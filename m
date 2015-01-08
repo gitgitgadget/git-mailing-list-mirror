@@ -1,84 +1,114 @@
 From: Reuben Hawkins <reubenhwk@gmail.com>
-Subject: [PATCH 1/3] configure.ac: check 'tv_nsec' field in 'struct stat'
-Date: Thu,  8 Jan 2015 12:00:55 -0800
-Message-ID: <1420747257-16132-1-git-send-email-reubenhwk@gmail.com>
+Subject: [PATCH 3/3] configure.ac: check for HMAC_CTX_cleanup
+Date: Thu,  8 Jan 2015 12:00:57 -0800
+Message-ID: <1420747257-16132-3-git-send-email-reubenhwk@gmail.com>
+References: <1420747257-16132-1-git-send-email-reubenhwk@gmail.com>
 Cc: Reuben Hawkins <reubenhwk@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 08 21:02:16 2015
+X-From: git-owner@vger.kernel.org Thu Jan 08 21:02:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y9JHM-0001oe-LY
+	id 1Y9JHN-0001oe-AK
 	for gcvg-git-2@plane.gmane.org; Thu, 08 Jan 2015 21:02:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932374AbbAHUBk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Jan 2015 15:01:40 -0500
-Received: from mail-pa0-f48.google.com ([209.85.220.48]:52093 "EHLO
-	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932150AbbAHUB3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Jan 2015 15:01:29 -0500
-Received: by mail-pa0-f48.google.com with SMTP id rd3so13731462pab.7
-        for <git@vger.kernel.org>; Thu, 08 Jan 2015 12:01:29 -0800 (PST)
+	id S932391AbbAHUBm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Jan 2015 15:01:42 -0500
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:42936 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932355AbbAHUBb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Jan 2015 15:01:31 -0500
+Received: by mail-pa0-f49.google.com with SMTP id eu11so13707221pac.8
+        for <git@vger.kernel.org>; Thu, 08 Jan 2015 12:01:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=5DEVywnw6dVFPOEPRgBPHWl2Zyayvd5I+HEQhXw+Cs4=;
-        b=pDtJIQrKP6Qorp1FXfbo62+Tc6jKEP+px8wiOqLRwPmgtqpJW7QrJ+zErYgK3eEgwB
-         DfdcU9h/yobOG2zdNwrbK1SYigTNe4/SnnO4gXpUDHVvZ+MuN25/zDlyBN5vdJey+2cc
-         75OXTjca20DNaIfd69uS4fiJRj78X1yzchz90s/zG00uxJMDuN8KM+ONUPUivvaB9oG6
-         c7OJ55L6dRi2fiRepIxqQYgst23C5Nqkk7WRt0cwVgkTByrAZ4rKR6z6RWCuvWBUikNv
-         NWFfP3uqGu8vxmIzEsOdVdqcYeOimCvAmBLLaICoZyoxjcl8OpTXrOqRPB1p1HTQ7VH9
-         klmg==
-X-Received: by 10.66.66.166 with SMTP id g6mr18090798pat.88.1420747288328;
-        Thu, 08 Jan 2015 12:01:28 -0800 (PST)
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=/C1hH32By9J/rxZcfWvJTUUwHSCxYJKg3WnnOkml5CA=;
+        b=HNpw9ejzj64Jv8cvUTFEJGdq6zbvyHlvaPDeFt5qyn204BW8ZmUrsOVErsh9oZ2RlB
+         UDwgvuinafn+mvXIupdlXf+XxONS9akBQ58DEQ7PS7yKjCLr2mCoHkZjQIqrhggd/sDO
+         0MtF3QKcoMpUzl87RUzKEgCjchb5Tw7G8kIChLnfVkOryo0/OAShTetBkEdoynsOJhHY
+         XYu/K1twxzQd+JKhYXOKJPaEkN9a/wDviJ1OJv/t3Z+EDZRzawZWtYc/TI07SCFX34h9
+         QV4UvyYgWP+/PlFy1p439Ko1lq8oju/5S+S2buCg4di0SJvg3A4Ic9D6c8R+U5bGRTHB
+         Jl6g==
+X-Received: by 10.66.65.165 with SMTP id y5mr17713723pas.146.1420747290403;
+        Thu, 08 Jan 2015 12:01:30 -0800 (PST)
 Received: from zoidberg.san.rr.com (cpe-76-88-40-245.san.res.rr.com. [76.88.40.245])
-        by mx.google.com with ESMTPSA id do3sm5248879pac.48.2015.01.08.12.01.27
+        by mx.google.com with ESMTPSA id do3sm5248879pac.48.2015.01.08.12.01.29
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 08 Jan 2015 12:01:27 -0800 (PST)
+        Thu, 08 Jan 2015 12:01:29 -0800 (PST)
 X-Mailer: git-send-email 2.2.0.68.g8f72f0c.dirty
+In-Reply-To: <1420747257-16132-1-git-send-email-reubenhwk@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262215>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262216>
 
-Detect 'tv_nsec' field in 'struct stat' and set Makefile variable
-NO_NSEC appropriately.
-
-A side-effect of the above detection is that we also determine
-whether 'stat.st_mtimespec' is available, so, as a bonus, set the
-Makefile variable USE_ST_TIMESPEC, as well.
+OpenSSL version 0.9.6b and before defined the function HMAC_cleanup.
+Newer versions define HMAC_CTX_cleanup.  Check for HMAC_CTX_cleanup and
+fall back to HMAC_cleanup when the newer function is missing.
 
 Signed-off-by: Reuben Hawkins <reubenhwk@gmail.com>
 ---
- configure.ac | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ Makefile          | 6 ++++++
+ configure.ac      | 4 ++++
+ git-compat-util.h | 3 +++
+ 3 files changed, 13 insertions(+)
 
+diff --git a/Makefile b/Makefile
+index 57e33f2..2ce1f1f 100644
+--- a/Makefile
++++ b/Makefile
+@@ -341,6 +341,9 @@ all::
+ # Define HAVE_CLOCK_GETTIME if your platform has clock_gettime in librt.
+ #
+ # Define HAVE_CLOCK_MONOTONIC if your platform has CLOCK_MONOTONIC in librt.
++#
++# Define NO_HMAC_CTX_CLEANUP if your OpenSSL is version 0.9.6b or earlier to
++# cleanup the HMAC context with the older HMAC_cleanup function.
+ 
+ GIT-VERSION-FILE: FORCE
+ 	@$(SHELL_PATH) ./GIT-VERSION-GEN
+@@ -1061,6 +1064,9 @@ ifndef NO_OPENSSL
+ 	ifdef NEEDS_CRYPTO_WITH_SSL
+ 		OPENSSL_LIBSSL += -lcrypto
+ 	endif
++	ifdef NO_HMAC_CTX_CLEANUP
++		BASIC_CFLAGS += -DNO_HMAC_CTX_CLEANUP
++	endif
+ else
+ 	BASIC_CFLAGS += -DNO_OPENSSL
+ 	BLK_SHA1 = 1
 diff --git a/configure.ac b/configure.ac
-index 6af9647..210eb4e 100644
+index c3293b9..9c66c3e 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -754,6 +754,19 @@ AC_CHECK_TYPES([struct itimerval],
- [#include <sys/time.h>])
- GIT_CONF_SUBST([NO_STRUCT_ITIMERVAL])
+@@ -924,6 +924,10 @@ AC_CHECK_LIB([iconv], [locale_charset],
+                      [CHARSET_LIB=-lcharset])])
+ GIT_CONF_SUBST([CHARSET_LIB])
  #
-+# Define USE_ST_TIMESPEC=YesPlease when stat.st_mtimespec.tv_nsec exists.
-+# Define NO_NSEC=YesPlease when neither stat.st_mtim.tv_nsec nor
-+# stat.st_mtimespec.tv_nsec exists.
-+AC_CHECK_MEMBER([struct stat.st_mtimespec.tv_nsec])
-+AC_CHECK_MEMBER([struct stat.st_mtim.tv_nsec])
-+if test x$ac_cv_member_struct_stat_st_mtimespec_tv_nsec = xyes ; then
-+	USE_ST_TIMESPEC=YesPlease
-+	GIT_CONF_SUBST([USE_ST_TIMESPEC])
-+elif test x$ac_cv_member_struct_stat_st_mtim_tv_nsec != xyes ; then
-+	NO_NSEC=YesPlease
-+	GIT_CONF_SUBST([NO_NSEC])
-+fi
++# Define NO_HMAC_CTX_CLEANUP=YesPlease if HMAC_CTX_cleanup is missing.
++AC_CHECK_LIB([crypto], [HMAC_CTX_cleanup],
++	[], [GIT_CONF_SUBST([NO_HMAC_CTX_CLEANUP], [YesPlease])])
 +#
- # Define NO_D_INO_IN_DIRENT if you don't have d_ino in your struct dirent.
- AC_CHECK_MEMBER(struct dirent.d_ino,
- [NO_D_INO_IN_DIRENT=],
+ # Define HAVE_CLOCK_GETTIME=YesPlease if clock_gettime is available.
+ GIT_CHECK_FUNC(clock_gettime,
+ 	[HAVE_CLOCK_GETTIME=YesPlease],
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 400e921..2fdca2d 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -213,6 +213,9 @@ extern char *gitbasename(char *);
+ #ifndef NO_OPENSSL
+ #include <openssl/ssl.h>
+ #include <openssl/err.h>
++#ifdef NO_HMAC_CTX_CLEANUP
++#define HMAC_CTX_cleanup HMAC_cleanup
++#endif
+ #endif
+ 
+ /* On most systems <netdb.h> would have given us this, but
 -- 
 2.2.0.68.g8f72f0c.dirty
