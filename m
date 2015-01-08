@@ -1,109 +1,164 @@
-From: "Kyle J. McKay" <mackyle@gmail.com>
-Subject: [PATCH v2] gettext.h: add parentheses around N_ expansion if supported
-Date: Thu,  8 Jan 2015 00:46:55 -0800
-Message-ID: <aea96640a01b65776eb0474aaceded5@74d39fa044aa309eaea14b9f57fe79c>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-To: Git mailing list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jan 08 09:51:23 2015
+From: Mike Hommey <mh@glandium.org>
+Subject: [PATCH] show-branch --upstream: add upstream branches to the list of branches to display
+Date: Thu,  8 Jan 2015 18:17:37 +0900
+Message-ID: <1420708657-20811-1-git-send-email-mh@glandium.org>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 08 10:20:50 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y98kK-0008Rh-Kg
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Jan 2015 09:47:13 +0100
+	id 1Y99EC-0005T0-6r
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Jan 2015 10:18:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755950AbbAHIrG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Jan 2015 03:47:06 -0500
-Received: from mail-pa0-f50.google.com ([209.85.220.50]:36544 "EHLO
-	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754641AbbAHIrF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Jan 2015 03:47:05 -0500
-Received: by mail-pa0-f50.google.com with SMTP id bj1so10443149pad.9
-        for <git@vger.kernel.org>; Thu, 08 Jan 2015 00:47:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=HMwMFzlxZviZAEMFrAqCL9wWbbmIFf7yJ4OjPwgi8zo=;
-        b=p9DrC3mJ38517K0YyEnN+WN5//qXsX+rb5Gv+/7fnfrTs8RS6AqydbZbM05lC6DmGa
-         LmuGQs2kmopCXTAATxsqQtlJU6E9+E23yZyMKNWkDRjB+CuV3sLd9S2G4ZCp2zuxLsiW
-         +m5MZJ3fXORiB/XVZO7HKFlvwCHuV1Z249JlzFP5DhV5gZRUbmP4XJZb7SkOkFXSwbVg
-         g1Rp+UITAJq6w3ueLrpEStocvZ6d+0hcX6t5tUiXl5UiP7/H14Q6ndq5Hxoyb/eEjpeI
-         xq6sfQgTZfGDK7a4RHBjZtcOESM8nIYfuNJWszbzUYBwggpImZZkVuHYgQHue2+AANJs
-         c1Pw==
-X-Received: by 10.70.37.79 with SMTP id w15mr12882199pdj.43.1420706824621;
-        Thu, 08 Jan 2015 00:47:04 -0800 (PST)
-Received: from localhost.localdomain (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
-        by mx.google.com with ESMTPSA id r1sm3840587pdb.24.2015.01.08.00.47.03
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Thu, 08 Jan 2015 00:47:03 -0800 (PST)
+	id S1753627AbbAHJRx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Jan 2015 04:17:53 -0500
+Received: from ks3293202.kimsufi.com ([5.135.186.141]:54139 "EHLO glandium.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751141AbbAHJRu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Jan 2015 04:17:50 -0500
+Received: from glandium by zenigata with local (Exim 4.84)
+	(envelope-from <glandium@glandium.org>)
+	id 1Y99Dl-0005QI-KB; Thu, 08 Jan 2015 18:17:37 +0900
+X-Mailer: git-send-email 2.2.1.4.g99d39fe.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262185>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262186>
 
-The N_ macro is used to mark strings for translation without
-actually translating them.  At runtime the string is expected
-to be passed to the gettext API for translation.
+`git show-branch --upstream` is equivalent to `git show-branch
+$(git for-each-ref refs/heads --format '%(refname:short)')
+$(git for-each-ref refs/heads --format '%(upstream:short)')`
 
-If two N_ macro invocations appear next to each other with only
-whitespace (or nothing at all) between them, the two separate
-strings will be marked for translation, but the preprocessor
-will then combine the strings into one and at runtime the
-string passed to gettext will not match the strings that were
-translated.
+`git show-branch --upstream foo bar` is equivalent to `git show-branch
+foo bar $(git for-each-ref refs/heads/foo refs/heads/bar
+--format '%(upstream:short)')`
 
-Avoid this by adding parentheses around the expansion of the
-N_ macro so that instead of ending up with two adjacent strings
-that are then combined by the preprocessor, two adjacent strings
-surrounded by parentheses result instead which causes a compile
-error so the mistake can be quickly found and corrected.
+Combined with --topics, it shows commits that are NOT on any of
+the upstream branches.
 
-However, since these string literals are typically assigned to
-static variables and not all compilers support parenthesized
-string literal assignments, only add the parentheses when the
-compiler is known to support the syntax.
-
-For now only __GNUC__ is tested which covers both gcc and clang
-which should result in early detection of any adjacent N_ macros.
-
-Although the necessary #ifdef makes the header less elegant,
-the benefit of avoiding propagation of a translation-marking
-error to all the translation teams thus creating extra work
-for them when the error is eventually detected and fixed would
-seem to outweigh the minor inelegance the #ifdef introduces.
-
-Signed-off-by: Kyle J. McKay <mackyle@gmail.com>
+Signed-off-by: Mike Hommey <mh@glandium.org>
 ---
- gettext.h | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/gettext.h b/gettext.h
-index 7671d09d..80ec29b5 100644
---- a/gettext.h
-+++ b/gettext.h
-@@ -62,7 +62,19 @@ const char *Q_(const char *msgid, const char *plu, unsigned long n)
- 	return ngettext(msgid, plu, n);
- }
+Note that in the --topics --upstream case, when there are different
+upstreams branches involved, only the merge-base of all of them is
+shown. I'm not sure if it's desirable to show more. The output as it
+is works for my own use cases.
+
+ Documentation/git-show-branch.txt |  6 ++++++
+ builtin/show-branch.c             | 42 +++++++++++++++++++++++++++++++++++++--
+ 2 files changed, 46 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git-show-branch.txt b/Documentation/git-show-branch.txt
+index b91d4e5..fd29c8d 100644
+--- a/Documentation/git-show-branch.txt
++++ b/Documentation/git-show-branch.txt
+@@ -53,6 +53,10 @@ OPTIONS
+ 	branch to the list of revs to be shown when it is not
+ 	given on the command line.
  
--/* Mark msgid for translation but do not translate it. */
-+/* Mark msgid for translation but do not translate it.
-+ *
-+ * In order to prevent accidents where two adjacent N_ macros
-+ * are mistakenly used, this macro is defined with parentheses
-+ * when the compiler is known to support parenthesized string
-+ * literal assignments.  This guarantees a compiler error in
-+ * such a case rather than a silent conjoining of the strings
-+ * by the preprocessor which results in translation failures.
-+ */
-+#ifdef __GNUC__
-+#define N_(msgid) (msgid)
-+#else
- #define N_(msgid) msgid
-+#endif
++--upstream::
++	With this option, the command includes the upstream
++	branch of each rev to be shown.
++
+ --topo-order::
+         By default, the branches and their commits are shown in
+         reverse chronological order.  This option makes them
+@@ -102,6 +106,8 @@ OPTIONS
  
- #endif
+ --topics::
+ 	Shows only commits that are NOT on the first branch given.
++	When used with `--upstream`, shows only commits that are NOT
++	on any upstream branch.
+ 	This helps track topic branches by hiding any commit that
+ 	is already in the main line of development.  When given
+ 	"git show-branch --topics master topic1 topic2", this
+diff --git a/builtin/show-branch.c b/builtin/show-branch.c
+index 270e39c..90e2ac3 100644
+--- a/builtin/show-branch.c
++++ b/builtin/show-branch.c
+@@ -4,9 +4,10 @@
+ #include "builtin.h"
+ #include "color.h"
+ #include "parse-options.h"
++#include "remote.h"
+ 
+ static const char* show_branch_usage[] = {
+-    N_("git show-branch [-a|--all] [-r|--remotes] [--topo-order | --date-order] [--current] [--color[=<when>] | --no-color] [--sparse] [--more=<n> | --list | --independent | --merge-base] [--no-name | --sha1-name] [--topics] [(<rev> | <glob>)...]"),
++    N_("git show-branch [-a|--all] [-r|--remotes] [--topo-order | --date-order] [--current] [--upstream] [--color[=<when>] | --no-color] [--sparse] [--more=<n> | --list | --independent | --merge-base] [--no-name | --sha1-name] [--topics] [(<rev> | <glob>)...]"),
+     N_("git show-branch (-g|--reflog)[=<n>[,<base>]] [--list] [<ref>]"),
+     NULL
+ };
+@@ -640,6 +641,7 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
+ 	int sha1_name = 0;
+ 	int shown_merge_point = 0;
+ 	int with_current_branch = 0;
++	int with_upstream_branches = 0;
+ 	int head_at = -1;
+ 	int topics = 0;
+ 	int dense = 1;
+@@ -658,6 +660,8 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
+ 		OPT_BOOL(0, "no-name", &no_name, N_("suppress naming strings")),
+ 		OPT_BOOL(0, "current", &with_current_branch,
+ 			 N_("include the current branch")),
++		OPT_BOOL(0, "upstream", &with_upstream_branches,
++			 N_("include upstream branches")),
+ 		OPT_BOOL(0, "sha1-name", &sha1_name,
+ 			 N_("name commits with their object names")),
+ 		OPT_BOOL(0, "merge-base", &merge_base,
+@@ -848,7 +852,41 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
+ 		if (commit->object.flags == flag)
+ 			commit_list_insert_by_date(commit, &list);
+ 		rev[num_rev] = commit;
++
++		if (with_upstream_branches) {
++			unsigned char branch_sha1[20];
++			struct branch *branch;
++			int current_ref_name_cnt = ref_name_cnt;
++
++			/* If this ref is already marked as an upstream, skip */
++			if (topics & flag)
++				continue;
++
++			branch = branch_get(ref_name[num_rev]);
++
++			if (!branch || !branch->merge || !branch->merge[0] ||
++			    !branch->merge[0]->dst)
++				continue;
++			if (get_sha1(branch->merge[0]->dst, branch_sha1))
++				continue;
++			append_remote_ref(branch->merge[0]->dst, branch_sha1, 0, 0);
++			/* If append_remote_ref didn't add a ref, it's either
++			 * because it's an upstream of a previous ref, or because
++			 * it was given on the command line. In neither case we
++			 * want the bit being set. */
++			if (topics && current_ref_name_cnt != ref_name_cnt)
++				topics |= 1u << (ref_name_cnt + REV_SHIFT - 1);
++		} else if (topics && num_rev == 0) {
++			topics |= flag;
++		}
+ 	}
++	/* topics is filled above with a mask of refs corresponding to
++	 * upstream branches, or the first given ref. It also still contains
++	 * the original bool value, which may match some bookkeeping flags,
++	 * so filter that out.
++	 */
++	topics &= ~0u << REV_SHIFT;
++
+ 	for (i = 0; i < num_rev; i++)
+ 		rev_mask[i] = rev[i]->object.flags;
+ 
+@@ -925,7 +963,7 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
+ 					  commit->parents->next);
+ 			if (topics &&
+ 			    !is_merge_point &&
+-			    (this_flag & (1u << REV_SHIFT)))
++			    (this_flag & topics))
+ 				continue;
+ 			if (dense && is_merge &&
+ 			    omit_in_dense(commit, rev, num_rev))
 -- 
-2.1.4
+2.2.1.4.g99d39fe.dirty
