@@ -1,68 +1,85 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [msysGit] Re: Probably a bug with "~" symbol in filenames on
- Windows 7 x64 in git 1.9.5
-Date: Thu, 8 Jan 2015 16:58:24 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1501081652230.21312@s15462909.onlinehome-server.info>
-References: <CADb7K9rELHWgy_NYJWrSr9gZn7pcMvETv93d0j+u2fXinj5iTg@mail.gmail.com> <CAPc5daVddkaMkx=43nCeQKbbkrV6nExOqvEBJNyugzDQB2n6kQ@mail.gmail.com> <alpine.DEB.1.00.1501081100570.21312@s15462909.onlinehome-server.info> <20150108102815.GA4806@peff.net>
- <54AE7F46.9060103@web.de>
+From: matthew sporleder <msporleder@gmail.com>
+Subject: low memory system to clone larger repo
+Date: Thu, 8 Jan 2015 11:10:08 -0500
+Message-ID: <CAHKF-AspyE84_0CVMz2OjFLt3Q62qKDfTkbUk3-+RQ_EZ=0JGg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="1784107012-2076956452-1420732705=:21312"
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Dmitry Bykov <pvrt74@gmail.com>, msysgit@googlegroups.com
-To: =?ISO-8859-15?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Thu Jan 08 17:00:00 2015
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 08 17:10:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y9FU0-0006OX-C6
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Jan 2015 16:58:48 +0100
+	id 1Y9Ff7-0000rh-CL
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Jan 2015 17:10:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754972AbbAHP6o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Jan 2015 10:58:44 -0500
-Received: from mout.gmx.net ([212.227.17.22]:50297 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754556AbbAHP6n (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Jan 2015 10:58:43 -0500
-Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
- mail.gmx.com (mrgmx103) with ESMTPSA (Nemesis) id 0Lm2lZ-1XaBhw3ivR-00Zg8u;
- Thu, 08 Jan 2015 16:58:25 +0100
-X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <54AE7F46.9060103@web.de>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Provags-ID: V03:K0:pFzWWET1DvdnuOr3NmSo6pEeKKS+qlsk7pJhvPgIM7I46ocgdk5
- dnV/iYsmkph1lzI5ZfUttfroIXriUxu/+Tih11xJrk2SyPBdnzxYFZbylwOJmb7G4R9Y2cc
- PMJiccsQc9zK2rG56RiH3cYA6HYcD8A48NhdOK7IHou49EJnSrUyfeDyaa02lXXtR+b766Q
- SVqPEOh8klObIWRngPk4w==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1754547AbbAHQKL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Jan 2015 11:10:11 -0500
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:59209 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753777AbbAHQKK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Jan 2015 11:10:10 -0500
+Received: by mail-wg0-f44.google.com with SMTP id b13so3448406wgh.3
+        for <git@vger.kernel.org>; Thu, 08 Jan 2015 08:10:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=ogg48O7EhV8yE70NkNL5IiwOXOVmVVGf2AI/WrxBT9Y=;
+        b=t1yvotMO77vuJgefCzHy99krpFqH3LzZp1QmhU1zHkB5YR1tTaSyUBXfstqnnEfLSE
+         YFy1N9uQl2jtby8n+KmJ2KQSZU+z81DHNd7vy4TNOeMgMQ6B0DpBv9ErtX4/V0BHV+sd
+         rWLe/c5Qiva3EZA22ZEd/br5NjmusDC1ubDq57CihIrh6bXkH2fpqNd+wRBnuaY8SFjW
+         ieN2U8iU7mY8IRaqNN6aOBu0JCqYUX34RqEEmwvZ9dOTYlwxKqY6AdQmBS+DZ90ti5lJ
+         FdvLFi7LBnRdf/iuUKew8x90J1/P0Uc+0A1HlRRZR1GeRKmuSGxxV19NgpzSLxpg3QYc
+         Vh9Q==
+X-Received: by 10.180.11.98 with SMTP id p2mr21515688wib.22.1420733408818;
+ Thu, 08 Jan 2015 08:10:08 -0800 (PST)
+Received: by 10.194.87.193 with HTTP; Thu, 8 Jan 2015 08:10:08 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262198>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+I am attempting to clone this repo: https://github.com/jsonn/src/
 
---1784107012-2076956452-1420732705=:21312
-Content-Type: TEXT/PLAIN; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+and have been successful on some lower memory systems, but i'm
+interested in continuing to push down the limit.
 
-Hi Torsten,
+I am getting more success running clone via https:// than git:// or
+ssh (which is confusing to me) and the smallest system that works is a
+raspberry pi with 256 RAM + 256 swap.
 
-On Thu, 8 Jan 2015, Torsten B=C3=B6gershausen wrote:
+I seem to run out of memory consistently around 16% into Resolving
+deltas phase but I don't notice an RSS jump so that's another
+confusing spot.
 
-> There is something more then just the "tilde" protection going on, [...]
+My config is below and I'd appreciate any more suggestions of getting
+that down to working on a 128MB box (or smaller).
 
-Indeed. What is going on is that you build Git yourself, from git.git,
-while Dmitry obviously used Git for Windows -- which carries a couple of
-patches on top of upstream git.git.
+---
 
-In this particular case, the tilde protection was introduced in
-https://github.com/msysgit/git/commit/2e2a2d12.
+I appreciate any suggestions,
+Matt
 
-Ciao,
-Johannes
---1784107012-2076956452-1420732705=:21312--
+p.s. shallow clones work fine on very small systems
+
+
+[pack]
+        windowMemory = 1m
+        packSizeLimit = 1m
+        deltaCacheSize = 1m
+        deltaCacheLimit = 10
+        packSizeLimit = 1m
+        threads = 1
+[core]
+        packedGitWindowSize = 1m
+        packedGitLimit = 1m
+        deltaBaseCacheLimit = 1m
+        compression = 0
+        loosecompression = 0
+        bigFileThreshold = 10m
+[http]
+        sslVerify = false
+[transfer]
+        unpackLimit = 10
