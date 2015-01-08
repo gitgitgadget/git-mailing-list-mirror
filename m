@@ -1,78 +1,68 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] standardize usage info string format
-Date: Thu, 08 Jan 2015 14:21:22 +0100
-Message-ID: <vpqvbkh9zn1.fsf@anie.imag.fr>
-References: <1420698501-15393-1-git-send-email-alexhenrie24@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [msysGit] Re: Probably a bug with "~" symbol in filenames on
+ Windows 7 x64 in git 1.9.5
+Date: Thu, 8 Jan 2015 16:58:24 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1501081652230.21312@s15462909.onlinehome-server.info>
+References: <CADb7K9rELHWgy_NYJWrSr9gZn7pcMvETv93d0j+u2fXinj5iTg@mail.gmail.com> <CAPc5daVddkaMkx=43nCeQKbbkrV6nExOqvEBJNyugzDQB2n6kQ@mail.gmail.com> <alpine.DEB.1.00.1501081100570.21312@s15462909.onlinehome-server.info> <20150108102815.GA4806@peff.net>
+ <54AE7F46.9060103@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, gitster@pobox.com, pclouds@gmail.com,
-	krh@redhat.com, vmiklos@frugalware.org, madcoder@debian.org,
-	barra_cuda@katamail.com, dpotapov@gmail.com, git@adamspiers.org,
-	sunshine@sunshineco.com, mhagger@alum.mit.edu, jrnieder@gmail.com,
-	barkalow@iabervon.org, stefanbeller@gmail.com,
-	shawn.bohrer@gmail.com, felipe.contreras@gmail.com,
-	rhansen@bbn.com, pasky@ucw.cz, s-beyer@gmx.net,
-	c.shoemaker@cox.net, grnch@gmx.net, jbowes@dangerouslyinc.com,
-	l.s.r@web.de, philipoakley@iee.org, michal.kiedrowicz@gmail.com,
-	cmn@elego.de, artagnon@gmail.com, rctay89@gmail.com,
-	stefan.naewe@gmail.com, pbonzini@redhat.com, aspotashev@gmail.com,
-	johan@herland.net, luksan@gmail.com, bebarino@gmail.com,
-	Johannes.Schindelin@gmx.de, kevin@bracey.fi, jasampler@gmail.com,
-	brad.king@kitware.com, git@drmicha.warpmail.net, peff@peff.net,
-	chriscool@tuxfamily.org, ayiehere@gmail.com, jos
-To: Alex Henrie <alexhenrie24@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 08 14:35:42 2015
+Content-Type: MULTIPART/MIXED; BOUNDARY="1784107012-2076956452-1420732705=:21312"
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Dmitry Bykov <pvrt74@gmail.com>, msysgit@googlegroups.com
+To: =?ISO-8859-15?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Thu Jan 08 17:00:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y9DDy-0007RS-E0
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Jan 2015 14:34:06 +0100
+	id 1Y9FU0-0006OX-C6
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Jan 2015 16:58:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756503AbbAHNeA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Jan 2015 08:34:00 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:37935 "EHLO rominette.imag.fr"
+	id S1754972AbbAHP6o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Jan 2015 10:58:44 -0500
+Received: from mout.gmx.net ([212.227.17.22]:50297 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754937AbbAHNd7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Jan 2015 08:33:59 -0500
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t08DMWb3003552
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 8 Jan 2015 14:22:32 +0100
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t08DLMPe009112;
-	Thu, 8 Jan 2015 14:21:22 +0100
-In-Reply-To: <1420698501-15393-1-git-send-email-alexhenrie24@gmail.com> (Alex
-	Henrie's message of "Wed, 7 Jan 2015 23:28:21 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 08 Jan 2015 14:22:35 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t08DMWb3003552
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1421328157.93585@+4gDFmf7vUhs/fTBnXYp9A
+	id S1754556AbbAHP6n (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Jan 2015 10:58:43 -0500
+Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
+ mail.gmx.com (mrgmx103) with ESMTPSA (Nemesis) id 0Lm2lZ-1XaBhw3ivR-00Zg8u;
+ Thu, 08 Jan 2015 16:58:25 +0100
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <54AE7F46.9060103@web.de>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Provags-ID: V03:K0:pFzWWET1DvdnuOr3NmSo6pEeKKS+qlsk7pJhvPgIM7I46ocgdk5
+ dnV/iYsmkph1lzI5ZfUttfroIXriUxu/+Tih11xJrk2SyPBdnzxYFZbylwOJmb7G4R9Y2cc
+ PMJiccsQc9zK2rG56RiH3cYA6HYcD8A48NhdOK7IHou49EJnSrUyfeDyaa02lXXtR+b766Q
+ SVqPEOh8klObIWRngPk4w==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262196>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262197>
 
-Alex Henrie <alexhenrie24@gmail.com> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> - Placing angle brackets around fill-in-the-blank parameters
-> - Putting dashes in multiword parameter names
-> - Adding spaces to [-f|--foobar] to make [-f | --foobar]
-> - Replacing <foobar>* with [<foobar>...]
+--1784107012-2076956452-1420732705=:21312
+Content-Type: TEXT/PLAIN; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-The review would be easier with a patch series having one patch per item
-in this list (not sure splitting the series now is worth the trouble
-though).
+Hi Torsten,
 
-I went quickly through the patch and didn't find any issue. I do support
-the style standardization effort.
+On Thu, 8 Jan 2015, Torsten B=C3=B6gershausen wrote:
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+> There is something more then just the "tilde" protection going on, [...]
+
+Indeed. What is going on is that you build Git yourself, from git.git,
+while Dmitry obviously used Git for Windows -- which carries a couple of
+patches on top of upstream git.git.
+
+In this particular case, the tilde protection was introduced in
+https://github.com/msysgit/git/commit/2e2a2d12.
+
+Ciao,
+Johannes
+--1784107012-2076956452-1420732705=:21312--
