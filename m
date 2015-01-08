@@ -1,117 +1,62 @@
-From: Yuri D'Elia <wavexx@thregr.org>
+From: John Szakmeister <john@szakmeister.net>
 Subject: Re: A better git log --graph?
-Date: Thu, 08 Jan 2015 12:39:35 +0100
-Message-ID: <54AE6C77.8060303@thregr.org>
-References: <m8jfg5$dsp$1@ger.gmane.org> <95FA7666-4031-48FE-B9F7-DC8BB969426C@gmail.com>
+Date: Thu, 8 Jan 2015 06:59:05 -0500
+Message-ID: <CAEBDL5XgVAKp0AAxtKPx20BTkO-F9P62=5MxHVdtBVWTXoNRTw@mail.gmail.com>
+References: <m8jfg5$dsp$1@ger.gmane.org>
+	<95FA7666-4031-48FE-B9F7-DC8BB969426C@gmail.com>
+	<54AE6C77.8060303@thregr.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 08 12:50:33 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: "Yuri D'Elia" <wavexx@thregr.org>
+X-From: git-owner@vger.kernel.org Thu Jan 08 13:03:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y9BUo-0000Fh-Lg
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Jan 2015 12:43:23 +0100
+	id 1Y9BkA-0001Ez-30
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Jan 2015 12:59:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756260AbbAHLnS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Jan 2015 06:43:18 -0500
-Received: from plane.gmane.org ([80.91.229.3]:40433 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753834AbbAHLnR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Jan 2015 06:43:17 -0500
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1Y9BSJ-0005fN-Gp
-	for git@vger.kernel.org; Thu, 08 Jan 2015 12:40:47 +0100
-Received: from 193.106.183.18 ([193.106.183.18])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 08 Jan 2015 12:40:47 +0100
-Received: from wavexx by 193.106.183.18 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 08 Jan 2015 12:40:47 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 193.106.183.18
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.3.0
-In-Reply-To: <95FA7666-4031-48FE-B9F7-DC8BB969426C@gmail.com>
+	id S1756292AbbAHL7I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Jan 2015 06:59:08 -0500
+Received: from mail-la0-f54.google.com ([209.85.215.54]:36825 "EHLO
+	mail-la0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756004AbbAHL7H (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Jan 2015 06:59:07 -0500
+Received: by mail-la0-f54.google.com with SMTP id pv20so8681148lab.13
+        for <git@vger.kernel.org>; Thu, 08 Jan 2015 03:59:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=0iL6NkDd4R1D+6586i6/K+S6Qd6+Nsg5G3XrlOhhKTQ=;
+        b=vhazl2k/q+a3xmnU2GZAtY7L0y8WYCPzsnH8CdcnhAw1ykkdkoUwx13IaB1ptLC7qq
+         G+WttQR17A5hXYQgE/oS5XdJy2taoX7GRCMP73pQw8e4dWy9G1rZd5Q2xOGQbg55Wc9k
+         hvfc0OGiXbqNrDQIj7iqB5MJoAXRfxoFH4iaqju5hb7flqGq5PWWNtZKrqwzE1nSoAVh
+         3sn06SLsZMPtpHoBgUbCrAkXA6CkCvt5rvRwxJCY8wM7/cB0rYAj9KiW4WTkCidujWKS
+         lA49cWgGIuh0ilfNBKW4OPPq2GCP4xVPpe4gAnxWPU/NsHYVvDvVi/Uia0FGe8mGncSa
+         aucg==
+X-Received: by 10.152.43.49 with SMTP id t17mr13106827lal.52.1420718345777;
+ Thu, 08 Jan 2015 03:59:05 -0800 (PST)
+Received: by 10.25.166.75 with HTTP; Thu, 8 Jan 2015 03:59:05 -0800 (PST)
+In-Reply-To: <54AE6C77.8060303@thregr.org>
+X-Google-Sender-Auth: YE86JlW0QH7iXupDEToBmU33aW8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262192>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262193>
 
-On 01/08/2015 08:52 AM, Kyle J. McKay wrote:
-> Since --graph is text-based, this response may not be on-topic hence  
-> no cc: to the list.
+On Thu, Jan 8, 2015 at 6:39 AM, Yuri D'Elia <wavexx@thregr.org> wrote:
+[snip]
+> I usually never use frontends. The notable exception is "tig" when I
+> want to get a feeling of the status of several branches and/or "blame"
+> some files. It haves a lot of typing. That being said, I tried gitk, but
+> assumed it was also parsing --graph layout.
 
-I see --graph as an important tool to get an overview on how the
-development is being done. I don't mind having a graphical tool for the
-job, and I was even suggesting if there was a graphviz-based tool that
-could do a better job.
+Try "gitk --date-order".  I find it gives me the picture I really want
+to see.  I've aliased it to "git k" in my gitconfig because I find it
+very valuable.
 
-I have a couple of projects where we made heavy use of topic branches,
-cherrypicks and whatnot. Not the best way to work, but I realized I just
-needed a graphical overview of the layout to streamline a bit the
-development.
-
-I normally use tig, but the drawn graph, even when turning on bar
-drawing, is really poor.
-
-> I assume that you've tried gitk?  It has a graphic viewer for the log,  
-> but I also find it difficult to tell what's going on in its graph  
-> although it's somewhat better than the --graph graph.  It does not  
-> parse --graph output.
-
-I usually never use frontends. The notable exception is "tig" when I
-want to get a feeling of the status of several branches and/or "blame"
-some files. It haves a lot of typing. That being said, I tried gitk, but
-assumed it was also parsing --graph layout.
-
-Now looking again, I notice some differencies, but it doesn't give me a
-better picture.
-
-> A better repository to view it on is the scons mirror (http://repo.or.cz/scons 
-> ) as it doesn't have nearly the number of branches/merges as Git  
-> (direct link is <http://repo.or.cz/git-browser/by-commit.html?r=scons.git 
->  >).
-
-It's better, but still not something I would feel like using.
-
-Github's network "graph" is a bit better in my mind, but it also has his
-own share of problems, namely trying his own logic to reduce the height
-of the graph recyling the row for multiple branches.
-
-> However, I find its graphs much easier to grok as it draws --first- 
-> parent links in a much thicker line style and they stay the same color  
-> so it's very easy to see forks, merges and where a fork was re-merged  
-> into a main branch.
-
-Yes, this does make a lot of difference when just looking at it. It
-immediately becomes much more apparent.
-
-I'm wondering if just turning on the bold attribute in --graph --color
-would help improve the output.
-
-> P.S. I'm not 100%, but I think that fossil shows the kinds of graphs  
-> you're looking for (see a sample at <http://sqlite.org/src/timeline?y=ci&n=200 
->  >) -- each branch head stays in the same column and non-first-parent  
-> links are thinner lines.
-
-Now that's *really* readable for me! Isn't it?
-I never used fossil so this is the first time I see it.
-
-The symbols are really well chosen as well.
-
-Can we have something like this in git?
-It might entirely be that it breaks for 200 branches, but hell, for
-smaller projects it's a boon.
-
-> P.P.S. In any case if this isn't too much off-topic for your original  
-> message, feel free to include any parts of the above message in a  
-> reply to the list.
-
-It was very helpful, so it's done.
+-John
