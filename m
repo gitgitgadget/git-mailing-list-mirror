@@ -1,126 +1,259 @@
-From: Marc Finet <m.dreadlock@gmail.com>
-Subject: Re: PATCH/RFC: format-patch: Add format.subjectprefixsep to change
- separators
-Date: Thu, 8 Jan 2015 22:47:22 +0100
-Message-ID: <20150108214722.GA10014@mlap.lactee>
-References: <1420377686-25608-1-git-send-email-m.dreadlock@gmail.com>
- <xmqqlhliqq1f.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2] receive-pack: support push-to-checkout hook
+Date: Thu, 08 Jan 2015 15:25:47 -0800
+Message-ID: <xmqqbnm8etxg.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 08 22:54:24 2015
+Content-Type: text/plain
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 09 00:26:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y9L1G-00082z-N9
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Jan 2015 22:53:31 +0100
+	id 1Y9MSh-0006Yo-CB
+	for gcvg-git-2@plane.gmane.org; Fri, 09 Jan 2015 00:25:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756442AbbAHVx0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Jan 2015 16:53:26 -0500
-Received: from mail-wi0-f182.google.com ([209.85.212.182]:37927 "EHLO
-	mail-wi0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756338AbbAHVxZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Jan 2015 16:53:25 -0500
-Received: by mail-wi0-f182.google.com with SMTP id h11so6144017wiw.3
-        for <git@vger.kernel.org>; Thu, 08 Jan 2015 13:53:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=D6kZXcv/sFXzRmP8oEdEP1jzmfxD63nok9AK5mUGbig=;
-        b=d4Ib8mkhz36XfWcEqluGqtHqsC341fKj/+tU1n0Ah4wz0E405UhuSBR6d2dsUYD+tU
-         zoEhh3/jxVopXP9MNTGLjH9lFvsRwmO3UCH8tq6ssFW278vKbr0l9vFD+rAD4yzrQEXE
-         hfhYOLTRqL1+kmuUIGiwjUoY/OY8O4Jh3KrmnVyWEgziNDzZVzpEzCfEJoOce0bpJTa2
-         devy/czxzYLKPRGz0nIw4BEWTlSaRUkGqDE/fOBDVxQmNhXauY/33Uc5BHBPImvqfGzb
-         GXBTPXJL0CLu1lcWTDvMxMhTVA7zqMTnjcaCSx88W8gNccERmmOrzEqhbZURW6e2tIhd
-         a5sg==
-X-Received: by 10.194.188.39 with SMTP id fx7mr23268106wjc.113.1420753645594;
-        Thu, 08 Jan 2015 13:47:25 -0800 (PST)
-Received: from mlap.lactee (amg01-2-78-227-45-71.fbx.proxad.net. [78.227.45.71])
-        by mx.google.com with ESMTPSA id dv9sm8110627wib.14.2015.01.08.13.47.24
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 08 Jan 2015 13:47:25 -0800 (PST)
-Received: by mlap.lactee (Postfix, from userid 1000)
-	id 04F0417EA68; Thu,  8 Jan 2015 22:47:22 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <xmqqlhliqq1f.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1755450AbbAHXZv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Jan 2015 18:25:51 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:62761 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755151AbbAHXZu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Jan 2015 18:25:50 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 365F62EB79;
+	Thu,  8 Jan 2015 18:25:49 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=l
+	6D7GgnNeZArAvdoqwtIkOZmbiI=; b=Th9hRQALZWS771xIQuJ2SQnrB1pgUc4uj
+	gzILMZsA9NkWBpM0qHfOQ6/n6uCpBbIGvSezxbV2RWD0abSUM+zC7UDo7G1sgfqu
+	L9c4SSbiQax6eqA3ldOXl0BZqaXfX4eGVnye6HvfbQpLc0P1XADlTSrttcFzgle9
+	BdlQyq6bE0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; q=dns; s=
+	sasl; b=vBFhWbZDYgEhEp+/sio8zDr4q2PTsfz1ZH/PMFhbKDTgnA27Hl2Opma5
+	GiCpj0BJmGxW1GvKGipdGfDd9SRX7Z/bZt49+Snlmnfdty4OcBs1hnTli//RUIEU
+	XRzT/vB15V6o+BCnOgrBt99V7Osu1OxzVSS/5KAhbfmXz7Q/dBE=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2B2EF2EB78;
+	Thu,  8 Jan 2015 18:25:49 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 87A212EB77;
+	Thu,  8 Jan 2015 18:25:48 -0500 (EST)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: AD89FA2C-978D-11E4-BA52-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262224>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262225>
 
-On Sun, Jan 04, 2015 at 11:55:24AM -0800, Junio C Hamano wrote:
-> Marc Finet <m.dreadlock@gmail.com> writes:
-> 
-> > Some mailing list use "PATCH:" rather than "[PATCH]" to prefix
-> > patches, so introduce a new option to configure:
-> >  - 2 chars that would enclose PATCH (and counters)
-> >  - 1 char that would come just after the PATCH (and counters)
-> > ---
-> > This mail has been sent with:
-> >  git -c format.subjectprefixsep=: send-email --annotate --subject-prefix=PATCH/RFC
-> 
-> A few comments:
-> 
->  - "Some mailing lists" may want to say "[PATCH v3 #4 of 10]" or
->    somesuch; as a customization mechanism, the approach this patch
->    takes falls way short to be useful.  "--subject=<format>" option
->    where <format> is similar the "log --format" options, e.g.
-> 
->    --subject="[PATCH% v #%N of %T] %s"
-> 
->    with format-patch specific set of substitutions (in the above
->    example, %v stands for patch version, %N patch number and %T
->    total number of patches in the series) may be a better way to go.
-In fact the log-tree.c::log_write_email_headers() has two cases
-depending on the number of patches to send. So we need either two (or
-three) options or we need to implement (because AFAIK it does not exists
-yet) conditionals. Both seemed to me a little bit overkill here.
+When receive.denyCurrentBranch is set to updateInstead, a push that
+tries to update the branch that is currently checked out is accepted
+only when the index and the working tree exactly matches the
+currently checked out commit, in which case the index and the
+working tree are updated to match the pushed commit.  Otherwise the
+push is refused.
+
+This hook can be used to customize this "push-to-deploy" logic.  The
+hook receives the commit with which the tip of the current branch is
+going to be updated, and can decide what kind of local changes are
+acceptable and how to update the index and the working tree to match
+the updated tip of the current branch.
+
+For example, the hook can simply run `git read-tree -u -m HEAD "$1"`
+in order to emulate 'git fetch' that is run in the reverse direction
+with `git push`, as the two-tree form of `read-tree -u -m` is
+essentially the same as `git checkout` that switches branches while
+keeping the local changes in the working tree that do not interfere
+with the difference between the branches.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+
+ * This is an update to $gmane/260527; relative to what I have been
+   keeping in 'pu', the only difference is that it comes with
+   documentation updates.
+
+ Documentation/config.txt   |  6 ++++-
+ Documentation/githooks.txt | 30 ++++++++++++++++++++++
+ builtin/receive-pack.c     | 19 +++++++++++++-
+ t/t5516-fetch-push.sh      | 63 ++++++++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 116 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 6a4c19e..4e558ab 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -2131,11 +2131,15 @@ receive.denyCurrentBranch::
+ 	message. Defaults to "refuse".
+ +
+ Another option is "updateInstead" which will update the working
+-directory (must be clean) if pushing into the current branch. This option is
++tree if pushing into the current branch.  This option is
+ intended for synchronizing working directories when one side is not easily
+ accessible via interactive ssh (e.g. a live web site, hence the requirement
+ that the working directory be clean). This mode also comes in handy when
+ developing inside a VM to test and fix code on different Operating Systems.
+++
++By default, "updateInstead" will refuse the push if the working tree or
++the index have any difference from the HEAD, but the `push-to-checkout`
++hook can be used to customize this.  See linkgit:githooks[5].
  
->  - Do not add configuration variable before you add command line
->    option.  Add option first and then when option proves useful you
->    can have the corresponding variable, not the other way around.
->    Make sure that the comamnd line option overrides configuration
->    variable while adding the variable in the second step of such a
->    patch series.
-Ok.
-
-> Having said all that.
-> 
-> What are these mailing lists and why are they using non-standard
-> convention?  Back when Git was young, we would have added more knobs
-> to adjust the behaviour to existing prevailing convention, but now
-> Git is older than X% of projects that use Git where the number X is
-> a pretty large number.  Perhaps just like they (whichever mailing
-> lists they are) switched out of Subversion or CVS and started using
-> Git to come to the modern world, maybe it is time they switch their
-> convention as well?
-Well, the only mailing-list I saw this behavior is zsh. I did not dig
-into its history to see when this behavior has been adopted. I did not
-see remarks regarding patches sent with [PATCH], but I just wanted to
-adopt the existing style rather than using a new one and thought that
-git was already providing a way to do so, and eventually developed this
-patch.
-
-So, I do not know what to do now:
- - stick to [PATCH]
- - try one of the two first alternatives above (multiple options or
-   implement conditionals)
- - re-work this patch by implementing the command line option, creating
-   an other patch to use a configuration option, and hope it would be
-   accepted because it makes sense to some people. The only advantage of
-   using PATCH: rather than [PATCH] is that 1 char is saved :|. Making
-   the subject less 'aggressive' is a feature but not necessarily an
-   advantage.
-
-Failing to see some interest for solutions 2 or 3, I would fall back to
-solution 1 :).
-
-Thanks,
-
-Marc.
+ receive.denyNonFastForwards::
+ 	If set to true, git-receive-pack will deny a ref update which is
+diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+index 9ef2469..7ba0ac9 100644
+--- a/Documentation/githooks.txt
++++ b/Documentation/githooks.txt
+@@ -341,6 +341,36 @@ Both standard output and standard error output are forwarded to
+ 'git send-pack' on the other end, so you can simply `echo` messages
+ for the user.
+ 
++push-to-checkout
++~~~~~~~~~~~~~~~~
++
++This hook is invoked by 'git-receive-pack' on the remote repository,
++which happens when a 'git push' is done on a local repository, when
++the push tries to update the branch that is currently checked out
++and the `receive.denyCurrentBranch` configuration variable is set to
++`updateInstead`.  Such a push by default is refused if the working
++tree and the index of the remote repository has any difference from
++the currently checked out commit; when both the working tree and the
++index match the current commit, they are updated to match the newly
++pushed tip of the branch.  This hook is to be used to override the
++default behaviour.
++
++The hook receives the commit with which the tip of the current
++branch is going to be updated.  It can exit with a non-zero status
++to refuse the push (when it does so, it must not modify the index or
++the working tree).  Or it can make any necessary changes to the
++working tree and to the index to bring them to the desired state
++when the tip of the current branch is updated to the new commit, and
++exit with a zero status.
++
++For example, the hook can simply run `git read-tree -u -m HEAD "$1"`
++in order to emulate 'git fetch' that is run in the reverse direction
++with `git push`, as the two-tree form of `read-tree -u -m` is
++essentially the same as `git checkout` that switches branches while
++keeping the local changes in the working tree that do not interfere
++with the difference between the branches.
++
++
+ pre-auto-gc
+ ~~~~~~~~~~~
+ 
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 11800cd..fc8ec9c 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -797,6 +797,20 @@ static const char *push_to_deploy(unsigned char *sha1,
+ 	return NULL;
+ }
+ 
++static const char *push_to_checkout_hook = "push-to-checkout";
++
++static const char *push_to_checkout(unsigned char *sha1,
++				    struct argv_array *env,
++				    const char *work_tree)
++{
++	argv_array_pushf(env, "GIT_WORK_TREE=%s", absolute_path(work_tree));
++	if (run_hook_le(env->argv, push_to_checkout_hook,
++			sha1_to_hex(sha1), NULL))
++		return "push-to-checkout hook declined";
++	else
++		return NULL;
++}
++
+ static const char *update_worktree(unsigned char *sha1)
+ {
+ 	const char *retval;
+@@ -808,7 +822,10 @@ static const char *update_worktree(unsigned char *sha1)
+ 
+ 	argv_array_pushf(&env, "GIT_DIR=%s", absolute_path(get_git_dir()));
+ 
+-	retval = push_to_deploy(sha1, &env, work_tree);
++	if (!find_hook(push_to_checkout_hook))
++		retval = push_to_deploy(sha1, &env, work_tree);
++	else
++		retval = push_to_checkout(sha1, &env, work_tree);
+ 
+ 	argv_array_clear(&env);
+ 	return retval;
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index 85c7fec..e4436c1 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -1434,4 +1434,67 @@ test_expect_success 'receive.denyCurrentBranch = updateInstead' '
+ 
+ '
+ 
++test_expect_success 'updateInstead with push-to-checkout hook' '
++	rm -fr testrepo &&
++	git init testrepo &&
++	(
++		cd testrepo &&
++		git pull .. master &&
++		git reset --hard HEAD^^ &&
++		git tag initial &&
++		git config receive.denyCurrentBranch updateInstead &&
++		write_script .git/hooks/push-to-checkout <<-\EOF
++		echo >&2 updating from $(git rev-parse HEAD)
++		echo >&2 updating to "$1"
++
++		git update-index -q --refresh &&
++		git read-tree -u -m HEAD "$1" || {
++			status=$?
++			echo >&2 read-tree failed
++			exit $status
++		}
++		EOF
++	) &&
++
++	# Try pushing into a pristine
++	git push testrepo master &&
++	(
++		cd testrepo &&
++		git diff --quiet &&
++		git diff HEAD --quiet &&
++		test $(git -C .. rev-parse HEAD) = $(git rev-parse HEAD)
++	) &&
++
++	# Try pushing into a repository with conflicting change
++	(
++		cd testrepo &&
++		git reset --hard initial &&
++		echo conflicting >path2
++	) &&
++	test_must_fail git push testrepo master &&
++	(
++		cd testrepo &&
++		test $(git rev-parse initial) = $(git rev-parse HEAD) &&
++		test conflicting = "$(cat path2)" &&
++		git diff-index --quiet --cached HEAD
++	) &&
++
++	# Try pushing into a repository with unrelated change
++	(
++		cd testrepo &&
++		git reset --hard initial &&
++		echo unrelated >path1 &&
++		echo irrelevant >path5 &&
++		git add path5
++	) &&
++	git push testrepo master &&
++	(
++		cd testrepo &&
++		test "$(cat path1)" = unrelated &&
++		test "$(cat path5)" = irrelevant &&
++		test "$(git diff --name-only --cached HEAD)" = path5 &&
++		test $(git -C .. rev-parse HEAD) = $(git rev-parse HEAD)
++	)
++'
++
+ test_done
+-- 
+2.2.1-390-g773ecee
