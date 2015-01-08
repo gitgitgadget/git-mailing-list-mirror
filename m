@@ -1,103 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] gettext.h: add parentheses around N_ expansion if supported
-Date: Thu, 08 Jan 2015 11:10:42 -0800
-Message-ID: <xmqqa91tf5ql.fsf@gitster.dls.corp.google.com>
-References: <aea96640a01b65776eb0474aaceded5@74d39fa044aa309eaea14b9f57fe79c>
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <l.s.r@web.de>
+Subject: Re: [PATCH 1/2] remote: Remove -v/--verbose option from git remote
+ show synopsis
+Date: Thu, 08 Jan 2015 20:17:23 +0100
+Message-ID: <54AED7C3.8010604@web.de>
+References: <1420739863-11602-1-git-send-email-kuleshovmail@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git mailing list <git@vger.kernel.org>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-To: "Kyle J. McKay" <mackyle@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 08 20:11:07 2015
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Alexander Kuleshov <kuleshovmail@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 08 20:18:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y9ITr-0008IF-Nn
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Jan 2015 20:10:52 +0100
+	id 1Y9Iae-0003MH-0U
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Jan 2015 20:17:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755620AbbAHTKr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Jan 2015 14:10:47 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:55891 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754002AbbAHTKq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Jan 2015 14:10:46 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id ADE742E01C;
-	Thu,  8 Jan 2015 14:10:45 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=HWdfvS/NBT/HTKK3YC39lgB6mtE=; b=Y7nZEu
-	D7rd64PFPuytPIRn+Daf3IygoHaYgHIzX02X97ZweSZIXT9YmiwFcoIudvDqvkcH
-	Pc+5zT6wH3U7ImGl/SIgSH3YgoYNd+wk8/63ypR6lCyHdnuYcISLVQ83SGr2B/TV
-	d7HxG5nri0cZFyV5QVs5Dv9BG+DwA/WMnu4gQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=XUHNGuUSd0EGJ/vcpO6eKQuCtBUbXwdV
-	uNocm9jvzxb0W0JLWz2qeQ2r6CwWiIr7T7LzPVX23yhYFv1yMQ5DzqMzERYFZ/nA
-	RA4p4QNRud9IQ9Y6sHX3uoGHD/oBRzpnRXr0JpxdKBNITpYJ+NVKDjW7Q3cE0R0R
-	yr+Y3K3ZbYw=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 918ED2E01B;
-	Thu,  8 Jan 2015 14:10:45 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0992B2E01A;
-	Thu,  8 Jan 2015 14:10:43 -0500 (EST)
-In-Reply-To: <aea96640a01b65776eb0474aaceded5@74d39fa044aa309eaea14b9f57fe79c>
-	(Kyle J. McKay's message of "Thu, 8 Jan 2015 00:46:55 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 0B57CCF2-976A-11E4-9DD0-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1754785AbbAHTRr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Jan 2015 14:17:47 -0500
+Received: from mout.web.de ([212.227.15.3]:60790 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751001AbbAHTRq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Jan 2015 14:17:46 -0500
+Received: from [192.168.178.27] ([79.253.173.145]) by smtp.web.de (mrweb002)
+ with ESMTPSA (Nemesis) id 0M5wkL-1XtxSZ0BqL-00xtSm; Thu, 08 Jan 2015 20:17:42
+ +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <1420739863-11602-1-git-send-email-kuleshovmail@gmail.com>
+X-Provags-ID: V03:K0:mBY2yiMyhK7MOJ8PPmH2P7rJyRUEZX+xATxrEqRaV25Yr6LFMMN
+ cYFrYgzneYxGI4i/Lk0j+eUzDGTyOJLe8/cGIMGc77ZnblNcTvLeE0Qx9DyE7WGYuseXNHK
+ Va2E4Wyop1CANiXfD6/awRI53Y4rK7VZu2pbIvoiNIeZNrtIv2Cc390j9peyZ/hzJR52FsS
+ sSEqZlYuDPCmcyRrVwCuA==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262209>
 
-"Kyle J. McKay" <mackyle@gmail.com> writes:
+Am 08.01.2015 um 18:57 schrieb Alexander Kuleshov:
+> git remote show doesn't use -v/--verbose option
 
-> For now only __GNUC__ is tested which covers both gcc and clang
-> which should result in early detection of any adjacent N_ macros.
+Hmm, but it does?
 
-I didn't check the list of -W options, but if there were a way to
-tell gcc to stick to the C standard in a more strict way than its
-default, wouldn't this patch start causing trouble?
+	$ git version
+	git version 2.2.1
+	$ git remote show
+	origin
+	$ git remote -v show
+	origin  git://git.kernel.org/pub/scm/git/git.git (fetch)
+	origin  git://git.kernel.org/pub/scm/git/git.git (push)
 
-> Although the necessary #ifdef makes the header less elegant,
-> the benefit of avoiding propagation of a translation-marking
-> error to all the translation teams thus creating extra work
-> for them when the error is eventually detected and fixed would
-> seem to outweigh the minor inelegance the #ifdef introduces.
->
-> Signed-off-by: Kyle J. McKay <mackyle@gmail.com>
+Perhaps you meant the following variant?  The changed line documents the 
+one above, though (-v before show).
+
+	$ git remote show -v
+	error: unknown switch `v'
+	usage: git remote show [<options>] <name>
+
+	    -n                    do not query remotes
+
+> Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
 > ---
->  gettext.h | 14 +++++++++++++-
->  1 file changed, 13 insertions(+), 1 deletion(-)
+>   builtin/remote.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> diff --git a/gettext.h b/gettext.h
-> index 7671d09d..80ec29b5 100644
-> --- a/gettext.h
-> +++ b/gettext.h
-> @@ -62,7 +62,19 @@ const char *Q_(const char *msgid, const char *plu, unsigned long n)
->  	return ngettext(msgid, plu, n);
->  }
->  
-> -/* Mark msgid for translation but do not translate it. */
-> +/* Mark msgid for translation but do not translate it.
-> + *
-> + * In order to prevent accidents where two adjacent N_ macros
-> + * are mistakenly used, this macro is defined with parentheses
-> + * when the compiler is known to support parenthesized string
-> + * literal assignments.  This guarantees a compiler error in
-> + * such a case rather than a silent conjoining of the strings
-> + * by the preprocessor which results in translation failures.
-> + */
-> +#ifdef __GNUC__
-> +#define N_(msgid) (msgid)
-> +#else
->  #define N_(msgid) msgid
-> +#endif
->  
->  #endif
+> diff --git a/builtin/remote.c b/builtin/remote.c
+> index 46ecfd9..978c645 100644
+> --- a/builtin/remote.c
+> +++ b/builtin/remote.c
+> @@ -14,7 +14,7 @@ static const char * const builtin_remote_usage[] = {
+>   	N_("git remote rename <old> <new>"),
+>   	N_("git remote remove <name>"),
+>   	N_("git remote set-head <name> (-a | --auto | -d | --delete |<branch>)"),
+> -	N_("git remote [-v | --verbose] show [-n] <name>"),
+> +	N_("git remote show [-n] <name>"),
+>   	N_("git remote prune [-n | --dry-run] <name>"),
+>   	N_("git remote [-v | --verbose] update [-p | --prune] [(<group> | <remote>)...]"),
+>   	N_("git remote set-branches [--add] <name> <branch>..."),
+>
