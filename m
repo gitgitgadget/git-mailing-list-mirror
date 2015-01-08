@@ -1,117 +1,126 @@
-From: Alexander Kuleshov <kuleshovmail@gmail.com>
-Subject: Re: [PATCH 1/2] remote: Remove -v/--verbose option from git remote
- show synopsis
-Date: Fri, 9 Jan 2015 02:32:35 +0600
-Message-ID: <CANCZXo5KT9OZHtJm3HUUncRgaBdY35nsvfGz8z-6WdMQ0ALQyw@mail.gmail.com>
-References: <1420739863-11602-1-git-send-email-kuleshovmail@gmail.com>
-	<54AED7C3.8010604@web.de>
-	<xmqqoaq9do7i.fsf@gitster.dls.corp.google.com>
+From: Marc Finet <m.dreadlock@gmail.com>
+Subject: Re: PATCH/RFC: format-patch: Add format.subjectprefixsep to change
+ separators
+Date: Thu, 8 Jan 2015 22:47:22 +0100
+Message-ID: <20150108214722.GA10014@mlap.lactee>
+References: <1420377686-25608-1-git-send-email-m.dreadlock@gmail.com>
+ <xmqqlhliqq1f.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 08 21:33:50 2015
+X-From: git-owner@vger.kernel.org Thu Jan 08 22:54:24 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y9Jl2-0002md-Jf
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Jan 2015 21:32:40 +0100
+	id 1Y9L1G-00082z-N9
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Jan 2015 22:53:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755644AbbAHUcg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Jan 2015 15:32:36 -0500
-Received: from mail-ob0-f181.google.com ([209.85.214.181]:51844 "EHLO
-	mail-ob0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752116AbbAHUcg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 8 Jan 2015 15:32:36 -0500
-Received: by mail-ob0-f181.google.com with SMTP id gq1so9992164obb.12
-        for <git@vger.kernel.org>; Thu, 08 Jan 2015 12:32:35 -0800 (PST)
+	id S1756442AbbAHVx0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Jan 2015 16:53:26 -0500
+Received: from mail-wi0-f182.google.com ([209.85.212.182]:37927 "EHLO
+	mail-wi0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756338AbbAHVxZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Jan 2015 16:53:25 -0500
+Received: by mail-wi0-f182.google.com with SMTP id h11so6144017wiw.3
+        for <git@vger.kernel.org>; Thu, 08 Jan 2015 13:53:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=wzAFHQhNUxg0oOiGkhRpiVh0UVQb6ButwJmVIw+3QAs=;
-        b=0yjz2gId8N80V9arFBY1eL4qzhUuxzlx1micPinBqLqbTV5RFnAIGxIg+mB0OobsHv
-         /CcKW9u/NPjUEnfhHOqz+BlobCyToUitH7hteiGuYdrr7KnCF4sBYnGUaVzRKY0cFdMZ
-         gUy+uOWKcTwOaDbWH1GdqEmqEbym0VUixUJ5i/TEWbV/ri1opchGEHHpFwp/n5OCyCDC
-         zWT7oa5+jQBmJfCAlBmy6Gpl8YgMOsXWzSGiTsyrqyZF9sfIN025ulVSr1Ir/cGcJta9
-         9XkfzlUh1vdBm5KEQLKXSvJtoX1XOEKwgs5AoizSTlxgRnO3ipZXCEW9lbn4e1cefL8R
-         vlzA==
-X-Received: by 10.202.220.85 with SMTP id t82mr6485149oig.43.1420749155684;
- Thu, 08 Jan 2015 12:32:35 -0800 (PST)
-Received: by 10.182.26.42 with HTTP; Thu, 8 Jan 2015 12:32:35 -0800 (PST)
-In-Reply-To: <xmqqoaq9do7i.fsf@gitster.dls.corp.google.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=D6kZXcv/sFXzRmP8oEdEP1jzmfxD63nok9AK5mUGbig=;
+        b=d4Ib8mkhz36XfWcEqluGqtHqsC341fKj/+tU1n0Ah4wz0E405UhuSBR6d2dsUYD+tU
+         zoEhh3/jxVopXP9MNTGLjH9lFvsRwmO3UCH8tq6ssFW278vKbr0l9vFD+rAD4yzrQEXE
+         hfhYOLTRqL1+kmuUIGiwjUoY/OY8O4Jh3KrmnVyWEgziNDzZVzpEzCfEJoOce0bpJTa2
+         devy/czxzYLKPRGz0nIw4BEWTlSaRUkGqDE/fOBDVxQmNhXauY/33Uc5BHBPImvqfGzb
+         GXBTPXJL0CLu1lcWTDvMxMhTVA7zqMTnjcaCSx88W8gNccERmmOrzEqhbZURW6e2tIhd
+         a5sg==
+X-Received: by 10.194.188.39 with SMTP id fx7mr23268106wjc.113.1420753645594;
+        Thu, 08 Jan 2015 13:47:25 -0800 (PST)
+Received: from mlap.lactee (amg01-2-78-227-45-71.fbx.proxad.net. [78.227.45.71])
+        by mx.google.com with ESMTPSA id dv9sm8110627wib.14.2015.01.08.13.47.24
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 08 Jan 2015 13:47:25 -0800 (PST)
+Received: by mlap.lactee (Postfix, from userid 1000)
+	id 04F0417EA68; Thu,  8 Jan 2015 22:47:22 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <xmqqlhliqq1f.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262223>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262224>
 
-What if move -v/--verbose after commands? Like:
+On Sun, Jan 04, 2015 at 11:55:24AM -0800, Junio C Hamano wrote:
+> Marc Finet <m.dreadlock@gmail.com> writes:
+> 
+> > Some mailing list use "PATCH:" rather than "[PATCH]" to prefix
+> > patches, so introduce a new option to configure:
+> >  - 2 chars that would enclose PATCH (and counters)
+> >  - 1 char that would come just after the PATCH (and counters)
+> > ---
+> > This mail has been sent with:
+> >  git -c format.subjectprefixsep=: send-email --annotate --subject-prefix=PATCH/RFC
+> 
+> A few comments:
+> 
+>  - "Some mailing lists" may want to say "[PATCH v3 #4 of 10]" or
+>    somesuch; as a customization mechanism, the approach this patch
+>    takes falls way short to be useful.  "--subject=<format>" option
+>    where <format> is similar the "log --format" options, e.g.
+> 
+>    --subject="[PATCH% v #%N of %T] %s"
+> 
+>    with format-patch specific set of substitutions (in the above
+>    example, %v stands for patch version, %N patch number and %T
+>    total number of patches in the series) may be a better way to go.
+In fact the log-tree.c::log_write_email_headers() has two cases
+depending on the number of patches to send. So we need either two (or
+three) options or we need to implement (because AFAIK it does not exists
+yet) conditionals. Both seemed to me a little bit overkill here.
+ 
+>  - Do not add configuration variable before you add command line
+>    option.  Add option first and then when option proves useful you
+>    can have the corresponding variable, not the other way around.
+>    Make sure that the comamnd line option overrides configuration
+>    variable while adding the variable in the second step of such a
+>    patch series.
+Ok.
 
-git remote show [-v | --verbose] [-n] <name>
+> Having said all that.
+> 
+> What are these mailing lists and why are they using non-standard
+> convention?  Back when Git was young, we would have added more knobs
+> to adjust the behaviour to existing prevailing convention, but now
+> Git is older than X% of projects that use Git where the number X is
+> a pretty large number.  Perhaps just like they (whichever mailing
+> lists they are) switched out of Subversion or CVS and started using
+> Git to come to the modern world, maybe it is time they switch their
+> convention as well?
+Well, the only mailing-list I saw this behavior is zsh. I did not dig
+into its history to see when this behavior has been adopted. I did not
+see remarks regarding patches sent with [PATCH], but I just wanted to
+adopt the existing style rather than using a new one and thought that
+git was already providing a way to do so, and eventually developed this
+patch.
 
-and etc...?
+So, I do not know what to do now:
+ - stick to [PATCH]
+ - try one of the two first alternatives above (multiple options or
+   implement conditionals)
+ - re-work this patch by implementing the command line option, creating
+   an other patch to use a configuration option, and hope it would be
+   accepted because it makes sense to some people. The only advantage of
+   using PATCH: rather than [PATCH] is that 1 char is saved :|. Making
+   the subject less 'aggressive' is a feature but not necessarily an
+   advantage.
 
-2015-01-09 2:14 GMT+06:00 Junio C Hamano <gitster@pobox.com>:
-> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
->
->> Am 08.01.2015 um 18:57 schrieb Alexander Kuleshov:
->>> git remote show doesn't use -v/--verbose option
->>
->> Hmm, but it does?
->>
->>       $ git version
->>       git version 2.2.1
->>       $ git remote show
->>       origin
->>       $ git remote -v show
->>       origin  git://git.kernel.org/pub/scm/git/git.git (fetch)
->>       origin  git://git.kernel.org/pub/scm/git/git.git (push)
->>
->> Perhaps you meant the following variant?  The changed line documents
->> the one above, though (-v before show).
->>
->>       $ git remote show -v
->>       error: unknown switch `v'
->>       usage: git remote show [<options>] <name>
->>
->>           -n                    do not query remotes
->
-> Ahh, I misread the patch.  Thanks.
->
->>> diff --git a/builtin/remote.c b/builtin/remote.c
->>> index 46ecfd9..978c645 100644
->>> --- a/builtin/remote.c
->>> +++ b/builtin/remote.c
->>> @@ -14,7 +14,7 @@ static const char * const builtin_remote_usage[] =
-=3D {
->>>      N_("git remote rename <old> <new>"),
->>>      N_("git remote remove <name>"),
->>>      N_("git remote set-head <name> (-a | --auto | -d | --delete |<=
-branch>)"),
->>> -    N_("git remote [-v | --verbose] show [-n] <name>"),
->>> +    N_("git remote show [-n] <name>"),
->>>      N_("git remote prune [-n | --dry-run] <name>"),
->>>      N_("git remote [-v | --verbose] update [-p | --prune] [(<group=
-> | <remote>)...]"),
->>>      N_("git remote set-branches [--add] <name> <branch>..."),
->>>
->
-> I however have a bit larger question.  Does it make sense to have
-> [-v/--verbose] in front of some but not all of the subcommands?
->
-> For example, the above snippet gives me an impression that
->
->     $ git remote -v prune -n origin
->
-> should not work, but that does not seem to be the case.
+Failing to see some interest for solutions 2 or 3, I would fall back to
+solution 1 :).
 
+Thanks,
 
-
---=20
-_________________________
-0xAX
+Marc.
