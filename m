@@ -1,132 +1,200 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCHv12 02/10] receive-pack.c: die instead of error in case of possible future bug
-Date: Wed,  7 Jan 2015 19:23:16 -0800
-Message-ID: <1420687404-13997-3-git-send-email-sbeller@google.com>
+Subject: [PATCHv12 01/10] receive-pack.c: shorten the execute_commands loop over all commands
+Date: Wed,  7 Jan 2015 19:23:15 -0800
+Message-ID: <1420687404-13997-2-git-send-email-sbeller@google.com>
 References: <1420687404-13997-1-git-send-email-sbeller@google.com>
 Cc: git@vger.kernel.org, pclouds@gmail.com, sunshine@sunshineco.com,
 	mhagger@alum.mit.edu, ronniesahlberg@gmail.com, jrnieder@gmail.com,
 	Stefan Beller <sbeller@google.com>
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Jan 08 04:24:40 2015
+X-From: git-owner@vger.kernel.org Thu Jan 08 04:24:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y93hS-00062p-Pa
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Jan 2015 04:23:55 +0100
+	id 1Y93hv-0000cP-NK
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Jan 2015 04:24:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755630AbbAHDXs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Jan 2015 22:23:48 -0500
-Received: from mail-ig0-f173.google.com ([209.85.213.173]:51423 "EHLO
-	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753067AbbAHDXq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Jan 2015 22:23:46 -0500
-Received: by mail-ig0-f173.google.com with SMTP id r2so882189igi.0
+	id S1754275AbbAHDXr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Jan 2015 22:23:47 -0500
+Received: from mail-ie0-f178.google.com ([209.85.223.178]:51012 "EHLO
+	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752640AbbAHDXp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Jan 2015 22:23:45 -0500
+Received: by mail-ie0-f178.google.com with SMTP id vy18so7442631iec.9
         for <git@vger.kernel.org>; Wed, 07 Jan 2015 19:23:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=MmX/RR0UYSiC6s69PHMyVCo2i3yqs4DhBBgbZlPzfEw=;
-        b=Gg1l/hqieNHRMDn3bGpXZGJR8LU77VtkIyGEIPXfgMD6MK3wgkP3gbZ9QDWC6X8jUC
-         GTKmQpQnhNjEwD1iRbccw8P3YLgkiNFIgrL/c/EE09uY5kr1qdxqUOXkSp4a35kBvmMN
-         tgaCjlAkwarWZy5eEN4P7Ga+BDpI5HKY6YgaXIx+CeOYuPAu0IZlZKzVFxMFudS3pUuw
-         L1pxB4n1KxVUzodnoOR1o8lCW4AlVTxXc9Pi9OvP7h2Jd7rPn6SzaBzsZ86NSZJub1lt
-         lGftwNg5FQcEmYTnZ70J6AJ+ZFuRpOy050awWYIGZS99CzHkLZSkK2UN6ubfKfBVZ+wo
-         c8Uw==
+        bh=Ddy4KqRdQtP7UoBWSzeXhtV8oZ60ll6I3dI4m1Xe4tQ=;
+        b=ETXVw8YbCt2UCOBodHdeVEBbsLhmtRAplwD3QVrEupsxOiovPYKuSm8QK6AMFP6G7u
+         klxgTPy14eXuGg0CBQfTOOEQ+zj9cR5O1UFqeioX7Cz20OuKIbwAKDxqb7GmIjGWwGiV
+         BAugc0/kMst16bvzYovznsMYoyLmCGouXHVgSGcmG8ISRXfq+uRsQ5TTgsTEJFrHlgnZ
+         ubMrkDWJjjpZs8toTGBggo9+1Ox/l0zAzxIsrz8EOHH0uJS6QJkUcuouwaJSZkl59plw
+         VPDyByQypLKNH3OmnXSPAHhMVlBZrr4j8ZPfgxJUirC0bJ/0pnvdGt5LonZqd6BPAOOQ
+         9ZRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=MmX/RR0UYSiC6s69PHMyVCo2i3yqs4DhBBgbZlPzfEw=;
-        b=FJnOgpLlO7NYvIp7abirm0R7jW4gfFc6AZjg6tGEJNG6+nb5k3pelP9YHdyCiMwQDQ
-         AI+rbhBqijocLsUQx+QEzGx3S2csqecqnhrJ25bsZoqQKrNvR3s1hZLamm9nYv+AjxOc
-         R+1x47dgg4e/eVlXMxkuS5ppTgcOOcbAWACDOtzzhCDk/Od+Y5CSk6fSf6zeNQbLxByN
-         RE9vO7Qg27oG+nuwvE9RfextTSHczUXxRTrVleE6OqWzkme5O2QRaS+O2rQfsbKp1Gbd
-         JpkUd+A0IK8noHOQ7CEe5sRipsuF/EsO2PIqFTQ0xWyh0OehJCE8rkkneGGxbipnTYxV
-         wfxg==
-X-Gm-Message-State: ALoCoQnwE1x8a2tCv87hazl8juMntK6Uzf86iE8Dc36qRcdl7aVqGHpqU5d5jx6tHFCvEnDD8Ah4
-X-Received: by 10.107.37.132 with SMTP id l126mr6408844iol.63.1420687425636;
-        Wed, 07 Jan 2015 19:23:45 -0800 (PST)
+        bh=Ddy4KqRdQtP7UoBWSzeXhtV8oZ60ll6I3dI4m1Xe4tQ=;
+        b=W7SYwyCouOfnzozHQEmNAEkoAxOQPE7+jqZr8RoNXZnXdL7eA4fAFJ73Kfbwc50NmB
+         cRwXzFZgBMCLiJnN5D4bOKXMYRUwHAUJYW9pTaDKRslAigbMnt6Ysbj7YsIExpiwvSWV
+         Ru14KXO130Fm9TuCfAwGvbXsLY7k9sw1255TRTB2FL//td9bbgcPmAEaZsl8gccc7rqh
+         DTsBigeSYs3D4Ur0Q9rABpOizdt3u8xfjWa2vROrmG/VeFMl7icimEAveAVo/a5R2o+k
+         zvvzrswv/PiGKRe2mIDRDlrtVNDkTLo9yAtH17Qmj8kOaW4jVv5CjChCzWsYBaOEwWNG
+         eUIQ==
+X-Gm-Message-State: ALoCoQkE5lvgWZjMcNu2Pr7+qfnPCNeS0UmWJdtig/pT06r58kJOsoO/bxI1wBttWgQUmiHlbjP3
+X-Received: by 10.42.130.198 with SMTP id w6mr6121623ics.97.1420687424396;
+        Wed, 07 Jan 2015 19:23:44 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b00:948f:12c6:eb26:9b9c])
-        by mx.google.com with ESMTPSA id mi3sm7456259igb.13.2015.01.07.19.23.45
+        by mx.google.com with ESMTPSA id e3sm7452348igg.16.2015.01.07.19.23.43
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 07 Jan 2015 19:23:45 -0800 (PST)
+        Wed, 07 Jan 2015 19:23:43 -0800 (PST)
 X-Mailer: git-send-email 2.2.1.62.g3f15098
 In-Reply-To: <1420687404-13997-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262177>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262178>
 
-Discussion on the previous patch revealed we rather want to err on the
-safe side. To do so we need to stop receive-pack in case of the possible
-future bug when connectivity is not checked on a shallow push.
+Make the main "execute_commands" loop in receive-pack easier to read
+by splitting out some steps into helper functions. The new helper
+'should_process_cmd' checks if a ref update is unnecessary, whether
+due to an error having occurred or for another reason. The helper
+'warn_if_skipped_connectivity_check' warns if we have forgotten to
+run a connectivity check on a ref which is shallow for the client
+which would be a bug.
 
-Also while touching that code we considered that removing the reported
-refs may be harmful in some situations. Sound the message more like a
-"This Cannot Happen, Please Investigate!" instead of giving advice to
-remove refs.
+This will help us to duplicate less code in a later patch when we make
+a second copy of the "execute_commands" loop.
 
-Suggested-by: Jonathan Nieder <jrnieder@gmail.com>
+No functional change intended.
+
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
 
 Notes:
     v12:
-    * no advice in case we die.
-    
+    * no changes
     v11:
-    * only die at the end so the loop works out for all refs.
-    * Remove the advice to delete refs.
+    * rename assure_connectivity_checked to warn_if_skipped_connectivity_check
     
-    > If the message says
-    >        fatal: BUG: connectivity check skipped???
-    > then it has exactly the right amount of information to tell me what to
-    > do.  Now I have
-    > - a short string to grep for in the source code (or on the web) to
-    >    find out what happened
+    >> This is why I choose the word assure.
+    >If this patch depends on the next one, would it make sense to put them
+    >in the opposite order?
     
-    And do a git blame to see previous versions?
+    With the next patch applied which dies if the assumption doesn't hold,
+    assure/assume sounds to me as if it describes the siuation well.
     
-    I am not so sure of this patch any more as it actually stops people
-    doing work if they want to do so. (They may deliberately choose to
-    ignore the BUG:... message, because of a deadline in 2 hours.)
+    > My personal preference would be to refactor the preceding code to make
+    > the check unnecessary.
     
-    So I do think this helps on getting people to report the bug in the
-    future if it arises faster, but on the other hand if we assume the
-    faulty hardware scenario and the deadline we actually stop people
-    from getting their desired work done.
+    The way I understand it, the shallow case is spread out all over the place
+    not by choise but because it doesn't work better. So the original author
+    (Duy) was wise enough to put checks in place because knowing it is fragile
+    and may break in the future?
+    This series doesn't intend to refactor the shallow case.
     
-    This patch doesn't actually relate to the topic of the series
-    (atomic pushes), but is a cleanup-as-we-go patch. If we need to
-    have further discussion on this, I'd rather want to delay this patch
-    and have a follow up on top of the atomic series.
-    
-    Thanks,
-    Stefan
+    So I picked up warn_if_skipped_connectivity_check as I'm ok with that.
     
     v10:
-    * new in v10.
+    * rename check_shallow_bugs to assure_connectivity_checked.
+    * reword commit message.
+    
+    v9:
+    * simplified should_process_cmd to be a one liner
+    * check_shallow_bugs doesn't check of shallow_update being set, rather
+      the function is just called if that option is set.
+    
+    v8: no change
+    
+    v7:
+     new in v7 as in v7 I'd split up the previous
+     [PATCH 4/7] receive-pack.c: receive-pack.c: use a single ref_transaction for atomic pushes
+     as suggested by Eric.
+    
+     This is pretty much
+    > patch 1: Factor out code into helper functions which will be needed by
+    > the upcoming atomic and non-atomic worker functions. Example helpers:
+    > 'cmd->error_string' and cmd->skip_update' check; and the
+    > 'si->shallow_ref[cmd->index]' check and handling.
 
- builtin/receive-pack.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ builtin/receive-pack.c | 43 +++++++++++++++++++++++++++----------------
+ 1 file changed, 27 insertions(+), 16 deletions(-)
 
 diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 2ebaf66..3bdb158 100644
+index 32fc540..2ebaf66 100644
 --- a/builtin/receive-pack.c
 +++ b/builtin/receive-pack.c
-@@ -1061,9 +1061,7 @@ static void warn_if_skipped_connectivity_check(struct command *commands,
- 		}
+@@ -1042,11 +1042,34 @@ static void reject_updates_to_hidden(struct command *commands)
  	}
- 	if (!checked_connectivity)
+ }
+ 
++static int should_process_cmd(struct command *cmd)
++{
++	return !cmd->error_string && !cmd->skip_update;
++}
++
++static void warn_if_skipped_connectivity_check(struct command *commands,
++					       struct shallow_info *si)
++{
++	struct command *cmd;
++	int checked_connectivity = 1;
++
++	for (cmd = commands; cmd; cmd = cmd->next) {
++		if (should_process_cmd(cmd) && si->shallow_ref[cmd->index]) {
++			error("BUG: connectivity check has not been run on ref %s",
++			      cmd->ref_name);
++			checked_connectivity = 0;
++		}
++	}
++	if (!checked_connectivity)
++		error("BUG: run 'git fsck' for safety.\n"
++		      "If there are errors, try to remove "
++		      "the reported refs above");
++}
++
+ static void execute_commands(struct command *commands,
+ 			     const char *unpacker_error,
+ 			     struct shallow_info *si)
+ {
+-	int checked_connectivity;
+ 	struct command *cmd;
+ 	unsigned char sha1[20];
+ 	struct iterate_data data;
+@@ -1077,27 +1100,15 @@ static void execute_commands(struct command *commands,
+ 	free(head_name_to_free);
+ 	head_name = head_name_to_free = resolve_refdup("HEAD", 0, sha1, NULL);
+ 
+-	checked_connectivity = 1;
+ 	for (cmd = commands; cmd; cmd = cmd->next) {
+-		if (cmd->error_string)
+-			continue;
+-
+-		if (cmd->skip_update)
++		if (!should_process_cmd(cmd))
+ 			continue;
+ 
+ 		cmd->error_string = update(cmd, si);
+-		if (shallow_update && !cmd->error_string &&
+-		    si->shallow_ref[cmd->index]) {
+-			error("BUG: connectivity check has not been run on ref %s",
+-			      cmd->ref_name);
+-			checked_connectivity = 0;
+-		}
+ 	}
+ 
+-	if (shallow_update && !checked_connectivity)
 -		error("BUG: run 'git fsck' for safety.\n"
 -		      "If there are errors, try to remove "
 -		      "the reported refs above");
-+		die("BUG: connectivity check skipped???");
++	if (shallow_update)
++		warn_if_skipped_connectivity_check(commands, si);
  }
  
- static void execute_commands(struct command *commands,
+ static struct command **queue_command(struct command **tail,
 -- 
 2.2.1.62.g3f15098
