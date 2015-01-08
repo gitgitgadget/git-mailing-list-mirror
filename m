@@ -1,68 +1,69 @@
 From: Alexander Kuleshov <kuleshovmail@gmail.com>
-Subject: [PATCH 1/2] remote: Remove -v/--verbose option from git remote show synopsis
-Date: Thu,  8 Jan 2015 23:57:43 +0600
-Message-ID: <1420739863-11602-1-git-send-email-kuleshovmail@gmail.com>
+Subject: [PATCH] show-branch: Indentation for show-branch usage
+Date: Fri,  9 Jan 2015 00:08:36 +0600
+Message-ID: <1420740516-20836-1-git-send-email-kuleshovmail@gmail.com>
 Cc: git@vger.kernel.org, Alexander Kuleshov <kuleshovmail@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 08 18:58:56 2015
+X-From: git-owner@vger.kernel.org Thu Jan 08 19:15:05 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y9HLR-0000nl-HH
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Jan 2015 18:58:05 +0100
+	id 1Y9Hap-0000pj-60
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Jan 2015 19:13:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932436AbbAHR6A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Jan 2015 12:58:00 -0500
-Received: from mail-lb0-f182.google.com ([209.85.217.182]:57164 "EHLO
-	mail-lb0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932432AbbAHR56 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Jan 2015 12:57:58 -0500
-Received: by mail-lb0-f182.google.com with SMTP id u10so4190699lbd.13
-        for <git@vger.kernel.org>; Thu, 08 Jan 2015 09:57:57 -0800 (PST)
+	id S1756810AbbAHSNy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Jan 2015 13:13:54 -0500
+Received: from mail-lb0-f175.google.com ([209.85.217.175]:33450 "EHLO
+	mail-lb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755225AbbAHSNx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Jan 2015 13:13:53 -0500
+Received: by mail-lb0-f175.google.com with SMTP id z11so4301307lbi.6
+        for <git@vger.kernel.org>; Thu, 08 Jan 2015 10:13:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id;
-        bh=s/7Y8Tcz2a5vZ8gWOIZSBP6rese6MDzHp2TETMuPXQA=;
-        b=D+0eBO0Q3ygu7MUn0fGnRLfy17vQ69Xjk7ci11ccXpoogBDvsaNRIofHVJorvsoAqg
-         qWwo2mlA7GuUSzh9eApovnfCAb23KjCAnRraTwENQeQfN+0fuUW7nxoxScXEApvY/TSt
-         ROxwSMJYqhtn/bgJvVAQWTK3TL4Fa+GwMUhKdhRd0Vlx04b7yQWrDBYxkqd459phbM3H
-         QkI3qGHMJtIul97zr2KZuguE8WGgO2JpdC6E+aSp0tUyol7yJIuMh+jjtWzSFs79BAMk
-         W+977cTdZrepePJxb2ZGQmAnF0z7WJKckC9PDqeCId5gRbZEHUu5ntQdpzrqepW7SmWm
-         A2VQ==
-X-Received: by 10.112.8.69 with SMTP id p5mr15939996lba.97.1420739877061;
-        Thu, 08 Jan 2015 09:57:57 -0800 (PST)
+        bh=YPcyxlxMtXFI4QMfmtQlCuRcjvbavAscH1p3/SusRNg=;
+        b=DFat2Qdk97pLSma+0JYhdPK144xLmGSD0Kwlcc7DXicdff4AeXn2b0uFT8jqy4tywF
+         Qsvl/TE9AG2D0PdIkq8GULvo1pMMZV8ItBzCuMYdhchihll30FY+ctCGKHPKbFUTi8Kn
+         nHFEKmRhNT84pj+lZQWzsLY3wiVwLd8QcCP1uorC//RjNFptILXEVrGgo7hZgmtqRFRJ
+         zg2Xtn6eIKShw7Gp2YewHjNxJnDlJRtkfEPOU5vKEPC52lnV2dhJN8oH8O85wQLEh+em
+         +q2/k2a6N0Yz1yCSDFDTMTKMmZmY55RBQAeso4WpK/FtXXa561zfe9iU8uLJXDQOcEbB
+         CXkw==
+X-Received: by 10.112.203.196 with SMTP id ks4mr15782225lbc.39.1420740522040;
+        Thu, 08 Jan 2015 10:08:42 -0800 (PST)
 Received: from localhost.localdomain ([95.59.128.28])
-        by mx.google.com with ESMTPSA id vl1sm1291168lbb.21.2015.01.08.09.57.54
+        by mx.google.com with ESMTPSA id j19sm1296971lbl.23.2015.01.08.10.08.39
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 08 Jan 2015 09:57:56 -0800 (PST)
-X-Mailer: git-send-email 2.2.1.364.g47473d1.dirty
+        Thu, 08 Jan 2015 10:08:41 -0800 (PST)
+X-Mailer: git-send-email 2.2.1.268.g1e6f5b2.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262203>
-
-git remote show doesn't use -v/--verbose option
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262204>
 
 Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
 ---
- builtin/remote.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ builtin/show-branch.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/remote.c b/builtin/remote.c
-index 46ecfd9..978c645 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -14,7 +14,7 @@ static const char * const builtin_remote_usage[] = {
- 	N_("git remote rename <old> <new>"),
- 	N_("git remote remove <name>"),
- 	N_("git remote set-head <name> (-a | --auto | -d | --delete |<branch>)"),
--	N_("git remote [-v | --verbose] show [-n] <name>"),
-+	N_("git remote show [-n] <name>"),
- 	N_("git remote prune [-n | --dry-run] <name>"),
- 	N_("git remote [-v | --verbose] update [-p | --prune] [(<group> | <remote>)...]"),
- 	N_("git remote set-branches [--add] <name> <branch>..."),
+diff --git a/builtin/show-branch.c b/builtin/show-branch.c
+index 270e39c..2e60107 100644
+--- a/builtin/show-branch.c
++++ b/builtin/show-branch.c
+@@ -6,7 +6,10 @@
+ #include "parse-options.h"
+ 
+ static const char* show_branch_usage[] = {
+-    N_("git show-branch [-a|--all] [-r|--remotes] [--topo-order | --date-order] [--current] [--color[=<when>] | --no-color] [--sparse] [--more=<n> | --list | --independent | --merge-base] [--no-name | --sha1-name] [--topics] [(<rev> | <glob>)...]"),
++    N_("git show-branch [-a|--all] [-r|--remotes] [--topo-order | --date-order]\n\
++                       [--current] [--color[=<when>] | --no-color] [--sparse]\n\
++                       [--more=<n> | --list | --independent | --merge-base]\n\
++                       [--no-name | --sha1-name] [--topics] [(<rev> | <glob>)...]"),
+     N_("git show-branch (-g|--reflog)[=<n>[,<base>]] [--list] [<ref>]"),
+     NULL
+ };
 -- 
-2.2.1.364.g47473d1.dirty
+2.2.1.268.g1e6f5b2.dirty
