@@ -1,73 +1,67 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 2/2] t/t3308-notes-merge.sh: succeed with relaxed
- notes refs
-Date: Thu, 8 Jan 2015 05:31:58 -0500
-Message-ID: <20150108103158.GB4806@peff.net>
-References: <d4509363c8f670483dacdd2a5070f5a@74d39fa044aa309eaea14b9f57fe79c>
- <e514c72c481c66f9808f1dd09117a16@74d39fa044aa309eaea14b9f57fe79c>
- <xmqq8uhgqkge.fsf@gitster.dls.corp.google.com>
- <20150107011958.GA3536@peff.net>
- <xmqqiogilgr5.fsf@gitster.dls.corp.google.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Probably a bug with "~" symbol in filenames on Windows 7 x64 in
+ git 1.9.5
+Date: Thu, 8 Jan 2015 11:40:27 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1501081140070.21312@s15462909.onlinehome-server.info>
+References: <CADb7K9rELHWgy_NYJWrSr9gZn7pcMvETv93d0j+u2fXinj5iTg@mail.gmail.com> <CAPc5daVddkaMkx=43nCeQKbbkrV6nExOqvEBJNyugzDQB2n6kQ@mail.gmail.com> <alpine.DEB.1.00.1501081100570.21312@s15462909.onlinehome-server.info> <20150108102815.GA4806@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: "Kyle J. McKay" <mackyle@gmail.com>,
-	Git mailing list <git@vger.kernel.org>,
-	Scott Chacon <schacon@gmail.com>,
-	Johan Herland <johan@herland.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 08 11:33:57 2015
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Dmitry Bykov <pvrt74@gmail.com>, msysgit@googlegroups.com
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jan 08 11:42:17 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y9ANr-0007N0-0t
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Jan 2015 11:32:07 +0100
+	id 1Y9AWB-0002PL-Pd
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Jan 2015 11:40:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755830AbbAHKcB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Jan 2015 05:32:01 -0500
-Received: from cloud.peff.net ([50.56.180.127]:60314 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753100AbbAHKcA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Jan 2015 05:32:00 -0500
-Received: (qmail 22395 invoked by uid 102); 8 Jan 2015 10:32:01 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 08 Jan 2015 04:32:01 -0600
-Received: (qmail 26988 invoked by uid 107); 8 Jan 2015 10:32:18 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 08 Jan 2015 05:32:18 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 08 Jan 2015 05:31:58 -0500
-Content-Disposition: inline
-In-Reply-To: <xmqqiogilgr5.fsf@gitster.dls.corp.google.com>
+	id S1756202AbbAHKkj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Jan 2015 05:40:39 -0500
+Received: from mout.gmx.net ([212.227.15.19]:52824 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754041AbbAHKki (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Jan 2015 05:40:38 -0500
+Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
+ mail.gmx.com (mrgmx003) with ESMTPSA (Nemesis) id 0MRoRF-1YG0A92BQ1-00StqH;
+ Thu, 08 Jan 2015 11:40:28 +0100
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <20150108102815.GA4806@peff.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Provags-ID: V03:K0:1azCycd6UMDxR5DZDx6O+MbDdN7b4aetE27K0qsQ+h2PiGwYhLf
+ jkLXybbFMFdi/1tWLyWpfmllXEjw2g52tXbWLE9CwZI2bDAu6NZsjBuKjV+jflRX/ha+yW9
+ ol+3ipEEvcxnubUsqTCqqUQkTdu3PbnqCkBHD02mdokms1FI46OqoCyIEK0TvOq5fXqSzZx
+ PvIeIRbHyB86HabdIaAHw==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262190>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262191>
 
-On Wed, Jan 07, 2015 at 08:03:58AM -0800, Junio C Hamano wrote:
+Hi Peff,
 
-> > But we are talking about
-> > somebody who is already fully-qualifying a ref (and anything unqualified
-> > continues to get looked up under refs/notes).
-> 
-> That (specifically 'merge') is not my real worry.  It's the other
-> way around, actually.
-> 
-> Because expand_notes_ref() makes sure that any given notes ref is
-> prefixed appropriately to start with refs/notes/,
-> 
->     git notes --ref=refs/heads/master add ...blah...
->     git notes --ref=refs/tag/v1.0 add ...blah...
-> 
-> would be a sensible way when somebody wants to keep a forest of
-> notes refs, one per real ref.  Wouldn't they have already been
-> trained to spell "refs/heads/master" when they want to refer to
-> refs/notes/refs/heads/master because of this?
+On Thu, 8 Jan 2015, Jeff King wrote:
 
-Thanks, that is a more interesting case, and I agree that moving to
-allowing fully-qualified refs would technically be a regression.  I'm
-still slightly doubtful that this is something people do in practice,
-but I guess we have no way to know for sure.
+> On Thu, Jan 08, 2015 at 11:06:18AM +0100, Johannes Schindelin wrote:
+> 
+> > ICON~714.PNG is a valid short name for a long name (such as
+> > 'icon.background.png') because it fits the shortening scheme (8.3 format,
+> > the base name ends in ~<n>). As this can clash with a validly shortened
+> > long name, Git for Windows refuses to check out such paths by default.
+> > 
+> > If you want the old -- unsafe -- behavior back, just set your
+> > core.protectNTFS to false (this means that you agree that the incurred
+> > problems are your own responsibility and cannot be blamed on anybody else
+> > ;-))
+> 
+> I wonder if it is worth having a "git-only" mode for core.protectNTFS.
+> Turning it off entirely would make him susceptible to GIT~1 attacks.
 
--Peff
+That is a good idea!
+
+Ciao,
+Dscho
