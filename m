@@ -1,185 +1,99 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] doc: core.ignoreStat update, and clarify the --assume-unchanged effect
-Date: Fri, 09 Jan 2015 11:29:33 -0800
-Message-ID: <xmqqbnm7da76.fsf@gitster.dls.corp.google.com>
-References: <1420496573-3260-1-git-send-email-philipoakley@iee.org>
-	<xmqqbnmajwd9.fsf@gitster.dls.corp.google.com>
-	<1ED88DC1DCC2463782B4F4167DC85D5D@PhilipOakley>
+Subject: Re: [PATCH] git.c: remove unused includes
+Date: Fri, 09 Jan 2015 11:52:01 -0800
+Message-ID: <xmqq7fwvd95q.fsf@gitster.dls.corp.google.com>
+References: <1420798353-12316-1-git-send-email-kuleshovmail@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "GitList" <git@vger.kernel.org>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	=?utf-8?Q?Nguy=3Fn_Th=C3=A1i_Ng=3Fc_Duy?= <pclouds@gmail.com>
-To: "Philip Oakley" <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Fri Jan 09 20:29:47 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Alexander Kuleshov <kuleshovmail@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 09 20:52:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y9fFi-0000OA-L8
-	for gcvg-git-2@plane.gmane.org; Fri, 09 Jan 2015 20:29:47 +0100
+	id 1Y9fbT-0005TE-TR
+	for gcvg-git-2@plane.gmane.org; Fri, 09 Jan 2015 20:52:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752016AbbAIT3l convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Jan 2015 14:29:41 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:56984 "EHLO
+	id S1751788AbbAITwL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Jan 2015 14:52:11 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:57434 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751622AbbAIT3l convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 Jan 2015 14:29:41 -0500
+	with ESMTP id S1751678AbbAITwJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Jan 2015 14:52:09 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 28A0C2E641;
-	Fri,  9 Jan 2015 14:29:35 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D20FF2EA6F;
+	Fri,  9 Jan 2015 14:52:08 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=2Z0uLCifWono
-	lv30BGbzpQ9Q+Ns=; b=avsUJILmd+gac3ObNQgs2QbRVshNDMutaaGCotjPXq2Y
-	deaIhyfxx6kj9Ee56tFYD1/El0WVpAla09jSSUZ1YwiW9yapLZAJ2Jir/gISV28g
-	/Tfs7hgykb2NotmN9Zw0rYypFKqq0sJvJ7WPtOX+UUABsktvc4PTj7iVOwz+MKQ=
+	:content-type; s=sasl; bh=A7ZuHss+MbvmRzGDn7ZEqrxTpwQ=; b=Q0x7SJ
+	zCjlDKuo7HrmDeXJbBqubqHVX2iUBj4NT38Ld7WrkjfN7qVP+PgDIKVracwaVBo9
+	8NxWQ+i7Ku1cysiEmAF1JxHTpNGVwKohUjBhspDSZGsiITgWlsSE2n1l6mL72tlj
+	ktm8FLm5aySG6fOQT6xzfkCboOTxh07pB/maU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=B88J2m
-	tU1TsjTvaA0pQXtACHSSfT7pJXws00lViINBh4GNvkDgk+H/bPNqGZX3MV9Z4npO
-	w6BGlb0AMWvWbsSghddnjyuN/7HTLYWOdsJR25RoRQ8cIFizObUr+10KxIdLnert
-	RcGBbMQCL6cXr5P6siCWt8NOhwtb+pmIENNnA=
+	:content-type; q=dns; s=sasl; b=rkYXwJvG17V+bZMthyLmLOn9Zhd6cpjZ
+	PYmVW36eDKqPQUa615ShWZPOTd8igzoshhvAGA7zDae3GWP2eT6dnGhNdmJW+c11
+	A+sJwqRhdt1HZCYHsKvLV2aYPTAyUDlzdS+KtgsPRoXPdMBEKe6NjvbRduIs/Hza
+	8+ujJcWoHM4=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1CD622E640;
-	Fri,  9 Jan 2015 14:29:35 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C91C72EA6E;
+	Fri,  9 Jan 2015 14:52:08 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 82BC32E63E;
-	Fri,  9 Jan 2015 14:29:34 -0500 (EST)
-In-Reply-To: <1ED88DC1DCC2463782B4F4167DC85D5D@PhilipOakley> (Philip Oakley's
-	message of "Fri, 9 Jan 2015 08:48:30 -0000")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 29A352EA6A;
+	Fri,  9 Jan 2015 14:52:03 -0500 (EST)
+In-Reply-To: <1420798353-12316-1-git-send-email-kuleshovmail@gmail.com>
+	(Alexander Kuleshov's message of "Fri, 9 Jan 2015 16:12:33 +0600")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: D7945A12-9835-11E4-8DCA-42529F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: FB6D4E6E-9838-11E4-81A9-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262242>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262243>
 
-"Philip Oakley" <philipoakley@iee.org> writes:
+Alexander Kuleshov <kuleshovmail@gmail.com> writes:
 
->>> diff --git a/Documentation/config.txt b/Documentation/config.txt
->>> index 52eeadd..fe179d0 100644
->>> --- a/Documentation/config.txt
->>> +++ b/Documentation/config.txt
->>> @@ -375,15 +375,18 @@ This is useful for excluding servers inside a
->>> firewall from
->>>  proxy use, while defaulting to a common proxy for external domains=
-=2E
->>>
->>>  core.ignoreStat::
->>> + If true, Git will avoid using lstat() calls to detect if files ha=
-ve
->>> + changed. Git will set the "assume-unchanged" bit for those
->>> tracked files
->>> + which it has updated identically in both the index and working
->>> tree.
->>
->> I wonder if this is better stated in two seemingly independent
->> sentences (like your version), or "... if files have changed by
->> setting the assume-unchanged bit ...." to clarify where the setting
->> of the bits to these files come into the big picture, but it is
->> minor.  Either way, I think it is a lot easier to understand than
->> what we have in 'master'.
+> * <cache.h> and <commit.h> already included in <builtin.h>
 >
-> I had considered a number of different wordings, and wanted to keep
-> the tricky parts separate to ease cognition.
+> * <quote.h> was appeared in (6035d6aa GIT_TRACE: show which
+> built-in/external commands are executed  25 Jun 2006) and sq_quote_print
+> was removed at (82aae5c quote: remove sq_quote_print() Jul 30 2013)
 
-Hmph, but wouldn't the result get more confusing, by stating two
-"tricky" things in separate sentences without giving any clue to
-guess how these two trickies are related?  That is why I suggested
-to say the same two things in a way that clarifies that "avoid using
-lstat(2)" is the effect and "setting the assume-unchanged bit" is
-the underlying implementation detail to cause that effect, i.e.
+That's not 6035d6aa, though.
 
-	If true, Git will avoid using lstat(2) calls to detect if
-	files have changed by setting "assume-unchanged" bit for
-	these tracked paths that Git has updated identically in both
-	the index and in the working tree.
+We started to include "quote.h" at 575ba9d6 (GIT_TRACE: show which
+built-in/external commands are executed, 2006-06-25) that wanted to
+use sq_quote_print().
 
-> On a separte note, this patch was a development from the problem
-> noticed by S=C3=A9rgio of the different actions of 'git commit .'and =
-'git
-> commit -a' when --assume-unchanged was used. Did you have any thought=
-s
-> regarding Duy's patch (05 December 2014 10:56) to his code given in
-> $gmane/260865.
+When 6ce4e61f (Trace into a file or an open fd and refactor tracing
+code., 2006-09-02) introduced trace.c API, the calls this file makes
+to sq_quote_print() were replaced by calls to trace_argv_printf()
+that are declared in "cache.h", which this file already includes.
+We should have stopped including "quote.h" in that commit, but
+forgot to do so.
+
 >
-> I wasn't sure if it had just been missed, or if there was some other
-> issue?
-
-I thought the reason why we are discussing this documentation
-clean-up (specifically, clarifying that assume-unchanged is a
-promise the user makes not to modify the paths marked as such and is
-not about telling Git to ignore changes to tracked paths), was
-because we agreed that such a change is a wrong thing to do.
-
-It is wrong for at least two reasons.
-
- - The "I promise not to modify them, so please omit lstat(2)
-   assuming that I keep that promise" is a performance thing---we
-   shouldn't add more code to cater to people who do not keep that
-   promise.
-
- - Adding one more case of "Git will hide changes to tracked paths
-   that you promised not to change" gives more chance to confuse
-   users into an incorrect understanding of what assume-unchanged
-   bit is about.  By not applying $gmane/260865, we keep one more
-   way for the users to notice that the bit is *not* a mechanism
-   to hide changes to tracked paths.
-
-
->>> +When files are modified outside of Git, the user will need to stag=
-e
->>> +the modified files explicitly (e.g. see 'Examples' section in
->>> +linkgit:git-update-index[1]).
->>> +Git will not normally detect changes to those files.
->>> ++
->>> +This is useful on systems where lstat() calls are very slow, such =
-as
->>> +CIFS/Microsoft Windows.
->>> +False by default.
->>
->> I think you are trying to make the result more readable by using
->> separate paragraphs for separate conceptual points, but then isn't
->> it wrong to have "False by default" as part of stating which
->> platforms are intended targets?  I wonder if we want to have that
->> last line as its own paragraph instead.
+> Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
+> ---
+>  git.c | 3 ---
+>  1 file changed, 3 deletions(-)
 >
-> I was happy with it being a simple separate sentence.
-
-I am also _for_ a separate sentence.  But when a set of three
-paragraphs, i.e.
-
-	A, something about A, and things about A.
-
-        B, something about B, and things about B.
-
-        C, something about C, and things about C.
-
-and you want to say something X that is not specific to A or B or C,
-would you add that X at the end of C's paragraph, resulting in:
-
-	A, something about A, and things about A.
-
-        B, something about B, and things about B.
-
-        C, something about C, and things about C.  X that applies to
-        all of A, B and C.
-
-or would it be more clear to see:
-
-	A, something about A, and things about A.
-
-        B, something about B, and things about B.
-
-        C, something about C, and things about C.
-
-        X that applies to all of A, B and C.
-
-was the question.  I think a simple separate sentence should not be
-part of the same "In what situations this is useful" paragraph.
+> diff --git a/git.c b/git.c
+> index 09b3bcf..c9bec99 100644
+> --- a/git.c
+> +++ b/git.c
+> @@ -1,10 +1,7 @@
+>  #include "builtin.h"
+> -#include "cache.h"
+>  #include "exec_cmd.h"
+>  #include "help.h"
+> -#include "quote.h"
+>  #include "run-command.h"
+> -#include "commit.h"
+>  
+>  const char git_usage_string[] =
+>  	"git [--version] [--help] [-C <path>] [-c name=value]\n"
