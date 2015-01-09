@@ -1,126 +1,180 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [RFC/PATCH] receive-pack.c: only accept push-cert if push_cert_nonce was advertised
-Date: Fri,  9 Jan 2015 12:47:17 -0800
-Message-ID: <1420836437-11068-1-git-send-email-sbeller@google.com>
-Cc: Stefan Beller <sbeller@google.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 09 21:47:34 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] gettext.h: add parentheses around N_ expansion if supported
+Date: Fri, 09 Jan 2015 14:22:46 -0800
+Message-ID: <xmqqwq4vbnm1.fsf@gitster.dls.corp.google.com>
+References: <aea96640a01b65776eb0474aaceded5@74d39fa044aa309eaea14b9f57fe79c>
+	<xmqqa91tf5ql.fsf@gitster.dls.corp.google.com>
+	<61CC69D2-A0F2-4BE2-B37A-F1D8FE19C45A@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Git mailing list <git@vger.kernel.org>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+To: "Kyle J. McKay" <mackyle@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 09 23:22:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y9gSy-0001sT-K8
-	for gcvg-git-2@plane.gmane.org; Fri, 09 Jan 2015 21:47:32 +0100
+	id 1Y9hxG-0001ig-FV
+	for gcvg-git-2@plane.gmane.org; Fri, 09 Jan 2015 23:22:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752674AbbAIUr2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Jan 2015 15:47:28 -0500
-Received: from mail-ie0-f171.google.com ([209.85.223.171]:49729 "EHLO
-	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751951AbbAIUr1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Jan 2015 15:47:27 -0500
-Received: by mail-ie0-f171.google.com with SMTP id ar1so17146377iec.2
-        for <git@vger.kernel.org>; Fri, 09 Jan 2015 12:47:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=NrWkaRjECXydB8FMvYsm8d6TUI6GFwlCkLfabR4kHRM=;
-        b=lAXEX3QYC4F1dJd0+rwXuRNBEPlKxK786bko31XHgavy3EnBFEUqVouPPipeRXuXqa
-         hIwGj3AT7U5M9EeVRwFgLAQSKoA+67K4K+XMmBkkhpVgQ3xTwgLwm8jpVOPIb1kAKcAl
-         A3zTcfDlFuPQWJFIoxO5gy5f751utiySn9lY+Y4NrInYe0pYhVRC+5CijHc/FEvaWBDQ
-         oWWvs6/xb5PSzOpvqFfc0Zirkn598zUPxVC6clZiiqq8ry603vQX+X1e77q5vDSiz0hy
-         e+RDjGLnXHGFwXFAMYFcuSyevWyiwQNaW8BmRsJM+WWkVizSP5lTeWdCUuIErx06C5+T
-         kaEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=NrWkaRjECXydB8FMvYsm8d6TUI6GFwlCkLfabR4kHRM=;
-        b=ke7SOxvii4bjUMbhDP801IAtyLpbCY1iY5cAu0CvOQkp3Yv07FPNBC5YI2BgX+URfp
-         6VGxdPxFv3fbYQainDERM0SLLDizv4GAAwBLQ+gcGWh1hstCnjrhfgdNszDfMmF1HqAx
-         WEmJ52fraK2Sri3gwZP9x3SuNlLc0I+t1QcFjiOWx/GpA3VU3tbkCB3xC7r/KkUOW2qD
-         lx3Y59ooktifrKo/111pq9+t0+Syi/J5QBRYIcbH+YhaYveMoZArJ5DEOOvMBsAY8Tq8
-         velpgLIMz0GPMfLVov9tvY/niSK52pgUEgb35aunKB74+odg1xCKacvQYYdlAcwANla+
-         g0og==
-X-Gm-Message-State: ALoCoQkgnyJFFxo4zErVV+5K0WYfY+EGcC0i7eNxzBcR1A91Nwafo/Gpo/Je5gnbjqqbd3x43Dzx
-X-Received: by 10.107.164.75 with SMTP id n72mr17213869ioe.17.1420836447066;
-        Fri, 09 Jan 2015 12:47:27 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b00:60c6:3f0a:318f:e7c0])
-        by mx.google.com with ESMTPSA id o185sm4308962ioe.40.2015.01.09.12.47.26
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 09 Jan 2015 12:47:26 -0800 (PST)
-X-Mailer: git-send-email 2.2.1.62.g3f15098
+	id S1752705AbbAIWWu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Jan 2015 17:22:50 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64508 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752313AbbAIWWt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Jan 2015 17:22:49 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 51AFA2CF8E;
+	Fri,  9 Jan 2015 17:22:48 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=hXN1VWUcTw5wd2iOz0E14CVsC1s=; b=BGHYzP
+	acM54+bm/ymlvdtR+wK+qQ0rszFTk5RxuwUNOLEqXJPmVWEZCA0zXH1Ay5WWzSz/
+	bIhPKR5yj2t0I6nFPq0cEHh8mj4RIyFV7nfvdZOX6Zn4c03zdG+jXasOrPsDhg0t
+	BNN2ucF4wU8TdYKP243vxgc5/6SSIkz7RcTvA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=cLvZnP5N+A8bEtPYqJfjqzZAZB8IlUOf
+	MFQJCb664yWJIcii1QC83htlJudQm3hPKXdRZG7eAR3SFYY9ytOW5rRvdHrg2SXO
+	rqE0Sa8vwN1L0SXHfdwBiqlRqRPXptj9FSh9fXKI+sI7VLoreR1PQh9zS4d7XSs9
+	xJZiia04syY=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 47A9A2CF8D;
+	Fri,  9 Jan 2015 17:22:48 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9A4A82CF8C;
+	Fri,  9 Jan 2015 17:22:47 -0500 (EST)
+In-Reply-To: <61CC69D2-A0F2-4BE2-B37A-F1D8FE19C45A@gmail.com> (Kyle J. McKay's
+	message of "Thu, 8 Jan 2015 20:55:11 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 0A58C6C8-984E-11E4-B662-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262244>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262245>
 
-If the server did not advertise the capability to have signed pushes
-it should not accept signed pushes as stated in
-Documentation/technical/protocol-capabilities.txt:
+"Kyle J. McKay" <mackyle@gmail.com> writes:
 
-    Client will then send a space separated list of capabilities it wants
-    to be in effect. The client MUST NOT ask for capabilities the server
-    did not say it supports.
+> I'm not super attached to this change, it's just that it seems to me
+> that translation support for Git is a scarce resource.  I'm guessing
+> that when considering the 7 complete translations (bg, ca, de, fr, sv,
+> vi and zh_CN) the average number of translators per language is in the
+> low single digits.  So I hate to see unnecessary translation churn,
+> not when it can be so easily prevented.
 
-    Server MUST diagnose and abort if capabilities it does not understand
-    was sent.  Server MUST NOT ignore capabilities that client requested
-    and server advertised.  As a consequence of these rules, server MUST
-    NOT advertise capabilities it does not understand.
+Yes, I share the same feeling and I agree that it is a worthy goal.
 
-After rereading the second paragraph I think they should also be reworded to
+I just did not want an unconditional "#ifdef __GNUC__" that nobody
+can override without editing the source, when __GNUC__ is a rough
+approximation whether a specific language extension exists and is
+enabled (we do not know which -W<option> or options like --pedantic
+that will be added in the future would interfere with us).
 
-    Server MUST diagnose and abort if capabilities it did not advertise
-    was sent.
+What I had in mind instead was something along this line (but with a
+better make variable name).  In an unconfigured build, it decides
+between ("msg") and "msg" using the same __GNUC__ heuristic, but
+that can be overridden from the $(MAKE) command line in a pinch.
 
+I do not do autoconf, but it would be trivial to set CAN_USE_* by
+try-compiling a small program.
 
-Suppose there would be hypothetical flaw in the capability of signed
-pushes (or any capability for the current reasoning) which may harm
-the server. This would require a bugfix release if it was severe and
-would put us on time pressure to get it done.
+ Makefile          | 17 ++++++++++++++++-
+ gettext.h         | 24 ++++++++++++++++++++++++
+ git-compat-util.h |  7 +++++++
+ 3 files changed, 47 insertions(+), 1 deletion(-)
 
-A change like the one proposed would allow us to tell the community to
-simply configure the server to not advertise the feature and if not
-advertised the flaw could not be abused.
-
-I am not saying there is a problem now, but I am rather saying patches
-similar to this one would buy us time in case of problems arising.
-
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
-
-Notes:
-    As I discovered the idea while composing the
-    atomic push series and the changes line of this
-    patch is closeby, this applies on top of
-    origin/sb/atomic-push (v12 as sent on Jan. 7th)
-    
-    This patch is RFC, thinking about security best practice.
-    It's not enough to document the intended behavior in
-    Documentation/technical/protocol-capabilities.txt, but
-    rather enforce it in the code as well.
-    
-    Any thoughts on that welcome!
-    
-    Thanks,
-    Stefan
-
- builtin/receive-pack.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 4c069c5..628d13a 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -1276,7 +1276,8 @@ static struct command *read_head_info(struct sha1_array *shallow)
- 				use_atomic = 1;
- 		}
+diff --git a/Makefile b/Makefile
+index 06e5d24..48f4ce2 100644
+--- a/Makefile
++++ b/Makefile
+@@ -343,6 +343,12 @@ all::
+ # return NULL when it receives a bogus time_t.
+ #
+ # Define HAVE_CLOCK_GETTIME if your platform has clock_gettime in librt.
++#
++# Define CAN_USE_CONSTANT_STRING_IN_PARENTHESES to Yes if your compiler
++# happily compiles the following initialization:
++#     static const char s[] = ("FOO");
++# and define it to No if you need to remove the parentheses () around the
++# constant.
  
--		if (!strcmp(line, "push-cert")) {
-+		if (push_cert_nonce &&
-+		    !strcmp(line, "push-cert")) {
- 			int true_flush = 0;
- 			char certbuf[1024];
+ GIT-VERSION-FILE: FORCE
+ 	@$(SHELL_PATH) ./GIT-VERSION-GEN
+@@ -950,6 +956,16 @@ ifneq (,$(SOCKLEN_T))
+ 	BASIC_CFLAGS += -Dsocklen_t=$(SOCKLEN_T)
+ endif
  
--- 
-2.2.1.62.g3f15098
++ifeq (Yes,$(CAN_USE_CONSTANT_STRING_IN_PARENTHESES))
++	BASIC_CFLAGS += -DUSE_PARENS_AROUND_N=1
++else
++ifneq (,$(CAN_USE_CONSTANT_STRING_IN_PARENTHESES))
++	BASIC_CFLAGS += -DUSE_PARENS_AROUND_N=0
++else
++	BASIC_CFLAGS += -DUSE_PARENS_AROUND_N=-1
++endif
++endif
++
+ ifeq ($(uname_S),Darwin)
+ 	ifndef NO_FINK
+ 		ifeq ($(shell test -d /sw/lib && echo y),y)
+@@ -2486,4 +2502,3 @@ cover_db: coverage-report
+ 
+ cover_db_html: cover_db
+ 	cover -report html -outputdir cover_db_html cover_db
+-
+diff --git a/gettext.h b/gettext.h
+index 7671d09..9b54ded 100644
+--- a/gettext.h
++++ b/gettext.h
+@@ -63,6 +63,30 @@ const char *Q_(const char *msgid, const char *plu, unsigned long n)
+ }
+ 
+ /* Mark msgid for translation but do not translate it. */
++#if !USE_PARENS_AROUND_N
+ #define N_(msgid) msgid
++#else
++/*
++ * Strictly speaking, this will lead to invalid C when
++ * used this way:
++ *     static const char s[] = N_("FOO");
++ * which will expand to
++ *     static const char s[] = ("FOO");
++ * and in valid C, the initializer on the right hand side must
++ * be without the parentheses.  But many compilers do accept it
++ * as a language extension and it will allow us to catch mistakes
++ * like:
++ *     static const char **msgs = {
++ *                N_("one")
++ *                N_("two"),
++ *                N_("three"),
++ *                NULL
++ *     }
++ * (notice the missing comma on one of the lines) by forcing
++ * an compilation error, because parenthesised ("one") ("two")
++ * will not get silently turned into ("onetwo").
++ */
++#define N_(msgid) (msgid)
++#endif
+ 
+ #endif
+diff --git a/git-compat-util.h b/git-compat-util.h
+index dcecd85..8640163 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -867,4 +867,11 @@ struct tm *git_gmtime_r(const time_t *, struct tm *);
+ #define gmtime_r git_gmtime_r
+ #endif
+ 
++#if USE_PARENS_AROUND_N == -1
++#  ifdef __GNUC__
++#    undef USE_PARENS_AROUND_N
++#    define USE_PARENS_AROUND_N 1
++#  endif
++#endif
++
+ #endif
