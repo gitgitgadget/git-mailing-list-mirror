@@ -1,145 +1,134 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH v3] doc: core.ignoreStat update, and clarify the --assume-unchanged effect
-Date: Fri, 9 Jan 2015 08:48:30 -0000
-Organization: OPDS
-Message-ID: <1ED88DC1DCC2463782B4F4167DC85D5D@PhilipOakley>
-References: <1420496573-3260-1-git-send-email-philipoakley@iee.org> <xmqqbnmajwd9.fsf@gitster.dls.corp.google.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1;
-	format=flowed	reply-type=original
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "GitList" <git@vger.kernel.org>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	=?iso-8859-1?Q?Nguy=3Fn_Th=E1i_Ng=3Fc_Duy?= <pclouds@gmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 09 09:54:14 2015
+From: Alexander Kuleshov <kuleshovmail@gmail.com>
+Subject: [PATCH] cat-file: add short option '-c' for 'cat-file --textconv'
+Date: Fri,  9 Jan 2015 14:47:59 +0600
+Message-ID: <1420793279-27853-1-git-send-email-kuleshovmail@gmail.com>
+Cc: git@vger.kernel.org, Alexander Kuleshov <kuleshovmail@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 09 09:55:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y9VFB-0001kt-B2
-	for gcvg-git-2@plane.gmane.org; Fri, 09 Jan 2015 09:48:33 +0100
+	id 1Y9VEx-0001TD-WF
+	for gcvg-git-2@plane.gmane.org; Fri, 09 Jan 2015 09:48:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756509AbbAIIs3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Jan 2015 03:48:29 -0500
-Received: from out1.ip05ir2.opaltelecom.net ([62.24.128.241]:2188 "EHLO
-	out1.ip05ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756034AbbAIIs3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 Jan 2015 03:48:29 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AvgOAJyUr1RZ8YLCPGdsb2JhbABcgwaBKoYvbMROBAKBGUQBAQEBAQEFAQEBATggG4QHBQEBAQECAQgBASgBBR4BARwFCwIDBQIBAxUMJRQBBBoGBwMUBhMIAgECAwGIEwy6So0fASuPeYMdgRMFhDiEfoR/TolJikqCXoM5glSBPD4xgkMBAQE
-X-IPAS-Result: AvgOAJyUr1RZ8YLCPGdsb2JhbABcgwaBKoYvbMROBAKBGUQBAQEBAQEFAQEBATggG4QHBQEBAQECAQgBASgBBR4BARwFCwIDBQIBAxUMJRQBBBoGBwMUBhMIAgECAwGIEwy6So0fASuPeYMdgRMFhDiEfoR/TolJikqCXoM5glSBPD4xgkMBAQE
-X-IronPort-AV: E=Sophos;i="5.07,729,1413241200"; 
-   d="scan'208";a="580411989"
-Received: from host-89-241-130-194.as13285.net (HELO PhilipOakley) ([89.241.130.194])
-  by out1.ip05ir2.opaltelecom.net with ESMTP; 09 Jan 2015 08:48:26 +0000
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1756210AbbAIIsL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Jan 2015 03:48:11 -0500
+Received: from mail-lb0-f176.google.com ([209.85.217.176]:57657 "EHLO
+	mail-lb0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754699AbbAIIsJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Jan 2015 03:48:09 -0500
+Received: by mail-lb0-f176.google.com with SMTP id p9so7058039lbv.7
+        for <git@vger.kernel.org>; Fri, 09 Jan 2015 00:48:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=5YzP3NmMHaorBHZadmagHCtyXOMfaIYVVRSIdnbY4W8=;
+        b=Drvpts3mr/p+rIclkZLrYegOPmDCO2X0qMhxXQOEr/dTNgUE3CNpEsL/h+4n55xeFP
+         +sNpBkQls03M5dm1U6AijTySWV7uNLyoKRoYJELpvDYNowHE44srgUl5G7cxGAMsPxFa
+         hTwpaaKLF6CHDejywfChZ/st0emSBgVqFchGfafvd18ADq/6Ga60V/9QhNO0hwW8B1od
+         0qtDw5EvgbjM5+waUQWnqsJwoxWnguecL+Ss1INxGv6cku6coLt79QI8DHX5w05oi0Gd
+         0c/T3TXx2sK0zj8jHedoX5UyuAs0zAlRJanCs6/DDcOiviB70cnda1ws6DYasdvi856h
+         16wg==
+X-Received: by 10.112.167.228 with SMTP id zr4mr20331594lbb.20.1420793288270;
+        Fri, 09 Jan 2015 00:48:08 -0800 (PST)
+Received: from localhost.localdomain ([92.46.69.16])
+        by mx.google.com with ESMTPSA id wq1sm1717313lbb.24.2015.01.09.00.48.05
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 09 Jan 2015 00:48:07 -0800 (PST)
+X-Mailer: git-send-email 2.2.1.522.g2561c04.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262236>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262237>
 
-=46rom: "Junio C Hamano" <gitster@pobox.com>
-> Philip Oakley <philipoakley@iee.org> writes:
->
->> The assume-unchanged bit, and consequently core.ignoreStat, can be
->> misunderstood. Be assertive about the expectation that file changes=20
->> should
->> notified to Git.
->>
->> Overhaul the general wording thus:
->>     1. direct description of what is ignored given first.
->>     2. example instruction of the user manual action required.
->>     3. use sideways indirection for assume-unchanged and update-inde=
-x
->>        references.
->>     4. add a 'normally' to give leeway for the change detection.
->>
->> Signed-off-by: Philip Oakley <philipoakley@iee.org>
->> ---
->>
->> This is the corrected patch which now applies on top of next and has=
-=20
->> been
->> checked on AsciiDoc. (was $gmane/261974/focus=3D262022)
->>
->> I have included the previous 'after three-dashes' comment and=20
->> included
->> them in the commit message. I'm happy for it to be tweaked as=20
->> appropriate.
->
-> Thanks.
->
->> diff --git a/Documentation/config.txt b/Documentation/config.txt
->> index 52eeadd..fe179d0 100644
->> --- a/Documentation/config.txt
->> +++ b/Documentation/config.txt
->> @@ -375,15 +375,18 @@ This is useful for excluding servers inside a=20
->> firewall from
->>  proxy use, while defaulting to a common proxy for external domains.
->>
->>  core.ignoreStat::
->> + If true, Git will avoid using lstat() calls to detect if files hav=
-e
->> + changed. Git will set the "assume-unchanged" bit for those tracked=
-=20
->> files
->> + which it has updated identically in both the index and working=20
->> tree.
->
-> I wonder if this is better stated in two seemingly independent
-> sentences (like your version), or "... if files have changed by
-> setting the assume-unchanged bit ...." to clarify where the setting
-> of the bits to these files come into the big picture, but it is
-> minor.  Either way, I think it is a lot easier to understand than
-> what we have in 'master'.
+Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
+---
+ Documentation/git-cat-file.txt |  5 +++--
+ builtin/cat-file.c             |  4 ++--
+ t/t8007-cat-file-textconv.sh   | 10 ++++++++++
+ 3 files changed, 15 insertions(+), 4 deletions(-)
 
-I had considered a number of different wordings, and wanted to keep the=
-=20
-tricky parts separate to ease cognition.
-
-On a separte note, this patch was a development from the problem notice=
-d=20
-by S=E9rgio of the different actions of 'git commit .'and 'git commit -=
-a'=20
-when --assume-unchanged was used. Did you have any thoughts regarding=20
-Duy's patch (05 December 2014 10:56) to his code given in $gmane/260865=
-=2E
-
-I wasn't sure if it had just been missed, or if there was some other=20
-issue?
-
-
->> ++
->> +When files are modified outside of Git, the user will need to stage
->> +the modified files explicitly (e.g. see 'Examples' section in
->> +linkgit:git-update-index[1]).
->> +Git will not normally detect changes to those files.
->> ++
->> +This is useful on systems where lstat() calls are very slow, such a=
-s
->> +CIFS/Microsoft Windows.
->> +False by default.
->
-> I think you are trying to make the result more readable by using
-> separate paragraphs for separate conceptual points, but then isn't
-> it wrong to have "False by default" as part of stating which
-> platforms are intended targets?  I wonder if we want to have that
-> last line as its own paragraph instead.
-
-I was happy with it being a simple separate sentence.
-
->
-> Thanks.
->
->>
->>  core.preferSymlinkRefs::
->>  Instead of the default "symref" format for HEAD
-> --
-Philip=20
+diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
+index f6a16f4..b346a5d 100644
+--- a/Documentation/git-cat-file.txt
++++ b/Documentation/git-cat-file.txt
+@@ -9,14 +9,14 @@ git-cat-file - Provide content or type and size information for repository objec
+ SYNOPSIS
+ --------
+ [verse]
+-'git cat-file' (-t | -s | -e | -p | <type> | --textconv ) <object>
++'git cat-file' (-t | -s | -e | -p | <type> | (-c | --textconv) ) <object>
+ 'git cat-file' (--batch | --batch-check) < <list-of-objects>
+ 
+ DESCRIPTION
+ -----------
+ In its first form, the command provides the content or the type of an object in
+ the repository. The type is required unless '-t' or '-p' is used to find the
+-object type, or '-s' is used to find the object size, or '--textconv' is used
++object type, or '-s' is used to find the object size, or '-c/--textconv' is used
+ (which implies type "blob").
+ 
+ In the second form, a list of objects (separated by linefeeds) is provided on
+@@ -52,6 +52,7 @@ OPTIONS
+ 	or to ask for a "blob" with <object> being a tag object that
+ 	points at it.
+ 
++-c
+ --textconv::
+ 	Show the content as transformed by a textconv filter. In this case,
+ 	<object> has be of the form <tree-ish>:<path>, or :<path> in order
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index f8d8129..a8154a0 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -329,7 +329,7 @@ static int batch_objects(struct batch_options *opt)
+ }
+ 
+ static const char * const cat_file_usage[] = {
+-	N_("git cat-file (-t|-s|-e|-p|<type>|--textconv) <object>"),
++	N_("git cat-file (-t|-s|-e|-p|<type>|(-c|--textconv)) <object>"),
+ 	N_("git cat-file (--batch|--batch-check) < <list_of_objects>"),
+ 	NULL
+ };
+@@ -373,7 +373,7 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
+ 		OPT_SET_INT('e', NULL, &opt,
+ 			    N_("exit with zero when there's no error"), 'e'),
+ 		OPT_SET_INT('p', NULL, &opt, N_("pretty-print object's content"), 'p'),
+-		OPT_SET_INT(0, "textconv", &opt,
++		OPT_SET_INT('c', "textconv", &opt,
+ 			    N_("for blob objects, run textconv on object's content"), 'c'),
+ 		{ OPTION_CALLBACK, 0, "batch", &batch, "format",
+ 			N_("show info and content of objects fed from the standard input"),
+diff --git a/t/t8007-cat-file-textconv.sh b/t/t8007-cat-file-textconv.sh
+index eacd49a..994c5b0 100755
+--- a/t/t8007-cat-file-textconv.sh
++++ b/t/t8007-cat-file-textconv.sh
+@@ -24,6 +24,11 @@ bin: test version 2
+ EOF
+ 
+ test_expect_success 'no filter specified' '
++	git cat-file -c :one.bin >result &&
++	test_cmp expected result
++'
++
++test_expect_success 'no filter specified' '
+ 	git cat-file --textconv :one.bin >result &&
+ 	test_cmp expected result
+ '
+@@ -52,6 +57,11 @@ cat >expected <<EOF
+ converted: test version 2
+ EOF
+ 
++test_expect_success 'cat-file -c on last commit' '
++	git cat-file -c :one.bin >result &&
++	test_cmp expected result
++'
++
+ test_expect_success 'cat-file --textconv on last commit' '
+ 	git cat-file --textconv :one.bin >result &&
+ 	test_cmp expected result
+-- 
+2.2.1.522.g2561c04.dirty
