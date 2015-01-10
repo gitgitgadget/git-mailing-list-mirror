@@ -1,64 +1,137 @@
-From: Richard Hansen <rhansen@bbn.com>
-Subject: [PATCH 1/2] Documentation/githooks: mention pwd, $GIT_PREFIX
-Date: Sat, 10 Jan 2015 01:49:57 -0500
-Message-ID: <1420872598-9609-2-git-send-email-rhansen@bbn.com>
-References: <1420872598-9609-1-git-send-email-rhansen@bbn.com>
-Cc: rhansen@bbn.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 10 07:50:30 2015
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 2/2] t1020-subdirectory.sh: check hook pwd, $GIT_PREFIX
+Date: Sat, 10 Jan 2015 09:25:18 +0100
+Message-ID: <54B0E1EE.2020301@kdbg.org>
+References: <1420872598-9609-1-git-send-email-rhansen@bbn.com> <1420872598-9609-3-git-send-email-rhansen@bbn.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Richard Hansen <rhansen@bbn.com>
+X-From: git-owner@vger.kernel.org Sat Jan 10 09:25:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y9psQ-0004lS-On
-	for gcvg-git-2@plane.gmane.org; Sat, 10 Jan 2015 07:50:27 +0100
+	id 1Y9rMT-0007AQ-Om
+	for gcvg-git-2@plane.gmane.org; Sat, 10 Jan 2015 09:25:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753647AbbAJGuV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Jan 2015 01:50:21 -0500
-Received: from smtp.bbn.com ([128.33.1.81]:13298 "EHLO smtp.bbn.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752651AbbAJGuT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Jan 2015 01:50:19 -0500
-Received: from socket.bbn.com ([192.1.120.102]:35716)
-	by smtp.bbn.com with esmtps (TLSv1:AES256-SHA:256)
-	(Exim 4.77 (FreeBSD))
-	(envelope-from <rhansen@bbn.com>)
-	id 1Y9psE-00018d-00; Sat, 10 Jan 2015 01:50:14 -0500
-X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id AAAD93FF9A
-X-Mailer: git-send-email 2.2.1
-In-Reply-To: <1420872598-9609-1-git-send-email-rhansen@bbn.com>
+	id S1751991AbbAJIZ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Jan 2015 03:25:29 -0500
+Received: from bsmtp7.bon.at ([213.33.87.19]:56809 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751306AbbAJIZ3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Jan 2015 03:25:29 -0500
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTPSA id 3kKDl94jPHz5tlG;
+	Sat, 10 Jan 2015 09:25:25 +0100 (CET)
+Received: from dx.sixt.local (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 27E1D19F813;
+	Sat, 10 Jan 2015 09:25:19 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
+In-Reply-To: <1420872598-9609-3-git-send-email-rhansen@bbn.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262258>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262259>
 
-Document that hooks are run from the top-level directory and that
-GIT_PREFIX is set to the name of the original subdirectory (relative
-to the top-level directory).
+Am 10.01.2015 um 07:49 schrieb Richard Hansen:
+> Make sure hooks are executed at the top-level directory and that
+> GIT_PREFIX is set (as documented).
+> 
+> Signed-off-by: Richard Hansen <rhansen@bbn.com>
+> ---
+>  t/t1020-subdirectory.sh | 34 ++++++++++++++++++++++++++++++++++
+>  1 file changed, 34 insertions(+)
+> 
+> diff --git a/t/t1020-subdirectory.sh b/t/t1020-subdirectory.sh
+> index 2edb4f2..03bb0a2 100755
+> --- a/t/t1020-subdirectory.sh
+> +++ b/t/t1020-subdirectory.sh
+> @@ -128,6 +128,23 @@ test_expect_success !MINGW '!alias expansion' '
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success 'hook pwd' '
+> +	pwd >expect &&
+> +	(
+> +		rm -f actual &&
+> +		mkdir -p .git/hooks &&
+> +		! test -e .git/hooks/post-checkout &&
 
-Signed-off-by: Richard Hansen <rhansen@bbn.com>
----
- Documentation/githooks.txt | 6 ++++++
- 1 file changed, 6 insertions(+)
+What is the purpose of this test?
 
-diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-index 9ef2469..c08f4fd 100644
---- a/Documentation/githooks.txt
-+++ b/Documentation/githooks.txt
-@@ -26,6 +26,12 @@ executable by default.
- 
- This document describes the currently defined hooks.
- 
-+Hooks are executed from the top-level directory of a repository, which
-+may not necessarily be the current directory.
-+The 'GIT_PREFIX' environment variable is set as returned by running
-+'git rev-parse --show-prefix' from the original current directory.
-+See linkgit:git-rev-parse[1].
-+
- HOOKS
- -----
- 
--- 
-2.2.1
+> +		cat <<-\EOF >.git/hooks/post-checkout &&
+> +			#!/bin/sh
+> +			pwd >actual
+> +		EOF
+> +		chmod +x .git/hooks/post-checkout &&
+
+Use write_script() to construct a shell script.
+
+> +		(cd dir && git checkout -- two) &&
+> +		rm -f .git/hooks/post-checkout
+
+This cleanup would be skipped if the checkout fails for some reason. Use
+test_when_finished.
+
+> +	) &&
+
+The outer sub-shell us unnecessary, isn't it?
+
+> +	test_cmp expect actual
+
+If 'git checkout' runs the hook from the wrong directory, there would
+not exist a file 'actual' at this point because it was rm -f'd earlier,
+and the test would fail. Perhaps it would make sense to document this
+failure case by inserting
+
+	test_path_is_file actual &&
+
+before the test_cmp?
+
+Which makes me think: Would the test for existence of 'actual' be
+sufficient? Then the test_cmp could be omitted. The advantage is that we
+do not depend on how the `pwd` is formatted: With or without symbolic
+links in any leading path or c:/foo vs. /c/foo on Windows. (I anticipate
+that the test as written fails on Windows because 'expect' is in c:/foo
+form and 'actual' is in /c/foo form.)
+
+> +'
+> +
+>  test_expect_success 'GIT_PREFIX for !alias' '
+>  	printf "dir/" >expect &&
+>  	(
+> @@ -154,6 +171,23 @@ test_expect_success 'GIT_PREFIX for built-ins' '
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success 'GIT_PREFIX for hooks' '
+> +	printf "dir/" >expect &&
+> +	(
+> +		rm -f actual &&
+> +		mkdir -p .git/hooks &&
+> +		! test -e .git/hooks/post-checkout &&
+> +		cat <<-\EOF >.git/hooks/post-checkout &&
+> +			#!/bin/sh
+> +			printf %s "$GIT_PREFIX" >actual
+> +		EOF
+> +		chmod +x .git/hooks/post-checkout &&
+> +		(cd dir && git checkout -- two) &&
+> +		rm -f .git/hooks/post-checkout
+> +	)  &&
+
+The comments about the sub-shell, write_script, and clean-up apply here,
+too.
+
+> +	test_cmp expect actual
+> +'
+> +
+>  test_expect_success 'no file/rev ambiguity check inside .git' '
+>  	git commit -a -m 1 &&
+>  	(
+> 
+
+-- Hannes
