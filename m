@@ -1,70 +1,52 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH] git-svn: make it play nicely with submodules
-Date: Sat, 10 Jan 2015 09:55:11 -0500
-Message-ID: <1420901711-81679-1-git-send-email-artagnon@gmail.com>
+Subject: Re: [PATCH] Git::SVN: handle missing ref_id case correctly
+Date: Sat, 10 Jan 2015 10:12:23 -0500
+Message-ID: <CALkWK0=jEh06hZSmHim54BaP_KiC8hg-455STQphu17PSoQTqw@mail.gmail.com>
+References: <1420900510-78522-1-git-send-email-artagnon@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Cc: Eric Wong <normalperson@yhbt.net>
 To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jan 10 15:55:35 2015
+X-From: git-owner@vger.kernel.org Sat Jan 10 16:13:11 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y9xRu-00073M-Sl
-	for gcvg-git-2@plane.gmane.org; Sat, 10 Jan 2015 15:55:35 +0100
+	id 1Y9xiw-0003uH-Jt
+	for gcvg-git-2@plane.gmane.org; Sat, 10 Jan 2015 16:13:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753383AbbAJOzU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Jan 2015 09:55:20 -0500
-Received: from mail-qa0-f54.google.com ([209.85.216.54]:45580 "EHLO
-	mail-qa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751247AbbAJOzT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Jan 2015 09:55:19 -0500
-Received: by mail-qa0-f54.google.com with SMTP id i13so10640583qae.13
-        for <git@vger.kernel.org>; Sat, 10 Jan 2015 06:55:18 -0800 (PST)
+	id S1753550AbbAJPNF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Jan 2015 10:13:05 -0500
+Received: from mail-ig0-f170.google.com ([209.85.213.170]:46110 "EHLO
+	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753255AbbAJPNE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Jan 2015 10:13:04 -0500
+Received: by mail-ig0-f170.google.com with SMTP id r2so5934056igi.1
+        for <git@vger.kernel.org>; Sat, 10 Jan 2015 07:13:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=0n3wZszPE6Eqd3M7NhKzExEYzMfgK4ESpdxDQVOXCUo=;
-        b=SRGYOAuQ1j7LXlyi7TU/kZ8DPukh9PKdt/LA/OMa7qAXTH7Z+MVq1CIXjt409lUgcw
-         zOAzDDotcABIDeQJsE+tbnPz4qWSi6rNENiRUFNvqlW1ZCPYiEfaHlgMpKbX+20yMWa5
-         Rt9KFUG1xLYtKx0urRWBXpdyoIlv16CvgqfO5JvMTJ9DKQwNv9cS1+KG1TnoIGRBwRLM
-         8xtEv5dnchGVHOW3uZ2MXHUZug1ONLC7PEiU7IPIz/8VMua2iiWW18Myicpev4bzup/f
-         mvkGSgn7XmML2mbyniBxlCsETrqnMl7wbtknMnTJSQveibYu4gXywgLNDtbjKjIsdl7r
-         xysg==
-X-Received: by 10.224.89.2 with SMTP id c2mr35720407qam.75.1420901718740;
-        Sat, 10 Jan 2015 06:55:18 -0800 (PST)
-Received: from localhost.localdomain (cpe-66-65-144-82.nyc.res.rr.com. [66.65.144.82])
-        by mx.google.com with ESMTPSA id f49sm9825759qga.42.2015.01.10.06.55.17
-        (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 10 Jan 2015 06:55:17 -0800 (PST)
-X-Mailer: git-send-email 2.2.1
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=A2yJ8uIvN9J1VZBmT2pMZW/bsaduaLbs2ZdRBx6ss6g=;
+        b=TRbGXSpweYZAcIILv2jev0c4D956ys+SFTRjK/YECL+Nbm+ewzn566/NmQuqioRUYU
+         WN/clXrLr2tSEw9RkXXJ+KZHF+2OpgC7HOpVSeFTJKKP4PVq3zkS+UilSFO0ZLrS2Kbh
+         WEca/jitWJjgrA2vwKtZi3VPe+UWMf4VjsMtMcAxL+d4CfGmryzJZklkX0W9DkJRVYHL
+         EmChw+YWE3PlJ6kXJr7a6IonBrr0Gr962i/Bi0OtbMdzvTWUdOURUZ5Q0cEeGONER44E
+         2MK4KOoEWFeg6qZy9zA650LWaGLTy5jENJCw2nre5r/bnql3xK0ABlsTedRMXo4L3YPM
+         FbWg==
+X-Received: by 10.50.17.99 with SMTP id n3mr7602172igd.21.1420902783276; Sat,
+ 10 Jan 2015 07:13:03 -0800 (PST)
+Received: by 10.107.3.75 with HTTP; Sat, 10 Jan 2015 07:12:23 -0800 (PST)
+In-Reply-To: <1420900510-78522-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262263>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262264>
 
-It's a simple matter of opening the directory specified in the gitfile.
+Ramkumar Ramachandra wrote:
+> -our $default_ref_id  = $ENV{GIT_SVN_ID} || 'git-svn';
+> +our $default_ref_id  = defined $ENV{GIT_SVN_ID} ? $ENV{GIT_SVN_ID} : 'git-svn';
 
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- git-svn.perl | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/git-svn.perl b/git-svn.perl
-index 6aa156c..8642783 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -337,6 +337,10 @@ for (my $i = 0; $i < @ARGV; $i++) {
- # make sure we're always running at the top-level working directory
- if ($cmd && $cmd =~ /(?:clone|init|multi-init)$/) {
- 	$ENV{GIT_DIR} ||= ".git";
-+	# catch the submodule case
-+	if (open(my $fh, '<', $ENV{GIT_DIR})) {
-+		$ENV{GIT_DIR} = $1 if <$fh> =~ /^gitdir: (.+)$/;
-+	}
- } else {
- 	my ($git_dir, $cdup);
- 	git_cmd_try {
--- 
-2.2.1
+This is probably not a functional change; please look at the second hunk.
