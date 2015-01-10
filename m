@@ -1,143 +1,217 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: Re: Distributed code review discussion
-Date: Sat, 10 Jan 2015 10:54:54 -0800
-Message-ID: <20150110185453.GL9044@odin.tremily.us>
-References: <CAH5CKOqSc2qLZwhCrafYkXMvLmRxKeA_7OO+WzM2FQwKS9F3cQ@mail.gmail.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH v3] doc: core.ignoreStat update, and clarify the --assume-unchanged effect
+Date: Sat, 10 Jan 2015 20:22:19 -0000
+Organization: OPDS
+Message-ID: <5861D798BD564D6EBE0D55C529C8ECF8@PhilipOakley>
+References: <1420496573-3260-1-git-send-email-philipoakley@iee.org><xmqqbnmajwd9.fsf@gitster.dls.corp.google.com><1ED88DC1DCC2463782B4F4167DC85D5D@PhilipOakley> <xmqqbnm7da76.fsf@gitster.dls.corp.google.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="CykseNgfyvuYXqns"
-Cc: git@vger.kernel.org
-To: Matus Faro <matusfaro@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 10 19:57:12 2015
+Content-Type: text/plain; charset=utf-8;
+	format=flowed	reply-type=original
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "GitList" <git@vger.kernel.org>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	=?utf-8?Q?Nguy=3Fn_Th=C3=A1i_Ng=3Fc_Duy?= <pclouds@gmail.com>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 10 21:21:43 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YA1Dj-0007p5-6R
-	for gcvg-git-2@plane.gmane.org; Sat, 10 Jan 2015 19:57:11 +0100
+	id 1YA2XW-0008AM-CO
+	for gcvg-git-2@plane.gmane.org; Sat, 10 Jan 2015 21:21:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753201AbbAJS5E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Jan 2015 13:57:04 -0500
-Received: from resqmta-ch2-10v.sys.comcast.net ([69.252.207.42]:44282 "EHLO
-	resqmta-ch2-10v.sys.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750770AbbAJS5D (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 10 Jan 2015 13:57:03 -0500
-Received: from resomta-ch2-20v.sys.comcast.net ([69.252.207.116])
-	by resqmta-ch2-10v.sys.comcast.net with comcast
-	id eJx11p0032XD5SV01Jx2Dh; Sat, 10 Jan 2015 18:57:02 +0000
-Received: from odin.tremily.us ([24.18.63.50])
-	by resomta-ch2-20v.sys.comcast.net with comcast
-	id eJv01p00T152l3L01Jv14x; Sat, 10 Jan 2015 18:55:02 +0000
-Received: by odin.tremily.us (Postfix, from userid 1000)
-	id 71CF2157CD18; Sat, 10 Jan 2015 10:54:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1420916094; bh=Nmya1uQfrJgLZ03Hg8GH5pcs6RIIF/62jQQ+8Dlh/pE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=UgA4Bao9e11U3BRBhSRbt1zl/6CyheIjduSxJlzP0vwJk/6KZulV41u0jJiSCfVee
-	 gbqU8PBql6aP3CTrN0jLVm3RqAsmrxyQTrzXCnBwwsAEGvB33XcznFi7SSGkfIXcdZ
-	 auLJp+kvl/QCzBre5HvJdjg+2WPE5S7bUIz26o88=
-Content-Disposition: inline
-In-Reply-To: <CAH5CKOqSc2qLZwhCrafYkXMvLmRxKeA_7OO+WzM2FQwKS9F3cQ@mail.gmail.com>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
-User-Agent: Mutt/1.5.23 (2014-03-12)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20140121; t=1420916222;
-	bh=J1Ob9ZwWHLwBds/j2ieUUIZ7MViZilBPZx7VJ/22Tjs=;
-	h=Received:Received:Received:Date:From:To:Subject:Message-ID:
-	 MIME-Version:Content-Type;
-	b=On6sbllMgMkaQOAVTPNFtH1/ArGgX+nU0aSNwGGtdWqQGjixrSWzXWzoGv1ljeVL/
-	 7OgjZOFLco0/5ooVjTbpX9jlXOpQWdb0in+VbMAX5LZAh15Hw5prx62DsDOVF4NWKV
-	 jfxjB9qoCKGfpykWWPiO53PGd4Lhq2KsuqWvk4qeOVrYk3jHh385EKS5CIRCu9ga8R
-	 XJ1DtrP2pU1aurxBm7iamiXlOccCs57vt7EPyBEavNw+KAIs3QAvILfQ0j/hEVyF0u
-	 3hExzjIdNWD3ll3liz9kBXUSxdc1yPCvDcK0/AgLWSi8Txn7PbcW1UmdwK1WinfsYo
-	 4SyJf102Y9aCw==
+	id S1751973AbbAJUVh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Jan 2015 15:21:37 -0500
+Received: from out1.ip06ir2.opaltelecom.net ([62.24.128.242]:12538 "EHLO
+	out1.ip06ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750753AbbAJUVg (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 10 Jan 2015 15:21:36 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AsYJAMuIsVRZ8Y7hPGdsb2JhbABbgwaBKoMFgypsxFoEAoEKRAEBAQEBAQUBAQEBODuEBwUBAQEBAgEIAQEZBAsBBR4BARwFCwIDBQIBAxUFAgUhAgIUAQQaBgcDFAYTCAIBAgMBiBMMtiuGU4w8ASuBIYhuhWqCby6BEwWEO4l/T4ZHgwYNgmSHXIJhgzqCVIE8PjGCQwEBAQ
+X-IPAS-Result: AsYJAMuIsVRZ8Y7hPGdsb2JhbABbgwaBKoMFgypsxFoEAoEKRAEBAQEBAQUBAQEBODuEBwUBAQEBAgEIAQEZBAsBBR4BARwFCwIDBQIBAxUFAgUhAgIUAQQaBgcDFAYTCAIBAgMBiBMMtiuGU4w8ASuBIYhuhWqCby6BEwWEO4l/T4ZHgwYNgmSHXIJhgzqCVIE8PjGCQwEBAQ
+X-IronPort-AV: E=Sophos;i="5.07,737,1413241200"; 
+   d="scan'208";a="665911756"
+Received: from host-89-241-142-225.as13285.net (HELO PhilipOakley) ([89.241.142.225])
+  by out1.ip06ir2.opaltelecom.net with ESMTP; 10 Jan 2015 20:21:28 +0000
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262270>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262271>
 
+=46rom: "Junio C Hamano" <gitster@pobox.com>
+> "Philip Oakley" <philipoakley@iee.org> writes:
+>
+>>>> diff --git a/Documentation/config.txt b/Documentation/config.txt
+>>>> index 52eeadd..fe179d0 100644
+>>>> --- a/Documentation/config.txt
+>>>> +++ b/Documentation/config.txt
+>>>> @@ -375,15 +375,18 @@ This is useful for excluding servers inside =
+a
+>>>> firewall from
+>>>>  proxy use, while defaulting to a common proxy for external
+>>>> domains.
+>>>>
+>>>>  core.ignoreStat::
+>>>> + If true, Git will avoid using lstat() calls to detect if files
+>>>> have
+>>>> + changed. Git will set the "assume-unchanged" bit for those
+>>>> tracked files
+>>>> + which it has updated identically in both the index and working
+>>>> tree.
+>>>
+>>> I wonder if this is better stated in two seemingly independent
+>>> sentences (like your version), or "... if files have changed by
+>>> setting the assume-unchanged bit ...." to clarify where the setting
+>>> of the bits to these files come into the big picture, but it is
+>>> minor.  Either way, I think it is a lot easier to understand than
+>>> what we have in 'master'.
+>>
+>> I had considered a number of different wordings, and wanted to keep
+>> the tricky parts separate to ease cognition.
+>
+> Hmph, but wouldn't the result get more confusing, by stating two
+> "tricky" things in separate sentences without giving any clue to
+> guess how these two trickies are related?  That is why I suggested
+> to say the same two things in a way that clarifies that "avoid using
+> lstat(2)" is the effect and "setting the assume-unchanged bit" is
+> the underlying implementation detail to cause that effect, i.e.
+>
+> If true, Git will avoid using lstat(2) calls to detect if
+> files have changed by setting "assume-unchanged" bit for
+> these tracked paths that Git has updated identically in both
+> the index and in the working tree.
 
---CykseNgfyvuYXqns
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I actually found that awkward to understand that because of both its
+length (as a single sentence), and who does what when being mixed
+together. Surely it's a 'separation of concerns' process. The splitting
+the sentence halves the readability score (among other things).
 
-On Sat, Jan 10, 2015 at 01:05:35PM -0500, Matus Faro wrote:
-> What I mean is a distributed code review system where a merge
-> request along with review comments would be stored within the git
-> repository and allowed to be pushed and pulled between repository
-> clones. This would allow users to retain the code review history
-> without relying on centralized or proprietary third party solutions.
+>
+>> On a separte note, this patch was a development from the problem
+>> noticed by S=C3=A9rgio of the different actions of 'git commit .'and=
+ 'git
+>> commit -a' when --assume-unchanged was used. Did you have any
+>> thoughts
+>> regarding Duy's patch (05 December 2014 10:56) to his code given in
+>> $gmane/260865.
+>>
+>> I wasn't sure if it had just been missed, or if there was some other
+>> issue?
+>
+> I thought the reason why we are discussing this documentation
+> clean-up (specifically, clarifying that assume-unchanged is a
+> promise the user makes not to modify the paths marked as such and is
+> not about telling Git to ignore changes to tracked paths), was
+> because we agreed that such a change is a wrong thing to do.
 
-You can do this today with pull-requests and code review happening in
-email, since you just have to distribute the mail archives to have a
-record of pull-requests and code review discussions (e.g. notmuch
-posts an mbox of it's list archives [1]).  For better usability, you
-have a few more options borrowing from the notmuch workflow:
+While that is true (the documentation gave false suggestions), the
+code should be trying to match our hoped for optimization so that the
+whole tree doesn't need to be lstat'd
 
-* Index messages in notmuch [2] (like notmuch does) and tag them so
-  you know what branches are waiting on review [3] or author feedback
-  [4].
-* Use nmbug [5] to collaborate on tagging and distribute tags to
-  interested parties.
+>
+> It is wrong for at least two reasons.
+>
+> - The "I promise not to modify them, so please omit lstat(2)
+>   assuming that I keep that promise" is a performance thing---we
+>   shouldn't add more code to cater to people who do not keep that
+>   promise.
 
-Things I've been thinking about doing =E2=80=9Cat some point=E2=80=9D:
+We should add code that keeps our "promise" that [where reasonable] we
+will optimise out lstats when there are large numbers of files to be
+checked; Surely?
 
-* Use ssoma [6] or my ssoma-mda Python port [7] to store the list
-  archives in Git using this format [8].  I'd like to teach notmuch to
-  read messages directly from the ssoma archive, which would let you
-  replace the mbox archive with something that's easier to collaborate
-  on than an mbox archive (e.g. for removing duplicates or fixing
-  typos).  If all interested parties are using ssoma-style storage for
-  the archives, you don't have to worry about =E2=80=9Coops, I didn't mean =
-to
-  hit send=E2=80=9D types of errors, since it's easy to patch the archive
-  itself.
-* Provide a web-UI for browsing the archive and manipulating tags, so
-  folks don't need to install Git / notmuch / ssoma to get involved in
-  patch review.  I'd still have them submit comments via email, but
-  you could have the web-app send email for them if you have
-  anti-email users ;).
+>
+> - Adding one more case of "Git will hide changes to tracked paths
+>   that you promised not to change" gives more chance to confuse
+>   users into an incorrect understanding of what assume-unchanged
+>   bit is about.  By not applying $gmane/260865, we keep one more
+>   way for the users to notice that the bit is *not* a mechanism
+>   to hide changes to tracked paths.
 
-Cheers,
-Trevor
+Surely, correcting the documentation is that route.
+I don't think we should be retaining the spikes on the steering wheel a=
+s
+a bad driver reminder. There will be other corner cases for bad drivers
+to spin off at.
 
-[1]: http://notmuchmail.org/archives/notmuch.mbox
-[2]: http://notmuchmail.org/
-[3]: http://nmbug.tethera.net/status/#Review
-[4]: http://nmbug.tethera.net/status/#Moreinfo
-[5]: http://notmuchmail.org/nmbug/
-[6]: http://ssoma.public-inbox.org/README
-[7]: http://git.tremily.us/?p=3Dssoma-mda.git
-[8]: http://ssoma.public-inbox.org/ssoma_repository.txt
+Ultimately the reason for inclusion would be that on large repos both
+commit -a and commit . should be equally fast, which would need to be
+said in the commit message.
 
---=20
-This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
-For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
+As a side point, a possible follow on tidy-up patch would be to have a
+macro to cover the common (ce->ce_flags & (CE_VALID | CE_SKIP_WORKTREE)
+idiom (many places, with different constructs) in the same vein as
+ce_skip_worktree()
 
---CykseNgfyvuYXqns
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
+>
+>>>> +When files are modified outside of Git, the user will need to
+>>>> stage
+>>>> +the modified files explicitly (e.g. see 'Examples' section in
+>>>> +linkgit:git-update-index[1]).
+>>>> +Git will not normally detect changes to those files.
+>>>> ++
+>>>> +This is useful on systems where lstat() calls are very slow, such
+>>>> as
+>>>> +CIFS/Microsoft Windows.
+>>>> +False by default.
+>>>
+>>> I think you are trying to make the result more readable by using
+>>> separate paragraphs for separate conceptual points, but then isn't
+>>> it wrong to have "False by default" as part of stating which
+>>> platforms are intended targets?  I wonder if we want to have that
+>>> last line as its own paragraph instead.
+>>
+>> I was happy with it being a simple separate sentence.
+>
+> I am also _for_ a separate sentence.  But when a set of three
+> paragraphs, i.e.
+>
+> A, something about A, and things about A.
+>
+>        B, something about B, and things about B.
+>
+>        C, something about C, and things about C.
+>
+> and you want to say something X that is not specific to A or B or C,
+> would you add that X at the end of C's paragraph, resulting in:
+>
+> A, something about A, and things about A.
+>
+>        B, something about B, and things about B.
+>
+>        C, something about C, and things about C.  X that applies to
+>        all of A, B and C.
+>
+> or would it be more clear to see:
+>
+> A, something about A, and things about A.
+>
+>        B, something about B, and things about B.
+>
+>        C, something about C, and things about C.
+>
+>        X that applies to all of A, B and C.
+>
+> was the question.  I think a simple separate sentence should not be
+> part of the same "In what situations this is useful" paragraph.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+In this case my split was about making sure that B was a distinct item
+within the flow, rather than being a single ABC paragraph, where the
+middle item gets lost in the noise [1]. People do remember the first an=
+d
+last item (sentence), so the default is easy to see.
 
-iQIcBAEBAgAGBQJUsXV8AAoJEG8/JgBt8ol8ZPsP/jHdAjp+C9gHfSmXh1o+Yc6Y
-YqtINZLnn+L+mvAgGquJ9blqogLTFqseLnKh1dL/Jkv6hC8smJPYL/sEbI/Lq4Qz
-hS2GIpwAJigma/OM4qXnZMonyZY/BLncFN+zJMYMcIecBm1FLLJeDSfIQb5B6biI
-bjN+MttB3pRT3Ib0+kPtD574iVgqHw2mkBAJHbKY4i+h65U/Rli5GIoUpuJKA2nl
-S4vwcPWxNmDNQQKx8IaO4U/B6t2qSOh1IrKyrkunDY/HRzskwVU7Qg00YlIpGZWJ
-HcaKLSkJcwKReb0oZqWdG+5UYc80Uqyl38FqX9xErpAhmlFERZqxiElM72KhS0iR
-Q1LZnklc+FtFrkxfgKbA1mpvMKMbCUMyhtp1cOQaGD4PmNT0+rzugJO1tnM2Hal8
-+DpQJIq483DzA3YXR3ZC+z8i4POaI8qnlIYPf2CdizEnLi04ybTzSxjKZ7vFhTDl
-ENVlDRDhicyg+nGvwCrekSdhJqCy/hcqfIGi/TBR1tY6PHncJS8S7I19wA7gQUhf
-D9MxKUzdzmnO6lqbhEcKZjCFDUmxB26hHCb2BWquYyANEOa7/uVG02dPRAnA4sRh
-7wzf8cL08tFDPtJHHXaQ/ZQn8f2tXelE8CVqdaPFtbBYXWqcVTC1Vi3bjjGLfj5t
-YchTca+ExgDf+SsNQ5MH
-=wOwG
------END PGP SIGNATURE-----
+--
+Philip
 
---CykseNgfyvuYXqns--
+[1] Losing the middle item(s) in a list is a common human error, and is
+commonly cited in human factors studies e.g. "Human Error", Reason.J,
+0521314194, cites Three Mile Island maintenance errors from poor
+documentation among others.
