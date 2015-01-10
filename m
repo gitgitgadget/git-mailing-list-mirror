@@ -1,137 +1,99 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH 2/2] t1020-subdirectory.sh: check hook pwd, $GIT_PREFIX
-Date: Sat, 10 Jan 2015 09:25:18 +0100
-Message-ID: <54B0E1EE.2020301@kdbg.org>
-References: <1420872598-9609-1-git-send-email-rhansen@bbn.com> <1420872598-9609-3-git-send-email-rhansen@bbn.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Richard Hansen <rhansen@bbn.com>
-X-From: git-owner@vger.kernel.org Sat Jan 10 09:25:34 2015
+From: Alexander Kuleshov <kuleshovmail@gmail.com>
+Subject: [PATCH] git.c: prevent change of environment variables
+Date: Sat, 10 Jan 2015 18:53:36 +0600
+Message-ID: <1420894416-22615-1-git-send-email-kuleshovmail@gmail.com>
+Cc: git@vger.kernel.org, Alexander Kuleshov <kuleshovmail@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 10 13:54:11 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Y9rMT-0007AQ-Om
-	for gcvg-git-2@plane.gmane.org; Sat, 10 Jan 2015 09:25:34 +0100
+	id 1Y9vYH-0007zN-0V
+	for gcvg-git-2@plane.gmane.org; Sat, 10 Jan 2015 13:54:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751991AbbAJIZ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Jan 2015 03:25:29 -0500
-Received: from bsmtp7.bon.at ([213.33.87.19]:56809 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751306AbbAJIZ3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Jan 2015 03:25:29 -0500
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTPSA id 3kKDl94jPHz5tlG;
-	Sat, 10 Jan 2015 09:25:25 +0100 (CET)
-Received: from dx.sixt.local (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 27E1D19F813;
-	Sat, 10 Jan 2015 09:25:19 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
-In-Reply-To: <1420872598-9609-3-git-send-email-rhansen@bbn.com>
+	id S1752579AbbAJMx4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Jan 2015 07:53:56 -0500
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:59038 "EHLO
+	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752047AbbAJMxz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Jan 2015 07:53:55 -0500
+Received: by mail-lb0-f174.google.com with SMTP id 10so12549768lbg.5
+        for <git@vger.kernel.org>; Sat, 10 Jan 2015 04:53:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=XPMt0o/uijZWBJ7qZP63WWhF8FCQ9Aw8emb+tSbMZdk=;
+        b=XZ5iFqTYHGb5tSTo4/IXHI2/pZT6lzk1Ud60mru0Cioet43cTd52Uc08AE0Ka+oOVo
+         CtiFIHqeEYa2/AnzO4abYC2sopvuppEcVxlPSTfOaEbgR8e4CiBPOy1dCYPonSFVpmrc
+         9ONlWVK4adiUMZlNsAuYNwA/OmRCnDxcwOyL3GUyR1DhMTa3cnVjYiG2l/hHkFPRNHr1
+         wwmPmOsWNsPEWZgaXrXbCc/LAv+zU8fVtA697rdQTdQb83JpEwEwuq6lqv7CEpJwZA8G
+         AxHYrhYafRhz3Au2CADQdQ7uNKtQ3452YNg//xkpq/P7ZNG5YIgyi9ISHdkDxOuYLauE
+         pbgg==
+X-Received: by 10.152.20.98 with SMTP id m2mr27088373lae.49.1420894433535;
+        Sat, 10 Jan 2015 04:53:53 -0800 (PST)
+Received: from localhost.localdomain ([95.59.92.204])
+        by mx.google.com with ESMTPSA id bs3sm2543269lbd.37.2015.01.10.04.53.51
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sat, 10 Jan 2015 04:53:52 -0800 (PST)
+X-Mailer: git-send-email 2.2.1.531.g5addc96.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262259>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262260>
 
-Am 10.01.2015 um 07:49 schrieb Richard Hansen:
-> Make sure hooks are executed at the top-level directory and that
-> GIT_PREFIX is set (as documented).
-> 
-> Signed-off-by: Richard Hansen <rhansen@bbn.com>
-> ---
->  t/t1020-subdirectory.sh | 34 ++++++++++++++++++++++++++++++++++
->  1 file changed, 34 insertions(+)
-> 
-> diff --git a/t/t1020-subdirectory.sh b/t/t1020-subdirectory.sh
-> index 2edb4f2..03bb0a2 100755
-> --- a/t/t1020-subdirectory.sh
-> +++ b/t/t1020-subdirectory.sh
-> @@ -128,6 +128,23 @@ test_expect_success !MINGW '!alias expansion' '
->  	test_cmp expect actual
->  '
->  
-> +test_expect_success 'hook pwd' '
-> +	pwd >expect &&
-> +	(
-> +		rm -f actual &&
-> +		mkdir -p .git/hooks &&
-> +		! test -e .git/hooks/post-checkout &&
+We can't change environment variables in aliases which doesn't start with '!'
 
-What is the purpose of this test?
+* 'git --exec-path=path' changes $GIT_EXEC_PATH variable in
+git_set_argv_exec_path
 
-> +		cat <<-\EOF >.git/hooks/post-checkout &&
-> +			#!/bin/sh
-> +			pwd >actual
-> +		EOF
-> +		chmod +x .git/hooks/post-checkout &&
+* 'git -p/--paginate' sets 'use_pager' to 1 and commit_pager_choice
+will change $GIT_PAGER_IN_USE variable in setup_pager(void) from pager.c
 
-Use write_script() to construct a shell script.
+* 'git -c' calls git_config_push_parameter which will change
+$GIT_CONFIG_PARAMETERS variable
 
-> +		(cd dir && git checkout -- two) &&
-> +		rm -f .git/hooks/post-checkout
+Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
+---
+ git.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-This cleanup would be skipped if the checkout fails for some reason. Use
-test_when_finished.
-
-> +	) &&
-
-The outer sub-shell us unnecessary, isn't it?
-
-> +	test_cmp expect actual
-
-If 'git checkout' runs the hook from the wrong directory, there would
-not exist a file 'actual' at this point because it was rm -f'd earlier,
-and the test would fail. Perhaps it would make sense to document this
-failure case by inserting
-
-	test_path_is_file actual &&
-
-before the test_cmp?
-
-Which makes me think: Would the test for existence of 'actual' be
-sufficient? Then the test_cmp could be omitted. The advantage is that we
-do not depend on how the `pwd` is formatted: With or without symbolic
-links in any leading path or c:/foo vs. /c/foo on Windows. (I anticipate
-that the test as written fails on Windows because 'expect' is in c:/foo
-form and 'actual' is in /c/foo form.)
-
-> +'
-> +
->  test_expect_success 'GIT_PREFIX for !alias' '
->  	printf "dir/" >expect &&
->  	(
-> @@ -154,6 +171,23 @@ test_expect_success 'GIT_PREFIX for built-ins' '
->  	test_cmp expect actual
->  '
->  
-> +test_expect_success 'GIT_PREFIX for hooks' '
-> +	printf "dir/" >expect &&
-> +	(
-> +		rm -f actual &&
-> +		mkdir -p .git/hooks &&
-> +		! test -e .git/hooks/post-checkout &&
-> +		cat <<-\EOF >.git/hooks/post-checkout &&
-> +			#!/bin/sh
-> +			printf %s "$GIT_PREFIX" >actual
-> +		EOF
-> +		chmod +x .git/hooks/post-checkout &&
-> +		(cd dir && git checkout -- two) &&
-> +		rm -f .git/hooks/post-checkout
-> +	)  &&
-
-The comments about the sub-shell, write_script, and clean-up apply here,
-too.
-
-> +	test_cmp expect actual
-> +'
-> +
->  test_expect_success 'no file/rev ambiguity check inside .git' '
->  	git commit -a -m 1 &&
->  	(
-> 
-
--- Hannes
+diff --git a/git.c b/git.c
+index c9bec99..3e87f05 100644
+--- a/git.c
++++ b/git.c
+@@ -89,8 +89,11 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
+ 		 * Check remaining flags.
+ 		 */
+ 		if (skip_prefix(cmd, "--exec-path", &cmd)) {
+-			if (*cmd == '=')
++			if (*cmd == '=') {
+ 				git_set_argv_exec_path(cmd + 1);
++				if (envchanged)
++					*envchanged = 1;
++			}
+ 			else {
+ 				puts(git_exec_path());
+ 				exit(0);
+@@ -106,6 +109,8 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
+ 			exit(0);
+ 		} else if (!strcmp(cmd, "-p") || !strcmp(cmd, "--paginate")) {
+ 			use_pager = 1;
++			if (envchanged)
++				*envchanged = 1;
+ 		} else if (!strcmp(cmd, "--no-pager")) {
+ 			use_pager = 0;
+ 			if (envchanged)
+@@ -171,6 +176,8 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
+ 				usage(git_usage_string);
+ 			}
+ 			git_config_push_parameter((*argv)[1]);
++			if (envchanged)
++				*envchanged = 1;
+ 			(*argv)++;
+ 			(*argc)--;
+ 		} else if (!strcmp(cmd, "--literal-pathspecs")) {
+-- 
+2.2.1.531.g5addc96.dirty
