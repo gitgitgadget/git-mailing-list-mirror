@@ -1,148 +1,103 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] blame.c: fix garbled error message
-Date: Mon, 12 Jan 2015 11:08:26 -0800
-Message-ID: <xmqq4mrv95qt.fsf@gitster.dls.corp.google.com>
-References: <1420925601-21615-1-git-send-email-git@cryptocrack.de>
+Subject: Re: [PATCH v2 1/2] Documentation/githooks: mention pwd, $GIT_PREFIX
+Date: Mon, 12 Jan 2015 11:56:50 -0800
+Message-ID: <xmqqzj9n7oxp.fsf@gitster.dls.corp.google.com>
+References: <54B0E1EE.2020301@kdbg.org>
+	<1420931503-22857-1-git-send-email-rhansen@bbn.com>
+	<1420931503-22857-2-git-send-email-rhansen@bbn.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Lukas Fleischer <git@cryptocrack.de>
-X-From: git-owner@vger.kernel.org Mon Jan 12 20:08:51 2015
+Cc: j6t@kdbg.org, git@vger.kernel.org
+To: Richard Hansen <rhansen@bbn.com>
+X-From: git-owner@vger.kernel.org Mon Jan 12 20:57:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YAkM5-0004d5-Sw
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Jan 2015 20:08:50 +0100
+	id 1YAl6h-0003OY-04
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Jan 2015 20:56:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756699AbbALTIf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Jan 2015 14:08:35 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:60726 "EHLO
+	id S1753705AbbALT4y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Jan 2015 14:56:54 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:57701 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755322AbbALTIc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Jan 2015 14:08:32 -0500
+	with ESMTP id S1750788AbbALT4x (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Jan 2015 14:56:53 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 65A262F739;
-	Mon, 12 Jan 2015 14:08:31 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 99CC42F3D6;
+	Mon, 12 Jan 2015 14:56:52 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=LqJaADKagDhK2tK0i6uiapBDN4U=; b=qM4mI/VAg0zRnIzYGkOg
-	8y+8f2Ak63qAwZPvVkmJdgBaATsEFuT8PQjgOV0462aZpVHb3rikwXyiXdARYnzS
-	nT6hwsiRLauL5I8sZDgnklsT/ORAexTqSLRuLiDU2X0Zm+06pnL5+DmvW4Yz8gzo
-	1deqhb2vxLkNHTEa6S8ANmg=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=zEWRA6wRwjt1ugIcW1Esd4mOgtc=; b=hfyOlL
+	N7I0as6vZc6eExR9SP6RrNjUuxnHIE7B04Wtp+mM5JhOnsH1EmDn3B6f1dgxqLjC
+	sfcovAWwlQZqnF4b2y2QPVdwRipAt2iRkoWCWHGfzlu+2qhfQn73sdO7sDSdvVkc
+	zEa3RjdwMJNqT+yBX1a4USVBGcNoXvDyB3Un8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=GioFEkM2PZvon2pyfyyjQfuP6sWaB2GbNiSS78r2PGgjSl
-	geoq1KUHjtDzbO//1cBBKxzylWfCku3gTfpEeDQWL2aiKvCpUQ7Ts4ZJMnZU9FAI
-	Qs3gRoWKWZyozx6LOVfxT5TlClDb0F036p1Rb3eb2F0nRMBn7W5AULd+d7goI=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=lglMVep5ABTjTrh8Selava2B9r6VTHcG
+	L/JtU8Hq/X6O/4q4qVxYxIP6VJB/fDsaeqE6y5qElPYYq9uAAIImxdpLX5jKPZ49
+	aJIoRjm9l9794I6cKr+g6Cm5lMVqqtRUBTufgB0jS+Bm6D9XjxTiOY8QVZVk7/Dm
+	C6Diu8eNr1M=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 596212F738;
-	Mon, 12 Jan 2015 14:08:31 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 90C762F3D5;
+	Mon, 12 Jan 2015 14:56:52 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 628352F735;
-	Mon, 12 Jan 2015 14:08:27 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0EEFA2F3D1;
+	Mon, 12 Jan 2015 14:56:51 -0500 (EST)
+In-Reply-To: <1420931503-22857-2-git-send-email-rhansen@bbn.com> (Richard
+	Hansen's message of "Sat, 10 Jan 2015 18:11:42 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 639008A4-9A8E-11E4-95B4-42529F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 26DC1DD8-9A95-11E4-ABC1-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262290>
 
-Lukas Fleischer <git@cryptocrack.de> writes:
+Richard Hansen <rhansen@bbn.com> writes:
 
-> The helper functions prepare_final() and prepare_initial() return a
-> pointer to a string that is a member of an object in the revs->pending
-> array. This array is later rebuilt when running prepare_revision_walk()
-> which potentially transforms the pointer target into a bogus string. Fix
-> this by maintaining a copy of the original string.
+> Document that hooks are run from the top-level directory and that
+> GIT_PREFIX is set to the name of the original subdirectory (relative
+> to the top-level directory).
 >
-> Signed-off-by: Lukas Fleischer <git@cryptocrack.de>
+> Signed-off-by: Richard Hansen <rhansen@bbn.com>
 > ---
-> The bug manifests when running `git blame HEAD^ -- nonexistent.file`.
-
-Before 1da1e07c (clean up name allocation in prepare_revision_walk,
-2014-10-15), these strings used to be non-volatile; they were instead
-leaked more or less deliberately.  But these days, these strings are
-cleared, so your patch is absolutely the right thing to do.
-
-Thanks for catching and fixing.  This fix needs to go to the 2.2.x
-maintenance track.
-
-> Note that I could have reduced code churn a little by moving the
-> xstrdup() invocations to the call sites. However, I think that the
-> return value of these functions should not depend on the consistency of
-> a volatile data structure. On the other hand, you might also argue that
-> there currently are only two call sites and that the functions are
-> marked static, so if you prefer the less intrusive version, please let
-> me know.
-
-FWIW, I agree that this can be argued either way.
-
-If we had a common low-level API that is used by short-term users to
-grab these names, it would be reasonable to make it the callers'
-responsibility to strdup() the return values for safekeeping if they
-want to keep using them long after the function returns.  But I
-agree that prepare_final/prepare_initial are not such a low-level
-common API functions.  I do not care too much about who does the
-strdup(), either the callers of prepare_* or the callee.
-
+>  Documentation/githooks.txt | 6 ++++++
+>  1 file changed, 6 insertions(+)
 >
->  builtin/blame.c | 12 +++++++-----
->  1 file changed, 7 insertions(+), 5 deletions(-)
->
-> diff --git a/builtin/blame.c b/builtin/blame.c
-> index 303e217..34d6f4f 100644
-> --- a/builtin/blame.c
-> +++ b/builtin/blame.c
-> @@ -2390,7 +2390,7 @@ static struct commit *fake_working_tree_commit(struct diff_options *opt,
->  	return commit;
->  }
+> diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+> index 9ef2469..c08f4fd 100644
+> --- a/Documentation/githooks.txt
+> +++ b/Documentation/githooks.txt
+> @@ -26,6 +26,12 @@ executable by default.
 >  
-> -static const char *prepare_final(struct scoreboard *sb)
-> +static char *prepare_final(struct scoreboard *sb)
->  {
->  	int i;
->  	const char *final_commit_name = NULL;
-> @@ -2415,10 +2415,10 @@ static const char *prepare_final(struct scoreboard *sb)
->  		sb->final = (struct commit *) obj;
->  		final_commit_name = revs->pending.objects[i].name;
->  	}
-> -	return final_commit_name;
-> +	return xstrdup(final_commit_name);
->  }
+>  This document describes the currently defined hooks.
 >  
-> -static const char *prepare_initial(struct scoreboard *sb)
-> +static char *prepare_initial(struct scoreboard *sb)
->  {
->  	int i;
->  	const char *final_commit_name = NULL;
-> @@ -2445,7 +2445,7 @@ static const char *prepare_initial(struct scoreboard *sb)
->  	}
->  	if (!final_commit_name)
->  		die("No commit to dig down to?");
-> -	return final_commit_name;
-> +	return xstrdup(final_commit_name);
->  }
->  
->  static int blame_copy_callback(const struct option *option, const char *arg, int unset)
-> @@ -2489,7 +2489,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
->  	struct origin *o;
->  	struct blame_entry *ent = NULL;
->  	long dashdash_pos, lno;
-> -	const char *final_commit_name = NULL;
-> +	char *final_commit_name = NULL;
->  	enum object_type type;
->  
->  	static struct string_list range_list;
-> @@ -2786,6 +2786,8 @@ parse_done:
->  
->  	assign_blame(&sb, opt);
->  
-> +	free(final_commit_name);
+> +Hooks are executed from the top-level directory of a repository, which
+> +may not necessarily be the current directory.
+
+I agree that it is a good idea to describe how the hook writers can
+go to the top-level directory and how the hook writers can discover
+where the hooked operation started, but these two lines cannot be
+the whole story---what happens when there is no top-level directory
+(i.e. a bare repository)?
+
+Is this universal to all hooks, or just the ones you examined?  I
+ask this because I know we do not go through a single interface to
+call out to hooks that says "cd to the root and then run the hook
+given as an argument".
+
+> +The 'GIT_PREFIX' environment variable is set as returned by running
+> +'git rev-parse --show-prefix' from the original current directory.
+
+Is this also universal, or is it set only for some but not all
+hooks?  What happens in a bare repository?  What is given if you are
+in a non-bare repository and are already at the root level?
+
+> +See linkgit:git-rev-parse[1].
 > +
->  	if (incremental)
->  		return 0;
+>  HOOKS
+>  -----
