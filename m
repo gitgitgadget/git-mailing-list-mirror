@@ -1,91 +1,49 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] http-push: trim trailing newline from remote symref
-Date: Mon, 12 Jan 2015 21:28:58 -0500
-Message-ID: <20150113022857.GA4087@peff.net>
+From: "Suklee Peck" <chaibi.medthameur@iresa.agrinet.tn>
+Subject: Re:Investment
+Date: Mon, 12 Jan 2015 09:34:02 -0800
+Message-ID: <20150112212930.DBD3923E9D@mta.agrinet.tn>
+Reply-To: saitt1@qq.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 13 03:29:06 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: Recipients <chaibi.medthameur@iresa.agrinet.tn>
+X-From: git-owner@vger.kernel.org Tue Jan 13 03:55:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YArE7-0000Gb-VP
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Jan 2015 03:29:04 +0100
+	id 1YArde-0001Pp-99
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Jan 2015 03:55:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753327AbbAMC27 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Jan 2015 21:28:59 -0500
-Received: from cloud.peff.net ([50.56.180.127]:33639 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752546AbbAMC26 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Jan 2015 21:28:58 -0500
-Received: (qmail 20563 invoked by uid 102); 13 Jan 2015 02:28:59 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 12 Jan 2015 20:28:58 -0600
-Received: (qmail 22943 invoked by uid 107); 13 Jan 2015 02:29:19 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 12 Jan 2015 21:29:19 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 12 Jan 2015 21:28:58 -0500
-Content-Disposition: inline
+	id S1752270AbbAMCzV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Jan 2015 21:55:21 -0500
+Received: from agrinetmail20.outgw.tn ([196.203.249.26]:53912 "EHLO
+	agrinetmail20.outgw.tn" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751938AbbAMCzV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Jan 2015 21:55:21 -0500
+X-Greylist: delayed 11037 seconds by postgrey-1.27 at vger.kernel.org; Mon, 12 Jan 2015 21:55:21 EST
+Received: from mta.agrinet.tn (unknown [193.95.21.21])
+	by agrinetmail20.outgw.tn (Postfix) with ESMTP id 1EE81572B;
+	Mon, 12 Jan 2015 23:43:17 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mta.agrinet.tn (Postfix) with ESMTP id 2472223E2F;
+	Mon, 12 Jan 2015 23:09:43 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mta.agrinet.tn
+Received: from mta.agrinet.tn ([127.0.0.1])
+	by localhost (mta.agrinet.tn [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id iFGI-odRBLiM; Mon, 12 Jan 2015 23:09:42 +0100 (CET)
+Received: from [23.227.199.61] (unknown [23.227.199.61])
+	by mta.agrinet.tn (Postfix) with ESMTPSA id DBD3923E9D;
+	Mon, 12 Jan 2015 22:29:30 +0100 (CET)
+Content-Description: Mail message body
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262323>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262324>
 
-When we fetch a symbolic ref file from the remote, we get
-the whole string "ref: refs/heads/master\n", recognize it by
-skipping past the "ref: ", and store the rest. We should
-chomp the trailing newline.
+I'm contacting you on behalf of an investment placed under management 5 years ago by Shui bian. He needs assistance in investing these funds. If you are interested, you can write to his private email ( saitt1@qq.com ) for further details.
 
-This bug was introduced in ae021d8 (use skip_prefix to avoid
-magic numbers, 2014-06-18), which did not notice that the
-length computation fed to xmemdupz was quietly tweaked by 1
-to account for this.
-
-We can solve it by explicitly trimming the newline, which is
-more obvious. Note that we use strbuf_rtrim here, which will
-actually cut off any trailing whitespace, not just a single
-newline. This is a good thing, though, as it makes our
-parsing more liberal (and spaces are not valid in refnames
-anyway).
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-This is a regression in v2.1.0.
-
-It was causing t5540 to fail, but I realized I have been building with
-NO_EXPAT for a while, so I didn't notice. Frankly, I'm kind of surprised
-and disturbed that nobody noticed it before now. More evidence that we
-can kill off dumb http-push? I would have thought somebody else would
-have noticed the test failure, though.
-
-I am embarrassed to have introduced the bug during a refactoring patch.
-But in my defense, the original code was quite subtle and horrible, and
-I think the end result at least is much obvious (and is a good point in
-favor of skip_prefix's existence!). The original came from eecc836
-(Another memory overrun in http-push.c, 2007-03-01). Looking at that
-patch, I can't understand how the code before it ever worked in the
-first place.
-
- http-push.c | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/http-push.c b/http-push.c
-index 26dfa67..184d24a 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -1578,6 +1578,9 @@ static void fetch_symref(const char *path, char **symref, unsigned char *sha1)
- 	if (buffer.len == 0)
- 		return;
- 
-+	/* Cut off trailing newline. */
-+	strbuf_rtrim(&buffer);
-+
- 	/* If it's a symref, set the refname; otherwise try for a sha1 */
- 	if (skip_prefix(buffer.buf, "ref: ", &name)) {
- 		*symref = xmemdupz(name, buffer.len - (name - buffer.buf));
--- 
-2.2.1.425.g441bb3c
+Best Regards,
+Suklee Peck
