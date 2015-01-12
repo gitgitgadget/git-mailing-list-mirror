@@ -1,73 +1,148 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] gettext.h: add parentheses around N_ expansion if supported
-Date: Mon, 12 Jan 2015 11:08:20 -0800
-Message-ID: <xmqqbnm395qz.fsf@gitster.dls.corp.google.com>
-References: <47914a9078cc9d272204ec00825d67f@74d39fa044aa309eaea14b9f57fe79c>
+Subject: Re: [PATCH] blame.c: fix garbled error message
+Date: Mon, 12 Jan 2015 11:08:26 -0800
+Message-ID: <xmqq4mrv95qt.fsf@gitster.dls.corp.google.com>
+References: <1420925601-21615-1-git-send-email-git@cryptocrack.de>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Git mailing list <git@vger.kernel.org>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-To: "Kyle J. McKay" <mackyle@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 12 20:08:36 2015
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Lukas Fleischer <git@cryptocrack.de>
+X-From: git-owner@vger.kernel.org Mon Jan 12 20:08:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YAkLq-0004WW-M6
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Jan 2015 20:08:35 +0100
+	id 1YAkM5-0004d5-Sw
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Jan 2015 20:08:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756697AbbALTI3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Jan 2015 14:08:29 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:57220 "EHLO
+	id S1756699AbbALTIf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Jan 2015 14:08:35 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:60726 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755337AbbALTI0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Jan 2015 14:08:26 -0500
+	with ESMTP id S1755322AbbALTIc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Jan 2015 14:08:32 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E93A52F731;
-	Mon, 12 Jan 2015 14:08:25 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 65A262F739;
+	Mon, 12 Jan 2015 14:08:31 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=+PW9fx1KmW84ZTlvvACOkw7cd88=; b=f1B170CwXD7IPwHQyHbn
-	8qnzsD7/nh6LfebxqCZRBwuGHTovnyxs05TLSsSrMidnPVtv4vRQHTMvWV5+vBMX
-	MhTcWfdN9V1pqggWx51NycUbI9Efxty/G878zetEskNRpXe3JB30nA7fzcklqpFH
-	/exAKxvLLrzexfop3pO0mkI=
+	 s=sasl; bh=LqJaADKagDhK2tK0i6uiapBDN4U=; b=qM4mI/VAg0zRnIzYGkOg
+	8y+8f2Ak63qAwZPvVkmJdgBaATsEFuT8PQjgOV0462aZpVHb3rikwXyiXdARYnzS
+	nT6hwsiRLauL5I8sZDgnklsT/ORAexTqSLRuLiDU2X0Zm+06pnL5+DmvW4Yz8gzo
+	1deqhb2vxLkNHTEa6S8ANmg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=AMFY/ciWAvS29fKnqhz6W1CqDoG8RiLbnsbEa2Xs9+i8CS
-	gr/v4rUmy0F1YKbmumS7L5Mr8pVQudL3rea/bqFQ10TQ63bNWrq0oZ/nWeFUGugI
-	m1MDwgjaPsgiu4Yyl2MS9mMN+i8Hon+uXxsIniCJZL3AwI2RxyIzCckDtgPPs=
+	 q=dns; s=sasl; b=GioFEkM2PZvon2pyfyyjQfuP6sWaB2GbNiSS78r2PGgjSl
+	geoq1KUHjtDzbO//1cBBKxzylWfCku3gTfpEeDQWL2aiKvCpUQ7Ts4ZJMnZU9FAI
+	Qs3gRoWKWZyozx6LOVfxT5TlClDb0F036p1Rb3eb2F0nRMBn7W5AULd+d7goI=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D9BEC2F730;
-	Mon, 12 Jan 2015 14:08:25 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 596212F738;
+	Mon, 12 Jan 2015 14:08:31 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9B9392F727;
-	Mon, 12 Jan 2015 14:08:21 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 628352F735;
+	Mon, 12 Jan 2015 14:08:27 -0500 (EST)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 601E97C6-9A8E-11E4-B579-42529F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 639008A4-9A8E-11E4-95B4-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262288>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262289>
 
-"Kyle J. McKay" <mackyle@gmail.com> writes:
+Lukas Fleischer <git@cryptocrack.de> writes:
 
-> The "yes", "no", "auto" settings for the new Makefile configuration
-> variable "USE_PARENS_AROUND_GETTEXT_N" are based on the way the
-> Makefile variable "COMPUTE_HEADER_DEPENDENCIES" works.  So I used
-> "yes" and "no" for consistency instead of "Yes" and "No".
+> The helper functions prepare_final() and prepare_initial() return a
+> pointer to a string that is a member of an object in the revs->pending
+> array. This array is later rebuilt when running prepare_revision_walk()
+> which potentially transforms the pointer target into a bogus string. Fix
+> this by maintaining a copy of the original string.
+>
+> Signed-off-by: Lukas Fleischer <git@cryptocrack.de>
+> ---
+> The bug manifests when running `git blame HEAD^ -- nonexistent.file`.
 
-Thanks for a careful execution of my clumsy illustration.
+Before 1da1e07c (clean up name allocation in prepare_revision_walk,
+2014-10-15), these strings used to be non-volatile; they were instead
+leaked more or less deliberately.  But these days, these strings are
+cleared, so your patch is absolutely the right thing to do.
 
-> +# and define it to "no" if you need to remove the parentheses () around the
-> +# constant.  The default is "auto", which means to use parentheses if your
-> +# compiler is detected to support it.
+Thanks for catching and fixing.  This fix needs to go to the 2.2.x
+maintenance track.
 
-Strictly speaking, s/detected to/most likely to/, as we are only
-checking "__GNUC__", but we can leave the phrasing as-is and wait
-until somebody complains.
+> Note that I could have reduced code churn a little by moving the
+> xstrdup() invocations to the call sites. However, I think that the
+> return value of these functions should not depend on the consistency of
+> a volatile data structure. On the other hand, you might also argue that
+> there currently are only two call sites and that the functions are
+> marked static, so if you prefer the less intrusive version, please let
+> me know.
 
-Thanks.
+FWIW, I agree that this can be argued either way.
+
+If we had a common low-level API that is used by short-term users to
+grab these names, it would be reasonable to make it the callers'
+responsibility to strdup() the return values for safekeeping if they
+want to keep using them long after the function returns.  But I
+agree that prepare_final/prepare_initial are not such a low-level
+common API functions.  I do not care too much about who does the
+strdup(), either the callers of prepare_* or the callee.
+
+>
+>  builtin/blame.c | 12 +++++++-----
+>  1 file changed, 7 insertions(+), 5 deletions(-)
+>
+> diff --git a/builtin/blame.c b/builtin/blame.c
+> index 303e217..34d6f4f 100644
+> --- a/builtin/blame.c
+> +++ b/builtin/blame.c
+> @@ -2390,7 +2390,7 @@ static struct commit *fake_working_tree_commit(struct diff_options *opt,
+>  	return commit;
+>  }
+>  
+> -static const char *prepare_final(struct scoreboard *sb)
+> +static char *prepare_final(struct scoreboard *sb)
+>  {
+>  	int i;
+>  	const char *final_commit_name = NULL;
+> @@ -2415,10 +2415,10 @@ static const char *prepare_final(struct scoreboard *sb)
+>  		sb->final = (struct commit *) obj;
+>  		final_commit_name = revs->pending.objects[i].name;
+>  	}
+> -	return final_commit_name;
+> +	return xstrdup(final_commit_name);
+>  }
+>  
+> -static const char *prepare_initial(struct scoreboard *sb)
+> +static char *prepare_initial(struct scoreboard *sb)
+>  {
+>  	int i;
+>  	const char *final_commit_name = NULL;
+> @@ -2445,7 +2445,7 @@ static const char *prepare_initial(struct scoreboard *sb)
+>  	}
+>  	if (!final_commit_name)
+>  		die("No commit to dig down to?");
+> -	return final_commit_name;
+> +	return xstrdup(final_commit_name);
+>  }
+>  
+>  static int blame_copy_callback(const struct option *option, const char *arg, int unset)
+> @@ -2489,7 +2489,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+>  	struct origin *o;
+>  	struct blame_entry *ent = NULL;
+>  	long dashdash_pos, lno;
+> -	const char *final_commit_name = NULL;
+> +	char *final_commit_name = NULL;
+>  	enum object_type type;
+>  
+>  	static struct string_list range_list;
+> @@ -2786,6 +2786,8 @@ parse_done:
+>  
+>  	assign_blame(&sb, opt);
+>  
+> +	free(final_commit_name);
+> +
+>  	if (incremental)
+>  		return 0;
