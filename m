@@ -1,103 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/2] Documentation/githooks: mention pwd, $GIT_PREFIX
-Date: Mon, 12 Jan 2015 11:56:50 -0800
-Message-ID: <xmqqzj9n7oxp.fsf@gitster.dls.corp.google.com>
-References: <54B0E1EE.2020301@kdbg.org>
-	<1420931503-22857-1-git-send-email-rhansen@bbn.com>
-	<1420931503-22857-2-git-send-email-rhansen@bbn.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] blame.c: fix garbled error message
+Date: Mon, 12 Jan 2015 15:40:26 -0500
+Message-ID: <20150112204025.GB9686@peff.net>
+References: <1420925601-21615-1-git-send-email-git@cryptocrack.de>
+ <xmqq4mrv95qt.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: j6t@kdbg.org, git@vger.kernel.org
-To: Richard Hansen <rhansen@bbn.com>
-X-From: git-owner@vger.kernel.org Mon Jan 12 20:57:00 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Lukas Fleischer <git@cryptocrack.de>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 12 21:40:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YAl6h-0003OY-04
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Jan 2015 20:56:59 +0100
+	id 1YAlmq-0005wT-EL
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Jan 2015 21:40:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753705AbbALT4y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Jan 2015 14:56:54 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:57701 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750788AbbALT4x (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Jan 2015 14:56:53 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 99CC42F3D6;
-	Mon, 12 Jan 2015 14:56:52 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=zEWRA6wRwjt1ugIcW1Esd4mOgtc=; b=hfyOlL
-	N7I0as6vZc6eExR9SP6RrNjUuxnHIE7B04Wtp+mM5JhOnsH1EmDn3B6f1dgxqLjC
-	sfcovAWwlQZqnF4b2y2QPVdwRipAt2iRkoWCWHGfzlu+2qhfQn73sdO7sDSdvVkc
-	zEa3RjdwMJNqT+yBX1a4USVBGcNoXvDyB3Un8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=lglMVep5ABTjTrh8Selava2B9r6VTHcG
-	L/JtU8Hq/X6O/4q4qVxYxIP6VJB/fDsaeqE6y5qElPYYq9uAAIImxdpLX5jKPZ49
-	aJIoRjm9l9794I6cKr+g6Cm5lMVqqtRUBTufgB0jS+Bm6D9XjxTiOY8QVZVk7/Dm
-	C6Diu8eNr1M=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 90C762F3D5;
-	Mon, 12 Jan 2015 14:56:52 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0EEFA2F3D1;
-	Mon, 12 Jan 2015 14:56:51 -0500 (EST)
-In-Reply-To: <1420931503-22857-2-git-send-email-rhansen@bbn.com> (Richard
-	Hansen's message of "Sat, 10 Jan 2015 18:11:42 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 26DC1DD8-9A95-11E4-ABC1-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1754019AbbALUk2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Jan 2015 15:40:28 -0500
+Received: from cloud.peff.net ([50.56.180.127]:33414 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754011AbbALUk1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Jan 2015 15:40:27 -0500
+Received: (qmail 5822 invoked by uid 102); 12 Jan 2015 20:40:26 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 12 Jan 2015 14:40:26 -0600
+Received: (qmail 20342 invoked by uid 107); 12 Jan 2015 20:40:47 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 12 Jan 2015 15:40:47 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 12 Jan 2015 15:40:26 -0500
+Content-Disposition: inline
+In-Reply-To: <xmqq4mrv95qt.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262291>
 
-Richard Hansen <rhansen@bbn.com> writes:
+On Mon, Jan 12, 2015 at 11:08:26AM -0800, Junio C Hamano wrote:
 
-> Document that hooks are run from the top-level directory and that
-> GIT_PREFIX is set to the name of the original subdirectory (relative
-> to the top-level directory).
->
-> Signed-off-by: Richard Hansen <rhansen@bbn.com>
-> ---
->  Documentation/githooks.txt | 6 ++++++
->  1 file changed, 6 insertions(+)
->
-> diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-> index 9ef2469..c08f4fd 100644
-> --- a/Documentation/githooks.txt
-> +++ b/Documentation/githooks.txt
-> @@ -26,6 +26,12 @@ executable by default.
->  
->  This document describes the currently defined hooks.
->  
-> +Hooks are executed from the top-level directory of a repository, which
-> +may not necessarily be the current directory.
+> Lukas Fleischer <git@cryptocrack.de> writes:
+> 
+> > The helper functions prepare_final() and prepare_initial() return a
+> > pointer to a string that is a member of an object in the revs->pending
+> > array. This array is later rebuilt when running prepare_revision_walk()
+> > which potentially transforms the pointer target into a bogus string. Fix
+> > this by maintaining a copy of the original string.
+> >
+> > Signed-off-by: Lukas Fleischer <git@cryptocrack.de>
+> > ---
+> > The bug manifests when running `git blame HEAD^ -- nonexistent.file`.
+> 
+> Before 1da1e07c (clean up name allocation in prepare_revision_walk,
+> 2014-10-15), these strings used to be non-volatile; they were instead
+> leaked more or less deliberately.  But these days, these strings are
+> cleared, so your patch is absolutely the right thing to do.
+> 
+> Thanks for catching and fixing.  This fix needs to go to the 2.2.x
+> maintenance track.
 
-I agree that it is a good idea to describe how the hook writers can
-go to the top-level directory and how the hook writers can discover
-where the hooked operation started, but these two lines cannot be
-the whole story---what happens when there is no top-level directory
-(i.e. a bare repository)?
+Yeah, agreed. Sorry for not catching this as part of 1da1e07c.
 
-Is this universal to all hooks, or just the ones you examined?  I
-ask this because I know we do not go through a single interface to
-call out to hooks that says "cd to the root and then run the hook
-given as an argument".
+I did a grep for 'pending.*name' to look at any other potential problem
+sites. It looks like blame is the only one that tries to retain a
+long-lived pointer to the name.
 
-> +The 'GIT_PREFIX' environment variable is set as returned by running
-> +'git rev-parse --show-prefix' from the original current directory.
+The other potentially interesting spot is that they are fed to the
+object callbacks from traverse_commit_list for tags. However, none of
+the callbacks saves it (and it would not make much sense to do so; they
+also receive broken-down filenames in the same way, so if they want to
+use it at all, they feed it through path_name() first, which makes a
+copy).
 
-Is this also universal, or is it set only for some but not all
-hooks?  What happens in a bare repository?  What is given if you are
-in a non-bare repository and are already at the root level?
+So I think Lukas's patch fixes everything (and his positioning of the
+strdup() calls is right where I would have put them).
 
-> +See linkgit:git-rev-parse[1].
-> +
->  HOOKS
->  -----
+-Peff
