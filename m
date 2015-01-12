@@ -1,79 +1,220 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] blame.c: fix garbled error message
-Date: Mon, 12 Jan 2015 15:40:26 -0500
-Message-ID: <20150112204025.GB9686@peff.net>
-References: <1420925601-21615-1-git-send-email-git@cryptocrack.de>
- <xmqq4mrv95qt.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-log: added --none-match option
+Date: Mon, 12 Jan 2015 12:51:38 -0800
+Message-ID: <xmqqk30r7med.fsf@gitster.dls.corp.google.com>
+References: <xmqqwq5o5e1j.fsf@gitster.dls.corp.google.com>
+	<1420349268-13479-1-git-send-email-ottxor@gentoo.org>
+	<xmqq61cjo6lq.fsf@gitster.dls.corp.google.com>
+	<CANgp9kxXzt7x9JnnxjrcRLse4m86eDAgWyC4FwKw2U48NjV=ew@mail.gmail.com>
+	<xmqqk30vbm3r.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Lukas Fleischer <git@cryptocrack.de>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 12 21:40:33 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Christoph Junghans <ottxor@gentoo.org>
+X-From: git-owner@vger.kernel.org Mon Jan 12 21:53:27 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YAlmq-0005wT-EL
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Jan 2015 21:40:32 +0100
+	id 1YAlzJ-00044N-VX
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Jan 2015 21:53:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754019AbbALUk2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Jan 2015 15:40:28 -0500
-Received: from cloud.peff.net ([50.56.180.127]:33414 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754011AbbALUk1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Jan 2015 15:40:27 -0500
-Received: (qmail 5822 invoked by uid 102); 12 Jan 2015 20:40:26 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 12 Jan 2015 14:40:26 -0600
-Received: (qmail 20342 invoked by uid 107); 12 Jan 2015 20:40:47 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 12 Jan 2015 15:40:47 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 12 Jan 2015 15:40:26 -0500
-Content-Disposition: inline
-In-Reply-To: <xmqq4mrv95qt.fsf@gitster.dls.corp.google.com>
+	id S1753546AbbALUxV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Jan 2015 15:53:21 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:56392 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751896AbbALUxU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Jan 2015 15:53:20 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5BB8E2F334;
+	Mon, 12 Jan 2015 15:53:19 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=OCC9D9lSzIf/bdouQpijEzxvul4=; b=Mnlm7V
+	8V5jl47jw7+xeUSdDou9cy19XkDwfR1H/16rfPvvBojZaml/pbTlk6nmfDOVuh9G
+	mdSXDVI2V2hgyfNV5lFpdzNs2oJ7noYhxOuJjw795yahV0rvWRnDW6hQYv0Zj2Ts
+	2ZCBzmlW2j4bCsFM+PIxfZRRCm6HoUpaXQ73U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=QlHi9GTNPQesjxPRaYskbiSzju1+TL5n
+	wVxFB5ZfuGqLrRo5/XpyqUSv1HThGWV83kocYIvHnTqhm8aPcsISJm8OwbLcMxKZ
+	Z3cvDszWpre1zY6ZGM3zjQu09AwW941LMPFst3IvJ6Da9k8NlvjhyA6l8byVhIRK
+	2PgBcFoejJw=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 52F1B2F333;
+	Mon, 12 Jan 2015 15:53:19 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 29B412F2E3;
+	Mon, 12 Jan 2015 15:51:40 -0500 (EST)
+In-Reply-To: <xmqqk30vbm3r.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Fri, 09 Jan 2015 14:55:20 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: CEB98E4E-9A9C-11E4-8107-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262291>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262292>
 
-On Mon, Jan 12, 2015 at 11:08:26AM -0800, Junio C Hamano wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Lukas Fleischer <git@cryptocrack.de> writes:
-> 
-> > The helper functions prepare_final() and prepare_initial() return a
-> > pointer to a string that is a member of an object in the revs->pending
-> > array. This array is later rebuilt when running prepare_revision_walk()
-> > which potentially transforms the pointer target into a bogus string. Fix
-> > this by maintaining a copy of the original string.
-> >
-> > Signed-off-by: Lukas Fleischer <git@cryptocrack.de>
-> > ---
-> > The bug manifests when running `git blame HEAD^ -- nonexistent.file`.
-> 
-> Before 1da1e07c (clean up name allocation in prepare_revision_walk,
-> 2014-10-15), these strings used to be non-volatile; they were instead
-> leaked more or less deliberately.  But these days, these strings are
-> cleared, so your patch is absolutely the right thing to do.
-> 
-> Thanks for catching and fixing.  This fix needs to go to the 2.2.x
-> maintenance track.
+> Christoph Junghans <ottxor@gentoo.org> writes:
+>
+>> The only useful thing I could image is using it in conjunction with
+>> --files-with-matches, but that is what --files-without-match is for.
+>
+> Yes, "-l" was exactly what I had in mind and I was hoping that "git
+> grep -l --no-match -e WIP -e TODO -e FIXME -e NEEDSWORK" may be a
+> way to find perfect files without needing any work.
+>
+> You can say "git grep -L -e WIP -e TODO -e FIXME -e NEEDSWORK"
+> instead.  I missed that "-L" option.
 
-Yeah, agreed. Sorry for not catching this as part of 1da1e07c.
+Thanks for your patience.  I should have realized that this not only
+can be "log-only" but _should_ be "log-only".  As you pointed out,
+when we already have "-L", trying to extend it to "grep" does not
+make much sense.
 
-I did a grep for 'pending.*name' to look at any other potential problem
-sites. It looks like blame is the only one that tries to retain a
-long-lived pointer to the name.
+Continuing this line of thought, as we determined that it is
+pointless to have this at "grep" level and it is needed only in the
+"log" family of commands, I would very much prefer the approach
+taken by your original "log --invert-grep" patch.  I would further
+say that I prefer not to touch grep_opt at all.
 
-The other potentially interesting spot is that they are fed to the
-object callbacks from traverse_commit_list for tags. However, none of
-the callbacks saves it (and it would not make much sense to do so; they
-also receive broken-down filenames in the same way, so if they want to
-use it at all, they feed it through path_name() first, which makes a
-copy).
+The new "global-invert bit" is about "we'd run the usual grep thing
+on the log message, and instead of filtering to only show the
+commits with matching message, we only show the ones with messages
+that do not match".  That logically belongs to the revision struct
+that is used to interpret what the underlying grep machinery figured
+out, and should not have to affect the way how underlying grep
+machinery works.
 
-So I think Lukas's patch fixes everything (and his positioning of the
-strdup() calls is right where I would have put them).
+We would want a few test to make sure that we do not break the
+feature in the future changes.  Here is an attempt.  The patch would
+apply any commit your original "--invert-grep" option would have
+applied.
 
--Peff
+Thanks again.
+
+-- >8 --
+Subject: log: teach --invert-grep option
+
+"git log --grep=<string>" shows only commits with messages that
+match the given string, but sometimes it is useful to be able to
+show only commits that do *not* have certain messages (e.g. "show me
+ones that are not FIXUP commits").
+
+Signed-off-by: Christoph Junghans <ottxor@gentoo.org>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+
+ jc: Christoph originally had the invert-grep flag in grep_opt, but
+     because "git grep --invert-grep" does not make sense except in
+     conjunction with "--files-with-matches", which is already
+     covered by "--files-without-matches", I moved it to revisions
+     structure.  I think it expresses what the feature is about
+     better to have the flag there.
+
+     When the newly inserted two tests run, the history would have
+     commits with messages "initial", "second", "third", "fourth",
+     "fifth", "sixth" and Second", committed in this order.  The
+     first commit that does not match either "th" or "Sec" is
+     "second", and "initial" is the one that does not match either
+     "th" or "Sec" case insensitively.
+
+ Documentation/rev-list-options.txt     |  4 ++++
+ contrib/completion/git-completion.bash |  2 +-
+ revision.c                             |  4 +++-
+ revision.h                             |  2 ++
+ t/t4202-log.sh                         | 12 ++++++++++++
+ 5 files changed, 22 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index deb8cca..05aa997 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -66,6 +66,10 @@ if it is part of the log message.
+ 	Limit the commits output to ones that match all given `--grep`,
+ 	instead of ones that match at least one.
+ 
++--invert-grep::
++	Limit the commits output to ones with log message that do not
++	match the pattern specified with `--grep=<pattern>`.
++
+ -i::
+ --regexp-ignore-case::
+ 	Match the regular expression limiting patterns without regard to letter
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 06bf262..53857f0 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1428,7 +1428,7 @@ __git_log_gitk_options="
+ # Options that go well for log and shortlog (not gitk)
+ __git_log_shortlog_options="
+ 	--author= --committer= --grep=
+-	--all-match
++	--all-match --invert-grep
+ "
+ 
+ __git_log_pretty_formats="oneline short medium full fuller email raw format:"
+diff --git a/revision.c b/revision.c
+index 615535c..84b33a3 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1952,6 +1952,8 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 		grep_set_pattern_type_option(GREP_PATTERN_TYPE_PCRE, &revs->grep_filter);
+ 	} else if (!strcmp(arg, "--all-match")) {
+ 		revs->grep_filter.all_match = 1;
++	} else if (!strcmp(arg, "--invert-grep")) {
++		revs->invert_grep = 1;
+ 	} else if ((argcount = parse_long_opt("encoding", argv, &optarg))) {
+ 		if (strcmp(optarg, "none"))
+ 			git_log_output_encoding = xstrdup(optarg);
+@@ -2848,7 +2850,7 @@ static int commit_match(struct commit *commit, struct rev_info *opt)
+ 				     (char *)message, strlen(message));
+ 	strbuf_release(&buf);
+ 	unuse_commit_buffer(commit, message);
+-	return retval;
++	return opt->invert_grep ? !retval : retval;
+ }
+ 
+ static inline int want_ancestry(const struct rev_info *revs)
+diff --git a/revision.h b/revision.h
+index a620530..b0b82e7 100644
+--- a/revision.h
++++ b/revision.h
+@@ -168,6 +168,8 @@ struct rev_info {
+ 
+ 	/* Filter by commit log message */
+ 	struct grep_opt	grep_filter;
++	/* Negate the match of grep_filter */
++	int invert_grep;
+ 
+ 	/* Display history graph */
+ 	struct git_graph *graph;
+diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+index 99ab7ca..1c9934e 100755
+--- a/t/t4202-log.sh
++++ b/t/t4202-log.sh
+@@ -212,6 +212,18 @@ test_expect_success 'log --grep' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'log --invert-grep --grep' '
++	echo second >expect &&
++	git log -1 --pretty="tformat:%s" --invert-grep --grep=th --grep=Sec >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'log --invert-grep --grep -i' '
++	echo initial >expect &&
++	git log -1 --pretty="tformat:%s" --invert-grep -i --grep=th --grep=Sec >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'log --grep option parsing' '
+ 	echo second >expect &&
+ 	git log -1 --pretty="tformat:%s" --grep sec >actual &&
