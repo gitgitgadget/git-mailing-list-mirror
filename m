@@ -1,95 +1,84 @@
-From: "Henning Moll" <newsScott@gmx.de>
-Subject: sporadic git failures on interactive rebase
-Date: Tue, 13 Jan 2015 11:54:32 +0100
-Message-ID: <trinity-5098e61e-b59a-4225-9d4c-8879dc78bb53-1421146472532@3capp-gmx-bs08>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: How to prevent empty git commit --amend
+Date: Tue, 13 Jan 2015 12:20:48 +0100
+Message-ID: <54B4FF90.2050306@drmicha.warpmail.net>
+References: <CA+iO_8mLsdsf1PepiB4M9jJh7pX8brqPdiwAvWGMdfYO0YKrCQ@mail.gmail.com>	<CACx-yZ12mn-EyR5Mx9rmACLtyeYWRdyef4jDqdFAPzeQDm03ug@mail.gmail.com> <CA+iO_8niTScwtYVRV-5wBNHOzr08k=1Vug0yH3+vQ-Y9GgyJKg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 13 11:54:40 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Ivo Anjo <ivo.anjo@ist.utl.pt>,
+	Daniel Knittl-Frank <knittl89@googlemail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 13 12:21:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YAz7P-0004MG-Tn
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Jan 2015 11:54:40 +0100
+	id 1YAzWv-0005Z5-K2
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Jan 2015 12:21:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752164AbbAMKyf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Jan 2015 05:54:35 -0500
-Received: from mout.gmx.net ([212.227.15.19]:57496 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752094AbbAMKye (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Jan 2015 05:54:34 -0500
-Received: from [195.49.159.90] by 3capp-gmx-bs08.server.lan (via HTTP); Tue,
- 13 Jan 2015 11:54:32 +0100
-Importance: normal
-Sensitivity: Normal
-X-Priority: 3
-X-Provags-ID: V03:K0:fzKbV5jFqLYHIeFmkY5ZhX+gL+K5gNkpM9iHGCV4npZ
- OEXj5qh8ZmjKGhFPQ8ZJMVPqMo2k+wkSpjRu+EDc2EzgC35+MX
- uvKwQCXBqEhPBcckm8S3xOftqIw2EGyuV0mDg1sJ8VYWlndWgw
- e2Q6PFWAX1e+/6ghV8wlhyJBNPFnV7aM6tsgCnhjsQ0589TKb2
- O7+Vcx5Lwn8VZx1AlzODNqeZneQ+Fd/yHqZWSAnxlz1tL2qIxW
- dy6r9dXkCki28Yb+YAWCnTP+7FzvdTTL5PcKuyb7VkXVrpmsln 1l5LNY=
-X-UI-Out-Filterresults: notjunk:1;
+	id S1752444AbbAMLUy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Jan 2015 06:20:54 -0500
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:55552 "EHLO
+	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752101AbbAMLUu (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 13 Jan 2015 06:20:50 -0500
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.nyi.internal (Postfix) with ESMTP id 171AF20A54
+	for <git@vger.kernel.org>; Tue, 13 Jan 2015 06:20:50 -0500 (EST)
+Received: from frontend2 ([10.202.2.161])
+  by compute3.internal (MEProxy); Tue, 13 Jan 2015 06:20:50 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=x-sasl-enc:message-id:date:from
+	:mime-version:to:cc:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=RWx8+dysJU0ek/Ofhuc+jD
+	Rmwdg=; b=pnZgOHLLvA5j83jzTAIZejpCxBdE/AU41ydb29fLtwYlBLeb2g4sNF
+	UteUk4AK32PufN22lHU8jswVj6hCsaamVIsAjaQwr2T0uOAxcITKq1Yd8gS5GvdM
+	JX2wQB23XfTaTp8cyPLFzvx1HvT01obuQioORse6Nvl59ERm2Bkbo=
+X-Sasl-enc: cBSOLR/yAtn61m6HwOY0L7TFOPAyJjkVsECWiitTcQ/R 1421148049
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 7B0A7680107;
+	Tue, 13 Jan 2015 06:20:49 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
+In-Reply-To: <CA+iO_8niTScwtYVRV-5wBNHOzr08k=1Vug0yH3+vQ-Y9GgyJKg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262334>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262335>
 
+Ivo Anjo schrieb am 13.01.2015 um 11:22:
+> Hello Daniel,
+> 
+> Thanks for your answer!
+> 
+> My issue is not with cancelling the amend commit, is that because the
+> amend commit already lists changes to the files I am working on (those
+> changes that already went in the commit I was ammending), I don't
+> realize that I forgot to add what I changed. For instance:
+> 
+> $ echo "Hello" >> readme.txt
+> $ git add readme.txt
+> $ git commit -m "Add readme"
+> 
+> $ echo "World" >> readme.txt
+> $ git commit --amend
+> 
+> now if I just save and close the editor git will say it committed
+> successfully (which it did), but in reality nothing at all happened.
+> 
+> Of course I can check the status or some other things before/after the
+> amend commit, but since end up doing this error sometimes I was hoping
+> I could set up git to stop me from doing it.
 
-Hi,
+"git commit --amend" is (also) the way to edit the last commit message,
+and for that you need to be able to do an "empty" amend.
 
-(git version 2.2.0)
+In your example above, git will also tell you that you have unstaged
+changes to readme.txt.
 
-I am currently developing/testing a script for a "history surgery" on a quite big repository (~30000 commits). The script always runs against exactly the same copy of a git repository. So things should be reproducable, but sometimes i get failures for the following sequence of commands:  
+If that isn't enough, you can use "-v" to display the diff in the editor
+(and remove it).
 
-$ git checkout some_branch
-$ GIT_SEQUENCE_EDITOR="sed -i '1s/^pick /edit /'" git rebase -i $MERGETARGET~1
-$ git rm -rf some_files
-$ git commit --amend --no-edit -c $MERGETARGET
-$ git rebase --continue
-
-(where MERGETARGET is a valid commit id in the history of some_branch)
-
-Here is an example output where things went wrong (MERGETARGET is 6185ac39299a740dc9bc6c5906dd1f229b3f046b). The interesting parts are the messages "c4095c1: not a commit that can be picked" and "error: short SHA1 c4095c1 is ambiguous.":
-
-. Switched to branch 'master-flat'
-. c4095c1: not a commit that can be picked
-. 80f99bd: not a commit that can be picked
-. Stopped at 6185ac39299a740dc9bc6c5906dd1f229b3f046b... some_comment
-. You can amend the commit now, with
-. 
-.         git commit --amend
-. 
-. Once you are satisfied with your changes, run
-. 
-.         git rebase --continue
-. rm 'some_files'
-. [detached HEAD 56675a06316345ac121997dde2b9eddb649d0539] some_comment
-.  Author: user <foo.bar@com.com>
-.  Date: Wed Sep 26 09:11:17 2012 +0000
-. [more info about that commit]
-. error: short SHA1 c4095c1 is ambiguous.
-. fatal: Needed a single revision
-. Invalid commit name: c4095c1
-
-Now that the command failed, i checked for ambigous c4095c1. But there is only one:
-$ git log -1 c4095c1
-. commit c4095c1f5e7c126accf93ba68e2fa72bb055f567
-. ...
-
-Just as a test:
-$ git log -1 c409
-. error: short SHA1 c409 is ambiguous.
-. error: short SHA1 c409 is ambiguous.
-
-As i said above this issue is not strictly reproducable. I have a full backup of the working dir including the .git folder from just before the command sequence above. If i rollback and execute the commands again, everything works fine. Up to now i didn't had the situation the the sequence failed twice two in a row.
-
-I also have the backup of the directory from directly after the sequence failure. So i can still test some commands if you need more information.
-
-Does anybody have an idea of what's going on here?
-
-Best regards
-Henning
+Michael
