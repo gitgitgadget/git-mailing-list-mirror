@@ -1,77 +1,89 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] t1050-large: replace dd by test-genrandom
-Date: Tue, 13 Jan 2015 16:47:33 -0500
-Message-ID: <20150113214733.GA16582@peff.net>
-References: <54B5579B.4080607@kdbg.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] format-patch: print format-patch usage if there are no arguments
+Date: Tue, 13 Jan 2015 14:28:13 -0800
+Message-ID: <xmqqiogaco3m.fsf@gitster.dls.corp.google.com>
+References: <1421171662-12164-1-git-send-email-kuleshovmail@gmail.com>
+	<xmqq387eed30.fsf@gitster.dls.corp.google.com>
+	<CANCZXo7UtCXF_bJe9exT1pUwwsgUuYs5mvHHGtDORoJew_UXnQ@mail.gmail.com>
+	<xmqqppaicwww.fsf@gitster.dls.corp.google.com>
+	<CAGZ79kYJ+XNktc7_C81xz=BfCP4_hrE=pWW5QGJ1kdXKMf4Jjw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Tue Jan 13 22:47:43 2015
+Content-Type: text/plain
+Cc: Alexander Kuleshov <kuleshovmail@gmail.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue Jan 13 23:28:32 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YB9JM-00007z-Ts
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Jan 2015 22:47:41 +0100
+	id 1YB9wp-0007T0-K6
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Jan 2015 23:28:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751670AbbAMVrg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Jan 2015 16:47:36 -0500
-Received: from cloud.peff.net ([50.56.180.127]:34082 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751233AbbAMVrg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Jan 2015 16:47:36 -0500
-Received: (qmail 18077 invoked by uid 102); 13 Jan 2015 21:47:35 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 13 Jan 2015 15:47:35 -0600
-Received: (qmail 30531 invoked by uid 107); 13 Jan 2015 21:47:56 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 13 Jan 2015 16:47:56 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 13 Jan 2015 16:47:33 -0500
-Content-Disposition: inline
-In-Reply-To: <54B5579B.4080607@kdbg.org>
+	id S1754024AbbAMW2S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Jan 2015 17:28:18 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:59923 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751122AbbAMW2Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Jan 2015 17:28:16 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6249630887;
+	Tue, 13 Jan 2015 17:28:15 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=QDxSoSUanCqdFfQxpRCWDb5OnMU=; b=dtGQdK
+	jVM2JZcWvBcwnNQZ4SKtNnSqsbxN6bjqRRyU1WNn2XgDQJ74Px41yZbTIutoGzep
+	5vdzgF2Zccj7OLZYZuiPTL7XI8fetBx8fc4qKHnmqiS9T0xjZR+kMrP589Fckd0u
+	thjrS05aUeX1kmWTe+1lO669PkcbhUq1hX7G4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qszFRcqFMtTUwMgdhvbQvRB/NT+h21OT
+	2rmvlllTYYkgRRik8tD3/BVMwkJsosJSCrWOVu5l7uv81/vnM9dFE9jMhUa0L+5M
+	9AUFOTuLLi83GlkyM/SnYuJFqs+nhSwGpdX7hrEThv9FXU8YOuAErO5Anack1c/t
+	dhZTWIvbDB8=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 58CD230886;
+	Tue, 13 Jan 2015 17:28:15 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D561430885;
+	Tue, 13 Jan 2015 17:28:14 -0500 (EST)
+In-Reply-To: <CAGZ79kYJ+XNktc7_C81xz=BfCP4_hrE=pWW5QGJ1kdXKMf4Jjw@mail.gmail.com>
+	(Stefan Beller's message of "Tue, 13 Jan 2015 12:00:18 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 770CBD2E-9B73-11E4-850D-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262356>
 
-On Tue, Jan 13, 2015 at 06:36:27PM +0100, Johannes Sixt wrote:
+Stefan Beller <sbeller@google.com> writes:
 
-> For some unknown reason, the dd on my Windows box segfaults every now
-> and than, but since recently, it does so much more often than it used
-> to, which makes running the test suite burdensome.
-> 
-> Get rid of four invocations of dd and use test-genrandom instead.
+> Another idea would be to take the first commit which is pointed to by
+> another branch as the first commit in the commit range.
 
-There are a dozen other uses of dd in the test suite. Do they all need
-to go?
+Trying to figure out what happened from the topology of the history
+is certainly attractive proposition, but I suspect that it would be
+too fragile to be practically useful.  The other topic you may have
+based your work on may have advanced independently (e.g. a "oops, I
+forgot this one" bugfix), resulting in a fork like this:
 
-> The new code does change some properties of the generated files:
-> 
->  - They are a bit smaller.
->  - They are not sparse anymore.
->  - They do not compress well anymore.
+ ---o---o---o---o (fixed reflog-expire)
+             \
+              x---x---x (atomic-push)
 
-This is unfortunate, as it means other platforms will be slower. I
-measured a best-of-five on running t1050 going from 0.780s to 1.750s.
-That's on an SSD. Doing it on a RAM disk the numbers are 0.600s and
-1.394s. Better, but not great.
+and the fork-point is no longer at the tip of anything.  "Excluding
+anything that is on another branch" would cover the forked case much
+better, but that is only true if there is no integration branch like
+'pu' or 'next', in which case, only an early part of atomic-push may
+already be part of another branch 'next' while the remainder is not,
+or the entirety of atomic-push may be part of another branch 'pu'.
 
-One second on the test suite probably isn't breaking the bank, but these
-sorts of things do add up. I wonder if we can shrink the test size. We
-use 2000k files with a 200k core.bigfilethreshold, and a 1500k
-GIT_ALLOC_LIMIT.  Skimming through the history, the sizes seem fairly
-arbitrary. We can't go _too_ low, or GIT_ALLOC_LIMIT will prevent us
-from even allocating heap memory for non-objects.
+On the other hand, "I am forked from building on this one" done with
+"checkout -t" is an explicit mark the user leaves, so it would serve
+as a better hint to base the default heuristics on, I think.
 
-I tried dropping it by a factor of 10, but sadly that hits several
-cases. The commit-slab code wants 512k chunks (which seems like rather a
-lot to me), and pack-objects starts at just over 150k for the set of
-objects. It would be nice to have a finer-grained tool than
-GIT_ALLOC_LIMIT that applied only to objects, but I guess then we would
-not be as sure of catching stray code paths (each caller would have to
-annotate "this is for an object").
-
--Peff
+But nobody is asking for such a feature ;-)
