@@ -1,111 +1,95 @@
-From: Ivo Anjo <ivo.anjo@ist.utl.pt>
-Subject: Re: How to prevent empty git commit --amend
-Date: Tue, 13 Jan 2015 10:22:02 +0000
-Message-ID: <CA+iO_8niTScwtYVRV-5wBNHOzr08k=1Vug0yH3+vQ-Y9GgyJKg@mail.gmail.com>
-References: <CA+iO_8mLsdsf1PepiB4M9jJh7pX8brqPdiwAvWGMdfYO0YKrCQ@mail.gmail.com>
-	<CACx-yZ12mn-EyR5Mx9rmACLtyeYWRdyef4jDqdFAPzeQDm03ug@mail.gmail.com>
+From: "Henning Moll" <newsScott@gmx.de>
+Subject: sporadic git failures on interactive rebase
+Date: Tue, 13 Jan 2015 11:54:32 +0100
+Message-ID: <trinity-5098e61e-b59a-4225-9d4c-8879dc78bb53-1421146472532@3capp-gmx-bs08>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Daniel Knittl-Frank <knittl89@googlemail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 13 11:22:15 2015
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 13 11:54:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YAyc2-0000jh-OS
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Jan 2015 11:22:15 +0100
+	id 1YAz7P-0004MG-Tn
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Jan 2015 11:54:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751261AbbAMKWJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Jan 2015 05:22:09 -0500
-Received: from smtp2.ist.utl.pt ([193.136.128.22]:42511 "EHLO smtp2.ist.utl.pt"
+	id S1752164AbbAMKyf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Jan 2015 05:54:35 -0500
+Received: from mout.gmx.net ([212.227.15.19]:57496 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751075AbbAMKWH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Jan 2015 05:22:07 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp2.ist.utl.pt (Postfix) with ESMTP id 44C417023680
-	for <git@vger.kernel.org>; Tue, 13 Jan 2015 10:22:04 +0000 (WET)
-X-Virus-Scanned: by amavisd-new-2.6.4 (20090625) (Debian) at ist.utl.pt
-Received: from smtp2.ist.utl.pt ([127.0.0.1])
-	by localhost (smtp2.ist.utl.pt [127.0.0.1]) (amavisd-new, port 10025)
-	with LMTP id T42fl2DWVGW1 for <git@vger.kernel.org>;
-	Tue, 13 Jan 2015 10:22:04 +0000 (WET)
-Received: from mail2.ist.utl.pt (mail.ist.utl.pt [IPv6:2001:690:2100:1::8])
-	by smtp2.ist.utl.pt (Postfix) with ESMTP id F2A4B7023681
-	for <git@vger.kernel.org>; Tue, 13 Jan 2015 10:22:03 +0000 (WET)
-Received: from mail-qg0-f44.google.com (mail-qg0-f44.google.com [209.85.192.44])
-	(Authenticated sender: ist155460)
-	by mail2.ist.utl.pt (Postfix) with ESMTPSA id 84027200D3AB
-	for <git@vger.kernel.org>; Tue, 13 Jan 2015 10:22:03 +0000 (WET)
-Received: by mail-qg0-f44.google.com with SMTP id q107so1441876qgd.3
-        for <git@vger.kernel.org>; Tue, 13 Jan 2015 02:22:02 -0800 (PST)
-X-Received: by 10.229.249.137 with SMTP id mk9mr57693348qcb.4.1421144522507;
- Tue, 13 Jan 2015 02:22:02 -0800 (PST)
-Received: by 10.229.159.14 with HTTP; Tue, 13 Jan 2015 02:22:02 -0800 (PST)
-In-Reply-To: <CACx-yZ12mn-EyR5Mx9rmACLtyeYWRdyef4jDqdFAPzeQDm03ug@mail.gmail.com>
+	id S1752094AbbAMKye (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Jan 2015 05:54:34 -0500
+Received: from [195.49.159.90] by 3capp-gmx-bs08.server.lan (via HTTP); Tue,
+ 13 Jan 2015 11:54:32 +0100
+Importance: normal
+Sensitivity: Normal
+X-Priority: 3
+X-Provags-ID: V03:K0:fzKbV5jFqLYHIeFmkY5ZhX+gL+K5gNkpM9iHGCV4npZ
+ OEXj5qh8ZmjKGhFPQ8ZJMVPqMo2k+wkSpjRu+EDc2EzgC35+MX
+ uvKwQCXBqEhPBcckm8S3xOftqIw2EGyuV0mDg1sJ8VYWlndWgw
+ e2Q6PFWAX1e+/6ghV8wlhyJBNPFnV7aM6tsgCnhjsQ0589TKb2
+ O7+Vcx5Lwn8VZx1AlzODNqeZneQ+Fd/yHqZWSAnxlz1tL2qIxW
+ dy6r9dXkCki28Yb+YAWCnTP+7FzvdTTL5PcKuyb7VkXVrpmsln 1l5LNY=
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262334>
 
-Hello Daniel,
 
-Thanks for your answer!
+Hi,
 
-My issue is not with cancelling the amend commit, is that because the
-amend commit already lists changes to the files I am working on (those
-changes that already went in the commit I was ammending), I don't
-realize that I forgot to add what I changed. For instance:
+(git version 2.2.0)
 
-$ echo "Hello" >> readme.txt
-$ git add readme.txt
-$ git commit -m "Add readme"
+I am currently developing/testing a script for a "history surgery" on a quite big repository (~30000 commits). The script always runs against exactly the same copy of a git repository. So things should be reproducable, but sometimes i get failures for the following sequence of commands:  
 
-$ echo "World" >> readme.txt
-$ git commit --amend
+$ git checkout some_branch
+$ GIT_SEQUENCE_EDITOR="sed -i '1s/^pick /edit /'" git rebase -i $MERGETARGET~1
+$ git rm -rf some_files
+$ git commit --amend --no-edit -c $MERGETARGET
+$ git rebase --continue
 
-now if I just save and close the editor git will say it committed
-successfully (which it did), but in reality nothing at all happened.
+(where MERGETARGET is a valid commit id in the history of some_branch)
 
-Of course I can check the status or some other things before/after the
-amend commit, but since end up doing this error sometimes I was hoping
-I could set up git to stop me from doing it.
+Here is an example output where things went wrong (MERGETARGET is 6185ac39299a740dc9bc6c5906dd1f229b3f046b). The interesting parts are the messages "c4095c1: not a commit that can be picked" and "error: short SHA1 c4095c1 is ambiguous.":
 
-Ivo Anjo
+. Switched to branch 'master-flat'
+. c4095c1: not a commit that can be picked
+. 80f99bd: not a commit that can be picked
+. Stopped at 6185ac39299a740dc9bc6c5906dd1f229b3f046b... some_comment
+. You can amend the commit now, with
+. 
+.         git commit --amend
+. 
+. Once you are satisfied with your changes, run
+. 
+.         git rebase --continue
+. rm 'some_files'
+. [detached HEAD 56675a06316345ac121997dde2b9eddb649d0539] some_comment
+.  Author: user <foo.bar@com.com>
+.  Date: Wed Sep 26 09:11:17 2012 +0000
+. [more info about that commit]
+. error: short SHA1 c4095c1 is ambiguous.
+. fatal: Needed a single revision
+. Invalid commit name: c4095c1
 
-On Tue, Jan 13, 2015 at 8:59 AM, Daniel Knittl-Frank
-<knittl89@googlemail.com> wrote:
->
-> On Tue, Jan 13, 2015 at 9:56 AM, Ivo Anjo <ivo.anjo@ist.utl.pt> wrote:
-> > Hello,
-> >
-> > I sometimes get a bit distracted when making amends. Once or twice per
-> > week I do a commit, then realize I added something I shouldn't, or
-> > forgot to add a line here or there, and then I do a git commit --amend
-> > to fix it.
-> >
-> > The thing is, a lot of times I forget to stage the modifications I did.
-> > And here is my issue: *git commit* refuses to work when there's
-> > nothing to commit, but *git commit --amend* happily pops up the editor
-> > and says you have committed something when you did not add/change
-> > anything.
-> >
-> > Is there a way to prevent a *git commit --amend** with nothing to
-> > commit from working?
-> > If not, I would like to suggest that this feature would be very helpful :)
->
-> Hi Ivo,
->
-> simply delete all text from the commit editor and exit/save the empty
-> file. This will abort the commit.
->
-> The same logic applies to git rebase --interactive: deleting
-> everything will do nothing.
->
-> Regards,
-> Daniel
->
-> --
-> typed with http://neo-layout.org
+Now that the command failed, i checked for ambigous c4095c1. But there is only one:
+$ git log -1 c4095c1
+. commit c4095c1f5e7c126accf93ba68e2fa72bb055f567
+. ...
+
+Just as a test:
+$ git log -1 c409
+. error: short SHA1 c409 is ambiguous.
+. error: short SHA1 c409 is ambiguous.
+
+As i said above this issue is not strictly reproducable. I have a full backup of the working dir including the .git folder from just before the command sequence above. If i rollback and execute the commands again, everything works fine. Up to now i didn't had the situation the the sequence failed twice two in a row.
+
+I also have the backup of the directory from directly after the sequence failure. So i can still test some commands if you need more information.
+
+Does anybody have an idea of what's going on here?
+
+Best regards
+Henning
