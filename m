@@ -1,72 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] blame.c: fix garbled error message
-Date: Mon, 12 Jan 2015 16:11:06 -0800
-Message-ID: <xmqqzj9n4k11.fsf@gitster.dls.corp.google.com>
-References: <1420925601-21615-1-git-send-email-git@cryptocrack.de>
-	<xmqq4mrv95qt.fsf@gitster.dls.corp.google.com>
-	<xmqqzj9n623h.fsf@gitster.dls.corp.google.com>
-	<20150112231231.GA4023@peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Lukas Fleischer <git@cryptocrack.de>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jan 13 01:11:27 2015
+From: Stefan Beller <sbeller@google.com>
+Subject: [PATCH] Document receive.advertiseatomic
+Date: Mon, 12 Jan 2015 16:24:02 -0800
+Message-ID: <1421108642-22213-1-git-send-email-sbeller@google.com>
+Cc: sunshine@sunshineco.com, git@vger.kernel.org,
+	Stefan Beller <sbeller@google.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Jan 13 01:24:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YAp4w-00061h-H9
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Jan 2015 01:11:26 +0100
+	id 1YApHJ-0002Re-Ci
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Jan 2015 01:24:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752560AbbAMALW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Jan 2015 19:11:22 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:55741 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751587AbbAMALV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Jan 2015 19:11:21 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 500C32F978;
-	Mon, 12 Jan 2015 19:11:21 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=lIMJl8OMobkz/b6gSNji+ffB4dw=; b=hI70K6
-	UYG5Z67Q755PszlyvKCwxZ60aGXQl6cSJWhfnd9lWSlVIIfSB1qMiVeo4Cq7r65j
-	cCNty2p02WfEqo6/oFFkF87IQH1HqtljSZAENz4i2nUvGvj3aUXQMsd+r5M8RVLO
-	z/V5rhjeV0u0IbRk1yBmlm9nmIXXWKXYKPaqA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ub5jeGXjrG6Cm8XZC/GOwnPKOJ06MnwC
-	4FumVN9IcJK4SABzUFJQySkFxPhAk6ce1eOOnW5KBsomX5zyIs8jV3P+g8A59EP9
-	OLF3l56Dmzj5dlA8MY3oSCD2RAKv4WXuXDepYE/+eVFf/fs7drMBDD023/8dxHPk
-	/xrdwB36/zk=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 46C952F977;
-	Mon, 12 Jan 2015 19:11:21 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BF8F32F96E;
-	Mon, 12 Jan 2015 19:11:07 -0500 (EST)
-In-Reply-To: <20150112231231.GA4023@peff.net> (Jeff King's message of "Mon, 12
-	Jan 2015 18:12:31 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: ABFAC7A8-9AB8-11E4-8DE3-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1753105AbbAMAYI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Jan 2015 19:24:08 -0500
+Received: from mail-ie0-f178.google.com ([209.85.223.178]:57381 "EHLO
+	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752392AbbAMAYG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Jan 2015 19:24:06 -0500
+Received: by mail-ie0-f178.google.com with SMTP id vy18so30561iec.9
+        for <git@vger.kernel.org>; Mon, 12 Jan 2015 16:24:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=SxnABxFijcdyqzDKERhBif6lK/qImUfFuv5Wo/FO+/I=;
+        b=mG0wC5XsbI4laGv8QPcimlzvN+JTqaedP8hgZ3gF54JqXOHLksIz1iniFC1TRGOv9K
+         GGlLY9f33IZYEawvVx+WnNcSkATJpyzuNPPHbOabiNu9iV+0sZJ5yccz6nIlC424LgF+
+         tl+mu8+ERP/e8RrXeXMXnmECBvJ+WKFxKHGCi3gRmrkg9Hf5Ssay9rn396/HRcw/i2JR
+         wmVr+sC2nBsDhK/He62XmKZHhbLaiClpOQ6vO/sVP8nKzeJZaYE8qG9BBNOAdZL92cUH
+         YsmyvOHIueOzD9R5/0Ej2Uhp5eppMIvr8Sj/xgqa3/yL+ww4NbaAyrNEbn6okAmc9Y7a
+         m/fg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=SxnABxFijcdyqzDKERhBif6lK/qImUfFuv5Wo/FO+/I=;
+        b=MrIZ5DzL0TEqnUXu0TQmJW9eU6jwC8BnXJFwlttyr+nrInifD7wrVuanJ2JJLIDPuC
+         H8sFxdREPU96Jd1Ty/DoCksQcG4Rh0VS+WIuDKsqj3UovhbU7BVDdFBNZF+JA0Bvz5pa
+         IyR3HHZQbPqoomjJiM3UX5vYv5+Y914Zy/aMqFyrlysAdTt0BWOwP6Uzr/X4uEN2O3AQ
+         sVDRKWP+BKxynloVkR+myut1UzRYThcz7ACzjgdehdvmjdksFegp4KBw/A8DEDf9nmDW
+         oGrZUoy5vg9UuRyRIyhdk9CN7Nt/03K01PWN/g93776HSEo9HeqdiSkXaq/56lO4jeVG
+         b61g==
+X-Gm-Message-State: ALoCoQmXF73o9xkBLA/lJaVdn5OOOrUuXy+RrQEb+IIb/v34cLoCHeGMrPAu4T8OoGuLJII6SfSX
+X-Received: by 10.107.131.102 with SMTP id f99mr30278016iod.31.1421108645456;
+        Mon, 12 Jan 2015 16:24:05 -0800 (PST)
+Received: from localhost ([2620:0:1000:5b00:50ea:ea5:b131:957b])
+        by mx.google.com with ESMTPSA id g5sm9374630iod.25.2015.01.12.16.24.04
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 12 Jan 2015 16:24:05 -0800 (PST)
+X-Mailer: git-send-email 2.2.1.62.g3f15098
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262310>
 
-Jeff King <peff@peff.net> writes:
+This was missing in 1b70fe5d3054 (2015-01-07, receive-pack.c: negotiate
+atomic push support) as I squashed the option in very late in the patch
+series.
 
-> As an aside, I have often been tempted to have xstrdup silently
-> propagate a NULL. It would have been the right thing to do here, but
-> maybe there are cases where the segfault is preferable for catching a
-> mistake early (otherwise you might store the NULL and then segfault much
-> later).
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
 
-Great minds think alike.  The sentence after "but maybe ..." was
-what I had in mind as a response in anticipation that somebody might
-suggest that; a separate xstrdup_or_null() might be fine, but I'd
-rather not to have xstrdup() that is _too_ magical.
+Notes:
+    v1:
+    This goes on top of origin/sb/atomic-push
+
+ Documentation/config.txt | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 9220725..4f8f498 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -2072,6 +2072,11 @@ rebase.autostash::
+ 	successful rebase might result in non-trivial conflicts.
+ 	Defaults to false.
+ 
++receive.advertiseatomic::
++	By default, git-receive-pack will advertise the atomic push
++	capability to its clients. If you don't want to this capability
++	to be advertised, set this variable to false.
++
+ receive.autogc::
+ 	By default, git-receive-pack will run "git-gc --auto" after
+ 	receiving data from git-push and updating refs.  You can stop
+-- 
+2.2.1.62.g3f15098
