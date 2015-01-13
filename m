@@ -1,94 +1,73 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: [PATCH] show-branch --upstream: add upstream branches to the
- list of branches to display
-Date: Tue, 13 Jan 2015 10:33:49 +0900
-Message-ID: <20150113013349.GA26587@glandium.org>
-References: <1420708657-20811-1-git-send-email-mh@glandium.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] blame.c: fix garbled error message
+Date: Mon, 12 Jan 2015 20:54:27 -0500
+Message-ID: <20150113015427.GA5497@peff.net>
+References: <1420925601-21615-1-git-send-email-git@cryptocrack.de>
+ <xmqq4mrv95qt.fsf@gitster.dls.corp.google.com>
+ <xmqqzj9n623h.fsf@gitster.dls.corp.google.com>
+ <20150112231231.GA4023@peff.net>
+ <xmqqzj9n4k11.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 13 02:34:03 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Lukas Fleischer <git@cryptocrack.de>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 13 02:55:24 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YAqMs-0004TH-W1
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Jan 2015 02:34:03 +0100
+	id 1YAqhX-00047z-U3
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Jan 2015 02:55:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751973AbbAMBd7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Jan 2015 20:33:59 -0500
-Received: from ks3293202.kimsufi.com ([5.135.186.141]:44767 "EHLO glandium.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751850AbbAMBd6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Jan 2015 20:33:58 -0500
-Received: from glandium by zenigata with local (Exim 4.84)
-	(envelope-from <glandium@glandium.org>)
-	id 1YAqMf-0007Eq-UP; Tue, 13 Jan 2015 10:33:49 +0900
+	id S1751891AbbAMBy3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Jan 2015 20:54:29 -0500
+Received: from cloud.peff.net ([50.56.180.127]:33588 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751650AbbAMBy2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Jan 2015 20:54:28 -0500
+Received: (qmail 19006 invoked by uid 102); 13 Jan 2015 01:54:28 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 12 Jan 2015 19:54:28 -0600
+Received: (qmail 22638 invoked by uid 107); 13 Jan 2015 01:54:49 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 12 Jan 2015 20:54:49 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 12 Jan 2015 20:54:27 -0500
 Content-Disposition: inline
-In-Reply-To: <1420708657-20811-1-git-send-email-mh@glandium.org>
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
-User-Agent: Mutt/1.5.23 (2014-03-12)
+In-Reply-To: <xmqqzj9n4k11.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262315>
 
-On Thu, Jan 08, 2015 at 06:17:37PM +0900, Mike Hommey wrote:
-> `git show-branch --upstream` is equivalent to `git show-branch
-> $(git for-each-ref refs/heads --format '%(refname:short)')
-> $(git for-each-ref refs/heads --format '%(upstream:short)')`
+On Mon, Jan 12, 2015 at 04:11:06PM -0800, Junio C Hamano wrote:
+
+> Jeff King <peff@peff.net> writes:
 > 
-> `git show-branch --upstream foo bar` is equivalent to `git show-branch
-> foo bar $(git for-each-ref refs/heads/foo refs/heads/bar
-> --format '%(upstream:short)')`
+> > As an aside, I have often been tempted to have xstrdup silently
+> > propagate a NULL. It would have been the right thing to do here, but
+> > maybe there are cases where the segfault is preferable for catching a
+> > mistake early (otherwise you might store the NULL and then segfault much
+> > later).
 > 
-> Combined with --topics, it shows commits that are NOT on any of
-> the upstream branches.
-> 
-> Signed-off-by: Mike Hommey <mh@glandium.org>
-> ---
-> 
-> Note that in the --topics --upstream case, when there are different
-> upstreams branches involved, only the merge-base of all of them is
-> shown. I'm not sure if it's desirable to show more. The output as it
-> is works for my own use cases.
+> Great minds think alike.  The sentence after "but maybe ..." was
+> what I had in mind as a response in anticipation that somebody might
+> suggest that; a separate xstrdup_or_null() might be fine, but I'd
+> rather not to have xstrdup() that is _too_ magical.
 
-Some example output (where inbound/default and b2g-inbound/default are two
-different upstream repositories):
-$ git show-branch --upstream HEAD
-! [HEAD] Bug 1120680 - try: -b do -p emulator,emulator-jb,emulator-kk -t none -u none
- ! [b2g-inbound/default] Bumping manifests a=b2g-bump
---
-+  [HEAD] Bug 1120680 - try: -b do -p emulator,emulator-jb,emulator-kk -t none -u none
- + [b2g-inbound/default] Bumping manifests a=b2g-bump
- + [b2g-inbound/default^] Backed out changeset ffdc6e420153 (bug 1107009) for Android crashes/asserts.
- + [b2g-inbound/default~2] Bumping manifests a=b2g-bump
--- [HEAD^] Merge m-c to b2g-inbound. a=merge
+Yeah. Of course, it is not _that_ many more characters to do a ternary
+conditional. I guess the main benefit is that you do not have to repeat
+the name of the variable (which lets you reuse a function result
+directly, avoiding an explicit temporary).
 
-$ git show-branch --upstream --topics HEAD
-! [HEAD] Bug 1120680 - try: -b do -p emulator,emulator-jb,emulator-kk -t none -u none
- ! [b2g-inbound/default] Bumping manifests a=b2g-bump
---
-+  [HEAD] Bug 1120680 - try: -b do -p emulator,emulator-jb,emulator-kk -t none -u none
--- [HEAD^] Merge m-c to b2g-inbound. a=merge
+Here's my attempt. Some cases are a little nicer, but overall, it does
+not feel significantly more readable to me. I dunno. I could go either
+way. I stuck Lukas's patch on top (modified to use xstrdup_or_null), if
+we do want to go that route. Otherwise it needs the ?: treatment.
 
-$ git show-branch --upstream --topics
-! [bug1107677] Bug 1107677 - Enable chunk recycling for 128 chunks in jemalloc3
- ! [bug1110760] Bug 1110760 - Followup to avoid build failure with Windows SDK v7.0 and v7.0A
-  ! [bug1120272] Bug 1120272 - wip
-   * [bug1120680] Bug 1120680 - try: -b do -p emulator,emulator-jb,emulator-kk -t none -u none
-    ! [inbound/default] Bug 762449 - Enable jemalloc 3 by default, but don' make it ride the trains yet. r=njn
-     ! [b2g-inbound/default] Bumping manifests a=b2g-bump
-------
-   *   [bug1120680] Bug 1120680 - try: -b do -p emulator,emulator-jb,emulator-kk -t none -u none
-  +    [bug1120272] Bug 1120272 - wip
- +     [bug1110760] Bug 1110760 - Followup to avoid build failure with Windows SDK v7.0 and v7.0A
-+      [bug1107677] Bug 1107677 - Enable chunk recycling for 128 chunks in jemalloc3
-+      [bug1107677^] Bug 1107677 - Port relevant parts from bug 1073662 part 6
-+      [bug1107677~2] Bug 1107677 - Port the relevant parts from bug 1073662 part 5
-+++*++ [bug1110760~183] Bug 1118950 - Fix mistyped DEBUG condition in GlobalHelperThreadState(). r=bhackett.
-
-Mike
+  [1/5]: git-compat-util: add xstrdup_or_null helper
+  [2/5]: builtin/apply.c: use xstrdup_or_null instead of null_strdup
+  [3/5]: builtin/commit.c: use xstrdup_or_null instead of envdup
+  [4/5]: use xstrdup_or_null to replace ternary conditionals
+  [5/5]: blame.c: fix garbled error message
