@@ -1,90 +1,120 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH] receive-pack.c: don't miss exporting unsolicited push certificates
-Date: Tue, 13 Jan 2015 16:11:34 -0800
-Message-ID: <CAGZ79kad=c1wXW163doxWBRdSvQ7Y9EkkD+ZXtOfawjtxEyeQw@mail.gmail.com>
-References: <xmqqbnm7bj8m.fsf@gitster.dls.corp.google.com>
-	<1420849874-32013-1-git-send-email-sbeller@google.com>
-	<xmqqmw5r9zck.fsf@gitster.dls.corp.google.com>
-	<54B0A2C1.4040602@gmail.com>
-	<xmqqiogb95t4.fsf@gitster.dls.corp.google.com>
+From: SZEDER =?utf-8?b?R8OhYm9y?= <szeder@ira.uka.de>
+Subject: Re: [PATCH v2] git-prompt: preserve value of $? inside shell prompt
+Date: Wed, 14 Jan 2015 00:57:26 +0100
+Message-ID: <20150114005726.Horde.idyLC0Or9SvaghEN_N_pRg1@webmail.informatik.kit.edu>
+References: <xmqqa92fbo0j.fsf@gitster.dls.corp.google.com>
+ <alpine.LSU.2.00.1412221808110.2546@hermes-1.csi.cam.ac.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Stefan Beller <stefanbeller@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 14 01:11:41 2015
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed	DelSp=Yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Tony Finch <dot@dotat.at>
+X-From: git-owner@vger.kernel.org Wed Jan 14 01:13:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YBBYi-0005kS-DN
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Jan 2015 01:11:40 +0100
+	id 1YBBaW-0006lu-JZ
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Jan 2015 01:13:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751331AbbANALg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Jan 2015 19:11:36 -0500
-Received: from mail-ie0-f179.google.com ([209.85.223.179]:55872 "EHLO
-	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750995AbbANALf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Jan 2015 19:11:35 -0500
-Received: by mail-ie0-f179.google.com with SMTP id rp18so5994102iec.10
-        for <git@vger.kernel.org>; Tue, 13 Jan 2015 16:11:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=t5iQr1U3knMb6jVW4g9V7jc7lnCzafJplOypf50h9RU=;
-        b=kqRiOk61Wn6SNQYVEKlIH94hWgoy+6dgXCXlKnBXs0Kh9wn4HF1zWy7uQkDy87/CAe
-         TvUDf9qPNGNWTq6bi4kGkb/7XuKxYTLCzptivxczqOGO3zXntxamYPGL1khudx9dcUgm
-         soBKa+UmDOObKKvZDXGtkR9JtrQD1DB+FcTgV5U5Fo191Z6qUU0qEnWBGXgksgGuKZqy
-         Fm8+rtKg+QO3jwcZFjqtDBQxz0tzShu1kmJZvbQC4TSq1YKiyZcuuXoPzXd9cW8/+mAp
-         EzqoKFsxxO97TsX4H9h8TKo2IdmV9X7OzZQ+K+I7MwIbt3bLxOmGxvhWCIX6rKktJKy6
-         r+aA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=t5iQr1U3knMb6jVW4g9V7jc7lnCzafJplOypf50h9RU=;
-        b=lJNoMEwRWVeZavfwZeIYGXJcWqbLHBX1ImOWEKmKxVIRy2PgHM6724X64XTwhs4O/A
-         TQHFw0pWtHGZkY/B8lvUO/SdysjKQPJu/Eg8+N7Zr+jzK5bYMfXx0FpbeO/td9lv4PJi
-         +/Xd/JWB8Uk0bCm3sysO8ign7Wo1KTJ4QVe2PtGOYj/+sAAfCML9pYKGfX+Zz/9nkvx1
-         HvPyYncmRHJxeeBhPb0/iPoFyZjNo3gjv5ApdbLdYPRW1rlP57kf82fjpucKIt3dJuw8
-         gnxlGRodaTtPYsG5PbA9Uu+v0c36VjRjimSJ+8BhUFZX7Lc72vnEbdZKWtnO97nBKswf
-         kLPQ==
-X-Gm-Message-State: ALoCoQkQkDCVnQdc0qLkVlRY8afincx6JFLI6AmUB+kQ6FsuhOnmzC4ciw/QemNDxijMibwGJC3C
-X-Received: by 10.107.170.166 with SMTP id g38mr1350128ioj.2.1421194294935;
- Tue, 13 Jan 2015 16:11:34 -0800 (PST)
-Received: by 10.107.31.8 with HTTP; Tue, 13 Jan 2015 16:11:34 -0800 (PST)
-In-Reply-To: <xmqqiogb95t4.fsf@gitster.dls.corp.google.com>
+	id S1752046AbbANAN0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 13 Jan 2015 19:13:26 -0500
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:39352 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751086AbbANANR convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Jan 2015 19:13:17 -0500
+X-Greylist: delayed 926 seconds by postgrey-1.27 at vger.kernel.org; Tue, 13 Jan 2015 19:13:16 EST
+Received: from irawebmail.ira.uni-karlsruhe.de ([141.3.10.230] helo=webmail.ira.uka.de)
+	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
+	iface 141.3.10.81 id 1YBBLA-00044e-S5; Wed, 14 Jan 2015 00:57:40 +0100
+Received: from apache by webmail.ira.uka.de with local (Exim 4.72)
+	(envelope-from <szeder@ira.uka.de>)
+	id 1YBBKw-0005qu-AY; Wed, 14 Jan 2015 00:57:26 +0100
+Received: from tmo-102-36.customers.d1-online.com
+ (tmo-102-36.customers.d1-online.com [80.187.102.36]) by
+ webmail.informatik.kit.edu (Horde Framework) with HTTP; Wed, 14 Jan 2015
+ 00:57:26 +0100
+In-Reply-To: <alpine.LSU.2.00.1412221808110.2546@hermes-1.csi.cam.ac.uk>
+User-Agent: Internet Messaging Program (IMP) H5 (6.2.2)
+Content-Disposition: inline
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1421193460.
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1421194392.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262364>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262365>
 
-On Mon, Jan 12, 2015 at 11:07 AM, Junio C Hamano <gitster@pobox.com> wrote:
->>
->> yes that's what I was trying to hint at. The hook would just see
->> it is unsolicited instead of not having the state available.
->
-> OK.  That makes sort of sense.  So if we:
->
->  1) did not apply either patch (i.e. we accept unsolicited
->     certificate, and the fact that we did not exchange "give me this
->     nonce" "here is your nonce" is conveyed to the hooks by the lack
->     of GIT_PUSH_CERT_NONCE environment and possible presense of
->     unsolicited nonce in the GIT_PUSH_CERT blob); and then
->
->  2) applied this patch first (i.e. we still allow unsolicited
->     certificate, and the same fact is now conveyed to the hooks also
->     by GIT_PUSH_CERT_NONCE_STATUS=UNSOLICITED if they sent a nonce,
->     or GIT_PUSH_CERT_NONCE_STATUS=MISSING); and then finally
->
->  3) applied the other patch to reject unsolicited certificate.
->
-> then we can stop at any of these three steps and the behaviour of
-> three resulting systems make sense and the pre-receive hook can
-> reject unsolicited certificates if it wants to, even at step #1.
+Hi,
 
-I do not quite understand the intention of your mail. Are you saying I should
-make a patch series to solve the problems as outlined above?
+Quoting Tony Finch <dot@dotat.at>:
+> If you have a prompt which displays the command exit status,
+> __git_ps1 without this change corrupts it, although it has
+> the correct value in the parent shell:
+>
+> 	~/src/git (master) 0 $ set | grep ^PS1
+> 	PS1=3D'\w$(__git_ps1) $? \$ '
+> 	~/src/git (master) 0 $ false
+> 	~/src/git (master) 0 $ echo $?
+> 	1
+> 	~/src/git (master) 0 $
+>
+> There is a slightly ugly workaround:
+>
+> 	~/src/git (master) 0 $ set | grep ^PS1
+> 	PS1=3D'\w$(x=3D$?; __git_ps1; exit $x) $? \$ '
+> 	~/src/git (master) 0 $ false
+> 	~/src/git (master) 1 $
+>
+> This change makes the workaround unnecessary.
+>
+> Signed-off-by: Tony Finch <dot@dotat.at>
+> ---
+>    contrib/completion/git-prompt.sh | 4 ++++
+>    1 file changed, 4 insertions(+)
+>
+> I hope that explains it properly :-)
+>
+> diff --git a/contrib/completion/git-prompt.sh
+> b/contrib/completion/git-prompt.sh
+> index c5473dc..5fe69d0 100644
+> --- a/contrib/completion/git-prompt.sh
+> +++ b/contrib/completion/git-prompt.sh
+> @@ -288,6 +288,7 @@ __git_eread ()
+>    # In this mode you can request colored hints using
+> GIT_PS1_SHOWCOLORHINTS=3Dtrue
+>    __git_ps1 ()
+>    {
+> +	local exit=3D$?
+>    	local pcmode=3Dno
+>    	local detached=3Dno
+>    	local ps1pc_start=3D'\u@\h:\w '
+> @@ -511,4 +512,7 @@ __git_ps1 ()
+>    	else
+>    		printf -- "$printf_format" "$gitstring"
+>    	fi
+> +
+> +	# preserve exit status
+> +	return $exit
+>    }
+> --
+> 2.2.1.68.g56d9796
+
+Makes sense, but the patch doesn't cover all cases, because =20
+__git_ps1() can exit early, off the top of my head without actually =20
+having a git clone at hand to look at the code, if:
+
+  * pwd is not in a git repo, which is a quite common case to worry abo=
+ut.
+  * .git/HEAD becomes unreadable while __git_ps1() is being executed.  =
+=20
+It's an unlikely race condition so I wouldn't worry much about it, but =
+=20
+for consistency's sake I think it's better to return $? there as well.
+
+Best,
+G=C3=A1bor
