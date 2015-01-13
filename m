@@ -1,108 +1,102 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 5/5] blame.c: fix garbled error message
-Date: Mon, 12 Jan 2015 20:59:26 -0500
-Message-ID: <20150113015925.GE18986@peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 1/5] git-compat-util: add xstrdup_or_null helper
+Date: Mon, 12 Jan 2015 18:21:19 -0800
+Message-ID: <20150113022119.GA29365@google.com>
 References: <20150113015427.GA5497@peff.net>
+ <20150113015736.GA18986@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Lukas Fleischer <git@cryptocrack.de>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 13 02:59:32 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Lukas Fleischer <git@cryptocrack.de>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jan 13 03:21:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YAqlW-0005WT-W3
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Jan 2015 02:59:31 +0100
+	id 1YAr6m-0005qZ-IL
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Jan 2015 03:21:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752654AbbAMB71 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Jan 2015 20:59:27 -0500
-Received: from cloud.peff.net ([50.56.180.127]:33614 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752583AbbAMB70 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Jan 2015 20:59:26 -0500
-Received: (qmail 19280 invoked by uid 102); 13 Jan 2015 01:59:26 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 12 Jan 2015 19:59:26 -0600
-Received: (qmail 22742 invoked by uid 107); 13 Jan 2015 01:59:47 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 12 Jan 2015 20:59:47 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 12 Jan 2015 20:59:26 -0500
+	id S1752480AbbAMCVY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Jan 2015 21:21:24 -0500
+Received: from mail-ie0-f171.google.com ([209.85.223.171]:58345 "EHLO
+	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751260AbbAMCVX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Jan 2015 21:21:23 -0500
+Received: by mail-ie0-f171.google.com with SMTP id ar1so463661iec.2
+        for <git@vger.kernel.org>; Mon, 12 Jan 2015 18:21:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=0O138rThKFxJKISP78BiyepFZkXDZeU3p85k2MO2V6Q=;
+        b=FzirNd0YWfXoE7Suz5/AIhB87F6bEqs6iuuciS/Z7xN/s+sGIGvCIs832Rd4IJd+Vi
+         kNdoGUkVLAub4HTBEITpi16M/KppfnZcscyTCJIkbGSRlehAl+9SOAqgBR0zkGpVuj7P
+         Z+tueOAYuobsnI2aZEsBeI0GTgxrLswFfeoOYLbH3zDjT21llRKXYJFhSdRukWiZzJhN
+         1zltPPHD5SUWDrMGJgIRgTTDNpaQpG2mXJ1Kj20YUpJxO8hB5qQYWh1PM2a0+HTCrYph
+         shlJMpsDJCO4KSpYqSdB4bJV3Zk8MFK5+TdatRwfadukRFJebBVCQIo6vvSO8U0XjB1W
+         e5wg==
+X-Received: by 10.50.35.195 with SMTP id k3mr18617892igj.11.1421115682832;
+        Mon, 12 Jan 2015 18:21:22 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:ddc9:e4c7:392b:b11c])
+        by mx.google.com with ESMTPSA id q196sm9547717ioe.5.2015.01.12.18.21.21
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 12 Jan 2015 18:21:21 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <20150113015427.GA5497@peff.net>
+In-Reply-To: <20150113015736.GA18986@peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262320>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262321>
 
-From: Lukas Fleischer <git@cryptocrack.de>
+Jeff King wrote:
 
-The helper functions prepare_final() and prepare_initial() return a
-pointer to a string that is a member of an object in the revs->pending
-array. This array is later rebuilt when running prepare_revision_walk()
-which potentially transforms the pointer target into a bogus string. Fix
-this by maintaining a copy of the original string.
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -675,6 +675,11 @@ extern char *xgetcwd(void);
+>  
+>  #define REALLOC_ARRAY(x, alloc) (x) = xrealloc((x), (alloc) * sizeof(*(x)))
+>  
+> +static inline char *xstrdup_or_null(const char *str)
+> +{
+> +	return str ? xstrdup(str) : NULL;
+> +}
 
-Signed-off-by: Lukas Fleischer <git@cryptocrack.de>
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin/blame.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+Would it make sense for xstrdup to always include the NULL check,
+avoiding the need for the more verbose xstrdup_or_null?
 
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 303e217..0374fe8 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -2390,7 +2390,7 @@ static struct commit *fake_working_tree_commit(struct diff_options *opt,
- 	return commit;
- }
+Jonathan
+
+diff --git i/wrapper.c w/wrapper.c
+index 007ec0d..5a835e8 100644
+--- i/wrapper.c
++++ w/wrapper.c
+@@ -40,7 +40,11 @@ try_to_free_t set_try_to_free_routine(try_to_free_t routine)
  
--static const char *prepare_final(struct scoreboard *sb)
-+static char *prepare_final(struct scoreboard *sb)
+ char *xstrdup(const char *str)
  {
- 	int i;
- 	const char *final_commit_name = NULL;
-@@ -2415,10 +2415,10 @@ static const char *prepare_final(struct scoreboard *sb)
- 		sb->final = (struct commit *) obj;
- 		final_commit_name = revs->pending.objects[i].name;
- 	}
--	return final_commit_name;
-+	return xstrdup_or_null(final_commit_name);
- }
- 
--static const char *prepare_initial(struct scoreboard *sb)
-+static char *prepare_initial(struct scoreboard *sb)
- {
- 	int i;
- 	const char *final_commit_name = NULL;
-@@ -2445,7 +2445,7 @@ static const char *prepare_initial(struct scoreboard *sb)
- 	}
- 	if (!final_commit_name)
- 		die("No commit to dig down to?");
--	return final_commit_name;
-+	return xstrdup(final_commit_name);
- }
- 
- static int blame_copy_callback(const struct option *option, const char *arg, int unset)
-@@ -2489,7 +2489,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
- 	struct origin *o;
- 	struct blame_entry *ent = NULL;
- 	long dashdash_pos, lno;
--	const char *final_commit_name = NULL;
-+	char *final_commit_name = NULL;
- 	enum object_type type;
- 
- 	static struct string_list range_list;
-@@ -2786,6 +2786,8 @@ parse_done:
- 
- 	assign_blame(&sb, opt);
- 
-+	free(final_commit_name);
+-	char *ret = strdup(str);
++	char *ret;
 +
- 	if (incremental)
- 		return 0;
++	if (!str)
++		return NULL;
++	ret = strdup(str);
+ 	if (!ret) {
+ 		try_to_free_routine(strlen(str) + 1);
+ 		ret = strdup(str);
+@@ -125,7 +129,11 @@ void *xmemdupz(const void *data, size_t len)
  
--- 
-2.2.1.425.g441bb3c
+ char *xstrndup(const char *str, size_t len)
+ {
+-	char *p = memchr(str, '\0', len);
++	char *p;
++
++	if (!str)
++		return NULL;
++	p = memchr(str, '\0', len);
+ 	return xmemdupz(str, p ? p - str : len);
+ }
+ 
