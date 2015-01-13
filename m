@@ -1,90 +1,124 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH] Document receive.advertiseatomic
-Date: Mon, 12 Jan 2015 16:24:02 -0800
-Message-ID: <1421108642-22213-1-git-send-email-sbeller@google.com>
-Cc: sunshine@sunshineco.com, git@vger.kernel.org,
-	Stefan Beller <sbeller@google.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Jan 13 01:24:14 2015
+From: Pat Thoyts <patthoyts@users.sourceforge.net>
+Subject: Re: [PATCH v2] git-gui: fix problem with gui.maxfilesdisplayed
+Date: Tue, 13 Jan 2015 00:32:43 +0000
+Message-ID: <87siffmses.fsf@red.patthoyts.tk>
+References: <54490495.2010200@disi.unitn.it> <548F0058.9090701@disi.unitn.it>
+Reply-To: patthoyts@users.sourceforge.net
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Dan Zwell <dzwell@zwell.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Csaba Kiraly <kiraly@fbk.eu>
+To: Csaba Kiraly <kiraly@disi.unitn.it>
+X-From: git-owner@vger.kernel.org Tue Jan 13 01:41:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YApHJ-0002Re-Ci
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Jan 2015 01:24:13 +0100
+	id 1YApXi-0000wL-Iw
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Jan 2015 01:41:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753105AbbAMAYI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Jan 2015 19:24:08 -0500
-Received: from mail-ie0-f178.google.com ([209.85.223.178]:57381 "EHLO
-	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752392AbbAMAYG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Jan 2015 19:24:06 -0500
-Received: by mail-ie0-f178.google.com with SMTP id vy18so30561iec.9
-        for <git@vger.kernel.org>; Mon, 12 Jan 2015 16:24:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=SxnABxFijcdyqzDKERhBif6lK/qImUfFuv5Wo/FO+/I=;
-        b=mG0wC5XsbI4laGv8QPcimlzvN+JTqaedP8hgZ3gF54JqXOHLksIz1iniFC1TRGOv9K
-         GGlLY9f33IZYEawvVx+WnNcSkATJpyzuNPPHbOabiNu9iV+0sZJ5yccz6nIlC424LgF+
-         tl+mu8+ERP/e8RrXeXMXnmECBvJ+WKFxKHGCi3gRmrkg9Hf5Ssay9rn396/HRcw/i2JR
-         wmVr+sC2nBsDhK/He62XmKZHhbLaiClpOQ6vO/sVP8nKzeJZaYE8qG9BBNOAdZL92cUH
-         YsmyvOHIueOzD9R5/0Ej2Uhp5eppMIvr8Sj/xgqa3/yL+ww4NbaAyrNEbn6okAmc9Y7a
-         m/fg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=SxnABxFijcdyqzDKERhBif6lK/qImUfFuv5Wo/FO+/I=;
-        b=MrIZ5DzL0TEqnUXu0TQmJW9eU6jwC8BnXJFwlttyr+nrInifD7wrVuanJ2JJLIDPuC
-         H8sFxdREPU96Jd1Ty/DoCksQcG4Rh0VS+WIuDKsqj3UovhbU7BVDdFBNZF+JA0Bvz5pa
-         IyR3HHZQbPqoomjJiM3UX5vYv5+Y914Zy/aMqFyrlysAdTt0BWOwP6Uzr/X4uEN2O3AQ
-         sVDRKWP+BKxynloVkR+myut1UzRYThcz7ACzjgdehdvmjdksFegp4KBw/A8DEDf9nmDW
-         oGrZUoy5vg9UuRyRIyhdk9CN7Nt/03K01PWN/g93776HSEo9HeqdiSkXaq/56lO4jeVG
-         b61g==
-X-Gm-Message-State: ALoCoQmXF73o9xkBLA/lJaVdn5OOOrUuXy+RrQEb+IIb/v34cLoCHeGMrPAu4T8OoGuLJII6SfSX
-X-Received: by 10.107.131.102 with SMTP id f99mr30278016iod.31.1421108645456;
-        Mon, 12 Jan 2015 16:24:05 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b00:50ea:ea5:b131:957b])
-        by mx.google.com with ESMTPSA id g5sm9374630iod.25.2015.01.12.16.24.04
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 12 Jan 2015 16:24:05 -0800 (PST)
-X-Mailer: git-send-email 2.2.1.62.g3f15098
+	id S1752118AbbAMAlF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Jan 2015 19:41:05 -0500
+Received: from know-smtprelay-omc-7.server.virginmedia.net ([80.0.253.71]:57640
+	"EHLO know-smtprelay-omc-7.server.virginmedia.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751938AbbAMAlD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Jan 2015 19:41:03 -0500
+X-Greylist: delayed 496 seconds by postgrey-1.27 at vger.kernel.org; Mon, 12 Jan 2015 19:41:03 EST
+Received: from red.patthoyts.tk ([82.45.42.101])
+	by know-smtprelay-7-imp with bizsmtp
+	id fCYk1p00q2AxhvW01CYkyN; Tue, 13 Jan 2015 00:32:45 +0000
+X-Originating-IP: [82.45.42.101]
+X-Spam: 0
+X-Authority: v=2.1 cv=cpwVkjIi c=1 sm=1 tr=0 a=FEdcR8KTC/yDun0iFnNZnw==:117
+ a=FEdcR8KTC/yDun0iFnNZnw==:17 a=6gpmbu8EOFEA:10 a=xqWC_Br6kY4A:10
+ a=FP58Ms26AAAA:8 a=YNv0rlydsVwA:10 a=Rf460ibiAAAA:8 a=OW3lbr68Y7xtuf9Cf58A:9
+ a=AkUkIWUyXwcA:10 a=NWVoK91CQyQA:10
+Received: from red.patthoyts.tk (red.patthoyts.tk [IPv6:2a01:348:2be::2])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by red.patthoyts.tk (Postfix) with ESMTPS id 3DA261961BB7;
+	Tue, 13 Jan 2015 00:32:44 +0000 (GMT)
+X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
+ qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
+ '?a?.s#@hl7CiTo'F"O!fvbL0
+X-Url: http://www.patthoyts.tk/
+In-Reply-To: <548F0058.9090701@disi.unitn.it> (Csaba Kiraly's message of "Mon,
+	15 Dec 2014 16:38:00 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262310>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262311>
 
-This was missing in 1b70fe5d3054 (2015-01-07, receive-pack.c: negotiate
-atomic push support) as I squashed the option in very late in the patch
-series.
+Csaba Kiraly <kiraly@disi.unitn.it> writes:
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
+>gui.maxfilesdisplayed (added in dd6451f9c7c5a36d3006231b618ac6da06c7c7b4)
+>was applied brute force on the file list in alphabetic order. As a result,
+>files that had modifications might not be displayed by git-gui. Even
+>worse, files that are already in the index might not be displayed, which
+>makes git-gui hard to use in some workflows.
+>
+>This fix changes the meaning of gui.maxfilesdisplayed, making it a soft
+>limit that only applies to "_O" files, i.e. files that are "Untracked,
+>not staged".
+>
+>Signed-off-by: Csaba Kiraly <kiraly@disi.unitn.it>
+>---
+> git-gui.sh | 21 ++++++++++++---------
+> 1 file changed, 12 insertions(+), 9 deletions(-)
+>
+>diff --git a/git-gui.sh b/git-gui.sh
+>index 27ce0e3..0e4b05a 100755
+>--- a/git-gui.sh
+>+++ b/git-gui.sh
+>@@ -1965,20 +1965,22 @@ proc display_all_files {} {
+> 
+> 	set to_display [lsort [array names file_states]]
+> 	set display_limit [get_config gui.maxfilesdisplayed]
+>-	if {[llength $to_display] > $display_limit} {
+>-		if {!$files_warning} {
+>-			# do not repeatedly warn:
+>-			set files_warning 1
+>-			info_popup [mc "Displaying only %s of %s files." \
+>-				$display_limit [llength $to_display]]
+>-		}
+>-		set to_display [lrange $to_display 0 [expr {$display_limit-1}]]
+>-	}
+>+	set displayed 0
+> 	foreach path $to_display {
+> 		set s $file_states($path)
+> 		set m [lindex $s 0]
+> 		set icon_name [lindex $s 1]
+> 
+>+		if {$displayed > $display_limit && [string index $m 1] eq {O} } {
+>+			if {!$files_warning} {
+>+				# do not repeatedly warn:
+>+				set files_warning 1
+>+				info_popup [mc "Display limit (gui.maxfilesdisplayed = %s) reached, not showing all %s files." \
+>+					$display_limit [llength $to_display]]
+>+			}
+>+			continue
+>+		}
+>+
+> 		set s [string index $m 0]
+> 		if {$s ne {U} && $s ne {_}} {
+> 			display_all_files_helper $ui_index $path \
+>@@ -1993,6 +1995,7 @@ proc display_all_files {} {
+> 		if {$s ne {_}} {
+> 			display_all_files_helper $ui_workdir $path \
+> 				$icon_name $s
+>+			incr displayed
+> 		}
+> 	}
 
-Notes:
-    v1:
-    This goes on top of origin/sb/atomic-push
+I found a way to test this and it seems fine. The message box points out
+the new controlling config variable which is good. Applied to the master
+branch.
 
- Documentation/config.txt | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 9220725..4f8f498 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2072,6 +2072,11 @@ rebase.autostash::
- 	successful rebase might result in non-trivial conflicts.
- 	Defaults to false.
- 
-+receive.advertiseatomic::
-+	By default, git-receive-pack will advertise the atomic push
-+	capability to its clients. If you don't want to this capability
-+	to be advertised, set this variable to false.
-+
- receive.autogc::
- 	By default, git-receive-pack will run "git-gc --auto" after
- 	receiving data from git-push and updating refs.  You can stop
 -- 
-2.2.1.62.g3f15098
+Pat Thoyts                            http://www.patthoyts.tk/
+PGP fingerprint 2C 6E 98 07 2C 59 C8 97  10 CE 11 E6 04 E0 B9 DD
