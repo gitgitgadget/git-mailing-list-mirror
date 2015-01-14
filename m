@@ -1,72 +1,60 @@
-From: Andreas Krey <a.krey@gmx.de>
-Subject: Re: Big repo not shrinking on repack or gc?
-Date: Wed, 14 Jan 2015 14:07:31 +0100
-Message-ID: <20150114130731.GD13247@inner.h.apk.li>
-References: <20150114115130.GA5677@inner.h.apk.li> <20150114124936.GC30383@peff.net>
+From: Christian Neukirchen <chneukirchen@gmail.com>
+Subject: Re: [ANNOUNCE] Git v2.3.0-rc0
+Date: Wed, 14 Jan 2015 14:11:52 +0100
+Message-ID: <87egqxfqw7.fsf@gmail.com>
+References: <xmqqmw5n5z8i.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jan 14 14:07:50 2015
+Content-Type: text/plain
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 14 14:12:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YBNfm-00035S-I4
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Jan 2015 14:07:46 +0100
+	id 1YBNk4-0005LT-Ow
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Jan 2015 14:12:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752477AbbANNHg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Jan 2015 08:07:36 -0500
-Received: from continuum.iocl.org ([217.140.74.2]:55651 "EHLO
-	continuum.iocl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752092AbbANNHf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Jan 2015 08:07:35 -0500
-Received: (from krey@localhost)
-	by continuum.iocl.org (8.11.3/8.9.3) id t0ED7VU08695;
-	Wed, 14 Jan 2015 14:07:31 +0100
-Content-Disposition: inline
-In-Reply-To: <20150114124936.GC30383@peff.net>
-User-Agent: Mutt/1.4.2.1i
-X-message-flag: What did you expect to see here?
+	id S1752483AbbANNMH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Jan 2015 08:12:07 -0500
+Received: from plane.gmane.org ([80.91.229.3]:54322 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751995AbbANNMG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jan 2015 08:12:06 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1YBNjv-0005HY-1H
+	for git@vger.kernel.org; Wed, 14 Jan 2015 14:12:03 +0100
+Received: from host57-2.natpool.mwn.de ([138.246.2.57])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 14 Jan 2015 14:12:03 +0100
+Received: from chneukirchen by host57-2.natpool.mwn.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 14 Jan 2015 14:12:03 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: host57-2.natpool.mwn.de
+In-Reply-To: <xmqqmw5n5z8i.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Mon, 12 Jan 2015 15:57:17 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262385>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262386>
 
-On Wed, 14 Jan 2015 07:49:36 +0000, Jeff King wrote:
-> On Wed, Jan 14, 2015 at 12:51:30PM +0100, Andreas Krey wrote:
-> 
-> > I have a repo here that is 130G, but when I clone --mirror it, the result
-> > is only 25G big.  Because of the --mirror I don't think that I missed
-> > any refs that keep objects only in the source repo.
-> 
-> Perhaps some objects are mentioned by reflogs, but not by the refs? They
-> would not be transferred as part of a clone. Try:
-> 
->   git rev-list --objects --all | cut -d' ' -f1 | sort >reachable
->   git rev-list --objects --reflog | cut -d' ' -f1 | sort >reflogs
+Junio C Hamano <gitster@pobox.com> writes:
 
-Actually, the output of 'git rev-list --objects --reflog' is empty, and
-there isn't even a reflog (or similar) directory. (This is a bare repo
-inside atlass. stash.)
+>  * "git push" into a repository with a working tree normally refuses
+>    to modify the branch that is checked out.  The command learned to
+>    optionally do an equivalent of "git reset --hard" only when there
+>    is no change to the working tree and the index instead, which would
+>    be useful to "deploy" by pushing into a repository.
 
-...
-> > I already tried 'git repack -fad' and 'git gc' to shrink the original repo,
-> 
-> You don't need the "-f" here. Just "git repack -ad" should be enough
-> (and the "-f" probably makes it _way_ slower).
+Perhaps this can mention "receive.denyCurrentBranch=updateInstead" so
+interested users won't have to grep the tree for 10min to find it. :)
 
-Right, the -f is an old workaround for old jgits in another repo.
-
-Apparently, part of the trick is --prune=all or similar on 'git gc',
-to get rid of the loose objects faster. That got a copy of the repo
-down to around 70G - still way to go.
-
-Andreas
-
+Thanks,
 -- 
-"Totally trivial. Famous last words."
-From: Linus Torvalds <torvalds@*.org>
-Date: Fri, 22 Jan 2010 07:29:21 -0800
+Christian Neukirchen  <chneukirchen@gmail.com>  http://chneukirchen.org
