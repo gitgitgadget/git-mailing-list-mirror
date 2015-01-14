@@ -1,99 +1,107 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH] bash completion: allow git stash store options completion
-Date: Wed, 14 Jan 2015 19:03:46 +0000
-Message-ID: <20150114190345.GC32115@vauxhall.crustytoothpaste.net>
-References: <1421171612-12058-1-git-send-email-kuleshovmail@gmail.com>
- <xmqq7fwqed7b.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] init-db: use OPT__QUIET macro instead OPT_BIT
+Date: Wed, 14 Jan 2015 11:08:47 -0800
+Message-ID: <xmqqa91l9o3k.fsf@gitster.dls.corp.google.com>
+References: <1421256762-26765-1-git-send-email-kuleshovmail@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="sHrvAb52M6C8blB9"
-Cc: Alexander Kuleshov <kuleshovmail@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 14 20:04:02 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Alexander Kuleshov <kuleshovmail@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 14 20:08:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YBTEV-00062P-LZ
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Jan 2015 20:04:00 +0100
+	id 1YBTJG-0008AL-VF
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Jan 2015 20:08:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754108AbbANTDy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Jan 2015 14:03:54 -0500
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:57238 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754099AbbANTDx (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Jan 2015 14:03:53 -0500
-Received: from vauxhall.crustytoothpaste.net (63-253-185-227.ip.mcleodusa.net [63.253.185.227])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	id S1753177AbbANTIv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Jan 2015 14:08:51 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:56089 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751893AbbANTIu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jan 2015 14:08:50 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7FF8A2B372;
+	Wed, 14 Jan 2015 14:08:49 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=FiiWh6hJTqGoY6mmM3xplCPLQzY=; b=rK4R3e
+	Bxdb02nyC2DitOWF5HIAps38N6V5uZ2X3NyEmHYmCiJ9DZfB/UE8ppL0KBl1b98J
+	FGsL31+u2DVoXqtWQ4G4ox4T0MXeSZqs6RkyZX4nW1FM4GKgYo5q1/IdSyPFhwDK
+	UMP+YP596T1N9Td+l/F/y+nxxvy03yE6CnMOA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=SDmT3Zd7LIPufRNR9TBpZA2K97E1qa+P
+	dE8kfZV3871XA+TIvqm3nHOghKBnjGxrDReGznBIml5mXmDHJ2khjQiwSVrQIZ9O
+	WYLvagkLcNz72fqTp9GHc7zjjLPAfc4zTA9/JU0EmbFp+NQQJO7vL4nzbTj0l+x2
+	KrLHE26pe38=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 76BD22B370;
+	Wed, 14 Jan 2015 14:08:49 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 938DE2808F;
-	Wed, 14 Jan 2015 19:03:52 +0000 (UTC)
-Mail-Followup-To: Junio C Hamano <gitster@pobox.com>,
-	Alexander Kuleshov <kuleshovmail@gmail.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <xmqq7fwqed7b.fsf@gitster.dls.corp.google.com>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.18.0-trunk-amd64)
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Spam-Score: 0.163 () BAYES_00,RDNS_DYNAMIC
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 127612B36F;
+	Wed, 14 Jan 2015 14:08:49 -0500 (EST)
+In-Reply-To: <1421256762-26765-1-git-send-email-kuleshovmail@gmail.com>
+	(Alexander Kuleshov's message of "Wed, 14 Jan 2015 23:32:42 +0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: C54AAE62-9C20-11E4-B27C-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262413>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262414>
 
+Alexander Kuleshov <kuleshovmail@gmail.com> writes:
 
---sHrvAb52M6C8blB9
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Tue, Jan 13, 2015 at 10:40:40AM -0800, Junio C Hamano wrote:
->Alexander Kuleshov <kuleshovmail@gmail.com> writes:
+> There is OPT__QUIET macro for easily -q/--quiet option defenition,
+> let's use it instead OPT_BIT
 >
->> This patch adds bash completion for git stash 'store' subcommand
->> which apperead at bd514cad (stash: introduce 'git stash store', 18 Jun 2=
-013)
->>
->> Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
->> ---
->
->Hmph.  The "create" and "store" subcommands are not end-user facing;
->they are meant to be used in scripts.  I am not sure if we want to
->complete them in the first place.  I know "create" already is in the
->list of completion candidates, but I wonder if adding "store" is
->making things worse.
+> Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
+> ---
+>  builtin/init-db.c | 11 +++++------
+>  1 file changed, 5 insertions(+), 6 deletions(-)
 
-For what it's worth, I'll often sketch out a script at the command line=20
-before putting it in a file (either because I realize I'll need to do=20
-the same thing again or I want to share it with others), so I think this=20
-might be a useful addition.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+This is questionable for three reasons.
 
---sHrvAb52M6C8blB9
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+ - OPT__QUIET() takes an integer and counts up; a single -q and
+   double -q -q will give different values to the given variable so
+   that the user can express varying levels of quietness.  You can
+   no longer check the value with "& INIT_DB_QUIET".
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+ - We did "flags" very deliberately because we wanted to make sure
+   we do not have to add different parameters to init_db() every
+   time we wanted a new small knob to tweak its operation like
+   "quiet", "verbose", etc.
 
-iQIcBAEBCgAGBQJUtr2RAAoJEL9TXYEfUvaLD2gP/0j+iomiUqFUdUNPUvqQwfFK
-9ZJtz8fflx1pDBz0dTQap2ezKOCVX6bJDU7UQdnaX5oas3zg2PRkKb7nMadJAHtP
-ZBGBeWZ6k29G/w8i9tYXhxTHs57SDXS69n8wRodN/j9iMFBAf3q3oIrBF4Bm/m/V
-lgR78Mn8ljS2d256m6FQVhDL6DKP/mfUkoP+6h6kE+OuOgxYXmWKGhoNMwoEPYcL
-iQ5XvTeoaQC8Yi5aLZaP2juifMVYcyptJRA0uSXXGOGyvSFTBHktVg1AuJrbfBG3
-AxkIrz45T1NilDnhXJqoEMi6zn0TUuS2YkQJp38R6nFSHKvLfb7jq0YXWK2bYnuQ
-VibaH8gaSrqBkWQuP3GJBCyMz60I3yHVDkQA/KHtYYWvzltxUai34uB8Ee7BfXsL
-z8GH7wNJui1OLZGhba0TpH/D6LrC0mfkRKh1rXcGiQHYPrQAezIV1oK0+Hef69G/
-uaIrPgCfXoSQzSTr722Mbn++ONt80EAcknUlRW/cucCXS6KgFvbz4zcrIgwfrbBs
-h1hq1m3Paxs21nB9wRKYiJPdr7AYoZqGyr9PXSg1fqVxze1CPcp1398s3+39clrs
-6InrsvQdsiFMuMnel425JK6zCrSo9g0TUbUeyqRbHkGBV+QkWEy4DoPMO6KClsc2
-nytwdCy/sUFupmfqf/ol
-=DdiN
------END PGP SIGNATURE-----
+ - We have been trying to move away from OPT__VERBOSE() and
+   OPT__QUIET() to OPT__VERBOSITY(), so that we can handle
+   combinations of --quiet and --verbose on the command line in a
+   more sensible manner.
 
---sHrvAb52M6C8blB9--
+I am OK if you switched to OPT__VERBOSITY(), in anticipation of more
+verbose output from the command in the future, though.
+
+
+> diff --git a/builtin/init-db.c b/builtin/init-db.c
+> index 280454a..a89343b 100644
+> --- a/builtin/init-db.c
+> +++ b/builtin/init-db.c
+> @@ -368,7 +368,7 @@ static void separate_git_dir(const char *git_dir)
+>  	write_file(git_link, 1, "gitdir: %s\n", git_dir);
+>  }
+>  
+> -int init_db(const char *template_dir, unsigned int flags)
+> +int init_db(const char *template_dir, unsigned int quiet)
+>  {
+>  	int reinit;
+>  	const char *git_dir = get_git_dir();
+> @@ -411,8 +411,7 @@ int init_db(const char *template_dir, unsigned int flags)
+>  		git_config_set("core.sharedrepository", buf);
+>  		git_config_set("receive.denyNonFastforwards", "true");
+>  	}
+> -	if (!(flags & INIT_DB_QUIET)) {
+> +	if (!(quiet & INIT_DB_QUIET)) {
