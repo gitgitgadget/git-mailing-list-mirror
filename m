@@ -1,53 +1,53 @@
-From: Andrew Mackenzie <andrew@mackenzie-serres.net>
-Subject: Re: remote helper example with push/fetch capabilities
-Date: Wed, 14 Jan 2015 21:57:31 +0000 (UTC)
-Message-ID: <loom.20150114T225554-824@post.gmane.org>
-References: <CAPCWLt6kxoJJSWAcyH_kW071Md0vc4zeo41hCKBQHd-_pvUMXQ@mail.gmail.com> <xmqqegs0d1qv.fsf@gitster.dls.corp.google.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH] git-svn: show progress in working_head_info()
+Date: Wed, 14 Jan 2015 17:40:23 -0500
+Message-ID: <CALkWK0nJdkk0D3R62upGWm24s4vqF5tehkb5fU=nWMnCJ-OGWw@mail.gmail.com>
+References: <1420896096-15254-1-git-send-email-artagnon@gmail.com> <20150110222135.GB32253@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 14 23:25:18 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Wed Jan 14 23:42:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YBWNJ-0003YZ-CC
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Jan 2015 23:25:17 +0100
+	id 1YBWdR-0002GV-Ph
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Jan 2015 23:41:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753819AbbANWZK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Jan 2015 17:25:10 -0500
-Received: from plane.gmane.org ([80.91.229.3]:33732 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752876AbbANWZG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Jan 2015 17:25:06 -0500
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1YBWN6-0003RV-G0
-	for git@vger.kernel.org; Wed, 14 Jan 2015 23:25:04 +0100
-Received: from 204.27.133.37.dynamic.jazztel.es ([37.133.27.204])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 14 Jan 2015 23:25:04 +0100
-Received: from andrew by 204.27.133.37.dynamic.jazztel.es with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 14 Jan 2015 23:25:04 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 37.133.27.204 (Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36)
+	id S1752561AbbANWlG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Jan 2015 17:41:06 -0500
+Received: from mail-ig0-f179.google.com ([209.85.213.179]:59785 "EHLO
+	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752532AbbANWlF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jan 2015 17:41:05 -0500
+Received: by mail-ig0-f179.google.com with SMTP id l13so11600739iga.0
+        for <git@vger.kernel.org>; Wed, 14 Jan 2015 14:41:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=j3YKuKrZ/6EE49xPU3riggarCWbhuvD1E5knzATd7u0=;
+        b=BUffP9ycTq4F+0zDGxjjrbcmSsP9Kqq9fckl+I5W8dlN962lDSYRPyoozALZVPGi0/
+         c1YjHVATOFvbZadCK0NpfZai65/PwTDOyehssqiFpTjOSTZ1FbwYDDffnoDRI5c9LxKi
+         iYgSZHaamaBoH5PkFY+u21lsvj8lSFMptOTvrhjh9eRD8Zrto/+t4BJ+kDuGQs7aagun
+         JtHXz9J3mN6UUiEkhaM2iM4RogE0wd0vptQC8qejeavTVLP1J9YEaX68DpSN1aBVN/Hr
+         WS9DCS1b0NCPHPNo9pAsg7x0PM2eRJZFr6F/8jTIfXuSy05W8x5uCbbl/AOyxH/WebSz
+         Yddw==
+X-Received: by 10.107.166.149 with SMTP id p143mr7187702ioe.16.1421275263860;
+ Wed, 14 Jan 2015 14:41:03 -0800 (PST)
+Received: by 10.107.13.18 with HTTP; Wed, 14 Jan 2015 14:40:23 -0800 (PST)
+In-Reply-To: <20150110222135.GB32253@dcvr.yhbt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262437>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262438>
 
-I'm interested in doing something very similar (not to S3, but to a customer 
-CMS repository), but have found it very difficult to find any documentation or 
-good example code on git-remote-helpers.
+Eric,
 
-If you can share any learnings or references I would really appreciate it!
+I'm sorry, but this change isn't important enough for me to follow up.
+Please merge the other two patches, if you think they're good.
 
-thanks, Andrew
+Thanks.
