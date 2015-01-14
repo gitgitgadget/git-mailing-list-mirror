@@ -1,70 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git ignores /~/.config/git/
-Date: Wed, 14 Jan 2015 16:07:52 -0500
-Message-ID: <20150114210751.GD1155@peff.net>
-References: <20150114193307.GA2592@lejenome.me>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: sporadic git failures on interactive rebase
+Date: Wed, 14 Jan 2015 16:11:09 -0500
+Message-ID: <CAPig+cT+bG=Pzws0WKpgnZX2mg4+VmAgxTBCwNiOGDmY4AzSKQ@mail.gmail.com>
+References: <trinity-5098e61e-b59a-4225-9d4c-8879dc78bb53-1421146472532@3capp-gmx-bs08>
+	<20150114121915.GB30383@peff.net>
+	<20150114123536.GA31530@peff.net>
+	<xmqqvbk9b81d.fsf@gitster.dls.corp.google.com>
+	<20150114205437.GB1155@peff.net>
+	<CAPig+cQ9GpL9r6Rr96jc6G=EvCArodSXC-qMzSBp=e7c7QQbtA@mail.gmail.com>
+	<20150114210222.GA5396@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Moez Bouhlel <bmoez.j@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 14 22:08:00 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Henning Moll <newsScott@gmx.de>, Git List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jan 14 22:11:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YBVAW-0002JD-8Z
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Jan 2015 22:08:00 +0100
+	id 1YBVDf-0003gt-Tp
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Jan 2015 22:11:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752262AbbANVHz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Jan 2015 16:07:55 -0500
-Received: from cloud.peff.net ([50.56.180.127]:34603 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752140AbbANVHy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Jan 2015 16:07:54 -0500
-Received: (qmail 15036 invoked by uid 102); 14 Jan 2015 21:07:54 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 14 Jan 2015 15:07:54 -0600
-Received: (qmail 6687 invoked by uid 107); 14 Jan 2015 21:08:15 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 14 Jan 2015 16:08:15 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Jan 2015 16:07:52 -0500
-Content-Disposition: inline
-In-Reply-To: <20150114193307.GA2592@lejenome.me>
+	id S1751972AbbANVLL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Jan 2015 16:11:11 -0500
+Received: from mail-yk0-f180.google.com ([209.85.160.180]:39151 "EHLO
+	mail-yk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751796AbbANVLK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jan 2015 16:11:10 -0500
+Received: by mail-yk0-f180.google.com with SMTP id 9so5206757ykp.11
+        for <git@vger.kernel.org>; Wed, 14 Jan 2015 13:11:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=CkoY516Pq42BzYHR/s/5wcUgNtslGKlSGLO6bNR3+eE=;
+        b=wLMBzD1QV6MoF0FPqhff4/kB0GnumvET2OfZqc+rpJcFXAs1NbFQ9mEMERXrCspsqc
+         msO8Q9fYmfMO+QmwFDebtr932k/YlFdoM0/gAcQs8mlqmjNoCswVKCrZ5E0xWzz7yC+T
+         WhkYiX3LykpGDyN1w97Zsjx5/1FeTJwgNYO/oLpeNnPiJdMEFwtgwjb1unxrmbnd5R4b
+         wA20+l2+X734OQASjf/D14GhRkKchCTdYQjYBbB3WcAvCcryVBh5CHH+EPy/JEtUJiKC
+         S7PyaQCaXf2sSkgpu8sHN0/I1bICqj1gwmEo+YMSfDXJJ51LmJNEr80hk2jEtfr82C6u
+         VJVA==
+X-Received: by 10.236.105.210 with SMTP id k58mr3445085yhg.52.1421269869858;
+ Wed, 14 Jan 2015 13:11:09 -0800 (PST)
+Received: by 10.170.73.7 with HTTP; Wed, 14 Jan 2015 13:11:09 -0800 (PST)
+In-Reply-To: <20150114210222.GA5396@peff.net>
+X-Google-Sender-Auth: RFHzTxrJgnCpF1NgPLq9NJ2xRFk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262430>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262431>
 
-On Wed, Jan 14, 2015 at 07:33:07PM +0000, Moez Bouhlel wrote:
+On Wed, Jan 14, 2015 at 4:02 PM, Jeff King <peff@peff.net> wrote:
+> On Wed, Jan 14, 2015 at 04:00:37PM -0500, Eric Sunshine wrote:
+>
+>> > So yeah, the most plausible theory to me so far is unluckiness combined
+>> > with pre-1.8.4.2. That should be easy to disprove if Henning tells us
+>> > his git version.
+>>
+>> Henning mentioned it at the very top of his original problem report:
+>>
+>>     "(git version 2.2.0)"
+>
+> Ah, reading comprehension. It pays off.
+>
+> I'm stumped, then.
 
-> git exludes /~/.config/git/ from the matching list.
-> 
-> ~ is the name of a dir on the root of git working tree and not my user home dir.
+Perhaps some new code been added to git-rebase--interactive.sh since
+75c69766 which neglects to invoke expand_todo_ids()?
 
-I'm not quite sure what you mean by "matching list". Do you mean that
-the path is not listed as untracked in "git status"?
-
-Are there any files inside the directory? Git will not mention empty
-directories, as tracks only file content, not directories.
-
-Beyond that, I cannot reproduce:
-
-  $ git init
-  $ mkdir -p '~/.config/git'
-  $ git status -s
-
-Lack of output is expected, since there are no files. Now:
-
-  $ echo content >'~/.config/git/foo'
-  $ git status -s
-  ?? ~/
-  $ git status -s -uall
-  ?? ~/.config/git/foo
-
-This is on Linux. Are you by any chance using Git for Windows? I wonder
-if the recent chances to short-names like "foo~1" could have affected
-this.
-
--Peff
+Or, possibly some older version of git is being invoked somehow during
+rebase despite his "front end" use of 2.2.0?
