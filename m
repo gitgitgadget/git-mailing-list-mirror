@@ -1,78 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] standardize usage info string format
-Date: Wed, 14 Jan 2015 09:31:22 -0800
-Message-ID: <xmqq7fwpb76d.fsf@gitster.dls.corp.google.com>
-References: <1421135087-7284-1-git-send-email-alexhenrie24@gmail.com>
-	<vpqy4p5bknl.fsf@anie.imag.fr>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Alex Henrie <alexhenrie24@gmail.com>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Jan 14 18:31:36 2015
+From: Alexander Kuleshov <kuleshovmail@gmail.com>
+Subject: [PATCH] init-db: use OPT__QUIET macro instead OPT_BIT
+Date: Wed, 14 Jan 2015 23:32:42 +0600
+Message-ID: <1421256762-26765-1-git-send-email-kuleshovmail@gmail.com>
+Cc: git@vger.kernel.org, Alexander Kuleshov <kuleshovmail@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 14 18:33:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YBRn5-0005N9-6L
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Jan 2015 18:31:35 +0100
+	id 1YBRoS-00064m-B4
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Jan 2015 18:33:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752581AbbANRb0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Jan 2015 12:31:26 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:61254 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751996AbbANRbY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Jan 2015 12:31:24 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id C8B6B2B96A;
-	Wed, 14 Jan 2015 12:31:23 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=W85WNFVgqNGAVBUksa/g4nHjQs8=; b=oP2K6B
-	Ud5FCNO30QwpJcka1I6Tv94EY5LX6ViWw05bILbSfdH3494bn1QmSsG4ho2Aem86
-	ZXf/H3rQqnZ+bVDPbchUk4Z6fJe1cGGewhls0eF9dNCl7AAur5DqVM7TedB9pjaN
-	HsKxQrlSmSY3ct5tbGEJWvXx0/1z9tttTsrS8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=q4+N+fgZU6uOkvqQoQCTh1BXEZI7ksxV
-	L+iTuctiivnJZxWiuWgQmQKQYLY2YIuUKm9EQ9GtDP5fDeexub129dkYnr/x9mYr
-	omhBbu0eqKa/aIMr4wgqND40CyM01eGI/zbc5BAsU3FgvW+sbafPawir93nbtd6I
-	AMFLWq090Pg=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id BED5C2B969;
-	Wed, 14 Jan 2015 12:31:23 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3B60D2B968;
-	Wed, 14 Jan 2015 12:31:23 -0500 (EST)
-In-Reply-To: <vpqy4p5bknl.fsf@anie.imag.fr> (Matthieu Moy's message of "Wed,
-	14 Jan 2015 13:40:14 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 28E77A58-9C13-11E4-A37F-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S932066AbbANRcz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Jan 2015 12:32:55 -0500
+Received: from mail-lb0-f180.google.com ([209.85.217.180]:43645 "EHLO
+	mail-lb0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754593AbbANRcx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jan 2015 12:32:53 -0500
+Received: by mail-lb0-f180.google.com with SMTP id l4so9119627lbv.11
+        for <git@vger.kernel.org>; Wed, 14 Jan 2015 09:32:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=QKFSmiDpEjw5GDbP2+OM3ajPP43yuPkX2bpZG/YTG8s=;
+        b=Ku9BJpW90EzjVp/0vh6nLpYJ9Jj/nrz5Jkq/ImYQxqcrkDSX3RwdPjPuuheivOXmst
+         mt3WQ0lnZOjCvgKLJY7BlwC5ise8xDIrSpGTRrqyJRjv/RsTp4D3Mne2B9g6rgWJaJSw
+         fQgAxZ607bVuwMFSdPAmOoY6tYGGMfBk8aJr3V5sFV8+SMkyMy+N21C/5/ztH/mN+uj5
+         ANt8L7+SbXMPy0qAS0+lpnD4njUBdhszYJqSCbtMs/TuTESMdVwqzEZ8PJe2CD+M7w95
+         1dU2PWlgcRsNk3Pcg1PBQfjax+6XQGLkjYeCbJ9pqVQDWm6HG4oHCNeUSechY44XYSHc
+         Zfeg==
+X-Received: by 10.112.62.194 with SMTP id a2mr5141424lbs.73.1421256771870;
+        Wed, 14 Jan 2015 09:32:51 -0800 (PST)
+Received: from localhost.localdomain ([178.89.21.160])
+        by mx.google.com with ESMTPSA id kw10sm1937160lac.45.2015.01.14.09.32.49
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 14 Jan 2015 09:32:50 -0800 (PST)
+X-Mailer: git-send-email 2.3.0.rc0.256.g17f147e
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262397>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+There is OPT__QUIET macro for easily -q/--quiet option defenition,
+let's use it instead OPT_BIT
 
-> Alex Henrie <alexhenrie24@gmail.com> writes:
->
->> This patch puts the usage info strings that were not already in docopt-
->> like format into docopt-like format, which will be a litle easier for
->> end users and a lot easier for translators. Changes include:
->>
->> - Placing angle brackets around fill-in-the-blank parameters
->> - Putting dashes in multiword parameter names
->> - Adding spaces to [-f|--foobar] to make [-f | --foobar]
->> - Replacing <foobar>* with [<foobar>...]
->
-> I had a closer look and found it all good.
->
-> Reviewed-by: Matthieu Moy <Matthieu.Moy@imag.fr>
->
-> Thanks!
+Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
+---
+ builtin/init-db.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-Thanks again.
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index 280454a..a89343b 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -368,7 +368,7 @@ static void separate_git_dir(const char *git_dir)
+ 	write_file(git_link, 1, "gitdir: %s\n", git_dir);
+ }
+ 
+-int init_db(const char *template_dir, unsigned int flags)
++int init_db(const char *template_dir, unsigned int quiet)
+ {
+ 	int reinit;
+ 	const char *git_dir = get_git_dir();
+@@ -411,8 +411,7 @@ int init_db(const char *template_dir, unsigned int flags)
+ 		git_config_set("core.sharedrepository", buf);
+ 		git_config_set("receive.denyNonFastforwards", "true");
+ 	}
+-	if (!(flags & INIT_DB_QUIET)) {
++	if (!(quiet & INIT_DB_QUIET)) {
+ 		int len = strlen(git_dir);
+ 
+ 		/* TRANSLATORS: The first '%s' is either "Reinitialized
+@@ -483,7 +482,7 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
+ 	const char *real_git_dir = NULL;
+ 	const char *work_tree;
+ 	const char *template_dir = NULL;
+-	unsigned int flags = 0;
++	unsigned int quiet = 0;
+ 	const struct option init_db_options[] = {
+ 		OPT_STRING(0, "template", &template_dir, N_("template-directory"),
+ 				N_("directory from which templates will be used")),
+@@ -493,7 +492,7 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
+ 			N_("permissions"),
+ 			N_("specify that the git repository is to be shared amongst several users"),
+ 			PARSE_OPT_OPTARG | PARSE_OPT_NONEG, shared_callback, 0},
+-		OPT_BIT('q', "quiet", &flags, N_("be quiet"), INIT_DB_QUIET),
++		OPT__QUIET(&quiet, N_("suppress progress reporting")),
+ 		OPT_STRING(0, "separate-git-dir", &real_git_dir, N_("gitdir"),
+ 			   N_("separate git dir from working tree")),
+ 		OPT_END()
+@@ -593,5 +592,5 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
+ 
+ 	set_git_dir_init(git_dir, real_git_dir, 1);
+ 
+-	return init_db(template_dir, flags);
++	return init_db(template_dir, quiet);
+ }
+-- 
+2.3.0.rc0.256.g17f147e
