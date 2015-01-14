@@ -1,72 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] format-patch: print format-patch usage if there are no arguments
-Date: Tue, 13 Jan 2015 15:41:18 -0800
-Message-ID: <xmqqzj9mb65d.fsf@gitster.dls.corp.google.com>
-References: <1421171662-12164-1-git-send-email-kuleshovmail@gmail.com>
-	<xmqq387eed30.fsf@gitster.dls.corp.google.com>
-	<CANCZXo7UtCXF_bJe9exT1pUwwsgUuYs5mvHHGtDORoJew_UXnQ@mail.gmail.com>
-	<xmqqppaicwww.fsf@gitster.dls.corp.google.com>
-	<CAGZ79kYJ+XNktc7_C81xz=BfCP4_hrE=pWW5QGJ1kdXKMf4Jjw@mail.gmail.com>
-	<xmqqiogaco3m.fsf@gitster.dls.corp.google.com>
-	<20150113224531.GB3144@peff.net>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH] receive-pack.c: don't miss exporting unsolicited push certificates
+Date: Tue, 13 Jan 2015 16:11:34 -0800
+Message-ID: <CAGZ79kad=c1wXW163doxWBRdSvQ7Y9EkkD+ZXtOfawjtxEyeQw@mail.gmail.com>
+References: <xmqqbnm7bj8m.fsf@gitster.dls.corp.google.com>
+	<1420849874-32013-1-git-send-email-sbeller@google.com>
+	<xmqqmw5r9zck.fsf@gitster.dls.corp.google.com>
+	<54B0A2C1.4040602@gmail.com>
+	<xmqqiogb95t4.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Stefan Beller <sbeller@google.com>,
-	Alexander Kuleshov <kuleshovmail@gmail.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jan 14 00:41:26 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Stefan Beller <stefanbeller@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 14 01:11:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YBB5R-0005Fk-MO
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Jan 2015 00:41:26 +0100
+	id 1YBBYi-0005kS-DN
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Jan 2015 01:11:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752818AbbAMXlV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Jan 2015 18:41:21 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50563 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751271AbbAMXlU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Jan 2015 18:41:20 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 760322E82F;
-	Tue, 13 Jan 2015 18:41:20 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=QvYHvWaxtHUW6G3VPKgMsma1s20=; b=LChgmG
-	5sqYxEAD7ZQ/72DkjYp7MKttQcglb8IxtJZBqNSutXUCpJU1spNX4yAjWXo43u+J
-	7JRv0iqLMwxRN8e/LL+idBSSBUFpUlStBmRTf7DambTrBrQ43oOvicd0rAWA5k/H
-	G/plp/D8md9/JgeRzIrMwcly4R+Mz2OlgbvUs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=USH0VTWlUJ7gIZXWp/fOol098N+FzpH+
-	0ynt26nulgMyyHf80O7iKdEuQBZXtsbtGr829elx85JTaGS+tpP+LBPAm48yq5rf
-	Im9yzBMxt9JLNhXfn3SNVNvYhFBP9YTf9UIyfsbc9msdUorb/ClJ0L7HD/QJZC2R
-	dK1Cg2r2+o8=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6CA862E82E;
-	Tue, 13 Jan 2015 18:41:20 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CF6222E82D;
-	Tue, 13 Jan 2015 18:41:19 -0500 (EST)
-In-Reply-To: <20150113224531.GB3144@peff.net> (Jeff King's message of "Tue, 13
-	Jan 2015 17:45:31 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: ACB30744-9B7D-11E4-AC8A-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751331AbbANALg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Jan 2015 19:11:36 -0500
+Received: from mail-ie0-f179.google.com ([209.85.223.179]:55872 "EHLO
+	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750995AbbANALf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Jan 2015 19:11:35 -0500
+Received: by mail-ie0-f179.google.com with SMTP id rp18so5994102iec.10
+        for <git@vger.kernel.org>; Tue, 13 Jan 2015 16:11:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=t5iQr1U3knMb6jVW4g9V7jc7lnCzafJplOypf50h9RU=;
+        b=kqRiOk61Wn6SNQYVEKlIH94hWgoy+6dgXCXlKnBXs0Kh9wn4HF1zWy7uQkDy87/CAe
+         TvUDf9qPNGNWTq6bi4kGkb/7XuKxYTLCzptivxczqOGO3zXntxamYPGL1khudx9dcUgm
+         soBKa+UmDOObKKvZDXGtkR9JtrQD1DB+FcTgV5U5Fo191Z6qUU0qEnWBGXgksgGuKZqy
+         Fm8+rtKg+QO3jwcZFjqtDBQxz0tzShu1kmJZvbQC4TSq1YKiyZcuuXoPzXd9cW8/+mAp
+         EzqoKFsxxO97TsX4H9h8TKo2IdmV9X7OzZQ+K+I7MwIbt3bLxOmGxvhWCIX6rKktJKy6
+         r+aA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=t5iQr1U3knMb6jVW4g9V7jc7lnCzafJplOypf50h9RU=;
+        b=lJNoMEwRWVeZavfwZeIYGXJcWqbLHBX1ImOWEKmKxVIRy2PgHM6724X64XTwhs4O/A
+         TQHFw0pWtHGZkY/B8lvUO/SdysjKQPJu/Eg8+N7Zr+jzK5bYMfXx0FpbeO/td9lv4PJi
+         +/Xd/JWB8Uk0bCm3sysO8ign7Wo1KTJ4QVe2PtGOYj/+sAAfCML9pYKGfX+Zz/9nkvx1
+         HvPyYncmRHJxeeBhPb0/iPoFyZjNo3gjv5ApdbLdYPRW1rlP57kf82fjpucKIt3dJuw8
+         gnxlGRodaTtPYsG5PbA9Uu+v0c36VjRjimSJ+8BhUFZX7Lc72vnEbdZKWtnO97nBKswf
+         kLPQ==
+X-Gm-Message-State: ALoCoQkQkDCVnQdc0qLkVlRY8afincx6JFLI6AmUB+kQ6FsuhOnmzC4ciw/QemNDxijMibwGJC3C
+X-Received: by 10.107.170.166 with SMTP id g38mr1350128ioj.2.1421194294935;
+ Tue, 13 Jan 2015 16:11:34 -0800 (PST)
+Received: by 10.107.31.8 with HTTP; Tue, 13 Jan 2015 16:11:34 -0800 (PST)
+In-Reply-To: <xmqqiogb95t4.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262363>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262364>
 
-Jeff King <peff@peff.net> writes:
+On Mon, Jan 12, 2015 at 11:07 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> yes that's what I was trying to hint at. The hook would just see
+>> it is unsolicited instead of not having the state available.
+>
+> OK.  That makes sort of sense.  So if we:
+>
+>  1) did not apply either patch (i.e. we accept unsolicited
+>     certificate, and the fact that we did not exchange "give me this
+>     nonce" "here is your nonce" is conveyed to the hooks by the lack
+>     of GIT_PUSH_CERT_NONCE environment and possible presense of
+>     unsolicited nonce in the GIT_PUSH_CERT blob); and then
+>
+>  2) applied this patch first (i.e. we still allow unsolicited
+>     certificate, and the same fact is now conveyed to the hooks also
+>     by GIT_PUSH_CERT_NONCE_STATUS=UNSOLICITED if they sent a nonce,
+>     or GIT_PUSH_CERT_NONCE_STATUS=MISSING); and then finally
+>
+>  3) applied the other patch to reject unsolicited certificate.
+>
+> then we can stop at any of these three steps and the behaviour of
+> three resulting systems make sense and the pre-receive hook can
+> reject unsolicited certificates if it wants to, even at step #1.
 
-> So that is perhaps not asking for the feature (I am already happy with
-> my homegrown wrapper), but is maybe an endorsement of it. :)
-
-OK.  A patch to add this should be reasonably clean and trivial, I
-would guess.
+I do not quite understand the intention of your mail. Are you saying I should
+make a patch series to solve the problems as outlined above?
