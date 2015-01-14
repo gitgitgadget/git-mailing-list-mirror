@@ -1,102 +1,176 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: t5539 broken under Mac OS X
-Date: Wed, 14 Jan 2015 10:37:41 -0800
-Message-ID: <xmqqmw5l9pje.fsf@gitster.dls.corp.google.com>
-References: <54B68D99.2040906@web.de>
+From: Michael Blume <blume.mike@gmail.com>
+Subject: Re: Segmentation fault in git apply
+Date: Wed, 14 Jan 2015 10:40:06 -0800
+Message-ID: <CAO2U3Qjn9o_eYayEMCC3S6DBr9kVH7mPL00QGrXAnV2iYRP-=A@mail.gmail.com>
+References: <CAO2U3QjGUfnTRO_poS+=-MfE4aYGuWpVJTe20H-u=FgkVy-RYg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Wed Jan 14 19:37:54 2015
+Content-Type: text/plain; charset=UTF-8
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jan 14 19:40:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YBSpF-0002Su-L4
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Jan 2015 19:37:54 +0100
+	id 1YBSro-0003eo-2m
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Jan 2015 19:40:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754310AbbANSht convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Jan 2015 13:37:49 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:63512 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753551AbbANShq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Jan 2015 13:37:46 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7CCBD2CA48;
-	Wed, 14 Jan 2015 13:37:43 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=6+8Mapn5MRXM
-	eN+qs7lcCReWzN8=; b=Jqd6a5X8/ygvS542rQREWMCdjZfiXjBOfoISiLZJkA46
-	NeLyQy+SwuT7QSEtacJN6fVb74Br03VaDnzk8k7GyU8mVZBz7t7ocUrTw5kbJBqY
-	iPqEu6tyMKnCxkmfpIr6QDcf6YX5hftO6BpvnXExpVefujn8q4kYy/AuU4VOtC0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=x+Ikp3
-	B8VKglt7WNUhBTvF3wKdFhGcvgEajU4srVpvl/sC/gGuOtSAQ41pO9KK3Uosnvbg
-	oZc+samI8L9Z5EOyJEz3Q6LKQi3BbZgh4crjSsoPt1IztlssLIQGyGwwWsldovZY
-	jbXRAqL8kQPzd9LreNeyZ/9oeyUKvHVcjJQ2Y=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 725092CA46;
-	Wed, 14 Jan 2015 13:37:43 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DD8562CA42;
-	Wed, 14 Jan 2015 13:37:42 -0500 (EST)
-In-Reply-To: <54B68D99.2040906@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
- =?utf-8?Q?en=22's?= message of
-	"Wed, 14 Jan 2015 16:39:05 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 6D002C7C-9C1C-11E4-B60A-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1752937AbbANSk1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Jan 2015 13:40:27 -0500
+Received: from mail-ob0-f171.google.com ([209.85.214.171]:44577 "EHLO
+	mail-ob0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752558AbbANSk1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jan 2015 13:40:27 -0500
+Received: by mail-ob0-f171.google.com with SMTP id uz6so9525013obc.2
+        for <git@vger.kernel.org>; Wed, 14 Jan 2015 10:40:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type;
+        bh=XBcyhmU5zjCpaoDOHLFAMbTVMRsz9W28Z3LsUxQY8Bw=;
+        b=KY5Fw+/WARkXBp+YRMcgJT+mJ/oA8CV+Czfo78tXVsbROo37gA+amn2cvs9X1EkHo4
+         Ur2H6p1XTD5yPcSakkGpMZpfnCx7KOH9+GdOr22W569LuulmYI1yXq+WNxCRlS6ZM3tH
+         0biZ+oDXcVBEs/N4QA+w5FsC4fe0mXNiZb+LBxSZU6WEUbPNYFnMoYz3s8WhUKFDejEp
+         4I6zSCZzbKeDtSSOWUk9wKckZHBxY9pjKTkI2frpiJ9OW4gdfpn++8xAPoa95DzT9+hP
+         trLyUPzjFEDZYFt+5tqgF+X2Kc6zUmFb97EocuwDRRI0sEjmQYBXZEjFo5SAi6MeDxb3
+         /QZA==
+X-Received: by 10.202.67.136 with SMTP id q130mr3192817oia.120.1421260826554;
+ Wed, 14 Jan 2015 10:40:26 -0800 (PST)
+Received: by 10.202.48.207 with HTTP; Wed, 14 Jan 2015 10:40:06 -0800 (PST)
+In-Reply-To: <CAO2U3QjGUfnTRO_poS+=-MfE4aYGuWpVJTe20H-u=FgkVy-RYg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262406>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262407>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
-
-> t5539 doesn't seem to work as expected under Mac OX X 10.6
-> (10.9 is OK)
+On Wed, Jan 14, 2015 at 10:20 AM, Michael Blume <blume.mike@gmail.com> wrote:
+> This is a mac with a fresh build of git from pu branch, commit 53b80d0.
 >
-> I am not root.
-> Are there any ideas how we can improve the situation, or how to debug=
- ?
-
-As to "how to debug", the first step is to grep for that message and
-notice that it comes from here:
-
-t/lib-httpd.sh:
-
-    if ! test_have_prereq SANITY; then
-            test_skip_or_die $GIT_TEST_HTTPD \
-                    "Cannot run httpd tests as root"
-    fi
-
-and then grep for SANITY to find:
-
-t/test-lib.sh:
-
-    # When the tests are run as root, permission tests will report that
-    # things are writable when they shouldn't be.
-    test -w / || test_set_prereq SANITY
-
-It appears that the check in lib-httpd.sh thinks you lack SANITY; is
-the root directory of your system somehow writable by you?
-
-
+> With my gitconfig looking like
 >
+> [user]
+>     email = blume.mike@gmail.com
+>     name = Michael Blume
+> [apply]
+>     whitespace = fix
+> [core]
+>     whitespace = fix,trailing-space,space-before-tab, tab-in-indent, tabwidth=4
 >
-> t>
-> t> ./t5539-fetch-http-shallow.sh ; echo $?
+> If I run
+> git clone git@github.com:MichaelBlume/clojure.git
+> cd clojure
+> git checkout origin/rebase-start
+> git rebase origin/rebase-base
 >
-> 1..0 # SKIP Cannot run httpd tests as root
-> 0
-> t>
-> t> GIT_TEST_HTTPD=3Dt ./t5539-fetch-http-shallow.sh ; echo $?
-> error: Cannot run httpd tests as root
-> 1
-> t>
+> I get
+>
+> src/jvm/clojure/lang/Compiler.java                          |  26
+> +++++++++++++++++---------
+>  test/clojure/test_clojure/compilation.clj                   |  33
+> ++++++++++++++++++++++++++++++++-
+>  test/clojure/test_clojure/compilation/examples_clj_1561.clj | 121
+> +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+>  3 files changed, 170 insertions(+), 10 deletions(-)
+>  create mode 100644 test/clojure/test_clojure/compilation/examples_clj_1561.clj
+> First, rewinding head to replay your work on top of it...
+> Applying: CLJ-1603 - add reducible cycle, iterate, repeat
+> Applying: CLJ-1515 Reify range
+> Applying: CLJ-1499 Direct iterators for PersistentHashMap,
+> APersistentSet, PersistentQueue, and PersistentStructMap, and records.
+> Added new IMapIterable interface for key and val iterators.
+> Applying: CLJ-1602 Make keys and vals return Iterable result
+> Applying: fix AOT bug preventing overriding of clojure.core functions
+> Applying: catch multiple rest forms
+> Applying: zipmap using iterators and transient maps
+> Applying: Define merge/merge-with after reduce has loaded
+> Applying: very simple test of the merge function
+> Applying: Support get on arbitrary java.util.List instances
+> Applying: CLJ-1451 add take-until
+> Applying: CLJ-1606 - complete eduction's xform without completing outer rfn
+> Applying: add unrolled vector implementation
+> Applying: add transient? predicate
+> Applying: fix emitted line numbers
+> Using index info to reconstruct a base tree...
+> M src/jvm/clojure/lang/Compiler.java
+> Falling back to patching base and 3-way merge...
+> Auto-merging src/jvm/clojure/lang/Compiler.java
+> Applying: just use a not
+> Applying: trailing whitespace
+> Applying: don't mix tabs/spaces in clojure.xml/emit-element
+> Applying: avoid mixing tabs with spaces in clojure core code
+> Applying: don't optimize for defrecord lookup if keyword is namespaced
+> Applying: CLJ-1572 - Extend CollReduce to IReduceInit for supported arity
+> Applying: unrolled impls for maps
+> Applying: CLJ-703: Remove flush and sync calls when writing class files.
+> Applying: CLJ-1078: Add queue and queue? to clojure.core
+> Applying: make RT.boundedLength lazier
+> Applying: first try for adding compare
+> Applying: Fix for #CLJ-1565
+> Applying: CLJ-1074: Read +/- Infinity and NaN
+> Applying: Fix CLJ-1074 for EdnReader too, see
+> eaeda2e7bf2697e565decdf14a8a99fbf8588c57
+> Applying: add get-and-set! to expose AtomicReference.getAndSet() for atoms
+> Applying: CLJ-1472 Locking macro without explicit monitor-enter, monitor-exit
+> Applying: CLJ-1449: Add starts-with? ends-with? contains? to clojure.string
+> Applying: if test expr of an if statement is a literal, don't emit the
+> runtime test
+> Applying: evaluate def symbol metadata only once
+> Applying: CLJ-1295: Speed up dissoc on array-maps
+> Applying: some throwing
+> Applying: don't pass offset to ArrayChunk
+> Applying: make EMPTY accessible
+> Applying: add handy create methods
+> Applying: regenerate
+> Applying: regenerate
+> /Users/michael.blume/libexec/git-core/git-am: line 854: 92059
+> Segmentation fault: 11  git apply --index "$dotest/patch" > /dev/null
+> 2>&1
+> /Users/michael.blume/workspace/clojure/.git/rebase-apply/patch:13: tab
+> in indent.
+>    IPersistentVector v = (IPersistentVector) asTransient().conj(val)
+> /Users/michael.blume/workspace/clojure/.git/rebase-apply/patch:14: tab
+> in indent.
+>    .persistent();
+> /Users/michael.blume/workspace/clojure/.git/rebase-apply/patch:15: tab
+> in indent.
+>    return (IPersistentVector) ((IObj) v).withMeta(meta);
+> /Users/michael.blume/workspace/clojure/.git/rebase-apply/patch:25: tab
+> in indent.
+> ITransientCollection coll = PersistentVector.EMPTY
+> /Users/michael.blume/workspace/clojure/.git/rebase-apply/patch:27: tab
+> in indent.
+> return (ITransientVector) coll.conj(e0).conj(e1).conj(e2)
+> warning: squelched 1 whitespace error
+> warning: 6 lines add whitespace errors.
+> Using index info to reconstruct a base tree...
+> M src/jvm/clojure/lang/PersistentUnrolledVector.java
+> <stdin>:13: tab in indent.
+>    IPersistentVector v = (IPersistentVector) asTransient().conj(val)
+> <stdin>:14: tab in indent.
+>    .persistent();
+> <stdin>:15: tab in indent.
+>    return (IPersistentVector) ((IObj) v).withMeta(meta);
+> <stdin>:25: tab in indent.
+> ITransientCollection coll = PersistentVector.EMPTY
+> <stdin>:27: tab in indent.
+> return (ITransientVector) coll.conj(e0).conj(e1).conj(e2)
+> warning: squelched 1 whitespace error
+> warning: 6 lines applied after fixing whitespace errors.
+> Falling back to patching base and 3-way merge...
+> fatal: Unable to create
+> '/Users/michael.blume/workspace/clojure/.git/index.lock': File exists.
+>
+> If no other git process is currently running, this probably means a
+> git process crashed in this repository earlier. Make sure no other git
+> process is running and remove the file manually to continue.
+> Failed to merge in the changes.
+> Patch failed at 0041 regenerate
+> The copy of the patch that failed is found in:
+>    /Users/michael.blume/workspace/clojure/.git/rebase-apply/patch
+>
+> When you have resolved this problem, run "git rebase --continue".
+> If you prefer to skip this patch, run "git rebase --skip" instead.
+> To check out the original branch and stop rebasing, run "git rebase --abort".
+
+Same problem, exists on master, checking 2.2.2
