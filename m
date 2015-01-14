@@ -1,92 +1,72 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: t5539 broken under Mac OS X
-Date: Wed, 14 Jan 2015 20:50:47 +0100
-Message-ID: <54B6C897.5030405@web.de>
-References: <54B68D99.2040906@web.de> <xmqqmw5l9pje.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] bash completion: allow git stash store options completion
+Date: Wed, 14 Jan 2015 12:06:32 -0800
+Message-ID: <xmqq1tmx9lfb.fsf@gitster.dls.corp.google.com>
+References: <1421171612-12058-1-git-send-email-kuleshovmail@gmail.com>
+	<xmqq7fwqed7b.fsf@gitster.dls.corp.google.com>
+	<20150114190345.GC32115@vauxhall.crustytoothpaste.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1?= =?UTF-8?B?c2Vu?= 
-	<tboegi@web.de>
-X-From: git-owner@vger.kernel.org Wed Jan 14 20:51:03 2015
+Content-Type: text/plain
+Cc: Alexander Kuleshov <kuleshovmail@gmail.com>, git@vger.kernel.org
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+X-From: git-owner@vger.kernel.org Wed Jan 14 21:06:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YBTy2-0001ia-HX
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Jan 2015 20:51:02 +0100
+	id 1YBUDA-0008SS-F7
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Jan 2015 21:06:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753621AbbANTu5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Jan 2015 14:50:57 -0500
-Received: from mout.web.de ([212.227.17.12]:53198 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751065AbbANTu4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Jan 2015 14:50:56 -0500
-Received: from macce.local ([78.72.72.190]) by smtp.web.de (mrweb102) with
- ESMTPSA (Nemesis) id 0M2MYq-1Xsa6K2Wkm-00s2h0; Wed, 14 Jan 2015 20:50:52
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
-In-Reply-To: <xmqqmw5l9pje.fsf@gitster.dls.corp.google.com>
-X-Provags-ID: V03:K0:ngtf/Egr18WG/3XVzPkffGJUX0mkQOFP4iybPPPfN1LGDhCALG3
- Glr8slo/d/NClxa/xxSDpTmmwCSfRNoTuiC44J9ZFCrEfaJZjBs0Rqpwz+JlcAl4aUJTVmf
- aOrTUbCRgtumIjQDgliwhkDsvfKLJPIeeEBqqRj9JQaQK1Xbcbybpg2k1tsOz/t6PFsyekN
- OvMWvFMU1EOjd+OHkKPbw==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1752382AbbANUGg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Jan 2015 15:06:36 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64856 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752309AbbANUGf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jan 2015 15:06:35 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 72B6C2C352;
+	Wed, 14 Jan 2015 15:06:34 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=pn6dcBW29mlcZ9jIsU1HsyYemF8=; b=j59OgS
+	e+34UKqyfhpQUhayueBWOuAQWcmn/FMjz9u7o59lJDdiOeeD2za8Q3E3SFqdAmcz
+	Cwm5GHMUS7uOaAMf6KqeEjNPaHYESz4oze7MVt5gfQnQ3tdqcn+fZvp6eJmBaTI+
+	jWN3S8PNsTaicijE3qj7KO9Ga7YWkP9XHNK1E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=kQwl52cuLM3hq25SwO/vnz4GbIywwdg3
+	YTvdFFrxstgqE+xVayBBYq2h8MOdG9ZYzz15vSWXDZ4rXM34qRRGUMEWkG9F2qI5
+	usNTNyqP+TAYQJk0jEHPIDMHJ5omljyzNsMWAao7fS93QpvY4w/CEDoXTdRNZgaU
+	bgEWlaMjTJc=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6313D2C351;
+	Wed, 14 Jan 2015 15:06:34 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CA2DF2C350;
+	Wed, 14 Jan 2015 15:06:33 -0500 (EST)
+In-Reply-To: <20150114190345.GC32115@vauxhall.crustytoothpaste.net> (brian
+	m. carlson's message of "Wed, 14 Jan 2015 19:03:46 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: D6752A3E-9C28-11E4-9DD9-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262417>
-
-On 2015-01-14 19.37, Junio C Hamano wrote:
-> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
->=20
->> t5539 doesn't seem to work as expected under Mac OX X 10.6
->> (10.9 is OK)
->>
->> I am not root.
->> Are there any ideas how we can improve the situation, or how to debu=
-g ?
->=20
-> As to "how to debug", the first step is to grep for that message and
-> notice that it comes from here:
->=20
-> t/lib-httpd.sh:
->=20
->     if ! test_have_prereq SANITY; then
->             test_skip_or_die $GIT_TEST_HTTPD \
->                     "Cannot run httpd tests as root"
->     fi
->=20
-> and then grep for SANITY to find:
->=20
-> t/test-lib.sh:
->=20
->     # When the tests are run as root, permission tests will report th=
-at
->     # things are writable when they shouldn't be.
->     test -w / || test_set_prereq SANITY
->=20
-> It appears that the check in lib-httpd.sh thinks you lack SANITY; is
-> the root directory of your system somehow writable by you?
->=20
-Yes, that was a good hint, thanks.
-The "problem" is that I am Admin on one machine, but not on the other,
-and / was writable for the admin group for some reasons, and only on th=
-is machine.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262418>
 
 
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-But, why does e.g. t0004 behave more gracefully (and skips) and t5539 j=
-ust dies ?
+[administrivia: please refrain from using Mail-follow-up-to]
 
-=2E/t0004-unwritable.sh=20
-ok 1 - setup
-ok 2 # skip write-tree should notice unwritable repository (missing SAN=
-ITY of POSIXPERM,SANITY)
+> For what it's worth, I'll often sketch out a script at the command
+> line before putting it in a file (either because I realize I'll need
+> to do the same thing again or I want to share it with others), so I
+> think this might be a useful addition.
 
-
-(And after changing the group of / t5539 passes, and so does t0004)
+Yes, but that applies to manual pages and possibly "-h" short hint;
+keeping completion that is unnecessary for end-users has cost, e.g.
+making unique prefix longer.
