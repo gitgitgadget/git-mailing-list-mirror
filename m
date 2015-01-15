@@ -1,99 +1,95 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: cosmetic bug: "git show --pretty:format" produces different output than "git show --format"
-Date: Thu, 15 Jan 2015 11:25:47 -0800
-Message-ID: <xmqqegqv7sn8.fsf@gitster.dls.corp.google.com>
-References: <CAEKevnWfFq9gyN8Ga8zXUDwk_+Mk6RK0HVT-+sbejjVPw0U0=w@mail.gmail.com>
-	<54B7E98B.6020907@drmicha.warpmail.net>
+Subject: Re: Advise on a push only repo
+Date: Thu, 15 Jan 2015 11:31:00 -0800
+Message-ID: <xmqqa91j7sej.fsf@gitster.dls.corp.google.com>
+References: <9782FD24F9FA45659CCE5171E73E49E7@black>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Francesc Zacarias <francesc@spotify.com>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Jan 15 20:25:56 2015
+Cc: <git@vger.kernel.org>
+To: "Jason Pyeron" <jpyeron@pdinc.us>
+X-From: git-owner@vger.kernel.org Thu Jan 15 20:31:10 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YBq3H-0006PJ-C2
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Jan 2015 20:25:55 +0100
+	id 1YBq8M-000889-9e
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Jan 2015 20:31:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752928AbbAOTZv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Jan 2015 14:25:51 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:54657 "EHLO
+	id S1752917AbbAOTbE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Jan 2015 14:31:04 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:58336 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751879AbbAOTZu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jan 2015 14:25:50 -0500
+	with ESMTP id S1751423AbbAOTbC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jan 2015 14:31:02 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8731F2E590;
-	Thu, 15 Jan 2015 14:25:49 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1756A2E74B;
+	Thu, 15 Jan 2015 14:31:02 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xOt1o8o8edFvMkiu1X4JQ45XW+Y=; b=PN+ImH
-	hpJqjirVbew70LxjKGGiqPwa0xmv0WBJ9X1IlJN7HsnybaGz3SmCb22emWgSYjWR
-	0wvNUBvrqkPZNP9f9N53AhPxK16Mf8p5DPvqqiPtGyzZ3ZvTo/3r2Rkrr/vIMTFv
-	HtlnekdT8iiuxHNAk4i/xZ5IlJzjyi8Z5Yxuk=
+	:content-type; s=sasl; bh=LnbYfuiP+ZZB8k4hrLkltBeM7Qc=; b=vpZUZe
+	HZwzTzBP4D1K9eLMki+6BjkiivJbNrMdZtCN3iU8mVCvZVV2qGqIWYnUsX1NmAty
+	i4fealBVK1XC40+LFsxKkFnTWONuausrEgMRlDx5p6qLh0EKl2+Z9hIvXhGe/8k9
+	HT1ZrJRmEnv1b4vraUxUfztc4vBhHDmHIEt7k=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZQsro4NNsPKhnNH0+uVIIaOQlq44ikY+
-	SRPAGDzBODARugSSpqRYntwkcOHaHxNzuz1dWdrmr1G7czxuByp3+T9cHuusVDQg
-	sH28XIjcPmkU+r7xd3sUCTlyP4dWpwX3RP0xIkHMg9am4ks1xOXI9nHT6gL1LBXr
-	7NWzm1v7TsY=
+	:content-type; q=dns; s=sasl; b=ea1TORIteBzkGx62TOg64aDy0DFdWYKs
+	gpcP+VtId0+sqZTHvF2A8pI6IfgrDWz/fbbpwoQXbXcLVoCsHDQgYFHIl+uEPtHR
+	t28qrdDTDs0G8YL84CNWxL8OUP5O8GyEwlIiGZKOhxWbCc5JoS2S9vgQUwMerx02
+	1+e4xIhDoqE=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7C5002E58F;
-	Thu, 15 Jan 2015 14:25:49 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id F3D632E748;
+	Thu, 15 Jan 2015 14:31:01 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F3DB12E58E;
-	Thu, 15 Jan 2015 14:25:48 -0500 (EST)
-In-Reply-To: <54B7E98B.6020907@drmicha.warpmail.net> (Michael J. Gruber's
-	message of "Thu, 15 Jan 2015 17:23:39 +0100")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 794AE2E747;
+	Thu, 15 Jan 2015 14:31:01 -0500 (EST)
+In-Reply-To: <9782FD24F9FA45659CCE5171E73E49E7@black> (Jason Pyeron's message
+	of "Thu, 15 Jan 2015 13:02:19 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 4FA1D27C-9CEC-11E4-96CE-42529F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 09E3D5C2-9CED-11E4-9214-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262504>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+"Jason Pyeron" <jpyeron@pdinc.us> writes:
 
-> The first part of the man page is a bit sloppy, but refers to the FORMAT
-> section. There, it says that "--pretty" is equivalent to
-> "--pretty=tformat:" which is different from "--pretty=format:".
+> I am setting up a continous integration (CI) system for an open source
+> project and I want to allow forking developers to use the system, but
+> I do not want anyone to do a clone or fetch from the CI git repo, the
+> repo.
+>
+> Any advice on limiting the https smart protocol to push only, blocking clone and fetch?
+>
+> Looking at http-backend.c
+>    542  static struct service_cmd {
+> ...
+>    558  };
 
-It is indeed sloppy.  It says --(pretty|format)=<format> can take
-these canned <format>s or 'format:<string>', but
+Looking at http-backend.c
 
- - it does not say it can also take 'tformat:<string>' at all; and
+     19 struct rpc_service {
+     20         const char *name;
+     21         const char *config_name;
+     22         signed enabled : 2;
+     23 };
+     24 
+     25 static struct rpc_service rpc_service[] = {
+     26         { "upload-pack", "uploadpack", 1 },
+     27         { "receive-pack", "receivepack", -1 },
+     28 };
 
- - it does not say a <format> that is none of the above is dwimmed
-   with 'tformat:' prefixed.
+So it would be natural to assume that there must be a way to
+enable/disable these two services, no?
 
-Perhaps something like this is needed.
+Looking at http_config() there, I would guess perhaps:
 
+    [http]
+        uploadpack = false
+        getanyfile = false
 
- Documentation/pretty-options.txt | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
-
-diff --git a/Documentation/pretty-options.txt b/Documentation/pretty-options.txt
-index 8569e29..7e17af9 100644
---- a/Documentation/pretty-options.txt
-+++ b/Documentation/pretty-options.txt
-@@ -3,9 +3,13 @@
- 
- 	Pretty-print the contents of the commit logs in a given format,
- 	where '<format>' can be one of 'oneline', 'short', 'medium',
--	'full', 'fuller', 'email', 'raw' and 'format:<string>'.  See
--	the "PRETTY FORMATS" section for some additional details for each
--	format.  When omitted, the format defaults to 'medium'.
-+	'full', 'fuller', 'email', 'raw', 'format:<string>'
-+	and 'tformat:<string>'.  When '<format>' is none of the above,
-+	acts as if '--pretty=tformat:<format>' were given.
-++
-+See
-+the "PRETTY FORMATS" section for some additional details for each
-+format.  When omitted, the format defaults to 'medium'.
- +
- Note: you can specify the default pretty format in the repository
- configuration (see linkgit:git-config[1]).
+but I am not sure if the latter is needed (or anybody seriously
+tested it, for that matter).
