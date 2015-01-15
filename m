@@ -1,156 +1,157 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Unused #include statements
-Date: Thu, 15 Jan 2015 15:20:09 -0800
-Message-ID: <xmqqy4p34onq.fsf@gitster.dls.corp.google.com>
-References: <CAKJhZwR+iMYAMCxurgc7z2dhqoqx_RxV1G4Jh3phPAOGptp_XQ@mail.gmail.com>
-	<CAObFj3wC6ezNQfAYvtepBdW3S0hv8c4_fXYTo-zp4wwddx3QXg@mail.gmail.com>
-	<20150115063307.GA11028@peff.net>
-	<xmqqvbk77u9m.fsf@gitster.dls.corp.google.com>
-	<20150115223836.GC19021@peff.net>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [RFC] Introducing different handling for small/large transactions
+Date: Thu, 15 Jan 2015 15:24:15 -0800
+Message-ID: <CAGZ79kbXYm66StsAwHFdTovkYeDVHWV2PdCK0abVXwWiD7sAAg@mail.gmail.com>
+References: <1421361371-30221-1-git-send-email-sbeller@google.com>
+	<20150115224605.GD19021@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Robert Schiele <rschiele@gmail.com>,
-	Zoltan Klinger <zoltan.klinger@gmail.com>,
-	GIT Mailing-list <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jan 16 00:20:24 2015
+X-From: git-owner@vger.kernel.org Fri Jan 16 00:24:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YBtiB-0002bN-Jk
-	for gcvg-git-2@plane.gmane.org; Fri, 16 Jan 2015 00:20:23 +0100
+	id 1YBtm1-0003ZF-BM
+	for gcvg-git-2@plane.gmane.org; Fri, 16 Jan 2015 00:24:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752777AbbAOXUQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Jan 2015 18:20:16 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:58561 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752147AbbAOXUP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jan 2015 18:20:15 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3C99D30411;
-	Thu, 15 Jan 2015 18:20:14 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ipfzCSo/HqjZex7bZa8CgcPjgbI=; b=O8CrAC
-	wSnbIxBIvegnZK//bbVial8EKEpQy8MxMYYbDTDxb3WBnjqUWFcD1mjz86mobf3R
-	LZewlmt9V6RVrkPLBomhn7VvnSdL/kk1dRs2XUwC0ZcrP/d759HX1NhFyIV9ymFp
-	dktV22eCFPfh8/Cwg7O9FJZGD90y/mdYbBXIo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=phixsP/IHKINTwzEwdmkOL05vDywMe+M
-	ef3Vjd3Kn8mW301A159ItP3U7dadXHGVocuJxLsKrma7GB80P2d4FRvf61z/Yrkt
-	IDXagCeBVvj6/ucQAw/7Jfx88v7QVGfB/7Cd1teqNlnQR9UgtceDaaLsTF/ApYEJ
-	F3k+ixFpenE=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 300DA30410;
-	Thu, 15 Jan 2015 18:20:14 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 18BEF3040F;
-	Thu, 15 Jan 2015 18:20:11 -0500 (EST)
-In-Reply-To: <20150115223836.GC19021@peff.net> (Jeff King's message of "Thu,
-	15 Jan 2015 17:38:37 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 0D4B2970-9D0D-11E4-814A-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1753586AbbAOXYR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Jan 2015 18:24:17 -0500
+Received: from mail-ie0-f171.google.com ([209.85.223.171]:33058 "EHLO
+	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752054AbbAOXYQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jan 2015 18:24:16 -0500
+Received: by mail-ie0-f171.google.com with SMTP id ar1so17940197iec.2
+        for <git@vger.kernel.org>; Thu, 15 Jan 2015 15:24:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=7wjmP8H60tpA5lJeqwtvQ+v3bjYNRhQo44zux522Xeo=;
+        b=kbxZYqxPMEE7p0AsMFUdcsTKfrro96DVKRfRPTbyd36XNYtuLtGxxYBBKgyqbsgdDV
+         FzJkMHzPiDGVO5MwBI9vHnumqrNn0i/h+fCto/Fz9QjTy14nYDxmioN50ks66D/PolDw
+         n4SFAXvCmiZ+QHZa1WqUGzwkApUIfizIxXJzCux0+Ir9TiStT+kItc14QWXLvF79ecZU
+         3/2FH5zf6WePvY2G/nHl6h0lL3H5R0DxTeRXCG2Y+V/w0JE4fay2HjVC/DBunB3MS+/y
+         ybm4gZzMbDjfEBPmFG4ZhG+khOokW8aOUt4Ao9vzDiNK9WLLZUjKdaQt/Y/Je3F+c3w9
+         JmTA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=7wjmP8H60tpA5lJeqwtvQ+v3bjYNRhQo44zux522Xeo=;
+        b=TkM1eNDh5gkTlKpZRhNppofM8pVN+Qe3N5w6CRQrMX1deHE9HDxnLbeVdnvHKuW+XJ
+         gP+eqAlmysJ75fXmL+oHInNIIUB1L4kfyabRkhALK/lhx8veYC7oDex3Kghfk0Eo0F+4
+         GG75EaV3osSyUvCQclKZQe94h6PyQXqXR3Kkbzt4YLqiuCKVepFh2E2u7+KbzjiFhYbS
+         LRJmTYpIQFKRVf7KeA7icuYcrUGln/YUp5YgfRMxy1Ocu6y5k5JJlvOPG9CvkI5NbId3
+         vggu4nPsgTfv0trgftVD8kE+uguHhGFt1sqv8LuwKpNUKCHiISM8LnfT6X5njZzy4h9E
+         gX8w==
+X-Gm-Message-State: ALoCoQkq6veQkBgFNR/LndCYLCRtmO0dtYHuVG2mjyU5FXI04q1Z2PWZ5Sfz7yX8NxmpUcwFkVam
+X-Received: by 10.50.122.68 with SMTP id lq4mr574842igb.10.1421364255240; Thu,
+ 15 Jan 2015 15:24:15 -0800 (PST)
+Received: by 10.107.31.8 with HTTP; Thu, 15 Jan 2015 15:24:15 -0800 (PST)
+In-Reply-To: <20150115224605.GD19021@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262521>
 
-Jeff King <peff@peff.net> writes:
-
-> On Thu, Jan 15, 2015 at 10:50:45AM -0800, Junio C Hamano wrote:
->>  ...
->> Thoughts?  I am not looking forward to a torrent of patches whose
->> sole purpose is to make the existing C files conform to any such
->> rule, though.  Clean-up patches that trickle in at a low rate is
->> tolerable, but a torrent is too distracting.
+On Thu, Jan 15, 2015 at 2:46 PM, Jeff King <peff@peff.net> wrote:
+> On Thu, Jan 15, 2015 at 02:36:11PM -0800, Stefan Beller wrote:
 >
-> I don't think the "optionally" one above is that necessary. Not because
-> I don't agree with it, but because I do not know that we want to get
-> into the business of laying out every minute detail and implication.
-> The CodingGuidelines document is meant to be guidelines, and I do not
-> want to see arguments like "well, the guidelines do not explicitly
-> _disallow_ this, so you must accept it or add something to the
-> guideline". That is a waste of everybody's time.
+>> So for here is my proposal for small transactions:
+>> (just one ref [and/or reflog] touched):
+>
+> The implication being that a "large" transaction is any with more than
+> one update.
 
-Totally.  I know we do not want to get into that business.
+Exactly.
 
-> A general philosophy + good taste (from the submitter and the
-> maintainer) should ideally be enough.
+>
+> I think performance may suffer if you do not also take into account the
+> size of the packed-refs file. If you are updating 5 refs and there are
+> 10 in the packed-refs file, rewriting the extra 5 is probably not a big
+> deal. If there are 400,000 in the packed-refs file, it probably is. I'm
+> not sure where the cutoff is (certainly the per-ref cost is less for
+> packed-refs once you have started writing the file, so there is probably
+> some crossover percentage that you could measure).
+>
+>>       * detect if we transition to a large transaction
+>>         (by having more than one entry in transaction->updates)
+>>         if so:
+>>               * Pack all currently existing refs into the packed
+>>                 refs file, commit the packed refs file and delete
+>>                 all loose refs. This will avoid (d/f) conflicts.
+>>
+>>               * Keep the packed-refs file locked and move the first
+>>                 transaction update into the packed-refs.lock file
+>
+> This increases lock contention, as now independent ref updates all need
+> to take the same packed-refs.lock. This can be a problem on a busy
+> repository, especially because we never retry the packed-refs lock.
+> We already see this problem somewhat on GitHub. Ref deletions need the
+> packed-refs.lock file, which can conflict with another deletion, or with
+> running `git pack-refs`.
+>
+> -Peff
 
-Yes, "ideally" ;-)
+I see the performance problem as well as the contention problem
+you're pointing out. Dealing with loose refs however creates other
+problems such as directory/file conflicts on renaming. I am trying to
+think of a way which moves most of the failures to the transaction_update
+phase, such that the transaction_commit is rather easy and not expected
+to produce many errors.
 
-> Which isn't to say we shouldn't clarify the document when need be. But I
-> think what I quoted at the top already is probably a good improvement
-> over what is there.
+So I think dealing with a generic large transaction cannot be really solved
+outside the packed refs file. There could be another special case for mass
+deleting refs however. Or retries for the packed refs file. Or we first check if
+we *really* need to lock the packed refs file (just realized we
+already do that :/)
 
-OK, thanks.  Let's queue something like this for post 2.3 cycle,
-then.
+(just curious:)
+May I ask on which kinds of repository you can see packed-refs.lock contention?
 
--- >8 --
-Subject: CodingGuidelines: clarify C #include rules
+I want to improve git atomicity, specially for 'weird' cases as presented in my
+previous mail[1]. Eventually I even want to have cross repository atomicty in
+git, so an example could be:
+(
+    cd API-Provider &&
+    edit files # new changes breaking the API
+    git commit -a -m "..."
+) &&
+(
+    cd API-consumer
+    edit files # use new and shiny API
+    git commit -a -m "..."
+) &&
+git multipush --atomic API-Provider:origin:master API-consumer:origin:master
 
-Even though "advice.h" includes "git-compat-util.h", it is not
-sensible to have it as the first #include and indirectly satisify
-the "You must give git-compat-util.h a clean environment to set up
-feature test macros before including any of the system headers are
-included", which is the real requirement.
+When having such a goal a reliable and easy to use ref transaction API makes
+life lots more easier. By reliable I mean that there are no sudden problems
+as pointed out in [1], these kinds of rejections make users unhappy. And by
+easy to use I mean there are only a few functions I need to know and no
+proliferation of functions exposed in the API. Internally we can do all we want
+such as special cases for delete-only transactions.
 
-Because:
+As another unrelated thought (400,000 refs is quite a lot)
+Would it make sense to have packed-refs files grouped by topic directory, i.e.
+one packed-ref for
+    topic/1
+    topic/2
+    topic/*
+and another packed ref for
+    feature/a
+    feature/b
+    feature/*
 
- - A command that interacts with the object store, config subsystem,
-   the index, or the working tree cannot do anything without using
-   what is declared in "cache.h";
+This would rather help your problems with contention instead of making things
+more atomic though. But that would avoid 400,000 refs in one packed refs file,
+which then may still be easier to handle for larger transactions.
 
- - A built-in command must be declared in "builtin.h", so anything
-   in builtin/*.c must include it;
+Thanks,
+Stefan
 
- - These two headers both include "git-compat-util.h" as the first
-   thing; and
-
- - Almost all our *.c files (outside compat/ and borrowed files in
-   xdiff/) need some Git-ness from "cache.h" to do something
-   Git-ish.
-
-let's explicitly specify that one of these three header files must
-be the first thing that is included.
-
-Any of our *.c file should include the header file that directly
-declares what it uses, instead of relying on the fact that some *.h
-file it includes happens to include another *.h file that declares
-the necessary function or type.  Spell it out as another guideline
-item.
-
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/CodingGuidelines | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
-
-diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-index 894546d..578d07c 100644
---- a/Documentation/CodingGuidelines
-+++ b/Documentation/CodingGuidelines
-@@ -328,9 +328,14 @@ For C programs:
- 
-  - When you come up with an API, document it.
- 
-- - The first #include in C files, except in platform specific
--   compat/ implementations, should be git-compat-util.h or another
--   header file that includes it, such as cache.h or builtin.h.
-+ - The first #include in C files, except in platform specific compat/
-+   implementations, must be either "git-compat-util.h", "cache.h" or
-+   "builtin.h".  You do not have to include more than one of these.
-+
-+ - A C file must directly include the header files that declare the
-+   functions and the types it uses, except for the functions and types
-+   that are made available to it by including one of the header files
-+   it must include by the previous rule.
- 
-  - If you are planning a new command, consider writing it in shell
-    or perl first, so that changes in semantics can be easily
+[1] http://www.mail-archive.com/git@vger.kernel.org/msg63919.html
