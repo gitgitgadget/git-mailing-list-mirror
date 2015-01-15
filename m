@@ -1,107 +1,87 @@
-From: Alexander Kuleshov <kuleshovmail@gmail.com>
-Subject: [PATCH] string-list: remove print_string_list from string-list's API
-Date: Thu, 15 Jan 2015 23:42:05 +0600
-Message-ID: <1421343725-3973-1-git-send-email-kuleshovmail@gmail.com>
-Cc: git@vger.kernel.org, Alexander Kuleshov <kuleshovmail@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 15 18:42:18 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] commit: reword --author error message
+Date: Thu, 15 Jan 2015 09:48:26 -0800
+Message-ID: <xmqq4mrs7x5h.fsf@gitster.dls.corp.google.com>
+References: <54B7CCCD.1070708@drmicha.warpmail.net>
+	<84cf10a22858275d6e213311c93df7f6a5408f60.1421331608.git.git@drmicha.warpmail.net>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Gunnar Wagner <gunnar.wagner@irisgermanica.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Jan 15 18:48:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YBoQz-0003bb-65
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Jan 2015 18:42:17 +0100
+	id 1YBoX3-0005mh-V2
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Jan 2015 18:48:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752763AbbAORmN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Jan 2015 12:42:13 -0500
-Received: from mail-lb0-f182.google.com ([209.85.217.182]:34225 "EHLO
-	mail-lb0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752483AbbAORmM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jan 2015 12:42:12 -0500
-Received: by mail-lb0-f182.google.com with SMTP id u10so14436743lbd.13
-        for <git@vger.kernel.org>; Thu, 15 Jan 2015 09:42:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=CW5YYUWAoCnJQwsuKmX4S0D8VFHULNOTG/H3lFyFCVQ=;
-        b=XoubyoV4MnrbKnzx1pp7GBcLeAYeWBWv5FO/NzIG7ghbKu3+I+FFEk6nFyG0OTGtHk
-         A6mR1QkrIOVcRJygbI04cuG7aKIaPmCK5Ff7RL/d12X0v3eagUCeMToBnhy1VRKbUf/y
-         E53XMr8zJrxmLWF9b2Mj0u7q+aX2LGz/Ef3mWcidJsfev6LxGPjBOGrycK1IW+gmS61P
-         1rZm23Cg7jHQ++S4fs6T+Ho+lFZCELzzhlmpVPiR8XEAblc8JWy7VR38R3mU8ww2RlOc
-         ijqYZh9trmoXkj38/zBdVecH2dgk6A68fFgzpLG2OyM3bGLU++gSvCMGlxRLaf6KZx+q
-         UsHQ==
-X-Received: by 10.153.6.6 with SMTP id cq6mr11257028lad.23.1421343731042;
-        Thu, 15 Jan 2015 09:42:11 -0800 (PST)
-Received: from localhost.localdomain ([95.59.93.191])
-        by mx.google.com with ESMTPSA id wq1sm210966lbb.24.2015.01.15.09.42.09
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 15 Jan 2015 09:42:10 -0800 (PST)
-X-Mailer: git-send-email 2.3.0.rc0.315.g0e14eda
+	id S1752074AbbAORs3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Jan 2015 12:48:29 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:60097 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751385AbbAORs2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jan 2015 12:48:28 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 26ABC2E990;
+	Thu, 15 Jan 2015 12:48:28 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=tw/9RANaBodmca3oqs1X5JGxOoY=; b=uF49qQ
+	y32qekKIyqJ45FHqMtPDirhM5IqYxmqDLVzCrtphlMEHL0Vqvxji7mY6PSmOiYEU
+	kaEDtU9QUXy708dznNf8M6trgCa2jrNIP5zzDVWqKSU3KF+PPUgl67n/ED/Kqcnp
+	n9y4UaaByzh87Yx22RjB1aaOiSfEQjwHFqN+U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=jQnQJ15pIrRMfR4CiN9QyWEyLytf6ZgL
+	dQS1AgQ4eXe3qRwYF8HKsEI8sEuuVa/baRnZR3270fgkAVU1b+/lV3Dp3mGQQ2Y0
+	qxCqBv++eVu17emFOLl1G7uPj6AL7urHO+Xw1Y/01NW5ulKbZRAzpkdVLO5qHv/K
+	3KxjvEjw0vU=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1D34F2E98F;
+	Thu, 15 Jan 2015 12:48:28 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9722B2E98E;
+	Thu, 15 Jan 2015 12:48:27 -0500 (EST)
+In-Reply-To: <84cf10a22858275d6e213311c93df7f6a5408f60.1421331608.git.git@drmicha.warpmail.net>
+	(Michael J. Gruber's message of "Thu, 15 Jan 2015 15:23:08 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: B5E49852-9CDE-11E4-AC6F-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262491>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262492>
 
-print_string_list routine has no callers anywhere.
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
----
- Documentation/technical/api-string-list.txt |  6 ------
- string-list.c                               | 10 ----------
- string-list.h                               |  1 -
- 3 files changed, 17 deletions(-)
+> If an --author argument is specified but does not contain a '>' then git tries
+> to find the argument within the exiting authors; and gives the error
+> message "No existing author found with '%s'" if there is no match.
+>
+> This is confusing for users who try to specify a valid complete author
+> name.
 
-diff --git a/Documentation/technical/api-string-list.txt b/Documentation/technical/api-string-list.txt
-index c08402b..99e12e9 100644
---- a/Documentation/technical/api-string-list.txt
-+++ b/Documentation/technical/api-string-list.txt
-@@ -87,12 +87,6 @@ Functions
- 	call free() on the util members of any items that have to be
- 	deleted.  Preserve the order of the items that are retained.
- 
--`print_string_list`::
--
--	Dump a string_list to stdout, useful mainly for debugging purposes. It
--	can take an optional header argument and it writes out the
--	string-pointer pairs of the string_list, each one in its own line.
--
- `string_list_clear`::
- 
- 	Free a string_list. The `string` pointer of the items will be freed in
-diff --git a/string-list.c b/string-list.c
-index 2a32a3f..ba832da 100644
---- a/string-list.c
-+++ b/string-list.c
-@@ -182,16 +182,6 @@ void string_list_clear_func(struct string_list *list, string_list_clear_func_t c
- 	list->nr = list->alloc = 0;
- }
- 
--
--void print_string_list(const struct string_list *p, const char *text)
--{
--	int i;
--	if ( text )
--		printf("%s\n", text);
--	for (i = 0; i < p->nr; i++)
--		printf("%s:%p\n", p->items[i].string, p->items[i].util);
--}
--
- struct string_list_item *string_list_append_nodup(struct string_list *list,
- 						  char *string)
- {
-diff --git a/string-list.h b/string-list.h
-index d3809a1..c417bd5 100644
---- a/string-list.h
-+++ b/string-list.h
-@@ -20,7 +20,6 @@ struct string_list {
- 
- void string_list_init(struct string_list *list, int strdup_strings);
- 
--void print_string_list(const struct string_list *p, const char *text);
- void string_list_clear(struct string_list *list, int free_util);
- 
- /* Use this function to call a custom clear function on each util pointer */
--- 
-2.3.0.rc0.315.g0e14eda
+I suspect that you meant s/a valid/an invalid/, as if it is valid,
+it cannot not contain '>' (after all, '>' is merely a rough
+approximation to check if it is "Name <email>" format).
+
+> Rename the error message to make it clearer that the failure has two
+> reasons in this case:
+> "Bad --author parameter '%s': neither completely wellformed nor part of
+> an existing one"
+
+You are trying to help a user who thought "Who www.where.com" was a
+valid thing to pass to --author; "it is not completely wellformed"
+is not very helpful without making her realize what in that bogus
+string is not "completely well-formed".
+
+Perhaps
+
+  "--author '%s' is not 'Name <email>' and no existing author matches that string"
+
+or somesuch?
