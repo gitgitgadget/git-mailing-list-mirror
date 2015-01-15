@@ -1,79 +1,126 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH] commit/status: show the index-worktree with -v -v
-Date: Thu, 15 Jan 2015 12:38:10 -0800
-Message-ID: <xmqqoapz6aq5.fsf@gitster.dls.corp.google.com>
-References: <xmqq387db6xy.fsf@gitster.dls.corp.google.com>
-	<038e08973a5872ea13a0ea76bf2a0443fe3c3b50.1421337740.git.git@drmicha.warpmail.net>
-	<xmqq1tmv7qjg.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Ivo Anjo <ivo.anjo@ist.utl.pt>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Jan 15 21:38:18 2015
+From: Stefan Beller <sbeller@google.com>
+Subject: [PATCH] t5543, atomic pushes: test deleting and renaming branches
+Date: Thu, 15 Jan 2015 12:45:20 -0800
+Message-ID: <1421354720-13312-1-git-send-email-sbeller@google.com>
+Cc: Stefan Beller <sbeller@google.com>
+To: git@vger.kernel.org, gitster@pobox.com, mhagger@alumn.mit.edu
+X-From: git-owner@vger.kernel.org Thu Jan 15 21:45:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YBrBJ-0003dY-Ia
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Jan 2015 21:38:17 +0100
+	id 1YBrIL-0005tJ-2m
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Jan 2015 21:45:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753197AbbAOUiO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Jan 2015 15:38:14 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:62709 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752699AbbAOUiN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jan 2015 15:38:13 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7E71D2FA83;
-	Thu, 15 Jan 2015 15:38:12 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=6beu3b+Mcezl0RS83w2bEcEiryY=; b=YXm3w/
-	FUJqT3E72s273u7JicqlcZoV7ZiFk5TLFKd4cFGlOfHh0TT9Rh0praHvXA8rc7Sx
-	r9ZR/MCpJeem+DRU1YZDIDPraZeRWDSnx6MLstZsSWQ4DgqL3L/4Mcbe5Ieqlw7z
-	sHll4chUfMJZNJblkFqP2OcMb549dlQ1LJPV8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NUD04GmQYdcZciXZqLUTimqeP4kotbph
-	baz2QMhWyvSa1t90g/Qqr/YsIfLqGQbcmnx05fu2kOg9LhfQUfJNkhjU+twfG0Wm
-	JviJaqWeY42Y/IAuODbL2w9WLKERMkWRlx8jjQUaqNCyZSdiSZJPTU3Y2qAQMOLt
-	IHS++0RrpKQ=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 74E692FA82;
-	Thu, 15 Jan 2015 15:38:12 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EB6812FA81;
-	Thu, 15 Jan 2015 15:38:11 -0500 (EST)
-In-Reply-To: <xmqq1tmv7qjg.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Thu, 15 Jan 2015 12:11:15 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 6C3C42D2-9CF6-11E4-BEC0-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1752941AbbAOUp2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Jan 2015 15:45:28 -0500
+Received: from mail-ie0-f181.google.com ([209.85.223.181]:58154 "EHLO
+	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752164AbbAOUp1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jan 2015 15:45:27 -0500
+Received: by mail-ie0-f181.google.com with SMTP id rl12so17165331iec.12
+        for <git@vger.kernel.org>; Thu, 15 Jan 2015 12:45:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=XmeDPVI0QV0DkUKQrtEB/7UX2otE3vDZS9IJWK4Cm8Q=;
+        b=HQHGvgtgBo3lalRfzFelnOZsZ1NhOo39Ap2cJ2V8m73O6LtFJosPKG8Tg9veLJyDDX
+         ZPdhNTCV4BsjCw36BV69YbZ4/iIPFZ9EelaZN8JN/9QpQ9h1mjD7ksfZP5xzVpwPEfua
+         nv8oF77ci9VidOcPydv5Zd6xzGvb4zPH2XYvqtN1MOLtNL+Pd7t+zQzSaKFy/5k/VIkM
+         NvI5tHybGx6+UblUeKLzZdgfjtF0si0PYDlTinZzdjT0XT/274fOZUJymzoks76kHAbb
+         AAdvk6z3e926J2JJ4MLQo1VHyod4svfkkDXZIN63yZ21VuIUfp84j93361IR6KM84R34
+         IV+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=XmeDPVI0QV0DkUKQrtEB/7UX2otE3vDZS9IJWK4Cm8Q=;
+        b=NXug5KJbYSECxCbl6LYroRFrlvxu2KMXPcQGRgQPdUklKkRpS8c5gLjB8T1AZnPetO
+         ya1MPAGK3P6W7zpxez8AZwdB5tPGY3ZWZwweDmXTYq0XmJO672cn20QcqD58eKUhjEX9
+         zrHtvjndg9nM0I6+Z9nCuuD6F4wcHPMFi7V9b+1SKJKrth0CIYmm3wSWJPtLZrMBnrBE
+         9ijEtWorHz2q0BprDCgzvogrRyNqt/sfQjhPAUtoAEK2az5K7dhCTkcHtAW+KwMrDKhx
+         vgnh+q984yUFBadV/Guq2MclkWr/X9y67EsONmzBxbhJvNG4hTFS0ODiwHkBbR0t0AVb
+         Resg==
+X-Gm-Message-State: ALoCoQl62l62agNgTEhJZe8LKSbosW9GKgjqT0siBg0lvGvATC9i6ctkgpgjZVhfqvwVKDY3/In5
+X-Received: by 10.107.169.34 with SMTP id s34mr4212905ioe.34.1421354726810;
+        Thu, 15 Jan 2015 12:45:26 -0800 (PST)
+Received: from localhost ([2620:0:1000:5b00:159a:d413:24c9:471f])
+        by mx.google.com with ESMTPSA id qj6sm198438igc.1.2015.01.15.12.45.26
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 15 Jan 2015 12:45:26 -0800 (PST)
+X-Mailer: git-send-email 2.2.1.62.g3f15098
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262510>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Add more test coverage to the atomic push option. It turns out there is a
+breakage when renaming branches within an atomic push. The breakage occurs
+because it cannot lock the refs v/v as well as x.
 
-> I do not think that output order is very helpful.  Two diffs to the
-> same file next to each other may make it easier to notice, though.
-> ...
-> or it may want to even be like this:
->
-> 	  diff --git a/A b/A
->         ...
->         diff --git to-be-committed/A left-out-of-the-commit/A
->         ...
->         diff --git a/B b/B
->         ...
->
-> by using a custom, unusual and easy-to-notice prefixes.
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ t/t5543-atomic-push.sh | 49 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 49 insertions(+)
 
-FWIW, with such a loud custom prefixes, I think it is OK to have all
-the changes to be committed first and then everything that is left
-out at the end.
+diff --git a/t/t5543-atomic-push.sh b/t/t5543-atomic-push.sh
+index 3480b33..96a106b 100755
+--- a/t/t5543-atomic-push.sh
++++ b/t/t5543-atomic-push.sh
+@@ -191,4 +191,53 @@ test_expect_success 'atomic push is not advertised if configured' '
+ 	test_refs master HEAD@{1}
+ '
+ 
++test_expect_success 'atomic push handles deletes gracefully' '
++	mk_repo_pair &&
++	(
++		cd workbench &&
++		git checkout -b todelete &&
++		test_commit one &&
++		git push --mirror up
++	) &&
++	(
++		cd workbench &&
++		git checkout -b anotherbranch &&
++		git branch -D todelete &&
++		git push --mirror --atomic up
++	)
++'
++
++test_expect_failure 'atomic push handles renames gracefully' '
++	# First push to upstream having the following branches:
++	# v, x/x, x/y and y/z. Now rename them and push atomically:
++	# v   -> v/v (1)
++	# x/x -> x   (2)
++	# x/y -> y   (3)
++	# y/z -> z   (4)
++	# (1) and (2) test (directory/file) conflicts on the branch itself. (3)
++	# is testing the (D/F) conflict with another branch involved which is
++	# freed in (4)
++	mk_repo_pair &&
++	(
++		cd workbench &&
++		git checkout -b v &&
++		test_commit one &&
++		git checkout -b x/x &&
++		test_commit two &&
++		git checkout -b x/y &&
++		test_commit three &&
++		git checkout -b y/z &&
++		test_commit four &&
++		git push --mirror up
++	) &&
++	(
++		cd workbench &&
++		git branch -m y/z z &&
++		git branch -m x/y y &&
++		git branch -m x/x x &&
++		git branch -m v v/v &&
++		git push --atomic up :v :x/x :x/y :y/z v/v x y z
++	)
++'
++
+ test_done
+-- 
+2.2.1.62.g3f15098
