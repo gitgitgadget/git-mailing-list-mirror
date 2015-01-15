@@ -1,95 +1,104 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] commit: reword --author error message
-Date: Thu, 15 Jan 2015 15:40:38 +0100
-Message-ID: <54B7D166.8090608@drmicha.warpmail.net>
-References: <54B7CCCD.1070708@drmicha.warpmail.net> <84cf10a22858275d6e213311c93df7f6a5408f60.1421331608.git.git@drmicha.warpmail.net> <20150115143120.GA16736@peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	Gunnar Wagner <gunnar.wagner@irisgermanica.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jan 15 15:40:46 2015
+Subject: [RFC/PATCH] commit/status: show the index-worktree with -v -v
+Date: Thu, 15 Jan 2015 17:08:03 +0100
+Message-ID: <038e08973a5872ea13a0ea76bf2a0443fe3c3b50.1421337740.git.git@drmicha.warpmail.net>
+References: <xmqq387db6xy.fsf@gitster.dls.corp.google.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Ivo Anjo <ivo.anjo@ist.utl.pt>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 15 17:08:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YBlbJ-0000vq-DX
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Jan 2015 15:40:45 +0100
+	id 1YBmy3-0007Rg-HL
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Jan 2015 17:08:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753571AbbAOOkl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Jan 2015 09:40:41 -0500
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:41113 "EHLO
+	id S1752936AbbAOQIM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Jan 2015 11:08:12 -0500
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:44423 "EHLO
 	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752012AbbAOOkk (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 15 Jan 2015 09:40:40 -0500
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.nyi.internal (Postfix) with ESMTP id 451BE213A9
-	for <git@vger.kernel.org>; Thu, 15 Jan 2015 09:40:40 -0500 (EST)
-Received: from frontend2 ([10.202.2.161])
-  by compute1.internal (MEProxy); Thu, 15 Jan 2015 09:40:40 -0500
+	by vger.kernel.org with ESMTP id S1751571AbbAOQIJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 Jan 2015 11:08:09 -0500
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailout.nyi.internal (Postfix) with ESMTP id 75E48203FF
+	for <git@vger.kernel.org>; Thu, 15 Jan 2015 11:08:05 -0500 (EST)
+Received: from frontend1 ([10.202.2.160])
+  by compute4.internal (MEProxy); Thu, 15 Jan 2015 11:08:05 -0500
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=x-sasl-enc:message-id:date:from
-	:mime-version:to:cc:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=NSBfXo6ZJ9hZ6Y1OoW7zsk
-	hV5YI=; b=e1dc7zKBdmf6LgaYF9WXgQfqmrCOdGtiwql/C6NRyYZyQ9FUIWQQTC
-	PNMTJkdklKZEKHqQOQ0Owx7InEMf6QHC6wcIXZh0hpM9ZPomXQ5Lqe/zI2Faz4dF
-	q56RUteW/I0JdF3/pijQwDlmx4rFRoy868Zark0gb39zRMBcnuFGc=
-X-Sasl-enc: /YTJXOS9szCwdSzvlgNDvk8lR2S5B5GDeK+PNeui7USF 1421332839
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id A104B6800AE;
-	Thu, 15 Jan 2015 09:40:39 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
-In-Reply-To: <20150115143120.GA16736@peff.net>
+	messagingengine.com; h=x-sasl-enc:from:to:cc:subject:date
+	:message-id:in-reply-to:references; s=smtpout; bh=LxC9q6tHVVyOIq
+	3ww7UDGfHWmug=; b=PbivQY2Sa8O7WayPSpgAvvm34RfrjbveikDTw0sY4Ux9c8
+	hL80/KbJP5grTPyhcj8rGBLUJG4Qw3OmbKib1Z73Hvb6x9W985QMkrY0laG2kEsR
+	Yejo6NQHo8ScqxJyLq5RYeexcXIo7WkFv/C3IWvCYdLf9J5sweBoK0nT28oY8=
+X-Sasl-enc: zg9E4vOmWPICo2p/aNl+mjvGNufERU24mgN+ZvN8mhE7 1421338084
+Received: from localhost (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id D36B7C00013;
+	Thu, 15 Jan 2015 11:08:04 -0500 (EST)
+X-Mailer: git-send-email 2.3.0.rc0.202.g6f441c7
+In-Reply-To: <xmqq387db6xy.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262483>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262484>
 
-Jeff King schrieb am 15.01.2015 um 15:31:
-> On Thu, Jan 15, 2015 at 03:23:08PM +0100, Michael J Gruber wrote:
-> 
->> If an --author argument is specified but does not contain a '>' then git tries
->> to find the argument within the exiting authors; and gives the error
->> message "No existing author found with '%s'" if there is no match.
->>
->> This is confusing for users who try to specify a valid complete author
->> name.
->>
->> Rename the error message to make it clearer that the failure has two
->> reasons in this case:
->> "Bad --author parameter '%s': neither completely wellformed nor part of
->> an existing one"
-> 
-> I really like the intent of this patch, but I actually find the new
-> message even more confusing.
+git commit and git status in long format show the diff between HEAD
+and the index when given -v. This allows previewing a commit to be made.
 
-The main observation is that the current error message is given only
-when both interpretations (complete ident, match ident) fail, and the
-error message conveys only one when it should do both. I don't care
-about the wording either.
+They also list tracked files with unstaged changes, but without a diff.
 
-> Is this a time when we could use hint() to give a multi-line explanation
-> (and probably a matching advice.* config)? Like:
-> 
->   hint: If the --author parameter contains angle brackets ("<>"), it
->   hint: is treated as a literal name/email pair to use. If not, then
->   hint: the history is searched for an existing matching author.
-> 
-> or something?
-> 
-> -Peff
-> 
+Introduce '-v -v' which shows the diff between the index and the
+worktree in addition to HEAD index diff. This allows to review unstaged
+changes which might be missing from the commit.
 
-Well, this basically copies the man page paragraph for that option. I
-don't want to set a(nother) precedent for doing this and create yet
-another config knob.
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+Also, the git status man page does not mention -v at all, and the doc
+for git status (long format) and the status parts of the git commit
+man page should really be the same.
 
-The alternative would be to just say "Bad --author parameter '%s'" (or
-"Invalid..."), as we do in most cases, and force the user to check the
-man page for the definition of "valid". I'm beginning to prefer this
-minimalistic approach...
+In any case, this may have helped the OP with his amend oversight.
 
-Michael
+ Documentation/git-commit.txt | 4 ++++
+ wt-status.c                  | 8 ++++++++
+ 2 files changed, 12 insertions(+)
+
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index 1e74b75..f14d2ec 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -284,6 +284,10 @@ configuration variable documented in linkgit:git-config[1].
+ 	would be committed at the bottom of the commit message
+ 	template.  Note that this diff output doesn't have its
+ 	lines prefixed with '#'.
+++
++If specified twice, show in addition the unified diff between
++what would be committed and the worktree files, i.e. the unstaged
++changes to tracked files.
+ 
+ -q::
+ --quiet::
+diff --git a/wt-status.c b/wt-status.c
+index b54eac5..75674c2 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -874,6 +874,14 @@ static void wt_status_print_verbose(struct wt_status *s)
+ 		wt_status_add_cut_line(s->fp);
+ 	}
+ 	run_diff_index(&rev, 1);
++	if (s->verbose > 1) {
++		setup_work_tree();
++		if (read_cache_preload(&rev.diffopt.pathspec) < 0)
++			perror("read_cache_preload");
++		rev.diffopt.a_prefix = 0; /* allow run_diff_files */
++		rev.diffopt.b_prefix = 0; /* to reset the prefixes */
++		run_diff_files(&rev, 0);
++	}
+ }
+ 
+ static void wt_status_print_tracking(struct wt_status *s)
+-- 
+2.3.0.rc0.202.g6f441c7
