@@ -1,118 +1,77 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: t5539 broken under Mac OS X
-Date: Thu, 15 Jan 2015 12:29:39 -0800
-Message-ID: <xmqqwq4n6b4c.fsf@gitster.dls.corp.google.com>
-References: <54B68D99.2040906@web.de>
-	<xmqqmw5l9pje.fsf@gitster.dls.corp.google.com>
-	<54B6C897.5030405@web.de> <20150114211712.GE1155@peff.net>
-	<064010B3-BC58-42F2-B5C0-DAADAA59B87D@gmail.com>
+Subject: Re: [PATCH] init-db: remove unused #includes
+Date: Thu, 15 Jan 2015 12:36:00 -0800
+Message-ID: <xmqqsifb6atr.fsf@gitster.dls.corp.google.com>
+References: <1421258367-8483-1-git-send-email-kuleshovmail@gmail.com>
+	<xmqq61c99o25.fsf@gitster.dls.corp.google.com>
+	<xmqqwq4p86i6.fsf@gitster.dls.corp.google.com>
+	<CANCZXo5UY80327pvjzYkJXroH_WZdW36LhSANK0O7GGVQLF=AA@mail.gmail.com>
+	<20150115105558.GA13536@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>,
-	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: "Kyle J. McKay" <mackyle@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 15 21:30:02 2015
+Cc: Alexander Kuleshov <kuleshovmail@gmail.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jan 15 21:36:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YBr3H-0000yO-SG
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Jan 2015 21:30:00 +0100
+	id 1YBr9F-0002xt-4N
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Jan 2015 21:36:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752940AbbAOU3z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Jan 2015 15:29:55 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:59729 "EHLO
+	id S1753592AbbAOUgE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Jan 2015 15:36:04 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:52744 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752257AbbAOU3y (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jan 2015 15:29:54 -0500
+	with ESMTP id S1752941AbbAOUgC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jan 2015 15:36:02 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4E28A2F895;
-	Thu, 15 Jan 2015 15:29:54 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 390CA2F9F7;
+	Thu, 15 Jan 2015 15:36:02 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=gLuyxn77rh/RLa1J5Gmkcyx7U0g=; b=qNwHU3
-	Q4bAEy9iXgBdcmn8bLjZDxXUDWRikWR7+DGwbDmeMuHMXJf1P1d4dp7CstzVdYch
-	mGgYYKsSVBn8LM22UW2KbzbR/EddQ43wtxDpVKltV56870MpgCI6Db8M6iVchNCq
-	qS4uCD2ZVln3IXw+GWiT5Qr6LyHgazF0fi9mI=
+	:content-type; s=sasl; bh=URqjmCG73akTAsLH/InpYDeRI/w=; b=fm6HOE
+	Vv7CZzmatMSBMd44SX6CnT+VQuEG+62JPRU/WMdqJ3d8/xne7JCmCfbVQwWv3uN6
+	Xql8VOOrKLvIN3ACI1RHhPKULXduQzLXQ/K9fJ7Htre19rK2JdK7qmvjJfEGk7pL
+	84vxJquMT7XEuMYYIxoyB6ENgiR7NsmffJd6w=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=SVAm2H4gAt0Q3ZPEZEgDO5jLo1uTEVH4
-	Ko3W6F0HiBLEddGHgn0BucY4d7cIW4LQZGfuP2s07kaiERPnmjHzg7HnKyUjHCwE
-	p+ZTTV7YCVDHQgi//Y+0BsOMSs/+YtggCplR7MyxnU261SF2ybzgCJCSY1AWZNfP
-	fjinUpTRLt0=
+	:content-type; q=dns; s=sasl; b=qocXGKB/Q16ySRflXimDj9dkLdq2ktL4
+	89kRRjisSclYGz5+iPq28OEwvIXHX0SQtBklniLZ3P1KlbHgwJnWwFNhMkkttelW
+	I4S8xVzfF9qfIlSLEwVOTzOzHhWcBVqrqVZ42w8k638PUmL8IYZdSphxSEbhRNET
+	wlx2wgeYw+E=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 447852F894;
-	Thu, 15 Jan 2015 15:29:54 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2C3902F9F6;
+	Thu, 15 Jan 2015 15:36:02 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 885EF2F88C;
-	Thu, 15 Jan 2015 15:29:40 -0500 (EST)
-In-Reply-To: <064010B3-BC58-42F2-B5C0-DAADAA59B87D@gmail.com> (Kyle J. McKay's
-	message of "Wed, 14 Jan 2015 21:48:28 -0800")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8E0A82F9F4;
+	Thu, 15 Jan 2015 15:36:01 -0500 (EST)
+In-Reply-To: <20150115105558.GA13536@peff.net> (Jeff King's message of "Thu,
+	15 Jan 2015 05:55:59 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 3B6A40BA-9CF5-11E4-A6E7-42529F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 1E8662DE-9CF6-11E4-B99B-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262507>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262508>
 
-"Kyle J. McKay" <mackyle@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> I ran into this problem.  It seems like (at least on older Mac OS X)  
-> that the root directory is created like so:
+> FWIW, the full set of CFLAGS I use (which I specify in config.mak) is:
 >
->    drwxrwxr-t  39 root  admin  /
+>     CFLAGS += -Wall -Werror
+>     CFLAGS += -Wno-format-zero-length
+>     CFLAGS += -Wdeclaration-after-statement
+>     CFLAGS += -Wpointer-arith
+>     CFLAGS += -Wstrict-prototypes
+>     CFLAGS += -Wold-style-declaration
 >
-> And since the first (and likely only user) on Mac OS X is a member of  
-> the admin group, the SANITY test fails and complains even though  
-> you're not running as root (the failure message is misleading).
+> -Peff
 
-The design choice Mac OS X makes around filesystems may deserve the
-!SANITY label ;-) but we may want to tighten the check for SANITY,
-or better yet, rethink the interaction between POSIXPERM and SANITY.
-
-What we want to express with SANITY is:
-
-	On this system, if the user who is running the test
-        does not have write permission to a file, write to such a
-        file would fail.
-
-So running our tests as a non-root admin user should be labeled as
-being sane.  We just use a more expedient "if you can write into the
-root directory, you must be root, asit is crazy to allow non-root
-user to 'mv /etc /foo && mkdir /etc && write /etc/passwd'"
-heuristics which is old-school.
-
-This should not be the final patch (I think it should become a lazy
-prereq as it does a lot more), but just for testing, how does this
-look?
-
- t/test-lib.sh | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
-
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index bb1402d..cdafab5 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1033,7 +1033,16 @@ test_lazy_prereq USR_BIN_TIME '
- 
- # When the tests are run as root, permission tests will report that
- # things are writable when they shouldn't be.
--test -w / || test_set_prereq SANITY
-+if test_have_prereq POSIXPERM &&
-+	! test -w / &&
-+	>sanitytest &&
-+	chmod a= sanitytest &&
-+	! (>sanitytest) 2>/dev/null &&
-+	chmod +w sanitytest &&
-+	rm -f sanitytest
-+then
-+	test_set_prereq SANITY
-+fi
- 
- GIT_UNZIP=${GIT_UNZIP:-unzip}
- test_lazy_prereq UNZIP '
+I think I have no-pointer-to-int-cast, old-style-definition and vla
+in addition to the above.
