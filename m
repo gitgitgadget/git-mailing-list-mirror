@@ -1,97 +1,81 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: commit --amend --author   error
-Date: Thu, 15 Jan 2015 15:21:01 +0100
-Message-ID: <54B7CCCD.1070708@drmicha.warpmail.net>
-References: <54B4D428.2050300@irisgermanica.com> <54B50062.3090209@drmicha.warpmail.net> <20150114120943.GA30383@peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Gunnar Wagner <gunnar.wagner@irisgermanica.com>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jan 15 15:21:14 2015
+Subject: [PATCH] commit: reword --author error message
+Date: Thu, 15 Jan 2015 15:23:08 +0100
+Message-ID: <84cf10a22858275d6e213311c93df7f6a5408f60.1421331608.git.git@drmicha.warpmail.net>
+References: <54B7CCCD.1070708@drmicha.warpmail.net>
+Cc: Jeff King <peff@peff.net>,
+	Gunnar Wagner <gunnar.wagner@irisgermanica.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 15 15:23:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YBlIN-0001Wh-U4
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Jan 2015 15:21:12 +0100
+	id 1YBlKN-0002Kw-TI
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Jan 2015 15:23:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753783AbbAOOVF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Jan 2015 09:21:05 -0500
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:43080 "EHLO
+	id S1754613AbbAOOXL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Jan 2015 09:23:11 -0500
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:56681 "EHLO
 	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751900AbbAOOVE (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 15 Jan 2015 09:21:04 -0500
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailout.nyi.internal (Postfix) with ESMTP id 68945213F8
-	for <git@vger.kernel.org>; Thu, 15 Jan 2015 09:21:03 -0500 (EST)
+	by vger.kernel.org with ESMTP id S1754478AbbAOOXK (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 Jan 2015 09:23:10 -0500
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.nyi.internal (Postfix) with ESMTP id 3271520B4A
+	for <git@vger.kernel.org>; Thu, 15 Jan 2015 09:23:10 -0500 (EST)
 Received: from frontend1 ([10.202.2.160])
-  by compute5.internal (MEProxy); Thu, 15 Jan 2015 09:21:03 -0500
+  by compute1.internal (MEProxy); Thu, 15 Jan 2015 09:23:10 -0500
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=x-sasl-enc:message-id:date:from
-	:mime-version:to:cc:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=ufxns0CwuAsDAj8Epl487P
-	5axow=; b=Ed8Ou+MdqsVaFzcwwAY0VdNRWb//vt4+g1z0b0hSPeJrDASmWSulAm
-	/AQO41zCSVt8LH+eECrv91B+hMx+bEybQpQFpZShJO2Dms2pswUYtEXmzzK5VWKB
-	FfSzC/2RKVC8Sfn1uUIHaMsRAWQ0/EBlP9oAg4KYLkaCInAvn5SKQ=
-X-Sasl-enc: 4bXbJl7EIxj+eR8Oj6pJLeqdqj/+rRDZ7DHzwuchcrEg 1421331663
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id C7862C00012;
-	Thu, 15 Jan 2015 09:21:02 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
-In-Reply-To: <20150114120943.GA30383@peff.net>
+	messagingengine.com; h=x-sasl-enc:from:to:cc:subject:date
+	:message-id:in-reply-to:references; s=smtpout; bh=lE4n+XciaLB+RK
+	Og0wJZ7Fui42I=; b=u3gEy8+HlKuhN9Ne5+b4dj7RyWsqOQUrmgIKcUf0utuvhc
+	JWQNG8UtOU7/cAX1cmxjenlNgmDQhX8iAIrFuKB5NN1gtDq8yJPWwg/eqyUugLlJ
+	MHzan+zC43YnnphmceHcNWmE6UNd2euFbhEGhoqfl8jdYJYAWkWEF+VHceTcs=
+X-Sasl-enc: yWXu3NyYXR3f/JtChH1Vrendmdj9F5p31fJLn8Ag3itz 1421331789
+Received: from localhost (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id BE8E4C00012;
+	Thu, 15 Jan 2015 09:23:09 -0500 (EST)
+X-Mailer: git-send-email 2.3.0.rc0.202.g6f441c7
+In-Reply-To: <54B7CCCD.1070708@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262479>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262480>
 
-Jeff King schrieb am 14.01.2015 um 13:09:
-> On Tue, Jan 13, 2015 at 12:24:18PM +0100, Michael J Gruber wrote:
-> 
->> Gunnar Wagner schrieb am 13.01.2015 um 09:15:
->>> I got APGL licensed code from someone else and want to post it on my 
->>> github (without taking credit for the work)
->>>
->>> tried   git commit --amend --author="Author name, www.website.com" but 
->>> got an error message which said something like "original author not found"
->>> Can it be that the --amen --author only work if the author is on github 
->>> himself?
->>>
->>
->> This has nothing to do with github.
->>
->> The author has be in the form "authorname <authoremail>". The important
->> parts for the format are the <>.
-> 
-> Yes, but the error message is a hint that there is something else going
-> on. When there are no angle brackets, some DWIM magic kicks in: git
-> tries to find a matching author by walking the project history from
-> HEAD. So you can do (in git.git):
-> 
->   $ git commit --allow-empty -m foo --author=gruber
->   [detached HEAD 73ef08b] foo
->    Author: Michael J Gruber <git@drmicha.warpmail.net>
+If an --author argument is specified but does not contain a '>' then git tries
+to find the argument within the exiting authors; and gives the error
+message "No existing author found with '%s'" if there is no match.
 
-(git commit --allow-almost-empty in the case of that author, hum)
+This is confusing for users who try to specify a valid complete author
+name.
 
-> Of course that does not work if you do not already have commits from the
-> person in your repository:
-> 
->   $ git commit --allow-empty -m foo --author=foobar
->   fatal: No existing author found with 'foobar'
-> 
-> -Peff
+Rename the error message to make it clearer that the failure has two
+reasons in this case:
+"Bad --author parameter '%s': neither completely wellformed nor part of
+an existing one"
 
-That is the full explanation, yes:
+(This codepath is touched only when we know already that the argument
+cannot be a completely wellformed author ident.)
 
-Neither can "Author name, www.website.com" be parsed as a complete valid
-"name <email>"
-nor can it be matched as part of an existing "name <email>" in the repo.
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+ builtin/commit.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-The OP clearly tried to do the first and got an error message about the
-second. Maybe we can do better here?
-
-Michael
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 7d90c35..851e2c5 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1056,7 +1056,7 @@ static const char *find_author_by_nickname(const char *name)
+ 		clear_mailmap(&mailmap);
+ 		return strbuf_detach(&buf, NULL);
+ 	}
+-	die(_("No existing author found with '%s'"), name);
++	die(_("Bad --author parameter '%s': neither completely wellformed nor part of an existing one"), name);
+ }
+ 
+ 
+-- 
+2.3.0.rc0.202.g6f441c7
