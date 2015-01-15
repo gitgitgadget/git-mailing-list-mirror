@@ -1,85 +1,75 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2] Documentation/init-db.txt: minor style and synopsys fixes
-Date: Thu, 15 Jan 2015 13:00:43 -0500
-Message-ID: <CAPig+cQumvDFc6LuiAWGO4d9LeZmtNr6Os6oRGSrGU8LPsiymA@mail.gmail.com>
-References: <1421317918-11677-1-git-send-email-kuleshovmail@gmail.com>
-	<CAPig+cTHDf6S-R6DEZ3mV+wNhn9KojsoMy_ogg7wG4aPWnvUpA@mail.gmail.com>
-	<CANCZXo6j6zXX8yrBV=OZpxZPzsf701f79YyQgvWJ+kQ3Dj0qUA@mail.gmail.com>
+From: "Jason Pyeron" <jpyeron@pdinc.us>
+Subject: Advise on a push only repo
+Date: Thu, 15 Jan 2015 13:02:19 -0500
+Organization: PD Inc
+Message-ID: <9782FD24F9FA45659CCE5171E73E49E7@black>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Alexander Kuleshov <kuleshovmail@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 15 19:00:50 2015
+Content-Type: text/plain;
+	charset="US-ASCII"
+Content-Transfer-Encoding: 8BIT
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jan 15 19:02:27 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YBoiu-0001Qn-Pb
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Jan 2015 19:00:49 +0100
+	id 1YBokU-0001w1-59
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Jan 2015 19:02:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752885AbbAOSAo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Jan 2015 13:00:44 -0500
-Received: from mail-yk0-f171.google.com ([209.85.160.171]:51893 "EHLO
-	mail-yk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752636AbbAOSAo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jan 2015 13:00:44 -0500
-Received: by mail-yk0-f171.google.com with SMTP id 142so7494137ykq.2
-        for <git@vger.kernel.org>; Thu, 15 Jan 2015 10:00:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=XzEum6Cy8sZuERBBYF3kLVz86eP098Hi34vynuhGXZY=;
-        b=FZd2fITLd3Dj6R3dUgrVsD0kawGRy5m217BxuUxrkEzBoUPO/3bv2WOqfBrUen6bPs
-         oJBoNmpcmJX5vFxUuOB2/053j8wS8ZrjXQdscpvSV94YXljuH45kodmDUdwJPMRg7dOT
-         feYBMu6tGLz05ujcFU7g6k6A6PHjnRlDGOhd8gp21qjNfgOXrH5SoBod8B86aMxP9ZMr
-         RVE78Bo7irOgKm1in1j7TuaR+QxwU5hPhGbp/a+V5pfznhsqE/HO/DmGqyX6mTeZzaq0
-         GRuKYJ9cIm2cdlH6/XoylH26gQvELCUYaD/izt92X+vkcktaLla3W/LCt9v5SNqvfakr
-         Q2cQ==
-X-Received: by 10.236.202.238 with SMTP id d74mr6669422yho.166.1421344843499;
- Thu, 15 Jan 2015 10:00:43 -0800 (PST)
-Received: by 10.170.73.7 with HTTP; Thu, 15 Jan 2015 10:00:43 -0800 (PST)
-In-Reply-To: <CANCZXo6j6zXX8yrBV=OZpxZPzsf701f79YyQgvWJ+kQ3Dj0qUA@mail.gmail.com>
-X-Google-Sender-Auth: PAeuZj_OAqz17pmlzboBuHq1Ec8
+	id S1753014AbbAOSCW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Jan 2015 13:02:22 -0500
+Received: from mail.pdinc.us ([67.90.184.27]:56127 "EHLO mail.pdinc.us"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752198AbbAOSCV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 Jan 2015 13:02:21 -0500
+Received: from black (nsa1.pdinc.us [67.90.184.2])
+	(authenticated bits=0)
+	by mail.pdinc.us (8.12.11.20060308/8.12.11) with ESMTP id t0FI2KwK017001
+	for <git@vger.kernel.org>; Thu, 15 Jan 2015 13:02:20 -0500
+X-Mailer: Microsoft Office Outlook 11
+Thread-Index: AdAw7WdqDCff8GD0RiSLtgYhGWeY3A==
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.3790.4913
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262495>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262496>
 
-On Thu, Jan 15, 2015 at 12:08 PM, Alexander Kuleshov
-<kuleshovmail@gmail.com> wrote:
-> Yes, right,
+I am setting up a continous integration (CI) system for an open source project and I want to allow forking developers to use the system, but I do not want anyone to do a clone or fetch from the CI git repo, the repo.
 
-Etiquette on this list is to avoid top-posting [1].
+Any advice on limiting the https smart protocol to push only, blocking clone and fetch?
 
-> how to do it better? Something like: Documentation,
-> init-db/init:.....? Or something else?
+Looking at http-backend.c
+   542  static struct service_cmd {
+   543          const char *method;
+   544          const char *pattern;
+   545          void (*imp)(char *);
+   546  } services[] = {
+   547          {"GET", "/HEAD$", get_head},
+   548          {"GET", "/info/refs$", get_info_refs},
+   549          {"GET", "/objects/info/alternates$", get_text_file},
+   550          {"GET", "/objects/info/http-alternates$", get_text_file},
+   551          {"GET", "/objects/info/packs$", get_info_packs},
+   552          {"GET", "/objects/[0-9a-f]{2}/[0-9a-f]{38}$", get_loose_object},
+   553          {"GET", "/objects/pack/pack-[0-9a-f]{40}\\.pack$", get_pack_file},
+   554          {"GET", "/objects/pack/pack-[0-9a-f]{40}\\.idx$", get_idx_file},
+   555
+   556          {"POST", "/git-upload-pack$", service_rpc},
+   557          {"POST", "/git-receive-pack$", service_rpc}
+   558  };
 
-Simplest would be to split it into two patches: one for
-git-init-db.txt and one for git-init.txt.
 
-Also...
+I feel I could just filter /git-receive-pack and /objects/ .
 
->> On Thu, Jan 15, 2015 at 5:31 AM, Alexander Kuleshov
->> <kuleshovmail@gmail.com> wrote:
->>> Subject: Documentation/init-db.txt: minor style and synopsys fixes
->>> This patch constists of two minor changes:
->>>
->>> * line-wrap 'git init-db' synopsis
->>>
->>> * last possible argument '[<directory>]' was missed
->>>
->>> Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
->>> ---
->>> +'git init-db' [-q | --quiet] [--bare] [--template=<template_directory>]
->>> +            [--separate-git-dir <git-dir>]
->>> +            [--shared[=<permissions>]] [<directory>]
+I am going to build my test system now.
 
-Taking Alex's review[2] into consideration:
-
-s/template_directory/template-directory/
-
-[1]: https://lkml.org/lkml/2005/1/11/111
-[2]: http://article.gmane.org/gmane.comp.version-control.git/262427
+--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-                                                               -
+- Jason Pyeron                      PD Inc. http://www.pdinc.us -
+- Principal Consultant              10 West 24th Street #100    -
+- +1 (443) 269-1555 x333            Baltimore, Maryland 21218   -
+-                                                               -
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+This message is copyright PD Inc, subject to license 20080407P00.
