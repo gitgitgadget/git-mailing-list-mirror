@@ -1,100 +1,80 @@
-From: Alexander Kuleshov <kuleshovmail@gmail.com>
-Subject: [PATCH v2] Documentation/init-db.txt: minor style and synopsys fixes
-Date: Thu, 15 Jan 2015 16:31:58 +0600
-Message-ID: <1421317918-11677-1-git-send-email-kuleshovmail@gmail.com>
-Cc: git@vger.kernel.org, Alexander Kuleshov <kuleshovmail@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 15 11:32:19 2015
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] init-db: remove unused #includes
+Date: Thu, 15 Jan 2015 05:55:59 -0500
+Message-ID: <20150115105558.GA13536@peff.net>
+References: <1421258367-8483-1-git-send-email-kuleshovmail@gmail.com>
+ <xmqq61c99o25.fsf@gitster.dls.corp.google.com>
+ <xmqqwq4p86i6.fsf@gitster.dls.corp.google.com>
+ <CANCZXo5UY80327pvjzYkJXroH_WZdW36LhSANK0O7GGVQLF=AA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Alexander Kuleshov <kuleshovmail@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 15 11:56:10 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YBhir-0004tw-8n
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Jan 2015 11:32:17 +0100
+	id 1YBi5w-00058F-He
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Jan 2015 11:56:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752769AbbAOKcM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Jan 2015 05:32:12 -0500
-Received: from mail-la0-f50.google.com ([209.85.215.50]:35092 "EHLO
-	mail-la0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752757AbbAOKcK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jan 2015 05:32:10 -0500
-Received: by mail-la0-f50.google.com with SMTP id pn19so12766632lab.9
-        for <git@vger.kernel.org>; Thu, 15 Jan 2015 02:32:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=4+LaP+EFWlF4NJrtUPBBpL2qu8IAN+YdtJs0r+QWHa8=;
-        b=MvXYFimDOO/4K/3jID1Eqyj+V4mROyjihwm0EwYvcYmADMVSp7bXmX5sYIPsxnIvfG
-         KuH9uoyeIPMTVqA2qZptewmH2CpP9DQJXceU8cFdMrKoc9klRINQFa/r+muhby3y4vOr
-         tPUNvVSTbM3R7ODZu2RTBf+a7+frxXEctzB2dl1c/cddKivDs4TYt/MHKOLsPv9COk7g
-         flhjDgam1KZ18qRSsE9ovKp177tDSRZUsP7qE0mx9qD5hlr1weMx2jYynflr33eW8Jxs
-         tKhqAFuZ5/UMbQInx7VQ8oGXHSDfo4OmnVWywM3cMzicaA1EtZ7r3iwDogMTypUYoYK6
-         WS3w==
-X-Received: by 10.112.131.1 with SMTP id oi1mr8856433lbb.2.1421317929557;
-        Thu, 15 Jan 2015 02:32:09 -0800 (PST)
-Received: from localhost.localdomain ([95.59.100.94])
-        by mx.google.com with ESMTPSA id qk4sm449407lbb.4.2015.01.15.02.32.07
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 15 Jan 2015 02:32:08 -0800 (PST)
-X-Mailer: git-send-email 2.3.0.rc0.314.g170a664.dirty
+	id S1752107AbbAOK4E convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Jan 2015 05:56:04 -0500
+Received: from cloud.peff.net ([50.56.180.127]:34884 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751737AbbAOK4C (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jan 2015 05:56:02 -0500
+Received: (qmail 5072 invoked by uid 102); 15 Jan 2015 10:56:02 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 15 Jan 2015 04:56:02 -0600
+Received: (qmail 12157 invoked by uid 107); 15 Jan 2015 10:56:23 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 15 Jan 2015 05:56:23 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Jan 2015 05:55:59 -0500
+Content-Disposition: inline
+In-Reply-To: <CANCZXo5UY80327pvjzYkJXroH_WZdW36LhSANK0O7GGVQLF=AA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262473>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262474>
 
-This patch constists of two minor changes:
+On Thu, Jan 15, 2015 at 04:13:00PM +0600, Alexander Kuleshov wrote:
 
-* line-wrap 'git init-db' synopsis
+> yes right, missed system_path usage. But it's strange, code still
+> compiles successfully without exec_cmd.h.
 
-* last possible argument '[<directory>]' was missed
+Sort of. With your patch I get:
 
-Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
----
- Documentation/git-init-db.txt | 5 +++--
- Documentation/git-init.txt    | 6 +++---
- 2 files changed, 6 insertions(+), 5 deletions(-)
+builtin/init-db.c: In function =E2=80=98copy_templates=E2=80=99:
+builtin/init-db.c:127:3: warning: implicit declaration of function =E2=80=
+=98system_path=E2=80=99 [-Wimplicit-function-declaration]
+   template_dir =3D to_free =3D system_path(DEFAULT_GIT_TEMPLATE_DIR);
+   ^
+builtin/init-db.c:127:26: warning: assignment makes pointer from intege=
+r without a cast
+   template_dir =3D to_free =3D system_path(DEFAULT_GIT_TEMPLATE_DIR);
 
-diff --git a/Documentation/git-init-db.txt b/Documentation/git-init-db.txt
-index 648a6cd..2c77aaa 100644
---- a/Documentation/git-init-db.txt
-+++ b/Documentation/git-init-db.txt
-@@ -9,8 +9,9 @@ git-init-db - Creates an empty Git repository
- SYNOPSIS
- --------
- [verse]
--'git init-db' [-q | --quiet] [--bare] [--template=<template_directory>] [--separate-git-dir <git dir>] [--shared[=<permissions>]]
--
-+'git init-db' [-q | --quiet] [--bare] [--template=<template_directory>]
-+	     [--separate-git-dir <git-dir>]
-+	     [--shared[=<permissions>]] [<directory>]
- 
- DESCRIPTION
- -----------
-diff --git a/Documentation/git-init.txt b/Documentation/git-init.txt
-index 369f889..25412ac 100644
---- a/Documentation/git-init.txt
-+++ b/Documentation/git-init.txt
-@@ -10,8 +10,8 @@ SYNOPSIS
- --------
- [verse]
- 'git init' [-q | --quiet] [--bare] [--template=<template_directory>]
--	  [--separate-git-dir <git dir>]
--	  [--shared[=<permissions>]] [directory]
-+	  [--separate-git-dir <git-dir>]
-+	  [--shared[=<permissions>]] [<directory>]
- 
- 
- DESCRIPTION
-@@ -108,7 +108,7 @@ By default, the configuration flag `receive.denyNonFastForwards` is enabled
- in shared repositories, so that you cannot force a non fast-forwarding push
- into it.
- 
--If you provide a 'directory', the command is run inside it. If this directory
-+If you provide a <directory>, the command is run inside it. If this directory
- does not exist, it will be created.
- 
- --
--- 
-2.3.0.rc0.314.g170a664.dirty
+Those are just warnings, and on some platforms the resulting code will
+be fine, but it does violate the C standard to not have a valid
+declaration in this case (it defaults to an int return type, which is
+wrong; but simply as a matter of style we do not like implicit
+declarations even when they are technically correct).
+
+If you are going to be doing refactoring, I'd recommend building with
+"-Werror" in your CFLAGS to catch such problems.
+
+=46WIW, the full set of CFLAGS I use (which I specify in config.mak) is=
+:
+
+    CFLAGS +=3D -Wall -Werror
+    CFLAGS +=3D -Wno-format-zero-length
+    CFLAGS +=3D -Wdeclaration-after-statement
+    CFLAGS +=3D -Wpointer-arith
+    CFLAGS +=3D -Wstrict-prototypes
+    CFLAGS +=3D -Wold-style-declaration
+
+-Peff
