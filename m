@@ -1,65 +1,85 @@
-From: Alexander Kuleshov <kuleshovmail@gmail.com>
-Subject: Re: [PATCH] string-list: remove print_string_list from string-list's API
-Date: Fri, 16 Jan 2015 00:00:13 +0600
-Message-ID: <CANCZXo7hn2wAqtfTNFBiKi_+K6O+vQQAh6pwAcRxjzuetL7+fg@mail.gmail.com>
-References: <1421343725-3973-1-git-send-email-kuleshovmail@gmail.com>
-	<CAPc5daVSMRXiocYAVuWHMmDPmR661cNevaG3RgJC5zyda_Nnig@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2] Documentation/init-db.txt: minor style and synopsys fixes
+Date: Thu, 15 Jan 2015 13:00:43 -0500
+Message-ID: <CAPig+cQumvDFc6LuiAWGO4d9LeZmtNr6Os6oRGSrGU8LPsiymA@mail.gmail.com>
+References: <1421317918-11677-1-git-send-email-kuleshovmail@gmail.com>
+	<CAPig+cTHDf6S-R6DEZ3mV+wNhn9KojsoMy_ogg7wG4aPWnvUpA@mail.gmail.com>
+	<CANCZXo6j6zXX8yrBV=OZpxZPzsf701f79YyQgvWJ+kQ3Dj0qUA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jan 15 19:00:21 2015
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Alexander Kuleshov <kuleshovmail@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 15 19:00:50 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YBoiT-0001IN-8r
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Jan 2015 19:00:21 +0100
+	id 1YBoiu-0001Qn-Pb
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Jan 2015 19:00:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752763AbbAOSAO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Jan 2015 13:00:14 -0500
-Received: from mail-ob0-f171.google.com ([209.85.214.171]:58150 "EHLO
-	mail-ob0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752702AbbAOSAN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jan 2015 13:00:13 -0500
-Received: by mail-ob0-f171.google.com with SMTP id va2so4861889obc.2
-        for <git@vger.kernel.org>; Thu, 15 Jan 2015 10:00:13 -0800 (PST)
+	id S1752885AbbAOSAo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Jan 2015 13:00:44 -0500
+Received: from mail-yk0-f171.google.com ([209.85.160.171]:51893 "EHLO
+	mail-yk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752636AbbAOSAo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jan 2015 13:00:44 -0500
+Received: by mail-yk0-f171.google.com with SMTP id 142so7494137ykq.2
+        for <git@vger.kernel.org>; Thu, 15 Jan 2015 10:00:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        bh=9m+p+akTVq0tFjuUyOXg0h8uXkFcL2K9x/Nkj7KN9uA=;
-        b=FirRNPT4ja1Lg1zewPAOv/i3/ZZ7Irj81mQkC0+iahTulPgdF4BA7ysOEDVYBKGQlY
-         nuyjWrBXqT0c2FuBqhUEjcmSW/MlWxzOvcVASMnORlYoigQFiK9TMqyFninO894zeU1R
-         le3m5eazM4ceH/TIsMzhEuLyErsluNMI0WkQD9R+lrbhQQMB+FnO+01ma/GBjkqi3vYo
-         pa7PPS8FzzlxnjKuzND4C7CCJi8XAo3Trr3KpEr340xAIsyve/xbAhxbo3pqeGfhcmrN
-         GYRmGLXUayp7bQNZVt7HJb3dAxwTYi7h04bdTJB8wrBK03DiFiiCb/AS8DS+wpHq/xr3
-         /wPA==
-X-Received: by 10.60.145.199 with SMTP id sw7mr6769958oeb.74.1421344813142;
- Thu, 15 Jan 2015 10:00:13 -0800 (PST)
-Received: by 10.182.26.42 with HTTP; Thu, 15 Jan 2015 10:00:13 -0800 (PST)
-In-Reply-To: <CAPc5daVSMRXiocYAVuWHMmDPmR661cNevaG3RgJC5zyda_Nnig@mail.gmail.com>
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=XzEum6Cy8sZuERBBYF3kLVz86eP098Hi34vynuhGXZY=;
+        b=FZd2fITLd3Dj6R3dUgrVsD0kawGRy5m217BxuUxrkEzBoUPO/3bv2WOqfBrUen6bPs
+         oJBoNmpcmJX5vFxUuOB2/053j8wS8ZrjXQdscpvSV94YXljuH45kodmDUdwJPMRg7dOT
+         feYBMu6tGLz05ujcFU7g6k6A6PHjnRlDGOhd8gp21qjNfgOXrH5SoBod8B86aMxP9ZMr
+         RVE78Bo7irOgKm1in1j7TuaR+QxwU5hPhGbp/a+V5pfznhsqE/HO/DmGqyX6mTeZzaq0
+         GRuKYJ9cIm2cdlH6/XoylH26gQvELCUYaD/izt92X+vkcktaLla3W/LCt9v5SNqvfakr
+         Q2cQ==
+X-Received: by 10.236.202.238 with SMTP id d74mr6669422yho.166.1421344843499;
+ Thu, 15 Jan 2015 10:00:43 -0800 (PST)
+Received: by 10.170.73.7 with HTTP; Thu, 15 Jan 2015 10:00:43 -0800 (PST)
+In-Reply-To: <CANCZXo6j6zXX8yrBV=OZpxZPzsf701f79YyQgvWJ+kQ3Dj0qUA@mail.gmail.com>
+X-Google-Sender-Auth: PAeuZj_OAqz17pmlzboBuHq1Ec8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262495>
 
-Maybe need to add comments for print_string_list, for preventing
-patches like this?
+On Thu, Jan 15, 2015 at 12:08 PM, Alexander Kuleshov
+<kuleshovmail@gmail.com> wrote:
+> Yes, right,
 
-2015-01-15 23:56 GMT+06:00 Junio C Hamano <gitster@pobox.com>:
-> On Thu, Jan 15, 2015 at 9:42 AM, Alexander Kuleshov
-> <kuleshovmail@gmail.com> wrote:
->> print_string_list routine has no callers anywhere.
->>
->> Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
->
-> http://thread.gmane.org/gmane.comp.version-control.git/262439
+Etiquette on this list is to avoid top-posting [1].
 
+> how to do it better? Something like: Documentation,
+> init-db/init:.....? Or something else?
 
+Simplest would be to split it into two patches: one for
+git-init-db.txt and one for git-init.txt.
 
--- 
-_________________________
-0xAX
+Also...
+
+>> On Thu, Jan 15, 2015 at 5:31 AM, Alexander Kuleshov
+>> <kuleshovmail@gmail.com> wrote:
+>>> Subject: Documentation/init-db.txt: minor style and synopsys fixes
+>>> This patch constists of two minor changes:
+>>>
+>>> * line-wrap 'git init-db' synopsis
+>>>
+>>> * last possible argument '[<directory>]' was missed
+>>>
+>>> Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
+>>> ---
+>>> +'git init-db' [-q | --quiet] [--bare] [--template=<template_directory>]
+>>> +            [--separate-git-dir <git-dir>]
+>>> +            [--shared[=<permissions>]] [<directory>]
+
+Taking Alex's review[2] into consideration:
+
+s/template_directory/template-directory/
+
+[1]: https://lkml.org/lkml/2005/1/11/111
+[2]: http://article.gmane.org/gmane.comp.version-control.git/262427
