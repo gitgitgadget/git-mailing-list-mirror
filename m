@@ -1,109 +1,91 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [RFC] Introducing different handling for small/large transactions
-Date: Thu, 15 Jan 2015 14:36:11 -0800
-Message-ID: <1421361371-30221-1-git-send-email-sbeller@google.com>
-Cc: Stefan Beller <sbeller@google.com>
-To: mhagger@alum.mit.edu, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 15 23:36:30 2015
+From: Jeff King <peff@peff.net>
+Subject: Re: Unused #include statements
+Date: Thu, 15 Jan 2015 17:38:37 -0500
+Message-ID: <20150115223836.GC19021@peff.net>
+References: <CAKJhZwR+iMYAMCxurgc7z2dhqoqx_RxV1G4Jh3phPAOGptp_XQ@mail.gmail.com>
+ <CAObFj3wC6ezNQfAYvtepBdW3S0hv8c4_fXYTo-zp4wwddx3QXg@mail.gmail.com>
+ <20150115063307.GA11028@peff.net>
+ <xmqqvbk77u9m.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Robert Schiele <rschiele@gmail.com>,
+	Zoltan Klinger <zoltan.klinger@gmail.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 15 23:38:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YBt1h-0007mE-M9
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Jan 2015 23:36:30 +0100
+	id 1YBt3s-0008JF-MR
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Jan 2015 23:38:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752686AbbAOWgZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Jan 2015 17:36:25 -0500
-Received: from mail-ie0-f177.google.com ([209.85.223.177]:43695 "EHLO
-	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751011AbbAOWgY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jan 2015 17:36:24 -0500
-Received: by mail-ie0-f177.google.com with SMTP id rd18so17656372iec.8
-        for <git@vger.kernel.org>; Thu, 15 Jan 2015 14:36:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=aPXejQw5HMd32nH7G7nQetbkhxheaL3zvCsWuDBRNPE=;
-        b=EtUZAx9YGKmjAi4WJ/eQlnZua0fOVJl7EV4xIxOwSyvfXpoUT7ykbtZyHNvvvxlKqW
-         I8+biE0xUA6i4GptL4M0kxF1SWTVf87XgWMduC+ol2EkK7mbTR/lf8E0+qWl+1xwe+8H
-         uNJziWyW5taulg7xQm64bvkDj4QB590xMi7/qHvjBzDiCOwGDLTU8HVvWkSYBkxodGTR
-         k1quvcW2I8ePqq4AyoNpNvNys7IjLnp2I7tOrGxcVQWomnWxdL2rEpbvY5dl6qyu3VFv
-         +9O3DarOj/M/sfuR6Mlaq/yGg6ye5u1+mtf7RTgE/o/RX+A1MAY9aRnxkbQZpAdkaErd
-         2B2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=aPXejQw5HMd32nH7G7nQetbkhxheaL3zvCsWuDBRNPE=;
-        b=msuVdOf7WH6iRT42aqI6WBm1gyCBvMd5Y7wFGsSB6FQNENEaVD3WKE+RRFc8u80LdK
-         NfDkBIBjjcc9NwhG2UsdhcGQG50/UYnGIGtz3mvo7Vyct3igaVKgTizFXZa8xwo5qvXu
-         KFwrpKNazFxraCQ/c5o5bH4l8dVVzauD9t570pAgXFt+YTiERy+oOoOxVvfD+EAeyUDd
-         0zuFOQjDCwBBckmyjdAb/SRDh8qGTPNVpZgqoYg94kxFQ1muWvwGdteR48Zp2XrwFtwm
-         hk67aO2z6/BETbp8U4mzkqYWDK4Y5wcbFRYfJ4dcB2ASJPlexDirotkIVR4vRiFQTMcY
-         NXbQ==
-X-Gm-Message-State: ALoCoQkmayrfBDlmLTVQ6saov1ctZulEzoatoXdA42fk+6xusy5JEAkNQKbpJp4az/NL56qxV9ea
-X-Received: by 10.43.154.196 with SMTP id lf4mr11799939icc.95.1421361383632;
-        Thu, 15 Jan 2015 14:36:23 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b00:159a:d413:24c9:471f])
-        by mx.google.com with ESMTPSA id qd4sm323153igc.22.2015.01.15.14.36.23
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 15 Jan 2015 14:36:23 -0800 (PST)
-X-Mailer: git-send-email 2.2.1.62.g3f15098
+	id S1752961AbbAOWik (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Jan 2015 17:38:40 -0500
+Received: from cloud.peff.net ([50.56.180.127]:35202 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752264AbbAOWij (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jan 2015 17:38:39 -0500
+Received: (qmail 5921 invoked by uid 102); 15 Jan 2015 22:38:39 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 15 Jan 2015 16:38:39 -0600
+Received: (qmail 17182 invoked by uid 107); 15 Jan 2015 22:39:01 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 15 Jan 2015 17:39:01 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Jan 2015 17:38:37 -0500
+Content-Disposition: inline
+In-Reply-To: <xmqqvbk77u9m.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262515>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262516>
 
-For everyday use we want git to be fast. Creating one commit should not
-touch the packed refs file. If we do other stuff involving more than
-one ref, we may accept touching the packed refs file and have a process
-which takes slightly longer but can handle more complex requests correctly,
-such as renaming into and from directories (topic/1 -> topic and reverse).
-Renaming is currently not part of the transaction API because of the (D/F)
-problems. This proposed change would enable having renames being part of
-the transactions API.
+On Thu, Jan 15, 2015 at 10:50:45AM -0800, Junio C Hamano wrote:
 
-A transaction covers creating, deleting and updating a ref and its reflog.
-Renaming would be a deletion followed by creating a new ref atomically.
+> So the rule might be:
+> 
+>  - The first #include in C files, except in platform specific
+>    compat/ implementations, must be either git-compat-util.h,
+>    cache.h or builtin.h.
+> 
+>  - A C file must directly include the header files that declare the
+>    functions and the types it uses, except for the functions and
+>    types that are made available to it by including one of the
+>    header files it must include by the previous rule.
 
-So for here is my proposal for small transactions:
-(just one ref [and/or reflog] touched):
+Yeah, that makes sense (and is what I took away from the existing rule
+in CodingGuidelines, but I agree what is there is not very rigorous).
 
-In ref_transaction_update:
-	* create $REF.lock file
-	* write new content to the lock file
+> Optionally, 
+> 
+>  - A C file must include only one of "git-compat-util.h", "cache.h"
+>    or "builtin.h"; e.g. if you include "builtin.h", do not include
+>    the other two, but it can consider what is availble in "cache.h"
+>    available to it.
+> 
+> Thoughts?  I am not looking forward to a torrent of patches whose
+> sole purpose is to make the existing C files conform to any such
+> rule, though.  Clean-up patches that trickle in at a low rate is
+> tolerable, but a torrent is too distracting.
 
-In ref_transaction_commit
-	* commit the .lock file to its destination
-	* in case this is a deletion:
-		* remove the loose ref
-		* and repack the packed refs file if necessary
+I don't think the "optionally" one above is that necessary. Not because
+I don't agree with it, but because I do not know that we want to get
+into the business of laying out every minute detail and implication.
+The CodingGuidelines document is meant to be guidelines, and I do not
+want to see arguments like "well, the guidelines do not explicitly
+_disallow_ this, so you must accept it or add something to the
+guideline". That is a waste of everybody's time.
 
-The larger transactions would be handled differently by relying
-on the packed refs file:
-In ref_transaction_update:
-	* detect if we transition to a large transaction
-	  (by having more than one entry in transaction->updates)
-	  if so:
-		* Pack all currently existing refs into the packed
-		  refs file, commit the packed refs file and delete
-		  all loose refs. This will avoid (d/f) conflicts.
+A general philosophy + good taste (from the submitter and the
+maintainer) should ideally be enough. And hopefully would stop a torrent
+of "but this file doesn't conform to the letter of CodingGuidelines!".
+Maybe it does not, but if there is no tangible benefit besides blindly
+following some rules, it is not worth the precious time of developers.
 
-		* Keep the packed-refs file locked and move the first
-		  transaction update into the packed-refs.lock file
+Which isn't to say we shouldn't clarify the document when need be. But I
+think what I quoted at the top already is probably a good improvement
+over what is there.
 
-	* Any update(delete, create, update) is put into the locked
-	  packed refs file.
-	* Additionally we need to obtain the .lock for the loose refs
-	  file to keep guarantees, though we should close the file
-	  descriptor as we don't wand to run out of file descriptors.
-
-In ref_transaction_commit:
-	* We only need to commit the packed refs file
-	* Discard all other lock files as the changes get committed as a whole
-	  by the packed refs file
-
-Any feedback would be welcome!
-Thanks,
-Stefan
+-Peff
