@@ -1,101 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: t5539 broken under Mac OS X
-Date: Thu, 15 Jan 2015 14:39:56 -0800
-Message-ID: <xmqqa91j6537.fsf@gitster.dls.corp.google.com>
-References: <54B68D99.2040906@web.de>
-	<xmqqmw5l9pje.fsf@gitster.dls.corp.google.com>
-	<54B6C897.5030405@web.de> <20150114211712.GE1155@peff.net>
-	<064010B3-BC58-42F2-B5C0-DAADAA59B87D@gmail.com>
-	<xmqqwq4n6b4c.fsf@gitster.dls.corp.google.com>
-	<20150115222719.GA19021@peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC] Introducing different handling for small/large transactions
+Date: Thu, 15 Jan 2015 17:46:05 -0500
+Message-ID: <20150115224605.GD19021@peff.net>
+References: <1421361371-30221-1-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "Kyle J. McKay" <mackyle@gmail.com>,
-	Torsten =?utf-8?Q?B=C3=B6gershau?= =?utf-8?Q?sen?= 
-	<tboegi@web.de>, Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jan 15 23:40:04 2015
+Content-Type: text/plain; charset=utf-8
+Cc: mhagger@alum.mit.edu, git@vger.kernel.org
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Thu Jan 15 23:46:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YBt5A-0000BP-03
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Jan 2015 23:40:04 +0100
+	id 1YBtB7-0001yR-NZ
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Jan 2015 23:46:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753394AbbAOWkA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Jan 2015 17:40:00 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:52816 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753086AbbAOWj7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jan 2015 17:39:59 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 647082FABE;
-	Thu, 15 Jan 2015 17:39:58 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=KvmsFkx3kFsI5AbqroWUG+OV7Ow=; b=idY76a
-	R9rE4bbFZPW50yWAwMKbG4dLe5hOyOa1Yv8MmfOTzTbJHFvPQkG9/3vidcSvdnfy
-	sPuan/ZEzZ7WSJCMA+1/7MmRGcjUh5DntBdEmayitfZ2U/GPt0pfziVfgPdrObzy
-	FCSwwbQ+2RqPFF7/FW1D3phVLdVFDAtYhBhwc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ieiLJ5b7YQSgAe5+2BT701ROfJxxdRqu
-	qf8UNO6l6AgDBOTkrWCmGuvyTWkfBXFX8/lcKs7aKhNIurt/TJIrFR94OPJX6WG0
-	ffxc7ekPUUTOh+m1bfYsHTV2rGSmbTIOQtqiNWAZk3kY9TyHhuullj2Hzk1wvEX0
-	Agd6VWw18Xo=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5AA892FABB;
-	Thu, 15 Jan 2015 17:39:58 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BF9F42FABA;
-	Thu, 15 Jan 2015 17:39:57 -0500 (EST)
-In-Reply-To: <20150115222719.GA19021@peff.net> (Jeff King's message of "Thu,
-	15 Jan 2015 17:27:19 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 6ED81956-9D07-11E4-9839-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1753975AbbAOWqJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Jan 2015 17:46:09 -0500
+Received: from cloud.peff.net ([50.56.180.127]:35213 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753902AbbAOWqI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jan 2015 17:46:08 -0500
+Received: (qmail 6271 invoked by uid 102); 15 Jan 2015 22:46:07 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 15 Jan 2015 16:46:07 -0600
+Received: (qmail 17324 invoked by uid 107); 15 Jan 2015 22:46:29 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 15 Jan 2015 17:46:29 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Jan 2015 17:46:05 -0500
+Content-Disposition: inline
+In-Reply-To: <1421361371-30221-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262517>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262518>
 
-Jeff King <peff@peff.net> writes:
+On Thu, Jan 15, 2015 at 02:36:11PM -0800, Stefan Beller wrote:
 
-> The current scheme does not require POSIXPERM. Would this mean that
-> some platforms no longer runs SANITY tests (e.g., Windows)?
->
-> Many of the SANITY-marked tests already require both, but not all.
+> So for here is my proposal for small transactions:
+> (just one ref [and/or reflog] touched):
 
-Before writing that patchlet, I briefly looked at grep output and
-thought that many that are protected only by SANITY lacked POSIXPERM
-by mistake:
+The implication being that a "large" transaction is any with more than
+one update.
 
- t/t1004-read-tree-m-u-wf.sh:test_expect_success SANITY 'funny symlink in...
- t/t3600-rm.sh 'Test that "git rm -f" fails if its rm fails'
- t/t7300-clean.sh:test_expect_success SANITY 'removal failure' '
- t/t7300-clean.sh:test_expect_success SANITY 'git clean -d with an...
+I think performance may suffer if you do not also take into account the
+size of the packed-refs file. If you are updating 5 refs and there are
+10 in the packed-refs file, rewriting the extra 5 is probably not a big
+deal. If there are 400,000 in the packed-refs file, it probably is. I'm
+not sure where the cutoff is (certainly the per-ref cost is less for
+packed-refs once you have started writing the file, so there is probably
+some crossover percentage that you could measure).
 
-All of the above relies on a working chmod as far as I can tell, so
-they should require POSIXPERM,SANITY, not just SANITY.
+> 	* detect if we transition to a large transaction
+> 	  (by having more than one entry in transaction->updates)
+> 	  if so:
+> 		* Pack all currently existing refs into the packed
+> 		  refs file, commit the packed refs file and delete
+> 		  all loose refs. This will avoid (d/f) conflicts.
+> 
+> 		* Keep the packed-refs file locked and move the first
+> 		  transaction update into the packed-refs.lock file
 
-> And
-> certainly lib-httpd actually cares whether you are _truly_ root, not
-> about weird filesystem permissions. Should lib-httpd literally be
-> checking the output of `id` (though I can imagine that is anything but
-> portable)?
+This increases lock contention, as now independent ref updates all need
+to take the same packed-refs.lock. This can be a problem on a busy
+repository, especially because we never retry the packed-refs lock.
+We already see this problem somewhat on GitHub. Ref deletions need the
+packed-refs.lock file, which can conflict with another deletion, or with
+running `git pack-refs`.
 
-Even though t/README describes SANITY to require:
-
-  Test is not run by root user, and an attempt to write to an
-  unwritable file is expected to fail correctly.
-
-and it has been that way from day one, c91cfd19 (tests: A SANITY
-test prereq for testing if we're root, 2010-08-06) is clear that
-this is about "'chmod -w' is a good way to test unwritable files"
-
-lib-httpd should, if it cares about the root-ness, be checking that
-in a more direct way, "test_have_prereq RUNNING_AS_ROOT".  Making
-the implementation of that portable is another matter, though.
+-Peff
