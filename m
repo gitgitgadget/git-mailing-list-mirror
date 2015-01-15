@@ -1,126 +1,167 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH] t5543, atomic pushes: test deleting and renaming branches
-Date: Thu, 15 Jan 2015 12:45:20 -0800
-Message-ID: <1421354720-13312-1-git-send-email-sbeller@google.com>
-Cc: Stefan Beller <sbeller@google.com>
-To: git@vger.kernel.org, gitster@pobox.com, mhagger@alumn.mit.edu
-X-From: git-owner@vger.kernel.org Thu Jan 15 21:45:35 2015
+From: "Jason Pyeron" <jpyeron@pdinc.us>
+Subject: RE: Advise on a push only repo
+Date: Thu, 15 Jan 2015 17:13:27 -0500
+Organization: PD Inc
+Message-ID: <4C328D132E8343F395AA9A72CC3BD4C1@black>
+References: <9782FD24F9FA45659CCE5171E73E49E7@black> <xmqqa91j7sej.fsf@gitster.dls.corp.google.com>
+Reply-To: <git@vger.kernel.org>
+Mime-Version: 1.0
+Content-Type: text/plain;
+	charset="US-ASCII"
+Content-Transfer-Encoding: 8BIT
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jan 15 23:13:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YBrIL-0005tJ-2m
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Jan 2015 21:45:33 +0100
+	id 1YBsfY-0001ea-68
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Jan 2015 23:13:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752941AbbAOUp2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Jan 2015 15:45:28 -0500
-Received: from mail-ie0-f181.google.com ([209.85.223.181]:58154 "EHLO
-	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752164AbbAOUp1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jan 2015 15:45:27 -0500
-Received: by mail-ie0-f181.google.com with SMTP id rl12so17165331iec.12
-        for <git@vger.kernel.org>; Thu, 15 Jan 2015 12:45:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=XmeDPVI0QV0DkUKQrtEB/7UX2otE3vDZS9IJWK4Cm8Q=;
-        b=HQHGvgtgBo3lalRfzFelnOZsZ1NhOo39Ap2cJ2V8m73O6LtFJosPKG8Tg9veLJyDDX
-         ZPdhNTCV4BsjCw36BV69YbZ4/iIPFZ9EelaZN8JN/9QpQ9h1mjD7ksfZP5xzVpwPEfua
-         nv8oF77ci9VidOcPydv5Zd6xzGvb4zPH2XYvqtN1MOLtNL+Pd7t+zQzSaKFy/5k/VIkM
-         NvI5tHybGx6+UblUeKLzZdgfjtF0si0PYDlTinZzdjT0XT/274fOZUJymzoks76kHAbb
-         AAdvk6z3e926J2JJ4MLQo1VHyod4svfkkDXZIN63yZ21VuIUfp84j93361IR6KM84R34
-         IV+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=XmeDPVI0QV0DkUKQrtEB/7UX2otE3vDZS9IJWK4Cm8Q=;
-        b=NXug5KJbYSECxCbl6LYroRFrlvxu2KMXPcQGRgQPdUklKkRpS8c5gLjB8T1AZnPetO
-         ya1MPAGK3P6W7zpxez8AZwdB5tPGY3ZWZwweDmXTYq0XmJO672cn20QcqD58eKUhjEX9
-         zrHtvjndg9nM0I6+Z9nCuuD6F4wcHPMFi7V9b+1SKJKrth0CIYmm3wSWJPtLZrMBnrBE
-         9ijEtWorHz2q0BprDCgzvogrRyNqt/sfQjhPAUtoAEK2az5K7dhCTkcHtAW+KwMrDKhx
-         vgnh+q984yUFBadV/Guq2MclkWr/X9y67EsONmzBxbhJvNG4hTFS0ODiwHkBbR0t0AVb
-         Resg==
-X-Gm-Message-State: ALoCoQl62l62agNgTEhJZe8LKSbosW9GKgjqT0siBg0lvGvATC9i6ctkgpgjZVhfqvwVKDY3/In5
-X-Received: by 10.107.169.34 with SMTP id s34mr4212905ioe.34.1421354726810;
-        Thu, 15 Jan 2015 12:45:26 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b00:159a:d413:24c9:471f])
-        by mx.google.com with ESMTPSA id qj6sm198438igc.1.2015.01.15.12.45.26
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 15 Jan 2015 12:45:26 -0800 (PST)
-X-Mailer: git-send-email 2.2.1.62.g3f15098
+	id S932364AbbAOWNb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Jan 2015 17:13:31 -0500
+Received: from mail.pdinc.us ([67.90.184.27]:56198 "EHLO mail.pdinc.us"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932361AbbAOWN3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 Jan 2015 17:13:29 -0500
+Received: from black (nsa1.pdinc.us [67.90.184.2])
+	(authenticated bits=0)
+	by mail.pdinc.us (8.12.11.20060308/8.12.11) with ESMTP id t0FMDSHf017989
+	for <git@vger.kernel.org>; Thu, 15 Jan 2015 17:13:28 -0500
+X-Mailer: Microsoft Office Outlook 11
+In-Reply-To: <xmqqa91j7sej.fsf@gitster.dls.corp.google.com>
+Thread-Index: AdAw+dREN33qi9PYSRav+NTRFwCxuAAFYyUw
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.3790.4913
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262510>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262511>
 
-Add more test coverage to the atomic push option. It turns out there is a
-breakage when renaming branches within an atomic push. The breakage occurs
-because it cannot lock the refs v/v as well as x.
+> -----Original Message-----
+> From: Junio C Hamano
+> Sent: Thursday, January 15, 2015 14:31
+> 
+> "Jason Pyeron" <jpyeron@pdinc.us> writes:
+> 
+> > I am setting up a continous integration (CI) system for an 
+> open source
+> > project and I want to allow forking developers to use the 
+> system, but
+> > I do not want anyone to do a clone or fetch from the CI git 
+> repo, the
+> > repo.
+> >
+> > Any advice on limiting the https smart protocol to push 
+> only, blocking clone and fetch?
+> >
+> > Looking at http-backend.c
+> >    542  static struct service_cmd {
+> > ...
+> >    558  };
+> 
+> Looking at http-backend.c
+> 
+>      19 struct rpc_service {
+>      20         const char *name;
+>      21         const char *config_name;
+>      22         signed enabled : 2;
+>      23 };
+>      24 
+>      25 static struct rpc_service rpc_service[] = {
+>      26         { "upload-pack", "uploadpack", 1 },
+>      27         { "receive-pack", "receivepack", -1 },
+>      28 };
+> 
+> So it would be natural to assume that there must be a way to
+> enable/disable these two services, no?
+> 
+> Looking at http_config() there, I would guess perhaps:
+> 
+>     [http]
+>         uploadpack = false
+>         getanyfile = false
+> 
+> but I am not sure if the latter is needed (or anybody seriously
+> tested it, for that matter).
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- t/t5543-atomic-push.sh | 49 +++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 49 insertions(+)
+Perfect! Had to add receivepack=true for the anonymous part.
 
-diff --git a/t/t5543-atomic-push.sh b/t/t5543-atomic-push.sh
-index 3480b33..96a106b 100755
---- a/t/t5543-atomic-push.sh
-+++ b/t/t5543-atomic-push.sh
-@@ -191,4 +191,53 @@ test_expect_success 'atomic push is not advertised if configured' '
- 	test_refs master HEAD@{1}
- '
- 
-+test_expect_success 'atomic push handles deletes gracefully' '
-+	mk_repo_pair &&
-+	(
-+		cd workbench &&
-+		git checkout -b todelete &&
-+		test_commit one &&
-+		git push --mirror up
-+	) &&
-+	(
-+		cd workbench &&
-+		git checkout -b anotherbranch &&
-+		git branch -D todelete &&
-+		git push --mirror --atomic up
-+	)
-+'
-+
-+test_expect_failure 'atomic push handles renames gracefully' '
-+	# First push to upstream having the following branches:
-+	# v, x/x, x/y and y/z. Now rename them and push atomically:
-+	# v   -> v/v (1)
-+	# x/x -> x   (2)
-+	# x/y -> y   (3)
-+	# y/z -> z   (4)
-+	# (1) and (2) test (directory/file) conflicts on the branch itself. (3)
-+	# is testing the (D/F) conflict with another branch involved which is
-+	# freed in (4)
-+	mk_repo_pair &&
-+	(
-+		cd workbench &&
-+		git checkout -b v &&
-+		test_commit one &&
-+		git checkout -b x/x &&
-+		test_commit two &&
-+		git checkout -b x/y &&
-+		test_commit three &&
-+		git checkout -b y/z &&
-+		test_commit four &&
-+		git push --mirror up
-+	) &&
-+	(
-+		cd workbench &&
-+		git branch -m y/z z &&
-+		git branch -m x/y y &&
-+		git branch -m x/x x &&
-+		git branch -m v v/v &&
-+		git push --atomic up :v :x/x :x/y :y/z v/v x y z
-+	)
-+'
-+
- test_done
--- 
-2.2.1.62.g3f15098
+root@twenty-one-100 /opt/git/public
+# cat /etc/httpd/conf.d/git.conf
+SetEnv GIT_PROJECT_ROOT /opt/git
+SetEnv GIT_HTTP_EXPORT_ALL
+ScriptAlias /git/ /usr/libexec/git-core/git-http-backend/
+<Directory "/usr/lib/git-core*">
+   Options ExecCGI Indexes
+   Order allow,deny
+   Allow from all
+   Require all granted
+</Directory>
+
+root@twenty-one-100 /opt/git/public
+# cat /opt/git/public/config
+[core]
+        repositoryformatversion = 0
+        filemode = true
+        bare = true
+[http]
+        receivepack = true
+        uploadpack = false
+        getanyfile = false
+
+Test get known object...
+
+root@twenty-one-100 /opt/git/public
+# dir objects/bd/e1557acecaf3cebb4775b7b734f095e6010c15
+-r--r--r--. 1 apache apache 163 Jan 15 16:56 objects/bd/e1557acecaf3cebb4775b7b734f095e6010c15
+
+root@twenty-one-100 /opt/git/public
+# curl http://127.0.0.1/git/public/objects/bd/e1557acecaf3cebb4775b7b734f095e6010c15 -v
+* About to connect() to 127.0.0.1 port 80 (#0)
+*   Trying 127.0.0.1... connected
+* Connected to 127.0.0.1 (127.0.0.1) port 80 (#0)
+> GET /git/public/objects/bd/e1557acecaf3cebb4775b7b734f095e6010c15 HTTP/1.1
+> User-Agent: curl/7.19.7 (x86_64-redhat-linux-gnu) libcurl/7.19.7 NSS/3.16.2.3 Basic ECC zlib/1.2.3 libidn/1.18 libssh2/1.4.2
+> Host: 127.0.0.1
+> Accept: */*
+>
+< HTTP/1.1 403 Forbidden
+< Date: Thu, 15 Jan 2015 22:08:48 GMT
+< Server: Apache/2.2.15 (CentOS)
+< Expires: Fri, 01 Jan 1980 00:00:00 GMT
+< Pragma: no-cache
+< Cache-Control: no-cache, max-age=0, must-revalidate
+< Content-Length: 0
+< Connection: close
+< Content-Type: text/plain; charset=UTF-8
+<
+* Closing connection #0
+
+root@twenty-one-100 /opt/git/public
+# fg
+tail -f /var/log/httpd/*_log    (wd: /opt/git)
+
+==> /var/log/httpd/error_log <==
+[Thu Jan 15 17:08:48 2015] [error] [client 127.0.0.1] Unsupported service: getanyfile
+
+==> /var/log/httpd/access_log <==
+127.0.0.1 - - [15/Jan/2015:17:08:48 -0500] "GET /git/public/objects/bd/e1557acecaf3cebb4775b7b734f095e6010c15 HTTP/1.1" 403 - "-" "curl/7.19.7 (x86_64-redhat-linux-gnu) libcurl/7.19.7 NSS/3.16.2.3 Basic ECC zlib/1.2.3 libidn/1.18 libssh2/1.4.2"
+^Z
+[1]+  Stopped                 tail -f /var/log/httpd/*_log  (wd: /opt/git)
+(wd now: /opt/git/public)
+
+root@twenty-one-100 /opt/git/public
+#
+
+
+--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-                                                               -
+- Jason Pyeron                      PD Inc. http://www.pdinc.us -
+- Principal Consultant              10 West 24th Street #100    -
+- +1 (443) 269-1555 x333            Baltimore, Maryland 21218   -
+-                                                               -
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+This message is copyright PD Inc, subject to license 20080407P00. 
