@@ -1,82 +1,115 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] commit: reword --author error message
-Date: Fri, 16 Jan 2015 11:53:12 -0800
-Message-ID: <xmqqfvba1p07.fsf@gitster.dls.corp.google.com>
-References: <54B7CCCD.1070708@drmicha.warpmail.net>
-	<84cf10a22858275d6e213311c93df7f6a5408f60.1421331608.git.git@drmicha.warpmail.net>
-	<xmqq4mrs7x5h.fsf@gitster.dls.corp.google.com>
-	<20150116093220.GA3006@peff.net>
-	<xmqqwq4m3a8k.fsf@gitster.dls.corp.google.com>
-	<C67968DA2DD34039AF6EC8B61AA1CA47@PhilipOakley>
-	<xmqqbnly376a.fsf@gitster.dls.corp.google.com>
-	<CAPig+cR4vaYe+KiJthmpzo3p7JQyGgEDBqqLP0nBM3YjXXZywQ@mail.gmail.com>
+Subject: Re: Segmentation fault in git apply
+Date: Fri, 16 Jan 2015 11:58:55 -0800
+Message-ID: <xmqqbnly1oqo.fsf@gitster.dls.corp.google.com>
+References: <CAO2U3QjGUfnTRO_poS+=-MfE4aYGuWpVJTe20H-u=FgkVy-RYg@mail.gmail.com>
+	<CAO2U3Qjn9o_eYayEMCC3S6DBr9kVH7mPL00QGrXAnV2iYRP-=A@mail.gmail.com>
+	<CAO2U3Qj-Hg2tb72NgO6wb-aqAxFG7aga2ZDeZNDCPJzGtmHTAA@mail.gmail.com>
+	<CAO2U3Qhd_DPP09BUyMr6NKUtOe4EQQ7G83BRg7MbtQXFPjKv8w@mail.gmail.com>
+	<CAO2U3Qje-YwcV1d5BK_zZqrTki4AU=emdkUZzEEieRjmoQdmGg@mail.gmail.com>
+	<CAO2U3Qi4TWZiNoOQVSW=Ycvp3bpBySZrCGmRLCbRJJes_n2Wkw@mail.gmail.com>
+	<99579252-EF8A-4DAF-A49D-2AC5627ED9E3@gmail.com>
+	<4157F6B0-DDF4-4F71-A09B-EE216537CA89@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Philip Oakley <philipoakley@iee.org>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
-	Gunnar Wagner <gunnar.wagner@irisgermanica.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Fri Jan 16 20:53:22 2015
+Cc: Michael Blume <blume.mike@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: "Kyle J. McKay" <mackyle@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 16 20:59:03 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YCCxL-0008VG-OW
-	for gcvg-git-2@plane.gmane.org; Fri, 16 Jan 2015 20:53:20 +0100
+	id 1YCD2t-0001pL-6N
+	for gcvg-git-2@plane.gmane.org; Fri, 16 Jan 2015 20:59:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754080AbbAPTxP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Jan 2015 14:53:15 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:55359 "EHLO
+	id S1754378AbbAPT67 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Jan 2015 14:58:59 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50812 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753864AbbAPTxO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Jan 2015 14:53:14 -0500
+	with ESMTP id S1752554AbbAPT66 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Jan 2015 14:58:58 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2FAB930DAE;
-	Fri, 16 Jan 2015 14:53:14 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8AD9C30F20;
+	Fri, 16 Jan 2015 14:58:57 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ycaliFx6C41lDE0417pJWUwrt5Y=; b=MtD2ve
-	k/wCAPyXgi1MmmayG8iHmobkW5tPouQFjQIWsW0jhLiUu8JG1mVRi9yJ/4GO5RMl
-	IiZme3NdXMPJsf6Obs4ILQqLxZlF56x5siIdkjkg2JrxsUEDkiHh4tPGLvU9Li7J
-	zVtNtIptv/d7VqfqZqS4FWor6cyDcoKtAXQuk=
+	:content-type; s=sasl; bh=PVoWVxiJJHygFQ0k//5k5rNYQ9Q=; b=lExXyu
+	xVG5LjegwOJt8ZJ+8S7mrQ4u/N2S+yTR2qU5RkpVavwXogfMJ+G5x4zTOZjh4nNb
+	gQgO6C9mZdFaaiADsDXL/9Yc9OOws8h5JUoRSHTAkx1RT0G8aobJfaUSQQuTGrJo
+	AkN6FoQp1kOJxJYRdEZLqSX9bJZ4LlYn8N2Vc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=K/WdNFffl3KLzc/j8eggR38zg13ADzOg
-	mM5TXWMF5monEj33905O0sW68q1Q4EJ9UsR8XPh692JnWKsdKp/U40WG7V2MIjAi
-	IzDtV44DQ6awtwLOAumKLYypYdoSs57c/V/IzlJjDeYN+B/fnbnksDKz8h4SSrmR
-	VAucqIcAiVo=
+	:content-type; q=dns; s=sasl; b=EodTs6DVC2apjQfNX4zE62gHjg/Gp72R
+	gojEEdoBDlM5UaeW6azo39Car2gU53K/LmURYIjL8g7Ap0EyN+p/5JbVKoMPna3w
+	VtvOsTB4hHhIEHGeAvPuer+7XO7MMzSqzzeRBjhBNlQ5eI1gScaQ2qKJWJN4C4Sq
+	se4Jb+Jzg+A=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1BC7E30DAD;
-	Fri, 16 Jan 2015 14:53:14 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 789E130F17;
+	Fri, 16 Jan 2015 14:58:57 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7721C30DAB;
-	Fri, 16 Jan 2015 14:53:13 -0500 (EST)
-In-Reply-To: <CAPig+cR4vaYe+KiJthmpzo3p7JQyGgEDBqqLP0nBM3YjXXZywQ@mail.gmail.com>
-	(Eric Sunshine's message of "Fri, 16 Jan 2015 14:37:20 -0500")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EC35F30F0E;
+	Fri, 16 Jan 2015 14:58:56 -0500 (EST)
+In-Reply-To: <4157F6B0-DDF4-4F71-A09B-EE216537CA89@gmail.com> (Kyle J. McKay's
+	message of "Thu, 15 Jan 2015 01:10:20 -0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 4E49F8FA-9DB9-11E4-AB46-42529F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 1AF61898-9DBA-11E4-94D0-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262569>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262570>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+"Kyle J. McKay" <mackyle@gmail.com> writes:
 
-> On Fri, Jan 16, 2015 at 1:35 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> "Philip Oakley" <philipoakley@iee.org> writes:
->>
->>>     die(_("--author '%s': not 'Name <email>', nor matches any existing
->>> author"));
->>
->> Sounds good.  Thanks.
+> If I make this change on top of 250b3c6c:
 >
-> To further bikeshed (particularly if "nor" is in the mix):
+> diff --git a/builtin/apply.c b/builtin/apply.c
+> index df773c75..8795e830 100644
+> --- a/builtin/apply.c
+> +++ b/builtin/apply.c
+> @@ -2390,6 +2390,8 @@ static int match_fragment(struct image *img,
+>  	fixed_buf = strbuf_detach(&fixed, &fixed_len);
+>  	if (postlen < postimage->len)
+>  		postlen = 0;
+> +	if (postlen)
+> +		postlen = 2 * postimage->len;
+>  	update_pre_post_images(preimage, postimage,
+>  			       fixed_buf, fixed_len, postlen);
+>  	return 1;
 >
->     neither 'Name <email>' nor a match for an existing author
+> Then the problem goes away.  That seems to suggest that postlen is
+> being computed incorrectly, but someone more familiar with
+> bulitin/apply.c is going to need to look at it.
 
-Short and sweet ;-)
+Indeed, with this, the test case detects under-counting in the
+caller (the caller counts 262 bytes but the expansion consumes 273
+bytes).
+
+-- >8 --
+Subject: apply: make update_pre_post_images() sanity check the given postlen
+
+---
+ builtin/apply.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/builtin/apply.c b/builtin/apply.c
+index 622ee16..18b7997 100644
+--- a/builtin/apply.c
++++ b/builtin/apply.c
+@@ -2174,6 +2174,10 @@ static void update_pre_post_images(struct image *preimage,
+ 	/* Fix the length of the whole thing */
+ 	postimage->len = new - postimage->buf;
+ 	postimage->nr -= reduced;
++
++	if (postlen && postlen < (new - postimage->buf))
++		die("BUG: postlen = %d, used = %d",
++		    (int)postlen, (int)(new - postimage->buf));
+ }
+ 
+ static int match_fragment(struct image *img,
+-- 
+2.3.0-rc0-149-g0286818
