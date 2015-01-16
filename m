@@ -1,65 +1,66 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] commit: reword --author error message
-Date: Fri, 16 Jan 2015 04:32:21 -0500
-Message-ID: <20150116093220.GA3006@peff.net>
-References: <54B7CCCD.1070708@drmicha.warpmail.net>
- <84cf10a22858275d6e213311c93df7f6a5408f60.1421331608.git.git@drmicha.warpmail.net>
- <xmqq4mrs7x5h.fsf@gitster.dls.corp.google.com>
+From: Andreas Krey <a.krey@gmx.de>
+Subject: Regarding the determinacy of 'git describe'
+Date: Fri, 16 Jan 2015 14:01:13 +0100
+Message-ID: <20150116130113.GA3220@inner.h.apk.li>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org,
-	Gunnar Wagner <gunnar.wagner@irisgermanica.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 16 10:32:30 2015
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 16 14:01:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YC3GY-0003I8-1F
-	for gcvg-git-2@plane.gmane.org; Fri, 16 Jan 2015 10:32:30 +0100
+	id 1YC6Wf-0006Hd-BE
+	for gcvg-git-2@plane.gmane.org; Fri, 16 Jan 2015 14:01:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751367AbbAPJcZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Jan 2015 04:32:25 -0500
-Received: from cloud.peff.net ([50.56.180.127]:35467 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751041AbbAPJcX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Jan 2015 04:32:23 -0500
-Received: (qmail 4516 invoked by uid 102); 16 Jan 2015 09:32:23 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 16 Jan 2015 03:32:23 -0600
-Received: (qmail 23687 invoked by uid 107); 16 Jan 2015 09:32:45 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 16 Jan 2015 04:32:45 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 16 Jan 2015 04:32:21 -0500
+	id S1753886AbbAPNBR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Jan 2015 08:01:17 -0500
+Received: from continuum.iocl.org ([217.140.74.2]:57849 "EHLO
+	continuum.iocl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751498AbbAPNBQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Jan 2015 08:01:16 -0500
+Received: (from krey@localhost)
+	by continuum.iocl.org (8.11.3/8.9.3) id t0GD1Dw03800;
+	Fri, 16 Jan 2015 14:01:13 +0100
 Content-Disposition: inline
-In-Reply-To: <xmqq4mrs7x5h.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.4.2.1i
+X-message-flag: What did you expect to see here?
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262548>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262549>
 
-On Thu, Jan 15, 2015 at 09:48:26AM -0800, Junio C Hamano wrote:
+Hi all again,
 
-> > Rename the error message to make it clearer that the failure has two
-> > reasons in this case:
-> > "Bad --author parameter '%s': neither completely wellformed nor part of
-> > an existing one"
-> 
-> You are trying to help a user who thought "Who www.where.com" was a
-> valid thing to pass to --author; "it is not completely wellformed"
-> is not very helpful without making her realize what in that bogus
-> string is not "completely well-formed".
-> 
-> Perhaps
-> 
->   "--author '%s' is not 'Name <email>' and no existing author matches that string"
-> 
-> or somesuch?
+today another expectation crumbled.
 
-Yeah, I think that is OK. It is kind of clunky to read, but it contains
-all of the necessary information to lead the user in the right
-direction.
+I expected the algo of 'git describe' to be deterministic,
+but it happens to return different tags in structurally
+identical repositories. These are generated on each run
+of a test (and obviously have different dates and thus
+commit IDs), and 'git describe' doesn't return the same
+tags in all of them.
 
--Peff
+Is that expected behaviour?
+
+The repos each look like
+(commit id and parents truncated to three chars):
+
+538 26d 8f5         (HEAD, origin/r2.4/feature-2, r2.4/feature-2) Merge branch 'r2.4/master' into r2.4/feature-2
+    26d         20c feature: 1st part
+        8f5 ac6     (origin/r2.4/master, origin/HEAD, r2.4/master) main: 3rd commit
+            ac6 20c (tag: r2.4/bl-1) main: 2nd commit
+                20c (tag: r2.4/bl-0, origin/sidestep) module: initial
+
+So HEAD is two hops away from both tags (bl-0 via 26d and bl-1 via 8f5),
+but for one I'd hoped that it always pick bl-1, and especially I'd expect
+it to be consistent for a given structure).
+
+Andreas
+
+-- 
+"Totally trivial. Famous last words."
+From: Linus Torvalds <torvalds@*.org>
+Date: Fri, 22 Jan 2010 07:29:21 -0800
