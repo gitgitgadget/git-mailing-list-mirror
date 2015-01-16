@@ -1,7 +1,7 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/7] strbuf.h: unify documentation comments beginnings
-Date: Fri, 16 Jan 2015 04:04:51 -0500
-Message-ID: <20150116090451.GB31113@peff.net>
+Subject: [PATCH 3/7] strbuf.h: drop asciidoc list formatting from API docs
+Date: Fri, 16 Jan 2015 04:05:10 -0500
+Message-ID: <20150116090510.GC31113@peff.net>
 References: <20150116090225.GA30797@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -10,118 +10,131 @@ Cc: Michael Haggerty <mhagger@alum.mit.edu>,
 	Stefan Beller <sbeller@google.com>,
 	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 16 10:05:08 2015
+X-From: git-owner@vger.kernel.org Fri Jan 16 10:05:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YC2q1-0003fI-Co
-	for gcvg-git-2@plane.gmane.org; Fri, 16 Jan 2015 10:05:05 +0100
+	id 1YC2qG-0003kc-70
+	for gcvg-git-2@plane.gmane.org; Fri, 16 Jan 2015 10:05:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753035AbbAPJEz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Jan 2015 04:04:55 -0500
-Received: from cloud.peff.net ([50.56.180.127]:35412 "HELO cloud.peff.net"
+	id S1752600AbbAPJFO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Jan 2015 04:05:14 -0500
+Received: from cloud.peff.net ([50.56.180.127]:35422 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752559AbbAPJEx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Jan 2015 04:04:53 -0500
-Received: (qmail 2908 invoked by uid 102); 16 Jan 2015 09:04:53 -0000
+	id S1751272AbbAPJFM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Jan 2015 04:05:12 -0500
+Received: (qmail 2927 invoked by uid 102); 16 Jan 2015 09:05:12 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 16 Jan 2015 03:04:53 -0600
-Received: (qmail 23444 invoked by uid 107); 16 Jan 2015 09:05:16 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 16 Jan 2015 03:05:12 -0600
+Received: (qmail 23464 invoked by uid 107); 16 Jan 2015 09:05:34 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 16 Jan 2015 04:05:15 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 16 Jan 2015 04:04:51 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 16 Jan 2015 04:05:34 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 16 Jan 2015 04:05:10 -0500
 Content-Disposition: inline
 In-Reply-To: <20150116090225.GA30797@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262541>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262542>
 
-From: Stefan Beller <sbeller@google.com>
+Using a hanging indent is much more readable. This means we
+won't format as asciidoc anymore, but since we don't have a
+working system for extracting these comments anyway, it's
+probably more important to just make the source readable.
 
-The prior patch uses "/**" to denote "documentation"
-comments that we pulled from api-strbuf.txt. Let's use a
-consistent style for similar comments that were already in
-strbuf.h.
-
-Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-This adds one spot that was missed in the original. I also rewrote the
-commit message, as I found the original hard to parse.
-
- strbuf.h | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ strbuf.h | 74 ++++++++++++++++++++++++++++++++--------------------------------
+ 1 file changed, 37 insertions(+), 37 deletions(-)
 
 diff --git a/strbuf.h b/strbuf.h
-index b4050de..fd57e45 100644
+index fd57e45..ab5ff27 100644
 --- a/strbuf.h
 +++ b/strbuf.h
-@@ -435,7 +435,7 @@ static inline int strbuf_strip_suffix(struct strbuf *sb, const char *suffix)
- 		return 0;
- }
+@@ -13,44 +13,44 @@
+  *
+  * strbufs have some invariants that are very important to keep in mind:
+  *
+- * . The `buf` member is never NULL, so it can be used in any usual C
+- * string operations safely. strbuf's _have_ to be initialized either by
+- * `strbuf_init()` or by `= STRBUF_INIT` before the invariants, though.
+- * +
+- * Do *not* assume anything on what `buf` really is (e.g. if it is
+- * allocated memory or not), use `strbuf_detach()` to unwrap a memory
+- * buffer from its strbuf shell in a safe way. That is the sole supported
+- * way. This will give you a malloced buffer that you can later `free()`.
+- * +
+- * However, it is totally safe to modify anything in the string pointed by
+- * the `buf` member, between the indices `0` and `len-1` (inclusive).
++ *  - The `buf` member is never NULL, so it can be used in any usual C
++ *    string operations safely. strbuf's _have_ to be initialized either by
++ *    `strbuf_init()` or by `= STRBUF_INIT` before the invariants, though.
+  *
+- * . The `buf` member is a byte array that has at least `len + 1` bytes
+- *   allocated. The extra byte is used to store a `'\0'`, allowing the
+- *   `buf` member to be a valid C-string. Every strbuf function ensure this
+- *   invariant is preserved.
+- * +
+- * NOTE: It is OK to "play" with the buffer directly if you work it this
+- *       way:
+- * +
+- * ----
+- * strbuf_grow(sb, SOME_SIZE); <1>
+- * strbuf_setlen(sb, sb->len + SOME_OTHER_SIZE);
+- * ----
+- * <1> Here, the memory array starting at `sb->buf`, and of length
+- * `strbuf_avail(sb)` is all yours, and you can be sure that
+- * `strbuf_avail(sb)` is at least `SOME_SIZE`.
+- * +
+- * NOTE: `SOME_OTHER_SIZE` must be smaller or equal to `strbuf_avail(sb)`.
+- * +
+- * Doing so is safe, though if it has to be done in many places, adding the
+- * missing API to the strbuf module is the way to go.
+- * +
+- * WARNING: Do _not_ assume that the area that is yours is of size `alloc
+- * - 1` even if it's true in the current implementation. Alloc is somehow a
+- * "private" member that should not be messed with. Use `strbuf_avail()`
+- * instead.
+- */
++ *    Do *not* assume anything on what `buf` really is (e.g. if it is
++ *    allocated memory or not), use `strbuf_detach()` to unwrap a memory
++ *    buffer from its strbuf shell in a safe way. That is the sole supported
++ *    way. This will give you a malloced buffer that you can later `free()`.
++ *
++ *    However, it is totally safe to modify anything in the string pointed by
++ *    the `buf` member, between the indices `0` and `len-1` (inclusive).
++ *
++ *  - The `buf` member is a byte array that has at least `len + 1` bytes
++ *    allocated. The extra byte is used to store a `'\0'`, allowing the
++ *    `buf` member to be a valid C-string. Every strbuf function ensure this
++ *    invariant is preserved.
++ *
++ *    NOTE: It is OK to "play" with the buffer directly if you work it this
++ *    way:
++ *
++ *    ----
++ *    strbuf_grow(sb, SOME_SIZE); <1>
++ *    strbuf_setlen(sb, sb->len + SOME_OTHER_SIZE);
++ *    ----
++ *    <1> Here, the memory array starting at `sb->buf`, and of length
++ *    `strbuf_avail(sb)` is all yours, and you can be sure that
++ *    `strbuf_avail(sb)` is at least `SOME_SIZE`.
++ *
++ *    NOTE: `SOME_OTHER_SIZE` must be smaller or equal to `strbuf_avail(sb)`.
++ *
++ *    Doing so is safe, though if it has to be done in many places, adding the
++ *    missing API to the strbuf module is the way to go.
++ *
++ *    WARNING: Do _not_ assume that the area that is yours is of size `alloc
++ *    - 1` even if it's true in the current implementation. Alloc is somehow a
++ *    "private" member that should not be messed with. Use `strbuf_avail()`
++ *    instead.
++*/
  
--/*
-+/**
-  * Split str (of length slen) at the specified terminator character.
-  * Return a null-terminated array of pointers to strbuf objects
-  * holding the substrings.  The substrings include the terminator,
-@@ -451,7 +451,7 @@ static inline int strbuf_strip_suffix(struct strbuf *sb, const char *suffix)
- extern struct strbuf **strbuf_split_buf(const char *, size_t,
- 					int terminator, int max);
- 
--/*
-+/**
-  * Split a NUL-terminated string at the specified terminator
-  * character.  See strbuf_split_buf() for more information.
-  */
-@@ -461,7 +461,7 @@ static inline struct strbuf **strbuf_split_str(const char *str,
- 	return strbuf_split_buf(str, strlen(str), terminator, max);
- }
- 
--/*
-+/**
-  * Split a strbuf at the specified terminator character.  See
-  * strbuf_split_buf() for more information.
-  */
-@@ -471,7 +471,7 @@ static inline struct strbuf **strbuf_split_max(const struct strbuf *sb,
- 	return strbuf_split_buf(sb->buf, sb->len, terminator, max);
- }
- 
--/*
-+/**
-  * Split a strbuf at the specified terminator character.  See
-  * strbuf_split_buf() for more information.
-  */
-@@ -481,7 +481,7 @@ static inline struct strbuf **strbuf_split(const struct strbuf *sb,
- 	return strbuf_split_max(sb, terminator, 0);
- }
- 
--/*
-+/**
-  * Free a NULL-terminated list of strbufs (for example, the return
-  * values of the strbuf_split*() functions).
-  */
-@@ -498,7 +498,7 @@ extern int launch_editor(const char *path, struct strbuf *buffer, const char *co
- 
- extern void strbuf_add_lines(struct strbuf *sb, const char *prefix, const char *buf, size_t size);
- 
--/*
-+/**
-  * Append s to sb, with the characters '<', '>', '&' and '"' converted
-  * into XML entities.
-  */
-@@ -523,7 +523,7 @@ extern int fprintf_ln(FILE *fp, const char *fmt, ...);
- 
- char *xstrdup_tolower(const char *);
- 
--/*
-+/**
-  * Create a newly allocated string using printf format. You can do this easily
-  * with a strbuf, but this provides a shortcut to save a few lines.
-  */
+ /**
+  * Data Structures
 -- 
 2.2.1.425.g441bb3c
