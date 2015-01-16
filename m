@@ -1,115 +1,122 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Segmentation fault in git apply
-Date: Fri, 16 Jan 2015 11:58:55 -0800
-Message-ID: <xmqqbnly1oqo.fsf@gitster.dls.corp.google.com>
-References: <CAO2U3QjGUfnTRO_poS+=-MfE4aYGuWpVJTe20H-u=FgkVy-RYg@mail.gmail.com>
-	<CAO2U3Qjn9o_eYayEMCC3S6DBr9kVH7mPL00QGrXAnV2iYRP-=A@mail.gmail.com>
-	<CAO2U3Qj-Hg2tb72NgO6wb-aqAxFG7aga2ZDeZNDCPJzGtmHTAA@mail.gmail.com>
-	<CAO2U3Qhd_DPP09BUyMr6NKUtOe4EQQ7G83BRg7MbtQXFPjKv8w@mail.gmail.com>
-	<CAO2U3Qje-YwcV1d5BK_zZqrTki4AU=emdkUZzEEieRjmoQdmGg@mail.gmail.com>
-	<CAO2U3Qi4TWZiNoOQVSW=Ycvp3bpBySZrCGmRLCbRJJes_n2Wkw@mail.gmail.com>
-	<99579252-EF8A-4DAF-A49D-2AC5627ED9E3@gmail.com>
-	<4157F6B0-DDF4-4F71-A09B-EE216537CA89@gmail.com>
+From: "Jason Pyeron" <jpyeron@pdinc.us>
+Subject: RE: Proper plumbing for porcelain gpg formats on git show?
+Date: Fri, 16 Jan 2015 15:05:00 -0500
+Organization: PD Inc
+Message-ID: <6B1E582B25CD4722B8993C5A3C304ECA@black>
+References: <EB979B4B153D49909C78239A333869FB@black><20150116192947.GD29365@google.com> <xmqqk30m1p0t.fsf@gitster.dls.corp.google.com>
+Reply-To: "Junio C Hamano" <gitster@pobox.com>,
+	  "Jonathan Nieder" <jrnieder@gmail.com>, <git@vger.kernel.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Michael Blume <blume.mike@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: "Kyle J. McKay" <mackyle@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 16 20:59:03 2015
+Content-Type: text/plain;
+	charset="US-ASCII"
+Content-Transfer-Encoding: 8BIT
+To: "'Junio C Hamano'" <gitster@pobox.com>,
+	"'Jonathan Nieder'" <jrnieder@gmail.com>, <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jan 16 21:05:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YCD2t-0001pL-6N
-	for gcvg-git-2@plane.gmane.org; Fri, 16 Jan 2015 20:59:03 +0100
+	id 1YCD8r-0003kH-QA
+	for gcvg-git-2@plane.gmane.org; Fri, 16 Jan 2015 21:05:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754378AbbAPT67 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Jan 2015 14:58:59 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50812 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752554AbbAPT66 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Jan 2015 14:58:58 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8AD9C30F20;
-	Fri, 16 Jan 2015 14:58:57 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=PVoWVxiJJHygFQ0k//5k5rNYQ9Q=; b=lExXyu
-	xVG5LjegwOJt8ZJ+8S7mrQ4u/N2S+yTR2qU5RkpVavwXogfMJ+G5x4zTOZjh4nNb
-	gQgO6C9mZdFaaiADsDXL/9Yc9OOws8h5JUoRSHTAkx1RT0G8aobJfaUSQQuTGrJo
-	AkN6FoQp1kOJxJYRdEZLqSX9bJZ4LlYn8N2Vc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=EodTs6DVC2apjQfNX4zE62gHjg/Gp72R
-	gojEEdoBDlM5UaeW6azo39Car2gU53K/LmURYIjL8g7Ap0EyN+p/5JbVKoMPna3w
-	VtvOsTB4hHhIEHGeAvPuer+7XO7MMzSqzzeRBjhBNlQ5eI1gScaQ2qKJWJN4C4Sq
-	se4Jb+Jzg+A=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 789E130F17;
-	Fri, 16 Jan 2015 14:58:57 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EC35F30F0E;
-	Fri, 16 Jan 2015 14:58:56 -0500 (EST)
-In-Reply-To: <4157F6B0-DDF4-4F71-A09B-EE216537CA89@gmail.com> (Kyle J. McKay's
-	message of "Thu, 15 Jan 2015 01:10:20 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 1AF61898-9DBA-11E4-94D0-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1754208AbbAPUFH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Jan 2015 15:05:07 -0500
+Received: from mail.pdinc.us ([67.90.184.27]:56449 "EHLO mail.pdinc.us"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752554AbbAPUFG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 16 Jan 2015 15:05:06 -0500
+Received: from black (nsa1.pdinc.us [67.90.184.2])
+	(authenticated bits=0)
+	by mail.pdinc.us (8.12.11.20060308/8.12.11) with ESMTP id t0GK505G021960;
+	Fri, 16 Jan 2015 15:05:00 -0500
+X-Mailer: Microsoft Office Outlook 11
+In-Reply-To: <xmqqk30m1p0t.fsf@gitster.dls.corp.google.com>
+Thread-Index: AdAxxgfsehDv/wyXRCOuZgylWRDk6AAADHvQ
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.3790.4913
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262570>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262571>
 
-"Kyle J. McKay" <mackyle@gmail.com> writes:
+> -----Original Message-----
+> From: Junio C Hamano
+> Sent: Friday, January 16, 2015 14:53
+> 
+> Jonathan Nieder <jrnieder@gmail.com> writes:
+> 
+> >> would there be interest in accepting a patch for 
+> >>
+> >> %Gs - the raw GPG text from the commit
+> >> %Gf - the key fingerprint
+> >
+> > There may be bikeshedding on the exact format specifier, but aside
+> > from that I don't see why not. ;-)
+> 
+> I was about to say "As long as the execution is good, why not?
+> Spawning an extra process 'gpg --list-packets' is not quite
+> acceptable without properly being lazy is not acceptable".
+> 
+> But verify_signed_buffer() reads "gpg --status-fd=1 --verify"
+> output, it is already done lazily in format_commit_one() only when
+> the "%G?" placeholder is used, and the output we parse that are
+> prefixed by [GNUPG:] should have enough information to grab the
+> fingerprint from on the VALIDSIG line.
+> 
+> So I do not see a lot of room to screw-up the execution ;-).
 
-> If I make this change on top of 250b3c6c:
->
-> diff --git a/builtin/apply.c b/builtin/apply.c
-> index df773c75..8795e830 100644
-> --- a/builtin/apply.c
-> +++ b/builtin/apply.c
-> @@ -2390,6 +2390,8 @@ static int match_fragment(struct image *img,
->  	fixed_buf = strbuf_detach(&fixed, &fixed_len);
->  	if (postlen < postimage->len)
->  		postlen = 0;
-> +	if (postlen)
-> +		postlen = 2 * postimage->len;
->  	update_pre_post_images(preimage, postimage,
->  			       fixed_buf, fixed_len, postlen);
->  	return 1;
->
-> Then the problem goes away.  That seems to suggest that postlen is
-> being computed incorrectly, but someone more familiar with
-> bulitin/apply.c is going to need to look at it.
+This kind of begs the question of extracting signatures, not in one's keyring. I was surprised to see %GK fail because it was not yet in the keyring. I would also expect a "B", not a "N" for %G?, maybe there should be a "X" for can't verify.
 
-Indeed, with this, the test case detects under-counting in the
-caller (the caller counts 262 bytes but the expansion consumes 273
-bytes).
+$ gpg --delete-keys DA0848AD
+gpg (GnuPG) 2.0.14; Copyright (C) 2009 Free Software Foundation, Inc.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
 
--- >8 --
-Subject: apply: make update_pre_post_images() sanity check the given postlen
 
----
- builtin/apply.c | 4 ++++
- 1 file changed, 4 insertions(+)
+pub  2048R/DA0848AD 2014-06-24 Jason Pyeron <jpyeron@pdinc.us>
 
-diff --git a/builtin/apply.c b/builtin/apply.c
-index 622ee16..18b7997 100644
---- a/builtin/apply.c
-+++ b/builtin/apply.c
-@@ -2174,6 +2174,10 @@ static void update_pre_post_images(struct image *preimage,
- 	/* Fix the length of the whole thing */
- 	postimage->len = new - postimage->buf;
- 	postimage->nr -= reduced;
-+
-+	if (postlen && postlen < (new - postimage->buf))
-+		die("BUG: postlen = %d, used = %d",
-+		    (int)postlen, (int)(new - postimage->buf));
- }
- 
- static int match_fragment(struct image *img,
--- 
-2.3.0-rc0-149-g0286818
+Delete this key from the keyring? (y/N) y
+
+$ git diff-tree -s --format=%G? HEAD
+N
+
+$ git diff-tree -s --format=%GG HEAD
+gpg: Signature made Fri 16 Jan 2015 01:33:12 PM EST using RSA key ID DA0848AD
+gpg: Can't check signature: No public key
+
+
+$ git diff-tree -s --format=%GK HEAD
+
+$ gpg --keyserver hkp://pgp.mit.edu --recv-keys 8D6B5984DA0848AD
+gpg: requesting key DA0848AD from hkp server pgp.mit.edu
+gpg: key DA0848AD: public key "Jason Pyeron <jpyeron@pdinc.us>" imported
+gpg: Total number processed: 1
+gpg:               imported: 1  (RSA: 1)
+
+$ git diff-tree -s --format=%G? HEAD
+U
+
+$ git diff-tree -s --format=%GG HEAD
+gpg: Signature made Fri 16 Jan 2015 01:33:12 PM EST using RSA key ID DA0848AD
+gpg: Good signature from "Jason Pyeron <jpyeron@pdinc.us>"
+gpg: WARNING: This key is not certified with a trusted signature!
+gpg:          There is no indication that the signature belongs to the owner.
+Primary key fingerprint: 8C88 9ECF 7A2F 7977 7CE9  13B4 8D6B 5984 DA08 48AD
+
+
+$ git diff-tree -s --format=%GK HEAD
+8D6B5984DA0848AD
+
+
+
+--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-                                                               -
+- Jason Pyeron                      PD Inc. http://www.pdinc.us -
+- Principal Consultant              10 West 24th Street #100    -
+- +1 (443) 269-1555 x333            Baltimore, Maryland 21218   -
+-                                                               -
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+This message is copyright PD Inc, subject to license 20080407P00. 
