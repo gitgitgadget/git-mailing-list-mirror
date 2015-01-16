@@ -1,126 +1,108 @@
-From: "Kyle J. McKay" <mackyle@gmail.com>
-Subject: Re: [PATCH] t/lib-httpd: switch SANITY check for NOT_ROOT
-Date: Fri, 16 Jan 2015 10:38:38 -0800
-Message-ID: <1CCD6775-7A2E-4AC4-813B-6027C0D67336@gmail.com>
-References: <54B6C897.5030405@web.de> <20150114211712.GE1155@peff.net> <064010B3-BC58-42F2-B5C0-DAADAA59B87D@gmail.com> <xmqqwq4n6b4c.fsf@gitster.dls.corp.google.com> <20150115222719.GA19021@peff.net> <xmqqa91j6537.fsf@gitster.dls.corp.google.com> <20150115235752.GB25120@peff.net> <xmqqh9vr4mlz.fsf@gitster.dls.corp.google.com> <20150116013256.GA25894@peff.net> <BEFF558C-774D-4891-96A0-BE962F8070E7@gmail.com> <20150116033445.GA29572@peff.net>
-Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=UTF-8; format=flowed; delsp=yes
-Cc: Junio C Hamano <gitster@pobox.com>,
- msysgit@googlegroups.com,
- =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
- Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: msysgit+bncBCA2HLOB7YGRBMVV4WSQKGQEAISDRRY@googlegroups.com Fri Jan 16 19:38:45 2015
-Return-path: <msysgit+bncBCA2HLOB7YGRBMVV4WSQKGQEAISDRRY@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-yk0-f191.google.com ([209.85.160.191])
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [RFC] Introducing different handling for small/large transactions
+Date: Fri, 16 Jan 2015 11:00:46 -0800
+Message-ID: <CAGZ79kZ9vFebD9nsNkfU759msT9CvF4gRS_Apmi5-u5XWsiGYQ@mail.gmail.com>
+References: <1421361371-30221-1-git-send-email-sbeller@google.com>
+	<xmqqppaf4o04.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 16 20:00:54 2015
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCA2HLOB7YGRBMVV4WSQKGQEAISDRRY@googlegroups.com>)
-	id 1YCBn9-0001cI-PD
-	for gcvm-msysgit@m.gmane.org; Fri, 16 Jan 2015 19:38:43 +0100
-Received: by mail-yk0-f191.google.com with SMTP id 9sf2975292ykp.8
-        for <gcvm-msysgit@m.gmane.org>; Fri, 16 Jan 2015 10:38:42 -0800 (PST)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1YCC8b-0008LI-Md
+	for gcvg-git-2@plane.gmane.org; Fri, 16 Jan 2015 20:00:54 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1756068AbbAPTAt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Jan 2015 14:00:49 -0500
+Received: from mail-ig0-f179.google.com ([209.85.213.179]:38462 "EHLO
+	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755423AbbAPTAs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Jan 2015 14:00:48 -0500
+Received: by mail-ig0-f179.google.com with SMTP id l13so4836173iga.0
+        for <git@vger.kernel.org>; Fri, 16 Jan 2015 11:00:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=from:to:in-reply-to:subject:references:message-id:content-type
-         :mime-version:date:cc:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe;
-        bh=hOUa1MBCxYRYM06RxYR1a1mDYTy6XdDwHeW5mUo4TJs=;
-        b=KLD14j0Gf2PuKzm55wGOhDM4VwNWX954nw+lAKtGGeQ5UwrZfReTfcAanRusBAQu/A
-         2XrXh1V0oHjAs8ZQ91koA94EiWiLHeV1rEchxHCiisaaUCdeEUgaU0CeFLy3gTsi/ZmR
-         wQinMxUpaCs8xB1YExl9CiE+ULkdBhVWCUUuCPzjal8rjsXso6MgmQ32FColu85dq2qt
-         CWyXN+ARdmJTFpq8tsIfb3sXsxr/sx9oqs87w6Hlt2JOc/UeDRsvUlnQKmwEuV8F8Tps
-         vQNpLy2MAIavps/fmYkplIjpMxMjTtbsYJ2T9fjiB1viYMb6q5iWeEL0fcSj3PmZ8OOa
-         ehnQ==
-X-Received: by 10.182.236.74 with SMTP id us10mr13374obc.32.1421433522811;
-        Fri, 16 Jan 2015 10:38:42 -0800 (PST)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.182.20.44 with SMTP id k12ls724183obe.1.gmail; Fri, 16 Jan
- 2015 10:38:42 -0800 (PST)
-X-Received: by 10.182.165.132 with SMTP id yy4mr13318087obb.20.1421433522396;
-        Fri, 16 Jan 2015 10:38:42 -0800 (PST)
-Received: from mail-pd0-x229.google.com (mail-pd0-x229.google.com. [2607:f8b0:400e:c02::229])
-        by gmr-mx.google.com with ESMTPS id v6si555180pdo.2.2015.01.16.10.38.42
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 16 Jan 2015 10:38:42 -0800 (PST)
-Received-SPF: pass (google.com: domain of mackyle@gmail.com designates 2607:f8b0:400e:c02::229 as permitted sender) client-ip=2607:f8b0:400e:c02::229;
-Received: by mail-pd0-f169.google.com with SMTP id z10so24203774pdj.0
-        for <msysgit@googlegroups.com>; Fri, 16 Jan 2015 10:38:42 -0800 (PST)
-X-Received: by 10.70.118.168 with SMTP id kn8mr24614789pdb.133.1421433522228;
-        Fri, 16 Jan 2015 10:38:42 -0800 (PST)
-Received: from [172.16.16.105] (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
-        by mx.google.com with ESMTPSA id kl7sm4738123pdb.10.2015.01.16.10.38.40
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Fri, 16 Jan 2015 10:38:41 -0800 (PST)
-In-Reply-To: <20150116033445.GA29572@peff.net>
-X-Mauler: Craptastic (2.936)
-X-Original-Sender: mackyle@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of mackyle@gmail.com designates 2607:f8b0:400e:c02::229
- as permitted sender) smtp.mail=mackyle@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262558>
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=3/m9UJutlzr9Bo6C5NAAh08cIfoQb22YEdRuOdqAriU=;
+        b=hu9zqqO9lSOHLafXviKeIiFv7JXLJql6HzVnCezZI3S+BmgJ+UCTH88A5fhOaDdUBa
+         89SiorSVftBbKUA4WdRfsHJvjgpqgMYVX6qKXQxrSXTYDNs4sV8cQTnCVbIe6kmxCSJE
+         j2yG6o0bmuUBsn1ZxdcKJHcbAA6ZAUsYdM5Aa6b2cXI6nR5sZt5wuZm8LUqC2ZH97L/+
+         nrAc/xZy5zwRv9CvlzMHSqy0BsMXNSlkh9SnLBgs2FV970OqR8yGFylauFEeUizDmC2I
+         L3qdq+7quhOsE0R1XpLfErVOt3jQDuh2kw0plC9tluQSFJLFhfVxnvLtRyqVaAu4INC0
+         ZuiQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=3/m9UJutlzr9Bo6C5NAAh08cIfoQb22YEdRuOdqAriU=;
+        b=CO3Kwu5I1t3I1JwSKUw4rvgEL+XwGOq3cnjyhSG1IzLVI+wU8A47LAhxRtFwvfJ8fF
+         lkzwni0qd+pJpUn3ip/IWZ2qHwOHMrgtLwZgGtdgI/vrILvYRdWPlaKCsSABBWOYCE7X
+         wqan9nenbXc3OdWIGRNMQXh5AnYYSNY8ac+EoTfnDY9Q1vB/g0MLxFh6umY+UTG5rl1H
+         5huYLPYf1vobLvr4gfkn/IWjIgs0AmBw0npgLsRdJ7SGjmL3r0liJaFTADskr5ChdTBD
+         uVbxTpsI60q5gvwfH58kONFlpywNM68ooYByPoBLFuZZJ2DaQ8cesWyfMgCBmcS62c2X
+         M4MA==
+X-Gm-Message-State: ALoCoQlVIBD/4XiUbwZkschpTwCVC1xptPJEmpaWKIbuLxLX0EIgFNFqsg2MUFb44/ZDOdlo2MYz
+X-Received: by 10.50.79.161 with SMTP id k1mr5306376igx.14.1421434847079; Fri,
+ 16 Jan 2015 11:00:47 -0800 (PST)
+Received: by 10.50.26.42 with HTTP; Fri, 16 Jan 2015 11:00:46 -0800 (PST)
+In-Reply-To: <xmqqppaf4o04.fsf@gitster.dls.corp.google.com>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262559>
 
-On Jan 15, 2015, at 19:34, Jeff King wrote:
-
-> On Thu, Jan 15, 2015 at 07:27:34PM -0800, Kyle J. McKay wrote:
+On Thu, Jan 15, 2015 at 3:34 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
 >
->> "id -u" works for me in MSYS and cygwin (each appears to have it's  
->> own
->> id.exe).
+>> In ref_transaction_commit
+>>       * commit the .lock file to its destination
+>>       * in case this is a deletion:
+>>               * remove the loose ref
+>>               * and repack the packed refs file if necessary
 >
-> That's comforting. MSYS was the one I was most worried about. What UID
-> do they report? I.e., do they correctly tell us if we are root (or
-> more accurately, if we are not root)?
+> Don't you need to repack and then remove the loose one, though?
+> Otherwise you would expose a stale packed ref in the middle to the
+> other readers, no?
 
-It's funny, really.  The MSYS version gives a different answer than  
-the cygwin version although both are non-zero.  The MSYS perl gives  
-the same answer as the MSYS id and the cygwin perl gives the same  
-answer as the cygwin id.
+You're right.
 
-I'm not even sure what it would mean to "be root" on one of those  
-systems.
+>
+>> The larger transactions would be handled differently by relying
+>> on the packed refs file:
+>> In ref_transaction_update:
+>>       * detect if we transition to a large transaction
+>>         (by having more than one entry in transaction->updates)
+>>         if so:
+>>               * Pack all currently existing refs into the packed
+>>                 refs file, commit the packed refs file and delete
+>>                 all loose refs. This will avoid (d/f) conflicts.
+>>
+>>               * Keep the packed-refs file locked and move the first
+>>                 transaction update into the packed-refs.lock file
+>>
+>>       * Any update(delete, create, update) is put into the locked
+>>         packed refs file.
+>
+> I am not sure if you mean (a) keep updates only in-core, to be
+> flushed at the commit time, or (b) each and every update in the
+> large transaction results in rewriting the entire packed-refs.lock
+> file, only to be renamed to the final name at the commit time.
+> I am hoping it would be the former.
 
-The closest I can think of would be to run as the "SYSTEM" user.  And  
-that's not nearly as simple as just "sudo -s". [1].
+I wasn't sure which I mean. The first one is obviously better to do.
 
-I haven't tested that.  I will try to remember to give that a try next  
-time I'm feeling the need for some frustration. ;)
-
--Kyle
-
-[1] http://cygwin.com/ml/cygwin/2010-04/msg00651.html
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "Git for Windows" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+>
+>>       * Additionally we need to obtain the .lock for the loose refs
+>>         file to keep guarantees, though we should close the file
+>>         descriptor as we don't wand to run out of file descriptors.
+>
+> Yes, this last point is important.
+>
