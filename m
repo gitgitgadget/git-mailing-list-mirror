@@ -1,85 +1,156 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: RFC: update hook for GPG signed submission on secured branches
-Date: Fri, 16 Jan 2015 14:49:46 -0800
-Message-ID: <xmqq7fwm1gtx.fsf@gitster.dls.corp.google.com>
-References: <BBE88A3EA44D47159C483F1046AC747E@black>
-	<xmqqsifa1px6.fsf@gitster.dls.corp.google.com>
-	<BD3DE7B299FE458287DC8C829CEADEC2@black>
+Subject: [PATCH] apply: count the size of postimage correctly
+Date: Fri, 16 Jan 2015 15:54:25 -0800
+Message-ID: <xmqqzj9iz3gu.fsf_-_@gitster.dls.corp.google.com>
+References: <CAO2U3QjGUfnTRO_poS+=-MfE4aYGuWpVJTe20H-u=FgkVy-RYg@mail.gmail.com>
+	<CAO2U3Qjn9o_eYayEMCC3S6DBr9kVH7mPL00QGrXAnV2iYRP-=A@mail.gmail.com>
+	<CAO2U3Qj-Hg2tb72NgO6wb-aqAxFG7aga2ZDeZNDCPJzGtmHTAA@mail.gmail.com>
+	<CAO2U3Qhd_DPP09BUyMr6NKUtOe4EQQ7G83BRg7MbtQXFPjKv8w@mail.gmail.com>
+	<CAO2U3Qje-YwcV1d5BK_zZqrTki4AU=emdkUZzEEieRjmoQdmGg@mail.gmail.com>
+	<CAO2U3Qi4TWZiNoOQVSW=Ycvp3bpBySZrCGmRLCbRJJes_n2Wkw@mail.gmail.com>
+	<99579252-EF8A-4DAF-A49D-2AC5627ED9E3@gmail.com>
+	<4157F6B0-DDF4-4F71-A09B-EE216537CA89@gmail.com>
+	<xmqqbnly1oqo.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: <git@vger.kernel.org>
-To: "Jason Pyeron" <jpyeron@pdinc.us>
-X-From: git-owner@vger.kernel.org Fri Jan 16 23:50:09 2015
+Cc: Michael Blume <blume.mike@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: "Kyle J. McKay" <mackyle@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 17 00:54:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YCFiQ-0002u1-SD
-	for gcvg-git-2@plane.gmane.org; Fri, 16 Jan 2015 23:50:07 +0100
+	id 1YCGio-0004Od-0j
+	for gcvg-git-2@plane.gmane.org; Sat, 17 Jan 2015 00:54:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751258AbbAPWtt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Jan 2015 17:49:49 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50929 "EHLO
+	id S1751690AbbAPXy3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Jan 2015 18:54:29 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:60542 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750968AbbAPWtt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Jan 2015 17:49:49 -0500
+	with ESMTP id S1751502AbbAPXy2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Jan 2015 18:54:28 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3A1282E2A5;
-	Fri, 16 Jan 2015 17:49:48 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 666DF300A3;
+	Fri, 16 Jan 2015 18:54:27 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=3iK9ePvOR5fn72BLnZ7lToo7ubU=; b=JDXowP
-	x/i9w1NOq8S4imoDLsa4NEhG5XjDMDZhcV8zv0gov29CuJNAsTF0fXyFiI3TJMCJ
-	obfPp/gKD6fO70peYuV9z7xlo5oxjcMy8ipH1llH5zO8qtuGCAYOdUKRxwAfJwRy
-	e6kWbTjKNduN5gur6EuyQBkdedrU+VAcbm+fY=
+	:content-type; s=sasl; bh=zQQuK35SPIZFzhl2uX+pfxU0SzU=; b=dzIJy9
+	ZKSyyvL4UeUfF2KiKgQBQ3Wrl364yh+PR60xVrWz6gOqhoq54dl9q3vGV4DUTtFG
+	wWj2CGpAvyjuSpDHf6FGF817fpcipk3UplG3apnFxBbzLneDnwYbaJa70nwqIV2N
+	T7HaaIAeOhekHM4Lhtfs+DfqgYHradpcEbmhw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=FY2mmwp1Il5Qkt3C4XBxuw22nGKcCOvL
-	ZWuyZoleAQa6hUJ9bLSxVt4ntZrlmMEFhXfmTZA+AdR4KqSKeqUxyD2ximk5kkrI
-	zKDU6MJQLQzmDMss8AghNOoUB3qaMkg/eUCIjasl+7nUn39Wv3UJAEvIaHynZ6Gj
-	TeTFvvs1O8U=
+	:content-type; q=dns; s=sasl; b=vqqctFFSnc7zMSmci5gE4qEoOSbluON2
+	49BHsu50E9KeyQfIhpJbvSrrsAdehDIZk+bm1Sqm/woq+W10aHmmaxdcmVKyROMk
+	/wHkrCT2Tma7rBbtZCMgD7qagcP2B9Ub2D/WhBReS7f5EQ78+g0BXllxAq8MAxU4
+	FmBjt0ocXzg=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 30F922E2A4;
-	Fri, 16 Jan 2015 17:49:48 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5A935300A2;
+	Fri, 16 Jan 2015 18:54:27 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A680B2E2A3;
-	Fri, 16 Jan 2015 17:49:47 -0500 (EST)
-In-Reply-To: <BD3DE7B299FE458287DC8C829CEADEC2@black> (Jason Pyeron's message
-	of "Fri, 16 Jan 2015 14:47:25 -0500")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D1F6A300A1;
+	Fri, 16 Jan 2015 18:54:26 -0500 (EST)
+In-Reply-To: <xmqqbnly1oqo.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Fri, 16 Jan 2015 11:58:55 -0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: F8DD6EF6-9DD1-11E4-8599-42529F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 010881B6-9DDB-11E4-903F-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262578>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262579>
 
-"Jason Pyeron" <jpyeron@pdinc.us> writes:
+Under --whitespace=fix option, match_fragment() function examines
+the preimage (the common context and the removed lines in the patch)
+and the file being patched and checks if they match after correcting
+all whitespace errors.  When they are found to match, the common
+context lines in the preimage is replaced with the fixed copy,
+because these lines will then be copied to the corresponding place
+in the postimage by a later call to update_pre_post_images().  Lines
+that are added in the postimage, under --whitespace=fix, have their
+whitespace errors already fixed when apply_one_fragment() prepares
+the preimage and the postimage, so in the end, application of the
+patch can be done by replacing the block of text in the file being
+patched that matched the preimage with what is in the postimage that
+was updated by update_pre_post_images().
 
->> Is this complex pipeline the same as this (I didn't understand the
->> trailing I at the end)?
->
-> Case insensitive, could have used [0-9a-fA-F].
+In the earlier days, fixing whitespace errors always resulted in
+reduction of size, either collapsing runs of spaces in the indent to
+a tab or removing the trailing whitespaces.  These days, however,
+some whitespace error fix results in extending the size.
 
-Ahh, a GNU extension.
+250b3c6c (apply --whitespace=fix: avoid running over the postimage
+buffer, 2013-03-22) tried to compute the final postimage size but
+its math was flawed.  It counted the size of the block of text in
+the original being patched after fixing the whitespace errors on its
+lines that correspond to the preimage.  That number does not have
+much to do with how big the final postimage would be.
 
->> 	git cat-file commit "$newrev" |
->>         sed -ne '/^gpgsig /,/^ -----END/{
->>         	s/^gpgsig //
->>                 s/^ //p
->> 	}' |
->
-> Will all future signature values end with a "^ -----END"?
+Instead count (1) the added lines in the postimage, whose size is
+the same as in the final patch result because their whitespace
+errors have already been corrected, and (2) the fixed size of the
+lines that are common.
 
-If it bothers you, alternatively, you can stop at the end of the
-commit object header, i.e.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-	/^gpgsig /,/^$/{
-        	s/^gigsig//
-                s/^ //p
-	}
+ * This seems to fix the clojure test case without breaking existing
+   tests.  We would need a test case for this, though.
 
-but I do not think it matters that much ;-)
+ builtin/apply.c | 23 +++++++++++++++++++++--
+ 1 file changed, 21 insertions(+), 2 deletions(-)
+
+diff --git a/builtin/apply.c b/builtin/apply.c
+index 622ee16..8e79510 100644
+--- a/builtin/apply.c
++++ b/builtin/apply.c
+@@ -2330,6 +2330,23 @@ static int match_fragment(struct image *img,
+ 	 * ignore whitespace, we were asked to correct whitespace
+ 	 * errors, so let's try matching after whitespace correction.
+ 	 *
++	 * While checking the preimage against the target, whitespace
++	 * errors in both fixed, we count how large the corresponding
++	 * postimage needs to be.  The postimage prepared by
++	 * apply_one_fragment() has whitespace errors fixed on added
++	 * lines already, but the common lines were propagated as-is,
++	 * which may become longer when their whitespace errors are
++	 * fixed.
++	 */
++
++	/* First count added lines in postimage */
++	postlen = 0;
++	for (i = 0; i < postimage->nr; i++) {
++		if (!(postimage->line[i].flag & LINE_COMMON))
++			postlen += postimage->line[i].len;
++	}
++
++	/*
+ 	 * The preimage may extend beyond the end of the file,
+ 	 * but in this loop we will only handle the part of the
+ 	 * preimage that falls within the file.
+@@ -2337,7 +2354,6 @@ static int match_fragment(struct image *img,
+ 	strbuf_init(&fixed, preimage->len + 1);
+ 	orig = preimage->buf;
+ 	target = img->buf + try;
+-	postlen = 0;
+ 	for (i = 0; i < preimage_limit; i++) {
+ 		size_t oldlen = preimage->line[i].len;
+ 		size_t tgtlen = img->line[try_lno + i].len;
+@@ -2365,7 +2381,10 @@ static int match_fragment(struct image *img,
+ 		match = (tgtfix.len == fixed.len - fixstart &&
+ 			 !memcmp(tgtfix.buf, fixed.buf + fixstart,
+ 					     fixed.len - fixstart));
+-		postlen += tgtfix.len;
++
++		/* Add the length if this is common with the postimage */
++		if (preimage->line[i].flag & LINE_COMMON)
++			postlen += tgtfix.len;
+ 
+ 		strbuf_release(&tgtfix);
+ 		if (!match)
+-- 
+2.3.0-rc0-157-g96da9ba
