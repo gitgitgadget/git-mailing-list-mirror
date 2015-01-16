@@ -1,144 +1,177 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] t/lib-httpd: switch SANITY check for NOT_ROOT
-Date: Thu, 15 Jan 2015 22:34:46 -0500
-Message-ID: <20150116033445.GA29572@peff.net>
-References: <54B6C897.5030405@web.de>
- <20150114211712.GE1155@peff.net>
- <064010B3-BC58-42F2-B5C0-DAADAA59B87D@gmail.com>
- <xmqqwq4n6b4c.fsf@gitster.dls.corp.google.com>
- <20150115222719.GA19021@peff.net>
- <xmqqa91j6537.fsf@gitster.dls.corp.google.com>
- <20150115235752.GB25120@peff.net>
- <xmqqh9vr4mlz.fsf@gitster.dls.corp.google.com>
- <20150116013256.GA25894@peff.net>
- <BEFF558C-774D-4891-96A0-BE962F8070E7@gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [RFC/PATCH] commit/status: show the index-worktree with -v -v
+Date: Fri, 16 Jan 2015 09:13:34 +0100
+Message-ID: <54B8C82E.8000707@drmicha.warpmail.net>
+References: <xmqq387db6xy.fsf@gitster.dls.corp.google.com>	<038e08973a5872ea13a0ea76bf2a0443fe3c3b50.1421337740.git.git@drmicha.warpmail.net> <xmqq1tmv7qjg.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, msysgit@googlegroups.com,
-	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: "Kyle J. McKay" <mackyle@gmail.com>
-X-From: msysgit+bncBDO2DJFKTEFBBWEN4KSQKGQEWAIJFKI@googlegroups.com Fri Jan 16 04:34:50 2015
-Return-path: <msysgit+bncBDO2DJFKTEFBBWEN4KSQKGQEWAIJFKI@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-yk0-f192.google.com ([209.85.160.192])
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Ivo Anjo <ivo.anjo@ist.utl.pt>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 16 09:13:47 2015
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDO2DJFKTEFBBWEN4KSQKGQEWAIJFKI@googlegroups.com>)
-	id 1YBxgQ-00007q-3p
-	for gcvm-msysgit@m.gmane.org; Fri, 16 Jan 2015 04:34:50 +0100
-Received: by mail-yk0-f192.google.com with SMTP id 79sf2486006ykr.9
-        for <gcvm-msysgit@m.gmane.org>; Thu, 15 Jan 2015 19:34:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe;
-        bh=SjdfwtPqQDzUC6VW+Xp6xGLrM/mHeUpg889mTLj6NAY=;
-        b=rukBugNhT8s4naayoKna4OT3iRIC8paZdClrvTNoqVy2N/ITBCHDTQhCKmBq66jsh+
-         jH+FfJjwOAXCAl0d7Fwmhu7hQTm//y2OHQue0bSoZgok7IGS5PGyHlkgMwbCnfLdK+3p
-         AAFq5YZ9I0YTDRN6SoZPeYPl+4Gp0YvrLWPeTXs2Z3wvtfcbNcmpk+zZsfFKWl4e1H+b
-         RmdiOrUa2s9LN3opblcPkJ2Nfd09+sJA8zeKU9Dn79104+KY33Ca9aM11vy9ADQZp3Hw
-         WjweW+Van6Lhzfou0q2aQHiNWjEdy54ikCYP1dQzj4075+wQXXioWDUbPiRm21cxfHTj
-         VM4w==
-X-Received: by 10.140.92.52 with SMTP id a49mr3200qge.10.1421379289441;
-        Thu, 15 Jan 2015 19:34:49 -0800 (PST)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.140.107.8 with SMTP id g8ls1301357qgf.22.gmail; Thu, 15 Jan
- 2015 19:34:48 -0800 (PST)
-X-Received: by 10.236.29.177 with SMTP id i37mr9968744yha.1.1421379288829;
-        Thu, 15 Jan 2015 19:34:48 -0800 (PST)
-Received: from cloud.peff.net (cloud.peff.net. [50.56.180.127])
-        by gmr-mx.google.com with SMTP id f3si119655igr.1.2015.01.15.19.34.48
-        for <msysgit@googlegroups.com>;
-        Thu, 15 Jan 2015 19:34:48 -0800 (PST)
-Received-SPF: pass (google.com: domain of peff@peff.net designates 50.56.180.127 as permitted sender) client-ip=50.56.180.127;
-Received: (qmail 18149 invoked by uid 102); 16 Jan 2015 03:34:48 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 15 Jan 2015 21:34:48 -0600
-Received: (qmail 19775 invoked by uid 107); 16 Jan 2015 03:35:10 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 15 Jan 2015 22:35:10 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Jan 2015 22:34:46 -0500
-Content-Disposition: inline
-In-Reply-To: <BEFF558C-774D-4891-96A0-BE962F8070E7@gmail.com>
-X-Original-Sender: peff@peff.net
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of peff@peff.net designates 50.56.180.127 as permitted
- sender) smtp.mail=peff@peff.net
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262537>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1YC22N-00079N-2Y
+	for gcvg-git-2@plane.gmane.org; Fri, 16 Jan 2015 09:13:47 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752635AbbAPINh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Jan 2015 03:13:37 -0500
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:33751 "EHLO
+	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752071AbbAPINg (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 16 Jan 2015 03:13:36 -0500
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailout.nyi.internal (Postfix) with ESMTP id 152D92092A
+	for <git@vger.kernel.org>; Fri, 16 Jan 2015 03:13:36 -0500 (EST)
+Received: from frontend1 ([10.202.2.160])
+  by compute5.internal (MEProxy); Fri, 16 Jan 2015 03:13:36 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=x-sasl-enc:message-id:date:from
+	:mime-version:to:cc:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=/0wJ4Ur+qeOWZ/cmr2bCk5
+	WKg10=; b=ZZOgU5YcWldDjEwbvWOHFjou/9h69dh6uez8IH+eCjcTlGtgDQvD3p
+	DdXzbLj8jEnzX1gIHHpj5ewb9gFfCYym3Dc839Ta5gmgspTqhUQcowxrpn0gnsVD
+	TbQQ/SVxBaSJTY07ZAEPINCbKx7tSnTkOpfo8NkZy3scBJNCgvJng=
+X-Sasl-enc: KiQvXYB/CB5U6ZbYolL8Xw68teSqXF8h2yTmmMbzCD2X 1421396015
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 57175C00013;
+	Fri, 16 Jan 2015 03:13:35 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
+In-Reply-To: <xmqq1tmv7qjg.fsf@gitster.dls.corp.google.com>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262538>
 
-On Thu, Jan 15, 2015 at 07:27:34PM -0800, Kyle J. McKay wrote:
-
-> >We implement NOT_ROOT by checking perl's "$>" variable,
-> >since we cannot rely on the "id" program being available
-> >everywhere (and we would rather avoid writing a custom C
-> >program to run geteuid if we can).
+Junio C Hamano schrieb am 15.01.2015 um 21:11:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
 > 
-> Does it make a difference that id is POSIX [1]?
-
-I don't know. Do all of the platforms where we run http tests have it
-(and conforming to POSIX-ish options or output)? It may be OK to guess
-yes and see if anybody complains (the worst case is skipping http
-tests).
-
-> "id -u" works for me in MSYS and cygwin (each appears to have it's own
-> id.exe).
-
-That's comforting. MSYS was the one I was most worried about. What UID
-do they report? I.e., do they correctly tell us if we are root (or
-more accurately, if we are not root)?
-
-> >+test_lazy_prereq NOT_ROOT '
-> >+	uid=$(perl -e "print \$<") &&
-> >+	test "$uid" != 0
-> >+'
+>> git commit and git status in long format show the diff between HEAD
+>> and the index when given -v. This allows previewing a commit to be made.
+>>
+>> They also list tracked files with unstaged changes, but without a diff.
+>>
+>> Introduce '-v -v' which shows the diff between the index and the
+>> worktree in addition to HEAD index diff. This allows to review unstaged
+>> changes which might be missing from the commit.
+>>
+>> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+>> ---
+>> Also, the git status man page does not mention -v at all, and the doc
+>> for git status (long format) and the status parts of the git commit
+>> man page should really be the same.
+>>
+>> In any case, this may have helped the OP with his amend oversight.
 > 
-> Does NO_PERL affect this?  Or is Perl always required to run the tests.
+> Hmm, does this show what change relative to HEAD is committed fully
+> and then after that show what change relative to the index being
+> commited remains in the working tree at the end?  
+> 
+> I do not think that output order is very helpful.  Two diffs to the
+> same file next to each other may make it easier to notice, though.
+> That is, not like this:
+> 
+> 	diff --git a/A b/A
+>         ...
+>         diff --git a/B b/B
+>         ...
+>         diff --git i/A w/A
+>         ...
+> 
+> but like this:
+> 
+> 	diff --git a/A b/A
+>         ...
+>         diff --git i/A w/A
+>         ...
+>         diff --git a/B b/B
+>         ...
+> 
+> or it may want to even be like this:
+> 
+> 	diff --git a/A b/A
+>         ...
+>         diff --git to-be-committed/A left-out-of-the-commit/A
+>         ...
+>         diff --git a/B b/B
+>         ...
+> 
+> by using a custom, unusual and easy-to-notice prefixes.
+> 
+>>  Documentation/git-commit.txt | 4 ++++
+>>  wt-status.c                  | 8 ++++++++
+>>  2 files changed, 12 insertions(+)
+>>
+>> diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+>> index 1e74b75..f14d2ec 100644
+>> --- a/Documentation/git-commit.txt
+>> +++ b/Documentation/git-commit.txt
+>> @@ -284,6 +284,10 @@ configuration variable documented in linkgit:git-config[1].
+>>  	would be committed at the bottom of the commit message
+>>  	template.  Note that this diff output doesn't have its
+>>  	lines prefixed with '#'.
+>> ++
+>> +If specified twice, show in addition the unified diff between
+>> +what would be committed and the worktree files, i.e. the unstaged
+>> +changes to tracked files.
+>>  
+>>  -q::
+>>  --quiet::
+>> diff --git a/wt-status.c b/wt-status.c
+>> index b54eac5..75674c2 100644
+>> --- a/wt-status.c
+>> +++ b/wt-status.c
+>> @@ -874,6 +874,14 @@ static void wt_status_print_verbose(struct wt_status *s)
+>>  		wt_status_add_cut_line(s->fp);
+>>  	}
+>>  	run_diff_index(&rev, 1);
+>> +	if (s->verbose > 1) {
+>> +		setup_work_tree();
+>> +		if (read_cache_preload(&rev.diffopt.pathspec) < 0)
+>> +			perror("read_cache_preload");
+> 
+> Hmm, as we have run diff-index already, we must have had the index
+> loaded, no?  What is going on here?
 
-No, we use a very limited subset of perl in our tests when necessary
-(basic enough that any perl5 will do), regardless of the NO_PERL
-setting.
+It was late and simply calling run_diff_files() didn't work (because of
+the missing setup_work_tree()), so I added the lines from our diff.c and
+overlooked that read_cache_preload() must have happened somewhere already.
 
-> Also "$<" is real user id.  Don't you want effective user id ("$>"), that's
-> what the comment says...
+>> +		rev.diffopt.a_prefix = 0; /* allow run_diff_files */
+>> +		rev.diffopt.b_prefix = 0; /* to reset the prefixes */
+> 
+> This is not just "allow to reset the prefixes", but forces the use
+> of mnemonic prefixes to make sure they look different from the
+> normal "diff --cached" output that shows what is going to be
+> committed.  If we were to do this, for consistency, we may want to
+> use the mnemonic prefix for the "to be commited" part, no?
 
-Yeah, I bungled this initially and thought I fixed it, but clearly not.
-:-/
+I guess here I got blinded by me default config which does that.
 
-I'll re-roll, but if we can get away with "id -u" I think that's
-preferable.
+> 
+>> +		run_diff_files(&rev, 0);
+>> +	}
+>>  }
+>>  
+>>  static void wt_status_print_tracking(struct wt_status *s)
 
--Peff
+I really like your suggestion to use more verbose prefixes here for both
+cases. I guess we can do without additional subheadings for the diffs then.
 
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+As for the helpfulness, the intention was to show the diff for the two
+categories of changes which "git status" lists without diff already:
 
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
+- changes to be committed (+index -HEAD) aka "git diff --cached"
+- changes present in worktree not to be committed (+worktree -index) aka
+"git diff"
 
---- 
-You received this message because you are subscribed to the Google Groups "Git for Windows" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+The paths which would appear in the diff "+worktree -HEAD" are not
+mentioned in "git status" per se (as a category with subheading),
+although they fall into at least 1 of the 2 categories, of course.
+
+Michael
