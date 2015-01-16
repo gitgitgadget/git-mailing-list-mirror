@@ -1,65 +1,75 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: RFC: update hook for GPG signed submission on secured branches
-Date: Fri, 16 Jan 2015 19:59:50 +0000
-Message-ID: <20150116195950.GK26383@serenity.lan>
-References: <BBE88A3EA44D47159C483F1046AC747E@black>
- <xmqqsifa1px6.fsf@gitster.dls.corp.google.com>
- <BD3DE7B299FE458287DC8C829CEADEC2@black>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: 'Junio C Hamano' <gitster@pobox.com>, git@vger.kernel.org
-To: Jason Pyeron <jpyeron@pdinc.us>
-X-From: git-owner@vger.kernel.org Fri Jan 16 21:05:57 2015
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH] contacts: introduce --since and --min-percent
+Date: Fri, 16 Jan 2015 15:58:53 -0500
+Message-ID: <1421441933-54183-1-git-send-email-artagnon@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jan 16 21:59:11 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YCD9V-00040q-7p
-	for gcvg-git-2@plane.gmane.org; Fri, 16 Jan 2015 21:05:53 +0100
+	id 1YCDz5-0004sH-FW
+	for gcvg-git-2@plane.gmane.org; Fri, 16 Jan 2015 21:59:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754232AbbAPUFt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Jan 2015 15:05:49 -0500
-Received: from jackal.aluminati.org ([72.9.247.210]:59712 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753944AbbAPUFs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Jan 2015 15:05:48 -0500
-X-Greylist: delayed 347 seconds by postgrey-1.27 at vger.kernel.org; Fri, 16 Jan 2015 15:05:48 EST
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id 64F38CDA59A;
-	Fri, 16 Jan 2015 20:00:00 +0000 (GMT)
-X-Quarantine-ID: <yYWEeSjZE+jU>
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -0.2
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.2 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_50=0.8] autolearn=no
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id yYWEeSjZE+jU; Fri, 16 Jan 2015 19:59:59 +0000 (GMT)
-Received: from serenity.lan (banza.aluminati.org [10.0.7.182])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by jackal.aluminati.org (Postfix) with ESMTPSA id 6D2AFCDA5B3;
-	Fri, 16 Jan 2015 19:59:51 +0000 (GMT)
-Content-Disposition: inline
-In-Reply-To: <BD3DE7B299FE458287DC8C829CEADEC2@black>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1753044AbbAPU7E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Jan 2015 15:59:04 -0500
+Received: from mail-qc0-f177.google.com ([209.85.216.177]:55595 "EHLO
+	mail-qc0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751581AbbAPU7C (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Jan 2015 15:59:02 -0500
+Received: by mail-qc0-f177.google.com with SMTP id x3so18946578qcv.8
+        for <git@vger.kernel.org>; Fri, 16 Jan 2015 12:59:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=plE/ogBzB+kxv+cZTtCzrAUX4FAOD9Clab+xRxlYjyk=;
+        b=r9IlfaoUvMclWy9wuESvYOF6Gorg3FcdI0dCrczL+Qkg9o4qYjqtoTWiiVCHLsqi4G
+         PeIw2LLTqiTbl4HH0RRLtNI5EmTdif/V332Pyt2ZdUBlk/PLo9wyfbEB+vHqnfoUQOW+
+         kYX9OhOeaNZlmzoDG01gS61XqiKxyfhWUpimnoTg64Cc9wG/7tzII1tpGsxU+7wnYtX8
+         GDyV3d93uIUxWHbE1x7iKS07q0nNyxRqmL74Ps15cEU5Hmxw1+gF0/gfi+Z1toLLTzow
+         PIvco2JNSrObadNOdeg8OcsV8AvL7k4pGHNDCM/ytXkRECv8p5TOSSm41IyQ43BiG2Lz
+         zTKA==
+X-Received: by 10.140.91.201 with SMTP id z67mr18185915qgd.27.1421441941420;
+        Fri, 16 Jan 2015 12:59:01 -0800 (PST)
+Received: from localhost.localdomain (cpe-66-65-144-82.nyc.res.rr.com. [66.65.144.82])
+        by mx.google.com with ESMTPSA id u1sm5166231qap.11.2015.01.16.12.59.00
+        (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 16 Jan 2015 12:59:00 -0800 (PST)
+X-Mailer: git-send-email 2.2.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262573>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262574>
 
-On Fri, Jan 16, 2015 at 02:47:25PM -0500, Jason Pyeron wrote:
-> > I am not sure if the design of this, to require signature only on
-> > the tip commit, is sound.  That is not a -bug- in the script,
-> > though.
-> 
-> It is to handle the "all my devs worked on this, they do ________
-> GPG", so as long as the tip os signed, it is an implicit I am
-> responsible for what is submitted.
+Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+---
+ contrib/contacts/git-contacts | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-Isn't this an ideal scenario for using the signed pushes introduced in
-Git 2.2.0?
+diff --git a/contrib/contacts/git-contacts b/contrib/contacts/git-contacts
+index dbe2abf..b06f2e1 100755
+--- a/contrib/contacts/git-contacts
++++ b/contrib/contacts/git-contacts
+@@ -8,12 +8,16 @@
+ use strict;
+ use warnings;
+ use IPC::Open2;
++use Getopt::Long qw/:config gnu_getopt no_ignore_case auto_abbrev/;
+ 
+ my $since = '5-years-ago';
+ my $min_percent = 10;
+ my $labels_rx = qr/Signed-off-by|Reviewed-by|Acked-by|Cc/i;
+ my %seen;
+ 
++my $rv = GetOptions('since=s' => \$since, 'min-percent=i' => \$min_percent);
++exit 1 if (!$rv);
++
+ sub format_contact {
+ 	my ($name, $email) = @_;
+ 	return "$name <$email>";
+-- 
+2.2.1
