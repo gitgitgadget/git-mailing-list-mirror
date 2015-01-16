@@ -1,7 +1,7 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 4/7] strbuf.h: format asciidoc code blocks as 4-space indent
-Date: Fri, 16 Jan 2015 04:05:16 -0500
-Message-ID: <20150116090515.GD31113@peff.net>
+Subject: [PATCH 5/7] strbuf.h: reorganize api function grouping headers
+Date: Fri, 16 Jan 2015 04:05:28 -0500
+Message-ID: <20150116090528.GE31113@peff.net>
 References: <20150116090225.GA30797@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -10,73 +10,115 @@ Cc: Michael Haggerty <mhagger@alum.mit.edu>,
 	Stefan Beller <sbeller@google.com>,
 	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 16 10:05:28 2015
+X-From: git-owner@vger.kernel.org Fri Jan 16 10:05:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YC2qN-0003mH-Dq
-	for gcvg-git-2@plane.gmane.org; Fri, 16 Jan 2015 10:05:27 +0100
+	id 1YC2qf-0003qy-RE
+	for gcvg-git-2@plane.gmane.org; Fri, 16 Jan 2015 10:05:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752254AbbAPJFU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Jan 2015 04:05:20 -0500
-Received: from cloud.peff.net ([50.56.180.127]:35427 "HELO cloud.peff.net"
+	id S1752542AbbAPJFd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Jan 2015 04:05:33 -0500
+Received: from cloud.peff.net ([50.56.180.127]:35436 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752783AbbAPJFS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Jan 2015 04:05:18 -0500
-Received: (qmail 2942 invoked by uid 102); 16 Jan 2015 09:05:18 -0000
+	id S1752082AbbAPJFb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Jan 2015 04:05:31 -0500
+Received: (qmail 2997 invoked by uid 102); 16 Jan 2015 09:05:31 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 16 Jan 2015 03:05:18 -0600
-Received: (qmail 23471 invoked by uid 107); 16 Jan 2015 09:05:40 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 16 Jan 2015 03:05:31 -0600
+Received: (qmail 23504 invoked by uid 107); 16 Jan 2015 09:05:53 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 16 Jan 2015 04:05:40 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 16 Jan 2015 04:05:16 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 16 Jan 2015 04:05:53 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 16 Jan 2015 04:05:28 -0500
 Content-Disposition: inline
 In-Reply-To: <20150116090225.GA30797@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262543>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262544>
 
-This is much easier to read when the whole thing is stuffed
-inside a comment block. And there is precedent for this
-convention in markdown (and just in general ascii text).
+The original API doc had something like:
+
+    Functions
+    ---------
+
+    * Life cycle
+
+      ... some life-cycle functions ...
+
+    * Related to the contents of the buffer
+
+      ... functions related to contents ....
+
+    etc
+
+This grouping can be hard to read in the comment sources,
+given the "*" in the comment lines, and the amount of text
+between each section.
+
+Instead, let's make a flat list of groupings, and underline
+each as a section header. That makes them stand out, and
+eliminates the weird half-phrase of "Related to...". Like:
+
+    Functions related to the contents of the buffer
+    -----------------------------------------------
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- strbuf.h | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ strbuf.h | 17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
 diff --git a/strbuf.h b/strbuf.h
-index ab5ff27..caa4dad 100644
+index caa4dad..6fa7156 100644
 --- a/strbuf.h
 +++ b/strbuf.h
-@@ -33,10 +33,9 @@
-  *    NOTE: It is OK to "play" with the buffer directly if you work it this
-  *    way:
-  *
-- *    ----
-- *    strbuf_grow(sb, SOME_SIZE); <1>
-- *    strbuf_setlen(sb, sb->len + SOME_OTHER_SIZE);
-- *    ----
-+ *        strbuf_grow(sb, SOME_SIZE); <1>
-+ *        strbuf_setlen(sb, sb->len + SOME_OTHER_SIZE);
-+ *
-  *    <1> Here, the memory array starting at `sb->buf`, and of length
-  *    `strbuf_avail(sb)` is all yours, and you can be sure that
-  *    `strbuf_avail(sb)` is at least `SOME_SIZE`.
-@@ -261,9 +260,7 @@ extern void strbuf_add(struct strbuf *, const void *, size_t);
-  * NOTE: This function will *always* be implemented as an inline or a macro
-  * using strlen, meaning that this is efficient to write things like:
-  *
-- * ----
-- * strbuf_addstr(sb, "immediate string");
-- * ----
-+ *     strbuf_addstr(sb, "immediate string");
-  *
+@@ -71,12 +71,8 @@ extern char strbuf_slopbuf[];
+ #define STRBUF_INIT  { 0, 0, strbuf_slopbuf }
+ 
+ /**
+- * Functions
+- * ---------
+- */
+-
+-/**
+- * * Life Cycle
++ * Life Cycle Functions
++ * --------------------
   */
- static inline void strbuf_addstr(struct strbuf *sb, const char *s)
+ 
+ /**
+@@ -120,7 +116,8 @@ static inline void strbuf_swap(struct strbuf *a, struct strbuf *b)
+ 
+ 
+ /**
+- * * Related to the size of the buffer
++ * Functions related to the size of the buffer
++ * -------------------------------------------
+  */
+ 
+ /**
+@@ -162,7 +159,8 @@ static inline void strbuf_setlen(struct strbuf *sb, size_t len)
+ 
+ 
+ /**
+- * * Related to the contents of the buffer
++ * Functions related to the contents of the buffer
++ * -----------------------------------------------
+  */
+ 
+ /**
+@@ -201,7 +199,8 @@ extern int strbuf_cmp(const struct strbuf *, const struct strbuf *);
+ 
+ 
+ /**
+- * * Adding data to the buffer
++ * Adding data to the buffer
++ * -------------------------
+  *
+  * NOTE: All of the functions in this section will grow the buffer as
+  * necessary.  If they fail for some reason other than memory shortage and the
 -- 
 2.2.1.425.g441bb3c
