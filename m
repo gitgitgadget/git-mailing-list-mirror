@@ -1,79 +1,106 @@
-From: "Jason Pyeron" <jpyeron@pdinc.us>
-Subject: Proper plumbing for porcelain gpg formats on git show?
-Date: Fri, 16 Jan 2015 11:57:17 -0500
-Organization: PD Inc
-Message-ID: <EB979B4B153D49909C78239A333869FB@black>
+From: Mike <ipso@snappymail.ca>
+Subject: git svn import failure : write .git/Git_svn_hash_BmjclS: Bad file
+ descriptor
+Date: Fri, 16 Jan 2015 09:13:17 -0800
+Message-ID: <54B946AD.5050701@snappymail.ca>
+Reply-To: ipso@snappymail.ca
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="US-ASCII"
-Content-Transfer-Encoding: 8BIT
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jan 16 17:57:26 2015
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 16 18:23:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YCAD8-0001cq-1G
-	for gcvg-git-2@plane.gmane.org; Fri, 16 Jan 2015 17:57:26 +0100
+	id 1YCAc6-0001sC-LO
+	for gcvg-git-2@plane.gmane.org; Fri, 16 Jan 2015 18:23:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752966AbbAPQ5V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Jan 2015 11:57:21 -0500
-Received: from mail.pdinc.us ([67.90.184.27]:56369 "EHLO mail.pdinc.us"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752640AbbAPQ5U convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 Jan 2015 11:57:20 -0500
-Received: from black (nsa1.pdinc.us [67.90.184.2])
-	(authenticated bits=0)
-	by mail.pdinc.us (8.12.11.20060308/8.12.11) with ESMTP id t0GGvIeg021131;
-	Fri, 16 Jan 2015 11:57:18 -0500
-X-Mailer: Microsoft Office Outlook 11
-Thread-Index: AdAxrXxBTS+nAUZWRvi5mPiaB/me2Q==
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.3790.4913
+	id S1753224AbbAPRXJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Jan 2015 12:23:09 -0500
+Received: from mail.timetrex.com ([50.97.106.214]:34283 "EHLO
+	mail.timetrex.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753003AbbAPRXI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Jan 2015 12:23:08 -0500
+X-Greylist: delayed 570 seconds by postgrey-1.27 at vger.kernel.org; Fri, 16 Jan 2015 12:23:08 EST
+Received: from mail.office.timetrex.com (unknown [184.68.39.238])
+	by mail.timetrex.com (Postfix) with ESMTP id D23CB20059
+	for <git@vger.kernel.org>; Fri, 16 Jan 2015 09:13:36 -0800 (PST)
+Received: by mail.office.timetrex.com (Postfix, from userid 108)
+	id 83A168148C; Fri, 16 Jan 2015 09:13:36 -0800 (PST)
+X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on
+	mail.office.timetrex.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-111.9 required=4.5 tests=ALL_TRUSTED,BAYES_00,
+	USER_IN_WHITELIST autolearn=disabled version=3.3.2
+Received: from [10.7.5.9] (mikeb.office.timetrex.com [10.7.5.9])
+	by mail.office.timetrex.com (Postfix) with ESMTPSA id C86CA812D0
+	for <git@vger.kernel.org>; Fri, 16 Jan 2015 09:13:35 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262551>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262552>
 
-I can't agree that 
+Similar to the issue mintywalker originally mentioned on Jan 8th 2015, 
+during a "git svn clone" I get a Bad File Descriptor error using:
 
-COMMITID=ef8df950c8d16dace62e55d18b26617b1268f1bc; \
- git cat-file $COMMITID -p |\
- sed -e '/^ /{H;$!d;}; x;/^gpgsig /!d; s/^gpgsig//;' |\
- cut -c 2- |\
- gpg --list-packets --textmode |\
- sed '/keyid/!d; s/.*keyid \([0-9A-F]\{16\}\).*/\1/I'
+git-svn version 2.2.2 (svn 1.8.8) on Ubuntu 14.04.
 
-is the way to go, when 
+<snip>
+r460 = 456377de3906d689c56e51af842e18abe086a980 (refs/remotes/origin/trunk)
+         A       client/binary/App_Client_v2.1.2.exe
+r461 = 36848dbb7f417da2e381b61b68ff7b0d22a5bf7f (refs/remotes/origin/trunk)
+write .git/Git_svn_hash_0WWL4a: Bad file descriptor
+  at /usr/lib/perl5/SVN/Ra.pm line 623.
 
-COMMITID=ef8df950c8d16dace62e55d18b26617b1268f1bc; \
- git log $COMMITID --pretty=format:%GK -n 1
 
-and
+$ svn diff --diff-cmd diff -c 461
+Index: client/binary/App_Client_v2.1.2.exe
+===================================================================
+Cannot display: file marked as a binary type.
+svn:mime-type = application/octet-stream
+Index: client/binary/App_Client_v2.1.2.exe
+===================================================================
+--- client/binary/App_Client_v2.1.2.exe    (revision 0)
++++ client/binary/App_Client_v2.1.2.exe    (revision 461)
 
-COMMITID=ef8df950c8d16dace62e55d18b26617b1268f1bc; \
- git show $COMMITID --pretty=format:%GK -s
+Property changes on: client/binary/App_Client_v2.1.2.exe
+___________________________________________________________________
+Added: svn:mime-type
+## -0,0 +1 ##
++application/octet-stream
+\ No newline at end of property
 
-do the same thing.
 
-Is there a way to properly extract the GPG signature object, such that GPG operations may be done on it?
+Not sure if it helps or not, but here is the commit immediately after 
+that one:
 
-Are the git log formats safe to use in scripts (asking because it was said not to use at http://git.661346.n2.nabble.com/show-pretty-B-without-a-diff-td5852061.html#a5853270)?
+$ svn diff --diff-cmd diff -c 462
+Index: interface/help/App_Client.exe
+===================================================================
+--- interface/help/App_Client.exe  (revision 0)
++++ interface/help/App_Client.exe  (revision 462)
+@@ -0,0 +1 @@
++link ../../client/binary/App_Client_v2.1.2.exe
+\ No newline at end of file
 
-If git log with format specifiers is safe to use, would there be interest in accepting a patch for 
+Property changes on: interface/help/App_Client.exe
+___________________________________________________________________
+Added: svn:special
+## -0,0 +1 ##
++*
+\ No newline at end of property
 
-%Gs - the raw GPG text from the commit
-%Gf - the key fingerprint
+Unfortunately the repository is private, but it seems like a pretty 
+simple commit that is causing the problem?
 
--Jason
+If you need more information please let me know.
 
---
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
--                                                               -
-- Jason Pyeron                      PD Inc. http://www.pdinc.us -
-- Principal Consultant              10 West 24th Street #100    -
-- +1 (443) 269-1555 x333            Baltimore, Maryland 21218   -
--                                                               -
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-This message is copyright PD Inc, subject to license 20080407P00.
+Thanks.
+
+
+-- 
+Mike
