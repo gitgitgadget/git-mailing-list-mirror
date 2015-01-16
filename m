@@ -1,177 +1,98 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [RFC/PATCH] commit/status: show the index-worktree with -v -v
-Date: Fri, 16 Jan 2015 09:13:34 +0100
-Message-ID: <54B8C82E.8000707@drmicha.warpmail.net>
-References: <xmqq387db6xy.fsf@gitster.dls.corp.google.com>	<038e08973a5872ea13a0ea76bf2a0443fe3c3b50.1421337740.git.git@drmicha.warpmail.net> <xmqq1tmv7qjg.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 0/7] migrate api-strbuf.txt into strbuf.h
+Date: Fri, 16 Jan 2015 04:02:26 -0500
+Message-ID: <20150116090225.GA30797@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Ivo Anjo <ivo.anjo@ist.utl.pt>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 16 09:13:47 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Stefan Beller <sbeller@google.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 16 10:02:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YC22N-00079N-2Y
-	for gcvg-git-2@plane.gmane.org; Fri, 16 Jan 2015 09:13:47 +0100
+	id 1YC2nb-00033L-UG
+	for gcvg-git-2@plane.gmane.org; Fri, 16 Jan 2015 10:02:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752635AbbAPINh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Jan 2015 03:13:37 -0500
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:33751 "EHLO
-	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752071AbbAPINg (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 Jan 2015 03:13:36 -0500
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailout.nyi.internal (Postfix) with ESMTP id 152D92092A
-	for <git@vger.kernel.org>; Fri, 16 Jan 2015 03:13:36 -0500 (EST)
-Received: from frontend1 ([10.202.2.160])
-  by compute5.internal (MEProxy); Fri, 16 Jan 2015 03:13:36 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=x-sasl-enc:message-id:date:from
-	:mime-version:to:cc:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=/0wJ4Ur+qeOWZ/cmr2bCk5
-	WKg10=; b=ZZOgU5YcWldDjEwbvWOHFjou/9h69dh6uez8IH+eCjcTlGtgDQvD3p
-	DdXzbLj8jEnzX1gIHHpj5ewb9gFfCYym3Dc839Ta5gmgspTqhUQcowxrpn0gnsVD
-	TbQQ/SVxBaSJTY07ZAEPINCbKx7tSnTkOpfo8NkZy3scBJNCgvJng=
-X-Sasl-enc: KiQvXYB/CB5U6ZbYolL8Xw68teSqXF8h2yTmmMbzCD2X 1421396015
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 57175C00013;
-	Fri, 16 Jan 2015 03:13:35 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
-In-Reply-To: <xmqq1tmv7qjg.fsf@gitster.dls.corp.google.com>
+	id S1753461AbbAPJCa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Jan 2015 04:02:30 -0500
+Received: from cloud.peff.net ([50.56.180.127]:35398 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752296AbbAPJC3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Jan 2015 04:02:29 -0500
+Received: (qmail 2745 invoked by uid 102); 16 Jan 2015 09:02:29 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 16 Jan 2015 03:02:29 -0600
+Received: (qmail 23367 invoked by uid 107); 16 Jan 2015 09:02:50 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 16 Jan 2015 04:02:50 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 16 Jan 2015 04:02:26 -0500
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262539>
 
-Junio C Hamano schrieb am 15.01.2015 um 21:11:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
-> 
->> git commit and git status in long format show the diff between HEAD
->> and the index when given -v. This allows previewing a commit to be made.
->>
->> They also list tracked files with unstaged changes, but without a diff.
->>
->> Introduce '-v -v' which shows the diff between the index and the
->> worktree in addition to HEAD index diff. This allows to review unstaged
->> changes which might be missing from the commit.
->>
->> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
->> ---
->> Also, the git status man page does not mention -v at all, and the doc
->> for git status (long format) and the status parts of the git commit
->> man page should really be the same.
->>
->> In any case, this may have helped the OP with his amend oversight.
-> 
-> Hmm, does this show what change relative to HEAD is committed fully
-> and then after that show what change relative to the index being
-> commited remains in the working tree at the end?  
-> 
-> I do not think that output order is very helpful.  Two diffs to the
-> same file next to each other may make it easier to notice, though.
-> That is, not like this:
-> 
-> 	diff --git a/A b/A
->         ...
->         diff --git a/B b/B
->         ...
->         diff --git i/A w/A
->         ...
-> 
-> but like this:
-> 
-> 	diff --git a/A b/A
->         ...
->         diff --git i/A w/A
->         ...
->         diff --git a/B b/B
->         ...
-> 
-> or it may want to even be like this:
-> 
-> 	diff --git a/A b/A
->         ...
->         diff --git to-be-committed/A left-out-of-the-commit/A
->         ...
->         diff --git a/B b/B
->         ...
-> 
-> by using a custom, unusual and easy-to-notice prefixes.
-> 
->>  Documentation/git-commit.txt | 4 ++++
->>  wt-status.c                  | 8 ++++++++
->>  2 files changed, 12 insertions(+)
->>
->> diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
->> index 1e74b75..f14d2ec 100644
->> --- a/Documentation/git-commit.txt
->> +++ b/Documentation/git-commit.txt
->> @@ -284,6 +284,10 @@ configuration variable documented in linkgit:git-config[1].
->>  	would be committed at the bottom of the commit message
->>  	template.  Note that this diff output doesn't have its
->>  	lines prefixed with '#'.
->> ++
->> +If specified twice, show in addition the unified diff between
->> +what would be committed and the worktree files, i.e. the unstaged
->> +changes to tracked files.
->>  
->>  -q::
->>  --quiet::
->> diff --git a/wt-status.c b/wt-status.c
->> index b54eac5..75674c2 100644
->> --- a/wt-status.c
->> +++ b/wt-status.c
->> @@ -874,6 +874,14 @@ static void wt_status_print_verbose(struct wt_status *s)
->>  		wt_status_add_cut_line(s->fp);
->>  	}
->>  	run_diff_index(&rev, 1);
->> +	if (s->verbose > 1) {
->> +		setup_work_tree();
->> +		if (read_cache_preload(&rev.diffopt.pathspec) < 0)
->> +			perror("read_cache_preload");
-> 
-> Hmm, as we have run diff-index already, we must have had the index
-> loaded, no?  What is going on here?
+This is a re-roll of this series:
 
-It was late and simply calling run_diff_files() didn't work (because of
-the missing setup_work_tree()), so I added the lines from our diff.c and
-overlooked that read_cache_preload() must have happened somewhere already.
+  http://thread.gmane.org/gmane.comp.version-control.git/260922/focus=261374
 
->> +		rev.diffopt.a_prefix = 0; /* allow run_diff_files */
->> +		rev.diffopt.b_prefix = 0; /* to reset the prefixes */
-> 
-> This is not just "allow to reset the prefixes", but forces the use
-> of mnemonic prefixes to make sure they look different from the
-> normal "diff --cached" output that shows what is going to be
-> committed.  If we were to do this, for consistency, we may want to
-> use the mnemonic prefix for the "to be commited" part, no?
+from early December to move the strbuf documentation into the header
+file. I've incorporated all of the minor formatting feedback and
+suggestions from Jonathan and Stefan in response to that series.
 
-I guess here I got blinded by me default config which does that.
+Patch 2 is new from Stefan, and just fixes the comment blocks that
+already existed in strbuf.h to be consistent.
 
-> 
->> +		run_diff_files(&rev, 0);
->> +	}
->>  }
->>  
->>  static void wt_status_print_tracking(struct wt_status *s)
+Patches 3-5 are the same as the old 2-4 (modulo a header I missed in the
+original of 5).
 
-I really like your suggestion to use more verbose prefixes here for both
-cases. I guess we can do without additional subheadings for the diffs then.
+Both Junio and Jonathan noted that tighter grouping of related functions
+can be more readable in some places. Patches 6 and 7 adjust those two
+spots. This moves us farther from a single comment describing each
+function, which may make extracting the documentation later harder. But
+I think it makes reading the in-header documentation much more pleasant.
 
-As for the helpfulness, the intention was to show the diff for the two
-categories of changes which "git status" lists without diff already:
+  [1/7]: strbuf.h: integrate api-strbuf.txt documentation
+  [2/7]: strbuf.h: unify documentation comments beginnings
+  [3/7]: strbuf.h: drop asciidoc list formatting from API docs
+  [4/7]: strbuf.h: format asciidoc code blocks as 4-space indent
+  [5/7]: strbuf.h: reorganize api function grouping headers
+  [6/7]: strbuf.h: drop boilerplate descriptions of strbuf_split_*
+  [7/7]: strbuf.h: group documentation for trim functions
 
-- changes to be committed (+index -HEAD) aka "git diff --cached"
-- changes present in worktree not to be committed (+worktree -index) aka
-"git diff"
+The two things I _didn't_ do are:
 
-The paths which would appear in the diff "+worktree -HEAD" are not
-mentioned in "git status" per se (as a category with subheading),
-although they fall into at least 1 of the 2 categories, of course.
+  1. Read through for possible places to use `backticks` or other
+     punctuation to make the source more readable. I think this is a
+     good goal, but it's largely orthogonal, so we can build it on top
+     just as easily (and also, it's tedious; I'm happy to work towards
+     that goal slowly as I touch or read specific pieces of
+     documentation).
 
-Michael
+  2. We do not consistently use parameter names in declarations. They
+     have no meaning to the compiler, of course, but they are a good way
+     of making the documentation more readable, since it gives us a
+     concrete name to refer to (and also some declarations are simply
+     confusing, such as when there are two ints next to each other;
+     which is which?).  This is in the same boat as (1). I think it's a
+     good direction, but I did not make a pass.  Patches welcome. :)
+
+And of course the elephant in the room is the other dozen or more
+api-*.txt files. I'd propose to do this strbuf.h series (and possible
+follow-ons mentioned above) and stop there for a bit. That will let us
+form a more coherent opinion on whether we like this system in practice,
+how it ages as functions are changed and added, etc. That might affect
+how or if we end up converting other files.
+
+It does leave us in an inconsistent state (some documentation is in
+Documentation/technical, and some is in the headers), but I think that
+is largely where we're at today. IMHO this is a strict improvement
+because at least the logical chunk of "strbuf" is now in a single place.
+
+-Peff
