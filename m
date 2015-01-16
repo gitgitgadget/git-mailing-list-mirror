@@ -1,25 +1,25 @@
 From: "Kyle J. McKay" <mackyle@gmail.com>
 Subject: Re: [PATCH] t/lib-httpd: switch SANITY check for NOT_ROOT
-Date: Fri, 16 Jan 2015 10:38:39 -0800
-Message-ID: <E986F3A9-0FFD-4653-8B1C-67C79FFB607B@gmail.com>
-References: <20150114211712.GE1155@peff.net> <064010B3-BC58-42F2-B5C0-DAADAA59B87D@gmail.com> <xmqqwq4n6b4c.fsf@gitster.dls.corp.google.com> <20150115222719.GA19021@peff.net> <xmqqa91j6537.fsf@gitster.dls.corp.google.com> <20150115235752.GB25120@peff.net> <xmqqh9vr4mlz.fsf@gitster.dls.corp.google.com> <20150116013256.GA25894@peff.net> <BEFF558C-774D-4891-96A0-BE962F8070E7@gmail.com> <20150116033445.GA29572@peff.net> <20150116091648.GA2450@peff.net>
+Date: Fri, 16 Jan 2015 10:38:38 -0800
+Message-ID: <1CCD6775-7A2E-4AC4-813B-6027C0D67336@gmail.com>
+References: <54B6C897.5030405@web.de> <20150114211712.GE1155@peff.net> <064010B3-BC58-42F2-B5C0-DAADAA59B87D@gmail.com> <xmqqwq4n6b4c.fsf@gitster.dls.corp.google.com> <20150115222719.GA19021@peff.net> <xmqqa91j6537.fsf@gitster.dls.corp.google.com> <20150115235752.GB25120@peff.net> <xmqqh9vr4mlz.fsf@gitster.dls.corp.google.com> <20150116013256.GA25894@peff.net> <BEFF558C-774D-4891-96A0-BE962F8070E7@gmail.com> <20150116033445.GA29572@peff.net>
 Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8; format=flowed; delsp=yes
 Cc: Junio C Hamano <gitster@pobox.com>,
  msysgit@googlegroups.com,
  =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
  Git Mailing List <git@vger.kernel.org>
 To: Jeff King <peff@peff.net>
-X-From: msysgit+bncBCA2HLOB7YGRBM5V4WSQKGQEE4PBTMI@googlegroups.com Fri Jan 16 19:38:45 2015
-Return-path: <msysgit+bncBCA2HLOB7YGRBM5V4WSQKGQEE4PBTMI@googlegroups.com>
+X-From: msysgit+bncBCA2HLOB7YGRBMVV4WSQKGQEAISDRRY@googlegroups.com Fri Jan 16 19:38:45 2015
+Return-path: <msysgit+bncBCA2HLOB7YGRBMVV4WSQKGQEAISDRRY@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-vc0-f188.google.com ([209.85.220.188])
+Received: from mail-yk0-f191.google.com ([209.85.160.191])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCA2HLOB7YGRBM5V4WSQKGQEE4PBTMI@googlegroups.com>)
-	id 1YCBnA-0001cK-SV
-	for gcvm-msysgit@m.gmane.org; Fri, 16 Jan 2015 19:38:45 +0100
-Received: by mail-vc0-f188.google.com with SMTP id id10sf2955254vcb.5
-        for <gcvm-msysgit@m.gmane.org>; Fri, 16 Jan 2015 10:38:44 -0800 (PST)
+	(envelope-from <msysgit+bncBCA2HLOB7YGRBMVV4WSQKGQEAISDRRY@googlegroups.com>)
+	id 1YCBn9-0001cI-PD
+	for gcvm-msysgit@m.gmane.org; Fri, 16 Jan 2015 19:38:43 +0100
+Received: by mail-yk0-f191.google.com with SMTP id 9sf2975292ykp.8
+        for <gcvm-msysgit@m.gmane.org>; Fri, 16 Jan 2015 10:38:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
         h=from:to:in-reply-to:subject:references:message-id:content-type
@@ -27,39 +27,39 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
          :x-original-authentication-results:precedence:mailing-list:list-id
          :list-post:list-help:list-archive:sender:list-subscribe
          :list-unsubscribe;
-        bh=SiV2GWt0DSkZhFq5bFfL5rDsyaG7zTNEVlkzhG99m80=;
-        b=glI+u4xkNGUzO5Sogmoq5MDUoKHiuw1e3feXJl8ckXuJ4EtZfQwAVc76FDN2SNWe46
-         4T1MbTbNiFI/9Ys/0EsU5pRQqarrEXBGV0Zd7Xwbnj/J8OlfHrz3krxCYG7G0X71X83d
-         dvlExSTivSgy0mbm49mFtE26ZpOtMSG8XpDmoD7gmYUTqFBcLA5IEZ4mKHUu9cYl1H3T
-         +c1U69YzxjfAOyGsRfZjSZjzfHp9O/+SXxkD8T4N7gEqEQjRI7r8C3z0ni8DOQWoqxiT
-         9JKX0uOr7gQXUb35EQTYndmxSJikji8GqvpfL9aktWvVJwIg1saLr7WVGYZPoepBPFKE
-         R34A==
-X-Received: by 10.50.129.98 with SMTP id nv2mr78688igb.1.1421433524063;
-        Fri, 16 Jan 2015 10:38:44 -0800 (PST)
+        bh=hOUa1MBCxYRYM06RxYR1a1mDYTy6XdDwHeW5mUo4TJs=;
+        b=KLD14j0Gf2PuKzm55wGOhDM4VwNWX954nw+lAKtGGeQ5UwrZfReTfcAanRusBAQu/A
+         2XrXh1V0oHjAs8ZQ91koA94EiWiLHeV1rEchxHCiisaaUCdeEUgaU0CeFLy3gTsi/ZmR
+         wQinMxUpaCs8xB1YExl9CiE+ULkdBhVWCUUuCPzjal8rjsXso6MgmQ32FColu85dq2qt
+         CWyXN+ARdmJTFpq8tsIfb3sXsxr/sx9oqs87w6Hlt2JOc/UeDRsvUlnQKmwEuV8F8Tps
+         vQNpLy2MAIavps/fmYkplIjpMxMjTtbsYJ2T9fjiB1viYMb6q5iWeEL0fcSj3PmZ8OOa
+         ehnQ==
+X-Received: by 10.182.236.74 with SMTP id us10mr13374obc.32.1421433522811;
+        Fri, 16 Jan 2015 10:38:42 -0800 (PST)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.107.157.194 with SMTP id g185ls1189607ioe.25.gmail; Fri, 16
- Jan 2015 10:38:43 -0800 (PST)
-X-Received: by 10.50.225.7 with SMTP id rg7mr3482767igc.5.1421433523734;
-        Fri, 16 Jan 2015 10:38:43 -0800 (PST)
-Received: from mail-pa0-x22e.google.com (mail-pa0-x22e.google.com. [2607:f8b0:400e:c03::22e])
-        by gmr-mx.google.com with ESMTPS id q14si590723pdj.0.2015.01.16.10.38.43
+Received: by 10.182.20.44 with SMTP id k12ls724183obe.1.gmail; Fri, 16 Jan
+ 2015 10:38:42 -0800 (PST)
+X-Received: by 10.182.165.132 with SMTP id yy4mr13318087obb.20.1421433522396;
+        Fri, 16 Jan 2015 10:38:42 -0800 (PST)
+Received: from mail-pd0-x229.google.com (mail-pd0-x229.google.com. [2607:f8b0:400e:c02::229])
+        by gmr-mx.google.com with ESMTPS id v6si555180pdo.2.2015.01.16.10.38.42
         for <msysgit@googlegroups.com>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 16 Jan 2015 10:38:43 -0800 (PST)
-Received-SPF: pass (google.com: domain of mackyle@gmail.com designates 2607:f8b0:400e:c03::22e as permitted sender) client-ip=2607:f8b0:400e:c03::22e;
-Received: by mail-pa0-f46.google.com with SMTP id lf10so25801652pab.5
-        for <msysgit@googlegroups.com>; Fri, 16 Jan 2015 10:38:43 -0800 (PST)
-X-Received: by 10.70.128.15 with SMTP id nk15mr24172184pdb.121.1421433523618;
-        Fri, 16 Jan 2015 10:38:43 -0800 (PST)
+        Fri, 16 Jan 2015 10:38:42 -0800 (PST)
+Received-SPF: pass (google.com: domain of mackyle@gmail.com designates 2607:f8b0:400e:c02::229 as permitted sender) client-ip=2607:f8b0:400e:c02::229;
+Received: by mail-pd0-f169.google.com with SMTP id z10so24203774pdj.0
+        for <msysgit@googlegroups.com>; Fri, 16 Jan 2015 10:38:42 -0800 (PST)
+X-Received: by 10.70.118.168 with SMTP id kn8mr24614789pdb.133.1421433522228;
+        Fri, 16 Jan 2015 10:38:42 -0800 (PST)
 Received: from [172.16.16.105] (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
-        by mx.google.com with ESMTPSA id kl7sm4738123pdb.10.2015.01.16.10.38.42
+        by mx.google.com with ESMTPSA id kl7sm4738123pdb.10.2015.01.16.10.38.40
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Fri, 16 Jan 2015 10:38:43 -0800 (PST)
-In-Reply-To: <20150116091648.GA2450@peff.net>
+        Fri, 16 Jan 2015 10:38:41 -0800 (PST)
+In-Reply-To: <20150116033445.GA29572@peff.net>
 X-Mauler: Craptastic (2.936)
 X-Original-Sender: mackyle@gmail.com
 X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of mackyle@gmail.com designates 2607:f8b0:400e:c03::22e
+ (google.com: domain of mackyle@gmail.com designates 2607:f8b0:400e:c02::229
  as permitted sender) smtp.mail=mackyle@gmail.com;       dkim=pass
  header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
 Precedence: list
@@ -73,36 +73,37 @@ Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
  <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262557>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262558>
 
-On Jan 16, 2015, at 01:16, Jeff King wrote:
+On Jan 15, 2015, at 19:34, Jeff King wrote:
 
-> Subject: [PATCH] t/lib-httpd: switch SANITY check for NOT_ROOT
-[...]
-> We implement NOT_ROOT by checking `id -u`, which is in POSIX
-> and seems to be available even on MSYS.  Note that we cannot
-> just call this "ROOT" and ask for "!ROOT". The possible
-> outcomes are:
+> On Thu, Jan 15, 2015 at 07:27:34PM -0800, Kyle J. McKay wrote:
 >
->  1. we know we are root
+>> "id -u" works for me in MSYS and cygwin (each appears to have it's  
+>> own
+>> id.exe).
 >
->  2. we know we are not root
->
->  3. we could not tell, because `id` was not available
->
-> We should conservatively treat (3) as "does not have the
-> prerequisite", which means that a naive negation would not
-> work.
-[...]
-> +
-> +test_lazy_prereq NOT_ROOT '
-> +	uid=$(id -u) &&
-> +	test "$uid" != 0
-> +'
+> That's comforting. MSYS was the one I was most worried about. What UID
+> do they report? I.e., do they correctly tell us if we are root (or
+> more accurately, if we are not root)?
 
-That looks good to me and worked as expected when I tried it.
+It's funny, really.  The MSYS version gives a different answer than  
+the cygwin version although both are non-zero.  The MSYS perl gives  
+the same answer as the MSYS id and the cygwin perl gives the same  
+answer as the cygwin id.
+
+I'm not even sure what it would mean to "be root" on one of those  
+systems.
+
+The closest I can think of would be to run as the "SYSTEM" user.  And  
+that's not nearly as simple as just "sudo -s". [1].
+
+I haven't tested that.  I will try to remember to give that a try next  
+time I'm feeling the need for some frustration. ;)
 
 -Kyle
+
+[1] http://cygwin.com/ml/cygwin/2010-04/msg00651.html
 
 -- 
 -- 
