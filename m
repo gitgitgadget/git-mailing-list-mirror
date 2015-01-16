@@ -1,106 +1,91 @@
-From: Mike <ipso@snappymail.ca>
-Subject: git svn import failure : write .git/Git_svn_hash_BmjclS: Bad file
- descriptor
-Date: Fri, 16 Jan 2015 09:13:17 -0800
-Message-ID: <54B946AD.5050701@snappymail.ca>
-Reply-To: ipso@snappymail.ca
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] commit: reword --author error message
+Date: Fri, 16 Jan 2015 09:29:15 -0800
+Message-ID: <xmqqwq4m3a8k.fsf@gitster.dls.corp.google.com>
+References: <54B7CCCD.1070708@drmicha.warpmail.net>
+	<84cf10a22858275d6e213311c93df7f6a5408f60.1421331608.git.git@drmicha.warpmail.net>
+	<xmqq4mrs7x5h.fsf@gitster.dls.corp.google.com>
+	<20150116093220.GA3006@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 16 18:23:16 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org,
+	Gunnar Wagner <gunnar.wagner@irisgermanica.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>,
+	Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jan 16 18:29:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YCAc6-0001sC-LO
-	for gcvg-git-2@plane.gmane.org; Fri, 16 Jan 2015 18:23:15 +0100
+	id 1YCAi2-0003w4-9A
+	for gcvg-git-2@plane.gmane.org; Fri, 16 Jan 2015 18:29:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753224AbbAPRXJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Jan 2015 12:23:09 -0500
-Received: from mail.timetrex.com ([50.97.106.214]:34283 "EHLO
-	mail.timetrex.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753003AbbAPRXI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Jan 2015 12:23:08 -0500
-X-Greylist: delayed 570 seconds by postgrey-1.27 at vger.kernel.org; Fri, 16 Jan 2015 12:23:08 EST
-Received: from mail.office.timetrex.com (unknown [184.68.39.238])
-	by mail.timetrex.com (Postfix) with ESMTP id D23CB20059
-	for <git@vger.kernel.org>; Fri, 16 Jan 2015 09:13:36 -0800 (PST)
-Received: by mail.office.timetrex.com (Postfix, from userid 108)
-	id 83A168148C; Fri, 16 Jan 2015 09:13:36 -0800 (PST)
-X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on
-	mail.office.timetrex.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-111.9 required=4.5 tests=ALL_TRUSTED,BAYES_00,
-	USER_IN_WHITELIST autolearn=disabled version=3.3.2
-Received: from [10.7.5.9] (mikeb.office.timetrex.com [10.7.5.9])
-	by mail.office.timetrex.com (Postfix) with ESMTPSA id C86CA812D0
-	for <git@vger.kernel.org>; Fri, 16 Jan 2015 09:13:35 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
+	id S1753611AbbAPR3S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Jan 2015 12:29:18 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:53617 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752560AbbAPR3R (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Jan 2015 12:29:17 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C1C7D2F322;
+	Fri, 16 Jan 2015 12:29:16 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=7D9clu2y9wnXbT9+QUPR6T9uwj4=; b=bjvo0g
+	hTXgieOXIT5xLzpp2/ekVs3BX3dXx+KukHJOEx1j/Mi+92IimMBpUFD6pnNomnrS
+	QWSh2aOALlngFy+c/WPjMvQvGlIily6WXVkiSGwxd8mSWUbjasABFPIQgGLeuwpX
+	48iAXqexBOAchg7uLMrYKw0/gGJwdmHqLlBdU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Qy2OD9HRudUZxSIDRgAXXJiAaqSCuJGY
+	RMYy2PIxFDsMPpodOw7KQWoi1vDE5yal+ed67dSTREN4RUbsKe3qNsls62oqqfjr
+	d9cS7yreUHENRR/IY0yru4SNBUSDBX61EWvJQdJVdRUq+P8BnqxmoTZYNVBV2xWC
+	ZUe9ZlnqnWg=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B7F142F321;
+	Fri, 16 Jan 2015 12:29:16 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 405CD2F31F;
+	Fri, 16 Jan 2015 12:29:16 -0500 (EST)
+In-Reply-To: <20150116093220.GA3006@peff.net> (Jeff King's message of "Fri, 16
+	Jan 2015 04:32:21 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 320B5422-9DA5-11E4-99B7-42529F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262552>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262553>
 
-Similar to the issue mintywalker originally mentioned on Jan 8th 2015, 
-during a "git svn clone" I get a Bad File Descriptor error using:
+Jeff King <peff@peff.net> writes:
 
-git-svn version 2.2.2 (svn 1.8.8) on Ubuntu 14.04.
+> On Thu, Jan 15, 2015 at 09:48:26AM -0800, Junio C Hamano wrote:
+>
+>> > Rename the error message to make it clearer that the failure has two
+>> > reasons in this case:
+>> > "Bad --author parameter '%s': neither completely wellformed nor part of
+>> > an existing one"
+>> 
+>> You are trying to help a user who thought "Who www.where.com" was a
+>> valid thing to pass to --author; "it is not completely wellformed"
+>> is not very helpful without making her realize what in that bogus
+>> string is not "completely well-formed".
+>> 
+>> Perhaps
+>> 
+>>   "--author '%s' is not 'Name <email>' and no existing author matches that string"
+>> 
+>> or somesuch?
+>
+> Yeah, I think that is OK. It is kind of clunky to read, but it contains
+> all of the necessary information to lead the user in the right
+> direction.
 
-<snip>
-r460 = 456377de3906d689c56e51af842e18abe086a980 (refs/remotes/origin/trunk)
-         A       client/binary/App_Client_v2.1.2.exe
-r461 = 36848dbb7f417da2e381b61b68ff7b0d22a5bf7f (refs/remotes/origin/trunk)
-write .git/Git_svn_hash_0WWL4a: Bad file descriptor
-  at /usr/lib/perl5/SVN/Ra.pm line 623.
+Indeed it is clunky and not in the usual format.
 
+This might be better, perhaps?
 
-$ svn diff --diff-cmd diff -c 461
-Index: client/binary/App_Client_v2.1.2.exe
-===================================================================
-Cannot display: file marked as a binary type.
-svn:mime-type = application/octet-stream
-Index: client/binary/App_Client_v2.1.2.exe
-===================================================================
---- client/binary/App_Client_v2.1.2.exe    (revision 0)
-+++ client/binary/App_Client_v2.1.2.exe    (revision 461)
-
-Property changes on: client/binary/App_Client_v2.1.2.exe
-___________________________________________________________________
-Added: svn:mime-type
-## -0,0 +1 ##
-+application/octet-stream
-\ No newline at end of property
-
-
-Not sure if it helps or not, but here is the commit immediately after 
-that one:
-
-$ svn diff --diff-cmd diff -c 462
-Index: interface/help/App_Client.exe
-===================================================================
---- interface/help/App_Client.exe  (revision 0)
-+++ interface/help/App_Client.exe  (revision 462)
-@@ -0,0 +1 @@
-+link ../../client/binary/App_Client_v2.1.2.exe
-\ No newline at end of file
-
-Property changes on: interface/help/App_Client.exe
-___________________________________________________________________
-Added: svn:special
-## -0,0 +1 ##
-+*
-\ No newline at end of property
-
-Unfortunately the repository is private, but it seems like a pretty 
-simple commit that is causing the problem?
-
-If you need more information please let me know.
-
-Thanks.
-
-
--- 
-Mike
+    die(_("--author '%s': not 'Name <email>' and matches no existing author"));
