@@ -1,66 +1,136 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: RFC: update hook for GPG signed submission on secured branches
-Date: Fri, 16 Jan 2015 11:41:01 -0800
-Message-ID: <xmqqoapy1pki.fsf@gitster.dls.corp.google.com>
-References: <BBE88A3EA44D47159C483F1046AC747E@black>
-	<xmqqsifa1px6.fsf@gitster.dls.corp.google.com>
+From: "Jason Pyeron" <jpyeron@pdinc.us>
+Subject: RE: RFC: update hook for GPG signed submission on secured branches
+Date: Fri, 16 Jan 2015 14:47:25 -0500
+Organization: PD Inc
+Message-ID: <BD3DE7B299FE458287DC8C829CEADEC2@black>
+References: <BBE88A3EA44D47159C483F1046AC747E@black> <xmqqsifa1px6.fsf@gitster.dls.corp.google.com>
+Reply-To: "Junio C Hamano" <gitster@pobox.com>, <git@vger.kernel.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: <git@vger.kernel.org>
-To: "Jason Pyeron" <jpyeron@pdinc.us>
-X-From: git-owner@vger.kernel.org Fri Jan 16 20:41:12 2015
+Content-Type: text/plain;
+	charset="US-ASCII"
+Content-Transfer-Encoding: 8BIT
+To: "'Junio C Hamano'" <gitster@pobox.com>, <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jan 16 20:47:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YCCla-0004wD-4H
-	for gcvg-git-2@plane.gmane.org; Fri, 16 Jan 2015 20:41:10 +0100
+	id 1YCCrm-0006pu-9x
+	for gcvg-git-2@plane.gmane.org; Fri, 16 Jan 2015 20:47:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756879AbbAPTlF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Jan 2015 14:41:05 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:55144 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755782AbbAPTlD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Jan 2015 14:41:03 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id CF17930A9B;
-	Fri, 16 Jan 2015 14:41:02 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=qAfOR8dGItJF9cxaePBW+XivbGc=; b=vFPEMn
-	AO4FjvivtBljwYOT9hnhWG8UtOk3LgyA5iLY/fxp3NqsmeafWvAAheCMZlXZ/h9C
-	LoUZ4uG1a+R4tgqG0jxzOE4aKkLpjTdQwwLWfWbG8I6AUKUCfngl/rdlwuoZpHbr
-	jTiTTWcRJOPNfUvEGkGhuin8S+vONAvFKsIl0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uOPODbxycmH5HkAI0TanFXuORV1fFjUM
-	D+WmWjM1YW50QM8OU9vJwASaoM3g7hfcsvKoGpLIsUo6Emhgv2j3155Czq+PBmPn
-	ZlwW4p7MRWWDqV56Cki+Dq+ljl3cR1Nu8fJpyd3evNNjVvXtREbBSA896g1JO5Rg
-	oVEg/sOCTTc=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id C49BC30A9A;
-	Fri, 16 Jan 2015 14:41:02 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 33F2830A98;
-	Fri, 16 Jan 2015 14:41:02 -0500 (EST)
-In-Reply-To: <xmqqsifa1px6.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Fri, 16 Jan 2015 11:33:25 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 9A5BC73E-9DB7-11E4-BDEB-42529F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1754953AbbAPTr3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Jan 2015 14:47:29 -0500
+Received: from mail.pdinc.us ([67.90.184.27]:56435 "EHLO mail.pdinc.us"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753782AbbAPTr3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 16 Jan 2015 14:47:29 -0500
+Received: from black (nsa1.pdinc.us [67.90.184.2])
+	(authenticated bits=0)
+	by mail.pdinc.us (8.12.11.20060308/8.12.11) with ESMTP id t0GJlPqL021846;
+	Fri, 16 Jan 2015 14:47:25 -0500
+X-Mailer: Microsoft Office Outlook 11
+In-Reply-To: <xmqqsifa1px6.fsf@gitster.dls.corp.google.com>
+Thread-Index: AdAxw1ngMvVr2EDVTwmEFmQi1PSlKgAAPCtg
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.3790.4913
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262566>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262567>
 
-Junio C Hamano <gitster@pobox.com> writes:
+> -----Original Message-----
+> From: Junio C Hamano
+> Sent: Friday, January 16, 2015 14:33
+> 
+> "Jason Pyeron" <jpyeron@pdinc.us> writes:
+> 
+> > What would you change? Any bugs that you see?
+> 
+> > sigkey=$(\
+> >  git cat-file $newrev -p |\
+> 
+> "-p" being a command line option should come before revision, but
+> more importantly, because you accept pushes only to refs/heads/, you
+> would want to explicitly require commit objects, no?  i.e.
+> 
+> 	git cat-file commit "$newrev" |
 
+True.
+
+> 
 > I am not sure if you need these unsightly backslashes.  When you
 > stop talking to it after saying "$(", or "$( git cat-file ... |",
 > the shell _knows_ that you haven't stopped what you want to tell
 > it.
+> 
+> >  sed -e '/^ /{H;$!d;}; x;/^gpgsig /!d; s/^gpgsig//;' |\
+> >  cut -c 2- |\
+> 
+> It always makes me feel nervous to see people pipe sed output to
+> another filter that is a mere s/.//;
 
-Ehh, s/stopped/finished/, that is.
+It was a very quick Lego block build.
+
+> 
+> Is this complex pipeline the same as this (I didn't understand the
+> trailing I at the end)?
+
+Case insensitive, could have used [0-9a-fA-F].
+
+> 
+> 	git cat-file commit "$newrev" |
+>         sed -ne '/^gpgsig /,/^ -----END/{
+>         	s/^gpgsig //
+>                 s/^ //p
+> 	}' |
+
+Will all future signature values end with a "^ -----END"? I was only going on the assumption that continuation lines start with a single space.
+
+> 	gpg --list-packets --textmode |
+>         sed -ne '/^:signature packet:/s/.*keyid \([0-9A-F]*\).*/\1/p'
+> 
+> >  gpg --list-packets --textmode |\
+> >  sed '/keyid/!d; s/.*keyid \([0-9A-F]\{16\}\).*/\1/I' \
+> > )
+> 
+> > if [ -z "$sigkey" ]; then
+> >         echo no GPG signature on commit $newrev
+> >         exit 1
+> > fi
+> 
+> I am not sure if the design of this, to require signature only on
+> the tip commit, is sound.  That is not a -bug- in the script,
+> though.
+
+It is to handle the "all my devs worked on this, they do ________ GPG", so as long as the tip os signed, it is an implicit I am responsible for what is submitted.
+
+> 
+> > if [[ $refname != refs/heads/* ]]; then
+> >         echo only heads may be pushed, illegal ref: $refname
+> >         exit 1;
+> > fi
+> >
+> > head="${refname:11}"
+> 
+> It is hard to tell where the magic number 11 comes from.  Perhaps
+> 
+>     head="${refname#refs/heads/}"
+> 
+> reads easier?
+
+Much.
+
+Thanks!
+
+-Jason
+
+--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-                                                               -
+- Jason Pyeron                      PD Inc. http://www.pdinc.us -
+- Principal Consultant              10 West 24th Street #100    -
+- +1 (443) 269-1555 x333            Baltimore, Maryland 21218   -
+-                                                               -
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+This message is copyright PD Inc, subject to license 20080407P00. 
