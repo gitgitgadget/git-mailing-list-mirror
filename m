@@ -1,183 +1,212 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: Re: [PATCH] t/lib-httpd: switch SANITY check for NOT_ROOT
-Date: Sun, 18 Jan 2015 00:35:30 +0100
-Message-ID: <54BAF1C2.60103@web.de>
-References: <20150114211712.GE1155@peff.net>	<064010B3-BC58-42F2-B5C0-DAADAA59B87D@gmail.com>	<xmqqwq4n6b4c.fsf@gitster.dls.corp.google.com>	<20150115222719.GA19021@peff.net>	<xmqqa91j6537.fsf@gitster.dls.corp.google.com>	<20150115235752.GB25120@peff.net>	<xmqqh9vr4mlz.fsf@gitster.dls.corp.google.com>	<20150116013256.GA25894@peff.net>	<BEFF558C-774D-4891-96A0-BE962F8070E7@gmail.com>	<20150116033445.GA29572@peff.net> <20150116091648.GA2450@peff.net>	<xmqqfvba37bq.fsf@gitster.dls.corp.google.com> <xmqqzj9i1rci.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "Kyle J. McKay" <mackyle@gmail.com>, msysgit@googlegroups.com, 
- =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>, 
- Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-X-From: msysgit+bncBCUZ3EUT2ADRBUPD5OSQKGQENGS4J4Q@googlegroups.com Sun Jan 18 00:35:49 2015
-Return-path: <msysgit+bncBCUZ3EUT2ADRBUPD5OSQKGQENGS4J4Q@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wi0-f191.google.com ([209.85.212.191])
+From: "Kyle J. McKay" <mackyle@gmail.com>
+Subject: [PATCH] test: add git apply whitespace expansion tests
+Date: Sun, 18 Jan 2015 02:49:45 -0800
+Message-ID: <102e322e68e78e39a7c227f3f3e102c@74d39fa044aa309eaea14b9f57fe79c>
+References: <CAO2U3QjGUfnTRO_poS+=-MfE4aYGuWpVJTe20H-u=FgkVy-RYg@mail.gmail.com> <CAO2U3Qjn9o_eYayEMCC3S6DBr9kVH7mPL00QGrXAnV2iYRP-=A@mail.gmail.com> <CAO2U3Qj-Hg2tb72NgO6wb-aqAxFG7aga2ZDeZNDCPJzGtmHTAA@mail.gmail.com> <CAO2U3Qhd_DPP09BUyMr6NKUtOe4EQQ7G83BRg7MbtQXFPjKv8w@mail.gmail.com> <CAO2U3Qje-YwcV1d5BK_zZqrTki4AU=emdkUZzEEieRjmoQdmGg@mail.gmail.com> <CAO2U3Qi4TWZiNoOQVSW=Ycvp3bpBySZrCGmRLCbRJJes_n2Wkw@mail.gmail.com> <99579252-EF8A-4DAF-A49D-2AC5627ED9E3@gmail.com> <4157F6B0-DDF4-4F71-A09B-EE216537CA89@gmail.com> <xmqqbnly1oqo.fsf@gitster.dls.corp.google.com> <xmqqzj9iz3gu.fsf_-_@gitster.dls.corp.google.com>
+Cc: Git mailing list <git@vger.kernel.org>,
+	Michael Blume <blume.mike@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jan 18 11:50:02 2015
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCUZ3EUT2ADRBUPD5OSQKGQENGS4J4Q@googlegroups.com>)
-	id 1YCcuA-0008GA-Tu
-	for gcvm-msysgit@m.gmane.org; Sun, 18 Jan 2015 00:35:46 +0100
-Received: by mail-wi0-f191.google.com with SMTP id n3sf694308wiv.8
-        for <gcvm-msysgit@m.gmane.org>; Sat, 17 Jan 2015 15:35:46 -0800 (PST)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1YCnQf-00019c-J7
+	for gcvg-git-2@plane.gmane.org; Sun, 18 Jan 2015 11:50:01 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752510AbbARKt5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Jan 2015 05:49:57 -0500
+Received: from mail-pd0-f181.google.com ([209.85.192.181]:38925 "EHLO
+	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752500AbbARKt4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Jan 2015 05:49:56 -0500
+Received: by mail-pd0-f181.google.com with SMTP id z10so19489040pdj.12
+        for <git@vger.kernel.org>; Sun, 18 Jan 2015 02:49:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe;
-        bh=QKHx/SKGoUzDzLaccH6lKjQpi4izLdXBHWNTtpwEoTA=;
-        b=OnewM0SnjVG9Sn8Kw+uG24wldbLOLKmal6KyRLZV/O/4orGqJ/VQzlrOmfj1/bpodE
-         +M/FCmmz6j4Qor4t6IeCjnQIJtJKZmeCN0yt/iTZeS9M3b5hyG2TKBH32OZXxO+dLapJ
-         2WF2XG0jwCQdBrDfO1zKoqjaC0Yzki5FzmH9IA8EJhn55wt+j8L65b+wZYYkkQrBFWaH
-         SPvFOJsG379r8G0uRIqNYYL7mZMX4lmz0T9Igvl854NqZYwiFa/o0e6TQPKPzwPnnAO2
-         ekbnM/1DH+wHFipuUXvmpDO3Cc22pf4LXZ8KDv/Ys7ml6CSpieHyO7Lafd1Jb2wxKxyN
-         mNyQ==
-X-Received: by 10.180.211.206 with SMTP id ne14mr68288wic.2.1421537746527;
-        Sat, 17 Jan 2015 15:35:46 -0800 (PST)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.103.226 with SMTP id fz2ls555878wib.38.gmail; Sat, 17 Jan
- 2015 15:35:45 -0800 (PST)
-X-Received: by 10.194.77.1 with SMTP id o1mr2753512wjw.1.1421537745612;
-        Sat, 17 Jan 2015 15:35:45 -0800 (PST)
-Received: from mout.web.de (mout.web.de. [212.227.17.12])
-        by gmr-mx.google.com with ESMTPS id v8si567344wif.1.2015.01.17.15.35.45
-        for <msysgit@googlegroups.com>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 17 Jan 2015 15:35:45 -0800 (PST)
-Received-SPF: pass (google.com: domain of tboegi@web.de designates 212.227.17.12 as permitted sender) client-ip=212.227.17.12;
-Received: from macce.local ([78.68.171.36]) by smtp.web.de (mrweb103) with
- ESMTPSA (Nemesis) id 0MN4Oy-1Y61CK2jEG-006hBv; Sun, 18 Jan 2015 00:35:36
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
-In-Reply-To: <xmqqzj9i1rci.fsf@gitster.dls.corp.google.com>
-X-Provags-ID: V03:K0:/EhTY5dF93smO0YGJpIJywPqWcwEIqDy46e5TEziso0B7N4ZlWD
- g0DpFzGqwZrqOQEB7Q3SAIkNNxYJ+xD6jPK5JsE7yXNOgyXKCXOLKLaOWgPNx85t69DUT/F
- tQdIN2JrlhdZ0FvZQIEq/d9KH4RfnsiiadcioGMeqJ1ZsbSSDubZ+SRjo6BiBWx5WSnpMd3
- yjVvtOSVFm85jrnTR33fA==
-X-UI-Out-Filterresults: notjunk:1;
-X-Original-Sender: tboegi@web.de
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of tboegi@web.de designates 212.227.17.12 as permitted
- sender) smtp.mail=tboegi@web.de
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262593>
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=YfoiCHSCV77eIH1UnJw0iWP8PsT9LJCB07z/jaWyul0=;
+        b=WS0lStlHMqMP8yNtmRt77uIPup7GjpXwxbNGcX5iqmFbVGrc8G8JKCQhW2Kwa0nn0N
+         EdFXPgtn2LjH0Q7KPTlg2dOOclxDkCgxErtl8divkBOtzH82+jlwPmKE0ry//or98h4m
+         nUbu+1zx3BDp9p0DTjF8eEzm2NYRpb8bIHYIfSjvXTFty5SjkK3zVhZzP5jAUQ4cZcVt
+         19agxaQOE4Enyz1f/qY5a+zpN4yzGodaeyw+E0m4ihPUmqa1mqyZkjxlOVs00iuV9KUz
+         zhO84XwsTExodsE9pP5cl+iBgRA9Oq7cEoqU8fcczEXyiQdQhfeif6GuxvB9sQsQXrfv
+         FgXQ==
+X-Received: by 10.70.102.193 with SMTP id fq1mr36417104pdb.19.1421578195473;
+        Sun, 18 Jan 2015 02:49:55 -0800 (PST)
+Received: from localhost.localdomain (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
+        by mx.google.com with ESMTPSA id mb9sm8734743pdb.40.2015.01.18.02.49.53
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Sun, 18 Jan 2015 02:49:54 -0800 (PST)
+In-Reply-To: <xmqqzj9iz3gu.fsf_-_@gitster.dls.corp.google.com>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262595>
 
-Hm, being one day offline and there are lots of ideas and
-new patches, I like that.
-I run these test under msys and cygwin on latest pu (a3dc223ff234481356c):
+When git apply fixes whitespace, the result can end up being
+longer than the initial text if whitespace ends up being expanded
+(such as with the tab-in-indent option).
 
+Since 250b3c6c (apply --whitespace=fix: avoid running over the
+postimage buffer, 2013-03-22) an attempt has been made to compute
+the correct final length in such a case.
 
-./t0001-init.sh
-./t0004-unwritable.sh
-./t0061-run-command.sh
-./t0070-fundamental.sh
-./t1004-read-tree-m-u-wf.sh
-./t1300-repo-config.sh
-./t1301-shared-repo.sh
-./t1308-config-set.sh
-./t2026-prune-linked-checkouts.sh
-./t3600-rm.sh
-./t3700-add.sh
-./t4039-diff-assume-unchanged.sh
-./t4056-diff-order.sh
-./t5537-fetch-shallow.sh
-./t7300-clean.sh
-./t7503-pre-commit-hook.sh
-./t7504-commit-msg-hook.sh
-./t7508-status.sh
+These tests all stress the whitespace-expansion-during-apply
+condition and can result in core dump failures when the final
+length is not computed correctly.
 
-(msys passes or skips all)
+Signed-off-by: Kyle J. McKay <mackyle@gmail.com>
+---
 
-Without digging further, these fail on my cygwin:
+* Here's some tests.  With "apply: make update_pre_post_images() sanity
+  check the given postlen" but not "apply: count the size of postimage
+  correctly" test 1/4 and 4/4 trigger the 'die("BUG: postlen...' but
+  test 2/4 and 3/4 do not although they fail because git apply generates
+  garbage.
 
-$ grep "not ok" p.txt
-not ok 29 - init notices EPERM
-not ok 2 - write-tree should notice unwritable repository
-not ok 3 - commit should notice unwritable repository
-not ok 4 - update-index should notice unwritable repository
-not ok 5 - add should notice unwritable repository
-not ok 3 - mktemp to unwritable directory prints filename
-not ok 13 - funny symlink in work tree, un-unlink-able
-not ok 23 - proper error on non-accessible files
-not ok 4 - prune directories with unreadable gitdir
-not ok 15 - Test that "git rm -f" fails if its rm fails
-not ok 16 - When the rm in "git rm -f" fails, it should not remove the file from the index
-not ok 20 - Re-add foo and baz
-not ok 21 - Modify foo -- rm should refuse
-not ok 22 - Modified foo -- rm -f should work
-not ok 23 - Re-add foo and baz for HEAD tests
-not ok 24 - foo is different in index from HEAD -- rm should refuse
-not ok 23 - git add should fail atomically upon an unreadable file
-not ok 24 - git add --ignore-errors
-not ok 25 - git add (add.ignore-errors)
-not ok 26 - git add (add.ignore-errors = false)
-not ok 27 - --no-ignore-errors overrides config
-not ok 4 - unreadable orderfile
-not ok 28 - removal failure
-not ok 61 - status succeeds in a read-only repository
+* After applying "apply: count the size of postimage correctly" all 4
+  tests pass whereas they all fail without that.  It's interesting that
+  the "BUG: postlen" check does not trigger for 2/4 or 3/4 but the output
+  is garbage in those cases without the fix.
 
-If we remove POSIXPERM from CYGWIN, all tests pass ;-)
-but some are skipped :
-< ok 26 - init creates a new deep directory (umask vs. shared)
-< ok 3 - run_command reports EACCES
-< ok 4 - unreadable directory in PATH
-< ok 113 - preserves existing permissions
-< ok 2 - shared=1 does not clear bits preset by umask 002
-< ok 3 - shared=1 does not clear bits preset by umask 022
-< ok 5 - update-server-info honors core.sharedRepository
-< ok 6 - shared = 0660 (r--r-----) ro
-< ok 7 - shared = 0660 (rw-rw----) rw
-< ok 8 - shared = 0640 (r--r-----) ro
-< ok 9 - shared = 0640 (rw-r-----) rw
-< ok 10 - shared = 0600 (r--------) ro
-< ok 11 - shared = 0600 (rw-------) rw
-< ok 12 - shared = 0666 (r--r--r--) ro
-< ok 13 - shared = 0666 (rw-rw-rw-) rw
-< ok 14 - shared = 0664 (r--r--r--) ro
-< ok 15 - shared = 0664 (rw-rw-r--) rw
-< ok 16 - info/refs respects umask in unshared repo
-< ok 17 - git reflog expire honors core.sharedRepository
-< ok 18 - forced modes
-< ok 4 - find-copies-harder is not confused by mode bits
-< ok 10 - shallow fetch from a read-only repo
-< ok 32 - git clean -d with an unreadable empty directory
-< ok 7 - with non-executable hook
-< ok 8 - --no-verify with non-executable hook
-< ok 13 - with non-executable hook
-< ok 14 - with non-executable hook (editor)
-< ok 15 - --no-verify with non-executable hook
-< ok 16 - --no-verify with non-executable hook (editor)
+* Theses tests can easily trigger core dumps.  It seems to depend on how
+  the git binary was built and what exactly ends up getting stepped on as
+  I have several different Git builds and some of them core dump on tests
+  that others pass or just produce garbage for, but none of them passes
+  2/4 or 3/4 without the "count postimage size correctly" fix.
 
-I'm not sure what is the best way forward, it seems as if CYGIN is "half POSIX" now.
+ t/t4138-apply-ws-expansion.sh | 121 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 121 insertions(+)
+ create mode 100755 t/t4138-apply-ws-expansion.sh
 
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "Git for Windows" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+diff --git a/t/t4138-apply-ws-expansion.sh b/t/t4138-apply-ws-expansion.sh
+new file mode 100755
+index 00000000..140ed9ac
+--- /dev/null
++++ b/t/t4138-apply-ws-expansion.sh
+@@ -0,0 +1,121 @@
++#!/bin/sh
++#
++# Copyright (C) 2015 Kyle J. McKay
++#
++
++# NOTE: To facilitate separate testing, this script can be run
++# standalone to just create the test files and do nothing else
++# by first setting the environment variable MAKE_PATCHES=1.
++
++test_description='git apply test patches with whitespace expansion.'
++
++[ -n "$MAKE_PATCHES" ] || \
++. ./test-lib.sh
++
++#
++## create test-N, patchN.patch, expect-N files
++#
++
++# test 1
++printf '\t%s\n' 1 2 3 4 5 6 > before
++printf '\t%s\n' 1 2 3 > after
++printf '%64s\n' a b c $x >> after
++printf '\t%s\n' 4 5 6 >> after
++git diff --no-index before after | \
++sed -e 's/before/test-1/' -e 's/after/test-1/' > patch1.patch
++printf '%64s\n' 1 2 3 4 5 6 > test-1
++printf '%64s\n' 1 2 3 a b c 4 5 6 > expect-1
++
++# test 2
++printf '\t%s\n' a b c d e f > before
++printf '\t%s\n' a b c > after
++n=10
++x=1
++while [ $x -lt $n ]; do
++	printf '%63s%d\n' '' $x >> after
++	x=$(( $x + 1 ))
++done
++printf '\t%s\n' d e f >> after
++git diff --no-index before after | \
++sed -e 's/before/test-2/' -e 's/after/test-2/' > patch2.patch
++printf '%64s\n' a b c d e f > test-2
++printf '%64s\n' a b c > expect-2
++x=1
++while [ $x -lt $n ]; do
++	printf '%63s%d\n' '' $x >> expect-2
++	x=$(( $x + 1 ))
++done
++printf '%64s\n' d e f >> expect-2
++
++# test 3
++printf '\t%s\n' a b c d e f > before
++printf '\t%s\n' a b c > after
++n=100
++x=0
++while [ $x -lt $n ]; do
++	printf '%63s%02d\n' '' $x >> after
++	x=$(( $x + 1 ))
++done
++printf '\t%s\n' d e f >> after
++git diff --no-index before after | \
++sed -e 's/before/test-3/' -e 's/after/test-3/' > patch3.patch
++printf '%64s\n' a b c d e f > test-3
++printf '%64s\n' a b c > expect-3
++x=0
++while [ $x -lt $n ]; do
++	printf '%63s%02d\n' '' $x >> expect-3
++	x=$(( $x + 1 ))
++done
++printf '%64s\n' d e f >> expect-3
++
++# test 4
++> before
++x=0
++while [ $x -lt 50 ]; do
++	printf '\t%02d\n' $x >> before
++	x=$(( $x + 1 ))
++done
++cat before > after
++printf '%64s\n' a b c >> after
++while [ $x -lt 100 ]; do
++	printf '\t%02d\n' $x >> before
++	printf '\t%02d\n' $x >> after
++	x=$(( $x + 1 ))
++done
++git diff --no-index before after | \
++sed -e 's/before/test-4/' -e 's/after/test-4/' > patch4.patch
++> test-4
++x=0
++while [ $x -lt 50 ]; do
++	printf '%63s%02d\n' '' $x >> test-4
++	x=$(( $x + 1 ))
++done
++cat test-4 > expect-4
++printf '%64s\n' a b c >> expect-4
++while [ $x -lt 100 ]; do
++	printf '%63s%02d\n' '' $x >> test-4
++	printf '%63s%02d\n' '' $x >> expect-4
++	x=$(( $x + 1 ))
++done
++
++# cleanup
++rm before after
++
++[ -z "$MAKE_PATCHES" ] || exit 0
++
++#
++## Run the tests
++#
++
++# Note that `patch` can successfully apply all patches when run
++# with the --ignore-whitespace option.
++
++for t in 1 2 3 4; do
++	test_expect_success "apply with ws expansion (t=$t)" '
++		git -c core.whitespace=tab-in-indent,tabwidth=63 \
++			apply --whitespace=fix patch$t.patch &&
++		test_cmp test-$t expect-$t
++	'
++done
++
++test_done
+--
