@@ -1,138 +1,76 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [RFC] Introducing different handling for small/large transactions
-Date: Sun, 18 Jan 2015 13:13:15 +0100
-Message-ID: <54BBA35B.50101@alum.mit.edu>
-References: <1421361371-30221-1-git-send-email-sbeller@google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 8bit
-To: Stefan Beller <sbeller@google.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 18 13:13:31 2015
+From: Yi EungJun <semtlenori@gmail.com>
+Subject: [PATCH v7 0/1] http: Add Accept-Language header if possible
+Date: Sun, 18 Jan 2015 21:23:25 +0900
+Message-ID: <1421583806-3563-1-git-send-email-eungjun.yi@navercorp.com>
+References: <xmqqegri1lbs.fsf@gitster.dls.corp.google.com>
+Cc: Yi EungJun <eungjun.yi@navercorp.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Jeff King <peff@peff.net>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	Michael Blume <blume.mike@gmail.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jan 18 13:23:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YCojS-0006WT-Ki
-	for gcvg-git-2@plane.gmane.org; Sun, 18 Jan 2015 13:13:30 +0100
+	id 1YCotG-0008HN-Ee
+	for gcvg-git-2@plane.gmane.org; Sun, 18 Jan 2015 13:23:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751425AbbARMNY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Jan 2015 07:13:24 -0500
-Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:57963 "EHLO
-	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751143AbbARMNX (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 18 Jan 2015 07:13:23 -0500
-X-AuditID: 12074411-f79fa6d000006b8a-2c-54bba35e06e1
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 0E.92.27530.E53ABB45; Sun, 18 Jan 2015 07:13:18 -0500 (EST)
-Received: from [192.168.69.130] (p5DDB231C.dip0.t-ipconnect.de [93.219.35.28])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t0ICDGrM017449
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Sun, 18 Jan 2015 07:13:17 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.3.0
-In-Reply-To: <1421361371-30221-1-git-send-email-sbeller@google.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrNIsWRmVeSWpSXmKPExsUixO6iqBu3eHeIwavjChZdV7qZLDZvbmdx
-	YPJYsKnU4/MmuQCmKG6bpMSSsuDM9Dx9uwTujL6/r9kKvspW7Jh8lbWB8Yp4FyMnh4SAicT1
-	83eYIWwxiQv31rN1MXJxCAlcZpSY376CGcI5xyTx+uNWNpAqXgFNiRvv2plAbBYBVYnFs34w
-	gthsAroSi3qaweKiAkESV1o2M0PUC0qcnPmEBcQWEbCWWHx/O9gcYQE/iemd31lBbCEBJ4l7
-	C7vBajgFnCV23f0ONodZQE9ix/VfrBC2vETz1tnMExj5ZyEZOwtJ2SwkZQsYmVcxyiXmlObq
-	5iZm5hSnJusWJyfm5aUW6Zrq5WaW6KWmlG5ihASk4A7GGSflDjEKcDAq8fDOCN8dIsSaWFZc
-	mXuIUZKDSUmUV3USUIgvKT+lMiOxOCO+qDQntfgQowQHs5II77ZSoBxvSmJlVWpRPkxKmoNF
-	SZyXb4m6n5BAemJJanZqakFqEUxWhoNDSYKXfRFQo2BRanpqRVpmTglCmomDE2Q4l5RIcWpe
-	SmpRYmlJRjwoJuOLgVEJkuIB2ssC0s5bXJCYCxSFaD3FqCglzmsEkhAASWSU5sGNhaWZV4zi
-	QF8K8+qBVPEAUxRc9yugwUxAg/Mf7wAZXJKIkJJqYKxtT3kW3L3fNpfhktGvAsV3L8WSPgjo
-	bLC8lNa6V6uQy5Dn+x737yx3Tu7IV/HKj53+iUN5hfSO6mUlsUnObjPXhU9ZwGx97XGD2+TK
-	i8dt1nIfX/z76vHIF5PMvK0es9s1rjVgPPTPxUOlUT341qpbQl8nK8neTttRcXoH 
+	id S1752011AbbARMXe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Jan 2015 07:23:34 -0500
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:55317 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751317AbbARMXd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Jan 2015 07:23:33 -0500
+Received: by mail-pa0-f43.google.com with SMTP id lj1so7476700pab.2
+        for <git@vger.kernel.org>; Sun, 18 Jan 2015 04:23:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to;
+        bh=noX36RLFDuZuSWL/wE2SXn6383rwnlnei+fKVdK0fgo=;
+        b=iUdZ0v9pVUrZL30glVzu9/Z5NyDsw9V52eSJDdoIUs/CQZQyBdRDhcq0iBYy4iYZ2G
+         17zlsNSWXKXfCkRuiBm7d+yiloKjhiOCBDCt0vvHe6faMSnnzXNQPes7Lrxt+K9zax9m
+         lA+SNZK6SU2FnjbrRKqF9txtYuCyTyBHA6LvX1aF+S023yZ14lFobtHOl3XZ5Iaj1bnR
+         x3H2aVPBX4wUOzeE0Y+uPrUG7e7HBvKOs6SFP1Yz1qDtsR4gatKqtDO83eZFF6XyEBE9
+         CDut4nSYvZDZ7AWN4f5z/wPvIAZ+wP/yg+Fhg7/KCMpl9PsK8iLvR6TeeeOBPKR7Sjth
+         mZUQ==
+X-Received: by 10.66.253.168 with SMTP id ab8mr36396003pad.153.1421583812878;
+        Sun, 18 Jan 2015 04:23:32 -0800 (PST)
+Received: from gmail.com ([121.130.252.34])
+        by mx.google.com with ESMTPSA id nk6sm8886695pdb.89.2015.01.18.04.23.29
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 18 Jan 2015 04:23:32 -0800 (PST)
+X-Google-Original-From: Yi EungJun <eungjun.yi@navercorp.com>
+X-Mailer: git-send-email 2.2.0.44.g37b3e56.dirty
+In-Reply-To: <xmqqegri1lbs.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262598>
 
-On 01/15/2015 11:36 PM, Stefan Beller wrote:
-> For everyday use we want git to be fast. Creating one commit should not
-> touch the packed refs file. If we do other stuff involving more than
-> one ref, we may accept touching the packed refs file and have a process
-> which takes slightly longer but can handle more complex requests correctly,
-> such as renaming into and from directories (topic/1 -> topic and reverse).
-> Renaming is currently not part of the transaction API because of the (D/F)
-> problems. This proposed change would enable having renames being part of
-> the transactions API.
-> 
-> A transaction covers creating, deleting and updating a ref and its reflog.
-> Renaming would be a deletion followed by creating a new ref atomically.
+From: Yi EungJun <eungjun.yi@navercorp.com>
 
-A rename is a little bit more than a generic delete+create pair; it also
-moves the reflog from the old name to the new name. Is your plan to add
-an extra "rename" operation to the refs-transactions API, or to
-automatically detect delete+create pairs and treat them as renames?
+Changes since v6
 
-> So for here is my proposal for small transactions:
-> (just one ref [and/or reflog] touched):
-> 
-> In ref_transaction_update:
-> 	* create $REF.lock file
-> 	* write new content to the lock file
-> 
-> In ref_transaction_commit
-> 	* commit the .lock file to its destination
-> 	* in case this is a deletion:
-> 		* remove the loose ref
-> 		* and repack the packed refs file if necessary
+>From Junio C Hamano's review:
 
-The above describes the current algorithm, but FYI it is not entirely
-correct. The deletion of the loose ref might expose an old version of
-the reference in the packed-refs file (which might even point at an
-object that has been garbage-collected. So the reference has to be
-deleted from the packed-refs file before the loose ref version is deleted.
+* Fix check_language() in t5550-http-fetch-dumb.sh as his suggestion.
 
-However, it is important that the packed-ref lock be held during the
-whole procedure, so that a pack-refs process doesn't rewrite the loose
-ref version of the reference into the (now-unlocked) packed-refs file,
-causing the reference to survive its supposed deletion. (At least that
-was the status a while ago; I don't know if recent changes to pack-refs
-might have removed this problem in another way.)
+>From Eric Sunshine's review:
 
-But activating a new packed-refs file while still holding the
-packed-refs lock is not supported by our current lockfile API. In fact,
-working towards enabling this was one of the reasons for the big
-lockfile refactoring that I did a while back. Though I never got as far
-as fixing this bug.
+* Rewrite the parser without state.
 
-> The larger transactions would be handled differently by relying
-> on the packed refs file:
-> In ref_transaction_update:
-> 	* detect if we transition to a large transaction
-> 	  (by having more than one entry in transaction->updates)
-> 	  if so:
-> 		* Pack all currently existing refs into the packed
-> 		  refs file, commit the packed refs file and delete
-> 		  all loose refs. This will avoid (d/f) conflicts.
-> 
-> 		* Keep the packed-refs file locked and move the first
-> 		  transaction update into the packed-refs.lock file
+Yi EungJun (1):
+  http: Add Accept-Language header if possible
 
-NB: this requires not just one but two rewrites of the packed-refs file,
-sharpening the performance concerns expressed elsewhere in this thread.
-
-But couldn't one of the rewrites be avoided if the transaction doesn't
-involve any deletes?
-
-> 	* Any update(delete, create, update) is put into the locked
-> 	  packed refs file.
-> 	* Additionally we need to obtain the .lock for the loose refs
-> 	  file to keep guarantees, though we should close the file
-> 	  descriptor as we don't wand to run out of file descriptors.
-> 
-> In ref_transaction_commit:
-> 	* We only need to commit the packed refs file
-> 	* Discard all other lock files as the changes get committed as a whole
-> 	  by the packed refs file
-
-Michael
+ http.c                     | 152 +++++++++++++++++++++++++++++++++++++++++++++
+ remote-curl.c              |   2 +
+ t/t5550-http-fetch-dumb.sh |  42 +++++++++++++
+ 3 files changed, 196 insertions(+)
 
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
+2.2.0.44.g37b3e56.dirty
