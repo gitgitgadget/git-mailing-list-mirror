@@ -1,68 +1,108 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: [PATCH] git-p4: support exclude in 'git p4 sync'
-Date: Sun, 18 Jan 2015 09:02:55 -0500
-Message-ID: <20150118140255.GA18490@padd.com>
-References: <1421528198-16749-1-git-send-email-luke@diamand.org>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: [L10N] Startup of Git 2.3.0 l10n round 2
+Date: Sun, 18 Jan 2015 22:47:36 +0800
+Message-ID: <CANYiYbH0dczJ3YRzyKHW1BEzZy3Odo8VvbCiWrkXhasp-35uCQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Luke Diamand <luke@diamand.org>
-X-From: git-owner@vger.kernel.org Sun Jan 18 15:10:57 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Alexander Shopov <ash@kambanaria.org>,
+	Alex Henrie <alexhenrie24@gmail.com>,
+	Ralf Thielow <ralf.thielow@googlemail.com>,
+	=?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
+	Marco Paolone <marcopaolone@gmail.com>,
+	Marco Sousa <marcomsousa@gmail.com>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	=?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
+	Jiang Xin <worldhello.net@gmail.com>,
+	Brian Gesiak <modocache@gmail.com>,
+	Dimitriy Ryazantcev <dimitriy.ryazantcev@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jan 18 15:47:43 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YCqZ2-00018I-EC
-	for gcvg-git-2@plane.gmane.org; Sun, 18 Jan 2015 15:10:52 +0100
+	id 1YCr8g-0007yy-82
+	for gcvg-git-2@plane.gmane.org; Sun, 18 Jan 2015 15:47:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752697AbbAROKs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Jan 2015 09:10:48 -0500
-Received: from honk.padd.com ([71.19.245.7]:53438 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751374AbbAROKr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Jan 2015 09:10:47 -0500
-X-Greylist: delayed 469 seconds by postgrey-1.27 at vger.kernel.org; Sun, 18 Jan 2015 09:10:47 EST
-Received: from arf.padd.com (unknown [50.111.111.202])
-	by honk.padd.com (Postfix) with ESMTPSA id 85BAC6371;
-	Sun, 18 Jan 2015 06:02:57 -0800 (PST)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id B0C1520BEC; Sun, 18 Jan 2015 09:02:55 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <1421528198-16749-1-git-send-email-luke@diamand.org>
+	id S1751676AbbAROri convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 18 Jan 2015 09:47:38 -0500
+Received: from mail-wg0-f47.google.com ([74.125.82.47]:35977 "EHLO
+	mail-wg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751090AbbAROrh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 18 Jan 2015 09:47:37 -0500
+Received: by mail-wg0-f47.google.com with SMTP id z12so2133943wgg.6
+        for <git@vger.kernel.org>; Sun, 18 Jan 2015 06:47:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=KBP1T6xH51G0FeHoQvBC14X9sIQmgx/2nU1WyGhZ77k=;
+        b=K+rlohK+d7ZoEZwLd1X3dP+AiQXSCdrf6vTmXu3AZu2PiiKg4tFpyLXwZQpU4Xb76X
+         QOKTLlH3Z36HE+h8yBjqpQ7MsOvr9njEFyHtyngqIKpRmzQgKEM5n3AVAA6rKsf0+SU9
+         ZudSKcWjlj601Bs3BtRMTjOsYjRG22IQVYJCeDcRT4MtdrpRyI8uKxwz7cTy7Jx3nCd9
+         lSlfl8XMNSqtx9SzvgOrLFO5XorSEoVOfZ18+s0l49Z4ae/PxCVvZEmuHk0rNm7xzvUz
+         7J+X8yNuX5VzObV9gPX5pnmxsx1vu94Z0XkAPqB7N9kj2yh7rULU6RH4xDLbjmf1e71i
+         c/Cw==
+X-Received: by 10.195.12.15 with SMTP id em15mr50452091wjd.80.1421592456465;
+ Sun, 18 Jan 2015 06:47:36 -0800 (PST)
+Received: by 10.194.80.131 with HTTP; Sun, 18 Jan 2015 06:47:36 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262600>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262601>
 
-luke@diamand.org wrote on Sat, 17 Jan 2015 20:56 +0000:
-> The git-p4 'clone' subcommand has long had the option to specify
-> parts of the repo to be excluded, on the command line. But this has
-> not been present in 'sync', which makes it less than useful: as
-> soon as you do a sync, the excluded parts start being repopulated
-> as those directories are changed.
-> 
-> (You can achieve the same effect by using a client specification to
-> do the exclusion, but that's then an extra step).
-> 
-> The code for doing the exclusion is actually all present in the base
-> 'P4Sync' class: this change turns that on by moving the definition
-> of the command-line switch.
-> 
-> It also updates the documentation and adds a test-case.
-> 
-> Thanks,
-> Luke
-> 
-> And yes, I'm back to using version control systems other than git :-(
+Hi,
 
-So sorry. I on the other hand have been fortunate enough to
-switch to using only git.
+=46ive l10n teams (Vietnamese, French, Swedish, Simplified Chinese and
+German) have already accomplished the 1st round l10n for Git 2.3.0.
 
-Nevertheless, I read through the patch and it looks good and
-makes sense. You've got my ack on this for what it's worth.
-Hopefully someone else starts picking up the git-p4 maintenance
-work. Hint.
+Now let's start l10n round 2 for the upcoming Git 2.3.0, because
+there are 3 new i18n updates found in Git master.
 
-		-- Pete
+The new "git.pot" is generated in commit v2.3.0-rc0-56-g105979f:
+
+    l10n: git.pot: v2.3.0 round 2 (3 updated)
+
+    Generate po/git.pot from v2.3.0-rc0-44-ga94655d for git v2.3.0 l10n
+    round 2.
+
+    Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+
+You can get it from the usual place:
+
+    https://github.com/git-l10n/git-po/
+
+As how to update your XX.po and help to translate Git, please see
+"Updating a XX.po file" and other sections in "po/README" file.
+
+--
+Jiang Xin
+
+2015-01-13 14:41 GMT+08:00 Jiang Xin <worldhello.net@gmail.com>:
+> Hi,
+>
+> Since Git v2.3.0-rc0 had already been released, it's time to start ne=
+w round
+> of git l10n. This time there are 13 new messages need to be translate=
+d since
+> last update for v2.2.0:
+>
+>     l10n: git.pot: v2.3.0 round 1 (13 new, 11 removed)
+>
+>     Generate po/git.pot from v2.3.0-rc0 for git v2.3.0 l10n round 1.
+>
+>     Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+>
+> You can get it from the usual place:
+>
+>     https://github.com/git-l10n/git-po/
+>
+> As how to update your XX.po and help to translate Git, please see
+> "Updating a XX.po file" and other sections in =E2=80=9Cpo/README" fil=
+e.
+>
+> --
+> Jiang Xin
