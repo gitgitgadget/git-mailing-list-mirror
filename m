@@ -1,92 +1,76 @@
-From: "Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>
-Subject: [PATCH] rebase -i: respect core.abbrev for real
-Date: Mon, 19 Jan 2015 16:20:48 +0200
-Message-ID: <1421677248-137853-1-git-send-email-kirill.shutemov@linux.intel.com>
-Cc: "Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>
-To: gitster@pobox.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 19 15:21:01 2015
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] branch: add support for --dry-run option
+Date: Mon, 19 Jan 2015 15:20:51 +0100
+Message-ID: <54BD12C3.5050802@drmicha.warpmail.net>
+References: <1421480159-4848-1-git-send-email-kuleshovmail@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Alexander Kuleshov <kuleshovmail@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 19 15:21:03 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YDDCM-0004mG-DG
+	id 1YDDCN-0004mG-GG
 	for gcvg-git-2@plane.gmane.org; Mon, 19 Jan 2015 15:20:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751792AbbASOUw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Jan 2015 09:20:52 -0500
-Received: from mga02.intel.com ([134.134.136.20]:34116 "EHLO mga02.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751734AbbASOUw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Jan 2015 09:20:52 -0500
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by orsmga101.jf.intel.com with ESMTP; 19 Jan 2015 06:20:51 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.09,427,1418112000"; 
-   d="scan'208";a="653177663"
-Received: from black.fi.intel.com ([10.237.72.86])
-  by fmsmga001.fm.intel.com with ESMTP; 19 Jan 2015 06:20:49 -0800
-Received: by black.fi.intel.com (Postfix, from userid 1000)
-	id 37F6A9D; Mon, 19 Jan 2015 16:20:49 +0200 (EET)
-X-Mailer: git-send-email 2.1.4
+	id S1751809AbbASOUy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Jan 2015 09:20:54 -0500
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:35803 "EHLO
+	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751734AbbASOUx (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Jan 2015 09:20:53 -0500
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailout.nyi.internal (Postfix) with ESMTP id DD58120006
+	for <git@vger.kernel.org>; Mon, 19 Jan 2015 09:20:52 -0500 (EST)
+Received: from frontend1 ([10.202.2.160])
+  by compute5.internal (MEProxy); Mon, 19 Jan 2015 09:20:52 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=x-sasl-enc:message-id:date:from
+	:mime-version:to:cc:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=mMI8fSeQt6GNtJXu4bjiUg
+	kr1L0=; b=stLstZmLcX7JOdCwMjsIP6AS6yPHeMlCotbdFV97miaSd1bjxkuyXa
+	s7x30VOk0HehHggpLt3XAncuph5FHFfcK7bhIjLAcgqq0bXq7fTsE9uWNte5i18r
+	2pQUw5sFhW6gSfrT67D/S2VDQkgkumL1pyXkkO3DVESLihNPEymYA=
+X-Sasl-enc: SXQf4hbUea4/Kxq4xtOhTWoJaqmcm7nEjj+XCnN39j6v 1421677252
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 4A6D0C00018;
+	Mon, 19 Jan 2015 09:20:52 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
+In-Reply-To: <1421480159-4848-1-git-send-email-kuleshovmail@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262615>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262616>
 
-I have tried to fix this before: see 568950388be2, but it doesn't
-really work.
+Alexander Kuleshov schrieb am 17.01.2015 um 08:35:
+> This patch adds support -d/--dry-run option for branch(es) deletion.
+> If -d/--dry-run option passed to git branch -d branch..., branch(es)
+> will not be removed, instead just print list of branches that are
+> to be removed.
+> 
+> For example:
+> 
+>     $ git branch
+>     a
+>     b
+>     c
+>     * master
+> 
+>     $ git branch -d -n a b c
+>     delete branch 'a' (261c0d1)
+>     delete branch 'b' (261c0d1)
+>     delete branch 'c' (261c0d1)
 
-I don't know how it happend, but that commit makes interactive rebase to
-respect core.abbrev only during --edit-todo, but not the initial todo
-list edit.
+Is there a case where deleting "a b c" would not delete "a b c"?
 
-For this time I've included a test-case to avoid this frustration again.
+In other words: What new information does a dry-run give the user, other
+than what "branch --list -v" would give already? (We could need a
+shortcut on the latter, but that is a different topic.)
 
-Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
----
- git-rebase--interactive.sh    | 4 ++--
- t/t3404-rebase-interactive.sh | 7 +++++++
- 2 files changed, 9 insertions(+), 2 deletions(-)
-
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index c6a4629cbc2b..1855e12f1ada 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -962,7 +962,7 @@ else
- 	shortrevisions=$shorthead
- fi
- git rev-list $merges_option --pretty=oneline --abbrev-commit \
--	--abbrev=7 --reverse --left-right --topo-order \
-+	--reverse --left-right --topo-order \
- 	$revisions ${restrict_revision+^$restrict_revision} | \
- 	sed -n "s/^>//p" |
- while read -r shortsha1 rest
-@@ -1020,7 +1020,7 @@ then
- 			# just the history of its first-parent for others that will
- 			# be rebasing on top of it
- 			git rev-list --parents -1 $rev | cut -d' ' -s -f2 > "$dropped"/$rev
--			short=$(git rev-list -1 --abbrev-commit --abbrev=7 $rev)
-+			short=$(git rev-list -1 --abbrev-commit $rev)
- 			sane_grep -v "^[a-z][a-z]* $short" <"$todo" > "${todo}2" ; mv "${todo}2" "$todo"
- 			rm "$rewritten"/$rev
- 		fi
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index 8197ed29a9ec..a8ffc24ce46b 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -1039,4 +1039,11 @@ test_expect_success 'short SHA-1 collide' '
- 	)
- '
- 
-+test_expect_success 'respect core.abbrev' '
-+	git config core.abbrev 12 &&
-+	set_cat_todo_editor &&
-+	test_must_fail git rebase -i HEAD~4 >todo-list 2>&1
-+	test 4 = $(grep -c "pick [0-9a-f]\{12,\}" todo-list)
-+'
-+
- test_done
--- 
-2.1.4
+Michael
