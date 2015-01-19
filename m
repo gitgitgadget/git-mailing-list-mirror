@@ -1,71 +1,81 @@
-From: Jim Garrison <jim@garrison.cc>
-Subject: git config --global not picking up includes
-Date: Mon, 19 Jan 2015 11:37:10 -0800
-Message-ID: <54BD5CE6.2060309@garrison.cc>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] git-config: better document default behavior for `--include`
+Date: Mon, 19 Jan 2015 14:58:47 -0500
+Message-ID: <20150119195847.GA8945@peff.net>
+References: <54BD5CE6.2060309@garrison.cc>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 19 20:42:15 2015
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Jim Garrison <jim@garrison.cc>
+X-From: git-owner@vger.kernel.org Mon Jan 19 20:58:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YDIDF-0008Bz-9S
-	for gcvg-git-2@plane.gmane.org; Mon, 19 Jan 2015 20:42:13 +0100
+	id 1YDITQ-0007G0-BP
+	for gcvg-git-2@plane.gmane.org; Mon, 19 Jan 2015 20:58:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752278AbbASTmI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Jan 2015 14:42:08 -0500
-Received: from smtp74.ord1c.emailsrvr.com ([108.166.43.74]:37270 "EHLO
-	smtp74.ord1c.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751618AbbASTmH (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 19 Jan 2015 14:42:07 -0500
-X-Greylist: delayed 350 seconds by postgrey-1.27 at vger.kernel.org; Mon, 19 Jan 2015 14:42:07 EST
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp2.relay.ord1c.emailsrvr.com (SMTP Server) with ESMTP id BA40118035A
-	for <git@vger.kernel.org>; Mon, 19 Jan 2015 14:36:13 -0500 (EST)
-X-Virus-Scanned: OK
-Received: by smtp2.relay.ord1c.emailsrvr.com (Authenticated sender: jim-AT-garrison.cc) with ESMTPSA id 69649180159
-	for <git@vger.kernel.org>; Mon, 19 Jan 2015 14:36:13 -0500 (EST)
-X-Sender-Id: jim@garrison.cc
-Received: from [10.0.0.6] (ResNet-10-42.resnet.ucsb.edu [169.231.10.42])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA)
-	by 0.0.0.0:465 (trex/5.4.2);
-	Mon, 19 Jan 2015 19:36:13 GMT
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.3.0
+	id S1751520AbbAST6u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Jan 2015 14:58:50 -0500
+Received: from cloud.peff.net ([50.56.180.127]:36143 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751473AbbAST6t (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Jan 2015 14:58:49 -0500
+Received: (qmail 3579 invoked by uid 102); 19 Jan 2015 19:58:49 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 19 Jan 2015 13:58:49 -0600
+Received: (qmail 15672 invoked by uid 107); 19 Jan 2015 19:59:13 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 19 Jan 2015 14:59:13 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 19 Jan 2015 14:58:47 -0500
+Content-Disposition: inline
+In-Reply-To: <54BD5CE6.2060309@garrison.cc>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262641>
 
-I have found that `git config --global` does not pick up any include 
-directives in the git config file.
+On Mon, Jan 19, 2015 at 11:37:10AM -0800, Jim Garrison wrote:
 
-For instance, my ~/.gitconfig contains the following:
+> I have found that `git config --global` does not pick up any include
+> directives in the git config file.
 
-     [include]
-         path = /home/garrison/gitconfig-include
+That's by design. You asked for the entries in a specific file, and we
+do not follow any includes by default in that case. You can use
+`--include` if you want to follow includes.
 
-And ~/gitconfig-include in turn contains
+The documentation is quite misleading here, though. Here's a patch.
 
-     [user]
-         name = Jim Garrison
+-- >8 --
+Subject: git-config: better document default behavior for `--include`
 
-However, when I pass the --global flag to git config, my name is not 
-picked up:
+As described in the commit message of 9b25a0b (config: add
+include directive, 2012-02-06), the `--include` option is
+only on by default in some cases. But our documentation
+described it as just "defaults to on", which doesn't tell
+the whole story.
 
-     $ git config --global user.name
-     $ git config user.name
-     Jim Garrison
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ Documentation/git-config.txt | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-If I instead replace .gitconfig with the contents of gitconfig-include 
-(and in turn remove the include step), everything works as expected.
-
-     $ git config --global user.name
-     Jim Garrison
-     $ git config user.name
-     Jim Garrison
-
-I am using the latest git master, built on Debian jessie.
+diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
+index 9dfa1a5..d42c062 100644
+--- a/Documentation/git-config.txt
++++ b/Documentation/git-config.txt
+@@ -215,7 +215,9 @@ See also <<FILES>>.
+ 
+ --[no-]includes::
+ 	Respect `include.*` directives in config files when looking up
+-	values. Defaults to on.
++	values. Defaults to `off` when a specific file is given (e.g.,
++	using `--file`, `--global`, etc) and `on` when searching all
++	config files.
+ 
+ [[FILES]]
+ FILES
+-- 
+2.2.1.425.g441bb3c
