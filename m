@@ -1,130 +1,92 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Proper plumbing for porcelain gpg formats on git show?
-Date: Mon, 19 Jan 2015 15:13:34 +0100
-Message-ID: <54BD110E.2080801@drmicha.warpmail.net>
-References: <EB979B4B153D49909C78239A333869FB@black><20150116192947.GD29365@google.com> <xmqqk30m1p0t.fsf@gitster.dls.corp.google.com> <6B1E582B25CD4722B8993C5A3C304ECA@black>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-To: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	jpyeron@pdinc.us
-X-From: git-owner@vger.kernel.org Mon Jan 19 15:13:44 2015
+From: "Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>
+Subject: [PATCH] rebase -i: respect core.abbrev for real
+Date: Mon, 19 Jan 2015 16:20:48 +0200
+Message-ID: <1421677248-137853-1-git-send-email-kirill.shutemov@linux.intel.com>
+Cc: "Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>
+To: gitster@pobox.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 19 15:21:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YDD5J-0002Ea-2A
-	for gcvg-git-2@plane.gmane.org; Mon, 19 Jan 2015 15:13:41 +0100
+	id 1YDDCM-0004mG-DG
+	for gcvg-git-2@plane.gmane.org; Mon, 19 Jan 2015 15:20:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751452AbbASONh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Jan 2015 09:13:37 -0500
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:44964 "EHLO
-	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751404AbbASONg (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 19 Jan 2015 09:13:36 -0500
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.nyi.internal (Postfix) with ESMTP id C4DC6208FE
-	for <git@vger.kernel.org>; Mon, 19 Jan 2015 09:13:35 -0500 (EST)
-Received: from frontend1 ([10.202.2.160])
-  by compute3.internal (MEProxy); Mon, 19 Jan 2015 09:13:35 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=x-sasl-enc:message-id:date:from
-	:mime-version:to:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=yEH7IqVVx5whmXbdfZMlgs
-	Z6YCg=; b=EuIjmCDftMCPDI46BxvGYVDzhzjoYlQAmuFFnSQKjpi8DNxp2q2dtH
-	vkd5kFVKdoSebMvluEr7CE/mlMsgWV/VMZZQkBHoTdzli4U4N/SonlEaNqitzBdC
-	RT260NDv7HPCPu6UEaauYAsrDPV7c8TmFSnqErHcXzEGaRRJvbMlI=
-X-Sasl-enc: Jdm7r+9+0jklg5qq9fj6eOxE9HIx8hN+fL+f2cz6RhF2 1421676815
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 0579CC00019;
-	Mon, 19 Jan 2015 09:13:34 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
-In-Reply-To: <6B1E582B25CD4722B8993C5A3C304ECA@black>
+	id S1751792AbbASOUw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Jan 2015 09:20:52 -0500
+Received: from mga02.intel.com ([134.134.136.20]:34116 "EHLO mga02.intel.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751734AbbASOUw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Jan 2015 09:20:52 -0500
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by orsmga101.jf.intel.com with ESMTP; 19 Jan 2015 06:20:51 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.09,427,1418112000"; 
+   d="scan'208";a="653177663"
+Received: from black.fi.intel.com ([10.237.72.86])
+  by fmsmga001.fm.intel.com with ESMTP; 19 Jan 2015 06:20:49 -0800
+Received: by black.fi.intel.com (Postfix, from userid 1000)
+	id 37F6A9D; Mon, 19 Jan 2015 16:20:49 +0200 (EET)
+X-Mailer: git-send-email 2.1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262614>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262615>
 
-Jason Pyeron schrieb am 16.01.2015 um 21:05:
->> -----Original Message-----
->> From: Junio C Hamano
->> Sent: Friday, January 16, 2015 14:53
->>
->> Jonathan Nieder <jrnieder@gmail.com> writes:
->>
->>>> would there be interest in accepting a patch for 
->>>>
->>>> %Gs - the raw GPG text from the commit
->>>> %Gf - the key fingerprint
->>>
->>> There may be bikeshedding on the exact format specifier, but aside
->>> from that I don't see why not. ;-)
->>
->> I was about to say "As long as the execution is good, why not?
->> Spawning an extra process 'gpg --list-packets' is not quite
->> acceptable without properly being lazy is not acceptable".
->>
->> But verify_signed_buffer() reads "gpg --status-fd=1 --verify"
->> output, it is already done lazily in format_commit_one() only when
->> the "%G?" placeholder is used, and the output we parse that are
->> prefixed by [GNUPG:] should have enough information to grab the
->> fingerprint from on the VALIDSIG line.
->>
->> So I do not see a lot of room to screw-up the execution ;-).
-> 
-> This kind of begs the question of extracting signatures, not in one's keyring. I was surprised to see %GK fail because it was not yet in the keyring. I would also expect a "B", not a "N" for %G?, maybe there should be a "X" for can't verify.
-> 
-> $ gpg --delete-keys DA0848AD
-> gpg (GnuPG) 2.0.14; Copyright (C) 2009 Free Software Foundation, Inc.
-> This is free software: you are free to change and redistribute it.
-> There is NO WARRANTY, to the extent permitted by law.
-> 
-> 
-> pub  2048R/DA0848AD 2014-06-24 Jason Pyeron <jpyeron@pdinc.us>
-> 
-> Delete this key from the keyring? (y/N) y
-> 
-> $ git diff-tree -s --format=%G? HEAD
-> N
-> 
-> $ git diff-tree -s --format=%GG HEAD
-> gpg: Signature made Fri 16 Jan 2015 01:33:12 PM EST using RSA key ID DA0848AD
-> gpg: Can't check signature: No public key
-> 
-> 
-> $ git diff-tree -s --format=%GK HEAD
-> 
-> $ gpg --keyserver hkp://pgp.mit.edu --recv-keys 8D6B5984DA0848AD
-> gpg: requesting key DA0848AD from hkp server pgp.mit.edu
-> gpg: key DA0848AD: public key "Jason Pyeron <jpyeron@pdinc.us>" imported
-> gpg: Total number processed: 1
-> gpg:               imported: 1  (RSA: 1)
-> 
-> $ git diff-tree -s --format=%G? HEAD
-> U
-> 
-> $ git diff-tree -s --format=%GG HEAD
-> gpg: Signature made Fri 16 Jan 2015 01:33:12 PM EST using RSA key ID DA0848AD
-> gpg: Good signature from "Jason Pyeron <jpyeron@pdinc.us>"
-> gpg: WARNING: This key is not certified with a trusted signature!
-> gpg:          There is no indication that the signature belongs to the owner.
-> Primary key fingerprint: 8C88 9ECF 7A2F 7977 7CE9  13B4 8D6B 5984 DA08 48AD
-> 
-> 
-> $ git diff-tree -s --format=%GK HEAD
-> 8D6B5984DA0848AD
+I have tried to fix this before: see 568950388be2, but it doesn't
+really work.
 
-I'm not exactly sure what you are trying to extract, but "git
-verify-commit -v" gives you the actual signature, which you can then
-feed into gpg/gpgsplit for surgery according to taste.
+I don't know how it happend, but that commit makes interactive rebase to
+respect core.abbrev only during --edit-todo, but not the initial todo
+list edit.
 
-As far as git goes, I think it should give you all gpg information that
-it has available but not morph into a gpg frontend or trust manager.
+For this time I've included a test-case to avoid this frustration again.
 
-Ultimately, signature verification in its true meaning requires human
-inspection of the full gpg output.
+Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+---
+ git-rebase--interactive.sh    | 4 ++--
+ t/t3404-rebase-interactive.sh | 7 +++++++
+ 2 files changed, 9 insertions(+), 2 deletions(-)
 
-Michael
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index c6a4629cbc2b..1855e12f1ada 100644
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -962,7 +962,7 @@ else
+ 	shortrevisions=$shorthead
+ fi
+ git rev-list $merges_option --pretty=oneline --abbrev-commit \
+-	--abbrev=7 --reverse --left-right --topo-order \
++	--reverse --left-right --topo-order \
+ 	$revisions ${restrict_revision+^$restrict_revision} | \
+ 	sed -n "s/^>//p" |
+ while read -r shortsha1 rest
+@@ -1020,7 +1020,7 @@ then
+ 			# just the history of its first-parent for others that will
+ 			# be rebasing on top of it
+ 			git rev-list --parents -1 $rev | cut -d' ' -s -f2 > "$dropped"/$rev
+-			short=$(git rev-list -1 --abbrev-commit --abbrev=7 $rev)
++			short=$(git rev-list -1 --abbrev-commit $rev)
+ 			sane_grep -v "^[a-z][a-z]* $short" <"$todo" > "${todo}2" ; mv "${todo}2" "$todo"
+ 			rm "$rewritten"/$rev
+ 		fi
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index 8197ed29a9ec..a8ffc24ce46b 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -1039,4 +1039,11 @@ test_expect_success 'short SHA-1 collide' '
+ 	)
+ '
+ 
++test_expect_success 'respect core.abbrev' '
++	git config core.abbrev 12 &&
++	set_cat_todo_editor &&
++	test_must_fail git rebase -i HEAD~4 >todo-list 2>&1
++	test 4 = $(grep -c "pick [0-9a-f]\{12,\}" todo-list)
++'
++
+ test_done
+-- 
+2.1.4
