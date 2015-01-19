@@ -1,82 +1,102 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] rebase -i: respect core.abbrev for real
-Date: Mon, 19 Jan 2015 17:43:52 -0500
-Message-ID: <CAPig+cQcYXzRwHMRcKQJf-mWq7d9Kgp7KndnEhFs4_mwgLpiiA@mail.gmail.com>
-References: <1421677248-137853-1-git-send-email-kirill.shutemov@linux.intel.com>
+Subject: Re: [PATCH v2 15/18] fsck: Document the new receive.fsck.* options.
+Date: Mon, 19 Jan 2015 17:44:45 -0500
+Message-ID: <CAPig+cSVUAV_6c0Zv36aA++AWCG05yxq-LpPsQ89VoepHGUBRw@mail.gmail.com>
+References: <xmqqr3w7gxr4.fsf@gitster.dls.corp.google.com>
+	<cover.1421682369.git.johannes.schindelin@gmx.de>
+	<41d4880fc48ad39d4798c2f9a0cb38a6a41c41b3.1421682369.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: "Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>
-X-From: git-owner@vger.kernel.org Mon Jan 19 23:43:58 2015
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jan 19 23:44:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YDL38-0006Eo-47
-	for gcvg-git-2@plane.gmane.org; Mon, 19 Jan 2015 23:43:58 +0100
+	id 1YDL3y-0006Yf-Id
+	for gcvg-git-2@plane.gmane.org; Mon, 19 Jan 2015 23:44:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751550AbbASWny (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Jan 2015 17:43:54 -0500
-Received: from mail-yk0-f180.google.com ([209.85.160.180]:46603 "EHLO
-	mail-yk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750956AbbASWnx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Jan 2015 17:43:53 -0500
-Received: by mail-yk0-f180.google.com with SMTP id 9so15625840ykp.11
-        for <git@vger.kernel.org>; Mon, 19 Jan 2015 14:43:52 -0800 (PST)
+	id S1751623AbbASWoq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Jan 2015 17:44:46 -0500
+Received: from mail-yk0-f179.google.com ([209.85.160.179]:58661 "EHLO
+	mail-yk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751514AbbASWop (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Jan 2015 17:44:45 -0500
+Received: by mail-yk0-f179.google.com with SMTP id 142so291576ykq.10
+        for <git@vger.kernel.org>; Mon, 19 Jan 2015 14:44:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc:content-type;
-        bh=9JjXuqIyOgsZovGbk6jYKFzcwXzHPXolPivFey2EuNQ=;
-        b=PP1ALjqa+cxP4dOOEzq4vlRzU1eFaGh/OPLHlxfGpga+/yF4LuVvwjvam3dtRL/iBx
-         QzCBnXg4oBkfdRa6BtMW892FWLYMgfOc1G0t5HT3woFORdbAUAYqAmJvGGLEFVFVUEVE
-         Tq34O9v0b/RrHwQM3olHJNUJ32tz+5Mt8d28coGW80+7D0isY2qcVrML0R7kqV1G6VxR
-         XVkTdZLiyMK6iFtVeuqLn2QAzwAMPOWFncDQSyNdeFsD73X6wKl5c3pyNhhUyGvAeaNf
-         PgOI/cQo1oBUGNapA2yhEY7NZZt7Z2z9VOqVZFWyGhtssLE9UPtihfLjkuxjftDOywX0
-         dfjw==
-X-Received: by 10.236.89.172 with SMTP id c32mr19899653yhf.180.1421707432690;
- Mon, 19 Jan 2015 14:43:52 -0800 (PST)
-Received: by 10.170.73.7 with HTTP; Mon, 19 Jan 2015 14:43:52 -0800 (PST)
-In-Reply-To: <1421677248-137853-1-git-send-email-kirill.shutemov@linux.intel.com>
-X-Google-Sender-Auth: PkFt68LSZ2vq8mEA86XS2KKA6HY
+        bh=7WLA6yyrqx9jxf5rIfiBRigGIAVKQ0+dg7LzEbigkso=;
+        b=zzUpo9SS/Jpr3iMptaXv0bjy+wcSrVVNF0r0IEhAaWL6eAzAADQqOnDQ9L/UMXxPvl
+         W7gsHp3SFWgpI7MeieEy5FSBDMM+ptpzV2s6BGEHPgTsSbN3YdfVbKQ4Q1B3FexEpcu/
+         JzlrPulGAVHL+an8cHFFdDjXIMrZwbRhGnp/N1HVcyei1woC4wexhZwLruHWAQ34+Ugm
+         ni+6XVxvkpXT0XpIxVdlXNUStgyg/pWSGDb5FSQdMJvdHEe+wxAEOpfv++NaYJZfrcQP
+         KW3XnLTpr3XFQ/nw7F24TZ5m7Wy5oznuKOcq6fPdlXcmR/ZY4K9H9XcdPkOzRgJnVMt2
+         eQlg==
+X-Received: by 10.170.119.7 with SMTP id l7mr21493671ykb.51.1421707485131;
+ Mon, 19 Jan 2015 14:44:45 -0800 (PST)
+Received: by 10.170.73.7 with HTTP; Mon, 19 Jan 2015 14:44:45 -0800 (PST)
+In-Reply-To: <41d4880fc48ad39d4798c2f9a0cb38a6a41c41b3.1421682369.git.johannes.schindelin@gmx.de>
+X-Google-Sender-Auth: uuRX7NUH_xZmQ8uU3mMyextRlzA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262644>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262645>
 
-On Mon, Jan 19, 2015 at 9:20 AM, Kirill A. Shutemov
-<kirill.shutemov@linux.intel.com> wrote:
-> I have tried to fix this before: see 568950388be2, but it doesn't
-> really work.
->
-> I don't know how it happend, but that commit makes interactive rebase to
-> respect core.abbrev only during --edit-todo, but not the initial todo
-> list edit.
->
-> For this time I've included a test-case to avoid this frustration again.
->
-> Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+On Mon, Jan 19, 2015 at 10:51 AM, Johannes Schindelin
+<johannes.schindelin@gmx.de> wrote:
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > ---
-> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-> index 8197ed29a9ec..a8ffc24ce46b 100755
-> --- a/t/t3404-rebase-interactive.sh
-> +++ b/t/t3404-rebase-interactive.sh
-> @@ -1039,4 +1039,11 @@ test_expect_success 'short SHA-1 collide' '
->         )
->  '
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index ae6791d..7371a5f 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -2130,6 +2130,31 @@ receive.fsckObjects::
+>         Defaults to false. If not set, the value of `transfer.fsckObjects`
+>         is used instead.
 >
-> +test_expect_success 'respect core.abbrev' '
-> +       git config core.abbrev 12 &&
-> +       set_cat_todo_editor &&
-> +       test_must_fail git rebase -i HEAD~4 >todo-list 2>&1
+> +receive.fsck.*::
+> +       When `receive.fsckObjects` is set to true, errors can be switched
+> +       to warnings and vice versa by configuring the `receive.fsck.*`
+> +       settings. These settings contain comma-separated lists of fsck
+> +       message IDs. For convenience, fsck prefixes the error/warning with
+> +       the message ID, e.g. "missing-email: invalid author/committer line
+> +       - missing email" means that setting `receive.fsck.ignore =
+> +       missing-email` will hide that issue.
+> ++
+> +--
+> +       error::
+> +               a comma-separated list of fsck message IDs that should be
+> +               trigger fsck to error out.
+> +       warn::
+> +               a comma-separated list of fsck message IDs that should be
+> +               displayed, but fsck should continue to error out.
+> +       ignore::
+> +               a comma-separated list of fsck message IDs that should be
+> +               ignored completely.
+> ++
+> +This feature is intended to support working with legacy repositories
+> +which would not pass pushing when `receive.fsckObjects = true`, allowing
+> +the host to accept repositories certain known issues but still catch
 
-Broken &&-chain.
+s/certain/with &/
 
-> +       test 4 = $(grep -c "pick [0-9a-f]\{12,\}" todo-list)
-> +'
+> +other issues.
 > +
->  test_done
+>  receive.unpackLimit::
+>         If the number of objects received in a push is below this
+>         limit then the objects will be unpacked into loose object
 > --
-> 2.1.4
+> 2.0.0.rc3.9669.g840d1f9
+>
+>
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
