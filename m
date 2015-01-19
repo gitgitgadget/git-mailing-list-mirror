@@ -1,81 +1,60 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] git-config: better document default behavior for `--include`
-Date: Mon, 19 Jan 2015 14:58:47 -0500
-Message-ID: <20150119195847.GA8945@peff.net>
-References: <54BD5CE6.2060309@garrison.cc>
+From: Maximilian Held <maximilian.held83@gmail.com>
+Subject: git --recurse-submodule does not recurse to sub-submodules (etc.)
+Date: Mon, 19 Jan 2015 21:19:12 +0100
+Message-ID: <CACgLhq_kMv2cj4RHr8Yx5tnYup5enCJVMrZf9Yt9Y5-bkfozLg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Jim Garrison <jim@garrison.cc>
-X-From: git-owner@vger.kernel.org Mon Jan 19 20:58:59 2015
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 19 21:20:02 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YDITQ-0007G0-BP
-	for gcvg-git-2@plane.gmane.org; Mon, 19 Jan 2015 20:58:56 +0100
+	id 1YDInn-0001Xi-6B
+	for gcvg-git-2@plane.gmane.org; Mon, 19 Jan 2015 21:19:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751520AbbAST6u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Jan 2015 14:58:50 -0500
-Received: from cloud.peff.net ([50.56.180.127]:36143 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751473AbbAST6t (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Jan 2015 14:58:49 -0500
-Received: (qmail 3579 invoked by uid 102); 19 Jan 2015 19:58:49 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 19 Jan 2015 13:58:49 -0600
-Received: (qmail 15672 invoked by uid 107); 19 Jan 2015 19:59:13 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 19 Jan 2015 14:59:13 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 19 Jan 2015 14:58:47 -0500
-Content-Disposition: inline
-In-Reply-To: <54BD5CE6.2060309@garrison.cc>
+	id S1752238AbbASUT4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Jan 2015 15:19:56 -0500
+Received: from mail-lb0-f179.google.com ([209.85.217.179]:43946 "EHLO
+	mail-lb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752159AbbASUTy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Jan 2015 15:19:54 -0500
+Received: by mail-lb0-f179.google.com with SMTP id z11so30132428lbi.10
+        for <git@vger.kernel.org>; Mon, 19 Jan 2015 12:19:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=PoFTNhFS1Ly7KlUvQy8SDUmWD8t4MTwwd+SPc3nozD8=;
+        b=rfO357Tpv1pGCI/jZ0zE/GhcTpg9X1PzxBKBYKHYOh2IAXcp8vtyxezjrylbP3Kpvn
+         LbmH68L0TFSZmqbUzMfovgjtj0TXV2t3q1+JaEDSSafp23LBneie5KzfLNsr+1Tb3DnN
+         AiADoQ5pIB0LBmmwcL5QM3cbl/D3lu9nLDlaEBGxvrax/DGUstARoWH5PO3NnBM5j6ti
+         2XA8GHzptXNEdhht9oaXT+66b8z9inGbMT/DFsOly9Yklt9834hmzdEMIUKQlikTrfrC
+         tHLLJL5Tti3gY/GulqKPdDuSCv26VO/WBmVrPFKKO56bJwApdK/d9Vrmk7CDEBuGeZ9D
+         DmOA==
+X-Received: by 10.152.7.180 with SMTP id k20mr20680841laa.4.1421698792604;
+ Mon, 19 Jan 2015 12:19:52 -0800 (PST)
+Received: by 10.25.129.203 with HTTP; Mon, 19 Jan 2015 12:19:12 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262641>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262642>
 
-On Mon, Jan 19, 2015 at 11:37:10AM -0800, Jim Garrison wrote:
+I have a directory with nested submodules, such as:
 
-> I have found that `git config --global` does not pick up any include
-> directives in the git config file.
+supermodule/submodule/sub-submodule/sub-sub-submodule
 
-That's by design. You asked for the entries in a specific file, and we
-do not follow any includes by default in that case. You can use
-`--include` if you want to follow includes.
+When I cd to supermodule and do:
 
-The documentation is quite misleading here, though. Here's a patch.
+"git push --recurse-submodule=check" (or on-demand),
 
--- >8 --
-Subject: git-config: better document default behavior for `--include`
+git only pushes the submodule, but not the sub-submodule etc.
 
-As described in the commit message of 9b25a0b (config: add
-include directive, 2012-02-06), the `--include` option is
-only on by default in some cases. But our documentation
-described it as just "defaults to on", which doesn't tell
-the whole story.
+Maybe this is expected behavior and not a bug, but I thought it was
+pretty unintuitive. I expected that git would push, well, recursively.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- Documentation/git-config.txt | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+Best
+Max
 
-diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-index 9dfa1a5..d42c062 100644
---- a/Documentation/git-config.txt
-+++ b/Documentation/git-config.txt
-@@ -215,7 +215,9 @@ See also <<FILES>>.
- 
- --[no-]includes::
- 	Respect `include.*` directives in config files when looking up
--	values. Defaults to on.
-+	values. Defaults to `off` when a specific file is given (e.g.,
-+	using `--file`, `--global`, etc) and `on` when searching all
-+	config files.
- 
- [[FILES]]
- FILES
--- 
-2.2.1.425.g441bb3c
+http://www.maxheld.de
