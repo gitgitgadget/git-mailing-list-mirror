@@ -1,168 +1,124 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: [PATCH (resend)] show-branch --upstream: add upstream branches to the list of branches to display
-Date: Mon, 19 Jan 2015 10:42:31 +0900
-Message-ID: <1421631751-20903-1-git-send-email-mh@glandium.org>
-Cc: git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Jan 19 02:42:47 2015
+From: "Kyle J. McKay" <mackyle@gmail.com>
+Subject: Re: [PATCH] test: add git apply whitespace expansion tests
+Date: Sun, 18 Jan 2015 19:54:45 -0800
+Message-ID: <AB9246EB-D720-4A4A-9AB7-4307613C19A3@gmail.com>
+References: <CAO2U3QjGUfnTRO_poS+=-MfE4aYGuWpVJTe20H-u=FgkVy-RYg@mail.gmail.com> <CAO2U3Qjn9o_eYayEMCC3S6DBr9kVH7mPL00QGrXAnV2iYRP-=A@mail.gmail.com> <CAO2U3Qj-Hg2tb72NgO6wb-aqAxFG7aga2ZDeZNDCPJzGtmHTAA@mail.gmail.com> <CAO2U3Qhd_DPP09BUyMr6NKUtOe4EQQ7G83BRg7MbtQXFPjKv8w@mail.gmail.com> <CAO2U3Qje-YwcV1d5BK_zZqrTki4AU=emdkUZzEEieRjmoQdmGg@mail.gmail.com> <CAO2U3Qi4TWZiNoOQVSW=Ycvp3bpBySZrCGmRLCbRJJes_n2Wkw@mail.gmail.com> <99579252-EF8A-4DAF-A49D-2AC5627ED9E3@gmail.com> <4157F6B0-DDF4-4F71-A09B-EE216537CA89@gmail.com> <xmqqbnly1oqo.fsf@gitster.dls.corp.google.com> <xmqqzj9iz3gu.fsf_-_@gitster.dls.corp.google.com> <102e322e68e78e39a7c227f3f3e102c@74d39fa044aa309eaea14b9f57fe79c> <CAPc5daXVk_ROUy7rmzS0aosWvE2wqw8tHZgomHHkay9CZjhbiw@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v936)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: Git mailing list <git@vger.kernel.org>,
+	Michael Blume <blume.mike@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 19 04:54:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YD1MZ-0004ZL-UL
-	for gcvg-git-2@plane.gmane.org; Mon, 19 Jan 2015 02:42:44 +0100
+	id 1YD3QU-0007rh-VU
+	for gcvg-git-2@plane.gmane.org; Mon, 19 Jan 2015 04:54:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751662AbbASBmk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Jan 2015 20:42:40 -0500
-Received: from ks3293202.kimsufi.com ([5.135.186.141]:47614 "EHLO glandium.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751501AbbASBmj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Jan 2015 20:42:39 -0500
-Received: from glandium by zenigata with local (Exim 4.84)
-	(envelope-from <glandium@glandium.org>)
-	id 1YD1MN-0005Rm-F5; Mon, 19 Jan 2015 10:42:31 +0900
-X-Mailer: git-send-email 2.2.2.dirty
+	id S1751350AbbASDyu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Jan 2015 22:54:50 -0500
+Received: from mail-pd0-f178.google.com ([209.85.192.178]:62838 "EHLO
+	mail-pd0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751090AbbASDyt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Jan 2015 22:54:49 -0500
+Received: by mail-pd0-f178.google.com with SMTP id r10so33894892pdi.9
+        for <git@vger.kernel.org>; Sun, 18 Jan 2015 19:54:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:in-reply-to:subject:references:message-id:content-type
+         :content-transfer-encoding:mime-version:date:cc;
+        bh=hJtgRP3jl1dLX3ovIHTNux3coEOYNTceP591JTG2QjQ=;
+        b=tTUY9NX3mBJf+1bp/pgbn2N0Yk3hPrtmgowMilWHLjxWFqIHJocYrG8UWCEoFPSzr/
+         /xloqkxidJNHB0dApuyuttopkEvDJ0cTDekqVrS43xWEY2aNUmOS7K6J6Il5NTyksbiQ
+         aGYRTPxU3pf7pwYs77bSZwNauTPTMKia4AXrH2+saXCBM6pm7W4WBWpfSjf0tpkmQPmU
+         DJrET7PGH8G7Sj/dEJRcbYQXNcPSyWL287iwx3HACgb9J+akSJSpwiEDPBsgBEO8vcoD
+         tA7TFZWKCcHUxCEpOSrBWQY6sXIPjpCM8xXujjhhFesu/5xzibPpVmZXRq4YR2sp7+F+
+         FU0A==
+X-Received: by 10.70.92.200 with SMTP id co8mr40184945pdb.101.1421639688615;
+        Sun, 18 Jan 2015 19:54:48 -0800 (PST)
+Received: from [172.16.16.105] (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
+        by mx.google.com with ESMTPSA id mw3sm10185918pdb.70.2015.01.18.19.54.47
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Sun, 18 Jan 2015 19:54:48 -0800 (PST)
+In-Reply-To: <CAPc5daXVk_ROUy7rmzS0aosWvE2wqw8tHZgomHHkay9CZjhbiw@mail.gmail.com>
+X-Mauler: Craptastic (2.936)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262609>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262610>
 
-`git show-branch` is a useful tool to display topics, but when you have
-several local topic branches based on different upstream branches, it
-can get cumbersome to use the right upstream branch with the right set
-of topic branches.
+On Jan 18, 2015, at 14:11, Junio C Hamano wrote:
 
-The --upstream flag automatically adds the upstream branch for every
-topic branch given, such that:
+> On Sun, Jan 18, 2015 at 2:49 AM, Kyle J. McKay <mackyle@gmail.com>  
+> wrote:
+>> * Here's some tests.  With "apply: make update_pre_post_images()  
+>> sanity
+>>  check the given postlen" but not "apply: count the size of postimage
+>>  correctly" test 1/4 and 4/4 trigger the 'die("BUG: postlen...' but
+>>  test 2/4 and 3/4 do not although they fail because git apply  
+>> generates
+>>  garbage.
+>
+> Do the failing cases that do not trigger the new postlen check fail
+> because the original (mis)counting thinks (incorrectly) that the
+> rewritten result _should_ fit within the original postlen (hence we
+> allow an in-place rewrite by passing postlen=0 to the helper), but
+> in fact after rewriting postimage->len ends up being longer due to
+> the miscounting?
 
-`git show-branch --upstream` is equivalent to `git show-branch
-$(git for-each-ref refs/heads --format '%(refname:short)')
-$(git for-each-ref refs/heads --format '%(upstream:short)')`
+I'm not 100%, but I think so because:
 
-`git show-branch --upstream foo bar` is equivalent to `git show-branch
-foo bar $(git for-each-ref refs/heads/foo refs/heads/bar
---format '%(upstream:short)')`
+Before 250b3c6c (apply --whitespace=fix: avoid running over the  
+postimage buffer, 2013-03-22), tests 1 and 4 tend to easily cause seg  
+faults whereas 2 and 3 just give garbage.
 
-Furthermore, the --topics argument only takes one "upstream" ref. However,
-when combined with --upstream, all the upstream branches are considered,
-and show-branch only shows commits that are NOT on ANY of those upstream
-branches.
+After 250b3c6c (apply --whitespace=fix: avoid running over the  
+postimage buffer, 2013-03-22), tests 1 and 4 may pass without seg  
+faulting although clearly there's some memory corruption going on  
+because after "apply: make update_pre_post_images() sanity check the  
+given postlen" they always die with the BUG message.
 
-Signed-off-by: Mike Hommey <mh@glandium.org>
----
- Documentation/git-show-branch.txt |  6 ++++++
- builtin/show-branch.c             | 42 +++++++++++++++++++++++++++++++++++++--
- 2 files changed, 46 insertions(+), 2 deletions(-)
+I created the tests after reading your description in "apply: count  
+the size of postimage correctly".  I made a guess about what would  
+trigger the problem -- I do not have a deep understanding of the  
+builtin/apply.c code though.  Tests 2 and 3 were attempts to make the  
+discrepancy between counted and needed (assuming the "apply: count the  
+size of postimage correctly" fix has not been applied) progressively  
+worse and instead I ended up with a different kind of failure.  Test 4  
+was then an alternate attempt to create a very large discrepancy and  
+it ended up with BUG: values not that dissimilar from test 1.
 
-diff --git a/Documentation/git-show-branch.txt b/Documentation/git-show-branch.txt
-index b91d4e5..fd29c8d 100644
---- a/Documentation/git-show-branch.txt
-+++ b/Documentation/git-show-branch.txt
-@@ -53,6 +53,10 @@ OPTIONS
- 	branch to the list of revs to be shown when it is not
- 	given on the command line.
- 
-+--upstream::
-+	With this option, the command includes the upstream
-+	branch of each rev to be shown.
-+
- --topo-order::
-         By default, the branches and their commits are shown in
-         reverse chronological order.  This option makes them
-@@ -102,6 +106,8 @@ OPTIONS
- 
- --topics::
- 	Shows only commits that are NOT on the first branch given.
-+	When used with `--upstream`, shows only commits that are NOT
-+	on any upstream branch.
- 	This helps track topic branches by hiding any commit that
- 	is already in the main line of development.  When given
- 	"git show-branch --topics master topic1 topic2", this
-diff --git a/builtin/show-branch.c b/builtin/show-branch.c
-index 270e39c..90e2ac3 100644
---- a/builtin/show-branch.c
-+++ b/builtin/show-branch.c
-@@ -4,9 +4,10 @@
- #include "builtin.h"
- #include "color.h"
- #include "parse-options.h"
-+#include "remote.h"
- 
- static const char* show_branch_usage[] = {
--    N_("git show-branch [-a|--all] [-r|--remotes] [--topo-order | --date-order] [--current] [--color[=<when>] | --no-color] [--sparse] [--more=<n> | --list | --independent | --merge-base] [--no-name | --sha1-name] [--topics] [(<rev> | <glob>)...]"),
-+    N_("git show-branch [-a|--all] [-r|--remotes] [--topo-order | --date-order] [--current] [--upstream] [--color[=<when>] | --no-color] [--sparse] [--more=<n> | --list | --independent | --merge-base] [--no-name | --sha1-name] [--topics] [(<rev> | <glob>)...]"),
-     N_("git show-branch (-g|--reflog)[=<n>[,<base>]] [--list] [<ref>]"),
-     NULL
- };
-@@ -640,6 +641,7 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
- 	int sha1_name = 0;
- 	int shown_merge_point = 0;
- 	int with_current_branch = 0;
-+	int with_upstream_branches = 0;
- 	int head_at = -1;
- 	int topics = 0;
- 	int dense = 1;
-@@ -658,6 +660,8 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
- 		OPT_BOOL(0, "no-name", &no_name, N_("suppress naming strings")),
- 		OPT_BOOL(0, "current", &with_current_branch,
- 			 N_("include the current branch")),
-+		OPT_BOOL(0, "upstream", &with_upstream_branches,
-+			 N_("include upstream branches")),
- 		OPT_BOOL(0, "sha1-name", &sha1_name,
- 			 N_("name commits with their object names")),
- 		OPT_BOOL(0, "merge-base", &merge_base,
-@@ -848,7 +852,41 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
- 		if (commit->object.flags == flag)
- 			commit_list_insert_by_date(commit, &list);
- 		rev[num_rev] = commit;
-+
-+		if (with_upstream_branches) {
-+			unsigned char branch_sha1[20];
-+			struct branch *branch;
-+			int current_ref_name_cnt = ref_name_cnt;
-+
-+			/* If this ref is already marked as an upstream, skip */
-+			if (topics & flag)
-+				continue;
-+
-+			branch = branch_get(ref_name[num_rev]);
-+
-+			if (!branch || !branch->merge || !branch->merge[0] ||
-+			    !branch->merge[0]->dst)
-+				continue;
-+			if (get_sha1(branch->merge[0]->dst, branch_sha1))
-+				continue;
-+			append_remote_ref(branch->merge[0]->dst, branch_sha1, 0, 0);
-+			/* If append_remote_ref didn't add a ref, it's either
-+			 * because it's an upstream of a previous ref, or because
-+			 * it was given on the command line. In neither case we
-+			 * want the bit being set. */
-+			if (topics && current_ref_name_cnt != ref_name_cnt)
-+				topics |= 1u << (ref_name_cnt + REV_SHIFT - 1);
-+		} else if (topics && num_rev == 0) {
-+			topics |= flag;
-+		}
- 	}
-+	/* topics is filled above with a mask of refs corresponding to
-+	 * upstream branches, or the first given ref. It also still contains
-+	 * the original bool value, which may match some bookkeeping flags,
-+	 * so filter that out.
-+	 */
-+	topics &= ~0u << REV_SHIFT;
-+
- 	for (i = 0; i < num_rev; i++)
- 		rev_mask[i] = rev[i]->object.flags;
- 
-@@ -925,7 +963,7 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
- 					  commit->parents->next);
- 			if (topics &&
- 			    !is_merge_point &&
--			    (this_flag & (1u << REV_SHIFT)))
-+			    (this_flag & topics))
- 				continue;
- 			if (dense && is_merge &&
- 			    omit_in_dense(commit, rev, num_rev))
--- 
-2.2.2.dirty
+FYI, without the counting fix, test 1 causes "BUG: postlen = 390, used  
+= 585" and test 4 causes "BUG: postlen = 396, used = 591".  So while I  
+did manage to increase the discrepancy a bit from the values you  
+reported for clojure (postlen = 262, used = 273), I was actually  
+aiming for a difference big enough to pretty much always guarantee a  
+core dump.
+
+The garbage tests 2 and 3 produce without the counting fix is  
+reminiscent of what you get when you use memcpy instead of memmove for  
+an overlapping memory copy operation.
+
+A slightly modified version of these 4 tests can be run as far back a  
+v1.7.4 (when apply --whitespace=fix started fixing tab-in-indent  
+errors) and you get core dumps or garbage there too for all 4.
+
+So since I've not been able to get test 2 or 3 to core dump (even  
+before 250b3c6c) I tend to believe you are correct in that the code  
+thinks (incorrectly) that the result should fit within the buffer.  I  
+say buffer because the test 3 patch inserts 100 lines into a 6 line  
+file and yet it never seems to cause a core dump (even in v1.7.4), so  
+the buffer size must be based on the patch, not the original -- I'm  
+sure that would make sense if I understood what's going on in the  
+apply code.
+
+I did manage to create a test 5 that causes "BUG: postlen = 3036, used  
+= 3542", but its verbose output has unfriendly long lines and it's  
+fixed by the same counting fix as the others so it doesn't seem  
+worthwhile to include it.
+
+-Kyle
