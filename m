@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 03/24] untracked cache: initial untracked cache validation
-Date: Tue, 20 Jan 2015 20:03:12 +0700
-Message-ID: <1421759013-8494-4-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 06/24] untracked cache: record/validate dir mtime and reuse cached output
+Date: Tue, 20 Jan 2015 20:03:15 +0700
+Message-ID: <1421759013-8494-7-git-send-email-pclouds@gmail.com>
 References: <1421759013-8494-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -10,254 +10,323 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 20 14:03:54 2015
+X-From: git-owner@vger.kernel.org Tue Jan 20 14:04:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YDYTJ-0003JK-R2
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Jan 2015 14:03:54 +0100
+	id 1YDYTi-0003UT-6I
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Jan 2015 14:04:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754080AbbATNDt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Jan 2015 08:03:49 -0500
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:41224 "EHLO
+	id S1754879AbbATNEN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Jan 2015 08:04:13 -0500
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:57919 "EHLO
 	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753389AbbATNDt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Jan 2015 08:03:49 -0500
-Received: by mail-pa0-f43.google.com with SMTP id eu11so8258767pac.2
-        for <git@vger.kernel.org>; Tue, 20 Jan 2015 05:03:48 -0800 (PST)
+	with ESMTP id S1754505AbbATNEL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Jan 2015 08:04:11 -0500
+Received: by mail-pa0-f43.google.com with SMTP id eu11so8260885pac.2
+        for <git@vger.kernel.org>; Tue, 20 Jan 2015 05:04:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=+1UlEhwPEFPflvDm0dmZiH0ypEQPOobeAr4+UWlzAKg=;
-        b=YyTz+cB7WLijgjl2TkMckO9sdwxU1RkOJUYT6xCPbEtwksm1hh2fWPEhBXcP97ONpD
-         J/6Odu06m04C8vvVepmgc/KMSpWq38AA1PKVpp8J43RLwa2fKwZnVlSdKTozQYgiAvOt
-         JwuQ5FTufDPod0WW+rmiKMmavbT2O3kam4LnASWvJOGuSQvx9QQjGA6B0HhvxcJOZtc9
-         WfLuJz4dKKVldOPNMd0CL3lnEFoRHz/p63Uubgh8CY+zx2Q3UuaT6OhjV0ZdjhwTTaPK
-         q9REfGYuk95lbIttyc3S5jZcZses/xXlvXu1l63qoK/BoxWboJcoTeOhk55iaHDZ7PEA
-         fzYw==
-X-Received: by 10.68.197.72 with SMTP id is8mr53592849pbc.17.1421759028504;
-        Tue, 20 Jan 2015 05:03:48 -0800 (PST)
+        bh=hNWYpAwjBnEhb2Kt0AYziXWmr5RrRZcJGWmp6ju/ZGw=;
+        b=U8w/3cSvbn919X+2EFwIy2e3PtHuvs5DtV3ldS7h/iLtRwDTlRfVvayVeeEzZb0Rhf
+         puyo33uRRgWVdf6YNtLhVVT5N195KpVngle7Vxtluo4BOOPhNY9CSK2E33N/DZHAHvCZ
+         SGnNmiVIeRIW7G4fc3MCNsBY6wICQLNRIZtlMJKUKTdrpg98fp8duCvfOzS7hdNNA6hL
+         TEHMOvet1fJEh1n8vlrZcguzW2hoaMiLpEWHuX/Oo4ZO3GgRnBZ86WmAe2VcOhKJ4oaQ
+         MxnIMMENgb9iGm/zYk3dVdYPbrec0MlpQTRyLsnR1X1w/cwWkvHgmcZ9YkKWa8v38lGY
+         iAfg==
+X-Received: by 10.67.24.69 with SMTP id ig5mr12482868pad.17.1421759050960;
+        Tue, 20 Jan 2015 05:04:10 -0800 (PST)
 Received: from lanh ([115.73.212.1])
-        by mx.google.com with ESMTPSA id xl12sm3221142pac.41.2015.01.20.05.03.44
+        by mx.google.com with ESMTPSA id kr10sm49152pdb.42.2015.01.20.05.04.07
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 20 Jan 2015 05:03:47 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Tue, 20 Jan 2015 20:03:57 +0700
+        Tue, 20 Jan 2015 05:04:10 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Tue, 20 Jan 2015 20:04:21 +0700
 X-Mailer: git-send-email 2.2.0.84.ge9c7a8a
 In-Reply-To: <1421759013-8494-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262657>
 
-Make sure the starting conditions and all global exclude files are
-good to go. If not, either disable untracked cache completely, or wipe
-out the cache and start fresh.
+The main readdir loop in read_directory_recursive() is replaced with a
+new one that checks if cached results of a directory is still valid.
 
+If a file is added or removed from the index, the containing directory
+is invalidated (but not its subdirs). If directory's mtime is changed,
+the same happens. If a .gitignore is updated, the containing directory
+and all subdirs are invalidated recursively. If dir_struct#flags or
+other conditions change, the cache is ignored.
+
+If a directory is invalidated, we opendir/readdir/closedir and run the
+exclude machinery on that directory listing as usual. If untracked
+cache is also enabled, we'll update the cache along the way. If a
+directory is validated, we simply pull the untracked listing out from
+the cache. The cache also records the list of direct subdirs that we
+have to recurse in. Fully excluded directories are seen as "untracked
+files".
+
+In the best case when no dirs are invalidated, read_directory()
+becomes a series of
+
+  stat(dir), open(.gitignore), fstat(), read(), close() and optionally
+  hash_sha1_file()
+
+=46or comparison, standard read_directory() is a sequence of
+
+  opendir(), readdir(), open(.gitignore), fstat(), read(), close(), the
+  expensive last_exclude_matching() and closedir().
+
+We already try not to open(.gitignore) if we know it does not exist,
+so open/fstat/read/close sequence does not apply to every
+directory. The sequence could be reduced further, as noted in
+prep_exclude() in another patch. So in theory, the entire best-case
+read_directory sequence could be reduced to a series of stat() and
+nothing else.
+
+This is not a silver bullet approach. When you compile a C file, for
+example, the old .o file is removed and a new one with the same name
+created, effectively invalidating the containing directory's cache
+(but not its subdirectories). If your build process touches every
+directory, this cache adds extra overhead for nothing, so it's a good
+idea to separate generated files from tracked files.. Editors may use
+the same strategy for saving files. And of course you're out of luck
+running your repo on an unsupported filesystem and/or operating system.
+
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- dir.c | 113 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++=
+ dir.c | 121 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++=
 ++++++--
- dir.h |   4 +++
- 2 files changed, 114 insertions(+), 3 deletions(-)
+ dir.h |   2 ++
+ 2 files changed, 121 insertions(+), 2 deletions(-)
 
 diff --git a/dir.c b/dir.c
-index 27734f0..44ed9f2 100644
+index fb6ed86..8c989e3 100644
 --- a/dir.c
 +++ b/dir.c
-@@ -582,6 +582,22 @@ static struct untracked_cache_dir *lookup_untracke=
-d(struct untracked_cache *uc,
- 	return d;
+@@ -37,7 +37,12 @@ enum path_treatment {
+ struct cached_dir {
+ 	DIR *fdir;
+ 	struct untracked_cache_dir *untracked;
++	int nr_files;
++	int nr_dirs;
++
+ 	struct dirent *de;
++	const char *file;
++	struct untracked_cache_dir *ucd;
+ };
+=20
+ static enum path_treatment read_directory_recursive(struct dir_struct =
+*dir,
+@@ -607,6 +612,14 @@ static void invalidate_gitignore(struct untracked_=
+cache *uc,
+ 	do_invalidate_gitignore(dir);
  }
 =20
-+static void do_invalidate_gitignore(struct untracked_cache_dir *dir)
-+{
-+	int i;
-+	dir->valid =3D 0;
-+	dir->untracked_nr =3D 0;
-+	for (i =3D 0; i < dir->dirs_nr; i++)
-+		do_invalidate_gitignore(dir->dirs[i]);
-+}
-+
-+static void invalidate_gitignore(struct untracked_cache *uc,
++static void invalidate_directory(struct untracked_cache *uc,
 +				 struct untracked_cache_dir *dir)
 +{
-+	uc->gitignore_invalidated++;
-+	do_invalidate_gitignore(dir);
++	uc->dir_invalidated++;
++	dir->valid =3D 0;
++	dir->untracked_nr =3D 0;
 +}
 +
  /*
   * Given a file with name "fname", read it (either from disk, or from
   * the index if "check_index" is non-zero), parse it and store the
-@@ -697,6 +713,13 @@ static void add_excludes_from_file_1(struct dir_st=
-ruct *dir, const char *fname,
- 				     struct sha1_stat *sha1_stat)
- {
- 	struct exclude_list *el;
-+	/*
-+	 * catch setup_standard_excludes() that's called before
-+	 * dir->untracked is assigned. That function behaves
-+	 * differently when dir->untracked is non-NULL.
-+	 */
-+	if (!dir->untracked)
-+		dir->unmanaged_exclude_files++;
- 	el =3D add_exclude_list(dir, EXC_FILE, fname);
- 	if (add_excludes(fname, "", 0, el, 0, sha1_stat) < 0)
- 		die("cannot use %s as an exclude file", fname);
-@@ -704,6 +727,7 @@ static void add_excludes_from_file_1(struct dir_str=
-uct *dir, const char *fname,
-=20
- void add_excludes_from_file(struct dir_struct *dir, const char *fname)
- {
-+	dir->unmanaged_exclude_files++; /* see validate_untracked_cache() */
- 	add_excludes_from_file_1(dir, fname, NULL);
+@@ -1424,6 +1437,39 @@ static enum path_treatment treat_one_path(struct=
+ dir_struct *dir,
+ 	}
  }
 =20
-@@ -1572,9 +1596,87 @@ static int treat_leading_path(struct dir_struct =
-*dir,
- 	return rc;
- }
-=20
-+static struct untracked_cache_dir *validate_untracked_cache(struct dir=
-_struct *dir,
-+						      int base_len,
-+						      const struct pathspec *pathspec)
++static enum path_treatment treat_path_fast(struct dir_struct *dir,
++					   struct untracked_cache_dir *untracked,
++					   struct cached_dir *cdir,
++					   struct strbuf *path,
++					   int baselen,
++					   const struct path_simplify *simplify)
 +{
-+	struct untracked_cache_dir *root;
-+
-+	if (!dir->untracked)
-+		return NULL;
-+
-+	/*
-+	 * We only support $GIT_DIR/info/exclude and core.excludesfile
-+	 * as the global ignore rule files. Any other additions
-+	 * (e.g. from command line) invalidate the cache. This
-+	 * condition also catches running setup_standard_excludes()
-+	 * before setting dir->untracked!
-+	 */
-+	if (dir->unmanaged_exclude_files)
-+		return NULL;
-+
-+	/*
-+	 * Optimize for the main use case only: whole-tree git
-+	 * status. More work involved in treat_leading_path() if we
-+	 * use cache on just a subset of the worktree. pathspec
-+	 * support could make the matter even worse.
-+	 */
-+	if (base_len || (pathspec && pathspec->nr))
-+		return NULL;
-+
-+	/* Different set of flags may produce different results */
-+	if (dir->flags !=3D dir->untracked->dir_flags ||
-+	    /*
-+	     * See treat_directory(), case index_nonexistent. Without
-+	     * this flag, we may need to also cache .git file content
-+	     * for the resolve_gitlink_ref() call, which we don't.
-+	     */
-+	    !(dir->flags & DIR_SHOW_OTHER_DIRECTORIES) ||
-+	    /* We don't support collecting ignore files */
-+	    (dir->flags & (DIR_SHOW_IGNORED | DIR_SHOW_IGNORED_TOO |
-+			   DIR_COLLECT_IGNORED)))
-+		return NULL;
-+
-+	/*
-+	 * If we use .gitignore in the cache and now you change it to
-+	 * .gitexclude, everything will go wrong.
-+	 */
-+	if (dir->exclude_per_dir !=3D dir->untracked->exclude_per_dir &&
-+	    strcmp(dir->exclude_per_dir, dir->untracked->exclude_per_dir))
-+		return NULL;
-+
-+	/*
-+	 * EXC_CMDL is not considered in the cache. If people set it,
-+	 * skip the cache.
-+	 */
-+	if (dir->exclude_list_group[EXC_CMDL].nr)
-+		return NULL;
-+
-+	if (!dir->untracked->root) {
-+		const int len =3D sizeof(*dir->untracked->root);
-+		dir->untracked->root =3D xmalloc(len);
-+		memset(dir->untracked->root, 0, len);
++	strbuf_setlen(path, baselen);
++	if (!cdir->ucd) {
++		strbuf_addstr(path, cdir->file);
++		return path_untracked;
 +	}
-+
-+	/* Validate $GIT_DIR/info/exclude and core.excludesfile */
-+	root =3D dir->untracked->root;
-+	if (hashcmp(dir->ss_info_exclude.sha1,
-+		    dir->untracked->ss_info_exclude.sha1)) {
-+		invalidate_gitignore(dir->untracked, root);
-+		dir->untracked->ss_info_exclude =3D dir->ss_info_exclude;
-+	}
-+	if (hashcmp(dir->ss_excludes_file.sha1,
-+		    dir->untracked->ss_excludes_file.sha1)) {
-+		invalidate_gitignore(dir->untracked, root);
-+		dir->untracked->ss_excludes_file =3D dir->ss_excludes_file;
-+	}
-+	return root;
++	strbuf_addstr(path, cdir->ucd->name);
++	/* treat_one_path() does this before it calls treat_directory() */
++	if (path->buf[path->len - 1] !=3D '/')
++		strbuf_addch(path, '/');
++	if (cdir->ucd->check_only)
++		/*
++		 * check_only is set as a result of treat_directory() getting
++		 * to its bottom. Verify again the same set of directories
++		 * with check_only set.
++		 */
++		return read_directory_recursive(dir, path->buf, path->len,
++						cdir->ucd, 1, simplify);
++	/*
++	 * We get path_recurse in the first run when
++	 * directory_exists_in_index() returns index_nonexistent. We
++	 * are sure that new changes in the index does not impact the
++	 * outcome. Return now.
++	 */
++	return path_recurse;
 +}
 +
- int read_directory(struct dir_struct *dir, const char *path, int len, =
-const struct pathspec *pathspec)
- {
- 	struct path_simplify *simplify;
-+	struct untracked_cache_dir *untracked;
+ static enum path_treatment treat_path(struct dir_struct *dir,
+ 				      struct untracked_cache_dir *untracked,
+ 				      struct cached_dir *cdir,
+@@ -1434,6 +1480,9 @@ static enum path_treatment treat_path(struct dir_=
+struct *dir,
+ 	int dtype;
+ 	struct dirent *de =3D cdir->de;
 =20
- 	/*
- 	 * Check out create_simplify()
-@@ -1598,10 +1700,15 @@ int read_directory(struct dir_struct *dir, cons=
-t char *path, int len, const stru
- 	 * create_simplify().
- 	 */
- 	simplify =3D create_simplify(pathspec ? pathspec->_raw : NULL);
-+	untracked =3D validate_untracked_cache(dir, len, pathspec);
++	if (!de)
++		return treat_path_fast(dir, untracked, cdir, path,
++				       baselen, simplify);
+ 	if (is_dot_or_dotdot(de->d_name) || !strcmp(de->d_name, ".git"))
+ 		return path_none;
+ 	strbuf_setlen(path, baselen);
+@@ -1454,6 +1503,52 @@ static void add_untracked(struct untracked_cache=
+_dir *dir, const char *name)
+ 	dir->untracked[dir->untracked_nr++] =3D xstrdup(name);
+ }
+=20
++static int valid_cached_dir(struct dir_struct *dir,
++			    struct untracked_cache_dir *untracked,
++			    struct strbuf *path,
++			    int check_only)
++{
++	struct stat st;
++
 +	if (!untracked)
-+		/*
-+		 * make sure untracked cache code path is disabled,
-+		 * e.g. prep_exclude()
-+		 */
-+		dir->untracked =3D NULL;
- 	if (!len || treat_leading_path(dir, path, len, simplify))
--		read_directory_recursive(dir, path, len,
--					 dir->untracked ? dir->untracked->root : NULL,
--					 0, simplify);
-+		read_directory_recursive(dir, path, len, untracked, 0, simplify);
- 	free_simplify(simplify);
- 	qsort(dir->entries, dir->nr, sizeof(struct dir_entry *), cmp_name);
- 	qsort(dir->ignored, dir->ignored_nr, sizeof(struct dir_entry *), cmp_=
-name);
++		return 0;
++
++	if (stat(path->len ? path->buf : ".", &st)) {
++		invalidate_directory(dir->untracked, untracked);
++		memset(&untracked->stat_data, 0, sizeof(untracked->stat_data));
++		return 0;
++	}
++	if (!untracked->valid ||
++	    match_stat_data(&untracked->stat_data, &st)) {
++		if (untracked->valid)
++			invalidate_directory(dir->untracked, untracked);
++		fill_stat_data(&untracked->stat_data, &st);
++		return 0;
++	}
++
++	if (untracked->check_only !=3D !!check_only) {
++		invalidate_directory(dir->untracked, untracked);
++		return 0;
++	}
++
++	/*
++	 * prep_exclude will be called eventually on this directory,
++	 * but it's called much later in last_exclude_matching(). We
++	 * need it now to determine the validity of the cache for this
++	 * path. The next calls will be nearly no-op, the way
++	 * prep_exclude() is designed.
++	 */
++	if (path->len && path->buf[path->len - 1] !=3D '/') {
++		strbuf_addch(path, '/');
++		prep_exclude(dir, path->buf, path->len);
++		strbuf_setlen(path, path->len - 1);
++	} else
++		prep_exclude(dir, path->buf, path->len);
++
++	/* hopefully prep_exclude() haven't invalidated this entry... */
++	return untracked->valid;
++}
++
+ static int open_cached_dir(struct cached_dir *cdir,
+ 			   struct dir_struct *dir,
+ 			   struct untracked_cache_dir *untracked,
+@@ -1462,7 +1557,11 @@ static int open_cached_dir(struct cached_dir *cd=
+ir,
+ {
+ 	memset(cdir, 0, sizeof(*cdir));
+ 	cdir->untracked =3D untracked;
++	if (valid_cached_dir(dir, untracked, path, check_only))
++		return 0;
+ 	cdir->fdir =3D opendir(path->len ? path->buf : ".");
++	if (dir->untracked)
++		dir->untracked->dir_opened++;
+ 	if (!cdir->fdir)
+ 		return -1;
+ 	return 0;
+@@ -1476,6 +1575,18 @@ static int read_cached_dir(struct cached_dir *cd=
+ir)
+ 			return -1;
+ 		return 0;
+ 	}
++	while (cdir->nr_dirs < cdir->untracked->dirs_nr) {
++		struct untracked_cache_dir *d =3D cdir->untracked->dirs[cdir->nr_dir=
+s];
++		cdir->ucd =3D d;
++		cdir->nr_dirs++;
++		return 0;
++	}
++	cdir->ucd =3D NULL;
++	if (cdir->nr_files < cdir->untracked->untracked_nr) {
++		struct untracked_cache_dir *d =3D cdir->untracked;
++		cdir->file =3D d->untracked[cdir->nr_files++];
++		return 0;
++	}
+ 	return -1;
+ }
+=20
+@@ -1483,6 +1594,12 @@ static void close_cached_dir(struct cached_dir *=
+cdir)
+ {
+ 	if (cdir->fdir)
+ 		closedir(cdir->fdir);
++	/*
++	 * We have gone through this directory and found no untracked
++	 * entries. Mark it valid.
++	 */
++	if (cdir->untracked)
++		cdir->untracked->valid =3D 1;
+ }
+=20
+ /*
+@@ -1536,7 +1653,7 @@ static enum path_treatment read_directory_recursi=
+ve(struct dir_struct *dir,
+ 		if (check_only) {
+ 			/* abort early if maximum state has been reached */
+ 			if (dir_state =3D=3D path_untracked) {
+-				if (untracked)
++				if (cdir.fdir)
+ 					add_untracked(untracked, path.buf + baselen);
+ 				break;
+ 			}
+@@ -1560,7 +1677,7 @@ static enum path_treatment read_directory_recursi=
+ve(struct dir_struct *dir,
+ 			if (dir->flags & DIR_SHOW_IGNORED)
+ 				break;
+ 			dir_add_name(dir, path.buf, path.len);
+-			if (untracked)
++			if (cdir.fdir)
+ 				add_untracked(untracked, path.buf + baselen);
+ 			break;
+=20
 diff --git a/dir.h b/dir.h
-index 9ab74b4..1d7a958 100644
+index 1d7a958..ff3d99b 100644
 --- a/dir.h
 +++ b/dir.h
-@@ -115,6 +115,8 @@ struct untracked_cache_dir {
- 	unsigned int untracked_alloc, dirs_nr, dirs_alloc;
- 	unsigned int untracked_nr;
- 	unsigned int check_only : 1;
-+	/* all data in this struct are good */
-+	unsigned int valid : 1;
- 	/* null SHA-1 means this directory does not have .gitignore */
- 	unsigned char exclude_sha1[20];
- 	char name[FLEX_ARRAY];
-@@ -132,6 +134,7 @@ struct untracked_cache {
- 	struct untracked_cache_dir *root;
+@@ -135,6 +135,8 @@ struct untracked_cache {
  	/* Statistics */
  	int dir_created;
-+	int gitignore_invalidated;
+ 	int gitignore_invalidated;
++	int dir_invalidated;
++	int dir_opened;
  };
 =20
  struct dir_struct {
-@@ -186,6 +189,7 @@ struct dir_struct {
- 	struct untracked_cache *untracked;
- 	struct sha1_stat ss_info_exclude;
- 	struct sha1_stat ss_excludes_file;
-+	unsigned unmanaged_exclude_files;
- };
-=20
- /*
 --=20
 2.2.0.84.ge9c7a8a
