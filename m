@@ -1,97 +1,60 @@
-From: "Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>
-Subject: [PATCHv2] rebase -i: respect core.abbrev for real
-Date: Tue, 20 Jan 2015 12:42:32 +0200
-Message-ID: <1421750552-110075-1-git-send-email-kirill.shutemov@linux.intel.com>
-References: <CAPig+cQcYXzRwHMRcKQJf-mWq7d9Kgp7KndnEhFs4_mwgLpiiA@mail.gmail.com>
-Cc: "Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>
-To: Eric Sunshine <sunshine@sunshineco.com>, gitster@pobox.com,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 20 11:42:42 2015
+From: Alberto Bertogli <albertito@blitiri.com.ar>
+Subject: [ANNOUNCE] git-arr 0.14
+Date: Tue, 20 Jan 2015 11:55:19 +0000
+Message-ID: <20150120115519.GA2428@blitiri.com.ar>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 20 13:38:10 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YDWGf-0001iJ-W6
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Jan 2015 11:42:42 +0100
+	id 1YDY4P-0004AQ-4U
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Jan 2015 13:38:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754026AbbATKmh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Jan 2015 05:42:37 -0500
-Received: from mga11.intel.com ([192.55.52.93]:59123 "EHLO mga11.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753740AbbATKmg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Jan 2015 05:42:36 -0500
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by fmsmga102.fm.intel.com with ESMTP; 20 Jan 2015 02:42:35 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.09,433,1418112000"; 
-   d="scan'208";a="672738057"
-Received: from black.fi.intel.com ([10.237.72.86])
-  by orsmga002.jf.intel.com with ESMTP; 20 Jan 2015 02:42:34 -0800
-Received: by black.fi.intel.com (Postfix, from userid 1000)
-	id 59236D4; Tue, 20 Jan 2015 12:42:33 +0200 (EET)
-X-Mailer: git-send-email 2.1.4
-In-Reply-To: <CAPig+cQcYXzRwHMRcKQJf-mWq7d9Kgp7KndnEhFs4_mwgLpiiA@mail.gmail.com>
+	id S1755182AbbATMiA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Jan 2015 07:38:00 -0500
+Received: from alerce.vps.bitfolk.com ([85.119.82.134]:59671 "EHLO
+	alerce.vps.bitfolk.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754776AbbATMh7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Jan 2015 07:37:59 -0500
+X-Greylist: delayed 2474 seconds by postgrey-1.27 at vger.kernel.org; Tue, 20 Jan 2015 07:37:59 EST
+Received: from 87-198-57-52.ptr.magnet.ie ([87.198.57.52] helo=blitiri.com.ar)
+	by alerce.vps.bitfolk.com with esmtpsa (TLS1.2:RSA_AES_128_CBC_SHA1:128)
+	(Exim 4.82)
+	(envelope-from <albertito@blitiri.com.ar>)
+	id 1YDXQK-0000Pm-OH
+	for git@vger.kernel.org; Tue, 20 Jan 2015 08:56:44 -0300
+Content-Disposition: inline
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262650>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262651>
 
-I have tried to fix this before: see 568950388be2, but it doesn't
-really work.
 
-I don't know how it happend, but that commit makes interactive rebase to
-respect core.abbrev only during --edit-todo, but not the initial todo
-list edit.
+Hi!
 
-For this time I've included a test-case to avoid this frustration again.
+git-arr is a git repository browser that can generate static HTML
+instead of having to run dynamically.
 
-Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
----
- v2: fix &&-chain in the test-case
----
- git-rebase--interactive.sh    | 4 ++--
- t/t3404-rebase-interactive.sh | 7 +++++++
- 2 files changed, 9 insertions(+), 2 deletions(-)
+I've just released version 0.14, which includes minor fixes and
+performance improvements, as well as the following features:
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index c6a4629cbc2b..1855e12f1ada 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -962,7 +962,7 @@ else
- 	shortrevisions=$shorthead
- fi
- git rev-list $merges_option --pretty=oneline --abbrev-commit \
--	--abbrev=7 --reverse --left-right --topo-order \
-+	--reverse --left-right --topo-order \
- 	$revisions ${restrict_revision+^$restrict_revision} | \
- 	sed -n "s/^>//p" |
- while read -r shortsha1 rest
-@@ -1020,7 +1020,7 @@ then
- 			# just the history of its first-parent for others that will
- 			# be rebasing on top of it
- 			git rev-list --parents -1 $rev | cut -d' ' -s -f2 > "$dropped"/$rev
--			short=$(git rev-list -1 --abbrev-commit --abbrev=7 $rev)
-+			short=$(git rev-list -1 --abbrev-commit $rev)
- 			sane_grep -v "^[a-z][a-z]* $short" <"$todo" > "${todo}2" ; mv "${todo}2" "$todo"
- 			rm "$rewritten"/$rev
- 		fi
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index 8197ed29a9ec..a31f7e0430e1 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -1039,4 +1039,11 @@ test_expect_success 'short SHA-1 collide' '
- 	)
- '
- 
-+test_expect_success 'respect core.abbrev' '
-+	git config core.abbrev 12 &&
-+	set_cat_todo_editor &&
-+	test_must_fail git rebase -i HEAD~4 >todo-list &&
-+	test 4 = $(grep -c "pick [0-9a-f]\{12,\}" todo-list)
-+'
-+
- test_done
--- 
-2.1.4
+ - Improved max_pages handling, including saner defaults.
+ - Show a creation event for the root commit (optionally).
+ - Support for hierarchical branch names.
+ - Render hexdump(1)-style binary blob content.
+
+You can find it at http://blitiri.com.ar/p/git-arr.
+
+
+Thanks specially to Eric Sunshine who wrote almost all the changes in
+this release, including all the features mentioned above, as well as
+many code cleanups.
+
+Cheers!
+		Alberto
