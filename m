@@ -1,108 +1,88 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] parse_color: fix return value for numeric color values 0-8
-Date: Tue, 20 Jan 2015 17:14:48 -0500
-Message-ID: <20150120221447.GB18778@peff.net>
-References: <xmqqmw5n5z8i.fsf@gitster.dls.corp.google.com>
- <CACBZZX5s1rZ3exktbisseJSjF8-0=8ByMpBpARy6h+=iP7wEyA@mail.gmail.com>
+From: Nico Williams <nico@cryptonector.com>
+Subject: Re: Git messes up =?iso-8859-1?Q?'=F8?= =?iso-8859-1?Q?'?= character
+Date: Tue, 20 Jan 2015 16:18:06 -0600
+Message-ID: <20150120221802.GJ2350@localhost>
+References: <54BEB08D.9090905@tronnes.org>
+ <54BEB585.2030902@web.de>
+ <54BEB7ED.2050103@tronnes.org>
+ <CACBZZX58Di=m2YEKRuAsuU=bqUXjQhN21tvjRL8Z1Vbuyk2fKQ@mail.gmail.com>
+ <54BEC75C.3090207@tronnes.org>
+ <CACBZZX5f0ciqmJizYxe+UvKL-g9iDZTca52=9xZP4_qiuEaO3Q@mail.gmail.com>
+ <54BECAE0.70309@tronnes.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 20 23:14:58 2015
+Cc: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Noralf =?iso-8859-1?Q?Tr=F8nnes?= <notro@tronnes.org>
+X-From: git-owner@vger.kernel.org Tue Jan 20 23:18:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YDh4Y-0000HM-IF
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Jan 2015 23:14:54 +0100
+	id 1YDh7p-0001Bg-TA
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Jan 2015 23:18:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751545AbbATWOu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Jan 2015 17:14:50 -0500
-Received: from cloud.peff.net ([50.56.180.127]:36577 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750727AbbATWOt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Jan 2015 17:14:49 -0500
-Received: (qmail 15514 invoked by uid 102); 20 Jan 2015 22:14:49 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 20 Jan 2015 16:14:49 -0600
-Received: (qmail 24484 invoked by uid 107); 20 Jan 2015 22:15:14 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 20 Jan 2015 17:15:14 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 20 Jan 2015 17:14:48 -0500
+	id S1751969AbbATWSN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Jan 2015 17:18:13 -0500
+Received: from hapkido.dreamhost.com ([66.33.216.122]:47892 "EHLO
+	hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751645AbbATWSN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 20 Jan 2015 17:18:13 -0500
+Received: from homiemail-a112.g.dreamhost.com (sub4.mail.dreamhost.com [69.163.253.135])
+	by hapkido.dreamhost.com (Postfix) with ESMTP id C9C2990479
+	for <git@vger.kernel.org>; Tue, 20 Jan 2015 14:18:12 -0800 (PST)
+Received: from homiemail-a112.g.dreamhost.com (localhost [127.0.0.1])
+	by homiemail-a112.g.dreamhost.com (Postfix) with ESMTP id 5195A200EDEAD;
+	Tue, 20 Jan 2015 14:18:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=cryptonector.com; h=date
+	:from:to:cc:subject:message-id:references:mime-version
+	:content-type:in-reply-to:content-transfer-encoding; s=
+	cryptonector.com; bh=1ut7ne/jcTwMgkW4sG116Y4SBDs=; b=vS321fB9YDv
+	+TdsXjfp+8zK97QGWsBwXo1z7gN3QtCpYwOFjOKN8EVtHEByJnLefASSZL1Ycc4n
+	NXh1IOlsWX5+Vb0oUQU7pniM91A3hNksnUcmBU+io0ortOpGT2szl3w4RHZWX3Fb
+	064x4p/1b7+53K1Lo6AGLKm65xNUpcag=
+Received: from localhost (108-207-244-174.lightspeed.austtx.sbcglobal.net [108.207.244.174])
+	(Authenticated sender: nico@cryptonector.com)
+	by homiemail-a112.g.dreamhost.com (Postfix) with ESMTPA id E81F2200EDEAA;
+	Tue, 20 Jan 2015 14:18:11 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <CACBZZX5s1rZ3exktbisseJSjF8-0=8ByMpBpARy6h+=iP7wEyA@mail.gmail.com>
+In-Reply-To: <54BECAE0.70309@tronnes.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262699>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262700>
 
-On Tue, Jan 20, 2015 at 10:49:32PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 =
-Bjarmason wrote:
-
-> I've had this in my .gitconfig since 2010 which was broken by Jeff's
-> v2.1.3-24-g695d95d:
+On Tue, Jan 20, 2015 at 10:38:40PM +0100, Noralf Tr=F8nnes wrote:
+> Yes:
+> $ echo Noralf Tr=F8nnes | xxd
+> 0000000: 4e6f 7261 6c66 2054 72f8 6e6e 6573 0a    Noralf Tr.nnes.
 >=20
->     ;; Don't be so invasive about coloring ^M when I'm editing files
-> that
->     ;; are supposed to have \r\n.
->     [color "diff"]
->        whitespace =3D 0
->
-> [...]
-> Maybe breaking this is OK (but I can't find what the replacement is),
-> but the config or the the changelog doesn't mention breaking existing
-> config settings.
+> Is there a command I can run that shows that I'm using ISO-8859-1 ?
+> I need something to google with, my previous search only gave locale
+> stuff, which seems fine.
 
-Eek. Definitely an unintended regression. The fix is below. Thanks for
-reporting (and especially for catching during the -rc period!).
+The locale(1) command tells you what your locale is set to, but it
+doesn't say anything about your input method -- it only tells you what
+your shell and commands started from it expect for input and what they
+should produce for output.
 
-You should not need it, but for reference, using "0" is the same as
-"black" (both in old git and new).
+The input method will generally be part of your windowing environment,
+for which you'll have to search how to check/configure your OS
+(sometimes it can be set on a per-window basis, sometimes it's a global
+setting).
 
--- >8 --
-When commit 695d95d refactored the color parsing, it missed
-a "return 0" when parsing literal numbers 0-8 (which
-represent basic ANSI colors), leading us to report these
-colors as an error.
+Even if the windowing environment is set to UTF-8, your terminal
+emulator might be set to ISO-8859-something, so check the terminal
+emulator (e.g., rxvt, Terminator, GNOME Terminal, PuTTY, ...).
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- color.c          | 1 +
- t/t4026-color.sh | 4 ++++
- 2 files changed, 5 insertions(+)
+=46inally, check what stty(1) says (e.g., on Linux it should show that
+iutf8 is enabled) (this is mostly so that when you backspace in cooked
+mode the line discipline knows how many bytes to drop from the buffer).
 
-diff --git a/color.c b/color.c
-index 809b359..9027352 100644
---- a/color.c
-+++ b/color.c
-@@ -112,6 +112,7 @@ static int parse_color(struct color *out, const cha=
-r *name, int len)
- 		} else if (val < 8) {
- 			out->type =3D COLOR_ANSI;
- 			out->value =3D val;
-+			return 0;
- 		} else if (val < 256) {
- 			out->type =3D COLOR_256;
- 			out->value =3D val;
-diff --git a/t/t4026-color.sh b/t/t4026-color.sh
-index 267c43b..4d20fea 100755
---- a/t/t4026-color.sh
-+++ b/t/t4026-color.sh
-@@ -60,6 +60,10 @@ test_expect_success 'absurdly long color specificati=
-on' '
- 	  "[1;2;4;5;7;22;24;25;27;38;2;255;255;255;48;2;255;255;255m"
- '
-=20
-+test_expect_success '0-7 are aliases for basic ANSI color names' '
-+	color "0 7" "[30;47m"
-+'
-+
- test_expect_success '256 colors' '
- 	color "254 bold 255" "[1;38;5;254;48;5;255m"
- '
+Nico
 --=20
-2.2.1.425.g441bb3c
