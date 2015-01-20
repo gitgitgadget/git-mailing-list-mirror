@@ -1,94 +1,97 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 15/18] fsck: Document the new receive.fsck.* options.
-Date: Tue, 20 Jan 2015 08:24:51 +0100
-Organization: gmx
-Message-ID: <af8b0ce029243f91e048d474c780b466@www.dscho.org>
-References: <xmqqr3w7gxr4.fsf@gitster.dls.corp.google.com>
- <cover.1421682369.git.johannes.schindelin@gmx.de>
- <41d4880fc48ad39d4798c2f9a0cb38a6a41c41b3.1421682369.git.johannes.schindelin@gmx.de>
- <CAPig+cSVUAV_6c0Zv36aA++AWCG05yxq-LpPsQ89VoepHGUBRw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	ericsunshine@gmail.com
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Tue Jan 20 08:25:18 2015
+From: "Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>
+Subject: [PATCHv2] rebase -i: respect core.abbrev for real
+Date: Tue, 20 Jan 2015 12:42:32 +0200
+Message-ID: <1421750552-110075-1-git-send-email-kirill.shutemov@linux.intel.com>
+References: <CAPig+cQcYXzRwHMRcKQJf-mWq7d9Kgp7KndnEhFs4_mwgLpiiA@mail.gmail.com>
+Cc: "Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>
+To: Eric Sunshine <sunshine@sunshineco.com>, gitster@pobox.com,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 20 11:42:42 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YDTBd-0006cK-L8
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Jan 2015 08:25:18 +0100
+	id 1YDWGf-0001iJ-W6
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Jan 2015 11:42:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752569AbbATHZJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Jan 2015 02:25:09 -0500
-Received: from s15462909.onlinehome-server.info ([87.106.4.80]:43289 "EHLO
-	s15462909.onlinehome-server.info" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752507AbbATHZF (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 Jan 2015 02:25:05 -0500
-Received: from s15462909.onlinehome-server.info (localhost.localdomain [127.0.0.1])
-	by s15462909.onlinehome-server.info (8.14.4/8.14.4/Debian-4.1ubuntu1) with ESMTP id t0K7OpVV010104;
-	Tue, 20 Jan 2015 08:24:51 +0100
-Received: (from www-data@localhost)
-	by s15462909.onlinehome-server.info (8.14.4/8.14.4/Submit) id t0K7OpA2010103;
-	Tue, 20 Jan 2015 08:24:51 +0100
-X-Authentication-Warning: s15462909.onlinehome-server.info: www-data set sender to johannes.schindelin@gmx.de using -f
-X-PHP-Originating-Script: 1000:rcube.php
-In-Reply-To: <CAPig+cSVUAV_6c0Zv36aA++AWCG05yxq-LpPsQ89VoepHGUBRw@mail.gmail.com>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1-git
+	id S1754026AbbATKmh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Jan 2015 05:42:37 -0500
+Received: from mga11.intel.com ([192.55.52.93]:59123 "EHLO mga11.intel.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753740AbbATKmg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Jan 2015 05:42:36 -0500
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+  by fmsmga102.fm.intel.com with ESMTP; 20 Jan 2015 02:42:35 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.09,433,1418112000"; 
+   d="scan'208";a="672738057"
+Received: from black.fi.intel.com ([10.237.72.86])
+  by orsmga002.jf.intel.com with ESMTP; 20 Jan 2015 02:42:34 -0800
+Received: by black.fi.intel.com (Postfix, from userid 1000)
+	id 59236D4; Tue, 20 Jan 2015 12:42:33 +0200 (EET)
+X-Mailer: git-send-email 2.1.4
+In-Reply-To: <CAPig+cQcYXzRwHMRcKQJf-mWq7d9Kgp7KndnEhFs4_mwgLpiiA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262649>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262650>
 
-Hi Eric,
+I have tried to fix this before: see 568950388be2, but it doesn't
+really work.
 
-On 2015-01-19 23:44, Eric Sunshine wrote:
-> On Mon, Jan 19, 2015 at 10:51 AM, Johannes Schindelin
-> <johannes.schindelin@gmx.de> wrote:
->> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
->> ---
->> diff --git a/Documentation/config.txt b/Documentation/config.txt
->> index ae6791d..7371a5f 100644
->> --- a/Documentation/config.txt
->> +++ b/Documentation/config.txt
->> @@ -2130,6 +2130,31 @@ receive.fsckObjects::
->>         Defaults to false. If not set, the value of `transfer.fsckObjects`
->>         is used instead.
->>
->> +receive.fsck.*::
->> +       When `receive.fsckObjects` is set to true, errors can be switched
->> +       to warnings and vice versa by configuring the `receive.fsck.*`
->> +       settings. These settings contain comma-separated lists of fsck
->> +       message IDs. For convenience, fsck prefixes the error/warning with
->> +       the message ID, e.g. "missing-email: invalid author/committer line
->> +       - missing email" means that setting `receive.fsck.ignore =
->> +       missing-email` will hide that issue.
->> ++
->> +--
->> +       error::
->> +               a comma-separated list of fsck message IDs that should be
->> +               trigger fsck to error out.
->> +       warn::
->> +               a comma-separated list of fsck message IDs that should be
->> +               displayed, but fsck should continue to error out.
->> +       ignore::
->> +               a comma-separated list of fsck message IDs that should be
->> +               ignored completely.
->> ++
->> +This feature is intended to support working with legacy repositories
->> +which would not pass pushing when `receive.fsckObjects = true`, allowing
->> +the host to accept repositories certain known issues but still catch
-> 
-> s/certain/with &/
+I don't know how it happend, but that commit makes interactive rebase to
+respect core.abbrev only during --edit-todo, but not the initial todo
+list edit.
 
-Good catch. Fixed here (to be included in the next re-roll):
+For this time I've included a test-case to avoid this frustration again.
 
-https://github.com/dscho/git/commit/2517476646835e61c33581935fc68062a8ff3f56#diff-ba92ef40c548c691816362bbdc35a613R2155
+Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+---
+ v2: fix &&-chain in the test-case
+---
+ git-rebase--interactive.sh    | 4 ++--
+ t/t3404-rebase-interactive.sh | 7 +++++++
+ 2 files changed, 9 insertions(+), 2 deletions(-)
 
-Thanks!
-Dscho
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index c6a4629cbc2b..1855e12f1ada 100644
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -962,7 +962,7 @@ else
+ 	shortrevisions=$shorthead
+ fi
+ git rev-list $merges_option --pretty=oneline --abbrev-commit \
+-	--abbrev=7 --reverse --left-right --topo-order \
++	--reverse --left-right --topo-order \
+ 	$revisions ${restrict_revision+^$restrict_revision} | \
+ 	sed -n "s/^>//p" |
+ while read -r shortsha1 rest
+@@ -1020,7 +1020,7 @@ then
+ 			# just the history of its first-parent for others that will
+ 			# be rebasing on top of it
+ 			git rev-list --parents -1 $rev | cut -d' ' -s -f2 > "$dropped"/$rev
+-			short=$(git rev-list -1 --abbrev-commit --abbrev=7 $rev)
++			short=$(git rev-list -1 --abbrev-commit $rev)
+ 			sane_grep -v "^[a-z][a-z]* $short" <"$todo" > "${todo}2" ; mv "${todo}2" "$todo"
+ 			rm "$rewritten"/$rev
+ 		fi
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index 8197ed29a9ec..a31f7e0430e1 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -1039,4 +1039,11 @@ test_expect_success 'short SHA-1 collide' '
+ 	)
+ '
+ 
++test_expect_success 'respect core.abbrev' '
++	git config core.abbrev 12 &&
++	set_cat_todo_editor &&
++	test_must_fail git rebase -i HEAD~4 >todo-list &&
++	test 4 = $(grep -c "pick [0-9a-f]\{12,\}" todo-list)
++'
++
+ test_done
+-- 
+2.1.4
