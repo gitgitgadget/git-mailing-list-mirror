@@ -1,155 +1,108 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: =?UTF-8?Q?Re=3A_Git_messes_up_=27=C3=B8=27_character?=
-Date: Tue, 20 Jan 2015 22:57:43 +0100
-Message-ID: <CACBZZX7Sfm2hX=+cMOshMxvoFR2k0R4VH2anQtwxFS_Gw=WFBQ@mail.gmail.com>
-References: <54BEB08D.9090905@tronnes.org> <54BEB585.2030902@web.de>
- <54BEB7ED.2050103@tronnes.org> <CACBZZX58Di=m2YEKRuAsuU=bqUXjQhN21tvjRL8Z1Vbuyk2fKQ@mail.gmail.com>
- <54BEC75C.3090207@tronnes.org> <CACBZZX5f0ciqmJizYxe+UvKL-g9iDZTca52=9xZP4_qiuEaO3Q@mail.gmail.com>
- <54BECAE0.70309@tronnes.org>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] parse_color: fix return value for numeric color values 0-8
+Date: Tue, 20 Jan 2015 17:14:48 -0500
+Message-ID: <20150120221447.GB18778@peff.net>
+References: <xmqqmw5n5z8i.fsf@gitster.dls.corp.google.com>
+ <CACBZZX5s1rZ3exktbisseJSjF8-0=8ByMpBpARy6h+=iP7wEyA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: =?UTF-8?Q?Noralf_Tr=C3=B8nnes?= <notro@tronnes.org>
-X-From: git-owner@vger.kernel.org Tue Jan 20 22:58:12 2015
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 20 23:14:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YDgoM-0004SU-M4
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Jan 2015 22:58:11 +0100
+	id 1YDh4Y-0000HM-IF
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Jan 2015 23:14:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751474AbbATV6F convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Jan 2015 16:58:05 -0500
-Received: from mail-ob0-f182.google.com ([209.85.214.182]:52426 "EHLO
-	mail-ob0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751293AbbATV6E convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 Jan 2015 16:58:04 -0500
-Received: by mail-ob0-f182.google.com with SMTP id wo20so36691579obc.13
-        for <git@vger.kernel.org>; Tue, 20 Jan 2015 13:58:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=PY9TvItPqtrbepzwAb7vwpNoS7ic/rUvhicepVh6mJQ=;
-        b=HZPBM/jkZIvxDJMSyGq30/nNQ12wzEHOy8LA7pwAVAWyc2DaYeuyOWgsjuU0cDYG/C
-         TMSwkl/fyRav1ZDf7fyuIxjbbLm/B5QHsUQRwIx26B18PqY3tovhCZhmamR2LnBIqYcy
-         azB0WG4EKQutCqW5MxLa2imWWf/bWr5Hok3DvXPtkO5zrIsJGPZ/QQAxE8y3spAUVeYM
-         e/E7V6phf4+HmL1g4chKOSoHxL4hKg0/arTRKCzR5ZG8n6yt4UPqvvpaCNh+1+1kTgBC
-         9Eu1hx08ToxIo3KOm/fn6RVvHUAJgYyt+cDwxW6bAWewM0xwna+YEdGpxsKjqd6sozkq
-         mfOA==
-X-Received: by 10.60.102.200 with SMTP id fq8mr23547368oeb.2.1421791083340;
- Tue, 20 Jan 2015 13:58:03 -0800 (PST)
-Received: by 10.76.50.70 with HTTP; Tue, 20 Jan 2015 13:57:43 -0800 (PST)
-In-Reply-To: <54BECAE0.70309@tronnes.org>
+	id S1751545AbbATWOu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Jan 2015 17:14:50 -0500
+Received: from cloud.peff.net ([50.56.180.127]:36577 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750727AbbATWOt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Jan 2015 17:14:49 -0500
+Received: (qmail 15514 invoked by uid 102); 20 Jan 2015 22:14:49 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 20 Jan 2015 16:14:49 -0600
+Received: (qmail 24484 invoked by uid 107); 20 Jan 2015 22:15:14 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 20 Jan 2015 17:15:14 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 20 Jan 2015 17:14:48 -0500
+Content-Disposition: inline
+In-Reply-To: <CACBZZX5s1rZ3exktbisseJSjF8-0=8ByMpBpARy6h+=iP7wEyA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262698>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262699>
 
-On Tue, Jan 20, 2015 at 10:38 PM, Noralf Tr=C3=B8nnes <notro@tronnes.or=
-g> wrote:
-> Den 20.01.2015 22:26, skrev =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+On Tue, Jan 20, 2015 at 10:49:32PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 =
+Bjarmason wrote:
+
+> I've had this in my .gitconfig since 2010 which was broken by Jeff's
+> v2.1.3-24-g695d95d:
+>=20
+>     ;; Don't be so invasive about coloring ^M when I'm editing files
+> that
+>     ;; are supposed to have \r\n.
+>     [color "diff"]
+>        whitespace =3D 0
 >
->> On Tue, Jan 20, 2015 at 10:23 PM, Noralf Tr=C3=B8nnes <notro@tronnes=
-=2Eorg>
->> wrote:
->>>
->>> Den 20.01.2015 21:45, skrev =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
->>>
->>>> On Tue, Jan 20, 2015 at 9:17 PM, Noralf Tr=C3=B8nnes <notro@tronne=
-s.org>
->>>> wrote:
->>>>>
->>>>> Den 20.01.2015 21:07, skrev Torsten B=C3=B6gershausen:
->>>>>>
->>>>>> On 2015-01-20 20.46, Noralf Tr=C3=B8nnes wrote:
->>>>>> could it be that your "=C3=B8" is not encoded as UTF-8,
->>>>>> but in ISO-8859-15 (or so)
->>>>>>
->>>>>>> $ git log -1
->>>>>>> commit b2a4f6abdb097c4dc092b56995a2af8e42fbea79
->>>>>>> Author: Noralf Tr<F8>nnes <notro@tronnes.org>
->>>>>>
->>>>>> What does
->>>>>> git config -l | grep Noralf | xxd
->>>>>> say ?
->>>>>>
->>>>> $ git config -l | grep Noralf | xxd
->>>>> 0000000: 7573 6572 2e6e 616d 653d 4e6f 7261 6c66  user.name=3DNor=
-alf
->>>>> 0000010: 2054 72f8 6e6e 6573 0a                    Tr.nnes.
->>>>>
->>>>> $ file ~/.gitconfig
->>>>> /home/pi/.gitconfig: ISO-8859 text
->>>>
->>>> What's happened here is that:
->>>>
->>>>    1. You've authored your commit in ISO-8859-1
->>>>    2. Git itself has no place for the encoding of the author name =
-in the
->>>> commit object format
->>>>    3. git-format-patch has a --compose-encoding which I think woul=
-d sort
->>>> this out if you set it to ISO-8859-1, but it defaults to UTF-8
->>>>    4. Your patch is actually a ISO-8859-1 byte sequence, but is
->>>> advertised as UTF-8
->>>>    5. You end up with a screwed-up commit
->>>>
->>>> You could work around this, but I suggest just joining the 21st
->>>> century and working exclusively in UTF-8, it makes things much eas=
-ier,
->>>> speaking as someone with 3x more non-ASCII characters their his na=
-me
->>>> than you :)
->>>>
->>> Ok, then the question is: How do I switch to UTF-8?
->>>
->>> To me it seems I'm already using it:
->>> $ locale charmap
->>> UTF-8
->>
->> Your .gitconfig has an ISO-8859-1 string, from an earlier mail of yo=
-urs:
->>
->>> $ git config -l | grep Noralf | xxd
->>> 0000000: 7573 6572 2e6e 616d 653d 4e6f 7261 6c66  user.name=3DNoral=
-f
->>> 0000010: 2054 72f8 6e6e 6573 0a                    Tr.nnes.
->>
->> On a system configured for UTF-8 this would be:
->>
->> $ echo Noralf Tr=C3=B8nnes | xxd
->> 0000000: 4e6f 7261 6c66 2054 72c3 b86e 6e65 730a  Noralf Tr..nnes.
->>
->> Note the "f8" v.s. "c3 b8".
->>
->
-> Yes:
-> $ echo Noralf Tr=C3=B8nnes | xxd
-> 0000000: 4e6f 7261 6c66 2054 72f8 6e6e 6573 0a    Noralf Tr.nnes.
->
-> Is there a command I can run that shows that I'm using ISO-8859-1 ?
-> I need something to google with, my previous search only gave locale =
-stuff,
-> which seems fine.
+> [...]
+> Maybe breaking this is OK (but I can't find what the replacement is),
+> but the config or the the changelog doesn't mention breaking existing
+> config settings.
 
-What does this give you, this is UTF-8.
+Eek. Definitely an unintended regression. The fix is below. Thanks for
+reporting (and especially for catching during the -rc period!).
 
-$ echo git commit --author=3D"Noralf Tr=C3=B8nnes <notro@tronnes.org>" =
-| xxd
-0000000: 6769 7420 636f 6d6d 6974 202d 2d61 7574  git commit --aut
-0000010: 686f 723d 4e6f 7261 6c66 2054 72c3 b86e  hor=3DNoralf Tr..n
-0000020: 6e65 7320 3c6e 6f74 726f 4074 726f 6e6e  nes <notro@tronn
-0000030: 6573 2e6f 7267 3e0a                      es.org>.
+You should not need it, but for reference, using "0" is the same as
+"black" (both in old git and new).
 
-To see if you're using UTF-8 just look at the codepoints for the
-non-ASCII characters you're using and check if they're valid UTF-8.
-E.g. you can check this out:
-http://en.wikipedia.org/wiki/%C3%98#Computers
+-- >8 --
+When commit 695d95d refactored the color parsing, it missed
+a "return 0" when parsing literal numbers 0-8 (which
+represent basic ANSI colors), leading us to report these
+colors as an error.
 
-Which shows you that the UTF-8 hex version is C3 B8, but the Latin-1
-is F8, you're emitting F8, I'm emitting C3 B8.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ color.c          | 1 +
+ t/t4026-color.sh | 4 ++++
+ 2 files changed, 5 insertions(+)
+
+diff --git a/color.c b/color.c
+index 809b359..9027352 100644
+--- a/color.c
++++ b/color.c
+@@ -112,6 +112,7 @@ static int parse_color(struct color *out, const cha=
+r *name, int len)
+ 		} else if (val < 8) {
+ 			out->type =3D COLOR_ANSI;
+ 			out->value =3D val;
++			return 0;
+ 		} else if (val < 256) {
+ 			out->type =3D COLOR_256;
+ 			out->value =3D val;
+diff --git a/t/t4026-color.sh b/t/t4026-color.sh
+index 267c43b..4d20fea 100755
+--- a/t/t4026-color.sh
++++ b/t/t4026-color.sh
+@@ -60,6 +60,10 @@ test_expect_success 'absurdly long color specificati=
+on' '
+ 	  "[1;2;4;5;7;22;24;25;27;38;2;255;255;255;48;2;255;255;255m"
+ '
+=20
++test_expect_success '0-7 are aliases for basic ANSI color names' '
++	color "0 7" "[30;47m"
++'
++
+ test_expect_success '256 colors' '
+ 	color "254 bold 255" "[1;38;5;254;48;5;255m"
+ '
+--=20
+2.2.1.425.g441bb3c
