@@ -1,86 +1,65 @@
-From: Kevin Stenerson <kevin@reflexionhealth.com>
-Subject: bash completion for git branch/checkout/etc doesn't escape metacharacters
-Date: Tue, 20 Jan 2015 11:15:50 -0800
-Message-ID: <CAPcx8dzgnChWpTn6po1NF65Mr_hPadUbbNCKHJqght7OG6ksFw@mail.gmail.com>
+From: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH] move MAXDEPTH definition to the cache.h
+Date: Tue, 20 Jan 2015 20:25:48 +0100
+Message-ID: <54BEABBC.9070302@web.de>
+References: <1421777797-14781-1-git-send-email-kuleshovmail@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 20 20:16:33 2015
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Alexander Kuleshov <kuleshovmail@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 20 20:26:03 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YDeHw-0003ap-QG
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Jan 2015 20:16:33 +0100
+	id 1YDeR6-0006Up-Jt
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Jan 2015 20:26:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754625AbbATTQ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Jan 2015 14:16:28 -0500
-Received: from mail-wi0-f176.google.com ([209.85.212.176]:64917 "EHLO
-	mail-wi0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754365AbbATTPv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Jan 2015 14:15:51 -0500
-Received: by mail-wi0-f176.google.com with SMTP id em10so9440674wid.3
-        for <git@vger.kernel.org>; Tue, 20 Jan 2015 11:15:50 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=g7dHWT6kZqnbFfFzfG4XPleYPjapm7j4yApCm1hh2Mo=;
-        b=GKbhyVFvDiayMh66ExfuuSwZ1PYWZn8xzAoJSDQ2Wjn/52Flk3yT1u5nPnBZFGxijq
-         GdnK62+GJi0W6ji25CTdtlRyMZ05QTEwQJn+kZKMBXpixCw0UiorsnUdJPZMydMm6M0U
-         tMzxIxtZEYiVe1oRhAq0Nx+c9F8ixsXCdj+k/fx+OnjYY/xHTJFOqU3k57a7ZMpszhfk
-         tChfKctcYZYyanBNM5DF/dYo9nXsvxMqR6k4MYJW2LKswgGBQ15otfqS3MX+rd7cqIiN
-         BJCtiA70Gw2GjIqapYSOG3KNTLjzNsd44hiakJRHVF43Ds+3iA6q7TFhd9A5cqB50vNA
-         iYGQ==
-X-Gm-Message-State: ALoCoQkw99bMxjBU12IUOLnFbJb3fV8c1cTB/g3GLThtVQoo/dwO3f6fE90pn7/DKGWdELyCTt7w
-X-Received: by 10.180.73.47 with SMTP id i15mr30517215wiv.0.1421781350581;
- Tue, 20 Jan 2015 11:15:50 -0800 (PST)
-Received: by 10.180.88.33 with HTTP; Tue, 20 Jan 2015 11:15:50 -0800 (PST)
+	id S1752757AbbATTZ4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Jan 2015 14:25:56 -0500
+Received: from mout.web.de ([212.227.15.14]:62285 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752621AbbATTZz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Jan 2015 14:25:55 -0500
+Received: from macce.local ([78.68.171.36]) by smtp.web.de (mrweb004) with
+ ESMTPSA (Nemesis) id 0MVpJg-1YFtUG2D5U-00X4Lg; Tue, 20 Jan 2015 20:25:52
+ +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
+In-Reply-To: <1421777797-14781-1-git-send-email-kuleshovmail@gmail.com>
+X-Provags-ID: V03:K0:DDss9b4gO8P3RB+zTcoodn2tV+P4Gw44ufRve/pa1XRFNcPeVYq
+ z0d2UlcjpmILCTm9P2Rstijl/r6sBGn81NikAOBJWI4A74Ess1jkVXfxmNdLt2/X6BQHG1b
+ 39zBTE5qEzjBnItAbXU3hdHZ2ViM5/jyCIeDnxto+u3RdHKbsiGs2bWypd43AazzIPab6ID
+ FBNbGPAyJn/xriAQ52ZAg==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262681>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262682>
 
-The bash completion provided with git doesn't escape or quote parens
-in tag or branch names.
-Alternatively, it doesn't reject branch or tag names with parenthesis
-as an invalid name (as it does for names with spaces or tabs)
-Bash treats parentheses in unquoted words as a word separator.
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -1010,6 +1010,7 @@ extern int read_ref(const char *refname, unsigned char *sha1);
+>   * Caps and underscores refers to the special refs, such as HEAD,
+>   * FETCH_HEAD and friends, that all live outside of the refs/ directory.
+>   */
 
-When encountering this problem I was using git version 2.2.2 and bash
-version 4.3.11
+What happened to the comment line ?
+Should it go away or better stay ?
 
-Steps to reproduce with bash:
+When we move the definition to a common file,
+it is not 100% clear what MAXDEPTH is about,
+and the comment is even more important, I think:
 
-    mkdir foo
-    cd foo
-    git init foo
-    touch bar
-    git add bar
-    git commit -m "Went to a bar"
+> +/* We allow "recursive" symbolic links. Only within reason, though. */
+> +#define MAXDEPTH 5
 
-Then for tags
+On the other hand, if we find a better name for that definition,
+we may skip the comment.
 
-    git tag 'v1.0.0(215)'
-
-Or branches
-
-    git branch 'mybranch(myuser)'
-
-And the actual bash completion
-
-    git checkout   # Use completion here -- it won't escape the parenthesis
-    git checkout master
-    git branch -d   # Use completion here -- it won't escape the parenthesis
-
-Similarily, when typing a name with an escape character such as
-"mytag\(", it won't complete the name from that point.
-
-This appears to be true for other bash meta characters as well such as
-'<', '>', '|', ';', '&'
-
------------
-Kevin Stenerson
-kevin@reflexionhealth.com
+A first suggestion may be
+#define MAXDEPTH_FOR_SYMLINKS 5
+but other variants are possible.
