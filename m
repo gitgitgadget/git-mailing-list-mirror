@@ -1,92 +1,155 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: [PATCH] show-branch: fix indentation of usage string
-Date: Tue, 20 Jan 2015 20:30:28 +0100
-Message-ID: <1421782228-24005-1-git-send-email-ralf.thielow@gmail.com>
-References: <CANYiYbGL4A+ut8NjKmq6U8ADVf2M9Lq-5DOG3qxbKBp5srtrJQ@mail.gmail.com>
+From: =?ISO-8859-1?Q?Noralf_Tr=F8nnes?= <notro@tronnes.org>
+Subject: Git messes up =?ISO-8859-1?Q?=27=F8=27_character?=
+Date: Tue, 20 Jan 2015 20:46:21 +0100
+Message-ID: <54BEB08D.9090905@tronnes.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: kuleshovmail@gmail.com, jn.avila@free.fr, worldhello.net@gmail.com,
-	Ralf Thielow <ralf.thielow@gmail.com>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Jan 20 20:30:40 2015
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 20 20:55:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YDeVb-0007hx-8B
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Jan 2015 20:30:39 +0100
+	id 1YDetR-0007Sy-Vi
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Jan 2015 20:55:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752774AbbATTae convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Jan 2015 14:30:34 -0500
-Received: from mail-wi0-f177.google.com ([209.85.212.177]:47816 "EHLO
-	mail-wi0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751778AbbATTac (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Jan 2015 14:30:32 -0500
-Received: by mail-wi0-f177.google.com with SMTP id r20so19305130wiv.4
-        for <git@vger.kernel.org>; Tue, 20 Jan 2015 11:30:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=BJx436nHOFtBWGfld8jPAXS+Slc0XqiMTbT74KyWGg4=;
-        b=AJTcyGRMF/kpZrDUeawxcqqRC1lriu3TxgefHKppdKm9vg24+yFpNI+mhCoSYBxM+q
-         PWKUyPyUz+1JkevGSG7faVXhseM5HFEX9/mNGgGsUvrhAIy3v7XzgDhVJIwkoTNDXLfq
-         J2STM7ZkHTb8ZJ9obCglOrsYI0Qnol1hdwpv6Thvo93nfjLGjvcVK+UUx14/C9Q5vyBP
-         sgZfSytsvQuNFrtvF5WcZbv7zJ/kFLClgY5O2/NZDRHXMaq21liZvFF1Mcx6Tcl6ENkp
-         ep6RZExX+AMggFReTAVHRIYzuqHncVc7aQB4wkffc3aCCJtYjBOsewmmnWHv5orLi4BO
-         p1NA==
-X-Received: by 10.180.107.195 with SMTP id he3mr50299748wib.44.1421782231684;
-        Tue, 20 Jan 2015 11:30:31 -0800 (PST)
-Received: from localhost (dslb-088-073-235-175.088.073.pools.vodafone-ip.de. [88.73.235.175])
-        by mx.google.com with ESMTPSA id j1sm22498722wjw.25.2015.01.20.11.30.30
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 20 Jan 2015 11:30:30 -0800 (PST)
-X-Mailer: git-send-email 2.3.0.rc0.211.g05e7197
-In-Reply-To: <CANYiYbGL4A+ut8NjKmq6U8ADVf2M9Lq-5DOG3qxbKBp5srtrJQ@mail.gmail.com>
+	id S1752871AbbATTzL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Jan 2015 14:55:11 -0500
+Received: from asav22.altibox.net ([109.247.116.9]:37416 "EHLO
+	asav22.altibox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752075AbbATTzK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Jan 2015 14:55:10 -0500
+X-Greylist: delayed 525 seconds by postgrey-1.27 at vger.kernel.org; Tue, 20 Jan 2015 14:55:09 EST
+Received: from localhost (localhost [127.0.0.1])
+	by asav22.altibox.net (Postfix) with ESMTP id A6FA9201A5;
+	Tue, 20 Jan 2015 20:46:21 +0100 (CET)
+Received: from asav22.altibox.net ([127.0.0.1])
+	by localhost (asav22.lysetele.net [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id wXUfemQ_-AP9; Tue, 20 Jan 2015 20:46:20 +0100 (CET)
+Received: from [127.0.0.1] (48.81-166-104.customer.lyse.net [81.166.104.48])
+	by asav22.altibox.net (Postfix) with ESMTP id 55DD420072;
+	Tue, 20 Jan 2015 20:46:19 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+X-Antivirus: avast! (VPS 150120-1, 20.01.2015), Outbound message
+X-Antivirus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262685>
 
-Noticed-by: Jean-No=C3=ABl Avila <jn.avila@free.fr>
-Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+I can't get my name: Noralf Tr=F8nnes, to come out correctly when I
+format and send a patch. The '=F8' becomes a question mark when receive=
+d
+in my email client.
+
+This is the head of the patch file generated by git format-patch:
+
+ From b2a4f6abdb097c4dc092b56995a2af8e42fbea79 Mon Sep 17 00:00:00 2001
+=46rom: =3D?UTF-8?q?Noralf=3D20Tr=3DF8nnes?=3D <notro@tronnes.org>
+Date: Tue, 20 Jan 2015 18:34:47 +0100
+Subject: [PATCH] staging: fbtft: remove ARCH_BCM2708 optimization
+MIME-Version: 1.0
+Content-Type: text/plain; charset=3DUTF-8
+Content-Transfer-Encoding: 8bit
+
+ARCH_BCM2708 is not present in mainline so remove optimization.
+
+Signed-off-by: Noralf Tr=F8nnes <notro@tronnes.org>
 ---
-Jiang Xin <worldhello.net@gmail.com> wrote:
-> 2015-01-18 23:53 GMT+08:00 Jean-No=C3=ABl AVILA <jn.avila@free.fr>:
-> Yes, it's wrong to using mixed tabs and spaces in the message. It com=
-es
-> from commit v2.0.5-5-g9990273, and it should be fixed.
 
-This also breaks the indentation of the command output.
+$ git log -1
+commit b2a4f6abdb097c4dc092b56995a2af8e42fbea79
+Author: Noralf Tr<F8>nnes <notro@tronnes.org>
+Date:   Tue Jan 20 18:34:47 2015 +0100
 
- builtin/show-branch.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+     staging: fbtft: remove ARCH_BCM2708 optimization
 
-diff --git a/builtin/show-branch.c b/builtin/show-branch.c
-index 691eeda..365228a 100644
---- a/builtin/show-branch.c
-+++ b/builtin/show-branch.c
-@@ -7,9 +7,9 @@
-=20
- static const char* show_branch_usage[] =3D {
-     N_("git show-branch [-a|--all] [-r|--remotes] [--topo-order | --da=
-te-order]\n"
--       "		       [--current] [--color[=3D<when>] | --no-color] [--spar=
-se]\n"
--       "		       [--more=3D<n> | --list | --independent | --merge-base=
-]\n"
--       "	       [--no-name | --sha1-name] [--topics] [(<rev> | <glob>)=
-=2E..]"),
-+       "		[--current] [--color[=3D<when>] | --no-color] [--sparse]\n"
-+       "		[--more=3D<n> | --list | --independent | --merge-base]\n"
-+       "		[--no-name | --sha1-name] [--topics] [(<rev> | <glob>)...]")=
-,
-     N_("git show-branch (-g|--reflog)[=3D<n>[,<base>]] [--list] [<ref>=
-]"),
-     NULL
- };
---=20
-2.3.0.rc0.211.g05e7197
+     ARCH_BCM2708 is not present in mainline so remove optimization.
+
+     Signed-off-by: Noralf Tr<F8>nnes <notro@tronnes.org>
+
+$ git send-email --to notro@tronnes.org=20
+0001-staging-fbtft-remove-ARCH_BCM2708-optimization.patch
+0001-staging-fbtft-remove-ARCH_BCM2708-optimization.patch
+(mbox) Adding cc: =3D?UTF-8?q?Noralf=3D20Tr=3DF8nnes?=3D <notro@tronnes=
+=2Eorg>=20
+from line 'From: =3D?UTF-8?q?Noralf=3D20Tr=3DF8nnes?=3D <notro@tronnes.=
+org>'
+(body) Adding cc: Noralf Tr=F8nnes <notro@tronnes.org> from line=20
+'Signed-off-by: Noralf Tr=F8nnes <notro@tronnes.org>'
+
+=46rom: =3D?UTF-8?q?Noralf=3D20Tr=3DF8nnes?=3D <notro@tronnes.org>
+To: notro@tronnes.org
+Subject: [PATCH] staging: fbtft: remove ARCH_BCM2708 optimization
+Date: Tue, 20 Jan 2015 20:25:24 +0100
+Message-Id: <1421781924-3066-1-git-send-email-notro@tronnes.org>
+X-Mailer: git-send-email 2.2.2
+MIME-Version: 1.0
+Content-Type: text/plain; charset=3DUTF-8
+Content-Transfer-Encoding: 8bit
+
+     The Cc list above has been expanded by additional
+     addresses found in the patch commit message. By default
+     send-email prompts before sending whenever this occurs.
+     This behavior is controlled by the sendemail.confirm
+     configuration setting.
+
+     For additional information, run 'git send-email --help'.
+     To retain the current behavior, but squelch this message,
+     run 'git config --global sendemail.confirm auto'.
+
+Send this email? ([y]es|[n]o|[q]uit|[a]ll): y
+OK. Log says:
+Server: smtp.ebnett.no
+MAIL FROM:<notro@tronnes.org>
+RCPT TO:<notro@tronnes.org>
+=46rom: =3D?UTF-8?q?Noralf=3D20Tr=3DF8nnes?=3D <notro@tronnes.org>
+To: notro@tronnes.org
+Subject: [PATCH] staging: fbtft: remove ARCH_BCM2708 optimization
+Date: Tue, 20 Jan 2015 20:44:15 +0100
+Message-Id: <1421783055-3117-1-git-send-email-notro@tronnes.org>
+X-Mailer: git-send-email 2.2.2
+MIME-Version: 1.0
+Content-Type: text/plain; charset=3DUTF-8
+Content-Transfer-Encoding: 8bit
+
+Result: 250 2.0.0 Ok: queued as B49BB8014D
+
+
+
+Setup:
+
+Ubuntu server
+$ cat /etc/issue
+Ubuntu 12.04.3 LTS \n \l
+
+$ git --version
+git version 2.2.2
+
+$ git config -l
+user.name=3DNoralf Tr=F8nnes
+user.email=3Dnotro@tronnes.org
+core.editor=3Dnano
+alias.serve=3Ddaemon --verbose --export-all --base-path=3D/home/pi --re=
+useaddr
+sendemail.smtpserver=3Dsmtp.ebnett.no
+core.repositoryformatversion=3D0
+core.filemode=3Dtrue
+core.bare=3Dfalse
+core.logallrefupdates=3Dtrue
+remote.origin.fetch=3D+refs/heads/*:refs/remotes/origin/*
+remote.origin.url=3Dgit://git.kernel.org/pub/scm/linux/kernel/git/gregk=
+h/staging.git
+branch.master.remote=3Dorigin
+branch.master.merge=3Drefs/heads/master
+branch.staging-testing.remote=3Dorigin
+branch.staging-testing.merge=3Drefs/heads/staging-testing
+
+
+Regards,
+Noralf Tr=F8nnes
