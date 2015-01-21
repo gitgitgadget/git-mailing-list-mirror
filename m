@@ -1,88 +1,79 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v3 09/19] fsck: Handle multiple authors in commits specially
-Date: Wed, 21 Jan 2015 20:25:30 +0100
+Subject: [PATCH v3 10/19] fsck: Make =?UTF-8?Q?fsck=5Ftag=28=29=20warn-fri?=
+ =?UTF-8?Q?endly?=
+Date: Wed, 21 Jan 2015 20:25:40 +0100
 Organization: gmx
-Message-ID: <8e23b0f08f9aef7b57716587f2573d8b381b4594.1421868116.git.johannes.schindelin@gmx.de>
+Message-ID: <726432c3b043ab282eecb9c70ac3f15cb7fc91e3.1421868116.git.johannes.schindelin@gmx.de>
 References: <xmqqr3w7gxr4.fsf@gitster.dls.corp.google.com>
  <cover.1421868116.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Jan 21 20:25:47 2015
+X-From: git-owner@vger.kernel.org Wed Jan 21 20:25:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YE0uP-0002b7-Sn
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Jan 2015 20:25:46 +0100
+	id 1YE0uU-0002en-8i
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Jan 2015 20:25:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754141AbbAUTZm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Jan 2015 14:25:42 -0500
-Received: from mout.gmx.net ([212.227.15.15]:51291 "EHLO mout.gmx.net"
+	id S1754146AbbAUTZo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Jan 2015 14:25:44 -0500
+Received: from mout.gmx.net ([212.227.15.18]:64040 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753743AbbAUTZl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Jan 2015 14:25:41 -0500
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0M86jp-1XrW4x2Rd3-00veTH; Wed, 21 Jan 2015 20:25:30
+	id S1753743AbbAUTZo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Jan 2015 14:25:44 -0500
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0LyWAQ-1XhJ3b0MVS-015nbd; Wed, 21 Jan 2015 20:25:41
  +0100
 In-Reply-To: <cover.1421868116.git.johannes.schindelin@gmx.de>
 X-Sender: johannes.schindelin@gmx.de
 User-Agent: Roundcube Webmail/1.1-git
-X-Provags-ID: V03:K0:C1CfUeGg72nAkPVOW/THyCn2+Iq3wfJBT5qfMpt6P4lySKC8/eC
- goLEfN822Gkv8ndDoa83RaZueNZSA0lztis14AXeRZ6c4JaimKmzFfrrF472ppznkIDGSak
- 5Z/pWRCRRYjEfiy9iXcrgi8gFpy/bKF4LnsAUhjy4M6I5Hxi2XMnWEOnjy5bgASfy2wbfEV
- cvWB/1P/lyalr4VBQKyCg==
+X-Provags-ID: V03:K0:/79qNRr9e2N5afeKQKxdho3PwVjpThmk9nqntrw4KkRDZODsr1u
+ a97tTc0araxb8EeBGGq8MipUaVuu+XjJgXWe5pTpnq7WjiUm+UZt2bYgF0uDMuUNf3HNBCk
+ ZNA/zAsZ/dg4tKAYZuERj4JalIGzTQOvIDNqNmzTaUzBp4nm+GUbGlN7rFJdFFGpKWTqFZD
+ +1Gxd1NxUqJ5TN7Vq/9Fg==
 X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262754>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262755>
 
-This problem has been detected in the wild, and is the primary reason
-to introduce an option to demote certain fsck errors to warnings. Let's
-offer to ignore this particular problem specifically.
+When fsck_tag() identifies a problem with the commit, it should try
+to make it possible to continue checking the commit object, in case the
+user wants to demote the detected errors to mere warnings.
 
-Technically, we could handle such repositories by setting
-receive.fsck.warn = missing-committer, but that could hide missing tree
-objects in the same commit because we cannot continue verifying any
-commit object after encountering a missing committer line, while we can
-continue in the case of multiple author lines.
+Just like fsck_commit(), there are certain problems that could hide oth=
+er
+issues with the same tag object. For example, if the 'type' line is not
+encountered in the correct position, the 'tag' line =E2=80=93 if there =
+is any =E2=80=93
+would not be handled at all.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- fsck.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ fsck.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/fsck.c b/fsck.c
-index 8979357..3118db1 100644
+index 3118db1..4adf9ce 100644
 --- a/fsck.c
 +++ b/fsck.c
-@@ -38,6 +38,7 @@
- 	FUNC(MISSING_TREE, ERROR) \
- 	FUNC(MISSING_TYPE, ERROR) \
- 	FUNC(MISSING_TYPE_ENTRY, ERROR) \
-+	FUNC(MULTIPLE_AUTHORS, ERROR) \
- 	FUNC(NOT_SORTED, ERROR) \
- 	FUNC(NUL_IN_HEADER, ERROR) \
- 	FUNC(TAG_OBJECT_NOT_TAG, ERROR) \
-@@ -545,6 +546,14 @@ static int fsck_commit_buffer(struct commit *commit, const char *buffer,
- 	err = fsck_ident(&buffer, &commit->object, options);
- 	if (err)
- 		return err;
-+	while (skip_prefix(buffer, "author ", &buffer)) {
-+		err = report(options, &commit->object, FSCK_MSG_MULTIPLE_AUTHORS, "invalid format - multiple 'author' lines");
-+		if (err)
-+			return err;
-+		err = fsck_ident(&buffer, &commit->object, options);
-+		if (err)
-+			return err;
-+	}
- 	if (!skip_prefix(buffer, "committer ", &buffer))
- 		return report(options, &commit->object, FSCK_MSG_MISSING_COMMITTER, "invalid format - expected 'committer' line");
- 	err = fsck_ident(&buffer, &commit->object, options);
--- 
+@@ -614,7 +614,8 @@ static int fsck_tag_buffer(struct tag *tag, const c=
+har *data,
+ 	}
+ 	if (get_sha1_hex(buffer, sha1) || buffer[40] !=3D '\n') {
+ 		ret =3D report(options, &tag->object, FSCK_MSG_INVALID_OBJECT_SHA1, =
+"invalid 'object' line format - bad sha1");
+-		goto done;
++		if (ret)
++			goto done;
+ 	}
+ 	buffer +=3D 41;
+=20
+--=20
 2.2.0.33.gc18b867
