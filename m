@@ -1,77 +1,81 @@
-From: Alexander Kuleshov <kuleshovmail@gmail.com>
-Subject: Re: [PATCH v2] Makefile: collect some Makefile variables instead of
- directly assignment
-Date: Wed, 21 Jan 2015 15:33:43 +0600
-Message-ID: <CANCZXo6DaSB4eiqQ6XrDpYMYeES50t1pi8CJwdzPZ2DOQpRjig@mail.gmail.com>
-References: <1421830161-27623-1-git-send-email-kuleshovmail@gmail.com>
-	<xmqqzj9cwkq4.fsf@gitster.dls.corp.google.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 20/24] update-index: test the system before enabling
+ untracked cache
+Date: Wed, 21 Jan 2015 16:46:30 +0700
+Message-ID: <CACsJy8CDgUWEE=QKAgw4G8pgA-cOmLMs4sH67C47Ohd5XJQDNQ@mail.gmail.com>
+References: <1421759013-8494-1-git-send-email-pclouds@gmail.com>
+ <1421759013-8494-21-git-send-email-pclouds@gmail.com> <xmqqwq4gy1nq.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 21 10:33:54 2015
+X-From: git-owner@vger.kernel.org Wed Jan 21 10:47:09 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YDrfc-0001nM-U9
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Jan 2015 10:33:53 +0100
+	id 1YDrsS-0006IJ-9z
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Jan 2015 10:47:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752676AbbAUJdt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Jan 2015 04:33:49 -0500
-Received: from mail-oi0-f48.google.com ([209.85.218.48]:54885 "EHLO
-	mail-oi0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752468AbbAUJdo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Jan 2015 04:33:44 -0500
-Received: by mail-oi0-f48.google.com with SMTP id v63so407156oia.7
-        for <git@vger.kernel.org>; Wed, 21 Jan 2015 01:33:43 -0800 (PST)
+	id S1751557AbbAUJrE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Jan 2015 04:47:04 -0500
+Received: from mail-qc0-f177.google.com ([209.85.216.177]:56142 "EHLO
+	mail-qc0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750916AbbAUJrB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 Jan 2015 04:47:01 -0500
+Received: by mail-qc0-f177.google.com with SMTP id p6so10051553qcv.8
+        for <git@vger.kernel.org>; Wed, 21 Jan 2015 01:47:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=ohBEfof7gb4n6Sp/N74krBr/tgjNadRLUha9DcnpFco=;
-        b=F5rNmf38BMeOMk24DAOca80Ou9RRszAzw7/C35Y0QEQZMQAqxpFsduoB/Nqpw5k8Ur
-         BMLGwg9zgMXUtt8REVx4A7I3Ese5r1usqGuqKPQ4I6T8Vh7NUGpcJ6G2tEzWJHSjH7Fm
-         infjiumn+oSX7EXCuhJqPUx5NIfORPQRRAkR0UvwouRgQewZEAgoVM0EyIi81AkEzPvC
-         NWy2BblY47SIzHbi+aZ6ggl/WGr5hJrkAmjT5ru+XNHXSQ97SkZnoTquMfEeoMaawEGz
-         Z7TqgRRP9JqZ3JbdA2vGQrPPpbGZmaogXNPLVV9feVuhePzFEifLWmImVhNhhWtmRS1B
-         C60g==
-X-Received: by 10.60.52.132 with SMTP id t4mr24213504oeo.11.1421832823892;
- Wed, 21 Jan 2015 01:33:43 -0800 (PST)
-Received: by 10.182.26.116 with HTTP; Wed, 21 Jan 2015 01:33:43 -0800 (PST)
-In-Reply-To: <xmqqzj9cwkq4.fsf@gitster.dls.corp.google.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=rk0FW6Dg2p0J2+9QZAb2uEtkEa9WxyvzJbFytd7Gu4M=;
+        b=G/j9N6ZyiL4AHjmVwSyhrdfepVJqs199LO8j2mCJaMaHVPs3VjwemdmAHp7mWCuYKZ
+         GRX1BTIbBGfXIgpZTXlDpzKABbDBkgu5A01X2pbz+qspxFIxY8QDtC9/lh2/2OfJKjwF
+         FTKkTIdaH/G1tbrL6o644DSjvM+/7r8NFyrUItCgF6V8jNnJM9yb73ApwDDxb/dC6Mth
+         mvz1KyIOaojyXVA92hBSVf9TuDfP+UO9DYCWwEktVgh8dPCtqEGdbQXIxAqKVFiEKk63
+         Nw40AhuToRm91dy8L8W8xUUXy5TTmMWlcj69ul3mb9sfWLEJIaeJwH68XJnS1FHGuJFD
+         4fxg==
+X-Received: by 10.224.127.193 with SMTP id h1mr52899671qas.98.1421833620500;
+ Wed, 21 Jan 2015 01:47:00 -0800 (PST)
+Received: by 10.96.137.73 with HTTP; Wed, 21 Jan 2015 01:46:30 -0800 (PST)
+In-Reply-To: <xmqqwq4gy1nq.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262727>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262728>
 
-Hello Junio,
+On Wed, Jan 21, 2015 at 3:32 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
+:
+>
+>> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+>> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gm=
+ail.com>
+>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>> ---
+>
+> It appears that this hijacks a fixed name dir-mtime-test at the root
+> level of every project managed by Git.  Is that intended?
 
-2015-01-21 15:23 GMT+06:00 Junio C Hamano <gitster@pobox.com>:
-> Alexander Kuleshov <kuleshovmail@gmail.com> writes:
->
->> Some of Makefile variables as TEST_PROGRAMS_NEED_X and BUILTIN_OBJS filled
->> directly by hand, let's collect it with the standard functions of 'make' util.
->
-> I am not sure if we want to do this.
->
-> $(wildcard) is a double-edged sword.  It will grab any file that
-> matches on the filesystem, not just the ones we want to include in
-> the Git source set.  I often have a file called test-something and
-> I'd prefer not to see such a random thing included in the build,
-> only because the filename matches some pattern.
+I did think about filename clash, but I chose a fixed name anyway for
+simplicity, otherwise we would need to reconstruct paths
+"dir-mtime-test/..." in many places.
 
-Yes, grabbing files by test-*.c is unreliable in this case. But what
-about builtin/*.c?
-Is there any plans that builtin will contain something another than
-builtin object files?
+> Shouldn't --use-untracked-cache option require the working tree
+> (i.e. die in a bare repository)?
 
->
-> While "we consider anything with a name that match the pattern we
-> say matter (e.g. test-*.c or builtin/*.c) as part of the source set"
-> is sometimes handy (it allows us to be lazy), it risks surprising
-> unsuspecting users.
->
-> So I dunno.
+setup_work_tree() takes care of that
+
+> ~/w/git $ git init --bare foo
+Kh=E1=BB=9Fi t=E1=BA=A1o tr=E1=BB=91ng r=E1=BB=97ng kho Git trong /home=
+/pclouds/w/git/foo/
+> ~/w/git $ cd foo/
+> ~/w/git/foo $ ../git update-index --untracked-cache
+fatal: This operation must be run in a work tree
+--=20
+Duy
