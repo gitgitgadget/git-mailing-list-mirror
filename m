@@ -1,85 +1,139 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git index containing tree extension for unknown path
-Date: Wed, 21 Jan 2015 12:39:04 -0800
-Message-ID: <xmqqr3unx40n.fsf@gitster.dls.corp.google.com>
-References: <CAENte7gqKpqr=ENOEN_3s3Fz6gc-Kt70OJyZojbgwhR7YVX6Zg@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2] .clang-format: introduce the use of clang-format
+Date: Wed, 21 Jan 2015 15:45:02 -0500
+Message-ID: <20150121204502.GA3287@peff.net>
+References: <1421530221-39306-1-git-send-email-artagnon@gmail.com>
+ <1421859687-27216-1-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git <git@vger.kernel.org>
-To: Christian Halstrick <christian.halstrick@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 21 21:39:31 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 21 21:45:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YE23m-0001iM-Ll
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Jan 2015 21:39:31 +0100
+	id 1YE29K-0004uL-UK
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Jan 2015 21:45:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753914AbbAUUjO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Jan 2015 15:39:14 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:54873 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753716AbbAUUjH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Jan 2015 15:39:07 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id A4BCB2FE62;
-	Wed, 21 Jan 2015 15:39:06 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=UzAb+iIhpdNBpDIJRm690iTEjoY=; b=M9Z1at
-	ROuLeKPWT9wp04wfhit+0ER6vcYxZFz0XO5pySQLariz/bR+ipM1hUzW5uuhIojn
-	UL+sWOVL61NhbeloEPOPtPFzpvuPdykps1FpWk3g2T+4hxwC6XAxRL/Zab6ZPtDD
-	oriRs8ITEvoYjdTK6eVbyRKzlUBSPfvRMH+ak=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=STc/tPKgiWSDrXKtznXBKvl4Jdc/NfeZ
-	+imBOjaHwq1r3o6JlZYT+ntoBEs71UFX1O6mobGonAMQ2DzIDN7ax92WnMiV1bAW
-	aduEX4lepdXkHWeLwZK/RlRA2zU1n2xtzj4714EV/E/2crp2JOXXBThg6SDeBI4n
-	pyW5DO27QEo=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 990372FE60;
-	Wed, 21 Jan 2015 15:39:06 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1185A2FE5D;
-	Wed, 21 Jan 2015 15:39:05 -0500 (EST)
-In-Reply-To: <CAENte7gqKpqr=ENOEN_3s3Fz6gc-Kt70OJyZojbgwhR7YVX6Zg@mail.gmail.com>
-	(Christian Halstrick's message of "Wed, 21 Jan 2015 17:14:19 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 8AF776FE-A1AD-11E4-9B8E-D3749F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1753423AbbAUUpN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Jan 2015 15:45:13 -0500
+Received: from cloud.peff.net ([50.56.180.127]:36992 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752948AbbAUUpE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Jan 2015 15:45:04 -0500
+Received: (qmail 27531 invoked by uid 102); 21 Jan 2015 20:45:04 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 21 Jan 2015 14:45:04 -0600
+Received: (qmail 388 invoked by uid 107); 21 Jan 2015 20:45:28 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 21 Jan 2015 15:45:28 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 21 Jan 2015 15:45:02 -0500
+Content-Disposition: inline
+In-Reply-To: <1421859687-27216-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262766>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262767>
 
-Christian Halstrick <christian.halstrick@gmail.com> writes:
+On Wed, Jan 21, 2015 at 12:01:27PM -0500, Ramkumar Ramachandra wrote:
 
-> Is it allowed that the git index contains a tree extension mentioning
-> patch 'x/y/z' while the only entry in the index is a '.gitattributes'
-> files in the root?
+> Instead of manually eyeballing style in reviews, just ask all
+> contributors to run their patches through [git-]clang-format.
 
-Depends on the definition of "mention", but it is not unexpected
-that you see "x", "y", and "z" in the cache-tree extension as
-invalidated nodes after you do something like this:
+Thanks for mentioning this; I hadn't seen the tool before.
 
-	rm -fr test &&
-        git init test &&
-        cd test
-        mkdir -p x/y/z &&
-        >x/y/z/1 &&
-        git add x &&
-        git write-tree && # cache-tree is fully valid
-        mv x/y/z x/y/a &&
-        git add x # cache-tree invalidated
+I didn't see it mentioned here, but for those who are also new to the
+tool, it has modes both for checking the content itself as well as diffs
+(so you are not stuck wading through its reformats of code you didn't
+touch).
 
-"z", if appears, should still know that "y" is its parent and "y",
-if appears, should still know that "x" is its parent.  All of the
-three should say they have been invalidated by showing a negative
-entry-count and show the "correct" subtree count that appear in the
-extension (i.e. if "z" is there as an invalidated leaf, it should
-say "-1 0" to indicate an invalidated entry by a negative entry count,
-with zero subtrees, and "y" would show "-1 1" to indicate an
-invalidated entry with one subtree, namely "z", etc.).
+> +BreakBeforeBraces: Linux
+> [...]
+> +BreakBeforeBraces: Stroustrup
+
+These seem conflicting. It looks like you added "Stroustrup" to keep the
+brace on the line with the "struct" keyword. But this does the wrong
+thing for "cuddled else"s like:
+
+  if (...) {
+     ...
+  } else {
+     ...
+  }
+
+I don't think clang-format has a mode that expresses our style.
+
+I ran some of my recent patches through clang-format-diff, and it
+generated quite a bit of output. Here are a few notes on what I saw.
+Feel free to ignore. They are not your problem, but others evaluating
+the tool might find it useful (and a few of them might suggest some
+settings for .clang-format).
+
+ - It really wants to break function declarations that go over the
+   column limit, even though we often do not do so. I think we're pretty
+   inconsistent here, and I'd be fine going either way with it.
+
+ - It really wanted to left-align some of my asterisks, like:
+
+     struct foo_list {
+       ...
+     } * foo, **foo_tail;
+
+   The odd thing is that it gets the second one right, but not the first
+   one (which should be "*foo" with no space). Setting:
+
+     DerivePointerAlignment: false
+     PointerAlignment: Right
+
+   cleared it up, but I'm curious why the auto-deriver didn't work.
+
+ - It really doesn't like list-alignment, like:
+
+      #define FOO    1
+      #define LONGER 2
+
+   and would prefer only a single space between "FOO" and "1". I think
+   I'm OK with that, but we have a lot of aligned bits in the existing
+   code.
+
+ - It really wants to put function __attribute__ macros on the same line
+   as the function. We often have it on a line above (especially it can
+   be so long). I couldn't find a way to specify this.
+
+ - I had a long ternary operator broken across three lines, like:
+
+     foo = bar ?
+           some_long_thing(...) :
+	   some_other_long_thing(...);
+
+   It put it all on one long line, which was much less readable. I set
+   BreakBeforeTernaryOperators to "true", but it did nothing. I set it
+   to "false", and then it broke. Which seems like a bug. It also
+   insisted on indenting it like:
+
+     foo = bar ?
+                   some_long_thing(...) :
+		   some_other_long_thing(...);
+
+    which I found less readable.
+
+So overall I think it has some promise, but I do not think it is quite
+flexible enough yet for us to use day-to-day. I'm slightly dubious that
+any automated formatter can ever be _perfect_ (sometimes
+human-subjective readability trumps a hard-and-fast rule), but this
+seems like it might have some promise. And over other indenters I have
+seen:
+
+  1. It's built on clang, so we know the parsing is solid.
+
+  2. It can operate on patches (and generates patches for you to apply!
+     You could add a git-add--interactive mode to selectively take its
+     suggestions).
+
+Again, thanks for sharing.
+
+-Peff
