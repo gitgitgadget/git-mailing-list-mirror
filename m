@@ -1,8 +1,9 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v3 17/19] fsck: Introduce `git fsck --quick`
-Date: Wed, 21 Jan 2015 20:27:26 +0100
+Subject: [PATCH v3 18/19] fsck: git receive-pack: support excluding objects
+ from fsck'ing
+Date: Wed, 21 Jan 2015 20:27:36 +0100
 Organization: gmx
-Message-ID: <d2b3c1b00446075e01612d391585292df4f32932.1421868116.git.johannes.schindelin@gmx.de>
+Message-ID: <93c9736d3fcf0b61389334af750465c2897d409d.1421868116.git.johannes.schindelin@gmx.de>
 References: <xmqqr3w7gxr4.fsf@gitster.dls.corp.google.com>
  <cover.1421868116.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
@@ -10,144 +11,218 @@ Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Jan 21 20:27:38 2015
+X-From: git-owner@vger.kernel.org Wed Jan 21 20:27:45 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YE0wB-0003gJ-Jx
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Jan 2015 20:27:35 +0100
+	id 1YE0wK-0003lk-T4
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Jan 2015 20:27:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754214AbbAUT1b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Jan 2015 14:27:31 -0500
-Received: from mout.gmx.net ([212.227.17.22]:57258 "EHLO mout.gmx.net"
+	id S1753994AbbAUT1l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Jan 2015 14:27:41 -0500
+Received: from mout.gmx.net ([212.227.17.21]:64672 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753138AbbAUT1a (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Jan 2015 14:27:30 -0500
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0MUDXS-1YMAAO2Qrq-00R4f9; Wed, 21 Jan 2015 20:27:26
+	id S1753138AbbAUT1k (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Jan 2015 14:27:40 -0500
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0MBq8p-1Y3Fh000TX-00AoqX; Wed, 21 Jan 2015 20:27:37
  +0100
 In-Reply-To: <cover.1421868116.git.johannes.schindelin@gmx.de>
 X-Sender: johannes.schindelin@gmx.de
 User-Agent: Roundcube Webmail/1.1-git
-X-Provags-ID: V03:K0:g8zzApSbxrjJ6mC9aRPp3g2c5jUXYpU4lgaVNDIHxKKsJb8qv3o
- wa3uOCDxCDdfq+tLE+jI4I89kHyfljXskyn4yed9pzFd+qMJrLqRyEE/Ur1ek+p7a7+YryX
- RkBFvvHaZwLPZQdvbzsspcGDe4dkJ97gK20rQTMkFehpEEOTuGmuedPzVcLGMseLztyF1Nt
- uhZx8POcNPrps8C2ICBgw==
+X-Provags-ID: V03:K0:z/RFW7LHhLW6iDn4pO5BfeoZ+d/SYVRhm1ruTXvTE/7TMV6D1VQ
+ f8VfnE5XGOOVKMR5nwj8lgfQLWhBqp3JB1me0WXQQ/n0xA+B41SBxrTxaqaemat+7w1O7Tz
+ 6wjC/jO0+9b9P0xX4r7sDavmie2He19hgfOxle1ve7larlraJdApoSFSSqsxB+hqFfgJicr
+ 61f6/N+EtAlwMKyXAQsnQ==
 X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262762>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262763>
 
-This option avoids unpacking each and all objects, and just verifies the
-connectivity. In particular with large repositories, this speeds up the
-operation, at the expense of missing corrupt blobs and ignoring
-unreachable objects, if any.
+The optional new config option `receive.fsck.skiplist` specifies the path
+to a file listing the names, i.e. SHA-1s, one per line, of objects that
+are to be ignored by `git receive-pack` when `receive.fsckObjects = true`.
+
+This is extremely handy in case of legacy repositories where it would
+cause more pain to change incorrect objects than to live with them
+(e.g. a duplicate 'author' line in an early commit object).
+
+The intended use case is for server administrators to inspect objects
+that are reported by `git push` as being too problematic to enter the
+repository, and to add the objects' SHA-1 to a (preferably sorted) file
+when the objects are legitimate, i.e. when it is determined that those
+problematic objects should be allowed to enter the server.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Documentation/git-fsck.txt |  7 ++++++-
- builtin/fsck.c             |  7 ++++++-
- t/t1450-fsck.sh            | 22 ++++++++++++++++++++++
- 3 files changed, 34 insertions(+), 2 deletions(-)
+ Documentation/config.txt        |  7 ++++++
+ builtin/receive-pack.c          |  9 +++++++
+ fsck.c                          | 53 +++++++++++++++++++++++++++++++++++++++++
+ fsck.h                          |  1 +
+ t/t5504-fetch-receive-strict.sh | 12 ++++++++++
+ 5 files changed, 82 insertions(+)
 
-diff --git a/Documentation/git-fsck.txt b/Documentation/git-fsck.txt
-index 25c431d..b98fb43 100644
---- a/Documentation/git-fsck.txt
-+++ b/Documentation/git-fsck.txt
-@@ -10,7 +10,7 @@ SYNOPSIS
- --------
- [verse]
- 'git fsck' [--tags] [--root] [--unreachable] [--cache] [--no-reflogs]
--	 [--[no-]full] [--strict] [--verbose] [--lost-found]
-+	 [--[no-]full] [--quick] [--strict] [--verbose] [--lost-found]
- 	 [--[no-]dangling] [--[no-]progress] [<object>*]
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 115811c..636adff 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -2173,6 +2173,13 @@ which would not pass pushing when `receive.fsckObjects = true`, allowing
+ the host to accept repositories with certain known issues but still catch
+ other issues.
  
- DESCRIPTION
-@@ -60,6 +60,11 @@ index file, all SHA-1 references in `refs` namespace, and all reflogs
- 	object pools.  This is now default; you can turn it off
- 	with --no-full.
- 
-+--quick::
-+	Check only the connectivity of tags, commits and tree objects. By
-+	avoiding to unpack blobs, this speeds up the operation, at the
-+	expense of missing corrupt objects.
++receive.fsck.skipList::
++	The path to a sorted list of object names (i.e. one SHA-1 per
++	line) that are known to be broken in a non-fatal way and should
++	be ignored. This feature is useful when an established project
++	should be accepted despite early commits containing errors that
++	can be safely ignored such as invalid committer email addresses.
 +
- --strict::
- 	Enable more strict checking, namely to catch a file mode
- 	recorded with g+w bit set, which was created by older
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 6f5e671..7ae4715 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -23,6 +23,7 @@ static int show_tags;
- static int show_unreachable;
- static int include_reflogs = 1;
- static int check_full = 1;
-+static int quick;
- static int check_strict;
- static int keep_cache_objects;
- static struct fsck_options fsck_walk_options = FSCK_OPTIONS_DEFAULT;
-@@ -184,6 +185,8 @@ static void check_reachable_object(struct object *obj)
- 	if (!(obj->flags & HAS_OBJ)) {
- 		if (has_sha1_pack(obj->sha1))
- 			return; /* it is in pack - forget about it */
-+		if (quick && has_sha1_file(obj->sha1))
-+			return;
- 		printf("missing %s %s\n", typename(obj->type), sha1_to_hex(obj->sha1));
- 		errors_found |= ERROR_REACHABLE;
- 		return;
-@@ -618,6 +621,7 @@ static struct option fsck_opts[] = {
- 	OPT_BOOL(0, "cache", &keep_cache_objects, N_("make index objects head nodes")),
- 	OPT_BOOL(0, "reflogs", &include_reflogs, N_("make reflogs head nodes (default)")),
- 	OPT_BOOL(0, "full", &check_full, N_("also consider packs and alternate objects")),
-+	OPT_BOOL(0, "quick", &quick, N_("check only connectivity")),
- 	OPT_BOOL(0, "strict", &check_strict, N_("enable more strict checking")),
- 	OPT_BOOL(0, "lost-found", &write_lost_and_found,
- 				N_("write dangling objects in .git/lost-found")),
-@@ -654,7 +658,8 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
- 	git_config(fsck_config, NULL);
+ receive.unpackLimit::
+ 	If the number of objects received in a push is below this
+ 	limit then the objects will be unpacked into loose object
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 18d5012..8e6d1a1 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -116,6 +116,15 @@ static int receive_pack_config(const char *var, const char *value, void *cb)
+ 		return 0;
+ 	}
  
- 	fsck_head_link();
--	fsck_object_dir(get_object_directory());
-+	if (!quick)
-+		fsck_object_dir(get_object_directory());
++	if (strcmp(var, "receive.fsck.skiplist") == 0) {
++		const char *path = is_absolute_path(value) ?
++			value : git_path("%s", value);
++		if (fsck_severity.len)
++			strbuf_addch(&fsck_severity, ',');
++		strbuf_addf(&fsck_severity, "skiplist=%s", path);
++		return 0;
++	}
++
+ 	if (skip_prefix(var, "receive.fsck.", &var)) {
+ 		strbuf_addf(&fsck_severity, "%s%s=%s",
+ 			fsck_severity.len ? "," : "", var, value);
+diff --git a/fsck.c b/fsck.c
+index 1334941..15cb8bd 100644
+--- a/fsck.c
++++ b/fsck.c
+@@ -8,6 +8,7 @@
+ #include "fsck.h"
+ #include "refs.h"
+ #include "utf8.h"
++#include "sha1-array.h"
  
- 	prepare_alt_odb();
- 	for (alt = alt_odb_list; alt; alt = alt->next) {
-diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
-index a79ff9f..1c624a3 100755
---- a/t/t1450-fsck.sh
-+++ b/t/t1450-fsck.sh
-@@ -431,4 +431,26 @@ test_expect_success 'fsck notices ref pointing to missing tag' '
- 	test_must_fail git -C missing fsck
- '
+ #define FSCK_FATAL -1
+ #define FSCK_INFO -2
+@@ -117,6 +118,43 @@ static int fsck_msg_severity(enum fsck_msg_id msg_id,
+ 	return severity;
+ }
  
-+test_expect_success 'fsck --quick' '
-+	rm -rf quick &&
-+	git init quick &&
-+	(
-+		cd quick &&
-+		touch empty &&
-+		git add empty &&
-+		test_commit empty &&
-+		empty=.git/objects/e6/9de29bb2d1d6434b8b29ae775ad8c2e48c5391 &&
-+		rm -f $empty &&
-+		echo invalid >$empty &&
-+		test_must_fail git fsck --strict &&
-+		git fsck --strict --quick &&
-+		tree=$(git rev-parse HEAD:) &&
-+		suffix=${tree#??} &&
-+		tree=.git/objects/${tree%$suffix}/$suffix &&
-+		rm -f $tree &&
-+		echo invalid >$tree &&
-+		test_must_fail git fsck --strict --quick
-+	)
++static void init_skiplist(struct fsck_options *options, const char *path)
++{
++	static struct sha1_array skiplist = SHA1_ARRAY_INIT;
++	int sorted, fd;
++	char buffer[41];
++	unsigned char sha1[20];
++
++	if (options->skiplist)
++		sorted = options->skiplist->sorted;
++	else {
++		sorted = 1;
++		options->skiplist = &skiplist;
++	}
++
++	fd = open(path, O_RDONLY);
++	if (fd < 0)
++		die("Could not open skip list: %s", path);
++	for (;;) {
++		int result = read_in_full(fd, buffer, sizeof(buffer));
++		if (result < 0)
++			die_errno("Could not read '%s'", path);
++		if (!result)
++			break;
++		if (get_sha1_hex(buffer, sha1) || buffer[40] != '\n')
++			die("Invalid SHA-1: %s", buffer);
++		sha1_array_append(&skiplist, sha1);
++		if (sorted && skiplist.nr > 1 &&
++				hashcmp(skiplist.sha1[skiplist.nr - 2],
++					sha1) > 0)
++			sorted = 0;
++	}
++	close(fd);
++
++	if (sorted)
++		skiplist.sorted = 1;
++}
++
+ static inline int substrcmp(const char *string, int len, const char *match)
+ {
+ 	int match_len = strlen(match);
+@@ -156,6 +194,17 @@ void fsck_set_severity(struct fsck_options *options, const char *mode)
+ 				severity = FSCK_WARN;
+ 			else if (!substrcmp(mode, equal, "ignore"))
+ 				severity = FSCK_IGNORE;
++			else if (!substrcmp(mode, equal, "skiplist")) {
++				char *path = xstrndup(mode + equal + 1,
++					len - equal - 1);
++
++				if (equal == len)
++					die("skiplist requires a path");
++				init_skiplist(options, path);
++				free(path);
++				mode += len;
++				continue;
++			}
+ 			else
+ 				die("Unknown fsck message severity: '%.*s'",
+ 					equal, mode);
+@@ -700,6 +749,10 @@ static int fsck_tag(struct tag *tag, const char *data,
+ int fsck_object(struct object *obj, void *data, unsigned long size,
+ 	struct fsck_options *options)
+ {
++	if (options->skiplist &&
++			sha1_array_lookup(options->skiplist, obj->sha1) >= 0)
++		return 0;
++
+ 	if (!obj)
+ 		return report(options, obj, FSCK_MSG_INVALID_OBJECT_SHA1, "no valid object to fsck");
+ 
+diff --git a/fsck.h b/fsck.h
+index 7be6c50..cae280e 100644
+--- a/fsck.h
++++ b/fsck.h
+@@ -29,6 +29,7 @@ struct fsck_options {
+ 	fsck_error error_func;
+ 	unsigned strict:1;
+ 	int *msg_severity;
++	struct sha1_array *skiplist;
+ };
+ 
+ #define FSCK_OPTIONS_DEFAULT { NULL, fsck_error_function, 0, NULL }
+diff --git a/t/t5504-fetch-receive-strict.sh b/t/t5504-fetch-receive-strict.sh
+index 5e54a13..d367bb2 100755
+--- a/t/t5504-fetch-receive-strict.sh
++++ b/t/t5504-fetch-receive-strict.sh
+@@ -123,6 +123,18 @@ committer Bugs Bunny <bugs@bun.ni> 1234567890 +0000
+ This commit object intentionally broken
+ EOF
+ 
++test_expect_success 'push with receive.fsck.skiplist' '
++	commit="$(git hash-object -t commit -w --stdin < bogus-commit)" &&
++	git push . $commit:refs/heads/bogus &&
++	rm -rf dst &&
++	git init dst &&
++	git --git-dir=dst/.git config receive.fsckobjects true &&
++	test_must_fail git push --porcelain dst bogus &&
++	git --git-dir=dst/.git config receive.fsck.skiplist SKIP &&
++	echo $commit > dst/.git/SKIP &&
++	git push --porcelain dst bogus
 +'
 +
- test_done
+ test_expect_success 'push with receive.fsck.warn = missing-email' '
+ 	commit="$(git hash-object -t commit -w --stdin < bogus-commit)" &&
+ 	git push . $commit:refs/heads/bogus &&
 -- 
 2.2.0.33.gc18b867
