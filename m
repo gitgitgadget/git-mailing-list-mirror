@@ -1,58 +1,92 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 00/18] Introduce an internal API to interact with the
- fsck machinery
-Date: Wed, 21 Jan 2015 19:24:57 +0100
-Organization: gmx
-Message-ID: <e779d4655b61b33827026e2aa440536b@www.dscho.org>
-References: <xmqqr3w7gxr4.fsf@gitster.dls.corp.google.com>
- <cover.1421682369.git.johannes.schindelin@gmx.de>
- <xmqq4mrkxzlb.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 20/24] update-index: test the system before enabling untracked cache
+Date: Wed, 21 Jan 2015 10:51:02 -0800
+Message-ID: <xmqqvbk0vug9.fsf@gitster.dls.corp.google.com>
+References: <1421759013-8494-1-git-send-email-pclouds@gmail.com>
+	<1421759013-8494-21-git-send-email-pclouds@gmail.com>
+	<xmqqwq4gy1nq.fsf@gitster.dls.corp.google.com>
+	<CACsJy8CDgUWEE=QKAgw4G8pgA-cOmLMs4sH67C47Ohd5XJQDNQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 21 19:25:13 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 21 19:51:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YDzxn-0001gE-5d
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Jan 2015 19:25:11 +0100
+	id 1YE0Mz-0007de-Qb
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Jan 2015 19:51:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752024AbbAUSZH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Jan 2015 13:25:07 -0500
-Received: from mout.gmx.net ([212.227.17.20]:63357 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751484AbbAUSZF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Jan 2015 13:25:05 -0500
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0LlV4F-1XcjT20eWd-00bKQZ; Wed, 21 Jan 2015 19:24:59
- +0100
-In-Reply-To: <xmqq4mrkxzlb.fsf@gitster.dls.corp.google.com>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1-git
-X-Provags-ID: V03:K0:lerGZ02q3zGf6nmwWnhCC2bzQZN4Zt39Cz/+3TcTB+QJrs0kD03
- bkAyoDXvTXqWKvlYFVk9hKUI5zLyI6ZYkEftAkKUFPIeoDD0/BPj8nsi6d0HEMFQi4TH79S
- FYyiFr86d14EWVypZVnDYU+VmYuXkGT5UmM4qcHiUga2Rbn3G3LbdgagAU8iSRKDHXaFJUa
- 46BdSip9L31oCqVm6KIkQ==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1752805AbbAUSvK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Jan 2015 13:51:10 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:57717 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752144AbbAUSvH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 Jan 2015 13:51:07 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C35F72FC0F;
+	Wed, 21 Jan 2015 13:51:05 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=UVnDDKRKquIc
+	NpFF7SScXq11DWI=; b=yW9rG+M9UcjLmmNb2/wTsK6mf99kHVbwno4H5McuOdhB
+	s+VRfI/zdkpSmMoXIFO/wLq3ERqpzEA86WovLCjYJjyoQfhjZUnqzWuUZj4imBPt
+	HFkqbbskZ2EXkvqQCSrlQWpkfyy/SqaxGGLtlwtNSy+tgJ++fP7p0p1M4/jIFgI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=eQFjIS
+	qLc9YUVWdG3Lj6y6EUwhwi29Ck7CABDSBcho8wNeHwj4+CFhnmU5iZm6ocwbbG+X
+	nGNJinPBeClgK0G1zwQm5LyKtvd8orQhn1EbU8E+CXdcUsA7olqY8HtYgK8bnHQg
+	vrmQqy4AsuFdZV/1AS3OpVi5kcHj4tIIFfff0=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B72282FC0E;
+	Wed, 21 Jan 2015 13:51:05 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 070732FC0D;
+	Wed, 21 Jan 2015 13:51:03 -0500 (EST)
+In-Reply-To: <CACsJy8CDgUWEE=QKAgw4G8pgA-cOmLMs4sH67C47Ohd5XJQDNQ@mail.gmail.com>
+	(Duy Nguyen's message of "Wed, 21 Jan 2015 16:46:30 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 735DDEDE-A19E-11E4-9751-D3749F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262740>
 
-Hi Junio,
+Duy Nguyen <pclouds@gmail.com> writes:
 
-On 2015-01-21 10:17, Junio C Hamano wrote:
-> The documentation did not format well.  Tentatively I added the
-> attached fix-up on top of the series before merging to 'pu'.
-> 
->  [...]
+> On Wed, Jan 21, 2015 at 3:32 PM, Junio C Hamano <gitster@pobox.com> w=
+rote:
+>> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> write=
+s:
+>>
+>>> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+>>> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@g=
+mail.com>
+>>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>>> ---
+>>
+>> It appears that this hijacks a fixed name dir-mtime-test at the root
+>> level of every project managed by Git.  Is that intended?
+>
+> I did think about filename clash, but I chose a fixed name anyway for
+> simplicity, otherwise we would need to reconstruct paths
+> "dir-mtime-test/..." in many places.
 
-Sorry for that! I have to admit that I did not even build the documentation :-( I incorporated your fixes into the respective patches.
+If you stuff the name of test directory (default "dir-mtime-test")
+in a strbuf and formulate test paths by chomping to the original and
+then appending "/..." at the end, like your remove_test_directory()
+already does, wouldn't that be sufficient?
 
-Ciao,
-Dscho
+>> Shouldn't --use-untracked-cache option require the working tree
+>> (i.e. die in a bare repository)?
+>
+> setup_work_tree() takes care of that
+
+OK, thanks.
