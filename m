@@ -1,433 +1,463 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [ANNOUNCE] Git v2.3.0-rc1
-Date: Tue, 20 Jan 2015 18:06:54 -0800
-Message-ID: <xmqq61c0zy2p.fsf@gitster.dls.corp.google.com>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: [PATCH] l10n: correct indentation of show-branch usage
+Date: Wed, 21 Jan 2015 15:49:44 +0800
+Message-ID: <1e607449135792dd117bd528432fc1fbc1115667.1421825841.git.worldhello.net@gmail.com>
+References: <1421782228-24005-1-git-send-email-ralf.thielow@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-2022-jp
-Cc: Linux Kernel <linux-kernel@vger.kernel.org>
-To: git@vger.kernel.org
-X-From: linux-kernel-owner@vger.kernel.org Wed Jan 21 03:07:21 2015
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>
+To: Jean-Noel Avila <jn.avila@free.fr>,
+	Jiang Xin <worldhello.net@gmail.com>,
+	Joan Perals <joan.perals@ixds.com>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	Ralf Thielow <ralf.thielow@gmail.com>,
+	Tran Ngoc Quan <vnwildman@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 21 08:50:30 2015
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1YDkhS-0007yW-Iq
-	for glk-linux-kernel-3@plane.gmane.org; Wed, 21 Jan 2015 03:07:19 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1YDq3W-0002Vw-0x
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Jan 2015 08:50:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752062AbbAUCHB (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Tue, 20 Jan 2015 21:07:01 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:60264 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751293AbbAUCG6 (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Tue, 20 Jan 2015 21:06:58 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B388A327C0;
-	Tue, 20 Jan 2015 21:06:57 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=Q
-	oghE2Q+YxcREun8sPOnnuA6z8U=; b=DBA4LXLeyIJmo+8joCbP12OnZb4nFMJlU
-	oIG917BsTFerD29cc3PTCUjPztk/0JfEopNPDemJG6/4Jpx3ODyr064A91oLj7kr
-	/eJ0de7LADPptgG2363FYBNovN4hED9fG98thstXhQt9spjpdiKSZFCn4nTsM+AZ
-	eET75u6y9k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type; q=dns; s=
-	sasl; b=xZZZmJZd2yG0c3dFU/GShYxNsF1G/2VuVfg34r356BA+awTSI3BQYtD7
-	ytpINKxFHjkyOYvmGB8GbLHOgIixTNRaC059KtWI2cFy8ysTDaueKnqVXZxQnsVI
-	IxlSpv+RHmkPuFE+BTNdNdlcptWWvyPVCCsUmXnj4hq/Q+MTlpY=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id AA61A327BF;
-	Tue, 20 Jan 2015 21:06:57 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D6D56327BB;
-	Tue, 20 Jan 2015 21:06:56 -0500 (EST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 2D446E4A-A112-11E4-9FF1-42529F42C9D4-77302942!pb-smtp1.pobox.com
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1752625AbbAUHuV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Jan 2015 02:50:21 -0500
+Received: from mail-pd0-f172.google.com ([209.85.192.172]:46508 "EHLO
+	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751394AbbAUHuA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Jan 2015 02:50:00 -0500
+Received: by mail-pd0-f172.google.com with SMTP id v10so26864026pde.3
+        for <git@vger.kernel.org>; Tue, 20 Jan 2015 23:50:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:mime-version:in-reply-to
+         :references:content-type:content-transfer-encoding;
+        bh=7lSMUL6Kz65ZTreh3BG7YdaTXgdLaGaxMQSCLxZrhlw=;
+        b=mCJcKBq9HGujjtB9oBA4DbbG05XewkupMQqT1KAM53o+Q5JQH2XqaKgs99lDc3tX2a
+         us1ELrr9ncDIKBuq9RSccgdk4Es/OKfJyeZ4/fI5bycxpEnaOyXf57xTw13F4J+vH753
+         x8TZURGIFkMWpBLMkKQbFZ0oLvK2rPSclNrUf19oPXnXReFqwDI2jwMrF5rX+h2Bw1cF
+         lpIYIqtR9HANzUCRTTT1hMVYrF75xBLbOJpAtTLwNBz75HBt17T8IZO/XT6D64zNR/Pg
+         9wYhNhY0jt87XGXMymrBhXyWNVEK/lpqbn1A20CyKltnxMnY6Ut7K0S33tc3pfGoj8wV
+         zKUQ==
+X-Received: by 10.70.90.100 with SMTP id bv4mr50440081pdb.29.1421826600125;
+        Tue, 20 Jan 2015 23:50:00 -0800 (PST)
+Received: from localhost.localdomain ([69.85.92.49])
+        by mx.google.com with ESMTPSA id qc1sm4951274pbb.84.2015.01.20.23.49.56
+        (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 20 Jan 2015 23:49:58 -0800 (PST)
+X-Mailer: git-send-email 2.3.0.rc0.7.g04cb2f2
+In-Reply-To: <1421782228-24005-1-git-send-email-ralf.thielow@gmail.com>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262711>
-
-A release candidate Git v2.3.0-rc1 is now available for testing
-at the usual places.
-
-The tarballs are found at:
-
-    https://www.kernel.org/pub/software/scm/git/testing/
-
-The following public repositories all have a copy of the 'v2.3.0-rc1'
-tag and the 'master' branch that the tag points at:
-
-  url = https://kernel.googlesource.com/pub/scm/git/git
-  url = git://repo.or.cz/alt-git.git
-  url = https://code.google.com/p/git-core/
-  url = git://git.sourceforge.jp/gitroot/git-core/git.git
-  url = git://git-core.git.sourceforge.net/gitroot/git-core/git-core
-  url = https://github.com/gitster/git
-
-Git v2.3 Release Notes (draft)
-==============================
-
-Updates since v2.2
-------------------
-
-Ports
-
- * Recent gcc toolchain on Cygwin started throwing compilation warning,
-   which has been squelched.
-
- * A few updates to build on platforms that lack tv_nsec,
-   clock_gettime, CLOCK_MONOTONIC and HMAC_CTX_cleanup (e.g. older
-   RHEL) have been added.
-
-
-UI, Workflows & Features
-
- * It was cumbersome to use "GIT_SSH" mechanism when the user wanted
-   to pass an extra set of arguments to the underlying ssh.  A new
-   environment variable GIT_SSH_COMMAND can be used for this.
-
- * A request to store an empty note via "git notes" meant to remove
-   note from the object but with --allow-empty we will store a
-   (surprise!)  note that is empty.
-
- * "git interpret-trailers" learned to properly handle the
-   "Conflicts:" block at the end.
-
- * "git am" learned "--message-id" option to copy the message ID of
-   the incoming e-mail to the log message of resulting commit.
-
- * "git clone --reference=<over there>" learned the "--dissociate"
-   option to go with it; it borrows objects from the reference object
-   store while cloning only to reduce network traffic and then
-   dissociates the resulting clone from the reference by performing
-   local copies of borrowed objects.
-
- * "git send-email" learned "--transfer-encoding" option to force a
-   non-fault Content-Transfer-Encoding header (e.g. base64).
-
- * "git send-email" normally identifies itself via X-Mailer: header in
-   the message it sends out.  A new command line flag --no-xmailer
-   allows the user to squelch the header.
-
- * "git push" into a repository with a working tree normally refuses
-   to modify the branch that is checked out.  The command learned to
-   optionally do an equivalent of "git reset --hard" only when there
-   is no change to the working tree and the index instead, which would
-   be useful to "deploy" by pushing into a repository.
-
- * "git new-workdir" (in contrib/) can be used to populate an empty
-   and existing directory now.
-
- * Credential helpers are asked in turn until one of them give
-   positive response, which is cumbersome to turn off when you need to
-   run Git in an automated setting.  The credential helper interface
-   learned to allow a helper to say "stop, don't ask other helpers."
-   Also GIT_TERMINAL_PROMPT environment can be set to false to disable
-   our built-in prompt mechanism for passwords.
-
- * "git branch -d" (delete) and "git branch -m" (move) learned to
-   honor "-f" (force) flag; unlike many other subcommands, the way to
-   force these have been with separate "-D/-M" options, which was
-   inconsistent.
-
- * "diff-highlight" filter (in contrib/) allows its color output to be
-   customized via configuration variables.
-
- * "git imap-send" learned to take "-v" (verbose) and "-q" (quiet)
-   command line options.
-
- * "git remote add $name $URL" is now allowed when "url.$URL.insteadOf"
-   is already defined.
-
- * "git imap-send" now can be built to use cURL library to talk to
-   IMAP servers (if the library is recent enough, of course).
-   This allows you to use authenticate method other than CRAM-MD5,
-   among other things.
-
- * "git imap-send" now allows GIT_CURL_VERBOSE environment variable to
-   control the verbosity when talking via the cURL library.
-
- * The prompt script (in contrib/) learned to optionally hide prompt
-   when in an ignored directory by setting GIT_PS1_HIDE_IF_PWD_IGNORED
-   shell variable.
-
-
-Performance, Internal Implementation, Development Support etc.
-
- * Earlier we made "rev-list --object-edge" more aggressively list the
-   objects at the edge commits, in order to reduce number of objects　
-   fetched into a shallow repository, but the change affected cases
-   other than "fetching into a shallow repository" and made it
-   unusably slow (e.g. fetching into a normal repository should not
-   have to suffer the overhead from extra processing).  Limit it to a
-   more specific case by introducing --objects-edge-aggressive, a new
-   option to rev-list.
-
- * Squelched useless compiler warnings on Mac OS X regarding the
-   crypto API.
-
- * The procedure to generate unicode table has been simplified.
-
- * Some filesystems assign filemodes in a strange way, fooling then
-   automatic "filemode trustability" check done during a new
-   repository creation.  The initialization codepath has been hardened
-   against this issue.
-
- * The codepath in "git remote update --prune" to drop many refs has
-   been optimized.
-
- * The API into get_merge_bases*() family of functions was easy to
-   misuse, which has been corrected to make it harder to do so.
-
- * Long overdue departure from the assumption that S_IFMT is shared by
-   everybody made in 2005, which was necessary to port to z/OS.
-
- * "git push" and "git fetch" did not communicate an overlong refname
-   correctly.  Now it uses 64kB sideband to accommodate longer ones.
-
- * Recent GPG changes the keyring format and drops support for RFC1991
-   formatted signatures, breaking our existing tests.
-
- * "git-prompt" (in contrib/) used a variable from the global scope,
-   possibly contaminating end-user's namespace.
-
-
-Also contains various documentation updates and code clean-ups.
-
-
-Fixes since v2.2
-----------------
-
-Unless otherwise noted, all the fixes since v2.2 in the maintenance
-track are contained in this release (see the maintenance releases'
-notes for details).
-
- * "git http-push" over WebDAV (aka dumb http-push) was broken in
-   v2.2.2 when parsing a symbolic ref, resulting in a bogus request
-   that gets rejected by recent versions of cURL library.
-   (merge f6786c8 jk/http-push-symref-fix later to maint).
-
- * The logic in "git bisect bad HEAD" etc. to avoid forcing the test
-   of the common ancestor of bad and good commits was broken.
-   (merge 07913d5 cc/bisect-rev-parsing later to maint).
-
- * "git checkout-index --temp=$target $path" did not work correctly
-   for paths outside the current subdirectory in the project.
-   (merge 74c4de5 es/checkout-index-temp later to maint).
-
- * The report from "git checkout" on a branch that builds on another
-   local branch by setting its branch.*.merge to branch name (not a
-   full refname) incorrectly said that the upstream is gone.
-   (merge 05e7368 jc/checkout-local-track-report later to maint).
-
- * With The git-prompt support (in contrib/), using the exit status of
-   the last command in the prompt, e.g.  PS1='$(__git_ps1) $? ', did
-   not work well, because the helper function stomped on the exit
-   status.
-   (merge 6babe76 tf/prompt-preserve-exit-status later to maint).
-
- * Recent update to "git commit" broke amending an existing commit
-   with bogus author/committer lines without a valid e-mail address.
-   (merge c83a509 jk/commit-date-approxidate later to maint).
-
- * The lockfile API used to get confused which file to clean up when
-   the process moved the $cwd after creating a lockfile.
-   (merge fa137f6 nd/lockfile-absolute later to maint).
-
- * Traditionally we tried to avoid interpreting date strings given by
-   the user as future dates, e.g. GIT_COMMITTER_DATE=2014-12-10 when
-   used early November 2014 was taken as "October 12, 2014" because it
-   is likely that a date in the future, December 10, is a mistake.
-   This heuristics has been loosened to allow people to express future
-   dates (most notably, --until=<date> may want to be far in the
-   future) and we no longer tiebreak by future-ness of the date when
-
-    (1) ISO-like format is used, and
-    (2) the string can make sense interpreted as both y-m-d and y-d-m.
-
-   Git may still have to use the heuristics to tiebreak between dd/mm/yy
-   and mm/dd/yy, though.
-   (merge d372395 jk/approxidate-avoid-y-d-m-over-future-dates later to maint).
-
- * Git did not correctly read an overlong refname from a packed refs
-   file.
-   (merge ea41783 jk/read-packed-refs-without-path-max later to maint).
-
- * "git apply" was described in the documentation to take --ignore-date
-   option, which it does not.
-   (merge 0cef4e7 rw/apply-does-not-take-ignore-date later to maint).
-
- * "git add -i" did not notice when the interactive command input
-   stream went away and kept asking the same question.
-   (merge a8bec7a jk/add-i-read-error later to maint).
-
- * "git send-email" did not handle RFC 2047 encoded headers quite
-   right.
-   (merge ab47e2a rd/send-email-2047-fix later to maint).
-
- * New tag object format validation added in 2.2 showed garbage after
-   a tagname it reported in its error message.
-   (merge a1e920a js/fsck-tag-validation later to maint).
-
- * The code that reads the reflog from the newer to the older entries
-   did not handle an entry that crosses a boundary of block it uses to
-   read them correctly.
-   (merge 69216bf jk/for-each-reflog-ent-reverse later to maint).
-
- * "git diff -B -M" after making a new copy B out of an existing file
-   A and then editing A extensively ought to report that B was created
-   by copying A and A was modified, which is what "git diff -C"
-   reports, but it instead said A was renamed to B and A was edited
-   heavily in place.  This was not just incoherent but also failed to
-   apply with "git apply".  The report has been corrected to match what
-   "git diff -C" produces for this case.
-   (merge 6936b58 jc/diff-b-m later to maint).
-
- * In files we pre-populate for the user to edit with commented hints,
-   a line of hint that is indented with a tab used to show as '#' (or
-   any comment char), ' ' (space), and then the hint text that began
-   with the tab, which some editors flag as an indentation error (tab
-   following space).  We now omit the space after the comment char in
-   such a case.
-   (merge d55aeb7 jc/strbuf-add-lines-avoid-sp-ht-sequence later to maint).
-
- * "git ls-tree" does not support path selection based on negative
-   pathspecs, but did not error out when negative pathspecs are given.
-   (merge f1f6224 nd/ls-tree-pathspec later to maint).
-
- * The function sometimes returned a non-freeable memory and some
-   other times returned a piece of memory that must be freed, leading
-   to inevitable leaks.
-   (merge 59362e5 jc/exec-cmd-system-path-leak-fix later to maint).
-
- * The code to abbreviate an object name to its short unique prefix
-   has been optimized when no abbreviation was requested.
-   (merge 61e704e mh/find-uniq-abbrev later to maint).
-
- * "git add --ignore-errors ..." did not ignore an error to
-   give a file that did not exist.
-   (merge 1d31e5a mg/add-ignore-errors later to maint).
-
- * "git checkout $treeish $path", when $path in the index and the
-   working tree already matched what is in $treeish at the $path,
-   still overwrote the $path unnecessarily.
-   (merge c5326bd jk/checkout-from-tree later to maint).
-
- * "git config --get-color" did not parse its command line arguments
-   carefully.
-   (merge cb35722 jk/colors-fix later to maint).
-
- * open() emulated on Windows platforms did not give EISDIR upon
-   an attempt to open a directory for writing.
-   (merge ba6fad0 js/windows-open-eisdir-error later to maint).
-
- * A few code paths used abs() when they should have used labs() on
-   long integers.
-   (merge 83915ba rs/maint-config-use-labs later to maint).
-   (merge 31a8aa1 rs/receive-pack-use-labs later to maint).
-
- * "gitweb" used to depend on a behaviour recent CGI.pm deprecated.
-   (merge 13dbf46 jk/gitweb-with-newer-cgi-multi-param later to maint).
-
- * "git init" (hence "git clone") initialized the per-repository
-   configuration file .git/config with x-bit by mistake.
-   (merge 1f32ecf mh/config-flip-xbit-back-after-checking later to maint).
-
- * Recent update in Git 2.2 started creating objects/info/packs and
-   info/refs files with permission bits tighter than user's umask.
-   (merge d91175b jk/prune-packed-server-info later to maint).
-
- * Git 2.0 was supposed to make the "simple" mode for the default of
-   "git push", but it didn't.
-   (merge 00a6fa0 jk/push-simple later to maint).
-
- * "Everyday" document had a broken link.
-   (merge 366c8d4 po/everyday-doc later to maint).
-
- * A few test fixes.
-   (merge 880ef58 jk/no-perl-tests later to maint).
-
- * The build procedure did not bother fixing perl and python scripts
-   when NO_PERL and NO_PYTHON build-time configuration changed.
-   (merge ca2051d jk/rebuild-perl-scripts-with-no-perl-seting-change later to maint).
-
- * The usage string of "git log" command was marked incorrectly for
-   l10n.
-   (merge e66dc0c km/log-usage-string-i18n later to maint).
-
- * "git for-each-ref" mishandled --format="%(upstream:track)" when a
-   branch is marked to have forked from a non-existing branch.
-   (merge b6160d9 rc/for-each-ref-tracking later to maint).
-
-----------------------------------------------------------------
-
-Changes since v2.3.0-rc0 are as follows:
-
-Adam Williamson (1):
-      correct smtp-ssl-cert-path description
-
-Alexander Kuleshov (4):
-      show-branch: line-wrap show-branch usage
-      git.c: remove unnecessary #includes
-      cat-file: remove unused includes
-      Documentation: list long options for -v and -n
-
-Jeff King (4):
-      t1301: set umask in reflog sharedrepository=group test
-      update-server-info: create info/* with mode 0666
-      http-push: trim trailing newline from remote symref
-      parse_color: fix return value for numeric color values 0-8
-
-Jess Austin (1):
-      git-prompt.sh: allow to hide prompt for ignored pwd
-
-Johannes Schindelin (2):
-      git remote: allow adding remotes agreeing with url.<...>.insteadOf
-      Add a regression test for 'git remote add <existing> <same-url>'
-
-Junio C Hamano (2):
-      Fifth batch for 2.3 cycle
-      Git 2.3.0-rc1
-
-Kyle J. McKay (3):
-      log.c: fix translation markings
-      imap-send.c: support GIT_CURL_VERBOSE
-      imap-send.c: set CURLOPT_USE_SSL to CURLUSESSL_TRY
-
-Matthieu Moy (1):
-      git-completion: add --autostash for 'git rebase'
-
-Philip Oakley (2):
-      doc: core.ignoreStat clarify the --assume-unchanged effect
-      doc: core.ignoreStat update, and clarify the --assume-unchanged effect
-
-Ralf Thielow (1):
-      show-branch: fix indentation of usage string
-
-Ramkumar Ramachandra (2):
-      Git::SVN: handle missing ref_id case correctly
-      git-svn: make it play nicely with submodules
-
-Raphael Kubo da Costa (1):
-      for-each-ref: always check stat_tracking_info()'s return value
-
-Reuben Hawkins (3):
-      configure.ac: check 'tv_nsec' field in 'struct stat'
-      configure.ac: check for clock_gettime and CLOCK_MONOTONIC
-      configure.ac: check for HMAC_CTX_cleanup
-
-Richard Hansen (3):
-      git-prompt.sh: if pc mode, immediately set PS1 to a plain prompt
-      test-lib: use 'test ...' instead of '[ ... ]'
-      test-lib.sh: do tests for color support after changing HOME
-
-Steffen Prohaska (1):
-      subtree: fix AsciiDoc list item continuation
-
-Tony Finch (1):
-      git-prompt: preserve value of $? in all cases
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262712>
+
+An indentation error was found right after we started l10n round 2, and
+commit d6589d1 (show-branch: fix indentation of usage string) and this
+update would fix it.
+
+Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+---
+This patch is based on master branch of git://github.com/git-l10n/git-p=
+o
+
+ po/de.po    | 18 +++++++++---------
+ po/fr.po    | 18 +++++++++---------
+ po/git.pot  | 10 +++++-----
+ po/sv.po    | 38 +++++++++++++++++++-------------------
+ po/vi.po    | 18 +++++++++---------
+ po/zh_CN.po | 24 +++++++++++-------------
+ 6 files changed, 62 insertions(+), 64 deletions(-)
+
+diff --git a/po/de.po b/po/de.po
+index 0b93b0f..b2d4639 100644
+--- a/po/de.po
++++ b/po/de.po
+@@ -7,8 +7,8 @@ msgid ""
+ msgstr ""
+ "Project-Id-Version: Git\n"
+ "Report-Msgid-Bugs-To: Git Mailing List <git@vger.kernel.org>\n"
+-"POT-Creation-Date: 2015-01-18 11:24+0800\n"
+-"PO-Revision-Date: 2014-11-20 10:19+0800\n"
++"POT-Creation-Date: 2015-01-21 14:21+0800\n"
++"PO-Revision-Date: 2015-01-21 15:01+0800\n"
+ "Last-Translator: Ralf Thielow <ralf.thielow@gmail.com>\n"
+ "Language-Team: German <>\n"
+ "Language: de\n"
+@@ -326,7 +326,7 @@ msgstr "kann '%s' nicht erstellen"
+ msgid "index-pack died"
+ msgstr "Erstellung der Paketindexdatei abgebrochen"
+=20
+-#: color.c:259
++#: color.c:260
+ #, c-format
+ msgid "invalid color value: %.*s"
+ msgstr "Ung=C3=BCltiger Farbwert: %.*s"
+@@ -9679,14 +9679,14 @@ msgstr "Ausgabe mit Zeilenumbr=C3=BCchen"
+ #: builtin/show-branch.c:9
+ msgid ""
+ "git show-branch [-a|--all] [-r|--remotes] [--topo-order | --date-orde=
+r]\n"
+-"\t\t       [--current] [--color[=3D<when>] | --no-color] [--sparse]\n=
+"
+-"\t\t       [--more=3D<n> | --list | --independent | --merge-base]\n"
+-"\t       [--no-name | --sha1-name] [--topics] [(<rev> | <glob>)...]"
++"\t\t[--current] [--color[=3D<when>] | --no-color] [--sparse]\n"
++"\t\t[--more=3D<n> | --list | --independent | --merge-base]\n"
++"\t\t[--no-name | --sha1-name] [--topics] [(<rev> | <glob>)...]"
+ msgstr ""
+ "git show-branch [-a|--all] [-r|--remotes] [--topo-order | --date-orde=
+r]\n"
+-"\t\t       [--current] [--color[=3D<Wann>] | --no-color] [--sparse]\n=
+"
+-"\t\t       [--more=3D<n> | --list | --independent | --merge-base]\n"
+-"\t       [--no-name | --sha1-name] [--topics] [(<Commit> | <glob>)...=
+]"
++"\t\t[--current] [--color[=3D<Wann>] | --no-color] [--sparse]\n"
++"\t\t[--more=3D<n> | --list | --independent | --merge-base]\n"
++"\t\t[--no-name | --sha1-name] [--topics] [(<Commit> | <glob>)...]"
+=20
+ #: builtin/show-branch.c:13
+ msgid "git show-branch (-g|--reflog)[=3D<n>[,<base>]] [--list] [<ref>]=
+"
+diff --git a/po/fr.po b/po/fr.po
+index d1b3397..3235879 100644
+--- a/po/fr.po
++++ b/po/fr.po
+@@ -73,8 +73,8 @@ msgid ""
+ msgstr ""
+ "Project-Id-Version: git\n"
+ "Report-Msgid-Bugs-To: Git Mailing List <git@vger.kernel.org>\n"
+-"POT-Creation-Date: 2015-01-18 11:24+0800\n"
+-"PO-Revision-Date: 2015-01-18 17:01+0100\n"
++"POT-Creation-Date: 2015-01-21 14:21+0800\n"
++"PO-Revision-Date: 2015-01-21 14:57+0800\n"
+ "Last-Translator: Jean-No=C3=ABl Avila <jn.avila@free.fr>\n"
+ "Language-Team: Jean-No=C3=ABl Avila <jn.avila@free.fr>\n"
+ "Language: fr\n"
+@@ -394,7 +394,7 @@ msgstr "impossible de cr=C3=A9er '%s'"
+ msgid "index-pack died"
+ msgstr "l'index de groupe a disparu"
+=20
+-#: color.c:259
++#: color.c:260
+ #, c-format
+ msgid "invalid color value: %.*s"
+ msgstr "Valeur invalide de couleur : %.*s"
+@@ -9675,14 +9675,14 @@ msgstr "Couper les lignes"
+ #: builtin/show-branch.c:9
+ msgid ""
+ "git show-branch [-a|--all] [-r|--remotes] [--topo-order | --date-orde=
+r]\n"
+-"\t\t       [--current] [--color[=3D<when>] | --no-color] [--sparse]\n=
+"
+-"\t\t       [--more=3D<n> | --list | --independent | --merge-base]\n"
+-"\t       [--no-name | --sha1-name] [--topics] [(<rev> | <glob>)...]"
++"\t\t[--current] [--color[=3D<when>] | --no-color] [--sparse]\n"
++"\t\t[--more=3D<n> | --list | --independent | --merge-base]\n"
++"\t\t[--no-name | --sha1-name] [--topics] [(<rev> | <glob>)...]"
+ msgstr ""
+ "git show-branch [-a|--all] [-r|--remotes] [--topo-order | --date-orde=
+r]\n"
+-"                [--current] [--color[=3D<quand>] | --no-color] [--spa=
+rse]\n"
+-"                [--more=3D<n> | --list | --independent | --merge-base=
+]\n"
+-"                [--no-name | --sha1-name] [--topics] [(<r=C3=A9v> | <=
+glob>)...]"
++"\t\t[--current] [--color[=3D<quand>] | --no-color] [--sparse]\n"
++"\t\t[--more=3D<n> | --list | --independent | --merge-base]\n"
++"\t\t[--no-name | --sha1-name] [--topics] [(<r=C3=A9v> | <glob>)...]"
+=20
+ #: builtin/show-branch.c:13
+ msgid "git show-branch (-g|--reflog)[=3D<n>[,<base>]] [--list] [<ref>]=
+"
+diff --git a/po/git.pot b/po/git.pot
+index 923d617..91fa5a1 100644
+--- a/po/git.pot
++++ b/po/git.pot
+@@ -8,7 +8,7 @@ msgid ""
+ msgstr ""
+ "Project-Id-Version: PACKAGE VERSION\n"
+ "Report-Msgid-Bugs-To: Git Mailing List <git@vger.kernel.org>\n"
+-"POT-Creation-Date: 2015-01-18 11:24+0800\n"
++"POT-Creation-Date: 2015-01-21 14:21+0800\n"
+ "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+ "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+ "Language-Team: LANGUAGE <LL@li.org>\n"
+@@ -305,7 +305,7 @@ msgstr ""
+ msgid "index-pack died"
+ msgstr ""
+=20
+-#: color.c:259
++#: color.c:260
+ #, c-format
+ msgid "invalid color value: %.*s"
+ msgstr ""
+@@ -9015,9 +9015,9 @@ msgstr ""
+ #: builtin/show-branch.c:9
+ msgid ""
+ "git show-branch [-a|--all] [-r|--remotes] [--topo-order | --date-orde=
+r]\n"
+-"\t\t       [--current] [--color[=3D<when>] | --no-color] [--sparse]\n=
+"
+-"\t\t       [--more=3D<n> | --list | --independent | --merge-base]\n"
+-"\t       [--no-name | --sha1-name] [--topics] [(<rev> | <glob>)...]"
++"\t\t[--current] [--color[=3D<when>] | --no-color] [--sparse]\n"
++"\t\t[--more=3D<n> | --list | --independent | --merge-base]\n"
++"\t\t[--no-name | --sha1-name] [--topics] [(<rev> | <glob>)...]"
+ msgstr ""
+=20
+ #: builtin/show-branch.c:13
+diff --git a/po/sv.po b/po/sv.po
+index 9f8e04d..0440443 100644
+--- a/po/sv.po
++++ b/po/sv.po
+@@ -7,8 +7,8 @@ msgid ""
+ msgstr ""
+ "Project-Id-Version: git 2.0.0\n"
+ "Report-Msgid-Bugs-To: Git Mailing List <git@vger.kernel.org>\n"
+-"POT-Creation-Date: 2015-01-18 11:24+0800\n"
+-"PO-Revision-Date: 2015-01-18 20:29+0100\n"
++"POT-Creation-Date: 2015-01-21 14:21+0800\n"
++"PO-Revision-Date: 2015-01-21 14:57+0800\n"
+ "Last-Translator: Peter Krefting <peter@softwolves.pp.se>\n"
+ "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
+ "Language: sv\n"
+@@ -320,7 +320,7 @@ msgstr "kan inte skapa \"%s\""
+ msgid "index-pack died"
+ msgstr "index-pack dog"
+=20
+-#: color.c:259
++#: color.c:260
+ #, c-format
+ msgid "invalid color value: %.*s"
+ msgstr "felaktigt f=C3=A4rgv=C3=A4rde: %.*s"
+@@ -6361,11 +6361,11 @@ msgstr " delat"
+=20
+ #: builtin/init-db.c:475
+ msgid ""
+-"git init [-q | --quiet] [--bare] [--template=3D<template-directory>] =
+[--shared"
+-"[=3D<permissions>]] [directory]"
++"git init [-q | --quiet] [--bare] [--template=3D<template-directory>] =
+[--"
++"shared[=3D<permissions>]] [directory]"
+ msgstr ""
+-"git init [-q | --quiet] [--bare] [--template=3D<mallkatalog>] [--shar=
+ed"
+-"[=3D<beh=C3=B6righeter>]] [katalog]"
++"git init [-q | --quiet] [--bare] [--template=3D<mallkatalog>] [--"
++"shared[=3D<beh=C3=B6righeter>]] [katalog]"
+=20
+ #: builtin/init-db.c:498
+ msgid "permissions"
+@@ -6408,8 +6408,8 @@ msgid ""
+ "git interpret-trailers [--trim-empty] [(--trailer <token>[(=3D|:)<val=
+ue>])...] "
+ "[<file>...]"
+ msgstr ""
+-"git interpret-trailers [--trim-empty] [(--trailer <symbol>[(=3D|:)"
+-"<v=C3=A4rde>])...] [<fil>...]"
++"git interpret-trailers [--trim-empty] [(--trailer "
++"<symbol>[(=3D|:)<v=C3=A4rde>])...] [<fil>...]"
+=20
+ #: builtin/interpret-trailers.c:25
+ msgid "trim empty trailers"
+@@ -9425,14 +9425,14 @@ msgstr "Radbryt utdata"
+ #: builtin/show-branch.c:9
+ msgid ""
+ "git show-branch [-a|--all] [-r|--remotes] [--topo-order | --date-orde=
+r]\n"
+-"\t\t       [--current] [--color[=3D<when>] | --no-color] [--sparse]\n=
+"
+-"\t\t       [--more=3D<n> | --list | --independent | --merge-base]\n"
+-"\t       [--no-name | --sha1-name] [--topics] [(<rev> | <glob>)...]"
++"\t\t[--current] [--color[=3D<when>] | --no-color] [--sparse]\n"
++"\t\t[--more=3D<n> | --list | --independent | --merge-base]\n"
++"\t\t[--no-name | --sha1-name] [--topics] [(<rev> | <glob>)...]"
+ msgstr ""
+ "git show-branch [-a|--all] [-r|--remotes] [--topo-order | --date-orde=
+r]\n"
+-"\t\t       [--current] [--color[=3D<n=C3=A4r>] | --no-color] [--spars=
+e]\n"
+-"\t\t       [--more=3D<n> | --list | --independent | --merge-base]\n"
+-"\t       [--no-name | --sha1-name] [--topics] [(<rev> | <m=C3=B6nster=
+>)...]"
++"\t\t[--current] [--color[=3D<n=C3=A4r>] | --no-color] [--sparse]\n"
++"\t\t[--more=3D<n> | --list | --independent | --merge-base]\n"
++"\t\t[--no-name | --sha1-name] [--topics] [(<rev> | <m=C3=B6nster>)...=
+]"
+=20
+ #: builtin/show-branch.c:13
+ msgid "git show-branch (-g|--reflog)[=3D<n>[,<base>]] [--list] [<ref>]=
+"
+@@ -9504,11 +9504,11 @@ msgstr "visa <n> nyaste refloggposter med b=C3=B6=
+rjan p=C3=A5 bas"
+=20
+ #: builtin/show-ref.c:10
+ msgid ""
+-"git show-ref [-q|--quiet] [--verify] [--head] [-d|--dereference] [-s|=
+--hash"
+-"[=3D<n>]] [--abbrev[=3D<n>]] [--tags] [--heads] [--] [pattern*] "
++"git show-ref [-q|--quiet] [--verify] [--head] [-d|--dereference] [-s|=
+--"
++"hash[=3D<n>]] [--abbrev[=3D<n>]] [--tags] [--heads] [--] [pattern*] "
+ msgstr ""
+-"git show-ref [-q|--quiet] [--verify] [--head] [-d|--dereference] [-s|=
+--hash"
+-"[=3D<n>]] [--abbrev[=3D<n>]] [--tags] [--heads] [--] [m=C3=B6nster*] =
+"
++"git show-ref [-q|--quiet] [--verify] [--head] [-d|--dereference] [-s|=
+--"
++"hash[=3D<n>]] [--abbrev[=3D<n>]] [--tags] [--heads] [--] [m=C3=B6nste=
+r*] "
+=20
+ #: builtin/show-ref.c:11
+ msgid "git show-ref --exclude-existing[=3Dpattern] < ref-list"
+diff --git a/po/vi.po b/po/vi.po
+index 940e57b..9c2bba8 100644
+--- a/po/vi.po
++++ b/po/vi.po
+@@ -8,8 +8,8 @@ msgid ""
+ msgstr ""
+ "Project-Id-Version: git v2.3.0\n"
+ "Report-Msgid-Bugs-To: Git Mailing List <git@vger.kernel.org>\n"
+-"POT-Creation-Date: 2015-01-18 11:24+0800\n"
+-"PO-Revision-Date: 2015-01-19 07:19+0700\n"
++"POT-Creation-Date: 2015-01-21 14:21+0800\n"
++"PO-Revision-Date: 2015-01-21 14:58+0800\n"
+ "Last-Translator: Tr=E1=BA=A7n Ng=E1=BB=8Dc Qu=C3=A2n <vnwildman@gmail=
+=2Ecom>\n"
+ "Language-Team: Vietnamese <translation-team-vi@lists.sourceforge.net>=
+\n"
+ "Language: vi\n"
+@@ -325,7 +325,7 @@ msgstr "kh=C3=B4ng th=E1=BB=83 t=E1=BA=A1o =E2=80=9C=
+%s=E2=80=9D"
+ msgid "index-pack died"
+ msgstr "m=E1=BB=A5c l=E1=BB=A5c g=C3=B3i =C4=91=C3=A3 ch=E1=BA=BFt"
+=20
+-#: color.c:259
++#: color.c:260
+ #, c-format
+ msgid "invalid color value: %.*s"
+ msgstr "gi=C3=A1 tr=E1=BB=8B m=C3=A0u kh=C3=B4ng h=E1=BB=A3p l=E1=BB=87=
+: %.*s"
+@@ -9500,14 +9500,14 @@ msgstr "Ng=E1=BA=AFt d=C3=B2ng khi qu=C3=A1 d=C3=
+=A0i"
+ #: builtin/show-branch.c:9
+ msgid ""
+ "git show-branch [-a|--all] [-r|--remotes] [--topo-order | --date-orde=
+r]\n"
+-"\t\t       [--current] [--color[=3D<when>] | --no-color] [--sparse]\n=
+"
+-"\t\t       [--more=3D<n> | --list | --independent | --merge-base]\n"
+-"\t       [--no-name | --sha1-name] [--topics] [(<rev> | <glob>)...]"
++"\t\t[--current] [--color[=3D<when>] | --no-color] [--sparse]\n"
++"\t\t[--more=3D<n> | --list | --independent | --merge-base]\n"
++"\t\t[--no-name | --sha1-name] [--topics] [(<rev> | <glob>)...]"
+ msgstr ""
+ "git show-branch [-a|--all] [-r|--remotes] [--topo-order | --date-orde=
+r]\n"
+-"\t\t       [--current] [--color[=3D<khi>] | --no-color] [--sparse]\n"
+-"\t\t       [--more=3D<n> | --list | --independent | --merge-base]\n"
+-"\t       [--no-name | --sha1-name] [--topics] [(<rev> | <glob>)=E2=80=
+=A6]"
++"\t\t[--current] [--color[=3D<khi>] | --no-color] [--sparse]\n"
++"\t\t[--more=3D<n> | --list | --independent | --merge-base]\n"
++"\t\t[--no-name | --sha1-name] [--topics] [(<rev> | <glob>)=E2=80=A6]"
+=20
+ #: builtin/show-branch.c:13
+ msgid "git show-branch (-g|--reflog)[=3D<n>[,<base>]] [--list] [<ref>]=
+"
+diff --git a/po/zh_CN.po b/po/zh_CN.po
+index ccbb03c..2b8d2cb 100644
+--- a/po/zh_CN.po
++++ b/po/zh_CN.po
+@@ -12,8 +12,8 @@ msgid ""
+ msgstr ""
+ "Project-Id-Version: Git\n"
+ "Report-Msgid-Bugs-To: Git Mailing List <git@vger.kernel.org>\n"
+-"POT-Creation-Date: 2015-01-18 11:24+0800\n"
+-"PO-Revision-Date: 2015-01-18 20:34+0800\n"
++"POT-Creation-Date: 2015-01-21 14:21+0800\n"
++"PO-Revision-Date: 2015-01-21 14:58+0800\n"
+ "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
+ "Language-Team: GitHub <https://github.com/gotgit/git/>\n"
+ "Language: zh_CN\n"
+@@ -320,7 +320,7 @@ msgstr "=E4=B8=8D=E8=83=BD=E5=88=9B=E5=BB=BA '%s'"
+ msgid "index-pack died"
+ msgstr "index-pack =E7=BB=88=E6=AD=A2"
+=20
+-#: color.c:259
++#: color.c:260
+ #, c-format
+ msgid "invalid color value: %.*s"
+ msgstr "=E6=97=A0=E6=95=88=E7=9A=84=E9=A2=9C=E8=89=B2=E5=80=BC=EF=BC=9A=
+%.*s"
+@@ -5368,8 +5368,7 @@ msgstr "=E8=8E=B7=E5=8F=96=E7=BB=84=E5=B9=B6=E6=8C=
+=87=E5=AE=9A=E5=BC=95=E7=94=A8=E8=A7=84=E5=88=99=E6=B2=A1=E6=9C=89=E6=84=
+=8F=E4=B9=89"
+=20
+ #: builtin/fmt-merge-msg.c:13
+ msgid "git fmt-merge-msg [-m <message>] [--log[=3D<n>]|--no-log] [--fi=
+le <file>]"
+-msgstr ""
+-"git fmt-merge-msg [-m <=E8=AF=B4=E6=98=8E>] [--log[=3D<n>]|--no-log] =
+[--file <=E6=96=87=E4=BB=B6>]"
++msgstr "git fmt-merge-msg [-m <=E8=AF=B4=E6=98=8E>] [--log[=3D<n>]|--n=
+o-log] [--file <=E6=96=87=E4=BB=B6>]"
+=20
+ #: builtin/fmt-merge-msg.c:662 builtin/fmt-merge-msg.c:665 builtin/gre=
+p.c:698
+ #: builtin/merge.c:198 builtin/repack.c:178 builtin/repack.c:182
+@@ -6375,8 +6374,7 @@ msgstr "=E4=B8=8D=E8=83=BD=E5=88=87=E6=8D=A2=E7=9B=
+=AE=E5=BD=95=E5=88=B0 %s"
+ msgid ""
+ "%s (or --work-tree=3D<directory>) not allowed without specifying %s (=
+or --git-"
+ "dir=3D<directory>)"
+-msgstr ""
+-"=E4=B8=8D=E5=85=81=E8=AE=B8 %s=EF=BC=88=E6=88=96 --work-tree=3D<=E7=9B=
+=AE=E5=BD=95>=EF=BC=89=E8=80=8C=E6=B2=A1=E6=9C=89=E6=8C=87=E5=AE=9A %s=EF=
+=BC=88=E6=88=96 --git-dir=3D<=E7=9B=AE=E5=BD=95>=EF=BC=89"
++msgstr "=E4=B8=8D=E5=85=81=E8=AE=B8 %s=EF=BC=88=E6=88=96 --work-tree=3D=
+<=E7=9B=AE=E5=BD=95>=EF=BC=89=E8=80=8C=E6=B2=A1=E6=9C=89=E6=8C=87=E5=AE=
+=9A %s=EF=BC=88=E6=88=96 --git-dir=3D<=E7=9B=AE=E5=BD=95>=EF=BC=89"
+=20
+ #: builtin/init-db.c:591
+ #, c-format
+@@ -9359,14 +9357,14 @@ msgstr "=E6=8A=98=E8=A1=8C=E8=BE=93=E5=87=BA"
+ #: builtin/show-branch.c:9
+ msgid ""
+ "git show-branch [-a|--all] [-r|--remotes] [--topo-order | --date-orde=
+r]\n"
+-"\t\t       [--current] [--color[=3D<when>] | --no-color] [--sparse]\n=
+"
+-"\t\t       [--more=3D<n> | --list | --independent | --merge-base]\n"
+-"\t       [--no-name | --sha1-name] [--topics] [(<rev> | <glob>)...]"
++"\t\t[--current] [--color[=3D<when>] | --no-color] [--sparse]\n"
++"\t\t[--more=3D<n> | --list | --independent | --merge-base]\n"
++"\t\t[--no-name | --sha1-name] [--topics] [(<rev> | <glob>)...]"
+ msgstr ""
+ "git show-branch [-a|--all] [-r|--remotes] [--topo-order | --date-orde=
+r]\n"
+-"\t\t       [--current] [--color[=3D<=E4=BD=95=E6=97=B6>] | --no-color=
+] [--sparse]\n"
+-"\t\t       [--more=3D<n> | --list | --independent | --merge-base]\n"
+-"\t       [--no-name | --sha1-name] [--topics] [(<=E7=89=88=E6=9C=AC> =
+| <=E9=80=9A=E9=85=8D=E7=AC=A6>)...]"
++"\t\t[--current] [--color[=3D<=E4=BD=95=E6=97=B6>] | --no-color] [--sp=
+arse]\n"
++"\t\t[--more=3D<n> | --list | --independent | --merge-base]\n"
++"\t\t[--no-name | --sha1-name] [--topics] [(<=E7=89=88=E6=9C=AC> | <=E9=
+=80=9A=E9=85=8D=E7=AC=A6>)...]"
+=20
+ #: builtin/show-branch.c:13
+ msgid "git show-branch (-g|--reflog)[=3D<n>[,<base>]] [--list] [<ref>]=
+"
+--=20
+2.3.0.rc0.7.g04cb2f2
