@@ -1,7 +1,7 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 2/6] refs.c: remove lock_fd from struct ref_lock
-Date: Wed, 21 Jan 2015 15:23:41 -0800
-Message-ID: <1421882625-916-3-git-send-email-sbeller@google.com>
+Subject: [PATCH 6/6] refs.c: enable large transactions
+Date: Wed, 21 Jan 2015 15:23:45 -0800
+Message-ID: <1421882625-916-7-git-send-email-sbeller@google.com>
 References: <1421882625-916-1-git-send-email-sbeller@google.com>
 Cc: Stefan Beller <sbeller@google.com>
 To: git@vger.kernel.org, gitster@pobox.com, mhagger@alum.mit.edu,
@@ -12,133 +12,116 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YE4d9-0000Vt-SN
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 00:24:12 +0100
+	id 1YE4d8-0000Vt-Sk
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 00:24:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752960AbbAUXYJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Jan 2015 18:24:09 -0500
-Received: from mail-ig0-f176.google.com ([209.85.213.176]:47913 "EHLO
-	mail-ig0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752721AbbAUXX6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Jan 2015 18:23:58 -0500
-Received: by mail-ig0-f176.google.com with SMTP id hl2so23432950igb.3
-        for <git@vger.kernel.org>; Wed, 21 Jan 2015 15:23:57 -0800 (PST)
+	id S1753121AbbAUXYF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Jan 2015 18:24:05 -0500
+Received: from mail-ie0-f179.google.com ([209.85.223.179]:39443 "EHLO
+	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751924AbbAUXXy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Jan 2015 18:23:54 -0500
+Received: by mail-ie0-f179.google.com with SMTP id x19so10908694ier.10
+        for <git@vger.kernel.org>; Wed, 21 Jan 2015 15:23:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=GdvIRUEZWdfK4D3bmKXK2QVGVozu3iOuESKWicTFMR4=;
-        b=Ojg3m2ux9vKu/lgp2laMUddQA2mbT57Bi/jnbn7/JIHoDgwQJyAJtKjl010+NFjtm6
-         qbBM+nTjeyOQMzYmgWzNqw5CRO7Xljk8GRG67UH+ldkGlWZBGROGUxC62QSVqn3zuN2y
-         ZuscfGfSpRPZc+e+NcF1oGpf32fg9GVTbj6y16Lzoh0ApnriHjBdfX2LHOf3xuqKd0Bl
-         LmIZcp2iaa+6CBVaZL3Nm2BI7T2Ylc5b8pJzEnoahtqsOUMbc4kWzH3nKyhnJyqogPCT
-         t4F7gRlJf76l80SjepQT2W1e1CEX0UoGa6JDyMYyr/JDsszckHwHYUu92oHpaD4ulMRO
-         /BjQ==
+        bh=vYcCQSYS4XJPox+XmUNsm+LR3C8A/ex9n/GcbnqNw7A=;
+        b=nDq0TGNl/XAWKyHgIZN/aKOFXfcdMKVU32TRrDupcHoaZ645HG+xISVbLGjpggcPEC
+         OCRQ+usYaUk6kub3bZDcMaCnhY8G3x/q5jhIgSMDtz7HcQcvIZVSkNnVFBp/H3RxFWxV
+         DBZdMAVAlhm+1D+R0mS2xVq8VbZspt/HORD12i5Bcno3JOVjtvHnB7K2XU08622agr6U
+         HedkfBl8QWgp6GZAfXtMc8l9TCeKyY7gw2FQd1qd+NBL+U/3dH7t92Q6tOy+/Cuyj9Ej
+         29rAOAfokbfrZ4qchCC4dPbSHqA/UStJMAufiIpcmOoKAXADl81hiNZDa0vYtJUf/4TM
+         +iyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=GdvIRUEZWdfK4D3bmKXK2QVGVozu3iOuESKWicTFMR4=;
-        b=brZx7wwEpg2oH1N0zaKwfTI4FUwtrycEi2RhzLHoULfHghjwJ7Jh+130LverYLCk/i
-         CIvwp6qkRXVccHnpTEW1DFJoxsQrVTR9RAoiPAhLrtF1VX5qmXYzTSMabHn22v7nMLc2
-         tdL4QofG2Lrjg83mTWX5BrEGh54LGTUs7z7xp//ds9kiQVXQK3auGdqvuJjj5HlIWUpa
-         vAF8ZIMt7b90UtGrG2qLhn6nPnkHZgBQPSC309NB8oB7WThHKDfgkLrmKLJMBgVY8yH0
-         Hb+qlxCFcHUA6Oa/o1ie4GSkTciwY2SNhpiHHoTtDfrGDMUBYoGMqFbGoBgtKIweJ0rn
-         AAUw==
-X-Gm-Message-State: ALoCoQkzvMPSoss+aHbD+7vZLnO2R/IVfS2tYeUp/z+ZA8o9k9pxZp4MdtN1UvLlzY9sh+b3AC0y
-X-Received: by 10.43.89.68 with SMTP id bd4mr43506806icc.63.1421882629620;
-        Wed, 21 Jan 2015 15:23:49 -0800 (PST)
+        bh=vYcCQSYS4XJPox+XmUNsm+LR3C8A/ex9n/GcbnqNw7A=;
+        b=GIt99CDxNuWiqwIAaRNKS4kQpwmVYPfsg4+p63oAE0l0SYojpT+c1aHbjBVO8AKBY5
+         bPNx3oIFbjwMAap55WO2wF9IomfhFES2/43DTZCc03xHBwmlJdczrva59I9f9IZvT411
+         UA5VsQYk7GS9x+xMADtn/Y5bGcPo2qWrVgVgVcxUYEf/mziI1oMy1n81UZMYLu9oV2qk
+         L01I1lChjTVP1TT+tFCCmZrlf0VkaW2+U6Fz/qFdRk/FlXAwfu+wwfOZ1W9LcF7jBY2V
+         BF7a4/53bKrlj6jmNRFy7FsT/Epm/CsdEHpHd5MZNa0WdGrZYI750xTCN0mqvlWBHzpU
+         P6pw==
+X-Gm-Message-State: ALoCoQnEJOZOdMJEm850hyHt2a56Kzw88Hc6eAnf9GK3rrJBE6iB2Xs+j3npOTna110ooIkua3xP
+X-Received: by 10.43.154.138 with SMTP id le10mr36082352icc.50.1421882634219;
+        Wed, 21 Jan 2015 15:23:54 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b00:a4e7:f2b3:5669:74a3])
-        by mx.google.com with ESMTPSA id qd2sm657351igc.22.2015.01.21.15.23.49
+        by mx.google.com with ESMTPSA id kt1sm662763igb.20.2015.01.21.15.23.53
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 21 Jan 2015 15:23:49 -0800 (PST)
+        Wed, 21 Jan 2015 15:23:53 -0800 (PST)
 X-Mailer: git-send-email 2.2.1.62.g3f15098
 In-Reply-To: <1421882625-916-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262782>
 
-The 'lock_fd' is the same as 'lk->fd'. No need to store it twice so remove
-it. You may argue this introduces more coupling as we need to know more
-about the internals of the lock file mechanism, but this will be solved in
-a later patch.
-
-No functional changes intended.
+By closing the file descriptors after creating the lock file we are not
+limiting the size of the transaction by the number of available file
+descriptors.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- refs.c | 15 +++++----------
- 1 file changed, 5 insertions(+), 10 deletions(-)
+ refs.c                | 14 +++++++++++++-
+ t/t1400-update-ref.sh |  4 ++--
+ 2 files changed, 15 insertions(+), 3 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index ab2f2a9..e905f51 100644
+index 0161667..014ef59 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -11,7 +11,6 @@ struct ref_lock {
- 	char *orig_ref_name;
- 	struct lock_file *lk;
- 	unsigned char old_sha1[20];
--	int lock_fd;
- 	int force_write;
- };
- 
-@@ -2262,7 +2261,6 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
- 	int attempts_remaining = 3;
- 
- 	lock = xcalloc(1, sizeof(struct ref_lock));
--	lock->lock_fd = -1;
- 
- 	if (mustexist)
- 		resolve_flags |= RESOLVE_REF_READING;
-@@ -2338,8 +2336,7 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
- 		goto error_return;
- 	}
- 
--	lock->lock_fd = hold_lock_file_for_update(lock->lk, ref_file, lflags);
--	if (lock->lock_fd < 0) {
-+	if (hold_lock_file_for_update(lock->lk, ref_file, lflags) < 0) {
- 		last_errno = errno;
- 		if (errno == ENOENT && --attempts_remaining > 0)
- 			/*
-@@ -2916,7 +2913,6 @@ static int close_ref(struct ref_lock *lock)
+@@ -3068,7 +3068,17 @@ static ssize_t write_in_full_to_lockfile(struct lock_file *lock,
+ 					 const void *buf,
+ 					 size_t count)
  {
- 	if (close_lock_file(lock->lk))
- 		return -1;
--	lock->lock_fd = -1;
- 	return 0;
+-	return write_in_full(lock->fd, buf, count);
++	if (lock->fd == -1) {
++		int ret;
++		if (reopen_lock_file(lock) < 0)
++			return -1;
++		ret = write_in_full(lock->fd, buf, count);
++		if (close_lock_file(lock) < 0)
++			return -1;
++		return ret;
++	} else {
++		return write_in_full(lock->fd, buf, count);
++	}
  }
  
-@@ -2924,7 +2920,6 @@ static int commit_ref(struct ref_lock *lock)
- {
- 	if (commit_lock_file(lock->lk))
- 		return -1;
--	lock->lock_fd = -1;
- 	return 0;
- }
- 
-@@ -3102,8 +3097,8 @@ static int write_ref_sha1(struct ref_lock *lock,
- 		errno = EINVAL;
- 		return -1;
+ /*
+@@ -3797,6 +3807,8 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+ 				    update->refname);
+ 			goto cleanup;
+ 		}
++		/* Do not keep all lock files open at the same time. */
++		close_lock_file(update->lock->lk);
  	}
--	if (write_in_full(lock->lock_fd, sha1_to_hex(sha1), 40) != 40 ||
--	    write_in_full(lock->lock_fd, &term, 1) != 1 ||
-+	if (write_in_full(lock->lk->fd, sha1_to_hex(sha1), 40) != 40 ||
-+	    write_in_full(lock->lk->fd, &term, 1) != 1 ||
- 	    close_ref(lock) < 0) {
- 		int save_errno = errno;
- 		error("Couldn't write %s", lock->lk->filename.buf);
-@@ -4083,9 +4078,9 @@ int reflog_expire(const char *refname, const unsigned char *sha1,
- 			status |= error("couldn't write %s: %s", log_file,
- 					strerror(errno));
- 		} else if ((flags & EXPIRE_REFLOGS_UPDATE_REF) &&
--			(write_in_full(lock->lock_fd,
-+			(write_in_full(lock->lk->fd,
- 				sha1_to_hex(cb.last_kept_sha1), 40) != 40 ||
--			 write_str_in_full(lock->lock_fd, "\n") != 1 ||
-+			 write_str_in_full(lock->lk->fd, "\n") != 1 ||
- 			 close_ref(lock) < 0)) {
- 			status |= error("couldn't write %s",
- 					lock->lk->filename.buf);
+ 
+ 	/* Perform updates first so live commits remain referenced */
+diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
+index ea98b9b..751b6dc 100755
+--- a/t/t1400-update-ref.sh
++++ b/t/t1400-update-ref.sh
+@@ -1071,7 +1071,7 @@ run_with_limited_open_files () {
+ 
+ test_lazy_prereq ULIMIT 'run_with_limited_open_files true'
+ 
+-test_expect_failure ULIMIT 'large transaction creating branches does not burst open file limit' '
++test_expect_success ULIMIT 'large transaction creating branches does not burst open file limit' '
+ (
+ 	for i in $(seq 33)
+ 	do
+@@ -1082,7 +1082,7 @@ test_expect_failure ULIMIT 'large transaction creating branches does not burst o
+ )
+ '
+ 
+-test_expect_failure ULIMIT 'large transaction deleting branches does not burst open file limit' '
++test_expect_success ULIMIT 'large transaction deleting branches does not burst open file limit' '
+ (
+ 	for i in $(seq 33)
+ 	do
 -- 
 2.2.1.62.g3f15098
