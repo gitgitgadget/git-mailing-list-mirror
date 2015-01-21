@@ -1,86 +1,105 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCHv1 0/6] Fix bug in large transactions
-Date: Wed, 21 Jan 2015 15:23:39 -0800
-Message-ID: <1421882625-916-1-git-send-email-sbeller@google.com>
+Subject: [PATCH 1/6] update-ref: Test handling large transactions properly
+Date: Wed, 21 Jan 2015 15:23:40 -0800
+Message-ID: <1421882625-916-2-git-send-email-sbeller@google.com>
+References: <1421882625-916-1-git-send-email-sbeller@google.com>
 Cc: Stefan Beller <sbeller@google.com>
 To: git@vger.kernel.org, gitster@pobox.com, mhagger@alum.mit.edu,
 	peff@peff.net, loic@dachary.org
-X-From: git-owner@vger.kernel.org Thu Jan 22 00:23:57 2015
+X-From: git-owner@vger.kernel.org Thu Jan 22 00:23:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YE4cr-0000Ix-F9
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 00:23:53 +0100
+	id 1YE4cx-0000Lu-6p
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 00:23:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752246AbbAUXXt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1752481AbbAUXXw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Jan 2015 18:23:52 -0500
+Received: from mail-ie0-f170.google.com ([209.85.223.170]:58239 "EHLO
+	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752362AbbAUXXt (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 21 Jan 2015 18:23:49 -0500
-Received: from mail-ie0-f182.google.com ([209.85.223.182]:42317 "EHLO
-	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751924AbbAUXXr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Jan 2015 18:23:47 -0500
-Received: by mail-ie0-f182.google.com with SMTP id ar1so13447789iec.13
-        for <git@vger.kernel.org>; Wed, 21 Jan 2015 15:23:47 -0800 (PST)
+Received: by mail-ie0-f170.google.com with SMTP id y20so18663651ier.1
+        for <git@vger.kernel.org>; Wed, 21 Jan 2015 15:23:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=OPDVOZ6m3yNX9WaoCdbYdJ+2Dom4FyXEzOk0+zs4MGc=;
-        b=BbzvpcN92BWRBr51h0/aHIw71p0+vtMEkU83/fBcBGsnVixiE2qCWuzb6McGMaICII
-         BfRIhv6qV0K7oXIR4v1/gvxzPxzwcYTPvoSH7KsdBVu/Jh9fIl+bNWula+eaajDerBhv
-         G4RQEhJJx+/7QRc9SU/HNkm6mSRRWdaXXqJj/iIapors+FElBIFeZEEXA6GkzT9oKAA4
-         2JhatMZdeEZumnnJq+jsDIecKQuTMj7SkG8lnXqxG2EGMNlNN1SCMef0OzErdh2Ahems
-         tJMdShDKBtVJ6bEC4diOlVwtfM9V7+gVzePU0GPGGn+BNSM+6i2eLdoB8dzj/35VT9MC
-         9jAg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=EbhgDPQHRbnN+Xv0cwTyAM0+TXTDMC4dK2YStLG/FEo=;
+        b=adCcXpHxH6cbhfA2JMUKyZxmuYGwuVn/ZrmMRcAFjTQPRN9DbNnsMhY6Y0mF9LmbYQ
+         6G2FUdmiknIxGuuQZkpjkCNWre/tmcb1c6ne5UHjDrO1sQwgFr969hPWGzCy9odubvv+
+         A5/7Gd2NX/HVYo9UWwJOEH/FoAUrqPDid9rl/C1BrmujvgMP9urIGytl8qOBZhcHv+fs
+         H1FDbfCsudBcx4yVfVii50+fWUGvmdAhdxTwauH+wVCyVCgOILhvLEQ5zLCXt5NNOkQm
+         FmTrDqvxKwgpsrHOTUj9x0cYH4GQlYZYCVFyp8Xir2z0m6VnGrxv5YtCWRJGKM5ho2Sn
+         u4sA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=OPDVOZ6m3yNX9WaoCdbYdJ+2Dom4FyXEzOk0+zs4MGc=;
-        b=I5gz+1T7RH5eQxasyKcbya/tN3XW0FXtV7qf8MHKd2SvdMEDUdH5+Am3VJy9eLyFmO
-         jcaEujwUQlRagRjRHlhE/adty62Ok8phu76AfZGeQpcjuJGS56spu999lfbARCSaTwb7
-         TvA98nBpdLsyVyg8xNsOfMmh+AmlLvZjBlaVFB41CuQ2giOYL3QfYgSi81EYiSNjFGig
-         SdmfT45mG+EhVrQpB0Yn6x1kez0N8XLLR+EDMCYY3Q3aczNxucODBXhtcvnqdFPrxIDC
-         rPcbae+uo/8gWGfKjXW+JUl0v6t1JyfjdHEAptysbh+ov06UWi0JiHuBRcTsH6Ofi601
-         ZpvA==
-X-Gm-Message-State: ALoCoQmePdrdxBUYVizgqVVlkXyybUrbUznSjqagTm9rPxnsC3hs0nOWKqZU/B/rV/lXogERsOPa
-X-Received: by 10.50.171.201 with SMTP id aw9mr38830163igc.2.1421882627296;
-        Wed, 21 Jan 2015 15:23:47 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=EbhgDPQHRbnN+Xv0cwTyAM0+TXTDMC4dK2YStLG/FEo=;
+        b=MPWuh9u7DXvD6Q/lXKhT5phFX8jrdWAeX5XCPqAUSyd587BpXr34QY+4BP6LcKFsva
+         vZrUDIkzsXxsbfdCgtH+hwrtJjbuhC8IAtLRp5WNcntN9wedXLbhkwkAeIAPl02GEgK2
+         MYCf7mKs+238e5pDi8etN+li2GvczsElJaqtEGaETkZQ5kzSVOrlaweP7O+yKfW9hChM
+         v2x8cX0bHWwafVrAda19s95RiNxkDq3IxsxN8GA4Syun8yNfJRrs6BERkgeOBHQl4n01
+         nLAvBnrXV+/bOwLeB86ArLbjUOhN1hyncLMX41ggIlEV4Fs8m2uNgO+6rSKt/DYmRtlx
+         eV2w==
+X-Gm-Message-State: ALoCoQlPEn2B+71HD1LBFSFe/CK0+2FkRs4gmAsfebn4IEWDC30xEXwdRoIgQuEQMZr7Pl3zpbmS
+X-Received: by 10.50.119.9 with SMTP id kq9mr148432igb.36.1421882628518;
+        Wed, 21 Jan 2015 15:23:48 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b00:a4e7:f2b3:5669:74a3])
-        by mx.google.com with ESMTPSA id b7sm687741igx.15.2015.01.21.15.23.46
+        by mx.google.com with ESMTPSA id qr1sm667350igb.18.2015.01.21.15.23.47
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 21 Jan 2015 15:23:46 -0800 (PST)
+        Wed, 21 Jan 2015 15:23:48 -0800 (PST)
 X-Mailer: git-send-email 2.2.1.62.g3f15098
+In-Reply-To: <1421882625-916-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262777>
 
-(reported as: git update-ref --stdin : too many open files, 2014-12-20)
-
-First a test case is introduced to demonstrate the failure,
-the patches 2-6 are little refactoring and the last patch 
-fixes the bug and also marks the bugs as resolved in the
-test suite.
-
-Unfortunately this applies on top of origin/next.
-
-Any feedback would be welcome!
-
-Thanks,
-Stefan
-
-Stefan Beller (6):
-  update-ref: Test handling large transactions properly
-  refs.c: remove lock_fd from struct ref_lock
-  refs.c: replace write_str_in_full by write_in_full
-  refs.c: Have a write_in_full_to_lock_file wrapping write_in_full
-  refs.c: write to a lock file only once
-  refs.c: enable large transactions
-
- refs.c                | 41 +++++++++++++++++++++++++++++------------
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
  t/t1400-update-ref.sh | 28 ++++++++++++++++++++++++++++
- 2 files changed, 57 insertions(+), 12 deletions(-)
+ 1 file changed, 28 insertions(+)
 
+diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
+index 6805b9e..ea98b9b 100755
+--- a/t/t1400-update-ref.sh
++++ b/t/t1400-update-ref.sh
+@@ -1065,4 +1065,32 @@ test_expect_success 'stdin -z delete refs works with packed and loose refs' '
+ 	test_must_fail git rev-parse --verify -q $c
+ '
+ 
++run_with_limited_open_files () {
++	(ulimit -n 32 && "$@")
++}
++
++test_lazy_prereq ULIMIT 'run_with_limited_open_files true'
++
++test_expect_failure ULIMIT 'large transaction creating branches does not burst open file limit' '
++(
++	for i in $(seq 33)
++	do
++		echo "create refs/heads/$i HEAD"
++	done >large_input &&
++	run_with_limited_open_files git update-ref --stdin <large_input &&
++	git rev-parse --verify -q refs/heads/33
++)
++'
++
++test_expect_failure ULIMIT 'large transaction deleting branches does not burst open file limit' '
++(
++	for i in $(seq 33)
++	do
++		echo "delete refs/heads/$i HEAD"
++	done >large_input &&
++	run_with_limited_open_files git update-ref --stdin <large_input &&
++	test_must_fail git rev-parse --verify -q refs/heads/33
++)
++'
++
+ test_done
 -- 
 2.2.1.62.g3f15098
