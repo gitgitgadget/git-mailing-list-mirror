@@ -1,130 +1,82 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [BUG?] setting ulimit in test suite broken for me
-Date: Wed, 21 Jan 2015 10:59:06 -0800
-Message-ID: <1421866746-29444-1-git-send-email-sbeller@google.com>
-Cc: Stefan Beller <sbeller@google.com>
-To: git@vger.kernel.org, jeanjacques.lafay@gmail.com, peff@peff.net
-X-From: git-owner@vger.kernel.org Wed Jan 21 19:59:23 2015
+From: Alexander Kuleshov <kuleshovmail@gmail.com>
+Subject: [PATCH] git-add--interactive: print message if there are no untracked files
+Date: Thu, 22 Jan 2015 01:03:24 +0600
+Message-ID: <1421867004-31672-1-git-send-email-kuleshovmail@gmail.com>
+Cc: git@vger.kernel.org, Alexander Kuleshov <kuleshovmail@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 21 20:03:45 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YE0Us-00040Q-Sv
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Jan 2015 19:59:23 +0100
+	id 1YE0Z2-0006XE-I1
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Jan 2015 20:03:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752852AbbAUS7T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Jan 2015 13:59:19 -0500
-Received: from mail-ig0-f175.google.com ([209.85.213.175]:63131 "EHLO
-	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751484AbbAUS7R (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Jan 2015 13:59:17 -0500
-Received: by mail-ig0-f175.google.com with SMTP id hn18so2878226igb.2
-        for <git@vger.kernel.org>; Wed, 21 Jan 2015 10:59:17 -0800 (PST)
+	id S1753990AbbAUTDh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Jan 2015 14:03:37 -0500
+Received: from mail-la0-f54.google.com ([209.85.215.54]:45544 "EHLO
+	mail-la0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753889AbbAUTDf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Jan 2015 14:03:35 -0500
+Received: by mail-la0-f54.google.com with SMTP id hv19so2586971lab.13
+        for <git@vger.kernel.org>; Wed, 21 Jan 2015 11:03:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
+        d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id;
-        bh=bhe1zTrPuIQ50iqqQ/uRlBlDcIHlb2jPqDJvvVCRGF4=;
-        b=mDBRZzWP1xdny40tSeRC7/CQ2s8tqLTcnQevLGV28kXVo7PV+1SHyatYRk9SGMLv4w
-         pMZ79YIu92Hb4oTZ+aq23MalfJCptgFGYpf5UGzLBVeKAA6b1wqFUW0Loyl+RD34xUcr
-         QBUxWh/e5EawUwhePu3l3KomDWA4MNahQKoe5VNcMDBT+mvcthNQlRFzS/h9GWv3gfGn
-         tmi3TmoyZhPIh7qBL65Lp5qx6UCJgb9dVrWMEFr/idDSQaWA7WIyzajHZfcp/n25ygBD
-         39hmWqmJ0c1Nw153PHspN2CJ/6gILlJ3Pelzv1D1nUCi0BLP1gVdEWDKgCV2W41tXt2w
-         lGaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=bhe1zTrPuIQ50iqqQ/uRlBlDcIHlb2jPqDJvvVCRGF4=;
-        b=QNgtbjK1zUSITVlxZ8WkWLLHpLsAUVX1Cio+KiYGS99pvX2VHF1/Orux9c/gZcL8Cr
-         mikwCmcCzn+ZtV4CkngKc9obtJq0cWdwKIX5lyr9XTmT8N8bZSs2Uzb9sllKMYyNWVAB
-         vXL2pQKhrCTow8+qItwTdIC18TDueaKY0CMLQz4aY8SOsRDckDZStWTdhAq2I6VJzv8y
-         y1YRsstIAUGrmyQ5fZB6eyNmIwshfko8A8j1YjXCqLqGsZ9eKrQiudKbuwxRaC7oXUMd
-         nKErtikQIaMi7/SwxqCfWrkw53j2O/I/1/QYsXtDHtwAxkVUGbTDJIhgOFdzTv2wca1c
-         cEQw==
-X-Gm-Message-State: ALoCoQlNMsIEX3GgQLObvptfyPkzJJh2U+h9E93/xqyvsgitwFfFY7LTRtLKTurVt8/6zf7nIIvd
-X-Received: by 10.42.97.66 with SMTP id m2mr34243229icn.48.1421866756978;
-        Wed, 21 Jan 2015 10:59:16 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b00:a4e7:f2b3:5669:74a3])
-        by mx.google.com with ESMTPSA id f1sm6530953igt.14.2015.01.21.10.59.13
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 21 Jan 2015 10:59:16 -0800 (PST)
-X-Mailer: git-send-email 2.2.1.62.g3f15098
+        bh=r/2ARkyB87O5xp5NfZ5dbluqATY2AvXremEm2ic04f0=;
+        b=f9vNxqIfVSsY1x0ooFvsZLDoOOCRVKveRlzioSpibEobrwfP0vPjKyToxrCudEZS94
+         CbfxxKVwaDfJZn6VnLed2cZWoj6vSaMBhL117KRhXWXYSPoLgWGITR46K+VlXf+oM8RN
+         ZBmz80MElvvcW3z3wT0BbFqhzSPjW0OiaffkCOPLKHMVZdXd2jGpkGA/Hp4w/j4kVg4d
+         YaKWZ35+s4NEYD+mBKdVSwtLz3uNUK8u6KbemSFOPnXPmYXss/LTZYfMWBBS3pk6nkgg
+         pQhVJ0MrdRFE40AdnzTY8iAjkokLH/JHmT4nMPuICKb2SsIhbKnYeej6yJtp2xwtbWDv
+         qefw==
+X-Received: by 10.112.185.101 with SMTP id fb5mr46147775lbc.12.1421867014373;
+        Wed, 21 Jan 2015 11:03:34 -0800 (PST)
+Received: from localhost.localdomain ([147.30.87.232])
+        by mx.google.com with ESMTPSA id w3sm5715413lag.35.2015.01.21.11.03.32
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 21 Jan 2015 11:03:33 -0800 (PST)
+X-Mailer: git-send-email 2.3.0-rc1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262741>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262742>
 
-Hi,
+If user selects 'add untracked' and there are no untracked files,
+"Add untracked>>" opens. But it does not make sense in this case, because there
+are no untracked files. So let's print message and exit from "add untracked" mode.
 
-so I wanted to create a new test for large transactions, which should look like:
-
-	run_with_limited_open_files () {
-		(ulimit -n 64 && "$@")
-	}
-
-	test_lazy_prereq ULIMIT 'run_with_limited_open_files true'
-
-	test_expect_success ULIMIT 'large transaction creating branches does not burst open file limit' '
-	(
-		echo $(ulimit -n)
-		for i in $(seq 65)
-		do
-			echo "create refs/heads/$i HEAD"
-		done >large_input &&
-		git update-ref --stdin <large_input &&
-		git rev-parse --verify -q refs/heads/65
-	)
-	'
-
-Mind the "echo $(ulimit -n)" in there as a debugging output.
-So if I run the test with "-d -v" to actually see the debugging output,
-I see ulimit -n set to 32768 instead of the desired 64.
-
-So I assumed I made a mistake and looked at other places with a similar
-pattern such as in t7004-tag.sh. Inserting a debug statement (as attached,
-so I don't need (to trust) -d and -v as parameters for the test) in there
-also doesn't report the desired stack size of 128, but rather the system
-default of 8192. Is that just my system or does anybody else also run into
-such a problem?
-
-Running ulimit -{n,s} manually in a shell (/bin/sh) as well as bash does
-work as expected as it correctly reports with ulimit -a as well as breaking
-the tests I try to write.
-
-Thanks,
-Stefan
-
-Signed-off-by: Stefan Beller <sbeller@google.com>
+Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
 ---
- t/t7004-tag.sh | 1 +
- 1 file changed, 1 insertion(+)
+ git-add--interactive.perl | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index 35c805a..4f09cb4 100755
---- a/t/t7004-tag.sh
-+++ b/t/t7004-tag.sh
-@@ -1460,20 +1460,21 @@ test_expect_success 'invalid sort parameter in configuratoin' '
- '
- 
- run_with_limited_stack () {
- 	(ulimit -s 128 && "$@")
+diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+index 94b988c..1a6dcf3 100755
+--- a/git-add--interactive.perl
++++ b/git-add--interactive.perl
+@@ -724,11 +724,15 @@ sub revert_cmd {
  }
  
- test_lazy_prereq ULIMIT 'run_with_limited_stack true'
- 
- # we require ulimit, this excludes Windows
- test_expect_success ULIMIT '--contains works in a deep repo' '
-+	echo $(ulimit -s) > ../ulimit_recorded
- 	>expect &&
- 	i=1 &&
- 	while test $i -lt 8000
- 	do
- 		echo "commit refs/heads/master
- committer A U Thor <author@example.com> $((1000000000 + $i * 100)) +0200
- data <<EOF
- commit #$i
- EOF"
- 		test $i = 1 && echo "from refs/heads/master^0"
+ sub add_untracked_cmd {
+-	my @add = list_and_choose({ PROMPT => 'Add untracked' },
+-				  list_untracked());
+-	if (@add) {
+-		system(qw(git update-index --add --), @add);
+-		say_n_paths('added', @add);
++	if (system(qw(git ls-files --others --exclude-standard --))) {
++		my @add = list_and_choose({ PROMPT => 'Add untracked' },
++					  list_untracked());
++		if (@add) {
++			system(qw(git update-index --add --), @add);
++			say_n_paths('added', @add);
++		}
++	} else {
++		print "No untracked files.\n";
+ 	}
+ 	print "\n";
+ }
 -- 
-2.2.1.62.g3f15098
+2.3.0.rc1.247.gb53aa6f
