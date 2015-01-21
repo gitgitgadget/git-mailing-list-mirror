@@ -1,139 +1,114 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2] .clang-format: introduce the use of clang-format
-Date: Wed, 21 Jan 2015 15:45:02 -0500
-Message-ID: <20150121204502.GA3287@peff.net>
-References: <1421530221-39306-1-git-send-email-artagnon@gmail.com>
- <1421859687-27216-1-git-send-email-artagnon@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-add--interactive: print message if there are no untracked files
+Date: Wed, 21 Jan 2015 13:11:33 -0800
+Message-ID: <xmqqmw5bx2ii.fsf@gitster.dls.corp.google.com>
+References: <1421867004-31672-1-git-send-email-kuleshovmail@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 21 21:45:18 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Alexander Kuleshov <kuleshovmail@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 21 22:11:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YE29K-0004uL-UK
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Jan 2015 21:45:15 +0100
+	id 1YE2Yv-0003sy-KE
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Jan 2015 22:11:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753423AbbAUUpN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Jan 2015 15:45:13 -0500
-Received: from cloud.peff.net ([50.56.180.127]:36992 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752948AbbAUUpE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Jan 2015 15:45:04 -0500
-Received: (qmail 27531 invoked by uid 102); 21 Jan 2015 20:45:04 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 21 Jan 2015 14:45:04 -0600
-Received: (qmail 388 invoked by uid 107); 21 Jan 2015 20:45:28 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 21 Jan 2015 15:45:28 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 21 Jan 2015 15:45:02 -0500
-Content-Disposition: inline
-In-Reply-To: <1421859687-27216-1-git-send-email-artagnon@gmail.com>
+	id S1752727AbbAUVLi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Jan 2015 16:11:38 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:55528 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751975AbbAUVLg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Jan 2015 16:11:36 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1582A30955;
+	Wed, 21 Jan 2015 16:11:36 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=PLXUZ1sh8X8tjcZ2HKJREh9CDDQ=; b=holx8X
+	swxg01EL5L8oOOK1yK7lL0vVNBX2XKqiRIuTs8k/zlmey+spgD28UePdu2gm+8Kq
+	7x4S9U9N5PNc4I5QceqFCSSEExc5qrOnF3ig8hImKJQdZrSfkQHPR+zo+aXRZUdQ
+	ILVRqGoMQQI42xK6F3r1SaTMoM4aLM70ZTNJc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=NDByxR6OsHfhCAWSd0skmhALgIinUQs/
+	9H0K+IXGac4LQwiqJluOoFcefo1t3DC63wy5+Y+2JqtOpxQsNHOeQjKFrBTGmezr
+	Tln6KeCuhdO3MTQZq9mWPoXf6kvcQMTSjFJBW1Kd1zQVL+l142WnEeHVtXbFDEQm
+	M2U3chpBYP0=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0BC2530952;
+	Wed, 21 Jan 2015 16:11:36 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5771330951;
+	Wed, 21 Jan 2015 16:11:35 -0500 (EST)
+In-Reply-To: <1421867004-31672-1-git-send-email-kuleshovmail@gmail.com>
+	(Alexander Kuleshov's message of "Thu, 22 Jan 2015 01:03:24 +0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 14D454EC-A1B2-11E4-862A-D3749F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262767>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262768>
 
-On Wed, Jan 21, 2015 at 12:01:27PM -0500, Ramkumar Ramachandra wrote:
+Alexander Kuleshov <kuleshovmail@gmail.com> writes:
 
-> Instead of manually eyeballing style in reviews, just ask all
-> contributors to run their patches through [git-]clang-format.
+> If user selects 'add untracked' and there are no untracked files,
+> "Add untracked>>" opens. But it does not make sense in this case,
+> because there are no untracked files. So let's print message and
+> exit from "add untracked" mode.
 
-Thanks for mentioning this; I hadn't seen the tool before.
+That reasoning makes perfect sense.
 
-I didn't see it mentioned here, but for those who are also new to the
-tool, it has modes both for checking the content itself as well as diffs
-(so you are not stuck wading through its reformats of code you didn't
-touch).
+> Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
+> ---
+>  git-add--interactive.perl | 14 +++++++++-----
+>  1 file changed, 9 insertions(+), 5 deletions(-)
+>
+> diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+> index 94b988c..1a6dcf3 100755
+> --- a/git-add--interactive.perl
+> +++ b/git-add--interactive.perl
+> @@ -724,11 +724,15 @@ sub revert_cmd {
+>  }
+>  
+>  sub add_untracked_cmd {
+> -	my @add = list_and_choose({ PROMPT => 'Add untracked' },
+> -				  list_untracked());
+> -	if (@add) {
+> -		system(qw(git update-index --add --), @add);
+> -		say_n_paths('added', @add);
+> +	if (system(qw(git ls-files --others --exclude-standard --))) {
 
-> +BreakBeforeBraces: Linux
-> [...]
-> +BreakBeforeBraces: Stroustrup
+But this ls-files invocation that knows too much about how
+list_untracked() computes things does not.
 
-These seem conflicting. It looks like you added "Stroustrup" to keep the
-brace on the line with the "struct" keyword. But this does the wrong
-thing for "cuddled else"s like:
+Why not
 
-  if (...) {
-     ...
-  } else {
-     ...
-  }
+	my @add = list_untracked();
+        if (@add) {
+        	@add = list_and_choose({...}, @add);
+	}
+        if (!@add) {
+		Nothing to do;
+	} else {
+		Run update-index
+	}
 
-I don't think clang-format has a mode that expresses our style.
+or something instead?
 
-I ran some of my recent patches through clang-format-diff, and it
-generated quite a bit of output. Here are a few notes on what I saw.
-Feel free to ignore. They are not your problem, but others evaluating
-the tool might find it useful (and a few of them might suggest some
-settings for .clang-format).
-
- - It really wants to break function declarations that go over the
-   column limit, even though we often do not do so. I think we're pretty
-   inconsistent here, and I'd be fine going either way with it.
-
- - It really wanted to left-align some of my asterisks, like:
-
-     struct foo_list {
-       ...
-     } * foo, **foo_tail;
-
-   The odd thing is that it gets the second one right, but not the first
-   one (which should be "*foo" with no space). Setting:
-
-     DerivePointerAlignment: false
-     PointerAlignment: Right
-
-   cleared it up, but I'm curious why the auto-deriver didn't work.
-
- - It really doesn't like list-alignment, like:
-
-      #define FOO    1
-      #define LONGER 2
-
-   and would prefer only a single space between "FOO" and "1". I think
-   I'm OK with that, but we have a lot of aligned bits in the existing
-   code.
-
- - It really wants to put function __attribute__ macros on the same line
-   as the function. We often have it on a line above (especially it can
-   be so long). I couldn't find a way to specify this.
-
- - I had a long ternary operator broken across three lines, like:
-
-     foo = bar ?
-           some_long_thing(...) :
-	   some_other_long_thing(...);
-
-   It put it all on one long line, which was much less readable. I set
-   BreakBeforeTernaryOperators to "true", but it did nothing. I set it
-   to "false", and then it broke. Which seems like a bug. It also
-   insisted on indenting it like:
-
-     foo = bar ?
-                   some_long_thing(...) :
-		   some_other_long_thing(...);
-
-    which I found less readable.
-
-So overall I think it has some promise, but I do not think it is quite
-flexible enough yet for us to use day-to-day. I'm slightly dubious that
-any automated formatter can ever be _perfect_ (sometimes
-human-subjective readability trumps a hard-and-fast rule), but this
-seems like it might have some promise. And over other indenters I have
-seen:
-
-  1. It's built on clang, so we know the parsing is solid.
-
-  2. It can operate on patches (and generates patches for you to apply!
-     You could add a git-add--interactive mode to selectively take its
-     suggestions).
-
-Again, thanks for sharing.
-
--Peff
+> +		my @add = list_and_choose({ PROMPT => 'Add untracked' },
+> +					  list_untracked());
+> +		if (@add) {
+> +			system(qw(git update-index --add --), @add);
+> +			say_n_paths('added', @add);
+> +		}
+> +	} else {
+> +		print "No untracked files.\n";
+>  	}
+>  	print "\n";
+>  }
