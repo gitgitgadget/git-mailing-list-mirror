@@ -1,77 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] test: add git apply whitespace expansion tests
-Date: Wed, 21 Jan 2015 14:33:38 -0800
-Message-ID: <xmqq1tmnwypp.fsf@gitster.dls.corp.google.com>
-References: <CAO2U3QjGUfnTRO_poS+=-MfE4aYGuWpVJTe20H-u=FgkVy-RYg@mail.gmail.com>
-	<CAO2U3Qjn9o_eYayEMCC3S6DBr9kVH7mPL00QGrXAnV2iYRP-=A@mail.gmail.com>
-	<CAO2U3Qj-Hg2tb72NgO6wb-aqAxFG7aga2ZDeZNDCPJzGtmHTAA@mail.gmail.com>
-	<CAO2U3Qhd_DPP09BUyMr6NKUtOe4EQQ7G83BRg7MbtQXFPjKv8w@mail.gmail.com>
-	<CAO2U3Qje-YwcV1d5BK_zZqrTki4AU=emdkUZzEEieRjmoQdmGg@mail.gmail.com>
-	<CAO2U3Qi4TWZiNoOQVSW=Ycvp3bpBySZrCGmRLCbRJJes_n2Wkw@mail.gmail.com>
-	<99579252-EF8A-4DAF-A49D-2AC5627ED9E3@gmail.com>
-	<4157F6B0-DDF4-4F71-A09B-EE216537CA89@gmail.com>
-	<xmqqbnly1oqo.fsf@gitster.dls.corp.google.com>
-	<xmqqzj9iz3gu.fsf_-_@gitster.dls.corp.google.com>
-	<102e322e68e78e39a7c227f3f3e102c@74d39fa044aa309eaea14b9f57fe79c>
-	<CAPc5daXVk_ROUy7rmzS0aosWvE2wqw8tHZgomHHkay9CZjhbiw@mail.gmail.com>
-	<AB9246EB-D720-4A4A-9AB7-4307613C19A3@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git mailing list <git@vger.kernel.org>,
-	Michael Blume <blume.mike@gmail.com>
-To: "Kyle J. McKay" <mackyle@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 21 23:33:59 2015
+From: Stefan Beller <sbeller@google.com>
+Subject: [PATCHv1 0/6] Fix bug in large transactions
+Date: Wed, 21 Jan 2015 15:23:39 -0800
+Message-ID: <1421882625-916-1-git-send-email-sbeller@google.com>
+Cc: Stefan Beller <sbeller@google.com>
+To: git@vger.kernel.org, gitster@pobox.com, mhagger@alum.mit.edu,
+	peff@peff.net, loic@dachary.org
+X-From: git-owner@vger.kernel.org Thu Jan 22 00:23:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YE3qX-00068z-WA
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Jan 2015 23:33:58 +0100
+	id 1YE4cr-0000Ix-F9
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 00:23:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753285AbbAUWdz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Jan 2015 17:33:55 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50064 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752337AbbAUWdx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Jan 2015 17:33:53 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3BA9730554;
-	Wed, 21 Jan 2015 17:33:53 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=jzJJlVaioPIrbYgZfysX9D6hYzY=; b=NVlHLt
-	Y6CTCKsBs48b1LWa3bJuB21Ze7SrIUf20VeGSmsWnDE5QemVlPA1q51ubXdPP/8R
-	XSkhi7J7UKNNexxR976VZvOr6BT5XQSrSMejGlQ7yA44QT/h66uGGJSvkSWEIVgN
-	MIMAhRDcLYL4aRUxH/SW1Nnv2+M2JCDEsFR1k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=L1HmR1qIostpRvZhjTwxW86Va2z/Tu5U
-	SoXuBZPc6vfRlKNb4JMA919bcRLmF4+rZ6m9jcaIC0fubkg11BhJGuBMUxmg9r4V
-	XHnyhM+uFmt4twFCL6w+I9MJFE1rJBpYxjtRaGuFU/R5XqI+nPdW3vJ/jKTImkBM
-	qRYnfPlbHq0=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 31FCF30553;
-	Wed, 21 Jan 2015 17:33:53 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5019030535;
-	Wed, 21 Jan 2015 17:33:39 -0500 (EST)
-In-Reply-To: <AB9246EB-D720-4A4A-9AB7-4307613C19A3@gmail.com> (Kyle J. McKay's
-	message of "Sun, 18 Jan 2015 19:54:45 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 8BBF06B4-A1BD-11E4-982B-7BA29F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1752246AbbAUXXt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Jan 2015 18:23:49 -0500
+Received: from mail-ie0-f182.google.com ([209.85.223.182]:42317 "EHLO
+	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751924AbbAUXXr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Jan 2015 18:23:47 -0500
+Received: by mail-ie0-f182.google.com with SMTP id ar1so13447789iec.13
+        for <git@vger.kernel.org>; Wed, 21 Jan 2015 15:23:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=OPDVOZ6m3yNX9WaoCdbYdJ+2Dom4FyXEzOk0+zs4MGc=;
+        b=BbzvpcN92BWRBr51h0/aHIw71p0+vtMEkU83/fBcBGsnVixiE2qCWuzb6McGMaICII
+         BfRIhv6qV0K7oXIR4v1/gvxzPxzwcYTPvoSH7KsdBVu/Jh9fIl+bNWula+eaajDerBhv
+         G4RQEhJJx+/7QRc9SU/HNkm6mSRRWdaXXqJj/iIapors+FElBIFeZEEXA6GkzT9oKAA4
+         2JhatMZdeEZumnnJq+jsDIecKQuTMj7SkG8lnXqxG2EGMNlNN1SCMef0OzErdh2Ahems
+         tJMdShDKBtVJ6bEC4diOlVwtfM9V7+gVzePU0GPGGn+BNSM+6i2eLdoB8dzj/35VT9MC
+         9jAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=OPDVOZ6m3yNX9WaoCdbYdJ+2Dom4FyXEzOk0+zs4MGc=;
+        b=I5gz+1T7RH5eQxasyKcbya/tN3XW0FXtV7qf8MHKd2SvdMEDUdH5+Am3VJy9eLyFmO
+         jcaEujwUQlRagRjRHlhE/adty62Ok8phu76AfZGeQpcjuJGS56spu999lfbARCSaTwb7
+         TvA98nBpdLsyVyg8xNsOfMmh+AmlLvZjBlaVFB41CuQ2giOYL3QfYgSi81EYiSNjFGig
+         SdmfT45mG+EhVrQpB0Yn6x1kez0N8XLLR+EDMCYY3Q3aczNxucODBXhtcvnqdFPrxIDC
+         rPcbae+uo/8gWGfKjXW+JUl0v6t1JyfjdHEAptysbh+ov06UWi0JiHuBRcTsH6Ofi601
+         ZpvA==
+X-Gm-Message-State: ALoCoQmePdrdxBUYVizgqVVlkXyybUrbUznSjqagTm9rPxnsC3hs0nOWKqZU/B/rV/lXogERsOPa
+X-Received: by 10.50.171.201 with SMTP id aw9mr38830163igc.2.1421882627296;
+        Wed, 21 Jan 2015 15:23:47 -0800 (PST)
+Received: from localhost ([2620:0:1000:5b00:a4e7:f2b3:5669:74a3])
+        by mx.google.com with ESMTPSA id b7sm687741igx.15.2015.01.21.15.23.46
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 21 Jan 2015 15:23:46 -0800 (PST)
+X-Mailer: git-send-email 2.2.1.62.g3f15098
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262776>
 
-"Kyle J. McKay" <mackyle@gmail.com> writes:
+(reported as: git update-ref --stdin : too many open files, 2014-12-20)
 
-> So since I've not been able to get test 2 or 3 to core dump (even
-> before 250b3c6c) I tend to believe you are correct in that the code
-> thinks (incorrectly) that the result should fit within the buffer.
+First a test case is introduced to demonstrate the failure,
+the patches 2-6 are little refactoring and the last patch 
+fixes the bug and also marks the bugs as resolved in the
+test suite.
 
-Thanks; let me steal your tests when I reroll.
+Unfortunately this applies on top of origin/next.
+
+Any feedback would be welcome!
+
+Thanks,
+Stefan
+
+Stefan Beller (6):
+  update-ref: Test handling large transactions properly
+  refs.c: remove lock_fd from struct ref_lock
+  refs.c: replace write_str_in_full by write_in_full
+  refs.c: Have a write_in_full_to_lock_file wrapping write_in_full
+  refs.c: write to a lock file only once
+  refs.c: enable large transactions
+
+ refs.c                | 41 +++++++++++++++++++++++++++++------------
+ t/t1400-update-ref.sh | 28 ++++++++++++++++++++++++++++
+ 2 files changed, 57 insertions(+), 12 deletions(-)
+
+-- 
+2.2.1.62.g3f15098
