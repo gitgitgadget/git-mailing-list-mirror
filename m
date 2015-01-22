@@ -1,86 +1,101 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCHv2 5/5] refs.c: enable large transactions
-Date: Thu, 22 Jan 2015 12:20:11 -0800
-Message-ID: <CAGZ79kaq25tD5y3r6FY_5X6xUz9b7Hb8h1KBbVdhsX5zPN_7Dw@mail.gmail.com>
-References: <1421893929-7447-1-git-send-email-sbeller@google.com>
-	<1421893929-7447-6-git-send-email-sbeller@google.com>
-	<54C0F41F.2080705@ramsay1.demon.co.uk>
-	<CAGZ79kZnECcGOWKr4JLpF5zh68+L8XX7yYntyZDJTbZ5cLD50w@mail.gmail.com>
-	<54C154C0.9020708@ramsay1.demon.co.uk>
-	<54C15A00.9000706@ramsay1.demon.co.uk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: RFC "grep '...\{m,n\}"?
+Date: Thu, 22 Jan 2015 12:19:19 -0800
+Message-ID: <xmqqvbjysh4o.fsf_-_@gitster.dls.corp.google.com>
+References: <CAPig+cQcYXzRwHMRcKQJf-mWq7d9Kgp7KndnEhFs4_mwgLpiiA@mail.gmail.com>
+	<1421927415-114643-1-git-send-email-kirill.shutemov@linux.intel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Loic Dachary <loic@dachary.org>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Thu Jan 22 21:20:19 2015
+Content-Type: text/plain
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 22 21:22:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YEOEk-0008Nz-Hp
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 21:20:18 +0100
+	id 1YEOH7-0001rd-Rz
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 21:22:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752971AbbAVUUO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Jan 2015 15:20:14 -0500
-Received: from mail-ig0-f171.google.com ([209.85.213.171]:65204 "EHLO
-	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752645AbbAVUUM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jan 2015 15:20:12 -0500
-Received: by mail-ig0-f171.google.com with SMTP id r10so2545526igi.4
-        for <git@vger.kernel.org>; Thu, 22 Jan 2015 12:20:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=VpfgLPHHQ0bheANcuG3UbbvDraXexbXjb3RKRkv3NWg=;
-        b=DFSRYKMDHoyEbjWZMOjBl2sGkAFevl1r9rACWhV1RLMeyUEv2/IqrEzEJVEy/yfaXE
-         JWBjtpxcLINsKb8lKYPpEn793zKGP4JJSQoRCtv1JDHbRJX7ep9pTx6DTSBY3s339/Sh
-         pES8PJgxC+IGO29NrsQH8QmI/YXQRtFjiraNukjxIy5w4JdEfvqRyDMe+XfvZZygJnxd
-         iPJ5uhKwTL2OP8FjM4mrmrGeH3mm3rLANXkOBib9c3MbXGVMd9833bQU7Alvn/QhZ/HD
-         SkKr9DpBEALfGhW3kxfrd/16uhkB+d4FIWcmXNOT6QIFWNC54jSVpFFPXAc0RkH5prQV
-         NGJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=VpfgLPHHQ0bheANcuG3UbbvDraXexbXjb3RKRkv3NWg=;
-        b=MBU0vYJOU+/wfETS1U1yM3h+uRxXnbKj9AZ1xBNrm6X9qI63rZ9EpQYqegfmOaej1l
-         W2vPPyJ92joACMB2p96z/Ir6/mUJWWh5zfwTd4YFTw5sSRoNwy8mXpvVos4deuaaM9td
-         fTRqHJq8g/nXfhyFJNK7+7inEO4hbW4jjgSmRyuiW3eP+33Amjtvd/MfM9oC0G1inIOn
-         2xVUXmn+VI3O0pMg7cEj5srGSN9wn/PMADCqDBg3JnJIOhymFHbazqLsEsbwGQrX3tWC
-         wSNqj/fHyV38Vdyqrn6DxWdKyfNFqapbHdHmRCNMRhzErjG4BCeoUkJNtg09BUbqk2Oe
-         qDsA==
-X-Gm-Message-State: ALoCoQmYa7knuThgtAlNJZbN7A8IDwEZQLLhbs42/RY2Q21YGt2OdJMKa04flINQv85YU8Qm+O4s
-X-Received: by 10.42.71.194 with SMTP id l2mr5335223icj.71.1421958011896; Thu,
- 22 Jan 2015 12:20:11 -0800 (PST)
-Received: by 10.50.26.42 with HTTP; Thu, 22 Jan 2015 12:20:11 -0800 (PST)
-In-Reply-To: <54C15A00.9000706@ramsay1.demon.co.uk>
+	id S1752954AbbAVUWm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Jan 2015 15:22:42 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:52380 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752842AbbAVUWk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Jan 2015 15:22:40 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B82D231F86;
+	Thu, 22 Jan 2015 15:22:39 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=wFZwbOs+pcVRcjHswF81FjvL48o=; b=I/vvd/
+	Oh44QTGsyBjIvWBKkNQ6SqXlvohOsvkiHg3JOt/cRuBbHCSt16VDzj6Fzkc5sIU2
+	e8mY1WgMDW/oqcP368IzM3YHZvYUEVVPDTMk2Z+D0JwXyg37Oa/8a+PJTaCCvaSa
+	/RLt01UIEU5rrEZi0Uay9zbt0Fy6bDySJcD64=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=DHn5LuHsjWiXso/yJtH6g6mYFzMXAwCK
+	WSTKJdG/8ss9JwsmbF3TvTn6hacd+bsFEVlxvCWXTjZr/XcP2Hv6G7M2OYc2KiZJ
+	GSnRBXGs+2xfvw8ctAkEfs/hwYpkbXNP08OnV0fJLI56PRQS6HNIPtUqbKXsgbtk
+	zFkVYEK+fbY=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id ADF6D31F85;
+	Thu, 22 Jan 2015 15:22:39 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7599831EB5;
+	Thu, 22 Jan 2015 15:19:20 -0500 (EST)
+In-Reply-To: <1421927415-114643-1-git-send-email-kirill.shutemov@linux.intel.com>
+	(Kirill A. Shutemov's message of "Thu, 22 Jan 2015 13:50:15 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: F2B638C2-A273-11E4-BED5-7BA29F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262868>
 
-On Thu, Jan 22, 2015 at 12:13 PM, Ramsay Jones
-<ramsay@ramsay1.demon.co.uk> wrote:
->
-> Notice the [-Wextra] warnings above. ;-)
->
-> ATB,
-> Ramsay Jones
->
+"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com> writes:
 
-Thanks, I put that into my config.mak
-Though recompiling the whole project yields
+> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+> index 8197ed29a9ec..a31f7e0430e1 100755
+> --- a/t/t3404-rebase-interactive.sh
+> +++ b/t/t3404-rebase-interactive.sh
+> @@ -1039,4 +1039,11 @@ test_expect_success 'short SHA-1 collide' '
+>  	)
+>  '
+>  
+> +test_expect_success 'respect core.abbrev' '
+> +	git config core.abbrev 12 &&
+> +	set_cat_todo_editor &&
+> +	test_must_fail git rebase -i HEAD~4 >todo-list &&
+> +	test 4 = $(grep -c "pick [0-9a-f]\{12,\}" todo-list)
+> +'
 
-      4 [-Wempty-body]
-    477 [-Wmissing-field-initializers]
-    966 [-Wsign-compare]
-    899 [-Wunused-parameter]
+Documentation/CodingGuidelines says
 
-so maybe I'll disable it again when I think it's too much output.
+ - As to use of grep, stick to a subset of BRE (namely, no \{m,n\},
+   [::], [==], or [..]) for portability.
+
+   - We do not use \{m,n\};
+
+   - We do not use -E;
+
+   - We do not use ? or + (which are \{0,1\} and \{1,\}
+     respectively in BRE) but that goes without saying as these
+     are ERE elements not BRE (note that \? and \+ are not even part
+     of BRE -- making them accessible from BRE is a GNU extension).
+
+but I see we have multiple hits from "git grep 'grep .*\\{'" (all in
+the t/ directory).  I wonder
+
+ - if everybody's system is now OK with \{m,n\} these days, or
+
+ - there are people who are grateful that we stayed away from using
+   \{m,n\} but they are not running the tests because their system
+   is too exotic to pass other parts of the test suite.
+
+If the former, we may want to drop the \{m,n\} from the forbidden
+list.
