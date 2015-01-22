@@ -1,62 +1,97 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: [PATCH] Makefile: do not compile git with debugging symbols by
- default
-Date: Fri, 23 Jan 2015 07:55:17 +0900
-Message-ID: <20150122225517.GB31912@glandium.org>
-References: <1421931037-21368-1-git-send-email-kuleshovmail@gmail.com>
- <20150122130036.GC19681@peff.net>
- <CANCZXo7ocgG27Y48NjYxurVMWOvHkvGqDrLuntkSTxHUK6hcNw@mail.gmail.com>
- <vpqa91ahg46.fsf@anie.imag.fr>
- <20150122183538.GA20085@peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Alexander Kuleshov <kuleshovmail@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jan 22 23:55:58 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 0/4] apply --whitespace=fix buffer corruption fix
+Date: Thu, 22 Jan 2015 14:58:21 -0800
+Message-ID: <1421967505-16879-1-git-send-email-gitster@pobox.com>
+References: <xmqq1tmnwypp.fsf@gitster.dls.corp.google.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 22 23:58:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YEQfM-0005eb-Qa
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 23:55:57 +0100
+	id 1YEQhz-0007l5-Uf
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 23:58:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753568AbbAVWzx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Jan 2015 17:55:53 -0500
-Received: from ks3293202.kimsufi.com ([5.135.186.141]:44811 "EHLO glandium.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753081AbbAVWzv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jan 2015 17:55:51 -0500
-Received: from glandium by zenigata with local (Exim 4.84)
-	(envelope-from <glandium@glandium.org>)
-	id 1YEQej-0000aa-SB; Fri, 23 Jan 2015 07:55:17 +0900
-Content-Disposition: inline
-In-Reply-To: <20150122183538.GA20085@peff.net>
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1753153AbbAVW6g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Jan 2015 17:58:36 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:55104 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751930AbbAVW6e (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Jan 2015 17:58:34 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D99B33134D;
+	Thu, 22 Jan 2015 17:58:33 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=9Uo1
+	LBC+Fy1xXoqkINJxLXK7wgA=; b=CAz4fWWE4IkuiqMJaHMM5rI/QMiBjEb29e+b
+	14oTzoJLqUKPANDHtbHuDi4NeQV9F0kN3M3Zia0mNmCJ8sDjBs0SDGhmKwlN6i30
+	eKXSvY9BIh2vkEH9Yf6CUGpFpCniouychVU2lPrYYyoTC5c/peEC4wvb1nsjbiE/
+	ODOnw18=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=cPPmxX
+	l9kru8fNFnLoyVfnNGFQZ2JvoOPTl03EAyfPcovARfE/IuCbvq1XnCjz4o7sO6nM
+	f4PVjdA8LIgYr2dtoYbnOdQejHzCXvGwq+gVTZe9sHXcg3n5z4we+hhxRYhQnVfR
+	fnADBruCdPkMg8+uBKM1ibU+LWlaKv4CzZQKg=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D0A8C3134C;
+	Thu, 22 Jan 2015 17:58:33 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 636983133D;
+	Thu, 22 Jan 2015 17:58:26 -0500 (EST)
+X-Mailer: git-send-email 2.3.0-rc1-150-gaf32ea2
+In-Reply-To: <xmqq1tmnwypp.fsf@gitster.dls.corp.google.com>
+X-Pobox-Relay-ID: 2C866E44-A28A-11E4-B7CD-7BA29F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262880>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262881>
 
-On Thu, Jan 22, 2015 at 01:35:38PM -0500, Jeff King wrote:
-> On Thu, Jan 22, 2015 at 06:36:41PM +0100, Matthieu Moy wrote:
-> 
-> > > Yes, main point is size of executable.
-> > 
-> > The Git executable is a few megabytes, i.e. 0.001% the size of a really
-> > small hard disk. The benefit seems really negligible to me.
-> 
-> I don't know the layout of the symbols with respect to the code, or
-> whether the stripped version might reduce memory pressure. So in theory
-> it could have a performance impact.
+"git apply --whitespace=fix" used to be able to assume that fixing
+errors will always reduce the size by e.g. stripping whitespaces at
+the end of lines or collapsing runs of spaces into tabs at the
+beginning of lines.  An update to accomodate fixes that lengthens
+the result by e.g. expanding leading tabs into spaces were made long
+time ago but the logic miscounted the necessary space after such
+whitespace fixes, leading to either under-allocation or over-usage
+of already allocated space.
 
-It doesn't. Debugging info is in a part of the file that is not mapped
-in memory, and in a part that can be removed without affecting the rest
-of the file, so it's more or less at the end.
+The second patch in this series is to illustrate this with a runtime
+sanity-check to protect us from future breakage (this is a reroll of
+a "how about this" weatherbaloon patch $gmane/262579, with Kyle's
+test script).
 
-Mike
+The third patch corrects the under-counting and makes the new test
+pass.
+
+The fourth patch makes us report the fact that we corrected
+whitespace errors in the common-context part.  When asked to correct
+whitespace errors, and given a patch that has whitespace errors in
+the common context (i.e. the lines prefixed with " ") either in the
+patch itself or the corresponding part in the file we are patching,
+we have been correcting the whitespace errors "while at it" since
+around c1beba5b (git-apply --whitespace=fix: fix whitespace fuzz
+introduced by previous run, 2008-01-30), but we were not reporting
+that we saw a need to fix them.
+
+This is not about the "buffer corruption fix", which is the primary
+focus of this series, but it is here because it is related to
+whitespace fix.
+
+
+Junio C Hamano (4):
+  typofix
+  apply: make update_pre_post_images() sanity check the given postlen
+  apply: count the size of postimage correctly
+  apply: detect and mark whitespace errors in context lines when fixing
+
+ builtin/apply.c               |  34 ++++++++++--
+ t/t4138-apply-ws-expansion.sh | 121 ++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 152 insertions(+), 3 deletions(-)
+ create mode 100755 t/t4138-apply-ws-expansion.sh
+
+-- 
+2.3.0-rc1-116-g84c5016
