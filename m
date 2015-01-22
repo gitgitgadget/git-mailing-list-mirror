@@ -1,100 +1,70 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/6] refs.c: replace write_str_in_full by write_in_full
-Date: Wed, 21 Jan 2015 18:52:13 -0500
-Message-ID: <20150121235213.GF11115@peff.net>
-References: <1421882625-916-1-git-send-email-sbeller@google.com>
- <1421882625-916-4-git-send-email-sbeller@google.com>
- <20150121233843.GB11115@peff.net>
- <CAGZ79kaTUraVYc1Th0-8ajw4kMuU-Sir2e9dW1uy90CuQRzgeg@mail.gmail.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [BUG?] setting ulimit in test suite broken for me
+Date: Wed, 21 Jan 2015 16:54:18 -0800
+Message-ID: <CAGZ79kZTZfFg2GUNCeML8_wcL42egkpjp+1VTNVBb7UAMdf7YA@mail.gmail.com>
+References: <1421866746-29444-1-git-send-email-sbeller@google.com>
+	<20150121190348.GA29891@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Loic Dachary <loic@dachary.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Thu Jan 22 00:52:20 2015
+	Jean-Jacques Lafay <jeanjacques.lafay@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jan 22 01:54:24 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YE54N-0002eH-DS
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 00:52:19 +0100
+	id 1YE62R-0007eh-W6
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 01:54:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752462AbbAUXwQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Jan 2015 18:52:16 -0500
-Received: from cloud.peff.net ([50.56.180.127]:37131 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752001AbbAUXwO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Jan 2015 18:52:14 -0500
-Received: (qmail 2948 invoked by uid 102); 21 Jan 2015 23:52:14 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 21 Jan 2015 17:52:14 -0600
-Received: (qmail 2096 invoked by uid 107); 21 Jan 2015 23:52:39 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 21 Jan 2015 18:52:39 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 21 Jan 2015 18:52:13 -0500
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kaTUraVYc1Th0-8ajw4kMuU-Sir2e9dW1uy90CuQRzgeg@mail.gmail.com>
+	id S1752121AbbAVAyU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Jan 2015 19:54:20 -0500
+Received: from mail-ie0-f180.google.com ([209.85.223.180]:49729 "EHLO
+	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751759AbbAVAyT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Jan 2015 19:54:19 -0500
+Received: by mail-ie0-f180.google.com with SMTP id rl12so11202877iec.11
+        for <git@vger.kernel.org>; Wed, 21 Jan 2015 16:54:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=C07RaNUrQ1n4nFcsNNuF2yhjz0kWQlcdYyCGNXEOFVQ=;
+        b=XxmqFuY5lZ1NaasAomkThRIcY2r+a7047P8CHDJXmoMz7SR+VRldS3Nf/J9p61Y5Q9
+         K8sXgSWfdF4LgatHfiaFwnahx2UEhKb76A578Barlhtfau5bgJGQcyO8iGcoV+EupzOe
+         POWBv5GE8bYpU9cAfns+4UIePHd3IwtzbuJH2QfNTrRCZe+Y+OywlYs1czZkhzdZe7oJ
+         PHV5lnr/AcxDvA69LtNYQIVeNKoEvG3SvSmwFgUCmk9x/CR/vRQqT7XINRwnlod4NXmx
+         O+++GIwfbguIXjEt5w+xETwPDt4xbP27X/EqAbcktqgsAnbIh7RJRHgQL+36P0tt+Rmn
+         IfIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=C07RaNUrQ1n4nFcsNNuF2yhjz0kWQlcdYyCGNXEOFVQ=;
+        b=lZ1McoQo2D3G1orB7YC8oZ+BZEGtaX/R0Z8JFsFah6FSJzis+XPdIK4cyNd3wOGK+6
+         P7pq3DR68qYzhwkjST7QFgBCVB62mJstnG/NCXJdyvx9kI/ewsivr08SGRke3kk91P3r
+         v798t9mrApTS17DRBTosy7YnuyFXbfPeXnauLDGKOodRIH9/hfMEVjXk0i27iyWimDoC
+         RxgOoxueJTwHMJE78DVOFtcNIq/lgfqUvDH41ix5hzyd3mO06E6Pcii52Y/mZ8AS7kus
+         PE2RJvDE8YeeH1pOZpJtP+QHywC1aiFZY9C4oOTQEiZ8eYcI6Svv1P7Rvf8Flw9TYJie
+         Iz1w==
+X-Gm-Message-State: ALoCoQk/X0C3qO8amNM+nSr17QlMyLHpCm19v8XbSGjqqBhuzrjely6cRFjiOAwqYVGKMrrqv48p
+X-Received: by 10.42.71.194 with SMTP id l2mr36751938icj.71.1421888058748;
+ Wed, 21 Jan 2015 16:54:18 -0800 (PST)
+Received: by 10.50.26.42 with HTTP; Wed, 21 Jan 2015 16:54:18 -0800 (PST)
+In-Reply-To: <20150121190348.GA29891@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262789>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262790>
 
-On Wed, Jan 21, 2015 at 03:44:36PM -0800, Stefan Beller wrote:
+On Wed, Jan 21, 2015 at 11:03 AM, Jeff King <peff@peff.net> wrote:
+>
+> in your debugging statement (and of course use run_with... for the
+> actual git command you want to limit).
+>
 
-> On Wed, Jan 21, 2015 at 3:38 PM, Jeff King <peff@peff.net> wrote:
-> > On Wed, Jan 21, 2015 at 03:23:42PM -0800, Stefan Beller wrote:
-> >
-> >> There is another occurrence where we could have used write_str_in_full
-> >> (line 3107: write_in_full(lock->lk->fd, &term, 1)), so the current state
-> >> is inconsistent. This replaces the only occurrence of write_str_in_full
-> >> by write_in_full, so we only need to wrap write_in_full in the next patch.
-> >
-> > I had to read the first sentence a few times to figure out what you
-> > meant. But I am not sure it is even relevant. We do not care about the
-> > inconsistency.
-> 
-> You're not the first who needs to reread my stuff :/
-> I have the impression my English worsened since coming into the USA.
+Thanks for that hint, its now part of the bugfix series.
 
-Actually, it was my fault in this case. I read it as "_this_ is another
-occurrence", and then I scratched my head wondering what the first
-occurrence was (was there a previous change that you should have been
-referencing?). I finally got it on the third try. :)
-
-> We do not care about the inconsistency, but we may care about the
-> change itself: "write_str_in_full is way better than write_in_full, so
-> why the step backwards?" And  I am trying to explain that this is not
-> a huge step backwards but rather improves consistency.
-
-But you could improve consistency by going the other way, too. :) I
-think the point is that you should lead in with the _real_ reason for
-the change, not justifications. You can put in the justifications, too,
-for the people who say "wait, but couldn't you do this other thing...".
-
-> > It is just "we are about to change how callers of
-> > write_in_full in this file behave, the wrapper gets in the way, and it
-> > does not add enough value by itself to merit making our future changes
-> > in two places".
-> 
-> That's actually true. Though that sounds as if we'd be lazy ("we only
-> want to make
-> one change, so let's bend over here")
-
-It's not laziness. It's avoiding duplicating logic, which would end up
-costing more lines and providing worse maintainability than just
-dropping the wrapper, which is after all only saving us a few characters
-(and not anything conceptually hard).
-
-> I'll rethink the commit message.
-
-Everything I said above is rather subjective, of course. I do appreciate
-you breaking your commits apart and explaining each one in the first
-place. IOW, while I have thoughts on improving them (obviously), the
-current iteration is not so bad that I would be upset to see it go into
-git. Don't waste too much time on it.
-
--Peff
+Stefan
