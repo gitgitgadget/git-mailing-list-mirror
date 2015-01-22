@@ -1,66 +1,62 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCHv2 0/5] Fix bug in large transactions
-Date: Thu, 22 Jan 2015 13:05:01 +0100
-Message-ID: <54C0E76D.5070104@alum.mit.edu>
-References: <1421893929-7447-1-git-send-email-sbeller@google.com>
+From: Tobias Getzner <tobias.getzner@gmx.de>
+Subject: Re: [BUG] Mojibake in git gui and gitk for certain unicode chars
+Date: Thu, 22 Jan 2015 13:18:22 +0100
+Message-ID: <1421929102.22955.3.camel@gmx.de>
+References: <1421927001.11296.27.camel@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-To: Stefan Beller <sbeller@google.com>, peff@peff.net,
-	git@vger.kernel.org, gitster@pobox.com, loic@dachary.org
-X-From: git-owner@vger.kernel.org Thu Jan 22 13:12:20 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 22 13:18:47 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YEGcV-0006gy-Ba
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 13:12:19 +0100
+	id 1YEGik-0001l4-Nc
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 13:18:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751474AbbAVMMQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Jan 2015 07:12:16 -0500
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:45504 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751029AbbAVMMO (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Jan 2015 07:12:14 -0500
-X-Greylist: delayed 421 seconds by postgrey-1.27 at vger.kernel.org; Thu, 22 Jan 2015 07:12:14 EST
-X-AuditID: 12074414-f797f6d000004084-13-54c0e770e6d2
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 6B.17.16516.077E0C45; Thu, 22 Jan 2015 07:05:04 -0500 (EST)
-Received: from [192.168.69.130] (p5DDB02C5.dip0.t-ipconnect.de [93.219.2.197])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t0MC510I009970
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Thu, 22 Jan 2015 07:05:03 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.3.0
-In-Reply-To: <1421893929-7447-1-git-send-email-sbeller@google.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrIKsWRmVeSWpSXmKPExsUixO6iqFvw/ECIwZSp8hZdV7qZLBp6rzBb
-	vNruY/GjpYfZYvPmdhYHVo9n21g9Fmwq9XjWu4fR4+IlZY/Pm+QCWKO4bZISS8qCM9Pz9O0S
-	uDP6P/xjKfjHWNG7WLGB8ThjFyMnh4SAicSV5vtsELaYxIV764FsLg4hgcuMEis726Gcc0wS
-	O799YQap4hXQllh57C87iM0ioCrRv+MSE4jNJqArsainGcwWFQiSuNKyGapeUOLkzCcsILaI
-	QIXExc13wLYJC1hIfFrzhhXEFhJwlLg7/QvYTE4BJ4ndh/6A2cwCehI7rv9ihbDlJba/ncM8
-	gZF/FpKxs5CUzUJStoCReRWjXGJOaa5ubmJmTnFqsm5xcmJeXmqRroVebmaJXmpK6SZGSBCL
-	7GA8clLuEKMAB6MSD29G8YEQIdbEsuLK3EOMkhxMSqK8e+8BhfiS8lMqMxKLM+KLSnNSiw8x
-	SnAwK4nwbrsPlONNSaysSi3Kh0lJc7AoifN+W6zuJySQnliSmp2aWpBaBJOV4eBQkuAVfAbU
-	KFiUmp5akZaZU4KQZuLgBBnOJSVSnJqXklqUWFqSEQ+KyPhiYEyCpHiA9paAtPMWFyTmAkUh
-	Wk8x6nIsaN8/k0mIJS8/L1VKnNcDpEgApCijNA9uBSxlvWIUB/pYmLcFpIoHmO7gJr0CWsIE
-	tKRgO9iSkkSElFQDYyZj5cO2poy/b3nOPTyy4+V3nhurUpKstwVye6+NdjE78k0+eVn57u0T
-	NC/O7z45T0ZsBes0v20lMxZmndxRljehuuz9b9mE6/9MvaS6u8rCJuneT/98rf7W 
+	id S1752129AbbAVMSm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Jan 2015 07:18:42 -0500
+Received: from mout.gmx.net ([212.227.15.18]:63436 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751744AbbAVMSZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Jan 2015 07:18:25 -0500
+Received: from glenalbyn.linguistics.ruhr-uni-bochum.de ([134.147.14.84]) by
+ mail.gmx.com (mrgmx003) with ESMTPSA (Nemesis) id 0MEFlg-1YTdrj1w9g-00FThi
+ for <git@vger.kernel.org>; Thu, 22 Jan 2015 13:18:23 +0100
+In-Reply-To: <1421927001.11296.27.camel@gmx.de>
+X-Mailer: Evolution 3.12.10 
+X-Provags-ID: V03:K0:r8TRwbC0yi0fIhUHdPfVevZ1coH3uUL1AgCjZ4tkGoLFpjzLEi6
+ NAT4p6ajmzpjl0N4oski9x3jZ2n0w/bKeFsAMv1tj5l/jwhgrXkXg7EstC0B1vL53809ds7
+ 6NJ02fby15zNseGp+yG/+j00RM4UIgU2OaC4FXFMNUweed2U7TdR1tF5Y7vlQ2cFbiLmfLc
+ u7LyXG+7BUEU/4dQv3Y4Q==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262821>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262822>
 
-On 01/22/2015 03:32 AM, Stefan Beller wrote:
-> version2:
+On Do, 2015-01-22 at 12:43 +0100, Tobias Getzner wrote:
+> Hello,
+>=20
+> I=E2=80=99ve noticed git gui and gitk seem to have problems decoding =
+certain
+> unicode characters. E.g., when a commit contains the character =C2=AB=
+=F0=9F=91=8D=C2=BB
+> (thumbs up sign; U+1F44D) in UTF-8 encoding, this character will show
+> as =C2=AB=C3=B0=C2=9F=C2=91=C2=8D=C2=BB in gitk.=20
 
-Summary: patches 1-4 look good to me. I sent a separate comment about
-patch 5, which seems to do more system calls than necessary.
+> I=E2=80=99ve noticed a perhaps related glitch when the options in git=
+ gui is
+> shown. My committer name contains the character =C2=AB=C3=9F=C2=BB (l=
+atin small letter
+> sharp s; U+00DF). The text field in the options dialog displays this =
+as
+> =C2=AB=C3=83=C2=9F=C2=BB,
 
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
+I suppose that some of the mojibake characters in the message might
+have been stripped out of the message because they are control chars.
+So, =C2=AB=F0=9F=91=8D=C2=BB was rendered as =C2=AB=C3=B0\x9f\x91\x8d=C2=
+=BB. =C2=AB=C3=9F=C2=BB was rendered as =C2=AB=C3=83\x9f=C2=BB.
