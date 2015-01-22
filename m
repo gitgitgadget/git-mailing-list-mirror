@@ -1,113 +1,118 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 5/5] refs.c: write values to lock files early for committing
-Date: Thu, 22 Jan 2015 15:11:37 -0800
-Message-ID: <1421968297-25407-6-git-send-email-sbeller@google.com>
+Subject: [PATCH 3/5] refs.c: move static functions to close and commit refs
+Date: Thu, 22 Jan 2015 15:11:35 -0800
+Message-ID: <1421968297-25407-4-git-send-email-sbeller@google.com>
 References: <54C0DDE7.8030708@alum.mit.edu>
  <1421968297-25407-1-git-send-email-sbeller@google.com>
 Cc: Stefan Beller <sbeller@google.com>
 To: peff@peff.net, git@vger.kernel.org, gitster@pobox.com,
 	mhagger@alum.mit.edu, loic@dachary.org, ramsay@ramsay1.demon.co.uk
-X-From: git-owner@vger.kernel.org Fri Jan 23 00:11:57 2015
+X-From: git-owner@vger.kernel.org Fri Jan 23 00:11:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YEQuq-0001Wa-Mu
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Jan 2015 00:11:57 +0100
+	id 1YEQuq-0001Wa-43
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Jan 2015 00:11:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753670AbbAVXLw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Jan 2015 18:11:52 -0500
-Received: from mail-ie0-f178.google.com ([209.85.223.178]:42950 "EHLO
-	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754022AbbAVXLr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jan 2015 18:11:47 -0500
-Received: by mail-ie0-f178.google.com with SMTP id rp18so4282826iec.9
-        for <git@vger.kernel.org>; Thu, 22 Jan 2015 15:11:46 -0800 (PST)
+	id S1754551AbbAVXLt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Jan 2015 18:11:49 -0500
+Received: from mail-ie0-f176.google.com ([209.85.223.176]:35093 "EHLO
+	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753670AbbAVXLp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Jan 2015 18:11:45 -0500
+Received: by mail-ie0-f176.google.com with SMTP id rd18so4285629iec.7
+        for <git@vger.kernel.org>; Thu, 22 Jan 2015 15:11:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=W8ryX9UBxmhHlH7WOx1kwHAg5ufRf313zDt6dbM0v4E=;
-        b=SYPJYPtfgVDxlhoKGu5W9O5HJVf62jLtPGsdjuBK64/YvCVwZN18/BPbHLrz/NPMoR
-         EU1U473amYpXXC5KoYllo6Mfkxhbo7BS6H245jNeUnQAb2mvb9PF/b4loOpsnhL1KEvg
-         MBrYaPaGVdYIvWpHaCxLkcLNWp0VJh/mY5LvaX2wOZMJLB1EaaDZefyH5H+IvFjU8QtY
-         eGX4XQ254a4yHgObddQMtupDyzbKtLKBGBSBwGYe3pgML9tuvtJAsNvkEG0z8xyHck0N
-         +C3CobQGLJ1l7UHRQpH7QXXxZVab5q5AxnAX4wnXHUIFAjbdaOOjAxKoKjL0ZmbtP0qR
-         7eaA==
+        bh=bm7eV3uEOWQi4JlL/JkGzvKRX7B/4Oe914L6wt4DwbY=;
+        b=STqo9Dsyf5BisUHabTyp3p+7b6aW6HB2WrBd+PZ2ebQKyY9joqIZPz8VPb9TfCeH+n
+         65v91BaPAhKr/QAsLrX+idjYowmMu+IvEVktGgUoslIa1CP9S7hSoxzLEG9kf0OLD+U4
+         3J7IRlhO1dnWWr85eEzB1D8MOsB0yixsQlsZvKSoftGV++Fm8Zk351EJAlnTuWYM7YeA
+         zycxChq7LX9wI9Z4+LCCXW48lnvvO0MgOcCWADw/8LPNDIO4pOPIyyBFdVRWdyod/YCI
+         ShcQ37uA4BESr/MZXFcE0ONw7HdBEbW5M7F1C8qAFP7p+Y0nbSCAeO7N4cuWYciDGkK0
+         XOEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=W8ryX9UBxmhHlH7WOx1kwHAg5ufRf313zDt6dbM0v4E=;
-        b=Zy5fYgfz5X/eOEnc6OEL7nG9Ogg1hYrLBzd81KgrFjpaJim1iMXCmsbMdLjarTmrzQ
-         o/Dzk5etZlH31dExc4GcveXWlV/hxoTGmLQFaLPk9GOhPqaR79u7pVOTFGPJSuof0xAb
-         h6d+LPoRI2ztDNGcr7cPwhp6F18PC+LhmQG+AXnSBj0vZDAjYo+4yuPLqfTsqLVIJ17F
-         8UnNmVYD18CCFvgZSfsaLpPslTmeIozKK6RnA0cny2+hcRQyWoV9FjXihfgEBW+EuiUN
-         f68HVKc1VP+JcW7smy20kyu2Guq6ToGwxX8dzOuCR+e9Agoav84IstL04ALb+JgpCqnW
-         vpPA==
-X-Gm-Message-State: ALoCoQlvCTtSWHYyuPt19g6ybxB9Df78VIisrxVyuMkrfykGeVj/+T1xvYhgQlYmg4XAiMEZSWWY
-X-Received: by 10.50.79.161 with SMTP id k1mr7408434igx.14.1421968306565;
-        Thu, 22 Jan 2015 15:11:46 -0800 (PST)
+        bh=bm7eV3uEOWQi4JlL/JkGzvKRX7B/4Oe914L6wt4DwbY=;
+        b=VwNqDg2vKzUn9QSeu6KDfX9J5xmVtmxkbQdkmBRfqRNFONHLRYgmULmtdoOV+KiAj5
+         m1ZeQ94HX1zzk5wUhG+j7jzr2Jd6O38bXnh7wIdAtGW+wdWOuCtneh3SDsRyNAoWm3dN
+         6H7rikzUzpZKhXWOggdxk4Jk2znX1NI6nNWrI16JgpAHIN/mcC04aiHXsziYzTnwcSoo
+         8fh0cdvK6ZlncK5wHBV+SLXevmxv1yfHZdEtONeMYw8pP7ygUnM4sVw+jyqizsS1wZZY
+         PuImW9d5dnCu6ohzyDB5jSRheFtlES28mugSvAeDBMEevmQdKsoOOIgkhUsLcoVoetZO
+         E+xg==
+X-Gm-Message-State: ALoCoQkOIYdHBBnuFYTmkFsaJ0I06CWv/uTVSqZ4cqyuA2Mqrt5yziiMEVb8docsMDRXbNZBuOzl
+X-Received: by 10.42.62.71 with SMTP id x7mr5923572ich.61.1421968304253;
+        Thu, 22 Jan 2015 15:11:44 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b00:e0f4:42de:391f:3cc5])
-        by mx.google.com with ESMTPSA id b1sm3893175igl.7.2015.01.22.15.11.46
+        by mx.google.com with ESMTPSA id 185sm241840iof.43.2015.01.22.15.11.43
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 22 Jan 2015 15:11:46 -0800 (PST)
+        Thu, 22 Jan 2015 15:11:43 -0800 (PST)
 X-Mailer: git-send-email 2.2.1.62.g3f15098
 In-Reply-To: <1421968297-25407-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262890>
 
-By writing the values to the lock file early we have a better sequence
-of system calls. Before this commit we had
-
-    open(), close(), open(), fdopen(), write(), fclose(), rename()
-
-Now there is:
-
-    open(), fdopen(), write(), fclose(), rename()
-
-The first four operations are performed in the first loop of
-ref_transaction_commit ("/* Acquire all locks while verifying
-old values */"), while the renameing is left to the next loop.
+By moving the functions up we don't need to have to declare them first
+when using them in a later patch.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- refs.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ refs.c | 28 ++++++++++++++--------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index c108c95..3d1890f 100644
+index 4580919..6f3cd7b 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -3767,6 +3767,15 @@ int ref_transaction_commit(struct ref_transaction *transaction,
- 				    update->refname);
- 			goto cleanup;
- 		}
-+		if (!is_null_sha1(update->new_sha1)) {
-+			if (write_ref_sha1(update->lock, update->new_sha1,
-+					   update->msg)) {
-+				strbuf_addf(err, "Cannot update the ref '%s'.",
-+					    update->refname);
-+				ret = TRANSACTION_GENERIC_ERROR;
-+				goto cleanup;
-+			}
-+		}
- 		/* Do not keep all lock files open at the same time. */
- 		close_ref(update->lock);
- 	}
-@@ -3776,9 +3785,7 @@ int ref_transaction_commit(struct ref_transaction *transaction,
- 		struct ref_update *update = updates[i];
+@@ -2808,6 +2808,20 @@ static int rename_ref_available(const char *oldname, const char *newname)
+ static int write_ref_sha1(struct ref_lock *lock, const unsigned char *sha1,
+ 			  const char *logmsg);
  
- 		if (!is_null_sha1(update->new_sha1)) {
--			if (write_ref_sha1(update->lock, update->new_sha1,
--					   update->msg)
--			    || commit_ref(update->lock, update->new_sha1)) {
-+			if (commit_ref(update->lock, update->new_sha1)) {
- 				strbuf_addf(err, "Cannot update the ref '%s'.",
- 					    update->refname);
- 				ret = TRANSACTION_GENERIC_ERROR;
++static int close_ref(struct ref_lock *lock)
++{
++	if (close_lock_file(lock->lk))
++		return -1;
++	return 0;
++}
++
++static int commit_ref(struct ref_lock *lock)
++{
++	if (commit_lock_file(lock->lk))
++		return -1;
++	return 0;
++}
++
+ int rename_ref(const char *oldrefname, const char *newrefname, const char *logmsg)
+ {
+ 	unsigned char sha1[20], orig_sha1[20];
+@@ -2901,20 +2915,6 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
+ 	return 1;
+ }
+ 
+-static int close_ref(struct ref_lock *lock)
+-{
+-	if (close_lock_file(lock->lk))
+-		return -1;
+-	return 0;
+-}
+-
+-static int commit_ref(struct ref_lock *lock)
+-{
+-	if (commit_lock_file(lock->lk))
+-		return -1;
+-	return 0;
+-}
+-
+ /*
+  * copy the reflog message msg to buf, which has been allocated sufficiently
+  * large, while cleaning up the whitespaces.  Especially, convert LF to space,
 -- 
 2.2.1.62.g3f15098
