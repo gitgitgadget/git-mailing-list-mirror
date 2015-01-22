@@ -1,75 +1,140 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] Makefile: do not compile git with debugging symbols by default
-Date: Thu, 22 Jan 2015 18:36:41 +0100
-Message-ID: <vpqa91ahg46.fsf@anie.imag.fr>
-References: <1421931037-21368-1-git-send-email-kuleshovmail@gmail.com>
-	<20150122130036.GC19681@peff.net>
-	<CANCZXo7ocgG27Y48NjYxurVMWOvHkvGqDrLuntkSTxHUK6hcNw@mail.gmail.com>
+From: Josef 'Jeff' Sipek <jeffpc@josefsipek.net>
+Subject: [ANNOUNCE] Guilt v0.36-rc1
+Date: Thu, 22 Jan 2015 12:48:37 -0500
+Message-ID: <20150122174836.GI101460@meili.jeffnet.31bits.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Alexander Kuleshov <kuleshovmail@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 22 18:37:15 2015
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 22 18:48:45 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YELgv-0002HL-Nu
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 18:37:14 +0100
+	id 1YELs5-0003xF-1S
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 18:48:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752734AbbAVRhK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Jan 2015 12:37:10 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:41330 "EHLO shiva.imag.fr"
+	id S1752552AbbAVRsl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Jan 2015 12:48:41 -0500
+Received: from josefsipek.net ([71.174.113.7]:1657 "EHLO josefsipek.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751930AbbAVRhI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jan 2015 12:37:08 -0500
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t0MHadh0014916
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 22 Jan 2015 18:36:39 +0100
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t0MHafNu019807;
-	Thu, 22 Jan 2015 18:36:41 +0100
-In-Reply-To: <CANCZXo7ocgG27Y48NjYxurVMWOvHkvGqDrLuntkSTxHUK6hcNw@mail.gmail.com>
-	(Alexander Kuleshov's message of "Thu, 22 Jan 2015 22:51:55 +0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 22 Jan 2015 18:36:40 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t0MHadh0014916
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1422553003.02854@ccLNoPIfShKtthbwrjVn0A
+	id S1752373AbbAVRsk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Jan 2015 12:48:40 -0500
+Received: from meili.jeffnet.31bits.net (unknown [172.31.0.119])
+	by josefsipek.net (Postfix) with ESMTPSA id ABD305567A;
+	Thu, 22 Jan 2015 12:48:38 -0500 (EST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262848>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262849>
 
-Alexander Kuleshov <kuleshovmail@gmail.com> writes:
+Guilt v0.36-rc1 is available for download.
 
-> Hello Jeff,
->
-> Yes, main point is size of executable.
+Guilt (Git Quilt) is a series of shell scripts which add a Mercurial
+queues-like functionality and interface to git.
 
-The Git executable is a few megabytes, i.e. 0.001% the size of a really
-small hard disk. The benefit seems really negligible to me.
+Tarballs:
+http://guilt.31bits.net/src/
 
-OTOH, debug information allow users to do better bug reports in case of
-crash (gdb, valgrind), which outweights by far the benefit of saving a
-handfull of megabytes IMHO.
+Git repo:
+git://repo.or.cz/guilt.git
 
-On a side note, I find it very frustrating when a program I use
-crashes, opens a bug report wizard, and end up telling me "sorry, your
-distro removed the debug symbols, recompile everything if you want to
-report a bug".
 
-I understand that for a few users, the size of executable matters. But
-this category of users should be able to find the "strip" target or
-something equivalent.
+This is the first release candidate for the long awaited v0.36.  Yes, it's
+been *way* too long since the last release, but hopefully that will change
+going forward.  By far, the most changes come from Per Cederqvist who
+cleaned up some rather dark corners in the code.  Thanks!
+
+As always, patches, and other feedback is welcome.
+
+Josef "Jeff" Sipek.
+
+------------
+Changes since v0.35:
+
+Alan Jenkins (5):
+      [GUILT 1/6] Refuse to push corrupt patches
+      [GUILT 2/6] guilt-header: fix patch corruption
+      [GUILT 3/6] Handle paths that contain spaces
+      [GUILT 4/6] Run regression tests in a directory which contains spaces
+      [GUILT 5/6] Allow guilt scripts to be run from a directory which contains spaces
+
+Dave Chinner (1):
+      guilt: fix "from: xxx" filtering in the patch description
+
+Jari Aalto (1):
+      Documentation/Makefile: Run xmlto with --skip-validation
+
+Jonathan Nieder (1):
+      Drop unneeded git version check.
+
+Josef 'Jeff' Sipek (12):
+      [GUILT 6/6] Allow the regression tests to be run from a directory with spaces in
+      guilt: remove a useless cat
+      commit: don't lose commits
+      fix direct invocation messages
+      guilt: fix -h invocation
+      Documentation: update HOWTO to use 'guilt foo'
+      Documentation: clean up the makefile
+      Documentation: guilt & git don't use hyphenated commands
+      regress: setup_git_repo can assert that the repo is setup as intended
+      FreeBSD is much like Darwin
+      regress: cmd and shouldfail shouldn't print escapes
+      Guilt v0.36-rc1
+
+Per Cederqvist (43):
+      get rid of "cat: write error: Broken pipe" error message
+      [GUILT] handle branches with slashes in guilt-graph
+      Testsuite: get rid of "Broken pipe" errors from yes.
+      The tests should not fail if log.date or log.decorate are set.
+      get rid of "cat: write error: Broken pipe" error message
+      The tests should not fail if log.date or log.decorate are set.
+      Testsuite: get rid of "Broken pipe" errors from yes.
+      Handle empty patches and patches with only a header.
+      Fix fatal "guilt graph" error in sha1sum invocation.
+      Change git branch when patches are applied.
+      The tests should not fail if guilt.diffstat is set.
+      Allow "guilt delete -f" to run from a dir which contains spaces.
+      Added test case for "guilt delete -f".
+      Allow "guilt import-commit" to run from a dir which contains spaces.
+      "guilt new": Accept more than 4 arguments.
+      Fix the do_get_patch function.
+      Added test cases for "guilt fold".
+      Added more test cases for "guilt new": empty patches.
+      Test suite: properly check the exit status of commands.
+      Run test_failed if the exit status of a test script is bad.
+      test suite: remove pointless redirection.
+      "guilt header": more robust header selection.
+      Check that "guilt header '.*'" fails.
+      Use "git check-ref-format" to validate patch names.
+      Produce legal patch names in guilt-import-commit.
+      Fix backslash handling when creating names of imported patches.
+      "guilt graph" no longer loops when no patches are applied.
+      guilt-graph: Handle commas in branch names.
+      Check that "guilt graph" works when working on a branch with a comma.
+      "guilt graph": Handle patch names containing quotes.
+      The log.decorate setting should not influence import-commit.
+      The log.decorate setting should not influence patchbomb.
+      The log.decorate setting should not influence guilt rebase.
+      disp no longer processes backslashes.
+      "guilt push" now fails when there are no more patches to push.
+      "guilt pop" now fails when there are no more patches to pop.
+      Minor testsuite fix.
+      Fix coding style errors in t-061.sh.
+      Added guilt.reusebranch configuration option.
+      Added a short style guide, and Emacs settings.
+      Don't use "git log -p" in the test suite.
+      Improved doc and tests for guilt header.
+      Document the exit status of guilt push and guilt pop.
+
+Theodore Ts'o (2):
+      guilt: skip empty line after from: line in patch descriptoin
+      guilt: fix date parsing
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+The obvious mathematical breakthrough would be development of an easy way to
+factor large prime numbers.
+		- Bill Gates, The Road Ahead, pg. 265
