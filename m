@@ -1,140 +1,121 @@
-From: Josef 'Jeff' Sipek <jeffpc@josefsipek.net>
-Subject: [ANNOUNCE] Guilt v0.36-rc1
-Date: Thu, 22 Jan 2015 12:48:37 -0500
-Message-ID: <20150122174836.GI101460@meili.jeffnet.31bits.net>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCHv1 0/6] Fix bug in large transactions
+Date: Thu, 22 Jan 2015 09:52:10 -0800
+Message-ID: <CAGZ79kZ5fdDiT=zXhQkt17kxLBbkJnh1F06nyZJN7ta9WZ2dmQ@mail.gmail.com>
+References: <1421882625-916-1-git-send-email-sbeller@google.com>
+	<20150121234659.GE11115@peff.net>
+	<xmqqsif3tfcf.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 22 18:48:45 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Loic Dachary <loic@dachary.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 22 18:52:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YELs5-0003xF-1S
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 18:48:45 +0100
+	id 1YELvV-0007d6-7m
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 18:52:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752552AbbAVRsl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Jan 2015 12:48:41 -0500
-Received: from josefsipek.net ([71.174.113.7]:1657 "EHLO josefsipek.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752373AbbAVRsk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jan 2015 12:48:40 -0500
-Received: from meili.jeffnet.31bits.net (unknown [172.31.0.119])
-	by josefsipek.net (Postfix) with ESMTPSA id ABD305567A;
-	Thu, 22 Jan 2015 12:48:38 -0500 (EST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1752661AbbAVRwN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Jan 2015 12:52:13 -0500
+Received: from mail-ie0-f173.google.com ([209.85.223.173]:50882 "EHLO
+	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752597AbbAVRwL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Jan 2015 12:52:11 -0500
+Received: by mail-ie0-f173.google.com with SMTP id tr6so2723012ieb.4
+        for <git@vger.kernel.org>; Thu, 22 Jan 2015 09:52:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=SQxMQLOJaQgX4nT6OBVykoEkcNq7l4jVxS+KZMXqX/c=;
+        b=pBBFm085YKbk7eCGDNYU7rpSccQSnUeUmnxhbHqF51h8TnXQVzvsBDH3ExiwwyqwO4
+         IY/yK+rJ983NK2LGKlEnltU9BID42UXDRxljOt2qd0rRGnAIkucAjxn+Y0BvrwpWYaYa
+         JaxL0fEFbR5/M6XMe5vI5AesI0D9bkz78dzpQOdq6PLRf6P+5nlyZc/trimhCP/VV1sF
+         xwauMSVvMS9YT952oV2Hekd8Q+8LqO/nRrmeDHscnL0B6LwYD59I6moviZWljSZjsOoR
+         C+aDNm8nUfnPxE+bRehXkQBw+Vv0rGKKdYW4y+uWjp7JYorzSb3SS+DMEuZ8ou2NXZ8U
+         di2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=SQxMQLOJaQgX4nT6OBVykoEkcNq7l4jVxS+KZMXqX/c=;
+        b=kuZ6atxcnd630tekMhkD14q44AmBCqEieQhyXGWsv5Nl5lftB08EZ7NcQsVDdYEinS
+         LMtZ9hOP0ZSA0thKN9OIra83dI4xqIlts6ktXe1pAku3EXCW76jCZOGWqxaA3tv+pFRb
+         ne10yZmS9jsfhJwrwq339IE6iXPB642IEFYKH5lxttGDvLh9Ujw6Vn27iFbP01zP20Qf
+         2Q7haE1vIFWl769TtNh8S97+RF6PL0YaA4N4xYBnxOT+Nxcg9UkJTgOi84aXRUfgGpqs
+         kyfAVnBciqPAB3hzBd63fo4MvePxHPzv88A3JmwoFV3jf6SycqzBJKNLzYbAAWfFM0OR
+         Hovg==
+X-Gm-Message-State: ALoCoQmW8aVEQ1mEa2SyYd0HRV/Wp+Qz5XzdPRCVImAqPKMbhS7Yi1L7QBTwgvWzGwiG4jBQ+rVH
+X-Received: by 10.50.108.108 with SMTP id hj12mr5435922igb.47.1421949130747;
+ Thu, 22 Jan 2015 09:52:10 -0800 (PST)
+Received: by 10.50.26.42 with HTTP; Thu, 22 Jan 2015 09:52:10 -0800 (PST)
+In-Reply-To: <xmqqsif3tfcf.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262850>
 
-Guilt v0.36-rc1 is available for download.
+On Thu, Jan 22, 2015 at 12:00 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jeff King <peff@peff.net> writes:
+>
+>> On Wed, Jan 21, 2015 at 03:23:39PM -0800, Stefan Beller wrote:
+>>
+>>> (reported as: git update-ref --stdin : too many open files, 2014-12-20)
+>>>
+>>> First a test case is introduced to demonstrate the failure,
+>>> the patches 2-6 are little refactoring and the last patch
+>>> fixes the bug and also marks the bugs as resolved in the
+>>> test suite.
+>>>
+>>> Unfortunately this applies on top of origin/next.
+>>
+>> Saying "applies on next" is not very useful to Junio. He is not going to
+>> branch a topic straight from "next", as merging it to master would pull
+>> in all of the topics cooking in "next" (not to mention a bunch of merge
+>> commits which are generally never part of "master").
+>>
+>> Instead, figure out which topic in next you actually _need_ to build on,
+>> and then it can be branched from there. And if there is no such topic,
+>> then you should not be building on next, of course. :) But I think you
+>> know that part already.
+>
+> All very true.
+>
+> I consider anything new that appears late in the cycle, especially
+> during deep in the pre-release freeze, less for me to apply but more
+> for others to eyeball the preview of a series the submitter plans to
+> work on once the next cycle starts, so basing on 'next' does not
+> hurt too much.  For interested others,
+>
+>         git checkout origin/next^0
+>
+> would be shorter to type than
+>
+>         git checkout "origin/next^{/^Merge branch 'sb/atomic-push'}^2"
+>
+> so... ;-)
+>
+> But what is more troublesome is that neither this or updated v2
+> applies to 'next'.
 
-Guilt (Git Quilt) is a series of shell scripts which add a Mercurial
-queues-like functionality and interface to git.
+v2 applies to sb/atomic-push instead of next and will result in a one
+line merge conflict with next.
 
-Tarballs:
-http://guilt.31bits.net/src/
+I know we're late in the cycle, hence I was just sending out for reviews.
+Though as it's not a feature, but a bug fix it may be worth picking it
+up now if it's easy to apply.
 
-Git repo:
-git://repo.or.cz/guilt.git
+Thanks,
+Stefan
 
-
-This is the first release candidate for the long awaited v0.36.  Yes, it's
-been *way* too long since the last release, but hopefully that will change
-going forward.  By far, the most changes come from Per Cederqvist who
-cleaned up some rather dark corners in the code.  Thanks!
-
-As always, patches, and other feedback is welcome.
-
-Josef "Jeff" Sipek.
-
-------------
-Changes since v0.35:
-
-Alan Jenkins (5):
-      [GUILT 1/6] Refuse to push corrupt patches
-      [GUILT 2/6] guilt-header: fix patch corruption
-      [GUILT 3/6] Handle paths that contain spaces
-      [GUILT 4/6] Run regression tests in a directory which contains spaces
-      [GUILT 5/6] Allow guilt scripts to be run from a directory which contains spaces
-
-Dave Chinner (1):
-      guilt: fix "from: xxx" filtering in the patch description
-
-Jari Aalto (1):
-      Documentation/Makefile: Run xmlto with --skip-validation
-
-Jonathan Nieder (1):
-      Drop unneeded git version check.
-
-Josef 'Jeff' Sipek (12):
-      [GUILT 6/6] Allow the regression tests to be run from a directory with spaces in
-      guilt: remove a useless cat
-      commit: don't lose commits
-      fix direct invocation messages
-      guilt: fix -h invocation
-      Documentation: update HOWTO to use 'guilt foo'
-      Documentation: clean up the makefile
-      Documentation: guilt & git don't use hyphenated commands
-      regress: setup_git_repo can assert that the repo is setup as intended
-      FreeBSD is much like Darwin
-      regress: cmd and shouldfail shouldn't print escapes
-      Guilt v0.36-rc1
-
-Per Cederqvist (43):
-      get rid of "cat: write error: Broken pipe" error message
-      [GUILT] handle branches with slashes in guilt-graph
-      Testsuite: get rid of "Broken pipe" errors from yes.
-      The tests should not fail if log.date or log.decorate are set.
-      get rid of "cat: write error: Broken pipe" error message
-      The tests should not fail if log.date or log.decorate are set.
-      Testsuite: get rid of "Broken pipe" errors from yes.
-      Handle empty patches and patches with only a header.
-      Fix fatal "guilt graph" error in sha1sum invocation.
-      Change git branch when patches are applied.
-      The tests should not fail if guilt.diffstat is set.
-      Allow "guilt delete -f" to run from a dir which contains spaces.
-      Added test case for "guilt delete -f".
-      Allow "guilt import-commit" to run from a dir which contains spaces.
-      "guilt new": Accept more than 4 arguments.
-      Fix the do_get_patch function.
-      Added test cases for "guilt fold".
-      Added more test cases for "guilt new": empty patches.
-      Test suite: properly check the exit status of commands.
-      Run test_failed if the exit status of a test script is bad.
-      test suite: remove pointless redirection.
-      "guilt header": more robust header selection.
-      Check that "guilt header '.*'" fails.
-      Use "git check-ref-format" to validate patch names.
-      Produce legal patch names in guilt-import-commit.
-      Fix backslash handling when creating names of imported patches.
-      "guilt graph" no longer loops when no patches are applied.
-      guilt-graph: Handle commas in branch names.
-      Check that "guilt graph" works when working on a branch with a comma.
-      "guilt graph": Handle patch names containing quotes.
-      The log.decorate setting should not influence import-commit.
-      The log.decorate setting should not influence patchbomb.
-      The log.decorate setting should not influence guilt rebase.
-      disp no longer processes backslashes.
-      "guilt push" now fails when there are no more patches to push.
-      "guilt pop" now fails when there are no more patches to pop.
-      Minor testsuite fix.
-      Fix coding style errors in t-061.sh.
-      Added guilt.reusebranch configuration option.
-      Added a short style guide, and Emacs settings.
-      Don't use "git log -p" in the test suite.
-      Improved doc and tests for guilt header.
-      Document the exit status of guilt push and guilt pop.
-
-Theodore Ts'o (2):
-      guilt: skip empty line after from: line in patch descriptoin
-      guilt: fix date parsing
-
--- 
-The obvious mathematical breakthrough would be development of an easy way to
-factor large prime numbers.
-		- Bill Gates, The Road Ahead, pg. 265
+>
+> Let me try to wiggle it in first.
+>
+> Thanks.
