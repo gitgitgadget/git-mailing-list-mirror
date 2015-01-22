@@ -1,62 +1,68 @@
-From: Tobias Getzner <tobias.getzner@gmx.de>
-Subject: Re: [BUG] Mojibake in git gui and gitk for certain unicode chars
-Date: Thu, 22 Jan 2015 13:18:22 +0100
-Message-ID: <1421929102.22955.3.camel@gmx.de>
-References: <1421927001.11296.27.camel@gmx.de>
+From: Kacper Kornet <draenog@pld-linux.org>
+Subject: [PATCH] Fix unclosed here document in t3301.sh
+Date: Thu, 22 Jan 2015 12:59:36 +0100
+Message-ID: <20150122115936.GA2358@camk.edu.pl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 22 13:18:47 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 22 13:20:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YEGik-0001l4-Nc
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 13:18:47 +0100
+	id 1YEGk8-0002TL-Nv
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 13:20:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752129AbbAVMSm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Jan 2015 07:18:42 -0500
-Received: from mout.gmx.net ([212.227.15.18]:63436 "EHLO mout.gmx.net"
+	id S1751731AbbAVMUJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Jan 2015 07:20:09 -0500
+Received: from moat.camk.edu.pl ([148.81.175.50]:52550 "EHLO moat.camk.edu.pl"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751744AbbAVMSZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Jan 2015 07:18:25 -0500
-Received: from glenalbyn.linguistics.ruhr-uni-bochum.de ([134.147.14.84]) by
- mail.gmx.com (mrgmx003) with ESMTPSA (Nemesis) id 0MEFlg-1YTdrj1w9g-00FThi
- for <git@vger.kernel.org>; Thu, 22 Jan 2015 13:18:23 +0100
-In-Reply-To: <1421927001.11296.27.camel@gmx.de>
-X-Mailer: Evolution 3.12.10 
-X-Provags-ID: V03:K0:r8TRwbC0yi0fIhUHdPfVevZ1coH3uUL1AgCjZ4tkGoLFpjzLEi6
- NAT4p6ajmzpjl0N4oski9x3jZ2n0w/bKeFsAMv1tj5l/jwhgrXkXg7EstC0B1vL53809ds7
- 6NJ02fby15zNseGp+yG/+j00RM4UIgU2OaC4FXFMNUweed2U7TdR1tF5Y7vlQ2cFbiLmfLc
- u7LyXG+7BUEU/4dQv3Y4Q==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1751452AbbAVMUH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Jan 2015 07:20:07 -0500
+X-Greylist: delayed 1217 seconds by postgrey-1.27 at vger.kernel.org; Thu, 22 Jan 2015 07:20:07 EST
+Received: from localhost (localhost [127.0.0.1])
+	by moat.camk.edu.pl (Postfix) with ESMTP id 1AEB61C278;
+	Thu, 22 Jan 2015 12:59:34 +0100 (CET)
+X-Virus-Scanned: amavisd-new at camk.edu.pl
+Received: from moat.camk.edu.pl ([127.0.0.1])
+	by localhost (liam.camk.edu.pl [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id KKYDgTK3Ignm; Thu, 22 Jan 2015 12:59:24 +0100 (CET)
+Received: from gatekeeper.camk.edu.pl (gatekeeper.camk.edu.pl [192.168.1.23])
+	by moat.camk.edu.pl (Postfix) with ESMTP id 9D1D91C1F4;
+	Thu, 22 Jan 2015 12:59:24 +0100 (CET)
+Received: by gatekeeper.camk.edu.pl (Postfix, from userid 1293)
+	id 560117E186; Thu, 22 Jan 2015 12:59:36 +0100 (CET)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262822>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262823>
 
-On Do, 2015-01-22 at 12:43 +0100, Tobias Getzner wrote:
-> Hello,
->=20
-> I=E2=80=99ve noticed git gui and gitk seem to have problems decoding =
-certain
-> unicode characters. E.g., when a commit contains the character =C2=AB=
-=F0=9F=91=8D=C2=BB
-> (thumbs up sign; U+1F44D) in UTF-8 encoding, this character will show
-> as =C2=AB=C3=B0=C2=9F=C2=91=C2=8D=C2=BB in gitk.=20
+Commit 908a3203632a02568df230c0fccf9a2cd8da24e6 introduced  indentation
+to here documents in t3301.sh. However in one place <<-EOF was missing
+-, which broke this test when run with mksh-50d. This commit fixes it.
 
-> I=E2=80=99ve noticed a perhaps related glitch when the options in git=
- gui is
-> shown. My committer name contains the character =C2=AB=C3=9F=C2=BB (l=
-atin small letter
-> sharp s; U+00DF). The text field in the options dialog displays this =
-as
-> =C2=AB=C3=83=C2=9F=C2=BB,
+Signed-off-by: Kacper Kornet <draenog@pld-linux.org>
+---
+ t/t3301-notes.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-I suppose that some of the mojibake characters in the message might
-have been stripped out of the message because they are control chars.
-So, =C2=AB=F0=9F=91=8D=C2=BB was rendered as =C2=AB=C3=B0\x9f\x91\x8d=C2=
-=BB. =C2=AB=C3=9F=C2=BB was rendered as =C2=AB=C3=83\x9f=C2=BB.
+diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
+index 245406a..433f925 100755
+--- a/t/t3301-notes.sh
++++ b/t/t3301-notes.sh
+@@ -658,7 +658,7 @@ test_expect_success '--show-notes=* adds to GIT_NOTES_DISPLAY_REF' '
+ '
+ 
+ test_expect_success '--no-standard-notes' '
+-	cat >expect-commits <<EOF
++	cat >expect-commits <<-EOF
+ 		commit 2c125331118caba0ff8238b7f4958ac6e93fe39c
+ 		Author: A U Thor <author@example.com>
+ 		Date:   Thu Apr 7 15:18:13 2005 -0700
+-- 
+2.2.2
