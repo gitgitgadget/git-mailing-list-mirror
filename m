@@ -1,143 +1,94 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 4/5] refs.c: remove committing the ref from write_ref_sha1
-Date: Thu, 22 Jan 2015 15:11:36 -0800
-Message-ID: <1421968297-25407-5-git-send-email-sbeller@google.com>
-References: <54C0DDE7.8030708@alum.mit.edu>
- <1421968297-25407-1-git-send-email-sbeller@google.com>
-Cc: Stefan Beller <sbeller@google.com>
-To: peff@peff.net, git@vger.kernel.org, gitster@pobox.com,
-	mhagger@alum.mit.edu, loic@dachary.org, ramsay@ramsay1.demon.co.uk
-X-From: git-owner@vger.kernel.org Fri Jan 23 00:12:06 2015
+Subject: Re: [PATCH v2 1/4] apply.c: typofix
+Date: Thu, 22 Jan 2015 15:17:42 -0800
+Message-ID: <CAGZ79kYR7AcgTghwLoTejvaB=BRW+YxJdHZtjteXVbcrNqh8LQ@mail.gmail.com>
+References: <xmqq1tmnwypp.fsf@gitster.dls.corp.google.com>
+	<1421967505-16879-1-git-send-email-gitster@pobox.com>
+	<1421967505-16879-2-git-send-email-gitster@pobox.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 23 00:17:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YEQux-0001fS-UG
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Jan 2015 00:12:04 +0100
+	id 1YER0W-0006Je-5r
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Jan 2015 00:17:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754561AbbAVXL5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Jan 2015 18:11:57 -0500
-Received: from mail-ig0-f169.google.com ([209.85.213.169]:64710 "EHLO
-	mail-ig0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753818AbbAVXLq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jan 2015 18:11:46 -0500
-Received: by mail-ig0-f169.google.com with SMTP id hl2so20933582igb.0
-        for <git@vger.kernel.org>; Thu, 22 Jan 2015 15:11:45 -0800 (PST)
+	id S1753521AbbAVXRo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Jan 2015 18:17:44 -0500
+Received: from mail-ie0-f175.google.com ([209.85.223.175]:62190 "EHLO
+	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752338AbbAVXRn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Jan 2015 18:17:43 -0500
+Received: by mail-ie0-f175.google.com with SMTP id ar1so4334567iec.6
+        for <git@vger.kernel.org>; Thu, 22 Jan 2015 15:17:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Z3LFW6OSvUmw3zZqwVp1OOg3Mp1V9ZkDeNaNLo7BdVA=;
-        b=HhB370V2K1tQuF5XPP9hEdaZzKP+8PF/mwnZ6fJ3Nvn2RttF5ygftCaolpb32N3LSD
-         gIkwcykLa21kd6viPj+zkhlnnshHGCzZn2B7E1DOUHjUqk6E9AwwVjYgCcx8N7a03XOm
-         fYbaaDRmrOO+ZSHtFVuxDYnmINv/r8Q8I7JApQeLRCrnuoDWF+Q5F+SLTpBt0+pdKV1U
-         1R0/dsqSlV+P9mjNIibn86xllpdmSPSQJLTrLf6uuPliUAF9dVmswpzFQaBQ9n+NwQXA
-         Atc/M+cS4r/G6Z7+jVgzGsGNXsScy5qwQLJDZX1awTX18k1gBz2BfpTdr9a6ZTCkV6JI
-         UNTQ==
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=OSy79CrFYfe4q9hBr4qzXQm3qoLJ4eVZWifhGupyCPU=;
+        b=XE8a+qaqVanYri5i7fa90CEIhGsoZH3+Ydxrp5BJ1Mrp8Qt5d/pvUjWsdEIoa1rLb/
+         GjseFL7+hQfcFyNQaQmT3niAXoZef53qnWQ9+K2MGF2Fakn8f8b1KhPi0k4bCESp/843
+         RC0SqwQj3qF+sRzod0k7uBQCHBdxrGqNOHaAJmljOvMQ/uBBIUI54GOoC7RsfY/vtbGi
+         DCANXstaorEPe4D0ybv0BFwH5H3NOHC+UrffJsGs/4wfjks5bFUAI4JCk55/GptfNek9
+         YCmrY1hybDexfy2CUUvuL27jzG/bSG45eYGlUXzeRpBgxprdzAO7QUr+9KJH+TO9W2Sa
+         dvjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=Z3LFW6OSvUmw3zZqwVp1OOg3Mp1V9ZkDeNaNLo7BdVA=;
-        b=mYwX/SG08RSV+lF/1HUiZQvrdbkguucXvDvKQovO4Ly0vRsXuQfQ+R7MYArGfu/2/f
-         FAk66KgmUcggxVNBhfDgaZokklwWxOodm83Z870ycz1RcfGCVscUUhSPATbtdZRymqyc
-         4S20559lkz6CnIhml+k1ScyGQpRBa5n+te9rfIc2YKIQtF+mOuffMTDUZ9xWtKO6zx+s
-         G3PY5BHFacbpYCipPPi4n/zXdVamrZSvst2DtVuuqGxbAR70zZrQklYa+kxR+K92hulR
-         8j2yurTx/pR0QFoCXAeCApg88Ub8qsllDjhpEX9LjaPCqcn8UlQEBGbBvXk6plJPeur1
-         oIbA==
-X-Gm-Message-State: ALoCoQmhSKlhD1+ZWWwW5F9yrDKXNwNL8KDzPhHdzVeGIyJQvQEYZjVpg8Pc2wuLWcmmJL9yea+v
-X-Received: by 10.43.34.137 with SMTP id ss9mr6277406icb.11.1421968305432;
-        Thu, 22 Jan 2015 15:11:45 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b00:e0f4:42de:391f:3cc5])
-        by mx.google.com with ESMTPSA id gd4sm3882425igd.11.2015.01.22.15.11.44
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 22 Jan 2015 15:11:45 -0800 (PST)
-X-Mailer: git-send-email 2.2.1.62.g3f15098
-In-Reply-To: <1421968297-25407-1-git-send-email-sbeller@google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=OSy79CrFYfe4q9hBr4qzXQm3qoLJ4eVZWifhGupyCPU=;
+        b=RiY5x/cLVZlY1h9jxBYMYtv0mjse4ka/nyBjrBOLcMMeN8Ci+LvqeLjkEzp8Jb1Irg
+         FctmUHrlxVpbU2XZ2iBaD74K+Lj+pG2A8/BVTOAaA+6xEhubHlihmJ6LBSp9nV8Ish+F
+         dCqGU8PzoZlRfIwS9bKkCJhQ9K13ixQ1LmFYRQsFTj4FhjC7+e4gAglg3xYUSCshUWgq
+         HPqWle2teq1Szueev92YHVqy8oLFezr8pYQ7cjiQqGL7z93zMjt9RSPJDprk5xs0QkVf
+         ofrh5LHkpv2Q08Cr3orAgpanvp24H3mE1VKj0+z78jbCDHzXl9LyvzUgWh1r8w9pDZTG
+         Dztw==
+X-Gm-Message-State: ALoCoQmkIinJtwkBO1BOi7/V1Zo9LgyO272FjSTyJW48AxxX0CyBtosAtIRL/MyC/zPdTjgon70t
+X-Received: by 10.50.222.70 with SMTP id qk6mr7880790igc.47.1421968662797;
+ Thu, 22 Jan 2015 15:17:42 -0800 (PST)
+Received: by 10.50.26.42 with HTTP; Thu, 22 Jan 2015 15:17:42 -0800 (PST)
+In-Reply-To: <1421967505-16879-2-git-send-email-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262891>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262892>
 
-This makes write_ref_sha1 only write the the lock file, committing
-needs to be done outside of that function. This will help us change
-the ref_transaction_commit in a later patch.
+On Thu, Jan 22, 2015 at 2:58 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  builtin/apply.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/builtin/apply.c b/builtin/apply.c
+> index 622ee16..31f8733 100644
+> --- a/builtin/apply.c
+> +++ b/builtin/apply.c
+> @@ -2326,7 +2326,7 @@ static int match_fragment(struct image *img,
+>
+>         /*
+>          * The hunk does not apply byte-by-byte, but the hash says
+> -        * it might with whitespace fuzz. We haven't been asked to
+> +        * it might with whitespace fuzz. We weren't asked to
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- refs.c | 22 +++++++++++++---------
- 1 file changed, 13 insertions(+), 9 deletions(-)
+(not a native speaker):
+A quick websearch reveals "We haven't been asked to ..."
+is quite commonly used in the web. So it's more of a grammar fix or a
+rewording of a comment instead of a typofix(which I assume are miss
+spellings)
 
-diff --git a/refs.c b/refs.c
-index 6f3cd7b..c108c95 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2815,8 +2815,11 @@ static int close_ref(struct ref_lock *lock)
- 	return 0;
- }
- 
--static int commit_ref(struct ref_lock *lock)
-+static int commit_ref(struct ref_lock *lock, const unsigned char *sha1)
- {
-+	if (!lock->force_write && !hashcmp(lock->old_sha1, sha1))
-+		return 0;
-+
- 	if (commit_lock_file(lock->lk))
- 		return -1;
- 	return 0;
-@@ -2879,7 +2882,8 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
- 	}
- 	lock->force_write = 1;
- 	hashcpy(lock->old_sha1, orig_sha1);
--	if (write_ref_sha1(lock, orig_sha1, logmsg)) {
-+	if (write_ref_sha1(lock, orig_sha1, logmsg)
-+	    || commit_ref(lock, orig_sha1)) {
- 		unlock_ref(lock);
- 		error("unable to write current sha1 into %s", newrefname);
- 		goto rollback;
-@@ -2898,8 +2902,10 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
- 	lock->force_write = 1;
- 	flag = log_all_ref_updates;
- 	log_all_ref_updates = 0;
--	if (write_ref_sha1(lock, orig_sha1, NULL))
-+	if (write_ref_sha1(lock, orig_sha1, NULL)
-+	    || commit_ref(lock, orig_sha1))
- 		error("unable to write current sha1 into %s", oldrefname);
-+
- 	unlock_ref(lock);
- 	log_all_ref_updates = flag;
- 
-@@ -3137,10 +3143,6 @@ static int write_ref_sha1(struct ref_lock *lock,
- 		    !strcmp(head_ref, lock->ref_name))
- 			log_ref_write("HEAD", lock->old_sha1, sha1, logmsg);
- 	}
--	if (commit_ref(lock)) {
--		error("Couldn't set %s", lock->ref_name);
--		return -1;
--	}
- 	return 0;
- }
- 
-@@ -3775,7 +3777,8 @@ int ref_transaction_commit(struct ref_transaction *transaction,
- 
- 		if (!is_null_sha1(update->new_sha1)) {
- 			if (write_ref_sha1(update->lock, update->new_sha1,
--					   update->msg)) {
-+					   update->msg)
-+			    || commit_ref(update->lock, update->new_sha1)) {
- 				strbuf_addf(err, "Cannot update the ref '%s'.",
- 					    update->refname);
- 				ret = TRANSACTION_GENERIC_ERROR;
-@@ -4064,7 +4067,8 @@ int reflog_expire(const char *refname, const unsigned char *sha1,
- 		} else if (commit_lock_file(&reflog_lock)) {
- 			status |= error("unable to commit reflog '%s' (%s)",
- 					log_file, strerror(errno));
--		} else if ((flags & EXPIRE_REFLOGS_UPDATE_REF) && commit_ref(lock)) {
-+		} else if ((flags & EXPIRE_REFLOGS_UPDATE_REF)
-+			    && commit_ref(lock, cb.last_kept_sha1)) {
- 			status |= error("couldn't set %s", lock->ref_name);
- 		}
- 	}
--- 
-2.2.1.62.g3f15098
+>          * ignore whitespace, we were asked to correct whitespace
+>          * errors, so let's try matching after whitespace correction.
+>          *
+> --
+> 2.3.0-rc1-116-g84c5016
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
