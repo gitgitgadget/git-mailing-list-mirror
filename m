@@ -1,94 +1,127 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH v2 1/4] apply.c: typofix
-Date: Thu, 22 Jan 2015 15:17:42 -0800
-Message-ID: <CAGZ79kYR7AcgTghwLoTejvaB=BRW+YxJdHZtjteXVbcrNqh8LQ@mail.gmail.com>
-References: <xmqq1tmnwypp.fsf@gitster.dls.corp.google.com>
-	<1421967505-16879-1-git-send-email-gitster@pobox.com>
-	<1421967505-16879-2-git-send-email-gitster@pobox.com>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH 1/3] connect.c: Improve parsing of literal IPV6 addresses
+Date: Thu, 22 Jan 2015 23:41:17 +0000
+Message-ID: <20150122234117.GD96498@vauxhall.crustytoothpaste.net>
+References: <54BD3D14.90309@web.de>
+ <20150122200702.GA96498@vauxhall.crustytoothpaste.net>
+ <54C17429.1090403@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 23 00:17:51 2015
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="M38YqGLZlgb6RLPS"
+Cc: git@vger.kernel.org, lists@hcf.yourweb.de
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Fri Jan 23 00:41:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YER0W-0006Je-5r
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Jan 2015 00:17:48 +0100
+	id 1YERNR-0007nO-Gh
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Jan 2015 00:41:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753521AbbAVXRo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Jan 2015 18:17:44 -0500
-Received: from mail-ie0-f175.google.com ([209.85.223.175]:62190 "EHLO
-	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752338AbbAVXRn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jan 2015 18:17:43 -0500
-Received: by mail-ie0-f175.google.com with SMTP id ar1so4334567iec.6
-        for <git@vger.kernel.org>; Thu, 22 Jan 2015 15:17:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=OSy79CrFYfe4q9hBr4qzXQm3qoLJ4eVZWifhGupyCPU=;
-        b=XE8a+qaqVanYri5i7fa90CEIhGsoZH3+Ydxrp5BJ1Mrp8Qt5d/pvUjWsdEIoa1rLb/
-         GjseFL7+hQfcFyNQaQmT3niAXoZef53qnWQ9+K2MGF2Fakn8f8b1KhPi0k4bCESp/843
-         RC0SqwQj3qF+sRzod0k7uBQCHBdxrGqNOHaAJmljOvMQ/uBBIUI54GOoC7RsfY/vtbGi
-         DCANXstaorEPe4D0ybv0BFwH5H3NOHC+UrffJsGs/4wfjks5bFUAI4JCk55/GptfNek9
-         YCmrY1hybDexfy2CUUvuL27jzG/bSG45eYGlUXzeRpBgxprdzAO7QUr+9KJH+TO9W2Sa
-         dvjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=OSy79CrFYfe4q9hBr4qzXQm3qoLJ4eVZWifhGupyCPU=;
-        b=RiY5x/cLVZlY1h9jxBYMYtv0mjse4ka/nyBjrBOLcMMeN8Ci+LvqeLjkEzp8Jb1Irg
-         FctmUHrlxVpbU2XZ2iBaD74K+Lj+pG2A8/BVTOAaA+6xEhubHlihmJ6LBSp9nV8Ish+F
-         dCqGU8PzoZlRfIwS9bKkCJhQ9K13ixQ1LmFYRQsFTj4FhjC7+e4gAglg3xYUSCshUWgq
-         HPqWle2teq1Szueev92YHVqy8oLFezr8pYQ7cjiQqGL7z93zMjt9RSPJDprk5xs0QkVf
-         ofrh5LHkpv2Q08Cr3orAgpanvp24H3mE1VKj0+z78jbCDHzXl9LyvzUgWh1r8w9pDZTG
-         Dztw==
-X-Gm-Message-State: ALoCoQmkIinJtwkBO1BOi7/V1Zo9LgyO272FjSTyJW48AxxX0CyBtosAtIRL/MyC/zPdTjgon70t
-X-Received: by 10.50.222.70 with SMTP id qk6mr7880790igc.47.1421968662797;
- Thu, 22 Jan 2015 15:17:42 -0800 (PST)
-Received: by 10.50.26.42 with HTTP; Thu, 22 Jan 2015 15:17:42 -0800 (PST)
-In-Reply-To: <1421967505-16879-2-git-send-email-gitster@pobox.com>
+	id S1753571AbbAVXl0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Jan 2015 18:41:26 -0500
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:43403 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752568AbbAVXlY (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Jan 2015 18:41:24 -0500
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:c8c4:ec20:e47c:f338])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id A40C12808F;
+	Thu, 22 Jan 2015 23:41:22 +0000 (UTC)
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	git@vger.kernel.org, lists@hcf.yourweb.de
+Content-Disposition: inline
+In-Reply-To: <54C17429.1090403@web.de>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 3.16.0-4-amd64)
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262893>
 
-On Thu, Jan 22, 2015 at 2:58 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  builtin/apply.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/builtin/apply.c b/builtin/apply.c
-> index 622ee16..31f8733 100644
-> --- a/builtin/apply.c
-> +++ b/builtin/apply.c
-> @@ -2326,7 +2326,7 @@ static int match_fragment(struct image *img,
->
->         /*
->          * The hunk does not apply byte-by-byte, but the hash says
-> -        * it might with whitespace fuzz. We haven't been asked to
-> +        * it might with whitespace fuzz. We weren't asked to
 
-(not a native speaker):
-A quick websearch reveals "We haven't been asked to ..."
-is quite commonly used in the web. So it's more of a grammar fix or a
-rewording of a comment instead of a typofix(which I assume are miss
-spellings)
+--M38YqGLZlgb6RLPS
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
->          * ignore whitespace, we were asked to correct whitespace
->          * errors, so let's try matching after whitespace correction.
->          *
-> --
-> 2.3.0-rc1-116-g84c5016
+On Thu, Jan 22, 2015 at 11:05:29PM +0100, Torsten B=C3=B6gershausen wrote:
+>We want to support ssh://bmc@2001:470:1f05:79::1/git/bmc/homedir.git/
+>   because e.g. the Git shipped with Debian (1.7.10.4) (and a lot of other=
+ installations) supports it.
+
+I understand that this used to work, but it probably shouldn't have ever=20
+been accepted.  It's nonstandard, and if we accept it for ssh, people=20
+will want it to work for https, and due to libcurl, it simply won't.
+
+I prefer to see our past acceptance of this format as a bug.  This is=20
+the first that I've heard of anyone noticing this (since 2013), so it=20
+can't be in common usage.
+
+If we accept it, we should explicitly document it as being deprecated and=
+=20
+note that it's inconsistent with the way everything else works.
+
+>We want to support ssh://bmc@[2001:470:1f05:79::1]/git/bmc/homedir.git/
+>    because that is what other people may expect to work as well:
+> ssh://bmc@[2001:470:1f05:79::1]:4444/git/bmc/homedir.git/
+
+Everyone expects this to work properly, because it's the standard URL=20
+form (RFC 2732).  I agree we should support it.
+
+>>  git push 2001:470:1f05:79::1:1 master
+>> when they mean
+>>
+>>  git push [2001:470:1f05:79::1]:1 master
+>That I don't understand this, where is the path name in your example ?
+
+The path in question is $HOME/1.  That's why the bracket notation is=20
+obligatory in the short form.  I agree it's a bit bizarre.
+
+>Everything after the first ':' is the path in the short form:
+>bmc@hostxx:/git/bmc/homedir.git/
 >
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>If you really want to use a literal IPV6 with the short form, you must use=
+ the brackets:
+>bmc@[2001:470:1f05:79::1]:/git/bmc/homedir.git/
+>(And you can not have a port number here)
+
+Right.  In my experience, nobody uses the ssh:// form unless they have=20
+to (i.e. they need to use a port number); it's extremely uncommon.  So=20
+they've already become used to using the bracketed notation, because=20
+it's already required for the usual form and it's required in the IPv6=20
+URL standard.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+
+--M38YqGLZlgb6RLPS
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCgAGBQJUwYqcAAoJEL9TXYEfUvaLhTUQAI+5KnyH+u4z0+Bb0ui2rbDk
+DTGqrXc0i4fIswjxsJynSeUvwDx+B7hN+DU5Z7Iw4OdMfGVUJaP354z9ZoPb1DK5
+M4F4QexxVwBM9SpQ2onU7gr/kxjaJnGA567cnauDIYmqdHSKwzNKs1FmZYqVe1lU
+D02IdPq/p/362YaFDyS0rTI0Shu3q9PEit3ke45VFPZgU3IOyZMq18iV1kxqzfd3
+uQjSK3Ea9k4m4TL03D0KhgTnVvuf3uodZ4Nsz1p5A8FvPPIEoBRnWpV/VFm2ge5D
+k0H/mJ+sLvKm5IYMzCa9IAig0DxH11fo1ZDRhTHlW11UaF5a+SfE6PlJGKBshjBy
+PbBvNeUZjZuMKl268m5Q9+BWpj/75jpGJxpWaMDnV7LL+5lMG5llMKduyL7L2+/t
+CRkN7IEnB+oHtpqo5Qq7fUFao4OxzFsM/vAkx6bo7B7cKivgfdAA59lQu8GHzCRJ
+dZAC3BwjAZfvDpL3BXAvOjYc5PKRc4bkNVWWR8BFQ/XvXMRXNQCyJvE/hqcASeES
+mJj6JHOtWNVMcPbKkLomiBsWoFFDGmvaUoYoUJhhPQK7r0zrxlOg+0SXus2bZteo
+B1Zg6HqDjOPzkNrBu87MMycpWve46YE5QlEGE88rBRN2UxfcLM1qqyUYjGsEKrqU
+0xSmY6t4r110JrHCLR2o
+=WFGl
+-----END PGP SIGNATURE-----
+
+--M38YqGLZlgb6RLPS--
