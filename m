@@ -1,73 +1,81 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Makefile: do not compile git with debugging symbols by
- default
-Date: Thu, 22 Jan 2015 13:35:38 -0500
-Message-ID: <20150122183538.GA20085@peff.net>
-References: <1421931037-21368-1-git-send-email-kuleshovmail@gmail.com>
- <20150122130036.GC19681@peff.net>
- <CANCZXo7ocgG27Y48NjYxurVMWOvHkvGqDrLuntkSTxHUK6hcNw@mail.gmail.com>
- <vpqa91ahg46.fsf@anie.imag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 20/24] update-index: test the system before enabling untracked cache
+Date: Thu, 22 Jan 2015 10:49:12 -0800
+Message-ID: <xmqqfvb2tzvb.fsf@gitster.dls.corp.google.com>
+References: <1421759013-8494-1-git-send-email-pclouds@gmail.com>
+	<1421759013-8494-21-git-send-email-pclouds@gmail.com>
+	<xmqqwq4gy1nq.fsf@gitster.dls.corp.google.com>
+	<CACsJy8CDgUWEE=QKAgw4G8pgA-cOmLMs4sH67C47Ohd5XJQDNQ@mail.gmail.com>
+	<xmqqvbk0vug9.fsf@gitster.dls.corp.google.com>
+	<20150122102624.GA25892@lanh>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Alexander Kuleshov <kuleshovmail@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu Jan 22 19:35:47 2015
+Content-Type: text/plain
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 22 19:49:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YEMba-0003Mv-BJ
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 19:35:46 +0100
+	id 1YEMoj-0006Dd-6w
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 19:49:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752716AbbAVSfm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Jan 2015 13:35:42 -0500
-Received: from cloud.peff.net ([50.56.180.127]:37450 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752749AbbAVSfl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jan 2015 13:35:41 -0500
-Received: (qmail 7187 invoked by uid 102); 22 Jan 2015 18:35:40 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 22 Jan 2015 12:35:40 -0600
-Received: (qmail 12798 invoked by uid 107); 22 Jan 2015 18:36:06 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 22 Jan 2015 13:36:06 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 22 Jan 2015 13:35:38 -0500
-Content-Disposition: inline
-In-Reply-To: <vpqa91ahg46.fsf@anie.imag.fr>
+	id S1753166AbbAVStR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Jan 2015 13:49:17 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64036 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751841AbbAVStQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Jan 2015 13:49:16 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2852A312E8;
+	Thu, 22 Jan 2015 13:49:15 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=kMdwV1ut8elLpU+M9fj7MkoEF3Y=; b=N1+1YP
+	e/dfuitcymg3b41SCYZlm9wF4DxjOSKbNcvVYnsAgcCxMNAzTREBKCJp/ZwudgkL
+	+e9pn3BJ20Uas4JWj2B8xxu7jrrkRlbivYcIMX4niiPm4NYiDANdWArCZnhojPpw
+	hZcyGgXH6wcM6oOPhCKlSrHs2pEkhXjf92e5Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ZsXt5m/sg03ikMTxURKGDZFWn6PJp7tX
+	d28fUTvQRX+r2CM8ljRCaRRYb2tMGPMTjFq+GE3VS4RZWl7hK69bKwqV8rIEqMvg
+	4cLXjaUqtTqOzqIIpf1EI8kz6K+i7tehSTsgNKpO9eqn8QEGdTjUGkQmGN2AFyS5
+	e0SnKI2R0JE=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1DC8F312E7;
+	Thu, 22 Jan 2015 13:49:15 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 76CDA312E6;
+	Thu, 22 Jan 2015 13:49:14 -0500 (EST)
+In-Reply-To: <20150122102624.GA25892@lanh> (Duy Nguyen's message of "Thu, 22
+	Jan 2015 17:26:24 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 5C921278-A267-11E4-BE45-7BA29F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262854>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262855>
 
-On Thu, Jan 22, 2015 at 06:36:41PM +0100, Matthieu Moy wrote:
+Duy Nguyen <pclouds@gmail.com> writes:
 
-> > Yes, main point is size of executable.
-> 
-> The Git executable is a few megabytes, i.e. 0.001% the size of a really
-> small hard disk. The benefit seems really negligible to me.
+> On Wed, Jan 21, 2015 at 10:51:02AM -0800, Junio C Hamano wrote:
+>> >> It appears that this hijacks a fixed name dir-mtime-test at the root
+>> >> level of every project managed by Git.  Is that intended?
+>> >
+>> > I did think about filename clash, but I chose a fixed name anyway for
+>> > simplicity, otherwise we would need to reconstruct paths
+>> > "dir-mtime-test/..." in many places.
+>> 
+>> If you stuff the name of test directory (default "dir-mtime-test")
+>> in a strbuf and formulate test paths by chomping to the original and
+>> then appending "/..." at the end, like your remove_test_directory()
+>> already does, wouldn't that be sufficient?
+>
+> It looks actually good. How about this on top?
 
-I don't know the layout of the symbols with respect to the code, or
-whether the stripped version might reduce memory pressure. So in theory
-it could have a performance impact.
-
-But...
-
-> OTOH, debug information allow users to do better bug reports in case of
-> crash (gdb, valgrind), which outweights by far the benefit of saving a
-> handfull of megabytes IMHO.
-
-Me too. Especially for people who are building git themselves, I feel
-like leaving the symbols is a sane default. Package builders are already
-using "make strip", or some feature of their package-build system (e.g.,
-"dh_strip") to take care of this for the "normal" users. But
-fundamentally this is a packaging issue, not a build issue.
-
--Peff
-
-PS We could still add a "DEBUG" knob to the Makefile and default it to
-   off. But I do not see much point. If you want to change the CFLAGS,
-   then change the CFLAGS knob. It's much more flexible.
+Yeah, looks cleaner.  I am not (yet) enthused by the intrusiveness
+of the overall series, though.
