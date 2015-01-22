@@ -1,103 +1,76 @@
-From: Alexander Kuleshov <kuleshovmail@gmail.com>
-Subject: Re: [PATCH] git-add--interactive: print message if there are no
- untracked files
-Date: Thu, 22 Jan 2015 13:11:37 +0600
-Message-ID: <CANCZXo5OQHNCyz3kUY6c0Y_Lpabee0WS+eQ5G53QupMLwOw=jg@mail.gmail.com>
-References: <1421867004-31672-1-git-send-email-kuleshovmail@gmail.com>
-	<xmqqmw5bx2ii.fsf@gitster.dls.corp.google.com>
-	<xmqqegqnx281.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] transport-helper: do not request symbolic refs to remote helpers
+Date: Wed, 21 Jan 2015 23:41:51 -0800
+Message-ID: <xmqqbnlruurk.fsf@gitster.dls.corp.google.com>
+References: <1421631307-20669-1-git-send-email-mh@glandium.org>
+	<xmqqwq4fuxbb.fsf@gitster.dls.corp.google.com>
+	<20150122070301.GA18195@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 22 08:11:43 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, srabbelier@gmail.com
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Thu Jan 22 08:41:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YEBva-0005Qu-NQ
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 08:11:43 +0100
+	id 1YECOs-0007Ml-3H
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 08:41:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751007AbbAVHLj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Jan 2015 02:11:39 -0500
-Received: from mail-oi0-f48.google.com ([209.85.218.48]:47136 "EHLO
-	mail-oi0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750913AbbAVHLi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jan 2015 02:11:38 -0500
-Received: by mail-oi0-f48.google.com with SMTP id v63so5321489oia.7
-        for <git@vger.kernel.org>; Wed, 21 Jan 2015 23:11:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=ov0pqN53Ed2TJGIUCGfVURN3grIcKiGeUGtMy05Rgio=;
-        b=1KAFpWMQDZ1RwzciuW6enRMS8QGcsOOGoDMMSB6Dny6GJ8Fh3xpmB7XjQH+h5TOLmC
-         1+R0sBGKmIuigipbbcjE8r7wgR3JjdsHeJZQjaaO4pJDQobISmV4scCxq8oCXiPUOcgE
-         SWS0f7yXpzYZiuhCBBJq3KMYu/VnYfNGOpW/DhcgD/2Vl6bMxTXu8fn5eD5wcmhirEh5
-         zbJEEf2Nx/mFbGhTUrkcWVvFpSuTgI8iRVONAZ/CR7TRZ3T3lR1Mwwky2bTOZQsmXb23
-         8PTtYHpiSkPQKNgrnpVxwunxgoTBQdE2epohWJssgw8oymeF0Dxr1qN9XU17fTyVZaIK
-         h1wQ==
-X-Received: by 10.60.156.196 with SMTP id wg4mr1409045oeb.11.1421910697500;
- Wed, 21 Jan 2015 23:11:37 -0800 (PST)
-Received: by 10.182.26.116 with HTTP; Wed, 21 Jan 2015 23:11:37 -0800 (PST)
-In-Reply-To: <xmqqegqnx281.fsf@gitster.dls.corp.google.com>
+	id S1751514AbbAVHly (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Jan 2015 02:41:54 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:51046 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751221AbbAVHlx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Jan 2015 02:41:53 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id BF871292B4;
+	Thu, 22 Jan 2015 02:41:52 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=1Qn881JilTdrb/nuYWYHMuN7adg=; b=gTx4es
+	Tn1UAycaSBCNnyzuPRoTzUF5czga9XaJhP/bQOacwtjcDA1uB9CkoOaVQ+8fehJh
+	yBacPoubVQ0+2ZwhA6cMpqNbuOWrJVQQ2Ip0dQjg4xvcGNvCcybfHz6zTx5VOrIn
+	LGffE1KQvkzU5+GfZHzyzaZazkyq3+fGCRBCM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=TU3FF8cz7lE1XUBh6VVbVlIQVuJXXuGp
+	tzBcmni4+zRr+GD0D2W6ODDnw2dnWSmFvalHgU7e1d9/fS0HnmUlkoHfCGTFlUSQ
+	ym2IrhgQaFPBFLVTR8ykS84s6USuBtTfRoiM8yEU92YP8pNaiiNKXoeVeca3nnTb
+	+hSAWO15yuc=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B5B0B292B2;
+	Thu, 22 Jan 2015 02:41:52 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3F39F292B1;
+	Thu, 22 Jan 2015 02:41:52 -0500 (EST)
+In-Reply-To: <20150122070301.GA18195@glandium.org> (Mike Hommey's message of
+	"Thu, 22 Jan 2015 16:03:01 +0900")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 21759406-A20A-11E4-AF95-7BA29F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262804>
 
-No i don't see any reasons why list_and_choose() shoud give a prompt
-without candidates. Will resed patch.
+Mike Hommey <mh@glandium.org> writes:
 
-Thank you.
+> Note the most important part is actually between the parens: that only
+> happens when the remote helper returns '?' to the `list` command, which
+> non-git remotes helpers (like git-remote-hg or git-remote-bzr) do.
+> git-remote-testgit also does, so if you only apply the test parts of the
+> patch, you'll see that the test fails.
+>
+> remote-curl probably doesn't hit the problem because it's not returning
+> '?' to `list`.
 
-2015-01-22 3:17 GMT+06:00 Junio C Hamano <gitster@pobox.com>:
-> Junio C Hamano <gitster@pobox.com> writes:
->
->>>  sub add_untracked_cmd {
->>> -    my @add = list_and_choose({ PROMPT => 'Add untracked' },
->>> -                              list_untracked());
->>> -    if (@add) {
->>> -            system(qw(git update-index --add --), @add);
->>> -            say_n_paths('added', @add);
->>> +    if (system(qw(git ls-files --others --exclude-standard --))) {
->>
->> But this ls-files invocation that knows too much about how
->> list_untracked() computes things does not.
->>
->> Why not
->> ...
->> or something instead?
->
-> Actually, is there any case where list_and_choose() should give a
-> prompt to choose from zero candidates?
->
-> In other words, I am wondering if this affects other callers of
-> list_and_choose in any negative way.
->
->  git-add--interactive.perl | 4 ++++
->  1 file changed, 4 insertions(+)
->
-> diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-> index 94b988c..46ed9a7 100755
-> --- a/git-add--interactive.perl
-> +++ b/git-add--interactive.perl
-> @@ -519,6 +519,10 @@ sub error_msg {
->  sub list_and_choose {
->         my ($opts, @stuff) = @_;
->         my (@chosen, @return);
-> +
-> +       if (!@stuff) {
-> +               return @return;
-> +       }
->         my $i;
->         my @prefixes = find_unique_prefixes(@stuff) unless $opts->{LIST_ONLY};
->
+Hmm, that suggests that the new codepath should be taken only when
+the remote helper says '?' (does it mean "I dunno"? where are these
+documented, by the way?), yes?  It wasn't immediately obvious from
+the patch text that it was the case.
 
-
-
--- 
-_________________________
-0xAX
+Thanks.
