@@ -1,99 +1,107 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCHv2 5/5] refs.c: enable large transactions
-Date: Thu, 22 Jan 2015 17:33:08 +0100
-Message-ID: <54C12644.1000406@alum.mit.edu>
-References: <1421893929-7447-1-git-send-email-sbeller@google.com> <1421893929-7447-6-git-send-email-sbeller@google.com> <54C0DDE7.8030708@alum.mit.edu> <20150122131018.GE19681@peff.net>
+From: Alexander Kuleshov <kuleshovmail@gmail.com>
+Subject: Re: [PATCH] Makefile: do not compile git with debugging symbols by default
+Date: Thu, 22 Jan 2015 22:51:55 +0600
+Message-ID: <CANCZXo7ocgG27Y48NjYxurVMWOvHkvGqDrLuntkSTxHUK6hcNw@mail.gmail.com>
+References: <1421931037-21368-1-git-send-email-kuleshovmail@gmail.com>
+	<20150122130036.GC19681@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
-	gitster@pobox.com, loic@dachary.org
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jan 22 17:33:23 2015
+X-From: git-owner@vger.kernel.org Thu Jan 22 17:52:03 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YEKh5-0001a6-Jd
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 17:33:19 +0100
+	id 1YEKzB-0002Q4-1U
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 17:52:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750901AbbAVQdQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Jan 2015 11:33:16 -0500
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:55364 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750794AbbAVQdO (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Jan 2015 11:33:14 -0500
-X-AuditID: 1207440d-f79976d000005643-e3-54c1264645a0
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 5E.DF.22083.64621C45; Thu, 22 Jan 2015 11:33:10 -0500 (EST)
-Received: from [192.168.69.130] (p5DDB02C5.dip0.t-ipconnect.de [93.219.2.197])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t0MGX8SR021752
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Thu, 22 Jan 2015 11:33:09 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.3.0
-In-Reply-To: <20150122131018.GE19681@peff.net>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrIKsWRmVeSWpSXmKPExsUixO6iqOumdjDE4OtGDYuuK91MFg29V5gt
-	Xm33sfjR0sNssXlzO4sDq8ezbaweCzaVejzr3cPocfGSssfnTXIBrFHcNkmJJWXBmel5+nYJ
-	3BmrrvxiLVjOU/Hm9inWBsYrnF2MnBwSAiYSyxrPskPYYhIX7q1n62Lk4hASuMwocWXqC0YI
-	5xyTRE/PM6AqDg5eAW2Jt7dMQUwWAVWJz/v5QHrZBHQlFvU0M4HYogJBEldaNjOD2LwCghIn
-	Zz5hAbFFBGQlvh/eyAhiMwtkSnR37AOrERawkTjYchVq705GiZ7Hh8CKOAX0JPrPPWWGaFCX
-	+DPvEpQtL7H97RzmCYwCs5DsmIWkbBaSsgWMzKsY5RJzSnN1cxMzc4pTk3WLkxPz8lKLdI30
-	cjNL9FJTSjcxQoKbdwfj/3UyhxgFOBiVeHgFCg+ECLEmlhVX5h5ilORgUhLlvSx/MESILyk/
-	pTIjsTgjvqg0J7X4EKMEB7OSCO9LFaAcb0piZVVqUT5MSpqDRUmcV22Jup+QQHpiSWp2ampB
-	ahFMVoaDQ0mCN1IVqFGwKDU9tSItM6cEIc3EwQkynEtKpDg1LyW1KLG0JCMeFKnxxcBYBUnx
-	AO1dDdLOW1yQmAsUhWg9xagoJc7bAZIQAElklObBjYWlrFeM4kBfCvN2gVTxANMdXPcroMFM
-	QIMLth8AGVySiJCSamDUsUtdVDC9v2tbrILIxBlrozQOvSvTzXaOaW9z21RXv5jH6HSy4oVF
-	qVoyhnoLZ6qpvTNOnZpk8/xSntN3LW7FRRYXZ05eKHXl/r6OzI3rr3877mq8/23X 
+	id S1752750AbbAVQv5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Jan 2015 11:51:57 -0500
+Received: from mail-ob0-f178.google.com ([209.85.214.178]:36008 "EHLO
+	mail-ob0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752530AbbAVQv4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Jan 2015 11:51:56 -0500
+Received: by mail-ob0-f178.google.com with SMTP id nt9so2446347obb.9
+        for <git@vger.kernel.org>; Thu, 22 Jan 2015 08:51:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=/GSVf+MnJn+xLIrAht7W9tWyl5WiaI1fQCLqWN3YTU0=;
+        b=FpC5OgGEBF8FgzIn5XBzLZV4ezV3T/HBDwiTVtNKlx/iMRiSi3lhiJOe6VPgl1YsDe
+         f6VIqqe9geYIQnBUKhM4tAb+JBTKFNpTjepdcUuqyn5F2a0XgirV50kiZbB5V+rhaeGW
+         KC8onrkWoNcEENcmSmQbqFZ5DRYDoS59eJiMcO0Ri3tYH7Ypwdh8BBvL/WXVf+rcxLLg
+         9sx1/+l3Xdjl3gyIb3kBD+ajxC8H3J/4kkcuJOZJ8ApXk6aG/X5SVPMpCWdQWP83KLg+
+         T9zKBnx2TsmPCroZLR0NnNisg2HvwqHSlI6crI6ufwYnippgtI05wBBZctAW0hsftsga
+         CGDA==
+X-Received: by 10.60.156.196 with SMTP id wg4mr1547176oeb.11.1421945515886;
+ Thu, 22 Jan 2015 08:51:55 -0800 (PST)
+Received: by 10.182.26.116 with HTTP; Thu, 22 Jan 2015 08:51:55 -0800 (PST)
+In-Reply-To: <20150122130036.GC19681@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262844>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262845>
 
-On 01/22/2015 02:10 PM, Jeff King wrote:
-> On Thu, Jan 22, 2015 at 12:24:23PM +0100, Michael Haggerty wrote:
-> 
->> I can't figure out where to apply this series or where to fetch it from,
->> so I can't see these changes in context, so maybe I'm misunderstanding
->> something. It looks like this code is doing
->>
->>     open(), close(), open(), fdopen(), write(), fclose(), rename()
->>
->> on each lockfile. But don't we have enough information to write the
->> SHA-1 into the lockfile the first time we touch it? I.e., couldn't we
->> reduce this to
->>
->>     open(), fdopen(), write(), fclose(), rename()
->>
->> , where the first four calls all happen in the initial loop? If a
->> problem is discovered when writing a later reference, we would roll back
->> the transaction anyway.
->>
->> I understand that this would require a bigger rewrite, so maybe it is
->> not worth it.
-> 
-> I had a nagging feeling on the multiple-open thing, too, and would much
-> prefer to just write out the contents early (since we know what they
-> are). It looks like we would just need to split write_ref_sha1() into
-> its two halves:
-> 
->   1. Write out the lockfile
-> 
->   2. Commit the change
-> 
-> And then call them at the appropriate spots from ref_transaction_commit().
-> 
-> I guess that is maybe a step backwards for abstracted ref backends,
-> though.
+Hello Jeff,
 
-Nah, the implementation of ref_transaction_commit() will have to differ
-between backends anyway. I don't think this would be a step backwards.
+Yes, main point is size of executable. I'm sorry, didn't see 'strip' target.
 
-Michael
+What if we will strip git and other executable files by default and
+add -g option and don't strip it if DEBUG=1 passed to make. Something
+like this:
+
+git$X: git.o GIT-LDFLAGS $(BUILTIN_OBJS) $(GITLIBS)
+
+    $(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) git.o \
+
+        $(BUILTIN_OBJS) $(LIBS)
+
+ifneq ($(DEBUG),1)
+
+    $(MAKE) strip
+
+endif
+
+
+Thank you.
+
+2015-01-22 19:00 GMT+06:00 Jeff King <peff@peff.net>:
+> On Thu, Jan 22, 2015 at 06:50:37PM +0600, Alexander Kuleshov wrote:
+>
+>> Standard user has no need in debugging information. This patch adds
+>> DEBUG=1 option to compile git with debugging symbols and compile without
+>> it by default.
+>
+> This explanation is missing why it is beneficial _not_ to have the
+> debugging information.
+>
+> I expect the answer is "it makes the executable smaller". And that is
+> true, but it gets smaller still if you run "strip" on the result:
+>
+>   $ make CFLAGS= >/dev/null 2>&1 && wc -c <git
+>   2424248
+>
+>   $ make CFLAGS=-g >/dev/null 2>&1 && wc -c <git
+>   4500816
+>
+>   $ strip git && wc -c <git
+>   2109200
+>
+> So I am not sure who this is helping. If you are size-conscious, you
+> should use strip, in which case the "-g" flag does not matter (and we
+> even have "make strip" to help you).
+>
+> Is there some other reason to avoid the debugging information?
+>
+> -Peff
+
+
 
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
+_________________________
+0xAX
