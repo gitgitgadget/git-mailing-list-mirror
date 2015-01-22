@@ -1,90 +1,115 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: [PATCH] Makefile: do not compile git with debugging symbols by
- default
-Date: Fri, 23 Jan 2015 00:09:14 +0900
-Message-ID: <20150122150914.GA20135@glandium.org>
-References: <1421931037-21368-1-git-send-email-kuleshovmail@gmail.com>
- <20150122130036.GC19681@peff.net>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: [GIT PULL] l10n updates for 2.3.0
+Date: Thu, 22 Jan 2015 23:21:28 +0800
+Message-ID: <CANYiYbFJfx1Sc+ync-Np11qBV6Zb3_mZFPaiQw5EwVa=3TG73g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Alexander Kuleshov <kuleshovmail@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jan 22 16:09:55 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 22 16:21:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YEJOL-0004la-Jy
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 16:09:53 +0100
+	id 1YEJZe-0004ty-F5
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 16:21:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751996AbbAVPJu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Jan 2015 10:09:50 -0500
-Received: from ks3293202.kimsufi.com ([5.135.186.141]:33308 "EHLO glandium.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750754AbbAVPJs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jan 2015 10:09:48 -0500
-Received: from glandium by zenigata with local (Exim 4.84)
-	(envelope-from <glandium@glandium.org>)
-	id 1YEJNi-0007cS-9t; Fri, 23 Jan 2015 00:09:14 +0900
-Content-Disposition: inline
-In-Reply-To: <20150122130036.GC19681@peff.net>
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1752700AbbAVPVa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Jan 2015 10:21:30 -0500
+Received: from mail-wg0-f52.google.com ([74.125.82.52]:46111 "EHLO
+	mail-wg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750888AbbAVPV3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Jan 2015 10:21:29 -0500
+Received: by mail-wg0-f52.google.com with SMTP id y19so2316258wgg.11
+        for <git@vger.kernel.org>; Thu, 22 Jan 2015 07:21:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=4F//nyRsWllAldhDJXCyFFRGk1euvvDnOyWQBMlQ8xQ=;
+        b=kYE7Q3DOxn72sPtR/khmJoMyWlRe5Fh9A91m7T9SAsjUhjH9uNByy/2DRmhXe4kqQS
+         RM3dmRLhlElllupjd547+zax/CzmhvOdI+wC39DofcXX/zUU+wmQI8dfsElbA5hhSkY2
+         Rx82IpbGxclO0rOQpukWELmPiKpA9mKJAfNUc9RPH38rJ3o9M504vOlBfW/Tkckf3rwh
+         UXKKvgG1sXzPX7frjvN4nQvDt9tJKux9KYY2vMG6Q8bZs/KSGFdjzKBaN8XPmY4tHuQu
+         jl4XBCuRFvE/BA6Xjb8czakMCx09NujxUM2Cb5X9jZbOe+PpjscOrgjbOESHrDeWbzU+
+         YzFw==
+X-Received: by 10.194.236.1 with SMTP id uq1mr4311460wjc.28.1421940088195;
+ Thu, 22 Jan 2015 07:21:28 -0800 (PST)
+Received: by 10.194.80.131 with HTTP; Thu, 22 Jan 2015 07:21:28 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262840>
 
-On Thu, Jan 22, 2015 at 08:00:36AM -0500, Jeff King wrote:
-> On Thu, Jan 22, 2015 at 06:50:37PM +0600, Alexander Kuleshov wrote:
-> 
-> > Standard user has no need in debugging information. This patch adds
-> > DEBUG=1 option to compile git with debugging symbols and compile without
-> > it by default.
-> 
-> This explanation is missing why it is beneficial _not_ to have the
-> debugging information.
-> 
-> I expect the answer is "it makes the executable smaller". And that is
-> true, but it gets smaller still if you run "strip" on the result:
-> 
->   $ make CFLAGS= >/dev/null 2>&1 && wc -c <git
->   2424248
-> 
->   $ make CFLAGS=-g >/dev/null 2>&1 && wc -c <git
->   4500816
-> 
->   $ strip git && wc -c <git
->   2109200
-> 
-> So I am not sure who this is helping. If you are size-conscious, you
-> should use strip, in which case the "-g" flag does not matter (and we
-> even have "make strip" to help you).
-> 
-> Is there some other reason to avoid the debugging information?
+Hi Junio,
 
-Maybe this comes from the misconception that debugging information
-changes the generated code, which, in fact, it doesn't.
+The following changes since commit 627736ca799edacf13881da7e671964a0afb=
+94b8:
 
-  $ make CFLAGS=-g LDFLAGS=-Wl,--build-id=none >/dev/null 2>&1 && wc -c <git
-  4432768
-  $ strip --strip-debug git && wc -c < git
-  2391120
-  $ cp git git_
-  $ make -j4 CFLAGS= LDFLAGS=-Wl,--build-id=none >/dev/null 2>&1 && wc -c <git
-  2400192
-  $ strip --strip-debug git && wc -c < git
-  2391120
-  $ diff -s git git_
-  Files git and git_ are identical
+  Git 2.3.0-rc1 (2015-01-20 17:35:41 -0800)
 
-LDFLAGS=-Wl,--build-id=none just avoids creating a .note.gnu.build-id
-section containing a uuid that varies between builds. The 9k difference
-between unstripped vs stripped for the no-debug-info case comes from the
-removal of the few symbols for source file names (all the symbols from
-readelf -s git | grep ABS).
+are available in the git repository at:
 
-Mike
+  git://github.com/git-l10n/git-po master
+
+for you to fetch changes up to 1e607449135792dd117bd528432fc1fbc1115667=
+:
+
+  l10n: correct indentation of show-branch usage (2015-01-21 15:35:37 +=
+0800)
+
+----------------------------------------------------------------
+(from the branch description for master local branch)
+
+Git l10n for git.git master branch
+
+----------------------------------------------------------------
+Jean-Noel Avila (2):
+      l10n: fr.po v2.3.0 round 1
+      l10n: fr.po v2.3.0 round 2
+
+Jiang Xin (10):
+      Merge branch 'master' of git://github.com/alexhenrie/git-po
+      l10n: git.pot: v2.3.0 round 1 (13 new, 11 removed)
+      l10n: zh_CN: translations for git v2.3.0-rc0
+      Merge branch 'master' of git://github.com/git-l10n/git-po
+      l10n: git.pot: v2.3.0 round 2 (3 updated)
+      Merge branch 'master' of git://github.com/nafmo/git-l10n-sv
+      Merge branch 'v2.3.0' of git://github.com/jnavila/git
+      l10n: zh_CN: various fixes on command arguments
+      Merge branch 'master' of git://github.com/git-l10n/git-po
+      l10n: correct indentation of show-branch usage
+
+Joan Perals (1):
+      l10n: ca.po: various fixes
+
+Peter Krefting (2):
+      l10n: sv.po: Update Swedish translation (2298t0f0u)
+      l10n: sv.po: Update Swedish translation (2298t0f0u)
+
+Ralf Thielow (4):
+      l10n: de.po: translate "track" as "versionieren"
+      l10n: de.po: fix typo
+      l10n: de.po: translate 13 new messages
+      l10n: de.po: translate 3 messages
+
+Tr=E1=BA=A7n Ng=E1=BB=8Dc Qu=C3=A2n (2):
+      l10n: vi.po(2298t): Updated and change Plural-Forms
+      l10n: vi.po(2298t): Updated 3 new strings
+
+ po/ca.po    | 1617 ++++++++++++++++++++++----------------------
+ po/de.po    | 1872 +++++++++++++++++++++++++--------------------------
+ po/fr.po    | 1813 +++++++++++++++++++++++++-------------------------
+ po/git.pot  | 1771 +++++++++++++++++++++++++------------------------
+ po/sv.po    | 1815 +++++++++++++++++++++++++-------------------------
+ po/vi.po    | 2139 +++++++++++++++++++++++++++++----------------------=
+--------
+ po/zh_CN.po | 1902 ++++++++++++++++++++++++++-------------------------=
+-
+ 7 files changed, 6506 insertions(+), 6423 deletions(-)
+
+--
+Jiang Xin
