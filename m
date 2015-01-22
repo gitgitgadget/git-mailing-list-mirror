@@ -1,76 +1,101 @@
-From: =?UTF-8?Q?Nico_Schl=C3=B6mer?= <nico.schloemer@gmail.com>
-Subject: error closing pipe: Bad file descriptor at /usr/share/perl5/Git/SVN/Fetcher.pm
- line 335.
-Date: Thu, 22 Jan 2015 14:11:34 +0100
-Message-ID: <CAK6Z60couQodKaAktF4r5GBiff=T-Nkjp5AkUBd1EC97JqVtxw@mail.gmail.com>
+From: Jeff Sipek <jeffpc@josefsipek.net>
+Subject: Re: [GUILT v4 32/33] Improved doc and tests for guilt header.
+Date: Thu, 22 Jan 2015 08:56:02 -0500
+Message-ID: <20150122135602.GA101460@meili.jeffnet.31bits.net>
+References: <1400450409-30998-1-git-send-email-cederp@opera.com>
+ <1400450409-30998-33-git-send-email-cederp@opera.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 22 14:12:02 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Per Cederqvist <cederp@opera.com>
+X-From: git-owner@vger.kernel.org Thu Jan 22 15:01:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YEHYH-0001N6-A3
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 14:12:01 +0100
+	id 1YEIKV-0005uH-4i
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 15:01:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752202AbbAVNL6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Jan 2015 08:11:58 -0500
-Received: from mail-lb0-f182.google.com ([209.85.217.182]:39277 "EHLO
-	mail-lb0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751595AbbAVNL4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jan 2015 08:11:56 -0500
-Received: by mail-lb0-f182.google.com with SMTP id l4so1391534lbv.13
-        for <git@vger.kernel.org>; Thu, 22 Jan 2015 05:11:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=oXdUpJoQNaHR4/b1HiCeoebbt4ajdyhJ9/9BzPix4mE=;
-        b=0E9xfyUzUi5l4wohbsuH+Ev9VdcieGgF49YSDXzstfOUV6/jSoEcGuWYU4lNRcXmu1
-         cJrm57EkLh03h1/uzZazw7dfVkGZZ5BQZfqwabBgWLWp82k5oeLCCzQi0wPKFWcXvL+S
-         D3Ih5dK5OC+bH7miGIOV9XXC21moKLHvFZxLKzhhylDqtNkQ8OV4Ep27Wfd7NEcHekMK
-         9t49ax7PylxKXWMF4bta8S7wqyb6sBT9RmY4fonDadcMbHlXYtLtFir/UXw/bd+tm74D
-         AGdN/1/eAIIIMRhw1hpqZFoPhgpsMZgCXIBzs4wXmXxIG2ivZ5wXjGBslJxTrtZgaclT
-         yTOQ==
-X-Received: by 10.112.30.71 with SMTP id q7mr1424525lbh.41.1421932315398; Thu,
- 22 Jan 2015 05:11:55 -0800 (PST)
-Received: by 10.114.91.132 with HTTP; Thu, 22 Jan 2015 05:11:34 -0800 (PST)
+	id S1752212AbbAVOBr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Jan 2015 09:01:47 -0500
+Received: from josefsipek.net ([71.174.113.7]:1540 "EHLO josefsipek.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751704AbbAVOBq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Jan 2015 09:01:46 -0500
+X-Greylist: delayed 339 seconds by postgrey-1.27 at vger.kernel.org; Thu, 22 Jan 2015 09:01:46 EST
+Received: from meili.jeffnet.31bits.net (unknown [172.31.0.119])
+	by josefsipek.net (Postfix) with ESMTPSA id 739485567A;
+	Thu, 22 Jan 2015 08:56:06 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <1400450409-30998-33-git-send-email-cederp@opera.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262832>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262833>
 
-Hi all,
-
-When cloning
-```
-$ git svn clone https://geuz.org/svn/gmsh/trunk
-```
-I'm getting the error
-```
-[...]
-r100 = e2a9b5baa2cebb18591ecb04ff350410d52f36de (refs/remotes/git-svn)
-error closing pipe: Bad file descriptor at
-/usr/share/perl5/Git/SVN/Fetcher.pm line 335.
-error closing pipe: Bad file descriptor at
-/usr/share/perl5/Git/SVN/Fetcher.pm line 335.
-out pipe went bad at /usr/share/perl5/Git.pm line 955.
-```
-after 99 commits were successfully checked out.
-
-Apparently, this problem has popped up before in a different context [1].
-
-This is with
-```
-$ git --version
-git version 2.2.2
-```
-What I can do to help debugging this?
-
-Cheers,
-Nico
+Signed-off-by: Josef 'Jeff' Sipek <jeffpc@josefsipek.net>
 
 
-[1] http://git.661346.n2.nabble.com/git-svn-exits-with-error-error-closing-pipe-Bad-file-descriptor-tt7592213.html#none
+On Mon, May 19, 2014 at 12:00:08AM +0200, Per Cederqvist wrote:
+> ---
+>  Documentation/guilt-header.txt | 5 ++++-
+>  regression/t-028.out           | 9 +++++++++
+>  regression/t-028.sh            | 3 +++
+>  3 files changed, 16 insertions(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/guilt-header.txt b/Documentation/guilt-header.txt
+> index 870bfaf..71b2e66 100644
+> --- a/Documentation/guilt-header.txt
+> +++ b/Documentation/guilt-header.txt
+> @@ -18,7 +18,10 @@ Prints either the topmost patch's header or the header of a specified patch.
+>  -E::
+>  	Open the raw patch in an editor, instead of printing it.
+>  <patchname>::
+> -	Name of the patch.
+> +	Name of the patch. If a patch with exactly this name exists,
+> +	use it. Otherwise, treat the name as a regexp; if the regexp
+> +	matches a single patch, use it. Otherwise, list all matching
+> +	patch names to stderr and fail.
+>  
+>  Author
+>  ------
+> diff --git a/regression/t-028.out b/regression/t-028.out
+> index ea72a3a..39ac900 100644
+> --- a/regression/t-028.out
+> +++ b/regression/t-028.out
+> @@ -56,3 +56,12 @@ Patch non-existant is not in the series
+>    remove
+>    mode
+>    patch-with-some-desc
+> +% guilt header de
+> +de does not uniquely identify a patch. Did you mean any of these?
+> +  mode
+> +  patch-with-some-desc
+> +% guilt header des
+> +blah blah blah
+> +
+> +Signed-off-by: Commiter Name <commiter@email>
+> +
+> diff --git a/regression/t-028.sh b/regression/t-028.sh
+> index 2ce0378..cd3088c 100755
+> --- a/regression/t-028.sh
+> +++ b/regression/t-028.sh
+> @@ -35,4 +35,7 @@ shouldfail guilt header non-existant
+>  # patch name is a regexp that just happens to match an existing patch.
+>  shouldfail guilt header '.*'
+>  
+> +shouldfail guilt header de
+> +cmd guilt header des
+> +
+>  # FIXME: how do we check that -e works?
+> -- 
+> 1.8.3.1
+> 
+
+-- 
+You measure democracy by the freedom it gives its dissidents, not the
+freedom it gives its assimilated conformists.
+		- Abbie Hoffman
