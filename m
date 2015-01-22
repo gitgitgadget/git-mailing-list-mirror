@@ -1,78 +1,76 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCHv2 5/5] refs.c: enable large transactions
-Date: Thu, 22 Jan 2015 08:10:18 -0500
-Message-ID: <20150122131018.GE19681@peff.net>
-References: <1421893929-7447-1-git-send-email-sbeller@google.com>
- <1421893929-7447-6-git-send-email-sbeller@google.com>
- <54C0DDE7.8030708@alum.mit.edu>
+From: =?UTF-8?Q?Nico_Schl=C3=B6mer?= <nico.schloemer@gmail.com>
+Subject: error closing pipe: Bad file descriptor at /usr/share/perl5/Git/SVN/Fetcher.pm
+ line 335.
+Date: Thu, 22 Jan 2015 14:11:34 +0100
+Message-ID: <CAK6Z60couQodKaAktF4r5GBiff=T-Nkjp5AkUBd1EC97JqVtxw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
-	gitster@pobox.com, loic@dachary.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Thu Jan 22 14:10:26 2015
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 22 14:12:02 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YEHWi-0000IH-Bx
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 14:10:25 +0100
+	id 1YEHYH-0001N6-A3
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 14:12:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752600AbbAVNKV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Jan 2015 08:10:21 -0500
-Received: from cloud.peff.net ([50.56.180.127]:37296 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752309AbbAVNKT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jan 2015 08:10:19 -0500
-Received: (qmail 17811 invoked by uid 102); 22 Jan 2015 13:10:19 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 22 Jan 2015 07:10:19 -0600
-Received: (qmail 9076 invoked by uid 107); 22 Jan 2015 13:10:44 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 22 Jan 2015 08:10:44 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 22 Jan 2015 08:10:18 -0500
-Content-Disposition: inline
-In-Reply-To: <54C0DDE7.8030708@alum.mit.edu>
+	id S1752202AbbAVNL6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Jan 2015 08:11:58 -0500
+Received: from mail-lb0-f182.google.com ([209.85.217.182]:39277 "EHLO
+	mail-lb0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751595AbbAVNL4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Jan 2015 08:11:56 -0500
+Received: by mail-lb0-f182.google.com with SMTP id l4so1391534lbv.13
+        for <git@vger.kernel.org>; Thu, 22 Jan 2015 05:11:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=oXdUpJoQNaHR4/b1HiCeoebbt4ajdyhJ9/9BzPix4mE=;
+        b=0E9xfyUzUi5l4wohbsuH+Ev9VdcieGgF49YSDXzstfOUV6/jSoEcGuWYU4lNRcXmu1
+         cJrm57EkLh03h1/uzZazw7dfVkGZZ5BQZfqwabBgWLWp82k5oeLCCzQi0wPKFWcXvL+S
+         D3Ih5dK5OC+bH7miGIOV9XXC21moKLHvFZxLKzhhylDqtNkQ8OV4Ep27Wfd7NEcHekMK
+         9t49ax7PylxKXWMF4bta8S7wqyb6sBT9RmY4fonDadcMbHlXYtLtFir/UXw/bd+tm74D
+         AGdN/1/eAIIIMRhw1hpqZFoPhgpsMZgCXIBzs4wXmXxIG2ivZ5wXjGBslJxTrtZgaclT
+         yTOQ==
+X-Received: by 10.112.30.71 with SMTP id q7mr1424525lbh.41.1421932315398; Thu,
+ 22 Jan 2015 05:11:55 -0800 (PST)
+Received: by 10.114.91.132 with HTTP; Thu, 22 Jan 2015 05:11:34 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262831>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262832>
 
-On Thu, Jan 22, 2015 at 12:24:23PM +0100, Michael Haggerty wrote:
+Hi all,
 
-> I can't figure out where to apply this series or where to fetch it from,
-> so I can't see these changes in context, so maybe I'm misunderstanding
-> something. It looks like this code is doing
-> 
->     open(), close(), open(), fdopen(), write(), fclose(), rename()
-> 
-> on each lockfile. But don't we have enough information to write the
-> SHA-1 into the lockfile the first time we touch it? I.e., couldn't we
-> reduce this to
-> 
->     open(), fdopen(), write(), fclose(), rename()
-> 
-> , where the first four calls all happen in the initial loop? If a
-> problem is discovered when writing a later reference, we would roll back
-> the transaction anyway.
-> 
-> I understand that this would require a bigger rewrite, so maybe it is
-> not worth it.
+When cloning
+```
+$ git svn clone https://geuz.org/svn/gmsh/trunk
+```
+I'm getting the error
+```
+[...]
+r100 = e2a9b5baa2cebb18591ecb04ff350410d52f36de (refs/remotes/git-svn)
+error closing pipe: Bad file descriptor at
+/usr/share/perl5/Git/SVN/Fetcher.pm line 335.
+error closing pipe: Bad file descriptor at
+/usr/share/perl5/Git/SVN/Fetcher.pm line 335.
+out pipe went bad at /usr/share/perl5/Git.pm line 955.
+```
+after 99 commits were successfully checked out.
 
-I had a nagging feeling on the multiple-open thing, too, and would much
-prefer to just write out the contents early (since we know what they
-are). It looks like we would just need to split write_ref_sha1() into
-its two halves:
+Apparently, this problem has popped up before in a different context [1].
 
-  1. Write out the lockfile
+This is with
+```
+$ git --version
+git version 2.2.2
+```
+What I can do to help debugging this?
 
-  2. Commit the change
+Cheers,
+Nico
 
-And then call them at the appropriate spots from ref_transaction_commit().
 
-I guess that is maybe a step backwards for abstracted ref backends,
-though.
-
--Peff
+[1] http://git.661346.n2.nabble.com/git-svn-exits-with-error-error-closing-pipe-Bad-file-descriptor-tt7592213.html#none
