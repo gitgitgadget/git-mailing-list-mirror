@@ -1,128 +1,76 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCHv2 5/5] refs.c: enable large transactions
-Date: Thu, 22 Jan 2015 12:24:23 +0100
-Message-ID: <54C0DDE7.8030708@alum.mit.edu>
-References: <1421893929-7447-1-git-send-email-sbeller@google.com> <1421893929-7447-6-git-send-email-sbeller@google.com>
+From: Tobias Getzner <tobias.getzner@gmx.de>
+Subject: [BUG] Mojibake in git gui and gitk for certain unicode chars
+Date: Thu, 22 Jan 2015 12:43:21 +0100
+Message-ID: <1421927001.11296.27.camel@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 8bit
-To: Stefan Beller <sbeller@google.com>, peff@peff.net,
-	git@vger.kernel.org, gitster@pobox.com, loic@dachary.org
-X-From: git-owner@vger.kernel.org Thu Jan 22 12:31:36 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 22 12:43:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YEFz5-0000Qm-0X
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 12:31:35 +0100
+	id 1YEGAa-0006vc-Gr
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 12:43:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751211AbbAVLbb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Jan 2015 06:31:31 -0500
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:45351 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750915AbbAVLba (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Jan 2015 06:31:30 -0500
-X-Greylist: delayed 421 seconds by postgrey-1.27 at vger.kernel.org; Thu, 22 Jan 2015 06:31:30 EST
-X-AuditID: 12074414-f797f6d000004084-a9-54c0dde9815b
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 8A.56.16516.9EDD0C45; Thu, 22 Jan 2015 06:24:25 -0500 (EST)
-Received: from [192.168.69.130] (p5DDB02C5.dip0.t-ipconnect.de [93.219.2.197])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t0MBONAj008455
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Thu, 22 Jan 2015 06:24:24 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.3.0
-In-Reply-To: <1421893929-7447-6-git-send-email-sbeller@google.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprEKsWRmVeSWpSXmKPExsUixO6iqPvy7oEQg8WHzSy6rnQzWTT0XmG2
-	eLXdx+JHSw+zxebN7SwOrB7PtrF6LNhU6vGsdw+jx8VLyh6fN8kFsEZx2yQllpQFZ6bn6dsl
-	cGf8u9LKXnBJqOL8m/gGxhV8XYwcHBICJhLNh5i6GDmBTDGJC/fWs3UxcnEICVxmlDg/+Q8r
-	hHOOSeLSzAssIFW8AtoSU9ZMYAFpZhFQlTg1SRgkzCagK7GopxlskKhAkMSVls3MEOWCEidn
-	PgFrFRGokLi4+Q4biC0sYCNxsOUqG8gYIYFyiS1zU0DCnAJOEtcmnQArYRbQk9hx/RcrhC0v
-	0bx1NvMERv5ZSKbOQlI2C0nZAkbmVYxyiTmlubq5iZk5xanJusXJiXl5qUW6Fnq5mSV6qSml
-	mxgh4Suyg/HISblDjAIcjEo8vBnFB0KEWBPLiitzDzFKcjApifJOvAkU4kvKT6nMSCzOiC8q
-	zUktPsQowcGsJMJregIox5uSWFmVWpQPk5LmYFES5/22WN1PSCA9sSQ1OzW1ILUIJivDwaEk
-	wSsJjFMhwaLU9NSKtMycEoQ0EwcnyHAuKZHi1LyU1KLE0pKMeFAsxhcDoxEkxQO0Vwiknbe4
-	IDEXKArReopRUUqcVwokIQCSyCjNgxsLS0qvGMWBvhTmnXMHqIoHmNDgul8BDWYCGlywHWxw
-	SSJCSqqBcbKvaL33vNTTv3ozH/+7cDFxnbbKrbKLF1ui+g50Shiov28z9b4jIDb11xJ976r1
-	5mrvJK+eFmHc4b+ZVYXF2OTBHZltN+KijvMZhX2bbF8bmvywvs7zDfcnIUdfnqP9 
+	id S1752177AbbAVLnZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Jan 2015 06:43:25 -0500
+Received: from mout.gmx.net ([212.227.17.21]:58997 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751595AbbAVLnX convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Jan 2015 06:43:23 -0500
+Received: from glenalbyn.linguistics.ruhr-uni-bochum.de ([134.147.14.84]) by
+ mail.gmx.com (mrgmx102) with ESMTPSA (Nemesis) id 0MZ7bs-1Xzu9003cC-00KxcD
+ for <git@vger.kernel.org>; Thu, 22 Jan 2015 12:43:22 +0100
+X-Mailer: Evolution 3.12.10 
+X-Provags-ID: V03:K0:v1iXu+ZpJXk48XNIbVKQQZithtjkRilr3r82WPVddQmJMjMJY6h
+ QfeTzfL5Dlo8sWMxZeYI72D2k5j8JAERLx+3u1WPr37UyvrVBJ5NWosUvHfLZ+2LEqN6zzE
+ /ZuxQQkwF9qFZevbj0UG2jQKBgzLpbKGy15sIxKiaEDBK2ZsaC5qL9fou2pxw+eraznPrXI
+ m/cLFk4GbHkVP96iLe0Ig==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262818>
 
-On 01/22/2015 03:32 AM, Stefan Beller wrote:
-> By closing the file descriptors after creating the lock file we are not
-> limiting the size of the transaction by the number of available file
-> descriptors.
-> 
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
->  refs.c                | 17 +++++++++++++----
->  t/t1400-update-ref.sh |  4 ++--
->  2 files changed, 15 insertions(+), 6 deletions(-)
-> 
-> diff --git a/refs.c b/refs.c
-> index 2013d37..9d01102 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -3055,11 +3055,18 @@ int is_branch(const char *refname)
->  static int write_sha1_to_lock_file(struct ref_lock *lock,
->  				   const unsigned char *sha1)
->  {
-> -	if (fdopen_lock_file(lock->lk, "w") < 0
-> -	    || fprintf(lock->lk->fp, "%s\n", sha1_to_hex(sha1)) != 41)
-> +	if (lock->lk->fd == -1) {
-> +		if (reopen_lock_file(lock->lk) < 0
-> +		    || fdopen_lock_file(lock->lk, "w") < 0
-> +		    || fprintf(lock->lk->fp, "%s\n", sha1_to_hex(sha1)) != 41
-> +		    || close_lock_file(lock->lk) < 0)
-> +		    return -1;
-> +	} else {
-> +		if (fdopen_lock_file(lock->lk, "w") < 0
-> +		    || fprintf(lock->lk->fp, "%s\n", sha1_to_hex(sha1)) != 41)
->  		return -1;
-> -	else
-> -		return 0;
-> +	}
-> +	return 0;
->  }
+Hello,
 
-I can't figure out where to apply this series or where to fetch it from,
-so I can't see these changes in context, so maybe I'm misunderstanding
-something. It looks like this code is doing
+I=E2=80=99ve noticed git gui and gitk seem to have problems decoding ce=
+rtain
+unicode characters. E.g., when a commit contains the character =C2=AB=F0=
+=9F=91=8D=C2=BB
+(thumbs up sign; U+1F44D) in UTF-8 encoding, this character will show
+as =C2=AB=C3=B0=C2=9F=C2=91=C2=8D=C2=BB in gitk. git gui also displays =
+it using the same sequence.
+When trying to stage lines within the context of such characters, the
+program will error out (corrupt patch).
 
-    open(), close(), open(), fdopen(), write(), fclose(), rename()
+The character sequence appears to be mojibake introduced by decoding
+UTF-8 as ISO-8859-1. However, my locale is set to =C2=ABen_US.utf8=C2=BB=
+=2E git gui
+is also set to assume UTF-8 encoding for files, and in the list menu
+where this encoding is selected, it lists the UTF-8 option under
+=C2=ABsystem encoding=C2=BB, which suggests that my locale is correctly=
+ picked
+up.
 
-on each lockfile. But don't we have enough information to write the
-SHA-1 into the lockfile the first time we touch it? I.e., couldn't we
-reduce this to
+Is there perchance any heuristics in place which tries decoding files
+as unicode, with a fall-back to latin1? If so, then potentially the bug
+could be due to U+1F44D tripping up the decoder, triggering a
+fall-back, and rendering the characters as mojibake.
 
-    open(), fdopen(), write(), fclose(), rename()
+I=E2=80=99ve noticed a perhaps related glitch when the options in git g=
+ui is
+shown. My committer name contains the character =C2=AB=C3=9F=C2=BB (lat=
+in small letter
+sharp s; U+00DF). The text field in the options dialog displays this as
+=C2=AB=C3=83=C2=9F=C2=BB, which also seems to be UTF-8 to latin1 mojiba=
+ke. Curiously, the
+same character displays just fine when staging parts of files via git
+gui, so the issue is not quite the same as the one described above.
 
-, where the first four calls all happen in the initial loop? If a
-problem is discovered when writing a later reference, we would roll back
-the transaction anyway.
-
-I understand that this would require a bigger rewrite, so maybe it is
-not worth it.
-
->  /*
-> @@ -3761,6 +3768,8 @@ int ref_transaction_commit(struct ref_transaction *transaction,
->  				    update->refname);
->  			goto cleanup;
->  		}
-> +		/* Do not keep all lock files open at the same time. */
-> +		close_lock_file(update->lock->lk);
->  	}
->  
->  	/* Perform updates first so live commits remain referenced */
-> [...]
-
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
+Best regards,
+Tobias
