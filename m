@@ -1,90 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] transport-helper: do not request symbolic refs to remote helpers
-Date: Wed, 21 Jan 2015 22:46:48 -0800
-Message-ID: <xmqqwq4fuxbb.fsf@gitster.dls.corp.google.com>
-References: <1421631307-20669-1-git-send-email-mh@glandium.org>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, srabbelier@gmail.com
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Thu Jan 22 07:47:24 2015
+From: "Kyle J. McKay" <mackyle@gmail.com>
+Subject: Re: [PATCH] test: add git apply whitespace expansion tests
+Date: Wed, 21 Jan 2015 22:55:05 -0800
+Message-ID: <21FC5344-64BF-46B1-ADA9-DDE3B1FEC8C4@gmail.com>
+References: <CAO2U3QjGUfnTRO_poS+=-MfE4aYGuWpVJTe20H-u=FgkVy-RYg@mail.gmail.com> <CAO2U3Qjn9o_eYayEMCC3S6DBr9kVH7mPL00QGrXAnV2iYRP-=A@mail.gmail.com> <CAO2U3Qj-Hg2tb72NgO6wb-aqAxFG7aga2ZDeZNDCPJzGtmHTAA@mail.gmail.com> <CAO2U3Qhd_DPP09BUyMr6NKUtOe4EQQ7G83BRg7MbtQXFPjKv8w@mail.gmail.com> <CAO2U3Qje-YwcV1d5BK_zZqrTki4AU=emdkUZzEEieRjmoQdmGg@mail.gmail.com> <CAO2U3Qi4TWZiNoOQVSW=Ycvp3bpBySZrCGmRLCbRJJes_n2Wkw@mail.gmail.com> <99579252-EF8A-4DAF-A49D-2AC5627ED9E3@gmail.com> <4157F6B0-DDF4-4F71-A09B-EE216537CA89@gmail.com> <xmqqbnly1oqo.fsf@gitster.dls.corp.google.com> <xmqqzj9iz3gu.fsf_-_@gitster.dls.corp.google.com> <102e322e68e78e39a7c227f3f3e102c@74d39fa044aa309eaea14b9f57fe79c> <CAPc5daXVk_ROUy7rmzS0aosWvE2wqw8tHZgomHHkay9CZjhbiw@mail.gmail.com> <AB9246EB-D720-4A4A-9AB7-4307613C19A3@gmail.
+ com> <xmqq1tmnwypp.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0 (Apple Message framework v936)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: Git mailing list <git@vger.kernel.org>,
+	Michael Blume <blume.mike@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 22 07:55:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YEBY4-000849-0Q
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 07:47:24 +0100
+	id 1YEBfe-0004BF-Nj
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 07:55:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751034AbbAVGq5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Jan 2015 01:46:57 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:51954 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750951AbbAVGqz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jan 2015 01:46:55 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D9A0B276A0;
-	Thu, 22 Jan 2015 01:46:49 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Rf2o1Fbtx2/vH5THVf4JmpzzxHI=; b=PAETqy
-	zATnBf3Ke7nzmJmY7pv/yRQyt0RGJhUIPa1X+4URNqkLQT0sIfJ/W8rq0D00P1L1
-	2KOybeLy8lv/rutK9fuhxrRU4Mtid0+c10cUEpRyi69HQx5ACXq3ekyuiggx+UuU
-	Sx4bqFAjfz9j/T5+e9Wrxcvi2M4+yt8AlGX9I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=UTqz188emTwd7Y8OjVhuUo67PsOw/FRw
-	iumJDO5GnVBgCX2NG0KOMTH31WJ7r6Q87DlVHieAg6kp/TEm9/qnjVSntGCGSngP
-	5e/+AQlKklcvOhyRyYn9glPRl0xK2glpSzsEX5BC5Y+mAM9Afzo65a+/l3emUIi4
-	4a48NSodREw=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id CFB072769F;
-	Thu, 22 Jan 2015 01:46:49 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 570A32769E;
-	Thu, 22 Jan 2015 01:46:49 -0500 (EST)
-In-Reply-To: <1421631307-20669-1-git-send-email-mh@glandium.org> (Mike
-	Hommey's message of "Mon, 19 Jan 2015 10:35:07 +0900")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 70C6AA5C-A202-11E4-B72E-7BA29F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751755AbbAVGzL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Jan 2015 01:55:11 -0500
+Received: from mail-pd0-f173.google.com ([209.85.192.173]:41774 "EHLO
+	mail-pd0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751449AbbAVGzI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Jan 2015 01:55:08 -0500
+Received: by mail-pd0-f173.google.com with SMTP id fp1so29815882pdb.4
+        for <git@vger.kernel.org>; Wed, 21 Jan 2015 22:55:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:in-reply-to:subject:references:message-id:content-type
+         :content-transfer-encoding:mime-version:date:cc;
+        bh=apx0rQxFsJVhCGNP9srugMkHrJq9AsZb/dNPzM0F2YQ=;
+        b=Y/F5LQnNsQ0O9H6CrUrEjBCaEwHO9MFps8KmYLI81INj+t6OyjpTJLUUtF995f/BWI
+         H9KqlVdlLUC71aH4CQAveCEd2o37+udgjm0kqLQmxKZTQc0sM+3VGGeClsmNxvh/PGE7
+         j2lutKpxiEffKr40cgoZJxS4/kqOap7HYUzabsvMBETahnY/b0+z7q16U/XaKNb4g5c4
+         cZ+671+msm9fQHztAVXmskDR8wmD/Q3pUV+kQe4HSw1XYX9/rxDl5NHTZK3T9Ht2t6Pp
+         TuSF1cYM7b2ZYn83t7REFVWgkex5LavNE2Jsl1396fBhDjF15S2qFZ5hb/ngTJlS6XC9
+         mHOw==
+X-Received: by 10.66.156.229 with SMTP id wh5mr68694061pab.119.1421909708407;
+        Wed, 21 Jan 2015 22:55:08 -0800 (PST)
+Received: from [172.16.16.105] (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
+        by mx.google.com with ESMTPSA id ps9sm7867512pbb.21.2015.01.21.22.55.07
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Wed, 21 Jan 2015 22:55:07 -0800 (PST)
+In-Reply-To: <xmqq1tmnwypp.fsf@gitster.dls.corp.google.com>
+X-Mauler: Craptastic (2.936)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262798>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262799>
 
-Mike Hommey <mh@glandium.org> writes:
+On Jan 21, 2015, at 14:33, Junio C Hamano wrote:
 
-> A typical remote helper will return a `list` of refs containing a symbolic
-> ref HEAD, pointing to, e.g. refs/heads/master. In the case of a clone, all
-> the refs are being requested through `fetch` or `import`, including the
-> symbolic ref.
+> "Kyle J. McKay" <mackyle@gmail.com> writes:
 >
-> While this works properly, in some cases of a fetch, like `git fetch url`
-> or `git fetch origin HEAD`, or any fetch command involving a symbolic ref
-> without also fetching the corresponding ref it points to, the fetch command
-> fails with:
+>> So since I've not been able to get test 2 or 3 to core dump (even
+>> before 250b3c6c) I tend to believe you are correct in that the code
+>> thinks (incorrectly) that the result should fit within the buffer.
 >
->   fatal: bad object 0000000000000000000000000000000000000000
->   error: <remote> did not send all necessary objects
->
-> (in the case the remote helper returned '?' values to the `list` command).
+> Thanks; let me steal your tests when I reroll.
 
-Hmph.
+Awesome. :)
 
-Since the most "typical remote helper" I immediately think of is
-remote-curl and "git fetch https://code.googlesource.com/git HEAD"
-does not seem to fail that way, I am not sure what to make of the
-above.  It is unclear if you meant that the above is inherent due to
-the way how remote helper protocol works (e.g. there is only one
-thing we can associate with a ref and we cannot say "HEAD points at
-this commit" at the same time we say "HEAD points at
-refs/heads/master"), or just due to broken or lazy implementation of
-the remote helpers that are invoked by transport-helper.c interface.
+But please squash in this tiny change if using the tests verbatim:
 
-> This is because there is only one ref given to fetch(), and it's not
-> further resolved to something at the end of fetch_with_import().
+On Jan 18, 2015, at 02:49, Kyle J. McKay wrote:
 
-There is no get_refs_list() or something similar involved?
+> +#
+> +## create test-N, patchN.patch, expect-N files
+> +#
+> +
+> +# test 1
+> +printf '\t%s\n' 1 2 3 4 5 6 > before
+> +printf '\t%s\n' 1 2 3 > after
+> +printf '%64s\n' a b c $x >> after
+
+This line ^ in test 1 should not have a '$x' in it.  It should just be:
+
+> +printf '%64s\n' a b c >> after
+
+The test runs fine currently, but if somehow x should get defined  
+before running the tests, test 1 would fail.  All the other '$x' in  
+the other tests are correct.
+
+> +printf '\t%s\n' 4 5 6 >> after
+> +git diff --no-index before after | \
+> +sed -e 's/before/test-1/' -e 's/after/test-1/' > patch1.patch
+> +printf '%64s\n' 1 2 3 4 5 6 > test-1
+> +printf '%64s\n' 1 2 3 a b c 4 5 6 > expect-1
+> +
+> +# test 2
+
+-Kyle
