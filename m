@@ -1,96 +1,131 @@
-From: "Kyle J. McKay" <mackyle@gmail.com>
-Subject: Re: [PATCH] test: add git apply whitespace expansion tests
-Date: Wed, 21 Jan 2015 22:55:05 -0800
-Message-ID: <21FC5344-64BF-46B1-ADA9-DDE3B1FEC8C4@gmail.com>
-References: <CAO2U3QjGUfnTRO_poS+=-MfE4aYGuWpVJTe20H-u=FgkVy-RYg@mail.gmail.com> <CAO2U3Qjn9o_eYayEMCC3S6DBr9kVH7mPL00QGrXAnV2iYRP-=A@mail.gmail.com> <CAO2U3Qj-Hg2tb72NgO6wb-aqAxFG7aga2ZDeZNDCPJzGtmHTAA@mail.gmail.com> <CAO2U3Qhd_DPP09BUyMr6NKUtOe4EQQ7G83BRg7MbtQXFPjKv8w@mail.gmail.com> <CAO2U3Qje-YwcV1d5BK_zZqrTki4AU=emdkUZzEEieRjmoQdmGg@mail.gmail.com> <CAO2U3Qi4TWZiNoOQVSW=Ycvp3bpBySZrCGmRLCbRJJes_n2Wkw@mail.gmail.com> <99579252-EF8A-4DAF-A49D-2AC5627ED9E3@gmail.com> <4157F6B0-DDF4-4F71-A09B-EE216537CA89@gmail.com> <xmqqbnly1oqo.fsf@gitster.dls.corp.google.com> <xmqqzj9iz3gu.fsf_-_@gitster.dls.corp.google.com> <102e322e68e78e39a7c227f3f3e102c@74d39fa044aa309eaea14b9f57fe79c> <CAPc5daXVk_ROUy7rmzS0aosWvE2wqw8tHZgomHHkay9CZjhbiw@mail.gmail.com> <AB9246EB-D720-4A4A-9AB7-4307613C19A3@gmail.
- com> <xmqq1tmnwypp.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Git mailing list <git@vger.kernel.org>,
-	Michael Blume <blume.mike@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 22 07:55:15 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv2] rebase -i: respect core.abbrev for real
+Date: Wed, 21 Jan 2015 22:56:28 -0800
+Message-ID: <xmqqsif3uwv7.fsf@gitster.dls.corp.google.com>
+References: <CAPig+cQcYXzRwHMRcKQJf-mWq7d9Kgp7KndnEhFs4_mwgLpiiA@mail.gmail.com>
+	<1421750552-110075-1-git-send-email-kirill.shutemov@linux.intel.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
+To: "Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>
+X-From: git-owner@vger.kernel.org Thu Jan 22 07:56:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YEBfe-0004BF-Nj
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 07:55:15 +0100
+	id 1YEBgx-0004vv-Cx
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 07:56:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751755AbbAVGzL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Jan 2015 01:55:11 -0500
-Received: from mail-pd0-f173.google.com ([209.85.192.173]:41774 "EHLO
-	mail-pd0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751449AbbAVGzI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jan 2015 01:55:08 -0500
-Received: by mail-pd0-f173.google.com with SMTP id fp1so29815882pdb.4
-        for <git@vger.kernel.org>; Wed, 21 Jan 2015 22:55:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:in-reply-to:subject:references:message-id:content-type
-         :content-transfer-encoding:mime-version:date:cc;
-        bh=apx0rQxFsJVhCGNP9srugMkHrJq9AsZb/dNPzM0F2YQ=;
-        b=Y/F5LQnNsQ0O9H6CrUrEjBCaEwHO9MFps8KmYLI81INj+t6OyjpTJLUUtF995f/BWI
-         H9KqlVdlLUC71aH4CQAveCEd2o37+udgjm0kqLQmxKZTQc0sM+3VGGeClsmNxvh/PGE7
-         j2lutKpxiEffKr40cgoZJxS4/kqOap7HYUzabsvMBETahnY/b0+z7q16U/XaKNb4g5c4
-         cZ+671+msm9fQHztAVXmskDR8wmD/Q3pUV+kQe4HSw1XYX9/rxDl5NHTZK3T9Ht2t6Pp
-         TuSF1cYM7b2ZYn83t7REFVWgkex5LavNE2Jsl1396fBhDjF15S2qFZ5hb/ngTJlS6XC9
-         mHOw==
-X-Received: by 10.66.156.229 with SMTP id wh5mr68694061pab.119.1421909708407;
-        Wed, 21 Jan 2015 22:55:08 -0800 (PST)
-Received: from [172.16.16.105] (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
-        by mx.google.com with ESMTPSA id ps9sm7867512pbb.21.2015.01.21.22.55.07
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Wed, 21 Jan 2015 22:55:07 -0800 (PST)
-In-Reply-To: <xmqq1tmnwypp.fsf@gitster.dls.corp.google.com>
-X-Mauler: Craptastic (2.936)
+	id S1750758AbbAVG4c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Jan 2015 01:56:32 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:54508 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750713AbbAVG4a (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Jan 2015 01:56:30 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C9CA32793A;
+	Thu, 22 Jan 2015 01:56:29 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=xYAlLpo2z5U5GmMnKqIXVEXxLXo=; b=koRQk1
+	lQVbfUjXwt0mTFO30nAGz+kyCROs6HOZspYdPyFLZeGZl1bTjWfcocO9c4E6Jq7K
+	EyhhYDRUJyIP/nzdThofFjK1wDQk1oPURG193Mwf6YIOGt4jcIxM/hfILF8sJCDY
+	m6oIOQyKSkLK1aL4/A5+pu+pQL5ykiclRGDHg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=yhxUqYmju1n5tHgsLG+nhCbrZUuqODNb
+	U5G+JD3q10t9hkVtmMwWI7Li5lcN2k58Rh9efSQSLT6d05iaq66iqNyh9mwIfVk0
+	BuOP90ixyAjB+kZ3RvJp0l+rjgeLWiTs5+mbs7Q2dBhgiCbk5mWvSIXg6iCC62xj
+	q7CK21q2R+o=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C03AE27938;
+	Thu, 22 Jan 2015 01:56:29 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 467F227936;
+	Thu, 22 Jan 2015 01:56:29 -0500 (EST)
+In-Reply-To: <1421750552-110075-1-git-send-email-kirill.shutemov@linux.intel.com>
+	(Kirill A. Shutemov's message of "Tue, 20 Jan 2015 12:42:32 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: CA715402-A203-11E4-A505-7BA29F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262799>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262800>
 
-On Jan 21, 2015, at 14:33, Junio C Hamano wrote:
+"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com> writes:
 
-> "Kyle J. McKay" <mackyle@gmail.com> writes:
+> I have tried to fix this before: see 568950388be2, but it doesn't
+> really work.
 >
->> So since I've not been able to get test 2 or 3 to core dump (even
->> before 250b3c6c) I tend to believe you are correct in that the code
->> thinks (incorrectly) that the result should fit within the buffer.
+> I don't know how it happend, but that commit makes interactive rebase to
+> respect core.abbrev only during --edit-todo, but not the initial todo
+> list edit.
 >
-> Thanks; let me steal your tests when I reroll.
+> For this time I've included a test-case to avoid this frustration again.
 
-Awesome. :)
+I suspect that the work that introduced expand/collapse could have
+gone one step further so that all of the short object names you are
+touching in this patch can stay in the full 40-hex name to avoid
+ambiguity.  That is, keep the internal representation always use the
+full object name, and then always call these three:
 
-But please squash in this tiny change if using the tests verbatim:
+    collapse_todo_ids 
+    git_sequence_editor
+    expand_todo_ids
 
-On Jan 18, 2015, at 02:49, Kyle J. McKay wrote:
+in this order.
 
-> +#
-> +## create test-N, patchN.patch, expect-N files
-> +#
+Wouldn't that make the end result a lot cleaner, I wonder?
+
+
+>
+> Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+> ---
+>  v2: fix &&-chain in the test-case
+> ---
+>  git-rebase--interactive.sh    | 4 ++--
+>  t/t3404-rebase-interactive.sh | 7 +++++++
+>  2 files changed, 9 insertions(+), 2 deletions(-)
+>
+> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+> index c6a4629cbc2b..1855e12f1ada 100644
+> --- a/git-rebase--interactive.sh
+> +++ b/git-rebase--interactive.sh
+> @@ -962,7 +962,7 @@ else
+>  	shortrevisions=$shorthead
+>  fi
+>  git rev-list $merges_option --pretty=oneline --abbrev-commit \
+> -	--abbrev=7 --reverse --left-right --topo-order \
+> +	--reverse --left-right --topo-order \
+>  	$revisions ${restrict_revision+^$restrict_revision} | \
+>  	sed -n "s/^>//p" |
+>  while read -r shortsha1 rest
+> @@ -1020,7 +1020,7 @@ then
+>  			# just the history of its first-parent for others that will
+>  			# be rebasing on top of it
+>  			git rev-list --parents -1 $rev | cut -d' ' -s -f2 > "$dropped"/$rev
+> -			short=$(git rev-list -1 --abbrev-commit --abbrev=7 $rev)
+> +			short=$(git rev-list -1 --abbrev-commit $rev)
+>  			sane_grep -v "^[a-z][a-z]* $short" <"$todo" > "${todo}2" ; mv "${todo}2" "$todo"
+>  			rm "$rewritten"/$rev
+>  		fi
+> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+> index 8197ed29a9ec..a31f7e0430e1 100755
+> --- a/t/t3404-rebase-interactive.sh
+> +++ b/t/t3404-rebase-interactive.sh
+> @@ -1039,4 +1039,11 @@ test_expect_success 'short SHA-1 collide' '
+>  	)
+>  '
+>  
+> +test_expect_success 'respect core.abbrev' '
+> +	git config core.abbrev 12 &&
+> +	set_cat_todo_editor &&
+> +	test_must_fail git rebase -i HEAD~4 >todo-list &&
+> +	test 4 = $(grep -c "pick [0-9a-f]\{12,\}" todo-list)
+> +'
 > +
-> +# test 1
-> +printf '\t%s\n' 1 2 3 4 5 6 > before
-> +printf '\t%s\n' 1 2 3 > after
-> +printf '%64s\n' a b c $x >> after
-
-This line ^ in test 1 should not have a '$x' in it.  It should just be:
-
-> +printf '%64s\n' a b c >> after
-
-The test runs fine currently, but if somehow x should get defined  
-before running the tests, test 1 would fail.  All the other '$x' in  
-the other tests are correct.
-
-> +printf '\t%s\n' 4 5 6 >> after
-> +git diff --no-index before after | \
-> +sed -e 's/before/test-1/' -e 's/after/test-1/' > patch1.patch
-> +printf '%64s\n' 1 2 3 4 5 6 > test-1
-> +printf '%64s\n' 1 2 3 a b c 4 5 6 > expect-1
-> +
-> +# test 2
-
--Kyle
+>  test_done
