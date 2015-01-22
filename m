@@ -1,86 +1,90 @@
-From: "Dan Langille (dalangil)" <dalangil@cisco.com>
-Subject: Re: [PATCH v3] remote-curl: fall back to Basic auth if Negotiate
- fails
-Date: Thu, 22 Jan 2015 14:47:21 +0000
-Message-ID: <00E4CEA7-3ECC-41CD-A9BC-D7EAF56DCFDE@cisco.com>
-References: <1420142187-1025433-1-git-send-email-sandals@crustytoothpaste.net>
- <1420676960-492860-1-git-send-email-sandals@crustytoothpaste.net>
- <7930FE25-8206-43A8-9678-C56D789E09CE@cisco.com>
- <xmqqk30hyock.fsf@gitster.dls.corp.google.com>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: [PATCH] Makefile: do not compile git with debugging symbols by
+ default
+Date: Fri, 23 Jan 2015 00:09:14 +0900
+Message-ID: <20150122150914.GA20135@glandium.org>
+References: <1421931037-21368-1-git-send-email-kuleshovmail@gmail.com>
+ <20150122130036.GC19681@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 22 15:47:29 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: Alexander Kuleshov <kuleshovmail@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jan 22 16:09:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YEJ2e-000484-Jo
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 15:47:28 +0100
+	id 1YEJOL-0004la-Jy
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 16:09:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752929AbbAVOrZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Jan 2015 09:47:25 -0500
-Received: from alln-iport-4.cisco.com ([173.37.142.91]:2373 "EHLO
-	alln-iport-4.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751996AbbAVOrX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jan 2015 09:47:23 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=cisco.com; i=@cisco.com; l=1170; q=dns/txt; s=iport;
-  t=1421938044; x=1423147644;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-id:content-transfer-encoding:
-   mime-version;
-  bh=V8nFyECtlpszTM25jJs/FzcOSZ+00FYnmYMFawMjoRQ=;
-  b=gz8+W8OHjz+ftwgK0XwTfAaW/mGozSoYFLcdpcm7C7N848QS3oyIIl4K
-   2VCO6xOA0oyspIKmyN5aLpTpy158ZS05ZsNARxVSs5jcpCpiA68m9VDuY
-   km3jyvqpzuNwV/QEsYe88BK2XjuPxNlS9xy1VWHdJfE2V7avss7F4NP3B
-   A=;
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AmEFAL8MwVStJV2b/2dsb2JhbABagwaBKgSDAMkyAhx4QwEBAQEBfYQMAQEBAwEjEUUFCwIBCBgCAiYCAgIwFRACBA4FiCQIviuUVQEBAQEBAQEBAQEBAQEBAQEBAQEBAReBIY4lMweCaC6BEwEEjQaBYIkZgRSNZIM9IoNub4FFfgEBAQ
-X-IronPort-AV: E=Sophos;i="5.09,449,1418083200"; 
-   d="scan'208";a="116597847"
-Received: from rcdn-core-4.cisco.com ([173.37.93.155])
-  by alln-iport-4.cisco.com with ESMTP; 22 Jan 2015 14:47:22 +0000
-Received: from xhc-rcd-x07.cisco.com (xhc-rcd-x07.cisco.com [173.37.183.81])
-	by rcdn-core-4.cisco.com (8.14.5/8.14.5) with ESMTP id t0MElMjV003416
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL);
-	Thu, 22 Jan 2015 14:47:22 GMT
-Received: from xmb-rcd-x03.cisco.com ([169.254.7.219]) by
- xhc-rcd-x07.cisco.com ([173.37.183.81]) with mapi id 14.03.0195.001; Thu, 22
- Jan 2015 08:47:21 -0600
-Thread-Topic: [PATCH v3] remote-curl: fall back to Basic auth if Negotiate
- fails
-Thread-Index: AQHQNRBRFAV48lOUvEGHDNPe7JHDHZzMnxwA
-In-Reply-To: <xmqqk30hyock.fsf@gitster.dls.corp.google.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.82.250.33]
-Content-ID: <0FD90355E2E4924F8073468013E3CA3F@emea.cisco.com>
+	id S1751996AbbAVPJu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Jan 2015 10:09:50 -0500
+Received: from ks3293202.kimsufi.com ([5.135.186.141]:33308 "EHLO glandium.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750754AbbAVPJs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Jan 2015 10:09:48 -0500
+Received: from glandium by zenigata with local (Exim 4.84)
+	(envelope-from <glandium@glandium.org>)
+	id 1YEJNi-0007cS-9t; Fri, 23 Jan 2015 00:09:14 +0900
+Content-Disposition: inline
+In-Reply-To: <20150122130036.GC19681@peff.net>
+X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262838>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262839>
 
-PiBPbiBKYW4gMjAsIDIwMTUsIGF0IDc6MjIgUE0sIEp1bmlvIEMgSGFtYW5vIDxnaXRzdGVyQHBv
-Ym94LmNvbT4gd3JvdGU6DQo+IA0KPiAiRGFuIExhbmdpbGxlIChkYWxhbmdpbCkiIDxkYWxhbmdp
-bEBjaXNjby5jb20+IHdyaXRlczoNCj4gDQo+PiBJIGRpZCBub3QgdGVzdCB0aGlzIHBhdGNoLiAg
-SXMgdGhhdCBob2xkaW5nIHVwIGEgY29tbWl0Pw0KPiANCj4gSSBhbSBob3BpbmcgdGhhdCB5b3Ug
-cmVidWlsdCB0aGUgR2l0IHlvdSB1c2Ugd2l0aCB0aGlzIHBhdGNoIGJ5IHRoZQ0KPiB0aW1lIHlv
-dSB3cm90ZSB0aGUgbWVzc2FnZSBJIGFtIHJlc3BvbmRpbmcgdG8gYW5kIGhhdmUgYmVlbiB1c2lu
-ZyBpdA0KPiBmb3IgeW91ciBkYWlseSBHaXQgbmVlZHMgOy0pDQoNClBhdGNoIHYyIGhhcyBiZWVu
-IHVzZWQgaW4gb3VyIHRlc3QgZW52aXJvbm1lbnQgd2l0aCBzdWNjZXNzLiAgSSBnb3QgZGl2ZXJ0
-ZWQgdG8gb3RoZXIgcHJvamVjdHMgYmVmb3JlIEkgY291bGQgdGVzdCBQYXRjaCB2My4NCg0KPiBJ
-IGJlbGlldmUgaXQgaXMgcXVldWVkIG9uIHRoZSAnbmV4dCcgYnJhbmNoIHNvIHRoYXQgb3RoZXJz
-IGxpa2UgeW91DQo+IHdobyBuZWVkIHRoZSBjaGFuZ2UgY2FuIHZlcmlmeSB0aGUgaW1wcm92ZW1l
-bnRzLCBhbmQgb3RoZXJzIHVubGlrZQ0KPiB5b3Ugd2hvIGRvIG5vdCBuZWVkIHRoZSBjaGFuZ2Ug
-Y2FuIG1ha2Ugc3VyZSB0aGUgY2hhbmdlIGRvZXMgbm90DQo+IGNhdXNlIHVuaW50ZW5kZWQgY29u
-c2VxdWVuY2VzLg0KDQpUaGFuayB5b3UuDQoNCuKAlCANCkRhbiBMYW5naWxsZQ0KSW5mcmFzdHJ1
-Y3R1cmUgJiBPcGVyYXRpb25zDQpUYWxvcyBHcm91cA0KU291cmNlZmlyZSwgSW5jLg0KDQoNCg==
+On Thu, Jan 22, 2015 at 08:00:36AM -0500, Jeff King wrote:
+> On Thu, Jan 22, 2015 at 06:50:37PM +0600, Alexander Kuleshov wrote:
+> 
+> > Standard user has no need in debugging information. This patch adds
+> > DEBUG=1 option to compile git with debugging symbols and compile without
+> > it by default.
+> 
+> This explanation is missing why it is beneficial _not_ to have the
+> debugging information.
+> 
+> I expect the answer is "it makes the executable smaller". And that is
+> true, but it gets smaller still if you run "strip" on the result:
+> 
+>   $ make CFLAGS= >/dev/null 2>&1 && wc -c <git
+>   2424248
+> 
+>   $ make CFLAGS=-g >/dev/null 2>&1 && wc -c <git
+>   4500816
+> 
+>   $ strip git && wc -c <git
+>   2109200
+> 
+> So I am not sure who this is helping. If you are size-conscious, you
+> should use strip, in which case the "-g" flag does not matter (and we
+> even have "make strip" to help you).
+> 
+> Is there some other reason to avoid the debugging information?
+
+Maybe this comes from the misconception that debugging information
+changes the generated code, which, in fact, it doesn't.
+
+  $ make CFLAGS=-g LDFLAGS=-Wl,--build-id=none >/dev/null 2>&1 && wc -c <git
+  4432768
+  $ strip --strip-debug git && wc -c < git
+  2391120
+  $ cp git git_
+  $ make -j4 CFLAGS= LDFLAGS=-Wl,--build-id=none >/dev/null 2>&1 && wc -c <git
+  2400192
+  $ strip --strip-debug git && wc -c < git
+  2391120
+  $ diff -s git git_
+  Files git and git_ are identical
+
+LDFLAGS=-Wl,--build-id=none just avoids creating a .note.gnu.build-id
+section containing a uuid that varies between builds. The 9k difference
+between unstripped vs stripped for the no-debug-info case comes from the
+removal of the few symbols for source file names (all the symbols from
+readelf -s git | grep ABS).
+
+Mike
