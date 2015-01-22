@@ -1,103 +1,133 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Pretty format specifier for commit count?
-Date: Thu, 22 Jan 2015 07:52:43 -0500
-Message-ID: <20150122125243.GB19681@peff.net>
-References: <20150119012926.GA24004@thin>
- <54BD0C85.1070001@drmicha.warpmail.net>
- <20150120011724.GA1944@thin>
- <20150120214952.GA18778@peff.net>
- <20150120231110.GC14475@cloud>
- <54C0CCA2.3060307@drmicha.warpmail.net>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: [PATCHv2 5/5] refs.c: enable large transactions
+Date: Thu, 22 Jan 2015 12:59:11 +0000
+Message-ID: <54C0F41F.2080705@ramsay1.demon.co.uk>
+References: <1421893929-7447-1-git-send-email-sbeller@google.com> <1421893929-7447-6-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: josh@joshtriplett.org, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Jan 22 13:52:56 2015
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+To: Stefan Beller <sbeller@google.com>, peff@peff.net,
+	git@vger.kernel.org, gitster@pobox.com, mhagger@alum.mit.edu,
+	loic@dachary.org
+X-From: git-owner@vger.kernel.org Thu Jan 22 13:59:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YEHFh-0006SR-J5
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 13:52:49 +0100
+	id 1YEHM2-0002IZ-0d
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 13:59:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751188AbbAVMwq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Jan 2015 07:52:46 -0500
-Received: from cloud.peff.net ([50.56.180.127]:37273 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750916AbbAVMwo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jan 2015 07:52:44 -0500
-Received: (qmail 17073 invoked by uid 102); 22 Jan 2015 12:52:44 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 22 Jan 2015 06:52:44 -0600
-Received: (qmail 8898 invoked by uid 107); 22 Jan 2015 12:53:10 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 22 Jan 2015 07:53:10 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 22 Jan 2015 07:52:43 -0500
-Content-Disposition: inline
-In-Reply-To: <54C0CCA2.3060307@drmicha.warpmail.net>
+	id S1751448AbbAVM7S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Jan 2015 07:59:18 -0500
+Received: from mdfmta010.mxout.tch.inty.net ([91.221.169.51]:53392 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750916AbbAVM7R (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Jan 2015 07:59:17 -0500
+Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta010.tch.inty.net (Postfix) with ESMTP id 69D30401E92;
+	Thu, 22 Jan 2015 12:59:13 +0000 (GMT)
+Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta010.tch.inty.net (Postfix) with ESMTP id 20275401E4F;
+	Thu, 22 Jan 2015 12:59:13 +0000 (GMT)
+Received: from [10.0.2.15] (unknown [80.176.147.220])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by mdfmta010.tch.inty.net (Postfix) with ESMTP;
+	Thu, 22 Jan 2015 12:59:12 +0000 (GMT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
+In-Reply-To: <1421893929-7447-6-git-send-email-sbeller@google.com>
+X-MDF-HostID: 19
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262827>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262828>
 
-On Thu, Jan 22, 2015 at 11:10:42AM +0100, Michael J Gruber wrote:
+On 22/01/15 02:32, Stefan Beller wrote:
+> By closing the file descriptors after creating the lock file we are not
+> limiting the size of the transaction by the number of available file
+> descriptors.
+> 
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  refs.c                | 17 +++++++++++++----
+>  t/t1400-update-ref.sh |  4 ++--
+>  2 files changed, 15 insertions(+), 6 deletions(-)
+> 
+> diff --git a/refs.c b/refs.c
+> index 2013d37..9d01102 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -3055,11 +3055,18 @@ int is_branch(const char *refname)
+>  static int write_sha1_to_lock_file(struct ref_lock *lock,
+>  				   const unsigned char *sha1)
+>  {
+> -	if (fdopen_lock_file(lock->lk, "w") < 0
+> -	    || fprintf(lock->lk->fp, "%s\n", sha1_to_hex(sha1)) != 41)
+> +	if (lock->lk->fd == -1) {
+> +		if (reopen_lock_file(lock->lk) < 0
+> +		    || fdopen_lock_file(lock->lk, "w") < 0
 
-> We do have a linear history when we walk with --first-parent :)
+fdopen_lock_file() returns a 'FILE *', so this causes sparse to bark:
 
-Yes, but I do not think it is robust to adding new commits on top. E.g.,
-given:
+    refs.c:3105:56: error: incompatible types for operation (<)
+    refs.c:3105:56:    left side has type struct _IO_FILE [usertype] *
+    refs.c:3105:56:    right side has type int
 
-  A--B--C---F
-      \    /
-       D--E
+> +		    || fprintf(lock->lk->fp, "%s\n", sha1_to_hex(sha1)) != 41
+> +		    || close_lock_file(lock->lk) < 0)
+> +		    return -1;
+> +	} else {
+> +		if (fdopen_lock_file(lock->lk, "w") < 0
 
-a --first-parent walk from F will show F-C-B-A. Now imagine the branch
-advances to I:
+Similarly, sparse barks:
 
-          G--H---I
-         /      /
-  A--B--C---F--J
-      \    /
-       D--E
+    refs.c:3110:53: error: incompatible types for operation (<)
+    refs.c:3110:53:    left side has type struct _IO_FILE [usertype] *
+    refs.c:3110:53:    right side has type int
 
-A walk from I will show I-H-G-C-B-A. F is no longer mentioned at all,
-and A, B, and C are now at different positions.
+> +		    || fprintf(lock->lk->fp, "%s\n", sha1_to_hex(sha1)) != 41)
+>  		return -1;
+> -	else
+> -		return 0;
+> +	}
+> +	return 0;
+>  }
+>  
+>  /*
+> @@ -3761,6 +3768,8 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+>  				    update->refname);
+>  			goto cleanup;
+>  		}
+> +		/* Do not keep all lock files open at the same time. */
+> +		close_lock_file(update->lock->lk);
+>  	}
+>  
+>  	/* Perform updates first so live commits remain referenced */
+> diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
+> index 47d2fe9..c593a1d 100755
+> --- a/t/t1400-update-ref.sh
+> +++ b/t/t1400-update-ref.sh
+> @@ -979,7 +979,7 @@ run_with_limited_open_files () {
+>  
+>  test_lazy_prereq ULIMIT_FILE_DESCRIPTORS 'run_with_limited_open_files true'
+>  
+> -test_expect_failure ULIMIT_FILE_DESCRIPTORS 'large transaction creating branches does not burst open file limit' '
+> +test_expect_success ULIMIT_FILE_DESCRIPTORS 'large transaction creating branches does not burst open file limit' '
+>  (
+>  	for i in $(test_seq 33)
+>  	do
+> @@ -990,7 +990,7 @@ test_expect_failure ULIMIT_FILE_DESCRIPTORS 'large transaction creating branches
+>  )
+>  '
+>  
+> -test_expect_failure ULIMIT_FILE_DESCRIPTORS 'large transaction deleting branches does not burst open file limit' '
+> +test_expect_success ULIMIT_FILE_DESCRIPTORS 'large transaction deleting branches does not burst open file limit' '
+>  (
+>  	for i in $(test_seq 33)
+>  	do
+> 
 
-This might be OK in Josh's case. I have an intuition that commits can
-only be _removed_ in this case. Which means position from the _top_
-might change, but the position from the root will always be the same
-(and that is what he wants to be stable).  But I did not think hard
-enough to convince myself that this is always the case.
-
-> So, for the changelog for commits "on a branch", where "on a branch" is
-> not the git concept but defined by "git rev-list --first-parent" (more
-> like hg branches), the count from root would be deterministic and the
-> right concept given the appropriate branch workflow.
-
-Certainly the distance to root is deterministic. But I think we are
-really counting "number of commits to be output between the root and
-this commit". I guess if:
-
-  1. You only ever start from one traversal point.
-
-  2. You are picking only one parent for each merge.
-
-then we know that our queue of commits to examine only ever has 0 or 1
-items in it. And therefore a commit is either shown in the same
-position from the end, or not shown at all. Because once we get there,
-it is deterministic which commits we will show.
-
-> Generation numbers are monotonous but may increase by steps greater than
-> 1 on that "branch" if I remember them correctly. I.e., merge commits are
-> "weighted" by the number of commits that get merged in.
-
-Sort of. It is the longest distance to (any) root from the commit. So it
-is the max() of the generations of the parents, plus one. So for a
-simple branch/merge between two lines of development, the increase is
-the number of commits that are merged. But a branch that has its own
-branches will not increase the generation count by the total number of
-commits, but rather by the longest individual sub-branch.
-
--Peff
+ATB,
+Ramsay Jones
