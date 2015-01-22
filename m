@@ -1,83 +1,85 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH] Fix unclosed here document in t3301.sh
-Date: Thu, 22 Jan 2015 13:21:23 +0100
-Message-ID: <CALKQrgdDfcGtk9MWdfQTC7hSgkDAWjN1O_U6F4BCJdMjoULD7Q@mail.gmail.com>
-References: <20150122115936.GA2358@camk.edu.pl>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git mailing list <git@vger.kernel.org>
-To: Kacper Kornet <draenog@pld-linux.org>
-X-From: git-owner@vger.kernel.org Thu Jan 22 13:46:38 2015
+From: Alexander Kuleshov <kuleshovmail@gmail.com>
+Subject: [PATCH] Makefile: do not compile git with debugging symbols by default
+Date: Thu, 22 Jan 2015 18:50:37 +0600
+Message-ID: <1421931037-21368-1-git-send-email-kuleshovmail@gmail.com>
+Cc: git@vger.kernel.org, Alexander Kuleshov <kuleshovmail@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 22 13:50:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YEH9h-0001OE-76
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 13:46:37 +0100
+	id 1YEHDr-0004ot-VX
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 13:50:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751851AbbAVMqe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Jan 2015 07:46:34 -0500
-Received: from mail14.copyleft.no ([178.255.144.193]:44883 "EHLO
-	mail14.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751299AbbAVMqc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jan 2015 07:46:32 -0500
-X-Greylist: delayed 1499 seconds by postgrey-1.27 at vger.kernel.org; Thu, 22 Jan 2015 07:46:32 EST
-Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
-	by mail14.copyleft.no with esmtp (Exim 4.76)
-	(envelope-from <johan@herland.net>)
-	id 1YEGlO-0001tk-Rs
-	for git@vger.kernel.org; Thu, 22 Jan 2015 13:21:30 +0100
-Received: from mail-pa0-f50.google.com ([209.85.220.50])
-	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.72 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1YEGlO-000Icc-KX
-	for git@vger.kernel.org; Thu, 22 Jan 2015 13:21:30 +0100
-Received: by mail-pa0-f50.google.com with SMTP id rd3so684777pab.9
-        for <git@vger.kernel.org>; Thu, 22 Jan 2015 04:21:24 -0800 (PST)
-X-Received: by 10.66.141.138 with SMTP id ro10mr1631035pab.67.1421929284042;
- Thu, 22 Jan 2015 04:21:24 -0800 (PST)
-Received: by 10.70.105.4 with HTTP; Thu, 22 Jan 2015 04:21:23 -0800 (PST)
-In-Reply-To: <20150122115936.GA2358@camk.edu.pl>
+	id S1751564AbbAVMuw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Jan 2015 07:50:52 -0500
+Received: from mail-la0-f52.google.com ([209.85.215.52]:47286 "EHLO
+	mail-la0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751299AbbAVMuv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Jan 2015 07:50:51 -0500
+Received: by mail-la0-f52.google.com with SMTP id hs14so1362529lab.11
+        for <git@vger.kernel.org>; Thu, 22 Jan 2015 04:50:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=/ahb0il+HFVIbAwScuFOwQxEISSHf4sKSVxeSPe4GQQ=;
+        b=bYofbo2vFMn9huaVO79XY7/PqcD8OWIofbOJdGi0C9mXVzGxadx2bVcE9Id/uDCFJ9
+         R2uMmJQH8zHIctYX3V9ITSyp475R3LOj7DtJcFIgGTg+UrD9Ds6SOhYdm2x6GE6yDd8l
+         9pvuxg1N2s87TMYrr0Mq0UhAe06tCsUS48X51HQe8xbo5PYVBkspONykS3h2H4utoAF+
+         ltqM8SIQEeyn5pxpC/5J7wQ5+bi+BRrx1hY08fnKODqZX0Y2HeJtqqI5QbQbmrm8ETUB
+         wZ49ysCLBfaJHtxBTT9Nj3lx5HDuYfxhvf6JCY7+CxVbtAhlVutz4IEtltWSMUQOuqsp
+         Owkw==
+X-Received: by 10.112.169.34 with SMTP id ab2mr1272383lbc.77.1421931049556;
+        Thu, 22 Jan 2015 04:50:49 -0800 (PST)
+Received: from localhost.localdomain ([5.251.234.181])
+        by mx.google.com with ESMTPSA id bs3sm5708831lbd.37.2015.01.22.04.50.47
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 22 Jan 2015 04:50:48 -0800 (PST)
+X-Mailer: git-send-email 2.3.0.rc1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262825>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262826>
 
-On Thu, Jan 22, 2015 at 12:59 PM, Kacper Kornet <draenog@pld-linux.org> wrote:
-> Commit 908a3203632a02568df230c0fccf9a2cd8da24e6 introduced  indentation
-> to here documents in t3301.sh. However in one place <<-EOF was missing
-> -, which broke this test when run with mksh-50d. This commit fixes it.
->
-> Signed-off-by: Kacper Kornet <draenog@pld-linux.org>
+Standard user has no need in debugging information. This patch adds
+DEBUG=1 option to compile git with debugging symbols and compile without
+it by default.
 
-Acked-by: Johan Herland <johan@herland.net>
+Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
+---
+ Makefile | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-> ---
->  t/t3301-notes.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
-> index 245406a..433f925 100755
-> --- a/t/t3301-notes.sh
-> +++ b/t/t3301-notes.sh
-> @@ -658,7 +658,7 @@ test_expect_success '--show-notes=* adds to GIT_NOTES_DISPLAY_REF' '
->  '
->
->  test_expect_success '--no-standard-notes' '
-> -       cat >expect-commits <<EOF
-> +       cat >expect-commits <<-EOF
->                 commit 2c125331118caba0ff8238b7f4958ac6e93fe39c
->                 Author: A U Thor <author@example.com>
->                 Date:   Thu Apr 7 15:18:13 2005 -0700
-> --
-> 2.2.2
-
-
-
+diff --git a/Makefile b/Makefile
+index b5b4cee..83ff691 100644
+--- a/Makefile
++++ b/Makefile
+@@ -3,6 +3,8 @@ all::
+ 
+ # Define V=1 to have a more verbose compile.
+ #
++# Define DEBUG=1 to compile git with debugging symbols.
++#
+ # Define SHELL_PATH to a POSIX shell if your /bin/sh is broken.
+ #
+ # Define SANE_TOOL_PATH to a colon-separated list of paths to prepend
+@@ -363,8 +365,13 @@ GIT-VERSION-FILE: FORCE
+ -include GIT-VERSION-FILE
+ 
+ # CFLAGS and LDFLAGS are for the users to override from the command line.
++DEBUG_CFLAGS=
++
++ifdef DEBUG
++	DEBUG_CFLAGS = -g
++endif
+ 
+-CFLAGS = -g -O2 -Wall
++CFLAGS = $(DEBUG_CFLAGS) -O2 -Wall
+ LDFLAGS =
+ ALL_CFLAGS = $(CPPFLAGS) $(CFLAGS)
+ ALL_LDFLAGS = $(LDFLAGS)
 -- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+2.3.0.rc1
