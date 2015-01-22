@@ -1,104 +1,67 @@
-From: Peter Wu <peter@lekensteyn.nl>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 Subject: Re: Git compile warnings (under mac/clang)
-Date: Thu, 22 Jan 2015 22:19:03 +0100
-Message-ID: <8235317.pb98ayo4Kl@al>
-References: <CAO2U3Qi6Xf1RrbxyVW3cHNe1-ZwxFHDVskGLZguWS=b38pgaXQ@mail.gmail.com> <CAGZ79kaFWL5HWdctLzTWf6D4nTP19sPZbcOg9fiRx7RQrWjY7Q@mail.gmail.com>
+Date: Thu, 22 Jan 2015 22:20:01 +0100
+Organization: gmx
+Message-ID: <b2cbad0d8e59a0c4eb0565608f3f90bc@www.dscho.org>
+References: <CAO2U3Qi6Xf1RrbxyVW3cHNe1-ZwxFHDVskGLZguWS=b38pgaXQ@mail.gmail.com>
+ <CAGZ79kaFWL5HWdctLzTWf6D4nTP19sPZbcOg9fiRx7RQrWjY7Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7Bit
-Cc: Michael Blume <blume.mike@gmail.com>, Johannes.Schindelin@gmx.de,
-	eungjun.yi@navercorp.com, Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Michael Blume <blume.mike@gmail.com>, peter@lekensteyn.nl,
+	eungjun.yi@navercorp.com, Git List <git@vger.kernel.org>
 To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Thu Jan 22 22:19:17 2015
+X-From: git-owner@vger.kernel.org Thu Jan 22 22:20:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YEP9p-0005Fz-3U
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 22:19:17 +0100
+	id 1YEPAk-00060P-65
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 22:20:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753568AbbAVVTN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Jan 2015 16:19:13 -0500
-Received: from lekensteyn.nl ([178.21.112.251]:54182 "EHLO lekensteyn.nl"
+	id S1753839AbbAVVUK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Jan 2015 16:20:10 -0500
+Received: from mout.gmx.net ([212.227.17.21]:53606 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753247AbbAVVTM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jan 2015 16:19:12 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lekensteyn.nl; s=s2048-2014-q3;
-	h=Content-Type:Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From; bh=SqtXGrrxVQ8oXecQIc5MZdfonjGps2eNXew+1ezrhrg=;
-	b=hdJNFk4NxusAMo/EeUBRlRIUhV9Wk6xMMyk/nNK59y3ex0IBho+bTPHexGt982bGuqFIi/uRka4u+v1Og04aCMtl6cYa3fXWA2QjcvxALDbk/grfaaTG2kOG5SHf2aNezQrlD7yhuFMHLHoU+96uzxUg5xGbjQA4GCffx6khLmUjBdVOGEVTJw933nXeEu9bvqEXB5hm69nuadyEb0yqaqDeZhVd2xAv3RybvHioIRt/V0n2rlTxmsTSqGvee+1GXABVPhxD8bmil0QxN8gxSJ6RMjCTCVJGKV4xaauVXzhHNKkaJkVx2Do+J7yWd27fOT2rI0QSNu7OAFbG63SjtA==;
-Received: by lekensteyn.nl with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:256)
-	(Exim 4.80)
-	(envelope-from <peter@lekensteyn.nl>)
-	id 1YEP9d-0002dN-8l; Thu, 22 Jan 2015 22:19:05 +0100
-User-Agent: KMail/4.14.4 (Linux/3.18.1-1-ARCH; KDE/4.14.4; x86_64; ; )
+	id S1752940AbbAVVUJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Jan 2015 16:20:09 -0500
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0Md31i-1XxI1b3v1u-00IAxM; Thu, 22 Jan 2015 22:20:02
+ +0100
 In-Reply-To: <CAGZ79kaFWL5HWdctLzTWf6D4nTP19sPZbcOg9fiRx7RQrWjY7Q@mail.gmail.com>
-X-Spam-Score: 0.0 (/)
-X-Spam-Status: No, hits=0.0 required=5.0 tests=NO_RELAYS=-0.001,URIBL_BLOCKED=0.001 autolearn=no autolearn_force=no
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1-git
+X-Provags-ID: V03:K0:e3PF7RSdX2g5ngO50rtKtC534OltQtmv3SoPgEUkM0b5pWLpUYB
+ HXX1e1aTgXk8Mh9173EXPQnaPFXSrKGfTOvpMErU6E+ftovlxA++1EQ0i39LZXfkA5/Rqi2
+ X+arzjtad8ykAE+YHa4ak8lAz9nChjdpwp7H9bu85YtD8yJZ54LIPzKuglwZ5HYFEmiXivR
+ zKMNSIQrj0WBQydu7YJZw==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262872>
 
-On Thursday 22 January 2015 11:59:54 Stefan Beller wrote:
+Hi Stefan,
+
+On 2015-01-22 20:59, Stefan Beller wrote:
 > cc Johannes Schindelin <Johannes.Schindelin@gmx.de> who is working in
 > the fsck at the moment
-> cc Peter Wu <peter@lekensteyn.nl> who worked on builtin/remote.c a few weeks ago
-> 
-> I just compiled origin/pu to test and also found a problem (doesn't
-> happen in origin/master):
-> 
-> http.c: In function 'get_preferred_languages':
-> http.c:1020:2: warning: implicit declaration of function 'setlocale'
-> [-Wimplicit-function-declaration]
->   retval = setlocale(LC_MESSAGES, NULL);
->   ^
-> http.c:1020:21: error: 'LC_MESSAGES' undeclared (first use in this function)
->   retval = setlocale(LC_MESSAGES, NULL);
->                      ^
-> http.c:1020:21: note: each undeclared identifier is reported only once
-> for each function it appears in
-> 
-> so I cc Yi EungJun <eungjun.yi@navercorp.com> as well.
-> 
+>
 > On Thu, Jan 22, 2015 at 11:43 AM, Michael Blume <blume.mike@gmail.com> wrote:
-> > These are probably minor, I only bring them up because Git's build is
-> > generally so quiet that it might be worth squashing these too.
-> >
-> >     CC fsck.o
-> > fsck.c:110:38: warning: comparison of unsigned enum expression >= 0 is
-> > always true [-Wtautological-compare]
-> >         if (options->msg_severity && msg_id >= 0 && msg_id < FSCK_MSG_MAX)
-> >                                      ~~~~~~ ^  ~
-> > 1 warning generated.
-> >     AR libgit.a
-> > /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib:
-> > file: libgit.a(gettext.o) has no symbols
-> >     CC builtin/remote.o
-> > builtin/remote.c:1572:5: warning: add explicit braces to avoid
-> > dangling else [-Wdangling-else]
-> >                                 else
-> >                                 ^
-> > builtin/remote.c:1580:5: warning: add explicit braces to avoid
-> > dangling else [-Wdangling-else]
-> >                                 else
-> >                                 ^
-> > 2 warnings generated.
+>
+>>     CC fsck.o
+>> fsck.c:110:38: warning: comparison of unsigned enum expression >= 0 is
+>> always true [-Wtautological-compare]
+>>         if (options->msg_severity && msg_id >= 0 && msg_id < FSCK_MSG_MAX)
+>>                                      ~~~~~~ ^  ~
 
-Hi, these warnings were present in v3 of the git-remote patch. v4 was
-proposed to overcome these issues, but I have yet to respond to Junio's
-feedback at http://www.spinics.net/lists/git/msg243652.html
-(Message-ID: <xmqqr3vx9ad5.fsf@gitster.dls.corp.google.com>)
+According to A2.5.4 of The C Programming Language 2nd edition:
 
-(cc'ing Junio to let him know I am still alive :p)
+    Identifiers declared as enumerators (see Par.A.8.4) are constants of type int.
 
-I'll get back to this next week, had some other tasks to prepare for.
+Therefore, the warning is incorrect: any assumption about enum fsck_msg_id to be unsigned is false.
 
-Kind regards,
-Peter
-
-> > (the warning about libgit.a(gettext.o) is probably because I'm
-> > building with NO_GETTEXT -- I've never been able to get gettext to
-> > work on my mac)
+Ciao,
+Johannes
