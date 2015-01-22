@@ -1,85 +1,103 @@
-From: Alexander Kuleshov <kuleshovmail@gmail.com>
-Subject: [PATCH] Makefile: do not compile git with debugging symbols by default
-Date: Thu, 22 Jan 2015 18:50:37 +0600
-Message-ID: <1421931037-21368-1-git-send-email-kuleshovmail@gmail.com>
-Cc: git@vger.kernel.org, Alexander Kuleshov <kuleshovmail@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 22 13:50:56 2015
+From: Jeff King <peff@peff.net>
+Subject: Re: Pretty format specifier for commit count?
+Date: Thu, 22 Jan 2015 07:52:43 -0500
+Message-ID: <20150122125243.GB19681@peff.net>
+References: <20150119012926.GA24004@thin>
+ <54BD0C85.1070001@drmicha.warpmail.net>
+ <20150120011724.GA1944@thin>
+ <20150120214952.GA18778@peff.net>
+ <20150120231110.GC14475@cloud>
+ <54C0CCA2.3060307@drmicha.warpmail.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: josh@joshtriplett.org, git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Jan 22 13:52:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YEHDr-0004ot-VX
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 13:50:56 +0100
+	id 1YEHFh-0006SR-J5
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 13:52:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751564AbbAVMuw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Jan 2015 07:50:52 -0500
-Received: from mail-la0-f52.google.com ([209.85.215.52]:47286 "EHLO
-	mail-la0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751299AbbAVMuv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jan 2015 07:50:51 -0500
-Received: by mail-la0-f52.google.com with SMTP id hs14so1362529lab.11
-        for <git@vger.kernel.org>; Thu, 22 Jan 2015 04:50:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=/ahb0il+HFVIbAwScuFOwQxEISSHf4sKSVxeSPe4GQQ=;
-        b=bYofbo2vFMn9huaVO79XY7/PqcD8OWIofbOJdGi0C9mXVzGxadx2bVcE9Id/uDCFJ9
-         R2uMmJQH8zHIctYX3V9ITSyp475R3LOj7DtJcFIgGTg+UrD9Ds6SOhYdm2x6GE6yDd8l
-         9pvuxg1N2s87TMYrr0Mq0UhAe06tCsUS48X51HQe8xbo5PYVBkspONykS3h2H4utoAF+
-         ltqM8SIQEeyn5pxpC/5J7wQ5+bi+BRrx1hY08fnKODqZX0Y2HeJtqqI5QbQbmrm8ETUB
-         wZ49ysCLBfaJHtxBTT9Nj3lx5HDuYfxhvf6JCY7+CxVbtAhlVutz4IEtltWSMUQOuqsp
-         Owkw==
-X-Received: by 10.112.169.34 with SMTP id ab2mr1272383lbc.77.1421931049556;
-        Thu, 22 Jan 2015 04:50:49 -0800 (PST)
-Received: from localhost.localdomain ([5.251.234.181])
-        by mx.google.com with ESMTPSA id bs3sm5708831lbd.37.2015.01.22.04.50.47
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 22 Jan 2015 04:50:48 -0800 (PST)
-X-Mailer: git-send-email 2.3.0.rc1
+	id S1751188AbbAVMwq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Jan 2015 07:52:46 -0500
+Received: from cloud.peff.net ([50.56.180.127]:37273 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750916AbbAVMwo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Jan 2015 07:52:44 -0500
+Received: (qmail 17073 invoked by uid 102); 22 Jan 2015 12:52:44 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 22 Jan 2015 06:52:44 -0600
+Received: (qmail 8898 invoked by uid 107); 22 Jan 2015 12:53:10 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 22 Jan 2015 07:53:10 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 22 Jan 2015 07:52:43 -0500
+Content-Disposition: inline
+In-Reply-To: <54C0CCA2.3060307@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262826>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262827>
 
-Standard user has no need in debugging information. This patch adds
-DEBUG=1 option to compile git with debugging symbols and compile without
-it by default.
+On Thu, Jan 22, 2015 at 11:10:42AM +0100, Michael J Gruber wrote:
 
-Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
----
- Makefile | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+> We do have a linear history when we walk with --first-parent :)
 
-diff --git a/Makefile b/Makefile
-index b5b4cee..83ff691 100644
---- a/Makefile
-+++ b/Makefile
-@@ -3,6 +3,8 @@ all::
- 
- # Define V=1 to have a more verbose compile.
- #
-+# Define DEBUG=1 to compile git with debugging symbols.
-+#
- # Define SHELL_PATH to a POSIX shell if your /bin/sh is broken.
- #
- # Define SANE_TOOL_PATH to a colon-separated list of paths to prepend
-@@ -363,8 +365,13 @@ GIT-VERSION-FILE: FORCE
- -include GIT-VERSION-FILE
- 
- # CFLAGS and LDFLAGS are for the users to override from the command line.
-+DEBUG_CFLAGS=
-+
-+ifdef DEBUG
-+	DEBUG_CFLAGS = -g
-+endif
- 
--CFLAGS = -g -O2 -Wall
-+CFLAGS = $(DEBUG_CFLAGS) -O2 -Wall
- LDFLAGS =
- ALL_CFLAGS = $(CPPFLAGS) $(CFLAGS)
- ALL_LDFLAGS = $(LDFLAGS)
--- 
-2.3.0.rc1
+Yes, but I do not think it is robust to adding new commits on top. E.g.,
+given:
+
+  A--B--C---F
+      \    /
+       D--E
+
+a --first-parent walk from F will show F-C-B-A. Now imagine the branch
+advances to I:
+
+          G--H---I
+         /      /
+  A--B--C---F--J
+      \    /
+       D--E
+
+A walk from I will show I-H-G-C-B-A. F is no longer mentioned at all,
+and A, B, and C are now at different positions.
+
+This might be OK in Josh's case. I have an intuition that commits can
+only be _removed_ in this case. Which means position from the _top_
+might change, but the position from the root will always be the same
+(and that is what he wants to be stable).  But I did not think hard
+enough to convince myself that this is always the case.
+
+> So, for the changelog for commits "on a branch", where "on a branch" is
+> not the git concept but defined by "git rev-list --first-parent" (more
+> like hg branches), the count from root would be deterministic and the
+> right concept given the appropriate branch workflow.
+
+Certainly the distance to root is deterministic. But I think we are
+really counting "number of commits to be output between the root and
+this commit". I guess if:
+
+  1. You only ever start from one traversal point.
+
+  2. You are picking only one parent for each merge.
+
+then we know that our queue of commits to examine only ever has 0 or 1
+items in it. And therefore a commit is either shown in the same
+position from the end, or not shown at all. Because once we get there,
+it is deterministic which commits we will show.
+
+> Generation numbers are monotonous but may increase by steps greater than
+> 1 on that "branch" if I remember them correctly. I.e., merge commits are
+> "weighted" by the number of commits that get merged in.
+
+Sort of. It is the longest distance to (any) root from the commit. So it
+is the max() of the generations of the parents, plus one. So for a
+simple branch/merge between two lines of development, the increase is
+the number of commits that are merged. But a branch that has its own
+branches will not increase the generation count by the total number of
+commits, but rather by the longest individual sub-branch.
+
+-Peff
