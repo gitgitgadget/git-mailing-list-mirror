@@ -1,113 +1,270 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] branch: add support for --dry-run option
-Date: Thu, 22 Jan 2015 11:17:08 +0100
-Message-ID: <54C0CE24.9040908@drmicha.warpmail.net>
-References: <1421480159-4848-1-git-send-email-kuleshovmail@gmail.com> <54BD12C3.5050802@drmicha.warpmail.net> <20150122013723.GA3795@odin.ulthar.us>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 20/24] update-index: test the system before enabling
+ untracked cache
+Date: Thu, 22 Jan 2015 17:26:24 +0700
+Message-ID: <20150122102624.GA25892@lanh>
+References: <1421759013-8494-1-git-send-email-pclouds@gmail.com>
+ <1421759013-8494-21-git-send-email-pclouds@gmail.com>
+ <xmqqwq4gy1nq.fsf@gitster.dls.corp.google.com>
+ <CACsJy8CDgUWEE=QKAgw4G8pgA-cOmLMs4sH67C47Ohd5XJQDNQ@mail.gmail.com>
+ <xmqqvbk0vug9.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Alexander Kuleshov <kuleshovmail@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Scott Schmit <i.grok@comcast.net>
-X-From: git-owner@vger.kernel.org Thu Jan 22 11:17:19 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 22 11:26:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YEEpB-0000AI-1Z
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 11:17:17 +0100
+	id 1YEExs-00058c-G4
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 11:26:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752206AbbAVKRN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Jan 2015 05:17:13 -0500
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:32964 "EHLO
-	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751793AbbAVKRK (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Jan 2015 05:17:10 -0500
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailout.nyi.internal (Postfix) with ESMTP id CB51520856
-	for <git@vger.kernel.org>; Thu, 22 Jan 2015 05:17:09 -0500 (EST)
-Received: from frontend2 ([10.202.2.161])
-  by compute4.internal (MEProxy); Thu, 22 Jan 2015 05:17:09 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=x-sasl-enc:message-id:date:from
-	:mime-version:to:cc:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=Wh9w+Hu1toroXNlt7pgS6X
-	t6F7g=; b=awUzk5ovkxOVt7BZDerM7/8qoi/CzCn0MOeZPVhJhM8z0GQ902D0OG
-	OhH36dY/L4wKzTOPF/PpTfGoToWt4NIBpFfHtwAEmVtd0dO0LyCAILYyCjoAY4Vo
-	15M2GcQH8pCC5e1lnyhpCk+1dOZkTYn738NxNl/szjdOH0Yf5f0MI=
-X-Sasl-enc: 4NKz1hPGyY4UNLWthXkwsNZ6jH39zkYM2RSAAeAmpwq9 1421921829
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id DD391680192;
-	Thu, 22 Jan 2015 05:17:08 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
-In-Reply-To: <20150122013723.GA3795@odin.ulthar.us>
+	id S1751731AbbAVK0N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Jan 2015 05:26:13 -0500
+Received: from mail-pa0-f48.google.com ([209.85.220.48]:33162 "EHLO
+	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751322AbbAVK0L (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Jan 2015 05:26:11 -0500
+Received: by mail-pa0-f48.google.com with SMTP id ey11so966210pad.7
+        for <git@vger.kernel.org>; Thu, 22 Jan 2015 02:26:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=viZRoaNZc+NZS6s26Uct9qpju93GmFJjGFQLSXnKI74=;
+        b=jRzARAA4Ni3qxQvT7M+xLnxpQ7LP7JmgaUYYna6fYBt3A5boOuvnwi3HwGq68thHg9
+         ZHZ49dHFUC0jzwyFlqT/r5QREaMlxd3Lui1eXM50Evc9T2WUUtbxy+0Dk0NEYRU0aplf
+         M8dH6Ib/zeGJ4kehMjL9YrpLokoRyvaEK1LqMqcOKRZTiv64RJOBrJ01WDknrIJ5102Y
+         qllbBdMWlDi2/pW/8oNWl7GbteCffnDDxXlp+YmuZgIBXPSZfxlmT0cT4yTiqdYUFaW1
+         LAaIaWDx9IY84kZv/EIVc3NmIBw4DEETCel8t9JhMWg7Sk04xrMmJBPEK/1ZVGZd/NIN
+         4fAQ==
+X-Received: by 10.68.201.232 with SMTP id kd8mr954413pbc.164.1421922370715;
+        Thu, 22 Jan 2015 02:26:10 -0800 (PST)
+Received: from lanh ([115.73.217.78])
+        by mx.google.com with ESMTPSA id pm2sm8423095pbb.81.2015.01.22.02.26.07
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 22 Jan 2015 02:26:09 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Thu, 22 Jan 2015 17:26:24 +0700
+Content-Disposition: inline
+In-Reply-To: <xmqqvbk0vug9.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262814>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262815>
 
-Scott Schmit schrieb am 22.01.2015 um 02:37:
-> On Mon, Jan 19, 2015 at 03:20:51PM +0100, Michael J Gruber wrote:
->> Alexander Kuleshov schrieb am 17.01.2015 um 08:35:
->>> This patch adds support -d/--dry-run option for branch(es) deletion.
->>> If -d/--dry-run option passed to git branch -d branch..., branch(es)
->>> will not be removed, instead just print list of branches that are
->>> to be removed.
->>>
->>> For example:
->>>
->>>     $ git branch
->>>     a
->>>     b
->>>     c
->>>     * master
->>>
->>>     $ git branch -d -n a b c
->>>     delete branch 'a' (261c0d1)
->>>     delete branch 'b' (261c0d1)
->>>     delete branch 'c' (261c0d1)
->>
->> Is there a case where deleting "a b c" would not delete "a b c"?
+On Wed, Jan 21, 2015 at 10:51:02AM -0800, Junio C Hamano wrote:
+> >> It appears that this hijacks a fixed name dir-mtime-test at the root
+> >> level of every project managed by Git.  Is that intended?
+> >
+> > I did think about filename clash, but I chose a fixed name anyway for
+> > simplicity, otherwise we would need to reconstruct paths
+> > "dir-mtime-test/..." in many places.
 > 
-> Sure:
-> $ cd /tmp/
-> $ git init foo
-> Initialized empty Git repository in /tmp/foo/.git/
-> $ cd foo/
-> $ touch .gitignore
-> $ git add .gitignore 
-> $ git commit -m init
-> [master (root-commit) fde5138] init
->  1 file changed, 0 insertions(+), 0 deletions(-)
->  create mode 100644 .gitignore
-> $ git checkout -b a
-> Switched to a new branch 'a'
-> $ git branch -d a
-> error: Cannot delete the branch 'a' which you are currently on.
-> $ touch file
-> $ git add file
-> $ git commit -m 'add file'
-> [a e2c2ece] add file
->  1 file changed, 0 insertions(+), 0 deletions(-)
->  create mode 100644 file
-> $ git checkout -b b master
-> Switched to a new branch 'b'
-> $ git branch -d a
-> error: The branch 'a' is not fully merged.
-> If you are sure you want to delete it, run 'git branch -D a'.
+> If you stuff the name of test directory (default "dir-mtime-test")
+> in a strbuf and formulate test paths by chomping to the original and
+> then appending "/..." at the end, like your remove_test_directory()
+> already does, wouldn't that be sufficient?
 
-Yes, and that is something that should go into the commit message. "Why
-do you want to add --dry-run? Because -d deletes only fully merged
-branches."
+It looks actually good. How about this on top?
 
-It should have been there in the 1st place, rather than forcing us to
-ask the question that always needs to answered for a patch: What is the
-intention? What is it good for?
-
-In this case, we have other means to accomplish the same (--list -v),
-and they are more natural if you want get information about the state of
-the branches ("list verbose") than doing "delete dry-run".
-
-Michael
+-- 8< --
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index f23ec83..f5f6689 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -32,6 +32,7 @@ static int mark_valid_only;
+ static int mark_skip_worktree_only;
+ #define MARK_FLAG 1
+ #define UNMARK_FLAG 2
++static struct strbuf mtime_dir = STRBUF_INIT;
+ 
+ __attribute__((format (printf, 1, 2)))
+ static void report(const char *fmt, ...)
+@@ -49,28 +50,37 @@ static void report(const char *fmt, ...)
+ 
+ static void remove_test_directory(void)
+ {
+-	struct strbuf sb = STRBUF_INIT;
+-	strbuf_addstr(&sb, "dir-mtime-test");
+-	remove_dir_recursively(&sb, 0);
+-	strbuf_release(&sb);
++	if (mtime_dir.len)
++		remove_dir_recursively(&mtime_dir, 0);
++}
++
++static const char *get_mtime_path(const char *path)
++{
++	static struct strbuf sb = STRBUF_INIT;
++	strbuf_reset(&sb);
++	strbuf_addf(&sb, "%s/%s", mtime_dir.buf, path);
++	return sb.buf;
+ }
+ 
+ static void xmkdir(const char *path)
+ {
++	path = get_mtime_path(path);
+ 	if (mkdir(path, 0700))
+ 		die_errno(_("failed to create directory %s"), path);
+ }
+ 
+-static int xstat(const char *path, struct stat *st)
++static int xstat_mtime_dir(struct stat *st)
+ {
+-	if (stat(path, st))
+-		die_errno(_("failed to stat %s"), path);
++	if (stat(mtime_dir.buf, st))
++		die_errno(_("failed to stat %s"), mtime_dir.buf);
+ 	return 0;
+ }
+ 
+ static int create_file(const char *path)
+ {
+-	int fd = open(path, O_CREAT | O_RDWR, 0644);
++	int fd;
++	path = get_mtime_path(path);
++	fd = open(path, O_CREAT | O_RDWR, 0644);
+ 	if (fd < 0)
+ 		die_errno(_("failed to create file %s"), path);
+ 	return fd;
+@@ -78,12 +88,14 @@ static int create_file(const char *path)
+ 
+ static void xunlink(const char *path)
+ {
++	path = get_mtime_path(path);
+ 	if (unlink(path))
+ 		die_errno(_("failed to delete file %s"), path);
+ }
+ 
+ static void xrmdir(const char *path)
+ {
++	path = get_mtime_path(path);
+ 	if (rmdir(path))
+ 		die_errno(_("failed to delete directory %s"), path);
+ }
+@@ -102,37 +114,40 @@ static int test_if_untracked_cache_is_supported(void)
+ {
+ 	struct stat st;
+ 	struct stat_data base;
+-	int fd;
++	int fd, ret = 0;
++
++	strbuf_addstr(&mtime_dir, "mtime-test-XXXXXX");
++	if (!mkdtemp(mtime_dir.buf))
++		die_errno("Could not make temporary directory");
+ 
+ 	fprintf(stderr, _("Testing "));
+-	xmkdir("dir-mtime-test");
+ 	atexit(remove_test_directory);
+-	xstat("dir-mtime-test", &st);
++	xstat_mtime_dir(&st);
+ 	fill_stat_data(&base, &st);
+ 	fputc('.', stderr);
+ 
+ 	avoid_racy();
+-	fd = create_file("dir-mtime-test/newfile");
+-	xstat("dir-mtime-test", &st);
++	fd = create_file("newfile");
++	xstat_mtime_dir(&st);
+ 	if (!match_stat_data(&base, &st)) {
+ 		close(fd);
+ 		fputc('\n', stderr);
+ 		fprintf_ln(stderr,_("directory stat info does not "
+ 				    "change after adding a new file"));
+-		return 0;
++		goto done;
+ 	}
+ 	fill_stat_data(&base, &st);
+ 	fputc('.', stderr);
+ 
+ 	avoid_racy();
+-	xmkdir("dir-mtime-test/new-dir");
+-	xstat("dir-mtime-test", &st);
++	xmkdir("new-dir");
++	xstat_mtime_dir(&st);
+ 	if (!match_stat_data(&base, &st)) {
+ 		close(fd);
+ 		fputc('\n', stderr);
+ 		fprintf_ln(stderr, _("directory stat info does not change "
+ 				     "after adding a new directory"));
+-		return 0;
++		goto done;
+ 	}
+ 	fill_stat_data(&base, &st);
+ 	fputc('.', stderr);
+@@ -140,52 +155,57 @@ static int test_if_untracked_cache_is_supported(void)
+ 	avoid_racy();
+ 	write_or_die(fd, "data", 4);
+ 	close(fd);
+-	xstat("dir-mtime-test", &st);
++	xstat_mtime_dir(&st);
+ 	if (match_stat_data(&base, &st)) {
+ 		fputc('\n', stderr);
+ 		fprintf_ln(stderr, _("directory stat info changes "
+ 				     "after updating a file"));
+-		return 0;
++		goto done;
+ 	}
+ 	fputc('.', stderr);
+ 
+ 	avoid_racy();
+-	close(create_file("dir-mtime-test/new-dir/new"));
+-	xstat("dir-mtime-test", &st);
++	close(create_file("new-dir/new"));
++	xstat_mtime_dir(&st);
+ 	if (match_stat_data(&base, &st)) {
+ 		fputc('\n', stderr);
+ 		fprintf_ln(stderr, _("directory stat info changes after "
+ 				     "adding a file inside subdirectory"));
+-		return 0;
++		goto done;
+ 	}
+ 	fputc('.', stderr);
+ 
+ 	avoid_racy();
+-	xunlink("dir-mtime-test/newfile");
+-	xstat("dir-mtime-test", &st);
++	xunlink("newfile");
++	xstat_mtime_dir(&st);
+ 	if (!match_stat_data(&base, &st)) {
+ 		fputc('\n', stderr);
+ 		fprintf_ln(stderr, _("directory stat info does not "
+ 				     "change after deleting a file"));
+-		return 0;
++		goto done;
+ 	}
+ 	fill_stat_data(&base, &st);
+ 	fputc('.', stderr);
+ 
+ 	avoid_racy();
+-	xunlink("dir-mtime-test/new-dir/new");
+-	xrmdir("dir-mtime-test/new-dir");
+-	xstat("dir-mtime-test", &st);
++	xunlink("new-dir/new");
++	xrmdir("new-dir");
++	xstat_mtime_dir(&st);
+ 	if (!match_stat_data(&base, &st)) {
+ 		fputc('\n', stderr);
+ 		fprintf_ln(stderr, _("directory stat info does not "
+ 				     "change after deleting a directory"));
+-		return 0;
++		goto done;
+ 	}
+ 
+-	xrmdir("dir-mtime-test");
++	if (rmdir(mtime_dir.buf))
++		die_errno(_("failed to delete directory %s"), mtime_dir.buf);
+ 	fprintf_ln(stderr, _(" OK"));
+-	return 1;
++	ret = 1;
++
++done:
++	strbuf_release(&mtime_dir);
++	return ret;
+ }
+ 
+ static int mark_ce_flags(const char *path, int flag, int mark)
+-- 8< --
