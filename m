@@ -1,121 +1,142 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCHv2 4/5] refs.c: have a write_sha1_to_lock_file wrapper
-Date: Wed, 21 Jan 2015 18:32:08 -0800
-Message-ID: <1421893929-7447-5-git-send-email-sbeller@google.com>
+Subject: [PATCHv2 3/5] refs.c: remove lock_fd from struct ref_lock
+Date: Wed, 21 Jan 2015 18:32:07 -0800
+Message-ID: <1421893929-7447-4-git-send-email-sbeller@google.com>
 References: <1421893929-7447-1-git-send-email-sbeller@google.com>
 Cc: Stefan Beller <sbeller@google.com>
 To: peff@peff.net, git@vger.kernel.org, gitster@pobox.com,
 	mhagger@alum.mit.edu, loic@dachary.org
-X-From: git-owner@vger.kernel.org Thu Jan 22 03:32:57 2015
+X-From: git-owner@vger.kernel.org Thu Jan 22 03:33:06 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YE7Zo-0008C2-G0
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 03:32:56 +0100
+	id 1YE7Zt-0008I7-QC
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 03:33:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754597AbbAVCcv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Jan 2015 21:32:51 -0500
-Received: from mail-ig0-f179.google.com ([209.85.213.179]:49314 "EHLO
-	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754451AbbAVCcW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Jan 2015 21:32:22 -0500
-Received: by mail-ig0-f179.google.com with SMTP id l13so304836iga.0
-        for <git@vger.kernel.org>; Wed, 21 Jan 2015 18:32:21 -0800 (PST)
+	id S1753402AbbAVCc4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Jan 2015 21:32:56 -0500
+Received: from mail-ig0-f178.google.com ([209.85.213.178]:57335 "EHLO
+	mail-ig0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753499AbbAVCcS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Jan 2015 21:32:18 -0500
+Received: by mail-ig0-f178.google.com with SMTP id hl2so283778igb.5
+        for <git@vger.kernel.org>; Wed, 21 Jan 2015 18:32:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=O9hnp5vht9/h8DCe0fJ5m2M+i9GwV2iCiCWFfwv95bs=;
-        b=nedPSpCVNcJSDXoSlHcJQA/3xE/vcvIyIWeer4wvOzr1i5g/8J5JtibG1bAKcTE5d3
-         bg/BA14a/R8wuBQek2XfnkZI8zrp9ZtjZPap5R/zE4sfVwWrGaEBW8grFhg21pTwgiZs
-         nNTSCLEnjzioqU1i6moo8UqL+kG+yASoQDyxfc4YmZHj6WKAMtw0uJAs+m3fO2c53s1T
-         v4t0vtUpKpG1cgFaU1VvbxuLneC5f5KUpgreS9AsQS2aqs9rmLLG4xi4g1pCanKTpz+V
-         kjb3qWWsLPvLkmrY/GTcIVP6tdwhxnqZONX0oJhUlbzj6k8H8Yi1axQOjPt+7dwHakz5
-         NpKg==
+        bh=GrVT1Bbvgle76i6W4ghANBoX4LvTwAeUbsQUi4r62bg=;
+        b=VJsaimwyN5KcWDwDUTFzoXiYhiXuLagE2MWIBd27KrzdlUrUoLDKT6dhTS+IrkzKXe
+         MFbPEDp9BLOocpf8gfhGRjCxyoIRMnd8mxwMH6gJIlHS8pSHkmPKauWySAVGwMQmnuuY
+         CTFZra75/f2Cx069cCfWPOrKolVeB/jRlyvDsGmvdXduEyH18YxcuhLZU0QxyjYbwBVs
+         4Qk9FtCDLVk+u8/nAQaHgwNzPZEpHWhOG401Xl0Za2io2Ze/bV+5CdfvFq6FjpeQjT0s
+         eLX1IuDQEYt7GRHLmF4TJIK6WLDz9cVyHTNOPEKEDFAVGq3lx2L1M9g20QrCIOUDcoTi
+         ZJpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=O9hnp5vht9/h8DCe0fJ5m2M+i9GwV2iCiCWFfwv95bs=;
-        b=Q3lfIL4i2JgmPuQ18x2I3aVNUjeRlanM08LYLzBW1ZWJP99ZRyQKTmRFSgYWaZJCcn
-         t9jFy9fM1dYts8uyDhqxaEgfyrNSzJ9FXM3W7XwbLS/vqV5iyXlRtDhyDqimQ0lomqir
-         7JFKKh1QNLRoyl2PGToYxL/qJXWUCwvxFV2UXZ+4SJseMcUPEpWibPICnrOQaQmO/pDi
-         c0j+Kue1/r3pytIXhbGCEV36jRJNxCq8pCksNLgi4uMXcZMtOnxWVqMhVbB5KuNfgQMR
-         CxOx0IupYCrxnF2g3SUWnPk1VEUErdexwsUlqqKthqmWnJ7cyAya8XFeACnPU0sc+qMZ
-         1A6w==
-X-Gm-Message-State: ALoCoQlz+2106paE15hpD+EiIFhvHl5sV/AnRV3iXr2+QsYbisUJFhUItC/rLIvhtTUcQiMYosgN
-X-Received: by 10.50.61.176 with SMTP id q16mr8863276igr.29.1421893937564;
-        Wed, 21 Jan 2015 18:32:17 -0800 (PST)
+        bh=GrVT1Bbvgle76i6W4ghANBoX4LvTwAeUbsQUi4r62bg=;
+        b=BZwyRsa0vMWDzuwBtkgrYKsiwnC3g1Z5XlIs/uoVgBdTi7bDm8wKKEJBE6NYUrOkee
+         ALeh/1F0mvnFkJOCl1XGrmykG0n+GwYy4fV/q+W9Iyfbvx4z7RmzN5BrsKyvWC903QYG
+         8183vFw6g9jjHgmH2X1draGZ3asvUTJcmvvNjw7BwSbmlgPs1+pATh6KNIV32rLqND7I
+         cbAT8UQvRvlDXZaO7xH0jL8HYmOAZYNo+fbskATlNgS8dGSOjgJ0LQYegiHZPjMGfrwv
+         uvJPBOL1CmO3vsPx/X/C2codDFOGDTAQq5MC3EurqxSYPPeG8sennkjTUgXYgT3n0EVk
+         PM/Q==
+X-Gm-Message-State: ALoCoQn2rfSeMWindFcf5PRWsqenW5+gfBySUq2yjUOU4Vj85k59vXIE0qTeJmI+twstU2Busdly
+X-Received: by 10.50.138.226 with SMTP id qt2mr33258837igb.1.1421893936448;
+        Wed, 21 Jan 2015 18:32:16 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b00:a4e7:f2b3:5669:74a3])
-        by mx.google.com with ESMTPSA id t8sm1142367igs.21.2015.01.21.18.32.17
+        by mx.google.com with ESMTPSA id aw9sm1162432igc.18.2015.01.21.18.32.15
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 21 Jan 2015 18:32:17 -0800 (PST)
+        Wed, 21 Jan 2015 18:32:16 -0800 (PST)
 X-Mailer: git-send-email 2.2.1.62.g3f15098
 In-Reply-To: <1421893929-7447-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262795>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262796>
 
-Now we only have one place where we need to touch the internals of
-the lock_file struct.
+The 'lock_fd' is the same as 'lk->fd'. No need to store it twice so remove
+it. You may argue this introduces more coupling as we need to know more
+about the internals of the lock file mechanism, but this will be solved in
+a later patch.
 
 No functional changes intended.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- refs.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ refs.c | 15 +++++----------
+ 1 file changed, 5 insertions(+), 10 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index 2472e61..2013d37 100644
+index 14e52ca..2472e61 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -3052,6 +3052,16 @@ int is_branch(const char *refname)
- 	return !strcmp(refname, "HEAD") || starts_with(refname, "refs/heads/");
+@@ -11,7 +11,6 @@ struct ref_lock {
+ 	char *orig_ref_name;
+ 	struct lock_file *lk;
+ 	unsigned char old_sha1[20];
+-	int lock_fd;
+ 	int force_write;
+ };
+ 
+@@ -2259,7 +2258,6 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
+ 	int attempts_remaining = 3;
+ 
+ 	lock = xcalloc(1, sizeof(struct ref_lock));
+-	lock->lock_fd = -1;
+ 
+ 	if (mustexist)
+ 		resolve_flags |= RESOLVE_REF_READING;
+@@ -2335,8 +2333,7 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
+ 		goto error_return;
+ 	}
+ 
+-	lock->lock_fd = hold_lock_file_for_update(lock->lk, ref_file, lflags);
+-	if (lock->lock_fd < 0) {
++	if (hold_lock_file_for_update(lock->lk, ref_file, lflags) < 0) {
+ 		if (errno == ENOENT && --attempts_remaining > 0)
+ 			/*
+ 			 * Maybe somebody just deleted one of the
+@@ -2904,7 +2901,6 @@ static int close_ref(struct ref_lock *lock)
+ {
+ 	if (close_lock_file(lock->lk))
+ 		return -1;
+-	lock->lock_fd = -1;
+ 	return 0;
  }
  
-+static int write_sha1_to_lock_file(struct ref_lock *lock,
-+				   const unsigned char *sha1)
-+{
-+	if (fdopen_lock_file(lock->lk, "w") < 0
-+	    || fprintf(lock->lk->fp, "%s\n", sha1_to_hex(sha1)) != 41)
-+		return -1;
-+	else
-+		return 0;
-+}
-+
- /*
-  * Write sha1 into the ref specified by the lock. Make sure that errno
-  * is sane on error.
-@@ -3059,7 +3069,6 @@ int is_branch(const char *refname)
- static int write_ref_sha1(struct ref_lock *lock,
- 	const unsigned char *sha1, const char *logmsg)
+@@ -2912,7 +2908,6 @@ static int commit_ref(struct ref_lock *lock)
  {
--	static char term = '\n';
- 	struct object *o;
+ 	if (commit_lock_file(lock->lk))
+ 		return -1;
+-	lock->lock_fd = -1;
+ 	return 0;
+ }
  
- 	if (!lock) {
-@@ -3085,8 +3094,7 @@ static int write_ref_sha1(struct ref_lock *lock,
+@@ -3090,8 +3085,8 @@ static int write_ref_sha1(struct ref_lock *lock,
  		errno = EINVAL;
  		return -1;
  	}
--	if (write_in_full(lock->lk->fd, sha1_to_hex(sha1), 40) != 40 ||
--	    write_in_full(lock->lk->fd, &term, 1) != 1 ||
-+	if (write_sha1_to_lock_file(lock, sha1) ||
+-	if (write_in_full(lock->lock_fd, sha1_to_hex(sha1), 40) != 40 ||
+-	    write_in_full(lock->lock_fd, &term, 1) != 1 ||
++	if (write_in_full(lock->lk->fd, sha1_to_hex(sha1), 40) != 40 ||
++	    write_in_full(lock->lk->fd, &term, 1) != 1 ||
  	    close_ref(lock) < 0) {
  		int save_errno = errno;
  		error("Couldn't write %s", lock->lk->filename.buf);
-@@ -4042,9 +4050,7 @@ int reflog_expire(const char *refname, const unsigned char *sha1,
+@@ -4047,9 +4042,9 @@ int reflog_expire(const char *refname, const unsigned char *sha1,
  			status |= error("couldn't write %s: %s", log_file,
  					strerror(errno));
  		} else if ((flags & EXPIRE_REFLOGS_UPDATE_REF) &&
--			(write_in_full(lock->lk->fd,
--				sha1_to_hex(cb.last_kept_sha1), 40) != 40 ||
--			 write_str_in_full(lock->lk->fd, "\n") != 1 ||
-+			(write_sha1_to_lock_file(lock, cb.last_kept_sha1) ||
+-			(write_in_full(lock->lock_fd,
++			(write_in_full(lock->lk->fd,
+ 				sha1_to_hex(cb.last_kept_sha1), 40) != 40 ||
+-			 write_str_in_full(lock->lock_fd, "\n") != 1 ||
++			 write_str_in_full(lock->lk->fd, "\n") != 1 ||
  			 close_ref(lock) < 0)) {
  			status |= error("couldn't write %s",
  					lock->lk->filename.buf);
