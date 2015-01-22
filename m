@@ -1,109 +1,90 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [PATCHv2 0/5] Fix bug in large transactions
-Date: Wed, 21 Jan 2015 18:32:04 -0800
-Message-ID: <1421893929-7447-1-git-send-email-sbeller@google.com>
-Cc: Stefan Beller <sbeller@google.com>
-To: peff@peff.net, git@vger.kernel.org, gitster@pobox.com,
-	mhagger@alum.mit.edu, loic@dachary.org
-X-From: git-owner@vger.kernel.org Thu Jan 22 03:33:07 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] transport-helper: do not request symbolic refs to remote helpers
+Date: Wed, 21 Jan 2015 22:46:48 -0800
+Message-ID: <xmqqwq4fuxbb.fsf@gitster.dls.corp.google.com>
+References: <1421631307-20669-1-git-send-email-mh@glandium.org>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org, srabbelier@gmail.com
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Thu Jan 22 07:47:24 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YE7Zz-0008Ke-40
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 03:33:07 +0100
+	id 1YEBY4-000849-0Q
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Jan 2015 07:47:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754612AbbAVCc7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Jan 2015 21:32:59 -0500
-Received: from mail-ig0-f175.google.com ([209.85.213.175]:60312 "EHLO
-	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754550AbbAVCcN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Jan 2015 21:32:13 -0500
-Received: by mail-ig0-f175.google.com with SMTP id hn18so4628038igb.2
-        for <git@vger.kernel.org>; Wed, 21 Jan 2015 18:32:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=tBt6DAUb6ps1gaAQCrA0axVLP9eOVLQwu5KEKKrMoLw=;
-        b=AI1yvmbEVuKLONfZE2pK3r7YqAvF7Bu/p1M65khIWroHDSIv5pEtTV0KJ8+6lyF27Q
-         5h0I9cDvdOexzrlnzwDvLCymdkCH/SpfQ5764g4cy4Um6OI/vpF8hCapPq8pHtp6I7bq
-         de3WacZfTUDFwsvOGb47jCk1CJvOE24Pwnx7zq7a5DUAJea5FEBzTd4fDvn4DWiwHqRu
-         qZLD+gk1Cgu1NJkQm6oAXpB7wfmG2ct9eed596ArfKIJI28zLTnng9sCcOgDu62jt8Sf
-         MpOCbB4/fY10yQVY+yFHf3yz8c6j5DRYRSoD5DwPjUIpiX0sZYJwDBgJxLB/GCz0idGI
-         jZoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=tBt6DAUb6ps1gaAQCrA0axVLP9eOVLQwu5KEKKrMoLw=;
-        b=Xc9h7mZBbQDgRoNmBNm2z+RATASelyiFo24eTuhXdTSbbiB5FvBgEHP2Sjs8qMRiS9
-         2QMOAKT3xIq/UDChW6BZiI2cg1kiK0/E5RZzf092Db/U8mODZYnByv5U7xg/N0nkLP1Q
-         wd1cnnNSkOmduFvaEF0UxcJLHo845Fe55UxccHadAHi9OgflTtR7e3gISf6YWTNpuQF0
-         WmcjSs/rWzdFan1poLWgAGSb8l3wG9GSWF3P6ttnMH4yzstGSMOrmxz7ybhG1mWUDuJO
-         YOfhdOu3rLRvEkK+gvkspw3XgOFCc4EyMC4E6VPbvMLDPnkaKUso4mMM1U/xQWEmXySY
-         SPIw==
-X-Gm-Message-State: ALoCoQnvxqfYI6Q71mc6uYPOviqWPbLmwkOSL6UyWILXsNjr2lq0++zvm0sUlbQzwHq0XJ0rdDbz
-X-Received: by 10.42.38.9 with SMTP id a9mr257533ice.68.1421893932331;
-        Wed, 21 Jan 2015 18:32:12 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b00:a4e7:f2b3:5669:74a3])
-        by mx.google.com with ESMTPSA id s17sm1191629igr.2.2015.01.21.18.32.11
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 21 Jan 2015 18:32:11 -0800 (PST)
-X-Mailer: git-send-email 2.2.1.62.g3f15098
+	id S1751034AbbAVGq5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Jan 2015 01:46:57 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:51954 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750951AbbAVGqz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Jan 2015 01:46:55 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D9A0B276A0;
+	Thu, 22 Jan 2015 01:46:49 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Rf2o1Fbtx2/vH5THVf4JmpzzxHI=; b=PAETqy
+	zATnBf3Ke7nzmJmY7pv/yRQyt0RGJhUIPa1X+4URNqkLQT0sIfJ/W8rq0D00P1L1
+	2KOybeLy8lv/rutK9fuhxrRU4Mtid0+c10cUEpRyi69HQx5ACXq3ekyuiggx+UuU
+	Sx4bqFAjfz9j/T5+e9Wrxcvi2M4+yt8AlGX9I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=UTqz188emTwd7Y8OjVhuUo67PsOw/FRw
+	iumJDO5GnVBgCX2NG0KOMTH31WJ7r6Q87DlVHieAg6kp/TEm9/qnjVSntGCGSngP
+	5e/+AQlKklcvOhyRyYn9glPRl0xK2glpSzsEX5BC5Y+mAM9Afzo65a+/l3emUIi4
+	4a48NSodREw=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id CFB072769F;
+	Thu, 22 Jan 2015 01:46:49 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 570A32769E;
+	Thu, 22 Jan 2015 01:46:49 -0500 (EST)
+In-Reply-To: <1421631307-20669-1-git-send-email-mh@glandium.org> (Mike
+	Hommey's message of "Mon, 19 Jan 2015 10:35:07 +0900")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 70C6AA5C-A202-11E4-B72E-7BA29F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262797>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262798>
 
-version2:
+Mike Hommey <mh@glandium.org> writes:
 
-* This applies on top of origin/sb/atomic-push though it will result in a one
-  line merge conflict with origin/jk/lock-ref-sha1-basic-return-errors when
-  merging to origin/next.
+> A typical remote helper will return a `list` of refs containing a symbolic
+> ref HEAD, pointing to, e.g. refs/heads/master. In the case of a clone, all
+> the refs are being requested through `fetch` or `import`, including the
+> symbolic ref.
+>
+> While this works properly, in some cases of a fetch, like `git fetch url`
+> or `git fetch origin HEAD`, or any fetch command involving a symbolic ref
+> without also fetching the corresponding ref it points to, the fetch command
+> fails with:
+>
+>   fatal: bad object 0000000000000000000000000000000000000000
+>   error: <remote> did not send all necessary objects
+>
+> (in the case the remote helper returned '?' values to the `list` command).
 
-* It now uses the FILE* pointer instead of file descriptors. This
-  results in a combination of the 2 former patches "refs.c: have
-  a write_in_full_to_lock_file wrapper" and "refs.c: write to a
-  lock file only once" as the wrapper function is more adapted to
-  its consumers
+Hmph.
 
-* no need to dance around with char *pointers which may leak.
+Since the most "typical remote helper" I immediately think of is
+remote-curl and "git fetch https://code.googlesource.com/git HEAD"
+does not seem to fail that way, I am not sure what to make of the
+above.  It is unclear if you meant that the above is inherent due to
+the way how remote helper protocol works (e.g. there is only one
+thing we can associate with a ref and we cannot say "HEAD points at
+this commit" at the same time we say "HEAD points at
+refs/heads/master"), or just due to broken or lazy implementation of
+the remote helpers that are invoked by transport-helper.c interface.
 
-* another new patch sneaked into the series: Renaming ULIMIT in t7004
-  to ULIMIT_STACK_SIZE
+> This is because there is only one ref given to fetch(), and it's not
+> further resolved to something at the end of fetch_with_import().
 
-That said, only the first and third patch are updated from the first version
-of the patches. The others are new in the sense that rewriting them was cheaper
-than keeping notes in between.
-
-version1:
-
-(reported as: git update-ref --stdin : too many open files, 2014-12-20)
-
-First a test case is introduced to demonstrate the failure,
-the patches 2-6 are little refactoring and the last patch
-fixes the bug and also marks the bugs as resolved in the
-test suite.
-
-Unfortunately this applies on top of origin/next.
-
-Any feedback would be welcome!
-
-Thanks,
-Stefan
-
-Stefan Beller (5):
-  update-ref: test handling large transactions properly
-  t7004: rename ULIMIT test prerequisite to ULIMIT_STACK_SIZE
-  refs.c: remove lock_fd from struct ref_lock
-  refs.c: have a write_sha1_to_lock_file wrapper
-  refs.c: enable large transactions
-
- refs.c                | 34 ++++++++++++++++++++++------------
- t/t1400-update-ref.sh | 28 ++++++++++++++++++++++++++++
- t/t7004-tag.sh        |  4 ++--
- 3 files changed, 52 insertions(+), 14 deletions(-)
-
--- 
-2.2.1.62.g3f15098
+There is no get_refs_list() or something similar involved?
