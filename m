@@ -1,82 +1,96 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: [PATCH] git-p4: correct --prepare-p4-only instructions
-Date: Fri, 23 Jan 2015 09:15:12 +0000
-Message-ID: <1422004512-10049-2-git-send-email-luke@diamand.org>
-References: <1422004512-10049-1-git-send-email-luke@diamand.org>
-Cc: Pete Wyckoff <pw@padd.com>, Luke Diamand <luke@diamand.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 23 10:16:29 2015
+From: Jeff King <peff@peff.net>
+Subject: Re: Should copy/rename detection consider file overwrites?
+Date: Fri, 23 Jan 2015 06:04:19 -0500
+Message-ID: <20150123110418.GA10028@peff.net>
+References: <20150123012908.GA8558@glandium.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Fri Jan 23 12:04:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YEaLq-0000kF-5M
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Jan 2015 10:16:26 +0100
+	id 1YEc2S-0007SM-Ji
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Jan 2015 12:04:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754045AbbAWJQU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Jan 2015 04:16:20 -0500
-Received: from mail-wg0-f52.google.com ([74.125.82.52]:34769 "EHLO
-	mail-wg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753253AbbAWJQP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jan 2015 04:16:15 -0500
-Received: by mail-wg0-f52.google.com with SMTP id y19so6274992wgg.11
-        for <git@vger.kernel.org>; Fri, 23 Jan 2015 01:16:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=OZ8oLavUTSZ9avK59T70DUM+05Q/EE/VqVPkFyFJFGE=;
-        b=QLwoTmYK8n7kHvNQUoz1JcWGmOQewyB+vwocsTDdV1ARWezr3UofutpMEjRtYlGktP
-         O90aj5WOqdTXlkf/jZZN7zko10fo5AuADnzVAJeGyfHsff+wMjmpM9if5Ukgt5O20x/W
-         ttciFGOeiK0Rg0hVXiOVoHY9xAZpnGqtloIaU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=OZ8oLavUTSZ9avK59T70DUM+05Q/EE/VqVPkFyFJFGE=;
-        b=Zvdny3ca7ayAj2asL1fFhXhxtpwEi3Ev7YFba9PMUIEvQag+kcWoyj+BP9TgKd6HfA
-         NIxF+rvNWVfeKh0wd0c82jV+8HIMlU5j0qngYf2pxQm9zBYozwmINnjoxt3I041YoDet
-         O9GLhNnP3B5R6AoLNNlMjcl/2xsh9WzeJvoQFF914qyTLySEwuHWbCHHLm98iSQhySRx
-         0BGtk8kpax/YogdunbvKPdxCmOLfdb/gTBDimlJdkEwZO8DtAXV7bL5tzs9QFP+EkdQw
-         YxdBGvo1rEl5xtL8jAFA45wPflJg2E3h4QzSdxF7oXc+sOFpWeJVR6G8bF/xIonNijGp
-         +GRQ==
-X-Gm-Message-State: ALoCoQnWhgMFMHNYo16W/ih2O01XJAFmOq8XWrki+ur8scDYzTz5/+xv4bkCE8NieEemrIbwoINC
-X-Received: by 10.180.8.169 with SMTP id s9mr1736581wia.72.1422004574291;
-        Fri, 23 Jan 2015 01:16:14 -0800 (PST)
-Received: from ethel.local.diamand.org (cpc7-cmbg17-2-0-cust139.5-4.cable.virginm.net. [86.1.43.140])
-        by mx.google.com with ESMTPSA id cf12sm1372311wjb.10.2015.01.23.01.16.12
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 23 Jan 2015 01:16:13 -0800 (PST)
-X-Mailer: git-send-email 2.3.0.rc1.30.g76afe74
-In-Reply-To: <1422004512-10049-1-git-send-email-luke@diamand.org>
+	id S1755193AbbAWLEZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Jan 2015 06:04:25 -0500
+Received: from cloud.peff.net ([50.56.180.127]:37763 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754594AbbAWLEW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jan 2015 06:04:22 -0500
+Received: (qmail 25629 invoked by uid 102); 23 Jan 2015 11:04:22 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 23 Jan 2015 05:04:22 -0600
+Received: (qmail 18783 invoked by uid 107); 23 Jan 2015 11:04:47 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 23 Jan 2015 06:04:47 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 23 Jan 2015 06:04:19 -0500
+Content-Disposition: inline
+In-Reply-To: <20150123012908.GA8558@glandium.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262904>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262905>
 
-If you use git-p4 with the "--prepare-p4-only" option, then
-it prints the p4 command line to use. However, the command
-line was incorrect: the changelist specification must be
-supplied on standard input, not as an argument to p4.
+On Fri, Jan 23, 2015 at 10:29:08AM +0900, Mike Hommey wrote:
 
-Signed-off-by: Luke Diamand <luke@diamand.org>
----
- git-p4.py | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> While fooling around with copy/rename detection, I noticed that it
+> doesn't detect the case where you copy or rename a file on top of
+> another:
+> 
+> $ git init
+> $ (echo foo; echo bar) > foo
 
-diff --git a/git-p4.py b/git-p4.py
-index ff132b2..90447de 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -1442,7 +1442,7 @@ class P4Submit(Command, P4UserMap):
-             print "  " + self.clientPath
-             print
-             print "To submit, use \"p4 submit\" to write a new description,"
--            print "or \"p4 submit -i %s\" to use the one prepared by" \
-+            print "or \"p4 submit -i <%s\" to use the one prepared by" \
-                   " \"git p4\"." % fileName
-             print "You can delete the file \"%s\" when finished." % fileName
- 
--- 
-2.1.3.1037.g95a6691.dirty
+If I replace this with a longer input, like:
+
+  cp /usr/share/dict/words foo
+
+> $ git add foo
+> $ git commit -m foo
+> $ echo 0 > bar
+> $ git add bar
+> $ git commit -m bar
+> $ git mv -f foo bar
+> $ git commit -m foobar
+> $ git log --oneline --reverse
+> 7dc2765 foo
+> b0c837d bar
+> 88caeba foobar
+> $ git blame -s -C -C bar
+> 88caebab 1) foo
+> 88caebab 2) bar
+
+Then the blame shows me the initial "foo" commit. So I think it is
+mainly that your toy example is too small (I think we will do
+exact rename detection whatever the size is, but I expect we are getting
+hung up on the break detection between "0\n" and "foo\nbar\n").
+
+> I can see how this is not trivially representable in e.g. git diff-tree,
+> but shouldn't at least blame try to tell that those lines actually come
+> from 7dc2765?
+
+diff-tree can show this, too, but you need to turn on "break detection"
+which will notice that "bar" has essentially been rewritten (and then
+consider its sides as candidates for rename detection). For example
+(with the longer input, as above):
+
+  $ git diff-tree --name-status -M HEAD
+  c6fe146b0c73adcbc4dbc2e58eb83af9007678bc
+  M       bar
+  D       foo
+
+  $ git diff-tree --name-status -M -B HEAD
+  c6fe146b0c73adcbc4dbc2e58eb83af9007678bc
+  R100    foo     bar
+
+Presumably if you set the break score low enough, your original example
+would behave the same way, but I couldn't get it to work (I didn't look
+closely, but I imagine it is just so tiny that we hit the internal
+limits on how low you can set the score).
+
+-Peff
