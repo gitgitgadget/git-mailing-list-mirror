@@ -1,88 +1,111 @@
 From: Per Cederqvist <cederp@opera.com>
-Subject: [GUILT 0/5] doc: less guilt-foo invocations, minor Makefile fixes
-Date: Fri, 23 Jan 2015 14:24:54 +0100
-Message-ID: <1422019499-2012-1-git-send-email-cederp@opera.com>
+Subject: [GUILT 1/5] Fix generation of Documentation/usage-%.txt.
+Date: Fri, 23 Jan 2015 14:24:55 +0100
+Message-ID: <1422019499-2012-2-git-send-email-cederp@opera.com>
+References: <1422019499-2012-1-git-send-email-cederp@opera.com>
 Cc: git@vger.kernel.org, Per Cederqvist <cederp@opera.com>
 To: Jeff Sipek <jeffpc@josefsipek.net>
-X-From: git-owner@vger.kernel.org Fri Jan 23 14:25:37 2015
+X-From: git-owner@vger.kernel.org Fri Jan 23 14:25:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YEeEw-0003k7-PU
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Jan 2015 14:25:35 +0100
+	id 1YEeFI-0003zH-2N
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Jan 2015 14:25:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752701AbbAWNZb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Jan 2015 08:25:31 -0500
-Received: from mail-we0-f172.google.com ([74.125.82.172]:63028 "EHLO
-	mail-we0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750786AbbAWNZ3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jan 2015 08:25:29 -0500
-Received: by mail-we0-f172.google.com with SMTP id q59so3987128wes.3
-        for <git@vger.kernel.org>; Fri, 23 Jan 2015 05:25:26 -0800 (PST)
+	id S1754969AbbAWNZv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Jan 2015 08:25:51 -0500
+Received: from mail-wi0-f171.google.com ([209.85.212.171]:44326 "EHLO
+	mail-wi0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754611AbbAWNZu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jan 2015 08:25:50 -0500
+Received: by mail-wi0-f171.google.com with SMTP id l15so2803204wiw.4
+        for <git@vger.kernel.org>; Fri, 23 Jan 2015 05:25:49 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=Z5BNswN81yVx6jgx14LXX5YanyBy0ndZmWbOm0RmH+0=;
-        b=PDSp1ulQ1sq0mVJpHjFKuOmvIm3lD4SmzathLj951zpWnbgHXKfKqrWtm28EUPWEMF
-         E0G8qqcFHSYVkpH3+Z163erbBNijpErJlYANUMF90K/KobX4/i1LoYflf2tAEyRwrPt4
-         K7jdNRpDnaRf7Guv89aK4KHxBdw9dh2IAsjs7ZMqP/gPldcUyk2m1FbD69dfSq1PVNCe
-         NyugWwuLcu0Q5A0fJ2EoJ0ozOgCA4DBQSWHyJlGCFwnUGIOBixGDbdu4S1cABmXki3UQ
-         JjZ7ZtSbFVSIWpjaKd0bu/xHjURbB5by7IyGU5oGScKfL/P953+PAJ3jdYfYzByS6sOR
-         Wp/Q==
-X-Gm-Message-State: ALoCoQkx9uoEzkULvcTmIiVsHjQM/7xCftGFsj3ZrGvEDbu+iKNuJEP4eyuGC6JhjjwmchI0MJEl
-X-Received: by 10.181.12.100 with SMTP id ep4mr3731993wid.62.1422019524684;
-        Fri, 23 Jan 2015 05:25:24 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=eZ+wHdszKOas7v/o6HQu9T3j7mMrLh8i86CZkV+3GxY=;
+        b=bP5Wd21Ww3w3nNqOxaxrwImCwNlyF3ykoncxCLmhj2IlVLPG6WYECrcYNy3SLj6sA0
+         ZDaAwgPx6yGGm4TkuzG5xj9dhDnF9F0tghwwoJf56waCQLvsKMkS0x6UvvTz5CjTc3Ke
+         NDY/iXepVhfkjiVYaqzMLeVFRCl4EcHhLqRlBLnVPevigWECGXC+GB4DMYcY+hogj6GY
+         shH94XOAWzITLmajlalQpXxE5a8pP92nNuQa7b04HrCJyD09+THVPRCx/gBq+4suna3o
+         4x7iEmF+gQe1EVDIg3Tb2s35oODSwai+EfEq+ZEathAujGbHdNb0M3FnYiJaQE2KVX6E
+         cvjA==
+X-Gm-Message-State: ALoCoQm5IEm+oO+zmSoGeyL9hfx9Sd8fIe/ZEwbEqvToi2KjEuI/Ekq3WkQQar/w66i2983fTNib
+X-Received: by 10.180.206.79 with SMTP id lm15mr3702617wic.67.1422019548952;
+        Fri, 23 Jan 2015 05:25:48 -0800 (PST)
 Received: from dualla.linkoping.osa (ip-200.t2.se.opera.com. [212.247.211.200])
-        by mx.google.com with ESMTPSA id fi10sm1841950wib.13.2015.01.23.05.25.22
+        by mx.google.com with ESMTPSA id fi10sm1841950wib.13.2015.01.23.05.25.47
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 23 Jan 2015 05:25:23 -0800 (PST)
+        Fri, 23 Jan 2015 05:25:47 -0800 (PST)
 X-Mailer: git-send-email 2.1.0
+In-Reply-To: <1422019499-2012-1-git-send-email-cederp@opera.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262922>
 
-guilt no longer supports running commands on the "guilt-add" form.
-You need to use "guilt add" instead.
+The old rule worked, most of the time, but had several issues:
 
-This patch series updates most of the documentation to use the
-supported "guilt add" form.
+ - It depended on the corresponding guilt-*.txt file, but the usage.sh
+   script actually reads ../guilt-foo.
 
-There is one known instance where I did not change the style: in the
-NAME section in Documentation/guilt-*.txt.  The reason is that if I
-change it there, xmlto will create the man pages as e.g. guilt_add.1
-instead of guilt-add.1, and I don't know how to fix that.  Also, the
-git man pages (as of Git 2.1.0) still have "git-add" under the NAME
-heading of git-add(1), so it might be wise to follow suite.
+ - Actually, each usage-%.txt depended on all guilt-*.txt files, so
+   make had to do more work than necessary if a single file was
+   altered.
 
-While working on this, I also found two minor issues with
-Documentation/Makefile.
+ - The construct broke parallel make, which would spawn several
+   usage.sh at once.  This leads to unnecessary work, and could
+   potentially result in broken usage files if the "echo some_string >
+   some_file" construct used by usage.sh isn't atomic.
 
-    /ceder
+Fixed by letting the usage.sh script update a single file, and writing
+a proper implicit make rule.  This makes parallel make work a lot
+better.
 
-Per Cederqvist (5):
-  Fix generation of Documentation/usage-%.txt.
-  doc: guilt.xml depends on cmds.txt.
-  doc: don't use guilt-foo invocations in examples.
-  doc: don't use guilt-foo invocations in usage messages.
-  doc: git doesn't use git-foo invocations.
+There is a small downside, though, as usage.sh will now be run once
+for each command (if everything is regenerated).  I think it is worth
+to pay that price to get the correctness.  This command is still very
+fast compared to the docbook processing.
 
- Documentation/.gitignore        | 3 +++
- Documentation/Makefile          | 6 ++++--
- Documentation/guilt-add.txt     | 4 ++--
- Documentation/guilt-delete.txt  | 2 +-
- Documentation/guilt-diff.txt    | 2 +-
- Documentation/guilt-help.txt    | 4 ++--
- Documentation/guilt-new.txt     | 6 +++---
- Documentation/guilt-refresh.txt | 2 +-
- Documentation/guilt-repair.txt  | 2 +-
- Documentation/guilt-rm.txt      | 2 +-
- Documentation/guilt-select.txt  | 4 ++--
- Documentation/usage.sh          | 8 +++-----
- 12 files changed, 24 insertions(+), 21 deletions(-)
+Signed-off-by: Per Cederqvist <cederp@opera.com>
+---
+ Documentation/Makefile | 4 ++--
+ Documentation/usage.sh | 8 +++-----
+ 2 files changed, 5 insertions(+), 7 deletions(-)
 
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index b6c3285..ec3c9e8 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -66,8 +66,8 @@ clean:
+ 	rm -f usage-*.txt
+ 	rm -f version.txt
+ 
+-usage-%.txt: $(MAN1_TXT) usage.sh
+-	sh ./usage.sh
++usage-guilt-%.txt: ../guilt-% usage.sh
++	sh ./usage.sh $<
+ 
+ %.html : %.txt footer.txt version.txt
+ 	$(ASCIIDOC) -b xhtml11 -d manpage -f asciidoc.conf $(ASCIIDOC_EXTRA) $<
+diff --git a/Documentation/usage.sh b/Documentation/usage.sh
+index 20fdca4..629f546 100644
+--- a/Documentation/usage.sh
++++ b/Documentation/usage.sh
+@@ -1,7 +1,5 @@
+ #!/bin/sh
+ 
+-for i in `ls ../guilt-*`; do
+-	name=$(basename $i)
+-	u=$(grep USAGE $i |  sed 's/USAGE="//' | sed 's/"$//') 
+-	echo "'$name' $u"  > usage-$name.txt
+-done
++name=$(basename $1)
++u=$(grep USAGE $1 |  sed 's/USAGE="//' | sed 's/"$//') 
++echo "'$name' $u"  > usage-$name.txt
 -- 
 2.1.0
