@@ -1,93 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git compile warnings (under mac/clang)
-Date: Fri, 23 Jan 2015 10:07:18 -0800
-Message-ID: <xmqqwq4dqskp.fsf@gitster.dls.corp.google.com>
-References: <CAO2U3Qi6Xf1RrbxyVW3cHNe1-ZwxFHDVskGLZguWS=b38pgaXQ@mail.gmail.com>
-	<CAGZ79kaFWL5HWdctLzTWf6D4nTP19sPZbcOg9fiRx7RQrWjY7Q@mail.gmail.com>
-	<b2cbad0d8e59a0c4eb0565608f3f90bc@www.dscho.org>
-	<20150122220140.GB6695@peff.net>
-	<315bf23981813799d16fdd9b533444f3@www.dscho.org>
-	<20150123122317.GA12517@peff.net>
-	<6fd8dc170de8be1ab38f8fda89d44f6a@www.dscho.org>
-	<20150123133033.GA27692@peff.net>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH 0/7] Coding style fixes.
+Date: Fri, 23 Jan 2015 10:36:33 -0800
+Message-ID: <CAGZ79kYPHv7UCy1jzf=0WeRP7od+3pZ61Rps9NK6_qbwER_Jjw@mail.gmail.com>
+References: <1422011208-3832-1-git-send-email-kuleshovmail@gmail.com>
+	<CANCZXo4Ga5a0OjNhqSOP39p76RfOOX+N5cZhA8j9hjhKodTqcg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Stefan Beller <sbeller@google.com>,
-	Michael Blume <blume.mike@gmail.com>, peter@lekensteyn.nl,
-	eungjun.yi@navercorp.com, Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jan 23 19:07:35 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Alexander Kuleshov <kuleshovmail@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 23 19:36:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YEido-0000SB-VB
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Jan 2015 19:07:33 +0100
+	id 1YEj5z-0007qU-Dq
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Jan 2015 19:36:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755656AbbAWSH3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Jan 2015 13:07:29 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:53516 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753430AbbAWSH2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jan 2015 13:07:28 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5F8AF31262;
-	Fri, 23 Jan 2015 13:07:20 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=POFtQ/B2eKa/ron496gv8GdlJm8=; b=AaXWg+
-	bQgKlZbc8l/dz2FHHgas4bGW9ejf0MXI0ly7fotL7YbJMOt3ByH5DbLaEe0TnLPE
-	PemXb8I2TJ0IXAiQn5/NGV7TALX2hTmJDxdSQ8/npGs0lWXy3SSYVpB8KqP4aj6f
-	yyz2bUFubb6v52KXENga7j5dp81NusmmbkBsw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=tbvwcHsbof6L1ghD9C2U0SyOWqSnw9w6
-	OKYYfJT66ZSk6+5hMpvu3b88LxlBn7N1/LODmgTQZo0i3SBjCXNylLC1wiSszNKj
-	ejY/PGEpspSl4AvlD6T8frlCZfoPmGRhPxO7Msevil2ayTb/4iMzKtf7XP9X8Svk
-	h2HoazWgKkM=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 52AC73125C;
-	Fri, 23 Jan 2015 13:07:20 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AE3CB31259;
-	Fri, 23 Jan 2015 13:07:19 -0500 (EST)
-In-Reply-To: <20150123133033.GA27692@peff.net> (Jeff King's message of "Fri,
-	23 Jan 2015 08:30:34 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: AC050E3C-A32A-11E4-9775-7BA29F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1756355AbbAWSgf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Jan 2015 13:36:35 -0500
+Received: from mail-ie0-f177.google.com ([209.85.223.177]:36312 "EHLO
+	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756351AbbAWSge (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jan 2015 13:36:34 -0500
+Received: by mail-ie0-f177.google.com with SMTP id vy18so8706735iec.8
+        for <git@vger.kernel.org>; Fri, 23 Jan 2015 10:36:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=1uPAVwMWp7sC36DIi/4+9RUubWDKjYAgwIAkmLjuiSQ=;
+        b=Oxm30r3OzfiUpVPy6GrmoEEZvBtUxBQ8G0gwAherkVp52JkqPoizre8WPK8A2LRMq+
+         uU5i582YYCR615gy531Aw7kxBJQPQ8y2DViqchtee1vRRlUozIhUcJqHbvq2nkrgcBiw
+         QmLlJsVpxoM79nqDvZmR6mX5RvY4rPuRl9lH/tiO8f9eaoc3DGJuqSX9V/ZCyOWFkCBM
+         hsIxN3lyLFNORe+Vib/euQOz30DTYfrVtnrkLSGJA15pdwo1XOx6sSXt14dWO1IBGgWW
+         2B+rEorIDMcteeZNn/Xsk+4t7+vDK+dXpezbA5oyiFrd9HWrx9FhhRVBFrlzOYvtmTk/
+         6yMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=1uPAVwMWp7sC36DIi/4+9RUubWDKjYAgwIAkmLjuiSQ=;
+        b=Ta0YItoG8aOEb1W/1Ehl5ZVc8YQwtSk9zn7GJuBcNIXBmA4CNzz+/NbL2hjqzBnAAi
+         9QZ+4NVs0jbDhnvxFs0B76s3eAVCTYIZ1E81uVL3yl73glxT0jZF7W40cJVvBPwpoctK
+         +VSn7JEBYkFPJwOO+k7M321LW3Q4YcJNQZO8IQ+Wqtu/EhA9g2zI2Z6YtoxZxfCxrNtd
+         uSbONFGr9rIBFAi+P6t6YGXrsRDFMBzuN9nzttHNV/U8p/sZGK+qmOP2XRLYeIUCockj
+         UGXA3M8FTGkvYvG2F0xb8eyjDNpqqfP5h/GmrKPoWhhpX7OmGuWsaXIXa4kG5uPuHcxO
+         hQVQ==
+X-Gm-Message-State: ALoCoQmR7QkzFxeLqcsG/zlatCnmnQ89hqkTn5glLL2Txr1eInpAi2gudrHUqc1AyQ1kAi4cp84P
+X-Received: by 10.50.108.108 with SMTP id hj12mr3391211igb.47.1422038193616;
+ Fri, 23 Jan 2015 10:36:33 -0800 (PST)
+Received: by 10.50.26.42 with HTTP; Fri, 23 Jan 2015 10:36:33 -0800 (PST)
+In-Reply-To: <CANCZXo4Ga5a0OjNhqSOP39p76RfOOX+N5cZhA8j9hjhKodTqcg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262940>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262941>
 
-Jeff King <peff@peff.net> writes:
-
->> diff --git a/fsck.c b/fsck.c
->> index 15cb8bd..8f8c82f 100644
->> --- a/fsck.c
->> +++ b/fsck.c
->> @@ -107,7 +107,7 @@ static int fsck_msg_severity(enum fsck_msg_id msg_id,
->>  {
->>  	int severity;
->>  
->> -	if (options->msg_severity && msg_id >= 0 && msg_id < FSCK_MSG_MAX)
->> +	if (options->msg_severity && ((unsigned int) msg_id) < FSCK_MSG_MAX)
->>  		severity = options->msg_severity[msg_id];
->>  	else {
->>  		severity = msg_id_info[msg_id].severity;
->> -- snap --
->> 
->> What do you think? Michael, does this cause more Clang warnings,
->> or would it resolve the issue?
+On Fri, Jan 23, 2015 at 4:09 AM, Alexander Kuleshov
+<kuleshovmail@gmail.com> wrote:
+> I made separate patch for every file. Please, let me know if need to
+> squash it into one commit.
 >
-> Hmm, yeah, that does not seem unreasonable, and is more localized.
+>
+> 2015-01-23 17:06 GMT+06:00 Alexander Kuleshov <kuleshovmail@gmail.com>:
+>> This patch set contatins minor style fixes. CodingGuidelines contains
+>> rule that the star must side with variable name.
+>>
 
-Or we could force enum to be signed by defining FSCK_MSG_UNUSED to
-be -1 at the very beginning of enum definition, without changing
-anything else.  Then "msg_id < 0" would become a very valid
-protection against programming mistakes, no?
+The whole series is
+Reviewed-by: Stefan Beller <sbeller@google.com>
