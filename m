@@ -1,119 +1,262 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: Git compile warnings (under mac/clang)
-Date: Fri, 23 Jan 2015 13:38:17 +0100
-Organization: gmx
-Message-ID: <6fd8dc170de8be1ab38f8fda89d44f6a@www.dscho.org>
-References: <CAO2U3Qi6Xf1RrbxyVW3cHNe1-ZwxFHDVskGLZguWS=b38pgaXQ@mail.gmail.com>
- <CAGZ79kaFWL5HWdctLzTWf6D4nTP19sPZbcOg9fiRx7RQrWjY7Q@mail.gmail.com>
- <b2cbad0d8e59a0c4eb0565608f3f90bc@www.dscho.org>
- <20150122220140.GB6695@peff.net>
- <315bf23981813799d16fdd9b533444f3@www.dscho.org>
- <20150123122317.GA12517@peff.net>
+From: Daniel Hahler <genml+git-2014@thequod.de>
+Subject: Re: git: regression with mergetool and answering "n" (backport fix
+ / add tests)
+Date: Fri, 23 Jan 2015 14:19:07 +0100
+Message-ID: <54C24A4B.3000909@thequod.de>
+References: <5499BDB2.4070301@thequod.de> <20141226010023.GC14150@gmail.com> <549CB5ED.5040804@thequod.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Stefan Beller <sbeller@google.com>,
-	Michael Blume <blume.mike@gmail.com>, peter@lekensteyn.nl,
-	eungjun.yi@navercorp.com, Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jan 23 13:38:36 2015
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="04vpDHqmw5wnMGsgd6Q3LClq20MCE4FSg"
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 23 14:19:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YEdVS-0004bC-1T
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Jan 2015 13:38:34 +0100
+	id 1YEe8q-0007hQ-Sf
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Jan 2015 14:19:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754760AbbAWMia (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Jan 2015 07:38:30 -0500
-Received: from mout.gmx.net ([212.227.15.19]:64485 "EHLO mout.gmx.net"
+	id S1754301AbbAWNTN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Jan 2015 08:19:13 -0500
+Received: from hahler.de ([188.40.33.212]:36191 "EHLO elfe.thequod.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754571AbbAWMi3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jan 2015 07:38:29 -0500
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0LvV1X-1XWTCC0fY3-010awt; Fri, 23 Jan 2015 13:38:19
- +0100
-In-Reply-To: <20150123122317.GA12517@peff.net>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1-git
-X-Provags-ID: V03:K0:0XPc7760adixkk2Rv80zVujarccYbTRbxQOLCp4V/snnRmF09Sv
- p6jisydtrEBvMl/Bxczp0CftXgzQzZxw24R8J9D/wzdrC7kBirFbiY47Q0jeXA91aoNOciU
- 8Um/gcBI3ZEhu/ww2X02hHlKBvwAw5iVXsVsQnfFQay74tGpOXYlow39o3eGiVwyrqaIIEm
- WzYYSeD/TPpOqk79uWCkg==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1752810AbbAWNTL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jan 2015 08:19:11 -0500
+Received: from localhost (amavis [10.122.1.24])
+	by elfe.thequod.de (Postfix) with ESMTP id 94DCE620FC;
+	Fri, 23 Jan 2015 14:19:08 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=thequod.de; h=
+	content-type:content-type:in-reply-to:references:subject:subject
+	:mime-version:user-agent:from:from:date:date:message-id:received
+	:received; s=postfix2; t=1422019148; bh=Ro1YO2QNsZzykmsIIfyAimIf
+	Bze0yv7c4TxM7ajkFQs=; b=W8Ag0ZJSt/3Xew0MhtjOKOTkx7sSHJSdCsIzXfRq
+	Nub5qlPdTisgQeSVzC/LR6reI2ot9UuXrf59qr4nzEk0EOqjlB08oO0oFOHDEbYZ
+	5Q5SIHDbeqlambs2inf5/FsopPO4OiFsDOehMTR9ymdIUyvuonXHEV0BnAuELRZ9
+	GQM=
+Received: from elfe.thequod.de ([10.122.1.25])
+	by localhost (amavis.thequod.de [10.122.1.24]) (amavisd-new, port 10026)
+	with ESMTP id 6Q30ia_4p4SL; Fri, 23 Jan 2015 14:19:08 +0100 (CET)
+Received: from lenny.thequod.de (ip5b403898.dynamic.kabel-deutschland.de [91.64.56.152])
+	(Authenticated sender: daniel@hahler.de)
+	by elfe.thequod.de (Postfix) with ESMTPSA;
+	Fri, 23 Jan 2015 14:19:08 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
+In-Reply-To: <549CB5ED.5040804@thequod.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262918>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262919>
 
-Hi Peff,
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--04vpDHqmw5wnMGsgd6Q3LClq20MCE4FSg
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On 2015-01-23 13:23, Jeff King wrote:
-> On Fri, Jan 23, 2015 at 12:48:29PM +0100, Johannes Schindelin wrote:
-> 
->>     Pointed out by Michael Blume. Jeff King provided the pointer to a commit
->>     fixing the same issue elsewhere in the Git source code.
-> 
-> It may be useful to reference the exact commit (3ce3ffb8) to help people
-> digging in the history (e.g., if we decide there is a better way to shut
-> up this warning and we need to find all the places to undo the
-> brain-damage).
+Hi,
 
-Good point, thanks!
+I am a bit surprised that this bug still exists in "maint" / v2.2.2.
 
->> -	for (i = 0; i < FSCK_MSG_MAX; i++) {
->> +	for (i = FSCK_MSG_MIN + 1; i < FSCK_MSG_MAX; i++) {
-> 
-> Ugh. It is really a shame how covering up this warning requires
-> polluting so many places. I don't think we have a better way, though,
-> aside from telling people to use -Wno-tautological-compare (and I can
-> believe that it _is_ a useful warning in some other circumstances, so it
-> seems a shame to lose it).
-> 
-> Unless we are willing to drop the ">= 0" check completely. I think it is
-> valid to do so regardless of the compiler's representation decision due
-> to the numbering rules I mentioned above. It kind-of serves as a
-> cross-check that we haven't cast some random int into the enum, but I
-> think we would do better to find those callsites (since they are not
-> guaranteed to work, anyway; in addition to signedness, it might choose a
-> much smaller representation).
+Cherry-picking/merging 0ddedd4 fixes it.
 
-Yeah, well, this check is really more of a safety net in case I messed up anything; I was saved so many times by my own defensive programming that I try to employ it as much as I can.
 
-But it does complicate the papering over Clang's overzealous warning, so I could live with removing the check altogether.
+Regards,
+Daniel.
 
-On the other hand, I could do something even easier:
+On 26.12.2014 02:12, Daniel Hahler wrote:
+> Hi David,
+>=20
+> sorry for the confusion - the patch / fix I've mentioned was meant to b=
+e
+> applied on the commit that caused the regression and not current master=
+=2E
+>=20
+>=20
+> Cheers,
+> Daniel.
+>=20
+> On 26.12.2014 02:00, David Aguilar wrote:
+>> On Tue, Dec 23, 2014 at 08:08:34PM +0100, Daniel Hahler wrote:
+>>> Hi,
+>>>
+>>> this is in reply to the commits from David:
+>>>
+>>>     commit 0ddedd4d6b9b3e8eb3557d8ed28e1a0b354a25f8
+>>>     Refs: v2.2.0-60-g0ddedd4
+>>>     Merge: e886efd 1e86d5b
+>>>     Author:     Junio C Hamano <gitster@pobox.com>
+>>>     AuthorDate: Fri Dec 12 14:31:39 2014 -0800
+>>>     Commit:     Junio C Hamano <gitster@pobox.com>
+>>>     CommitDate: Fri Dec 12 14:31:39 2014 -0800
+>>>
+>>>         Merge branch 'da/difftool-mergetool-simplify-reporting-status=
+'
+>>>
+>>>         Code simplification.
+>>>
+>>>         * da/difftool-mergetool-simplify-reporting-status:
+>>>           mergetools: stop setting $status in merge_cmd()
+>>>           mergetool: simplify conditionals
+>>>           difftool--helper: add explicit exit statement
+>>>           mergetool--lib: remove use of $status global
+>>>           mergetool--lib: remove no-op assignment to $status from set=
+up_user_tool
+>>>
+>>> I've ran into a problem, where "git mergetool" (using vimdiff) would =
+add
+>>> the changes to the index, although you'd answered "n" after not chang=
+ing/saving
+>>> the merged file.
+>>
+>> Thanks for the heads-up.
+>>
+>> Do you perhaps have mergetool.vimdiff.trustExitCode defined, or
+>> a similar setting?
+>>
+>> If you saw the prompt then it should have aborted right after
+>> you answered "n".
+>>
+>> The very last thing merge_cmd() for vimdiff does is call
+>> check_unchanged().  We'll come back to check_unchanged() later.
+>>
+>> I tried to reproduce this issue.  Here's a transcript:
+>>
+>> ....
+>> $ git status -s
+>> UU file.txt
+>>
+>> $ git mergetool -t vimdiff file.txt
+>> Merging:
+>> file.txt
+>>
+>> Normal merge conflict for 'file.txt':
+>>   {local}: modified file
+>>   {remote}: modified file
+>> 4 files to edit
+>> #### Enter :qall inside vim
+>> file.txt seems unchanged.
+>> Was the merge successful? [y/n] n
+>> merge of file.txt failed
+>> Continue merging other unresolved paths (y/n) ? n
+>>
+>> $ git status -s
+>> UU file.txt
+>> ....
+>>
+>> That seemed to work fine.  Any clues?
+>> More notes below...
+>>
+>>> This regression has been introduced in:
+>>>
+>>>     commit 99474b6340dbcbe58f6c256fdee231cbadb060f4
+>>>     Author: David Aguilar <davvid@gmail.com>
+>>>     Date:   Fri Nov 14 13:33:55 2014 -0800
+>>>
+>>>         difftool: honor --trust-exit-code for builtin tools
+>>>        =20
+>>>         run_merge_tool() was not setting $status, which prevented the=
 
--- snip --
-diff --git a/fsck.c b/fsck.c
-index 15cb8bd..8f8c82f 100644
---- a/fsck.c
-+++ b/fsck.c
-@@ -107,7 +107,7 @@ static int fsck_msg_severity(enum fsck_msg_id msg_id,
- {
- 	int severity;
- 
--	if (options->msg_severity && msg_id >= 0 && msg_id < FSCK_MSG_MAX)
-+	if (options->msg_severity && ((unsigned int) msg_id) < FSCK_MSG_MAX)
- 		severity = options->msg_severity[msg_id];
- 	else {
- 		severity = msg_id_info[msg_id].severity;
--- snap --
+>>>         exit code for builtin tools from being forwarded to the calle=
+r.
+>>>        =20
+>>>         Capture the exit status and add a test to guarantee the behav=
+ior.
+>>>        =20
+>>>         Reported-by: Adria Farres <14farresa@gmail.com>
+>>>         Signed-off-by: David Aguilar <davvid@gmail.com>
+>>>         Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>>>
+>>>     diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
+>>>     index c45a020..cce4f8c 100644
+>>>     --- a/git-mergetool--lib.sh
+>>>     +++ b/git-mergetool--lib.sh
+>>>     @@ -221,6 +221,7 @@ run_merge_tool () {
+>>>             else
+>>>                     run_diff_cmd "$1"
+>>>             fi
+>>>     +       status=3D$?
+>>>             return $status
+>>>      }
+>>>
+>>>
+>>> My fix has been the following, but I agree that the changes from Davi=
+d
+>>> are much better in general.
+>>>
+>>>     diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
+>>>     index cce4f8c..fa9acb1 100644
+>>>     --- a/git-mergetool--lib.sh
+>>>     +++ b/git-mergetool--lib.sh
+>>>     @@ -105,6 +105,7 @@ check_unchanged () {
+>>>                             esac
+>>>                     done
+>>>             fi
+>>>     +       return $status
+>>>      }
+>>
+>> I don't think this fix does anything.
+>> Here is all of check_unchanged() for context:
+>>
+>> check_unchanged () {
+>> 	if test "$MERGED" -nt "$BACKUP"
+>> 	then
+>> 		return 0
+>> 	else
+>> 		while true
+>> 		do
+>> 			echo "$MERGED seems unchanged."
+>> 			printf "Was the merge successful? [y/n] "
+>> 			read answer || return 1
+>> 			case "$answer" in
+>> 			y*|Y*) return 0 ;;
+>> 			n*|N*) return 1 ;;
+>> 			esac
+>> 		done
+>> 	fi
+>> }
+>>
+>> The addition of "return $status" after the "fi" in the above fix
+>> won't do anything because that code is unreachable.
+>> We either return 0 or 1.
+>>
+>>> I haven't verified if it really fixes the regression, but if it does =
+it
+>>> should get backported into the branches where the regression is prese=
+nt.
+>>
+>> Also, the $status variable doesn't even exist anymore, so the
+>> fix is suspect.
+>>
+>> What platform are you on?
+>>
+>>> Also, there should be some tests for this.
+>>
+>> I don't disagree with that ;-)
+>>
+>> Let me know if you have any clues.  I don't see anything obvious.
+>>
+>> cheers,
+>>
+>=20
 
-What do you think? Michael, does this cause more Clang warnings, or would it resolve the issue?
+--=20
+http://daniel.hahler.de/
 
-> I do not see either side of the bounds check here:
-> 
->> +	if (options->msg_severity &&
->> +			msg_id > FSCK_MSG_MIN && msg_id < FSCK_MSG_MAX)
-> 
-> as really doing anything. Any code which triggers it must already cause
-> undefined behavior, I think (with the exception of "msg_id == FSCK_MSG_MAX",
-> but presumably that is something we never expect to happen, either).
 
-Yep, it should not be triggered at all, but as I said, it is a nice defensive programming measure to avoid segmentation faults in case of a bug.
+--04vpDHqmw5wnMGsgd6Q3LClq20MCE4FSg
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-Ciao,
-Dscho
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUwkpLfAK/hT/mPgARAmLvAJ9/XR+FSp8eYMuZ9QWkl53qwqr43ACfaOxz
+gAyGh5dsc905ni1CGiGIHfg=
+=WyCL
+-----END PGP SIGNATURE-----
+
+--04vpDHqmw5wnMGsgd6Q3LClq20MCE4FSg--
