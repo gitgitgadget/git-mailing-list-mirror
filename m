@@ -1,100 +1,91 @@
-From: Per Cederqvist <cederp@opera.com>
-Subject: [GUILT 5/5] doc: git doesn't use git-foo invocations.
-Date: Fri, 23 Jan 2015 14:24:59 +0100
-Message-ID: <1422019499-2012-6-git-send-email-cederp@opera.com>
-References: <1422019499-2012-1-git-send-email-cederp@opera.com>
-Cc: git@vger.kernel.org, Per Cederqvist <cederp@opera.com>
-To: Jeff Sipek <jeffpc@josefsipek.net>
-X-From: git-owner@vger.kernel.org Fri Jan 23 14:28:21 2015
+From: Jeff King <peff@peff.net>
+Subject: Re: Git compile warnings (under mac/clang)
+Date: Fri, 23 Jan 2015 08:30:34 -0500
+Message-ID: <20150123133033.GA27692@peff.net>
+References: <CAO2U3Qi6Xf1RrbxyVW3cHNe1-ZwxFHDVskGLZguWS=b38pgaXQ@mail.gmail.com>
+ <CAGZ79kaFWL5HWdctLzTWf6D4nTP19sPZbcOg9fiRx7RQrWjY7Q@mail.gmail.com>
+ <b2cbad0d8e59a0c4eb0565608f3f90bc@www.dscho.org>
+ <20150122220140.GB6695@peff.net>
+ <315bf23981813799d16fdd9b533444f3@www.dscho.org>
+ <20150123122317.GA12517@peff.net>
+ <6fd8dc170de8be1ab38f8fda89d44f6a@www.dscho.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Stefan Beller <sbeller@google.com>,
+	Michael Blume <blume.mike@gmail.com>, peter@lekensteyn.nl,
+	eungjun.yi@navercorp.com, Git List <git@vger.kernel.org>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jan 23 14:30:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YEeHd-0005kE-I7
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Jan 2015 14:28:21 +0100
+	id 1YEeJs-0007SX-Vl
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Jan 2015 14:30:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755345AbbAWN1V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Jan 2015 08:27:21 -0500
-Received: from mail-we0-f178.google.com ([74.125.82.178]:54078 "EHLO
-	mail-we0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754334AbbAWN1U (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jan 2015 08:27:20 -0500
-Received: by mail-we0-f178.google.com with SMTP id k48so7555965wev.9
-        for <git@vger.kernel.org>; Fri, 23 Jan 2015 05:27:19 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=E+PUe3c1R10LOLhn6m4+3Ix5ebea1NEYGdAyGDBL7Dg=;
-        b=EijbeFSLPZRpzaLYK193LAfK3Oe4XxtcZt5uElR6FOY0nqJv42MoE+IOxASCOF6ALR
-         XsKy4G1ejN5UWiEr4VwZaluG1zzJ/Ioerov7PqEg8A+KitdzKoV8fQ/sesiW7lQVB5z2
-         KLpx2MIeICMrvh0hnALdCmWoemVcqaLypl6hAXBHrgjKP78BslFm9AFKby9jJoldQdVM
-         UCqhdtHbJcL7zeZjfxX8e6AuEQMQIliAxCjek2uMAqfpSPWD6RPNKYG8JF4oTRe0VHKt
-         m0WhnJTHerjVuXngBqCMwpnWs+f3rZwVMg+BRZAom0qJcyEwTp63ebLZhgJs/lHS4EUv
-         F6Ig==
-X-Gm-Message-State: ALoCoQmNDrhlH7mp05PNdghUQ/VToTo5YB2ZRt0Xyj7w3hQHBYDFj7TQGnPoMjfvCqIDepaO6p2n
-X-Received: by 10.194.59.234 with SMTP id c10mr14112947wjr.49.1422019639200;
-        Fri, 23 Jan 2015 05:27:19 -0800 (PST)
-Received: from dualla.linkoping.osa (ip-200.t2.se.opera.com. [212.247.211.200])
-        by mx.google.com with ESMTPSA id fi10sm1841950wib.13.2015.01.23.05.27.17
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 23 Jan 2015 05:27:18 -0800 (PST)
-X-Mailer: git-send-email 2.1.0
-In-Reply-To: <1422019499-2012-1-git-send-email-cederp@opera.com>
+	id S1753929AbbAWNah (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Jan 2015 08:30:37 -0500
+Received: from cloud.peff.net ([50.56.180.127]:37837 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752662AbbAWNag (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jan 2015 08:30:36 -0500
+Received: (qmail 4590 invoked by uid 102); 23 Jan 2015 13:30:36 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 23 Jan 2015 07:30:36 -0600
+Received: (qmail 20008 invoked by uid 107); 23 Jan 2015 13:31:02 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 23 Jan 2015 08:31:02 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 23 Jan 2015 08:30:34 -0500
+Content-Disposition: inline
+In-Reply-To: <6fd8dc170de8be1ab38f8fda89d44f6a@www.dscho.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262926>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262927>
 
-Make them into reference to the man pages instead.
+On Fri, Jan 23, 2015 at 01:38:17PM +0100, Johannes Schindelin wrote:
 
-Signed-off-by: Per Cederqvist <cederp@opera.com>
----
- Documentation/guilt-add.txt     | 2 +-
- Documentation/guilt-refresh.txt | 2 +-
- Documentation/guilt-rm.txt      | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+> > Unless we are willing to drop the ">= 0" check completely. I think it is
+> > valid to do so regardless of the compiler's representation decision due
+> > to the numbering rules I mentioned above. It kind-of serves as a
+> > cross-check that we haven't cast some random int into the enum, but I
+> > think we would do better to find those callsites (since they are not
+> > guaranteed to work, anyway; in addition to signedness, it might choose a
+> > much smaller representation).
+> 
+> Yeah, well, this check is really more of a safety net in case I messed
+> up anything; I was saved so many times by my own defensive programming
+> that I try to employ it as much as I can.
 
-diff --git a/Documentation/guilt-add.txt b/Documentation/guilt-add.txt
-index a276f09..067b6ca 100644
---- a/Documentation/guilt-add.txt
-+++ b/Documentation/guilt-add.txt
-@@ -11,7 +11,7 @@ include::usage-guilt-add.txt[]
- 
- DESCRIPTION
- -----------
--Adds the files specified to git using git-add making it available to guilt.
-+Adds the files specified to git using git-add(1) making it available to guilt.
- 
- OPTIONS
- -------
-diff --git a/Documentation/guilt-refresh.txt b/Documentation/guilt-refresh.txt
-index 7757bdc..98076e3 100644
---- a/Documentation/guilt-refresh.txt
-+++ b/Documentation/guilt-refresh.txt
-@@ -23,7 +23,7 @@ OPTIONS
- Include a diffstat output in the patch file. Useful for cases where
- patches will be submitted with other tools.
- +
--If the command line option is omitted, the corresponding git-config
-+If the command line option is omitted, the corresponding git-config(1)
- option "guilt.diffstat" will be queried. So this would enable diffstat
- output by default:
- 
-diff --git a/Documentation/guilt-rm.txt b/Documentation/guilt-rm.txt
-index 71b49fe..cfe471e 100644
---- a/Documentation/guilt-rm.txt
-+++ b/Documentation/guilt-rm.txt
-@@ -11,7 +11,7 @@ include::usage-guilt-rm.txt[]
- 
- DESCRIPTION
- -----------
--Removes the files specified from git using git-rm
-+Removes the files specified from git using git-rm(1).
- 
- OPTIONS
- -------
--- 
-2.1.0
+Yeah, I am all in favor of defensive programming. But I am not sure that
+it is defending much here, as we silently fall back to an alternate
+value for the severity. Would we notice, or would that produce subtly
+wrong results? IOW, would this be better as:
+
+  assert(msg_id >= 0 && msg_id < FSCK_MSG_MAX);
+
+or something?
+
+> -- snip --
+> diff --git a/fsck.c b/fsck.c
+> index 15cb8bd..8f8c82f 100644
+> --- a/fsck.c
+> +++ b/fsck.c
+> @@ -107,7 +107,7 @@ static int fsck_msg_severity(enum fsck_msg_id msg_id,
+>  {
+>  	int severity;
+>  
+> -	if (options->msg_severity && msg_id >= 0 && msg_id < FSCK_MSG_MAX)
+> +	if (options->msg_severity && ((unsigned int) msg_id) < FSCK_MSG_MAX)
+>  		severity = options->msg_severity[msg_id];
+>  	else {
+>  		severity = msg_id_info[msg_id].severity;
+> -- snap --
+> 
+> What do you think? Michael, does this cause more Clang warnings, or would it resolve the issue?
+
+Hmm, yeah, that does not seem unreasonable, and is more localized.
+
+-Peff
