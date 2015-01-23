@@ -1,77 +1,75 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: git pull not ignoring the file which has been sent to the
- temporary ignore list
-Date: Fri, 23 Jan 2015 14:32:33 -0800
-Message-ID: <CAGZ79kaNHjAna3PBxMEfZV1dfZnoohst1Ky5aSkCi+v4NBcN=w@mail.gmail.com>
-References: <3278910.5D06XWKxyS@linux-wzza.site>
-	<xmqqiofxqoo3.fsf@gitster.dls.corp.google.com>
-	<4004424.cytMaov38D@linux-wzza.site>
-	<CAGZ79kbk=DFcMSVtnWHw7Vn-xm4q4x5T_9qiPrqt5oN1DMhFSw@mail.gmail.com>
-	<xmqq8ugtqjxg.fsf@gitster.dls.corp.google.com>
-	<CAGZ79kaJkDjr7uPScKgO=P5nVZ4sQgn1aQNf9MwVuHMcA4a2NQ@mail.gmail.com>
-	<xmqq4mrhqgl4.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] diff: make -M -C mean the same as -C -M
+Date: Fri, 23 Jan 2015 14:34:47 -0800
+Message-ID: <xmqqvbjxp1mg.fsf@gitster.dls.corp.google.com>
+References: <1421978835-9921-1-git-send-email-mh@glandium.org>
+	<xmqqr3ulqr09.fsf@gitster.dls.corp.google.com>
+	<20150123222659.GA22303@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Arup Rakshit <aruprakshit@rocketmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 23 23:32:43 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Fri Jan 23 23:35:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YEmmM-0007Dx-S3
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Jan 2015 23:32:39 +0100
+	id 1YEmoe-0001fe-TW
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Jan 2015 23:35:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751676AbbAWWcg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Jan 2015 17:32:36 -0500
-Received: from mail-ie0-f170.google.com ([209.85.223.170]:40625 "EHLO
-	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751097AbbAWWce (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jan 2015 17:32:34 -0500
-Received: by mail-ie0-f170.google.com with SMTP id y20so66401ier.1
-        for <git@vger.kernel.org>; Fri, 23 Jan 2015 14:32:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=6wKXFJ4WbVGiCkpEGRNmmvO7IFGrchqLN5eihoD2PDU=;
-        b=V72Sh6LHAMAYHWBdm3WZoxwtTxrZ4/riqjadQHOznAmFzyrf0ZlF3bYiGeibnX7UtZ
-         +Dv6tqPLUOCXMtntiiPxqq4M5wOmwMrA2/amuMld71WQevtcZG4VsSadwRYa8HJtsWda
-         gqXtXdsAZRHszu3N7FFikZXbB2b2tZTlVNyoF1iJ7+I9Bfu4EFbFEv8sNvyrbTYd5mn7
-         MWcmTvT5V60bCrEkrAdvmzyQrSFzV+h+Bu0Vy+zDHRdAXcLnFElrfT2nk9LotsI9fkao
-         4gDtsdXKVstjh8kiK+cnDZeIhTlrw+QiWOJ/m4GE7cNWLCjRSigQtEBGByWlXKs7nX6l
-         9T5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=6wKXFJ4WbVGiCkpEGRNmmvO7IFGrchqLN5eihoD2PDU=;
-        b=Kuaznqvys43fzQkrxGFiWpGy4oJk4MXlv1y9LGLgr/oBNcl2JcbLLw1WtLra/IDhU7
-         TQaL+Qe4JM+YYzMlnBLfanKfNgQqaWXFb8i2ExhShCo7+TGEHJsVnYVcK3Zp5Dkv/xRv
-         G/fv7at1N7KMxoasjJCqPyIBeN3Cd6PpPGnfgrQn1j6heLTbfpJ1T4ye2kfS8NBNU8Jv
-         h1UHPQKnrlYl8El+w80i4Z+eHdqgHd/Y76prNiKYxUN62VurtFQVbXHvLrnOQrBORvNU
-         tReB/IkYXpfsFVkjfA1Jci/cfzfwxe2G+b84DDV34JG/u8BWpsRAxKP4du0kD/sa5aXY
-         x0AA==
-X-Gm-Message-State: ALoCoQkx1tglkGHEQuT2L26IJhaKsMdjVxCRSJ5P+uC3nBSrgr7e+xonpIZgMS6CdOYEIgIx5SWf
-X-Received: by 10.107.16.138 with SMTP id 10mr6249771ioq.33.1422052353815;
- Fri, 23 Jan 2015 14:32:33 -0800 (PST)
-Received: by 10.50.26.42 with HTTP; Fri, 23 Jan 2015 14:32:33 -0800 (PST)
-In-Reply-To: <xmqq4mrhqgl4.fsf@gitster.dls.corp.google.com>
+	id S1751686AbbAWWex (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Jan 2015 17:34:53 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:65449 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753272AbbAWWeu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jan 2015 17:34:50 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5219A31AAB;
+	Fri, 23 Jan 2015 17:34:49 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=jekjVwC7CBrUfvuVq8gwe2m8+W8=; b=QCV12k
+	Y0++2EO0X7EpO2Di7QO9ig2Y28Ez4YoIyD0JNIrKRLJ5bN+yR3Ip/PnBgPrfS+2e
+	q/ExQgJF1hl3FLXUab/mb1Tddk17uMHo3djDSerSfgnSCjBBbdzlYNhpAQwOlQC9
+	2X4IxF3tCW6PSZVOYjlci8IaureSfv2evJv4s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=vFELIqvXQB0gs2rNlYq0kq9gN0efIayb
+	foJPLgCB98mmdPdmdEzLlQsBOXOrRyEcHBRN1P4TIhH8iecC4PZ0vA0GqM02dIg+
+	bZFXRkAiBcwogcYQpi0bWJLfx6dMToVxmv1SL64kgXCq90ldKPyzPHosaVR8JDhj
+	7d2Rx1xkyAw=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 482AE31AAA;
+	Fri, 23 Jan 2015 17:34:49 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 977F331AA9;
+	Fri, 23 Jan 2015 17:34:48 -0500 (EST)
+In-Reply-To: <20150123222659.GA22303@glandium.org> (Mike Hommey's message of
+	"Sat, 24 Jan 2015 07:26:59 +0900")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 09DF6762-A350-11E4-A4D3-7BA29F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262970>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262971>
 
-On Fri, Jan 23, 2015 at 2:26 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> Assuming you want to ignore less than the upstream project (delete some
->> lines from .gitignore) it get's tricky in my opinion.
->
-> Why?  Doesn't info/exclude allow negative ignore patterns?
+Mike Hommey <mh@glandium.org> writes:
 
-I used negative patterns only once, so they did not come to my mind today.
-Apologies for not looking it up before replying. :(
+>> In the context of "git blame", "-C" and "-M" control orthogonal
+>> concepts and it makes sense to use only one but not the other, or
+>> both.
+>
+> In the context of blame both -C and -M |= a flags set, so one doesn't
+> override the other. You can place them in any order, the result will be
+> the same. Incidentally, -C includes the flag -M sets, so -C -M is
+> actually redundant. What -C and -M can be used for is set different
+> scores (-C9 -M8).
+
+Yes.  That is what I meant by "orthogonal" and "makese sense to use
+only one but not the other, or both".  As they are not related with
+each other, it makes sense to mix them freely, unlike "-C/-M" given
+to diff.
