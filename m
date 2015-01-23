@@ -1,96 +1,69 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Should copy/rename detection consider file overwrites?
-Date: Fri, 23 Jan 2015 06:04:19 -0500
-Message-ID: <20150123110418.GA10028@peff.net>
-References: <20150123012908.GA8558@glandium.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+From: Alexander Kuleshov <kuleshovmail@gmail.com>
+Subject: [PATCH 0/7] Coding style fixes.
+Date: Fri, 23 Jan 2015 17:06:48 +0600
+Message-ID: <1422011208-3832-1-git-send-email-kuleshovmail@gmail.com>
 Cc: git@vger.kernel.org
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Fri Jan 23 12:04:34 2015
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 23 12:07:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YEc2S-0007SM-Ji
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Jan 2015 12:04:33 +0100
+	id 1YEc58-0000ut-9m
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Jan 2015 12:07:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755193AbbAWLEZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Jan 2015 06:04:25 -0500
-Received: from cloud.peff.net ([50.56.180.127]:37763 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754594AbbAWLEW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jan 2015 06:04:22 -0500
-Received: (qmail 25629 invoked by uid 102); 23 Jan 2015 11:04:22 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 23 Jan 2015 05:04:22 -0600
-Received: (qmail 18783 invoked by uid 107); 23 Jan 2015 11:04:47 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 23 Jan 2015 06:04:47 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 23 Jan 2015 06:04:19 -0500
-Content-Disposition: inline
-In-Reply-To: <20150123012908.GA8558@glandium.org>
+	id S1754724AbbAWLHO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Jan 2015 06:07:14 -0500
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:56557 "EHLO
+	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751795AbbAWLHN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jan 2015 06:07:13 -0500
+Received: by mail-lb0-f174.google.com with SMTP id f15so6443298lbj.5
+        for <git@vger.kernel.org>; Fri, 23 Jan 2015 03:07:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=5fZhJjdy+nYeVL1E0j10I8fi7Vzngz8Rhavoe1bcclA=;
+        b=kat6kYL2HtfK2/rxp1N5oariNWvpfWHcd2lFDgoarqiw8ynMik1ISuGz815jDVsoqy
+         rpCdMuGA/F9Mm+dyg0agHzcG6IrItebZ1FPTN+QUrq89y+uJehOFsNxNPmWX+FR1zEsh
+         GG6SIdhC8SlTKjrYV6AYefc7ddR9AdRsfaH6uYJbnTyVlHoDVoN1b56uPQqr8tfH7vzw
+         GlVh0UEb2ltPy8sWyFM8q2qw2VhTXrF8r8UKPy9JnZPWOsxqYw8+82bxoYan6IDiHD9y
+         9BXu4GkOJ4NLrgf7Ry1xpDpV54vVwCfg2xLS1vpsECZpMU+pYl5184uvezpe344/02at
+         e/Rg==
+X-Received: by 10.152.228.133 with SMTP id si5mr6545170lac.96.1422011231471;
+        Fri, 23 Jan 2015 03:07:11 -0800 (PST)
+Received: from localhost.localdomain ([5.63.126.22])
+        by mx.google.com with ESMTPSA id e7sm362615lbq.33.2015.01.23.03.07.09
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 23 Jan 2015 03:07:10 -0800 (PST)
+X-Mailer: git-send-email 2.3.0.rc1.275.g028c360
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262906>
 
-On Fri, Jan 23, 2015 at 10:29:08AM +0900, Mike Hommey wrote:
+This patch set contatins minor style fixes. CodingGuidelines contains
+rule that the star must side with variable name.
 
-> While fooling around with copy/rename detection, I noticed that it
-> doesn't detect the case where you copy or rename a file on top of
-> another:
-> 
-> $ git init
-> $ (echo foo; echo bar) > foo
+Alexander Kuleshov (7):
+  show-branch: minor style fix
+  clone: minor style fix
+  test-hashmap: minor style fix
+  http-backend: minor style fix
+  refs: minor style fix
+  quote: minor style fix
+  fast-import: minor style fix
 
-If I replace this with a longer input, like:
+ builtin/clone.c       | 2 +-
+ builtin/show-branch.c | 2 +-
+ fast-import.c         | 2 +-
+ http-backend.c        | 2 +-
+ quote.c               | 2 +-
+ refs.h                | 2 +-
+ test-hashmap.c        | 4 ++--
+ 7 files changed, 8 insertions(+), 8 deletions(-)
 
-  cp /usr/share/dict/words foo
-
-> $ git add foo
-> $ git commit -m foo
-> $ echo 0 > bar
-> $ git add bar
-> $ git commit -m bar
-> $ git mv -f foo bar
-> $ git commit -m foobar
-> $ git log --oneline --reverse
-> 7dc2765 foo
-> b0c837d bar
-> 88caeba foobar
-> $ git blame -s -C -C bar
-> 88caebab 1) foo
-> 88caebab 2) bar
-
-Then the blame shows me the initial "foo" commit. So I think it is
-mainly that your toy example is too small (I think we will do
-exact rename detection whatever the size is, but I expect we are getting
-hung up on the break detection between "0\n" and "foo\nbar\n").
-
-> I can see how this is not trivially representable in e.g. git diff-tree,
-> but shouldn't at least blame try to tell that those lines actually come
-> from 7dc2765?
-
-diff-tree can show this, too, but you need to turn on "break detection"
-which will notice that "bar" has essentially been rewritten (and then
-consider its sides as candidates for rename detection). For example
-(with the longer input, as above):
-
-  $ git diff-tree --name-status -M HEAD
-  c6fe146b0c73adcbc4dbc2e58eb83af9007678bc
-  M       bar
-  D       foo
-
-  $ git diff-tree --name-status -M -B HEAD
-  c6fe146b0c73adcbc4dbc2e58eb83af9007678bc
-  R100    foo     bar
-
-Presumably if you set the break score low enough, your original example
-would behave the same way, but I couldn't get it to work (I didn't look
-closely, but I imagine it is just so tiny that we hit the internal
-limits on how low you can set the score).
-
--Peff
+--
+2.3.0.rc1.275.g028c360
