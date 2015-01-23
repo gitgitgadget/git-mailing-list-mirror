@@ -1,74 +1,122 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 0/7] Coding style fixes.
-Date: Fri, 23 Jan 2015 10:36:33 -0800
-Message-ID: <CAGZ79kYPHv7UCy1jzf=0WeRP7od+3pZ61Rps9NK6_qbwER_Jjw@mail.gmail.com>
-References: <1422011208-3832-1-git-send-email-kuleshovmail@gmail.com>
-	<CANCZXo4Ga5a0OjNhqSOP39p76RfOOX+N5cZhA8j9hjhKodTqcg@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Git compile warnings (under mac/clang)
+Date: Fri, 23 Jan 2015 13:37:37 -0500
+Message-ID: <20150123183737.GA32191@peff.net>
+References: <CAO2U3Qi6Xf1RrbxyVW3cHNe1-ZwxFHDVskGLZguWS=b38pgaXQ@mail.gmail.com>
+ <CAGZ79kaFWL5HWdctLzTWf6D4nTP19sPZbcOg9fiRx7RQrWjY7Q@mail.gmail.com>
+ <b2cbad0d8e59a0c4eb0565608f3f90bc@www.dscho.org>
+ <20150122220140.GB6695@peff.net>
+ <315bf23981813799d16fdd9b533444f3@www.dscho.org>
+ <20150123122317.GA12517@peff.net>
+ <6fd8dc170de8be1ab38f8fda89d44f6a@www.dscho.org>
+ <20150123133033.GA27692@peff.net>
+ <xmqqwq4dqskp.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Alexander Kuleshov <kuleshovmail@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 23 19:36:41 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>,
+	Michael Blume <blume.mike@gmail.com>, peter@lekensteyn.nl,
+	eungjun.yi@navercorp.com, Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 23 19:40:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YEj5z-0007qU-Dq
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Jan 2015 19:36:39 +0100
+	id 1YEj9S-0003XC-4c
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Jan 2015 19:40:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756355AbbAWSgf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Jan 2015 13:36:35 -0500
-Received: from mail-ie0-f177.google.com ([209.85.223.177]:36312 "EHLO
-	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756351AbbAWSge (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jan 2015 13:36:34 -0500
-Received: by mail-ie0-f177.google.com with SMTP id vy18so8706735iec.8
-        for <git@vger.kernel.org>; Fri, 23 Jan 2015 10:36:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=1uPAVwMWp7sC36DIi/4+9RUubWDKjYAgwIAkmLjuiSQ=;
-        b=Oxm30r3OzfiUpVPy6GrmoEEZvBtUxBQ8G0gwAherkVp52JkqPoizre8WPK8A2LRMq+
-         uU5i582YYCR615gy531Aw7kxBJQPQ8y2DViqchtee1vRRlUozIhUcJqHbvq2nkrgcBiw
-         QmLlJsVpxoM79nqDvZmR6mX5RvY4rPuRl9lH/tiO8f9eaoc3DGJuqSX9V/ZCyOWFkCBM
-         hsIxN3lyLFNORe+Vib/euQOz30DTYfrVtnrkLSGJA15pdwo1XOx6sSXt14dWO1IBGgWW
-         2B+rEorIDMcteeZNn/Xsk+4t7+vDK+dXpezbA5oyiFrd9HWrx9FhhRVBFrlzOYvtmTk/
-         6yMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=1uPAVwMWp7sC36DIi/4+9RUubWDKjYAgwIAkmLjuiSQ=;
-        b=Ta0YItoG8aOEb1W/1Ehl5ZVc8YQwtSk9zn7GJuBcNIXBmA4CNzz+/NbL2hjqzBnAAi
-         9QZ+4NVs0jbDhnvxFs0B76s3eAVCTYIZ1E81uVL3yl73glxT0jZF7W40cJVvBPwpoctK
-         +VSn7JEBYkFPJwOO+k7M321LW3Q4YcJNQZO8IQ+Wqtu/EhA9g2zI2Z6YtoxZxfCxrNtd
-         uSbONFGr9rIBFAi+P6t6YGXrsRDFMBzuN9nzttHNV/U8p/sZGK+qmOP2XRLYeIUCockj
-         UGXA3M8FTGkvYvG2F0xb8eyjDNpqqfP5h/GmrKPoWhhpX7OmGuWsaXIXa4kG5uPuHcxO
-         hQVQ==
-X-Gm-Message-State: ALoCoQmR7QkzFxeLqcsG/zlatCnmnQ89hqkTn5glLL2Txr1eInpAi2gudrHUqc1AyQ1kAi4cp84P
-X-Received: by 10.50.108.108 with SMTP id hj12mr3391211igb.47.1422038193616;
- Fri, 23 Jan 2015 10:36:33 -0800 (PST)
-Received: by 10.50.26.42 with HTTP; Fri, 23 Jan 2015 10:36:33 -0800 (PST)
-In-Reply-To: <CANCZXo4Ga5a0OjNhqSOP39p76RfOOX+N5cZhA8j9hjhKodTqcg@mail.gmail.com>
+	id S1756400AbbAWSho (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Jan 2015 13:37:44 -0500
+Received: from cloud.peff.net ([50.56.180.127]:37965 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756384AbbAWShm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jan 2015 13:37:42 -0500
+Received: (qmail 20400 invoked by uid 102); 23 Jan 2015 18:37:40 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 23 Jan 2015 12:37:40 -0600
+Received: (qmail 22437 invoked by uid 107); 23 Jan 2015 18:38:05 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 23 Jan 2015 13:38:05 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 23 Jan 2015 13:37:37 -0500
+Content-Disposition: inline
+In-Reply-To: <xmqqwq4dqskp.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262941>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262942>
 
-On Fri, Jan 23, 2015 at 4:09 AM, Alexander Kuleshov
-<kuleshovmail@gmail.com> wrote:
-> I made separate patch for every file. Please, let me know if need to
-> squash it into one commit.
->
->
-> 2015-01-23 17:06 GMT+06:00 Alexander Kuleshov <kuleshovmail@gmail.com>:
->> This patch set contatins minor style fixes. CodingGuidelines contains
->> rule that the star must side with variable name.
->>
+On Fri, Jan 23, 2015 at 10:07:18AM -0800, Junio C Hamano wrote:
 
-The whole series is
-Reviewed-by: Stefan Beller <sbeller@google.com>
+> >> diff --git a/fsck.c b/fsck.c
+> >> index 15cb8bd..8f8c82f 100644
+> >> --- a/fsck.c
+> >> +++ b/fsck.c
+> >> @@ -107,7 +107,7 @@ static int fsck_msg_severity(enum fsck_msg_id msg_id,
+> >>  {
+> >>  	int severity;
+> >>  
+> >> -	if (options->msg_severity && msg_id >= 0 && msg_id < FSCK_MSG_MAX)
+> >> +	if (options->msg_severity && ((unsigned int) msg_id) < FSCK_MSG_MAX)
+> >>  		severity = options->msg_severity[msg_id];
+> >>  	else {
+> >>  		severity = msg_id_info[msg_id].severity;
+> >> -- snap --
+> >> 
+> >> What do you think? Michael, does this cause more Clang warnings,
+> >> or would it resolve the issue?
+> >
+> > Hmm, yeah, that does not seem unreasonable, and is more localized.
+> 
+> Or we could force enum to be signed by defining FSCK_MSG_UNUSED to
+> be -1 at the very beginning of enum definition, without changing
+> anything else.  Then "msg_id < 0" would become a very valid
+> protection against programming mistakes, no?
+
+Yeah, I think that would work, too. It is a little unfortunate in the
+sense that it actually makes things _worse_ from the perspective of the
+type system. That is, in the current code if you assume that everyone
+else has followed the type rules, then an fsck_msg_id you get definitely
+is indexable into various arrays. But if you add in a sentinel value,
+now you (in theory) have to check for the sentinel value everywhere.
+
+I'm not sure if that matters in practice, though, if you are going to be
+defensive against people misusing the enum system in the first place
+(e.g., you are worried about them passing a random int and having it
+produce a segfault, you have to do range checks either way).
+
+But of all the options outlined, I think I'd much rather just see an
+assert() for something that should never happen, rather than mixing it
+into the logic.
+
+In that vein, one thing that puzzles me is that the current code looks
+like:
+
+  if (options->msg_severity && msg_id >= 0 && msg_id < FSCK_MSG_MAX)
+	  severity = options->msg_severity[msg_id];
+  else {
+	  severity = msg_id_info[msg_id].severity;
+	  ...
+  }
+
+So if the severity override list given by "options" exists, _and_ if we
+are in the enum range, then we use that. Otherwise, we dereference the
+global list. But wouldn't an out-of-range condition have the exact same
+problem dereferencing that global list?
+
+IOW, should this really be:
+
+  if (msg_id < 0 || msg_id >= FSCK_MSG_MAX)
+	die("BUG: broken enum");
+
+  if (options->msg_severity)
+	severity = options->msg_severity[msg_id];
+  else
+	severity = msg_id_info[msg_id].severity;
+
+? And then you can spell that first part as assert(), which I suspect
+(but did not test) may shut up clang's warnings.
+
+-Peff
