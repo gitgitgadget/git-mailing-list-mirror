@@ -1,64 +1,57 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: [PATCH] diff: make -M -C mean the same as -C -M
-Date: Fri, 23 Jan 2015 11:07:15 +0900
-Message-ID: <1421978835-9921-1-git-send-email-mh@glandium.org>
-Cc: git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Jan 23 03:07:31 2015
+From: Robert Dailey <rcdailey.lists@gmail.com>
+Subject: Git submodule first time update with proxy
+Date: Thu, 22 Jan 2015 20:50:45 -0600
+Message-ID: <CAHd499BEmV2zeosE9th59QTWPA0CPsU8eyHnONhsZqEb=bH+rA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jan 23 03:50:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YETek-0008A7-Im
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Jan 2015 03:07:30 +0100
+	id 1YEUKh-0006Tn-HT
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Jan 2015 03:50:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755120AbbAWCH0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Jan 2015 21:07:26 -0500
-Received: from ks3293202.kimsufi.com ([5.135.186.141]:49875 "EHLO glandium.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755115AbbAWCHZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jan 2015 21:07:25 -0500
-Received: from glandium by zenigata with local (Exim 4.84)
-	(envelope-from <glandium@glandium.org>)
-	id 1YETeV-0002ae-MM; Fri, 23 Jan 2015 11:07:15 +0900
-X-Mailer: git-send-email 2.2.2.2.g806f5e2.dirty
+	id S1753758AbbAWCus (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Jan 2015 21:50:48 -0500
+Received: from mail-ie0-f172.google.com ([209.85.223.172]:55861 "EHLO
+	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752015AbbAWCuq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Jan 2015 21:50:46 -0500
+Received: by mail-ie0-f172.google.com with SMTP id rd18so5020610iec.3
+        for <git@vger.kernel.org>; Thu, 22 Jan 2015 18:50:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:date:message-id:subject:from:to:content-type;
+        bh=nsMd+L1UDb5goNx7GlHkiZAKOutxl9Weffwuo8hDNlo=;
+        b=GmjPT/+zRvv3Uq38e+49uQl+0VCC5vd7Q8Rl9lRSz65kSjOZ7u9cYbRtMVQP9xYmYL
+         VIDOZeBxyeKoLkRsf3OFz9dBW96D1jDt2yhI9zzx2vEM17iViRTRUkMyLu1BMSrvNeOc
+         Taw4BboM6yUstMIux1uABjq7FhTOQs8jRVMIBrR1F92JO/JJKAdJ6hGdbob19yd93nQk
+         tPOv2gS2IGACbTMAn5Q/eoh5bbb2tbTFAOEj/emCCsRfehxFhMrrh44gwHpCWz7EGch8
+         sCIEnxR1kNzfFvScHeXMuFdPDn5L3vMkcrMJ3QjodJnc940DNE/g9scXoGi4Fu2uBld8
+         w9DA==
+X-Received: by 10.107.31.14 with SMTP id f14mr1463883iof.15.1421981445870;
+ Thu, 22 Jan 2015 18:50:45 -0800 (PST)
+X-Google-Sender-Delegation: rcdailey@gmail.com
+Received: by 10.36.56.70 with HTTP; Thu, 22 Jan 2015 18:50:45 -0800 (PST)
+X-Google-Sender-Auth: vbkBo-h4haI5ZH-Wl58eBPXz7CA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262899>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262900>
 
-While -C implies -M, it is quite common to see both on example command lines
-here and there. The unintuitive thing is that if -M appears after -C, then
-copy detection is turned off because of how the command line arguments are
-handled.
+I have a submodule using HTTP URL. I do this:
 
-Change this so that when both -C and -M appear, whatever their order, copy
-detection is on.
+$ git submodule init MySubmodule
+$ git submodule update MySubmodule
 
-Signed-off-by: Mike Hommey <mh@glandium.org>
----
+The 2nd command fails because the HTTP URL cannot be resolved, this is
+because it requires a proxy. I have "http.proxy" setup properly in the
+.git/config of my parent git repository, so I was hoping the submodule
+update function would have a way to specify it to inherit the proxy
+value from the parent config.
 
-Interestingly, I even found mentions of -C -M in this order for benchmarks,
-on this very list (see 6555655.XSJ9EnW4BY@mako).
-
- diff.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/diff.c b/diff.c
-index d1bd534..9081fd8 100644
---- a/diff.c
-+++ b/diff.c
-@@ -3670,7 +3670,8 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
- 		 !strcmp(arg, "--find-renames")) {
- 		if ((options->rename_score = diff_scoreopt_parse(arg)) == -1)
- 			return error("invalid argument to -M: %s", arg+2);
--		options->detect_rename = DIFF_DETECT_RENAME;
-+		if (options->detect_rename != DIFF_DETECT_COPY)
-+			options->detect_rename = DIFF_DETECT_RENAME;
- 	}
- 	else if (!strcmp(arg, "-D") || !strcmp(arg, "--irreversible-delete")) {
- 		options->irreversible_delete = 1;
--- 
-2.2.2.2.g806f5e2.dirty
+How can I set up my submodule?
