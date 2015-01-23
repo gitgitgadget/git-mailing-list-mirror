@@ -1,106 +1,76 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: Should copy/rename detection consider file overwrites?
-Date: Sat, 24 Jan 2015 07:37:15 +0900
-Message-ID: <20150123223715.GB22303@glandium.org>
-References: <20150123012908.GA8558@glandium.org>
- <20150123110418.GA10028@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git-p4 maintainership change
+Date: Fri, 23 Jan 2015 14:42:07 -0800
+Message-ID: <xmqqppa5p1a8.fsf@gitster.dls.corp.google.com>
+References: <20150123214849.GA3866@padd.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jan 23 23:37:30 2015
+To: Luke Diamand <luke@diamand.org>, Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Fri Jan 23 23:42:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YEmr3-0004YW-US
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Jan 2015 23:37:30 +0100
+	id 1YEmvh-00028H-Da
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Jan 2015 23:42:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750966AbbAWWh0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Jan 2015 17:37:26 -0500
-Received: from ks3293202.kimsufi.com ([5.135.186.141]:49526 "EHLO glandium.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750717AbbAWWhZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jan 2015 17:37:25 -0500
-Received: from glandium by zenigata with local (Exim 4.84)
-	(envelope-from <glandium@glandium.org>)
-	id 1YEmqp-0006s9-Gj; Sat, 24 Jan 2015 07:37:15 +0900
-Content-Disposition: inline
-In-Reply-To: <20150123110418.GA10028@peff.net>
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1751998AbbAWWmM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Jan 2015 17:42:12 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:55109 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752011AbbAWWmL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jan 2015 17:42:11 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 497ED31CB7;
+	Fri, 23 Jan 2015 17:42:11 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=G3vapAT9GpfqGx38l07qvcN+FO0=; b=tWGCen
+	MrQsLgf268BYqqgdrEzoVc3yEd3b5zpERqqwV7zOAfJlSOdxplOdsUg96qfoI8yu
+	PBHp8yQQNMWC2bctISY2xjdcyQi3nwgqQ72SkCYEfVm1e7ZvWhTkjphyprCYm9Dd
+	xFduaTW9lloEr4xHjgU4OOyRuwSj2eRpzZZpU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=fmsCVRzB9qTObNF0VSGq8TTf6OznFKUl
+	AJes8cXA3wF8I3BEK4ZXk3VWN+xGBpWuFJ5ku/Q0niaVO4lbAtANuAv6y2ImKlUA
+	U2zhn6zzFoSD1C/R21VCR1t/MDGWOcpfwSv4VtZW9r3xw1SPDUVwzubXQ7WJqDoW
+	2Fxs5EuXXPE=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3D1AF31CB6;
+	Fri, 23 Jan 2015 17:42:11 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8FAAE31CB5;
+	Fri, 23 Jan 2015 17:42:10 -0500 (EST)
+In-Reply-To: <20150123214849.GA3866@padd.com> (Pete Wyckoff's message of "Fri,
+	23 Jan 2015 13:48:49 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 114E7EEC-A351-11E4-A694-7BA29F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262972>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262973>
 
-On Fri, Jan 23, 2015 at 06:04:19AM -0500, Jeff King wrote:
-> On Fri, Jan 23, 2015 at 10:29:08AM +0900, Mike Hommey wrote:
-> 
-> > While fooling around with copy/rename detection, I noticed that it
-> > doesn't detect the case where you copy or rename a file on top of
-> > another:
-> > 
-> > $ git init
-> > $ (echo foo; echo bar) > foo
-> 
-> If I replace this with a longer input, like:
-> 
->   cp /usr/share/dict/words foo
-> 
-> > $ git add foo
-> > $ git commit -m foo
-> > $ echo 0 > bar
-> > $ git add bar
-> > $ git commit -m bar
-> > $ git mv -f foo bar
-> > $ git commit -m foobar
-> > $ git log --oneline --reverse
-> > 7dc2765 foo
-> > b0c837d bar
-> > 88caeba foobar
-> > $ git blame -s -C -C bar
-> > 88caebab 1) foo
-> > 88caebab 2) bar
-> 
-> Then the blame shows me the initial "foo" commit. So I think it is
-> mainly that your toy example is too small (I think we will do
-> exact rename detection whatever the size is, but I expect we are getting
-> hung up on the break detection between "0\n" and "foo\nbar\n").
+Pete Wyckoff <pw@padd.com> writes:
 
-Err, I was afraid my testcase was too small. And that all boils down to
-this:
+> Hi Junio. I'm fortunate enough to need no longer any git
+> integration with Perforce (p4). I work only in git these days.
+> Thus you might expect my interest in improving git-p4 would
+> be waning.
+>
+> Luke, on the other hand, continues to need git-p4 and is
+> active in improving it. I think you should consider accepting
+> patches in that area from him directly. He's contributed many
+> patches over the years and has helped users to debug their issues
+> too.
+>
+> I'll certainly be available to comment on any dodgy code in there
+> already, and can help with archeological, but will not likely do
+> any substantive work to git-p4 in the near future.
 
-    <num> is optional but it is the lower bound on the number of
-    alphanumeric characters that Git must detect as moving/copying
-    between files for it to associate those lines with the parent
-    commit. And the default value is 40.
-
-> > I can see how this is not trivially representable in e.g. git diff-tree,
-> > but shouldn't at least blame try to tell that those lines actually come
-> > from 7dc2765?
-> 
-> diff-tree can show this, too, but you need to turn on "break detection"
-> which will notice that "bar" has essentially been rewritten (and then
-> consider its sides as candidates for rename detection). For example
-> (with the longer input, as above):
-> 
->   $ git diff-tree --name-status -M HEAD
->   c6fe146b0c73adcbc4dbc2e58eb83af9007678bc
->   M       bar
->   D       foo
-> 
->   $ git diff-tree --name-status -M -B HEAD
->   c6fe146b0c73adcbc4dbc2e58eb83af9007678bc
->   R100    foo     bar
-> 
-> Presumably if you set the break score low enough, your original example
-> would behave the same way, but I couldn't get it to work (I didn't look
-> closely, but I imagine it is just so tiny that we hit the internal
-> limits on how low you can set the score).o
-
-Oh. Good to know, thanks.
-
-Mike
+Thanks for your help during all these years, and thanks Luke for
+taking the area maintainership.
