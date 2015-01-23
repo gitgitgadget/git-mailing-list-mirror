@@ -1,176 +1,93 @@
-From: Jeff Sipek <jeffpc@josefsipek.net>
-Subject: Re: [GUILT 2/2] Teach "guilt graph" the "-x exclude-pattern" option.
-Date: Fri, 23 Jan 2015 09:49:13 -0500
-Message-ID: <20150123144913.GI101465@meili.jeffnet.31bits.net>
-References: <1422022867-7908-1-git-send-email-cederp@opera.com>
- <1422022867-7908-3-git-send-email-cederp@opera.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Git compile warnings (under mac/clang)
+Date: Fri, 23 Jan 2015 10:07:18 -0800
+Message-ID: <xmqqwq4dqskp.fsf@gitster.dls.corp.google.com>
+References: <CAO2U3Qi6Xf1RrbxyVW3cHNe1-ZwxFHDVskGLZguWS=b38pgaXQ@mail.gmail.com>
+	<CAGZ79kaFWL5HWdctLzTWf6D4nTP19sPZbcOg9fiRx7RQrWjY7Q@mail.gmail.com>
+	<b2cbad0d8e59a0c4eb0565608f3f90bc@www.dscho.org>
+	<20150122220140.GB6695@peff.net>
+	<315bf23981813799d16fdd9b533444f3@www.dscho.org>
+	<20150123122317.GA12517@peff.net>
+	<6fd8dc170de8be1ab38f8fda89d44f6a@www.dscho.org>
+	<20150123133033.GA27692@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Per Cederqvist <cederp@opera.com>
-X-From: git-owner@vger.kernel.org Fri Jan 23 15:49:22 2015
+Content-Type: text/plain
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>,
+	Michael Blume <blume.mike@gmail.com>, peter@lekensteyn.nl,
+	eungjun.yi@navercorp.com, Git List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jan 23 19:07:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YEfY0-0003pV-Jd
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Jan 2015 15:49:20 +0100
+	id 1YEido-0000SB-VB
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Jan 2015 19:07:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753397AbbAWOtR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Jan 2015 09:49:17 -0500
-Received: from josefsipek.net ([71.174.113.7]:1676 "EHLO josefsipek.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750946AbbAWOtP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jan 2015 09:49:15 -0500
-Received: from meili.jeffnet.31bits.net (unknown [172.31.0.119])
-	by josefsipek.net (Postfix) with ESMTPSA id 6FCFA55654;
-	Fri, 23 Jan 2015 09:49:14 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <1422022867-7908-3-git-send-email-cederp@opera.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1755656AbbAWSH3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Jan 2015 13:07:29 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:53516 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753430AbbAWSH2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jan 2015 13:07:28 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5F8AF31262;
+	Fri, 23 Jan 2015 13:07:20 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=POFtQ/B2eKa/ron496gv8GdlJm8=; b=AaXWg+
+	bQgKlZbc8l/dz2FHHgas4bGW9ejf0MXI0ly7fotL7YbJMOt3ByH5DbLaEe0TnLPE
+	PemXb8I2TJ0IXAiQn5/NGV7TALX2hTmJDxdSQ8/npGs0lWXy3SSYVpB8KqP4aj6f
+	yyz2bUFubb6v52KXENga7j5dp81NusmmbkBsw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=tbvwcHsbof6L1ghD9C2U0SyOWqSnw9w6
+	OKYYfJT66ZSk6+5hMpvu3b88LxlBn7N1/LODmgTQZo0i3SBjCXNylLC1wiSszNKj
+	ejY/PGEpspSl4AvlD6T8frlCZfoPmGRhPxO7Msevil2ayTb/4iMzKtf7XP9X8Svk
+	h2HoazWgKkM=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 52AC73125C;
+	Fri, 23 Jan 2015 13:07:20 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AE3CB31259;
+	Fri, 23 Jan 2015 13:07:19 -0500 (EST)
+In-Reply-To: <20150123133033.GA27692@peff.net> (Jeff King's message of "Fri,
+	23 Jan 2015 08:30:34 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: AC050E3C-A32A-11E4-9775-7BA29F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262939>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262940>
 
-On Fri, Jan 23, 2015 at 03:21:07PM +0100, Per Cederqvist wrote:
-> Some projects keep a ChangeLog which every commit modifies.  This
-> makes the graph a very uninteresting single line of commits.  It is
-> sometimes useful to see how the graph would look if we ignore the
-> ChangeLog file.
-> 
-> The new -x option is useful in situations like this.  It can be
-> repeated several times to ignore many files.  Each argument is saved
-> to a temporary file and "grep -v -f $TEMPORARY" is used to filter out
-> the file names you want to ignore.
+Jeff King <peff@peff.net> writes:
 
-Cool idea.
+>> diff --git a/fsck.c b/fsck.c
+>> index 15cb8bd..8f8c82f 100644
+>> --- a/fsck.c
+>> +++ b/fsck.c
+>> @@ -107,7 +107,7 @@ static int fsck_msg_severity(enum fsck_msg_id msg_id,
+>>  {
+>>  	int severity;
+>>  
+>> -	if (options->msg_severity && msg_id >= 0 && msg_id < FSCK_MSG_MAX)
+>> +	if (options->msg_severity && ((unsigned int) msg_id) < FSCK_MSG_MAX)
+>>  		severity = options->msg_severity[msg_id];
+>>  	else {
+>>  		severity = msg_id_info[msg_id].severity;
+>> -- snap --
+>> 
+>> What do you think? Michael, does this cause more Clang warnings,
+>> or would it resolve the issue?
+>
+> Hmm, yeah, that does not seem unreasonable, and is more localized.
 
-> Also added a minimal test case and documentation.
-> 
-> Signed-off-by: Per Cederqvist <cederp@opera.com>
-> ---
->  Documentation/guilt-graph.txt |  5 +++++
->  guilt-graph                   | 24 ++++++++++++++++++------
->  regression/t-033.out          | 12 ++++++++++++
->  regression/t-033.sh           |  3 +++
->  4 files changed, 38 insertions(+), 6 deletions(-)
-> 
-> diff --git a/Documentation/guilt-graph.txt b/Documentation/guilt-graph.txt
-> index f43206e..eeed321 100644
-> --- a/Documentation/guilt-graph.txt
-> +++ b/Documentation/guilt-graph.txt
-> @@ -16,6 +16,11 @@ patches.
->  
->  OPTIONS
->  -------
-> +-x <pattern>::
-> +	Ignore files that matches the given grep pattern. Can be
-> +	repeated to ignore several files. This can be useful to ignore
-> +	for instance ChangeLog files that every commit modifies.
-> +
->  <patchname>::
->  	Instead of starting with the topmost applied patch, start with
->  	<patchname>.
-> diff --git a/guilt-graph b/guilt-graph
-> index d90c2f1..4d5fe46 100755
-> --- a/guilt-graph
-> +++ b/guilt-graph
-> @@ -3,7 +3,7 @@
->  # Copyright (c) Josef "Jeff" Sipek, 2007-2013
->  #
->  
-> -USAGE="[<patchname>]"
-> +USAGE="[-x exclude-pattern]... [<patchname>]"
->  if [ -z "$GUILT_VERSION" ]; then
->  	echo "Invoking `basename "$0"` directly is no longer supported." >&2
->  	exit 1
-> @@ -11,6 +11,22 @@ fi
->  
->  _main() {
->  
-> +cache="$GUILT_DIR/$branch/.graphcache.$$"
-> +xclude="$GUILT_DIR/$branch/.graphexclude.$$"
-> +trap "rm -rf \"$cache\" \"$xclude\"" 0
-> +mkdir "$cache"
-> +>"$xclude"
-> +
-> +while [ $# -gt 0 ]; do
-> +    if [ "$1" = "-x" ] && [ $# -ge 2 ]; then
-> +	echo "$2" >> "$xclude"
-> +	shift
-> +	shift
-> +    else
-> +	break
-> +    fi
-
-Spaces used for indentation.  Otherwise looks good.
-
-Signed-off-by: Josef 'Jeff' Sipek <jeffpc@josefsipek.net>
-
-> +done
-> +
->  if [ $# -gt 1 ]; then
->  	usage
->  fi
-> @@ -39,10 +55,6 @@ getfiles()
->  	git diff-tree -r "$1^" "$1" | cut -f2
->  }
->  
-> -cache="$GUILT_DIR/$branch/.graphcache.$$"
-> -mkdir "$cache"
-> -trap "rm -rf \"$cache\"" 0
-> -
->  disp "digraph G {"
->  
->  current="$top"
-> @@ -66,7 +78,7 @@ while [ "$current" != "$base" ]; do
->  	rm -f "$cache/dep"
->  	touch "$cache/dep"
->  
-> -	getfiles $current | while read f; do
-> +	getfiles $current | grep -v -f "$xclude" | while read f; do
->  		# hash the filename
->  		fh=`echo "$f" | sha1 | cut -d' ' -f1`
->  		if [ -e "$cache/$fh" ]; then
-> diff --git a/regression/t-033.out b/regression/t-033.out
-> index c120d4f..1ed371f 100644
-> --- a/regression/t-033.out
-> +++ b/regression/t-033.out
-> @@ -88,3 +88,15 @@ digraph G {
->  	"ff2775f8d1dc753f635830adcc3a067e0b681e2d" [label="a.patch"]
->  	"891bc14b5603474c9743fd04f3da888644413dc5" -> "ff2775f8d1dc753f635830adcc3a067e0b681e2d"; // ?
->  }
-> +%% The same graph, but excluding deps introduced by file.txt.
-> +% guilt graph -x file.txt
-> +digraph G {
-> +# checking rev bc7df666a646739eaf559af23cab72f2bfd01f0e
-> +	"bc7df666a646739eaf559af23cab72f2bfd01f0e" [label="a-\"better&quicker'-patch.patch"]
-> +# checking rev 891bc14b5603474c9743fd04f3da888644413dc5
-> +	"891bc14b5603474c9743fd04f3da888644413dc5" [label="c.patch"]
-> +# checking rev c7014443c33d2b0237293687ceb9cbd38313df65
-> +	"c7014443c33d2b0237293687ceb9cbd38313df65" [label="b.patch"]
-> +# checking rev ff2775f8d1dc753f635830adcc3a067e0b681e2d
-> +	"ff2775f8d1dc753f635830adcc3a067e0b681e2d" [label="a.patch"]
-> +}
-> diff --git a/regression/t-033.sh b/regression/t-033.sh
-> index 9fe1827..ae22914 100755
-> --- a/regression/t-033.sh
-> +++ b/regression/t-033.sh
-> @@ -59,3 +59,6 @@ cmd git add file.txt
->  cmd guilt refresh
->  fixup_time_info "a-\"better&quicker'-patch.patch"
->  cmd guilt graph
-> +
-> +echo "%% The same graph, but excluding deps introduced by file.txt."
-> +cmd guilt graph -x file.txt
-> -- 
-> 2.1.0
-> 
-
--- 
-Computer Science is no more about computers than astronomy is about
-telescopes.
-		- Edsger Dijkstra
+Or we could force enum to be signed by defining FSCK_MSG_UNUSED to
+be -1 at the very beginning of enum definition, without changing
+anything else.  Then "msg_id < 0" would become a very valid
+protection against programming mistakes, no?
