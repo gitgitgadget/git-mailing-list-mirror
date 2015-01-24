@@ -1,117 +1,67 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: Git submodule first time update with proxy
-Date: Sat, 24 Jan 2015 18:47:10 +1300
-Message-ID: <CAFOYHZBqLPzE94sbb=RoD0yViqPhJ+DRnYJQ6o_2taF1DhhHhA@mail.gmail.com>
-References: <CAHd499BEmV2zeosE9th59QTWPA0CPsU8eyHnONhsZqEb=bH+rA@mail.gmail.com>
-	<CAFOYHZAiZkXqSkso+=Eh_THEkh+qi9k8xWsP0yt1dbw5ymwDDQ@mail.gmail.com>
-	<CAHd499A+K=uh=wt4P_qy+8XOEttTziJEPvhE+=03oD_MRxna2Q@mail.gmail.com>
-	<CAHd499B+ZAAYAtDdsX=v4H60dq3wuVgR0Hk7x6NRubMJ_Umjjg@mail.gmail.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [msysGit] Re: [PATCH] t/lib-httpd: switch SANITY check for
+ =?UTF-8?Q?NOT=5FROOT?=
+Date: Sat, 24 Jan 2015 10:41:08 +0100
+Organization: gmx
+Message-ID: <2dba96fc1f2d52f4e103478a7827272d@www.dscho.org>
+References: <20150114211712.GE1155@peff.net>
+ <064010B3-BC58-42F2-B5C0-DAADAA59B87D@gmail.com>
+ <xmqqwq4n6b4c.fsf@gitster.dls.corp.google.com>
+ <20150115222719.GA19021@peff.net>
+ <xmqqa91j6537.fsf@gitster.dls.corp.google.com>
+ <20150115235752.GB25120@peff.net>
+ <xmqqh9vr4mlz.fsf@gitster.dls.corp.google.com>
+ <20150116013256.GA25894@peff.net>
+ <BEFF558C-774D-4891-96A0-BE962F8070E7@gmail.com>
+ <20150116033445.GA29572@peff.net> <20150116091648.GA2450@peff.net>
+ <xmqqfvba37bq.fsf@gitster.dls.corp.google.com>
+ <xmqqzj9i1rci.fsf@gitster.dls.corp.google.com> <54BAF1C2.60103@web.de>
+ <xmqq61bzwyqp.fsf@gitster.dls.corp.google.com> <54C170E9.4010401@web.de>
+ <xmqqlhkusc4h.fsf@gitster.dls.corp.google.com> <54C2BC01.2030307@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git <git@vger.kernel.org>
-To: Robert Dailey <rcdailey.lists@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 24 06:47:20 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	"Kyle J. McKay" <mackyle@gmail.com>, msysgit@googlegroups.com,
+	Git Mailing List <git@vger.kernel.org>
+To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Sat Jan 24 10:41:24 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YEtZ0-0008PS-Vh
-	for gcvg-git-2@plane.gmane.org; Sat, 24 Jan 2015 06:47:19 +0100
+	id 1YExDX-00043b-Fj
+	for gcvg-git-2@plane.gmane.org; Sat, 24 Jan 2015 10:41:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751456AbbAXFrM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Jan 2015 00:47:12 -0500
-Received: from mail-pd0-f170.google.com ([209.85.192.170]:59913 "EHLO
-	mail-pd0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751070AbbAXFrL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Jan 2015 00:47:11 -0500
-Received: by mail-pd0-f170.google.com with SMTP id p10so1839996pdj.1
-        for <git@vger.kernel.org>; Fri, 23 Jan 2015 21:47:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=/0BdDEWP+yXQP8TK9WTf1a8NQmy4IYItmNOkvPkp5Xc=;
-        b=rfYpn6zkV+3AMZKmFajAc1h6VTRw9kJgR/TwxS5Lc2GccIxxZoeWw+uP0xTcfN+wcB
-         oZMx3K1Lx1vJdZGq3D4nR3jbjwK7EePgoKZjzqx7OH70kLjOZwDqWklT/OHCEtOKV6q+
-         LkDcHBCvG22wc9Xnr1ej9JxC5HogoRqctkNF2VR51C/FQbgpKj3uL6ctM2vq6+dRb7u5
-         eAH8iJtcJdFbNJfhdoVX76MYWEApctrGy0pnehdmi2KM0G1g8oaW0aTA8kgvKGW7BnbW
-         5sMUofrLNP8426cpLNNg6+8aO9sXiUT+AkBTvaYEyJvNcI3fDARM/xoVbGFfKxach9zI
-         5QOw==
-X-Received: by 10.66.121.134 with SMTP id lk6mr12517887pab.71.1422078430314;
- Fri, 23 Jan 2015 21:47:10 -0800 (PST)
-Received: by 10.70.109.199 with HTTP; Fri, 23 Jan 2015 21:47:10 -0800 (PST)
-In-Reply-To: <CAHd499B+ZAAYAtDdsX=v4H60dq3wuVgR0Hk7x6NRubMJ_Umjjg@mail.gmail.com>
+	id S1751918AbbAXJlS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 24 Jan 2015 04:41:18 -0500
+Received: from mout.gmx.net ([212.227.15.18]:55316 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751394AbbAXJlP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Jan 2015 04:41:15 -0500
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0M9aX9-1YQC0w2U3D-00CxtQ; Sat, 24 Jan 2015 10:41:09
+ +0100
+In-Reply-To: <54C2BC01.2030307@web.de>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1-git
+X-Provags-ID: V03:K0:9zG1qVTxBqx8SvHiR0OtP5bKqmcOsi6PPO/aUdfAVo3opphZGR+
+ Xh+cfbE5p3gzBd+7CVAPmi8I/J0Ag2A6CDeLOVb/8Vov/2HlJ+UXX3VjCaFI8GoYU7Qg3mS
+ Ads3E9BSfE9zz5NEQCDWTRGJSMtjqDi5B53DXNzS0uOv+qzCXQlB/DeHMH6Q3tDgxo/3qEs
+ PTJUBclj3tgRD6bLokxIQ==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262990>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/262991>
 
-On Sat, Jan 24, 2015 at 5:45 PM, Robert Dailey <rcdailey.lists@gmail.com> wrote:
-> On Fri, Jan 23, 2015 at 10:23 PM, Robert Dailey
-> <rcdailey.lists@gmail.com> wrote:
->> On Fri, Jan 23, 2015 at 4:13 PM, Chris Packham <judge.packham@gmail.com> wrote:
->>> Hi,
->>>
->>> On Fri, Jan 23, 2015 at 3:50 PM, Robert Dailey <rcdailey.lists@gmail.com> wrote:
->>>> I have a submodule using HTTP URL. I do this:
->>>>
->>>> $ git submodule init MySubmodule
->>>> $ git submodule update MySubmodule
->>>>
->>>> The 2nd command fails because the HTTP URL cannot be resolved, this is
->>>> because it requires a proxy. I have "http.proxy" setup properly in the
->>>> .git/config of my parent git repository, so I was hoping the submodule
->>>> update function would have a way to specify it to inherit the proxy
->>>> value from the parent config.
->>>
->>> Your not the first to suggest it and you probably won't be the last.
->>> It is hard to decide _which_ config variables, if any, should
->>> propagate from the parent. What works for one use-case may not
->>> necessarily work for another.
->>>
->>>> How can I set up my submodule?
->>>
->>> Probably the easiest thing would be to make your http.proxy
->>> configuration global i.e.
->>>
->>>   $ git config --global http.proxy ....
->>>
->>> If you don't want to make it a global setting you can setup the
->>> submodule configuration after running init but before running update
->>> i.e.
->>>
->>>   $ git submodule init MySubmodule
->>>   $ (cd MySubmodule && git config http.proxy ...)
->>>   $ git submodule update MySubmodule
->>
->>  For some reason, the init call does not create the submodule
->> directory as you indicate. I also checked in .git/modules and it's not
->> there either.
->
+On 2015-01-23 22:24, Torsten B=C3=B6gershausen wrote:
+> [...] either to always switch off SANITY for CYGWIN (or Windows in ge=
+neral).
 
-OK I must be wrong about that. I was working from memory. Trying it
-now I see the error in my thinking
+Nice one! You gave me the chuckle for the day ;-)
 
-  $ git submodule init bar
-  Submodule 'bar' (bar.git) registered for path 'bar'
-
-I thought this meant that bar/.git (and .git/modules/bar) had been
-created but as you point out I was wrong.
-
-> Correction:
->
-> I have to deinit the submodule then init again, then the submodule dir
-> is created (but empty).
-
-That's the default state of an uninitialized submodule.
-
-> When I run the git config command inside the
-> submodule directory, it silently returns and does not indicate
-> failure, however the final git submodule update command shows failure
-> to access the remote and then subsequently the submodule empty
-> directory is removed by Git.
-
-So it looks like the only solution to your problem right now is to use
-git config --global for your proxy configuration.
+Ciao,
+Dscho
