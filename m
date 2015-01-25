@@ -1,122 +1,87 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 17/21] list-files: show directories as well as files
-Date: Sun, 25 Jan 2015 14:16:36 -0500
-Message-ID: <CAPig+cTwcAWUiJGViYDjeRifd2ERojQR+f+cpSB806RwYHoCCw@mail.gmail.com>
+Subject: Re: [PATCH 21/21] t3080: tests for git-list-files
+Date: Sun, 25 Jan 2015 14:20:29 -0500
+Message-ID: <CAPig+cQ8AuoA=ZNaOiZ_JQb-fKtXa-mFhoYQg+eWJxF3eFy9FA@mail.gmail.com>
 References: <1422189476-7518-1-git-send-email-pclouds@gmail.com>
-	<1422189476-7518-18-git-send-email-pclouds@gmail.com>
+	<1422189476-7518-22-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Git List <git@vger.kernel.org>
 To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
 	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jan 25 20:16:45 2015
+X-From: git-owner@vger.kernel.org Sun Jan 25 20:20:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YFSft-0000wE-0v
-	for gcvg-git-2@plane.gmane.org; Sun, 25 Jan 2015 20:16:45 +0100
+	id 1YFSjv-0005SQ-V8
+	for gcvg-git-2@plane.gmane.org; Sun, 25 Jan 2015 20:20:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757516AbbAYTQk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 Jan 2015 14:16:40 -0500
-Received: from mail-yh0-f42.google.com ([209.85.213.42]:55941 "EHLO
-	mail-yh0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755936AbbAYTQh convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 25 Jan 2015 14:16:37 -0500
-Received: by mail-yh0-f42.google.com with SMTP id a41so2121724yho.1
-        for <git@vger.kernel.org>; Sun, 25 Jan 2015 11:16:36 -0800 (PST)
+	id S1759366AbbAYTUv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 Jan 2015 14:20:51 -0500
+Received: from mail-yh0-f43.google.com ([209.85.213.43]:46477 "EHLO
+	mail-yh0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757853AbbAYTUa convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 25 Jan 2015 14:20:30 -0500
+Received: by mail-yh0-f43.google.com with SMTP id 29so2121003yhl.2
+        for <git@vger.kernel.org>; Sun, 25 Jan 2015 11:20:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc:content-type:content-transfer-encoding;
-        bh=nhUKMooQ+OQwU2Ei+xlmgGF5SEAAOUWEJTrAo4k7R3o=;
-        b=ao7X6peQ9AarJXTY2IkwZUszS/vSQArKh+1qVTvG2W4oH9m7w9wqU0u1EKmCRIjHb0
-         CaA3Cf/VDTcOVCU7Ph7FwuPCRYnlqHHOVspEjCh0E/9tepoZN4+Low8Ym6+f4FDTSLtH
-         7sAncnoX75QcnUAfY4AJnnbMSdSs8HiYqQzqdLeMCk56WTCJUsSYHeL/HGpZiYZE8VT3
-         BJgeVuAYW0iQoIFpUukgYtpgRX5uEyTiKdsjYK0W7as09R7LQxwg4/CQJp/2r92wIO8f
-         g82jUZ5U5LLF3y6zz/N3XiZj4/FqwmieaidVNf1HdeBeVvlraaJxb++2aH3gVH3owGWc
-         QZZA==
-X-Received: by 10.236.202.238 with SMTP id d74mr7686222yho.166.1422213396565;
- Sun, 25 Jan 2015 11:16:36 -0800 (PST)
-Received: by 10.170.73.7 with HTTP; Sun, 25 Jan 2015 11:16:36 -0800 (PST)
-In-Reply-To: <1422189476-7518-18-git-send-email-pclouds@gmail.com>
-X-Google-Sender-Auth: HGiJtm0w9uYE0tOcD-y9nG37gl0
+        bh=4pRxAncvkcaXwjDmdtYqpFECkhMB/2bwgtyu69HalKw=;
+        b=TA1T48DhRnV1a6TNPuKUq/xXZXqqoqeI/MJr51CW9j8tRjLmcYL7T5VKgncByU+uXH
+         fsqwgZZnDF5+k1S9G7QxL7VS+6K0RBqRhz3SyDzdBPgDepmPJVWGMD157UP4JblyqER+
+         Kr5eQX3uHDRDku8qzJ7g1Ho8HJFa+eJvzXYcnF2XLrv6FakpbZGEySxVSpo9VeAU3kDg
+         CAQdmMh9+Liobwu6iHk0MYAQHR2LUM2QT6ITEnwgAncBRzz6Auhn/5DHBfV692nF1Tkn
+         3nIVjjuZKG1TixRdxjseFdD3H8ylDws73ZsxgnQppc1D5SzCb3yKAlFsq1LLiwhSvuCO
+         eXbw==
+X-Received: by 10.170.136.130 with SMTP id d124mr8944954ykc.2.1422213629767;
+ Sun, 25 Jan 2015 11:20:29 -0800 (PST)
+Received: by 10.170.73.7 with HTTP; Sun, 25 Jan 2015 11:20:29 -0800 (PST)
+In-Reply-To: <1422189476-7518-22-git-send-email-pclouds@gmail.com>
+X-Google-Sender-Auth: MWsbyFPLkBkcXBw8TQGCNk1dJlU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263020>
 
 On Sun, Jan 25, 2015 at 7:37 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
 Duy <pclouds@gmail.com> wrote:
-> The index does not store directories explicitly (except submodules) s=
-o
-> we have to figure them out from file list when output lis depth-limit=
-ed.
->
-> The function show_as_directory() deliberately generates duplicate
-> directories and expects the previous patch to remove duplicates.
->
 > Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
 il.com>
 > ---
-> diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-> index 1a1c9c8..29b5c2e 100644
-> --- a/builtin/ls-files.c
-> +++ b/builtin/ls-files.c
-> @@ -179,6 +181,35 @@ static void show_killed_files(struct dir_struct =
-*dir)
->         }
->  }
->
-> +static int show_as_directory(const struct cache_entry *ce)
-> +{
-> +       struct strbuf sb =3D STRBUF_INIT;
-> +       const char *p;
+> diff --git a/t/t3080-list-files.sh b/t/t3080-list-files.sh
+> new file mode 100755
+> index 0000000..6313dd9
+> --- /dev/null
+> +++ b/t/t3080-list-files.sh
+> +test_expect_success 'no dups' '
+> +       echo dirty >>file &&
+
+To leave a clean slate for subsequent tests, would it make sense to
+restore 'file' to a clean state via test_when_finished()?
+
+> +       git list-files -m file >actual &&
+> +       echo "file" >expected &&
+> +       test_cmp expected actual &&
+> +       git list-files -cm file >actual &&
+> +       echo "C file" >expected &&
+> +       test_cmp expected actual &&
+> +       git list-files -tcm file >actual &&
+> +       test_cmp expected actual
+> +'
 > +
-> +       strbuf_add(&sb, ce->name, ce_namelen(ce));
-> +       while (sb.len && (p =3D strrchr(sb.buf, '/')) !=3D NULL) {
-> +               struct strbuf sb2 =3D STRBUF_INIT;
-> +               strbuf_setlen(&sb, p - sb.buf);
-> +               if (!match_pathspec(&pathspec, sb.buf, sb.len,
-> +                                   max_prefix_len, NULL, 1))
-> +                       continue;
-> +               write_name(&sb2, sb.buf);
-> +               if (want_color(use_color)) {
-> +                       struct strbuf sb3 =3D STRBUF_INIT;
-> +                       color_filename(&sb3, ce->name, sb2.buf, S_IFD=
-IR, 1);
-> +                       strbuf_release(&sb2);
-> +                       sb2 =3D sb3;
+> +test_expect_success 'diff-cached' '
+> +       echo dirty >>file &&
+> +       git add file &&
 
-Although more expensive, would it be a bit more idiomatic and obvious
-to phrase this as
+Ditto here?
 
-    strbuf_swap(&sb2, &sb3);
-    strbuf_release(&sb3);
-
-or is it not worth it?
-
-> +               }
-> +               if (show_tag)
-> +                       strbuf_insert(&sb2, 0, tag_cached, strlen(tag=
-_cached));
-> +               strbuf_fputs(&sb2, strbuf_detach(&sb, NULL), NULL);
-
-The detached strbuf content gets assigned to the 'util' field of the
-'struct string_list output' item and is eventually leaked, however,
-the program exits soon after. Okay.
-
-> +               strbuf_release(&sb2);
-> +               return 1;
-> +       }
-> +       strbuf_release(&sb);
-> +       return 0;
-> +}
-> +
->  static void write_ce_name(struct strbuf *sb, const struct cache_entr=
-y *ce)
->  {
->         struct strbuf quoted =3D STRBUF_INIT;
+> +       git list-files -M >actual &&
+> +       echo "file" >expected &&
+> +       test_cmp expected actual
+> +'
