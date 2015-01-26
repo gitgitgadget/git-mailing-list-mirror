@@ -1,81 +1,71 @@
-From: Josh Boyer <jwboyer@fedoraproject.org>
-Subject: Re: patch-2.7.3 no longer applies relative symbolic link patches
-Date: Mon, 26 Jan 2015 11:32:17 -0500
-Message-ID: <CA+5PVA4bs6CYU8MHn1JqBjnb-5wYJT2Tjqa65=v2uSPL8c7dYw@mail.gmail.com>
-References: <CA+5PVA7rVy6Li_1haj1QmGG0D6avLB5Xej=2YGt6K-11kKHR5A@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: "Linux-Kernel@Vger. Kernel. Org" <linux-kernel@vger.kernel.org>,
-	twaugh@redhat.com, Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Jan 26 17:32:23 2015
+From: Alexander Kuleshov <kuleshovmail@gmail.com>
+Subject: [PATCH] Documentation/git-add.txt: add `add.ginore-errors` configuration variable
+Date: Mon, 26 Jan 2015 22:55:25 +0600
+Message-ID: <1422291325-4332-1-git-send-email-kuleshovmail@gmail.com>
+Cc: git@vger.kernel.org, Alexander Kuleshov <kuleshovmail@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 26 17:55:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YFmaN-0007sf-ES
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Jan 2015 17:32:23 +0100
+	id 1YFmwu-0000KJ-AI
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Jan 2015 17:55:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755541AbbAZQcT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Jan 2015 11:32:19 -0500
-Received: from mail-oi0-f49.google.com ([209.85.218.49]:36015 "EHLO
-	mail-oi0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753040AbbAZQcS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Jan 2015 11:32:18 -0500
-Received: by mail-oi0-f49.google.com with SMTP id a3so7931120oib.8;
-        Mon, 26 Jan 2015 08:32:17 -0800 (PST)
+	id S1756117AbbAZQzh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Jan 2015 11:55:37 -0500
+Received: from mail-la0-f51.google.com ([209.85.215.51]:55848 "EHLO
+	mail-la0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753317AbbAZQzf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Jan 2015 11:55:35 -0500
+Received: by mail-la0-f51.google.com with SMTP id ge10so8737698lab.10
+        for <git@vger.kernel.org>; Mon, 26 Jan 2015 08:55:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=PYj/Wuj0JeqK+PJuBmFz+5Scf3vOEc0+GWoUWzpLGaQ=;
-        b=nb0g9E6xMY900SlymcLfBCZzycUp9HOGQcIoZl5yyn1s75ESHjIrcb8vYGFo+07iyA
-         ELWSFpdReCRA0ubi0QcVPnRZ4XB0KEOrrMsGes346JZzEM+RoDP8De4/Ie2L6RfqD4Dh
-         Gs56Bb5rvt+VT65CGA3IWRa08CFJ12lviU5n5X3bv/a0j7v5sIa/Nh66BlvDXh4wdb/H
-         apwYLi9CTvmfj6IlHF0KS/AMS8C2hxYfABR+Is//3/LIhpE3u0Ut/iiO1GzPI6fSNhXc
-         TvU7zzJKv7xSjfGm3sxRUcX3NUDLGj3hHROBlky/suEOq6YmT+xNJfSKT7KKob/YMTMN
-         +/9Q==
-X-Received: by 10.202.186.8 with SMTP id k8mr12782712oif.39.1422289937460;
- Mon, 26 Jan 2015 08:32:17 -0800 (PST)
-Received: by 10.76.50.70 with HTTP; Mon, 26 Jan 2015 08:32:17 -0800 (PST)
-In-Reply-To: <CA+5PVA7rVy6Li_1haj1QmGG0D6avLB5Xej=2YGt6K-11kKHR5A@mail.gmail.com>
-X-Google-Sender-Auth: ZyQNTOCXjgc1iATDxPyJTI9kn9M
+        h=from:to:cc:subject:date:message-id;
+        bh=Gc7iTng4BP3b6I9es1efVifYUvvWsfksJRg+cHR/ikc=;
+        b=LLnSMi/i705UlB7dneVlFAnwEFE0sWGNvMZeeJKR00MJFgr5RBJiOUZiKDL9JBMbOv
+         eApmOblq4HU7QK0aMkdeNlo+9gmrOMDsTUChFYJFRBGqEElmBpptFC5zPAEX4eGZCEDH
+         rYXzJcbCvfisNgtLOMWFdNPzeugwyjNzegAcEj6gLQqO8X3eJSOPdwwUZfNrES1FsLcj
+         +Sh/ANY/HaKIWbpEryMg1UfBuRq5nBJ7SwYsv6XUT8R0NZpHjHxK7Yfn7Aj1Rki74NBJ
+         UcFbkeudKq5rwoM8VYnX3N0coNMgqXvQ8UWeM1YKA3EkJm2yNSJ6umr+Ooid+rdz7L3v
+         b++w==
+X-Received: by 10.152.4.233 with SMTP id n9mr22403980lan.61.1422291333908;
+        Mon, 26 Jan 2015 08:55:33 -0800 (PST)
+Received: from localhost.localdomain ([178.89.29.232])
+        by mx.google.com with ESMTPSA id r7sm1170261lbs.37.2015.01.26.08.55.32
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 26 Jan 2015 08:55:33 -0800 (PST)
+X-Mailer: git-send-email 2.3.0.rc1.275.g028c360
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263036>
 
-[Adding Junio's correct email address.  Sigh.]
+'git add' supports not only `add.ignoreErrors`, but also `add.ignore-errors`
+configuration variable.
 
-On Mon, Jan 26, 2015 at 11:29 AM, Josh Boyer <jwboyer@fedoraproject.org> wrote:
-> Hi,
->
-> I went to do the Fedora 3.19-rc6 build this morning and it failed in
-> our buildsystem with:
->
-> + '[' '!' -f /builddir/build/SOURCES/patch-3.19-rc6.xz ']'
-> + case "$patch" in
-> + unxz
-> + patch -p1 -F1 -s
-> symbolic link target '../../../../../include/dt-bindings' is invalid
-> error: Bad exit status from /var/tmp/rpm-tmp.mWE3ZL (%prep)
->
-> That is coming from the hunk in patch-3.19-rc6.xz that creates the
-> symbolic link from arch/arm64/boot/dts/include/dt-bindings to
-> include/dt-bindings.  Oddly enough, patch-3.19-rc5.xz contains the
-> same hunk and it built fine last week.
->
-> Digging in, it seems that upstream patch has decided that relative
-> symlinks are forbidden now as part of a fix for CVE-2015-1196.  You
-> can find the relevant bugs here:
->
-> https://bugzilla.redhat.com/show_bug.cgi?id=1185928
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=775901#13
->
-> Aside from locally modifying patch-3.19-rc6.xz, I'm not sure what else
-> to do.  I thought I would send a heads up since anyone that is using
-> patch-2.7.3 is probably going to run into this issue.
->
-> josh
+Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
+---
+ Documentation/git-add.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
+index 1c74907..f68c2a2 100644
+--- a/Documentation/git-add.txt
++++ b/Documentation/git-add.txt
+@@ -155,8 +155,8 @@ for "git add --no-all <pathspec>...", i.e. ignored removed files.
+ 	If some files could not be added because of errors indexing
+ 	them, do not abort the operation, but continue adding the
+ 	others. The command shall still exit with non-zero status.
+-	The configuration variable `add.ignoreErrors` can be set to
+-	true to make this the default behaviour.
++	The configuration variable `add.ignoreErrors` or `add.ignore-errors`
++	can be set to true to make this the default behaviour.
+ 
+ --ignore-missing::
+ 	This option can only be used together with --dry-run. By using
+-- 
+2.3.0.rc1.275.g028c360
