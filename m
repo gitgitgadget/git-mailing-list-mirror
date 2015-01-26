@@ -1,83 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-new-workdir: support submodules
-Date: Sun, 25 Jan 2015 21:39:25 -0800
-Message-ID: <xmqqtwzem776.fsf@gitster.dls.corp.google.com>
-References: <CAGXKyzHoLLgkXk0X4UVtLBEryqsHriKmmO5+2iVWk3mR8y7=Hw@mail.gmail.com>
-	<CAGXKyzEwAjCNTxRtjSuFh9b6BzzOYKOQryKtXBGY3_hkkFvyVw@mail.gmail.com>
-	<xmqqegqlnelu.fsf@gitster.dls.corp.google.com>
-	<CAGXKyzEPWrbRFOhvCBm=2Z50zso85G50z-nLd_wyzyeEADQSmw@mail.gmail.com>
-	<xmqqa916nq4p.fsf@gitster.dls.corp.google.com>
-	<CAGXKyzEYVsz-nRs52pTKo+6JLBiO9daU_C3qev3H43=Vzuygiw@mail.gmail.com>
+From: Prem <prem.muthedath@gmail.com>
+Subject: git push --repo option not working as described in git manual.
+Date: Mon, 26 Jan 2015 08:21:50 +0000 (UTC)
+Message-ID: <loom.20150126T091917-791@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
-To: Craig Silverstein <csilvers@khanacademy.org>
-X-From: git-owner@vger.kernel.org Mon Jan 26 06:39:39 2015
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 26 09:25:17 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YFcOh-0007uv-4Y
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Jan 2015 06:39:39 +0100
+	id 1YFeyv-0007TZ-L8
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Jan 2015 09:25:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751681AbbAZFj3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Jan 2015 00:39:29 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:59201 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750830AbbAZFj1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Jan 2015 00:39:27 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id EC8C633675;
-	Mon, 26 Jan 2015 00:39:26 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=6jtdVHOeHY1epMAmcQZiOFH6vjc=; b=R4Xqqj
-	x6PwlC7W5zCqhEIuUPDUiItL9yMM2pCAsLVw3jn5t5ZJ5EB+iJmF94qt6in1E6hp
-	V+BAIWlrWgLT8Hc95Re5zzDHvCaFw/upQ0Ys/lDnFUWzBTeHWCpmkcV7GZS1qeJM
-	z43D+WWkDX0iS181kUDms2alU8sCtRLWrE/Hs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=oME4xtrXlDE4e+UmFgTKQVPgusHPFJMU
-	ed2+oo+drxhFMCYDV5wpUMqmX2pAcWAvxYFpRZbhWIbv5doKBfKYojPfLX9GTEyf
-	lB2jkXIApBrPs6zpf19Q4ZLP72Fclf5S/i3B1Y7uC1r2mjhMr67CCpoiNL/WYnS6
-	94ri4f5crDs=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E30AA33674;
-	Mon, 26 Jan 2015 00:39:26 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 656E133673;
-	Mon, 26 Jan 2015 00:39:26 -0500 (EST)
-In-Reply-To: <CAGXKyzEYVsz-nRs52pTKo+6JLBiO9daU_C3qev3H43=Vzuygiw@mail.gmail.com>
-	(Craig Silverstein's message of "Sun, 25 Jan 2015 20:57:49 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: B0B0636A-A51D-11E4-BFFB-7BA29F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1752288AbbAZIZJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Jan 2015 03:25:09 -0500
+Received: from plane.gmane.org ([80.91.229.3]:39978 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751517AbbAZIZI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Jan 2015 03:25:08 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1YFeym-0007LU-5m
+	for git@vger.kernel.org; Mon, 26 Jan 2015 09:25:04 +0100
+Received: from yash-static-187.233.21.103.yashtel.co.in ([yash-static-187.233.21.103.yashtel.co.in])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 26 Jan 2015 09:25:04 +0100
+Received: from prem.muthedath by yash-static-187.233.21.103.yashtel.co.in with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 26 Jan 2015 09:25:04 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 103.21.233.187 (Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/600.2.5 (KHTML, like Gecko) Version/8.0.2 Safari/600.2.5)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263027>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263028>
 
-Craig Silverstein <csilvers@khanacademy.org> writes:
+I am using git 2.2.2 and want to report an issue with git push --repo option.
 
-> This patch, in adding submodule support, I expect would be
-> similarly useful to people even though it, also, imposes those
-> same constraints to the submodule's config files.
+git 2.2.2 manual says that git push --repo=public will push to public
+only if the current branch does not track a remote branch.  See
+http://git-scm.com/docs/git-push
 
-I would expect that you would see exactly the same issue with Duy's
-multiple work tree series.  This is not limited to new-workdir.
+However, I see that git pushes even when the current branch is
+tracking a remote branch.
 
-The right way to look at this is to fix what "git submodule" does;
-its use of "config" that is shared across branches is the root cause
-of the trouble.  No other part of Git keeps data that needs to be
-per-branch (or more specifically "tied to the working tree state")
-in .git/config in such a way that leaving it stale when the working
-tree state changes breaks the system.
+Here is the test case (push default setting is simple, git version
+2.2.2, Mac OS X 10.10.1):
+1. I have a local branch "master".
+2. "master" tracks remote branch "blah/master".  Here "blah" is the
+remote repository.
+3. While I am on my local master branch, I run git push --repo=silver
+4. git pushes the local master branch to silver repository.
+5. But per git manual, it shouldn't push to silver, as the local
+branch is tracking "blah/master". So is this broken or am I missing something?
 
-One way to do so might be to move the bits it stores in the config
-file to somewhere else that is more closely tied to the checkout
-state and handle that similar to .git/index and .git/HEAD when it
-comes to multiple work-trees.
+
+Here is another test case (push default setting is simple, git version
+2.2.2, Mac OS X 10.10.1):
+1. I have a local branch "whoa".
+2. "whoa" tracks remote branch "origin/whoa".  Here "origin" is the
+remote repository.
+3. While I am on my local whoa branch, I run git push --repo=blah
+4. git pushes the local whoa branch to blah repository.
+5. But per git manual, it shouldn't push to blah, as the local branch
+is tracking "origin/whoa".  So is this broken or am I missing something?
+
+
+Appreciate your help.
