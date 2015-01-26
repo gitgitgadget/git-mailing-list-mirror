@@ -1,87 +1,77 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCHv2] commit: reword --author error message
-Date: Mon, 26 Jan 2015 16:48:33 +0100
-Message-ID: <7e2e1d1e7f4a25d84a6f7a1c0cb035221529f189.1422286879.git.git@drmicha.warpmail.net>
-References: <xmqqfvba1p07.fsf@gitster.dls.corp.google.com>
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Philip Oakley <philipoakley@iee.org>,
-	Gunnar Wagner <gunnar.wagner@irisgermanica.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 26 16:48:41 2015
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+From: Josh Boyer <jwboyer@fedoraproject.org>
+Subject: patch-2.7.3 no longer applies relative symbolic link patches
+Date: Mon, 26 Jan 2015 11:29:07 -0500
+Message-ID: <CA+5PVA7rVy6Li_1haj1QmGG0D6avLB5Xej=2YGt6K-11kKHR5A@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: "Linux-Kernel@Vger. Kernel. Org" <linux-kernel@vger.kernel.org>,
+	twaugh@redhat.com, Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>,
+	Junio C Hamano <junkio@cox.net>
+X-From: linux-kernel-owner@vger.kernel.org Mon Jan 26 17:29:16 2015
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YFlu3-0008Ff-H4
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Jan 2015 16:48:39 +0100
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1YFmXK-0004Pz-Jz
+	for glk-linux-kernel-3@plane.gmane.org; Mon, 26 Jan 2015 17:29:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755955AbbAZPsg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Jan 2015 10:48:36 -0500
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:51769 "EHLO
-	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754790AbbAZPsf (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 26 Jan 2015 10:48:35 -0500
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailout.nyi.internal (Postfix) with ESMTP id 8A23F20A7C
-	for <git@vger.kernel.org>; Mon, 26 Jan 2015 10:48:34 -0500 (EST)
-Received: from frontend1 ([10.202.2.160])
-  by compute5.internal (MEProxy); Mon, 26 Jan 2015 10:48:34 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=x-sasl-enc:from:to:cc:subject:date
-	:message-id:in-reply-to:references; s=smtpout; bh=rNZJ519UWt+O5i
-	zP2uyYPoJD6vQ=; b=OXrOh4XYzvh6P5pRO1uMqkqvvW9UvBAn95sCPhlw39QTP1
-	S2qkPY3OOrhldfhNRb5EmIetYGG5n02jMiS7aFhJI84Wqnvu1o4FgBR5oaJVmWdZ
-	UaxBmMNSZoYOLb2hl1zGH1rxs3N4Qbl/xpxi1E1GyGsEun+/C1/KdJUVBYhiE=
-X-Sasl-enc: 6/cfk8f7SqezGBs+H0PX1FthVt5n1ywt+3i/GGLZsJRu 1422287314
-Received: from localhost (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 1D927C0001A;
-	Mon, 26 Jan 2015 10:48:34 -0500 (EST)
-X-Mailer: git-send-email 2.3.0.rc1.222.gae238f2
-In-Reply-To: <xmqqfvba1p07.fsf@gitster.dls.corp.google.com>
-Sender: git-owner@vger.kernel.org
+	id S1756417AbbAZQ3K (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Mon, 26 Jan 2015 11:29:10 -0500
+Received: from mail-oi0-f42.google.com ([209.85.218.42]:44100 "EHLO
+	mail-oi0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754602AbbAZQ3I (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Mon, 26 Jan 2015 11:29:08 -0500
+Received: by mail-oi0-f42.google.com with SMTP id i138so7943014oig.1;
+        Mon, 26 Jan 2015 08:29:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:date:message-id:subject:from:to:cc:content-type;
+        bh=NEVOO0lgO73fWCTDqHgLutqhYFXof1ttfw0S4hvKTfo=;
+        b=Xp8HfXvuCatQZahwtToy/56MICqLXIyUsbmEyToLMKCCDnaMwbv+X9CMii/WZgwn9Y
+         B+6apAU8jl6maU3gdnpKYLDWkZGhW1kPA8Nua0hqxJDhXNJqvXjMH5vXFbNWSj/pEm0T
+         7oZBLwQb3v7Z2ZCrACEnLwT7nhdF1QfrSvyE58xNv2lSxQwQMZdrMXXH3kFBTIHfp9sn
+         y43XGXy9lewuYtkWsi5xEe/wspBYMg/lOiMZk0g9cx5yVxhwI8Od5EDmYLmjZ+RJfkHV
+         zWRc7GlotjhQD8k/m9CR14XdIHJO+SVAv+0kSr4O0TVSGAc3pKFqmAzGObMZsT5XBMXJ
+         deeA==
+X-Received: by 10.182.71.73 with SMTP id s9mr13575132obu.15.1422289747157;
+ Mon, 26 Jan 2015 08:29:07 -0800 (PST)
+Received: by 10.76.50.70 with HTTP; Mon, 26 Jan 2015 08:29:07 -0800 (PST)
+X-Google-Sender-Auth: XQmQ7eriBYg5IOK0o-RyMQA4D8Y
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263032>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263033>
 
-If an --author argument is specified but does not contain a '>' then git tries
-to find the argument within the existing authors; and gives the error
-message "No existing author found with '%s'" if there is no match.
+Hi,
 
-This is confusing for users who try to specify a valid complete author
-name.
+I went to do the Fedora 3.19-rc6 build this morning and it failed in
+our buildsystem with:
 
-Rename the error message to make it clearer that the failure has two
-reasons in this case.
++ '[' '!' -f /builddir/build/SOURCES/patch-3.19-rc6.xz ']'
++ case "$patch" in
++ unxz
++ patch -p1 -F1 -s
+symbolic link target '../../../../../include/dt-bindings' is invalid
+error: Bad exit status from /var/tmp/rpm-tmp.mWE3ZL (%prep)
 
-(This codepath is touched only when we know already that the argument
-cannot be a completely wellformed author ident.)
+That is coming from the hunk in patch-3.19-rc6.xz that creates the
+symbolic link from arch/arm64/boot/dts/include/dt-bindings to
+include/dt-bindings.  Oddly enough, patch-3.19-rc5.xz contains the
+same hunk and it built fine last week.
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
-There's really not much by me in this patch any more...
-Everyone on cc contributed - bikeshedding in its best, productive form!
+Digging in, it seems that upstream patch has decided that relative
+symlinks are forbidden now as part of a fix for CVE-2015-1196.  You
+can find the relevant bugs here:
 
-BTW: How do you pull cc/msgid from the list into format-patch/send-email most effectively?
-(granted that I move away from gmane/nntp, which is likely)
+https://bugzilla.redhat.com/show_bug.cgi?id=1185928
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=775901#13
 
- builtin/commit.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Aside from locally modifying patch-3.19-rc6.xz, I'm not sure what else
+to do.  I thought I would send a heads up since anyone that is using
+patch-2.7.3 is probably going to run into this issue.
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 7d90c35..240423b 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1056,7 +1056,7 @@ static const char *find_author_by_nickname(const char *name)
- 		clear_mailmap(&mailmap);
- 		return strbuf_detach(&buf, NULL);
- 	}
--	die(_("No existing author found with '%s'"), name);
-+	die(_("--author '%s': neither 'Name <email>' nor a match for an existing author"), name);
- }
- 
- 
--- 
-2.3.0.rc1.222.gae238f2
+josh
