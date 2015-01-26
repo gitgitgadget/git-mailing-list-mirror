@@ -1,73 +1,80 @@
-From: Olaf Hering <olaf@aepfle.de>
-Subject: implement a stable 'Last updated' in Documentation
-Date: Mon, 26 Jan 2015 18:24:09 +0100
-Message-ID: <20150126172409.GA15204@aepfle.de>
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: [PATCH] l10n: de.po: fix typo
+Date: Mon, 26 Jan 2015 19:16:55 +0100
+Message-ID: <1422296215-4095-1-git-send-email-ralf.thielow@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: bebe@bebehei.de, tr@thomasrast.ch, jk@jk.gs, stimming@tuhh.de,
+	phillip.szelat@gmail.com, matthias.ruester@gmail.com,
+	magnus.goerlitz@googlemail.com,
+	Ralf Thielow <ralf.thielow@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 26 18:24:23 2015
+X-From: git-owner@vger.kernel.org Mon Jan 26 19:17:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YFnOg-0000bv-1u
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Jan 2015 18:24:22 +0100
+	id 1YFoDq-0001sz-DJ
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Jan 2015 19:17:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756532AbbAZRYN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Jan 2015 12:24:13 -0500
-Received: from mo4-p00-ob.smtp.rzone.de ([81.169.146.220]:25341 "EHLO
-	mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756276AbbAZRYM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Jan 2015 12:24:12 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1422293050; l=935;
-	s=domk; d=aepfle.de;
-	h=Content-Disposition:Content-Type:MIME-Version:Subject:To:From:Date;
-	bh=Q7A3s5CdZhZydUjRfVQL0Yvi1Xx0u4WWaCWItOXo8ko=;
-	b=xreeHBa03bc9AUrPLvRgkiJelUEke7Ng5bAMtsbDCbWfaexz24mRbACeperPKdFjCaR
-	rk3C8tiHOG0mpnIr9yZvrl3ffwqHMQNnK+2Kj1d27Jx2YKQoro0sRfN4CKdkz4fTntJiF
-	w/AlcgwI4F9xhlRlebB/uk7GeR4NGs3jg8c=
-X-RZG-AUTH: :P2EQZWCpfu+qG7CngxMFH1J+yackYocTD1iAi8x+OWi/zfN1cLnBYfssDIlSQZelGPTkz+JJHiQM2XCL4FiyQ+n/+A0DGQ==
-X-RZG-CLASS-ID: mo00
-Received: from probook.fritz.box ([2001:a60:1087:7e01:1ec1:deff:feb9:bb48])
-	by smtp.strato.de (RZmta 37.1 AUTH)
-	with ESMTPSA id c02a4fr0QHOA1ln
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	for <git@vger.kernel.org>;
-	Mon, 26 Jan 2015 18:24:10 +0100 (CET)
-Received: by probook.fritz.box (Postfix, from userid 1000)
-	id F2D825016F; Mon, 26 Jan 2015 18:24:09 +0100 (CET)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.22.rev6346 (2013-10-29)
+	id S1756397AbbAZSRJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Jan 2015 13:17:09 -0500
+Received: from mail-wi0-f181.google.com ([209.85.212.181]:44773 "EHLO
+	mail-wi0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755816AbbAZSRI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Jan 2015 13:17:08 -0500
+Received: by mail-wi0-f181.google.com with SMTP id fb4so8926wid.2
+        for <git@vger.kernel.org>; Mon, 26 Jan 2015 10:17:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:mime-version:content-type
+         :content-transfer-encoding;
+        bh=QE6ShPbfPVCLaQcizhS30sVZCBobAKD6/TX3uBHwFbg=;
+        b=f33HIlsEbEJfgLuoz2SNcNo3Ghdb3XgA7I+dvvUo3SVafVmTq3IzGUlFzmRNZ+QTuN
+         WLgTvseQFMWq1/mmSAb4LsGpIEmw+EOO2zg10zwQTY6iM9TWbd6YzRkTlyDw+A9F36Gd
+         whWBmkWo8I6K/jal2lquGnTL8uewbQnGopUZQRmB2zwvDv4OsDLayCwwtF5UlIKcR0V/
+         pdn6hk65p6eOZuZiwZAtM0flP8MTgUkjdIOQHViOsCs86VolbB4ZF1a1M/2E7qPZq5Er
+         yxheeVscQmIV2tfRvXt8ULDF6fL04xnyB63zWlsFn6AyjU+yv/epDdy6CpIgKtITQ5C8
+         BDgw==
+X-Received: by 10.194.108.202 with SMTP id hm10mr48045726wjb.72.1422296226655;
+        Mon, 26 Jan 2015 10:17:06 -0800 (PST)
+Received: from localhost (dslb-088-073-235-175.088.073.pools.vodafone-ip.de. [88.73.235.175])
+        by mx.google.com with ESMTPSA id dn2sm14916527wib.14.2015.01.26.10.17.05
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 26 Jan 2015 10:17:06 -0800 (PST)
+X-Mailer: git-send-email 2.3.0.rc1.218.gc1bb7d0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263039>
 
+=46rom: Benedikt Heine <bebe@bebehei.de>
 
-Several files in Documentation have an unstable 'Last updated' timestamp. The
-reason is that their mtime changes every time, which prevents reproducible
-builds.
+Signed-off-by: Benedikt Heine <bebe@bebehei.de>
+Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+---
+ po/de.po | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-341 technical/api-index.txt: technical/api-index-skel.txt \
-342         technical/api-index.sh $(patsubst %,%.txt,$(API_DOCS))
-343         $(QUIET_GEN)cd technical && '$(SHELL_PATH_SQ)' ./api-index.sh
-
-388 howto-index.txt: howto-index.sh $(wildcard howto/*.txt)
-389         $(QUIET_GEN)$(RM) $@+ $@ && \
-390         '$(SHELL_PATH_SQ)' ./howto-index.sh $(sort $(wildcard howto/*.txt)) >$@+ && \
-391         mv $@+ $@
-
-399 $(patsubst %.txt,%.html,$(wildcard howto/*.txt)): %.html : %.txt
-400         $(QUIET_ASCIIDOC)$(RM) $@+ $@ && \
-401         sed -e '1,/^$$/d' $< | \
-402         $(TXT_TO_HTML) - >$@+ && \
-403         mv $@+ $@
-
-What file timestamp should be used for them? Likely "../version"?
-The final file, before passing it to asciidoc, should get a fixed timestamp
-with 'touch -r $reference_file $file'.
-
-Olaf
+diff --git a/po/de.po b/po/de.po
+index b2d4639..596f486 100644
+--- a/po/de.po
++++ b/po/de.po
+@@ -4295,8 +4295,8 @@ msgstr ""
+ "    git config --global user.name \"Ihr Name\"\n"
+ "    git config --global user.email ihre@emailadresse.de\n"
+ "\n"
+-"Nachdem Sie das getan hast, k=C3=B6nnen Sie Ihre Identit=C3=A4t f=C3=BC=
+r diesen Commit "
+-"=C3=A4ndern mit:\n"
++"Nachdem Sie das getan haben, k=C3=B6nnen Sie Ihre Identit=C3=A4t f=C3=
+=BCr diesen Commit "
++"=C3=A4ndern:\n"
+ "\n"
+ "    git commit --amend --reset-author\n"
+=20
+--=20
+2.3.0.rc1.218.gc1bb7d0
