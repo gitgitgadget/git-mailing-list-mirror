@@ -1,98 +1,125 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH] Makefile: do not compile git with debugging symbols by
- default
-Date: Tue, 27 Jan 2015 00:43:39 -0800
-Message-ID: <20150127084338.GA37443@gmail.com>
-References: <1421931037-21368-1-git-send-email-kuleshovmail@gmail.com>
- <20150122130036.GC19681@peff.net>
- <CANCZXo7ocgG27Y48NjYxurVMWOvHkvGqDrLuntkSTxHUK6hcNw@mail.gmail.com>
- <vpqa91ahg46.fsf@anie.imag.fr>
- <20150122183538.GA20085@peff.net>
- <20150122225517.GB31912@glandium.org>
+From: Olaf Hering <olaf@aepfle.de>
+Subject: Re: implement a stable 'Last updated' in Documentation
+Date: Tue, 27 Jan 2015 12:11:07 +0100
+Message-ID: <20150127111107.GA6517@aepfle.de>
+References: <20150126172409.GA15204@aepfle.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Jeff King <peff@peff.net>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Alexander Kuleshov <kuleshovmail@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Tue Jan 27 09:43:52 2015
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 27 12:11:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YG1kV-0001UB-2M
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Jan 2015 09:43:51 +0100
+	id 1YG43L-0006Dt-Iw
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Jan 2015 12:11:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754559AbbA0Inr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jan 2015 03:43:47 -0500
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:35601 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752579AbbA0Inp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jan 2015 03:43:45 -0500
-Received: by mail-pa0-f53.google.com with SMTP id kx10so17165737pab.12
-        for <git@vger.kernel.org>; Tue, 27 Jan 2015 00:43:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=nH78c7KjhgbklBq1q70TqYfmu388M5W+LhzeC27A1Q0=;
-        b=nIqdyQM8kt+/D0U9T1HW4RMCZI6+CDy3tt6JsXqlQBiAiFmgvfQb6SRvOhE0lsBTt0
-         f+0V5n+ixURr0oOB1VNH7gBk+JlBrhINDRB51Chr7auGL7HdhpAVppnhhe62jR37WA9o
-         /hYOMQYC8pevjBHH3Fn/YpDxUm6pWvIgovLjNFeL3n2PMdFx9BQc0dCWCYN9E1/8LSyH
-         z1pitHveIhC0fL+wEuTwVSVT33ZOVVbaco3hjaaV+ShrRBaKetToTJhdaP8u22s8QMf1
-         gsTa3hVRaX/7/bCYues1Q+GA243kcUcxUHIJ4w2KiFc615yBh9hK2qOjaWI+LuVrYeS1
-         DBXw==
-X-Received: by 10.66.184.48 with SMTP id er16mr31202pac.61.1422348225082;
-        Tue, 27 Jan 2015 00:43:45 -0800 (PST)
-Received: from gmail.com (208-106-56-2.static.sonic.net. [208.106.56.2])
-        by mx.google.com with ESMTPSA id ej7sm860040pac.21.2015.01.27.00.43.43
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Tue, 27 Jan 2015 00:43:44 -0800 (PST)
+	id S1757797AbbA0LLM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jan 2015 06:11:12 -0500
+Received: from mo4-p00-ob.smtp.rzone.de ([81.169.146.220]:64072 "EHLO
+	mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756291AbbA0LLK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jan 2015 06:11:10 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1422357068; l=2821;
+	s=domk; d=aepfle.de;
+	h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Subject:To:From:Date;
+	bh=GpEgHLAMc5hztPm8xG5OsmbWJffdkK1eR4QZAp0EOKc=;
+	b=oKfXbY2QgcDr1Q+2TeryfxC52josz+Y78vo8/ywKPGeBEITyfIqmE2F662BKdtk+R+f
+	v/CRs8noSIcJ7boK77VQAYyggpI8DwWN9tpqBDqEAi8Nb4bRqT3PyTMJEqd9MX8ZAivQp
+	J8Shy38OkW+pYVqrHVyqaEbYI8T/eD7t4cA=
+X-RZG-AUTH: :P2EQZWCpfu+qG7CngxMFH1J+yackYocTD1iAi8x+OWi/zfN1cLnBYfssDIlSQZelGPTkz+JJHiQM2XCL4FiyQ+n/+A0DGQ==
+X-RZG-CLASS-ID: mo00
+Received: from probook.fritz.box ([2001:a60:1087:7e01:1ec1:deff:feb9:bb48])
+	by smtp.strato.de (RZmta 37.1 AUTH)
+	with ESMTPSA id J03851r0RBB802U
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	for <git@vger.kernel.org>;
+	Tue, 27 Jan 2015 12:11:08 +0100 (CET)
+Received: by probook.fritz.box (Postfix, from userid 1000)
+	id D4DF15016F; Tue, 27 Jan 2015 12:11:07 +0100 (CET)
 Content-Disposition: inline
-In-Reply-To: <20150122225517.GB31912@glandium.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <20150126172409.GA15204@aepfle.de>
+User-Agent: Mutt/1.5.22.rev6346 (2013-10-29)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263063>
 
-On Fri, Jan 23, 2015 at 07:55:17AM +0900, Mike Hommey wrote:
-> On Thu, Jan 22, 2015 at 01:35:38PM -0500, Jeff King wrote:
-> > On Thu, Jan 22, 2015 at 06:36:41PM +0100, Matthieu Moy wrote:
-> > 
-> > > > Yes, main point is size of executable.
-> > > 
-> > > The Git executable is a few megabytes, i.e. 0.001% the size of a really
-> > > small hard disk. The benefit seems really negligible to me.
-> > 
-> > I don't know the layout of the symbols with respect to the code, or
-> > whether the stripped version might reduce memory pressure. So in theory
-> > it could have a performance impact.
+On Mon, Jan 26, Olaf Hering wrote:
+
+> Several files in Documentation have an unstable 'Last updated' timestamp. The
+> reason is that their mtime changes every time, which prevents reproducible
+> builds.
 > 
-> It doesn't. Debugging info is in a part of the file that is not mapped
-> in memory, and in a part that can be removed without affecting the rest
-> of the file, so it's more or less at the end.
+> 341 technical/api-index.txt: technical/api-index-skel.txt \
+> 342         technical/api-index.sh $(patsubst %,%.txt,$(API_DOCS))
+> 343         $(QUIET_GEN)cd technical && '$(SHELL_PATH_SQ)' ./api-index.sh
+> 
+> 388 howto-index.txt: howto-index.sh $(wildcard howto/*.txt)
+> 389         $(QUIET_GEN)$(RM) $@+ $@ && \
+> 390         '$(SHELL_PATH_SQ)' ./howto-index.sh $(sort $(wildcard howto/*.txt)) >$@+ && \
+> 391         mv $@+ $@
+> 
+> 399 $(patsubst %.txt,%.html,$(wildcard howto/*.txt)): %.html : %.txt
+> 400         $(QUIET_ASCIIDOC)$(RM) $@+ $@ && \
+> 401         sed -e '1,/^$$/d' $< | \
+> 402         $(TXT_TO_HTML) - >$@+ && \
+> 403         mv $@+ $@
+> 
+> What file timestamp should be used for them? Likely "../version"?
+> The final file, before passing it to asciidoc, should get a fixed timestamp
+> with 'touch -r $reference_file $file'.
 
-It goes even further.  These days Fedora systems strip debug
-info out into separate files and packages while creating rpms
-debuginfo packages are created automatically and provide
-debuginfo files under /usr/lib/debug, where gdb knows to look by
-default.
+I came up with this change. If anything happens to depend on
+howto-index.txt and technical/api-index.txt then this part needs rework.
 
-Alexander, one nice thing about the Makefile is that it supports
-you creating a file in your Git worktree called "config.mak"
-with the following content:
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 3e39e28..25ad0bd 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -6,6 +6,7 @@ TECH_DOCS =
+ ARTICLES =
+ SP_ARTICLES =
+ OBSOLETE_HTML =
++TIMESTAMP_FILE = ../version
+ 
+ MAN1_TXT += $(filter-out \
+ 		$(addsuffix .txt, $(ARTICLES) $(SP_ARTICLES)), \
+@@ -341,6 +342,7 @@ user-manual.xml: user-manual.txt user-manual.conf
+ technical/api-index.txt: technical/api-index-skel.txt \
+ 	technical/api-index.sh $(patsubst %,%.txt,$(API_DOCS))
+ 	$(QUIET_GEN)cd technical && '$(SHELL_PATH_SQ)' ./api-index.sh
++	touch -r '$(TIMESTAMP_FILE)' $@
+ 
+ technical/%.html: ASCIIDOC_EXTRA += -a git-relative-html-prefix=../
+ $(patsubst %,%.html,$(API_DOCS) technical/api-index $(TECH_DOCS)): %.html : %.txt asciidoc.conf
+@@ -388,6 +390,7 @@ $(patsubst %.txt,%.texi,$(MAN_TXT)): %.texi : %.xml
+ howto-index.txt: howto-index.sh $(wildcard howto/*.txt)
+ 	$(QUIET_GEN)$(RM) $@+ $@ && \
+ 	'$(SHELL_PATH_SQ)' ./howto-index.sh $(sort $(wildcard howto/*.txt)) >$@+ && \
++	touch -r '$(TIMESTAMP_FILE)' $@+ && \
+ 	mv $@+ $@
+ 
+ $(patsubst %,%.html,$(ARTICLES)) : %.html : %.txt
+@@ -397,9 +400,12 @@ WEBDOC_DEST = /pub/software/scm/git/docs
+ 
+ howto/%.html: ASCIIDOC_EXTRA += -a git-relative-html-prefix=../
+ $(patsubst %.txt,%.html,$(wildcard howto/*.txt)): %.html : %.txt
+-	$(QUIET_ASCIIDOC)$(RM) $@+ $@ && \
+-	sed -e '1,/^$$/d' $< | \
+-	$(TXT_TO_HTML) - >$@+ && \
++	$(QUIET_ASCIIDOC)$(RM) $@++ $@+ $@ && \
++	sed -e '1,/^$$/d' $< >$@++ && \
++	touch -r '$(TIMESTAMP_FILE)' $@++ && \
++	$(TXT_TO_HTML) -o $@+ $@++ && \
++	$(RM) $@++ && \
++	touch $@+ && \
+ 	mv $@+ $@
+ 
+ install-webdoc : html
 
-CFLAGS = -O2 -Wall
-
-If you do that then git will build without debug info and you
-won't have to specify CFLAGS when invoking "make".
-Hopefully that's easy and convenient enough.
-
-cheers,
--- 
-David
+Olaf
