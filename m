@@ -1,122 +1,150 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: [PATCH 2/2] test-lib.sh: Dynamic test for the prerequisite SANITY
-Date: Wed, 28 Jan 2015 08:53:46 +1300
-Message-ID: <CAFOYHZDcvBvF8rgyax_4xMc88sZJFTVX-fXwV1iZa8veTaFixQ@mail.gmail.com>
-References: <54C7B115.7020405@web.de>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] dumb-http: do not pass NULL path to parse_pack_index
+Date: Tue, 27 Jan 2015 15:02:27 -0500
+Message-ID: <20150127200226.GA19618@peff.net>
+References: <1422372041-16474-1-git-send-email-charles@hashpling.org>
+ <20150127181220.GA17067@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: GIT <git@vger.kernel.org>
-To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Tue Jan 27 20:53:59 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Shawn Pearce <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Charles Bailey <charles@hashpling.org>
+X-From: git-owner@vger.kernel.org Tue Jan 27 21:02:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YGCD0-0000lZ-Bm
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Jan 2015 20:53:58 +0100
+	id 1YGCLK-0002Ru-2O
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Jan 2015 21:02:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932765AbbA0Txs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Jan 2015 14:53:48 -0500
-Received: from mail-pd0-f171.google.com ([209.85.192.171]:41120 "EHLO
-	mail-pd0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932733AbbA0Txr convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Jan 2015 14:53:47 -0500
-Received: by mail-pd0-f171.google.com with SMTP id fp1so20784458pdb.2
-        for <git@vger.kernel.org>; Tue, 27 Jan 2015 11:53:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=7mN4QSdQWch2gmb33X3yxyBScHQ7jYXMPi6mFClyAYc=;
-        b=l9KjTzrxKNb++Vx4mK+bK5aH+96BxW9U81ubRQVt6U55HnXPTOA0tXur1cS7jYtBEn
-         p4x7S3L0XC5efoXr4I4GpHoJjEp3ldqzghY3xN2HBVLO4DKi3YmjBOEQTLKaj0gXUbyr
-         lGogzMkapz3IDka1q5Vx+wgRUJLTg6w7A+YjIYK9ND7baOoCytR8T3kMq9tln02F4JXN
-         x+eEvsV2PlpKB7zOhHyB2efKR7kGMlGwXOveGR3N6aBFjQS22KVNr3WBKGT8+2vM9OuA
-         clQxXrSfPX/xuEA8bVxhI5guDM2Dsai+VFK7gEqyBiKpCvPYFcCQ73O0hTZ/yKCQW6Fm
-         jHWg==
-X-Received: by 10.70.49.99 with SMTP id t3mr4690992pdn.105.1422388426598; Tue,
- 27 Jan 2015 11:53:46 -0800 (PST)
-Received: by 10.70.109.199 with HTTP; Tue, 27 Jan 2015 11:53:46 -0800 (PST)
-In-Reply-To: <54C7B115.7020405@web.de>
+	id S932621AbbA0UCa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jan 2015 15:02:30 -0500
+Received: from cloud.peff.net ([50.56.180.127]:42454 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751020AbbA0UC2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jan 2015 15:02:28 -0500
+Received: (qmail 9807 invoked by uid 102); 27 Jan 2015 20:02:28 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 27 Jan 2015 14:02:28 -0600
+Received: (qmail 3935 invoked by uid 107); 27 Jan 2015 20:02:56 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 27 Jan 2015 15:02:56 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 27 Jan 2015 15:02:27 -0500
+Content-Disposition: inline
+In-Reply-To: <20150127181220.GA17067@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263085>
 
-Minor typo in a comment.
+On Tue, Jan 27, 2015 at 01:12:20PM -0500, Jeff King wrote:
 
-On Wed, Jan 28, 2015 at 4:39 AM, Torsten B=C3=B6gershausen <tboegi@web.=
-de> wrote:
-> The SANITY precondition was not set when running as root,
-> but this is not 100% reliable for CYGWIN:
->
-> A file may be allowed to be deleted when the containing
-> directory does not have write permissions.
->
-> See
-> https://technet.microsoft.com/en-us/library/bb463216.aspx
-> "...In UNIX, the write permission bit on a directory permits both
-> the creation and removal of new files or sub-directories in the direc=
-tory.
-> On Windows, the Write_Data access right controls the creation of new
-> sub-files and the Delete_Child access right controls the deletion. ..=
-=2E."
->
-> We may argue that the translation of the POSIX write permission bit
-> into "Windows access rights" can be improved in CYGWIN.
->
-> A dynamic test handles all cases: when the sequence
-> $ mkdir SANETESTD &&
-> $ chmod +w SANETESTD &&
-> $ >SANETESTD/x &&
-> $ ! rm SANETESTD/x
-> succeeds the prerequisite SANITY is true.
->
-> Helped-by: Junio C Hamano <gitster@pobox.com>
-> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
-> ---
->  t/test-lib.sh | 17 ++++++++++++++++-
->  1 file changed, 16 insertions(+), 1 deletion(-)
->
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index 93f7cad..887e986 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -1038,8 +1038,23 @@ test_lazy_prereq NOT_ROOT '
->
->  # When the tests are run as root, permission tests will report that
->  # things are writable when they shouldn't be.
-> +# Special check for CYGWIN (or Windows in general):
-> +# A file can be deleted, even if the containing directory does'nt
+> It looks like the culprit is 7b64469 (Allow parse_pack_index on
+> temporary files, 2010-04-19). It added a new "idx_path" parameter to
+> parse_pack_index, which we pass as NULL.  That causes its call to
+> check_packed_git_idx to fail (because it has no idea what file we are
+> talking about!).
 
-s/does'nt/doesn't/
+This is not quite right. That refactoring commit correctly passes the
+result of sha1_pack_index_name() for the newly-added parameter. It's the
+_next_ commit which then erroneously passes NULL. :)
 
-> +# have write permissions
->  test_lazy_prereq SANITY '
-> -       test_have_prereq POSIXPERM,NOT_ROOT
-> +       mkdir SANETESTD &&
-> +       chmod +w SANETESTD &&
-> +       >SANETESTD/x &&
-> +       chmod -w SANETESTD ||
-> +       error "bug in test sript: cannot prepare SANETESTD"
-> +
-> +       ! rm SANETESTD/x
-> +       status=3D$?
-> +
-> +       chmod +w SANETESTD &&
-> +       rm -rf SANETESTD ||
-> +       error "bug in test sript: cannot clean SANETESTD"
-> +       return $status
->  '
->
->  GIT_UNZIP=3D${GIT_UNZIP:-unzip}
-> --
-> 2.2.0.rc1.26.g3e3a70d
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Here's my fix with a proper commit message. I tweaked the title on your
+test, as I didn't find the original very descriptive. I also bumped the
+call to sha1_pack_index_name() into the caller, as that makes more sense
+to me after reading the older commits (and there are literally no other
+callers outside of this function).
+
+-- >8 --
+Once upon a time, dumb http always fetched .idx files
+directly into their final location, and then checked their
+validity with parse_pack_index. This was refactored in
+commit 750ef42 (http-fetch: Use temporary files for
+pack-*.idx until verified, 2010-04-19), which uses the
+following logic:
+
+  1. If we have the idx already in place, see if it's
+     valid (using parse_pack_index). If so, use it.
+
+  2. Otherwise, fetch the .idx to a tempfile, check
+     that, and if so move it into place.
+
+  3. Either way, fetch the pack itself if necessary.
+
+However, it got step 1 wrong. We pass a NULL path parameter
+to parse_pack_index, so an existing .idx file always looks
+broken. Worse, we do not treat this broken .idx as an
+opportunity to re-fetch, but instead return an error,
+ignoring the pack entirely. This can lead to a dumb-http
+fetch failing to retrieve the necessary objects.
+
+This doesn't come up much in practice, because it must be a
+packfile that we found out about (and whose .idx we stored)
+during an earlier dumb-http fetch, but whose packfile we
+_didn't_ fetch. I.e., we did a partial clone of a
+repository, didn't need some packfiles, and now a followup
+fetch needs them.
+
+Discovery and tests by Charles Bailey <charles@hashpling.org>.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I'm happy to flip the authorship on this. You have more lines in it than
+I do. :)
+
+As I mentioned before, I think we could treat a broken .idx file
+differently (by deleting and refetching), but I doubt it matters in
+practice. The only reason this came up at all is that our test for
+"broken" was bogus, and it may be better to let a user diagnose and
+deal with breakage.
+
+ http.c                     |  2 +-
+ t/t5550-http-fetch-dumb.sh | 18 ++++++++++++++++++
+ 2 files changed, 19 insertions(+), 1 deletion(-)
+
+diff --git a/http.c b/http.c
+index 040f362..f2373c0 100644
+--- a/http.c
++++ b/http.c
+@@ -1240,7 +1240,7 @@ static int fetch_and_setup_pack_index(struct packed_git **packs_head,
+ 	int ret;
+ 
+ 	if (has_pack_index(sha1)) {
+-		new_pack = parse_pack_index(sha1, NULL);
++		new_pack = parse_pack_index(sha1, sha1_pack_index_name(sha1));
+ 		if (!new_pack)
+ 			return -1; /* parse_pack_index() already issued error message */
+ 		goto add_pack;
+diff --git a/t/t5550-http-fetch-dumb.sh b/t/t5550-http-fetch-dumb.sh
+index ac71418..6da9422 100755
+--- a/t/t5550-http-fetch-dumb.sh
++++ b/t/t5550-http-fetch-dumb.sh
+@@ -165,6 +165,24 @@ test_expect_success 'fetch notices corrupt idx' '
+ 	)
+ '
+ 
++test_expect_success 'fetch can handle previously-fetched .idx files' '
++	git checkout --orphan branch1 &&
++	echo base >file &&
++	git add file &&
++	git commit -m base &&
++	git --bare init "$HTTPD_DOCUMENT_ROOT_PATH"/repo_packed_branches.git &&
++	git push "$HTTPD_DOCUMENT_ROOT_PATH"/repo_packed_branches.git branch1 &&
++	git --git-dir="$HTTPD_DOCUMENT_ROOT_PATH"/repo_packed_branches.git repack -d &&
++	git checkout -b branch2 branch1 &&
++	echo b2 >>file &&
++	git commit -a -m b2 &&
++	git push "$HTTPD_DOCUMENT_ROOT_PATH"/repo_packed_branches.git branch2 &&
++	git --git-dir="$HTTPD_DOCUMENT_ROOT_PATH"/repo_packed_branches.git repack -d &&
++	git --bare init clone_packed_branches.git &&
++	git --git-dir=clone_packed_branches.git fetch "$HTTPD_URL"/dumb/repo_packed_branches.git branch1:branch1 &&
++	git --git-dir=clone_packed_branches.git fetch "$HTTPD_URL"/dumb/repo_packed_branches.git branch2:branch2
++'
++
+ test_expect_success 'did not use upload-pack service' '
+ 	grep '/git-upload-pack' <"$HTTPD_ROOT_PATH"/access.log >act
+ 	: >exp
+-- 
+2.3.0.rc1.287.g761fd19
