@@ -1,94 +1,78 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: patch-2.7.3 no longer applies relative symbolic link patches
-Date: Tue, 27 Jan 2015 12:39:11 -0800
-Message-ID: <xmqqa914klg0.fsf@gitster.dls.corp.google.com>
-References: <CA+5PVA7rVy6Li_1haj1QmGG0D6avLB5Xej=2YGt6K-11kKHR5A@mail.gmail.com>
-	<CA+5PVA4bs6CYU8MHn1JqBjnb-5wYJT2Tjqa65=v2uSPL8c7dYw@mail.gmail.com>
-	<CA+55aFxbY21vBbPs5qCFPT1HSBbaeS+Z2Fr9So1r3rXrMWe_ZQ@mail.gmail.com>
-	<xmqqzj94lx7z.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH] dumb-http: do not pass NULL path to parse_pack_index
+Date: Tue, 27 Jan 2015 12:46:44 -0800
+Message-ID: <xmqq386wkl3f.fsf@gitster.dls.corp.google.com>
+References: <1422372041-16474-1-git-send-email-charles@hashpling.org>
+	<20150127181220.GA17067@peff.net> <20150127200226.GA19618@peff.net>
+	<20150127201921.GA24365@hashpling.org>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Josh Boyer <jwboyer@fedoraproject.org>,
-	"Linux-Kernel\@Vger. Kernel. Org" <linux-kernel@vger.kernel.org>,
-	twaugh@redhat.com, Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: linux-kernel-owner@vger.kernel.org Tue Jan 27 21:39:21 2015
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+Cc: Jeff King <peff@peff.net>, Shawn Pearce <spearce@spearce.org>,
+	git@vger.kernel.org
+To: Charles Bailey <charles@hashpling.org>
+X-From: git-owner@vger.kernel.org Tue Jan 27 21:46:57 2015
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1YGCut-0000jX-QX
-	for glk-linux-kernel-3@plane.gmane.org; Tue, 27 Jan 2015 21:39:20 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1YGD2D-0001CG-8O
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Jan 2015 21:46:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932772AbbA0UjP (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Tue, 27 Jan 2015 15:39:15 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:53667 "EHLO
+	id S932840AbbA0Uqt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jan 2015 15:46:49 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:63599 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932613AbbA0UjN (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Tue, 27 Jan 2015 15:39:13 -0500
+	with ESMTP id S932569AbbA0Uqs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jan 2015 15:46:48 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0512C32218;
-	Tue, 27 Jan 2015 15:39:13 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C9348323A9;
+	Tue, 27 Jan 2015 15:46:47 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=io1GcQnBtA8KUgA5olOrlf7J9Rg=; b=mE6zM9
-	LFAz7FoEjeoMFjkhcrXw+VdJtQCtAJ9h+7g9kJfJVDeMBNlCNXFkOp/5CaBe9Uul
-	1IkDp4Xfil0phbM8LjSVgBWgiHPO5b7ChrLkilnBlnkch5SmCCb7fulIXKnb6VJC
-	lLhiisjMRO5261/ZpVbKUvmrA77xx6LTbYlwM=
+	:content-type; s=sasl; bh=xkTdMscz+twXAp1FgsdmoS+KVF4=; b=mnk+gP
+	z1FGxJAIlvlOqMcSWoc0EfYHzNtf5SFBt0C147W7d3PamW7YKtYMmRze6D50VGP8
+	AwC2soBdvT7xqreeYx2dxYSPf7s8St5QS2hbxfYwdPbnBsf2WQvXg7f50NVj+/wB
+	i/XFF0Lya5QgdPVn81KAk5+SpGvtuhUV1rBqQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=bHy3zc3fSp0BG/dN2aiBEYBzhBZwWPeN
-	NyIhHkznvh/yxTmzSZ7lWerbDVMm292hpK5nTO6IAH8JlXZIMarlvF2sNQGUl23e
-	wA7c/WrrDk1OLhAi1tkA5/AIoeg7/WXEMTSVMXGt5yS3VURvX0s4EMn7h31bQxuB
-	Rd9o9qD07cE=
+	:content-type; q=dns; s=sasl; b=GbUIBKUe888hIUD2GQrWB3s3KNa8RqE8
+	Wl+MI8+UNTZ8dEUyI4N3/IHHGblV+exb8PVhJN3LBF3sY4r3P4/lQK1faG9Awhce
+	rRwZN3fKs+GLOMsa8yy20LvVFGHpn4fj4eg61/co6bgaD9BgDqReS3nu3UDpU1bz
+	ovVsdfuUKSg=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id ECD8332217;
-	Tue, 27 Jan 2015 15:39:12 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B9D76323A8;
+	Tue, 27 Jan 2015 15:46:47 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5624D32213;
-	Tue, 27 Jan 2015 15:39:12 -0500 (EST)
-In-Reply-To: <xmqqzj94lx7z.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Mon, 26 Jan 2015 19:27:12 -0800")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8ED86323A6;
+	Tue, 27 Jan 2015 15:46:45 -0500 (EST)
+In-Reply-To: <20150127201921.GA24365@hashpling.org> (Charles Bailey's message
+	of "Tue, 27 Jan 2015 20:19:21 +0000")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 8D3A71E4-A664-11E4-B9F6-7BA29F42C9D4-77302942!pb-smtp1.pobox.com
-Sender: linux-kernel-owner@vger.kernel.org
+X-Pobox-Relay-ID: 9B55CCD2-A665-11E4-80D6-7BA29F42C9D4-77302942!pb-smtp1.pobox.com
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263089>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263090>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Charles Bailey <charles@hashpling.org> writes:
 
-> Linus Torvalds <torvalds@linux-foundation.org> writes:
+> On Tue, Jan 27, 2015 at 03:02:27PM -0500, Jeff King wrote:
+>> Discovery and tests by Charles Bailey <charles@hashpling.org>.
+>> 
+>> Signed-off-by: Jeff King <peff@peff.net>
+>> ---
+>> I'm happy to flip the authorship on this. You have more lines in it than
+>> I do. :)
 >
->> Ugh. I don't see anything we can do about this on the git side, and I
->> do kind of understand why 'patch' would be worried about '..' files.
->> In a perfect world, patch would parse the filename and see that it
->> stays within the directory structure of the project, but that is a
->> rather harder thing to do than just say "no dot-dot files".
->
-> It is unclear to me why "limit to the current directory and below"
-> is such a big deal in the first place.
->
-> If the user wants to apply a patch that touches ../etc/shadow, is
-> the tool in the place to complain?"
+> No, I'm happy with you taking the blame/praise for this, it's definitely
+> your fix.
 
-Let me take this part back.
+Looks good (rather, makes the original look obviously broken and
+makes me wonder why our review process did not catch that bogus NULL
+in the first place).
 
-I think "git apply" should behave closely to "git apply --index"
-(which is used by "git am" unless there is a very good reason not to
-(and "'git apply --index' behaves differently from GNU patch, and we
-should match what the latter does" is not a very good reason).  When
-the index guards the working tree, we do not follow any symlink,
-whether the destination is inside the current directory or not.
-
-I however do not think the current "git apply" notices that it will
-overwrite a path beyond a symlink---we may need to fix that if that
-is the case.  I'll see what I can find (but I'll be doing 2.3-rc2
-today so it may be later this week).
-
-Thanks.
+Thanks, both.
