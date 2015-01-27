@@ -1,86 +1,90 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [PATCHv2] commit: reword --author error message
-Date: Tue, 27 Jan 2015 12:22:04 +0000
-Message-ID: <54C782EC.3020309@ramsay1.demon.co.uk>
-References: <xmqqfvba1p07.fsf@gitster.dls.corp.google.com> <7e2e1d1e7f4a25d84a6f7a1c0cb035221529f189.1422286879.git.git@drmicha.warpmail.net> <20150126190711.GA13582@peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Philip Oakley <philipoakley@iee.org>,
-	Gunnar Wagner <gunnar.wagner@irisgermanica.com>
-To: Jeff King <peff@peff.net>,
-	Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Jan 27 13:22:26 2015
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCH] git-push.txt: document the behavior of --repo
+Date: Tue, 27 Jan 2015 13:35:53 +0100
+Message-ID: <d8bed5c1736a4a291208227b0f54c1039d67f5cc.1422361902.git.git@drmicha.warpmail.net>
+References: <xmqqppa1mrku.fsf@gitster.dls.corp.google.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Prem <prem.muthedath@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 27 13:36:24 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YG59u-0003s8-UD
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Jan 2015 13:22:19 +0100
+	id 1YG5NQ-0000aZ-TM
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Jan 2015 13:36:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758038AbbA0MWM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jan 2015 07:22:12 -0500
-Received: from mdfmta005.mxout.tbr.inty.net ([91.221.168.46]:38003 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754720AbbA0MWJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jan 2015 07:22:09 -0500
-Received: from mdfmta005.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta005.tbr.inty.net (Postfix) with ESMTP id 2FBDEA65558;
-	Tue, 27 Jan 2015 12:22:09 +0000 (GMT)
-Received: from mdfmta005.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta005.tbr.inty.net (Postfix) with ESMTP id E863FA65556;
-	Tue, 27 Jan 2015 12:22:08 +0000 (GMT)
-Received: from [10.0.2.15] (unknown [80.176.147.220])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by mdfmta005.tbr.inty.net (Postfix) with ESMTP;
-	Tue, 27 Jan 2015 12:22:07 +0000 (GMT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
-In-Reply-To: <20150126190711.GA13582@peff.net>
-X-MDF-HostID: 8
+	id S1759049AbbA0MgN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jan 2015 07:36:13 -0500
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:58290 "EHLO
+	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1759017AbbA0Mf5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Jan 2015 07:35:57 -0500
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailout.nyi.internal (Postfix) with ESMTP id 3765420924
+	for <git@vger.kernel.org>; Tue, 27 Jan 2015 07:35:55 -0500 (EST)
+Received: from frontend1 ([10.202.2.160])
+  by compute4.internal (MEProxy); Tue, 27 Jan 2015 07:35:55 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=x-sasl-enc:from:to:cc:subject:date
+	:message-id:in-reply-to:references; s=smtpout; bh=DqliYtIEGffQPW
+	ikrVotR1jYOJE=; b=WSxjagRa+VKAvEhA4WWx+7vps4RbObFiEcLffrBCs6y1Xu
+	eYHdVTDODzxXvKtDUiEDbeYeT/C+3FLUVY/8KE6QOtuQM5uHDqSUS9KRVKVrNSfl
+	QkRilbXGF3OIWRbluwVBYshf0+JUUOj7PfL4QKs55dbeSG1wISgcLvD/vFaBQ=
+X-Sasl-enc: rY9KUW9+rhtzpBTPazMaAY8wBRpsW+gzmnuTDBLMydb/ 1422362154
+Received: from localhost (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 827C7C00017;
+	Tue, 27 Jan 2015 07:35:54 -0500 (EST)
+X-Mailer: git-send-email 2.3.0.rc1.222.gae238f2
+In-Reply-To: <xmqqppa1mrku.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263064>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263065>
 
-On 26/01/15 19:07, Jeff King wrote:
-> On Mon, Jan 26, 2015 at 04:48:33PM +0100, Michael J Gruber wrote:
-> 
->> -	die(_("No existing author found with '%s'"), name);
->> +	die(_("--author '%s': neither 'Name <email>' nor a match for an existing author"), name);
-> 
-> I had to add to the bikeshed, but I had to read this several times to
-> make sense of it. It is grammatically:
-> 
->   X [is] neither Y nor Z
-> 
-> except that by eliding the verb ("is"), I somehow had trouble making
-> sense of Z ("a match...") as a noun.
-> 
-> I came up with:
-> 
->   --author '%s': neither 'Name <email>' nor matches an existing author
-> 
-> only to see that it was suggested earlier in the thread as a predecessor
-> to this. ;)
-> 
-> I wonder if adding back in the missing verb, rather than a colon, would
-> also make more sense:
-> 
->   --author '%s' is neither 'Name <email>' nor a match for an existing author
-> 
+As per the code, the --repo <repo> option is equivalent to the <repo>
+argument to 'git push'. [It exists for historical reasons, back from the time
+when options had to come before arguments.]
 
-I usually don't like to add anything to the bikeshed, but ...
+Say so. [But not that.]
 
-This sounds odd to me, so maybe:
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+Thanks for digging up the thread, Junio. I never would have thought that
+I had been with the Git community for that long already...
 
-  --author '%s' is neither in the form of 'Name <email>' nor a match for an existing author
+ Documentation/git-push.txt | 18 ++----------------
+ 1 file changed, 2 insertions(+), 16 deletions(-)
 
-although that is getting a bit long! :-D
-
-ATB,
-Ramsay Jones
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index ea97576..0ad31c4 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -219,22 +219,8 @@ origin +master` to force a push to the `master` branch). See the
+ `<refspec>...` section above for details.
+ 
+ --repo=<repository>::
+-	This option is only relevant if no <repository> argument is
+-	passed in the invocation. In this case, 'git push' derives the
+-	remote name from the current branch: If it tracks a remote
+-	branch, then that remote repository is pushed to. Otherwise,
+-	the name "origin" is used. For this latter case, this option
+-	can be used to override the name "origin". In other words,
+-	the difference between these two commands
+-+
+---------------------------
+-git push public         #1
+-git push --repo=public  #2
+---------------------------
+-+
+-is that #1 always pushes to "public" whereas #2 pushes to "public"
+-only if the current branch does not track a remote branch. This is
+-useful if you write an alias or script around 'git push'.
++	This option is equivalent to the <repository> argument; the latter
++	wins if both are specified.
+ 
+ -u::
+ --set-upstream::
+-- 
+2.3.0.rc1.222.gae238f2
