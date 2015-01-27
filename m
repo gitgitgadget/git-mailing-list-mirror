@@ -1,110 +1,122 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-push.txt: document the behavior of --repo
-Date: Tue, 27 Jan 2015 11:30:46 -0800
-Message-ID: <xmqqvbjskom1.fsf@gitster.dls.corp.google.com>
-References: <xmqqppa1mrku.fsf@gitster.dls.corp.google.com>
-	<d8bed5c1736a4a291208227b0f54c1039d67f5cc.1422361902.git.git@drmicha.warpmail.net>
+From: Chris Packham <judge.packham@gmail.com>
+Subject: Re: [PATCH 2/2] test-lib.sh: Dynamic test for the prerequisite SANITY
+Date: Wed, 28 Jan 2015 08:53:46 +1300
+Message-ID: <CAFOYHZDcvBvF8rgyax_4xMc88sZJFTVX-fXwV1iZa8veTaFixQ@mail.gmail.com>
+References: <54C7B115.7020405@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Prem <prem.muthedath@gmail.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Jan 27 20:31:05 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: GIT <git@vger.kernel.org>
+To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Tue Jan 27 20:53:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YGBqr-0001WR-3j
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Jan 2015 20:31:05 +0100
+	id 1YGCD0-0000lZ-Bm
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Jan 2015 20:53:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758980AbbA0Ta7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jan 2015 14:30:59 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:56935 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751662AbbA0Ta6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jan 2015 14:30:58 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8CF383102E;
-	Tue, 27 Jan 2015 14:30:50 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=vEDZAWu6bmZmO7Mpz++q/h67S8E=; b=KABK9a
-	hoyKdEH6GjyXtLgN+aIZpvTwd8WMs+M6zQdTBrYq6Pq6p79XCUyT8jfgrc/wA7Vu
-	nWjmivckyYwGdW7Qmi+GrCZUuKfxkTrmjygnqdXDAruEej8YUN4A7gKaX2P5pcFf
-	m1MsftL4OMfswV07FtFEtTG1/vRczEvchgHCo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vc/S+nluEmNPSwsaMi2YXcOdo2Y0PyFB
-	w3IZE5ANbeGNqEl2LofaaYNd4LNhTM4bXlwA0gf6JB4pdEehxwz/i30TfUxRzMsk
-	br07H16ABRiHCcQzirTx3OQlLdPBxd8jVedTA9nk0bT4zgjwL48/aBqL6FiAk52n
-	sPLqOV3l2hA=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 698943102D;
-	Tue, 27 Jan 2015 14:30:50 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D3E063102C;
-	Tue, 27 Jan 2015 14:30:48 -0500 (EST)
-In-Reply-To: <d8bed5c1736a4a291208227b0f54c1039d67f5cc.1422361902.git.git@drmicha.warpmail.net>
-	(Michael J. Gruber's message of "Tue, 27 Jan 2015 13:35:53 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: FF52A562-A65A-11E4-877A-7BA29F42C9D4-77302942!pb-smtp1.pobox.com
+	id S932765AbbA0Txs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Jan 2015 14:53:48 -0500
+Received: from mail-pd0-f171.google.com ([209.85.192.171]:41120 "EHLO
+	mail-pd0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932733AbbA0Txr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Jan 2015 14:53:47 -0500
+Received: by mail-pd0-f171.google.com with SMTP id fp1so20784458pdb.2
+        for <git@vger.kernel.org>; Tue, 27 Jan 2015 11:53:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=7mN4QSdQWch2gmb33X3yxyBScHQ7jYXMPi6mFClyAYc=;
+        b=l9KjTzrxKNb++Vx4mK+bK5aH+96BxW9U81ubRQVt6U55HnXPTOA0tXur1cS7jYtBEn
+         p4x7S3L0XC5efoXr4I4GpHoJjEp3ldqzghY3xN2HBVLO4DKi3YmjBOEQTLKaj0gXUbyr
+         lGogzMkapz3IDka1q5Vx+wgRUJLTg6w7A+YjIYK9ND7baOoCytR8T3kMq9tln02F4JXN
+         x+eEvsV2PlpKB7zOhHyB2efKR7kGMlGwXOveGR3N6aBFjQS22KVNr3WBKGT8+2vM9OuA
+         clQxXrSfPX/xuEA8bVxhI5guDM2Dsai+VFK7gEqyBiKpCvPYFcCQ73O0hTZ/yKCQW6Fm
+         jHWg==
+X-Received: by 10.70.49.99 with SMTP id t3mr4690992pdn.105.1422388426598; Tue,
+ 27 Jan 2015 11:53:46 -0800 (PST)
+Received: by 10.70.109.199 with HTTP; Tue, 27 Jan 2015 11:53:46 -0800 (PST)
+In-Reply-To: <54C7B115.7020405@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263083>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263084>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+Minor typo in a comment.
 
-> As per the code, the --repo <repo> option is equivalent to the <repo>
-> argument to 'git push'. [It exists for historical reasons, back from the time
-> when options had to come before arguments.]
+On Wed, Jan 28, 2015 at 4:39 AM, Torsten B=C3=B6gershausen <tboegi@web.=
+de> wrote:
+> The SANITY precondition was not set when running as root,
+> but this is not 100% reliable for CYGWIN:
 >
-> Say so. [But not that.]
+> A file may be allowed to be deleted when the containing
+> directory does not have write permissions.
 >
-> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+> See
+> https://technet.microsoft.com/en-us/library/bb463216.aspx
+> "...In UNIX, the write permission bit on a directory permits both
+> the creation and removal of new files or sub-directories in the direc=
+tory.
+> On Windows, the Write_Data access right controls the creation of new
+> sub-files and the Delete_Child access right controls the deletion. ..=
+=2E."
+>
+> We may argue that the translation of the POSIX write permission bit
+> into "Windows access rights" can be improved in CYGWIN.
+>
+> A dynamic test handles all cases: when the sequence
+> $ mkdir SANETESTD &&
+> $ chmod +w SANETESTD &&
+> $ >SANETESTD/x &&
+> $ ! rm SANETESTD/x
+> succeeds the prerequisite SANITY is true.
+>
+> Helped-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
 > ---
-> Thanks for digging up the thread, Junio. I never would have thought that
-> I had been with the Git community for that long already...
+>  t/test-lib.sh | 17 ++++++++++++++++-
+>  1 file changed, 16 insertions(+), 1 deletion(-)
+>
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index 93f7cad..887e986 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -1038,8 +1038,23 @@ test_lazy_prereq NOT_ROOT '
+>
+>  # When the tests are run as root, permission tests will report that
+>  # things are writable when they shouldn't be.
+> +# Special check for CYGWIN (or Windows in general):
+> +# A file can be deleted, even if the containing directory does'nt
 
-;-)
+s/does'nt/doesn't/
 
-I think this update will do for now, but in the medium term (read:
-by the end of this year, or earlier if somebody is motivated
-enough), we might want to:
-
- * deprecate --repo=<repository> as it is very much no-op these
-   days (that is, strike "But not that" part above);
-
- * dig deeper what Prem wanted out of their imagined semantics of
-   the --repo=<repository> option.  I suspect that it has something
-   to do with support of triangular workflow, and
-
-   - it might turn out that there is a better way to do what Prem
-     wanted to do without that option but using other existing
-     mechanisms [*1*], in which case we can stop there on the code
-     side, and clarify how to use those other existing mechanisms in
-     the tutorial.
-
-   - or it may be that we do not have a good way to achieve what
-     Prem wanted to do, and that a *new* option to specify the
-     target URL from the command line, like Prem used the --repo
-     option may turn out to be the best way forward [*2*], in which
-     case a code update may become necessary.
-
-Thanks.
-
-
-
-[Footnotes]
-
- *1* For example, in 1.8.3 we saw some changes around triangular
-     "pull from one place, push to another place" workflow with
-     remote.pushdefault configuration, and branch.*.pushremote lets
-     the users control this even at a branch level.
-
- *2* I say "may turn out to be" because we cannot tell if that is
-     the best solution until we know what was really what Prem
-     wanted to do---we may be looking at an XY problem after all.
+> +# have write permissions
+>  test_lazy_prereq SANITY '
+> -       test_have_prereq POSIXPERM,NOT_ROOT
+> +       mkdir SANETESTD &&
+> +       chmod +w SANETESTD &&
+> +       >SANETESTD/x &&
+> +       chmod -w SANETESTD ||
+> +       error "bug in test sript: cannot prepare SANETESTD"
+> +
+> +       ! rm SANETESTD/x
+> +       status=3D$?
+> +
+> +       chmod +w SANETESTD &&
+> +       rm -rf SANETESTD ||
+> +       error "bug in test sript: cannot clean SANETESTD"
+> +       return $status
+>  '
+>
+>  GIT_UNZIP=3D${GIT_UNZIP:-unzip}
+> --
+> 2.2.0.rc1.26.g3e3a70d
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
