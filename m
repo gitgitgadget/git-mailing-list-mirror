@@ -1,100 +1,146 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] git-push.txt: document the behavior of --repo
-Date: Tue, 27 Jan 2015 17:07:19 -0500
-Message-ID: <CAPig+cQCf+vKbZ5ydFSNmGCUvmCkQW-DEPhO1JAAap1VorhXsA@mail.gmail.com>
-References: <xmqqppa1mrku.fsf@gitster.dls.corp.google.com>
-	<d8bed5c1736a4a291208227b0f54c1039d67f5cc.1422361902.git.git@drmicha.warpmail.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] test-lib.sh: Dynamic test for the prerequisite SANITY
+Date: Tue, 27 Jan 2015 14:20:19 -0800
+Message-ID: <xmqqh9vbkgrg.fsf@gitster.dls.corp.google.com>
+References: <54C7B115.7020405@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Prem <prem.muthedath@gmail.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Jan 27 23:07:27 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Tue Jan 27 23:20:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YGEI9-0002zU-KL
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Jan 2015 23:07:25 +0100
+	id 1YGEUu-00023o-VF
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Jan 2015 23:20:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759982AbbA0WHV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jan 2015 17:07:21 -0500
-Received: from mail-yh0-f42.google.com ([209.85.213.42]:56771 "EHLO
-	mail-yh0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755780AbbA0WHU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jan 2015 17:07:20 -0500
-Received: by mail-yh0-f42.google.com with SMTP id a41so7249499yho.1
-        for <git@vger.kernel.org>; Tue, 27 Jan 2015 14:07:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=iicxyLtK/22LNYVkQWYEV5QEbcUaCIyfkp0Faq0aTRs=;
-        b=J0vS+zAfW2Pp7yZTa4IFH+H80h8henH8am9g68Xs6d8Fjf46HsPDgwZPfN/UqmWJ5n
-         B+LBsCo3gQXYFuf6Bbi7iEqJI81b565H8Ib6bVXuScTDeyXRAR7LO7wm8HaQiCITij+t
-         mUWI5p2YYliV4h5u815v4aMVSqaBpbVViGsHcBeEqx9kmElWWtHHnahXhafIZ1OljXo9
-         MBmknRM7lofbMCR28zTfHm7w94yottoLS/3gOIdIVNcjNCQc9wBn9tJGd+YOD2X14SPr
-         rCpBr5TxvA+TdpN2q/X9k2e2G0Nku90ajuXb2SjEqt9Gu/90bbl7Sb8Iz1lMDafNfzCs
-         AlPw==
-X-Received: by 10.236.202.238 with SMTP id d74mr41597yho.166.1422396439711;
- Tue, 27 Jan 2015 14:07:19 -0800 (PST)
-Received: by 10.170.73.7 with HTTP; Tue, 27 Jan 2015 14:07:19 -0800 (PST)
-In-Reply-To: <d8bed5c1736a4a291208227b0f54c1039d67f5cc.1422361902.git.git@drmicha.warpmail.net>
-X-Google-Sender-Auth: rqNP_modeyS3EFNiNiyoZ1S5YG8
+	id S933119AbbA0WUZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Jan 2015 17:20:25 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50171 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S933097AbbA0WUW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Jan 2015 17:20:22 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9B77432CC2;
+	Tue, 27 Jan 2015 17:20:21 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=4x/AsQ+gwVXX
+	mEn2tEfRifTP43o=; b=LMyhQxqEVl+5mb6/nXRCtanwDgNs/0jtvgY3Jno0w01w
+	K915iSzLPGML1wrHu1yfxlyfRUVVETkGL3e/mgmzVWrCeKbw7iCZ+OGQWozjkMq8
+	nSMr3DprM3Y6daudU87laJxYa8a5/9a/QdhelyVGA9/u94TXu8PKR/hqR31oYSY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=EY9cuT
+	6nvIrrPrGco83ZPYlrRW5t0UhUJsJs01nwLLl/oL8q1AAL25yQgIP0yUydOHS30n
+	p7/SPaIBnEgiFeSUEJaREGkcGA5RbQkVC67h5wmhZRhO7nIh3BNfJowmKH+L0Vxc
+	dk5mKxqGn3Ea8tg2hWnrR0xHIsmmxf66N1f18=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9154E32CC1;
+	Tue, 27 Jan 2015 17:20:21 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0E15532CBD;
+	Tue, 27 Jan 2015 17:20:20 -0500 (EST)
+In-Reply-To: <54C7B115.7020405@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
+ =?utf-8?Q?en=22's?= message of
+	"Tue, 27 Jan 2015 16:39:01 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: AE6ACF72-A672-11E4-B7A5-7BA29F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263093>
 
-On Tue, Jan 27, 2015 at 7:35 AM, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
-> As per the code, the --repo <repo> option is equivalent to the <repo>
-> argument to 'git push'. [It exists for historical reasons, back from the time
-> when options had to come before arguments.]
->
-> Say so. [But not that.]
->
-> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
-> ---
-> diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-> index ea97576..0ad31c4 100644
-> --- a/Documentation/git-push.txt
-> +++ b/Documentation/git-push.txt
-> @@ -219,22 +219,8 @@ origin +master` to force a push to the `master` branch). See the
->  `<refspec>...` section above for details.
->
->  --repo=<repository>::
-> -       This option is only relevant if no <repository> argument is
-> -       passed in the invocation. In this case, 'git push' derives the
-> -       remote name from the current branch: If it tracks a remote
-> -       branch, then that remote repository is pushed to. Otherwise,
-> -       the name "origin" is used. For this latter case, this option
-> -       can be used to override the name "origin". In other words,
-> -       the difference between these two commands
-> -+
-> ---------------------------
-> -git push public         #1
-> -git push --repo=public  #2
-> ---------------------------
-> -+
-> -is that #1 always pushes to "public" whereas #2 pushes to "public"
-> -only if the current branch does not track a remote branch. This is
-> -useful if you write an alias or script around 'git push'.
-> +       This option is equivalent to the <repository> argument; the latter
-> +       wins if both are specified.
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
-To what does "latter" refer in this case? (I presume it means the
-standalone <repository> argument, though the text feels ambiguous.)
+>  # When the tests are run as root, permission tests will report that
+>  # things are writable when they shouldn't be.
 
-Also, both the standalone argument and the right-hand-side of --repo=
-are spelled "<repository>", so there may be potential for confusion
-when talking about <repository> (despite the subsequent "argument").
-Perhaps qualifying it as "_standalone_ <repository> argument" might
-help.
+This no longer is relevant, I think.
 
->  -u::
->  --set-upstream::
-> --
-> 2.3.0.rc1.222.gae238f2
+> +# Special check for CYGWIN (or Windows in general):
+
+Misleading comment in the end result, as your new test drops SANITY
+correctly on POSIX for the root user, too.  In a commit log message
+it is correct to say "This adds special check for Cygwin", but the
+resulting code is sensible with or without Cygwin, I would think,
+with the justification to "test by checking what we really want, not
+by inferring from the result of indirectly testing something else".
+
+> +# A file can be deleted, even if the containing directory does'nt
+> +# have write permissions
+
+We also rely on SANITY to make sure that "chmod -rx directory" makes
+"directory/file" undiscoverable.
+
+How about extending it like this (not tested)?
+
+-- >8 --
+=46rom: Torsten B=C3=B6gershausen <tboegi@web.de>
+Date: Tue, 27 Jan 2015 16:39:01 +0100
+Subject: [PATCH] test-lib.sh: set prerequisite SANITY by testing what w=
+e really need
+
+What we wanted out of the SANITY precondition is that the filesystem
+behaves sensibly with permission bits settings.
+
+ - You should not be able to remove a file in a read-only directory,
+
+ - You should not be able to tell if a file in a directory exists if
+   the directory lacks read or execute permission bits.
+
+We used to cheat by approximating that condition with "is the /
+writable?" test and/or "are we running as root?" test.  Neither test
+is sufficient or appropriate in more exotic environments like
+Cygwin.
+
+Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ t/test-lib.sh | 25 ++++++++++++++++++++++---
+ 1 file changed, 22 insertions(+), 3 deletions(-)
+
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index b2b2ec7..446d8d5 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -997,9 +997,28 @@ test_lazy_prereq NOT_ROOT '
+ 	test "$uid" !=3D 0
+ '
+=20
+-# When the tests are run as root, permission tests will report that
+-# things are writable when they shouldn't be.
+-test -w / || test_set_prereq SANITY
++# On a filesystem that lacks SANITY, a file can be deleted even if
++# the containing directory doesn't have write permissions, or a file
++# can be accessed even if the containing directory doesn't have read
++# or execute permissions, causing our tests that validate that Git
++# works sensibly in such situations.
++test_lazy_prereq SANITY '
++	mkdir SANETESTD.1 SANETESTD.2 &&
++
++	chmod +w SANETESTD.1 SANETESTD.2 &&
++	>SANETESTD.1/x 2>SANETESTD.2/x &&
++	chmod -w SANETESTD.1 &&
++	chmod -rx SANETESTD.2 ||
++	error "bug in test sript: cannot prepare SANETESTD"
++
++	! rm SANETESTD.1/x && ! test -f SANETESTD.2/x
++	status=3D$?
++
++	chmod +rwx SANETESTD.1 SANETESTD.2 &&
++	rm -rf SANETESTD.1 SANETESTD.2 ||
++	error "bug in test sript: cannot clean SANETESTD"
++	return $status
++'
+=20
+ GIT_UNZIP=3D${GIT_UNZIP:-unzip}
+ test_lazy_prereq UNZIP '
+--=20
+2.3.0-rc1-180-g1a69fe5
