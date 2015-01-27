@@ -1,88 +1,118 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH] git-new-workdir: support submodules
-Date: Tue, 27 Jan 2015 18:35:41 +0100
-Message-ID: <54C7CC6D.80906@web.de>
-References: <CAGXKyzHoLLgkXk0X4UVtLBEryqsHriKmmO5+2iVWk3mR8y7=Hw@mail.gmail.com>	<CAGXKyzEwAjCNTxRtjSuFh9b6BzzOYKOQryKtXBGY3_hkkFvyVw@mail.gmail.com>	<xmqqegqlnelu.fsf@gitster.dls.corp.google.com>	<CAGXKyzEPWrbRFOhvCBm=2Z50zso85G50z-nLd_wyzyeEADQSmw@mail.gmail.com>	<xmqqa916nq4p.fsf@gitster.dls.corp.google.com>	<CAGXKyzEYVsz-nRs52pTKo+6JLBiO9daU_C3qev3H43=Vzuygiw@mail.gmail.com> <xmqqtwzem776.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Add failing test for fetching from multiple packs over
+ dumb httpd
+Date: Tue, 27 Jan 2015 13:12:21 -0500
+Message-ID: <20150127181220.GA17067@peff.net>
+References: <1422372041-16474-1-git-send-email-charles@hashpling.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-	=?ISO-8859-15?Q?Nguye=5E=7En_Th=E1i_Ngo=2Ec?= <pclouds@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>,
-	Craig Silverstein <csilvers@khanacademy.org>
-X-From: git-owner@vger.kernel.org Tue Jan 27 18:35:57 2015
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Charles Bailey <charles@hashpling.org>
+X-From: git-owner@vger.kernel.org Tue Jan 27 19:12:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YGA3N-0001HO-1a
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Jan 2015 18:35:53 +0100
+	id 1YGAcl-0000G3-S7
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Jan 2015 19:12:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755607AbbA0Rft (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jan 2015 12:35:49 -0500
-Received: from mout.web.de ([212.227.15.14]:62936 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751532AbbA0Rfs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jan 2015 12:35:48 -0500
-Received: from [192.168.178.41] ([79.211.105.105]) by smtp.web.de (mrweb004)
- with ESMTPSA (Nemesis) id 0Mbdf3-1Xx7CO22YH-00J5X3; Tue, 27 Jan 2015 18:35:45
- +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
-In-Reply-To: <xmqqtwzem776.fsf@gitster.dls.corp.google.com>
-X-Provags-ID: V03:K0:i5PD5o5sMOtBcJlXFIhPB0yDq7wZ2solPq/oOZ6aobsbLgSE533
- QXZgjs5pb3Th/iO0r4Gzfn8DffOBJq59aEPEwj/B3y7Y5CGc+Z65E7ySXJnmUIpF3eH8jNG
- LmKJuR7udd34MCaA2IfbN2d+0IRAIyf1Uiw+nD5SIe/Pj4Z5cBbFDwUSh0QYA0lYSjXJafG
- s6N8twhL89mevpSCJOdEA==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1758636AbbA0SMX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jan 2015 13:12:23 -0500
+Received: from cloud.peff.net ([50.56.180.127]:42419 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754723AbbA0SMW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jan 2015 13:12:22 -0500
+Received: (qmail 5278 invoked by uid 102); 27 Jan 2015 18:12:22 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 27 Jan 2015 12:12:22 -0600
+Received: (qmail 3101 invoked by uid 107); 27 Jan 2015 18:12:50 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 27 Jan 2015 13:12:49 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 27 Jan 2015 13:12:21 -0500
+Content-Disposition: inline
+In-Reply-To: <1422372041-16474-1-git-send-email-charles@hashpling.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263081>
 
-Am 26.01.2015 um 06:39 schrieb Junio C Hamano:
-> Craig Silverstein <csilvers@khanacademy.org> writes:
->
->> This patch, in adding submodule support, I expect would be
->> similarly useful to people even though it, also, imposes those
->> same constraints to the submodule's config files.
->
-> I would expect that you would see exactly the same issue with Duy's
-> multiple work tree series.  This is not limited to new-workdir.
->
-> The right way to look at this is to fix what "git submodule" does;
-> its use of "config" that is shared across branches is the root cause
-> of the trouble.  No other part of Git keeps data that needs to be
-> per-branch (or more specifically "tied to the working tree state")
-> in .git/config in such a way that leaving it stale when the working
-> tree state changes breaks the system.
+On Tue, Jan 27, 2015 at 03:20:41PM +0000, Charles Bailey wrote:
 
-I'm not sure what submodule config shared across branches you are
-referring to here, the only two things that submodules by default
-store in .git/config are the url (to mark the submodule initialized)
-and the update setting (which I believe should be copied there in
-the first place, but changing that in a correct and backwards
-compatible would take some effort). This means you'll init (or
-deinit) a submodule in all multiple worktrees at the same time, but
-having the url setting in .git/config is a feature, not a bug.
+> From: Charles Bailey <cbailey32@bloomberg.net>
+> 
+> When objects are spread across multiple packs, if an initial fetch does
+> require all pack files, a subsequent fetch for objects in packs not
+> retrieved in the initial fetch will fail.
 
-And if you are talking about the core.worktree setting in
-.git/modules/<submodule_name>/config, I proposed way to get rid of
-that when we moved the submodule .git directory there (but that
-wasn't accepted):
+s/does/does not/, I think?
 
-    http://permalink.gmane.org/gmane.comp.version-control.git/188007
+> I'm not very familiar with the http client code so this analysis is based
+> purely on observed behaviour.
 
-Additionally I suspect submodules are just the first to suffer,
-other worktree specific config (like e.g. EOL settings) affecting
-all multiple worktrees at the same time when changed in a single
-worktree might easily confuse other users too.
+Debugging the http code is a royal pain because all the work happens in
+a separate helper. I use a git-remote-debug script like this:
 
-> One way to do so might be to move the bits it stores in the config
-> file to somewhere else that is more closely tied to the checkout
-> state and handle that similar to .git/index and .git/HEAD when it
-> comes to multiple work-trees.
+  #!/bin/sh
+  host=localhost:5001
+  proto=$(echo "${2:-$1}" | sed 's/:.*//')
+  prog=git-remote-$proto
+  echo >&2 "gdb -ex 'target remote $host' $prog"
+  gdbserver localhost:5001 "$prog" "$@"
 
-Yup, the idea of separating config entries into worktree and repo
-specific files sounds like the solution for these problems.
+and then you can use:
+
+  git fetch debug::http://...
+
+in the test script, cut-and-paste the gdb command printed to stderr, and
+you're dropped into the appropriate debugger without worrying about all
+of the stdio mess.
+
+> When fetching only some refs from a repository served over dumb httpd Git
+> appears to download all of the index files for the available packs but then
+> only chooses the pack files that help it resolve the objects which we need.
+
+Right. And it looks like we have special code in sha1_file.c to make
+sure we do not trust an index which does not have a matching packfile.
+So that's good.
+
+The http-walker code does its own check, in fetch_and_setup_pack_index,
+that checks for an existing valid copy of the index. If we don't have
+it, we download the index and proceed. If we do, we skip straight to
+grabbing the pack. But if we have it and it doesn't appear valid, we
+return an error. And there seems to be a bug with checking the validity.
+
+It looks like the culprit is 7b64469 (Allow parse_pack_index on
+temporary files, 2010-04-19). It added a new "idx_path" parameter to
+parse_pack_index, which we pass as NULL.  That causes its call to
+check_packed_git_idx to fail (because it has no idea what file we are
+talking about!).
+
+This seems to fix it:
+
+diff --git a/sha1_file.c b/sha1_file.c
+index 30995e6..eda4d90 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1149,6 +1149,9 @@ struct packed_git *parse_pack_index(unsigned char *sha1, const char *idx_path)
+ 	const char *path = sha1_pack_name(sha1);
+ 	struct packed_git *p = alloc_packed_git(strlen(path) + 1);
+ 
++	if (!idx_path)
++		idx_path = sha1_pack_index_name(sha1);
++
+ 	strcpy(p->pack_name, path);
+ 	hashcpy(p->sha1, sha1);
+ 	if (check_packed_git_idx(idx_path, p)) {
+
+(Alternatively, we could pass in sha1_pack_index_name instead of NULL in
+the first place, but I think it is reasonable for parse_pack_index to
+take care of this).
+
+I think it may also make sense for fetch_and_setup_pack_index to delete
+and re-download a broken .idx file (rather than aborting), but I don't
+think that's a big deal. It should only happen in the face of on-disk
+data corruption, and the user can remove the broken .idx themselves.
+
+-Peff
