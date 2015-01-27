@@ -1,90 +1,110 @@
-From: Charles Bailey <charles@hashpling.org>
-Subject: Re: [PATCH] Add failing test for fetching from multiple packs over
- dumb httpd
-Date: Tue, 27 Jan 2015 18:29:39 +0000
-Message-ID: <20150127182939.GA18236@hashpling.org>
-References: <1422372041-16474-1-git-send-email-charles@hashpling.org>
- <20150127181220.GA17067@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-push.txt: document the behavior of --repo
+Date: Tue, 27 Jan 2015 11:30:46 -0800
+Message-ID: <xmqqvbjskom1.fsf@gitster.dls.corp.google.com>
+References: <xmqqppa1mrku.fsf@gitster.dls.corp.google.com>
+	<d8bed5c1736a4a291208227b0f54c1039d67f5cc.1422361902.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jan 27 19:29:49 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Prem <prem.muthedath@gmail.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue Jan 27 20:31:05 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YGAtY-00015o-0q
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Jan 2015 19:29:48 +0100
+	id 1YGBqr-0001WR-3j
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Jan 2015 20:31:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759260AbbA0S3n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jan 2015 13:29:43 -0500
-Received: from avasout05.plus.net ([84.93.230.250]:33357 "EHLO
-	avasout05.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754627AbbA0S3m (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jan 2015 13:29:42 -0500
-Received: from hashpling.plus.com ([212.159.69.125])
-	by avasout05 with smtp
-	id l6Vf1p0022iA9hg016Vgcc; Tue, 27 Jan 2015 18:29:41 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.1 cv=K8ysHkmI c=1 sm=1 tr=0
- a=wpJ/2au8Z6V/NgdivHIBow==:117 a=wpJ/2au8Z6V/NgdivHIBow==:17 a=EBOSESyhAAAA:8
- a=0Bzu9jTXAAAA:8 a=J0QyKEt1u0cA:10 a=BHUvooL90DcA:10 a=kj9zAlcOel0A:10
- a=Ew9TdX-QAAAA:8 a=YNv0rlydsVwA:10 a=BNFp--SqAAAA:8 a=JqWvZ6SbcGFL_5ICQGQA:9
- a=CjuIK1q_8ugA:10
-Received: from charles by hashpling.plus.com with local (Exim 4.84)
-	(envelope-from <charles@hashpling.plus.com>)
-	id 1YGAtP-000656-Jv; Tue, 27 Jan 2015 18:29:39 +0000
-Content-Disposition: inline
-In-Reply-To: <20150127181220.GA17067@peff.net>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1758980AbbA0Ta7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jan 2015 14:30:59 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:56935 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751662AbbA0Ta6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jan 2015 14:30:58 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8CF383102E;
+	Tue, 27 Jan 2015 14:30:50 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=vEDZAWu6bmZmO7Mpz++q/h67S8E=; b=KABK9a
+	hoyKdEH6GjyXtLgN+aIZpvTwd8WMs+M6zQdTBrYq6Pq6p79XCUyT8jfgrc/wA7Vu
+	nWjmivckyYwGdW7Qmi+GrCZUuKfxkTrmjygnqdXDAruEej8YUN4A7gKaX2P5pcFf
+	m1MsftL4OMfswV07FtFEtTG1/vRczEvchgHCo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=vc/S+nluEmNPSwsaMi2YXcOdo2Y0PyFB
+	w3IZE5ANbeGNqEl2LofaaYNd4LNhTM4bXlwA0gf6JB4pdEehxwz/i30TfUxRzMsk
+	br07H16ABRiHCcQzirTx3OQlLdPBxd8jVedTA9nk0bT4zgjwL48/aBqL6FiAk52n
+	sPLqOV3l2hA=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 698943102D;
+	Tue, 27 Jan 2015 14:30:50 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D3E063102C;
+	Tue, 27 Jan 2015 14:30:48 -0500 (EST)
+In-Reply-To: <d8bed5c1736a4a291208227b0f54c1039d67f5cc.1422361902.git.git@drmicha.warpmail.net>
+	(Michael J. Gruber's message of "Tue, 27 Jan 2015 13:35:53 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: FF52A562-A65A-11E4-877A-7BA29F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263083>
 
-On Tue, Jan 27, 2015 at 01:12:21PM -0500, Jeff King wrote:
-> On Tue, Jan 27, 2015 at 03:20:41PM +0000, Charles Bailey wrote:
-> 
-> > From: Charles Bailey <cbailey32@bloomberg.net>
-> > 
-> > When objects are spread across multiple packs, if an initial fetch does
-> > require all pack files, a subsequent fetch for objects in packs not
-> > retrieved in the initial fetch will fail.
-> 
-> s/does/does not/, I think?
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-Yes, that's definitely what I meant to write.
+> As per the code, the --repo <repo> option is equivalent to the <repo>
+> argument to 'git push'. [It exists for historical reasons, back from the time
+> when options had to come before arguments.]
+>
+> Say so. [But not that.]
+>
+> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+> ---
+> Thanks for digging up the thread, Junio. I never would have thought that
+> I had been with the Git community for that long already...
 
-[...]
-> It looks like the culprit is 7b64469 (Allow parse_pack_index on
-> temporary files, 2010-04-19). It added a new "idx_path" parameter to
-> parse_pack_index, which we pass as NULL.  That causes its call to
-> check_packed_git_idx to fail (because it has no idea what file we are
-> talking about!).
+;-)
 
-That change looks like it went into 1.7.1.1. I cannot confirm this
-working before then but we've definitely seen the bug in 1.7.12.3 and
-more recent versions.
+I think this update will do for now, but in the medium term (read:
+by the end of this year, or earlier if somebody is motivated
+enough), we might want to:
 
-> This seems to fix it:
-> 
-> diff --git a/sha1_file.c b/sha1_file.c
-> index 30995e6..eda4d90 100644
-> --- a/sha1_file.c
-> +++ b/sha1_file.c
-> @@ -1149,6 +1149,9 @@ struct packed_git *parse_pack_index(unsigned char *sha1, const char *idx_path)
->  	const char *path = sha1_pack_name(sha1);
->  	struct packed_git *p = alloc_packed_git(strlen(path) + 1);
->  
-> +	if (!idx_path)
-> +		idx_path = sha1_pack_index_name(sha1);
-> +
->  	strcpy(p->pack_name, path);
->  	hashcpy(p->sha1, sha1);
->  	if (check_packed_git_idx(idx_path, p)) {
+ * deprecate --repo=<repository> as it is very much no-op these
+   days (that is, strike "But not that" part above);
 
-It certainly fixes my test script and I can give this patch a test in
-the 'real' world.
+ * dig deeper what Prem wanted out of their imagined semantics of
+   the --repo=<repository> option.  I suspect that it has something
+   to do with support of triangular workflow, and
+
+   - it might turn out that there is a better way to do what Prem
+     wanted to do without that option but using other existing
+     mechanisms [*1*], in which case we can stop there on the code
+     side, and clarify how to use those other existing mechanisms in
+     the tutorial.
+
+   - or it may be that we do not have a good way to achieve what
+     Prem wanted to do, and that a *new* option to specify the
+     target URL from the command line, like Prem used the --repo
+     option may turn out to be the best way forward [*2*], in which
+     case a code update may become necessary.
+
+Thanks.
+
+
+
+[Footnotes]
+
+ *1* For example, in 1.8.3 we saw some changes around triangular
+     "pull from one place, push to another place" workflow with
+     remote.pushdefault configuration, and branch.*.pushremote lets
+     the users control this even at a branch level.
+
+ *2* I say "may turn out to be" because we cannot tell if that is
+     the best solution until we know what was really what Prem
+     wanted to do---we may be looking at an XY problem after all.
