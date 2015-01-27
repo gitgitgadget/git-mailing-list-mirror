@@ -1,59 +1,70 @@
-From: Charles Bailey <charles@hashpling.org>
-Subject: Re: [PATCH] dumb-http: do not pass NULL path to parse_pack_index
-Date: Tue, 27 Jan 2015 20:19:21 +0000
-Message-ID: <20150127201921.GA24365@hashpling.org>
-References: <1422372041-16474-1-git-send-email-charles@hashpling.org>
- <20150127181220.GA17067@peff.net>
- <20150127200226.GA19618@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 09/21] list-files: a user friendly version of ls-files and more
+Date: Tue, 27 Jan 2015 12:30:48 -0800
+Message-ID: <xmqqegqgkltz.fsf@gitster.dls.corp.google.com>
+References: <1422189476-7518-1-git-send-email-pclouds@gmail.com>
+	<1422189476-7518-10-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Shawn Pearce <spearce@spearce.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jan 27 21:27:06 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 27 21:30:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YGCj2-000582-Ro
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Jan 2015 21:27:05 +0100
+	id 1YGCmm-00015J-Id
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Jan 2015 21:30:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759647AbbA0U1A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jan 2015 15:27:00 -0500
-Received: from avasout06.plus.net ([212.159.14.18]:49289 "EHLO
-	avasout06.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758660AbbA0U07 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jan 2015 15:26:59 -0500
-X-Greylist: delayed 455 seconds by postgrey-1.27 at vger.kernel.org; Tue, 27 Jan 2015 15:26:59 EST
-Received: from hashpling.plus.com ([212.159.69.125])
-	by avasout06 with smtp
-	id l8KM1p0022iA9hg018KN0B; Tue, 27 Jan 2015 20:19:22 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.1 cv=fJO33Pqe c=1 sm=1 tr=0
- a=wpJ/2au8Z6V/NgdivHIBow==:117 a=wpJ/2au8Z6V/NgdivHIBow==:17 a=EBOSESyhAAAA:8
- a=0Bzu9jTXAAAA:8 a=J0QyKEt1u0cA:10 a=BHUvooL90DcA:10 a=kj9zAlcOel0A:10
- a=Ew9TdX-QAAAA:8 a=YNv0rlydsVwA:10 a=PKzvZo6CAAAA:8 a=6oagbjdQaxfSgnkMwukA:9
- a=CjuIK1q_8ugA:10 a=j5TWktWTkXEA:10 a=hemqA1mEHwwA:10 a=pcn2qVC-oP0A:10
-Received: from charles by hashpling.plus.com with local (Exim 4.84)
-	(envelope-from <charles@hashpling.plus.com>)
-	id 1YGCbZ-0006Mw-FK; Tue, 27 Jan 2015 20:19:21 +0000
-Content-Disposition: inline
-In-Reply-To: <20150127200226.GA19618@peff.net>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1759865AbbA0Uaw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Jan 2015 15:30:52 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:56198 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1759859AbbA0Uav convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Jan 2015 15:30:51 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E600A3201E;
+	Tue, 27 Jan 2015 15:30:50 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=XNQ7WuiXwzff
+	sCJYgyTVOJvMwP8=; b=JiWQZ1pIXpLRhRvoQm0vmuiTrrEvEGsNniNtJlb5t+pn
+	m2+nBlja/rw0gkZ5z7YxeaLFXzR9nAkReflmHzfQvHtSBiCbJ2rYysigLR8ElzNE
+	OSoG4uCv50f6afmLjL8crSVR8EQOYErg4sXd1rriz/fal0FnQBOAm5tjq+f4ZWA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=qv89P5
+	S0/je+mKPCDFWABhCOZV86JRIfHyy+a4aXyjQgkSz1mxUiJlQfq2S6sNIBcebslg
+	f9loMbZukj/ztGIX0kWmJAW8RBA+3bV/HY60cZftS8dp3dyh+DHH1CmKmFg+ctyz
+	4TGdVhA5IQq0cw8bjAQGWvrsngIiCb5ogSth0=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id DC2633201D;
+	Tue, 27 Jan 2015 15:30:50 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 759F03201A;
+	Tue, 27 Jan 2015 15:30:49 -0500 (EST)
+In-Reply-To: <1422189476-7518-10-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Sun, 25
+ Jan 2015 19:37:44 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 6173F93C-A663-11E4-8AD9-7BA29F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263088>
 
-On Tue, Jan 27, 2015 at 03:02:27PM -0500, Jeff King wrote:
-> Discovery and tests by Charles Bailey <charles@hashpling.org>.
-> 
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> I'm happy to flip the authorship on this. You have more lines in it than
-> I do. :)
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-No, I'm happy with you taking the blame/praise for this, it's definitely
-your fix.
+> +color.list-files::
+> +	A boolean to enable/disable color in the output of
+> +	linkgit:git-list-files[1]. May be set to `always`, `false` (or
+> +	`never`) or `auto` (or `true`), in which case colors are used
+> +	only when the output is to a terminal. Defaults to false.
+
+This violates the configuration variable naming rules; perhaps
+rename it to color.listFiles or something?
