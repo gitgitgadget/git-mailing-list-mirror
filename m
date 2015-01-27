@@ -1,62 +1,96 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: bug report
-Date: Tue, 27 Jan 2015 09:50:23 -0500
-Message-ID: <20150127145022.GB30027@peff.net>
-References: <OF166CC5C9.21C21E8C-ON80257DDA.005038FD-80257DDA.0050E350@ie.ibm.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Albert Akhriev <albert_akhriev@ie.ibm.com>
-X-From: git-owner@vger.kernel.org Tue Jan 27 15:50:36 2015
+From: Charles Bailey <charles@hashpling.org>
+Subject: [PATCH] Add failing test for fetching from multiple packs over dumb httpd
+Date: Tue, 27 Jan 2015 15:20:41 +0000
+Message-ID: <1422372041-16474-1-git-send-email-charles@hashpling.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 27 16:28:27 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YG7TJ-0007sT-TZ
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Jan 2015 15:50:30 +0100
+	id 1YG841-0007FZ-2u
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Jan 2015 16:28:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758275AbbA0Ou0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jan 2015 09:50:26 -0500
-Received: from cloud.peff.net ([50.56.180.127]:39027 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754685AbbA0OuY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jan 2015 09:50:24 -0500
-Received: (qmail 4726 invoked by uid 102); 27 Jan 2015 14:50:24 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 27 Jan 2015 08:50:24 -0600
-Received: (qmail 12132 invoked by uid 107); 27 Jan 2015 14:50:51 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 27 Jan 2015 09:50:51 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 27 Jan 2015 09:50:23 -0500
-Content-Disposition: inline
-In-Reply-To: <OF166CC5C9.21C21E8C-ON80257DDA.005038FD-80257DDA.0050E350@ie.ibm.com>
+	id S1758066AbbA0P2V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jan 2015 10:28:21 -0500
+Received: from avasout05.plus.net ([84.93.230.250]:42162 "EHLO
+	avasout05.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753835AbbA0P2U (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jan 2015 10:28:20 -0500
+X-Greylist: delayed 455 seconds by postgrey-1.27 at vger.kernel.org; Tue, 27 Jan 2015 10:28:20 EST
+Received: from hashpling.plus.com ([212.159.69.125])
+	by avasout05 with smtp
+	id l3Li1p0022iA9hg013LjVe; Tue, 27 Jan 2015 15:20:43 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.1 cv=K8ysHkmI c=1 sm=1 tr=0
+ a=wpJ/2au8Z6V/NgdivHIBow==:117 a=wpJ/2au8Z6V/NgdivHIBow==:17 a=EBOSESyhAAAA:8
+ a=0Bzu9jTXAAAA:8 a=BHUvooL90DcA:10 a=Ew9TdX-QAAAA:8 a=YNv0rlydsVwA:10
+ a=BNFp--SqAAAA:8 a=qIh2a4dgYqQJT2lYG_QA:9
+Received: from charles by hashpling.plus.com with local (Exim 4.84)
+	(envelope-from <charles@hashpling.plus.com>)
+	id 1YG7wX-0004Iw-Vz; Tue, 27 Jan 2015 15:20:41 +0000
+X-Mailer: git-send-email 2.0.2.611.g8c85416
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263068>
 
-On Tue, Jan 27, 2015 at 02:43:31PM +0000, Albert Akhriev wrote:
+From: Charles Bailey <cbailey32@bloomberg.net>
 
-> My system:                      RedHat 6.5/64-bit (gcc 4.4.7)
-> My configuration options:  ./configure --prefix=/home/albert/soft
-> 
-> Compilation of git 2.2.2 itself was fine, but some tests failed.
-> I presume, there might be some network communication restrictions here in
-> the lab
-> (gitweb had failed as can be seen in the listing below):
+When objects are spread across multiple packs, if an initial fetch does
+require all pack files, a subsequent fetch for objects in packs not
+retrieved in the initial fetch will fail.
+---
 
-The gitweb tests should run locally and not need to touch the network.
-It looks like gitweb cannot run at all. Are you sure you have a working
-perl (with CGI and other base modules)?
+I'm not very familiar with the http client code so this analysis is based
+purely on observed behaviour.
 
-Try running:
+When fetching only some refs from a repository served over dumb httpd Git
+appears to download all of the index files for the available packs but then
+only chooses the pack files that help it resolve the objects which we need.
 
-  cd t
-  ./t9500-gitweb-standaloneno-errors.sh -v -i
+If we then later try to fetch an object which is in a pack file for
+which Git has previously downloaded an index file, it seems to trip because it
+believes it already has the object locally due to the presence of the index
+file but doesn't actually have it because it never retrieved the corresponding
+pack file. It reports an error of the form "Cannot obtain needed object ...".
 
-which should give more output. Also check the contents of gitweb.log in
-"t/trash directory/t9500-...".
+Manually deleting index files which have no corresponding local pack
+file will allow a repeat of the failed fetch to succeed.
 
--Peff
+ t/t5550-http-fetch-dumb.sh | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
+
+diff --git a/t/t5550-http-fetch-dumb.sh b/t/t5550-http-fetch-dumb.sh
+index ac71418..cf2362a 100755
+--- a/t/t5550-http-fetch-dumb.sh
++++ b/t/t5550-http-fetch-dumb.sh
+@@ -165,6 +165,24 @@ test_expect_success 'fetch notices corrupt idx' '
+ 	)
+ '
+ 
++test_expect_failure 'fetch packed branches' '
++	git checkout --orphan branch1 &&
++	echo base >file &&
++	git add file &&
++	git commit -m base &&
++	git --bare init "$HTTPD_DOCUMENT_ROOT_PATH"/repo_packed_branches.git &&
++	git push "$HTTPD_DOCUMENT_ROOT_PATH"/repo_packed_branches.git branch1 &&
++	git --git-dir="$HTTPD_DOCUMENT_ROOT_PATH"/repo_packed_branches.git repack -d &&
++	git checkout -b branch2 branch1 &&
++	echo b2 >>file &&
++	git commit -a -m b2 &&
++	git push "$HTTPD_DOCUMENT_ROOT_PATH"/repo_packed_branches.git branch2 &&
++	git --git-dir="$HTTPD_DOCUMENT_ROOT_PATH"/repo_packed_branches.git repack -d &&
++	git --bare init clone_packed_branches.git &&
++	git --git-dir=clone_packed_branches.git fetch "$HTTPD_URL"/dumb/repo_packed_branches.git branch1:branch1 &&
++	git --git-dir=clone_packed_branches.git fetch "$HTTPD_URL"/dumb/repo_packed_branches.git branch2:branch2
++'
++
+ test_expect_success 'did not use upload-pack service' '
+ 	grep '/git-upload-pack' <"$HTTPD_ROOT_PATH"/access.log >act
+ 	: >exp
+-- 
+2.0.2.611.g8c85416
