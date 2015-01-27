@@ -1,78 +1,165 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] dumb-http: do not pass NULL path to parse_pack_index
-Date: Tue, 27 Jan 2015 12:46:44 -0800
-Message-ID: <xmqq386wkl3f.fsf@gitster.dls.corp.google.com>
-References: <1422372041-16474-1-git-send-email-charles@hashpling.org>
-	<20150127181220.GA17067@peff.net> <20150127200226.GA19618@peff.net>
-	<20150127201921.GA24365@hashpling.org>
+Subject: Re: [PATCH 17/21] list-files: show directories as well as files
+Date: Tue, 27 Jan 2015 13:51:29 -0800
+Message-ID: <xmqqmw53ki3i.fsf@gitster.dls.corp.google.com>
+References: <1422189476-7518-1-git-send-email-pclouds@gmail.com>
+	<1422189476-7518-18-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>, Shawn Pearce <spearce@spearce.org>,
-	git@vger.kernel.org
-To: Charles Bailey <charles@hashpling.org>
-X-From: git-owner@vger.kernel.org Tue Jan 27 21:46:57 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 27 22:51:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YGD2D-0001CG-8O
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Jan 2015 21:46:53 +0100
+	id 1YGE2r-0000el-DV
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Jan 2015 22:51:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932840AbbA0Uqt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jan 2015 15:46:49 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:63599 "EHLO
+	id S1760041AbbA0Vvd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Jan 2015 16:51:33 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50546 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932569AbbA0Uqs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jan 2015 15:46:48 -0500
+	with ESMTP id S1753689AbbA0Vvc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Jan 2015 16:51:32 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id C9348323A9;
-	Tue, 27 Jan 2015 15:46:47 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8B89032580;
+	Tue, 27 Jan 2015 16:51:31 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xkTdMscz+twXAp1FgsdmoS+KVF4=; b=mnk+gP
-	z1FGxJAIlvlOqMcSWoc0EfYHzNtf5SFBt0C147W7d3PamW7YKtYMmRze6D50VGP8
-	AwC2soBdvT7xqreeYx2dxYSPf7s8St5QS2hbxfYwdPbnBsf2WQvXg7f50NVj+/wB
-	i/XFF0Lya5QgdPVn81KAk5+SpGvtuhUV1rBqQ=
+	:content-type:content-transfer-encoding; s=sasl; bh=z7ApfxydfL5Y
+	P5TYKEX9fgCQ/FA=; b=b6jDJuTUCAXUHzd7XKWCJbw4US6egu6zuue+bsq1BGQT
+	mBbNkHp4CQwYjcXgijueAseRzeqWFsPzNtteYwIH4acvWpSiuPlk1C0sUtJb6Mgy
+	jiBw1urtEoyJOz3GX6MdUDkxGAltuMQW3L0LrVTh0ats0SXguPOpeCPXosTkLcE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=GbUIBKUe888hIUD2GQrWB3s3KNa8RqE8
-	Wl+MI8+UNTZ8dEUyI4N3/IHHGblV+exb8PVhJN3LBF3sY4r3P4/lQK1faG9Awhce
-	rRwZN3fKs+GLOMsa8yy20LvVFGHpn4fj4eg61/co6bgaD9BgDqReS3nu3UDpU1bz
-	ovVsdfuUKSg=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=VH3NLQ
+	lpDACRCsJQBVEVmT1ZXLrm5T8YXBcNjRVBwK68DT5eMXbDRqJzkqWQlf1h1l0206
+	etNc+yDwKNdk622q7VRcjPG3xq+hQ2auT+RfUFmY/mQdmCPPolVrkIjMPKpQJuAJ
+	COyoIK5PQfNkCP7rqGi+rfKxqU2fsFQt+9wLU=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B9D76323A8;
-	Tue, 27 Jan 2015 15:46:47 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 81BCD3257F;
+	Tue, 27 Jan 2015 16:51:31 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8ED86323A6;
-	Tue, 27 Jan 2015 15:46:45 -0500 (EST)
-In-Reply-To: <20150127201921.GA24365@hashpling.org> (Charles Bailey's message
-	of "Tue, 27 Jan 2015 20:19:21 +0000")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0022F3257D;
+	Tue, 27 Jan 2015 16:51:30 -0500 (EST)
+In-Reply-To: <1422189476-7518-18-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Sun, 25
+ Jan 2015 19:37:52 +0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 9B55CCD2-A665-11E4-80D6-7BA29F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: A7391F50-A66E-11E4-8A3A-7BA29F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263090>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263091>
 
-Charles Bailey <charles@hashpling.org> writes:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-> On Tue, Jan 27, 2015 at 03:02:27PM -0500, Jeff King wrote:
->> Discovery and tests by Charles Bailey <charles@hashpling.org>.
->> 
->> Signed-off-by: Jeff King <peff@peff.net>
->> ---
->> I'm happy to flip the authorship on this. You have more lines in it than
->> I do. :)
->
-> No, I'm happy with you taking the blame/praise for this, it's definitely
-> your fix.
+> @@ -194,16 +225,31 @@ static void write_ce_name(struct strbuf *sb, co=
+nst struct cache_entry *ce)
+>  static void show_ce_entry(const char *tag, const struct cache_entry =
+*ce)
+>  {
+>  	static struct strbuf sb =3D STRBUF_INIT;
+> -	int len =3D max_prefix_len;
+> +	int len =3D max_prefix_len, saved_max_depth;
+> =20
+>  	if (len >=3D ce_namelen(ce))
+>  		die("git ls-files: internal error - cache entry not superset of pr=
+efix");
+> =20
+> +	if (show_dirs) {
+> +		/* ignore depth to catch dirs that contain matched entries */
+> +		saved_max_depth =3D pathspec.max_depth;
+> +		pathspec.max_depth =3D -1;
+> +	}
+> +
+>  	if (!match_pathspec(&pathspec, ce->name, ce_namelen(ce),
+>  			    len, ps_matched,
+>  			    S_ISDIR(ce->ce_mode) || S_ISGITLINK(ce->ce_mode)))
+>  		return;
+> =20
+> +	if (show_dirs) {
+> +		pathspec.max_depth =3D saved_max_depth;
+> +		if (strchr(ce->name, '/') &&
+> +		    !match_pathspec(&pathspec, ce->name, ce_namelen(ce),
+> +				    prefix_len, NULL, 1) &&
+> +		    show_as_directory(ce))
+> +			return;
+> +	}
+> +
 
-Looks good (rather, makes the original look obviously broken and
-makes me wonder why our review process did not catch that bogus NULL
-in the first place).
+My compiler seems to be too stupid to notice that saved_max_depth is
+always set before it is used, if it gets used and complains.  Sigh.
 
-Thanks, both.
+=46or now I am tempted to squash this in.  Note that the original does
+not seem to restore saved_max_depath when the pathspec does not match
+and function returns in the call to match_pathspec() we have in the
+code before your patch, which smells like a bug, and the attached
+would fix it.
+
+ builtin/ls-files.c | 33 ++++++++++++++++++++++-----------
+ 1 file changed, 22 insertions(+), 11 deletions(-)
+
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index 29b5c2e..f28b7e9 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -222,27 +222,38 @@ static void write_ce_name(struct strbuf *sb, cons=
+t struct cache_entry *ce)
+ 	strbuf_release(&quoted);
+ }
+=20
++static int match_pathspec_with_depth(struct pathspec *ps,
++				     const char *name, int namelen,
++				     int prefix, char *seen, int is_dir,
++				     const int *custom_depth)
++{
++	int saved_depth =3D ps->max_depth;
++	int result;
++
++	if (custom_depth)
++		ps->max_depth =3D *custom_depth;
++	result =3D match_pathspec(ps, name, namelen, prefix, seen, is_dir);
++	if (custom_depth)
++		ps->max_depth =3D saved_depth;
++	return result;
++}
++
+ static void show_ce_entry(const char *tag, const struct cache_entry *c=
+e)
+ {
+ 	static struct strbuf sb =3D STRBUF_INIT;
+-	int len =3D max_prefix_len, saved_max_depth;
++	int len =3D max_prefix_len;
++	static const int infinite_depth =3D -1;
+=20
+ 	if (len >=3D ce_namelen(ce))
+ 		die("git ls-files: internal error - cache entry not superset of pref=
+ix");
+=20
+-	if (show_dirs) {
+-		/* ignore depth to catch dirs that contain matched entries */
+-		saved_max_depth =3D pathspec.max_depth;
+-		pathspec.max_depth =3D -1;
+-	}
+-
+-	if (!match_pathspec(&pathspec, ce->name, ce_namelen(ce),
+-			    len, ps_matched,
+-			    S_ISDIR(ce->ce_mode) || S_ISGITLINK(ce->ce_mode)))
++	if (!match_pathspec_with_depth(&pathspec, ce->name, ce_namelen(ce),
++				       len, ps_matched,
++				       S_ISDIR(ce->ce_mode) || S_ISGITLINK(ce->ce_mode),
++				       show_dirs ? &infinite_depth : NULL))
+ 		return;
+=20
+ 	if (show_dirs) {
+-		pathspec.max_depth =3D saved_max_depth;
+ 		if (strchr(ce->name, '/') &&
+ 		    !match_pathspec(&pathspec, ce->name, ce_namelen(ce),
+ 				    prefix_len, NULL, 1) &&
