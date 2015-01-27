@@ -1,150 +1,174 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] dumb-http: do not pass NULL path to parse_pack_index
-Date: Tue, 27 Jan 2015 15:02:27 -0500
-Message-ID: <20150127200226.GA19618@peff.net>
-References: <1422372041-16474-1-git-send-email-charles@hashpling.org>
- <20150127181220.GA17067@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Documentation/git-add.txt: add `add.ginore-errors` configuration variable
+Date: Tue, 27 Jan 2015 12:17:58 -0800
+Message-ID: <xmqqiofskmfd.fsf@gitster.dls.corp.google.com>
+References: <1422291325-4332-1-git-send-email-kuleshovmail@gmail.com>
+	<CAPig+cT9hC=n7WkANno9Eif-+RUCeA6mQioUhOSkDEx_vdmN1Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Shawn Pearce <spearce@spearce.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Charles Bailey <charles@hashpling.org>
-X-From: git-owner@vger.kernel.org Tue Jan 27 21:02:34 2015
+Content-Type: text/plain
+Cc: Alexander Kuleshov <kuleshovmail@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Tue Jan 27 21:18:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YGCLK-0002Ru-2O
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Jan 2015 21:02:34 +0100
+	id 1YGCaO-0003Pt-D2
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Jan 2015 21:18:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932621AbbA0UCa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jan 2015 15:02:30 -0500
-Received: from cloud.peff.net ([50.56.180.127]:42454 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751020AbbA0UC2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jan 2015 15:02:28 -0500
-Received: (qmail 9807 invoked by uid 102); 27 Jan 2015 20:02:28 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 27 Jan 2015 14:02:28 -0600
-Received: (qmail 3935 invoked by uid 107); 27 Jan 2015 20:02:56 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 27 Jan 2015 15:02:56 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 27 Jan 2015 15:02:27 -0500
-Content-Disposition: inline
-In-Reply-To: <20150127181220.GA17067@peff.net>
+	id S1759507AbbA0USD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jan 2015 15:18:03 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:53284 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755120AbbA0USB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jan 2015 15:18:01 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B5AFF31CCB;
+	Tue, 27 Jan 2015 15:18:00 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=vSdstxmpc4IdmwW1axsYbVw1XEE=; b=Acnk9O
+	qFFThhnYA93JLbYqbIT6R/N71FFyMCCtOKVnViSqZSgircNHnOa/5Tqw87+RJTd9
+	BqlepjXsCmFV8uFlJMQtJkYwa55uKuAqfY+qSpQ3k3RLcqljceGfR1l+k3IGdjND
+	NybW9VMfCuO9VRMHiiDOJ4ZMnDKsWFOZ/aZcE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=jgLX4mb12rsR6Yn6csI70OjWfFIWm6vY
+	GGF+kQWJ8AAedISPfFSp3tcTosddmwaGCg9VDcPfynP4/zZFOXXDXXA/7G83U493
+	AKrCOtUHZhLchKtpfhMK2vtQn2DpON7ui6qTU8zxD51iBN8TuxTDbHMjxIpyyoKc
+	iiM0e0nbACE=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 708C731CCA;
+	Tue, 27 Jan 2015 15:18:00 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BBF5931CC9;
+	Tue, 27 Jan 2015 15:17:59 -0500 (EST)
+In-Reply-To: <CAPig+cT9hC=n7WkANno9Eif-+RUCeA6mQioUhOSkDEx_vdmN1Q@mail.gmail.com>
+	(Eric Sunshine's message of "Mon, 26 Jan 2015 16:58:20 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 96AB15CE-A661-11E4-BE75-7BA29F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263086>
 
-On Tue, Jan 27, 2015 at 01:12:20PM -0500, Jeff King wrote:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> It looks like the culprit is 7b64469 (Allow parse_pack_index on
-> temporary files, 2010-04-19). It added a new "idx_path" parameter to
-> parse_pack_index, which we pass as NULL.  That causes its call to
-> check_packed_git_idx to fail (because it has no idea what file we are
-> talking about!).
+> On Mon, Jan 26, 2015 at 11:55 AM, Alexander Kuleshov
+> <kuleshovmail@gmail.com> wrote:
+>> 'git add' supports not only `add.ignoreErrors`, but also `add.ignore-errors`
+>> configuration variable.
+>
+> See 6b3020a2 (add: introduce add.ignoreerrors synonym for
+> add.ignore-errors,  2010-12-01) for why this patch is undesirable.
 
-This is not quite right. That refactoring commit correctly passes the
-result of sha1_pack_index_name() for the newly-added parameter. It's the
-_next_ commit which then erroneously passes NULL. :)
-
-Here's my fix with a proper commit message. I tweaked the title on your
-test, as I didn't find the original very descriptive. I also bumped the
-call to sha1_pack_index_name() into the caller, as that makes more sense
-to me after reading the older commits (and there are literally no other
-callers outside of this function).
+We might want to do this instead, as the correction to the
+misspelled configuration variable name was from the 1.7.0-era that
+is sufficiently old (v1.7.0.8 was done in December 2010).
 
 -- >8 --
-Once upon a time, dumb http always fetched .idx files
-directly into their final location, and then checked their
-validity with parse_pack_index. This was refactored in
-commit 750ef42 (http-fetch: Use temporary files for
-pack-*.idx until verified, 2010-04-19), which uses the
-following logic:
+Subject: doc: clarify naming rules for configuration variables
 
-  1. If we have the idx already in place, see if it's
-     valid (using parse_pack_index). If so, use it.
+Also mark deprecated variables in the documentation more clearly.
 
-  2. Otherwise, fetch the .idx to a tempfile, check
-     that, and if so move it into place.
+The text for the rules are partly taken from the log message of
+Jonathan's 6b3020a2 (add: introduce add.ignoreerrors synonym for
+add.ignore-errors, 2010-12-01).
 
-  3. Either way, fetch the pack itself if necessary.
-
-However, it got step 1 wrong. We pass a NULL path parameter
-to parse_pack_index, so an existing .idx file always looks
-broken. Worse, we do not treat this broken .idx as an
-opportunity to re-fetch, but instead return an error,
-ignoring the pack entirely. This can lead to a dumb-http
-fetch failing to retrieve the necessary objects.
-
-This doesn't come up much in practice, because it must be a
-packfile that we found out about (and whose .idx we stored)
-during an earlier dumb-http fetch, but whose packfile we
-_didn't_ fetch. I.e., we did a partial clone of a
-repository, didn't need some packfiles, and now a followup
-fetch needs them.
-
-Discovery and tests by Charles Bailey <charles@hashpling.org>.
-
-Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
-I'm happy to flip the authorship on this. You have more lines in it than
-I do. :)
+ Documentation/CodingGuidelines | 25 +++++++++++++++++++++++++
+ Documentation/config.txt       | 15 +++++++--------
+ 2 files changed, 32 insertions(+), 8 deletions(-)
 
-As I mentioned before, I think we could treat a broken .idx file
-differently (by deleting and refetching), but I doubt it matters in
-practice. The only reason this came up at all is that our test for
-"broken" was bogus, and it may be better to let a user diagnose and
-deal with breakage.
-
- http.c                     |  2 +-
- t/t5550-http-fetch-dumb.sh | 18 ++++++++++++++++++
- 2 files changed, 19 insertions(+), 1 deletion(-)
-
-diff --git a/http.c b/http.c
-index 040f362..f2373c0 100644
---- a/http.c
-+++ b/http.c
-@@ -1240,7 +1240,7 @@ static int fetch_and_setup_pack_index(struct packed_git **packs_head,
- 	int ret;
+diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+index 894546d..8fbac15 100644
+--- a/Documentation/CodingGuidelines
++++ b/Documentation/CodingGuidelines
+@@ -413,6 +413,31 @@ Error Messages
+  - Say what the error is first ("cannot open %s", not "%s: cannot open")
  
- 	if (has_pack_index(sha1)) {
--		new_pack = parse_pack_index(sha1, NULL);
-+		new_pack = parse_pack_index(sha1, sha1_pack_index_name(sha1));
- 		if (!new_pack)
- 			return -1; /* parse_pack_index() already issued error message */
- 		goto add_pack;
-diff --git a/t/t5550-http-fetch-dumb.sh b/t/t5550-http-fetch-dumb.sh
-index ac71418..6da9422 100755
---- a/t/t5550-http-fetch-dumb.sh
-+++ b/t/t5550-http-fetch-dumb.sh
-@@ -165,6 +165,24 @@ test_expect_success 'fetch notices corrupt idx' '
- 	)
- '
  
-+test_expect_success 'fetch can handle previously-fetched .idx files' '
-+	git checkout --orphan branch1 &&
-+	echo base >file &&
-+	git add file &&
-+	git commit -m base &&
-+	git --bare init "$HTTPD_DOCUMENT_ROOT_PATH"/repo_packed_branches.git &&
-+	git push "$HTTPD_DOCUMENT_ROOT_PATH"/repo_packed_branches.git branch1 &&
-+	git --git-dir="$HTTPD_DOCUMENT_ROOT_PATH"/repo_packed_branches.git repack -d &&
-+	git checkout -b branch2 branch1 &&
-+	echo b2 >>file &&
-+	git commit -a -m b2 &&
-+	git push "$HTTPD_DOCUMENT_ROOT_PATH"/repo_packed_branches.git branch2 &&
-+	git --git-dir="$HTTPD_DOCUMENT_ROOT_PATH"/repo_packed_branches.git repack -d &&
-+	git --bare init clone_packed_branches.git &&
-+	git --git-dir=clone_packed_branches.git fetch "$HTTPD_URL"/dumb/repo_packed_branches.git branch1:branch1 &&
-+	git --git-dir=clone_packed_branches.git fetch "$HTTPD_URL"/dumb/repo_packed_branches.git branch2:branch2
-+'
++Externally Visible Names
 +
- test_expect_success 'did not use upload-pack service' '
- 	grep '/git-upload-pack' <"$HTTPD_ROOT_PATH"/access.log >act
- 	: >exp
--- 
-2.3.0.rc1.287.g761fd19
++ - For configuration variable names, follow the existing convention:
++
++   . The section name indicates the affected subsystem.
++
++   . The subsection name, if any, indicates which of an unbounded set
++     of things to set the value for.
++
++   . The variable name describes the effect of tweaking this knob.
++
++   The section and variable names that consist of multiple words are
++   formed by concatenating the words without punctuations (e.g. `-`),
++   and are broken using bumpyCaps in documentation as a hint to the
++   reader.
++
++   When choosing the variable namespace, do not use variable name for
++   specifying possibly unbounded set of things, most notably anything
++   an end user can freely come up with (e.g. branch names), but also
++   large fixed set defined by the system that can grow over time
++   (e.g. what kind of common whitespace problems to notice).  Use
++   subsection names or variable values, like existing variables
++   branch.<name>.description and core.whitespace do, instead.
++
++
+ Writing Documentation:
+ 
+  Most (if not all) of the documentation pages are written in the
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 0a4d22a..8a76d1d 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -664,14 +664,13 @@ core.abbrev::
+ 	for abbreviated object names to stay unique for sufficiently long
+ 	time.
+ 
+-add.ignore-errors::
+ add.ignoreErrors::
++add.ignore-errors (deprecated)::
+ 	Tells 'git add' to continue adding files when some files cannot be
+ 	added due to indexing errors. Equivalent to the '--ignore-errors'
+-	option of linkgit:git-add[1].  Older versions of Git accept only
+-	`add.ignore-errors`, which does not follow the usual naming
+-	convention for configuration variables.  Newer versions of Git
+-	honor `add.ignoreErrors` as well.
++	option of linkgit:git-add[1].  `add.ignore-errors` is deprecated,
++	as it does not follow the usual naming convention for configuration
++	variables.
+ 
+ alias.*::
+ 	Command aliases for the linkgit:git[1] command wrapper - e.g.
+@@ -1924,7 +1923,7 @@ pack.useBitmaps::
+ 	true. You should not generally need to turn this off unless
+ 	you are debugging pack bitmaps.
+ 
+-pack.writebitmaps::
++pack.writebitmaps (deprecated)::
+ 	This is a deprecated synonym for `repack.writeBitmaps`.
+ 
+ pack.writeBitmapHashCache::
+@@ -2235,7 +2234,7 @@ sendemail.smtpencryption::
+ 	See linkgit:git-send-email[1] for description.  Note that this
+ 	setting is not subject to the 'identity' mechanism.
+ 
+-sendemail.smtpssl::
++sendemail.smtpssl (deprecated)::
+ 	Deprecated alias for 'sendemail.smtpencryption = ssl'.
+ 
+ sendemail.smtpsslcertpath::
+@@ -2273,7 +2272,7 @@ sendemail.thread::
+ sendemail.validate::
+ 	See linkgit:git-send-email[1] for description.
+ 
+-sendemail.signedoffcc::
++sendemail.signedoffcc (deprecated)::
+ 	Deprecated alias for 'sendemail.signedoffbycc'.
+ 
+ showbranch.default::
