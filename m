@@ -1,78 +1,76 @@
-From: Josh Boyer <jwboyer@fedoraproject.org>
-Subject: Re: patch-2.7.3 no longer applies relative symbolic link patches
-Date: Mon, 26 Jan 2015 17:15:50 -0500
-Message-ID: <CA+5PVA7Hb1ppHFYA4wHC+uEyULk4m_7eX2FRNuisi1uOTagBEw@mail.gmail.com>
-References: <CA+5PVA7rVy6Li_1haj1QmGG0D6avLB5Xej=2YGt6K-11kKHR5A@mail.gmail.com>
-	<CA+5PVA4bs6CYU8MHn1JqBjnb-5wYJT2Tjqa65=v2uSPL8c7dYw@mail.gmail.com>
-	<CA+55aFxbY21vBbPs5qCFPT1HSBbaeS+Z2Fr9So1r3rXrMWe_ZQ@mail.gmail.com>
-	<CA+5PVA5RdtLyRiYerG=u--bRZQ87qU0EGf7kGPMiQs9_KB3hRw@mail.gmail.com>
-	<CA+55aFwa1-pudNus+r=5EghpGkm33h--GZNND5UHt=ZKvP15Xw@mail.gmail.com>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: t5539 broken under Mac OS X
+Date: Tue, 27 Jan 2015 02:44:14 +0100
+Message-ID: <CABPQNSYZMS+feX=jSxwOhr+P8isroct2=Dcw18LSjCYZUvug=A@mail.gmail.com>
+References: <54B68D99.2040906@web.de> <xmqqmw5l9pje.fsf@gitster.dls.corp.google.com>
+ <54B6C897.5030405@web.de> <20150114211712.GE1155@peff.net>
+ <064010B3-BC58-42F2-B5C0-DAADAA59B87D@gmail.com> <xmqqwq4n6b4c.fsf@gitster.dls.corp.google.com>
+ <20150115222719.GA19021@peff.net> <xmqqa91j6537.fsf@gitster.dls.corp.google.com>
+ <20150115235752.GB25120@peff.net> <xmqqh9vr4mlz.fsf@gitster.dls.corp.google.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"Linux-Kernel@Vger. Kernel. Org" <linux-kernel@vger.kernel.org>,
-	twaugh@redhat.com, Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: linux-kernel-owner@vger.kernel.org Mon Jan 26 23:16:02 2015
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>, "Kyle J. McKay" <mackyle@gmail.com>,
+	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 27 02:45:05 2015
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1YFrws-0004Xn-IR
-	for glk-linux-kernel-3@plane.gmane.org; Mon, 26 Jan 2015 23:15:58 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1YFvDC-00010X-Bs
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Jan 2015 02:45:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756894AbbAZWPx (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Mon, 26 Jan 2015 17:15:53 -0500
-Received: from mail-ob0-f171.google.com ([209.85.214.171]:47693 "EHLO
-	mail-ob0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752749AbbAZWPu (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Mon, 26 Jan 2015 17:15:50 -0500
-Received: by mail-ob0-f171.google.com with SMTP id va2so10376017obc.2;
-        Mon, 26 Jan 2015 14:15:50 -0800 (PST)
+	id S932414AbbA0Bo6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Jan 2015 20:44:58 -0500
+Received: from mail-ie0-f173.google.com ([209.85.223.173]:42058 "EHLO
+	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932295AbbA0Boz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Jan 2015 20:44:55 -0500
+Received: by mail-ie0-f173.google.com with SMTP id tr6so12468160ieb.4
+        for <git@vger.kernel.org>; Mon, 26 Jan 2015 17:44:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=KtL5sEXbSeQxA66ioYefI9njonwaOHq8Ipfix40RxPY=;
-        b=TrXM4TuIoJHVZLXWTyFmOSrI0qqPW73mYomqN9BGrjN3d7HdpIMw0YJoyeFE2X8ANs
-         mOdu5pAENbnwug0gkPVImDwVXy8GYxLkT4J26u6mq1GrgVMrIRJsXRhC69kIDgxJzcFX
-         9Np/DGWhq5+oYCFLScDPGRpz65cp6rRRURemJ5VHbJkVvZ1wY4KoyIL6VyzWyzmFWONc
-         GT3CcIRjp1VqEIq39NCnLaVYk/29K8TTY/gOuE3EWbi2vS849MzQiJrYttNvlMErywEq
-         WLFVuIUiPqQUdAbaYCtPbqnZ7MlH+XKfbAyFPR6qFshzY10Y+48GCcP0W9ElSK3SdkfW
-         g9og==
-X-Received: by 10.202.2.73 with SMTP id 70mr13356720oic.69.1422310550463; Mon,
- 26 Jan 2015 14:15:50 -0800 (PST)
-Received: by 10.76.50.70 with HTTP; Mon, 26 Jan 2015 14:15:50 -0800 (PST)
-In-Reply-To: <CA+55aFwa1-pudNus+r=5EghpGkm33h--GZNND5UHt=ZKvP15Xw@mail.gmail.com>
-X-Google-Sender-Auth: aNhxF0IqDGpWxjmYmWgx6ztJWjE
-Sender: linux-kernel-owner@vger.kernel.org
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=kIKtxNDYVLAqmVlsXBjxzzE8T1YQssCDlQ4SlCgldDI=;
+        b=p3OW/liUMNmTyIZ72JRqS0Xjy6PJ2/UM0XGfI7MmpcZP8fdZMWvLOTC2iU7NeHW55h
+         Iq4E0rWAAq03sKR78gJJGXstcvYISHnZkC5+xfxdoBdm8rQU0hlLGC1TRemcMPsPN5e7
+         TU9Slj2zUEsepSHvOI1J0Rm+Rx+651QnqvWXxO/YuVaQGBLPpkTEIs8EgkZyf5aMkmSa
+         MSrJ/Ahe2zXZjAP0bmFsBRFtz8ZLVDIjy+GNF8z5Z4tZOyBqw+l8J3FbkrHM6mswvbkN
+         L3Sw8tUlrV3zMWvdhQMxzwmkhRSnF8BbV4qV8E94hyLuquMxxrbzoL5KGzUHklWjuSwk
+         xlNg==
+X-Received: by 10.107.151.80 with SMTP id z77mr21551315iod.51.1422323095133;
+ Mon, 26 Jan 2015 17:44:55 -0800 (PST)
+Received: by 10.64.240.139 with HTTP; Mon, 26 Jan 2015 17:44:14 -0800 (PST)
+In-Reply-To: <xmqqh9vr4mlz.fsf@gitster.dls.corp.google.com>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263051>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263052>
 
-On Mon, Jan 26, 2015 at 4:30 PM, Linus Torvalds
-<torvalds@linux-foundation.org> wrote:
-> On Mon, Jan 26, 2015 at 1:07 PM, Josh Boyer <jwboyer@fedoraproject.org> wrote:
->>
->> Or did I miss a way that git-apply can take a git patch and apply it
->> to a tree that isn't a git repo?
+On Fri, Jan 16, 2015 at 1:04 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jeff King <peff@peff.net> writes:
 >
-> Exactly. "git apply" works as a straight "patch" replacement outside
-> of a git repository. It doesn't actually need a git tree to work.
+>> Exactly. I am happy to submit a patch, but I cannot think of any
+>> mechanisms besides:
+>>
+>>   1. Calling `id`, which I suspect is very not portable.
+>>
+>>   2. Writing a C program to check getuid(). That's portable for most
+>>      Unixes. It looks like we already have a hacky wrapper on mingw that
+>>      will always return "1".
+>>
+>> Is (2) too gross?
+>
+> Not overly gross compared to some existing test-*.c files, I would
+> say.
+>
+> I wondered what 'perl -e 'print $>' would say in mingw, and if that
+> is portable enough, though.
 
-Ah.  I had somehow missed that entirely.  Good to know for future reference.
-
-> (Of course, "git apply" is _not_ a "patch" replacement in the general
-> sense. It only applies context diffs - preferentially git style ones -
->  so no old-style patches etc need apply. And it's not
-> replacement-compatible in a syntax sense either, in that while many of
-> the options are the same, not all are etc etc).
-
-Sure.  Though for the Fedora kernel builds, we tend to use git
-formatted patches only anyway.  I might play around with this and see
-how it works as the normal way to apply things.
-
-josh
+$ perl -e 'print $>'
+500
