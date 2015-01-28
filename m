@@ -1,90 +1,116 @@
-From: Michael Blume <blume.mike@gmail.com>
-Subject: Re: [PATCH 21/21] t3080: tests for git-list-files
-Date: Wed, 28 Jan 2015 09:49:02 -0800
-Message-ID: <CAO2U3Qg_w17uDZhqehJnQQLeRTLXN1Fir=v+RJqcknptqJB-6Q@mail.gmail.com>
-References: <1422189476-7518-1-git-send-email-pclouds@gmail.com>
- <1422189476-7518-22-git-send-email-pclouds@gmail.com> <CAPig+cQ8AuoA=ZNaOiZ_JQb-fKtXa-mFhoYQg+eWJxF3eFy9FA@mail.gmail.com>
- <CAO2U3QhA1bGAKmM4OL0VVuOfwaocqmFEsQdZNhSqf_7tkJ+=WQ@mail.gmail.com> <CACsJy8DKJiXpHU4v3vsrgG0dDQ1akGYzfW9cgVJ=mPtdHjsbZw@mail.gmail.com>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: [PATCH 2/2] test-lib.sh: Dynamic test for the prerequisite SANITY
+Date: Wed, 28 Jan 2015 20:19:10 +0100
+Message-ID: <54C9362E.2000705@web.de>
+References: <54C7B115.7020405@web.de> <xmqqh9vbkgrg.fsf@gitster.dls.corp.google.com> <54C89DC8.1050805@web.de> <CAPc5daVAGOnu3pe_r=GuDXp1kNkJgbCqP-qD38kXmdEJa3ZSFQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 28 21:26:25 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1?= =?UTF-8?B?c2Vu?= 
+	<tboegi@web.de>
+X-From: git-owner@vger.kernel.org Wed Jan 28 21:26:27 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YGZBv-0002Or-CY
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Jan 2015 21:26:23 +0100
+	id 1YGZBy-0002Or-9B
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Jan 2015 21:26:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932097AbbA1U0L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Jan 2015 15:26:11 -0500
-Received: from mail-oi0-f49.google.com ([209.85.218.49]:38546 "EHLO
-	mail-oi0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753971AbbA1UZs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jan 2015 15:25:48 -0500
-Received: by mail-oi0-f49.google.com with SMTP id a3so19719805oib.8
-        for <git@vger.kernel.org>; Wed, 28 Jan 2015 12:25:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=RjywzF+fnCyc6Xb/EdrFhhbcTQD1OIqrymEjQac0WqM=;
-        b=p77jubB4a0UFknTI4Z6zs3tPwgiphMBuA9QaC8AuomrP8qCcSxaHUqh1BwNOR2YKa3
-         FyLtJIa9azK3p94zaDGOQGBE/oi3DYxwcZLruTb5v1QRbi3UVxksSq8fZWPsrXjT99EN
-         NT/rPo53aMZOf4VmtLfcOmVcYGoBtNU6BsaD53psWixytouW6HAnMGfCfNKtEpSUzva5
-         pER6sAj7PC4zReFmh5aIZ8ud1Tl2TQMjivomaxwtjniAbbEBvJrBAlwYjU8RVtxkLZAb
-         sdsQLsMsmUlJfmWGpZmFeceJjEmox0a1o/Pm4zWduXjXhHpDUFn7CcbH4OQMuNvPez2O
-         7wnw==
-X-Received: by 10.202.214.206 with SMTP id n197mr2838648oig.2.1422467362867;
- Wed, 28 Jan 2015 09:49:22 -0800 (PST)
-Received: by 10.202.86.136 with HTTP; Wed, 28 Jan 2015 09:49:02 -0800 (PST)
-In-Reply-To: <CACsJy8DKJiXpHU4v3vsrgG0dDQ1akGYzfW9cgVJ=mPtdHjsbZw@mail.gmail.com>
+	id S932514AbbA1U0V convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Jan 2015 15:26:21 -0500
+Received: from mout.web.de ([212.227.17.11]:50814 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757649AbbA1U0K (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jan 2015 15:26:10 -0500
+Received: from birne.lan ([78.68.171.17]) by smtp.web.de (mrweb103) with
+ ESMTPSA (Nemesis) id 0MZUS9-1XxeNO0a33-00LHRI; Wed, 28 Jan 2015 20:19:11
+ +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
+In-Reply-To: <CAPc5daVAGOnu3pe_r=GuDXp1kNkJgbCqP-qD38kXmdEJa3ZSFQ@mail.gmail.com>
+X-Provags-ID: V03:K0:kKVMLOADsIJW7a0EJ2V8VbqvDpVvGw1S6lbiTb22gaju7si29xG
+ jhcrXTFXfhDQ4QO6EfZtNkpyHrOSXUYESie8Ct94K41RxRon3TFnQwtHyCBbohP3XjFxffE
+ cpn+mhUgl9CpdGBbqobbrccX0XD1ovWwl5rOrKWp23jE1njRnTQOdSNzVbdce2nXBtnNvTM
+ opYbjcr454tJAxIGbagBg==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263108>
 
-On Wed, Jan 28, 2015 at 2:19 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Wed, Jan 28, 2015 at 11:44 AM, Michael Blume <blume.mike@gmail.com> wrote:
->> Test 3 is failing on my mac:
+
+On 28.01.15 18:38, Junio C Hamano wrote:
+> On Wed, Jan 28, 2015 at 12:28 AM, Torsten B=C3=B6gershausen <tboegi@w=
+eb.de> wrote:
+>> On 27.01.15 23:20, Junio C Hamano wrote:
 >>
->> expecting success:
->> test_config color.ls.file red &&
->> test_config color.ls.directory green &&
->> test_config color.ls.submodule yellow &&
->> git list-files --color=always >actual &&
->> test_cmp "$TEST_DIRECTORY"/t3080/color_ls actual
+>>> How about extending it like this (not tested)?
+>> Thanks, this looks good: the test is more extensive,
+>> I can test this next week.
 >>
->> --- /Users/michael.blume/workspace/git/t/t3080/color_ls 2015-01-28
->> 04:40:23.000000000 +0000
->> +++ actual 2015-01-28 04:42:59.000000000 +0000
->> @@ -1,3 +1,3 @@
->> -dir
->> -file
->> -gitlink
->> +dir
->> +file
->> +gitlink
+>>> -- >8 --
+>>> From: Torsten B=C3=B6gershausen <tboegi@web.de>
+>>> Date: Tue, 27 Jan 2015 16:39:01 +0100
+>>> Subject: [PATCH] test-lib.sh: set prerequisite SANITY by testing wh=
+at we really need
+>>>
+>>> What we wanted out of the SANITY precondition is that the filesyste=
+m
+>>> behaves sensibly with permission bits settings.
+>>>
+>>>  - You should not be able to remove a file in a read-only directory=
+,
+>>>
+>>>  - You should not be able to tell if a file in a directory exists i=
+f
+>>>    the directory lacks read or execute permission bits.
+> Forgot one thing. I do not offhand know if tests that needs SANITY
+> depends on this, but we may also want to check for this:
 >
-> Urgh.. colors do not send well over plain text.. I just realized we
-> have test_decode_color to convert colors to text descriptions.. will
-> fix..
+>  - You should not be able to write to a file that is marked as read-o=
+nly.
 >
-> Anyway, I think i may know why it fails. I suppose  the env variable
-> LS_COLORS is not defined, or defined as empty in your shell?
-> --
-> Duy
+> by adding something like
+>
+>   >sanitytest && chmod -w sanitytest && ! echo boo >sanitytest && !
+> test -s sanitytest"
+>
+> in the mix.
+>
+>>> We used to cheat by approximating that condition with "is the /
+>>> writable?" test and/or "are we running as root?" test.  Neither tes=
+t
+>>> is sufficient or appropriate in more exotic environments like
+>>> Cygwin.
+>> How about going this direction:
+>>
+>> We used to cheat by approximating that condition with "is the /
+>> writable?" test and/or "are we running as root?" test. Neither test
+>> is sufficient or appropriate, especially in environments like
+>> Cygwin, Mingw or Mac OS X.
+> OK, but MacOS X does not have SANITY problem; "is the / writable?" te=
+st
+> was misdetecting and declaring a system with SANITY does not have one=
+=2E
+>
+> Perhaps roll Cygwin and Mingw into a single Windows category? I dunno=
+=2E
+The whole discussion actually started with Mac OS X,
+and the conclusion was that Mac OS X should have SANITY set, but hadn't=
+,
+because  / is writable (if you install from scratch):
 
+$gmane/262389
+and especially:
+$gmane/262456
 
-In case it helps:
-https://www.dropbox.com/s/zsm3xgulmsl3rqm/Screenshot%202015-01-28%2009.46.57.png?dl=0
+The whole discussion ended up a fix for t5539, and, as a different impr=
+ovement,
+the lazy SANITY probing - which works for me on all systems I had the c=
+hance to test it.
 
-Also no, LS_COLORS is not defined
-
-$ echo $LS_COLORS
-
-$
+The code is OK (we can add more tests, as you suggested).
+The only problem I can see is to put everything into a good commit-msg.
