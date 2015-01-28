@@ -1,63 +1,82 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Score in diff-format
-Date: Wed, 28 Jan 2015 15:23:09 +0900
-Message-ID: <20150128062309.GA29506@glandium.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-push.txt: document the behavior of --repo
+Date: Wed, 28 Jan 2015 12:12:49 -0800
+Message-ID: <xmqqfvauhdfi.fsf@gitster.dls.corp.google.com>
+References: <xmqqppa1mrku.fsf@gitster.dls.corp.google.com>
+	<d8bed5c1736a4a291208227b0f54c1039d67f5cc.1422361902.git.git@drmicha.warpmail.net>
+	<CAPig+cQCf+vKbZ5ydFSNmGCUvmCkQW-DEPhO1JAAap1VorhXsA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 28 07:23:25 2015
+Content-Type: text/plain
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Git List <git@vger.kernel.org>, Prem <prem.muthedath@gmail.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Wed Jan 28 21:13:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YGM25-0001wz-N5
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Jan 2015 07:23:22 +0100
+	id 1YGYyw-0002I9-Hz
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Jan 2015 21:12:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760962AbbA1GXS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Jan 2015 01:23:18 -0500
-Received: from ks3293202.kimsufi.com ([5.135.186.141]:40010 "EHLO glandium.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760874AbbA1GXR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jan 2015 01:23:17 -0500
-Received: from glandium by zenigata with local (Exim 4.84)
-	(envelope-from <glandium@glandium.org>)
-	id 1YGM1t-0005Wc-LX
-	for git@vger.kernel.org; Wed, 28 Jan 2015 15:23:09 +0900
-Content-Disposition: inline
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1753697AbbA1UM4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Jan 2015 15:12:56 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:51084 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753605AbbA1UMx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jan 2015 15:12:53 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3B11133577;
+	Wed, 28 Jan 2015 15:12:52 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Z5H30yrSpmVD/fgM7XpaTLgrPhM=; b=MhCLfe
+	BAVD5jt4HuOBO676/Lm1M1QeY2yfkx5VPHU0K5VYVewb3vumqQdibniK0XrIyTnL
+	AZPr5vm45RNvI3mfdMf8NKKk0B/Rp0GYDQAtsAJXBM48BHnl8jl8In5Rq++tuIlg
+	jUnE9QnYrjsj3X1TMTn+hRluK6yXJVlVhpneM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=bKPscu5I/jF171L2INS4GGdj20XvEW3Y
+	ewVInuAkiqJwvdOc6oFUKVa+U2OYLe5A6/sda47HIx8QCLSnhCvRU3IeHyTDc4XN
+	xHo9CAt6RDaCvwDYi8Gg3ZjBUDoKRaiM525HxLkaHaL4x9IAPxFh0L6rGF+XP6Vq
+	SQGEO5jbMVs=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 326F933576;
+	Wed, 28 Jan 2015 15:12:52 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 96B0733575;
+	Wed, 28 Jan 2015 15:12:51 -0500 (EST)
+In-Reply-To: <CAPig+cQCf+vKbZ5ydFSNmGCUvmCkQW-DEPhO1JAAap1VorhXsA@mail.gmail.com>
+	(Eric Sunshine's message of "Tue, 27 Jan 2015 17:07:19 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 0968E3A2-A72A-11E4-903E-7BA29F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263104>
 
-Hi,
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-diff-format.txt says this:
+>> +       This option is equivalent to the <repository> argument; the latter
+>> +       wins if both are specified.
+>
+> To what does "latter" refer in this case? (I presume it means the
+> standalone <repository> argument, though the text feels ambiguous.)
+>
+> Also, both the standalone argument and the right-hand-side of --repo=
+> are spelled "<repository>", so there may be potential for confusion
+> when talking about <repository> (despite the subsequent "argument").
+> Perhaps qualifying it as "_standalone_ <repository> argument" might
+> help.
 
-  An output line is formatted this way:
-  (snip)
+I didn't find that "latter" too hard to understand (I admit that my
+reading stuttered there, though).
 
-  That is, from the left to the right:
-
-  (snip)
-  . status, followed by optional "score" number.
-
-  (snip)
-  Status letters C and R are always followed by a score (denoting the
-  percentage of similarity between the source and target of the move or
-  copy), and are the only ones to be so.
-
-As I read this last paragraph, the following is not supposed to happen:
-$ git diff-tree 926b1ec63ee045503f609e88ca445b94c06bd5d7 --abbrev -r -C -B
-926b1ec63ee045503f609e88ca445b94c06bd5d7
-:100644 100644 81ac702... 7ab0cf4... M087       contrib/subtree/INSTALL
-
-It however makes sense that it happens, and it looks like a case of the
-documentation being outdated or confusing. Or am I interpreting it wrong?
-
-Cheers,
-
-Mike
+I do not think saying "standalone <repository> argument" there would
+help very much, because there is no mention of "standalone" around
+there.  The earlier part of the sentence mentions "option" and
+"argument", so "the repository specified as an argument is used if
+both this option and an argument are given" or something?
