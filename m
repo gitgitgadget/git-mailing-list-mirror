@@ -1,70 +1,99 @@
-From: Yi EungJun <semtlenori@gmail.com>
-Subject: [PATCH v9 0/1] http: Add Accept-Language header if possible
-Date: Wed, 28 Jan 2015 21:04:36 +0900
-Message-ID: <1422446677-8415-1-git-send-email-eungjun.yi@navercorp.com>
-References: <CAPc5daXEFZ+3Qr8fg0g9Mi6V+3r5yNmAFpAwVXciaMTwK244kg@mail.gmail.com>
-Cc: Yi EungJun <eungjun.yi@navercorp.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	Peter Krefting <peter@softwolves.pp.se>,
-	Michael Blume <blume.mike@gmail.com>,
-	=?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jan 29 02:57:21 2015
+From: Olaf Hering <olaf@aepfle.de>
+Subject: Re: implement a stable 'Last updated' in Documentation
+Date: Wed, 28 Jan 2015 09:02:14 +0100
+Message-ID: <20150128080214.GA18851@aepfle.de>
+References: <20150126172409.GA15204@aepfle.de>
+ <xmqqd25zkeg7.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 29 03:02:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YGeMC-0004g6-Eb
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Jan 2015 02:57:20 +0100
+	id 1YGeRH-0001Lz-JY
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Jan 2015 03:02:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755543AbbA2B5O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Jan 2015 20:57:14 -0500
-Received: from mail-pa0-f51.google.com ([209.85.220.51]:34477 "EHLO
-	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753333AbbA2B5N (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jan 2015 20:57:13 -0500
-Received: by mail-pa0-f51.google.com with SMTP id fb1so32506809pad.10
-        for <git@vger.kernel.org>; Wed, 28 Jan 2015 17:57:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=cho/eYFvORKEppZVMiSZXbuPrhiCXntJ2ji1ZsPDbrg=;
-        b=ZZCxCkOTi7CUl2c+yUX8nBNQeZawyMCBcynb092jPywPuQe63UAEd8FELoiZq9PFoV
-         U0yuHT7s7qrNfg8iuOyM6towozi3gtQGrdgtDbgy94CqowDUmsEcD770PbRWbO7/FE6L
-         uwcLOtP4kcpI+HV9kxVfc/QUFltI5ghLO1HcnHrP/lFCEOP8LhOzo7RtFSCQtvPjvzbv
-         iWb9a8XjhVBn5FIn1B9Owk0xmMWrY/3XXpl27rDZTw2n5NzDWvsIGj7Gdfin+3WrUXoL
-         w9IExi0RxlQRhWC1Ls64VOwjumemQe+6d3a6e/YxWA81r4rMtUYfCJDTstuTg3DW3CEV
-         LyWQ==
-X-Received: by 10.68.57.165 with SMTP id j5mr5295696pbq.70.1422446686600;
-        Wed, 28 Jan 2015 04:04:46 -0800 (PST)
-Received: from gmail.com ([111.91.137.67])
-        by mx.google.com with ESMTPSA id fr11sm4614680pad.1.2015.01.28.04.04.43
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 28 Jan 2015 04:04:45 -0800 (PST)
-X-Google-Original-From: Yi EungJun <eungjun.yi@navercorp.com>
-X-Mailer: git-send-email 2.3.0.rc1.32.g7a36c04
-In-Reply-To: <CAPc5daXEFZ+3Qr8fg0g9Mi6V+3r5yNmAFpAwVXciaMTwK244kg@mail.gmail.com>
+	id S1756118AbbA2CCb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Jan 2015 21:02:31 -0500
+Received: from mo4-p00-ob.smtp.rzone.de ([81.169.146.163]:19005 "EHLO
+	mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754489AbbA2CCa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jan 2015 21:02:30 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1422496948; l=2013;
+	s=domk; d=aepfle.de;
+	h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Subject:Cc:To:From:Date;
+	bh=N5kDsIAMFMb1fHw92Tv8eDey3McYmzuHqKjaXZWoxC4=;
+	b=oeuFZJw9TyMiJhE5H9xg3FCULFDggf0pz9QYO1ORPrmRJ+VDaYbjG66TmYGzpMoJB26
+	ar/1l2Cox276KEw172uTakHWkQJN/2wIyQpKdS3FqL31r/lnkwOMQEFQEAE0vnDsEVLo7
+	+QJTHwqBai6htL1zlq6xntWPOON27sB3mb0=
+X-RZG-AUTH: :P2EQZWCpfu+qG7CngxMFH1J+yackYocTD1iAi8x+OWi/zfN1cLnBYfssDIlSQZelGPTkz+JJHiQM2XCL4FiyQ+n/+A0DGQ==
+X-RZG-CLASS-ID: mo00
+Received: from probook.fritz.box ([2001:a60:1087:7e01:1ec1:deff:feb9:bb48])
+	by smtp.strato.de (RZmta 37.1 AUTH)
+	with ESMTPSA id a0516ar0S82E6dv
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate);
+	Wed, 28 Jan 2015 09:02:14 +0100 (CET)
+Received: by probook.fritz.box (Postfix, from userid 1000)
+	id 6113E5016F; Wed, 28 Jan 2015 09:02:14 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <xmqqd25zkeg7.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.22.rev6346 (2013-10-29)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263131>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263132>
 
-From: Yi EungJun <eungjun.yi@navercorp.com>
+On Tue, Jan 27, Junio C Hamano wrote:
 
-Change since v8
+> Olaf Hering <olaf@aepfle.de> writes:
+> 
+> > Several files in Documentation have an unstable 'Last updated' timestamp. The
+> > reason is that their mtime changes every time, which prevents reproducible
+> > builds.
+> >
+> > 341 technical/api-index.txt: technical/api-index-skel.txt \
+> > 342         technical/api-index.sh $(patsubst %,%.txt,$(API_DOCS))
+> > 343         $(QUIET_GEN)cd technical && '$(SHELL_PATH_SQ)' ./api-index.sh
+> >
+> > 388 howto-index.txt: howto-index.sh $(wildcard howto/*.txt)
+> > 389         $(QUIET_GEN)$(RM) $@+ $@ && \
+> > 390         '$(SHELL_PATH_SQ)' ./howto-index.sh $(sort $(wildcard howto/*.txt)) >$@+ && \
+> > 391         mv $@+ $@
+> >
+> > 399 $(patsubst %.txt,%.html,$(wildcard howto/*.txt)): %.html : %.txt
+> > 400         $(QUIET_ASCIIDOC)$(RM) $@+ $@ && \
+> > 401         sed -e '1,/^$$/d' $< | \
+> > 402         $(TXT_TO_HTML) - >$@+ && \
+> > 403         mv $@+ $@
+> 
+> All of them seem to have dependencies so it seems to me that two
+> builds back to back without actually changing their input would not
+> re-build anything.  What am I missing???
 
-Apply Junio's patch: Use an array of char* instead of strbuf for language_tags.
+Per default the files referenced do not exist, so a build from releases
+will generate the files. But I agree, perhaps there should be some
+refactoring to handle dependencies properly.
+In any case, if the 'Last updated' is unavoidable some reference is
+required, see my patch in the other mail.
 
-Yi EungJun (1):
-  http: Add Accept-Language header if possible
+> > What file timestamp should be used for them? Likely "../version"?
+> 
+> I tend to think the "Last updated" timestamp taken from the
+> filesystem timestamp is a bad practice inherited by these tools from
+> the days back when nobody used any revision control systems.
 
- http.c                     | 147 +++++++++++++++++++++++++++++++++++++++++++++
- remote-curl.c              |   2 +
- t/t5550-http-fetch-dumb.sh |  42 +++++++++++++
- 3 files changed, 191 insertions(+)
+I'm not sure. The bug is that such 'Last updated' line exists at all in
+the default output. Noone asked for it, noone really needs it. And it
+makes it impossible to get reproducible builds.
+But so far I found no way to avoid the 'Last updated' output. The docs
+and google suggest something like :last-updated-time!:, which did not
+work for me.
 
--- 
-2.3.0.rc1.32.g7a36c04
+Olaf
