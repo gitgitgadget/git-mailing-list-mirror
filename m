@@ -1,81 +1,161 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: [PATCH] git-p4: correct "exclude" change
-Date: Wed, 28 Jan 2015 06:08:04 +0000
-Message-ID: <1422425284-5282-2-git-send-email-luke@diamand.org>
-References: <1422425284-5282-1-git-send-email-luke@diamand.org>
-Cc: Junio C Hamano <gitster@pobox.com>, Luke Diamand <luke@diamand.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 28 07:08:28 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] http: Add Accept-Language header if possible
+Date: Tue, 27 Jan 2015 22:15:48 -0800
+Message-ID: <CAPc5daXEFZ+3Qr8fg0g9Mi6V+3r5yNmAFpAwVXciaMTwK244kg@mail.gmail.com>
+References: <xmqq7fwfuu62.fsf@gitster.dls.corp.google.com> <1422373918-14132-1-git-send-email-eungjun.yi@navercorp.com>
+ <1422373918-14132-2-git-send-email-eungjun.yi@navercorp.com> <xmqqwq47iyrn.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Yi EungJun <eungjun.yi@navercorp.com>,
+	Jeff King <peff@peff.net>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	Michael Blume <blume.mike@gmail.com>,
+	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+To: Yi EungJun <semtlenori@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 28 07:16:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YGLnb-0000DC-DO
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Jan 2015 07:08:23 +0100
+	id 1YGLvE-0001dP-3c
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Jan 2015 07:16:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758264AbbA1GIQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Jan 2015 01:08:16 -0500
-Received: from mail-pa0-f48.google.com ([209.85.220.48]:58145 "EHLO
-	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752992AbbA1GIO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jan 2015 01:08:14 -0500
-Received: by mail-pa0-f48.google.com with SMTP id ey11so23426449pad.7
-        for <git@vger.kernel.org>; Tue, 27 Jan 2015 22:08:14 -0800 (PST)
+	id S1758053AbbA1GQK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Jan 2015 01:16:10 -0500
+Received: from mail-ob0-f179.google.com ([209.85.214.179]:57192 "EHLO
+	mail-ob0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754837AbbA1GQJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jan 2015 01:16:09 -0500
+Received: by mail-ob0-f179.google.com with SMTP id va8so6781811obc.10
+        for <git@vger.kernel.org>; Tue, 27 Jan 2015 22:16:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=NzScRBAWSQnqEk7osPH6z6gVZW1OhFjWuLhHUJjtgb8=;
-        b=JVivQEKOVebIM3SHQT0q6/u/x3VsOPlptE18IhEXMJ+IKJlLWhvm1R3Z6ivWlWU8HB
-         6Ccc5qwF1JCYa2QwZu6nHs0cKJCVVL7B9xkl+5dpQoDHztE5DRA8GTJOh8EAR9X3fYsK
-         yUsJBBNAOU1/j+9MN7cy4fPVZ7qVE3JOIdr+0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=NzScRBAWSQnqEk7osPH6z6gVZW1OhFjWuLhHUJjtgb8=;
-        b=aWOBvdr/E0qoGbsCRUe8YB4J/oXH/+IitI/vPSRsciToA5zKYZs989kcoUJP0X8Yn9
-         lhMMsBiiEO13iCt3TVB+O/gTz1Wq0SKChu019BhsoKgIYR1Xu3KnolU1grs1Dac5r1zh
-         kwdlcLjRGtehTBQ88velzVqFKD2H3XuYAbUWei95aEd8RRvek/8g/YQcG/CMHerJz2ZH
-         rY8NVIIPWIvm0klP0YnO/DaLHofT2XYJtR/qJmQwqTRAtOz/Z6i7BDiIUuHAOyL/bmql
-         8wPn8lvZ0o7zgn3auquxzHzh5V5GX8s1AXQ93N3HAw1moI9ModHlAHgX0cRNh7XkM/zU
-         2UBw==
-X-Gm-Message-State: ALoCoQnFktGVpCbO9LdN3v+MafV3wrzW+jrMi5X6WYOnbKKbdmIxMP75ZFl+cIKoD9uesoyajWdE
-X-Received: by 10.68.197.161 with SMTP id iv1mr2767428pbc.147.1422425294002;
-        Tue, 27 Jan 2015 22:08:14 -0800 (PST)
-Received: from lgd-kipper.corp.roku ([216.38.147.4])
-        by mx.google.com with ESMTPSA id fg6sm3441182pdb.24.2015.01.27.22.08.13
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 27 Jan 2015 22:08:13 -0800 (PST)
-X-Mailer: git-send-email 2.3.0.rc2.188.g4b64765.dirty
-In-Reply-To: <1422425284-5282-1-git-send-email-luke@diamand.org>
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=8oCpMEyx6ftLiHRnj/7pK3HSiyxrF1+SM0j+VK+fKhE=;
+        b=oVIAjceQiGB9JNdh7iCjcoyEx+STSkxZ6hljOTv4FtYiq336XH0nCvzcarRIfqkn4D
+         EOCIMshg8yVDl/rX/u/UdyPlwVAnPrVt0lvpS4RMU41UuRVnbXwS1EEme4nOoXyYI3Gi
+         Wu/GdmctqktamiIxa7xN8iAvGkr0rlYo6R81pL5eMyW0Gk/jKnxkrOvq5CiYyOS5UtrS
+         76XID8BwEZA3IyDNUwDnSW/tLu8SFJO7M942AfzH0jvBlqC6+QekqSuBJG8icdrobDRv
+         pXDAvcykNVySbPCZhRgUBH5u+YF037hvgo74UvDg2JD5ptEUmoV1+qRk6YYVqunujD8T
+         NFwg==
+X-Received: by 10.202.217.9 with SMTP id q9mr950876oig.35.1422425768530; Tue,
+ 27 Jan 2015 22:16:08 -0800 (PST)
+Received: by 10.202.48.132 with HTTP; Tue, 27 Jan 2015 22:15:48 -0800 (PST)
+In-Reply-To: <xmqqwq47iyrn.fsf@gitster.dls.corp.google.com>
+X-Google-Sender-Auth: AMkgPWW5pvAd8P1ng_U3zh8Jis4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263101>
 
-The previous change for excluding paths in the "sync"
-subcommand was incorrect, missing a comma, preventing
-git-p4 from working.
+On Tue, Jan 27, 2015 at 3:34 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Yi EungJun <semtlenori@gmail.com> writes:
+>
+>> +
+>> +             sprintf(q_format, ";q=0.%%0%dd", decimal_places);
+>> +
+>> +             strbuf_addstr(buf, "Accept-Language: ");
+>> +
+>> +             for(i = 0; i < num_langs; i++) {
+>> +                     if (i > 0)
+>> +                             strbuf_addstr(buf, ", ");
+>> +
+>> +                     strbuf_addstr(buf, strbuf_detach(&language_tags[i], NULL));
+>
+> This is not wrong per-se, but it looks somewhat convoluted to me.
+> ...
 
-Signed-off-by: Luke Diamand <luke@diamand.org>
----
- git-p4.py | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Actually, this is wrong, isn't it?
 
-diff --git a/git-p4.py b/git-p4.py
-index 6ff0b76..549022e 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -1915,7 +1915,7 @@ class P4Sync(Command, P4UserMap):
-                 optparse.make_option("--keep-path", dest="keepRepoPath", action='store_true',
-                                      help="Keep entire BRANCH/DIR/SUBDIR prefix during import"),
-                 optparse.make_option("--use-client-spec", dest="useClientSpec", action='store_true',
--                                     help="Only sync files that are included in the Perforce Client Spec")
-+                                     help="Only sync files that are included in the Perforce Client Spec"),
-                 optparse.make_option("-/", dest="cloneExclude",
-                                      action="append", type="string",
-                                      help="exclude depot path"),
--- 
-2.3.0.rc2.188.g4b64765.dirty
+strbuf_detach() removes the language_tags[i].buf from the strbuf,
+and the caller now owns that piece of memory. Then strbuf_addstr()
+appends a copy of that string to buf, and the piece of memory
+that was originally held by language_tags[i].buf is now lost forever.
+
+This is leaking.
+
+>> +     /* free language tags */
+>> +     for(i = 0; i < num_langs; i++) {
+>> +             strbuf_release(&language_tags[i]);
+>> +     }
+
+... because this loop does not free memory for earlier parts of language_tags[].
+
+> I am wondering if using strbuf for each of the language_tags[] is
+> even necessary.  How about doing it this way instead?
+
+And I think my counter-proposal does not leak (as it does not us strbuf for
+language_tags[] anymore).
+
+>
+>  http.c | 22 +++++++++-------------
+>  1 file changed, 9 insertions(+), 13 deletions(-)
+>
+> diff --git a/http.c b/http.c
+> index 6111c6a..db591b3 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -1027,7 +1027,7 @@ static void write_accept_language(struct strbuf *buf)
+>         const int MAX_DECIMAL_PLACES = 3;
+>         const int MAX_LANGUAGE_TAGS = 1000;
+>         const int MAX_ACCEPT_LANGUAGE_HEADER_SIZE = 4000;
+> -       struct strbuf *language_tags = NULL;
+> +       char **language_tags = NULL;
+>         int num_langs = 0;
+>         const char *s = get_preferred_languages();
+>         int i;
+> @@ -1053,9 +1053,7 @@ static void write_accept_language(struct strbuf *buf)
+>                 if (tag.len) {
+>                         num_langs++;
+>                         REALLOC_ARRAY(language_tags, num_langs);
+> -                       strbuf_init(&language_tags[num_langs - 1], 0);
+> -                       strbuf_swap(&tag, &language_tags[num_langs - 1]);
+> -
+> +                       language_tags[num_langs - 1] = strbuf_detach(&tag, NULL);
+>                         if (num_langs >= MAX_LANGUAGE_TAGS - 1) /* -1 for '*' */
+>                                 break;
+>                 }
+> @@ -1070,13 +1068,12 @@ static void write_accept_language(struct strbuf *buf)
+>
+>                 /* add '*' */
+>                 REALLOC_ARRAY(language_tags, num_langs + 1);
+> -               strbuf_init(&language_tags[num_langs], 0);
+> -               strbuf_addstr(&language_tags[num_langs++], "*");
+> +               language_tags[num_langs++] = "*"; /* it's OK; this won't be freed */
+>
+>                 /* compute decimal_places */
+>                 for (max_q = 1, decimal_places = 0;
+> -                               max_q < num_langs && decimal_places <= MAX_DECIMAL_PLACES;
+> -                               decimal_places++, max_q *= 10)
+> +                    max_q < num_langs && decimal_places <= MAX_DECIMAL_PLACES;
+> +                    decimal_places++, max_q *= 10)
+>                         ;
+>
+>                 sprintf(q_format, ";q=0.%%0%dd", decimal_places);
+> @@ -1087,7 +1084,7 @@ static void write_accept_language(struct strbuf *buf)
+>                         if (i > 0)
+>                                 strbuf_addstr(buf, ", ");
+>
+> -                       strbuf_addstr(buf, strbuf_detach(&language_tags[i], NULL));
+> +                       strbuf_addstr(buf, language_tags[i]);
+>
+>                         if (i > 0)
+>                                 strbuf_addf(buf, q_format, max_q - i);
+> @@ -1101,10 +1098,9 @@ static void write_accept_language(struct strbuf *buf)
+>                 }
+>         }
+>
+> -       /* free language tags */
+> -       for(i = 0; i < num_langs; i++) {
+> -               strbuf_release(&language_tags[i]);
+> -       }
+> +       /* free language tags -- last one is a static '*' */
+> +       for(i = 0; i < num_langs - 1; i++)
+> +               free(language_tags[i]);
+>         free(language_tags);
+>  }
+>
