@@ -1,120 +1,72 @@
-From: Michael Blume <blume.mike@gmail.com>
-Subject: Re: [PATCH 21/21] t3080: tests for git-list-files
-Date: Tue, 27 Jan 2015 20:44:30 -0800
-Message-ID: <CAO2U3QhA1bGAKmM4OL0VVuOfwaocqmFEsQdZNhSqf_7tkJ+=WQ@mail.gmail.com>
-References: <1422189476-7518-1-git-send-email-pclouds@gmail.com>
- <1422189476-7518-22-git-send-email-pclouds@gmail.com> <CAPig+cQ8AuoA=ZNaOiZ_JQb-fKtXa-mFhoYQg+eWJxF3eFy9FA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>, Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Wed Jan 28 05:45:02 2015
+From: Luke Diamand <luke@diamand.org>
+Subject: [PATCH] Correction to git-p4 "exclude" change
+Date: Wed, 28 Jan 2015 06:08:03 +0000
+Message-ID: <1422425284-5282-1-git-send-email-luke@diamand.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Luke Diamand <luke@diamand.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 28 07:08:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YGKUt-0008Gf-5p
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Jan 2015 05:44:59 +0100
+	id 1YGLnW-0008VI-7R
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Jan 2015 07:08:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761787AbbA1Eox convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Jan 2015 23:44:53 -0500
-Received: from mail-ob0-f175.google.com ([209.85.214.175]:65364 "EHLO
-	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761776AbbA1Eov convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Jan 2015 23:44:51 -0500
-Received: by mail-ob0-f175.google.com with SMTP id wp4so17339641obc.6
-        for <git@vger.kernel.org>; Tue, 27 Jan 2015 20:44:51 -0800 (PST)
+	id S1761271AbbA1GIN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Jan 2015 01:08:13 -0500
+Received: from mail-pd0-f179.google.com ([209.85.192.179]:43434 "EHLO
+	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752992AbbA1GIL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jan 2015 01:08:11 -0500
+Received: by mail-pd0-f179.google.com with SMTP id v10so23603541pde.10
+        for <git@vger.kernel.org>; Tue, 27 Jan 2015 22:08:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=78YYgoMC6l/wIMvHCLiY3lsRQcrEo1I6P/1+k7NKWqs=;
-        b=W9hkdaFHYXRiOaPbseurD2aGZl05J/nqbEKJLCu2tsdt+DFD1sfXiXImL86N3mBJrZ
-         HucUKT1HcA/ZQ1vRfqyRo+nYspEzflHOHvP/ud+feqy2mStkpqv8R/s6ebBDPRr+BFai
-         0toXz9xdYawlNW3RB2dehGr8nBFcDc9nVmcTiBnnW4LrOMLys36R/emlxys/OBcQI/a5
-         KFLSA4r0H6C+/AZHWd+3/1jxL3KF5E0oTMOM6/iP0lIJis/nwNLZurigAlQU6AUD36hv
-         8sIXoR5ALavr/AFCspnrQggkQQ+d0FmjU6iQ1abVNY14UaY4AR1oirTvOKdcZCYIoNJS
-         9tJg==
-X-Received: by 10.202.197.206 with SMTP id v197mr872545oif.54.1422420291288;
- Tue, 27 Jan 2015 20:44:51 -0800 (PST)
-Received: by 10.202.86.136 with HTTP; Tue, 27 Jan 2015 20:44:30 -0800 (PST)
-In-Reply-To: <CAPig+cQ8AuoA=ZNaOiZ_JQb-fKtXa-mFhoYQg+eWJxF3eFy9FA@mail.gmail.com>
+        d=diamand.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=ixb54IslEWUY/7Znj+uRmfUn9AIzu1fhMQO+GVZ61jM=;
+        b=INGljhFECqhuj2+LUUx7ZL0+GL+MvIuJ/tqHp0xE2Jsej2MjyyNx0ExILEIpIYva3x
+         cFDZ4HHi9dWFshibaVbI1lI3a+5zGRB+HP+l745QlPT1GEBmbSQIpUW+j9GIQ2fWnKFV
+         nQDyh8i6KZ1kA37ZnuVgBiUMEMBfAvgUFirLo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=ixb54IslEWUY/7Znj+uRmfUn9AIzu1fhMQO+GVZ61jM=;
+        b=IPrVqtsov/lOj8ANFJClo/PLVe5HAfXv6l3yR0x31Rt3hMaCn9fm+Z2P0iKy/MdWce
+         cO9BdYdgMH3cBCNMDZ2eHfr7mB0zaFOrjD6bkCGvqTpHe2CQlKPlgFp7pen0klQW5mDo
+         GEyGX4EUpOERXwxHqGlj/IoxzH/U4VOqgguByGUaZPfxYibFwLzQDsIeiATc3LNK2UF9
+         AzkiX3csST7iZ9rCpnZOCGubGTMQsBUNwiSXopuoXtJy9p2yEpvbnKm28sMpD9AMYfUY
+         bJXTIXDLjGnvymlyawYf5zQJ14YLFNEccrT8guH27a2ALJlpKA74J3xbNEmpW8CQkfBH
+         iDLQ==
+X-Gm-Message-State: ALoCoQnDvzEetAgLx+l5mVBktgqcVSejsu2X6VxcIXY/y9w/181DERXUd38Ch5pya0e6e/rLzKc6
+X-Received: by 10.66.236.36 with SMTP id ur4mr2794881pac.107.1422425291339;
+        Tue, 27 Jan 2015 22:08:11 -0800 (PST)
+Received: from lgd-kipper.corp.roku ([216.38.147.4])
+        by mx.google.com with ESMTPSA id fg6sm3441182pdb.24.2015.01.27.22.08.09
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 27 Jan 2015 22:08:10 -0800 (PST)
+X-Mailer: git-send-email 2.3.0.rc2.188.g4b64765.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263098>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263099>
 
-Test 3 is failing on my mac:
+My previous change for adding support for "exclude" to git-p4 "sync"
+was incorrect, missing out a comma, which stopped git-p4 from working.
+This change fixes that.
 
-expecting success:
-test_config color.ls.file red &&
-test_config color.ls.directory green &&
-test_config color.ls.submodule yellow &&
-git list-files --color=3Dalways >actual &&
-test_cmp "$TEST_DIRECTORY"/t3080/color_ls actual
+I've also noticed that t9814-git-p4-rename.sh has stopped working; I'm
+going to follow up with a fix for that once I've worked out what's
+wrong with it. There's a small shell syntax problem (missing "esac")
+but after fixing that it still fails, so I'm not sure what's happening
+yet. It was discussed a while back.
 
---- /Users/michael.blume/workspace/git/t/t3080/color_ls 2015-01-28
-04:40:23.000000000 +0000
-+++ actual 2015-01-28 04:42:59.000000000 +0000
-@@ -1,3 +1,3 @@
--dir
--file
--gitlink
-+dir
-+file
-+gitlink
-not ok 3 - color.ls.*
-#
-# test_config color.ls.file red &&
-# test_config color.ls.directory green &&
-# test_config color.ls.submodule yellow &&
-# git list-files --color=3Dalways >actual &&
-# test_cmp "$TEST_DIRECTORY"/t3080/color_ls actual
-#
+Luke Diamand (1):
+  git-p4: correct "exclude" change
 
-On Sun, Jan 25, 2015 at 11:20 AM, Eric Sunshine <sunshine@sunshineco.co=
-m> wrote:
-> On Sun, Jan 25, 2015 at 7:37 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8D=
-c Duy <pclouds@gmail.com> wrote:
->> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gm=
-ail.com>
->> ---
->> diff --git a/t/t3080-list-files.sh b/t/t3080-list-files.sh
->> new file mode 100755
->> index 0000000..6313dd9
->> --- /dev/null
->> +++ b/t/t3080-list-files.sh
->> +test_expect_success 'no dups' '
->> +       echo dirty >>file &&
->
-> To leave a clean slate for subsequent tests, would it make sense to
-> restore 'file' to a clean state via test_when_finished()?
->
->> +       git list-files -m file >actual &&
->> +       echo "file" >expected &&
->> +       test_cmp expected actual &&
->> +       git list-files -cm file >actual &&
->> +       echo "C file" >expected &&
->> +       test_cmp expected actual &&
->> +       git list-files -tcm file >actual &&
->> +       test_cmp expected actual
->> +'
->> +
->> +test_expect_success 'diff-cached' '
->> +       echo dirty >>file &&
->> +       git add file &&
->
-> Ditto here?
->
->> +       git list-files -M >actual &&
->> +       echo "file" >expected &&
->> +       test_cmp expected actual
->> +'
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+ git-p4.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+-- 
+2.3.0.rc2.188.g4b64765.dirty
