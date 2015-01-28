@@ -1,98 +1,80 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-push.txt: document the behavior of --repo
-Date: Wed, 28 Jan 2015 12:55:58 -0800
-Message-ID: <xmqqsieufwv5.fsf@gitster.dls.corp.google.com>
-References: <xmqqppa1mrku.fsf@gitster.dls.corp.google.com>
-	<d8bed5c1736a4a291208227b0f54c1039d67f5cc.1422361902.git.git@drmicha.warpmail.net>
-	<CAPig+cQCf+vKbZ5ydFSNmGCUvmCkQW-DEPhO1JAAap1VorhXsA@mail.gmail.com>
-	<xmqqfvauhdfi.fsf@gitster.dls.corp.google.com>
-	<CAPig+cR-45NzCK5mu9d=1o8nss54ShYn1Snexx5rT+En8XeMcA@mail.gmail.com>
+Subject: Re: [PATCH] Correction to git-p4 "exclude" change
+Date: Wed, 28 Jan 2015 12:49:54 -0800
+Message-ID: <xmqqwq46fx59.fsf@gitster.dls.corp.google.com>
+References: <1422425284-5282-1-git-send-email-luke@diamand.org>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Git List <git@vger.kernel.org>, Prem <prem.muthedath@gmail.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Wed Jan 28 22:07:14 2015
+Cc: git@vger.kernel.org
+To: Luke Diamand <luke@diamand.org>
+X-From: git-owner@vger.kernel.org Wed Jan 28 22:24:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YGZpP-0003RY-Uo
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Jan 2015 22:07:12 +0100
+	id 1YGa68-0008Jj-B1
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Jan 2015 22:24:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756796AbbA1VGu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Jan 2015 16:06:50 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:57024 "EHLO
+	id S1755997AbbA1VYY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Jan 2015 16:24:24 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:59233 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754440AbbA1U4B (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jan 2015 15:56:01 -0500
+	with ESMTP id S932308AbbA1Ut5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jan 2015 15:49:57 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 613A63407B;
-	Wed, 28 Jan 2015 15:56:00 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 31B7933F47;
+	Wed, 28 Jan 2015 15:49:56 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=UzlbP1Rqw0FoUahjztc9uRtNJY4=; b=x0tirq
-	4OEvKiVjU5Fm/WDBbrvzQwUk/EQE0epN8oX37xEz1OLVP4Pj7bMUOt9++Zyo4/Lc
-	c+WDFLusFG0cyvOB/M8biDp+CKT+zI70FByA4Cnt2lu9GrH3fu0idz4UBaNup8rH
-	B1QtC3y4+LpY9twmur4JkS/nP7E8hm+QXkjGg=
+	:content-type; s=sasl; bh=EnBplBzm8Ep37gzqZYHxHXC3azU=; b=FX5FIb
+	Bx05Feck1VqLU7hx4PtNMviAM5LF8NA6X1XHMr3ugovjPyHufqtisSRhtILjhUDC
+	N7Of9kazHv0L5AuIxM7brenKqpSjSnjOkWZHtXdF6Zgnkr4KLnbASHkkJLxfffFE
+	twFx6cl/BzPwzgotslErnrC8+GL5L/0iqZFhU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=lkjtSRH/zlJy0Uk5r6enkPrSliAYGxeE
-	ryKyL4/Yw7jyH4ycSucQ+lBCgHOTdCBOQz2hN34FFQzRA3JKV+wun4VPlHKX9oYx
-	AZCjUeCBYvGeBAPtnGcMUcbWtYPOBK8GQk7BIiQ9lfWWNodK2CTEYNHDzIRX891L
-	MCrT1chGZ50=
+	:content-type; q=dns; s=sasl; b=a//q1/xAp/Owv2XsFPwfJ+MNZdjgw14g
+	GniLF/AOeXtPmRTQ6hq+Uu0BCC71dbHuQqQPSJOu0ZX5jchxLn1r9TjiEr8QNE7+
+	zAUma7CNchi+EJ78OWjVK1gBvEMp2RwxlDc/waRzOD5aJLbGr6fFUgAIHqk/Rf0S
+	J2RzZTBPTks=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 54F9734079;
-	Wed, 28 Jan 2015 15:56:00 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 27BC333F45;
+	Wed, 28 Jan 2015 15:49:56 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CB75A34078;
-	Wed, 28 Jan 2015 15:55:59 -0500 (EST)
-In-Reply-To: <CAPig+cR-45NzCK5mu9d=1o8nss54ShYn1Snexx5rT+En8XeMcA@mail.gmail.com>
-	(Eric Sunshine's message of "Wed, 28 Jan 2015 15:30:18 -0500")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8CBC233F43;
+	Wed, 28 Jan 2015 15:49:55 -0500 (EST)
+In-Reply-To: <1422425284-5282-1-git-send-email-luke@diamand.org> (Luke
+	Diamand's message of "Wed, 28 Jan 2015 06:08:03 +0000")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 101B17BE-A730-11E4-9EBF-7BA29F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 36FDEEF2-A72F-11E4-AE76-7BA29F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263117>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263118>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Luke Diamand <luke@diamand.org> writes:
 
-> On Wed, Jan 28, 2015 at 3:12 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Eric Sunshine <sunshine@sunshineco.com> writes:
->>
->>>> +       This option is equivalent to the <repository> argument; the latter
->>>> +       wins if both are specified.
->>>
->>> To what does "latter" refer in this case? (I presume it means the
->>> standalone <repository> argument, though the text feels ambiguous.)
->>>
->>> Also, both the standalone argument and the right-hand-side of --repo=
->>> are spelled "<repository>", so there may be potential for confusion
->>> when talking about <repository> (despite the subsequent "argument").
->>> Perhaps qualifying it as "_standalone_ <repository> argument" might
->>> help.
->>
->> I didn't find that "latter" too hard to understand (I admit that my
->> reading stuttered there, though).
->>
->> I do not think saying "standalone <repository> argument" there would
->> help very much, because there is no mention of "standalone" around
->> there.  The earlier part of the sentence mentions "option" and
->> "argument", so "the repository specified as an argument is used if
->> both this option and an argument are given" or something?
+> My previous change for adding support for "exclude" to git-p4 "sync"
+> was incorrect, missing out a comma, which stopped git-p4 from working.
+> This change fixes that.
 >
-> Yes, that addresses the two (minor) ambiguities and sounds fine.
-> Thinking about it afterward, I came up with this:
+> I've also noticed that t9814-git-p4-rename.sh has stopped working; I'm
+> going to follow up with a fix for that once I've worked out what's
+> wrong with it. There's a small shell syntax problem (missing "esac")
+> but after fixing that it still fails, so I'm not sure what's happening
+> yet. It was discussed a while back.
 >
->     This option is equivalent to the <repository> argument. If both
->     are specified, the command-line argument takes precedence.
+> Luke Diamand (1):
+>   git-p4: correct "exclude" change
+>
+>  git-p4.py | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-Sure, even though I felt a similar stuttering at around 'both' when
-reading it for the first time.
+Thanks.
 
-Let me amend using your phrasing and requeue.
+Will keep out of 'master' for now.  It may not be a bad idea to
+squash this fix (and any futher ones if needed) into a single patch
+when we rewind 'next' after 2.3 final is tagged.
