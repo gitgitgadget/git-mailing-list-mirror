@@ -1,99 +1,74 @@
-From: Olaf Hering <olaf@aepfle.de>
-Subject: Re: implement a stable 'Last updated' in Documentation
-Date: Wed, 28 Jan 2015 09:02:14 +0100
-Message-ID: <20150128080214.GA18851@aepfle.de>
-References: <20150126172409.GA15204@aepfle.de>
- <xmqqd25zkeg7.fsf@gitster.dls.corp.google.com>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: [PATCH 2/2] test-lib.sh: Dynamic test for the prerequisite SANITY
+Date: Wed, 28 Jan 2015 09:28:56 +0100
+Message-ID: <54C89DC8.1050805@web.de>
+References: <54C7B115.7020405@web.de> <xmqqh9vbkgrg.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 29 03:02:38 2015
+To: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1?= =?UTF-8?B?c2Vu?= 
+	<tboegi@web.de>
+X-From: git-owner@vger.kernel.org Thu Jan 29 03:07:25 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YGeRH-0001Lz-JY
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Jan 2015 03:02:35 +0100
+	id 1YGeVx-0005wW-2Z
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Jan 2015 03:07:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756118AbbA2CCb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Jan 2015 21:02:31 -0500
-Received: from mo4-p00-ob.smtp.rzone.de ([81.169.146.163]:19005 "EHLO
-	mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754489AbbA2CCa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jan 2015 21:02:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1422496948; l=2013;
-	s=domk; d=aepfle.de;
-	h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Subject:Cc:To:From:Date;
-	bh=N5kDsIAMFMb1fHw92Tv8eDey3McYmzuHqKjaXZWoxC4=;
-	b=oeuFZJw9TyMiJhE5H9xg3FCULFDggf0pz9QYO1ORPrmRJ+VDaYbjG66TmYGzpMoJB26
-	ar/1l2Cox276KEw172uTakHWkQJN/2wIyQpKdS3FqL31r/lnkwOMQEFQEAE0vnDsEVLo7
-	+QJTHwqBai6htL1zlq6xntWPOON27sB3mb0=
-X-RZG-AUTH: :P2EQZWCpfu+qG7CngxMFH1J+yackYocTD1iAi8x+OWi/zfN1cLnBYfssDIlSQZelGPTkz+JJHiQM2XCL4FiyQ+n/+A0DGQ==
-X-RZG-CLASS-ID: mo00
-Received: from probook.fritz.box ([2001:a60:1087:7e01:1ec1:deff:feb9:bb48])
-	by smtp.strato.de (RZmta 37.1 AUTH)
-	with ESMTPSA id a0516ar0S82E6dv
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate);
-	Wed, 28 Jan 2015 09:02:14 +0100 (CET)
-Received: by probook.fritz.box (Postfix, from userid 1000)
-	id 6113E5016F; Wed, 28 Jan 2015 09:02:14 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <xmqqd25zkeg7.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.22.rev6346 (2013-10-29)
+	id S1761298AbbA2CHP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Jan 2015 21:07:15 -0500
+Received: from mout.web.de ([212.227.15.3]:53873 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1761232AbbA2CHL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jan 2015 21:07:11 -0500
+Received: from birne.lan ([78.68.171.17]) by smtp.web.de (mrweb002) with
+ ESMTPSA (Nemesis) id 0MEER6-1YROUe3UvA-00FWxz; Wed, 28 Jan 2015 09:29:00
+ +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
+In-Reply-To: <xmqqh9vbkgrg.fsf@gitster.dls.corp.google.com>
+X-Provags-ID: V03:K0:9f+iAu476SC22vX5M0YZsGQNCG22t6visCdJzgGv+WZ3szLqVIV
+ pNyCewVa03OFzw11qh7WcKD8PifGhrw6KZofK9ByJz5rApRbzULQLUTgphoCxmX5gpk1+Cz
+ fJWiy60xR4i+pog4akT6KCgLtEqp+Vm5afw0PiE2/tix9hrf+3jmUNQxsRP3Momwmwu7UKY
+ 6p7/CHTt7k13ps1F7WvDA==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263133>
 
-On Tue, Jan 27, Junio C Hamano wrote:
+On 27.01.15 23:20, Junio C Hamano wrote:
 
-> Olaf Hering <olaf@aepfle.de> writes:
-> 
-> > Several files in Documentation have an unstable 'Last updated' timestamp. The
-> > reason is that their mtime changes every time, which prevents reproducible
-> > builds.
-> >
-> > 341 technical/api-index.txt: technical/api-index-skel.txt \
-> > 342         technical/api-index.sh $(patsubst %,%.txt,$(API_DOCS))
-> > 343         $(QUIET_GEN)cd technical && '$(SHELL_PATH_SQ)' ./api-index.sh
-> >
-> > 388 howto-index.txt: howto-index.sh $(wildcard howto/*.txt)
-> > 389         $(QUIET_GEN)$(RM) $@+ $@ && \
-> > 390         '$(SHELL_PATH_SQ)' ./howto-index.sh $(sort $(wildcard howto/*.txt)) >$@+ && \
-> > 391         mv $@+ $@
-> >
-> > 399 $(patsubst %.txt,%.html,$(wildcard howto/*.txt)): %.html : %.txt
-> > 400         $(QUIET_ASCIIDOC)$(RM) $@+ $@ && \
-> > 401         sed -e '1,/^$$/d' $< | \
-> > 402         $(TXT_TO_HTML) - >$@+ && \
-> > 403         mv $@+ $@
-> 
-> All of them seem to have dependencies so it seems to me that two
-> builds back to back without actually changing their input would not
-> re-build anything.  What am I missing???
+> How about extending it like this (not tested)?
+Thanks, this looks good: the test is more extensive,
+I can test this next week.
 
-Per default the files referenced do not exist, so a build from releases
-will generate the files. But I agree, perhaps there should be some
-refactoring to handle dependencies properly.
-In any case, if the 'Last updated' is unavoidable some reference is
-required, see my patch in the other mail.
+>=20
+> -- >8 --
+> From: Torsten B=C3=B6gershausen <tboegi@web.de>
+> Date: Tue, 27 Jan 2015 16:39:01 +0100
+> Subject: [PATCH] test-lib.sh: set prerequisite SANITY by testing what=
+ we really need
+>=20
+> What we wanted out of the SANITY precondition is that the filesystem
+> behaves sensibly with permission bits settings.
+>=20
+>  - You should not be able to remove a file in a read-only directory,
+>=20
+>  - You should not be able to tell if a file in a directory exists if
+>    the directory lacks read or execute permission bits.
+>=20
+> We used to cheat by approximating that condition with "is the /
+> writable?" test and/or "are we running as root?" test.  Neither test
+> is sufficient or appropriate in more exotic environments like
+> Cygwin.
+How about going this direction:
 
-> > What file timestamp should be used for them? Likely "../version"?
-> 
-> I tend to think the "Last updated" timestamp taken from the
-> filesystem timestamp is a bad practice inherited by these tools from
-> the days back when nobody used any revision control systems.
-
-I'm not sure. The bug is that such 'Last updated' line exists at all in
-the default output. Noone asked for it, noone really needs it. And it
-makes it impossible to get reproducible builds.
-But so far I found no way to avoid the 'Last updated' output. The docs
-and google suggest something like :last-updated-time!:, which did not
-work for me.
-
-Olaf
+We used to cheat by approximating that condition with "is the /
+writable?" test and/or "are we running as root?" test. Neither test
+is sufficient or appropriate, especially in environments like
+Cygwin, Mingw or Mac OS X.
