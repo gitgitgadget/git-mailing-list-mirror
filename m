@@ -1,145 +1,65 @@
 From: Duy Nguyen <pclouds@gmail.com>
 Subject: Re: [PATCH] git-new-workdir: support submodules
-Date: Wed, 28 Jan 2015 17:50:07 +0700
-Message-ID: <20150128105007.GA761@lanh>
+Date: Wed, 28 Jan 2015 17:53:43 +0700
+Message-ID: <CACsJy8C1zBawTbeNcr+JtzTwHupb8jpivL-8Tvr=zjAAUhMLLw@mail.gmail.com>
 References: <CAGXKyzHoLLgkXk0X4UVtLBEryqsHriKmmO5+2iVWk3mR8y7=Hw@mail.gmail.com>
  <CAGXKyzEwAjCNTxRtjSuFh9b6BzzOYKOQryKtXBGY3_hkkFvyVw@mail.gmail.com>
- <xmqqegqlnelu.fsf@gitster.dls.corp.google.com>
- <CAGXKyzEPWrbRFOhvCBm=2Z50zso85G50z-nLd_wyzyeEADQSmw@mail.gmail.com>
- <xmqqa916nq4p.fsf@gitster.dls.corp.google.com>
- <CAGXKyzEYVsz-nRs52pTKo+6JLBiO9daU_C3qev3H43=Vzuygiw@mail.gmail.com>
- <xmqqtwzem776.fsf@gitster.dls.corp.google.com>
- <54C7CC6D.80906@web.de>
+ <xmqqegqlnelu.fsf@gitster.dls.corp.google.com> <CAGXKyzEPWrbRFOhvCBm=2Z50zso85G50z-nLd_wyzyeEADQSmw@mail.gmail.com>
+ <xmqqa916nq4p.fsf@gitster.dls.corp.google.com> <CAGXKyzEYVsz-nRs52pTKo+6JLBiO9daU_C3qev3H43=Vzuygiw@mail.gmail.com>
+ <xmqqtwzem776.fsf@gitster.dls.corp.google.com> <54C7CC6D.80906@web.de> <20150128105007.GA761@lanh>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Craig Silverstein <csilvers@khanacademy.org>,
-	git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+	Git Mailing List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>
 To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Thu Jan 29 03:50:33 2015
+X-From: git-owner@vger.kernel.org Thu Jan 29 04:00:45 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YGfBf-0005Fs-3H
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Jan 2015 03:50:31 +0100
+	id 1YGfLX-0006dI-Qy
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Jan 2015 04:00:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760808AbbA2CuZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Jan 2015 21:50:25 -0500
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:41259 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760620AbbA2CuX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jan 2015 21:50:23 -0500
-Received: by mail-pa0-f49.google.com with SMTP id fa1so32994299pad.8
-        for <git@vger.kernel.org>; Wed, 28 Jan 2015 18:50:22 -0800 (PST)
+	id S1763490AbbA2DAi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Jan 2015 22:00:38 -0500
+Received: from mail-ie0-f177.google.com ([209.85.223.177]:38070 "EHLO
+	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755163AbbA2DAf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jan 2015 22:00:35 -0500
+Received: by mail-ie0-f177.google.com with SMTP id vy18so28297654iec.8
+        for <git@vger.kernel.org>; Wed, 28 Jan 2015 19:00:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=m7M8GPexheOKw7OPQEfTxUIUN+2pfFSwWHwJse9HZdY=;
-        b=mEy6kn7Gyk0BQP26n1wLClw8zJBoM6HIBKAk635Q8s753iI4kj5os4lajBmn8MsF5V
-         OQDQ+VnQ/gHNwzHudRuDq6/pL5Du2YgkK9ai1AgM2AKhbtUBpLgrUHjejb5wctfvO2/z
-         FW8ezmoqYQGtLXE0yE4Dfq8vXOzUszzomukR4qYLMPPHOHtAnLQJtt1dZEQq2+yPMXLx
-         2P01vXTwYttr4OQB8dDVIhGlEbfjezlLFD5H0rTWt1uiwX3L+YcPZkLX3jurHv5veXOM
-         pPYEPHvpDuO7EX8rgAdSozGQSSeFXzKJROva24XF7wP1pbmlZ8Xhea/YTq9OVDDXV2XL
-         ZXkw==
-X-Received: by 10.68.96.194 with SMTP id du2mr4537015pbb.107.1422442213283;
-        Wed, 28 Jan 2015 02:50:13 -0800 (PST)
-Received: from lanh ([115.73.229.37])
-        by mx.google.com with ESMTPSA id ns6sm4276277pbb.77.2015.01.28.02.50.10
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 28 Jan 2015 02:50:12 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Wed, 28 Jan 2015 17:50:07 +0700
-Content-Disposition: inline
-In-Reply-To: <54C7CC6D.80906@web.de>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=WDGE9PjDff4smZK2lDFS7xXqEZR4YeoE2d3El4br9lE=;
+        b=V5hmz8CzMDG1uGqTz4TgbowoRYmZdUgAaI9uSe7KnUbNwmkoa4O3sHz/YV2cD/thKQ
+         ZzzpE/ypSUbDF2zx9qb/1LX/kDwbDSgrOss5P7cUQX6/sMV4lTebocnn7kUix35vbRaZ
+         Oj5re7fMaoHN6ROKVe3n5Th6r4IBJPCDoAznVWbjp4daZ/mOO0JCyMRXm+pDS42jOf6S
+         R69HeFE13eWjVgxQiNwFiVXGcjIpaDhzvFcf1elI/++WcEejE/qBNXfklUY1XVBYJAv6
+         GPXX/6y/qKX3hWIib8iEZnB6Ho4rc511kdOj4LWC2GXxIgZRFZYUPg+nDtPF+dEIo30Z
+         rTOQ==
+X-Received: by 10.107.10.214 with SMTP id 83mr3193418iok.16.1422442453998;
+ Wed, 28 Jan 2015 02:54:13 -0800 (PST)
+Received: by 10.107.131.34 with HTTP; Wed, 28 Jan 2015 02:53:43 -0800 (PST)
+In-Reply-To: <20150128105007.GA761@lanh>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263135>
 
-On Tue, Jan 27, 2015 at 06:35:41PM +0100, Jens Lehmann wrote:
-> > One way to do so might be to move the bits it stores in the config
-> > file to somewhere else that is more closely tied to the checkout
-> > state and handle that similar to .git/index and .git/HEAD when it
-> > comes to multiple work-trees.
-> 
-> Yup, the idea of separating config entries into worktree and repo
-> specific files sounds like the solution for these problems.
+On Wed, Jan 28, 2015 at 5:50 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+> For git-new-workdir.sh, perhaps we can teach include.path to make
+> config.local path relative to where the config symlink is, not where
+> the symlink target is.
 
-OK, would this work? This PoC patch adds a config key namespace
-local.* that is written to $GIT_DIR/config.local instead of
-$GIT_DIR/config (I still need to ban local.* in global config
-files). This config.local is loaded togethr with $GIT_DIR/config.
-
-For nd/multiple-work-trees we can transparently map
-$GIT_DIR/config.local to $SUPER/worktrees/<id>/config.local. For
-git-new-workdir.sh, perhaps we can teach include.path to make
-config.local path relative to where the config symlink is, not where
-the symlink target is.
-
-We can then teach setup.c to read local.core.worktree if core.worktree
-is not present, and more apdation in git-submodule.sh.. I don't expect
-big changes because git-submodule.sh just needs to read some other
-config keys and dont need to care if git-new-workdir.sh or
-nd/multiple-work-trees is being used.
-
--- 8< --
-diff --git a/config.c b/config.c
-index 752e2e2..237bd8e 100644
---- a/config.c
-+++ b/config.c
-@@ -1177,6 +1177,15 @@ int git_config_system(void)
- 	return !git_env_bool("GIT_CONFIG_NOSYSTEM", 0);
- }
- 
-+static int config_local_filter(const char *var, const char *value, void *data)
-+{
-+	struct config_include_data *inc = data;
-+
-+	if (!starts_with(var, "local."))
-+		return error("$GIT_DIR/config.local can only contain local.*");
-+	return inc->fn(var, value, inc->data);
-+}
-+
- int git_config_early(config_fn_t fn, void *data, const char *repo_config)
- {
- 	int ret = 0, found = 0;
-@@ -1202,8 +1211,19 @@ int git_config_early(config_fn_t fn, void *data, const char *repo_config)
- 	}
- 
- 	if (repo_config && !access_or_die(repo_config, R_OK, 0)) {
-+		char *wt_config;
- 		ret += git_config_from_file(fn, repo_config, data);
- 		found += 1;
-+		wt_config = git_pathdup("config.local");
-+		if (!access_or_die(wt_config, R_OK, 0)) {
-+			struct config_include_data inc = CONFIG_INCLUDE_INIT;
-+			inc.fn = fn;
-+			inc.data = data;
-+			ret += git_config_from_file(config_local_filter,
-+						    wt_config, &inc);
-+			found += 1;
-+		}
-+		free(wt_config);
- 	}
- 
- 	switch (git_config_from_parameters(fn, data)) {
-@@ -1942,8 +1962,12 @@ int git_config_set_multivar_in_file(const char *config_filename,
- 
- 	store.multi_replace = multi_replace;
- 
--	if (!config_filename)
--		config_filename = filename_buf = git_pathdup("config");
-+	if (!config_filename) {
-+		if (starts_with(key, "local."))
-+			config_filename = filename_buf = git_pathdup("config.local");
-+		else
-+			config_filename = filename_buf = git_pathdup("config");
-+	}
- 
- 	/*
- 	 * The lock serves a purpose in addition to locking: the new
--- 8< --
+Ignore this part. I originally wanted to use include.path to load
+config.local, but there was an easier way. With this patch, I think
+config.local is already per worktree that is created by
+git-new-workdir.sh.
+-- 
+Duy
