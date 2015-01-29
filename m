@@ -1,62 +1,77 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Testsuite regression with perl 5.8.0 [Re: [ANNOUNCE] Git
- v2.3.0-rc2]
-Date: Thu, 29 Jan 2015 10:52:15 -0500
-Message-ID: <20150129155214.GC742@peff.net>
-References: <xmqqpp9ziyqh.fsf@gitster.dls.corp.google.com>
- <54CA3611.1000804@statsbiblioteket.dk>
+From: Trygve Aaberge <trygveaa@gmail.com>
+Subject: [PATCH] completion: Support exclude prefix, ^<rev>
+Date: Thu, 29 Jan 2015 18:05:54 +0100
+Message-ID: <20150129170554.GP8104@aaberge.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: "Tom G. Christensen" <tgc@statsbiblioteket.dk>
-X-From: git-owner@vger.kernel.org Thu Jan 29 16:52:23 2015
+Cc: SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 29 18:06:05 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YGrOH-00014v-Gy
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Jan 2015 16:52:21 +0100
+	id 1YGsXb-00078i-96
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Jan 2015 18:06:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752851AbbA2PwR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Jan 2015 10:52:17 -0500
-Received: from cloud.peff.net ([50.56.180.127]:43021 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752375AbbA2PwR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jan 2015 10:52:17 -0500
-Received: (qmail 26856 invoked by uid 102); 29 Jan 2015 15:52:16 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 29 Jan 2015 09:52:16 -0600
-Received: (qmail 18650 invoked by uid 107); 29 Jan 2015 15:52:45 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 29 Jan 2015 10:52:45 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 29 Jan 2015 10:52:15 -0500
+	id S1754131AbbA2RF6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Jan 2015 12:05:58 -0500
+Received: from mail-lb0-f173.google.com ([209.85.217.173]:45657 "EHLO
+	mail-lb0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753792AbbA2RF6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jan 2015 12:05:58 -0500
+Received: by mail-lb0-f173.google.com with SMTP id p9so30456823lbv.4
+        for <git@vger.kernel.org>; Thu, 29 Jan 2015 09:05:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        bh=l1YYAv7BPTH7pk6QLHV4D3eOLHXp8wQaWxwzcF+4yA4=;
+        b=MEH2Nf9Gf5dMGVb04LahnWM2Wp38IZ+wVmp+xQRN4Staj32b8B+H8TG9gUVQLJ8H60
+         H3Yyu/BqjlxUnlOjlLBf8kWT1Q9yh8SeorJLGs02MSFIwTqQ2U9Bjs82KyvNg6AFKfSJ
+         DJlb5STrkHOao7KbtoYqeh6EVEpkYHUaePeYbnXu47U8c+tOZKvYB2ZaLMZmIJ92P166
+         vqBV4BKzhuKAnHi05N6lGQEctS3oVOdfV39oOs9HBxXs/lL2ISXbZ4zcoaUellQ/bkBA
+         35wL7bInqFVaA7HJmx8+UbQUtEJnMLiREupR6lU2F85+rHHdg3c2/FiqTas3j5kIsgnv
+         xMYQ==
+X-Received: by 10.112.57.226 with SMTP id l2mr2032344lbq.27.1422551156603;
+        Thu, 29 Jan 2015 09:05:56 -0800 (PST)
+Received: from aaberge.net (kramer.samfundet.no. [2001:67c:29f4::72])
+        by mx.google.com with ESMTPSA id s7sm2216429las.17.2015.01.29.09.05.55
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 29 Jan 2015 09:05:55 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <54CA3611.1000804@statsbiblioteket.dk>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263151>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263153>
 
-On Thu, Jan 29, 2015 at 02:30:57PM +0100, Tom G. Christensen wrote:
+When using the exclude pattern, ^<rev>, the completion did not work.
+This enables completion after ^ in the same way that completion after ..
+is done.
 
-> On 28/01/15 00:35, Junio C Hamano wrote:
-> >A release candidate Git v2.3.0-rc2 is now available for testing
-> >at the usual places.
-> >
-> 
-> Commit 2cf770 added testing of the --[no-]xmailer option to git send-email
-> in t9001-send-email.sh
-> Unfortunately it used the modern Getopt::long style of --no-<option> to
-> negate the option which is not supported with Getopt::Long 2.32 as shipped
-> with perl 5.8.0 on RHEL3 causing the tests to fail.
-> 
-> Changing the --no-xmailer option to the old --noxmailer style allows the
-> tests to pass.
+Signed-off-by: Trygve Aaberge <trygveaa@gmail.com>
+---
+ contrib/completion/git-completion.bash | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-Both this and the curl-version issue you reported seem to have simple
-solutions that you've already worked out and tested. Would you like to
-express them in the form of patches so they can be applied? :)
-
--Peff
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 8cfee95..3036dac 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -496,6 +496,10 @@ __git_complete_revlist_file ()
+ 		cur_="${cur_#*..}"
+ 		__gitcomp_nl "$(__git_refs)" "$pfx" "$cur_"
+ 		;;
++	^*)
++		cur_="${cur_#^}"
++		__gitcomp_nl "$(__git_refs)" "^" "$cur_"
++		;;
+ 	*)
+ 		__gitcomp_nl "$(__git_refs)"
+ 		;;
+-- 
+2.2.2
