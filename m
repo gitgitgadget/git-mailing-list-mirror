@@ -1,103 +1,155 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: git loses commits on git pull --rebase with Dictator and
- Lieutenants Workflow
-Date: Fri, 30 Jan 2015 06:27:03 +1300
-Message-ID: <CAFOYHZDLPr1sJ2Agyq6tT=ahpgNp=eL_Q4c=-iDd9i_JqFNTcg@mail.gmail.com>
-References: <loom.20150128T203924-608@post.gmane.org>
+From: "Tom G. Christensen" <tgc@statsbiblioteket.dk>
+Subject: Re: All gnupg tests broken on el4 [Re: [ANNOUNCE] Git v2.3.0-rc2]
+Date: Thu, 29 Jan 2015 18:34:54 +0100
+Message-ID: <54CA6F3E.4060804@statsbiblioteket.dk>
+References: <xmqqpp9ziyqh.fsf@gitster.dls.corp.google.com> <54CA3169.4020701@statsbiblioteket.dk> <20150129154319.GA742@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: GIT <git@vger.kernel.org>
-To: Dick <dick@mrns.nl>
-X-From: git-owner@vger.kernel.org Thu Jan 29 18:27:12 2015
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jan 29 18:35:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YGss3-0002qz-0S
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Jan 2015 18:27:11 +0100
+	id 1YGsze-0002V2-LM
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Jan 2015 18:35:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752787AbbA2R1F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Jan 2015 12:27:05 -0500
-Received: from mail-pa0-f47.google.com ([209.85.220.47]:48472 "EHLO
-	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753623AbbA2R1D (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jan 2015 12:27:03 -0500
-Received: by mail-pa0-f47.google.com with SMTP id lj1so41464737pab.6
-        for <git@vger.kernel.org>; Thu, 29 Jan 2015 09:27:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=iEEuds+Zx2ifl5WWgnWrZEYwTSRAhOXKYwMnqgAhtl4=;
-        b=s0Rdx9fewlT8vWLfQzhXLNuN0ThoULII8xKaryocWxlyPSvx05+F6tm3HE6gifEfFB
-         Us2g9HA3EiCPT01kDzKCkM6gdbmHCr5B6FhuDDy60fyf6k9p71iZ0Pjr21XkQx1qRj1L
-         fwciERfrYvogl2DhVCEvAsYh42AFdysDwx2r06KZ8kLAkSBbwktzCOABEfq1isxH2qhW
-         NgV7Axifsrac8Pb/QciHC07qL+liMYcZN2+sctH2cAiilzW2vNLhFLsZYgZGdCF0bglF
-         Ic9sdnWNBcUIpY/8kpZkLDpKmmQr+Br4FGjB7bJQ7FWeWTZh1Ump1WMWZfXcNEJ9oV1S
-         Scwg==
-X-Received: by 10.68.189.167 with SMTP id gj7mr2500396pbc.58.1422552423183;
- Thu, 29 Jan 2015 09:27:03 -0800 (PST)
-Received: by 10.70.109.199 with HTTP; Thu, 29 Jan 2015 09:27:03 -0800 (PST)
-In-Reply-To: <loom.20150128T203924-608@post.gmane.org>
+	id S1754938AbbA2Re7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Jan 2015 12:34:59 -0500
+Received: from sbexch03.sb.statsbiblioteket.dk ([130.225.24.68]:6263 "EHLO
+	sbexch03.sb.statsbiblioteket.dk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753623AbbA2Re6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 29 Jan 2015 12:34:58 -0500
+Received: from [172.18.234.199] (172.18.234.199) by
+ sbexch03.sb.statsbiblioteket.dk (130.225.24.68) with Microsoft SMTP Server id
+ 8.3.348.2; Thu, 29 Jan 2015 18:34:55 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.8.0
+In-Reply-To: <20150129154319.GA742@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263154>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263155>
 
-Hi,
+On 29/01/15 16:43, Jeff King wrote:
+> Weird. The pubkeys are there in keyring.gpg; I wonder why the older
+> version of gpg has trouble extracting them (and how one was _supposed_
+> to export secret keys at that time).
+>
 
-On Thu, Jan 29, 2015 at 8:49 AM, Dick <dick@mrns.nl> wrote:
-> Hi all,
->
-> I've encountered a problem with the Dictator and Lieutenants Workflow. I've
-> configured remote origin so it pulls from the "blessed repository" and
-> pushes to the "developer public" repository.
->
-> When the "blessed repository" has the same branch name as the "developer
-> public" repository git pull seems to drop commits.
->
-> I've create a test script to demonstrate, left is the blessed repository,
-> right.git is the developer public and right is the developer private
-> repository.
->
-> rm -rf left/ right/ right.git/
-> git init left
-> cd left/
-> echo "hello world" > test.txt
-> git add test.txt
-> git commit -m .
-> cd ..
-> git clone --bare left right.git
-> git clone right.git/ right
-> cd right
-> git remote set-url origin ../left
-> git remote set-url origin --push ../right.git
-> echo "bye world" >> test.txt
-> git commit -a -m .
-> git push
-> git log
-> echo "start: two commits, ok"
-> git fetch
-> git rebase origin/master
-> git log
-> echo "manual fetch/rebase: two commits, still ok"
-> git pull --rebase
-> git log
-> echo "pull: one commits, oops?"
->
-> Am I using git wrong or is this a git bug?
->
-> Thanks for having a look!
->
-> Dick
+Importing the unmodified keyring.gpg with 1.2.6 yields this:
+$ gpg --homedir "$GNUPGHOME" --import /tmp/keyring.gpg
+gpg: keyring `/home/tgc/gpghome/secring.gpg' created
+gpg: keyring `/home/tgc/gpghome/pubring.gpg' created
+gpg: key CDDE430D: secret key imported
+gpg: key B7227189: secret key imported
+gpg: Total number processed: 2
+gpg:       secret keys read: 2
+gpg:   secret keys imported: 2
+$ gpg --homedir "$GNUPGHOME" --list-keys
+$ gpg --homedir "$GNUPGHOME" --list-secret-keys
+/home/tgc/gpghome/secring.gpg
+-----------------------------
+sec  1024D/CDDE430D 2007-06-07 C O Mitter <committer@example.com>
+ssb  2048g/7703B0E5 2007-06-07
 
-I can confirm the behaviour that Dick is seeing with git 2.0.4
-(happens to be what I was running on my laptop). Just rebuilding
-2.3.0-rc2 now.
+sec  2048R/B7227189 2013-03-22 Eris Discordia <discord@example.net>
+ssb  2048R/29472784 2013-03-22
+$
 
-AFAIK 'git fetch && git rebase origin/master' and 'git pull -r' in the
-scenario above should be roughly equivalent.
+> So if I understand you correctly, the tests should pass with the patch
+> below?
+>
 
-I'll see if I can work the testcase above into an actual test script.
+Yes, adding the pubkeys as a separate entity makes gpg 1.2.6 understand 
+things fine.
+
+gnupg 1.2.6 with the patched keyring:
+$ gpg --homedir "$GNUPGHOME" --import /tmp/keyring.gpg
+gpg: keyring `/home/tgc/gpghome/secring.gpg' created
+gpg: keyring `/home/tgc/gpghome/pubring.gpg' created
+gpg: key CDDE430D: secret key imported
+gpg: key B7227189: secret key imported
+gpg: /home/tgc/gpghome/trustdb.gpg: trustdb created
+gpg: key CDDE430D: public key "C O Mitter <committer@example.com>" imported
+gpg: key B7227189: public key "Eris Discordia <discord@example.net>" 
+imported
+gpg: Total number processed: 4
+gpg:               imported: 2  (RSA: 1)
+gpg:       secret keys read: 2
+gpg:   secret keys imported: 2
+$ gpg --homedir "$GNUPGHOME" --list-keys
+/home/tgc/gpghome/pubring.gpg
+-----------------------------
+pub  1024D/CDDE430D 2007-06-07 C O Mitter <committer@example.com>
+sub  2048g/7703B0E5 2007-06-07
+
+pub  2048R/B7227189 2013-03-22 Eris Discordia <discord@example.net>
+sub  2048R/29472784 2013-03-22
+$
+
+The patch should work as posted, though I have only tested the new 
+keyring by hand as shown above.
+
+> It feels a bit hacky, and I wish I knew more about why the current file
+> doesn't work (i.e., if we did "gpg --export-secret-keys" with v1.2.6,
+> would it produce different output that can be read by both versions?).
+
+I grabbed the binary keyrings from 1e3eefb^ and pointed gpg 1.2.6 at them.
+
+$ gpg --homedir "$GNUPGHOME" --armor --export-secret-keys CDDE430D  > 
+CDDE430D.secret.key
+$ gpg --homedir "$PWD/gpghome3" --import CDDE430D.secret.key
+gpg: keyring `/home/tgc/gpghome3/secring.gpg' created
+gpg: keyring `/home/tgc/gpghome3/pubring.gpg' created
+gpg: key CDDE430D: secret key imported
+gpg: Total number processed: 1
+gpg:       secret keys read: 1
+gpg:   secret keys imported: 1
+$ gpg --homedir "$PWD/gpghome3" --list-keys
+$
+
+No public key imported however the pubkey *was* exported to 
+CDDE430D.secret.key
+
+Importing that same keyfile using gnupg 1.4.5 on an RHEL5 host:
+$ gpg --homedir "$PWD/gpghome" --import /tmp/CDDE430D.secret.key
+gpg: keyring `/home/tgc/gpghome/secring.gpg' created
+gpg: keyring `/home/tgc/gpghome/pubring.gpg' created
+gpg: key CDDE430D: secret key imported
+gpg: /home/tgc/gpghome/trustdb.gpg: trustdb created
+gpg: key CDDE430D: public key "C O Mitter <committer@example.com>" imported
+gpg: Total number processed: 1
+gpg:               imported: 1
+gpg:       secret keys read: 1
+gpg:   secret keys imported: 1
+$ gpg --homedir "/home/tgc/gpghome" --list-keys
+/home/tgc/gpghome/pubring.gpg
+-----------------------------
+pub   1024D/CDDE430D 2007-06-07
+uid                  C O Mitter <committer@example.com>
+sub   2048g/7703B0E5 2007-06-07
+$
+
+So gnupg 1.2.6 can export fine but cannot correctly import the same.
+
+> Another option is to just declare that version old and broken, and skip
+> the tests (either by checking its version, or just checking after we
+> import the keys that we can actually _use_ them).
+>
+That would seem a bit heavy-handed as it is otherwise working fine with 
+the old gnupg.
+
+<snip patch>
+
+-tgc
+
+
+-- 
+Tom G. Christensen - Systemmedarbejder - IT-drift
+Statsbiblioteket - Victor Albecks Vej 1 - 8000 Aarhus C
+Tlf: (+45) 8946 2027 - Fax: (+45) 8946 2029
+CVR/SE: 10100682 - EAN: 5798000791084
