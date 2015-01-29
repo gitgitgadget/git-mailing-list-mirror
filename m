@@ -1,69 +1,78 @@
-From: Valery Yundin <yuvalery@gmail.com>
-Subject: git svn import failure : write .git/Git_svn_hash_BmjclS: Bad file descriptor
-Date: Thu, 29 Jan 2015 23:03:47 +0100
-Message-ID: <CABNxngNDwf_Cy77OzvMg__kCNoTz5y1a2KKG1vobYjE_m_aLkQ@mail.gmail.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH] apply: refuse touching a file beyond symlink
+Date: Thu, 29 Jan 2015 14:15:13 -0800
+Message-ID: <CAGZ79kYqGoLGMkXChH+-63JtGbAAb8gnAbUHYuJYv=NUUNt4XQ@mail.gmail.com>
+References: <CA+5PVA7rVy6Li_1haj1QmGG0D6avLB5Xej=2YGt6K-11kKHR5A@mail.gmail.com>
+	<CA+5PVA4bs6CYU8MHn1JqBjnb-5wYJT2Tjqa65=v2uSPL8c7dYw@mail.gmail.com>
+	<CA+55aFxbY21vBbPs5qCFPT1HSBbaeS+Z2Fr9So1r3rXrMWe_ZQ@mail.gmail.com>
+	<xmqqzj94lx7z.fsf@gitster.dls.corp.google.com>
+	<xmqqa914klg0.fsf@gitster.dls.corp.google.com>
+	<xmqqfvauf7ej.fsf@gitster.dls.corp.google.com>
+	<xmqqtwzadrj8.fsf@gitster.dls.corp.google.com>
+	<xmqqa911e2ot.fsf_-_@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 29 23:03:54 2015
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Josh Boyer <jwboyer@fedoraproject.org>,
+	"Linux-Kernel@Vger. Kernel. Org" <linux-kernel@vger.kernel.org>,
+	twaugh@redhat.com, Linus Torvalds <torvalds@linux-foundation.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: linux-kernel-owner@vger.kernel.org Thu Jan 29 23:15:40 2015
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YGxBp-00066J-20
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Jan 2015 23:03:53 +0100
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1YGxNB-00028a-4K
+	for glk-linux-kernel-3@plane.gmane.org; Thu, 29 Jan 2015 23:15:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754996AbbA2WDt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Jan 2015 17:03:49 -0500
-Received: from mail-qg0-f41.google.com ([209.85.192.41]:40060 "EHLO
-	mail-qg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750780AbbA2WDs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jan 2015 17:03:48 -0500
-Received: by mail-qg0-f41.google.com with SMTP id q108so34971372qgd.0
-        for <git@vger.kernel.org>; Thu, 29 Jan 2015 14:03:47 -0800 (PST)
+	id S1758923AbbA2WPc (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Thu, 29 Jan 2015 17:15:32 -0500
+Received: from mail-ie0-f181.google.com ([209.85.223.181]:37558 "EHLO
+	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758720AbbA2WPQ (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Thu, 29 Jan 2015 17:15:16 -0500
+Received: by mail-ie0-f181.google.com with SMTP id rp18so79927iec.12
+        for <linux-kernel@vger.kernel.org>; Thu, 29 Jan 2015 14:15:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:date:message-id:subject:from:to:content-type;
-        bh=Gn87kh54GIBkihkgWoSXbc8D03ERx+ueG+Kpkz86lQs=;
-        b=H4vJn9t1d8VLy+89Oc8iylvPJPMlNlPg/0KGhZa/iA4RDIWIsS3NAGnb7DzH8ujKPM
-         Tn6et8QYBraIeFcXzhy1cYIU8/DeQ4Dwr35BdH5DpUlA6a7CBHQPsnFHtvJBZWc3IjaG
-         LRHzATbjW4eifDRvU+4ax3M1Z1l9Hie87dAvnJksiIIu+gw9Mqt6zOiwCczTcssn+FFe
-         5yd0UCqKW3Gweu/XKND1m7fFakq16u+gZwOvRGS2uFoyCG/VdElOkc8LE+miW1KPJ3br
-         bzpKnPZ8Bcsij2/tsqFnZMrqyaMbLfS/sMihIVZUOU2YTqWzlxdpiCRhgF6yxtqIEEZx
-         lHjw==
-X-Received: by 10.224.65.137 with SMTP id j9mr5581293qai.47.1422569027846;
- Thu, 29 Jan 2015 14:03:47 -0800 (PST)
-Received: by 10.96.46.170 with HTTP; Thu, 29 Jan 2015 14:03:47 -0800 (PST)
-X-Google-Sender-Auth: xjUc6Ib1yp5i12r_Q8s5_jEpDCY
-Sender: git-owner@vger.kernel.org
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=nfk7pESKXpOrsdAxt3K0C8+z8ZMlwYXqpFQ/12E8Bqs=;
+        b=ejsvE5hnTF2Uz1xEop4zmII7EwouI3MMe8tfqhmqYxwMwCM11C4JyvmGP3aKvPhXIh
+         O9xrVaRrx8LD0bAXKKWjP6SnYVo44MKIK4FJFHi8phiMZzTPiuQu5llW6HHjwwVipUon
+         zBb+awWzxm4x39JOkuSfkiPJYLcYgt5Qgm6EjOK8TX5QsvLww9vZ3vAXazmoB5qiTFZ1
+         MgEh5QUIb4lrbQUbn67xCkagGxeDKtL1yZg7sNwhTIu03L5gkibgQmdnN+SZVdWWptyM
+         lGMf1UsmPtSwmIU7sSWfuA7Pfde2o3ylhDCvN/DLaCcru+PoTva0B/+lVNLsEjEbAVge
+         OKYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=nfk7pESKXpOrsdAxt3K0C8+z8ZMlwYXqpFQ/12E8Bqs=;
+        b=fgRnhn93rPoVqCL+IJ8qnp8m7u9ZvGLRx/6TYOo9TaleBOiKGmfrdJpUxHRRpXBJK/
+         Lm9CcpHFuDYztgSGw6VAAyrs5jX7UCkYZcvBHCqVCL9ZsroYGMWCxXoDI7VlWw24zYJJ
+         SwCxjRit1/C458XfWRsXkKWXLNRD3I77hfIfdjNAdjRXJkVHtWb7AqbutzjgiKoklJpy
+         hkTj3lSGwwxoCObO3fYM0pKW89AmH/Nb6mFoWOJNRkGJFdGLu/mptm2Zk58r6guV3Eio
+         +RT/s1fAepFxJp2HHF/EITWGVdFi8IlzGUjLinGOeLZu05lItdLs7tuFSkFGc7wQi03j
+         2Mtg==
+X-Gm-Message-State: ALoCoQm9cDoPjJHsHL2aDPdJK/QmtSM/adNqhMkZKrvSW1TYT7NI1xIP9pVo9Ew0jjkZVUYs8O47
+X-Received: by 10.50.79.161 with SMTP id k1mr3772029igx.14.1422569713068; Thu,
+ 29 Jan 2015 14:15:13 -0800 (PST)
+Received: by 10.50.26.42 with HTTP; Thu, 29 Jan 2015 14:15:13 -0800 (PST)
+In-Reply-To: <xmqqa911e2ot.fsf_-_@gitster.dls.corp.google.com>
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263163>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263164>
 
-Hi,
+On Thu, Jan 29, 2015 at 12:45 PM, Junio C Hamano <gitster@pobox.com> wrote:
 
-Looks like there might be a bug in SVN import code. Here is the
-command that fails
+> +
+> +test_expect_success SYMLINKS 'do not follow symbolic link (same input)' '
+> +
+> +       # same input creates a confusihng symbolic link
 
-> git svn clone --username anonymous svn://powhegbox.mib.infn.it/trunk/POWHEG-BOX
-
-r217 = 2e6cdb1f4604b2256195590fa8275632971eac42 (refs/remotes/git-svn)
-        M       lhefread.f
-        M       Z_plus_jet/Born.f
-        M       Z_plus_jet/powheg.input
-        M       Z_plus_jet/init_processes.f
-        D       JJ/madgraph_3_flavours/born/nexternal.inc
-write .git/Git_svn_hash_bl5Cj3: Bad file descriptor
- at /usr/lib/perl5/vendor_perl/5.20.1/x86_64-linux-thread-multi/SVN/Ra.pm
-line 623.
-
-Tested on:
-git-svn version 2.3.0.rc2 (svn 1.8.11) - FAIL
-git-svn version 2.2.2 (svn 1.8.10) - FAIL
-git-svn version 1.8.4.5 (svn 1.8.11) - WORKS
-
-PS unfortunately I don't have admin access to SVN repository
-
-With best regards, Valery Yundin.
+s/confusihng/confusing/
