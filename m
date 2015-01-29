@@ -1,108 +1,78 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: git loses commits on git pull --rebase with Dictator and
- Lieutenants Workflow
-Date: Fri, 30 Jan 2015 07:08:29 +1300
-Message-ID: <CAFOYHZBs=r016FE6ENOnYMs85D9XetTWtVR+faBL5Sj-91=ezg@mail.gmail.com>
-References: <loom.20150128T203924-608@post.gmane.org>
-	<CAFOYHZDLPr1sJ2Agyq6tT=ahpgNp=eL_Q4c=-iDd9i_JqFNTcg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: All gnupg tests broken on el4 [Re: [ANNOUNCE] Git v2.3.0-rc2]
+Date: Thu, 29 Jan 2015 10:48:26 -0800
+Message-ID: <xmqqpp9xe83p.fsf@gitster.dls.corp.google.com>
+References: <xmqqpp9ziyqh.fsf@gitster.dls.corp.google.com>
+	<54CA3169.4020701@statsbiblioteket.dk> <20150129154319.GA742@peff.net>
+	<54CA6F3E.4060804@statsbiblioteket.dk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: GIT <git@vger.kernel.org>
-To: Dick <dick@mrns.nl>
-X-From: git-owner@vger.kernel.org Thu Jan 29 19:08:50 2015
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: "Tom G. Christensen" <tgc@statsbiblioteket.dk>
+X-From: git-owner@vger.kernel.org Thu Jan 29 19:48:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YGtWL-0006QH-Mj
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Jan 2015 19:08:50 +0100
+	id 1YGu8t-0000ZC-Us
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Jan 2015 19:48:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755913AbbA2SIb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Jan 2015 13:08:31 -0500
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:64873 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755857AbbA2SIa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jan 2015 13:08:30 -0500
-Received: by mail-pa0-f46.google.com with SMTP id lj1so41890750pab.5
-        for <git@vger.kernel.org>; Thu, 29 Jan 2015 10:08:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=NmJCKJx3iKgbYI0Cu19GbtoLGkdBhwgP1LmQJdX+NYs=;
-        b=rUH+daZCPSyaRCvp3VI1IHCNV8s9bM3nCMYJr5RR7+luRKYLe472e3l+sXvYRbcVfh
-         boZj0bwMLGAKPLNWdSHcgHymanazwdnXAwcR0xp3DMCq2bJE7RC/kGLBfIlsGkfaQcue
-         SWaFmgY0DunE9iHq20FOG28Hvx7ystwrF7hBYS8VDyIAK4OBVB1sQVvjLcSoLGxxwvnh
-         8w3RFg31Udv4eWGACYOrDbiQje8fy9z5XyswLb0spv6Qe8VkXPqRRzLi67b8BUQZJhCl
-         23m+GZl6d/tm0ZYgnAT1P0BfcBonxhOZ6qjn7aeAcYcFeu80OV0JF5ZWCi3n2XaWEMP8
-         on9A==
-X-Received: by 10.66.146.39 with SMTP id sz7mr2531875pab.59.1422554909706;
- Thu, 29 Jan 2015 10:08:29 -0800 (PST)
-Received: by 10.70.109.199 with HTTP; Thu, 29 Jan 2015 10:08:29 -0800 (PST)
-In-Reply-To: <CAFOYHZDLPr1sJ2Agyq6tT=ahpgNp=eL_Q4c=-iDd9i_JqFNTcg@mail.gmail.com>
+	id S1754498AbbA2Ssg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Jan 2015 13:48:36 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:57675 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753234AbbA2Ssf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jan 2015 13:48:35 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 236DF33033;
+	Thu, 29 Jan 2015 13:48:34 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=iVq1JqGdtDobaea8fbg4XA+rVyo=; b=GgB8FR
+	pBs2rI0FE+HXCYrUGuJT+Ep4Vhws/oao2kA63vaLaDEtJc/VX4lD3QcA6GtluJBO
+	ZD8BHJwlo3ptl9zeFoMhBnTIldKzQ8QB4VWBCE6gCG73QAKDIw7dKRl7pFK5KtxM
+	/9SkfzUd0NoivxhqSaPiEcDeoXXQbdkQXpWaI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Qe08B+YhG4K/2DyCREjZhTJzv5jZMerI
+	Vkitz7l0P5YPAscYSwmo/GkqBEzxZ4NeDyNbRQIvPgS033HScZtBbpsGUis1BFtE
+	aM9nh3fW6fJlM0dbSe8St8VtmHn25vnGuPBK/kYJF5iVjdZyOokUs9RHzRN0NqCb
+	5/X5a3cxPMA=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1804333032;
+	Thu, 29 Jan 2015 13:48:34 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DE87D3302F;
+	Thu, 29 Jan 2015 13:48:28 -0500 (EST)
+In-Reply-To: <54CA6F3E.4060804@statsbiblioteket.dk> (Tom G. Christensen's
+	message of "Thu, 29 Jan 2015 18:34:54 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 6A372604-A7E7-11E4-9E16-7BA29F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263156>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263157>
 
-On Fri, Jan 30, 2015 at 6:27 AM, Chris Packham <judge.packham@gmail.com> wrote:
-> Hi,
->
-> On Thu, Jan 29, 2015 at 8:49 AM, Dick <dick@mrns.nl> wrote:
->> Hi all,
->>
->> I've encountered a problem with the Dictator and Lieutenants Workflow. I've
->> configured remote origin so it pulls from the "blessed repository" and
->> pushes to the "developer public" repository.
->>
->> When the "blessed repository" has the same branch name as the "developer
->> public" repository git pull seems to drop commits.
->>
->> I've create a test script to demonstrate, left is the blessed repository,
->> right.git is the developer public and right is the developer private
->> repository.
->>
->> rm -rf left/ right/ right.git/
->> git init left
->> cd left/
->> echo "hello world" > test.txt
->> git add test.txt
->> git commit -m .
->> cd ..
->> git clone --bare left right.git
->> git clone right.git/ right
->> cd right
->> git remote set-url origin ../left
->> git remote set-url origin --push ../right.git
->> echo "bye world" >> test.txt
->> git commit -a -m .
->> git push
->> git log
->> echo "start: two commits, ok"
->> git fetch
->> git rebase origin/master
->> git log
->> echo "manual fetch/rebase: two commits, still ok"
->> git pull --rebase
->> git log
->> echo "pull: one commits, oops?"
->>
->> Am I using git wrong or is this a git bug?
->>
->> Thanks for having a look!
->>
->> Dick
->
-> I can confirm the behaviour that Dick is seeing with git 2.0.4
-> (happens to be what I was running on my laptop). Just rebuilding
-> 2.3.0-rc2 now.
+"Tom G. Christensen" <tgc@statsbiblioteket.dk> writes:
 
-Also happens on 2.3.0-rc2
+> On 29/01/15 16:43, Jeff King wrote:
+>
+>> Another option is to just declare that version old and broken, and skip
+>> the tests (either by checking its version, or just checking after we
+>> import the keys that we can actually _use_ them).
+>>
+> That would seem a bit heavy-handed as it is otherwise working fine
+> with the old gnupg.
 
->
-> AFAIK 'git fetch && git rebase origin/master' and 'git pull -r' in the
-> scenario above should be roughly equivalent.
->
-> I'll see if I can work the testcase above into an actual test script.
+Thanks, both, for tracking this one down.
+
+I am tempted to say that we should do both.  This "export public
+key, even though new importers do not need" fix to make things
+usable with 1.2.6, and the other one to catch and skip breakages
+when future versions of GPG breaks us in whichever way we do not
+anticipate now.
