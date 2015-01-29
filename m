@@ -1,106 +1,244 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH] refs.c: clean up write_ref_sha1 returns
-Date: Wed, 28 Jan 2015 13:35:23 -0800
-Message-ID: <CAGZ79kY1Hy7xAZ4JSRev2EUoORFNbdhSeNysBwo0jhmskKgvvw@mail.gmail.com>
-References: <CAGZ79kbQiVQJyZC8mKaSUnOpY6YJc0TYdX=msuZDXLd7DxmTmQ@mail.gmail.com>
-	<1422306638-23785-1-git-send-email-sbeller@google.com>
-	<xmqq8ugonc0h.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: patch-2.7.3 no longer applies relative symbolic link patches
+Date: Wed, 28 Jan 2015 22:05:56 -0800
+Message-ID: <xmqqfvauf7ej.fsf@gitster.dls.corp.google.com>
+References: <CA+5PVA7rVy6Li_1haj1QmGG0D6avLB5Xej=2YGt6K-11kKHR5A@mail.gmail.com>
+	<CA+5PVA4bs6CYU8MHn1JqBjnb-5wYJT2Tjqa65=v2uSPL8c7dYw@mail.gmail.com>
+	<CA+55aFxbY21vBbPs5qCFPT1HSBbaeS+Z2Fr9So1r3rXrMWe_ZQ@mail.gmail.com>
+	<xmqqzj94lx7z.fsf@gitster.dls.corp.google.com>
+	<xmqqa914klg0.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Michael Haggerty <mhagger@alum.mit.edu>, Jeff King <peff@peff.net>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Loic Dachary <loic@dachary.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 29 04:48:38 2015
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+Content-Type: text/plain
+Cc: Josh Boyer <jwboyer@fedoraproject.org>,
+	"Linux-Kernel\@Vger. Kernel. Org" <linux-kernel@vger.kernel.org>,
+	twaugh@redhat.com, Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>,
+	Jeff King <peff@peff.net>
+X-From: linux-kernel-owner@vger.kernel.org Thu Jan 29 07:06:12 2015
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YGg5q-0000UA-Mz
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Jan 2015 04:48:35 +0100
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1YGiF0-0002Xs-9Q
+	for glk-linux-kernel-3@plane.gmane.org; Thu, 29 Jan 2015 07:06:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753998AbbA2BZN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Jan 2015 20:25:13 -0500
-Received: from mail-ie0-f180.google.com ([209.85.223.180]:53273 "EHLO
-	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752326AbbA2BZJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jan 2015 20:25:09 -0500
-Received: by mail-ie0-f180.google.com with SMTP id rl12so27530597iec.11
-        for <git@vger.kernel.org>; Wed, 28 Jan 2015 17:25:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=gPHx+k43gSVlBKK0SF/FZm/hSCxTw3PiDDdnVqVMJs8=;
-        b=L9yPXiK/Q06V/3T8mwqL3il5j/H8cHhst7x5YSqcQrvtGiRAYIjPeYcy6pKtiWnnKe
-         krs9uSU0ZpW5qNdmdDQ5L3nmWaytazht5kQ6wNyQPxNqIZaEfHxEHL2ndKMxlViE4xgQ
-         R37HlpUclqlSzxG3uhBDPrkp/Rh3sqH4Jf+hTN+WQdaf+sf/lMNg3QnN0l0LOVFEMZ5U
-         TN1TQktCTBBct9h+E57ZkXSHWMigpoizyNElVzbr5fIhUo87NTc2q3KQLuVn0fFrIUEr
-         j1YNkff1whTysW2+r9dsudKLLLjlgINxQI/fCmwt7N5lkGRoVnSSUxZFuLJiyJYibufC
-         Ymnw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=gPHx+k43gSVlBKK0SF/FZm/hSCxTw3PiDDdnVqVMJs8=;
-        b=U55l3kRhr0Mko3zP+rWck6m0zQmK68o38dutDrQL3TsqJOej+PXAStl/zYfykHu9DI
-         vyU2VPI/+NwVgxMKEAcRFjrPVkGUBICiiPxjtZ1Ki9YcFy8Q9n93ik1mbGp1K1bd0jFY
-         ZCHyV8NaJT2i2xm0KUEx03HMT2R7UEhXnuLPoSTD+LlIFtBCgOmEsyVAVlnW/QWJKYzT
-         s6VvUveYdTDJYQeOjmls/Ol49CGygDfn7zb/CU2U2tfGoyY1MdVxPYNiBLX1GMuf1TEs
-         FvNWxa9yUdK63aFM6Mg5CY2XEJ5u+2o8VYPNwBx9ZjwL1Xc7QhUP0Uq1x/oY16tiSgp3
-         8G8g==
-X-Gm-Message-State: ALoCoQnsqdywhVKeQWfFYJRLTDPZ8BdfTMPKzFaW1sYjWRiXA60QLALS3SSEFXAO9QwUKp6nGODr
-X-Received: by 10.50.85.44 with SMTP id e12mr6304331igz.48.1422480923868; Wed,
- 28 Jan 2015 13:35:23 -0800 (PST)
-Received: by 10.50.26.42 with HTTP; Wed, 28 Jan 2015 13:35:23 -0800 (PST)
-In-Reply-To: <xmqq8ugonc0h.fsf@gitster.dls.corp.google.com>
-Sender: git-owner@vger.kernel.org
+	id S1756733AbbA2GGD (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Thu, 29 Jan 2015 01:06:03 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:57410 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753212AbbA2GF7 (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Thu, 29 Jan 2015 01:05:59 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C8278291C1;
+	Thu, 29 Jan 2015 01:05:58 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=htihrXplMHMJJY1wH/hWxe4ASDY=; b=bMlN2q
+	59z4kWRA7Rsvw0VO3ynzauZrG3LTfR7BYhChtGToIfPzyyy4IZj2LLdxw0gSzn5o
+	k+bNNhkZew1mHpquPhdjoGh/CBqTG3orDkzVhr21qQTlJNMQffj3K/8fK1JVB+0h
+	RTUjTt5gZn1PGlzHKoVpAE1LkR3W9Q4iZqwik=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=cEsa2e27Lg6Hjl/eJgTDOyF5gYaUZXSX
+	qMyaQ9EUPLXY5IICElrudO6QFFFBhh7aRTuCBnDo5SvzWqBhUhAWHRYRcmhQgp6z
+	P2keJUKWHrGch+bcDYEJIg7O0eJs1T9gGfP5THJiImFzE+aZYIsFVc0ONwFW4dxj
+	XYVj84LVcqw=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id BCBE9291C0;
+	Thu, 29 Jan 2015 01:05:58 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 17085291BF;
+	Thu, 29 Jan 2015 01:05:58 -0500 (EST)
+In-Reply-To: <xmqqa914klg0.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Tue, 27 Jan 2015 12:39:11 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: E49B8E14-A77C-11E4-A6D9-7BA29F42C9D4-77302942!pb-smtp1.pobox.com
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263137>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263138>
 
-On Mon, Jan 26, 2015 at 7:22 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Junio C Hamano <gitster@pobox.com> writes:
 >
->>     I can redo the atomic-push-fix series with this cleanup merged
->>     into the appropriate patches or you could just queue it on top
->>     of said series.
+>> If the user wants to apply a patch that touches ../etc/shadow, is
+>> the tool in the place to complain?"
 >
-> Yeah, I do not think we are expecting to fast track these two series
-> through 'next' to 'master' before 2.3 final, so I think it would be
-> better to use this patch _only_ to see if the final shape of the
-> code this patch represents makes sense, so that we can expedite the
-> final submission in the next development cycle, at which time we
-> will have a chance to refresh 'next', hence a chance to clean-up
-> atomic-push series in place.
-
-I tried to rip this patch and its 3 previous patches apart to see if it could be
-done another way. The outcome was to actually sqquash this patch
-completely into b1c6da0a13 (refs.c: remove unlock_ref and commit_ref
-from write_ref_sha1).
-
-Looking at the end result the write_ref_sha1 function it has a good
-design contract. Either you get 0 returned and all is good, or -1 is returned
-and errno is set to a meaningful value which seems to adress your concerns
-on that patch:
-
-> I am not sure if it is sensible to call that "correct but hard to
-> understand".  I'd rather see us admit that its behaviour is screwey
-> and needs fixing for better code health longer term.
-
-
->> @@ -2880,7 +2877,6 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
->>               error("unable to lock %s for update", newrefname);
->>               goto rollback;
->>       }
->> -     lock->force_write = 1;
->>       hashcpy(lock->old_sha1, orig_sha1);
+> Let me take this part back.
 >
-> Is this hashcpy() still necessary?
+> I think "git apply" should behave closely to "git apply --index"
+> (which is used by "git am" unless there is a very good reason not to
+> (and "'git apply --index' behaves differently from GNU patch, and we
+> should match what the latter does" is not a very good reason).  When
+> the index guards the working tree, we do not follow any symlink,
+> whether the destination is inside the current directory or not.
+>
+> I however do not think the current "git apply" notices that it will
+> overwrite a path beyond a symlink---we may need to fix that if that
+> is the case.  I'll see what I can find (but I'll be doing 2.3-rc2
+> today so it may be later this week).
 
-Thanks for catching that! It is not necessary any more and will be
-removed in a reroll.
-I think I'll wait for rerolling the atomic-push-fix series until 2.3
-is out then?
+Yikes.  It turns out that the index is what protects us from going
+outside the working tree.  "apply --index" (hence "am") is immune
+against the CVE-2015-1196, but that is not because we do not follow
+symbolic links.
+
+Also the solution is not just a simple has_symlink_leading_path().
+Here is tonight's snapshot of what I've found out (not tested beyond
+passing the test suite including the new test added by the patch).
+
+-- >8 --
+Subject: [PATCH] apply: refuse touching a file beyond symlink
+
+Because Git tracks symbolic links as symbolic links, a path that has
+a symbolic link in its leading part (e.g. path/to/dir being a
+symbolic link to somewhere else, be it inside or outside the working
+tree) can never appear in a patch that validly apply, unless the
+same patch first removes the symbolic link.
+
+Detect and reject such a patch.  Things to note:
+
+ - Unfortunately, we cannot reuse the has_symlink_leading_path()
+   from dir.c, as that is only about the working tree, but "git
+   apply" can be told to apply the patch only to the index.
+
+ - We cannot directly use has_symlink_leading_path() even when we
+   are applying to the working tree, as an early patch of a valid
+   input may remove a symbolic link path/to/dir and then a later
+   patch of the input may create a path path/to/dir/file.  The
+   leading symbolic link check must be done on the interim result we
+   compute in core (i.e. after the first patch, there is no
+   path/to/dir symbolic link and it is perfectly valid to create
+   path/to/dir/file).  Similarly, when an input creates a symbolic
+   link path/to/dir and then creates a file path/to/dir/file, we
+   need to flag it as an error without actually creating path/to/dir
+   symbolic link in the filesystem.
+
+ - Instead, for any patch in the input that leaves a path (i.e. a
+   non deletion) in the result, we check all leading paths against
+   interim result and then either the index or the working tree.
+   The interim result of applying patch is already kept track of
+   by fn_table logic for us.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin/apply.c                 | 44 +++++++++++++++++++++++++++++++++++++++++
+ t/t4122-apply-symlink-inside.sh | 37 ++++++++++++++++++++++++++++++++++
+ 2 files changed, 81 insertions(+)
+
+diff --git a/builtin/apply.c b/builtin/apply.c
+index ef32e4f..da088c5 100644
+--- a/builtin/apply.c
++++ b/builtin/apply.c
+@@ -3483,6 +3483,46 @@ static int check_to_create(const char *new_name, int ok_if_exists)
+ 	return 0;
+ }
+ 
++static int path_is_beyond_symlink(const char *name_)
++{
++	struct strbuf name = STRBUF_INIT;
++
++	strbuf_addstr(&name, name_);
++	do {
++		struct patch *previous;
++
++		while (--name.len && name.buf[name.len] != '/')
++			; /* scan backwards */
++		if (!name.len)
++			break;
++		name.buf[name.len] = '\0';
++		previous = in_fn_table(name.buf);
++		if (previous) {
++			if (!was_deleted(previous) &&
++			    !to_be_deleted(previous) &&
++			    previous->new_mode &&
++			    S_ISLNK(previous->new_mode))
++				goto symlink_found;
++		} else if (check_index) {
++			int pos = cache_name_pos(name.buf, name.len);
++			if (0 <= pos &&
++			    S_ISLNK(active_cache[pos]->ce_mode))
++				goto symlink_found;
++		} else {
++			struct stat st;
++			if (!lstat(name.buf, &st) && S_ISLNK(st.st_mode))
++				goto symlink_found;
++		}
++	} while (1);
++
++	strbuf_release(&name);
++	return 0;
++symlink_found:
++	strbuf_release(&name);
++	return -1;
++
++}
++
+ /*
+  * Check and apply the patch in-core; leave the result in patch->result
+  * for the caller to write it out to the final destination.
+@@ -3570,6 +3610,10 @@ static int check_patch(struct patch *patch)
+ 		}
+ 	}
+ 
++	if (!patch->is_delete && path_is_beyond_symlink(patch->new_name))
++		return error(_("affected file '%s' is beyond a symbolic link"),
++			     patch->new_name);
++
+ 	if (apply_data(patch, &st, ce) < 0)
+ 		return error(_("%s: patch does not apply"), name);
+ 	patch->rejected = 0;
+diff --git a/t/t4122-apply-symlink-inside.sh b/t/t4122-apply-symlink-inside.sh
+index 70b3a06..8b11bc6 100755
+--- a/t/t4122-apply-symlink-inside.sh
++++ b/t/t4122-apply-symlink-inside.sh
+@@ -52,4 +52,41 @@ test_expect_success 'check result' '
+ 
+ '
+ 
++test_expect_success 'do not follow symbolic link' '
++
++	git reset --hard &&
++	test_ln_s_add ../i386/dir arch/x86_64/dir &&
++	git diff HEAD >add_symlink.patch &&
++	git reset --hard &&
++
++	mkdir arch/x86_64/dir &&
++	>arch/x86_64/dir/file &&
++	git add arch/x86_64/dir/file &&
++	git diff HEAD >add_file.patch &&
++	git reset --hard &&
++	rm -fr arch/x86_64/dir &&
++
++	cat add_symlink.patch add_file.patch >patch &&
++
++	mkdir arch/i386/dir &&
++
++	test_must_fail git apply patch 2>error-wt &&
++	test_i18ngrep "beyond a symbolic link" error-wt &&
++	test ! -e arch/x86_64/dir &&
++	test ! -e arch/i386/dir/file &&
++
++	test_must_fail git apply --index patch 2>error-ix &&
++	test_i18ngrep "beyond a symbolic link" error-ix &&
++	test ! -e arch/x86_64/dir &&
++	test ! -e arch/i386/dir/file &&
++	test_must_fail git ls-files --error-unmatch arch/x86_64/dir &&
++	test_must_fail git ls-files --error-unmatch arch/i386/dir &&
++
++	test_must_fail git apply --cached patch 2>error-ct &&
++	test_i18ngrep "beyond a symbolic link" error-ct &&
++	test_must_fail git ls-files --error-unmatch arch/x86_64/dir &&
++	test_must_fail git ls-files --error-unmatch arch/i386/dir
++
++'
++
+ test_done
+-- 
+2.3.0-rc2-149-gdd42ee9
