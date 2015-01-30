@@ -1,71 +1,88 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH] apply: refuse touching a file beyond symlink
-Date: Fri, 30 Jan 2015 10:04:57 +0100
-Message-ID: <CAP8UFD0zourNU6oqxcORP=3x2oXmTa3xz+jicdWRLXBgN7QQtA@mail.gmail.com>
-References: <CA+5PVA7rVy6Li_1haj1QmGG0D6avLB5Xej=2YGt6K-11kKHR5A@mail.gmail.com>
-	<CA+5PVA4bs6CYU8MHn1JqBjnb-5wYJT2Tjqa65=v2uSPL8c7dYw@mail.gmail.com>
-	<CA+55aFxbY21vBbPs5qCFPT1HSBbaeS+Z2Fr9So1r3rXrMWe_ZQ@mail.gmail.com>
-	<xmqqzj94lx7z.fsf@gitster.dls.corp.google.com>
-	<xmqqa914klg0.fsf@gitster.dls.corp.google.com>
-	<xmqqfvauf7ej.fsf@gitster.dls.corp.google.com>
-	<xmqqtwzadrj8.fsf@gitster.dls.corp.google.com>
-	<xmqqa911e2ot.fsf_-_@gitster.dls.corp.google.com>
+From: "Tom G. Christensen" <tgc@statsbiblioteket.dk>
+Subject: [PATCH] Makefile: Handle broken curl version number in version check
+Date: Fri, 30 Jan 2015 10:52:34 +0100
+Message-ID: <1422611554-15393-1-git-send-email-tgc@statsbiblioteket.dk>
+References: <54CA2E84.6090604@statsbiblioteket.dk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Josh Boyer <jwboyer@fedoraproject.org>,
-	"Linux-Kernel@Vger. Kernel. Org" <linux-kernel@vger.kernel.org>,
-	twaugh@redhat.com, Linus Torvalds <torvalds@linux-foundation.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: linux-kernel-owner@vger.kernel.org Fri Jan 30 10:05:16 2015
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+Content-Type: text/plain
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jan 30 10:52:44 2015
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1YH7Vr-0000FD-37
-	for glk-linux-kernel-3@plane.gmane.org; Fri, 30 Jan 2015 10:05:15 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1YH8Fo-0004VH-60
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Jan 2015 10:52:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760059AbbA3JFE (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Fri, 30 Jan 2015 04:05:04 -0500
-Received: from mail-ie0-f176.google.com ([209.85.223.176]:41234 "EHLO
-	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754056AbbA3JE6 (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Fri, 30 Jan 2015 04:04:58 -0500
-Received: by mail-ie0-f176.google.com with SMTP id at20so2084546iec.7;
-        Fri, 30 Jan 2015 01:04:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=mqGR6djyCf2clOR0uc9FQ8x2scT0gMvT017Ff4YoyUc=;
-        b=OIw4eOWFM6LyeMsDpeY0rmRAaWG/TxP7NFW5+cWMzlrdBUzl9PdfnZZVLJ4p5qhJbo
-         mQcKATg0qXNCoZv697Q3b/TZHon5anX4CSXkyPeigrlkhMtF7dwdLEZ6qFcGIXYVvzi3
-         2uZUlW8LNpypN5u3uyR5/Oh9amfbP7gX7hmi8QPMdd5b/xQFavynckb+h62VdL+hrDdn
-         VYAvVbLJ/L3e5v4Tu3bfV0C5e67h2FZPm9BfxvFQHjn4oJSdb4ynNeleFaWsRbP6T9pj
-         A3uHXr35linW9rv+vk2qwlpoYr4FAfISJC1Os+FmgkPVqyzxiRFYm4r9PPLeZ0isxWCu
-         SnJA==
-X-Received: by 10.50.138.226 with SMTP id qt2mr1577503igb.1.1422608697652;
- Fri, 30 Jan 2015 01:04:57 -0800 (PST)
-Received: by 10.50.245.144 with HTTP; Fri, 30 Jan 2015 01:04:57 -0800 (PST)
-In-Reply-To: <xmqqa911e2ot.fsf_-_@gitster.dls.corp.google.com>
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1759898AbbA3Jwj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Jan 2015 04:52:39 -0500
+Received: from sbexch03.sb.statsbiblioteket.dk ([130.225.24.68]:15654 "EHLO
+	sbexch03.sb.statsbiblioteket.dk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1759885AbbA3Jwh (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 30 Jan 2015 04:52:37 -0500
+Received: from throll.localdomain (172.18.234.199) by
+ sbexch03.sb.statsbiblioteket.dk (130.225.24.68) with Microsoft SMTP Server id
+ 8.3.348.2; Fri, 30 Jan 2015 10:52:34 +0100
+Received: by throll.localdomain (Postfix, from userid 3000)	id 71B0740381E;
+ Fri, 30 Jan 2015 10:52:34 +0100 (CET)
+X-Mailer: git-send-email 2.2.2
+In-Reply-To: <54CA2E84.6090604@statsbiblioteket.dk>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263172>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263173>
 
-On Thu, Jan 29, 2015 at 9:45 PM, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Instead, for any patch in the input that leaves a path (i.e. a non
-> deletion) in the result, we check all leading paths against interim
-> result and then either the index or the working tree.  The interim
-> results of applying patches are kept track of by fn_table logic for
-> us already, so use it to fiture out if existing a symbolic link will
+curl 7.11.0 through 7.12.2 when built from their official release
+archives will present a 5 digit version number instead of the documented
+6 digits which breaks the version check in the Makefile.
+Correct these broken version numbers on the fly when extracting them to
+ensure the comparison works correctly.
 
-s/fiture/figure/
-s/existing a symbolic link/an existing symbolic link/
+Signed-off-by: Tom G. Christensen <tgc@statsbiblioteket.dk>
+---
 
-> cause problems, if a new symbolic link that will cause problems will
-> appear, etc.
+This was discoved while building on RHEL4 which has curl 7.12.1.
+The makefile check for curl >= 7.34.0 failed and enabled
+USE_CURL_FOR_IMAP_SEND.
+
+# curl-config --vernum
+70C01
+# { echo 072200; curl-config --vernum 2>/dev/null ; } | sort -r | sed -ne 2p
+072200
+#
+
+I checked the curl release tarballs and this problem seems to exist for
+curl 7.11.0 (0x70B00) through 7.12.2 (0x70C02). In both 7.10.7 (0x070a07)
+and 7.12.3 (0x070c03) the version is correctly set using 6 hex digits as
+documented.
+I tried to verify this using the official curl repo on github but it does
+not seem to record this discrepancy and shows the correct 6 digit version
+numbers for the affected releases.
+
+ Makefile | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index c44eb3a..69a2ce3 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1035,13 +1035,13 @@ else
+ 	REMOTE_CURL_NAMES = $(REMOTE_CURL_PRIMARY) $(REMOTE_CURL_ALIASES)
+ 	PROGRAM_OBJS += http-fetch.o
+ 	PROGRAMS += $(REMOTE_CURL_NAMES)
+-	curl_check := $(shell (echo 070908; curl-config --vernum) 2>/dev/null | sort -r | sed -ne 2p)
++	curl_check := $(shell (echo 070908; curl-config --vernum | sed -e '/^70[B-C]/ s/^7/07/') 2>/dev/null | sort -r | sed -ne 2p)
+ 	ifeq "$(curl_check)" "070908"
+ 		ifndef NO_EXPAT
+ 			PROGRAM_OBJS += http-push.o
+ 		endif
+ 	endif
+-	curl_check := $(shell (echo 072200; curl-config --vernum) 2>/dev/null | sort -r | sed -ne 2p)
++	curl_check := $(shell (echo 072200; curl-config --vernum | sed -e '/^70[B-C]/ s/^7/07/') 2>/dev/null | sort -r | sed -ne 2p)
+ 	ifeq "$(curl_check)" "072200"
+ 		USE_CURL_FOR_IMAP_SEND = YesPlease
+ 	endif
+-- 
+2.2.2
