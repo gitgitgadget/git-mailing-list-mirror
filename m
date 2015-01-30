@@ -1,71 +1,76 @@
-From: Lance Fredrickson <lancethepants@gmail.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: bug report: build issue with git 2.2.2 using uclibc toolchain
-Date: Fri, 30 Jan 2015 09:30:27 -0700
-Message-ID: <54CBB1A3.9000805@gmail.com>
+Date: Fri, 30 Jan 2015 11:33:32 -0500
+Message-ID: <20150130163331.GA5239@peff.net>
 References: <54CBA968.2040807@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 30 17:30:55 2015
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Lance Fredrickson <lancethepants@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 30 17:33:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YHET7-0000YV-Iq
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Jan 2015 17:30:53 +0100
+	id 1YHEVn-0003So-3g
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Jan 2015 17:33:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932767AbbA3Qag (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Jan 2015 11:30:36 -0500
-Received: from mail-pa0-f47.google.com ([209.85.220.47]:54074 "EHLO
-	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932604AbbA3Qac (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Jan 2015 11:30:32 -0500
-Received: by mail-pa0-f47.google.com with SMTP id lj1so54089255pab.6
-        for <git@vger.kernel.org>; Fri, 30 Jan 2015 08:30:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=hFLPqpSORPqx4Y5PxRlYJ6otTOdxa+NBtqxghQw0028=;
-        b=jUeWDeVRdbH8nkuMudQpNKsew41czOQRlOKmgxhBx/SvCNRGCjqgsuG/6jEgy1b2sb
-         aaoZfQd5C5UG7Rjj+TOb4L5peEAWWjVehyF/YK6hrF6kwFVgtL/ZGZxqW+Xw0i8j/SSp
-         LPy4JhL3Q37LBDV4XYxvuRdPDozPJtEBdoriU6JcHIKFP8PLCtc1KLfaTtmlUEfIJWP6
-         h7VKu31DE2tpm1xBvWCiKLi2q08BRVoz5SlC9X2+7HJVyh1ofVG0WmUeP1Guye35TA1t
-         bEBJNAjl/rxj3GHYDkAYjjeNEe1SF1ntiJhm6hcl0MnuBPMUOQ5LGUK+5jH9LmP7YXnv
-         lsBQ==
-X-Received: by 10.70.42.208 with SMTP id q16mr10201817pdl.56.1422635431604;
-        Fri, 30 Jan 2015 08:30:31 -0800 (PST)
-Received: from [10.0.0.155] ([70.103.142.130])
-        by mx.google.com with ESMTPSA id ex1sm11204135pbc.80.2015.01.30.08.30.30
-        for <git@vger.kernel.org>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 30 Jan 2015 08:30:30 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
+	id S932909AbbA3Qdf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Jan 2015 11:33:35 -0500
+Received: from cloud.peff.net ([50.56.180.127]:43344 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752910AbbA3Qde (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Jan 2015 11:33:34 -0500
+Received: (qmail 26216 invoked by uid 102); 30 Jan 2015 16:33:34 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 30 Jan 2015 10:33:34 -0600
+Received: (qmail 25385 invoked by uid 107); 30 Jan 2015 16:34:03 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 30 Jan 2015 11:34:03 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 30 Jan 2015 11:33:32 -0500
+Content-Disposition: inline
 In-Reply-To: <54CBA968.2040807@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263182>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263183>
 
-Sorry, file this one away under user error. I had an issue with my build 
-environment.
-cheers!
+On Fri, Jan 30, 2015 at 08:55:20AM -0700, Lance Fredrickson wrote:
 
-On 1/30/2015 8:55 AM, Lance Fredrickson wrote:
-> I've been keeping up-to-date versions of git built for an embedded 
-> mipsel architecture device running on uclibc.
+> I've been keeping up-to-date versions of git built for an embedded mipsel
+> architecture device running on uclibc.
 > 2.2.1 and previous versions build fine, but 2.2.2 stops with an error.
->
-> The toolchain is an OpenWRT variant (entware) using gcc 4.6.4 and 
-> uclibc 0.9.32, available at the following.
+> 
+> The toolchain is an OpenWRT variant (entware) using gcc 4.6.4 and uclibc
+> 0.9.32, available at the following.
 > http://entware.wl500g.info/sources/
->
+> 
 > Here is the output of the build error.
->
+> 
 > CC builtin/grep.o
 > builtin/get-tar-commit-id.c: In function 'cmd_get_tar_commit_id':
-> builtin/get-tar-commit-id.c:31:12: error: dereferencing pointer to 
+> builtin/get-tar-commit-id.c:31:12: error: dereferencing pointer to
 > incomplete type
+
+That seems odd. The line in question is:
+
+  if (header->typeflag[0] != 'g')
+
+the "header" variable is defined above as:
+
+  struct ustar_header *header = (struct ustar_header *)buffer;
+
+and "struct ustar_header" is defined in "tar.h", which is included
+above.
+
+uclibc ships its own tar.h. Ours should take precedence (because we use
+""), but perhaps there is something funny going on in the build
+settings. I can't find any interesting changes in v2.2.1..v2.2.2,
+though.
+
+Can you double-check that v2.2.1 still builds, and if so try to use "git
+bisect start v2.2.2 v2.2.1" to find the responsible commit?
+
+-Peff
