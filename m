@@ -1,87 +1,121 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Makefile: Handle broken curl version number in version check
-Date: Fri, 30 Jan 2015 14:09:50 -0800
-Message-ID: <xmqq61bnc441.fsf@gitster.dls.corp.google.com>
-References: <54CA2E84.6090604@statsbiblioteket.dk>
-	<1422611554-15393-1-git-send-email-tgc@statsbiblioteket.dk>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH] t9001: use older Getopt::Long boolean prefix '--no'
+ rather than '--no-'
+Date: Fri, 30 Jan 2015 23:05:16 +0000
+Message-ID: <20150130230516.GA7867@vauxhall.crustytoothpaste.net>
+References: <54CA3611.1000804@statsbiblioteket.dk>
+ <1422599085-11804-1-git-send-email-tgc@statsbiblioteket.dk>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: <git@vger.kernel.org>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="W/nzBZO5zC0uMSeA"
+Cc: git@vger.kernel.org
 To: "Tom G. Christensen" <tgc@statsbiblioteket.dk>
-X-From: git-owner@vger.kernel.org Fri Jan 30 23:09:59 2015
+X-From: git-owner@vger.kernel.org Sat Jan 31 00:05:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YHJlF-0008Fs-Qq
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Jan 2015 23:09:58 +0100
+	id 1YHKcx-0005Ks-R6
+	for gcvg-git-2@plane.gmane.org; Sat, 31 Jan 2015 00:05:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754194AbbA3WJx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Jan 2015 17:09:53 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:55564 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1758767AbbA3WJw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Jan 2015 17:09:52 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2925133C15;
-	Fri, 30 Jan 2015 17:09:52 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=cSrpy594uKoUuSAY58LM+0JgiCI=; b=hK+hGm
-	6S859ca6NxGOOobBe+V6rGKDJXk1zf2GovDNotoLUemAwq875UlvLQXIJQCytuvI
-	39r4TlgbWGNhguMAMKNNZH6NUyq15Eg+B20NeOpO3FHm93Ae5teRjZWR6nA9OfX4
-	15Jp2kBZ56Priet7+NnzkKPnXyJa765xhF4T4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=GNZW3J1yl5axXNdeL1lPYdVpA9SYDu7+
-	44fuMokMS487G67AvZFmiWnEkJWb7BRIZw+6kpdq57fvGfPafVcOevV2x+YHHdFb
-	aZ0B5Lvl1aVf/x7/QyYaL67Wo84hKfVo/2FBMIiyFmtuQgIKrguGseTk+oUgK8hm
-	gSrh1/xfRJk=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1F66333C14;
-	Fri, 30 Jan 2015 17:09:52 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	id S1758201AbbA3XFX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Jan 2015 18:05:23 -0500
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:47437 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753675AbbA3XFW (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 30 Jan 2015 18:05:22 -0500
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:6680:99ff:fe4f:73a0])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 97A8133C13;
-	Fri, 30 Jan 2015 17:09:51 -0500 (EST)
-In-Reply-To: <1422611554-15393-1-git-send-email-tgc@statsbiblioteket.dk> (Tom
-	G. Christensen's message of "Fri, 30 Jan 2015 10:52:34 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: B67B7AC0-A8CC-11E4-A1F0-7BA29F42C9D4-77302942!pb-smtp1.pobox.com
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id EC5CF2808F;
+	Fri, 30 Jan 2015 23:05:20 +0000 (UTC)
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	"Tom G. Christensen" <tgc@statsbiblioteket.dk>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <1422599085-11804-1-git-send-email-tgc@statsbiblioteket.dk>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 3.18.0-trunk-amd64)
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263201>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263202>
 
-"Tom G. Christensen" <tgc@statsbiblioteket.dk> writes:
 
-> diff --git a/Makefile b/Makefile
-> index c44eb3a..69a2ce3 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -1035,13 +1035,13 @@ else
->  	REMOTE_CURL_NAMES = $(REMOTE_CURL_PRIMARY) $(REMOTE_CURL_ALIASES)
->  	PROGRAM_OBJS += http-fetch.o
->  	PROGRAMS += $(REMOTE_CURL_NAMES)
-> -	curl_check := $(shell (echo 070908; curl-config --vernum) 2>/dev/null | sort -r | sed -ne 2p)
-> +	curl_check := $(shell (echo 070908; curl-config --vernum | sed -e '/^70[B-C]/ s/^7/07/') 2>/dev/null | sort -r | sed -ne 2p)
->  	ifeq "$(curl_check)" "070908"
->  		ifndef NO_EXPAT
->  			PROGRAM_OBJS += http-push.o
->  		endif
->  	endif
-> -	curl_check := $(shell (echo 072200; curl-config --vernum) 2>/dev/null | sort -r | sed -ne 2p)
-> +	curl_check := $(shell (echo 072200; curl-config --vernum | sed -e '/^70[B-C]/ s/^7/07/') 2>/dev/null | sort -r | sed -ne 2p)
->  	ifeq "$(curl_check)" "072200"
->  		USE_CURL_FOR_IMAP_SEND = YesPlease
->  	endif
+--W/nzBZO5zC0uMSeA
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Thanks, will apply but with sed part tweaked to '/^70[BC]/s/^/0/'
-instead.
+On Fri, Jan 30, 2015 at 07:24:45AM +0100, Tom G. Christensen wrote:
+>The '--no-xmailer' option is a Getopt::Long boolean option. The
+>'--no-' prefix (as in --no-xmailer) for boolean options is not
+>supported in Getopt::Long version 2.32 which was released with Perl 5.8.0.
+>This version only supports '--no' as in '--noxmailer'.  More recent
+>versions of Getopt::Long, such as version 2.34, support either prefix. So
+>use the older form in the tests.
+>
+>See also:
+>
+>d2559f734bba7fe5257720356a92f3b7a5b0d37c
+>907a0b1e04ea31cb368e9422df93d8ebb0187914
+>84eeb687de7a6c7c42af3fb51b176e0f412a979e
+>3fee1fe87144360a1913eab86af9ad136c810076
+>
+>Signed-off-by: Tom G. Christensen <tgc@statsbiblioteket.dk>
+>---
+> t/t9001-send-email.sh | 6 +++---
+> 1 file changed, 3 insertions(+), 3 deletions(-)
+>
+>diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+>index af6a3e8..30df6ae 100755
+>--- a/t/t9001-send-email.sh
+>+++ b/t/t9001-send-email.sh
+>@@ -1580,20 +1580,20 @@ do_xmailer_test () {
+>
+> test_expect_success $PREREQ '--[no-]xmailer without any configuration' '
+> 	do_xmailer_test 1 "--xmailer" &&
+>-	do_xmailer_test 0 "--no-xmailer"
+>+	do_xmailer_test 0 "--noxmailer"
 
-The existing tests that copied and pasted are bad enough.  Can we
-consolidate them into some helper or a shorter idiom that lets us
-more easily ask "Do we have cURL version X or higher?"
+I don't think this is an adequate fix.  The documented option is=20
+--no-xmailer.  If your version of Getopt::Long is not capable of that,=20
+then the program doesn't work as documented, and the test is correctly=20
+failing.  --noxmailer is not documented at all, so it's not something we=20
+should be testing.
+
+We should probably require a certain version of Getopt::Long or=20
+explicitly handle this in the parsing code itself.  I think the former=20
+is a better choice, since no security-supported OS still ships with such=20
+a positively ancient version.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+
+--W/nzBZO5zC0uMSeA
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCgAGBQJUzA4sAAoJEL9TXYEfUvaLCIMQAJJmvKVaunL3GGO9EOjAmsWE
+AJGphxwenWBJ9XpOSI0/dpMc3heHjsBzN+E2yGE+2mdfil8HsDsGBzuOB0iRBPmb
+teBMHiyAovNxC0tAHEpju8oEqVbZt91ibTAQGUsAEeQfQs19bvHvoM3nIppJOJuo
+S/FK7c492fB8rIKHnubNtyjXtRD4CZ9SPpUhG/bqU20iZ0Qm1EXvYT/HZULig2mW
+bqL2PZMaiHjmr7P3gIJ7Fpbah/+NqiXs1oIXwDhtxMz0oNDyXRl45qqPiH+ESwPr
+zUJlyTHSX2dC2IMCts9onBLuJdnWQrp4CaQn9vu6LRhhkI1djhdRp+dag2GyI+cD
+FEh9HElhdaK8/geXdXd8JMr85oBdaSEfUQW9M2DlO4DOk/hdaafcMHiqg9suRMqB
+yahru2Tg7dX/E1nFnrtY3+hyXJ+66qgAo6FKbSKkomnjv2MizLEcGctyIRo2AheN
+wTfwzfy2HmjJyCIyZGfbt0lL1ySuO1HZRNmsen1sAtp66lrHV/3nLlzCsiMLuIdX
+mW2vaaCH8xayS56N8l0Grau6Tsp0O5lDlnHVw0Ua8awgl+sJwWD9En09shA4DSiY
+986CE+VYoe7Wuzww8a6SRjpr0Vvc63F9XOAAJHBewH8mURjESO5UkI5NqYagpeBZ
+pC2emWLKyQhMeTWnPH5X
+=jSs1
+-----END PGP SIGNATURE-----
+
+--W/nzBZO5zC0uMSeA--
