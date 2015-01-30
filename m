@@ -1,85 +1,71 @@
-From: "Tom G. Christensen" <tgc@statsbiblioteket.dk>
-Subject: [PATCH] t9001: use older Getopt::Long boolean prefix '--no' rather than '--no-'
-Date: Fri, 30 Jan 2015 07:24:45 +0100
-Message-ID: <1422599085-11804-1-git-send-email-tgc@statsbiblioteket.dk>
-References: <54CA3611.1000804@statsbiblioteket.dk>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH] apply: refuse touching a file beyond symlink
+Date: Fri, 30 Jan 2015 10:04:57 +0100
+Message-ID: <CAP8UFD0zourNU6oqxcORP=3x2oXmTa3xz+jicdWRLXBgN7QQtA@mail.gmail.com>
+References: <CA+5PVA7rVy6Li_1haj1QmGG0D6avLB5Xej=2YGt6K-11kKHR5A@mail.gmail.com>
+	<CA+5PVA4bs6CYU8MHn1JqBjnb-5wYJT2Tjqa65=v2uSPL8c7dYw@mail.gmail.com>
+	<CA+55aFxbY21vBbPs5qCFPT1HSBbaeS+Z2Fr9So1r3rXrMWe_ZQ@mail.gmail.com>
+	<xmqqzj94lx7z.fsf@gitster.dls.corp.google.com>
+	<xmqqa914klg0.fsf@gitster.dls.corp.google.com>
+	<xmqqfvauf7ej.fsf@gitster.dls.corp.google.com>
+	<xmqqtwzadrj8.fsf@gitster.dls.corp.google.com>
+	<xmqqa911e2ot.fsf_-_@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jan 30 07:24:56 2015
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Josh Boyer <jwboyer@fedoraproject.org>,
+	"Linux-Kernel@Vger. Kernel. Org" <linux-kernel@vger.kernel.org>,
+	twaugh@redhat.com, Linus Torvalds <torvalds@linux-foundation.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: linux-kernel-owner@vger.kernel.org Fri Jan 30 10:05:16 2015
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YH50h-0002nB-5Q
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Jan 2015 07:24:55 +0100
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1YH7Vr-0000FD-37
+	for glk-linux-kernel-3@plane.gmane.org; Fri, 30 Jan 2015 10:05:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751798AbbA3GYt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Jan 2015 01:24:49 -0500
-Received: from sbexch03.sb.statsbiblioteket.dk ([130.225.24.68]:12841 "EHLO
-	sbexch03.sb.statsbiblioteket.dk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750909AbbA3GYt (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 30 Jan 2015 01:24:49 -0500
-Received: from throll.localdomain (172.18.234.199) by
- sbexch03.sb.statsbiblioteket.dk (130.225.24.68) with Microsoft SMTP Server id
- 8.3.348.2; Fri, 30 Jan 2015 07:24:45 +0100
-Received: by throll.localdomain (Postfix, from userid 3000)	id D5F02400E6C;
- Fri, 30 Jan 2015 07:24:45 +0100 (CET)
-X-Mailer: git-send-email 2.2.2
-In-Reply-To: <54CA3611.1000804@statsbiblioteket.dk>
-Sender: git-owner@vger.kernel.org
+	id S1760059AbbA3JFE (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Fri, 30 Jan 2015 04:05:04 -0500
+Received: from mail-ie0-f176.google.com ([209.85.223.176]:41234 "EHLO
+	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754056AbbA3JE6 (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Fri, 30 Jan 2015 04:04:58 -0500
+Received: by mail-ie0-f176.google.com with SMTP id at20so2084546iec.7;
+        Fri, 30 Jan 2015 01:04:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=mqGR6djyCf2clOR0uc9FQ8x2scT0gMvT017Ff4YoyUc=;
+        b=OIw4eOWFM6LyeMsDpeY0rmRAaWG/TxP7NFW5+cWMzlrdBUzl9PdfnZZVLJ4p5qhJbo
+         mQcKATg0qXNCoZv697Q3b/TZHon5anX4CSXkyPeigrlkhMtF7dwdLEZ6qFcGIXYVvzi3
+         2uZUlW8LNpypN5u3uyR5/Oh9amfbP7gX7hmi8QPMdd5b/xQFavynckb+h62VdL+hrDdn
+         VYAvVbLJ/L3e5v4Tu3bfV0C5e67h2FZPm9BfxvFQHjn4oJSdb4ynNeleFaWsRbP6T9pj
+         A3uHXr35linW9rv+vk2qwlpoYr4FAfISJC1Os+FmgkPVqyzxiRFYm4r9PPLeZ0isxWCu
+         SnJA==
+X-Received: by 10.50.138.226 with SMTP id qt2mr1577503igb.1.1422608697652;
+ Fri, 30 Jan 2015 01:04:57 -0800 (PST)
+Received: by 10.50.245.144 with HTTP; Fri, 30 Jan 2015 01:04:57 -0800 (PST)
+In-Reply-To: <xmqqa911e2ot.fsf_-_@gitster.dls.corp.google.com>
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263171>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263172>
 
-The '--no-xmailer' option is a Getopt::Long boolean option. The
-'--no-' prefix (as in --no-xmailer) for boolean options is not
-supported in Getopt::Long version 2.32 which was released with Perl 5.8.0.
-This version only supports '--no' as in '--noxmailer'.  More recent
-versions of Getopt::Long, such as version 2.34, support either prefix. So
-use the older form in the tests.
+On Thu, Jan 29, 2015 at 9:45 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Instead, for any patch in the input that leaves a path (i.e. a non
+> deletion) in the result, we check all leading paths against interim
+> result and then either the index or the working tree.  The interim
+> results of applying patches are kept track of by fn_table logic for
+> us already, so use it to fiture out if existing a symbolic link will
 
-See also:
+s/fiture/figure/
+s/existing a symbolic link/an existing symbolic link/
 
-d2559f734bba7fe5257720356a92f3b7a5b0d37c
-907a0b1e04ea31cb368e9422df93d8ebb0187914
-84eeb687de7a6c7c42af3fb51b176e0f412a979e
-3fee1fe87144360a1913eab86af9ad136c810076
-
-Signed-off-by: Tom G. Christensen <tgc@statsbiblioteket.dk>
----
- t/t9001-send-email.sh | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index af6a3e8..30df6ae 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -1580,20 +1580,20 @@ do_xmailer_test () {
- 
- test_expect_success $PREREQ '--[no-]xmailer without any configuration' '
- 	do_xmailer_test 1 "--xmailer" &&
--	do_xmailer_test 0 "--no-xmailer"
-+	do_xmailer_test 0 "--noxmailer"
- '
- 
- test_expect_success $PREREQ '--[no-]xmailer with sendemail.xmailer=true' '
- 	test_config sendemail.xmailer true &&
- 	do_xmailer_test 1 "" &&
--	do_xmailer_test 0 "--no-xmailer" &&
-+	do_xmailer_test 0 "--noxmailer" &&
- 	do_xmailer_test 1 "--xmailer"
- '
- 
- test_expect_success $PREREQ '--[no-]xmailer with sendemail.xmailer=false' '
- 	test_config sendemail.xmailer false &&
- 	do_xmailer_test 0 "" &&
--	do_xmailer_test 0 "--no-xmailer" &&
-+	do_xmailer_test 0 "--noxmailer" &&
- 	do_xmailer_test 1 "--xmailer"
- '
- 
--- 
-2.2.1
+> cause problems, if a new symbolic link that will cause problems will
+> appear, etc.
