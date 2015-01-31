@@ -1,128 +1,79 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v4 07/19] fsck: Make =?UTF-8?Q?fsck=5Fident=28=29=20warn-f?=
- =?UTF-8?Q?riendly?=
-Date: Sat, 31 Jan 2015 22:05:41 +0100
+Subject: [PATCH v4 10/19] fsck: Make =?UTF-8?Q?fsck=5Ftag=28=29=20warn-fri?=
+ =?UTF-8?Q?endly?=
+Date: Sat, 31 Jan 2015 22:05:56 +0100
 Organization: gmx
-Message-ID: <8f24728329cfdac09800e4bb249b44486e459bc2.1422737997.git.johannes.schindelin@gmx.de>
+Message-ID: <eff683e7d1c7bd3b692f20c170615671e1672f84.1422737997.git.johannes.schindelin@gmx.de>
 References: <xmqqr3w7gxr4.fsf@gitster.dls.corp.google.com>
  <cover.1422737997.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, mhagger@alum.mit.edu, peff@peff.net
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat Jan 31 22:05:59 2015
+X-From: git-owner@vger.kernel.org Sat Jan 31 22:06:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YHfEr-0004VT-BB
-	for gcvg-git-2@plane.gmane.org; Sat, 31 Jan 2015 22:05:57 +0100
+	id 1YHfF9-0004iY-Kl
+	for gcvg-git-2@plane.gmane.org; Sat, 31 Jan 2015 22:06:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756077AbbAaVFx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 31 Jan 2015 16:05:53 -0500
-Received: from mout.gmx.net ([212.227.15.15]:54020 "EHLO mout.gmx.net"
+	id S1756137AbbAaVGL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 31 Jan 2015 16:06:11 -0500
+Received: from mout.gmx.net ([212.227.15.19]:50421 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755820AbbAaVFx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 Jan 2015 16:05:53 -0500
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0MMT1y-1YJLGS1blm-008KRL; Sat, 31 Jan 2015 22:05:42
+	id S1755820AbbAaVGL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 Jan 2015 16:06:11 -0500
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0M4WuC-1XS49Q47K8-00yiUz; Sat, 31 Jan 2015 22:05:57
  +0100
 In-Reply-To: <cover.1422737997.git.johannes.schindelin@gmx.de>
 X-Sender: johannes.schindelin@gmx.de
 User-Agent: Roundcube Webmail/1.1-git
-X-Provags-ID: V03:K0:1JSoWr2r4ye/4TAv4yLEbqNEh1wiHQZ7CfFj9cNNe4cs4pn6pMq
- FI6UDizzpd3cbA5MnoPbfiJrHugd4/osNwVzFGX0lKHtFjzeX0seVGsTit2p+8Hm72ExW7Z
- FGvFku7AD11YtcEPbMLZT9u9YMl89iUcdn/YyozSW2c2nqbrn9SsngWnjIpzLLy3+LjyyWP
- Xue9kJxLCFcUnbOl0khVQ==
+X-Provags-ID: V03:K0:qSgTO+WZmjnv7SXD6o1GFzn1kUa69RycI24CfrlxTL16kUE3wJ3
+ DEaUw3GXFWSrSPFbwyveBdMYU8VQaMnFFCyLOhd58eiNRVflvFW3h1fw6SK4uIufpRKbhuY
+ m+MAGOLWF8flMI4dnsoD293Mzg0HzPqSw/b7goa+Xmdllw3vNjBp6aOFlmBRE3Jhsm3qyct
+ 80C+B9a+1vjDOXGPmhPFg==
 X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263220>
 
-When fsck_ident() identifies a problem with the ident, it should still
-advance the pointer to the next line so that fsck can continue in the
-case of a mere warning.
+When fsck_tag() identifies a problem with the commit, it should try
+to make it possible to continue checking the commit object, in case the
+user wants to demote the detected errors to mere warnings.
+
+Just like fsck_commit(), there are certain problems that could hide oth=
+er
+issues with the same tag object. For example, if the 'type' line is not
+encountered in the correct position, the 'tag' line =E2=80=93 if there =
+is any =E2=80=93
+would not be handled at all.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- fsck.c | 49 +++++++++++++++++++++++++++----------------------
- 1 file changed, 27 insertions(+), 22 deletions(-)
+ fsck.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/fsck.c b/fsck.c
-index e52b027..cd3ee48 100644
+index b92d8c4..f72e404 100644
 --- a/fsck.c
 +++ b/fsck.c
-@@ -459,40 +459,45 @@ static int require_end_of_header(const void *data, unsigned long size,
- 
- static int fsck_ident(const char **ident, struct object *obj, struct fsck_options *options)
- {
-+	const char *p = *ident;
- 	char *end;
- 
--	if (**ident == '<')
-+	*ident = strchrnul(*ident, '\n');
-+	if (**ident == '\n')
-+		(*ident)++;
-+
-+	if (*p == '<')
- 		return report(options, obj, FSCK_MSG_MISSING_NAME_BEFORE_EMAIL, "invalid author/committer line - missing space before email");
--	*ident += strcspn(*ident, "<>\n");
--	if (**ident == '>')
-+	p += strcspn(p, "<>\n");
-+	if (*p == '>')
- 		return report(options, obj, FSCK_MSG_BAD_NAME, "invalid author/committer line - bad name");
--	if (**ident != '<')
-+	if (*p != '<')
- 		return report(options, obj, FSCK_MSG_MISSING_EMAIL, "invalid author/committer line - missing email");
--	if ((*ident)[-1] != ' ')
-+	if (p[-1] != ' ')
- 		return report(options, obj, FSCK_MSG_MISSING_SPACE_BEFORE_EMAIL, "invalid author/committer line - missing space before email");
--	(*ident)++;
--	*ident += strcspn(*ident, "<>\n");
--	if (**ident != '>')
-+	p++;
-+	p += strcspn(p, "<>\n");
-+	if (*p != '>')
- 		return report(options, obj, FSCK_MSG_BAD_EMAIL, "invalid author/committer line - bad email");
--	(*ident)++;
--	if (**ident != ' ')
-+	p++;
-+	if (*p != ' ')
- 		return report(options, obj, FSCK_MSG_MISSING_SPACE_BEFORE_DATE, "invalid author/committer line - missing space before date");
--	(*ident)++;
--	if (**ident == '0' && (*ident)[1] != ' ')
-+	p++;
-+	if (*p == '0' && p[1] != ' ')
- 		return report(options, obj, FSCK_MSG_ZERO_PADDED_DATE, "invalid author/committer line - zero-padded date");
--	if (date_overflows(strtoul(*ident, &end, 10)))
-+	if (date_overflows(strtoul(p, &end, 10)))
- 		return report(options, obj, FSCK_MSG_DATE_OVERFLOW, "invalid author/committer line - date causes integer overflow");
--	if (end == *ident || *end != ' ')
-+	if ((end == p || *end != ' '))
- 		return report(options, obj, FSCK_MSG_BAD_DATE, "invalid author/committer line - bad date");
--	*ident = end + 1;
--	if ((**ident != '+' && **ident != '-') ||
--	    !isdigit((*ident)[1]) ||
--	    !isdigit((*ident)[2]) ||
--	    !isdigit((*ident)[3]) ||
--	    !isdigit((*ident)[4]) ||
--	    ((*ident)[5] != '\n'))
-+	p = end + 1;
-+	if ((*p != '+' && *p != '-') ||
-+	    !isdigit(p[1]) ||
-+	    !isdigit(p[2]) ||
-+	    !isdigit(p[3]) ||
-+	    !isdigit(p[4]) ||
-+	    (p[5] != '\n'))
- 		return report(options, obj, FSCK_MSG_BAD_TIMEZONE, "invalid author/committer line - bad time zone");
--	(*ident) += 6;
-+	p += 6;
- 	return 0;
- }
- 
--- 
+@@ -620,7 +620,8 @@ static int fsck_tag_buffer(struct tag *tag, const c=
+har *data,
+ 	}
+ 	if (get_sha1_hex(buffer, sha1) || buffer[40] !=3D '\n') {
+ 		ret =3D report(options, &tag->object, FSCK_MSG_INVALID_OBJECT_SHA1, =
+"invalid 'object' line format - bad sha1");
+-		goto done;
++		if (ret)
++			goto done;
+ 	}
+ 	buffer +=3D 41;
+=20
+--=20
 2.2.0.33.gc18b867
