@@ -1,100 +1,67 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v4 19/19] fsck: support ignoring objects in `git fsck` via
- fsck.skiplist
-Date: Sat, 31 Jan 2015 22:07:06 +0100
-Organization: gmx
-Message-ID: <efb672505c7f15b7e5775f1637a2ae7cfe30edeb.1422737997.git.johannes.schindelin@gmx.de>
-References: <xmqqr3w7gxr4.fsf@gitster.dls.corp.google.com>
- <cover.1422737997.git.johannes.schindelin@gmx.de>
+From: Andreas Gruenbacher <agruen@gnu.org>
+Subject: Re: patch-2.7.3 no longer applies relative symbolic link patches
+Date: Sat, 31 Jan 2015 21:27:37 +0000 (UTC)
+Message-ID: <majhc9$ant$1@ger.gmane.org>
+References: <CA+5PVA7rVy6Li_1haj1QmGG0D6avLB5Xej=2YGt6K-11kKHR5A@mail.gmail.com>
+	<CA+5PVA4bs6CYU8MHn1JqBjnb-5wYJT2Tjqa65=v2uSPL8c7dYw@mail.gmail.com>
+	<CA+55aFxbY21vBbPs5qCFPT1HSBbaeS+Z2Fr9So1r3rXrMWe_ZQ@mail.gmail.com>
+	<CA+5PVA5RdtLyRiYerG=u--bRZQ87qU0EGf7kGPMiQs9_KB3hRw@mail.gmail.com>
+	<CA+55aFwa1-pudNus+r=5EghpGkm33h--GZNND5UHt=ZKvP15Xw@mail.gmail.com>
+	<CAPc5daVu=hjjYwDoCwco=cdg16kib80ZBbArh3z8R+j2vq6C6g@mail.gmail.com>
+	<CA+55aFxdssyi_CrhB_yf8yXrG2PnuEHxf-=X6NnoVFxJnG0Jww@mail.gmail.com>
+	<ma8btn$t01$2@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, mhagger@alum.mit.edu, peff@peff.net
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat Jan 31 22:07:19 2015
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: git@vger.kernel.org
+To: linux-kernel@vger.kernel.org
+X-From: linux-kernel-owner@vger.kernel.org Sat Jan 31 22:27:58 2015
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YHfGB-0005Qo-4Z
-	for gcvg-git-2@plane.gmane.org; Sat, 31 Jan 2015 22:07:19 +0100
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1YHfa9-0002ms-Vh
+	for glk-linux-kernel-3@plane.gmane.org; Sat, 31 Jan 2015 22:27:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756213AbbAaVHO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 31 Jan 2015 16:07:14 -0500
-Received: from mout.gmx.net ([212.227.17.21]:59065 "EHLO mout.gmx.net"
+	id S1755760AbbAaV1t (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Sat, 31 Jan 2015 16:27:49 -0500
+Received: from plane.gmane.org ([80.91.229.3]:54440 "EHLO plane.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753293AbbAaVHN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 Jan 2015 16:07:13 -0500
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0LgI0W-1Xul5j1h8W-00ngdW; Sat, 31 Jan 2015 22:07:07
- +0100
-In-Reply-To: <cover.1422737997.git.johannes.schindelin@gmx.de>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1-git
-X-Provags-ID: V03:K0:/rjtDpoe4dUX+LwK8mzIGIzGDujDEN8Wm+kUKoXkCKbyCv4jXWx
- RmsXXNKSQFRuISSMsaAs0+oQmWdFHRGCEt8kFKBTovpdNI5fZShFUKTww2rZclr+b32oWMl
- FcuvCu8YlVF447qLfEoDIVYFHslS4PJ6bGzVdW1ZOQ+h2LBbPmrBRUZOF/DZLBP9Xmh0ARl
- pR+mNEb6SH2LgQaNQtB/g==
-X-UI-Out-Filterresults: notjunk:1;
-Sender: git-owner@vger.kernel.org
+	id S1752475AbbAaV1r (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
+	Sat, 31 Jan 2015 16:27:47 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <glk-linux-kernel-3@m.gmane.org>)
+	id 1YHfZv-0002dV-JV
+	for linux-kernel@vger.kernel.org; Sat, 31 Jan 2015 22:27:43 +0100
+Received: from 80-110-112-196.cgn.dynamic.surfer.at ([80.110.112.196])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <linux-kernel@vger.kernel.org>; Sat, 31 Jan 2015 22:27:43 +0100
+Received: from agruen by 80-110-112-196.cgn.dynamic.surfer.at with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <linux-kernel@vger.kernel.org>; Sat, 31 Jan 2015 22:27:43 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 80-110-112-196.cgn.dynamic.surfer.at
+User-Agent: Pan/0.139 (Sexual Chocolate; GIT bf56508
+ git://git.gnome.org/pan2)
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263229>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263230>
 
-Identical to support in `git receive-pack for the config option
-`receive.fsck.skiplist`, we now support ignoring given objects in
-`git fsck` via `fsck.skiplist` altogether.
+On Tue, 27 Jan 2015 15:47:04 +0000, Andreas Gruenbacher wrote:
+> On Mon, 26 Jan 2015 13:50:10 -0800, Linus Torvalds wrote:
+>> I _think_ we allow arbitrary symlinks to be created, but then we should
+>> be careful about actually _following_ them.
+> 
+> I would prefer to allow arbitrary symlinks even in GNU patch, but patch
+> still must not be allowed to leave the working directory. The only way
+> to achieve that I can think of is to implement path traversal in user
+> space, which is not so easy to do correctly and efficiently.
 
-This is extremely handy in case of legacy repositories where it would
-cause more pain to change incorrect objects than to live with them
-(e.g. a duplicate 'author' line in an early commit object).
+This should be working in patch-2.7.4 now.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- Documentation/config.txt |  7 +++++++
- builtin/fsck.c           | 10 ++++++++++
- 2 files changed, 17 insertions(+)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index e685aef..93c43d5 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1220,6 +1220,13 @@ that setting `fsck.severity = missing-email=ignore` will hide that issue.
- This feature is intended to support working with legacy repositories
- which cannot be repaired without disruptive changes.
- 
-+fsck.skipList::
-+	The path to a sorted list of object names (i.e. one SHA-1 per
-+	line) that are known to be broken in a non-fatal way and should
-+	be ignored. This feature is useful when an established project
-+	should be accepted despite early commits containing errors that
-+	can be safely ignored such as invalid committer email addresses.
-+
- gc.aggressiveDepth::
- 	The depth parameter used in the delta compression
- 	algorithm used by 'git gc --aggressive'.  This defaults
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index cf61aad..81570d8 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -54,6 +54,16 @@ static int fsck_config(const char *var, const char *value, void *cb)
- 		return 0;
- 	}
- 
-+	if (strcmp(var, "fsck.skiplist") == 0) {
-+		const char *path = is_absolute_path(value) ?
-+			value : git_path("%s", value);
-+		struct strbuf sb = STRBUF_INIT;
-+		strbuf_addf(&sb, "skiplist=%s", path);
-+		fsck_set_severity(&fsck_obj_options, sb.buf);
-+		strbuf_release(&sb);
-+		return 0;
-+	}
-+
- 	return git_default_config(var, value, cb);
- }
- 
--- 
-2.2.0.33.gc18b867
+Andreas
