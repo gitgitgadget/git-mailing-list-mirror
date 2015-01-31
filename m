@@ -1,56 +1,66 @@
-From: Joker <joker@byom.de>
-Subject: Re: Importing from RTC to GIT
-Date: Sun, 1 Feb 2015 04:50:06 -0700 (MST)
-Message-ID: <1422791406383-7624818.post@n2.nabble.com>
-References: <43622BFE4D7C4B4094E4A212BD8B2B0353B69B31C7@isifboise45.isif.state.id.us>
+From: "Rena N. Politi" <rena.n.politi@gmail.com>
+Subject: You will upload it till Sunday evening, February 1
+Date: Sun, 1 Feb 2015 00:40:55 +0200
+Message-ID: <20150131224050.5C1AA359A5B9@genf174.server4you.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 01 12:50:16 2015
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Feb 01 15:36:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YHt2c-0003nk-Ef
-	for gcvg-git-2@plane.gmane.org; Sun, 01 Feb 2015 12:50:14 +0100
+	id 1YHvdO-00079k-FV
+	for gcvg-git-2@plane.gmane.org; Sun, 01 Feb 2015 15:36:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752883AbbBALuI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Feb 2015 06:50:08 -0500
-Received: from mwork.nabble.com ([162.253.133.43]:59446 "EHLO mwork.nabble.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752651AbbBALuG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Feb 2015 06:50:06 -0500
-Received: from mjim.nabble.com (unknown [162.253.133.84])
-	by mwork.nabble.com (Postfix) with ESMTP id 8B4621276D14
-	for <git@vger.kernel.org>; Sun,  1 Feb 2015 03:50:08 -0800 (PST)
-In-Reply-To: <43622BFE4D7C4B4094E4A212BD8B2B0353B69B31C7@isifboise45.isif.state.id.us>
+	id S1753375AbbBAOgS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Feb 2015 09:36:18 -0500
+Received: from genf174.server4you.net ([217.172.184.70]:35146 "EHLO
+	genf174.server4you.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752356AbbBAOgR convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 1 Feb 2015 09:36:17 -0500
+X-Greylist: delayed 6457 seconds by postgrey-1.27 at vger.kernel.org; Sun, 01 Feb 2015 09:36:17 EST
+Received: from localhost (localhost [127.0.0.1])
+	by genf174.server4you.net (Postfix) with ESMTP id 44EF935F3662
+	for <git@vger.kernel.org>; Sun,  1 Feb 2015 11:57:16 +0100 (CET)
+Received: from genf174.server4you.net ([127.0.0.1])
+	by localhost (genf174.server4you.net [127.0.0.1]) (amavisd-new, port 10032)
+	with ESMTP id EmuELjpZgR23 for <git@vger.kernel.org>;
+	Sun,  1 Feb 2015 11:57:15 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by genf174.server4you.net (Postfix) with ESMTP id 7F34735CE37D
+	for <git@vger.kernel.org>; Sun,  1 Feb 2015 05:44:37 +0100 (CET)
+X-Virus-Scanned: amavisd-new at genf174.server4you.net
+Received: from genf174.server4you.net ([127.0.0.1])
+	by localhost (genf174.server4you.net [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id XoBU8Iz5siai for <git@vger.kernel.org>;
+	Sun,  1 Feb 2015 05:44:37 +0100 (CET)
+Received: from 10.0.2.15 (genf174.server4you.net [217.172.184.70])
+	by genf174.server4you.net (Postfix) with SMTP id 5C1AA359A5B9
+	for <git@vger.kernel.org>; Sat, 31 Jan 2015 23:40:49 +0100 (CET)
+X-Priority: 1 (Highest)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263234>
 
-Its the more or less the same response as I wrote in the stackoverflow
-thread.
-To begin with, we run into the same issue...
+Dear Authors of Invited Papers in Dubai (UAE),
 
-We also wanted to keep our history and didnt found anything. So we started
-to create a python script, which automates the process to migrate RTC SCM
-Stream by Stream to GIT.
+Due to the great success of the  WSEAS.org upcoming conferences in Dubai, UAE, Febr 22-24, '15, www.wseas.org,  we can accept your INVITED paper
+provided that you will upload it till Sunday evening, February 1
 
-The script(s) can be found here: https://github.com/WtfJoke/rtc2git
+We remind you that as invited author, you will enjoy not only the usual publication in our Books and CD-ROMS (indexed by ISI, SCOPUS etc...), but
+also you will publish the extended version of your paper(s) in our 33 ISI/SCI/SCOPUS Indexed Journals.
 
-It doesnt work with git fast import, though. But its a possible way to
-migrate your components. You can read how it works on the stackoverflow-post
-or in the project description.
-The script is not finished yet, but in a good state. With that I was able to
-migrate some components sucesfully already (the rtc commands take some time
-for completion, therefore it takes quite a lot of time to migrate stuff).
+Our invited authors are explicitly marked in the program as invited authors and the presentation of their papers lasts twice as long as the regular
+paper.
+Upload your invited paper by selecting the conference that applies the most to your field (please, include the phrase 
+"Invited-by-Rena- git@vger.kernel.org " in the Web Form, in the Field: Comments)
 
+Best Regards
 
-
---
-View this message in context: http://git.661346.n2.nabble.com/Importing-from-RTC-to-GIT-tp7617984p7624818.html
-Sent from the git mailing list archive at Nabble.com.
+Rena N. Politi
+Conferences & Publishing Services of WSEAS
