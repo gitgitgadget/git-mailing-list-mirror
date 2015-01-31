@@ -1,8 +1,8 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v4 03/19] fsck: Provide a function to parse fsck message IDs
-Date: Sat, 31 Jan 2015 22:04:59 +0100
+Subject: [PATCH v4 05/19] fsck: Allow demoting errors to warnings
+Date: Sat, 31 Jan 2015 22:05:07 +0100
 Organization: gmx
-Message-ID: <c6fb23c70970e083b046a784e2dc22bb3f0776ba.1422737997.git.johannes.schindelin@gmx.de>
+Message-ID: <4d054c3aee1e0743828170841c0169b33b7485df.1422737997.git.johannes.schindelin@gmx.de>
 References: <xmqqr3w7gxr4.fsf@gitster.dls.corp.google.com>
  <cover.1422737997.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
@@ -10,97 +10,136 @@ Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org, mhagger@alum.mit.edu, peff@peff.net
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat Jan 31 22:05:13 2015
+X-From: git-owner@vger.kernel.org Sat Jan 31 22:05:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YHfE8-0003vi-JR
-	for gcvg-git-2@plane.gmane.org; Sat, 31 Jan 2015 22:05:12 +0100
+	id 1YHfEF-00043Q-7I
+	for gcvg-git-2@plane.gmane.org; Sat, 31 Jan 2015 22:05:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755760AbbAaVFI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 31 Jan 2015 16:05:08 -0500
-Received: from mout.gmx.net ([212.227.17.22]:63228 "EHLO mout.gmx.net"
+	id S1755868AbbAaVFO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 31 Jan 2015 16:05:14 -0500
+Received: from mout.gmx.net ([212.227.17.22]:52368 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755558AbbAaVFG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 Jan 2015 16:05:06 -0500
+	id S1755777AbbAaVFN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 Jan 2015 16:05:13 -0500
 Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0MeQ43-1Y1OiZ0AoR-00Q9mF; Sat, 31 Jan 2015 22:05:00
+ ESMTPSA (Nemesis) id 0Maa3B-1XxWsZ1cuf-00K8CR; Sat, 31 Jan 2015 22:05:10
  +0100
 In-Reply-To: <cover.1422737997.git.johannes.schindelin@gmx.de>
 X-Sender: johannes.schindelin@gmx.de
 User-Agent: Roundcube Webmail/1.1-git
-X-Provags-ID: V03:K0:083Aly/CH4HHF778q9WIfO16acMrBm77MnXLK1F4QDS74xXRdQ/
- LumzU18ew7/bNuoGFqROQ8CmOA2LKaCiFyqve80R/3ib9CC1QZQq9fvz5tlQQoqhPOLbKe4
- OU37/Qz2q1KKkQCOgVjGnie5oK5icNSG4VFQr/9HkQ1LR5afArLgAt3eiMOLbTa6s2V00Gg
- RGICL8TkUsZSDxFbXK97A==
+X-Provags-ID: V03:K0:0IHGJ9NhbPvbr9vsejp/KSwDt9DbytJ83/oHgJX7BAZf0cN3nIO
+ pjZpd7AhdU62KuMQ+r62nR7tiR83XrPll+zUfq3d5cvQQehUHuRVyJxF4cC0XG58tYnvDok
+ XfhcoDdUsf1A3aGqQ11MdS6XIZyrlsQhpDUTs6zqLyM3DtWHzufFuUTZjv2GQ3jNDzboGVf
+ rxG9Zlxxkkqu79/kMeI9g==
 X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263214>
 
-This function will be used in the next commits to allow the user to
-ask fsck to handle specific problems differently, e.g. demoting certain
-errors to warnings. It has to handle partial strings because we would
-like to be able to parse, say, 'missing-email,missing-tagger-entry'
-command lines.
+For example, missing emails in commit and tag objects can be demoted to
+mere warnings with
 
-To make the parsing robust, we generate strings from the enum keys, and
-using these keys, we will map lower-case, dash-separated strings values
-to the corresponding enum values.
+	git config receive.fsck.severity missing-email=warn
+
+The value is actually a comma-separated list.
+
+In case that the same key is listed in multiple receive.fsck.severity
+lines in the config, the latter configuration wins (this can happen for
+example when both $HOME/.gitconfig and .git/config contain severity
+settings).
+
+As git receive-pack does not actually perform the checks, it hands off
+the setting to index-pack or unpack-objects in the form of an optional
+argument to the --strict option.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- fsck.c | 27 +++++++++++++++++++++++++--
- 1 file changed, 25 insertions(+), 2 deletions(-)
+ builtin/index-pack.c     |  4 ++++
+ builtin/receive-pack.c   | 13 +++++++++++--
+ builtin/unpack-objects.c |  5 +++++
+ 3 files changed, 20 insertions(+), 2 deletions(-)
 
-diff --git a/fsck.c b/fsck.c
-index 30f7a48..2d91e28 100644
---- a/fsck.c
-+++ b/fsck.c
-@@ -63,15 +63,38 @@ enum fsck_msg_id {
- };
- #undef MSG_ID
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 925f7b5..b82b4dd 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -1565,6 +1565,10 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
+ 			} else if (!strcmp(arg, "--strict")) {
+ 				strict = 1;
+ 				do_fsck_object = 1;
++			} else if (skip_prefix(arg, "--strict=", &arg)) {
++				strict = 1;
++				do_fsck_object = 1;
++				fsck_set_severity(&fsck_options, arg);
+ 			} else if (!strcmp(arg, "--check-self-contained-and-connected")) {
+ 				strict = 1;
+ 				check_self_contained_and_connected = 1;
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index e0ce78e..9b7f1a8 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -36,6 +36,7 @@ static enum deny_action deny_current_branch = DENY_UNCONFIGURED;
+ static enum deny_action deny_delete_current = DENY_UNCONFIGURED;
+ static int receive_fsck_objects = -1;
+ static int transfer_fsck_objects = -1;
++static struct strbuf fsck_severity = STRBUF_INIT;
+ static int receive_unpack_limit = -1;
+ static int transfer_unpack_limit = -1;
+ static int advertise_atomic_push = 1;
+@@ -115,6 +116,12 @@ static int receive_pack_config(const char *var, const char *value, void *cb)
+ 		return 0;
+ 	}
  
--#define MSG_ID(id, severity) { FSCK_##severity },
-+#define STR(x) #x
-+#define MSG_ID(id, severity) { STR(id), FSCK_##severity },
- static struct {
-+	const char *id_string;
- 	int severity;
- } msg_id_info[FSCK_MSG_MAX + 1] = {
- 	FOREACH_MSG_ID(MSG_ID)
--	{ -1 }
-+	{ NULL, -1 }
- };
- #undef MSG_ID
- 
-+static int parse_msg_id(const char *text, int len)
-+{
-+	int i, j;
-+
-+	for (i = 0; i < FSCK_MSG_MAX; i++) {
-+		const char *key = msg_id_info[i].id_string;
-+		/* id_string is upper-case, with underscores */
-+		for (j = 0; j < len; j++) {
-+			char c = *(key++);
-+			if (c == '_')
-+				c = '-';
-+			if (text[j] != tolower(c))
-+				break;
-+		}
-+		if (j == len && !*key)
-+			return i;
++	if (strcmp(var, "receive.fsck.severity") == 0) {
++		strbuf_addf(&fsck_severity, "%c%s",
++			fsck_severity.len ? ',' : '=', value);
++		return 0;
 +	}
 +
-+	die("Unhandled message id: %.*s", len, text);
-+}
-+
- static int fsck_msg_severity(enum fsck_msg_id msg_id,
- 	struct fsck_options *options)
- {
+ 	if (strcmp(var, "receive.fsckobjects") == 0) {
+ 		receive_fsck_objects = git_config_bool(var, value);
+ 		return 0;
+@@ -1471,7 +1478,8 @@ static const char *unpack(int err_fd, struct shallow_info *si)
+ 		if (quiet)
+ 			argv_array_push(&child.args, "-q");
+ 		if (fsck_objects)
+-			argv_array_push(&child.args, "--strict");
++			argv_array_pushf(&child.args, "--strict%s",
++				fsck_severity.buf);
+ 		child.no_stdout = 1;
+ 		child.err = err_fd;
+ 		child.git_cmd = 1;
+@@ -1489,7 +1497,8 @@ static const char *unpack(int err_fd, struct shallow_info *si)
+ 		argv_array_pushl(&child.args, "index-pack",
+ 				 "--stdin", hdr_arg, keep_arg, NULL);
+ 		if (fsck_objects)
+-			argv_array_push(&child.args, "--strict");
++			argv_array_pushf(&child.args, "--strict%s",
++				fsck_severity.buf);
+ 		if (fix_thin)
+ 			argv_array_push(&child.args, "--fix-thin");
+ 		child.out = -1;
+diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
+index 6d17040..fe9117c 100644
+--- a/builtin/unpack-objects.c
++++ b/builtin/unpack-objects.c
+@@ -530,6 +530,11 @@ int cmd_unpack_objects(int argc, const char **argv, const char *prefix)
+ 				strict = 1;
+ 				continue;
+ 			}
++			if (skip_prefix(arg, "--strict=", &arg)) {
++				strict = 1;
++				fsck_set_severity(&fsck_options, arg);
++				continue;
++			}
+ 			if (starts_with(arg, "--pack_header=")) {
+ 				struct pack_header *hdr;
+ 				char *c;
 -- 
 2.2.0.33.gc18b867
