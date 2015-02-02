@@ -1,85 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv4] sha1_file: fix iterating loose alternate objects
-Date: Mon, 02 Feb 2015 12:00:17 -0800
-Message-ID: <xmqqk300t772.fsf@gitster.dls.corp.google.com>
-References: <4727F1DC-2FC3-49BE-8C6D-0C4D7D8B107C@jonathonmah.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH] git-submodules.sh: fix '/././' path normalization
+Date: Mon, 02 Feb 2015 21:02:12 +0100
+Message-ID: <54CFD7C4.4030000@web.de>
+References: <1422630843-9559-1-git-send-email-ps@pks.im>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Jonathon Mah <me@jonathonmah.com>
-X-From: git-owner@vger.kernel.org Mon Feb 02 21:00:42 2015
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 02 21:02:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YINAj-000377-N6
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Feb 2015 21:00:38 +0100
+	id 1YINCg-0004Hm-DD
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Feb 2015 21:02:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933356AbbBBUAd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Feb 2015 15:00:33 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:62455 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S933316AbbBBUAc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Feb 2015 15:00:32 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2390F33EC5;
-	Mon,  2 Feb 2015 15:00:32 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=KEE6Vb/Zd610uLlSxvRisiJ9fp0=; b=aT7BH2
-	akL0z+/DtNKNs7xQwA2JxkF4scy5qlglW3OXh0Vp4tAdd/01bRNIgsoG36EOdGRL
-	ouPJrXTBzE2w74rsBwKKkvcc6YyV0A8ZIvUqqlCN3Q4okbrtpI8PmHHgR3ZKx+w6
-	/TTIqMHhxCePQbVEvXMXfrPM+uy0PJlynCjeU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mKwIBM1NYJZrmk7EWfc5S4mXCeos2u+u
-	c52MRJkZ8f2xUdo2ylROjlGrDwrvgaYNsM01J16Jhj/dnroulqIPqtlx4RF/T+HO
-	lTk2u+GkHokiAGnZCgqKqFpObjLo0E6rTRQIF2ALWYwk1vMOWQNrITR9Sogyc8Cn
-	DM1Vc8xQlcY=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1A0C133EC4;
-	Mon,  2 Feb 2015 15:00:32 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 84A0533EAA;
-	Mon,  2 Feb 2015 15:00:18 -0500 (EST)
-In-Reply-To: <4727F1DC-2FC3-49BE-8C6D-0C4D7D8B107C@jonathonmah.com> (Jonathon
-	Mah's message of "Mon, 2 Feb 2015 10:48:12 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 1C9B4204-AB16-11E4-8F3E-7BA29F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1753658AbbBBUCe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Feb 2015 15:02:34 -0500
+Received: from mout.web.de ([212.227.17.12]:49459 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752326AbbBBUCd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Feb 2015 15:02:33 -0500
+Received: from [192.168.178.41] ([79.193.69.156]) by smtp.web.de (mrweb103)
+ with ESMTPSA (Nemesis) id 0Md4pC-1Y09Yd2P3q-00IGHm; Mon, 02 Feb 2015 21:02:13
+ +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
+In-Reply-To: <1422630843-9559-1-git-send-email-ps@pks.im>
+X-Provags-ID: V03:K0:iiGhArEAW9bVh0tAqlGMxzIj6FRSU9mTY6vpK4Cyj0o89TdC/fv
+ fHvz4W2zaGO+da+LN/A5Z58iMzggdbCyYnUavo2kFwg9vszQ8Su38CtAJRu3xro5GRVr7ue
+ HkwuTlW8VQqlCJFzXIkrcDeArXOcYc0U73U5vBAIjdWAGOVGw5eCFbazajxtMXL3QJKqRYQ
+ mH9qYMiusuD99SDXZLb/g==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263281>
 
-Jonathon Mah <me@jonathonmah.com> writes:
+Am 30.01.2015 um 16:14 schrieb Patrick Steinhardt:
+> When we add a new submodule the path of the submodule is being normalized. We
+> fail to normalize multiple adjacent '/./', though. Thus 'path/to/././submodule'
+> will become 'path/to/./submodule' where it should be 'path/to/submodule'
+> instead.
 
-> +test_expect_success 'prune: handle alternate object database' '
-> +	test_create_repo A &&
-> +		(cd A &&
-> +		echo "Hello World" >file1 &&
-> +		git add file1 &&
-> +		git commit -m "Initial commit" file1) &&
-> +	git clone -s A B &&
-> +		(cd B &&
-> +		echo "foo bar" >file2 &&
-> +		git add file2 &&
-> +		git commit -m "next commit" file2 &&
-> +		git prune)
+Thanks, nicely done and fixes the issue you noticed: Ack from me.
+
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>   git-submodule.sh           |  2 +-
+>   t/t7400-submodule-basic.sh | 17 +++++++++++++++++
+>   2 files changed, 18 insertions(+), 1 deletion(-)
+>
+> diff --git a/git-submodule.sh b/git-submodule.sh
+> index 9245abf..36797c3 100755
+> --- a/git-submodule.sh
+> +++ b/git-submodule.sh
+> @@ -423,7 +423,7 @@ cmd_add()
+>   		sed -e '
+>   			s|//*|/|g
+>   			s|^\(\./\)*||
+> -			s|/\./|/|g
+> +			s|/\(\./\)*|/|g
+>   			:start
+>   			s|\([^/]*\)/\.\./||
+>   			tstart
+> diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+> index 7c88245..5811a98 100755
+> --- a/t/t7400-submodule-basic.sh
+> +++ b/t/t7400-submodule-basic.sh
+> @@ -171,6 +171,23 @@ test_expect_success 'submodule add with ./ in path' '
+>   	test_cmp empty untracked
+>   '
+>
+> +test_expect_success 'submodule add with /././ in path' '
+> +	echo "refs/heads/master" >expect &&
+> +	>empty &&
+> +
+> +	(
+> +		cd addtest &&
+> +		git submodule add "$submodurl" dotslashdotsubmod/././frotz/./ &&
+> +		git submodule init
+> +	) &&
+> +
+> +	rm -f heads head untracked &&
+> +	inspect addtest/dotslashdotsubmod/frotz ../../.. &&
+> +	test_cmp expect heads &&
+> +	test_cmp expect head &&
+> +	test_cmp empty untracked
 > +'
-
-The issue does not have much to do with introducing new path to the
-cloned repository, or the original having any specific content for
-that matter, so I am tempted to simplify the above to something like
-this intead:
-
-	test_create_repo A &&
-	git -C A commit --allow-empty -m "initial commit" &&
-	git clone --shared A B &&
-	git -C B commit --allow-empty -m "next commit" &&
-	git -C B prune
-
-Thanks.
+> +
+>   test_expect_success 'submodule add with // in path' '
+>   	echo "refs/heads/master" >expect &&
+>   	>empty &&
+>
