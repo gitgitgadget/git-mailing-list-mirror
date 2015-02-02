@@ -1,92 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t9001: use older Getopt::Long boolean prefix '--no' rather than '--no-'
-Date: Mon, 02 Feb 2015 12:12:03 -0800
-Message-ID: <xmqqbnlct6ng.fsf@gitster.dls.corp.google.com>
-References: <54CA3611.1000804@statsbiblioteket.dk>
-	<1422599085-11804-1-git-send-email-tgc@statsbiblioteket.dk>
-	<20150130230516.GA7867@vauxhall.crustytoothpaste.net>
-	<a924a58108ea8ad8aece1ee66cbdc3f@74d39fa044aa309eaea14b9f57fe79c>
-	<xmqqmw4x85bw.fsf@gitster.dls.corp.google.com>
-	<8103CEFD-4160-4C03-B58B-A3CCCA52748B@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCHv5] sha1_file: fix iterating loose alternate objects
+Date: Mon, 2 Feb 2015 15:27:33 -0500
+Message-ID: <20150202202733.GB28915@peff.net>
+References: <E05CAD49-755C-4F26-A527-597B1AD412D8@jonathonmah.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Git mailing list <git@vger.kernel.org>,
-	"Tom G. Christensen" <tgc@statsbiblioteket.dk>
-To: "Kyle J. McKay" <mackyle@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 02 21:12:17 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jonathon Mah <me@jonathonmah.com>
+X-From: git-owner@vger.kernel.org Mon Feb 02 21:27:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YINLz-0001JG-SA
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Feb 2015 21:12:16 +0100
+	id 1YINau-0001Zz-3j
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Feb 2015 21:27:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932101AbbBBUMI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Feb 2015 15:12:08 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:57052 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754917AbbBBUMF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Feb 2015 15:12:05 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2855A35198;
-	Mon,  2 Feb 2015 15:12:05 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=yMEhXTJNPOxiOF4MqNIGbzQgXfw=; b=H4gYoE
-	SZxUSE/rBY5H1pf6F/ckGCWg1dRkbw+DDx63ZhwGqTJfbDFuOo/XKuTuFObH326R
-	edFdQUcLms3vpgCam5C4zWU+0WyZRad4R0FxnGxFSfNEuA+p71/cyyettZZ7NXeP
-	1w+kb314nMDo3L3opHG7IhBixSSiZyo8rw6lk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=AuqGZ2rMKL3+glZYzGkpVpMeFwzTOmaf
-	3+JiM9AQFMl1di+VWg/0ZJkYJTFZK500WdJI1cjP2xGdTk0YKFJquXGGnVCkcFMu
-	NZ0jJaL/lVFWbx4BnkSB+sniPx7JWfQZuuFXhGxjq/JbU7ON5lMa0vLMcgp5/FMM
-	F9kQfDpQQxs=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1D2CF35197;
-	Mon,  2 Feb 2015 15:12:05 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 90BC235196;
-	Mon,  2 Feb 2015 15:12:04 -0500 (EST)
-In-Reply-To: <8103CEFD-4160-4C03-B58B-A3CCCA52748B@gmail.com> (Kyle J. McKay's
-	message of "Mon, 2 Feb 2015 08:11:02 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: C17230A2-AB17-11E4-B71C-7BA29F42C9D4-77302942!pb-smtp1.pobox.com
+	id S964935AbbBBU1g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Feb 2015 15:27:36 -0500
+Received: from cloud.peff.net ([50.56.180.127]:44226 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S964927AbbBBU1f (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Feb 2015 15:27:35 -0500
+Received: (qmail 17476 invoked by uid 102); 2 Feb 2015 20:27:35 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 02 Feb 2015 14:27:35 -0600
+Received: (qmail 11512 invoked by uid 107); 2 Feb 2015 20:28:11 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 02 Feb 2015 15:28:11 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 02 Feb 2015 15:27:33 -0500
+Content-Disposition: inline
+In-Reply-To: <E05CAD49-755C-4F26-A527-597B1AD412D8@jonathonmah.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263285>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263286>
 
-"Kyle J. McKay" <mackyle@gmail.com> writes:
+On Mon, Feb 02, 2015 at 12:05:54PM -0800, Jonathon Mah wrote:
 
-> On Feb 1, 2015, at 17:33, Junio C Hamano wrote:
->
->> "Kyle J. McKay" <mackyle@gmail.com> writes:
->>
->>>> use 5.008;
->>>
->>> So either that needs to change or the code should properly deal with
->>> the version of Getopt::Long that comes with 5.8.0.
->>>
->>> Since it's really not very difficult or invasive to add support for
->>> the no- variants, here's a patch to do so:
->>
->> Doesn't that approach add "what does --no-no-chain-rely-to even
->> mean?" confusion to the resulting system?  If that is not the case,
->> then I am all for it, but otherwise, let's not.
->
-> No.  You have to append the '!' to get the automagic no prefix
-> alternative(s), so while 'chain-reply-to!' means support chain-reply- 
-> to, nochain-reply-to and (if you have a new enough Getopt::Long) no- 
-> chain-reply-to, just using 'no-chain-reply-to' without the trailing
-> !' means that nono-chain-reply-to and no-no-chain-reply-to remain
-> invalid options that will generate an error.
+> Simplified test per Junio (verified that it fails before and passes
+> now). Punting on Jeff's "more elaborate example".
 
-Ahh, I missed that ! suffix (or lack thereof).
+I think that's fine. I started to try to create such an example, but
+it's actually rather tricky. If the alternate has the tip object, then
+one of these must be true:
 
-Thanks.
+  1. It has all of the objects the tip depends on.
+
+  2. It is missing an object, and this tip is part of the referenced
+     history.
+
+  3. It is missing an object, but this part of history is not
+     referenced.
+
+In case (1), we do not care about deleting objects from the base
+repository; we already have another copy in the alternate.
+
+In case (2), the alternate is corrupt, and all bets are off.
+
+In case (3), we can only have dropped the object from the alternate by
+pruning it and keeping the tip object that refers to it. Which is the
+exact thing that this new code was added to avoid (to always keep
+depended-upon objects).
+
+So I actually do not see how the situation would come up in practice,
+and possibly we could drop the iteration of the alternates' loose
+objects entirely from this code. But certainly that is orthogonal to
+Jonathon's fix (which is a true regression for the less-exotic case that
+his test demonstrates).
+
+-Peff
