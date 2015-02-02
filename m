@@ -1,205 +1,135 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 3/3] CodingGuidelines: describe naming rules for configuration
- variables
-Date: Mon, 02 Feb 2015 07:47:27 +0100
-Message-ID: <54CF1D7F.6050903@alum.mit.edu>
-References: <xmqqiofskmfd.fsf@gitster.dls.corp.google.com>	<1422484393-4414-1-git-send-email-gitster@pobox.com>	<1422484393-4414-4-git-send-email-gitster@pobox.com>	<54CDB5C6.3020702@alum.mit.edu> <xmqq1tm99yhx.fsf@gitster.dls.corp.google.com>
+From: Chris Packham <judge.packham@gmail.com>
+Subject: Re: [git-gui] bug report: "Open existing repository" dialog fails on submodules
+Date: Mon, 2 Feb 2015 21:41:16 +1300
+Message-ID: <CAFOYHZBpVf0Dk=aM3hbpVjwc-f_WtZx+Myaja6=V2KXCDijsQA@mail.gmail.com>
+References: <CAMto89Dvz-u+at4CPLGQRak4niOJk1trSCn2wQugLUnD1h=Fjw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 8bit
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 02 07:54:51 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: GIT <git@vger.kernel.org>
+To: =?UTF-8?B?UsOpbWkgUmFtcGlu?= <remirampin@gmail.com>,
+	Pat Thoyts <patthoyts@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Mon Feb 02 09:41:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YIAuI-0003Cp-BJ
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Feb 2015 07:54:50 +0100
+	id 1YICZO-00078x-G5
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Feb 2015 09:41:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932612AbbBBGyq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Feb 2015 01:54:46 -0500
-Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:63179 "EHLO
-	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932513AbbBBGyp (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 Feb 2015 01:54:45 -0500
-X-Greylist: delayed 421 seconds by postgrey-1.27 at vger.kernel.org; Mon, 02 Feb 2015 01:54:45 EST
-X-AuditID: 1207440e-f79bc6d000000c43-2e-54cf1d831bde
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id E1.C9.03139.38D1FC45; Mon,  2 Feb 2015 01:47:31 -0500 (EST)
-Received: from [192.168.69.130] (p4FC96EED.dip0.t-ipconnect.de [79.201.110.237])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t126lSi3032190
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Mon, 2 Feb 2015 01:47:29 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.3.0
-In-Reply-To: <xmqq1tm99yhx.fsf@gitster.dls.corp.google.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprFKsWRmVeSWpSXmKPExsUixO6iqNssez7E4Ot5IYuuK91MFg29V5gt
-	+pd3sVn8aOlhdmDx+PAxzuNZ7x5Gj4uXlD0+b5ILYInitklKLCkLzkzP07dL4M443r6HueCZ
-	XsWFnz4NjD9Vuhg5OSQETCSWvJjICGGLSVy4t56ti5GLQ0jgMqNE54+r7BDOeSaJy8/esoNU
-	8QpoS3yb8JEJxGYRUJU407gErJtNQFdiUU8zWFxUIEjiSstmZoh6QYmTM5+wgNgiAo4SJx5c
-	ZwWxmQU8JeZvWMYGYgsLxElse/cCavNnRomm9VfBmjkFrCX2nrrBBtGgJ7Hj+i+oZnmJ5q2z
-	mScwCsxCsmMWkrJZSMoWMDKvYpRLzCnN1c1NzMwpTk3WLU5OzMtLLdI11svNLNFLTSndxAgJ
-	Z74djO3rZQ4xCnAwKvHwTvh4LkSINbGsuDL3EKMkB5OSKG/HH6AQX1J+SmVGYnFGfFFpTmrx
-	IUYJDmYlEV5hkHLelMTKqtSifJiUNAeLkjiv2hJ1PyGB9MSS1OzU1ILUIpisDAeHkgRvtsz5
-	ECHBotT01Iq0zJwShDQTByfIcC4pkeLUvJTUosTSkox4UKzGFwOjFSTFA7TXHKSdt7ggMRco
-	CtF6ilFRSpw3DiQhAJLIKM2DGwtLUq8YxYG+FOatA6niASY4uO5XQIOZgAYvm3QGZHBJIkJK
-	qoGRY/ttju/z7nztlhcu63RVKGh0udlUO0neOrkucaFN9crdCmveXk/8mNr38MgWW5nb0/dv
-	7ZE408rAlmO1Zm9V/izLZBtuVevNPwVd4qt/b2guL1/2esKOZ+FvvdfaOvJvtvpo 
+	id S932967AbbBBIlR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Feb 2015 03:41:17 -0500
+Received: from mail-pa0-f51.google.com ([209.85.220.51]:54843 "EHLO
+	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932802AbbBBIlR convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 2 Feb 2015 03:41:17 -0500
+Received: by mail-pa0-f51.google.com with SMTP id fb1so79856273pad.10
+        for <git@vger.kernel.org>; Mon, 02 Feb 2015 00:41:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=ys/WeSmtQeOjMkyujABp/vMptDqS5HRjJf6zxFoVSNc=;
+        b=AN0+iwY9a1uzF3iBX+eJHIM84QOpHDbDUUeCWCXDP1jaP2iyYQiVHh8ZgkaJzCh2PC
+         ++fns+Gca9ySXEx+y24akh0R23jpNZoCWEjfbewLarNU04KHTQn6XX7N0X3ppZ7JUYCh
+         kTf0ah4IbOcTgPkAlepFUBkGCGBJUBibkAUvaje6BxVaV39QN2wxr++z5ZRsnpwvcXH+
+         YEGb24Lcs140xOnAgNOo5ZKM2/h1evFsO6imQGPpicT++HOgq1fhPzOwDo9o9+lWMSkP
+         iOE71mGfBJZ3ReDiDaHlFG90rh89ACZeIj2mP0HsWSihGsZd0ZHWSDJyhFTHDZEUmik1
+         wVSQ==
+X-Received: by 10.68.189.167 with SMTP id gj7mr27884367pbc.58.1422866476458;
+ Mon, 02 Feb 2015 00:41:16 -0800 (PST)
+Received: by 10.70.109.199 with HTTP; Mon, 2 Feb 2015 00:41:16 -0800 (PST)
+In-Reply-To: <CAMto89Dvz-u+at4CPLGQRak4niOJk1trSCn2wQugLUnD1h=Fjw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263252>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263253>
 
-Junio,
+Hi,
 
-Thanks for your thoughtful response.
+On Sat, Jan 31, 2015 at 10:46 AM, R=C3=A9mi Rampin <remirampin@gmail.co=
+m> wrote:
+> Hi,
+>
+> This bug report concerns git-gui. Apologies if this is not the right
+> mailing-list.
+>
+> By submodule I mean a repository for which .git is not a regular Git
+> directory, but rather a "gitdir: ..." file.
+> While running "git gui" from such a directory will work fine, trying
+> to open it from the choose_repository window will fail with "Not a Gi=
+t
+> repository". This is because of the simplistic implementation of proc
+> _is_git in lib/choose_repository.tcl.
+>
+> I suggest fixing that function, or using Git directly to perform that
+> check, for instance checking "git rev-parse --show-toplevel". I'd
+> attempt a patch but my tcl-fu is weak.
+>
 
-On 02/01/2015 09:18 PM, Junio C Hamano wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
-> 
->> On 01/28/2015 11:33 PM, Junio C Hamano wrote:
->>> +   When choosing the variable namespace, do not use variable name for
->>> +   specifying possibly unbounded set of things, most notably anything
->>> +   an end user can freely come up with (e.g. branch names), but also
->>> +   large fixed set defined by the system that can grow over time
->>> +   (e.g. what kind of common whitespace problems to notice).
->>
->> I think we can all agree with this rule for "anything an end user can
->> freely come up with". Such sets are truly unbounded.
->>
->> But what is the justification for applying it to "large fixed set
->> defined by the system that can grow over time"?
-> [...]
-> 
-> I can see it argued that for things that are completely independent
-> (e.g. the consequence of setting fsck.badDate can never be affected
-> by how fsck.missingTagger is configured), separate configuration
-> variables may not be wrong per-se, but I can see that a set of knobs
-> that would have been originally independent, as the operation grow
-> richer, gain more semantics to make them related, and at that point,
-> I doubt "they are internally independent; expose them as independent
-> to the end users" argument would hold water that well.
-> 
-> A good example is "core.whitespace", where you would have started
-> with a simple set of booleans ("blank-at-eol" and "space-before-tab"
-> are conceptually independent and will stay to be), but once you
-> start supporting "indent-with-non-tab" and "tab-in-indent" you
-> cannot pretend that they are independent.
-> 
-> And that is the "existing practice" I primarily had in mind.  We
-> didn't do
-> 
-> 	whitespace.tabInIndent = true
->         whitespace.indentWithNonTab = true
-> 
-> to pretend they are independent and still internally having to make
-> sure the consistency of the setting.  We structured the syntax for
-> ease of the end user (not scripter) to shorter
-> 
-> 	core.whitespace = tab-in-indent,indent-with-non-tab
-> 
-> as we need the consistency thing either way (and it is easier to see
-> the consistency mistakes when they appear next to each other).
-> 
-> And I am happy that we chose wisely in an early version that didn't
-> use one-variable-per-knob but used list-of-features-as-value instead.
+I would have thought the following would work
 
-You make an interesting point: values that start as a list of
-independent booleans can grow dependencies over time.
+--- 8< ---
+Subject: [PATCH] git-gui: use git rev-parse to validate paths
 
-In retrospect, ISTM that a better interface for the indentation-related
-"whitespace" settings would have been something like
+The current _is_git function to validate a path as a git repository doe=
+s
+not handle a gitfiles which have been used for submodules for some time=
+=2E
+Instead of using a custom function let's just ask git rev-parse.
 
-* "whitespace.indent" -- a single value chosen from "tabs-only |
-spaces-only | tabs-when-possible | anything"
-* "whitespace.tabwidth" -- an integer value
+Signed-off-by: Chris Packham <chris.packham@alliedtelesis.co.nz>
+---
+ lib/choose_repository.tcl | 15 ++++-----------
+ 1 file changed, 4 insertions(+), 11 deletions(-)
 
-This would have made the mutual-exclusivity of those choices manifest in
-the style of configuration rather than hoping that the user notices that
-his settings contradict each other.
+diff --git a/lib/choose_repository.tcl b/lib/choose_repository.tcl
+index 92d6022..944ab50 100644
+--- a/lib/choose_repository.tcl
++++ b/lib/choose_repository.tcl
+@@ -339,19 +339,12 @@ method _git_init {} {
+ }
 
-Let's dig into this example some more by imagining some other
-hypothetical future extensions. Suppose we wanted to support different
-whitespace rules for different types of files [1]. For example, I might
-never want to forbid "cr-at-eol" everywhere, and might usually like to
-uses spaces for my indentation, but for Makefiles need to indent using
-tabs. The "type 2" syntax, I think, is pretty straightforward:
+ proc _is_git {path} {
+-       if {[file exists [file join $path HEAD]]
+-        && [file exists [file join $path objects]]
+-        && [file exists [file join $path config]]} {
++       puts $path
++       if {[catch {exec git rev-parse --resolve-git-dir $path}]} {
++               return 0
++       } else {
+                return 1
+        }
+-       if {[is_Cygwin]} {
+-               if {[file exists [file join $path HEAD]]
+-                && [file exists [file join $path objects.lnk]]
+-                && [file exists [file join $path config.lnk]]} {
+-                       return 1
+-               }
+-       }
+-       return 0
+ }
 
-    [whitespace]
-            cr-at-eol = error
-            indent = spaces-only
+ proc _objdir {path} {
+--=20
+2.3.0.rc2
+--- >8 ---
 
-    [whitespace "makefile"]
-            indent = tabs-only
+But it actually looks like git rev-parse --resolve-git-dir $path needs
+to be run inside a git repository _any_ git repository, which seems a
+bit backwards to me.
 
-Our usual rules, "last setting wins" and "foo.*.bar, if present, takes
-precedence overrides foo.bar", make it pretty clear how the above should
-be interpreted.
+  $ cd
+  $ git rev-parse --resolve-git-dir ~/src/git/.git
+  fatal: Not a git repository (or any parent up to mount point /home)
+  Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not =
+set).
 
-What would be the "type 1" syntax for this? Would "cr-at-eol" be
-inherited from "core.whitespace" to "core.makefile.whitespace"? If not,
-then I have to repeat "cr-at-eol":
+  $ cd ~/src/git
+  $ git rev-parse --resolve-git-dir ~/src/git-gui/.git
+  /home/chrisp/src/git-gui/.git
 
-    [core]
-            whitespace = cr-at-eol tab-in-indent
-    [core "makefile"]
-            whitespace = cr-at-eol indent-with-non-tab
-
-[2]. If values are inherited, then do I also have to countermand
-"tab-in-indent" in the "makefile" rule?
-
-    [core]
-            whitespace = cr-at-eol tab-in-indent
-    [core "makefile"]
-            whitespace = indent-with-non-tab -tab-in-indent
-
-Or does "indent-with-non-tab" automatically supersede "tab-in-indent",
-according to last-setting-wins (an interpretation that starts requiring
-the config parser to have domain-specific knowledge)?:
-
-    [core]
-            whitespace = cr-at-eol tab-in-indent
-    [core "makefile"]
-            whitespace = indent-with-non-tab
-
-But if that is the case, which setting wins in this scenario?:
-
-    [core]
-            whitespace = cr-at-eol tab-in-indent
-    [core "makefile"]
-            whitespace = indent-with-non-tab
-    # In another config file maybe:
-    [core]
-            whitespace = space-before-tab
-
-Does "core.whitespace = space-before-tab" supersede
-"core.makefile.whitespace = indent-with-non-tab" here?
-
-No matter which of the "type 1" variants we choose, we would have to
-invent new rules for users and config parsers to learn, and some of
-those rules would require domain-specific knowledge to interpret.
-Whereas the "type 2" style is pretty straightforward and leans only on
-existing conventions.
-
-> [...]
-
-Michael
-
-[1] I'm not claiming that this specific extension makes sense. It might
-make more sense to configure the whitespace rules one-by-one using
-gitattributes. But I think it is nevertheless a typical way that
-features are extended and therefore an interesting gedankenexperiment.
-
-[2] For the purposes of this discussion, let's ignore the fact that
-there is no precedent for a three-level "core" setting like
-"core.makefile.whitespace". It could just as easily be spelled
-"whitespace.makefile.check" or something in the "type 1" syntax.
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
+So one potential fix git a gui-gui bug, one new(?) bug in git rev-parse=
+=2E
