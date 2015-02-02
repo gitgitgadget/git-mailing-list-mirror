@@ -1,62 +1,112 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCHv4] sha1_file: fix iterating loose alternate objects
-Date: Mon, 2 Feb 2015 13:50:49 -0500
-Message-ID: <20150202185049.GA27399@peff.net>
-References: <4727F1DC-2FC3-49BE-8C6D-0C4D7D8B107C@jonathonmah.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/3] CodingGuidelines: describe naming rules for configuration variables
+Date: Mon, 02 Feb 2015 10:54:22 -0800
+Message-ID: <xmqq386ouotd.fsf@gitster.dls.corp.google.com>
+References: <xmqqiofskmfd.fsf@gitster.dls.corp.google.com>
+	<1422484393-4414-1-git-send-email-gitster@pobox.com>
+	<1422484393-4414-4-git-send-email-gitster@pobox.com>
+	<54CDB5C6.3020702@alum.mit.edu>
+	<xmqq1tm99yhx.fsf@gitster.dls.corp.google.com>
+	<54CF1D7F.6050903@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jonathon Mah <me@jonathonmah.com>
-X-From: git-owner@vger.kernel.org Mon Feb 02 19:50:58 2015
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Mon Feb 02 19:54:32 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YIM5I-0004LD-Vh
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Feb 2015 19:50:57 +0100
+	id 1YIM8k-0006KW-8o
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Feb 2015 19:54:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753555AbbBBSuw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Feb 2015 13:50:52 -0500
-Received: from cloud.peff.net ([50.56.180.127]:44161 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752822AbbBBSuw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Feb 2015 13:50:52 -0500
-Received: (qmail 13396 invoked by uid 102); 2 Feb 2015 18:50:51 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 02 Feb 2015 12:50:51 -0600
-Received: (qmail 10697 invoked by uid 107); 2 Feb 2015 18:51:27 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 02 Feb 2015 13:51:27 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 02 Feb 2015 13:50:49 -0500
-Content-Disposition: inline
-In-Reply-To: <4727F1DC-2FC3-49BE-8C6D-0C4D7D8B107C@jonathonmah.com>
+	id S1754878AbbBBSy0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Feb 2015 13:54:26 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:58259 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751116AbbBBSyY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Feb 2015 13:54:24 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 56ADD34762;
+	Mon,  2 Feb 2015 13:54:24 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=SMYEMAqYliS22CvCEJzBXqzxGvY=; b=SC+OYj
+	zh8jEkoKQ+5RTAEvlXqmB/MoXBfVne+BWvEavWw83SDBzZJTN7zUbSOnjJy/UEaK
+	PHtpW5ABVrr8YET7Kd7QUpI/M5Nm3UBLy/9uSO9oLMo78apBXtOq8GfKNa7p7BEY
+	HZpm2Q+c1eq9IFUGtsYXymZhGRjh71VVOZR1I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=LAPjDEnWf/FjFnoXUR1mHUHlRnCehV7m
+	CDvCGo5Sk/vZKkcUUOnb3tCpEppPoA7Fu/HANfM5Sn0yMF0sLHzzRvjoNf331XDE
+	xKeDRmUXvo/Jao4NpgHdxJ8u9D+4tf9r6wyj4y02U2xSshLRnOTtR95dEAtYMSXz
+	y/jFFM5cRzI=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4D60A34761;
+	Mon,  2 Feb 2015 13:54:24 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BE32034760;
+	Mon,  2 Feb 2015 13:54:23 -0500 (EST)
+In-Reply-To: <54CF1D7F.6050903@alum.mit.edu> (Michael Haggerty's message of
+	"Mon, 02 Feb 2015 07:47:27 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: E76243B6-AB0C-11E4-8073-7BA29F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263276>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263277>
 
-On Mon, Feb 02, 2015 at 10:48:12AM -0800, Jonathon Mah wrote:
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-> The string in 'base' contains a path suffix to a specific object; when
-> its value is used, the suffix must either be filled (as in
-> stat_sha1_file, open_sha1_file, check_and_freshen_nonlocal) or cleared
-> (as in prepare_packed_git) to avoid junk at the end.  loose_from_alt_odb
-> (introduced in 660c889e46d185dc98ba78963528826728b0a55d) did neither and
-> treated 'base' as a complete path to the "base" object directory,
-> instead of a pointer to the "base" of the full path string.
-> 
-> The trailing path after 'base' is still initialized to NUL, hiding the
-> bug in some common cases.  Additionally the descendent
-> for_each_file_in_obj_subdir function swallows ENOENT, so an error only
-> shows if the alternate's path was last filled with a valid object
-> (where statting /path/to/existing/00/0bjectfile/00 fails).
-> 
-> Signed-off-by: Jonathon Mah <me@JonathonMah.com>
-> ---
-> Squashed test and fix.
+> You make an interesting point: values that start as a list of
+> independent booleans can grow dependencies over time.
+>
+> In retrospect, ISTM that a better interface for the indentation-related
+> "whitespace" settings would have been something like
+>
+> * "whitespace.indent" -- a single value chosen from "tabs-only |
+> spaces-only | tabs-when-possible | anything"
+> * "whitespace.tabwidth" -- an integer value
+>
+> This would have made the mutual-exclusivity of those choices manifest in
+> the style of configuration rather than hoping that the user notices that
+> his settings contradict each other.
+>
+> Let's dig into this example some more by imagining some other
+> hypothetical future extensions.
 
-Thanks, this version looks good to me.
+Let's not; that line of thought entirely misses the point.  If you
+start from one set of variables, you can define a structure
+(e.g. "there are indentation-related and you must choose only one
+among them") over it after the fact.
 
--Peff
+Once you have chosen a structure, you have to live with it.  Either
+you make sure that a structure itself is extensible, or you make
+sure you accept a new variable only if it fits within a structure.
+Either way, you lose.  You cannot predict the future, and you do not
+want to constrain those who will contribute to the project in the
+future.
+
+My aversion to one-variable-per-knob was primarily against the
+"because that is how the variables are internally represented; a
+collection of enums that can be independently set" argument.  If we
+assume that one-variable-per-knob style implies variables that can
+be independently set, that _is_ defining the structure the future
+work has to live within.
+
+But as I and Peff discussed in the other sub(sub)thread, having two
+variables placed flatly in the namespace, e.g. ws.indentWithTab and
+ws.noTabInIndent, does not have to mean they are independent.
+
+And the opposite is also true; having these two knobs as possible
+elements of the value of a single variable does not imply they
+always have meaningful interactions.
+
+So I am fine with "fsck.missingTagger = ignore/warn/error", as long
+as the argument that supports the style is not "because
+fsck.missingTagger and fsck.malformedIdent are independent".
