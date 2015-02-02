@@ -1,122 +1,54 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v4 00/19] Introduce an internal API to interact with the
- fsck machinery
-Date: Mon, 02 Feb 2015 17:48:38 +0100
-Organization: gmx
-Message-ID: <d5ebe9aeb5f4dd5cbe8673ae2076ba04@www.dscho.org>
-References: <xmqqr3w7gxr4.fsf@gitster.dls.corp.google.com>
- <cover.1422737997.git.johannes.schindelin@gmx.de>
- <060e1e6a5530dfb311074b0aa854b281@www.dscho.org>
- <54CF70DA.5090506@alum.mit.edu>
+From: Andrew Wong <andrew.kw.w@gmail.com>
+Subject: "git status" should warn/error when it cannot lists a directory
+Date: Mon, 2 Feb 2015 11:58:33 -0500
+Message-ID: <CADgNjamcR+b-_DKzScU=35idAgG542B7CaJC2AqAE9Srvsq17g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com, git@vger.kernel.org, peff@peff.net
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon Feb 02 17:48:51 2015
+Content-Type: text/plain; charset=UTF-8
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Feb 02 17:58:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YIKB9-0005lq-BZ
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Feb 2015 17:48:51 +0100
+	id 1YIKKd-0005E9-IM
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Feb 2015 17:58:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932524AbbBBQsr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Feb 2015 11:48:47 -0500
-Received: from mout.gmx.net ([212.227.17.22]:50403 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932417AbbBBQsq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Feb 2015 11:48:46 -0500
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0M0bo2-1XNbSL0iH0-00unuD; Mon, 02 Feb 2015 17:48:39
- +0100
-In-Reply-To: <54CF70DA.5090506@alum.mit.edu>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1-git
-X-Provags-ID: V03:K0:lj4JHr4saCIDKECP0VEzrfQffQHZKn0vU6SHBXcJZ5Z3YvVthl8
- CwmYHwMRgl5OPRJ08jLMLby8GYwXAaFhWcnG5DDXBXDphVYWPkEbw6Sf7UobcXJAnH3F/Rz
- lvwcJYd1rT0+McMLgSRy5dJzXStrnK6vRi5CCjbdOtwQcgj8nq0W69YL3bDsz6aH0F1Wztx
- K5TMQUlsS2wiLIHsEUrcg==
-X-UI-Out-Filterresults: notjunk:1;
+	id S932801AbbBBQ6f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Feb 2015 11:58:35 -0500
+Received: from mail-we0-f180.google.com ([74.125.82.180]:56485 "EHLO
+	mail-we0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932424AbbBBQ6f (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Feb 2015 11:58:35 -0500
+Received: by mail-we0-f180.google.com with SMTP id m14so40240828wev.11
+        for <git@vger.kernel.org>; Mon, 02 Feb 2015 08:58:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=Et2zov1xpVKjvHKavhf1M9wAtHts1zcCqbCSpgFfmVQ=;
+        b=B/jxKf7micguc5PtQT836w2I7ZjkbYP+NWQkDlC1/U6lkoJJSLhRWmTa1TMxQ8qBHY
+         OEmrEGNXgEKEjBmC1g/KeezVrQ98Usn/3Fyqp3vHh8ivv56WtQ+5+SxZfIYZ7E9xSTTB
+         lPimgseAGGSKhJKtWfxxnAfdXrOYbSbr4gCd0pKaNI3pZsw/Aeu/182hQGzvqgkaZvJN
+         dcFeMwBTts50wpaPJjXUUCcGicmuBMgJ+5OIMqwaxg86tWdhMr2TxjPL3gzRuIaG/AFo
+         yo/qwmtheO3I9liN4DkhrvT2MDJpsDszd3qHIy1fnhQs71TgDxvqtvPivBLzmciK6Edk
+         9E/g==
+X-Received: by 10.195.13.104 with SMTP id ex8mr46694220wjd.12.1422896313951;
+ Mon, 02 Feb 2015 08:58:33 -0800 (PST)
+Received: by 10.194.172.65 with HTTP; Mon, 2 Feb 2015 08:58:33 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263261>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263262>
 
-Hi Michael,
+When "git status" recurses a directory that isn't readable (but
+executable), it should print out a warning/error. Currently, if there
+are untracked files in these directories, git wouldn't be able to
+discover them. Ideally, "git status" should return a non-zero exit
+code as well.
 
-On 2015-02-02 13:43, Michael Haggerty wrote:
-> On 02/02/2015 12:41 PM, Johannes Schindelin wrote:
->> Hi all (in particular Junio),
->>
->> On 2015-01-31 22:04, Johannes Schindelin wrote:
->>
->>> [...] switch to fsck.severity to address Michael's concerns that
->>> letting fsck.(error|warn|ignore)'s comma-separated lists possibly
->>> overriding each other partially;
->>
->> Having participated in the CodingStyle thread, I came to the
->> conclusion that the fsck.severity solution favors syntax over
->> intuitiveness.
->>
->> Therefore, I would like to support the case for
->> `fsck.level.missingAuthor` (note that there is an extra ".level." in
->> contrast to earlier suggestions).
-> 
-> Why "level"?
-
-"Severity level", or "error level". Maybe ".severity." would be better?
-
->> The benefits:
->>
->> - it is very, very easy to understand
->>
->> - cumulative settings are intuitively cumulative, i.e. setting
->> `fsck.level.missingAuthor` will leave `fsck.level.invalidEmail`
->> completely unaffected
->>
->> - it is very easy to enquire and set the levels via existing `git
->> config` calls
->>
->> Now, there is one downside, but *only* if we ignore Postel's law.
->>
->> Postel's law ("be lenient in what you accept as input, but strict in
->> your output") would dictate that our message ID parser accept both
->> "missing-author" and "missingAuthor" if we follow the inconsistent
->> practice of using lowercase-dashed keys on the command-line but
->> CamelCased ones in the config.
->>
->> However, earlier Junio made very clear that the parser is required to
->> fail to parse "missing-author" in the config, and to fail to parse
->> "missingAuthor" on the command-line.
->>
->> Therefore, the design I recommend above will require two, minimally
->> different parsers for essentially the same thing.
->>
->> IMHO this is a downside that is by far outweighed by the ease of use
->> of the new feature, therefore I am willing to bear the burden of
->> implementation.
-> 
-> I again encourage you to consider skipping the implementation of
-> command-line options entirely. It's not like users are going to want to
-> use different options for different invocations. Let them use
-> 
->     git -c fsck.level.missingAuthor=ignore fsck
-> 
-> if they really want to play around, then
-> 
->     git config fsck.level.missingAuthor ignore
-> 
-> to make it permanent. After that they will never have to worry about
-> that option again.
-
-Unfortunately, I have to pass the `receive.fsck.*` settings from `git-receive-pack` to `git-unpack-objects` or `git-index-pack` via the command-line, because it is `git-receive-pack` that consumes the config setting, but it is one of `git-unpack-objects` and `git-index-pack` that has to act on it...
-
-> And Postel needn't be offended :-)
-
-;-)
-
-Ciao,
-Dscho
+The problem seems to be In read_directory_recursive() from dir.c. When
+opendir() returns null, we continue on ignoring any error. Is there a
+scenario where returning null is expected? We can simply call perror()
+here, but it would be nice if we can propagate the error to the exit
+code too. How would we do that?
