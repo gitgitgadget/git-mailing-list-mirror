@@ -1,165 +1,81 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v4 00/19] Introduce an internal API to interact with the
- fsck machinery
-Date: Tue, 03 Feb 2015 16:11:06 +0100
-Message-ID: <54D0E50A.5030601@alum.mit.edu>
-References: <xmqqr3w7gxr4.fsf@gitster.dls.corp.google.com> <cover.1422737997.git.johannes.schindelin@gmx.de> <060e1e6a5530dfb311074b0aa854b281@www.dscho.org> <54CF70DA.5090506@alum.mit.edu> <d5ebe9aeb5f4dd5cbe8673ae2076ba04@www.dscho.org>
+From: =?UTF-8?B?UsOpbWkgUmFtcGlu?= <remirampin@gmail.com>
+Subject: Re: [PATCH 1/2] Fixes _is_git
+Date: Tue, 03 Feb 2015 10:52:25 -0500
+Message-ID: <54D0EEB9.1090803@gmail.com>
+References: <CAMto89CHf4OT_S05SaRrVRZvF-PH2_6DrcEpdGiUfaRGutJQHw@mail.gmail.com>	<1422897883-11036-1-git-send-email-remirampin@gmail.com> <CAFOYHZBHoXC34gBu_Lx347f=-uUcVM1nHYT87SzxfeMa=KdFgw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 8bit
-Cc: gitster@pobox.com, git@vger.kernel.org, peff@peff.net
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Feb 03 16:11:28 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: GIT <git@vger.kernel.org>
+To: Chris Packham <judge.packham@gmail.com>,
+	Pat Thoyts <patthoyts@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Tue Feb 03 16:52:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YIf8R-0001wl-6T
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Feb 2015 16:11:27 +0100
+	id 1YIfmJ-0008P0-JR
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Feb 2015 16:52:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753446AbbBCPLR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Feb 2015 10:11:17 -0500
-Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:65490 "EHLO
-	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752306AbbBCPLQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 Feb 2015 10:11:16 -0500
-X-AuditID: 12074411-f79fa6d000006b8a-5c-54d0e50c1701
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 28.F8.27530.C05E0D45; Tue,  3 Feb 2015 10:11:08 -0500 (EST)
-Received: from [192.168.69.130] (p4FC96E08.dip0.t-ipconnect.de [79.201.110.8])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t13FB6wv021582
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Tue, 3 Feb 2015 10:11:07 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.3.0
-In-Reply-To: <d5ebe9aeb5f4dd5cbe8673ae2076ba04@www.dscho.org>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprFKsWRmVeSWpSXmKPExsUixO6iqMvz9EKIQd8PNYuuK91MFg29V5gt
-	+pd3sVn8aOlhdmDx+PAxzuNZ7x5Gj4uXlD0+b5ILYInitklKLCkLzkzP07dL4M7YsuIlW8F2
-	hYoJc54xNTBOl+pi5OSQEDCRaL+7lhHCFpO4cG89WxcjF4eQwGVGiVsrr0I5Z5kkznZvYu9i
-	5ODgFdCWuPctCKSBRUBVYtqK6awgNpuArsSinmYmEFtUIEjiSstmZhCbV0BQ4uTMJywgtgjQ
-	snkv1oDZzAKWEqefTWYDsYUFYiW2LDnDBLHrHaPEgskbwZo5BWwl9i5YwgzRoCex4/ovVghb
-	XqJ562zmCYwCs5DsmIWkbBaSsgWMzKsY5RJzSnN1cxMzc4pTk3WLkxPz8lKLdE31cjNL9FJT
-	SjcxQsJZcAfjjJNyhxgFOBiVeHgdlC6ECLEmlhVX5h5ilORgUhLljb0BFOJLyk+pzEgszogv
-	Ks1JLT7EKMHBrCTCe+YRUI43JbGyKrUoHyYlzcGiJM7Lt0TdT0ggPbEkNTs1tSC1CCYrw8Gh
-	JMHr/xioUbAoNT21Ii0zpwQhzcTBCTKcS0qkODUvJbUosbQkIx4Uq/HFwGgFSfEA7W0Aaect
-	LkjMBYpCtJ5iVJQS560CSQiAJDJK8+DGwpLUK0ZxoC+FeZeBVPEAExxc9yugwUxAg2Uvgg0u
-	SURISTUwWlxYbMTutsXw/bX4p53P2O39duW/tX93IuQ3h3jS1UU3VtzcUXH6xfker36uEB55
-	bme7nIOLqmWydyRnffJQjWpRE316be5t6yVVV3wlDPWTdz48I8eisKDpxO9Xc5wY 
+	id S966006AbbBCPwf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Feb 2015 10:52:35 -0500
+Received: from mail-qa0-f47.google.com ([209.85.216.47]:63901 "EHLO
+	mail-qa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965864AbbBCPwe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Feb 2015 10:52:34 -0500
+Received: by mail-qa0-f47.google.com with SMTP id n8so34438279qaq.6
+        for <git@vger.kernel.org>; Tue, 03 Feb 2015 07:52:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=DuBWoSTn+O+PkSHxT80GC+j0DOeHs+Wxaf7gChU3xmY=;
+        b=sU8/SY+gauzC02N8nCVRmdTH/Cfk90bgPGQfwwQnSxseWC+kwyYUUoy086DL/lPatN
+         bxKF8Plt/PhewnC6S2aRV/onnl6n4x02uIJVHdsoNyjnnDr8ZvJ35G7U1T0tZtY1skoi
+         m33tVYKBvxkqXE4lhLnw3KWTjeywDxwDaptMojABsDIbQmqpHS96+F05q6VJIJZZiV/M
+         28twvuaiXSTlmKQ51Gdt+yZZX42107UFS1+TWh868S9ZTC+UkNArMA9JAwvEt9r4Lr8z
+         R855x/B5QZQl3aIlplxLAEgXe1Z9gvOXh1P5wzkiVFu2K7Z4wCdP7d8NGUEkva4zFSFI
+         whsA==
+X-Received: by 10.224.7.3 with SMTP id b3mr54355874qab.71.1422978747058;
+        Tue, 03 Feb 2015 07:52:27 -0800 (PST)
+Received: from [128.238.102.81] ([128.238.102.81])
+        by mx.google.com with ESMTPSA id n4sm21591798qac.30.2015.02.03.07.52.26
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 03 Feb 2015 07:52:26 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
+In-Reply-To: <CAFOYHZBHoXC34gBu_Lx347f=-uUcVM1nHYT87SzxfeMa=KdFgw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263320>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263321>
 
-On 02/02/2015 05:48 PM, Johannes Schindelin wrote:
-> On 2015-02-02 13:43, Michael Haggerty wrote:
->> On 02/02/2015 12:41 PM, Johannes Schindelin wrote:
->>> Hi all (in particular Junio),
->>>
->>> On 2015-01-31 22:04, Johannes Schindelin wrote:
->>>
->>>> [...] switch to fsck.severity to address Michael's concerns that
->>>> letting fsck.(error|warn|ignore)'s comma-separated lists possibly
->>>> overriding each other partially;
->>>
->>> Having participated in the CodingStyle thread, I came to the
->>> conclusion that the fsck.severity solution favors syntax over
->>> intuitiveness.
->>>
->>> Therefore, I would like to support the case for
->>> `fsck.level.missingAuthor` (note that there is an extra ".level." in
->>> contrast to earlier suggestions).
->>
->> Why "level"?
-> 
-> "Severity level", or "error level". Maybe ".severity." would be better?
+2015-02-02 12:24 UTC-05:00, Remi Rampin <remirampin@gmail.com>:
+>>  proc _is_git {path} {
+>> +       if {[file isfile $path]} {
+>> +               set fp [open $path r]
+>> +               gets $fp line
+>> +               close $fp
+>> +               if {[regexp "^gitdir: (.+)$" $line line link_target]} {
 
-Sorry, I should have been clearer. I understand why the word "level"
-makes sense, as opposed to, say, "peanut-butter". What I don't
-understand is why a middle word is needed at all. In the config file it
-will look like
+2015-02-03 3:44 UTC-05:00, Chris Packham <judge.packham@gmail.com>:
+> It might be simpler to use one of the 'string' commands e.g. string
+> wordend "gitdir: " I also suspect the string functions would be faster
+> than regexp but that probably doesn't matter.
 
-[fsck "level"]
-        missingAuthor = error
+I want to check that the file actually begins with "gitdir: " and then
+extract the path, so I'm not sure if using string functions is that
+simple/fast.
 
-, which looks funny. "level" is a constant, so it seems superfluous.
+>> +                       return [_is_git [file join [file dirname $path] $link_target]]
 
-If anything, it might be more useful to allow an optional middle word to
-allow the strictness level to be adjusted based on which command
-encounters the problem. For example, if you want to tolerate existing
-commits that have missing authors, but not allow any new ones to be
-pushed, you could set
+> Do we want to avoid pathological cases of infinite recursion? Someone
+> would have to maliciously create such a situation.
 
-[strictness]
-        missingAuthor = ignore
-[strictness "receive-pack"]
-        missingAuthor = error
-
-(There's probably a better word than "strictness", but you get the idea.)
-
->>> The benefits:
->>>
->>> - it is very, very easy to understand
->>>
->>> - cumulative settings are intuitively cumulative, i.e. setting
->>> `fsck.level.missingAuthor` will leave `fsck.level.invalidEmail`
->>> completely unaffected
->>>
->>> - it is very easy to enquire and set the levels via existing `git
->>> config` calls
->>>
->>> Now, there is one downside, but *only* if we ignore Postel's law.
->>>
->>> Postel's law ("be lenient in what you accept as input, but strict in
->>> your output") would dictate that our message ID parser accept both
->>> "missing-author" and "missingAuthor" if we follow the inconsistent
->>> practice of using lowercase-dashed keys on the command-line but
->>> CamelCased ones in the config.
->>>
->>> However, earlier Junio made very clear that the parser is required to
->>> fail to parse "missing-author" in the config, and to fail to parse
->>> "missingAuthor" on the command-line.
->>>
->>> Therefore, the design I recommend above will require two, minimally
->>> different parsers for essentially the same thing.
->>>
->>> IMHO this is a downside that is by far outweighed by the ease of use
->>> of the new feature, therefore I am willing to bear the burden of
->>> implementation.
->>
->> I again encourage you to consider skipping the implementation of
->> command-line options entirely. It's not like users are going to want to
->> use different options for different invocations. Let them use
->>
->>     git -c fsck.level.missingAuthor=ignore fsck
->>
->> if they really want to play around, then
->>
->>     git config fsck.level.missingAuthor ignore
->>
->> to make it permanent. After that they will never have to worry about
->> that option again.
-> 
-> Unfortunately, I have to pass the `receive.fsck.*` settings from
-> `git-receive-pack` to `git-unpack-objects` or `git-index-pack` via the
-> command-line, because it is `git-receive-pack` that consumes the config
-> setting, but it is one of `git-unpack-objects` and `git-index-pack` that
-> has to act on it...
-
-Wouldn't that work automatically via the GIT_CONFIG_PARAMETERS
-mechanism? If I run
-
-    git -c foo.bar=baz $CMD
-
-, then git-$CMD is invoked with GIT_CONFIG_PARAMETERS set to
-"'foo.bar=baz'", which causes child processes to treat that value as a
-configuration setting. I don't have a lot of experience with this but I
-think it should do what you need.
-
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
+Limiting the recursion is very simple, but I'm not sure people are
+supposed to stumble on that. More importantly this probably calls for a
+different error message, thus a new error result that I am not ready to
+implement. But it could be another patch.
+But I suppose I can add a simple "return 0" limit to the recursion if
+needed, let me know.
