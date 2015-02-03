@@ -1,66 +1,103 @@
-From: =?UTF-8?B?UsOpbWkgUmFtcGlu?= <remirampin@gmail.com>
-Subject: Re: [PATCH 2/2] Makes _do_open2 set _gitdir to actual path
-Date: Tue, 03 Feb 2015 11:00:41 -0500
-Message-ID: <54D0F0A9.3080607@gmail.com>
-References: <CAMto89CHf4OT_S05SaRrVRZvF-PH2_6DrcEpdGiUfaRGutJQHw@mail.gmail.com>	<1422897883-11036-1-git-send-email-remirampin@gmail.com>	<1422897883-11036-2-git-send-email-remirampin@gmail.com> <CAFOYHZB_c3U9jpAq=jrGgMU+wMMf8w5D9iqLC9ccGC8S3hhXZg@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Weird output of git status in pre-commit hook when providing a
+ pathspec on commit
+Date: Tue, 3 Feb 2015 11:32:35 -0500
+Message-ID: <20150203163235.GA9325@peff.net>
+References: <80E24BA2-84FE-47FC-A5C0-D291E3C63BD5@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: GIT <git@vger.kernel.org>
-To: Chris Packham <judge.packham@gmail.com>,
-	Pat Thoyts <patthoyts@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Tue Feb 03 17:00:49 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?Q?Micha=C3=ABl?= Fortin <fortinmike@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 03 17:32:44 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YIfuC-0004TC-H4
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Feb 2015 17:00:48 +0100
+	id 1YIgP6-0005cK-BH
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Feb 2015 17:32:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966161AbbBCQAo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Feb 2015 11:00:44 -0500
-Received: from mail-qg0-f46.google.com ([209.85.192.46]:49291 "EHLO
-	mail-qg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965669AbbBCQAn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Feb 2015 11:00:43 -0500
-Received: by mail-qg0-f46.google.com with SMTP id i50so52784005qgf.5
-        for <git@vger.kernel.org>; Tue, 03 Feb 2015 08:00:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=oDR5gurmUKTIxCwss+83jAFcFHUf485FFzTobBEBi8w=;
-        b=RWXOeFaeeZ+zsUgtSn/v10nqmZMpKox+W4TR0GRo2axstrVdEWeyz2h15hC28zh7gi
-         JzJbal+qkCFRmIN2JevqrjgqVfmTK3Cx6xnNKGH/++S9ost2QCMY8bGHSnRqm2n0SsN4
-         W5bYhKrnTi4N6Gi+RA022PbUlsTOyC0WvM5Yke6XKuwhfJx+HLhizf1++3Ub6Q0Ia9Lm
-         ZYYlFNhprjzaGcYDOnh/8z8BOg867WBvoi9yrIKpzMqbHQjGkvxS9b0XVWgnZr6vhnHv
-         zjRRgPceJVhsVpx+E+sZ1s1oiHawTV27PqMBimcMHoMPxVXQkIBJDwzsHby+30wo89ab
-         Ge5w==
-X-Received: by 10.224.7.197 with SMTP id e5mr54841955qae.64.1422979243128;
-        Tue, 03 Feb 2015 08:00:43 -0800 (PST)
-Received: from [128.238.102.81] ([128.238.102.81])
-        by mx.google.com with ESMTPSA id d3sm21625452qaf.13.2015.02.03.08.00.42
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 03 Feb 2015 08:00:42 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
-In-Reply-To: <CAFOYHZB_c3U9jpAq=jrGgMU+wMMf8w5D9iqLC9ccGC8S3hhXZg@mail.gmail.com>
+	id S965811AbbBCQcj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Feb 2015 11:32:39 -0500
+Received: from cloud.peff.net ([50.56.180.127]:44585 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S965765AbbBCQci (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Feb 2015 11:32:38 -0500
+Received: (qmail 3542 invoked by uid 102); 3 Feb 2015 16:32:38 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 03 Feb 2015 10:32:38 -0600
+Received: (qmail 10722 invoked by uid 107); 3 Feb 2015 16:32:37 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 03 Feb 2015 11:32:37 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Feb 2015 11:32:35 -0500
+Content-Disposition: inline
+In-Reply-To: <80E24BA2-84FE-47FC-A5C0-D291E3C63BD5@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263322>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263323>
 
-2015-02-02 12:24 UTC-05:00, Remi Rampin <remirampin@gmail.com>:
->> -                       return [_is_git [file join [file dirname $path] $link_target]]
->> +                       set link_target_abs [file join [file dirname $path] $link_target]
+On Tue, Feb 03, 2015 at 08:14:06AM -0500, Micha=C3=ABl Fortin wrote:
 
-2015-02-03 3:51 UTC-05:00, Chris Packham <judge.packham@gmail.com>:
-> At this point link_target_abs is something like
-> sub/../.git/modules/sub. It might be nice to normalize this with 'git
-> rev-parse --git-dir' or even just (cd $link_target_abs && pwd). I'm
-> not sure if tcl has anything built in that could do this kind of
-> normalization.
+> Repo1 has the following pre-commit hook:
+>=20
+> #!/bin/bash
+> git -C "../Repo2" status --porcelain
+>=20
+> I then commit in Repo1 using the following (this is actually ran by a
+> GUI, I have no control over the commands themselves):
+>=20
+> git add --force -- MyNewFile
+> git commit -m "My message" -o -- MyNewFile
 
-There is 'file normalize' according to the docs. I can update the patch
-if needed.
+Because the commit command uses "-o", git must use a temporary index
+file to stage the commit. It sets GIT_INDEX_FILE in the environment, an=
+d
+then runs your hook.
+
+When the hook runs "git -C" it moves into another repository, but the
+GIT_INDEX_FILE in the environment takes precedence over the local index
+found in that repository. So you see a HEAD and working tree from Repo2=
+,
+but the index from Repo1.
+
+This is a specific case of a more general problem. If you were to run
+git like:
+
+  git --git-dir=3D/path/to/.git commit ...
+
+you would have similar problems. You would have $GIT_DIR set in the
+environment, and would see the HEAD from Repo1, but the working tree
+from Repo2.
+
+In other words, moving into another git directory from inside a hook is
+not as easy as just going there. You also need to clear any state from
+the environment. E.g., by adding this to the top of your hook:
+
+  unset $(git rev-parse --local-env-vars)
+
+Should "-C" (or "--git-dir") make this easier by doing it for you? I'm
+not sure it is a good idea. It is right now valid to do:
+
+  GIT_INDEX_FILE=3D/path/to/index.tmp git -C /path/to/repo ...
+
+which would break if we cleared git variables. OTOH, maybe using "-C"
+(instead of chdir-ing yourself) is a good indication that you want that
+cleared. I dunno. It is probably too late at this point, as we would be
+subtly breaking backwards compatibility. Perhaps it would make more
+sense to add a new option, so you could do:
+
+  git --reset-git-vars -C ../Repo2 status --porcelain
+
+But this is a fairly obscure use case, and the rev-parse invocation
+above is not so bad. I think it is more about knowing that you need to
+use it, rather than the pain of typing it. And I am not sure how to mak=
+e
+that more clear. Is there a specific place in the documentation you
+looked and might have been warned? Maybe the description for "-C" shoul=
+d
+cover this.
+
+-Peff
