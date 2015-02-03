@@ -1,95 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] ewah: fix building with gcc < 3.4.0
-Date: Tue, 03 Feb 2015 13:48:18 -0800
-Message-ID: <xmqqlhkepsyl.fsf@gitster.dls.corp.google.com>
-References: <1422959227-3046-1-git-send-email-tgc@statsbiblioteket.dk>
-	<20150203163545.GB9325@peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 1/4] apply: reject input that touches outside $cwd
+Date: Tue, 3 Feb 2015 16:50:43 -0500
+Message-ID: <20150203215043.GA21357@peff.net>
+References: <1422919650-13346-1-git-send-email-gitster@pobox.com>
+ <1422919650-13346-2-git-send-email-gitster@pobox.com>
+ <20150203005005.GB31946@peff.net>
+ <xmqqpp9qrbgf.fsf@gitster.dls.corp.google.com>
+ <20150203210140.GA20594@peff.net>
+ <xmqqtwz2pu4c.fsf@gitster.dls.corp.google.com>
+ <20150203212450.GC20594@peff.net>
+ <xmqqpp9qptc3.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "Tom G. Christensen" <tgc@statsbiblioteket.dk>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Feb 03 22:48:30 2015
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 03 22:50:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YIlKf-0007zU-SJ
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Feb 2015 22:48:30 +0100
+	id 1YIlMx-0000gT-N1
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Feb 2015 22:50:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161322AbbBCVsX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Feb 2015 16:48:23 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:52560 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1161048AbbBCVsU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Feb 2015 16:48:20 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D4000344A2;
-	Tue,  3 Feb 2015 16:48:19 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=NJGcAlV3RxUGMfczaHhVk0fOLP4=; b=vgXBlC
-	QvZVjxBIeXMVOScAc+bCxQ+IR+cFSavLC0sUrlhQFQdogVb1gqqLRVp2mxTo/n2c
-	xbcOrtifAbexXzv7idH1jByxRnlNHBxP9phPC1/cnHiLKDq6w+kfIwEBkzFyt4Fu
-	hAfc7LuGYI7xXw56GcLunqa7C4xVBeOTfJjG4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=LscNlMX9/0JYmx45Hq+JaN7MNnj6aJMP
-	nNIfEv8sWFENPq+V9PYferx8F7c2k5XeUBAsAqzNeGnx2jkmMCSxEJXOLI/DzBXd
-	fizxDaAXgag+LF//s0vIGuJU/2fuOP6pL/PV/ng94vBsTlUjCox3aNtVsLOQ1D+z
-	unubKtFniSM=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id CB2CE344A1;
-	Tue,  3 Feb 2015 16:48:19 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 50260344A0;
-	Tue,  3 Feb 2015 16:48:19 -0500 (EST)
-In-Reply-To: <20150203163545.GB9325@peff.net> (Jeff King's message of "Tue, 3
-	Feb 2015 11:35:45 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 5DDE4BAC-ABEE-11E4-801D-7BA29F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751286AbbBCVur (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Feb 2015 16:50:47 -0500
+Received: from cloud.peff.net ([50.56.180.127]:44858 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750785AbbBCVuq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Feb 2015 16:50:46 -0500
+Received: (qmail 17164 invoked by uid 102); 3 Feb 2015 21:50:46 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 03 Feb 2015 15:50:46 -0600
+Received: (qmail 15094 invoked by uid 107); 3 Feb 2015 21:50:45 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 03 Feb 2015 16:50:45 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Feb 2015 16:50:43 -0500
+Content-Disposition: inline
+In-Reply-To: <xmqqpp9qptc3.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263338>
 
-Jeff King <peff@peff.net> writes:
+On Tue, Feb 03, 2015 at 01:40:12PM -0800, Junio C Hamano wrote:
 
-> On Tue, Feb 03, 2015 at 11:27:07AM +0100, Tom G. Christensen wrote:
->
->> The __builtin_ctzll function was added in gcc 3.4.0.
->> This extends the check for gcc so that use of __builtin_ctzll is only
->> enabled if gcc >= 3.4.0.
->> ---
->> 
->> I noticed this on RHEL3 during 2.0.0rc phase but I see that the same
->> issue was noticed on Debian Sarge:
->> http://article.gmane.org/gmane.comp.version-control.git/255190
->> RHEL3 ships with gcc 3.2.3.
->> 
->> With this patch git can build on RHEL3 provided cURL support is disabled.
->
-> Thanks. I built with some older gcc's at the time this was developed,
-> but I don't think I went past what was in Debian stable, which was
-> probably 4.something.
->
->> -#ifdef __GNUC__
->> +/* __builtin_ctzll was not available until 3.4.0 */
->> +#if defined(__GNUC__) && (__GNUC__ > 3 || (__GNUC__ == 3  && __GNUC_MINOR > 3))
->>  #define ewah_bit_ctz64(x) __builtin_ctzll(x)
->>  #else
->>  static inline int ewah_bit_ctz64(uint64_t x)
->
-> We could turn this into a HAS_CTZLL Makefile knob (and auto-set it as
-> above), but I don't think it is worth it. I don't expect anybody to need
-> to tweak it. I double-checked that clang sets the value of __GNUC__
-> appropriately.
+> Jeff King <peff@peff.net> writes:
+> 
+> > But wouldn't we still fail writing "foo/bar" at that point if "foo" is a
+> > regular file (again, we should never do this, but that is the point of
+> > the test).
+> 
+> The point of the test is not to create foo, whether it is a symlink
+> or an emulating regular file, in the first place.
 
-OK.  I would imagine that this would go on top of jk/pack-bitmap,
-which we could be merged down to 2.0.x maintenance track if we
-wanted to.
+I thought the point was not to create "../bar", when "foo" points to
+"..". I agree that the way you have implemented it is that we would
+never even write "foo", and the test checks for that, but to me that is
+the least interesting bit of what is being tested. Crossing a symlink
+boundary and escaping from the tree are interesting, and the atomicity
+is a side note. We could also realize that treating "foo" as a file
+would fail and cancel the whole operation atomically, too.
 
-Tom, can you make it a habit to sign-off your patch?
+But I think we are getting into contrasting our mental models, which is
+probably not productive. I am OK with leaving it without the SYMLINKS
+flag, as it should pass on systems that do not handle symlinks. And if
+it does not, then that will be a good cross-check that our analysis was
+sane. :)
+
+-Peff
