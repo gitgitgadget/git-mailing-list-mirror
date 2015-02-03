@@ -1,128 +1,112 @@
-From: Stefan Beller <stefanbeller@gmail.com>
-Subject: Re: Relative paths don't work in .gitignore as would be expected.
-Date: Mon, 2 Feb 2015 18:18:27 -0800
-Message-ID: <CALbm-Ea7X3dDrMUw0sDhWf0sg+zs7oRUkRD+aPzD9fHqB=ZuWQ@mail.gmail.com>
-References: <CAKU1PAWMh_3x9OoFmXG4+5b=7PRckC47k-MAq++SXahxAP5V7g@mail.gmail.com>
-	<54CF11CA.6000308@gmail.com>
-	<xmqqsieot999.fsf@gitster.dls.corp.google.com>
+From: Bryan Turner <bturner@atlassian.com>
+Subject: Re: folder naming bug?
+Date: Tue, 3 Feb 2015 15:37:19 +1100
+Message-ID: <CAGyf7-FXhhW74DvcO8nbWud9A868AYqKj_zY61wmf9XGvH4eQA@mail.gmail.com>
+References: <27503C0E-7D33-4893-AD25-6A821D31FAB1@sparkstart.io>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: "/#!/JoePea" <trusktr@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 03 03:18:39 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Users <git@vger.kernel.org>
+To: Kevin Coleman <kevin.coleman@sparkstart.io>
+X-From: git-owner@vger.kernel.org Tue Feb 03 05:37:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YIT4W-0005ou-J4
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Feb 2015 03:18:36 +0100
+	id 1YIVEs-00027E-81
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Feb 2015 05:37:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754046AbbBCCSb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Feb 2015 21:18:31 -0500
-Received: from mail-wi0-f178.google.com ([209.85.212.178]:42391 "EHLO
-	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753406AbbBCCSa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Feb 2015 21:18:30 -0500
-Received: by mail-wi0-f178.google.com with SMTP id bs8so18853943wib.5
-        for <git@vger.kernel.org>; Mon, 02 Feb 2015 18:18:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=ZT2rbp+AjSOUbLUHLOzABbXwtVQ+0AptIZA6/D0zceA=;
-        b=wpltf1JOgARaVZrwSjzappEGo+EZiLWyFZIwWifpydAK1Myes41o0xUjB34QlUY3gH
-         abuM4KtmTflwvnjy7/cCJ8WOtl2OaKcvMo+xEnkm3K9pM0k/RmnzV/IqKbe/z62tlqT6
-         QQ2wrvRj2exvv6qDlrHjNnhV8Pm7dIbA2rsEgUtaeB3yU+gpJD0xGdoBX4feZRMQg7vR
-         NllaeYh9XteO8K1bOukcWboOn+zUbKwXFdORw7JWfnwONPjhkXc7A/Pw6sA+PPnZia+j
-         spGP14+Xy6l6B4M0VB4p/P9gB9I517EFqoyq/5Aha31a3dkXTh3gE6ERyYa7mgPW5bql
-         v4vg==
-X-Received: by 10.180.7.199 with SMTP id l7mr30421157wia.66.1422929908043;
- Mon, 02 Feb 2015 18:18:28 -0800 (PST)
-Received: by 10.180.94.132 with HTTP; Mon, 2 Feb 2015 18:18:27 -0800 (PST)
-In-Reply-To: <xmqqsieot999.fsf@gitster.dls.corp.google.com>
+	id S932879AbbBCEhV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Feb 2015 23:37:21 -0500
+Received: from na3sys009aog105.obsmtp.com ([74.125.149.75]:57329 "HELO
+	na3sys009aog105.obsmtp.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1752140AbbBCEhU convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 2 Feb 2015 23:37:20 -0500
+Received: from mail-oi0-f45.google.com ([209.85.218.45]) (using TLSv1) by na3sys009aob105.postini.com ([74.125.148.12]) with SMTP
+	ID DSNKVNBQf2Ce2+63EWiKvrNlQ8vnQlUN1DXr@postini.com; Mon, 02 Feb 2015 20:37:20 PST
+Received: by mail-oi0-f45.google.com with SMTP id g201so47445289oib.4
+        for <git@vger.kernel.org>; Mon, 02 Feb 2015 20:37:19 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=lY1Qbtf+jYAt3YPovIIZ8bDKwPBlWkyn9GYKtJoP+RM=;
+        b=D1ItEoydjZw0qd3ixxDYP1dV5w+Fa/KwdDkvYtlvTIYTTnaG31b7YV7L4B1zWrxoil
+         dLWV79CEB3rGIp+yvp6/UA+xG8AGPSEl7DFqXVxIHS1LCHaQ4R8PQqSZ2yDv2nKrG3jS
+         DzuHAqzMCXRcFSSYEyzIR68Mv/Aows/VLKO1YiOtFRmTe98vbydZvzqCn1RjYr4OxoFo
+         1kNGnNfaWY7VytuRwuPBTNPmKlbGpj1fllXaSGOibPI6HbXytVrNA1YwU6bod4SdYebD
+         Rj+zMrgjhpMmBDESByudRgpqzY7vZCFnzVBmOYu/rlan/TxcIQaGBb5Sg8h6xHAY5nrc
+         NEvA==
+X-Gm-Message-State: ALoCoQkXghPt702E4cPM3B0h9nbVRoD/8o+qrsFpB+xV6qDBiMh8oQKdfkMNUAXwmbEoutkLnoIcx20mio2KHs1MQNsfQ9nQdSYLujLjFrPZhw5//CTTxuKIrGekPdTZC7ljuJvbuhPjQ013JhjudLoHAMhMJF30/A==
+X-Received: by 10.202.44.216 with SMTP id s207mr13290322ois.106.1422938239250;
+        Mon, 02 Feb 2015 20:37:19 -0800 (PST)
+X-Received: by 10.202.44.216 with SMTP id s207mr13290316ois.106.1422938239095;
+ Mon, 02 Feb 2015 20:37:19 -0800 (PST)
+Received: by 10.182.98.225 with HTTP; Mon, 2 Feb 2015 20:37:19 -0800 (PST)
+In-Reply-To: <27503C0E-7D33-4893-AD25-6A821D31FAB1@sparkstart.io>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263304>
 
-2015-02-02 11:15 GMT-08:00 Junio C Hamano <gitster@pobox.com>:
-> Stefan Beller <stefanbeller@gmail.com> writes:
->
->> On 01.02.2015 14:51, /#!/JoePea wrote:
->>> I have this in my .gitignore:
->>>
->>>   ./*.js
->>>
->>> I would expect that to cause git to ignore .js files in the same
->>> folder as .gitignore, but it doesn't do anything. However, this works:
->>>
->>>   /*.js
->>>
->>> I'm not sure what this actually means because a leading slash is the
->>> root of some filesystem,
->
-> Isn't gitignore(5) documentation reasonably clear?
->
->  - If the pattern ends with a slash, it is removed for the purpose
->    of the following description, but it would only find a match with
->    a directory. In other words, foo/ will match a directory foo and
->    paths underneath it, but will not match a regular file or a
->    symbolic link foo (this is consistent with the way how pathspec
->    works in general in Git).
->
->  - If the pattern does not contain a slash /, Git treats it as a
->    shell glob pattern and checks for a match against the pathname
->    relative to the location of the .gitignore file (relative to the
->    toplevel of the work tree if not from a .gitignore file).
->
->  - A leading slash matches the beginning of the pathname. For
->    example, "/*.c" matches "cat-file.c" but not "mozilla-sha1/sha1.c".
->
->> That's true, though you'd never (barely?) git version control an entire
->> file system?
->
-> When you have the entire file system under /.git, "/var/" still
-> would be the right way to spell a pattern to match only a directory
-> (because of the trailing '/') whose name matches 'var' and lives in
-> the root level of the filesystem (because of the leading '/' anchors
-> the pattern to the same level as the file the pattern appears in,
-> i.e. /.gitignore) and no other place.
+Are you, by any chance, on MacOS? HFS+ by default is
+case-insensitive-but-case-preserving, and Git on MacOS by default runs
+with core.ignorecase =3D true as a result.
 
-Ok, that's true. So when I started diving into the wonderful world of
-unix like operating system, one of the first things I was taught is
-"/" starts an absolute path, while "./foo" or just "foo" starts a relative
-path. And this stuck with me. Now I realize git treats the repository
-root literally as the root and hence absolute paths starting with "/"
-make totally sense inside git as the world stops for git outside its
-work directory.
+If you set that to false does it change the behavior?
 
+Hope this helps,
+Bryan Turner
+
+On Tue, Feb 3, 2015 at 12:56 PM, Kevin Coleman
+<kevin.coleman@sparkstart.io> wrote:
+> git isn=E2=80=99t tracking folder renames when the case of the letter=
+s change, but it will track it if the folder changes names.  Is this in=
+tentional?
 >
->> (from man gitignore, though reading that and not finding a './' it may
->> need improvement
+> Here is an example:
 >
-> We do not allow relative pathname traversal with "." or "..", do we?
-
-Because we don't have to. It's always relative to the .gitignore file
-(foo/.gitignore can talk about bar/ and still mean foo/bar), so we don't
-need to express the relativity in any special way.
-
+> 08:51:26 ~/test $ git init
+> Initialized empty Git repository in /Users/kcoleman/test/.git/
+> 08:51:29 ~/test (master #) $ mkdir main
+> 08:51:44 ~/test (master #) $ cd main
+> 08:51:46 ~/test/main (master #) $ touch readme.md
+> 08:51:50 ~/test/main (master #) $ ls
+> readme.md
+> 08:51:53 ~/test/main (master #) $ cd ..
+> 08:51:54 ~/test (master #) $ git add .
+> 08:51:59 ~/test (master #) $ git commit -m "one"
+> [master (root-commit) b0fddf6] one
+>  1 file changed, 0 insertions(+), 0 deletions(-)
+>  create mode 100644 main/readme.md
+> 08:52:04 ~/test (master) $ cd main
+> 08:52:14 ~/test/main (master) $ cd ..
+> 08:52:27 ~/test (master) $ mv main Main
+> 08:53:51 ~/test (master) $ git status
+> On branch master
+> nothing to commit, working directory clean
+> 08:53:53 ~/test (master) $ ls
+> Main
+> 08:54:02 ~/test (master) $ mv Main MainA
+> 08:55:44 ~/test (master *) $ git status
+> On branch master
+> Changes not staged for commit:
+>   (use "git add/rm <file>..." to update what will be committed)
+>   (use "git checkout -- <file>..." to discard changes in working dire=
+ctory)
 >
-> I would be very hesitant to special case "./*.js" to mean "*.js
-> files in the same directory as .gitignore appears", as I think it
-> risks intelligent readers to infer "../foo/*.js" or "../*.js" would
-> take effect, when placed in "bar/.gitignore".  A design that spreads
-> an incorrect assumption/expectation is not a good one, I would have
-> to say.
+>         deleted:    main/readme.md
 >
-
-I did not say I'd change the behavior of the ignore rules. I rather meant
-to say the documentation could be filled with examples for common
-patterns.
-
-That way you'd not be required to read all the rules and *think* about
-them, but rather can just copy/paste and hope it works. ;)
-
-Sorry if this sounded otherwise.
+> Untracked files:
+>   (use "git add <file>..." to include in what will be committed)
+>
+>         MainA/
+>
+> no changes added to commit (use "git add" and/or "git commit -a")
+> 08:55:45 ~/test (master *) $--
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
