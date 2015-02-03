@@ -1,67 +1,96 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH v2 3/4] apply: do not read from beyond a symbolic link
-Date: Mon, 2 Feb 2015 16:08:49 -0800
-Message-ID: <CAGZ79kbE2frDRgXkS0zGvufR1GP15wjgf9t49U87jPT83aTF0w@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 1/4] apply: reject input that touches outside $cwd
+Date: Mon, 2 Feb 2015 19:45:08 -0500
+Message-ID: <20150203004507.GA31946@peff.net>
 References: <1422919650-13346-1-git-send-email-gitster@pobox.com>
-	<1422919650-13346-4-git-send-email-gitster@pobox.com>
+ <1422919650-13346-2-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 03 01:08:55 2015
+X-From: git-owner@vger.kernel.org Tue Feb 03 01:45:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YIR31-0008Jj-3H
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Feb 2015 01:08:55 +0100
+	id 1YIRcD-0001tk-9X
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Feb 2015 01:45:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755522AbbBCAIv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Feb 2015 19:08:51 -0500
-Received: from mail-ie0-f178.google.com ([209.85.223.178]:35907 "EHLO
-	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755313AbbBCAIu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Feb 2015 19:08:50 -0500
-Received: by mail-ie0-f178.google.com with SMTP id rd18so12271427iec.9
-        for <git@vger.kernel.org>; Mon, 02 Feb 2015 16:08:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=X7TTYe5pjnJF7QmBgM15/4NJM8+bO+y1sC4aT1+z3S8=;
-        b=PUoJ0FbeQbSyTYNxbqTcHvkYCbmdDzG5rGTknIUSUSsvLJRAmOmcI7ILj+j41R3AYe
-         K91Q2QAZEFVmN6Wx1+X3WdNOTRWBjTC2uzqA0lbzcppcT2P3Zerh5Hj9FMZ6WjL0biMX
-         YUyyc/MP1W5Se2qmKKZy2BM+NR0jxS2lh99ILdlvQ9mTAvXsrjninMkzEG43wQA956rT
-         6b9tIlEisTnyXlfccqnO3i1FbkY8IIXN8db9q8nKWSrl1RhPC96KQzOLXbSrGMrkLPQI
-         aaRPcP5sbsXYJ7pwADcBUX76V0MtSDYwKaq30fcJoltap/m73qP8PpmEr3xvMEVk5TJg
-         XbSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=X7TTYe5pjnJF7QmBgM15/4NJM8+bO+y1sC4aT1+z3S8=;
-        b=TXTvso8yiMgUsb+SCrrm0uiKd6dTM3kvbZo7yZXOqpaqQ3tGKOH+yq5UWK86v2d6Yj
-         34/Z6lRa+/1ibaluods7UN2NZ+KAK5sgcx+pFcrnsWu8kRp+MFiV9BuROxqV7q56nopr
-         oF0g0xfwwBiTL0cFFu0fQSm/rxEbbGJEV6tJKrWn7f4yelCRnYQEaasjxdqyYUwWFPLZ
-         PfRr4sxuENrSc7pQwMlexk2eh+hTr15MGJ2jlzuRrOUez8W0PmHhgS+M86UxA7dbaU3K
-         Mz4J0QVxYBXGzv4V4D+LQOOxCSW5rP9/1kM6Fqn3EcPKqs0uKv0CU7m83H5HmbQxW9uH
-         WSLA==
-X-Gm-Message-State: ALoCoQmeiBz/OKCWYxypBtYhEv+gHRAmZxgi+0LQUGhbetqHUQpg6zex853BmhFxPytYXZDhh5f7
-X-Received: by 10.107.16.169 with SMTP id 41mr5866852ioq.33.1422922129910;
- Mon, 02 Feb 2015 16:08:49 -0800 (PST)
-Received: by 10.50.26.42 with HTTP; Mon, 2 Feb 2015 16:08:49 -0800 (PST)
-In-Reply-To: <1422919650-13346-4-git-send-email-gitster@pobox.com>
+	id S1755358AbbBCApM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Feb 2015 19:45:12 -0500
+Received: from cloud.peff.net ([50.56.180.127]:44327 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755292AbbBCApL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Feb 2015 19:45:11 -0500
+Received: (qmail 28448 invoked by uid 102); 3 Feb 2015 00:45:11 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 02 Feb 2015 18:45:11 -0600
+Received: (qmail 4557 invoked by uid 107); 3 Feb 2015 00:45:09 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 02 Feb 2015 19:45:09 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 02 Feb 2015 19:45:08 -0500
+Content-Disposition: inline
+In-Reply-To: <1422919650-13346-2-git-send-email-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263296>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263297>
 
-On Mon, Feb 2, 2015 at 3:27 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> +       test_must_fail git apply --index patch
-> +
-> +'
+On Mon, Feb 02, 2015 at 03:27:27PM -0800, Junio C Hamano wrote:
 
-Is the empty line between the last test_must_fail and the closing `'`
-intentional?
+> By default, a patch that affects outside the working area is
+> rejected as a mistake (or a mischief); Git itself does not create
+> such a patch, unless the user bends backwards and specifies a
+> non-standard prefix to "git diff" and friends.
+> 
+> When `git apply` is used without either `--index` or `--cached`
+> option as a "better GNU patch", the user can pass `--unsafe-paths`
+> option to override this safety check.  This cannot be used to escape
+> outside the working tree when using `--index` or `--cached` to apply
+> the patch to the index.
+> 
+> The new test was stolen from Jeff King with slight enhancements.
+
+I notice that this includes the symlink-crossing tests, marked as
+failures. Reading the series, I know what is going to happen later, but
+do you want to leave a note like:
+
+  Note that we also add tests for leaving the working directory by
+  crossing symlink boundaries, which is not addressed in this patch.
+  That is a separate issue caused following symlinks, which will come
+  later.
+
+or something to help later readers of "git log"?
+
+> +--unsafe-paths::
+> +	By default, a patch that affects outside the working area is
+> +	rejected as a mistake (or a mischief); Git itself never
+> +	creates such a patch unless the user bends backwards and
+> +	specifies nonstandard prefix to "git diff" and friends.
+
+Minor wordsmithing: the usual idiom is "bend over backwards", and you
+probably want s/specifies/& a/.
+
+> ++
+> +When `git apply` is used without either `--index` or `--cached`
+> +option as a "better GNU patch", the user can pass `--unsafe-paths`
+> +option to override this safety check.
+
+Similarly, probably every instance of "foo option" would read better as
+"the foo option".
+
+> This cannot be used to escape
+> +outside the working tree when using `--index` or `--cached` to apply
+> +the patch to the index.
+
+I had trouble figuring out what this meant. Would it be simpler to just
+say:
+
+  This option has no effect when `--index` or `--cached` is in use.
+
+Or is there some other subtlety that you are trying to convey that I am
+missing?
+
+-Peff
