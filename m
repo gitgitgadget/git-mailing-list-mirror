@@ -1,58 +1,65 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: use-after-free leads to git-blame writing garbage in error
- message
-Date: Tue, 3 Feb 2015 18:38:43 +0900
-Message-ID: <20150203093843.GA14981@glandium.org>
-References: <20150203091715.GA25445@glandium.org>
- <20150203093245.3733.71523@typhoon>
+From: "Tom G. Christensen" <tgc@statsbiblioteket.dk>
+Subject: [PATCH] ewah: fix building with gcc < 3.4.0
+Date: Tue, 3 Feb 2015 11:27:07 +0100
+Message-ID: <1422959227-3046-1-git-send-email-tgc@statsbiblioteket.dk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Lukas Fleischer <git@cryptocrack.de>
-X-From: git-owner@vger.kernel.org Tue Feb 03 10:38:58 2015
+Content-Type: text/plain
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Feb 03 11:27:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YIZwf-0002j5-PL
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Feb 2015 10:38:58 +0100
+	id 1YIahS-000853-0L
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Feb 2015 11:27:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753871AbbBCJiy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Feb 2015 04:38:54 -0500
-Received: from ks3293202.kimsufi.com ([5.135.186.141]:43728 "EHLO glandium.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750798AbbBCJiw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Feb 2015 04:38:52 -0500
-Received: from glandium by zenigata with local (Exim 4.84)
-	(envelope-from <glandium@glandium.org>)
-	id 1YIZwR-0004Z6-7r; Tue, 03 Feb 2015 18:38:43 +0900
-Content-Disposition: inline
-In-Reply-To: <20150203093245.3733.71523@typhoon>
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S933551AbbBCK1N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Feb 2015 05:27:13 -0500
+Received: from sbexch03.sb.statsbiblioteket.dk ([130.225.24.68]:55501 "EHLO
+	sbexch03.sb.statsbiblioteket.dk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752291AbbBCK1N (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 Feb 2015 05:27:13 -0500
+Received: from throll.localdomain (172.18.234.199) by
+ sbexch03.sb.statsbiblioteket.dk (130.225.24.68) with Microsoft SMTP Server id
+ 8.3.389.2; Tue, 3 Feb 2015 11:27:07 +0100
+Received: by throll.localdomain (Postfix, from userid 3000)	id 95BD3400EC1;
+ Tue,  3 Feb 2015 11:27:07 +0100 (CET)
+X-Mailer: git-send-email 2.2.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263317>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263318>
 
-On Tue, Feb 03, 2015 at 10:32:45AM +0100, Lukas Fleischer wrote:
-> On Tue, 03 Feb 2015 at 10:17:15, Mike Hommey wrote:
-> > Symptoms: $ git blame HEAD -- foo fatal: no such path foo in <random
-> > garbage>
-> > 
-> > Expected output: $ git blame HEAD -- foo fatal: no such path foo in
-> > HEAD
-> > 
-> > Bisect says this was introduced in
-> > 1da1e07c835e900337714cfad6c32a8dc0b36ac3 [...]
-> 
-> This should be fixed by commit a46442f (blame.c: fix garbled error
-> message, 2015-01-12) which is in next.
+The __builtin_ctzll function was added in gcc 3.4.0.
+This extends the check for gcc so that use of __builtin_ctzll is only
+enabled if gcc >= 3.4.0.
+---
 
-Indeed it is, I should have checked next.
+I noticed this on RHEL3 during 2.0.0rc phase but I see that the same
+issue was noticed on Debian Sarge:
+http://article.gmane.org/gmane.comp.version-control.git/255190
+RHEL3 ships with gcc 3.2.3.
 
-Thanks.
+With this patch git can build on RHEL3 provided cURL support is disabled.
 
-Mike
+ ewah/ewok.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/ewah/ewok.h b/ewah/ewok.h
+index f6ad190..13c6e20 100644
+--- a/ewah/ewok.h
++++ b/ewah/ewok.h
+@@ -47,7 +47,8 @@ static inline uint32_t ewah_bit_popcount64(uint64_t x)
+ 	return (x * 0x0101010101010101ULL) >> 56;
+ }
+ 
+-#ifdef __GNUC__
++/* __builtin_ctzll was not available until 3.4.0 */
++#if defined(__GNUC__) && (__GNUC__ > 3 || (__GNUC__ == 3  && __GNUC_MINOR > 3))
+ #define ewah_bit_ctz64(x) __builtin_ctzll(x)
+ #else
+ static inline int ewah_bit_ctz64(uint64_t x)
+-- 
+2.2.2
