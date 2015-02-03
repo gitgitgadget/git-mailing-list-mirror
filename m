@@ -1,128 +1,133 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: [PATCH 2/2] Makes _do_open2 set _gitdir to actual path
-Date: Tue, 3 Feb 2015 21:51:31 +1300
-Message-ID: <CAFOYHZB_c3U9jpAq=jrGgMU+wMMf8w5D9iqLC9ccGC8S3hhXZg@mail.gmail.com>
-References: <CAMto89CHf4OT_S05SaRrVRZvF-PH2_6DrcEpdGiUfaRGutJQHw@mail.gmail.com>
-	<1422897883-11036-1-git-send-email-remirampin@gmail.com>
-	<1422897883-11036-2-git-send-email-remirampin@gmail.com>
+From: Mike Hommey <mh@glandium.org>
+Subject: use-after-free leads to git-blame writing garbage in error message
+Date: Tue, 3 Feb 2015 18:17:15 +0900
+Message-ID: <20150203091715.GA25445@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: GIT <git@vger.kernel.org>
-To: Remi Rampin <remirampin@gmail.com>,
-	Pat Thoyts <patthoyts@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Tue Feb 03 09:51:40 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 03 10:17:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YIZCq-00066E-TB
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Feb 2015 09:51:37 +0100
+	id 1YIZc0-0001Gs-OL
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Feb 2015 10:17:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755015AbbBCIvd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Feb 2015 03:51:33 -0500
-Received: from mail-pa0-f47.google.com ([209.85.220.47]:36723 "EHLO
-	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751591AbbBCIvc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Feb 2015 03:51:32 -0500
-Received: by mail-pa0-f47.google.com with SMTP id lj1so93607583pab.6
-        for <git@vger.kernel.org>; Tue, 03 Feb 2015 00:51:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=8617SqUl2goGKSFN0JXqkoQhkRz8MYp+LAzUWI1bMYE=;
-        b=bf6cb1VjsUJLQI5Zun3rn15ezr1EO15/Ks6HDv7d35VCW3j3mwbXVMIPumCiCL6Nn4
-         /6mAQdSwiHEIjXku3Bfg+Ix3BHZj0RhRyC3tveqM6wsn0LjFcF3IoX/fiMuTxLzQnZG2
-         rcvM/ZIp0b1xkKb+McAujiC3zK7flAYKsjyG8tnUv+SfAEe2M0HYA5BnPZCURF5Xg6Et
-         2gCNvaboIwVNES6bA1jWvpXOKreZrnGK8HrqDKDNMk6+3u4QYhTVcCEeF9SaxL+8UDjj
-         nzANKIDgEzLgJubJvO9SYDYoIlzdnAsgSDZtvpapNi7mIeoAuH5Hc0zKSqKe7ijcI7wA
-         ISaQ==
-X-Received: by 10.66.186.208 with SMTP id fm16mr35735705pac.62.1422953491733;
- Tue, 03 Feb 2015 00:51:31 -0800 (PST)
-Received: by 10.70.109.199 with HTTP; Tue, 3 Feb 2015 00:51:31 -0800 (PST)
-In-Reply-To: <1422897883-11036-2-git-send-email-remirampin@gmail.com>
+	id S1753432AbbBCJRc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Feb 2015 04:17:32 -0500
+Received: from ks3293202.kimsufi.com ([5.135.186.141]:43516 "EHLO glandium.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751206AbbBCJR3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Feb 2015 04:17:29 -0500
+Received: from glandium by zenigata with local (Exim 4.84)
+	(envelope-from <glandium@glandium.org>)
+	id 1YIZbf-0002qG-MD; Tue, 03 Feb 2015 18:17:15 +0900
+Content-Disposition: inline
+X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263313>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263314>
 
-On Tue, Feb 3, 2015 at 6:24 AM, Remi Rampin <remirampin@gmail.com> wrote:
-> If _is_git had to follow "gitdir: ..." files to reach the actual Git
-> directory, we set _gitdir to that final path.
-> ---
->  lib/choose_repository.tcl | 14 ++++++++++----
->  1 file changed, 10 insertions(+), 4 deletions(-)
->
-> diff --git a/lib/choose_repository.tcl b/lib/choose_repository.tcl
-> index 49ff641..641068d 100644
-> --- a/lib/choose_repository.tcl
-> +++ b/lib/choose_repository.tcl
-> @@ -338,13 +338,17 @@ method _git_init {} {
->         return 1
->  }
->
-> -proc _is_git {path} {
-> +proc _is_git {path {outdir_var ""}} {
-> +       if {$outdir_var ne ""} {
-> +               upvar 1 $outdir_var outdir
-> +       }
->         if {[file isfile $path]} {
->                 set fp [open $path r]
->                 gets $fp line
->                 close $fp
->                 if {[regexp "^gitdir: (.+)$" $line line link_target]} {
-> -                       return [_is_git [file join [file dirname $path] $link_target]]
-> +                       set link_target_abs [file join [file dirname $path] $link_target]
+Symptoms:
+  $ git blame HEAD -- foo
+  fatal: no such path foo in <random garbage>
 
-At this point link_target_abs is something like
-sub/../.git/modules/sub. It might be nice to normalize this with 'git
-rev-parse --git-dir' or even just (cd $link_target_abs && pwd). I'm
-not sure if tcl has anything built in that could do this kind of
-normalization.
+Expected output:
+  $ git blame HEAD -- foo
+  fatal: no such path foo in HEAD
 
-> +                       return [_is_git $link_target_abs outdir]
->                 }
->                 return 0
->         }
-> @@ -352,12 +356,14 @@ proc _is_git {path} {
->         if {[file exists [file join $path HEAD]]
->          && [file exists [file join $path objects]]
->          && [file exists [file join $path config]]} {
-> +               set outdir $path
->                 return 1
->         }
->         if {[is_Cygwin]} {
->                 if {[file exists [file join $path HEAD]]
->                  && [file exists [file join $path objects.lnk]]
->                  && [file exists [file join $path config.lnk]]} {
-> +                       set outdir $path
->                         return 1
->                 }
->         }
-> @@ -1103,7 +1109,7 @@ method _open_local_path {} {
->  }
->
->  method _do_open2 {} {
-> -       if {![_is_git [file join $local_path .git]]} {
-> +       if {![_is_git [file join $local_path .git] actualgit]} {
->                 error_popup [mc "Not a Git repository: %s" [file tail $local_path]]
->                 return
->         }
-> @@ -1116,7 +1122,7 @@ method _do_open2 {} {
->         }
->
->         _append_recentrepos [pwd]
-> -       set ::_gitdir .git
-> +       set ::_gitdir $actualgit
->         set ::_prefix {}
->         set done 1
->  }
-> --
-> 1.9.5.msysgit.0
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Bisect says this was introduced in 1da1e07c835e900337714cfad6c32a8dc0b36ac3
+
+valgrind output looks like this:
+==4738== Memcheck, a memory error detector
+==4738== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==4738== Using Valgrind-3.10.0 and LibVEX; rerun with -h for copyright info
+==4738== Command: ./git-blame HEAD -- foo
+==4738== 
+==4738== Invalid read of size 1
+==4738==    at 0x58B6F00: vfprintf (vfprintf.c:1636)
+==4738==    by 0x58E1298: vsnprintf (vsnprintf.c:119)
+==4738==    by 0x5107ED: vreportf (usage.c:12)
+==4738==    by 0x510823: die_builtin (usage.c:36)
+==4738==    by 0x510A82: die (usage.c:103)
+==4738==    by 0x41318F: cmd_blame (blame.c:2716)
+==4738==    by 0x405B52: run_builtin (git.c:351)
+==4738==    by 0x405B52: handle_builtin (git.c:530)
+==4738==    by 0x404C69: main (git.c:653)
+==4738==  Address 0x5f042d0 is 0 bytes inside a block of size 5 free'd
+==4738==    at 0x4C29E90: free (vg_replace_malloc.c:473)
+==4738==    by 0x4C1621: object_array_release_entry.isra.0 (object.c:354)
+==4738==    by 0x4C1F73: object_array_clear (object.c:380)
+==4738==    by 0x4E8E05: prepare_revision_walk (revision.c:2739)
+==4738==    by 0x41153E: cmd_blame (blame.c:2705)
+==4738==    by 0x405B52: run_builtin (git.c:351)
+==4738==    by 0x405B52: handle_builtin (git.c:530)
+==4738==    by 0x404C69: main (git.c:653)
+==4738== 
+==4738== Invalid read of size 1
+==4738==    at 0x58E50D0: _IO_default_xsputn (genops.c:475)
+==4738==    by 0x58B6EC1: vfprintf (vfprintf.c:1636)
+==4738==    by 0x58E1298: vsnprintf (vsnprintf.c:119)
+==4738==    by 0x5107ED: vreportf (usage.c:12)
+==4738==    by 0x510823: die_builtin (usage.c:36)
+==4738==    by 0x510A82: die (usage.c:103)
+==4738==    by 0x41318F: cmd_blame (blame.c:2716)
+==4738==    by 0x405B52: run_builtin (git.c:351)
+==4738==    by 0x405B52: handle_builtin (git.c:530)
+==4738==    by 0x404C69: main (git.c:653)
+==4738==  Address 0x5f042d0 is 0 bytes inside a block of size 5 free'd
+==4738==    at 0x4C29E90: free (vg_replace_malloc.c:473)
+==4738==    by 0x4C1621: object_array_release_entry.isra.0 (object.c:354)
+==4738==    by 0x4C1F73: object_array_clear (object.c:380)
+==4738==    by 0x4E8E05: prepare_revision_walk (revision.c:2739)
+==4738==    by 0x41153E: cmd_blame (blame.c:2705)
+==4738==    by 0x405B52: run_builtin (git.c:351)
+==4738==    by 0x405B52: handle_builtin (git.c:530)
+==4738==    by 0x404C69: main (git.c:653)
+==4738== 
+==4738== Invalid read of size 1
+==4738==    at 0x58E50DE: _IO_default_xsputn (genops.c:474)
+==4738==    by 0x58B6EC1: vfprintf (vfprintf.c:1636)
+==4738==    by 0x58E1298: vsnprintf (vsnprintf.c:119)
+==4738==    by 0x5107ED: vreportf (usage.c:12)
+==4738==    by 0x510823: die_builtin (usage.c:36)
+==4738==    by 0x510A82: die (usage.c:103)
+==4738==    by 0x41318F: cmd_blame (blame.c:2716)
+==4738==    by 0x405B52: run_builtin (git.c:351)
+==4738==    by 0x405B52: handle_builtin (git.c:530)
+==4738==    by 0x404C69: main (git.c:653)
+==4738==  Address 0x5f042d2 is 2 bytes inside a block of size 5 free'd
+==4738==    at 0x4C29E90: free (vg_replace_malloc.c:473)
+==4738==    by 0x4C1621: object_array_release_entry.isra.0 (object.c:354)
+==4738==    by 0x4C1F73: object_array_clear (object.c:380)
+==4738==    by 0x4E8E05: prepare_revision_walk (revision.c:2739)
+==4738==    by 0x41153E: cmd_blame (blame.c:2705)
+==4738==    by 0x405B52: run_builtin (git.c:351)
+==4738==    by 0x405B52: handle_builtin (git.c:530)
+==4738==    by 0x404C69: main (git.c:653)
+==4738== 
+fatal: no such path foo in HEAD
+==4738== 
+==4738== HEAP SUMMARY:
+==4738==     in use at exit: 733,417 bytes in 807 blocks
+==4738==   total heap usage: 1,505 allocs, 698 frees, 915,428 bytes allocated
+==4738== 
+==4738== LEAK SUMMARY:
+==4738==    definitely lost: 0 bytes in 0 blocks
+==4738==    indirectly lost: 0 bytes in 0 blocks
+==4738==      possibly lost: 0 bytes in 0 blocks
+==4738==    still reachable: 733,417 bytes in 807 blocks
+==4738==         suppressed: 0 bytes in 0 blocks
+==4738== Rerun with --leak-check=full to see details of leaked memory
+==4738== 
+==4738== For counts of detected and suppressed errors, rerun with: -v
+==4738== ERROR SUMMARY: 9 errors from 3 contexts (suppressed: 0 from 0)
+
+Cheers,
+
+Mike
