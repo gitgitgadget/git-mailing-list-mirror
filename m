@@ -1,141 +1,91 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: folder naming bug?
-Date: Tue, 3 Feb 2015 00:23:17 -0500
-Message-ID: <20150203052317.GA1262@peff.net>
-References: <27503C0E-7D33-4893-AD25-6A821D31FAB1@sparkstart.io>
- <CAGyf7-FXhhW74DvcO8nbWud9A868AYqKj_zY61wmf9XGvH4eQA@mail.gmail.com>
- <06E0624C-2484-476D-A32F-B586062EC230@sparkstart.io>
+Subject: Re: "git status" should warn/error when it cannot lists a directory
+Date: Tue, 3 Feb 2015 00:36:43 -0500
+Message-ID: <20150203053642.GB1262@peff.net>
+References: <CADgNjamcR+b-_DKzScU=35idAgG542B7CaJC2AqAE9Srvsq17g@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Bryan Turner <bturner@atlassian.com>,
-	Git Users <git@vger.kernel.org>
-To: Kevin Coleman <kevin.coleman@sparkstart.io>
-X-From: git-owner@vger.kernel.org Tue Feb 03 06:24:08 2015
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Andrew Wong <andrew.kw.w@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 03 06:37:02 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YIVy3-0005iB-Ru
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Feb 2015 06:24:08 +0100
+	id 1YIWAW-0002uU-So
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Feb 2015 06:37:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965966AbbBCFXV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Feb 2015 00:23:21 -0500
-Received: from cloud.peff.net ([50.56.180.127]:44407 "HELO cloud.peff.net"
+	id S966120AbbBCFgr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Feb 2015 00:36:47 -0500
+Received: from cloud.peff.net ([50.56.180.127]:44412 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S965022AbbBCFXU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Feb 2015 00:23:20 -0500
-Received: (qmail 7807 invoked by uid 102); 3 Feb 2015 05:23:20 -0000
+	id S966111AbbBCFgp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Feb 2015 00:36:45 -0500
+Received: (qmail 8350 invoked by uid 102); 3 Feb 2015 05:36:45 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 02 Feb 2015 23:23:20 -0600
-Received: (qmail 6305 invoked by uid 107); 3 Feb 2015 05:23:18 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 02 Feb 2015 23:36:45 -0600
+Received: (qmail 6492 invoked by uid 107); 3 Feb 2015 05:36:44 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 03 Feb 2015 00:23:18 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Feb 2015 00:23:17 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 03 Feb 2015 00:36:44 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Feb 2015 00:36:43 -0500
 Content-Disposition: inline
-In-Reply-To: <06E0624C-2484-476D-A32F-B586062EC230@sparkstart.io>
+In-Reply-To: <CADgNjamcR+b-_DKzScU=35idAgG542B7CaJC2AqAE9Srvsq17g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263307>
 
-On Mon, Feb 02, 2015 at 11:52:21PM -0500, Kevin Coleman wrote:
+On Mon, Feb 02, 2015 at 11:58:33AM -0500, Andrew Wong wrote:
 
-> Yes, I am on a Mac.  I just tried that, but I don=E2=80=99t think tha=
-t
-> completely fixed it.  As you can see it tracks =E2=80=9Cfoo/bar.md=E2=
-=80=9D and then
-> it tracks =E2=80=9CFoo/bar.md=E2=80=9D.  It still tracks both =E2=80=9C=
-foo=E2=80=9D and =E2=80=9CFoo=E2=80=9D even tho
-> only =E2=80=9CFoo=E2=80=9D exists in my dir after the rename.
+> When "git status" recurses a directory that isn't readable (but
+> executable), it should print out a warning/error. Currently, if there
+> are untracked files in these directories, git wouldn't be able to
+> discover them. Ideally, "git status" should return a non-zero exit
+> code as well.
 
-Yes, because your filesystem _is_ case insensitive, but now you have
-told git that it is not. In your example:
+Also, I think "git add ." would silently ignore such directories, which
+is probably a bad thing if you are relying on it to capture the whole
+directory's state. Similarly, I think we would ignore transient
+errors (like EMFILE) or other EACCES problems (like a mode 0700
+directory owned by somebody else).
 
-> 11:41:57 ~/test $ git init
-> Initialized empty Git repository in /Users/kcoleman/test/.git/
-> 11:42:03 ~/test (master #) $ git config core.ignorecase false
-> 11:42:06 ~/test (master #) $ mkdir foo
-> 11:42:13 ~/test (master #) $ cd foo
-> 11:42:26 ~/test/foo (master #) $ touch bar.md
-> 11:42:30 ~/test/foo (master #) $ cd ..
-> 11:42:32 ~/test (master #) $ git add .
+> The problem seems to be In read_directory_recursive() from dir.c. When
+> opendir() returns null, we continue on ignoring any error. Is there a
+> scenario where returning null is expected? We can simply call perror()
+> here, but it would be nice if we can propagate the error to the exit
+> code too. How would we do that?
 
-Now git has "foo" (lowercase) in the index. And that's what your
-filesystem has, too.
+I think we should report an error on EACCES. Perhaps somebody is happy
+that "git add" ignores unreadable directories, but the right solution is
+for them to put those directories in their .gitignore (and/or use
+"--ignore-errors").
 
-> 11:42:35 ~/test (master #) $ git commit -m "first"
-> [master (root-commit) 6125a1d] first
->  1 file changed, 0 insertions(+), 0 deletions(-)
->  create mode 100644 foo/bar.md
-> 11:42:39 ~/test (master) $ mv foo Foo
-> 11:42:44 ~/test (master) $ ls
-> Foo
+People may want to ignore ENOENT in this situation, though. That is a
+sign that somebody is racily modifying the directory while git is
+running. That's generally a bad idea, but it is not a big deal for us to
+skip such a directory (after all, we might racily have missed its
+existence in the first place, so all bets are off).
 
-Now we still have "foo" in the index, but "Foo" in the filesystem.
+>From a cursory look, I'd agree that hitting the opendir() in
+read_directory_recursive is the right place to start. I'd silently
+ignore ENOENT, and propagate the rest.
 
-> 11:42:46 ~/test (master) $ git status
-> On branch master
-> Untracked files:
->   (use "git add <file>..." to include in what will be committed)
->=20
-> 	Foo/
+That code is too low-level to call die() directly, I think, so you will
+need to propagate the error back. Adding a new error-value to the "enum
+path_treatment" could work, but it will probably be rather clumsy
+getting it all the way back up to the original caller. It will probably
+be much easier to:
 
-When git asks the filesystem lstat("foo") to find out if we still have
-it, the filesystem returns the entry for "Foo" (because it is
-case-insensitive).
+  1. Give dir_struct an error flag, and set it whenever the traversal
+     sees an error. Callers can check the flag at the appropriate level
+     and ignore or die() as appropriate.
 
-But when git asks the filesystem to iterate over all of the files, so i=
-t
-can check which ones are not tracked, it will get "Foo", which of cours=
-e
-is not in the index.
-
-So you do not see a deletion of "foo", but you do see "Foo" as
-untracked.
-
-> 11:42:48 ~/test (master) $ git add .
-> 11:43:18 ~/test (master +) $ git commit -m "second"
-> [master f78d025] second
->  1 file changed, 0 insertions(+), 0 deletions(-)
->  create mode 100644 Foo/bar.md
-
-And this tells git to look through the filesystem for untracked files
-and add them to the index. So it adds "Foo".
-
-Now that you have both "foo" and "Foo" in the index, but the filesystem
-treats them the same, you can create more mayhem. If you were to update
-one entry but not the other (e.g., by writing to bar.md before doing th=
-e
-second commit), then git would be perpetually confused. _One_ of the
-files would always look like needed to be updated, because the
-filesystem cannot represent the situation that is in the index.
-
-And that is why git sets core.ignorecase in the first place. :)
-
-As to your original problem:
-
-> >> git isn=E2=80=99t tracking folder renames when the case of the let=
-ters
-> >> change, but it will track it if the folder changes names.  Is this
-> >> intentional?
-
-Yes, this is intentional. Your filesystem treats them as the same file,
-so git has to, as well.
-
-If your goal is to change the case that git records, then you should be
-able to do it with "git mv". But git will never pick up a case change
-that you made separately in the filesystem, because it's
-indistinguishable from the filesystem simply picking a different case t=
-o
-store the file.
-
-And that does happen. For instance, if you switch between two branches
-with "Foo" and "foo", most case-preserving filesystems will leave you
-with whichever version you had first (i.e., git asks the filesystem to
-open "foo", and the filesystem says "ah, I already have Foo; that must
-have been what you meant").
+  2. Teach dir_struct a "quiet" flag. If not set, emit a warning()
+     deep in the code. Alternatively, you could collect a set of
+     error-producing pathnames (along with their errno values), and
+     the caller could decide whether to print them itself (this is
+     similar to how DIR_COLLECT_IGNORED works).
 
 -Peff
