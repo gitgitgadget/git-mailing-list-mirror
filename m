@@ -1,108 +1,165 @@
-From: =?utf-8?Q?Micha=C3=ABl_Fortin?= <fortinmike@gmail.com>
-Subject: Weird output of git status in pre-commit hook when providing a pathspec on commit
-Date: Tue, 3 Feb 2015 08:14:06 -0500
-Message-ID: <80E24BA2-84FE-47FC-A5C0-D291E3C63BD5@gmail.com>
-Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2070.6\))
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 03 14:14:17 2015
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v4 00/19] Introduce an internal API to interact with the
+ fsck machinery
+Date: Tue, 03 Feb 2015 16:11:06 +0100
+Message-ID: <54D0E50A.5030601@alum.mit.edu>
+References: <xmqqr3w7gxr4.fsf@gitster.dls.corp.google.com> <cover.1422737997.git.johannes.schindelin@gmx.de> <060e1e6a5530dfb311074b0aa854b281@www.dscho.org> <54CF70DA.5090506@alum.mit.edu> <d5ebe9aeb5f4dd5cbe8673ae2076ba04@www.dscho.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 8bit
+Cc: gitster@pobox.com, git@vger.kernel.org, peff@peff.net
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Feb 03 16:11:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YIdJ2-0002vV-4a
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Feb 2015 14:14:16 +0100
+	id 1YIf8R-0001wl-6T
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Feb 2015 16:11:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933777AbbBCNOM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Feb 2015 08:14:12 -0500
-Received: from mail-qa0-f54.google.com ([209.85.216.54]:40940 "EHLO
-	mail-qa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754040AbbBCNOK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 Feb 2015 08:14:10 -0500
-Received: by mail-qa0-f54.google.com with SMTP id w8so33685270qac.13
-        for <git@vger.kernel.org>; Tue, 03 Feb 2015 05:14:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:content-type:content-transfer-encoding:subject:message-id:date
-         :to:mime-version;
-        bh=rMxAVIKz91Al3usGR2dE3h2VFV0FVxv+F2r5iJG0ZrQ=;
-        b=nmiWvC7qwCoFbypfcB50sjm41fM8wzKZ+dcv04NsY9wn8H7O0dbZn7V6edJlXbzxaX
-         jhc7DZkUpERf/kvWggbnReJ6EzhCyuzy+N34XBFMWkY8LQu5z4I3W90hHkMRzPxGTne3
-         5ed6YbbByYtU04mb8y/SmHXHGLUD4hzeZu0PYF+c6ijw4q6P2Yqph7AjELYmXy5JF/6u
-         L6kuCm1EZZeLclksm4afJ/Pdl6GWuiwWwbtKjqYWDhkh+IowiklYJ0ECGsKmO49pNumz
-         mtE2HibEdNNkg6HCwKgbhbHmNi9P6rokYilzAN3Z3SQ0Soh/ZYaQSJ3guIcB7e7LYMU6
-         3JRA==
-X-Received: by 10.224.40.195 with SMTP id l3mr52725811qae.61.1422969248954;
-        Tue, 03 Feb 2015 05:14:08 -0800 (PST)
-Received: from [172.20.10.2] (out-pq-129.wireless.telus.com. [216.218.29.129])
-        by mx.google.com with ESMTPSA id d62sm21185391qga.15.2015.02.03.05.14.06
-        for <git@vger.kernel.org>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 03 Feb 2015 05:14:07 -0800 (PST)
-X-Mailer: Apple Mail (2.2070.6)
+	id S1753446AbbBCPLR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Feb 2015 10:11:17 -0500
+Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:65490 "EHLO
+	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752306AbbBCPLQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 Feb 2015 10:11:16 -0500
+X-AuditID: 12074411-f79fa6d000006b8a-5c-54d0e50c1701
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 28.F8.27530.C05E0D45; Tue,  3 Feb 2015 10:11:08 -0500 (EST)
+Received: from [192.168.69.130] (p4FC96E08.dip0.t-ipconnect.de [79.201.110.8])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t13FB6wv021582
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Tue, 3 Feb 2015 10:11:07 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.3.0
+In-Reply-To: <d5ebe9aeb5f4dd5cbe8673ae2076ba04@www.dscho.org>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprFKsWRmVeSWpSXmKPExsUixO6iqMvz9EKIQd8PNYuuK91MFg29V5gt
+	+pd3sVn8aOlhdmDx+PAxzuNZ7x5Gj4uXlD0+b5ILYInitklKLCkLzkzP07dL4M7YsuIlW8F2
+	hYoJc54xNTBOl+pi5OSQEDCRaL+7lhHCFpO4cG89WxcjF4eQwGVGiVsrr0I5Z5kkznZvYu9i
+	5ODgFdCWuPctCKSBRUBVYtqK6awgNpuArsSinmYmEFtUIEjiSstmZhCbV0BQ4uTMJywgtgjQ
+	snkv1oDZzAKWEqefTWYDsYUFYiW2LDnDBLHrHaPEgskbwZo5BWwl9i5YwgzRoCex4/ovVghb
+	XqJ562zmCYwCs5DsmIWkbBaSsgWMzKsY5RJzSnN1cxMzc4pTk3WLkxPz8lKLdE31cjNL9FJT
+	SjcxQsJZcAfjjJNyhxgFOBiVeHgdlC6ECLEmlhVX5h5ilORgUhLljb0BFOJLyk+pzEgszogv
+	Ks1JLT7EKMHBrCTCe+YRUI43JbGyKrUoHyYlzcGiJM7Lt0TdT0ggPbEkNTs1tSC1CCYrw8Gh
+	JMHr/xioUbAoNT21Ii0zpwQhzcTBCTKcS0qkODUvJbUosbQkIx4Uq/HFwGgFSfEA7W0Aaect
+	LkjMBYpCtJ5iVJQS560CSQiAJDJK8+DGwpLUK0ZxoC+FeZeBVPEAExxc9yugwUxAg2Uvgg0u
+	SURISTUwWlxYbMTutsXw/bX4p53P2O39duW/tX93IuQ3h3jS1UU3VtzcUXH6xfker36uEB55
+	bme7nIOLqmWydyRnffJQjWpRE316be5t6yVVV3wlDPWTdz48I8eisKDpxO9Xc5wY 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263319>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263320>
 
-Hi all,
+On 02/02/2015 05:48 PM, Johannes Schindelin wrote:
+> On 2015-02-02 13:43, Michael Haggerty wrote:
+>> On 02/02/2015 12:41 PM, Johannes Schindelin wrote:
+>>> Hi all (in particular Junio),
+>>>
+>>> On 2015-01-31 22:04, Johannes Schindelin wrote:
+>>>
+>>>> [...] switch to fsck.severity to address Michael's concerns that
+>>>> letting fsck.(error|warn|ignore)'s comma-separated lists possibly
+>>>> overriding each other partially;
+>>>
+>>> Having participated in the CodingStyle thread, I came to the
+>>> conclusion that the fsck.severity solution favors syntax over
+>>> intuitiveness.
+>>>
+>>> Therefore, I would like to support the case for
+>>> `fsck.level.missingAuthor` (note that there is an extra ".level." in
+>>> contrast to earlier suggestions).
+>>
+>> Why "level"?
+> 
+> "Severity level", or "error level". Maybe ".severity." would be better?
 
-I'm seeing behavior that I *think* might be a bug in git (I'm running 2=
-=2E2.2). At least I couldn't find anything about this anywhere, so here=
- goes:
+Sorry, I should have been clearer. I understand why the word "level"
+makes sense, as opposed to, say, "peanut-butter". What I don't
+understand is why a middle word is needed at all. In the config file it
+will look like
 
-I'm trying to run git commands outside of the current working copy (e.g=
-=2E inside another repo) from a pre-commit hook. However I'm encounteri=
-ng a very weird issue that occurs when a pathspec is provided when perf=
-orming a commit.
+[fsck "level"]
+        missingAuthor = error
 
-More precisely, what I'm trying to do is check whether a repository bes=
-ide the current repository is clean (no uncommitted changes) or not, fr=
-om a pre-commit hook.
+, which looks funny. "level" is a constant, so it seems superfluous.
 
-My repositories look like this on disk:
+If anything, it might be more useful to allow an optional middle word to
+allow the strictness level to be adjusted based on which command
+encounters the problem. For example, if you want to tolerate existing
+commits that have missing authors, but not allow any new ones to be
+pushed, you could set
 
-ContainerDirectory
-|-- Repo1 (contains one untracked file)
-|-- Repo2 (no uncommitted changes)
+[strictness]
+        missingAuthor = ignore
+[strictness "receive-pack"]
+        missingAuthor = error
 
-Repo1 has the following pre-commit hook:
+(There's probably a better word than "strictness", but you get the idea.)
 
-#!/bin/bash
-git -C "../Repo2" status --porcelain
+>>> The benefits:
+>>>
+>>> - it is very, very easy to understand
+>>>
+>>> - cumulative settings are intuitively cumulative, i.e. setting
+>>> `fsck.level.missingAuthor` will leave `fsck.level.invalidEmail`
+>>> completely unaffected
+>>>
+>>> - it is very easy to enquire and set the levels via existing `git
+>>> config` calls
+>>>
+>>> Now, there is one downside, but *only* if we ignore Postel's law.
+>>>
+>>> Postel's law ("be lenient in what you accept as input, but strict in
+>>> your output") would dictate that our message ID parser accept both
+>>> "missing-author" and "missingAuthor" if we follow the inconsistent
+>>> practice of using lowercase-dashed keys on the command-line but
+>>> CamelCased ones in the config.
+>>>
+>>> However, earlier Junio made very clear that the parser is required to
+>>> fail to parse "missing-author" in the config, and to fail to parse
+>>> "missingAuthor" on the command-line.
+>>>
+>>> Therefore, the design I recommend above will require two, minimally
+>>> different parsers for essentially the same thing.
+>>>
+>>> IMHO this is a downside that is by far outweighed by the ease of use
+>>> of the new feature, therefore I am willing to bear the burden of
+>>> implementation.
+>>
+>> I again encourage you to consider skipping the implementation of
+>> command-line options entirely. It's not like users are going to want to
+>> use different options for different invocations. Let them use
+>>
+>>     git -c fsck.level.missingAuthor=ignore fsck
+>>
+>> if they really want to play around, then
+>>
+>>     git config fsck.level.missingAuthor ignore
+>>
+>> to make it permanent. After that they will never have to worry about
+>> that option again.
+> 
+> Unfortunately, I have to pass the `receive.fsck.*` settings from
+> `git-receive-pack` to `git-unpack-objects` or `git-index-pack` via the
+> command-line, because it is `git-receive-pack` that consumes the config
+> setting, but it is one of `git-unpack-objects` and `git-index-pack` that
+> has to act on it...
 
-I then commit in Repo1 using the following (this is actually ran by a G=
-UI, I have no control over the commands themselves):
+Wouldn't that work automatically via the GIT_CONFIG_PARAMETERS
+mechanism? If I run
 
-git add --force -- MyNewFile
-git commit -m "My message" -o -- MyNewFile
+    git -c foo.bar=baz $CMD
 
-This results in some very puzzling output. I would expect the hook to o=
-utput nothing because Repo2 contains no changes. However, it returns th=
-e following:
+, then git-$CMD is invoked with GIT_CONFIG_PARAMETERS set to
+"'foo.bar=baz'", which causes child processes to treat that value as a
+configuration setting. I don't have a lot of experience with this but I
+think it should do what you need.
 
-D  Repo2-File1.txt
-D  Repo2-File2.txt
-D  Repo2-File3.txt
-?? Repo2-File1.txt
-?? Repo2-File2.txt
-?? Repo2-File3.txt
+Michael
 
-As you can see, the files are listed as both deleted and untracked, whi=
-ch makes no sense to me because there are in fact no uncommitted change=
-s in that repo. There are only these three files in the repo. Removing =
-the pathspec ("-- MyNewFile") from the commit command shows the expecte=
-d output (nothing, because there are no changes in Repo2).
-
-I have reproduced this behavior on OS X and Windows (with the latest gi=
-t for Windows).
-
-Can you explain what's going on?
-
-Thanks in advance for any info!
-
-Micha=C3=ABl Fortin
-www.irradiated.net
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
