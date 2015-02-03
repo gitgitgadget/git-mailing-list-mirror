@@ -1,91 +1,63 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: "git status" should warn/error when it cannot lists a directory
-Date: Tue, 3 Feb 2015 00:36:43 -0500
-Message-ID: <20150203053642.GB1262@peff.net>
-References: <CADgNjamcR+b-_DKzScU=35idAgG542B7CaJC2AqAE9Srvsq17g@mail.gmail.com>
+From: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH v2 1/4] apply: reject input that touches outside $cwd
+Date: Tue, 03 Feb 2015 06:56:19 +0100
+Message-ID: <54D06303.7050100@web.de>
+References: <1422919650-13346-1-git-send-email-gitster@pobox.com> <1422919650-13346-2-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Andrew Wong <andrew.kw.w@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 03 06:37:02 2015
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 03 06:57:03 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YIWAW-0002uU-So
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Feb 2015 06:37:01 +0100
+	id 1YIWTs-00032o-CP
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Feb 2015 06:57:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966120AbbBCFgr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Feb 2015 00:36:47 -0500
-Received: from cloud.peff.net ([50.56.180.127]:44412 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S966111AbbBCFgp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Feb 2015 00:36:45 -0500
-Received: (qmail 8350 invoked by uid 102); 3 Feb 2015 05:36:45 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 02 Feb 2015 23:36:45 -0600
-Received: (qmail 6492 invoked by uid 107); 3 Feb 2015 05:36:44 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 03 Feb 2015 00:36:44 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Feb 2015 00:36:43 -0500
-Content-Disposition: inline
-In-Reply-To: <CADgNjamcR+b-_DKzScU=35idAgG542B7CaJC2AqAE9Srvsq17g@mail.gmail.com>
+	id S966003AbbBCF4z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Feb 2015 00:56:55 -0500
+Received: from mout.web.de ([212.227.15.3]:61895 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965172AbbBCF4y (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Feb 2015 00:56:54 -0500
+Received: from [192.168.88.199] ([194.47.243.242]) by smtp.web.de (mrweb003)
+ with ESMTPSA (Nemesis) id 0M8iK4-1YUbIp2152-00CCvW; Tue, 03 Feb 2015 06:56:47
+ +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:31.0) Gecko/20100101 Icedove/31.4.0
+In-Reply-To: <1422919650-13346-2-git-send-email-gitster@pobox.com>
+X-Provags-ID: V03:K0:Ehc7ery5QIWVL51LarJqpUzJi3cJJpQeEHcnNRqRZln2xrbJeFN
+ eCkEZqj4cyNhWR0qTpG/vkbopAhG43EJ4z9/d0iJ2VKBKYt07/75yRCLnE1YPkTGOmJUBbz
+ PPwYXKYQKaWzzEKA51Kg8DFxro6tXdBFo782PE7d0Or0yisXrbuvTMTrl4Olbax8z2B+5aE
+ q4dBiEtfXeKNqK690FRXg==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263307>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263308>
 
-On Mon, Feb 02, 2015 at 11:58:33AM -0500, Andrew Wong wrote:
+If I am allowed to to some load thinking:
 
-> When "git status" recurses a directory that isn't readable (but
-> executable), it should print out a warning/error. Currently, if there
-> are untracked files in these directories, git wouldn't be able to
-> discover them. Ideally, "git status" should return a non-zero exit
-> code as well.
+The commit msh header says:
+  reject input that touches outside $cwd
 
-Also, I think "git add ." would silently ignore such directories, which
-is probably a bad thing if you are relying on it to capture the whole
-directory's state. Similarly, I think we would ignore transient
-errors (like EMFILE) or other EACCES problems (like a mode 0700
-directory owned by somebody else).
+The commit message says:
+   By default, a patch that affects outside the working area
 
-> The problem seems to be In read_directory_recursive() from dir.c. When
-> opendir() returns null, we continue on ignoring any error. Is there a
-> scenario where returning null is expected? We can simply call perror()
-> here, but it would be nice if we can propagate the error to the exit
-> code too. How would we do that?
+And the new command line option is this:
+   --unsafe-paths
+(Which may be a good choice to pretend people from using it without
+   having read the documentaion)
 
-I think we should report an error on EACCES. Perhaps somebody is happy
-that "git add" ignores unreadable directories, but the right solution is
-for them to put those directories in their .gitignore (and/or use
-"--ignore-errors").
+(And isn't working area the same as "work space" ?)
 
-People may want to ignore ENOENT in this situation, though. That is a
-sign that somebody is racily modifying the directory while git is
-running. That's generally a bad idea, but it is not a big deal for us to
-skip such a directory (after all, we might racily have missed its
-existence in the first place, so all bets are off).
+I have the slight feeling that there may be more unsafe-path situations coming
+up in the future..
 
->From a cursory look, I'd agree that hitting the opendir() in
-read_directory_recursive is the right place to start. I'd silently
-ignore ENOENT, and propagate the rest.
-
-That code is too low-level to call die() directly, I think, so you will
-need to propagate the error back. Adding a new error-value to the "enum
-path_treatment" could work, but it will probably be rather clumsy
-getting it all the way back up to the original caller. It will probably
-be much easier to:
-
-  1. Give dir_struct an error flag, and set it whenever the traversal
-     sees an error. Callers can check the flag at the appropriate level
-     and ignore or die() as appropriate.
-
-  2. Teach dir_struct a "quiet" flag. If not set, emit a warning()
-     deep in the code. Alternatively, you could collect a set of
-     error-producing pathnames (along with their errno values), and
-     the caller could decide whether to print them itself (this is
-     similar to how DIR_COLLECT_IGNORED works).
-
--Peff
+Will
+--allow-outside-ws
+or
+--patch-outside-ws
+be better ?
