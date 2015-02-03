@@ -1,62 +1,59 @@
 From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
 Subject: Re: folder naming bug?
-Date: Tue, 03 Feb 2015 09:34:02 +0100
-Message-ID: <54D087FA.8030707@web.de>
-References: <27503C0E-7D33-4893-AD25-6A821D31FAB1@sparkstart.io> <CAGyf7-FXhhW74DvcO8nbWud9A868AYqKj_zY61wmf9XGvH4eQA@mail.gmail.com> <06E0624C-2484-476D-A32F-B586062EC230@sparkstart.io>
+Date: Tue, 03 Feb 2015 09:40:29 +0100
+Message-ID: <54D0897D.4050101@web.de>
+References: <27503C0E-7D33-4893-AD25-6A821D31FAB1@sparkstart.io> <CAGyf7-FXhhW74DvcO8nbWud9A868AYqKj_zY61wmf9XGvH4eQA@mail.gmail.com> <06E0624C-2484-476D-A32F-B586062EC230@sparkstart.io> <20150203052317.GA1262@peff.net> <26FB4384-1027-436F-84C5-91C6CC4D27EA@sparkstart.io>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8;
 	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Users <git@vger.kernel.org>
+Cc: Bryan Turner <bturner@atlassian.com>,
+	Git Users <git@vger.kernel.org>
 To: Kevin Coleman <kevin.coleman@sparkstart.io>,
-	Bryan Turner <bturner@atlassian.com>
-X-From: git-owner@vger.kernel.org Tue Feb 03 09:34:45 2015
+	Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Feb 03 09:41:11 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YIYwX-00075R-27
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Feb 2015 09:34:45 +0100
+	id 1YIZ2l-0001XX-2N
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Feb 2015 09:41:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932898AbbBCIef convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Feb 2015 03:34:35 -0500
-Received: from mout.web.de ([212.227.15.3]:51193 "EHLO mout.web.de"
+	id S932575AbbBCIlH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Feb 2015 03:41:07 -0500
+Received: from mout.web.de ([212.227.17.12]:57504 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932148AbbBCIef (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Feb 2015 03:34:35 -0500
-Received: from [192.168.88.199] ([194.47.243.242]) by smtp.web.de (mrweb002)
- with ESMTPSA (Nemesis) id 0MEER6-1YPCmb3i6i-00FTHn; Tue, 03 Feb 2015 09:34:30
+	id S1752221AbbBCIlF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Feb 2015 03:41:05 -0500
+Received: from [192.168.88.199] ([194.47.243.242]) by smtp.web.de (mrweb101)
+ with ESMTPSA (Nemesis) id 0LfAoO-1Xps3s2J20-00oqQ2; Tue, 03 Feb 2015 09:40:56
  +0100
 User-Agent: Mozilla/5.0 (X11; Linux i686; rv:31.0) Gecko/20100101 Icedove/31.4.0
-In-Reply-To: <06E0624C-2484-476D-A32F-B586062EC230@sparkstart.io>
-X-Provags-ID: V03:K0:ZzZr7DO6xO0imGG0I1/pwTSC8qGM0BSODO9qeiPa/XIx5O98iJe
- hwQW5M06Guc2QlYS7fu+9IVwwG5m8AMjxtiUnlRx5vH7z/tVjv7GxBr+kFjXp74/9z6tEQH
- aNcYOSYIjOtRcTFv77qb6u7BXkrLOlC5ynTo/AIiY2jjZWTfIDsv/VxcF3dHYKUw4UU4072
- ceveD3DpWuh4OecqIgoVA==
+In-Reply-To: <26FB4384-1027-436F-84C5-91C6CC4D27EA@sparkstart.io>
+X-Provags-ID: V03:K0:BC9Ts1LavRikOvuvhOD/8tlnkUAZuP8OHGb7sUVG3ntFOVU8pGG
+ IMvfcd7+hzZps1AKeDcwppnykku3iR2bOMQ1qaFg9bU6Q9FbkVlAepX1cv2S+TMT0RrEVUm
+ 73MAz/hGMt4ShLC6gcrvhO1Gsn9N1x9P2tfoqBfZlqhp75vEXThkEMjUFPVX53efcVohhAs
+ CFPxM9IeDaI8kyfoWTc0w==
 X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263310>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263311>
 
+On 02/03/2015 07:23 AM, Kevin Coleman wrote:
+> Awesome reply! That makes sense.  So basically if I accidentally capi=
+talize a folder name and commit it, I need to be very careful when I co=
+rrect it.  Definitely ran into this problem with my repo and =E2=80=98l=
+ost=E2=80=99 a few commits before I noticed something was off.
+>
+> -Kevin Coleman
+(Please no top-posting)
 
-On 02/03/2015 05:52 AM, Kevin Coleman wrote:
-> =3D=3D=3D=3D
-> Yes, I am on a Mac.  I just tried that, but I don=E2=80=99t think tha=
-t completely fixed it.  As you can see it tracks =E2=80=9Cfoo/bar.md=E2=
-=80=9D and then it tracks =E2=80=9CFoo/bar.md=E2=80=9D.  It still track=
-s both =E2=80=9Cfoo=E2=80=9D and =E2=80=9CFoo=E2=80=9D even tho only =E2=
-=80=9CFoo=E2=80=9D exists in my dir after the rename.
-You asked Git to track Foo/bar.md and the file system says "yes, it's h=
-ere"
-When you rename Foo/ into foo/, the file system still says "Foo/bar.md"=
-=20
-is here.
-You need to tell git about the rename :
-git mv Foo/bar.md foo/bar.md
+According to my experience setting core.ignorecase false
+may cause the user to loose commits.
 
-Why does anybody think that setting "core.ignorecase false" will=20
-convince the file system
-to become case insensitive ?
+Can you reproduce the problem ?
+with core.ignorecase false (Which is wrong)
+with core.ignorecase true (You shouldn't loose anything)
