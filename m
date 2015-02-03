@@ -1,70 +1,72 @@
-From: Jeff King <peff@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH v2 1/4] apply: reject input that touches outside $cwd
-Date: Tue, 3 Feb 2015 16:01:40 -0500
-Message-ID: <20150203210140.GA20594@peff.net>
+Date: Tue, 03 Feb 2015 13:23:15 -0800
+Message-ID: <xmqqtwz2pu4c.fsf@gitster.dls.corp.google.com>
 References: <1422919650-13346-1-git-send-email-gitster@pobox.com>
- <1422919650-13346-2-git-send-email-gitster@pobox.com>
- <20150203005005.GB31946@peff.net>
- <xmqqpp9qrbgf.fsf@gitster.dls.corp.google.com>
+	<1422919650-13346-2-git-send-email-gitster@pobox.com>
+	<20150203005005.GB31946@peff.net>
+	<xmqqpp9qrbgf.fsf@gitster.dls.corp.google.com>
+	<20150203210140.GA20594@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 03 22:01:47 2015
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Feb 03 22:23:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YIkbT-0000wB-Ed
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Feb 2015 22:01:47 +0100
+	id 1YIkwM-0003gK-3b
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Feb 2015 22:23:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161124AbbBCVBn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Feb 2015 16:01:43 -0500
-Received: from cloud.peff.net ([50.56.180.127]:44790 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756171AbbBCVBn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Feb 2015 16:01:43 -0500
-Received: (qmail 14955 invoked by uid 102); 3 Feb 2015 21:01:42 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 03 Feb 2015 15:01:42 -0600
-Received: (qmail 14217 invoked by uid 107); 3 Feb 2015 21:01:42 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 03 Feb 2015 16:01:42 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Feb 2015 16:01:40 -0500
-Content-Disposition: inline
-In-Reply-To: <xmqqpp9qrbgf.fsf@gitster.dls.corp.google.com>
+	id S1161169AbbBCVXS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Feb 2015 16:23:18 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:54855 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1161164AbbBCVXR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Feb 2015 16:23:17 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 15AC235DA1;
+	Tue,  3 Feb 2015 16:23:17 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=DKlJ5cA9YqOPmSMjnD5dD96qex4=; b=nOmrKT
+	fu4IwHOaAO6Aqbn52rKrEQEWS8c9fps5pWmj2oioj2WwC8Bj50Bnien2QJEPFxTh
+	2bG+4ohv313btPIgxkbY7O99AIGAgrm1a1sAXr5ukZKV8unF7IuMyn62j5nJixYS
+	wua8LV0vLQDBkRa8t06IQOzMRyWLZQYU2GUHQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=uptQUsAhLObkLXNjiyqTK48OJrXVvyHz
+	BtoRfgcZfvoM/YbCrY5kUdlat2kbsPgr6xKcSefdBO74ZyYYyeO/pDNoWxitlsgw
+	3jzL+QIEKahmNZW/WMsrebNZXcWu8iSZlaUjGQH6PllCdsurDP6IfVV7pH9NJEfV
+	gY4B/SlcM00=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0CF1A35DA0;
+	Tue,  3 Feb 2015 16:23:17 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 78E8835D9F;
+	Tue,  3 Feb 2015 16:23:16 -0500 (EST)
+In-Reply-To: <20150203210140.GA20594@peff.net> (Jeff King's message of "Tue, 3
+	Feb 2015 16:01:40 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: DE1C5FEC-ABEA-11E4-9C76-7BA29F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263334>
 
-On Tue, Feb 03, 2015 at 12:23:28PM -0800, Junio C Hamano wrote:
+Jeff King <peff@peff.net> writes:
 
-> > By the way, does this patch (and the other symlink-escape ones) need to
-> > be marked with the SYMLINKS prereq? For a pure-index application, it
-> > should work anywhere, but I have a feeling that this "git apply patch"
-> > may try to write the symlink to the filesystem, fail, and report failure
-> > for the wrong reason.  I don't have a SYMLINK-challenged filesystem to
-> > test on, though.
-> 
-> We check the links to be created by the patch itself in-core before
-> going to the filesystem, and the symbolic links you are creating
-> using mkpatch_symlink should be caught before we invoke symlink(2),
-> I think.
-> 
-> In other words, this series attempts to stick to the "verify
-> everything in-core before deciding that it is OK to touch the
-> working tree or the index".
+> Right, I do not think these tests will _fail_ when the filesystem does
+> not support symlinks. But nor are they actually testing anything
+> interesting. They would pass on such a system even without your patch,
+> as we would fail to apply even the symlink creation part of the patch.
 
-Right, I do not think these tests will _fail_ when the filesystem does
-not support symlinks. But nor are they actually testing anything
-interesting. They would pass on such a system even without your patch,
-as we would fail to apply even the symlink creation part of the patch.
-
-I can live with leaving them unmarked, though. It gets the code
-exercised on more systems, which gives a slightly higher chance of
-catching some other unexpected breakage.
-
--Peff
+I thought we write out the contents of the symbolic link as a
+regular file on such a filesystem, and as long as we do not expect
+"test -h expected-to-be-symlink-we-just-created" to succeed we would
+be fine.
