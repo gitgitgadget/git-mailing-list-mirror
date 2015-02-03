@@ -1,176 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 4/4] apply: do not touch a file beyond a symbolic link
-Date: Mon, 02 Feb 2015 17:56:55 -0800
-Message-ID: <xmqq61bjsqoo.fsf@gitster.dls.corp.google.com>
-References: <1422919650-13346-1-git-send-email-gitster@pobox.com>
-	<1422919650-13346-5-git-send-email-gitster@pobox.com>
-	<20150203011139.GC31946@peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Feb 03 02:57:04 2015
+From: Kevin Coleman <kevin.coleman@sparkstart.io>
+Subject: folder naming bug?
+Date: Mon, 2 Feb 2015 20:56:39 -0500
+Message-ID: <27503C0E-7D33-4893-AD25-6A821D31FAB1@sparkstart.io>
+Mime-Version: 1.0 (Mac OS X Mail 8.1 \(1993\))
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 03 03:03:27 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YISje-0004BR-Go
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Feb 2015 02:57:02 +0100
+	id 1YISpq-0007NU-EB
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Feb 2015 03:03:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755487AbbBCB46 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Feb 2015 20:56:58 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:60757 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754866AbbBCB45 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Feb 2015 20:56:57 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id DE39F353C1;
-	Mon,  2 Feb 2015 20:56:56 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Hxdf5G9gj2SwpmWFFJCAFM7ECFU=; b=Rw2vBZ
-	6sALWW7Lziyc3AFElZ4usJRqEszixqm7bcUjJ318S5QECv60K0+mCCOSvuSGN/7i
-	CNvBqtJuKRsY6WRSBuY7/5szNXw+hNNnR4U4MANAFCGs0e3oNBZfgJ/OozQe90LD
-	s1ZAfmXkxtikgO/tcilrtuqvgtjyZIvH5Zm8A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=rB+EiB9WpBXLGSrL2IEVacRxEmD9zt6U
-	7j9xgEs9ajinTGUvhUTxRtEMKswsRoe7RIPgUxLX2ARI2W+OHcqxvB8jS/R/NYs2
-	+7lfa+UkEr6UVlWm17rjqjwzcF0+V1VZTGPV6en+8eXCiVC8wgvdgakCdDMo2FeE
-	RzStFhHVOBM=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D5F2C353C0;
-	Mon,  2 Feb 2015 20:56:56 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	id S965678AbbBCCDW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Feb 2015 21:03:22 -0500
+Received: from relay.ox.registrar-servers.com ([199.188.203.174]:33125 "EHLO
+	relay.ox.registrar-servers.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755213AbbBCCDV convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 2 Feb 2015 21:03:21 -0500
+X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Mon, 02 Feb 2015 21:03:21 EST
+Received: (qmail 21905 invoked by uid 89); 3 Feb 2015 01:56:40 -0000
+Received: from unknown (HELO imap2-3.ox.privateemail.com) (192.64.116.208)
+  by relay.ox.registrar-servers.com with (DHE-RSA-AES256-SHA encrypted) SMTP; 3 Feb 2015 01:56:40 -0000
+Received: from localhost (localhost [127.0.0.1])
+	by mail.privateemail.com (Postfix) with ESMTP id 87DD28C0081
+	for <git@vger.kernel.org>; Mon,  2 Feb 2015 20:56:39 -0500 (EST)
+X-Virus-Scanned: Debian amavisd-new at imap2.ox.privateemail.com
+Received: from mail.privateemail.com ([127.0.0.1])
+	by localhost (imap2.ox.privateemail.com [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id EpU_-40UfwiE for <git@vger.kernel.org>;
+	Mon,  2 Feb 2015 20:56:39 -0500 (EST)
+Received: from [192.168.49.81] (unknown [72.16.218.22])
+	(using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 47060353BC;
-	Mon,  2 Feb 2015 20:56:56 -0500 (EST)
-In-Reply-To: <20150203011139.GC31946@peff.net> (Jeff King's message of "Mon, 2
-	Feb 2015 20:11:40 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: EEA88564-AB47-11E4-A808-7BA29F42C9D4-77302942!pb-smtp1.pobox.com
+	by mail.privateemail.com (Postfix) with ESMTPSA id 59D828C0069
+	for <git@vger.kernel.org>; Mon,  2 Feb 2015 20:56:39 -0500 (EST)
+X-Mailer: Apple Mail (2.1993)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263300>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263301>
 
-Jeff King <peff@peff.net> writes:
+git isn=E2=80=99t tracking folder renames when the case of the letters =
+change, but it will track it if the folder changes names.  Is this inte=
+ntional?
 
-> On Mon, Feb 02, 2015 at 03:27:30PM -0800, Junio C Hamano wrote:
->
->> +static struct string_list symlink_changes;
->
-> I notice we don't duplicate strings for this list. Are the paths we
-> register here always stable? I think they should be, as they are part of
-> the "struct patch".
+Here is an example:
 
-Yeah, and I also forgot to free this string-list itself.  Needs
-fixing.
+08:51:26 ~/test $ git init
+Initialized empty Git repository in /Users/kcoleman/test/.git/
+08:51:29 ~/test (master #) $ mkdir main
+08:51:44 ~/test (master #) $ cd main
+08:51:46 ~/test/main (master #) $ touch readme.md
+08:51:50 ~/test/main (master #) $ ls
+readme.md
+08:51:53 ~/test/main (master #) $ cd ..
+08:51:54 ~/test (master #) $ git add .
+08:51:59 ~/test (master #) $ git commit -m "one"
+[master (root-commit) b0fddf6] one
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 main/readme.md
+08:52:04 ~/test (master) $ cd main
+08:52:14 ~/test/main (master) $ cd ..
+08:52:27 ~/test (master) $ mv main Main
+08:53:51 ~/test (master) $ git status
+On branch master
+nothing to commit, working directory clean
+08:53:53 ~/test (master) $ ls
+Main
+08:54:02 ~/test (master) $ mv Main MainA
+08:55:44 ~/test (master *) $ git status
+On branch master
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working direct=
+ory)
 
-> I think this means we'll be
-> overly cautious with a patch that does:
->
->   1. add foo as a symlink
->
->   2. remove foo
->
->   3. add foo/bar
->
-> which is perfectly OK
+	deleted:    main/readme.md
 
-No, such a patchset is broken.
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
 
-A valid "git apply" input must *not* depend on the order of patches
-in it.  The consequence is that "an input to 'git apply' must not
-mention the fate of each path at most once."
+	MainA/
 
-"create B by copying A" and "modify A in-place" can appear in the
-same patchset in any order, and the new file B will have the
-contents from the original A, not the result of modifying A
-in-place, which is what will be in the resulting A.  That is how
-"git diff" expresses renames and copies, and that is why rearranging
-the patchset using "git diff -Oorderfile" is safe.
-
-> but we'll reject. I suspect this is making things
-> much simpler for you, because now we don't have to worry about order of
-> application that we were discussing the other day.
-
-It is not "now this new decision made things simpler".  "git diff"
-output and "git apply" application have been designed to work that
-way from day one.  At least from day one of rename/copy feature.
-
-We probably should start thinking about ripping out the fn_table[]
-crud.  It fundamentally cannot correctly work on an input that
-concatenates more than one "git diff" outputs that have renames
-and/or copies of the same file, and it never will, and that is not
-due to a bug in the implementation.
-
-The reason why the incremental application is a fundamentally flawed
-concept in the context of "git apply" is because you cannot tell the
-boundary between the original "git diff" outputs.
-
-Imagine that you have three versions, A, B and C, and the original
-two "git diff -M A B" and "git diff -M B C" output said this:
-
-    (A -> B)
-    edit X in place and add two lines at the beginning
-    create Z by copying X
-
-    (B -> C)
-    create Y by renaming X and add a line at the end
-
-If you take "git diff -M A C", it should say:
-
-    (A -> C)
-    edit X in place and add two lines at the beginning
-    create Y by copying X and add two lines at the beginning
-        and a line at the end
-    create Z by copying X
-
-Now, if you concatenate two "git diff" outputs and feed it to "git
-apply", you would want it to express a patchset that goes from A to
-C, but think if you can really get such a semantics.
-
-    edit X in place and add two lines at the beginning
-    create Z by copying X
-    create Y by renaming X and add a line at the end
-
-You fundamentally cannot tell that Z needs to be a copy of X before
-the change to X (which is what the usual "git apply" does), but Y
-needs to start from a copy of X after the change to X.  There is no
-clue to tell "git apply" that there is a boundary between the first
-two operations and the third one.  It is impossible for the
-concatenated patch to express the same thing as "(A -> C)" patch
-does, without inventng some "I am now switching to a new basis"
-marker in the "git apply" input stream.
-
->> +	/*
->> +	 * An attempt to read from or delete a path that is beyond
->> +	 * a symbolic link will be prevented by load_patch_target()
->> +	 * that is called at the beginning of apply_data().  We need
->> +	 * to make sure that the patch result is not deposited to
->> +	 * a path that is beyond a symbolic link ourselves.
->> +	 */
->> +	if (!patch->is_delete && path_is_beyond_symlink(patch->new_name))
->> +		return error(_("affected file '%s' is beyond a symbolic link"),
->> +			     patch->new_name);
->
-> Do we need to check the patch->is_delete case here (with patch->old_name)?
-
-> I had a suspicion that the new patch 3/4 to check the reading-side might
-> help with that, but the comment here sounds like we do need to check
-> here, too
-
-Hmm, the comment above was meant to tell you that we do not have to
-worry about the deletion case (because load_patch_target() will try
-to read the original to verify we are deleting what we expect to
-delete at the beginning of apply_data(), and it will notice that
-old_name is beyond a symbolic link), but we still need to check the
-non-deletion case.  Strictly speaking, modify-in-place case does not
-have to depend on this code (the same load_patch_target() check will
-catch it because it wants to check the preimage).
-
-May need rephrasing to clarify but I thought it was clear enough.
+no changes added to commit (use "git add" and/or "git commit -a")
+08:55:45 ~/test (master *) $
