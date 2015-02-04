@@ -1,72 +1,75 @@
-From: "Tom G. Christensen" <tgc@statsbiblioteket.dk>
-Subject: [PATCH v2] ewah: fix building with gcc < 3.4.0
-Date: Wed, 4 Feb 2015 09:23:16 +0100
-Message-ID: <1423038196-804-1-git-send-email-tgc@statsbiblioteket.dk>
-References: <xmqqlhkepsyl.fsf@gitster.dls.corp.google.com>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Subject: Invalid responses to 8bit encoding and In-Reply-To questions
+Date: Wed, 4 Feb 2015 10:07:15 +0100
+Message-ID: <CAMuHMdWbHMPEwkYvzKzzc6L0T8ufk62DGS2sZ1w1BthL1kAZWA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Feb 04 09:23:32 2015
+Content-Type: text/plain; charset=UTF-8
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Feb 04 10:07:26 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YIvFB-000152-R2
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Feb 2015 09:23:30 +0100
+	id 1YIvvg-0006Dx-H2
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Feb 2015 10:07:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932887AbbBDIXU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Feb 2015 03:23:20 -0500
-Received: from sbexch03.sb.statsbiblioteket.dk ([130.225.24.68]:11776 "EHLO
-	sbexch03.sb.statsbiblioteket.dk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753983AbbBDIXT (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 Feb 2015 03:23:19 -0500
-Received: from throll.localdomain (172.18.234.199) by
- sbexch03.sb.statsbiblioteket.dk (130.225.24.68) with Microsoft SMTP Server id
- 8.3.389.2; Wed, 4 Feb 2015 09:23:16 +0100
-Received: by throll.localdomain (Postfix, from userid 3000)	id 87F17400EB4;
- Wed,  4 Feb 2015 09:23:16 +0100 (CET)
-X-Mailer: git-send-email 2.2.2
-In-Reply-To: <xmqqlhkepsyl.fsf@gitster.dls.corp.google.com>
+	id S933185AbbBDJHT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Feb 2015 04:07:19 -0500
+Received: from mail-oi0-f45.google.com ([209.85.218.45]:40129 "EHLO
+	mail-oi0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932605AbbBDJHP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Feb 2015 04:07:15 -0500
+Received: by mail-oi0-f45.google.com with SMTP id g201so334712oib.4
+        for <git@vger.kernel.org>; Wed, 04 Feb 2015 01:07:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:date:message-id:subject:from:to:content-type;
+        bh=Ni8UXlzr0LfCTbx7XPnaK2JdOcjkJQuxKhQOD42FFz0=;
+        b=bGGEp3ZUDqRzJUfs3IrRMDKgzkQtDWbMNosnU1MkSZid0ph+y7w8/nAUjZmyWuEf3p
+         e9YyS+T3zYt25y49fZf+CAXA0WL8Me43PzCzPy2EUYrwnoHUq4hHQjKXL69IzQslCvpE
+         MsB7H+xeN/9/Mv1yc5AdzOQkP+MVLHF9jwTh6WcV3M9EGUB+qJ652tcXSDjUGojDhGlO
+         4CSsTE9xWU505LNHq8p6+KTDO1FA8PpcG3G0n9zav3bsP4bqgeJfERILzAEk5KcwCaY4
+         ivcNIeZdbB17IEU+5M8F0qK8Cy9XtMrUL/DfKs1FLst06n33ESS/PI74/o37cNbOETx/
+         ycDw==
+X-Received: by 10.182.191.6 with SMTP id gu6mr18376246obc.36.1423040835055;
+ Wed, 04 Feb 2015 01:07:15 -0800 (PST)
+Received: by 10.60.103.210 with HTTP; Wed, 4 Feb 2015 01:07:15 -0800 (PST)
+X-Google-Sender-Auth: 70NmbB-A7Nc1Mc1xxRlWhTXzamU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263348>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263349>
 
-The __builtin_ctzll function was added in gcc 3.4.0.
-This extends the check for gcc so that use of __builtin_ctzll is only
-enabled if gcc >= 3.4.0.
+>From a thread on another mailing list:
+| > Content-Type: text/plain; charset=y
+| > Content-Transfer-Encoding: 8bit
+| >
+| > When I try to apply it git am says:
+| >
+| > $ git am --signoff geert1.patch
+| > fatal: cannot convert from y to UTF-8
+| >
+| > Wut? I never heard of an encoding named "y", and SMTP is
+| > not my strongest subject anyway.
+|
+| Oops, I'm afraid automatic-I replied "y" to the git-send-email question
+| "Which 8bit encoding should I declare [UTF-8]?"
+| (happened before with the In-Reply-To questions ;-(
 
-Signed-off-by: Tom G. Christensen <tgc@statsbiblioteket.dk>
----
-v2:
-Add S-o-b
+Would it be possible to reject obviously wrong replies ("y", "yes", "n", "no")
+to the 8bit encoding and In-Reply-To questions?
 
-v1:
-I noticed this on RHEL3 during 2.0.0rc phase but I see that the same
-issue was noticed on Debian Sarge:
-http://article.gmane.org/gmane.comp.version-control.git/255190
-RHEL3 ships with gcc 3.2.3.
+Thanks!
 
-With this patch git can build on RHEL3 provided cURL support is disabled.
+Gr{oetje,eeting}s,
 
- ewah/ewok.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+                        Geert
 
-diff --git a/ewah/ewok.h b/ewah/ewok.h
-index f6ad190..13c6e20 100644
---- a/ewah/ewok.h
-+++ b/ewah/ewok.h
-@@ -47,7 +47,8 @@ static inline uint32_t ewah_bit_popcount64(uint64_t x)
- 	return (x * 0x0101010101010101ULL) >> 56;
- }
- 
--#ifdef __GNUC__
-+/* __builtin_ctzll was not available until 3.4.0 */
-+#if defined(__GNUC__) && (__GNUC__ > 3 || (__GNUC__ == 3  && __GNUC_MINOR > 3))
- #define ewah_bit_ctz64(x) __builtin_ctzll(x)
- #else
- static inline int ewah_bit_ctz64(uint64_t x)
--- 
-2.2.2
+--
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
