@@ -1,65 +1,85 @@
-From: Matthew Brett <matthew.brett@gmail.com>
-Subject: Advice on edits to git-rebase man page
-Date: Wed, 4 Feb 2015 12:21:14 -0800
-Message-ID: <CAH6Pt5pN8nrZzW+JntU5AWS1P4vu_JmdQBM_oR4Rfnh937wFPQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git tag --no-merged?
+Date: Wed, 04 Feb 2015 13:27:18 -0800
+Message-ID: <xmqq1tm5nz9l.fsf@gitster.dls.corp.google.com>
+References: <alpine.DEB.2.00.1502041615110.30476@ds9.cixit.se>
+	<54D26B7C.7020300@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Reuben Thomas <rrt@sc3d.org>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Feb 04 21:21:41 2015
+Content-Type: text/plain
+Cc: Peter Krefting <peter@softwolves.pp.se>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Wed Feb 04 22:27:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YJ6SC-000621-3G
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Feb 2015 21:21:40 +0100
+	id 1YJ7Tr-0007M1-2e
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Feb 2015 22:27:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161613AbbBDUVf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Feb 2015 15:21:35 -0500
-Received: from mail-yh0-f41.google.com ([209.85.213.41]:59177 "EHLO
-	mail-yh0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161552AbbBDUVf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Feb 2015 15:21:35 -0500
-Received: by mail-yh0-f41.google.com with SMTP id f73so1688991yha.0
-        for <git@vger.kernel.org>; Wed, 04 Feb 2015 12:21:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:cc:content-type;
-        bh=FCqT4lWb1ljjosq0Bj83Hk/96GglN8IiSCgNDlAH4Bg=;
-        b=SzxicXxlvosfPlKIdOwXOxp6CEiKaS+zsqLltcz0Ew5BRITEcvWDA1lRdoeeATyeuS
-         l4vUADk5Hclu55uYgEF6QplM3WRu1N6PvO1MZdF1NFfoWmMqlPfVGOuDYr1zk84cltnH
-         1Rmd5N/j0FenbqzfugX7IhZ723Ov9sCZuTTSTTpAgCkrnnw0ubu+xtxqqTaKeOjew6CY
-         1vWOTjyYSh26BOP2A3lxWNlzrsGV4EWpjzp6SyqeBz4pMzVt3fQOobapqz2xYszrDLdp
-         P/Z2Z2tp4Icb6+0GkESSsJGL31OPlMwClczF/M9Yuj0BcW+H2P7u/ecyqGDktYtzXXvE
-         zewQ==
-X-Received: by 10.236.40.100 with SMTP id e64mr13466322yhb.109.1423081294433;
- Wed, 04 Feb 2015 12:21:34 -0800 (PST)
-Received: by 10.170.217.69 with HTTP; Wed, 4 Feb 2015 12:21:14 -0800 (PST)
+	id S965234AbbBDV1W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Feb 2015 16:27:22 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:57958 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932213AbbBDV1V (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Feb 2015 16:27:21 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 985B334666;
+	Wed,  4 Feb 2015 16:27:20 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=0KKJA9TOzeq0qqbkKZH5BW5G2wA=; b=kBUCFH
+	96qKpS+HAbHMRHmqWTaKwrbIhAgGvaLDDjFVdtwxsnOUl3plpY9f8JMfqSgpEKaB
+	1jUUjzyc/Ci1dB7Ez/PKHQXx3xMILzqZH05JbeCK5RsWlOZcy5Fg298XmzuiIDX3
+	5OAwVK5+p2tQBLYy/0voMbBL97+o5pOgvrLxM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Sm8pST8ZE/Pwqz2YUO6QSgxOrMLRAKK8
+	ReAPfrUum7xqkITalfH0Dp2QWqXV3zqd72ccA4/gJfymqKUVRGisjBlhLDEVG8/7
+	OSNPO2+u0uE8+5P97lOQpj7WzWOPK9QuhHSM+i2unOR6WFqMOWLJsE4ig4OjDKdv
+	lFnjUc/PpVU=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9008134664;
+	Wed,  4 Feb 2015 16:27:20 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 19C5C34663;
+	Wed,  4 Feb 2015 16:27:20 -0500 (EST)
+In-Reply-To: <54D26B7C.7020300@kdbg.org> (Johannes Sixt's message of "Wed, 04
+	Feb 2015 19:57:00 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 99BAD84A-ACB4-11E4-B4D8-7BA29F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263357>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263358>
 
-Hi,
+Johannes Sixt <j6t@kdbg.org> writes:
 
-Sorry for the rather open-ended email, but I am interested to whether
-you would be interested in patches for git-rebase man page, based on a
-tutorial page I wrote some ago:
+> Am 04.02.2015 um 16:19 schrieb Peter Krefting:
+>> Using "git branch --no-merged" I can get a list of branches that I have
+>> that I haven't merged into my current branch.
+>
+> Assuming v2.0.0 is a tag, using "git branch --no-merged v2.0.0" you can
+> see which branches haven't been merged into v2.0.0.
 
-http://matthew-brett.github.io/pydagogue/rebase_without_tears.html
+I think the request is a bit more involved than "Which one is not
+yet in v2.0.0?"
 
-The reason I ask, is because I have found the git-rebase man page
-particularly difficult to read for an overview of what it is intended
-for.   A colleague recently wrote to me asking if I would consider
-proposing merging my page with the git man page.
+The question, as I now understand it after reading it again, 
 
-Obviously my page as it is now is very different in tone from the
-git-rebase page, but I think there are some aspects that could be
-fruitfully merged.   Would you be interested in patches of this sort,
-or does the page seem too far from the intention of the man page?
+    I want to merge the changes from the maintenance branches to
+    master (and possibly to other maintenance branches if there are
+    changes relevant to other products), but I only want to do this for
+    our tagged released.
 
-Best,
+is "which branches, whose tips are already tagged, are not yet in
+'master'?"
 
-Matthew
+The one I gave is not what was asked, either, as I misread the
+question.  It was an answer to "which commits are not yet in any
+tagged version, show them together with the names of branches from
+which they are reached".
