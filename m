@@ -1,106 +1,77 @@
 From: Remi Rampin <remirampin@gmail.com>
-Subject: [PATCH 2/2] Makes chooser set 'gitdir' to the resolved path
-Date: Thu,  5 Feb 2015 11:20:15 -0500
-Message-ID: <1423153215-9706-3-git-send-email-remirampin@gmail.com>
+Subject: [PATCH 1/2] Fixes chooser not accepting gitfiles
+Date: Thu,  5 Feb 2015 11:20:14 -0500
+Message-ID: <1423153215-9706-2-git-send-email-remirampin@gmail.com>
 References: <CAMto89CHf4OT_S05SaRrVRZvF-PH2_6DrcEpdGiUfaRGutJQHw@mail.gmail.com>
  <1423153215-9706-1-git-send-email-remirampin@gmail.com>
 Cc: patthoyts@users.sourceforge.net, Remi Rampin <remirampin@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 05 17:20:32 2015
+X-From: git-owner@vger.kernel.org Thu Feb 05 17:20:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YJPAM-0006nu-OJ
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Feb 2015 17:20:31 +0100
+	id 1YJPAU-0006uZ-1H
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Feb 2015 17:20:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757167AbbBEQU1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1757052AbbBEQU1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Thu, 5 Feb 2015 11:20:27 -0500
-Received: from mail-qc0-f177.google.com ([209.85.216.177]:48441 "EHLO
-	mail-qc0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756893AbbBEQU0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Feb 2015 11:20:26 -0500
-Received: by mail-qc0-f177.google.com with SMTP id p6so7124060qcv.8
-        for <git@vger.kernel.org>; Thu, 05 Feb 2015 08:20:26 -0800 (PST)
+Received: from mail-qc0-f174.google.com ([209.85.216.174]:38544 "EHLO
+	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753616AbbBEQUZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Feb 2015 11:20:25 -0500
+Received: by mail-qc0-f174.google.com with SMTP id s11so7157991qcv.5
+        for <git@vger.kernel.org>; Thu, 05 Feb 2015 08:20:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=VNm7NbXHQGi82PZKGrOqt8X+xtcVbbfFVNFGU2jBudo=;
-        b=npxmmlvMd0kD/qA6jQ0A//Vbvo7AQscoQwe7l/jPPsnAXP33Lx2pjs/Q5xS/I8UUfW
-         hXsvbryhn02j6cakmyFUfDLH7EOZon+DwRo4m1JwOVSpVHkqXdT0QXPZxcSOpp1a0gSK
-         0hkv+/EKSoebwL3eOTbGzYq7PBMQvmvQSxDxsah/XNGVyjVFrQzTtKIJJDcMKmU6eP7N
-         5yFXbFxuwGIUrqsLbBqwxfL3+5ov9imi1hwHTnHpnM409CX66XC5UPxqZqNpmrcmMwZn
-         ajozV56pdhX8Jn5+e/fLwWnD7v1L4klYY4sA1rnWQTN2Zfgrc/xCNxaXnPrU/QTEKVHh
-         zbew==
-X-Received: by 10.224.72.8 with SMTP id k8mr10183117qaj.26.1423153225982;
-        Thu, 05 Feb 2015 08:20:25 -0800 (PST)
+        bh=Smiflv8OIhNG1Y2jwu23FcAmsG9rPnxoeJGtMUE0Oj8=;
+        b=amy/IWgUHLam4HNgU5d8lMoonMiY4RIT6z5I6iXI3ymKZcM+joA22Hom2sd8f7zPY/
+         DACVExvc6pzWk2pELo0HpBmQ5o3Y4M8csCZRPPdQm/4BYGzm6kPcyHAUOOvw9JosQDZ7
+         HeGSFB7uWQg2+T1RROL7LO0UJJRORqf88AFI+10KvJJYIr6f0b2mZmfJ0ipHYJcd5D+Q
+         Fshu6e/LrsSJanIHm/5TrSPeW60sXK3pMy7pTaghbJ3NS1SJiK74c1aZKBqacghaXajB
+         epMTK1111eyCWcZ38jgL93YdG2XZDIubeTm9Eaq5yh4WI9zR0zvg52vXibvTax7SaYdG
+         j26Q==
+X-Received: by 10.140.85.211 with SMTP id n77mr9151208qgd.17.1423153224916;
+        Thu, 05 Feb 2015 08:20:24 -0800 (PST)
 Received: from debian-78-amd64.poly.edu ([128.238.102.81])
-        by mx.google.com with ESMTPSA id c16sm5333798qge.24.2015.02.05.08.20.24
+        by mx.google.com with ESMTPSA id c16sm5333798qge.24.2015.02.05.08.20.23
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 05 Feb 2015 08:20:25 -0800 (PST)
+        Thu, 05 Feb 2015 08:20:24 -0800 (PST)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1423153215-9706-1-git-send-email-remirampin@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263378>
 
-If _is_git follows a "gitdir: ..." file link to get to the actual
-repository, we want _gitdir to be set to that final path.
+Makes _is_git handle the case where the path is a "gitdir: ..." file.
 ---
- lib/choose_repository.tcl | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ lib/choose_repository.tcl | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
 diff --git a/lib/choose_repository.tcl b/lib/choose_repository.tcl
-index abc6b1d..75d1da8 100644
+index 92d6022..abc6b1d 100644
 --- a/lib/choose_repository.tcl
 +++ b/lib/choose_repository.tcl
-@@ -338,7 +338,10 @@ method _git_init {} {
- 	return 1
+@@ -339,6 +339,16 @@ method _git_init {} {
  }
  
--proc _is_git {path} {
-+proc _is_git {path {outdir_var ""}} {
-+	if {$outdir_var ne ""} {
-+		upvar 1 $outdir_var outdir
+ proc _is_git {path} {
++	if {[file isfile $path]} {
++		set fp [open $path r]
++		gets $fp line
++		close $fp
++		if {[regexp "^gitdir: (.+)$" $line line link_target]} {
++			set path [file join [file dirname $path] $link_target]
++			set path [file normalize $path]
++		}
 +	}
- 	if {[file isfile $path]} {
- 		set fp [open $path r]
- 		gets $fp line
-@@ -352,12 +355,14 @@ proc _is_git {path} {
++
  	if {[file exists [file join $path HEAD]]
  	 && [file exists [file join $path objects]]
  	 && [file exists [file join $path config]]} {
-+		set outdir $path
- 		return 1
- 	}
- 	if {[is_Cygwin]} {
- 		if {[file exists [file join $path HEAD]]
- 		 && [file exists [file join $path objects.lnk]]
- 		 && [file exists [file join $path config.lnk]]} {
-+			set outdir $path
- 			return 1
- 		}
- 	}
-@@ -1103,7 +1108,7 @@ method _open_local_path {} {
- }
- 
- method _do_open2 {} {
--	if {![_is_git [file join $local_path .git]]} {
-+	if {![_is_git [file join $local_path .git] actualgit]} {
- 		error_popup [mc "Not a Git repository: %s" [file tail $local_path]]
- 		return
- 	}
-@@ -1116,7 +1121,7 @@ method _do_open2 {} {
- 	}
- 
- 	_append_recentrepos [pwd]
--	set ::_gitdir .git
-+	set ::_gitdir $actualgit
- 	set ::_prefix {}
- 	set done 1
- }
 -- 
 1.9.5.msysgit.0
