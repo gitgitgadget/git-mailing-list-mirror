@@ -1,91 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] Makefile: Use the same source directory for "ln -s" as for "ln" / "cp"
-Date: Thu, 05 Feb 2015 11:23:24 -0800
-Message-ID: <xmqqmw4skvrn.fsf@gitster.dls.corp.google.com>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: [PATCH 1/2] Makefile: Use the same source directory for "ln -s"
+ as for "ln" / "cp"
+Date: Thu, 5 Feb 2015 20:26:08 +0100
+Message-ID: <CAHGBnuP5e7NsDrD31otFGZiFYW-vxsOf7kV61=Zt32n3S78RBg@mail.gmail.com>
 References: <CAHGBnuOGv4Zn7dz6voEMn=PtMfm=0TQumt9PxV9nYgXyB0Xj=g@mail.gmail.com>
 	<D060A1E5-DAF3-49D5-B0B3-F831BCDFD41F@gmail.com>
+	<xmqqmw4skvrn.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Sebastian Schuberth <sschuberth@gmail.com>,
+Content-Type: text/plain; charset=UTF-8
+Cc: "Kyle J. McKay" <mackyle@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>,
 	Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>
-To: "Kyle J. McKay" <mackyle@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 05 20:23:37 2015
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 05 20:26:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YJS1Y-0002sA-Rl
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Feb 2015 20:23:37 +0100
+	id 1YJS4E-0004zR-W6
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Feb 2015 20:26:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752792AbbBETXc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Feb 2015 14:23:32 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:51462 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752500AbbBETXb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Feb 2015 14:23:31 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id EFDD5358B5;
-	Thu,  5 Feb 2015 14:23:30 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=f9o9CwThBlBzDgkgstWZNkA4mcg=; b=amnJTR
-	jxHwsfKJ8/OwZcfSLCCxdJIQYuhQhlNp03vdzQwL/AsUET6NGqm5GUJQXk/qnAAr
-	GWl4o+JRtONLl22IbHW8Ssn6dn7CcBBNRNdTShJgGnXW0OL7S2LlTOwEQhQ3qKib
-	aWfGe3y7YOalZxcCs+a74NI+MF2R8bZ+AeVus=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=SktfZHaEMfTk3Klfy1RinWgBV9pTzum7
-	9WUTRoP7YPCJ/FHzgngMeRSWaEaRy+q4l2EVGRL9RijIxQtxSgMKOUNqC8UG56LS
-	zuwGfhX0uuljquG4nqSoi6WhT5HyuW3eut/imm5Dh/4QeQfEkYQLD2mL8EELjmNz
-	KoKfHpkP5sg=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E77B2358B4;
-	Thu,  5 Feb 2015 14:23:30 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 71393358AE;
-	Thu,  5 Feb 2015 14:23:25 -0500 (EST)
-In-Reply-To: <D060A1E5-DAF3-49D5-B0B3-F831BCDFD41F@gmail.com> (Kyle J. McKay's
-	message of "Thu, 5 Feb 2015 09:48:41 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 77BCE78E-AD6C-11E4-B33E-7BA29F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1753984AbbBET0M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Feb 2015 14:26:12 -0500
+Received: from mail-yh0-f43.google.com ([209.85.213.43]:65454 "EHLO
+	mail-yh0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752563AbbBET0J (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Feb 2015 14:26:09 -0500
+Received: by mail-yh0-f43.google.com with SMTP id 29so4242190yhl.2
+        for <git@vger.kernel.org>; Thu, 05 Feb 2015 11:26:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=tJEvpmJcrzW0FvEHSafWMCmraqrDz/+lCtDvfMFGUbs=;
+        b=qZbkMQYJaSgDJ6lTz6NJSKW9It/xY6y4ZsCx8kwjIzU+SetfsBmA6hhslxujh7/VMJ
+         DlS7zX+vhv+wREC0rwf4W3z6sI/9U1WykHaNyOq+c0D+NzLy7LckF1014B0OcZvp23rk
+         m6BMYu5uju9hzHUQay7oOyT7Va2IhhiHtSG4oULcXgWkAoBJjSkmV8KGgjmmfb9q+5X5
+         flVaj7cNKwhoXgdv3KIyNxdLah86eaOjp4iMmqF3nz1VuYG0vm5NsP+1SbSe/9nZIDj+
+         8PPH6ESdoxo+XeTNRG7BHeBHxNlCiRTAK8DB0vHBkrPAQtMCLiT4/puILDRV/Fc5qEcp
+         NxOg==
+X-Received: by 10.236.53.66 with SMTP id f42mr2338385yhc.92.1423164368457;
+ Thu, 05 Feb 2015 11:26:08 -0800 (PST)
+Received: by 10.170.132.133 with HTTP; Thu, 5 Feb 2015 11:26:08 -0800 (PST)
+In-Reply-To: <xmqqmw4skvrn.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263390>
 
-"Kyle J. McKay" <mackyle@gmail.com> writes:
+On Thu, Feb 5, 2015 at 8:23 PM, Junio C Hamano <gitster@pobox.com> wrote:
 
->> -        ln -s "git$X" "$$bindir/$$p" 2>/dev/null || \
->> +        ln -s "$$bindir/git$X" "$$bindir/$$p" 2>/dev/null || \
+>> This is wrong.
+>>
+>> Currently with symlinks you will get installed into bindir something
+>> like this:
+>>
+>>   git
+>>   git-tag -> git
+>>   git-show -> git
+>>
+>> etc.
+>>
+>> With your change you would have
+>>
+>>   git
+>>   git-tag -> /usr/local/libexec/git-core/git
+>>   git-show -> /usr/local/libexec/git-core/git
+>>
+>> And I don't think we want that.  While those absolute path symlinks
+>> are technically correct,...
 >
-> This is wrong.
+> It is not even correct, is it?
 >
-> Currently with symlinks you will get installed into bindir something
-> like this:
->
->   git
->   git-tag -> git
->   git-show -> git
->
-> etc.
->
-> With your change you would have
->
->   git
->   git-tag -> /usr/local/libexec/git-core/git
->   git-show -> /usr/local/libexec/git-core/git
->
-> And I don't think we want that.  While those absolute path symlinks
-> are technically correct,...
+> When DESTDIR is set to allow you to install into a temporary place
+> only so that you can "tar" up the resulting filesystem tree, bindir
+> points at the location we need to "cp" the built programs into, i.e.
+> inside DESTDIR.
 
-It is not even correct, is it?
+Agreed folks, please disregard this as well as 2/2 of this series.
 
-When DESTDIR is set to allow you to install into a temporary place
-only so that you can "tar" up the resulting filesystem tree, bindir
-points at the location we need to "cp" the built programs into, i.e.
-inside DESTDIR.
+-- 
+Sebastian Schuberth
