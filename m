@@ -1,85 +1,90 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: Re: [PATCH 1/2] Makefile: Use the same source directory for "ln -s"
- as for "ln" / "cp"
-Date: Thu, 5 Feb 2015 20:26:08 +0100
-Message-ID: <CAHGBnuP5e7NsDrD31otFGZiFYW-vxsOf7kV61=Zt32n3S78RBg@mail.gmail.com>
-References: <CAHGBnuOGv4Zn7dz6voEMn=PtMfm=0TQumt9PxV9nYgXyB0Xj=g@mail.gmail.com>
-	<D060A1E5-DAF3-49D5-B0B3-F831BCDFD41F@gmail.com>
-	<xmqqmw4skvrn.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [Qemu-devel] [PATCH v3 0/7] cpu: add device_add foo-x86_64-cpu support
+Date: Thu, 05 Feb 2015 11:29:07 -0800
+Message-ID: <xmqqiofgkvi4.fsf@gitster.dls.corp.google.com>
+References: <cover.1421214154.git.zhugh.fnst@cn.fujitsu.com>
+	<20150205114914.GA10126@stefanha-thinkpad.redhat.com>
+	<54D38B73.4060803@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "Kyle J. McKay" <mackyle@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 05 20:26:23 2015
+Content-Type: text/plain
+Cc: Stefan Hajnoczi <stefanha@gmail.com>,
+	Zhu Guihua <zhugh.fnst@cn.fujitsu.com>, qemu-devel@nongnu.org,
+	tangchen@cn.fujitsu.com, chen.fan.fnst@cn.fujitsu.com,
+	isimatu.yasuaki@jp.fujitsu.com, imammedo@redhat.com,
+	guz.fnst@cn.fujitsu.com, anshul.makkar@profitbricks.com,
+	afaerber@suse.de, git@vger.kernel.org
+To: Eric Blake <eblake@redhat.com>
+X-From: git-owner@vger.kernel.org Thu Feb 05 20:29:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YJS4E-0004zR-W6
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Feb 2015 20:26:23 +0100
+	id 1YJS71-0007Dw-NF
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Feb 2015 20:29:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753984AbbBET0M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Feb 2015 14:26:12 -0500
-Received: from mail-yh0-f43.google.com ([209.85.213.43]:65454 "EHLO
-	mail-yh0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752563AbbBET0J (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Feb 2015 14:26:09 -0500
-Received: by mail-yh0-f43.google.com with SMTP id 29so4242190yhl.2
-        for <git@vger.kernel.org>; Thu, 05 Feb 2015 11:26:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=tJEvpmJcrzW0FvEHSafWMCmraqrDz/+lCtDvfMFGUbs=;
-        b=qZbkMQYJaSgDJ6lTz6NJSKW9It/xY6y4ZsCx8kwjIzU+SetfsBmA6hhslxujh7/VMJ
-         DlS7zX+vhv+wREC0rwf4W3z6sI/9U1WykHaNyOq+c0D+NzLy7LckF1014B0OcZvp23rk
-         m6BMYu5uju9hzHUQay7oOyT7Va2IhhiHtSG4oULcXgWkAoBJjSkmV8KGgjmmfb9q+5X5
-         flVaj7cNKwhoXgdv3KIyNxdLah86eaOjp4iMmqF3nz1VuYG0vm5NsP+1SbSe/9nZIDj+
-         8PPH6ESdoxo+XeTNRG7BHeBHxNlCiRTAK8DB0vHBkrPAQtMCLiT4/puILDRV/Fc5qEcp
-         NxOg==
-X-Received: by 10.236.53.66 with SMTP id f42mr2338385yhc.92.1423164368457;
- Thu, 05 Feb 2015 11:26:08 -0800 (PST)
-Received: by 10.170.132.133 with HTTP; Thu, 5 Feb 2015 11:26:08 -0800 (PST)
-In-Reply-To: <xmqqmw4skvrn.fsf@gitster.dls.corp.google.com>
+	id S1754117AbbBET3L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Feb 2015 14:29:11 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:57422 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751482AbbBET3K (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Feb 2015 14:29:10 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 95D5235A92;
+	Thu,  5 Feb 2015 14:29:09 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=CHk/6Mry4WPr0L0sntu46k1o+4Q=; b=trNvqx
+	aayrDj2w3ePf3i8kD6/0B2bmOlVEyYwqsRxiMmsnmOYFB/I4Xtqnp+k8qdfcYnJr
+	WjuWk8WraXk1f6/qv8OPB+swmF2zZkUGmvJuPyUfiKrkHkX9thye+YpLSvA8zSMW
+	snOS2mGhdYw6shCcaS9XTXpiZYsGA7WixUL04=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=k+MjXqJPT9IqqmHcIdV7Xv6iJHhqoju4
+	tZ18m+7WeMCSX8ekniar61/BFhMRBoP+bxr9bm3oe8PAeAio7TqdIQClGhVbSbFS
+	Q7sC7UapRXPXR9TtNim8XhLS4L2bGivFIWNQ6H8UeBSxBErnruogfH+RY8S4+REN
+	4tDmOALypak=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8875635A91;
+	Thu,  5 Feb 2015 14:29:09 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D90BD35A90;
+	Thu,  5 Feb 2015 14:29:08 -0500 (EST)
+In-Reply-To: <54D38B73.4060803@redhat.com> (Eric Blake's message of "Thu, 05
+	Feb 2015 08:25:39 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 417D854C-AD6D-11E4-B407-7BA29F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263391>
 
-On Thu, Feb 5, 2015 at 8:23 PM, Junio C Hamano <gitster@pobox.com> wrote:
+Eric Blake <eblake@redhat.com> writes:
 
->> This is wrong.
->>
->> Currently with symlinks you will get installed into bindir something
->> like this:
->>
->>   git
->>   git-tag -> git
->>   git-show -> git
->>
->> etc.
->>
->> With your change you would have
->>
->>   git
->>   git-tag -> /usr/local/libexec/git-core/git
->>   git-show -> /usr/local/libexec/git-core/git
->>
->> And I don't think we want that.  While those absolute path symlinks
->> are technically correct,...
+> On 02/05/2015 04:49 AM, Stefan Hajnoczi wrote:
+>> On Wed, Jan 14, 2015 at 03:27:23PM +0800, Zhu Guihua wrote:
+>>> This series is based on the previous patchset from Chen Fan:
+>>> https://lists.nongnu.org/archive/html/qemu-devel/2014-05/msg02360.html
+>> 
+>> This email has an invalid charset:
+>> Content-Type: text/plain; charset="y"
+>> 
+>> I guess you entered "y" when asked how the message was encoded.
+>> 
+>> Please don't do that, it means we can only guess at the charset.
 >
-> It is not even correct, is it?
->
-> When DESTDIR is set to allow you to install into a temporary place
-> only so that you can "tar" up the resulting filesystem tree, bindir
-> points at the location we need to "cp" the built programs into, i.e.
-> inside DESTDIR.
+> In the past, people made a similar problem when 'git send-email' was
+> asking if a message was in-reply-to something else (the number of
+> messages incorrectly threaded to a message-id of 'y' or 'n' was evidence
+> of the poor quality of the question).  git.git commit 51bbccfd1b4a
+> corrected that problem.  Sounds like charset encoding is another case
+> where the interactive parser should be taught to balk at nonsense
+> encoding answers?
 
-Agreed folks, please disregard this as well as 2/2 of this series.
-
--- 
-Sebastian Schuberth
+I think I answered this in $gmane/263354; care to come up with a
+plausible valid_re?  It is inpractical to attempt to cover all valid
+charset names, so whatever you do I'd imagine you would want to pass
+the confirm_only parameter set to true.
