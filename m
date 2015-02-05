@@ -1,93 +1,87 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG] Move tracking in git diff is not as good as in git status
-Date: Thu, 05 Feb 2015 11:01:59 -0800
-Message-ID: <xmqq61bgmbbs.fsf@gitster.dls.corp.google.com>
-References: <20150205061142.GA31599@odin.ulthar.us>
-	<099A7D2D-6033-4A16-91DD-E2288BC5C729@gmail.com>
+Subject: Re: [PATCH] Correction to git-p4 "exclude" change
+Date: Thu, 05 Feb 2015 11:05:28 -0800
+Message-ID: <xmqq1tm4mb5z.fsf@gitster.dls.corp.google.com>
+References: <1422425284-5282-1-git-send-email-luke@diamand.org>
+	<xmqqwq46fx59.fsf@gitster.dls.corp.google.com>
+	<CAE5ih7_TJOQ=ttw03V3J9A=jtwUD-Emy-mSp0kNrYKkqMs30ng@mail.gmail.com>
+	<CAE5ih7-Eo9uNCRQHO8bOGCuE0w8U_S4q+aYTNfttSHLQM6GVpA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Scott Schmit <i.grok@comcast.net>,
-	git mailing list <git@vger.kernel.org>
-To: "Kyle J. McKay" <mackyle@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 05 20:02:10 2015
+Cc: Git Users <git@vger.kernel.org>
+To: Luke Diamand <luke@diamand.org>
+X-From: git-owner@vger.kernel.org Thu Feb 05 20:05:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YJRgn-0003gv-5k
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Feb 2015 20:02:09 +0100
+	id 1YJRkO-00070y-Kf
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Feb 2015 20:05:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751314AbbBETCD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Feb 2015 14:02:03 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64173 "EHLO
+	id S1753609AbbBETFd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Feb 2015 14:05:33 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:63142 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751274AbbBETCC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Feb 2015 14:02:02 -0500
+	with ESMTP id S1753564AbbBETFc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Feb 2015 14:05:32 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 86998350B2;
-	Thu,  5 Feb 2015 14:02:01 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 864333520F;
+	Thu,  5 Feb 2015 14:05:31 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=VJKRkaPa8q+ps+wopDgwr76D4Hs=; b=nbJzo2
-	GDIMev/ag/Dy1C5ejb95vvBJ7vy4eiDt3PbJjyzVCEI5slXFqYAM0hMBneseFDlb
-	EzolU697flmPz9g8SQoKlZal6K3Bbg2xnkUKx68q9qWHthYWJNiczzIxItHsB7JI
-	n3pJNUOVzaiFLrCp+vYcYObrU80UAN7sVGprQ=
+	:content-type; s=sasl; bh=VHRvyJjfG/LhC17aDLXRYdjwXs0=; b=xVjS5h
+	wEu9ljrnMsrt2Gf80d7gvBAaIzy50VseFAzDz1FcoeyPr41vPzLqdZ5F5nKsU+Ub
+	RolgqOGxKDPE1vmS0sRff0rWub1jiI2ZOSEZjzDI1aC5bCSVJ7rMkE5gGgSIRoXi
+	0l0dBz1jp5ZQccLkVtZmxuEHHyCIOZbMoXBPY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=kGrl+xezYZgxzKubfpC4MhBSSWQX53UZ
-	qSx7/GRNJeQRCOV1g/OJOaELTVAm0XPvSyxFVZdHe9/6YPnFa8gfFKSRkX91iBbW
-	wyLnPN4I11izNLAdqtEShF5kaKPf3yK0VhJ1J8V/r1Fhiciscs8jjcJRd4GCiZta
-	XRIFHurkIFE=
+	:content-type; q=dns; s=sasl; b=LZzoMD0cuOCH0FiNgJKFDHQaENrOrTmp
+	1a4ia62MFZEL83PxvsFlnIqePy53tRyNW5zSDXx/Pm1Sdpp8sRubonfnJXu5ek+Y
+	gjcegyZbr7ihpQnJ25VXHEPrdHL0C5vmJa1MYy9zY2IzmydFH9aatjhmjnKUSeu9
+	7uk2B1+yo/k=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7551A350B1;
-	Thu,  5 Feb 2015 14:02:01 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7CCBB3520E;
+	Thu,  5 Feb 2015 14:05:31 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9B24D350AE;
-	Thu,  5 Feb 2015 14:02:00 -0500 (EST)
-In-Reply-To: <099A7D2D-6033-4A16-91DD-E2288BC5C729@gmail.com> (Kyle J. McKay's
-	message of "Wed, 4 Feb 2015 23:39:25 -0800")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F1E643520D;
+	Thu,  5 Feb 2015 14:05:29 -0500 (EST)
+In-Reply-To: <CAE5ih7-Eo9uNCRQHO8bOGCuE0w8U_S4q+aYTNfttSHLQM6GVpA@mail.gmail.com>
+	(Luke Diamand's message of "Thu, 5 Feb 2015 08:24:12 +0000")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 76EEA34A-AD69-11E4-BF81-7BA29F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: F3B90E88-AD69-11E4-BF9E-7BA29F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263383>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263384>
 
-"Kyle J. McKay" <mackyle@gmail.com> writes:
+Luke Diamand <luke@diamand.org> writes:
 
-> On Feb 4, 2015, at 22:11, Scott Schmit wrote:
+> (Resending as plain text).
 >
->> In my use of git, I've noticed that "git status" is a lot better at
->> tracking moves and renames than "git diff", and this has recently
->> caused
->> me a lot of headaches because a large number of moves were made in a
->> single commit, and it was very difficult to figure out which moves
->> were
->> right and which were wrong.
->>
->> I was using a fairly old version of git (1.7.11), but was able to
->> reproduce it on git 2.2.1.
->>
->> Here's a reproduction recipe:
-> [...]
->> # Now "shift" the files
->> git mv 2 3
->> git mv 1 2
-> [...]
->> git commit -m "2=1;3=2;"
->>
->> # Neither of these commands get it (but -C gets a glimmer of the
->> truth)
->> git diff -M --stat --summary HEAD~..
->> git diff -C --stat --summary HEAD~..
->
-> Ah, but did you try this:
->
->   git diff -B -M --stat --summary HEAD~..
+> I could be wrong about this, but my correction above doesn't seem to
+> be in 'next'. Does that mean (reading your last "what's cooking") that
+> the broken version is going to go out to 'master' soon?
 
-Yes, since f714fb84 (Enable rewrite as well as rename detection in
-git-status, 2007-12-02) "git status" internally uses "-B -M".
+The current copy of "What's cooking" I have reads like so:
+
+    * ld/p4-exclude-in-sync (2015-01-28) 2 commits
+     - git-p4: correct "exclude" change
+      (merged to 'next' on 2015-01-22 at f6f1fc7)
+     + git-p4: support excluding paths on sync
+
+     Will squash into one after 2.3 final.
+
+As we are too late to merge anything new to 'master', and the broken
+one is not in 'master', I have been playing lazy to make time to
+tend to other issues ;-)  After 2.3 final, we would rewind the tip
+of 'next' and will rebuild, and when that happens, I am hoping that
+we can make these two into one commit that does not have the "oops,
+I forgot a comma and broke the entire command" fix-up as a separate
+commit.
+
+Or did I mis-read you?  Do we have broken code already in 'master'
+that this hot-fix needs to be applied to unbreak?
