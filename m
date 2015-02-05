@@ -1,130 +1,105 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [Qemu-devel] [PATCH v3 0/7] cpu: add device_add foo-x86_64-cpu support
-Date: Thu, 05 Feb 2015 12:17:15 -0800
-Message-ID: <xmqq61bgkt9w.fsf@gitster.dls.corp.google.com>
-References: <cover.1421214154.git.zhugh.fnst@cn.fujitsu.com>
-	<20150205114914.GA10126@stefanha-thinkpad.redhat.com>
-	<54D38B73.4060803@redhat.com>
-	<xmqqiofgkvi4.fsf@gitster.dls.corp.google.com>
-	<20150205195758.GC15326@peff.net>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: [PATCH 1/2] Makefile: Use the same source directory for "ln -s"
+ as for "ln" / "cp"
+Date: Thu, 5 Feb 2015 21:29:04 +0100
+Message-ID: <CAHGBnuPL7NN9J+4xd7xifsmbSPcC5V2ze05ji7P_qnvWHPGV+A@mail.gmail.com>
+References: <CAHGBnuOGv4Zn7dz6voEMn=PtMfm=0TQumt9PxV9nYgXyB0Xj=g@mail.gmail.com>
+	<D060A1E5-DAF3-49D5-B0B3-F831BCDFD41F@gmail.com>
+	<xmqqmw4skvrn.fsf@gitster.dls.corp.google.com>
+	<CAHGBnuP5e7NsDrD31otFGZiFYW-vxsOf7kV61=Zt32n3S78RBg@mail.gmail.com>
+	<20150205195143.GB15326@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Eric Blake <eblake@redhat.com>,
-	Stefan Hajnoczi <stefanha@gmail.com>,
-	Zhu Guihua <zhugh.fnst@cn.fujitsu.com>, qemu-devel@nongnu.org,
-	tangchen@cn.fujitsu.com, chen.fan.fnst@cn.fujitsu.com,
-	isimatu.yasuaki@jp.fujitsu.com, imammedo@redhat.com,
-	guz.fnst@cn.fujitsu.com, anshul.makkar@profitbricks.com,
-	afaerber@suse.de, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"Kyle J. McKay" <mackyle@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Feb 05 21:17:27 2015
+X-From: git-owner@vger.kernel.org Thu Feb 05 21:29:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YJSrb-0000LU-TA
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Feb 2015 21:17:24 +0100
+	id 1YJT32-0008RI-7B
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Feb 2015 21:29:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751783AbbBEURT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Feb 2015 15:17:19 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:60634 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751151AbbBEURS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Feb 2015 15:17:18 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7928D35891;
-	Thu,  5 Feb 2015 15:17:17 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=pjfvfEUXQBsvboJ/qwGcT5DgxU4=; b=k9hCd9
-	Pv22lWCUsmSHNYXGjyipy9Fp8j4/jxaSQnkQZ6pPU4qmsaVMMG1K0pCXKKZnZS8n
-	BizhyoGGCWn05kAGzPn5jT9tf7fuft/VpDRLuZy3HMxshY3iZzbvuLBJVxY1sLvB
-	Q+FulTJSfPUsMgY9dpqzSLOzmqJ54IS/ysvvQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KC/CIZvdyPLVCz8xR2T/kEbsnuRpL6gk
-	nN7yHIjZ/tdpGTtEALxkP/wY8DJkKCHuouNvNUjH6bvM22Mmr3UF0zqhTessJpxM
-	+yxQx0KVjTcKZiB0DbjvfJ+Z+lJNc+267d6DhievXmmYRZbiuIK46rrVrxyt8yLn
-	ULM8esVhLMg=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6D9663588D;
-	Thu,  5 Feb 2015 15:17:17 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CDD1C3588A;
-	Thu,  5 Feb 2015 15:17:16 -0500 (EST)
-In-Reply-To: <20150205195758.GC15326@peff.net> (Jeff King's message of "Thu, 5
-	Feb 2015 14:57:58 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: FAD7E1DA-AD73-11E4-B917-7BA29F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751453AbbBEU3H convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Feb 2015 15:29:07 -0500
+Received: from mail-yk0-f169.google.com ([209.85.160.169]:52782 "EHLO
+	mail-yk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751077AbbBEU3G convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 5 Feb 2015 15:29:06 -0500
+Received: by mail-yk0-f169.google.com with SMTP id 79so1516799ykr.0
+        for <git@vger.kernel.org>; Thu, 05 Feb 2015 12:29:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=eae6NrZ3CkkACG+yN/q7/W319I+2uXICdT9vuWfRDYU=;
+        b=WukxW5d2HmTV0oM5+eFo3PEmn+9hdOqLhq+EkQXjDUimDRxIss9I3PkQ6RfREI8s0k
+         y3DGmk4l/vpcC+bw/AS3YHuzHvpd9PHO9Ig3RdUY4lnoX/W/MA9zIFDE+crNFsS2FbKz
+         wv38CyKNOqC2ZR/QHE050vSqQ3Zf56AYe0MJ7pl7O0oSRDYZSqIa048juCAaAbjMeLWh
+         gKR8M0pRvWq/BJ5m+MXKvYw7yDahUG8+77k3aSWkTvt2QJI1AN2OKa2VJY2iGXRWRUFB
+         bADjrZJfhMRiwpDH7D8v0kJM9Y33k3iGh7CziW7rX7gzzeHIkIgDGHZZBTFNo0ckazOB
+         DtCg==
+X-Received: by 10.170.84.134 with SMTP id b128mr2706863yka.82.1423168144643;
+ Thu, 05 Feb 2015 12:29:04 -0800 (PST)
+Received: by 10.170.132.133 with HTTP; Thu, 5 Feb 2015 12:29:04 -0800 (PST)
+In-Reply-To: <20150205195143.GB15326@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263398>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263399>
 
-Jeff King <peff@peff.net> writes:
+On Thu, Feb 5, 2015 at 8:51 PM, Jeff King <peff@peff.net> wrote:
 
-> On Thu, Feb 05, 2015 at 11:29:07AM -0800, Junio C Hamano wrote:
+> On Thu, Feb 05, 2015 at 08:26:08PM +0100, Sebastian Schuberth wrote:
 >
->> Eric Blake <eblake@redhat.com> writes:
->> 
->> > On 02/05/2015 04:49 AM, Stefan Hajnoczi wrote:
->> >> On Wed, Jan 14, 2015 at 03:27:23PM +0800, Zhu Guihua wrote:
->> >>> This series is based on the previous patchset from Chen Fan:
->> >>> https://lists.nongnu.org/archive/html/qemu-devel/2014-05/msg02360.html
->> >> 
->> >> This email has an invalid charset:
->> >> Content-Type: text/plain; charset="y"
->> >> 
->> >> I guess you entered "y" when asked how the message was encoded.
->> >> 
->> >> Please don't do that, it means we can only guess at the charset.
+>> > It is not even correct, is it?
 >> >
->> > In the past, people made a similar problem when 'git send-email' was
->> > asking if a message was in-reply-to something else (the number of
->> > messages incorrectly threaded to a message-id of 'y' or 'n' was evidence
->> > of the poor quality of the question).  git.git commit 51bbccfd1b4a
->> > corrected that problem.  Sounds like charset encoding is another case
->> > where the interactive parser should be taught to balk at nonsense
->> > encoding answers?
->> 
->> I think I answered this in $gmane/263354; care to come up with a
->> plausible valid_re?  It is inpractical to attempt to cover all valid
->> charset names, so whatever you do I'd imagine you would want to pass
->> the confirm_only parameter set to true.
+>> > When DESTDIR is set to allow you to install into a temporary place
+>> > only so that you can "tar" up the resulting filesystem tree, bindi=
+r
+>> > points at the location we need to "cp" the built programs into, i.=
+e.
+>> > inside DESTDIR.
+>>
+>> Agreed folks, please disregard this as well as 2/2 of this series.
 >
-> Would "length() > 1" be enough[1]? Or are people really typing "yes" and
-> not just "y"?
->
-> I cannot imagine a charset name that is smaller than two characters. It
-> may be that there are none smaller than 4, and we could cut it off
-> there. Googling around for some lists of common charsets, it seems like
-> that might be plausible (but not any larger; "big5" is 4 characters, and
-> people may spell "utf8" without the hyphen).
->
-> -Peff
->
-> [1] Of course, to match the existing regex code, we may want to spell
->     this as "/../" or "/..../".
+> We would still want an equivalent to 2/2 to set up a relative symlink
+> for $(ALL_PROGRAMS), though, right?
 
-Perhaps. Just in case there were shorter ones, something like this
-with confirm_only to allow them to say "Yes, I do mean 'xx'"?
+Probably. But I'm not sure how to calculate the relative path
+correctly so that it'll work with all possible bin / execdir
+combinations. A simple
 
- git-send-email.perl | 1 +
- 1 file changed, 1 insertion(+)
+diff --git a/Makefile b/Makefile
+index 21f23cb..d2849c3 100644
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 3092ab3..848f176 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -752,6 +752,7 @@ sub file_declares_8bit_cte {
- 		print "    $f\n";
- 	}
- 	$auto_8bit_encoding = ask("Which 8bit encoding should I declare [UTF-8]? ",
-+				  valid_re => qr/.{4}/, confirm_only => 1,
- 				  default => "UTF-8");
- }
- 
+--- a/Makefile
++++ b/Makefile
+
+@@ -2258,8 +2258,8 @@
+
+ endif
+ =C2=B7=C2=B7=C2=B7=C2=B7=C2=B7=C2=B7=C2=B7=C2=B7$(RM)=C2=B7"$$execdir/=
+$$p"=C2=B7&&=C2=B7\
+ =C2=B7=C2=B7=C2=B7=C2=B7=C2=B7=C2=B7=C2=B7=C2=B7test=C2=B7-z=C2=B7"$(N=
+O_INSTALL_HARDLINKS)$(NO_CROSS_DIRECTORY_HARDLINKS)"=C2=B7&&=C2=B7\
+ =C2=B7=C2=B7=C2=B7=C2=B7=C2=B7=C2=B7=C2=B7=C2=B7ln=C2=B7"$$bindir/$$p"=
+=C2=B7"$$execdir/$$p"=C2=B72>/dev/null=C2=B7||=C2=B7\
++=C2=B7=C2=B7=C2=B7=C2=B7=C2=B7=C2=B7=C2=B7=C2=B7ln=C2=B7-s=C2=B7"../$$=
+p"=C2=B7"$$execdir/$$p"=C2=B72>/dev/null=C2=B7||=C2=B7\
+ =C2=B7=C2=B7=C2=B7=C2=B7=C2=B7=C2=B7=C2=B7=C2=B7cp=C2=B7"$$bindir/$$p"=
+=C2=B7"$$execdir/$$p"=C2=B7||=C2=B7exit;=C2=B7\
+ =C2=B7=C2=B7=C2=B7=C2=B7=C2=B7=C2=B7done;=C2=B7\
+ =C2=B7=C2=B7=C2=B7=C2=B7}=C2=B7&&=C2=B7\
+--=C2=B7
+
+does not seem to be correct in all cases.
+
+--=20
+Sebastian Schuberth
