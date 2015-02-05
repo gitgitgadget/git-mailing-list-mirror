@@ -1,124 +1,103 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] decimal_width: avoid integer overflow
-Date: Thu, 5 Feb 2015 03:14:19 -0500
-Message-ID: <20150205081419.GA7666@peff.net>
+From: Luke Diamand <luke@diamand.org>
+Subject: Re: [PATCH] Correction to git-p4 "exclude" change
+Date: Thu, 5 Feb 2015 08:24:12 +0000
+Message-ID: <CAE5ih7-Eo9uNCRQHO8bOGCuE0w8U_S4q+aYTNfttSHLQM6GVpA@mail.gmail.com>
+References: <1422425284-5282-1-git-send-email-luke@diamand.org>
+	<xmqqwq46fx59.fsf@gitster.dls.corp.google.com>
+	<CAE5ih7_TJOQ=ttw03V3J9A=jtwUD-Emy-mSp0kNrYKkqMs30ng@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 05 09:14:28 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Users <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 05 09:24:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YJHZz-0003Ix-59
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Feb 2015 09:14:27 +0100
+	id 1YJHjW-0008Cz-Cp
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Feb 2015 09:24:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752705AbbBEIOX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Feb 2015 03:14:23 -0500
-Received: from cloud.peff.net ([50.56.180.127]:45340 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752099AbbBEIOW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Feb 2015 03:14:22 -0500
-Received: (qmail 10474 invoked by uid 102); 5 Feb 2015 08:14:22 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 05 Feb 2015 02:14:22 -0600
-Received: (qmail 28830 invoked by uid 107); 5 Feb 2015 08:14:22 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 05 Feb 2015 03:14:22 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 05 Feb 2015 03:14:19 -0500
-Content-Disposition: inline
+	id S1751646AbbBEIYO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Feb 2015 03:24:14 -0500
+Received: from mail-oi0-f51.google.com ([209.85.218.51]:56869 "EHLO
+	mail-oi0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750838AbbBEIYN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Feb 2015 03:24:13 -0500
+Received: by mail-oi0-f51.google.com with SMTP id x69so5377439oia.10
+        for <git@vger.kernel.org>; Thu, 05 Feb 2015 00:24:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=diamand.org; s=google;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=L+GekS1x8rfCQyG5Q/CUpd+4xVSwkr0ZOJ+9qOm/s4w=;
+        b=Xx035g5oZ0PNYyyWFZgGt9ZwbavVslL3X5u9EC/jSg2sNHpa9Co0AWdpOWyz23p92y
+         9WJPLax3RntGju1vcSy2XHNe5RCOQNaIToC9pK2PIhbJWeqSz9JCE6xfx3j/6oo9Vm1R
+         GQqakohocdDrLtiTWan8csXr/RzguRc42jCeU=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=L+GekS1x8rfCQyG5Q/CUpd+4xVSwkr0ZOJ+9qOm/s4w=;
+        b=j5m26aL61VQhGlp1uYBlzwuke/7DXZeUCLbZ9/8QiJQGnbC7ldNWDdraxXVKIGs1PE
+         JQb2LaaosWPgjtZ7pwLNnzAyMd+lziyg18Icj4KfUUkt7L8mQw/hu0l2x8Y2tQ+yxECe
+         g5dCA1TleuH7EfSKwUs9Nn5wOY2+MSXp/4jQDYn8e24RH/78/ZcyUSx9ZyKWk/bXpdcF
+         I9EW835SbsyeDg2JPrkpo07jD4ExP46tXkX1E8/Qy+jFFECyIbBjWtQqoFQg0w2Ws7/C
+         QMCImmCR3jvp9MkhZjNcf3Jtvz2UGbUEYAYAoFIPdZFG1i8oN2V6pIaacI96Rq2IIyZy
+         oY3A==
+X-Gm-Message-State: ALoCoQnBt188Fdym4ZG3tedYaOuv3W4ZIRdhlLJknsY/NYq3cfp3ejhG/zN3HfbBdBqa8tUjxW2y
+X-Received: by 10.182.74.199 with SMTP id w7mr1605165obv.20.1423124652758;
+ Thu, 05 Feb 2015 00:24:12 -0800 (PST)
+Received: by 10.60.175.130 with HTTP; Thu, 5 Feb 2015 00:24:12 -0800 (PST)
+In-Reply-To: <CAE5ih7_TJOQ=ttw03V3J9A=jtwUD-Emy-mSp0kNrYKkqMs30ng@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263366>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263367>
 
-The decimal_width function originally appeared in blame.c as
-"lineno_width", and was designed for calculating the
-print-width of small-ish integer values (line numbers in
-text files). In ec7ff5b, it was made into a reusable
-function, and in dc801e7, we started using it to align
-diffstats.
+(Resending as plain text).
 
-Binary files in a diffstat show byte counts rather than line
-numbers, meaning they can be quite large (e.g., consider
-adding or removing a 2GB file). decimal_width is not up to
-the challenge for two reasons:
+I could be wrong about this, but my correction above doesn't seem to
+be in 'next'. Does that mean (reading your last "what's cooking") that
+the broken version is going to go out to 'master' soon?
 
-  1. It takes the value as an "int", whereas large files may
-     easily surpass this. The value may be truncated, in
-     which case we will produce an incorrect value.
+Thanks,
+Luke
 
-  2. It counts "up" by repeatedly multiplying another
-     integer by 10 until it surpasses the value.  This can
-     cause an infinite loop when the value is close to the
-     largest representable integer.
-
-     For example, consider using a 32-bit signed integer,
-     and a value of 2,140,000,000 (just shy of 2^31-1).
-     We will count up and eventually see that 1,000,000,000
-     is smaller than our value. The next step would be to
-     multiply by 10 and see that 10,000,000,000 is too
-     large, ending the loop. But we can't represent that
-     value, and we have signed overflow.
-
-     This is technically undefined behavior, but a common
-     behavior is to lose the high bits, in which case our
-     iterator will certainly be less than the number. So
-     we'll keep multiplying, overflow again, and so on.
-
-This patch changes the argument to a uintmax_t (the same
-type we use to store the diffstat information for binary
-filese), and counts "down" by repeatedly dividing our value
-by 10.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-Note that besides taking a larger type, we also switch to an unsigned
-type. I don't think a signed value makes any sense here (do we include
-the "-" or not?), and certainly would not have behaved correctly with
-the old code. I did a quick look over all the callers, and they all look
-to be conceptually unsigned.
-
- cache.h | 2 +-
- pager.c | 8 ++++----
- 2 files changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/cache.h b/cache.h
-index f704af5..04951dd 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1498,7 +1498,7 @@ extern const char *pager_program;
- extern int pager_in_use(void);
- extern int pager_use_color;
- extern int term_columns(void);
--extern int decimal_width(int);
-+extern int decimal_width(uintmax_t);
- extern int check_pager_config(const char *cmd);
- 
- extern const char *editor_program;
-diff --git a/pager.c b/pager.c
-index f6e8c33..98b2682 100644
---- a/pager.c
-+++ b/pager.c
-@@ -133,12 +133,12 @@ int term_columns(void)
- /*
-  * How many columns do we need to show this number in decimal?
-  */
--int decimal_width(int number)
-+int decimal_width(uintmax_t number)
- {
--	int i, width;
-+	int width;
- 
--	for (width = 1, i = 10; i <= number; width++)
--		i *= 10;
-+	for (width = 1; number >= 10; width++)
-+		number /= 10;
- 	return width;
- }
- 
--- 
-2.3.0.rc1.287.g761fd19
+On 5 February 2015 at 08:19, Luke Diamand <luke@diamand.org> wrote:
+> I could be wrong about this, but my correction above doesn't seem to be in
+> 'next'. Does that mean (reading your last "what's cooking") that the broken
+> version is going to go out to 'master' soon?
+>
+> Thanks,
+> Luke
+>
+>
+> On 28 January 2015 at 20:49, Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> Luke Diamand <luke@diamand.org> writes:
+>>
+>> > My previous change for adding support for "exclude" to git-p4 "sync"
+>> > was incorrect, missing out a comma, which stopped git-p4 from working.
+>> > This change fixes that.
+>> >
+>> > I've also noticed that t9814-git-p4-rename.sh has stopped working; I'm
+>> > going to follow up with a fix for that once I've worked out what's
+>> > wrong with it. There's a small shell syntax problem (missing "esac")
+>> > but after fixing that it still fails, so I'm not sure what's happening
+>> > yet. It was discussed a while back.
+>> >
+>> > Luke Diamand (1):
+>> >   git-p4: correct "exclude" change
+>> >
+>> >  git-p4.py | 2 +-
+>> >  1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> Thanks.
+>>
+>> Will keep out of 'master' for now.  It may not be a bad idea to
+>> squash this fix (and any futher ones if needed) into a single patch
+>> when we rewind 'next' after 2.3 final is tagged.
+>>
+>
