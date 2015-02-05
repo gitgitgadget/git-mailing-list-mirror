@@ -1,91 +1,80 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [Qemu-devel] [PATCH v3 0/7] cpu: add device_add foo-x86_64-cpu
- support
-Date: Thu, 5 Feb 2015 14:57:58 -0500
-Message-ID: <20150205195758.GC15326@peff.net>
-References: <cover.1421214154.git.zhugh.fnst@cn.fujitsu.com>
- <20150205114914.GA10126@stefanha-thinkpad.redhat.com>
- <54D38B73.4060803@redhat.com>
- <xmqqiofgkvi4.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] check-builtins: Strip any executable suffix to make it work on Windows
+Date: Thu, 05 Feb 2015 12:01:03 -0800
+Message-ID: <xmqqa90sku0w.fsf@gitster.dls.corp.google.com>
+References: <CAHGBnuNvesez_Ctvpi16vzsOZnaHiY5Fcf5+b+u0HNZ9zAyNZw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Eric Blake <eblake@redhat.com>,
-	Stefan Hajnoczi <stefanha@gmail.com>,
-	Zhu Guihua <zhugh.fnst@cn.fujitsu.com>, qemu-devel@nongnu.org,
-	tangchen@cn.fujitsu.com, chen.fan.fnst@cn.fujitsu.com,
-	isimatu.yasuaki@jp.fujitsu.com, imammedo@redhat.com,
-	guz.fnst@cn.fujitsu.com, anshul.makkar@profitbricks.com,
-	afaerber@suse.de, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 05 20:58:11 2015
+Content-Type: text/plain
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Johannes Sixt <j6t@kdbg.org>, normalperson@yhbt.net,
+	amyrick@apple.com
+To: Sebastian Schuberth <sschuberth@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 05 21:01:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YJSZ0-0002MO-AT
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Feb 2015 20:58:10 +0100
+	id 1YJSby-0004hK-E5
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Feb 2015 21:01:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753725AbbBET6E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Feb 2015 14:58:04 -0500
-Received: from cloud.peff.net ([50.56.180.127]:45667 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750990AbbBET6B (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Feb 2015 14:58:01 -0500
-Received: (qmail 8408 invoked by uid 102); 5 Feb 2015 19:58:00 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 05 Feb 2015 13:58:00 -0600
-Received: (qmail 1842 invoked by uid 107); 5 Feb 2015 19:58:00 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 05 Feb 2015 14:58:00 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 05 Feb 2015 14:57:58 -0500
-Content-Disposition: inline
-In-Reply-To: <xmqqiofgkvi4.fsf@gitster.dls.corp.google.com>
+	id S1751880AbbBEUBJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Feb 2015 15:01:09 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:60874 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751540AbbBEUBI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Feb 2015 15:01:08 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7B642353BA;
+	Thu,  5 Feb 2015 15:01:06 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=rMM5UFn0V2vH9eyiYwzUy0JZ04M=; b=U48Es6
+	iOaC6HqmYzV8WKxiwjEo8UQKJvwD65UYFSGX0XfJzY0J/s6tpV/bYYTLORtjxyCU
+	YyASazgaGMItOAORl1qR0CRTLPWHY6QNFhz9oVAkRLjxTnYU6U64NDbrRvdf5VmH
+	t+cibyrC6LMZMey4uFWjQRrwJ3ZxaxWR6fL1o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hMPBIApCWQ2rKcns4tqRC6ZDw3JPHYuS
+	OOYzfwFMOpv3LQ3nAfFiir5fL01Pmhk4rmlmu+LdvBe7YUlcxR6umtMGcOAWt1iK
+	8UMEq1jo75eoy74UskYjdmBPGGQErWZf+K3YKnW8r2rtNE1fGwZo1zhS82CFPiOH
+	c58+jGeAPeY=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 716B1353B9;
+	Thu,  5 Feb 2015 15:01:06 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 40CE3353B7;
+	Thu,  5 Feb 2015 15:01:04 -0500 (EST)
+In-Reply-To: <CAHGBnuNvesez_Ctvpi16vzsOZnaHiY5Fcf5+b+u0HNZ9zAyNZw@mail.gmail.com>
+	(Sebastian Schuberth's message of "Thu, 5 Feb 2015 14:28:04 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: B72397BA-AD71-11E4-986F-7BA29F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263394>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263395>
 
-On Thu, Feb 05, 2015 at 11:29:07AM -0800, Junio C Hamano wrote:
+Sebastian Schuberth <sschuberth@gmail.com> writes:
 
-> Eric Blake <eblake@redhat.com> writes:
-> 
-> > On 02/05/2015 04:49 AM, Stefan Hajnoczi wrote:
-> >> On Wed, Jan 14, 2015 at 03:27:23PM +0800, Zhu Guihua wrote:
-> >>> This series is based on the previous patchset from Chen Fan:
-> >>> https://lists.nongnu.org/archive/html/qemu-devel/2014-05/msg02360.html
-> >> 
-> >> This email has an invalid charset:
-> >> Content-Type: text/plain; charset="y"
-> >> 
-> >> I guess you entered "y" when asked how the message was encoded.
-> >> 
-> >> Please don't do that, it means we can only guess at the charset.
-> >
-> > In the past, people made a similar problem when 'git send-email' was
-> > asking if a message was in-reply-to something else (the number of
-> > messages incorrectly threaded to a message-id of 'y' or 'n' was evidence
-> > of the poor quality of the question).  git.git commit 51bbccfd1b4a
-> > corrected that problem.  Sounds like charset encoding is another case
-> > where the interactive parser should be taught to balk at nonsense
-> > encoding answers?
-> 
-> I think I answered this in $gmane/263354; care to come up with a
-> plausible valid_re?  It is inpractical to attempt to cover all valid
-> charset names, so whatever you do I'd imagine you would want to pass
-> the confirm_only parameter set to true.
+> Signed-off-by: Sebastian Schuberth <sschuberth@gmail.com>
+> ---
+>  check-builtins.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/check-builtins.sh b/check-builtins.sh
+> index 07cff69..a0aaf3a 100755
+> --- a/check-builtins.sh
+> +++ b/check-builtins.sh
+> @@ -3,7 +3,7 @@
+>  {
+>      cat <<\EOF
+>  sayIt:
+> -    $(foreach b,$(BUILT_INS),echo XXX $b YYY;)
+> +    $(foreach b,$(BUILT_INS),echo XXX $(b:$X=) YYY;)
+>  EOF
 
-Would "length() > 1" be enough[1]? Or are people really typing "yes" and
-not just "y"?
-
-I cannot imagine a charset name that is smaller than two characters. It
-may be that there are none smaller than 4, and we could cut it off
-there. Googling around for some lists of common charsets, it seems like
-that might be plausible (but not any larger; "big5" is 4 characters, and
-people may spell "utf8" without the hyphen).
-
--Peff
-
-[1] Of course, to match the existing regex code, we may want to spell
-    this as "/../" or "/..../".
+Makes sense; thanks.
