@@ -1,114 +1,98 @@
-From: "Kyle J. McKay" <mackyle@gmail.com>
-Subject: Re: [BUG] Move tracking in git diff is not as good as in git status
-Date: Wed, 4 Feb 2015 23:39:25 -0800
-Message-ID: <099A7D2D-6033-4A16-91DD-E2288BC5C729@gmail.com>
-References: <20150205061142.GA31599@odin.ulthar.us>
-Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: git mailing list <git@vger.kernel.org>
-To: Scott Schmit <i.grok@comcast.net>
-X-From: git-owner@vger.kernel.org Thu Feb 05 08:39:34 2015
+From: Chris Packham <judge.packham@gmail.com>
+Subject: Re: [PATCH 1/2] Fixes _is_git
+Date: Thu, 5 Feb 2015 21:13:45 +1300
+Message-ID: <CAFOYHZAerQWpeOPzD5D3gqKdWYvaCE3vB88Y_iD30eRF5MC2DQ@mail.gmail.com>
+References: <CAMto89CHf4OT_S05SaRrVRZvF-PH2_6DrcEpdGiUfaRGutJQHw@mail.gmail.com>
+	<1422897883-11036-1-git-send-email-remirampin@gmail.com>
+	<CAFOYHZBHoXC34gBu_Lx347f=-uUcVM1nHYT87SzxfeMa=KdFgw@mail.gmail.com>
+	<54D0EEB9.1090803@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Pat Thoyts <patthoyts@users.sourceforge.net>,
+	GIT <git@vger.kernel.org>
+To: =?UTF-8?B?UsOpbWkgUmFtcGlu?= <remirampin@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 05 09:13:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YJH2D-00019w-Ry
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Feb 2015 08:39:34 +0100
+	id 1YJHZP-0002z1-A7
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Feb 2015 09:13:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755518AbbBEHj3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Feb 2015 02:39:29 -0500
-Received: from mail-pd0-f182.google.com ([209.85.192.182]:40747 "EHLO
-	mail-pd0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755141AbbBEHj3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Feb 2015 02:39:29 -0500
-Received: by pdjy10 with SMTP id y10so6141862pdj.7
-        for <git@vger.kernel.org>; Wed, 04 Feb 2015 23:39:28 -0800 (PST)
+	id S1756565AbbBEINq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Feb 2015 03:13:46 -0500
+Received: from mail-pd0-f179.google.com ([209.85.192.179]:40869 "EHLO
+	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755192AbbBEINp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 5 Feb 2015 03:13:45 -0500
+Received: by pdjy10 with SMTP id y10so6313923pdj.7
+        for <git@vger.kernel.org>; Thu, 05 Feb 2015 00:13:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:in-reply-to:subject:references:message-id:content-type
-         :content-transfer-encoding:mime-version:date:cc;
-        bh=UB/Idrrylv8qoGlk47vSK17SWecuW29fM26pJkp7vds=;
-        b=RM+HMpya3Ccf6HtsF5JVkRiGsdWu0o7r3nEm88R1gpEvm8+gD5ffIhAu1GjZ7oWrwX
-         Ffjuf1vMysv79IyB/r0PDAPCFuxrBwf2YfqxNuBzLaj7SHvifq/VVMY1oG2zf2hy4gYq
-         MUDKjaI2FuS1rKJlxa6H5A7o5lrGiwp6zKRmAxsX/JbPcfr5uKzyHDpgwpGl2jHqmN5U
-         s1knNhNRt6AaqTUGkMA3Afd83RmUORqtFasM6GauvNBFeCwboRJmOJ1YJgJhtvaW3W2y
-         LWweqtNi7gqRhI82MiJuKV+c5/H8GDR1RlbCG50IHXVoUoz2dqwFEpP39RKAQ6EILohw
-         5iFQ==
-X-Received: by 10.68.98.98 with SMTP id eh2mr3757243pbb.112.1423121968484;
-        Wed, 04 Feb 2015 23:39:28 -0800 (PST)
-Received: from [172.16.16.105] (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
-        by mx.google.com with ESMTPSA id y2sm1182785pbt.36.2015.02.04.23.39.27
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Wed, 04 Feb 2015 23:39:27 -0800 (PST)
-In-Reply-To: <20150205061142.GA31599@odin.ulthar.us>
-X-Mauler: Craptastic (2.936)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=Ro7ZzoVndkVmxzlDlpY5iSWsWt4AJEwQp4Nraj92Jqk=;
+        b=xEOjrV6LZ6KyhS42ogx93upcOzRrDnHa9o625UB/OW8c+5Fl5KaLS2azSgWh2jBs2u
+         gpFf2+RIY51eeRI6taN61UKZfGyxNiFyRh3paXPw1kvCNrbddqByMIRGKC5Yzw/cgVDH
+         6tH+AyXGbs63GCwaMaueXmswYrrv4fmKgeZhc8cS3JkAfKXSb8pLr/umodTJ+ek8ZkUf
+         vUm3ITX6YTSQfkjGfwn4hog+X2CxgHNimC3SRsI92H+kxWLpk/SS+7U8yKIL2b/Jfw5I
+         map0PvLD/mrDkLCZV/wsFoG+2WHhJjXtpzABj472vOuBXPKZHUGWafq+5nh9xNuToAcP
+         fO1A==
+X-Received: by 10.70.44.132 with SMTP id e4mr3773729pdm.58.1423124025304; Thu,
+ 05 Feb 2015 00:13:45 -0800 (PST)
+Received: by 10.70.109.199 with HTTP; Thu, 5 Feb 2015 00:13:45 -0800 (PST)
+In-Reply-To: <54D0EEB9.1090803@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263364>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263365>
 
-On Feb 4, 2015, at 22:11, Scott Schmit wrote:
-
-> In my use of git, I've noticed that "git status" is a lot better at
-> tracking moves and renames than "git diff", and this has recently  
-> caused
-> me a lot of headaches because a large number of moves were made in a
-> single commit, and it was very difficult to figure out which moves  
-> were
-> right and which were wrong.
+On Wed, Feb 4, 2015 at 4:52 AM, R=C3=A9mi Rampin <remirampin@gmail.com>=
+ wrote:
+> 2015-02-02 12:24 UTC-05:00, Remi Rampin <remirampin@gmail.com>:
+>>>  proc _is_git {path} {
+>>> +       if {[file isfile $path]} {
+>>> +               set fp [open $path r]
+>>> +               gets $fp line
+>>> +               close $fp
+>>> +               if {[regexp "^gitdir: (.+)$" $line line link_target=
+]} {
 >
-> I was using a fairly old version of git (1.7.11), but was able to
-> reproduce it on git 2.2.1.
+> 2015-02-03 3:44 UTC-05:00, Chris Packham <judge.packham@gmail.com>:
+>> It might be simpler to use one of the 'string' commands e.g. string
+>> wordend "gitdir: " I also suspect the string functions would be fast=
+er
+>> than regexp but that probably doesn't matter.
 >
-> Here's a reproduction recipe:
-[...]
-> # Now "shift" the files
-> git mv 2 3
-> git mv 1 2
-[...]
-> git commit -m "2=1;3=2;"
+> I want to check that the file actually begins with "gitdir: " and the=
+n
+> extract the path, so I'm not sure if using string functions is that
+> simple/fast.
+
+Makes sense.
+
 >
-> # Neither of these commands get it (but -C gets a glimmer of the  
-> truth)
-> git diff -M --stat --summary HEAD~..
-> git diff -C --stat --summary HEAD~..
-
-Ah, but did you try this:
-
-   git diff -B -M --stat --summary HEAD~..
-
-> # Swap the files in place
-> git mv 3 tmp
-> git mv 2 3
-> git mv tmp 2
-[...]
-> git commit -m "Swap 2 & 3"
+>>> +                       return [_is_git [file join [file dirname $p=
+ath] $link_target]]
 >
-> # Diff has no idea
-> git diff -M --stat --summary HEAD~..
-> git diff -C --stat --summary HEAD~..
+>> Do we want to avoid pathological cases of infinite recursion? Someon=
+e
+>> would have to maliciously create such a situation.
+>
+> Limiting the recursion is very simple, but I'm not sure people are
+> supposed to stumble on that. More importantly this probably calls for=
+ a
+> different error message, thus a new error result that I am not ready =
+to
+> implement. But it could be another patch.
+> But I suppose I can add a simple "return 0" limit to the recursion if
+> needed, let me know.
 
-Again, try this:
-
-   git diff -B -M --stat --summary HEAD~..
-
-You can even use this:
-
-   git log -B -M --summary
-
-to see them all.
-
-While you can configure -M (or -C) to be on by default (see git config  
-diff.renames), there does not appear to be a config option to turn on - 
-B (--break-rewrites) by default.
-
-And according to a recent thread [1], using -B and -M together can  
-produce incorrect results so you might not want them both on by  
-default anyway.
-
--Kyle
-
-[1] http://thread.gmane.org/gmane.linux.kernel/1879635
+It'd have to be fairly intentional to cause any real problems. The one
+thing I was thinking was to factor out the part that checks for HEAD
+info objects etc into a __is_git that _is_git could call thus
+eliminating recursion but I don't see it really being anything more
+than a theoretical issue.
