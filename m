@@ -1,98 +1,124 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: [PATCH 1/2] Fixes _is_git
-Date: Thu, 5 Feb 2015 21:13:45 +1300
-Message-ID: <CAFOYHZAerQWpeOPzD5D3gqKdWYvaCE3vB88Y_iD30eRF5MC2DQ@mail.gmail.com>
-References: <CAMto89CHf4OT_S05SaRrVRZvF-PH2_6DrcEpdGiUfaRGutJQHw@mail.gmail.com>
-	<1422897883-11036-1-git-send-email-remirampin@gmail.com>
-	<CAFOYHZBHoXC34gBu_Lx347f=-uUcVM1nHYT87SzxfeMa=KdFgw@mail.gmail.com>
-	<54D0EEB9.1090803@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] decimal_width: avoid integer overflow
+Date: Thu, 5 Feb 2015 03:14:19 -0500
+Message-ID: <20150205081419.GA7666@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Pat Thoyts <patthoyts@users.sourceforge.net>,
-	GIT <git@vger.kernel.org>
-To: =?UTF-8?B?UsOpbWkgUmFtcGlu?= <remirampin@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 05 09:13:53 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 05 09:14:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YJHZP-0002z1-A7
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Feb 2015 09:13:51 +0100
+	id 1YJHZz-0003Ix-59
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Feb 2015 09:14:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756565AbbBEINq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Feb 2015 03:13:46 -0500
-Received: from mail-pd0-f179.google.com ([209.85.192.179]:40869 "EHLO
-	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755192AbbBEINp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 Feb 2015 03:13:45 -0500
-Received: by pdjy10 with SMTP id y10so6313923pdj.7
-        for <git@vger.kernel.org>; Thu, 05 Feb 2015 00:13:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=Ro7ZzoVndkVmxzlDlpY5iSWsWt4AJEwQp4Nraj92Jqk=;
-        b=xEOjrV6LZ6KyhS42ogx93upcOzRrDnHa9o625UB/OW8c+5Fl5KaLS2azSgWh2jBs2u
-         gpFf2+RIY51eeRI6taN61UKZfGyxNiFyRh3paXPw1kvCNrbddqByMIRGKC5Yzw/cgVDH
-         6tH+AyXGbs63GCwaMaueXmswYrrv4fmKgeZhc8cS3JkAfKXSb8pLr/umodTJ+ek8ZkUf
-         vUm3ITX6YTSQfkjGfwn4hog+X2CxgHNimC3SRsI92H+kxWLpk/SS+7U8yKIL2b/Jfw5I
-         map0PvLD/mrDkLCZV/wsFoG+2WHhJjXtpzABj472vOuBXPKZHUGWafq+5nh9xNuToAcP
-         fO1A==
-X-Received: by 10.70.44.132 with SMTP id e4mr3773729pdm.58.1423124025304; Thu,
- 05 Feb 2015 00:13:45 -0800 (PST)
-Received: by 10.70.109.199 with HTTP; Thu, 5 Feb 2015 00:13:45 -0800 (PST)
-In-Reply-To: <54D0EEB9.1090803@gmail.com>
+	id S1752705AbbBEIOX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Feb 2015 03:14:23 -0500
+Received: from cloud.peff.net ([50.56.180.127]:45340 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752099AbbBEIOW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Feb 2015 03:14:22 -0500
+Received: (qmail 10474 invoked by uid 102); 5 Feb 2015 08:14:22 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 05 Feb 2015 02:14:22 -0600
+Received: (qmail 28830 invoked by uid 107); 5 Feb 2015 08:14:22 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 05 Feb 2015 03:14:22 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 05 Feb 2015 03:14:19 -0500
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263365>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263366>
 
-On Wed, Feb 4, 2015 at 4:52 AM, R=C3=A9mi Rampin <remirampin@gmail.com>=
- wrote:
-> 2015-02-02 12:24 UTC-05:00, Remi Rampin <remirampin@gmail.com>:
->>>  proc _is_git {path} {
->>> +       if {[file isfile $path]} {
->>> +               set fp [open $path r]
->>> +               gets $fp line
->>> +               close $fp
->>> +               if {[regexp "^gitdir: (.+)$" $line line link_target=
-]} {
->
-> 2015-02-03 3:44 UTC-05:00, Chris Packham <judge.packham@gmail.com>:
->> It might be simpler to use one of the 'string' commands e.g. string
->> wordend "gitdir: " I also suspect the string functions would be fast=
-er
->> than regexp but that probably doesn't matter.
->
-> I want to check that the file actually begins with "gitdir: " and the=
-n
-> extract the path, so I'm not sure if using string functions is that
-> simple/fast.
+The decimal_width function originally appeared in blame.c as
+"lineno_width", and was designed for calculating the
+print-width of small-ish integer values (line numbers in
+text files). In ec7ff5b, it was made into a reusable
+function, and in dc801e7, we started using it to align
+diffstats.
 
-Makes sense.
+Binary files in a diffstat show byte counts rather than line
+numbers, meaning they can be quite large (e.g., consider
+adding or removing a 2GB file). decimal_width is not up to
+the challenge for two reasons:
 
->
->>> +                       return [_is_git [file join [file dirname $p=
-ath] $link_target]]
->
->> Do we want to avoid pathological cases of infinite recursion? Someon=
-e
->> would have to maliciously create such a situation.
->
-> Limiting the recursion is very simple, but I'm not sure people are
-> supposed to stumble on that. More importantly this probably calls for=
- a
-> different error message, thus a new error result that I am not ready =
-to
-> implement. But it could be another patch.
-> But I suppose I can add a simple "return 0" limit to the recursion if
-> needed, let me know.
+  1. It takes the value as an "int", whereas large files may
+     easily surpass this. The value may be truncated, in
+     which case we will produce an incorrect value.
 
-It'd have to be fairly intentional to cause any real problems. The one
-thing I was thinking was to factor out the part that checks for HEAD
-info objects etc into a __is_git that _is_git could call thus
-eliminating recursion but I don't see it really being anything more
-than a theoretical issue.
+  2. It counts "up" by repeatedly multiplying another
+     integer by 10 until it surpasses the value.  This can
+     cause an infinite loop when the value is close to the
+     largest representable integer.
+
+     For example, consider using a 32-bit signed integer,
+     and a value of 2,140,000,000 (just shy of 2^31-1).
+     We will count up and eventually see that 1,000,000,000
+     is smaller than our value. The next step would be to
+     multiply by 10 and see that 10,000,000,000 is too
+     large, ending the loop. But we can't represent that
+     value, and we have signed overflow.
+
+     This is technically undefined behavior, but a common
+     behavior is to lose the high bits, in which case our
+     iterator will certainly be less than the number. So
+     we'll keep multiplying, overflow again, and so on.
+
+This patch changes the argument to a uintmax_t (the same
+type we use to store the diffstat information for binary
+filese), and counts "down" by repeatedly dividing our value
+by 10.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+Note that besides taking a larger type, we also switch to an unsigned
+type. I don't think a signed value makes any sense here (do we include
+the "-" or not?), and certainly would not have behaved correctly with
+the old code. I did a quick look over all the callers, and they all look
+to be conceptually unsigned.
+
+ cache.h | 2 +-
+ pager.c | 8 ++++----
+ 2 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/cache.h b/cache.h
+index f704af5..04951dd 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1498,7 +1498,7 @@ extern const char *pager_program;
+ extern int pager_in_use(void);
+ extern int pager_use_color;
+ extern int term_columns(void);
+-extern int decimal_width(int);
++extern int decimal_width(uintmax_t);
+ extern int check_pager_config(const char *cmd);
+ 
+ extern const char *editor_program;
+diff --git a/pager.c b/pager.c
+index f6e8c33..98b2682 100644
+--- a/pager.c
++++ b/pager.c
+@@ -133,12 +133,12 @@ int term_columns(void)
+ /*
+  * How many columns do we need to show this number in decimal?
+  */
+-int decimal_width(int number)
++int decimal_width(uintmax_t number)
+ {
+-	int i, width;
++	int width;
+ 
+-	for (width = 1, i = 10; i <= number; width++)
+-		i *= 10;
++	for (width = 1; number >= 10; width++)
++		number /= 10;
+ 	return width;
+ }
+ 
+-- 
+2.3.0.rc1.287.g761fd19
