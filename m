@@ -1,62 +1,56 @@
-From: Joachim Schmitz <jojo@schmitz-digital.de>
-Subject: Re: read()  =?utf-8?b?TUFYX0lPX1NJWkU=?= bytes, more than =?utf-8?b?U1NJWkVfTUFYPw==?=
-Date: Sat, 7 Feb 2015 19:14:06 +0000 (UTC)
-Message-ID: <loom.20150207T201128-590@post.gmane.org>
-References: <loom.20150207T174514-727@post.gmane.org>
+From: "Antonio Vinal" <ferderodcal@aol.jp>
+Subject: Please respond!!!
+Date: Thu, 5 Feb 2015 18:12:59 -0000
+Message-ID: <201502052110.t15L9tXB075523@ufps.kuban.su>
+Reply-To: <barr.antoniovinal@yahoo.com.hk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+	charset="Windows-1251"
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 07 20:14:25 2015
+To: undisclosed-recipients:;
+X-From: git-owner@vger.kernel.org Sat Feb 07 20:37:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YKApk-0002sr-Bt
-	for gcvg-git-2@plane.gmane.org; Sat, 07 Feb 2015 20:14:24 +0100
+	id 1YKBCH-0005mU-U3
+	for gcvg-git-2@plane.gmane.org; Sat, 07 Feb 2015 20:37:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758711AbbBGTOU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Feb 2015 14:14:20 -0500
-Received: from plane.gmane.org ([80.91.229.3]:56684 "EHLO plane.gmane.org"
+	id S1756058AbbBGTgQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Feb 2015 14:36:16 -0500
+Received: from ufps.kuban.su ([62.183.43.38]:52463 "EHLO ufps.kuban.su"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758708AbbBGTOT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Feb 2015 14:14:19 -0500
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1YKApc-0002og-9C
-	for git@vger.kernel.org; Sat, 07 Feb 2015 20:14:16 +0100
-Received: from dslb-188-109-251-074.188.109.pools.vodafone-ip.de ([188.109.251.74])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 07 Feb 2015 20:14:16 +0100
-Received: from jojo by dslb-188-109-251-074.188.109.pools.vodafone-ip.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 07 Feb 2015 20:14:16 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 188.109.251.74 (Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko)
+	id S1755873AbbBGTgP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Feb 2015 14:36:15 -0500
+X-Greylist: delayed 763 seconds by postgrey-1.27 at vger.kernel.org; Sat, 07 Feb 2015 14:36:14 EST
+Received: from User (supervds.org [162.248.75.196] (may be forged))
+	(authenticated bits=0)
+	by ufps.kuban.su (8.14.3/8.13.8) with ESMTP id t15L9tXB075523;
+	Thu, 5 Feb 2015 21:10:23 GMT
+	(envelope-from ferderodcal@aol.jp)
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2600.0000
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
+X-Virus-Scanned: clamav-milter 0.96 at ufps.kuban.su
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263452>
+X-Spam-Report: 7.1 points;
+ *  2.2 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
+ *      [Blocked - see <http://www.spamcop.net/bl.shtml?62.183.43.38>]
+ *  0.7 MSOE_MID_WRONG_CASE MSOE_MID_WRONG_CASE
+ *  4.2 FORGED_MUA_OUTLOOK Forged mail pretending to be from MS Outlook
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263453>
 
-Joachim Schmitz <jojo <at> schmitz-digital.de> writes:
+Hello friend!
 
-<snip>
-> and as a (rather strange) 
-> consequence mmap() (from compat/mmap.c) fails with EACCESS (why 
-EACCESS?), 
-> because xpread() returns something > 0.
+I would like to contact you personally for an important proposal that could of interest to you.
+I send this email only to know if this email address is functional.
+I have something very important to discuss with you. Contact me for details by:  Email: fernrodyup12@aol.jp with your direct contacts.
 
-Seems mmap() should either set errno to EINVAL or not set it at all an 
-just 'forward' whatever xpread() has set.
-
-As per http://man7.org/linux/man-pages/man2/mmap.2.html mmap() sets EINVAL 
-if (amongst other things) it doesn't like the value of len, exactly the 
-case here.
-
-bye, Jojo
+Kind regards.
+Antonio Vi?al.
