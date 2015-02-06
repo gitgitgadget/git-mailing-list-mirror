@@ -1,82 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] apply: do not allow reversing a 'copy' patch
-Date: Fri, 06 Feb 2015 15:06:01 -0800
-Message-ID: <xmqqa90qd4iu.fsf@gitster.dls.corp.google.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH] apply: do not allow reversing a 'copy' patch
+Date: Fri, 6 Feb 2015 15:39:46 -0800
+Message-ID: <CAGZ79kbLGEmVWvDki9UefzX9zj8m+O9_nWH07WLxqTym4mptGg@mail.gmail.com>
 References: <xmqqvbjed76s.fsf@gitster.dls.corp.google.com>
+	<xmqqa90qd4iu.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 07 00:06:12 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 07 00:39:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YJryV-0002xo-5P
-	for gcvg-git-2@plane.gmane.org; Sat, 07 Feb 2015 00:06:11 +0100
+	id 1YJsVC-0000Cx-74
+	for gcvg-git-2@plane.gmane.org; Sat, 07 Feb 2015 00:39:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756245AbbBFXGG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Feb 2015 18:06:06 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:55364 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753096AbbBFXGE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Feb 2015 18:06:04 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 10D07344C4;
-	Fri,  6 Feb 2015 18:06:03 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=S4Shd96ZhyLRt+SXg8n3Fh0KFdk=; b=HZmIrI
-	WxnAIYI9bMUYym55VzAVemYBiNFf/lUkTltMMFwf+gn2JaXGOrZnOy0wtn7NWsO1
-	w+X0qTip6nEXpePRUPcvWB+qab9rOCy5GUZiKngHVSu7cg1+lCBNWkkjyrfjnv2q
-	A2qO9JOG9sNUeBKQJ5zfkPaqJLviLhvfhOcrA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wLRZFk5e5T8jgxvDpgFwx96FYMYX7lnl
-	sMITCG3g3lvJ8RMha0ILjg/4czu1YIU3rIQhdYUCfHgQzcCOKvHYnL0vC/kdQOlI
-	Rho8UmK9RG2jZVOsv+nP3PqDZwK5f3AGmbla7SwLK6doBoZPLa/uODcF0FAa68CL
-	q/tlP/HWu2E=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 07F27344C3;
-	Fri,  6 Feb 2015 18:06:03 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 80E3D344C2;
-	Fri,  6 Feb 2015 18:06:02 -0500 (EST)
-In-Reply-To: <xmqqvbjed76s.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Fri, 06 Feb 2015 14:08:27 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: B89700E4-AE54-11E4-ADCF-7BA29F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1753850AbbBFXjs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Feb 2015 18:39:48 -0500
+Received: from mail-ig0-f180.google.com ([209.85.213.180]:37397 "EHLO
+	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752550AbbBFXjr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Feb 2015 18:39:47 -0500
+Received: by mail-ig0-f180.google.com with SMTP id b16so6240600igk.1
+        for <git@vger.kernel.org>; Fri, 06 Feb 2015 15:39:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=JsFKUXcey+eaQ+RGe9byup03q/eCqx3Lf+Fcwd0XcBs=;
+        b=mD/xj5O9jK6aMQoW0kFdARx6NEb9pF7O+XWxbyTYIZNm51PDA6RKOWwovKF5WrB+un
+         +P3hnKYJDsOKAKrr65iFDG3Vg6lXRPUPDC1V6ktzH+aoZ7wppLjg+q2dD0daiXj0PvY9
+         kVw7P/kSrEwlo1FjHLJjNvqUykFb3sxydWJkozjVM0tT7DR32zOtj0DVlaFcmfg7PJ10
+         VHAHph1oBrLF6lacr0qIn/ncYfWcZdN8AtUP7NgVMNBcN1ryrGx5LyV0N6sKzFEcSPCd
+         tfv5IlBzZHDebHW6hcgswtHVcqNlNh3A00K7gKX3jxgt1YzYF7rXxoELlkSG5CBDlOY7
+         zqWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=JsFKUXcey+eaQ+RGe9byup03q/eCqx3Lf+Fcwd0XcBs=;
+        b=I481/Q5ewPPquu8ngYCwkvdpJX7P5ZTnZnEnBtIlK9wdhCCj3xMqZLJ7hRuAzHvhye
+         BbxV28k9gIP5Xzf5DwqBmNJBF9NcHLdY7VlJOSlvgLRxtMUvOrkC8JpWzOi5O3t8eWyR
+         lvL0ZxKRIL/YGc9zIcuIg52ahtV5EmcFhPWTOZ4gkk3UNPAFTNNIqOyHe0wX98rTTdCr
+         gkH7H2nYTwRzMgdluBySiktnT8USWLUSmVJmyTp0lkNGqdNADKMRaq/21eWnVyy/2EdW
+         IhFyjLtdoNrNMfoZW1qT9S4K07FpR/i7DuwGA8yFKGEsEuQP2VKc9vJzmFYXaw3/h7uB
+         uT4g==
+X-Gm-Message-State: ALoCoQman6OGZragTAi4mMQPZ3Uyv+SwTAwNovSQb7+uUbND6VmhRYp/Ladv+fU8HJfVwHGEZgrU
+X-Received: by 10.107.16.169 with SMTP id 41mr13385141ioq.33.1423265986707;
+ Fri, 06 Feb 2015 15:39:46 -0800 (PST)
+Received: by 10.50.26.42 with HTTP; Fri, 6 Feb 2015 15:39:46 -0800 (PST)
+In-Reply-To: <xmqqa90qd4iu.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263434>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263435>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Fri, Feb 6, 2015 at 3:06 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> +                       die(_("sorry, cannot apply a 'copying' patch in reverse (yet)"));
 
->         Action item: warn users against using "apply -R" on a
->         patchset with such a patch while this is fixed.
+Is it wise to give the reader of the output hope that this is not
+implemented (yet)
+but may be in the future?
 
-This needs to be replaced with the logic to properly reverse a patch
-that creates a new file by copying from somewhere else, but for now,
-this would be a good idea to prevent lossages from happening.
-
- builtin/apply.c | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/builtin/apply.c b/builtin/apply.c
-index 0aad912..b33b403 100644
---- a/builtin/apply.c
-+++ b/builtin/apply.c
-@@ -2069,6 +2069,9 @@ static void reverse_patches(struct patch *p)
- 	for (; p; p = p->next) {
- 		struct fragment *frag = p->fragments;
- 
-+		if (p->is_copy)
-+			die(_("sorry, cannot apply a 'copying' patch in reverse (yet)"));
-+
- 		swap(p->new_name, p->old_name);
- 		swap(p->new_mode, p->old_mode);
- 		swap(p->is_new, p->is_delete);
+I'd drop the "sorry" as well as the "(yet)" as the style of this error
+message seems
+to differ from other error messages in git.
