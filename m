@@ -1,71 +1,100 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [ANNOUNCE] Git v2.3.0
-Date: Fri, 6 Feb 2015 13:56:19 +0100
-Message-ID: <CACBZZX7a-NndphJMOcdh-v91_yOnicLzhSoO17jtcOKJn23gXA@mail.gmail.com>
-References: <xmqqvbjghsw0.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: BUG: 'error: invalid key: pager.show_ref' on 'git show_ref'
+Date: Fri, 6 Feb 2015 14:33:13 -0500
+Message-ID: <20150206193313.GA4220@peff.net>
+References: <20150206124528.GA18859@inner.h.apk.li>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Linux Kernel <linux-kernel@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: linux-kernel-owner@vger.kernel.org Fri Feb 06 13:56:46 2015
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Andreas Krey <a.krey@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Feb 06 20:33:22 2015
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1YJiSj-0000dC-FD
-	for glk-linux-kernel-3@plane.gmane.org; Fri, 06 Feb 2015 13:56:45 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1YJoeW-0002W3-Rm
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Feb 2015 20:33:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756506AbbBFM4l (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Fri, 6 Feb 2015 07:56:41 -0500
-Received: from mail-ob0-f171.google.com ([209.85.214.171]:46659 "EHLO
-	mail-ob0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752096AbbBFM4k (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Fri, 6 Feb 2015 07:56:40 -0500
-Received: by mail-ob0-f171.google.com with SMTP id gq1so12966158obb.2;
-        Fri, 06 Feb 2015 04:56:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=wJygbTSQi+/UEwxz82ILd4Uz1iXXrzLL7WB+N4TrpOQ=;
-        b=OQ/LfcFkqv+xWLQmfcuDHfuBdcGOy/sulz9TPNx/YaA7mEOgpzeptg6Odwg+Ki8yuL
-         Ll7GZEmDFP19VG55s4jyc+QgXGYJZ6LITBWGJxkbSGpoMLN8roRWuBtlagcc1TPjRg/U
-         I5e4/jY8EJKrHJi3Je1mHSCZjbhghwewkxfzezfJXdj9f4zaMLK0CtckJIeZ+fSDgjhC
-         jgjo+DE5O0Kh9zMjKC3EivLrHDbyBXUimfHR828FBiWSmIKRQHPpAeAXbE7qF0+MuTUe
-         tgly0ddGCvxVgl+VRGryUWspSUhmcMzt0UL9b7A0XYnYye5/o3vD1lBEN26mrShGAWZ/
-         gEMQ==
-X-Received: by 10.202.104.68 with SMTP id d65mr2219671oic.129.1423227399475;
- Fri, 06 Feb 2015 04:56:39 -0800 (PST)
-Received: by 10.76.50.70 with HTTP; Fri, 6 Feb 2015 04:56:19 -0800 (PST)
-In-Reply-To: <xmqqvbjghsw0.fsf@gitster.dls.corp.google.com>
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1754530AbbBFTdQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Feb 2015 14:33:16 -0500
+Received: from cloud.peff.net ([50.56.180.127]:46051 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752144AbbBFTdQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Feb 2015 14:33:16 -0500
+Received: (qmail 3536 invoked by uid 102); 6 Feb 2015 19:33:15 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 06 Feb 2015 13:33:15 -0600
+Received: (qmail 11068 invoked by uid 107); 6 Feb 2015 19:33:16 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 06 Feb 2015 14:33:16 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 06 Feb 2015 14:33:13 -0500
+Content-Disposition: inline
+In-Reply-To: <20150206124528.GA18859@inner.h.apk.li>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263417>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263418>
 
-On Thu, Feb 5, 2015 at 11:53 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> The latest feature release Git v2.3.0 is now available at the
-> usual places.
->
-> [...]
->  * Git 2.0 was supposed to make the "simple" mode for the default of
->    "git push", but it didn't.
->    (merge 00a6fa0 jk/push-simple later to maint).
+On Fri, Feb 06, 2015 at 01:45:28PM +0100, Andreas Krey wrote:
 
-Maybe I'm misunderstanding what this does, but changing the push
-default was *the* backwards compatibility breakage we advertised for
-v2.0.0[1].
+> there seems to be a regression in the behaviour of 'git show_ref'
+> (note the underscore). In v2.0.3-711-g586f414 it starts to say:
+> 
+>   $ ./git show_ref
+>   error: invalid key: pager.show_ref
+>   git: 'show_ref' is not a git command. See 'git --help'.
+> 
+> and somewhere (probably two commits, judging the diffs)
+> later that changes again to:
+> 
+>   $ git show_ref
+>   error: invalid key: pager.show_ref
+>   error: invalid key: alias.show_ref
+>   git: 'show_ref' is not a git command. See 'git --help'.
+> 
+> Apparently we need to squelch this message from
+> within git_config_get_* in this case?
 
-A lot of users (including myself) upgraded to v2.0.0 very carefully
-making sure that the common pattern of "git push" our users were using
-wasn't broken.
+This is highlighting the problem with "pager.*" that Junio mentioned
+recently, which is that the keyname has arbitrary data, but
+syntactically is limited to alnum and "-". This should have been:
 
-But apparently that change isn't taking effect until now. If so I
-think this needs to be advertised a lot more prominently than buried
-down along with other miscellaneous fixes in the changelog.
+  pager.show_ref.enabled
 
-1. https://git.kernel.org/cgit/git/git.git/tree/Documentation/RelNotes/2.0.0.txt
+from the beginning. But of course it was not. Even if we transition, we
+would want to support pager.* for a while.
+
+I don't think squelching the messages is quite the right approach. They
+come from git_config_parse_key, which barfs on parsing the syntactically
+invalid keyname. So not only are we complaining, but we are not actually
+looking up the value. I don't think that's technically a regression in
+586f414, though. The reader started to complain, but AFAICT git would
+not agree to parse a file containing:
+
+  [pager]
+  show_ref = true
+
+in the first place. So it is not a new problem, but it is a bug that you
+cannot set pager config for such a command or alias.
+
+I can think of a few possible paths forward:
+
+  1. Squelch the messages, and declare "show_ref" and friends
+     out-of-luck for pager config or aliases.
+
+  2. Relax the syntactic rules for config keys to allow more characters.
+     We cannot make this perfect (e.g., we cannot allow "." for reasons
+     of ambiguity), but I imagine we could cover most practical cases.
+
+     Note that we would need the matching loosening on the file-parsing
+     side.
+
+  3. Start phasing in pager.*.enabled (and I guess pager.*.command). We
+     would still do the lookup of pager.* for backwards compatibility,
+     but we would be careful to do so only when it is syntactically
+     valid. IOW, this looks like (1), except the path forward for
+     "show_ref" is to use the new, more robust, syntax.
+
+-Peff
