@@ -1,52 +1,130 @@
-From: Joachim Schmitz <jojo@schmitz-digital.de>
-Subject: Re: read()  =?utf-8?b?TUFYX0lPX1NJWkU=?= bytes, more than =?utf-8?b?U1NJWkVfTUFYPw==?=
-Date: Sat, 7 Feb 2015 16:48:54 +0000 (UTC)
-Message-ID: <loom.20150207T174757-863@post.gmane.org>
-References: <loom.20150207T174514-727@post.gmane.org>
+From: "Randall S. Becker" <rsbecker@nexbridge.com>
+Subject: RE: hang in git-upload-pack
+Date: Sat, 7 Feb 2015 11:48:50 -0500
+Message-ID: <01dd01d042f5$f3a03d10$dae0b730$@nexbridge.com>
+References: <loom.20150207T171056-519@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+	charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 07 17:50:15 2015
+To: "'Joachim Schmitz'" <jojo@schmitz-digital.de>,
+	<git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Feb 07 18:15:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YK8aE-0008Dl-9L
-	for gcvg-git-2@plane.gmane.org; Sat, 07 Feb 2015 17:50:14 +0100
+	id 1YK8yi-0002vm-BL
+	for gcvg-git-2@plane.gmane.org; Sat, 07 Feb 2015 18:15:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755958AbbBGQuH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Feb 2015 11:50:07 -0500
-Received: from plane.gmane.org ([80.91.229.3]:51564 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755689AbbBGQuF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Feb 2015 11:50:05 -0500
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1YK8a3-00088z-2R
-	for git@vger.kernel.org; Sat, 07 Feb 2015 17:50:03 +0100
-Received: from dslb-188-109-251-074.188.109.pools.vodafone-ip.de ([188.109.251.74])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 07 Feb 2015 17:50:03 +0100
-Received: from jojo by dslb-188-109-251-074.188.109.pools.vodafone-ip.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 07 Feb 2015 17:50:03 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 188.109.251.74 (Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko)
+	id S1758469AbbBGRP2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Feb 2015 12:15:28 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:55455 "EHLO
+	elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755887AbbBGRP1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Feb 2015 12:15:27 -0500
+X-Greylist: delayed 1591 seconds by postgrey-1.27 at vger.kernel.org; Sat, 07 Feb 2015 12:15:27 EST
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from pangea (CPE0023eb577e25-CM602ad06c91a7.cpe.net.cable.rogers.com [99.237.128.150])
+	(authenticated bits=0)
+	by elephants.elehost.com (8.14.9/8.14.9) with ESMTP id t17GmpK9094969
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+	Sat, 7 Feb 2015 11:48:52 -0500 (EST)
+	(envelope-from rsbecker@nexbridge.com)
+In-Reply-To: <loom.20150207T171056-519@post.gmane.org>
+X-Mailer: Microsoft Outlook 15.0
+Thread-Index: AQJDfamoLIQdaLdh4v9OrkZBkSaz8pv+8C0g
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263444>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263445>
 
-Joachim Schmitz <jojo <at> schmitz-digital.de> writes:
+> -----Original Message-----
+>Sent: February 7, 2015 11:26 AM
+>In HP-Nonstop we're experiencing hangs in git-upload-pack, which seems to
+be the result
+>of reads from / writes to pipes don't ever finish or don't get interrupted
+properly (SIGPIPE, SIGCHLD?)
+>Any idea why that might be and how to fix it?
 
-> because xpread() returns something > 0.
- something < 0 of course (presumably -1)...
+More context on this issue:
+This is a new port of Git 2.3 to HP NonStop OSS (POSIX-ish). With very
+minimal changes in git_compat-util.h to include floss and wrapper.c (below),
+we are able to clone remote repositories and work on local repositories
+without issue. However, when attempting to fetch from a local bare
+repository (set up as a remote but on the same server) into a working
+repository, or when a remote client attempts to clone from any repository on
+the server over any protocol, we end up with git-upload-pack hanging as the
+common point of failure. Note that this function has not worked in prior
+version of git, so we have no working reference to compare. The team is
+suspecting differences in how the OS deals with pipes but our primary need
+from the community is some guidance on continuing our investigation in
+resolving this.
 
-bye, Jojo
+Most git tests succeed except for: t0025(test 2), t0301(test
+12-expected),t5507(test 4 - suspicious of this),t9001(expected).
+
+A sample trace showing the issue is below. There are no external clients
+involved in this sample. This is git to git locally. The condition appears
+to be representative of all of the hangs.
+
+GIT_TRACE=1 /usr/local/bin/git --exec-path=/usr/local/bin fetch
+old_floss_tail
+09:52:01.198401 trace: built-in: git 'fetch' 'old_floss_tail'
+09:52:01.226684 trace: run_command: 'git-upload-pack
+'\''/home/git/floss.git/.git'\'''
+09:52:01.229229 trace: exec: '/usr/local/bin/bash' '-c' 'git-upload-pack
+'\''/home/git/floss.git/.git'\''' 'git-upload-pack
+'\''/home/git/floss.git/.git'\'''
+09:52:01.303638 trace: run_command: 'rev-list' '--objects' '--stdin' '--not'
+'--all' '--quiet'
+warning: no common commits
+09:52:01.438320 trace: run_command: 'pack-objects' '--revs' '--thin'
+'--stdout' '--progress' '--delta-base-offset' '--include-tag'
+remote: 09:52:01.445274 trace: exec: 'git' 'pack-objects' '--revs' '--thin'
+'--stdout' '--progress' '--delta-base-offset' '--include-tag'
+remote: 09:52:01.463846 trace: built-in: git 'pack-objects' '--revs'
+'--thin' '--stdout' '--progress' '--delta-base-offset' '--include-tag'
+remote: Counting objects: 485, done.
+remote: Compressing objects: 100% (472/472), done.
+<<<< Hangs forever at this point. >>>> 
+
+The git-unpack-load is stopped at (not that the addresses might mean much):
+  xread + 0x130 (UCr)
+  create_pack_file + 0x18F0 (UCr)
+  upload_pack + 0x450 (UCr)
+  .
+
+There are two git processes at:
+  xread + 0x130 (UCr)
+  read_in_full + 0x130 (UCr)
+  get_packet_data + 0x4A0 (UCr)
+  .
+
+And one git is at:
+  xwrite + 0x130 (UCr)
+  flush + 0x530 (UCr)
+  sha1write + 0x600 (UCr)
+  write_no_reuse_object + 0x1390 (UCr)
+  .
+
+Wrapper.c change:
+@@ -173,7 +173,12 @@ void *xcalloc(size_t nmemb, size_t size)
+  * the absence of bugs, large chunks can result in bad latencies when
+  * you decide to kill the process.
+  */
+-#define MAX_IO_SIZE (8*1024*1024)
++#ifdef __TANDEM
++# include <limits.h> /* SSIZE_MAX == 52k */
++# define MAX_IO_SIZE SSIZE_MAX
++#else
++# define MAX_IO_SIZE (8*1024*1024)
++#endif
+
+Best Regards,
+Randall
+-- Brief whoami: NonStop&UNIX developer since approximately
+UNIX(421664400)/NonStop(211288444200000000)
