@@ -1,8 +1,7 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 01/11] refs: move REF_DELETING to refs.c
-Date: Sun,  8 Feb 2015 17:13:55 +0100
-Message-ID: <1423412045-15616-2-git-send-email-mhagger@alum.mit.edu>
-References: <1423412045-15616-1-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH 00/11] Allow reference values to be checked in a transaction
+Date: Sun,  8 Feb 2015 17:13:54 +0100
+Message-ID: <1423412045-15616-1-git-send-email-mhagger@alum.mit.edu>
 Cc: Stefan Beller <sbeller@google.com>,
 	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
@@ -10,92 +9,108 @@ Cc: Stefan Beller <sbeller@google.com>,
 	<pclouds@gmail.com>, git@vger.kernel.org,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 08 17:14:42 2015
+X-From: git-owner@vger.kernel.org Sun Feb 08 17:21:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YKUVO-0002tl-5d
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Feb 2015 17:14:42 +0100
+	id 1YKUbp-0005kw-QJ
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Feb 2015 17:21:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756641AbbBHQO1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Feb 2015 11:14:27 -0500
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:52179 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755001AbbBHQOZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 8 Feb 2015 11:14:25 -0500
-X-AuditID: 1207440d-f79976d000005643-09-54d78b59bd60
+	id S1758557AbbBHQVS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Feb 2015 11:21:18 -0500
+Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:45011 "EHLO
+	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1758495AbbBHQVR (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 8 Feb 2015 11:21:17 -0500
+X-Greylist: delayed 421 seconds by postgrey-1.27 at vger.kernel.org; Sun, 08 Feb 2015 11:21:17 EST
+X-AuditID: 1207440c-f79376d00000680a-6b-54d78b54af27
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 0C.FC.22083.95B87D45; Sun,  8 Feb 2015 11:14:17 -0500 (EST)
+	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id F0.54.26634.45B87D45; Sun,  8 Feb 2015 11:14:12 -0500 (EST)
 Received: from michael.fritz.box (p4FC9719C.dip0.t-ipconnect.de [79.201.113.156])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t18GE9l5014021
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t18GE9l4014021
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Sun, 8 Feb 2015 11:14:16 -0500
+	Sun, 8 Feb 2015 11:14:10 -0500
 X-Mailer: git-send-email 2.1.4
-In-Reply-To: <1423412045-15616-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrKIsWRmVeSWpSXmKPExsUixO6iqBvZfT3EYOcCaYuuK91MFg29V5gt
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrLIsWRmVeSWpSXmKPExsUixO6iqBvSfT3E4M4SPouuK91MFg29V5gt
 	3t5cwmhxe8V8ZovuKW8ZLXr7PrFabN7czuLA7vH3/Qcmj52z7rJ7LNhU6nHxkrLH501yAaxR
-	3DZJiSVlwZnpefp2CdwZEzb/ZS3Yw1XR9/EIWwPjfI4uRk4OCQETiXvXn7JA2GISF+6tZ+ti
-	5OIQErjMKNG35BYThHOCSaJt+yM2kCo2AV2JRT3NTCC2iICaxMS2Q2DdzAKrmSS23gWrERaw
-	kFi59S5rFyMHB4uAqsS0y3ogYV4BF4mm1pNQy+Qkzh//yQxicwq4Six50wtmCwHV7LnVyzSB
-	kXcBI8MqRrnEnNJc3dzEzJzi1GTd4uTEvLzUIl0jvdzMEr3UlNJNjJAg493B+H+dzCFGAQ5G
-	JR7eDrnrIUKsiWXFlbmHGCU5mJREeY+GA4X4kvJTKjMSizPii0pzUosPMUpwMCuJ8C46fC1E
-	iDclsbIqtSgfJiXNwaIkzqu2RN1PSCA9sSQ1OzW1ILUIJivDwaEkwXuiE2ioYFFqempFWmZO
-	CUKaiYMTZDiXlEhxal5KalFiaUlGPCgy4ouBsQGS4gHa2wnSzltckJgLFIVoPcWoKCXO+x8k
-	IQCSyCjNgxsLSx2vGMWBvhTmfQNSxQNMO3Ddr4AGMwENXrz0CsjgkkSElFQDo/6e1K2qD2Z9
-	zf48IWrd5et7tWTKBe/9lFlkGOKz5vx6+diNKXcW1LKEeTJs4DaP1PpzNH/+15/dai+y15as
-	5zaLLDGaee317ePH8kK7b1icT8+v4oz6uXBlbmrUP4mWJ79usM1ljWFZtsmwagGz 
+	3DZJiSVlwZnpefp2CdwZl25MZSk4I1Tx8MZR5gbG2XxdjJwcEgImEjO6zzNB2GISF+6tZwOx
+	hQQuM0ps21/excgFZJ9gkjjSdpMFJMEmoCuxqKcZrEFEQE1iYtshsDizwGomia13wZqFBXwk
+	Nja+AKthEVCV+Nb7kx3E5hVwkVj9dyHUMjmJ88d/Mk9g5F7AyLCKUS4xpzRXNzcxM6c4NVm3
+	ODkxLy+1SNdQLzezRC81pXQTIyRoeHYwflsnc4hRgINRiYe3Q+56iBBrYllxZe4hRkkOJiVR
+	3qPhQCG+pPyUyozE4oz4otKc1OJDjBIczEoivIsOXwsR4k1JrKxKLcqHSUlzsCiJ86ouUfcT
+	EkhPLEnNTk0tSC2CycpwcChJ8Bp2AQ0VLEpNT61Iy8wpQUgzcXCCDOeSEilOzUtJLUosLcmI
+	BwV6fDEw1EFSPEB7t4G08xYXJOYCRSFaTzEqSonzJoMkBEASGaV5cGNhqeAVozjQl8K8qSBV
+	PMA0Atf9CmgwE9DgxUuvgAwuSURISTUw6kl2tbbpHssU3bwhT2ePx6S6eQqCfMlThdsub7Kf
+	8/DzhPQ/LxYv2LxHfK5IwrtZQpPmV/dutTrRqvqEwULE9dLid8u1EpK4tv8/yO981NGaa6t2
+	pWAie1+dh8jKHakJuimlU37EJL+4c/6DPOeUqT6f19wXsl64y82dXa/M/Ns5po6s 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263521>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263522>
 
-It is only used internally now. Document it a little bit better, too.
+The main purpose of this series is to simplify the interface to
+reference transactions as follows:
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
- refs.c | 6 ++++++
- refs.h | 4 +---
- 2 files changed, 7 insertions(+), 3 deletions(-)
+* Remove the need to supply an explicit have_old parameter to
+  ref_transaction_update() and ref_transaction_delete(). Instead,
+  check the old_sha1 if and only if it is non-NULL.
 
-diff --git a/refs.c b/refs.c
-index c5fa709..cd5208b 100644
---- a/refs.c
-+++ b/refs.c
-@@ -35,6 +35,12 @@ static unsigned char refname_disposition[256] = {
- };
- 
- /*
-+ * Flag passed to lock_ref_sha1_basic() telling it to tolerate broken
-+ * refs (i.e., because the reference is about to be deleted anyway).
-+ */
-+#define REF_DELETING	0x02
-+
-+/*
-  * Used as a flag to ref_transaction_delete when a loose ref is being
-  * pruned.
-  */
-diff --git a/refs.h b/refs.h
-index afa3c4d..9bf2148 100644
---- a/refs.h
-+++ b/refs.h
-@@ -183,12 +183,10 @@ extern int peel_ref(const char *refname, unsigned char *sha1);
-  * Flags controlling ref_transaction_update(), ref_transaction_create(), etc.
-  * REF_NODEREF: act on the ref directly, instead of dereferencing
-  *              symbolic references.
-- * REF_DELETING: tolerate broken refs
-  *
-- * Flags >= 0x100 are reserved for internal use.
-+ * Other flags are reserved for internal use.
-  */
- #define REF_NODEREF	0x01
--#define REF_DELETING	0x02
- 
- /*
-  * Setup reflog before using. Set errno to something meaningful on failure.
+* Allow NULL to be supplied to ref_transaction_update() as new_sha1,
+  in which case old_sha1 will be verified under lock, but the
+  reference's value will not be altered.
+
+* Add a function ref_transaction_verify(), which verifies the current
+  value of a reference without changing it.
+
+* Make the similarity between ref_transaction_update() and
+  update_ref() more obvious.
+
+Along the way, it fixes a race that could happen if two processes try
+to create an orphan commit at the same time.
+
+This patch series applies on top of master merged together with
+sb/atomic-push, which in turn depends on mh/reflog-expire. It is also
+available from my GitHub account [1] as branch "refs-have-new":
+
+It's nothing earth-shattering, but I think it is a worthwhile cleanup.
+
+Michael
+
+[1] https://github.com/mhagger/git
+
+Michael Haggerty (11):
+  refs: move REF_DELETING to refs.c
+  refs: remove the gap in the REF_* constant values
+  struct ref_update: move "have_old" into "flags"
+  ref_transaction_update(): remove "have_old" parameter
+  ref_transaction_delete(): remove "have_old" parameter
+  commit: add tests of commit races
+  commit: avoid race when creating orphan commits
+  ref_transaction_create(): check that new_sha1 is valid
+  ref_transaction_delete(): check that old_sha1 is not null_sha1
+  ref_transaction_verify(): new function to check a reference's value
+  update_ref(): improve documentation
+
+ branch.c                |   5 +-
+ builtin/commit.c        |   4 +-
+ builtin/fetch.c         |   6 ++-
+ builtin/receive-pack.c  |   5 +-
+ builtin/replace.c       |   2 +-
+ builtin/tag.c           |   2 +-
+ builtin/update-ref.c    |  17 +++----
+ fast-import.c           |   6 +--
+ refs.c                  | 130 +++++++++++++++++++++++++++++++++---------------
+ refs.h                  |  61 ++++++++++++++++-------
+ sequencer.c             |   2 +-
+ t/t7516-commit-races.sh |  38 ++++++++++++++
+ walker.c                |   2 +-
+ 13 files changed, 197 insertions(+), 83 deletions(-)
+ create mode 100755 t/t7516-commit-races.sh
+
 -- 
 2.1.4
