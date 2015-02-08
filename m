@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 01/21] ls_colors.c: add $LS_COLORS parsing code
-Date: Sun,  8 Feb 2015 16:01:19 +0700
-Message-ID: <1423386099-19994-2-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 03/21] ls_colors.c: add a function to color a file name
+Date: Sun,  8 Feb 2015 16:01:21 +0700
+Message-ID: <1423386099-19994-4-git-send-email-pclouds@gmail.com>
 References: <1423386099-19994-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -10,517 +10,147 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 08 10:02:35 2015
+X-From: git-owner@vger.kernel.org Sun Feb 08 10:02:44 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YKNlC-0005jo-Aq
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Feb 2015 10:02:35 +0100
+	id 1YKNlL-0005oA-Lo
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Feb 2015 10:02:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752110AbbBHJC2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 Feb 2015 04:02:28 -0500
-Received: from mail-pd0-f171.google.com ([209.85.192.171]:44150 "EHLO
-	mail-pd0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751924AbbBHJCZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Feb 2015 04:02:25 -0500
-Received: by pdbft15 with SMTP id ft15so24371687pdb.11
-        for <git@vger.kernel.org>; Sun, 08 Feb 2015 01:02:24 -0800 (PST)
+	id S1753613AbbBHJCh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 Feb 2015 04:02:37 -0500
+Received: from mail-pd0-f170.google.com ([209.85.192.170]:36196 "EHLO
+	mail-pd0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751924AbbBHJCf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Feb 2015 04:02:35 -0500
+Received: by pdjp10 with SMTP id p10so14332813pdj.3
+        for <git@vger.kernel.org>; Sun, 08 Feb 2015 01:02:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=RFJLXIdxbnI8eYxO0MSyxKz+DTMCL4kk1TKTtyg5jpw=;
-        b=e7yr8i5hwCmxIElAdpJH5Qcgq0fDIJm2wmrXzlbOsbwRlC0Rm7YfcRAQylqEGftg1P
-         2pilWUcimQXNZfvOg92pdy7JpLGYm50lUAzC2t2J6J731zM+v8eESoVDY/jipVlh3On5
-         dE8HZv1OcL+m35KgKrRLnbs2zd+GJGSbcWWGHNubp3gVZBexiUmuFu+56sICGJsl/jXf
-         eSbYZxkF50UPQUhAGDl+/D4NpZh1rpQDoKi3s8t9rm9XDwnl+5WYKNFqcZCFojAroAdM
-         t8sZeEjyNUfRu1OjW7EoWPt9kNmbu7Z8+uNyyTVd+77QYT/kb/kE3R7yEot6LfG4eXQ/
-         A4+Q==
-X-Received: by 10.66.102.34 with SMTP id fl2mr19155785pab.114.1423386144525;
-        Sun, 08 Feb 2015 01:02:24 -0800 (PST)
+        bh=L6wa+MDEIfyvPI5sfctMQMd1sW+YAuimbZ6wE9eX428=;
+        b=PSMX63ygHEjtRGSqkICReWrc2SrSnGqewa6uCzueAvZzeiE4HDv5fIV9S2us5e4wNi
+         LqfkZniRLI1hrPE+0EGllgeIXtqvo6pCYZR4SqO94lxsep5C+EYT4vx6Anj+gY288qQV
+         SealY0+mQ/JTuMMgUd8QCBOIlqJFDhVuoQxmabHyxifaL8ZrHIim6HwoK4yaA/REOSFR
+         MmjzS0L32wBWBOVBkK7PhSM0FpEVaPGbjUpumT6NqschKqyYu0BI4p4Zlo7tJ4WLqR4J
+         nCsrE/5vsZMdzE47qX+H4Wu35M5OLLJJ23Upu7LIQjpqJ0tcQVcIBSJEhay3MtD8X7qz
+         nGmQ==
+X-Received: by 10.68.224.6 with SMTP id qy6mr19107780pbc.155.1423386155483;
+        Sun, 08 Feb 2015 01:02:35 -0800 (PST)
 Received: from lanh ([115.73.243.52])
-        by mx.google.com with ESMTPSA id si8sm12936146pbc.26.2015.02.08.01.02.21
+        by mx.google.com with ESMTPSA id rn15sm13048964pab.10.2015.02.08.01.02.32
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 08 Feb 2015 01:02:23 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Sun, 08 Feb 2015 16:02:31 +0700
+        Sun, 08 Feb 2015 01:02:34 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Sun, 08 Feb 2015 16:02:42 +0700
 X-Mailer: git-send-email 2.3.0.rc1.137.g477eb31
 In-Reply-To: <1423386099-19994-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263489>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263490>
 
-Reusing color settings from $LS_COLORS could give a native look and
-feel on file coloring.
-
-This code is basically from coreutils.git [1], rewritten to fit Git.
-
-As this is from GNU ls, the environment variable CLICOLOR is not
-tested. It is to be decided later whether we should ignore $LS_COLORS
-if $CLICOLOR is not set on Mac or FreeBSD.
-
-[1] commit 7326d1f1a67edf21947ae98194f98c38b6e9e527 file
-    src/ls.c. This is the last GPL-2 commit before coreutils turns to
-    GPL-3.
+The new function is based on print_color_indicator() from commit
+7326d1f1a67edf21947ae98194f98c38b6e9e527 in coreutils.git.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Makefile          |   1 +
- color.h           |   8 ++
- ls_colors.c (new) | 398 ++++++++++++++++++++++++++++++++++++++++++++++=
+ color.h     |  2 ++
+ ls_colors.c | 66 +++++++++++++++++++++++++++++++++++++++++++++++++++++=
 ++++++++
- 3 files changed, 407 insertions(+)
- create mode 100644 ls_colors.c
+ 2 files changed, 68 insertions(+)
 
-diff --git a/Makefile b/Makefile
-index 827006b..459121d 100644
---- a/Makefile
-+++ b/Makefile
-@@ -703,6 +703,7 @@ LIB_OBJS +=3D list-objects.o
- LIB_OBJS +=3D ll-merge.o
- LIB_OBJS +=3D lockfile.o
- LIB_OBJS +=3D log-tree.o
-+LIB_OBJS +=3D ls_colors.o
- LIB_OBJS +=3D mailmap.o
- LIB_OBJS +=3D match-trees.o
- LIB_OBJS +=3D merge.o
 diff --git a/color.h b/color.h
-index f5beab1..3eaa5bd 100644
+index 3eaa5bd..b6904a3 100644
 --- a/color.h
 +++ b/color.h
-@@ -45,6 +45,12 @@ struct strbuf;
- #define GIT_COLOR_BG_MAGENTA	"\033[45m"
- #define GIT_COLOR_BG_CYAN	"\033[46m"
-=20
-+#define GIT_COLOR_WHITE_ON_RED    "\033[37;41m"
-+#define GIT_COLOR_WHITE_ON_BLUE   "\033[37;44m"
-+#define GIT_COLOR_BLACK_ON_YELLOW "\033[30;43m"
-+#define GIT_COLOR_BLUE_ON_GREEN   "\033[34;42m"
-+#define GIT_COLOR_BLACK_ON_GREEN  "\033[30;42m"
-+
- /* A special value meaning "no color selected" */
- #define GIT_COLOR_NIL "NIL"
-=20
-@@ -87,4 +93,6 @@ void color_print_strbuf(FILE *fp, const char *color, =
+@@ -94,5 +94,7 @@ void color_print_strbuf(FILE *fp, const char *color, =
 const struct strbuf *sb);
-=20
  int color_is_nil(const char *color);
 =20
-+void parse_ls_color(void);
-+
+ void parse_ls_color(void);
++void color_filename(struct strbuf *sb, const char *name,
++		    const char *display_name, mode_t mode, int linkok);
+=20
  #endif /* COLOR_H */
 diff --git a/ls_colors.c b/ls_colors.c
-new file mode 100644
-index 0000000..e743315
---- /dev/null
+index 2dc2d39..f84ef0f 100644
+--- a/ls_colors.c
 +++ b/ls_colors.c
-@@ -0,0 +1,398 @@
-+#include "cache.h"
-+#include "color.h"
+@@ -424,3 +424,69 @@ void parse_ls_color(void)
+ 		color_symlink_as_referent =3D 1;
+ 	git_config(ls_colors_config, NULL);
+ }
 +
-+enum color_ls {
-+	LS_LC,			/* left, unused */
-+	LS_RC,			/* right, unused */
-+	LS_EC,			/* end color, unused */
-+	LS_RS,			/* reset */
-+	LS_NO,			/* normal */
-+	LS_FL,			/* file, default */
-+	LS_DI,			/* directory */
-+	LS_LN,			/* symlink */
-+
-+	LS_PI,			/* pipe */
-+	LS_SO,			/* socket */
-+	LS_BD,			/* block device */
-+	LS_CD,			/* char device */
-+	LS_MI,			/* missing file */
-+	LS_OR,			/* orphaned symlink */
-+	LS_EX,			/* executable */
-+	LS_DO,			/* Solaris door */
-+
-+	LS_SU,			/* setuid */
-+	LS_SG,			/* setgid */
-+	LS_ST,			/* sticky */
-+	LS_OW,			/* other-writable */
-+	LS_TW,			/* ow with sticky */
-+	LS_CA,			/* cap */
-+	LS_MH,			/* multi hardlink */
-+	LS_CL,			/* clear end of line */
-+
-+	MAX_LS
-+};
-+
-+static char ls_colors[MAX_LS][COLOR_MAXLEN] =3D {
-+	"",
-+	"",
-+	"",
-+	GIT_COLOR_RESET,
-+	GIT_COLOR_NORMAL,
-+	GIT_COLOR_NORMAL,
-+	GIT_COLOR_BOLD_BLUE,
-+	GIT_COLOR_BOLD_CYAN,
-+
-+	GIT_COLOR_YELLOW,
-+	GIT_COLOR_BOLD_MAGENTA,
-+	GIT_COLOR_BOLD_YELLOW,
-+	GIT_COLOR_BOLD_YELLOW,
-+	GIT_COLOR_NORMAL,
-+	GIT_COLOR_NORMAL,
-+	GIT_COLOR_BOLD_GREEN,
-+	GIT_COLOR_BOLD_MAGENTA,
-+
-+	GIT_COLOR_WHITE_ON_RED,
-+	GIT_COLOR_BLACK_ON_YELLOW,
-+	GIT_COLOR_WHITE_ON_BLUE,
-+	GIT_COLOR_BLUE_ON_GREEN,
-+	GIT_COLOR_BLACK_ON_GREEN,
-+	"",
-+	"",
-+	""
-+};
-+
-+static const char *const indicator_name[] =3D {
-+	"lc", "rc", "ec", "rs", "no", "fi", "di", "ln",
-+	"pi", "so", "bd", "cd", "mi", "or", "ex", "do",
-+	"su", "sg", "st", "ow", "tw", "ca", "mh", "cl",
-+	NULL
-+};
-+
-+struct bin_str {
-+	size_t len;			/* Number of bytes */
-+	const char *string;		/* Pointer to the same */
-+};
-+
-+struct color_ext_type {
-+	struct bin_str ext;		/* The extension we're looking for */
-+	struct bin_str seq;		/* The sequence to output when we do */
-+	struct color_ext_type *next;	/* Next in list */
-+};
-+
-+static struct color_ext_type *color_ext_list;
-+
-+/*
-+ * When true, in a color listing, color each symlink name according to=
- the
-+ * type of file it points to.  Otherwise, color them according to the =
-`ln'
-+ * directive in LS_COLORS.  Dangling (orphan) symlinks are treated spe=
-cially,
-+ * regardless.  This is set when `ln=3Dtarget' appears in LS_COLORS.
-+ */
-+static int color_symlink_as_referent;
-+
-+/*
-+ * Parse a string as part of the LS_COLORS variable; this may involve
-+ * decoding all kinds of escape characters.  If equals_end is set an
-+ * unescaped equal sign ends the string, otherwise only a : or \0
-+ * does.  Set *OUTPUT_COUNT to the number of bytes output.  Return
-+ * true if successful.
-+ *
-+ * The resulting string is *not* null-terminated, but may contain
-+ * embedded nulls.
-+ *
-+ * Note that both dest and src are char **; on return they point to
-+ * the first free byte after the array and the character that ended
-+ * the input string, respectively.
-+ */
-+static int get_funky_string(char **dest, const char **src, int equals_=
-end,
-+			    size_t *output_count)
++void color_filename(struct strbuf *sb, const char *name,
++		    const char *display_name, mode_t mode, int linkok)
 +{
-+	char num;			/* For numerical codes */
-+	size_t count;			/* Something to count with */
-+	enum {
-+		ST_GND, ST_BACKSLASH, ST_OCTAL, ST_HEX,
-+		ST_CARET, ST_END, ST_ERROR
-+	} state;
-+	const char *p;
-+	char *q;
++	int type;
++	struct color_ext_type *ext;	/* Color extension */
 +
-+	p =3D *src;			/* We don't want to double-indirect */
-+	q =3D *dest;			/* the whole darn time.  */
++	if (S_ISREG(mode)) {
++		type =3D LS_FL;
++		if ((mode & S_ISUID) !=3D 0)
++			type =3D LS_SU;
++		else if ((mode & S_ISGID) !=3D 0)
++			type =3D LS_SG;
++		else if ((mode & (S_IXUSR | S_IXGRP | S_IXOTH)) !=3D 0)
++			type =3D LS_EX;
++	} else if (S_ISDIR(mode)) {
++		if ((mode & S_ISVTX) && (mode & S_IWOTH))
++			type =3D LS_TW;
++		else if ((mode & S_IWOTH) !=3D 0)
++			type =3D LS_OW;
++		else if ((mode & S_ISVTX) !=3D 0)
++			type =3D LS_ST;
++		else
++			type =3D LS_DI;
++	} else if (S_ISLNK(mode))
++		type =3D (!linkok && *ls_colors[LS_OR]) ? LS_OR : LS_LN;
++	else if (S_ISFIFO(mode))
++		type =3D LS_PI;
++	else if (S_ISSOCK(mode))
++		type =3D LS_SO;
++	else if (S_ISBLK(mode))
++		type =3D LS_BD;
++	else if (S_ISCHR(mode))
++		type =3D LS_CD;
++#ifdef S_ISDOOR
++	else if (S_ISDOOR(mode))
++		type =3D LS_DO;
++#endif
++	else
++		/* Classify a file of some other type as C_ORPHAN.  */
++		type =3D LS_OR;
 +
-+	count =3D 0;			/* No characters counted in yet.  */
-+	num =3D 0;
-+
-+	state =3D ST_GND;		/* Start in ground state.  */
-+	while (state < ST_END) {
-+		switch (state) {
-+		case ST_GND:		/* Ground state (no escapes) */
-+			switch (*p) {
-+			case ':':
-+			case '\0':
-+				state =3D ST_END;	/* End of string */
-+				break;
-+			case '\\':
-+				state =3D ST_BACKSLASH; /* Backslash scape sequence */
-+				++p;
-+				break;
-+			case '^':
-+				state =3D ST_CARET; /* Caret escape */
-+				++p;
-+				break;
-+			case '=3D':
-+				if (equals_end) {
-+					state =3D ST_END; /* End */
-+					break;
-+				}
-+				/* else fall through */
-+			default:
-+				*(q++) =3D *(p++);
-+				++count;
-+				break;
-+			}
-+			break;
-+
-+		case ST_BACKSLASH:	/* Backslash escaped character */
-+			switch (*p) {
-+			case '0':
-+			case '1':
-+			case '2':
-+			case '3':
-+			case '4':
-+			case '5':
-+			case '6':
-+			case '7':
-+				state =3D ST_OCTAL;	/* Octal sequence */
-+				num =3D *p - '0';
-+				break;
-+			case 'x':
-+			case 'X':
-+				state =3D ST_HEX;	/* Hex sequence */
-+				num =3D 0;
-+				break;
-+			case 'a':		/* Bell */
-+				num =3D '\a';
-+				break;
-+			case 'b':		/* Backspace */
-+				num =3D '\b';
-+				break;
-+			case 'e':		/* Escape */
-+				num =3D 27;
-+				break;
-+			case 'f':		/* Form feed */
-+				num =3D '\f';
-+				break;
-+			case 'n':		/* Newline */
-+				num =3D '\n';
-+				break;
-+			case 'r':		/* Carriage return */
-+				num =3D '\r';
-+				break;
-+			case 't':		/* Tab */
-+				num =3D '\t';
-+				break;
-+			case 'v':		/* Vtab */
-+				num =3D '\v';
-+				break;
-+			case '?':		/* Delete */
-+				num =3D 127;
-+				break;
-+			case '_':		/* Space */
-+				num =3D ' ';
-+				break;
-+			case '\0':		/* End of string */
-+				state =3D ST_ERROR;	/* Error! */
-+				break;
-+			default:		/* Escaped character like \ ^ : =3D */
-+				num =3D *p;
-+				break;
-+			}
-+			if (state =3D=3D ST_BACKSLASH) {
-+				*(q++) =3D num;
-+				++count;
-+				state =3D ST_GND;
-+			}
-+			++p;
-+			break;
-+
-+		case ST_OCTAL:		/* Octal sequence */
-+			if (*p < '0' || *p > '7') {
-+				*(q++) =3D num;
-+				++count;
-+				state =3D ST_GND;
-+			} else
-+				num =3D (num << 3) + (*(p++) - '0');
-+			break;
-+
-+		case ST_HEX:		/* Hex sequence */
-+			switch (*p) {
-+			case '0':
-+			case '1':
-+			case '2':
-+			case '3':
-+			case '4':
-+			case '5':
-+			case '6':
-+			case '7':
-+			case '8':
-+			case '9':
-+				num =3D (num << 4) + (*(p++) - '0');
-+				break;
-+			case 'a':
-+			case 'b':
-+			case 'c':
-+			case 'd':
-+			case 'e':
-+			case 'f':
-+				num =3D (num << 4) + (*(p++) - 'a') + 10;
-+				break;
-+			case 'A':
-+			case 'B':
-+			case 'C':
-+			case 'D':
-+			case 'E':
-+			case 'F':
-+				num =3D (num << 4) + (*(p++) - 'A') + 10;
-+				break;
-+			default:
-+				*(q++) =3D num;
-+				++count;
-+				state =3D ST_GND;
-+				break;
-+			}
-+			break;
-+
-+		case ST_CARET:		/* Caret escape */
-+			state =3D ST_GND;	/* Should be the next state... */
-+			if (*p >=3D '@' && *p <=3D '~') {
-+				*(q++) =3D *(p++) & 037;
-+				++count;
-+			} else if (*p =3D=3D '?') {
-+				*(q++) =3D 127;
-+				++count;
-+			} else
-+				state =3D ST_ERROR;
-+			break;
-+
-+		default:
-+			abort();
-+		}
-+	}
-+
-+	*dest =3D q;
-+	*src =3D p;
-+	*output_count =3D count;
-+
-+	return state !=3D ST_ERROR;
-+}
-+
-+void parse_ls_color(void)
-+{
-+	const char *p;			/* Pointer to character being parsed */
-+	char *buf;			/* color_buf buffer pointer */
-+	int state;			/* State of parser */
-+	int ind_no;			/* Indicator number */
-+	char label[3];			/* Indicator label */
-+	struct color_ext_type *ext;	/* Extension we are working on */
-+	static char *color_buf;
-+	char *start;
-+	size_t len;
-+
-+	if ((p =3D getenv("LS_COLORS")) =3D=3D NULL || *p =3D=3D '\0')
-+		return;
-+
++	/* Check the file's suffix only if still classified as C_FILE.  */
 +	ext =3D NULL;
-+	strcpy(label, "??");
-+
-+	/*
-+	 * This is an overly conservative estimate, but any possible
-+	 * LS_COLORS string will *not* generate a color_buf longer
-+	 * than itself, so it is a safe way of allocating a buffer in
-+	 * advance.
-+	 */
-+	buf =3D color_buf =3D xstrdup(p);
-+
-+	state =3D 1;
-+	while (state > 0) {
-+		switch (state) {
-+		case 1:		/* First label character */
-+			switch (*p) {
-+			case ':':
-+				++p;
++	if (type =3D=3D LS_FL) {
++		/* Test if NAME has a recognized suffix.  */
++		size_t len =3D strlen(name);
++		const char *p =3D name + len;		/* Pointer to final \0.  */
++		for (ext =3D color_ext_list; ext !=3D NULL; ext =3D ext->next) {
++			if (ext->ext.len <=3D len &&
++			    !strncmp(p - ext->ext.len, ext->ext.string, ext->ext.len))
 +				break;
-+
-+			case '*':
-+				/*
-+				 * Allocate new extension block and add to head of
-+				 * linked list (this way a later definition will
-+				 * override an earlier one, which can be useful for
-+				 * having terminal-specific defs override global).
-+				 */
-+
-+				ext =3D xmalloc(sizeof(*ext));
-+				ext->next =3D color_ext_list;
-+				color_ext_list =3D ext;
-+
-+				++p;
-+				ext->ext.string =3D buf;
-+
-+				state =3D (get_funky_string(&buf, &p, 1, &ext->ext.len)
-+					 ? 4 : -1);
-+				break;
-+
-+			case '\0':
-+				state =3D 0;	/* Done! */
-+				break;
-+
-+			default:	/* Assume it is file type label */
-+				label[0] =3D *(p++);
-+				state =3D 2;
-+				break;
-+			}
-+			break;
-+
-+		case 2:		/* Second label character */
-+			if (*p) {
-+				label[1] =3D *(p++);
-+				state =3D 3;
-+			} else
-+				state =3D -1;	/* Error */
-+			break;
-+
-+		case 3:		/* Equal sign after indicator label */
-+			state =3D -1;	/* Assume failure...  */
-+			if (*(p++) !=3D '=3D')
-+				break;
-+			for (ind_no =3D 0; indicator_name[ind_no] !=3D NULL; ++ind_no) {
-+				if (!strcmp(label, indicator_name[ind_no])) {
-+					start =3D buf;
-+					if (get_funky_string(&buf, &p, 0, &len))
-+						state =3D 1;
-+					else
-+						state =3D -1;
-+					break;
-+				}
-+			}
-+			if (state =3D=3D -1)
-+				error(_("unrecognized prefix: %s"), label);
-+			else if (ind_no =3D=3D LS_LN && len =3D=3D 6 &&
-+				 starts_with(start, "target"))
-+				color_symlink_as_referent =3D 1;
-+			else
-+				sprintf(ls_colors[ind_no], "\033[%.*sm",
-+				       (int)len, start);
-+			break;
-+
-+		case 4:		/* Equal sign after *.ext */
-+			if (*(p++) =3D=3D '=3D') {
-+				ext->seq.string =3D buf;
-+				state =3D (get_funky_string(&buf, &p, 0, &ext->seq.len)
-+					 ? 1 : -1);
-+			} else
-+				state =3D -1;
-+			break;
 +		}
 +	}
 +
-+	if (!strcmp(ls_colors[LS_LN], "target"))
-+		color_symlink_as_referent =3D 1;
++	if (display_name)
++		name =3D display_name;
++	if (ext)
++		strbuf_addf(sb, "\033[%.*sm%s%s",
++			    (int)ext->seq.len, ext->seq.string,
++			    name, GIT_COLOR_RESET);
++	else if (*ls_colors[type])
++		strbuf_addf(sb, "%s%s%s", ls_colors[type], name, GIT_COLOR_RESET);
++	else
++		strbuf_addstr(sb, name);
 +}
 --=20
 2.3.0.rc1.137.g477eb31
