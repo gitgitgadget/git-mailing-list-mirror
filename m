@@ -1,284 +1,207 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 00/24] nd/untracked-cache updates
-Date: Sun,  8 Feb 2015 15:55:24 +0700
-Message-ID: <1423385748-19825-1-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 01/24] dir.c: optionally compute sha-1 of a .gitignore file
+Date: Sun,  8 Feb 2015 15:55:25 +0700
+Message-ID: <1423385748-19825-2-git-send-email-pclouds@gmail.com>
+References: <1423385748-19825-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
+	<pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 08 09:56:00 2015
+X-From: git-owner@vger.kernel.org Sun Feb 08 09:56:07 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YKNep-0002FM-4G
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Feb 2015 09:55:59 +0100
+	id 1YKNew-0002Is-AJ
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Feb 2015 09:56:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752020AbbBHIzw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Feb 2015 03:55:52 -0500
-Received: from mail-pa0-f50.google.com ([209.85.220.50]:39894 "EHLO
-	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751823AbbBHIzv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Feb 2015 03:55:51 -0500
-Received: by mail-pa0-f50.google.com with SMTP id rd3so26852310pab.9
-        for <git@vger.kernel.org>; Sun, 08 Feb 2015 00:55:51 -0800 (PST)
+	id S1752557AbbBHIz7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 Feb 2015 03:55:59 -0500
+Received: from mail-pd0-f172.google.com ([209.85.192.172]:37338 "EHLO
+	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751823AbbBHIz6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Feb 2015 03:55:58 -0500
+Received: by pdbfp1 with SMTP id fp1so24348681pdb.4
+        for <git@vger.kernel.org>; Sun, 08 Feb 2015 00:55:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version:content-type
-         :content-transfer-encoding;
-        bh=d9wclA/JcQqFbkls12TmxeEdDUzYq1M/Orm0WftqxAE=;
-        b=HslGe5emtS6d4uXAwdoDoQmQo9GQ/cU0HjTrXPiCDj/UWEFdZgbbyea5gSxaJBMcA4
-         TeOuiMMEKd8WIAcGB2j02ktlgwVgH92Yo+VtCmeXwIUAa9kA/k9zdYSzFq2F0FsIgUce
-         6EQcwlul+E3qyW9gHpr9f1Ho8CpIl49ScUb2kwchjudpUXS3MUR+gJxHiuTNjdm0vHWn
-         NkMs9OgXVI1R+EnilxN97OCXUpJ8YDG6eecyWPY2isDksc/9zNMmM5OuQ33ld1fiFyqi
-         dbGZTBCAVNxIIhAU9o703+ibcmAH0VIpRKSy+gW0q99X1OK18btOhQmPS0rgUcfT4v/H
-         LtjQ==
-X-Received: by 10.70.22.234 with SMTP id h10mr19403002pdf.118.1423385751321;
-        Sun, 08 Feb 2015 00:55:51 -0800 (PST)
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=LAJKLON91QxdjhbEVHBnXcF1Kv7nDHQRgwytYuAok4g=;
+        b=WAGm83Yg0MDLypedKexq7Z+m2EWWwj4LRLIBDINIdA/aVXtpdCGDu/2piLobfmdFI8
+         ltexErKv/HcjQZhIlB2PlqEoRxym4+7mnzHoHlH0XSGDOvKYoBvlVUHyPcK5KqNEw31c
+         lF1wu88vlKLpMUsE6sq9OWt4njfSCklOSWz1aI2nPuswqW6LLhts32rJD65bC2JNgNGY
+         hum+Tpz94zYafEiF1WXcU6bvb6Mnx928QnBtks6RltMyZUg9UCTovFRJUNSDp9UYHdMs
+         TiCptIMqV6+b2ZKza14xkbwIbWYV6YRcbKX3oCYGk6NkCnhF4biv/DmjeBtRCmuGElRT
+         GZiw==
+X-Received: by 10.68.135.136 with SMTP id ps8mr19440404pbb.130.1423385757439;
+        Sun, 08 Feb 2015 00:55:57 -0800 (PST)
 Received: from lanh ([115.73.243.52])
-        by mx.google.com with ESMTPSA id oi5sm12934922pbb.7.2015.02.08.00.55.48
+        by mx.google.com with ESMTPSA id os6sm13036072pac.28.2015.02.08.00.55.54
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 08 Feb 2015 00:55:50 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Sun, 08 Feb 2015 15:55:58 +0700
+        Sun, 08 Feb 2015 00:55:56 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Sun, 08 Feb 2015 15:56:04 +0700
 X-Mailer: git-send-email 2.3.0.rc1.137.g477eb31
+In-Reply-To: <1423385748-19825-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263462>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263463>
 
-Code changes are all in 20/24, to avoid hard coding the test path. The
-rest is documentation changes.
+This is not used anywhere yet. But the goal is to compare quickly if a
+=2Egitignore file has changed when we have the SHA-1 of both old (cache=
+d
+somewhere) and new (from index or a tree) versions.
 
--- 8<--
-diff --git a/Documentation/git-status.txt b/Documentation/git-status.txt
-index 7850f53..4dcad4e 100644
---- a/Documentation/git-status.txt
-+++ b/Documentation/git-status.txt
-@@ -59,7 +59,7 @@ shown (i.e. the same as specifying `normal`), to help you avoid
- forgetting to add newly created files.  Because it takes extra work
- to find untracked files in the filesystem, this mode may take some
- time in a large working tree.
--Consider to enable untracked cache and split index if supported (see
-+Consider enabling untracked cache and split index if supported (see
- `git update-index --untracked-cache` and `git update-index
- --split-index`), Otherwise you can use `no` to have `git status`
- return more quickly without showing untracked files.
-diff --git a/Documentation/technical/index-format.txt b/Documentation/technical/index-format.txt
-index 0045b89..e24b4bc 100644
---- a/Documentation/technical/index-format.txt
-+++ b/Documentation/technical/index-format.txt
-@@ -269,9 +269,9 @@ Git index format
-   - A number of directory blocks in depth-first-search order, each
-     consists of
- 
--    - The number of untracked entries, variable witdh encoding.
-+    - The number of untracked entries, variable width encoding.
- 
--    - The number of sub-directory blocks, variable with encoding.
-+    - The number of sub-directory blocks, variable width encoding.
- 
-     - The directory name terminated by NUL.
- 
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index e76740d..fc5e108 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -32,6 +32,7 @@ static int mark_valid_only;
- static int mark_skip_worktree_only;
- #define MARK_FLAG 1
- #define UNMARK_FLAG 2
-+static struct strbuf mtime_dir = STRBUF_INIT;
- 
- __attribute__((format (printf, 1, 2)))
- static void report(const char *fmt, ...)
-@@ -49,28 +50,37 @@ static void report(const char *fmt, ...)
- 
- static void remove_test_directory(void)
- {
--	struct strbuf sb = STRBUF_INIT;
--	strbuf_addstr(&sb, "dir-mtime-test");
--	remove_dir_recursively(&sb, 0);
--	strbuf_release(&sb);
-+	if (mtime_dir.len)
-+		remove_dir_recursively(&mtime_dir, 0);
-+}
-+
-+static const char *get_mtime_path(const char *path)
-+{
-+	static struct strbuf sb = STRBUF_INIT;
-+	strbuf_reset(&sb);
-+	strbuf_addf(&sb, "%s/%s", mtime_dir.buf, path);
-+	return sb.buf;
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Helped-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ dir.c | 53 ++++++++++++++++++++++++++++++++++++++++++++++-------
+ dir.h |  6 ++++++
+ 2 files changed, 52 insertions(+), 7 deletions(-)
+
+diff --git a/dir.c b/dir.c
+index fcb6872..4cc936b 100644
+--- a/dir.c
++++ b/dir.c
+@@ -466,7 +466,8 @@ void add_exclude(const char *string, const char *ba=
+se,
+ 	x->el =3D el;
  }
- 
- static void xmkdir(const char *path)
+=20
+-static void *read_skip_worktree_file_from_index(const char *path, size=
+_t *size)
++static void *read_skip_worktree_file_from_index(const char *path, size=
+_t *size,
++						struct sha1_stat *sha1_stat)
  {
-+	path = get_mtime_path(path);
- 	if (mkdir(path, 0700))
- 		die_errno(_("failed to create directory %s"), path);
+ 	int pos, len;
+ 	unsigned long sz;
+@@ -485,6 +486,10 @@ static void *read_skip_worktree_file_from_index(co=
+nst char *path, size_t *size)
+ 		return NULL;
+ 	}
+ 	*size =3D xsize_t(sz);
++	if (sha1_stat) {
++		memset(&sha1_stat->stat, 0, sizeof(sha1_stat->stat));
++		hashcpy(sha1_stat->sha1, active_cache[pos]->sha1);
++	}
+ 	return data;
  }
- 
--static int xstat(const char *path, struct stat *st)
-+static int xstat_mtime_dir(struct stat *st)
- {
--	if (stat(path, st))
--		die_errno(_("failed to stat %s"), path);
-+	if (stat(mtime_dir.buf, st))
-+		die_errno(_("failed to stat %s"), mtime_dir.buf);
- 	return 0;
+=20
+@@ -529,11 +534,18 @@ static void trim_trailing_spaces(char *buf)
+ 		*last_space =3D '\0';
  }
- 
- static int create_file(const char *path)
- {
--	int fd = open(path, O_CREAT | O_RDWR, 0644);
-+	int fd;
-+	path = get_mtime_path(path);
-+	fd = open(path, O_CREAT | O_RDWR, 0644);
- 	if (fd < 0)
- 		die_errno(_("failed to create file %s"), path);
- 	return fd;
-@@ -78,12 +88,14 @@ static int create_file(const char *path)
- 
- static void xunlink(const char *path)
- {
-+	path = get_mtime_path(path);
- 	if (unlink(path))
- 		die_errno(_("failed to delete file %s"), path);
- }
- 
- static void xrmdir(const char *path)
- {
-+	path = get_mtime_path(path);
- 	if (rmdir(path))
- 		die_errno(_("failed to delete directory %s"), path);
- }
-@@ -102,37 +114,40 @@ static int test_if_untracked_cache_is_supported(void)
+=20
+-int add_excludes_from_file_to_list(const char *fname,
+-				   const char *base,
+-				   int baselen,
+-				   struct exclude_list *el,
+-				   int check_index)
++/*
++ * Given a file with name "fname", read it (either from disk, or from
++ * the index if "check_index" is non-zero), parse it and store the
++ * exclude rules in "el".
++ *
++ * If "ss" is not NULL, compute SHA-1 of the exclude file and fill
++ * stat data from disk (only valid if add_excludes returns zero). If
++ * ss_valid is non-zero, "ss" must contain good value as input.
++ */
++static int add_excludes(const char *fname, const char *base, int basel=
+en,
++			struct exclude_list *el, int check_index,
++			struct sha1_stat *sha1_stat)
  {
  	struct stat st;
- 	struct stat_data base;
--	int fd;
-+	int fd, ret = 0;
-+
-+	strbuf_addstr(&mtime_dir, "mtime-test-XXXXXX");
-+	if (!mkdtemp(mtime_dir.buf))
-+		die_errno("Could not make temporary directory");
- 
- 	fprintf(stderr, _("Testing "));
--	xmkdir("dir-mtime-test");
- 	atexit(remove_test_directory);
--	xstat("dir-mtime-test", &st);
-+	xstat_mtime_dir(&st);
- 	fill_stat_data(&base, &st);
- 	fputc('.', stderr);
- 
- 	avoid_racy();
--	fd = create_file("dir-mtime-test/newfile");
--	xstat("dir-mtime-test", &st);
-+	fd = create_file("newfile");
-+	xstat_mtime_dir(&st);
- 	if (!match_stat_data(&base, &st)) {
+ 	int fd, i, lineno =3D 1;
+@@ -547,7 +559,7 @@ int add_excludes_from_file_to_list(const char *fnam=
+e,
+ 		if (0 <=3D fd)
+ 			close(fd);
+ 		if (!check_index ||
+-		    (buf =3D read_skip_worktree_file_from_index(fname, &size)) =3D=3D=
+ NULL)
++		    (buf =3D read_skip_worktree_file_from_index(fname, &size, sha1_s=
+tat)) =3D=3D NULL)
+ 			return -1;
+ 		if (size =3D=3D 0) {
+ 			free(buf);
+@@ -560,6 +572,11 @@ int add_excludes_from_file_to_list(const char *fna=
+me,
+ 	} else {
+ 		size =3D xsize_t(st.st_size);
+ 		if (size =3D=3D 0) {
++			if (sha1_stat) {
++				fill_stat_data(&sha1_stat->stat, &st);
++				hashcpy(sha1_stat->sha1, EMPTY_BLOB_SHA1_BIN);
++				sha1_stat->valid =3D 1;
++			}
+ 			close(fd);
+ 			return 0;
+ 		}
+@@ -571,6 +588,21 @@ int add_excludes_from_file_to_list(const char *fna=
+me,
+ 		}
+ 		buf[size++] =3D '\n';
  		close(fd);
- 		fputc('\n', stderr);
- 		fprintf_ln(stderr,_("directory stat info does not "
- 				    "change after adding a new file"));
--		return 0;
-+		goto done;
++		if (sha1_stat) {
++			int pos;
++			if (sha1_stat->valid &&
++			    !match_stat_data(&sha1_stat->stat, &st))
++				; /* no content change, ss->sha1 still good */
++			else if (check_index &&
++				 (pos =3D cache_name_pos(fname, strlen(fname))) >=3D 0 &&
++				 !ce_stage(active_cache[pos]) &&
++				 ce_uptodate(active_cache[pos]))
++				hashcpy(sha1_stat->sha1, active_cache[pos]->sha1);
++			else
++				hash_sha1_file(buf, size, "blob", sha1_stat->sha1);
++			fill_stat_data(&sha1_stat->stat, &st);
++			sha1_stat->valid =3D 1;
++		}
  	}
- 	fill_stat_data(&base, &st);
- 	fputc('.', stderr);
- 
- 	avoid_racy();
--	xmkdir("dir-mtime-test/new-dir");
--	xstat("dir-mtime-test", &st);
-+	xmkdir("new-dir");
-+	xstat_mtime_dir(&st);
- 	if (!match_stat_data(&base, &st)) {
- 		close(fd);
- 		fputc('\n', stderr);
- 		fprintf_ln(stderr, _("directory stat info does not change "
- 				     "after adding a new directory"));
--		return 0;
-+		goto done;
- 	}
- 	fill_stat_data(&base, &st);
- 	fputc('.', stderr);
-@@ -140,52 +155,57 @@ static int test_if_untracked_cache_is_supported(void)
- 	avoid_racy();
- 	write_or_die(fd, "data", 4);
- 	close(fd);
--	xstat("dir-mtime-test", &st);
-+	xstat_mtime_dir(&st);
- 	if (match_stat_data(&base, &st)) {
- 		fputc('\n', stderr);
- 		fprintf_ln(stderr, _("directory stat info changes "
- 				     "after updating a file"));
--		return 0;
-+		goto done;
- 	}
- 	fputc('.', stderr);
- 
- 	avoid_racy();
--	close(create_file("dir-mtime-test/new-dir/new"));
--	xstat("dir-mtime-test", &st);
-+	close(create_file("new-dir/new"));
-+	xstat_mtime_dir(&st);
- 	if (match_stat_data(&base, &st)) {
- 		fputc('\n', stderr);
- 		fprintf_ln(stderr, _("directory stat info changes after "
- 				     "adding a file inside subdirectory"));
--		return 0;
-+		goto done;
- 	}
- 	fputc('.', stderr);
- 
- 	avoid_racy();
--	xunlink("dir-mtime-test/newfile");
--	xstat("dir-mtime-test", &st);
-+	xunlink("newfile");
-+	xstat_mtime_dir(&st);
- 	if (!match_stat_data(&base, &st)) {
- 		fputc('\n', stderr);
- 		fprintf_ln(stderr, _("directory stat info does not "
- 				     "change after deleting a file"));
--		return 0;
-+		goto done;
- 	}
- 	fill_stat_data(&base, &st);
- 	fputc('.', stderr);
- 
- 	avoid_racy();
--	xunlink("dir-mtime-test/new-dir/new");
--	xrmdir("dir-mtime-test/new-dir");
--	xstat("dir-mtime-test", &st);
-+	xunlink("new-dir/new");
-+	xrmdir("new-dir");
-+	xstat_mtime_dir(&st);
- 	if (!match_stat_data(&base, &st)) {
- 		fputc('\n', stderr);
- 		fprintf_ln(stderr, _("directory stat info does not "
- 				     "change after deleting a directory"));
--		return 0;
-+		goto done;
- 	}
- 
--	xrmdir("dir-mtime-test");
-+	if (rmdir(mtime_dir.buf))
-+		die_errno(_("failed to delete directory %s"), mtime_dir.buf);
- 	fprintf_ln(stderr, _(" OK"));
--	return 1;
-+	ret = 1;
-+
-+done:
-+	strbuf_release(&mtime_dir);
-+	return ret;
+=20
+ 	el->filebuf =3D buf;
+@@ -589,6 +621,13 @@ int add_excludes_from_file_to_list(const char *fna=
+me,
+ 	return 0;
  }
- 
- static int mark_ce_flags(const char *path, int flag, int mark)
--- 8<--
--- 
+=20
++int add_excludes_from_file_to_list(const char *fname, const char *base=
+,
++				   int baselen, struct exclude_list *el,
++				   int check_index)
++{
++	return add_excludes(fname, base, baselen, el, check_index, NULL);
++}
++
+ struct exclude_list *add_exclude_list(struct dir_struct *dir,
+ 				      int group_type, const char *src)
+ {
+diff --git a/dir.h b/dir.h
+index 6c45e9d..cdca71b 100644
+--- a/dir.h
++++ b/dir.h
+@@ -73,6 +73,12 @@ struct exclude_list_group {
+ 	struct exclude_list *el;
+ };
+=20
++struct sha1_stat {
++	struct stat_data stat;
++	unsigned char sha1[20];
++	int valid;
++};
++
+ struct dir_struct {
+ 	int nr, alloc;
+ 	int ignored_nr, ignored_alloc;
+--=20
 2.3.0.rc1.137.g477eb31
