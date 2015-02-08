@@ -1,49 +1,85 @@
-From: Joachim Schmitz <jojo@schmitz-digital.de>
-Subject: Re: read() =?utf-8?b?TUFYX0lPX1NJWkU=?= bytes, more than =?utf-8?b?U1NJWkVfTUFYPw==?=
-Date: Sat, 7 Feb 2015 22:31:39 +0000 (UTC)
-Message-ID: <loom.20150207T232422-706@post.gmane.org>
-References: <loom.20150207T174514-727@post.gmane.org> <54D64939.4080102@web.de> <loom.20150207T182443-33@post.gmane.org> <54D67662.7040504@web.de> <CAPc5daUnKcktv0xcz-fGEApckbkQksKuZO53ZL20E1MhtZmn4w@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: read() MAX_IO_SIZE bytes, more than SSIZE_MAX?
+Date: Sat, 7 Feb 2015 18:13:47 -0800
+Message-ID: <CAPc5daXD_7XZD5Vag51BjrSZ0q1r9eMswhLmnpUFqqjrc9oSTw@mail.gmail.com>
+References: <loom.20150207T174514-727@post.gmane.org> <54D64939.4080102@web.de>
+ <loom.20150207T182443-33@post.gmane.org> <54D67662.7040504@web.de>
+ <CAPc5daUnKcktv0xcz-fGEApckbkQksKuZO53ZL20E1MhtZmn4w@mail.gmail.com> <loom.20150207T232422-706@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: base64
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 07 23:31:53 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Joachim Schmitz <jojo@schmitz-digital.de>
+X-From: git-owner@vger.kernel.org Sun Feb 08 03:14:26 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YKDur-00085d-08
-	for gcvg-git-2@plane.gmane.org; Sat, 07 Feb 2015 23:31:53 +0100
+	id 1YKHOD-0000OW-Gl
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Feb 2015 03:14:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758815AbbBGWbt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Feb 2015 17:31:49 -0500
-Received: from plane.gmane.org ([80.91.229.3]:34633 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756069AbbBGWbs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Feb 2015 17:31:48 -0500
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1YKDuj-00082e-6W
-	for git@vger.kernel.org; Sat, 07 Feb 2015 23:31:45 +0100
-Received: from dslb-188-109-251-074.188.109.pools.vodafone-ip.de ([188.109.251.74])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 07 Feb 2015 23:31:45 +0100
-Received: from jojo by dslb-188-109-251-074.188.109.pools.vodafone-ip.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 07 Feb 2015 23:31:45 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 188.109.251.74 (Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko)
+	id S1751469AbbBHCOK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Feb 2015 21:14:10 -0500
+Received: from mail-ob0-f178.google.com ([209.85.214.178]:51552 "EHLO
+	mail-ob0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750747AbbBHCOJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Feb 2015 21:14:09 -0500
+Received: by mail-ob0-f178.google.com with SMTP id uz6so19803202obc.9
+        for <git@vger.kernel.org>; Sat, 07 Feb 2015 18:14:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=5IlSn5qGQ/+fJgjsaSxgCDlXL1DVa5Y9IDHX65cIeQI=;
+        b=kD+/v93dBN9cKj6mRdemEe+UR4bF/TF0qXMgwJ0+e+wr28leYOuO0kGRdMjjJBeTfs
+         Qrnvhb9H3fsr8cIdBevRwqVsbpufxcTWRkHV/ZIsl8TOnWBz6oWebOxDSgoDaU8/rRVC
+         MXs4SBdSZbwLYBjyyqsa92UsM7IxS0nnXcu0uE22y0fLkGeP8SA/Ww1Xqp1H5c1JotOc
+         AwmlbqmwqZwJg+NjpRYQM0BpKZzqzDADUJcq3t3dq4/IDL8/+7iB1qsp5nqz+2YOQti0
+         oD0TLQx1B4RPNxxEm2C8O4eNim3D8+JSEeKLz42o1DmUDQx9vVaIl7INZGJDRlmKuYLj
+         zfrA==
+X-Received: by 10.202.87.142 with SMTP id l136mr7100999oib.84.1423361648174;
+ Sat, 07 Feb 2015 18:14:08 -0800 (PST)
+Received: by 10.202.48.132 with HTTP; Sat, 7 Feb 2015 18:13:47 -0800 (PST)
+In-Reply-To: <loom.20150207T232422-706@post.gmane.org>
+X-Google-Sender-Auth: Jo-ujuEsHVzCwmP7tN_wrguuqkQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263460>
 
-SnVuaW8gQyBIYW1hbm8gPGdpdHN0ZXIgPGF0PiBwb2JveC5jb20+IHdyaXRlczoKCj4gCj4gT24gU2F0LCBGZWIgNywgMjAxNSBhdCAxMjozMiBQTSwgVG9yc3RlbiBCw7ZnZXJzaGF1c2VuIDx0Ym9lZ2kgPGF0PiAKd2ViLmRlPiB3cm90ZToKPiA+IEkgZG9uJ3Qga25vdyBldmVyeSBwbGF0Zm9ybSBvZiB0aGUgcGxhbmV0IHdlbGwgZW5vdWdoIHRvIGJlIGhlbHBmdWwgCmhlcmUsCj4gPiBlc3BlY2lhbGx5IHRoZSBvbmVzIHdoaWNoIGRvbid0IGZvbGxvdyBhbGwgdGhlIHNwZWNpZmljYXRpb25zLgo+ID4KPiA+IEluIG90aGVyIHdvcmRzOiBBcyBsb25nIGFzIHdlIGNhbiBub3QgZ3VhcmFudGVlIHRoYXQgU1NJWkVfTUFYIGlzIApkZWZpbmVkLAo+ID4gKGFuZCBpcyBkZWZpbmVkIHRvIHNvbWV0aG9uZyB1c2VmdWwgZm9yIHhyZWFkKCkveHdyaXRlKCkgKQo+ID4gd2Ugc2hvdWxkIGJlIG1vcmUgZGVmZW5zaXZlIGhlcmU6Cj4gPgo+ID4gdHdlYWsgb25seSBvbiBwbGF0Zm9ybSB3aGVyZSB3ZSBrbm93IGl0IGlzIG5lZWRlZCBhbmQgd2Uga25vdyB0aGF0IGl0IAp3b3Jrcy4KPiAKPiBZdXAsIEkgYWdyZWUgdGhhdCBpcyBhIHNlbnNpYmxlIHdheSB0byBn
- by4KPiAKPiAgKDEpIGlmIE1ha2VmaWxlIG92ZXJyaWRlcyB0aGUgc2l6ZSwgdXNlIGl0OyBvdGhlcndpc2UKPiAgKDIpIGlmIFNTSVpFX01BWCBpcyBkZWZpbmVkLCBhbmQgaXQgaXMgc21hbGxlciB0aGFuIG91ciBpbnRlcm5hbAo+IGRlZmF1bHQsIHVzZSBpdDsgb3RoZXJ3aXNlCj4gICgzKSB1c2Ugb3VyIGludGVybmFsIGRlZmF1bHQuCj4gCj4gQW5kIGxlYXZlIG91ciBpbnRlcm5hbCBkZWZhdWx0IHRvIDhNQi4KPiAKPiBUaGF0IHdheSwgbm9ib2R5IG5lZWRzIHRvIGRvIGFueXRoaW5nIGRpZmZlcmVudGx5IGZyb20gaGlzIGN1cnJlbnQgYnVpbGQgCnNldC11cCwKPiBhbmQgSSBzdXNwZWN0IHRoYXQgaXQgd291bGQgbWFrZSBzdGVwICgxKSBvcHRpb25hbC4KPiAKCnNvbWV0aGluZyBsaWtlIHRoaXM6CgovKiBhbGxvdyBvdmVyd3JpdGluZyBmcm9tIGUuZy4gTWFrZWZpbGUgKi8KI2lmICFkZWZpbmVkKE1BWF9JT19TSVpFKQojIGRlZmluZSBNQVhfSU9fU0laRSAoOCoxMDI0KjEwMjQpCiNlbmRpZgovKiBmb3IgcGxhdHRmb3JtcyB0aGF0IGhhdmUgU1NJWkUgYW5kIGhhdmUgaXQgc21hbGxlciAqLwojaWYgZGVmaW5lZChTU0laRV9NQVggJiYgKF
- NTSVpFX01BWCA8IE1BWF9JT19TSVpFKSAKIyB1bmRlZiBNQVhfSU9fU0laRSAvKiBhdm9pZCB3YXJuaW5nICovCiMgZGVmaW5lIE1BWF9JT19TSVpFIFNTSVpFX01BWAojZW5kaWYKClN0ZXBzIDIgYW5kIDMgb25seSAsIGluZGVlZCBzdGVwIDEgbm90IG5lZWRlZC4uLgoKQnllLCBKb2pv
+On Sat, Feb 7, 2015 at 2:31 PM, Joachim Schmitz <jojo@schmitz-digital.de> wrote:
+> Junio C Hamano <gitster <at> pobox.com> writes:
+>>
+>> Yup, I agree that is a sensible way to go.
+>>
+>>  (1) if Makefile overrides the size, use it; otherwise
+>>  (2) if SSIZE_MAX is defined, and it is smaller than our internal
+>> default, use it; otherwise
+>>  (3) use our internal default.
+>>
+>> And leave our internal default to 8MB.
+>>
+>> That way, nobody needs to do anything differently from his current build
+> set-up,
+>> and I suspect that it would make step (1) optional.
+>
+> something like this:
+>
+> /* allow overwriting from e.g. Makefile */
+> #if !defined(MAX_IO_SIZE)
+> # define MAX_IO_SIZE (8*1024*1024)
+> #endif
+> /* for plattforms that have SSIZE and have it smaller */
+> #if defined(SSIZE_MAX && (SSIZE_MAX < MAX_IO_SIZE)
+> # undef MAX_IO_SIZE /* avoid warning */
+> # define MAX_IO_SIZE SSIZE_MAX
+> #endif
+
+No, not like that. If you do (1), that is only so that the Makefile can override
+a broken definition a platform may give to SSIZE_MAX.  So
+
+ (1) if Makefile gives one, use it without second-guessing with SSIZE_MAX.
+ (2) if SSIZE_MAX is defined, and if it is smaller than our internal
+default, use it.
+ (3) all other cases, us our internal default.
