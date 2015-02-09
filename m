@@ -1,132 +1,101 @@
-From: Dilyan Palauzov <dilyan.palauzov@aegee.org>
-Subject: Re: git 2.2.2 annotate crash (strbuf.c:32)
-Date: Mon, 09 Feb 2015 20:22:46 +0100
-Message-ID: <54D90906.7000507@aegee.org>
-References: <54D7D634.2050807@aegee.org> <20150209012858.GB21072@peff.net> <CAPig+cQ7iYq_c_MstfsMzArCZFM_0ORRa8Gi-YckaeZiWKN=4w@mail.gmail.com> <54D88D03.1090501@aegee.org> <20150209184612.GA4327@flurp.local>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] index-pack: reduce memory footprint a bit
+Date: Mon, 09 Feb 2015 11:27:21 -0800
+Message-ID: <xmqqfvaec2cm.fsf@gitster.dls.corp.google.com>
+References: <CACsJy8A=6m5sWnDhPPMNrWbZ=fOMXPxO_1GVh-WpHycf5gm+rg@mail.gmail.com>
+	<1423487929-28019-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon Feb 09 20:23:29 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, msporleder@gmail.com
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 09 20:27:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YKtvb-0006rc-0O
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Feb 2015 20:23:27 +0100
+	id 1YKtzV-0000Gz-MO
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Feb 2015 20:27:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933717AbbBITXW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Feb 2015 14:23:22 -0500
-Received: from mailout-aegee.scc.kit.edu ([129.13.185.235]:59060 "EHLO
-	mailout-aegee.scc.kit.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933468AbbBITXV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Feb 2015 14:23:21 -0500
-Received: from smtp.aegee.org (aegeepc1.aegee.uni-karlsruhe.de [129.13.131.81])
-	by scc-mailout-02.scc.kit.edu with esmtp (Exim 4.72 #1)
-	id 1YKtvT-0000HZ-CH; Mon, 09 Feb 2015 20:23:19 +0100
-Authentication-Results: aegeeserv.aegee.org; auth=pass (PLAIN) smtp.auth=didopalauzov
-DKIM-Filter: OpenDKIM Filter v2.10.0 smtp.aegee.org t19JNJd8003443
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aegee.org; s=k4096;
-	t=1423509799; i=dkim+MSA-tls@aegee.org;
-	bh=CvUMwpJefTBBHszwOOq8zJi6vyCSI1rRXLSc2j8WSkQ=;
-	h=Date:From:To:CC:Subject:References:In-Reply-To;
-	b=oRNliGdPKs5zoPKtua4/loi879PlAvrsQVK+WF6uIMZS7rUEU2eWx8vehKsskq1TW
-	 xff7saIFNvbANfQncMN3HNWuxvOPKhLYDBv4fjzEGBRI3du1vBGKuO0GFjXbtHgtCw
-	 9gK6l/Xz+AlQTae8dJ+41u8LfJLSEj9rSQD94HjVtVEaHVlvbBGHoEFMlm+q4AKy1K
-	 2Aeru5nmt4eKh13Uq/DYrVYMPnd7bPMFoyWKkxRM8xLf7yIYDXoo1ZhpiuVarnCuGI
-	 FGUjNvtw6jr8KK0bldyIl7/Tjs4q90QPvyVjFwEQecdf0O/46X8YV9YkugwmnWoRq/
-	 JQI9UVtuIFPVNLKkGdgMXdT2sS8eW3u9mIsxRoe1+6Vi1LLtP5BCQypoA4/B1U3ye5
-	 +xGxleYKPERO6rXCrJbBozY8u7CGlceiog5uSl3x/psbvskhla8DT9U7m7MK+m16sP
-	 uP6Fidryy+vfVNt7zJpylgL/bFsY0DyK/CD1VU+udNBnW+jNV1oKyuEI8dz41EepkW
-	 5Hn6MR+PMUP7JkhZZmyYDhTIw8wKNCTVcTnhXx2DvivT6vUUVh2e2M0IwMmr9tqbBb
-	 adYMmlR1eA1F/FxpgpFh38BCvi0+3to/go73RT8rNTyS+pQUMnb1M4f/L4s 
-Received: from [192.168.0.2] (zuhause [212.202.110.243])
-	(authenticated bits=0)
-	by smtp.aegee.org (8.15.1/8.14.5) with ESMTPSA id t19JNJd8003443
-	(version=TLSv1.2 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Mon, 9 Feb 2015 19:23:19 GMT
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
-In-Reply-To: <20150209184612.GA4327@flurp.local>
-X-Virus-Scanned: clamav-milter 0.98.6 at aegeeserv
-X-Virus-Status: Clean
+	id S933806AbbBIT1Z convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Feb 2015 14:27:25 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:60975 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S933771AbbBIT1Y convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 Feb 2015 14:27:24 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 752C8358ED;
+	Mon,  9 Feb 2015 14:27:23 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=T4R3Rwj8TzxS
+	EG9vgYRYe8Ph+GA=; b=nFqcR/4ZBGz4XO4VEPfsGqV2A33XBBi6vNWKz1PFBCMt
+	KL9l3n0xlV1ibgNq/AOgRkr+zivJvAVOWTL3eKNCI+NtoyJq5hfl6l2t46zXuDv0
+	efdzacSGS/yAzA+p0uiFVLROBdW1rfELL1DO56BlJ7AGxa5pZLHQOpxblwuG+yc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=pAOLRz
+	YgOYGNKgC+dG9/dRamUuKTFsPjo45lYBM+/u80eiF3M5AOTvw/H8vItcWyWPopux
+	LqiF4VWiBp2E5E7G7pMqKgqYjAUH5ehZX5r7ivnj+w75qhND5mFLTranU5qNyYlj
+	Rh+Zgt8xNf5QMW1U6oaYaxIo1/wClqGIaRaIA=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6BD3B358EC;
+	Mon,  9 Feb 2015 14:27:23 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D59E4358EA;
+	Mon,  9 Feb 2015 14:27:22 -0500 (EST)
+In-Reply-To: <1423487929-28019-1-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Mon, 9 Feb
+ 2015 20:18:49 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: ABE858EA-B091-11E4-AE31-7BA29F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263587>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263588>
 
-Hello,
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-this patch fixes the problem for me.
+> For each object in the input pack, we need one struct object_entry. O=
+n
+> x86-64, this struct is 64 bytes long. Although:
+>
+>  - The 8 bytes for delta_depth and base_object_no are only useful whe=
+n
+>    show_stat is set. And it's never set unless someone is debugging.
+>
+>  - The three fields hdr_size, type and real_type take 4 bytes each
+>    even though they never use more than 4 bits.
+>
+> By moving delta_depth and base_object_no out of struct object_entry
+> and make the other 3 fields one byte long instead of 4, we shrink 25%
+> of this struct.
+>
+> On a 3.4M object repo that's about 53MB. The saving is less impressiv=
+e
+> compared to index-pack total memory use (about 400MB before delta
+> resolving, so the saving is just 13%)
+>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+>  I'm not sure if this patch is worth pursuing. It makes the code a
+>  little bit harder to read. I was just wondering how much memory coul=
+d
+>  be saved..
 
-Thanks
-   Dilyan
+I would say 13% is already impressive ;-).
 
-On 09.02.2015 19:46, Eric Sunshine wrote:
-> On Mon, Feb 09, 2015 at 11:33:39AM +0100, Dilyan Palauzov wrote:
->> the point is that with exactly the same configuration on one
->> computer there is crash and on another one things work just fine.
->>
->> I found out that line builtin/blame.c:1675 makes the problems:
->>
->> if (len) {
->>    printf("blame.c:1676, subject: %s, len: %i\n", subject, len);
->> -->  strbuf_add(&ret->summary, subject, len);  <--
->> } else
->>     strbuf_addf(&ret->summary, "(%s)", sha1_to_hex(commit->object.sha1));
->>
->> commenting it out and compiling does not lead to crashing git
->> anymore. You can find below the output of printf.
->>
->> git clone git://git.cyrusimap.org/cyrus-imapd
->> git annotate timsieved/parser.c
->>
->> *** Error in `git': double free or corruption (!prev):
->> 0x00000000022e4b40 ***
->
-> There is a bit of suspicious code in builtin/blame.c where it is
-> destroying the commit_info without ever initializing it, and this
-> happens many times when blaming 'timsieved/parser.c'. Does the
-> following patch fix the problem for you?
->
-> --- 8< ---
-> diff --git a/builtin/blame.c b/builtin/blame.c
-> index 303e217..a3cc972 100644
-> --- a/builtin/blame.c
-> +++ b/builtin/blame.c
-> @@ -2085,7 +2085,6 @@ static void find_alignment(struct scoreboard *sb, int *option)
->
->   	for (e = sb->ent; e; e = e->next) {
->   		struct origin *suspect = e->suspect;
-> -		struct commit_info ci;
->   		int num;
->
->   		if (compute_auto_abbrev)
-> @@ -2096,6 +2095,7 @@ static void find_alignment(struct scoreboard *sb, int *option)
->   		if (longest_file < num)
->   			longest_file = num;
->   		if (!(suspect->commit->object.flags & METAINFO_SHOWN)) {
-> +			struct commit_info ci;
->   			suspect->commit->object.flags |= METAINFO_SHOWN;
->   			get_commit_info(suspect->commit, &ci, 1);
->   			if (*option & OUTPUT_SHOW_EMAIL)
-> @@ -2104,6 +2104,7 @@ static void find_alignment(struct scoreboard *sb, int *option)
->   				num = utf8_strwidth(ci.author.buf);
->   			if (longest_author < num)
->   				longest_author = num;
-> +			commit_info_destroy(&ci);
->   		}
->   		num = e->s_lno + e->num_lines;
->   		if (longest_src_lines < num)
-> @@ -2113,8 +2114,6 @@ static void find_alignment(struct scoreboard *sb, int *option)
->   			longest_dst_lines = num;
->   		if (largest_score < ent_score(sb, e))
->   			largest_score = ent_score(sb, e);
-> -
-> -		commit_info_destroy(&ci);
->   	}
->   	max_orig_digits = decimal_width(longest_src_lines);
->   	max_digits = decimal_width(longest_dst_lines);
->
+I do not find the result all that harder to read.  I however think
+that the change would make it a lot harder to maintain, especially
+because the name "object-entry-extra" does not have any direct link
+to "show-stat" to hint us that this must be allocated when show-stat
+is in use and must never be looked at when show-stat is not in use.
+
+Also it makes me wonder if the compilers are smart enough to notice
+that the codepaths that access objects_extra[] are OK because they
+are all inside "if (show_stat)".
