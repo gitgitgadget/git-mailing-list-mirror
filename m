@@ -1,77 +1,99 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 0/8] Fix some problems with reflog expiration
-Date: Mon, 9 Feb 2015 10:57:52 -0800
-Message-ID: <CAGZ79kak+K+ZquHoPLra+ABbtxWQLLuEj+z049sACHvjA2oZqg@mail.gmail.com>
-References: <1423473164-6011-1-git-send-email-mhagger@alum.mit.edu>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: 'git rebase' silently drops changes?
+Date: Mon, 09 Feb 2015 20:03:15 +0100
+Message-ID: <54D90473.2090208@kdbg.org>
+References: <87386ispb3.fsf@osv.gnss.ru> <54D68455.5070305@gmail.com>	<54D7696B.3060407@kdbg.org> <87oap38cv1.fsf@osv.gnss.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>, "git@vger.kernel.org" <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon Feb 09 19:57:59 2015
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: Sebastian Schuberth <sschuberth@gmail.com>, git@vger.kernel.org
+To: Sergey Organov <sorganov@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 09 20:03:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YKtWv-00044F-Ui
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Feb 2015 19:57:58 +0100
+	id 1YKtcE-0006XZ-N9
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Feb 2015 20:03:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760939AbbBIS5y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Feb 2015 13:57:54 -0500
-Received: from mail-ie0-f177.google.com ([209.85.223.177]:40459 "EHLO
-	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758932AbbBIS5x (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Feb 2015 13:57:53 -0500
-Received: by iecrp18 with SMTP id rp18so12442851iec.7
-        for <git@vger.kernel.org>; Mon, 09 Feb 2015 10:57:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=SDorg9WisagtKpCnEM6s/F/KVHHtzEsKvETQuj6iPa0=;
-        b=CfjfErMxoBBX5hVG+0UdJAGGJxcNVYkVGuup8F8irSXq45ck8VFqg2YcAzoKS2/qP3
-         kq3uQHUk0wPb9MNo+3h4ueEQVXdWmBhDuBeT/FLtA8t1P8ZzG2WONbXWhfNbKuKh27yG
-         WDJhqyIhErEe9ouLfqK6rz95ES4Q5ghjqWLTzekrmhEVnuG3Xj4a42qgVFnaT8RIAfD1
-         XA6GvmeLVUFvRIj6AOBp9MGapb6FaZg/UuLe15Bhwv5m6O52r+Q6GI2YK5sLxHbkIgIJ
-         DvbwWBkGdLAd1vpo1g3oA24HnmuYj7DkieJb9OSvMi9UM8Z0cSaeEMnlwGIEZ1tQbTgL
-         t4Ng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=SDorg9WisagtKpCnEM6s/F/KVHHtzEsKvETQuj6iPa0=;
-        b=LrxJvLJiFPOx88Gtq0KUUe1x6sWm+QgKFumooQVYNPSIvpRvy2Kx2WcOJFJ/H/Vdw6
-         FBaiSwHe1Z5+XYXffedm4IOYNWjuZ0JDCuHVBW1njj64ELryDpfEHUL+rxgtEQkW+SFh
-         V79BOWK9OGQCzfHuAzkAigQ5QDMZg5BsvxxT5bQSvAM3aCwdmBHqTcxCGP6wvdM1WcW2
-         9fNuG9VhJ5HIl0x3ODMRHMuTmnttv4bOvuKPAXSE68oFb1055FciaeCA9ab93Fb4zNSe
-         NSBr8F+plYIz3rjFUwBXFpdRFX2NWr7Lm0dKExOHgbQaxA3n9ZtHRtUBRif//7AsPNXV
-         ZjrA==
-X-Gm-Message-State: ALoCoQmjOHoynChTGbfPdkNVJRYfrdzzAaDTJfr8YcLdOJZ+AritpZukCfoN/EFa0UFXOZN9AbQU
-X-Received: by 10.42.207.129 with SMTP id fy1mr26473101icb.17.1423508272500;
- Mon, 09 Feb 2015 10:57:52 -0800 (PST)
-Received: by 10.50.26.42 with HTTP; Mon, 9 Feb 2015 10:57:52 -0800 (PST)
-In-Reply-To: <1423473164-6011-1-git-send-email-mhagger@alum.mit.edu>
+	id S933807AbbBITDW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Feb 2015 14:03:22 -0500
+Received: from bsmtp7.bon.at ([213.33.87.19]:6629 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S933756AbbBITDW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Feb 2015 14:03:22 -0500
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTPSA id 3kgxTL4Wryz5tlH;
+	Mon,  9 Feb 2015 20:03:18 +0100 (CET)
+Received: from dx.sixt.local (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id EDD0C19F925;
+	Mon,  9 Feb 2015 20:03:15 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
+In-Reply-To: <87oap38cv1.fsf@osv.gnss.ru>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263583>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263584>
 
-On Mon, Feb 9, 2015 at 1:12 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+Am 09.02.2015 um 13:53 schrieb Sergey Organov:
+> Johannes Sixt <j6t@kdbg.org> writes:
+> 
+>> Am 07.02.2015 um 22:32 schrieb Sebastian Schuberth:
+>>> On 06.02.2015 22:28, Sergey Organov wrote:
+>>>
+>>>> # Now rebase my work.
+>>>> git rebase -f HEAD~1
+>>>>
+>>>> # What? Where is my "Precious" change in "a"???
+>>>> cat a
+>>>> </SCRIPT>
+>>>>
+>>>> I.e., the modification marked [!] was silently lost during rebase!
+>>>
+>>> Just a wild guess: Maybe because you omitted "-p" / "--preserve-merges"
+>>> from "git rebase"?
+>>
+>> No, that would not help. --preserve-merges repeats the merge, but does
+>> not apply the amendment.
+> 
+> Really? Why? Here the valid concern you gave below doesn't even apply!
 
-> By the way, both of these patch series conflict with
-> sb/atomic-push-fix, which is in pu. My understanding is that Stefan
-> wants to rework that patch series anyway, but if not I would be happy
-> to show how to resolve the conflicts.
+--preserve-merges was bolted on to git-rebase. The first implementation
+just re-computed the merge, and rebase would be interrupted if the merge
+was not clean. This was good enough for many.
 
-Heh, I had it already reworked on Friday evening, but forgot to send it out
-for review. As mentioned before, sb/atomic-push-fix is a misleading branch name
-as it actually enables large transactions [ "large" means > $(ulimit -n) ].
+Later --preserve-merges was abused to replay not only integration
+branches, but branchy history in general. At that time, the feature was
+deemed wide spread enough that changing its behavior was a no-go.
 
-I don't mind reworking that series again on top of either this or the other
-patch series you sent out, as I wasn't entirely happy with it anyway.
-(Naming is hard)
+There you have it.
+
+If you want a version of --preserve-merges that does what *you* need,
+consider this commit:
+
+  git://repo.or.cz/git/mingw/j6t.git rebase-p-first-parent
+
+Use it like this:
+
+  git rebase -i -p --first-parent ...
+
+Beware, its implementation is incomplete: if the rebase is interrupted,
+then 'git rebase --continue' behaves as if --first-parent were not given.
+
+>> it is impossible for git rebase to decide to which rebased
+>> commit the amendement applies. It doesn't even try to guess. It's the
+>> responsibility of the user to apply the amendment to the correct
+>> commit.
+> 
+> Yeah, this sounds reasonable, /except/ git even gives no warning when it
+> drops amendments. Shouldn't 'git rebase' rather consider merge amendment
+> a kind of conflict?
+
+There is work in progress where a merge is computed entirely in-memory
+(without relying on files in the worktree). It could be used to detect
+whether there are any changes beyond the automatic merge results, and
+they could be warned about.
+
+-- Hannes
