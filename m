@@ -1,64 +1,124 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: low memory system to clone larger repo
-Date: Mon, 9 Feb 2015 19:32:19 +0700
-Message-ID: <CACsJy8A=6m5sWnDhPPMNrWbZ=fOMXPxO_1GVh-WpHycf5gm+rg@mail.gmail.com>
-References: <CAHKF-AspyE84_0CVMz2OjFLt3Q62qKDfTkbUk3-+RQ_EZ=0JGg@mail.gmail.com>
+From: Sergey Organov <sorganov@gmail.com>
+Subject: Re: 'git rebase' silently drops changes?
+Date: Mon, 09 Feb 2015 15:53:54 +0300
+Message-ID: <87oap38cv1.fsf@osv.gnss.ru>
+References: <87386ispb3.fsf@osv.gnss.ru> <54D68455.5070305@gmail.com>
+	<54D7696B.3060407@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: matthew sporleder <msporleder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 09 13:32:59 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: Sebastian Schuberth <sschuberth@gmail.com>, git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Mon Feb 09 13:54:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YKnWL-0001tZ-SN
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Feb 2015 13:32:58 +0100
+	id 1YKnqk-0001bV-3F
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Feb 2015 13:54:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759921AbbBIMcv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Feb 2015 07:32:51 -0500
-Received: from mail-ie0-f171.google.com ([209.85.223.171]:46879 "EHLO
-	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759455AbbBIMcu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Feb 2015 07:32:50 -0500
-Received: by iecar1 with SMTP id ar1so15967498iec.13
-        for <git@vger.kernel.org>; Mon, 09 Feb 2015 04:32:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=0vIq84nmfkWxyjYl3cPVjqLbkIWiJmZyNrb9OWTZu5c=;
-        b=x+znk28xs948NIgaTTPz2GAcGb8aCt/6F4uK+RoWkIgFYCHDCoFL5SyAcd8KoJtBCb
-         Cm35Ne/WZaVYTFxFow6/aTihj8YkmbH02Z7tE3WlvmlfHColPYG622Fvb4NT5CRpYjuf
-         G5/X9pZKZs+lvl6mf/fMKohSn2fgT41P/PvH7BpnzB5RNJj+IMemVgRWntW9AXIZwWLD
-         63gKHs8ukPc+iP2KWbQ1ks/UzGrtmGr0+I2pizWEyM3hd4Puihtp+tXMsxSH8wzt+mp5
-         NGyJApbuIeCy+QrwBjlGb1Wc22mO+cp2hSgGRTX1zvbZ9Ixkj4sggzxD3hQYQC5D2gw3
-         QSzg==
-X-Received: by 10.42.83.147 with SMTP id h19mr24783077icl.95.1423485170222;
- Mon, 09 Feb 2015 04:32:50 -0800 (PST)
-Received: by 10.107.131.155 with HTTP; Mon, 9 Feb 2015 04:32:19 -0800 (PST)
-In-Reply-To: <CAHKF-AspyE84_0CVMz2OjFLt3Q62qKDfTkbUk3-+RQ_EZ=0JGg@mail.gmail.com>
+	id S932866AbbBIMx6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Feb 2015 07:53:58 -0500
+Received: from mail.javad.com ([54.86.164.124]:56019 "EHLO mail.javad.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932469AbbBIMx5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Feb 2015 07:53:57 -0500
+Received: from osv.gnss.ru (unknown [89.175.180.246])
+	by mail.javad.com (Postfix) with ESMTPSA id 9FED562BF4;
+	Mon,  9 Feb 2015 12:53:56 +0000 (UTC)
+Received: from osv by osv.gnss.ru with local (Exim 4.72)
+	(envelope-from <sorganov@gmail.com>)
+	id 1YKnqc-0008Vx-RN; Mon, 09 Feb 2015 15:53:54 +0300
+In-Reply-To: <54D7696B.3060407@kdbg.org> (Johannes Sixt's message of "Sun, 08
+	Feb 2015 14:49:31 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263564>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263565>
 
-On Thu, Jan 8, 2015 at 11:10 PM, matthew sporleder <msporleder@gmail.com> wrote:
-> I am attempting to clone this repo: https://github.com/jsonn/src/
+Johannes Sixt <j6t@kdbg.org> writes:
 
-This repo has 3.4M objects. Basic book keeping would cost 200MB (in
-practice it'll be higher because I'm assuming no deltas in my
-calculation). On my 64-bit system, it already uses 400+ MB at the
-beginning of delta resolving phase, and is about 500MB during. 32-bit
-systems cost less but I doubt we could keep it within 256 MB limit. I
-think you just need more powerful machines for a repo this size.
+> Am 07.02.2015 um 22:32 schrieb Sebastian Schuberth:
+>> On 06.02.2015 22:28, Sergey Organov wrote:
+>> 
+>>> # Now rebase my work.
+>>> git rebase -f HEAD~1
+>>>
+>>> # What? Where is my "Precious" change in "a"???
+>>> cat a
+>>> </SCRIPT>
+>>>
+>>> I.e., the modification marked [!] was silently lost during rebase!
+>> 
+>> Just a wild guess: Maybe because you omitted "-p" / "--preserve-merges"
+>> from "git rebase"?
+>
+> No, that would not help. --preserve-merges repeats the merge, but does
+> not apply the amendment.
 
-Also, they have some large files (udivmodti4_test.c 16MB, MD5SUMS
-6MB..) These giant files could make index-pack use more memory
-especially if they are deltified. If you repack the repo with
-core.bigFileThreshold about 1-2MB, then clone, you may get a better
-memory consumption, but at the cost of bigger packs.
--- 
-Duy
+Really? Why? Here the valid concern you gave below doesn't even apply!
+
+Check... yes, git silently drops amend even with --preserve-merges
+(script to reproduce at the end[1])! How comes?
+
+> It's just how rebase works: It omits merge commits when it linearizes
+> history.
+>
+> Sergey, it is impossible for git rebase to decide to which rebased
+> commit the amendement applies. It doesn't even try to guess. It's the
+> responsibility of the user to apply the amendment to the correct
+> commit.
+
+Yeah, this sounds reasonable, /except/ git even gives no warning when it
+drops amendments. Shouldn't 'git rebase' rather consider merge amendment
+a kind of conflict?
+
+
+[1] To reproduce amend drop by "git rebase --preserve-merges":
+
+<SCRIPT>
+git init t
+cd t
+git config rerere.enabled false # doesn't actually matter either way.
+
+echo "I" > a; git add a
+echo "I" > b; git add b
+git commit -aqm "I"
+git tag start
+
+git checkout -b test
+
+echo "B" >> b; git commit -m "B" -a
+
+git checkout master
+
+echo "A" >> a
+git commit -aqm "A"
+
+git merge --no-edit test
+git branch -d test
+
+# Clean merge, but result didn't compile, so I fixed it and
+# amended the merge:
+echo "Precious!" >> a # [!] This is modification that gets lost
+git commit --amend --no-edit -aq
+cat a
+
+# Make a change earlier in history, to rebase my work on top of it.
+git co -q start
+git co -b test
+echo "C" > c; git add c
+git commit -aqm "C"
+
+# Now rebase my work.
+git co master
+git rebase --preserve-merges --no-fork-point test
+
+# What? Where is my "Precious" change in "a"???
+cat a
+
+</SCRIPT>
+
+-- Sergey.
