@@ -1,7 +1,8 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 0/8] Fix some problems with reflog expiration
-Date: Mon,  9 Feb 2015 10:12:36 +0100
-Message-ID: <1423473164-6011-1-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH 2/8] write_ref_sha1(): Move write elision test to callers
+Date: Mon,  9 Feb 2015 10:12:38 +0100
+Message-ID: <1423473164-6011-3-git-send-email-mhagger@alum.mit.edu>
+References: <1423473164-6011-1-git-send-email-mhagger@alum.mit.edu>
 Cc: Stefan Beller <sbeller@google.com>,
 	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
@@ -9,127 +10,120 @@ Cc: Stefan Beller <sbeller@google.com>,
 	<pclouds@gmail.com>, git@vger.kernel.org,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 09 10:20:05 2015
+X-From: git-owner@vger.kernel.org Mon Feb 09 10:20:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YKkVf-00025q-KD
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Feb 2015 10:20:04 +0100
+	id 1YKkVu-0002C7-TS
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Feb 2015 10:20:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932462AbbBIJT6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Feb 2015 04:19:58 -0500
-Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:60308 "EHLO
-	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932386AbbBIJT4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Feb 2015 04:19:56 -0500
-X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Mon, 09 Feb 2015 04:19:56 EST
-X-AuditID: 1207440e-f79bc6d000000c43-fd-54d87a1483f9
+	id S932490AbbBIJUL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Feb 2015 04:20:11 -0500
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:59271 "EHLO
+	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932386AbbBIJUJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 Feb 2015 04:20:09 -0500
+X-AuditID: 12074413-f79f26d0000030e7-de-54d87a161350
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id D4.4E.03139.41A78D45; Mon,  9 Feb 2015 04:12:52 -0500 (EST)
+	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 18.42.12519.61A78D45; Mon,  9 Feb 2015 04:12:55 -0500 (EST)
 Received: from michael.fritz.box (p4FC971C1.dip0.t-ipconnect.de [79.201.113.193])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t199CnQW026231
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t199CnQY026231
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Mon, 9 Feb 2015 04:12:50 -0500
+	Mon, 9 Feb 2015 04:12:53 -0500
 X-Mailer: git-send-email 2.1.4
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrDIsWRmVeSWpSXmKPExsUixO6iqCtSdSPE4NZGLouuK91MFg29V5gt
-	3t5cwmhxe8V8ZovuKW8ZLXr7PrFabN7czuLA7vH3/Qcmj52z7rJ7LNhU6nHxkrLH501yAaxR
-	3DZJiSVlwZnpefp2CdwZk8/dZyv4Kl7xY/IzpgbGycJdjJwcEgImEkc3zGaCsMUkLtxbz9bF
-	yMUhJHCZUeLvgcOsEM4JJonXV86xgFSxCehKLOppBusQEVCTmNh2CCzOLLCaSWLrXaBuDg5h
-	AVuJW3tNQMIsAqoSa/7eYwQJ8wo4Syw9ZQmxS07i/PGfzBMYuRcwMqxilEvMKc3VzU3MzClO
-	TdYtTk7My0st0jXWy80s0UtNKd3ECAkZvh2M7etlDjEKcDAq8fBWfLweIsSaWFZcmXuIUZKD
-	SUmUd0HijRAhvqT8lMqMxOKM+KLSnNTiQ4wSHMxKIrzfM4ByvCmJlVWpRfkwKWkOFiVxXrUl
-	6n5CAumJJanZqakFqUUwWRkODiUJ3jkVQI2CRanpqRVpmTklCGkmDk6Q4VxSIsWpeSmpRYml
-	JRnxoDCPLwYGOkiKB2jvDpB23uKCxFygKETrKUZFKXHefpCEAEgiozQPbiwsEbxiFAf6Upi3
-	D6SKB5hE4LpfAQ1mAhpcUAA2uCQRISXVwDg/WVtz3Ze9zw76xRZPiOlz8pBm2nLlzyrG1m9J
-	Ntlzt3/IvKZ30u2u9m7nbYlLGuWU183fsdJKPFxK9t/9myc71WcHf9ibfGLOntLbHUorox7z
-	5O88O1WYtfybGU925v8io99himELrT+4Rr1uOiLl8l9UYLKwipbolg2Slk3f3yU3 
+In-Reply-To: <1423473164-6011-1-git-send-email-mhagger@alum.mit.edu>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrEIsWRmVeSWpSXmKPExsUixO6iqCtedSPEYEaORdeVbiaLht4rzBZv
+	by5htLi9Yj6zRfeUt4wWvX2fWC02b25ncWD3+Pv+A5PHzll32T0WbCr1uHhJ2ePzJrkA1ihu
+	m6TEkrLgzPQ8fbsE7ownXxazFNwUrujoLG5gvMjfxcjJISFgIvFl/ydmCFtM4sK99WwgtpDA
+	ZUaJHX1ZXYxcQPYJJol5t9cwgSTYBHQlFvU0g9kiAmoSE9sOsYDYzAKrmSS23gVrFhbwlPg8
+	9zeQzcHBIqAq0X84GyTMK+Asse3FbUaIXXIS54//BNvLKeAi8e7cHKi9zhKzJ+9jnsDIu4CR
+	YRWjXGJOaa5ubmJmTnFqsm5xcmJeXmqRrrlebmaJXmpK6SZGSHgJ72DcdVLuEKMAB6MSD2/F
+	x+shQqyJZcWVuYcYJTmYlER5FyTeCBHiS8pPqcxILM6ILyrNSS0+xCjBwawkwvs9AyjHm5JY
+	WZValA+TkuZgURLnVVui7ickkJ5YkpqdmlqQWgSTleHgUJLg5aoEahQsSk1PrUjLzClBSDNx
+	cIIM55ISKU7NS0ktSiwtyYgHRUV8MTAuQFI8QHu/VoDsLS5IzAWKQrSeYlSUEuf9BpIQAElk
+	lObBjYUljVeM4kBfCvOeA6niASYcuO5XQIOZgAYXFIANLklESEk1MG7sLPt9NeLjxHmSrmrC
+	YhsLvvedSWW8cfKrnVbo/sMXnK1aChOPpJyYcpH3zfH39fHmEgqKyduuCp7+N3+hNceXhvgr
+	/yfW//gzf9aO6uh2nUWadxy1Fkj8WWHqKstbX8rcoXNi1utdLtMm7V8ZcPTGg6pG 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263552>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263553>
 
-In addition to a few cleanups, this patch series fixes some problems
-that I noticed when working on mh/reflog-expire:
+write_ref_sha1() previously skipped the write if the reference already
+had the desired value, unless lock->force_write was set. Instead,
+perform that test at the callers.
 
-* Ignore '--updateref' when expiring the reflog of a symbolic
-  reference, because the alternatives are all pretty silly. See the
-  log message for commit 6/8 for more information.
+Two of the callers (in rename_ref()) unconditionally set force_write
+just before calling write_ref_sha1(), so they don't need the extra
+check at all. Nor do they need to set force_write anymore.
 
-* Ignore '--updateref' when *all* reflog entries are expired by "git
-  reflog expire" or "git reflog delete". Currently, this sets the
-  reference to 0{40}, which breaks the repository. (Another
-  alternative would be to delete the reference in this situation, but
-  that seemed too radical to me somehow.)
+The last caller, in ref_transaction_commit(), still needs the test.
 
-* When expiring the reflog for a symbolic reference, lock the symbolic
-  reference rather than its referent.
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+---
+ refs.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-This patch series applies on top of master merged together with
-sb/atomic-push, like the "refs-have-new" patch series that I just
-submitted. It is also available from my GitHub account [1] as branch
-"expire-updateref-fixes".
-
-There is a minor conflict between this patch series and
-"mh/refs-have-new":
-
-<<<<<<< HEAD
-		if (!is_null_sha1(update->new_sha1)) {
-			if (!update->lock->force_write &&
-			    !hashcmp(update->lock->old_sha1, update->new_sha1)) {
-				unlock_ref(update->lock);
-				update->lock = NULL;
-			} else if (write_ref_sha1(update->lock, update->new_sha1,
-						  update->msg)) {
-||||||| merged common ancestors
-		if (!is_null_sha1(update->new_sha1)) {
-			if (write_ref_sha1(update->lock, update->new_sha1,
-					   update->msg)) {
-=======
-		if ((flags & REF_HAVE_NEW) && !is_null_sha1(update->new_sha1)) {
-			if (write_ref_sha1(update->lock, update->new_sha1,
-					   update->msg)) {
->>>>>>> refs-have-new
-
-It can be resolved in the obvious way:
-
-<<<<<<<
-		if ((flags & REF_HAVE_NEW) && !is_null_sha1(update->new_sha1)) {
-			if (!update->lock->force_write &&
-			    !hashcmp(update->lock->old_sha1, update->new_sha1)) {
-				unlock_ref(update->lock);
-				update->lock = NULL;
-			} else if (write_ref_sha1(update->lock, update->new_sha1,
-						  update->msg)) {
->>>>>>>
-
-By the way, both of these patch series conflict with
-sb/atomic-push-fix, which is in pu. My understanding is that Stefan
-wants to rework that patch series anyway, but if not I would be happy
-to show how to resolve the conflicts.
-
-Michael
-
-[1] https://github.com/mhagger/git
-
-Michael Haggerty (8):
-  write_ref_sha1(): remove check for lock == NULL
-  write_ref_sha1(): Move write elision test to callers
-  lock_ref_sha1_basic(): do not set force_write for missing references
-  reflog: fix documentation
-  reflog: rearrange the manpage
-  reflog_expire(): ignore --updateref for symbolic references
-  reflog_expire(): never update a reference to null_sha1
-  reflog_expire(): lock symbolic refs themselves, not their referent
-
- Documentation/git-reflog.txt | 65 +++++++++++++++++++++++---------------------
- builtin/reflog.c             |  2 +-
- refs.c                       | 55 ++++++++++++++++++++-----------------
- 3 files changed, 65 insertions(+), 57 deletions(-)
-
+diff --git a/refs.c b/refs.c
+index d1130e2..651e37e 100644
+--- a/refs.c
++++ b/refs.c
+@@ -2878,7 +2878,6 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
+ 		error("unable to lock %s for update", newrefname);
+ 		goto rollback;
+ 	}
+-	lock->force_write = 1;
+ 	hashcpy(lock->old_sha1, orig_sha1);
+ 	if (write_ref_sha1(lock, orig_sha1, logmsg)) {
+ 		error("unable to write current sha1 into %s", newrefname);
+@@ -2894,7 +2893,6 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
+ 		goto rollbacklog;
+ 	}
+ 
+-	lock->force_write = 1;
+ 	flag = log_all_ref_updates;
+ 	log_all_ref_updates = 0;
+ 	if (write_ref_sha1(lock, orig_sha1, NULL))
+@@ -3080,10 +3078,6 @@ static int write_ref_sha1(struct ref_lock *lock,
+ 	static char term = '\n';
+ 	struct object *o;
+ 
+-	if (!lock->force_write && !hashcmp(lock->old_sha1, sha1)) {
+-		unlock_ref(lock);
+-		return 0;
+-	}
+ 	o = parse_object(sha1);
+ 	if (!o) {
+ 		error("Trying to write ref %s with nonexistent object %s",
+@@ -3797,15 +3791,21 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+ 		struct ref_update *update = updates[i];
+ 
+ 		if (!is_null_sha1(update->new_sha1)) {
+-			if (write_ref_sha1(update->lock, update->new_sha1,
+-					   update->msg)) {
++			if (!update->lock->force_write &&
++			    !hashcmp(update->lock->old_sha1, update->new_sha1)) {
++				unlock_ref(update->lock);
++				update->lock = NULL;
++			} else if (write_ref_sha1(update->lock, update->new_sha1,
++						  update->msg)) {
+ 				update->lock = NULL; /* freed by write_ref_sha1 */
+ 				strbuf_addf(err, "Cannot update the ref '%s'.",
+ 					    update->refname);
+ 				ret = TRANSACTION_GENERIC_ERROR;
+ 				goto cleanup;
++			} else {
++				/* freed by write_ref_sha1(): */
++				update->lock = NULL;
+ 			}
+-			update->lock = NULL; /* freed by write_ref_sha1 */
+ 		}
+ 	}
+ 
 -- 
 2.1.4
