@@ -1,66 +1,85 @@
-From: Matt Korostoff <mkorostoff@gmail.com>
-Subject: Re: [PATCH] contrib/completion: suppress stderror in bash completion
- of git remotes
-Date: Mon, 9 Feb 2015 16:00:12 -0500
-Message-ID: <CAMZO7dL-ENGmjt4J-rb5y2yVOFGVQKXdh3UB5krnJyfU5M=6xw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] contrib/completion: suppress stderror in bash completion of git remotes
+Date: Mon, 09 Feb 2015 13:09:31 -0800
+Message-ID: <xmqqy4o6aj1w.fsf@gitster.dls.corp.google.com>
 References: <1423515508-40109-1-git-send-email-MKorostoff@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Feb 09 22:00:41 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Matt Korostoff <mkorostoff@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 09 22:09:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YKvRe-00051F-Vw
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Feb 2015 22:00:39 +0100
+	id 1YKvaO-0000mr-Gh
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Feb 2015 22:09:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760898AbbBIVAe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Feb 2015 16:00:34 -0500
-Received: from mail-qc0-f179.google.com ([209.85.216.179]:45198 "EHLO
-	mail-qc0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751552AbbBIVAd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Feb 2015 16:00:33 -0500
-Received: by mail-qc0-f179.google.com with SMTP id r5so3429825qcx.10
-        for <git@vger.kernel.org>; Mon, 09 Feb 2015 13:00:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type;
-        bh=IJSFBuU/iH9YMkHTGX5ZbmfzKINvHFocIFe6vvSDSMo=;
-        b=V+51T8iXRlH/d/8znIwLhbRQUubWqq/lMh6j+MnZZlA3seA9zc+elhUxM0zmnv3Tsg
-         vgCNfPmCkNTtDBcvLpjydDy81Av6PvAIjv78FK8HTquA55ESP3d5quPgMUrRRgoOzIRr
-         q1t0WVW/S75CXjHKxdjCZCywOCzgfBHvjQRnJ2agw1vlLXS61AHWX5iWVJ1Sz7ou2LCp
-         6K2Z+JJ28qf0C3LRh/sybbESxYXG5Mx/qRWwlRUGtZ4I9qN0xrzQLTJqtXEMFV9/Pc4w
-         GRq/9qNm07/8ZAFJ+h6rqx/9DXJDlq5Dc2ln5JeCJXYzn5IctSo/z7ZmtwKqD8ZsYMtJ
-         232g==
-X-Received: by 10.140.102.100 with SMTP id v91mr43043671qge.29.1423515632963;
- Mon, 09 Feb 2015 13:00:32 -0800 (PST)
-Received: by 10.140.89.167 with HTTP; Mon, 9 Feb 2015 13:00:12 -0800 (PST)
-In-Reply-To: <1423515508-40109-1-git-send-email-MKorostoff@gmail.com>
+	id S1761036AbbBIVJg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Feb 2015 16:09:36 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:58728 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1760531AbbBIVJf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Feb 2015 16:09:35 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 050D8357DB;
+	Mon,  9 Feb 2015 16:09:35 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=MHP9TowwWCrBaL/7AygeDOPBotE=; b=Ttoayl
+	NTDfmUSRj+MSVI2b+Ph8m1fsTPYLgNnKq9YjPpfWERVH+kv1uEt9heVLbwm46SLz
+	E6b+97ARydesHPWYdDaALRxZrqw4Bw4Uwo+m7t/ugzQi6qNfJrTyJDSsdpd0sg4u
+	AAybxJR2HrHJ17HsVseIlVo+xQdqgQILX4jdU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=RtSWoZN6xmj8zGiwLmPDRby6QP3INYz1
+	LFPEvOylOLLxY1hZxKdR2w3wxygjMJOUlJxn6UGICzYxCInzcWvB7XIcTpG789nR
+	QHfPK076S+7FflK4+RhPfN5tBkr5OOibaypQS4AVAIGZ/b3WS7kB32wW7teR2ILq
+	Zk9sHt1R6jo=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id EE662357D8;
+	Mon,  9 Feb 2015 16:09:34 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6788F357D3;
+	Mon,  9 Feb 2015 16:09:33 -0500 (EST)
+In-Reply-To: <1423515508-40109-1-git-send-email-MKorostoff@gmail.com> (Matt
+	Korostoff's message of "Mon, 9 Feb 2015 15:58:28 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: F1FFE4CA-B09F-11E4-AE21-7BA29F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263600>
 
-Here are some screen shots demonstrating the issue I'm describing here:
+Matt Korostoff <mkorostoff@gmail.com> writes:
 
-before this patch:
-https://cloud.githubusercontent.com/assets/1197335/6108333/1f3b10fa-b040-11e4-9164-3c7769dae110.gif
-
-after this patch:
-https://cloud.githubusercontent.com/assets/1197335/6108340/3878cad0-b040-11e4-9994-dcd5c4d62bba.gif
-
-On Mon, Feb 9, 2015 at 3:58 PM, Matt Korostoff <mkorostoff@gmail.com> wrote:
 > In some system configurations there is a bug with the
 > __git_remotes function.  Specifically, there is a problem
 > with line 415, `test -d "$d/remotes" && ls -1 "$d/remotes"`.
 > While `test -d` is meant to prevent listing the remotes
 > directory if it does not exist, in some system, `ls` will
 > run regardless.
->
+
+What's "some system"?
+
+Is this a platform's bug (e.g. "test -d" does not work correctly)?
+
+Is this an configuration error of user's Git repository?
+
+Is this something else?
+
+I _think_ you would see the problem if $d/remotes is a directory
+whose contents cannot be listed (e.g. "chmod a= $d/remotes"), and
+that would not be a platform's bug (i.e. "test -d" would happily say
+"Yes there is a directory", and "ls" would fail with "Permission
+denied").  But I wonder if we rather want the user to notice that
+misconfiguration so that the user can correct it, instead of hiding
+the error message from "ls".
+
 > This results in an error in which typing `git push or` + `tab`
 > prints out `ls: .git/remotes: No such file or directory`.
 > This can be fixed by simply directing stderror of this line
@@ -76,12 +95,9 @@ On Mon, Feb 9, 2015 at 3:58 PM, Matt Korostoff <mkorostoff@gmail.com> wrote:
 > @@ -412,7 +412,7 @@ __git_refs_remotes ()
 >  __git_remotes ()
 >  {
->         local i IFS=$'\n' d="$(__gitdir)"
-> -       test -d "$d/remotes" && ls -1 "$d/remotes"
-> +       test -d "$d/remotes" && ls -1 "$d/remotes" 2>/dev/null
->         for i in $(git --git-dir="$d" config --get-regexp 'remote\..*\.url' 2>/dev/null); do
->                 i="${i#remote.}"
->                 echo "${i/.url*/}"
-> --
-> 1.7.10.2 (Apple Git-33)
->
+>  	local i IFS=$'\n' d="$(__gitdir)"
+> -	test -d "$d/remotes" && ls -1 "$d/remotes"
+> +	test -d "$d/remotes" && ls -1 "$d/remotes" 2>/dev/null
+>  	for i in $(git --git-dir="$d" config --get-regexp 'remote\..*\.url' 2>/dev/null); do
+>  		i="${i#remote.}"
+>  		echo "${i/.url*/}"
