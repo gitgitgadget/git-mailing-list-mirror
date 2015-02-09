@@ -1,85 +1,86 @@
-From: "Paul E. McKenney" <paulmck@linux.vnet.ibm.com>
-Subject: Re: Is there some way to suppress Cc email only to stable?
-Date: Mon, 9 Feb 2015 15:35:37 -0800
-Message-ID: <20150209233537.GG4166@linux.vnet.ibm.com>
-References: <20150209194224.GA27482@linux.vnet.ibm.com>
- <20150209215350.GU29365@google.com>
-Reply-To: paulmck@linux.vnet.ibm.com
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] builtin/blame: destroy initialized commit_info only
+Date: Mon, 9 Feb 2015 18:37:08 -0500
+Message-ID: <20150209233707.GA20462@peff.net>
+References: <1423517287-8354-1-git-send-email-sunshine@sunshineco.com>
+ <20150209232435.GB24814@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, mingo@kernel.org, stable@vger.kernel.org,
-	greg@kroah.com
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: stable-owner@vger.kernel.org Tue Feb 10 00:35:50 2015
-Return-path: <stable-owner@vger.kernel.org>
-Envelope-to: glks-stable3@plane.gmane.org
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Antoine Pelisse <apelisse@gmail.com>,
+	Dilyan Palauzov <dilyan.palauzov@aegee.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Tue Feb 10 00:37:19 2015
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <stable-owner@vger.kernel.org>)
-	id 1YKxrj-0001CW-VH
-	for glks-stable3@plane.gmane.org; Tue, 10 Feb 2015 00:35:44 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1YKxtG-0001wm-NO
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Feb 2015 00:37:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933301AbbBIXfm (ORCPT <rfc822;glks-stable3@m.gmane.org>);
-	Mon, 9 Feb 2015 18:35:42 -0500
-Received: from e39.co.us.ibm.com ([32.97.110.160]:56967 "EHLO
-	e39.co.us.ibm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932911AbbBIXfl (ORCPT
-	<rfc822;stable@vger.kernel.org>); Mon, 9 Feb 2015 18:35:41 -0500
-Received: from /spool/local
-	by e39.co.us.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only! Violators will be prosecuted
-	for <stable@vger.kernel.org> from <paulmck@linux.vnet.ibm.com>;
-	Mon, 9 Feb 2015 16:35:41 -0700
-Received: from d03dlp02.boulder.ibm.com (9.17.202.178)
-	by e39.co.us.ibm.com (192.168.1.139) with IBM ESMTP SMTP Gateway: Authorized Use Only! Violators will be prosecuted;
-	Mon, 9 Feb 2015 16:35:40 -0700
-Received: from b03cxnp07028.gho.boulder.ibm.com (b03cxnp07028.gho.boulder.ibm.com [9.17.130.15])
-	by d03dlp02.boulder.ibm.com (Postfix) with ESMTP id D64633E40030;
-	Mon,  9 Feb 2015 16:35:39 -0700 (MST)
-Received: from d03av05.boulder.ibm.com (d03av05.boulder.ibm.com [9.17.195.85])
-	by b03cxnp07028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id t19NYEf029294722;
-	Mon, 9 Feb 2015 16:34:14 -0700
-Received: from d03av05.boulder.ibm.com (localhost [127.0.0.1])
-	by d03av05.boulder.ibm.com (8.14.4/8.14.4/NCO v10.0 AVout) with ESMTP id t19NZcXA019555;
-	Mon, 9 Feb 2015 16:35:39 -0700
-Received: from paulmck-ThinkPad-W500 (sig-9-65-236-19.ibm.com [9.65.236.19])
-	by d03av05.boulder.ibm.com (8.14.4/8.14.4/NCO v10.0 AVin) with ESMTP id t19NZcXP019525;
-	Mon, 9 Feb 2015 16:35:38 -0700
-Received: by paulmck-ThinkPad-W500 (Postfix, from userid 1000)
-	id 943F338BAA2; Mon,  9 Feb 2015 15:35:37 -0800 (PST)
+	id S1761576AbbBIXhL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Feb 2015 18:37:11 -0500
+Received: from cloud.peff.net ([50.56.180.127]:47049 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1759276AbbBIXhK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Feb 2015 18:37:10 -0500
+Received: (qmail 11440 invoked by uid 102); 9 Feb 2015 23:37:10 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 09 Feb 2015 17:37:10 -0600
+Received: (qmail 2427 invoked by uid 107); 9 Feb 2015 23:37:12 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 09 Feb 2015 18:37:12 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 09 Feb 2015 18:37:08 -0500
 Content-Disposition: inline
-In-Reply-To: <20150209215350.GU29365@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-TM-AS-MML: disable
-X-Content-Scanned: Fidelis XPS MAILER
-x-cbid: 15020923-0033-0000-0000-0000039B4032
-Sender: stable-owner@vger.kernel.org
+In-Reply-To: <20150209232435.GB24814@peff.net>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <stable.vger.kernel.org>
-X-Mailing-List: stable@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263616>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263617>
 
-On Mon, Feb 09, 2015 at 01:53:50PM -0800, Jonathan Nieder wrote:
-> Hi,
-> 
-> Paul E. McKenney wrote:
-> 
-> > Cc: <stable@vger.kernel.org>
-> >
-> > Yet I cannot allow git-send-email to actually send email to that address,
-> > lest I get an automated nastygram in response.
-> 
-> Interesting.  Last time this came up, the result seemed to be
-> different[*].
+On Mon, Feb 09, 2015 at 06:24:35PM -0500, Jeff King wrote:
 
-Hmmm...  Greg KH didn't say there were no automated nastygrams, just
-that he wasn't worried about it.
-
-I can try it on the next to-be-backported commit and see what happens.
-
-							Thanx, Paul
-
-> Thanks,
-> Jonathan
+> Clang's address sanitizer has compiler support, so it does get to see
+> this memory and could put a canary value in for each loop iteration. But
+> it doesn't. Instead, you're supposed to use the "memory sanitizer" to
+> catch uninitialized memory.
 > 
-> [*] http://thread.gmane.org/gmane.comp.version-control.git/178926/focus=178929
-> 
+> I tried that, but got overwhelmed with false positives. Like valgrind,
+> it has problems accepting that memory written by zlib is actually
+> initialized. But in theory, if we went to the work to annotate some
+> false positives, it should be able to find this problem.
+
+I got rid of the false positives here, through a combination of
+compiling with NO_OPENSSL (since it otherwise doesn't know that
+git_SHA1_Final is initializing hashes), and this patch which lets it
+assume that the output of zlib (at least for these cases) is always
+initialized:
+
+diff --git a/sha1_file.c b/sha1_file.c
+index 30995e6..28c8f84 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1682,6 +1682,7 @@ unsigned long get_size_from_delta(struct packed_git *p,
+ 	git_zstream stream;
+ 	int st;
+ 
++	memset(delta_head, 0, 20);
+ 	memset(&stream, 0, sizeof(stream));
+ 	stream.next_out = delta_head;
+ 	stream.avail_out = sizeof(delta_head);
+@@ -1973,6 +1974,7 @@ static void *unpack_compressed_entry(struct packed_git *p,
+ 	buffer = xmallocz_gently(size);
+ 	if (!buffer)
+ 		return NULL;
++	memset(buffer, 0, size);
+ 	memset(&stream, 0, sizeof(stream));
+ 	stream.next_out = buffer;
+ 	stream.avail_out = size + 1;
+
+
+Sadly, though, the test case in question runs to completion. It does not
+seem to detect our use of uninitialized memory. :(
+
+-Peff
