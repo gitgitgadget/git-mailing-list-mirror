@@ -1,80 +1,74 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 8/8] reflog_expire(): lock symbolic refs themselves, not their referent
-Date: Mon,  9 Feb 2015 10:12:44 +0100
-Message-ID: <1423473164-6011-9-git-send-email-mhagger@alum.mit.edu>
-References: <1423473164-6011-1-git-send-email-mhagger@alum.mit.edu>
-Cc: Stefan Beller <sbeller@google.com>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>, git@vger.kernel.org,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 09 10:20:43 2015
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH/RFD 0/3] worktree.* config keys and submodule and multiple worktrees
+Date: Mon, 9 Feb 2015 16:35:29 +0700
+Message-ID: <CACsJy8D8Ur4W348t-WFUPrb7SQxmff5MJ4aRp+w+ZiQ7VVvipg@mail.gmail.com>
+References: <1423401394-13675-1-git-send-email-pclouds@gmail.com> <54D79EAB.6060301@web.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Max Kirillov <max@max630.net>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Mon Feb 09 10:36:10 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YKkWH-0002IX-44
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Feb 2015 10:20:42 +0100
+	id 1YKklB-0000Kx-NM
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Feb 2015 10:36:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932928AbbBIJU2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Feb 2015 04:20:28 -0500
-Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:60317 "EHLO
-	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932621AbbBIJU0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Feb 2015 04:20:26 -0500
-X-Greylist: delayed 442 seconds by postgrey-1.27 at vger.kernel.org; Mon, 09 Feb 2015 04:20:26 EST
-X-AuditID: 1207440e-f79bc6d000000c43-14-54d87a1fec42
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 95.4E.03139.F1A78D45; Mon,  9 Feb 2015 04:13:03 -0500 (EST)
-Received: from michael.fritz.box (p4FC971C1.dip0.t-ipconnect.de [79.201.113.193])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t199CnQe026231
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Mon, 9 Feb 2015 04:13:02 -0500
-X-Mailer: git-send-email 2.1.4
-In-Reply-To: <1423473164-6011-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrAIsWRmVeSWpSXmKPExsUixO6iqCtfdSPE4O9CDYuuK91MFg29V5gt
-	3t5cwmhxe8V8ZovuKW8ZLXr7PrFabN7czuLA7vH3/Qcmj52z7rJ7LNhU6nHxkrLH501yAaxR
-	3DZJiSVlwZnpefp2CdwZ96enFixgq1jbfpyxgbGVtYuRg0NCwETiylfPLkZOIFNM4sK99Wxd
-	jFwcQgKXGSV2vn/CAuGcYJJ48noPO0gVm4CuxKKeZiYQW0RATWJi2yEWEJtZYDWTxNa7bCC2
-	sEC4xJyjExlBbBYBVYlD524xg9i8As4SJ/evZYTYJidx/vhPsDingIvEu3NzwHqFgGpmT97H
-	PIGRdwEjwypGucSc0lzd3MTMnOLUZN3i5MS8vNQiXWO93MwSvdSU0k2MkBDj28HYvl7mEKMA
-	B6MSD2/Fx+shQqyJZcWVuYcYJTmYlER5FyTeCBHiS8pPqcxILM6ILyrNSS0+xCjBwawkwvs9
-	AyjHm5JYWZValA+TkuZgURLnVVui7ickkJ5YkpqdmlqQWgSTleHgUJLgnVMB1ChYlJqeWpGW
-	mVOCkGbi4AQZziUlUpyal5JalFhakhEPiov4YmBkgKR4gPbuAGnnLS5IzAWKQrSeYtTlWNC+
-	fyaTEEtefl6qlDhvP0iRAEhRRmke3ApYQnnFKA70sTBvH0gVDzAZwU16BbSECWhJQQHYkpJE
-	hJRUA2Op845V57RC58w9Ny1XxV3Iq9BV7FaY2cqt9qcPvf14wK2gwV3s6Ow+c83GV0Ub/snu
-	zJQ/4DDZzaX1tMAtQ2/do6ZaPyZuzAspXsPHaXvfyUz/Y8Iljvht/7xcbWexCp1d 
+	id S1760277AbbBIJgA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Feb 2015 04:36:00 -0500
+Received: from mail-ie0-f181.google.com ([209.85.223.181]:36027 "EHLO
+	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759875AbbBIJgA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Feb 2015 04:36:00 -0500
+Received: by ierx19 with SMTP id x19so8639442ier.3
+        for <git@vger.kernel.org>; Mon, 09 Feb 2015 01:35:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=/9ETjA2xJ1nvN+Ha2ufdUBoZrWDnRFWWF55bxUZyWFc=;
+        b=UF42NaIuHwWNtTme3hgW9oP6AIJq0RzvW8daxEbkydHNA+KDe6BaTKMzRC19dnRXLK
+         IiSUnRPzV8B7In5DNxwEZPMRHObT8NbKMZqHdKi53xCbK1+EFsBEGBNq4DB2vS7uxqjH
+         Oir4sir4cZ2ZZJqZhBaxvtq8Gvb0qno6+QsXjY5OxlFaEfxcXcBgLOi7MiU6+EPDGURc
+         tLm4r3yRgB8be+wT1eHG7neaXzIVfKiid7ocQ9WVUJMlxihB2x3myoMUnCJ1Q0v+ivrl
+         b4B6V14TjjKd8trCiDs/geV7SCdLgPT/4OQC4lGJ67X9dOgAuFM97OVjp865fn0b1oUU
+         AP6w==
+X-Received: by 10.50.107.36 with SMTP id gz4mr15871673igb.25.1423474559368;
+ Mon, 09 Feb 2015 01:35:59 -0800 (PST)
+Received: by 10.107.131.155 with HTTP; Mon, 9 Feb 2015 01:35:29 -0800 (PST)
+In-Reply-To: <54D79EAB.6060301@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263555>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263556>
 
-When processing the reflog of a symbolic ref, hold the lock on the
-symbolic reference itself, not on the reference that it points to.
+On Mon, Feb 9, 2015 at 12:36 AM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
+> I wonder if it's worth all the hassle to invent new names. Wouldn't
+> it be much better to just keep a list of per-worktree configuration
+> value names and use that inside the config code to decide where to
+> find them for multiple work trees. That would also work easily for
+> stuff like EOL-config and would push the complexity in the config
+> machinery and not onto the user.
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
- refs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+It's certainly possible to relocate core.worktree to outside
+$GIT_DIR/config. But I don't think it helps. If anything it'll make it
+harder to distinguish the old setup and the new one. I think we need a
+clear signal that will make old git barf on new setup, to be safe.
+Maybe stepping core.repositoryformatversion, or breaking .git file
+format when we switch to the new setup (with $GIT_COMMON_DIR).
 
-diff --git a/refs.c b/refs.c
-index 1b2a497..3fcf342 100644
---- a/refs.c
-+++ b/refs.c
-@@ -4037,7 +4037,7 @@ int reflog_expire(const char *refname, const unsigned char *sha1,
- 	 * reference itself, plus we might need to update the
- 	 * reference if --updateref was specified:
- 	 */
--	lock = lock_ref_sha1_basic(refname, sha1, NULL, 0, &type);
-+	lock = lock_ref_sha1_basic(refname, sha1, NULL, REF_NODEREF, &type);
- 	if (!lock)
- 		return error("cannot lock ref '%s'", refname);
- 	if (!reflog_exists(refname)) {
+Or.. perhaps we could use the old setup for "primary" worktree and the
+new one for secondary worktrees of the same submodule. In these
+secondary submodules, $GIT_COMMON_DIR is enough to make old git reject
+them. And we could just reuse core.worktree, if we can make
+core.worktree in $GIT_DIR/config.worktree shadow one in
+$GIT_DIR/config..
+
+Need to study git-submodule.sh some more..
 -- 
-2.1.4
+Duy
