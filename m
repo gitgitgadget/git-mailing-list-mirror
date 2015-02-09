@@ -1,101 +1,122 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 00/11] Allow reference values to be checked in a transaction
-Date: Mon, 09 Feb 2015 10:41:08 -0800
-Message-ID: <xmqqtwyvapx7.fsf@gitster.dls.corp.google.com>
-References: <1423412045-15616-1-git-send-email-mhagger@alum.mit.edu>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: git 2.2.2 annotate crash (strbuf.c:32)
+Date: Mon, 9 Feb 2015 13:46:12 -0500
+Message-ID: <20150209184612.GA4327@flurp.local>
+References: <54D7D634.2050807@aegee.org>
+ <20150209012858.GB21072@peff.net>
+ <CAPig+cQ7iYq_c_MstfsMzArCZFM_0ORRa8Gi-YckaeZiWKN=4w@mail.gmail.com>
+ <54D88D03.1090501@aegee.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Stefan Beller <sbeller@google.com>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon Feb 09 19:41:16 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Dilyan Palauzov <dilyan.palauzov@aegee.org>
+X-From: git-owner@vger.kernel.org Mon Feb 09 19:46:26 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YKtGm-0005C2-15
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Feb 2015 19:41:16 +0100
+	id 1YKtLl-0007RU-65
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Feb 2015 19:46:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933646AbbBISlM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Feb 2015 13:41:12 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:52986 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S933415AbbBISlL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Feb 2015 13:41:11 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D578E36BEA;
-	Mon,  9 Feb 2015 13:41:10 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=8TQIsl68pSGc5Nxpnoc1jk+gN2Q=; b=tGZY4r
-	ydIQbgoJC882YOz5OHK6UJ2Z3enZSOe8spHPSAdP8+GrfxM7kYKJV7HZRAcgwEtL
-	PiDFLzXabLU8y+RDzW45EABmNZ6MhEP/VFf5qDw/cFPm0l6H8mwt2vYwxVRfugqt
-	77G/TqejfYeiQSQS6h0tMBksDekD6TSzOBav8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=f2PsKAc3j39C3Y3L/VV3hkDFg0tWJyIA
-	O8AtP6TcsQwNcAtjGCK1pPlNaqNof6UM/RE34w0XnkKr2gpFPlc9qFnp4r5ktjmw
-	+Q0nHCInUJF75LCMNgn1+0MPAwWfE6/CV3+0IXBY4aGWBVNyeS4IaQkOcAVM0YrS
-	Zy4wQLBSsvI=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id CA01A36BE9;
-	Mon,  9 Feb 2015 13:41:10 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 42EFB36BE8;
-	Mon,  9 Feb 2015 13:41:10 -0500 (EST)
-In-Reply-To: <1423412045-15616-1-git-send-email-mhagger@alum.mit.edu> (Michael
-	Haggerty's message of "Sun, 8 Feb 2015 17:13:54 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 3759E58A-B08B-11E4-ADBD-7BA29F42C9D4-77302942!pb-smtp1.pobox.com
+	id S933773AbbBISqU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Feb 2015 13:46:20 -0500
+Received: from mail-ie0-f169.google.com ([209.85.223.169]:41591 "EHLO
+	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760210AbbBISqT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Feb 2015 13:46:19 -0500
+Received: by iecrd18 with SMTP id rd18so6713711iec.8
+        for <git@vger.kernel.org>; Mon, 09 Feb 2015 10:46:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=eUXDfSuZPTkyTe5qKp+XribzN8S+CzHXVrqUFEhxSMU=;
+        b=Q++rX33mV3/XPsa/1FTwo/FbIbcLVTsN1j6uiE1M6LjEfF3bwvg7Xw6i6U7KL3Wja6
+         LjT7c99PmWCFytIGYQ0dL3yCRUBCt4cX0nAnVPTUrLFh7zr/0G1BouephzRCzmVUi+f6
+         5ALUeK3PZOj5zkZIxymbti/vHcinlGqRDPQQS7L2GRTh5O9JS0ORHdEwRfidEYgGPsjp
+         Nc0chLeAf+qkbW84BrRnW9RZSlbGP4X7Q+ypVb8gP2uNB4Vawp1GOjCaaaVq1JMdMCho
+         o1PNhEyEocY2lHdfwPpLSjmFDZet0OG7g6DiX7NTcGtdVL5h/uYUNndqgzxEFKRffOR3
+         DgrA==
+X-Received: by 10.42.226.5 with SMTP id iu5mr13284425icb.0.1423507579135;
+        Mon, 09 Feb 2015 10:46:19 -0800 (PST)
+Received: from flurp.local (user-12l3cpl.cable.mindspring.com. [69.81.179.53])
+        by mx.google.com with ESMTPSA id hi15sm6082655igb.19.2015.02.09.10.46.18
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Mon, 09 Feb 2015 10:46:18 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <54D88D03.1090501@aegee.org>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263578>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263579>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+On Mon, Feb 09, 2015 at 11:33:39AM +0100, Dilyan Palauzov wrote:
+> the point is that with exactly the same configuration on one
+> computer there is crash and on another one things work just fine.
+> 
+> I found out that line builtin/blame.c:1675 makes the problems:
+> 
+> if (len) {
+>   printf("blame.c:1676, subject: %s, len: %i\n", subject, len);
+> -->  strbuf_add(&ret->summary, subject, len);  <--
+> } else
+>    strbuf_addf(&ret->summary, "(%s)", sha1_to_hex(commit->object.sha1));
+> 
+> commenting it out and compiling does not lead to crashing git
+> anymore. You can find below the output of printf.
+> 
+> git clone git://git.cyrusimap.org/cyrus-imapd
+> git annotate timsieved/parser.c
+> 
+> *** Error in `git': double free or corruption (!prev):
+> 0x00000000022e4b40 ***
 
-> The main purpose of this series is to simplify the interface to
-> reference transactions as follows:
->
-> * Remove the need to supply an explicit have_old parameter to
->   ref_transaction_update() and ref_transaction_delete(). Instead,
->   check the old_sha1 if and only if it is non-NULL.
->
-> * Allow NULL to be supplied to ref_transaction_update() as new_sha1,
->   in which case old_sha1 will be verified under lock, but the
->   reference's value will not be altered.
->
-> * Add a function ref_transaction_verify(), which verifies the current
->   value of a reference without changing it.
->
-> * Make the similarity between ref_transaction_update() and
->   update_ref() more obvious.
->
-> Along the way, it fixes a race that could happen if two processes try
-> to create an orphan commit at the same time.
->
-> This patch series applies on top of master merged together with
-> sb/atomic-push, which in turn depends on mh/reflog-expire.
+There is a bit of suspicious code in builtin/blame.c where it is
+destroying the commit_info without ever initializing it, and this
+happens many times when blaming 'timsieved/parser.c'. Does the
+following patch fix the problem for you?
 
-I am a bit puzzled by your intentions, so help me out.
-
-I see that your understanding is that Stefan will be rerolling the
-push atomicity thing; wouldn't we then want to have a "fix and
-clean" topic like this one first and build the push atomicity thing
-on top instead?
-
-In other words, would it make sense to extend mh/reflog-expire (in
-'next') topic with commits from "Fix some problems with reflog
-expiration (8 patches)" series and this series to fix and clean it?
-
-We may even want to rebase/reroll mh/reflog-expire on top of v2.3
-while doing so to adjust to the transaction stuff, if that makes
-some of the changes in the two new series unnecessary (if these "fix
-and clean up" changes made in mh/reflog-expire in 'next', that is).
+--- 8< ---
+diff --git a/builtin/blame.c b/builtin/blame.c
+index 303e217..a3cc972 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -2085,7 +2085,6 @@ static void find_alignment(struct scoreboard *sb, int *option)
+ 
+ 	for (e = sb->ent; e; e = e->next) {
+ 		struct origin *suspect = e->suspect;
+-		struct commit_info ci;
+ 		int num;
+ 
+ 		if (compute_auto_abbrev)
+@@ -2096,6 +2095,7 @@ static void find_alignment(struct scoreboard *sb, int *option)
+ 		if (longest_file < num)
+ 			longest_file = num;
+ 		if (!(suspect->commit->object.flags & METAINFO_SHOWN)) {
++			struct commit_info ci;
+ 			suspect->commit->object.flags |= METAINFO_SHOWN;
+ 			get_commit_info(suspect->commit, &ci, 1);
+ 			if (*option & OUTPUT_SHOW_EMAIL)
+@@ -2104,6 +2104,7 @@ static void find_alignment(struct scoreboard *sb, int *option)
+ 				num = utf8_strwidth(ci.author.buf);
+ 			if (longest_author < num)
+ 				longest_author = num;
++			commit_info_destroy(&ci);
+ 		}
+ 		num = e->s_lno + e->num_lines;
+ 		if (longest_src_lines < num)
+@@ -2113,8 +2114,6 @@ static void find_alignment(struct scoreboard *sb, int *option)
+ 			longest_dst_lines = num;
+ 		if (largest_score < ent_score(sb, e))
+ 			largest_score = ent_score(sb, e);
+-
+-		commit_info_destroy(&ci);
+ 	}
+ 	max_orig_digits = decimal_width(longest_src_lines);
+ 	max_digits = decimal_width(longest_dst_lines);
+-- 
+2.3.0.rc2.191.g303d43c
+--- 8< ---
