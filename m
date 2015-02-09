@@ -1,85 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: Is there some way to suppress Cc email only to stable?
-Date: Mon, 09 Feb 2015 13:46:10 -0800
-Message-ID: <xmqqpp9iahct.fsf@gitster.dls.corp.google.com>
+Date: Mon, 9 Feb 2015 13:53:50 -0800
+Message-ID: <20150209215350.GU29365@google.com>
 References: <20150209194224.GA27482@linux.vnet.ibm.com>
-	<xmqq386eby6w.fsf@gitster.dls.corp.google.com>
-	<20150209211021.GB4166@linux.vnet.ibm.com>
-	<xmqqtwyuaipa.fsf@gitster.dls.corp.google.com>
-	<20150209214312.GC4166@linux.vnet.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, mingo@kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, mingo@kernel.org, stable@vger.kernel.org,
+	greg@kroah.com
 To: "Paul E. McKenney" <paulmck@linux.vnet.ibm.com>
-X-From: git-owner@vger.kernel.org Mon Feb 09 22:46:19 2015
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+X-From: stable-owner@vger.kernel.org Mon Feb 09 22:54:01 2015
+Return-path: <stable-owner@vger.kernel.org>
+Envelope-to: glks-stable3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YKw9p-0008HK-F9
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Feb 2015 22:46:17 +0100
+	(envelope-from <stable-owner@vger.kernel.org>)
+	id 1YKwHH-0003jn-Rh
+	for glks-stable3@plane.gmane.org; Mon, 09 Feb 2015 22:54:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761359AbbBIVqN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Feb 2015 16:46:13 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:52040 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1761134AbbBIVqM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Feb 2015 16:46:12 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 36B2F3721E;
-	Mon,  9 Feb 2015 16:46:12 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=HWLeHXBuHWfz6obC8ICPavxaY2Q=; b=JkzhA3
-	AN6MLF109/04LgJ7U7c3p6braX5KR0ybfrtwd4E7mzeA9W4LxwWRDKvHXHEbhOP9
-	M4+lp0im3y3qLEZvkZp1aUOiFzXJ9ND80oQaloA2lZulbvpE2BBD9iRQeM171wb6
-	p5yukxqdlWymzh1oHRd7/DGrEzMIzgEt+EHrY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=V06j45d83AY4uxfpDmhns9BWDbOwZxzE
-	D7Ar/1bBRcChIB43hsEDiuirFT9FTCxui75BGdHKyscLz/HIrRg3ny8krxJJlde9
-	sHMlwWTfSwmAcSGswi3xL8VccEM/X+hHa2h/xp32TD7oisZE2Yeibn0skj2PkD7U
-	9W48xyWmEeQ=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2CC3D3721D;
-	Mon,  9 Feb 2015 16:46:12 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B8ECC3721C;
-	Mon,  9 Feb 2015 16:46:11 -0500 (EST)
-In-Reply-To: <20150209214312.GC4166@linux.vnet.ibm.com> (Paul E. McKenney's
-	message of "Mon, 9 Feb 2015 13:43:12 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 104F01D6-B0A5-11E4-893D-38A39F42C9D4-77302942!pb-smtp1.pobox.com
-Sender: git-owner@vger.kernel.org
+	id S1760753AbbBIVx6 (ORCPT <rfc822;glks-stable3@m.gmane.org>);
+	Mon, 9 Feb 2015 16:53:58 -0500
+Received: from mail-pa0-f50.google.com ([209.85.220.50]:32979 "EHLO
+	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760442AbbBIVx5 (ORCPT
+	<rfc822;stable@vger.kernel.org>); Mon, 9 Feb 2015 16:53:57 -0500
+Received: by mail-pa0-f50.google.com with SMTP id hz1so7728927pad.9;
+        Mon, 09 Feb 2015 13:53:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=LxRgDLTtOcpA/qdWdF8MG5amn4jLPmwaemcR6F2m3y8=;
+        b=ZZtCzwvYruHy2MNsiZwLkSA9dv62YAhTo3iuOE2HzVqELxTptFCg5Wx+HBe+KuLO64
+         RKcSgrQvit6CQZqmFs6beFWm2fqMrh1zHFUUElJZRY9DQ2XWJC53OaJkFp1CHRHZPvC7
+         M5goA5mX842ApqySpvTEnCOpilmrcKzu1WVn2HLIS2BDBbJtKiZtfQpzvUMYAnsplfPF
+         l68ZZgBqOdKDzZkL2NiJbQN6z8LVTXgdSTQ1GfkCevorwpKK7qqvqW1bAMXWujgOnrjJ
+         FoH8hk63Sbov+sPNQHcgmzTNOx+ZPfj0g+b9PO/v6kwio33QzBiYbW+6ItJin/jk0kvw
+         tlYQ==
+X-Received: by 10.67.1.132 with SMTP id bg4mr31541807pad.151.1423518836872;
+        Mon, 09 Feb 2015 13:53:56 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b80b:4923:be66:2d21])
+        by mx.google.com with ESMTPSA id mt4sm17308186pdb.55.2015.02.09.13.53.54
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 09 Feb 2015 13:53:56 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20150209194224.GA27482@linux.vnet.ibm.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Sender: stable-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263608>
+List-ID: <stable.vger.kernel.org>
+X-Mailing-List: stable@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263609>
 
-"Paul E. McKenney" <paulmck@linux.vnet.ibm.com> writes:
+Hi,
 
->> > Hence the desire to have a Cc that doesn't actually send any email,
->> > but that is visible in mainline for the benefit of the scripts that
->> > handle the stable workflow.
->> 
->> So a configuration variable that you can set once and forget, e.g.
->> 
->>     [sendemail]
->> 	blacklistedRecipients = stable@vger.kernel.org
->> 
->> would not cut it, as you would _later_ want to send the e-mail once
->> the commit hits the mainline.  Am I reading you correctly?
+Paul E. McKenney wrote:
+
+> Cc: <stable@vger.kernel.org>
 >
-> This would actually work for me.  Once the patch is accepted into
-> mainline, I am done with it.  So I should -never- send email to
-> stable@vger.kernel.org, unless I am doing so manually, for example because
-> I forgot to add the stable tag to a given commit.  But in that case,
-> I would just use mutt to forward the patch to stable@vger.kernel.org,
-> and git would not be involved.
+> Yet I cannot allow git-send-email to actually send email to that address,
+> lest I get an automated nastygram in response.
 
-OK, thanks, we have a workable design to let us move forward, then.
+Interesting.  Last time this came up, the result seemed to be
+different[*].
 
-Gits, any takers?
+Thanks,
+Jonathan
+
+[*] http://thread.gmane.org/gmane.comp.version-control.git/178926/focus=178929
