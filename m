@@ -1,69 +1,109 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Is there some way to suppress Cc email only to stable?
-Date: Mon, 9 Feb 2015 13:53:50 -0800
-Message-ID: <20150209215350.GU29365@google.com>
-References: <20150209194224.GA27482@linux.vnet.ibm.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] gitk: Remove tcl-format flag from a message that shouldn't have it
+Date: Mon, 09 Feb 2015 13:55:23 -0800
+Message-ID: <xmqqlhk6agxg.fsf@gitster.dls.corp.google.com>
+References: <1421914779-30865-1-git-send-email-alexhenrie24@gmail.com>
+	<CAMMLpeTvtzPuiQJVxAx-Ja4JsoUxih5azMaN7_RcLvajny6A6g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, mingo@kernel.org, stable@vger.kernel.org,
-	greg@kroah.com
-To: "Paul E. McKenney" <paulmck@linux.vnet.ibm.com>
-X-From: stable-owner@vger.kernel.org Mon Feb 09 22:54:01 2015
-Return-path: <stable-owner@vger.kernel.org>
-Envelope-to: glks-stable3@plane.gmane.org
+Content-Type: text/plain
+Cc: Git mailing list <git@vger.kernel.org>,
+	patthoyts@users.sourceforge.net,
+	Alex Henrie <alexhenrie24@gmail.com>
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Mon Feb 09 22:55:37 2015
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <stable-owner@vger.kernel.org>)
-	id 1YKwHH-0003jn-Rh
-	for glks-stable3@plane.gmane.org; Mon, 09 Feb 2015 22:54:00 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1YKwIp-0004OF-23
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Feb 2015 22:55:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760753AbbBIVx6 (ORCPT <rfc822;glks-stable3@m.gmane.org>);
-	Mon, 9 Feb 2015 16:53:58 -0500
-Received: from mail-pa0-f50.google.com ([209.85.220.50]:32979 "EHLO
-	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760442AbbBIVx5 (ORCPT
-	<rfc822;stable@vger.kernel.org>); Mon, 9 Feb 2015 16:53:57 -0500
-Received: by mail-pa0-f50.google.com with SMTP id hz1so7728927pad.9;
-        Mon, 09 Feb 2015 13:53:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=LxRgDLTtOcpA/qdWdF8MG5amn4jLPmwaemcR6F2m3y8=;
-        b=ZZtCzwvYruHy2MNsiZwLkSA9dv62YAhTo3iuOE2HzVqELxTptFCg5Wx+HBe+KuLO64
-         RKcSgrQvit6CQZqmFs6beFWm2fqMrh1zHFUUElJZRY9DQ2XWJC53OaJkFp1CHRHZPvC7
-         M5goA5mX842ApqySpvTEnCOpilmrcKzu1WVn2HLIS2BDBbJtKiZtfQpzvUMYAnsplfPF
-         l68ZZgBqOdKDzZkL2NiJbQN6z8LVTXgdSTQ1GfkCevorwpKK7qqvqW1bAMXWujgOnrjJ
-         FoH8hk63Sbov+sPNQHcgmzTNOx+ZPfj0g+b9PO/v6kwio33QzBiYbW+6ItJin/jk0kvw
-         tlYQ==
-X-Received: by 10.67.1.132 with SMTP id bg4mr31541807pad.151.1423518836872;
-        Mon, 09 Feb 2015 13:53:56 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:b80b:4923:be66:2d21])
-        by mx.google.com with ESMTPSA id mt4sm17308186pdb.55.2015.02.09.13.53.54
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 09 Feb 2015 13:53:56 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20150209194224.GA27482@linux.vnet.ibm.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Sender: stable-owner@vger.kernel.org
+	id S1760866AbbBIVzb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Feb 2015 16:55:31 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:59921 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755796AbbBIVza (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Feb 2015 16:55:30 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8933537422;
+	Mon,  9 Feb 2015 16:55:29 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+9FDxC3H6gVsj3rkys+3Av3+z/0=; b=K+itp2
+	0pNJVKONPdjdNmIjf/oJfxCADCNdOZx3ImKGjU8uJ9vHw0dPhyUTk1nX1o6Vy1U1
+	GoBZE+goU7DliMlyWadZuJQ99HcaMY+wSgUT1m2vifRLDDz7VjYEovdcxpUc/POq
+	/Wpo5+D5umeIWcBptRJrQsxoGCyt0Z1WA9WfM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=iBPP95XU6TchT2K++BNqvoiYA2Lcylox
+	gvivQz3xhZk3QbDvKEdL0l3e832I/knSzXkSDE3dJLcBe9XE5l998OHCr7W6K17t
+	qPOrMRYUPdYuqBjtuQj5/KtjJxRD2OamW2a20aerZKUzbOQaul2HsdFu+GVBCGMV
+	lfU3o6RlwmA=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8119337421;
+	Mon,  9 Feb 2015 16:55:29 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 024143741D;
+	Mon,  9 Feb 2015 16:55:24 -0500 (EST)
+In-Reply-To: <CAMMLpeTvtzPuiQJVxAx-Ja4JsoUxih5azMaN7_RcLvajny6A6g@mail.gmail.com>
+	(Alex Henrie's message of "Mon, 9 Feb 2015 14:36:51 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 5A12F8A8-B0A6-11E4-A778-38A39F42C9D4-77302942!pb-smtp1.pobox.com
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <stable.vger.kernel.org>
-X-Mailing-List: stable@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263609>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263610>
 
-Hi,
+Alex Henrie <alexhenrie24@gmail.com> writes:
 
-Paul E. McKenney wrote:
+> This is just a friendly reminder that this patch has been sitting in
+> the mailing list archives for a couple of weeks, and it has not yet
+> been accepted or commented on.
 
-> Cc: <stable@vger.kernel.org>
->
-> Yet I cannot allow git-send-email to actually send email to that address,
-> lest I get an automated nastygram in response.
+I think that is because the message was not sent to the right
+people, and also because the patch was made against a wrong project
+;-).
 
-Interesting.  Last time this came up, the result seemed to be
-different[*].
+I'll forward it to the gitk maintainer after digging it out of the
+archive and tweaking it.  Thanks.
 
-Thanks,
-Jonathan
+Paul, comments?
 
-[*] http://thread.gmane.org/gmane.comp.version-control.git/178926/focus=178929
+-- >8 --
+From: Alex Henrie <alexhenrie24@gmail.com>
+Date: Thu, 22 Jan 2015 01:19:39 -0700
+Subject: gitk: Remove tcl-format flag from a message that shouldn't have it
+
+xgettext sees "% o" and interprets it as a placeholder for an octal
+number preceded by a space. However, in this case it's not actually a
+placeholder, and most translations will replace the "% o" sequence with
+something else. Removing the tcl-format flag from this string prevents
+tools like Poedit from freaking out when "% o" doesn't appear in the
+translated string.
+
+The corrected flag will appear in each translation's po file the next time
+the translation is updated with `make update-po`.
+
+Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
+---
+ gitk | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/gitk b/gitk
+index 78358a7..dfd458d 100755
+--- a/gitk
++++ b/gitk
+@@ -11237,6 +11237,7 @@ proc prefspage_general {notebook} {
+     ${NS}::label $page.maxwidthl -text [mc "Maximum graph width (lines)"]
+     spinbox $page.maxwidth -from 0 -to 100 -width 4 -textvariable maxwidth
+     grid $page.spacer $page.maxwidthl $page.maxwidth -sticky w
++                                         #xgettext:no-tcl-format
+     ${NS}::label $page.maxpctl -text [mc "Maximum graph width (% of pane)"]
+     spinbox $page.maxpct -from 1 -to 100 -width 4 -textvariable maxgraphpct
+     grid x $page.maxpctl $page.maxpct -sticky w
+-- 
+2.2.2
