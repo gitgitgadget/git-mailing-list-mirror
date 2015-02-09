@@ -1,99 +1,108 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Is there some way to suppress Cc email only to stable?
-Date: Mon, 09 Feb 2015 13:17:05 -0800
-Message-ID: <xmqqtwyuaipa.fsf@gitster.dls.corp.google.com>
-References: <20150209194224.GA27482@linux.vnet.ibm.com>
-	<xmqq386eby6w.fsf@gitster.dls.corp.google.com>
-	<20150209211021.GB4166@linux.vnet.ibm.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, mingo@kernel.org
-To: "Paul E. McKenney" <paulmck@linux.vnet.ibm.com>
-X-From: git-owner@vger.kernel.org Mon Feb 09 22:17:17 2015
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH] builtin/blame: destroy initialized commit_info only
+Date: Mon,  9 Feb 2015 16:28:07 -0500
+Message-ID: <1423517287-8354-1-git-send-email-sunshine@sunshineco.com>
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	Antoine Pelisse <apelisse@gmail.com>,
+	Dilyan Palauzov <dilyan.palauzov@aegee.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 09 22:28:42 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YKvhi-0004He-EO
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Feb 2015 22:17:14 +0100
+	id 1YKvsn-0000hS-Bo
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Feb 2015 22:28:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761293AbbBIVRJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Feb 2015 16:17:09 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64188 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1761277AbbBIVRI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Feb 2015 16:17:08 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E355835A24;
-	Mon,  9 Feb 2015 16:17:07 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=192P/kGngtaa4XPE0xKHm68+a7E=; b=i0d7mP
-	ow6dHoVgitfNBDlp6o89LvZXy/YTiYxCgwO8NZM/l+VpIyrnsJSDtKpwxEWcBk7i
-	9mKy8240BtekdanJXW9iwpATrR8hyWsj5cJjDO9bSlxeMYjRzfhs40LnWKgE9mim
-	Hkatfytf10C0wQ3Wmie2gHeoXi9W9XFbVGyz0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xf2opzhVvl2xWAOMgJLAK5TIM1ZseFre
-	i3zK2BuBPSXI+YrL3vwCMtGIjt7rvFT9S2bOXXjW40s/1KLeSzoeVlhEvHkPyyOj
-	aNo/tgX1Z4s5tbs4AQ9rOejtNnUZfZ8Xbx/QiMGoa+/yjDkrsfX3N3a1cWLwWss0
-	6OvoVWOSXD4=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D27DD35A23;
-	Mon,  9 Feb 2015 16:17:07 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4937735A1C;
-	Mon,  9 Feb 2015 16:17:07 -0500 (EST)
-In-Reply-To: <20150209211021.GB4166@linux.vnet.ibm.com> (Paul E. McKenney's
-	message of "Mon, 9 Feb 2015 13:10:21 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 0087BDF0-B0A1-11E4-A843-7BA29F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1761312AbbBIV2h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Feb 2015 16:28:37 -0500
+Received: from mail-ig0-f174.google.com ([209.85.213.174]:47671 "EHLO
+	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761201AbbBIV2g (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Feb 2015 16:28:36 -0500
+Received: by mail-ig0-f174.google.com with SMTP id b16so19551699igk.1
+        for <git@vger.kernel.org>; Mon, 09 Feb 2015 13:28:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:date:message-id;
+        bh=M4P/Sbm4Km8Bxvw8SdM8EEOxU5v/zmgdY5w6Pxj7QG4=;
+        b=0kCH8/+sRtqoA7BBvlxFLvGk6rJWsCY6yjAzCrERxdgXSRhJwvPf+YuTNJbsX3iUoW
+         Z1AT7VqkEX6Klq35aw+vSIN7uF9JO8tRqTGoLmkmIdqcaWe0SxHQPMCCGgJuwBifS/Iv
+         AhRH/AOnXSoJByvtpEfqn9OxEOkaKXk/HhQ1I0D6XeC65pkgWAqBJGO7ro9b5stNs8+G
+         edRiatlgiB7lQhyO5PbyTXhYtsc72xW3YZofW1Ja3uiPDANnLEPZUOAt6vrnW9dZMnDy
+         a0C4NW5U1NdzdwCy8gkPcHq3pYv/mKyLwH7kvBqf+KineX2lozIKOFJCzb7Py8X2ET0s
+         VMjw==
+X-Received: by 10.43.78.196 with SMTP id zn4mr962319icb.81.1423517315931;
+        Mon, 09 Feb 2015 13:28:35 -0800 (PST)
+Received: from localhost.localdomain (user-12l3cpl.cable.mindspring.com. [69.81.179.53])
+        by mx.google.com with ESMTPSA id k35sm7166319iod.5.2015.02.09.13.28.34
+        (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 09 Feb 2015 13:28:35 -0800 (PST)
+X-Mailer: git-send-email 2.3.0.rc2.191.g303d43c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263602>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263603>
 
-"Paul E. McKenney" <paulmck@linux.vnet.ibm.com> writes:
+Since ea02ffa3 (mailmap: simplify map_user() interface, 2013-01-05),
+find_alignment() has been invoking commit_info_destroy() on an
+uninitialized auto 'struct commit_info' (when METAINFO_SHOWN is not
+set). commit_info_destroy() calls strbuf_release() for each of
+'commit_info' strbuf member, which randomly invokes free() on whatever
+random stack value happens to be reside in strbuf.buf, thus leading to
+periodic crashes.
 
-> On Mon, Feb 09, 2015 at 12:57:11PM -0800, Junio C Hamano wrote:
->> No, I do not think we have a way to blacklist certain recipient
->> addresses from getting passed to the MTA, and I do not object to
->> addition of such a mechanism if there is a valid need to do so.
->> 
->> It feels a bit too convoluted to say "Cc: to this address" in the
->> log message and then "nonono, I do not want to send there", though.
->> Why do you want to have Cc: in the log message if you do not want to
->> send e-mail to that address in the first place?  Allowing the
->> behaviour you are asking for would mean that those who see that the
->> commit appeared on a branch would not be able to assume that the
->> patch has already been sent to the stable review address, no?
->
-> I could see where it might seem a bit strange.  ;-)
->
-> The reason behind this is that you are not supposed to actually send
-> email to the stable lists until after the patch has been accepted into
-> mainline.  One way to make this work is of course to leave the stable
-> Cc tags out of the commit log, and to manually send an email when the
-> commit has been accepted.  However, this is subject to human error,
-> and more specifically in this case, -my- human error.
->
-> Hence the desire to have a Cc that doesn't actually send any email,
-> but that is visible in mainline for the benefit of the scripts that
-> handle the stable workflow.
+Reported-by: Dilyan Palauzov <dilyan.palauzov@aegee.org>
+Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+---
 
-So a configuration variable that you can set once and forget, e.g.
+No test accompanying this fix since I don't know how to formulate one.
 
-    [sendemail]
-	blacklistedRecipients = stable@vger.kernel.org
+Discussion: http://thread.gmane.org/gmane.comp.version-control.git/263534
 
-would not cut it, as you would _later_ want to send the e-mail once
-the commit hits the mainline.  Am I reading you correctly?
+ builtin/blame.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-Or is it that nobody actually sends to stable@vger.kernel.org address
-manually, but some automated process scans new commits that hit the
-mainline and the string "Cc: stable@vger.kernel.org" is used as a cue
-for that process to pick them up?
+diff --git a/builtin/blame.c b/builtin/blame.c
+index 303e217..a3cc972 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -2085,7 +2085,6 @@ static void find_alignment(struct scoreboard *sb, int *option)
+ 
+ 	for (e = sb->ent; e; e = e->next) {
+ 		struct origin *suspect = e->suspect;
+-		struct commit_info ci;
+ 		int num;
+ 
+ 		if (compute_auto_abbrev)
+@@ -2096,6 +2095,7 @@ static void find_alignment(struct scoreboard *sb, int *option)
+ 		if (longest_file < num)
+ 			longest_file = num;
+ 		if (!(suspect->commit->object.flags & METAINFO_SHOWN)) {
++			struct commit_info ci;
+ 			suspect->commit->object.flags |= METAINFO_SHOWN;
+ 			get_commit_info(suspect->commit, &ci, 1);
+ 			if (*option & OUTPUT_SHOW_EMAIL)
+@@ -2104,6 +2104,7 @@ static void find_alignment(struct scoreboard *sb, int *option)
+ 				num = utf8_strwidth(ci.author.buf);
+ 			if (longest_author < num)
+ 				longest_author = num;
++			commit_info_destroy(&ci);
+ 		}
+ 		num = e->s_lno + e->num_lines;
+ 		if (longest_src_lines < num)
+@@ -2113,8 +2114,6 @@ static void find_alignment(struct scoreboard *sb, int *option)
+ 			longest_dst_lines = num;
+ 		if (largest_score < ent_score(sb, e))
+ 			largest_score = ent_score(sb, e);
+-
+-		commit_info_destroy(&ci);
+ 	}
+ 	max_orig_digits = decimal_width(longest_src_lines);
+ 	max_digits = decimal_width(longest_dst_lines);
+-- 
+2.3.0.rc2.191.g303d43c
