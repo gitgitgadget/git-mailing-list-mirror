@@ -1,101 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] index-pack: reduce memory footprint a bit
-Date: Mon, 09 Feb 2015 11:27:21 -0800
-Message-ID: <xmqqfvaec2cm.fsf@gitster.dls.corp.google.com>
-References: <CACsJy8A=6m5sWnDhPPMNrWbZ=fOMXPxO_1GVh-WpHycf5gm+rg@mail.gmail.com>
-	<1423487929-28019-1-git-send-email-pclouds@gmail.com>
+From: "Paul E. McKenney" <paulmck@linux.vnet.ibm.com>
+Subject: Is there some way to suppress Cc email only to stable?
+Date: Mon, 9 Feb 2015 11:42:24 -0800
+Message-ID: <20150209194224.GA27482@linux.vnet.ibm.com>
+Reply-To: paulmck@linux.vnet.ibm.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, msporleder@gmail.com
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 09 20:27:30 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: mingo@kernel.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 09 20:42:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YKtzV-0000Gz-MO
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Feb 2015 20:27:30 +0100
+	id 1YKuE9-0006S1-IV
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Feb 2015 20:42:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933806AbbBIT1Z convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Feb 2015 14:27:25 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:60975 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S933771AbbBIT1Y convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Feb 2015 14:27:24 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 752C8358ED;
-	Mon,  9 Feb 2015 14:27:23 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=T4R3Rwj8TzxS
-	EG9vgYRYe8Ph+GA=; b=nFqcR/4ZBGz4XO4VEPfsGqV2A33XBBi6vNWKz1PFBCMt
-	KL9l3n0xlV1ibgNq/AOgRkr+zivJvAVOWTL3eKNCI+NtoyJq5hfl6l2t46zXuDv0
-	efdzacSGS/yAzA+p0uiFVLROBdW1rfELL1DO56BlJ7AGxa5pZLHQOpxblwuG+yc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=pAOLRz
-	YgOYGNKgC+dG9/dRamUuKTFsPjo45lYBM+/u80eiF3M5AOTvw/H8vItcWyWPopux
-	LqiF4VWiBp2E5E7G7pMqKgqYjAUH5ehZX5r7ivnj+w75qhND5mFLTranU5qNyYlj
-	Rh+Zgt8xNf5QMW1U6oaYaxIo1/wClqGIaRaIA=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6BD3B358EC;
-	Mon,  9 Feb 2015 14:27:23 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D59E4358EA;
-	Mon,  9 Feb 2015 14:27:22 -0500 (EST)
-In-Reply-To: <1423487929-28019-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Mon, 9 Feb
- 2015 20:18:49 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: ABE858EA-B091-11E4-AE31-7BA29F42C9D4-77302942!pb-smtp1.pobox.com
+	id S933639AbbBITm3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Feb 2015 14:42:29 -0500
+Received: from e32.co.us.ibm.com ([32.97.110.150]:36372 "EHLO
+	e32.co.us.ibm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932406AbbBITm2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Feb 2015 14:42:28 -0500
+Received: from /spool/local
+	by e32.co.us.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only! Violators will be prosecuted
+	for <git@vger.kernel.org> from <paulmck@linux.vnet.ibm.com>;
+	Mon, 9 Feb 2015 12:42:28 -0700
+Received: from d03dlp03.boulder.ibm.com (9.17.202.179)
+	by e32.co.us.ibm.com (192.168.1.132) with IBM ESMTP SMTP Gateway: Authorized Use Only! Violators will be prosecuted;
+	Mon, 9 Feb 2015 12:42:26 -0700
+Received: from b03cxnp07028.gho.boulder.ibm.com (b03cxnp07028.gho.boulder.ibm.com [9.17.130.15])
+	by d03dlp03.boulder.ibm.com (Postfix) with ESMTP id D39E219D803F
+	for <git@vger.kernel.org>; Mon,  9 Feb 2015 12:33:35 -0700 (MST)
+Received: from d03av05.boulder.ibm.com (d03av05.boulder.ibm.com [9.17.195.85])
+	by b03cxnp07028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id t19Jf0NH27853030
+	for <git@vger.kernel.org>; Mon, 9 Feb 2015 12:41:00 -0700
+Received: from d03av05.boulder.ibm.com (localhost [127.0.0.1])
+	by d03av05.boulder.ibm.com (8.14.4/8.14.4/NCO v10.0 AVout) with ESMTP id t19JgPuH022367
+	for <git@vger.kernel.org>; Mon, 9 Feb 2015 12:42:25 -0700
+Received: from paulmck-ThinkPad-W500 (sig-9-65-236-19.ibm.com [9.65.236.19])
+	by d03av05.boulder.ibm.com (8.14.4/8.14.4/NCO v10.0 AVin) with ESMTP id t19JgOlh022345;
+	Mon, 9 Feb 2015 12:42:25 -0700
+Received: by paulmck-ThinkPad-W500 (Postfix, from userid 1000)
+	id 7054238BAA2; Mon,  9 Feb 2015 11:42:24 -0800 (PST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-TM-AS-MML: disable
+X-Content-Scanned: Fidelis XPS MAILER
+x-cbid: 15020919-0005-0000-0000-000008AAAA12
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263588>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263589>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+Hello!
 
-> For each object in the input pack, we need one struct object_entry. O=
-n
-> x86-64, this struct is 64 bytes long. Although:
->
->  - The 8 bytes for delta_depth and base_object_no are only useful whe=
-n
->    show_stat is set. And it's never set unless someone is debugging.
->
->  - The three fields hdr_size, type and real_type take 4 bytes each
->    even though they never use more than 4 bits.
->
-> By moving delta_depth and base_object_no out of struct object_entry
-> and make the other 3 fields one byte long instead of 4, we shrink 25%
-> of this struct.
->
-> On a 3.4M object repo that's about 53MB. The saving is less impressiv=
-e
-> compared to index-pack total memory use (about 400MB before delta
-> resolving, so the saving is just 13%)
->
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
->  I'm not sure if this patch is worth pursuing. It makes the code a
->  little bit harder to read. I was just wondering how much memory coul=
-d
->  be saved..
+I need to be able to put the following Cc in a git commit:
 
-I would say 13% is already impressive ;-).
+Cc: <stable@vger.kernel.org>
 
-I do not find the result all that harder to read.  I however think
-that the change would make it a lot harder to maintain, especially
-because the name "object-entry-extra" does not have any direct link
-to "show-stat" to hint us that this must be allocated when show-stat
-is in use and must never be looked at when show-stat is not in use.
+Yet I cannot allow git-send-email to actually send email to that address,
+lest I get an automated nastygram in response.  I found the --to-cmd=
+option to git-send-email, but it looks to only add email addresses, never
+delete them.  I also found the --suppress-cc= option to git-send-email,
+but it appears to suppress all Cc emails, not just selected ones.
 
-Also it makes me wonder if the compilers are smart enough to notice
-that the codepaths that access objects_extra[] are OK because they
-are all inside "if (show_stat)".
+One approach that occurred to me is to hand-edit the files produced
+by git-format-patch, removing stable@vger.kernel.org entirely prior to
+using git-send-email.  However, this is a bit error-prone.  Yes, I could
+script it, but with my luck, I will eventually end up having my script
+mangle some patch, for example to the Linux kernel's MAINTAINERS file.
+Furthermore, this approach means that people reviewing the patches
+cannot see the Cc stable entries (though I could presumably comment them
+out somehow).
+
+Another approach is to add the stable Ccs just before doing the pull
+request, by my upstream maintainer is not fond of that approach.  Nor am
+I, as it would be all to easy to forget to add the stable Ccs.  Or to
+get them wrong.
+
+I can't be the only person wanting to do something like this.  So is
+there some git option that I am missing here?
+
+							Thanx, Paul
