@@ -1,73 +1,65 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 11/24] untracked cache: load from UNTR index extension
-Date: Mon, 09 Feb 2015 14:26:13 -0800
-Message-ID: <xmqqmw4mwwl6.fsf@gitster.dls.corp.google.com>
-References: <1423385748-19825-1-git-send-email-pclouds@gmail.com>
-	<1423385748-19825-12-git-send-email-pclouds@gmail.com>
+Subject: Re: [PATCH 17/21] list-files: show directories as well as files
+Date: Mon, 09 Feb 2015 14:28:33 -0800
+Message-ID: <xmqqiofawwha.fsf@gitster.dls.corp.google.com>
+References: <1423386099-19994-1-git-send-email-pclouds@gmail.com>
+	<1423386099-19994-18-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
 To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 09 23:26:23 2015
+X-From: git-owner@vger.kernel.org Mon Feb 09 23:28:47 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YKwmb-0008E0-8L
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Feb 2015 23:26:21 +0100
+	id 1YKwou-0000eE-4h
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Feb 2015 23:28:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760974AbbBIW0R convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Feb 2015 17:26:17 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:61474 "EHLO
+	id S1761222AbbBIW2k convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Feb 2015 17:28:40 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:58083 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755927AbbBIW0Q convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Feb 2015 17:26:16 -0500
+	with ESMTP id S1753238AbbBIW2j convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 Feb 2015 17:28:39 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id A12A837B08;
-	Mon,  9 Feb 2015 17:26:15 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0580D37B94;
+	Mon,  9 Feb 2015 17:28:39 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=N6vV6qBd5F+E
-	I2LIcIcYtv6TazU=; b=vfMrXEzrbPmGRCwgjfTy0+zUIGxzqPiy/8nkO6dbGV2x
-	rpdMJPaJz+fHUQ7bUEqUVLIR4QaaU6BLfk3NdDYZGu2UUcn2d3yn4ASaiA7j1+wo
-	AP8wv8oBMb2cOhUOXV01p+SBEyDKanOZVKIo9LCBvTid0YmIJ4+UFZUtkKX3j6E=
+	:content-type:content-transfer-encoding; s=sasl; bh=1f0LEdEd0Ie/
+	Laipy1HGE9gDl8Q=; b=QHNRCmBB1NKPTNGHqVqvYGq23xQ4aLYp1NJ2T31NNgCz
+	9iMxdyw5La0xvQPCqv/QX5LOky6Vtl0NAdWaFJmf/HcZlgR1G8IlxtcxsDrGep4/
+	42zKmlKhyZFzmy1dhTC1zz0+rmcE6mftu5aDZGWp8eaTlgncp1jS+FADCf1eaBg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=fIIV64
-	y3MraeD5cERHTeCPqSVWUOBZmJSOLoPsR9zfkBwrw5ZVVnaY+zeaVuVlwtMRKdX9
-	b4sWyBnZjAuz3N93sL+Ei1qGfAmuqxABCQsTnRzKz5dRJ8YrqxGNZQe1VKy9xEvg
-	z2NT+rvWvYg1xlPr8mgrhKsDCSdpVzAADO3Pc=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=hSCjNL
+	ZYqu7zlLsHVCboFnnj7Bmf61HN/QgVYgt7B8rk5pIWr1Cb9SgKGhU9ZrS9Y97BX9
+	pwvjGmYulLRtNnhBeol+pUHrmOOEvh3uazLbmePntiQbpgpJvVPkxRQ+pIh+id41
+	WE2llmmxVdLZ9KIQNxboHg1VgExJk/oIGk+rM=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9804E37B07;
-	Mon,  9 Feb 2015 17:26:15 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id F16B537B93;
+	Mon,  9 Feb 2015 17:28:38 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1E69137B06;
-	Mon,  9 Feb 2015 17:26:15 -0500 (EST)
-In-Reply-To: <1423385748-19825-12-git-send-email-pclouds@gmail.com>
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 610FB37B8D;
+	Mon,  9 Feb 2015 17:28:35 -0500 (EST)
+In-Reply-To: <1423386099-19994-18-git-send-email-pclouds@gmail.com>
  (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Sun, 8 Feb
- 2015 15:55:35 +0700")
+ 2015 16:01:35 +0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: A8D3FA92-B0AA-11E4-90A5-38A39F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: FC6FB240-B0AA-11E4-A413-38A39F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263613>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263614>
 
 Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-> +static int read_one_dir(struct untracked_cache_dir **untracked_,
-> +			struct read_data *rd)
-> +{
-> +#define NEXT(x) \
-> +	next =3D data + (x); \
-> +	if (next > rd->end) \
-> +		return -1;
+> +	if (show_dirs &&strchr(ce->name, '/') &&
 
-Please do not do this, and instead write them at two places they are
-used.  It is not clear to those who are reading the use sites that
-this can break the control flow and return to the caller.
+Oops.  Will fix it up locally.
