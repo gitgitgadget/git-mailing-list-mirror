@@ -1,60 +1,144 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] sha1_file.c: make sure open_sha1_file does not open a
- directory
-Date: Sun, 8 Feb 2015 20:12:00 -0500
-Message-ID: <20150209011159.GA21072@peff.net>
-References: <b0993cc1fcac290d7506b24942af300@74d39fa044aa309eaea14b9f57fe79c>
- <20150209005444.GA16827@peff.net>
+Subject: [PATCH 1/2] for_each_loose_file_in_objdir: take an optional strbuf
+ path
+Date: Sun, 8 Feb 2015 20:13:22 -0500
+Message-ID: <20150209011321.GA21123@peff.net>
+References: <20150209011159.GA21072@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Jonathon Mah <me@jonathonmah.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Git mailing list <git@vger.kernel.org>
 To: "Kyle J. McKay" <mackyle@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 09 02:12:18 2015
+X-From: git-owner@vger.kernel.org Mon Feb 09 02:13:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YKctZ-0000Ks-Kg
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Feb 2015 02:12:14 +0100
+	id 1YKcun-0000m5-Br
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Feb 2015 02:13:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755557AbbBIBME (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Feb 2015 20:12:04 -0500
-Received: from cloud.peff.net ([50.56.180.127]:46600 "HELO cloud.peff.net"
+	id S1755805AbbBIBNY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Feb 2015 20:13:24 -0500
+Received: from cloud.peff.net ([50.56.180.127]:46607 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754359AbbBIBMD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Feb 2015 20:12:03 -0500
-Received: (qmail 16177 invoked by uid 102); 9 Feb 2015 01:12:02 -0000
+	id S1754359AbbBIBNY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Feb 2015 20:13:24 -0500
+Received: (qmail 16276 invoked by uid 102); 9 Feb 2015 01:13:24 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 08 Feb 2015 19:12:02 -0600
-Received: (qmail 26811 invoked by uid 107); 9 Feb 2015 01:12:04 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 08 Feb 2015 19:13:24 -0600
+Received: (qmail 26836 invoked by uid 107); 9 Feb 2015 01:13:26 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 08 Feb 2015 20:12:04 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 08 Feb 2015 20:12:00 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 08 Feb 2015 20:13:26 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 08 Feb 2015 20:13:22 -0500
 Content-Disposition: inline
-In-Reply-To: <20150209005444.GA16827@peff.net>
+In-Reply-To: <20150209011159.GA21072@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263539>
 
-On Sun, Feb 08, 2015 at 07:54:44PM -0500, Jeff King wrote:
+We feed a root "objdir" path to this iterator function,
+which then copies the result into a strbuf, so that it can
+repeatedly append the object sub-directories to it. Let's
+make it easy for callers to just pass us a strbuf in the
+first place.
 
-> However, the first thing for_each_loose_file_in_objdir is going to do is
-> stick the path into a strbuf. So perhaps the most sensible thing is to
-> just teach it to take a strbuf from the caller. I'll work up a patch.
-> 
-> It looks like a1b47246 isn't even in "next" yet, so I'll build it
-> directly on what is already in master, dropping Jonathan's patch.
+We leave the original interface as a convenience for callers
+who want to just pass a const string like the result of
+get_object_directory().
 
-Here it is. The first patch is a refactoring to allow this,
-and the second is the moral equivalent of Jonathon's patch.
-These replace a1b47246 on the tip of jk/prune-mtime.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ cache.h     |  9 +++++++++
+ sha1_file.c | 31 +++++++++++++++++++++----------
+ 2 files changed, 30 insertions(+), 10 deletions(-)
 
-  [1/2]: for_each_loose_file_in_objdir: take an optional strbuf path
-  [2/2]: sha1_file: fix iterating loose alternate objects
-
--Peff
+diff --git a/cache.h b/cache.h
+index 51ee856..4743f7e 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1256,6 +1256,10 @@ extern int unpack_object_header(struct packed_git *, struct pack_window **, off_
+  *
+  * Any callback that is NULL will be ignored. Callbacks returning non-zero
+  * will end the iteration.
++ *
++ * In the "buf" variant, "path" is a strbuf which will also be used as a
++ * scratch buffer, but restored to its original contents before
++ * the function returns.
+  */
+ typedef int each_loose_object_fn(const unsigned char *sha1,
+ 				 const char *path,
+@@ -1271,6 +1275,11 @@ int for_each_loose_file_in_objdir(const char *path,
+ 				  each_loose_cruft_fn cruft_cb,
+ 				  each_loose_subdir_fn subdir_cb,
+ 				  void *data);
++int for_each_loose_file_in_objdir_buf(struct strbuf *path,
++				      each_loose_object_fn obj_cb,
++				      each_loose_cruft_fn cruft_cb,
++				      each_loose_subdir_fn subdir_cb,
++				      void *data);
+ 
+ /*
+  * Iterate over loose and packed objects in both the local
+diff --git a/sha1_file.c b/sha1_file.c
+index c632641..725de7f 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -3358,31 +3358,42 @@ static int for_each_file_in_obj_subdir(int subdir_nr,
+ 	return r;
+ }
+ 
+-int for_each_loose_file_in_objdir(const char *path,
++int for_each_loose_file_in_objdir_buf(struct strbuf *path,
+ 			    each_loose_object_fn obj_cb,
+ 			    each_loose_cruft_fn cruft_cb,
+ 			    each_loose_subdir_fn subdir_cb,
+ 			    void *data)
+ {
+-	struct strbuf buf = STRBUF_INIT;
+-	size_t baselen;
++	size_t baselen = path->len;
+ 	int r = 0;
+ 	int i;
+ 
+-	strbuf_addstr(&buf, path);
+-	strbuf_addch(&buf, '/');
+-	baselen = buf.len;
+-
+ 	for (i = 0; i < 256; i++) {
+-		strbuf_addf(&buf, "%02x", i);
+-		r = for_each_file_in_obj_subdir(i, &buf, obj_cb, cruft_cb,
++		strbuf_addf(path, "/%02x", i);
++		r = for_each_file_in_obj_subdir(i, path, obj_cb, cruft_cb,
+ 						subdir_cb, data);
+-		strbuf_setlen(&buf, baselen);
++		strbuf_setlen(path, baselen);
+ 		if (r)
+ 			break;
+ 	}
+ 
++	return r;
++}
++
++int for_each_loose_file_in_objdir(const char *path,
++				  each_loose_object_fn obj_cb,
++				  each_loose_cruft_fn cruft_cb,
++				  each_loose_subdir_fn subdir_cb,
++				  void *data)
++{
++	struct strbuf buf = STRBUF_INIT;
++	int r;
++
++	strbuf_addstr(&buf, path);
++	r = for_each_loose_file_in_objdir_buf(&buf, obj_cb, cruft_cb,
++					      subdir_cb, data);
+ 	strbuf_release(&buf);
++
+ 	return r;
+ }
+ 
+-- 
+2.3.0.rc1.287.g761fd19
