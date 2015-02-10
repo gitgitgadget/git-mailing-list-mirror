@@ -1,94 +1,164 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: Re: git-p4 is not cloning perforce code properly
-Date: Tue, 10 Feb 2015 15:27:59 +0000
-Message-ID: <CAE5ih78VwwSFcXxXopbmKFoi_HP_9RU_KQFr_h5GRyfeq8b73w@mail.gmail.com>
-References: <1423576488362-7625215.post@n2.nabble.com>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: EOL handling (EGit/svn/Windows)
+Date: Tue, 10 Feb 2015 16:32:30 +0100
+Message-ID: <54DA248E.4080100@web.de>
+References: <CAA01Csrp0ZOouM5zhVuHQW9sWCnbMMLRkmcbRtgsU3k8wNtSqw@mail.gmail.com>	<54D99BED.8010005@web.de> <CAA01CspP-C5ZVSR6Vyxe0X6UxpxGPwEM=P_7QwcfPFpUBGEzPQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Users <git@vger.kernel.org>
-To: Sandeep <varshneysan@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 10 16:28:17 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>,
+	=?UTF-8?B?VG9yc3RlbiA=?= =?UTF-8?B?QsO2Z2Vyc2hhdXNlbg==?= 
+	<tboegi@web.de>
+X-From: git-owner@vger.kernel.org Tue Feb 10 16:32:44 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YLCjY-0004W2-KO
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Feb 2015 16:28:17 +0100
+	id 1YLCns-0006aE-9s
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Feb 2015 16:32:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751447AbbBJP2K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2015 10:28:10 -0500
-Received: from mail-ob0-f180.google.com ([209.85.214.180]:54248 "EHLO
-	mail-ob0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751404AbbBJP17 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Feb 2015 10:27:59 -0500
-Received: by mail-ob0-f180.google.com with SMTP id vb8so32421658obc.11
-        for <git@vger.kernel.org>; Tue, 10 Feb 2015 07:27:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=vpSIGLrESdHs8CmuKlQoGUMrxdcwuaFpvfUbK+JEtZo=;
-        b=ggUyyaNyTCMRVF5deaHDrGvDlkbKKXdSUArL80SSrreP2U0u+6cgHxi9uE7s9mS328
-         kZwkQB3We7ADPbepEdYgZR+dxjMMpBtjJu5l6580P/u69J0MFt/BojtLWoo8tW9HQ5pc
-         xEkV22kd/r6VmfOHPhvVD+PiqyxbWiWNWYTFc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=vpSIGLrESdHs8CmuKlQoGUMrxdcwuaFpvfUbK+JEtZo=;
-        b=lKaMcK2RZQC5+llGskp+F/KeWpGbzHRZSmNygFDFZj9MSiFk2Dn71yOUQO4Ceejh21
-         kU+aAya7q4e3VlskCVR2Lb3fOZqhzYmf4QDPDZMputjH7gUAENs3tCR9sIJ6XxPDeu5A
-         2TW7Ot6fcNDfhnbupOzDK6oRa+ZIMo0hkDxc0zOlxA3+gswaf3DyOAWb0QMBHSgZUzlG
-         Kcb3vuNwT9ByirbuTLdX5PEYE3tkDA5sdU54Z0x2QzyGm1JCmLIIWobQQ61yZYgMuM6d
-         6OfCfzbFAAspZCfGyQEXoyp3+FBnMDJMIIj2m7eTmxWprNG8ErjnUqKrbgWUIpHGYgXx
-         JKgA==
-X-Gm-Message-State: ALoCoQlUSdIe4LHWArZWglw79pqpbL2LYVkollOLANF0M/X+pVM4KR5TT0R8dv5imgkStpcUR21J
-X-Received: by 10.60.134.200 with SMTP id pm8mr16252561oeb.61.1423582079152;
- Tue, 10 Feb 2015 07:27:59 -0800 (PST)
-Received: by 10.60.175.130 with HTTP; Tue, 10 Feb 2015 07:27:59 -0800 (PST)
-In-Reply-To: <1423576488362-7625215.post@n2.nabble.com>
+	id S1751244AbbBJPck convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Feb 2015 10:32:40 -0500
+Received: from mout.web.de ([212.227.17.11]:60656 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750853AbbBJPcj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Feb 2015 10:32:39 -0500
+Received: from macce.local ([217.211.68.12]) by smtp.web.de (mrweb102) with
+ ESMTPSA (Nemesis) id 0MF3jD-1YN7ol1I43-00GHDi; Tue, 10 Feb 2015 16:32:36
+ +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
+In-Reply-To: <CAA01CspP-C5ZVSR6Vyxe0X6UxpxGPwEM=P_7QwcfPFpUBGEzPQ@mail.gmail.com>
+X-Provags-ID: V03:K0:F+ZtRWYppXC5uKl3HCUp92xjdU/v9nbQ8zHmhZBfnQUHtwPHcSC
+ 9IxamB5DHR6nGen5y/DYEwL8GZa78uHHuYB2R/6XUgmJph4D1k/wztN3swb8Z0anEfGvt68
+ XLJZjlM3L44CVosoCDqVcFjktv9KksvJacOFxYcugNxOySb5dt9ASMEm5AwLa45D65RtUDh
+ 8Bg+W9HlieuIXXsJZ7lCg==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263634>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263635>
 
-When you say "skipping", can you be more specific please? What command
-line are you using?
+On 2015-02-10 11.52, Piotr Krukowiecki wrote:
+> On Tue, Feb 10, 2015 at 6:49 AM, Torsten B=C3=B6gershausen <tboegi@we=
+b.de> wrote:
+>> Which Git versions are you using ?
+>=20
+> The one I'm testing currently:
+>=20
+> git version 1.7.9 (cygwin)
+> git version 1.9.0.msysgit.0 (msys)
+> EGit from Eclipse Luna
+>=20
+> Cygwin git is a bit old, as I see now. Will try to update later.
+>=20
+>=20
+>> How many people are there involved, how many on Windows, how many on=
+ Linux ?
+>=20
+> Less than 10 actively, most on Windows.
+>=20
+>=20
+>> Do you want to commit to svn, or is this a one-time conversion ?
+>=20
+> One-time.
+>=20
+>=20
+>> If it is a one-time conversion, and you continue to work in Git only=
+,
+>> then the cleanest, most portable and future proof way is to use the
+>> .gitattributes file,
+>=20
+> I'm not sure if EGit supports .gitattributes:
+> https://bugs.eclipse.org/bugs/show_bug.cgi?id=3D342372
+>=20
+>=20
+>> add that to the repo, do the normalization  and push.
+>> A line like this:
+>> * text=3Dauto
+>> is the easiest way.
+>=20
+> I'm trying it.
+>=20
+>=20
+>> Have a look at
+>> https://www.kernel.org/pub/software/scm/git/docs/gitattributes.html
+>> take a tee or coffee, do some experiments first with a dummy repo,
+>> but all the client OS/Gits involved.
+>=20
+> That's one step we did not do carefully enough :(
+>=20
+>=20
+>> Please let us know the result (or feel free to ask more questions)
+>=20
+> For testing, I've converted all files to LF and commited it, also
+> added the .gitattribute file.
+>=20
+> So far:
+> 1. msysgit can't checkout a one file (saying filename too long, the
+> relative path has 215 bytes) - probably not related to EOL issue.
+Please have a look here:
+https://github.com/msysgit/msysgit/releases/Git-1.9.5-preview20141217
+I think we have support for long path names (Haven't tested it myself)
+> Cygwin git works ok. So I did not check how msysgit works yet.
+> 2. maybe due to old cygwin git, I have a problem of not displaying
+> changes, if the changed line has LF eol (and the file was checked out
+> on Windows with CRLF eols). Will try later with newer git.
+Normally you will not see any changes, and "git diff" will not show
+anything either.
+> 2a. EGit handles such files gracefuly, but OTOH if the file is simple
+> dos2unix'ed, it shows diffs showing all lines changed, and when you
+> commit the files, it will create empty commit.
+Why this dos2unix ?
+Is there a special reason ?
+By the way, when people only use Egit, I assume they use Eclipse,
+and you don't use Notepad.exe or so at all.
+Then you don't need CRLF in the worktree at all, as Eclipse handle
+LF well.
 
-If I want to clone the P4 tree at the current revision, I do something like:
+and in this case you should be able to set
+git config core.autocrlf input
+on all repos, just in case someone sneaks in a CRLF somewhere.
+(And after the normalizing of course)
 
-$ git p4 clone //depot/sometree/...
+https://www.kernel.org/pub/software/scm/git/docs/git-config.html
 
-That gets me just a single revision.
+(and don't ask me if Egit supports that)
 
-If I want all revisions back to the start of time, I do:
+>=20
+>=20
+> $ git status
+> # On branch master
+> #
+> nothing to commit (working directory clean)
+>=20
+> $ file master/settings.gradle
+> master/settings.gradle: ASCII text, with CRLF line terminators
+That is under msysgit ?
+(Side note: Msysgit is called Git for Windows these days)
+>=20
+> $ dos2unix.exe master/settings.gradle
+Is this under Msysgit ?
+> dos2unix: converting file master/settings.gradle to Unix format ...
+>=20
+> $ git status
+> # On branch master
+> #
+> # Changes not staged for commit:
+> #   (use "git add <file>..." to update what will be committed)
+> #   (use "git checkout -- <file>..." to discard changes in working di=
+rectory)
+> #
+> #       modified:   master/settings.gradle
+> #
+> no changes added to commit (use "git add" and/or "git commit -a")
+>=20
+> $ git diff
+> fatal: LF would be replaced by CRLF in master/settings.gradle
+That's interesting.
 
-$ git p4 clone //depot/sometree/...@all
-
-Thanks,
-Luke
-
-
-On 10 February 2015 at 13:54, Sandeep <varshneysan@gmail.com> wrote:
-> Dear All,
->
-> I am trying to clone perforce branch from git to my local drive, but it's
-> skipping too many files and change list while fetching it from perforce.
->
-> it'll be very helpful if anyone can suggest me about how to git rid with
-> this issue.
->
-> Thanks in Advance,
-> Sandeep
->
->
->
-> --
-> View this message in context: http://git.661346.n2.nabble.com/git-p4-is-not-cloning-perforce-code-properly-tp7625215.html
-> Sent from the git mailing list archive at Nabble.com.
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+What does=20
+git config -l | grep core
+give ?
