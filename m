@@ -1,143 +1,130 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH] refs.c: get rid of force_write flag
-Date: Tue, 10 Feb 2015 15:12:31 -0800
-Message-ID: <1423609951-8301-1-git-send-email-sbeller@google.com>
+Subject: Re: [PATCH 3/8] lock_ref_sha1_basic(): do not set force_write for
+ missing references
+Date: Tue, 10 Feb 2015 15:24:47 -0800
+Message-ID: <CAGZ79kbrFpgF6_dLYdgT2D0JjWggu8edjV2sgXER5btpmyjDNw@mail.gmail.com>
 References: <1423473164-6011-1-git-send-email-mhagger@alum.mit.edu>
-Cc: gitster@pobox.com, ronniesahlberg@gmail.com, jrnieder@gmail.com,
-	pclouds@gmail.com, git@vger.kernel.org,
-	Stefan Beller <sbeller@google.com>
-To: mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Wed Feb 11 00:12:40 2015
+	<1423473164-6011-4-git-send-email-mhagger@alum.mit.edu>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, "git@vger.kernel.org" <git@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Wed Feb 11 00:24:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YLJyy-0004Iv-D4
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Feb 2015 00:12:40 +0100
+	id 1YLKAm-00011O-Nr
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Feb 2015 00:24:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752038AbbBJXMg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2015 18:12:36 -0500
-Received: from mail-ie0-f178.google.com ([209.85.223.178]:44883 "EHLO
-	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751471AbbBJXMf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Feb 2015 18:12:35 -0500
-Received: by iecar1 with SMTP id ar1so38258iec.11
-        for <git@vger.kernel.org>; Tue, 10 Feb 2015 15:12:34 -0800 (PST)
+	id S1751887AbbBJXYt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Feb 2015 18:24:49 -0500
+Received: from mail-ie0-f181.google.com ([209.85.223.181]:34648 "EHLO
+	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751651AbbBJXYs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Feb 2015 18:24:48 -0500
+Received: by iery20 with SMTP id y20so192376ier.1
+        for <git@vger.kernel.org>; Tue, 10 Feb 2015 15:24:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=fyGkHFwfvzrTo3etSLLHMvdZz/RCFhTjpH2y9fBnRYo=;
-        b=CIe7xWDclTzeie1ruDaojACZzRDjwOv3CjlH7eCV29ttkU39LWs6D1etm3S87raPhq
-         aSy4qOwZYIyofn3oYvwa2xTcdizqE55S0ATNpYgynOwnlKq0O03x9lzcCeMien6ZEPmm
-         SLsLUeB8cFxHuCmfa/l9R3ZBUQRgFsykrdFFOR/23pDqckcKXJj12GplSj0hBpR3TQef
-         8DOlpBhX/wt3hAV2zZz+coqKTLCErlkWFq0s6v+oHZCY/ZSkZXlEfdlgnSYkkxnEqNF+
-         sx0H9xYRM4UesXVVKAflSbO6LfqPX+RIHhFcKprwDOxhzzsrlPbRRnk1PdET1OJbTiCh
-         1mJQ==
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=bKXy2WH2d2oJAqKbSwpDSMMsq4s2jEHz3QHojtaHyUQ=;
+        b=FUK91AUVAaKkkCCeMHCn1Ci0hdlvVT4kH+4yD5ePcFFzOKk32rgYR/cUE3QeDG5Xgl
+         O5/Giny/xjCG+QRBt0M4+6rJgK4xzCDS+GwEBTH98gL9RgVoz+ayzh1jPWFN89G23em4
+         tp+NfudSMcw0PaaBJolNAmV20w4pifpN4difEt2miBoz2gDaYFs80XacwPasLByBCSwo
+         VwxhW4VzcK2tTBmcxPhvEQ0TqnnOrXZuY5csqS6Ip/QI5qNBZJbzB5r5VF6rkN4NLbyJ
+         N/wSshltgGhsfOSGRIJpIPan3ZFis/3k34AIVINTG+J9V661tueQMj/UdV33eSkGaG5e
+         6tQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=fyGkHFwfvzrTo3etSLLHMvdZz/RCFhTjpH2y9fBnRYo=;
-        b=Ocb8weCmTRpFo5TFm27F6kdIM9TZwgdwdgahl3OLhF//Z06rWDFTTEfT9exvBqv2y7
-         1s+yp1GKufeREoe8MFXzXVFjUP89ndtxaIei1/8F8KvzeqGUSyhnoAJJI2664yJ5f5+W
-         I4AhL9CCEJDuWzZxX+i7F1nv0UnpPapCmuR6HnYUKtT2V3vtYxiIys2w8sa2N6ok6EgE
-         F/jPD9US1p7bvZpARADwz2WUThFLOxZQPMXhdwFOUyq6d884FXU/n6JFdiPpjwxWJWtZ
-         phDQ5aLVKcFaEYFD3hSSAF8Sr8aX1nuis+9mnNAui/RHdwSR0MOTW9w7NOhN81CR0c6Y
-         yeZg==
-X-Gm-Message-State: ALoCoQkBWA83Yi1GRMTZC/bMAWd6vaQSaJpmJGxsVO1VXQBeh076bd/SZ2MHW0OfjRsiV2bd+fr9
-X-Received: by 10.50.43.201 with SMTP id y9mr253571igl.6.1423609954498;
-        Tue, 10 Feb 2015 15:12:34 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b00:b140:96b2:4fcd:bd2b])
-        by mx.google.com with ESMTPSA id 199sm9531995ioe.14.2015.02.10.15.12.33
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 10 Feb 2015 15:12:34 -0800 (PST)
-X-Mailer: git-send-email 2.2.1.62.g3f15098
-In-Reply-To: <1423473164-6011-1-git-send-email-mhagger@alum.mit.edu>
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=bKXy2WH2d2oJAqKbSwpDSMMsq4s2jEHz3QHojtaHyUQ=;
+        b=hrWa1ZrF+kwYJB0SBaNFLxn7a84KP70oDJhrnt5iqKi96jdpvX92/FjJoo6VJHt2/X
+         l2X4UjjB/y6unWDT+81BsxNrYNMGjI/WYvG6pe9KT/FXlNHQrIgpb6qNHChXt0eOX9Xf
+         7MfqZAJtlQcvcprKsu2yD99AFi9pHsOpFaf9Oy6isRwe+pwIVu00N+SCs2nSTY4Vvad3
+         9mB3yb1rEzkLu7js7PkJPCtC/VTz78qFDSj+sZXxeiV5JGpi8ltYSvlNBLPFVMjl3Gvq
+         XnZFqwuZELQYhTqi9g7QQYUHkpSkiuli+MCFIH2IaV998sSyeKiunlEz1F0qKwOak2dV
+         yM6Q==
+X-Gm-Message-State: ALoCoQmtG39zB3fGM7eu2lFuWSYDX5CrZBydAE3tKSG94VsisMNvG7M9YeuFFeieBIcUexqqTUGe
+X-Received: by 10.107.137.17 with SMTP id l17mr14820529iod.33.1423610687409;
+ Tue, 10 Feb 2015 15:24:47 -0800 (PST)
+Received: by 10.50.26.42 with HTTP; Tue, 10 Feb 2015 15:24:47 -0800 (PST)
+In-Reply-To: <1423473164-6011-4-git-send-email-mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263658>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263659>
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
+On Mon, Feb 9, 2015 at 1:12 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> If a reference is missing, its SHA-1 will be null_sha1, which can't
+> possibly match a new value that ref_transaction_commit() is trying to
+> update it to. So there is no need to set force_write in this scenario.
+>
 
-Notes:
-    When this patch series is applied, you only have 3 occurences of force_write.
-    
-    1. In the struct as an undocumented int.
-    2. In  lock_ref_sha1_basic:
-    	if ((flags & REF_NODEREF) && (type & REF_ISSYMREF))
-    		lock->force_write = 1;
-    3: In ref_transaction_commit:
-    	/* Perform updates first so live commits remain referenced */
-    	for (i = 0; i < n; i++) {
-    		struct ref_update *update = updates[i];
-    
-    		if (!is_null_sha1(update->new_sha1)) {
-    			if (!update->lock->force_write &&
-    			    !hashcmp(update->lock->old_sha1, update->new_sha1)) {
-    				unlock_ref(update->lock);
-    				update->lock = NULL;
-    			} else if (write_ref_sha1(update->lock, update->new_sha1,
-    						  update->msg)) {
-    				update->lock = NULL; /* freed by write_ref_sha1 */
-    				strbuf_addf(err, "Cannot update the ref '%s'.",
-    					    update->refname);
-    				ret = TRANSACTION_GENERIC_ERROR;
-    				goto cleanup;
-    			} else {
-    				/* freed by write_ref_sha1(): */
-    				update->lock = NULL;
-    			}
-    		}
-    	}
-    
-    So maybe we can solve it even more elegant by omiting the first 2 occurences and
-    directly check the type and flags in ref_transaction_commit.
-    
-    Maybe this makes sense to go on top of that series?
-    
-    Thanks,
-    Stefan
+This commit reverts half the lines of 5bdd8d4a3062a (2008-11, do not
+force write of packed refs). And reading both commit messages, they
+seem to contradict each other. (Both agree on  "If a reference is
+missing, its SHA-1 will be null_sha1 as provided by resolve_ref", but
+the conclusion seems to be different.)
 
- refs.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+On the other hand, there is more than 6 years difference, so I guess
+the meaning and implications of some variables and functions may have
+slightly changed.
 
-diff --git a/refs.c b/refs.c
-index 3fcf342..ae24502 100644
---- a/refs.c
-+++ b/refs.c
-@@ -12,7 +12,6 @@ struct ref_lock {
- 	struct lock_file *lk;
- 	unsigned char old_sha1[20];
- 	int lock_fd;
--	int force_write;
- };
- 
- /*
-@@ -2319,8 +2318,6 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
- 	lock->ref_name = xstrdup(refname);
- 	lock->orig_ref_name = xstrdup(orig_refname);
- 	ref_file = git_path("%s", refname);
--	if ((flags & REF_NODEREF) && (type & REF_ISSYMREF))
--		lock->force_write = 1;
- 
-  retry:
- 	switch (safe_create_leading_directories(ref_file)) {
-@@ -3788,8 +3785,10 @@ int ref_transaction_commit(struct ref_transaction *transaction,
- 		struct ref_update *update = updates[i];
- 
- 		if (!is_null_sha1(update->new_sha1)) {
--			if (!update->lock->force_write &&
--			    !hashcmp(update->lock->old_sha1, update->new_sha1)) {
-+			/* Ignore symbolic links when told not to dereference */
-+			if (!((update->type & REF_ISSYMREF)
-+			      && (update->flags & REF_NODEREF))
-+			    && !hashcmp(update->lock->old_sha1, update->new_sha1)) {
- 				unlock_ref(update->lock);
- 				update->lock = NULL;
- 			} else if (write_ref_sha1(update->lock, update->new_sha1,
--- 
-2.2.1.62.g3f15098
+> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+> ---
+>  refs.c | 15 ++++++---------
+>  1 file changed, 6 insertions(+), 9 deletions(-)
+>
+> diff --git a/refs.c b/refs.c
+> index 651e37e..b083858 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -2259,7 +2259,6 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
+>         int type, lflags;
+>         int mustexist = (old_sha1 && !is_null_sha1(old_sha1));
+>         int resolve_flags = 0;
+> -       int missing = 0;
+>         int attempts_remaining = 3;
+>
+>         lock = xcalloc(1, sizeof(struct ref_lock));
+> @@ -2298,13 +2297,13 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
+>                         orig_refname, strerror(errno));
+>                 goto error_return;
+>         }
+> -       missing = is_null_sha1(lock->old_sha1);
+> -       /* When the ref did not exist and we are creating it,
+> -        * make sure there is no existing ref that is packed
+> -        * whose name begins with our refname, nor a ref whose
+> -        * name is a proper prefix of our refname.
+> +       /*
+> +        * When the ref did not exist and we are creating it, make
+> +        * sure there is no existing packed ref whose name begins with
+> +        * our refname, nor a packed ref whose name is a proper prefix
+> +        * of our refname.
+>          */
+> -       if (missing &&
+> +       if (is_null_sha1(lock->old_sha1) &&
+>              !is_refname_available(refname, skip, get_packed_refs(&ref_cache))) {
+>                 last_errno = ENOTDIR;
+>                 goto error_return;
+> @@ -2320,8 +2319,6 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
+>         lock->ref_name = xstrdup(refname);
+>         lock->orig_ref_name = xstrdup(orig_refname);
+>         ref_file = git_path("%s", refname);
+> -       if (missing)
+> -               lock->force_write = 1;
+>         if ((flags & REF_NODEREF) && (type & REF_ISSYMREF))
+>                 lock->force_write = 1;
+>
+> --
+> 2.1.4
+>
