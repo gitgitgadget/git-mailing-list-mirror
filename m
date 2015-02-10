@@ -1,67 +1,126 @@
-From: "Constantine A. Murenin" <mureninc@gmail.com>
-Subject: Re: Gmail Message rejection
-Date: Tue, 10 Feb 2015 12:52:43 -0800
-Message-ID: <CAPKkNb7Q++LxcDzz-MfGZLLJsqiNC-N=42RfVQ6EZRJBp-_iww@mail.gmail.com>
-References: <20150209201408.Horde.2Ts12JtaemmvhMa5RcSg8w1@server.aercontechnologies.net>
-	<CALbm-EaxbmajmcbqVMN-Jp-xcrqW=P2DGeyqKPg-YM+zncd5bQ@mail.gmail.com>
-	<vpqvbj9acum.fsf@anie.imag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] merge-file: correctly open files when in a subdir
+Date: Tue, 10 Feb 2015 12:57:42 -0800
+Message-ID: <xmqqwq3pv60p.fsf@gitster.dls.corp.google.com>
+References: <CAPHKiG7vzKbtH7=cXD-7Cta=a-iy-ViMustn98z+VEog5ep2sg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Stefan Beller <stefanbeller@gmail.com>, erik@aercon.net,
-	Git Mailing List <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Feb 10 21:52:50 2015
+Content-Type: text/plain
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Stefan Beller <stefanbeller@googlemail.com>
+To: Aleksander Boruch-Gruszecki <aleksander.boruchgruszecki@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 10 21:57:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YLHnc-0007yn-SO
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Feb 2015 21:52:49 +0100
+	id 1YLHsU-0001mZ-4l
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Feb 2015 21:57:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751335AbbBJUwo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2015 15:52:44 -0500
-Received: from mail-ie0-f180.google.com ([209.85.223.180]:34753 "EHLO
-	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750763AbbBJUwn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Feb 2015 15:52:43 -0500
-Received: by iery20 with SMTP id y20so27905252ier.1
-        for <git@vger.kernel.org>; Tue, 10 Feb 2015 12:52:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=0vKSJhM8EWljamS/cxnAr3hRWBDlFKpGP7udJDlodb0=;
-        b=cap0OoJCPs+Ued0cmgSMjlnQBYXRPGuLZIfI+nbTfKLNKRf+tNZstZB72i9JAfZCsc
-         1GFtYedC1yskncnB4V3jpjTqeFpw/y3X7K5TrpV2EmN9p5rT2IurUJ4C5F7uGBzoGpXd
-         8RFMrwrLaTe+454syljJOseeBJIMTBq6BJZUDZo3yYOx4yvLb/7sHvURUwdiu3S/PqG6
-         XbpjIhAoVvWQNBdEWgkCaOM7epqld9zhgS2rlT3pRcdo2FlS+n68gnljICqCUyoOZpK8
-         qoZxsYlyptYCOCc6sQ+V5j8vHDQUBiQd3Y6iioQn7psV/3rgr5zFzczm1vqwWYoMdfZa
-         PHPw==
-X-Received: by 10.50.111.168 with SMTP id ij8mr25836507igb.43.1423601563225;
- Tue, 10 Feb 2015 12:52:43 -0800 (PST)
-Received: by 10.36.74.75 with HTTP; Tue, 10 Feb 2015 12:52:43 -0800 (PST)
-In-Reply-To: <vpqvbj9acum.fsf@anie.imag.fr>
+	id S1751825AbbBJU5q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Feb 2015 15:57:46 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:61297 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751381AbbBJU5p (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Feb 2015 15:57:45 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 86EA937537;
+	Tue, 10 Feb 2015 15:57:44 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=GuoCfDUBhdygZkTkob6oH87z704=; b=RJJcho
+	HwpaCq5mtSnb8M4TKtwm1gk92oRl1PApqUPmRvUA+0i3Z2pRh5mWqcgCQrvcEwr0
+	d8plvxR/mvd0K/3aXTVE/HP2gTqIIGWr5KCCrbFYquvv+jjasmFyJ3VwFOVwc1JW
+	JAOL0UEiagTtHLzK97N3eSkCwAtbwqSe9Fjuc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=J8mbHUPLbN8XV/B1KXFPRJIcFF2U190q
+	GCP/luDSrODT0T6HqWCk8DwTCm0Wwr+HVqqDEeCUEq/Apb28OZ+Z6g10/huzqekP
+	TZqN5QH1QR6oqVMfl/x9MwEnt+odt0DILqMwnnJV4KIlIh3/PW3HyMFM3WBaSZmw
+	kBK96D8PlWA=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7DDA937536;
+	Tue, 10 Feb 2015 15:57:44 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 001EE37534;
+	Tue, 10 Feb 2015 15:57:43 -0500 (EST)
+In-Reply-To: <CAPHKiG7vzKbtH7=cXD-7Cta=a-iy-ViMustn98z+VEog5ep2sg@mail.gmail.com>
+	(Aleksander Boruch-Gruszecki's message of "Tue, 10 Feb 2015 21:23:55
+	+0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 7590B9E6-B167-11E4-9388-38A39F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263647>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263648>
 
-On 10 February 2015 at 09:35, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> wrote:
-> Stefan Beller <stefanbeller@gmail.com> writes:
+Aleksander Boruch-Gruszecki <aleksander.boruchgruszecki@gmail.com>
+writes:
+
+> run_setup_gently() is called before merge-file. This may result in changing
+> current working directory, which wasn't taken into account when opening a file
+> for writing.
 >
->> If you want email to send via gmail, you can do so by enabling "text
->> only" mode for sending mails.
+> Fix by prepending the passed prefix. Previous var is left so that error
+> messages keep refering to the file from the user's working directory
+> perspective.
 >
-> Unfortunately, it is also a known "bug" that the Android Gmail client
-> doesn't have this option (or didn't last time I checked).
+> Signed-off-by: Aleksander Boruch-Gruszecki
+>     <aleksander.boruchgruszecki@gmail.com>
 
-Don't use it, then!
+Please don't line wrap the footer.
 
-We should not design our infrastructure to the lowest common
-denominator like that.  Especially if it's just a question of
-supporting broken brand new implementations, those which couldn't have
-been bothered to adhere to the best practices.
+> ---
+>  builtin/merge-file.c  | 3 ++-
+>  t/t6023-merge-file.sh | 6 ++++++
+>  2 files changed, 8 insertions(+), 1 deletion(-)
 
-C.
+This patch does not apply.
+
+> diff --git a/builtin/merge-file.c b/builtin/merge-file.c
+> index 844f84f..232b768 100644
+> --- a/builtin/merge-file.c
+> +++ b/builtin/merge-file.c
+> @@ -90,7 +90,8 @@ int cmd_merge_file(int argc, const char **argv,
+> const char *prefix)
+
+Please do not line-wrap the patch, either.
+
+>
+>      if (ret >= 0) {
+
+The original has a single tab at the beginning of this line to
+indent, not four spaces.
+
+>          const char *filename = argv[0];
+> -        FILE *f = to_stdout ? stdout : fopen(filename, "wb");
+> +        const char *fpath = prefix_filename(prefix, prefixlen, argv[0]);
+> +        FILE *f = to_stdout ? stdout : fopen(fpath, "wb");
+>
+>          if (!f)
+>              ret = error("Could not open %s for writing", filename);
+> diff --git a/t/t6023-merge-file.sh b/t/t6023-merge-file.sh
+> index 3758961..fdd104c 100755
+> --- a/t/t6023-merge-file.sh
+> +++ b/t/t6023-merge-file.sh
+> @@ -72,6 +72,12 @@ test_expect_success 'works in subdirectory' '
+>      ( cd dir && git merge-file a.txt o.txt b.txt )
+>  '
+>
+> +mkdir -p dir/deep
+> +cp new1.txt orig.txt new2.txt dir/deep
+> +test_expect_success 'accounts for subdirectory when writing' '
+> +    (cd dir && git merge-file deep/new1.txt deep/orig.txt deep/new2.txt)
+> +'
+
+Interesting.  Makes us wonder why the one before this new one you
+added did not catch the issue, doesn't it?
+
+> +
+>  cp new1.txt test.txt
+>  test_expect_success "merge without conflict (--quiet)" \
+>      "git merge-file --quiet test.txt orig.txt new2.txt"
