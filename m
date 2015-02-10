@@ -1,167 +1,98 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] fast-import: avoid running end_packfile recursively
-Date: Tue, 10 Feb 2015 13:58:29 -0500
-Message-ID: <20150210185828.GB20090@peff.net>
-References: <20150210010719.GA31823@peff.net>
- <xmqqa90lwqpr.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 06/11] commit: add tests of commit races
+Date: Tue, 10 Feb 2015 11:12:29 -0800
+Message-ID: <xmqq1tlxwpgi.fsf@gitster.dls.corp.google.com>
+References: <1423412045-15616-1-git-send-email-mhagger@alum.mit.edu>
+	<1423412045-15616-7-git-send-email-mhagger@alum.mit.edu>
+	<CAGZ79kYmgeXt1k22h3fbDR04BTHOQRxryNVSJDOL2DC5yLLHpw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 10 19:58:37 2015
+Content-Type: text/plain
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue Feb 10 20:12:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YLG16-0005R0-Si
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Feb 2015 19:58:37 +0100
+	id 1YLGEg-0003Nj-3b
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Feb 2015 20:12:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753699AbbBJS6c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2015 13:58:32 -0500
-Received: from cloud.peff.net ([50.56.180.127]:47360 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753407AbbBJS6b (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Feb 2015 13:58:31 -0500
-Received: (qmail 30911 invoked by uid 102); 10 Feb 2015 18:58:31 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 10 Feb 2015 12:58:31 -0600
-Received: (qmail 8943 invoked by uid 107); 10 Feb 2015 18:58:33 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 10 Feb 2015 13:58:33 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 10 Feb 2015 13:58:29 -0500
-Content-Disposition: inline
-In-Reply-To: <xmqqa90lwqpr.fsf@gitster.dls.corp.google.com>
+	id S1753454AbbBJTMd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Feb 2015 14:12:33 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:57760 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752422AbbBJTMc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Feb 2015 14:12:32 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9688A366C4;
+	Tue, 10 Feb 2015 14:12:31 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=KUp4Y7Wbkrjd65b+54F4dmjdCFg=; b=em0eiM
+	WeAHw9xF9rpkc8GPUzSvun6KDGINubKbUnipaWI9fDpRnojN23W+8DIPGoIQ408Q
+	3hLcfQSqEQ/zOmeLKtiqnBU6kCY4509kj30BUuZcJgn2p9zK0wUOodj/rglccNmN
+	CMrgVsGUWQ/L/JQHy2WqzzC+k/RMT+Ycj3cFY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qAhMWHdJuu8mV+1G4ojcNsOvva3cGpsT
+	xnIQHnLkCknt6Eq/fNpCSNzvUjkrm3IqINBQHF8Rbb6SKcr9e7ICHa4XtZI9pMBl
+	9s+ynskhwbEGJ9fmTgMv2jhn5k26HREX3SjApRaOUPUeUZ6wiZ3df1FC2KhbgLlH
+	Z22LKE3OKRY=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8C817366C3;
+	Tue, 10 Feb 2015 14:12:31 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 046F4366C2;
+	Tue, 10 Feb 2015 14:12:31 -0500 (EST)
+In-Reply-To: <CAGZ79kYmgeXt1k22h3fbDR04BTHOQRxryNVSJDOL2DC5yLLHpw@mail.gmail.com>
+	(Stefan Beller's message of "Mon, 9 Feb 2015 10:31:59 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: C2C6685A-B158-11E4-82B1-38A39F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263642>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263643>
 
-On Tue, Feb 10, 2015 at 10:45:20AM -0800, Junio C Hamano wrote:
+Stefan Beller <sbeller@google.com> writes:
 
-> > Unfortunately, it is not so easy. pack_data is a global, and
-> > end_packfile calls into other functions which operate on the
-> > global directly. We would have to teach each of these to
-> > take an argument, and there is no guarantee that we would
-> > catch all of the spots.
-> 
-> Well, you can rename the global to something else to make sure ;-)
-> But I think that the approach with a simple flag is better.
+> On Sun, Feb 8, 2015 at 8:14 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+>
+>> +# Copyright (c) 2014 Michael Haggerty <mhagger@alum.mit.edu>
+>
+> What is the projects stance on copyright lines?
 
-:) True. The problems I had in mind were more:
+I do not think we have a strong one.
 
-  1. One of the problems with that is that there are a whole bunch of
-     helper functions that use the variable. But only the ones that are
-     called as part of end_packfile need this treatment. So either we
-     need to touch all of them, or we need to figure out reliably which
-     ones are part of this code path.
+> I've seen files (most of them from the beginning) having some copyright lines,
+> other files (often introduced way later) not having them, "because
+> we're git and have
+> history, so we know who did it".
 
-  2. Unless we get rid of the global completely, we open ourselves up to
-     end_packfile calling new functions, bringing the problem back. This
-     is probably not a huge concern, though, as this code has basically
-     not changed much since its inception.
+I personally agree with that statement.  Also, a copyright notice
+per file is often added when a new file is added, but that ends up
+giving false sense of "ownership" to everybody else down the line
+even after the file has been extensively modified.  It's not like
+Michael solely owns all lines in this file in later versions.  And
+even if people added their name at the top every time they make any
+change, their names tend to stay even when their contributions are
+later completely rewritten or removed.
 
-I did work through it, though, and the result is not _too_ bad. Here it
-is for reference, in case you want to change your mind. The remaining
-references are only in start_packfile, and in gfi_load_object, both of
-which are hopefully unlikely to be called from end_packfile.
+In a sense, my agreement with your statement is stronger than "Yes,
+Git can tell us who did what anyway".  What we can find in the
+history is the sole source of truth, and in-file copyright notice is
+misleading.  You do not even have to have one in the Berne signatory
+nations anyway.
 
----
-diff --git a/fast-import.c b/fast-import.c
-index d0bd285..e842386 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -883,7 +883,7 @@ static void start_packfile(void)
- 	all_packs[pack_id] = p;
- }
- 
--static const char *create_index(void)
-+static const char *create_index(struct packed_git *pack)
- {
- 	const char *tmpfile;
- 	struct pack_idx_entry **idx, **c, **last;
-@@ -901,18 +901,18 @@ static const char *create_index(void)
- 	if (c != last)
- 		die("internal consistency error creating the index");
- 
--	tmpfile = write_idx_file(NULL, idx, object_count, &pack_idx_opts, pack_data->sha1);
-+	tmpfile = write_idx_file(NULL, idx, object_count, &pack_idx_opts, pack->sha1);
- 	free(idx);
- 	return tmpfile;
- }
- 
--static char *keep_pack(const char *curr_index_name)
-+static char *keep_pack(struct packed_git *pack, const char *curr_index_name)
- {
- 	static char name[PATH_MAX];
- 	static const char *keep_msg = "fast-import";
- 	int keep_fd;
- 
--	keep_fd = odb_pack_keep(name, sizeof(name), pack_data->sha1);
-+	keep_fd = odb_pack_keep(name, sizeof(name), pack->sha1);
- 	if (keep_fd < 0)
- 		die_errno("cannot create keep file");
- 	write_or_die(keep_fd, keep_msg, strlen(keep_msg));
-@@ -920,12 +920,12 @@ static char *keep_pack(const char *curr_index_name)
- 		die_errno("failed to write keep file");
- 
- 	snprintf(name, sizeof(name), "%s/pack/pack-%s.pack",
--		 get_object_directory(), sha1_to_hex(pack_data->sha1));
--	if (move_temp_to_file(pack_data->pack_name, name))
-+		 get_object_directory(), sha1_to_hex(pack->sha1));
-+	if (move_temp_to_file(pack->pack_name, name))
- 		die("cannot store pack file");
- 
- 	snprintf(name, sizeof(name), "%s/pack/pack-%s.idx",
--		 get_object_directory(), sha1_to_hex(pack_data->sha1));
-+		 get_object_directory(), sha1_to_hex(pack->sha1));
- 	if (move_temp_to_file(curr_index_name, name))
- 		die("cannot store index file");
- 	free((void *)curr_index_name);
-@@ -947,8 +947,11 @@ static void unkeep_all_packs(void)
- 
- static void end_packfile(void)
- {
-+	struct packed_git *old_p = pack_data;
-+
- 	if (!pack_data)
- 		return;
-+	pack_data = NULL;
- 
- 	clear_delta_base_cache();
- 	if (object_count) {
-@@ -959,13 +962,13 @@ static void end_packfile(void)
- 		struct branch *b;
- 		struct tag *t;
- 
--		close_pack_windows(pack_data);
-+		close_pack_windows(old_p);
- 		sha1close(pack_file, cur_pack_sha1, 0);
--		fixup_pack_header_footer(pack_data->pack_fd, pack_data->sha1,
--				    pack_data->pack_name, object_count,
-+		fixup_pack_header_footer(old_p->pack_fd, old_p->sha1,
-+				    old_p->pack_name, object_count,
- 				    cur_pack_sha1, pack_size);
--		close(pack_data->pack_fd);
--		idx_name = keep_pack(create_index());
-+		close(old_p->pack_fd);
-+		idx_name = keep_pack(old_p, create_index(old_p));
- 
- 		/* Register the packfile with core git's machinery. */
- 		new_p = add_packed_git(idx_name, strlen(idx_name), 1);
-@@ -994,11 +997,10 @@ static void end_packfile(void)
- 		pack_id++;
- 	}
- 	else {
--		close(pack_data->pack_fd);
--		unlink_or_warn(pack_data->pack_name);
-+		close(old_p->pack_fd);
-+		unlink_or_warn(old_p->pack_name);
- 	}
--	free(pack_data);
--	pack_data = NULL;
-+	free(old_p);
- 
- 	/* We can't carry a delta across packfiles. */
- 	strbuf_release(&last_blob.data);
+> The tests themselves look fine.
+>
+> Is there a reason you did not append the tests in 7509 ?
+
+Hmph.
