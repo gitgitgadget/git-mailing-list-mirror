@@ -1,173 +1,102 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [msysGit] Missing inversion in Makefile (ee9be06)
-Date: Tue, 10 Feb 2015 22:51:19 -0000
-Organization: OPDS
-Message-ID: <C928DF3E5D7D423588EF2C2BA09D8A73@PhilipOakley>
-References: <E3DB9AD2A8914C379FB3371494B0B816@PhilipOakley> <549F0355.5020805@kdbg.org> <4C7BB65E9EE445F08645582230EA9782@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH 1/8] write_ref_sha1(): remove check for lock == NULL
+Date: Tue, 10 Feb 2015 14:52:23 -0800
+Message-ID: <CAGZ79kbCHAS3kbF_rwiGFxNCG1movygkcyOddELM7ikOM+wKBQ@mail.gmail.com>
+References: <1423473164-6011-1-git-send-email-mhagger@alum.mit.edu>
+	<1423473164-6011-2-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="utf-8";
-	reply-type=response
-Content-Transfer-Encoding: 7bit
-Cc: "Eric Wong" <normalperson@yhbt.net>,
-	"Junio C Hamano" <gitster@pobox.com>,
-	"Git MsysGit" <msysgit@googlegroups.com>
-To: "Philip Oakley" <philipoakley@iee.org>,
-	"Johannes Sixt" <j6t@kdbg.org>, "Git List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Feb 10 23:51:20 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, "git@vger.kernel.org" <git@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Feb 10 23:52:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YLJeK-0003Da-Dp
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Feb 2015 23:51:20 +0100
+	id 1YLJfQ-0003fR-Ti
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Feb 2015 23:52:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755008AbbBJWvP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2015 17:51:15 -0500
-Received: from out1.ip07ir2.opaltelecom.net ([62.24.128.243]:23595 "EHLO
-	out1.ip07ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754994AbbBJWvN (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Feb 2015 17:51:13 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Ar4LAKmK2lRcFj9qPGdsb2JhbABbgwZSTwuDAYQXvACFJREzBAKBIEQBAQEBAQEFAQEBATg7hAcFAQEBAQIBCAEBGRUeAQEhBQYCAwUCAQMVAQQCBSECAhQBBBoGBwMGAQ0GARIIAgECAwGIFAwJuh6GU5AFAQEBAQEBAQMBAQEBAQEBARYEgSGOVoJvLoEUBY8gVYJ8hnWLHYV0TYQQPjEBBII+AQEB
-X-IPAS-Result: Ar4LAKmK2lRcFj9qPGdsb2JhbABbgwZSTwuDAYQXvACFJREzBAKBIEQBAQEBAQEFAQEBATg7hAcFAQEBAQIBCAEBGRUeAQEhBQYCAwUCAQMVAQQCBSECAhQBBBoGBwMGAQ0GARIIAgECAwGIFAwJuh6GU5AFAQEBAQEBAQMBAQEBAQEBARYEgSGOVoJvLoEUBY8gVYJ8hnWLHYV0TYQQPjEBBII+AQEB
-X-IronPort-AV: E=Sophos;i="5.09,553,1418083200"; 
-   d="scan'208";a="129511549"
-Received: from host-92-22-63-106.as13285.net (HELO PhilipOakley) ([92.22.63.106])
-  by out1.ip07ir2.opaltelecom.net with ESMTP; 10 Feb 2015 22:51:10 +0000
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1754884AbbBJWwZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Feb 2015 17:52:25 -0500
+Received: from mail-ie0-f173.google.com ([209.85.223.173]:41879 "EHLO
+	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751381AbbBJWwY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Feb 2015 17:52:24 -0500
+Received: by iecrd18 with SMTP id rd18so16549963iec.8
+        for <git@vger.kernel.org>; Tue, 10 Feb 2015 14:52:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=MonJPIgiemRq+oAeKFPk9ta+qHJ7jGAGVUQK/B/ggBw=;
+        b=EFsM7uiVxam1vLVSI+ODUUER+W3Dnmggp7tnDEdM/SecaCulVXnqYFjU4dSb4TRJMt
+         KR5rX5hV6qOZ+b3ApQIFxFrAFXt6V5N766cBsQ8o73jcjfdTdlCMXSCjKjAeVKflZOat
+         YF0RUpDbrjioQd6ZJ1PBWGPhy7CLDODyrie1e27D6nSDv11RUIzVTf5uOm0WpGKGK4be
+         va+VRQWkd1sOYyfzV5oKJxkynCDssfx4d0o6ZPZPWTeiQFnqB5LxbAMA0HQhHk0DWwZl
+         Wbs4zVh4MNgH8b6W60J3BIlJ812AFDE/pUKh7EiNeOaeOm4Ze+D5sQaq7Obp2GHWVVJD
+         JMgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=MonJPIgiemRq+oAeKFPk9ta+qHJ7jGAGVUQK/B/ggBw=;
+        b=dEA3Plo0S+PADSw2RjX/MNVjIbAJfTYje104Bk5bPLGLf4lsX3934STu8vhDfygFLm
+         CC3AlDoaE0eoi9KFNaC5EyZ61r2LQ+yZq2wBdNExgwRLqkXktMz/1bwiLykCDHMbWSVq
+         WaLSB2uHcIOAHr32wD2GXlsqdYzHEeq8En+6IK40L1THYgor2o7an2ClsYwT+4XTY5qA
+         aB9aS/kev38kI7sJZB1QSzkthQmXoY/94viIrTHgHr4o7iOnrNXA7IJvPHu3Cr4KC461
+         zQr0rDCDmhwzM9BOv1ht+OEPY+Wn1E+fp71oE2rUuaf0sb5qcBuNpLRagF8OfhwdalW8
+         6ujw==
+X-Gm-Message-State: ALoCoQnxjtg1gJ09kq7DNvLO+g3VcjnGIkIAgkHAH6SZAKsSlQRzl+B/RNGMKW4j+9Ge94SVVRbG
+X-Received: by 10.50.85.44 with SMTP id e12mr106120igz.48.1423608743477; Tue,
+ 10 Feb 2015 14:52:23 -0800 (PST)
+Received: by 10.50.26.42 with HTTP; Tue, 10 Feb 2015 14:52:23 -0800 (PST)
+In-Reply-To: <1423473164-6011-2-git-send-email-mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263657>
 
-Another go at this XY-Problem...
+On Mon, Feb 9, 2015 at 1:12 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> None of the callers pass NULL to this function, and there doesn't seem
+> to be any usefulness to allowing them to do so.
 
+Usually I'd oppose this change, as it seems to be a good defensive
+measure. (I cannot assume future me or anybody knows what they're
+doing), but as this function (write_ref_sha1) is not widely exposed
+any more since aae383db8 (Apr 28, refs.c: make write_ref_sha1 static),
+I think it's safe to assume changes affecting this call are well
+understood in the future.
 
-From: "Philip Oakley" <philipoakley@iee.org>
-Sent: Saturday, December 27, 2014 8:17 PM
-> From: "Johannes Sixt" <j6t@kdbg.org>
->> Am 27.12.2014 um 19:49 schrieb Philip Oakley:
->>> Hi,
->>>
->>> In ee9be06 (perl: detect new files in MakeMaker builds, 2012-07-27)
->>> there is a step to detect if there has been an update to the PM.* 
->>> files,
->>> however it appears that the logic is inverted in the comparison.
->>>
->>> I need some extra eye's on this to be sure I have it right (I'm 
->>> trying
->>> to debug an old Windows breakage...).
->>>
->>> The resultant output of a make dry run included (on my m/c)..:
->>>
->>>  find perl -type f -name '*.pm' | sort >perl/PM.stamp+ && \
->>>   { cmp perl/PM.stamp+ perl/PM.stamp >/dev/null 2>/dev/null || mv
->>> perl/PM.stamp+ perl/PM.stamp; } && \
->>>   rm -f perl/PM.stamp+
->>>  make -C perl  PERL_PATH='/usr/bin/perl' prefix='/c/Documents and
->>> Settings/Philip' perl.mak
->>>
->>> Shouldn't it be `{ ! cmp ` so that when the files are not identical, 
->>> the
->>> move is performed?
->>>
->>> https://github.com/git/git/blob/ee9be06770223238c6a22430eb874754dd22dfb0/Makefile#L2097
->>
->> The existing code looks correct to me. cmp succeeds when the files 
->> are
->> identical and fails when they are different: When it succeeds (files 
->> are
->> equal), the mv is not executed. When it fails, either because a file
->> does not exist or they are different, the mv is executed.
->>
-> Thanks. The inverse logic had me confused.
-> It's like 7400's again, for those that remember;-)
+so
+Reviewed-by: Stefan Beller <sbeller@google.com>
+
 >
-
-Here's where the real problem starts...
-
-> I was getting errors from
-> `cd $git_dir && make -n MSVC=1 V=1 2>MakeDryErrs.txt 1>MakeDry.txt` 
-> (borrowed from 'msvc-build') which reported the PM.stamp as a problem, 
-> with the quoted code being the last part of the MakeDry.txt (and no 
-> PM.stamp seen).
+> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+> ---
+>  refs.c | 4 ----
+>  1 file changed, 4 deletions(-)
 >
-> Now that I've been poking and investigating the error's stopped! It's 
-> all getting rather frustrating. Time to go again on a clean and 
-> rebuild..
-
-I'm trying to get the msysgit msvc-build script[1], which essentially 
-implements the Git 'compat/vcbuild/README', to work again in terms of 
-creating a Visual Studio [2008] project file (.sln).
-
-If I run the code (find perl -type f -name '*.pm' ...) manually then the 
-PM.stamp file is created allowing future dry-runs to succeed - hence 
-some of my confusion.
-
-The script uses git's 'contrib/buildsystems/engine.pl' to parse the 
-output of:
- `make -n MSVC=1 V=1 2>\dev\null` [2]
-
-This appears to no longer work because the -n (dry-run) option fails to 
-run the required 'perl/PM.stamp' during the dry-run. At least that's now 
-my understanding.
-
-The 
-https://www.gnu.org/software/make/manual/html_node/Instead-of-Execution.html 
-page indicates that adding a + to the right rule would be needed to also 
-run the PM.stamp process during dry-run.
-
-At the moment I'm getting (on my old WinXP machine, using Msysgit 1.9.5 
-as a basis)
-
-$ make -n MSVC=1 V=1 1>makedry.txt
-make[1]: *** No rule to make target `PM.stamp', needed by `perl.mak'. 
-Stop.
-make: *** [perl/perl.mak] Error 2
-
-i.e. PM.stamp was not created so can't be the target of the dry-run make 
-rule.
-
-The makedry.txt file generated ends with the
-
-find perl -type f -name '*.pm' | sort >perl/PM.stamp+ && \
- { cmp perl/PM.stamp+ perl/PM.stamp >/dev/null 2>/dev/null || mv 
-perl/PM.stamp+ perl/PM.stamp; } && \
- rm -f perl/PM.stamp+
-make -C perl  PERL_PATH='/usr/bin/perl' prefix='/c/Documents and 
-Settings/Philip' perl.mak
-make[1]: Entering directory `/c/msysgit195/git/perl'
-make -C .. GIT-CFLAGS
-make[2]: Entering directory `/c/msysgit195/git'
-FLAGS='compat/vcbuild/scripts/clink.pl:  -Imsvcgit/32bits/include [...]
-     if test x"$FLAGS" != x"`cat GIT-CFLAGS 2>/dev/null`" ; then \
-  echo >&2 "    * new build flags"; \
-  echo "$FLAGS" >GIT-CFLAGS; \
-            fi
-make[2]: Leaving directory `/c/msysgit195/git'
-make[1]: Leaving directory `/c/msysgit195/git/perl'
-
-i.e. the commands for the PM.stamp process are listed, rather than 
-executed as may have been hoped.
-
-I've tried hacking the plus(+) prefix onto the "perl/PM.stamp: FORCE" 
-rule, but it gave the same error.
-
-
-What would be the right way of making a dry-run produce a suitable 
-complete output? Make files are not something I normally delve into.
-
---
-Philip
-
-[1] https://github.com/msysgit/msysgit/blob/master/bin/msvc-build
-[2] 
-https://github.com/git/git/blob/master/contrib/buildsystems/engine.pl#L75
+> diff --git a/refs.c b/refs.c
+> index c5fa709..d1130e2 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -3080,10 +3080,6 @@ static int write_ref_sha1(struct ref_lock *lock,
+>         static char term = '\n';
+>         struct object *o;
+>
+> -       if (!lock) {
+> -               errno = EINVAL;
+> -               return -1;
+> -       }
+>         if (!lock->force_write && !hashcmp(lock->old_sha1, sha1)) {
+>                 unlock_ref(lock);
+>                 return 0;
+> --
+> 2.1.4
+>
