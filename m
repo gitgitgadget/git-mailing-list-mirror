@@ -1,7 +1,7 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v4 2/4] apply: do not read from the filesystem under --index
-Date: Tue, 10 Feb 2015 14:36:09 -0800
-Message-ID: <1423607771-27157-3-git-send-email-gitster@pobox.com>
+Subject: [PATCH v4 3/4] apply: do not read from beyond a symbolic link
+Date: Tue, 10 Feb 2015 14:36:10 -0800
+Message-ID: <1423607771-27157-4-git-send-email-gitster@pobox.com>
 References: <1423010662-26497-1-git-send-email-gitster@pobox.com>
  <1423607771-27157-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
@@ -11,71 +11,98 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YLJPu-000540-Fu
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Feb 2015 23:36:26 +0100
+	id 1YLJPv-000540-3I
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Feb 2015 23:36:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754066AbbBJWgT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2015 17:36:19 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64801 "EHLO
+	id S1753696AbbBJWgX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Feb 2015 17:36:23 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:51941 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752916AbbBJWgS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Feb 2015 17:36:18 -0500
+	with ESMTP id S1752370AbbBJWgT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Feb 2015 17:36:19 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 584C73749E;
-	Tue, 10 Feb 2015 17:36:17 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D628A374A3;
+	Tue, 10 Feb 2015 17:36:18 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=vt29
-	B2X6DP/hjkmY+s1KvM+p9ho=; b=IVIN02SbGiVy+mh4JD5JX1l1jIj+9kY7iZ/E
-	HvaObrR7sfHGdaU0BOLeMNzbp8AqaRU+TcQ0363zDiVWkZrpXabgUM0yPZX0y2xN
-	/mOdBnleZwhBiuqaHUHx/DCQ/KsWmOIiaAl+Sgdv79Vml8wBBGP/I97QovuqOYpG
-	whRGQ8M=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=/+mn
+	vo9ROrDrR021Ng4eN3aDAcA=; b=D+GlKZADmbyd/L8CA6d7GRYIO3IzYx9dL8N5
+	kU/gYEknBTpiCGDexStWScyADPJomRJqdubVTAw4/JuX5E60/XsjZhmTnkLBHjy5
+	iByHQk83VnQRC/U5CRzp2hJ8Sz/SgQWbIS03dB9g3d7XybpG7D44kWucZdSPRjIi
+	CzbZzlg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=A1LKwc
-	pLGAywCMnlGSXyhj96l0crbcRFhWf5UlWA2INDbvjmMTLnTJ0OfUuScZfwPqlmdo
-	aROGHMUCtSmaEznjQxuBgJdOy+6f+QKP2XABc5fYj78WNBNTvzQ1FXYKAFznWTR1
-	EaObnX7zvOtEtsNg6ifOY9u2dUCTe4WpnwkJc=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=R5uxTI
+	0tHNMhNo2Maydadny8GLwYV1HIyKB5RMbMe6LcAX3tVbSU79IroKX90bWZSZ1ImV
+	Dwg6c4zrllrfak4utt6Cx9pC5aluBhKf8e88ylNP10FrYFQeNc03Thudd6/NQ6vb
+	jbSpbiqxa/j+REcBgvGYwiekAQXUEdp7ems1g=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 346963749D;
-	Tue, 10 Feb 2015 17:36:17 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id CE01A374A2;
+	Tue, 10 Feb 2015 17:36:18 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A8EE13749C;
-	Tue, 10 Feb 2015 17:36:16 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4940D374A1;
+	Tue, 10 Feb 2015 17:36:18 -0500 (EST)
 X-Mailer: git-send-email 2.3.0-185-g073f588
 In-Reply-To: <1423607771-27157-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 39CD8D68-B175-11E4-8978-38A39F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 3AC4D8AC-B175-11E4-999F-38A39F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263654>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263655>
 
-We currently read the preimage to apply a patch from the index only
-when the --cached option is given.  Do so also when the command is
-running under the --index option.  With --index, the index entry and
-the working tree file for a path that is involved in a patch must be
-identical, so this should not affect the result, but by reading from
-the index, we will get the protection to avoid reading an unintended
-path beyond a symbolic link automatically.
+We should reject a patch, whether it renames/copies dir/file to
+elsewhere with or without modificiation, or updates dir/file in
+place, if "dir/" part is actually a symbolic link to elsewhere,
+by making sure that the code to read the preimage does not read
+from a path that is beyond a symbolic link.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/apply.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ builtin/apply.c                 |  2 ++
+ t/t4122-apply-symlink-inside.sh | 19 +++++++++++++++++++
+ 2 files changed, 21 insertions(+)
 
 diff --git a/builtin/apply.c b/builtin/apply.c
-index 8561236..21e45a0 100644
+index 21e45a0..422e4ce 100644
 --- a/builtin/apply.c
 +++ b/builtin/apply.c
-@@ -3136,7 +3136,7 @@ static int load_patch_target(struct strbuf *buf,
- 			     const char *name,
- 			     unsigned expected_mode)
- {
--	if (cached) {
-+	if (cached || check_index) {
- 		if (read_file_or_gitlink(ce, buf))
- 			return error(_("read of %s failed"), name);
- 	} else if (name) {
+@@ -3145,6 +3145,8 @@ static int load_patch_target(struct strbuf *buf,
+ 				return read_file_or_gitlink(ce, buf);
+ 			else
+ 				return SUBMODULE_PATCH_WITHOUT_INDEX;
++		} else if (has_symlink_leading_path(name, strlen(name))) {
++			return error(_("reading from '%s' beyond a symbolic link"), name);
+ 		} else {
+ 			if (read_old_data(st, name, buf))
+ 				return error(_("read of %s failed"), name);
+diff --git a/t/t4122-apply-symlink-inside.sh b/t/t4122-apply-symlink-inside.sh
+index 70b3a06..035c080 100755
+--- a/t/t4122-apply-symlink-inside.sh
++++ b/t/t4122-apply-symlink-inside.sh
+@@ -52,4 +52,23 @@ test_expect_success 'check result' '
+ 
+ '
+ 
++test_expect_success SYMLINKS 'do not read from beyond symbolic link' '
++	git reset --hard &&
++	mkdir -p arch/x86_64/dir &&
++	>arch/x86_64/dir/file &&
++	git add arch/x86_64/dir/file &&
++	echo line >arch/x86_64/dir/file &&
++	git diff >patch &&
++	git reset --hard &&
++
++	mkdir arch/i386/dir &&
++	>arch/i386/dir/file &&
++	ln -s ../i386/dir arch/x86_64/dir &&
++
++	test_must_fail git apply patch &&
++	test_must_fail git apply --cached patch &&
++	test_must_fail git apply --index patch
++
++'
++
+ test_done
 -- 
 2.3.0-185-g073f588
