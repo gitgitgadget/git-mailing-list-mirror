@@ -1,74 +1,70 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 07/11] commit: avoid race when creating orphan commits
-Date: Wed, 11 Feb 2015 16:47:52 +0100
-Message-ID: <54DB79A8.9020409@alum.mit.edu>
-References: <1423412045-15616-1-git-send-email-mhagger@alum.mit.edu>	<1423412045-15616-8-git-send-email-mhagger@alum.mit.edu> <CAGZ79kYF2WWqSq71d5FZvP7PCKra-cmYHPAB0RVFed8Ag14ZWA@mail.gmail.com>
+From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+Subject: Re: EOL handling (EGit/svn/Windows)
+Date: Wed, 11 Feb 2015 16:51:27 +0100
+Message-ID: <CAA01CsrJv8HmtNG6XAHZm5Hk8x8S_vFCYPz8vCtwBwd9-GAykg@mail.gmail.com>
+References: <CAA01Csrp0ZOouM5zhVuHQW9sWCnbMMLRkmcbRtgsU3k8wNtSqw@mail.gmail.com>
+	<54D99BED.8010005@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu40=?= =?UTF-8?B?YyBEdXk=?= 
-	<pclouds@gmail.com>, "git@vger.kernel.org" <git@vger.kernel.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Wed Feb 11 16:48:17 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Wed Feb 11 16:51:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YLZWR-0006zP-Fn
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Feb 2015 16:48:15 +0100
+	id 1YLZZd-0000Y1-TX
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Feb 2015 16:51:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753090AbbBKPsL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Feb 2015 10:48:11 -0500
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:48311 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752862AbbBKPsL (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Feb 2015 10:48:11 -0500
-X-AuditID: 1207440d-f79976d000005643-1f-54db79ab8f52
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id EA.28.22083.BA97BD45; Wed, 11 Feb 2015 10:47:55 -0500 (EST)
-Received: from [192.168.69.130] (p4FC9687D.dip0.t-ipconnect.de [79.201.104.125])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t1BFlqXV015348
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Wed, 11 Feb 2015 10:47:53 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.4.0
-In-Reply-To: <CAGZ79kYF2WWqSq71d5FZvP7PCKra-cmYHPAB0RVFed8Ag14ZWA@mail.gmail.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrEKsWRmVeSWpSXmKPExsUixO6iqLu68naIwf5LbBZdV7qZLBp6rzBb
-	vL25hNGie8pbRovevk+sFps3t7M4sHnsnHWX3WPBplKPi5eUPT5vkgtgieK2SUosKQvOTM/T
-	t0vgzljV08JY0MJScerQJ6YGxpnMXYycHBICJhLH/y1mh7DFJC7cW8/WxcjFISRwmVHi2fTT
-	zBDOBSaJwx1vwKp4BbQlLjx/wQZiswioSnTNnccEYrMJ6Eos6mkGs0UFgiQOnX7MAlEvKHFy
-	5hMwW0RATWLmqtlgG5gF5jFJXGn/CTZIWMBL4tjT24wQ2w4xSnyYuwsswSkQKLHqyBawbmYB
-	dYk/8y4xQ9jyEtvfzmGewCgwC8mSWUjKZiEpW8DIvIpRLjGnNFc3NzEzpzg1Wbc4OTEvL7VI
-	10gvN7NELzWldBMjJMx5dzD+XydziFGAg1GJh9dj660QIdbEsuLK3EOMkhxMSqK891Nuhwjx
-	JeWnVGYkFmfEF5XmpBYDnczBrCTCy58FlONNSaysSi3Kh0lJc7AoifOqLVH3ExJITyxJzU5N
-	LUgtgsnKcHAoSfC2VwA1ChalpqdWpGXmlCCkmTg4QYZzSYkUp+alpBYllpZkxIPiNb4YGLEg
-	KR6gvRdB2nmLCxJzgaIQracYdTkWtO+fySTEkpeflyolzisCTEtCAiBFGaV5cCtgSe0VozjQ
-	x8K8D0BG8QATItykV0BLmICWFBTcAFlSkoiQkmpgVFuloSe3caJXiam2z8bdiw9o/bqpYx5h
-	td/y6PnKVS4izCt2JpofiXvI/HpJl4jzvfsNfdXM1b57tOZt27L3c+7jTyduNT03 
+	id S1753151AbbBKPva convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Feb 2015 10:51:30 -0500
+Received: from mail-wi0-f178.google.com ([209.85.212.178]:51900 "EHLO
+	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752833AbbBKPv3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Feb 2015 10:51:29 -0500
+Received: by mail-wi0-f178.google.com with SMTP id em10so4744893wid.5
+        for <git@vger.kernel.org>; Wed, 11 Feb 2015 07:51:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=IwAuOQgP7R+c1GbmjATmdxlXdcHnFqzqb1mEWrU2Waw=;
+        b=bwT0eSJCoyDKUVFW/p0bCydaO/TlPL7X4d4kNral72Wql4quakHHn7NrJrfhEm3HcV
+         Up93khnAt8we4tHEsd1F875R9A3+D0nXf4Bfjx5mvOJqrQ/hWtAr6eA56mh1qAZOeYQk
+         dPLMvZ35wkQwP2djbH+6TAdsEbDG/LLB1Q6n6Y8crzgpwFNaJ/gFd/7rgjv8lRtrNsEj
+         mOepj3Pf8SrlC0wZL19xQbwgm2aZB9hQaLuP65l/92W1aecBOT3EgIXsnR6Pkue6WUEk
+         QEfqjOQGEEPispVnplryI/IMYhs32tG0TpH09VhnZhIPUD4NkYyOkIU4sY3ryylddYw6
+         cbaA==
+X-Received: by 10.180.88.193 with SMTP id bi1mr57183509wib.70.1423669888082;
+ Wed, 11 Feb 2015 07:51:28 -0800 (PST)
+Received: by 10.180.207.4 with HTTP; Wed, 11 Feb 2015 07:51:27 -0800 (PST)
+In-Reply-To: <54D99BED.8010005@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263680>
 
-On 02/09/2015 07:35 PM, Stefan Beller wrote:
-> On Sun, Feb 8, 2015 at 8:14 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
->> If, during the initial check, HEAD doesn't point at anything, then we
-> 
-> Maybe
-> "If HEAD doesn't point at anything during the initial check, then..." ?
-> (Being a non native speaker is hard. These commas look so confusing,
-> so the version without commas makes it way easier to read for me.)
+On Tue, Feb 10, 2015 at 6:49 AM, Torsten B=C3=B6gershausen <tboegi@web.=
+de> wrote:
+> add that to the repo, do the normalization  and push.
 
-Will change. Thanks!
+I did LF normalization over history. Looks like everything worked
+correctly, just wondering, what does the WARNING mean?
 
-Michael
+$ git filter-branch --tree-filter '~/fix-eol.sh' -d /dev/shm/repo-tmp -=
+- --all
+Rewrite 4eab51b65af61d2b0e56f9990cc14be1e1372194 (13349/13349)
+Ref 'refs/heads/master' was rewritten
+Ref 'refs/remotes/origin/master' was rewritten
+WARNING: Ref 'refs/remotes/origin/master' is unchanged
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
+$ cat ~/fix-eol.sh
+find . -type f \! -path ./.git/\* -print0 | xargs -0 dos2unix
+--keepdate 2>/dev/null
+
+
+--=20
+Piotr Krukowiecki
