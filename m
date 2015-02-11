@@ -1,81 +1,82 @@
-From: matthew sporleder <msporleder@gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
 Subject: Re: [PATCH] index-pack: reduce memory footprint a bit
-Date: Wed, 11 Feb 2015 07:01:42 -0600
-Message-ID: <CAHKF-AsF=8n0zxmbYfEKnBgOAnjqW_Psw1eNsZtyMjDchyt5zA@mail.gmail.com>
+Date: Wed, 11 Feb 2015 20:10:05 +0700
+Message-ID: <CACsJy8CsGKK7Dt4aHHg=GQ9Y2h8bBPBVWnHwqu=CRDkYzzyGkg@mail.gmail.com>
 References: <CACsJy8A=6m5sWnDhPPMNrWbZ=fOMXPxO_1GVh-WpHycf5gm+rg@mail.gmail.com>
-	<1423487929-28019-1-git-send-email-pclouds@gmail.com>
-	<xmqqfvaec2cm.fsf@gitster.dls.corp.google.com>
-	<20150210093041.GA30992@lanh>
-	<CAHKF-Atr_ezupL02aW08S-6NGGLi55vHuVep1mQvOaQq0Xh=FA@mail.gmail.com>
-	<xmqq61b9wqil.fsf@gitster.dls.corp.google.com>
+ <1423487929-28019-1-git-send-email-pclouds@gmail.com> <xmqqfvaec2cm.fsf@gitster.dls.corp.google.com>
+ <20150210093041.GA30992@lanh> <CAHKF-Atr_ezupL02aW08S-6NGGLi55vHuVep1mQvOaQq0Xh=FA@mail.gmail.com>
+ <xmqq61b9wqil.fsf@gitster.dls.corp.google.com> <CAHKF-AsF=8n0zxmbYfEKnBgOAnjqW_Psw1eNsZtyMjDchyt5zA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Duy Nguyen <pclouds@gmail.com>,
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 11 14:01:49 2015
+To: matthew sporleder <msporleder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 11 14:10:47 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YLWvM-000200-Pf
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Feb 2015 14:01:49 +0100
+	id 1YLX3w-0006Qc-W4
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Feb 2015 14:10:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752530AbbBKNBo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Feb 2015 08:01:44 -0500
-Received: from mail-we0-f173.google.com ([74.125.82.173]:51963 "EHLO
-	mail-we0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752240AbbBKNBo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Feb 2015 08:01:44 -0500
-Received: by mail-we0-f173.google.com with SMTP id w55so3255636wes.4
-        for <git@vger.kernel.org>; Wed, 11 Feb 2015 05:01:43 -0800 (PST)
+	id S1752831AbbBKNKh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Feb 2015 08:10:37 -0500
+Received: from mail-ie0-f173.google.com ([209.85.223.173]:42073 "EHLO
+	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751738AbbBKNKg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Feb 2015 08:10:36 -0500
+Received: by iery20 with SMTP id y20so3666544ier.9
+        for <git@vger.kernel.org>; Wed, 11 Feb 2015 05:10:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=gDUZgKmQgQfyFA3VnBfTRs2XsXrAdX0QN7KvwfhvC4Q=;
-        b=irX7MHSes43R2Q6PPvmVauJM+XAY1fUfYLbpqMoJAihnsaO/hHlVWwxm6dAZfFRDVI
-         mobtQ7i2i4Tx4IqKVrvrYLvXNas1/oUDbDWroWEmx45o6gHcgZfs/Qg0TsBnfVzDiHZd
-         hOPJOgt6TVLxKFJZWUZ/8pQtThW0yaMry6gHG3Er+2kkBxV5Pp0TiPJPTtbSTyI5Bflh
-         sydmw5eOR8pNkFRf8UmdV2iImCZ41O3EW+iKCHNlZq4LNrq5XxBoR0+R4qFhnQyZLGyG
-         yhaQQvA7hUwtfibuU0DO8XHGDfxpdvahqTfApnBxFzoVIMKkIauqAXpz5Gmw6FFq+3si
-         AiFg==
-X-Received: by 10.180.95.97 with SMTP id dj1mr5453108wib.43.1423659702917;
- Wed, 11 Feb 2015 05:01:42 -0800 (PST)
-Received: by 10.195.13.14 with HTTP; Wed, 11 Feb 2015 05:01:42 -0800 (PST)
-In-Reply-To: <xmqq61b9wqil.fsf@gitster.dls.corp.google.com>
+        bh=kpIpVQKfxZ1q2e8ZDJeWqGoKnKAAg5mZOZA6046O5Ys=;
+        b=YAhhVllIc/EwZsrkH/RZgyA0icox42XwVMxnwlI5JDm4uYLFzmYqiFLErVYb8+Yc7c
+         UGUBvXUO/VaI+PubHiUz5f3us4598xbEbD2Q3zFSpm3j3IUhcAGeqdffItKoyDHeDyHb
+         Q9Cbd5bopMHKB3wE65X1JHso4Wz3iCFUNYPz10RTTQbCpkq00QhQCEk4VRhAhsKBZ3p/
+         EYGazctUdfi69jZEf06N5o4HNlyfOt6F4ZSuvXaAVBjeeB9qUokZPgyiHY34/PBWkCC4
+         u8Xnpj7HwvRKIIVnwg+QKu2vUBpBYFveC5xQRHjOXZDj7+jJCaQCrB0En/mVSQe6AiM2
+         rAyw==
+X-Received: by 10.50.107.36 with SMTP id gz4mr3434247igb.25.1423660235931;
+ Wed, 11 Feb 2015 05:10:35 -0800 (PST)
+Received: by 10.107.131.155 with HTTP; Wed, 11 Feb 2015 05:10:05 -0800 (PST)
+In-Reply-To: <CAHKF-AsF=8n0zxmbYfEKnBgOAnjqW_Psw1eNsZtyMjDchyt5zA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263676>
 
-On Tue, Feb 10, 2015 at 12:49 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> matthew sporleder <msporleder@gmail.com> writes:
+On Wed, Feb 11, 2015 at 8:01 PM, matthew sporleder <msporleder@gmail.com> wrote:
+> On Tue, Feb 10, 2015 at 12:49 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> matthew sporleder <msporleder@gmail.com> writes:
+>>
+>>> I'm having trouble getting this new patch to apply.
+>>
+>> Apply the first one, replace all object_entry_extra with
+>> object_stat, replace all objects_extra with obj_stat and amend the
+>> first one.  Then apply this one.
 >
->> I'm having trouble getting this new patch to apply.
+> I got this to work and had a good experience but got this from an arm user:
 >
-> Apply the first one, replace all object_entry_extra with
-> object_stat, replace all objects_extra with obj_stat and amend the
-> first one.  Then apply this one.
+> Cloning into 'NetBSD-src-git'...
+> remote: Counting objects: 3484984, done.
+> remote: Compressing objects: 100% (636083/636083), done.
+> error: index-pack died of signal 10
+> fatal: index-pack failed
+>       125.84 real         0.13 user         0.49 sys
+>
+> Core was generated by `git'.
+> Program terminated with signal SIGBUS, Bus error.
 
-I got this to work and had a good experience but got this from an arm user:
+It might be the effect of __attribute__((packed)). Maybe you could try
+again without that in builtin/index-pack.c. Also could you run gdb and
+do
 
-Cloning into 'NetBSD-src-git'...
-remote: Counting objects: 3484984, done.
-remote: Compressing objects: 100% (636083/636083), done.
-error: index-pack died of signal 10
-fatal: index-pack failed
-      125.84 real         0.13 user         0.49 sys
+p sizeof(*ofs_deltas)
 
-Core was generated by `git'.
-Program terminated with signal SIGBUS, Bus error.
-#0  0x00045f88 in cmd_index_pack ()
-(gdb) bt
-#0  0x00045f88 in cmd_index_pack ()
-#1  0x00014058 in handle_builtin ()
-#2  0x00129358 in main ()
-
-
-I will wait for the "official" patch and ask if my friend can compile with -g.
+? No need to actually run it from gdb.
+-- 
+Duy
