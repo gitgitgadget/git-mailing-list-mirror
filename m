@@ -1,73 +1,89 @@
-From: David Glasser <glasser@davidglasser.net>
-Subject: Keep original author with git merge --squash?
-Date: Wed, 11 Feb 2015 09:21:04 -0800
-Message-ID: <CAN7QDoKQAZKUt_MHWjgt1k3PvXQv6XTcjdijh8KRodO3=VD47A@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 06/11] commit: add tests of commit races
+Date: Wed, 11 Feb 2015 10:10:26 -0800
+Message-ID: <xmqqk2zouxnx.fsf@gitster.dls.corp.google.com>
+References: <1423412045-15616-1-git-send-email-mhagger@alum.mit.edu>
+	<1423412045-15616-7-git-send-email-mhagger@alum.mit.edu>
+	<CAGZ79kYmgeXt1k22h3fbDR04BTHOQRxryNVSJDOL2DC5yLLHpw@mail.gmail.com>
+	<xmqq1tlxwpgi.fsf@gitster.dls.corp.google.com>
+	<54DB6F9C.7060600@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 11 18:21:31 2015
+Content-Type: text/plain
+Cc: Stefan Beller <sbeller@google.com>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Wed Feb 11 19:10:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YLayg-0004Jl-UL
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Feb 2015 18:21:31 +0100
+	id 1YLbkB-0000wp-Tb
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Feb 2015 19:10:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753403AbbBKRV0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Feb 2015 12:21:26 -0500
-Received: from mail-wg0-f48.google.com ([74.125.82.48]:36092 "EHLO
-	mail-wg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752013AbbBKRV0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Feb 2015 12:21:26 -0500
-Received: by mail-wg0-f48.google.com with SMTP id l18so1792755wgh.7
-        for <git@vger.kernel.org>; Wed, 11 Feb 2015 09:21:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:from:date:message-id:subject:to:content-type;
-        bh=QFpespvmNNiXe2irICRVoZ2OeLK11s3JmbLjv3sS+AE=;
-        b=bE/3Fga1mFp+wlmqjvCjTayNmjhgSPTDVzpMi75VYOOxNOVwBo3urVnewgvu89Lw7i
-         Kh9F/toKFbJZsmZUKQ3fWndpgXscyhWsaBhfeJAcO+QdMbOveLJIQwhWMC6oYBCWPFDn
-         g/NoN9+TNo4szHf2i0wwsewHWawYxtxgBIqQQY6T/iGR78Eu/JPqazo9NOkHLElgFXpH
-         2SKYgqLOJhacq39khItAv7c2k/AC/lZ0H1JkZZyEgG8pvVYrzbcJm3CS8FKF3duG/B4W
-         jkSb4FinYwRpcvswogezglS+tqx5lgvH7JpAZSvpaVoVC2l0AdGAmNJHfDPGQw8foen6
-         PBiA==
-X-Received: by 10.194.3.40 with SMTP id 8mr61896777wjz.98.1423675285075; Wed,
- 11 Feb 2015 09:21:25 -0800 (PST)
-Received: by 10.194.16.196 with HTTP; Wed, 11 Feb 2015 09:21:04 -0800 (PST)
-X-Google-Sender-Auth: O5mdJIP8Tl4lluadNauG-80LLow
+	id S1752887AbbBKSKc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Feb 2015 13:10:32 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:52140 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752429AbbBKSKb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Feb 2015 13:10:31 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E5AFB36BAC;
+	Wed, 11 Feb 2015 13:10:28 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=GRrIUK0eB+XYNhTzCkAs+CHUNBc=; b=Wlq2Me
+	NEbvWesHGV3JoFj71Yq6z81m3YU1QuvYJXjnDt3Qs2ZHrVx1d5m420Dtk5BfLF9F
+	gkpp0J4dAj93x0UXnw0xcQ7UczY8IQBAOfxzZQjVM9JUkcepxPtrMVwEVVEwG9e3
+	G8ugd2LkOaR9SHO7nQk+1xyRDmDFfP9am1VM4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=VAUaj1ChqC1MP3LrxxT39ItVfjYiT+tv
+	1MqzEGRPcCp9GxsqUEcAmVC7dsVIPQUbBiwP3Yungmc1CU6ipA7yCboN8DBKyh66
+	FeXmzvyGAQFI8SeXpeMQ+VeLpNZPtpdikjvNcKmXJbE1t8Cyi+OkLTL18rmLTcug
+	CgljPxK7f8k=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id DC16036BAA;
+	Wed, 11 Feb 2015 13:10:28 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6283836BA9;
+	Wed, 11 Feb 2015 13:10:27 -0500 (EST)
+In-Reply-To: <54DB6F9C.7060600@alum.mit.edu> (Michael Haggerty's message of
+	"Wed, 11 Feb 2015 16:05:00 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 41BD7520-B219-11E4-A356-A4119F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263683>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263684>
 
-I frequently find myself using `git merge --squash` to combine a
-series of commits by the same author into one.
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-(For example, I fetch my project's GitHub PRs into my repo.
-Frequently, a PR consists of the original PR (with a good description)
-followed by a few follow-ups based on feedback from me.  While I'd
-prefer that the submitter amended their original commit instead of
-making it my job, this is rare.  And I don't feel that it's valuable
-to my project's git history to contain all the intermediate stages of
-code review --- it's usually just one commit.)
+> On the other hand, there's this [1] and this [2] from the FSF, which
+> recommend a copyright blurb at the beginning of every source file.
+> Though actually the recommendation is to include a GPL blurb too, not
+> just a naked copyright line like I used. But I get the feeling that the
+> FSF's recommendation is more for ideological than for legal reasons.
 
-So `git merge --squash origin/pr/1234` is a really convenient command
-here... except for one thing: it sets the author as me.  I always have
-to manually find the author line and make sure to pass it to --author
-(perhaps with --amend).
+It is relatively recent (late 1980s) that US became part of Berne
+Convention (1886).  Before that you had to write Copyright and All
+Rights Reserved (or Todos Derechos Reserrvados) in Buenos Aires
+days.
 
-What would people think of a flag (or a config value) that means "if
-all merged commits are by the same author, use that author for the
-resulting commit instead of the default author"?
+It is not surprising to see the more cautious practice from the
+older days in recommendations by an old organization like FSF.
 
-(I'm not sure if this should be a flag to --squash or to commit.
-Maybe `git merge --squash`; `git commit --use-squashed-author`?  Seems
-like it should be not too hard to implement; SQUASH_MSG is pretty
-parseable.  Or just a config value.)
+>>> Is there a reason you did not append the tests in 7509 ?
+>> 
+>> Hmph.
+>
+> I don't know what "Hmph" means in this context.
 
---dave
-
--- 
-glasser@davidglasser.net | langtonlabs.org | flickr.com/photos/glasser/
+"Hmph, it might deserve more thought, but I do not have opinion
+right now".
