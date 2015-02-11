@@ -1,22 +1,23 @@
 From: Karsten Blees <karsten.blees@gmail.com>
-Subject: [PATCH 1/3] Win32: make FILETIME conversion functions public
-Date: Thu, 12 Feb 2015 00:51:09 +0100
-Message-ID: <54DBEAED.5030201@gmail.com>
+Subject: [PATCH 2/3] Win32: replace MSVCRT's fstat() with a
+ Win32-based implementation
+Date: Thu, 12 Feb 2015 00:52:06 +0100
+Message-ID: <54DBEB26.6020403@gmail.com>
 References: <54DBEAA5.6000205@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Karsten Blees <karsten.blees@gmail.com>
 To: Git List <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>
-X-From: msysgit+bncBCH3XYXLXQDBB3GV56TAKGQEKEIACZQ@googlegroups.com Thu Feb 12 00:51:10 2015
-Return-path: <msysgit+bncBCH3XYXLXQDBB3GV56TAKGQEKEIACZQ@googlegroups.com>
+X-From: msysgit+bncBCH3XYXLXQDBBJGW56TAKGQEYNEF3NI@googlegroups.com Thu Feb 12 00:52:05 2015
+Return-path: <msysgit+bncBCH3XYXLXQDBBJGW56TAKGQEYNEF3NI@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
 Received: from mail-la0-f55.google.com ([209.85.215.55])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCH3XYXLXQDBB3GV56TAKGQEKEIACZQ@googlegroups.com>)
-	id 1YLh3l-0007JL-3N
-	for gcvm-msysgit@m.gmane.org; Thu, 12 Feb 2015 00:51:09 +0100
-Received: by labgd6 with SMTP id gd6sf1687018lab.2
-        for <gcvm-msysgit@m.gmane.org>; Wed, 11 Feb 2015 15:51:08 -0800 (PST)
+	(envelope-from <msysgit+bncBCH3XYXLXQDBBJGW56TAKGQEYNEF3NI@googlegroups.com>)
+	id 1YLh4f-0007ok-Ch
+	for gcvm-msysgit@m.gmane.org; Thu, 12 Feb 2015 00:52:05 +0100
+Received: by labgd6 with SMTP id gd6sf1688277lab.2
+        for <gcvm-msysgit@m.gmane.org>; Wed, 11 Feb 2015 15:52:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
         h=message-id:date:from:user-agent:mime-version:to:cc:subject
@@ -24,39 +25,39 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
          :x-original-authentication-results:precedence:mailing-list:list-id
          :list-post:list-help:list-archive:sender:list-subscribe
          :list-unsubscribe;
-        bh=uxcGIiqIjGCb7JqeklTR6OnyQJ3mQeVrckp09roXsw8=;
-        b=L6CRkWWZudoJgX/eJi9FwNC+pzlVHhLZs2RPRaeG0WagQrhL4XUx+Db38ww3MKkKJY
-         WLOMuhbffSVn9xv4XKN0yAdbofZHE2Sd9VV3AdHY5ibVS1QdAgq9B4ysjTVaER/uLhO4
-         C43nGuiuyKbpJF7b6Z9ZlO6cQJoR8Eo92w1MAEJlEUemqYBji4DQUBLvhuzdllLl+8Oy
-         wCfz+hOxr/V0f73LYumlcSujygClkypnOjo5lOMDdvmjZtv/Qs/9ZWCoyWnAAi608PzR
-         KZLOya9Hmbmqq3JgKqVKf9E6uOgYDgnb+xyc1dK57fRxz7ui+LXkn5NZ4G2Q7GoKrDvm
-         GMFw==
-X-Received: by 10.180.228.36 with SMTP id sf4mr4858wic.1.1423698668794;
-        Wed, 11 Feb 2015 15:51:08 -0800 (PST)
+        bh=kVOY3oH3t3pEqRjikPavbash99DV6VN6EvJomcLox4Q=;
+        b=eUh73fzsV6XywWb455nSX1b3M/c5oLQc68/VOZ1yLKUFAmPGiIMbVJKlx/d74meonm
+         CpOvbuuDD6jx/bDmDuoMNXFe/AWnV56C4CCIy8ZRX88o7oNYSc2Xf6WdFrPlgw9BrzL/
+         V68TK1JyKkVvrFi+LHf9I8BENY7eGmkO0FbWYx183EKAR3CQtXRsV5dCbmEgTXOR990f
+         +rxetQo3VQs4K4Kj53Okob8xceinXT1OF5GSoecnpjrIVlXmtfwPbKPl2x2g6vQv5Orq
+         GHEr43eolstuO2hIC+wzCPQBwNoO/hTOtTeufyY9G83ckI0BAp1BlsvasYSYXKLh1V4M
+         8whA==
+X-Received: by 10.180.79.10 with SMTP id f10mr5080wix.8.1423698725118;
+        Wed, 11 Feb 2015 15:52:05 -0800 (PST)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.186.71 with SMTP id fi7ls21945wic.28.canary; Wed, 11 Feb
- 2015 15:51:08 -0800 (PST)
-X-Received: by 10.181.13.236 with SMTP id fb12mr21349wid.1.1423698668007;
-        Wed, 11 Feb 2015 15:51:08 -0800 (PST)
-Received: from mail-wg0-x22d.google.com (mail-wg0-x22d.google.com. [2a00:1450:400c:c00::22d])
-        by gmr-mx.google.com with ESMTPS id i7si33799wif.0.2015.02.11.15.51.07
+Received: by 10.180.102.131 with SMTP id fo3ls20689wib.39.canary; Wed, 11 Feb
+ 2015 15:52:04 -0800 (PST)
+X-Received: by 10.181.13.236 with SMTP id fb12mr21728wid.1.1423698724424;
+        Wed, 11 Feb 2015 15:52:04 -0800 (PST)
+Received: from mail-wi0-x235.google.com (mail-wi0-x235.google.com. [2a00:1450:400c:c05::235])
+        by gmr-mx.google.com with ESMTPS id o9si35514wiw.0.2015.02.11.15.52.04
         for <msysgit@googlegroups.com>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 11 Feb 2015 15:51:08 -0800 (PST)
-Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c00::22d as permitted sender) client-ip=2a00:1450:400c:c00::22d;
-Received: by mail-wg0-f45.google.com with SMTP id k14so3654920wgh.4
-        for <msysgit@googlegroups.com>; Wed, 11 Feb 2015 15:51:07 -0800 (PST)
-X-Received: by 10.180.90.206 with SMTP id by14mr927133wib.0.1423698667940;
-        Wed, 11 Feb 2015 15:51:07 -0800 (PST)
+        Wed, 11 Feb 2015 15:52:04 -0800 (PST)
+Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c05::235 as permitted sender) client-ip=2a00:1450:400c:c05::235;
+Received: by mail-wi0-x235.google.com with SMTP id r20so367954wiv.2
+        for <msysgit@googlegroups.com>; Wed, 11 Feb 2015 15:52:04 -0800 (PST)
+X-Received: by 10.194.134.105 with SMTP id pj9mr1724572wjb.143.1423698724370;
+        Wed, 11 Feb 2015 15:52:04 -0800 (PST)
 Received: from [10.1.116.53] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id a5sm129277wib.20.2015.02.11.15.51.06
+        by mx.google.com with ESMTPSA id dj4sm3307900wjc.13.2015.02.11.15.52.03
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 11 Feb 2015 15:51:07 -0800 (PST)
+        Wed, 11 Feb 2015 15:52:03 -0800 (PST)
 User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
 In-Reply-To: <54DBEAA5.6000205@gmail.com>
 X-Original-Sender: karsten.blees@gmail.com
 X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c00::22d
+ (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c05::235
  as permitted sender) smtp.mail=karsten.blees@gmail.com;       dkim=pass
  header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
 Precedence: list
@@ -70,68 +71,72 @@ Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
  <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263704>
+
+fstat() is the only stat-related CRT function for which we don't have a
+full replacement yet (and thus the only reason to stick with MSVCRT's
+'struct stat' definition).
+
+Fully implement fstat(), in preparation of implementing a POSIX 2013
+compatible 'struct stat' with nanosecond-precision file times.
 
 Signed-off-by: Karsten Blees <blees@dcon.de>
 ---
- compat/mingw.c | 16 ----------------
- compat/mingw.h | 16 ++++++++++++++++
- 2 files changed, 16 insertions(+), 16 deletions(-)
+ compat/mingw.c | 28 +++++++++++++++++++---------
+ 1 file changed, 19 insertions(+), 9 deletions(-)
 
 diff --git a/compat/mingw.c b/compat/mingw.c
-index 70f3191..ba3cfb0 100644
+index ba3cfb0..6d73a3d 100644
 --- a/compat/mingw.c
 +++ b/compat/mingw.c
-@@ -419,22 +419,6 @@ int mingw_chmod(const char *filename, int mode)
- 	return _wchmod(wfilename, mode);
- }
+@@ -532,28 +532,38 @@ int mingw_fstat(int fd, struct stat *buf)
+ {
+ 	HANDLE fh = (HANDLE)_get_osfhandle(fd);
+ 	BY_HANDLE_FILE_INFORMATION fdata;
++	DWORD avail;
  
--/*
-- * The unit of FILETIME is 100-nanoseconds since January 1, 1601, UTC.
-- * Returns the 100-nanoseconds ("hekto nanoseconds") since the epoch.
-- */
--static inline long long filetime_to_hnsec(const FILETIME *ft)
--{
--	long long winTime = ((long long)ft->dwHighDateTime << 32) + ft->dwLowDateTime;
--	/* Windows to Unix Epoch conversion */
--	return winTime - 116444736000000000LL;
--}
--
--static inline time_t filetime_to_time_t(const FILETIME *ft)
--{
--	return (time_t)(filetime_to_hnsec(ft) / 10000000);
--}
--
- /* We keep the do_lstat code in a separate function to avoid recursion.
-  * When a path ends with a slash, the stat will fail with ENOENT. In
-  * this case, we strip the trailing slashes and stat again.
-diff --git a/compat/mingw.h b/compat/mingw.h
-index 5e499cf..f2a78b4 100644
---- a/compat/mingw.h
-+++ b/compat/mingw.h
-@@ -283,6 +283,22 @@ static inline int getrlimit(int resource, struct rlimit *rlp)
- }
+ 	if (fh == INVALID_HANDLE_VALUE) {
+ 		errno = EBADF;
+ 		return -1;
+ 	}
+-	/* direct non-file handles to MS's fstat() */
+-	if (GetFileType(fh) != FILE_TYPE_DISK)
+-		return _fstati64(fd, buf);
  
- /*
-+ * The unit of FILETIME is 100-nanoseconds since January 1, 1601, UTC.
-+ * Returns the 100-nanoseconds ("hekto nanoseconds") since the epoch.
-+ */
-+static inline long long filetime_to_hnsec(const FILETIME *ft)
-+{
-+	long long winTime = ((long long)ft->dwHighDateTime << 32) + ft->dwLowDateTime;
-+	/* Windows to Unix Epoch conversion */
-+	return winTime - 116444736000000000LL;
-+}
+-	if (GetFileInformationByHandle(fh, &fdata)) {
+-		buf->st_ino = 0;
+-		buf->st_gid = 0;
+-		buf->st_uid = 0;
+-		buf->st_nlink = 1;
++	/* initialize stat fields */
++	memset(buf, 0, sizeof(*buf));
++	buf->st_nlink = 1;
 +
-+static inline time_t filetime_to_time_t(const FILETIME *ft)
-+{
-+	return (time_t)(filetime_to_hnsec(ft) / 10000000);
-+}
++	switch (GetFileType(fh) & ~FILE_TYPE_REMOTE) {
++	case FILE_TYPE_DISK:
++		if (!GetFileInformationByHandle(fh, &fdata))
++			break;
+ 		buf->st_mode = file_attr_to_st_mode(fdata.dwFileAttributes);
+ 		buf->st_size = fdata.nFileSizeLow |
+ 			(((off_t)fdata.nFileSizeHigh)<<32);
+-		buf->st_dev = buf->st_rdev = 0; /* not used by Git */
+ 		buf->st_atime = filetime_to_time_t(&(fdata.ftLastAccessTime));
+ 		buf->st_mtime = filetime_to_time_t(&(fdata.ftLastWriteTime));
+ 		buf->st_ctime = filetime_to_time_t(&(fdata.ftCreationTime));
+ 		return 0;
 +
-+/*
-  * Use mingw specific stat()/lstat()/fstat() implementations on Windows.
-  */
- #define off_t off64_t
++	case FILE_TYPE_CHAR:
++		buf->st_mode = _S_IFCHR;
++		return 0;
++
++	case FILE_TYPE_PIPE:
++		buf->st_mode = _S_IFIFO;
++		if (PeekNamedPipe(fh, NULL, 0, NULL, &avail, NULL))
++			buf->st_size = avail;
++		return 0;
+ 	}
+ 	errno = EBADF;
+ 	return -1;
 -- 
 2.3.0.3.ge7778af
 
