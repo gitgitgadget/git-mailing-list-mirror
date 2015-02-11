@@ -1,175 +1,121 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: [PATCH] show-branch --upstream: add upstream branches to the list of branches to display
-Date: Wed, 11 Feb 2015 10:16:14 +0900
-Message-ID: <1423617374-31408-1-git-send-email-mh@glandium.org>
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 11 02:16:33 2015
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+From: Chris Packham <judge.packham@gmail.com>
+Subject: Re: Windows Bluescreen
+Date: Wed, 11 Feb 2015 21:56:07 +1300
+Message-ID: <CAFOYHZADerTE88KudrH7LTi3yX4Sg1vJe3Xj0vJH+DNeO6NOEw@mail.gmail.com>
+References: <20150209201218.Horde.w9pQrdbL-Mf8IdgtaJtVuQ9@server.aercontechnologies.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: GIT <git@vger.kernel.org>, msysgit@googlegroups.com
+To: erik@aercon.net
+X-From: msysgit+bncBCL33DMYQAARBKFS5STAKGQELT4TQ7A@googlegroups.com Wed Feb 11 09:56:09 2015
+Return-path: <msysgit+bncBCL33DMYQAARBKFS5STAKGQELT4TQ7A@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-pa0-f57.google.com ([209.85.220.57])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YLLuq-0005hy-6d
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Feb 2015 02:16:32 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751100AbbBKBQ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2015 20:16:28 -0500
-Received: from ks3293202.kimsufi.com ([5.135.186.141]:55070 "EHLO glandium.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750813AbbBKBQ1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Feb 2015 20:16:27 -0500
-Received: from glandium by zenigata with local (Exim 4.84)
-	(envelope-from <glandium@glandium.org>)
-	id 1YLLuY-0008BF-OB; Wed, 11 Feb 2015 10:16:14 +0900
-X-Mailer: git-send-email 2.3.0.2.g4d8711e
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263668>
+	(envelope-from <msysgit+bncBCL33DMYQAARBKFS5STAKGQELT4TQ7A@googlegroups.com>)
+	id 1YLT5d-00076l-F0
+	for gcvm-msysgit@m.gmane.org; Wed, 11 Feb 2015 09:56:09 +0100
+Received: by mail-pa0-f57.google.com with SMTP id bj1sf515359pad.2
+        for <gcvm-msysgit@m.gmane.org>; Wed, 11 Feb 2015 00:56:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:x-original-sender:x-original-authentication-results
+         :precedence:mailing-list:list-id:list-post:list-help:list-archive
+         :sender:list-subscribe:list-unsubscribe;
+        bh=93SZ5eO1TrdyaoplTXxW9cbzW2Vk+4cr40fMeu0iyJ4=;
+        b=Cfp93/8Df0DVPhVljf20iMzOUj+Yh4O1alSct2g14HfPKXWWEda9Yn3tLtK/VycO6G
+         eQLXHkWI9+Y72FGgIOPj5tQBzTC3AfSGXyV0RsBBzI62ogUBjlsCaRNz5DvdB+3XZqJE
+         tOiapiUQXtyiv7nEjLz/AROUx/QypBz6ycGkZEqDFOkQJHKRXjv/n3H8lJ1mF3hjadBY
+         +sARkD9TknzLzQNQH/7Y73Uu5oVzJ9gt/Exvkv4Bwjp1YeaUC+GmBZo77RJosXFsD+BX
+         ul2QS6q801/zTmuy/yq9aR0bL/pDy3+jrE+GRHsC5wk/XxwIBKGD4O/Qf6g2bYIEAC7u
+         ziGQ==
+X-Received: by 10.50.85.17 with SMTP id d17mr30306igz.7.1423644968664;
+        Wed, 11 Feb 2015 00:56:08 -0800 (PST)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.107.135.211 with SMTP id r80ls125860ioi.82.gmail; Wed, 11 Feb
+ 2015 00:56:08 -0800 (PST)
+X-Received: by 10.66.66.1 with SMTP id b1mr23223961pat.8.1423644968094;
+        Wed, 11 Feb 2015 00:56:08 -0800 (PST)
+Received: from mail-pd0-f179.google.com (mail-pd0-f179.google.com. [209.85.192.179])
+        by gmr-mx.google.com with ESMTPS id ki8si24378pdb.1.2015.02.11.00.56.08
+        for <msysgit@googlegroups.com>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 11 Feb 2015 00:56:08 -0800 (PST)
+Received-SPF: pass (google.com: domain of judge.packham@gmail.com designates 209.85.192.179 as permitted sender) client-ip=209.85.192.179;
+Received: by pdno5 with SMTP id o5so3066064pdn.8
+        for <msysgit@googlegroups.com>; Wed, 11 Feb 2015 00:56:08 -0800 (PST)
+X-Received: by 10.70.103.162 with SMTP id fx2mr7587796pdb.24.1423644967930;
+ Wed, 11 Feb 2015 00:56:07 -0800 (PST)
+Received: by 10.70.87.100 with HTTP; Wed, 11 Feb 2015 00:56:07 -0800 (PST)
+In-Reply-To: <20150209201218.Horde.w9pQrdbL-Mf8IdgtaJtVuQ9@server.aercontechnologies.net>
+X-Original-Sender: judge.packham@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of judge.packham@gmail.com designates 209.85.192.179 as
+ permitted sender) smtp.mail=judge.packham@gmail.com;       dkim=pass
+ header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263669>
 
-`git show-branch` is a useful tool to display topics, but when you have
-several local topic branches based on different upstream branches, it
-can get cumbersome to use the right upstream branch with the right set
-of topic branches.
+Hi Erik,
 
-The --upstream flag automatically adds the upstream branch for every
-topic branch given, such that:
+On Tue, Feb 10, 2015 at 9:12 AM,  <erik@aercon.net> wrote:
+>
+> I find that preview 1.8 is bluescreening on about 1 of 3 ssh pushes.  1.9
+> preview 12-17-2014 doesn't even bluescreen, the windows gui locks until
+> reset.
 
-`git show-branch --upstream` is equivalent to `git show-branch
-$(git for-each-ref refs/heads --format '%(refname:short)')
-$(git for-each-ref refs/heads --format '%(upstream:short)')`
+Does this mean that pushing over git:// file:// and http:// are
+unaffected? Can you successfully do other (non-git) things over ssh?
 
-`git show-branch --upstream foo bar` is equivalent to `git show-branch
-foo bar $(git for-each-ref refs/heads/foo refs/heads/bar
---format '%(upstream:short)')`
+>
+> Sample command:
+> git push omv master\r
+>
+> config. =
+>
+> [core]
+>         repositoryformatversion = 0
+>         filemode = false
+>         bare = false
+>         logallrefupdates = true
+>         symlinks = false
+>         ignorecase = true
+>         hideDotFiles = dotGitOnly
+> [remote "omv"]
+>         url = gitpush@192.168.0.100:/git-repos/HexEncrypter
+>         fetch = +refs/heads/*:refs/remotes/omv/*
+>
 
-Furthermore, the --topics argument only takes one "upstream" ref. However,
-when combined with --upstream, all the upstream branches are considered,
-and show-branch only shows commits that are NOT on ANY of those upstream
-branches.
+You might get a more helpful response out of the msysgit folks (I've
+added them to the Cc list).
 
-Signed-off-by: Mike Hommey <mh@glandium.org>
----
-
-Refreshed against current "next".
-
-
- Documentation/git-show-branch.txt |  6 ++++++
- builtin/show-branch.c             | 44 ++++++++++++++++++++++++++++++++++++---
- 2 files changed, 47 insertions(+), 3 deletions(-)
-
-diff --git a/Documentation/git-show-branch.txt b/Documentation/git-show-branch.txt
-index b91d4e5..fd29c8d 100644
---- a/Documentation/git-show-branch.txt
-+++ b/Documentation/git-show-branch.txt
-@@ -53,6 +53,10 @@ OPTIONS
- 	branch to the list of revs to be shown when it is not
- 	given on the command line.
- 
-+--upstream::
-+	With this option, the command includes the upstream
-+	branch of each rev to be shown.
-+
- --topo-order::
-         By default, the branches and their commits are shown in
-         reverse chronological order.  This option makes them
-@@ -102,6 +106,8 @@ OPTIONS
- 
- --topics::
- 	Shows only commits that are NOT on the first branch given.
-+	When used with `--upstream`, shows only commits that are NOT
-+	on any upstream branch.
- 	This helps track topic branches by hiding any commit that
- 	is already in the main line of development.  When given
- 	"git show-branch --topics master topic1 topic2", this
-diff --git a/builtin/show-branch.c b/builtin/show-branch.c
-index f3fb5fb..140e88c 100644
---- a/builtin/show-branch.c
-+++ b/builtin/show-branch.c
-@@ -4,11 +4,12 @@
- #include "builtin.h"
- #include "color.h"
- #include "parse-options.h"
-+#include "remote.h"
- 
- static const char* show_branch_usage[] = {
-     N_("git show-branch [-a | --all] [-r | --remotes] [--topo-order | --date-order]\n"
--       "		[--current] [--color[=<when>] | --no-color] [--sparse]\n"
--       "		[--more=<n> | --list | --independent | --merge-base]\n"
-+       "		[--current] [--upstream] [--color[=<when>] | --no-color]\n"
-+       "		[--sparse] [--more=<n> | --list | --independent | --merge-base]\n"
-        "		[--no-name | --sha1-name] [--topics] [(<rev> | <glob>)...]"),
-     N_("git show-branch (-g | --reflog)[=<n>[,<base>]] [--list] [<ref>]"),
-     NULL
-@@ -643,6 +644,7 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
- 	int sha1_name = 0;
- 	int shown_merge_point = 0;
- 	int with_current_branch = 0;
-+	int with_upstream_branches = 0;
- 	int head_at = -1;
- 	int topics = 0;
- 	int dense = 1;
-@@ -661,6 +663,8 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
- 		OPT_BOOL(0, "no-name", &no_name, N_("suppress naming strings")),
- 		OPT_BOOL(0, "current", &with_current_branch,
- 			 N_("include the current branch")),
-+		OPT_BOOL(0, "upstream", &with_upstream_branches,
-+			 N_("include upstream branches")),
- 		OPT_BOOL(0, "sha1-name", &sha1_name,
- 			 N_("name commits with their object names")),
- 		OPT_BOOL(0, "merge-base", &merge_base,
-@@ -851,7 +855,41 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
- 		if (commit->object.flags == flag)
- 			commit_list_insert_by_date(commit, &list);
- 		rev[num_rev] = commit;
-+
-+		if (with_upstream_branches) {
-+			unsigned char branch_sha1[20];
-+			struct branch *branch;
-+			int current_ref_name_cnt = ref_name_cnt;
-+
-+			/* If this ref is already marked as an upstream, skip */
-+			if (topics & flag)
-+				continue;
-+
-+			branch = branch_get(ref_name[num_rev]);
-+
-+			if (!branch || !branch->merge || !branch->merge[0] ||
-+			    !branch->merge[0]->dst)
-+				continue;
-+			if (get_sha1(branch->merge[0]->dst, branch_sha1))
-+				continue;
-+			append_remote_ref(branch->merge[0]->dst, branch_sha1, 0, 0);
-+			/* If append_remote_ref didn't add a ref, it's either
-+			 * because it's an upstream of a previous ref, or because
-+			 * it was given on the command line. In neither case we
-+			 * want the bit being set. */
-+			if (topics && current_ref_name_cnt != ref_name_cnt)
-+				topics |= 1u << (ref_name_cnt + REV_SHIFT - 1);
-+		} else if (topics && num_rev == 0) {
-+			topics |= flag;
-+		}
- 	}
-+	/* topics is filled above with a mask of refs corresponding to
-+	 * upstream branches, or the first given ref. It also still contains
-+	 * the original bool value, which may match some bookkeeping flags,
-+	 * so filter that out.
-+	 */
-+	topics &= ~0u << REV_SHIFT;
-+
- 	for (i = 0; i < num_rev; i++)
- 		rev_mask[i] = rev[i]->object.flags;
- 
-@@ -928,7 +966,7 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
- 					  commit->parents->next);
- 			if (topics &&
- 			    !is_merge_point &&
--			    (this_flag & (1u << REV_SHIFT)))
-+			    (this_flag & topics))
- 				continue;
- 			if (dense && is_merge &&
- 			    omit_in_dense(commit, rev, num_rev))
 -- 
-2.3.0.2.g4d8711e
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "Git for Windows" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
