@@ -1,93 +1,81 @@
-From: Erik Friesen <erik@aercon.net>
-Subject: Re: Windows Bluescreen
-Date: Wed, 11 Feb 2015 07:33:22 -0500
-Message-ID: <CAEuupitA4PHBByLLcqc5pVbn1C+ZyQ6Vzbk-LsOjseOEHhkENw@mail.gmail.com>
-References: <20150209201218.Horde.w9pQrdbL-Mf8IdgtaJtVuQ9@server.aercontechnologies.net>
-	<CAFOYHZADerTE88KudrH7LTi3yX4Sg1vJe3Xj0vJH+DNeO6NOEw@mail.gmail.com>
+From: matthew sporleder <msporleder@gmail.com>
+Subject: Re: [PATCH] index-pack: reduce memory footprint a bit
+Date: Wed, 11 Feb 2015 07:01:42 -0600
+Message-ID: <CAHKF-AsF=8n0zxmbYfEKnBgOAnjqW_Psw1eNsZtyMjDchyt5zA@mail.gmail.com>
+References: <CACsJy8A=6m5sWnDhPPMNrWbZ=fOMXPxO_1GVh-WpHycf5gm+rg@mail.gmail.com>
+	<1423487929-28019-1-git-send-email-pclouds@gmail.com>
+	<xmqqfvaec2cm.fsf@gitster.dls.corp.google.com>
+	<20150210093041.GA30992@lanh>
+	<CAHKF-Atr_ezupL02aW08S-6NGGLi55vHuVep1mQvOaQq0Xh=FA@mail.gmail.com>
+	<xmqq61b9wqil.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: GIT <git@vger.kernel.org>, msysgit@googlegroups.com
-To: Chris Packham <judge.packham@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 11 13:33:39 2015
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 11 14:01:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YLWU1-0003pC-67
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Feb 2015 13:33:33 +0100
+	id 1YLWvM-000200-Pf
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Feb 2015 14:01:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752532AbbBKMdY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Feb 2015 07:33:24 -0500
-Received: from mail-ie0-f170.google.com ([209.85.223.170]:38730 "EHLO
-	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752182AbbBKMdX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Feb 2015 07:33:23 -0500
-Received: by iecrd18 with SMTP id rd18so3482726iec.5
-        for <git@vger.kernel.org>; Wed, 11 Feb 2015 04:33:22 -0800 (PST)
+	id S1752530AbbBKNBo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Feb 2015 08:01:44 -0500
+Received: from mail-we0-f173.google.com ([74.125.82.173]:51963 "EHLO
+	mail-we0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752240AbbBKNBo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Feb 2015 08:01:44 -0500
+Received: by mail-we0-f173.google.com with SMTP id w55so3255636wes.4
+        for <git@vger.kernel.org>; Wed, 11 Feb 2015 05:01:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=i0YbGDutklm2vMeWq/tg37U58MhTOSldG5zyRSI2gCk=;
-        b=kM6dTfMn4hQUQRs/6jyXoX6oOs1C+bYODoj06f2M4nhTaqML+E04CdGl4V5sHDW2CG
-         P2UTR/3OQlv1DmZnWQPi3/zD9BMFK0gaJo6YA3qWxhTqg3WquC/sJ+Pt9XB1UhL3/jL1
-         ncsc353rMADRH+wmnsTZLCs7p99agi4LXVmM1yQMuD31cpvabHLR0c2gNye5Ilw8JlgO
-         PTNYY7YjQdN6OQviTTuUGTeQrGhwu7ZNhBUqH+EU+hVKFD10bb5vZrtYjAh5AsvnKfzf
-         Ql0gaVzwC/a9C59Y5nBnm6FMntBWtwGFwAYdO8OJpu0wxojSDE5dXmUOhwHMjjBJMYBB
-         Hl3Q==
-X-Received: by 10.43.55.84 with SMTP id vx20mr2692250icb.62.1423658002886;
- Wed, 11 Feb 2015 04:33:22 -0800 (PST)
-Received: by 10.36.40.16 with HTTP; Wed, 11 Feb 2015 04:33:22 -0800 (PST)
-In-Reply-To: <CAFOYHZADerTE88KudrH7LTi3yX4Sg1vJe3Xj0vJH+DNeO6NOEw@mail.gmail.com>
-X-Google-Sender-Auth: y8RCmCSnGpSX48QBCt_1T_Ooqs8
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=gDUZgKmQgQfyFA3VnBfTRs2XsXrAdX0QN7KvwfhvC4Q=;
+        b=irX7MHSes43R2Q6PPvmVauJM+XAY1fUfYLbpqMoJAihnsaO/hHlVWwxm6dAZfFRDVI
+         mobtQ7i2i4Tx4IqKVrvrYLvXNas1/oUDbDWroWEmx45o6gHcgZfs/Qg0TsBnfVzDiHZd
+         hOPJOgt6TVLxKFJZWUZ/8pQtThW0yaMry6gHG3Er+2kkBxV5Pp0TiPJPTtbSTyI5Bflh
+         sydmw5eOR8pNkFRf8UmdV2iImCZ41O3EW+iKCHNlZq4LNrq5XxBoR0+R4qFhnQyZLGyG
+         yhaQQvA7hUwtfibuU0DO8XHGDfxpdvahqTfApnBxFzoVIMKkIauqAXpz5Gmw6FFq+3si
+         AiFg==
+X-Received: by 10.180.95.97 with SMTP id dj1mr5453108wib.43.1423659702917;
+ Wed, 11 Feb 2015 05:01:42 -0800 (PST)
+Received: by 10.195.13.14 with HTTP; Wed, 11 Feb 2015 05:01:42 -0800 (PST)
+In-Reply-To: <xmqq61b9wqil.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263674>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263675>
 
-Pushing over http and https are unaffected..  My linux nas died, so on
-rebuild I tried to do the ssh thing, and realized quite soon that
-things weren't right.
+On Tue, Feb 10, 2015 at 12:49 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> matthew sporleder <msporleder@gmail.com> writes:
+>
+>> I'm having trouble getting this new patch to apply.
+>
+> Apply the first one, replace all object_entry_extra with
+> object_stat, replace all objects_extra with obj_stat and amend the
+> first one.  Then apply this one.
 
-As far as other uses of ssh, I don't know, I use putty frequently, but
-I am not clear if it is using the same libraries or not.
+I got this to work and had a good experience but got this from an arm user:
 
-I hunted around for the bugreport email on mysgit but couldn't seem to
-find it.  It seems in the foggy recesses I remember reading about an
-ssh issue with windows, but can't find it now.
+Cloning into 'NetBSD-src-git'...
+remote: Counting objects: 3484984, done.
+remote: Compressing objects: 100% (636083/636083), done.
+error: index-pack died of signal 10
+fatal: index-pack failed
+      125.84 real         0.13 user         0.49 sys
 
-On Wed, Feb 11, 2015 at 3:56 AM, Chris Packham <judge.packham@gmail.com> wrote:
-> Hi Erik,
->
-> On Tue, Feb 10, 2015 at 9:12 AM,  <erik@aercon.net> wrote:
->>
->> I find that preview 1.8 is bluescreening on about 1 of 3 ssh pushes.  1.9
->> preview 12-17-2014 doesn't even bluescreen, the windows gui locks until
->> reset.
->
-> Does this mean that pushing over git:// file:// and http:// are
-> unaffected? Can you successfully do other (non-git) things over ssh?
->
->>
->> Sample command:
->> git push omv master\r
->>
->> config. =
->>
->> [core]
->>         repositoryformatversion = 0
->>         filemode = false
->>         bare = false
->>         logallrefupdates = true
->>         symlinks = false
->>         ignorecase = true
->>         hideDotFiles = dotGitOnly
->> [remote "omv"]
->>         url = gitpush@192.168.0.100:/git-repos/HexEncrypter
->>         fetch = +refs/heads/*:refs/remotes/omv/*
->>
->
-> You might get a more helpful response out of the msysgit folks (I've
-> added them to the Cc list).
+Core was generated by `git'.
+Program terminated with signal SIGBUS, Bus error.
+#0  0x00045f88 in cmd_index_pack ()
+(gdb) bt
+#0  0x00045f88 in cmd_index_pack ()
+#1  0x00014058 in handle_builtin ()
+#2  0x00129358 in main ()
+
+
+I will wait for the "official" patch and ask if my friend can compile with -g.
