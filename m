@@ -1,99 +1,73 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 10/11] ref_transaction_verify(): new function to check
- a reference's value
-Date: Wed, 11 Feb 2015 17:11:35 +0100
-Message-ID: <54DB7F37.7030206@alum.mit.edu>
-References: <1423412045-15616-1-git-send-email-mhagger@alum.mit.edu>	<1423412045-15616-11-git-send-email-mhagger@alum.mit.edu> <CAGZ79kZqsCmhzw9mW4Bxyzd-+XRuzh5aYFnp5GLZwjGj9SW_LQ@mail.gmail.com>
+From: David Glasser <glasser@davidglasser.net>
+Subject: Keep original author with git merge --squash?
+Date: Wed, 11 Feb 2015 09:21:04 -0800
+Message-ID: <CAN7QDoKQAZKUt_MHWjgt1k3PvXQv6XTcjdijh8KRodO3=VD47A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu40=?= =?UTF-8?B?YyBEdXk=?= 
-	<pclouds@gmail.com>, "git@vger.kernel.org" <git@vger.kernel.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Wed Feb 11 17:18:55 2015
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 11 18:21:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YLa06-0008OX-16
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Feb 2015 17:18:54 +0100
+	id 1YLayg-0004Jl-UL
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Feb 2015 18:21:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754003AbbBKQSu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Feb 2015 11:18:50 -0500
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:50064 "EHLO
-	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753995AbbBKQSt (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Feb 2015 11:18:49 -0500
-X-Greylist: delayed 421 seconds by postgrey-1.27 at vger.kernel.org; Wed, 11 Feb 2015 11:18:48 EST
-X-AuditID: 12074413-f79f26d0000030e7-45-54db7f393e0a
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 8D.2A.12519.93F7BD45; Wed, 11 Feb 2015 11:11:37 -0500 (EST)
-Received: from [192.168.69.130] (p4FC9687D.dip0.t-ipconnect.de [79.201.104.125])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t1BGBZCM016470
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Wed, 11 Feb 2015 11:11:36 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.4.0
-In-Reply-To: <CAGZ79kZqsCmhzw9mW4Bxyzd-+XRuzh5aYFnp5GLZwjGj9SW_LQ@mail.gmail.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrGKsWRmVeSWpSXmKPExsUixO6iqGtZfzvE4P8XdYuuK91MFg29V5gt
-	3t5cwmjRPeUto0Vv3ydWi82b21kc2Dx2zrrL7rFgU6nHxUvKHp83yQWwRHHbJCWWlAVnpufp
-	2yVwZyx52sRc8JSv4sj1DawNjBe5uxg5OSQETCR63ixgg7DFJC7cWw9kc3EICVxmlNi0bxcz
-	hHOBSaJv0jlGkCpeAW2Jax++s4PYLAKqEgu3HmMBsdkEdCUW9TQzgdiiAkESh04/ZoGoF5Q4
-	OfMJmC0ioCYxc9VssA3MAvOYJK60/wRbLSyQIHF711Oo1YcZJeaePQm2jVMgUOJwx3GwbmYB
-	dYk/8y4xQ9jyEtvfzmGewCgwC8mSWUjKZiEpW8DIvIpRLjGnNFc3NzEzpzg1Wbc4OTEvL7VI
-	11wvN7NELzWldBMjJMyFdzDuOil3iFGAg1GJh/fDplshQqyJZcWVuYcYJTmYlER5natuhwjx
-	JeWnVGYkFmfEF5XmpBYfYpTgYFYS4eXPAsrxpiRWVqUW5cOkpDlYlMR51Zao+wkJpCeWpGan
-	phakFsFkZTg4lCR41eqAGgWLUtNTK9Iyc0oQ0kwcnCDDuaREilPzUlKLEktLMuJB8RpfDIxY
-	kBQP0F5TkHbe4oLEXKAoROspRkUpcd4ftUAJAZBERmke3FhY8nrFKA70pTBvB0g7DzDxwXW/
-	AhrMBDS4oOAGyOCSRISUVAOj5HaVHbfmeFsLHjsfM2mi1JyINQwv5n7cW3M/VI31ceH8KsUM
-	i5dMX4WdxWbz/dxZuPXv9jsaIeZsejWr+F3Za00Uf5R9zNIqrthS5BI6hz3Y943b 
+	id S1753403AbbBKRV0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Feb 2015 12:21:26 -0500
+Received: from mail-wg0-f48.google.com ([74.125.82.48]:36092 "EHLO
+	mail-wg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752013AbbBKRV0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Feb 2015 12:21:26 -0500
+Received: by mail-wg0-f48.google.com with SMTP id l18so1792755wgh.7
+        for <git@vger.kernel.org>; Wed, 11 Feb 2015 09:21:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:from:date:message-id:subject:to:content-type;
+        bh=QFpespvmNNiXe2irICRVoZ2OeLK11s3JmbLjv3sS+AE=;
+        b=bE/3Fga1mFp+wlmqjvCjTayNmjhgSPTDVzpMi75VYOOxNOVwBo3urVnewgvu89Lw7i
+         Kh9F/toKFbJZsmZUKQ3fWndpgXscyhWsaBhfeJAcO+QdMbOveLJIQwhWMC6oYBCWPFDn
+         g/NoN9+TNo4szHf2i0wwsewHWawYxtxgBIqQQY6T/iGR78Eu/JPqazo9NOkHLElgFXpH
+         2SKYgqLOJhacq39khItAv7c2k/AC/lZ0H1JkZZyEgG8pvVYrzbcJm3CS8FKF3duG/B4W
+         jkSb4FinYwRpcvswogezglS+tqx5lgvH7JpAZSvpaVoVC2l0AdGAmNJHfDPGQw8foen6
+         PBiA==
+X-Received: by 10.194.3.40 with SMTP id 8mr61896777wjz.98.1423675285075; Wed,
+ 11 Feb 2015 09:21:25 -0800 (PST)
+Received: by 10.194.16.196 with HTTP; Wed, 11 Feb 2015 09:21:04 -0800 (PST)
+X-Google-Sender-Auth: O5mdJIP8Tl4lluadNauG-80LLow
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263683>
 
-On 02/09/2015 07:50 PM, Stefan Beller wrote:
-> On Sun, Feb 8, 2015 at 8:14 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
->>  /*
->> - * Add a reference update to transaction.  new_sha1 is the value that
->> - * the reference should have after the update, or null_sha1 if it should
->> - * be deleted.  If old_sha1 is non-NULL, then it the value
->> - * that the reference should have had before the update, or null_sha1 if
->> - * it must not have existed beforehand.
->> - * Function returns 0 on success and non-zero on failure. A failure to update
->> - * means that the transaction as a whole has failed and will need to be
->> - * rolled back.
->> + * Add a reference update to transaction. new_sha1 is the value that
->> + * the reference should have after the update, or null_sha1 if it
->> + * should be deleted. If new_sha1 is NULL, then the reference is not
->> + * changed at all. old_sha1 is the value that the reference must have
->> + * before the update, or null_sha1 if it must not have existed
->> + * beforehand. The old value is checked after the lock is taken to
->> + * prevent races. If the old value doesn't agree with old_sha1, the
->> + * whole transaction fails. If old_sha1 is NULL, then the previous
->> + * value is not checked.
->> + *
->> + * Return 0 on success and non-zero on failure. Any failure in the
->> + * transaction means that the transaction as a whole has failed and
->> + * will need to be rolled back.
-> 
-> Do we need to be explicit about having to rollback everything in each
-> ref_transaction_* function documentation?
+I frequently find myself using `git merge --squash` to combine a
+series of commits by the same author into one.
 
-Thanks for the suggestion.
+(For example, I fetch my project's GitHub PRs into my repo.
+Frequently, a PR consists of the original PR (with a good description)
+followed by a few follow-ups based on feedback from me.  While I'd
+prefer that the submitter amended their original commit instead of
+making it my job, this is rare.  And I don't feel that it's valuable
+to my project's git history to contain all the intermediate stages of
+code review --- it's usually just one commit.)
 
-I just added a new commit that moves this (and more) information to the
-introductory comment above these four functions' declarations, so that
-it doesn't have to be repeated for each function. It will be in the re-roll.
+So `git merge --squash origin/pr/1234` is a really convenient command
+here... except for one thing: it sets the author as me.  I always have
+to manually find the author line and make sure to pass it to --author
+(perhaps with --amend).
 
-Michael
+What would people think of a flag (or a config value) that means "if
+all merged commits are by the same author, use that author for the
+resulting commit instead of the default author"?
+
+(I'm not sure if this should be a flag to --squash or to commit.
+Maybe `git merge --squash`; `git commit --use-squashed-author`?  Seems
+like it should be not too hard to implement; SQUASH_MSG is pretty
+parseable.  Or just a config value.)
+
+--dave
 
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
+glasser@davidglasser.net | langtonlabs.org | flickr.com/photos/glasser/
