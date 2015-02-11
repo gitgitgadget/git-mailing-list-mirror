@@ -1,113 +1,108 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 3/8] lock_ref_sha1_basic(): do not set force_write for
- missing references
-Date: Tue, 10 Feb 2015 16:07:26 -0800
-Message-ID: <CAGZ79kbz93ne8KVkeZfj9muomfcoTh7BUEyEo5ZZpYNG4RSYZg@mail.gmail.com>
-References: <1423473164-6011-1-git-send-email-mhagger@alum.mit.edu>
-	<1423473164-6011-4-git-send-email-mhagger@alum.mit.edu>
-	<CAGZ79kbrFpgF6_dLYdgT2D0JjWggu8edjV2sgXER5btpmyjDNw@mail.gmail.com>
-	<20150211000520.GA30561@peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] config: add show_err flag to git_config_parse_key()
+Date: Tue, 10 Feb 2015 19:27:54 -0500
+Message-ID: <20150211002754.GC30561@peff.net>
+References: <20150206124528.GA18859@inner.h.apk.li>
+ <20150206193313.GA4220@peff.net>
+ <xmqqbnl6hljt.fsf@gitster.dls.corp.google.com>
+ <20150206203902.GB10857@peff.net>
+ <54DA5FC1.9010707@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Junio C Hamano <gitster@pobox.com>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Feb 11 01:07:35 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, Andreas Krey <a.krey@gmx.de>,
+	git@vger.kernel.org
+To: Tanay Abhra <tanayabh@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 11 01:28:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YLKq3-0002Xo-Ui
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Feb 2015 01:07:32 +0100
+	id 1YLL9v-000292-Gb
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Feb 2015 01:28:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750918AbbBKAH1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2015 19:07:27 -0500
-Received: from mail-ie0-f173.google.com ([209.85.223.173]:39589 "EHLO
-	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750812AbbBKAH1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Feb 2015 19:07:27 -0500
-Received: by iecvy18 with SMTP id vy18so351844iec.6
-        for <git@vger.kernel.org>; Tue, 10 Feb 2015 16:07:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=vdYPS1wj67WebNemU7/bK1NlgqICIWKrKYW9y/Q1Xuw=;
-        b=Pg613YUWoKqAPwYxgUXddKmnxYvjddf0KiWyIxhnxj6mhuDkyng22Nnork0xrFjV5R
-         AiT7VmNt8LBCN9dT1k93nOvWOqs5N4pvB8E+WedHgNUiGqHVCXN4p50iFhdiJOo0lSOP
-         Kn8mgqEynsgIXd50PZhPxBSbOGKxMNR1Fr97Xh0OOGgjfpQwIhO/+V0JA35aT8JTcxAi
-         27acIVIrWvJS/29VOgdIZv6ITZvaEIxhXpn4C0epF7w47T/Gra95p0kyCKtbRKdbQLgC
-         KwmOre+4ca5eHtnpb5rDuhj1fS51Da2bjoRYrOcEpUBC+4pDo29LDxpYhAOF+yLerCW3
-         XcwQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=vdYPS1wj67WebNemU7/bK1NlgqICIWKrKYW9y/Q1Xuw=;
-        b=a7ZnMkTY5kMe/D/YFeppTbnOuItU3/TH+LCzXVdL0x28CGTILNSAut7a38hOSpjmHJ
-         V/pEfY43zet/qwLpLn53O1lXX5+bA8fE6HD2RqyRtUCbNjcG8RCIU2RkChAGxo/MOHTw
-         EizZnLSMRmbri+K8WlXdveOD6mzqO+3CalJi5SvCn9vIWpylvIqcKJMA/SAx+HlLDxrh
-         dzO+6XZY34TNX3kfmCLFNFUCn7oavdnl/+LUX5BQ8uBQhZg1TRtOEMhXQnOupwXbIvN0
-         985O8zkwaUQIy1kjaWU3P6j91ACzxmn6y07SJZNNeeM2XPvd3w8pSyfOwoGu+pztIY2k
-         L+Wg==
-X-Gm-Message-State: ALoCoQl9TjOWleC7bbWVE0C6xAW2x/D+cotSAj3e0AMi6dFpDgXcokX4m4NfokmhZzRQE/TrBA+5
-X-Received: by 10.107.137.17 with SMTP id l17mr14988401iod.33.1423613246323;
- Tue, 10 Feb 2015 16:07:26 -0800 (PST)
-Received: by 10.50.26.42 with HTTP; Tue, 10 Feb 2015 16:07:26 -0800 (PST)
-In-Reply-To: <20150211000520.GA30561@peff.net>
+	id S1752240AbbBKA16 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Feb 2015 19:27:58 -0500
+Received: from cloud.peff.net ([50.56.180.127]:47530 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751797AbbBKA15 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Feb 2015 19:27:57 -0500
+Received: (qmail 14874 invoked by uid 102); 11 Feb 2015 00:27:57 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 10 Feb 2015 18:27:57 -0600
+Received: (qmail 11498 invoked by uid 107); 11 Feb 2015 00:27:59 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 10 Feb 2015 19:27:59 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 10 Feb 2015 19:27:54 -0500
+Content-Disposition: inline
+In-Reply-To: <54DA5FC1.9010707@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263664>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263665>
 
-On Tue, Feb 10, 2015 at 4:05 PM, Jeff King <peff@peff.net> wrote:
-> On Tue, Feb 10, 2015 at 03:24:47PM -0800, Stefan Beller wrote:
->
->> On Mon, Feb 9, 2015 at 1:12 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
->> > If a reference is missing, its SHA-1 will be null_sha1, which can't
->> > possibly match a new value that ref_transaction_commit() is trying to
->> > update it to. So there is no need to set force_write in this scenario.
->> >
->>
->> This commit reverts half the lines of 5bdd8d4a3062a (2008-11, do not
->> force write of packed refs). And reading both commit messages, they
->> seem to contradict each other. (Both agree on  "If a reference is
->> missing, its SHA-1 will be null_sha1 as provided by resolve_ref", but
->> the conclusion seems to be different.)
->
-> Most of the lines of 5bdd8d4a3062a that are being reverted here are
-> caching the is_null_sha1() check in the "missing" variable. And that's
-> a cleanup in this patch that is not strictly necessary ("missing" would
-> only be used once, so it becomes noise).
->
-> The interesting thing in the earlier commit was to use the null sha1 to
-> cause a force-write, rather than lstat()ing the filesystem. And here we
-> are saying the force-write is not necessary at all, no matter what
-> storage scheme is used. So I don't think there is any contradiction
-> between the two.
->
-> Is this patch correct that the force-write is not necessary? I think so.
-> The force-write flag comes from:
->
-> commit 732232a123e1e61e38babb1c572722bb8a189ba3
-> Author: Shawn Pearce <spearce@spearce.org>
-> Date:   Fri May 19 03:29:05 2006 -0400
->
->     Force writing ref if it doesn't exist.
->
->     Normally we try to skip writing a ref if its value hasn't changed
->     but in the special case that the ref doesn't exist but the new
->     value is going to be 0{40} then force writing the ref anyway.
->
-> but I am not sure that logic still holds (if it ever did). We do not ever write
-> 0{40} into a ref value.
->
-> -Peff
+On Wed, Feb 11, 2015 at 01:15:05AM +0530, Tanay Abhra wrote:
 
-Makes sense.
+> I just saw your mail late in the night (I didn't had net for a week).
+> This patch just squelches the error message, I will take a better
+> look tomorrow morning.
+
+Thanks, this is probably a good first step. We can worry about making
+the config look actually _work_ as the next step (which does not even
+have to happen right now; it is not like it hasn't been this way since
+the very beginning of git).
+
+Another option for this first step would be to actually make
+git_config_parse_key permissive, rather than just squelching the error.
+That is, to actually look up pager.under_score rather than silently
+erroring out with an invalid key whenever we are reading (whereas on the
+writing side, we _do_ want to make sure we enforce syntactic validity).
+I doubt it matters, much, though.  Such a lookup would never succeed,
+because the config file parser will also not allow it. So assuming the
+syntactic rules here match what the config file parser does, they are at
+worst redundant.
+
+>  builtin/config.c |  2 +-
+>  cache.h          |  2 +-
+>  config.c         | 19 ++++++++++++-------
+>  3 files changed, 14 insertions(+), 9 deletions(-)
+
+Here's a test that can be squashed in:
+
+diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
+index da958a8..a28a2fd 100755
+--- a/t/t7006-pager.sh
++++ b/t/t7006-pager.sh
+@@ -447,4 +447,14 @@ test_expect_success TTY 'external command pagers override sub-commands' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'command with underscores does not complain' '
++	write_script git-under_score <<-\EOF &&
++	echo ok
++	EOF
++	git --exec-path=. under_score >actual 2>&1 &&
++	echo ok >expect &&
++	test_cmp expect actual
++'
++
++
+ test_done
+
+I was tempted to also add something like:
+
+  test_expect_failure TTY 'command with underscores can override pager' '
+	test_config pager.under_score "sed s/^/paged://" &&
+	git --exec-path=. under_score >actual &&
+	echo paged:ok >expect &&
+	test_cmp expect actual
+  '
+
+but I am not sure it is worth adding the test, even as a placeholder.
+Unless we are planning to relax the config syntax, the correct spelling
+is more like "pager.under_score.command". It's probably better to just
+add the test along with the code when we know what the final form will
+look like.
+
+-Peff
