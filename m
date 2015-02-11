@@ -1,98 +1,175 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 8/8] reflog_expire(): lock symbolic refs themselves, not
- their referent
-Date: Tue, 10 Feb 2015 16:49:22 -0800
-Message-ID: <CAGZ79kaBGAOt-R1=mSG5H-5p=2UWjZEesktVwQcDAWFC-OW2Eg@mail.gmail.com>
-References: <1423473164-6011-1-git-send-email-mhagger@alum.mit.edu>
-	<1423473164-6011-9-git-send-email-mhagger@alum.mit.edu>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>, "git@vger.kernel.org" <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Feb 11 01:49:34 2015
+From: Mike Hommey <mh@glandium.org>
+Subject: [PATCH] show-branch --upstream: add upstream branches to the list of branches to display
+Date: Wed, 11 Feb 2015 10:16:14 +0900
+Message-ID: <1423617374-31408-1-git-send-email-mh@glandium.org>
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 11 02:16:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YLLUk-0003Sb-1u
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Feb 2015 01:49:34 +0100
+	id 1YLLuq-0005hy-6d
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Feb 2015 02:16:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751446AbbBKAt0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2015 19:49:26 -0500
-Received: from mail-ie0-f178.google.com ([209.85.223.178]:37659 "EHLO
-	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750861AbbBKAtX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Feb 2015 19:49:23 -0500
-Received: by iebtr6 with SMTP id tr6so553639ieb.4
-        for <git@vger.kernel.org>; Tue, 10 Feb 2015 16:49:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=k6K6q4G7kxgEHmgoQTac9hsel8mhmls2zGegOxqVnvw=;
-        b=jkOkKzwztSLjtkYPQ37CO3lRXAXyajidUspFhWjMIimzxwyLGdgECCl2PBkmnvY71C
-         K4a2TSsPl+3pA9ZZ5LJGNRKJFEHtQjX641ZYpU0StknZO6+TuYzLqg0mgsKlxurpKjkA
-         VeMyib8yWhFoP+4gr07gRUWY0TEgrT20Debz9BpmJ/g/c9tdqt3x9uSlMWWipop373Cc
-         bHFmDt9RRDjtkVtm2u6qlBMT2k7a0VesgG7P6Esgee4zvrVhc5sPHIuhoaeyOVaTOUm+
-         aktKkkO+CdHzbgiSBa/TKlILsnBDeSC/upGUHt7fbeHJZiha9CklPlaKq8oCvbyoRmvW
-         85Zg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=k6K6q4G7kxgEHmgoQTac9hsel8mhmls2zGegOxqVnvw=;
-        b=WD85BPJ5Xyh7U27ApPuI1YxvpYp4sOOGrGT2BpiHgAZxuVeqGwipT8eSMIsgohbR/r
-         COQ2muYc9KqxRKD7yj2YSXqX9DrvKI78jf/YUzfC9XerB5wjJj+MP6I89S3H/LPTxS8w
-         ELBTekEA6RNcv+j1gJvDstMmo8ocaCASvZKKTRkAmurYjLkAdzHZqnOHKyBYaa58PRjf
-         JZHV1RSpGcTs5G14OT4Qs/m3lUzerJLxWkvAzIhC5hf21m/qdoSsM85zD/Np771TMB5Z
-         eOPxKvnIviVIuv9UUOpy9Djv4ZjWSWp3dchRWyixTHx/+BDH+h/UhfF3WKbVN0fcdiHw
-         2H7w==
-X-Gm-Message-State: ALoCoQmQt/K2tDg9x5j07iZqMy2A6lXS8OEQ9qzUyMETyAvHb4vEv+5O6AW6CyZcXCVJsOcVRdH5
-X-Received: by 10.42.230.67 with SMTP id jl3mr432326icb.15.1423615762594; Tue,
- 10 Feb 2015 16:49:22 -0800 (PST)
-Received: by 10.50.26.42 with HTTP; Tue, 10 Feb 2015 16:49:22 -0800 (PST)
-In-Reply-To: <1423473164-6011-9-git-send-email-mhagger@alum.mit.edu>
+	id S1751100AbbBKBQ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Feb 2015 20:16:28 -0500
+Received: from ks3293202.kimsufi.com ([5.135.186.141]:55070 "EHLO glandium.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750813AbbBKBQ1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Feb 2015 20:16:27 -0500
+Received: from glandium by zenigata with local (Exim 4.84)
+	(envelope-from <glandium@glandium.org>)
+	id 1YLLuY-0008BF-OB; Wed, 11 Feb 2015 10:16:14 +0900
+X-Mailer: git-send-email 2.3.0.2.g4d8711e
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263667>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263668>
 
-On Mon, Feb 9, 2015 at 1:12 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> When processing the reflog of a symbolic ref, hold the lock on the
-> symbolic reference itself, not on the reference that it points to.
+`git show-branch` is a useful tool to display topics, but when you have
+several local topic branches based on different upstream branches, it
+can get cumbersome to use the right upstream branch with the right set
+of topic branches.
 
-I am not sure if that makes sense.
-So when expiring HEAD, you want to have a .git/HEAD.lock file
-instead of a .git/refs/heads/master.lock file?
+The --upstream flag automatically adds the upstream branch for every
+topic branch given, such that:
 
-What would happen if there is a concurrent modification
-to the master branch?
+`git show-branch --upstream` is equivalent to `git show-branch
+$(git for-each-ref refs/heads --format '%(refname:short)')
+$(git for-each-ref refs/heads --format '%(upstream:short)')`
 
->
-> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
-> ---
->  refs.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/refs.c b/refs.c
-> index 1b2a497..3fcf342 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -4037,7 +4037,7 @@ int reflog_expire(const char *refname, const unsigned char *sha1,
->          * reference itself, plus we might need to update the
->          * reference if --updateref was specified:
->          */
-> -       lock = lock_ref_sha1_basic(refname, sha1, NULL, 0, &type);
-> +       lock = lock_ref_sha1_basic(refname, sha1, NULL, REF_NODEREF, &type);
->         if (!lock)
->                 return error("cannot lock ref '%s'", refname);
->         if (!reflog_exists(refname)) {
-> --
-> 2.1.4
->
+`git show-branch --upstream foo bar` is equivalent to `git show-branch
+foo bar $(git for-each-ref refs/heads/foo refs/heads/bar
+--format '%(upstream:short)')`
+
+Furthermore, the --topics argument only takes one "upstream" ref. However,
+when combined with --upstream, all the upstream branches are considered,
+and show-branch only shows commits that are NOT on ANY of those upstream
+branches.
+
+Signed-off-by: Mike Hommey <mh@glandium.org>
+---
+
+Refreshed against current "next".
+
+
+ Documentation/git-show-branch.txt |  6 ++++++
+ builtin/show-branch.c             | 44 ++++++++++++++++++++++++++++++++++++---
+ 2 files changed, 47 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/git-show-branch.txt b/Documentation/git-show-branch.txt
+index b91d4e5..fd29c8d 100644
+--- a/Documentation/git-show-branch.txt
++++ b/Documentation/git-show-branch.txt
+@@ -53,6 +53,10 @@ OPTIONS
+ 	branch to the list of revs to be shown when it is not
+ 	given on the command line.
+ 
++--upstream::
++	With this option, the command includes the upstream
++	branch of each rev to be shown.
++
+ --topo-order::
+         By default, the branches and their commits are shown in
+         reverse chronological order.  This option makes them
+@@ -102,6 +106,8 @@ OPTIONS
+ 
+ --topics::
+ 	Shows only commits that are NOT on the first branch given.
++	When used with `--upstream`, shows only commits that are NOT
++	on any upstream branch.
+ 	This helps track topic branches by hiding any commit that
+ 	is already in the main line of development.  When given
+ 	"git show-branch --topics master topic1 topic2", this
+diff --git a/builtin/show-branch.c b/builtin/show-branch.c
+index f3fb5fb..140e88c 100644
+--- a/builtin/show-branch.c
++++ b/builtin/show-branch.c
+@@ -4,11 +4,12 @@
+ #include "builtin.h"
+ #include "color.h"
+ #include "parse-options.h"
++#include "remote.h"
+ 
+ static const char* show_branch_usage[] = {
+     N_("git show-branch [-a | --all] [-r | --remotes] [--topo-order | --date-order]\n"
+-       "		[--current] [--color[=<when>] | --no-color] [--sparse]\n"
+-       "		[--more=<n> | --list | --independent | --merge-base]\n"
++       "		[--current] [--upstream] [--color[=<when>] | --no-color]\n"
++       "		[--sparse] [--more=<n> | --list | --independent | --merge-base]\n"
+        "		[--no-name | --sha1-name] [--topics] [(<rev> | <glob>)...]"),
+     N_("git show-branch (-g | --reflog)[=<n>[,<base>]] [--list] [<ref>]"),
+     NULL
+@@ -643,6 +644,7 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
+ 	int sha1_name = 0;
+ 	int shown_merge_point = 0;
+ 	int with_current_branch = 0;
++	int with_upstream_branches = 0;
+ 	int head_at = -1;
+ 	int topics = 0;
+ 	int dense = 1;
+@@ -661,6 +663,8 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
+ 		OPT_BOOL(0, "no-name", &no_name, N_("suppress naming strings")),
+ 		OPT_BOOL(0, "current", &with_current_branch,
+ 			 N_("include the current branch")),
++		OPT_BOOL(0, "upstream", &with_upstream_branches,
++			 N_("include upstream branches")),
+ 		OPT_BOOL(0, "sha1-name", &sha1_name,
+ 			 N_("name commits with their object names")),
+ 		OPT_BOOL(0, "merge-base", &merge_base,
+@@ -851,7 +855,41 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
+ 		if (commit->object.flags == flag)
+ 			commit_list_insert_by_date(commit, &list);
+ 		rev[num_rev] = commit;
++
++		if (with_upstream_branches) {
++			unsigned char branch_sha1[20];
++			struct branch *branch;
++			int current_ref_name_cnt = ref_name_cnt;
++
++			/* If this ref is already marked as an upstream, skip */
++			if (topics & flag)
++				continue;
++
++			branch = branch_get(ref_name[num_rev]);
++
++			if (!branch || !branch->merge || !branch->merge[0] ||
++			    !branch->merge[0]->dst)
++				continue;
++			if (get_sha1(branch->merge[0]->dst, branch_sha1))
++				continue;
++			append_remote_ref(branch->merge[0]->dst, branch_sha1, 0, 0);
++			/* If append_remote_ref didn't add a ref, it's either
++			 * because it's an upstream of a previous ref, or because
++			 * it was given on the command line. In neither case we
++			 * want the bit being set. */
++			if (topics && current_ref_name_cnt != ref_name_cnt)
++				topics |= 1u << (ref_name_cnt + REV_SHIFT - 1);
++		} else if (topics && num_rev == 0) {
++			topics |= flag;
++		}
+ 	}
++	/* topics is filled above with a mask of refs corresponding to
++	 * upstream branches, or the first given ref. It also still contains
++	 * the original bool value, which may match some bookkeeping flags,
++	 * so filter that out.
++	 */
++	topics &= ~0u << REV_SHIFT;
++
+ 	for (i = 0; i < num_rev; i++)
+ 		rev_mask[i] = rev[i]->object.flags;
+ 
+@@ -928,7 +966,7 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
+ 					  commit->parents->next);
+ 			if (topics &&
+ 			    !is_merge_point &&
+-			    (this_flag & (1u << REV_SHIFT)))
++			    (this_flag & topics))
+ 				continue;
+ 			if (dense && is_merge &&
+ 			    omit_in_dense(commit, rev, num_rev))
+-- 
+2.3.0.2.g4d8711e
