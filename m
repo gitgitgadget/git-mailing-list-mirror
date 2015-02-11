@@ -1,141 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: read() MAX_IO_SIZE bytes, more than SSIZE_MAX?
-Date: Wed, 11 Feb 2015 15:15:47 -0800
-Message-ID: <xmqq1tlwt4yk.fsf@gitster.dls.corp.google.com>
-References: <loom.20150207T174514-727@post.gmane.org>
-	<54D64939.4080102@web.de> <loom.20150207T182443-33@post.gmane.org>
-	<54D67662.7040504@web.de>
-	<CAPc5daUnKcktv0xcz-fGEApckbkQksKuZO53ZL20E1MhtZmn4w@mail.gmail.com>
-	<loom.20150207T232422-706@post.gmane.org>
-	<CAPc5daXD_7XZD5Vag51BjrSZ0q1r9eMswhLmnpUFqqjrc9oSTw@mail.gmail.com>
-	<loom.20150208T125055-287@post.gmane.org>
-	<CAPig+cTbLOV-0yFKp8wwVLSr4OJz7LUaLZgVGHUdFhj7xZEzrw@mail.gmail.com>
-	<xmqqmw4ktamx.fsf@gitster.dls.corp.google.com>
-	<loom.20150211T222833-105@post.gmane.org>
-	<loom.20150211T230519-703@post.gmane.org>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH 8/8] reflog_expire(): lock symbolic refs themselves, not
+ their referent
+Date: Wed, 11 Feb 2015 15:25:38 -0800
+Message-ID: <CAGZ79kaaQWRXhph=0g3SRHKXMoW8eAp7QG21yuWXWd7OW4M+uA@mail.gmail.com>
+References: <1423473164-6011-1-git-send-email-mhagger@alum.mit.edu>
+	<1423473164-6011-9-git-send-email-mhagger@alum.mit.edu>
+	<CAGZ79kaBGAOt-R1=mSG5H-5p=2UWjZEesktVwQcDAWFC-OW2Eg@mail.gmail.com>
+	<xmqq61b8t65x.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Joachim Schmitz <jojo@schmitz-digital.de>
-X-From: git-owner@vger.kernel.org Thu Feb 12 00:15:55 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 12 00:25:45 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YLgVf-00069p-8c
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Feb 2015 00:15:55 +0100
+	id 1YLgfA-0002sS-Kq
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Feb 2015 00:25:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754468AbbBKXPv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Feb 2015 18:15:51 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:54316 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752614AbbBKXPu convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Feb 2015 18:15:50 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B961238D7D;
-	Wed, 11 Feb 2015 18:15:49 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=YGf95LKLgC5d
-	hr0uHYMuvThjOkY=; b=X/mSpsRsayQNDBWGKxBYIcm6Hf7X3+tRWnlKz0BgHaez
-	G930N7BBcVXLQw8ELI87UlUPlh5YtMS2s4J1VWV0TmCYHb63eeqwl5quBspVsQlA
-	+RHYTlvuX76tgCwATqJvmQLa5nSVSuF0/K0oXdJQB+j6N7mBteUu25cQLTZ11LA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=trYZ0H
-	AjblO2ExCeV5mb2NM8fJ5e2Ds1zgky4L+RG1qIGXjsXaSvlcxTxJfVRElpd45E5U
-	NJt/YFamZA6hLhnMkld0kjai8+n22Rwi/60YGewtuY8sfzkqd1/yPULglt1GJWW2
-	dSWhMFmrGsMqCJAiOTxoKDJOWs6NL+YWZtpx8=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id AF4AD38D7C;
-	Wed, 11 Feb 2015 18:15:49 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2FF8A38D7B;
-	Wed, 11 Feb 2015 18:15:49 -0500 (EST)
-In-Reply-To: <loom.20150211T230519-703@post.gmane.org> (Joachim Schmitz's
-	message of "Wed, 11 Feb 2015 22:05:50 +0000 (UTC)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: EA56B726-B243-11E4-9BAC-A4119F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1753946AbbBKXZk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Feb 2015 18:25:40 -0500
+Received: from mail-ie0-f176.google.com ([209.85.223.176]:37785 "EHLO
+	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753765AbbBKXZj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Feb 2015 18:25:39 -0500
+Received: by iecrl12 with SMTP id rl12so5623421iec.4
+        for <git@vger.kernel.org>; Wed, 11 Feb 2015 15:25:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=WMFFdnHlDZtsdEA8U23Zv2dBXh31toXyI5blKSF22Pg=;
+        b=pAF7/mE0l329oOhfdlFGco6nEXNLGDmToEozKxbe1PpwNdteFgcbQIy8k7M/9UFQpv
+         EJGLEsC+4SAOvRb2KGFhvBBz5xN9C9lSl2SrEvsXbQv+0pGomCUFZNH/9iMKOp3ya09E
+         F4h9ENdc66Qxs42r33NIr9r7QfzDz2eN606MGnjLzJLrp84ABZP+4b7NjHNhRn0RbodX
+         nbICMztKoqgEqhJQflVbLa+PxeHBcMcVyA9QzlDyBSMljZFjWGgZud2R5lXMOeypb+p2
+         oLrkxemnXumJGwt4AXpxsjehIO51lM8YxQTFbcsfL3W3TiffW9sNr8cZRsjOTLRATGQe
+         2vIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=WMFFdnHlDZtsdEA8U23Zv2dBXh31toXyI5blKSF22Pg=;
+        b=D7QJD1VUiXlmwXr0+SLsEMQaapVA8jbrA3oWDHGUT8N+/dVp96WcTsFOK05jwzVDHy
+         o8CBzmD0Jh1l0gCbo5i25eF0tN0cOg++4yXNHdMQafgXACrA6HzpRTFLp9Yot7cYphZX
+         fcILGXHmhyrH5UMzCDwHMD6odfPnDUMvfMQYeqKUR+O6mUcE8LNrJCxfn0ZlPMJHjTj3
+         7RE0Jv4GXipJ/shGz/RPIwzfDW01yqpiTczdHOPXg9CR5De8iMj7YDRbJat8KC3hUWqZ
+         YlTcZUeXXheLU1QXOLjfyY+w6htcZrA1yQLTr5PHX2m42SmLJp1TSWVtcAXiOvNozpyh
+         C2KA==
+X-Gm-Message-State: ALoCoQnCLt4gyMbMax6PfPz7dfDnnepj0vvfZVJTY/UwBKoGaRkn8swL7o/MhWMEQJfE2QqzOqLA
+X-Received: by 10.107.137.17 with SMTP id l17mr1329967iod.33.1423697139059;
+ Wed, 11 Feb 2015 15:25:39 -0800 (PST)
+Received: by 10.50.26.42 with HTTP; Wed, 11 Feb 2015 15:25:38 -0800 (PST)
+In-Reply-To: <xmqq61b8t65x.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263699>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263700>
 
-Joachim Schmitz <jojo@schmitz-digital.de> writes:
-
-> Joachim Schmitz <jojo <at> schmitz-digital.de> writes:
+On Wed, Feb 11, 2015 at 2:49 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
 >
->>=20
->> Junio C Hamano <gitster <at> pobox.com> writes:
->>=20
->> <snip>=20
->> > OK, then let's do this.
->> >=20
+>> On Mon, Feb 9, 2015 at 1:12 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+>>> When processing the reflog of a symbolic ref, hold the lock on the
+>>> symbolic reference itself, not on the reference that it points to.
+>>
+>> I am not sure if that makes sense.
+>> So when expiring HEAD, you want to have a .git/HEAD.lock file
+>> instead of a .git/refs/heads/master.lock file?
+>>
+>> What would happen if there is a concurrent modification
+>> to the master branch?
 >
+> The HEAD may be pointing at 'master' and the other party that is
+> trying to modify it would fail when it tries to update the reflog
+> for HEAD thanks to HEAD.lock being held by us.  The HEAD may be
+> pointing at 'next' and the other part that updates 'master' would
+> not try to modify HEAD reflog and we do not conflict.
 >
-> Except for the type "taht"
+> At least, I think that is the rationale behind this change.
 
-Also #ifndef part X-<
+That makes sense! Do we have documentation on symrefs?
 
-Here is what I queued for the day.
-
--- >8 --
-Subject: xread/xwrite: clip MAX_IO_SIZE to SSIZE_MAX
-
-Since 0b6806b9 (xread, xwrite: limit size of IO to 8MB, 2013-08-20),
-we chomp our calls to read(2) and write(2) into chunks of
-MAX_IO_SIZE bytes (8 MiB), because a large IO results in a bad
-latency when the program needs to be killed.  This also brought our
-IO below SSIZE_MAX, which is a limit POSIX allows read(2) and
-write(2) to fail when the IO size exceeds it, for OS X, where a
-problem was originally reported.
-
-However, there are other systems that define SSIZE_MAX smaller than
-our default, and feeding 8 MiB to underlying read(2)/write(2) would
-fail.  Make sure we clip our calls to the lower limit as well.
-
-Reported-by: Joachim Schmitz <jojo@schmitz-digital.de>
-Helped-by: Torsten B=C3=B6gershausen <tboegi@web.de>
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- wrapper.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
-
-diff --git a/wrapper.c b/wrapper.c
-index f92b147..c77c2eb 100644
---- a/wrapper.c
-+++ b/wrapper.c
-@@ -135,8 +135,21 @@ void *xcalloc(size_t nmemb, size_t size)
-  * 64-bit is buggy, returning EINVAL if len >=3D INT_MAX; and even in
-  * the absense of bugs, large chunks can result in bad latencies when
-  * you decide to kill the process.
-+ *
-+ * We pick 8 MiB as our default, but if the platform defines SSIZE_MAX
-+ * that is smaller than that, clip it to SSIZE_MAX, as a call to
-+ * read(2) or write(2) larger than that is allowed to fail.  As the la=
-st
-+ * resort, we allow a port to pass via CFLAGS e.g. "-DMAX_IO_SIZE=3Dva=
-lue"
-+ * to override this, if the definition of SSIZE_MAX platform is broken=
-=2E
-  */
--#define MAX_IO_SIZE (8*1024*1024)
-+#ifndef MAX_IO_SIZE
-+# define MAX_IO_SIZE_DEFAULT (8*1024*1024)
-+# if defined(SSIZE_MAX) && (SSIZE_MAX < MAX_IO_SIZE_DEFAULT)
-+#  define MAX_IO_SIZE SSIZE_MAX
-+# else
-+#  define MAX_IO_SIZE MAX_IO_SIZE_DEFAULT
-+# endif
-+#endif
-=20
- /*
-  * xread() is the same a read(), but it automatically restarts read()
---=20
-2.3.0-186-g9f73ee1
+Originally I was wondering if this would make things
+complicated for  symbolic branches which are not HEAD.
+Then you could update the branch pointed to, because it
+has no lock as the lock is on the symref. On the other hand
+this seems to be an improvement, as you cannot move the
+symref itself, as it has the lock and we don't really have other
+symrefs?
