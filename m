@@ -1,95 +1,112 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] merge-file: correctly open files when in a subdir
-Date: Wed, 11 Feb 2015 10:21:56 -0800
-Message-ID: <xmqqd25gux4r.fsf@gitster.dls.corp.google.com>
-References: <CAPHKiG7vzKbtH7=cXD-7Cta=a-iy-ViMustn98z+VEog5ep2sg@mail.gmail.com>
-	<xmqqwq3pv60p.fsf@gitster.dls.corp.google.com>
-	<CAPHKiG6M9_fOjpx8Pt8UTpUcrS+tmqL3YcT11WyJJu8m6nkJ4A@mail.gmail.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH 06/11] commit: add tests of commit races
+Date: Wed, 11 Feb 2015 10:24:35 -0800
+Message-ID: <CAGZ79kYFvLWsasWsEevLqugY_Yts5K4e3WRJtKmN4S67F9W6+Q@mail.gmail.com>
+References: <1423412045-15616-1-git-send-email-mhagger@alum.mit.edu>
+	<1423412045-15616-7-git-send-email-mhagger@alum.mit.edu>
+	<CAGZ79kYmgeXt1k22h3fbDR04BTHOQRxryNVSJDOL2DC5yLLHpw@mail.gmail.com>
+	<xmqq1tlxwpgi.fsf@gitster.dls.corp.google.com>
+	<54DB6F9C.7060600@alum.mit.edu>
+	<xmqqk2zouxnx.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Stefan Beller <stefanbeller@googlemail.com>
-To: Aleksander Boruch-Gruszecki <aleksander.boruchgruszecki@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 11 19:22:09 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 11 19:24:43 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YLbvM-0007BC-KZ
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Feb 2015 19:22:08 +0100
+	id 1YLbxp-00008e-85
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Feb 2015 19:24:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753254AbbBKSWE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Feb 2015 13:22:04 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:62859 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752959AbbBKSWC (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Feb 2015 13:22:02 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id CE4FF36EF0;
-	Wed, 11 Feb 2015 13:22:01 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=VfnbRMUKwo8g/VDAKPFbyYak+3w=; b=ntqlWh
-	SHBRKiOO7jq09Q7amHpC+Je/HLtoPk3V1aAMntEtJL2Fw+drj2+SLyay2KZG842k
-	00GNhOJKC0eQLUGSnRoQFSGD+0nbUub/nZ7DyJW9YxRc3FimXvAXiES0pgM6TZ/l
-	hY5joyLpXv5JTHVWGFB30Lh/q2AOYwfpg+f7M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=T+2uY5k0juSOzUQReHeqNLni6QzXyN7G
-	+p4df/VUPsdCqrvpSDajTtGCSLFZzb/W1yDMZ5hUEF0Nw4DPlKqpHcCdFwK6AKUG
-	VypLlS4758NHcNtgTBYSAK2a3x873HKyfMEKV6wZEhO4xKIwKPURgx5awpbVbVIJ
-	uB3ICJZ+0VA=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id C3D2F36EEF;
-	Wed, 11 Feb 2015 13:22:01 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6503536EE4;
-	Wed, 11 Feb 2015 13:21:58 -0500 (EST)
-In-Reply-To: <CAPHKiG6M9_fOjpx8Pt8UTpUcrS+tmqL3YcT11WyJJu8m6nkJ4A@mail.gmail.com>
-	(Aleksander Boruch-Gruszecki's message of "Wed, 11 Feb 2015 10:58:51
-	+0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: DD930EAA-B21A-11E4-BCF0-A4119F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1753377AbbBKSYh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Feb 2015 13:24:37 -0500
+Received: from mail-ie0-f182.google.com ([209.85.223.182]:44112 "EHLO
+	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753755AbbBKSYg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Feb 2015 13:24:36 -0500
+Received: by iecar1 with SMTP id ar1so6026881iec.11
+        for <git@vger.kernel.org>; Wed, 11 Feb 2015 10:24:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=5Dz4XLfBzjqlbbL0ueGli23xTgGd/JPlHwuKsakcNuk=;
+        b=VbpJBktOohKVwxn9eTSopnhm60pq5/5esOYJUcc7D+4ZP3OXC6C4YXtJWWeFXSZtKd
+         QG7JwvJCDFheB+nZvfgy4v2kUFU63V/RWL8+rFE459VGNIbuproT4V1kC0KQVL+JDqk9
+         90X8L1po4mO4rHLXMfipRgIOphubp+BLhqMMLRi7QYP9YZQlKHvfFi4mciKhhYiJ+b4P
+         v2EzbWKiSkt5asEnG6wFTqHQdzsM8oa6I6bB74LcivDIgxlu8oucVkpOD9K4CYzzLUuQ
+         XYVQU8Pv8diuVc6dS5M/zsjmsPPqG9RC8si1SEVJnzuam6wGUGAfAKDq6a5+j3EvKtuk
+         YqVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=5Dz4XLfBzjqlbbL0ueGli23xTgGd/JPlHwuKsakcNuk=;
+        b=L1AR/rRgQAfbmsjTMiaLsk/pK9YOYGxnJH992CUps/5SnUryh1T2W92noN2Yg4bAHa
+         Qsrqz+k/mnvqECkuXRKZtn809XjuxrqcrlxB93/I92MPlIvZek4wgvP2VScQxEXmZqNg
+         1p8Rf5zsHQpgrdtfI8+55xGvI3ByfMlm13/e7cFg4mTkHK3/yPdetFxIjX25Pn6ZXDEX
+         R3zDw+FO+g6zoWvdV/DpQ032iglpn84XY0hKJx6hYh1MJ27YgSUE8amTvDWPwK/OpF3e
+         cSQ1kh+cr8kzWyKa+Zvn8wvXG6S0O+5UHczyal6I/QkWEKe8eA5zm9XSF/7/UFrQAfAB
+         HPsQ==
+X-Gm-Message-State: ALoCoQnOH5tF3aOynX3+Uz4MJ03Ap8ModYJrVln429JlIGdO3kKuSnxsVRoVG0y4TUBXG/Nc69Il
+X-Received: by 10.42.159.129 with SMTP id l1mr2367447icx.15.1423679075756;
+ Wed, 11 Feb 2015 10:24:35 -0800 (PST)
+Received: by 10.50.26.42 with HTTP; Wed, 11 Feb 2015 10:24:35 -0800 (PST)
+In-Reply-To: <xmqqk2zouxnx.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263686>
 
-Aleksander Boruch-Gruszecki <aleksander.boruchgruszecki@gmail.com>
-writes:
-
->>> @@ -72,6 +72,12 @@ test_expect_success 'works in subdirectory' '
->>>      ( cd dir && git merge-file a.txt o.txt b.txt )
->>>  '
->>>
->>> +mkdir -p dir/deep
->>> +cp new1.txt orig.txt new2.txt dir/deep
->>> +test_expect_success 'accounts for subdirectory when writing' '
->>> +    (cd dir && git merge-file deep/new1.txt deep/orig.txt deep/new2.txt)
->>> +'
->>
->> Interesting.  Makes us wonder why the one before this new one you
->> added did not catch the issue, doesn't it?
+On Wed, Feb 11, 2015 at 10:10 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
 >
-> The test before the one added by me does work because merge-file
-> tries to open "a.txt" for writing in repo root directory, which will create
-> a file if it does not exist.
+>> On the other hand, there's this [1] and this [2] from the FSF, which
+>> recommend a copyright blurb at the beginning of every source file.
+>> Though actually the recommendation is to include a GPL blurb too, not
+>> just a naked copyright line like I used. But I get the feeling that the
+>> FSF's recommendation is more for ideological than for legal reasons.
+>
+> It is relatively recent (late 1980s) that US became part of Berne
+> Convention (1886).  Before that you had to write Copyright and All
+> Rights Reserved (or Todos Derechos Reserrvados) in Buenos Aires
+> days.
 
-Ahh, this existing test
+Quoting from wikipedia[1]
 
->>>      ( cd dir && git merge-file a.txt o.txt b.txt )
+(note however that when the United States joined the Convention
+in 1988, it continued to make statutory damages and attorney's fees
+only available for registered works).
 
-implicitly expects that dir/a.txt is written, but the broken
-implementation writes to a.txt (i.e. outside dir).  But the test
-only checks the exit code from the command without making sure that
-dir/a.txt is written, it does not notice the breakage.
+Does that mean if somebody would infringe the GPL on git (e.g. selling
+a modified git version without giving sources), it would be harder to
+tell him to stop because of the missing attorney's fees in case we drop
+out the copyright notices? (I have no deep understanding of legal
+processes in the US).
 
-Thanks, that makes sense and it also makes sense that checking the
-resulting content in dir/a.txt would make sense.  Then we many not
-need to add a new dir/deep/* test---after all they are checking the
-same thing.
+>
+> It is not surprising to see the more cautious practice from the
+> older days in recommendations by an old organization like FSF.
+>
+>>>> Is there a reason you did not append the tests in 7509 ?
+
+You convinced me that having to start with an orphan commit justifies
+a new test file as well as the nature of the test.
+
+>>>
+>>> Hmph.
+>>
+>> I don't know what "Hmph" means in this context.
+>
+> "Hmph, it might deserve more thought, but I do not have opinion
+> right now".
+
+[1] http://en.wikipedia.org/wiki/Berne_Convention
