@@ -1,83 +1,89 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 5/8] reflog: rearrange the manpage
-Date: Tue, 10 Feb 2015 15:42:18 -0800
-Message-ID: <CAGZ79kY+AN6fmbBfCBdkUXiBSgJusFa7Jv2OS=n=EPXBpzp8EQ@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/8] lock_ref_sha1_basic(): do not set force_write for
+ missing references
+Date: Tue, 10 Feb 2015 19:05:20 -0500
+Message-ID: <20150211000520.GA30561@peff.net>
 References: <1423473164-6011-1-git-send-email-mhagger@alum.mit.edu>
-	<1423473164-6011-6-git-send-email-mhagger@alum.mit.edu>
+ <1423473164-6011-4-git-send-email-mhagger@alum.mit.edu>
+ <CAGZ79kbrFpgF6_dLYdgT2D0JjWggu8edjV2sgXER5btpmyjDNw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
+Content-Type: text/plain; charset=utf-8
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>,
 	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>, "git@vger.kernel.org" <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Feb 11 00:42:26 2015
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Wed Feb 11 01:05:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YLKRk-0000Ye-Un
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Feb 2015 00:42:25 +0100
+	id 1YLKo3-0001ht-KE
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Feb 2015 01:05:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751783AbbBJXmT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2015 18:42:19 -0500
-Received: from mail-ie0-f171.google.com ([209.85.223.171]:38279 "EHLO
-	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751273AbbBJXmT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Feb 2015 18:42:19 -0500
-Received: by iecrd18 with SMTP id rd18so240306iec.5
-        for <git@vger.kernel.org>; Tue, 10 Feb 2015 15:42:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=zY3p6MFm5kPM5XvaxR9y5o5SNyoBRYeB3jDpwFYTp40=;
-        b=BQDwfbmN/lv3Aqd5T7o3691Ie7FILreJL8Pc64CQNPVyjaRpZ2OGaga5OshN/EsJy+
-         Q2/JoskKp79uweEQe0qvYD6WT49syKOLxV9hyqAhww9qtJUvWyjvKVFHnh2JEPt+9AWB
-         uixIDYn495yVCVxU1JAX1Zd/0s9th6Hk9EQMsLW3ykzW1rPG0bjxbTRl/I0uouTt/etR
-         4hi9TRxmhIecM62jciz3erZjiBYtmeQkZKTCG7u4nhesfh0Hd84Z8+ApP9SFGrWn9Boi
-         arJ3kjVzK2eBBb46AdTJiGAfxvuwbrIwtpkKOJF8seS4s81H6yadsjB00jyUBYIzNeEd
-         prBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=zY3p6MFm5kPM5XvaxR9y5o5SNyoBRYeB3jDpwFYTp40=;
-        b=mhnPuhxQm6jYfdFHe7HJHj0xbioGDHbJFThFW2Zua8fPVELDOmHdeGv9MoW7ZUyNbt
-         y6aOnHUDXz+ptL4FI5RtM2GgeuB9EU4mOzvzEsJ0j/tx7xkex0Fz00vSJWm/VZLP9vlo
-         PNGDHeuK7lILg5H3vB5QIiUtGyVuLSiyPLKjrc0t//vcs+9xo5avM6euQknuXEE5S2v6
-         sCLwFwPi13SFcBzHUCzdn2qLzIf7Dc3aL9Hn16vfP5pUBrzvg30/+UByF11kvoL4e6cJ
-         uC29Z2Frqe6iis6wWQ67YLc2kRV9WYMOfgV5NXewEy9NAL00SSdrOuRfcXAqdCNEYEOc
-         ustA==
-X-Gm-Message-State: ALoCoQnhUMSJ0Jyz+cqbaXvi8YCzs7tC/dL0ktTW6DdZjAf9524yGGKgjQYc+nyKh/c4MU4Ec5Ev
-X-Received: by 10.107.18.148 with SMTP id 20mr7659918ios.34.1423611738421;
- Tue, 10 Feb 2015 15:42:18 -0800 (PST)
-Received: by 10.50.26.42 with HTTP; Tue, 10 Feb 2015 15:42:18 -0800 (PST)
-In-Reply-To: <1423473164-6011-6-git-send-email-mhagger@alum.mit.edu>
+	id S1751525AbbBKAFX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Feb 2015 19:05:23 -0500
+Received: from cloud.peff.net ([50.56.180.127]:47506 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750905AbbBKAFX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Feb 2015 19:05:23 -0500
+Received: (qmail 13886 invoked by uid 102); 11 Feb 2015 00:05:22 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 10 Feb 2015 18:05:22 -0600
+Received: (qmail 11327 invoked by uid 107); 11 Feb 2015 00:05:25 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 10 Feb 2015 19:05:25 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 10 Feb 2015 19:05:20 -0500
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kbrFpgF6_dLYdgT2D0JjWggu8edjV2sgXER5btpmyjDNw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263661>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263662>
 
-On Mon, Feb 9, 2015 at 1:12 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> ---all::
-> -       Instead of listing <refs> explicitly, prune all refs.
-> +--stale-fix::
-> +       This revamps the logic -- the definition of "broken commit"
-> +       becomes: a commit that is not reachable from any of the refs and
-> +       there is a missing object among the commit, tree, or blob
-> +       objects reachable from it that is not reachable from any of the
-> +       refs.
+On Tue, Feb 10, 2015 at 03:24:47PM -0800, Stefan Beller wrote:
 
---stale-fix becomes more and more irrelevant over time,
-so why not put in at the very end even after --all ?
+> On Mon, Feb 9, 2015 at 1:12 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> > If a reference is missing, its SHA-1 will be null_sha1, which can't
+> > possibly match a new value that ref_transaction_commit() is trying to
+> > update it to. So there is no need to set force_write in this scenario.
+> >
+> 
+> This commit reverts half the lines of 5bdd8d4a3062a (2008-11, do not
+> force write of packed refs). And reading both commit messages, they
+> seem to contradict each other. (Both agree on  "If a reference is
+> missing, its SHA-1 will be null_sha1 as provided by resolve_ref", but
+> the conclusion seems to be different.)
 
-Thinking out loud:
-(--expire=,--expire-unreachable= and --stale-fix) look like a group
-and (--updateref --rewrite --verbose and --all) also feel like a group,
-so you wanted to keep --stale-fix after --expire-unreachable= ?
+Most of the lines of 5bdd8d4a3062a that are being reverted here are
+caching the is_null_sha1() check in the "missing" variable. And that's
+a cleanup in this patch that is not strictly necessary ("missing" would
+only be used once, so it becomes noise).
 
-While talking about this man page, we should also add --dry-run?
+The interesting thing in the earlier commit was to use the null sha1 to
+cause a force-write, rather than lstat()ing the filesystem. And here we
+are saying the force-write is not necessary at all, no matter what
+storage scheme is used. So I don't think there is any contradiction
+between the two.
+
+Is this patch correct that the force-write is not necessary? I think so.
+The force-write flag comes from:
+
+commit 732232a123e1e61e38babb1c572722bb8a189ba3
+Author: Shawn Pearce <spearce@spearce.org>
+Date:   Fri May 19 03:29:05 2006 -0400
+
+    Force writing ref if it doesn't exist.
+    
+    Normally we try to skip writing a ref if its value hasn't changed
+    but in the special case that the ref doesn't exist but the new
+    value is going to be 0{40} then force writing the ref anyway.
+
+but I am not sure that logic still holds (if it ever did). We do not ever write
+0{40} into a ref value.
+
+-Peff
