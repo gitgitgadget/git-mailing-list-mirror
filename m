@@ -1,123 +1,91 @@
-From: =?UTF-8?q?=D0=94=D0=B8=D0=BB=D1=8F=D0=BD=20=D0=9F=D0=B0=D0=BB=D0=B0=D1=83=D0=B7=D0=BE=D0=B2?= 
-	<git-dpa@aegee.org>
-Subject: [PATCH] Remove duplicate #include
-Date: Fri, 13 Feb 2015 14:47:39 +0000
-Message-ID: <1423838859-15413-1-git-send-email-git-dpa@aegee.org>
+From: "Dr. Zoe Michel ." <announcement@wopu.org>
+Subject: Kind reminder about your Invited Paper
+Date: Fri, 13 Feb 2015 00:28:46 +0200
+Message-ID: <20150212222846.CB94536B2045@genf174.server4you.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 13 16:05:43 2015
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Feb 13 16:15:10 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YMHoI-0005W7-Ie
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Feb 2015 16:05:38 +0100
+	id 1YMHxT-00028x-Uo
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Feb 2015 16:15:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752970AbbBMPFe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Feb 2015 10:05:34 -0500
-Received: from mailout-aegee.scc.kit.edu ([129.13.185.235]:41871 "EHLO
-	mailout-aegee.scc.kit.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752603AbbBMPFc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Feb 2015 10:05:32 -0500
-X-Greylist: delayed 1076 seconds by postgrey-1.27 at vger.kernel.org; Fri, 13 Feb 2015 10:05:31 EST
-Received: from test.aegee.org (aegeepc1.aegee.uni-karlsruhe.de [129.13.131.81])
-	by scc-mailout-02.scc.kit.edu with esmtp (Exim 4.72 #1)
-	id 1YMHWn-0007mP-GC; Fri, 13 Feb 2015 15:47:33 +0100
-Received: from test.aegee.org (localhost [127.0.0.1])
-	by test.aegee.org (8.15.1/8.14.5) with ESMTP id t1DEldU3015479;
-	Fri, 13 Feb 2015 14:47:39 GMT
-DKIM-Filter: OpenDKIM Filter v2.10.0 test.aegee.org t1DEldU3015479
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aegee.org; s=k4096;
-	t=1423838860; i=dkim+sm-localhost@aegee.org;
-	bh=rH//JpE9dVy5YqvoVvhbRgBRycgQZ7wFjGZu+c2u6os=;
-	h=From:To:Subject:Date;
-	b=ld+3Gta3rbUMkge9iJguMY+S/3Dqv7By585yyPe8HEXPppUb8yoWRctx2iV5F1YzL
-	 ytZd0qk0Ld0ciVPKMZg/z8hXSKwKOuvQ3x5U/HNYOpimwyiqpPU+AN1bwuAvY4vJvj
-	 4QzDyBHtmXV7wLtZIgqJ02pIf+kbZN8bjr/rehp5PJAn7aw8qz2L4L8I8ncSuKC1a5
-	 t4yh6ZyEDXEzS5lGR2FAZX55VFc374LLB7wpcTxoMtz0Zequ644fcL7SV5G1tf1TlI
-	 13EUgz/YmPltWtM3Mug2KvmndVIsXtp/6fQGsmWH2GD3TN2biY1j3SWoHo4JThS95/
-	 MVUFkncCPwdo5oU+gPQgaEreffxLnBZvKkrnEW14gpWsvQIsf3/5FXt9zUsViIYjWh
-	 9RGkVRc8cJ6FZs5eY3Dy3ypKKBr1qhF0nUFvGIJunfx1d2qnIB+0MxCrBPCp7jDrem
-	 Jf24VPUe+iYOMub7AixPiLXFcUq53YAEWd6SKVGf7q9vvF5dmUQo+RuNKnPe0xUBbI
-	 tdTBEdiI6+DJWEB4jjJWFgzFz/BPL9kap1xF87hr7F98KsLAUAiQm95JI0Q5+u1Bkt
-	 9Evvv9yEqfZfRI3xATntXvF/CDAdVqf4nNxLaL0i61hy/c5tUvbskng1mPRXQhmAiB
-	 pYYa1x5DupO 
-Received: (from root@localhost)
-	by test.aegee.org (8.15.1/8.14.5/Submit) id t1DEldt1015469;
-	Fri, 13 Feb 2015 14:47:39 GMT
-X-Mailer: git-send-email 2.3.0.1.g02b6b75
-X-Virus-Scanned: clamav-milter 0.98.6 at aegeeserv
-X-Virus-Status: Clean
+	id S1752844AbbBMPPB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Feb 2015 10:15:01 -0500
+Received: from genf174.server4you.net ([217.172.184.70]:58388 "EHLO
+	genf174.server4you.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752377AbbBMPPA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 13 Feb 2015 10:15:00 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by genf174.server4you.net (Postfix) with ESMTP id E6A8C36F5610
+	for <git@vger.kernel.org>; Fri, 13 Feb 2015 09:48:14 +0100 (CET)
+Received: from genf174.server4you.net ([127.0.0.1])
+	by localhost (genf174.server4you.net [127.0.0.1]) (amavisd-new, port 10032)
+	with ESMTP id e5ciT_CM0DvV for <git@vger.kernel.org>;
+	Fri, 13 Feb 2015 09:48:14 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by genf174.server4you.net (Postfix) with ESMTP id 3299C36E51EE
+	for <git@vger.kernel.org>; Fri, 13 Feb 2015 08:07:10 +0100 (CET)
+X-Virus-Scanned: amavisd-new at genf174.server4you.net
+Received: from genf174.server4you.net ([127.0.0.1])
+	by localhost (genf174.server4you.net [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id 6o3Ob9x9o22y for <git@vger.kernel.org>;
+	Fri, 13 Feb 2015 08:07:09 +0100 (CET)
+Received: from 10.0.2.15 (genf174.server4you.net [217.172.184.70])
+	by genf174.server4you.net (Postfix) with SMTP id CB94536B2045
+	for <git@vger.kernel.org>; Thu, 12 Feb 2015 23:28:46 +0100 (CET)
+X-Priority: 1 (Highest)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263809>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263810>
 
-deheader (git://gitorious.org/deheader/deheader.git) found out that
-some .c files #include twice one and the same header file.
+Dear Professor
 
-This patch removes such occurrences and hence speeds up the compilation=
-=2E
+I would like to ask you if you have uploaded your Invited Paper in our conferences
+in Vienna, Austria, March 15-17, 2015:  www.inase.org
 
-Signed-off-by: =D0=94=D0=B8=D0=BB=D1=8F=D0=BD =D0=9F=D0=B0=D0=BB=D0=B0=D1=
-=83=D0=B7=D0=BE=D0=B2 <git-dpa@aegee.org>
----
- builtin/fetch.c    | 1 -
- trailer.c          | 1 -
- transport-helper.c | 1 -
- userdiff.c         | 1 -
- 4 files changed, 4 deletions(-)
+Invited Authors have a special privileged position in the conference program with
+double time for their presentation. The number of Invited Papers do not surpass the
+4-5% of the total number of papers and Invited Authors can be members of the
+committee of the next INASE Conferences.
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 7b84d35..75a55e5 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -11,7 +11,6 @@
- #include "run-command.h"
- #include "parse-options.h"
- #include "sigchain.h"
--#include "transport.h"
- #include "submodule.h"
- #include "connected.h"
- #include "argv-array.h"
-diff --git a/trailer.c b/trailer.c
-index 623adeb..05b3859 100644
---- a/trailer.c
-+++ b/trailer.c
-@@ -1,7 +1,6 @@
- #include "cache.h"
- #include "string-list.h"
- #include "run-command.h"
--#include "string-list.h"
- #include "commit.h"
- #include "trailer.h"
- /*
-diff --git a/transport-helper.c b/transport-helper.c
-index 0224687..3652b16 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -5,7 +5,6 @@
- #include "commit.h"
- #include "diff.h"
- #include "revision.h"
--#include "quote.h"
- #include "remote.h"
- #include "string-list.h"
- #include "thread-utils.h"
-diff --git a/userdiff.c b/userdiff.c
-index fad52d6..2ccbee5 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -1,6 +1,5 @@
- #include "cache.h"
- #include "userdiff.h"
--#include "cache.h"
- #include "attr.h"
-=20
- static struct userdiff_driver *drivers;
---=20
-2.3.0.1.g24c2b87
+Extended Versions of all the Invited papers will be promoted for direct publication
+in 36 Collaborating ISI/SCI Journals (with Impact Factor from Thomson Reuters)
+
+Proceedings will be published both in CD-ROM and Hard-Copy by INASE Press and will
+be immediately indexed in ISI/SCI, SCOPUS, EI Compendex, IET(IEE), AMS, ACS,
+CiteSeerX, Zentralblatt, British Library, EBSCO, SWETS, EMBASE, CAS, Scholar Google
+
+Inform us that you uploaded your invited paper, very simply, by writing in the
+Field: 
+Short CV of the Main Author, the phrase:  "
+Invited-by-Zoe-Michel-git@vger.kernel.org " 
+
+So, kindly upload your invited paper with the correct INASE format until February
+20, 2015.
+
+(For regular papers the deadline is February 15; for Invited Papers like yours, we
+are giving 5 additional days).
+
+**** All the papers of 2013, 2014 and 2015 are now in ISI and SCOPUS! Contact me for
+more details now as well as for giving you more assistance on this matter.
+
+@ See reports and photos from former INASE conferences in our web site
+
+Best Regards
+
+Dr. Zoe Michel
+INASE Headquarters
+Our Phone Number: 00359 89 56 49 370
+
+In case that you do not intend to participate in any of our future conferences of
+2015 or of the upcoming years (2016,...), please, send an email to info@inase.org
+with Subject in the Subject Line of your Email exactly the phrase:   
+" DO NOT INVITE ME AGAIN git@vger.kernel.org "
