@@ -1,171 +1,91 @@
-From: Yue Lin Ho <b8732003@student.nsysu.edu.tw>
-Subject: Re: Re: Windows Bluescreen
-Date: Thu, 12 Feb 2015 05:48:59 -0800 (PST)
-Message-ID: <5b7a81f3-4209-47cd-a13c-f27ba30c8b7b@googlegroups.com>
-References: <20150209201218.Horde.w9pQrdbL-Mf8IdgtaJtVuQ9@server.aercontechnologies.net>
- <CAFOYHZADerTE88KudrH7LTi3yX4Sg1vJe3Xj0vJH+DNeO6NOEw@mail.gmail.com>
- <CAEuupitA4PHBByLLcqc5pVbn1C+ZyQ6Vzbk-LsOjseOEHhkENw@mail.gmail.com>
- <CAFOYHZAMv5BEmDXGSoo53iSwCYLdhOcM7dHwCMidZBaJh0xmUQ@mail.gmail.com>
- <CAEuupiuv=gRnnZm1C75dx35nC=sXR1Hb_PzLXzAKHwaD7kYsXA@mail.gmail.com>
- <1423744959.10453.3.camel@thomas-debian-x64>
- <CAEuupivCDfpJrT+T921CpMg-+tCnMBZ8x=1uNgKJbcJyX0vGWw@mail.gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 5/8] reflog: rearrange the manpage
+Date: Thu, 12 Feb 2015 16:17:34 +0100
+Message-ID: <54DCC40E.4040506@alum.mit.edu>
+References: <1423473164-6011-1-git-send-email-mhagger@alum.mit.edu>	<1423473164-6011-6-git-send-email-mhagger@alum.mit.edu> <CAGZ79kY+AN6fmbBfCBdkUXiBSgJusFa7Jv2OS=n=EPXBpzp8EQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; 
-	boundary="----=_Part_2190_135257263.1423748939858"
-Cc: thomas.braun@virtuell-zuhause.de, judge.packham@gmail.com, 
-	git@vger.kernel.org, erik@aercon.net
-To: msysgit@googlegroups.com
-X-From: msysgit+bncBCQ6P57Q3EFRBTO66KTAKGQEBDGLHRA@googlegroups.com Thu Feb 12 14:49:04 2015
-Return-path: <msysgit+bncBCQ6P57Q3EFRBTO66KTAKGQEBDGLHRA@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-ob0-f184.google.com ([209.85.214.184])
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu40=?= =?UTF-8?B?YyBEdXk=?= 
+	<pclouds@gmail.com>, "git@vger.kernel.org" <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Thu Feb 12 16:17:52 2015
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCQ6P57Q3EFRBTO66KTAKGQEBDGLHRA@googlegroups.com>)
-	id 1YLu8c-0004qU-Bk
-	for gcvm-msysgit@m.gmane.org; Thu, 12 Feb 2015 14:49:02 +0100
-Received: by mail-ob0-f184.google.com with SMTP id va2sf2635527obc.1
-        for <gcvm-msysgit@m.gmane.org>; Thu, 12 Feb 2015 05:49:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:x-original-sender:precedence:mailing-list
-         :list-id:list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe;
-        bh=ssJh261Fo4C9mta+U8JDoSQJJ9XYBwq/vIurLkukKNg=;
-        b=Sn4Y8owBuIQRPp1b5CnJwv4pcllO1BTRuYhUd5JX4tq5yaql4xuo7UNNCLefu13yga
-         z9IonbJYdI7W00x7G4j2ixLAOhkXnbyUyJzx0R5DvPNGW7pK5CZbGxrAD2LQ7DHSGx/O
-         VrtHthej90gCbtkbBRNRqwI0J24fVOL56WnB7dIC8mm3xkyI2oq6DEE9QvF5tnjVh62j
-         m4NEfmRY83OHxjZWKL4QAFich/Mqz7+ngmNthpMJrViGVg8JLo7uVQ6/bnrfK/8Sy+wq
-         Nk7DhytZ0PIaVsydguPfq6ZJ23ClPl8E/iyrWBRypgzc+KM6tHTYjTNEGGeTFr+IJ+GK
-         rXcg==
-X-Received: by 10.50.40.9 with SMTP id t9mr62334igk.7.1423748941392;
-        Thu, 12 Feb 2015 05:49:01 -0800 (PST)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.107.14.202 with SMTP id 193ls478429ioo.38.gmail; Thu, 12 Feb
- 2015 05:49:01 -0800 (PST)
-X-Received: by 10.50.60.71 with SMTP id f7mr63126igr.10.1423748941047;
-        Thu, 12 Feb 2015 05:49:01 -0800 (PST)
-In-Reply-To: <CAEuupivCDfpJrT+T921CpMg-+tCnMBZ8x=1uNgKJbcJyX0vGWw@mail.gmail.com>
-X-Original-Sender: b8732003@student.nsysu.edu.tw
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263739>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1YLvWZ-0007bB-7t
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Feb 2015 16:17:51 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1755952AbbBLPRr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Feb 2015 10:17:47 -0500
+Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:59086 "EHLO
+	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752766AbbBLPRo (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Feb 2015 10:17:44 -0500
+X-AuditID: 1207440e-f79bc6d000000c43-34-54dcc4109e1b
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id F5.4F.03139.014CCD45; Thu, 12 Feb 2015 10:17:36 -0500 (EST)
+Received: from [192.168.69.130] (p4FC96396.dip0.t-ipconnect.de [79.201.99.150])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t1CFHYp8013709
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Thu, 12 Feb 2015 10:17:35 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.4.0
+In-Reply-To: <CAGZ79kY+AN6fmbBfCBdkUXiBSgJusFa7Jv2OS=n=EPXBpzp8EQ@mail.gmail.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrGKsWRmVeSWpSXmKPExsUixO6iqCtw5E6IQecqTYuuK91MFg29V5gt
+	3t5cwmjRPeUto0Vv3ydWi82b21kc2Dx2zrrL7rFgU6nHxUvKHp83yQWwRHHbJCWWlAVnpufp
+	2yVwZ/xq2shUsJ+zYuOk9UwNjMvYuxg5OSQETCTm/njIBGGLSVy4t56ti5GLQ0jgMqPEv/Ut
+	jBDOeSaJ1t1NzCBVvALaEt+3/ACzWQRUJW4s7WADsdkEdCUW9TSDTRIVCJI4dPoxC0S9oMTJ
+	mU/AbBEBNYmZq2aDbWAWmMckcaX9J1izsICZxP4d81ggth1glNi76wXYfZwCgRIfd3xlBbGZ
+	BdQl/sy7xAxhy0tsfzuHeQKjwCwkS2YhKZuFpGwBI/MqRrnEnNJc3dzEzJzi1GTd4uTEvLzU
+	Il1jvdzMEr3UlNJNjJAw59vB2L5e5hCjAAejEg/vCtM7IUKsiWXFlbmHGCU5mJREeYV3A4X4
+	kvJTKjMSizPii0pzUosPMUpwMCuJ8EYtA8rxpiRWVqUW5cOkpDlYlMR51Zao+wkJpCeWpGan
+	phakFsFkZTg4lCR4zx0CahQsSk1PrUjLzClBSDNxcIIM55ISKU7NS0ktSiwtyYgHxWt8MTBi
+	QVI8QHsvgrTzFhck5gJFIVpPMSpKifNOAkkIgCQySvPgxsKS1ytGcaAvhXklDgNV8QATH1z3
+	K6DBTECDJ864DTK4JBEhJdXAOOVKx5KDCfwp9/eqz2d+u7ysLl8hqYqhu3T/CZc1+Vsf7e43
+	XPb0+G+2T2/r76h1Bz7T+egctVtquUzSv5g0EwU288biGT9qElma0u7UKO/fcWrD 
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263740>
 
-------=_Part_2190_135257263.1423748939858
-Content-Type: multipart/alternative; 
-	boundary="----=_Part_2191_1231120715.1423748939858"
+On 02/11/2015 12:42 AM, Stefan Beller wrote:
+> On Mon, Feb 9, 2015 at 1:12 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+>> ---all::
+>> -       Instead of listing <refs> explicitly, prune all refs.
+>> +--stale-fix::
+>> +       This revamps the logic -- the definition of "broken commit"
+>> +       becomes: a commit that is not reachable from any of the refs and
+>> +       there is a missing object among the commit, tree, or blob
+>> +       objects reachable from it that is not reachable from any of the
+>> +       refs.
+> 
+> --stale-fix becomes more and more irrelevant over time,
+> so why not put in at the very end even after --all ?
+> 
+> Thinking out loud:
+> (--expire=,--expire-unreachable= and --stale-fix) look like a group
+> and (--updateref --rewrite --verbose and --all) also feel like a group,
+> so you wanted to keep --stale-fix after --expire-unreachable= ?
 
-------=_Part_2191_1231120715.1423748939858
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Yes, that's what I was thinking.
 
-Erik Friesen=E6=96=BC 2015=E5=B9=B42=E6=9C=8812=E6=97=A5=E6=98=9F=E6=9C=9F=
-=E5=9B=9B UTC+8=E4=B8=8B=E5=8D=889=E6=99=8221=E5=88=8640=E7=A7=92=E5=AF=AB=
-=E9=81=93=EF=BC=9A
->
-> Sorry, I don't know what this TOP posting problem is, and hitting=20
-> reply only replies to the last sender. =20
->
+But you are right that the docs could be improved even more, so in the
+re-roll I will make some further changes.
 
-top post:
+> While talking about this man page, we should also add --dry-run?
 
-  The answer is ...
-  > I have a question that ...
+Good point. I'll fix that, too.
 
-"don't top post":
+Michael
 
-  > I have a question that ...
-  The answer is ...
-
-Yue Lin Ho
-
---=20
---=20
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github =
-accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den
-
----=20
-You received this message because you are subscribed to the Google Groups "=
-Git for Windows" group.
-To unsubscribe from this group and stop receiving emails from it, send an e=
-mail to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
-
-------=_Part_2191_1231120715.1423748939858
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><font face=3D"courier new, monospace">Erik Friesen=E6=96=
-=BC 2015=E5=B9=B42=E6=9C=8812=E6=97=A5=E6=98=9F=E6=9C=9F=E5=9B=9B UTC+8=E4=
-=B8=8B=E5=8D=889=E6=99=8221=E5=88=8640=E7=A7=92=E5=AF=AB=E9=81=93=EF=BC=9A<=
-/font><blockquote class=3D"gmail_quote" style=3D"margin: 0;margin-left: 0.8=
-ex;border-left: 1px #ccc solid;padding-left: 1ex;"><font face=3D"courier ne=
-w, monospace">Sorry, I don't know what this TOP posting problem is, and hit=
-ting
-<br>reply only replies to the last sender. &nbsp;<br></font></blockquote><d=
-iv><font face=3D"courier new, monospace"><br></font></div><div><font face=
-=3D"courier new, monospace">top post:</font></div><div><font face=3D"courie=
-r new, monospace"><br></font></div><div><font color=3D"#0000ff"><span style=
-=3D"font-family: 'courier new', monospace;">&nbsp; The answer is ...</span>=
-<br></font></div><div><font face=3D"courier new, monospace" color=3D"#0000f=
-f">&nbsp; &gt; I have a question that ...</font></div><div><font face=3D"co=
-urier new, monospace"><br></font></div><div><font face=3D"courier new, mono=
-space">"don't top post":</font></div><div><font face=3D"courier new, monosp=
-ace"><br></font></div><div><font color=3D"#0000ff"><span style=3D"font-fami=
-ly: 'courier new', monospace;">&nbsp; &gt; I have a question that ...</span=
-><br></font></div><div><font face=3D"courier new, monospace" color=3D"#0000=
-ff">&nbsp; The answer is ...</font></div><div><font face=3D"courier new, mo=
-nospace"><br></font></div><div><font face=3D"courier new, monospace">Yue Li=
-n Ho</font></div></div>
-
-<p></p>
-
--- <br />
--- <br />
-*** Please reply-to-all at all times ***<br />
-*** (do not pretend to know who is subscribed and who is not) ***<br />
-*** Please avoid top-posting. ***<br />
-The msysGit Wiki is here: <a href=3D"https://github.com/msysgit/msysgit/wik=
-i">https://github.com/msysgit/msysgit/wiki</a> - Github accounts are free.<=
-br />
-&nbsp;<br />
-You received this message because you are subscribed to the Google<br />
-Groups &quot;msysGit&quot; group.<br />
-To post to this group, send email to msysgit@googlegroups.com<br />
-To unsubscribe from this group, send email to<br />
-msysgit+unsubscribe@googlegroups.com<br />
-For more options, and view previous threads, visit this group at<br />
-<a href=3D"http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den">http:=
-//groups.google.com/group/msysgit?hl=3Den_US?hl=3Den</a><br />
-<br />
---- <br />
-You received this message because you are subscribed to the Google Groups &=
-quot;Git for Windows&quot; group.<br />
-To unsubscribe from this group and stop receiving emails from it, send an e=
-mail to <a href=3D"mailto:msysgit+unsubscribe@googlegroups.com">msysgit+uns=
-ubscribe@googlegroups.com</a>.<br />
-For more options, visit <a href=3D"https://groups.google.com/d/optout">http=
-s://groups.google.com/d/optout</a>.<br />
-
-------=_Part_2191_1231120715.1423748939858--
-------=_Part_2190_135257263.1423748939858--
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
