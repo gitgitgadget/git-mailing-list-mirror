@@ -1,80 +1,95 @@
-From: David Glasser <glasser@davidglasser.net>
-Subject: Re: Keep original author with git merge --squash?
-Date: Thu, 12 Feb 2015 12:53:33 -0800
-Message-ID: <CAN7QDoLKFBCJpFa+QL8dPQtwyAyDNt-ck_sNJ3fS+vTrK_Lg9w@mail.gmail.com>
-References: <CAN7QDoKQAZKUt_MHWjgt1k3PvXQv6XTcjdijh8KRodO3=VD47A@mail.gmail.com>
- <20150212092824.GA19626@peff.net> <xmqqpp9erihg.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Geolocation support
+Date: Thu, 12 Feb 2015 12:57:11 -0800
+Message-ID: <xmqqd25ergpk.fsf@gitster.dls.corp.google.com>
+References: <87mwrncfkh.fsf@ethzero.com>
+	<CALkWK0kHEDn4Wt3Y+XUE59_9ZDf504yopMp9QtBUk49Sd+EXbg@mail.gmail.com>
+	<CALWbr2w3=DTAMkFtJoLF1_X46fefpEq2WtTb7HGiTiOExFHG3w@mail.gmail.com>
+	<7vhahtfuzm.fsf@alter.siamese.dyndns.org> <87h9uwvtm2.fsf@ethzero.com>
+	<CAPc5daW5jYAj5z6UMJAQLoWS4L6OH-NSvbGBMd3LO0qCV40a4A@mail.gmail.com>
+	<CACBZZX5rgah7Ucek8dicaDeqvjdkR5ybBC5O7PUxE8+KBwrpgA@mail.gmail.com>
+	<xmqqlhk6c2zd.fsf@gitster.dls.corp.google.com>
+	<87d25ekg65.fsf@ethzero.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 12 21:54:00 2015
+Content-Type: text/plain
+Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Antoine Pelisse <apelisse@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	git <git@vger.kernel.org>
+To: Alessandro Di Marco <dmr@ethzero.com>
+X-From: git-owner@vger.kernel.org Thu Feb 12 21:57:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YM0lr-00064J-4d
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Feb 2015 21:53:59 +0100
+	id 1YM0p4-0007ly-Ii
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Feb 2015 21:57:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751440AbbBLUxz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Feb 2015 15:53:55 -0500
-Received: from mail-we0-f176.google.com ([74.125.82.176]:65404 "EHLO
-	mail-we0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751045AbbBLUxy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Feb 2015 15:53:54 -0500
-Received: by mail-we0-f176.google.com with SMTP id x3so12671850wes.7
-        for <git@vger.kernel.org>; Thu, 12 Feb 2015 12:53:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=CuRa/+kzUvrzGDJ+gVUCja8KdUlMeXSgLXUf93/LW0I=;
-        b=0yGylgZm3O3NMsYn9AFyCGFZLW1/o91/re35bvsTi8f4noqua3Hg6wemdj+EeqPpGz
-         HNlHsCESUIttg2ezXoVFjFtDCpXqGdQo7O7r5zk8bJ+nufY67Lbe9oFwvRxTSFF4Qy66
-         w8wq21YCgBpT+q7zDAKcx5brQ6DwAiS8A47D2zUcq05NBbOpenv6Hr2WQ2jnN+Dalp2y
-         vldZK+IzYLFbACP39CzeD/cPyajG9+IOa/60TdOsZPK7gTrGSNttPtCfmv4crdNbSoel
-         GBfNcOfDHgTfgseEIWhTZg2oIgjF0MQTLUIseHcQZsjH2hGrena4lJFJTo19/ccFkqYz
-         sNPg==
-X-Received: by 10.194.2.75 with SMTP id 11mr11574509wjs.78.1423774433731; Thu,
- 12 Feb 2015 12:53:53 -0800 (PST)
-Received: by 10.194.29.200 with HTTP; Thu, 12 Feb 2015 12:53:33 -0800 (PST)
-In-Reply-To: <xmqqpp9erihg.fsf@gitster.dls.corp.google.com>
-X-Google-Sender-Auth: HqdYzvrMP_nQtmbcUn-L9X1e4Og
+	id S1751798AbbBLU5O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Feb 2015 15:57:14 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:53992 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751701AbbBLU5N (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Feb 2015 15:57:13 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id DE15437BFE;
+	Thu, 12 Feb 2015 15:57:12 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=8S5R+UYtpykztaRpZ6Xwon8xSeU=; b=qjKDOb
+	gpNyitOWdJ8cfsg+EFGCwTElMRy/+voFgzZmjJrIwOe/p89/fKN7pAC2gAWja9Ly
+	h/7jS/SbZKD1jVxMdUiOdQLmyhGOTvMR/Qpv4X3kuJG6ebkQsbbsOXqdrltWidOH
+	u4X232uMfJKtU6e5pFD9EV7JcmF2UZ/nMDYCM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=DjuWF6U9mH9VdhGXACdm08oOSIy2qVuS
+	JBs17svob6OtSGxiPW6Lp8AsyP5dWMoYCd6uNgLA3K0ahkQJprQZL1fnjL7GUoat
+	FvXHZIRpWJ4KwE8b+pfwfge1fpGaLGybsMVEWy4Aslbhb7y5SRfqVj9IJDfC+UKq
+	0mQdIeDqelY=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D44EC37BFD;
+	Thu, 12 Feb 2015 15:57:12 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4926E37BFC;
+	Thu, 12 Feb 2015 15:57:12 -0500 (EST)
+In-Reply-To: <87d25ekg65.fsf@ethzero.com> (Alessandro Di Marco's message of
+	"Thu, 12 Feb 2015 21:50:42 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: B7896A30-B2F9-11E4-AD4D-A4119F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263769>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263770>
 
-On Thu, Feb 12, 2015 at 12:18 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jeff King <peff@peff.net> writes:
+Alessandro Di Marco <dmr@ethzero.com> writes:
+
+> Junio C Hamano <gitster@pobox.com> writes:
 >
->> On Wed, Feb 11, 2015 at 09:21:04AM -0800, David Glasser wrote:
->>
->>> (I'm not sure if this should be a flag to --squash or to commit.
->>> Maybe `git merge --squash`; `git commit --use-squashed-author`?  Seems
->>> like it should be not too hard to implement; SQUASH_MSG is pretty
->>> parseable.  Or just a config value.)
->>
->> It sounds like "git commit -c" is close to what you want, which will
->> pull the author and commit message from a particular commit. But I don't
->> think there is a convenient way to name the commit in your case (it is
->> likely to be the first commit on the branch you are squash-merging, but
->> there isn't a shorthand for that).
+>> More importantly, adding non-essential stuff left and right will force
+>> third party Git reimplementations to pay attention to them and also
+>> will leave room for them to make mistakes when deciding what to
+>> propagate, what to drop and what to update when rewriting commits via
+>> rebase, cherry-pick, etc.
 >
-> I thought David was primarily interested in the case where a branch
-> authored by a single person, so specifying the tip of the branch
-> being "merged" would be sufficient, no?
+> ??? http://en.wikipedia.org/wiki/Security_through_obscurity
+>
+> Do you realize that every git I tried so far has happily accepted any
+> crufts I sent to it via git push? And that they stored that crufts and
+> then returned it on cloning? :-|
 
-Well, using -c appears to override SQUASH_MSG entirely; it replaces
-the message as well as the author.  Often I do want to make my own
-message based on all the messages provided by the submitter.  (And
-typically the branch's tip is the least useful message anyway: it's
-usually something like "respond to code review".)
+Yes, they will all copy the original commits byte-for-byte.
+Otherwise they are broken.
 
---dave
+But that is not the paragraph you quoted and responded is about.
 
-
--- 
-glasser@davidglasser.net | langtonlabs.org | flickr.com/photos/glasser/
+What *should* happen, either in the original repository or the other
+repository you pushed these commits into, when you _rewrite_ such a
+commit?  Should all the cruft headers be carried over to the
+rewritten commit?  Should all of them be dropped?  Should some be
+kept but some be dropped?  Should some be kept under one condition
+but not others?  How are you making sure that all Git reimplementations
+do the same thing to the random cruft headers?
