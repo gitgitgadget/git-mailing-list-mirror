@@ -1,91 +1,75 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: Keep original author with git merge --squash?
-Date: Thu, 12 Feb 2015 12:35:48 +0100
-Message-ID: <54DC9014.1010200@alum.mit.edu>
-References: <CAN7QDoKQAZKUt_MHWjgt1k3PvXQv6XTcjdijh8KRodO3=VD47A@mail.gmail.com> <20150212092824.GA19626@peff.net>
+Subject: Re: [PATCH 7/8] reflog_expire(): never update a reference to null_sha1
+Date: Thu, 12 Feb 2015 12:51:02 +0100
+Message-ID: <54DC93A6.7080003@alum.mit.edu>
+References: <1423473164-6011-1-git-send-email-mhagger@alum.mit.edu>	<1423473164-6011-8-git-send-email-mhagger@alum.mit.edu> <CAPig+cTksvo2A9nazpeg=BThOSPv7DsJ6hz51h=U_yvSNBGn5A@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Cc: git@vger.kernel.org, Fabian Ruch <bafain@gmail.com>
-To: Jeff King <peff@peff.net>, David Glasser <glasser@davidglasser.net>
-X-From: git-owner@vger.kernel.org Thu Feb 12 12:36:09 2015
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Stefan Beller <sbeller@google.com>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Thu Feb 12 12:58:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YLs40-0006qn-J5
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Feb 2015 12:36:08 +0100
+	id 1YLsPf-0000Oz-1H
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Feb 2015 12:58:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755491AbbBLLgD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Feb 2015 06:36:03 -0500
-Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:50506 "EHLO
-	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755202AbbBLLgC (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Feb 2015 06:36:02 -0500
-X-AuditID: 1207440f-f792a6d000001284-27-54dc9017676d
+	id S1755522AbbBLL6Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Feb 2015 06:58:16 -0500
+Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:48844 "EHLO
+	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752691AbbBLL6Q (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Feb 2015 06:58:16 -0500
+X-Greylist: delayed 421 seconds by postgrey-1.27 at vger.kernel.org; Thu, 12 Feb 2015 06:58:16 EST
+X-AuditID: 1207440c-f79376d00000680a-63-54dc93a89eaf
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id DB.21.04740.7109CD45; Thu, 12 Feb 2015 06:35:51 -0500 (EST)
+	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 19.4D.26634.8A39CD45; Thu, 12 Feb 2015 06:51:04 -0500 (EST)
 Received: from [192.168.69.130] (p4FC96396.dip0.t-ipconnect.de [79.201.99.150])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t1CBZmfW004005
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t1CBp27r004588
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Thu, 12 Feb 2015 06:35:49 -0500
+	Thu, 12 Feb 2015 06:51:03 -0500
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.4.0
-In-Reply-To: <20150212092824.GA19626@peff.net>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprJKsWRmVeSWpSXmKPExsUixO6iqCs+4U6Iwb3z7BaH5t5jt+i60s1k
-	sXDDfDaLHy09zA4sHg0LfjF57Jx1l93jWe8eRo/Pm+QCWKK4bZISS8qCM9Pz9O0SuDP6txcX
-	LOGp6Pji1MB4k7OLkZNDQsBE4vLnmcwQtpjEhXvr2UBsIYHLjBJ311Z2MXIB2eeZJG48aAMr
-	4hXQlti89QQ7iM0ioCoxp/UxI4jNJqArsainmQnEFhUIkjh0+jELRL2gxMmZT8BsEQF3iRVN
-	D8F6mQXMJe7NOgU2U1jASuJxRyszxOIiiStrV4DZnAJ6Eo/uvmCCqFeX+DPvEjOELS/RvHU2
-	8wRGgVlIVsxCUjYLSdkCRuZVjHKJOaW5urmJmTnFqcm6xcmJeXmpRbomermZJXqpKaWbGCHB
-	zL+DsWu9zCFGAQ5GJR7eFaZ3QoRYE8uKK3MPMUpyMCmJ8nK1AoX4kvJTKjMSizPii0pzUosP
-	MUpwMCuJ8Po2AeV4UxIrq1KL8mFS0hwsSuK86kvU/YQE0hNLUrNTUwtSi2CyMhwcShK8q/qA
-	GgWLUtNTK9Iyc0oQ0kwcnCDDuaREilPzUlKLEktLMuJBURpfDIxTkBQP0N7dIO28xQWJuUBR
-	iNZTjIpS4rxXQBICIImM0jy4sbAU9YpRHOhLYV7OfqAqHmB6g+t+BTSYCWjwxBm3QQaXJCKk
-	pBoYHSJa02fu/p61NTJy7b85sjWrV9g+8ZAru6dlbSGyea6d444lHDsXfD9TJqx8mFGb4dka
-	FQ3p5z4emndZmH5/mb5eVFio4e28+hXvm8TeL2++/uNLat36f27ugev+r+NKZHm2 
+In-Reply-To: <CAPig+cTksvo2A9nazpeg=BThOSPv7DsJ6hz51h=U_yvSNBGn5A@mail.gmail.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrJKsWRmVeSWpSXmKPExsUixO6iqLty8p0Qg3PaFl1XupksGnqvMFu8
+	vbmE0aJ7yltGi96+T6wWmze3s1icedPI6MDusXPWXXaPBZtKPS5eUvZY/MDL4/MmuQDWKG6b
+	pMSSsuDM9Dx9uwTujKcf9zMX9DBX7N6zlb2BcRtTFyMnh4SAicSLx2dZIGwxiQv31rN1MXJx
+	CAlcZpRoetcJ5Zxnklh5eCMrSBWvgLbEmSsLwLpZBFQltp3dB2azCehKLOppBrNFBYIkDp1+
+	zAJRLyhxcuYTMFsEqPfDhk2MIEOZBZYxSfxau5q9i5GDQ1jAX+LVTxuIZQcYJV6duMgI0sAp
+	ECix6tAtsMXMAuoSf+ZdYoaw5SW2v53DPIFRYBaSHbOQlM1CUraAkXkVo1xiTmmubm5iZk5x
+	arJucXJiXl5qka6hXm5miV5qSukmRkjQ8+xg/LZO5hCjAAejEg9vgPGdECHWxLLiytxDjJIc
+	TEqivFytQCG+pPyUyozE4oz4otKc1OJDjBIczEoivL5NQDnelMTKqtSifJiUNAeLkjiv6hJ1
+	PyGB9MSS1OzU1ILUIpisDAeHkgSvADC6hQSLUtNTK9Iyc0oQ0kwcnCDDuaREilPzUlKLEktL
+	MuJB0RpfDIxXkBQP0N73k0D2Fhck5gJFIVpPMepyLGjfP5NJiCUvPy9VSpyXF2SHAEhRRmke
+	3ApYinvFKA70sTCvNMgoHmB6hJv0CmgJE9CSiTNugywpSURISTUw5mi9Ur3EIz9ronOHpn2d
+	fdwexZBm13+qnC8iI8/e+Mrdu3z+9mfdnurnnYqvPJbcox1/7Wd2xpE/J0sOa/mV 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263729>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263730>
 
-On 02/12/2015 10:28 AM, Jeff King wrote:
-> On Wed, Feb 11, 2015 at 09:21:04AM -0800, David Glasser wrote:
+On 02/09/2015 09:55 PM, Eric Sunshine wrote:
+> On Mon, Feb 9, 2015 at 4:12 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+>> [...]
+>> But we don't want the repository in an invalid state even temporarily,
+>> and we don't want leave an invalid state if other callers of "git
 > 
->> (I'm not sure if this should be a flag to --squash or to commit.
->> Maybe `git merge --squash`; `git commit --use-squashed-author`?  Seems
->> like it should be not too hard to implement; SQUASH_MSG is pretty
->> parseable.  Or just a config value.)
-> 
-> It sounds like "git commit -c" is close to what you want, which will
-> pull the author and commit message from a particular commit. But I don't
-> think there is a convenient way to name the commit in your case (it is
-> likely to be the first commit on the branch you are squash-merging, but
-> there isn't a shorthand for that).
-> 
-> I assume you are already munging in your editor the template provided by
-> "git commit" after the squash? What would be really nice, IMHO, is if
-> there was a way to set the author during that edit (e.g., by moving one
-> of the "Author:" lines to the top of the file). That would cover your
-> use case, I think, and would also be useful in general.
+> s/want/want to/
+> [...]
 
-If only Git supported options on todo list lines [1], this could be
-implemented via a "--use-author" option:
-
-    pick --use-author 1234556 blah
-    squash 84392ab etc
-    fixup 49106a5 another
-
-Happily, this would work with fixup, too, without forcing the user to go
-into the editor. Also, it wouldn't require metadata to be read in-band
-from the commit message.
+Thanks; will fix.
 
 Michael
-
-[1] http://article.gmane.org/gmane.comp.version-control.git/255410
 
 -- 
 Michael Haggerty
