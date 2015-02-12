@@ -1,129 +1,165 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 8/8] reflog_expire(): lock symbolic refs themselves, not
- their referent
-Date: Thu, 12 Feb 2015 17:52:18 +0100
-Message-ID: <54DCDA42.2060800@alum.mit.edu>
-References: <1423473164-6011-1-git-send-email-mhagger@alum.mit.edu>	<1423473164-6011-9-git-send-email-mhagger@alum.mit.edu>	<CAGZ79kaBGAOt-R1=mSG5H-5p=2UWjZEesktVwQcDAWFC-OW2Eg@mail.gmail.com>	<xmqq61b8t65x.fsf@gitster.dls.corp.google.com> <CAGZ79kaaQWRXhph=0g3SRHKXMoW8eAp7QG21yuWXWd7OW4M+uA@mail.gmail.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH 6/8] reflog_expire(): ignore --updateref for symbolic references
+Date: Thu, 12 Feb 2015 09:04:37 -0800
+Message-ID: <CAGZ79kbspWzoKFz50aPnpbPr8LXcKz9qAYTwoNe4dQfZCgt=zw@mail.gmail.com>
+References: <1423473164-6011-1-git-send-email-mhagger@alum.mit.edu>
+	<1423473164-6011-7-git-send-email-mhagger@alum.mit.edu>
+	<CAGZ79kZvM4FeHQ074kh7qhsz8cHgGaHxOruP7CM2DgPJErkA-w@mail.gmail.com>
+	<54DCD015.2080002@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Stefan Beller <sbeller@google.com>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 12 17:52:36 2015
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, "git@vger.kernel.org" <git@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Thu Feb 12 18:04:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YLx0F-0000vA-Mz
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Feb 2015 17:52:36 +0100
+	id 1YLxC3-0007kB-9i
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Feb 2015 18:04:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751061AbbBLQwb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Feb 2015 11:52:31 -0500
-Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:50668 "EHLO
-	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750900AbbBLQwa (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Feb 2015 11:52:30 -0500
-X-AuditID: 1207440c-f79376d00000680a-a3-54dcda45261c
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 29.9C.26634.54ADCD45; Thu, 12 Feb 2015 11:52:21 -0500 (EST)
-Received: from [192.168.69.130] (p4FC96396.dip0.t-ipconnect.de [79.201.99.150])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t1CGqJo1018441
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Thu, 12 Feb 2015 11:52:20 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.4.0
-In-Reply-To: <CAGZ79kaaQWRXhph=0g3SRHKXMoW8eAp7QG21yuWXWd7OW4M+uA@mail.gmail.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrCKsWRmVeSWpSXmKPExsUixO6iqOt6606IQW+njEXXlW4mi4beK8wW
-	b28uYbTonvKW0aK37xOrxebN7SwObB47Z91l91iwqdTj4iVlj8+b5AJYorhtkhJLyoIz0/P0
-	7RK4M94decJSME28YsmHq0wNjFeFuhg5OSQETCRW7u9khLDFJC7cW8/WxcjFISRwmVGiY9oJ
-	FgjnPJNE847lQA4HB6+AtsT5NZEgDSwCqhJf1l1jBrHZBHQlFvU0M4HYogJBEodOP2YBsXkF
-	BCVOznwCZosIeEmcWjeDGWQms8AtRokfHS/ZQRLCArESP+88ZAWxhQS2MEm0rXMDsTkFAiX+
-	nL8NNpRZQF3iz7xLzBC2vETz1tnMExgFZiHZMQtJ2SwkZQsYmVcxyiXmlObq5iZm5hSnJusW
-	Jyfm5aUW6Rrq5WaW6KWmlG5ihIQ4zw7Gb+tkDjEKcDAq8fAGGN8JEWJNLCuuzD3EKMnBpCTK
-	m3oTKMSXlJ9SmZFYnBFfVJqTWnyIUYKDWUmEN2oZUI43JbGyKrUoHyYlzcGiJM6rukTdT0gg
-	PbEkNTs1tSC1CCYrw8GhJMG7+QZQo2BRanpqRVpmTglCmomDE2Q4l5RIcWpeSmpRYmlJRjwo
-	VuOLgdEKkuIB2vsIpJ23uCAxFygK0XqKUVFKnPcWSEIAJJFRmgc3Fpa4XjGKA30pzMsM8hIP
-	MOnBdb8CGswENHjijNsgg0sSEVJSDYyaTL4dSxtL3OUrxWZ9+bv3m0NwbZbX89TrZcK37z1Z
-	uFDFbNexu3ym7CuytFdt/9lgIf/CIctz1qEY25x6Ld36VJ8vXR9eulQWnj+6iqXO 
+	id S1751006AbbBLREj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Feb 2015 12:04:39 -0500
+Received: from mail-ie0-f170.google.com ([209.85.223.170]:39149 "EHLO
+	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750931AbbBLREi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Feb 2015 12:04:38 -0500
+Received: by iecvy18 with SMTP id vy18so13302653iec.6
+        for <git@vger.kernel.org>; Thu, 12 Feb 2015 09:04:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=YHu+cLKxbEFcHi9s5EQNZFwHVuqOU3ApmdCC/mAxazo=;
+        b=p3PkChJxTexiWqh1Jphf+YYGz1DcAORjVN04EyJbUKJnmyQm7OIf69mFngR4bAGGXO
+         k5CC63tWYLmVSH2XVdoAbxqQ8jxRGfTcWDudCyxe7S4qXuQ3aS2jW4ZavyLf21K5O4BD
+         5OCdRdb/RhhFrBaC+HHa3db5e1UblXJ/vwRuQXh55s0AL9STkJSP46FxkIA+kh6g5eKt
+         FyPpX4u/kUxiQ5pIHffYESZX/p83+HDQCEbNcMAS6XiXVWjyxSJgHdqxKbZayLcjYlXA
+         SlPBxxPq7m+j+vdJ9oGjbkbC01v+k6zMAYwLWoOVqSv5UI7gIBVD9Xt3nh58t/807S+0
+         gDLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=YHu+cLKxbEFcHi9s5EQNZFwHVuqOU3ApmdCC/mAxazo=;
+        b=VCEC+XdljRH4nlAwP4gBF4LBaXRjF25tUi46Fa1R8ZXjFqBvE0aLgWsy/MDGhcw11J
+         NyEraCIZtcStHvN5CCZX7/VoD23f86FZtl+HNrodP074EuoiuniT9+ozIouKDuyyLKW8
+         PNvIEovzmMYSL83JwBrNsfLekZzIjJqwKBhf4OrL3pHmb2EPC8fVCRvmFLtwrYyvgMQw
+         1GBZjbpf0Zwh0v5pWoOpqWkWbZ6INN+onwLvu8Bq/vJFcHyoyxF6tdCzmKam19nFrhRS
+         2tDnN5s4gS/LrYDGkpUBjM1HMDlJjvcD2lQwNsRPEpTw2uXuhqtcZ5NWWaHHWwMAJojT
+         picQ==
+X-Gm-Message-State: ALoCoQmSwC9LuSAOn1LAZctrYdSWyOVXC2aR6LCMpNMP3vAIdMQKC6E6vBEtsHzAHGmUn5C09Z+J
+X-Received: by 10.50.222.44 with SMTP id qj12mr5129505igc.48.1423760678083;
+ Thu, 12 Feb 2015 09:04:38 -0800 (PST)
+Received: by 10.50.26.42 with HTTP; Thu, 12 Feb 2015 09:04:37 -0800 (PST)
+In-Reply-To: <54DCD015.2080002@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263743>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263744>
 
-On 02/12/2015 12:25 AM, Stefan Beller wrote:
-> On Wed, Feb 11, 2015 at 2:49 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Stefan Beller <sbeller@google.com> writes:
+On Thu, Feb 12, 2015 at 8:08 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> On 02/11/2015 01:44 AM, Stefan Beller wrote:
+>> On Mon, Feb 9, 2015 at 1:12 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
 >>
->>> On Mon, Feb 9, 2015 at 1:12 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
->>>> When processing the reflog of a symbolic ref, hold the lock on the
->>>> symbolic reference itself, not on the reference that it points to.
+>>> If we are expiring reflog entries for a symbolic reference, then how
+>>> should --updateref be handled if the newest reflog entry is expired?
 >>>
->>> I am not sure if that makes sense.
->>> So when expiring HEAD, you want to have a .git/HEAD.lock file
->>> instead of a .git/refs/heads/master.lock file?
+>>> Option 1: Update the referred-to reference. (This is what the current
+>>> code does.) This doesn't make sense, because the referred-to reference
+>>> has its own reflog, which hasn't been rewritten.
 >>>
->>> What would happen if there is a concurrent modification
->>> to the master branch?
+>>> Option 2: Update the symbolic reference itself (as in, REF_NODEREF).
+>>> This would convert the symbolic reference into a non-symbolic
+>>> reference (e.g., detaching HEAD), which is surely not what a user
+>>> would expect.
+>>>
+>>> Option 3: Error out. This is plausible, but it would make the
+>>> following usage impossible:
+>>>
+>>>     git reflog expire ... --updateref --all
+>>>
+>>> Option 4: Ignore --updateref for symbolic references.
+>>>
 >>
->> The HEAD may be pointing at 'master' and the other party that is
->> trying to modify it would fail when it tries to update the reflog
->> for HEAD thanks to HEAD.lock being held by us.  The HEAD may be
->> pointing at 'next' and the other part that updates 'master' would
->> not try to modify HEAD reflog and we do not conflict.
+>> Ok let me ask a question first about the symbolic refs.
 >>
->> At least, I think that is the rationale behind this change.
-> 
-> That makes sense! Do we have documentation on symrefs?
-> 
-> Originally I was wondering if this would make things
-> complicated for  symbolic branches which are not HEAD.
-> Then you could update the branch pointed to, because it
-> has no lock as the lock is on the symref. On the other hand
-> this seems to be an improvement, as you cannot move the
-> symref itself, as it has the lock and we don't really have other
-> symrefs?
+>> We used to use symbolic links for that, but because of
+>> portability issues we decided to not make it a link, but rather
+>> a standard file containing the pointing link (The content of
+>> .git/HEAD is "ref: refs/heads/master\n" except when detached)
+>>
+>> So this is the only distinction? Or is there also a concept of
+>> symbolic links/pointers for the reflog handling?
+>
+> A symbolic reference can have a reflog just like a normal reference can.
 
-The convention is that holding lock $GIT_DIR/$refname.lock (where
-$refname might be, for example, "HEAD" or "refs/heads/master") protects
-two things:
+Yes I can understand that, maybe I was thinking one step
+further in the wrong direction. The question was rather:
+Do we have symbolic reflogs, i.e.
+$ cat .git/logs/<some_ref>:
+symbolic log: find log in other reflog
 
-* The loose-reference file $GIT_DIR/$refname
-* The reflog file $GIT_DIR/logs/$refname
+>
+> When a reference is updated through a symbolic reference, then
+> write_ref_sha1() writes a reflog entry for both the reference and the
+> symbolic reference. Also (as an extra kludge), if *any* reference is
+> updated directly and it happens to be the current HEAD reference, then
+> an entry is added to HEAD's reflog.
 
-And this makes sense:
+Yes because we cannot do inverse symref resolution, we have this kludge
+(with the long comment, "This should do 99% of the time in theory
+and 100% in practise") of checking if it is also HEAD whenever we
+touch another ref.
 
-Suppose that HEAD is refs/heads/master. These two thing have independent
-reflogs, so there is no reason that one process can't be expiring the
-reflog of HEAD while another expires the reflog of refs/heads/master.
+>
+> "HEAD" is the only symbolic reference that is ever transferred across
+> repositories.
+>
+> Symbolic references are always stored loose (i.e., not in packed-refs).
+>
+> Does that answer your questions?
+>
+>>> We choose to implement option 4.
+>>
+>> You're only saying why the other options are insane, not why this
+>> is sane.
+>>
+>> Also I'd rather tend for option 3 than 4, as it is a safety measure
+>> (assuming we give a hint to the user what the problem is, and
+>> how it is circumventable)
+>
+> This is a pretty exotic usage. I can't think of any real-life use case
+> for using "--updateref" together with a symbolic reference. In our
+> entire code base, "--updateref" is only used a single time, in
+> "git-stash.sh", and that is always for "refs/stash", which is never a
+> symbolic reference. "git-stash" itself is implemented in a very stylized
+> way ("stylized" being a polite way of saying "bizarre"), and I doubt
+> that there are many more users of this option in the wild, let alone
+> "--updateref" together with a symbolic reference.
+>
+> So, honestly, I don't think it is worth the effort of deciding between 3
+> vs. 4. Since 4 is easier to implement (and already implemented), I'd
+> rather leave it as is. If you want to submit a patch implementing 3, I
+> won't argue against it.
 
-The behavior before this patch was that the reflog for "HEAD" was
-modified while holding the reflog for "refs/heads/master". This is too
-strict and would make those two processes contend unnecessarily.
+I am not going to bring a patch for option 3. I just learned to be extra
+suspicious if we want to drop something silently, so I wanted to
+understand in what circumstances we'd run into trouble with that.
+That said:
 
-I can't think of a reason that the current behavior is unsafe. But it's
-more restrictive than necessary, and more confusing than necessary. My
-guess is that it was unintended (i.e., a bug). It dates from
+Reviewed-by: Stefan Beller <sbeller@google.com>
 
-    68db31cc28 (2007-05-09) git-update-ref: add --no-deref option for
-overwriting/detaching ref
-
-which initially added the REF_NODEREF constant and probably forgot that
-the new flag should be used in this invocation.
-
-However, another important question is whether other Git implementations
-have copied this unusual locking policy. If so, that would be a reason
-not to change it. I just pinged the libgit2 maintainer to find out their
-policy. Maybe you could find out about JGit?
-
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
+>
+> Michael
+>
+> --
+> Michael Haggerty
+> mhagger@alum.mit.edu
+>
