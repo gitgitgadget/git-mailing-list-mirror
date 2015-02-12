@@ -1,134 +1,131 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Keep original author with git merge --squash?
-Date: Thu, 12 Feb 2015 15:32:37 -0800
-Message-ID: <xmqqwq3mogdm.fsf@gitster.dls.corp.google.com>
-References: <CAN7QDoKQAZKUt_MHWjgt1k3PvXQv6XTcjdijh8KRodO3=VD47A@mail.gmail.com>
-	<20150212092824.GA19626@peff.net>
-	<xmqqpp9erihg.fsf@gitster.dls.corp.google.com>
-	<CAN7QDoLKFBCJpFa+QL8dPQtwyAyDNt-ck_sNJ3fS+vTrK_Lg9w@mail.gmail.com>
-	<xmqq8ug2rfi2.fsf@gitster.dls.corp.google.com>
-	<CAN7QDoJ+hOFqoc54sAbLeSxvj8TQKQRSVKbNQXZYfPv1uOy=WA@mail.gmail.com>
-	<xmqq4mqqrc70.fsf@gitster.dls.corp.google.com>
-	<20150212225003.GA20763@peff.net>
+Subject: Re: [PATCH 0/3] Win32: nanosecond-precision file times
+Date: Thu, 12 Feb 2015 15:38:13 -0800
+Message-ID: <xmqqsieaog4a.fsf@gitster.dls.corp.google.com>
+References: <54DBEAA5.6000205@gmail.com>
+	<xmqqbnkysygl.fsf@gitster.dls.corp.google.com>
+	<54DD2FDA.7030604@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: David Glasser <glasser@davidglasser.net>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Feb 13 00:32:49 2015
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,  msysGit <msysgit@googlegroups.com>, Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Karsten Blees <karsten.blees@gmail.com>
+X-From: msysgit+bncBCG77UMM3EJRBZ7S6STAKGQEGXP5AZA@googlegroups.com Fri Feb 13 00:38:18 2015
+Return-path: <msysgit+bncBCG77UMM3EJRBZ7S6STAKGQEGXP5AZA@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-ie0-f183.google.com ([209.85.223.183])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YM3FV-00055m-1a
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Feb 2015 00:32:45 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752106AbbBLXck (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Feb 2015 18:32:40 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:54580 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751325AbbBLXck (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Feb 2015 18:32:40 -0500
+	(envelope-from <msysgit+bncBCG77UMM3EJRBZ7S6STAKGQEGXP5AZA@googlegroups.com>)
+	id 1YM3Kq-0007mT-W0
+	for gcvm-msysgit@m.gmane.org; Fri, 13 Feb 2015 00:38:17 +0100
+Received: by iebtr6 with SMTP id tr6sf1058435ieb.2
+        for <gcvm-msysgit@m.gmane.org>; Thu, 12 Feb 2015 15:38:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe;
+        bh=2KrsRL9o9TpCLZaxALzqvjYE29V2PP2Pu+aDxukbO7Q=;
+        b=GFf0sxvZV7saUEfpSFFKngA8RHdX8xglejqH3Tl+1H1KqgSdHKzwxdKxStLIgUBbdY
+         74c0VnY1ud9a+J/7Pk62qNw0O9LTVUE/+GUbhF8fwwRt1c8ft1fhk0p97g6TGManvFA5
+         1pUdsPp+zzazQdnI4VEf+Aef8ohddKkIE1dTRZG7UOXjjXzximgEOlgbxqdQDvmpZHqo
+         JbKyMb9wKvxywHJYvbbjrC0IeINjNu5tjFWpJov3UtJc8fQKYPw6RgEk83puZr+GiObg
+         Il/sJ+Iadj1lDUQy8iNMgwIBU6mOMYC0ed7+AId/GsxX5PtKAYvTk2F4E+2ghw3mrz69
+         EsKQ==
+X-Received: by 10.140.40.242 with SMTP id x105mr89977qgx.14.1423784296175;
+        Thu, 12 Feb 2015 15:38:16 -0800 (PST)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.140.25.145 with SMTP id 17ls1113089qgt.82.gmail; Thu, 12 Feb
+ 2015 15:38:15 -0800 (PST)
+X-Received: by 10.236.2.227 with SMTP id 63mr6274938yhf.12.1423784295761;
+        Thu, 12 Feb 2015 15:38:15 -0800 (PST)
+Received: from sasl.smtp.pobox.com (pb-smtp1.int.icgroup.com. [208.72.237.35])
+        by gmr-mx.google.com with ESMTP id jn10si254960igb.3.2015.02.12.15.38.15
+        for <msysgit@googlegroups.com>;
+        Thu, 12 Feb 2015 15:38:15 -0800 (PST)
+Received-SPF: pass (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted sender) client-ip=208.72.237.35;
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9B2393857D;
-	Thu, 12 Feb 2015 18:32:39 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=A94WTUPp8REw1iliy5/vQM33JUs=; b=ajViwY
-	5RmNfiaMtNu01c6UbAk3Xlxf8ZjvUMlo4gzk+gtxP0ue7kP8sntFgZw3oYcnva1x
-	LTSVb2KIHapxAvqxdYn/B9wXGAyl90EvN1b9QIVQzYh1X/+1JheDxHA1izzB0lqc
-	VuFw3D/wTzMN6UknPOF2ElNrGRPRkJ0/sfYLI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NHTFZyxEwkBly+IqudvW+yjhWwwlt1cN
-	IW6RCtG7IT7ZW2SNkDympNCokamXBG+fC5Tv8ekGBjdJgcc7O4lQqjsG1wBO79+q
-	07pB1yqL5OMJYUJcYtMXWmZ4jBUTrzjwzE8HSBxRuoy+Eh7Gf72ATCtOyQ8SjaT8
-	0fYRWhkU2E8=
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id DF7D7386F8;
+	Thu, 12 Feb 2015 18:38:14 -0500 (EST)
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 91F3B3857B;
-	Thu, 12 Feb 2015 18:32:39 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D6CF6386F6;
+	Thu, 12 Feb 2015 18:38:14 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0EB663857A;
-	Thu, 12 Feb 2015 18:32:38 -0500 (EST)
-In-Reply-To: <20150212225003.GA20763@peff.net> (Jeff King's message of "Thu,
-	12 Feb 2015 17:50:03 -0500")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5D0CE386F5;
+	Thu, 12 Feb 2015 18:38:14 -0500 (EST)
+In-Reply-To: <54DD2FDA.7030604@gmail.com> (Karsten Blees's message of "Thu, 12
+	Feb 2015 23:57:30 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 6EAD7476-B30F-11E4-931D-A4119F42C9D4-77302942!pb-smtp1.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263788>
+X-Pobox-Relay-ID: 36957D94-B310-11E4-A704-A4119F42C9D4-77302942!pb-smtp1.pobox.com
+X-Original-Sender: gitster@pobox.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted
+ sender) smtp.mail=junio@pobox.com;       dkim=pass header.i=@pobox.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263789>
 
-Jeff King <peff@peff.net> writes:
+Karsten Blees <karsten.blees@gmail.com> writes:
 
-> What happens if there is no "Author:" line in the output?
-
-I've been assuming that we would do what the current code does.
-"git commit --amend" for example internally remembers who the
-original author was and uses that, without paying any attention to
-the result from the editor.  If there is no "Author:", that would
-not change.
-
-And I do not think we need to be able to say "Oops, I forgot to pass
-the --reset-author option from the command line", personally, so...
-
-> So probably a saner thing is that a missing "Author:" line does nothing,
-
-yes and
-
-> and using "Author: " (with no text) does a reset.
-
-no (I do not think it is wrong per-se, but I do not think such a
-good idea).
-
-> Also, on the topic of "merge --squash". I never use it myself, but
-> having experimented with it due to this thread, I found the template it
-> sticks into COMMIT_EDITMSG to be horribly unfriendly for munging. For
-> example, with two simple commits, I get:
+> This is more about copying 'old' things around, which usually also
+> copies mtime on Windows. E.g.:
 >
->     Squashed commit of the following:
->     
->     commit 6821a8ac920ed00675e4aec10dcef705211105cd
->     Author: Jeff King <peff@peff.net>
->     Date:   Thu Feb 12 17:39:28 2015 -0500
->     
->         commit subject 2
->     
->         commit body 2
->     
->     commit b0840bb4bbfe00b6ed8c7c4d483f11d126fa2d69
->     Author: Jeff King <peff@peff.net>
->     Date:   Thu Feb 12 17:39:28 2015 -0500
->     
->         commit subject 1
->     
->         commit body 1
+>   # create two files with slightly different mtime
+>   for i in {1..10}; do (echo "v1" >> test); done &&
+>   for i in {1..10}; do (echo "v2" >> test2); done
+>   # wait a bit so that '.git/index' is always newer than 'test' / 'test2'
+>   sleep 1
+>   git add test
+>   git commit -m v1
+>   # copy test2 over test (similar to 'cp -p', but native 'copy' also
+>   # copies mtime nanoseconds)
+>   cmd //c "copy /y test2 test"
+>   git add test
+>   git commit -m v2
 >
-> I guess that is helpful if you want to keep a complete log of what got
-> squashed, but I doubt that is the common case (if you did, then doing a
-> real merge would probably be in order).
+> Without these patches, git does not detect the change, and the second
+> git add / git commit are noops.
 
-I think it should show exactly the same thing as "rebase -i" squash
-insn would give you.  People already know how to munge that, right?
+We do have sec/nsec fields in cache_time structure, so I have
+nothing against updating the msysGit port to fill that value.
 
-> It also raises a question for the proposal in this thread: if there are
-> multiple "Author:" lines, which one do we take? The first, or the last?
+I was and am just reacting to the fact that this is sold as if it
+"fixes" something.  It doesn't fundamentally change the fact that
+mtime that does not follow the semantics Dscho mentioned in his
+earlier message does not work well with Git.
 
-I was siding with David's "pay attention to in-buffer Author: only
-when all of them agree".  When squash-merging a branch with two or
-more authors, we would attribute the authorship silently and
-automatically to you if you do not do anything special otherwise.
+Having said that, even with such a patch, as long as the system is
+sufficiently fast, test and test2 will have nonoseconds identical
+timestamp and you would have the same issue, no?
 
-Possible alternatives when multiple "Author:"s do not agree are:
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
- - use you who is playing the integrator;
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
 
- - use the tip;
-
- - use the one that most often appears; or
-
- - error out and ask the user to leave only one (or zero--if you
-   want to take the authorship) by re-attempting "git commit".
+--- 
+You received this message because you are subscribed to the Google Groups "Git for Windows" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
