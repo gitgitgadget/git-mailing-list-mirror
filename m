@@ -1,68 +1,76 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: Re: [ANNOUNCE] Git Merge, April 8-9, Paris
-Date: Thu, 12 Feb 2015 21:16:34 +0100
-Message-ID: <54DD0A22.1030608@gmail.com>
-References: <20150123233755.GA10264@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Keep original author with git merge --squash?
+Date: Thu, 12 Feb 2015 12:18:51 -0800
+Message-ID: <xmqqpp9erihg.fsf@gitster.dls.corp.google.com>
+References: <CAN7QDoKQAZKUt_MHWjgt1k3PvXQv6XTcjdijh8KRodO3=VD47A@mail.gmail.com>
+	<20150212092824.GA19626@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 12 21:17:00 2015
+Content-Type: text/plain
+Cc: David Glasser <glasser@davidglasser.net>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Feb 12 21:18:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YM0C2-0003Bs-6h
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Feb 2015 21:16:58 +0100
+	id 1YM0Dz-0004AB-2j
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Feb 2015 21:18:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751092AbbBLUQy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Feb 2015 15:16:54 -0500
-Received: from plane.gmane.org ([80.91.229.3]:52128 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751038AbbBLUQy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Feb 2015 15:16:54 -0500
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1YM0Bq-00034v-Lg
-	for git@vger.kernel.org; Thu, 12 Feb 2015 21:16:46 +0100
-Received: from p5b156861.dip0.t-ipconnect.de ([91.21.104.97])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 12 Feb 2015 21:16:46 +0100
-Received: from sschuberth by p5b156861.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 12 Feb 2015 21:16:46 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: p5b156861.dip0.t-ipconnect.de
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
-In-Reply-To: <20150123233755.GA10264@peff.net>
+	id S1751201AbbBLUSz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Feb 2015 15:18:55 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:56921 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751099AbbBLUSy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Feb 2015 15:18:54 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9DAFA3700C;
+	Thu, 12 Feb 2015 15:18:53 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=aGVYBzqFspt+R4EuKsIRU6M+igM=; b=O3I3EL
+	t5NxEbQ589bkeF8sVHnpcfhcEqOowVWp/KwLDZjU4Vg6W3Nb4W7QnErJ1GO2hnyP
+	Av3Q3duX483rZJsnSWBbiP6q5+LZvNjPHiFvG0UmpngjnCMx3/pgecL3gMLaZn8X
+	EazC492kLrbj9FbEbt6nNUmPI9OtyEPu5Bc94=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=lnInWMYJjothR09wr2CEZmXkQkG6HgBL
+	wv9EGPeAIIUwzsOa/NY1dT2jI1dvSejXuUEftf3tZCjrIriKUrPc7f6jAojhpPpd
+	YmRnDbF/8rAkv6VW/FPpk1Je3a9vIAdwWXMSVZW8QT6ev0tEobKP2xk2sf7cca7w
+	et7uPfzzs40=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 93B1D3700B;
+	Thu, 12 Feb 2015 15:18:53 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 12B2F3700A;
+	Thu, 12 Feb 2015 15:18:52 -0500 (EST)
+In-Reply-To: <20150212092824.GA19626@peff.net> (Jeff King's message of "Thu,
+	12 Feb 2015 04:28:24 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 5D0DA85A-B2F4-11E4-AEC9-A4119F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263761>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263762>
 
-On 24.01.2015 00:37, Jeff King wrote:
+Jeff King <peff@peff.net> writes:
 
-> GitHub is organizing a Git-related conference to be held April 8-9,
-> 2015, in Paris.  Details here:
+> On Wed, Feb 11, 2015 at 09:21:04AM -0800, David Glasser wrote:
 >
->    http://git-merge.com/
+>> (I'm not sure if this should be a flag to --squash or to commit.
+>> Maybe `git merge --squash`; `git commit --use-squashed-author`?  Seems
+>> like it should be not too hard to implement; SQUASH_MSG is pretty
+>> parseable.  Or just a config value.)
 >
-> The exact schedule is still being worked out, but there is going to be
-> some dedicated time/space for Git (and libgit2 and JGit) developers to
-> meet and talk to each other.
->
-> If you have patches in Git, I'd encourage you to consider attending. If
-> travel finances are a problem, please talk to me. GitHub may be able to
-> defray the cost of travel.
->
-> I hope to see people there!
+> It sounds like "git commit -c" is close to what you want, which will
+> pull the author and commit message from a particular commit. But I don't
+> think there is a convenient way to name the commit in your case (it is
+> likely to be the first commit on the branch you are squash-merging, but
+> there isn't a shorthand for that).
 
-Forwarding this to the Windows-specific Git lists for people who are 
-only subscribed over there ...
-
--- 
-Sebastian Schuberth
+I thought David was primarily interested in the case where a branch
+authored by a single person, so specifying the tip of the branch
+being "merged" would be sufficient, no?
