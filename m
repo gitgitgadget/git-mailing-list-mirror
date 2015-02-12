@@ -1,117 +1,127 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: Re: [ANNOUNCE] Git Merge, April 8-9, Paris
-Date: Thu, 12 Feb 2015 21:23:23 +0100
-Message-ID: <54DD0BBB.60806@gmail.com>
-References: <20150123233755.GA10264@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/3] transport-helper: emit progress and verbosity options after asking for capabilities
+Date: Thu, 12 Feb 2015 12:28:24 -0800
+Message-ID: <xmqqlhk2ri1j.fsf@gitster.dls.corp.google.com>
+References: <1423735801-11108-1-git-send-email-mh@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-To: Jeff King <peff@peff.net>, git@vger.kernel.org, 
- msysGit <msysgit@googlegroups.com>,
- git-win-sdk@googlegroups.com, git-for-windows@googlegroups.com
-X-From: msysgit+bncBDZMLEGXWQLBB44X6STAKGQEQP4UMXA@googlegroups.com Thu Feb 12 21:24:21 2015
-Return-path: <msysgit+bncBDZMLEGXWQLBB44X6STAKGQEQP4UMXA@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-we0-f192.google.com ([74.125.82.192])
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Thu Feb 12 21:28:34 2015
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDZMLEGXWQLBB44X6STAKGQEQP4UMXA@googlegroups.com>)
-	id 1YM0JA-000710-Fw
-	for gcvm-msysgit@m.gmane.org; Thu, 12 Feb 2015 21:24:20 +0100
-Received: by mail-we0-f192.google.com with SMTP id w62sf3020003wes.9
-        for <gcvm-msysgit@m.gmane.org>; Thu, 12 Feb 2015 12:24:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=message-id:date:from:user-agent:mime-version:newsgroups:to:subject
-         :references:in-reply-to:content-type:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe;
-        bh=LiJHsoEKMlGEsqXNaz94rwU7Y1g/gl/LtC+62GqA79E=;
-        b=cV3jQH49TBXp0H2/RhkWtseoI06i6guoZXJdi5y6du+aRxlXwQ3si5TJU4Sgh3OhgI
-         oREJvwm6fqz+8LeyjyztB2Iln+Hjlri548EjyLosFvfSjMlsWiEZg1ZYXXWNS3PwfWMx
-         f2Tia7jgxO/tlNdoJ6WqbLuxGgpq538KdxLv4kvv3IBesfzsNuVts6fh/BcKJGCcodaQ
-         +bj/yxagirkSCR03CV1XUU24W+fqwXBcxlc2T35tuqJDexDaGN//VIbta1Exu9n09TZ+
-         cZW+BbKOarbQ3vhGVLH3bHx4GbCC5nf6V0xZIbjY03G5GeQGFrlSxyTsKEyCaSb1f+2v
-         irEw==
-X-Received: by 10.180.10.38 with SMTP id f6mr53405wib.11.1423772660064;
-        Thu, 12 Feb 2015 12:24:20 -0800 (PST)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.80.168 with SMTP id s8ls220191wix.2.canary; Thu, 12 Feb
- 2015 12:24:19 -0800 (PST)
-X-Received: by 10.180.89.194 with SMTP id bq2mr786616wib.4.1423772659024;
-        Thu, 12 Feb 2015 12:24:19 -0800 (PST)
-Received: from mail-wi0-x232.google.com (mail-wi0-x232.google.com. [2a00:1450:400c:c05::232])
-        by gmr-mx.google.com with ESMTPS id o9si2611080wiw.0.2015.02.12.12.24.19
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 12 Feb 2015 12:24:19 -0800 (PST)
-Received-SPF: pass (google.com: domain of sschuberth@gmail.com designates 2a00:1450:400c:c05::232 as permitted sender) client-ip=2a00:1450:400c:c05::232;
-Received: by mail-wi0-f178.google.com with SMTP id em10so7321893wid.5;
-        Thu, 12 Feb 2015 12:24:19 -0800 (PST)
-X-Received: by 10.180.187.200 with SMTP id fu8mr9894134wic.28.1423772650378;
-        Thu, 12 Feb 2015 12:24:10 -0800 (PST)
-Received: from [192.168.188.20] (p5B156861.dip0.t-ipconnect.de. [91.21.104.97])
-        by mx.google.com with ESMTPSA id ch6sm7116511wjc.3.2015.02.12.12.24.09
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 12 Feb 2015 12:24:09 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <20150123233755.GA10264@peff.net>
-X-Original-Sender: sschuberth@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of sschuberth@gmail.com designates 2a00:1450:400c:c05::232
- as permitted sender) smtp.mail=sschuberth@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263764>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1YM0NC-0000lH-TP
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Feb 2015 21:28:31 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1750943AbbBLU21 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Feb 2015 15:28:27 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:57219 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750810AbbBLU20 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Feb 2015 15:28:26 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id DE4CC372AC;
+	Thu, 12 Feb 2015 15:28:25 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=UHNKQSszOF6IZYg2y5M6vJzvT6A=; b=H/T5El
+	swBvEtyzIyvSCVeg9ZIbg4dLFYIrYOXACeOfZPHrg2pIhzZhECNJp0LpG3BJgTHJ
+	2q068Q9LLP2g1PQSiIqRY/Ne1dli+VzZiykhuL+WgSpNrFa9+LfE/v3sg0OG0u9q
+	GZPF8RenLX3o2TiYjPruJhkU8K22OEa2cgwGk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=d1nt/nLG3al9mz+NT6lSmeQ//KGIWTLB
+	lwtlaWXfARig58VS8VejR9YrArjS381MEOqsOV9CmCU6dp6KmcX67tanhe5em4X/
+	1ocOWmqH/FyYqAmTfp9F66AruAdT7tqghxmTLkVH+2rkNbIgqqZzCZyBFcI5t6qY
+	pAqcPMHCB1E=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D3F24372AB;
+	Thu, 12 Feb 2015 15:28:25 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 39C29372A9;
+	Thu, 12 Feb 2015 15:28:25 -0500 (EST)
+In-Reply-To: <1423735801-11108-1-git-send-email-mh@glandium.org> (Mike
+	Hommey's message of "Thu, 12 Feb 2015 19:09:59 +0900")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: B215E06E-B2F5-11E4-9941-A4119F42C9D4-77302942!pb-smtp1.pobox.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263765>
 
-On 24.01.2015 00:37, Jeff King wrote:
+Mike Hommey <mh@glandium.org> writes:
 
-> GitHub is organizing a Git-related conference to be held April 8-9,
-> 2015, in Paris.  Details here:
+> Currently, the progress and verbosity options are only emitted for the fetch
+> and push commands, but they should also be emitted for other commands, such as
+> import or export, and, why not, even list.
 >
->    http://git-merge.com/
+> Signed-off-by: Mike Hommey <mh@glandium.org>
+> ---
+
+I had a hard time understanding what you are trying to achieve.  The
+word "emit" may be techinically correct from the point of view of
+this program, but wouldn't there be a better word to describe what
+is being achieved by this program "emit"ting the additional output
+lines?
+
+Perhaps "ask the helper to enable progress and verbosity capabilities"
+or somesuch?
+
+They "should also be emitted" may also want to be justified in a
+better way, by describing what _bad_ things the current code that
+lacks this patch is doing as a bug.
+
+Perhaps like "The current transport-helper.c code does not tell a
+remote helper that uses the import and export interface to enable
+progress and verbosity capabilities, even if the helper supports
+them."
+
+Is there a downside of doing this?  I do not think of any offhand.
+
+Thanks.
+
+>  transport-helper.c | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
 >
-> The exact schedule is still being worked out, but there is going to be
-> some dedicated time/space for Git (and libgit2 and JGit) developers to
-> meet and talk to each other.
->
-> If you have patches in Git, I'd encourage you to consider attending. If
-> travel finances are a problem, please talk to me. GitHub may be able to
-> defray the cost of travel.
->
-> I hope to see people there!
-
-Forwarding this to the Windows-specific Git lists for people who are 
-only subscribed over there ...
-
--- 
-Sebastian Schuberth
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "Git for Windows" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+> diff --git a/transport-helper.c b/transport-helper.c
+> index 0224687..23a741c 100644
+> --- a/transport-helper.c
+> +++ b/transport-helper.c
+> @@ -98,6 +98,8 @@ static void do_take_over(struct transport *transport)
+>  	free(data);
+>  }
+>  
+> +static void standard_options(struct transport *t);
+> +
+>  static struct child_process *get_helper(struct transport *transport)
+>  {
+>  	struct helper_data *data = transport->data;
+> @@ -212,6 +214,7 @@ static struct child_process *get_helper(struct transport *transport)
+>  	strbuf_release(&buf);
+>  	if (debug)
+>  		fprintf(stderr, "Debug: Capabilities complete.\n");
+> +	standard_options(transport);
+>  	return data->helper;
+>  }
+>  
+> @@ -339,7 +342,6 @@ static int fetch_with_fetch(struct transport *transport,
+>  	int i;
+>  	struct strbuf buf = STRBUF_INIT;
+>  
+> -	standard_options(transport);
+>  	if (data->check_connectivity &&
+>  	    data->transport_options.check_self_contained_and_connected)
+>  		set_helper_option(transport, "check-connectivity", "true");
+> @@ -824,7 +826,6 @@ static int push_refs_with_push(struct transport *transport,
+>  		return 0;
+>  	}
+>  
+> -	standard_options(transport);
+>  	for_each_string_list_item(cas_option, &cas_options)
+>  		set_helper_option(transport, "cas", cas_option->string);
