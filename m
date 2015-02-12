@@ -1,117 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 03/12] struct ref_update: move "have_old" into "flags"
-Date: Thu, 12 Feb 2015 11:15:32 -0800
-Message-ID: <xmqqsiebrlez.fsf@gitster.dls.corp.google.com>
-References: <1423739543-1025-1-git-send-email-mhagger@alum.mit.edu>
-	<1423739543-1025-4-git-send-email-mhagger@alum.mit.edu>
-	<CAGZ79kYqx8s8Cz29Qn1aBtCnDOkR-Guk4RM-_KQeO+nHWv=r8w@mail.gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git svn import failure : write .git/Git_svn_hash_BmjclS: Bad
+ file descriptor
+Date: Thu, 12 Feb 2015 19:18:07 +0000
+Message-ID: <20150212191807.GA30062@dcvr.yhbt.net>
+References: <CABNxngNDwf_Cy77OzvMg__kCNoTz5y1a2KKG1vobYjE_m_aLkQ@mail.gmail.com>
+ <20150129233429.GA7162@dcvr.yhbt.net>
+ <CABNxngPErFiTzUNK6P90Ug5fVtJSYD9XrGrQzK8+mt2u4g=Xyg@mail.gmail.com>
+ <20150130002247.GA22519@dcvr.yhbt.net>
+ <CABNxngMVsaSLmzf0ZsaXZqXhD+hOaRmz-uuSzm0ALDFhKjnrXA@mail.gmail.com>
+ <20150130013017.GA10713@dcvr.yhbt.net>
+ <CAK6Z60cGnvPP0ctnyV4tHfMmBGYRidEJzkAG+J2h9BunmtOAsQ@mail.gmail.com>
+ <CABNxngNH20O52QHSivQLvRFSW2hqnVTYuBv0CWn1L53cL+XoGw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Thu Feb 12 20:15:48 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Nico =?utf-8?B?U2NobMO2bWVy?= <nico.schloemer@gmail.com>,
+	git@vger.kernel.org, Minty <mintywalker@gmail.com>,
+	Mike <ipso@snappymail.ca>, Junio C Hamano <gitster@pobox.com>
+To: Valery Yundin <yuvalery@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 12 20:18:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YLzEo-0003st-Jm
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Feb 2015 20:15:46 +0100
+	id 1YLzHC-0005Ak-NR
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Feb 2015 20:18:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751188AbbBLTPm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Feb 2015 14:15:42 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:61463 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750912AbbBLTPl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Feb 2015 14:15:41 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 213E235CC8;
-	Thu, 12 Feb 2015 14:15:35 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=oM9lhlJPOMUSgGP4s/wl+UEuW80=; b=q3aDas
-	+Nu/DBaxrCX8GD+PYVmoYIf7RpI3hn3UTC1KqWfeImSvWDE9yJ6MKchuEojQyILr
-	ZhWwsCf7vBFSfx46nHhkKDo5ALXFEdDu+zpYDSbsLwtcaZJUygIsEOy+ElFZSLpL
-	JpeTsXLQGmUo4xQJ+nHrrmKDNtpgv6FM2ayvk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=oNwGAdA0ABL7tCSY4QCBYzMcGOo1MlU0
-	PFw7szaQoRVeJ0zTYl8rwIZyNR4bvUl8RQevdl/en+tzVRmSSIhDf+SS6Ot1yx+t
-	2KFLFb0hVE9vOOUulaDZ0/kZbLQai/VZ2pZQ82fi5LYfLWll7njZxwAhYN1iUplr
-	3ygxE8USfU0=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0FF4C35CC7;
-	Thu, 12 Feb 2015 14:15:35 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 55BC635CC6;
-	Thu, 12 Feb 2015 14:15:33 -0500 (EST)
-In-Reply-To: <CAGZ79kYqx8s8Cz29Qn1aBtCnDOkR-Guk4RM-_KQeO+nHWv=r8w@mail.gmail.com>
-	(Stefan Beller's message of "Thu, 12 Feb 2015 10:08:14 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 8447A60E-B2EB-11E4-8D43-A4119F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751269AbbBLTSJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Feb 2015 14:18:09 -0500
+Received: from dcvr.yhbt.net ([64.71.152.64]:41424 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751099AbbBLTSI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Feb 2015 14:18:08 -0500
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id AA35C633842;
+	Thu, 12 Feb 2015 19:18:07 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <CABNxngNH20O52QHSivQLvRFSW2hqnVTYuBv0CWn1L53cL+XoGw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263751>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263752>
 
-Stefan Beller <sbeller@google.com> writes:
-
-> On Thu, Feb 12, 2015 at 3:12 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
->> -       int flags; /* REF_NODEREF? */
->> -       int have_old; /* 1 if old_sha1 is valid, 0 otherwise */
->> +       /*
->> +        * One or more of REF_HAVE_OLD, REF_NODEREF,
->> +        * REF_DELETING, and REF_IS_PRUNING:
->> +        */
->> +       int flags;
+Valery Yundin <yuvalery@gmail.com> wrote:
+> On 31 January 2015 at 13:51, Nico Schl=C3=B6mer <nico.schloemer@gmail=
+=2Ecom> wrote:
+> > I tried the patch and I still get
+> > ```
+> > [...]
+> > r100 =3D e2a9b5baa2cebb18591ecb04ff350410d52f36de (refs/remotes/git=
+-svn)
+> > Unexpected result returned from git cat-file at
+> > /home/nschloe/share/perl/5.18.2/Git/SVN/Fetcher.pm line 335.
+> > Failed to read object 619f9d1d857fb287d06a70c9dac6b8b534d0de6a at
+> > /home/nschloe/share/perl/5.18.2/Git/SVN/Fetcher.pm line 336, <GEN16=
 >
-> Nit:
-> I'd find it more readable if it would be:
->     /*
->      * One or more of
->      * REF_HAVE_OLD,
->      * REF_NODEREF,
->      * REF_DELETING,
->      * REF_IS_PRUNING:
->      * whose definition is found at the top of this file.
->      */
+> > line 757.
+> >
+> > error closing pipe: Bad file descriptor at
+> > /home/nschloe/libexec/git-core/git-svn line 0.
+> > error closing pipe: Bad file descriptor at
+> > /home/nschloe/libexec/git-core/git-svn line 0.
+> > ```
+> > when
+> > ```
+> > git svn clone https://geuz.org/svn/gmsh/trunk
+>=20
+> It seems that the same commit dfa72fdb96 is responsible for the error
+> in "git svn clone https://geuz.org/svn/gmsh/trunk". But unlike in my
+> case, the patch doesn't fix it.
 
-I wouldn't do either, though, as you would have to keep repeating
-yourself here and over there.  Wouldn't it be sufficient to:
+(top-posting corrected)
 
- - Have a header that says "these are bits meant to go to struct
-   ref_update.flags" at the beginning of series of #define's;
+Odd, I managed to clone that without issues, but I couldn't reproduce
+this problem with or without the tempfile clearing patch applied.
 
- - Say "ref_update.flags bits are defined above" here.  The phrasing
-   can be "One or more of REF_HAVE_OLD, etc. defined above." as long
-   as it is clear that this is not meant to be an exhausitive list.
+   git svn clone --username gmsh https://geuz.org/svn/gmsh/trunk
 
-Also, unless we are taking advantage of the fact that MSB is special
-in signed integral types [*1*], I would prefer to see us use an
-unsigned type to store these bits in a variable of an integral type.
-That would let the readers assume that they have fewer tricky things
-possibly going on in the code.
-
-
-[Footnote]
-
-*1* For example, you can give the MSB to the REF_ERROR bit, and say
-
-	if (structure->flags < 0)
-        	there is an error;
-	else
-        	other things;
-
-only if flags is a signed type.  Also if you are relying on the fact
-that MSB is special in this kind of thing:
-
-	structure->flags >>= 3;
-
-then you obviously cannot use unsigned type for collection of bits.
+Anybody else?
