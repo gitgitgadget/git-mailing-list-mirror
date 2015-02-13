@@ -1,107 +1,88 @@
-From: "Randall S. Becker" <rsbecker@nexbridge.com>
-Subject: RE: t5570 trap use in start/stop_git_daemon
-Date: Fri, 13 Feb 2015 07:27:01 -0500
-Message-ID: <019d01d04788$5e923970$1bb6ac50$@nexbridge.com>
-References: <013601d04702$d7e721e0$87b565a0$@nexbridge.com> <20150213074403.GB26775@peff.net> <20150213080359.GC26775@peff.net> <loom.20150213T094712-477@post.gmane.org>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 6/8] reflog_expire(): ignore --updateref for symbolic
+ references
+Date: Fri, 13 Feb 2015 15:34:42 +0100
+Message-ID: <54DE0B82.6090906@alum.mit.edu>
+References: <1423473164-6011-1-git-send-email-mhagger@alum.mit.edu> <1423473164-6011-7-git-send-email-mhagger@alum.mit.edu> <20150212215421.GA19618@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-To: "'Joachim Schmitz'" <jojo@schmitz-digital.de>,
-	<git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Feb 13 13:27:41 2015
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Stefan Beller <sbeller@google.com>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Feb 13 15:35:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YMFL1-0005m2-Cx
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Feb 2015 13:27:15 +0100
+	id 1YMHKe-00066t-1H
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Feb 2015 15:35:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752509AbbBMM1J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Feb 2015 07:27:09 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:55632 "EHLO
-	elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751535AbbBMM1I (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Feb 2015 07:27:08 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from pangea (CPE0023eb577e25-CM602ad06c91a7.cpe.net.cable.rogers.com [99.237.128.150])
+	id S1752362AbbBMOeu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Feb 2015 09:34:50 -0500
+Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:63755 "EHLO
+	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751839AbbBMOeu (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 13 Feb 2015 09:34:50 -0500
+X-AuditID: 12074412-f79e46d0000036b4-70-54de0b8503ea
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 50.C0.14004.58B0ED45; Fri, 13 Feb 2015 09:34:45 -0500 (EST)
+Received: from [192.168.69.130] (p5DDB38B4.dip0.t-ipconnect.de [93.219.56.180])
 	(authenticated bits=0)
-	by elephants.elehost.com (8.14.9/8.14.9) with ESMTP id t1DCR2go073086
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-	Fri, 13 Feb 2015 07:27:03 -0500 (EST)
-	(envelope-from rsbecker@nexbridge.com)
-In-Reply-To: <loom.20150213T094712-477@post.gmane.org>
-X-Mailer: Microsoft Outlook 15.0
-Thread-Index: AQLlk6fgg9R2/EmQ48FysdiY4jUl5QEp0JxQAcjRYWECu7j74ZqWdPYg
-Content-Language: en-ca
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t1DEYgSq012148
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Fri, 13 Feb 2015 09:34:43 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.4.0
+In-Reply-To: <20150212215421.GA19618@peff.net>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrFKsWRmVeSWpSXmKPExsUixO6iqNvKfS/EYMYDQYuuK91MFg29V5gt
+	3t5cwmjRPeUto8WPlh5mi96+T6wWmze3sziwe+ycdZfdY8GmUo9nvXsYPS5eUvb4vEkugDWK
+	2yYpsaQsODM9T98ugTtj2qy3rAWz2Cqe7jzJ3sB4l6WLkZNDQsBE4sim9UwQtpjEhXvr2boY
+	uTiEBC4zSkxfP5MRwjnPJPG0ZT5rFyMHB6+AtkT7dg6QBhYBVYlVkw+BDWIT0JVY1NMMNkhU
+	IEji0OnHYHFeAUGJkzOfgNkiArIS3w9vBJvJLDCbSeJz7yJGkISwQJjE+jePWCCWzQXafOU5
+	G8gyTgE9iTMN+SA1zALqEn/mXWKGsOUltr+dwzyBUWAWkh2zkJTNQlK2gJF5FaNcYk5prm5u
+	YmZOcWqybnFyYl5eapGumV5uZoleakrpJkZI2AvtYFx/Uu4QowAHoxIP7wu/uyFCrIllxZW5
+	hxglOZiURHm1/wCF+JLyUyozEosz4otKc1KLDzFKcDArifBG3ADK8aYkVlalFuXDpKQ5WJTE
+	eX8uVvcTEkhPLEnNTk0tSC2CycpwcChJ8H7kvBciJFiUmp5akZaZU4KQZuLgBBnOJSVSnJqX
+	klqUWFqSEQ+K1fhiYLSCpHiA9nJyAbXzFhck5gJFIVpPMepyLGjfP5NJiCUvPy9VSpz3G8gO
+	AZCijNI8uBWwJPeKURzoY2FeFpBRPMAECTfpFdASJqAlE2fcBllSkoiQkmpgLJy+4IWXy4bd
+	N87yKdTvuDr3W0+RBE+rylTxgus+1qzPIrj2ux38+yjjyrXn3vYBr7tPV+o6ObHl 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263808>
 
-On 2015/02/13 3:58AM Joachim Schmitz wrote:
->Jeff King <peff <at> peff.net> writes:
-> > On Fri, Feb 13, 2015 at 02:44:03AM -0500, Jeff King wrote:
-> > On Thu, Feb 12, 2015 at 03:31:12PM -0500, Randall S. Becker wrote:
-> > 
-><snip> 
->> Hmm, today I learned something new about ksh. Apparently when you use
->> the "function" keyword to define a function like:
->> 
->>   function foo {
->>     trap 'echo trapped' EXIT
->>   }
->>   echo before
->>   foo
->>   echo after
->> 
->> then the trap runs when the function exits! If you declare the same
->> function as:
->> 
->>   foo() {
->>     trap 'echo trapped' EXIT
->>   }
->> 
->> it behaves differently. POSIX shell does not have the function keyword,
->> of course, and we are not using it here. Bash _does_ have the function
->> keyword, but seems to behave POSIX-y even when it is present. I.e.,
->> running the first script:
->> 
->>   $ ksh foo.sh
->>   before
->>   trapped
->>   after
->> 
->>   $ bash foo.sh
-> >  before
->>   after
-> >  trapped
->> 
-<snip>
->Both versions produce your first output on our platform
->$ ksh foo1.sh
->before
->trapped
->after
->$ bash foo1.sh
->before
->after
->trapped
->$ ksh foo2.sh
->before
->trapped
->after
->$ bash foo2.sh
->before
->after
->trapped
->$
->This might have been one (or even _the_) reason why we picked bash as our 
->SHELL_PATH in config.mak.uname (I don't remember, it's more than 2 years 
->ago), not sure which shell Randall's test used?
+On 02/12/2015 10:54 PM, Jeff King wrote:
+> On Mon, Feb 09, 2015 at 10:12:42AM +0100, Michael Haggerty wrote:
+> 
+>>  	if (!(flags & EXPIRE_REFLOGS_DRY_RUN)) {
+>> +		/*
+>> +		 * It doesn't make sense to adjust a reference pointed
+>> +		 * to by a symbolic ref based on expiring entries in
+>> +		 * the symbolic reference's reflog.
+>> +		 */
+>> +		int update = (flags & EXPIRE_REFLOGS_UPDATE_REF) &&
+>> +			~(type & REF_ISSYMREF);
+>> +
+> 
+> Isn't this second clause tautological? Unless REF_ISSYMREF covers all
+> bits in "type", then "type & REF_ISSYMREF" must always have at least one
+> bit 0, and negating it becomes non-zero. Did you mean:
+> 
+>    !(type & REF_ISSYMREF)
+> 
+> ?
 
-I tested both for trying to get t5570 to work. No matter which, without
-resetting the trap, function return would kill the git-daemon and the test
-would fail.
+You're right, of course. Thanks.
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
