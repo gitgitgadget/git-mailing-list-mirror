@@ -1,8 +1,7 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 8/8] reflog_expire(): lock symbolic refs themselves, not
- their referent
-Date: Fri, 13 Feb 2015 10:32:06 -0800
-Message-ID: <CAGZ79kYRi3KYcvNQbkhP0uLFgpJzD+h=P+smOLQy2Msv0C_1kw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 8/8] reflog_expire(): lock symbolic refs themselves, not their referent
+Date: Fri, 13 Feb 2015 11:12:10 -0800
+Message-ID: <xmqqa90hocc5.fsf@gitster.dls.corp.google.com>
 References: <1423473164-6011-1-git-send-email-mhagger@alum.mit.edu>
 	<1423473164-6011-9-git-send-email-mhagger@alum.mit.edu>
 	<CAGZ79kaBGAOt-R1=mSG5H-5p=2UWjZEesktVwQcDAWFC-OW2Eg@mail.gmail.com>
@@ -14,101 +13,144 @@ References: <1423473164-6011-1-git-send-email-mhagger@alum.mit.edu>
 	<xmqqoaoxoffe.fsf@gitster.dls.corp.google.com>
 	<CAGZ79kZpCjcGeifbLztpNUSq7-3Yy2_GEVPGEQsxrgoZfLFU+g@mail.gmail.com>
 	<xmqqk2zloeg1.fsf@gitster.dls.corp.google.com>
+	<CAGZ79kYRi3KYcvNQbkhP0uLFgpJzD+h=P+smOLQy2Msv0C_1kw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
 Cc: Michael Haggerty <mhagger@alum.mit.edu>,
 	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	=?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@elego.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 13 19:32:21 2015
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>,
+	Carlos =?utf-8?Q?Mart?= =?utf-8?Q?=C3=ADn?= Nieto 
+	<cmn@elego.de>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Fri Feb 13 20:12:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YML2J-00004u-03
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Feb 2015 19:32:19 +0100
+	id 1YMLf0-0006bS-Pw
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Feb 2015 20:12:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752934AbbBMScJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Feb 2015 13:32:09 -0500
-Received: from mail-ig0-f171.google.com ([209.85.213.171]:59514 "EHLO
-	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752665AbbBMScI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Feb 2015 13:32:08 -0500
-Received: by mail-ig0-f171.google.com with SMTP id h15so12334256igd.4
-        for <git@vger.kernel.org>; Fri, 13 Feb 2015 10:32:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=ca9oTWANV4MvQr3ssfXkVFljFsAgbrcvAcBpASMonN4=;
-        b=Jslu2/ttH/om6ldDPlEBZXFCxIRH+h+neCVHNA8A7xHzar44tw8KOZHkM34TjLpZfw
-         48pCVIWKluNCQfjkHWm/MqRlqzxmuxVG6zjNDDIAOp7oJF5xRNv0BjMWMz2KWOEG8TJI
-         SB0FRRgEY/vA9jUAJzwv0h/GR/svH4v+gjvzxLiM2GWCs+LpyzMEBvy2uuiugGSImceT
-         M6srPD1Wrt7nft7ODVKR/pDIgPc/2LZ98ZQQ/xtWzt21J9wOFrAx9DAoz4AkmCVFY5yk
-         jlobCf7zfdhdVUneo4wmXNBn2tjwGMKHoYTlnpYGjPaJ8cE6iJ+Xq/HoFTDx4H3nAAJl
-         oung==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=ca9oTWANV4MvQr3ssfXkVFljFsAgbrcvAcBpASMonN4=;
-        b=WEAX95lDPPeH72bII2Un2h4SRLCHJncWQqrf7gyJbzhHBQL8WSYwu1b6iOS4kTbM5N
-         QX6Rw+PhyDbeq9QB3FFNNOJaigWbtrpCDfc7ge0aeCP/MCHjCCeJnAQhBvgcMrCxGeTJ
-         4S8JEqkMEnV7hOAbXEA0kD2L2saTk0FZcZSd5zs6OG6AoLEQcD8wOyluDoOziJRgqzvz
-         yw0JqxNiLTTH03Yzs5dS36jpb2zcj6hRBt/4EhgReR3JqDyLiqkVuQrebuSVYRWlnwW/
-         rNMu4HxN9AyJno4LkFwDduMUXPyOcQ8QrdTFOh/Enwq1i4MCZdmc66QLULX2FyWxc98L
-         3nfQ==
-X-Gm-Message-State: ALoCoQn2M9nH/zZmRuep7p9MxSYOI1dTfIed9qZi4/vKePJgyx+UOYPtH2KxzlndxnP2OL/muJma
-X-Received: by 10.50.128.38 with SMTP id nl6mr5541360igb.48.1423852326637;
- Fri, 13 Feb 2015 10:32:06 -0800 (PST)
-Received: by 10.50.26.42 with HTTP; Fri, 13 Feb 2015 10:32:06 -0800 (PST)
-In-Reply-To: <xmqqk2zloeg1.fsf@gitster.dls.corp.google.com>
+	id S1753246AbbBMTMO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Feb 2015 14:12:14 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:56430 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752772AbbBMTMO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Feb 2015 14:12:14 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id EEE0923434;
+	Fri, 13 Feb 2015 14:12:12 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=hwYEd5qZSif4bWZjx997oYLLGpY=; b=eBWSK3
+	ZuTIi7YsCP3ipQK8ZEv/jAZwjrgpzrKG5a/pPNWzhA45o49UxjJ77KqIXFKL6HTM
+	aMkCrInWGsok8vJCjENAcaJyw+Bh5Eocck+E9TgDWJyy+d1O3cedgdiaQSJQ73oG
+	1DzbHMBDbTHxywLmxfCKIjtG87q7XEOy3NGG4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=A5BdFUssNAoxV4ZbRdwkCiRiKOM9EjGj
+	vRwJwv5sdTDceiCTMONcLr5ybham76mAMoOZqH3H2vM8GqJiX9k7fF/Ci7bXA7qc
+	A9jrOivadqk87is8hWFda8I75yHI1yGIv3+MXTlA/Tijbavy6JLAWM/h30MFVoN7
+	esPgMI2Rj3c=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E510723433;
+	Fri, 13 Feb 2015 14:12:12 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DDEE823432;
+	Fri, 13 Feb 2015 14:12:11 -0500 (EST)
+In-Reply-To: <CAGZ79kYRi3KYcvNQbkhP0uLFgpJzD+h=P+smOLQy2Msv0C_1kw@mail.gmail.com>
+	(Stefan Beller's message of "Fri, 13 Feb 2015 10:32:06 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 369FBFE4-B3B4-11E4-A2F7-A4119F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263820>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263821>
 
-On Fri, Feb 13, 2015 at 10:26 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> On Fri, Feb 13, 2015 at 10:05 AM, Junio C Hamano <gitster@pobox.com> wrote:
+Stefan Beller <sbeller@google.com> writes:
+
+> On Fri, Feb 13, 2015 at 10:26 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Stefan Beller <sbeller@google.com> writes:
 >>
->>> We convinced ourselves that not locking the symref is wrong, but
->>> have we actually convinced us that not locking the underlying ref,
->>> as long as we have a lock on the symref, is safe?
+>>> On Fri, Feb 13, 2015 at 10:05 AM, Junio C Hamano <gitster@pobox.com> wrote:
 >>>
->>> To protect you, the holder of a lock on refs/remotes/origin/HEAD
->>> that happens to point at refs/remotes/origin/next, from somebody who
->>> is updating the underlying refs/remotes/origin/next directly without
->>> going through the symbolic ref (e.g. receive-pack), wouldn't the
->>> other party need to find any and all symbolic refs that point at the
->>> underlying ref and take locks on them?
+>>>> We convinced ourselves that not locking the symref is wrong, but
+>>>> have we actually convinced us that not locking the underlying ref,
+>>>> as long as we have a lock on the symref, is safe?
+>>>>
+>>>> To protect you, the holder of a lock on refs/remotes/origin/HEAD
+>>>> that happens to point at refs/remotes/origin/next, from somebody who
+>>>> is updating the underlying refs/remotes/origin/next directly without
+>>>> going through the symbolic ref (e.g. receive-pack), wouldn't the
+>>>> other party need to find any and all symbolic refs that point at the
+>>>> underlying ref and take locks on them?
+>>>
+>>> As we're just modifying the ref log of HEAD in this case, we don't bother
+>>> with where the HEAD points to. The other party may change
+>>> refs/remotes/origin/next without us noticing, but we don't care here as
+>>> all we do is rewriting the ref log for HEAD.
+>>>
+>>> If the other party were to modify HEAD (point it to some other branch, or
+>>> forward the branch pointed to), they'd be expected to lock HEAD and
+>>> would fail as we have the lock?
 >>
->> As we're just modifying the ref log of HEAD in this case, we don't bother
->> with where the HEAD points to. The other party may change
->> refs/remotes/origin/next without us noticing, but we don't care here as
->> all we do is rewriting the ref log for HEAD.
->>
->> If the other party were to modify HEAD (point it to some other branch, or
->> forward the branch pointed to), they'd be expected to lock HEAD and
->> would fail as we have the lock?
+>> I was not talking about HEAD in what you are responding to, though.
+>> Don't we maintain a reflog on refs/remotes/origin/HEAD?  Is it OK to
+>> allow its entries to become inconsistent with the underlying ref?
 >
-> I was not talking about HEAD in what you are responding to, though.
-> Don't we maintain a reflog on refs/remotes/origin/HEAD?  Is it OK to
-> allow its entries to become inconsistent with the underlying ref?
->
+> Yes we do have a HEAD ref log, and that ref log would differ from
+> the underlying ref log. I don't know if that is desired, but I
+> would tend to not like it.
 
-Yes we do have a HEAD ref log, and that ref log would differ from
-the underlying ref log. I don't know if that is desired, but I would tend to
-not like it.
+HEAD (or refs/remotes/origin/HEAD) reflog and reflog for
+refs/heads/master (or refs/remotes/origin/next) would have to be
+different as long as we allow symbolic refs to be repointed to
+different refs.  If HEAD refers to 'next' today, and at the tip of
+next sits commit X, the reflog for both of them would record the
+fact that they were pointing at X.  If you repoint HEAD to point at
+'master' (e.g. "git checkout master") whose tip is at commit Y, then
+reflog for HEAD would record the fact that now HEAD points at Y, and
+reflogs for 'master' or 'next' would not change merely because you
+switched where HEAD points at.
 
-So the other party updating the underlying ref would also need to lock
-HEAD then,
-which ... they don't. But they try writing to it nevertheless, in
-refs.c line 3121-3150
-see the /* special hack */ comment.
+And there is anything to like or not to like about it.
+
+As we are trying to see a way to move forward to do the right thing
+around reflog, I was wondering if locking only the symbolic ref is a
+sensible endgame.  "The right thing" being:
+
+   When a symbolic ref S points at underlying ref R, and if R's tip
+   changes from X to Y, we would want to know from the reflog of S
+   that S used to point at X and then changed to point at Y.
+
+Replace S and R with either (HEAD, refs/heads/master) or
+(refs/remotes/origin/HEAD, refs/remotes/origin/next) in the above
+and we want both to be true.
+
+How best to achieve that, and what is the set of right ref(s) to
+take lock(s) on?  I am not very much interested in how incorrect
+today's code might behave.  That is not the central point when
+discussing what is the best way forward.
+
+> So the other party updating the underlying ref would also need to lock
+> HEAD then,
+
+Yes, that is what I meant.  Your "also" can be read in two different
+ways ("other party, too" or "HEAD, too"), though, and I think we
+want both ;-).  That is why I hinted that it was iffy to state that
+we only have to take the lock only on S and not on R, but only as a
+workaround to keep older implementation out we take both---once they
+get extinct we can get away with by taking a lock only on S.
+
+When pushing to update 'master' and 'next' into a repository whose
+'HEAD' points at 'master', we would want to take locks on 'next' (no
+question), but is it sensible to take the lock on 'HEAD' and
+deliberately leave 'master' unlocked?  Or is it more sensible to
+take all locks on the underlying refs involved (i.e. 'next' and
+'master') and in addition any symbolic refs that are pointing at
+these refs involved (i.e. 'HEAD')?
