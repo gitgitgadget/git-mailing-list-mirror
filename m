@@ -1,111 +1,93 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/3] Win32: nanosecond-precision file times
-Date: Fri, 13 Feb 2015 11:28:17 -0800
-Message-ID: <xmqq61b5obla.fsf@gitster.dls.corp.google.com>
-References: <54DBEAA5.6000205@gmail.com>
-	<xmqqbnkysygl.fsf@gitster.dls.corp.google.com>
-	<54DD2FDA.7030604@gmail.com>
-	<xmqqsieaog4a.fsf@gitster.dls.corp.google.com>
-	<54DD5A89.5080502@gmail.com>
+Subject: Re: Keep original author with git merge --squash?
+Date: Fri, 13 Feb 2015 11:30:53 -0800
+Message-ID: <xmqq1tltobgy.fsf@gitster.dls.corp.google.com>
+References: <CAN7QDoKQAZKUt_MHWjgt1k3PvXQv6XTcjdijh8KRodO3=VD47A@mail.gmail.com>
+	<20150212092824.GA19626@peff.net>
+	<xmqqpp9erihg.fsf@gitster.dls.corp.google.com>
+	<CAN7QDoLKFBCJpFa+QL8dPQtwyAyDNt-ck_sNJ3fS+vTrK_Lg9w@mail.gmail.com>
+	<xmqq8ug2rfi2.fsf@gitster.dls.corp.google.com>
+	<CAN7QDoJ+hOFqoc54sAbLeSxvj8TQKQRSVKbNQXZYfPv1uOy=WA@mail.gmail.com>
+	<xmqq4mqqrc70.fsf@gitster.dls.corp.google.com>
+	<20150212225003.GA20763@peff.net>
+	<xmqqwq3mogdm.fsf@gitster.dls.corp.google.com>
+	<20150213071041.GA26775@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,  msysGit <msysgit@googlegroups.com>,  Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Karsten Blees <karsten.blees@gmail.com>
-X-From: msysgit+bncBCG77UMM3EJRBU5A7GTAKGQEFGZPMZY@googlegroups.com Fri Feb 13 20:28:20 2015
-Return-path: <msysgit+bncBCG77UMM3EJRBU5A7GTAKGQEFGZPMZY@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-ie0-f185.google.com ([209.85.223.185])
+Content-Type: text/plain
+Cc: David Glasser <glasser@davidglasser.net>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Feb 13 20:31:04 2015
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCG77UMM3EJRBU5A7GTAKGQEFGZPMZY@googlegroups.com>)
-	id 1YMLuW-00079M-2I
-	for gcvm-msysgit@m.gmane.org; Fri, 13 Feb 2015 20:28:20 +0100
-Received: by iecrd18 with SMTP id rd18sf4698674iec.8
-        for <gcvm-msysgit@m.gmane.org>; Fri, 13 Feb 2015 11:28:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe;
-        bh=KNBcg+MSf04JHfh9WDE+Cp3CgeW6LLgcy64BiTWEHHU=;
-        b=V0+O4GbeQ4QdkbAgeD02e6610NsRX+r8j3Z9KzGHrXWTQrucnPbaemI5sMyof/tpAY
-         Mvu3WGJdbYcSPmTxiIq1w9499gdoCGno/AYFkSZKUpJdFVdWEbgCMM0EasLnG1LEAXfW
-         SCAbJaWmPLioqjcndEygP1HQdjQFy/mcRx+P0kQJyGEjL7wWQyx99VlBghpROBAZbL9l
-         J8MgZORTAnOQjjhXQb0JJhz4LMxJTkhyuwSh15DQZuhnXFQkLK4nQizXff1VgREV201T
-         UwYSUNMtd5T1gP3RlQvti79OPAXaumIQymtJ3XAxxfMY9CjI3oYhdNGOcspH0Cp9BbSa
-         9l9A==
-X-Received: by 10.140.100.163 with SMTP id s32mr140965qge.41.1423855699344;
-        Fri, 13 Feb 2015 11:28:19 -0800 (PST)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.140.31.139 with SMTP id f11ls1391498qgf.95.gmail; Fri, 13 Feb
- 2015 11:28:18 -0800 (PST)
-X-Received: by 10.140.232.84 with SMTP id d81mr2581814qhc.7.1423855698972;
-        Fri, 13 Feb 2015 11:28:18 -0800 (PST)
-Received: from sasl.smtp.pobox.com (pb-smtp1.int.icgroup.com. [208.72.237.35])
-        by gmr-mx.google.com with ESMTP id ba9si1616428qcb.0.2015.02.13.11.28.18
-        for <msysgit@googlegroups.com>;
-        Fri, 13 Feb 2015 11:28:18 -0800 (PST)
-Received-SPF: pass (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted sender) client-ip=208.72.237.35;
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1YMLx8-0000At-FB
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Feb 2015 20:31:02 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1753216AbbBMTa6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Feb 2015 14:30:58 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:54534 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753019AbbBMTa5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Feb 2015 14:30:57 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id AEF8F238B9;
-	Fri, 13 Feb 2015 14:28:18 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7ABE823988;
+	Fri, 13 Feb 2015 14:30:56 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=TNHpJWx7o1GfIwMOHF+swmAY654=; b=f2nCQQ
+	rj3XJwOjYyUohd64T5ze+rTiHH6xGbCTfzKpszIfp9ZHQUxDFNqP6D6S9S/OmY5o
+	48jSGDREB5gYo0BDrf/uvNl4eOsREXL7TC6lCT/AoheiTJuZycWPqDNKpIUU3oru
+	f+zSvLfFB3br/2E42aC9lgYBz/sZBdiEm+H3U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ktfUIdaNFXUUIkldC8kmdMa43swxnj4/
+	coRcYwOp/VTTxdAc+zo3rxWH1DfDVI6Vbtaa2+pB7pS+QxuS+97utEAxw/j11jt5
+	L2z0mvx+ntkzV+i3HxYbt14cNn25OG9p9UfEBPtYLgqaW3DixZ/tkIJ0Y69jW9z4
+	ZQFjDbTxmfM=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id A5207238B8;
-	Fri, 13 Feb 2015 14:28:18 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7259E23987;
+	Fri, 13 Feb 2015 14:30:56 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 29A66238B2;
-	Fri, 13 Feb 2015 14:28:18 -0500 (EST)
-In-Reply-To: <54DD5A89.5080502@gmail.com> (Karsten Blees's message of "Fri, 13
-	Feb 2015 02:59:37 +0100")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 028EE23985;
+	Fri, 13 Feb 2015 14:30:54 -0500 (EST)
+In-Reply-To: <20150213071041.GA26775@peff.net> (Jeff King's message of "Fri,
+	13 Feb 2015 02:10:41 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 7685834E-B3B6-11E4-9AE4-A4119F42C9D4-77302942!pb-smtp1.pobox.com
-X-Original-Sender: gitster@pobox.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted
- sender) smtp.mail=junio@pobox.com;       dkim=pass header.i=@pobox.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263823>
+X-Pobox-Relay-ID: D4027F40-B3B6-11E4-94CB-A4119F42C9D4-77302942!pb-smtp1.pobox.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263824>
 
-Karsten Blees <karsten.blees@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Am 13.02.2015 um 00:38 schrieb Junio C Hamano:
+> On Thu, Feb 12, 2015 at 03:32:37PM -0800, Junio C Hamano wrote:
+>
+>> > It also raises a question for the proposal in this thread: if there are
+>> > multiple "Author:" lines, which one do we take? The first, or the last?
 >> 
->> We do have sec/nsec fields in cache_time structure, so I have
->> nothing against updating the msysGit port to fill that value.
+>> I was siding with David's "pay attention to in-buffer Author: only
+>> when all of them agree".  When squash-merging a branch with two or
+>> more authors, we would attribute the authorship silently and
+>> automatically to you if you do not do anything special otherwise.
+>
+> That's probably reasonable. I was thinking more of a case where you made
+> some fixups on top of somebody else's branch, and then used "git rebase
+> -i" to squash them together. But I think we already use the authorship
+> for the root of the squash in that case.
+>
+> This case collapses nicely if we make a slight tweak to your proposed
+> behavior (or maybe this is what you meant). If there are multiple
+> authors listed, we behave as if none was listed. That would leave the
+> authorship as it behaves today (with the author of the first commit) if
+> you do nothing, or you can override it by dropping all but one.
 
-Having said that, we do not enable the NSEC stuff by default on Unix
-for a reason.  I'd expect those who know Windows filesystems well to
-pick the default there wisely ;-)
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "Git for Windows" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+I actually was (and am still) wondering that "silently ignore all of
+them if there are multiple ones that contradict with each other" is
+a bad idea, and that was why the last item on the "possible
+alternatives" list was to error out and ask clarification.
