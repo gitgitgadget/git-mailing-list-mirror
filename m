@@ -1,84 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git ls-files -X option is relative to repo root
-Date: Fri, 13 Feb 2015 14:02:10 -0800
-Message-ID: <xmqqy4o1lbbx.fsf@gitster.dls.corp.google.com>
-References: <CAG4vEKM-2sy0z3=YLS+rgH99w6ukdcNBode9CAh4C4t9eSa02A@mail.gmail.com>
-	<xmqqmw4hmtlw.fsf@gitster.dls.corp.google.com>
-	<xmqqiof5mt0q.fsf@gitster.dls.corp.google.com>
-	<CAG4vEKP760_sq1fsJD_1jjz0_G+T8NosSXDqx0bvQy4tPVz5JQ@mail.gmail.com>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: [PATCH 2/2] transport-helper: ask the helper to set the same
+ options for import as for fetch
+Date: Sat, 14 Feb 2015 07:14:50 +0900
+Message-ID: <20150213221450.GA24285@glandium.org>
+References: <xmqqlhk2ri1j.fsf@gitster.dls.corp.google.com>
+ <1423805086-807-1-git-send-email-mh@glandium.org>
+ <1423805086-807-2-git-send-email-mh@glandium.org>
+ <xmqqwq3lmwnb.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Daniel Finnie <dan@danfinnie.com>
-X-From: git-owner@vger.kernel.org Fri Feb 13 23:02:24 2015
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 13 23:15:08 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YMOJb-00057M-OL
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Feb 2015 23:02:24 +0100
+	id 1YMOVv-0004IB-Cu
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Feb 2015 23:15:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753859AbbBMWCO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Feb 2015 17:02:14 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64409 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753281AbbBMWCM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Feb 2015 17:02:12 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0D2BA34476;
-	Fri, 13 Feb 2015 17:02:12 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=h2HU57WcPTnps8a18lSfjkThXf0=; b=tL91m5
-	GqFSmE9F+XeQrj+S2AakTs4913lKdcXnltt9e9G7B98CFqURT9hT34IUJIJWzL4d
-	V6skAhUi9NNF6i9/WWkEYkVhcK92MAfESNvv6ct83Senk5jjOWoM8YShrt4QUFjO
-	k4E48GeXqw+KEz/hQB4V0cI04IvqQa2GXoQFo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KNRCZHmMGUsbWkAGAr7F/Gya053mrVbV
-	gdFBYvQ/1N2n/yK0LyS1gJbV5Mp+C78dr/JkMeU4uthEM860CNLEUFkdE5SFxFIQ
-	YaaFlS8R4KHFwBTDykHaGKTEeX5iMbeUdCRMZ28F5UOjnigLnhAzEn+S7VdTtReE
-	OGd+c1eZEgc=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0249734475;
-	Fri, 13 Feb 2015 17:02:12 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7068234474;
-	Fri, 13 Feb 2015 17:02:11 -0500 (EST)
-In-Reply-To: <CAG4vEKP760_sq1fsJD_1jjz0_G+T8NosSXDqx0bvQy4tPVz5JQ@mail.gmail.com>
-	(Daniel Finnie's message of "Fri, 13 Feb 2015 16:19:28 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: F5FD0D44-B3CB-11E4-B68B-A4119F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1753403AbbBMWPA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Feb 2015 17:15:00 -0500
+Received: from ks3293202.kimsufi.com ([5.135.186.141]:34967 "EHLO glandium.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752743AbbBMWPA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Feb 2015 17:15:00 -0500
+Received: from glandium by zenigata with local (Exim 4.84)
+	(envelope-from <glandium@glandium.org>)
+	id 1YMOVe-0006Lp-U0; Sat, 14 Feb 2015 07:14:50 +0900
+Content-Disposition: inline
+In-Reply-To: <xmqqwq3lmwnb.fsf@gitster.dls.corp.google.com>
+X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263844>
 
-Daniel Finnie <dan@danfinnie.com> writes:
+On Fri, Feb 13, 2015 at 11:36:24AM -0800, Junio C Hamano wrote:
+> Mike Hommey <mh@glandium.org> writes:
+> 
+> > A remote helper is currently only told about the 'check-connectivity',
+> > 'cloning', and 'update-shallow' options when it supports the 'fetch'
+> > command, but not when it supports 'import' instead.
+> 
+> Sounds sensible.
+> 
+> Does the same issue exist for export vs push or do they happen to be
+> coded to pass similar enough set of options already by copied and
+> pasted code?
 
-> Do you have any comments on why the path in --exclude-from=<path> is
-> relative to the project root?
+The issue exists:
+- export is given dry-run, pushcert and force.
+- push is given cas, dry-run and pushcert.
 
-Not really.
+(note: cas and pushcert are both not documented in
+gitremote-helpers.txt)
 
-Because ls-files was designed to be used by Porcelain scripts, and
-because the first thing Porcelain scripts are expected to do is to
-learn the prefix and then cd to the root level of the working tree
-before doing anything else, <path> that is relative to the root
-level of the working tree ends up to be not so unnatural thing to be
-used with --exclude-from=<path> (e.g. ".git/info/exclude").
+Force is actually not necessary for push, because the push syntax itself
+includes the force instruction in the refspec given as argument.
 
-If it were relative to whatever subdirectory the invoker of the
-Porcelain script happened to be, Porcelain would have to do a lot
-more (e.g. in "cd x/y && myPorcelain ../../.git/info/exclude", the
-myPorcelain script would first have to learn the prefix is x/y, go
-up two levels, and then strip two ../ from ../../.git/info/exclude
-to turn it into .git/info/exclude when it runs ls-files).
+I haven't looked exactly what cas does and if it makes sense for export.
+(FWIW, I'm using push and import at the moment, so it's not a direct
+issue for me ; I don't support cas anyways)
 
-So that is a convenience explanation in retrospect, but "Why" is
-often a futile question to ask when talking about evolution, in
-which whatever works gets picked.
+Mike
