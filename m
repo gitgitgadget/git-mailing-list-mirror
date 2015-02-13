@@ -1,136 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Remove duplicate #include
-Date: Fri, 13 Feb 2015 13:15:44 -0800
-Message-ID: <xmqqegptms1r.fsf@gitster.dls.corp.google.com>
-References: <1423838859-15413-1-git-send-email-git-dpa@aegee.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-2022-jp
-Cc: git@vger.kernel.org
-To: =?iso-2022-jp?B?GyRCJyUnWiddJ3EnXxsoQiAbJEInMSdRJ10nUSdlJ1knYCdTGyhC?= 
-	<git-dpa@aegee.org>
-X-From: git-owner@vger.kernel.org Fri Feb 13 22:15:51 2015
+From: Stefan Beller <sbeller@google.com>
+Subject: [PATCH] hex.c: reduce memory footprint of sha1_to_hex static buffers
+Date: Fri, 13 Feb 2015 13:18:49 -0800
+Message-ID: <1423862329-7899-1-git-send-email-sbeller@google.com>
+Cc: torvalds@linux-foundation.org, gitster@pobox.com,
+	Stefan Beller <sbeller@google.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 13 22:19:03 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YMNaZ-0003D9-Bk
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Feb 2015 22:15:51 +0100
+	id 1YMNde-0004tD-A2
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Feb 2015 22:19:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753967AbbBMVPr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Feb 2015 16:15:47 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:62059 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753727AbbBMVPq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Feb 2015 16:15:46 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D41733781A;
-	Fri, 13 Feb 2015 16:15:45 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=fesO/tlR5WGM74uRxkM6cnqr+3Y=; b=ixGWq9
-	TSVucLHzp3PMaMC3K/3tRcmOZDip5AFSbEA3bJJbiIRSg8QhdhS0UCu90ozKjQw6
-	EyhTDvPa7vWDR7Dyt/bk8bJTVmiBb6JJ+evjFIluxtMYKAnroK+szpSpeBeaFIxv
-	GqNFw2Ol+mecKvEISJsY6FOdtcQ9l52HLIbAc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=GrjFqqSheqhnP4MdrsdmoC3Sgk3UXBs9
-	v0iZSuEyuboZwEdbYE+Q833j3AlOfG5yBqjc7BDK9lyrYLfhg3bX2D0ABIjUIp9I
-	o0fhiDJaQEAbhRUTCiYjhEgCsY62F+AsEsxX7kVIvbGES5ChJZGu/2LdNQIoe7Et
-	NbZIX6LcRwo=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id BEAA537819;
-	Fri, 13 Feb 2015 16:15:45 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3548537817;
-	Fri, 13 Feb 2015 16:15:45 -0500 (EST)
-In-Reply-To: <1423838859-15413-1-git-send-email-git-dpa@aegee.org>
- (=?iso-2022-jp?B?IhskQiclJ1onXSdxJ18bKEIJGyRCJzEnUSddJ1EnZSdZJ2AnUxsoQiIn?=
- =?iso-2022-jp?B?cw==?= message of "Fri, 13 Feb 2015 14:47:39 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 79428384-B3C5-11E4-A408-A4119F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1752153AbbBMVS6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Feb 2015 16:18:58 -0500
+Received: from mail-ig0-f173.google.com ([209.85.213.173]:40914 "EHLO
+	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751263AbbBMVS5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Feb 2015 16:18:57 -0500
+Received: by mail-ig0-f173.google.com with SMTP id a13so13295823igq.0
+        for <git@vger.kernel.org>; Fri, 13 Feb 2015 13:18:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=nuWBViQIdd0PUINPSBV7eNrmB/jrrkGq0Yc1BuDzHc4=;
+        b=Bkek1BT1mPE/t7XO4qN6BbsCI3XJJHOUcPuS5xOSIWoMFzmFD4JmTdUfqzA292g74Z
+         Bgs6/OWf5D3sQHevem3Hq7XmCM+C/73myV4EzPalato8FXy9CQOhqjoMoJaxo+bqkBzl
+         XQbtQLVqm64+vCNpQzAy7QIOQ60BvMdH2iB18sAYGLq25ieq51aakta+x81cSr0uGxth
+         rEYWpvR8sZKqvmBKLMZNR4+ZwIVjXths+/t9WODMpSqymGCjOyottjuEfXqJCvaF8rhq
+         DzP7w+cVbrd3YDXy+SiTc9W2ekN8lfE2ter1PCRWSisKwwTDfhGHsitYmJUyue+lBFk8
+         u9XA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=nuWBViQIdd0PUINPSBV7eNrmB/jrrkGq0Yc1BuDzHc4=;
+        b=BtwApNGUrbdJ/arakObLSLuK0dcRh6OFBRLfxBJfsvvyWQ4GKNmMJhweM7VCkpsoKP
+         Vlnuwdm0ycn6Uw1sksUI+yuNMMkfrAThv8tOw+HEoP5MCuEBS/fgCW6vJKmDUXeIcbK0
+         va9X/8DACRUOmgFi2D0VC2qopaY+DmN2cTcMJeWPXvmdXaLNAqwFdYavn61CJ0Ia7DUj
+         HUafwTnjIiDsH6ZKZH/wnvuo9oifpxiBFzlPVayGfufJF8OfWpXEFEveKEiyY4iULrpi
+         x4C12vCgi6sC05hoIEeXOodONoaKFaTn/FirM5KT2R2q7Y5HsRty/+TQRQfv+iRUAm/p
+         73hQ==
+X-Gm-Message-State: ALoCoQk9IbuVyad2+L3Oy/9sJdMdtVQvNT0zd8VlLLQCk2cXQzmc84VJl2JQc0Se+rq5c2wS6A80
+X-Received: by 10.42.153.132 with SMTP id m4mr16902128icw.49.1423862336996;
+        Fri, 13 Feb 2015 13:18:56 -0800 (PST)
+Received: from localhost ([2620:0:1000:5b00:380e:e39a:f95:c662])
+        by mx.google.com with ESMTPSA id 5sm3903531igr.17.2015.02.13.13.18.56
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 13 Feb 2015 13:18:56 -0800 (PST)
+X-Mailer: git-send-email 2.3.0.81.gc37f363
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263836>
 
-Дилян Палаузов  <git-dpa@aegee.org> writes:
+41 bytes is the exact number of bytes needed for having the returned
+hex string represented. 50 seems to be an arbitrary number, such
+that there are no benefits from alignment to certain address boundaries.
 
-> deheader (git://gitorious.org/deheader/deheader.git) found out that
-> some .c files #include twice one and the same header file.
->
-> This patch removes such occurrences and hence speeds up the compilation.
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ hex.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Does it speed up?  By how much?  Any numbers?
-
-I do not see any reason to reject this change.  Removing repeated
-inclusions of the same header is a good thing by itself [*1*].
-
-Thanks.
-
-[Footnote]
-
-*1* If things break when repeated inclusions are removed, that would
-mean the headers were wrong in the first place.  I do not think
-transport.h, string-list.h, quote.h and cache.h have any reason why
-they need to be included twice to work correctly, and in fact they
-are designed to be no-op when included twice.
-
-> Signed-off-by: Дилян Палаузов <git-dpa@aegee.org>
-> ---
->  builtin/fetch.c    | 1 -
->  trailer.c          | 1 -
->  transport-helper.c | 1 -
->  userdiff.c         | 1 -
->  4 files changed, 4 deletions(-)
->
-> diff --git a/builtin/fetch.c b/builtin/fetch.c
-> index 7b84d35..75a55e5 100644
-> --- a/builtin/fetch.c
-> +++ b/builtin/fetch.c
-> @@ -11,7 +11,6 @@
->  #include "run-command.h"
->  #include "parse-options.h"
->  #include "sigchain.h"
-> -#include "transport.h"
->  #include "submodule.h"
->  #include "connected.h"
->  #include "argv-array.h"
-> diff --git a/trailer.c b/trailer.c
-> index 623adeb..05b3859 100644
-> --- a/trailer.c
-> +++ b/trailer.c
-> @@ -1,7 +1,6 @@
->  #include "cache.h"
->  #include "string-list.h"
->  #include "run-command.h"
-> -#include "string-list.h"
->  #include "commit.h"
->  #include "trailer.h"
->  /*
-> diff --git a/transport-helper.c b/transport-helper.c
-> index 0224687..3652b16 100644
-> --- a/transport-helper.c
-> +++ b/transport-helper.c
-> @@ -5,7 +5,6 @@
->  #include "commit.h"
->  #include "diff.h"
->  #include "revision.h"
-> -#include "quote.h"
->  #include "remote.h"
->  #include "string-list.h"
->  #include "thread-utils.h"
-> diff --git a/userdiff.c b/userdiff.c
-> index fad52d6..2ccbee5 100644
-> --- a/userdiff.c
-> +++ b/userdiff.c
-> @@ -1,6 +1,5 @@
->  #include "cache.h"
->  #include "userdiff.h"
-> -#include "cache.h"
->  #include "attr.h"
->  
->  static struct userdiff_driver *drivers;
+diff --git a/hex.c b/hex.c
+index 9ebc050..cfd9d72 100644
+--- a/hex.c
++++ b/hex.c
+@@ -59,7 +59,7 @@ int get_sha1_hex(const char *hex, unsigned char *sha1)
+ char *sha1_to_hex(const unsigned char *sha1)
+ {
+ 	static int bufno;
+-	static char hexbuffer[4][50];
++	static char hexbuffer[4][41];
+ 	static const char hex[] = "0123456789abcdef";
+ 	char *buffer = hexbuffer[3 & ++bufno], *buf = buffer;
+ 	int i;
+-- 
+2.3.0.81.gc37f363
