@@ -1,89 +1,106 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Keep original author with git merge --squash?
-Date: Fri, 13 Feb 2015 02:10:41 -0500
-Message-ID: <20150213071041.GA26775@peff.net>
-References: <CAN7QDoKQAZKUt_MHWjgt1k3PvXQv6XTcjdijh8KRodO3=VD47A@mail.gmail.com>
- <20150212092824.GA19626@peff.net>
- <xmqqpp9erihg.fsf@gitster.dls.corp.google.com>
- <CAN7QDoLKFBCJpFa+QL8dPQtwyAyDNt-ck_sNJ3fS+vTrK_Lg9w@mail.gmail.com>
- <xmqq8ug2rfi2.fsf@gitster.dls.corp.google.com>
- <CAN7QDoJ+hOFqoc54sAbLeSxvj8TQKQRSVKbNQXZYfPv1uOy=WA@mail.gmail.com>
- <xmqq4mqqrc70.fsf@gitster.dls.corp.google.com>
- <20150212225003.GA20763@peff.net>
- <xmqqwq3mogdm.fsf@gitster.dls.corp.google.com>
+Subject: Re: t5570 trap use in start/stop_git_daemon
+Date: Fri, 13 Feb 2015 02:44:03 -0500
+Message-ID: <20150213074403.GB26775@peff.net>
+References: <013601d04702$d7e721e0$87b565a0$@nexbridge.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: David Glasser <glasser@davidglasser.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 13 08:10:50 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: 'Git Mailing List' <git@vger.kernel.org>,
+	'Joachim Schmitz' <jojo@schmitz-digital.de>
+To: "Randall S. Becker" <rsbecker@nexbridge.com>
+X-From: git-owner@vger.kernel.org Fri Feb 13 08:44:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YMAOn-0003kp-5Y
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Feb 2015 08:10:49 +0100
+	id 1YMAvC-0003wL-3V
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Feb 2015 08:44:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752105AbbBMHKp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Feb 2015 02:10:45 -0500
-Received: from cloud.peff.net ([50.56.180.127]:48551 "HELO cloud.peff.net"
+	id S1751806AbbBMHoI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Feb 2015 02:44:08 -0500
+Received: from cloud.peff.net ([50.56.180.127]:48563 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752023AbbBMHKo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Feb 2015 02:10:44 -0500
-Received: (qmail 27978 invoked by uid 102); 13 Feb 2015 07:10:44 -0000
+	id S1751592AbbBMHoH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Feb 2015 02:44:07 -0500
+Received: (qmail 29343 invoked by uid 102); 13 Feb 2015 07:44:06 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 13 Feb 2015 01:10:44 -0600
-Received: (qmail 31697 invoked by uid 107); 13 Feb 2015 07:10:47 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 13 Feb 2015 01:44:06 -0600
+Received: (qmail 31907 invoked by uid 107); 13 Feb 2015 07:44:09 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 13 Feb 2015 02:10:47 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 13 Feb 2015 02:10:41 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 13 Feb 2015 02:44:09 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 13 Feb 2015 02:44:03 -0500
 Content-Disposition: inline
-In-Reply-To: <xmqqwq3mogdm.fsf@gitster.dls.corp.google.com>
+In-Reply-To: <013601d04702$d7e721e0$87b565a0$@nexbridge.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263798>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263799>
 
-On Thu, Feb 12, 2015 at 03:32:37PM -0800, Junio C Hamano wrote:
+On Thu, Feb 12, 2015 at 03:31:12PM -0500, Randall S. Becker wrote:
 
-> > and using "Author: " (with no text) does a reset.
-> 
-> no (I do not think it is wrong per-se, but I do not think such a
-> good idea).
+> On the NonStop port, we found that =C2=93trap=C2=94 was causing an is=
+sue with test
+> success for t5570. When start_git_daemon completes, the shell (ksh,ba=
+sh) on
+> this platform is sending a signal 0 that is being caught and acted on=
+ by the
+> trap command within the start_git_daemon and stop_git_daemon function=
+s. I am
+> taking this up with the operating system group,
 
-Fair enough. It is probably a minority use case, and one that is likely
-to cause confusion.
+Yeah, that seems wrong. If it were a subshell, even, I could see some
+argument for it, but it seems odd to trap 0 when a function returns
+(bash does have a RETURN trap, which AFAIK is bash-specific, but it
+should not trigger a 0-trap).
 
-> > Also, on the topic of "merge --squash". I never use it myself, but
-> > having experimented with it due to this thread, I found the template it
-> > sticks into COMMIT_EDITMSG to be horribly unfriendly for munging. For
-> > example, with two simple commits, I get:
-> [...]
-> I think it should show exactly the same thing as "rebase -i" squash
-> insn would give you.  People already know how to munge that, right?
+> but in any case, it may be
+> appropriate to include a trap reset at the end of both functions, as =
+below.
+> I verified this change on SUSE Linux.
+>=20
+> diff --git a/t/lib-git-daemon.sh b/t/lib-git-daemon.sh
+> index bc4b341..543e98a 100644
+> --- a/t/lib-git-daemon.sh
+> +++ b/t/lib-git-daemon.sh
+> @@ -62,6 +62,7 @@ start_git_daemon() {
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 test_skip_or_die $GIT_TEST_GIT_DAEMON \
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "=
+git daemon failed to start"
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0fi
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 trap '' EXIT
+> }
 
-Yeah, that was exactly what I expected to see (but didn't). They should
-probably have the same format, though we may want to enhance both to
-contain more information (like author names).
+I don't think this is the right thing to do. That trap is meant to live
+beyond the function's return. Without it, there is nothing to clean up
+the running git-daemon if we exit the test script prematurely (e.g., by
+a test failing in immediate-mode). We pollute the environment with a
+running process which would cause subsequent test runs to fail.
 
-> > It also raises a question for the proposal in this thread: if there are
-> > multiple "Author:" lines, which one do we take? The first, or the last?
-> 
-> I was siding with David's "pay attention to in-buffer Author: only
-> when all of them agree".  When squash-merging a branch with two or
-> more authors, we would attribute the authorship silently and
-> automatically to you if you do not do anything special otherwise.
+> stop_git_daemon() {
+> @@ -84,4 +85,6 @@ stop_git_daemon() {
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 fi
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 GIT_DAEMON_PID=3D
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rm -f git_daemon_output
+> +
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 trap '' EXIT
+> }
 
-That's probably reasonable. I was thinking more of a case where you made
-some fixups on top of somebody else's branch, and then used "git rebase
--i" to squash them together. But I think we already use the authorship
-for the root of the squash in that case.
+This one is slightly less bad, in that we are dropping our
+daemon-specific cleanup here anyway. But the appropriate trap is still:
 
-This case collapses nicely if we make a slight tweak to your proposed
-behavior (or maybe this is what you meant). If there are multiple
-authors listed, we behave as if none was listed. That would leave the
-authorship as it behaves today (with the author of the first commit) if
-you do nothing, or you can override it by dropping all but one.
+  trap 'die' EXIT
+
+which we set earlier in the function. Without it, the test harness's
+ability to detect a premature failure is lost.
+
+So I do not know quite what is going on with your shell, but turning of=
+f
+the traps in these functions is definitely not an acceptable (general)
+workaround; it makes things much worse on working platforms.
 
 -Peff
