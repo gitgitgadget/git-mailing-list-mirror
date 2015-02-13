@@ -1,68 +1,76 @@
-From: "Kyle J. McKay" <mackyle@gmail.com>
-Subject: Re: [PATCH 0/2] Getopt::Long workaround in send-email
-Date: Fri, 13 Feb 2015 12:30:52 -0800
-Message-ID: <1C7C5039-FF71-4978-B65A-9CCC94E70457@gmail.com>
-References: <xmqq8ug2pvw7.fsf@gitster.dls.corp.google.com> <1423858769-1565-1-git-send-email-gitster@pobox.com>
-Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Brandon Casey <drafnel@gmail.com>,
-	"Tom G. Christensen" <tgc@statsbiblioteket.dk>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 13 21:31:08 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git ls-files -X option is relative to repo root
+Date: Fri, 13 Feb 2015 12:42:03 -0800
+Message-ID: <xmqqmw4hmtlw.fsf@gitster.dls.corp.google.com>
+References: <CAG4vEKM-2sy0z3=YLS+rgH99w6ukdcNBode9CAh4C4t9eSa02A@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Daniel Finnie <dan@danfinnie.com>
+X-From: git-owner@vger.kernel.org Fri Feb 13 21:42:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YMMtC-0002CJ-Hb
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Feb 2015 21:31:02 +0100
+	id 1YMN40-0008W9-QC
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Feb 2015 21:42:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752071AbbBMUa4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Feb 2015 15:30:56 -0500
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:55900 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752349AbbBMUaz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Feb 2015 15:30:55 -0500
-Received: by mail-pa0-f49.google.com with SMTP id fb1so21089902pad.8
-        for <git@vger.kernel.org>; Fri, 13 Feb 2015 12:30:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:in-reply-to:subject:references:message-id:content-type
-         :content-transfer-encoding:mime-version:date:cc;
-        bh=fcfd4suWPkzR3lDKhTBNOZ6hajb8O0mP0hF8IINO1vI=;
-        b=Pv9RQyTbgBl4J0ltyg9hPpD2K3dRT3HooHE2yzuj5/NtlcDgy40cBMVzo+W48tpm39
-         Y9CyqH/r0mV5KgIsufbb177+Kxyj8HZPMQ4x8E1Bb1MoxjYwK8PG0kvfnKjkZrxN23n7
-         sL1whdqcpyu1cj/W6m414mjpp+AAMJ5JMbhLBBfdfldnXLmT71XNDNzLAxIyL+xE3Qpk
-         2lbYZbXGnm3BSFRCrWsWQMdoq+rZdrr5o9y4nqPgNHaWrpKGWGWLAKKhYX2m7ah09cO2
-         oKAThO5tZ4pHfKgMshi4riiIOS5BZcuTUSmJD70NTYRYmx0/2tMw++hNDk66080Idkd0
-         lDoQ==
-X-Received: by 10.68.164.194 with SMTP id ys2mr18345941pbb.20.1423859455266;
-        Fri, 13 Feb 2015 12:30:55 -0800 (PST)
-Received: from [172.16.16.105] (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
-        by mx.google.com with ESMTPSA id yf6sm7599361pab.26.2015.02.13.12.30.53
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Fri, 13 Feb 2015 12:30:54 -0800 (PST)
-In-Reply-To: <1423858769-1565-1-git-send-email-gitster@pobox.com>
-X-Mauler: Craptastic (2.936)
+	id S1752924AbbBMUmG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Feb 2015 15:42:06 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:53391 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752772AbbBMUmF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Feb 2015 15:42:05 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1303124E16;
+	Fri, 13 Feb 2015 15:42:05 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=qNWpGULCfWWzcGMtrpjpHfvtaaM=; b=e/Ix0E
+	K3wqrp8ZrmlJ+UzCXSg6fVj3As1CHhBuIdioe4TZgp/+2QSElcx+fdQFL7CAPLBW
+	dz5wBuiyrWfJSZ1OMFrYToTmxBjr3tYXMcqgpLwZooWZDQ9lgqtRClbrZHeNhv7I
+	JPOLnm7SE4U8YA4xsDNr6r02DpdcZFK8XR5Sc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hg76cSB8aBE0XEDaVYnSD6i7kpcdXCES
+	mLaESlovdpM2pT3MKp51+1J5PYeplIIG/AnyeES0XEtSlfuXj3xW8/38pz+/dd70
+	klOZoBQpA2sIJBP/iW+ksoDaVq1iskZpDtpZObZGuK/J8Zl7qpkQEMDi1/jIDdVi
+	CBImTv1LPGM=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 098AC24E15;
+	Fri, 13 Feb 2015 15:42:05 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7035B24E14;
+	Fri, 13 Feb 2015 15:42:04 -0500 (EST)
+In-Reply-To: <CAG4vEKM-2sy0z3=YLS+rgH99w6ukdcNBode9CAh4C4t9eSa02A@mail.gmail.com>
+	(Daniel Finnie's message of "Fri, 13 Feb 2015 14:23:40 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: C4CB59A2-B3C0-11E4-877F-A4119F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263831>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263832>
 
-On Feb 13, 2015, at 12:19, Junio C Hamano wrote:
-> The first one is a replay of Kyle's workaround for older versions of
-> Getopt::Long that did not take "--no-option" to negate a boolean
-> option "--option".  The second one reverts the workarounds made to
-> the test script over time, and should break if the first one does
-> not work well for older Getopt::Long (I have no reason to suspect it
-> would break, though).
->
-> I am inclined to squash these into one commit before starting to
-> merge them down to 'next' and then to 'master', after getting
-> Tested-by: from those with older Getopt::Long (prior to 2.32).
+Daniel Finnie <dan@danfinnie.com> writes:
 
-I have no objection to them being squashed together.
+> My question deals with the --exclude-from option to git-ls-files.
 
--Kyle
+You will be fine if you remember that these plumbing commands work
+by first cd'ing to the top-level of the working tree (and adjust the
+paths given from the command line by prefixing the prefix to them).
+
+The input lines that come from --exclude-per-directory should go
+through the prefixing, but -X=<file> makes that single file affect
+the whole operation.  It does not make sense to allow where you are
+to affect behaviour of the command, i.e. in these two invocations of
+ls-files:
+
+	git ls-files -X /var/tmp/exclude -i
+        cd example && git ls-files -X /var/tmp/exclude -i
+
+if the same line in /var/tmp/exclude meant completely different
+things, it would be crazy.
