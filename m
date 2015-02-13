@@ -1,74 +1,72 @@
-From: Zheng Zhang <simsicon@gitcafe.com>
-Subject: Bad object pointed under refs/head/
-Date: Fri, 13 Feb 2015 18:06:58 +0800
-Message-ID: <CAN6kTyfiw6QPk469xV6gyL-+YB5Ca3vNHhEX7daiyn7j536SXQ@mail.gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 0/3] nd/multiple-work-trees updates
+Date: Fri, 13 Feb 2015 17:14:43 +0700
+Message-ID: <CACsJy8C+mSzwnEDvW4orMp-oyKX9_592r0Ed-UTfrH4Z1a6koA@mail.gmail.com>
+References: <1420278087-14613-1-git-send-email-pclouds@gmail.com> <xmqqlhk2pwle.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: GitCafe-dev-team <dev@gitcafe.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 13 11:07:08 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Mark Levedahl <mlevedahl@gmail.com>,
+	Max Kirillov <max@max630.net>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 13 11:15:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YMD9Q-0001ME-1K
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Feb 2015 11:07:08 +0100
+	id 1YMDHT-0005FD-35
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Feb 2015 11:15:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752412AbbBMKHB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Feb 2015 05:07:01 -0500
-Received: from mail-lb0-f181.google.com ([209.85.217.181]:48926 "EHLO
-	mail-lb0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752292AbbBMKHA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Feb 2015 05:07:00 -0500
-Received: by mail-lb0-f181.google.com with SMTP id b6so14549912lbj.12
-        for <git@vger.kernel.org>; Fri, 13 Feb 2015 02:06:59 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to:cc
-         :content-type;
-        bh=rw/UTFzSSVKysOsH10Im8gcNpqxw/UWXAtmjxEEDupw=;
-        b=lUeCUdCQ9jDklgDZqn9Ay1+zx7khd/5TPGb0ZeZEMzIXa7eV2w2BzW5SC3INw59/+E
-         0RxeL87gj7fEAXxbgjzGCym19U0Ph7vXcZbBacA9zkIEkz/46oQ1J9LL78kkx85oMShc
-         m91ScK1g3JggdH2TGBQBcYpUFQN1DwQLSAoAHObiUoI+OlSBe9gEjIQWbfwfOTgbkSIY
-         VZzVPuOTmr+BxipnzqPKNce/Gwr7cLoVNOrqmFc1+UkehaJRsdVSmMXF/8giqAVjGf+r
-         oibrntMpPd+G0qq4CwTM/eDFdod2ZhxgN/NCsBYtxl8y7u9BuKTDu44QyHxPXnQe2tIS
-         zPrA==
-X-Gm-Message-State: ALoCoQmtBCgn3OB3WthBYXcINT9o6g29MPRGH07TKLku5Y4rI4keCEdNNFb7sjM7HLrEk9Qo2tkL
-X-Received: by 10.152.25.165 with SMTP id d5mr7182909lag.43.1423822018904;
- Fri, 13 Feb 2015 02:06:58 -0800 (PST)
-Received: by 10.114.81.100 with HTTP; Fri, 13 Feb 2015 02:06:58 -0800 (PST)
-X-Originating-IP: [192.241.225.190]
+	id S1752390AbbBMKPQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Feb 2015 05:15:16 -0500
+Received: from mail-ig0-f175.google.com ([209.85.213.175]:63478 "EHLO
+	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751806AbbBMKPO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 13 Feb 2015 05:15:14 -0500
+Received: by mail-ig0-f175.google.com with SMTP id hn18so9589795igb.2
+        for <git@vger.kernel.org>; Fri, 13 Feb 2015 02:15:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=PlvTyikbOMqWuE+6r8kToRZ6MjxWozkCCt3lltOUW5M=;
+        b=GedSMzMxoGchsi02rqg3I8kWo/VKicOfPPykCHCNjs9WxcV97TlAD60dubYqzx6pS1
+         5Ab/z0fcybdZDZXj/vz95LgpBjqQ0Gm5JV2/dXCK4w2CA3aek4zpfajject7jSkEdc+O
+         Jt2holHIAnKsdxDQZZIUZYjqRAmny4UPLzs/o0gY1xVMu8OIPAJxKGw5utTQ4m1zC9lO
+         20aHmpnlcubk+I2Q0xC7Tn8PMaoafeMwcJx2HIg6ezXkBCegrrMrdBJaXCxqXHeESf9C
+         nqfpO7CmooQdnBTaWc3nFMRCgf7AyZYWAnwhiUWbAPrAZmvxvBwPP/KceVsHLvHHu3Iu
+         LgcA==
+X-Received: by 10.50.62.110 with SMTP id x14mr2646887igr.2.1423822514017; Fri,
+ 13 Feb 2015 02:15:14 -0800 (PST)
+Received: by 10.107.131.155 with HTTP; Fri, 13 Feb 2015 02:14:43 -0800 (PST)
+In-Reply-To: <xmqqlhk2pwle.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263804>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263805>
 
-Hi,
+On Fri, Feb 13, 2015 at 5:57 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
+:
+>
+>> These patches are on top of what's in 'pu'. They add
+>> --ignore-other-worktrees and make a note about current submodule
+>> support status. I don't think submodule support is ready yet even
+>> with Max Kirillov's series [1]. His 03/03 is already fixed in 'pu'
+>> though, so only 01/03 and 02/03 are new.
+>>
+>> [1] http://thread.gmane.org/gmane.comp.version-control.git/261107
+>
+> With the understanding (perhaps a strongly-worded paragraph in the
+> release notes) that this is not suitable for submodule users yet,
+> is this in a good enough shape to go to 'next'?
 
-I was running some test with Git 1.8.4.5, then I accidentally met a
-problem that leaded to the following error,
-
-> > error: refs/heads/develop does not point to a valid object!
-
-Turns out that the sha in refs/heads/develop is a bad object id, this
-happened after merging a branch X to branch develop, but packed-refs
-is updated to a corrected sha. No other merges at that point.
-
-The fix is easy, just removed refs/heads/develop.
-
-So there were two sha created, one is updated to refs/heads/develop,
-and the other one which is corrected, updated to packed-refs,  Weird.
-
-I am wondering if there is a way to prevent this happening? Is this an
-ancient bug?
-
-Many thanks
-
--- 
-GitCafe.com
-Share a cup of open source
-
-Zhang Zheng
-@simsicon
+I'm not aware of any problems on this series (except submodules). So, y=
+es.
+--=20
+Duy
