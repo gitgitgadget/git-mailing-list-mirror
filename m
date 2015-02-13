@@ -1,82 +1,145 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH] hex.c: reduce memory footprint of sha1_to_hex static buffers
-Date: Fri, 13 Feb 2015 13:56:37 -0800
-Message-ID: <CAGZ79kaEun-mEQPg7cmPV7RJR8A+BxSsSpeAQgcsuJn8L4TGEg@mail.gmail.com>
-References: <1423862329-7899-1-git-send-email-sbeller@google.com>
-	<xmqq7fvlmqu8.fsf@gitster.dls.corp.google.com>
+From: Dilyan Palauzov <dilyan.palauzov@aegee.org>
+Subject: Re: [PATCH] Remove duplicate #include
+Date: Fri, 13 Feb 2015 22:57:27 +0100
+Message-ID: <54DE7347.3000107@aegee.org>
+References: <1423838859-15413-1-git-send-email-git-dpa@aegee.org> <xmqqegptms1r.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 13 22:56:47 2015
+Content-Type: text/plain; charset=iso-2022-jp
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 13 22:57:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YMOE8-0001jM-5I
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Feb 2015 22:56:44 +0100
+	id 1YMOEy-0002Fq-1r
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Feb 2015 22:57:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753530AbbBMV4l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Feb 2015 16:56:41 -0500
-Received: from mail-ie0-f182.google.com ([209.85.223.182]:35058 "EHLO
-	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752515AbbBMV4i (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Feb 2015 16:56:38 -0500
-Received: by iecrl12 with SMTP id rl12so20423651iec.2
-        for <git@vger.kernel.org>; Fri, 13 Feb 2015 13:56:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=n23zVMwuYZk0aMQToueELn8SsoU03cNbIo0heKuoDGE=;
-        b=XqXrdHccDYj94kTuvpS7VxpNpM9RGtGdWaA/dAOol5+1g7D4eWrgxd4plU/JPLhMGh
-         dnMNIVtaoFVmRrzTcNFcejXIuKIyNYwYTgO51EAiaYbk2zRjNXrrcqhdAAI4fzvYXbKI
-         vRkSLBt2bvFkm43FSdRHCYospEOcjHrdJCCOrZrw4teJsG9Pg1m+ZcxQUki1nQYbZIql
-         +MAFkOAczFQ515QsQdo8EvpvOXf9WMM6+pHSWI2PUrl2jhtXPB+hCNGjtd3+6g8NBjcf
-         EPDGez30OivbHvzSFz4KY5V+1iycse8NO3+XxOWagaqmiA+VVzbktE9apr+CQKXUMxb3
-         yVFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=n23zVMwuYZk0aMQToueELn8SsoU03cNbIo0heKuoDGE=;
-        b=DVlW/YOZ1Mi/kRX4+8A0HNYP20M94vlCXk4Kl4lCiVg6Bv0nGtCGxZmMc7tEWIdUk2
-         3IkBJziaq7Rm2UAtcO/UL/QqRLz+p+0OQYqVg/uQrBglEOCeUJGoMMTqRwRG0Zu7gGwC
-         V8fpa0X9YLoiPFQXIySCWwXsSggXBLjcTUueABOULuQuKX3b6FIcxbefK6w8VA4iON6e
-         l3lFrrG56d5VU1r0bfxabz/K4u4bXcl2gtPsGyK2GGnBXhF32T/ZUCQvzxl7lE1mC+Ms
-         CTdB25Wr+tJrMml1Ju+Y8Y32zGG2PA7KFaCrRksvEtJveKPEWY58f6c5dTYybnksVtLm
-         j33g==
-X-Gm-Message-State: ALoCoQnkJzftBHD41OVQM8XT16MmtgTkwTZO0yFBc6Rgg6M+DBOUKtogv8Dt+216Q0QVJvKcCSqn
-X-Received: by 10.107.137.17 with SMTP id l17mr14224204iod.33.1423864597933;
- Fri, 13 Feb 2015 13:56:37 -0800 (PST)
-Received: by 10.50.26.42 with HTTP; Fri, 13 Feb 2015 13:56:37 -0800 (PST)
-In-Reply-To: <xmqq7fvlmqu8.fsf@gitster.dls.corp.google.com>
+	id S1753802AbbBMV5c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Feb 2015 16:57:32 -0500
+Received: from mailout-aegee.scc.kit.edu ([129.13.185.235]:33033 "EHLO
+	mailout-aegee.scc.kit.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752805AbbBMV5b (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Feb 2015 16:57:31 -0500
+Received: from smtp.aegee.org (aegeepc1.aegee.uni-karlsruhe.de [129.13.131.81])
+	by scc-mailout-02.scc.kit.edu with esmtp (Exim 4.72 #1)
+	id 1YMOEr-0002lL-CZ; Fri, 13 Feb 2015 22:57:29 +0100
+Authentication-Results: aegeeserv.aegee.org; auth=pass (PLAIN) smtp.auth=didopalauzov
+DKIM-Filter: OpenDKIM Filter v2.10.0 smtp.aegee.org t1DLvUGe024645
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aegee.org; s=k4096;
+	t=1423864650; i=dkim+MSA-tls@aegee.org;
+	bh=TeWISS+MBEy/OcgD8/Nmi6m5pVK3xPzSTAU/9Pdr79o=;
+	h=Date:From:To:Subject:References:In-Reply-To;
+	b=SaCzw3F8GnZkOQ2oAmpo1txTcQghrPjABUb2oerSCH0200aquq6xqG4SBe45FlKcZ
+	 ccdP76rCUhBrA6B9L7a7JfO7pufgpB8Q4mw/1e6lSc7kzn7v9/H0FZHfOab8SvCb9Y
+	 qz/jDujiCOakvrQC4ntPHkhl75K0+MoMNhPA8uYzNSWMn2dcsJcUUXHxuuGA2WE/0O
+	 Y1guWaSVdTHNlnZmaZyhlEFhVJaMdd5SO+7SbhmynxCirMZvizi+R7tYz2Hrd4mEmB
+	 SmaIIQhfqAOkKr/3MfNc5rWl9aI54ADxhReur4/ri6pLd7UwNWccWbgSpLONjJN9W9
+	 h0Jeetc7tqjS1DKYyuvuBtt2Grz65Eo3lBFrq/bKvo4M8Xf46doqV18/BI3dNkwos/
+	 V7KEk1wMYLTZm5iUBvaAQnv3MlJv3PGgIWLN6305absmhAjORsBDi4HTDSBtP6GrcC
+	 ZE3nP1rkoFJpifW7njqzUM600m+ZEvmUmznoFsO6O0qkGHB3JiTCGIKYx1mxJdQqrG
+	 kp8iSrPR/Emjlq39RV/hRDJ0ufjbdkavCQe3ncHi9oMcTKz8PurB696w3FQlCeoAqY
+	 MJPEhd4iuLJigaPsDa6Tibrt2aYy8LOSdwMUeu+QL+Ru1l4Ksyln08zGSK2Mbe 
+Received: from [192.168.0.16] (zuhause [212.202.110.243])
+	(authenticated bits=0)
+	by smtp.aegee.org (8.15.1/8.14.5) with ESMTPSA id t1DLvUGe024645
+	(version=TLSv1.2 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO)
+	for <git@vger.kernel.org>; Fri, 13 Feb 2015 21:57:30 GMT
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
+In-Reply-To: <xmqqegptms1r.fsf@gitster.dls.corp.google.com>
+X-Virus-Scanned: clamav-milter 0.98.6 at aegeeserv
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263840>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263841>
 
-On Fri, Feb 13, 2015 at 1:41 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> 41 bytes is the exact number of bytes needed for having the returned
->> hex string represented. 50 seems to be an arbitrary number, such
->> that there are no benefits from alignment to certain address boundaries.
->
-> Yes, with s/seems to be/is/;
->
-> This comes from e83c5163 (Initial revision of "git", the information
-> manager from hell, 2005-04-07), and when dcb3450f (sha1_to_hex()
-> usage cleanup, 2006-05-03) introduced the "4 recycled buffers" on
-> top, the underlying array was left at 50 bytes long.
->
-> You can now have "I fixed Linus's bug" badge ;-)
+Hello Junio,
 
-I don't think it's a bug, it's just wasting memory?
+in theory it speeds up, because the preprocessor has less work to do.
+In practice I don't know how much and this seems also irrelevant
+criterion for accepting this patch.
 
-As I could not find any documentation on the
-magical 50 in the early days, I cc'd Linus
-in case there is something I did not think of yet.
+Greetings
+  Dilyan
+
+On 13.02.2015 22:15, Junio C Hamano wrote:
+> Дилян Палаузов  <git-dpa@aegee.org> writes:
+> 
+>> deheader (git://gitorious.org/deheader/deheader.git) found out that
+>> some .c files #include twice one and the same header file.
+>>
+>> This patch removes such occurrences and hence speeds up the compilation.
+> 
+> Does it speed up?  By how much?  Any numbers?
+> 
+> I do not see any reason to reject this change.  Removing repeated
+> inclusions of the same header is a good thing by itself [*1*].
+> 
+> Thanks.
+> 
+> [Footnote]
+> 
+> *1* If things break when repeated inclusions are removed, that would
+> mean the headers were wrong in the first place.  I do not think
+> transport.h, string-list.h, quote.h and cache.h have any reason why
+> they need to be included twice to work correctly, and in fact they
+> are designed to be no-op when included twice.
+> 
+>> Signed-off-by: Дилян Палаузов <git-dpa@aegee.org>
+>> ---
+>>   builtin/fetch.c    | 1 -
+>>   trailer.c          | 1 -
+>>   transport-helper.c | 1 -
+>>   userdiff.c         | 1 -
+>>   4 files changed, 4 deletions(-)
+>>
+>> diff --git a/builtin/fetch.c b/builtin/fetch.c
+>> index 7b84d35..75a55e5 100644
+>> --- a/builtin/fetch.c
+>> +++ b/builtin/fetch.c
+>> @@ -11,7 +11,6 @@
+>>   #include "run-command.h"
+>>   #include "parse-options.h"
+>>   #include "sigchain.h"
+>> -#include "transport.h"
+>>   #include "submodule.h"
+>>   #include "connected.h"
+>>   #include "argv-array.h"
+>> diff --git a/trailer.c b/trailer.c
+>> index 623adeb..05b3859 100644
+>> --- a/trailer.c
+>> +++ b/trailer.c
+>> @@ -1,7 +1,6 @@
+>>   #include "cache.h"
+>>   #include "string-list.h"
+>>   #include "run-command.h"
+>> -#include "string-list.h"
+>>   #include "commit.h"
+>>   #include "trailer.h"
+>>   /*
+>> diff --git a/transport-helper.c b/transport-helper.c
+>> index 0224687..3652b16 100644
+>> --- a/transport-helper.c
+>> +++ b/transport-helper.c
+>> @@ -5,7 +5,6 @@
+>>   #include "commit.h"
+>>   #include "diff.h"
+>>   #include "revision.h"
+>> -#include "quote.h"
+>>   #include "remote.h"
+>>   #include "string-list.h"
+>>   #include "thread-utils.h"
+>> diff --git a/userdiff.c b/userdiff.c
+>> index fad52d6..2ccbee5 100644
+>> --- a/userdiff.c
+>> +++ b/userdiff.c
+>> @@ -1,6 +1,5 @@
+>>   #include "cache.h"
+>>   #include "userdiff.h"
+>> -#include "cache.h"
+>>   #include "attr.h"
+>>   
+>>   static struct userdiff_driver *drivers;
