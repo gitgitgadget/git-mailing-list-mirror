@@ -1,130 +1,122 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 8/8] reflog_expire(): lock symbolic refs themselves, not
- their referent
-Date: Fri, 13 Feb 2015 21:11:30 +0100
-Message-ID: <54DE5A72.6030106@alum.mit.edu>
-References: <1423473164-6011-1-git-send-email-mhagger@alum.mit.edu>	<1423473164-6011-9-git-send-email-mhagger@alum.mit.edu>	<CAGZ79kaBGAOt-R1=mSG5H-5p=2UWjZEesktVwQcDAWFC-OW2Eg@mail.gmail.com>	<xmqq61b8t65x.fsf@gitster.dls.corp.google.com>	<CAGZ79kaaQWRXhph=0g3SRHKXMoW8eAp7QG21yuWXWd7OW4M+uA@mail.gmail.com>	<54DCDA42.2060800@alum.mit.edu>	<CAGZ79kZgjRNS3zd4Tif6M66mjkP6-tDpy4FAtio8jiwqHxUtgw@mail.gmail.com>	<54DE259C.4030001@alum.mit.edu>	<xmqqoaoxoffe.fsf@gitster.dls.corp.google.com>	<CAGZ79kZpCjcGeifbLztpNUSq7-3Yy2_GEVPGEQsxrgoZfLFU+g@mail.gmail.com>	<xmqqk2zloeg1.fsf@gitster.dls.corp.google.com>	<CAGZ79kYRi3KYcvNQbkhP0uLFgpJzD+h=P+smOLQy2Msv0C_1kw@mail.gmail.com> <xmqqa90hocc5.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	=?UTF-8?B?Q2FybG9zIE1hcnTDrW4gTmlldG8=?= <cmn@elego.de>
-To: Junio C Hamano <gitster@pobox.com>,
-	Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Fri Feb 13 21:18:50 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 1/2] git-send-email.perl: support no- prefix with older GetOptions
+Date: Fri, 13 Feb 2015 12:19:28 -0800
+Message-ID: <1423858769-1565-2-git-send-email-gitster@pobox.com>
+References: <xmqq8ug2pvw7.fsf@gitster.dls.corp.google.com>
+ <1423858769-1565-1-git-send-email-gitster@pobox.com>
+Cc: "Kyle J. McKay" <mackyle@gmail.com>,
+	Brandon Casey <drafnel@gmail.com>,
+	"Tom G. Christensen" <tgc@statsbiblioteket.dk>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 13 21:19:43 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YMMhK-0002kh-8D
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Feb 2015 21:18:46 +0100
+	id 1YMMiC-00033M-Dm
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Feb 2015 21:19:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752332AbbBMUSi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Feb 2015 15:18:38 -0500
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:58681 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751263AbbBMUSh (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 13 Feb 2015 15:18:37 -0500
-X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Fri, 13 Feb 2015 15:18:37 EST
-X-AuditID: 12074414-f797f6d000004084-12-54de5a75619a
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id F7.15.16516.57A5ED45; Fri, 13 Feb 2015 15:11:33 -0500 (EST)
-Received: from [192.168.69.130] (p5DDB38B4.dip0.t-ipconnect.de [93.219.56.180])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t1DKBUBm028594
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Fri, 13 Feb 2015 15:11:32 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.4.0
-In-Reply-To: <xmqqa90hocc5.fsf@gitster.dls.corp.google.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrNKsWRmVeSWpSXmKPExsUixO6iqFsadS/EYM1vU4vpXatZLLqudDNZ
-	NPReYbZ4e3MJo0X3lLeMFr19n1gtNm9uZ3Fg97i07iWTx85Zd9k9Fmwq9bh4Sdnj8ya5ANYo
-	bpukxJKy4Mz0PH27BO6MY09usBW8Eq2Y+DW6gfG1QBcjJ4eEgInE5IlnWSFsMYkL99azgdhC
-	ApcZJa4/8Oli5AKyzzNJbNwwgxkkwSugLTHz4WSwIhYBVYm+da/A4mwCuhKLepqZQGxRgSCJ
-	Q6cfs0DUC0qcnPkEyObgEBHwkmibWQwyk1lgDpPEzs9TweYIC8RK/LzzkBVi2QVWibNvL4E1
-	cwpYSzxZ1wjWzCygLrF+nhBImFlAXqJ562zmCYwCs5CsmIVQNQtJ1QJG5lWMcok5pbm6uYmZ
-	OcWpybrFyYl5ealFuhZ6uZkleqkppZsYIQEvsoPxyEm5Q4wCHIxKPLwv/O6GCLEmlhVX5h5i
-	lORgUhLl5Yy4FyLEl5SfUpmRWJwRX1Sak1p8iFGCg1lJhNcuECjHm5JYWZValA+TkuZgURLn
-	/bZY3U9IID2xJDU7NbUgtQgmK8PBoSTBGxcJ1ChYlJqeWpGWmVOCkGbi4AQZziUlUpyal5Ja
-	lFhakhEPitL4YmCcgqR4gPbOAmnnLS5IzAWKQrSeYlSUEudNAUkIgCQySvPgxsLS2CtGcaAv
-	hXkTQKp4gCkQrvsV0GAmoMETZ9wGGVySiJCSamBU8rql9VpM33XrTk2GlFM+v18piHmEqsgc
-	/xxlpG0o5/3H+OFDs3jn1ZN4NwhxctU/vZFjU3pCZkak5LQLWqdsi5vFVeaFWPBO 
+	id S1753255AbbBMUTf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Feb 2015 15:19:35 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:62290 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753215AbbBMUTe (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Feb 2015 15:19:34 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C3FAE248BE;
+	Fri, 13 Feb 2015 15:19:33 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=Iuvc
+	vXb2VX9eDPGVeOONyqVEBQ4=; b=dO/sVJNDQgRYSJleAJ01sBhCNlZ7nhqRIdB0
+	ODuO4N9gG8UAeQOijCpOoqgakRt9ec/zMEpb/2ccysSrbXQSY67ndzI/5i/N4Wzm
+	3eRgf1PPEbjtFvddJFWBq2Mkd59x9Y1wc7L+6wuqe61svUDFPQNij66ueoKl69Gu
+	ewFWepM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
+	iBXQazuiw6VBen6o5H/HGw5YR+hoUDHpspuH4yAoerFyYL6zJ5QCdbbetF69TCxS
+	JcUj9afSfnt/BeOu2aDiMXkcg7MkFRj7Gg6vJy/VTd8Nud/d9hHOnyNJQ+pHSKjx
+	Ht5eS2WM+fXmijICNjASPapxJL/3xcfv9Fzw+9XbYrU=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id BA626248BD;
+	Fri, 13 Feb 2015 15:19:33 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 404CC248BC;
+	Fri, 13 Feb 2015 15:19:33 -0500 (EST)
+X-Mailer: git-send-email 2.3.0-191-geb1a277
+In-Reply-To: <1423858769-1565-1-git-send-email-gitster@pobox.com>
+X-Pobox-Relay-ID: 9F6B0F52-B3BD-11E4-BCED-A4119F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263827>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263828>
 
-On 02/13/2015 08:12 PM, Junio C Hamano wrote:
-> [...]
-> As we are trying to see a way to move forward to do the right thing
-> around reflog, I was wondering if locking only the symbolic ref is a
-> sensible endgame.  "The right thing" being:
-> 
->    When a symbolic ref S points at underlying ref R, and if R's tip
->    changes from X to Y, we would want to know from the reflog of S
->    that S used to point at X and then changed to point at Y.
+From: "Kyle J. McKay" <mackyle@gmail.com>
 
-Let's first talk about an ideal world if we had complete support for
-symbolic references.
+Only Perl version 5.8.0 or later is required, but that comes with
+an older Getopt::Long (2.32) that does not support the 'no-'
+prefix.  Support for that was added in Getopt::Long version 2.33.
 
-Yes, I agree with your principle. Moreover, suppose that S and S2 *both*
-point at R, and there is a third symref S3 that points at symref S
-(symbolic refs can point at other symbolic refs!):
+Since the help only mentions the 'no-' prefix and not the 'no'
+prefix, add explicit support for the 'no-' prefix when running
+with older GetOptions versions.
 
-X <- R <- S <- S3
-        \
-         S2
+Reported-by: Tom G. Christensen <tgc@statsbiblioteket.dk>
+Signed-off-by: Kyle J. McKay <mackyle@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ git-send-email.perl | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-Now, if R updated from X to Y (regardless of whether the update is via R
-directly or via one of the symrefs), then each of the four reflogs (R,
-S, S2, and S3) should gain a new entry reflecting the update.
-
-If S is reseated to point at R2 instead of R, then the reflogs for S and
-for S3 should each gain new entries
-
-What locks should we hold? In my opinion, we should hold the locks on
-exactly those references (symbolic or regular) whose reflogs we want to
-change. So in the first example, we should hold
-
-    $GIT_DIR/$R.lock
-    $GIT_DIR/$S.lock
-    $GIT_DIR/$S2.lock, and
-    $GIT_DIR/$S3.lock
-
-Ideally, we should acquire all of the locks before making any modifications.
-
-
-Now back to the real world. Currently, if R is changed *through* a
-symbolic reference S, then the reflogs for both R and S are updated, but
-not the reflogs for any other symbolic references that might point at R.
-If R is changed directly, then no symref's reflogs are affected, except
-for the special case that HEAD's reflog is changed if it points directly
-at R. This limitation is a hack to avoid having to walk symrefs
-backwards to find any symrefs that might be pointing at R.
-
-If a symref is reseated, then its reflog is changed but not that of any
-symrefs that might be pointed at it.
-
-It might actually not be extremely expensive to follow symrefs
-backwards. Symbolic references cannot be packed, so we would only have
-to scan the loose references; we could ignore packed refs. But it would
-still be a lot more expensive than just updating one file. I don't know
-that it's worth it, given that symbolic references are used so sparingly.
-
-I think that the rule about locks as expressed above can be carried over
-the the real world:
-
-    We should hold the locks on exactly those references (symbolic
-    or regular) whose reflogs we plan to change. We should acquire all
-    of the locks before making any changes.
-
-Michael
-
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 3092ab3..a18a795 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -299,6 +299,7 @@ sub signal_handler {
+ 		    "bcc=s" => \@bcclist,
+ 		    "no-bcc" => \$no_bcc,
+ 		    "chain-reply-to!" => \$chain_reply_to,
++		    "no-chain-reply-to" => sub {$chain_reply_to = 0},
+ 		    "smtp-server=s" => \$smtp_server,
+ 		    "smtp-server-option=s" => \@smtp_server_options,
+ 		    "smtp-server-port=s" => \$smtp_server_port,
+@@ -311,25 +312,34 @@ sub signal_handler {
+ 		    "smtp-domain:s" => \$smtp_domain,
+ 		    "identity=s" => \$identity,
+ 		    "annotate!" => \$annotate,
++		    "no-annotate" => sub {$annotate = 0},
+ 		    "compose" => \$compose,
+ 		    "quiet" => \$quiet,
+ 		    "cc-cmd=s" => \$cc_cmd,
+ 		    "suppress-from!" => \$suppress_from,
++		    "no-suppress-from" => sub {$suppress_from = 0},
+ 		    "suppress-cc=s" => \@suppress_cc,
+ 		    "signed-off-cc|signed-off-by-cc!" => \$signed_off_by_cc,
++		    "no-signed-off-cc|no-signed-off-by-cc" => sub {$signed_off_by_cc = 0},
+ 		    "cc-cover|cc-cover!" => \$cover_cc,
++		    "no-cc-cover" => sub {$cover_cc = 0},
+ 		    "to-cover|to-cover!" => \$cover_to,
++		    "no-to-cover" => sub {$cover_to = 0},
+ 		    "confirm=s" => \$confirm,
+ 		    "dry-run" => \$dry_run,
+ 		    "envelope-sender=s" => \$envelope_sender,
+ 		    "thread!" => \$thread,
++		    "no-thread" => sub {$thread = 0},
+ 		    "validate!" => \$validate,
++		    "no-validate" => sub {$validate = 0},
+ 		    "transfer-encoding=s" => \$target_xfer_encoding,
+ 		    "format-patch!" => \$format_patch,
++		    "no-format-patch" => sub {$format_patch = 0},
+ 		    "8bit-encoding=s" => \$auto_8bit_encoding,
+ 		    "compose-encoding=s" => \$compose_encoding,
+ 		    "force" => \$force,
+ 		    "xmailer!" => \$use_xmailer,
++		    "no-xmailer" => sub {$use_xmailer = 0},
+ 	 );
+ 
+ usage() if $help;
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
+2.3.0-191-geb1a277
