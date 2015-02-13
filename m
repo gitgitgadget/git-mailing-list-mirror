@@ -1,85 +1,89 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: [PATCH 1/2] transport-helper: ask the helper to set progress and verbosity options after asking for its capabilities
-Date: Fri, 13 Feb 2015 14:24:45 +0900
-Message-ID: <1423805086-807-1-git-send-email-mh@glandium.org>
-References: <xmqqlhk2ri1j.fsf@gitster.dls.corp.google.com>
-Cc: git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Feb 13 06:25:00 2015
+From: Jeff King <peff@peff.net>
+Subject: Re: Keep original author with git merge --squash?
+Date: Fri, 13 Feb 2015 02:10:41 -0500
+Message-ID: <20150213071041.GA26775@peff.net>
+References: <CAN7QDoKQAZKUt_MHWjgt1k3PvXQv6XTcjdijh8KRodO3=VD47A@mail.gmail.com>
+ <20150212092824.GA19626@peff.net>
+ <xmqqpp9erihg.fsf@gitster.dls.corp.google.com>
+ <CAN7QDoLKFBCJpFa+QL8dPQtwyAyDNt-ck_sNJ3fS+vTrK_Lg9w@mail.gmail.com>
+ <xmqq8ug2rfi2.fsf@gitster.dls.corp.google.com>
+ <CAN7QDoJ+hOFqoc54sAbLeSxvj8TQKQRSVKbNQXZYfPv1uOy=WA@mail.gmail.com>
+ <xmqq4mqqrc70.fsf@gitster.dls.corp.google.com>
+ <20150212225003.GA20763@peff.net>
+ <xmqqwq3mogdm.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: David Glasser <glasser@davidglasser.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 13 08:10:50 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YM8kN-0003no-Sp
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Feb 2015 06:25:00 +0100
+	id 1YMAOn-0003kp-5Y
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Feb 2015 08:10:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751643AbbBMFYz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Feb 2015 00:24:55 -0500
-Received: from ks3293202.kimsufi.com ([5.135.186.141]:60651 "EHLO glandium.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751500AbbBMFYy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Feb 2015 00:24:54 -0500
-Received: from glandium by zenigata with local (Exim 4.84)
-	(envelope-from <glandium@glandium.org>)
-	id 1YM8kA-0000Dq-Gm; Fri, 13 Feb 2015 14:24:46 +0900
-X-Mailer: git-send-email 2.3.0.3.g5a196f5
-In-Reply-To: <xmqqlhk2ri1j.fsf@gitster.dls.corp.google.com>
+	id S1752105AbbBMHKp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Feb 2015 02:10:45 -0500
+Received: from cloud.peff.net ([50.56.180.127]:48551 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752023AbbBMHKo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Feb 2015 02:10:44 -0500
+Received: (qmail 27978 invoked by uid 102); 13 Feb 2015 07:10:44 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 13 Feb 2015 01:10:44 -0600
+Received: (qmail 31697 invoked by uid 107); 13 Feb 2015 07:10:47 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 13 Feb 2015 02:10:47 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 13 Feb 2015 02:10:41 -0500
+Content-Disposition: inline
+In-Reply-To: <xmqqwq3mogdm.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263797>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263798>
 
-Currently, a remote helper is only told about the progress and verbosity
-options for the 'fetch' and 'push' commands. This means a remote helper
-that implements 'import' and 'export' can never know the user requested
-progress or verbosity (or lack thereof) through the command line.
+On Thu, Feb 12, 2015 at 03:32:37PM -0800, Junio C Hamano wrote:
 
-Telling the remote helper about those options after asking for its
-capabilities ensures it can act accordingly for all commands.
+> > and using "Author: " (with no text) does a reset.
+> 
+> no (I do not think it is wrong per-se, but I do not think such a
+> good idea).
 
-Signed-off-by: Mike Hommey <mh@glandium.org>
----
- transport-helper.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+Fair enough. It is probably a minority use case, and one that is likely
+to cause confusion.
 
-diff --git a/transport-helper.c b/transport-helper.c
-index 0224687..23a741c 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -98,6 +98,8 @@ static void do_take_over(struct transport *transport)
- 	free(data);
- }
- 
-+static void standard_options(struct transport *t);
-+
- static struct child_process *get_helper(struct transport *transport)
- {
- 	struct helper_data *data = transport->data;
-@@ -212,6 +214,7 @@ static struct child_process *get_helper(struct transport *transport)
- 	strbuf_release(&buf);
- 	if (debug)
- 		fprintf(stderr, "Debug: Capabilities complete.\n");
-+	standard_options(transport);
- 	return data->helper;
- }
- 
-@@ -339,7 +342,6 @@ static int fetch_with_fetch(struct transport *transport,
- 	int i;
- 	struct strbuf buf = STRBUF_INIT;
- 
--	standard_options(transport);
- 	if (data->check_connectivity &&
- 	    data->transport_options.check_self_contained_and_connected)
- 		set_helper_option(transport, "check-connectivity", "true");
-@@ -824,7 +826,6 @@ static int push_refs_with_push(struct transport *transport,
- 		return 0;
- 	}
- 
--	standard_options(transport);
- 	for_each_string_list_item(cas_option, &cas_options)
- 		set_helper_option(transport, "cas", cas_option->string);
- 
--- 
-2.3.0.3.g5a196f5
+> > Also, on the topic of "merge --squash". I never use it myself, but
+> > having experimented with it due to this thread, I found the template it
+> > sticks into COMMIT_EDITMSG to be horribly unfriendly for munging. For
+> > example, with two simple commits, I get:
+> [...]
+> I think it should show exactly the same thing as "rebase -i" squash
+> insn would give you.  People already know how to munge that, right?
+
+Yeah, that was exactly what I expected to see (but didn't). They should
+probably have the same format, though we may want to enhance both to
+contain more information (like author names).
+
+> > It also raises a question for the proposal in this thread: if there are
+> > multiple "Author:" lines, which one do we take? The first, or the last?
+> 
+> I was siding with David's "pay attention to in-buffer Author: only
+> when all of them agree".  When squash-merging a branch with two or
+> more authors, we would attribute the authorship silently and
+> automatically to you if you do not do anything special otherwise.
+
+That's probably reasonable. I was thinking more of a case where you made
+some fixups on top of somebody else's branch, and then used "git rebase
+-i" to squash them together. But I think we already use the authorship
+for the root of the squash in that case.
+
+This case collapses nicely if we make a slight tweak to your proposed
+behavior (or maybe this is what you meant). If there are multiple
+authors listed, we behave as if none was listed. That would leave the
+authorship as it behaves today (with the author of the first commit) if
+you do nothing, or you can override it by dropping all but one.
+
+-Peff
