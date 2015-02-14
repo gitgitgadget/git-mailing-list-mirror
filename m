@@ -1,82 +1,79 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: Bad object pointed under refs/head/
-Date: Sat, 14 Feb 2015 07:19:10 +0100
-Message-ID: <54DEE8DE.9060501@alum.mit.edu>
-References: <CAN6kTyfiw6QPk469xV6gyL-+YB5Ca3vNHhEX7daiyn7j536SXQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] transport-helper: ask the helper to set the same options for import as for fetch
+Date: Sat, 14 Feb 2015 00:12:23 -0800
+Message-ID: <xmqqoaowlxnc.fsf@gitster.dls.corp.google.com>
+References: <xmqqlhk2ri1j.fsf@gitster.dls.corp.google.com>
+	<1423805086-807-1-git-send-email-mh@glandium.org>
+	<1423805086-807-2-git-send-email-mh@glandium.org>
+	<xmqqwq3lmwnb.fsf@gitster.dls.corp.google.com>
+	<20150213221450.GA24285@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: GitCafe-dev-team <dev@gitcafe.com>
-To: Zheng Zhang <simsicon@gitcafe.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 14 07:26:44 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Sat Feb 14 09:12:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YMWBg-0003or-2x
-	for gcvg-git-2@plane.gmane.org; Sat, 14 Feb 2015 07:26:44 +0100
+	id 1YMXq7-0006gG-Cr
+	for gcvg-git-2@plane.gmane.org; Sat, 14 Feb 2015 09:12:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751558AbbBNG0a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Feb 2015 01:26:30 -0500
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:43021 "EHLO
-	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751125AbbBNG03 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 14 Feb 2015 01:26:29 -0500
-X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Sat, 14 Feb 2015 01:26:29 EST
-X-AuditID: 12074413-f79f26d0000030e7-0c-54dee8e3ece8
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 21.A3.12519.3E8EED45; Sat, 14 Feb 2015 01:19:15 -0500 (EST)
-Received: from [192.168.69.130] (p5DDB3718.dip0.t-ipconnect.de [93.219.55.24])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t1E6JAPP023464
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Sat, 14 Feb 2015 01:19:14 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.4.0
-In-Reply-To: <CAN6kTyfiw6QPk469xV6gyL-+YB5Ca3vNHhEX7daiyn7j536SXQ@mail.gmail.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFuphleLIzCtJLcpLzFFi42IRYndR1H384l6Iwfmd4hZ3e8+yW3Rd6Way
-	aNrbzOjA7PHj42I2j8+b5AKYorhtkhJLyoIz0/P07RK4M2Z+fM1S8JO9Yt/n2AbG+WxdjJwc
-	EgImEhuOrmaHsMUkLtxbDxTn4hASuMwocWzqU1YI5xyTxNE7b8CqeAW0Jdq/HGIGsVkEVCXm
-	NT9jAbHZBHQlFvU0M4HYogJBEodOP2aBqBeUODnzCZgtImAtcej7crDNzAJqEss39oDNERYw
-	kPi3Yy8jiC0kECDR9PccK4jNKRAo0XBgAytEvbrEn3mXmCFseYntb+cwT2AUmIVkxSwkZbOQ
-	lC1gZF7FKJeYU5qrm5uYmVOcmqxbnJyYl5dapGuul5tZopeaUrqJERKywjsYd52UO8QowMGo
-	xMMrsfReiBBrYllxZe4hRkkOJiVR3s9rgEJ8SfkplRmJxRnxRaU5qcWHGCU4mJVEeH1uA+V4
-	UxIrq1KL8mFS0hwsSuK8akvU/YQE0hNLUrNTUwtSi2CyMhwcShK85sDYFBIsSk1PrUjLzClB
-	SDNxcIIM55ISKU7NS0ktSiwtyYgHRWp8MTBWQVI8QHv/PAfZW1yQmAsUhWg9xagoJc5rCjJX
-	ACSRUZoHNxaWiF4xigN9Kcy7HqSdB5jE4LpfAQ1mAho8ccZtkMEliQgpqQZGs8cxr95VF4bs
-	mMs6u33L++03mdf9cNjQ+lq19KFzGeOB0E9/tHTdPLpUelvv//vPsUXG49mmcisF9f8e+a+9
-	D07eoFehXSf6+K/sibbPqcvc9i8zj0300SjXF1j8UCWP/eKvta38t8umXp3Y5Tlb 
+	id S1753243AbbBNIM0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Feb 2015 03:12:26 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:56657 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752633AbbBNIMZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Feb 2015 03:12:25 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B05D62E707;
+	Sat, 14 Feb 2015 03:12:24 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=9KLmIjQHLyd0Q53V3DcQKp2rh8k=; b=o+J4FB
+	2aFKhY0yOOPWMsNPvwlt2acSMcDlayEMSegV3K4N75CyFWYWPU8q5IcRd8KBe0vn
+	w3VDfYipEBE1lULkwbCorevSsL6XF3ngSK/2JrustHGvV9aGN4IevHXJA9SNQopg
+	VhUoozstDiig72yPdp0H8ptYARo8RUJj71Zf4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=bpjMvLDmMp12ZmiOIWeesCngh1aeVuUC
+	AcYmz12AXymezMR5QsbjI08eOIz7PiiBpziW//FGd1Kvmuo+eHjRCxghfrCnnPI9
+	PkUUQN8efUKSf0wjyp/KAjrsVlgcQYFDihytDQenwTa7wn0I/PrSG7BNmPkFNx3U
+	niJfEwYf+o8=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A0A652E706;
+	Sat, 14 Feb 2015 03:12:24 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 29C072E704;
+	Sat, 14 Feb 2015 03:12:24 -0500 (EST)
+In-Reply-To: <20150213221450.GA24285@glandium.org> (Mike Hommey's message of
+	"Sat, 14 Feb 2015 07:14:50 +0900")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 34DD62CA-B421-11E4-BA50-A4119F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263848>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263849>
 
-On 02/13/2015 11:06 AM, Zheng Zhang wrote:
-> I was running some test with Git 1.8.4.5, then I accidentally met a
-> problem that leaded to the following error,
-> 
->>> error: refs/heads/develop does not point to a valid object!
-> 
-> Turns out that the sha in refs/heads/develop is a bad object id, this
-> happened after merging a branch X to branch develop, but packed-refs
-> is updated to a corrected sha. No other merges at that point.
-> 
-> The fix is easy, just removed refs/heads/develop.
-> 
-> So there were two sha created, one is updated to refs/heads/develop,
-> and the other one which is corrected, updated to packed-refs,  Weird.
-> 
-> I am wondering if there is a way to prevent this happening? Is this an
-> ancient bug?
+Mike Hommey <mh@glandium.org> writes:
 
-If you can find and document a way to reproduce this problem, then you
-will have a much better chance of finding somebody who is willing to
-look into it. Otherwise it's hard to know how to even get started.
+> I haven't looked exactly what cas does and if it makes sense for export.
+> (FWIW, I'm using push and import at the moment, so it's not a direct
+> issue for me ; I don't support cas anyways)
 
-Michael
+The question primarily came from curiosity to gauge how much
+potential work remains in the area (of course, people are welcome to
+share the curiosity and get motivated to fill the gaps as
+discovered).
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
+In other words, I didn't mean to say "complete other methods in
+transport helper while at it; otherwise your patches are incomplete
+and unacceptable".  It is better to concentrate what you use whose
+desired behaviour you are sure about, and these two patches do
+exactly that.
+
+Thanks.
