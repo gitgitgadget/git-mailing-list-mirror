@@ -1,79 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] transport-helper: ask the helper to set the same options for import as for fetch
-Date: Sat, 14 Feb 2015 00:12:23 -0800
-Message-ID: <xmqqoaowlxnc.fsf@gitster.dls.corp.google.com>
-References: <xmqqlhk2ri1j.fsf@gitster.dls.corp.google.com>
-	<1423805086-807-1-git-send-email-mh@glandium.org>
-	<1423805086-807-2-git-send-email-mh@glandium.org>
-	<xmqqwq3lmwnb.fsf@gitster.dls.corp.google.com>
-	<20150213221450.GA24285@glandium.org>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: [msysGit] Re: [PATCH] t/lib-httpd: switch SANITY check for NOT_ROOT
+Date: Sat, 14 Feb 2015 09:36:43 +0100
+Message-ID: <54DF091B.9070903@web.de>
+References: <20150114211712.GE1155@peff.net>	<064010B3-BC58-42F2-B5C0-DAADAA59B87D@gmail.com>	<xmqqwq4n6b4c.fsf@gitster.dls.corp.google.com>	<20150115222719.GA19021@peff.net>	<xmqqa91j6537.fsf@gitster.dls.corp.google.com>	<20150115235752.GB25120@peff.net>	<xmqqh9vr4mlz.fsf@gitster.dls.corp.google.com>	<20150116013256.GA25894@peff.net>	<BEFF558C-774D-4891-96A0-BE962F8070E7@gmail.com>	<20150116033445.GA29572@peff.net> <20150116091648.GA2450@peff.net>	<xmqqfvba37bq.fsf@gitster.dls.corp.google.com>	<xmqqzj9i1rci.fsf@gitster.dls.corp.google.com> <54BAF1C2.60103@web.de>	<xmqq61bzwyqp.fsf@gitster.dls.corp.google.com>	<54C170E9.4010401@web.de>	<xmqqlhkusc4h.fsf@gitster.dls.corp.google.com> <54C1E395.30003@web.de> <xmqqzj8ipxj6.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Sat Feb 14 09:12:36 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, "Kyle J. McKay" <mackyle@gmail.com>,
+	msysgit@googlegroups.com, Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1?= =?UTF-8?B?c2Vu?= 
+	<tboegi@web.de>
+X-From: git-owner@vger.kernel.org Sat Feb 14 09:37:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YMXq7-0006gG-Cr
-	for gcvg-git-2@plane.gmane.org; Sat, 14 Feb 2015 09:12:35 +0100
+	id 1YMYDj-0002Dx-Kj
+	for gcvg-git-2@plane.gmane.org; Sat, 14 Feb 2015 09:36:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753243AbbBNIM0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Feb 2015 03:12:26 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:56657 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752633AbbBNIMZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Feb 2015 03:12:25 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B05D62E707;
-	Sat, 14 Feb 2015 03:12:24 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=9KLmIjQHLyd0Q53V3DcQKp2rh8k=; b=o+J4FB
-	2aFKhY0yOOPWMsNPvwlt2acSMcDlayEMSegV3K4N75CyFWYWPU8q5IcRd8KBe0vn
-	w3VDfYipEBE1lULkwbCorevSsL6XF3ngSK/2JrustHGvV9aGN4IevHXJA9SNQopg
-	VhUoozstDiig72yPdp0H8ptYARo8RUJj71Zf4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=bpjMvLDmMp12ZmiOIWeesCngh1aeVuUC
-	AcYmz12AXymezMR5QsbjI08eOIz7PiiBpziW//FGd1Kvmuo+eHjRCxghfrCnnPI9
-	PkUUQN8efUKSf0wjyp/KAjrsVlgcQYFDihytDQenwTa7wn0I/PrSG7BNmPkFNx3U
-	niJfEwYf+o8=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id A0A652E706;
-	Sat, 14 Feb 2015 03:12:24 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 29C072E704;
-	Sat, 14 Feb 2015 03:12:24 -0500 (EST)
-In-Reply-To: <20150213221450.GA24285@glandium.org> (Mike Hommey's message of
-	"Sat, 14 Feb 2015 07:14:50 +0900")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 34DD62CA-B421-11E4-BA50-A4119F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751284AbbBNIgz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Feb 2015 03:36:55 -0500
+Received: from mout.web.de ([212.227.17.11]:53697 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750832AbbBNIgz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Feb 2015 03:36:55 -0500
+Received: from macce.local ([217.211.68.12]) by smtp.web.de (mrweb102) with
+ ESMTPSA (Nemesis) id 0Ls91n-1XafQF2RR9-013wZ8; Sat, 14 Feb 2015 09:36:48
+ +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
+In-Reply-To: <xmqqzj8ipxj6.fsf@gitster.dls.corp.google.com>
+X-Provags-ID: V03:K0:lO1aiIhHUwJKzBP0Pm8kqyRcw4ERPwXfPF32NQArFS4SO0rv6Ph
+ TQ4GJNGEZsnm7xgAR5Yl4rw25AobNIQIWBkz8oxssYlBshiJx8CWrjO9E0jXU17qomHqJod
+ 2yQhStjWgqdBjikNYuGTS3n/tLG8OpMznd8dF01mcBcsAJY00muG4jj0XMsw4VcFKczmu+9
+ bH8KkTweuJNwMOAGaV4WA==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263850>
 
-Mike Hommey <mh@glandium.org> writes:
+On 2015-02-12 23.36, Junio C Hamano wrote:
+> So after discussing this one and queuing the resulting three-patch
+> series jk/sanity that consists of the three patches:
+> 
+>     * jk/sanity (2015-01-27) 3 commits
+>      - test-lib.sh: set prerequisite SANITY by testing what we really need
+>      - tests: correct misuses of POSIXPERM
+>      - t/lib-httpd: switch SANITY check for NOT_ROOT
+> 
+>      Waiting for ack or counter-proposal from Torsten.
+>      Otherwise looking good.
+> 
+> Do we want to proceed with these, or do we want any more work done
+> on them?
+> 
+I managed to run the tests with POSIXPERM and/or SANITY under
+Cygwin, Msysgit, Linux, root@linux,  Mac and root@Mac.
+All passed.
 
-> I haven't looked exactly what cas does and if it makes sense for export.
-> (FWIW, I'm using push and import at the moment, so it's not a direct
-> issue for me ; I don't support cas anyways)
-
-The question primarily came from curiosity to gauge how much
-potential work remains in the area (of course, people are welcome to
-share the curiosity and get motivated to fill the gaps as
-discovered).
-
-In other words, I didn't mean to say "complete other methods in
-transport helper while at it; otherwise your patches are incomplete
-and unacceptable".  It is better to concentrate what you use whose
-desired behaviour you are sure about, and these two patches do
-exactly that.
-
-Thanks.
+The work to "be done", what I can see: please amend the commit message: 
+ s/more exotic//
