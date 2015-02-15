@@ -1,126 +1,146 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Re: [PATCH] t/lib-httpd: switch SANITY check for NOT_ROOT
-Date: Sun, 15 Feb 2015 15:48:32 -0800
-Message-ID: <xmqqwq3i7n3j.fsf@gitster.dls.corp.google.com>
-References: <20150114211712.GE1155@peff.net>
-	<064010B3-BC58-42F2-B5C0-DAADAA59B87D@gmail.com>
-	<xmqqwq4n6b4c.fsf@gitster.dls.corp.google.com>
-	<20150115222719.GA19021@peff.net>
-	<xmqqa91j6537.fsf@gitster.dls.corp.google.com>
-	<20150115235752.GB25120@peff.net>
-	<xmqqh9vr4mlz.fsf@gitster.dls.corp.google.com>
-	<20150116013256.GA25894@peff.net>
-	<BEFF558C-774D-4891-96A0-BE962F8070E7@gmail.com>
-	<20150116033445.GA29572@peff.net> <20150116091648.GA2450@peff.net>
-	<xmqqfvba37bq.fsf@gitster.dls.corp.google.com>
-	<xmqqzj9i1rci.fsf@gitster.dls.corp.google.com> <54BAF1C2.60103@web.de>
-	<xmqq61bzwyqp.fsf@gitster.dls.corp.google.com>
-	<54C170E9.4010401@web.de>
-	<xmqqlhkusc4h.fsf@gitster.dls.corp.google.com> <54C1E395.30003@web.de>
-	<xmqqzj8ipxj6.fsf@gitster.dls.corp.google.com>
-	<54DF091B.9070903@web.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Cc: Jeff King <peff@peff.net>,  "Kyle J. McKay" <mackyle@gmail.com>,  msysgit@googlegroups.com,  Git Mailing List <git@vger.kernel.org>
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: msysgit+bncBCG77UMM3EJRBU7AQSTQKGQEZL42KBQ@googlegroups.com Mon Feb 16 00:48:39 2015
-Return-path: <msysgit+bncBCG77UMM3EJRBU7AQSTQKGQEZL42KBQ@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-qc0-f186.google.com ([209.85.216.186])
+From: Dave Olszewski <cxreg@pobox.com>
+Subject: [PATCH] push: allow --follow-tags' to be set by config push.followTags
+Date: Sun, 15 Feb 2015 15:39:48 -0800
+Message-ID: <1424043588-15994-1-git-send-email-cxreg@pobox.com>
+Cc: Dave Olszewski <cxreg@pobox.com>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Feb 16 00:53:38 2015
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCG77UMM3EJRBU7AQSTQKGQEZL42KBQ@googlegroups.com>)
-	id 1YN8vU-0007kW-Qi
-	for gcvm-msysgit@m.gmane.org; Mon, 16 Feb 2015 00:48:36 +0100
-Received: by mail-qc0-f186.google.com with SMTP id l6sf6789613qcy.3
-        for <gcvm-msysgit@m.gmane.org>; Sun, 15 Feb 2015 15:48:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type:content-transfer-encoding
-         :x-original-sender:x-original-authentication-results:precedence
-         :mailing-list:list-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe;
-        bh=ySHRnc+JfeXAysZAWW0Kb9BFthr9gL4rFEfcmZ4TlfY=;
-        b=YPnEwxOswTWDghy0YDGZKxEDsIWQBCTHuutv4Vtog+irw0IQyom6V9+u2vKA3TI6wo
-         dMsX4NndZxvmZXizOWxJfWmhDpRvT3ciMCB2Rlzgdrln5NX5MbuQsUd/TKQAcG3wIvVd
-         sws6jf9fZAxNYGZccSdFkG44aFtjgESAmpO5Im69MTrqA7SYYb6FSUpEwmh1rrgPE2QN
-         UqQd59fQXIpq6JvpW1Tx5Nuk9xutbRfHhf9g9Jv2KgPzqheq+Mzl9y9cln808aA8/xvv
-         nD8Q7zFxfU6CaN5f/BjHyvnstrwdJ4VioDeKSf5QfnBPNrwBaMB0MTHeE8Bt4uEZnCNH
-         NYUA==
-X-Received: by 10.50.253.1 with SMTP id zw1mr332984igc.11.1424044116154;
-        Sun, 15 Feb 2015 15:48:36 -0800 (PST)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.50.33.10 with SMTP id n10ls579188igi.25.gmail; Sun, 15 Feb
- 2015 15:48:35 -0800 (PST)
-X-Received: by 10.50.2.71 with SMTP id 7mr18283592igs.4.1424044115498;
-        Sun, 15 Feb 2015 15:48:35 -0800 (PST)
-Received: from sasl.smtp.pobox.com (pb-smtp1.int.icgroup.com. [208.72.237.35])
-        by gmr-mx.google.com with ESMTP id u2si942769igh.0.2015.02.15.15.48.35
-        for <msysgit@googlegroups.com>;
-        Sun, 15 Feb 2015 15:48:35 -0800 (PST)
-Received-SPF: pass (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted sender) client-ip=208.72.237.35;
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 52CB639DB9;
-	Sun, 15 Feb 2015 18:48:34 -0500 (EST)
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 49BDB39DB8;
-	Sun, 15 Feb 2015 18:48:34 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C358439DB7;
-	Sun, 15 Feb 2015 18:48:33 -0500 (EST)
-In-Reply-To: <54DF091B.9070903@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
- =?utf-8?Q?en=22's?= message of
-	"Sat, 14 Feb 2015 09:36:43 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 26FCFA4C-B56D-11E4-9E75-A4119F42C9D4-77302942!pb-smtp1.pobox.com
-X-Original-Sender: gitster@pobox.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted
- sender) smtp.mail=junio@pobox.com;       dkim=pass header.i=@pobox.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263862>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1YN90K-0000pP-GW
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Feb 2015 00:53:36 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752565AbbBOXxc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Feb 2015 18:53:32 -0500
+Received: from 62.f9.1243.static.theplanet.com ([67.18.249.98]:45519 "EHLO
+	62.f9.1243.static.theplanet.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750904AbbBOXxc (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 15 Feb 2015 18:53:32 -0500
+X-Greylist: delayed 810 seconds by postgrey-1.27 at vger.kernel.org; Sun, 15 Feb 2015 18:53:31 EST
+X-Envelope-From: count@genericorp.net
+Received: from bumba (70-56-91-30.tukw.qwest.net [70.56.91.30])
+	(authenticated bits=0)
+	by 62.f9.1243.static.theplanet.com (8.14.4/8.14.4/Debian-8) with ESMTP id t1FNdwSN007655
+	(version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
+	Sun, 15 Feb 2015 17:39:59 -0600
+Received: from count by bumba with local (Exim 4.82_1-5b7a7c0-XX)
+	(envelope-from <count@genericorp.net>)
+	id 1YN8n3-0004Ab-6p; Sun, 15 Feb 2015 15:39:53 -0800
+X-Mailer: git-send-email 2.1.4
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263863>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+Signed-off-by: Dave Olszewski <cxreg@pobox.com>
+---
+ Documentation/config.txt               | 3 +++
+ Documentation/git-push.txt             | 5 ++++-
+ cache.h                                | 1 +
+ config.c                               | 5 +++++
+ contrib/completion/git-completion.bash | 1 +
+ environment.c                          | 1 +
+ transport.c                            | 2 +-
+ 7 files changed, 16 insertions(+), 2 deletions(-)
 
-> The work to "be done", what I can see: please amend the commit message:=
-=20
->  s/more exotic//
-
-Thanks for reminding; I thought this was excised already but
-apparently hasn't (yet).
-
---=20
---=20
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github =
-accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den
-
----=20
-You received this message because you are subscribed to the Google Groups "=
-Git for Windows" group.
-To unsubscribe from this group and stop receiving emails from it, send an e=
-mail to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index ae6791d..cdb8a99 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -2079,6 +2079,9 @@ new default).
+ 
+ --
+ 
++push.followTags::
++	If set to true enable '--follow-tags' option by default.
++
+ rebase.stat::
+ 	Whether to show a diffstat of what changed upstream since the last
+ 	rebase. False by default.
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index ea97576..caa187b 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -128,7 +128,10 @@ already exists on the remote side.
+ 	Push all the refs that would be pushed without this option,
+ 	and also push annotated tags in `refs/tags` that are missing
+ 	from the remote but are pointing at commit-ish that are
+-	reachable from the refs being pushed.
++	reachable from the refs being pushed.  This can also be specified
++	with configuration variable 'push.followTags'.  For more
++	information, see 'push.followTags' in linkgit:git-config[1].
++
+ 
+ --signed::
+ 	GPG-sign the push request to update refs on the receiving
+diff --git a/cache.h b/cache.h
+index f704af5..9318189 100644
+--- a/cache.h
++++ b/cache.h
+@@ -648,6 +648,7 @@ enum push_default_type {
+ extern enum branch_track git_branch_track;
+ extern enum rebase_setup_type autorebase;
+ extern enum push_default_type push_default;
++extern int push_follow_tags;
+ 
+ enum object_creation_mode {
+ 	OBJECT_CREATION_USES_HARDLINKS = 0,
+diff --git a/config.c b/config.c
+index e5e64dc..cb237cd 100644
+--- a/config.c
++++ b/config.c
+@@ -977,6 +977,11 @@ static int git_default_push_config(const char *var, const char *value)
+ 		return 0;
+ 	}
+ 
++	if (!strcmp(var, "push.followtags")) {
++		push_follow_tags = git_config_bool(var, value);
++		return 0;
++	}
++
+ 	/* Add other config variables here and to Documentation/config.txt. */
+ 	return 0;
+ }
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index c21190d..cffb2b8 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -2188,6 +2188,7 @@ _git_config ()
+ 		pull.octopus
+ 		pull.twohead
+ 		push.default
++		push.followTags
+ 		rebase.autosquash
+ 		rebase.stat
+ 		receive.autogc
+diff --git a/environment.c b/environment.c
+index 1ade5c9..aef9587 100644
+--- a/environment.c
++++ b/environment.c
+@@ -52,6 +52,7 @@ unsigned whitespace_rule_cfg = WS_DEFAULT_RULE;
+ enum branch_track git_branch_track = BRANCH_TRACK_REMOTE;
+ enum rebase_setup_type autorebase = AUTOREBASE_NEVER;
+ enum push_default_type push_default = PUSH_DEFAULT_UNSPECIFIED;
++int push_follow_tags = 0;
+ #ifndef OBJECT_CREATION_MODE
+ #define OBJECT_CREATION_MODE OBJECT_CREATION_USES_HARDLINKS
+ #endif
+diff --git a/transport.c b/transport.c
+index 0694a7c..87cd657 100644
+--- a/transport.c
++++ b/transport.c
+@@ -1148,7 +1148,7 @@ int transport_push(struct transport *transport,
+ 			match_flags |= MATCH_REFS_MIRROR;
+ 		if (flags & TRANSPORT_PUSH_PRUNE)
+ 			match_flags |= MATCH_REFS_PRUNE;
+-		if (flags & TRANSPORT_PUSH_FOLLOW_TAGS)
++		if ((flags & TRANSPORT_PUSH_FOLLOW_TAGS) || push_follow_tags)
+ 			match_flags |= MATCH_REFS_FOLLOW_TAGS;
+ 
+ 		if (match_push_refs(local_refs, &remote_refs,
+-- 
+2.1.4
