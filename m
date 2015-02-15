@@ -1,81 +1,132 @@
 From: Brandon Casey <drafnel@gmail.com>
-Subject: Re: [PATCH 0/2] Getopt::Long workaround in send-email
-Date: Sat, 14 Feb 2015 22:13:52 -0800
-Message-ID: <CA+sFfMetZv_sr9EUOQDJpdq0E9bYYKWrSh4OeFfRDBY3SjRxeg@mail.gmail.com>
+Subject: Re: [PATCH 1/2] git-send-email.perl: support no- prefix with older GetOptions
+Date: Sat, 14 Feb 2015 22:32:31 -0800
+Message-ID: <CA+sFfMdVBgqV6Ar53eo_PEzHSLMc+Z_fA_ND5CBEtX8=pKvk_Q@mail.gmail.com>
 References: <xmqq8ug2pvw7.fsf@gitster.dls.corp.google.com>
 	<1423858769-1565-1-git-send-email-gitster@pobox.com>
+	<1423858769-1565-2-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	"Tom G. Christensen" <tgc@statsbiblioteket.dk>,
-	"Kyle J. McKay" <mackyle@gmail.com>
+	"Kyle J. McKay" <mackyle@gmail.com>,
+	"Tom G. Christensen" <tgc@statsbiblioteket.dk>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 15 07:14:07 2015
+X-From: git-owner@vger.kernel.org Sun Feb 15 07:32:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YMsSz-0001Ro-3z
-	for gcvg-git-2@plane.gmane.org; Sun, 15 Feb 2015 07:14:05 +0100
+	id 1YMsku-0001rJ-SU
+	for gcvg-git-2@plane.gmane.org; Sun, 15 Feb 2015 07:32:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750933AbbBOGNx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Feb 2015 01:13:53 -0500
-Received: from mail-ie0-f179.google.com ([209.85.223.179]:33776 "EHLO
-	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750869AbbBOGNw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Feb 2015 01:13:52 -0500
-Received: by iecar1 with SMTP id ar1so28110044iec.0
-        for <git@vger.kernel.org>; Sat, 14 Feb 2015 22:13:52 -0800 (PST)
+	id S1751124AbbBOGcc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Feb 2015 01:32:32 -0500
+Received: from mail-ie0-f169.google.com ([209.85.223.169]:41302 "EHLO
+	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750769AbbBOGcb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Feb 2015 01:32:31 -0500
+Received: by iecrd18 with SMTP id rd18so27992033iec.8
+        for <git@vger.kernel.org>; Sat, 14 Feb 2015 22:32:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=QZdYHKMnUOobd5JzA84N+uc3+cwFsMLTEO4tjiQyomo=;
-        b=enI6km74bZpjIyEeaIPYpxNZIJGUDQ+HuM2gzkvlQ2sV++Haj1MtU+BtA9NtoJSI95
-         Q7oxkveFtuiTm63CNa3vsAFvdzrCE8vsobS5UxLxNhHTAvmNDLn/eq9wChy7RvZsFvX6
-         Qf76tsE1boPjUqxAzp6XaUBFOd52bmcXwqEhZl4YWWVZs6Fpid4uWFtLX7RrCtNfapPp
-         DKMnC4bDXO/TqPmANd8zzbbRJD0Qqi8db4JY8iDYb6TTD0ta1tVmaIbnIcfYN1V5V7Qp
-         nTRwtHkADGHtQ7Iwy8T2HfqnpARCPC1OAE5Na1tS6e6zzfcnVSzPlRP1W4OEav38h0SR
-         qLxA==
-X-Received: by 10.107.34.149 with SMTP id i143mr22623154ioi.1.1423980832123;
- Sat, 14 Feb 2015 22:13:52 -0800 (PST)
-Received: by 10.64.58.201 with HTTP; Sat, 14 Feb 2015 22:13:52 -0800 (PST)
-In-Reply-To: <1423858769-1565-1-git-send-email-gitster@pobox.com>
+        bh=FiO/HrCJS/iFk9JANlNWTnqpJFOoox9MrF2/DJCciC4=;
+        b=EL5gYuCzzWw3pRFS3DsaErO6mDA9+Ub9WJXfjqwcZ9AmKWHoPEQJMBi4uZJmZII4WG
+         hVsACkl5n7kSSFlY9Jw2JvLiA0R1WvvZ6bO+LC1W4ieNmmr2xs7qsz/o9qV75UxdhxZo
+         nuug0viLkAadbAw4aMCeNRb72bgepD+nLzbVwnoD3BUuP06/l0IelGLIfw9csplzh726
+         Ebx3Df6lJ7A/o7XkHMbdUcgCZd5j0Qq90yC/fW6MmYEXPIRzGgu8cjgOQTTaw1PsV9Mn
+         gQH1gKJDWcqpSe2yt4YmK3m82ZCWhX5bgLFtGHavuFhhYv5kTBZHFRZ8kwRl9GoHod9r
+         OpLw==
+X-Received: by 10.107.34.149 with SMTP id i143mr22683873ioi.1.1423981951164;
+ Sat, 14 Feb 2015 22:32:31 -0800 (PST)
+Received: by 10.64.58.201 with HTTP; Sat, 14 Feb 2015 22:32:31 -0800 (PST)
+In-Reply-To: <1423858769-1565-2-git-send-email-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263851>
-
-[apparently it is impossible to send a plain text email using Google
-Inbox, maybe people on this list know someone to talk to about that?
-Sorry for the dup for those on cc]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263852>
 
 On Fri, Feb 13, 2015 at 12:19 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> The first one is a replay of Kyle's workaround for older versions of
-> Getopt::Long that did not take "--no-option" to negate a boolean
-> option "--option".  The second one revert the workarounds made to
-> the test script over time, and should break if the first one does
-> not work well for older Getopt::Long (I have no reason to suspect it
-> would break, though).
+> From: "Kyle J. McKay" <mackyle@gmail.com>
+>
+> Only Perl version 5.8.0 or later is required, but that comes with
+> an older Getopt::Long (2.32) that does not support the 'no-'
+> prefix.  Support for that was added in Getopt::Long version 2.33.
+>
+> Since the help only mentions the 'no-' prefix and not the 'no'
+> prefix, add explicit support for the 'no-' prefix when running
+> with older GetOptions versions.
 
-The only downside I can see is that we're going to end up carrying
-around these extra options for the forseeable future and possibly
-adding more over time with this precedent.  Maybe that's not so bad.
-The extra options are not ugly at all.  My original thinking in just
-fixing up the tests was that the platforms with ancient versions of
-perl/Getopt::Long would just disappear over time and we'd eventually
-stop fixing up the tests to be backwards compatible when people
-stopped showing up saying that the tests failed on their ancient
-system.
+ultra-ultra-nit: s/when running/for when running/  The current wording
+makes it sound like the explicit support is only enabled when running
+with older GetOpt versions.
 
-What platforms are actually affected?  RHEL3?  Other ancient UNIX?  I
-know the systems I was fixing up were ancient SunOS and IRIX.
+> Reported-by: Tom G. Christensen <tgc@statsbiblioteket.dk>
+> Signed-off-by: Kyle J. McKay <mackyle@gmail.com>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  git-send-email.perl | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
+>
+> diff --git a/git-send-email.perl b/git-send-email.perl
+> index 3092ab3..a18a795 100755
+> --- a/git-send-email.perl
+> +++ b/git-send-email.perl
+> @@ -299,6 +299,7 @@ sub signal_handler {
+>                     "bcc=s" => \@bcclist,
+>                     "no-bcc" => \$no_bcc,
+>                     "chain-reply-to!" => \$chain_reply_to,
+> +                   "no-chain-reply-to" => sub {$chain_reply_to = 0},
+>                     "smtp-server=s" => \$smtp_server,
+>                     "smtp-server-option=s" => \@smtp_server_options,
+>                     "smtp-server-port=s" => \$smtp_server_port,
+> @@ -311,25 +312,34 @@ sub signal_handler {
+>                     "smtp-domain:s" => \$smtp_domain,
+>                     "identity=s" => \$identity,
+>                     "annotate!" => \$annotate,
+> +                   "no-annotate" => sub {$annotate = 0},
+>                     "compose" => \$compose,
+>                     "quiet" => \$quiet,
+>                     "cc-cmd=s" => \$cc_cmd,
+>                     "suppress-from!" => \$suppress_from,
+> +                   "no-suppress-from" => sub {$suppress_from = 0},
+>                     "suppress-cc=s" => \@suppress_cc,
+>                     "signed-off-cc|signed-off-by-cc!" => \$signed_off_by_cc,
+> +                   "no-signed-off-cc|no-signed-off-by-cc" => sub {$signed_off_by_cc = 0},
+>                     "cc-cover|cc-cover!" => \$cover_cc,
 
-Unfortunately (or fortunately, depending on how you look at it), I
-don't have access to any ancient systems to test on anymore.  So I
-can't run the updated tests to make sure they still pass.  The patches
-"look" fine to me though. :-)
+I know it's not part of this patch, but does the above duplication of
+"cc-cover" do something I'm not aware of?  Or should it just be
+"cc-cover!"?
+
+> +                   "no-cc-cover" => sub {$cover_cc = 0},
+>                     "to-cover|to-cover!" => \$cover_to,
+
+Here (above) too.
+
+> +                   "no-to-cover" => sub {$cover_to = 0},
+>                     "confirm=s" => \$confirm,
+>                     "dry-run" => \$dry_run,
+>                     "envelope-sender=s" => \$envelope_sender,
+>                     "thread!" => \$thread,
+> +                   "no-thread" => sub {$thread = 0},
+>                     "validate!" => \$validate,
+> +                   "no-validate" => sub {$validate = 0},
+>                     "transfer-encoding=s" => \$target_xfer_encoding,
+>                     "format-patch!" => \$format_patch,
+> +                   "no-format-patch" => sub {$format_patch = 0},
+>                     "8bit-encoding=s" => \$auto_8bit_encoding,
+>                     "compose-encoding=s" => \$compose_encoding,
+>                     "force" => \$force,
+>                     "xmailer!" => \$use_xmailer,
+> +                   "no-xmailer" => sub {$use_xmailer = 0},
+>          );
+>
+>  usage() if $help;
+
+Looks fine to me.
 
 -Brandon
