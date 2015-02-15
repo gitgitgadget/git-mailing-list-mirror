@@ -1,361 +1,126 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 6/6] t4008: modernise style
-Date: Sun, 15 Feb 2015 15:43:44 -0800
-Message-ID: <1424043824-25242-7-git-send-email-gitster@pobox.com>
-References: <1424043824-25242-1-git-send-email-gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 16 00:44:15 2015
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Subject: Re: Re: [PATCH] t/lib-httpd: switch SANITY check for NOT_ROOT
+Date: Sun, 15 Feb 2015 15:48:32 -0800
+Message-ID: <xmqqwq3i7n3j.fsf@gitster.dls.corp.google.com>
+References: <20150114211712.GE1155@peff.net>
+	<064010B3-BC58-42F2-B5C0-DAADAA59B87D@gmail.com>
+	<xmqqwq4n6b4c.fsf@gitster.dls.corp.google.com>
+	<20150115222719.GA19021@peff.net>
+	<xmqqa91j6537.fsf@gitster.dls.corp.google.com>
+	<20150115235752.GB25120@peff.net>
+	<xmqqh9vr4mlz.fsf@gitster.dls.corp.google.com>
+	<20150116013256.GA25894@peff.net>
+	<BEFF558C-774D-4891-96A0-BE962F8070E7@gmail.com>
+	<20150116033445.GA29572@peff.net> <20150116091648.GA2450@peff.net>
+	<xmqqfvba37bq.fsf@gitster.dls.corp.google.com>
+	<xmqqzj9i1rci.fsf@gitster.dls.corp.google.com> <54BAF1C2.60103@web.de>
+	<xmqq61bzwyqp.fsf@gitster.dls.corp.google.com>
+	<54C170E9.4010401@web.de>
+	<xmqqlhkusc4h.fsf@gitster.dls.corp.google.com> <54C1E395.30003@web.de>
+	<xmqqzj8ipxj6.fsf@gitster.dls.corp.google.com>
+	<54DF091B.9070903@web.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Cc: Jeff King <peff@peff.net>,  "Kyle J. McKay" <mackyle@gmail.com>,  msysgit@googlegroups.com,  Git Mailing List <git@vger.kernel.org>
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: msysgit+bncBCG77UMM3EJRBU7AQSTQKGQEZL42KBQ@googlegroups.com Mon Feb 16 00:48:39 2015
+Return-path: <msysgit+bncBCG77UMM3EJRBU7AQSTQKGQEZL42KBQ@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-qc0-f186.google.com ([209.85.216.186])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YN8rG-0006Kx-DH
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Feb 2015 00:44:14 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755137AbbBOXoH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Feb 2015 18:44:07 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:54162 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755076AbbBOXoC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Feb 2015 18:44:02 -0500
+	(envelope-from <msysgit+bncBCG77UMM3EJRBU7AQSTQKGQEZL42KBQ@googlegroups.com>)
+	id 1YN8vU-0007kW-Qi
+	for gcvm-msysgit@m.gmane.org; Mon, 16 Feb 2015 00:48:36 +0100
+Received: by mail-qc0-f186.google.com with SMTP id l6sf6789613qcy.3
+        for <gcvm-msysgit@m.gmane.org>; Sun, 15 Feb 2015 15:48:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type:content-transfer-encoding
+         :x-original-sender:x-original-authentication-results:precedence
+         :mailing-list:list-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe;
+        bh=ySHRnc+JfeXAysZAWW0Kb9BFthr9gL4rFEfcmZ4TlfY=;
+        b=YPnEwxOswTWDghy0YDGZKxEDsIWQBCTHuutv4Vtog+irw0IQyom6V9+u2vKA3TI6wo
+         dMsX4NndZxvmZXizOWxJfWmhDpRvT3ciMCB2Rlzgdrln5NX5MbuQsUd/TKQAcG3wIvVd
+         sws6jf9fZAxNYGZccSdFkG44aFtjgESAmpO5Im69MTrqA7SYYb6FSUpEwmh1rrgPE2QN
+         UqQd59fQXIpq6JvpW1Tx5Nuk9xutbRfHhf9g9Jv2KgPzqheq+Mzl9y9cln808aA8/xvv
+         nD8Q7zFxfU6CaN5f/BjHyvnstrwdJ4VioDeKSf5QfnBPNrwBaMB0MTHeE8Bt4uEZnCNH
+         NYUA==
+X-Received: by 10.50.253.1 with SMTP id zw1mr332984igc.11.1424044116154;
+        Sun, 15 Feb 2015 15:48:36 -0800 (PST)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.50.33.10 with SMTP id n10ls579188igi.25.gmail; Sun, 15 Feb
+ 2015 15:48:35 -0800 (PST)
+X-Received: by 10.50.2.71 with SMTP id 7mr18283592igs.4.1424044115498;
+        Sun, 15 Feb 2015 15:48:35 -0800 (PST)
+Received: from sasl.smtp.pobox.com (pb-smtp1.int.icgroup.com. [208.72.237.35])
+        by gmr-mx.google.com with ESMTP id u2si942769igh.0.2015.02.15.15.48.35
+        for <msysgit@googlegroups.com>;
+        Sun, 15 Feb 2015 15:48:35 -0800 (PST)
+Received-SPF: pass (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted sender) client-ip=208.72.237.35;
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5627E39CFE;
-	Sun, 15 Feb 2015 18:44:02 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=JZSD
-	nUQJSeDJl9FNSLMT2+SbM5M=; b=ApwEw+zPNZBfJIeUZG40beZ+drMBNR8fWzqD
-	6KByd6kwAvUA/VibrtCr1nGgj2qeh5L1WyB1S5XMp9zKR4BiUT5ZS6plVahzImpz
-	8SOO3RLcvA+I3UX8PN1N5CkvjC1nmKLhWoaNKxsRLKK7NLYqlMbo55XZY/xj1IrJ
-	IzP0uC4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=byeji+
-	KwA253eLLoYpza1rU0rm3JFLKfi/fFke0pg57sEDK74UCLlZJDMOEgNreNLVaKx5
-	YHXcJkWAHtrIDqAnjNM4EwTJ6FFB65Ghl8kUJxTFLhss4FlxN6WVtszueDX8tZYq
-	NmsHTnLV0o5KIfjnAxrQx4pa4204RQDbn1hRw=
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 52CB639DB9;
+	Sun, 15 Feb 2015 18:48:34 -0500 (EST)
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4DADD39CFD;
-	Sun, 15 Feb 2015 18:44:02 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 49BDB39DB8;
+	Sun, 15 Feb 2015 18:48:34 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B9A7739CF2;
-	Sun, 15 Feb 2015 18:43:55 -0500 (EST)
-X-Mailer: git-send-email 2.3.0-266-g5b48884
-In-Reply-To: <1424043824-25242-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 8142FCDC-B56C-11E4-9248-A4119F42C9D4-77302942!pb-smtp1.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263861>
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C358439DB7;
+	Sun, 15 Feb 2015 18:48:33 -0500 (EST)
+In-Reply-To: <54DF091B.9070903@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
+ =?utf-8?Q?en=22's?= message of
+	"Sat, 14 Feb 2015 09:36:43 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 26FCFA4C-B56D-11E4-9E75-A4119F42C9D4-77302942!pb-smtp1.pobox.com
+X-Original-Sender: gitster@pobox.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted
+ sender) smtp.mail=junio@pobox.com;       dkim=pass header.i=@pobox.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263862>
 
-Update this ancient test script to a more modern style in which the
-expected result is prepared inside the body of the test that uses
-it.  Also, instead of using $tree, a shell variable, throughout the
-test script, create a tag that points at it, to make it easier to
-manually debug the test script in its trash directory.
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/t4008-diff-break-rewrite.sh | 286 +++++++++++++++++++-----------------------
- 1 file changed, 126 insertions(+), 160 deletions(-)
+> The work to "be done", what I can see: please amend the commit message:=
+=20
+>  s/more exotic//
 
-diff --git a/t/t4008-diff-break-rewrite.sh b/t/t4008-diff-break-rewrite.sh
-index 718274f..9dd1bc5 100755
---- a/t/t4008-diff-break-rewrite.sh
-+++ b/t/t4008-diff-break-rewrite.sh
-@@ -24,165 +24,131 @@ Further, with -B and -M together, these should turn into two renames.
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/diff-lib.sh ;# test-lib chdir's into trash
- 
--test_expect_success \
--    setup \
--    'cat "$TEST_DIRECTORY"/diff-lib/README >file0 &&
--     cat "$TEST_DIRECTORY"/diff-lib/COPYING >file1 &&
--    git update-index --add file0 file1 &&
--    tree=$(git write-tree) &&
--    echo "$tree"'
--
--test_expect_success \
--    'change file1 with copy-edit of file0 and remove file0' \
--    'sed -e "s/git/GIT/" file0 >file1 &&
--     rm -f file0 &&
--    git update-index --remove file0 file1'
--
--test_expect_success \
--    'run diff with -B' \
--    'git diff-index -B --cached "$tree" >current'
--
--cat >expected <<\EOF
--:100644 000000 548142c327a6790ff8821d67c2ee1eff7a656b52 0000000000000000000000000000000000000000 D	file0
--:100644 100644 6ff87c4664981e4397625791c8ea3bbb5f2279a3 2fbedd0b5d4b8126e4750c3bee305e8ff79f80ec M100	file1
--EOF
--
--test_expect_success \
--    'validate result of -B (#1)' \
--    'compare_diff_raw expected current'
--
--test_expect_success \
--    'run diff with -B and -M' \
--    'git diff-index -B -M "$tree" >current'
--
--cat >expected <<\EOF
--:100644 100644 548142c327a6790ff8821d67c2ee1eff7a656b52 2fbedd0b5d4b8126e4750c3bee305e8ff79f80ec R100	file0	file1
--EOF
--
--test_expect_success \
--    'validate result of -B -M (#2)' \
--    'compare_diff_raw expected current'
--
--test_expect_success \
--    'swap file0 and file1' \
--    'rm -f file0 file1 &&
--     git read-tree -m $tree &&
--     git checkout-index -f -u -a &&
--     mv file0 tmp &&
--     mv file1 file0 &&
--     mv tmp file1 &&
--     git update-index file0 file1'
--
--test_expect_success \
--    'run diff with -B' \
--    'git diff-index -B "$tree" >current'
--
--cat >expected <<\EOF
--:100644 100644 548142c327a6790ff8821d67c2ee1eff7a656b52 6ff87c4664981e4397625791c8ea3bbb5f2279a3 M100	file0
--:100644 100644 6ff87c4664981e4397625791c8ea3bbb5f2279a3 548142c327a6790ff8821d67c2ee1eff7a656b52 M100	file1
--EOF
--
--test_expect_success \
--    'validate result of -B (#3)' \
--    'compare_diff_raw expected current'
--
--test_expect_success \
--    'run diff with -B and -M' \
--    'git diff-index -B -M "$tree" >current'
--
--cat >expected <<\EOF
--:100644 100644 6ff87c4664981e4397625791c8ea3bbb5f2279a3 6ff87c4664981e4397625791c8ea3bbb5f2279a3 R100	file1	file0
--:100644 100644 548142c327a6790ff8821d67c2ee1eff7a656b52 548142c327a6790ff8821d67c2ee1eff7a656b52 R100	file0	file1
--EOF
--
--test_expect_success \
--    'validate result of -B -M (#4)' \
--    'compare_diff_raw expected current'
--
--test_expect_success \
--    'make file0 into something completely different' \
--    'rm -f file0 &&
--     test_ln_s_add frotz file0 &&
--     git update-index file1'
--
--test_expect_success \
--    'run diff with -B' \
--    'git diff-index -B "$tree" >current'
--
--cat >expected <<\EOF
--:100644 120000 548142c327a6790ff8821d67c2ee1eff7a656b52 67be421f88824578857624f7b3dc75e99a8a1481 T	file0
--:100644 100644 6ff87c4664981e4397625791c8ea3bbb5f2279a3 548142c327a6790ff8821d67c2ee1eff7a656b52 M100	file1
--EOF
--
--test_expect_success \
--    'validate result of -B (#5)' \
--    'compare_diff_raw expected current'
--
--test_expect_success \
--    'run diff with -B -M' \
--    'git diff-index -B -M "$tree" >current'
--
--# file0 changed from regular to symlink.  file1 is very close to the preimage of file0.
--# the change does not make file0 disappear, so file1 is denoted as a copy of file0
--cat >expected <<\EOF
--:100644 120000 548142c327a6790ff8821d67c2ee1eff7a656b52 67be421f88824578857624f7b3dc75e99a8a1481 T	file0
--:100644 100644 548142c327a6790ff8821d67c2ee1eff7a656b52 548142c327a6790ff8821d67c2ee1eff7a656b52 C	file0	file1
--EOF
--
--test_expect_success \
--    'validate result of -B -M (#6)' \
--    'compare_diff_raw expected current'
--
--test_expect_success \
--    'run diff with -M' \
--    'git diff-index -M "$tree" >current'
--
--# This should not mistake file0 as the copy source of new file1
--# due to type differences.
--cat >expected <<\EOF
--:100644 120000 548142c327a6790ff8821d67c2ee1eff7a656b52 67be421f88824578857624f7b3dc75e99a8a1481 T	file0
--:100644 100644 6ff87c4664981e4397625791c8ea3bbb5f2279a3 548142c327a6790ff8821d67c2ee1eff7a656b52 M	file1
--EOF
--
--test_expect_success \
--    'validate result of -M (#7)' \
--    'compare_diff_raw expected current'
--
--test_expect_success \
--    'file1 edited to look like file0 and file0 rename-edited to file2' \
--    'rm -f file0 file1 &&
--     git read-tree -m $tree &&
--     git checkout-index -f -u -a &&
--     sed -e "s/git/GIT/" file0 >file1 &&
--     sed -e "s/git/GET/" file0 >file2 &&
--     rm -f file0 &&
--     git update-index --add --remove file0 file1 file2'
--
--test_expect_success \
--    'run diff with -B' \
--    'git diff-index -B "$tree" >current'
--
--cat >expected <<\EOF
--:100644 000000 548142c327a6790ff8821d67c2ee1eff7a656b52 0000000000000000000000000000000000000000 D	file0
--:100644 100644 6ff87c4664981e4397625791c8ea3bbb5f2279a3 2fbedd0b5d4b8126e4750c3bee305e8ff79f80ec M100	file1
--:000000 100644 0000000000000000000000000000000000000000 69a939f651686f56322566e2fd76715947a24162 A	file2
--EOF
--
--test_expect_success \
--    'validate result of -B (#8)' \
--    'compare_diff_raw expected current'
--
--test_expect_success \
--    'run diff with -B -C' \
--    'git diff-index -B -C "$tree" >current'
--
--cat >expected <<\EOF
--:100644 100644 548142c327a6790ff8821d67c2ee1eff7a656b52 2fbedd0b5d4b8126e4750c3bee305e8ff79f80ec C095	file0	file1
--:100644 100644 548142c327a6790ff8821d67c2ee1eff7a656b52 69a939f651686f56322566e2fd76715947a24162 R095	file0	file2
--EOF
--
--test_expect_success \
--    'validate result of -B -M (#9)' \
--    'compare_diff_raw expected current'
-+test_expect_success setup '
-+	cat "$TEST_DIRECTORY"/diff-lib/README >file0 &&
-+	cat "$TEST_DIRECTORY"/diff-lib/COPYING >file1 &&
-+	git update-index --add file0 file1 &&
-+	git tag reference $(git write-tree)
-+'
-+
-+test_expect_success 'change file1 with copy-edit of file0 and remove file0' '
-+	sed -e "s/git/GIT/" file0 >file1 &&
-+	rm -f file0 &&
-+	git update-index --remove file0 file1
-+'
-+
-+test_expect_success 'run diff with -B (#1)' '
-+	git diff-index -B --cached reference >current &&
-+	cat >expect <<-\EOF &&
-+	:100644 000000 548142c327a6790ff8821d67c2ee1eff7a656b52 0000000000000000000000000000000000000000 D	file0
-+	:100644 100644 6ff87c4664981e4397625791c8ea3bbb5f2279a3 2fbedd0b5d4b8126e4750c3bee305e8ff79f80ec M100	file1
-+	EOF
-+	compare_diff_raw expect current
-+'
-+
-+test_expect_success 'run diff with -B and -M (#2)' '
-+	git diff-index -B -M reference >current &&
-+	cat >expect <<-\EOF &&
-+	:100644 100644 548142c327a6790ff8821d67c2ee1eff7a656b52 2fbedd0b5d4b8126e4750c3bee305e8ff79f80ec R100	file0	file1
-+	EOF
-+	compare_diff_raw expect current
-+'
-+
-+test_expect_success 'swap file0 and file1' '
-+	rm -f file0 file1 &&
-+	git read-tree -m reference &&
-+	git checkout-index -f -u -a &&
-+	mv file0 tmp &&
-+	mv file1 file0 &&
-+	mv tmp file1 &&
-+	git update-index file0 file1
-+'
-+
-+test_expect_success 'run diff with -B (#3)' '
-+	git diff-index -B reference >current &&
-+	cat >expect <<-\EOF &&
-+	:100644 100644 548142c327a6790ff8821d67c2ee1eff7a656b52 6ff87c4664981e4397625791c8ea3bbb5f2279a3 M100	file0
-+	:100644 100644 6ff87c4664981e4397625791c8ea3bbb5f2279a3 548142c327a6790ff8821d67c2ee1eff7a656b52 M100	file1
-+	EOF
-+	compare_diff_raw expect current
-+'
-+
-+test_expect_success 'run diff with -B and -M (#4)' '
-+	git diff-index -B -M reference >current &&
-+	cat >expect <<-\EOF &&
-+	:100644 100644 6ff87c4664981e4397625791c8ea3bbb5f2279a3 6ff87c4664981e4397625791c8ea3bbb5f2279a3 R100	file1	file0
-+	:100644 100644 548142c327a6790ff8821d67c2ee1eff7a656b52 548142c327a6790ff8821d67c2ee1eff7a656b52 R100	file0	file1
-+	EOF
-+	compare_diff_raw expect current
-+'
-+
-+test_expect_success 'make file0 into something completely different' '
-+	rm -f file0 &&
-+	test_ln_s_add frotz file0 &&
-+	git update-index file1
-+'
-+
-+test_expect_success 'run diff with -B (#5)' '
-+	git diff-index -B reference >current &&
-+	cat >expect <<-\EOF &&
-+	:100644 120000 548142c327a6790ff8821d67c2ee1eff7a656b52 67be421f88824578857624f7b3dc75e99a8a1481 T	file0
-+	:100644 100644 6ff87c4664981e4397625791c8ea3bbb5f2279a3 548142c327a6790ff8821d67c2ee1eff7a656b52 M100	file1
-+	EOF
-+	compare_diff_raw expect current
-+'
-+
-+test_expect_success 'run diff with -B -M (#6)' '
-+	git diff-index -B -M reference >current &&
-+
-+	# file0 changed from regular to symlink.  file1 is the same as the preimage
-+	# of file0.  Because the change does not make file0 disappear, file1 is
-+	# denoted as a copy of file0
-+	cat >expect <<-\EOF &&
-+	:100644 120000 548142c327a6790ff8821d67c2ee1eff7a656b52 67be421f88824578857624f7b3dc75e99a8a1481 T	file0
-+	:100644 100644 548142c327a6790ff8821d67c2ee1eff7a656b52 548142c327a6790ff8821d67c2ee1eff7a656b52 C	file0	file1
-+	EOF
-+	compare_diff_raw expect current
-+'
-+
-+test_expect_success 'run diff with -M (#7)' '
-+	git diff-index -M reference >current &&
-+
-+	# This should not mistake file0 as the copy source of new file1
-+	# due to type differences.
-+	cat >expect <<-\EOF &&
-+	:100644 120000 548142c327a6790ff8821d67c2ee1eff7a656b52 67be421f88824578857624f7b3dc75e99a8a1481 T	file0
-+	:100644 100644 6ff87c4664981e4397625791c8ea3bbb5f2279a3 548142c327a6790ff8821d67c2ee1eff7a656b52 M	file1
-+	EOF
-+	compare_diff_raw expect current
-+'
-+
-+test_expect_success 'file1 edited to look like file0 and file0 rename-edited to file2' '
-+	rm -f file0 file1 &&
-+	git read-tree -m reference &&
-+	git checkout-index -f -u -a &&
-+	sed -e "s/git/GIT/" file0 >file1 &&
-+	sed -e "s/git/GET/" file0 >file2 &&
-+	rm -f file0 &&
-+	git update-index --add --remove file0 file1 file2
-+'
-+
-+test_expect_success 'run diff with -B (#8)' '
-+	git diff-index -B reference >current &&
-+	cat >expect <<-\EOF &&
-+	:100644 000000 548142c327a6790ff8821d67c2ee1eff7a656b52 0000000000000000000000000000000000000000 D	file0
-+	:100644 100644 6ff87c4664981e4397625791c8ea3bbb5f2279a3 2fbedd0b5d4b8126e4750c3bee305e8ff79f80ec M100	file1
-+	:000000 100644 0000000000000000000000000000000000000000 69a939f651686f56322566e2fd76715947a24162 A	file2
-+	EOF
-+	compare_diff_raw expect current
-+'
-+
-+test_expect_success 'run diff with -B -C (#9)' '
-+	git diff-index -B -C reference >current &&
-+	cat >expect <<-\EOF &&
-+	:100644 100644 548142c327a6790ff8821d67c2ee1eff7a656b52 2fbedd0b5d4b8126e4750c3bee305e8ff79f80ec C095	file0	file1
-+	:100644 100644 548142c327a6790ff8821d67c2ee1eff7a656b52 69a939f651686f56322566e2fd76715947a24162 R095	file0	file2
-+	EOF
-+	compare_diff_raw expect current
-+'
- 
- test_done
--- 
-2.3.0-266-g5b48884
+Thanks for reminding; I thought this was excised already but
+apparently hasn't (yet).
+
+--=20
+--=20
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github =
+accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den
+
+---=20
+You received this message because you are subscribed to the Google Groups "=
+Git for Windows" group.
+To unsubscribe from this group and stop receiving emails from it, send an e=
+mail to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
