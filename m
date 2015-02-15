@@ -1,92 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [Discuss] soften warning message after cloning "void"
-Date: Wed, 18 Feb 2015 15:24:14 -0800
-Message-ID: <xmqqh9ui2481.fsf@gitster.dls.corp.google.com>
+From: "CSCC 2015 Invited Special Sessions" <our.conferences@wopu.org>
+Subject: How to organize your Invited Special Session or Workshop within CSCC 2015. See Photos from CSCC 2014 below. 36 ISI Journals will publish the extended versions of all the papers
+Date: Mon, 16 Feb 2015 00:58:28 +0200
+Message-ID: <20150215225828.E4B613973393@genf174.server4you.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 19 00:24:24 2015
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Feb 19 00:34:25 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YODyg-0003W6-QM
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Feb 2015 00:24:23 +0100
+	id 1YOE8P-0007Np-Bv
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Feb 2015 00:34:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751426AbbBRXYS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Feb 2015 18:24:18 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:52981 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750770AbbBRXYR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Feb 2015 18:24:17 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 54DC53A378;
-	Wed, 18 Feb 2015 18:24:16 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=I
-	OuRgh2F8Mj+Ryj1SLwmI7oKBsk=; b=XuF2xYhubuUU1y3Kc9gI6fqbVfFjZWRAR
-	xD2bLbuzB0wY5nFuB25YBGFbYmnH0BWcfM1Vuf8WRpbaj4/0aLRgqGvVdF2C7FMt
-	3ns9hAoCmon53dJOCZjdiaSK0acWHmFwnHCfQkYSt4OoUNFa+oKrK+IuiTDZYvsD
-	GEEn/EFzAw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=fMF
-	YlQvi1VqHXSQWeP3JRx8qj44FOjhA8DluCRc5F0t/p9Urj29HUlX0Jklog+yNJMZ
-	Bt2m5+pQTZJnRGXKNhGtajYbxSPCjspt8VzFFQf+ilhxSOJSVeUpGfARfh32ve8i
-	wCw5w6cdOORR29UsPY1ZM4aEbih9VFKbLSyYQY3k=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4C1263A377;
-	Wed, 18 Feb 2015 18:24:16 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C21873A376;
-	Wed, 18 Feb 2015 18:24:15 -0500 (EST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 412F87AE-B7C5-11E4-8467-A4119F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751730AbbBRXeV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Feb 2015 18:34:21 -0500
+Received: from genf174.server4you.net ([217.172.184.70]:59974 "EHLO
+	genf174.server4you.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751036AbbBRXeU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Feb 2015 18:34:20 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by genf174.server4you.net (Postfix) with ESMTP id E14543A22219
+	for <git@vger.kernel.org>; Mon, 16 Feb 2015 21:39:50 +0100 (CET)
+Received: from genf174.server4you.net ([127.0.0.1])
+	by localhost (genf174.server4you.net [127.0.0.1]) (amavisd-new, port 10032)
+	with ESMTP id fbUEdWsQ_zEj for <git@vger.kernel.org>;
+	Mon, 16 Feb 2015 21:39:49 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by genf174.server4you.net (Postfix) with ESMTP id 821CB3A15AB2
+	for <git@vger.kernel.org>; Mon, 16 Feb 2015 19:13:28 +0100 (CET)
+X-Virus-Scanned: amavisd-new at genf174.server4you.net
+Received: from genf174.server4you.net ([127.0.0.1])
+	by localhost (genf174.server4you.net [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id vF77IZnlA2pD for <git@vger.kernel.org>;
+	Mon, 16 Feb 2015 19:13:28 +0100 (CET)
+Received: from 10.0.2.15 (genf174.server4you.net [217.172.184.70])
+	by genf174.server4you.net (Postfix) with SMTP id E4B613973393
+	for <git@vger.kernel.org>; Sun, 15 Feb 2015 23:58:27 +0100 (CET)
+X-Priority: 1 (Highest)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264071>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264072>
 
-If you did this:
+Dear Colleagues,
 
-    $ git init void &&
-      git -C void commit --allow-empty -m initial &&
-      git -C void symbolic-ref HEAD refs/heads/nosuch
-    $ git clone --no-local void new
+I hope you know our conference CSCC: Circuits, Systems, Communications and Computers
+www.cscc.co The Conference is now in its 19 year and in 2015 is organized in the
+wonderful and historical island of Zakynthos in Greece (July 16,17,18,19,20 2015 /
+Five days).   
+The conference is indexed in ISI, SCOPUS, Engineering Villeage, EI Compendex, IET etc
+and has collaboration with important scientific societies and 3 universities:
+More Details: www.cscc.co
+Last year the Proceedings of CSCC were published in 12 Volumes (hard-copy) and one
+CD (containing the material of these 12 volumes) and this material was distributed
+to our authors. 
+See a full report and many wonderful photos from the CSCC 2014 here:
+inase-news.blogspot.com/2014/12/post-conference-report-inase_15.html  www.cscc14.org
 
-you would get
+CSCC has always famous plenary speakers from prestigious universities, IEEE Fellows
+(www.cscc.co / last year: www.cscc14.org) and this year we have arranged
+post-conference publication of all the extended version of all the accepted papers
+in 36 ISI/SCI Indexed Journals. We have also 4 Tutorials by well-known colleagues.
 
-    warning: remote HEAD refers to nonexistent ref, unable to checkout.
+We would like to invite you to organize a Special Session or Workshop. For Special
+Session / Workshop organizers we give financial support (honorarium), free
+publication, air tickets and hotel expenses. Successful special session organizers
+will be automatically included in the committee of CSCC 2016, as well as we will
+jointly examine their participation in the Editorial Board in one of our 36
+collaborating ISI/SCI Journals. Special Session organizers are also appointed
+Associate Editors in the conference Proceedings. We will also give several mailing
+lists to the Session Organizers to send their own Call For Papers.
 
-While it is correct that we are unable to perform the normal
-"checkout" of their primary branch that their HEAD points at,
-it was reported that some users find this message unnecessarily
-alarming.
+So, far we have 16 Special Sessions and we believe that we will reach more than 80
+until July. Send the proposal of your Special Session to us now following the
+instructions of cscc.co 
 
-Rephrase by saying what we decided to do, instead of only stating
-what led us to that decision without telling what that decision is.
-That is, "(because we cannot checkout), we left the HEAD pointing at
-an unborn branch."
+The list of the reviewers that will undertake the peer review process and their
+emails is included in the proceedings and is also sent to ISI, SCOPUS and other
+indexes.
 
----
- builtin/clone.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+See you in Zakynthos, Greece in July 
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 9572467..c7f1bf2 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -625,8 +625,8 @@ static int checkout(void)
- 
- 	head = resolve_refdup("HEAD", RESOLVE_REF_READING, sha1, NULL);
- 	if (!head) {
--		warning(_("remote HEAD refers to nonexistent ref, "
--			  "unable to checkout.\n"));
-+		warning(_("remote HEAD refers to nonexistent ref; "
-+			  "leaving the current branch unborn.\n"));
- 		return 0;
- 	}
- 	if (!strcmp(head, "HEAD")) {
+The Organizing and Steering Committee
+
+================
+If you do not want to receive more invitations, send an email to cscc2015@gmail.com
+with exactly this SUBJECT (in the Subject line of your email please):
+" REMOVE git@vger.kernel.org "
