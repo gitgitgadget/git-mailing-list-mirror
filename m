@@ -1,8 +1,7 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/6] t9300: correct expected object names
-Date: Sun, 15 Feb 2015 15:43:40 -0800
-Message-ID: <1424043824-25242-3-git-send-email-gitster@pobox.com>
-References: <1424043824-25242-1-git-send-email-gitster@pobox.com>
+Subject: [PATCH 0/6] test updates around diff
+Date: Sun, 15 Feb 2015 15:43:38 -0800
+Message-ID: <1424043824-25242-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Mon Feb 16 00:43:55 2015
 Return-path: <git-owner@vger.kernel.org>
@@ -10,71 +9,69 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YN8qw-0006CL-30
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Feb 2015 00:43:54 +0100
+	id 1YN8qv-0006CL-Gb
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Feb 2015 00:43:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754918AbbBOXnu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Feb 2015 18:43:50 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:51295 "EHLO
+	id S1753980AbbBOXns (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Feb 2015 18:43:48 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:62037 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751797AbbBOXnt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Feb 2015 18:43:49 -0500
+	with ESMTP id S1750904AbbBOXnr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Feb 2015 18:43:47 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 75CEB39CE8;
-	Sun, 15 Feb 2015 18:43:49 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9B2BE39CE2;
+	Sun, 15 Feb 2015 18:43:46 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=Ev+e
-	GUBaXXVfdjm3vwsWj7oHopI=; b=ZtVT7wHHIVoxLzXxie9IbQzdwyrvzrT1Inbd
-	AtYBRbfZzgcIRCR9WE1Pajb1ZO0nbe/jI+Ce9clO3l8kP4UAP123ZJNDB8x+1BrA
-	9gVFB2t3eqcn3SFBx47PBKlQgNskZ34EElNcMdW2/clSsyUEVkr7FovyErcQLkkQ
-	q7Vzor0=
+	:subject:date:message-id; s=sasl; bh=JDmeX9xwtG2b6CCUST03sP4qc6Q
+	=; b=CWl8jxSt54aDeSis8km+xtLjiLUHlWN6tNaPRcW/KhXHbnvptrHVv9LGfd4
+	gKhwzzrCUjQkDRoFpDvMgjOYQ6lR5KoGHgszWauo8Jsux+qeF+5oXtfabmaaXCwO
+	aAuphnPPtvCrPWqKNwDc6ZLmp12LN0djcaO+OZ1k3gYeQJwg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=Vv8XPG
-	an+jkbi3iUZh4zldaz9ibFBHVzsiTO7eSGP3PgxBOxpz+JHgwWJda8/eVe4wio1F
-	nV6V2b1YhtaKPm+M0V/85ba/B6dnyL3qqrW0ZkYP9oZpbg5rCsRe+573NJxoBzoi
-	Zc4OvNuoEzzcO7EfozpC/m0UczeDbqXG2wM14=
+	:date:message-id; q=dns; s=sasl; b=qNXyEm9AHOWW9hSFH4hUmGbZbtExv
+	LqVSbmAVWD/h3TEB16dUwfIW0i3ZmUl990d4PYEMbgH41g9ueArZhAxCu3XBSmZR
+	6RJp1PsQFvwaJlVwGah6qMcbyzsocrZcUyy//750LZlCjqHZwkMsY9pUOXKdldR9
+	RG0zepD9Y3h5U8=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6C86339CE7;
-	Sun, 15 Feb 2015 18:43:49 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 92FE239CE1;
+	Sun, 15 Feb 2015 18:43:46 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E57F439CE6;
-	Sun, 15 Feb 2015 18:43:48 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1B0D639CE0;
+	Sun, 15 Feb 2015 18:43:46 -0500 (EST)
 X-Mailer: git-send-email 2.3.0-266-g5b48884
-In-Reply-To: <1424043824-25242-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 7D325A0C-B56C-11E4-984B-A4119F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 7B823C90-B56C-11E4-9422-A4119F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263855>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263856>
 
-The output the test #36 expects is bogus.  There are no blob objects
-whose names are 36a590... or 046d037... when this test was run.
+This is primarily to update t4008 that will have to be updated in
+the course of "diff -B -M" work to modern standard and also make it
+easier to be used as the test bed.
 
-It was left unnoticed only because compare_diff_raw, which only
-cares about the add/delete/rename/copy was used to check the result.
+Junio C Hamano (6):
+  t4008: correct stale comments
+  t9300: correct expected object names
+  t4010: correct expected object names
+  tests: do not borrow from COPYING and README from the real source
+  t/diff-lib: check exact object names in compare_diff_raw
+  t4008: modernise style
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/t9300-fast-import.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/diff-lib.sh                 |   2 +-
+ t/diff-lib/COPYING            | 361 ++++++++++++++++++++++++++++++++++++++++++
+ t/diff-lib/README             |  46 ++++++
+ t/t4003-diff-rename-1.sh      |   4 +-
+ t/t4005-diff-rename-2.sh      |   4 +-
+ t/t4007-rename-3.sh           |   2 +-
+ t/t4008-diff-break-rewrite.sh | 292 +++++++++++++++-------------------
+ t/t4009-diff-rename-4.sh      |   4 +-
+ t/t4010-diff-pathspec.sh      |   2 +-
+ t/t9300-fast-import.sh        |   4 +-
+ 10 files changed, 547 insertions(+), 174 deletions(-)
+ create mode 100644 t/diff-lib/COPYING
+ create mode 100644 t/diff-lib/README
 
-diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-index 27263df..e53def2 100755
---- a/t/t9300-fast-import.sh
-+++ b/t/t9300-fast-import.sh
-@@ -582,8 +582,8 @@ test_expect_success 'D: verify pack' '
- '
- 
- cat >expect <<EOF
--:000000 100755 0000000000000000000000000000000000000000 35a59026a33beac1569b1c7f66f3090ce9c09afc A	newdir/exec.sh
--:000000 100644 0000000000000000000000000000000000000000 046d0371e9220107917db0d0e030628de8a1de9b A	newdir/interesting
-+:000000 100755 0000000000000000000000000000000000000000 e74b7d465e52746be2b4bae983670711e6e66657 A	newdir/exec.sh
-+:000000 100644 0000000000000000000000000000000000000000 fcf778cda181eaa1cbc9e9ce3a2e15ee9f9fe791 A	newdir/interesting
- EOF
- git diff-tree -M -r branch^ branch >actual
- test_expect_success \
 -- 
 2.3.0-266-g5b48884
