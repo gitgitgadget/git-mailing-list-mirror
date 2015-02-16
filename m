@@ -1,73 +1,101 @@
-From: Alex Henrie <alexhenrie24@gmail.com>
-Subject: Re: [PATCH] gitk: Remove tcl-format flag from a message that
- shouldn't have it
-Date: Mon, 16 Feb 2015 16:27:12 -0700
-Message-ID: <CAMMLpeR6TkZxFQBVJukC3KgXM-cJkRY31m8OthHxMkaZzLqGjg@mail.gmail.com>
-References: <1421914779-30865-1-git-send-email-alexhenrie24@gmail.com>
- <CAMMLpeTvtzPuiQJVxAx-Ja4JsoUxih5azMaN7_RcLvajny6A6g@mail.gmail.com> <xmqqlhk6agxg.fsf@gitster.dls.corp.google.com>
+From: Julien Cretel <j.cretel@umail.ucc.ie>
+Subject: Re: Should "git log --decorate" indicate whether the HEAD is detached?
+Date: Mon, 16 Feb 2015 23:40:27 +0000
+Message-ID: <CACdBeKnWJvUmFaHNrzcX7LtovOLu3PFaeTyoUAUeC7wmYUboDg@mail.gmail.com>
+References: <CACdBeKmNazMtzK4hdd7WXMPDr7HdPe+EFpyd3M-TPBAUEY+HpA@mail.gmail.com>
+	<xmqqa90d4fdp.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Paul Mackerras <paulus@samba.org>,
-	Git mailing list <git@vger.kernel.org>,
-	patthoyts@users.sourceforge.net
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 17 00:33:21 2015
+X-From: git-owner@vger.kernel.org Tue Feb 17 00:40:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YNVAF-0004c3-3y
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Feb 2015 00:33:19 +0100
+	id 1YNVHG-0007Dt-Vm
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Feb 2015 00:40:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751355AbbBPX1f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Feb 2015 18:27:35 -0500
-Received: from mail-la0-f47.google.com ([209.85.215.47]:45995 "EHLO
-	mail-la0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751244AbbBPX1f (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Feb 2015 18:27:35 -0500
-Received: by labge10 with SMTP id ge10so32548963lab.12
-        for <git@vger.kernel.org>; Mon, 16 Feb 2015 15:27:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=QJxs/mwHtlB+3/NnsZ3Mwi7Wqtz/0B9lSVQhvhZYSeo=;
-        b=Xbb3KKz7ioE5FZQ3HwrZx4UAgxcZ5W/7d7eFKhsCC6zDvHO5An/6+dUJ46g73CIhPh
-         0apvUDyfqEp/MIOorcsu3z2anvatvp33wWRH/UXhz5ptfneK6wdRIUFTAOmzKRC4glhA
-         wo8YfA5E0YgS3hEl2lJlRFJs0vrbSbPW0TcDYrvDwyV+QHw56GJJGabTWwC0Os5nhCtP
-         E2R84GRdC4ysNieLa6gAy/LKrxAPVlJ4v50fZhD8Nllu4QTwZ2UOnzbAQMqNdcw44jcy
-         DzCh652TYtyeX0O8GdUz3cf1LpQb9aAIShumGZ3lxBCb1emJgLNAnzEJJr3Y3Zi46usT
-         UuGA==
-X-Received: by 10.152.44.228 with SMTP id h4mr26244872lam.31.1424129253156;
- Mon, 16 Feb 2015 15:27:33 -0800 (PST)
-Received: by 10.112.146.42 with HTTP; Mon, 16 Feb 2015 15:27:12 -0800 (PST)
-In-Reply-To: <xmqqlhk6agxg.fsf@gitster.dls.corp.google.com>
+	id S1751315AbbBPXk2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Feb 2015 18:40:28 -0500
+Received: from mail-yk0-f169.google.com ([209.85.160.169]:35357 "EHLO
+	mail-yk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750931AbbBPXk1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Feb 2015 18:40:27 -0500
+Received: by mail-yk0-f169.google.com with SMTP id 79so14480125ykr.0
+        for <git@vger.kernel.org>; Mon, 16 Feb 2015 15:40:27 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=+RmYtS65iIEXfZv9M9bA4WMF00KuWV7LUuslOUTsszE=;
+        b=hoF5MF4VlSDponVrgGLFqxcSRdi53n1t/TmSMlDqPUPzEujjf/wN5KmT9sZcheBmYI
+         bJNT+DUVEZbDxyhWqt4TQ3qOAcMvcZUDjtrlOLSkCNXt5GgLoYc69TI3TQPMhboKi+iW
+         NvSo4BTCAgg96D3zcKe4/ou0N8eb2+AW+2mYs86lSvJEfea6UtY30YyssG6EyMfUvZQm
+         MhBMaVswyiwdpRt9LVQ+1kTsgR5RUtlhnB2ruWEbh2aoujDynLIa5jQl9ivQjxmjxzSF
+         WChOoU8QtA8SsuEzFFX7Ed/Gw4JnTKxgUgSzTW4cdpCo/eTUMqL6jDxEveZWiC/rPPDG
+         Vg6g==
+X-Gm-Message-State: ALoCoQmMuGzOJhv8KHYp65XjyDlDlq0FICZHBaTxH8H6dkDSj+fF8P4fOvqLPXX9HUiTEVNpAJhd
+X-Received: by 10.170.220.197 with SMTP id m188mr84293ykf.58.1424130027108;
+ Mon, 16 Feb 2015 15:40:27 -0800 (PST)
+Received: by 10.170.36.197 with HTTP; Mon, 16 Feb 2015 15:40:27 -0800 (PST)
+In-Reply-To: <xmqqa90d4fdp.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263925>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263926>
 
-2015-02-09 14:55 GMT-07:00 Junio C Hamano <gitster@pobox.com>:
+On Mon, Feb 16, 2015 at 11:15 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Julien Cretel <j.cretel@umail.ucc.ie> writes:
 >
-> Alex Henrie <alexhenrie24@gmail.com> writes:
+>> As of Git 2.3.0, the output of "git log --decorate" is ambiguous as to
+>> whether the HEAD is detached or not.
 >
-> > This is just a friendly reminder that this patch has been sitting in
-> > the mailing list archives for a couple of weeks, and it has not yet
-> > been accepted or commented on.
->
-> I think that is because the message was not sent to the right
-> people, and also because the patch was made against a wrong project
-> ;-).
->
-> I'll forward it to the gitk maintainer after digging it out of the
-> archive and tweaking it.  Thanks.
->
-> Paul, comments?
+> It sounds as if you are reporting some regression, but has any
+> version of Git ever done so, or is this just a new feature that
+> does not exist yet?
 
-Another week and still no comments on either this patch or the gitk
-Catalan translation patch. Is Paul Mackerras still actively involved
-in the project?
+Apologies; I should have explained myself better. I'm not reporting a
+regression;
+as far as I can tell, "git log --decorate" has always been ambiguous
+in that way.
 
--Alex
+>
+>> More specifically, consider the following output of "git log --decorate":
+>>
+>>     4d860e9 (HEAD, master, dev) Remove trailing whitespace
+>>
+>> Whether the HEAD is attached to master or detached, the output is the same.
+>> Could/should "git log --decorate" be modified to provide this information?
+>> Perhaps something along the lines of
+>>
+>>     4d860e9 (HEAD -> master, dev) Remove trailing whitespace
+>>
+>> or
+>>
+>>     4d860e9 (HEAD = master, dev) Remove trailing whitespace
+>>
+>
+> I personally do not see a need for such a differenciation.  Why does
+> one even need to know, and is it worth the cost of computing at the
+> runtime?
+
+I believe the "--decorate" flag to be quite popular. I personally like to run
+"git log --decorate --graph --oneline --all" to quickly get an idea of the state
+of a repo. In my experience, many users do the same, to the point that they
+feel the need to define an alias for this command; see the top answers to
+http://stackoverflow.com/q/1057564/2541573.
+
+My problem with the current output of "git log --decorate" is the asymmetry,
+so to speak. If the HEAD is detached but pointing at a commit that isn't any
+branch's tip, then the user can be sure the HEAD detached; however, if at
+least one branch points to the current commit, there is no way to tell.
+
+I must admit I haven't given much thought about the cost involved, but I can't
+imagine performance would take a big hit. Would it?
+
+>
+> Most of the time when I am on detached HEAD it is either a few
+> commits behind a tip, or a few commits ahead of a tip.
