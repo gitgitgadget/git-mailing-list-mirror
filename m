@@ -1,71 +1,67 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] builtin/push.c: make push_default a static variable
-Date: Sun, 15 Feb 2015 21:57:03 -0800
-Message-ID: <CAPc5daXU6x2ok+XqXDkWWi5O2N_dr+deQtOMx+Eh16UUGi5yJQ@mail.gmail.com>
-References: <20150216054550.GA24611@peff.net> <20150216054754.GB25088@peff.net>
+Subject: Re: [PATCH 3/2] push: allow --follow-tags to be set by config push.followTags
+Date: Sun, 15 Feb 2015 22:02:08 -0800
+Message-ID: <CAPc5daU6VOmuNp3VbYgoFDXJshkC2AnRsZQQdoRMArYpezZr=A@mail.gmail.com>
+References: <1424055690-32631-1-git-send-email-cxreg@pobox.com>
+ <20150216052049.GA5031@peff.net> <20150216054550.GA24611@peff.net> <20150216055422.GB24611@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Dave Olszewski <cxreg@pobox.com>,
 	Git Mailing List <git@vger.kernel.org>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 16 06:57:29 2015
+X-From: git-owner@vger.kernel.org Mon Feb 16 07:02:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YNEgS-0002p3-DC
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Feb 2015 06:57:28 +0100
+	id 1YNElN-0004WO-I0
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Feb 2015 07:02:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752024AbbBPF5Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Feb 2015 00:57:24 -0500
-Received: from mail-ob0-f176.google.com ([209.85.214.176]:52363 "EHLO
-	mail-ob0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751265AbbBPF5X (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Feb 2015 00:57:23 -0500
-Received: by mail-ob0-f176.google.com with SMTP id wo20so38951621obc.7
-        for <git@vger.kernel.org>; Sun, 15 Feb 2015 21:57:23 -0800 (PST)
+	id S1752287AbbBPGC3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Feb 2015 01:02:29 -0500
+Received: from mail-ob0-f171.google.com ([209.85.214.171]:55456 "EHLO
+	mail-ob0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751095AbbBPGC2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Feb 2015 01:02:28 -0500
+Received: by mail-ob0-f171.google.com with SMTP id gq1so38985344obb.2
+        for <git@vger.kernel.org>; Sun, 15 Feb 2015 22:02:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
          :subject:to:cc:content-type;
-        bh=5+voMRWJi0EJIxH/w+wQ3VaILTX87uullXtaPiyvBvc=;
-        b=YELOheSDKkkc2+NTQ8Yb1l0lgt8f3DnyFDGodnc+Jlq3b4ZMqu5OV7RikufWMBXVuh
-         GwLswaolQ+W/4ZVSw24u0Y+CeM+YzveMPWdqLrmkkz84uuiYD4fNXJ6eI5MF613atotB
-         rhdkdowcgc+L6GBq7LLmy/38pe7EAlVPLwuQuTuJTd2cX3wXUO6lwwB4DaOxU+DDpBln
-         7Amcj5QqKo9k7f/IE3wN8fLeSx/VS+mDHJT051Z1kruXP132ZQKpZ3LsSjtBpWaumd8S
-         Mo7j8+CjGT9SvwXT0CJUvml2BHVxvi0O9hjHgDLBi0d6H38w429Kl4e+aElGenkHVT8M
-         c6Hg==
-X-Received: by 10.60.39.165 with SMTP id q5mr14129192oek.72.1424066243203;
- Sun, 15 Feb 2015 21:57:23 -0800 (PST)
-Received: by 10.202.48.132 with HTTP; Sun, 15 Feb 2015 21:57:03 -0800 (PST)
-In-Reply-To: <20150216054754.GB25088@peff.net>
-X-Google-Sender-Auth: N_MdL7Hb1ku-3oddD9qAvNIjFfk
+        bh=1yV7xhGbtkd+4cy5pvoQct6c7xCbzQuzWphZz0nM2PE=;
+        b=MeJFSCKOq/w3HIWnTXFrIWEsJbvjwFWLC9D3StPuvjv/DFimR3zJjMx5cnsYY0yx1E
+         mbBiK+Yp4r93yKFVwMMPWLMCIcnIGkK8KFxo/qXPj957MLavJMlIA6dJzN9KcV3SbjQ2
+         IkvlhQY0bHqpPhK4i6qqNsJXw/a6z6EtDAgHzbaII60NIt1GWd1+C9zOkNoeT+CHWVMD
+         /W8C/PW5rit4YxPweie+l4WkpmAf0E6AODkhvc8kQEVKBrOrTcFlHkvvfYuM8pl6aj/A
+         ESL69k22sA4XLaVMozo+WNdmTSKcLDPMUPwbySfjADVd6fSGaagF5hKHfmpGzzh2hR2k
+         jVvA==
+X-Received: by 10.182.149.164 with SMTP id ub4mr13917139obb.1.1424066548242;
+ Sun, 15 Feb 2015 22:02:28 -0800 (PST)
+Received: by 10.202.48.132 with HTTP; Sun, 15 Feb 2015 22:02:08 -0800 (PST)
+In-Reply-To: <20150216055422.GB24611@peff.net>
+X-Google-Sender-Auth: xpAdDjGKT3x-Sqas5x8kftwiGXs
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263875>
 
-On Sun, Feb 15, 2015 at 9:47 PM, Jeff King <peff@peff.net> wrote:
-> When the "push_default" flag was originally added, it was
-> made globally visible to all code. This might have been
-> useful if other commands or library calls ended up depending
-> on it, but as it turns out, only builtin/push.c cares.
-> ...
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> We know this is safe because no other callers needed tweaked when the
-> variable went out of scope. :) It would only be a bad idea if we
-> were planning on having other code in the future depend on push_default
-> (e.g., the code in remote.c to find the push destination). But it does
-> not seem to have needed that in the intervening years, so it's probably
-> fine to do this cleanup now.
+On Sun, Feb 15, 2015 at 9:54 PM, Jeff King <peff@peff.net> wrote:
+>
+> Or alternatively, we could pull the "flags" field from cmd_push out into
+> a static global "transport_flags", and manipulate it directly from the
+> config (or if we don't like a global, pass it via the config-callback
+> void pointer; but certainly a global is more common in git for code like
+> this). Then we do not have to worry about propagating values from
+> integers into flag bits at all.
 
-Yay. Great minds think alike ;-)
-
-"It definitely smells wrong to touch environment.c and cache.h" was my
-first reaction to the "follow-tags config" patch, and I really think this shows
-the right way forward.
+Yup, that would be my preference. The largest problem I had with the
+original change was how to ensure that future new code would not
+mistakenly set the global follow_tags _without_ letting the command
+line option parser to override it. If the config parser flips the bit in the
+same flags, it would become much less likely for future code to make
+such a mistake.
 
 Thanks.
