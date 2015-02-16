@@ -1,128 +1,95 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Pack v4 again..
-Date: Mon, 16 Feb 2015 01:45:38 -0500
-Message-ID: <20150216064537.GF32381@peff.net>
-References: <CACsJy8CMCTirggRhD28xvv4tM8b4+NL_ruF4LgW293dHAmLYdA@mail.gmail.com>
- <alpine.LFD.2.11.1502152221480.22104@knanqh.ubzr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/3] cmd_push: pass "flags" pointer to config callback
+Date: Sun, 15 Feb 2015 23:05:57 -0800
+Message-ID: <xmqqr3tq72ui.fsf@gitster.dls.corp.google.com>
+References: <20150216061051.GA29895@peff.net>
+	<20150216061325.GB32381@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Duy Nguyen <pclouds@gmail.com>,
+Content-Type: text/plain
+Cc: Dave Olszewski <cxreg@pobox.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Mon Feb 16 07:45:46 2015
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Feb 16 08:06:09 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YNFRB-0001HH-CQ
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Feb 2015 07:45:45 +0100
+	id 1YNFks-0000Y3-RE
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Feb 2015 08:06:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752517AbbBPGpl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Feb 2015 01:45:41 -0500
-Received: from cloud.peff.net ([50.56.180.127]:49424 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751108AbbBPGpk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Feb 2015 01:45:40 -0500
-Received: (qmail 10578 invoked by uid 102); 16 Feb 2015 06:45:40 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 16 Feb 2015 00:45:40 -0600
-Received: (qmail 12669 invoked by uid 107); 16 Feb 2015 06:45:45 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 16 Feb 2015 01:45:45 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Feb 2015 01:45:38 -0500
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.11.1502152221480.22104@knanqh.ubzr>
+	id S1752454AbbBPHGB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Feb 2015 02:06:01 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:53935 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751801AbbBPHGA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Feb 2015 02:06:00 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 638F22BB5D;
+	Mon, 16 Feb 2015 02:05:59 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=x8X9QnE7Dcxcpf9mFMDVlmrtZGg=; b=M2wzsV
+	UFWojKUKwLtP2bcVYbpcugIbM0YUDqkr72UWR0YGWrDIx9Eqp8y3O+kgPvtmGo5b
+	OnqpocSC5nZWYo/OrQcoJ1Lmh2KfHyt9tqQLq0HGplwq7ltPXoqUR8NzwESIXGLK
+	ZvvQehSm3u6oOVkr5qwBZJDm7+5YDSQ5Njytw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=snLs1NXStJJc4A7jJ6XJkzexi9ALEscL
+	M4sY5QX7q8gxBUPkUOchNsURxO3c5LUITEDCVzrlupwnp1gHqsdrqwXeaC+nUikA
+	TcbnFrMrWNXF46cbW8ihKaMxrju6XofcBocUpi+aie5hyOPp6TJdGlG5+M+6eigc
+	sXTIv6+cS8U=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5B18D2BB5C;
+	Mon, 16 Feb 2015 02:05:59 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D358C2BB5B;
+	Mon, 16 Feb 2015 02:05:58 -0500 (EST)
+In-Reply-To: <20150216061325.GB32381@peff.net> (Jeff King's message of "Mon,
+	16 Feb 2015 01:13:25 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 42438EB4-B5AA-11E4-AA44-A4119F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263883>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263884>
 
-On Sun, Feb 15, 2015 at 11:59:02PM -0500, Nicolas Pitre wrote:
+Jeff King <peff@peff.net> writes:
 
-> Yet, I think the biggest problem with pack v4 at the moment is the 
-> packing algorithm for tree objects.  We are piggy-backing on the pack v2 
-> object delta compression sorting and that produces suboptimal results 
-> due to deep recursions.  And it is the recursion that kills us. The pack 
-> v4 requires a new packing algorithm for its tree objects.
-> 
-> What I imagined is something like this:
-> 
-> - Each canonical tree entry is made of a SHA1, mode and path.  Let's 
->   assume this is hashed into a 24-bit value.
-> 
-> - Each tree object can therefore be represented as a string of 24-bit 
->   "characters".
-> 
-> - Delta-compressing a tree object becomes a substring search where we 
->   try to replace a sequence of "characters" with the longest "string" 
->   possible from another object.  Repeat with the remaining sequences.
+> This will let us manipulate any transport flags which have matching
+> config options (there are none yet, but we will add one in
+> the next patch).
 
-Somewhat related to this, I was playing this weekend with the idea of
-generating fast tree diffs from our on-disk deltas. That is, given a
-base tree and a binary delta against it, could I reliably reproduce a
-diff (one way or the other) in O(size of diff), rather than O(size of
-tree)?
+Nice---this will later lets us do push.atomic if we really wanted
+to, right?
 
-I have two applications in mind:
+> To be honest, the whole do_push is confusing to me. It seems like that
+> should just be part of cmd_push.
 
-  1. Tree diffs for "git log -- pathspec" do the same diff (between a
-     tree and its corresponding version in the parent) over and over.
-     A significant percentage of the time (at least in linux.git and
-     git.git), we store deltas between these trees.  We could stop
-     wasting time walking the common parts of the trees, and jump right
-     to the differences.
+Yeah, that part of the push callchain always confuses me every time
+I look at it.  I think it was a consequence of how transport layer
+was wedged into the existing codepath that only handled push that
+called send-pack to unify the codepaths that push calls into
+different transport backends, and we may have done it differently
+and more cleanly if we were designing the push to transport to
+backends from scratch.
 
-  2. Calculating reachability for packing[1] spends a lot of time in
-     lookup_object, as we have to go through each tree saying "have we
-     seen object 1234abcd yet?". If we could instead just view the
-     differences, we would not have to make those hash lookups for
-     entries whose objects we know we have seen.
-
-The conclusion I came to was "no, you cannot do it in the general case
-of byte-wise binary diffs"[2].  Conceptually, it's not too difficult. For
-example, if we know we have copied up to byte X from the source tree,
-then we skip to byte Y, we know that bytes Y-X did not make it, and are
-a deletion of entries. If those fall on whole-entry boundaries, it's
-pretty simple. But of course we have no guarantee that they do in a
-byte-wise diff. E.g., if entry "foo" changes its sha1, then we will
-generally copy up to and including the "foo\0" from the source, and then
-insert our own new sha1. Which means we need to walk backwards from
-point "Y" to find the filename of the entry we are in. Or worse, the
-sha1s might share one or more leading bytes, and that would be part of
-the copy, too.
-
-So in short, we may end up anywhere within a tree object and need to
-walk backwards to the start of the entry. But we cannot walk backwards
-looking for a NUL, because it may also be part of a sha1. You can only
-reliably parse a git tree by starting at the beginning of the stream and
-going forwards[3].
-
-If we knew that our deltas were always produced on entry-boundaries (a
-"character" in your description above), this would be much simpler.
-
-Maybe this is all stuff you already thought through, but if not, food
-for thought. :)
-
--Peff
-
-[1] Of course there are other reachability checks besides packing, like
-    git-prune. But all of those are even better sped up by using
-    reachability bitmaps. Packing, as the place where we generate the
-    bitmaps, and which is sensitive to things like traversal order,
-    remains the place where we will always need to actually walk.
-
-[2] One option, of course, is to generate byte-wise deltas, but with a
-    promise to always align them on entry boundaries. I'm tempted by
-    this, because the result would be readable by existing packv2
-    readers. We'd have to set a flag somewhere that indicates the pack
-    was written with this property, though.
-
-[3] I suspect you could come up with some heuristic that finds tree
-    entry boundaries with high probability, and in the low probability
-    case does not produce a wrong answer, but instead has to walk all
-    the way back to the beginning of the tree. That would be fine here.
-    But frankly, this "walk backwards" thing was just the straw that
-    broke the camel's back for me in working on this. Handling all the
-    possible cases was ending up quite complicated.
+>  builtin/push.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/builtin/push.c b/builtin/push.c
+> index f558c2e..c25108f 100644
+> --- a/builtin/push.c
+> +++ b/builtin/push.c
+> @@ -555,7 +555,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+>  	};
+>  
+>  	packet_trace_identity("push");
+> -	git_config(git_push_config, NULL);
+> +	git_config(git_push_config, &flags);
+>  	argc = parse_options(argc, argv, prefix, options, push_usage, 0);
+>  
+>  	if (deleterefs && (tags || (flags & (TRANSPORT_PUSH_ALL | TRANSPORT_PUSH_MIRROR))))
