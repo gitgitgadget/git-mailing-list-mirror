@@ -1,124 +1,102 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Multi-threaded 'git clone'
-Date: Mon, 16 Feb 2015 10:03:06 -0500
-Message-ID: <20150216150305.GA8279@peff.net>
-References: <CACSCj9yoso1oLHzySx1F3O+DFAPiz-XEz1YNCEUMu1pj7KmX7w@mail.gmail.com>
- <alpine.DEB.2.02.1502160521030.23770@nftneq.ynat.uz>
+From: =?UTF-8?Q?Nico_Schl=C3=B6mer?= <nico.schloemer@gmail.com>
+Subject: Re: git svn import failure : write .git/Git_svn_hash_BmjclS: Bad file descriptor
+Date: Mon, 16 Feb 2015 16:10:41 +0100
+Message-ID: <CAK6Z60dZu_0kNJF2-eJMgnjYVhxfyps53mcfZT41V1DBZZ+zhw@mail.gmail.com>
+References: <CABNxngNDwf_Cy77OzvMg__kCNoTz5y1a2KKG1vobYjE_m_aLkQ@mail.gmail.com>
+ <20150129233429.GA7162@dcvr.yhbt.net> <CABNxngPErFiTzUNK6P90Ug5fVtJSYD9XrGrQzK8+mt2u4g=Xyg@mail.gmail.com>
+ <20150130002247.GA22519@dcvr.yhbt.net> <CABNxngMVsaSLmzf0ZsaXZqXhD+hOaRmz-uuSzm0ALDFhKjnrXA@mail.gmail.com>
+ <20150130013017.GA10713@dcvr.yhbt.net> <CAK6Z60cGnvPP0ctnyV4tHfMmBGYRidEJzkAG+J2h9BunmtOAsQ@mail.gmail.com>
+ <CABNxngNH20O52QHSivQLvRFSW2hqnVTYuBv0CWn1L53cL+XoGw@mail.gmail.com> <20150212191807.GA30062@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Koosha Khajehmoogahi <koosha.khajeh@gmail.com>,
-	git <git@vger.kernel.org>
-To: David Lang <david@lang.hm>
-X-From: git-owner@vger.kernel.org Mon Feb 16 16:03:17 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Valery Yundin <yuvalery@gmail.com>, git@vger.kernel.org,
+	Minty <mintywalker@gmail.com>, Mike <ipso@snappymail.ca>,
+	Junio C Hamano <gitster@pobox.com>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Mon Feb 16 16:11:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YNNCd-00054L-2N
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Feb 2015 16:03:15 +0100
+	id 1YNNKK-0000Vi-KW
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Feb 2015 16:11:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753303AbbBPPDK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Feb 2015 10:03:10 -0500
-Received: from cloud.peff.net ([50.56.180.127]:49550 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753194AbbBPPDJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Feb 2015 10:03:09 -0500
-Received: (qmail 32585 invoked by uid 102); 16 Feb 2015 15:03:08 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 16 Feb 2015 09:03:08 -0600
-Received: (qmail 15444 invoked by uid 107); 16 Feb 2015 15:03:13 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 16 Feb 2015 10:03:13 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Feb 2015 10:03:06 -0500
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.02.1502160521030.23770@nftneq.ynat.uz>
+	id S1756045AbbBPPLG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Feb 2015 10:11:06 -0500
+Received: from mail-la0-f54.google.com ([209.85.215.54]:44379 "EHLO
+	mail-la0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753102AbbBPPLD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 Feb 2015 10:11:03 -0500
+Received: by lams18 with SMTP id s18so29563507lam.11
+        for <git@vger.kernel.org>; Mon, 16 Feb 2015 07:11:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=f2OHltAdfAvxh7cWW4zDlhQKOvW193jz46OlTLWIvas=;
+        b=ZDv4n5garmFFm9Z0PUMAkw0XG5pC9tzogoTVXK6l1Idoobq4ToTpIuRqaUQDgYZHtq
+         HyfdgyjUCouV/z1AomIS7Dx3Kpxpn4DvGe2z1P5KHw3GpaxQObh6XA5O1+jgjAK+ZWOt
+         RieIb3rJAiC41/AV16jscCVxzBGOLJIbyPqeVCWqRGsrZ1yNdE9g7Vnt87va0g8I4XdV
+         TqM18oc/5rs/Avu4UWmyldIV4TCxgdlfoXcv9ie4W93u80bOlY75FbitOzHGRycKTfc3
+         mkg7T7INvxIBtHySbGsvIMx/+lyfGPjz8nztBMncu3B87yFmkQSchm1WUVgSzpR+cXHs
+         Pu9Q==
+X-Received: by 10.152.10.98 with SMTP id h2mr16273310lab.18.1424099461703;
+ Mon, 16 Feb 2015 07:11:01 -0800 (PST)
+Received: by 10.114.11.73 with HTTP; Mon, 16 Feb 2015 07:10:41 -0800 (PST)
+In-Reply-To: <20150212191807.GA30062@dcvr.yhbt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263901>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263902>
 
-On Mon, Feb 16, 2015 at 05:31:13AM -0800, David Lang wrote:
+I just double-checked and I can only produce this issue on one machine
+(tested on 3). Apparently, this is has nothing to do with Git itself
+then.
 
-> I think it's an interesting question to look at, but before you start
-> looking at changing the architecture of the current code, I would suggest
-> doing a bit more analisys of the problem to see if the bottleneck is really
-> where you think it is.
-> 
-> First measure, then optimize :-)
+Any ideas of what could be wrong?
 
-Yes, very much so. Fortunately some people have already done some of
-this work. :)
+Cheers,
+Nico
 
-On the server side of a clone, the things that must be done before
-sending any data are:
-
-  1. Count up all of the objects that must be sent by traversing the
-     object graph.
-
-  2. Find any pairs for delta compression (this is the "Compressing
-     objects" phase of the progress reporting).
-
-Step (1) naively takes 30-45 seconds for a kernel repo. However, with
-reachability bitmaps, it's instant-ish. I just did a clone from
-kernel.org, and it looks like they've turned on bitmaps.
-
-For step (2), git will reuse deltas that already exist in the on-disk
-packfile, and will not consider new deltas between objects that are
-already in the same pack (because we would already have considered them
-when packing in the first place). So the key for servers is to keep
-things pretty packed. My kernel.org clone shows that they could probably
-stand to repack torvalds/linux.git, but it's not too terrible.
-
-This part is multithreaded, so what work we do happens in parallel. But
-note that some servers may turn pack.threads down to 1 (since their many
-CPUs are kept busy by multiple requests, rather than trying to finish a
-single one).
-
-Then the server streams the data to the client. It might do some light
-work transforming the data as it comes off the disk, but most of it is
-just blitted straight from disk, and the network is the bottleneck.
-
-On the client side, the incoming data streams into an index-pack
-process. For each full object it sees, it hashes and records the name of
-the object as it comes in. For deltas, it queues them for resolution
-after the complete pack arrives.
-
-Once the full pack arrives, then it resolves all of the deltas. This
-part is also multithreaded. If you check out "top" during the "resolving
-deltas" phase of the clone, you should see multiple cores in use.
-
-So I don't think there is any room for "just multithread it" in this
-process. The CPU intensive bits are already multithreaded. There may be
-room for optimizing that, though (e.g., reducing lock contention or
-similar).
-
-It would also be possible to resolve deltas while the pack is streaming
-in, rather than waiting until the whole thing arrives. That's not
-possible in all cases (an object may be a delta against a base that
-comes later in the pack), but in practice git puts bases before their
-deltas. However, it's overall less efficient, because you may end up
-walking through the same parts of the delta chain more than once. For
-example, imagine you see a stream of objects A, B, C, D. You get B and
-see that it's a delta against A. So you resolve it, hash the object, and
-are good. Now you see C, which is a delta against B. To generate C, you
-have to compute B again. Now you get to D, which is another delta
-against B. So now we compute B again.
-
-You can get around this somewhat with a cache of intermediate object
-contents, but of course there may be hundreds or thousands of chains
-like this in use at once, so you're going to end up with some cache
-misses.
-
-What index-pack does instead is to wait until it has all of the objects,
-then finds A and says "what objects use A as a base?". Then it computes
-B, hashes it, and says "what objects use B as a base?". And finds C and
-D, after which it nows it can drop the intermediate result B.
-
-So that's less work over all, though in some workloads it may finish
-faster if you were to stream it (because your many processors are
-sitting idle while we are blocked on network bandwidth). So that's a
-potential area of exploration.
-
--Peff
+On Thu, Feb 12, 2015 at 8:18 PM, Eric Wong <normalperson@yhbt.net> wrot=
+e:
+> Valery Yundin <yuvalery@gmail.com> wrote:
+>> On 31 January 2015 at 13:51, Nico Schl=C3=B6mer <nico.schloemer@gmai=
+l.com> wrote:
+>> > I tried the patch and I still get
+>> > ```
+>> > [...]
+>> > r100 =3D e2a9b5baa2cebb18591ecb04ff350410d52f36de (refs/remotes/gi=
+t-svn)
+>> > Unexpected result returned from git cat-file at
+>> > /home/nschloe/share/perl/5.18.2/Git/SVN/Fetcher.pm line 335.
+>> > Failed to read object 619f9d1d857fb287d06a70c9dac6b8b534d0de6a at
+>> > /home/nschloe/share/perl/5.18.2/Git/SVN/Fetcher.pm line 336, <GEN1=
+6>
+>> > line 757.
+>> >
+>> > error closing pipe: Bad file descriptor at
+>> > /home/nschloe/libexec/git-core/git-svn line 0.
+>> > error closing pipe: Bad file descriptor at
+>> > /home/nschloe/libexec/git-core/git-svn line 0.
+>> > ```
+>> > when
+>> > ```
+>> > git svn clone https://geuz.org/svn/gmsh/trunk
+>>
+>> It seems that the same commit dfa72fdb96 is responsible for the erro=
+r
+>> in "git svn clone https://geuz.org/svn/gmsh/trunk". But unlike in my
+>> case, the patch doesn't fix it.
+>
+> (top-posting corrected)
+>
+> Odd, I managed to clone that without issues, but I couldn't reproduce
+> this problem with or without the tempfile clearing patch applied.
+>
+>    git svn clone --username gmsh https://geuz.org/svn/gmsh/trunk
+>
+> Anybody else?
