@@ -1,117 +1,114 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: Pack v4 again..
-Date: Sun, 15 Feb 2015 23:59:02 -0500 (EST)
-Message-ID: <alpine.LFD.2.11.1502152221480.22104@knanqh.ubzr>
-References: <CACsJy8CMCTirggRhD28xvv4tM8b4+NL_ruF4LgW293dHAmLYdA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] push: allow --follow-tags to be set by config
+ push.followTags
+Date: Mon, 16 Feb 2015 00:20:49 -0500
+Message-ID: <20150216052049.GA5031@peff.net>
+References: <1424055690-32631-1-git-send-email-cxreg@pobox.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; CHARSET=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 16 06:14:13 2015
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Dave Olszewski <cxreg@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 16 06:20:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YNE0Y-0005q3-57
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Feb 2015 06:14:10 +0100
+	id 1YNE76-0007y1-O2
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Feb 2015 06:20:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752285AbbBPFOF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Feb 2015 00:14:05 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:17651 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751265AbbBPFOE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Feb 2015 00:14:04 -0500
-X-Greylist: delayed 901 seconds by postgrey-1.27 at vger.kernel.org; Mon, 16 Feb 2015 00:14:04 EST
-Received: from yoda.home ([66.131.180.142]) by VL-VM-MR002.ip.videotron.ca
- (Oracle Communications Messaging Exchange Server 7u4-22.01 64bit (built Apr 21
- 2011)) with ESMTP id <0NJU000ULLUFYE90@VL-VM-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Sun, 15 Feb 2015 23:59:03 -0500 (EST)
-Received: from xanadu.home (xanadu.home [192.168.2.2])	by yoda.home (Postfix)
- with ESMTPSA id C9D6C2DA0496; Sun, 15 Feb 2015 23:59:02 -0500 (EST)
-In-reply-to: <CACsJy8CMCTirggRhD28xvv4tM8b4+NL_ruF4LgW293dHAmLYdA@mail.gmail.com>
-User-Agent: Alpine 2.11 (LFD 23 2013-08-11)
+	id S1751708AbbBPFUx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Feb 2015 00:20:53 -0500
+Received: from cloud.peff.net ([50.56.180.127]:49357 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751018AbbBPFUw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Feb 2015 00:20:52 -0500
+Received: (qmail 6877 invoked by uid 102); 16 Feb 2015 05:20:52 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 15 Feb 2015 23:20:52 -0600
+Received: (qmail 12006 invoked by uid 107); 16 Feb 2015 05:20:57 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 16 Feb 2015 00:20:57 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Feb 2015 00:20:49 -0500
+Content-Disposition: inline
+In-Reply-To: <1424055690-32631-1-git-send-email-cxreg@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263868>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263869>
 
-On Fri, 13 Feb 2015, Duy Nguyen wrote:
+On Sun, Feb 15, 2015 at 07:01:30PM -0800, Dave Olszewski wrote:
 
-> After taking 1.5 years "vacation" from pack v4, I plan to do something
-> about it again. Will post more when I have some patches to discuss.
-> Only one question for now (forgive me if I asked already, it's been
-> quite some time)
+> +push.followTags::
+> +	If set to true enable '--follow-tags' option by default.  You
+> +	may override this configuration at time of push by specifying
+> +	'--no-follow-tags'.
 
-Yeah.  I had to re-study my own code before replying.
+Thanks, this is something I've considered implementing myself, as I have
+one repo that is frequently migrating tags from one remote to another,
+and I often forget to specify the option.
 
-> I think pack v4 does not deliver its best promise that walking a tree
-> is simply following pointers and jumping from place to place. When we
-> want to copy from the middle of another tree, we need to scan from the
-> beginning of the tree. Tree offset cache helps, but the problem
-> remains. What do you think about an alternative format that each
-> "copy" instruction includes both index of the tree entry to copy from
-> (i.e. what we store now)  _and_ the byte offset from the beginning of
-> the tree? With this byte offset, we know exactly where to start
-> copying without scanning from the beginning. It will be a bit(?)
-> bigger, but it's also faster.
+> diff --git a/builtin/push.c b/builtin/push.c
+> index fc771a9..47f0119 100644
+> --- a/builtin/push.c
+> +++ b/builtin/push.c
+> @@ -525,6 +525,11 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+>  
+>  	packet_trace_identity("push");
+>  	git_config(git_push_config, NULL);
+> +
+> +	/* set TRANSPORT_PUSH_FOLLOW_TAGS in flags so that --no-follow-tags may unset it */
+> +	if (push_follow_tags)
+> +		flags |= TRANSPORT_PUSH_FOLLOW_TAGS;
 
-That would make the format inflexible.  If we want to do partial 
-repacking by, say, copying some objects and repacking others (some 
-objects might need repacking because the objects they refer to are 
-omitted from the repack) then if those repacked objects are themselves 
-referred to by byte offset then we lose as the offset is no longer 
-valid.
+You can see above that we use git_push_config to load our config...
 
-> I imagine this is an optimization that can be done locally. The pack
-> transferred over network does not have these byte offsets. After the
-> pack is stored and verified by index-pack, we can rewrite it and add
-> this info. The simplest way is use a fixed size for this offset (e.g.
-> uint16_t or even uint8_t), add the place holder in copy instructions
-> of all v4 trees. After that object offsets will not change again and
-> we can start filling real offsets to placeholders.
+> --- a/config.c
+> +++ b/config.c
+> @@ -977,6 +977,11 @@ static int git_default_push_config(const char *var, const char *value)
+>  		return 0;
+>  	}
+>  
+> +	if (!strcmp(var, "push.followtags")) {
+> +		push_follow_tags = git_config_bool(var, value);
+> +		return 0;
+> +	}
 
-Having a local extra index is fine.  Just like the pack index which is 
-always created locally and can be recreated at any time.  Some tree 
-offset cache might be beneficial, but I'd avoid making it into the pack 
-file itself.
+But here you are adding to git_default_push_config, which is in another
+file.
 
-Yet, I think the biggest problem with pack v4 at the moment is the 
-packing algorithm for tree objects.  We are piggy-backing on the pack v2 
-object delta compression sorting and that produces suboptimal results 
-due to deep recursions.  And it is the recursion that kills us. The pack 
-v4 requires a new packing algorithm for its tree objects.
+I'm trying to figure out why git_default_push_config exists at all. The
+major difference from git_push_config is that the "default" variant will
+get loaded for _all_ commands, not just "push". So if it affected
+variables that were used by other commands, it would be needed. But all
+it sets is push_default, which seems to be specific to builtin/push.c.
 
-What I imagined is something like this:
+So I suspect it can be removed entirely, and folded into
+git_config_push. But that's outside the scope of your patch.
 
-- Each canonical tree entry is made of a SHA1, mode and path.  Let's 
-  assume this is hashed into a 24-bit value.
+What _is_ in the scope of your patch is that I think the new option you
+are adding could go into git_push_config; it is definitely only about
+the push command itself. And then you could declare it as:
 
-- Each tree object can therefore be represented as a string of 24-bit 
-  "characters".
+  static int push_follow_tags;
 
-- Delta-compressing a tree object becomes a substring search where we 
-  try to replace a sequence of "characters" with the longest "string" 
-  possible from another object.  Repeat with the remaining sequences.
+without having to worry about making it an extern that is available
+everywhere.
 
-Having a 24-bit hash value is totally arbitrary.  It could be 16 bits 
-with more collisions but much faster search and less memory usage.  The 
-optimal value would need to be determined after some experimentation.
+> diff --git a/transport.c b/transport.c
+> index 0694a7c..ff5f63d 100644
+> --- a/transport.c
+> +++ b/transport.c
+> @@ -1148,7 +1148,7 @@ int transport_push(struct transport *transport,
+>  			match_flags |= MATCH_REFS_MIRROR;
+>  		if (flags & TRANSPORT_PUSH_PRUNE)
+>  			match_flags |= MATCH_REFS_PRUNE;
+> -		if (flags & TRANSPORT_PUSH_FOLLOW_TAGS)
+> +		if ((flags & TRANSPORT_PUSH_FOLLOW_TAGS))
+>  			match_flags |= MATCH_REFS_FOLLOW_TAGS;
 
-Algorithms for the longest common substring problem already exist.  So 
-one of the classical algorithms could probably be adapted here.
+This looks like just noise in the diff (I guess leftover from some
+debugging you were doing). Is that correct?
 
-This would allow for exploiting the provision in pack v4 to copy from 
-more than one tree object.  And this would also favor shallower 
-recursions and even smaller packs.  Imposing a minimum substring length 
-(rather than a maximum delta depth) would determine the runtime 
-performance when using the pack afterwards.
-
-If you have enough free cycles to work on this, that's what I'd suggest 
-you explore at this point. I wish I could myself as I think this ought 
-to be rather cool work.
-
-
-Nicolas
+-Peff
