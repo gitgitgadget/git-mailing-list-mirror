@@ -1,125 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/3] request-pull: do something if $3 is passed
-Date: Mon, 16 Feb 2015 11:47:55 -0800
-Message-ID: <xmqqiof163kk.fsf@gitster.dls.corp.google.com>
-References: <1424110568-29479-1-git-send-email-bonzini@gnu.org>
+From: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: odb_mkstemp's 0444 permission broke write/delete access on AFP
+Date: Mon, 16 Feb 2015 20:50:43 +0100
+Message-ID: <54E24A13.20405@web.de>
+References: <A403BFCC-D66F-49BD-B54C-BB86B467F1A1@gmail.com>	<vpqtwyl90mx.fsf@anie.imag.fr> <xmqqsie565i9.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Paolo Bonzini <pbonzini@redhat.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Paolo Bonzini <bonzini@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Feb 16 20:48:03 2015
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: Fairuzan Roslan <fairuzan.roslan@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Feb 16 20:51:02 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YNReE-0008OW-9D
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Feb 2015 20:48:02 +0100
+	id 1YNRh4-00016h-ES
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Feb 2015 20:50:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751667AbbBPTr6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Feb 2015 14:47:58 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:61382 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751439AbbBPTr5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Feb 2015 14:47:57 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id DB30D37197;
-	Mon, 16 Feb 2015 14:47:56 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=H4uJiWRJVurdhj6DaNNYL4j9UHQ=; b=pVJaad
-	cZZ66gOozFiSlF/edMIh3pVR0wAbPZcoWCdTrEndnRJG+SVDYRj4eUO91IFJCi7r
-	D6qTGUF0wasFV9esURV2NY9Ammt/DyTG/OCriB8YaFCrclVKdoYUQ4x+8WxzQUcs
-	jVtC7xpB9MOD9ihIIoqAecUnkMr3wWgHHISd0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=RYuD3VbYAROt7vH74bwujJjDeqY9Fjox
-	r1mE3OD4718lqBVw1MUeRJZaGkR7fn9KdSphsrS5JHCFPGAXhJsUedufiqvwpD2D
-	FsEteuIAMWqCM/9HFWt6Rul23Q8L26kUkOZfVRngMryWlPVzqTL9Knf25yUu68cF
-	QTnaJ+uuVmo=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D036037196;
-	Mon, 16 Feb 2015 14:47:56 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5674D37193;
-	Mon, 16 Feb 2015 14:47:56 -0500 (EST)
-In-Reply-To: <1424110568-29479-1-git-send-email-bonzini@gnu.org> (Paolo
-	Bonzini's message of "Mon, 16 Feb 2015 19:16:05 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: B402C6E0-B614-11E4-BA12-A4119F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751795AbbBPTux (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Feb 2015 14:50:53 -0500
+Received: from mout.web.de ([212.227.15.3]:62830 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751794AbbBPTux (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Feb 2015 14:50:53 -0500
+Received: from birne-2.local ([217.211.68.12]) by smtp.web.de (mrweb001) with
+ ESMTPSA (Nemesis) id 0MBkal-1YFVbs3Frj-00AjoW; Mon, 16 Feb 2015 20:50:47
+ +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
+In-Reply-To: <xmqqsie565i9.fsf@gitster.dls.corp.google.com>
+X-Provags-ID: V03:K0:Cv8rxvx6NJBOQkf/UJROYzo51qSfu8IuCoMm6OEkRXB2wVWeV2J
+ N7y9CcPgcvHhnkwmPp7TUr2F95SJtOxz3so/vI3ZbwFvJfN11a6z1mJxTN72Axcb0jEiHBM
+ aGbaywKJe7cUa1WyDHOu/5/xS84uJID3w5nRl/H7pUMw3YBHigipiysSJKDe0W9Xx1ckniL
+ YsXTJCe2g7pOxh1Z40F3Q==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263915>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263916>
 
-Paolo Bonzini <bonzini@gnu.org> writes:
+On 16.02.15 20:06, Junio C Hamano wrote:
+> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+> 
+>> The issue is that having object and pack files read-only on the
+>> filesystem is a safety feature to prevent accidental modifications (even
+>> though it's actually not that effective, since brute-force "sed -i" or
+>> "perl -i" still accept to modify read-only files).
+> 
+> I did not see it as a "safety feature", and instead saw it as a
+> reminder to me that I am not supposed to write into them when I
+> check them with "ls -l".
+> 
+>> So, I'd be a bit reluctant to remove this safety feature for all users
+>> if it's only for the benefit of a minority of users. Not that I think
+>> the problem shouldn't be fixed, but I'd rather investigate alternate
+>> solutions before using this mode = 0644.
+> 
+> I fully agree with you that this should not be unconditional.
+> However, I am not sure if there is an effective workaround to a
+> filesystem that pays attention to the mode bits of the file when
+> doing an operation on the directory the file is sitting within.  It
+> may be OK to introduce a new configuration variable, perhaps call it
+> core.brokenFileSystemNeedsWritableFile or something, and probe and
+> enable it inside init_db().
+> 
+> But I suspect that the single "mode = 0444" under discussion may not
+> cover all places we create files, as the assumption that the we get
+> a sane semantics from the filesystem permeates throughout the code.
+> 
+> What other glitches does AFP have?  Does it share Windows' "you
+> cannot rename a file you have an open file descriptor on?"  Anything
+> else?
 
-> From: Paolo Bonzini <pbonzini@redhat.com>
->
-> After updating to git 2.3.0, "git request-pull" is stubbornly complaining
-> that I lack a matching tag on the remote side unless I pass the third
-> argument.  But I did prepare and push a signed tag.
+May I ask which OS you have on the server side, and which on the client side?
 
-A few questions.
+I'm aware that Mac OS "speaks" AFP, but even Linux can do and there is
+SW which enables AFP on  a Windows machine (all this is server side).
 
- - what old version did you update from?  I think the "correct
-   over-eager dwimming" change was from v2.0 days.
-
- - what exactly do you mean by "stubbornly complain"?  I think we
-   say something about HEAD not matching the HEAD over there, which
-   I think is bogus (we should instead say things about the branch
-   you are on and the branch over there with the same name) and is
-   worth fixing.
-
-> This looks like a bug to me; when $3 is not passed git will try to use
-> "HEAD" as the default but it cannot be resolved to a tag, neither locally
-> (patch 2) nor remotely (patch 3).
-
-An earlier 024d34cb (request-pull: more strictly match local/remote
-branches, 2014-01-22) deliberately disabled over-eager DWIMming when
-the $3-rd argument _is_ given.  It didn't say much about what should
-happen when it is missing.
-
-I am torn about your changes.
-
-One part of me feel that not giving the $3-rd argument should behave
-the same way as if you gave the name of the current branch as the
-$3-rd argument.  DWIMming from local HEAD to a local branch name
-(e.g. 'master') may be OK and necessary (I already said it is worth
-fixing above).  But we should not be resurrecting the over-eager
-DWIMming from that point---not from a local branch name to a tag
-that points at it, which was what 024d34cb wanted to forbid.
-
-On the other hand, I can also understand (not necessarily agree
-with) a view that not giving the $3-rd argument is an explicit
-user's wish to us to DWIM as much as we want.  But again, that
-directly contradicts with the desire of 024d34cb.
-
-So,... I dunno.
-
-I'd be more comfortable if 2/3 and 3/3 were replaced with something
-like "do not ask HEAD to be pulled, but always require a specific
-ref to be pulled", by dereferencing HEAD locally to a branch name,
-and behave as if that name was given to $3 from the command line,
-without doing any other changes (like turning that branch name that
-was implicitly given into a tag that happens to point at it).
-
-Thanks.
-
->
-> Patch 1 is a simple testcase fix.
->
-> Paolo
->
-> Paolo Bonzini (3):
->   request-pull: fix expected format in tests
->   request-pull: use "git tag --points-at" to detect local tags
->   request-pull: find matching tag or branch name on remote side
->
->  git-request-pull.sh     | 15 +++++++++++----
->  t/t5150-request-pull.sh |  5 ++---
->  2 files changed, 13 insertions(+), 7 deletions(-)
+As a client we may have Mac OS, Linux (not sure if Windows can use APF)
+What do you use ?
