@@ -1,62 +1,73 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: Multi-threaded 'git clone'
-Date: Tue, 17 Feb 2015 06:16:39 +0700
-Message-ID: <CACsJy8Brnu7rBxtCq_ac58BW7dOK=wtzMxVL-gsOUXJB2Jss9w@mail.gmail.com>
-References: <CACSCj9yoso1oLHzySx1F3O+DFAPiz-XEz1YNCEUMu1pj7KmX7w@mail.gmail.com>
- <alpine.DEB.2.02.1502160521030.23770@nftneq.ynat.uz> <20150216150305.GA8279@peff.net>
- <alpine.DEB.2.02.1502160727480.23770@nftneq.ynat.uz> <20150216154745.GA10120@peff.net>
+From: Alex Henrie <alexhenrie24@gmail.com>
+Subject: Re: [PATCH] gitk: Remove tcl-format flag from a message that
+ shouldn't have it
+Date: Mon, 16 Feb 2015 16:27:12 -0700
+Message-ID: <CAMMLpeR6TkZxFQBVJukC3KgXM-cJkRY31m8OthHxMkaZzLqGjg@mail.gmail.com>
+References: <1421914779-30865-1-git-send-email-alexhenrie24@gmail.com>
+ <CAMMLpeTvtzPuiQJVxAx-Ja4JsoUxih5azMaN7_RcLvajny6A6g@mail.gmail.com> <xmqqlhk6agxg.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: David Lang <david@lang.hm>,
-	Koosha Khajehmoogahi <koosha.khajeh@gmail.com>,
-	git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Feb 17 00:17:19 2015
+Cc: Paul Mackerras <paulus@samba.org>,
+	Git mailing list <git@vger.kernel.org>,
+	patthoyts@users.sourceforge.net
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 17 00:33:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YNUul-00078G-D2
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Feb 2015 00:17:19 +0100
+	id 1YNVAF-0004c3-3y
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Feb 2015 00:33:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752829AbbBPXRN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Feb 2015 18:17:13 -0500
-Received: from mail-ie0-f172.google.com ([209.85.223.172]:41195 "EHLO
-	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751630AbbBPXRK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Feb 2015 18:17:10 -0500
-Received: by iecrd18 with SMTP id rd18so37184412iec.8
-        for <git@vger.kernel.org>; Mon, 16 Feb 2015 15:17:09 -0800 (PST)
+	id S1751355AbbBPX1f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Feb 2015 18:27:35 -0500
+Received: from mail-la0-f47.google.com ([209.85.215.47]:45995 "EHLO
+	mail-la0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751244AbbBPX1f (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Feb 2015 18:27:35 -0500
+Received: by labge10 with SMTP id ge10so32548963lab.12
+        for <git@vger.kernel.org>; Mon, 16 Feb 2015 15:27:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=b8baPTzH9RbBPUpwXyHYU1wfskXVpApRladsVDmG8J4=;
-        b=0F2TYi2K4yzKLOcbVcFPIsHJ8GWYCKNLIg8FdW0eMhcmAZHjBu4gdmRRf1wI/3t8vK
-         E2o1gSOTJNWUffBUGdevytAbwt5VCLY0GSziNxsDQ6Kcr5t3LzII3VqCcnbEriUuF28U
-         dfSmPugP1Kn2s9FDOi7lTWmgMNW4QbaMEjONDBnH/hNA3CeBLpQpaxyQAxvAPH9QrS2o
-         2Rzzq81lAelFL5JJNiFnI2x91iNQpf/3uMz4IEmfPoEAO4IGsqIsaIDqJnGXwnioDCQv
-         1CZMx2sWWLoGlZzkQKCsKMgqLgJUpJgkX9Jr77uWe7cvsfWy+cGMitc4m/9PSjIt5ikf
-         uywQ==
-X-Received: by 10.50.108.108 with SMTP id hj12mr24255517igb.47.1424128629666;
- Mon, 16 Feb 2015 15:17:09 -0800 (PST)
-Received: by 10.107.131.155 with HTTP; Mon, 16 Feb 2015 15:16:39 -0800 (PST)
-In-Reply-To: <20150216154745.GA10120@peff.net>
+        bh=QJxs/mwHtlB+3/NnsZ3Mwi7Wqtz/0B9lSVQhvhZYSeo=;
+        b=Xbb3KKz7ioE5FZQ3HwrZx4UAgxcZ5W/7d7eFKhsCC6zDvHO5An/6+dUJ46g73CIhPh
+         0apvUDyfqEp/MIOorcsu3z2anvatvp33wWRH/UXhz5ptfneK6wdRIUFTAOmzKRC4glhA
+         wo8YfA5E0YgS3hEl2lJlRFJs0vrbSbPW0TcDYrvDwyV+QHw56GJJGabTWwC0Os5nhCtP
+         E2R84GRdC4ysNieLa6gAy/LKrxAPVlJ4v50fZhD8Nllu4QTwZ2UOnzbAQMqNdcw44jcy
+         DzCh652TYtyeX0O8GdUz3cf1LpQb9aAIShumGZ3lxBCb1emJgLNAnzEJJr3Y3Zi46usT
+         UuGA==
+X-Received: by 10.152.44.228 with SMTP id h4mr26244872lam.31.1424129253156;
+ Mon, 16 Feb 2015 15:27:33 -0800 (PST)
+Received: by 10.112.146.42 with HTTP; Mon, 16 Feb 2015 15:27:12 -0800 (PST)
+In-Reply-To: <xmqqlhk6agxg.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263924>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263925>
 
-On Mon, Feb 16, 2015 at 10:47 PM, Jeff King <peff@peff.net> wrote:
-> Each clone generates the pack on the fly
-> based on what's on disk and streams it out. It should _usually_ be the
-> same, but there's nothing to guarantee byte-for-byte equality between
-> invocations.
+2015-02-09 14:55 GMT-07:00 Junio C Hamano <gitster@pobox.com>:
+>
+> Alex Henrie <alexhenrie24@gmail.com> writes:
+>
+> > This is just a friendly reminder that this patch has been sitting in
+> > the mailing list archives for a couple of weeks, and it has not yet
+> > been accepted or commented on.
+>
+> I think that is because the message was not sent to the right
+> people, and also because the patch was made against a wrong project
+> ;-).
+>
+> I'll forward it to the gitk maintainer after digging it out of the
+> archive and tweaking it.  Thanks.
+>
+> Paul, comments?
 
-It's usually _not_ the same. I tried when I wanted to produce stable
-packs. The first condition is single-threaded pack-objects. Otherwise
-thread scheduler could make object order unpredictable.
--- 
-Duy
+Another week and still no comments on either this patch or the gitk
+Catalan translation patch. Is Paul Mackerras still actively involved
+in the project?
+
+-Alex
