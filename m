@@ -1,70 +1,117 @@
-From: Dave Olszewski <cxreg@pobox.com>
-Subject: Re: Re: [PATCH] push: allow --follow-tags' to be set by config
- push.followTags
-Date: Sun, 15 Feb 2015 19:01:16 -0800 (PST)
-Message-ID: <alpine.DEB.2.11.1502151859230.16979@narbuckle.genericorp.net>
-References: <1424043588-15994-1-git-send-email-cxreg@pobox.com> <CAPc5daXkf3Vc-kGsqQ4zo6qSMrh93GZbXeFK9oLwajyNahmx1Q@mail.gmail.com>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: Pack v4 again..
+Date: Sun, 15 Feb 2015 23:59:02 -0500 (EST)
+Message-ID: <alpine.LFD.2.11.1502152221480.22104@knanqh.ubzr>
+References: <CACsJy8CMCTirggRhD28xvv4tM8b4+NL_ruF4LgW293dHAmLYdA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: TEXT/PLAIN; CHARSET=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 16 04:13:37 2015
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 16 06:14:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YNC7t-0003fR-FF
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Feb 2015 04:13:37 +0100
+	id 1YNE0Y-0005q3-57
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Feb 2015 06:14:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752942AbbBPDNc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Feb 2015 22:13:32 -0500
-Received: from 63.f9.1243.static.theplanet.com ([67.18.249.99]:33976 "EHLO
-	62.f9.1243.static.theplanet.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751677AbbBPDNc (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 15 Feb 2015 22:13:32 -0500
-X-Greylist: delayed 734 seconds by postgrey-1.27 at vger.kernel.org; Sun, 15 Feb 2015 22:13:32 EST
-X-Envelope-From: cxreg@pobox.com
-Received: from localhost (count@narbuckle [127.0.0.1])
-	(authenticated bits=0)
-	by 62.f9.1243.static.theplanet.com (8.14.4/8.14.4/Debian-8) with ESMTP id t1G31Gb3012122
-	(version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sun, 15 Feb 2015 21:01:16 -0600
-X-X-Sender: count@narbuckle.genericorp.net
-In-Reply-To: <CAPc5daXkf3Vc-kGsqQ4zo6qSMrh93GZbXeFK9oLwajyNahmx1Q@mail.gmail.com>
-User-Agent: Alpine 2.11 (DEB 23 2013-08-11)
+	id S1752285AbbBPFOF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Feb 2015 00:14:05 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:17651 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751265AbbBPFOE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Feb 2015 00:14:04 -0500
+X-Greylist: delayed 901 seconds by postgrey-1.27 at vger.kernel.org; Mon, 16 Feb 2015 00:14:04 EST
+Received: from yoda.home ([66.131.180.142]) by VL-VM-MR002.ip.videotron.ca
+ (Oracle Communications Messaging Exchange Server 7u4-22.01 64bit (built Apr 21
+ 2011)) with ESMTP id <0NJU000ULLUFYE90@VL-VM-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Sun, 15 Feb 2015 23:59:03 -0500 (EST)
+Received: from xanadu.home (xanadu.home [192.168.2.2])	by yoda.home (Postfix)
+ with ESMTPSA id C9D6C2DA0496; Sun, 15 Feb 2015 23:59:02 -0500 (EST)
+In-reply-to: <CACsJy8CMCTirggRhD28xvv4tM8b4+NL_ruF4LgW293dHAmLYdA@mail.gmail.com>
+User-Agent: Alpine 2.11 (LFD 23 2013-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263868>
 
-On Sun, 15 Feb 2015, Junio C Hamano wrote:
+On Fri, 13 Feb 2015, Duy Nguyen wrote:
 
-> On Sun, Feb 15, 2015 at 3:39 PM, Dave Olszewski <cxreg@pobox.com> wrote:
-> > Signed-off-by: Dave Olszewski <cxreg@pobox.com>
-> >
-> > diff --git a/Documentation/config.txt b/Documentation/config.txt
-> > index ae6791d..cdb8a99 100644
-> > --- a/Documentation/config.txt
-> > +++ b/Documentation/config.txt
-> > @@ -2079,6 +2079,9 @@ new default).
-> >
-> >  --
-> >
-> > +push.followTags::
-> > +       If set to true enable '--follow-tags' option by default.
-> > +
-> 
-> After setting this in your repository, does "git push --no-follow-tags" let
-> you override it if you want to do so for a single invocation?
-> 
-> If it does, the code is good but it should be documented here; if it
-> does not, it should be corrected and it should be documented here.
-> 
-> Thanks.
+> After taking 1.5 years "vacation" from pack v4, I plan to do something
+> about it again. Will post more when I have some patches to discuss.
+> Only one question for now (forgive me if I asked already, it's been
+> quite some time)
 
-Thanks for the feedback.  I was able to get this behavior by setting the
-config value into the flags variable before parsing command line
-options.  Hopefully this is acceptable practice.  Updated patch coming
-shortly
+Yeah.  I had to re-study my own code before replying.
+
+> I think pack v4 does not deliver its best promise that walking a tree
+> is simply following pointers and jumping from place to place. When we
+> want to copy from the middle of another tree, we need to scan from the
+> beginning of the tree. Tree offset cache helps, but the problem
+> remains. What do you think about an alternative format that each
+> "copy" instruction includes both index of the tree entry to copy from
+> (i.e. what we store now)  _and_ the byte offset from the beginning of
+> the tree? With this byte offset, we know exactly where to start
+> copying without scanning from the beginning. It will be a bit(?)
+> bigger, but it's also faster.
+
+That would make the format inflexible.  If we want to do partial 
+repacking by, say, copying some objects and repacking others (some 
+objects might need repacking because the objects they refer to are 
+omitted from the repack) then if those repacked objects are themselves 
+referred to by byte offset then we lose as the offset is no longer 
+valid.
+
+> I imagine this is an optimization that can be done locally. The pack
+> transferred over network does not have these byte offsets. After the
+> pack is stored and verified by index-pack, we can rewrite it and add
+> this info. The simplest way is use a fixed size for this offset (e.g.
+> uint16_t or even uint8_t), add the place holder in copy instructions
+> of all v4 trees. After that object offsets will not change again and
+> we can start filling real offsets to placeholders.
+
+Having a local extra index is fine.  Just like the pack index which is 
+always created locally and can be recreated at any time.  Some tree 
+offset cache might be beneficial, but I'd avoid making it into the pack 
+file itself.
+
+Yet, I think the biggest problem with pack v4 at the moment is the 
+packing algorithm for tree objects.  We are piggy-backing on the pack v2 
+object delta compression sorting and that produces suboptimal results 
+due to deep recursions.  And it is the recursion that kills us. The pack 
+v4 requires a new packing algorithm for its tree objects.
+
+What I imagined is something like this:
+
+- Each canonical tree entry is made of a SHA1, mode and path.  Let's 
+  assume this is hashed into a 24-bit value.
+
+- Each tree object can therefore be represented as a string of 24-bit 
+  "characters".
+
+- Delta-compressing a tree object becomes a substring search where we 
+  try to replace a sequence of "characters" with the longest "string" 
+  possible from another object.  Repeat with the remaining sequences.
+
+Having a 24-bit hash value is totally arbitrary.  It could be 16 bits 
+with more collisions but much faster search and less memory usage.  The 
+optimal value would need to be determined after some experimentation.
+
+Algorithms for the longest common substring problem already exist.  So 
+one of the classical algorithms could probably be adapted here.
+
+This would allow for exploiting the provision in pack v4 to copy from 
+more than one tree object.  And this would also favor shallower 
+recursions and even smaller packs.  Imposing a minimum substring length 
+(rather than a maximum delta depth) would determine the runtime 
+performance when using the pack afterwards.
+
+If you have enough free cycles to work on this, that's what I'd suggest 
+you explore at this point. I wish I could myself as I think this ought 
+to be rather cool work.
+
+
+Nicolas
