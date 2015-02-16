@@ -1,73 +1,69 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Multi-threaded 'git clone'
-Date: Mon, 16 Feb 2015 10:47:45 -0500
-Message-ID: <20150216154745.GA10120@peff.net>
-References: <CACSCj9yoso1oLHzySx1F3O+DFAPiz-XEz1YNCEUMu1pj7KmX7w@mail.gmail.com>
- <alpine.DEB.2.02.1502160521030.23770@nftneq.ynat.uz>
- <20150216150305.GA8279@peff.net>
- <alpine.DEB.2.02.1502160727480.23770@nftneq.ynat.uz>
-Mime-Version: 1.0
+From: Fairuzan Roslan <fairuzan.roslan@gmail.com>
+Subject: odb_mkstemp's 0444 permission broke write/delete access on AFP
+Date: Tue, 17 Feb 2015 01:54:33 +0800
+Message-ID: <A403BFCC-D66F-49BD-B54C-BB86B467F1A1@gmail.com>
+Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2070.6\))
 Content-Type: text/plain; charset=utf-8
-Cc: Koosha Khajehmoogahi <koosha.khajeh@gmail.com>,
-	git <git@vger.kernel.org>
-To: David Lang <david@lang.hm>
-X-From: git-owner@vger.kernel.org Mon Feb 16 16:47:53 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Matthieu.Moy@imag.fr, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Feb 16 18:54:45 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YNNto-000079-U0
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Feb 2015 16:47:53 +0100
+	id 1YNPsZ-00082r-Qi
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Feb 2015 18:54:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753708AbbBPPrs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Feb 2015 10:47:48 -0500
-Received: from cloud.peff.net ([50.56.180.127]:49585 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753017AbbBPPrr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Feb 2015 10:47:47 -0500
-Received: (qmail 2116 invoked by uid 102); 16 Feb 2015 15:47:47 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 16 Feb 2015 09:47:47 -0600
-Received: (qmail 15923 invoked by uid 107); 16 Feb 2015 15:47:53 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 16 Feb 2015 10:47:53 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Feb 2015 10:47:45 -0500
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.02.1502160727480.23770@nftneq.ynat.uz>
+	id S1753697AbbBPRyk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Feb 2015 12:54:40 -0500
+Received: from mail-pd0-f177.google.com ([209.85.192.177]:38635 "EHLO
+	mail-pd0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753490AbbBPRyj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 Feb 2015 12:54:39 -0500
+Received: by pdbfp1 with SMTP id fp1so33636213pdb.5
+        for <git@vger.kernel.org>; Mon, 16 Feb 2015 09:54:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:content-type:content-transfer-encoding:subject:date:message-id
+         :cc:to:mime-version;
+        bh=OGSuQB/ucrEHiH5HV8NukC7Wf6FOKJJ4sGWXkATAlKQ=;
+        b=KDgic9d/SpqGhqmoHjYf1uIn141pHm7Ake1ea56nOM+1ePGI+E3uX5+IJncCgWgWat
+         TU1q/hEeLDtj7mz298tgtdJNTnDz1bZOcIUza8XGo3LG0mSWGHF9QyfJ+gKMD8tUuWB6
+         2K0fzgFOI/GmI54W+8g56WusmtUZqw6EHIFP5XmXEin7o2BPCR+UxHWDaErQS8+GqDbP
+         KD/55rXlDXcqz9Pph8seRE6DpWcnfkq90QgQSrUUANgnL4HoUsdFKu1ra+l+a6MeYYAc
+         +2hs1wdNX+ovmRPoc5Lw//MJEXrFCQkTxf1OGk7xXx4H+i1uQ8upMTy7kO4+m+kIla8m
+         XwLA==
+X-Received: by 10.66.224.164 with SMTP id rd4mr41768708pac.12.1424109278653;
+        Mon, 16 Feb 2015 09:54:38 -0800 (PST)
+Received: from [192.168.88.200] (brk-24-241.tm.net.my. [202.188.24.241])
+        by mx.google.com with ESMTPSA id ki2sm15384985pdb.33.2015.02.16.09.54.36
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 16 Feb 2015 09:54:37 -0800 (PST)
+X-Mailer: Apple Mail (2.2070.6)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263904>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263905>
 
-On Mon, Feb 16, 2015 at 07:31:33AM -0800, David Lang wrote:
+Hi,
 
-> >Then the server streams the data to the client. It might do some light
-> >work transforming the data as it comes off the disk, but most of it is
-> >just blitted straight from disk, and the network is the bottleneck.
-> 
-> Depending on how close to full the WAN link is, it may be possible to
-> improve this with multiple connections (again, referencing bbcp), but
-> there's also the question of if it's worth trying to use the entire WAN for
-> a single user. The vast majority of the time the server is doing more than
-> one thing and would rather let any individual user wait a bit and service
-> the other users.
+Somehow the =E2=80=9Cint mode =3D 0444;=E2=80=9D in odb_mkstemp (enviro=
+nment.c) are causing a lot of issues (unable to unlink/write/rename) to=
+ those people who use AFP shares.
 
-Yeah, I have seen clients that make multiple TCP connections to each
-request a chunk of a file in parallel. The short answer is that this is
-going to be very hard with git. Each clone generates the pack on the fly
-based on what's on disk and streams it out. It should _usually_ be the
-same, but there's nothing to guarantee byte-for-byte equality between
-invocations. So you'd have to multiplex all of the connections into the
-same server process. And even then it's hard; that process knows its
-going to send you byte the bytes for object X, but it doesn't know at
-exactly which offset until it gets there, which makes sending things out
-of order tricky. And the whole output is checksummed by a single sha1
-over the whole stream that comes at the end.
+In order to be able to write/unlink/delete/rename a file on AFP filesys=
+tem the owner of the file must have at least a u+w access to it.
 
-I think the most feasible thing would be to quickly spool it to a server
-on the LAN, and then use an existing fetch-in-parallel tool to grab it
-from there over the WAN.
+The issue was first introduced in https://github.com/git/git/blob/f80c7=
+ae8fe9c0f3ce93c96a2dccaba34e456e33a/wrapper.c line 284.
 
--Peff
+To fix these issues the permission need to be adjusted to =E2=80=9Cint =
+mode =3D 0644;=E2=80=9D in odb_mkstemp (environment.c)
+
+Please let me know if you need further detail.
+
+Regards,
+=46airuzan
