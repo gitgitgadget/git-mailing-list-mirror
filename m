@@ -1,78 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/2] push: allow --follow-tags to be set by config push.followTags
-Date: Sun, 15 Feb 2015 22:11:21 -0800
-Message-ID: <CAPc5daUX4Jb6xdmv1jLUM28KJCfYAdTCUiqqrk04pTw=89O9YQ@mail.gmail.com>
-References: <1424055690-32631-1-git-send-email-cxreg@pobox.com>
- <20150216052049.GA5031@peff.net> <20150216054550.GA24611@peff.net>
- <20150216055422.GB24611@peff.net> <CAPc5daU6VOmuNp3VbYgoFDXJshkC2AnRsZQQdoRMArYpezZr=A@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 1/3] cmd_push: set "atomic" bit directly
+Date: Mon, 16 Feb 2015 01:12:04 -0500
+Message-ID: <20150216061204.GA32381@peff.net>
+References: <20150216061051.GA29895@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Cc: Dave Olszewski <cxreg@pobox.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 16 07:11:48 2015
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 16 07:12:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YNEuI-0007aX-8r
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Feb 2015 07:11:46 +0100
+	id 1YNEui-0007gn-Hc
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Feb 2015 07:12:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751709AbbBPGLm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Feb 2015 01:11:42 -0500
-Received: from mail-ob0-f169.google.com ([209.85.214.169]:50933 "EHLO
-	mail-ob0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751095AbbBPGLl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Feb 2015 01:11:41 -0500
-Received: by mail-ob0-f169.google.com with SMTP id wp4so39011792obc.0
-        for <git@vger.kernel.org>; Sun, 15 Feb 2015 22:11:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=WvjA4AsdMSIT/jIhuLftjdwZF4Zf8ept79fyOLJ82CA=;
-        b=vV/FhTtipOQ2LiIxOKoYHQPqSkiAo5xdl7CsiniZ3OEpwE223NMVw2QS3wR757MRjK
-         OYOcXT/BoaiQjY7WaJBvwUV+2qFxHr56+Gtag9USe98zFce15ARACDEIGD7lkK2i6X8v
-         +VMKrZM0dTPAcVrF4q5mVz39UiUNTAuJQD+my9t/n550bW+7mxSpvHtXDmDXs6jTNCzn
-         hLXcuOEKr8CtxntPnecFK3S6++URwJVP6A8UvFg1ijPKU2EDQ1gxvBvyDrlpjkkVC8rn
-         mpuY90GFaMoM9YhhBAXzT1U48tECmOBo4mPGc/iQ+YdHFY/NUtr4KzV6MShHSf5Vk1LM
-         1/iA==
-X-Received: by 10.60.84.163 with SMTP id a3mr2102335oez.55.1424067101191; Sun,
- 15 Feb 2015 22:11:41 -0800 (PST)
-Received: by 10.202.48.132 with HTTP; Sun, 15 Feb 2015 22:11:21 -0800 (PST)
-In-Reply-To: <CAPc5daU6VOmuNp3VbYgoFDXJshkC2AnRsZQQdoRMArYpezZr=A@mail.gmail.com>
-X-Google-Sender-Auth: IaZs0DVFDbD5IFF2QHQaLiZ5DlA
+	id S1753049AbbBPGMI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Feb 2015 01:12:08 -0500
+Received: from cloud.peff.net ([50.56.180.127]:49401 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752130AbbBPGMH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Feb 2015 01:12:07 -0500
+Received: (qmail 9135 invoked by uid 102); 16 Feb 2015 06:12:07 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 16 Feb 2015 00:12:07 -0600
+Received: (qmail 12520 invoked by uid 107); 16 Feb 2015 06:12:12 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 16 Feb 2015 01:12:12 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Feb 2015 01:12:04 -0500
+Content-Disposition: inline
+In-Reply-To: <20150216061051.GA29895@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263877>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263878>
 
-On Sun, Feb 15, 2015 at 10:02 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> On Sun, Feb 15, 2015 at 9:54 PM, Jeff King <peff@peff.net> wrote:
->>
->> Or alternatively, we could pull the "flags" field from cmd_push out into
->> a static global "transport_flags", and manipulate it directly from the
->> config (or if we don't like a global, pass it via the config-callback
->> void pointer; but certainly a global is more common in git for code like
->> this). Then we do not have to worry about propagating values from
->> integers into flag bits at all.
->
-> Yup, that would be my preference. The largest problem I had with the
-> original change was how to ensure that future new code would not
-> mistakenly set the global follow_tags _without_ letting the command
-> line option parser to override it. If the config parser flips the bit in the
-> same flags, it would become much less likely for future code to make
-> such a mistake.
+This makes the code shorter and more obvious by removing an
+unnecessary interim variable.
 
-Having said that, I think this version is good enough.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin/push.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-Unlike a global in environment.c (that is named not-so-specifically that
-anybody can set by reading the configuration file) that can be overriden
-only by command line parser used only for "git push", the global int and
-the flags are both localized to "git push" in this version, and there is
-much less chance to introduce new buggy code that forgets the command
-line override.
-
-Thanks, again.
+diff --git a/builtin/push.c b/builtin/push.c
+index ab99f4c..f558c2e 100644
+--- a/builtin/push.c
++++ b/builtin/push.c
+@@ -519,7 +519,6 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 	int flags = 0;
+ 	int tags = 0;
+ 	int rc;
+-	int atomic = 0;
+ 	const char *repo = NULL;	/* default repository */
+ 	struct option options[] = {
+ 		OPT__VERBOSITY(&verbosity),
+@@ -551,7 +550,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 		OPT_BIT(0, "follow-tags", &flags, N_("push missing but relevant tags"),
+ 			TRANSPORT_PUSH_FOLLOW_TAGS),
+ 		OPT_BIT(0, "signed", &flags, N_("GPG sign the push"), TRANSPORT_PUSH_CERT),
+-		OPT_BOOL(0, "atomic", &atomic, N_("request atomic transaction on remote side")),
++		OPT_BIT(0, "atomic", &flags, N_("request atomic transaction on remote side"), TRANSPORT_PUSH_ATOMIC),
+ 		OPT_END()
+ 	};
+ 
+@@ -567,9 +566,6 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 	if (tags)
+ 		add_refspec("refs/tags/*");
+ 
+-	if (atomic)
+-		flags |= TRANSPORT_PUSH_ATOMIC;
+-
+ 	if (argc > 0) {
+ 		repo = argv[0];
+ 		set_refspecs(argv + 1, argc - 1, repo);
+-- 
+2.3.0.rc1.287.g761fd19
