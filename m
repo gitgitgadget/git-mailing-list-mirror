@@ -1,211 +1,120 @@
-From: Tanay Abhra <tanayabh@gmail.com>
-Subject: [PATCH v2] add a flag to supress errors in git_config_parse_key()
-Date: Mon, 16 Feb 2015 13:28:07 +0530
-Message-ID: <54E1A30F.5010303@gmail.com>
-References: <20150206124528.GA18859@inner.h.apk.li>	<20150206193313.GA4220@peff.net>	<xmqqbnl6hljt.fsf@gitster.dls.corp.google.com>	<20150206203902.GB10857@peff.net> <54DA5FC1.9010707@gmail.com>	<20150211002754.GC30561@peff.net> <xmqq386cuvxl.fsf@gitster.dls.corp.google.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 01/24] dir.c: optionally compute sha-1 of a .gitignore file
+Date: Mon, 16 Feb 2015 16:45:58 +0700
+Message-ID: <CACsJy8AyAeNa0CoUA-jAYGN5S8yJ1wRzdZe==z-xbT-f2j0HaQ@mail.gmail.com>
+References: <1423385748-19825-1-git-send-email-pclouds@gmail.com>
+ <1423385748-19825-2-git-send-email-pclouds@gmail.com> <xmqqiof8ta6f.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Andreas Krey <a.krey@gmx.de>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 16 09:01:35 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 16 10:46:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YNGcY-0005Ms-MF
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Feb 2015 09:01:35 +0100
+	id 1YNIGA-0005FC-HQ
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Feb 2015 10:46:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932078AbbBPIBa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Feb 2015 03:01:30 -0500
-Received: from mail-pa0-f44.google.com ([209.85.220.44]:38506 "EHLO
-	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755255AbbBPH6U (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Feb 2015 02:58:20 -0500
-Received: by mail-pa0-f44.google.com with SMTP id kq14so33577607pab.3
-        for <git@vger.kernel.org>; Sun, 15 Feb 2015 23:58:20 -0800 (PST)
+	id S1755077AbbBPJq3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Feb 2015 04:46:29 -0500
+Received: from mail-ie0-f173.google.com ([209.85.223.173]:40050 "EHLO
+	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752377AbbBPJq3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 Feb 2015 04:46:29 -0500
+Received: by iebtr6 with SMTP id tr6so22176826ieb.7
+        for <git@vger.kernel.org>; Mon, 16 Feb 2015 01:46:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=UOkjrXT47s9B/74SXw3EUloIPeVRIssJ2nToB5xCdyQ=;
-        b=LhttAHShOmNEtbNXZbIwKNSj+FtuY2ATPR2lrdGy63ZKWYRbOf3XXcFk0sWY+MKdZy
-         Lp599dEeRwgc9Kgh3NLjo/4C6UUrRaT5zYYj4Z+SeEHzm97CiDEXGbe0d07vK6wTtPFk
-         o/gJOxc9h7x9ShOzRGmLzKjjva5zeBsq3+QoNEMH2Jp7OyhkKpPxg3qmz/NvrXuFUNOM
-         iQSNG9JeoEtvnRyzMRBB4YXXCz0VQKvspX3oohMfEbUfdwsy6E7+XTpaFhu/8ZxW6nS9
-         4RIL0FUVf1UxmJ9ISqcg857a6DiUkhp9Q4c5bJ6kchCRS7mv7eTN2cl/bzXuSZJyWugC
-         lADw==
-X-Received: by 10.70.56.34 with SMTP id x2mr37040944pdp.127.1424073500309;
-        Sun, 15 Feb 2015 23:58:20 -0800 (PST)
-Received: from [27.56.33.148] ([27.56.33.148])
-        by mx.google.com with ESMTPSA id yf6sm13933900pab.26.2015.02.15.23.58.16
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 15 Feb 2015 23:58:19 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <xmqq386cuvxl.fsf@gitster.dls.corp.google.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=bSltNDQIIFEgm4YfcRk29uUbH63BYJ3nuo/oZNpEAuc=;
+        b=rlQyRPZxXox5R/1FsYYsZacGlQ1hx51GSNqp2PA+vkto5kkmPQIiGHsqmhiFCPDExA
+         FZNGIFQLr4qWwN+BaZSpKgKIhRCiqBnScblISLBqZDUwF3V/oivQiQhAc+2W9Fltae9n
+         7qqpeekWG7n4tLOC6Xs2xmSfbpHCECuLaVs9uIQ24kX/edwkrbGBbomgQJ84KMWVS12e
+         TsoXYMSQcZ1p2R3dKWKPzBydhU3WivZB1FpKa3ma189IB6/IjIRirA13B+X1MxH/P6b5
+         5krLyvaa83/DEJ91RL80KyEB8Ca7LR/KcDdTYcLcmAP90T9g2T07HYleags3Fzg0a6tf
+         iKAg==
+X-Received: by 10.107.137.226 with SMTP id t95mr25668809ioi.10.1424079988391;
+ Mon, 16 Feb 2015 01:46:28 -0800 (PST)
+Received: by 10.107.131.155 with HTTP; Mon, 16 Feb 2015 01:45:58 -0800 (PST)
+In-Reply-To: <xmqqiof8ta6f.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263888>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263889>
 
+On Thu, Feb 12, 2015 at 4:23 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
+:
+>
+>> -int add_excludes_from_file_to_list(const char *fname,
+>> -                                const char *base,
+>> -                                int baselen,
+>> -                                struct exclude_list *el,
+>> -                                int check_index)
+>> +/*
+>> + * Given a file with name "fname", read it (either from disk, or fr=
+om
+>> + * the index if "check_index" is non-zero), parse it and store the
+>> + * exclude rules in "el".
+>> + *
+>> + * If "ss" is not NULL, compute SHA-1 of the exclude file and fill
+>> + * stat data from disk (only valid if add_excludes returns zero). I=
+f
+>> + * ss_valid is non-zero, "ss" must contain good value as input.
+>> + */
+>> +static int add_excludes(const char *fname, const char *base, int ba=
+selen,
+>> +                     struct exclude_list *el, int check_index,
+>> +                     struct sha1_stat *sha1_stat)
+>> ...
+>> @@ -571,6 +588,21 @@ int add_excludes_from_file_to_list(const char *=
+fname,
+>>               }
+>>               buf[size++] =3D '\n';
+>>               close(fd);
+>> +             if (sha1_stat) {
+>> +                     int pos;
+>> +                     if (sha1_stat->valid &&
+>> +                         !match_stat_data(&sha1_stat->stat, &st))
+>> +                             ; /* no content change, ss->sha1 still=
+ good */
+>> +                     else if (check_index &&
+>> +                              (pos =3D cache_name_pos(fname, strlen=
+(fname))) >=3D 0 &&
+>> +                              !ce_stage(active_cache[pos]) &&
+>> +                              ce_uptodate(active_cache[pos]))
+>> +                             hashcpy(sha1_stat->sha1, active_cache[=
+pos]->sha1);
+>> +                     else
+>> +                             hash_sha1_file(buf, size, "blob", sha1=
+_stat->sha1);
+>
+> I do not think this would work well on DOS.
+>
+> This helper function originally is meant to work *only* on the
+> checked out representation of the file and that is what is read by
+> read_in_full(), and that is the reason why it handles the case where
+> the contents of buf[] happens to be CRLF terminated in the function.
+>
+> If you want to detect the content changes across working tree, index
+> and the tree objects by reusing hash_sha1_file(), however, you must
+> not feed the checked out (aka "smudged") representation to it.
+> You'd need to turn it into "cleaned" representation by doing the
+> equivalent of calling index_path().  Some helpers in the callchain
+> that originates from index_path() might directly be reusable for
+> your purpose.
 
-`git_config_parse_key()` is used to sanitize the input key.
-Some callers of the function like `git_config_set_multivar_in_file()`
-get the pre-sanitized key directly from the user so it becomes
-necessary to raise an error specifying what went wrong when the entered
-key is syntactically malformed.
-
-Other callers like `configset_find_element()` get their keys from
-the git itself so a return value signifying error would be enough.
-The error output shown to the user is useless and confusing in this
-case so add a flag to suppress errors in such cases.
-
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
----
-Hi Jeff,
-
-I went through Junio's config guideline patch series
-and the whole thread of underscore bug report and I also think
-that pager.*.command is the right path to go.
-
-If you want to relax the syntactic requirement (such as add '_' to
-the current set of allowed chacters), I can work upon it but most of the
-comments point that moving towards pager.*.command would be better.
-
-p.s: I hope that I got the unsigned flag suggestion by Junio correctly.
-
--Tanay
-
- builtin/config.c |  2 +-
- cache.h          |  4 +++-
- config.c         | 20 +++++++++++++-------
- t/t7006-pager.sh |  9 +++++++++
- 4 files changed, 26 insertions(+), 9 deletions(-)
-
-diff --git a/builtin/config.c b/builtin/config.c
-index d32c532..326d3d3 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -200,7 +200,7 @@ static int get_value(const char *key_, const char *regex_)
- 			goto free_strings;
- 		}
- 	} else {
--		if (git_config_parse_key(key_, &key, NULL)) {
-+		if (git_config_parse_key(key_, &key, NULL, 0)) {
- 			ret = CONFIG_INVALID_KEY;
- 			goto free_strings;
- 		}
-diff --git a/cache.h b/cache.h
-index f704af5..9073ee2 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1329,6 +1329,8 @@ extern int update_server_info(int);
-
- #define CONFIG_REGEX_NONE ((void *)1)
-
-+#define CONFIG_ERROR_QUIET 0x0001
-+
- struct git_config_source {
- 	unsigned int use_stdin:1;
- 	const char *file;
-@@ -1358,7 +1360,7 @@ extern int git_config_string(const char **, const char *, const char *);
- extern int git_config_pathname(const char **, const char *, const char *);
- extern int git_config_set_in_file(const char *, const char *, const char *);
- extern int git_config_set(const char *, const char *);
--extern int git_config_parse_key(const char *, char **, int *);
-+extern int git_config_parse_key(const char *, char **, int *, unsigned int);
- extern int git_config_set_multivar(const char *, const char *, const char *, int);
- extern int git_config_set_multivar_in_file(const char *, const char *, const char *, const char *, int);
- extern int git_config_rename_section(const char *, const char *);
-diff --git a/config.c b/config.c
-index e5e64dc..7e23bb9 100644
---- a/config.c
-+++ b/config.c
-@@ -1309,7 +1309,7 @@ static struct config_set_element *configset_find_element(struct config_set *cs,
- 	 * `key` may come from the user, so normalize it before using it
- 	 * for querying entries from the hashmap.
- 	 */
--	ret = git_config_parse_key(key, &normalized_key, NULL);
-+	ret = git_config_parse_key(key, &normalized_key, NULL, CONFIG_ERROR_QUIET);
-
- 	if (ret)
- 		return NULL;
-@@ -1842,8 +1842,10 @@ int git_config_set(const char *key, const char *value)
-  *             lowercase section and variable name
-  * baselen - pointer to int which will hold the length of the
-  *           section + subsection part, can be NULL
-+ * flags - toggle whether the function raises an error on a syntactically
-+ *         malformed key
-  */
--int git_config_parse_key(const char *key, char **store_key, int *baselen_)
-+int git_config_parse_key(const char *key, char **store_key, int *baselen_, unsigned int flags)
- {
- 	int i, dot, baselen;
- 	const char *last_dot = strrchr(key, '.');
-@@ -1854,12 +1856,14 @@ int git_config_parse_key(const char *key, char **store_key, int *baselen_)
- 	 */
-
- 	if (last_dot == NULL || last_dot == key) {
--		error("key does not contain a section: %s", key);
-+		if (!flags)
-+			error("key does not contain a section: %s", key);
- 		return -CONFIG_NO_SECTION_OR_NAME;
- 	}
-
- 	if (!last_dot[1]) {
--		error("key does not contain variable name: %s", key);
-+		if (!flags)
-+			error("key does not contain variable name: %s", key);
- 		return -CONFIG_NO_SECTION_OR_NAME;
- 	}
-
-@@ -1881,12 +1885,14 @@ int git_config_parse_key(const char *key, char **store_key, int *baselen_)
- 		if (!dot || i > baselen) {
- 			if (!iskeychar(c) ||
- 			    (i == baselen + 1 && !isalpha(c))) {
--				error("invalid key: %s", key);
-+				if (!flags)
-+					error("invalid key: %s", key);
- 				goto out_free_ret_1;
- 			}
- 			c = tolower(c);
- 		} else if (c == '\n') {
--			error("invalid key (newline): %s", key);
-+			if (!flags)
-+				error("invalid key (newline): %s", key);
- 			goto out_free_ret_1;
- 		}
- 		(*store_key)[i] = c;
-@@ -1936,7 +1942,7 @@ int git_config_set_multivar_in_file(const char *config_filename,
- 	char *filename_buf = NULL;
-
- 	/* parse-key returns negative; flip the sign to feed exit(3) */
--	ret = 0 - git_config_parse_key(key, &store.key, &store.baselen);
-+	ret = 0 - git_config_parse_key(key, &store.key, &store.baselen, 0);
- 	if (ret)
- 		goto out_free;
-
-diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
-index da958a8..2dd71c0 100755
---- a/t/t7006-pager.sh
-+++ b/t/t7006-pager.sh
-@@ -447,4 +447,13 @@ test_expect_success TTY 'external command pagers override sub-commands' '
- 	test_cmp expect actual
- '
-
-+test_expect_success 'command with underscores does not complain' '
-+	write_script git-under_score <<-\EOF &&
-+	echo ok
-+	EOF
-+	git --exec-path=. under_score >actual 2>&1 &&
-+	echo ok >expect &&
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-1.9.0.GIT
+Urgh.. you're right this test would fail when some filters are
+involved. I'm not sure if we want to check the cleaned version though.
+What matters to exclude machinery is the checkout version. I think for
+now we fall back to hashing .gitignore content. Perhaps later we could
+make an exception for cr/lf conversion (and just that, not generic
+filters, doing content conversion here sounds like a bad idea).
+--=20
+Duy
