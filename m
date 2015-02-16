@@ -1,152 +1,84 @@
-From: Karsten Blees <karsten.blees@gmail.com>
-Subject: Re: [PATCH 0/3] Win32: nanosecond-precision file times
-Date: Mon, 16 Feb 2015 21:18:46 +0100
-Message-ID: <54E250A6.4070605@gmail.com>
-References: <54DBEAA5.6000205@gmail.com>	<xmqqbnkysygl.fsf@gitster.dls.corp.google.com>	<54DD2FDA.7030604@gmail.com>	<xmqqsieaog4a.fsf@gitster.dls.corp.google.com>	<54DD5A89.5080502@gmail.com> <xmqq61b5obla.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 01/24] dir.c: optionally compute sha-1 of a .gitignore file
+Date: Mon, 16 Feb 2015 13:59:34 -0800
+Message-ID: <xmqq4mql5xh5.fsf@gitster.dls.corp.google.com>
+References: <1423385748-19825-1-git-send-email-pclouds@gmail.com>
+	<1423385748-19825-2-git-send-email-pclouds@gmail.com>
+	<xmqqiof8ta6f.fsf@gitster.dls.corp.google.com>
+	<CACsJy8AyAeNa0CoUA-jAYGN5S8yJ1wRzdZe==z-xbT-f2j0HaQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>, 
- Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: msysgit+bncBCH3XYXLXQDBBI5BRGTQKGQE2OGX6VA@googlegroups.com Mon Feb 16 21:18:49 2015
-Return-path: <msysgit+bncBCH3XYXLXQDBBI5BRGTQKGQE2OGX6VA@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wg0-f64.google.com ([74.125.82.64])
+Content-Type: text/plain
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 16 22:59:44 2015
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCH3XYXLXQDBBI5BRGTQKGQE2OGX6VA@googlegroups.com>)
-	id 1YNS7z-0003Qt-5D
-	for gcvm-msysgit@m.gmane.org; Mon, 16 Feb 2015 21:18:47 +0100
-Received: by mail-wg0-f64.google.com with SMTP id z12sf3100945wgg.9
-        for <gcvm-msysgit@m.gmane.org>; Mon, 16 Feb 2015 12:18:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe;
-        bh=RqYadHSiF6Cl/iXjS/CGmnG4ckpcYizNaBO7FDO2uzw=;
-        b=RrDR2VVwmXbC4hYhxN6hZT/7ZnPHQm941nkmq097QrdpnbRCNpWMpq3/00QKNE04GP
-         KLSoRWnelMfuyO7fnyYimusPQ18tkCwY/qYlQGCh+TmflQcl6CzxtSAEugQ2j/xz5aFt
-         HIyyz/K7KUDVXnKkki//ToEakLdjoov46SYPXUf5y92UL+nhn/R5PtxXvMI6jeXb5rn6
-         OsFeQrNvYomrv7PyRhyhpmWjWwuUXfHTf2xeQnWQGh+Q1XhnDjUswqFbTwv+v4ySZpSp
-         oj75Rh9quHaKSe+1k1q9BuFKbfwcoZFAh5roCtu4VoXLp9PDudODr5G72tvt2XLxPk1T
-         rVRQ==
-X-Received: by 10.152.198.227 with SMTP id jf3mr47955lac.13.1424117926740;
-        Mon, 16 Feb 2015 12:18:46 -0800 (PST)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.116.14 with SMTP id js14ls616659lab.69.gmail; Mon, 16 Feb
- 2015 12:18:43 -0800 (PST)
-X-Received: by 10.112.160.3 with SMTP id xg3mr3144021lbb.5.1424117923199;
-        Mon, 16 Feb 2015 12:18:43 -0800 (PST)
-Received: from mail-wg0-x22e.google.com (mail-wg0-x22e.google.com. [2a00:1450:400c:c00::22e])
-        by gmr-mx.google.com with ESMTPS id ew5si8333027wid.1.2015.02.16.12.18.43
-        for <msysgit@googlegroups.com>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 16 Feb 2015 12:18:43 -0800 (PST)
-Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c00::22e as permitted sender) client-ip=2a00:1450:400c:c00::22e;
-Received: by mail-wg0-x22e.google.com with SMTP id a1so31415974wgh.5
-        for <msysgit@googlegroups.com>; Mon, 16 Feb 2015 12:18:43 -0800 (PST)
-X-Received: by 10.194.200.68 with SMTP id jq4mr53190626wjc.128.1424117921842;
-        Mon, 16 Feb 2015 12:18:41 -0800 (PST)
-Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id u18sm24307100wjq.42.2015.02.16.12.18.40
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 16 Feb 2015 12:18:40 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
-In-Reply-To: <xmqq61b5obla.fsf@gitster.dls.corp.google.com>
-X-Original-Sender: karsten.blees@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c00::22e
- as permitted sender) smtp.mail=karsten.blees@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263917>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1YNThd-0000lO-Ur
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Feb 2015 22:59:42 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751633AbbBPV7i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Feb 2015 16:59:38 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:51700 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751604AbbBPV7h (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Feb 2015 16:59:37 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7AC9F374FD;
+	Mon, 16 Feb 2015 16:59:36 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=YZcY8ltZSsQIJEOeh+yTJ+N0LuY=; b=FlMgp2
+	GOD2eUD1kTzY3u+UiCFai0hkjd47WMR18jMga+d8vhJRjvMHPlhQNrpS7MTpJd8g
+	Zt2oRjp6SYPWix0mGjJMy2N9UXFDfq1L2B6fZTTZUi8mVPCPp7NK24n5x7g+BVsH
+	FoLqu0R77R3hrKqERnPkPjMNYMCCeWWdhRXWc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=rgbscFdq/ExTborqRMyivNbxD16kc0Hu
+	/xNBdTezrNFESuBs+C3VJYSkKrNAMl0TEyIafqYAw/3my5SFboHx5ORimY9DYNs5
+	4LF4hqBjcvV62Fha9aFgq/Hq3ChlQj8FVjoJltNNvA/wfvS/MGNCChpAXwFI9lWk
+	5gbraEVnKLw=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6FF7C374FC;
+	Mon, 16 Feb 2015 16:59:36 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EC3A1374FA;
+	Mon, 16 Feb 2015 16:59:35 -0500 (EST)
+In-Reply-To: <CACsJy8AyAeNa0CoUA-jAYGN5S8yJ1wRzdZe==z-xbT-f2j0HaQ@mail.gmail.com>
+	(Duy Nguyen's message of "Mon, 16 Feb 2015 16:45:58 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 188BD8BA-B627-11E4-BFD4-A4119F42C9D4-77302942!pb-smtp1.pobox.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263918>
 
-Am 13.02.2015 um 20:28 schrieb Junio C Hamano:
-> Karsten Blees <karsten.blees@gmail.com> writes:
-> 
->> Am 13.02.2015 um 00:38 schrieb Junio C Hamano:
->>>
->>> We do have sec/nsec fields in cache_time structure, so I have
->>> nothing against updating the msysGit port to fill that value.
-> 
-> Having said that, we do not enable the NSEC stuff by default on Unix
-> for a reason.  I'd expect those who know Windows filesystems well to
-> pick the default there wisely ;-)
-> 
+Duy Nguyen <pclouds@gmail.com> writes:
 
-Now I'm a bit confused about the discrepancy between racy-git.txt and
-the Makefile.
+> On Thu, Feb 12, 2015 at 4:23 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> ...
+>> If you want to detect the content changes across working tree, index
+>> and the tree objects by reusing hash_sha1_file(), however, you must
+>> not feed the checked out (aka "smudged") representation to it.
+>> You'd need to turn it into "cleaned" representation by doing the
+>> equivalent of calling index_path().  Some helpers in the callchain
+>> that originates from index_path() might directly be reusable for
+>> your purpose.
+>
+> Urgh.. you're right this test would fail when some filters are
+> involved. I'm not sure if we want to check the cleaned version though.
+> What matters to exclude machinery is the checkout version. 
 
-Racy-git.txt explains that the nsec-part may be dropped when an inode
-is flushed to disk if the file system doesn't support nsec resolution.
-This was supposedly an issue with the Linux kernel fixed back in 2005.
-
-In my understanding, this means that git would see the file as
-changed and re-check the content (i.e. it will hurt performance).
-
-IOW: Git may be slow if the file system cache has better file time
-resolution than the on-disk file system representation.
-
-
-However, the Makefile has this to say on the subject:
-
-# Define USE_NSEC below if you want git to care about sub-second file mtimes
-# and ctimes. Note that you need recent glibc (at least 2.2.4) for this, and
-# it will BREAK YOUR LOCAL DIFFS! show-diff and anything using it will likely
-# randomly break unless your underlying filesystem supports those sub-second
-# times (my ext3 doesn't).
-
-Am I missing something? Is there anything in Git that will actually
-"break" with USE_NSEC if the OS / file system doesn't support it
-(rather than just being slow)?
-
-History:
-* The Makefile comment was added in 2005 (bdd4da59), along with a
-  comment in read-cache.c explaining the issue (i.e. flushing to disk
-  will clear the nsec field).
-* The comment in read-cache.c was removed in 2008 (7a51ed66),
-  seemingly dropping USE_NSEC support entirely.
-* USE_NSEC support was re-added (without the read-cache.c comment) in
-  2009 (fba2f38a).
-
-
-Regarding the Windows situation: I've just verified (on my Win7 x64
-box) that file times obtained through a variety of APIs (GetFileTime,
-GetFileAttributesEx, GetFileInformationByHandle, FindFirstFile) are
-consistent and properly rounded to the file system's resolution (e.g.
-10ms / 2s for FAT). This is even if the file is still open and I try
-to SetFileTime() to unrounded values.
-
-So I think enabling USE_NSEC should be fine on Windows.
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "Git for Windows" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+Oh, I wouldn't suggest getting lines from the cleaned version.  It
+is just that you must hash the cleaned version if you want to decide
+"Ah, the content is different from what the internal cache is based
+on, so I need to invalidate my cache" and "Because the version I
+have on the filesystem matches what is in the index, which is what
+my cache is based on, I would use my cached version".  The latter
+would break (i.e. the signature would not match when it should) and
+you end up invalidating the cache when you do not have to.
