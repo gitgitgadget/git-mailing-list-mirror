@@ -1,56 +1,72 @@
-From: Koosha Khajehmoogahi <koosha.khajeh@gmail.com>
-Subject: Multi-threaded 'git clone'
-Date: Mon, 16 Feb 2015 14:16:46 +0100
-Message-ID: <CACSCj9yoso1oLHzySx1F3O+DFAPiz-XEz1YNCEUMu1pj7KmX7w@mail.gmail.com>
+From: Armin Ronacher <armin.ronacher@active-4.com>
+Subject: Re: Experience with Recovering From User Error (And suggestions for
+ improvements)
+Date: Mon, 16 Feb 2015 14:29:19 +0100
+Message-ID: <54E1F0AF.1070403@active-4.com>
+References: <54E1C96D.2080109@active-4.com> <CACBZZX4NkkMymnG5ZWtO1ya2xzVhxuqh4d3tU2U+mPU49n=m8g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Feb 16 14:17:39 2015
+Content-Type: text/plain; charset=utf-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 16 14:29:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YNLYR-0008PC-Ak
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Feb 2015 14:17:39 +0100
+	id 1YNLjr-0005Op-ML
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Feb 2015 14:29:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932907AbbBPNR3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Feb 2015 08:17:29 -0500
-Received: from mail-qg0-f50.google.com ([209.85.192.50]:61663 "EHLO
-	mail-qg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932600AbbBPNR1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Feb 2015 08:17:27 -0500
-Received: by mail-qg0-f50.google.com with SMTP id e89so23212682qgf.9
-        for <git@vger.kernel.org>; Mon, 16 Feb 2015 05:17:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=lz0dBJJ1p5w8iAgRH937itQkOVCMncl+I9wY96jIsxU=;
-        b=s+aUD3sXomqaZwGg/XiGnSC5tUnMWDZj5Y2OrPVw4u5memFkKaZzJd91a8LUovAST6
-         VI0FAxdH/kWJtTMN0C0I5OvD7LIm2Q76V5SaYSeBVcrNEqjnn4wSbL8HhU33hEuinzdE
-         OTcfmkFjQPeh28gPM1eWgO221IgSxZRrPuTx/NJ6Su9Bw8dzwZk5DjKXwCZ0Kkss08Ir
-         521ZrLOuefA/sOQGOP9pkFSwl7Hifd/eY2GaFyngQurkNypM0ZxQCDYLYc6ZxC7Tw6WE
-         Bwt8YfGbxeRsQUp5tvqKg7S+v7HMXKPjaLcfpKqmv33Xa8Ga1dfaypCx6mlopwwdS586
-         hxtQ==
-X-Received: by 10.140.94.236 with SMTP id g99mr370644qge.70.1424092646175;
- Mon, 16 Feb 2015 05:17:26 -0800 (PST)
-Received: by 10.140.92.179 with HTTP; Mon, 16 Feb 2015 05:16:46 -0800 (PST)
+	id S932348AbbBPN3X convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Feb 2015 08:29:23 -0500
+Received: from mail.architekten-ronacher.at ([178.188.250.58]:46524 "EHLO
+	[192.168.6.11]" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754621AbbBPN3X (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Feb 2015 08:29:23 -0500
+Received: from localhost (localhost.localhost [127.0.0.1])
+	by GateDefender.ronacher (Postfix) with ESMTP id 27DBFEDC003;
+	Mon, 16 Feb 2015 14:29:21 +0100 (CET)
+X-Virus-Scanned: by Panda GateDefender
+X-Spam-CTCH-RefID: str=0001.0A090204.54E1F0B1.0019,ss=1,fgs=0
+Received: from herzog.local (unknown [192.168.6.133])
+	by GateDefender.ronacher (Postfix) with ESMTPS id 5642BEDC002;
+	Mon, 16 Feb 2015 14:29:20 +0100 (CET)
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
+In-Reply-To: <CACBZZX4NkkMymnG5ZWtO1ya2xzVhxuqh4d3tU2U+mPU49n=m8g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263899>
 
-Greetings,
+Hi,
 
-Cloning huge repositories like Linux kernel takes considerable amount
-of time. Is it possible to incorporate a multi-threaded simultaneous
-connections functionality for cloning? To what extent do we need to
-change the architecture of the current code and how large would be the
-scope of the work? That just seems an interesting idea to me and would
-liked to share it with the community.
+On 16/02/15 13:09, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> We should definitely make recovery like this harder, but is there a
+> reason for why you don't use "git reset --keep" instead of --hard?
+This was only the second time in years of git usage that the reset was=20
+incorrectly done.  I suppose at this point I might try to retrain my=20
+muscle memory to type something else :)
 
-Regards
+> If we created such hooks for "git reset --hard" we'd just need to
+> expose some other thing as that low-level operation (and break script=
+s
+> that already rely on it doing the minimal "yes I want to change the
+> tree no matter what" thing), and then we'd just be back to square one
+> in a few years when users started using "git reset --really-hard" (or
+> whatever the flag would be).
+I don't think that's necessary, I don't think it would make the=20
+operation much slower to just make a dangling commit and write out a fe=
+w=20
+blobs.  The garbage collect will soon enough take care of that data=20
+anyways.  But I guess that would need testing on large trees to see how=
+=20
+bad that goes.
 
--- 
-Koosha
+I might look into the git undo thing that was mentioned.
+
+
+Regards,
+Armin
