@@ -1,178 +1,71 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 3/2] push: allow --follow-tags to be set by config
- push.followTags
-Date: Mon, 16 Feb 2015 00:54:22 -0500
-Message-ID: <20150216055422.GB24611@peff.net>
-References: <1424055690-32631-1-git-send-email-cxreg@pobox.com>
- <20150216052049.GA5031@peff.net>
- <20150216054550.GA24611@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] builtin/push.c: make push_default a static variable
+Date: Sun, 15 Feb 2015 21:57:03 -0800
+Message-ID: <CAPc5daXU6x2ok+XqXDkWWi5O2N_dr+deQtOMx+Eh16UUGi5yJQ@mail.gmail.com>
+References: <20150216054550.GA24611@peff.net> <20150216054754.GB25088@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Dave Olszewski <cxreg@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 16 06:54:31 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Dave Olszewski <cxreg@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Feb 16 06:57:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YNEdZ-0001xL-S7
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Feb 2015 06:54:30 +0100
+	id 1YNEgS-0002p3-DC
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Feb 2015 06:57:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751709AbbBPFyZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Feb 2015 00:54:25 -0500
-Received: from cloud.peff.net ([50.56.180.127]:49377 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750744AbbBPFyY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Feb 2015 00:54:24 -0500
-Received: (qmail 8357 invoked by uid 102); 16 Feb 2015 05:54:25 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 15 Feb 2015 23:54:25 -0600
-Received: (qmail 12277 invoked by uid 107); 16 Feb 2015 05:54:30 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 16 Feb 2015 00:54:30 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Feb 2015 00:54:22 -0500
-Content-Disposition: inline
-In-Reply-To: <20150216054550.GA24611@peff.net>
+	id S1752024AbbBPF5Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Feb 2015 00:57:24 -0500
+Received: from mail-ob0-f176.google.com ([209.85.214.176]:52363 "EHLO
+	mail-ob0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751265AbbBPF5X (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Feb 2015 00:57:23 -0500
+Received: by mail-ob0-f176.google.com with SMTP id wo20so38951621obc.7
+        for <git@vger.kernel.org>; Sun, 15 Feb 2015 21:57:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=5+voMRWJi0EJIxH/w+wQ3VaILTX87uullXtaPiyvBvc=;
+        b=YELOheSDKkkc2+NTQ8Yb1l0lgt8f3DnyFDGodnc+Jlq3b4ZMqu5OV7RikufWMBXVuh
+         GwLswaolQ+W/4ZVSw24u0Y+CeM+YzveMPWdqLrmkkz84uuiYD4fNXJ6eI5MF613atotB
+         rhdkdowcgc+L6GBq7LLmy/38pe7EAlVPLwuQuTuJTd2cX3wXUO6lwwB4DaOxU+DDpBln
+         7Amcj5QqKo9k7f/IE3wN8fLeSx/VS+mDHJT051Z1kruXP132ZQKpZ3LsSjtBpWaumd8S
+         Mo7j8+CjGT9SvwXT0CJUvml2BHVxvi0O9hjHgDLBi0d6H38w429Kl4e+aElGenkHVT8M
+         c6Hg==
+X-Received: by 10.60.39.165 with SMTP id q5mr14129192oek.72.1424066243203;
+ Sun, 15 Feb 2015 21:57:23 -0800 (PST)
+Received: by 10.202.48.132 with HTTP; Sun, 15 Feb 2015 21:57:03 -0800 (PST)
+In-Reply-To: <20150216054754.GB25088@peff.net>
+X-Google-Sender-Auth: N_MdL7Hb1ku-3oddD9qAvNIjFfk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263873>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263874>
 
-On Mon, Feb 16, 2015 at 12:45:50AM -0500, Jeff King wrote:
+On Sun, Feb 15, 2015 at 9:47 PM, Jeff King <peff@peff.net> wrote:
+> When the "push_default" flag was originally added, it was
+> made globally visible to all code. This might have been
+> useful if other commands or library calls ended up depending
+> on it, but as it turns out, only builtin/push.c cares.
+> ...
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> We know this is safe because no other callers needed tweaked when the
+> variable went out of scope. :) It would only be a bad idea if we
+> were planning on having other code in the future depend on push_default
+> (e.g., the code in remote.c to find the push destination). But it does
+> not seem to have needed that in the intervening years, so it's probably
+> fine to do this cleanup now.
 
-> On Mon, Feb 16, 2015 at 12:20:49AM -0500, Jeff King wrote:
-> 
-> > But here you are adding to git_default_push_config, which is in another
-> > file.
-> > 
-> > I'm trying to figure out why git_default_push_config exists at all. The
-> > major difference from git_push_config is that the "default" variant will
-> > get loaded for _all_ commands, not just "push". So if it affected
-> > variables that were used by other commands, it would be needed. But all
-> > it sets is push_default, which seems to be specific to builtin/push.c.
-> > 
-> > So I suspect it can be removed entirely, and folded into
-> > git_config_push. But that's outside the scope of your patch.
-> 
-> Here's that cleanup, plus another one I noticed while doing it.
-> 
->   [1/2]: git_push_config: drop cargo-culted wt_status pointer
->   [2/2]: builtin/push.c: make push_default a static variable
+Yay. Great minds think alike ;-)
 
-And here's what your patch would look like rebased on top. Two nits,
-though. One, it could probably use a few basic tests.
+"It definitely smells wrong to touch environment.c and cache.h" was my
+first reaction to the "follow-tags config" patch, and I really think this shows
+the right way forward.
 
-And two, the way that the config and --follow-tags interact is a little
-non-obvious (as evidenced by the fact that you needed a comment to
-explain what was going on).
-
-One way to do it would be similar to how "atomic" is implemented: use
-OPT_BOOL to set an int, and then pick up the final value of that int
-after config and command-line parsing is done. Then a reader does not
-have to wonder why the "follow_tags" variable is not set by
-"--follow-tags".
-
-Or alternatively, we could pull the "flags" field from cmd_push out into
-a static global "transport_flags", and manipulate it directly from the
-config (or if we don't like a global, pass it via the config-callback
-void pointer; but certainly a global is more common in git for code like
-this). Then we do not have to worry about propagating values from
-integers into flag bits at all.
-
--- >8 --
-From: Dave Olszewski <cxreg@pobox.com>
-Subject: push: allow --follow-tags to be set by config push.followTags
-
-Signed-off-by: Dave Olszewski <cxreg@pobox.com>
----
- Documentation/config.txt               |  6 ++++++
- Documentation/git-push.txt             |  5 ++++-
- builtin/push.c                         | 11 +++++++++++
- contrib/completion/git-completion.bash |  1 +
- 4 files changed, 22 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index ae6791d..e01d21c 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2079,6 +2079,12 @@ new default).
- 
- --
- 
-+push.followTags::
-+	If set to true enable '--follow-tags' option by default.  You
-+	may override this configuration at time of push by specifying
-+	'--no-follow-tags'.
-+
-+
- rebase.stat::
- 	Whether to show a diffstat of what changed upstream since the last
- 	rebase. False by default.
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index ea97576..caa187b 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -128,7 +128,10 @@ already exists on the remote side.
- 	Push all the refs that would be pushed without this option,
- 	and also push annotated tags in `refs/tags` that are missing
- 	from the remote but are pointing at commit-ish that are
--	reachable from the refs being pushed.
-+	reachable from the refs being pushed.  This can also be specified
-+	with configuration variable 'push.followTags'.  For more
-+	information, see 'push.followTags' in linkgit:git-config[1].
-+
- 
- --signed::
- 	GPG-sign the push request to update refs on the receiving
-diff --git a/builtin/push.c b/builtin/push.c
-index ab99f4c..7ddf4dd 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -20,6 +20,7 @@ static int deleterefs;
- static const char *receivepack;
- static int verbosity;
- static int progress = -1;
-+static int follow_tags;
- 
- static struct push_cas_option cas;
- 
-@@ -511,6 +512,11 @@ static int git_push_config(const char *k, const char *v, void *cb)
- 		return 0;
- 	}
- 
-+	if (!strcmp(k, "push.followtags")) {
-+		follow_tags = git_config_bool(k, v);
-+		return 0;
-+	}
-+
- 	return git_default_config(k, v, NULL);
- }
- 
-@@ -557,6 +563,11 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 
- 	packet_trace_identity("push");
- 	git_config(git_push_config, NULL);
-+
-+	/* set TRANSPORT_PUSH_FOLLOW_TAGS in flags so that --no-follow-tags may unset it */
-+	if (follow_tags)
-+		flags |= TRANSPORT_PUSH_FOLLOW_TAGS;
-+
- 	argc = parse_options(argc, argv, prefix, options, push_usage, 0);
- 
- 	if (deleterefs && (tags || (flags & (TRANSPORT_PUSH_ALL | TRANSPORT_PUSH_MIRROR))))
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index c21190d..cffb2b8 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2188,6 +2188,7 @@ _git_config ()
- 		pull.octopus
- 		pull.twohead
- 		push.default
-+		push.followTags
- 		rebase.autosquash
- 		rebase.stat
- 		receive.autogc
--- 
-2.3.0.rc1.287.g761fd19
+Thanks.
