@@ -1,101 +1,92 @@
 From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: [PATCH 0/3] request-pull: do something if $3 is passed
-Date: Tue, 17 Feb 2015 13:04:11 -0800
-Message-ID: <CA+55aFxdxzeHmckgn5ZSvXKr9VOztNApif+=5xmZ+4v=RhUryQ@mail.gmail.com>
+Date: Tue, 17 Feb 2015 13:08:13 -0800
+Message-ID: <CA+55aFz4Dy=-bC8ccWfmHpquAWH+Fm0abmkW_dVB9M5wpm3qkQ@mail.gmail.com>
 References: <1424110568-29479-1-git-send-email-bonzini@gnu.org>
 	<xmqqiof163kk.fsf@gitster.dls.corp.google.com>
 	<54E31405.5040502@gnu.org>
 	<xmqqvbj01fbz.fsf@gitster.dls.corp.google.com>
 	<54E3A5E2.6060806@gnu.org>
 	<CA+55aFw_pKtraqwMMsqsYgF=ikShH=6ybtb7+QPr8r=77kmoVQ@mail.gmail.com>
-	<54E3AA41.5070209@gnu.org>
+	<xmqqiof01ca9.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
+Cc: Paolo Bonzini <bonzini@gnu.org>,
 	Git Mailing List <git@vger.kernel.org>,
 	Paolo Bonzini <pbonzini@redhat.com>
-To: Paolo Bonzini <bonzini@gnu.org>
-X-From: git-owner@vger.kernel.org Tue Feb 17 22:04:17 2015
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 17 22:08:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YNpJY-0007Fo-Nq
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Feb 2015 22:04:17 +0100
+	id 1YNpNU-0000MR-8x
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Feb 2015 22:08:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752664AbbBQVEN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Feb 2015 16:04:13 -0500
-Received: from mail-ie0-f169.google.com ([209.85.223.169]:43690 "EHLO
-	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751596AbbBQVEM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Feb 2015 16:04:12 -0500
-Received: by iebtr6 with SMTP id tr6so33448322ieb.10
-        for <git@vger.kernel.org>; Tue, 17 Feb 2015 13:04:11 -0800 (PST)
+	id S1752344AbbBQVIQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Feb 2015 16:08:16 -0500
+Received: from mail-ig0-f180.google.com ([209.85.213.180]:45092 "EHLO
+	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751574AbbBQVIO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Feb 2015 16:08:14 -0500
+Received: by mail-ig0-f180.google.com with SMTP id b16so32627855igk.1
+        for <git@vger.kernel.org>; Tue, 17 Feb 2015 13:08:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc:content-type;
-        bh=rIE9k5fgx3Hg/dLy2pSwhw4mcSYgxvhxKnqfdxxTlSA=;
-        b=PhNSjiKoavO3UD4GbKthOQ2U3bH0cXcNOhj381okOHw+XR8KAhMlchn8vyTiZOWnVp
-         Ajm90NXyHclGAbyjbkposDch+JIMQX30npM71QVANVNvaxoNjQPjm+yd3LBsmyhUTJaQ
-         41Y/f8SVz5vc6X+ObGNhjMKjuwfEijBcjviMdaVGD6ohk5dkub7pw+1p0kJ1FO8Hqv1o
-         oQK0mUvCzLqkiSoSVt3qeAgNyZEO03fwWBnBjsAvveh5FztrjSoB9+tSK62aAHcTVhVL
-         nDKbwBJTEESj8+GgLJChG9Tn5SF8k6IrpUAgwMA9uTgH53qK57F2DJKdY2YCqmCEn5JD
-         f6hQ==
+        bh=7hLw0anNPKIGe9bQnpOlGjUuDakM4u3Np1f22LUDobA=;
+        b=Z4DyRdKrpPBK8nuX5ZBy1bKRq0aAJPIhnwpp7QXgOLJWB0B50GWjoDSTC9yns3yXvz
+         D9f0MU3PW9dYFNqowq7E1zFZcAkhYLA9HdbGq2S6lnbOcYEL0FwG9dJr+aMp0OPZyCKn
+         hoKHyZrA/BdBH6SqttSJPf9SzA64hbr6BkoOceHXZrLko6DImKI7LQyyG/tJGGKfP4Dg
+         qZAs4HyEkWGDQMxlW3LJbm1Yol5UpuvjJy7lbh6GEhe3kHRGpp3fK/BpkohrDhOkJKbS
+         La+931y3quN6k5kTn8OpS65AIkWcOev+lY9/F8FNlPpoeBq8rFE/1EfUducBHUEZ89DP
+         4DYA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linux-foundation.org; s=google;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc:content-type;
-        bh=rIE9k5fgx3Hg/dLy2pSwhw4mcSYgxvhxKnqfdxxTlSA=;
-        b=fbKEV9PICFw0K4MJZtGH+QP0EV8EXXOIkqfBzpfX+Po5kRltdb0tQDY9xFypBE209/
-         GR8XVyb9+DRBn0cL0hzzwTAdJmGlBWB2D1GLgf0UYUqnxlYnuaJFZ2N7HmbxlU4v1YDP
-         iPqAT8G7SvlfAeolyCW0H8OCryQ2F2/+b/9/U=
-X-Received: by 10.50.79.163 with SMTP id k3mr30380784igx.30.1424207051098;
- Tue, 17 Feb 2015 13:04:11 -0800 (PST)
-Received: by 10.36.60.10 with HTTP; Tue, 17 Feb 2015 13:04:11 -0800 (PST)
-In-Reply-To: <54E3AA41.5070209@gnu.org>
-X-Google-Sender-Auth: QeYg3W8YFxNLUMMHFAWg346BV8A
+        bh=7hLw0anNPKIGe9bQnpOlGjUuDakM4u3Np1f22LUDobA=;
+        b=fNh3hczK+VaKdGiBKI9RWFlUYZqjd4NVVRfX6Yw5R1VALpW2T80bxlYrpGtUaBpcXH
+         ZYSgjWVaznfOhBP+Nc7s8thgl8IWYg9c704h6wksPcj3qFKy2dtDfU/nNC32zkqf5zp8
+         s930zWFYxjaWQsPgWoAhqOXHQJoJVLlfsAd4E=
+X-Received: by 10.42.152.201 with SMTP id j9mr31990972icw.25.1424207293675;
+ Tue, 17 Feb 2015 13:08:13 -0800 (PST)
+Received: by 10.36.60.10 with HTTP; Tue, 17 Feb 2015 13:08:13 -0800 (PST)
+In-Reply-To: <xmqqiof01ca9.fsf@gitster.dls.corp.google.com>
+X-Google-Sender-Auth: 9cCS0__CgnhjpZp2myZK5eN_ymQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263986>
 
-On Tue, Feb 17, 2015 at 12:53 PM, Paolo Bonzini <bonzini@gnu.org> wrote:
+On Tue, Feb 17, 2015 at 1:03 PM, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Without $3, git tries to do things that make no sense like "git show-ref
-> --heads --tags HEAD"; or that make little sense when requesting a pull,
-> like looking for HEAD in the output of "git ls-remote".  But from the
-> release notes of 2.0 it looks like it's intended and the script is just
-> taking shortcuts.
+> "HEAD should resolve as a tag" is not sensible, but "HEAD should
+> locally DWIM to something sensible" is still possible, no?
 
-It is *you* who make no sense.
+I disagree. Why? Because what you have locally is *not* necessarily
+the same thing you have remotely.
 
-Looking for HEAD in "git ls-remote"? Perfectly sensible:
+And that's *exactly* why people used to send me broken pull requests.
+"git pull-request" would guess on things, and it would get the guesses
+wrong, and write the pull request wrong.
 
-    [torvalds@i7 linux]$ git ls-remote origin | grep HEAD
-    cc4f9c2a91b7be7b3590bb1cbe8148873556aa3f HEAD
+> We could for example make the rule for unset $3 case like this:
+> instead of the current "missing $3 is a request to pull HEAD":
+>
+>     If you have one and only one signed tag that happens to point at
+>     the commit sitting at HEAD, behave as if that tag was given as
+>     the third argument from the command line.
 
-that's the default thing when you don't specify any particular branch or tag.
+If you verify that "one and only" to be true both locally and
+remotely, then I guess I would be ok with it. But it really would have
+to be unique. And truly unique, as in no confusion about branches or
+tags, only one or the other. Because the "tag vs branch" was one of
+the main sources of confusion that made me repeatedly get bad pull
+requests, particularly when there was something locally that wasn't
+actually named the same thing remotely.
 
-> Ok, in 1.9.x I used to not say anything; if the new workflow is to
-> always specify a tag, that's okay.
-
-Indeed. You have to specify what you want me to pull. Exactly because
-in 1.9.x people didn't, and I got *really* tired of getting bogus pull
-requests that didn't work, or pointed at the wrong branch when people
-had multiple branches with the same contents etc.
-
-> I wanted git to find the matching tag on the remote side when I use "git
-> request-pull origin/master URL" with no third parameter, since I never
-> request pulls except with a single signed tag.
-
-The thing is, HEAD works. Not for you, because you don't use HEAD. But
-because you don't use HEAD, you shouldn't use the default.
-
-I *would* agree to making $3 be mandatory, but there are still people
-out there who just use a single branch per repository and no signed
-branches. Which is the only reason that "default HEAD' thing exists.
-
-                       :Linus
+                         Linus
