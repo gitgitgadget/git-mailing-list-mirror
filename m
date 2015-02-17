@@ -1,101 +1,65 @@
-From: Julien Cretel <j.cretel@umail.ucc.ie>
-Subject: Re: Should "git log --decorate" indicate whether the HEAD is detached?
-Date: Mon, 16 Feb 2015 23:40:27 +0000
-Message-ID: <CACdBeKnWJvUmFaHNrzcX7LtovOLu3PFaeTyoUAUeC7wmYUboDg@mail.gmail.com>
-References: <CACdBeKmNazMtzK4hdd7WXMPDr7HdPe+EFpyd3M-TPBAUEY+HpA@mail.gmail.com>
-	<xmqqa90d4fdp.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Multi-threaded 'git clone'
+Date: Mon, 16 Feb 2015 19:56:32 -0500
+Message-ID: <20150217005632.GA13001@peff.net>
+References: <CACSCj9yoso1oLHzySx1F3O+DFAPiz-XEz1YNCEUMu1pj7KmX7w@mail.gmail.com>
+ <alpine.DEB.2.02.1502160521030.23770@nftneq.ynat.uz>
+ <20150216150305.GA8279@peff.net>
+ <alpine.DEB.2.02.1502160727480.23770@nftneq.ynat.uz>
+ <20150216154745.GA10120@peff.net>
+ <CACsJy8Brnu7rBxtCq_ac58BW7dOK=wtzMxVL-gsOUXJB2Jss9w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 17 00:40:37 2015
+Content-Type: text/plain; charset=utf-8
+Cc: David Lang <david@lang.hm>,
+	Koosha Khajehmoogahi <koosha.khajeh@gmail.com>,
+	git <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 17 01:56:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YNVHG-0007Dt-Vm
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Feb 2015 00:40:35 +0100
+	id 1YNWSu-0007eB-A7
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Feb 2015 01:56:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751315AbbBPXk2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Feb 2015 18:40:28 -0500
-Received: from mail-yk0-f169.google.com ([209.85.160.169]:35357 "EHLO
-	mail-yk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750931AbbBPXk1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Feb 2015 18:40:27 -0500
-Received: by mail-yk0-f169.google.com with SMTP id 79so14480125ykr.0
-        for <git@vger.kernel.org>; Mon, 16 Feb 2015 15:40:27 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=+RmYtS65iIEXfZv9M9bA4WMF00KuWV7LUuslOUTsszE=;
-        b=hoF5MF4VlSDponVrgGLFqxcSRdi53n1t/TmSMlDqPUPzEujjf/wN5KmT9sZcheBmYI
-         bJNT+DUVEZbDxyhWqt4TQ3qOAcMvcZUDjtrlOLSkCNXt5GgLoYc69TI3TQPMhboKi+iW
-         NvSo4BTCAgg96D3zcKe4/ou0N8eb2+AW+2mYs86lSvJEfea6UtY30YyssG6EyMfUvZQm
-         MhBMaVswyiwdpRt9LVQ+1kTsgR5RUtlhnB2ruWEbh2aoujDynLIa5jQl9ivQjxmjxzSF
-         WChOoU8QtA8SsuEzFFX7Ed/Gw4JnTKxgUgSzTW4cdpCo/eTUMqL6jDxEveZWiC/rPPDG
-         Vg6g==
-X-Gm-Message-State: ALoCoQmMuGzOJhv8KHYp65XjyDlDlq0FICZHBaTxH8H6dkDSj+fF8P4fOvqLPXX9HUiTEVNpAJhd
-X-Received: by 10.170.220.197 with SMTP id m188mr84293ykf.58.1424130027108;
- Mon, 16 Feb 2015 15:40:27 -0800 (PST)
-Received: by 10.170.36.197 with HTTP; Mon, 16 Feb 2015 15:40:27 -0800 (PST)
-In-Reply-To: <xmqqa90d4fdp.fsf@gitster.dls.corp.google.com>
+	id S1751731AbbBQA4g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Feb 2015 19:56:36 -0500
+Received: from cloud.peff.net ([50.56.180.127]:49703 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751555AbbBQA4f (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Feb 2015 19:56:35 -0500
+Received: (qmail 25456 invoked by uid 102); 17 Feb 2015 00:56:35 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 16 Feb 2015 18:56:35 -0600
+Received: (qmail 2757 invoked by uid 107); 17 Feb 2015 00:56:42 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 16 Feb 2015 19:56:42 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Feb 2015 19:56:32 -0500
+Content-Disposition: inline
+In-Reply-To: <CACsJy8Brnu7rBxtCq_ac58BW7dOK=wtzMxVL-gsOUXJB2Jss9w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263926>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263927>
 
-On Mon, Feb 16, 2015 at 11:15 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Julien Cretel <j.cretel@umail.ucc.ie> writes:
->
->> As of Git 2.3.0, the output of "git log --decorate" is ambiguous as to
->> whether the HEAD is detached or not.
->
-> It sounds as if you are reporting some regression, but has any
-> version of Git ever done so, or is this just a new feature that
-> does not exist yet?
+On Tue, Feb 17, 2015 at 06:16:39AM +0700, Duy Nguyen wrote:
 
-Apologies; I should have explained myself better. I'm not reporting a
-regression;
-as far as I can tell, "git log --decorate" has always been ambiguous
-in that way.
+> On Mon, Feb 16, 2015 at 10:47 PM, Jeff King <peff@peff.net> wrote:
+> > Each clone generates the pack on the fly
+> > based on what's on disk and streams it out. It should _usually_ be the
+> > same, but there's nothing to guarantee byte-for-byte equality between
+> > invocations.
+> 
+> It's usually _not_ the same. I tried when I wanted to produce stable
+> packs. The first condition is single-threaded pack-objects. Otherwise
+> thread scheduler could make object order unpredictable.
 
->
->> More specifically, consider the following output of "git log --decorate":
->>
->>     4d860e9 (HEAD, master, dev) Remove trailing whitespace
->>
->> Whether the HEAD is attached to master or detached, the output is the same.
->> Could/should "git log --decorate" be modified to provide this information?
->> Perhaps something along the lines of
->>
->>     4d860e9 (HEAD -> master, dev) Remove trailing whitespace
->>
->> or
->>
->>     4d860e9 (HEAD = master, dev) Remove trailing whitespace
->>
->
-> I personally do not see a need for such a differenciation.  Why does
-> one even need to know, and is it worth the cost of computing at the
-> runtime?
+True. If you keep your server repositories fully packed, that eliminates
+the delta search (and/or makes it feasible to turn pack.threads to 1 to
+make it deterministic). But any change in the repository (e.g., somebody
+else pushing, even to a ref you are not fetching) can cause unexpected
+changes in the bytes.
 
-I believe the "--decorate" flag to be quite popular. I personally like to run
-"git log --decorate --graph --oneline --all" to quickly get an idea of the state
-of a repo. In my experience, many users do the same, to the point that they
-feel the need to define an alias for this command; see the top answers to
-http://stackoverflow.com/q/1057564/2541573.
-
-My problem with the current output of "git log --decorate" is the asymmetry,
-so to speak. If the HEAD is detached but pointing at a commit that isn't any
-branch's tip, then the user can be sure the HEAD detached; however, if at
-least one branch points to the current commit, there is no way to tell.
-
-I must admit I haven't given much thought about the cost involved, but I can't
-imagine performance would take a big hit. Would it?
-
->
-> Most of the time when I am on detached HEAD it is either a few
-> commits behind a tip, or a few commits ahead of a tip.
+-Peff
