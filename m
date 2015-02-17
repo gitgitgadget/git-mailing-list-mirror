@@ -1,121 +1,94 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v3 07/13] commit: add tests of commit races
-Date: Tue, 17 Feb 2015 18:00:17 +0100
-Message-ID: <1424192423-27979-8-git-send-email-mhagger@alum.mit.edu>
-References: <1424192423-27979-1-git-send-email-mhagger@alum.mit.edu>
-Cc: Stefan Beller <sbeller@google.com>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>, git@vger.kernel.org,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 17 18:08:52 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: odb_mkstemp's 0444 permission broke write/delete access on AFP
+Date: Tue, 17 Feb 2015 09:13:28 -0800
+Message-ID: <xmqqwq3g31hj.fsf@gitster.dls.corp.google.com>
+References: <A403BFCC-D66F-49BD-B54C-BB86B467F1A1@gmail.com>
+	<vpqtwyl90mx.fsf@anie.imag.fr>
+	<340435D1-2FEB-4A4A-BBD2-E301096C72D8@gmail.com>
+	<vpqiof14qu8.fsf@anie.imag.fr>
+	<13683B35-70A8-4D9E-80E1-440E4E0DC7F0@gmail.com>
+	<vpqr3tozzs5.fsf@anie.imag.fr>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Fairuzan Roslan <fairuzan.roslan@gmail.com>, git@vger.kernel.org,
+	tboegi@web.de
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Feb 17 18:13:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YNldi-0007bM-Qe
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Feb 2015 18:08:51 +0100
+	id 1YNliV-0001hm-6r
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Feb 2015 18:13:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752582AbbBQRIa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Feb 2015 12:08:30 -0500
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:58007 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752561AbbBQRI2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Feb 2015 12:08:28 -0500
-X-Greylist: delayed 464 seconds by postgrey-1.27 at vger.kernel.org; Tue, 17 Feb 2015 12:08:28 EST
-X-AuditID: 12074414-f797f6d000004084-bf-54e373bb8c97
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id BC.C3.16516.BB373E45; Tue, 17 Feb 2015 12:00:43 -0500 (EST)
-Received: from michael.fritz.box (p5DDB008A.dip0.t-ipconnect.de [93.219.0.138])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t1HH0TXc000419
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Tue, 17 Feb 2015 12:00:42 -0500
-X-Mailer: git-send-email 2.1.4
-In-Reply-To: <1424192423-27979-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrGIsWRmVeSWpSXmKPExsUixO6iqLu7+HGIwctvMhZdV7qZLBp6rzBb
-	vL25hNHi9or5zBbdU94yWvT2fWK12Ly5ncWB3ePv+w9MHjtn3WX3WLCp1OPiJWWPz5vkAlij
-	uG2SEkvKgjPT8/TtErgzdjX9Zy+4zV9xrKmDqYHxKU8XIyeHhICJxN2Zc1kgbDGJC/fWs3Ux
-	cnEICVxmlLh/aj0rhHOcSWLOs62MIFVsAroSi3qamUBsEQE1iYlth8C6mQVWM0lsvcsGYgsL
-	WEv8uzObGcRmEVCV+PztCFicV8BF4u/szWwQ2+Qkzh//CVbDKeAqsezXMnYQWwioZn7HbKYJ
-	jLwLGBlWMcol5pTm6uYmZuYUpybrFicn5uWlFula6OVmluilppRuYoSEmcgOxiMn5Q4xCnAw
-	KvHwWkx4FCLEmlhWXJl7iFGSg0lJlJcTGKRCfEn5KZUZicUZ8UWlOanFhxglOJiVRHiDUoBy
-	vCmJlVWpRfkwKWkOFiVx3m+L1f2EBNITS1KzU1MLUotgsjIcHEoSvKZFQI2CRanpqRVpmTkl
-	CGkmDk6Q4VxSIsWpeSmpRYmlJRnxoNiILwZGB0iKB2hvFkg7b3FBYi5QFKL1FKOilDivBkhC
-	ACSRUZoHNxaWPF4xigN9KcybC1LFA0w8cN2vgAYzAQ2e/+cRyOCSRISUVAMj/97PtTXHkm9e
-	jl1979lF9y8f84RPX6n8uGtZm7NizJGFipdlPGx/mkuLK2Z7Sfmee+QZdXC2fGPYq/4d7/wi
-	+HnDPjuZN2lsyTkpXTrRv0tbO/ZdjeR09zsd5el+p76ZJ4klb5dludPTPdfCxWr5 
+	id S1752774AbbBQRNk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Feb 2015 12:13:40 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64796 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751758AbbBQRNc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Feb 2015 12:13:32 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 37BA836C19;
+	Tue, 17 Feb 2015 12:13:31 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=eVRwqn/kFYUf003idK+00/HhgE8=; b=XcuTKd
+	7aCxxdVfocEF6l8II0+a72O6oZekK19YQqUjLUkSIR4fatjY2Xl6fdgYWm0FBSWf
+	BCUC/mDqgAJTHocPk4LbKa94RqB4g6A84sRsQ2POGB4ElJ89gWu5fqi/Mw1x6xgk
+	FyNyarh2VdRxARzKiGWPgImlNopERwbdM3sHc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=CemdLGRPVFD7mfAMD75ZqtQMCYfl3A5i
+	nV2qlEdiuQzgCv6yxqL09s4f5uZcSYSX5r57jA12YXidOmi58oLag56jEa2t8GpW
+	I6Cd2GiRyfIC8MY/OBzMY24a+ppWNvdCg6myTQZUkkwSh0dJPPJTbCpackfk6nZZ
+	vmmzfbeH/aI=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2B81336C18;
+	Tue, 17 Feb 2015 12:13:31 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9E18836C0F;
+	Tue, 17 Feb 2015 12:13:30 -0500 (EST)
+In-Reply-To: <vpqr3tozzs5.fsf@anie.imag.fr> (Matthieu Moy's message of "Tue,
+	17 Feb 2015 09:51:38 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 4BA1EE32-B6C8-11E4-B8B4-A4119F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263968>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263969>
 
-Committing involves the following steps:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-1. Determine the current value of HEAD (if any).
-2. Create the new commit object.
-3. Update HEAD.
+> This should be fixable from Git itself, by replacing the calls to
+> "unlink" with something like
+>
+> int unlink_or_chmod(...) {
+> 	if (unlink(...)) {
+> 		chmod(...); // give user write permission
+> 		return unlink(...);
+> 	}
+> }
 
-Please note that step 2 can take arbitrarily long, because it might
-involve the user editing a commit message.
+I agree with the approach in principle, but I wonder if we want to
+contaminate the generic codepath with unlink_or_chmod().
 
-If a second process sneaks in a commit during step 2, then the first
-commit process should fail. This is usually done correctly, because
-step 3 verifies that HEAD still points at the same commit that it
-pointed to during step 1.
+Don't we want to have this
 
-However, if there is a race when creating an *orphan* commit, then the
-test in step 3 is skipped.
+	#undef unlink
+	int workaround_broken_unlink(...) {
+        	... the same ...
+	}
 
-Add tests for proper handling of such races. One of the new tests
-fails. It will be fixed in a moment.
+in compat/broken-unlink.c and something like this
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
- t/t7516-commit-races.sh | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
- create mode 100755 t/t7516-commit-races.sh
+	#ifdef BROKEN_UNLINK
+	#define unlink(x) workaround_broken_unlink(x)
+        #endif
 
-diff --git a/t/t7516-commit-races.sh b/t/t7516-commit-races.sh
-new file mode 100755
-index 0000000..ed04d1c
---- /dev/null
-+++ b/t/t7516-commit-races.sh
-@@ -0,0 +1,30 @@
-+#!/bin/sh
-+
-+test_description='git commit races'
-+. ./test-lib.sh
-+
-+test_expect_failure 'race to create orphan commit' '
-+	write_script hare-editor <<-\EOF &&
-+	git commit --allow-empty -m hare
-+	EOF
-+	test_must_fail env EDITOR=./hare-editor git commit --allow-empty -m tortoise -e &&
-+	git show -s --pretty=format:%s >subject &&
-+	grep hare subject &&
-+	test -z "$(git show -s --pretty=format:%P)"
-+'
-+
-+test_expect_success 'race to create non-orphan commit' '
-+	write_script airplane-editor <<-\EOF &&
-+	git commit --allow-empty -m airplane
-+	EOF
-+	git checkout --orphan branch &&
-+	git commit --allow-empty -m base &&
-+	git rev-parse HEAD >base &&
-+	test_must_fail env EDITOR=./airplane-editor git commit --allow-empty -m ship -e &&
-+	git show -s --pretty=format:%s >subject &&
-+	grep airplane subject &&
-+	git rev-parse HEAD^ >parent &&
-+	test_cmp base parent
-+'
-+
-+test_done
--- 
-2.1.4
+in git-compat-util.h instead?  That way, people on well behaving
+systems do not have to worry about clobbering errno and stuff,
+perhaps?
