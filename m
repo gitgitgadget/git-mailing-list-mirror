@@ -1,90 +1,180 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] builtin/push.c: make push_default a static variable
-Date: Tue, 17 Feb 2015 09:45:07 -0800
-Message-ID: <xmqqsie4300s.fsf@gitster.dls.corp.google.com>
-References: <20150216054550.GA24611@peff.net>
-	<20150216054754.GB25088@peff.net> <20150217104628.GA25978@peff.net>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: odb_mkstemp's 0444 permission broke write/delete access on AFP
+Date: Tue, 17 Feb 2015 18:54:21 +0100
+Message-ID: <54E3804D.6020301@web.de>
+References: <A403BFCC-D66F-49BD-B54C-BB86B467F1A1@gmail.com> <vpqtwyl90mx.fsf@anie.imag.fr> <340435D1-2FEB-4A4A-BBD2-E301096C72D8@gmail.com> <vpqiof14qu8.fsf@anie.imag.fr> <13683B35-70A8-4D9E-80E1-440E4E0DC7F0@gmail.com> <vpqr3tozzs5.fsf@anie.imag.fr> <CA0F915F-74B1-4292-AFB8-D1A4C76C0137@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Dave Olszewski <cxreg@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Feb 17 18:45:31 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: gitster@pobox.com, git@vger.kernel.org, tboegi@web.de
+To: Fairuzan Roslan <fairuzan.roslan@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Feb 17 18:58:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YNmD5-0007rv-9E
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Feb 2015 18:45:23 +0100
+	id 1YNmPG-0001Y1-1k
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Feb 2015 18:57:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752076AbbBQRpL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Feb 2015 12:45:11 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:62979 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751591AbbBQRpK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Feb 2015 12:45:10 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8F17D37728;
-	Tue, 17 Feb 2015 12:45:09 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/IY3901CRjd/jwkukW+2JSgrM3k=; b=hnl/hK
-	g3gk+OXevuhXybcqN7k6Bzm7M00uXh4CKYWlRcB8scr9Rr+ABqgeIFeAzTLUjT0O
-	vmNj6Oqc6sjnnPNRvykgkcG0v/YFkB33TaaX+vEXulP+uWm/aC6C+wjoLoYO017B
-	2FNtX4UkCaMUjy5eaY6QBtARX+3Q607bVhBEM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gSuGVzldVpkGNNTI+7b6cd83tus+Z/Uv
-	orDWOhAr9qyIYqMsCrFTN8Byy5n461BoBi+08o3hiHV0WeQoCITTqcNvc+pnTbXn
-	0Rq5DUFTFJBsz4dNfwlypSUmpDSsen4a9JTRpgPQ3EyOXa0UOFUd+xr+CJw3DOio
-	axIWOBZdtzs=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7696037727;
-	Tue, 17 Feb 2015 12:45:09 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C4FE137726;
-	Tue, 17 Feb 2015 12:45:08 -0500 (EST)
-In-Reply-To: <20150217104628.GA25978@peff.net> (Jeff King's message of "Tue,
-	17 Feb 2015 05:46:28 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: B7065BD2-B6CC-11E4-929C-A4119F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1754452AbbBQRye convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 Feb 2015 12:54:34 -0500
+Received: from mout.web.de ([212.227.17.11]:55329 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753498AbbBQRyd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Feb 2015 12:54:33 -0500
+Received: from macce9.local ([217.211.68.12]) by smtp.web.de (mrweb102) with
+ ESMTPSA (Nemesis) id 0MfYn9-1YC3I72DkJ-00P8Ld; Tue, 17 Feb 2015 18:54:28
+ +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
+In-Reply-To: <CA0F915F-74B1-4292-AFB8-D1A4C76C0137@gmail.com>
+X-Provags-ID: V03:K0:d/gn1F8aeQ/TSZAYrrGyHRsF5omB977TXjKyjCymDGWfijzW305
+ cU/NN20uAkmA5uQlmntF0/iFtKWbQtiUN6rNaAtIiFwr2pnnJxCLzodJi0rJAAwnSPaWlN2
+ BMCLIsDo9/ZFeun/ljGEsyVyHD/1ATgOlonXBO3WixIVzCV4xn5OrTSVZ8PPxC9c92Q46ZI
+ asH+DXKPfVquimPjd6k3g==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263970>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263971>
 
-Jeff King <peff@peff.net> writes:
+On 17/02/15 17:58, Fairuzan Roslan wrote:
+>=20
+>> On Feb 17, 2015, at 4:51 PM, Matthieu Moy <Matthieu.Moy@grenoble-inp=
+=2Efr> wrote:
+>>
+>> Fairuzan Roslan <fairuzan.roslan@gmail.com> writes:
+>>
+>>> $ git clone https://github.com/robbyrussell/oh-my-zsh.git
+>>> Cloning into 'oh-my-zsh'...
+>>> remote: Counting objects: 11830, done.
+>>> remote: Total 11830 (delta 0), reused 0 (delta 0)
+>>> Receiving objects: 100% (11830/11830), 2.12 MiB | 481.00 KiB/s, don=
+e.
+>>> Resolving deltas: 100% (6510/6510), done.
+>>> warning: unable to unlink /Volumes/installer/oh-my-zsh/.git/objects=
+/pack/tmp_pack_zjPxuc: Operation not permitted
+>>
+>> This should be fixable from Git itself, by replacing the calls to
+>> "unlink" with something like
+>>
+>> int unlink_or_chmod(...) {
+>> 	if (unlink(...)) {
+>> 		chmod(...); // give user write permission
+>> 		return unlink(...);
+>> 	}
+>> }
+>>
+>> This does not add extra cost in the normal case, and would fix this
+>> particular issue for afp shares. So, I think that would fix the bigg=
+est
+>> problem for afp-share users without disturbing others. It seems
+>> reasonable to me to do that unconditionnally.
+>>
+>>> $ rm -rf oh-my-zsh/.git/objects/pack/tmp_*
+>>> rm: oh-my-zsh/.git/objects/pack/tmp_idx_oUN1sb: Operation not permi=
+tted
+>>> rm: oh-my-zsh/.git/objects/pack/tmp_pack_zjPxuc: Operation not perm=
+itted
+>>
+>> What happens if you do "rm -fr oh-my-zsh/.git/objects/pack/" (i.e.
+>> remove the directory, not the files)?
+>>
+>> If you can still remove the directory, then I'd say the solution abo=
+ve
+>> could be sufficient: the user isn't supposed to interfer with the
+>> content of .git/objects other than by using Git, and if he or she do=
+es,
+>> then asking a chmod prior to an rm seems reasonable.
+>>
+>> If you can't, then it's another problematic use-case (basically, you
+>> can't just "rm -fr" a whole clone), and then it deserves at least an
+>> opt-in configuration to get writable pack files.
+>>
+>> (Unfortunately, I suspect we're in the later case)
+>>
+>>> If you insist on setting the tmp idx & pack file permission to 0444=
+ at
+>>> least give it a u+w permission whenever you try to unlink and renam=
+e
+>>> it so it won=E2=80=99t fail.
+>>
+>> Yes. In case you hadn't guessed, this is precisely what I had in min=
+d
+>> when I asked "Is it a problem when using Git [...] or when trying to
+>> remove files outside Git?".
+>>
+>> --
+>> Matthieu Moy
+>> http://www-verimag.imag.fr/~moy/
+>=20
+> Yes. It=E2=80=99s a problem when using Git where it fails to unlink a=
+nd rename the tmp idx and pack files.
+> The reason I tries to rm -rf the tmp_idx_XXXXXX and tmp_pack_XXXXXX i=
+s to proof a point why Git fails
+>=20
+> Perhaps my explanation wasn=E2=80=99t clear enough. Maybe it=E2=80=99=
+s hard for you to understand without having to test it yourself on a AF=
+P filesystem.
+>=20
+> Let me explain why AFP filesystem is more strict and different from y=
+our typical filesystem like ext4,hfs+,etc.
+>=20
+> $ mkdir testdir; chmod 0755 testdir; touch testdir/testfile; chmod 04=
+44 testdir/testfile; ls -la testdir
+> total 0
+> drwxr-xr-x  1 user  staff  264 Feb 18 00:26 .
+> drwx------  1 user  staff  264 Feb 18 00:26 ..
+> -r--r--r--  1 user  staff    0 Feb 18 00:26 testfile
+>=20
+> $ rm -rf testdir
+> rm: testdir/testfile: Operation not permitted
+> rm: testdir: Directory not empty
+>=20
+This works on my system (Mac OS 10.9 as server and client)
 
-> If we wanted to implement "@{push}" (or "@{publish}") to mean "the
-> tracking ref of the remote ref you would push to if you ran git-push",
-> then this is a step in the wrong direction.
+> $ chmod +w testdir/testfile; ls -la testdir
+> total 0
+> drwxr-xr-x  1 riaf  staff  264 Feb 18 00:26 .
+> drwx------  1 riaf  staff  264 Feb 18 00:26 ..
+> -rw-r=E2=80=94r--  1 riaf  staff    0 Feb 18 00:26 testfile
+>=20
+> $ rm -rf testdir <=E2=80=94=E2=80=94 No error message
+>=20
+> This show that you cannot delete a directory or a file without a writ=
+e permission in AFP filesystem.
+>=20
+> The problem with Git failing is not because its inability to delete a=
+ directory but its inability to unlink and rename tmp_idx_XXXXXX and tm=
+p_pack_XXXXXX because those files were set to 0444 by odb_mkstemp.
+> Try google for =E2=80=9CGit AFP=E2=80=9D and you will see a lot peopl=
+e are facing with the same problem.
+Yes, (at least to my knowledge) you seem to be one of the first to repo=
+rt it here, thanks for that.
+>=20
+> Regarding your suggestion, yes I think it would work but you have to =
+take care (chmod) every calls that rename or unlink or delete files wit=
+h 0444 permission.
+>=20
+> Regards,
+> Fairuzan
+>=20
+The "right" solution is to make a wrapper function, and to re-define un=
+link() and rename() with help
+of the preprocessor.
 
-Is that because push_default variable needs to be looked at from
-sha1_name.c when resolving "@{push}", optionally prefixed with the
-name of the branch?  I wonder if that codepath should know the gory
-details of which ref at the remote the branch is pushed to and which
-remote-tracking ref we use in the local repository to mirror that
-remote ref in the first place?
+git-compat-util.h has an example for fopen(), so that can be used for a=
+ patch.
 
-What do we do for the @{upstream} side of the things---it calls
-branch_get() and when the branch structure is returned, the details
-have been computed for us so get_upstream_branch() only needs to use
-the information already computed.  The interesting parts of the
-computation all happen inside remote.c, it seems.
+And no, as I can not reproduce it here, I can only help with reviews or=
+ so.
 
-So we probably would do something similar to @{push} side, which
-would mean that push_default variable and the logic needs to be
-visible to remote.c if we want to have the helper that is similar to
-set_merge() that is used from branch_get() to support @{upstream}.
 
-Hmmm, I have a feeling that "with default configuration, where does
-'git push' send this branch to?" logic should be contained within
-the source file whose name has "push" in it and exposed as a helper
-function, instead of exposing just one of the lowest level knob
-push_default to outside callers and have them figure things out.
 
-Viewed from that angle, it might be the case that remote.c knows too
-much about what happens during fetch and pull, but I dunno.
+
+
+
+
+=20
