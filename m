@@ -1,111 +1,86 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 0/3] request-pull: do something if $3 is passed
-Date: Tue, 17 Feb 2015 13:18:16 -0800
-Message-ID: <CA+55aFy_63YEaYa4KYEiMP+pR0-MKrf2nd1PgnJ2Ez2XJuVGhQ@mail.gmail.com>
-References: <1424110568-29479-1-git-send-email-bonzini@gnu.org>
-	<xmqqiof163kk.fsf@gitster.dls.corp.google.com>
-	<54E31405.5040502@gnu.org>
-	<xmqqvbj01fbz.fsf@gitster.dls.corp.google.com>
-	<54E3A5E2.6060806@gnu.org>
-	<CA+55aFw_pKtraqwMMsqsYgF=ikShH=6ybtb7+QPr8r=77kmoVQ@mail.gmail.com>
-	<54E3AA41.5070209@gnu.org>
-	<CA+55aFxdxzeHmckgn5ZSvXKr9VOztNApif+=5xmZ+4v=RhUryQ@mail.gmail.com>
-	<1957798859.18730760.1424207408147.JavaMail.zimbra@redhat.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Git gc removes all packs
+Date: Tue, 17 Feb 2015 13:57:05 -0800
+Message-ID: <xmqq7fvg19se.fsf@gitster.dls.corp.google.com>
+References: <CAC+L6n1M7LtGaJy94fnhXm94zJ32HXLNVGMguWSqHm=qqLLDxA@mail.gmail.com>
+	<20150205200332.GD15326@peff.net> <54E36EBF.2070600@alum.mit.edu>
+	<20150217165514.GA12176@peff.net> <54E3A695.1050708@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Paolo Bonzini <bonzini@gnu.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Paolo Bonzini <pbonzini@redhat.com>
-X-From: git-owner@vger.kernel.org Tue Feb 17 22:19:17 2015
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>,
+	Dmitry Neverov <dmitry.neverov@gmail.com>, git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Feb 17 22:57:17 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YNpY5-0004Nd-3p
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Feb 2015 22:19:17 +0100
+	id 1YNq8n-0003Vc-Ut
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Feb 2015 22:57:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753526AbbBQVTM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Feb 2015 16:19:12 -0500
-Received: from mail-ig0-f171.google.com ([209.85.213.171]:40511 "EHLO
-	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752862AbbBQVSR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Feb 2015 16:18:17 -0500
-Received: by mail-ig0-f171.google.com with SMTP id h15so32529578igd.4
-        for <git@vger.kernel.org>; Tue, 17 Feb 2015 13:18:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=FuGnSX6a0t66wk4G/Iz76AM1YyRGS9aZwG1w5X7XGN4=;
-        b=kpqWpWUlkqZGO36/hO6rjgFp417Saa85RKBaNLmdMktBG13QfhcS77T2rliskbX97T
-         zAR+v7wLtJC1LzrCUStCk+ROcdxI7U8i0KlI0i06+8e4k0iOZuXCJWHQXyqS9hiaFec8
-         JLCl0YRaSNRy69blLs+cqjce7B3pJF3Sk3KymnNZTAyWq3ueZVIU7iQ2Ioyjiq6nDRJf
-         ndTP9y+WfMACsBUJshTXh7G6adMRE1D8DIx2umwLbr7PXM3Wi9gyqGQgoYh43acilVjF
-         0oh9T6NwRKtxxt21uytYQ7+/VDrbkwBbaJNKLrDyqAcxv1af+DVbAjtzCgHSjXOtojSF
-         PIRA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=FuGnSX6a0t66wk4G/Iz76AM1YyRGS9aZwG1w5X7XGN4=;
-        b=hutAUjt6/lTFb/Eb2EdBlS/vpRhJ+yWmLlL/cja7os+iGBeRC9zz3lhoKnRK60LExO
-         dSO2cEJzzadiV/AffLipnaeDnU2CXkH1yNPmUUF3Ua5BRAy6rD5qUzwdK8ITa9D3W7kZ
-         k2BygYIefCEAhx49oLDDPAfuQTcWBmBiM+BmM=
-X-Received: by 10.107.7.154 with SMTP id g26mr28610271ioi.64.1424207896753;
- Tue, 17 Feb 2015 13:18:16 -0800 (PST)
-Received: by 10.36.60.10 with HTTP; Tue, 17 Feb 2015 13:18:16 -0800 (PST)
-In-Reply-To: <1957798859.18730760.1424207408147.JavaMail.zimbra@redhat.com>
-X-Google-Sender-Auth: CvyXMbrH8v8BHc6_j39Uox4ZNbA
+	id S1752021AbbBQV5J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Feb 2015 16:57:09 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:54302 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750846AbbBQV5I (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Feb 2015 16:57:08 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 44B8338068;
+	Tue, 17 Feb 2015 16:57:07 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ff4nEj9zQAuNc8kr7Su+PrqgQwM=; b=Feamd2
+	UZBSJ4YrrCOPS+dJ/K3B166AXxtGfdLMnoR2ztS4Ny4WHz5KtpQ7LECqUwJlJ+mI
+	K18PnoLaMB1yo07ezQplN2dC4Ww2lR1B76bTxwvsJmat+QUlN8kU59PfMafN471P
+	tMUXRIIWFOkdMsCyYHBKGpyB1OOQeafXrJ1L8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ny/CtgiD4hG/rB1dZsw3HZUY9oF34Pit
+	eK3JMJ9vv2qR0n47TAv6A1Ux/C/FdNNKRxKK0Og1Oh5mgE9wajG0QWWpqJoOM9WB
+	PV32lFpX9IVXsUyS93zCrncZkOC0k3jmahJXQn5Lheru4TIpm2Rl4wQlv4B8lRGe
+	1E+TOTP42E0=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3750738067;
+	Tue, 17 Feb 2015 16:57:07 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AF3FC38065;
+	Tue, 17 Feb 2015 16:57:06 -0500 (EST)
+In-Reply-To: <54E3A695.1050708@alum.mit.edu> (Michael Haggerty's message of
+	"Tue, 17 Feb 2015 21:37:41 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: EA0A9548-B6EF-11E4-95B0-A4119F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263989>
 
-On Tue, Feb 17, 2015 at 1:10 PM, Paolo Bonzini <pbonzini@redhat.com> wrote:
->
-> Sure.  But if I got a pull request saying "please pull
-> git://example.org/foo.git HEAD" I would think that the sender
-> messed up the pull request.  So *in the context of git-request-pull*
-> ${remote:-HEAD} makes little sense to me.
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-Umm. If somebody actually leaves off the third argument THAT IS NOT AT
-ALL what it prints.
+> On 02/17/2015 05:55 PM, Jeff King wrote:
+>> On Tue, Feb 17, 2015 at 05:39:27PM +0100, Michael Haggerty wrote:
+>> 
+>>> There's a bunch of code in refs.c that is there explicitly for reading
+>>> loose references that are symlinks. If the link contents literally start
+>>> with "refs/", then they are read and treated as a symbolic ref.
+>>> Otherwise, the symlink is just followed.
+>> ...
+> Yes, this makes sense too. But my point was that sticking symlinks to
+> random files in your refs hierarchy is pretty questionable even *before*
+> the symlink gets broken. If we would warn the user as soon as we saw
+> such a thing, then the user's problem would never have advanced as far
+> as it did. Do you think that emitting warnings on *intact* symlinks is
+> too draconian?
 
-It will show
+Do you mean that we would end up reading refs/heads/hold if the user
+did this:
 
-    The following changes since commit <base>...
+    git rev-parse --verify HEAD -- >precious
+    ln -s ../../../precious .git/refs/heads/hold
 
-        .. base commit description ..
-
-   are available in the git repository at:
-
-      git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
-
-    for you to fetch changes up to cc4f9c2a91b7be7b3590bb1cbe8148873556aa3f:
-    ...
-
-IOW, it does exactly the right thing. It gives the contents of HEAD,
-but it doesn't actually say HEAD anywhere.
-
-And just look at lkml. The above kind of branch-less and tag-less pull
-requests are still fairly common. It's the original git model, and it
-may be a bit archaic, and I much prefer people to send me signed tags,
-but hey, that's what "don't mention a branch or tag" means.
-
-And no, I don't think git request-pull is at all different from other
-git commands. "git log" means the same thing as "git log HEAD". Exact
-same thing, and nobody would actually write out that HEAD (except
-inside scripts, perhaps).
-
-So basically I agree that git request-pull has changed behavior, but
-the new behavior is *more* in line with other git commands, and the
-old behavior was actually really really odd with that whole extensive
-"guess what the user means". No other git command ever did that
-guessing thing (ok, famous last words, maybe somebody can come up with
-one), and not mentioning a branch/tag/commit explicitly pretty much
-always means "HEAD".
-
-                      :Linus
+because that symbolic link does not begin with "refs/", and is an
+accident waiting to happen so we should forbid it in the longer
+term and warning when we see it would be the first step?
