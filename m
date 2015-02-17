@@ -1,108 +1,137 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] builtin/push.c: make push_default a static variable
-Date: Tue, 17 Feb 2015 13:23:25 -0500
-Message-ID: <20150217182324.GA12816@peff.net>
-References: <20150216054550.GA24611@peff.net>
- <20150216054754.GB25088@peff.net>
- <20150217104628.GA25978@peff.net>
- <xmqqsie4300s.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Dave Olszewski <cxreg@pobox.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 17 19:23:33 2015
+From: Stefan Beller <sbeller@google.com>
+Subject: (unknown)
+Date: Tue, 17 Feb 2015 10:27:08 -0800
+Message-ID: <1424197628-568-1-git-send-email-sbeller@google.com>
+References: <xmqqoaos2yn5.fsf@gitster.dls.corp.google.com>
+Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Feb 17 19:27:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YNmnz-0001dg-Vv
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Feb 2015 19:23:32 +0100
+	id 1YNmrd-00030j-7u
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Feb 2015 19:27:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753759AbbBQSX2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Feb 2015 13:23:28 -0500
-Received: from cloud.peff.net ([50.56.180.127]:50031 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753272AbbBQSX1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Feb 2015 13:23:27 -0500
-Received: (qmail 5180 invoked by uid 102); 17 Feb 2015 18:23:27 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 17 Feb 2015 12:23:27 -0600
-Received: (qmail 10164 invoked by uid 107); 17 Feb 2015 18:23:35 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 17 Feb 2015 13:23:35 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 17 Feb 2015 13:23:25 -0500
-Content-Disposition: inline
-In-Reply-To: <xmqqsie4300s.fsf@gitster.dls.corp.google.com>
+	id S1754590AbbBQS1N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Feb 2015 13:27:13 -0500
+Received: from mail-ie0-f182.google.com ([209.85.223.182]:37117 "EHLO
+	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753580AbbBQS1M (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Feb 2015 13:27:12 -0500
+Received: by iecrl12 with SMTP id rl12so40530523iec.4
+        for <git@vger.kernel.org>; Tue, 17 Feb 2015 10:27:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=LrKIbfmg0tov3T54wEJtYcXmDMk/7kc1eW7fVDTPP5o=;
+        b=TCFU6BXH3C5l9vcEmpfs12y2cn4ALnHZvJ9m4GyfXrG3/EMs3j8Gc6pJLjQsVBZVz3
+         N5U89zxSXyVbglmFGjRkiQyvtbXGCWWBl7UNSziW5Q8hyGH2999dvjp6Xt0BbtaN4JSZ
+         HwgSH7Yvq0tYlFhueNewB7cy1xzDOqv8w0QQJJhdjx9ZPrIadcbVJRYBdXp5Fs5pnBtb
+         9tzs7SbGFr2axeTgYNLKY/7EUtUKWwMlsYNN4bdqasrla/Fd4UkbGMz3briDjZ4ytsp0
+         dMx42OhpbK7af57KQlo9cq1c/gVFqUrWeJFerVOkd9vnOjLv2aUSYrIwBMJ7o94Pjwhy
+         S7eg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=LrKIbfmg0tov3T54wEJtYcXmDMk/7kc1eW7fVDTPP5o=;
+        b=QN6wowz8pquN9sPjsXcXzNUJ2n+H2LHuKxsfz5PsUtPvfplyQLdZhLGKfItRPnBYdu
+         w0xwthBST22ReKtz15mdyA8UIrWPSpZVAsA2dvD8eTPR/r18EOFMEF95g/+3pZpv0j8w
+         YppRTZ91uukHhXXJRE7VxvdqOkWfBS+EZfffLXu3vt0yqZ30tI/isswD84NOQMkKkTWd
+         T1SLhh4GwELexkNUs9e6LsqJrVe+0FLmXtWh+QkQxc+DTT/iohA3rm8j+OIqK22rpJKv
+         3xwYAOXp7OZNGU5K42r+Eb9N4fkXo3BszWK2gTcefPXu9GUmT2EpG4eVEJJvtS+yUZdP
+         yIsw==
+X-Gm-Message-State: ALoCoQmN8RN/+FVP4tZl0ix9iBeeXwxYMh/DiihuOKD0nZIRCxpkMCN0v3j9Bk1q36K5XJpJhWS1
+X-Received: by 10.42.13.193 with SMTP id e1mr34325496ica.59.1424197631434;
+        Tue, 17 Feb 2015 10:27:11 -0800 (PST)
+Received: from localhost ([2620:0:1000:5b00:d457:48b:a341:557a])
+        by mx.google.com with ESMTPSA id s17sm10497447igr.2.2015.02.17.10.27.10
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 17 Feb 2015 10:27:10 -0800 (PST)
+Subject: 
+X-Mailer: git-send-email 2.3.0.81.gc37f363
+In-Reply-To: <xmqqoaos2yn5.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263974>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263975>
 
-On Tue, Feb 17, 2015 at 09:45:07AM -0800, Junio C Hamano wrote:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > If we wanted to implement "@{push}" (or "@{publish}") to mean "the
-> > tracking ref of the remote ref you would push to if you ran git-push",
-> > then this is a step in the wrong direction.
-> 
-> Is that because push_default variable needs to be looked at from
-> sha1_name.c when resolving "@{push}", optionally prefixed with the
-> name of the branch?
+On Tue, Feb 17, 2015 at 10:14 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
+>
+>> This fixes a memory leak, when building the cache entries as
+>> refresh_cache_entry may decide to return NULL in case of
+>>
+>
+> in case of what?
 
-Yes, exactly.
+Yeah, I got distracted when rewriting the commit message as I was 
+looking at refresh_cache_ent() wondering if there is a better place to 
+free the memory. Just as you said below.
 
-> I wonder if that codepath should know the gory details of which ref at
-> the remote the branch is pushed to and which remote-tracking ref we
-> use in the local repository to mirror that remote ref in the first
-> place?
+Maybe we can drop that part of the sentence as it doesn't matter
+why refresh_cache_ent() returns NULL. All that matters is the 
+possibility of it returning NULL.
 
-I think that was one of the ugly bits from the series; that we had to
-reimplement "where would we push" and "what would it be called if we
-pushed and then fetched"? The former cares about push_default, and the
-latter has to apply push and then fetch refspecs.
+>
+> I briefly wondered if refresh_cache_ent() should do the freeing but
+> that does not make sense at all if done unconditionally because the
+> other caller of the function does want to retain ce on error, and it
+> makes little sense to invent FREE_CE_ON_ERROR bit in refresh_option,
+> either, so this fix looks sensible.
+>
 
-If you want to peek at it again, it's at:
+So here is a reworded commit message:
 
-  https://github.com/peff/git/commit/8859afb1af63cb3cb0bc4cc8c1719c2011f406c9
+---8<---
+From 3a1f646c1dbe828b68e1b269290d2b5593f86455 Mon Sep 17 00:00:00 2001
+From: Stefan Beller <sbeller@google.com>
+Date: Tue, 17 Feb 2015 10:05:36 -0800
+Subject: [PATCH] read-cache.c: free cache entry when refreshing fails
 
-(but note that it should not be called @{publish}, as per earlier
-discussions).
+This fixes a memory leak when building the cache entries as
+refresh_cache_entry may decide to return NULL, but it doesn't
+free the cache entry structure which was passed in as an argument.
 
-> What do we do for the @{upstream} side of the things---it calls
-> branch_get() and when the branch structure is returned, the details
-> have been computed for us so get_upstream_branch() only needs to use
-> the information already computed.  The interesting parts of the
-> computation all happen inside remote.c, it seems.
-> 
-> So we probably would do something similar to @{push} side, which
-> would mean that push_default variable and the logic needs to be
-> visible to remote.c if we want to have the helper that is similar to
-> set_merge() that is used from branch_get() to support @{upstream}.
+I am not sure how severe this memory leak is as it was found by
+scan.coverity.com, CID 290041.
 
-Sure, we could go that way. But I don't think it changes the issue for
-_this_ patch series, which is that the variable needs visibility outside
-of builtin/push.c (and we need to load the config for programs besides
-git-push).
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ read-cache.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-> Hmmm, I have a feeling that "with default configuration, where does
-> 'git push' send this branch to?" logic should be contained within
-> the source file whose name has "push" in it and exposed as a helper
-> function, instead of exposing just one of the lowest level knob
-> push_default to outside callers and have them figure things out.
-> 
-> Viewed from that angle, it might be the case that remote.c knows too
-> much about what happens during fetch and pull, but I dunno.
-
-Yeah, it would be nice if there were a convenient lib-ified set of
-functions for getting this information, and "fetch" and "push" commands
-were built on top of it. I don't know how painful that would be, though.
-The existing code has grown somewhat organically.
-
-But even with that change, the lib-ified code needs to hook into
-git_default_config (or do its own config lookup) so that we get the
-proper value no matter who the caller is.
-
--Peff
+diff --git a/read-cache.c b/read-cache.c
+index 9cff715..8d71860 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -725,7 +725,7 @@ struct cache_entry *make_cache_entry(unsigned int mode,
+ 		unsigned int refresh_options)
+ {
+ 	int size, len;
+-	struct cache_entry *ce;
++	struct cache_entry *ce, *ret;
+ 
+ 	if (!verify_path(path)) {
+ 		error("Invalid path '%s'", path);
+@@ -742,7 +742,13 @@ struct cache_entry *make_cache_entry(unsigned int mode,
+ 	ce->ce_namelen = len;
+ 	ce->ce_mode = create_ce_mode(mode);
+ 
+-	return refresh_cache_entry(ce, refresh_options);
++	ret = refresh_cache_entry(ce, refresh_options);
++	if (!ret) {
++		free(ce);
++		return NULL;
++	} else {
++		return ret;
++	}
+ }
+ 
+ int ce_same_name(const struct cache_entry *a, const struct cache_entry *b)
+-- 
+2.3.0.81.gc37f363
