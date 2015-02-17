@@ -1,83 +1,55 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: 'make test' fails in pu
-Date: Tue, 17 Feb 2015 03:55:10 -0500
-Message-ID: <20150217085509.GC17174@peff.net>
-References: <1424162357.30155.14.camel@kaarsemaker.net>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Lift --stdout restriction for using reachability bitmap in pack-objects?
+Date: Tue, 17 Feb 2015 17:07:36 +0700
+Message-ID: <CACsJy8AC5ZcsB2_qS4k-+6fJt2_e7m=o8C9UAEcywh=P_4HXAw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git <git@vger.kernel.org>
-To: Dennis Kaarsemaker <dennis@kaarsemaker.net>
-X-From: git-owner@vger.kernel.org Tue Feb 17 09:55:23 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Vicent Marti <tanoku@gmail.com>, Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Feb 17 11:08:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YNdw7-0000fb-SC
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Feb 2015 09:55:20 +0100
+	id 1YNf4f-0006SW-Nl
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Feb 2015 11:08:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933281AbbBQIzN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Feb 2015 03:55:13 -0500
-Received: from cloud.peff.net ([50.56.180.127]:49790 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S933260AbbBQIzM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Feb 2015 03:55:12 -0500
-Received: (qmail 13241 invoked by uid 102); 17 Feb 2015 08:55:12 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 17 Feb 2015 02:55:12 -0600
-Received: (qmail 5381 invoked by uid 107); 17 Feb 2015 08:55:19 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 17 Feb 2015 03:55:19 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 17 Feb 2015 03:55:10 -0500
-Content-Disposition: inline
-In-Reply-To: <1424162357.30155.14.camel@kaarsemaker.net>
+	id S1756294AbbBQKIJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Feb 2015 05:08:09 -0500
+Received: from mail-ig0-f181.google.com ([209.85.213.181]:47501 "EHLO
+	mail-ig0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752058AbbBQKIH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Feb 2015 05:08:07 -0500
+Received: by mail-ig0-f181.google.com with SMTP id hn18so28873084igb.2
+        for <git@vger.kernel.org>; Tue, 17 Feb 2015 02:08:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:cc:content-type;
+        bh=VEn1gz2LMR4/evQ0zSVACCMl1Nkqru3HEw+iCzKWNX8=;
+        b=H4GLIhcCFs3oXTQHngssVj4GMYpdGYG8crPS+BPQKMWr/y6HhLXXTxPaqoqo4znvJL
+         s3H+Hh6n/vsTLbRt8ew1t0dA4KcijBCZ4x7HfZa1fCCwQvefg/ibdjiW+icM9jx5pH6e
+         RPWPTxbZiP5klzLEy2KnlfmajPGYi0vC7K047lptwO4UsL+BWSk8Mq3HV2YYXxLi11hj
+         DDj/7OF+K17wrL1LpuEgsBGYk7PEBAkSOEtEjMIgc08BGCCRZo9uypdmuJoU58niSzN0
+         Xqj1IjHV9zJttrPF5CrFTGR3FmPyjmp7Bt+yWbWf9FqYe2WrJToPonuC1vI0gLxJECo+
+         wLog==
+X-Received: by 10.107.30.147 with SMTP id e141mr35684407ioe.17.1424167687135;
+ Tue, 17 Feb 2015 02:08:07 -0800 (PST)
+Received: by 10.107.131.155 with HTTP; Tue, 17 Feb 2015 02:07:36 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263938>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263939>
 
-On Tue, Feb 17, 2015 at 09:39:17AM +0100, Dennis Kaarsemaker wrote:
+Commit 6b8fda2 (pack-objects: use bitmaps when packing objects -
+2013-12-21) turns off reachability bitmap optimization if --stdout is
+not specified. I wonder if we could lift this restriction?
 
-> Make test has been failing for 'pu' yesterday for and today at
-> t4016-diff-quote.sh. Full log:
-> http://ci.kaarsemaker.net/git/refs/heads/pu/1df29c71a731c679de9055ae5e407f3a4e18740a/artefact/test/log
-> 
-> I noticed this a few times before and it tends to get fixed again
-> relatively quickly. So I'm wondering:
-> 
-> - Should I even mention that it's failing, or is that just useless
->   noise?
-> - If I should report this, I could also make my testing thing send 
->   mails. Would that be useful?
-
-If you bisect this, it turns up commit 30cd8f94f, which says:
-
-    WIP: diff-b-m
-
-    [...]
-
-    This update is still broken and breaks a handful of tests:
-    
-         4016 4023 4047 4130 6022 6031 6032 9300 9200 9300 9350
-
-Sometimes a breakage in pu is surprising (e.g., it breaks only on a
-platform that the maintainer does not run "make test" on) and we would
-want to know about it. But sometimes it is merely that there is a
-work-in-progress. And it probably requires a human to tell the
-difference.
-
-So no, I do not think automatically mailing on test failures in pu is a
-good idea. Manually peeking at them and sending fixes before the series
-is merged to next _is_ very much encouraged, though. :)
-
-Unlike "pu", "next" and "master" should never fail tests (I think that
-Junio will not push them out if the tests have failed on his system). So
-failures there are much more likely to be interesting platform bugs (but
-of course, testing "pu" is still encouraged, as we may catch problems).
-
-But even for "next", I would say blind automated emails are not nearly
-as useful as a human who has looked at the problem (and especially
-bisected).
-
--Peff
+My use case is debugging pack-objects in gdb (repeatedly) where this
+optimization could really save time. But specifying --stdout would
+clutter gdb interface.. I don't know this code well enough to judge,
+but I think the worst thing is we don't write .idx file out (maybe
+because it would involve a lot more work).
+-- 
+Duy
