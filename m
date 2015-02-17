@@ -1,87 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: [PATCH 0/3] request-pull: do something if $3 is passed
-Date: Tue, 17 Feb 2015 13:03:10 -0800
-Message-ID: <xmqqiof01ca9.fsf@gitster.dls.corp.google.com>
+Date: Tue, 17 Feb 2015 13:04:11 -0800
+Message-ID: <CA+55aFxdxzeHmckgn5ZSvXKr9VOztNApif+=5xmZ+4v=RhUryQ@mail.gmail.com>
 References: <1424110568-29479-1-git-send-email-bonzini@gnu.org>
 	<xmqqiof163kk.fsf@gitster.dls.corp.google.com>
 	<54E31405.5040502@gnu.org>
 	<xmqqvbj01fbz.fsf@gitster.dls.corp.google.com>
 	<54E3A5E2.6060806@gnu.org>
 	<CA+55aFw_pKtraqwMMsqsYgF=ikShH=6ybtb7+QPr8r=77kmoVQ@mail.gmail.com>
+	<54E3AA41.5070209@gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Paolo Bonzini <bonzini@gnu.org>,
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
 	Git Mailing List <git@vger.kernel.org>,
 	Paolo Bonzini <pbonzini@redhat.com>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Feb 17 22:03:21 2015
+To: Paolo Bonzini <bonzini@gnu.org>
+X-From: git-owner@vger.kernel.org Tue Feb 17 22:04:17 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YNpIc-0006oj-MV
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Feb 2015 22:03:19 +0100
+	id 1YNpJY-0007Fo-Nq
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Feb 2015 22:04:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752424AbbBQVDO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Feb 2015 16:03:14 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64165 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752304AbbBQVDN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Feb 2015 16:03:13 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 116CF37233;
-	Tue, 17 Feb 2015 16:03:13 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Qf6vdba2zPNNXz0S2faspeVx37o=; b=YH1pUu
-	ROk8cjJXSJWj/h2T4E3lBMBDOa55NpaNH/ly4okK2uS7L1QBJrGWn6zApEZdL/4/
-	LbDreMPM6ZwqfesJ21hAvSDUKo70qfsx9BW+LVkbIupCTGrJpUav+aKBTgUQp7d9
-	OmMZC0c9hQG7YWN1SK6A3oxqrHHMR6PZOSSRA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=t3K6OGmLsue0G1E2bnHqA06GKmPpDk6W
-	0ZHPIH2oW0T15aHPKYwHDePynHWfx7Q7i6I/RyAIIX38PADZVAt/hLwRiLsG8THW
-	73LK99bshilL7Uq7FMmOlbP+MMLwT/sbI7cia4wBbN7Wp06gblk2sFs89QL7cL77
-	pIwSAaJZCcQ=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 02A5D37232;
-	Tue, 17 Feb 2015 16:03:13 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 41E2637231;
-	Tue, 17 Feb 2015 16:03:12 -0500 (EST)
-In-Reply-To: <CA+55aFw_pKtraqwMMsqsYgF=ikShH=6ybtb7+QPr8r=77kmoVQ@mail.gmail.com>
-	(Linus Torvalds's message of "Tue, 17 Feb 2015 12:42:40 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 621F166A-B6E8-11E4-A9BF-A4119F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1752664AbbBQVEN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Feb 2015 16:04:13 -0500
+Received: from mail-ie0-f169.google.com ([209.85.223.169]:43690 "EHLO
+	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751596AbbBQVEM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Feb 2015 16:04:12 -0500
+Received: by iebtr6 with SMTP id tr6so33448322ieb.10
+        for <git@vger.kernel.org>; Tue, 17 Feb 2015 13:04:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=rIE9k5fgx3Hg/dLy2pSwhw4mcSYgxvhxKnqfdxxTlSA=;
+        b=PhNSjiKoavO3UD4GbKthOQ2U3bH0cXcNOhj381okOHw+XR8KAhMlchn8vyTiZOWnVp
+         Ajm90NXyHclGAbyjbkposDch+JIMQX30npM71QVANVNvaxoNjQPjm+yd3LBsmyhUTJaQ
+         41Y/f8SVz5vc6X+ObGNhjMKjuwfEijBcjviMdaVGD6ohk5dkub7pw+1p0kJ1FO8Hqv1o
+         oQK0mUvCzLqkiSoSVt3qeAgNyZEO03fwWBnBjsAvveh5FztrjSoB9+tSK62aAHcTVhVL
+         nDKbwBJTEESj8+GgLJChG9Tn5SF8k6IrpUAgwMA9uTgH53qK57F2DJKdY2YCqmCEn5JD
+         f6hQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=rIE9k5fgx3Hg/dLy2pSwhw4mcSYgxvhxKnqfdxxTlSA=;
+        b=fbKEV9PICFw0K4MJZtGH+QP0EV8EXXOIkqfBzpfX+Po5kRltdb0tQDY9xFypBE209/
+         GR8XVyb9+DRBn0cL0hzzwTAdJmGlBWB2D1GLgf0UYUqnxlYnuaJFZ2N7HmbxlU4v1YDP
+         iPqAT8G7SvlfAeolyCW0H8OCryQ2F2/+b/9/U=
+X-Received: by 10.50.79.163 with SMTP id k3mr30380784igx.30.1424207051098;
+ Tue, 17 Feb 2015 13:04:11 -0800 (PST)
+Received: by 10.36.60.10 with HTTP; Tue, 17 Feb 2015 13:04:11 -0800 (PST)
+In-Reply-To: <54E3AA41.5070209@gnu.org>
+X-Google-Sender-Auth: QeYg3W8YFxNLUMMHFAWg346BV8A
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263985>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
-
-> HEAD is not a tag. Never has been, never will be. If you want me to
-> pull a tag, then you damn well should say what tag you want, not just
-> randomly say HEAD.
+On Tue, Feb 17, 2015 at 12:53 PM, Paolo Bonzini <bonzini@gnu.org> wrote:
 >
-> So what is it you want to do? At no point is "HEAD should resolve as a
-> tag" sensible.
+> Without $3, git tries to do things that make no sense like "git show-ref
+> --heads --tags HEAD"; or that make little sense when requesting a pull,
+> like looking for HEAD in the output of "git ls-remote".  But from the
+> release notes of 2.0 it looks like it's intended and the script is just
+> taking shortcuts.
 
-"HEAD should resolve as a tag" is not sensible, but "HEAD should
-locally DWIM to something sensible" is still possible, no?
+It is *you* who make no sense.
 
-We could for example make the rule for unset $3 case like this,
-instead of the current "missing $3 is a request to pull HEAD":
+Looking for HEAD in "git ls-remote"? Perfectly sensible:
 
-    If you have one and only one signed tag that happens to point at
-    the commit sitting at HEAD, behave as if that tag was given as
-    the third argument from the command line.
+    [torvalds@i7 linux]$ git ls-remote origin | grep HEAD
+    cc4f9c2a91b7be7b3590bb1cbe8148873556aa3f HEAD
 
-    Otherwise, if you are on a branch, behave as if that branch was
-    given as the third argument from the command line.
+that's the default thing when you don't specify any particular branch or tag.
 
-    If you are not on any branch, error out.
+> Ok, in 1.9.x I used to not say anything; if the new workflow is to
+> always specify a tag, that's okay.
+
+Indeed. You have to specify what you want me to pull. Exactly because
+in 1.9.x people didn't, and I got *really* tired of getting bogus pull
+requests that didn't work, or pointed at the wrong branch when people
+had multiple branches with the same contents etc.
+
+> I wanted git to find the matching tag on the remote side when I use "git
+> request-pull origin/master URL" with no third parameter, since I never
+> request pulls except with a single signed tag.
+
+The thing is, HEAD works. Not for you, because you don't use HEAD. But
+because you don't use HEAD, you shouldn't use the default.
+
+I *would* agree to making $3 be mandatory, but there are still people
+out there who just use a single branch per repository and no signed
+branches. Which is the only reason that "default HEAD' thing exists.
+
+                       :Linus
