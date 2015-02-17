@@ -1,74 +1,89 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 0/7] migrate api-strbuf.txt into strbuf.h
-Date: Tue, 17 Feb 2015 15:00:55 -0800
-Message-ID: <20150217230055.GA6785@google.com>
-References: <20150116090225.GA30797@peff.net>
- <xmqqh9uqpwe9.fsf@gitster.dls.corp.google.com>
- <20150212230513.GA21222@peff.net>
+From: "Dan Langille (dalangil)" <dalangil@cisco.com>
+Subject: Re: [PATCH v3] remote-curl: fall back to Basic auth if Negotiate
+ fails
+Date: Tue, 17 Feb 2015 23:05:41 +0000
+Message-ID: <CA01B76E-F3D4-40AC-B524-32BFBA930108@cisco.com>
+References: <1420142187-1025433-1-git-send-email-sandals@crustytoothpaste.net>
+ <1420676960-492860-1-git-send-email-sandals@crustytoothpaste.net>
+ <7930FE25-8206-43A8-9678-C56D789E09CE@cisco.com>
+ <xmqqk30hyock.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Stefan Beller <sbeller@google.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Feb 18 00:01:11 2015
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 18 00:05:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YNr8g-0001NS-BD
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Feb 2015 00:01:10 +0100
+	id 1YNrDA-0002rN-Q5
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Feb 2015 00:05:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752294AbbBQXBF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Feb 2015 18:01:05 -0500
-Received: from mail-ig0-f170.google.com ([209.85.213.170]:42243 "EHLO
-	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751522AbbBQXBD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Feb 2015 18:01:03 -0500
-Received: by mail-ig0-f170.google.com with SMTP id l13so44903633iga.1
-        for <git@vger.kernel.org>; Tue, 17 Feb 2015 15:01:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=PUztOm4H1ZxZ4UhvMtkqP8cYjQKjJ6kTPYKyvRdEgJg=;
-        b=fZ6ccSLSNo4gy5ifhFonCYFd3uIcEouoV/LQd6X7yyW/prRw1F4IshaHMIMKJtLnTS
-         DN99kYDnP+3JKixouBquJI+VYkWC4ephHVD3Ew0LLyFZmSOJQtK57rppvC5jCm1LW2nW
-         nXCfJtxeiPQ5/ftAobu7e/vejYPsBIwFbfq9hPrVYxTBSQt/9K/vzcaKLlRt7pQ4Teab
-         1OdfZxJkV/8Mi71W4kQj6i+W8JvPpchrxl3/uVMCwe/Qx6prstC1qd45axUhKSlF8aSR
-         0yqknj4x3aUcA6qp8lIImGTt8DMXOSpPvKnGW9fDxW5m4FIBQ2/Hx3Qq6w7o+Z676hb+
-         A5cw==
-X-Received: by 10.50.108.108 with SMTP id hj12mr30655562igb.47.1424214062351;
-        Tue, 17 Feb 2015 15:01:02 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:cc13:2338:8bf7:2ec2])
-        by mx.google.com with ESMTPSA id yq1sm10870953igb.21.2015.02.17.15.01.01
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 17 Feb 2015 15:01:01 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20150212230513.GA21222@peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753000AbbBQXFo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Feb 2015 18:05:44 -0500
+Received: from alln-iport-5.cisco.com ([173.37.142.92]:2423 "EHLO
+	alln-iport-5.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752273AbbBQXFo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Feb 2015 18:05:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=cisco.com; i=@cisco.com; l=1356; q=dns/txt; s=iport;
+  t=1424214344; x=1425423944;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-id:content-transfer-encoding:
+   mime-version;
+  bh=e8T6vGsUcWN2L+UkNh4U1//FSLhFGtC3hzZCHg00BC0=;
+  b=DzDfegMgmeqvbAg/ojxRv7PdosHQYAMOeJFj3r1n5XhzjABOw1TsE5wB
+   5w2NciG3NyU+F0+2OshCNFASmx0TjYUiNkC22FuN4TJFrdV+JYlzKeB/M
+   CiZWTpQ+6Z7Hju+Tr+fbol0QD7s0yiZMKF1YYkShnWV2w6PzOn5dtjjQT
+   I=;
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: A0CFBQDqyONU/4UNJK1bgwZSWgSCf79QhTY5Ahx+QwEBAQEBAXyEDAEBAQMBIxFFBQsCAQgYAgImAgICMBUQAgQOBYgnCA25QJdxAQEBAQEBAQEBAQEBAQEBAQEBAQEBEwSBIYluhDszB4JoLoEUBY84g1eFYIEYjjeDPiKCAhyBUG8FgT9/AQEB
+X-IronPort-AV: E=Sophos;i="5.09,595,1418083200"; 
+   d="scan'208";a="124500748"
+Received: from alln-core-11.cisco.com ([173.36.13.133])
+  by alln-iport-5.cisco.com with ESMTP; 17 Feb 2015 23:05:42 +0000
+Received: from xhc-rcd-x10.cisco.com (xhc-rcd-x10.cisco.com [173.37.183.84])
+	by alln-core-11.cisco.com (8.14.5/8.14.5) with ESMTP id t1HN5gKC026678
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL);
+	Tue, 17 Feb 2015 23:05:42 GMT
+Received: from xmb-rcd-x03.cisco.com ([169.254.7.147]) by
+ xhc-rcd-x10.cisco.com ([173.37.183.84]) with mapi id 14.03.0195.001; Tue, 17
+ Feb 2015 17:05:42 -0600
+Thread-Topic: [PATCH v3] remote-curl: fall back to Basic auth if Negotiate
+ fails
+Thread-Index: AQHQNRBRFAV48lOUvEGHDNPe7JHDHZz2BsKA
+In-Reply-To: <xmqqk30hyock.fsf@gitster.dls.corp.google.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [64.100.213.185]
+Content-ID: <7E4984560D814D49BEFAC1D30D016BAE@emea.cisco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263996>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263997>
 
-Jeff King wrote:
-> On Thu, Feb 12, 2015 at 03:01:18PM -0800, Junio C Hamano wrote:
-
->> I am inclined to merge this to 'next', if there is a general
->> understanding that we will try to make the headers _the_ single
->> source of truth of the API by (1) not adding to api-*.txt without
->> describing new things in the headers and (2) moving things from
->> api-*.txt to corresponding headers when clarifying, fixing or
->> updating the API.
->
-> I'm fine with that (unsurprisingly), but I would like to hear an "OK"
-> from Jonathan before going ahead.
-
-Sorry for the slow reply.  Sounds good to me.  I'd prefer for the
-in-between state to last as short a period as possible, but I realize
-that preference isn't all that meaningful in the absence of patches. :)
-
-Jonathan
+PiBPbiBKYW4gMjAsIDIwMTUsIGF0IDc6MjIgUE0sIEp1bmlvIEMgSGFtYW5vIDxnaXRzdGVyQHBv
+Ym94LmNvbT4gd3JvdGU6DQo+IA0KPiAiRGFuIExhbmdpbGxlIChkYWxhbmdpbCkiIDxkYWxhbmdp
+bEBjaXNjby5jb20+IHdyaXRlczoNCj4gDQo+PiBJIGRpZCBub3QgdGVzdCB0aGlzIHBhdGNoLiAg
+SXMgdGhhdCBob2xkaW5nIHVwIGEgY29tbWl0Pw0KPiANCj4gSSBhbSBob3BpbmcgdGhhdCB5b3Ug
+cmVidWlsdCB0aGUgR2l0IHlvdSB1c2Ugd2l0aCB0aGlzIHBhdGNoIGJ5IHRoZQ0KPiB0aW1lIHlv
+dSB3cm90ZSB0aGUgbWVzc2FnZSBJIGFtIHJlc3BvbmRpbmcgdG8gYW5kIGhhdmUgYmVlbiB1c2lu
+ZyBpdA0KPiBmb3IgeW91ciBkYWlseSBHaXQgbmVlZHMgOy0pDQo+IA0KPiBJIGJlbGlldmUgaXQg
+aXMgcXVldWVkIG9uIHRoZSAnbmV4dCcgYnJhbmNoIHNvIHRoYXQgb3RoZXJzIGxpa2UgeW91DQo+
+IHdobyBuZWVkIHRoZSBjaGFuZ2UgY2FuIHZlcmlmeSB0aGUgaW1wcm92ZW1lbnRzLCBhbmQgb3Ro
+ZXJzIHVubGlrZQ0KPiB5b3Ugd2hvIGRvIG5vdCBuZWVkIHRoZSBjaGFuZ2UgY2FuIG1ha2Ugc3Vy
+ZSB0aGUgY2hhbmdlIGRvZXMgbm90DQo+IGNhdXNlIHVuaW50ZW5kZWQgY29uc2VxdWVuY2VzLg0K
+DQpJcyB0aGlzIHRoZSBwYXRjaCBpbiBxdWVzdGlvbj8NCg0KIGh0dHBzOi8vZ2l0aHViLmNvbS9n
+aXQvZ2l0L2NvbW1pdC80ZGJlNjY0NjRiNGZkNjk1YzU5ODljYzI3MmZhMGVkZDY0NzUwMzdjDQoN
+CkkgYXNrIGJlY2F1c2UgcHJldmlvdXMgdmVyc2lvbnMgb2YgdGhlIHBhdGNoIGFjdGVkIGFnYWlu
+c3QgaHR0cC5oIGFzIHdlbGwgYW5kIG15IGZhaWx1cmUgd2l0aCBpdC4NCg0KQ291bGQgSSBleHBl
+Y3QgdGhhdCBwYXRjaCB3b3JrIGFnYWluc3QgMi4zLjA/DQoNCkl0IGFwcGxpZXMgY2xlYW5seSwg
+Y29tcGlsZXMsIGJ1dCBjb3JlcyB3aGVuIEkgdHJ5IGEg4oCYZ2l0IGNsb25l4oCZLiAgVW5tYXRj
+aGVkIDIuMy4wIHN1Y2NlZWRzLg==
