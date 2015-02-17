@@ -1,138 +1,166 @@
-From: Martin Maas <maas@eecs.berkeley.edu>
-Subject: Potential Bug: git merge overwrites uncommitted changes
-Date: Mon, 16 Feb 2015 20:26:38 -0800
-Message-ID: <CAHBpcCZMqFyFga4hyGQA3Sum3Lsn=knR1i9PAHr8G+Zyx8FepA@mail.gmail.com>
-Reply-To: maas@eecs.berkeley.edu
+From: Martin Fick <mfick@codeaurora.org>
+Subject: Re: Multi-threaded 'git clone'
+Date: Mon, 16 Feb 2015 22:20:02 -0700
+Message-ID: <20150217052007.CC8B713FECF@smtp.codeaurora.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 17 05:27:15 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: base64
+Cc: git <git@vger.kernel.org>,
+	Koosha Khajehmoogahi <koosha.khajeh@gmail.com>,
+	David Lang <david@lang.hm>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Feb 17 06:20:17 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YNZkF-0004Ru-Dg
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Feb 2015 05:26:47 +0100
+	id 1YNaZz-0000um-NQ
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Feb 2015 06:20:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751936AbbBQE0m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Feb 2015 23:26:42 -0500
-Received: from mail-la0-f46.google.com ([209.85.215.46]:44642 "EHLO
-	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751371AbbBQE0l (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Feb 2015 23:26:41 -0500
-Received: by lams18 with SMTP id s18so33562269lam.11
-        for <git@vger.kernel.org>; Mon, 16 Feb 2015 20:26:38 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:reply-to:date:message-id:subject
-         :from:to:content-type;
-        bh=zmGOGXR300OpgiRpBKd/qu9mbElGBMJx07b+VglRvtE=;
-        b=EdWFxs6jYopyRtriA+Nxp4SbpVl0bmizg4+WSOi18Pdxguh/kdZgUZccHx/E7Mb/Aw
-         IReZHL7yJp9GuPB9JZCQFEys8mptWNLdQNtTf+fLYGN+vW3lar4QId1J2nkg5n9e9QDY
-         +Ni0etKaQ/gWETdp5QSy4BOG333AG+1r6tig6EZrFKFnw/Yyux+pqpD+DGCEFAufcA7J
-         afl/MZvxHbRWlc4e5/TgKVrsnSkslkarpVAktrS5j8TNJ+BLeH3gc2+FfwwSOc+RQl8i
-         429vskOmViAfJkd8h5iwKtQ/qzW1YfNU5M4Wjo5SOjoV+2PPlVBxfBSTOR6mQE1zceZh
-         P9Mw==
-X-Gm-Message-State: ALoCoQlhT3eEEfnyJJjcGDSq4u2c80EA/yLlQjG4rR6lmdbxMULiT+bZfD1hOQsqYlHAJfI4ZBcm
-X-Received: by 10.112.214.204 with SMTP id oc12mr14631113lbc.10.1424147198126;
- Mon, 16 Feb 2015 20:26:38 -0800 (PST)
-Received: by 10.112.12.200 with HTTP; Mon, 16 Feb 2015 20:26:38 -0800 (PST)
+	id S1752898AbbBQFUJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Feb 2015 00:20:09 -0500
+Received: from smtp.codeaurora.org ([198.145.29.96]:49077 "EHLO
+	smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752258AbbBQFUI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Feb 2015 00:20:08 -0500
+Received: from smtp.codeaurora.org (localhost [127.0.0.1])
+	by smtp.codeaurora.org (Postfix) with ESMTP id DF92813FEC6;
+	Tue, 17 Feb 2015 05:20:07 +0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 486)
+	id CC8B713FECF; Tue, 17 Feb 2015 05:20:07 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on
+	pdx-caf-smtp.dmz.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.4 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+	MISSING_MID autolearn=no version=3.3.1
+Received: from [10.10.7.85] (184-96-4-77.hlrn.qwest.net [184.96.4.77])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	(Authenticated sender: mfick@smtp.codeaurora.org)
+	by smtp.codeaurora.org (Postfix) with ESMTPSA id B983813FEC6;
+	Tue, 17 Feb 2015 05:20:05 +0000 (UTC)
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263932>
 
-Hi all,
-
-Teaching a university class using git, we encountered a case of
-potentially incorrect behavior when students made changes to a file,
-forgot to commit them, and then pulled a new one-line change from our
-remote repository. This resulted in the uncommitted changes being
-overwritten without a warning.
-
-To our understanding, the expected behavior should have been a warning
-that uncommitted files are being overwritten, or an auto-merge that
-preserves the changes in the uncommitted files. Instead, git shows the
-merge as a single-line change, while in reality discarding potentially
-a large number of uncommitted lines.
-
-I have attached a script that replicates this behavior -- we have been
-able to replicate the problem with git versions 1.9.1, 1.9.3 and
-2.2.2. Please let us know whether this is a bug, or whether this is
-the intended behavior.
-
-It appears that it is only this specific sequence of commands that
-causes the behavior. Across a range of small modifications to the
-sequence of steps, the behavior is as expected:
-
-* using git cp and dropping the add step -> modifications preserved
-* not doing commit 2 (or its changes) -> modifications live in new file
-* any change in branch use other than test first master second ->
-modifications preserved
-
-(Asking colleagues, one of them pointed me to the following article
-which describes a potentially related problem that appears to have
-been fixed in 1.7.7:
-http://benno.id.au/blog/2011/10/01/git-recursive-merge-broken)
-
-Thanks,
-Martin
-
----
-
-git-test.sh: Run in a clean directory!
-
-#!/bin/bash
-
-# Replicate the two different states of hw2_starter, before and after
-our update.
-git clone git@github.com:cs61c-spring2015/hw2_starter.git
-cd hw2_starter
-git checkout f8a2e4418b4c370921790d1dfd1b6f9761262d4a
-git checkout -b test
-cd ..
-
-# Set up the cs61c-xx repository, and fetch "first" hw2_starter.
-mkdir cs61c-test
-cd cs61c-test
-git init
-git remote add hw2_starter ../hw2_starter/
-git fetch hw2_starter
-git merge hw2_starter/test -m "add hw2 changes"
-
-# Perform a series of commits that some students accidentally did.
-mkdir hw2
-git mv hw1 hw2
-git commit -a -m "commit 1"
-
-cp hw2/hw1/* hw2/
-git add hw2/*
-git commit -a -m "commit 2"
-
-# Now we make changes to the beargit.c file, but don't commit them.
-for i in `seq 1 5`; do
-echo "beargitcode line $i" >> hw2/beargit.c
-done
-
-echo
-echo
-echo " *** SHOULD HAVE A LINE CONTAINING beargitcode IN beargit.c ***"
-echo
-echo "CONTENT OF beargit.c | grep beargitcode BEFORE MERGE:"
-cat hw2/beargit.c | grep beargitcode
-echo "[EOF]"
-echo
-
-# Now we fetch the update, as we told students
-git fetch hw2_starter
-git merge hw2_starter/master -m "add hw2 changes"
-
-# This should fail, because there are uncommitted changes!!!
-
-echo
-echo "CONTENT OF beargit.c | grep beargitcode AFTER MERGE:"
-cat hw2/beargit.c | grep beargitcode
-echo "[EOF]"
-echo
+VGhlcmUgY3VycmVudGx5IGlzIGEgdGhyZWFkIG9uIHRoZSBHZXJyaXQgbGlzdCBhYm91dCBob3cg
+bXVjaCBmYXN0ZXIgY2xvbmluZyBjYW4gYmUgd2hlbiB1c2luZyBHZXJyaXQvamdpdCBHQ2VkIHBh
+Y2tzIHdpdGggYml0bWFwcyB2ZXJzdXMgQyBnaXQgR0NlZCBwYWNrcyB3aXRoIGJpdG1hcHMuCgpT
+b21lIGRpZmZlcmVuY2VzIG91dGxpbmVkIGFyZSB0aGF0IGpnaXQgc2VlbXMgdG8gaGF2ZSBtb3Jl
+IGJpdG1hcHMsIGl0IGNyZWF0ZXMgb25lIGZvciBldmVyeSByZWZzL2hlYWRzLCBpcyBDIGdpdCBk
+b2luZyB0aGF0PyAgQW5vdGhlciBkaWZmZXJlbmNlIHNlZW1zIHRvIGJlIHRoYXQgamdpdCBjcmVh
+dGVzIHR3byBwYWNrcywgc3BsaXR0aW5nIHN0dWZmIG5vdCByZWFjaGFibGUgZnJvbSByZWZzL2hl
+YWRzIGludG8gaXRzIG93biBwYWNrLiAgVGhpcyBtYWtlcyBhIGNsb25lIGhhdmUgemVybyBDUFUg
+c2VydmVyIHNpZGUgaW4gdGhlIHByaXN0aW5lIGNhc2UuICBJbiB0aGUgR2Vycml0IHVzZSBjYXNl
+LCB0aGlzIHNlY29uZCAidW5yZWFjaGFibGUiIHBhY2tmaWxlIGNhbiBiZSBzaXplYWJsZSwgSSB3
+b25kZXIgaWYgdGhlcmUgYXJlIG90aGVyIHVzZSBjYXNlcyB3aGVyZSB0aGlzIG1pZ2h0IGFsc28g
+YmUgdGhlIGNhc2UgKGFuZCB0aGlzIHNsb3dpbmcgZG93biBjbG9uZXMgZm9yIEMgZ2l0IEdDZWQg
+cmVwb3MpPwoKSWYgdGhlcmUgaXMgbm90IGEgbG90IG9mIHBhcmFsbGVsaXNtIGxlZnQgdG8gc3F1
+ZWFrIG91dCwgcGVyaGFwcyBhIGZvY3VzIHdpdGggYmV0dGVyIHJldHVybnMgaXMgdHJ5aW5nIHRv
+IGRvIHdoYXRldmVyIGlzIHBvc3NpYmxlIHRvIG1ha2UgYWxsIGNsb25lcyAoYW5kIHBvdGVudGlh
+bGx5IGFueSBmZXRjaCB1c2UgY2FzZSBkZWVtZWQgaW1wb3J0YW50IG9uIGEgcGFydGljdWxhciBz
+ZXJ2ZXIpIGhhdmUgemVybyBDUFU/ICBEZXBlbmRpbmcgb24gd2hhdCBhIHNlcnZlcidzIHByaW1h
+cnkgbWlzc2lvbiBpcywgSSBjb3VsZCBlbnZpc2lvbiBjZXJ0YWluIGFkbWlucyB3aWxsaW5nIHRv
+IHNhY3JpZmljZSBzaWduaWZpY2FudCBhbW91bnRzIG9mIGRpc2sgc3BhY2UgdG8gc3BlZWQgdXAg
+dGhlaXIgZmV0Y2hlcy4gIFBlcmhhcHMgc29tZSBtb3JlIGV4dHJlbWUgdGhpbmtpbmcgKHN1Y2gg
+YXMgd2hhdCBtdXN0IGhhdmUgbGVkIHRvIGJpdG1hcHMpIGlzIHdvcnRoIGJyYWluc3Rvcm1pbmcg
+YWJvdXQgdG8gaW1wcm92ZSBzZXJ2ZXIgdXNlIGNhc2VzPwoKV2hhdCBpZiBhbiBhZG1pbiB3ZXJl
+IHdpbGxpbmcgdG8gc2FjcmlmaWNlIGEgcGFja2ZpbGUgZm9yIGV2ZXJ5IHVzZSBjYXNlIGhlIGRl
+ZW1lZCBpbXBvcnRhbnQsIGNvdWxkIGdpdCBiZSBtYWRlIHRvIHN1cHBvcnQgdGhhdCBlYXNpbHk/
+ICBGb3IgZXhhbXBsZSwgbWF5YmUgdGhlIGFkbWluIGNvbnNpZGVycyBhIGNsb25lIG9yIGEgZmV0
+Y2ggZnJvbSBtYXN0ZXIgdG8gYmUgaW1wb3J0YW50LCBjb3VsZCB6ZXJvIHBlcmNlbnQgQ1BVIGJl
+IGFjaGlldmVkIHJlZ3VsYXJseSBmb3IgdGhvc2UgdHdvIHVzZSBjYXNlcz8gIENsb25pbmcgaXMg
+cG9zc2libGUgaWYgdGhlIHJlcG9zaXRvcnkgd2VyZSByZXBhY2tlZCBpbiB0aGUgamdpdCBzdHls
+ZSBhZnRlciBhbnkgcHVzaCB0byBhIGhlYWQuICBJcyBpdCB3b3J0aCBleHBsb3Jpbmcgd2F5cyBv
+ZiBtYWtpbmcgR0MgZWZmaWNpZW50IGVub3VnaCB0byBtYWtlIHRoaXMgZmVhc2libGU/ICBDYW4g
+Yml0bWFwcyBiZSBsZXZlcmFnZWQgdG8gbWFrZSByZXBhY2tpbmcgZmFzdGVyPyAgSSBiZWxpZXZl
+IHRoYXQgYXQgbGVhc3QgcmVhY2hhYmlsaXR5IGNoZWNraW5nIGNvdWxkIHBvdGVudGlhbGx5IGJl
+IGltcHJvdmVkIHdpdGggYml0bWFwcz8gQXJlIHRoZXJlIHBvdGVudGlhbGx5IGFueSB3YXlzIHRv
+IG1ha2UgYmV0dGVyIGRlbHRpZmljYXRpb24gcmV1c2UgZHVyaW5nIHJlcGFja2luZyAobm90IGJp
+dG1hcCByZWxhdGVkKSwgYnkgc29tZWhvdyByZXZlcnNpbmcgb3IgdHJhbnNsYXRpbmcgZGVsdGFz
+IHRvIG5ldyBvYmplY3RzIHRoYXQgd2VyZSBqdXN0IHJlY2VpdmVkLCB3aXRob3V0IGFjdHVhbGx5
+IHJlY2FsY3VsYXRpbmcgdGhlbSwgYnV0IHlldCBzdGlsbCBnZXR0aW5nIG1vc3Qgb2JqZWN0cyBk
+ZWx0aWZpZWQgYWdhaW5zdCB0aGUgbmV3ZXN0IG9iamVjdHMgKGFjaGlldmluZyB0aGUgc2FtZSBw
+YWNrcyBhcyBnaXQgR0Mgd291bGQgYWNoaWV2ZSB0b2RheSwgYnV0IGZhc3Rlcik/IFdoYXQgb3Ro
+ZXIgcGllY2VzIG5lZWQgdG8gYmUgaW1wcm92ZWQgdG8gbWFrZSByZXBhY2tpbmcgZmFzdGVyPwoK
+QXMgZm9yIHRoZSBzaW5nbGUgYnJhbmNoIGZldGNoIGNhc2UsIGNvdWxkIHRoaXMgc29tZWhvdyBi
+ZSBpbXByb3ZlZCBieSBhbGxvY2F0aW5nIG9uZSBvciBtb3JlIHBhY2tmaWxlcyB0byB0aGlzIHVz
+ZSBjYXNlPyAgVGhlIHNpbXBsZXN0IHNpbmdsZSBicmFuY2ggZmV0Y2ggdXNlIGNhc2UgaXMgbGlr
+ZWx5IHNvbWVvbmUgZG9pbmcgYSBnaXQgaW5pdCBmb2xsb3dlZCBieSBhIHNpbmdsZSBicmFuY2gg
+ZmV0Y2guICBJIHRoaW5rIHRoZSBhbmRyb2lkIHJlcG8gdG9vbCBjYW4gYmUgdXNlZCBpbiB0aGlz
+IHdheSwgc28gdGhpcyBtYXkgYWN0dWFsbHkgYmUgYSBjb21tb24gdXNlIGNhc2U/ICBXaXRoIGEg
+cGFja2ZpbGUgZGVkaWNhdGVkIHRvIHRoaXMgYnJhbmNoLCBnaXQgc2hvdWxkIGJlIGFibGUgdG8g
+anVzdCBzdHJlYW0gaXQgb3V0IHdpdGhvdXQgYW55IENQVS4gIEJ1dCBJIHRoaW5rIGdpdCB3b3Vs
+ZCBuZWVkIHRvIGtub3cgdGhpcyBwYWNrZmlsZSBleGlzdHMgdG8gYmUgYWJsZSB0byB1c2UgaXQu
+ICBJdCB3b3VsZCBiZSBuaWNlIGlmIGJpdG1hcHMgY291bGQgaGVscCBoZXJlLCBidXQgSSBiZWxp
+ZXZlIGJpdG1hcHMgY2FuIHNvIGZhciBvbmx5IGJlIHVzZWQgZm9yIG9uZSBwYWNrZmlsZS4gIEkg
+dW5kZXJzdGFuZCB0aGF0IG1ha2luZyBiaXRtYXBzIHNwYW4gbXVsdGlwbGUgcGFja2ZpbGVzIHdv
+dWxkIGJlIHZlcnkgY29tcGxpY2F0ZWQsIGJ1dCBtYXliZSBpdCB3b3VsZCBub3QgYmUgc28gaGFy
+ZCB0byBzdXBwb3J0IGJpdG1hcHMgb24gbXVsdGlwbGUgcGFja2ZpbGVzIGlmIGVhY2ggb2YgdGhl
+c2Ugd2VyZSAic2VsZiBjb250YWluZWQiPyAgQnkgc2VsZiBjb250YWluZWQgSSBtZWFuIHRoYXQg
+YWxsIG9iamVjdHMgcmVmZXJlbmNlZCBieSBvYmplY3RzIGluIHRoZSBwYWNrZmlsZSB3ZXJlIGNv
+bnRhaW5lZCBpbiB0aGF0IHBhY2tmaWxlLgoKV2hhdCBvdGhlciBzdGlsbCB1bmltcGxlbWVudGVk
+IGNhY2hpbmcgdGVjaG5pcXVlcyBjb3VsZCBiZSB1c2VkIHRvIGltcHJvdmUgY2xvbmUvZmV0Y2gg
+dXNlIGNhc2VzPyAKCi0gU2hhbGxvdyBjbG9uZXMgKGRlZGljYXRlIGEgc3BlY2lhbCBwYWNrZmls
+ZSB0byB0aGlzLCB3aGF0IGFib3V0IGFub3RoZXIgYml0bWFwIGZvcm1hdCB0aGF0IG9ubHkgbWFw
+cyBvYmplY3RzIGluIGEgc2luZ2xlIHRyZWUgdG8gaGVscCB0aGlzKT8KCi0gU21hbGwgZmV0Y2hl
+cyAoc2ltcGxlIGJyYW5jaCBGRiB1cGRhdGVzKSwgSSBzdXNwZWN0IHRoZXNlIGFyZSBmYXN0IGVu
+b3VnaCwgYnV0IGlmIG5vdCwgbWF5YmUgY2FjaGluZyBzb21lIHRoaW4gcGFja3MgKHRoYXQgY291
+bGQgcmVzdWx0IGluIHplcm8gQ1BVIHJlcXVlc3RzIGZvciBtYW55IGNsaWVudHMpIHdvdWxkIGJl
+IHVzZWZ1bD8gIE1heWJlIHNwcmVhZCB0aGVzZSBvdXQgZXhwb25lbnRpYWxseSBvdmVyIHRpbWUg
+c28gdGhhdCBtYW55IHdpbGwgYmUgYXZhaWxhYmxlIGZvciByZWNlbnQgdXBkYXRlcyBhbmQgZmV3
+ZXIgZm9yIG9sZGVyIHVwZGF0ZXM/ICBJIGtub3cgZ2l0IG5vcm1hbGx5IHRocm93cyBhd2F5IHRo
+aW4gcGFja3MgYWZ0ZXIgcmVjZWl2aW5nIHRoZW0gYW5kIHJlc29sdmluZyB0aGVtLCBidXQgaWYg
+aXQga2VwdCB0aGVtIGFyb3VuZCAobWF5YmUgaW4gYSBzcGVjaWFsIGRpcmVjdG9yeSksIGl0IHNl
+ZW1zIHRoYXQgdGhleSBjb3VsZCBiZSB1c2VmdWwgZm9yIHVwZGF0aW5nIG90aGVyIGNsaWVudHMg
+d2l0aCB6ZXJvIENQVT8gIEEgdGhpbiBwYWNrIGNhY2hlIG1pZ2h0IGJlIHNvbWV0aGluZyByZWFs
+bHkgZWFzeSB0byBtYW5hZ2UgYmFzZWQgb24gZmlsZSB0aW1lc3RhbXBzLCBhbiBhZG1pbiBtYXkg
+c2ltcGx5IG5lZWQgdG8gc2V0IGEgbWF4IGNhY2hlIHNpemUuICBCdXQgaG93IGNhbiBnaXQga25v
+dyB3aGF0IHRoaW4gcGFja3MgaXQgaGFzLCBhbmQgd2hhdCB0aGV5IHdvdWxkIGJlIHVzZWZ1bCBm
+b3IsIG5hbWUgdGhlbSB3aXRoIHRoZWlyIHN0YXJ0IGFuZCBlbmRpbmcgc2hhcz8KClNvcnJ5IGZv
+ciB0aGUgbG9uZyB3aW5kZWQgcmFudC4gSSBzdXNwZWN0IHRoYXQgc29tZSB2YXJpYXRpb24gb2Yg
+YWxsIG15IHN1Z2dlc3Rpb25zIGhhdmUgYWxyZWFkeSBiZWVuIHN1Z2dlc3RlZCwgYnV0IG1heWJl
+IHRoZXkgd2lsbCByZWtpbmRsZSBzb21lIG9sZGVyLCBub3cgdXNlZnVsIHRob3VnaHRzLCBvciBp
+bnNwaXJlIHNvbWUgbmV3IG9uZXMuICBBbmQgbWF5YmUgc29tZSBvZiB0aGVzZSBhcmUgYmV0dGVy
+IHRvIHB1cnN1ZSB0aGVuIG1vcmUgcGFyYWxsZWxpc20/CgotTWFydGluCgpRdWFsY29tbSBJbm5v
+dmF0aW9uIENlbnRlciwgSW5jLgpUaGUgUXVhbGNvbW0gSW5ub3ZhdGlvbiBDZW50ZXIsIEluYy4g
+aXMgYSBtZW1iZXIgb2YgdGhlIENvZGUgQXVyb3JhIEZvcnVtLCBhIExpbnV4IEZvdW5kYXRpb24g
+Q29sbGFib3JhdGl2ZSBQcm9qZWN0T24gRmViIDE2LCAyMDE1IDg6NDcgQU0sIEplZmYgS2luZyA8
+cGVmZkBwZWZmLm5ldD4gd3JvdGU6Cj4KPiBPbiBNb24sIEZlYiAxNiwgMjAxNSBhdCAwNzozMToz
+M0FNIC0wODAwLCBEYXZpZCBMYW5nIHdyb3RlOiAKPgo+ID4gPlRoZW4gdGhlIHNlcnZlciBzdHJl
+YW1zIHRoZSBkYXRhIHRvIHRoZSBjbGllbnQuIEl0IG1pZ2h0IGRvIHNvbWUgbGlnaHQgCj4gPiA+
+d29yayB0cmFuc2Zvcm1pbmcgdGhlIGRhdGEgYXMgaXQgY29tZXMgb2ZmIHRoZSBkaXNrLCBidXQg
+bW9zdCBvZiBpdCBpcyAKPiA+ID5qdXN0IGJsaXR0ZWQgc3RyYWlnaHQgZnJvbSBkaXNrLCBhbmQg
+dGhlIG5ldHdvcmsgaXMgdGhlIGJvdHRsZW5lY2suIAo+ID4gCj4gPiBEZXBlbmRpbmcgb24gaG93
+IGNsb3NlIHRvIGZ1bGwgdGhlIFdBTiBsaW5rIGlzLCBpdCBtYXkgYmUgcG9zc2libGUgdG8gCj4g
+PiBpbXByb3ZlIHRoaXMgd2l0aCBtdWx0aXBsZSBjb25uZWN0aW9ucyAoYWdhaW4sIHJlZmVyZW5j
+aW5nIGJiY3ApLCBidXQgCj4gPiB0aGVyZSdzIGFsc28gdGhlIHF1ZXN0aW9uIG9mIGlmIGl0J3Mg
+d29ydGggdHJ5aW5nIHRvIHVzZSB0aGUgZW50aXJlIFdBTiBmb3IgCj4gPiBhIHNpbmdsZSB1c2Vy
+LiBUaGUgdmFzdCBtYWpvcml0eSBvZiB0aGUgdGltZSB0aGUgc2VydmVyIGlzIGRvaW5nIG1vcmUg
+dGhhbiAKPiA+IG9uZSB0aGluZyBhbmQgd291bGQgcmF0aGVyIGxldCBhbnkgaW5kaXZpZHVhbCB1
+c2VyIHdhaXQgYSBiaXQgYW5kIHNlcnZpY2UgCj4gPiB0aGUgb3RoZXIgdXNlcnMuIAo+Cj4gWWVh
+aCwgSSBoYXZlIHNlZW4gY2xpZW50cyB0aGF0IG1ha2UgbXVsdGlwbGUgVENQIGNvbm5lY3Rpb25z
+IHRvIGVhY2ggCj4gcmVxdWVzdCBhIGNodW5rIG9mIGEgZmlsZSBpbiBwYXJhbGxlbC4gVGhlIHNo
+b3J0IGFuc3dlciBpcyB0aGF0IHRoaXMgaXMgCj4gZ29pbmcgdG8gYmUgdmVyeSBoYXJkIHdpdGgg
+Z2l0LiBFYWNoIGNsb25lIGdlbmVyYXRlcyB0aGUgcGFjayBvbiB0aGUgZmx5IAo+IGJhc2VkIG9u
+IHdoYXQncyBvbiBkaXNrIGFuZCBzdHJlYW1zIGl0IG91dC4gSXQgc2hvdWxkIF91c3VhbGx5XyBi
+ZSB0aGUgCj4gc2FtZSwgYnV0IHRoZXJlJ3Mgbm90aGluZyB0byBndWFyYW50ZWUgYnl0ZS1mb3It
+Ynl0ZSBlcXVhbGl0eSBiZXR3ZWVuIAo+IGludm9jYXRpb25zLiBTbyB5b3UnZCBoYXZlIHRvIG11
+bHRpcGxleCBhbGwgb2YgdGhlIGNvbm5lY3Rpb25zIGludG8gdGhlIAo+IHNhbWUgc2VydmVyIHBy
+b2Nlc3MuIEFuZCBldmVuIHRoZW4gaXQncyBoYXJkOyB0aGF0IHByb2Nlc3Mga25vd3MgaXRzIAo+
+IGdvaW5nIHRvIHNlbmQgeW91IGJ5dGUgdGhlIGJ5dGVzIGZvciBvYmplY3QgWCwgYnV0IGl0IGRv
+ZXNuJ3Qga25vdyBhdCAKPiBleGFjdGx5IHdoaWNoIG9mZnNldCB1bnRpbCBpdCBnZXRzIHRoZXJl
+LCB3aGljaCBtYWtlcyBzZW5kaW5nIHRoaW5ncyBvdXQgCj4gb2Ygb3JkZXIgdHJpY2t5LiBBbmQg
+dGhlIHdob2xlIG91dHB1dCBpcyBjaGVja3N1bW1lZCBieSBhIHNpbmdsZSBzaGExIAo+IG92ZXIg
+dGhlIHdob2xlIHN0cmVhbSB0aGF0IGNvbWVzIGF0IHRoZSBlbmQuIAo+Cj4gSSB0aGluayB0aGUg
+bW9zdCBmZWFzaWJsZSB0aGluZyB3b3VsZCBiZSB0byBxdWlja2x5IHNwb29sIGl0IHRvIGEgc2Vy
+dmVyIAo+IG9uIHRoZSBMQU4sIGFuZCB0aGVuIHVzZSBhbiBleGlzdGluZyBmZXRjaC1pbi1wYXJh
+bGxlbCB0b29sIHRvIGdyYWIgaXQgCj4gZnJvbSB0aGVyZSBvdmVyIHRoZSBXQU4uIAo+Cj4gLVBl
+ZmYgCj4gLS0gCj4gVG8gdW5zdWJzY3JpYmUgZnJvbSB0aGlzIGxpc3Q6IHNlbmQgdGhlIGxpbmUg
+InVuc3Vic2NyaWJlIGdpdCIgaW4gCj4gdGhlIGJvZHkgb2YgYSBtZXNzYWdlIHRvIG1ham9yZG9t
+b0B2Z2VyLmtlcm5lbC5vcmcgCj4gTW9yZSBtYWpvcmRvbW8gaW5mbyBhdMKgIGh0dHA6Ly92Z2Vy
+Lmtlcm5lbC5vcmcvbWFqb3Jkb21vLWluZm8uaHRtbCAK
