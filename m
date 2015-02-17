@@ -1,225 +1,133 @@
-From: Fairuzan Roslan <fairuzan.roslan@gmail.com>
-Subject: Re: odb_mkstemp's 0444 permission broke write/delete access on AFP
-Date: Tue, 17 Feb 2015 11:22:28 +0800
-Message-ID: <13683B35-70A8-4D9E-80E1-440E4E0DC7F0@gmail.com>
-References: <A403BFCC-D66F-49BD-B54C-BB86B467F1A1@gmail.com> <vpqtwyl90mx.fsf@anie.imag.fr> <340435D1-2FEB-4A4A-BBD2-E301096C72D8@gmail.com> <vpqiof14qu8.fsf@anie.imag.fr>
-Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2070.6\))
-Content-Type: multipart/signed; boundary="Apple-Mail=_8CD5EF2B-B52E-4560-81A0-24F596EE0677"; protocol="application/pgp-signature"; micalg=pgp-sha1
-Cc: gitster@pobox.com, git@vger.kernel.org, tboegi@web.de
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Feb 17 04:22:44 2015
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: Pack v4 again..
+Date: Mon, 16 Feb 2015 20:12:33 -0800
+Message-ID: <CAJo=hJvR-3o3U3YWhvq4D-A6YomFbjwEyKxjT93EoNMRrW1PtQ@mail.gmail.com>
+References: <CACsJy8CMCTirggRhD28xvv4tM8b4+NL_ruF4LgW293dHAmLYdA@mail.gmail.com>
+ <alpine.LFD.2.11.1502152221480.22104@knanqh.ubzr> <20150216064537.GF32381@peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Nicolas Pitre <nico@fluxnic.net>, Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Feb 17 05:13:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YNYkG-0008Cz-5o
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Feb 2015 04:22:44 +0100
+	id 1YNZWt-0007sv-F5
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Feb 2015 05:12:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755729AbbBQDWg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Feb 2015 22:22:36 -0500
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:35680 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754566AbbBQDWe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Feb 2015 22:22:34 -0500
-Received: by padfa1 with SMTP id fa1so2972495pad.2
-        for <git@vger.kernel.org>; Mon, 16 Feb 2015 19:22:33 -0800 (PST)
+	id S1752571AbbBQEMz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Feb 2015 23:12:55 -0500
+Received: from mail-yh0-f48.google.com ([209.85.213.48]:55154 "EHLO
+	mail-yh0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751330AbbBQEMy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Feb 2015 23:12:54 -0500
+Received: by mail-yh0-f48.google.com with SMTP id t59so15762374yho.7
+        for <git@vger.kernel.org>; Mon, 16 Feb 2015 20:12:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:mime-version:content-type:from:in-reply-to:date:cc
-         :message-id:references:to;
-        bh=gTsaPwOqxsXYYCaW/+YdrlTJlrxO3n8gKv/bVXdXvGI=;
-        b=jNb7JKk2wOuTuAPNOgbp6zth57LuJWRB3SqeXKQkODyqVdGwI9eLdRvH2cl4jYlj9Q
-         DzU/TrEPbZ4KQb9uAXJU3z66qSvFHGJGZ/3PAFS5xe+q1+8yIQJjzJhtmhuY0KCT0Rgb
-         nIgQ23kbj/iWiavfbSwIMgwiFkzvswZdt676HSJq9Zgr2JOUvvg/z7c4+eM/Dw8ej3YJ
-         1asy/ezEVG8H9heDQWG+hEy4PBfcTPDCZtYDc8+PGK3Vkggiqfz0WpyRu2A7XQqo3s2K
-         IrQ+/Iy/UDHsZJnmrNCEodfiXiraCUbo8vWLoj/M+eEOqSgrIJsCd1YOhXPNIhEKnvOi
-         AQwg==
-X-Received: by 10.66.62.137 with SMTP id y9mr45523995par.87.1424143353704;
-        Mon, 16 Feb 2015 19:22:33 -0800 (PST)
-Received: from [192.168.88.200] (brk-24-241.tm.net.my. [202.188.24.241])
-        by mx.google.com with ESMTPSA id v5sm16174549pdh.9.2015.02.16.19.22.30
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 16 Feb 2015 19:22:32 -0800 (PST)
-X-Pgp-Agent: GPGMail 2.5b5
-In-Reply-To: <vpqiof14qu8.fsf@anie.imag.fr>
-X-Mailer: Apple Mail (2.2070.6)
+        d=spearce.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=1n8c5sMKC+LV6oSfcaWKeXDhEiIuF9VOUejRIRgs6iA=;
+        b=N/HbExZ4v1+bKJnc21US6ULpy0Sd3yRe+n8J8epoONawy/9jPw1O5+R7b5ILE7VECh
+         GHIqWz9znO9R0kFFNmop7yu8wxjhVq6zES/3htYGFxD65NJSoTnclP3ycswZJbFnAmWi
+         x6qyJDHi3myI8VYFy+1PJ2NnQpTOwAZorYM5o=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=1n8c5sMKC+LV6oSfcaWKeXDhEiIuF9VOUejRIRgs6iA=;
+        b=Ai6DPGVGWdUWT3QpcBlcR0dEO9TfJ1OV6i4bygZUi5qDfXGAA7k96PjxXnDe/4XhmY
+         8CLNXF/rZMMubUWIPYUTu8r5IeL0uqkLEXGOul8Kpp0OE7qO3m0kNA/At33apA8lVFEt
+         k0VJLm6/CBMdvEoWlgFnJETTswHTk0ztTmvbhuoophiiMgjgqEdP+j+DpxFbsDfrTtM2
+         vLm3kIHyghboUi9lVBbXfNX+IASkaWXytAxQNNqrhkED0Q1NRsT0qq3pRt2NV5BtrPkV
+         0soDsoKF5gK33JMJD1WKr2oVRoxWBdK/TxFGiwQgpnMlTKprPrLHblXicXenzoO4SqdQ
+         WrsQ==
+X-Gm-Message-State: ALoCoQmV2qYSyoxkPI94wVU9GbKOtT1wlCf+ucTTkcX6aWhXDTHKEeAVxgxvs68sr/ltbynt2shs
+X-Received: by 10.170.60.16 with SMTP id c16mr216454ykc.128.1424146373442;
+ Mon, 16 Feb 2015 20:12:53 -0800 (PST)
+Received: by 10.170.39.19 with HTTP; Mon, 16 Feb 2015 20:12:33 -0800 (PST)
+In-Reply-To: <20150216064537.GF32381@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263929>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263930>
 
+On Sun, Feb 15, 2015 at 10:45 PM, Jeff King <peff@peff.net> wrote:
+> On Sun, Feb 15, 2015 at 11:59:02PM -0500, Nicolas Pitre wrote:
+>
+>> Yet, I think the biggest problem with pack v4 at the moment is the
+>> packing algorithm for tree objects.  We are piggy-backing on the pack v2
+>> object delta compression sorting and that produces suboptimal results
+>> due to deep recursions.  And it is the recursion that kills us. The pack
+>> v4 requires a new packing algorithm for its tree objects.
+>>
+>> What I imagined is something like this:
+>>
+>> - Each canonical tree entry is made of a SHA1, mode and path.  Let's
+>>   assume this is hashed into a 24-bit value.
+>>
+>> - Each tree object can therefore be represented as a string of 24-bit
+>>   "characters".
+>>
+>> - Delta-compressing a tree object becomes a substring search where we
+>>   try to replace a sequence of "characters" with the longest "string"
+>>   possible from another object.  Repeat with the remaining sequences.
+>
+> Somewhat related to this, I was playing this weekend with the idea of
+> generating fast tree diffs from our on-disk deltas. That is, given a
+> base tree and a binary delta against it, could I reliably reproduce a
+> diff (one way or the other) in O(size of diff), rather than O(size of
+> tree)?
 
---Apple-Mail=_8CD5EF2B-B52E-4560-81A0-24F596EE0677
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=utf-8
+Yes, if you always make the tree diff *search* on entry boundaries.
 
+> The conclusion I came to was "no, you cannot do it in the general case
+> of byte-wise binary diffs"[2].
 
-> On Feb 17, 2015, at 3:08 AM, Matthieu Moy =
-<Matthieu.Moy@grenoble-inp.fr> wrote:
->=20
-> [ Please, don't top post on this list ]
->=20
-> Fairuzan Roslan <fairuzan.roslan@gmail.com> writes:
->=20
->> I don=E2=80=99t see the issue for the owner of his/her own file to =
-have write
->> access.
->=20
-> Object and pack files are not meant to be modified. Hence, they are
-> read-only so that an (accidental) attempt to modify them fails.
->=20
->> Setting tmp idx & pack files to read-only even for the file owner is
->> not a safety feature.
->=20
-> Yes it is. If you do not think so, then please give some arguments.
->=20
->> You should at least give the user the option to set the permission in
->> the config file and not hardcoded the permission in the binary.
->=20
-> This is the kind of thing I meant by "investigate alternate =
-solutions".
-> I have no AFP share to test, so it would help if you answered the
-> question I asked in my previous message:
->=20
->>> On Feb 17, 2015, at 2:23 AM, Matthieu Moy =
-<Matthieu.Moy@grenoble-inp.fr> wrote:
->>>=20
->>> Fairuzan Roslan <fairuzan.roslan@gmail.com> writes:
->>>=20
->>>> Hi,
->>>>=20
->>>> Somehow the =E2=80=9Cint mode =3D 0444;=E2=80=9D in odb_mkstemp =
-(environment.c) are
->>>> causing a lot of issues (unable to unlink/write/rename) to those
->>>> people who use AFP shares.
->>>=20
->>> Is it a problem when using Git (like "git gc" failing to remove old
->>> packs), or when trying to remove files outside Git?
->=20
-> (BTW, why did you try to write/rename pack files?)
->=20
-> --
-> Matthieu Moy
-> http://www-verimag.imag.fr/~moy/
+This is also why you cannot binary search inside of the canonical tree
+format. :(
 
-I think its easier if I just show you=E2=80=A6
+> If we knew that our deltas were always produced on entry-boundaries (a
+> "character" in your description above), this would be much simpler.
 
-OS : OS X 10.10.0 - 10.10.2
-Client :  git version 1.9.3 (Apple Git-50) and git version 2.2.1
-AFP share : //user@hostname._afpovertcp._tcp.local/installer on =
-/Volumes/installer (afpfs, nodev, nosuid, mounted by user)
+Eons ago Nico and I were of the opinion that pack v4 trees could use
+the existing byte based delta format on disk, but the delta
+search/encoder would always align to fixed width entry boundaries.
+That gives you deltas that are understandable by the current decoder,
+but are also trivially processed in delta format as insertions and
+copy runs always cover complete entries and are never a partial entry.
 
-1. git clone example
+It was all theory; we never actually wrote a prototype of that.
 
-$ git clone https://github.com/robbyrussell/oh-my-zsh.git
-Cloning into 'oh-my-zsh'...
-remote: Counting objects: 11830, done.
-remote: Total 11830 (delta 0), reused 0 (delta 0)
-Receiving objects: 100% (11830/11830), 2.12 MiB | 481.00 KiB/s, done.
-Resolving deltas: 100% (6510/6510), done.
-warning: unable to unlink =
-/Volumes/installer/oh-my-zsh/.git/objects/pack/tmp_pack_zjPxuc: =
-Operation not permitted
-error: unable to write sha1 filename =
-/Volumes/installer/oh-my-zsh/.git/objects/pack/pack-cceafdc9ef02bc58844138=
-ba543ec6cc38252bb1.pack: Operation not permitted
-fatal: cannot store pack file
-fatal: index-pack failed
+> [1] Of course there are other reachability checks besides packing, like
+>     git-prune. But all of those are even better sped up by using
+>     reachability bitmaps. Packing, as the place where we generate the
+>     bitmaps, and which is sensitive to things like traversal order,
+>     remains the place where we will always need to actually walk.
 
-$ ls -l oh-my-zsh/.git/objects/pack
-total 5008
--rw-------  1 user  staff       32 Feb 17 09:59 =
-pack-cceafdc9ef02bc58844138ba543ec6cc38252bb1.keep
--r--r--r--  1 user  staff   332312 Feb 17 09:59 tmp_idx_oUN1sb
--r--r--r--  1 user  staff  2223007 Feb 17 09:59 tmp_pack_zjPxuc
+`git log -- $path` isn't trivially improved with reachability bitmaps.
+Its something we have been pondering a lot at $DAY_JOB and haven't
+found a magic bullet solution for yet. Until someone comes up with
+another chunk of magic, we need tree diffs for a lot of operations.
 
-$ rm -rf oh-my-zsh/.git/objects/pack/tmp_*
-rm: oh-my-zsh/.git/objects/pack/tmp_idx_oUN1sb: Operation not permitted
-rm: oh-my-zsh/.git/objects/pack/tmp_pack_zjPxuc: Operation not permitted
+> [2] One option, of course, is to generate byte-wise deltas, but with a
+>     promise to always align them on entry boundaries. I'm tempted by
+>     this, because the result would be readable by existing packv2
+>     readers. We'd have to set a flag somewhere that indicates the pack
+>     was written with this property, though.
 
-Detail Errors:
-1. delete_ref_loose (refs.c) -> unlink_or_msg (wrapper.c) -> "unable to =
-unlink %s: %s"
-2. move_temp_to_file (sha1_file.c ) -> =E2=80=9Cunable to write sha1 =
-filename %s: %s=E2=80=9D
+Yes, that was always something we wanted to look at doing.
 
-2. git pull example
+> [3] I suspect you could come up with some heuristic that finds tree
+>     entry boundaries with high probability, and in the low probability
+>     case does not produce a wrong answer, but instead has to walk all
+>     the way back to the beginning of the tree. That would be fine here.
+>     But frankly, this "walk backwards" thing was just the straw that
+>     broke the camel's back for me in working on this. Handling all the
+>     possible cases was ending up quite complicated.
 
-Textual git:master $ git pull
-remote: Counting objects: 435, done.
-remote: Compressing objects: 100% (398/398), done.
-remote: Total 435 (delta 219), reused 18 (delta 12)
-Receiving objects: 100% (435/435), 1.22 MiB | 756.00 KiB/s, done.
-Resolving deltas: 100% (219/219), done.
-warning: unable to unlink .git/objects/pack/tmp_pack_vDaIZa: Operation =
-not permitted
-error: unable to write sha1 filename =
-.git/objects/pack/pack-977a2dc0f4be3996dc1186e565a30d55d14b5e87.pack: =
-Operation not permitted
-fatal: cannot store pack file
-fatal: index-pack failed
-
-Textual git:master $ ls -l .git/objects/pack/tmp_*
--r--r--r--  1 user  staff    13252 Feb 17 10:51 =
-.git/objects/pack/tmp_idx_uhnicb
--r--r--r--  1 user  staff  1275487 Feb 17 10:51 =
-.git/objects/pack/tmp_pack_vDaIZa
-
-=3D Same explanation as git clone example
-
-3. git gc example
-
-Textual git:master $ git gc
-Counting objects: 49691, done.
-Delta compression using up to 4 threads.
-Compressing objects: 100% (11347/11347), done.
-fatal: unable to rename temporary pack file: Operation not permitted
-error: failed to run repack
-
-Textual git:master $ ls -l .git/objects/pack/tmp_*
--r--r--r--  1 user  staff   1392420 Feb 17 10:58 =
-.git/objects/pack/tmp_idx_77nr1b
--r--r--r--  1 user  staff  96260304 Feb 17 10:58 =
-.git/objects/pack/tmp_pack_RlAZc9
-
-Detail Error:
-1. finish_tmp_packfile (pack-write.c) -> die_errno(=E2=80=9Cunable to =
-rename temporary pack file=E2=80=9D);
-
-
-If you insist on setting the tmp idx & pack file permission to 0444 at =
-least give it a u+w permission whenever you try to unlink and rename it =
-so it won=E2=80=99t fail.
-
-Regards,
-Fairuzan
-
-
-
-
-
-
---Apple-Mail=_8CD5EF2B-B52E-4560-81A0-24F596EE0677
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
-	filename=signature.asc
-Content-Type: application/pgp-signature;
-	name=signature.asc
-Content-Description: Message signed with OpenPGP using GPGMail
-
------BEGIN PGP SIGNATURE-----
-Comment: GPGTools - http://gpgtools.org
-
-iQEcBAEBAgAGBQJU4rP0AAoJEKrU1IvC77KVTA0IAKFu7W50gOhMl8VLIKnEQyM2
-rc9ckjDi9UyLmPM+l+bbaKeHg97Z8NBS+G0jGuMYhMglDTzDN4d7GwfH2YICN/ZJ
-bHhDl866vmnQif9vVtxSs9lv2Xvrico8F1QnQm9Cx6/8fQuIlvxYVUjiqs9iY3W+
-WZ38AobuUQ2cU8zy9Sy3528FttTXfLG5ggj5lKKyC1e4jjzLqHU2vT7sWv9HLgNV
-MWCF3L2Lno9zlU2PmWmWnils7DPhbsmIRkGuT0Or4k7q+QkvMeGBL1BapQFnJ+MD
-KQ6+80jm15+Mv/taXXnzyBpOROE+eJI2+1CIsqu2axlky18sBWTkx3Tfrt7BOh0=
-=/v0Q
------END PGP SIGNATURE-----
-
---Apple-Mail=_8CD5EF2B-B52E-4560-81A0-24F596EE0677--
+No, I tried this in JGit once. You can't do it reliably enough.
