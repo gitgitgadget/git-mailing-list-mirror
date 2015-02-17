@@ -1,166 +1,155 @@
-From: Martin Fick <mfick@codeaurora.org>
-Subject: Re: Multi-threaded 'git clone'
-Date: Mon, 16 Feb 2015 22:20:02 -0700
-Message-ID: <20150217052007.CC8B713FECF@smtp.codeaurora.org>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: odb_mkstemp's 0444 permission broke write/delete access on AFP
+Date: Tue, 17 Feb 2015 06:34:43 +0100
+Message-ID: <54E2D2F3.5080800@web.de>
+References: <A403BFCC-D66F-49BD-B54C-BB86B467F1A1@gmail.com> <vpqtwyl90mx.fsf@anie.imag.fr> <340435D1-2FEB-4A4A-BBD2-E301096C72D8@gmail.com> <vpqiof14qu8.fsf@anie.imag.fr> <13683B35-70A8-4D9E-80E1-440E4E0DC7F0@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: base64
-Cc: git <git@vger.kernel.org>,
-	Koosha Khajehmoogahi <koosha.khajeh@gmail.com>,
-	David Lang <david@lang.hm>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Feb 17 06:20:17 2015
+Content-Type: text/plain; charset=utf-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Fairuzan Roslan <fairuzan.roslan@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Feb 17 06:35:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YNaZz-0000um-NQ
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Feb 2015 06:20:16 +0100
+	id 1YNaou-0006xG-KF
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Feb 2015 06:35:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752898AbbBQFUJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Feb 2015 00:20:09 -0500
-Received: from smtp.codeaurora.org ([198.145.29.96]:49077 "EHLO
-	smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752258AbbBQFUI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Feb 2015 00:20:08 -0500
-Received: from smtp.codeaurora.org (localhost [127.0.0.1])
-	by smtp.codeaurora.org (Postfix) with ESMTP id DF92813FEC6;
-	Tue, 17 Feb 2015 05:20:07 +0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 486)
-	id CC8B713FECF; Tue, 17 Feb 2015 05:20:07 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on
-	pdx-caf-smtp.dmz.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.4 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-	MISSING_MID autolearn=no version=3.3.1
-Received: from [10.10.7.85] (184-96-4-77.hlrn.qwest.net [184.96.4.77])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	(Authenticated sender: mfick@smtp.codeaurora.org)
-	by smtp.codeaurora.org (Postfix) with ESMTPSA id B983813FEC6;
-	Tue, 17 Feb 2015 05:20:05 +0000 (UTC)
-X-Virus-Scanned: ClamAV using ClamSMTP
+	id S1754704AbbBQFfg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 Feb 2015 00:35:36 -0500
+Received: from mout.web.de ([212.227.15.14]:53151 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754625AbbBQFff (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Feb 2015 00:35:35 -0500
+Received: from [192.168.88.199] ([194.47.243.242]) by smtp.web.de (mrweb004)
+ with ESMTPSA (Nemesis) id 0LuIAZ-1XOeSh2koZ-011fz3; Tue, 17 Feb 2015 06:35:32
+ +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:31.0) Gecko/20100101 Icedove/31.4.0
+In-Reply-To: <13683B35-70A8-4D9E-80E1-440E4E0DC7F0@gmail.com>
+X-Provags-ID: V03:K0:uqahqi7z9YDiHFDdDueQZ0Kc40i99nFlhqZAhofvCRXqrBZ8FvV
+ wlr8yWzSHFUTP6w1xRoqs6Ppw3hMaDPhpqbDlpy7cabYxPnmw9A/jWR45DrzTV0XkWyo1be
+ UbCMKZU2yuAraBxwAQq0GifeLKKeYondV3evN3D6sIMUDzIEhRFCWCxTkKNxFlXsP//g13V
+ ca0tc0XwtUS0Wye+NuV/A==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263932>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/263933>
 
-VGhlcmUgY3VycmVudGx5IGlzIGEgdGhyZWFkIG9uIHRoZSBHZXJyaXQgbGlzdCBhYm91dCBob3cg
-bXVjaCBmYXN0ZXIgY2xvbmluZyBjYW4gYmUgd2hlbiB1c2luZyBHZXJyaXQvamdpdCBHQ2VkIHBh
-Y2tzIHdpdGggYml0bWFwcyB2ZXJzdXMgQyBnaXQgR0NlZCBwYWNrcyB3aXRoIGJpdG1hcHMuCgpT
-b21lIGRpZmZlcmVuY2VzIG91dGxpbmVkIGFyZSB0aGF0IGpnaXQgc2VlbXMgdG8gaGF2ZSBtb3Jl
-IGJpdG1hcHMsIGl0IGNyZWF0ZXMgb25lIGZvciBldmVyeSByZWZzL2hlYWRzLCBpcyBDIGdpdCBk
-b2luZyB0aGF0PyAgQW5vdGhlciBkaWZmZXJlbmNlIHNlZW1zIHRvIGJlIHRoYXQgamdpdCBjcmVh
-dGVzIHR3byBwYWNrcywgc3BsaXR0aW5nIHN0dWZmIG5vdCByZWFjaGFibGUgZnJvbSByZWZzL2hl
-YWRzIGludG8gaXRzIG93biBwYWNrLiAgVGhpcyBtYWtlcyBhIGNsb25lIGhhdmUgemVybyBDUFUg
-c2VydmVyIHNpZGUgaW4gdGhlIHByaXN0aW5lIGNhc2UuICBJbiB0aGUgR2Vycml0IHVzZSBjYXNl
-LCB0aGlzIHNlY29uZCAidW5yZWFjaGFibGUiIHBhY2tmaWxlIGNhbiBiZSBzaXplYWJsZSwgSSB3
-b25kZXIgaWYgdGhlcmUgYXJlIG90aGVyIHVzZSBjYXNlcyB3aGVyZSB0aGlzIG1pZ2h0IGFsc28g
-YmUgdGhlIGNhc2UgKGFuZCB0aGlzIHNsb3dpbmcgZG93biBjbG9uZXMgZm9yIEMgZ2l0IEdDZWQg
-cmVwb3MpPwoKSWYgdGhlcmUgaXMgbm90IGEgbG90IG9mIHBhcmFsbGVsaXNtIGxlZnQgdG8gc3F1
-ZWFrIG91dCwgcGVyaGFwcyBhIGZvY3VzIHdpdGggYmV0dGVyIHJldHVybnMgaXMgdHJ5aW5nIHRv
-IGRvIHdoYXRldmVyIGlzIHBvc3NpYmxlIHRvIG1ha2UgYWxsIGNsb25lcyAoYW5kIHBvdGVudGlh
-bGx5IGFueSBmZXRjaCB1c2UgY2FzZSBkZWVtZWQgaW1wb3J0YW50IG9uIGEgcGFydGljdWxhciBz
-ZXJ2ZXIpIGhhdmUgemVybyBDUFU/ICBEZXBlbmRpbmcgb24gd2hhdCBhIHNlcnZlcidzIHByaW1h
-cnkgbWlzc2lvbiBpcywgSSBjb3VsZCBlbnZpc2lvbiBjZXJ0YWluIGFkbWlucyB3aWxsaW5nIHRv
-IHNhY3JpZmljZSBzaWduaWZpY2FudCBhbW91bnRzIG9mIGRpc2sgc3BhY2UgdG8gc3BlZWQgdXAg
-dGhlaXIgZmV0Y2hlcy4gIFBlcmhhcHMgc29tZSBtb3JlIGV4dHJlbWUgdGhpbmtpbmcgKHN1Y2gg
-YXMgd2hhdCBtdXN0IGhhdmUgbGVkIHRvIGJpdG1hcHMpIGlzIHdvcnRoIGJyYWluc3Rvcm1pbmcg
-YWJvdXQgdG8gaW1wcm92ZSBzZXJ2ZXIgdXNlIGNhc2VzPwoKV2hhdCBpZiBhbiBhZG1pbiB3ZXJl
-IHdpbGxpbmcgdG8gc2FjcmlmaWNlIGEgcGFja2ZpbGUgZm9yIGV2ZXJ5IHVzZSBjYXNlIGhlIGRl
-ZW1lZCBpbXBvcnRhbnQsIGNvdWxkIGdpdCBiZSBtYWRlIHRvIHN1cHBvcnQgdGhhdCBlYXNpbHk/
-ICBGb3IgZXhhbXBsZSwgbWF5YmUgdGhlIGFkbWluIGNvbnNpZGVycyBhIGNsb25lIG9yIGEgZmV0
-Y2ggZnJvbSBtYXN0ZXIgdG8gYmUgaW1wb3J0YW50LCBjb3VsZCB6ZXJvIHBlcmNlbnQgQ1BVIGJl
-IGFjaGlldmVkIHJlZ3VsYXJseSBmb3IgdGhvc2UgdHdvIHVzZSBjYXNlcz8gIENsb25pbmcgaXMg
-cG9zc2libGUgaWYgdGhlIHJlcG9zaXRvcnkgd2VyZSByZXBhY2tlZCBpbiB0aGUgamdpdCBzdHls
-ZSBhZnRlciBhbnkgcHVzaCB0byBhIGhlYWQuICBJcyBpdCB3b3J0aCBleHBsb3Jpbmcgd2F5cyBv
-ZiBtYWtpbmcgR0MgZWZmaWNpZW50IGVub3VnaCB0byBtYWtlIHRoaXMgZmVhc2libGU/ICBDYW4g
-Yml0bWFwcyBiZSBsZXZlcmFnZWQgdG8gbWFrZSByZXBhY2tpbmcgZmFzdGVyPyAgSSBiZWxpZXZl
-IHRoYXQgYXQgbGVhc3QgcmVhY2hhYmlsaXR5IGNoZWNraW5nIGNvdWxkIHBvdGVudGlhbGx5IGJl
-IGltcHJvdmVkIHdpdGggYml0bWFwcz8gQXJlIHRoZXJlIHBvdGVudGlhbGx5IGFueSB3YXlzIHRv
-IG1ha2UgYmV0dGVyIGRlbHRpZmljYXRpb24gcmV1c2UgZHVyaW5nIHJlcGFja2luZyAobm90IGJp
-dG1hcCByZWxhdGVkKSwgYnkgc29tZWhvdyByZXZlcnNpbmcgb3IgdHJhbnNsYXRpbmcgZGVsdGFz
-IHRvIG5ldyBvYmplY3RzIHRoYXQgd2VyZSBqdXN0IHJlY2VpdmVkLCB3aXRob3V0IGFjdHVhbGx5
-IHJlY2FsY3VsYXRpbmcgdGhlbSwgYnV0IHlldCBzdGlsbCBnZXR0aW5nIG1vc3Qgb2JqZWN0cyBk
-ZWx0aWZpZWQgYWdhaW5zdCB0aGUgbmV3ZXN0IG9iamVjdHMgKGFjaGlldmluZyB0aGUgc2FtZSBw
-YWNrcyBhcyBnaXQgR0Mgd291bGQgYWNoaWV2ZSB0b2RheSwgYnV0IGZhc3Rlcik/IFdoYXQgb3Ro
-ZXIgcGllY2VzIG5lZWQgdG8gYmUgaW1wcm92ZWQgdG8gbWFrZSByZXBhY2tpbmcgZmFzdGVyPwoK
-QXMgZm9yIHRoZSBzaW5nbGUgYnJhbmNoIGZldGNoIGNhc2UsIGNvdWxkIHRoaXMgc29tZWhvdyBi
-ZSBpbXByb3ZlZCBieSBhbGxvY2F0aW5nIG9uZSBvciBtb3JlIHBhY2tmaWxlcyB0byB0aGlzIHVz
-ZSBjYXNlPyAgVGhlIHNpbXBsZXN0IHNpbmdsZSBicmFuY2ggZmV0Y2ggdXNlIGNhc2UgaXMgbGlr
-ZWx5IHNvbWVvbmUgZG9pbmcgYSBnaXQgaW5pdCBmb2xsb3dlZCBieSBhIHNpbmdsZSBicmFuY2gg
-ZmV0Y2guICBJIHRoaW5rIHRoZSBhbmRyb2lkIHJlcG8gdG9vbCBjYW4gYmUgdXNlZCBpbiB0aGlz
-IHdheSwgc28gdGhpcyBtYXkgYWN0dWFsbHkgYmUgYSBjb21tb24gdXNlIGNhc2U/ICBXaXRoIGEg
-cGFja2ZpbGUgZGVkaWNhdGVkIHRvIHRoaXMgYnJhbmNoLCBnaXQgc2hvdWxkIGJlIGFibGUgdG8g
-anVzdCBzdHJlYW0gaXQgb3V0IHdpdGhvdXQgYW55IENQVS4gIEJ1dCBJIHRoaW5rIGdpdCB3b3Vs
-ZCBuZWVkIHRvIGtub3cgdGhpcyBwYWNrZmlsZSBleGlzdHMgdG8gYmUgYWJsZSB0byB1c2UgaXQu
-ICBJdCB3b3VsZCBiZSBuaWNlIGlmIGJpdG1hcHMgY291bGQgaGVscCBoZXJlLCBidXQgSSBiZWxp
-ZXZlIGJpdG1hcHMgY2FuIHNvIGZhciBvbmx5IGJlIHVzZWQgZm9yIG9uZSBwYWNrZmlsZS4gIEkg
-dW5kZXJzdGFuZCB0aGF0IG1ha2luZyBiaXRtYXBzIHNwYW4gbXVsdGlwbGUgcGFja2ZpbGVzIHdv
-dWxkIGJlIHZlcnkgY29tcGxpY2F0ZWQsIGJ1dCBtYXliZSBpdCB3b3VsZCBub3QgYmUgc28gaGFy
-ZCB0byBzdXBwb3J0IGJpdG1hcHMgb24gbXVsdGlwbGUgcGFja2ZpbGVzIGlmIGVhY2ggb2YgdGhl
-c2Ugd2VyZSAic2VsZiBjb250YWluZWQiPyAgQnkgc2VsZiBjb250YWluZWQgSSBtZWFuIHRoYXQg
-YWxsIG9iamVjdHMgcmVmZXJlbmNlZCBieSBvYmplY3RzIGluIHRoZSBwYWNrZmlsZSB3ZXJlIGNv
-bnRhaW5lZCBpbiB0aGF0IHBhY2tmaWxlLgoKV2hhdCBvdGhlciBzdGlsbCB1bmltcGxlbWVudGVk
-IGNhY2hpbmcgdGVjaG5pcXVlcyBjb3VsZCBiZSB1c2VkIHRvIGltcHJvdmUgY2xvbmUvZmV0Y2gg
-dXNlIGNhc2VzPyAKCi0gU2hhbGxvdyBjbG9uZXMgKGRlZGljYXRlIGEgc3BlY2lhbCBwYWNrZmls
-ZSB0byB0aGlzLCB3aGF0IGFib3V0IGFub3RoZXIgYml0bWFwIGZvcm1hdCB0aGF0IG9ubHkgbWFw
-cyBvYmplY3RzIGluIGEgc2luZ2xlIHRyZWUgdG8gaGVscCB0aGlzKT8KCi0gU21hbGwgZmV0Y2hl
-cyAoc2ltcGxlIGJyYW5jaCBGRiB1cGRhdGVzKSwgSSBzdXNwZWN0IHRoZXNlIGFyZSBmYXN0IGVu
-b3VnaCwgYnV0IGlmIG5vdCwgbWF5YmUgY2FjaGluZyBzb21lIHRoaW4gcGFja3MgKHRoYXQgY291
-bGQgcmVzdWx0IGluIHplcm8gQ1BVIHJlcXVlc3RzIGZvciBtYW55IGNsaWVudHMpIHdvdWxkIGJl
-IHVzZWZ1bD8gIE1heWJlIHNwcmVhZCB0aGVzZSBvdXQgZXhwb25lbnRpYWxseSBvdmVyIHRpbWUg
-c28gdGhhdCBtYW55IHdpbGwgYmUgYXZhaWxhYmxlIGZvciByZWNlbnQgdXBkYXRlcyBhbmQgZmV3
-ZXIgZm9yIG9sZGVyIHVwZGF0ZXM/ICBJIGtub3cgZ2l0IG5vcm1hbGx5IHRocm93cyBhd2F5IHRo
-aW4gcGFja3MgYWZ0ZXIgcmVjZWl2aW5nIHRoZW0gYW5kIHJlc29sdmluZyB0aGVtLCBidXQgaWYg
-aXQga2VwdCB0aGVtIGFyb3VuZCAobWF5YmUgaW4gYSBzcGVjaWFsIGRpcmVjdG9yeSksIGl0IHNl
-ZW1zIHRoYXQgdGhleSBjb3VsZCBiZSB1c2VmdWwgZm9yIHVwZGF0aW5nIG90aGVyIGNsaWVudHMg
-d2l0aCB6ZXJvIENQVT8gIEEgdGhpbiBwYWNrIGNhY2hlIG1pZ2h0IGJlIHNvbWV0aGluZyByZWFs
-bHkgZWFzeSB0byBtYW5hZ2UgYmFzZWQgb24gZmlsZSB0aW1lc3RhbXBzLCBhbiBhZG1pbiBtYXkg
-c2ltcGx5IG5lZWQgdG8gc2V0IGEgbWF4IGNhY2hlIHNpemUuICBCdXQgaG93IGNhbiBnaXQga25v
-dyB3aGF0IHRoaW4gcGFja3MgaXQgaGFzLCBhbmQgd2hhdCB0aGV5IHdvdWxkIGJlIHVzZWZ1bCBm
-b3IsIG5hbWUgdGhlbSB3aXRoIHRoZWlyIHN0YXJ0IGFuZCBlbmRpbmcgc2hhcz8KClNvcnJ5IGZv
-ciB0aGUgbG9uZyB3aW5kZWQgcmFudC4gSSBzdXNwZWN0IHRoYXQgc29tZSB2YXJpYXRpb24gb2Yg
-YWxsIG15IHN1Z2dlc3Rpb25zIGhhdmUgYWxyZWFkeSBiZWVuIHN1Z2dlc3RlZCwgYnV0IG1heWJl
-IHRoZXkgd2lsbCByZWtpbmRsZSBzb21lIG9sZGVyLCBub3cgdXNlZnVsIHRob3VnaHRzLCBvciBp
-bnNwaXJlIHNvbWUgbmV3IG9uZXMuICBBbmQgbWF5YmUgc29tZSBvZiB0aGVzZSBhcmUgYmV0dGVy
-IHRvIHB1cnN1ZSB0aGVuIG1vcmUgcGFyYWxsZWxpc20/CgotTWFydGluCgpRdWFsY29tbSBJbm5v
-dmF0aW9uIENlbnRlciwgSW5jLgpUaGUgUXVhbGNvbW0gSW5ub3ZhdGlvbiBDZW50ZXIsIEluYy4g
-aXMgYSBtZW1iZXIgb2YgdGhlIENvZGUgQXVyb3JhIEZvcnVtLCBhIExpbnV4IEZvdW5kYXRpb24g
-Q29sbGFib3JhdGl2ZSBQcm9qZWN0T24gRmViIDE2LCAyMDE1IDg6NDcgQU0sIEplZmYgS2luZyA8
-cGVmZkBwZWZmLm5ldD4gd3JvdGU6Cj4KPiBPbiBNb24sIEZlYiAxNiwgMjAxNSBhdCAwNzozMToz
-M0FNIC0wODAwLCBEYXZpZCBMYW5nIHdyb3RlOiAKPgo+ID4gPlRoZW4gdGhlIHNlcnZlciBzdHJl
-YW1zIHRoZSBkYXRhIHRvIHRoZSBjbGllbnQuIEl0IG1pZ2h0IGRvIHNvbWUgbGlnaHQgCj4gPiA+
-d29yayB0cmFuc2Zvcm1pbmcgdGhlIGRhdGEgYXMgaXQgY29tZXMgb2ZmIHRoZSBkaXNrLCBidXQg
-bW9zdCBvZiBpdCBpcyAKPiA+ID5qdXN0IGJsaXR0ZWQgc3RyYWlnaHQgZnJvbSBkaXNrLCBhbmQg
-dGhlIG5ldHdvcmsgaXMgdGhlIGJvdHRsZW5lY2suIAo+ID4gCj4gPiBEZXBlbmRpbmcgb24gaG93
-IGNsb3NlIHRvIGZ1bGwgdGhlIFdBTiBsaW5rIGlzLCBpdCBtYXkgYmUgcG9zc2libGUgdG8gCj4g
-PiBpbXByb3ZlIHRoaXMgd2l0aCBtdWx0aXBsZSBjb25uZWN0aW9ucyAoYWdhaW4sIHJlZmVyZW5j
-aW5nIGJiY3ApLCBidXQgCj4gPiB0aGVyZSdzIGFsc28gdGhlIHF1ZXN0aW9uIG9mIGlmIGl0J3Mg
-d29ydGggdHJ5aW5nIHRvIHVzZSB0aGUgZW50aXJlIFdBTiBmb3IgCj4gPiBhIHNpbmdsZSB1c2Vy
-LiBUaGUgdmFzdCBtYWpvcml0eSBvZiB0aGUgdGltZSB0aGUgc2VydmVyIGlzIGRvaW5nIG1vcmUg
-dGhhbiAKPiA+IG9uZSB0aGluZyBhbmQgd291bGQgcmF0aGVyIGxldCBhbnkgaW5kaXZpZHVhbCB1
-c2VyIHdhaXQgYSBiaXQgYW5kIHNlcnZpY2UgCj4gPiB0aGUgb3RoZXIgdXNlcnMuIAo+Cj4gWWVh
-aCwgSSBoYXZlIHNlZW4gY2xpZW50cyB0aGF0IG1ha2UgbXVsdGlwbGUgVENQIGNvbm5lY3Rpb25z
-IHRvIGVhY2ggCj4gcmVxdWVzdCBhIGNodW5rIG9mIGEgZmlsZSBpbiBwYXJhbGxlbC4gVGhlIHNo
-b3J0IGFuc3dlciBpcyB0aGF0IHRoaXMgaXMgCj4gZ29pbmcgdG8gYmUgdmVyeSBoYXJkIHdpdGgg
-Z2l0LiBFYWNoIGNsb25lIGdlbmVyYXRlcyB0aGUgcGFjayBvbiB0aGUgZmx5IAo+IGJhc2VkIG9u
-IHdoYXQncyBvbiBkaXNrIGFuZCBzdHJlYW1zIGl0IG91dC4gSXQgc2hvdWxkIF91c3VhbGx5XyBi
-ZSB0aGUgCj4gc2FtZSwgYnV0IHRoZXJlJ3Mgbm90aGluZyB0byBndWFyYW50ZWUgYnl0ZS1mb3It
-Ynl0ZSBlcXVhbGl0eSBiZXR3ZWVuIAo+IGludm9jYXRpb25zLiBTbyB5b3UnZCBoYXZlIHRvIG11
-bHRpcGxleCBhbGwgb2YgdGhlIGNvbm5lY3Rpb25zIGludG8gdGhlIAo+IHNhbWUgc2VydmVyIHBy
-b2Nlc3MuIEFuZCBldmVuIHRoZW4gaXQncyBoYXJkOyB0aGF0IHByb2Nlc3Mga25vd3MgaXRzIAo+
-IGdvaW5nIHRvIHNlbmQgeW91IGJ5dGUgdGhlIGJ5dGVzIGZvciBvYmplY3QgWCwgYnV0IGl0IGRv
-ZXNuJ3Qga25vdyBhdCAKPiBleGFjdGx5IHdoaWNoIG9mZnNldCB1bnRpbCBpdCBnZXRzIHRoZXJl
-LCB3aGljaCBtYWtlcyBzZW5kaW5nIHRoaW5ncyBvdXQgCj4gb2Ygb3JkZXIgdHJpY2t5LiBBbmQg
-dGhlIHdob2xlIG91dHB1dCBpcyBjaGVja3N1bW1lZCBieSBhIHNpbmdsZSBzaGExIAo+IG92ZXIg
-dGhlIHdob2xlIHN0cmVhbSB0aGF0IGNvbWVzIGF0IHRoZSBlbmQuIAo+Cj4gSSB0aGluayB0aGUg
-bW9zdCBmZWFzaWJsZSB0aGluZyB3b3VsZCBiZSB0byBxdWlja2x5IHNwb29sIGl0IHRvIGEgc2Vy
-dmVyIAo+IG9uIHRoZSBMQU4sIGFuZCB0aGVuIHVzZSBhbiBleGlzdGluZyBmZXRjaC1pbi1wYXJh
-bGxlbCB0b29sIHRvIGdyYWIgaXQgCj4gZnJvbSB0aGVyZSBvdmVyIHRoZSBXQU4uIAo+Cj4gLVBl
-ZmYgCj4gLS0gCj4gVG8gdW5zdWJzY3JpYmUgZnJvbSB0aGlzIGxpc3Q6IHNlbmQgdGhlIGxpbmUg
-InVuc3Vic2NyaWJlIGdpdCIgaW4gCj4gdGhlIGJvZHkgb2YgYSBtZXNzYWdlIHRvIG1ham9yZG9t
-b0B2Z2VyLmtlcm5lbC5vcmcgCj4gTW9yZSBtYWpvcmRvbW8gaW5mbyBhdMKgIGh0dHA6Ly92Z2Vy
-Lmtlcm5lbC5vcmcvbWFqb3Jkb21vLWluZm8uaHRtbCAK
+On 02/17/2015 04:22 AM, Fairuzan Roslan wrote:
+>> On Feb 17, 2015, at 3:08 AM, Matthieu Moy <Matthieu.Moy@grenoble-inp=
+=2Efr> wrote:
+>>
+>> [ Please, don't top post on this list ]
+>>
+>> Fairuzan Roslan <fairuzan.roslan@gmail.com> writes:
+>>
+>>> I don=E2=80=99t see the issue for the owner of his/her own file to =
+have write
+>>> access.
+>> Object and pack files are not meant to be modified. Hence, they are
+>> read-only so that an (accidental) attempt to modify them fails.
+>>
+>>> Setting tmp idx & pack files to read-only even for the file owner i=
+s
+>>> not a safety feature.
+>> Yes it is. If you do not think so, then please give some arguments.
+>>
+>>> You should at least give the user the option to set the permission =
+in
+>>> the config file and not hardcoded the permission in the binary.
+>> This is the kind of thing I meant by "investigate alternate solution=
+s".
+>> I have no AFP share to test, so it would help if you answered the
+>> question I asked in my previous message:
+>>
+>>>> On Feb 17, 2015, at 2:23 AM, Matthieu Moy <Matthieu.Moy@grenoble-i=
+np.fr> wrote:
+>>>>
+>>>> Fairuzan Roslan <fairuzan.roslan@gmail.com> writes:
+>>>>
+>>>>> Hi,
+>>>>>
+>>>>> Somehow the =E2=80=9Cint mode =3D 0444;=E2=80=9D in odb_mkstemp (=
+environment.c) are
+>>>>> causing a lot of issues (unable to unlink/write/rename) to those
+>>>>> people who use AFP shares.
+>>>> Is it a problem when using Git (like "git gc" failing to remove ol=
+d
+>>>> packs), or when trying to remove files outside Git?
+>> (BTW, why did you try to write/rename pack files?)
+>>
+>> --
+>> Matthieu Moy
+>> http://www-verimag.imag.fr/~moy/
+> I think its easier if I just show you=E2=80=A6
+>
+> OS : OS X 10.10.0 - 10.10.2
+> Client :  git version 1.9.3 (Apple Git-50) and git version 2.2.1
+> AFP share : //user@hostname._afpovertcp._tcp.local/installer on /Volu=
+mes/installer (afpfs, nodev, nosuid, mounted by user)
+>
+> 1. git clone example
+>
+> $ git clone https://github.com/robbyrussell/oh-my-zsh.git
+> Cloning into 'oh-my-zsh'...
+> remote: Counting objects: 11830, done.
+> remote: Total 11830 (delta 0), reused 0 (delta 0)
+> Receiving objects: 100% (11830/11830), 2.12 MiB | 481.00 KiB/s, done.
+> Resolving deltas: 100% (6510/6510), done.
+> warning: unable to unlink /Volumes/installer/oh-my-zsh/.git/objects/p=
+ack/tmp_pack_zjPxuc: Operation not permitted
+> error: unable to write sha1 filename /Volumes/installer/oh-my-zsh/.gi=
+t/objects/pack/pack-cceafdc9ef02bc58844138ba543ec6cc38252bb1.pack: Oper=
+ation not permitted
+> fatal: cannot store pack file
+> fatal: index-pack failed
+>
+> $ ls -l oh-my-zsh/.git/objects/pack
+> total 5008
+> -rw-------  1 user  staff       32 Feb 17 09:59 pack-cceafdc9ef02bc58=
+844138ba543ec6cc38252bb1.keep
+> -r--r--r--  1 user  staff   332312 Feb 17 09:59 tmp_idx_oUN1sb
+> -r--r--r--  1 user  staff  2223007 Feb 17 09:59 tmp_pack_zjPxuc
+>
+> $ rm -rf oh-my-zsh/.git/objects/pack/tmp_*
+> rm: oh-my-zsh/.git/objects/pack/tmp_idx_oUN1sb: Operation not permitt=
+ed
+> rm: oh-my-zsh/.git/objects/pack/tmp_pack_zjPxuc: Operation not permit=
+ted
+>
+> Detail Errors:
+> 1. delete_ref_loose (refs.c) -> unlink_or_msg (wrapper.c) -> "unable =
+to unlink %s: %s"
+> 2. move_temp_to_file (sha1_file.c ) -> =E2=80=9Cunable to write sha1 =
+filename %s: %s=E2=80=9D
+>
+> 2. git pull example
+>
+> Textual git:master $ git pull
+> remote: Counting objects: 435, done.
+> remote: Compressing objects: 100% (398/398), done.
+> remote: Total 435 (delta 219), reused 18 (delta 12)
+> Receiving objects: 100% (435/435), 1.22 MiB | 756.00 KiB/s, done.
+> Resolving deltas: 100% (219/219), done.
+> warning: unable to unlink .git/objects/pack/tmp_pack_vDaIZa: Operatio=
+n not permitted
+> error: unable to write sha1 filename .git/objects/pack/pack-977a2dc0f=
+4be3996dc1186e565a30d55d14b5e87.pack: Operation not permitted
+I'm somewhat unsure how this is connected to 0444 ?
+
+It seems as if you don't have write permissions for some reasons.
+(on the higher directory), what does
+ls -ld  .git/objects/pack/
+ls -ld  .git/objects/
+give ?
+
+can you run
+rm .git/objects/pack/pack-977a2dc0f4be3996dc1186e565a30d55d14b5e87.pack
+
+on the command line ?
