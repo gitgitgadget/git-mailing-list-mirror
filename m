@@ -1,116 +1,90 @@
-From: Eric Frederich <eric.frederich@gmail.com>
-Subject: Re: Get a git diff without taking index into account
-Date: Wed, 18 Feb 2015 14:36:39 -0500
-Message-ID: <CAAoZyYNY5V=WNf9dSG1p2iQqk11CjDB9Qm=t9mv97vgjY_ZWHA@mail.gmail.com>
-References: <CAAoZyYN-ohiq-Od=u-cd5FRH8=NpJNGS+zEo+NYgwAK7Kjaz_w@mail.gmail.com>
-	<CAAoZyYPhiKX1F5ymdSijR7=e8CT1sqaomehBjt-NVDz_A4V4UA@mail.gmail.com>
-	<CAPc5daU9km+gr-DHJzJF59mugwGeNX69H27E_DaoyBZnuzoiFw@mail.gmail.com>
-	<CAAoZyYPVopmP_bv7EZS912R4bxpzNm49_q0XXZXqa52dTDDM2Q@mail.gmail.com>
-	<xmqqfva341sf.fsf@gitster.dls.corp.google.com>
-	<CAAoZyYOst-5cD7qtV=T3Oahja1JN1ZmeyAcELrn7xD0bMc7Mrg@mail.gmail.com>
-	<20150218183251.GB6346@peff.net>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Should "git log --decorate" indicate whether the HEAD is detached?
+Date: Wed, 18 Feb 2015 20:45:08 +0100
+Message-ID: <54E4EBC4.6000802@drmicha.warpmail.net>
+References: <CACdBeKmNazMtzK4hdd7WXMPDr7HdPe+EFpyd3M-TPBAUEY+HpA@mail.gmail.com>	<xmqqa90d4fdp.fsf@gitster.dls.corp.google.com>	<CACdBeKnWJvUmFaHNrzcX7LtovOLu3PFaeTyoUAUeC7wmYUboDg@mail.gmail.com>	<54E46635.4060009@drmicha.warpmail.net> <xmqq8ufv408l.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Feb 18 20:36:51 2015
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Julien Cretel <j.cretel@umail.ucc.ie>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 18 20:45:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YOAQO-0002eF-JC
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Feb 2015 20:36:44 +0100
+	id 1YOAYh-0006qU-FB
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Feb 2015 20:45:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753699AbbBRTgk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Feb 2015 14:36:40 -0500
-Received: from mail-ob0-f173.google.com ([209.85.214.173]:55932 "EHLO
-	mail-ob0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752831AbbBRTgj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Feb 2015 14:36:39 -0500
-Received: by mail-ob0-f173.google.com with SMTP id uy5so6165686obc.4
-        for <git@vger.kernel.org>; Wed, 18 Feb 2015 11:36:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=hMDVwjQjq1+ecr24MBgbpGVz3j7QNx57MdGuO0urcW4=;
-        b=p52mCw4QASfXKBU+cmqGhKYSvBVgG/jbhqtUpJfmQ9w5Orf2oCM/tD7iqVkO5K5ceQ
-         IJMpB/EfqzWEPgKHdzrP419o5zdHje6VFR9fYSIrVrtelFN2Hi7cSGa2LBpJKh8+k4Yu
-         xWVrqXRt3xKFyLW3BC/PEgL0DN2CYU+v0p94QHNHy7enDpyfrV44BMSBeZiw6qCBGGFq
-         yOrfpCkdsdgApc0YqHvIGIOv1hpxsEVrPOlu/cPHKMoTLtI/Ss259I8LmYuG4FEGMaP2
-         NqPko3D5Ryb6KsUIC/ZBVDqdiaIrh7AzScu87NVJKCmdM0TRo9GYNywl5jWaVkWilEjR
-         XO2g==
-X-Received: by 10.60.116.4 with SMTP id js4mr612714oeb.78.1424288199225; Wed,
- 18 Feb 2015 11:36:39 -0800 (PST)
-Received: by 10.202.12.193 with HTTP; Wed, 18 Feb 2015 11:36:39 -0800 (PST)
-In-Reply-To: <20150218183251.GB6346@peff.net>
+	id S1754674AbbBRTpM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Feb 2015 14:45:12 -0500
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:50158 "EHLO
+	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753767AbbBRTpL (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Feb 2015 14:45:11 -0500
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailout.nyi.internal (Postfix) with ESMTP id D4F8022905
+	for <git@vger.kernel.org>; Wed, 18 Feb 2015 14:45:10 -0500 (EST)
+Received: from frontend1 ([10.202.2.160])
+  by compute4.internal (MEProxy); Wed, 18 Feb 2015 14:45:10 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=x-sasl-enc:message-id:date:from
+	:mime-version:to:cc:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=mtAjB7tdeezeVjjZa9TbQ6
+	LWxEk=; b=AgkaLVKePFZMdlDzth9B0nLNDHpXM/g33Noc3Qyrhy0/1QGF0x1N65
+	O1LR3ZQBuDq6/fEHLlhRpoKZuw9ijzm9zAHl7uCHRG9DWNnlqRyFA3K4dqrTsAxR
+	79q3clOdZlW1rD2qa+CrW1ODiFRnxiA0o8vbxG6UXy4PMPTeW/Cd0=
+X-Sasl-enc: G4IMWi8KNwXQwWXk93AXzZOkQvXUL5CrgeaUFXZQdPG/ 1424288710
+Received: from localhost.localdomain (unknown [88.70.121.210])
+	by mail.messagingengine.com (Postfix) with ESMTPA id C6A01C00295;
+	Wed, 18 Feb 2015 14:45:09 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
+In-Reply-To: <xmqq8ufv408l.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264058>
 
-Thanks Jeff.
+Junio C Hamano venit, vidit, dixit 18.02.2015 18:07:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
+> 
+>> "git branch" will tell you your branches and which one is checked out
+>> (or HEAD); "git status" will tell you the latter.
+>>
+>> "git log" is about the DAG which has absolutely nothing to do with what
+>> you have currently checked out.
+> 
+> Yeah, that summarizes my reaction, too.  More importantly, "log" is
+> about showing commits and "--decorate" is a way to enrich the
+> presentation of commits---it talks about commits in terms of refs;
+> the command and the option is not about describing refs and their
+> relationships.
+> 
+> I do not terribly mind showing the fact that HEAD points at a branch
+> when --decorate talks about HEAD, partly because we will be showing
+> both HEAD and the branch name _anyway_ in the output.  But I am not
+> sure if the extra bit of information is more helpful to the readers
+> or being distracting.
+> 
+> Julien's "HEAD=master, other" vs "HEAD, master, other" may be
+> subdued enough to be undistracting, I would guess.  I do not think
+> the distinction between "HEAD = master" and "HEAD -> master" would
+> be useful, on the other hand.  We already know that the names listed
+> all refer to the same commit, which means that we do not have to say
+> "HEAD is detached" explicitly as long as we have a way to say "HEAD
+> points at this branch".  If HEAD is listed and is not marked to
+> point at another branch that is shown, by definition it is detached,
+> no?
+> 
 
-I recognize your picture from here...
-   http://git.661346.n2.nabble.com/push-race-td7569254.html
-... which helped me figure out how two processes trying to update a
-ref at the same time works out.
+Yep, it very well is. Also, that approach would tell you which branch is
+checked out, though I don't consider that git log's business.
 
-I will try using a separate GIT_INDEX_FILE for each working tree.
+OTOH, it's "backwards" in the sense that it marks the "ordinary" case
+(HEAD is symref, branch is checked out) specially compared to the
+"exceptional/dangerous" case (HEAD is ref, detached). And status, branch
+will point out that latter case more verbously, too.
 
-I'm not certain that what I'm trying to do is even a good idea.
-
-We have a system which is the official storage of things we'll just
-call "items".
-These items have one or more "revisions".  These revisions can have
-all sorts of relationships to other revisions.
-Once a revision is released it is locked down and cannot be changed
-including the revisions.
-
-Rather than working directly with this official storage system, we
-want our application to work against a concept of a "local workspace".
-This is where I want to use Git.
-We can map a released revision to a tree structure by getting all the
-files, serializing all the attributes, relation data, etc.
-That tree structure is what I would store in Git.
-
-My options seem to be
-  1) use a single Git repo to store all items in a disconnected manner
-(each item has a branch disconnected (orphaned?) from the other
-branches)
-  2) each item gets its own Git repo
-  3) use a single Git repo to store all items but have them all
-together in a workspace
-
-I'm pursuing option (1) right now and trying to see how much work it would take.
-With option (2) I think that would limit my ability to send a bunch of
-items from one repo to another.
-Option (3) doesn't really map to the system we're trying to mimic
-because releases are done at the "item revision" level, not at a
-higher workspace level.
-
-On Wed, Feb 18, 2015 at 1:32 PM, Jeff King <peff@peff.net> wrote:
-> On Wed, Feb 18, 2015 at 01:27:50PM -0500, Eric Frederich wrote:
->
->> My immediate concern is not to fix the documentation but to get some
->> sort of status or diff.
->> I want to avoid using an index because I want to allow multiple
->> processes to do different diffs at the same time.
->
-> If you only have one working tree, can't all of the processes use the
-> same index (that matches the working tree) and do different diffs
-> against it?
->
-> If you have multiple working trees, can you use one index per working
-> tree, and specify it using GIT_INDEX_FILE?
->
-> If you can persist the index file for each working tree, this will be
-> much faster in the long run, too (you can just refresh the index before
-> each diff, which means that git does not have to actually open the files
-> in most cases; we can compare their stat information to what is in the
-> index, and then the index sha1 with what is in the tree).
->
-> -Peff
+Michael
