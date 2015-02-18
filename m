@@ -1,109 +1,101 @@
-From: Fairuzan Roslan <fairuzan.roslan@gmail.com>
-Subject: Re: odb_mkstemp's 0444 permission broke write/delete access on AFP
-Date: Wed, 18 Feb 2015 22:23:21 +0800
-Message-ID: <293AD985-D133-4454-BBBA-B4106F16E91D@gmail.com>
-References: <A403BFCC-D66F-49BD-B54C-BB86B467F1A1@gmail.com> <vpqtwyl90mx.fsf@anie.imag.fr> <340435D1-2FEB-4A4A-BBD2-E301096C72D8@gmail.com> <vpqiof14qu8.fsf@anie.imag.fr> <13683B35-70A8-4D9E-80E1-440E4E0DC7F0@gmail.com> <vpqr3tozzs5.fsf@anie.imag.fr> <CA0F915F-74B1-4292-AFB8-D1A4C76C0137@gmail.com> <54E3804D.6020301@web.de> <vpq61azab52.fsf@anie.imag.fr> <E28114B6-86FA-4F4A-9D5F-BFC03B9D79B8@gmail.com> <vpqr3tn2u3f.fsf@anie.imag.fr>
-Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2070.6\))
-Content-Type: multipart/signed; boundary="Apple-Mail=_7D6365AA-902C-4CD4-BD50-25E9FF21DA8A"; protocol="application/pgp-signature"; micalg=pgp-sha1
-Cc: =?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-	gitster@pobox.com, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Feb 18 15:23:33 2015
+From: Eric Frederich <eric.frederich@gmail.com>
+Subject: Get a git diff without taking index into account
+Date: Wed, 18 Feb 2015 09:57:33 -0500
+Message-ID: <CAAoZyYN-ohiq-Od=u-cd5FRH8=NpJNGS+zEo+NYgwAK7Kjaz_w@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 18 15:57:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YO5XI-0007Hs-Vm
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Feb 2015 15:23:33 +0100
+	id 1YO64I-0005f1-T2
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Feb 2015 15:57:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751933AbbBROX1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Feb 2015 09:23:27 -0500
-Received: from mail-pd0-f176.google.com ([209.85.192.176]:38067 "EHLO
-	mail-pd0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751711AbbBROX1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Feb 2015 09:23:27 -0500
-Received: by pdbfp1 with SMTP id fp1so1448336pdb.5
-        for <git@vger.kernel.org>; Wed, 18 Feb 2015 06:23:26 -0800 (PST)
+	id S1752121AbbBRO5e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Feb 2015 09:57:34 -0500
+Received: from mail-ob0-f177.google.com ([209.85.214.177]:60324 "EHLO
+	mail-ob0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751968AbbBRO5e (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Feb 2015 09:57:34 -0500
+Received: by mail-ob0-f177.google.com with SMTP id wp18so2602447obc.8
+        for <git@vger.kernel.org>; Wed, 18 Feb 2015 06:57:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=subject:mime-version:content-type:from:in-reply-to:date:cc
-         :message-id:references:to;
-        bh=0J4gdOhxUh/ska0lFm8uY+Mbl9XuAG8IKCCLhBYd5JY=;
-        b=Rtza7LHQhhYjB+wmJ4xNW7tJzgUxi5ZE6KBb2ke705scQfKFD80s8birXj9jP7Tlam
-         iT5BqAp3wugSjuk/cl4+5ZtnwZCNUXPQtAeISK1KcDvOx1GpcvWl34azZUGposOcTEbk
-         UL/oDfzIysqAhAcwLkpGJsCBWGbhgt6d7nz5wTneFryYAvkllbtl3/uSpEniTOylWm1e
-         1vtQyLBOfUvG2aWpy8cqTGFRU1hA6RPHPqn57+k1n0OLW+Z/KxGPmgXKdXs93Uoi6PxF
-         zT9xHUzq074eraPIk4weCWX0Cc3KgrmcRXAhVzkBPOSPuTqf4iXxnsoINqHHC+LMGmsY
-         WDvg==
-X-Received: by 10.68.237.2 with SMTP id uy2mr58463502pbc.72.1424269406850;
-        Wed, 18 Feb 2015 06:23:26 -0800 (PST)
-Received: from ?IPv6:2001:e68:5422:4c50:d102:fd4c:acd2:e1ca? ([2001:e68:5422:4c50:d102:fd4c:acd2:e1ca])
-        by mx.google.com with ESMTPSA id fx13sm9283202pdb.7.2015.02.18.06.23.24
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 18 Feb 2015 06:23:25 -0800 (PST)
-X-Pgp-Agent: GPGMail 2.5b5
-In-Reply-To: <vpqr3tn2u3f.fsf@anie.imag.fr>
-X-Mailer: Apple Mail (2.2070.6)
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=RKu60xLqVokSEUW1c2XHklIV5LE9hPmVRu3BK26b9w8=;
+        b=PaoAmN5mKPCEZV7pj+wn5pxqglM4FICogc4JSSF0d9eLsdEsTGEEm0f3NzJoXHx132
+         G/CQpf9cRFnDVG0BW7GmH6T5mqomEgJiIjmaBL+qIMmFxLwghnZX+SWHn3ftFMkyWlCz
+         ++/+513ZXUcuMyWWqFpR3klhheEEAxx40N15hXexgvBRn0mCW2uDdFqCz1iA6JZ4/FIu
+         TSxxOiYPkTPEn0MFNDwv+oyb/Zg3fWgNLVi+HA+LgEz3O+8KzF8B4unTc7UbRzCSUruj
+         Sr4WlMw51WbButVgtKjyC/HwwlqrUI/G2e31skSMzug8x9bsBopIqUG7Z/UfZSBnUWYM
+         Ez4g==
+X-Received: by 10.182.65.97 with SMTP id w1mr22342144obs.73.1424271453560;
+ Wed, 18 Feb 2015 06:57:33 -0800 (PST)
+Received: by 10.202.12.193 with HTTP; Wed, 18 Feb 2015 06:57:33 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264020>
 
+Some background.
+I'm trying to use Git as an object store for trees.
+I put trees into the repo and can retrieve them.
+I'm having issues with diffing these trees that I retrieve from the repo.
+If I use a "git checkout" the diffs seem to work but if I create the
+tree myself user lower level ls-tree and cat-file commands then the
+diff doesn't work.
+It seems to take the index into account.
 
---Apple-Mail=_7D6365AA-902C-4CD4-BD50-25E9FF21DA8A
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=utf-8
+Below is a complete working example.
+Should be able to copy / paste line by line.
+I am trying to run the diff of form:
+  git diff [--options] <commit> [--] [<path>...]
+where it says it does a diff from working tree to a commit
 
+Maybe git is interpreting my command as one of the other forms?
+Can someone help me understand what is going on?
 
-> On Feb 18, 2015, at 10:05 PM, Matthieu Moy =
-<Matthieu.Moy@grenoble-inp.fr> wrote:
->=20
-> Fairuzan Roslan <fairuzan.roslan@gmail.com> writes:
->=20
->> Client: OS X 10.9 - 10.10.2
->> git client: git version 1.9.3 (Apple Git-50) and git version 2.2.1
->>=20
->> Server : Linux 3.2.40 (Synology DSM 5.1)
->> AFP : Netatalk afpd 3.1.1
->=20
-> Any chance you can test this with a Mac OS server?
->=20
-> Perhaps because the server is not a Mac OS, it doesn't have the uchg
-> flag, and maps it to the w bit in the POSIX permission system (this is
-> pure speculation from me).
->=20
-> --
-> Matthieu Moy
-> http://www-verimag.imag.fr/~moy/
+#
+# EXAMPLE
+#
 
-I don=E2=80=99t have any Mac OS X server in my disposal at this moment =
-but if you want to test out with netatalk AFPD I believe it=E2=80=99s =
-available in debian & ubuntu apt repo
+# cleanup and create dummy data
+rm -rf /tmp/mydatastore && mkdir -p /tmp/mydatastore
+rm -rf /tmp/test /tmp/test2 && mkdir -p /tmp/test/d1 /tmp/test2
+echo "this is f1" > /tmp/test/f1
+echo "this is f2" > /tmp/test/d1/f2
 
-Regards,
-Fairuzan
+# create a new branch called test with data from /tmp/test
+git --git-dir=/tmp/mydatastore/.db init --bare
+git --git-dir=/tmp/mydatastore/.db hash-object -w /tmp/test/d1/f2 /tmp/test/f1
+echo -e "100644 blob c837441e09d13d3a0a2d906d7c3813adda504833\tf2" |
+git --git-dir=/tmp/mydatastore/.db mktree --batch
+echo -e "100644 blob
+11ac5613caf504eec18b2e60f1e6b3c598b085eb\tf1\n40755 tree
+055f1133fbc9872f3093cca5f182b16611e6789a\td1" | git
+--git-dir=/tmp/mydatastore/.db mktree
+commit_sha=`git --git-dir=/tmp/mydatastore/.db commit-tree -m "initial
+commit" c427094b22e74d1eaeebdc9e49e6790b5b6a706a`
+git --git-dir=/tmp/mydatastore/.db update-ref refs/heads/test $commit_sha
 
---Apple-Mail=_7D6365AA-902C-4CD4-BD50-25E9FF21DA8A
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
-	filename=signature.asc
-Content-Type: application/pgp-signature;
-	name=signature.asc
-Content-Description: Message signed with OpenPGP using GPGMail
+# why does this show diffs?
+git --git-dir=/tmp/mydatastore/.db --work-tree=/tmp/test diff $commit_sha
 
------BEGIN PGP SIGNATURE-----
-Comment: GPGTools - http://gpgtools.org
+# after doing a checkout somewhere else it doesn't show any diffs
+git --git-dir=/tmp/mydatastore/.db --work-tree=/tmp/test2 checkout test .
+git --git-dir=/tmp/mydatastore/.db --work-tree=/tmp/test diff $commit_sha
 
-iQEcBAEBAgAGBQJU5KBZAAoJEKrU1IvC77KVlacH/AxdfLZgxjDjzKKhiGS+CNFg
-diWsiePgd8bZq/NO5KlewvOMNmkQaM1LGJeqUSjozmjF8GuiJhDVN6n4SQiEXko/
-nVLlQ669LxcOeQVLQRwO8okiLzW9gfsvv5LSdpF9lEKS+c2qniJqbxWJTycVfFAb
-JhIlivIUekpulO0/uXKLSH+cQcMsq4GZd6daXUMk/hX+sYnfZOrnU3aAMxmM+EQE
-8+QSenNoYPgC0cstj7cN6N1Z17SV96pkxJAaSEuf0ApUm1gzqj67rViXpV5aWUJt
-MdWYlIasPM4NBOmslVhsOZhR5C0RAAj33CmCJQpayx/muQWyqXaiR3K72Z1mPGo=
-=h04s
------END PGP SIGNATURE-----
+# remove the index and it shows diffs again
+rm /tmp/mydatastore/.db/index
+git --git-dir=/tmp/mydatastore/.db --work-tree=/tmp/test diff $commit_sha
 
---Apple-Mail=_7D6365AA-902C-4CD4-BD50-25E9FF21DA8A--
+# it was my understanding from "git help diff" that this form of diff
+is supposed to
+# compare a work tree against a commit or branch and not take into
+account the index.
+# Clearly it takes into account the index because we get different
+results with and without it
