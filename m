@@ -1,150 +1,78 @@
-From: Matthew Brett <matthew.brett@gmail.com>
-Subject: Re: Advice on edits to git-rebase man page
-Date: Wed, 18 Feb 2015 10:59:33 -0800
-Message-ID: <CAH6Pt5q91aEF4X=RTBV8BMHHf7vuiaikn9PT42UAe3Ht6hLr3A@mail.gmail.com>
-References: <CAH6Pt5pN8nrZzW+JntU5AWS1P4vu_JmdQBM_oR4Rfnh937wFPQ@mail.gmail.com>
- <vpqa90s4oz2.fsf@anie.imag.fr> <xmqqa90smbhu.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2] add a flag to supress errors in git_config_parse_key()
+Date: Wed, 18 Feb 2015 14:02:15 -0500
+Message-ID: <20150218190215.GD7257@peff.net>
+References: <20150206124528.GA18859@inner.h.apk.li>
+ <20150206193313.GA4220@peff.net>
+ <xmqqbnl6hljt.fsf@gitster.dls.corp.google.com>
+ <20150206203902.GB10857@peff.net>
+ <54DA5FC1.9010707@gmail.com>
+ <20150211002754.GC30561@peff.net>
+ <xmqq386cuvxl.fsf@gitster.dls.corp.google.com>
+ <54E1A30F.5010303@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Git Mailing List <git@vger.kernel.org>,
-	Reuben Thomas <rrt@sc3d.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 18 20:01:41 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, Andreas Krey <a.krey@gmx.de>,
+	git@vger.kernel.org
+To: Tanay Abhra <tanayabh@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 18 20:02:24 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YO9sN-00032h-QN
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Feb 2015 20:01:36 +0100
+	id 1YO9t9-0003kX-Eo
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Feb 2015 20:02:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754050AbbBRTAR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Feb 2015 14:00:17 -0500
-Received: from mail-yh0-f53.google.com ([209.85.213.53]:37186 "EHLO
-	mail-yh0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753820AbbBRTAO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Feb 2015 14:00:14 -0500
-Received: by yhoa41 with SMTP id a41so2126315yho.4
-        for <git@vger.kernel.org>; Wed, 18 Feb 2015 11:00:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=C2YBQYb241rcHOf6gZf05OzrsIE+HbPNnWyqT1Kpejk=;
-        b=yJ5X7TAxzpBp/9jr84cib9nnJ4vIw2va3G2O4S7TYYh9lpJybaBHEd2zsxxR+At9b1
-         3Uua/LffUSepCr8kFEFCqGNGMJbeiGpBXiGykyBXBoRGymzHUJHwAkN921Izx+5EONo9
-         H8kyFrm4WO1fAvzNbdLmnJbUZxtahkdcOpsOUi95kCvNY5CptfyedgKlTnCXrCMPvYJW
-         vTgbhZ7AsdZ7xC5CPu/06KITQ5cKNDp7u6DgSQ1463yearqETK0ObkW5aN0xQRXhfMq+
-         weIXZE9zc+UzYRwzz9Uar5XPv7zlSK3t8y2IbWgvA5BcAaX6eWfoVPyshwWoaXHRS5vW
-         L5EA==
-X-Received: by 10.236.26.138 with SMTP id c10mr829451yha.36.1424286013399;
- Wed, 18 Feb 2015 11:00:13 -0800 (PST)
-Received: by 10.170.217.69 with HTTP; Wed, 18 Feb 2015 10:59:33 -0800 (PST)
-In-Reply-To: <xmqqa90smbhu.fsf@gitster.dls.corp.google.com>
+	id S1753587AbbBRTCT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Feb 2015 14:02:19 -0500
+Received: from cloud.peff.net ([50.56.180.127]:50631 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753418AbbBRTCR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Feb 2015 14:02:17 -0500
+Received: (qmail 4078 invoked by uid 102); 18 Feb 2015 19:02:17 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 18 Feb 2015 13:02:17 -0600
+Received: (qmail 19823 invoked by uid 107); 18 Feb 2015 19:02:25 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 18 Feb 2015 14:02:25 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Feb 2015 14:02:15 -0500
+Content-Disposition: inline
+In-Reply-To: <54E1A30F.5010303@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264044>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264045>
 
-On Thu, Feb 5, 2015 at 10:58 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
->
->>   NAME
->>        git-rebase - Forward-port local commits to the updated upstream head
->>
->> => Quite technical already.
->
-> Very much true, and I would say the description is "technically
-> correct" in the sense that "it is not wrong per-se".  There are a
-> few points that this fails to state and some that this overspecifies.
->
->  - Rebase is about changing the base of an existing branch, but the
->    description does not even mention the word "branch" [*1*].
->
->  - There is nothing "forward" about it.  I often see myself applying
->    (tentatively) incoming patches on top of whatever commit I happen
->    to have checked out, review it and then rebasing it to apply to
->    older maintenance track if the topic is about fixing an old bug.
->
->  - There is no point stressing "local" commits; all the operations
->    you do to munge commits are local.
->
-> Perhaps something like this instead?
->
->     git-rebase - Rebuild a branch on top of a different commit
->
->
->>   DESCRIPTION
->>        If <branch> is specified, git rebase will perform an automatic
->>        git checkout <branch> before doing anything else. Otherwise it
->>        remains on the current branch.
->>
->> => Ouch, do we really want to start a documentation like this?
->
-> No.  We should say what the command does and what the command is for
-> in more general terms first and then describe how arguments can be
-> used to affect it.
->
->> So, the DESCRIPTION part can definitely be improved IMHO. Your notation
->> <graft-point>, <exclude-from> and <include-from> may be an improvement
->> already.
->
-> <graft-point>, <exclude-from> and <include-from> aren't technically
-> wrong per-se, but I do not think bulk-replacing the words currently
-> used in the manual page with these is an improvement at all, unless
-> the mental picture the explanation draws is also updated to match
-> these new words.
->
-> reBASE is about changing the base of the affected branch, and the
-> mental picture the current documentation draws is "there is a plant,
-> from which you cut a branch, scion. Then you graft the scion onto
-> understock".  It calls the original tree (that the branch being
-> transplanted is part of) the "old-base", and the understock (that
-> the scion is going to be grafted onto) the "new-base".  The word
-> "graft" in "graft point" may better convey that we are doing a
-> transplanting than the current wording, but the word "point" makes
-> it unclear to the readers if it refers to the "point" where the
-> scion was cut from or where it is going to transplanted to, I am
-> afraid.
+On Mon, Feb 16, 2015 at 01:28:07PM +0530, Tanay Abhra wrote:
 
-Thanks for the detailed feedback, sorry to be slow to reply.
+> I went through Junio's config guideline patch series
+> and the whole thread of underscore bug report and I also think
+> that pager.*.command is the right path to go.
+> 
+> If you want to relax the syntactic requirement (such as add '_' to
+> the current set of allowed chacters), I can work upon it but most of the
+> comments point that moving towards pager.*.command would be better.
 
-For 'graft-point' - I agree that it is not immediately clear whether
-this is the start of the commits that will be moved or the place that
-they will be moved to.  <newbase> and <oldbase> are really not too bad
-in the current docs.  After all, the command is called reBASE.  On the
-other hand, the term 'graft' gives the impression of moving part of a
-tree from one origin (base) to another, which I think is correct,
-whereas the 'base' terminology doesn't allow an obvious name for the
-'shoot' or 'scion'.  For example, I don't think there is such a term
-in the current docs, other than 'set of commits'.
+No, as silly as I find the "_" restriction, it is not worth doing. One,
+it would not cover all cases (it is one common case, so it makes the
+problem more rare but does not eliminate it). And two, there are other
+parsers of git's config format. Technically we do not need to care about
+them and they can follow our lead, but we do not need to make things
+harder on them than is necessary.
 
-> Also <exclude-from> and <include-from> is probably too operational,
-> and describing the command with only these two words would miss the
-> point that the command is about transplanting a branch.  It is true
-> that in order to transplant a branch, you first need to figure out
-> the set of commits whose effects are to be replayed, you would need
-> <exclude-from>..<include-from> range computation, but it is an
-> lower-level implemention detail.
+>  	if (last_dot == NULL || last_dot == key) {
+> -		error("key does not contain a section: %s", key);
+> +		if (!flags)
+> +			error("key does not contain a section: %s", key);
 
-First - the current docs have <upstream> for <exclude-from> and
-<branch> for <include-from>.  I find both of these confusing and hard
-to read:
+The intent of the flag variable is that you would check:
 
-* upstream - it isn't part of the semantics of rebase that the exclude
-point should be something "upstream", that is only one of the common
-uses.  I think this is related to the point you made about "forward"
-in the one-line description.
-* branch - too generic - does not convey the point that this is the
-included end point of the selected history.
+  if (!(flags & CONFIG_ERROR_QUIET))
 
-Second - I don't understand why the actual use of <upstream> and
-<branch> for selecting commits is a lower-level implementation detail.
-Is there some higher-level explanation for how these parameters select
-revisions?
+here. I know that there are no other flags yet, so the two are
+equivalent. But when somebody adds a new flag later, you would not want
+them to have to tweak each of these sites.
 
-Thanks,
-
-Matthew
+-Peff
