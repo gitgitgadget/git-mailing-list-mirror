@@ -1,66 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] git cat-file "literally" option
-Date: Wed, 18 Feb 2015 07:47:25 -0800
-Message-ID: <CAPc5daUWTRA=cziUsXEbwNrggA_3mhRsrfnVaQ-F7iEeSO7ATw@mail.gmail.com>
-References: <54E45DD7.205@gmail.com> <54E48A96.8010301@gmail.com> <CACsJy8BJnHTyXhhJaCuZAzjm=Gd96EjANEw76j=3L92cmbX7HA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Git GSoC 2015
+Date: Wed, 18 Feb 2015 10:58:18 -0500
+Message-ID: <20150218155818.GA26814@peff.net>
+References: <20150212093435.GA20118@peff.net>
+ <CAGZ79kbFntyRSgNraz_UG6GstSDCvNZeg5_e1daFYnUGjDpFJg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: karthik nayak <karthik.188@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 18 16:47:52 2015
+Content-Type: text/plain; charset=utf-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Wed Feb 18 16:58:27 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YO6qs-0005cJ-Hi
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Feb 2015 16:47:50 +0100
+	id 1YO718-0003MW-4w
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Feb 2015 16:58:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751906AbbBRPrq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Feb 2015 10:47:46 -0500
-Received: from mail-ob0-f181.google.com ([209.85.214.181]:59923 "EHLO
-	mail-ob0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751795AbbBRPrq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Feb 2015 10:47:46 -0500
-Received: by mail-ob0-f181.google.com with SMTP id vb8so3267516obc.12
-        for <git@vger.kernel.org>; Wed, 18 Feb 2015 07:47:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=QXbQN6y2EsualgjPXABdX299E5z6YEmzpyGnnJxYgIQ=;
-        b=VAaNmuVDBMVfRpxcsH7X049D9eoJleACqevyB+YQpECCAZn84VrT4z2mHRzcL/AvOq
-         r5kZASZSvspB3/WLBfe9EOUij3y4KBl/AOLZ1tuYvSkxCUD1aGx+6ZLDgE7UAd5SuY4s
-         IZUUBWj05WS+ba5CIZ/fZd+F0GdDNIhC/i569Vh/B/MuEweNEvm5Bd2veFSE2bsn0M0Z
-         06fPt887qIZU6im74wX+iWH26crH9q6wlQGabfcb5wi/iMQ3tkTzVj0bAv+CjCWc8woT
-         eFlhOrNGKWpdiIWKKUkIdwN9+Zz3FBTaQxFG3aKvz1xA3Nr2H58tXyWj+uZQNpNUaAxf
-         7jOA==
-X-Received: by 10.202.87.79 with SMTP id l76mr21370079oib.84.1424274465558;
- Wed, 18 Feb 2015 07:47:45 -0800 (PST)
-Received: by 10.202.48.132 with HTTP; Wed, 18 Feb 2015 07:47:25 -0800 (PST)
-In-Reply-To: <CACsJy8BJnHTyXhhJaCuZAzjm=Gd96EjANEw76j=3L92cmbX7HA@mail.gmail.com>
-X-Google-Sender-Auth: qKYojNHd9lbgTIcDnCiSl0FGCzM
+	id S1752337AbbBRP6W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Feb 2015 10:58:22 -0500
+Received: from cloud.peff.net ([50.56.180.127]:50459 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751831AbbBRP6V (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Feb 2015 10:58:21 -0500
+Received: (qmail 28450 invoked by uid 102); 18 Feb 2015 15:58:21 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 18 Feb 2015 09:58:21 -0600
+Received: (qmail 17820 invoked by uid 107); 18 Feb 2015 15:58:29 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 18 Feb 2015 10:58:29 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Feb 2015 10:58:18 -0500
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kbFntyRSgNraz_UG6GstSDCvNZeg5_e1daFYnUGjDpFJg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264024>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264025>
 
-On Wed, Feb 18, 2015 at 5:58 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-> ... skip the enum object_type conversion. You probably need special
-> treatment for packed objects too.
+On Tue, Feb 17, 2015 at 04:05:24PM -0800, Stefan Beller wrote:
 
-I do not think you can store object of type "bogus" in a pack data stream
-to begin with, so I wouldn't worry about packed objects.
+> I have observed the GSoC last year and the micro projects seem to be
+> have helped a lot. Although I don't have a strong proficiency yet, I'd
+> may be a mentor this year?
 
-"cat-file --literally" that does not take "-t" would not be useful, as the
-output "cat-file <type> <object>" does not tell what <type> the thing
-is. Other things like sizes and existence can be inferred once you have
-an interface to do "cat-file <type> <object>", so in that sense -e and -s
-are not essential (this also applies to "cat-file" without --literally).
+Certainly. The first steps are helping with the project selection,
+specifically:
 
-By definition, "--literally -p" would not be able to do anything fancier than
-just dump the bytes (i.e. what "cat-file <type> <object>" does), as the
-bogus type is not something the code would know the best external
-representation for.
+  1. Populating the list of suggested projects (this week).
+
+  2. Helping to review applications once they start coming in (in a
+     month or so).
+
+> Why do you not like to be the org admin again this year?
+
+Because it's a non-zero time commitment, and I have many other things
+I'd like to do. :)
+
+Actually, I do not mind being the org admin too much if nobody else
+wants to step up. But what I really need help on is the proposed project
+list, which is part of the application (which is due on Friday). That is
+not something I can fill out by myself.
+
+-Peff
