@@ -1,60 +1,55 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Possible GSoC project?
-Date: Wed, 18 Feb 2015 20:27:03 +0100
-Message-ID: <87h9ujja0o.fsf@fencepost.gnu.org>
+From: "Martin d'Anjou" <martin.danjou14@gmail.com>
+Subject: gitk drawing bug
+Date: Wed, 18 Feb 2015 14:27:58 -0500
+Message-ID: <CACZ2eqdm_DXfa0o9J3NXfxD0XG-iAbPNUhySg026qhkqZAYWJA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=ISO-8859-1
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 18 20:27:12 2015
+X-From: git-owner@vger.kernel.org Wed Feb 18 20:28:06 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YOAHA-0006Zi-2t
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Feb 2015 20:27:12 +0100
+	id 1YOAHz-00071g-IS
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Feb 2015 20:28:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754348AbbBRT1H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Feb 2015 14:27:07 -0500
-Received: from fencepost.gnu.org ([208.118.235.10]:54710 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753459AbbBRT1F (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Feb 2015 14:27:05 -0500
-Received: from localhost ([127.0.0.1]:53753 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1YOAH2-0007MI-9n
-	for git@vger.kernel.org; Wed, 18 Feb 2015 14:27:04 -0500
-Received: by lola (Postfix, from userid 1000)
-	id D59D1E0E86; Wed, 18 Feb 2015 20:27:03 +0100 (CET)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.0.50 (gnu/linux)
+	id S1755042AbbBRT2A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Feb 2015 14:28:00 -0500
+Received: from mail-wi0-f177.google.com ([209.85.212.177]:49472 "EHLO
+	mail-wi0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753279AbbBRT17 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Feb 2015 14:27:59 -0500
+Received: by mail-wi0-f177.google.com with SMTP id bs8so4502062wib.4
+        for <git@vger.kernel.org>; Wed, 18 Feb 2015 11:27:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=CR3tutUyawAe7iOpE4cjH+KOfZAvgKkvgtKb6G1uQOw=;
+        b=kVA9r5nIPpBkQ0rVUDuRNFwCEfjZJlTVlUvcPWMCAV/KZKD+eIeGtDeqqEuYHjhwn/
+         Mth4IyOb4c9P9ZrEKNuhZ37DTH3N30L3j3oPdVPZhpi9PjKh6WxbKKlgVHeoNkYJsNzu
+         xCrFZvJkosbbOXZcv7xKZZH7BJHphTcNKVr7AQiRxPqmUVi3b1D/3oMnbQc+4sNpT5TD
+         MgFR6bTNEF7WmpPKYAvKIJgARPoWb8SjFrLT8XRrCjX3gQpzCoQsUwwrzzZD8mYeM9LK
+         9mdtd4zgc+Wxy/9IveYobH39AA9gpVE3ZdAZGSs8bHMUaSowGrgec2Et0AmRy80cLOnu
+         tr9Q==
+X-Received: by 10.194.57.199 with SMTP id k7mr1666204wjq.1.1424287678092; Wed,
+ 18 Feb 2015 11:27:58 -0800 (PST)
+Received: by 10.194.109.99 with HTTP; Wed, 18 Feb 2015 11:27:58 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264054>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264055>
 
+Hi,
 
-Maybe it would be worthwhile to explore GUB
-<URL:http://www.lilypond.org/gub> for rolling the Windows (and possibly
-Cygwin as well, but then they tend to do their own) release/installer
-for Git?
+It appears I have uncovered inconsistent behaviour in gitk. Looks like
+a bug. I have a picture here:
+https://docs.google.com/document/d/19TTzGD94B9EEIrVU5mRMjfJFvF5Ar3MlPblRJfP5OdQ/edit?usp=sharing
 
-LilyPond has a similar mixture of scripting engines and target-dependent
-bits-of-GNU that it packages into its installers (for GNU/Linux,
-FreeBSD, MacOSX on PowerPC as well as x86, Windows) using GUB, and as
-far as developers are concerned, the synchronized releases happen
-without any extra work and involvement just by letting the standard
-release scripts roll.
+Essentially, when I hit shift-F5, it sometimes draw the history
+differently (still valid, but drawn differently). There is no change
+in the repository between the shift-F5 keystrokes.
 
-Looking at <URL:http://lilypond.org/gub/applications>, there appears to
-be a Git recipe already, but it will likely not be an installed bundle
-including the necessary scripting engines (what's it?  Tk, Perl,
-Bash/Dash, and similar?).
-
-So it might be worth figuring out what is needed for setting this up in
-order to have a run-and-forget kind of release for a number of
-platforms.
-
--- 
-David Kastrup
+Thanks,
+Martin
