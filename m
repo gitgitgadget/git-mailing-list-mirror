@@ -1,85 +1,90 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/3] request-pull: do something if $3 is passed
-Date: Tue, 17 Feb 2015 23:11:00 -0800
-Message-ID: <xmqqvbiz4ruj.fsf@gitster.dls.corp.google.com>
-References: <1424110568-29479-1-git-send-email-bonzini@gnu.org>
-	<xmqqiof163kk.fsf@gitster.dls.corp.google.com>
-	<54E31405.5040502@gnu.org>
-	<xmqqvbj01fbz.fsf@gitster.dls.corp.google.com>
-	<54E3A5E2.6060806@gnu.org>
-	<CA+55aFw_pKtraqwMMsqsYgF=ikShH=6ybtb7+QPr8r=77kmoVQ@mail.gmail.com>
-	<54E3AA41.5070209@gnu.org>
-	<CA+55aFxdxzeHmckgn5ZSvXKr9VOztNApif+=5xmZ+4v=RhUryQ@mail.gmail.com>
-	<1957798859.18730760.1424207408147.JavaMail.zimbra@redhat.com>
-	<CA+55aFy_63YEaYa4KYEiMP+pR0-MKrf2nd1PgnJ2Ez2XJuVGhQ@mail.gmail.com>
+Subject: Re: Git gc removes all packs
+Date: Tue, 17 Feb 2015 23:13:05 -0800
+Message-ID: <xmqqoaor4rr2.fsf@gitster.dls.corp.google.com>
+References: <CAC+L6n1M7LtGaJy94fnhXm94zJ32HXLNVGMguWSqHm=qqLLDxA@mail.gmail.com>
+	<20150205200332.GD15326@peff.net> <54E36EBF.2070600@alum.mit.edu>
+	<20150217165514.GA12176@peff.net> <54E3A695.1050708@alum.mit.edu>
+	<xmqq7fvg19se.fsf@gitster.dls.corp.google.com>
+	<54E3BE8B.2040403@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
-	Paolo Bonzini <bonzini@gnu.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Feb 18 08:11:11 2015
+Cc: Jeff King <peff@peff.net>,
+	Dmitry Neverov <dmitry.neverov@gmail.com>, git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Wed Feb 18 08:13:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YNyms-0000kR-Mn
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Feb 2015 08:11:11 +0100
+	id 1YNyos-0001Jq-TV
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Feb 2015 08:13:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751059AbbBRHLF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Feb 2015 02:11:05 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:60371 "EHLO
+	id S1751850AbbBRHNJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Feb 2015 02:13:09 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:57493 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750774AbbBRHLD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Feb 2015 02:11:03 -0500
+	with ESMTP id S1750962AbbBRHNH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Feb 2015 02:13:07 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 302BA31D87;
-	Wed, 18 Feb 2015 02:11:02 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3C53431DDD;
+	Wed, 18 Feb 2015 02:13:07 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=zGEUqEJ1ANS9KdnpwfOMsUgLgrQ=; b=KGycvw
-	bzQm5zYPxNdB+nHguLDK6B5n8xsYgDKh47YDkjFXz9T3SMhOQHL6BdLzDN7E0qVR
-	6vguli62DmbYvvhsSHHUTaORjeKl34xhjXwCUiYNJHOGqFW7YWzfDs2fdjbnhwOG
-	WP0g0vBxfU0EDjux9pbuOR1iRmAVFIKa10NUA=
+	:content-type; s=sasl; bh=s3XKoTxqrR5S2yUDq4pBUB2PGTA=; b=kUiguH
+	Cn4a6B+QVbu8qF4xcPaivg5QK8O3k7MI83z2MGkbFRFex0MOnWuM/rZaIV4azmZB
+	uzNIpJnkE/sN5UBXZ5eqHNIWC/F9eYNVXYY5ybT8Tn8tnxkKnT7BTs213fmSB/rK
+	lWslTtlAOHA2KJzssmIK6t5KqEu44IinnKJ1I=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=N5A2KXB0bLTQii+CAZy2T4TVisqbBHrQ
-	F0OwQ3Clmq87QSpkSsRQP+E/97e9YYK7V9ftprKreNEDX8ySfI9AJMgIWpSDPmAV
-	0JZOG/d6cJF2pSQCMvqRoShC4oevD9hGzKDWk0STcpJlcYzgRzhIpG2s1557HCnk
-	0Ftfv9bv9IU=
+	:content-type; q=dns; s=sasl; b=DfkC8kFIUWwigUAdn+Gj3UXKe5XDv8Is
+	drf8GKz4VlcJYuujca3nymuQ1XFzEml00i72uXsU8otlAHZA8hcxaeyLiNR/I7q/
+	O9bo4ti7NScyI0us707pCwxfuqJSBtHAatpKdfhjNPib6LtQuqNXOtcgEsyjkoq4
+	8kEhJfNR3tg=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2411231D85;
-	Wed, 18 Feb 2015 02:11:02 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 30BCD31DDC;
+	Wed, 18 Feb 2015 02:13:07 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9A14731D84;
-	Wed, 18 Feb 2015 02:11:01 -0500 (EST)
-In-Reply-To: <CA+55aFy_63YEaYa4KYEiMP+pR0-MKrf2nd1PgnJ2Ez2XJuVGhQ@mail.gmail.com>
-	(Linus Torvalds's message of "Tue, 17 Feb 2015 13:18:16 -0800")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AAD3E31DDB;
+	Wed, 18 Feb 2015 02:13:06 -0500 (EST)
+In-Reply-To: <54E3BE8B.2040403@alum.mit.edu> (Michael Haggerty's message of
+	"Tue, 17 Feb 2015 23:19:55 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 4B8D8904-B73D-11E4-9949-A4119F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 961A07B8-B73D-11E4-92AF-A4119F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264005>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-> So basically I agree that git request-pull has changed behavior, but
-> the new behavior is *more* in line with other git commands, and the
-> old behavior was actually really really odd with that whole extensive
-> "guess what the user means". No other git command ever did that
-> guessing thing (ok, famous last words, maybe somebody can come up with
-> one), and not mentioning a branch/tag/commit explicitly pretty much
-> always means "HEAD".
+> On 02/17/2015 10:57 PM, Junio C Hamano wrote:
+> ...
+>> Do you mean that we would end up reading refs/heads/hold if the user
+>> did this:
+>> 
+>>     git rev-parse --verify HEAD -- >precious
+>>     ln -s ../../../precious .git/refs/heads/hold
+>> 
+>> because that symbolic link does not begin with "refs/",
+>
+> Correct, you can do exactly that. The "hold" reference is resolvable and
+> listable using "for-each-ref". But if I try to update it, the contents
+> of the "precious" file are overwritten. On the other hand, if I run
+> "pack-refs", then the current value of the "hold" reference is moved to
+> "packed-refs" and the symlink is removed. This behavior is not sane.
+>
+>> and is an
+>> accident waiting to happen so we should forbid it in the longer
+>> term and warning when we see it would be the first step?
+>
+> Yes, I am proposing that approach, though if somebody can suggest a use
+> case I'm willing to be convinced otherwise.
 
-OK.
-
-There may be some stuff that DWIMs "HEAD" to something other than
-the commit that is at the tip of HEAD, but I agree that the fewer we
-have such oddballs, the better.
-
-Thanks.
+Thanks.  I agree the proposed tightening is probably harmless, but I
+too would want to see if somebody comes up with a valid use case.  I
+do not think of anything offhand.
