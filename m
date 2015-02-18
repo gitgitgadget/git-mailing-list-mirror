@@ -1,96 +1,63 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFH] GSoC 2015 application
-Date: Wed, 18 Feb 2015 13:54:37 -0800
-Message-ID: <xmqqlhju28de.fsf@gitster.dls.corp.google.com>
-References: <20150218191417.GA7767@peff.net>
+Subject: Re: Get a git diff without taking index into account
+Date: Wed, 18 Feb 2015 14:16:52 -0800
+Message-ID: <CAPc5daUw8F6fFZk0+-_9Z5nxPG4D56P88yFz=BSfK+xYxLhBxg@mail.gmail.com>
+References: <CAAoZyYN-ohiq-Od=u-cd5FRH8=NpJNGS+zEo+NYgwAK7Kjaz_w@mail.gmail.com>
+ <CAAoZyYPhiKX1F5ymdSijR7=e8CT1sqaomehBjt-NVDz_A4V4UA@mail.gmail.com>
+ <CAPc5daU9km+gr-DHJzJF59mugwGeNX69H27E_DaoyBZnuzoiFw@mail.gmail.com>
+ <CAAoZyYPVopmP_bv7EZS912R4bxpzNm49_q0XXZXqa52dTDDM2Q@mail.gmail.com>
+ <xmqqfva341sf.fsf@gitster.dls.corp.google.com> <CAAoZyYOst-5cD7qtV=T3Oahja1JN1ZmeyAcELrn7xD0bMc7Mrg@mail.gmail.com>
+ <20150218183251.GB6346@peff.net> <CAAoZyYOT_OQZ+rrwFvnsVBV_sYRA4Oti3vRNnE6_RaV9w8qxdg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Feb 18 22:54:46 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
+To: Eric Frederich <eric.frederich@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 18 23:17:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YOCZy-0006a1-2R
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Feb 2015 22:54:46 +0100
+	id 1YOCvm-0007yL-G2
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Feb 2015 23:17:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752120AbbBRVyl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Feb 2015 16:54:41 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:61063 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752090AbbBRVyk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Feb 2015 16:54:40 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id A142538A2B;
-	Wed, 18 Feb 2015 16:54:39 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Z0JGi+UYKLEVs1AM05BHFh0SQiM=; b=Z9R6dK
-	OiMHjFTdBlkciZkTf5segvzEbOguXu8QYpUZ1GJqblVYyyO3o2QGF+787VTD5Gdr
-	VPvXdBD2pGHVbRYaAiuSsfLg1EnzS8yS8/N5+gx2MxPZuawP4QDRszd2fwFjwkGj
-	V7isEfZ3STRW8Xm5lAvUSZYoYG9c0xwmaGNOw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=x2WRsUhAHnOW+Y/zIYQyfHEspCfUqB7N
-	Gb7ALTiNkCuYneK+JUK/uDnKrj+rot38gWraEsYA6ce9HUgn8YdIo+sOAwznKxH4
-	WpM2sGTwVYPtGru7sOd5grSh44qLD+8bvLJPsuKranwvqKf9WIUyfRbtO05PAyZg
-	qB209yAWbo8=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 96FBC38A2A;
-	Wed, 18 Feb 2015 16:54:39 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E79B538A27;
-	Wed, 18 Feb 2015 16:54:38 -0500 (EST)
-In-Reply-To: <20150218191417.GA7767@peff.net> (Jeff King's message of "Wed, 18
-	Feb 2015 14:14:17 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: BC56645A-B7B8-11E4-A488-A4119F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1752610AbbBRWRO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Feb 2015 17:17:14 -0500
+Received: from mail-ob0-f173.google.com ([209.85.214.173]:40045 "EHLO
+	mail-ob0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751728AbbBRWRN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Feb 2015 17:17:13 -0500
+Received: by mail-ob0-f173.google.com with SMTP id uy5so7862337obc.4
+        for <git@vger.kernel.org>; Wed, 18 Feb 2015 14:17:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=3z0VD7SQQSZIWj0gPyZwU7+NyiGWOFjB0ewOupRExh4=;
+        b=0EuGMLZnirZuXdkQ/p6b4e0vjz8npLd2NLs9zqintqxi4zII0laQH3Q0KpT2U92nSQ
+         rAcnDDVRxWyF31VPDQ0X6HNw6w3FuetdmqFjVIDLrLTi/rRVDIaFqq/BfUNvQMlFAqlZ
+         TpJJjMc2FTUgl6I//LMdG53v10dUpSryRLvXXUsC6G+cn5hr0Ppx4zj30GJNkkpJ61eJ
+         3aStdvz2rEcrEm4dxzGNFC+XdhCyefRTrPjhi+XSpKf9dqfD+3lSrJ062BiaUICAScKV
+         xSiPXAXmfhs98LwvtZD9MbHCXtAUGwF/iBe2DozsCVz/H4RWsoLZD3pkBRiEAvT0kag4
+         HdyA==
+X-Received: by 10.182.149.164 with SMTP id ub4mr981098obb.1.1424297832896;
+ Wed, 18 Feb 2015 14:17:12 -0800 (PST)
+Received: by 10.202.48.132 with HTTP; Wed, 18 Feb 2015 14:16:52 -0800 (PST)
+In-Reply-To: <CAAoZyYOT_OQZ+rrwFvnsVBV_sYRA4Oti3vRNnE6_RaV9w8qxdg@mail.gmail.com>
+X-Google-Sender-Auth: SZtOpLUosLxfcuJr4bcDLqjG1Nc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264066>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264067>
 
-Jeff King <peff@peff.net> writes:
+On Wed, Feb 18, 2015 at 1:38 PM, Eric Frederich
+<eric.frederich@gmail.com> wrote:
+> Could you elaborate on "you can just refresh the index before each diff"
+> What command would I use to do this?
 
-> and the list of microprojects:
->
->   http://git.github.io/SoC-2015-Microprojects.html
+"update-index --refresh", perhaps?
 
-A few for micros.
+> Also, how would I go about detecting untracked files the way status does?
 
-diff --git a/SoC-2015-Microprojects.md b/SoC-2015-Microprojects.md
-index b79a89f..f3b2b55 100644
---- a/SoC-2015-Microprojects.md
-+++ b/SoC-2015-Microprojects.md
-@@ -107,4 +107,25 @@ suitable.  Just remember to keep the change small!  It is much better
- for you to finish a small but complete change than to try something
- too ambitious and not get it done.
- 
--**TODO** add entries
-+### Make "git -C '' cmd" not to barf.
-+
-+Instead, make it just like "cd ''", which is a no-op that silently
-+succeeds.  Cf. $gmane/258109
-+
-+### Allow "-" as a short-hand for "@{-1}" in more places.
-+
-+Pick one command that operates on branch names.  Teach it the "-"
-+shorthand that stands for "the branch we were previously on", like we
-+did for "git merge -" sometime after we introduced "git checkout -".
-+Cf. $gmane/230828
-+
-+### Make "git diff --no-index $directory $file" DWIM better.
-+
-+"git diff --no-index $directory $directory/$file" is obviously what
-+the user wanted.
-+
-+### Forbid "log --graph --no-walk"
-+
-+Because --graph is about connected history while --no-walk is about
-+discrete points.  Cf. $gmane/216083
-+
+"ls-files"?
