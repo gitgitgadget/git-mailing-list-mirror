@@ -1,49 +1,76 @@
-From: =?windows-1251?B?0ujy7uLgIM/u6+jt4A==?= <b@outlook.com>
-Subject: =?windows-1251?B?RndkOiDI+eX4/CDv7uTg8O7qIO3gIDIzIPTl?=
-	=?windows-1251?B?4vDg6/8/?=
-Date: Wed, 18 Feb 2015 11:45:26 +0300
-Organization: =?windows-1251?B?yOLu7eA=?=
-Message-ID: <232690C3C81C3162BEBBF24F9BCBA8BF@5.145.216.42>
-Reply-To: =?windows-1251?B?0ujy7uLgIM/u6+jt4A==?= <PnJQqz@qip.ru>
+From: karthik nayak <karthik.188@gmail.com>
+Subject: Re: Git GSoC 2015
+Date: Wed, 18 Feb 2015 14:54:24 +0530
+Message-ID: <54E45A48.6090402@gmail.com>
+References: <20150212093435.GA20118@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1251
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: gisula@mail.ru, gisvain_andrey@mail.ru, gisyossieva_194@mail.ru,
-	git.tmj@uzairways.com, git@php-git1.php.net, git@github.com,
-	git@pumori.ru, git@vger.kernel.org, git_14@mail.ru,
-	git1grp@online.ru, gita.90@mail.ru, gita@freemail.ru,
-	gita@hea.iki.rssi.ru, gita@nightmail.ru, gita_86@mail.ru
-X-From: git-owner@vger.kernel.org Wed Feb 18 09:48:37 2015
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Jeff King <peff@peff.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 18 10:24:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YO0J9-0004oI-Hd
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Feb 2015 09:48:35 +0100
+	id 1YO0rz-0000fg-6T
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Feb 2015 10:24:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752307AbbBRIsb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Feb 2015 03:48:31 -0500
-Received: from [109.248.246.207] ([109.248.246.207]:60127 "EHLO
-	amillersend1.ru" rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751727AbbBRIsb convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Feb 2015 03:48:31 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=v5.ip4vmarketing1.com; s=dkim;
-	h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:From:Reply-To:Message-ID:Subject:To; bh=J0mlMgP2hJrA7sIR2vr4ScL9MBNuZ1NXflujOj9cCTs=;
-	b=KnzLh2Q2cp9/oXO8b+kuEgHT4ZE/3xalH4SIQuuD6X8YKwN/z3GBJ/1E9KdTjQjtjC3KY6cQ75McOuL1QT27KnbwOh/baiaKpi3g/aPa+Dgix3XWKVvg2Vggvp6XbZc/42j/mo9ZtSIWJD1D7Maiivzfi4eu6qTMCZ1ncRZgf5A=;
-Received: from puxas2 by amillersend1.ru with local (Exim 4.80)
-	id 1YO0GN-0000wy-H1; Wed, 18 Feb 2015 11:45:43 +0300
-X-PHP-Originating-Script: 501:ip4mass.php
-X-Priority: 3
+	id S1751794AbbBRJYa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Feb 2015 04:24:30 -0500
+Received: from mail-pd0-f181.google.com ([209.85.192.181]:44988 "EHLO
+	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751562AbbBRJY2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Feb 2015 04:24:28 -0500
+Received: by pdbnh10 with SMTP id nh10so46034659pdb.11
+        for <git@vger.kernel.org>; Wed, 18 Feb 2015 01:24:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:subject:references
+         :in-reply-to:content-type:content-transfer-encoding;
+        bh=gdqYEt8FouS8twj5sP0MovBzMDlB8yeupGohRp4EjNY=;
+        b=l77GpTPiGmDfidWeeSyMBVFTkIZLvmtXgt9WdRYdqAl2iDjZ9fjOlsKQU3heAygQ74
+         BJkUQctuB0qiIGcbDObZjfLU1USe9V/iq5uVmYeCHm+CrowwRhYT+v771EP+/Kx73KuK
+         dO9SLhp1ZSdBEFUcGX0RO2V6S7F2PQSoP5MX0MJKC2CY9TnGg44iNtP9ANLI/5L7/ieW
+         3ulQgOx0N4GaQSNMlq7vQSvUJg+sdp2buYMUscLE5QOCehY3FEF516e5oIj7yot1G7dm
+         Dw92Ya4sB9blNU5RCLQ75YS83LSYnZbGDufe76rgbim5X5I8T4nezhIPz9JlSVRHbSXJ
+         NADg==
+X-Received: by 10.66.55.104 with SMTP id r8mr55907436pap.75.1424251468168;
+        Wed, 18 Feb 2015 01:24:28 -0800 (PST)
+Received: from [172.16.2.128] ([182.48.234.2])
+        by mx.google.com with ESMTPSA id d9sm2058412pdk.3.2015.02.18.01.24.25
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 18 Feb 2015 01:24:27 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
+In-Reply-To: <20150212093435.GA20118@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 5.4 points;
- *  3.2 SUSPICIOUS_RECIPS Similar addresses in recipient list
- *  2.2 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
- *      [Blocked - see <http://www.spamcop.net/bl.shtml?109.248.246.207>]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264007>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264008>
 
-Re: =C8=F9=E5=F8=FC =EF=EE=E4=E0=F0=EE=EA =ED=E0 23 =F4=E5=E2=F0=E0=EB=FF=
-? http://bit.ly/1Cg6gJ0
+
+On 02/12/2015 03:04 PM, Jeff King wrote:
+> The beginnings of the Google Summer of Code deadlines are upon us again.
+> Organization applications are due February 20th (next Friday).
+>
+>   - Do we want to do it?
+I was planning on applying as a student. Would be wonderful if Git applies.
+>   - Who would like to volunteer to be the org admin?
+>
+>     I would like for it not to be me again, but I can help walk anyone
+>     through the application process (which largely just pulls from the
+>     prior year's application).
+>
+>   - Any thoughts on procedures or lessons learned from last year?
+>
+>     Personally, I really liked the "micro-project" system from last year.
+>     It made it easy to drop spammy candidates (because they didn't bother
+>     to do a micro-project at all), and it gave us some interaction with
+>     the candidates before we had to make a decision.
+>
+> -Peff
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
