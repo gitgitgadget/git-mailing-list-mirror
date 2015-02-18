@@ -1,85 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [Q] should "color.*.<slot> = normal" emit nothing?
-Date: Wed, 18 Feb 2015 13:03:06 -0800
-Message-ID: <xmqqzj8b0w6t.fsf@gitster.dls.corp.google.com>
+From: Eric Frederich <eric.frederich@gmail.com>
+Subject: Re: Get a git diff without taking index into account
+Date: Wed, 18 Feb 2015 16:38:55 -0500
+Message-ID: <CAAoZyYOT_OQZ+rrwFvnsVBV_sYRA4Oti3vRNnE6_RaV9w8qxdg@mail.gmail.com>
+References: <CAAoZyYN-ohiq-Od=u-cd5FRH8=NpJNGS+zEo+NYgwAK7Kjaz_w@mail.gmail.com>
+	<CAAoZyYPhiKX1F5ymdSijR7=e8CT1sqaomehBjt-NVDz_A4V4UA@mail.gmail.com>
+	<CAPc5daU9km+gr-DHJzJF59mugwGeNX69H27E_DaoyBZnuzoiFw@mail.gmail.com>
+	<CAAoZyYPVopmP_bv7EZS912R4bxpzNm49_q0XXZXqa52dTDDM2Q@mail.gmail.com>
+	<xmqqfva341sf.fsf@gitster.dls.corp.google.com>
+	<CAAoZyYOst-5cD7qtV=T3Oahja1JN1ZmeyAcELrn7xD0bMc7Mrg@mail.gmail.com>
+	<20150218183251.GB6346@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 18 22:04:13 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Feb 18 22:39:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YOBn2-0000fW-O3
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Feb 2015 22:04:13 +0100
+	id 1YOCKi-0008Sf-Jf
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Feb 2015 22:39:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752621AbbBRVEI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Feb 2015 16:04:08 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:56778 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751634AbbBRVEH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Feb 2015 16:04:07 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id C841739984;
-	Wed, 18 Feb 2015 16:04:05 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=R
-	cbvzWhxRfBM3MdekwKLfscy3HM=; b=iYNAxtUXLW5fGBr4jrOucdmsCN+zcqBDt
-	Dg51blYDbh5v49LXTT0K8Lg//zhkWeSarpRrZ8HXIBhiemH38Nnr06vRqcIA5T8m
-	Arl61bG8364hLhb95G/y+Nf8STi+81Rowyu8X9x9d9LBb+q9QxPmZorA9Akyharz
-	frigf9JK3g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=iYQ
-	7cFnn2dF60Z/GN4ZWti6yc5AT3y7utDYj7HzWtwEh8W2KycLketNU3HxNLhfIj//
-	FiKovEQ42fmj3pyuR9dlOezHVFqpNOSAkF1G3npjdfIQ90pfxvZ8QLgCIXCk9Hrh
-	ueta2PN0yCJBVHdpzLfhlfJsku1nsgNpGUB0/TyE=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id BE84339983;
-	Wed, 18 Feb 2015 16:04:05 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F271D39907;
-	Wed, 18 Feb 2015 16:03:07 -0500 (EST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 89FB7D6C-B7B1-11E4-9B55-A4119F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1752160AbbBRVi4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Feb 2015 16:38:56 -0500
+Received: from mail-ob0-f175.google.com ([209.85.214.175]:37994 "EHLO
+	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750976AbbBRVi4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Feb 2015 16:38:56 -0500
+Received: by mail-ob0-f175.google.com with SMTP id va2so7440083obc.6
+        for <git@vger.kernel.org>; Wed, 18 Feb 2015 13:38:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=DxsP3qfzQuUlfAeYQcogy2/rA0+0qjU17yLrqs4puLY=;
+        b=nMh3ONMxMHWLQkfLAobh7ulKTeD8n5oMfxHdE7YxDhDpFr/Q97SkVQzwufynV4rijU
+         VdrGk38NORMadiGivr+hAAXR5e8rx7W64wf8qfEoG9kOp+vr0LHkZj9CJqAUgTXB1b1d
+         pFQbKU0cIRgCv+0TMjGnXeis8wvmEKbjEP13guGATVq9B+mb19G6/20FRtE9ZK9S6a0T
+         NTu2SAQ7Iohcdk7mhqB1u+pXF6lnpDCqXCbzzNRbE43LBrS0rY1/lyhN6r5sd62bSktn
+         xGx79vERGwdXXolo8UUFh540HzDVBDNhs4GlWIu99pHBCO/Ni6own5UDmvDdV+lmu0iX
+         GEhw==
+X-Received: by 10.202.9.132 with SMTP id 126mr774300oij.77.1424295535493; Wed,
+ 18 Feb 2015 13:38:55 -0800 (PST)
+Received: by 10.202.12.193 with HTTP; Wed, 18 Feb 2015 13:38:55 -0800 (PST)
+In-Reply-To: <20150218183251.GB6346@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264064>
 
-If you wanted to paint the HEAD decoration as the same color as the
-body text (primarily because cyan is too faint on a black-on-white
-terminal to be readable) you would not want to say
+On Wed, Feb 18, 2015 at 1:32 PM, Jeff King <peff@peff.net> wrote:
+> On Wed, Feb 18, 2015 at 01:27:50PM -0500, Eric Frederich wrote:
+>
+> If you can persist the index file for each working tree, this will be
+> much faster in the long run, too (you can just refresh the index before
+> each diff, which means that git does not have to actually open the files
+> in most cases; we can compare their stat information to what is in the
+> index, and then the index sha1 with what is in the tree).
 
-    [color "decorate"]
-        head = black
+Could you elaborate on "you can just refresh the index before each diff"
+What command would I use to do this?
+I don't want to store some object just to get a diff of it.
 
-because that you would not be able to reuse same configuration on
-a white-on-black terminal.  I would naively expect
-
-    [color "decorate"]
-        head = normal
-
-to work, but it does not.  I notice that we have these definitions
-in color.h:
-
-    #define GIT_COLOR_NORMAL        ""
-    #define GIT_COLOR_RESET         "\033[m"
-    #define GIT_COLOR_BOLD          "\033[1m"
-    #define GIT_COLOR_RED           "\033[31m"
-    #define GIT_COLOR_GREEN         "\033[32m"
-    ...
-
-As a workaround, I ended up doing this:
-
-    [color "decorate"]
-        head = reset
-
-which should work OK.  But I have a feeling that the definition of
-our "normal" may want to do the "reset", not "no-op" like we
-currently do.
-
-Comments?
+Also, how would I go about detecting untracked files the way status does?
+There is no way to specify a HEAD per git command using switches or
+environment variables.
+I can't change the HEAD of the Git repo because other processes may be
+using it at the same time.
