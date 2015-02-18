@@ -1,72 +1,103 @@
-From: Eric Frederich <eric.frederich@gmail.com>
-Subject: Re: Get a git diff without taking index into account
-Date: Wed, 18 Feb 2015 16:38:55 -0500
-Message-ID: <CAAoZyYOT_OQZ+rrwFvnsVBV_sYRA4Oti3vRNnE6_RaV9w8qxdg@mail.gmail.com>
-References: <CAAoZyYN-ohiq-Od=u-cd5FRH8=NpJNGS+zEo+NYgwAK7Kjaz_w@mail.gmail.com>
-	<CAAoZyYPhiKX1F5ymdSijR7=e8CT1sqaomehBjt-NVDz_A4V4UA@mail.gmail.com>
-	<CAPc5daU9km+gr-DHJzJF59mugwGeNX69H27E_DaoyBZnuzoiFw@mail.gmail.com>
-	<CAAoZyYPVopmP_bv7EZS912R4bxpzNm49_q0XXZXqa52dTDDM2Q@mail.gmail.com>
-	<xmqqfva341sf.fsf@gitster.dls.corp.google.com>
-	<CAAoZyYOst-5cD7qtV=T3Oahja1JN1ZmeyAcELrn7xD0bMc7Mrg@mail.gmail.com>
-	<20150218183251.GB6346@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] log --decorate: do not leak "commit" color into the next item
+Date: Wed, 18 Feb 2015 13:44:54 -0800
+Message-ID: <xmqqpp9628tl.fsf@gitster.dls.corp.google.com>
+References: <xmqqzj8b0w6t.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Feb 18 22:39:01 2015
+Content-Type: text/plain
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 18 22:45:03 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YOCKi-0008Sf-Jf
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Feb 2015 22:39:00 +0100
+	id 1YOCQY-0002Uj-Rp
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Feb 2015 22:45:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752160AbbBRVi4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Feb 2015 16:38:56 -0500
-Received: from mail-ob0-f175.google.com ([209.85.214.175]:37994 "EHLO
-	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750976AbbBRVi4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Feb 2015 16:38:56 -0500
-Received: by mail-ob0-f175.google.com with SMTP id va2so7440083obc.6
-        for <git@vger.kernel.org>; Wed, 18 Feb 2015 13:38:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=DxsP3qfzQuUlfAeYQcogy2/rA0+0qjU17yLrqs4puLY=;
-        b=nMh3ONMxMHWLQkfLAobh7ulKTeD8n5oMfxHdE7YxDhDpFr/Q97SkVQzwufynV4rijU
-         VdrGk38NORMadiGivr+hAAXR5e8rx7W64wf8qfEoG9kOp+vr0LHkZj9CJqAUgTXB1b1d
-         pFQbKU0cIRgCv+0TMjGnXeis8wvmEKbjEP13guGATVq9B+mb19G6/20FRtE9ZK9S6a0T
-         NTu2SAQ7Iohcdk7mhqB1u+pXF6lnpDCqXCbzzNRbE43LBrS0rY1/lyhN6r5sd62bSktn
-         xGx79vERGwdXXolo8UUFh540HzDVBDNhs4GlWIu99pHBCO/Ni6own5UDmvDdV+lmu0iX
-         GEhw==
-X-Received: by 10.202.9.132 with SMTP id 126mr774300oij.77.1424295535493; Wed,
- 18 Feb 2015 13:38:55 -0800 (PST)
-Received: by 10.202.12.193 with HTTP; Wed, 18 Feb 2015 13:38:55 -0800 (PST)
-In-Reply-To: <20150218183251.GB6346@peff.net>
+	id S1752318AbbBRVo6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Feb 2015 16:44:58 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:61923 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750976AbbBRVo6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Feb 2015 16:44:58 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id ED5C438713;
+	Wed, 18 Feb 2015 16:44:56 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=DuQx6VVdG4ezmWZB41Pbj582NsM=; b=cVrAzK
+	NRIhjrqBmBYIkiORuiC+E61YXxALLs04imfwwE4BXr2gPB+dUkHeOacS1Il1V8vv
+	i27bEfqp42GWfiyXjIOOzRUsAbEkIRVknwFcTL/fs1Nk+IYlBAw03I7qSBZTXvKe
+	jU0qzp4xjAnL0ySxF6L9mRXiW8vZdOWUQa5xE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=LwMVIEYpCZ6ha1cHoiMk4fiJ6hALdwUq
+	aEaUYVB7ZQQ+Kxv/PEY3Y46EBrZ7hda9f102qH03uM9RDkCe6XUyamxvoUpDMIvy
+	Ph9qNn/45jvJe3LjappGYleldIfVTOoDml6m3t9s9/RGFSTpN3+uCr41DfNEHqcR
+	v8fjgNqTXI4=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E496F38712;
+	Wed, 18 Feb 2015 16:44:56 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 19A463870E;
+	Wed, 18 Feb 2015 16:44:56 -0500 (EST)
+In-Reply-To: <xmqqzj8b0w6t.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Wed, 18 Feb 2015 13:03:06 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 60EF4132-B7B7-11E4-B62B-A4119F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264064>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264065>
 
-On Wed, Feb 18, 2015 at 1:32 PM, Jeff King <peff@peff.net> wrote:
-> On Wed, Feb 18, 2015 at 01:27:50PM -0500, Eric Frederich wrote:
->
-> If you can persist the index file for each working tree, this will be
-> much faster in the long run, too (you can just refresh the index before
-> each diff, which means that git does not have to actually open the files
-> in most cases; we can compare their stat information to what is in the
-> index, and then the index sha1 with what is in the tree).
+If you wanted to paint the HEAD and local branch name in the same
+color as the body text (perhaps because cyan and green are too faint
+on a black-on-white terminal to be readable), you would not want to
+have to say
 
-Could you elaborate on "you can just refresh the index before each diff"
-What command would I use to do this?
-I don't want to store some object just to get a diff of it.
+    [color "decorate"]
+        head = black
+        branch = black
 
-Also, how would I go about detecting untracked files the way status does?
-There is no way to specify a HEAD per git command using switches or
-environment variables.
-I can't change the HEAD of the Git repo because other processes may be
-using it at the same time.
+because that you would not be able to reuse same configuration on a
+white-on-black terminal.  You would naively expect
+
+    [color "decorate"]
+        head = normal
+	branch = normal
+
+to work, but unfortunately it does not.  It paints the string "HEAD"
+and the branch name in the same color as the opening parenthesis or
+comma between the decoration elements when showing output like this:
+
+    $ git show -s --decorate
+    commit f3f407747c1cce420ae4b4857c4a6806efe38680 (HEAD, master)
+    ...
+
+This is because the code forgets to reset the color after printing
+the "prefix" in its own color.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+
+ * Answering to myself ...
+
+ log-tree.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/log-tree.c b/log-tree.c
+index 7f0890e..53bb526 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -195,6 +195,7 @@ void format_decorations_extended(struct strbuf *sb,
+ 	while (decoration) {
+ 		strbuf_addstr(sb, color_commit);
+ 		strbuf_addstr(sb, prefix);
++		strbuf_addstr(sb, color_reset);
+ 		strbuf_addstr(sb, decorate_get_color(use_color, decoration->type));
+ 		if (decoration->type == DECORATION_REF_TAG)
+ 			strbuf_addstr(sb, "tag: ");
