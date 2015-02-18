@@ -1,144 +1,60 @@
-From: Fairuzan Roslan <fairuzan.roslan@gmail.com>
-Subject: Re: odb_mkstemp's 0444 permission broke write/delete access on AFP
-Date: Wed, 18 Feb 2015 21:47:17 +0800
-Message-ID: <E28114B6-86FA-4F4A-9D5F-BFC03B9D79B8@gmail.com>
-References: <A403BFCC-D66F-49BD-B54C-BB86B467F1A1@gmail.com> <vpqtwyl90mx.fsf@anie.imag.fr> <340435D1-2FEB-4A4A-BBD2-E301096C72D8@gmail.com> <vpqiof14qu8.fsf@anie.imag.fr> <13683B35-70A8-4D9E-80E1-440E4E0DC7F0@gmail.com> <vpqr3tozzs5.fsf@anie.imag.fr> <CA0F915F-74B1-4292-AFB8-D1A4C76C0137@gmail.com> <54E3804D.6020301@web.de> <vpq61azab52.fsf@anie.imag.fr>
-Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2070.6\))
-Content-Type: multipart/signed; boundary="Apple-Mail=_88A9CDF8-4884-4B42-895B-066D9C313159"; protocol="application/pgp-signature"; micalg=pgp-sha1
-Cc: =?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-	gitster@pobox.com, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Feb 18 14:47:35 2015
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [RFC] git cat-file "literally" option
+Date: Wed, 18 Feb 2015 20:58:01 +0700
+Message-ID: <CACsJy8BJnHTyXhhJaCuZAzjm=Gd96EjANEw76j=3L92cmbX7HA@mail.gmail.com>
+References: <54E45DD7.205@gmail.com> <54E48A96.8010301@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: karthik nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 18 14:58:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YO4yU-00008U-OH
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Feb 2015 14:47:35 +0100
+	id 1YO59B-000523-I4
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Feb 2015 14:58:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751841AbbBRNrZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Feb 2015 08:47:25 -0500
-Received: from mail-pa0-f41.google.com ([209.85.220.41]:39105 "EHLO
-	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751812AbbBRNrX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Feb 2015 08:47:23 -0500
-Received: by pablf10 with SMTP id lf10so1329533pab.6
-        for <git@vger.kernel.org>; Wed, 18 Feb 2015 05:47:23 -0800 (PST)
+	id S1751718AbbBRN6d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Feb 2015 08:58:33 -0500
+Received: from mail-ie0-f172.google.com ([209.85.223.172]:36800 "EHLO
+	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751245AbbBRN6c (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Feb 2015 08:58:32 -0500
+Received: by ierx19 with SMTP id x19so1371762ier.3
+        for <git@vger.kernel.org>; Wed, 18 Feb 2015 05:58:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=subject:mime-version:content-type:from:in-reply-to:date:cc
-         :message-id:references:to;
-        bh=rcjhZ9sym1EkBqleUOawaFy4CqJIyfvVhg7B/V88s2U=;
-        b=WSlciGmLWKsfMwoEduSvg7eOfktgSNo4scokipAMqFrH+XPng1Z466cSzZQsHgSCAP
-         nMN/qEWdZMoB63L/py2+Lv7AO3rHpD2KCh0YVRFB3yF3p+9hyA5Vlqbku9RxfirIhxSZ
-         bfUSbLxtmQcZHtULlh+uV38FOFxbG5/Xfk4OVBgwtxK7CCEUvZQVsrwfvtwpIW2UVsRy
-         vLXZ2iMGX99PZ+lNzM+UyFL1sJvfDOmYfTlaTD9cSP3x7rZ+7FPvLm4dVbUY2JvDaDUv
-         v6hoXAXzbI7EfuvzxFf3Yl9HQK1vACkMPTvIOxZr/zWxWjZm/XMBkhk4sTzS4CoKgYnV
-         NyVA==
-X-Received: by 10.68.239.102 with SMTP id vr6mr59096382pbc.35.1424267243011;
-        Wed, 18 Feb 2015 05:47:23 -0800 (PST)
-Received: from [192.168.88.200] (brk-24-241.tm.net.my. [202.188.24.241])
-        by mx.google.com with ESMTPSA id a10sm20807286pdl.61.2015.02.18.05.47.20
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 18 Feb 2015 05:47:21 -0800 (PST)
-X-Pgp-Agent: GPGMail 2.5b5
-In-Reply-To: <vpq61azab52.fsf@anie.imag.fr>
-X-Mailer: Apple Mail (2.2070.6)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=BpKe7BfrhNNziU8Pb5aUudKTuj7TX5YpKmFL23IH5I0=;
+        b=WNqUPV/fxnIMRxDR6dWcj2H3rcKglx99Rb0KKcj4zQQOQ9QkogUrQKSkCnUWoWZ8sk
+         EWccFwXXAKP6mw6Q8f7xX9urGn4u/qyPxrQurW9IMgeefNo5Ubb/eIwZo1B9LQx2zYOK
+         zZUI9N/Lu1ocqXYfmsvL94VNDuQRBRwUMvaopAC9bnusblvp8W/NVZmkS2aGVK0u3bcJ
+         mDGKWbflnNyiLz2OLkamdMPulU+tDJcCSMTKA4YQx7sAAt6Z6/lmx367M9Z6xbjr9EZ8
+         40v8k4Cr17XYjTsXzRErajFmAQAWZ6zZqf0Eka5O6jY0E2e2EEMl9fqOvkIlOuYGvd0i
+         Dygw==
+X-Received: by 10.50.118.97 with SMTP id kl1mr277540igb.23.1424267912111; Wed,
+ 18 Feb 2015 05:58:32 -0800 (PST)
+Received: by 10.107.131.155 with HTTP; Wed, 18 Feb 2015 05:58:01 -0800 (PST)
+In-Reply-To: <54E48A96.8010301@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264016>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264017>
 
+On Wed, Feb 18, 2015 at 7:50 PM, karthik nayak <karthik.188@gmail.com> wrote:
+> Also,
+> Is there any way I can get the type of object made via git hash-object
+> --literally. The problem I'm facing is "sha1_object_info()" returns a
+> object_type enum, so objects not specified there are considered as errors.
 
---Apple-Mail=_88A9CDF8-4884-4B42-895B-066D9C313159
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=utf-8
-
-
-> On Feb 18, 2015, at 4:15 PM, Matthieu Moy =
-<Matthieu.Moy@grenoble-inp.fr> wrote:
->=20
-> And now I'm starting to wonder whether other people do have the same
-> issue. Sure, googling "Git AFP" shows a lot of people having problems
-> with Git and AFP, but are they really the same problem?
->=20
-> I googled 'git afp "unable to unlink"', and all results except one =
-point
-> to this thread:
->=20
-> =
-https://www.google.com/search?q=3Dgit+afp+%22warning%3A+unable+to+unlink%2=
-2
->=20
-> The only one which doesn't actually does not mention afp.
->=20
-> Fairuzan: are you sure you're not the only one having the issue? Can =
-you
-> give more info on your system (OS version client and server side, =
-=E2=80=A6)?
-
-No I don=E2=80=99t think I=E2=80=99m the only one with the permission =
-issue here but I=E2=80=99m sure many people prefer using smb over afp
-
-
-Client: OS X 10.9 - 10.10.2
-git client: git version 1.9.3 (Apple Git-50) and git version 2.2.1
-
-Server : Linux 3.2.40 (Synology DSM 5.1)
-AFP : Netatalk afpd 3.1.1
-
-=46rom what I have tested whenever a file=E2=80=99s permission set to =
-read-only on the AFP shares a user immutable flag were set as well hence =
-why any action such as unlink or rename failed.
-
-$ ls -laO
-total 0
-drwxr-xr-x  1 user  staff  - 264 Feb 18 21:31 .
-drwx------  1 user  staff  - 264 Feb 18 21:31 ..
--rw-r--r--  1 user  staff  -   0 Feb 18 21:31 testfile
-$ chmod 0444 testfile; ls -laO
-total 0
-drwxr-xr-x  1 user  staff  -    264 Feb 18 21:31 .
-drwx------  1 user  staff  -    264 Feb 18 21:32 ..
--r--r--r--  1 user  staff  uchg   0 Feb 18 21:31 testfile
-
-I believe this to stop a read-only file to be modified by the user in  =
-Netatalk AFPD.
-
-$ chmod 0644 testfile; ls -laO
-total 0
-drwxr-xr-x  1 user  staff  - 264 Feb 18 21:32 .
-drwx------  1 user  staff  - 264 Feb 18 21:43 ..
--rw-r--r--  1 user  staff  -   0 Feb 18 21:31 testfile
-
-Changing the permission to read-write will remove the user immutable =
-flag.
-
-Regards,
-Fairuzan
-
-
---Apple-Mail=_88A9CDF8-4884-4B42-895B-066D9C313159
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
-	filename=signature.asc
-Content-Type: application/pgp-signature;
-	name=signature.asc
-Content-Description: Message signed with OpenPGP using GPGMail
-
------BEGIN PGP SIGNATURE-----
-Comment: GPGTools - http://gpgtools.org
-
-iQEcBAEBAgAGBQJU5JflAAoJEKrU1IvC77KVkccH/0dfCFzCzCbhsZ9bk1M1fho9
-9e4EPlaDp/size4BoksjTrnKnhrn3S+F9bLAjD9WMHawhaD4Poe3VBNdwcHQz8CX
-Rpp4A2kwY5ZLQ7HXPvoSD0eCWRuK8Yt06rFBO0N3/4v7WInn6wOAiJmWS2+DpaYx
-day12INFhKTI+UR26gXS6sRbyonxeDtAzf1WnGIfIipYrMYNV82Gq8NEYcDiJn5B
-BaX3OWFaGlmWQ8pWEwBQWpRfstgW57cYLB3p5PYs+/H0EuJxEDbgNfY2+eTL/t5X
-/Vo3cCqHVBD5NoHTvQ1ygdSjbdHiTqbmfOxThLN15D1kJgZzj4hmKGTKhtUCjoo=
-=vVzP
------END PGP SIGNATURE-----
-
---Apple-Mail=_88A9CDF8-4884-4B42-895B-066D9C313159--
+Use what sha1_object_info() uses behind the scene. Loose object
+encodes object type as a string, you could just print that string and
+skip the enum object_type conversion. You probably need special
+treatment for packed objects too. See parse_sha1_header() and
+unpack_object_header().
+-- 
+Duy
