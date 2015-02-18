@@ -1,332 +1,58 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 02/10] http: add Accept-Language header if possible
-Date: Wed, 18 Feb 2015 11:01:55 -0800
-Message-ID: <1424286123-12985-2-git-send-email-gitster@pobox.com>
+Subject: Re: [PATCH 01/10] wincred: fix get credential if username has "@"
+Date: Wed, 18 Feb 2015 11:03:06 -0800
+Message-ID: <xmqqlhjv2gb9.fsf@gitster.dls.corp.google.com>
 References: <1424286123-12985-1-git-send-email-gitster@pobox.com>
-Cc: Yi EungJun <eungjun.yi@navercorp.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Aleksey Vasenev <margtu-fivt@ya.ru>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 18 20:02:24 2015
+X-From: git-owner@vger.kernel.org Wed Feb 18 20:03:17 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YO9t8-0003kX-SS
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Feb 2015 20:02:23 +0100
+	id 1YO9ty-00048Y-To
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Feb 2015 20:03:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753537AbbBRTCQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Feb 2015 14:02:16 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50114 "EHLO
+	id S1753061AbbBRTDJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Feb 2015 14:03:09 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:51653 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753418AbbBRTCL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Feb 2015 14:02:11 -0500
+	with ESMTP id S1752653AbbBRTDI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Feb 2015 14:03:08 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3FF4938288;
-	Wed, 18 Feb 2015 14:02:11 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0077D382C7;
+	Wed, 18 Feb 2015 14:03:08 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=l0RN
-	TUMa/XIePC5bXo+LKziCGvU=; b=tud3THsUhpDF+SUme5VZ6mxO+osLalHUtitW
-	cS7ba73yPtQTxAyVVc8y/uzxr0uDTS0d+G54S/odoYp0ZUejGingF5y+16KNxXXa
-	pj7vVWEGoNB9hWino4bCqZ1WGZEWf9KR6JJyf24NPMxkL22fM5ekR/nwKff3PySd
-	GWugMR8=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=r5sP6cB/WMTncy78GB++Tn2xBUI=; b=fsWeIC
+	z269uQ1kyqxsJbd3hY3iacUlkv+uzQaluJK2vliQawRvZ2cgo15ozgk756gmm93c
+	aWNoH4ynfnDBTW72NMjlhfUJdRxKmES6/3L9k/xQEo6R8SABca6bkQccn/SQ65wd
+	merMGCCGo9glVPQYwMptP3WdI7Fcua2mkhCic=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
-	u1i3E1Ek9IBOf+pcg7EUbIk+sZqf84IwSI3Kt15GocEmQPCQUt1NXdKFxkP8EwW6
-	SgWS6/12lbUKJv1lLSYmMYqcfDVPDE4FrBN8MmfjckHh+RyNOzP53xx4eurnN1W7
-	NusxAz7oCcnaR5lM31pw2KKUME1ipvXEMf3bbzLVWCg=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KJMG21JDqo1Y5fk6tszxl4ZgEAhdyXm4
+	zSPuQeI6C3sD77iOueDXhlOf/8ZEzqGbKoeBoFesx+WtRBrEMGD6JPU1pLTwc9H+
+	oyL/sfD8V2L6PXgfPZp3w41+NvQJeyQpvgDw+xsnRmR8jaekzYDN7JX04NQxTbc2
+	1kmwPRNhQqU=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 370A838284;
-	Wed, 18 Feb 2015 14:02:11 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E3AE0382C6;
+	Wed, 18 Feb 2015 14:03:07 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C49023827B;
-	Wed, 18 Feb 2015 14:02:06 -0500 (EST)
-X-Mailer: git-send-email 2.3.0-301-g71e72fe
-In-Reply-To: <1424286123-12985-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: A1FA2CDA-B7A0-11E4-9BC4-A4119F42C9D4-77302942!pb-smtp1.pobox.com
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 58BFD382C4;
+	Wed, 18 Feb 2015 14:03:07 -0500 (EST)
+In-Reply-To: <1424286123-12985-1-git-send-email-gitster@pobox.com> (Junio
+	C. Hamano's message of "Wed, 18 Feb 2015 11:01:54 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: C612CCBC-B7A0-11E4-9EC3-A4119F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264048>
 
-From: Yi EungJun <eungjun.yi@navercorp.com>
-
-Add an Accept-Language header which indicates the user's preferred
-languages defined by $LANGUAGE, $LC_ALL, $LC_MESSAGES and $LANG.
-
-Examples:
-  LANGUAGE= -> ""
-  LANGUAGE=ko:en -> "Accept-Language: ko, en;q=0.9, *;q=0.1"
-  LANGUAGE=ko LANG=en_US.UTF-8 -> "Accept-Language: ko, *;q=0.1"
-  LANGUAGE= LANG=en_US.UTF-8 -> "Accept-Language: en-US, *;q=0.1"
-
-This gives git servers a chance to display remote error messages in
-the user's preferred language.
-
-Limit the number of languages to 1,000 because q-value must not be
-smaller than 0.001, and limit the length of Accept-Language header to
-4,000 bytes for some HTTP servers which cannot accept such long header.
-
-Signed-off-by: Yi EungJun <eungjun.yi@navercorp.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- http.c                     | 147 +++++++++++++++++++++++++++++++++++++++++++++
- remote-curl.c              |   2 +
- t/t5550-http-fetch-dumb.sh |  42 +++++++++++++
- 3 files changed, 191 insertions(+)
-
-diff --git a/http.c b/http.c
-index 040f362..8b659b6 100644
---- a/http.c
-+++ b/http.c
-@@ -68,6 +68,8 @@ static struct curl_slist *no_pragma_header;
- 
- static struct active_request_slot *active_queue_head;
- 
-+static char *cached_accept_language;
-+
- size_t fread_buffer(char *ptr, size_t eltsize, size_t nmemb, void *buffer_)
- {
- 	size_t size = eltsize * nmemb;
-@@ -515,6 +517,9 @@ void http_cleanup(void)
- 		cert_auth.password = NULL;
- 	}
- 	ssl_cert_password_required = 0;
-+
-+	free(cached_accept_language);
-+	cached_accept_language = NULL;
- }
- 
- struct active_request_slot *get_active_slot(void)
-@@ -986,6 +991,142 @@ static void extract_content_type(struct strbuf *raw, struct strbuf *type,
- 		strbuf_addstr(charset, "ISO-8859-1");
- }
- 
-+/*
-+ * Guess the user's preferred languages from the value in LANGUAGE environment
-+ * variable and LC_MESSAGES locale category if NO_GETTEXT is not defined.
-+ *
-+ * The result can be a colon-separated list like "ko:ja:en".
-+ */
-+static const char *get_preferred_languages(void)
-+{
-+	const char *retval;
-+
-+	retval = getenv("LANGUAGE");
-+	if (retval && *retval)
-+		return retval;
-+
-+#ifndef NO_GETTEXT
-+	retval = setlocale(LC_MESSAGES, NULL);
-+	if (retval && *retval &&
-+		strcmp(retval, "C") &&
-+		strcmp(retval, "POSIX"))
-+		return retval;
-+#endif
-+
-+	return NULL;
-+}
-+
-+static void write_accept_language(struct strbuf *buf)
-+{
-+	/*
-+	 * MAX_DECIMAL_PLACES must not be larger than 3. If it is larger than
-+	 * that, q-value will be smaller than 0.001, the minimum q-value the
-+	 * HTTP specification allows. See
-+	 * http://tools.ietf.org/html/rfc7231#section-5.3.1 for q-value.
-+	 */
-+	const int MAX_DECIMAL_PLACES = 3;
-+	const int MAX_LANGUAGE_TAGS = 1000;
-+	const int MAX_ACCEPT_LANGUAGE_HEADER_SIZE = 4000;
-+	char **language_tags = NULL;
-+	int num_langs = 0;
-+	const char *s = get_preferred_languages();
-+	int i;
-+	struct strbuf tag = STRBUF_INIT;
-+
-+	/* Don't add Accept-Language header if no language is preferred. */
-+	if (!s)
-+		return;
-+
-+	/*
-+	 * Split the colon-separated string of preferred languages into
-+	 * language_tags array.
-+	 */
-+	do {
-+		/* collect language tag */
-+		for (; *s && (isalnum(*s) || *s == '_'); s++)
-+			strbuf_addch(&tag, *s == '_' ? '-' : *s);
-+
-+		/* skip .codeset, @modifier and any other unnecessary parts */
-+		while (*s && *s != ':')
-+			s++;
-+
-+		if (tag.len) {
-+			num_langs++;
-+			REALLOC_ARRAY(language_tags, num_langs);
-+			language_tags[num_langs - 1] = strbuf_detach(&tag, NULL);
-+			if (num_langs >= MAX_LANGUAGE_TAGS - 1) /* -1 for '*' */
-+				break;
-+		}
-+	} while (*s++);
-+
-+	/* write Accept-Language header into buf */
-+	if (num_langs) {
-+		int last_buf_len = 0;
-+		int max_q;
-+		int decimal_places;
-+		char q_format[32];
-+
-+		/* add '*' */
-+		REALLOC_ARRAY(language_tags, num_langs + 1);
-+		language_tags[num_langs++] = "*"; /* it's OK; this won't be freed */
-+
-+		/* compute decimal_places */
-+		for (max_q = 1, decimal_places = 0;
-+		     max_q < num_langs && decimal_places <= MAX_DECIMAL_PLACES;
-+		     decimal_places++, max_q *= 10)
-+			;
-+
-+		sprintf(q_format, ";q=0.%%0%dd", decimal_places);
-+
-+		strbuf_addstr(buf, "Accept-Language: ");
-+
-+		for (i = 0; i < num_langs; i++) {
-+			if (i > 0)
-+				strbuf_addstr(buf, ", ");
-+
-+			strbuf_addstr(buf, language_tags[i]);
-+
-+			if (i > 0)
-+				strbuf_addf(buf, q_format, max_q - i);
-+
-+			if (buf->len > MAX_ACCEPT_LANGUAGE_HEADER_SIZE) {
-+				strbuf_remove(buf, last_buf_len, buf->len - last_buf_len);
-+				break;
-+			}
-+
-+			last_buf_len = buf->len;
-+		}
-+	}
-+
-+	/* free language tags -- last one is a static '*' */
-+	for (i = 0; i < num_langs - 1; i++)
-+		free(language_tags[i]);
-+	free(language_tags);
-+}
-+
-+/*
-+ * Get an Accept-Language header which indicates user's preferred languages.
-+ *
-+ * Examples:
-+ *   LANGUAGE= -> ""
-+ *   LANGUAGE=ko:en -> "Accept-Language: ko, en; q=0.9, *; q=0.1"
-+ *   LANGUAGE=ko_KR.UTF-8:sr@latin -> "Accept-Language: ko-KR, sr; q=0.9, *; q=0.1"
-+ *   LANGUAGE=ko LANG=en_US.UTF-8 -> "Accept-Language: ko, *; q=0.1"
-+ *   LANGUAGE= LANG=en_US.UTF-8 -> "Accept-Language: en-US, *; q=0.1"
-+ *   LANGUAGE= LANG=C -> ""
-+ */
-+static const char *get_accept_language(void)
-+{
-+	if (!cached_accept_language) {
-+		struct strbuf buf = STRBUF_INIT;
-+		write_accept_language(&buf);
-+		if (buf.len > 0)
-+			cached_accept_language = strbuf_detach(&buf, NULL);
-+	}
-+
-+	return cached_accept_language;
-+}
-+
- /* http_request() targets */
- #define HTTP_REQUEST_STRBUF	0
- #define HTTP_REQUEST_FILE	1
-@@ -998,6 +1139,7 @@ static int http_request(const char *url,
- 	struct slot_results results;
- 	struct curl_slist *headers = NULL;
- 	struct strbuf buf = STRBUF_INIT;
-+	const char *accept_language;
- 	int ret;
- 
- 	slot = get_active_slot();
-@@ -1023,6 +1165,11 @@ static int http_request(const char *url,
- 					 fwrite_buffer);
- 	}
- 
-+	accept_language = get_accept_language();
-+
-+	if (accept_language)
-+		headers = curl_slist_append(headers, accept_language);
-+
- 	strbuf_addstr(&buf, "Pragma:");
- 	if (options && options->no_cache)
- 		strbuf_addstr(&buf, " no-cache");
-diff --git a/remote-curl.c b/remote-curl.c
-index dd63bc2..04989e5 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -962,6 +962,8 @@ int main(int argc, const char **argv)
- 	struct strbuf buf = STRBUF_INIT;
- 	int nongit;
- 
-+	git_setup_gettext();
-+
- 	git_extract_argv0_path(argv[0]);
- 	setup_git_directory_gently(&nongit);
- 	if (argc < 2) {
-diff --git a/t/t5550-http-fetch-dumb.sh b/t/t5550-http-fetch-dumb.sh
-index ac71418..e1e2938 100755
---- a/t/t5550-http-fetch-dumb.sh
-+++ b/t/t5550-http-fetch-dumb.sh
-@@ -196,5 +196,47 @@ test_expect_success 'reencoding is robust to whitespace oddities' '
- 	grep "this is the error message" stderr
- '
- 
-+check_language () {
-+	case "$2" in
-+	'')
-+		>expect
-+		;;
-+	?*)
-+		echo "Accept-Language: $1" >expect
-+		;;
-+	esac &&
-+	GIT_CURL_VERBOSE=1 \
-+	LANGUAGE=$2 \
-+	git ls-remote "$HTTPD_URL/dumb/repo.git" >output 2>&1 &&
-+	tr -d '\015' <output |
-+	sort -u |
-+	sed -ne '/^Accept-Language:/ p' >actual &&
-+	test_cmp expect actual
-+}
-+
-+test_expect_success 'git client sends Accept-Language based on LANGUAGE' '
-+	check_language "ko-KR, *;q=0.9" ko_KR.UTF-8'
-+
-+test_expect_success 'git client sends Accept-Language correctly with unordinary LANGUAGE' '
-+	check_language "ko-KR, *;q=0.9" "ko_KR:" &&
-+	check_language "ko-KR, en-US;q=0.9, *;q=0.8" "ko_KR::en_US" &&
-+	check_language "ko-KR, *;q=0.9" ":::ko_KR" &&
-+	check_language "ko-KR, en-US;q=0.9, *;q=0.8" "ko_KR!!:en_US" &&
-+	check_language "ko-KR, ja-JP;q=0.9, *;q=0.8" "ko_KR en_US:ja_JP"'
-+
-+test_expect_success 'git client sends Accept-Language with many preferred languages' '
-+	check_language "ko-KR, en-US;q=0.9, fr-CA;q=0.8, de;q=0.7, sr;q=0.6, \
-+ja;q=0.5, zh;q=0.4, sv;q=0.3, pt;q=0.2, *;q=0.1" \
-+		ko_KR.EUC-KR:en_US.UTF-8:fr_CA:de.UTF-8@euro:sr@latin:ja:zh:sv:pt &&
-+	check_language "ko-KR, en-US;q=0.99, fr-CA;q=0.98, de;q=0.97, sr;q=0.96, \
-+ja;q=0.95, zh;q=0.94, sv;q=0.93, pt;q=0.92, nb;q=0.91, *;q=0.90" \
-+		ko_KR.EUC-KR:en_US.UTF-8:fr_CA:de.UTF-8@euro:sr@latin:ja:zh:sv:pt:nb
-+'
-+
-+test_expect_success 'git client does not send an empty Accept-Language' '
-+	GIT_CURL_VERBOSE=1 LANGUAGE= git ls-remote "$HTTPD_URL/dumb/repo.git" 2>stderr &&
-+	! grep "^Accept-Language:" stderr
-+'
-+
- stop_httpd
- test_done
--- 
-2.3.0-301-g71e72fe
+Sorry, please disregard these sent by mistake.
