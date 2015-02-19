@@ -1,55 +1,66 @@
-From: ofremunapoleon196@gmail.com
-Subject: No enough space for download
-Date: Thu, 19 Feb 2015 05:47:00 +0000
-Message-ID: <358789881-1424324823-cardhu_decombobulator_blackberry.rim.net-397906447-@b5.c6.bise7.blackberry>
-Reply-To: ofremunapoleon196@gmail.com
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFH] GSoC 2015 application
+Date: Wed, 18 Feb 2015 21:49:08 -0800
+Message-ID: <CAPc5daVzmMnWOdctZeYLjxocnk2vrCrwmOyFvG13mB+zmVFQRQ@mail.gmail.com>
+References: <20150218191417.GA7767@peff.net> <xmqqlhju28de.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 19 06:47:13 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Feb 19 06:49:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YOJxA-0005TE-Ga
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Feb 2015 06:47:12 +0100
+	id 1YOJzW-0006VY-Su
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Feb 2015 06:49:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751734AbbBSFrI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Feb 2015 00:47:08 -0500
-Received: from mail-wi0-f180.google.com ([209.85.212.180]:55056 "EHLO
-	mail-wi0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751605AbbBSFrG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Feb 2015 00:47:06 -0500
-Received: by mail-wi0-f180.google.com with SMTP id h11so6765611wiw.1
-        for <git@vger.kernel.org>; Wed, 18 Feb 2015 21:47:05 -0800 (PST)
+	id S1752454AbbBSFta (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Feb 2015 00:49:30 -0500
+Received: from mail-ob0-f182.google.com ([209.85.214.182]:52099 "EHLO
+	mail-ob0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752416AbbBSFt3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Feb 2015 00:49:29 -0500
+Received: by mail-ob0-f182.google.com with SMTP id nt9so10537899obb.13
+        for <git@vger.kernel.org>; Wed, 18 Feb 2015 21:49:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:reply-to:sensitivity:importance:subject:to:from:date
-         :content-type:mime-version;
-        bh=zM0kLAI2CIh+hr5ATuEtBoXKZKFgwauHEtnhJDj/SJA=;
-        b=gAQezXVvieU68pqwLNdwF5+8W+cw9C1RmKwDakfeycEVC3rUJNIiAWBY0ebI6rtGne
-         QVtqrm2eciY9hkpNPPsWfpVl03JjPljGT0pReK83mMbsnNO6/jG9czR+DY4PpI3acCm3
-         g8lOa6Fuy5kO3TXicP78yVuaAqRiaHzXVdFpl6O2GnsRbqKRCM7JHHXWMkbtbfG3NAH+
-         y7NG0/52+lFcUN2+3czdTl9TojB2bSz9WH/8ilikINrE8AamVxY2cWNFfSghXxeaOvDc
-         PFIHdRhyEO4UlaJIGuXoU4GQAwVqUGzlo0Scd0rYzVydcWX7FMcwVUR9qOvsa+nf1g8P
-         y/Dg==
-X-Received: by 10.181.13.14 with SMTP id eu14mr11793374wid.2.1424324825487;
-        Wed, 18 Feb 2015 21:47:05 -0800 (PST)
-Received: from 172.18.199.185 (bda-178-239-84-228.bis7.eu.blackberry.com. [178.239.84.228])
-        by mx.google.com with ESMTPSA id bf8sm26800923wjb.37.2015.02.18.21.47.04
-        for <git@vger.kernel.org>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Wed, 18 Feb 2015 21:47:04 -0800 (PST)
-X-rim-org-msg-ref-id: 358789881
-X-Priority: Normal
-Sensitivity: Normal
-Importance: Normal
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=eic0WkTiO3LWJugy7++x7VWlgTRmNQvpKvtiHPr+kL0=;
+        b=PufBTr99tt8aYMiU8kAsAwNeHBovY2c/D2cc4FxvrQ841o1BFvcN4lWTv9+KMecb63
+         zRrf7gghmlTNjFdf0PUpvnug6UaxQnSvi3aPAMzpG65xIn+VRhvWwbWLtt/mGTqNJpuX
+         Qyya8oaz6Q4mJn5NuBGITYKOCX2ZJyp28gmxnNkwUTPXNBAlXp41Qd28W8DsuA/gMddF
+         NcBe4JRmPKkvRauLGU9Tr9932IeACTW+beOWPQVrzMsZY/HruUu4zmzq1PPHfrlFmHjY
+         x4T/Rac7Dpq+TWWlNYJk4VAN7af6+LBubPYBcFgrLf9DktkVHnr8krkQwtlUBGh2L8UE
+         VPzg==
+X-Received: by 10.202.219.215 with SMTP id s206mr1718536oig.114.1424324968730;
+ Wed, 18 Feb 2015 21:49:28 -0800 (PST)
+Received: by 10.202.48.132 with HTTP; Wed, 18 Feb 2015 21:49:08 -0800 (PST)
+In-Reply-To: <xmqqlhju28de.fsf@gitster.dls.corp.google.com>
+X-Google-Sender-Auth: NWlJUp3y0_-p19T-bYlkM0Ddv3M
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264083>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264084>
 
+On Wed, Feb 18, 2015 at 1:54 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> A few for micros.
+>
+> +### Allow "-" as a short-hand for "@{-1}" in more places.
+> +
+> +Pick one command that operates on branch names.  Teach it the "-"
+> +shorthand that stands for "the branch we were previously on", like we
 
-Sent from my BlackBerry wireless device from MTN
+In the same vein (people may have noticed that "Pick one" is meant to
+make this into multiple micros ;-)
+
+### Use unsigned integral type for collection of bits.
+
+Pick one field of a structure that (1) is of signed integral type and (2) is
+used as a collection of multiple bits. Discuss if there is a good reason
+why it has to be a signed integral field and change it to an unsigned
+type otherwise.  Cf. $gmane/263751
