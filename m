@@ -1,142 +1,126 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Interested in helping open source friends on HP-UX?
-Date: Thu, 19 Feb 2015 12:20:02 +0100
-Message-ID: <54E5C6E2.9040101@drmicha.warpmail.net>
-References: <xmqq4mt2fx2m.fsf@gitster.dls.corp.google.com>	<20150218170007.784be6aa@pc09.procura.nl>	<54E4CFDC.40401@drmicha.warpmail.net>	<20150218182547.GA6346@peff.net>	<xmqqpp972h1n.fsf@gitster.dls.corp.google.com>	<20150218185734.GB7257@peff.net>	<54E5BBDD.7040100@drmicha.warpmail.net> <20150219121438.59050ce8@pc09.procura.nl>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-To: "H.Merijn Brand" <h.m.brand@xs4all.nl>
-X-From: git-owner@vger.kernel.org Thu Feb 19 12:20:30 2015
+Subject: [RFD/PATCH] stash: introduce checkpoint mode
+Date: Thu, 19 Feb 2015 13:34:03 +0100
+Message-ID: <dbd1aae0508bd72dc3b21fabda4c420eef487720.1424349039.git.git@drmicha.warpmail.net>
+References: <54E5C27E.9060109@drmicha.warpmail.net>
+Cc: "Kyle J. McKay" <mackyle@gmail.com>,
+	Armin Ronacher <armin.ronacher@active-4.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 19 13:34:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YOP9h-0005pX-SQ
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Feb 2015 12:20:30 +0100
+	id 1YOQJ8-0007Pn-9c
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Feb 2015 13:34:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752767AbbBSLUG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Feb 2015 06:20:06 -0500
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:58371 "EHLO
+	id S1753125AbbBSMeI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Feb 2015 07:34:08 -0500
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:60065 "EHLO
 	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752358AbbBSLUE (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 Feb 2015 06:20:04 -0500
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
-	by mailout.nyi.internal (Postfix) with ESMTP id 1655420BFB
-	for <git@vger.kernel.org>; Thu, 19 Feb 2015 06:20:04 -0500 (EST)
-Received: from frontend2 ([10.202.2.161])
-  by compute2.internal (MEProxy); Thu, 19 Feb 2015 06:20:04 -0500
+	by vger.kernel.org with ESMTP id S1752459AbbBSMeG (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 Feb 2015 07:34:06 -0500
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.nyi.internal (Postfix) with ESMTP id 6D5D8209DD
+	for <git@vger.kernel.org>; Thu, 19 Feb 2015 07:34:05 -0500 (EST)
+Received: from frontend1 ([10.202.2.160])
+  by compute1.internal (MEProxy); Thu, 19 Feb 2015 07:34:05 -0500
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=x-sasl-enc:message-id:date:from
-	:mime-version:to:cc:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=nvAiGlMsgiaudspvwyusg+
-	JhGik=; b=c7llsUy8bl+3iPyukXPQBnBcSetBEa0dRloE3DWX+o72oTSJ1rvgWA
-	/JZgjz1xI7pgoM7EuwzqTt/Pax7RO1dd9Ib36pf9QqPITNzd8jsv6sq9vTayb6ul
-	sEdsPlGh8Pjes7i+LdPxTjGUU83ayDm1rjZAZJ32zuji5D7o4kIQ4=
-X-Sasl-enc: GZCj8mDIjCKh/smHmd7D8mWdq8b96TDwaSCp455VKdnU 1424344803
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 5E6C66801BC;
-	Thu, 19 Feb 2015 06:20:03 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
-In-Reply-To: <20150219121438.59050ce8@pc09.procura.nl>
+	messagingengine.com; h=x-sasl-enc:from:to:cc:subject:date
+	:message-id:in-reply-to:references; s=smtpout; bh=AX7ZhMZJRoJNos
+	yROpBnYgH3p1c=; b=mamHRjp1KxrArmQAgJ7wuM1qPGDa0gbS7GpFfx4x7EpUaN
+	kzi6eBsFTb1bsb5XKfe8Kx73cQp93dU+zKkHpute7J8546jSj5Dt/YtZFE3s/ern
+	wCme/TG26n08/tEJcEtOBfWFwntpMDsjoJGlnU7z243fcwApEaMl1KKAo/rE0=
+X-Sasl-enc: d9Wx2vkAr1fTsUWOgd9sjZobehTnFxUBM9Fc7mU7RUwa 1424349245
+Received: from localhost (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 08606C002A4;
+	Thu, 19 Feb 2015 07:34:04 -0500 (EST)
+X-Mailer: git-send-email 2.3.0.191.ge77e8b9
+In-Reply-To: <54E5C27E.9060109@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264093>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264094>
 
-H.Merijn Brand venit, vidit, dixit 19.02.2015 12:14:
-> On Thu, 19 Feb 2015 11:33:01 +0100, Michael J Gruber
-> <git@drmicha.warpmail.net> wrote:
-> 
->> Jeff King venit, vidit, dixit 18.02.2015 19:57:
->>> On Wed, Feb 18, 2015 at 10:47:16AM -0800, Junio C Hamano wrote:
->>>
->>>>> It seems like we could use
->>>>>
->>>>>   (cd src && tar cf - .) | (cd dst && tar xf -)
->>>>>
->>>>> here as a more portable alternative. I don't think we can rely on rsync
->>>>> being everywhere.
->>>>
->>>> Thanks; I wasn't even aware that we used rsync in our tests.  We
->>>> certainly do not want to rely on it.
->>>
->>> I don't think we do.
->>>
->>> Grepping for rsync in t/, it is mentioned in three places:
->>>
->>>   1. In t1509, we use it, but that test script does not run unless you
->>>      set a bunch of environment variables to enable it.
->>>
->>>   2. In a sample patch for t4100. Obviously this one doesn't execute. :)
->>>
->>>   3. In t5500, to test "rsync:" protocol supported. This is behind a
->>>      check that we can run rsync at all (though it does not properly use
->>>      prereqs or use the normal "skip" procedure).
->>>
->>>> Why not "cp -r src dst", though?
->>>
->>> I was assuming that the "-P" in the original had some purpose. My "cp
->>> -r" does not seem to dereference symlinks, but maybe there is something
->>> I am missing.
->>>
->>> -Peff
->>
->> There's a symlink in sub that needs to be preserved.
->>
->> I'm cooking up a mini-series covering tar/cp -P so far and hopefully the
->> JP encodings later. Do I understand correctly that for Merijin's use
-> 
-> Merijn, no second j. You can also call me Tux, as that is what the perl
-> people do just because of that :)
-> 
->> case on HP-UX, we want
->>
->> - as few extra tools (GNU...) as possible for the run time git
->> - may get a few more tools installed to run the test
-> 
-> You can require as many GNU tools for testing as you like: I'll install
-> them. I just need to be sure they are not required runtime. (tar, cp)
-> 
->> I still don't have a clear picture of the iconv situation: Does your
->> iconv library require OLD_ICONV to compile?
-> 
-> No
-> 
->> Is there a reason you want to disable it?
-> 
-> Yes, if I build a package/depot, and the package depends on iconv, it
-> is highly likely to fail on the client side after installation, as I do
-> not control the version of iconv/libiconv installed.
-> 
-> As HP does not have libiconv installed by default, I have experienced
-> many tools to be unusable after installation because of that dependency.
-> 
-> Another reason is that I built 64bitall, as my CURl and SSL environment
-> is 64bitall for every other project on these systems (including Oracle
-> related, which *only* ships 64bit objects on HP-UX) and the OpenSource
-> repos for HP-UX only ship 32bit software (sad, but true). That implies
-> that I cannot require libiconv.so to be present on the client side.
-> 
-> I'd like my git to be as standalone as possible
+"git stash save" performs the steps "create-store-reset". Often,
+users try to use "stash save" as a way to to save their current state
+(index, worktree) before an operation like "checkout/reset --patch" they
+don't feel confident about, and are forced to do "git stash save && git
+stash apply".
 
-OK, so we should use NO_ICONV on HP_UX then.
+Provide an extra mode that does "create-store" only without the reset,
+so that one can "ceckpoint" the sate and keep working on it.
 
->> Failing so many tests with NO_ICONV is certainly not ideal, but I'm not
->> sure we should care to protect so many tests with a prerequisite.
-> 
-> How feasible is it to isolate those tests into separate test files that
-> people that know to not use e.g. Asian can safely ignore them?
-> 
->> Michael
+Suggested-by: "Kyle J. McKay" <mackyle@gmail.com>
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
 
-We have the prerequisite mechanism for that, and most probably, the
-tests are "isolated" already, in the sense that with NO_ICONV, only
-trivial setup tests succeed for those test files but all "proper" tests
-fail. But I'll check. Need a good test to set the prerequisite, though.
+Notes:
+    I'm not sure about how to best expose this mode:
+    
+    git stash checkpoint
+    git stash save --checkpoint
+    
+    Maybe it is best to document the former and rename "--checkpoint"
+    to "--no-reset"?
+    
+    Also, a "safe return" to a checkpoint probably requires
+    
+    git reset --hard && git stash pop
+    
+    although "git stash pop" will do in many cases. Should we provide a shortcut
+    "restore" which does the reset-and-pop?
 
-Michael
+ git-stash.sh | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+diff --git a/git-stash.sh b/git-stash.sh
+index d4cf818..42f140c 100755
+--- a/git-stash.sh
++++ b/git-stash.sh
+@@ -193,12 +193,16 @@ store_stash () {
+ }
+ 
+ save_stash () {
++	checkpoint=
+ 	keep_index=
+ 	patch_mode=
+ 	untracked=
+ 	while test $# != 0
+ 	do
+ 		case "$1" in
++		-c|--checkpoint)
++			checkpoint=t
++			;;
+ 		-k|--keep-index)
+ 			keep_index=t
+ 			;;
+@@ -267,6 +271,11 @@ save_stash () {
+ 	die "$(gettext "Cannot save the current status")"
+ 	say Saved working directory and index state "$stash_msg"
+ 
++	if test -n "$checkpoint"
++	then
++		exit 0
++	fi
++
+ 	if test -z "$patch_mode"
+ 	then
+ 		git reset --hard ${GIT_QUIET:+-q}
+@@ -576,6 +585,10 @@ save)
+ 	shift
+ 	save_stash "$@"
+ 	;;
++checkpoint)
++	shift
++	save_stash "--checkpoint" "$@"
++	;;
+ apply)
+ 	shift
+ 	apply_stash "$@"
+-- 
+2.3.0.191.ge77e8b9
