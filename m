@@ -1,181 +1,156 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [RFH] GSoC 2015 application
-Date: Thu, 19 Feb 2015 11:32:46 +0100
-Message-ID: <vpqzj8ary29.fsf@anie.imag.fr>
-References: <20150218191417.GA7767@peff.net>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Experience with Recovering From User Error (And suggestions for
+ improvements)
+Date: Thu, 19 Feb 2015 12:01:18 +0100
+Message-ID: <54E5C27E.9060109@drmicha.warpmail.net>
+References: <54E1C96D.2080109@active-4.com> <CACBZZX4NkkMymnG5ZWtO1ya2xzVhxuqh4d3tU2U+mPU49n=m8g@mail.gmail.com> <54E1F0AF.1070403@active-4.com> <54E45F74.6080907@drmicha.warpmail.net> <19A600EC-080C-48F1-A949-9A32AFC247E7@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Feb 19 11:33:12 2015
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?windows-1252?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: "Kyle J. McKay" <mackyle@gmail.com>,
+	Armin Ronacher <armin.ronacher@active-4.com>
+X-From: git-owner@vger.kernel.org Thu Feb 19 12:01:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YOOPv-0000s4-M9
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Feb 2015 11:33:12 +0100
+	id 1YOOrJ-0005WJ-E5
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Feb 2015 12:01:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753321AbbBSKdG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Feb 2015 05:33:06 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:34933 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753312AbbBSKdA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Feb 2015 05:33:00 -0500
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t1JAWjM5025401
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 19 Feb 2015 11:32:45 +0100
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t1JAWkbX009246;
-	Thu, 19 Feb 2015 11:32:46 +0100
-In-Reply-To: <20150218191417.GA7767@peff.net> (Jeff King's message of "Wed, 18
-	Feb 2015 14:14:17 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 19 Feb 2015 11:32:45 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t1JAWjM5025401
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1424946768.21759@S+gdRKx15dcpH6Z/ND0COw
+	id S1753100AbbBSLBX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Feb 2015 06:01:23 -0500
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:60193 "EHLO
+	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753066AbbBSLBV (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 Feb 2015 06:01:21 -0500
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
+	by mailout.nyi.internal (Postfix) with ESMTP id 9449C20B87
+	for <git@vger.kernel.org>; Thu, 19 Feb 2015 06:01:20 -0500 (EST)
+Received: from frontend1 ([10.202.2.160])
+  by compute6.internal (MEProxy); Thu, 19 Feb 2015 06:01:20 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=x-sasl-enc:message-id:date:from
+	:mime-version:to:cc:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=ttA3wuNdB0iSZVkPqS/BOs
+	3cfA8=; b=ITW+SHZzTkU+2hSZ8QqBSpOnwdPLgoYq63PrVNIC8h2aY9J7nUxAV7
+	D35AmgY0/1BPZSjuwNLpGuTAz/Pj3wVxZOa2uGghj+VKtpbQk1xN+v5FQ9DpdyMG
+	TWchB4aAqE5ii31kc1Dj4lsj08MhULyPDokhC2fJvdVXWopvp32Mw=
+X-Sasl-enc: lT9tad/OUS/m5K59tPJYuza0kPsG/n3VVapI7lPY/mn4 1424343680
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id DC2D9C002A3;
+	Thu, 19 Feb 2015 06:01:19 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
+In-Reply-To: <19A600EC-080C-48F1-A949-9A32AFC247E7@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264089>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264090>
 
-Jeff King <peff@peff.net> writes:
+Kyle J. McKay venit, vidit, dixit 19.02.2015 02:17:
+> On Feb 18, 2015, at 01:46, Michael J Gruber wrote:
+>> Armin Ronacher venit, vidit, dixit 16.02.2015 14:29:
+>>> Hi,
+>>>
+>>> On 16/02/15 13:09, =C6var Arnfj=F6r=F0 Bjarmason wrote:
+>>>> We should definitely make recovery like this harder, but is there =
+a
+>>>> reason for why you don't use "git reset --keep" instead of --hard?
+>>> This was only the second time in years of git usage that the reset =
+=20
+>>> was
+>>> incorrectly done.  I suppose at this point I might try to retrain m=
+y
+>>> muscle memory to type something else :)
+>>>
+>>>> If we created such hooks for "git reset --hard" we'd just need to
+>>>> expose some other thing as that low-level operation (and break =20
+>>>> scripts
+>>>> that already rely on it doing the minimal "yes I want to change th=
+e
+>>>> tree no matter what" thing), and then we'd just be back to square =
+=20
+>>>> one
+>>>> in a few years when users started using "git reset --really-=20
+>>>> hard" (or
+>>>> whatever the flag would be).
+>>> I don't think that's necessary, I don't think it would make the
+>>> operation much slower to just make a dangling commit and write out =
+=20
+>>> a few
+>>> blobs.  The garbage collect will soon enough take care of that data
+>>> anyways.  But I guess that would need testing on large trees to see=
+ =20
+>>> how
+>>> bad that goes.
+>>>
+>>> I might look into the git undo thing that was mentioned.
+>>>
+>>> Regards,
+>>> Armin
+>>>
+>>
+>> Are you concerned about the index only, not unstaged worktree change=
+s?
+>>
+>> In this case, keeping a reflog for the index may help, and it would
+>> somehow fit into the overall concept.
+>=20
+> There was this concept of a git stash checkpoint to save work in =20
+> progress without creating a normal commit that I read about some time=
+ =20
+> ago (blog? Git book? -- don't recall) that was basically just this:
+>=20
+>    git stash save
+>    git stash apply
+>=20
+> The problem with that is that it touches the working tree and can =20
+> trigger rebuilds etc.  However, when I ran across the undocumented =20
+> "git stash create" command I was able to write a simple git-checkpoin=
+t =20
+> script [1] that creates a new stash entry without touching the index =
+=20
+> or working tree which I find quite handy from time to time.
 
-> I do need somebody to volunteer as backup admin. This doesn't need
-> to involve any specific commitment, but is mostly about what to do if I
-> get hit by a bus.
+I think that would make for a nice additional command/mode that we coul=
+d
+support for git-stash.sh. Alle the pieces are there.
 
-If you promise me to try hard not to be hit by a bus and no one else
-steps in, I can be the backup admin.
+> So I think that what Armin originally asked for (create a dangling =20
+> commit of changes before reset --hard) could be accomplished simply b=
+y =20
+> running:
+>=20
+>    git checkpoint && git stash drop
+>=20
+>> Otherwise, we would basically need a full stash before a hard reset.
+>> That's not the first time where we could need a distinction between
+>> "command run by user" and "command run by script". For the former, w=
+e
+>> could allow overriding default options, re-aliasing internal command=
+s,
+>> adding expensive safety hooks. For the latter we can't.
+>>
+>> It's just that we don't have such a concept yet (other than checking=
+ =20
+>> tty).
+>=20
+> But of course plugging that into git reset somehow is indeed the =20
+> problem since you cannot alias/redefine git commands.
+>=20
+> -Kyle
+>=20
+> [1] https://gist.github.com/mackyle/83b1ba13e263356bdab0
 
-> Where I really need help now is in the "ideas" page:
->
->   http://git.github.io/SoC-2015-Ideas.html
+Also, "git stash create" does the tree creation and object creation tha=
+t
+we wanted to avoid at least for scripts.
 
-Throwing out a few ideas for discussion, I can write something if people
-agree.
+And "git reset --hard-but-safe" suffers from the user education problem=
+s
+that have been mentioned already.
 
-* "git bisect fixed/unfixed", to allow bisecting a fix instead of a
-  regression less painfully. There were already some proposed patches
-  ( https://git.wiki.kernel.org/index.php/SmallProjectsIdeas#git_bisect_fix.2Funfixed ),
-  so it shouldn't be too hard. Perhaps this item can be included in the
-  "git bisect --first-parent" idea (turning it into "git bisect
-  improvements").
-
-* Be nicer to the user on tracked/untracked merge conflicts
-
-  I've had it on
-  https://git.wiki.kernel.org/index.php/SmallProjectsIdeas#Be_nicer_to_the_user_on_tracked.2Funtracked_merge_conflicts
-  for a while but never got someone to do it.
-
-    "When merging a commit which has tracked files with the same name as local untracked files, Git refuses to proceed. It could be nice to:
-
-    - Accept the situation without conflict when the tracked file has
-      the exact same content as the local untracked file (which would
-      become tracked). No data is lost, nothing can be committed
-      accidentally.
-
-    - Possibly, for fast-forward merges, if a local files belongs to the
-      index but not to the last commit, attempt a merge between the
-      upstream version and the local one (resulting in the same content
-      as if the file had just been committed, but without introducing an
-      extra commit). 
-
-    Recent versions SVN do something similar: on update, it considers
-    added but not committed files like normal tracked files, and
-    attempts a merge of the upstream version with the local one (which
-    always succeeds when the files have identical content). Attempting a
-    merge for non-fast forward cases would probably not make sense: it
-    would mix changes coming from the merge with other changes that do
-    not come from a commit."
-  
-  This shouldn't be technically too hard, but finding which behavior is
-  right, where should things be customizeable and what the default value
-  for the configuration should be will probably lead to interesting
-  discussions. It contains two steps, which is good (all-or-nothing
-  projects are much harder to deal with). The biggest drawback is that
-  the first item may be simple for a GSoC while the second could be both
-  controversial and hard to implement (depending on which solution is
-  taken).
-
-> and the list of microprojects:
->
->   http://git.github.io/SoC-2015-Microprojects.html
-
-Here are a few ideas, based on
-https://git.wiki.kernel.org/index.php/SmallProjectsIdeas
-
--- >8 --
-From 513774754872436ea8b7eea63828b804c6a107e7 Mon Sep 17 00:00:00 2001
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Date: Thu, 19 Feb 2015 10:48:06 +0100
-Subject: [PATCH] 2015 microproject ideas
-
----
- SoC-2015-Microprojects.md | 42 ++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 42 insertions(+)
-
-diff --git a/SoC-2015-Microprojects.md b/SoC-2015-Microprojects.md
-index 8cb6a8f..1abf595 100644
---- a/SoC-2015-Microprojects.md
-+++ b/SoC-2015-Microprojects.md
-@@ -128,3 +128,45 @@ the user wanted.
- 
- Because --graph is about connected history while --no-walk is about
- discrete points.  Cf. $gmane/216083
-+
-+### Move ~/.git-credentials and ~/.git-credential-cache to ~/.config/git
-+
-+Most of git dotfiles can be located, at the user's option, in
-+~/.<file> or in ~/.config/git/<file>, following the [XDG
-+standard](http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html).
-+~/.git-credentials and ~/.git-credential-cache are still hardcoded as
-+~/.<file>, and should allow using the XDG directory layout too
-+(~/.git-credentials could be allowed as ~/.config/git/credential and
-+~/.git-credential-cache could be allowed as ~/.cache/git/credential,
-+possibly modified by $XDG_CONFIG_HOME and $XDG_CACHE_HOME).
-+
-+Each of these files can be a microproject of its own. The suggested
-+approach is:
-+
-+* See how XDG was implemented for other files (run "git log --grep
-+  XDG" in Git's source code) and read the XDG specification.
-+
-+* Implement and test the new behavior, without breaking compatibility
-+  with the old behavior.
-+
-+* Update the documentation
-+
-+### Add configuration options for some commonly used command-line options
-+
-+This includes:
-+
-+* git am -3
-+
-+* git am -c
-+
-+Some people always run the command with these options, and would
-+prefer to be able to activate them by default in ~/.gitconfig.
-+
-+### Add more builtin patterns for userdiff
-+
-+"git diff" shows the function name corresponding to each hunk after
-+the @@ ... @@ line. For common languages (C, HTML, Ada, Matlab, ...),
-+the way to find the function name is built-in Git's source code as
-+regular expressions (see userdiff.c). A few languages are common
-+enough to deserve a built-in driver, but are not yet recognized. For
-+example, CSS, shell.
--- 
-2.0.2.737.gfb43bde
-
-
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Michael
