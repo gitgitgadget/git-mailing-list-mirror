@@ -1,79 +1,189 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFD/PATCH] stash: introduce checkpoint mode
-Date: Thu, 19 Feb 2015 09:49:11 -0800
-Message-ID: <xmqq7fvd23mw.fsf@gitster.dls.corp.google.com>
-References: <54E5C27E.9060109@drmicha.warpmail.net>
-	<dbd1aae0508bd72dc3b21fabda4c420eef487720.1424349039.git.git@drmicha.warpmail.net>
-	<8AAD6FE6-75C1-4BA2-8667-4DF8BF6B1EE4@gmail.com>
+From: Michal Sojka <sojkam1@fel.cvut.cz>
+Subject: Re: [PATCH v2] submodule: Fix documentation of update subcommand
+Date: Thu, 19 Feb 2015 18:54:36 +0100
+Message-ID: <87d255zt0j.fsf@steelpick.2x.cz>
+References: <xmqqvbj0yx6c.fsf@gitster.dls.corp.google.com> <1424299716-21138-1-git-send-email-sojkam1@fel.cvut.cz> <xmqqbnkq23a0.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org,
-	Armin Ronacher <armin.ronacher@active-4.com>,
-	=?utf-8?B?w4Z2YXIgQXJu?= =?utf-8?B?ZmrDtnLDsA==?= Bjarmason 
-	<avarab@gmail.com>
-To: "Kyle J. McKay" <mackyle@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 19 18:49:24 2015
+Cc: git@vger.kernel.org, Jens.Lehmann@web.de
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 19 18:54:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YOVE4-0006pq-35
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Feb 2015 18:49:24 +0100
+	id 1YOVJF-0001DU-9X
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Feb 2015 18:54:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752582AbbBSRtU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Feb 2015 12:49:20 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50746 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751824AbbBSRtT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Feb 2015 12:49:19 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5ADA337FE6;
-	Thu, 19 Feb 2015 12:49:13 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=22skFP70FOttchBTrnCRpwmWbug=; b=Ohj5YV
-	Zd9pSbT2KfDtYbrH2iyEZAhoT6n/RBF14EfW756V4xXOD8OhJ0D+e+6MGuGz5vHY
-	ZFzJbT2xpzvh6c6/PMY3VhsxgRBhab65w1Vt/sSdbWJhIQfb83+nqN+Ymc5M12MP
-	Wa4Vb2Ex6ml25v6QASPoEQjooViA3IDAivJUE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gELmGU8mQJBdF1WFIGX5qPHWl6TpL4E4
-	fcMw3cVeRHW5rYrau4JRwkPVP/ILQp12XgL2bhdbZbNyub/d+gRGQeMpn6o70IYp
-	z3cBU87sp3cYoAOf+4SfRXM+i8Go+S4Z5X+7z1auC8TI9kx/OkWenKcJAaOqZRyj
-	TYFL1LyAGkQ=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 51C8237FE5;
-	Thu, 19 Feb 2015 12:49:13 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C3CF937FE4;
-	Thu, 19 Feb 2015 12:49:12 -0500 (EST)
-In-Reply-To: <8AAD6FE6-75C1-4BA2-8667-4DF8BF6B1EE4@gmail.com> (Kyle J. McKay's
-	message of "Thu, 19 Feb 2015 05:58:14 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 9D488A96-B85F-11E4-B3D3-A4119F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751908AbbBSRyl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Feb 2015 12:54:41 -0500
+Received: from max.feld.cvut.cz ([147.32.192.36]:34747 "EHLO max.feld.cvut.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751597AbbBSRyk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Feb 2015 12:54:40 -0500
+Received: from localhost (unknown [192.168.200.7])
+	by max.feld.cvut.cz (Postfix) with ESMTP id 49D613CFEA6;
+	Thu, 19 Feb 2015 18:54:38 +0100 (CET)
+X-Virus-Scanned: IMAP STYX AMAVIS
+Received: from max.feld.cvut.cz ([192.168.200.1])
+	by localhost (styx.feld.cvut.cz [192.168.200.7]) (amavisd-new, port 10044)
+	with ESMTP id Pyhyb9Vpuarj; Thu, 19 Feb 2015 18:54:36 +0100 (CET)
+Received: from imap.feld.cvut.cz (imap.feld.cvut.cz [147.32.192.34])
+	by max.feld.cvut.cz (Postfix) with ESMTP id 5E16D4CC658;
+	Thu, 19 Feb 2015 18:54:36 +0100 (CET)
+Received: from wsh by steelpick.2x.cz with local (Exim 4.84)
+	(envelope-from <sojkam1@fel.cvut.cz>)
+	id 1YOVJ6-0001Ig-3J; Thu, 19 Feb 2015 18:54:36 +0100
+In-Reply-To: <xmqqbnkq23a0.fsf@gitster.dls.corp.google.com>
+User-Agent: Notmuch/0.19+54~g0747f5c (http://notmuchmail.org) Emacs/24.4.1 (x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264104>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264105>
 
-"Kyle J. McKay" <mackyle@gmail.com> writes:
-
-> What about a shortcut to "reset-and-apply" as well?
+On Thu, Feb 19 2015, Junio C Hamano wrote:
+> Michal Sojka <sojkam1@fel.cvut.cz> writes:
 >
-> I have often been frustrated when "git stash apply" refuses to work
-> because I have changes that would be stepped on and there's no --force
-> option like git checkout has.  I end up doing a reset just so I can
-> run stash apply.
+>> The documentation of 'git submodule update' has several problems:
+>>
+>> 1) It says that submodule.$name.update can be overridden by --checkout
+>>    only if its value is `none`.
+>
+> Hmm, I do not read the existing sentence that way, though.  The
+> "only if" above is only in your head and not in the documentation,
+> no?
 
-Doesn't that cut both ways, though?
+Yes, you're right.
 
-A single step short-cut, done in any way other than a more explicit
-way such as "git reset --hard && git stash apply" (e.g. "git stash
-reset-and-apply" or "git stash apply --force") that makes it crystal
-clear that the user _is_ discarding, has a risk of encouraging users
-to form a dangerous habit of invoking the short-cut without thinking
-and leading to "oops, I didn't mean that!".
+> The way I understand it is that the explanation does not even bother
+> to say that it is overridable when update is set to something that
+> clearly corresponds to --option (e.g. 'update=rebase' is for people
+> too lazy to type --rebase from the command line), but because it is
+> unclear when it is set to 'update=none', it specifically singles out
+> that case.
+
+I updated the commit message a bit.
+
+>> diff --git a/Documentation/config.txt b/Documentation/config.txt
+>> index ae6791d..f30cbbc 100644
+>> --- a/Documentation/config.txt
+>> +++ b/Documentation/config.txt
+>> @@ -2411,12 +2411,29 @@ status.submodulesummary::
+>>
+>>  submodule.<name>.path::
+>>  submodule.<name>.url::
+>> +	The path within this project and URL for a submodule. These
+>> +	variables are initially populated by 'git submodule init';
+>> +	edit them to override the URL and other values found in the
+>> +	`.gitmodules` file. See linkgit:git-submodule[1] and
+>> +	linkgit:gitmodules[5] for details.
+>> +
+>
+> OK.
+>
+>>  submodule.<name>.update::
+>> -	The path within this project, URL, and the updating strategy
+>> -	for a submodule.  These variables are initially populated
+>> -	by 'git submodule init'; edit them to override the
+>> -	URL and other values found in the `.gitmodules` file.  See
+>> -	linkgit:git-submodule[1] and linkgit:gitmodules[5] for details.
+>> +	The default updating strategy for a submodule, used by `git
+>> +	submodule update`. This variable is populated by `git
+>> +	submodule init` from linkgit:gitmodules[5].
+>> +
+>> +	If the value is 'checkout' (the default), the new commit
+>> +	specified in the superproject will be checked out in the
+>
+> Have you formatted this?  I _think_ this change would break the
+> typesetting by having an empty line there.
+
+Right. I need to add a '+' and deindent.
+
+>> +	submodule on a detached HEAD.
+>> +	If 'rebase', the current branch of the submodule will be
+>> +	rebased onto the commit specified in the superproject.
+>> +	If 'merge', the commit specified in the superproject will be
+>> +	merged into the current branch in the submodule. If 'none',
+>> +	the submodule with name `$name` will not be updated by
+>> +	default.
+>> +	If the value is of form '!command', it will cause `command` to
+>> +	be run. `command` can be any arbitrary shell command that
+>> +	takes a single argument, namely the sha1 to update to.
+>
+> I have a feeling that it is better to leave the explanations of
+> these values in git-submodule.txt (i.e. where you took the above
+> text from) and say "see description of 'update' command in
+> linkgit:git-submodule[1]" here to avoid duplication.
+
+OK
+
+>>  submodule.<name>.branch::
+>>  	The remote branch name for a submodule, used by `git submodule
+>> diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+>> index 8e6af65..c92908e 100644
+>> --- a/Documentation/git-submodule.txt
+>> +++ b/Documentation/git-submodule.txt
+>> @@ -154,14 +154,13 @@ If `--force` is specified, the submodule's work tree will be removed even if
+>>  it contains local modifications.
+>>
+>>  update::
+>> -	Update the registered submodules, i.e. clone missing submodules and
+>> -	checkout the commit specified in the index of the containing repository.
+>> -	This will make the submodules HEAD be detached unless `--rebase` or
+>> -	`--merge` is specified or the key `submodule.$name.update` is set to
+>> -	`rebase`, `merge` or `none`. `none` can be overridden by specifying
+>> -	`--checkout`. Setting the key `submodule.$name.update` to `!command`
+>> -	will cause `command` to be run. `command` can be any arbitrary shell
+>> -	command that takes a single argument, namely the sha1 to update to.
+>> +	Update the registered submodules to match what the superproject
+>> +	expects by cloning missing submodules and updating the working
+>> +	tree of the submodules....
+>
+> This part is better than the original.
+
+Indeed. You wrote this in a previous email :)
+
+>>  The "updating" can take various forms
+>> +	and can be configured in .git/config by the
+>> +	`submodule.$name.update` key or by explicitely giving one of
+>> +	'--checkout' (the default), '--merge' or '--rebase' options. See
+>> +	linkgit:git-config[1] for details.
+>
+> Because submodule.<name>.update is interesting only to those who run
+> "git submodule update", and also the command line options that
+> interact with the setting are only described here not in config.txt,
+> I think it is better to have the description of various modes here.
+>
+> And the description, if it is done here, can clarify the precedence
+> (i.e. command line trumps configuration) and semantics
+> (i.e. configuration 'update=checkout' and option --checkout are both
+> to trigger the same behaviour), perhaps like this:
+>
+> 	The updating can be done in one of three ways:
+>
+>         checkout;; detaches the HEAD in the submodule at the commit
+>             that is recorded by the superproject.  This is done when
+>             --checkout option is given, or no option is given, and
+>             submodule.<name>.update is unset, or if it is set to
+>             'checkout'.
+>         rebase;; EXPLAIN IN A SIMILAR WAY, talk about --rebase,
+>             'rebase', etc.
+>         merge;; EXPLAIN IN A SIMILAR WAY, talk about --merge,
+>             'merge', etc.
+>
+>         When no option is given and submodule.<name>.update is set
+>         to 'none', the submodule is not updated.
+>
+> It would be awkward to talk about --option in any of the other pages
+> like config.txt and gitmodules.txt, but the relationship between the
+> options and configurations must be explained somewhere, so....
+
+Agreed expect that there is a fourth way: !command. But this could be
+easily added here as well.
+
+I'll send an updated patch in a while.
+
+Thanks.
+-Michal
