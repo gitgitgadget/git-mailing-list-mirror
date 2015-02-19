@@ -1,100 +1,181 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Interested in helping open source friends on HP-UX?
-Date: Thu, 19 Feb 2015 11:33:01 +0100
-Message-ID: <54E5BBDD.7040100@drmicha.warpmail.net>
-References: <xmqq4mt2fx2m.fsf@gitster.dls.corp.google.com> <20150218170007.784be6aa@pc09.procura.nl> <54E4CFDC.40401@drmicha.warpmail.net> <20150218182547.GA6346@peff.net> <xmqqpp972h1n.fsf@gitster.dls.corp.google.com> <20150218185734.GB7257@peff.net>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [RFH] GSoC 2015 application
+Date: Thu, 19 Feb 2015 11:32:46 +0100
+Message-ID: <vpqzj8ary29.fsf@anie.imag.fr>
+References: <20150218191417.GA7767@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: "H.Merijn Brand" <h.m.brand@xs4all.nl>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
 X-From: git-owner@vger.kernel.org Thu Feb 19 11:33:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YOOPw-0000s4-8d
+	id 1YOOPv-0000s4-M9
 	for gcvg-git-2@plane.gmane.org; Thu, 19 Feb 2015 11:33:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753319AbbBSKdF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Feb 2015 05:33:05 -0500
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:52466 "EHLO
-	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753314AbbBSKdD (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 Feb 2015 05:33:03 -0500
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.nyi.internal (Postfix) with ESMTP id F051020993
-	for <git@vger.kernel.org>; Thu, 19 Feb 2015 05:33:02 -0500 (EST)
-Received: from frontend2 ([10.202.2.161])
-  by compute1.internal (MEProxy); Thu, 19 Feb 2015 05:33:02 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=x-sasl-enc:message-id:date:from
-	:mime-version:to:cc:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=WK1wK/mIz/D1pCjaS/zSGr
-	PROuI=; b=eA6GHRHnr9ZlSC8tZlaLZoJyBddH6WsxEv7J4NS+7qhKS4SDiCo/tJ
-	iTbcebIguM8OteA8okvqT+Yz2wsCZvrQlQwrwPSb4fBZrU0BGgkFwrQ54jIeqtY4
-	oStXHsbHnF5dj3vjFKbgluKAsjQ+f2GmvL7+Lh3OwJPDW1acLjE4I=
-X-Sasl-enc: Hx/M3hoMZwK40T0v/V7TVXPBmZuXq0PmdbvqsbYTrNcB 1424341982
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 3D4C26801D3;
-	Thu, 19 Feb 2015 05:33:02 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
-In-Reply-To: <20150218185734.GB7257@peff.net>
+	id S1753321AbbBSKdG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Feb 2015 05:33:06 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:34933 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753312AbbBSKdA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Feb 2015 05:33:00 -0500
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t1JAWjM5025401
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 19 Feb 2015 11:32:45 +0100
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t1JAWkbX009246;
+	Thu, 19 Feb 2015 11:32:46 +0100
+In-Reply-To: <20150218191417.GA7767@peff.net> (Jeff King's message of "Wed, 18
+	Feb 2015 14:14:17 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 19 Feb 2015 11:32:45 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t1JAWjM5025401
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1424946768.21759@S+gdRKx15dcpH6Z/ND0COw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264089>
 
-Jeff King venit, vidit, dixit 18.02.2015 19:57:
-> On Wed, Feb 18, 2015 at 10:47:16AM -0800, Junio C Hamano wrote:
-> 
->>> It seems like we could use
->>>
->>>   (cd src && tar cf - .) | (cd dst && tar xf -)
->>>
->>> here as a more portable alternative. I don't think we can rely on rsync
->>> being everywhere.
->>
->> Thanks; I wasn't even aware that we used rsync in our tests.  We
->> certainly do not want to rely on it.
-> 
-> I don't think we do.
-> 
-> Grepping for rsync in t/, it is mentioned in three places:
-> 
->   1. In t1509, we use it, but that test script does not run unless you
->      set a bunch of environment variables to enable it.
-> 
->   2. In a sample patch for t4100. Obviously this one doesn't execute. :)
-> 
->   3. In t5500, to test "rsync:" protocol supported. This is behind a
->      check that we can run rsync at all (though it does not properly use
->      prereqs or use the normal "skip" procedure).
-> 
->> Why not "cp -r src dst", though?
-> 
-> I was assuming that the "-P" in the original had some purpose. My "cp
-> -r" does not seem to dereference symlinks, but maybe there is something
-> I am missing.
-> 
-> -Peff
+Jeff King <peff@peff.net> writes:
 
-There's a symlink in sub that needs to be preserved.
+> I do need somebody to volunteer as backup admin. This doesn't need
+> to involve any specific commitment, but is mostly about what to do if I
+> get hit by a bus.
 
-I'm cooking up a mini-series covering tar/cp -P so far and hopefully the
-JP encodings later. Do I understand correctly that for Merijin's use
-case on HP-UX, we want
+If you promise me to try hard not to be hit by a bus and no one else
+steps in, I can be the backup admin.
 
-- as few extra tools (GNU...) as possible for the run time git
-- may get a few more tools installed to run the test
+> Where I really need help now is in the "ideas" page:
+>
+>   http://git.github.io/SoC-2015-Ideas.html
 
-I still don't have a clear picture of the iconv situation: Does your
-iconv library require OLD_ICONV to compile? Is there a reason you want
-to disable it?
+Throwing out a few ideas for discussion, I can write something if people
+agree.
 
-Failing so many tests with NO_ICONV is certainly not ideal, but I'm not
-sure we should care to protect so many tests with a prerequisite.
+* "git bisect fixed/unfixed", to allow bisecting a fix instead of a
+  regression less painfully. There were already some proposed patches
+  ( https://git.wiki.kernel.org/index.php/SmallProjectsIdeas#git_bisect_fix.2Funfixed ),
+  so it shouldn't be too hard. Perhaps this item can be included in the
+  "git bisect --first-parent" idea (turning it into "git bisect
+  improvements").
 
-Michael
+* Be nicer to the user on tracked/untracked merge conflicts
+
+  I've had it on
+  https://git.wiki.kernel.org/index.php/SmallProjectsIdeas#Be_nicer_to_the_user_on_tracked.2Funtracked_merge_conflicts
+  for a while but never got someone to do it.
+
+    "When merging a commit which has tracked files with the same name as local untracked files, Git refuses to proceed. It could be nice to:
+
+    - Accept the situation without conflict when the tracked file has
+      the exact same content as the local untracked file (which would
+      become tracked). No data is lost, nothing can be committed
+      accidentally.
+
+    - Possibly, for fast-forward merges, if a local files belongs to the
+      index but not to the last commit, attempt a merge between the
+      upstream version and the local one (resulting in the same content
+      as if the file had just been committed, but without introducing an
+      extra commit). 
+
+    Recent versions SVN do something similar: on update, it considers
+    added but not committed files like normal tracked files, and
+    attempts a merge of the upstream version with the local one (which
+    always succeeds when the files have identical content). Attempting a
+    merge for non-fast forward cases would probably not make sense: it
+    would mix changes coming from the merge with other changes that do
+    not come from a commit."
+  
+  This shouldn't be technically too hard, but finding which behavior is
+  right, where should things be customizeable and what the default value
+  for the configuration should be will probably lead to interesting
+  discussions. It contains two steps, which is good (all-or-nothing
+  projects are much harder to deal with). The biggest drawback is that
+  the first item may be simple for a GSoC while the second could be both
+  controversial and hard to implement (depending on which solution is
+  taken).
+
+> and the list of microprojects:
+>
+>   http://git.github.io/SoC-2015-Microprojects.html
+
+Here are a few ideas, based on
+https://git.wiki.kernel.org/index.php/SmallProjectsIdeas
+
+-- >8 --
+From 513774754872436ea8b7eea63828b804c6a107e7 Mon Sep 17 00:00:00 2001
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Date: Thu, 19 Feb 2015 10:48:06 +0100
+Subject: [PATCH] 2015 microproject ideas
+
+---
+ SoC-2015-Microprojects.md | 42 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 42 insertions(+)
+
+diff --git a/SoC-2015-Microprojects.md b/SoC-2015-Microprojects.md
+index 8cb6a8f..1abf595 100644
+--- a/SoC-2015-Microprojects.md
++++ b/SoC-2015-Microprojects.md
+@@ -128,3 +128,45 @@ the user wanted.
+ 
+ Because --graph is about connected history while --no-walk is about
+ discrete points.  Cf. $gmane/216083
++
++### Move ~/.git-credentials and ~/.git-credential-cache to ~/.config/git
++
++Most of git dotfiles can be located, at the user's option, in
++~/.<file> or in ~/.config/git/<file>, following the [XDG
++standard](http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html).
++~/.git-credentials and ~/.git-credential-cache are still hardcoded as
++~/.<file>, and should allow using the XDG directory layout too
++(~/.git-credentials could be allowed as ~/.config/git/credential and
++~/.git-credential-cache could be allowed as ~/.cache/git/credential,
++possibly modified by $XDG_CONFIG_HOME and $XDG_CACHE_HOME).
++
++Each of these files can be a microproject of its own. The suggested
++approach is:
++
++* See how XDG was implemented for other files (run "git log --grep
++  XDG" in Git's source code) and read the XDG specification.
++
++* Implement and test the new behavior, without breaking compatibility
++  with the old behavior.
++
++* Update the documentation
++
++### Add configuration options for some commonly used command-line options
++
++This includes:
++
++* git am -3
++
++* git am -c
++
++Some people always run the command with these options, and would
++prefer to be able to activate them by default in ~/.gitconfig.
++
++### Add more builtin patterns for userdiff
++
++"git diff" shows the function name corresponding to each hunk after
++the @@ ... @@ line. For common languages (C, HTML, Ada, Matlab, ...),
++the way to find the function name is built-in Git's source code as
++regular expressions (see userdiff.c). A few languages are common
++enough to deserve a built-in driver, but are not yet recognized. For
++example, CSS, shell.
+-- 
+2.0.2.737.gfb43bde
+
+
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
