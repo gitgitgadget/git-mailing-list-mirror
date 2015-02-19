@@ -1,46 +1,61 @@
-From: ydirson@free.fr
-Subject: Strange reachability inconsistency (apparently, at least...)
-Date: Thu, 19 Feb 2015 16:03:37 +0100 (CET)
-Message-ID: <324985759.551780546.1424358217833.JavaMail.root@zimbra39-e7.priv.proxad.net>
-References: <144640746.551672305.1424355582540.JavaMail.root@zimbra39-e7.priv.proxad.net>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Git Feature Request - show current branch
+Date: Thu, 19 Feb 2015 17:21:05 +0100
+Message-ID: <54E60D71.6050906@drmicha.warpmail.net>
+References: <13b.3lxh{.41MsIT3sthY.1KvU6v@seznam.cz> <001801d04c48$732f9980$598ecc80$@nexbridge.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-Cc: dirson@bertin.fr, poulot@bertin.fr, ydirson@free.fr
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Feb 19 16:03:47 2015
+To: "Randall S. Becker" <rsbecker@nexbridge.com>, mdconf@seznam.cz,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 19 17:21:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YOSdm-000805-O1
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Feb 2015 16:03:47 +0100
+	id 1YOTqj-0005DC-6B
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Feb 2015 17:21:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751575AbbBSPDm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Feb 2015 10:03:42 -0500
-Received: from smtp2-g21.free.fr ([212.27.42.2]:58658 "EHLO smtp2-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750955AbbBSPDm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Feb 2015 10:03:42 -0500
-Received: from zimbra39-e7.priv.proxad.net (unknown [172.20.243.189])
-	by smtp2-g21.free.fr (Postfix) with ESMTP id 52F6A4B01FF;
-	Thu, 19 Feb 2015 16:03:37 +0100 (CET)
-In-Reply-To: <144640746.551672305.1424355582540.JavaMail.root@zimbra39-e7.priv.proxad.net>
-X-Originating-IP: [62.23.137.162]
-X-Mailer: Zimbra 7.2.0-GA2598 (ZimbraWebClient - FF3.0 (Linux)/7.2.0-GA2598)
-X-Authenticated-User: ydirson@free.fr
+	id S1752404AbbBSQVI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Feb 2015 11:21:08 -0500
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:33070 "EHLO
+	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750856AbbBSQVH (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 Feb 2015 11:21:07 -0500
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+	by mailout.nyi.internal (Postfix) with ESMTP id 94ED120D79
+	for <git@vger.kernel.org>; Thu, 19 Feb 2015 11:21:06 -0500 (EST)
+Received: from frontend2 ([10.202.2.161])
+  by compute2.internal (MEProxy); Thu, 19 Feb 2015 11:21:06 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=x-sasl-enc:message-id:date:from
+	:mime-version:to:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=r217HJ06CBxQ9xKocH13Jj
+	ZNkcg=; b=FHZUJWhnBAH6g2EjDn6bpt6rVls1iEgYnhi/HQdH7NakeHRkgi1xeM
+	Wyx/BC86mzIe6flhuT/c2PxcL7o9wl1Sk0x9UzVPUv4Nl20pWCRwG6WHqHfIQRgh
+	qZZKeK+lRXato4KAVeZeZDyyQREzXjrnI5aURqwhtm+y6h/P41fXI=
+X-Sasl-enc: iAb+nodcYrKt5QF2o5jdLkzIqYu1uh9VewpXKbQfiJUb 1424362866
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 07D6E6801D3;
+	Thu, 19 Feb 2015 11:21:05 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
+In-Reply-To: <001801d04c48$732f9980$598ecc80$@nexbridge.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264102>
 
-I have a (fsck-clean) git tree in which for 2 commits A and B:
+Randall S. Becker venit, vidit, dixit 19.02.2015 14:32:
+> git symbolic-ref --short HEAD
 
-* "git merge-base --is-ancestor A B" returns 0
-* "git log B..A" returns a non-empty set of commits
+That errors out when HEAD is detached.
 
-I get this behaviour with 2.3.0 as well as with 2.1.3 and 1.7.12.
+git rev-parse --symbolic-full-name [--abbrev-ref] HEAD
 
-Is that a real bug or am I just misinterpreting something ?
+returns the branch name or HEAD. Though it's a bit difficult to discover.
+
+I guess git 3.0 will have "git branch" and "git branches" :)
+
+Michael
