@@ -1,66 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFH] GSoC 2015 application
-Date: Wed, 18 Feb 2015 21:49:08 -0800
-Message-ID: <CAPc5daVzmMnWOdctZeYLjxocnk2vrCrwmOyFvG13mB+zmVFQRQ@mail.gmail.com>
-References: <20150218191417.GA7767@peff.net> <xmqqlhju28de.fsf@gitster.dls.corp.google.com>
+From: Orivej Desh <orivej@gmx.fr>
+Subject: SVN.pm produces "Wide character in setenv" warnings
+Date: Thu, 19 Feb 2015 06:49:45 +0000
+Message-ID: <m3h9ui4cqe.fsf@gmx.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Feb 19 06:49:39 2015
+Content-Type: multipart/mixed; boundary="=-=-="
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 19 07:55:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YOJzW-0006VY-Su
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Feb 2015 06:49:39 +0100
+	id 1YOL10-0005ix-RU
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Feb 2015 07:55:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752454AbbBSFta (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Feb 2015 00:49:30 -0500
-Received: from mail-ob0-f182.google.com ([209.85.214.182]:52099 "EHLO
-	mail-ob0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752416AbbBSFt3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Feb 2015 00:49:29 -0500
-Received: by mail-ob0-f182.google.com with SMTP id nt9so10537899obb.13
-        for <git@vger.kernel.org>; Wed, 18 Feb 2015 21:49:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=eic0WkTiO3LWJugy7++x7VWlgTRmNQvpKvtiHPr+kL0=;
-        b=PufBTr99tt8aYMiU8kAsAwNeHBovY2c/D2cc4FxvrQ841o1BFvcN4lWTv9+KMecb63
-         zRrf7gghmlTNjFdf0PUpvnug6UaxQnSvi3aPAMzpG65xIn+VRhvWwbWLtt/mGTqNJpuX
-         Qyya8oaz6Q4mJn5NuBGITYKOCX2ZJyp28gmxnNkwUTPXNBAlXp41Qd28W8DsuA/gMddF
-         NcBe4JRmPKkvRauLGU9Tr9932IeACTW+beOWPQVrzMsZY/HruUu4zmzq1PPHfrlFmHjY
-         x4T/Rac7Dpq+TWWlNYJk4VAN7af6+LBubPYBcFgrLf9DktkVHnr8krkQwtlUBGh2L8UE
-         VPzg==
-X-Received: by 10.202.219.215 with SMTP id s206mr1718536oig.114.1424324968730;
- Wed, 18 Feb 2015 21:49:28 -0800 (PST)
-Received: by 10.202.48.132 with HTTP; Wed, 18 Feb 2015 21:49:08 -0800 (PST)
-In-Reply-To: <xmqqlhju28de.fsf@gitster.dls.corp.google.com>
-X-Google-Sender-Auth: NWlJUp3y0_-p19T-bYlkM0Ddv3M
+	id S1751698AbbBSGzH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Feb 2015 01:55:07 -0500
+Received: from plane.gmane.org ([80.91.229.3]:57984 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750920AbbBSGzG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Feb 2015 01:55:06 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1YOL0q-0005eZ-5i
+	for git@vger.kernel.org; Thu, 19 Feb 2015 07:55:04 +0100
+Received: from 81.4.107.250 ([81.4.107.250])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 19 Feb 2015 07:55:04 +0100
+Received: from orivej by 81.4.107.250 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 19 Feb 2015 07:55:04 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 81.4.107.250
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.0.50 (gnu/linux)
+Cancel-Lock: sha1:HRK7ZU/OOEF7z3pZzurvFkhRmHw=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264085>
 
-On Wed, Feb 18, 2015 at 1:54 PM, Junio C Hamano <gitster@pobox.com> wrote:
->
-> A few for micros.
->
-> +### Allow "-" as a short-hand for "@{-1}" in more places.
-> +
-> +Pick one command that operates on branch names.  Teach it the "-"
-> +shorthand that stands for "the branch we were previously on", like we
+--=-=-=
+Content-Type: text/plain
 
-In the same vein (people may have noticed that "Pick one" is meant to
-make this into multiple micros ;-)
+"git svn fetch" causes Perl 5.18 or newer to emit "Wide character in
+setenv" warnings when used in combination with svn.authorsfile with
+non-ASCII names:
 
-### Use unsigned integral type for collection of bits.
+     Wide character in setenv at /usr/lib64/perl5/vendor_perl/5.20.1/Git/SVN.pm line 969.
+     Wide character in setenv at /usr/lib64/perl5/vendor_perl/5.20.1/Git/SVN.pm line 973.
 
-Pick one field of a structure that (1) is of signed integral type and (2) is
-used as a collection of multiple bits. Discuss if there is a good reason
-why it has to be a signed integral field and change it to an unsigned
-type otherwise.  Cf. $gmane/263751
+I have no taste of Perl so I do not propose this patch for inclusion,
+but it fixes this for me.
+
+
+--=-=-=
+Content-Type: text/x-diff
+Content-Disposition: inline; filename=git-svn-env.patch
+
+diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
+index d9a52a5..2ffebfe 100644
+--- a/perl/Git/SVN.pm
++++ b/perl/Git/SVN.pm
+@@ -957,6 +957,17 @@ sub full_pushurl {
+ 	}
+ }
+ 
++sub utf8_encode {
++	my ($s) = @_;
++	utf8::encode($s);
++	return $s;
++}
++
++sub UENV {
++	my ($var, $val) = @_;
++	$ENV{$var} = utf8_encode($val);
++}
++
+ sub set_commit_header_env {
+ 	my ($log_entry) = @_;
+ 	my %env;
+@@ -966,13 +977,13 @@ sub set_commit_header_env {
+ 		}
+ 	}
+ 
+-	$ENV{GIT_AUTHOR_NAME} = $log_entry->{name};
++	UENV("GIT_AUTHOR_NAME", $log_entry->{name});
+ 	$ENV{GIT_AUTHOR_EMAIL} = $log_entry->{email};
+ 	$ENV{GIT_AUTHOR_DATE} = $ENV{GIT_COMMITTER_DATE} = $log_entry->{date};
+ 
+-	$ENV{GIT_COMMITTER_NAME} = (defined $log_entry->{commit_name})
++	UENV("GIT_COMMITTER_NAME", (defined $log_entry->{commit_name})
+ 						? $log_entry->{commit_name}
+-						: $log_entry->{name};
++						: $log_entry->{name});
+ 	$ENV{GIT_COMMITTER_EMAIL} = (defined $log_entry->{commit_email})
+ 						? $log_entry->{commit_email}
+ 						: $log_entry->{email};
+
+--=-=-=--
