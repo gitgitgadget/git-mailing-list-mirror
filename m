@@ -1,83 +1,100 @@
-From: karthik nayak <karthik.188@gmail.com>
-Subject: Re: [RFC] git cat-file "literally" option
-Date: Thu, 19 Feb 2015 15:40:52 +0530
-Message-ID: <54E5B6AC.3030706@gmail.com>
-References: <54E45DD7.205@gmail.com> <54E48A96.8010301@gmail.com> <CACsJy8BJnHTyXhhJaCuZAzjm=Gd96EjANEw76j=3L92cmbX7HA@mail.gmail.com> <CAPc5daUWTRA=cziUsXEbwNrggA_3mhRsrfnVaQ-F7iEeSO7ATw@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Interested in helping open source friends on HP-UX?
+Date: Thu, 19 Feb 2015 11:33:01 +0100
+Message-ID: <54E5BBDD.7040100@drmicha.warpmail.net>
+References: <xmqq4mt2fx2m.fsf@gitster.dls.corp.google.com> <20150218170007.784be6aa@pc09.procura.nl> <54E4CFDC.40401@drmicha.warpmail.net> <20150218182547.GA6346@peff.net> <xmqqpp972h1n.fsf@gitster.dls.corp.google.com> <20150218185734.GB7257@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 19 11:11:02 2015
+Cc: "H.Merijn Brand" <h.m.brand@xs4all.nl>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 19 11:33:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YOO4T-0008QC-9b
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Feb 2015 11:11:01 +0100
+	id 1YOOPw-0000s4-8d
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Feb 2015 11:33:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752507AbbBSKK5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Feb 2015 05:10:57 -0500
-Received: from mail-pd0-f177.google.com ([209.85.192.177]:41461 "EHLO
-	mail-pd0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752075AbbBSKK4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Feb 2015 05:10:56 -0500
-Received: by pdno5 with SMTP id o5so7839040pdn.8
-        for <git@vger.kernel.org>; Thu, 19 Feb 2015 02:10:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=vGREFOqkXC3sU2RfMsE4uICrs/xWTwt66N/9+Z5Ss1M=;
-        b=vgoTffdk3eEfJyBZtDnhNyjvlM3x2SbQO5lDPvj0uFfjEjZVzCZe8p8SwLQz/qy10R
-         kc3vNaG/kG7/XIlAdDFbVUdvMAS473roVPLpHHadA4bCOLqsebgdWf9DPSTYfCB/3qIy
-         ul+97iwsbwFA+sCGa9yZsYXw1tuhvU3fPOm+Rz189RAkfHSAhBQ1XbllwJ4aPPeqKC51
-         SlzsWEUjjovC+WTyPGMMOBOJhGvRcnkRldRCOcSdZkx3H6TWEyx9kGeIvVAskndHf6Il
-         Biw5TWqLrBdGV5vJaEOwJvOzOZUdGxmc6iVnI5p8FbVqe9V9zXiVnXCPXFRTiBKobOZi
-         mQNg==
-X-Received: by 10.70.47.70 with SMTP id b6mr6325577pdn.136.1424340655864;
-        Thu, 19 Feb 2015 02:10:55 -0800 (PST)
-Received: from [172.16.2.128] ([182.48.234.2])
-        by mx.google.com with ESMTPSA id ev2sm23136440pbb.69.2015.02.19.02.10.53
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 19 Feb 2015 02:10:55 -0800 (PST)
+	id S1753319AbbBSKdF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Feb 2015 05:33:05 -0500
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:52466 "EHLO
+	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753314AbbBSKdD (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 Feb 2015 05:33:03 -0500
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.nyi.internal (Postfix) with ESMTP id F051020993
+	for <git@vger.kernel.org>; Thu, 19 Feb 2015 05:33:02 -0500 (EST)
+Received: from frontend2 ([10.202.2.161])
+  by compute1.internal (MEProxy); Thu, 19 Feb 2015 05:33:02 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=x-sasl-enc:message-id:date:from
+	:mime-version:to:cc:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=WK1wK/mIz/D1pCjaS/zSGr
+	PROuI=; b=eA6GHRHnr9ZlSC8tZlaLZoJyBddH6WsxEv7J4NS+7qhKS4SDiCo/tJ
+	iTbcebIguM8OteA8okvqT+Yz2wsCZvrQlQwrwPSb4fBZrU0BGgkFwrQ54jIeqtY4
+	oStXHsbHnF5dj3vjFKbgluKAsjQ+f2GmvL7+Lh3OwJPDW1acLjE4I=
+X-Sasl-enc: Hx/M3hoMZwK40T0v/V7TVXPBmZuXq0PmdbvqsbYTrNcB 1424341982
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 3D4C26801D3;
+	Thu, 19 Feb 2015 05:33:02 -0500 (EST)
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
-In-Reply-To: <CAPc5daUWTRA=cziUsXEbwNrggA_3mhRsrfnVaQ-F7iEeSO7ATw@mail.gmail.com>
+In-Reply-To: <20150218185734.GB7257@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264088>
 
+Jeff King venit, vidit, dixit 18.02.2015 19:57:
+> On Wed, Feb 18, 2015 at 10:47:16AM -0800, Junio C Hamano wrote:
+> 
+>>> It seems like we could use
+>>>
+>>>   (cd src && tar cf - .) | (cd dst && tar xf -)
+>>>
+>>> here as a more portable alternative. I don't think we can rely on rsync
+>>> being everywhere.
+>>
+>> Thanks; I wasn't even aware that we used rsync in our tests.  We
+>> certainly do not want to rely on it.
+> 
+> I don't think we do.
+> 
+> Grepping for rsync in t/, it is mentioned in three places:
+> 
+>   1. In t1509, we use it, but that test script does not run unless you
+>      set a bunch of environment variables to enable it.
+> 
+>   2. In a sample patch for t4100. Obviously this one doesn't execute. :)
+> 
+>   3. In t5500, to test "rsync:" protocol supported. This is behind a
+>      check that we can run rsync at all (though it does not properly use
+>      prereqs or use the normal "skip" procedure).
+> 
+>> Why not "cp -r src dst", though?
+> 
+> I was assuming that the "-P" in the original had some purpose. My "cp
+> -r" does not seem to dereference symlinks, but maybe there is something
+> I am missing.
+> 
+> -Peff
 
-On 02/18/2015 07:28 PM, Duy Nguyen wrote:> On Wed, Feb 18, 2015 at 7:50
- > Use what sha1_object_info() uses behind the scene. Loose object
- > encodes object type as a string, you could just print that string and
- > skip the enum object_type conversion. You probably need special
- > treatment for packed objects too. See parse_sha1_header() and
- > unpack_object_header().
+There's a symlink in sub that needs to be preserved.
 
-Thank you will look into that!
+I'm cooking up a mini-series covering tar/cp -P so far and hopefully the
+JP encodings later. Do I understand correctly that for Merijin's use
+case on HP-UX, we want
 
-On 02/18/2015 09:17 PM, Junio C Hamano wrote:
-> On Wed, Feb 18, 2015 at 5:58 AM, Duy Nguyen <pclouds@gmail.com> wrote:
->> ... skip the enum object_type conversion. You probably need special
->> treatment for packed objects too.
->
-> I do not think you can store object of type "bogus" in a pack data stream
-> to begin with, so I wouldn't worry about packed objects.
->
-> "cat-file --literally" that does not take "-t" would not be useful, as the
-> output "cat-file <type> <object>" does not tell what <type> the thing
-> is. Other things like sizes and existence can be inferred once you have
-> an interface to do "cat-file <type> <object>", so in that sense -e and -s
-> are not essential (this also applies to "cat-file" without --literally).
->
-> By definition, "--literally -p" would not be able to do anything fancier than
-> just dump the bytes (i.e. what "cat-file <type> <object>" does), as the
-> bogus type is not something the code would know the best external
-> representation for.
->
+- as few extra tools (GNU...) as possible for the run time git
+- may get a few more tools installed to run the test
 
-Thanks for clearing that out. Will work on this for now.
+I still don't have a clear picture of the iconv situation: Does your
+iconv library require OLD_ICONV to compile? Is there a reason you want
+to disable it?
+
+Failing so many tests with NO_ICONV is certainly not ideal, but I'm not
+sure we should care to protect so many tests with a prerequisite.
+
+Michael
