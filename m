@@ -1,62 +1,70 @@
-From: Matthew Brett <matthew.brett@gmail.com>
-Subject: Re: git mac 10.7.x
-Date: Fri, 20 Feb 2015 08:35:39 -0800
-Message-ID: <CAH6Pt5rm2jrGst3Lm3a5xdum_1sxh3G+xLD0TVhCSLi4jh5fvw@mail.gmail.com>
-References: <24CFF4AD-D1EE-40EA-A5F1-9109F29800BE@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Git Scaling: What factors most affect Git performance for a large repo?
+Date: Fri, 20 Feb 2015 17:38:53 +0100
+Message-ID: <vpq38604jxe.fsf@anie.imag.fr>
+References: <CAH8BJxEr_v+aitpZduXPC4oiRhMuySpc7Wb1aGcYe_p3mWjn+w@mail.gmail.com>
+	<20150220000320.GD5021@vauxhall.crustytoothpaste.net>
+	<CAH8BJxEWDb0SDHPS_ZnPzz0QEbryw2GCv2RtJm2u_6rPH566hg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: sojourner <sojournerh@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 20 17:36:26 2015
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Stephen Morton <stephen.c.morton@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 20 17:39:02 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YOqYz-0003GC-Nn
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Feb 2015 17:36:26 +0100
+	id 1YOqbU-0004VR-S5
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Feb 2015 17:39:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755401AbbBTQgV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Feb 2015 11:36:21 -0500
-Received: from mail-yk0-f171.google.com ([209.85.160.171]:41215 "EHLO
-	mail-yk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755124AbbBTQgU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Feb 2015 11:36:20 -0500
-Received: by mail-yk0-f171.google.com with SMTP id q200so7716575ykb.2
-        for <git@vger.kernel.org>; Fri, 20 Feb 2015 08:36:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=7WpdgxwLjbNpU+nVdTn7mcFjscok21a1azSBSsCtSu4=;
-        b=mAkRcIl9W5+aa5etcYfAqfydo1FoK7EukAOIJWVxDWv/vejr12JYPDguMQy+kw3Y8X
-         EmcnyLjZFvVpKlTio+ov2rMk2rYuy4V4hymkI/DUUTH9nGHq5odUDbI8Quwv57zL8WMy
-         qfKm7WzNzgcUT3rkUBZdFflJvozORLRY+3GhhsD+00thms4VJsA1qpLbJPtfz59i0PmW
-         rI9/ht35MDMNUfJjhZL/+WZHG7MpGiPzzyhu65SCUeSPTgWwh9L9gUuxMLg5DlA36DKh
-         cG+PrrrOejLC+ghynBSdqO8cvnLMz55JWy1Bk3zMXEObciIsJmTStMZjedBLl2g1vjYa
-         P/0A==
-X-Received: by 10.236.198.236 with SMTP id v72mr7294979yhn.114.1424450180170;
- Fri, 20 Feb 2015 08:36:20 -0800 (PST)
-Received: by 10.170.217.69 with HTTP; Fri, 20 Feb 2015 08:35:39 -0800 (PST)
-In-Reply-To: <24CFF4AD-D1EE-40EA-A5F1-9109F29800BE@gmail.com>
+	id S1754953AbbBTQi5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 Feb 2015 11:38:57 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:56818 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754546AbbBTQi4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Feb 2015 11:38:56 -0500
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t1KGcp8q012996
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 20 Feb 2015 17:38:51 +0100
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t1KGcroa006062;
+	Fri, 20 Feb 2015 17:38:53 +0100
+In-Reply-To: <CAH8BJxEWDb0SDHPS_ZnPzz0QEbryw2GCv2RtJm2u_6rPH566hg@mail.gmail.com>
+	(Stephen Morton's message of "Fri, 20 Feb 2015 11:06:44 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 20 Feb 2015 17:38:51 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t1KGcp8q012996
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1425055132.14373@OHxodlG3lH/r1w5dpa42mw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264171>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264172>
 
-Hi,
+Stephen Morton <stephen.c.morton@gmail.com> writes:
 
-On Fri, Feb 20, 2015 at 2:38 AM, sojourner <sojournerh@gmail.com> wrote:
-> Installed Git via installer. Updated path in .bash_profile. Get error Illegal instruction: 4 when trying to run Git.
+> 1. =C6var : I'm a bit concerned by your statement that git rebases ta=
+ke
+> about 1-2 s per commit. Does that mean that a "git pull --rebase", if
+> it is picking up say 120 commits (not at all unrealistic), could
+> potentially take 4 minutes to complete? Or have I misinterpreted your
+> comment.
 
-I've seen the installer problem - suggestions here:
-http://practical-neuroimaging.github.io/installation.html#if-you-are-on-osx-10-8-mountain-lion-or-below
+=C6var talked about "applied commits" during rebase. When you "git pull
+--rebase", you fast-forward the history you just fetched, which is
+almost instantaneous, and then you reapply your local history on top of
+it.
 
-> Built Git from source. Searches for the compiled source unsuccessful. Which is nice: there's nothing to uninstall.
+So, the performance depends on how long your local history is, not on
+how many commits you're fetching.
 
-I'm not sure what happened there :)
-
-Best,
-
-Matthew
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
