@@ -1,59 +1,73 @@
-From: "Randall S. Becker" <rsbecker@nexbridge.com>
-Subject: RE: Git Scaling: What factors most affect Git performance for a large repo?
-Date: Fri, 20 Feb 2015 14:27:50 -0500
-Message-ID: <00b701d04d43$514ddfb0$f3e99f10$@nexbridge.com>
-References: <20150220065801.7CDC7140BE4@smtp.codeaurora.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-Cc: "'Git Mailing List'" <git@vger.kernel.org>,
-	"'Stephen Morton'" <stephen.c.morton@gmail.com>,
-	"'Duy Nguyen'" <pclouds@gmail.com>,
-	"'Joachim Schmitz'" <jojo@schmitz-digital.de>
-To: "'Martin Fick'" <mfick@codeaurora.org>,
-	"'David Turner'" <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Fri Feb 20 20:28:09 2015
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH v3 2/2] Documentation/git-am.txt: mention mailinfo.scissors config variable
+Date: Fri, 20 Feb 2015 20:32:21 +0100
+Message-ID: <1424460741-25533-2-git-send-email-Matthieu.Moy@imag.fr>
+References: <1424426947-26441-1-git-send-email-Matthieu.Moy@imag.fr>
+ <1424460741-25533-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Feb 20 20:32:42 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YOtFA-0008Ho-Kd
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Feb 2015 20:28:08 +0100
+	id 1YOtJZ-0001zO-J7
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Feb 2015 20:32:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755289AbbBTT2D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Feb 2015 14:28:03 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:47470 "EHLO
-	elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755281AbbBTT2C convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Feb 2015 14:28:02 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from pangea (CPE0023eb577e25-CM602ad06c91a7.cpe.net.cable.rogers.com [99.237.128.150])
-	(authenticated bits=0)
-	by elephants.elehost.com (8.14.9/8.14.9) with ESMTP id t1KJRqYB057683
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-	Fri, 20 Feb 2015 14:27:53 -0500 (EST)
-	(envelope-from rsbecker@nexbridge.com)
-In-Reply-To: <20150220065801.7CDC7140BE4@smtp.codeaurora.org>
-X-Mailer: Microsoft Outlook 15.0
-Thread-Index: AQIFAHiBvT022NtyWGyCa/+wtfpWPpyQgQfQ
-Content-Language: en-ca
+	id S1754762AbbBTTch (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Feb 2015 14:32:37 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:56685 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754748AbbBTTch (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Feb 2015 14:32:37 -0500
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t1KJWOAh022706
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 20 Feb 2015 20:32:24 +0100
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t1KJWQcO008709;
+	Fri, 20 Feb 2015 20:32:26 +0100
+Received: from moy by anie.imag.fr with local (Exim 4.80)
+	(envelope-from <moy@imag.fr>)
+	id 1YOtJK-0006iz-8r; Fri, 20 Feb 2015 20:32:26 +0100
+X-Mailer: git-send-email 2.3.0.157.g79e124b
+In-Reply-To: <1424460741-25533-1-git-send-email-Matthieu.Moy@imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 20 Feb 2015 20:32:24 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t1KJWOAh022706
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1425065548.91674@+r1leXixQvLRHcp3e2yubQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264180>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264181>
 
------Original Message-----
-On Feb 20, 2015 1:58AM Martin Fick wrote:
->On Feb 19, 2015 5:42 PM, David Turner <dturner@twopensource.com> wrote:
-> > This one is not affected by how deep your repo's history is, or how 
-> > wide your tree is, so should be quick.. 
->Good to hear that others are starting to experiment with solutions to this problem!  I hope to hear more updates on this.
+It was already documented, but the user had to follow the link to
+git-mailinfo.txt to find it.
 
-<snip-snip>
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+ Documentation/git-am.txt | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-Now that Jojo and I  have git 2.3.0 ported to the HP NonStop platform, there are some very large code bases out there that may start being managed using git. These will tend to initially shallow histories (100's not 1000's of commits, and fairly linear) but large source and binaries - I know of a few where just the distributed set of sources are above 1Gb and are unlikely to be managed in multiple repos despite my previous best efforts to change that. Fortunately, It is a relatively simple matter to profile the code on the platform for various operations so data on where to improve may be available - I hope. 
-
-With that said, for NonStop file system tends to be heavier weight than on Linux (many more moving parts by virtue of the MPP nature of the OS and hardware). Packing up changes seems pretty good, but any operating involving creating a large number of small files does hurt a bunch.
+diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
+index f4eea28..0d8ba48 100644
+--- a/Documentation/git-am.txt
++++ b/Documentation/git-am.txt
+@@ -52,7 +52,8 @@ OPTIONS
+ -c::
+ --scissors::
+ 	Remove everything in body before a scissors line (see
+-	linkgit:git-mailinfo[1]).
++	linkgit:git-mailinfo[1]). Can be activated by default using
++	the `mailinfo.scissors` configuration variable.
+ 
+ --no-scissors::
+ 	Ignore scissors lines (see linkgit:git-mailinfo[1]).
+-- 
+2.3.0.157.g79e124b
