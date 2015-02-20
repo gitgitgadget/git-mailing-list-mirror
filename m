@@ -1,117 +1,64 @@
-From: Martin Fick <mfick@codeaurora.org>
-Subject: Re: Git Scaling: What factors most affect Git performance for a
- large repo?
-Date: Thu, 19 Feb 2015 23:57:54 -0700
-Message-ID: <20150220065801.7CDC7140BE4@smtp.codeaurora.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFH] GSoC 2015 application
+Date: Fri, 20 Feb 2015 02:13:42 -0500
+Message-ID: <20150220071342.GB8763@peff.net>
+References: <20150218191417.GA7767@peff.net>
+ <CACsJy8B_zkAecL2Wag8a5c9-_C9eoA9dYj4ciBXqXRVmRW77zw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: base64
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Stephen Morton <stephen.c.morton@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Fri Feb 20 07:58:16 2015
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 20 08:13:50 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YOhXT-0000bJ-8C
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Feb 2015 07:58:15 +0100
+	id 1YOhmX-0006qf-Ht
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Feb 2015 08:13:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751332AbbBTG6E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Feb 2015 01:58:04 -0500
-Received: from smtp.codeaurora.org ([198.145.29.96]:44216 "EHLO
-	smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750882AbbBTG6D (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Feb 2015 01:58:03 -0500
-Received: from smtp.codeaurora.org (localhost [127.0.0.1])
-	by smtp.codeaurora.org (Postfix) with ESMTP id 8DDC7140A45;
-	Fri, 20 Feb 2015 06:58:01 +0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 486)
-	id 7CDC7140BE4; Fri, 20 Feb 2015 06:58:01 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on
-	pdx-caf-smtp.dmz.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.4 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-	MISSING_MID autolearn=no version=3.3.1
-Received: from [10.10.7.85] (184-96-4-77.hlrn.qwest.net [184.96.4.77])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	(Authenticated sender: mfick@smtp.codeaurora.org)
-	by smtp.codeaurora.org (Postfix) with ESMTPSA id 695C0140A45;
-	Fri, 20 Feb 2015 06:58:00 +0000 (UTC)
-X-Virus-Scanned: ClamAV using ClamSMTP
+	id S1753092AbbBTHNp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Feb 2015 02:13:45 -0500
+Received: from cloud.peff.net ([50.56.180.127]:51398 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752160AbbBTHNo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Feb 2015 02:13:44 -0500
+Received: (qmail 6855 invoked by uid 102); 20 Feb 2015 07:13:45 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 20 Feb 2015 01:13:45 -0600
+Received: (qmail 7629 invoked by uid 107); 20 Feb 2015 07:13:43 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 20 Feb 2015 02:13:43 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 20 Feb 2015 02:13:42 -0500
+Content-Disposition: inline
+In-Reply-To: <CACsJy8B_zkAecL2Wag8a5c9-_C9eoA9dYj4ciBXqXRVmRW77zw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264135>
 
-T24gRmViIDE5LCAyMDE1IDU6NDIgUE0sIERhdmlkIFR1cm5lciA8ZHR1cm5lckB0d29wZW5zb3Vy
-Y2UuY29tPiB3cm90ZToKPgo+IE9uIEZyaSwgMjAxNS0wMi0yMCBhdCAwNjozOCArMDcwMCwgRHV5
-IE5ndXllbiB3cm90ZTogCj4gPiA+wqDCoMKgICogJ2dpdCBwdXNoJz8gCj4gPiAKPiA+IFRoaXMg
-b25lIGlzIG5vdCBhZmZlY3RlZCBieSBob3cgZGVlcCB5b3VyIHJlcG8ncyBoaXN0b3J5IGlzLCBv
-ciBob3cgCj4gPiB3aWRlIHlvdXIgdHJlZSBpcywgc28gc2hvdWxkIGJlIHF1aWNrLi4gCj4gPiAK
-PiA+IEFoIHRoZSBudW1iZXIgb2YgcmVmcyBtYXkgYWZmZWN0IGJvdGggZ2l0LXB1c2ggYW5kIGdp
-dC1wdWxsLiBJIHRoaW5rIAo+ID4gU3RlZmFuIGtub3dzIGJldHRlciB0aGFuIEkgaW4gdGhpcyBh
-cmVhLiAKPgo+IEkgY2FuIHRlbGwgeW91IHRoYXQgdGhpcyBpcyBhIGJpdCBvZiBhIHByb2JsZW0g
-Zm9yIHVzIGF0IFR3aXR0ZXIuwqAgV2UgCj4gaGF2ZSBvdmVyIDEwMGsgcmVmcywgd2hpY2ggYWRk
-cyB+MjBNaUIgb2YgZG93bnN0cmVhbSB0cmFmZmljIHRvIGV2ZXJ5IAo+IHB1c2guIAo+Cj4gSSBh
-ZGRlZCBhIGhhY2sgdG8gaW1wcm92ZSB0aGlzIGxvY2FsbHkgaW5zaWRlIFR3aXR0ZXI6IFRoZSBj
-bGllbnQgc2VuZHMgCj4gYSBibG9vbSBmaWx0ZXIgb2Ygc2hhcyB0aGF0IGl0IGJlbGlldmVzIHRo
-YXQgdGhlIHNlcnZlciBrbm93cyBhYm91dDsgdGhlIAo+IHNlcnZlciBzZW5kcyBvbmx5IHRoZSBz
-aGEgb2YgbWFzdGVyIGFuZCBhbnkgcmVmcyB0aGF0IGFyZSBub3QgaW4gdGhlIAo+IGJsb29tIGZp
-bHRlci7CoCBUaGUgY2xpZW50wqAgdXNlcyBpdHMgbG9jYWwgdmVyc2lvbiBvZiB0aGUgc2VydmVy
-cycgcmVmcyAKPiBhcyBpZiB0aGV5IGhhZCBqdXN0IGJlZW4gc2VudC7CoCBUaGlzIG1lYW5zIHRo
-YXQgc29tZSBwYWNrcyB3aWxsIGJlIAo+IHN1Ym9wdGltYWwsIGR1ZSB0byBmYWxzZSBwb3NpdGl2
-ZXMgaW4gdGhlIGJsb29tIGZpbHRlciBsZWFkaW5nIHNvbWUgbmV3IAo+IHJlZnMgdG8gbm90IGJl
-IHNlbnQuwqAgQWxzbywgaWYgdGhlcmUgd2VyZSBhIHJlcGFjayBiZXR3ZWVuIHRoZSBwdWxsIGFu
-ZCAKPiB0aGUgcHVzaCwgc29tZSByZWZzIG1pZ2h0IGhhdmUgYmVlbiBkZWxldGVkIG9uIHRoZSBz
-ZXJ2ZXI7IHdlIHJlcGFjayAKPiByYXJlbHkgZW5vdWdoIGFuZCBwdWxsIGZyZXF1ZW50bHkgZW5v
-dWdoIHRoYXQgdGhpcyBpcyBob3BlZnVsbHkgbm90IGFuIAo+IGlzc3VlLiAKPgo+IFdlJ3JlIHN0
-aWxsIHRlc3RpbmcgdG8gc2VlIGlmIHRoaXMgd29ya3MuwqAgQnV0IGR1ZSB0byB0aGUgbnVtYmVy
-IG9mIAo+IGFzc3VtcHRpb25zIGl0IG1ha2VzLCBpdCdzIHByb2JhYmx5IG5vdCB0aGF0IGdyZWF0
-IGFuIGlkZWEgZm9yIGdlbmVyYWwgCj4gdXNlLiAKCkdvb2QgdG8gaGVhciB0aGF0IG90aGVycyBh
-cmUgc3RhcnRpbmcgdG8gZXhwZXJpbWVudCB3aXRoIHNvbHV0aW9ucyB0byB0aGlzIHByb2JsZW0h
-ICBJIGhvcGUgdG8gaGVhciBtb3JlIHVwZGF0ZXMgb24gdGhpcy4KCkkgaGF2ZSBhIHByb3RvdHlw
-ZSBvZiBhIHNpbXBsZXIsIGFuZApJIGJlbGlldmUgbW9yZSByb2J1c3Qgc29sdXRpb24sIGJ1dCBh
-aW1lZCBhdCBhIHNtYWxsZXIgdXNlIGNhc2UgSSB0aGluay4gIE9uIGNvbm5lY3RpbmcsIHRoZSBj
-bGllbnQgc2VuZHMgYSBzaGEgb2YgYWxsIGl0cyByZWZzL3NoYXMgYXMgZGVmaW5lZCBieSBhIHJl
-ZnNwZWMsIHdoaWNoIGl0IGFsc28gc2VuZHMgdG8gdGhlIHNlcnZlciwgd2hpY2ggaXQgYmVsaWV2
-ZXMgdGhlIHNlcnZlciBtaWdodCBoYXZlIHRoZSBzYW1lIHJlZnMvc2hhcyB2YWx1ZXMgZm9yLiAg
-VGhlIHNlcnZlciBjYW4gdGhlbiBjYWxjdWxhdGUgdGhlIHZhbHVlIG9mIGl0cyByZWZzL3NoYXMg
-d2hpY2ggbWVldCB0aGUgc2FtZSByZWZzcGVjLCBhbmQgdGhlbiBvbWl0IHNlbmRpbmcgdGhvc2Ug
-cmVmcyBpZiB0aGUgInZlcmlmaWNhdGlvbiIgc2hhIG1hdGNoZXMsIGFuZCBpbnN0ZWFkIHNlbmQg
-b25seSBhIGNvbmZpcm1hdGlvbiB0aGF0IHRoZXkgbWF0Y2hlZCAoYWxvbmcgd2l0aCBhbnkgcmVm
-cyBvdXRzaWRlIG9mIHRoZSByZWZzcGVjKS4gIE9uIGEgbWF0Y2gsIHRoZSBjbGllbnQgY2FuIGlu
-amVjdCB0aGUgbG9jYWwgdmFsdWVzIG9mIHRoZSByZWZzIHdoaWNoIG1ldCB0aGUgcmVmc3BlYyBh
-bmQgYmUgZ3VhcmFudGVlZCB0aGF0IHRoZXkgbWF0Y2ggdGhlIHNlcnZlcidzIHZhbHVlcy4KClRo
-aXMgb3B0aW1pemF0aW9uIGlzIGFpbWVkIGF0IHRoZSB3b3JzdCBjYXNlIHNjZW5hcmlvIChhbmQg
-aXMgdGh1cyB0aGUgcG90ZW50aWFsbHkgYmVzdCBjYXNlICJjb21wcmVzc2lvbiIpLCB3aGVuIHRo
-ZSBjbGllbnQgYW5kIHNlcnZlciBtYXRjaCBmb3IgYWxsIHJlZnMgKGEgcmVmcy8qIHJlZnNwZWMp
-ICBUaGlzIGlzIHNvbWV0aGluZyB0aGF0IGhhcHBlbnMgb2Z0ZW4gb24gR2Vycml0IHNlcnZlciBz
-dGFydHVwLCB3aGVuIGl0IHZlcmlmaWVzIHRoYXQgaXRzIG1pcnJvcnMgYXJlIHVwLXRvLWRhdGUu
-ICBPbmUgcmVhc29uIEkgY2hvc2UgdGhpcyBhcyBhIHN0YXJ0aW5nIG9wdGltaXphdGlvbiwgaXMg
-YmVjYXVzZSBJIHRoaW5rIGl0IGlzIG9uZSB1c2UgY2FzZSB3aGljaCB3aWxsIGFjdHVhbGx5IG5v
-dCBiZW5lZml0IGZyb20gImZpeGluZyIgdGhlIGdpdCBwcm90b2NvbCB0byBvbmx5IHNlbmQgcmVs
-ZXZhbnQgcmVmcyBzaW5jZSBhbGwgdGhlIHJlZnMgYXJlIGluIGZhY3QgcmVsZXZhbnQgaGVyZSEg
-U28gc29tZXRoaW5nIGxpa2UgdGhpcyB3aWxsIGxpa2VseSBiZSBuZWVkZWQgaW4gYW55IGZ1dHVy
-ZSBnaXQgcHJvdG9jb2wgaW4gb3JkZXIgZm9yIGl0IHRvIGJlIGVmZmljaWVudCBmb3IgdGhpcyB1
-c2UgY2FzZS4gIEFuZCBJIGJlbGlldmUgdGhpcyB1c2UgY2FzZSBpcyBsaWtlbHkgdG8gc3RpY2sg
-YXJvdW5kLgoKV2l0aCBhIG1pbm9yIHR3ZWFrLCB0aGlzIG9wdGltaXphdGlvbiBzaG91bGQgd29y
-ayB3aGVuIHJlcGxpY2F0aW5nIGFjdHVhbCBleHBlY3RlZCB1cGRhdGVzIGFsc28gYnkgZXhjbHVk
-aW5nIHRoZSBleHBlY3RlZCB1cGRhdGluZyByZWZzIGZyb20gdGhlIHZlcmlmaWNhdGlvbiBzbyB0
-aGF0IHRoZSBzZXJ2ZXIgYWx3YXlzIHNlbmRzIHRoZWlyIHZhbHVlcyBzaW5jZSB0aGV5IHdpbGwg
-bGlrZWx5IG5vdCBtYXRjaCBhbmQgd291bGQgd3JlY2sgdGhlIG9wdGltaXphdGlvbi4gIEhvd2V2
-ZXIsIGZvciB0aGlzIHVzZSBjYXNlIGl0IGlzIG5vdCBjbGVhciB3aGV0aGVyIGl0IGlzIGFjdHVh
-bGx5IGV2ZW4gd29ydGggY2FyaW5nIGFib3V0IHRoZSBub24gdXBkYXRpbmcgcmVmcz8gIEluIHRo
-ZW9yeSB0aGUga25vd2xlZGdlIG9mIHRoZSBub24gdXBkYXRpbmcgcmVmcyBjYW4gcG90ZW50aWFs
-bHkgcmVkdWNlIHRoZSBhbW91bnQgb2YgZGF0YSB0cmFuc21pdHRlZCwgYnV0IEkgc3VzcGVjdCB0
-aGF0IGFzIHRoZSByZWYgY291bnQgaW5jcmVhc2VzLCB0aGlzIGhhcyBkaW1pbmlzaGluZyByZXR1
-cm5zIGFuZCBtb3N0bHkgZW5kcyB1cCBjaGV3aW5nIHVwIENQVSBhbmQgbWVtb3J5IGluIGEgdmFp
-biBhdHRlbXB0IHRvIHJlZHVjZSBuZXR3b3JrIHRyYWZmaWMuCgpQbGVhc2UgZG8ga2VlcCB1cyB1
-cC10by1kYXRlIG9mIHlvdXIgcmVzdWx0cywKCi1NYXJ0aW4KCgpRdWFsY29tbSBJbm5vdmF0aW9u
-IENlbnRlciwgSW5jLgpUaGUgUXVhbGNvbW0gSW5ub3ZhdGlvbiBDZW50ZXIsIEluYy4gaXMgYSBt
-ZW1iZXIgb2YgdGhlIENvZGUgQXVyb3JhIEZvcnVtLCBhIExpbnV4IEZvdW5kYXRpb24gQ29sbGFi
-b3JhdGl2ZSBQcm9qZWN0
+On Fri, Feb 20, 2015 at 10:26:15AM +0700, Duy Nguyen wrote:
+
+> On Thu, Feb 19, 2015 at 2:14 AM, Jeff King <peff@peff.net> wrote:
+> > and the list of microprojects:
+> >
+> >   http://git.github.io/SoC-2015-Microprojects.html
+> >
+> 
+> There is debian bug 777690 [1] that's basically about making tag's
+> version sort aware about -rc, -pre suffixes. I imagine it would touch
+> versioncmp.c and builtin/tag.c (to retrieve the suffixes from config
+> file).
+> 
+> [1] https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=777690
+
+I think that's a reasonable thing to work on, but it's too big for a
+microproject and too small for a GSoC.
+
+I think this could be an "extra credit" for the project to unify
+for-each-ref, "tag -l", and "branch -l", though. That will vastly
+enhance the supporting abilities the latter two (e.g., you could sort by
+taggerdate).
+
+-Peff
