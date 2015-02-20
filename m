@@ -1,101 +1,106 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: Git Scaling: What factors most affect Git performance for a
- large repo?
-Date: Fri, 20 Feb 2015 22:58:27 +0000
-Message-ID: <20150220225827.GA23852@vauxhall.crustytoothpaste.net>
-References: <CAH8BJxEr_v+aitpZduXPC4oiRhMuySpc7Wb1aGcYe_p3mWjn+w@mail.gmail.com>
- <20150220000320.GD5021@vauxhall.crustytoothpaste.net>
- <54E7B077.3050501@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [RFH] GSoC 2015 application
+Date: Fri, 20 Feb 2015 18:06:29 -0500
+Message-ID: <CAPig+cR_OaJGAR--04YWW1KHm+1UA7q7O9e4TTcZksGo9s4+8w@mail.gmail.com>
+References: <20150218191417.GA7767@peff.net>
+	<vpqzj8ary29.fsf@anie.imag.fr>
+	<20150220020022.GC16124@peff.net>
+	<vpqwq3cdhhe.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Q68bSM7Ycu6FN28Q"
-Cc: Stephen Morton <stephen.c.morton@gmail.com>, git@vger.kernel.org
-To: Sebastian Schuberth <sschuberth@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 20 23:58:40 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Sat Feb 21 00:06:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YOwWt-0001eT-HT
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Feb 2015 23:58:39 +0100
+	id 1YOweZ-0004s1-9P
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Feb 2015 00:06:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754600AbbBTW6f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Feb 2015 17:58:35 -0500
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:49154 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752484AbbBTW6e (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Feb 2015 17:58:34 -0500
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:c808:e39c:abee:cc11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id AEAC02808F;
-	Fri, 20 Feb 2015 22:58:31 +0000 (UTC)
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Sebastian Schuberth <sschuberth@gmail.com>,
-	Stephen Morton <stephen.c.morton@gmail.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <54E7B077.3050501@gmail.com>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.19.0-trunk-amd64)
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
+	id S1754554AbbBTXGb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Feb 2015 18:06:31 -0500
+Received: from mail-yk0-f181.google.com ([209.85.160.181]:51764 "EHLO
+	mail-yk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754089AbbBTXGa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Feb 2015 18:06:30 -0500
+Received: by mail-yk0-f181.google.com with SMTP id 200so8583312ykr.12
+        for <git@vger.kernel.org>; Fri, 20 Feb 2015 15:06:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=tDb3d7A8z5m93nNLt1LFmsGRyK0yWXu7/xDkkMfebEg=;
+        b=Oeo6KxNsjrMnuWOadWC8CmrPcq3QTjg0uAkY5QAGdnYS/n4EYwq1QTpbsBEvPbVdto
+         WvWS6R3Sn9QiGWamOu575tpDv8QKeNjqH3OucR2JhXlJMQB7Sjh0LifPgXJC3wXqqPJD
+         2GPrCDn2GEJ3ziKC3rQwnrwpIP+ToWZIZBB2rXe8EM1Sx+YHPsdDrlp2q7GBlQb//7Ws
+         9IfZis0PHdwd8Htuagdyp34kBHMFxPi8YuqHDQPwgxvGSROr9DhhKB20vRfUvqOwfO4w
+         Fic72E9XPcmaq4Z6Jf/0GfA0a/dGHrcDAbsLBVbeXjq6aSGuTlYlzD49mwB8mUUjujF4
+         yryQ==
+X-Received: by 10.236.45.106 with SMTP id o70mr26192yhb.180.1424473589692;
+ Fri, 20 Feb 2015 15:06:29 -0800 (PST)
+Received: by 10.170.73.7 with HTTP; Fri, 20 Feb 2015 15:06:29 -0800 (PST)
+In-Reply-To: <vpqwq3cdhhe.fsf@anie.imag.fr>
+X-Google-Sender-Auth: nC4SIFUYoBZWn87LEimryhF-xsU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264193>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264194>
 
-
---Q68bSM7Ycu6FN28Q
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Fri, Feb 20, 2015 at 11:08:55PM +0100, Sebastian Schuberth wrote:
->On 20.02.2015 01:03, brian m. carlson wrote:
+On Fri, Feb 20, 2015 at 5:06 AM, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> Jeff King <peff@peff.net> writes:
+>> I think these might be getting a little larger than "micro".
 >
->>If you want good performance, I'd recommend the latest version of Git
->>both client- and server-side.  Newer versions of Git provide pack
->>bitmaps, which can dramatically speed up clones and fetches, and Git
+> The ~/.git-credential-cache may be a bit harder, but the case of
+> ~/.git-credentials should follow the same pattern as files for which
+> this is already done. So, doing it by mimicking existing code shouldn't
+> be too hard.
 >
->Do you happen now which version, if at all, of JGit and Gerrit support=20
->pack bitmaps?
+> But maybe that's me being optimistic ;-).
 
-They were originally implemented in JGit, but I don't know what version,=20
-sorry.  Some googling tells me that it's probably version 3.0.
+As a person who did a significant number of GSoC 2014 micro-project
+reviews (as well as many actual GSoC reviews), I probably ought to
+weigh in and say that this may be too optimistic. In fact, most of the
+GSoC 2015 micro-project suggestions[1] seem far too large and
+involved.
 
->>2.3.0 fixes a performance regression with large numbers of refs in
->>non-shallow repositories.
->
->Do you also know in what Git version the regression was introduced?
+For 2014, most of the GSoC micro-projects were extremely simple, of
+the form "replace starts_with() with skip_prefix()", yet most
+applicants still required three or four (or more) attempts to get it
+right (and some never did), even with extremely detailed hand-holding
+reviews at each step. (And, such reviews are quite time-consuming. I
+was allocating six to eight hours each day to those reviews, yet I
+couldn't keep up with all the submissions.)
 
-v1.8.4-rc3-8-gfbd4a70.  It was fixed in v2.2.1-65-g2dacf26.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+Although quite simple, many of the 2014 micro-projects[2]
+(particularly from Michael Haggerty) had a bit of a twist (or trick
+question) thrown in, requiring a tad more thought and effort than mere
+mechanical search-and-replace. That was useful because it helped
+identify potentially acceptable candidates more easily, however, that
+added twist was probably a good upper limit on difficulty for
+micro-projects.
 
---Q68bSM7Ycu6FN28Q
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+Another important aspect of 2014's micro-projects was that they could
+be accomplished with only very localized knowledge: that is, a student
+could read the logic of the one function being touched and learn
+enough to be successful. The micro-projects did not require global
+knowledge of Git internals or hours of research.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+The attitude in 2014 was that it was important for students to get a
+taste of what it is like working on the Git project and what would be
+expected of them as submitters, and for GSoC administrators and
+mentors to get a feel for the applicants by how they interacted with
+reviewers. By going through the review process on a project with high
+engineering standards, it also was hope that students would learn and
+benefit from the experience even if not selected. Extremely simple
+micro-projects (possibly with a twist) in the style of 2014's were
+more than sufficient to satisfy these goals, and were more than enough
+to consume significant reviewer time. The suggested 2015's
+micro-projects seem far in excess.
 
-iQIcBAEBCgAGBQJU57wTAAoJEL9TXYEfUvaLCnAQAKCJjzWOcYODe+jFmdCwXzMG
-1njVU83uRy/73kbff+YTt80bFHxDRp7q55fsGK9vj5AWTdPgIzkaXzr+sjfdCWa1
-xq4a2Uu34AWCDfho1SXSibC25PcajavDwdUC63A1q6+YtnmbMkLztlBcFVr4D8lu
-/gu3WHHjM3uddj2/M3dkNMyomdmCqgq79UUA8JL1MWf5YwXUfcQraSJm5pkVT+BI
-MUBAd6BE+Kapg2EfuJt+r+y8++p0vit/lc0ms028oKrsiAl8ASHGwgkjfmP22t0q
-+Z31dVe9BahcXo3KLxmRe76JufJ0Uhm6iyu0IIpxZ6gqmWQPzs/N/WbtpnK3p0b9
-WqDXccyMHWmyciVV4G/cbTubI/u+3jlpdjrDIEwVfnwK7N6XxNB9poSsCZ9DhU56
-cFij2hQH55AZhqC1bMn0h1mx9IFePmmOndLC9goNro6PDOONABpBb02eWIHzld2/
-HsuETQ5cOwHDhy/yD3PtCKRo/cy3Ce6VmiA9SfN7X0bfWGVjD+GhzEY8TnGXf0Ss
-b96f2Ufwfub4eE0oPpdldHFgefawrSaS+v6DtO3bFNt99hgNIHZ3ZH2ZKytDUjdH
-bh6PLNQp1Rjsp0V7iT75aIG/pRvUnPyqn6RjJuGjx2plRT0+/7Y0K1KH8aop7EBL
-sCyLYBjyIx0ONa9mRBle
-=yMRW
------END PGP SIGNATURE-----
-
---Q68bSM7Ycu6FN28Q--
+[1]: http://git.github.io/SoC-2015-Microprojects.html
+[2]: http://git.github.io/SoC-2014-Microprojects.html
