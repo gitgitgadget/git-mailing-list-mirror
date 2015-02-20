@@ -1,61 +1,69 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: vcs chuckles
-Date: Fri, 20 Feb 2015 14:41:51 +0100
-Message-ID: <54E7399F.7010600@drmicha.warpmail.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+From: Alfred Perlstein <bright@mu.org>
+Subject: Question on shallow clones.
+Date: Fri, 20 Feb 2015 06:13:10 -0800
+Message-ID: <40B70861-177F-4239-A86F-49C92121ACE7@mu.org>
+Mime-Version: 1.0 (Apple Message framework v1283)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
 To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Feb 20 14:41:59 2015
+X-From: git-owner@vger.kernel.org Fri Feb 20 15:18:05 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YOnqA-0007ta-1A
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Feb 2015 14:41:58 +0100
+	id 1YOoP5-0008CL-Lb
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Feb 2015 15:18:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754022AbbBTNlx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Feb 2015 08:41:53 -0500
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:35033 "EHLO
-	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751181AbbBTNlx (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Feb 2015 08:41:53 -0500
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
-	by mailout.nyi.internal (Postfix) with ESMTP id 25D2420E21
-	for <git@vger.kernel.org>; Fri, 20 Feb 2015 08:41:52 -0500 (EST)
-Received: from frontend1 ([10.202.2.160])
-  by compute2.internal (MEProxy); Fri, 20 Feb 2015 08:41:52 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=x-sasl-enc:message-id:date:from
-	:mime-version:to:subject:content-type:content-transfer-encoding;
-	 s=smtpout; bh=YjjieKLFPPaFdOF0vzGPlxhV5dQ=; b=aSZGGklSkFUzqsR0l
-	/dMsj/C8ClJHF89+jndzWZfwkISJ0q5uu2tIxQRSCT+SwlLZpnNaDzsXZbqPML67
-	xblmTVWI77O3iijQZjmweuOTIsc84C+6b6xdpBFyDqSC0ai0t/f9Em59oZEkF3wl
-	Innv3/F8XP1Bt6Y1nXLQHfak/Y=
-X-Sasl-enc: PlQDfb+VNampLBeo2ZFi4gtUZuQ9zBZ7G0GXFHU3GVxu 1424439712
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 22D05C002A4
-	for <git@vger.kernel.org>; Fri, 20 Feb 2015 08:41:52 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
+	id S1754401AbbBTOR6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Feb 2015 09:17:58 -0500
+Received: from elvis.mu.org ([192.203.228.196]:30840 "EHLO elvis.mu.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753612AbbBTOR6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Feb 2015 09:17:58 -0500
+X-Greylist: delayed 524 seconds by postgrey-1.27 at vger.kernel.org; Fri, 20 Feb 2015 09:17:58 EST
+Received: from [10.0.1.100] (c-76-21-10-192.hsd1.ca.comcast.net [76.21.10.192])
+	by elvis.mu.org (Postfix) with ESMTPSA id 77FB3341F90C
+	for <git@vger.kernel.org>; Fri, 20 Feb 2015 06:09:10 -0800 (PST)
+X-Mailer: Apple Mail (2.1283)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264165>
 
-[just for chuckles, no flames please]
+Hello,
 
-$ hg branch topic
-Arbeitsverzeichnis wurde als Zweig topic markiert
-(branches are permanent and global, did you want a bookmark?)
+Very sorry if this has been explained before, I have been doing research past few weeks in spare time and have not found a good answer yet on the safety of doing something with git.
 
-I have no idea since when hg cautions against using their version of
-branches (embedded into the commits), but that line made me smile -
-because it reminds me of one of the reasons why I switched to git rather
-than hg back then (despite my exposure to python).
+Basically we have some repos with huge history, namely FreeBSD source and FreeBSD ports.  In order to reduce the space in $repo/.git as well as speed up clone time we were thinking of doing a shallow clone of the repo with something like --depth 5000.
 
-Also, it's comforting to see that we can compete on the l10n front...
-good to be here :)
+I am wondering, if we such a thing, basically:
 
-Michael
+# get a shallow mirror of let's say 5000 entries
+git clone --depth 5000 --mirror our-freebsd.git  smaller-freebsd.git
+# move our current repo to a backup
+mv our-freebsd.git our-freebsd.git.backup
+# make shallow repo our primary
+mv smaller-freebsd.git our-freebsd.git
+
+Will we be able to push/pull from our "new" repo as if nothing happened?  Will hashes remain the same?
+
+Can we in theory later do this:
+
+# merge branches from the "github" remote and push back to "our-freebsd.git"
+git clone /url/our-freebsd.git  our-freebsd.git
+cd our-freebsd.git
+git remote add github https://github.com/freebsd/freebsd.git
+git fetch github
+# get from our-freebsd
+git checkout -b master origin/master
+# now merge in freebsd changes
+git merge --no-ff github/master
+git push origin HEAD
+
+Or will this break terribly?
+
+Thank you very much.
+
+-Alfred
