@@ -1,108 +1,106 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: odb_mkstemp's 0444 permission broke write/delete access on AFP
-Date: Fri, 20 Feb 2015 11:40:08 +0100
-Message-ID: <vpqvbiwamt3.fsf@anie.imag.fr>
-References: <A403BFCC-D66F-49BD-B54C-BB86B467F1A1@gmail.com>
-	<vpqtwyl90mx.fsf@anie.imag.fr>
-	<340435D1-2FEB-4A4A-BBD2-E301096C72D8@gmail.com>
-	<vpqiof14qu8.fsf@anie.imag.fr>
-	<13683B35-70A8-4D9E-80E1-440E4E0DC7F0@gmail.com>
-	<vpqr3tozzs5.fsf@anie.imag.fr>
-	<20150219200833.GB5021@vauxhall.crustytoothpaste.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: Interested in helping open source friends on HP-UX?
+Date: Fri, 20 Feb 2015 05:49:21 -0500
+Message-ID: <20150220104921.GA2467@peff.net>
+References: <20150218182547.GA6346@peff.net>
+ <xmqqpp972h1n.fsf@gitster.dls.corp.google.com>
+ <20150218185734.GB7257@peff.net>
+ <54E5BBDD.7040100@drmicha.warpmail.net>
+ <20150219121438.59050ce8@pc09.procura.nl>
+ <54E5C6E2.9040101@drmicha.warpmail.net>
+ <20150219125433.GA1591@peff.net>
+ <54E5E347.4070401@drmicha.warpmail.net>
+ <20150220014801.GB16124@peff.net>
+ <54E70E2B.8000604@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Fairuzan Roslan <fairuzan.roslan@gmail.com>, gitster@pobox.com,
-	git@vger.kernel.org, tboegi@web.de
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-X-From: git-owner@vger.kernel.org Fri Feb 20 11:40:33 2015
+Content-Type: text/plain; charset=utf-8
+Cc: "H.Merijn Brand" <h.m.brand@xs4all.nl>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Feb 20 11:49:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YOl0b-0007fD-GI
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Feb 2015 11:40:33 +0100
+	id 1YOl9F-00031s-1H
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Feb 2015 11:49:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753976AbbBTKk3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Feb 2015 05:40:29 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:48193 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753731AbbBTKk3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Feb 2015 05:40:29 -0500
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t1KAe7cG019063
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 20 Feb 2015 11:40:08 +0100
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t1KAe8qX031885;
-	Fri, 20 Feb 2015 11:40:08 +0100
-In-Reply-To: <20150219200833.GB5021@vauxhall.crustytoothpaste.net> (brian m.
-	carlson's message of "Thu, 19 Feb 2015 20:08:33 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 20 Feb 2015 11:40:08 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t1KAe7cG019063
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1425033608.93546@HZ0NaW+zXAPoPGu5Z6pTpA
+	id S1754050AbbBTKtY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Feb 2015 05:49:24 -0500
+Received: from cloud.peff.net ([50.56.180.127]:51529 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753994AbbBTKtX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Feb 2015 05:49:23 -0500
+Received: (qmail 17633 invoked by uid 102); 20 Feb 2015 10:49:24 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 20 Feb 2015 04:49:24 -0600
+Received: (qmail 9547 invoked by uid 107); 20 Feb 2015 10:49:22 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 20 Feb 2015 05:49:22 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 20 Feb 2015 05:49:21 -0500
+Content-Disposition: inline
+In-Reply-To: <54E70E2B.8000604@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264159>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264160>
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+On Fri, Feb 20, 2015 at 11:36:27AM +0100, Michael J Gruber wrote:
 
-> On Tue, Feb 17, 2015 at 09:51:38AM +0100, Matthieu Moy wrote:
->> This should be fixable from Git itself, by replacing the calls to
->> "unlink" with something like
->> 
->> int unlink_or_chmod(...) {
->> 	if (unlink(...)) {
->> 		chmod(...); // give user write permission
->> 		return unlink(...);
->> 	}
->> }
->> 
->> This does not add extra cost in the normal case, and would fix this
->> particular issue for afp shares. So, I think that would fix the biggest
->> problem for afp-share users without disturbing others. It seems
->> reasonable to me to do that unconditionnally.
->
-> This can have security issues if you're trying to unlink a symlink, as 
-> chmod will dereference the symlink but unlink will not.  Giving the file 
-> owner write permission may not be sufficient, as the user may be a 
-> member of a group with write access to the repo.  A malicious user who 
-> also has access to the repo could force the current user to chmod an 
-> arbitrary file such that it had looser permissions.
+> > It's not quite so bad as you make out. We write the value to the
+> > GIT-BUILD-OPTIONS file during "make", no matter where it comes from, and
+> > load that in test-lib.sh. So:
+> > 
+> >   make NO_ICONV=Nope
+> >   cd t
+> >   ./t3901-i18n-patch.sh
+> > 
+> > works just fine (for this and for any of the other options we mark
+> > there).
+> 
+> It survives a cd, sure...
 
-Ouch, indeed. I don't think that would be so problematic in practice (if
-the attacker has access to the repo, it's easier to write arbitrary code
-in hooks or config), but clearly we don't want to take the risk.
+I think the interesting thing is that it survives running `./tXXXX`
+rather than running the test through make.
 
-So, the right solution should be stg like Junio's
+> Now, change your config.mak before the cd and
+> forget the make. Not everyone does
+> 
+> make -C t t3901-i18n-patch.sh
+> 
+> Though, having just discovered that shell completion works for that
+> form, too, I may do it more often (and then complain about having to use
+> GIT_TEST_OPTS ;) )
 
- * in init-db.c, autoprobe by doing something like this:
+Yeah, I never use "make tXXXX" myself. But nor would I expect the tests
+to respect a version of git I had not actually built. E.g., if you build
+with NO_PERL, and then remove NO_PERL from your config.mak but do _not_
+actually run "make", should that work? Ditto for NO_ICONV, for that
+matter. The tests must match the binary, and the best guess we have
+about the binary is the last thing we built.
 
-    create a test file with 0444 permission bits;
-    if (unlink(that test file)) {
-	chmod(that test file, 0644);
-        if (!unlink(that test file)) {
-		broken_unlink = 1;
-		git_config_set("core.brokenunlink", broken_unlink);
-	} else {
-        	die("aaargh");
-	}
-    }
+Adding "git --build-options" would give us a better guess (it may not be
+what the user _wanted_ to test, but it is what they _are_ testing).
 
-But when core.brokenunlink is set, just use 0666 instead of 0444 as
-default mode for object files.
+> > I suspect GIT_TEST_INSTALLED is not all that widely used, or somebody
+> > would have complained before. But if we really want to support it, I
+> > think the right thing is to bake GIT-BUILD-OPTIONS into the binary, so
+> > that "git --build-options" dumps it. It might also have value for
+> > debugging and forensics in general.
+> 
+> Yep, that would be helpful in general. I don't think we should worry
+> about GIT_TEST_INSTALLED too much. Who came up with that feature anyway...?
 
-But right now, I'm not sure we're actually to work around an issue with
-AFP shares or only one particular case of problematic configurtion for
-one user.
+Clearly a crazy person. :) I am not saying it is a _bad_ idea. Only that
+the responsibility to make sure the installed version matches the
+current build parameters lies with the user (and for that matter, the
+current set of tests; we add new tests that would fail on old versions,
+and you cannot mix and match).
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+So an alternate explanation than "not widely used" is "all of the users
+of it are responsible individuals who do not make bogus bug reports to
+the list". :)
+
+-Peff
