@@ -1,91 +1,77 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: Something wrong with diff --color-words=regexp?
-Date: Fri, 20 Feb 2015 08:49:09 +0100
-Message-ID: <54E6E6F5.2020202@kdbg.org>
-References: <20150219235213.GA1291@glandium.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFH] GSoC 2015 application
+Date: Fri, 20 Feb 2015 00:06:21 -0800
+Message-ID: <CAPc5daVUqHd4YAJh9TyMZ8Og12ZGj1A9v=qpVNa+kV6E6U16Mg@mail.gmail.com>
+References: <20150218191417.GA7767@peff.net> <54E6C78D.3070506@alum.mit.edu> <20150220072924.GC8763@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-To: Mike Hommey <mh@glandium.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 20 08:55:36 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Stefan Beller <sbeller@google.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Feb 20 09:06:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YOiQx-0007pg-LI
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Feb 2015 08:55:36 +0100
+	id 1YOibn-0004O8-43
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Feb 2015 09:06:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752663AbbBTHzb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Feb 2015 02:55:31 -0500
-Received: from [93.83.142.38] ([93.83.142.38]:60889 "EHLO dx.site"
-	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751332AbbBTHzb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Feb 2015 02:55:31 -0500
-X-Greylist: delayed 378 seconds by postgrey-1.27 at vger.kernel.org; Fri, 20 Feb 2015 02:55:30 EST
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.site (Postfix) with ESMTP id 905C25194;
-	Fri, 20 Feb 2015 08:49:09 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
-In-Reply-To: <20150219235213.GA1291@glandium.org>
+	id S1753798AbbBTIGn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Feb 2015 03:06:43 -0500
+Received: from mail-oi0-f45.google.com ([209.85.218.45]:50216 "EHLO
+	mail-oi0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753512AbbBTIGm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Feb 2015 03:06:42 -0500
+Received: by mail-oi0-f45.google.com with SMTP id i138so1398214oig.4
+        for <git@vger.kernel.org>; Fri, 20 Feb 2015 00:06:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=AhBeTv/6/Dy+PkWEr+YVVa7r6AcgdqtBw2Z8m+rVH3w=;
+        b=wbTgkqd1WPvWDXcg27ZQaPrQ64+j6+xcJ8s0W1dySw8Z6neH3174bugnTEDa/2MsSK
+         wIoce6ubmaeXG2OA2JjG9ow+AyMcaJhPxv7AupA5rekh6TUxNl/kSDfBZG10WNya4lG0
+         pdXtcdTxlDUmvZMsF4HjE+2lTZVMMzxKWggg4vS3d8xGMzLrfIk8XTWXlv4XbMHWFAnF
+         lgXOg9ZHoLgmLokX9BpzCHg0JiGMbdu/RnixlS5dsR/FhCsrX6fMYXoMl55mTzGlssZQ
+         xL/CkbVlobzFeo0lCdD1AM4KILLc4qX5h4MHSbPvLPM6lKqabFBaddtLHkl0AVDl1N16
+         uE1A==
+X-Received: by 10.182.209.72 with SMTP id mk8mr5603296obc.54.1424419601611;
+ Fri, 20 Feb 2015 00:06:41 -0800 (PST)
+Received: by 10.202.48.132 with HTTP; Fri, 20 Feb 2015 00:06:21 -0800 (PST)
+In-Reply-To: <20150220072924.GC8763@peff.net>
+X-Google-Sender-Auth: eeUuJgiwgjIM2wiz9bJ8BLh-UIE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264137>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264138>
 
-Am 20.02.2015 um 00:52 schrieb Mike Hommey:
-> Hi,
+On Thu, Feb 19, 2015 at 11:29 PM, Jeff King <peff@peff.net> wrote:
 >
-> I was trying to use --color-words with a regex to check a diff, and it appears
-> it displays things out of order. Am I misunderstanding what my regexp should be
-> doing or is there a bug?
+> This brings up an important issue. We cannot do GSoC without mentors. I
+> had hoped that people populating the "ideas" list would volunteer to
+> mentor for their projects.
 >
-> $ git diff -U3 HEAD^ dom/base/nsDOMFileReader.cpp
-> diff --git a/dom/base/nsDOMFileReader.cpp b/dom/base/nsDOMFileReader.cpp
-> index 6267e0e..fa22590 100644
-> --- a/dom/base/nsDOMFileReader.cpp
-> +++ b/dom/base/nsDOMFileReader.cpp
-> @@ -363,7 +363,7 @@ nsDOMFileReader::DoReadData(nsIAsyncInputStream* aStream, uint64_t aCount)
->         return NS_ERROR_OUT_OF_MEMORY;
->       }
->       if (mDataFormat != FILE_AS_ARRAYBUFFER) {
-> -      mFileData = (char *) moz_realloc(mFileData, mDataLen + aCount);
-> +      mFileData = (char *) realloc(mFileData, mDataLen + aCount);
->         NS_ENSURE_TRUE(mFileData, NS_ERROR_OUT_OF_MEMORY);
->       }
+> But so far the possibilities are:
 >
-> $ git diff -U3 --color-words='[^ ()]' HEAD^ dom/base/nsDOMFileReader.cpp
-> diff --git a/dom/base/nsDOMFileReader.cpp b/dom/base/nsDOMFileReader.cpp
-> index 6267e0e..fa22590 100644
-> --- a/dom/base/nsDOMFileReader.cpp
-> +++ b/dom/base/nsDOMFileReader.cpp
-> @@ -363,7 +363,7 @@ nsDOMFileReader::DoReadData(nsIAsyncInputStream* aStream, uint64_t aCount)
->        return NS_ERROR_OUT_OF_MEMORY;
->      }
->      if (mDataFormat != FILE_AS_ARRAYBUFFER) {
->        mFileData = (char *moz_) realloc(mFileData, mDataLen + aCount);
->        NS_ENSURE_TRUE(mFileData, NS_ERROR_OUT_OF_MEMORY);
->      }
+>   - Stefan
+>
+>   - me, who has already promised to be stingy
+>
+>   - Matthieu, who also cited time constraints
+>
+>   - Junio, who contributed some project ideas, but who in the past has
+>     declined to mentor in order to remain impartial as the maintainer
+>     who evaluates student results (which I think is quite reasonable)
+>
+> So...basically 1 mentor and 2 reticent maybes? That doesn't look good.
 
-Your regexp says that every character (with a few exceptions) by itself 
-is a word. Your diff says that it deleted the words 'm', 'o', 'z', and 
-'_'. So, that is not wrong.
+Indeed, the mentor panel looks particularly weak this year, if nobody
+can afford the time for proper mentoring.
 
-Furthermore, your regexp says that space, '(' and ')' are whitespace. 
-Whitespace is *ignored* for computation of the word difference. 
-Nevertheless, --color-word mode helpfully keeps the whitespace of the 
-post-image to produce readable output. In doing so, it has to choose 
-whether to keep the whitespace before or after a word. It chooses to 
-keep it before a word. Hence, you see the whitespace sequence ') ' 
-attached in front of 'r' (of 'realloc') instead of after '*'. So, the 
-procedure is a matter of choice, which sometimes does not match 
-expectations.
-
-Perhaps you meant to say
-
-     --color-words='[^ ()]+'
-
-to split the diff text into longer words.
-
--- Hannes
+Even though I can indirectly help by giving reviews at a more hand-holding
+level than usual, there is a limit. And I definitely do not foresee acting as a
+mentor myself.
