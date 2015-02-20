@@ -1,90 +1,71 @@
-From: "Zoe Michel ." <announcement@wopu.org>
-Subject: You can upload your Invited Paper until heend of this week
-Date: Tue, 17 Feb 2015 12:48:11 +0200
-Message-ID: <20150217104810.E37DF3AB6C75@genf174.server4you.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFH] GSoC 2015 application
+Date: Fri, 20 Feb 2015 00:26:29 -0800
+Message-ID: <CAPc5daVJ_nYk=tWqpUYPpsX6Z50H429jOh8QfMwUdNDdTDMq9w@mail.gmail.com>
+References: <20150218191417.GA7767@peff.net> <CACsJy8B_zkAecL2Wag8a5c9-_C9eoA9dYj4ciBXqXRVmRW77zw@mail.gmail.com>
+ <20150220071342.GB8763@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Feb 20 09:23:34 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Feb 20 09:26:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YOis1-00032g-97
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Feb 2015 09:23:33 +0100
+	id 1YOivH-0004e3-7W
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Feb 2015 09:26:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753886AbbBTIXZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Feb 2015 03:23:25 -0500
-Received: from genf174.server4you.net ([217.172.184.70]:53235 "EHLO
-	genf174.server4you.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753817AbbBTIXZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Feb 2015 03:23:25 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by genf174.server4you.net (Postfix) with ESMTP id E44363B58AFC
-	for <git@vger.kernel.org>; Wed, 18 Feb 2015 18:40:18 +0100 (CET)
-Received: from genf174.server4you.net ([127.0.0.1])
-	by localhost (genf174.server4you.net [127.0.0.1]) (amavisd-new, port 10032)
-	with ESMTP id ZVtEs5QwxlEm for <git@vger.kernel.org>;
-	Wed, 18 Feb 2015 18:40:18 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by genf174.server4you.net (Postfix) with ESMTP id D57CD3ABF6C1
-	for <git@vger.kernel.org>; Tue, 17 Feb 2015 12:42:39 +0100 (CET)
-X-Virus-Scanned: amavisd-new at genf174.server4you.net
-Received: from genf174.server4you.net ([127.0.0.1])
-	by localhost (genf174.server4you.net [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id B1bonIyT3oD4 for <git@vger.kernel.org>;
-	Tue, 17 Feb 2015 12:42:38 +0100 (CET)
-Received: from 10.0.2.15 (genf174.server4you.net [217.172.184.70])
-	by genf174.server4you.net (Postfix) with SMTP id E37DF3AB6C75
-	for <git@vger.kernel.org>; Tue, 17 Feb 2015 11:48:07 +0100 (CET)
-X-Priority: 1 (Highest)
+	id S1753618AbbBTI0v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Feb 2015 03:26:51 -0500
+Received: from mail-ob0-f170.google.com ([209.85.214.170]:46562 "EHLO
+	mail-ob0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752663AbbBTI0u (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Feb 2015 03:26:50 -0500
+Received: by mail-ob0-f170.google.com with SMTP id va2so22852037obc.1
+        for <git@vger.kernel.org>; Fri, 20 Feb 2015 00:26:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=QQLVuUSvfuiI30xD6NAPXET53RsnRjKiqBap1AR3qyc=;
+        b=Q8OJiYedPWe+tX2CCeIrRJY0fwwQYvcxkixk8qpXuZgNNHv1nuw52/OfhdjTfdbAtv
+         5Iv++6GirFyh4wE2ZgCDTgFnz6ZRRoq995DCfwOD/yUiDjpcqKLqmxYotNG8QBmCn6yQ
+         Poz84HQrcJmFHbYFR1wx+358FiQqBmFogzrYTuZRAu/d/Qlw0KTq2KE/pPcJNGahWIPi
+         k8FOUyMnHKVkyj9+XHEIQ0McqrgbWXxvuVSivjl1d7lQR7YcyKJTSlii0PSgZCChnURV
+         s5Xi7EHjdDwKSc/hfwbuqEKJKl+DSEAYk5dHtYx3Qzfl/G6pD1TS8XbbY+CC6lo4CyEb
+         g+dA==
+X-Received: by 10.182.68.12 with SMTP id r12mr5761205obt.84.1424420809806;
+ Fri, 20 Feb 2015 00:26:49 -0800 (PST)
+Received: by 10.202.48.132 with HTTP; Fri, 20 Feb 2015 00:26:29 -0800 (PST)
+In-Reply-To: <20150220071342.GB8763@peff.net>
+X-Google-Sender-Auth: oChghtSU-Vl6gABf_82nVy0b-Uc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264141>
 
-Dear Invited Author,
+On Thu, Feb 19, 2015 at 11:13 PM, Jeff King <peff@peff.net> wrote:
 
-Further to our previous communication, we would like to inform you that you can
-upload your Invited Paper in our conferences in Vienna, Austria, March 15-17, 2015: 
-www.inase.org until the end of this week
+>> There is debian bug 777690 [1] that's basically about making tag's
+>> version sort aware about -rc, -pre suffixes. I imagine it would touch
+>> versioncmp.c and builtin/tag.c (to retrieve the suffixes from config
+>> file).
+>>
+>> [1] https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=777690
+>
+> I think that's a reasonable thing to work on, but it's too big for a
+> microproject and too small for a GSoC.
 
-Extended Versions of all the Invited papers will be promoted for direct publication
-in 36 Collaborating ISI/SCI Journals (with Impact Factor from Thomson Reuters)
+That is certainly too big as a Micro, but I do not think it is too small
+for GSoC, if it is to be done right (meaning, not just implementing an
+arbitrary version comparison hardwired, but design how to make it
+extensible).
 
-Proceedings will be published both in CD-ROM and Hard-Copy by INASE Press and will
-be indexed in ISI/SCI, SCOPUS, EI Compendex, IET(IEE), AMS, ACS, CiteSeerX,
-Zentralblatt, British Library, EBSCO, SWETS, EMBASE, CAS, Scholar Google
-
-Invited Authors have a special privileged position in the conference program with
-double time for their presentation. The number of Invited Papers do not surpass the
-4-5% of the total number of papers and Invited Authors can be members of the
-committee of the next INASE Conferences.
-
-Inform us that you uploaded your invited paper, very simply, by writing in the
-Field: 
-Short CV of the Main Author, the phrase:  "
-Invited-by-Zoe-Michel-git@vger.kernel.org " 
-
-So, kindly upload your invited paper with the correct INASE format until February
-22, 2015.
-
-All the extended versions of the papers of 2013, 2014 and 2015 have been published
-and indexed in our collaborating ISI/SCI/SCOPUS Journals. Contact me for more
-details now as well as for giving you more assistance on this matter.
-
-@ See reports and photos from former INASE conferences in our web site inase.org
-
-Best Regards
-
-Dr. Zoe Michel
-INASE Headquarters
-
---------
-In case that you do not intend to participate in any of our future conferences of
-2015 or of the upcoming years (2016,...), please, send an email to info@inase.org
-with Subject in the Subject Line of your Email exactly the phrase:   
-" DO NOT INVITE ME AGAIN git@vger.kernel.org "
+I have a feeling that I am complaining that student projects are
+designed to be too grand and getting told that I am overly pessimistic
+by everybody else every year. Perhaps this year others may prove
+me wrong, if we can find mentors, that is ;-)
