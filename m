@@ -1,61 +1,89 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [RFH] GSoC 2015 application
-Date: Fri, 20 Feb 2015 10:26:15 +0700
-Message-ID: <CACsJy8B_zkAecL2Wag8a5c9-_C9eoA9dYj4ciBXqXRVmRW77zw@mail.gmail.com>
-References: <20150218191417.GA7767@peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] log --decorate: do not leak "commit" color into the next
+ item
+Date: Thu, 19 Feb 2015 20:42:31 -0500
+Message-ID: <20150220014230.GA16124@peff.net>
+References: <xmqqzj8b0w6t.fsf@gitster.dls.corp.google.com>
+ <xmqqpp9628tl.fsf@gitster.dls.corp.google.com>
+ <20150218230728.GA17302@peff.net>
+ <xmqqvbixzsnv.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Feb 20 04:26:52 2015
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 20 04:29:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YOeEs-0006TH-OR
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Feb 2015 04:26:51 +0100
+	id 1YOeHH-0007SA-D9
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Feb 2015 04:29:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753631AbbBTD0r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Feb 2015 22:26:47 -0500
-Received: from mail-ie0-f172.google.com ([209.85.223.172]:42335 "EHLO
-	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752018AbbBTD0q (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Feb 2015 22:26:46 -0500
-Received: by iecrp18 with SMTP id rp18so4987349iec.9
-        for <git@vger.kernel.org>; Thu, 19 Feb 2015 19:26:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=nkPAGArN32bWZI/2HeilaOCu2AcXTmobdWMBpm1dF3E=;
-        b=FioFBLIK58TA4dIYk00Q8cIiPyLADKcgc/qSkGNxMafgLJn8rNXNgJhtWogRK1sFg+
-         JY/+h7jBqpPHz64jxM/uDhdkx2T1viylk0Mbb6u6Oo4GmVK5RiqusGDI2aM7Owp9gJyw
-         1CDcovNR8qistS1Fm0i1fklCUHMJYM3V6dQmt6kERkLx+Ra6PEOkiGZf1OKaZd2iOOGB
-         8JVfrlODifJXRE4YwQm/kevxsvMlgQnqdyA7drCp1aAuOU5H6P0g7AvJxSCRj6sWaLsW
-         eXrTmS7vevmru53YZwYHZTLJO8BSKCOEbMg8yEoKNDtnI1uhE6akmtfD7YCc+BePbWgO
-         TFHw==
-X-Received: by 10.42.109.20 with SMTP id j20mr9615873icp.27.1424402805696;
- Thu, 19 Feb 2015 19:26:45 -0800 (PST)
-Received: by 10.107.131.155 with HTTP; Thu, 19 Feb 2015 19:26:15 -0800 (PST)
-In-Reply-To: <20150218191417.GA7767@peff.net>
+	id S1753417AbbBTD3P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Feb 2015 22:29:15 -0500
+Received: from cloud.peff.net ([50.56.180.127]:51347 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753392AbbBTD3P (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Feb 2015 22:29:15 -0500
+Received: (qmail 28158 invoked by uid 102); 20 Feb 2015 03:29:15 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 19 Feb 2015 21:29:15 -0600
+Received: (qmail 5427 invoked by uid 107); 20 Feb 2015 01:42:32 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 19 Feb 2015 20:42:32 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 19 Feb 2015 20:42:31 -0500
+Content-Disposition: inline
+In-Reply-To: <xmqqvbixzsnv.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264130>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264131>
 
-On Thu, Feb 19, 2015 at 2:14 AM, Jeff King <peff@peff.net> wrote:
-> and the list of microprojects:
->
->   http://git.github.io/SoC-2015-Microprojects.html
->
+On Thu, Feb 19, 2015 at 10:02:12AM -0800, Junio C Hamano wrote:
 
-There is debian bug 777690 [1] that's basically about making tag's
-version sort aware about -rc, -pre suffixes. I imagine it would touch
-versioncmp.c and builtin/tag.c (to retrieve the suffixes from config
-file).
+> Jeff King <peff@peff.net> writes:
+> 
+> > Yeah, I think this is a good fix. I had a vague feeling that we may have
+> > done this on purpose to let the decoration color "inherit" from the
+> > existing colors for backwards compatibility, but I don't think that
+> > could ever have worked (since color.decorate.* never defaulted to
+> > "normal").
+> 
+> Hmph, but that $gmane/191118 talks about giving bold to commit-color
+> and then expecting for decors to inherit the boldness, a wish I can
+> understand.  But I do not necessarily agree with it---it relies on
+> that after "<commit-color>(" and "<commit-color>, " there is no reset,
+> which is not how everything else works.
 
-[1] https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=777690
--- 
-Duy
+I don't see anybody actually _wanting_ the inheritance. It is mentioned
+merely as an observation. So yeah, we would break anybody who does:
+
+  [color "diff"]
+  commit = blue
+
+  [color "decorate"]
+  branch = normal
+  remoteBranch = normal
+  tag = normal
+  stash = normal
+  HEAD = normal
+
+and expects the "blue" to persist automatically.
+
+But given that this behaves in the opposite way of every other part of
+git's color handling, I think we can call it a bug, and people doing
+that are crazy (they should s/normal/blue/ in the latter config).
+
+> So this change at least needs to come with an explanation to people
+> who are used to and took advantage of this color attribute leakage,
+> definitely in the log message and preferrably to the documentation
+> that covers all the color.*.<slot> settings, I think.
+
+I'd agree it is worth a mention in the log (and possibly release notes),
+but I don't think it is worth polluting the documentation forever
+(though explaining that we never inherit might be worth doing, and that
+is perhaps what you meant).
+
+-Peff
