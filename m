@@ -1,69 +1,44 @@
-From: Alfred Perlstein <bright@mu.org>
-Subject: Question on shallow clones.
-Date: Fri, 20 Feb 2015 06:13:10 -0800
-Message-ID: <40B70861-177F-4239-A86F-49C92121ACE7@mu.org>
-Mime-Version: 1.0 (Apple Message framework v1283)
+From: Yi EungJun <semtlenori@gmail.com>
+Subject: Re: [ANNOUNCE] Git Merge, April 8-9, Paris
+Date: Fri, 20 Feb 2015 07:18:28 -0700 (MST)
+Message-ID: <1424441908654-7625750.post@n2.nabble.com>
+References: <20150123233755.GA10264@peff.net>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Feb 20 15:18:05 2015
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 20 15:18:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YOoP5-0008CL-Lb
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Feb 2015 15:18:04 +0100
+	id 1YOoPZ-0008SW-8y
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Feb 2015 15:18:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754401AbbBTOR6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Feb 2015 09:17:58 -0500
-Received: from elvis.mu.org ([192.203.228.196]:30840 "EHLO elvis.mu.org"
+	id S1754086AbbBTOS3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Feb 2015 09:18:29 -0500
+Received: from mwork.nabble.com ([162.253.133.43]:58167 "EHLO mwork.nabble.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753612AbbBTOR6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Feb 2015 09:17:58 -0500
-X-Greylist: delayed 524 seconds by postgrey-1.27 at vger.kernel.org; Fri, 20 Feb 2015 09:17:58 EST
-Received: from [10.0.1.100] (c-76-21-10-192.hsd1.ca.comcast.net [76.21.10.192])
-	by elvis.mu.org (Postfix) with ESMTPSA id 77FB3341F90C
-	for <git@vger.kernel.org>; Fri, 20 Feb 2015 06:09:10 -0800 (PST)
-X-Mailer: Apple Mail (2.1283)
+	id S1753921AbbBTOS2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Feb 2015 09:18:28 -0500
+Received: from mjim.nabble.com (unknown [162.253.133.84])
+	by mwork.nabble.com (Postfix) with ESMTP id ED2BA1479893
+	for <git@vger.kernel.org>; Fri, 20 Feb 2015 06:18:29 -0800 (PST)
+In-Reply-To: <20150123233755.GA10264@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264165>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264166>
 
-Hello,
+I heard Git Contributors Summit is scheduled on April 8th at Git Merge 2015.
 
-Very sorry if this has been explained before, I have been doing research past few weeks in spare time and have not found a good answer yet on the safety of doing something with git.
+Does anyone know the agenda of the summit? I am considering to attend the
+summit.
 
-Basically we have some repos with huge history, namely FreeBSD source and FreeBSD ports.  In order to reduce the space in $repo/.git as well as speed up clone time we were thinking of doing a shallow clone of the repo with something like --depth 5000.
 
-I am wondering, if we such a thing, basically:
 
-# get a shallow mirror of let's say 5000 entries
-git clone --depth 5000 --mirror our-freebsd.git  smaller-freebsd.git
-# move our current repo to a backup
-mv our-freebsd.git our-freebsd.git.backup
-# make shallow repo our primary
-mv smaller-freebsd.git our-freebsd.git
-
-Will we be able to push/pull from our "new" repo as if nothing happened?  Will hashes remain the same?
-
-Can we in theory later do this:
-
-# merge branches from the "github" remote and push back to "our-freebsd.git"
-git clone /url/our-freebsd.git  our-freebsd.git
-cd our-freebsd.git
-git remote add github https://github.com/freebsd/freebsd.git
-git fetch github
-# get from our-freebsd
-git checkout -b master origin/master
-# now merge in freebsd changes
-git merge --no-ff github/master
-git push origin HEAD
-
-Or will this break terribly?
-
-Thank you very much.
-
--Alfred
+--
+View this message in context: http://git.661346.n2.nabble.com/ANNOUNCE-Git-Merge-April-8-9-Paris-tp7624561p7625750.html
+Sent from the git mailing list archive at Nabble.com.
