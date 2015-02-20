@@ -1,85 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git Scaling: What factors most affect Git performance for a large repo?
-Date: Fri, 20 Feb 2015 13:04:30 -0800
-Message-ID: <xmqqa908z44h.fsf@gitster.dls.corp.google.com>
-References: <CAH8BJxEr_v+aitpZduXPC4oiRhMuySpc7Wb1aGcYe_p3mWjn+w@mail.gmail.com>
-	<CACBZZX6A+35wGBYAYj7E9d4XwLby21TLbTh-zRX+fkSt_e2zeg@mail.gmail.com>
-	<CACsJy8DkS65axQNY70FrfqR5s-49oOn8j7SAE9BTiRVNrm+ohQ@mail.gmail.com>
-	<CACBZZX4T38j9YU3eiHTfkDoZKsgyJFrnJQNm5WBmb9RDenDOBg@mail.gmail.com>
-	<CACBZZX45eCo6YS4EpHvMQjN32+-w5BztfoLiwh_rJTs7FydgoQ@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] --disassociate alias for --dissociate clone option
+Date: Fri, 20 Feb 2015 17:01:13 -0500
+Message-ID: <CAPig+cTGZohqPRL2OHcaF5bBwED-bhCsZJkp9g00uqJKWfObaA@mail.gmail.com>
+References: <1424459423-11727-1-git-send-email-mattwhiteley@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Stephen Morton <stephen.c.morton@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 20 22:04:38 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Matt Whiteley <mattwhiteley@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 20 23:01:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YOukX-0002Uj-SG
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Feb 2015 22:04:38 +0100
+	id 1YOvdP-00021C-1X
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Feb 2015 23:01:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754496AbbBTVEe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 Feb 2015 16:04:34 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:59877 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754303AbbBTVEd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Feb 2015 16:04:33 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id A730E39F7A;
-	Fri, 20 Feb 2015 16:04:32 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=fNZbV+aQzLZh
-	9MJfyi08iPC980A=; b=DjB34g4tsPNPyWryL1RwIcC06gQf+sn6/vPP8VIsYr5L
-	WhM7Au01xu9sRZsgh4Ldok6EDslAaTBisfuyrdhtrVJVdbwS99OR3TxDeP4m9d4y
-	QOkv41DSc8NCR/7V4Po5RoV226q/HV3fwZrPQ4CHpuBURHI7IPHYdalpgMswr3w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=QvtfOa
-	mcenrJltpFhG0KRAwDt59SBom7vlhyO93HtS0VAxehQbh/xnDVMCJweGgYRfSjTT
-	oeGbDdk8nn4Rz/6zwgo30WJ6Dkie1HmT08zOclBPLAj8hs1yURSQ7BvtxRBdnAT7
-	hi2QCoP+xu8A3PpWOMDhBnLbP7ujKEpbDlIDI=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9D9C839F79;
-	Fri, 20 Feb 2015 16:04:32 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1991F39F78;
-	Fri, 20 Feb 2015 16:04:32 -0500 (EST)
-In-Reply-To: <CACBZZX45eCo6YS4EpHvMQjN32+-w5BztfoLiwh_rJTs7FydgoQ@mail.gmail.com>
-	(=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Fri, 20 Feb
- 2015 15:25:59
-	+0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 10F23782-B944-11E4-8B1B-A4119F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1754574AbbBTWBP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Feb 2015 17:01:15 -0500
+Received: from mail-yk0-f175.google.com ([209.85.160.175]:54319 "EHLO
+	mail-yk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754370AbbBTWBO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Feb 2015 17:01:14 -0500
+Received: by mail-yk0-f175.google.com with SMTP id q200so8488666ykb.6
+        for <git@vger.kernel.org>; Fri, 20 Feb 2015 14:01:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=Yc2hYV7GuA89M3pwJ2TgIhCRpZvTQwdx7P8pk2XxOXA=;
+        b=SPofpNVVoORWUJgW7D6zPb37BVQ3kIcDxJp+QBFQ/sQSQ0OekmKMeFKMNAzzFBMDxD
+         d6PG9IipYuQEk8gL5DL35Yg54e7q7+U7gAyLzU0mebo7SmyfM+HWz3CkZ44FAJ0ICwo2
+         UCD4UW2wnKZ8BFvF7Mk24GHgSw/LcSuRPTsdFafQSJ9dnawnypmZtyqsyqW/uL6Wzad3
+         L4JfLoQ3LhOllkcdDM6+P/Ol7feuU0jun/VVorARb6Nl7LF7wdJd0+4FE4ZPZlmn4f2i
+         9fkHDY1hkq4BRcD9+Zs9HGlt2Ra8b8oB/oZrxiDrD5WGJ7Tgsb26G4/GSaJCHLWyaThz
+         TK8A==
+X-Received: by 10.236.45.106 with SMTP id o70mr8688546yhb.180.1424469673703;
+ Fri, 20 Feb 2015 14:01:13 -0800 (PST)
+Received: by 10.170.73.7 with HTTP; Fri, 20 Feb 2015 14:01:13 -0800 (PST)
+In-Reply-To: <1424459423-11727-1-git-send-email-mattwhiteley@gmail.com>
+X-Google-Sender-Auth: XIx4Coh9jauC4GLKEUAvVQ3WdOY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264186>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264187>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+On Fri, Feb 20, 2015 at 2:10 PM, Matt Whiteley <mattwhiteley@gmail.com> wrote:
+> I find the new --dissociate option for clone very helpful but I have a
+> hard time with the spelling. It seems reasonable to have an alias since
+> one exists for --recursive.
 
-> I actually ran this a few times while testing it, so this is a before
-> and after on a hot cache of linux.git with 406 tags v.s. ~140k. I ran
-> the gc + repack + bitmaps for both repos noted in an earlier reply of
-> mine, and took the fastest run out of 3:
->
->     $ time (git log master -100 >/dev/null)
->     Before: real    0m0.021s
->     After: real    0m2.929s
+You may be undermining your own argument for inclusion of a new
+--dissociate option by citing the aliased "recursive" option.
 
-Do you force --decorate with some config?  Or do you see similar
-performance difference with "git rev-parse master", too?
-
->     $ time (git status >/dev/null)
->     # Around 150ms, no noticeable difference
-
-This is understandable, as it will not look at any ref other than
-HEAD.
+git-clone's --recursive-submodules was added (see ccdd3da6) for
+disambiguation long after --recursive; and not the other way around
+with --recursive being more convenient or easier to remember or spell
+than --recursive-submodules. The implication of ccdd3da6 is that
+--recursive-submodules is favored over --recursive (and perhaps the
+latter may some day be deprecated).
