@@ -1,152 +1,242 @@
-From: "H.Merijn Brand" <h.m.brand@xs4all.nl>
-Subject: Re: Interested in helping open source friends on HP-UX?
-Date: Fri, 20 Feb 2015 12:24:07 +0100
-Message-ID: <20150220122407.4183490b@pc09.procura.nl>
-References: <20150218182547.GA6346@peff.net>
-	<xmqqpp972h1n.fsf@gitster.dls.corp.google.com>
-	<20150218185734.GB7257@peff.net>
-	<54E5BBDD.7040100@drmicha.warpmail.net>
-	<20150219121438.59050ce8@pc09.procura.nl>
-	<54E5C6E2.9040101@drmicha.warpmail.net>
-	<20150219125433.GA1591@peff.net>
-	<54E5E347.4070401@drmicha.warpmail.net>
-	<20150220014801.GB16124@peff.net>
-	<54E70E2B.8000604@drmicha.warpmail.net>
-	<20150220104921.GA2467@peff.net>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: Git Scaling: What factors most affect Git performance for a large repo?
+Date: Fri, 20 Feb 2015 13:09:06 +0100
+Message-ID: <CACBZZX4T38j9YU3eiHTfkDoZKsgyJFrnJQNm5WBmb9RDenDOBg@mail.gmail.com>
+References: <CAH8BJxEr_v+aitpZduXPC4oiRhMuySpc7Wb1aGcYe_p3mWjn+w@mail.gmail.com>
+ <CACBZZX6A+35wGBYAYj7E9d4XwLby21TLbTh-zRX+fkSt_e2zeg@mail.gmail.com> <CACsJy8DkS65axQNY70FrfqR5s-49oOn8j7SAE9BTiRVNrm+ohQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- boundary="Sig_/fFsLsn_Pt3Qb3BGvqn/eJ2q"; protocol="application/pgp-signature"
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Feb 20 12:24:23 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Stephen Morton <stephen.c.morton@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 20 13:09:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YOlgy-0001mA-Vv
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Feb 2015 12:24:21 +0100
+	id 1YOmOi-00066l-HR
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Feb 2015 13:09:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754082AbbBTLYR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Feb 2015 06:24:17 -0500
-Received: from lb1-smtp-cloud3.xs4all.net ([194.109.24.22]:46301 "EHLO
-	lb1-smtp-cloud3.xs4all.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753899AbbBTLYQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Feb 2015 06:24:16 -0500
-Received: from pc09.procura.nl ([46.144.236.233])
-	by smtp-cloud3.xs4all.net with ESMTP
-	id ubQB1p00E52pRCE01bQCUx; Fri, 20 Feb 2015 12:24:13 +0100
-In-Reply-To: <20150220104921.GA2467@peff.net>
-X-Mailer: Claws Mail 3.11.1-78-gf28db0 (GTK+ 2.24.23; x86_64-suse-linux-gnu)
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwEAIAAACI8LKTAAAACXBIWXMAAABIAAAASABGyWs+AAAC
- JElEQVRo3u2aMY4CMQxFczZ6RItEzRm4DBINDbRUSPRInIRbsNK6+dJfezN4kokn48IaCSjysL8d
- e9Knoj2fr9f9/gllqQ6U9/vxWK3EdwdIEGjRIVCu18NhuxUfK46SH81+fzrdbuKPx/P5ctHQdAdI
- TKAgpvV6s9ntBEfXEYSGgMQzIHnuFBBjkshCNJ2KtJZ04hHNAugP8bZr3NIHhbcF0AKoK0CoaHXU
- LUWBIs1n+jV+Fl8CVqOApEXAwyMO/DSR4XVntoAYDR7eBjQupuYAYTMph8Rj21D4m7MChN02tpqs
- NSnb/KqU2oHCXu5xDCgflj/RAgBiKBIXnICzAsSjWBsTz5K4/HeXYvb8yK5lY3VGEwPi2aONKT+5
- AlcxrTPOwcTiraGRChgMEKJh0bVVifGVTq6qgBiNVl8QE29EsK6VE+YJAOG2wz5AvsqUS6uqgHCA
- n4NGvBYpnJ64Jgg27sCtxtBk1CJIA4S/GhdWKh07QxUB48jWGhZ4jKamRRr/T8/M0AaEyctry6YB
- 4dTGj9iWZNs3DahES5kPCJOu0RQbF/fQOBprsB9gaO9JtPDzII9U5ySXX7AnuIt91y54AAW7rPpT
- LCe5gt3F+CLqr2UarGB3MXvMylWGq4+9RCx3TW1oJq1t3HPQlFs6N1fFNEB4s8dn7Ne7ACSm7TPQ
- I5quAWmw6qBpulHM33B0Csge4Nd8JTTYG2b1XyRe3lH8x34ABJ6aePuQ2N4AAAAASUVORK5CYII=
+	id S1753941AbbBTMJ2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 Feb 2015 07:09:28 -0500
+Received: from mail-ob0-f175.google.com ([209.85.214.175]:47699 "EHLO
+	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753631AbbBTMJ1 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Feb 2015 07:09:27 -0500
+Received: by mail-ob0-f175.google.com with SMTP id va2so23715110obc.6
+        for <git@vger.kernel.org>; Fri, 20 Feb 2015 04:09:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=p0iQUsP7uVrsylZyj4tzRi1idXvfB7iJBdns1CgT3LA=;
+        b=FHHtWGdz0Ad9ig8JrzrMRki7LykrEquBGyRP3hgSrnk6ynJIN+Uhz0EgcgCX1mIDae
+         q+/12T5GBChH2WWkj1kWaujMZHcQv11mn6v4/1e2jtV8qbEM0ZP3ytO74f6yMQidvT9r
+         fYu6lIoi3rV4vU70LRVf5Z86ZTE+UcIPuPkioE3J5mAUXXHqDUcz5rGpgbi3tYTtWFZK
+         YMWGxr6uYqls2DbNkWhAiaSuJUyBFKhMiMvxVNXFxsxurtCA75hqgTIo5p5sM2BJHGDM
+         x3RteIvZ3E3KltKdIbqDDhxEBueZeZcsD36Ew7NWZbJ0m8JygNKFKeUHGGKc0I+qaG9E
+         Fo2Q==
+X-Received: by 10.60.114.40 with SMTP id jd8mr6394880oeb.12.1424434166713;
+ Fri, 20 Feb 2015 04:09:26 -0800 (PST)
+Received: by 10.76.82.1 with HTTP; Fri, 20 Feb 2015 04:09:06 -0800 (PST)
+In-Reply-To: <CACsJy8DkS65axQNY70FrfqR5s-49oOn8j7SAE9BTiRVNrm+ohQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264161>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264162>
 
---Sig_/fFsLsn_Pt3Qb3BGvqn/eJ2q
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
+On Fri, Feb 20, 2015 at 1:04 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Fri, Feb 20, 2015 at 6:29 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmas=
+on
+> <avarab@gmail.com> wrote:
+>> Anecdotally I work on a repo at work (where I'm mostly "the Git guy"=
+) that's:
+>>
+>>  * Around 500k commits
+>>  * Around 100k tags
+>>  * Around 5k branches
+>>  * Around 500 commits/day, almost entirely to the same branch
+>>  * 1.5 GB .git checkout.
+>>  * Mostly text source, but some binaries (we're trying to cut down[1=
+] on those)
+>
+> Would be nice if you could make an anonymized version of this repo
+> public. Working on a "real" large repo is better than an artificial
+> one.
 
-On Fri, 20 Feb 2015 05:49:21 -0500, Jeff King <peff@peff.net> wrote:
+Yeah, I'll try to do that.
 
-> On Fri, Feb 20, 2015 at 11:36:27AM +0100, Michael J Gruber wrote:
->=20
-> > > It's not quite so bad as you make out. We write the value to the
-> > > GIT-BUILD-OPTIONS file during "make", no matter where it comes from, =
-and
-> > > load that in test-lib.sh. So:
-> > >=20
-> > >   make NO_ICONV=3DNope
-> > >   cd t
-> > >   ./t3901-i18n-patch.sh
-> > >=20
-> > > works just fine (for this and for any of the other options we mark
-> > > there).
-> >=20
-> > It survives a cd, sure...
->=20
-> I think the interesting thing is that it survives running `./tXXXX`
-> rather than running the test through make.
+>> But actually most of "git fetch" is spent in the reachability check
+>> subsequently done by "git-rev-list" which takes several seconds. I
+>
+> I wonder if reachability bitmap could help here..
 
-I always use prove
+I could have sworn I had that enabled already but evidently not. I did
+test it and it cut down on clone times a bit. Now our daily repacking
+is:
 
-$ prove -v t1234.sh
+        git --git-dir=3D{} gc &&
+        git --git-dir=3D{} pack-refs --all --prune &&
+        git --git-dir=3D{} repack -Ad --window=3D250 --depth=3D100
+--write-bitmap-index --pack-kept-objects &&
 
-> > Now, change your config.mak before the cd and
-> > forget the make. Not everyone does
-> >=20
-> > make -C t t3901-i18n-patch.sh
-> >=20
-> > Though, having just discovered that shell completion works for that
-> > form, too, I may do it more often (and then complain about having to use
-> > GIT_TEST_OPTS ;) )
->=20
-> Yeah, I never use "make tXXXX" myself. But nor would I expect the tests
-> to respect a version of git I had not actually built. E.g., if you build
-> with NO_PERL, and then remove NO_PERL from your config.mak but do _not_
-> actually run "make", should that work? Ditto for NO_ICONV, for that
-> matter. The tests must match the binary, and the best guess we have
-> about the binary is the last thing we built.
->=20
-> Adding "git --build-options" would give us a better guess (it may not be
-> what the user _wanted_ to test, but it is what they _are_ testing).
->=20
-> > > I suspect GIT_TEST_INSTALLED is not all that widely used, or somebody
-> > > would have complained before. But if we really want to support it, I
-> > > think the right thing is to bake GIT-BUILD-OPTIONS into the binary, so
-> > > that "git --build-options" dumps it. It might also have value for
-> > > debugging and forensics in general.
-> >=20
-> > Yep, that would be helpful in general. I don't think we should worry
-> > about GIT_TEST_INSTALLED too much. Who came up with that feature anyway=
-...?
->=20
-> Clearly a crazy person. :) I am not saying it is a _bad_ idea. Only that
-> the responsibility to make sure the installed version matches the
-> current build parameters lies with the user (and for that matter, the
-> current set of tests; we add new tests that would fail on old versions,
-> and you cannot mix and match).
->=20
-> So an alternate explanation than "not widely used" is "all of the users
-> of it are responsible individuals who do not make bogus bug reports to
-> the list". :)
->=20
-> -Peff
+It's not clear to me from the documentation whether this should just
+be enabled on the server, or the clients too. In any case I've enabled
+it on both.
 
+Even then with it enabled on both a "git pull" that pulls down just
+one commit on one branch is 13s. Trace attached at the end of the
+mail.
 
---=20
-H.Merijn Brand  http://tux.nl   Perl Monger  http://amsterdam.pm.org/
-using perl5.00307 .. 5.21   porting perl5 on HP-UX, AIX, and openSUSE
-http://mirrors.develooper.com/hpux/        http://www.test-smoke.org/
-http://qa.perl.org   http://www.goldmark.org/jeff/stupid-disclaimers/
+>> haven't looked into it but there's got to be room for optimization
+>> there, surely it only has to do reachability checks for new refs, or
+>> could run in some "I trust this remote not to send me corrupt data"
+>> completely mode (which would make sense within a company where you c=
+an
+>> trust your main Git box).
+>
+> No, it's not just about trusting the server side, it's about catching
+> data corruption on the wire as well. We have a trick to avoid
+> reachability check in clone case, which is much more expensive than a
+> fetch. Maybe we could do something further to help the fetch case _if=
+_
+> reachability bitmaps don't help.
 
---Sig_/fFsLsn_Pt3Qb3BGvqn/eJ2q
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
+Still, if that's indeed a big bottleneck what's the worst-case
+scenario here? That the local repository gets hosed? The server will
+still recursively validate the objects it gets sent, right?
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
+I wonder if a better trade-off in that case would be to skip this in
+some situations and instead put something like "git fsck" in a
+cronjob.
 
-iQEcBAEBAgAGBQJU5xlbAAoJEAOhR6E+XcCY0mkH/23Bzb1YcwZI7ynRL1Z8q3gm
-nDbhr+Rxd4UkeaO1q156pCtbwRnpw/+/6zwlM3SQN+QSJR/q6STptll3ij5rVVE9
-hWLOfJJZxLv3cf9Sg2Cf1EqcFO5aR5r+VZ9LSH5uqUsYTMVVOvSqkPTw42oQuZBU
-4X2GUuenldrAbwVcCvoGzaOlSEW3Zx//Uul8cdAT/lxd4QSLUIZVO+QTnpPG27nX
-TAlNW+ifZ8q89UZPyNh+RLnu/3BWQkmDoHgpDa3ZyzngJJ+51aP75SsgaeMQCn9C
-VB73fGSuB4HLv3LVcMPnAZASrse9DcyZlp2B3AOgdE+WUKDeEkaTKQESij5EaYs=
-=3MD6
------END PGP SIGNATURE-----
+Here's a "git pull" trace mentioned above:
 
---Sig_/fFsLsn_Pt3Qb3BGvqn/eJ2q--
+$ time GIT_TRACE=3D1 git pull
+13:06:13.603781 git.c:555               trace: exec: 'git-pull'
+13:06:13.603936 run-command.c:351       trace: run_command: 'git-pull'
+13:06:13.620615 git.c:349               trace: built-in: git
+'rev-parse' '--git-dir'
+13:06:13.631602 git.c:349               trace: built-in: git
+'rev-parse' '--is-bare-repository'
+13:06:13.636103 git.c:349               trace: built-in: git
+'rev-parse' '--show-toplevel'
+13:06:13.641491 git.c:349               trace: built-in: git 'ls-files'=
+ '-u'
+13:06:13.719923 git.c:349               trace: built-in: git
+'symbolic-ref' '-q' 'HEAD'
+13:06:13.728085 git.c:349               trace: built-in: git 'config'
+'branch.trunk.rebase'
+13:06:13.738160 git.c:349               trace: built-in: git 'config' '=
+pull.ff'
+13:06:13.743286 git.c:349               trace: built-in: git
+'rev-parse' '-q' '--verify' 'HEAD'
+13:06:13.972091 git.c:349               trace: built-in: git
+'rev-parse' '--verify' 'HEAD'
+13:06:14.149420 git.c:349               trace: built-in: git
+'update-index' '-q' '--ignore-submodules' '--refresh'
+13:06:14.294098 git.c:349               trace: built-in: git
+'diff-files' '--quiet' '--ignore-submodules'
+13:06:14.467711 git.c:349               trace: built-in: git
+'diff-index' '--cached' '--quiet' '--ignore-submodules' 'HEAD' '--'
+13:06:14.683419 git.c:349               trace: built-in: git
+'rev-parse' '-q' '--git-dir'
+13:06:15.189707 git.c:349               trace: built-in: git
+'rev-parse' '-q' '--verify' 'HEAD'
+13:06:15.335948 git.c:349               trace: built-in: git 'fetch'
+'--update-head-ok'
+13:06:15.691303 run-command.c:351       trace: run_command: 'ssh'
+'git.example.com' 'git-upload-pack '\''/gitrepos/core.git'\'''
+13:06:17.095662 run-command.c:351       trace: run_command: 'rev-list'
+'--objects' '--stdin' '--not' '--all' '--quiet'
+remote: Counting objects: 6, done.
+remote: Compressing objects: 100% (6/6), done.
+3:06:20.426346 run-command.c:351       trace: run_command:
+'unpack-objects' '--pack_header=3D2,6'
+13:06:20.431806 exec_cmd.c:130          trace: exec: 'git'
+'unpack-objects' '--pack_header=3D2,6'
+13:06:20.437343 git.c:349               trace: built-in: git
+'unpack-objects' '--pack_header=3D2,6'
+remote: Total 6 (delta 0), reused 0 (delta 0)
+Unpacking objects: 100% (6/6), done.
+13:06:20.444196 run-command.c:351       trace: run_command: 'rev-list'
+'--objects' '--stdin' '--not' '--all'
+13:06:20.447135 exec_cmd.c:130          trace: exec: 'git' 'rev-list'
+'--objects' '--stdin' '--not' '--all'
+13:06:20.451283 git.c:349               trace: built-in: git
+'rev-list' '--objects' '--stdin' '--not' '--all'
+=46rom ssh://git.example.com/gitrepos/core
+   02d33d2..41e72c4  core      -> origin/core
+13:06:22.559609 run-command.c:351       trace: run_command: 'gc' '--aut=
+o'
+13:06:22.562176 exec_cmd.c:130          trace: exec: 'git' 'gc' '--auto=
+'
+13:06:22.565661 git.c:349               trace: built-in: git 'gc' '--au=
+to'
+13:06:22.594980 git.c:349               trace: built-in: git
+'rev-parse' '-q' '--verify' 'HEAD'
+13:06:22.845728 git.c:349               trace: built-in: git
+'show-branch' '--merge-base' 'refs/heads/core'
+'41e72c42addc5075e8009a3eebe914fa0ce98b27'
+'02d33d2be7f8601c3502fdd89b0946447d7cdf15'
+13:06:23.087586 git.c:349               trace: built-in: git 'fmt-merge=
+-msg'
+13:06:23.341451 git.c:349               trace: built-in: git
+'rev-parse' '--parseopt' '--stuck-long' '--' '--onto'
+'41e72c42addc5075e8009a3eebe914fa0ce98b27'
+'41e72c42addc5075e8009a3eebe914fa0ce98b27'
+13:06:23.350513 git.c:349               trace: built-in: git
+'rev-parse' '--git-dir'
+13:06:23.362011 git.c:349               trace: built-in: git
+'rev-parse' '--is-bare-repository'
+13:06:23.365282 git.c:349               trace: built-in: git
+'rev-parse' '--show-toplevel'
+13:06:23.372589 git.c:349               trace: built-in: git 'config'
+'--bool' 'rebase.stat'
+13:06:23.377056 git.c:349               trace: built-in: git 'config'
+'--bool' 'rebase.autostash'
+13:06:23.382102 git.c:349               trace: built-in: git 'config'
+'--bool' 'rebase.autosquash'
+13:06:23.389458 git.c:349               trace: built-in: git
+'rev-parse' '--verify' '41e72c42addc5075e8009a3eebe914fa0ce98b27^0'
+13:06:23.608894 git.c:349               trace: built-in: git
+'rev-parse' '--verify' '41e72c42addc5075e8009a3eebe914fa0ce98b27^0'
+13:06:23.894026 git.c:349               trace: built-in: git
+'symbolic-ref' '-q' 'HEAD'
+13:06:23.898918 git.c:349               trace: built-in: git
+'rev-parse' '--verify' 'HEAD'
+13:06:24.102269 git.c:349               trace: built-in: git
+'rev-parse' '--verify' 'HEAD'
+13:06:24.338636 git.c:349               trace: built-in: git
+'update-index' '-q' '--ignore-submodules' '--refresh'
+13:06:24.539912 git.c:349               trace: built-in: git
+'diff-files' '--quiet' '--ignore-submodules'
+13:06:24.729362 git.c:349               trace: built-in: git
+'diff-index' '--cached' '--quiet' '--ignore-submodules' 'HEAD' '--'
+13:06:24.938533 git.c:349               trace: built-in: git
+'merge-base' '41e72c42addc5075e8009a3eebe914fa0ce98b27'
+'02d33d2be7f8601c3502fdd89b0946447d7cdf15'
+13:06:25.197791 git.c:349               trace: built-in: git 'diff'
+'--stat' '--summary' '02d33d2be7f8601c3502fdd89b0946447d7cdf15'
+'41e72c42addc5075e8009a3eebe914fa0ce98b27'
+[details on updated files]
+13:06:25.488275 git.c:349               trace: built-in: git
+'checkout' '-q' '41e72c42addc5075e8009a3eebe914fa0ce98b27^0'
+13:06:26.467413 git.c:349               trace: built-in: git
+'update-ref' 'ORIG_HEAD' '02d33d2be7f8601c3502fdd89b0946447d7cdf15'
+=46ast-forwarded trunk to 41e72c42addc5075e8009a3eebe914fa0ce98b27.
+13:06:26.716256 git.c:349               trace: built-in: git 'rev-parse=
+' 'HEAD'
+13:06:26.958595 git.c:349               trace: built-in: git
+'update-ref' '-m' 'rebase finished: refs/heads/core onto
+41e72c42addc5075e8009a3eebe914fa0ce98b27' 'refs/heads/core'
+'41e72c42addc5075e8009a3eebe914fa0ce98b27'
+'02d33d2be7f8601c3502fdd89b0946447d7cdf15'
+13:06:27.205320 git.c:349               trace: built-in: git
+'symbolic-ref' '-m' 'rebase finished: returning to refs/heads/core'
+'HEAD' 'refs/heads/core'
+13:06:27.208748 git.c:349               trace: built-in: git 'gc' '--au=
+to'
