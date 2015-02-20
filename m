@@ -1,82 +1,101 @@
-From: "Kyle J. McKay" <mackyle@gmail.com>
-Subject: Re: git mac 10.7.x
-Date: Fri, 20 Feb 2015 14:54:14 -0800
-Message-ID: <004039F7-C541-429F-B15C-13865427834E@gmail.com>
-References: <24CFF4AD-D1EE-40EA-A5F1-9109F29800BE@gmail.com> <1768B135-0FC3-49FE-AD9A-D33E39F822B6@gmail.com> <0596CAEE-2F31-4D61-A3A8-9C8AF2A287C6@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: sojourner <sojournerh@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 20 23:54:23 2015
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: Git Scaling: What factors most affect Git performance for a
+ large repo?
+Date: Fri, 20 Feb 2015 22:58:27 +0000
+Message-ID: <20150220225827.GA23852@vauxhall.crustytoothpaste.net>
+References: <CAH8BJxEr_v+aitpZduXPC4oiRhMuySpc7Wb1aGcYe_p3mWjn+w@mail.gmail.com>
+ <20150220000320.GD5021@vauxhall.crustytoothpaste.net>
+ <54E7B077.3050501@gmail.com>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="Q68bSM7Ycu6FN28Q"
+Cc: Stephen Morton <stephen.c.morton@gmail.com>, git@vger.kernel.org
+To: Sebastian Schuberth <sschuberth@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 20 23:58:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YOwSk-0008KP-PF
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Feb 2015 23:54:23 +0100
+	id 1YOwWt-0001eT-HT
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Feb 2015 23:58:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754574AbbBTWyS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Feb 2015 17:54:18 -0500
-Received: from mail-pd0-f182.google.com ([209.85.192.182]:35383 "EHLO
-	mail-pd0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752745AbbBTWyR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Feb 2015 17:54:17 -0500
-Received: by pdbfl12 with SMTP id fl12so10772669pdb.2
-        for <git@vger.kernel.org>; Fri, 20 Feb 2015 14:54:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:in-reply-to:subject:references:message-id:content-type
-         :content-transfer-encoding:mime-version:date:cc;
-        bh=t2v3M1w1M+9YEoAXWZtC11Nx5bYWifpAYoTskOcoUs4=;
-        b=jOypr2RH9FKAVqHlU1imjg2VmeqAWUrZbHlWDHG5626M305BcdTyo1YFGxlqobnyng
-         9ROoEG2k1p2IVg+fR8rI0YIPfMQ3HCRuT4RwlfEVgT4PC3/P3mVvpwuR8YeKjGWjLQyw
-         pU4cwyCVFn1Tqmefr7FzL0s30U23I8GfwiBNoTG/gd5KvyBRy4QofRc7XXY3FHvYFYQA
-         wHRZjrYbN/RCiORgNcdxg0BoK+PNdxzM+VZi6ywBTkOdy54BNhT/heH+iBQ+DjX2/Qbi
-         W1Lf4kafJNH8n1zazY5374AABC8ujN6/vdhtgIwOVYx8H7ATGmLrma4+2jo7M1zp7Rzf
-         LgGA==
-X-Received: by 10.66.132.6 with SMTP id oq6mr10pab.29.1424472857169;
-        Fri, 20 Feb 2015 14:54:17 -0800 (PST)
-Received: from [172.16.16.105] (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
-        by mx.google.com with ESMTPSA id qo4sm13518091pdb.71.2015.02.20.14.54.15
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Fri, 20 Feb 2015 14:54:16 -0800 (PST)
-In-Reply-To: <0596CAEE-2F31-4D61-A3A8-9C8AF2A287C6@gmail.com>
-X-Mauler: Craptastic (2.936)
+	id S1754600AbbBTW6f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Feb 2015 17:58:35 -0500
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:49154 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752484AbbBTW6e (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Feb 2015 17:58:34 -0500
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:c808:e39c:abee:cc11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id AEAC02808F;
+	Fri, 20 Feb 2015 22:58:31 +0000 (UTC)
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Sebastian Schuberth <sschuberth@gmail.com>,
+	Stephen Morton <stephen.c.morton@gmail.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <54E7B077.3050501@gmail.com>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 3.19.0-trunk-amd64)
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264192>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264193>
 
-On Feb 20, 2015, at 12:01, sojourner wrote:
-> What's the difference between this installer and the other one? Why  
-> is this installer going to work?
 
-See the website for a description.  It was built to work with 10.4.8  
-or later.  It was built using Apple's older GCC specifically to be  
-compatible so does not contain any "illegal instructions" that only  
-work on 10.8.x or later.  Besides, I've actually run it on the older  
-systems without problem so I'm pretty confident you won't have an  
-issue with it.
+--Q68bSM7Ycu6FN28Q
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
--Kyle
-
-> On 20 Feb 2015, at 13:32, Kyle J. McKay wrote:
+On Fri, Feb 20, 2015 at 11:08:55PM +0100, Sebastian Schuberth wrote:
+>On 20.02.2015 01:03, brian m. carlson wrote:
 >
->> On Feb 20, 2015, at 02:38, sojourner wrote:
->>> Installed Git via installer. Updated path in .bash_profile. Get  
->>> error Illegal instruction: 4 when trying to run Git.
->>>
->>> Built Git from source. Searches for the compiled source  
->>> unsuccessful. Which is nice: there's nothing to uninstall.
->>>
->>> Searching online has a lot of suggestions and ideas. Anybody have  
->>> anything that actually works?--
->>
->> You can get a working installer from <http://mackyle.github.io/git-osx-installer/ 
->> > that should work for you on 10.7.x just fine.
->>
->> -Kyle
+>>If you want good performance, I'd recommend the latest version of Git
+>>both client- and server-side.  Newer versions of Git provide pack
+>>bitmaps, which can dramatically speed up clones and fetches, and Git
 >
+>Do you happen now which version, if at all, of JGit and Gerrit support=20
+>pack bitmaps?
+
+They were originally implemented in JGit, but I don't know what version,=20
+sorry.  Some googling tells me that it's probably version 3.0.
+
+>>2.3.0 fixes a performance regression with large numbers of refs in
+>>non-shallow repositories.
+>
+>Do you also know in what Git version the regression was introduced?
+
+v1.8.4-rc3-8-gfbd4a70.  It was fixed in v2.2.1-65-g2dacf26.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+
+--Q68bSM7Ycu6FN28Q
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCgAGBQJU57wTAAoJEL9TXYEfUvaLCnAQAKCJjzWOcYODe+jFmdCwXzMG
+1njVU83uRy/73kbff+YTt80bFHxDRp7q55fsGK9vj5AWTdPgIzkaXzr+sjfdCWa1
+xq4a2Uu34AWCDfho1SXSibC25PcajavDwdUC63A1q6+YtnmbMkLztlBcFVr4D8lu
+/gu3WHHjM3uddj2/M3dkNMyomdmCqgq79UUA8JL1MWf5YwXUfcQraSJm5pkVT+BI
+MUBAd6BE+Kapg2EfuJt+r+y8++p0vit/lc0ms028oKrsiAl8ASHGwgkjfmP22t0q
++Z31dVe9BahcXo3KLxmRe76JufJ0Uhm6iyu0IIpxZ6gqmWQPzs/N/WbtpnK3p0b9
+WqDXccyMHWmyciVV4G/cbTubI/u+3jlpdjrDIEwVfnwK7N6XxNB9poSsCZ9DhU56
+cFij2hQH55AZhqC1bMn0h1mx9IFePmmOndLC9goNro6PDOONABpBb02eWIHzld2/
+HsuETQ5cOwHDhy/yD3PtCKRo/cy3Ce6VmiA9SfN7X0bfWGVjD+GhzEY8TnGXf0Ss
+b96f2Ufwfub4eE0oPpdldHFgefawrSaS+v6DtO3bFNt99hgNIHZ3ZH2ZKytDUjdH
+bh6PLNQp1Rjsp0V7iT75aIG/pRvUnPyqn6RjJuGjx2plRT0+/7Y0K1KH8aop7EBL
+sCyLYBjyIx0ONa9mRBle
+=yMRW
+-----END PGP SIGNATURE-----
+
+--Q68bSM7Ycu6FN28Q--
