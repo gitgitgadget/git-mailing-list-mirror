@@ -1,71 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 Subject: Re: [RFH] GSoC 2015 application
-Date: Fri, 20 Feb 2015 00:26:29 -0800
-Message-ID: <CAPc5daVJ_nYk=tWqpUYPpsX6Z50H429jOh8QfMwUdNDdTDMq9w@mail.gmail.com>
-References: <20150218191417.GA7767@peff.net> <CACsJy8B_zkAecL2Wag8a5c9-_C9eoA9dYj4ciBXqXRVmRW77zw@mail.gmail.com>
- <20150220071342.GB8763@peff.net>
+Date: Fri, 20 Feb 2015 10:39:42 +0100
+Message-ID: <vpqpp94exb5.fsf@anie.imag.fr>
+References: <20150218191417.GA7767@peff.net> <54E6C78D.3070506@alum.mit.edu>
+	<20150220072924.GC8763@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Stefan Beller <sbeller@google.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Feb 20 09:26:56 2015
+X-From: git-owner@vger.kernel.org Fri Feb 20 10:40:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YOivH-0004e3-7W
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Feb 2015 09:26:55 +0100
+	id 1YOk4D-0004OB-RR
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Feb 2015 10:40:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753618AbbBTI0v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Feb 2015 03:26:51 -0500
-Received: from mail-ob0-f170.google.com ([209.85.214.170]:46562 "EHLO
-	mail-ob0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752663AbbBTI0u (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Feb 2015 03:26:50 -0500
-Received: by mail-ob0-f170.google.com with SMTP id va2so22852037obc.1
-        for <git@vger.kernel.org>; Fri, 20 Feb 2015 00:26:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=QQLVuUSvfuiI30xD6NAPXET53RsnRjKiqBap1AR3qyc=;
-        b=Q8OJiYedPWe+tX2CCeIrRJY0fwwQYvcxkixk8qpXuZgNNHv1nuw52/OfhdjTfdbAtv
-         5Iv++6GirFyh4wE2ZgCDTgFnz6ZRRoq995DCfwOD/yUiDjpcqKLqmxYotNG8QBmCn6yQ
-         Poz84HQrcJmFHbYFR1wx+358FiQqBmFogzrYTuZRAu/d/Qlw0KTq2KE/pPcJNGahWIPi
-         k8FOUyMnHKVkyj9+XHEIQ0McqrgbWXxvuVSivjl1d7lQR7YcyKJTSlii0PSgZCChnURV
-         s5Xi7EHjdDwKSc/hfwbuqEKJKl+DSEAYk5dHtYx3Qzfl/G6pD1TS8XbbY+CC6lo4CyEb
-         g+dA==
-X-Received: by 10.182.68.12 with SMTP id r12mr5761205obt.84.1424420809806;
- Fri, 20 Feb 2015 00:26:49 -0800 (PST)
-Received: by 10.202.48.132 with HTTP; Fri, 20 Feb 2015 00:26:29 -0800 (PST)
-In-Reply-To: <20150220071342.GB8763@peff.net>
-X-Google-Sender-Auth: oChghtSU-Vl6gABf_82nVy0b-Uc
+	id S1753808AbbBTJkH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Feb 2015 04:40:07 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:41688 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753482AbbBTJkE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Feb 2015 04:40:04 -0500
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t1K9dgHq013816
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 20 Feb 2015 10:39:42 +0100
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t1K9dgPt030297;
+	Fri, 20 Feb 2015 10:39:42 +0100
+In-Reply-To: <20150220072924.GC8763@peff.net> (Jeff King's message of "Fri, 20
+	Feb 2015 02:29:25 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 20 Feb 2015 10:39:42 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t1K9dgHq013816
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1425029985.13436@CAlQKjVuAeRu2+5FUTJ66A
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264142>
 
-On Thu, Feb 19, 2015 at 11:13 PM, Jeff King <peff@peff.net> wrote:
+Jeff King <peff@peff.net> writes:
 
->> There is debian bug 777690 [1] that's basically about making tag's
->> version sort aware about -rc, -pre suffixes. I imagine it would touch
->> versioncmp.c and builtin/tag.c (to retrieve the suffixes from config
->> file).
->>
->> [1] https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=777690
->
-> I think that's a reasonable thing to work on, but it's too big for a
-> microproject and too small for a GSoC.
+>   - Matthieu, who also cited time constraints
 
-That is certainly too big as a Micro, but I do not think it is too small
-for GSoC, if it is to be done right (meaning, not just implementing an
-arbitrary version comparison hardwired, but design how to make it
-extensible).
+Just to clarify: last year we were co-mentoring with Ram. I ended up
+having a lot of time and did most of the work (not blaming Ram, and I
+enjoyed the experience). I'm still motivated to co-mentor, but this time
+the co-mentoring has to be more balanced (or unballanced to the other
+mentor ;-) ).
 
-I have a feeling that I am complaining that student projects are
-designed to be too grand and getting told that I am overly pessimistic
-by everybody else every year. Perhaps this year others may prove
-me wrong, if we can find mentors, that is ;-)
+>   - Junio, who contributed some project ideas, but who in the past has
+>     declined to mentor in order to remain impartial as the maintainer
+>     who evaluates student results (which I think is quite reasonable)
+
+Yes, as a mentor I did appreciate having Junio as impartial
+maintainer/reviewer. And he did for sure contribute even without being a
+mentor!
+
+>From your list, it seems we can target 1 or 2 slots. I'd say it's still
+worth applying, but if we don't find more mentors then perhaps it would
+make sense to say so explicitely in
+http://git.github.io/SoC-2015-Ideas.html so that students looking for
+organization know that we'll have very few slots.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
