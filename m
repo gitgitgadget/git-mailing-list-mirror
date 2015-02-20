@@ -1,66 +1,94 @@
-From: "Kyle J. McKay" <mackyle@gmail.com>
-Subject: Re: git mac 10.7.x
-Date: Fri, 20 Feb 2015 10:32:24 -0800
-Message-ID: <1768B135-0FC3-49FE-AD9A-D33E39F822B6@gmail.com>
-References: <24CFF4AD-D1EE-40EA-A5F1-9109F29800BE@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: sojourner <sojournerh@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 20 19:32:35 2015
+From: Matt Whiteley <mattwhiteley@gmail.com>
+Subject: [PATCH 1/2] clone: add disassociate alias to dissociate option
+Date: Fri, 20 Feb 2015 11:10:22 -0800
+Message-ID: <1424459423-11727-2-git-send-email-mattwhiteley@gmail.com>
+References: <1424459423-11727-1-git-send-email-mattwhiteley@gmail.com>
+Cc: Matt Whiteley <mattwhiteley@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 20 20:11:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YOsNM-0005fP-7T
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Feb 2015 19:32:32 +0100
+	id 1YOsyV-0000Uq-SI
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Feb 2015 20:10:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752566AbbBTSc2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Feb 2015 13:32:28 -0500
-Received: from mail-pd0-f180.google.com ([209.85.192.180]:43159 "EHLO
-	mail-pd0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752165AbbBTSc1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Feb 2015 13:32:27 -0500
-Received: by pdev10 with SMTP id v10so9307646pde.10
-        for <git@vger.kernel.org>; Fri, 20 Feb 2015 10:32:27 -0800 (PST)
+	id S1754756AbbBTTKu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Feb 2015 14:10:50 -0500
+Received: from mail-pd0-f170.google.com ([209.85.192.170]:39428 "EHLO
+	mail-pd0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754195AbbBTTKr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Feb 2015 14:10:47 -0500
+Received: by pdjy10 with SMTP id y10so9574438pdj.6
+        for <git@vger.kernel.org>; Fri, 20 Feb 2015 11:10:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:in-reply-to:subject:references:message-id:content-type
-         :content-transfer-encoding:mime-version:date:cc;
-        bh=0o1MjQFSYLmx93RR8oTGmQwGMI0stItZ5qGA0sQ27bc=;
-        b=jg/JRvRkMe2XjdGoeubF4G0fxRvROogTxNfzX05Rilcls8TAjWwLQhoPlgcvvWLQn4
-         iDOXYUA/UJjmhfVg7RTsIKigbT71desgSbIDSKmTKCOB2ejq9R9jRTArp3xAoljk5AlO
-         P8whnrBUd+wI9dz6cNecspL3GFa7uo3m/dspLxAS0iC+9zw1zkMe6wqCYAqj5fm3Ub5w
-         Q7uX71UeLtyumWKMwkN9heeohX4naCdFJ0j2vAKVnDLxXC6Ngiqt8WyoxR8Xd2eAuqJd
-         sVBVpJsl5H95Kt7fn2hvJ255XQtSfOT7XjSfHR4/YHPqJ0P5ulG30oXx0TGmXAgfMHI0
-         8IPA==
-X-Received: by 10.70.91.8 with SMTP id ca8mr9162407pdb.156.1424457147316;
-        Fri, 20 Feb 2015 10:32:27 -0800 (PST)
-Received: from [172.16.16.105] (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
-        by mx.google.com with ESMTPSA id qz3sm27889642pab.13.2015.02.20.10.32.26
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Fri, 20 Feb 2015 10:32:26 -0800 (PST)
-In-Reply-To: <24CFF4AD-D1EE-40EA-A5F1-9109F29800BE@gmail.com>
-X-Mauler: Craptastic (2.936)
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=ffYSFEH4EeokmhC1GulkEa+ncFYT2DMz41qj9cd2lsY=;
+        b=V9gK6uS/daYbeGRLDjhRXGmFdfnUg/gCmSOnNPcovDDxt55pHTkiM1pP+ASJKkTsBf
+         PAj48/pCy+VrUJlblJ84gz12jMbJYswOOcxaqE6ad4gydSBMVjQoGFUQsqJ24DGS6uvu
+         qZcuMRivkPA/XLHfl4zunRFtwZLRyAv6t7xv6FXT6VyeUt+QCRpEiIvvWgVuhkv8KxqU
+         tWNPj5zYCeHTug7s7i9DLN8pB3xUREFwbg6RAjxMtQ9gtyQdd6hdORUqIsriJu+LiG3r
+         8v/rD61ZLx2QaJb9htycch/Mox7MQm/qCPI6Oq5YkAX1TKqXkx0KKLMxSMAEQaqdrn1z
+         /o/g==
+X-Received: by 10.70.23.5 with SMTP id i5mr18772522pdf.119.1424459447224;
+        Fri, 20 Feb 2015 11:10:47 -0800 (PST)
+Received: from localhost.localdomain ([67.204.180.114])
+        by mx.google.com with ESMTPSA id ak7sm7474955pad.47.2015.02.20.11.10.46
+        (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 20 Feb 2015 11:10:46 -0800 (PST)
+X-Mailer: git-send-email 2.3.0
+In-Reply-To: <1424459423-11727-1-git-send-email-mattwhiteley@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264177>
 
-On Feb 20, 2015, at 02:38, sojourner wrote:
-> Installed Git via installer. Updated path in .bash_profile. Get  
-> error Illegal instruction: 4 when trying to run Git.
->
-> Built Git from source. Searches for the compiled source  
-> unsuccessful. Which is nice: there's nothing to uninstall.
->
-> Searching online has a lot of suggestions and ideas. Anybody have  
-> anything that actually works?--
+Enable clone to accept alternate spelling for dissociate option. Add
+alias to documentation following existing recursive/recurse-submodules
+convention.
 
-You can get a working installer from <http://mackyle.github.io/git-osx-installer/ 
- > that should work for you on 10.7.x just fine.
+Signed-off-by: Matt Whiteley <mattwhiteley@gmail.com>
+---
+ Documentation/git-clone.txt | 3 ++-
+ builtin/clone.c             | 2 ++
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
--Kyle
+diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+index f1f2a3f..0b4c1b2 100644
+--- a/Documentation/git-clone.txt
++++ b/Documentation/git-clone.txt
+@@ -12,7 +12,7 @@ SYNOPSIS
+ 'git clone' [--template=<template_directory>]
+ 	  [-l] [-s] [--no-hardlinks] [-q] [-n] [--bare] [--mirror]
+ 	  [-o <name>] [-b <name>] [-u <upload-pack>] [--reference <repository>]
+-	  [--dissociate] [--separate-git-dir <git dir>]
++	  [--dissociate | --disassociate] [--separate-git-dir <git dir>]
+ 	  [--depth <depth>] [--[no-]single-branch]
+ 	  [--recursive | --recurse-submodules] [--] <repository>
+ 	  [<directory>]
+@@ -102,6 +102,7 @@ objects from the source repository into a pack in the cloned repository.
+ `--dissociate` option.
+ 
+ --dissociate::
++--disassociate::
+ 	Borrow the objects from reference repositories specified
+ 	with the `--reference` options only to reduce network
+ 	transfer and stop borrowing from them after a clone is made
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 316c75d..7e193ae 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -97,6 +97,8 @@ static struct option builtin_clone_options[] = {
+ 		    N_("clone only one branch, HEAD or --branch")),
+ 	OPT_BOOL(0, "dissociate", &option_dissociate,
+ 		 N_("use --reference only while cloning")),
++	OPT_BOOL(0, "disassociate", &option_dissociate,
++		 N_("use --reference only while cloning")),
+ 	OPT_STRING(0, "separate-git-dir", &real_git_dir, N_("gitdir"),
+ 		   N_("separate git dir from working tree")),
+ 	OPT_STRING_LIST('c', "config", &option_config, N_("key=value"),
+-- 
+2.3.0
