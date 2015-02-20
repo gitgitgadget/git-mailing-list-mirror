@@ -1,92 +1,77 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: Git Scaling: What factors most affect Git performance for a
- large repo?
-Date: Fri, 20 Feb 2015 19:41:59 -0500
-Organization: Twitter
-Message-ID: <1424479319.31528.18.camel@leckie>
-References: <20150220065801.7CDC7140BE4@smtp.codeaurora.org>
-	 <1424456952.31528.6.camel@leckie> <3770789.lx2BnZ41U2@mfick1-lnx>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFH] GSoC 2015 application
+Date: Fri, 20 Feb 2015 06:35:38 -0500
+Message-ID: <20150220113538.GA5491@peff.net>
+References: <20150218191417.GA7767@peff.net>
+ <54E6C78D.3070506@alum.mit.edu>
+ <20150220072924.GC8763@peff.net>
+ <vpqpp94exb5.fsf@anie.imag.fr>
+ <20150220094844.GB30127@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Stephen Morton <stephen.c.morton@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>
-To: Martin Fick <mfick@codeaurora.org>
-X-From: git-owner@vger.kernel.org Sat Feb 21 01:42:12 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Stefan Beller <sbeller@google.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Sat Feb 21 02:09:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YOy93-0003xM-OU
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Feb 2015 01:42:10 +0100
+	id 1YOyZo-0007S8-Nl
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Feb 2015 02:09:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755376AbbBUAmE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Feb 2015 19:42:04 -0500
-Received: from mail-qc0-f178.google.com ([209.85.216.178]:44305 "EHLO
-	mail-qc0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755324AbbBUAmD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Feb 2015 19:42:03 -0500
-Received: by qcvs11 with SMTP id s11so3552808qcv.11
-        for <git@vger.kernel.org>; Fri, 20 Feb 2015 16:42:02 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:mime-version
-         :content-transfer-encoding;
-        bh=0EvpL6zXInHopTDNM5QGPIqelqIPLV0+xlYJXqACOIQ=;
-        b=N8J4f/aUiHOtyn4XD5T8E94TXlG0P0wwOuR2g+0stQbENb/JzbkE/wmYFisY042yuq
-         OfbDK6AVvWCArNAOB3kI0hgM+OYciYT1530WGGWE/gybvQd09SwMfHwWTVQS0ll05xvf
-         meJH09H6P1ZnwsJKjrXQSiRmfAXVDMn01IyjjfJLtUyY8eJF7iU+fHljwHyI2IZlJWjr
-         1PIg1rZ2g6V7q7momMSm29rBbkuAVZz0U1uO0he8RuOOHRT5adSHKrPY2z83Z/+vaj+C
-         s71yJ2//y90pSUsnM8s659ftK212QW2UARGqDfFgY8UgnzIK5AEGUr+Uj7U31+cliCfI
-         SHCg==
-X-Gm-Message-State: ALoCoQn14AMgJo1SVlJk5mmMFxKcJz/w1wLF/dtZ+QFj4W89VAIdri0j3VTlxWpfI35b5TGmS6Az
-X-Received: by 10.229.134.200 with SMTP id k8mr1009094qct.13.1424479322022;
-        Fri, 20 Feb 2015 16:42:02 -0800 (PST)
-Received: from [172.17.131.24] (ip-66-9-26-66.autorev.intellispace.net. [66.9.26.66])
-        by mx.google.com with ESMTPSA id f46sm22964074qgd.3.2015.02.20.16.42.00
-        (version=TLSv1.2 cipher=AES128-GCM-SHA256 bits=128/128);
-        Fri, 20 Feb 2015 16:42:01 -0800 (PST)
-In-Reply-To: <3770789.lx2BnZ41U2@mfick1-lnx>
-X-Mailer: Evolution 3.10.4-0ubuntu2 
+	id S1755086AbbBUBJn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Feb 2015 20:09:43 -0500
+Received: from cloud.peff.net ([50.56.180.127]:51723 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755033AbbBUBJn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Feb 2015 20:09:43 -0500
+Received: (qmail 23154 invoked by uid 102); 21 Feb 2015 01:09:43 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 20 Feb 2015 19:09:43 -0600
+Received: (qmail 11276 invoked by uid 107); 20 Feb 2015 11:35:39 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 20 Feb 2015 06:35:39 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 20 Feb 2015 06:35:38 -0500
+Content-Disposition: inline
+In-Reply-To: <20150220094844.GB30127@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264198>
 
-On Fri, 2015-02-20 at 13:37 -0700, Martin Fick wrote:
-> On Friday, February 20, 2015 01:29:12 PM David Turner wrote:
-> >...
-> > For a more general solution, perhaps a log of ref updates
-> > could be used. Every time a ref is updated on the server,
-> > that ref would be written into an append-only log.  Every
-> > time a client pulls, their pull data includes an index
-> > into that log.  Then on push, the client could say, "I
-> > have refs as-of $index", and the server could read the
-> > log (or do something more-optimized) and send only refs
-> > updated since that index.
+On Fri, Feb 20, 2015 at 04:48:44AM -0500, Jeff King wrote:
+
+> > From your list, it seems we can target 1 or 2 slots. I'd say it's still
+> > worth applying, but if we don't find more mentors then perhaps it would
+> > make sense to say so explicitely in
+> > http://git.github.io/SoC-2015-Ideas.html so that students looking for
+> > organization know that we'll have very few slots.
 > 
-> Interesting idea, I like it.
-> 
-> How would you make this reliable?  It relies on updates 
-> being reliably recorded which would mean that you would have 
-> to ensure that any tool which touches the repo follows this 
-> convention.  That is unfortunately a tough thing to enforce 
-> for most people.
+> I don't mind doing 1 slot if that's what we have resources for. But if
+> we have to say "eh, we do not really have enough mentors to support
+> you", then I wonder if it is worth doing.  They do not know how many
+> people have applied, or how tight the competition is.
 
-I think it only truly relies on the server reliably updating its state
-on ref updates. Which of course the server will do because why would you
-let arbitrary processes write to your central git repo?  (That is, most
-people use git in a roughly-centralized way, and if you turn on this
-config option, you promise to only do ref updates that write to the
-log).
+So that being said, I did complete the application. We can still
+withdraw if we want before students start applying, or we can put a
+disclaimer on the ideas page.
 
-If the client fails to update its state (on a fetch), it will send
-larger-than-necessary packs but not otherwise fail.  And this situation
-is sometimes be detectable on the client side -- if
-mtime(.git/refs/remotes/$remote ) > mtime
-(.git/server-ref-log-index/$remote), then we know our
-server-ref-log-index is out-of-date.
+I tweaked the application text to update it for this year, but nothing
+too major. The result is at:
+
+  http://git.github.io/SoC-2015-Org-Application.html
+
+That content was cut-and-pasted into Google's application interface.
+Matthieu, as backup admin you should have access to tweak that if there
+are typos, etc (and I will probably not be available to apply fixes from
+now until the deadline, so please do so if you see anything).
+
+We can continue to improve the ideas page as time goes on. At some point
+Google will look at as part of the application, but probably not right
+at the deadline. :)
+
+-Peff
