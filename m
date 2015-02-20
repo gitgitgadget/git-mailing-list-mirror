@@ -1,67 +1,117 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [RFH] GSoC 2015 application
-Date: Fri, 20 Feb 2015 06:35:09 +0100
-Message-ID: <54E6C78D.3070506@alum.mit.edu>
-References: <20150218191417.GA7767@peff.net>
+From: Martin Fick <mfick@codeaurora.org>
+Subject: Re: Git Scaling: What factors most affect Git performance for a
+ large repo?
+Date: Thu, 19 Feb 2015 23:57:54 -0700
+Message-ID: <20150220065801.7CDC7140BE4@smtp.codeaurora.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: Jeff King <peff@peff.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 20 06:35:52 2015
+Content-Transfer-Encoding: base64
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Stephen Morton <stephen.c.morton@gmail.com>,
+	Duy Nguyen <pclouds@gmail.com>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Fri Feb 20 07:58:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YOgFf-00014V-08
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Feb 2015 06:35:47 +0100
+	id 1YOhXT-0000bJ-8C
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Feb 2015 07:58:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753777AbbBTFfn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Feb 2015 00:35:43 -0500
-Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:55898 "EHLO
-	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753172AbbBTFfP (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Feb 2015 00:35:15 -0500
-X-AuditID: 1207440f-f792a6d000001284-27-54e6c790f050
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id BA.E4.04740.097C6E45; Fri, 20 Feb 2015 00:35:12 -0500 (EST)
-Received: from [192.168.69.130] (p5DDB39E1.dip0.t-ipconnect.de [93.219.57.225])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t1K5ZA15003403
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Fri, 20 Feb 2015 00:35:11 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.4.0
-In-Reply-To: <20150218191417.GA7767@peff.net>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpnleLIzCtJLcpLzFFi42IRYndR1J1w/FmIwbSrXBZdV7qZLH609DA7
-	MHk8693D6PF5k1wAUxS3TVJiSVlwZnqevl0Cd8aWSXuYC74yV0zc5tzA2M3cxcjJISFgIrF+
-	6y82CFtM4sK99UA2F4eQwGVGifkdM1ggnPNMEofevwbr4BXQlnj3/hALiM0ioCqxcvoxJhCb
-	TUBXYlFPM5gtKhAkcej0YxaIekGJkzOfgNkiAkYSNz58A9smLKAhsfjkMjBbSEBHov3tSTCb
-	E2jOnHcdYDazgLrEn3mXmCFseYntb+cwT2Dkn4Vk7CwkZbOQlC1gZF7FKJeYU5qrm5uYmVOc
-	mqxbnJyYl5dapGuil5tZopeaUrqJERKQ/DsYu9bLHGIU4GBU4uG9MPNZiBBrYllxZe4hRkkO
-	JiVRXttFQCG+pPyUyozE4oz4otKc1OJDjBIczEoivD2TgHK8KYmVValF+TApaQ4WJXFe9SXq
-	fkIC6YklqdmpqQWpRTBZGQ4OJQne9mNAjYJFqempFWmZOSUIaSYOTpDhXFIixal5KalFiaUl
-	GfGgiIwvBsYkSIoHaG8xSDtvcUFiLlAUovUUoy7Hgvb9M5mEWPLy81KlxHn7QIoEQIoySvPg
-	VsDSzytGcaCPhXmPglTxAFMX3KRXQEuYgJbM//MIZElJIkJKqoFRZ52U5bwZEXtSbTbsuhdz
-	3N3cead/x7zmWfnMq0yipyQ68z322h41wUpvtski29a85YZxG9aUWx/p31doujIhSFPz/AY2
-	l4Un1nc9Fzk/9wLDjmlyj5mad0a7Li8y2hiwYlneSrt3XVW7Mt+vuXe9ff7FxIWV 
+	id S1751332AbbBTG6E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Feb 2015 01:58:04 -0500
+Received: from smtp.codeaurora.org ([198.145.29.96]:44216 "EHLO
+	smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750882AbbBTG6D (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Feb 2015 01:58:03 -0500
+Received: from smtp.codeaurora.org (localhost [127.0.0.1])
+	by smtp.codeaurora.org (Postfix) with ESMTP id 8DDC7140A45;
+	Fri, 20 Feb 2015 06:58:01 +0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 486)
+	id 7CDC7140BE4; Fri, 20 Feb 2015 06:58:01 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on
+	pdx-caf-smtp.dmz.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.4 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+	MISSING_MID autolearn=no version=3.3.1
+Received: from [10.10.7.85] (184-96-4-77.hlrn.qwest.net [184.96.4.77])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	(Authenticated sender: mfick@smtp.codeaurora.org)
+	by smtp.codeaurora.org (Postfix) with ESMTPSA id 695C0140A45;
+	Fri, 20 Feb 2015 06:58:00 +0000 (UTC)
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264134>
 
-On 02/18/2015 08:14 PM, Jeff King wrote:
-> The response to my previous email was not overwhelming, but people did
-> express some interest in Git doing GSoC this year. So I've started on
-> the application, using last year's version as a template.
-
-Regretfully, I can't in good conscience volunteer to be a GSoC mentor
-this year. I have too many other projects going on and don't see how I
-can free up enough time to be a good mentor.
-
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
+T24gRmViIDE5LCAyMDE1IDU6NDIgUE0sIERhdmlkIFR1cm5lciA8ZHR1cm5lckB0d29wZW5zb3Vy
+Y2UuY29tPiB3cm90ZToKPgo+IE9uIEZyaSwgMjAxNS0wMi0yMCBhdCAwNjozOCArMDcwMCwgRHV5
+IE5ndXllbiB3cm90ZTogCj4gPiA+wqDCoMKgICogJ2dpdCBwdXNoJz8gCj4gPiAKPiA+IFRoaXMg
+b25lIGlzIG5vdCBhZmZlY3RlZCBieSBob3cgZGVlcCB5b3VyIHJlcG8ncyBoaXN0b3J5IGlzLCBv
+ciBob3cgCj4gPiB3aWRlIHlvdXIgdHJlZSBpcywgc28gc2hvdWxkIGJlIHF1aWNrLi4gCj4gPiAK
+PiA+IEFoIHRoZSBudW1iZXIgb2YgcmVmcyBtYXkgYWZmZWN0IGJvdGggZ2l0LXB1c2ggYW5kIGdp
+dC1wdWxsLiBJIHRoaW5rIAo+ID4gU3RlZmFuIGtub3dzIGJldHRlciB0aGFuIEkgaW4gdGhpcyBh
+cmVhLiAKPgo+IEkgY2FuIHRlbGwgeW91IHRoYXQgdGhpcyBpcyBhIGJpdCBvZiBhIHByb2JsZW0g
+Zm9yIHVzIGF0IFR3aXR0ZXIuwqAgV2UgCj4gaGF2ZSBvdmVyIDEwMGsgcmVmcywgd2hpY2ggYWRk
+cyB+MjBNaUIgb2YgZG93bnN0cmVhbSB0cmFmZmljIHRvIGV2ZXJ5IAo+IHB1c2guIAo+Cj4gSSBh
+ZGRlZCBhIGhhY2sgdG8gaW1wcm92ZSB0aGlzIGxvY2FsbHkgaW5zaWRlIFR3aXR0ZXI6IFRoZSBj
+bGllbnQgc2VuZHMgCj4gYSBibG9vbSBmaWx0ZXIgb2Ygc2hhcyB0aGF0IGl0IGJlbGlldmVzIHRo
+YXQgdGhlIHNlcnZlciBrbm93cyBhYm91dDsgdGhlIAo+IHNlcnZlciBzZW5kcyBvbmx5IHRoZSBz
+aGEgb2YgbWFzdGVyIGFuZCBhbnkgcmVmcyB0aGF0IGFyZSBub3QgaW4gdGhlIAo+IGJsb29tIGZp
+bHRlci7CoCBUaGUgY2xpZW50wqAgdXNlcyBpdHMgbG9jYWwgdmVyc2lvbiBvZiB0aGUgc2VydmVy
+cycgcmVmcyAKPiBhcyBpZiB0aGV5IGhhZCBqdXN0IGJlZW4gc2VudC7CoCBUaGlzIG1lYW5zIHRo
+YXQgc29tZSBwYWNrcyB3aWxsIGJlIAo+IHN1Ym9wdGltYWwsIGR1ZSB0byBmYWxzZSBwb3NpdGl2
+ZXMgaW4gdGhlIGJsb29tIGZpbHRlciBsZWFkaW5nIHNvbWUgbmV3IAo+IHJlZnMgdG8gbm90IGJl
+IHNlbnQuwqAgQWxzbywgaWYgdGhlcmUgd2VyZSBhIHJlcGFjayBiZXR3ZWVuIHRoZSBwdWxsIGFu
+ZCAKPiB0aGUgcHVzaCwgc29tZSByZWZzIG1pZ2h0IGhhdmUgYmVlbiBkZWxldGVkIG9uIHRoZSBz
+ZXJ2ZXI7IHdlIHJlcGFjayAKPiByYXJlbHkgZW5vdWdoIGFuZCBwdWxsIGZyZXF1ZW50bHkgZW5v
+dWdoIHRoYXQgdGhpcyBpcyBob3BlZnVsbHkgbm90IGFuIAo+IGlzc3VlLiAKPgo+IFdlJ3JlIHN0
+aWxsIHRlc3RpbmcgdG8gc2VlIGlmIHRoaXMgd29ya3MuwqAgQnV0IGR1ZSB0byB0aGUgbnVtYmVy
+IG9mIAo+IGFzc3VtcHRpb25zIGl0IG1ha2VzLCBpdCdzIHByb2JhYmx5IG5vdCB0aGF0IGdyZWF0
+IGFuIGlkZWEgZm9yIGdlbmVyYWwgCj4gdXNlLiAKCkdvb2QgdG8gaGVhciB0aGF0IG90aGVycyBh
+cmUgc3RhcnRpbmcgdG8gZXhwZXJpbWVudCB3aXRoIHNvbHV0aW9ucyB0byB0aGlzIHByb2JsZW0h
+ICBJIGhvcGUgdG8gaGVhciBtb3JlIHVwZGF0ZXMgb24gdGhpcy4KCkkgaGF2ZSBhIHByb3RvdHlw
+ZSBvZiBhIHNpbXBsZXIsIGFuZApJIGJlbGlldmUgbW9yZSByb2J1c3Qgc29sdXRpb24sIGJ1dCBh
+aW1lZCBhdCBhIHNtYWxsZXIgdXNlIGNhc2UgSSB0aGluay4gIE9uIGNvbm5lY3RpbmcsIHRoZSBj
+bGllbnQgc2VuZHMgYSBzaGEgb2YgYWxsIGl0cyByZWZzL3NoYXMgYXMgZGVmaW5lZCBieSBhIHJl
+ZnNwZWMsIHdoaWNoIGl0IGFsc28gc2VuZHMgdG8gdGhlIHNlcnZlciwgd2hpY2ggaXQgYmVsaWV2
+ZXMgdGhlIHNlcnZlciBtaWdodCBoYXZlIHRoZSBzYW1lIHJlZnMvc2hhcyB2YWx1ZXMgZm9yLiAg
+VGhlIHNlcnZlciBjYW4gdGhlbiBjYWxjdWxhdGUgdGhlIHZhbHVlIG9mIGl0cyByZWZzL3NoYXMg
+d2hpY2ggbWVldCB0aGUgc2FtZSByZWZzcGVjLCBhbmQgdGhlbiBvbWl0IHNlbmRpbmcgdGhvc2Ug
+cmVmcyBpZiB0aGUgInZlcmlmaWNhdGlvbiIgc2hhIG1hdGNoZXMsIGFuZCBpbnN0ZWFkIHNlbmQg
+b25seSBhIGNvbmZpcm1hdGlvbiB0aGF0IHRoZXkgbWF0Y2hlZCAoYWxvbmcgd2l0aCBhbnkgcmVm
+cyBvdXRzaWRlIG9mIHRoZSByZWZzcGVjKS4gIE9uIGEgbWF0Y2gsIHRoZSBjbGllbnQgY2FuIGlu
+amVjdCB0aGUgbG9jYWwgdmFsdWVzIG9mIHRoZSByZWZzIHdoaWNoIG1ldCB0aGUgcmVmc3BlYyBh
+bmQgYmUgZ3VhcmFudGVlZCB0aGF0IHRoZXkgbWF0Y2ggdGhlIHNlcnZlcidzIHZhbHVlcy4KClRo
+aXMgb3B0aW1pemF0aW9uIGlzIGFpbWVkIGF0IHRoZSB3b3JzdCBjYXNlIHNjZW5hcmlvIChhbmQg
+aXMgdGh1cyB0aGUgcG90ZW50aWFsbHkgYmVzdCBjYXNlICJjb21wcmVzc2lvbiIpLCB3aGVuIHRo
+ZSBjbGllbnQgYW5kIHNlcnZlciBtYXRjaCBmb3IgYWxsIHJlZnMgKGEgcmVmcy8qIHJlZnNwZWMp
+ICBUaGlzIGlzIHNvbWV0aGluZyB0aGF0IGhhcHBlbnMgb2Z0ZW4gb24gR2Vycml0IHNlcnZlciBz
+dGFydHVwLCB3aGVuIGl0IHZlcmlmaWVzIHRoYXQgaXRzIG1pcnJvcnMgYXJlIHVwLXRvLWRhdGUu
+ICBPbmUgcmVhc29uIEkgY2hvc2UgdGhpcyBhcyBhIHN0YXJ0aW5nIG9wdGltaXphdGlvbiwgaXMg
+YmVjYXVzZSBJIHRoaW5rIGl0IGlzIG9uZSB1c2UgY2FzZSB3aGljaCB3aWxsIGFjdHVhbGx5IG5v
+dCBiZW5lZml0IGZyb20gImZpeGluZyIgdGhlIGdpdCBwcm90b2NvbCB0byBvbmx5IHNlbmQgcmVs
+ZXZhbnQgcmVmcyBzaW5jZSBhbGwgdGhlIHJlZnMgYXJlIGluIGZhY3QgcmVsZXZhbnQgaGVyZSEg
+U28gc29tZXRoaW5nIGxpa2UgdGhpcyB3aWxsIGxpa2VseSBiZSBuZWVkZWQgaW4gYW55IGZ1dHVy
+ZSBnaXQgcHJvdG9jb2wgaW4gb3JkZXIgZm9yIGl0IHRvIGJlIGVmZmljaWVudCBmb3IgdGhpcyB1
+c2UgY2FzZS4gIEFuZCBJIGJlbGlldmUgdGhpcyB1c2UgY2FzZSBpcyBsaWtlbHkgdG8gc3RpY2sg
+YXJvdW5kLgoKV2l0aCBhIG1pbm9yIHR3ZWFrLCB0aGlzIG9wdGltaXphdGlvbiBzaG91bGQgd29y
+ayB3aGVuIHJlcGxpY2F0aW5nIGFjdHVhbCBleHBlY3RlZCB1cGRhdGVzIGFsc28gYnkgZXhjbHVk
+aW5nIHRoZSBleHBlY3RlZCB1cGRhdGluZyByZWZzIGZyb20gdGhlIHZlcmlmaWNhdGlvbiBzbyB0
+aGF0IHRoZSBzZXJ2ZXIgYWx3YXlzIHNlbmRzIHRoZWlyIHZhbHVlcyBzaW5jZSB0aGV5IHdpbGwg
+bGlrZWx5IG5vdCBtYXRjaCBhbmQgd291bGQgd3JlY2sgdGhlIG9wdGltaXphdGlvbi4gIEhvd2V2
+ZXIsIGZvciB0aGlzIHVzZSBjYXNlIGl0IGlzIG5vdCBjbGVhciB3aGV0aGVyIGl0IGlzIGFjdHVh
+bGx5IGV2ZW4gd29ydGggY2FyaW5nIGFib3V0IHRoZSBub24gdXBkYXRpbmcgcmVmcz8gIEluIHRo
+ZW9yeSB0aGUga25vd2xlZGdlIG9mIHRoZSBub24gdXBkYXRpbmcgcmVmcyBjYW4gcG90ZW50aWFs
+bHkgcmVkdWNlIHRoZSBhbW91bnQgb2YgZGF0YSB0cmFuc21pdHRlZCwgYnV0IEkgc3VzcGVjdCB0
+aGF0IGFzIHRoZSByZWYgY291bnQgaW5jcmVhc2VzLCB0aGlzIGhhcyBkaW1pbmlzaGluZyByZXR1
+cm5zIGFuZCBtb3N0bHkgZW5kcyB1cCBjaGV3aW5nIHVwIENQVSBhbmQgbWVtb3J5IGluIGEgdmFp
+biBhdHRlbXB0IHRvIHJlZHVjZSBuZXR3b3JrIHRyYWZmaWMuCgpQbGVhc2UgZG8ga2VlcCB1cyB1
+cC10by1kYXRlIG9mIHlvdXIgcmVzdWx0cywKCi1NYXJ0aW4KCgpRdWFsY29tbSBJbm5vdmF0aW9u
+IENlbnRlciwgSW5jLgpUaGUgUXVhbGNvbW0gSW5ub3ZhdGlvbiBDZW50ZXIsIEluYy4gaXMgYSBt
+ZW1iZXIgb2YgdGhlIENvZGUgQXVyb3JhIEZvcnVtLCBhIExpbnV4IEZvdW5kYXRpb24gQ29sbGFi
+b3JhdGl2ZSBQcm9qZWN0
