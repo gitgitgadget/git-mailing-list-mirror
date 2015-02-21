@@ -1,70 +1,92 @@
 From: Christoph Anton Mitterer <calestyo@scientia.net>
-Subject: [cosmetic bug?] needlessly(?) executable files
-Date: Sat, 21 Feb 2015 18:48:37 +0100
-Message-ID: <1424540917.15539.24.camel@scientia.net>
+Subject: [REQUEST] another --cleanup mode for commit
+Date: Sat, 21 Feb 2015 18:48:31 +0100
+Message-ID: <1424540911.15539.23.camel@scientia.net>
 Mime-Version: 1.0
 Content-Type: multipart/signed; micalg="sha-512";
 	protocol="application/x-pkcs7-signature";
-	boundary="=-GEvMQ+SnXlyqfi1Hk5W2"
+	boundary="=-AdKWog4rq7d52JMj4mmC"
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 21 18:55:06 2015
+X-From: git-owner@vger.kernel.org Sat Feb 21 18:55:07 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YPEGf-0003cW-QA
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Feb 2015 18:55:06 +0100
+	id 1YPEGf-0003cW-6G
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Feb 2015 18:55:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751717AbbBURyy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Feb 2015 12:54:54 -0500
-Received: from mailgw02.dd24.net ([193.46.215.43]:48752 "EHLO
+	id S1751698AbbBURyx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Feb 2015 12:54:53 -0500
+Received: from mailgw02.dd24.net ([193.46.215.43]:48751 "EHLO
 	mailgw02.dd24.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751561AbbBURyu (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1751488AbbBURyu (ORCPT <rfc822;git@vger.kernel.org>);
 	Sat, 21 Feb 2015 12:54:50 -0500
-Received: from mailpolicy-01.live.igb.homer.key-systems.net (mailpolicy-01.live.igb.homer.key-systems.net [192.168.1.26])
-	by mailgw02.dd24.net (Postfix) with ESMTP id 03A545FB06
-	for <git@vger.kernel.org>; Sat, 21 Feb 2015 17:48:40 +0000 (UTC)
+Received: from mailpolicy-01.live.igb.homer.key-systems.net (mailpolicy-02.live.igb.homer.key-systems.net [192.168.1.27])
+	by mailgw02.dd24.net (Postfix) with ESMTP id 6708D5FB02
+	for <git@vger.kernel.org>; Sat, 21 Feb 2015 17:48:33 +0000 (UTC)
 X-Virus-Scanned: Debian amavisd-new at
-	mailpolicy-01.live.igb.homer.key-systems.net
+	mailpolicy-02.live.igb.homer.key-systems.net
 Received: from mailgw02.dd24.net ([192.168.1.36])
-	by mailpolicy-01.live.igb.homer.key-systems.net (mailpolicy-01.live.igb.homer.key-systems.net [192.168.1.26]) (amavisd-new, port 10236)
-	with ESMTP id iIiIQrbuX95o for <git@vger.kernel.org>;
-	Sat, 21 Feb 2015 17:48:38 +0000 (UTC)
+	by mailpolicy-01.live.igb.homer.key-systems.net (mailpolicy-02.live.igb.homer.key-systems.net [192.168.1.27]) (amavisd-new, port 10236)
+	with ESMTP id lbl7lWNQNPgt for <git@vger.kernel.org>;
+	Sat, 21 Feb 2015 17:48:31 +0000 (UTC)
 Received: from heisenberg.fritz.box (ppp-188-174-161-156.dynamic.mnet-online.de [188.174.161.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
 	by mailgw02.dd24.net (Postfix) with ESMTPSA
-	for <git@vger.kernel.org>; Sat, 21 Feb 2015 17:48:38 +0000 (UTC)
+	for <git@vger.kernel.org>; Sat, 21 Feb 2015 17:48:31 +0000 (UTC)
 X-Mailer: Evolution 3.12.9-1+b1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264220>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264221>
 
 
---=-GEvMQ+SnXlyqfi1Hk5W2
+--=-AdKWog4rq7d52JMj4mmC
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 Hey.
 
-Just a question about files like:
-.git/config
-.git/hooks/*.sample
+Right now, all --cleanup modes for commit (except verbatim) seem to
+remove all "unnecessary" whitespace and collapse consecutive empty
+lines.
 
-Is there any reason that these are created executable? Especially the
-config file?
-I know the hooks are already disabled by being named .sample, but having
-them executable just increases the chance that one accidentally fires
-them up manually.
+I use already vim to show me any such things and when I don't remove it
+then, this usually means I want to have it intentionally (especially
+consecutive empty lines).
 
+Now obviously I could do things like --no-status, but I actually like
+the status to be shown - as I like it to be automatically removed. ;-)
+
+
+So it would be great if one could have another cleanup mode which
+basically does just the following:
+- remove any trailing lines that start with # and the one newline (which
+  is automatically added with the status) before these
+  e.g.
+    foo
+    #bar
+ =20
+    #status
+  yields in:
+    foo
+    #bar
+  e.g.
+    foo
+    #bar
+    #status
+  yields in:
+    foo
+
+- apart form that, leave any whitespace, new lines, etc. as is
 
 Cheers,
 Chris.
 
---=-GEvMQ+SnXlyqfi1Hk5W2
+--=-AdKWog4rq7d52JMj4mmC
 Content-Type: application/x-pkcs7-signature; name="smime.p7s"
 Content-Disposition: attachment; filename="smime.p7s"
 Content-Transfer-Encoding: base64
@@ -152,17 +174,17 @@ sdQAw+7Lzzw9IYCpX2Nl/N3gX6T0K/CFcUHUZyX7GrGXrtaZghNB0m6lG5kngOcLqagAMYIC7TCC
 AukCAQEwWzBUMRQwEgYDVQQKEwtDQWNlcnQgSW5jLjEeMBwGA1UECxMVaHR0cDovL3d3dy5DQWNl
 cnQub3JnMRwwGgYDVQQDExNDQWNlcnQgQ2xhc3MgMyBSb290AgMCOakwDQYJYIZIAWUDBAIDBQCg
 ggFjMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTE1MDIyMTE3NDgz
-N1owTwYJKoZIhvcNAQkEMUIEQPbZsBE+pfE2coD4ehycc+gAvKbmWays4bQrNmkzn6YxvpwibT/4
-uC4z2zM4M20vd16spf4nwJOLzEShzqV8Ho8wagYJKwYBBAGCNxAEMV0wWzBUMRQwEgYDVQQKEwtD
+MVowTwYJKoZIhvcNAQkEMUIEQPp7ZiFKO0LQF7OZvTN6Dai1EQjcB5hMwedJJwGk+gU68jTZdtCP
+2mPZh9ILZm8rzneYfIHJ88pKaswGPorS2ywwagYJKwYBBAGCNxAEMV0wWzBUMRQwEgYDVQQKEwtD
 QWNlcnQgSW5jLjEeMBwGA1UECxMVaHR0cDovL3d3dy5DQWNlcnQub3JnMRwwGgYDVQQDExNDQWNl
 cnQgQ2xhc3MgMyBSb290AgMCOakwbAYLKoZIhvcNAQkQAgsxXaBbMFQxFDASBgNVBAoTC0NBY2Vy
 dCBJbmMuMR4wHAYDVQQLExVodHRwOi8vd3d3LkNBY2VydC5vcmcxHDAaBgNVBAMTE0NBY2VydCBD
-bGFzcyAzIFJvb3QCAwI5qTANBgkqhkiG9w0BAQEFAASCAQCMvoIlyYD28MIhyRjqzcorMotYUheF
-9383qr9dzoIgEgoyx9tnTX92S9GHS8QHC/1MeH6tmh31+2YJ42xj17qB6fGzVnTBmOq/tEgIyc3o
-yiXgkrO6jO19mm7RrFJViMSGDKW3SahInPlfeycigKf7/wJCYhTqIE3dCmvsuT/jbPV7EmGoJWer
-yVpnAPisZ04S7GVDPAIutNvSJkc1uFwXUcilMYz6jROiGOmOlB/Ax3kuuDkTsen414zeh2eNkbQP
-g2+A0VWasCyjeJ+gBZ18F/w8uWweHCIzbXxFkBc9RdiZ/2i9MyxJyxEpqJItNY7OxEMTCrt8MZtl
-539FMYaeAAAAAAAA
+bGFzcyAzIFJvb3QCAwI5qTANBgkqhkiG9w0BAQEFAASCAQCjadmHK0hfG2a4/pt+CLGIfG9BK+o7
+pGCygGsaTrA8ClxQ5i2i7pde5ruD4CHeW4mPkYxJ1DsAvP/EZ1aPPxEP+I30h6Sq2yAl+049Dc8+
+KTgSdr6AsFIe5s9M48wIwaznFkpxqWcepdxa0oGW1gqWlEJsGEdAKo87fKtzQWEZ59EiEJKyDWAm
+teJtqQx4mI0XdyZKWvrAYyA1bW3wuxVGESNJgKGZ/ixg3YTbYtywa9Ohe9C8BQwkuirrx1TadKxH
+qanl/OjzmffHSXmYNzWwS7zJJshQH+s8HeMcOrfM2zcsL09zDHkkjudTS9s5XtoEw8yUcjo+W+R9
+3eASMEfDAAAAAAAA
 
 
---=-GEvMQ+SnXlyqfi1Hk5W2--
+--=-AdKWog4rq7d52JMj4mmC--
