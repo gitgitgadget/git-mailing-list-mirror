@@ -1,205 +1,199 @@
 From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: [PATCH v2 1/3] connect.c: allow ssh://user@[2001:db8::1]/repo.git
-Date: Sat, 21 Feb 2015 16:52:48 +0100
-Message-ID: <54E8A9D0.30108@web.de>
+Subject: [PATCH v2 3/3] t5500: show user name and host in diag-url
+Date: Sat, 21 Feb 2015 16:52:55 +0100
+Message-ID: <54E8A9D7.4050702@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: tboegi@web.de, lists@hcf.yourweb.de
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 21 16:53:01 2015
+X-From: git-owner@vger.kernel.org Sat Feb 21 16:53:05 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YPCMU-00089R-RF
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Feb 2015 16:52:59 +0100
+	id 1YPCMa-0008AU-L0
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Feb 2015 16:53:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752889AbbBUPwy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 21 Feb 2015 10:52:54 -0500
-Received: from mout.web.de ([212.227.17.11]:62752 "EHLO mout.web.de"
+	id S1752896AbbBUPxB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 21 Feb 2015 10:53:01 -0500
+Received: from mout.web.de ([212.227.17.12]:62816 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752808AbbBUPwv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Feb 2015 10:52:51 -0500
-Received: from macce.local ([217.211.68.12]) by smtp.web.de (mrweb103) with
- ESMTPSA (Nemesis) id 0MhDgb-1YCMIj3c3N-00MNSe; Sat, 21 Feb 2015 16:52:49
+	id S1752892AbbBUPw6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Feb 2015 10:52:58 -0500
+Received: from macce.local ([217.211.68.12]) by smtp.web.de (mrweb101) with
+ ESMTPSA (Nemesis) id 0Lvjiy-1XSoLz2kHs-017Rym; Sat, 21 Feb 2015 16:52:55
  +0100
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
-X-Provags-ID: V03:K0:gRFW1oKCppgIbwlAvb6eiZGwEsxP3JqKq6yMmkCKvCBmEHkG9V7
- k+BRqbTpPKQqqfQdoVtPd1maEjqBguQXkBd2arpwlwfV632dZmGg8YkM4V6zsSKakixnOMB
- oYz6ECxL2WF7q1Dd0ax3Jj05aUmo36OtxJVa9AH4ZfLjYk/cqmVh0Kh9V3/73QYuGA+q54t
- /ZucVIlW4Ly+UL8mKOZ0Q==
+X-Provags-ID: V03:K0:EcG5RL5wCAEX9N2hwJQZUwZ9wDTrsXxkAYaVg/5ujiZ17NvZgyM
+ meuiKhAiT0tNucwT+a647lVm54fOHPQOBgMIBHK+fJJx131H8ey6513w6EZEx/GEUYiJrv4
+ +Ok5Ockm4/RKmOpBDw2zRujpaW3H7QnERNGPFqfN/rho+vVJLGgCsSq2E/IqPaJ1lweXMah
+ ryIJrOTMsYu25nASjUcxg==
 X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264216>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264217>
 
-The ssh:// syntax was added in 2386d65822c91, it accepted
-ssh://user@2001:db8::1/repo.git, which is now legacy.
+The URL for ssh may have include a username before the hostname,
+like ssh://user@host/repo.
+When literal IPV6 addresses are used together with a username,
+the substring "user@[::1]" must be converted into "user@::1".
 
-Over the years the parser was improved to support [] and port numbers,
-but the combination of ssh://user@[2001:db8::1]:222/repo.git did
-never work.
-
-The only only way to use a user name, a literall IPV6 address and a por=
-t
-number was ssh://[user@2001:db8::1]:222/repo.git
-
-(Thanks to Christian Taube <lists@hcf.yourweb.de> for reporting this lo=
-ng
-standing issue)
-
-New users would use ssh://user@[2001:db8::1]:222/repo.git,
-so change the parser to handle it correctly.
-
-Support the old legacy URL's as well, to be backwards compatible,
-and avoid regressions for users which upgrade an existing installation
-to a later Git version.
+Make that conversion visible for the user, and write userandhost
+in the diagnostics
 
 Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
 ---
-
-Thanks for the reviews
-I hope the intention of being backward compatible is a little bit clear=
-er now,
-as well as the intention to accept URL's conforming to the RFC
-
-
- connect.c        | 63 ++++++++++++++++++++++++++++++++++--------------=
+ connect.c             | 35 +++++++++++++++++++++++------------
+ t/t5500-fetch-pack.sh | 51 +++++++++++++++++++++++++++++++++----------=
 --------
- t/t5601-clone.sh |  2 +-
- 2 files changed, 39 insertions(+), 26 deletions(-)
+ 2 files changed, 56 insertions(+), 30 deletions(-)
 
 diff --git a/connect.c b/connect.c
-index d47d0ec..b608976 100644
+index b608976..84f8156 100644
 --- a/connect.c
 +++ b/connect.c
-@@ -274,28 +274,44 @@ static enum protocol get_protocol(const char *nam=
-e)
- 	die("I don't handle protocol '%s'", name);
- }
-=20
-+static char *host_end(char **hoststart, int removebrackets)
-+{
-+	char *host =3D *hoststart;
-+	char *end;
-+	char *start =3D strstr(host, "@[");
-+	if (start)
-+		start++; /* Jump over '@' */
-+	else
-+		start =3D host;
-+	if (start[0] =3D=3D '[') {
-+		end =3D strchr(start + 1, ']');
-+		if (end) {
-+			if (removebrackets) {
-+				*end =3D 0;
-+				memmove(start, start + 1, end - start);
-+				end++;
-+			}
-+		} else
-+			end =3D host;
-+	} else
-+		end =3D host;
-+	return end;
-+}
-+
- #define STR_(s)	# s
- #define STR(s)	STR_(s)
-=20
- static void get_host_and_port(char **host, const char **port)
- {
- 	char *colon, *end;
--
--	if (*host[0] =3D=3D '[') {
--		end =3D strchr(*host + 1, ']');
--		if (end) {
--			*end =3D 0;
--			end++;
--			(*host)++;
--		} else
--			end =3D *host;
--	} else
--		end =3D *host;
-+	end =3D host_end(host, 1);
- 	colon =3D strchr(end, ':');
--
- 	if (colon) {
--		*colon =3D 0;
--		*port =3D colon + 1;
-+		long portnr =3D strtol(colon + 1, &end, 10);
-+		if (end !=3D colon + 1 && *end =3D=3D '\0' && 0 <=3D portnr && portn=
-r < 65536) {
-+			*colon =3D 0;
-+			*port =3D colon + 1;
-+		}
- 	}
- }
-=20
-@@ -547,13 +563,16 @@ static struct child_process *git_proxy_connect(in=
-t fd[2], char *host)
- 	return proxy;
- }
-=20
--static const char *get_port_numeric(const char *p)
-+static char *get_port(char *host)
- {
- 	char *end;
-+	char *p =3D strchr(host, ':');
-+
- 	if (p) {
- 		long port =3D strtol(p + 1, &end, 10);
- 		if (end !=3D p + 1 && *end =3D=3D '\0' && 0 <=3D port && port < 6553=
-6) {
--			return p;
-+			*p =3D '\0';
-+			return p+1;
- 		}
- 	}
-=20
-@@ -595,14 +614,7 @@ static enum protocol parse_connect_url(const char =
-*url_orig, char **ret_host,
- 	 * Don't do destructive transforms as protocol code does
- 	 * '[]' unwrapping in get_host_and_port()
- 	 */
--	if (host[0] =3D=3D '[') {
--		end =3D strchr(host + 1, ']');
--		if (end) {
--			end++;
--		} else
--			end =3D host;
--	} else
--		end =3D host;
-+	end =3D host_end(&host, 0);
-=20
- 	if (protocol =3D=3D PROTO_LOCAL)
- 		path =3D end;
-@@ -705,7 +717,8 @@ struct child_process *git_connect(int fd[2], const =
+@@ -675,7 +675,7 @@ struct child_process *git_connect(int fd[2], const =
 char *url,
- 			char *ssh_host =3D hostandport;
- 			const char *port =3D NULL;
+ 	signal(SIGCHLD, SIG_DFL);
+=20
+ 	protocol =3D parse_connect_url(url, &hostandport, &path);
+-	if (flags & CONNECT_DIAG_URL) {
++	if ((flags & CONNECT_DIAG_URL) && (protocol !=3D PROTO_SSH)) {
+ 		printf("Diag: url=3D%s\n", url ? url : "NULL");
+ 		printf("Diag: protocol=3D%s\n", prot_name(protocol));
+ 		printf("Diag: hostandport=3D%s\n", hostandport ? hostandport : "NULL=
+");
+@@ -719,18 +719,29 @@ struct child_process *git_connect(int fd[2], cons=
+t char *url,
  			get_host_and_port(&ssh_host, &port);
--			port =3D get_port_numeric(port);
-+			if (!port)
-+				port =3D get_port(ssh_host);
+ 			if (!port)
+ 				port =3D get_port(ssh_host);
+-
+-			if (!ssh) ssh =3D "ssh";
+-
+-			argv_array_push(&conn->args, ssh);
+-			if (putty && !strcasestr(ssh, "tortoiseplink"))
+-				argv_array_push(&conn->args, "-batch");
+-			if (port) {
+-				/* P is for PuTTY, p is for OpenSSH */
+-				argv_array_push(&conn->args, putty ? "-P" : "-p");
+-				argv_array_push(&conn->args, port);
++			if (flags & CONNECT_DIAG_URL) {
++				printf("Diag: url=3D%s\n", url ? url : "NULL");
++				printf("Diag: protocol=3D%s\n", prot_name(protocol));
++				printf("Diag: userandhost=3D%s\n", ssh_host ? ssh_host : "NULL");
++				printf("Diag: port=3D%s\n", port ? port : "NONE");
++				printf("Diag: path=3D%s\n", path ? path : "NULL");
++
++				free(hostandport);
++				free(path);
++				return NULL;
++			} else {
++				if (!ssh) ssh =3D "ssh";
++
++				argv_array_push(&conn->args, ssh);
++				if (putty && !strcasestr(ssh, "tortoiseplink"))
++					argv_array_push(&conn->args, "-batch");
++				if (port) {
++					/* P is for PuTTY, p is for OpenSSH */
++					argv_array_push(&conn->args, putty ? "-P" : "-p");
++					argv_array_push(&conn->args, port);
++				}
++				argv_array_push(&conn->args, ssh_host);
+ 			}
+-			argv_array_push(&conn->args, ssh_host);
+ 		} else {
+ 			/* remove repo-local variables from the environment */
+ 			conn->env =3D local_repo_env;
+diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
+index 5b2b1c2..bd37f04 100755
+--- a/t/t5500-fetch-pack.sh
++++ b/t/t5500-fetch-pack.sh
+@@ -541,13 +541,30 @@ check_prot_path () {
+ 	test_cmp expected actual
+ }
 =20
- 			if (!ssh) ssh =3D "ssh";
-=20
-diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index e4f10c0..f901b8a 100755
---- a/t/t5601-clone.sh
-+++ b/t/t5601-clone.sh
-@@ -326,7 +326,7 @@ test_expect_success !MINGW,!CYGWIN 'clone local pat=
-h foo:bar' '
-=20
- test_expect_success 'bracketed hostnames are still ssh' '
- 	git clone "[myhost:123]:src" ssh-bracket-clone &&
--	expect_ssh myhost:123 src
-+	expect_ssh myhost '-p 123' src
- '
-=20
- counter=3D0
+-check_prot_host_path () {
+-	cat >expected <<-EOF &&
++check_prot_host_port_path () {
++	local diagport
++	case "$2" in
++		*ssh*)
++		pp=3Dssh
++		uah=3Duserandhost
++		ehost=3D$(echo $3 | tr -d "[]")
++		diagport=3D"Diag: port=3D$4"
++		;;
++		*)
++		pp=3D$p
++		uah=3Dhostandport
++		ehost=3D$(echo $3$4 | sed -e "s/22$/:22/" -e "s/NONE//")
++		diagport=3D""
++		;;
++	esac
++	cat >exp <<-EOF &&
+ 	Diag: url=3D$1
+-	Diag: protocol=3D$2
+-	Diag: hostandport=3D$3
+-	Diag: path=3D$4
++	Diag: protocol=3D$pp
++	Diag: $uah=3D$ehost
++	$diagport
++	Diag: path=3D$5
+ 	EOF
++	grep -v "^$" exp >expected
+ 	git fetch-pack --diag-url "$1" >actual &&
+ 	test_cmp expected actual
+ }
+@@ -557,22 +574,20 @@ do
+ 	# git or ssh with scheme
+ 	for p in "ssh+git" "git+ssh" git ssh
+ 	do
+-		for h in host host:12 [::1] [::1]:23
++		for h in host user@host user@[::1] user@::1
+ 		do
+-			case "$p" in
+-			*ssh*)
+-				pp=3Dssh
+-				;;
+-			*)
+-				pp=3D$p
+-			;;
+-			esac
+ 			test_expect_success "fetch-pack --diag-url $p://$h/$r" '
+-				check_prot_host_path $p://$h/$r $pp "$h" "/$r"
++				check_prot_host_port_path $p://$h/$r $p "$h" NONE "/$r"
+ 			'
+ 			# "/~" -> "~" conversion
+ 			test_expect_success "fetch-pack --diag-url $p://$h/~$r" '
+-				check_prot_host_path $p://$h/~$r $pp "$h" "~$r"
++				check_prot_host_port_path $p://$h/~$r $p "$h" NONE "~$r"
++			'
++		done
++		for h in host User@host User@[::1]
++		do
++			test_expect_success "fetch-pack --diag-url $p://$h:22/$r" '
++				check_prot_host_port_path $p://$h:22/$r $p "$h" 22 "/$r"
+ 			'
+ 		done
+ 	done
+@@ -603,11 +618,11 @@ do
+ 	for h in host [::1]
+ 	do
+ 		test_expect_success "fetch-pack --diag-url $h:$r" '
+-			check_prot_path $h:$r $p "$r"
++			check_prot_host_port_path $h:$r $p "$h" NONE "$r"
+ 		'
+ 		# Do "/~" -> "~" conversion
+ 		test_expect_success "fetch-pack --diag-url $h:/~$r" '
+-			check_prot_host_path $h:/~$r $p "$h" "~$r"
++			check_prot_host_port_path $h:/~$r $p "$h" NONE "~$r"
+ 		'
+ 	done
+ done
 --=20
 2.2.0.rc1.790.ge19fcd2
