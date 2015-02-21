@@ -1,62 +1,76 @@
 From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
-Subject: [PATCH] pretty: use starts_with() to check for a prefix
-Date: Sat, 21 Feb 2015 20:53:09 +0100
-Message-ID: <54E8E225.4070406@web.de>
+Subject: [PATCH] sha1_name: use strlcpy() to copy strings
+Date: Sat, 21 Feb 2015 20:55:22 +0100
+Message-ID: <54E8E2AA.1020300@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
 Cc: Junio C Hamano <gitster@pobox.com>
 To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Feb 21 20:53:38 2015
+X-From: git-owner@vger.kernel.org Sat Feb 21 20:56:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YPG7N-000396-R0
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Feb 2015 20:53:38 +0100
+	id 1YPG9d-00047B-J5
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Feb 2015 20:55:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751966AbbBUTxe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Feb 2015 14:53:34 -0500
-Received: from mout.web.de ([212.227.17.11]:61937 "EHLO mout.web.de"
+	id S1752034AbbBUTzx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Feb 2015 14:55:53 -0500
+Received: from mout.web.de ([212.227.15.14]:52564 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751768AbbBUTxd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Feb 2015 14:53:33 -0500
-Received: from [192.168.178.27] ([79.253.189.194]) by smtp.web.de (mrweb102)
- with ESMTPSA (Nemesis) id 0M8Qpi-1XdDnX29Vy-00w09N; Sat, 21 Feb 2015 20:53:29
+	id S1751850AbbBUTzx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Feb 2015 14:55:53 -0500
+Received: from [192.168.178.27] ([79.253.189.194]) by smtp.web.de (mrweb003)
+ with ESMTPSA (Nemesis) id 0Lc8aj-1XiTCl01m1-00jXQe; Sat, 21 Feb 2015 20:55:42
  +0100
 User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
-X-Provags-ID: V03:K0:h1ngKinfahhQlEqkXRjTj83VvDmByEGpK9QQ8UInz5sqR3GTeQh
- jBpKBXTb/3XUGWWIXD50Awj4bERbiI8ynN202aDEKsWKAI3Stu2GrswUr4fZ+uw5m8EnABw
- suaMWIIAPl6iWo1FUMYnGfh+ke11iawXzBYevaI8OurFXAPKxchICLio8DvtxkyOmkwMpf9
- F97hK1P10o87hT5V0GkUQ==
+X-Provags-ID: V03:K0:nfy3jPRXk0ahrGh5FN/xA41LJ+jzGgHBoMaFJDLOzK5C82XxvOf
+ fE8Ut8e3PRowDa1G4FL0NDgz8uWHodp8I/RkcltGH5lneTlEzSlllo31M9gYXYGUOy2tYO9
+ BmESOJ3tUYw0Bzm8goakboyANFNko7tPmeRuwrs2pwBNwRLtipTalp58lX+yxlAg1ben8kQ
+ 5Y7DWtv8bigqoYen3qcfg==
 X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264226>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264227>
 
-Simplify the code and avoid duplication by using starts_with() instead
-of strlen() and strncmp() to check if a line starts with "encoding ".
+Use strlcpy() instead of calling strncpy() and then setting the last
+byte of the target buffer to NUL explicitly.  This shortens and
+simplifies the code a bit.
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
+Signed-of-by: Rene Scharfe <l.s.r@web.de>
 ---
- pretty.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sha1_name.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/pretty.c b/pretty.c
-index 9d34d02..7b49304 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -567,7 +567,7 @@ static char *replace_encoding_header(char *buf, const char *encoding)
- 	char *cp = buf;
+diff --git a/sha1_name.c b/sha1_name.c
+index cf2a83b..95f9f8f 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -1391,9 +1391,7 @@ static int get_sha1_with_context_1(const char *name,
+ 			namelen = strlen(cp);
+ 		}
  
- 	/* guess if there is an encoding header before a \n\n */
--	while (strncmp(cp, "encoding ", strlen("encoding "))) {
-+	while (!starts_with(cp, "encoding ")) {
- 		cp = strchr(cp, '\n');
- 		if (!cp || *++cp == '\n')
- 			return buf;
+-		strncpy(oc->path, cp,
+-			sizeof(oc->path));
+-		oc->path[sizeof(oc->path)-1] = '\0';
++		strlcpy(oc->path, cp, sizeof(oc->path));
+ 
+ 		if (!active_cache)
+ 			read_cache();
+@@ -1443,9 +1441,7 @@ static int get_sha1_with_context_1(const char *name,
+ 							   name, len);
+ 			}
+ 			hashcpy(oc->tree, tree_sha1);
+-			strncpy(oc->path, filename,
+-				sizeof(oc->path));
+-			oc->path[sizeof(oc->path)-1] = '\0';
++			strlcpy(oc->path, filename, sizeof(oc->path));
+ 
+ 			free(new_filename);
+ 			return ret;
 -- 
 2.3.0
