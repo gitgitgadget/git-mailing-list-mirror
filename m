@@ -1,76 +1,105 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Support customized reordering in version sort
-Date: Fri, 20 Feb 2015 21:37:18 -0800
-Message-ID: <xmqqh9ufygdt.fsf@gitster.dls.corp.google.com>
-References: <20150218191417.GA7767@peff.net>
-	<CACsJy8B_zkAecL2Wag8a5c9-_C9eoA9dYj4ciBXqXRVmRW77zw@mail.gmail.com>
-	<20150220071342.GB8763@peff.net>
-	<CAPc5daVJ_nYk=tWqpUYPpsX6Z50H429jOh8QfMwUdNDdTDMq9w@mail.gmail.com>
-	<20150221030209.GA567@lanh>
-	<CAPc5daXtmvfgkFA_YeQxunjSWYGUQB0uWCQVgfxMP_M9fB9qEw@mail.gmail.com>
-	<CACsJy8BFZ2O62f+QofSqZRoQ9BOX0SLnXHY_g93iMnyikW8H7g@mail.gmail.com>
-	<CAPc5daVJJcC--mwq0PfAczge3zG44ToDKP853FkyZ3x1KUfsig@mail.gmail.com>
+Subject: Re: [Discuss] soften warning message after cloning "void"
+Date: Fri, 20 Feb 2015 21:58:07 -0800
+Message-ID: <xmqq8ufryff4.fsf@gitster.dls.corp.google.com>
+References: <xmqqh9ui2481.fsf@gitster.dls.corp.google.com>
+	<CAGZ79kYu1k=iKRWTxVD9Q=C9F5J0d653czeR0NCy04wGobB=Vw@mail.gmail.com>
+	<CAPc5daUzdiS0HkVbqZvQvSm_49FhQj++hicmDTb717Cd7hg8hA@mail.gmail.com>
+	<CAJo=hJt4qVd_dybSn9Wy2UPpvm1+Kg0pE=vyB_fr0eHqQEXdVg@mail.gmail.com>
+	<CAPc5daVoHCxg8-xEVxJK-G0HKKHApbwCzTd0q6jab5jfyHcarQ@mail.gmail.com>
+	<CAGZ79kZAtnhKYQgoA=d-UfQ8LfH4qTxaAFpJRJPSYApD7dwtzg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 21 06:37:48 2015
+Cc: Shawn Pearce <spearce@spearce.org>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Sat Feb 21 06:58:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YP2l1-0002wq-Eq
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Feb 2015 06:37:39 +0100
+	id 1YP350-0004qm-Ab
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Feb 2015 06:58:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751155AbbBUFhW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Feb 2015 00:37:22 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:59582 "EHLO
+	id S1751206AbbBUF6L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Feb 2015 00:58:11 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50286 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750746AbbBUFhV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Feb 2015 00:37:21 -0500
+	with ESMTP id S1750746AbbBUF6K (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Feb 2015 00:58:10 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 91B1F3AD82;
-	Sat, 21 Feb 2015 00:37:20 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A280B310C2;
+	Sat, 21 Feb 2015 00:58:09 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Qd3kJquiKy/5bT0woekBy+mac4A=; b=JAtXYZ
-	FeJJnCRXZ+mB/rKK6OuF3P8cXEgXOWGIgsaFQgDDKusC//U2AkgY616hY3BAKN4k
-	/iqFViEvkK/dasJqzmIJ9libiRpaMEJP9jN8nnZ+cBXlqX970QsWVW0ZOGJL3clw
-	iSMky8DMTCIKdcdta+cMyV7xV/STH4ZWz046Y=
+	:content-type; s=sasl; bh=5DgBTQWt8u3VNPTL+SI0wU8tAi4=; b=uOToNy
+	9OqVyfIC/cfC6SCLLwSy/SAJNSWjHf2hILmtGM8cucPPNfBGg2a5pyBxWa2Huc//
+	Hilh6XjHssFeZCk7EzboI9f1XNnPOHMnfdrSHgsICT25cPlIx2W1VoTzm6DFGJaf
+	Hd/17yrQCak9GDEblKWQoJUAXopICittqWrXQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=LcUWaDYx6U/suRL7RoD883JQoyGrNLFr
-	piDSbp+zshJWusB8iRnUDnNikpeWTC6am8vZJ8+hbMXP3ycY1BZlRQVwgt6BnQt2
-	RjFL1bxMmR0YRIyFuUEp07Y6C+yaxeY/pZJ2Au5Nfiu60+OgaKBf4Zb/8S5iSjDC
-	FLTHkNAyDDk=
+	:content-type; q=dns; s=sasl; b=p1Fy6BlGcn/SlgB0xoKZU88MMOmLfTVE
+	+Ye3AHcFu4va+G0/aG28VeUc5OcSZDmHNRg8UrXF4MtvZO/gBJOY07NA7G2CL1QP
+	1iYecCrpueqS6VHM5nMiY4brFpXoO9f0qajLyaywanpxr3/OrvuVYrStFDARTZOR
+	l+YEI3PWteU=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 88A293AD80;
-	Sat, 21 Feb 2015 00:37:20 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 98172310C0;
+	Sat, 21 Feb 2015 00:58:09 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1061D3AD7F;
-	Sat, 21 Feb 2015 00:37:19 -0500 (EST)
-In-Reply-To: <CAPc5daVJJcC--mwq0PfAczge3zG44ToDKP853FkyZ3x1KUfsig@mail.gmail.com>
-	(Junio C. Hamano's message of "Fri, 20 Feb 2015 21:12:49 -0800")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1A11C310BF;
+	Sat, 21 Feb 2015 00:58:09 -0500 (EST)
+In-Reply-To: <CAGZ79kZAtnhKYQgoA=d-UfQ8LfH4qTxaAFpJRJPSYApD7dwtzg@mail.gmail.com>
+	(Stefan Beller's message of "Wed, 18 Feb 2015 21:12:06 -0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: B414A804-B98B-11E4-A9FF-A4119F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 9C906152-B98E-11E4-BA6D-A4119F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264209>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Stefan Beller <sbeller@google.com> writes:
 
-> You can define values to optional negatives and optional positives to
-> express a more
-> elaborate sort order e.g.
+> On Wed, Feb 18, 2015 at 6:54 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> On Wed, Feb 18, 2015 at 4:43 PM, Shawn Pearce <spearce@spearce.org> wrote:
+>>>
+>>> This fails from a JGit server because the ref advertisement for an
+>>> empty repository differs and disagrees with the format used by
+>>> git-core. The result is a confused client spewing an odd checkout
+>>> message.
+>>
+>> That is exactly why the rephrasing was brought up, wasn't it?
+>>
+>> As the Subject: line says, this thread is for people who want to
+>> help those users with un-odd message, so discuss away
+>> and come up with a final applicable patch ;-).
 >
->   1.0-pre12 < 1.0-rc0 < 1.0 < 1.0-post1
+> "warning: remote HEAD does not exist, not checking out any branch."
 >
-> even though "-post" does not have to be declared as optional positive.
+> would then be the correct answer.
 
-... that is, you say "-pre" is a more negative optional than "-rc"
-that is also a negative optional.
+Technically speaking, that is incorrect because HEAD already points
+at 'master'.  We DO check out a 'master' branch.  What is unusual is
+that the branch has not been born yet, and that is exactly the same
+state after 'git init' created an empty directory.  I.e.
+
+	$ git init new
+        $ cd new
+        $ git remote add origin $URL
+	$ git symbolic-ref HEAD
+        refs/heads/master
+
+would be exactly the same place where you are when you see that
+message.
+
+What we are not doing is not "not checking out". What we are not
+doing is to fast-forwarding the void to any of the branches the
+remote has, because we do not know which branch the remote wants
+us to start our history from by default.
+
+So, "warning: not starting history of 'master' from any of the
+remote's branches, as their HEAD does not point to a valid branch"
+or something like that?
