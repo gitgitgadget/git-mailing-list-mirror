@@ -1,78 +1,125 @@
 From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: Support customized reordering in version sort
-Date: Sat, 21 Feb 2015 10:33:03 +0700
-Message-ID: <CACsJy8BFZ2O62f+QofSqZRoQ9BOX0SLnXHY_g93iMnyikW8H7g@mail.gmail.com>
-References: <20150218191417.GA7767@peff.net> <CACsJy8B_zkAecL2Wag8a5c9-_C9eoA9dYj4ciBXqXRVmRW77zw@mail.gmail.com>
- <20150220071342.GB8763@peff.net> <CAPc5daVJ_nYk=tWqpUYPpsX6Z50H429jOh8QfMwUdNDdTDMq9w@mail.gmail.com>
- <20150221030209.GA567@lanh> <CAPc5daXtmvfgkFA_YeQxunjSWYGUQB0uWCQVgfxMP_M9fB9qEw@mail.gmail.com>
+Subject: Re: Git Scaling: What factors most affect Git performance for a large repo?
+Date: Sat, 21 Feb 2015 10:51:31 +0700
+Message-ID: <CACsJy8DxTC8xG+emwGUM6qJT-ocv1vWVSLe8S=WdTOe_Kb7+bg@mail.gmail.com>
+References: <CAH8BJxEr_v+aitpZduXPC4oiRhMuySpc7Wb1aGcYe_p3mWjn+w@mail.gmail.com>
+ <CACBZZX6A+35wGBYAYj7E9d4XwLby21TLbTh-zRX+fkSt_e2zeg@mail.gmail.com>
+ <CACsJy8DkS65axQNY70FrfqR5s-49oOn8j7SAE9BTiRVNrm+ohQ@mail.gmail.com> <CACBZZX4T38j9YU3eiHTfkDoZKsgyJFrnJQNm5WBmb9RDenDOBg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 21 04:33:43 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Stephen Morton <stephen.c.morton@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 21 04:52:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YP0p1-0002u2-Qy
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Feb 2015 04:33:40 +0100
+	id 1YP16u-0001mo-0q
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Feb 2015 04:52:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755442AbbBUDdf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Feb 2015 22:33:35 -0500
-Received: from mail-ie0-f181.google.com ([209.85.223.181]:39001 "EHLO
-	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754990AbbBUDde (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Feb 2015 22:33:34 -0500
-Received: by iecvy18 with SMTP id vy18so12404272iec.6
-        for <git@vger.kernel.org>; Fri, 20 Feb 2015 19:33:34 -0800 (PST)
+	id S1755465AbbBUDwD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 Feb 2015 22:52:03 -0500
+Received: from mail-ie0-f171.google.com ([209.85.223.171]:36678 "EHLO
+	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755459AbbBUDwB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Feb 2015 22:52:01 -0500
+Received: by ierx19 with SMTP id x19so12490914ier.3
+        for <git@vger.kernel.org>; Fri, 20 Feb 2015 19:52:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=y7K+2EMYYi4xNyNM9A2N9x3U11I9cHeCqxxs4riDbLY=;
-        b=wZOhqfHYix5ammiWeLEjJoGLZeRkZT9Buh0pK356/r9PiDkULBWfnuRhBnMDTt4GEn
-         gSj/Qtkly9KQRnGvY9HhjofUHToQDl/CWnjaT6sX7K9IE3zJiKTH/XpnoeQJLs7c42N3
-         qkAhixXGn1X54+k5hAouILIsJWwxd22/Rjmo+PXHkuO3p1w1rz/AP5aiG1Fo88Nn4ZHM
-         bLi9ePFrD9ro0xcCZxft+Sub6pJ4bHEDOjs0PW7wJ6GJjuEfWXhN47qrTaQuTDDwa+ji
-         +G09GIPO71SDCq4AyeGy8g56O0sa9mWPSWDidbnFsYen1FAfzOXrFV+vtAc7DuhAwYrL
-         6dtQ==
-X-Received: by 10.43.19.134 with SMTP id qk6mr1171429icb.29.1424489614069;
- Fri, 20 Feb 2015 19:33:34 -0800 (PST)
-Received: by 10.107.131.155 with HTTP; Fri, 20 Feb 2015 19:33:03 -0800 (PST)
-In-Reply-To: <CAPc5daXtmvfgkFA_YeQxunjSWYGUQB0uWCQVgfxMP_M9fB9qEw@mail.gmail.com>
+         :cc:content-type:content-transfer-encoding;
+        bh=WZ8m9kqKlcooXb7lNDyNyVIQdITVe4dc4yqGvAY1iAY=;
+        b=yBBwglNW7AnM+2H6hoPwP4MoBJYAji41nCjWF+0BnyhAOAr6yf0Kzztvo5zE/lw2Au
+         3Cemo1wWlanlLfevJdVubvIAb4jmiKryoC3ZW16guAZeYraxUw2Y+m0ECHBkHVKihRrY
+         p/cg5sMo/TRHQCpqurvp7XXtAfD2Yp/BWwrZkKFU9hnvt6hm591YQ4FCsXa/8QCK1ns5
+         wrjnzek6vAs1s3QP8gqwXUkluCAZnplROz6vP+tOseAyusjNWBV4zdMIzpKzzbABpD6J
+         mUnqHGzNxG2yuxCalkxn+8j8WRuK6aSr1kw4Pk3D+TjwNHAOs48hX/mQyegcEWGGIDh6
+         24Sw==
+X-Received: by 10.107.170.220 with SMTP id g89mr1437759ioj.31.1424490721193;
+ Fri, 20 Feb 2015 19:52:01 -0800 (PST)
+Received: by 10.107.131.155 with HTTP; Fri, 20 Feb 2015 19:51:31 -0800 (PST)
+In-Reply-To: <CACBZZX4T38j9YU3eiHTfkDoZKsgyJFrnJQNm5WBmb9RDenDOBg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264201>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264202>
 
-On Sat, Feb 21, 2015 at 10:25 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> On Fri, Feb 20, 2015 at 7:02 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+On Fri, Feb 20, 2015 at 7:09 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+>>> But actually most of "git fetch" is spent in the reachability check
+>>> subsequently done by "git-rev-list" which takes several seconds. I
 >>
->> My idea is to make it easy for the user to change the sort algorithm.
->> And it's probably intuitive to just substitute a string with
->> something. So if "1-rc1" is put incorrectly before "1.1" and you
->> realize that "1.999" ought to be the last one before "2". You could
->> tell git to internally replace "1-rc1" with "1.999".
->>
->> This patch does that. The user feeds substitution rules via
->> versionsort.substitute config keys, e.g.
->>
->>     git config versionsort.substitute "-rc .999"
+>> I wonder if reachability bitmap could help here..
 >
-> I would say 1-rc1 comes and then 1-rc2 and then 1-rc3 ... 1-rc10 and then
-> 1-rc11 and then finally 1. It will probably be followed by 1.1-rc1, 1.1-rc2, ...
-> and then 1.1 (aka 1.1-final).
+> I could have sworn I had that enabled already but evidently not. I di=
+d
+> test it and it cut down on clone times a bit. Now our daily repacking
+> is:
 >
-> If 1-rc1 is equated with 1.9991 because -rc is replaced with .999, how does
-> it make 1 come after 1.99911, and 1.1.9992 come before 1.1?
+>         git --git-dir=3D{} gc &&
+>         git --git-dir=3D{} pack-refs --all --prune &&
+>         git --git-dir=3D{} repack -Ad --window=3D250 --depth=3D100
+> --write-bitmap-index --pack-kept-objects &&
 >
-> I didn't read the patch text and perhaps the explanation above is the only
-> thing faulty about your message, or perhaps my reading is faulty and the
-> above describes a sound idea, but I do not see how the above makes sense.
+> It's not clear to me from the documentation whether this should just
+> be enabled on the server, or the clients too. In any case I've enable=
+d
+> it on both.
 
-No, faulty thinking. Back to the whiteboard..
+Pack bitmaps matter most on the server side. What I was not sure was
+whether it helped the client side as well because you do rev-list on
+the client side for reachability test. But thinking again, I don't
+think enabling pack bitmaps on the client side helps much. The "--not
+--all" part in rev-list basically just traverses commits, not trees
+and objects (where pack bitmaps shine). The big problem here is
+"--all" which will go examine all refs. So big ref number problem
+again..
 
--- 
+> Even then with it enabled on both a "git pull" that pulls down just
+> one commit on one branch is 13s. Trace attached at the end of the
+> mail.
+>
+>>> haven't looked into it but there's got to be room for optimization
+>>> there, surely it only has to do reachability checks for new refs, o=
+r
+>>> could run in some "I trust this remote not to send me corrupt data"
+>>> completely mode (which would make sense within a company where you =
+can
+>>> trust your main Git box).
+>>
+>> No, it's not just about trusting the server side, it's about catchin=
+g
+>> data corruption on the wire as well. We have a trick to avoid
+>> reachability check in clone case, which is much more expensive than =
+a
+>> fetch. Maybe we could do something further to help the fetch case _i=
+f_
+>> reachability bitmaps don't help.
+>
+> Still, if that's indeed a big bottleneck what's the worst-case
+> scenario here? That the local repository gets hosed? The server will
+> still recursively validate the objects it gets sent, right?
+
+The server is under pressure to pack and send data fast so it does not
+validate as heavily as the client. When deltas are reused, only crc32
+is verified. When deltas are generated, the server must unpack some
+objects for deltification, but I don't think it rehashes the content
+to see if it produces the same SHA-1. Single bit flips could go
+unnoticed..
+
+> I wonder if a better trade-off in that case would be to skip this in
+> some situations and instead put something like "git fsck" in a
+> cronjob.
+
+Either that or be optimistic, accept the pack (i.e. git-fetch returns
+quickly) and validate it in the background. If the pack is indeed
+good, you don't have to wait until validation is done. If the pack is
+bad, you would know after a minute or two, hopefully you can still
+recover from that point.
+--=20
 Duy
