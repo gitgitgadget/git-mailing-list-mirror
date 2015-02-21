@@ -1,80 +1,70 @@
 From: Christoph Anton Mitterer <calestyo@scientia.net>
-Subject: [BUG] git mangles up commit messages on rebase
-Date: Sat, 21 Feb 2015 18:48:26 +0100
-Message-ID: <1424540906.15539.22.camel@scientia.net>
+Subject: [cosmetic bug?] needlessly(?) executable files
+Date: Sat, 21 Feb 2015 18:48:37 +0100
+Message-ID: <1424540917.15539.24.camel@scientia.net>
 Mime-Version: 1.0
 Content-Type: multipart/signed; micalg="sha-512";
 	protocol="application/x-pkcs7-signature";
-	boundary="=-IdFt21NDti0vSGMGkaCG"
+	boundary="=-GEvMQ+SnXlyqfi1Hk5W2"
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 21 18:55:00 2015
+X-From: git-owner@vger.kernel.org Sat Feb 21 18:55:06 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YPEGZ-0003cW-AO
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Feb 2015 18:54:59 +0100
+	id 1YPEGf-0003cW-QA
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Feb 2015 18:55:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751671AbbBURyw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Feb 2015 12:54:52 -0500
-Received: from mailgw02.dd24.net ([193.46.215.43]:48750 "EHLO
+	id S1751717AbbBURyy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Feb 2015 12:54:54 -0500
+Received: from mailgw02.dd24.net ([193.46.215.43]:48752 "EHLO
 	mailgw02.dd24.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751204AbbBURyu (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1751561AbbBURyu (ORCPT <rfc822;git@vger.kernel.org>);
 	Sat, 21 Feb 2015 12:54:50 -0500
-X-Greylist: delayed 378 seconds by postgrey-1.27 at vger.kernel.org; Sat, 21 Feb 2015 12:54:49 EST
 Received: from mailpolicy-01.live.igb.homer.key-systems.net (mailpolicy-01.live.igb.homer.key-systems.net [192.168.1.26])
-	by mailgw02.dd24.net (Postfix) with ESMTP id 35C8A5FAF9
-	for <git@vger.kernel.org>; Sat, 21 Feb 2015 17:48:29 +0000 (UTC)
+	by mailgw02.dd24.net (Postfix) with ESMTP id 03A545FB06
+	for <git@vger.kernel.org>; Sat, 21 Feb 2015 17:48:40 +0000 (UTC)
 X-Virus-Scanned: Debian amavisd-new at
 	mailpolicy-01.live.igb.homer.key-systems.net
 Received: from mailgw02.dd24.net ([192.168.1.36])
 	by mailpolicy-01.live.igb.homer.key-systems.net (mailpolicy-01.live.igb.homer.key-systems.net [192.168.1.26]) (amavisd-new, port 10236)
-	with ESMTP id Q5v5KCGJiWB4 for <git@vger.kernel.org>;
-	Sat, 21 Feb 2015 17:48:27 +0000 (UTC)
+	with ESMTP id iIiIQrbuX95o for <git@vger.kernel.org>;
+	Sat, 21 Feb 2015 17:48:38 +0000 (UTC)
 Received: from heisenberg.fritz.box (ppp-188-174-161-156.dynamic.mnet-online.de [188.174.161.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
 	by mailgw02.dd24.net (Postfix) with ESMTPSA
-	for <git@vger.kernel.org>; Sat, 21 Feb 2015 17:48:27 +0000 (UTC)
+	for <git@vger.kernel.org>; Sat, 21 Feb 2015 17:48:38 +0000 (UTC)
 X-Mailer: Evolution 3.12.9-1+b1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264220>
 
 
---=-IdFt21NDti0vSGMGkaCG
+--=-GEvMQ+SnXlyqfi1Hk5W2
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 Hey.
 
-When I do a simple interactive rebase, e.g. something like this:
-edit 78f3ba8 editing or just rewriting this commit
-pick b621076 foo
-pick e06c28e this one had a "verbatim" commit message
-pick c0a447f bar
+Just a question about files like:
+.git/config
+.git/hooks/*.sample
 
-and one of the commit messages from the children I edit/rewrite had a
-commit message that was edited with --cleanup=3Dverbatim (e.g. double
-newlines, etc.).
+Is there any reason that these are created executable? Especially the
+config file?
+I know the hooks are already disabled by being named .sample, but having
+them executable just increases the chance that one accidentally fires
+them up manually.
 
-Then these get lost once I --continue and it appears that the messages
-are recreated but with the default of --cleanup=3Ddefault .
-
-IMO that's quite annoying, cause when one intentionally chose e.g.
--cleanup=3Dverbatim and made commit messages with that, then this is
-probably what one wanted and it should be dumped just because of
-changing another commit.
-
-Could that possibly be solved? :)
 
 Cheers,
 Chris.
 
---=-IdFt21NDti0vSGMGkaCG
+--=-GEvMQ+SnXlyqfi1Hk5W2
 Content-Type: application/x-pkcs7-signature; name="smime.p7s"
 Content-Disposition: attachment; filename="smime.p7s"
 Content-Transfer-Encoding: base64
@@ -161,18 +151,18 @@ oI53V93lYRE9IwCQTDz6o2CTBKOvNfYOao9PSmCnhQVsRqGP9Md246FZV/dxssRuFFxtbUFm3xuT
 sdQAw+7Lzzw9IYCpX2Nl/N3gX6T0K/CFcUHUZyX7GrGXrtaZghNB0m6lG5kngOcLqagAMYIC7TCC
 AukCAQEwWzBUMRQwEgYDVQQKEwtDQWNlcnQgSW5jLjEeMBwGA1UECxMVaHR0cDovL3d3dy5DQWNl
 cnQub3JnMRwwGgYDVQQDExNDQWNlcnQgQ2xhc3MgMyBSb290AgMCOakwDQYJYIZIAWUDBAIDBQCg
-ggFjMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTE1MDIyMTE3NDgy
-NlowTwYJKoZIhvcNAQkEMUIEQDMsedQ5OHQdHUhIEyKFMp3dQb40udPlbiChXQ4vJx5sKTS/rDWx
-1f16ilLPIZIJMy+q31gN5h11gsq237B8mNcwagYJKwYBBAGCNxAEMV0wWzBUMRQwEgYDVQQKEwtD
+ggFjMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTE1MDIyMTE3NDgz
+N1owTwYJKoZIhvcNAQkEMUIEQPbZsBE+pfE2coD4ehycc+gAvKbmWays4bQrNmkzn6YxvpwibT/4
+uC4z2zM4M20vd16spf4nwJOLzEShzqV8Ho8wagYJKwYBBAGCNxAEMV0wWzBUMRQwEgYDVQQKEwtD
 QWNlcnQgSW5jLjEeMBwGA1UECxMVaHR0cDovL3d3dy5DQWNlcnQub3JnMRwwGgYDVQQDExNDQWNl
 cnQgQ2xhc3MgMyBSb290AgMCOakwbAYLKoZIhvcNAQkQAgsxXaBbMFQxFDASBgNVBAoTC0NBY2Vy
 dCBJbmMuMR4wHAYDVQQLExVodHRwOi8vd3d3LkNBY2VydC5vcmcxHDAaBgNVBAMTE0NBY2VydCBD
-bGFzcyAzIFJvb3QCAwI5qTANBgkqhkiG9w0BAQEFAASCAQAOLuY2K/jKyPqi7GCWV/+KJcpBDgTZ
-Z2hESxJFzPFuMmaDZSkUeDGkPrxkNPnb7MfaJ7uaYnt00lUGxizj0T1Ypw0d8Cm+O7gXk+7/Mg5W
-UF5OOsBY2yhqQmn6ktUH/LWZYX9K33MPRiBqIbvRGKwwjjmVpQUsN2YPAWhHBhxZuEwPFUvzKgrz
-0pxC0pqWq8MNpiKkk1bIRChguU0IzWlIdi37DV1+T+Pqy4hD19uP9CtofajNjcjlvfcr2wWJHq1L
-NAVwZkxUqcJnQ9eIAHRouqJ30VHsskdzTc+NN413McuiuSV8xHCssBjYJp+sdd4zgxY8V+uSu+a1
-EjMjeUfCAAAAAAAA
+bGFzcyAzIFJvb3QCAwI5qTANBgkqhkiG9w0BAQEFAASCAQCMvoIlyYD28MIhyRjqzcorMotYUheF
+9383qr9dzoIgEgoyx9tnTX92S9GHS8QHC/1MeH6tmh31+2YJ42xj17qB6fGzVnTBmOq/tEgIyc3o
+yiXgkrO6jO19mm7RrFJViMSGDKW3SahInPlfeycigKf7/wJCYhTqIE3dCmvsuT/jbPV7EmGoJWer
+yVpnAPisZ04S7GVDPAIutNvSJkc1uFwXUcilMYz6jROiGOmOlB/Ax3kuuDkTsen414zeh2eNkbQP
+g2+A0VWasCyjeJ+gBZ18F/w8uWweHCIzbXxFkBc9RdiZ/2i9MyxJyxEpqJItNY7OxEMTCrt8MZtl
+539FMYaeAAAAAAAA
 
 
---=-IdFt21NDti0vSGMGkaCG--
+--=-GEvMQ+SnXlyqfi1Hk5W2--
