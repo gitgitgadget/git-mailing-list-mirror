@@ -1,87 +1,116 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [cosmetic bug?] needlessly(?) executable files
-Date: Sun, 22 Feb 2015 10:44:12 -0800
-Message-ID: <xmqqr3thwzur.fsf@gitster.dls.corp.google.com>
-References: <1424540917.15539.24.camel@scientia.net>
+Subject: Re: [RFC/PATCH] branch: name detached HEAD analogous to status
+Date: Sun, 22 Feb 2015 11:21:48 -0800
+Message-ID: <xmqqa905wy43.fsf@gitster.dls.corp.google.com>
+References: <71fc137d8015f6e81ab91cfcbcad4ec0fa0dc3e6.1424626271.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: git@vger.kernel.org
-To: Christoph Anton Mitterer <calestyo@scientia.net>
-X-From: git-owner@vger.kernel.org Sun Feb 22 19:44:25 2015
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Sun Feb 22 20:21:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YPbVw-0003lw-UO
-	for gcvg-git-2@plane.gmane.org; Sun, 22 Feb 2015 19:44:25 +0100
+	id 1YPc6G-0004Tm-7Y
+	for gcvg-git-2@plane.gmane.org; Sun, 22 Feb 2015 20:21:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752070AbbBVSoP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Feb 2015 13:44:15 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64014 "EHLO
+	id S1752075AbbBVTVw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Feb 2015 14:21:52 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:60798 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752041AbbBVSoO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Feb 2015 13:44:14 -0500
+	with ESMTP id S1752028AbbBVTVv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Feb 2015 14:21:51 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id DFB143891F;
-	Sun, 22 Feb 2015 13:44:13 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9B36839313;
+	Sun, 22 Feb 2015 14:21:50 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=kBi3CpQKZo5934brT3JyI6ojl/4=; b=jCTlS2
-	i3VP4/p17MDNcU16/v4S0xO7S9k6ck4UmOgDsOTeq0QFaP+V8vfcm4aeOmjwIAxB
-	x4e/CQBL+SzFQHHYi7dKolUOC5iaJ9s9Y1bIbpKrQE/9Q5FJ0K950zf2U7B3Q8iy
-	5+U+NW60sj/LtJVIlumv+MLGDcxeKVehm1yLY=
+	:content-type; s=sasl; bh=jB3doI17894aRZa82VLZYwtFtcU=; b=pL7Ycl
+	wtgCojh/ghVcp04MtxbcaisUu14fIRWD+cR/ONBjqCek4FgyHGRENt6dUX2L5qav
+	N8EPW1qgHYSO9UphgMcjLb46dZFab0NlGyRt15WW43LIX0qy4H7gKl9ivesP3Wa/
+	QrmUlGIHBVmb19WBuhAHQ2+rDxx7t8ITTUIwo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=HjjUpYqn+H/f3/kjY6p45sbh4JMluxIk
-	u/vodRSteB1j4PNyKNatt35+Iz2enM38DrZBrdCmBGCqlvy6MTOQYaNSRdTTBxHR
-	+jWppP2d+lqs6aBGvlQQSRzRusZ69rwDreIk0GJQAJ285iKi68pswWnVOSd1HfZc
-	szTMd/CVKNU=
+	:content-type; q=dns; s=sasl; b=b5Yu6Xm0tkOA0W4Bym6sOjlF80A2o+Ft
+	sQ4d2Ei7o0+3Sov22Vy/4D8EGubu55Vf703iPl10j9PB2wvIqjlLpJACImzB68xo
+	2/H1b6E55z2O/QLbKDSuOS6dcE5Sc23HuvGg62c30JGHXwJgPuBNKVers4hLmto1
+	jmnfEIQZARY=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D67AC3891E;
-	Sun, 22 Feb 2015 13:44:13 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 90E6139311;
+	Sun, 22 Feb 2015 14:21:50 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 49F603891D;
-	Sun, 22 Feb 2015 13:44:13 -0500 (EST)
-In-Reply-To: <1424540917.15539.24.camel@scientia.net> (Christoph Anton
-	Mitterer's message of "Sat, 21 Feb 2015 18:48:37 +0100")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1106C3930F;
+	Sun, 22 Feb 2015 14:21:49 -0500 (EST)
+In-Reply-To: <71fc137d8015f6e81ab91cfcbcad4ec0fa0dc3e6.1424626271.git.git@drmicha.warpmail.net>
+	(Michael J. Gruber's message of "Sun, 22 Feb 2015 18:38:20 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: CBC62490-BAC2-11E4-B9D1-A4119F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 0CE98002-BAC8-11E4-A639-A4119F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264235>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264236>
 
-Christoph Anton Mitterer <calestyo@scientia.net> writes:
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-> Just a question about files like:
-> .git/config
-> .git/hooks/*.sample
+> "git status" carefully names a detached HEAD "at" resp. "from" a rev or
+> ref depending on whether the detached HEAD has moved since. "git branch"
+> always uses "from", which can be confusing, because a status-aware user
+> would interpret this as moved detached HEAD.
 >
-> Is there any reason that these are created executable? Especially the
-> config file?
+> Make "git branch" use the same logic and wording.
 
-In a new repository I just did "git init", I see this:
+Yeah, otherwise the user would wonder why sometimes the object name
+after that "from" matches "git rev-parse HEAD" and sometimes does
+not.
 
-    $ rm -fr stupid
-    $ umask 0027
-    $ git init stupid
-    $ ls -l stupid/.git/config | sed -e 's/ .*//'
-    -rw-r-----
+In order to make sure that it will be easy for us to maintain that
+these two commands will keep using the same logic and wording after
+this "fix" is applied, should this patch do a bit more?  Or is it
+worth doing that for such a small piece of code to be shared?
 
-So no, config is not created executable.
+The following is a tangent and I do not think it is likely we would
+do anything about it, but I wonder what value we give the end users
+by showing the "from" information, both in "status" and "branch" in
+the first place.  When I am on a detached HEAD, I'd be doing one of
+these three things:
 
-> I know the hooks are already disabled by being named .sample,
+ (1) I am on some kind of sequencing machinery (e.g. "rebase -i",
+     "cherry-pick A..B", or "bisect").  It does not matter to me at
+     all if I am at the same commit at which I started the sequenced
+     operations or the sequencing machinery has moved me one or more
+     commits along its planned course of action, or where the
+     original point the sequencing machinery detached the HEAD at.
+     I suspect that I would not use "git status" or "git branch" in
+     this mode anyway.
 
-I think that is deliberate, so that lazy people can just do:
+ (2) I am sight-seeing, starting with e.g. "git checkout v2.0.0",
+     and moving around with "git checkout $some_other_commit".  I'd
+     always see that I am "at" the commit I last checked out, so the
+     distinctions would not be even shown to me.
 
-    $ mv .git/hooks/pre-commit.sample .git/hooks/pre-commit
+ (3) I am experimenting to fix or enhance an existing thing that is
+     meant to eventually hit a concrete branch, but I do not know if
+     the experiment would pan out. "git checkout $topic~$n" would be
+     to start from near the tip of that $topic ($n may often be 0
+     but not always) and then I would "git commit" my experiments.
+     When I assess my progress, I'd be interested in what I have
+     that is not in $topic and vice versa since I started that
+     experiment, so
 
-without one more command
+     $ git log ...$topic
+     $ git show-branch HEAD $topic
 
-    $ chmod +x .git/hooks/pre-commit
+     would be a lot more useful than having to learn "where did I
+     detach" from either "status" or "branch" and then do something
+     about that the abbreviated object name (like feeding it to
+     "describe" or "log").
 
-after doing so.
+Of course, the decision to make the point the HEAD was originally
+detached at is not an issue this patch introduces, but it makes me
+wonder if that existing "at vs from" logic is an overall win or a
+loss.
