@@ -1,158 +1,72 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [RFC/PATCH] branch: name detached HEAD analogous to status
-Date: Sun, 22 Feb 2015 18:38:20 +0100
-Message-ID: <71fc137d8015f6e81ab91cfcbcad4ec0fa0dc3e6.1424626271.git.git@drmicha.warpmail.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 22 18:38:29 2015
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: [PATCH v2 1/3] connect.c: allow ssh://user@[2001:db8::1]/repo.git
+Date: Sun, 22 Feb 2015 18:57:34 +0100
+Message-ID: <54EA188E.9090601@web.de>
+References: <54E8A9D0.30108@web.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: lists@hcf.yourweb.de,
+	"sandals@crustytoothpaste.net >> brian m. carlson" 
+	<sandals@crustytoothpaste.net>
+To: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 22 18:57:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YPaU8-0004wx-S0
-	for gcvg-git-2@plane.gmane.org; Sun, 22 Feb 2015 18:38:29 +0100
+	id 1YPamt-0005en-Be
+	for gcvg-git-2@plane.gmane.org; Sun, 22 Feb 2015 18:57:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752090AbbBVRiY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Feb 2015 12:38:24 -0500
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:54594 "EHLO
-	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752047AbbBVRiX (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 22 Feb 2015 12:38:23 -0500
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
-	by mailout.nyi.internal (Postfix) with ESMTP id DAD4C2061D
-	for <git@vger.kernel.org>; Sun, 22 Feb 2015 12:38:21 -0500 (EST)
-Received: from frontend2 ([10.202.2.161])
-  by compute6.internal (MEProxy); Sun, 22 Feb 2015 12:38:22 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=x-sasl-enc:from:to:subject:date
-	:message-id; s=smtpout; bh=15aVO7CjqTgDQaCSHYwrStCEmdw=; b=UyI89
-	nldGGAKfYpc3tr9wM0WTOsshlnEFkgWESzvdfcDL0Z2XLUP2d4hohyIQ5bXvN+Ky
-	u40gBZOezmaTdPGHKggnSGk5oFbLI++vwNkocSKCA6g4lWpTaTIGNJTm8UiZCwNw
-	KgbWUSqXV/66JksksNvoYjsFYI78h/AuYNA/78=
-X-Sasl-enc: vwIlA2G6mE4zoUWWtlnu0QD902Xt6MIycHZYGoWszuUv 1424626702
-Received: from localhost (unknown [188.96.118.84])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 1AF4268012D;
-	Sun, 22 Feb 2015 12:38:21 -0500 (EST)
-X-Mailer: git-send-email 2.3.0.296.g32c87e1
+	id S1752308AbbBVR5r convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 22 Feb 2015 12:57:47 -0500
+Received: from mout.web.de ([212.227.17.12]:61995 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752194AbbBVR5q (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Feb 2015 12:57:46 -0500
+Received: from macce.local ([217.211.68.12]) by smtp.web.de (mrweb102) with
+ ESMTPSA (Nemesis) id 0LbJ02-1Xf0he0lOU-00kuQR; Sun, 22 Feb 2015 18:57:36
+ +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
+In-Reply-To: <54E8A9D0.30108@web.de>
+X-Provags-ID: V03:K0:oK3ACsH/pw91acAzIyGwauTG4pGfICs7cccxbqCFzEzCTerxXut
+ JIp1uttuAcRe63PmNY1Ia0OvUNMcQnl8tlSSKHCm9e2rJK9q4Lo4slsHRYLD1GJyiyElSXY
+ xs0ESYNp24cnVbBUffXqxDKIr854JkkgplhZ3ny1q8tzKN7FVm057qdoQS/76pFvmApa3w1
+ kcEjvYtC5wF4gJszops6w==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264232>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264233>
 
-"git status" carefully names a detached HEAD "at" resp. "from" a rev or
-ref depending on whether the detached HEAD has moved since. "git branch"
-always uses "from", which can be confusing, because a status-aware user
-would interpret this as moved detached HEAD.
+(Sorry for the spam, a few things need correction already now,
+and forgot cc: Brian)
 
-Make "git branch" use the same logic and wording.
+On 2015-02-21 16.52, Torsten B=C3=B6gershausen wrote:
+> The ssh:// syntax was added in 2386d65822c91, it accepted
+> ssh://user@2001:db8::1/repo.git, which is now legacy.
+>=20
+> Over the years the parser was improved to support [] and port numbers=
+,
+> but the combination of ssh://user@[2001:db8::1]:222/repo.git did
+> never work.
+s/did never work/was never implemented/
+>=20
+> The only only way to use a user name, a literall IPV6 address and a p=
+ort
+s/literall/literal/
+> number was ssh://[user@2001:db8::1]:222/repo.git
+>=20
+> (Thanks to Christian Taube <lists@hcf.yourweb.de> for reporting this =
+long
+> standing issue)
+>=20
+> New users would use ssh://user@[2001:db8::1]:222/repo.git,
+> so change the parser to handle it correctly.
+>=20
+> Support the old legacy URL's as well, to be backwards compatible,
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
-
-Notes:
-    The wording is still different:
-    
-    HEAD detached at %s
-    * (detached at %s)
-    
-    for status (line 1) resp. branch (line 2). Maybe it's worthwhile to use the
-    exact same string so that l10n output is guaranteed to be the same? E.g.
-    
-    a)
-    HEAD detached at %s
-    * (HEAD detached at %s)
-    
-    or
-    b)
-    HEAD (detached at %s)
-    * (detached at %s)
-    
-    In case b), "git status" strings would need to change, in case a)
-    only "git branch" strings which change anyway by this patch.
-
- builtin/branch.c         | 13 ++++++++++---
- t/t3203-branch-output.sh | 39 ++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 48 insertions(+), 4 deletions(-)
-
-diff --git a/builtin/branch.c b/builtin/branch.c
-index d8949cb..be391ee 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -589,9 +589,16 @@ static char *get_head_description(void)
- 	else if (state.bisect_in_progress)
- 		strbuf_addf(&desc, _("(no branch, bisect started on %s)"),
- 			    state.branch);
--	else if (state.detached_from)
--		strbuf_addf(&desc, _("(detached from %s)"),
--			    state.detached_from);
-+	else if (state.detached_from) {
-+		unsigned char sha1[20];
-+		if (!get_sha1("HEAD", sha1) &&
-+		    !hashcmp(sha1, state.detached_sha1))
-+			strbuf_addf(&desc, _("(detached at %s)"),
-+				state.detached_from);
-+		else
-+			strbuf_addf(&desc, _("(detached from %s)"),
-+				state.detached_from);
-+	}
- 	else
- 		strbuf_addstr(&desc, _("(no branch)"));
- 	free(state.branch);
-diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
-index ba4f98e..aaff885 100755
---- a/t/t3203-branch-output.sh
-+++ b/t/t3203-branch-output.sh
-@@ -96,7 +96,7 @@ test_expect_success 'git branch -v pattern does not show branch summaries' '
- 
- test_expect_success 'git branch shows detached HEAD properly' '
- 	cat >expect <<EOF &&
--* (detached from $(git rev-parse --short HEAD^0))
-+* (detached at $(git rev-parse --short HEAD^0))
-   branch-one
-   branch-two
-   master
-@@ -106,4 +106,41 @@ EOF
- 	test_i18ncmp expect actual
- '
- 
-+test_expect_success 'git branch shows detached HEAD properly after moving' '
-+	cat >expect <<EOF &&
-+* (detached from $(git rev-parse --short HEAD))
-+  branch-one
-+  branch-two
-+  master
-+EOF
-+	git reset --hard HEAD^1 &&
-+	git branch >actual &&
-+	test_i18ncmp expect actual
-+'
-+
-+test_expect_success 'git branch shows detached HEAD properly from tag' '
-+	cat >expect <<EOF &&
-+* (detached at fromtag)
-+  branch-one
-+  branch-two
-+  master
-+EOF
-+	git tag fromtag master &&
-+	git checkout fromtag &&
-+	git branch >actual &&
-+	test_i18ncmp expect actual
-+'
-+
-+test_expect_success 'git branch shows detached HEAD properly after moving from tag' '
-+	cat >expect <<EOF &&
-+* (detached from fromtag)
-+  branch-one
-+  branch-two
-+  master
-+EOF
-+	git reset --hard HEAD^1 &&
-+	git branch >actual &&
-+	test_i18ncmp expect actual
-+'
-+
- test_done
--- 
-2.3.0.296.g32c87e1
+s/URL's/URLs/
