@@ -1,62 +1,100 @@
-From: Kevin Daudt <me@ikke.info>
-Subject: Re: Identifying user who =?utf-8?Q?ran_?=
- =?utf-8?B?4oCcZ2l0IHJlc2V04oCd?= command
-Date: Mon, 23 Feb 2015 17:48:33 +0100
-Message-ID: <20150223164833.GA17528@vps892.directvps.nl>
-References: <1424493989740-7625788.post@n2.nabble.com>
- <CAPc5daULfa8oASxvWQ7RuV9T4SXoCw_Pi0EfGkk1GGafa1r9Xg@mail.gmail.com>
- <1424495778228-7625791.post@n2.nabble.com>
+From: Mason <slash.tmp@free.fr>
+Subject: Salvaging borked project history
+Date: Mon, 23 Feb 2015 18:05:27 +0100
+Message-ID: <54EB5DD7.7050202@free.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Technext <varuag.chhabra@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 23 17:48:44 2015
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Feb 23 18:05:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YPwBU-0003cm-5R
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Feb 2015 17:48:40 +0100
+	id 1YPwRt-0004UK-8V
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Feb 2015 18:05:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752372AbbBWQsf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Feb 2015 11:48:35 -0500
-Received: from ikke.info ([178.21.113.177]:52427 "EHLO vps892.directvps.nl"
+	id S1752219AbbBWRFd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Feb 2015 12:05:33 -0500
+Received: from smtp2-g21.free.fr ([212.27.42.2]:9481 "EHLO smtp2-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752219AbbBWQsf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Feb 2015 11:48:35 -0500
-Received: by vps892.directvps.nl (Postfix, from userid 1001)
-	id A94B81DCF6D; Mon, 23 Feb 2015 17:48:33 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <1424495778228-7625791.post@n2.nabble.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1751898AbbBWRFc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Feb 2015 12:05:32 -0500
+Received: from [172.27.0.114] (unknown [83.142.147.193])
+	(Authenticated sender: shill)
+	by smtp2-g21.free.fr (Postfix) with ESMTPSA id A606D4B0293
+	for <git@vger.kernel.org>; Mon, 23 Feb 2015 18:05:16 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:35.0) Gecko/20100101 Firefox/35.0 SeaMonkey/2.32.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264273>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264274>
 
-On Fri, Feb 20, 2015 at 10:16:18PM -0700, Technext wrote:
-> Thanks Junio for the prompt reply! :) Yes, that's exactly how i would like
-> things to be. I'll definitely try to push this thing and see if this flow
-> can be implemented.
-> 
-> However, can you please guide me whether there's any way i could have
-> figured out about the git reset command that the developer executed on his
-> local? (my first query)
+Hello everyone,
 
-git reset . is just a local working tree operation, which does not leave
-something behind, just like when the user would do any other file
-operations and comitted that. This created a so called evil merge, which
-are not easy to detect (see [1] for some possible solutions)
+Here's the situation:
 
-> 
-> Also, am i right in thinking that a check cannot be implemented using hooks
-> or any other similar way? (my second query)
+Back in 2012, we cloned a MIPS repo, which was itself a clone of
+a 3.4.2 kernel with ~40 MIPS-specific patches applied.
 
-Because an evil merge is hard to detect, it's even harder to do it
-automated in a script. Human review works much better for this (when
-merging in the changes from the developer).
+Then the devs started pushing patches; and once in a while, the
+maintainer would "sync" with the mainline kernel. I don't know
+what tool he used to sync, but he discarded the original patches
+doing so, and git blame now shows him as the author of every
+mainline change since the clone.
 
+Now that we are moving to a more recent kernel, I'm trying to
+"fix" this situation, i.e. I'd like kernel code to have proper
+attribution in git blame, while keeping intact the information
+for "internal" commits.
 
-[1]: https://stackoverflow.com/a/27744011/20261
+While I'm at it, I want to minimize history by ignoring patches
+that are now irrelevant:
+
+1) we don't support MIPS anymore, I want to ignore any internal
+change we made in the arch/mips directory
+
+2) for some reason, there was a large amount of create/delete churn
+in arch/arm/configs; so I want to ignore our changes, and I'll commit
+an acceptable config when the process is complete.
+
+3) ignore some internal platform-specific patches
+
+(NB: All these "ignores" are for internal patches, not mainline patches)
+
+Sooo, using git log and grep, I came up with a list of ~300 patches I'd
+like to apply on top of the latest 3.14 kernel. For testing purposes,
+I used git format-patch on the oldest of my 300 patches.
+
+I then made a shiny new clone of linux-stable.git, and tried using git am
+to apply that patch to the tip of linux-stable, expecting having to solve
+a few dozens conflicts, and move on (hoping to automate it at some point).
+
+But 'git am' just gave up. Small sample of errors:
+
+error: patch failed: drivers/block/Kconfig:411
+error: drivers/block/Kconfig: patch does not apply
+error: drivers/tty/serial/8250/8250.c: does not exist in index
+error: patch failed: drivers/tty/serial/8250/8250_early.c:121
+error: drivers/tty/serial/8250/8250_early.c: patch does not apply
+error: patch failed: drivers/video/Kconfig:101
+error: drivers/video/Kconfig: patch does not apply
+...
+Patch failed at 0001 Commit for supporting Sigma Designs' SoCs.
+The copy of the patch that failed is found in:
+    .git/rebase-apply/patch
+When you have resolved this problem, run "git am --continue".
+If you prefer to skip this patch, run "git am --skip" instead.
+To restore the original branch and stop patching, run "git am --abort".
+
+How do I "resolve this problem".
+
+I suppose I am doing this the wrong way.
+What is the correct way to do it?
+(I'm using git 2.3)
+
+Should I use git am -3 in the original repo?
+
+Regards.
