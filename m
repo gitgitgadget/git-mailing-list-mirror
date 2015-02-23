@@ -1,78 +1,69 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: What's cooking in git.git (Feb 2015, #06; Sun, 22)
-Date: Mon, 23 Feb 2015 15:27:52 -0500
-Message-ID: <20150223202752.GA30429@peff.net>
-References: <xmqqk2z9vd38.fsf@gitster.dls.corp.google.com>
- <54EB30F0.4010404@drmicha.warpmail.net>
- <xmqqk2z8tpve.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: AW: git blame swallows up lines in case of mixed line endings
+Date: Mon, 23 Feb 2015 12:27:51 -0800
+Message-ID: <xmqqmw44s794.fsf@gitster.dls.corp.google.com>
+References: <71BF70CE41AEE741896AF3A5450D86F11F2D1F46@DEFTHW99EH3MSX.ww902.siemens.net>
+	<54E88BFA.9050900@web.de>
+	<xmqqwq38tql9.fsf@gitster.dls.corp.google.com>
+	<71BF70CE41AEE741896AF3A5450D86F11F2D21EB@DEFTHW99EH3MSX.ww902.siemens.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 23 21:28:01 2015
+Content-Type: text/plain
+Cc: "'git\@vger.kernel.org'" <git@vger.kernel.org>
+To: "Sokolov\, Konstantin \(ext\)" <konstantin.sokolov.ext@siemens.com>
+X-From: git-owner@vger.kernel.org Mon Feb 23 21:28:08 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YPzbk-0001MI-My
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Feb 2015 21:28:01 +0100
+	id 1YPzbs-0001QR-5R
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Feb 2015 21:28:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752756AbbBWU1z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Feb 2015 15:27:55 -0500
-Received: from cloud.peff.net ([50.56.180.127]:52464 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752330AbbBWU1y (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Feb 2015 15:27:54 -0500
-Received: (qmail 448 invoked by uid 102); 23 Feb 2015 20:27:54 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 23 Feb 2015 14:27:54 -0600
-Received: (qmail 27206 invoked by uid 107); 23 Feb 2015 20:27:55 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 23 Feb 2015 15:27:55 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 23 Feb 2015 15:27:52 -0500
-Content-Disposition: inline
-In-Reply-To: <xmqqk2z8tpve.fsf@gitster.dls.corp.google.com>
+	id S1752767AbbBWU17 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Feb 2015 15:27:59 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:62691 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752695AbbBWU14 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Feb 2015 15:27:56 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B377C3A9FC;
+	Mon, 23 Feb 2015 15:27:54 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=aOU1wZkJjOobUcBduUaYQSow3g8=; b=Gjhsrf
+	LQxLd5e5CI8wt5XVXutZRI1yFvgRcOD+B4c1tD9g3UXBYIrRh+dVqoQzkX5Ppy5V
+	xFIxreEBXThuit7bEdgYB90CQqsryViZX/x+/QI0u4YfrSgfr/xGDZ0KBzb+JEvV
+	qySLchrFucCqFyoiKOBNq908/+ohdE1R1dS6c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=JnG12yJVj8y2WzvUIVtfGD3fVkwDBG5a
+	F6eFbhWf914+uU9KG+k6ash/xMTiaHqzZc0yZ9sgm2UL+dBdvSMrco/K7sl0hprX
+	AbCSnXyXGJi2+UuKN8ocns97GTXpy0808wlDGpu7mQfuFsgXKUg5S8e8j89bqK7S
+	WMyWxMm8zcE=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 911593A9FB;
+	Mon, 23 Feb 2015 15:27:54 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6D7513A9F8;
+	Mon, 23 Feb 2015 15:27:53 -0500 (EST)
+In-Reply-To: <71BF70CE41AEE741896AF3A5450D86F11F2D21EB@DEFTHW99EH3MSX.ww902.siemens.net>
+	(Konstantin Sokolov's message of "Mon, 23 Feb 2015 19:09:21 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 71B10744-BB9A-11E4-81D7-A4119F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264296>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264297>
 
-On Mon, Feb 23, 2015 at 11:00:21AM -0800, Junio C Hamano wrote:
+"Sokolov, Konstantin (ext)" <konstantin.sokolov.ext@siemens.com>
+writes:
 
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
-> 
-> > status, status -s and the like are in an ordinary user's tool box.
-> > ls-files isn't, at least not with "-t", which we even mark as deprecated.
-> >
-> > That makes me wonder, though, how difficult it would be to
-> > wt_status_collect_unchanged() and to leverage the status machinery
-> > rather than ls-files.
-> 
-> Good point.  wt-status feels like a much better infrastructure to
-> build on than "ls-files -t", which should die ;-).  Especially if
-> the command is interested in showing the state of the working tree
-> files relative to the tree of HEAD, as "ls-files" is purely between
-> the index and the working tree.
+> Thank you for going into the matter. I was not aware of the textconv
+> filter. This is definitely a decent solution. But what exactly do you
+> mean by "Even though we have an option to mark <CR> alone as the end
+> of line marker"?
 
-I had to look up "-t", having never used it myself. ;)
-
-What I noticed in the manpage was rather gross:
-
-   -t
-       This feature is semi-deprecated. For scripting purpose, git-status(1)--porcelain
-       and git-diff-files(1)--name-status are almost always superior alternatives, and
-       users should look at git-status(1)--short or git-diff(1)--name-status for more
-       user-friendly alternatives.
-
-It looks like asciidoc sucks up the space between a linkgit macro and
-the next word. I can fix it with "{nbsp}", but I'm not sure if there's a
-better way.
-
-It's also rather hard to read the commands as intended with the "(1)"
-stuck there. I'm tempted to just make this `git status --porcelain` and
-drop the link entirely, but I guess it is helping people who read the
-HTML version.
-
--Peff
+s/have/do not have/; sorry for a false hope ;-)
