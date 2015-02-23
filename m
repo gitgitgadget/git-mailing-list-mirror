@@ -1,82 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] submodule: Improve documentation of update subcommand
-Date: Mon, 23 Feb 2015 12:25:52 -0800
-Message-ID: <xmqqr3tgs7cf.fsf@gitster.dls.corp.google.com>
-References: <87egpgdaac.fsf@steelpick.2x.cz>
-	<1424698360-10952-1-git-send-email-sojkam1@fel.cvut.cz>
-	<xmqqvbiss7xb.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: What's cooking in git.git (Feb 2015, #06; Sun, 22)
+Date: Mon, 23 Feb 2015 15:27:52 -0500
+Message-ID: <20150223202752.GA30429@peff.net>
+References: <xmqqk2z9vd38.fsf@gitster.dls.corp.google.com>
+ <54EB30F0.4010404@drmicha.warpmail.net>
+ <xmqqk2z8tpve.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Jens.Lehmann@web.de
-To: Michal Sojka <sojkam1@fel.cvut.cz>
-X-From: git-owner@vger.kernel.org Mon Feb 23 21:26:01 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 23 21:28:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YPzZo-0000HI-4l
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Feb 2015 21:26:00 +0100
+	id 1YPzbk-0001MI-My
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Feb 2015 21:28:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752534AbbBWUZ4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Feb 2015 15:25:56 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:54325 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752429AbbBWUZz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Feb 2015 15:25:55 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id DA18E3A986;
-	Mon, 23 Feb 2015 15:25:54 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=NWkN9wdsdOC+XpVycBbKhAf+tfg=; b=TqMMpC
-	xXh2Z6+9MrPTEfwwzF6sxKDtbSCfRQCt5YNlCPciRBc/fKoyqxfQo4d21/GMcd2h
-	tGLj2qjMvULj7XCGigiNcsiIR2a9HcjtZE9DB1oFpixCWsBvL+BrMvcoD0M1AtQ3
-	5vjHnANvkDwkLvRxKqsKOyWsPQsGjM850k8Rg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=G0A1TFNe8UoJaQ0TGCM3MYuMxnXjB22H
-	gS8wmTaA29f/wIh/p7Ns7KdtPXfnM4sHvaaMmS9LaB0Hp5zA6Db+4QUhgYJxdauQ
-	PiB6trLMOAjH3ome+Aj2gzxz8PT+7AqbcokdULWzfL6M56f/6g6PDxqalcrK1clh
-	eTuj7Q4sLL8=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id CC4C03A985;
-	Mon, 23 Feb 2015 15:25:54 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4934F3A984;
-	Mon, 23 Feb 2015 15:25:54 -0500 (EST)
-In-Reply-To: <xmqqvbiss7xb.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Mon, 23 Feb 2015 12:13:20 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 2AAA75EC-BB9A-11E4-A50E-A4119F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1752756AbbBWU1z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Feb 2015 15:27:55 -0500
+Received: from cloud.peff.net ([50.56.180.127]:52464 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752330AbbBWU1y (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Feb 2015 15:27:54 -0500
+Received: (qmail 448 invoked by uid 102); 23 Feb 2015 20:27:54 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 23 Feb 2015 14:27:54 -0600
+Received: (qmail 27206 invoked by uid 107); 23 Feb 2015 20:27:55 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 23 Feb 2015 15:27:55 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 23 Feb 2015 15:27:52 -0500
+Content-Disposition: inline
+In-Reply-To: <xmqqk2z8tpve.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264295>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264296>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Mon, Feb 23, 2015 at 11:00:21AM -0800, Junio C Hamano wrote:
 
->> +Update the registered submodules to match what the superproject
->> +expects by cloning missing submodules and updating the working tree of
->> +the submodules. The "updating" can be done in several ways depending
->> +on command line options and the value of `submodule.<name>.update`
->> +configuration variable. Supported update methods are:
->
-> If you read the description of "--remote" (sorry, I didn't notice it
-> until I formatted the result of this patch and tried to read the
-> whole thing), we already use "update procedure" to mean these modes
-> of updates collectively.  Either use "update procedures" here (and
-> everywhere else in this patch where it is called "update method"),
-> or adjust the existing "update procedure" to "update method".
-> Either way is fine, but because "update procedure" is not wrong
-> per-se, I think it would be better to use that phrasing that may
-> already be familiar with the "git submodule" users.
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
+> 
+> > status, status -s and the like are in an ordinary user's tool box.
+> > ls-files isn't, at least not with "-t", which we even mark as deprecated.
+> >
+> > That makes me wonder, though, how difficult it would be to
+> > wt_status_collect_unchanged() and to leverage the status machinery
+> > rather than ls-files.
+> 
+> Good point.  wt-status feels like a much better infrastructure to
+> build on than "ls-files -t", which should die ;-).  Especially if
+> the command is interested in showing the state of the working tree
+> files relative to the tree of HEAD, as "ls-files" is purely between
+> the index and the working tree.
 
-Addendum.  Your update to config.txt calls it "updating strategy".
-That also needs to be unified to clarify that we are talking about
-the same thing in these places to the readers.
+I had to look up "-t", having never used it myself. ;)
 
-Thanks.
+What I noticed in the manpage was rather gross:
+
+   -t
+       This feature is semi-deprecated. For scripting purpose, git-status(1)--porcelain
+       and git-diff-files(1)--name-status are almost always superior alternatives, and
+       users should look at git-status(1)--short or git-diff(1)--name-status for more
+       user-friendly alternatives.
+
+It looks like asciidoc sucks up the space between a linkgit macro and
+the next word. I can fix it with "{nbsp}", but I'm not sure if there's a
+better way.
+
+It's also rather hard to read the commands as intended with the "(1)"
+stuck there. I'm tempted to just make this `git status --porcelain` and
+drop the link entirely, but I guess it is helping people who read the
+HTML version.
+
+-Peff
