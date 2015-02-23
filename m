@@ -1,227 +1,113 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/4] option-strings: use OPT_FILENAME
-Date: Mon, 23 Feb 2015 12:44:30 -0500
-Message-ID: <20150223174430.GA19904@peff.net>
-References: <cover.1424707497.git.git@drmicha.warpmail.net>
- <3af5c93959b22dc327d7fb3974d36764906c2969.1424707497.git.git@drmicha.warpmail.net>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 5/6] t/diff-lib: check exact object names in compare_diff_raw
+Date: Mon, 23 Feb 2015 19:14:47 +0100
+Message-ID: <54EB6E17.5040102@kdbg.org>
+References: <1424043824-25242-1-git-send-email-gitster@pobox.com> <1424043824-25242-6-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Mon Feb 23 18:44:41 2015
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 23 19:15:09 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YPx3f-0000D7-Le
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Feb 2015 18:44:40 +0100
+	id 1YPxXA-0000Hj-LW
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Feb 2015 19:15:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752625AbbBWRoe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Feb 2015 12:44:34 -0500
-Received: from cloud.peff.net ([50.56.180.127]:52371 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752580AbbBWRoc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Feb 2015 12:44:32 -0500
-Received: (qmail 20284 invoked by uid 102); 23 Feb 2015 17:44:32 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 23 Feb 2015 11:44:32 -0600
-Received: (qmail 26016 invoked by uid 107); 23 Feb 2015 17:44:32 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 23 Feb 2015 12:44:32 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 23 Feb 2015 12:44:30 -0500
-Content-Disposition: inline
-In-Reply-To: <3af5c93959b22dc327d7fb3974d36764906c2969.1424707497.git.git@drmicha.warpmail.net>
+	id S1753093AbbBWSO6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Feb 2015 13:14:58 -0500
+Received: from bsmtp7.bon.at ([213.33.87.19]:21267 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753048AbbBWSOx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Feb 2015 13:14:53 -0500
+Received: from dx.site (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTPSA id 3krWkx5Rbjz5tlG;
+	Mon, 23 Feb 2015 19:14:49 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.site (Postfix) with ESMTP id 0A8F7519D;
+	Mon, 23 Feb 2015 19:14:47 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
+In-Reply-To: <1424043824-25242-6-git-send-email-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264276>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264277>
 
-On Mon, Feb 23, 2015 at 05:17:44PM +0100, Michael J Gruber wrote:
+Am 16.02.2015 um 00:43 schrieb Junio C Hamano:
+> The "sanitize" helper wanted to strip the similarity and
+> dissimilarity scores when making comparison, but it was
+> stripping away the object names as well.
+> 
+> While we do not want to require the exact object names the tests
+> expect to be maintained, as it would be seen as an extra burden,
+> this would have prevented us catching a silly bug such as showing
+> non 0{40} object name on the preimage side of an addition or on the
+> postimage side of a deletion, because all [0-9a-f]{40} strings were
+> considered equally OK.
+> 
+> In the longer term, when a test only wants to see the status of the
+> change without having to worry about object names, it should be
+> rewritten not to inspect the raw format.
+> 
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>   t/diff-lib.sh | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/t/diff-lib.sh b/t/diff-lib.sh
+> index 75a35fc..c211dc4 100644
+> --- a/t/diff-lib.sh
+> +++ b/t/diff-lib.sh
+> @@ -1,6 +1,6 @@
+>   :
+>   
+> -sanitize_diff_raw='/^:/s/ '"$_x40"' '"$_x40"' \([A-Z]\)[0-9]*	/ X X \1#	/'
+> +sanitize_diff_raw='/^:/s/ '"\($_x40\)"' '"\($_x40\)"' \([A-Z]\)[0-9]*	/ \1 \2 \3#	/'
+>   compare_diff_raw () {
+>       # When heuristics are improved, the score numbers would change.
+>       # Ignore them while comparing.
+> 
 
-> diff --git a/archive.c b/archive.c
-> index 94a9981..b4da255 100644
-> --- a/archive.c
-> +++ b/archive.c
-> @@ -419,7 +419,7 @@ static int parse_archive_args(int argc, const char **argv,
->  		OPT_STRING(0, "format", &format, N_("fmt"), N_("archive format")),
->  		OPT_STRING(0, "prefix", &base, N_("prefix"),
->  			N_("prepend prefix to each pathname in the archive")),
-> -		OPT_STRING('o', "output", &output, N_("file"),
-> +		OPT_FILENAME('o', "output", &output,
->  			N_("write the archive to this file")),
->  		OPT_BOOL(0, "worktree-attributes", &worktree_attributes,
->  			N_("read .gitattributes in working directory")),
+This reveals a minor bug in test_ln_s_add:
 
-This one is rather tricky...if you look down a few lines, you will see
-that we just die() when the option is specified. The point is that
---output is not supposed to make it down to this level (it gets
-intercepted by cmd_archive first), and we would not want to respect it
-for a remote invocation (ditto for --exec and --remote options).
+---- 8< ----
+Subject: [PATCH] test_ln_s_add: refresh stat info of fake symbolic links
 
-It's a little weird that we have it here at all (after all, if we
-omitted it, we would _also_ complain here). But I guess the "-h" text is
-generated by this parse_options invocation. That seems to be confirmed
-by the commit messages of 4fac1d3a98 and 52e7787609.
+We have a helper function test_ln_s_add that inserts a symbolic link
+into the index even if the file system does not support symbolic links.
+There is a small flaw in the emulation path: the added entry does not
+pick up stat information of the fake symbolic link from the file system,
+as a consequence, the index is not exactly the same as for the "regular"
+path (where symbolic links are available). To fix this, just call
+git update-index again.
 
-So I think your change has literally no impact; we do not care about
-prefixing or not here, and the help text remains the same (because it
-already said "file"). I am not sure which is better from a readability
-standpoint. On the one hand, it is clear that we should match the option
-in cmd_archive, since we are printing the help for it here. But we would
-never want to act in any way on the filename-properties of this string
-(e.g., if we ever started looking at the filesystem as part of
-fix_filename(), this would leak information if a malicious client sent
-"--output=foo" to a git-upload-archive server). That's probably a rather
-unlikely scenario, though.
+This flaw was revealed by the earlier change that tightened
+compare_diff_raw(), because a test case in t4008 depends on the
+correctly updated index.
 
-> diff --git a/builtin/archive.c b/builtin/archive.c
-> index a1e3b94..9c96681 100644
-> --- a/builtin/archive.c
-> +++ b/builtin/archive.c
-> @@ -85,7 +85,7 @@ int cmd_archive(int argc, const char **argv, const char *prefix)
->  	const char *output = NULL;
->  	const char *remote = NULL;
->  	struct option local_opts[] = {
-> -		OPT_STRING('o', "output", &output, N_("file"),
-> +		OPT_FILENAME('o', "output", &output,
->  			N_("write the archive to this file")),
->  		OPT_STRING(0, "remote", &remote, N_("repo"),
->  			N_("retrieve the archive from remote repository <repo>")),
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+ t/test-lib-functions.sh | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-So this one is the flip-side of the parse_archive_args() change above.
-Any changes to the help-string here will _not_ get shown (we use
-PARSE_OPT_KEEP_ALL, which implies PARSE_OPT_NO_INTERNAL_HELP, and the
-"-h" gets passed down to parse_archive_args parser).
-
-But it should be changing the behavior of "-o" to properly handle
-relative paths, which is a good thing. Except it doesn't. :)
-
-The entry in git.c:commands for cmd_archive does not mention
-"RUN_SETUP", so we will not have actually chdir'd here. It already works
-fine.
-
-I do not think using OPT_FILENAME here is _hurting_ anything, though.
-The "prefix" variable will always be NULL, and therefore fix_filename()
-will be a noop. And the code is hopefully more obvious as a result. So
-I'd be OK with this change, even though it technically does nothing.
-
-> diff --git a/builtin/blame.c b/builtin/blame.c
-> index 303e217..9b14c7c 100644
-> --- a/builtin/blame.c
-> +++ b/builtin/blame.c
-> @@ -2514,8 +2514,8 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
->  		OPT_BIT('e', "show-email", &output_option, N_("Show author email instead of name (Default: off)"), OUTPUT_SHOW_EMAIL),
->  		OPT_BIT('w', NULL, &xdl_opts, N_("Ignore whitespace differences"), XDF_IGNORE_WHITESPACE),
->  		OPT_BIT(0, "minimal", &xdl_opts, N_("Spend extra cycles to find better match"), XDF_NEED_MINIMAL),
-> -		OPT_STRING('S', NULL, &revs_file, N_("file"), N_("Use revisions from <file> instead of calling git-rev-list")),
-> -		OPT_STRING(0, "contents", &contents_from, N_("file"), N_("Use <file>'s contents as the final image")),
-> +		OPT_FILENAME('S', NULL, &revs_file, N_("Use revisions from <file> instead of calling git-rev-list")),
-> +		OPT_FILENAME(0, "contents", &contents_from, N_("Use <file>'s contents as the final image")),
-
-These ones _are_ actually doing something, and it seems like a strict
-improvement. E.g.:
-
-  cd t &&
-  git blame --contents=test-lib.sh test-lib.sh
-
-does not work without your patch.
-
-> diff --git a/builtin/config.c b/builtin/config.c
-> index 8cc2604..b80922c 100644
-> --- a/builtin/config.c
-> +++ b/builtin/config.c
-> @@ -54,7 +54,7 @@ static struct option builtin_config_options[] = {
->  	OPT_BOOL(0, "global", &use_global_config, N_("use global config file")),
->  	OPT_BOOL(0, "system", &use_system_config, N_("use system config file")),
->  	OPT_BOOL(0, "local", &use_local_config, N_("use repository config file")),
-> -	OPT_STRING('f', "file", &given_config_source.file, N_("file"), N_("use given config file")),
-> +	OPT_FILENAME('f', "file", &given_config_source.file, N_("use given config file")),
->  	OPT_STRING(0, "blob", &given_config_source.blob, N_("blob-id"), N_("read config from given blob object")),
->  	OPT_GROUP(N_("Action")),
->  	OPT_BIT(0, "get", &actions, N_("get value: name [value-regex]"), ACTION_GET),
-
-This one introduces a bug. We already handle prepending the prefix to
-the filename later in cmd_config(). Doing:
-
-  cd t &&
-  git config --file=../.git/config --list
-
-works, but with your patch produces:
-
-  fatal: unable to read config file 't/t/../.git/config': No such file or directory
-
-In theory we can get rid of the manual handling in cmd_config in favor
-of using OPT_FILENAME. There are some spots where we assign to
-given_config_source.file after parsing options but before doing the
-fixup, but I think they should all be absolute paths (they come from
-home_config_paths(), so unless you have a relative home directory...).
-
-It might be worth double-checking the test coverage before touching this
-area too much, though.
-
-> diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-> index b8182c2..44f2600 100644
-> --- a/builtin/fast-export.c
-> +++ b/builtin/fast-export.c
-> @@ -983,9 +983,9 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
->  		OPT_CALLBACK(0, "tag-of-filtered-object", &tag_of_filtered_mode, N_("mode"),
->  			     N_("select handling of tags that tag filtered objects"),
->  			     parse_opt_tag_of_filtered_mode),
-> -		OPT_STRING(0, "export-marks", &export_filename, N_("file"),
-> +		OPT_FILENAME(0, "export-marks", &export_filename,
->  			     N_("Dump marks to this file")),
-> -		OPT_STRING(0, "import-marks", &import_filename, N_("file"),
-> +		OPT_FILENAME(0, "import-marks", &import_filename,
->  			     N_("Import marks from this file")),
->  		OPT_BOOL(0, "fake-missing-tagger", &fake_missing_tagger,
->  			 N_("Fake a tagger when tags lack one")),
-
-These ones look like a straightforward improvement.
-
-> diff --git a/builtin/hash-object.c b/builtin/hash-object.c
-> index 6158363..7b13940 100644
-> --- a/builtin/hash-object.c
-> +++ b/builtin/hash-object.c
-> @@ -98,7 +98,7 @@ int cmd_hash_object(int argc, const char **argv, const char *prefix)
->  		OPT_BOOL( 0 , "stdin-paths", &stdin_paths, N_("read file names from stdin")),
->  		OPT_BOOL( 0 , "no-filters", &no_filters, N_("store file as is without filters")),
->  		OPT_BOOL( 0, "literally", &literally, N_("just hash any random garbage to create corrupt objects for debugging Git")),
-> -		OPT_STRING( 0 , "path", &vpath, N_("file"), N_("process file as it were from this path")),
-> +		OPT_FILENAME( 0 , "path", &vpath, N_("process file as it were from this path")),
->  		OPT_END()
-
-I'm not sure about this one. hash-object does not do SETUP_GIT
-automatically, so at the time of the parsing, our prefix is empty. So
-it's always a noop.
-
-Later, we _do_ tack the prefix on here, but only after we have called
-setup_git_directory (and only if we are writing out the object, since
-otherwise we do not need to be in a .git directory at all).
-
-So using OPT_FILENAME here doesn't produce any wrong behavior, but it is
-potentially quite confusing.
-
-> diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-> index 99cee20..0ddd3a8 100644
-> --- a/builtin/ls-files.c
-> +++ b/builtin/ls-files.c
-> @@ -489,7 +489,7 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
->  		{ OPTION_CALLBACK, 'X', "exclude-from", &dir, N_("file"),
->  			N_("exclude patterns are read from <file>"),
->  			0, option_parse_exclude_from },
-> -		OPT_STRING(0, "exclude-per-directory", &dir.exclude_per_dir, N_("file"),
-> +		OPT_FILENAME(0, "exclude-per-directory", &dir.exclude_per_dir,
->  			N_("read additional per-directory exclude patterns in <file>")),
->  		{ OPTION_CALLBACK, 0, "exclude-standard", &dir, NULL,
->  			N_("add the standard git exclusions"),
-
-I don't think this is right. The per-directory exclude path gets tacked
-onto each directory we traverse. It is not a single path in itself, and
-prepending our current prefix to it would definitely be the wrong thing
-(if you were in "t/", we would not want to look for "Documentation/t/.gitignore").
-
--Peff
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index cb132cf..bd1069b 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -749,7 +749,9 @@ test_ln_s_add () {
+ 	else
+ 		printf '%s' "$1" >"$2" &&
+ 		ln_s_obj=$(git hash-object -w "$2") &&
+-		git update-index --add --cacheinfo 120000 $ln_s_obj "$2"
++		git update-index --add --cacheinfo 120000 $ln_s_obj "$2" &&
++		# pick up stat info from the file
++		git update-index "$2"
+ 	fi
+ }
+ 
+-- 
+2.3.0.rc0.21.g454f6cd
