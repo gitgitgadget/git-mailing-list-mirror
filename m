@@ -1,93 +1,114 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: What's cooking in git.git (Feb 2015, #06; Sun, 22)
-Date: Mon, 23 Feb 2015 14:53:52 +0100
-Message-ID: <54EB30F0.4010404@drmicha.warpmail.net>
-References: <xmqqk2z9vd38.fsf@gitster.dls.corp.google.com>
+From: Ulrike Fischer <luatex@nililand.de>
+Subject: zip files created with git archive flags text files as binaries
+Date: Mon, 23 Feb 2015 14:58:42 +0100
+Message-ID: <12g5ss8uqwflv.dlg@nililand.de>
+Reply-To: luatex@nililand.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 23 14:54:09 2015
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 23 15:00:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YPtSZ-0003nz-OE
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Feb 2015 14:54:08 +0100
+	id 1YPtYa-0006u6-0j
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Feb 2015 15:00:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752641AbbBWNx5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Feb 2015 08:53:57 -0500
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:42037 "EHLO
-	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752592AbbBWNxz (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 23 Feb 2015 08:53:55 -0500
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailout.nyi.internal (Postfix) with ESMTP id A0973208E0
-	for <git@vger.kernel.org>; Mon, 23 Feb 2015 08:53:53 -0500 (EST)
-Received: from frontend1 ([10.202.2.160])
-  by compute5.internal (MEProxy); Mon, 23 Feb 2015 08:53:54 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=x-sasl-enc:message-id:date:from
-	:mime-version:to:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=SaQqo1ll59EQfCLZ/boXAP
-	E62I0=; b=q0/vTVcdnH84RTwPqB0IahdJY8Zkf+NhQqzD3absGCm3CCJOa3CAAm
-	8JieK4d8o0/0pPd7D8rnkiKENVTEMFpYRnWdVNaAKsJB/Kgm/J6hcVYvXFoILoUe
-	Wk3/Rwh0Ae9tDzX8WB3EOcLbpjOtSHaXLVe+lxKPTrdzHhzZ2zvTw=
-X-Sasl-enc: pm4AhEHPCt+GDG6wVOUJ024Pc3U5XXntImqtCPsMbqR9 1424699634
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id D31B4C002A5;
-	Mon, 23 Feb 2015 08:53:53 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
-In-Reply-To: <xmqqk2z9vd38.fsf@gitster.dls.corp.google.com>
+	id S1752493AbbBWOAN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Feb 2015 09:00:13 -0500
+Received: from plane.gmane.org ([80.91.229.3]:39806 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752028AbbBWOAM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Feb 2015 09:00:12 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1YPtYJ-0006mu-UG
+	for git@vger.kernel.org; Mon, 23 Feb 2015 15:00:03 +0100
+Received: from p5b391692.dip0.t-ipconnect.de ([91.57.22.146])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 23 Feb 2015 15:00:03 +0100
+Received: from luatex by p5b391692.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 23 Feb 2015 15:00:03 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: p5b391692.dip0.t-ipconnect.de
+User-Agent: 40tude_Dialog/2.0.15.41de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264258>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264259>
 
-Junio C Hamano venit, vidit, dixit 22.02.2015 22:41:
+I'm using git on windows 7.
 
-> [Stalled]
-> 
-> * nd/list-files (2015-02-09) 21 commits
->  . t3080: tests for git-list-files
->  . list-files: -M aka diff-cached
->  . list-files -F: show submodules with the new indicator '&'
->  . list-files: add -F/--classify
->  . list-files: show directories as well as files
->  . list-files: do not show duplicate cached entries
->  . list-files: sort output and remove duplicates
->  . list-files: add -t back
->  . list-files: add -1 short for --no-column
->  . list-files: add -R/--recursive short for --max-depth=-1
->  . list-files: -u does not imply showing stages
->  . list-files: make alias 'ls' default to 'list-files'
->  . list-files: a user friendly version of ls-files and more
->  . ls-files: support --max-depth
->  . ls-files: add --column
->  . ls-files: add --color to highlight file names
->  . ls-files: buffer full item in strbuf before printing
->  . ls_colors.c: highlight submodules like directories
->  . ls_colors.c: add a function to color a file name
->  . ls_colors.c: parse color.ls.* from config file
->  . ls_colors.c: add $LS_COLORS parsing code
-> 
->  A new "git list-files" Porcelain command, "ls-files" with bells and
->  whistles.
-> 
->  No comments?  No reviews?  No interests?
+$ git --version
+git version 1.9.4.msysgit.0
 
-I like the result a lot (I admit - I like colors in terminals).
-Since the aim is a user facing command I'm wondering whether the status
-symbols really should be those from "ls-files" or rather those from
-"status -s" (and diff --name-files). (Yes, that would require two chars.)
+Some days ago I uploaded a latex package to CTAN (www.ctan.org). 
+I created the zip-file with 
 
-status, status -s and the like are in an ordinary user's tool box.
-ls-files isn't, at least not with "-t", which we even mark as deprecated.
+git archive --format=zip --prefix=citeall/
+--output=zip/citeall_2015-02-20.zip HEAD 
 
-That makes me wonder, though, how difficult it would be to
-wt_status_collect_unchanged() and to leverage the status machinery
-rather than ls-files.
+The zip contained four text files and a pdf. 
 
-Michael
+The CTAN maintainers informed me that all files in the zip are
+flagged as binaries and this makes it difficult for them to process
+them further (they want to correct line feeds of the text files:
+http://mirror.ctan.org/tex-archive/help/ctan/CTAN-upload-addendum.html#crlf) 
+
+unzip -Z reports for my zip:
+
+$ unzip -Z citeall_2015_02_20.zip
+Archive:  citeall_2015_02_20.zip
+Zip file size: 105509 bytes, number of entries: 6
+drwx---     0.0 fat        0 bx stor 15-Feb-20 17:07 citeall/
+-rw----     0.0 fat      458 bx defN 15-Feb-20 17:07 citeall/README
+-rw----     0.0 fat   102244 bx defN 15-Feb-20 17:07
+citeall/citeall.pdf
+-rw----     0.0 fat     3431 bx defN 15-Feb-20 17:07
+citeall/citeall.sty
+-rw----     0.0 fat     3971 bx defN 15-Feb-20 17:07
+citeall/citeall.tex
+-rw----     0.0 fat      557 bx defN 15-Feb-20 17:07
+citeall/examples-citeall.bib
+6 files, 110661 bytes uncompressed, 104669 bytes compressed:  5.4%
+
+The problem are all the "bx" entries. 
+
+When I zip all the files with the standard windows zip-tool I get
+this:
+
+$ unzip -Z citeall-win.zip
+Archive:  citeall-win.zip
+Zip file size: 105275 bytes, number of entries: 5
+-rw----     2.0 fat   102244 b- defN 15-Feb-20 17:07
+citeall/citeall.pdf
+-rw----     2.0 fat     3431 t- defN 15-Feb-20 17:07
+citeall/citeall.sty
+-rw----     2.0 fat     3971 t- defN 15-Feb-20 17:07
+citeall/citeall.tex
+-rw----     2.0 fat      557 t- defN 15-Feb-20 17:07
+citeall/examples-citeall.bib
+-rw----     2.0 fat      458 t- defN 15-Feb-20 17:07 citeall/README
+5 files, 110661 bytes uncompressed, 104675 bytes compressed:  5.4%
+
+Here the text files have a correct t flag. 
+
+I don't know if it the problem exists also with zips created with
+git archive on non-windows OS.
+
+Would it be possible to correct the zip-backend so that it flags
+text files correctly? Or alternativly could one configure git
+archive to use another zip programm? 
+
+(I tried to sent this already some hours ago, but the message seems
+to be lost ...)
+
+-- 
+Ulrike Fischer 
+http://www.troubleshooting-tex.de/
