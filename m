@@ -1,111 +1,165 @@
-From: "Sokolov, Konstantin (ext)" <konstantin.sokolov.ext@siemens.com>
-Subject: AW: git blame swallows up lines in case of mixed line endings
-Date: Mon, 23 Feb 2015 11:50:51 +0000
-Message-ID: <71BF70CE41AEE741896AF3A5450D86F11F2D20FD@DEFTHW99EH3MSX.ww902.siemens.net>
-References: <71BF70CE41AEE741896AF3A5450D86F11F2D1F46@DEFTHW99EH3MSX.ww902.siemens.net>
- <54E88BFA.9050900@web.de>
+From: Christoph Anton Mitterer <calestyo@scientia.net>
+Subject: Re: [cosmetic bug?] needlessly(?) executable files
+Date: Mon, 23 Feb 2015 14:08:13 +0100
+Message-ID: <1424696893.4662.5.camel@scientia.net>
+References: <1424540917.15539.24.camel@scientia.net>
+	 <xmqqr3thwzur.fsf@gitster.dls.corp.google.com>
+	 <1424679663.30155.30.camel@kaarsemaker.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: =?iso-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
-	"'git@vger.kernel.org'" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Feb 23 13:04:25 2015
+Content-Type: multipart/signed; micalg="sha-512";
+	protocol="application/x-pkcs7-signature";
+	boundary="=-osZEHpHR/+0OZ8G7vgId"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 23 14:08:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YPrkN-0007Up-RB
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Feb 2015 13:04:24 +0100
+	id 1YPskp-0006kP-Jm
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Feb 2015 14:08:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752557AbbBWMET convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Feb 2015 07:04:19 -0500
-Received: from lizzard.sbs.de ([194.138.37.39]:53741 "EHLO lizzard.sbs.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752082AbbBWMES convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 23 Feb 2015 07:04:18 -0500
-X-Greylist: delayed 805 seconds by postgrey-1.27 at vger.kernel.org; Mon, 23 Feb 2015 07:04:18 EST
-Received: from mail1.sbs.de (localhost [127.0.0.1])
-	by lizzard.sbs.de (8.14.3/8.14.3) with ESMTP id t1NBoq39010370;
-	Mon, 23 Feb 2015 12:50:52 +0100
-Received: from DEFTHW99ERGMSX.ww902.siemens.net (defthw99ergmsx.ww902.siemens.net [139.22.70.132])
-	by mail1.sbs.de (8.14.3/8.14.3) with ESMTP id t1NBoqHv016182
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL);
-	Mon, 23 Feb 2015 12:50:52 +0100
-Received: from DENBGAT9ERFMSX.ww902.siemens.net (139.22.70.83) by
- DEFTHW99ERGMSX.ww902.siemens.net (139.22.70.132) with Microsoft SMTP Server
- (TLS) id 14.3.224.2; Mon, 23 Feb 2015 12:50:52 +0100
-Received: from DEFTHW99EH3MSX.ww902.siemens.net ([169.254.1.249]) by
- DENBGAT9ERFMSX.ww902.siemens.net ([139.22.70.83]) with mapi id
- 14.03.0224.002; Mon, 23 Feb 2015 12:50:51 +0100
-Thread-Topic: git blame swallows up lines in case of mixed line endings
-Thread-Index: AdBMSq6uIhmDfLX5RVankGP+MpKSCQBiZeEAAGI4EiA=
-In-Reply-To: <54E88BFA.9050900@web.de>
-Accept-Language: de-DE, en-US
-Content-Language: de-DE
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [139.22.70.37]
+	id S1752149AbbBWNIv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Feb 2015 08:08:51 -0500
+Received: from [193.46.215.43] ([193.46.215.43]:52345 "EHLO mailgw02.dd24.net"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1751661AbbBWNIu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Feb 2015 08:08:50 -0500
+Received: from mailpolicy-01.live.igb.homer.key-systems.net (mailpolicy-01.live.igb.homer.key-systems.net [192.168.1.26])
+	by mailgw02.dd24.net (Postfix) with ESMTP id 4D6E05FB7B
+	for <git@vger.kernel.org>; Mon, 23 Feb 2015 13:08:16 +0000 (UTC)
+X-Virus-Scanned: Debian amavisd-new at
+	mailpolicy-01.live.igb.homer.key-systems.net
+Received: from mailgw02.dd24.net ([192.168.1.36])
+	by mailpolicy-01.live.igb.homer.key-systems.net (mailpolicy-01.live.igb.homer.key-systems.net [192.168.1.26]) (amavisd-new, port 10236)
+	with ESMTP id DHgoSrkKbQDD for <git@vger.kernel.org>;
+	Mon, 23 Feb 2015 13:08:14 +0000 (UTC)
+Received: from heisenberg.fritz.box (ppp-46-244-242-255.dynamic.mnet-online.de [46.244.242.255])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by mailgw02.dd24.net (Postfix) with ESMTPSA
+	for <git@vger.kernel.org>; Mon, 23 Feb 2015 13:08:14 +0000 (UTC)
+In-Reply-To: <1424679663.30155.30.camel@kaarsemaker.net>
+X-Mailer: Evolution 3.12.9-1+b1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264252>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264254>
 
-It's not that I want to use CR as line ending. We just had to process a=
- repository where it was the case. We use git blame as an automatic pro=
-cessing step in a bigger system. So if a line does not exist for git bl=
-ame but it does exist for other parts of the system (which read the sam=
-e file) we run into consistency problems.=20
 
------Urspr=FCngliche Nachricht-----
-Von: Torsten B=F6gershausen [mailto:tboegi@web.de]=20
-Gesendet: Samstag, 21. Februar 2015 14:46
-An: Sokolov, Konstantin (ext); 'git@vger.kernel.org'
-Betreff: Re: git blame swallows up lines in case of mixed line endings
+--=-osZEHpHR/+0OZ8G7vgId
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 2015-02-19 14.48, Sokolov, Konstantin (ext) wrote:
-> Hi Folks,
->=20
-> I encounter unexpected behavior in the following case:
->=20
-> file content:
->=20
-> line1<CR><LF>
-> line2<CR>
-> line3<CR><LF>
-> line4
->=20
-> This is what I get as console output (on Windows):
->=20
->> git blame -s file.txt
-> 7db36436 1) line1
-> line3436 2) line2
-> 7db36436 3) line4
->=20
-> This is the real content:
->=20
->> git blame -s file.txt > blame.txt
->=20
-> blame.txt opened in Notepad++:
->=20
-> 7db36436 1) line1 <CR><LF>
-> 7db36436 2) line2 <CR>
-> line3 <CR><LF>
-> 7db36436 3) line4 <LF>
->=20
-> Admittedly, very stupid editors, such as Windows Notepad, cannot hand=
-le mixed line endings as well. But is this also the way git blame shoul=
-d behave?
->=20
-> Kind regards
-> Konstantin
->
-Git (and other tools) do not handle a single CR as a line ending.
-A line ending in Git is either CRLF or LF.
+On Mon, 2015-02-23 at 09:21 +0100, Dennis Kaarsemaker wrote:=20
+> It used to be for a brief period in history, between daa22c6f8d (2.1.0)
+> and 1f32ecf (2.2.2).
+Ah thanks,... I have 2.1.4 which explains this :)
 
-A "mixed line ending" in Git sense is a mixture between CRLF and LF, bu=
-t not a lone CR.
-(And in this sense it is the expected behavior)
 
-Are you sure you want to use it, or is it a typo ?
+Cheers,
+Chris.
+
+--=-osZEHpHR/+0OZ8G7vgId
+Content-Type: application/x-pkcs7-signature; name="smime.p7s"
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Transfer-Encoding: base64
+
+MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgMFADCABgkqhkiG9w0BBwEAAKCCEZIw
+ggW/MIIDp6ADAgECAgMCOakwDQYJKoZIhvcNAQENBQAwVDEUMBIGA1UEChMLQ0FjZXJ0IEluYy4x
+HjAcBgNVBAsTFWh0dHA6Ly93d3cuQ0FjZXJ0Lm9yZzEcMBoGA1UEAxMTQ0FjZXJ0IENsYXNzIDMg
+Um9vdDAeFw0xNDA2MTIxNjM2MThaFw0xNjA2MTExNjM2MThaMHwxITAfBgNVBAMTGENocmlzdG9w
+aCBBbnRvbiBNaXR0ZXJlcjEkMCIGCSqGSIb3DQEJARYVY2FsZXN0eW9Ac2NpZW50aWEubmV0MTEw
+LwYJKoZIhvcNAQkBFiJtYWlsQGNocmlzdG9waC5hbnRvbi5taXR0ZXJlci5uYW1lMIIBIjANBgkq
+hkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA4phP/j9vT9dZT+k3ffHxvRWMOuzBnu5O3Fl4y2+WL7pL
+rfLiEhWzGXhHvjSqpt4vCNSdqy43453nnu8+hMb+uEtqSIL1AHU5eLhuDNVN9S4bt9E7nA2WKYBU
+LCUi/xCD/GL7ToyJNwhrhzcCZ7pXSc3xVqFoC4f6weU9ExhoEZQNRpTM0BFCOi4fRxvKFNnUYgjK
+hqy0Ta5H0Xx86mAp0Q4dxoD7mhI5iTF6TRkUheELxF24JCuAf04M89Cwft6DRH1FpJ3yvgW2B5U5
+aFSL4ZnF4N/wyCB7Dkm1rQ7RCAvw5btkf0VdPnU7ccDCx8HEc2nxK/lbCjrznvh3sa1CCwIDAQAB
+o4IBcDCCAWwwDAYDVR0TAQH/BAIwADBWBglghkgBhvhCAQ0ESRZHVG8gZ2V0IHlvdXIgb3duIGNl
+cnRpZmljYXRlIGZvciBGUkVFIGhlYWQgb3ZlciB0byBodHRwOi8vd3d3LkNBY2VydC5vcmcwDgYD
+VR0PAQH/BAQDAgOoMEAGA1UdJQQ5MDcGCCsGAQUFBwMEBggrBgEFBQcDAgYKKwYBBAGCNwoDBAYK
+KwYBBAGCNwoDAwYJYIZIAYb4QgQBMDIGCCsGAQUFBwEBBCYwJDAiBggrBgEFBQcwAYYWaHR0cDov
+L29jc3AuY2FjZXJ0Lm9yZzA4BgNVHR8EMTAvMC2gK6AphidodHRwOi8vY3JsLmNhY2VydC5vcmcv
+Y2xhc3MzLXJldm9rZS5jcmwwRAYDVR0RBD0wO4EVY2FsZXN0eW9Ac2NpZW50aWEubmV0gSJtYWls
+QGNocmlzdG9waC5hbnRvbi5taXR0ZXJlci5uYW1lMA0GCSqGSIb3DQEBDQUAA4ICAQBefctiLgGl
+e5baspuozyA4k7Up7SVhGHbif6pQfoFc/9Thx9GXnYpX+U64PMyWBfWwHZIy52Vg0RVkvPi1t6mi
+GyBfoSpC6ooR0bKWtUIogw/ymqKWlTLVR8kbLqRmRk4juMtCXG2K3yMygX/rjkuUSuFj2Bjpkmzg
+CtMojbUMYbszePmhQ7DJ62YEdtKpcjN94QAsI5GWlIAbs3KJazAcaNCRJeXCLcUMchyKHJA+NXH5
+az/ekBxBMBzJP2An20PP88UI4JW18z31KiG9UVGa2uO4l4aWgVe2GnhNEdCD/o48msJEWKAt5vl2
+yMqr7ihmNPocU2+/FW0xPe/vftdOTD9pgXdSGf4prdD+23q2YvpalOCzr2p8yCJZNVBPMxAP4mL0
+3OEktXza4wohqAmceXKfGUNwRGBaPvtIGnPrpLhCQ+2YJDg8g1UEsk23bKyZlJWeKJyVqOBsDJmj
+aBsN/qKhQFnav+zQdqGhMeaSisF/53mD3gyVYg2JRl18apgGbg32kyLmomqa0JbhnY3Dc3FVtZfe
++P+s2Cyep3pVKvFer2llRoGm8TwraG5Yhyx8Oq/1qETpstjbURJOVBLDCV4AjOEUj0ZnE/tEo/DK
+yexgGaViNvjp+IZdFdJhYmsVjw4Q3vG7O0pfsLiYEyQjeDgjNEWDfa5/MufPywIfxzCCBb8wggOn
+oAMCAQICAwI5qTANBgkqhkiG9w0BAQ0FADBUMRQwEgYDVQQKEwtDQWNlcnQgSW5jLjEeMBwGA1UE
+CxMVaHR0cDovL3d3dy5DQWNlcnQub3JnMRwwGgYDVQQDExNDQWNlcnQgQ2xhc3MgMyBSb290MB4X
+DTE0MDYxMjE2MzYxOFoXDTE2MDYxMTE2MzYxOFowfDEhMB8GA1UEAxMYQ2hyaXN0b3BoIEFudG9u
+IE1pdHRlcmVyMSQwIgYJKoZIhvcNAQkBFhVjYWxlc3R5b0BzY2llbnRpYS5uZXQxMTAvBgkqhkiG
+9w0BCQEWIm1haWxAY2hyaXN0b3BoLmFudG9uLm1pdHRlcmVyLm5hbWUwggEiMA0GCSqGSIb3DQEB
+AQUAA4IBDwAwggEKAoIBAQDimE/+P29P11lP6Td98fG9FYw67MGe7k7cWXjLb5Yvukut8uISFbMZ
+eEe+NKqm3i8I1J2rLjfjneee7z6Exv64S2pIgvUAdTl4uG4M1U31Lhu30TucDZYpgFQsJSL/EIP8
+YvtOjIk3CGuHNwJnuldJzfFWoWgLh/rB5T0TGGgRlA1GlMzQEUI6Lh9HG8oU2dRiCMqGrLRNrkfR
+fHzqYCnRDh3GgPuaEjmJMXpNGRSF4QvEXbgkK4B/Tgzz0LB+3oNEfUWknfK+BbYHlTloVIvhmcXg
+3/DIIHsOSbWtDtEIC/Dlu2R/RV0+dTtxwMLHwcRzafEr+VsKOvOe+HexrUILAgMBAAGjggFwMIIB
+bDAMBgNVHRMBAf8EAjAAMFYGCWCGSAGG+EIBDQRJFkdUbyBnZXQgeW91ciBvd24gY2VydGlmaWNh
+dGUgZm9yIEZSRUUgaGVhZCBvdmVyIHRvIGh0dHA6Ly93d3cuQ0FjZXJ0Lm9yZzAOBgNVHQ8BAf8E
+BAMCA6gwQAYDVR0lBDkwNwYIKwYBBQUHAwQGCCsGAQUFBwMCBgorBgEEAYI3CgMEBgorBgEEAYI3
+CgMDBglghkgBhvhCBAEwMgYIKwYBBQUHAQEEJjAkMCIGCCsGAQUFBzABhhZodHRwOi8vb2NzcC5j
+YWNlcnQub3JnMDgGA1UdHwQxMC8wLaAroCmGJ2h0dHA6Ly9jcmwuY2FjZXJ0Lm9yZy9jbGFzczMt
+cmV2b2tlLmNybDBEBgNVHREEPTA7gRVjYWxlc3R5b0BzY2llbnRpYS5uZXSBIm1haWxAY2hyaXN0
+b3BoLmFudG9uLm1pdHRlcmVyLm5hbWUwDQYJKoZIhvcNAQENBQADggIBAF59y2IuAaV7ltqym6jP
+IDiTtSntJWEYduJ/qlB+gVz/1OHH0Zedilf5Trg8zJYF9bAdkjLnZWDRFWS8+LW3qaIbIF+hKkLq
+ihHRspa1QiiDD/KaopaVMtVHyRsupGZGTiO4y0JcbYrfIzKBf+uOS5RK4WPYGOmSbOAK0yiNtQxh
+uzN4+aFDsMnrZgR20qlyM33hACwjkZaUgBuzcolrMBxo0JEl5cItxQxyHIockD41cflrP96QHEEw
+HMk/YCfbQ8/zxQjglbXzPfUqIb1RUZra47iXhpaBV7YaeE0R0IP+jjyawkRYoC3m+XbIyqvuKGY0
++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
+AukCAQEwWzBUMRQwEgYDVQQKEwtDQWNlcnQgSW5jLjEeMBwGA1UECxMVaHR0cDovL3d3dy5DQWNl
+cnQub3JnMRwwGgYDVQQDExNDQWNlcnQgQ2xhc3MgMyBSb290AgMCOakwDQYJYIZIAWUDBAIDBQCg
+ggFjMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTE1MDIyMzEzMDgx
+M1owTwYJKoZIhvcNAQkEMUIEQMgvgOvtt1NyYVogvs61u/bQx3SGUHk12vGPX+7rOrl4swPJ9rYO
+O2ibZYpEgo69+O/x5u5ok6JE5ODx4DsURA4wagYJKwYBBAGCNxAEMV0wWzBUMRQwEgYDVQQKEwtD
+QWNlcnQgSW5jLjEeMBwGA1UECxMVaHR0cDovL3d3dy5DQWNlcnQub3JnMRwwGgYDVQQDExNDQWNl
+cnQgQ2xhc3MgMyBSb290AgMCOakwbAYLKoZIhvcNAQkQAgsxXaBbMFQxFDASBgNVBAoTC0NBY2Vy
+dCBJbmMuMR4wHAYDVQQLExVodHRwOi8vd3d3LkNBY2VydC5vcmcxHDAaBgNVBAMTE0NBY2VydCBD
+bGFzcyAzIFJvb3QCAwI5qTANBgkqhkiG9w0BAQEFAASCAQC5G0vSG8rvgg+7JFP1J2wf5feLF6xD
+2ng60UU1a97uScU06dPBQ9nygjzdhYBrYQ1u909Pj19zmoWBVrb9wGeLetT+SMdCKL3nV395ZhhF
+tdgyh7krjn9DDtBBJ3YzNHn7o4TKCw+A1blBnFxFDev7vmiDYIqof7xo938gbZspAAh7uELdCOnQ
+oVh3an2qLBS79YzcCdTzJf8TE8p6UtFJkQTzZYVPlzcsQGAkLnlRlAZq6y8b0BPE0+2O+fKjEXOP
+hLFJS2XzJu7QCiJBwJ4Vc9OP7eiJu/yJbVlmxfJdCTEG1411VeoTvExQPCUSjOTHpuKwsz2j83ap
+OwDs/Hz9AAAAAAAA
+
+
+--=-osZEHpHR/+0OZ8G7vgId--
