@@ -1,94 +1,94 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] sha1_name: use strlcpy() to copy strings
-Date: Mon, 23 Feb 2015 13:36:09 -0500
-Message-ID: <20150223183609.GC19904@peff.net>
-References: <54E8E2AA.1020300@web.de>
- <xmqqsidxvhrk.fsf@gitster.dls.corp.google.com>
- <54EA592C.6040701@web.de>
+From: "Randall S. Becker" <rsbecker@nexbridge.com>
+Subject: =?us-ascii?Q?RE:_Identifying_user_who_ran_=22git_reset=22_command?=
+Date: Mon, 23 Feb 2015 13:43:14 -0500
+Message-ID: <00e601d04f98$95177470$bf465d50$@nexbridge.com>
+References: <1424493989740-7625788.post@n2.nabble.com> <CAPc5daULfa8oASxvWQ7RuV9T4SXoCw_Pi0EfGkk1GGafa1r9Xg@mail.gmail.com> <1424495778228-7625791.post@n2.nabble.com> <20150223164833.GA17528@vps892.directvps.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-X-From: git-owner@vger.kernel.org Mon Feb 23 19:36:19 2015
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+To: "'Kevin Daudt'" <me@ikke.info>,
+	"'Technext'" <varuag.chhabra@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 23 19:43:25 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YPxrd-0003bX-V6
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Feb 2015 19:36:18 +0100
+	id 1YPxyV-0007DV-0w
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Feb 2015 19:43:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752752AbbBWSgO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Feb 2015 13:36:14 -0500
-Received: from cloud.peff.net ([50.56.180.127]:52404 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752403AbbBWSgM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Feb 2015 13:36:12 -0500
-Received: (qmail 24031 invoked by uid 102); 23 Feb 2015 18:36:11 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 23 Feb 2015 12:36:11 -0600
-Received: (qmail 26391 invoked by uid 107); 23 Feb 2015 18:36:12 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 23 Feb 2015 13:36:12 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 23 Feb 2015 13:36:09 -0500
-Content-Disposition: inline
-In-Reply-To: <54EA592C.6040701@web.de>
+	id S1753196AbbBWSnT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Feb 2015 13:43:19 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:10361 "EHLO
+	elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752625AbbBWSnS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Feb 2015 13:43:18 -0500
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from pangea (CPE0023eb577e25-CM602ad06c91a7.cpe.net.cable.rogers.com [99.237.128.150])
+	(authenticated bits=0)
+	by elephants.elehost.com (8.14.9/8.14.9) with ESMTP id t1NIhDFR058541
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+	Mon, 23 Feb 2015 13:43:14 -0500 (EST)
+	(envelope-from rsbecker@nexbridge.com)
+In-Reply-To: <20150223164833.GA17528@vps892.directvps.nl>
+X-Mailer: Microsoft Outlook 15.0
+Thread-Index: AQFHpfFYPRhN9rWYiHSGmDxyRFXcDwIe5G7nAmo+J1cBQ5yDEZ3heB3A
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264281>
 
-On Sun, Feb 22, 2015 at 11:33:16PM +0100, Ren=C3=A9 Scharfe wrote:
-
-> Am 22.02.2015 um 21:00 schrieb Junio C Hamano:
-> >Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+On 23 Feb 2015, Kevin Daudt wrote:
+> On Fri, Feb 20, 2015 at 10:16:18PM -0700, Technext wrote:
+> > Thanks Junio for the prompt reply! :) Yes, that's exactly how i would
+> > like things to be. I'll definitely try to push this thing and see if
+> > this flow can be implemented.
+> > However, can you please guide me whether there's any way i could have
+> > figured out about the git reset command that the developer executed on
+> > his local? (my first query)
+> 
+> git reset . is just a local working tree operation, which does not leave
+> something behind, just like when the user would do any other file
+operations
+> and comitted that. This created a so called evil merge, which are not easy
+to
+> detect (see [1] for some possible solutions)
+> 
 > >
-> >>Use strlcpy() instead of calling strncpy() and then setting the las=
-t
-> >>byte of the target buffer to NUL explicitly.  This shortens and
-> >>simplifies the code a bit.
-> >
-> >Thanks.  It makes me wonder if the longer term direction should be
-> >not to use a bound buffer for oc->path, though.
->=20
-> That's a good idea in general, but a bit more involved since we'd nee=
-d to
-> introduce a cleanup function that releases the memory allocated by th=
-e new
-> version of get_sha1_with_context() first and call it from the appropr=
-iate
-> places.
->=20
-> Would that be a good micro-project for GSoC or is it too simple?
+> > Also, am i right in thinking that a check cannot be implemented using
+> > hooks or any other similar way? (my second query)
+> 
+> Because an evil merge is hard to detect, it's even harder to do it
+automated in a
+> script. Human review works much better for this (when merging in the
+changes
+> from the developer).
 
-Yeah, avoiding resource ownership questions was one of the reasons I
-went with the static buffer in the first place. But I would love to see
-it go away. Not only does it potentially truncate paths, but I recall
-there was some complication with the size of "struct object_context" (I
-couldn't find the details in a cursory search, but basically it was not
-reasonable to have a big array of them).
+The only effective way I have found to deal with this is to have an
+implemented policy of making sure that developers only push changes to topic
+branches and have an approver handle the merge. This will not eliminate the
+evil merge or reset, but at least you get a second set of eyes on it. With
+that said, the oops merge or reset is different, which an accidental
+operation.
 
-Could we perhaps make this more like sha1_object_info_extended, where
-the caller "asks" for fields by filling in pointers, and the
-object_context itself can be discarded without leaking resources?
+I know it is off-topic, but there is an approach used by other systems (some
+code-management, some not) that implement per-command policies. Something
+like a client-side hook or config-like access control list may be useful:
+like a hooks/pre-execute (invoked possibly as high up as in run_argv() after
+handle_options()) that gets passed argv, and is able to accept/decline the
+command, might catch accidents. Granted this slows things down a whole lot,
+but places that use (I didn't say need) command-level restrictions, often
+are willing to accept performance degradation and the resulting grumbling
+that comes with it. And you've probably had this discussion before, so I
+sincerely apologize in advance for bringing it up.
 
-Like:
+Cheers,
+Randall
 
-  struct strbuf path =3D STRBUF_INIT;
-  struct object_context oc =3D OBJECT_CONTEXT_INIT;
-
-  oc.path =3D &path;
-  get_sha1_with_context(sha1, &oc);
-
-  ... use path directly ...
-  strbuf_release(&path);
-
-Then callers who do not care about the path do not have to even know th=
-e
-feature exists (and it opens us up to adding new string-like context
-fields in the future if we need to).
-
--Peff
+-- Brief whoami: NonStop&UNIX developer since approximately
+UNIX(421664400)/NonStop(211288444200000000)
+-- In real life, I talk too much.
