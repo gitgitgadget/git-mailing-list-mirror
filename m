@@ -1,128 +1,82 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: Git Scaling: What factors most affect Git performance for a
- large repo?
-Date: Mon, 23 Feb 2015 15:23:16 -0500
-Organization: Twitter
-Message-ID: <1424722996.27803.29.camel@leckie>
-References: <CAH8BJxEr_v+aitpZduXPC4oiRhMuySpc7Wb1aGcYe_p3mWjn+w@mail.gmail.com>
-	 <CACsJy8Dortn4fHwF8xSgJ=KoJ9o1qzmc_UyaVq003D2sxFZEuQ@mail.gmail.com>
-	 <1424392969.30029.15.camel@leckie>
-	 <xmqqegpkz4cf.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] submodule: Improve documentation of update subcommand
+Date: Mon, 23 Feb 2015 12:25:52 -0800
+Message-ID: <xmqqr3tgs7cf.fsf@gitster.dls.corp.google.com>
+References: <87egpgdaac.fsf@steelpick.2x.cz>
+	<1424698360-10952-1-git-send-email-sojkam1@fel.cvut.cz>
+	<xmqqvbiss7xb.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Stephen Morton <stephen.c.morton@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 23 21:23:27 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Jens.Lehmann@web.de
+To: Michal Sojka <sojkam1@fel.cvut.cz>
+X-From: git-owner@vger.kernel.org Mon Feb 23 21:26:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YPzXJ-0007ID-M1
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Feb 2015 21:23:26 +0100
+	id 1YPzZo-0000HI-4l
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Feb 2015 21:26:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752643AbbBWUXV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Feb 2015 15:23:21 -0500
-Received: from mail-qc0-f180.google.com ([209.85.216.180]:43961 "EHLO
-	mail-qc0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752284AbbBWUXU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Feb 2015 15:23:20 -0500
-Received: by qcxr5 with SMTP id r5so13129881qcx.10
-        for <git@vger.kernel.org>; Mon, 23 Feb 2015 12:23:20 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:mime-version
-         :content-transfer-encoding;
-        bh=XMkbEQXJ4hh0Pk0w5mldB1mp0kv9bsOkPKLVZImhS4s=;
-        b=NzL12c6bxI6AU32EnqIeiqBxExyc+2g1PQ8tZ+d6NVARE6/mHySIB3uf9skdfdnuKl
-         2WPh7ug8MniIUK50yR4k88H7uEUCDTpAMELPOzpBJ3+05t/dImUk5UHUYSjt7Db2oLrv
-         lW7qMP2/Qn7VgA1ByD2tjfMHc/SYxm6rZ7+lPLC+g78+7JXHuYFzsoE5xRlBmLW97ycj
-         IuGsT+JZg/redv5gYQeom2bleXH7EU+VeDXxKOFuBUrz2dUXQZa6ca2r0RU9F3eHMdtq
-         p/k5pMpSYIXfpI/Q+8EX2ipbGIXBFsEIGhuQAMYBnwktcwa1UgtU74QGiO5CdNr2tMq0
-         PozQ==
-X-Gm-Message-State: ALoCoQkYVycbRKTnE2zcePdNSUr2f5olSX17BA8rIozzCQ6yTZ5g8w37dwdL1/T9g7hpkIr6RE5k
-X-Received: by 10.140.236.73 with SMTP id h70mr28343561qhc.41.1424723000088;
-        Mon, 23 Feb 2015 12:23:20 -0800 (PST)
-Received: from [172.17.131.24] (ip-66-9-26-66.autorev.intellispace.net. [66.9.26.66])
-        by mx.google.com with ESMTPSA id 70sm3657090qhe.29.2015.02.23.12.23.18
-        (version=TLSv1.2 cipher=AES128-GCM-SHA256 bits=128/128);
-        Mon, 23 Feb 2015 12:23:19 -0800 (PST)
-In-Reply-To: <xmqqegpkz4cf.fsf@gitster.dls.corp.google.com>
-X-Mailer: Evolution 3.10.4-0ubuntu2 
+	id S1752534AbbBWUZ4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Feb 2015 15:25:56 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:54325 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752429AbbBWUZz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Feb 2015 15:25:55 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id DA18E3A986;
+	Mon, 23 Feb 2015 15:25:54 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=NWkN9wdsdOC+XpVycBbKhAf+tfg=; b=TqMMpC
+	xXh2Z6+9MrPTEfwwzF6sxKDtbSCfRQCt5YNlCPciRBc/fKoyqxfQo4d21/GMcd2h
+	tGLj2qjMvULj7XCGigiNcsiIR2a9HcjtZE9DB1oFpixCWsBvL+BrMvcoD0M1AtQ3
+	5vjHnANvkDwkLvRxKqsKOyWsPQsGjM850k8Rg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=G0A1TFNe8UoJaQ0TGCM3MYuMxnXjB22H
+	gS8wmTaA29f/wIh/p7Ns7KdtPXfnM4sHvaaMmS9LaB0Hp5zA6Db+4QUhgYJxdauQ
+	PiB6trLMOAjH3ome+Aj2gzxz8PT+7AqbcokdULWzfL6M56f/6g6PDxqalcrK1clh
+	eTuj7Q4sLL8=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id CC4C03A985;
+	Mon, 23 Feb 2015 15:25:54 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4934F3A984;
+	Mon, 23 Feb 2015 15:25:54 -0500 (EST)
+In-Reply-To: <xmqqvbiss7xb.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Mon, 23 Feb 2015 12:13:20 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 2AAA75EC-BB9A-11E4-A50E-A4119F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264294>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264295>
 
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Fri, 2015-02-20 at 12:59 -0800, Junio C Hamano wrote:
-> David Turner <dturner@twopensource.com> writes:
-> 
-> > On Fri, 2015-02-20 at 06:38 +0700, Duy Nguyen wrote:
-> >> >    * 'git push'?
-> >> 
-> >> This one is not affected by how deep your repo's history is, or how
-> >> wide your tree is, so should be quick..
-> >> 
-> >> Ah the number of refs may affect both git-push and git-pull. I think
-> >> Stefan knows better than I in this area.
-> >
-> > I can tell you that this is a bit of a problem for us at Twitter.  We
-> > have over 100k refs, which adds ~20MiB of downstream traffic to every
-> > push.
-> >
-> > I added a hack to improve this locally inside Twitter: The client sends
-> > a bloom filter of shas that it believes that the server knows about; the
-> > server sends only the sha of master and any refs that are not in the
-> > bloom filter.  The client  uses its local version of the servers' refs
-> > as if they had just been sent....
-> 
-> Interesting.
-> 
-> Care to extend the discussion to improve the protocol exchange,
-> which starts at $gmane/263932 [*1*], where I list the known issues
-> around the current protocol (and a possible way to correct them in
-> footnotes)?
+>> +Update the registered submodules to match what the superproject
+>> +expects by cloning missing submodules and updating the working tree of
+>> +the submodules. The "updating" can be done in several ways depending
+>> +on command line options and the value of `submodule.<name>.update`
+>> +configuration variable. Supported update methods are:
+>
+> If you read the description of "--remote" (sorry, I didn't notice it
+> until I formatted the result of this patch and tried to read the
+> whole thing), we already use "update procedure" to mean these modes
+> of updates collectively.  Either use "update procedures" here (and
+> everywhere else in this patch where it is called "update method"),
+> or adjust the existing "update procedure" to "update method".
+> Either way is fine, but because "update procedure" is not wrong
+> per-se, I think it would be better to use that phrasing that may
+> already be familiar with the "git submodule" users.
 
-At Twitter, we changed to an entirely different clone strategy for our
-largest repo: instead of using git clone, we use bittorrent (on a
-tarball of the repo).  For git pull, we maintain a journal of all pushes
-ever made to the server (data and ref updates); each client keeps track
-of their location in that journal.  So now pull does not require any
-computation on the server; the client just requests the segment of the
-journal that they don't have.  Then the client replays the journal.
-This scheme isn't perfect: clients end up with data about even
-transitory and long-dead branches, and there is presently no way to
-redact data (although that would be possible to add).  And of course
-shallow and sparse clones are impossible.  But it works quite well for
-Twitter's needs.  As I understand it, the hope is to implement redaction
-and then submit patches upstream.
+Addendum.  Your update to config.txt calls it "updating strategy".
+That also needs to be unified to clarify that we are talking about
+the same thing in these places to the readers.
 
-I say "we", but I personally did not do any of the above work.  Because
-I haven't looked into most of these issues personally, I'm reluctant to
-say too much on protocol improvements.  I would want to better
-understand the constraints.  I do think there is value in having a
-diversity of possible protocols to handle different use cases.  As
-repositories grow, traditional full-repo clones become less viable.
-Network transfer and client-side performance both suffer.  In a repo the
-size of (say) WebKit, the traditional model works.  In a repo the size
-of Facebook's monorepo, it starts to break down.  So Facebook does
-entirely shallow clones (using hg, but the problems are similar in git).
-Commands like log and blame instead call out to a server to gather
-history data.  At Google, whose repo is I think two or three orders of
-magnitude larger than WebKit, all local copies are both shallow and
-sparse; there is also support for "sparse commits" -- so that a commit
-that affects (say) ten thousand files across the entire tree can be kept
-to a reasonable size. 
-
-<end digression>
-
-Twitter's journal scheme explains why I implemented bloom filter pushes
--- the number of refs does not significantly affect pull performance,
-but pushes still go through the normal git machinery, so we wanted an
-optimization to reduce latency there.
+Thanks.
