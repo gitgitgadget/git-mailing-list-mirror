@@ -1,78 +1,82 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [RFH] GSoC 2015 application
-Date: Mon, 23 Feb 2015 09:02:58 +0100
-Message-ID: <vpqfv9xxdfx.fsf@anie.imag.fr>
-References: <20150218191417.GA7767@peff.net> <54E6C78D.3070506@alum.mit.edu>
-	<20150220072924.GC8763@peff.net> <vpqpp94exb5.fsf@anie.imag.fr>
-	<20150220094844.GB30127@peff.net> <20150220113538.GA5491@peff.net>
+From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Subject: Re: [cosmetic bug?] needlessly(?) executable files
+Date: Mon, 23 Feb 2015 09:21:03 +0100
+Message-ID: <1424679663.30155.30.camel@kaarsemaker.net>
+References: <1424540917.15539.24.camel@scientia.net>
+	 <xmqqr3thwzur.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Stefan Beller <sbeller@google.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 23 09:03:28 2015
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: Christoph Anton Mitterer <calestyo@scientia.net>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 23 09:21:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YPnzD-0007CY-EW
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Feb 2015 09:03:27 +0100
+	id 1YPoGO-0006zA-TA
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Feb 2015 09:21:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751249AbbBWIDU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Feb 2015 03:03:20 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:41386 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751159AbbBWIDT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Feb 2015 03:03:19 -0500
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t1N82waD027202
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 23 Feb 2015 09:02:58 +0100
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t1N82w48016871;
-	Mon, 23 Feb 2015 09:02:58 +0100
-In-Reply-To: <20150220113538.GA5491@peff.net> (Jeff King's message of "Fri, 20
-	Feb 2015 06:35:38 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 23 Feb 2015 09:02:58 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t1N82waD027202
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1425283379.00175@EOCsCs3W37InkgJJneGOvg
+	id S1752402AbbBWIVH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Feb 2015 03:21:07 -0500
+Received: from mail-wg0-f52.google.com ([74.125.82.52]:63887 "EHLO
+	mail-wg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751178AbbBWIVG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Feb 2015 03:21:06 -0500
+Received: by mail-wg0-f52.google.com with SMTP id x12so23992193wgg.11
+        for <git@vger.kernel.org>; Mon, 23 Feb 2015 00:21:05 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:content-type:mime-version:content-transfer-encoding;
+        bh=3zf1pOLYq+RDHDu/QxJq9EPU/z9YTl5F8Fy7HdTbR58=;
+        b=RdirvXlOt6AhblVCiVkA8YiW9mrJlNmEDeiO9EMURpde4BZSfEBW0O5sDSzZ0HkyJt
+         7j5CWTnrzpl/cEEDb82wcPdGsmWKpJTrvdAxuKq9vAzdLgGN+gcFwjW4SgeOq3gtiAul
+         cBc8VFaY/MK+3n9WL4kSga0JroORsWOfKBHukKIRz00OBoW2gXZhMtzsS0fSe9RsW/MP
+         1cXVBw2sZJIAGsAAH4c1xivPx0W1w7ZU4IlqRz8k6KfaS06MzhTsRpZJuc7/z4xBlI4S
+         kOc31FqdDr3lFEvmKogKTP9Jm4sAccL/wWPoltmNHJlU3FBcuOqR//sPV1MAW9k2l10M
+         A8RQ==
+X-Gm-Message-State: ALoCoQkyqV//QrvtKJPYCsGvjG8024+P1OqsKYet08SGs8bllSrQvnxeIngrBwyVUQl73ILyUQeL
+X-Received: by 10.180.73.205 with SMTP id n13mr18102660wiv.64.1424679665433;
+        Mon, 23 Feb 2015 00:21:05 -0800 (PST)
+Received: from seahawk.local (proxy-gw-l.booking.com. [5.57.20.8])
+        by mx.google.com with ESMTPSA id v7sm54455673wju.22.2015.02.23.00.21.04
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 23 Feb 2015 00:21:04 -0800 (PST)
+In-Reply-To: <xmqqr3thwzur.fsf@gitster.dls.corp.google.com>
+X-Mailer: Evolution 3.12.7-0ubuntu1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264249>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264250>
 
-Jeff King <peff@peff.net> writes:
+On zo, 2015-02-22 at 10:44 -0800, Junio C Hamano wrote:
+> Christoph Anton Mitterer <calestyo@scientia.net> writes:
+> 
+> > Just a question about files like:
+> > .git/config
+> > .git/hooks/*.sample
+> >
+> > Is there any reason that these are created executable? Especially
+> the
+> > config file?
+> 
+> In a new repository I just did "git init", I see this:
+> 
+>     $ rm -fr stupid
+>     $ umask 0027
+>     $ git init stupid
+>     $ ls -l stupid/.git/config | sed -e 's/ .*//'
+>     -rw-r-----
+> 
+> So no, config is not created executable.
 
-> So that being said, I did complete the application. We can still
-> withdraw if we want before students start applying, or we can put a
-> disclaimer on the ideas page.
-
-I'm in favor of the disclaimer, but I won't fight if other people think
-it's better to just withdraw.
-
-> That content was cut-and-pasted into Google's application interface.
-> Matthieu, as backup admin you should have access to tweak that if there
-> are typos, etc (and I will probably not be available to apply fixes from
-> now until the deadline, so please do so if you see anything).
-
-I do have access to the text here:
-
-  http://www.google-melange.com/gsoc/org/survey_response/show/google/gsoc2015/git
-
-but I did not find an "edit" button. I can edit
-
-  http://www.google-melange.com/gsoc/org/profile/edit/google/gsoc2015/git
-
-OTOH.
+It used to be for a brief period in history, between daa22c6f8d (2.1.0)
+and 1f32ecf (2.2.2).
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Dennis Kaarsemaker
+http://www.kaarsemaker.net
