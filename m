@@ -1,78 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/3] t5601: add more test cases for IPV6
-Date: Sun, 22 Feb 2015 18:50:00 -0800
-Message-ID: <xmqq61atuysn.fsf@gitster.dls.corp.google.com>
-References: <54E8A9DD.7090908@web.de>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 1/2] index-pack: reduce object_entry size to save memory
+Date: Mon, 23 Feb 2015 10:38:30 +0700
+Message-ID: <CACsJy8CGQAx9KVHF_yGHh+zi6xirtP7ZxTb3-2NafGkmjQkcGA@mail.gmail.com>
+References: <1424397488-22169-1-git-send-email-pclouds@gmail.com>
+ <1424397488-22169-2-git-send-email-pclouds@gmail.com> <xmqqegphuze8.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, lists@hcf.yourweb.de
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Mon Feb 23 03:50:17 2015
+Cc: Git Mailing List <git@vger.kernel.org>,
+	matthew sporleder <msporleder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 23 04:39:10 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YPj69-0002yy-2N
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Feb 2015 03:50:17 +0100
+	id 1YPjrR-0007v7-Ug
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Feb 2015 04:39:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752163AbbBWCuF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 22 Feb 2015 21:50:05 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:57654 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752121AbbBWCuD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 22 Feb 2015 21:50:03 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id AC3FB3B06E;
-	Sun, 22 Feb 2015 21:50:02 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=5CY71phiFA/q
-	nyPe1QCj9Ign09s=; b=t6PG8MHvtdqpGNTEI4BhVBkf6tfOnW6ny54CD4YdnJRR
-	Y/xk6a3JzPamFPU6jgf6IWula8TKW/eiPYU6bw4ANXKePtZ9LDEHpRWZ/PPOq/Nb
-	ohI8MfjwwnW9tSy0txH+IgxLtbv6nHV6h6eZqbJab/NEq2fNf0C1x40M0ZyrD2E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=cu3ywD
-	y2eO4sDbf+hFzn3GZ4um7vdhWq8t+FkezDQL9V97NkFAP+usNJh45ry1+kEV2/y0
-	Ez1ZlCHkrE6czVg6/6oxRS4xro3xHP6c6F0AOQU+uRJchAYYfZ2FyjJv669nrrOG
-	lua0Nin1+uFgDNNrmt4HRjFc1mBf6ySgsZL/k=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id A1F1A3B06D;
-	Sun, 22 Feb 2015 21:50:02 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F16683B06C;
-	Sun, 22 Feb 2015 21:50:01 -0500 (EST)
-In-Reply-To: <54E8A9DD.7090908@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
- =?utf-8?Q?en=22's?= message of
-	"Sat, 21 Feb 2015 16:53:01 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: A9D3667E-BB06-11E4-89B3-A4119F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1752212AbbBWDjC convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 22 Feb 2015 22:39:02 -0500
+Received: from mail-ig0-f174.google.com ([209.85.213.174]:46565 "EHLO
+	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751800AbbBWDjB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 22 Feb 2015 22:39:01 -0500
+Received: by mail-ig0-f174.google.com with SMTP id b16so15411766igk.1
+        for <git@vger.kernel.org>; Sun, 22 Feb 2015 19:39:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=F+3m8pPrD7xfh3WM6l4zx7/DYKlCrhwu7pnWoNuPAUs=;
+        b=LOz8aTSvwZUKShilmnYokFkoFFg56jk8h2OSP2SU2AdZnQv28ZOtU2nmd6bV4AdFSJ
+         w8/0mAf71uJE6Aotmch1DkvJjuQWUd19WPnq+4qScGpbJry9izvE4YJloG2ojXvtkWib
+         wwQvY2anEf7NC0D3FDtKuFAfFwjXX8pTu2NsvCWU6ijdalCOMiHjWjGvydA5AMsSQ0Q9
+         u2EVO2sF2cs8L6OeEUcuHov0txsppRTNyM3X9v9+t2qgVBXKwll4NeP2eVJEhXXTDRS5
+         kiy19NbjCvkEn2DJrDSnKmHJBJ/eaIQHIyUwi+ARzDvbq9/L0fEKdIfBp39Qh7fzpMQa
+         b0MQ==
+X-Received: by 10.50.66.243 with SMTP id i19mr10551320igt.7.1424662740474;
+ Sun, 22 Feb 2015 19:39:00 -0800 (PST)
+Received: by 10.107.131.155 with HTTP; Sun, 22 Feb 2015 19:38:30 -0800 (PST)
+In-Reply-To: <xmqqegphuze8.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264246>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+On Mon, Feb 23, 2015 at 9:37 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
+:
+>
+>> diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+>> index 4632117..07b2c0c 100644
+>> --- a/builtin/index-pack.c
+>> +++ b/builtin/index-pack.c
+>> @@ -18,9 +18,12 @@ static const char index_pack_usage[] =3D
+>>  struct object_entry {
+>>       struct pack_idx_entry idx;
+>>       unsigned long size;
+>> -     unsigned int hdr_size;
+>> -     enum object_type type;
+>> -     enum object_type real_type;
+>> +     unsigned char hdr_size;
+>> +     char type;
+>> +     char real_type;
+>
+> Don't you need these two fields to be able to hold a negative value
+> like OBJ_BAD (=3D -1)?  You'd need to spell "signed char" out here.
 
-> @@ -359,7 +366,7 @@ done
->  for repo in rep rep/home/project 123
->  do
->  	test_expect_success "clone [::1]:$repo" '
-> -		test_clone_url [::1]:$repo ::1 $repo
-> +		test_clone_url [::1]:$repo ::1 "$repo"
->  	'
->  done
-
-This change is somewhat a curious one.  Why quote the last
-occurrence of $repo but not the previous one?
-
-> +for tuah in ::1 [::1] user@::1 user@[::1] [user@::1]
-> +do
-> +	euah=3D$(echo $tuah | tr -d "[]")
-
-What are tuah and euah, by the way?  Are they FLA for some phrases?
+Right. char's signedness is undefined. Can't believe I hit this on ARM
+not 2 months ago and already forgot the lesson. Will fix.
+--=20
+Duy
