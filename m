@@ -1,67 +1,91 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: [PATCH v2 2/3] t5601: add more test cases for IPV6
-Date: Mon, 23 Feb 2015 06:36:40 +0100
-Message-ID: <54EABC68.40308@web.de>
-References: <54E8A9DD.7090908@web.de> <xmqq61atuysn.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Strange reachability inconsistency (apparently, at least...)
+Date: Sun, 22 Feb 2015 22:44:31 -0800
+Message-ID: <xmqq1tlhunxs.fsf@gitster.dls.corp.google.com>
+References: <144640746.551672305.1424355582540.JavaMail.root@zimbra39-e7.priv.proxad.net>
+	<324985759.551780546.1424358217833.JavaMail.root@zimbra39-e7.priv.proxad.net>
+	<CAPc5daW=OeNmPVMVWQvp3rfYzfV7z6c1=26E26y0SaRQH7JooA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, lists@hcf.yourweb.de
-To: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1?= =?UTF-8?B?c2Vu?= 
-	<tboegi@web.de>
-X-From: git-owner@vger.kernel.org Mon Feb 23 06:37:56 2015
+Content-Type: text/plain
+Cc: git list <git@vger.kernel.org>, dirson@bertin.fr, poulot@bertin.fr
+To: ydirson@free.fr
+X-From: git-owner@vger.kernel.org Mon Feb 23 07:44:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YPliM-0007yX-Ax
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Feb 2015 06:37:54 +0100
+	id 1YPmkx-0003Op-H4
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Feb 2015 07:44:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751413AbbBWFht convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Feb 2015 00:37:49 -0500
-Received: from mout.web.de ([212.227.17.12]:56242 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751119AbbBWFht (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Feb 2015 00:37:49 -0500
-Received: from [192.168.88.199] ([194.47.243.242]) by smtp.web.de (mrweb101)
- with ESMTPSA (Nemesis) id 0LvSU3-1XPnUQ0aLz-010Ze7; Mon, 23 Feb 2015 06:37:45
- +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:31.0) Gecko/20100101 Icedove/31.4.0
-In-Reply-To: <xmqq61atuysn.fsf@gitster.dls.corp.google.com>
-X-Provags-ID: V03:K0:DStjrTa10TTNU/vMuxD6W/nBVq7yD2rhyymTJgVtwLn4FqCisdO
- OJxmsAIogOrSDx3FojMzdPu9DerGT2n1ZzCKWSZueBa8JW61r5zFdQU14Ge8AvRKSQ+4JAH
- S7aTbqEW2fqHU98sL6y3xtobKQus4jDWYEKICJNcToHU+j3Kp3L2U/Xg5JUhEe3seUMxYWS
- UIaPtmfKuUNnQBinK7C/Q==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1751972AbbBWGof (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Feb 2015 01:44:35 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64600 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750903AbbBWGoe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Feb 2015 01:44:34 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A7AB92C28A;
+	Mon, 23 Feb 2015 01:44:33 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=shORIfROVfhw3UAzrA4wQvY8bJY=; b=CxcmaO
+	Z9HA5pkw9tP5It4FTe/pHZoFgQQvCmZnqJwYh4RK+gZwuN6gPDOIlCncQAssH/1c
+	dk4vkk6jEqWJbUoe3URwu4/VEP+yfqcI6/anpYI1cZz02UrBPzPKz78msju8bzYL
+	0R+yv8jwj73Y5mWJmRcAXBcGJY2Up/PB1w96c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=QF96AQrqK53HRnexZ53/9oyZH4V4rvdb
+	dfL0+ZswiToE3aS/proXe0CYBiPcY1ZkgY1TcDOa5E7GsHoOJp+49o4jzHSD/VvE
+	0fdqMN7DYiB4DXHsXOK6YpdRwZo1Bm/JHsKVHsd7jtoDiXEHB6j1GoDQZMduDkQM
+	PHNC1P0Aq3U=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9EF832C289;
+	Mon, 23 Feb 2015 01:44:33 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 254792C288;
+	Mon, 23 Feb 2015 01:44:33 -0500 (EST)
+In-Reply-To: <CAPc5daW=OeNmPVMVWQvp3rfYzfV7z6c1=26E26y0SaRQH7JooA@mail.gmail.com>
+	(Junio C. Hamano's message of "Sun, 22 Feb 2015 15:30:11 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 6CCFBAE0-BB27-11E4-93A5-A4119F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264248>
 
-On 02/23/2015 03:50 AM, Junio C Hamano wrote:
-> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+Junio C Hamano <gitster@pobox.com> writes:
+
+> On Thu, Feb 19, 2015 at 7:03 AM,  <ydirson@free.fr> wrote:
+>> I have a (fsck-clean) git tree in which for 2 commits A and B:
+>>
+>> * "git merge-base --is-ancestor A B" returns 0
+>> * "git log B..A" returns a non-empty set of commits
+>>
+>> I get this behaviour with 2.3.0 as well as with 2.1.3 and 1.7.12.
+>>
+>> Is that a real bug or am I just misinterpreting something ?
 >
->> @@ -359,7 +366,7 @@ done
->>   for repo in rep rep/home/project 123
->>   do
->>   	test_expect_success "clone [::1]:$repo" '
->> -		test_clone_url [::1]:$repo ::1 $repo
->> +		test_clone_url [::1]:$repo ::1 "$repo"
->>   	'
->>   done
-> This change is somewhat a curious one.  Why quote the last
-> occurrence of $repo but not the previous one?
-The reason to quote is that
-some shells replace ~ with $HOME, but not "~"
-exactly here it seems not to be needed.
->
->> +for tuah in ::1 [::1] user@::1 user@[::1] [user@::1]
->> +do
->> +	euah=3D$(echo $tuah | tr -d "[]")
-> What are tuah and euah, by the way?  Are they FLA for some phrases?
-tuah =3D tested username and host
-euah =3D expected username and host
+> Sounds strange. Is it possible to share the repository (or an
+> anonymised copy of it)?
+
+Actually it does not sound all that strange.
+
+I suspect that B is indeed a proper descendant of A, but you have
+commits with screwed-up committer timestamps between these two
+commits that break the cut-off heuristic used by log and reb-list.
+
+Grab the output from "git rev-list B..A".  These are supposed to be
+ahead of B (i.e. should not be reachable from B).  Then look at the
+output from "git log B" (no lower bound) and see if these commits
+appear there, perhaps like:
+
+    $ git rev-list B..A | sed -e 's/^/^/' >phantoms
+    $ git log --format='%H %ct' B | grep -C2 -f phantoms
+
+Hits from the latter "grep" would indicate that what the traversal
+B..A claimed that are not reachable from B contained some commits
+that are indeed reachable from B.
