@@ -1,68 +1,80 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFH] GSoC 2015 application
-Date: Mon, 23 Feb 2015 10:36:04 -0500
-Message-ID: <20150223153604.GA19129@peff.net>
-References: <20150218191417.GA7767@peff.net>
- <54E6C78D.3070506@alum.mit.edu>
- <20150220072924.GC8763@peff.net>
- <vpqpp94exb5.fsf@anie.imag.fr>
- <20150220094844.GB30127@peff.net>
- <20150220113538.GA5491@peff.net>
- <vpqfv9xxdfx.fsf@anie.imag.fr>
+From: Pierre-Olivier Vares <pierre-olivier.vares@fingerprint.fr>
+Subject: Internationalization and yes/no prompts
+Date: Mon, 23 Feb 2015 16:46:07 +0100
+Message-ID: <54EB4B3F.6080706@fingerprint.fr>
+References: <20150212085211.9112780692@smtp-out.fingerprint.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Stefan Beller <sbeller@google.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Feb 23 16:36:14 2015
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 23 16:46:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YPv3N-0005P3-LT
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Feb 2015 16:36:14 +0100
+	id 1YPvD6-0002Xy-00
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Feb 2015 16:46:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752653AbbBWPgI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Feb 2015 10:36:08 -0500
-Received: from cloud.peff.net ([50.56.180.127]:52281 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752628AbbBWPgH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Feb 2015 10:36:07 -0500
-Received: (qmail 11462 invoked by uid 102); 23 Feb 2015 15:36:06 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 23 Feb 2015 09:36:06 -0600
-Received: (qmail 24811 invoked by uid 107); 23 Feb 2015 15:36:06 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 23 Feb 2015 10:36:06 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 23 Feb 2015 10:36:04 -0500
-Content-Disposition: inline
-In-Reply-To: <vpqfv9xxdfx.fsf@anie.imag.fr>
+	id S1752904AbbBWPqL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Feb 2015 10:46:11 -0500
+Received: from smtp-out.fingerprint.fr ([109.69.192.220]:57353 "EHLO
+	smtp-out.fingerprint.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752247AbbBWPqK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Feb 2015 10:46:10 -0500
+Received: from mxr1.fingerprint.fr (unknown [192.168.2.144])
+	by smtp-out.fingerprint.fr (Postfix) with SMTP id 406C380A90
+	for <git@vger.kernel.org>; Mon, 23 Feb 2015 16:41:39 +0100 (CET)
+Received: (qmail 8860 invoked from network); 23 Feb 2015 15:46:07 -0000
+Received: from unknown (HELO ?192.168.0.128?) (109.69.192.35)
+  by mxr1.fingerprint.fr with SMTP; 23 Feb 2015 15:46:07 -0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
+In-Reply-To: <20150212085211.9112780692@smtp-out.fingerprint.fr>
+X-Forwarded-Message-Id: <20150212085211.9112780692@smtp-out.fingerprint.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264265>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264266>
 
-On Mon, Feb 23, 2015 at 09:02:58AM +0100, Matthieu Moy wrote:
+Hi,
 
-> > That content was cut-and-pasted into Google's application interface.
-> > Matthieu, as backup admin you should have access to tweak that if there
-> > are typos, etc (and I will probably not be available to apply fixes from
-> > now until the deadline, so please do so if you see anything).
-> 
-> I do have access to the text here:
-> 
->   http://www.google-melange.com/gsoc/org/survey_response/show/google/gsoc2015/git
-> 
-> but I did not find an "edit" button. I can edit
-> 
->   http://www.google-melange.com/gsoc/org/profile/edit/google/gsoc2015/git
-> 
-> OTOH.
+I just fell in a little trap, in which you may find interest.
 
-I think it's just because the application period has ended, so our
-answers to the questions are frozen.
+I'm using git on the command line (on an Elementary OS system : Linux 
+3.2.0-76-generic #111-Ubuntu SMP Tue Jan 13 22:16:09 UTC 2015 x86_64 
+x86_64 x86_64 GNU/Linux).
+git version : 2.3.0
 
--Peff
+My system is configured in french.
+
+That's said :
+I run a git clean -i, and select option 4 (ask each).
+     (By the fact, messages are translated, but options of the 
+'interactive' menu aren't)
+So I get, for each file, the question :
+/Supprimer //premier_fichier ? [Remove first_file ?]/
+Natural answer to this question is 'Oui' [Yes], so I type 'o', rather 
+than 'y'.
+Once finished, I see no file has been removed (since 'o' has been 
+considered as 'different than yes')
+Whereas it's not an end-of-the-world thing*, it's annoying as at first 
+sight I didn't understand why it has 'not worked'.
+
+I thought of a few possibilities (some easy to implement, others more 
+complex; some are stricter for the user) :
+- explicitly put "y/n" in the message. Translaters should be warned to 
+let "y/n",
+- only allow y and n answers (and variants : yes, no), and reject 
+everything else with a message
+- use as 'n', but echoes a message : 'Answer considered as /no/'
+- accept answers depending on the language used to echo the prompt (y/n 
+for english, o/n for french, j/n for german, ...)
+
+What do you think about that ?
+
+* but just imagine how worst it could be if you're configured in a 
+language where 'No' is said using a word beginning by 'Y'...
+
+Cheers,
+Pierre-Olivier Vares
