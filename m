@@ -1,61 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Strange reachability inconsistency (apparently, at least...)
-Date: Sun, 22 Feb 2015 15:30:11 -0800
-Message-ID: <CAPc5daW=OeNmPVMVWQvp3rfYzfV7z6c1=26E26y0SaRQH7JooA@mail.gmail.com>
-References: <144640746.551672305.1424355582540.JavaMail.root@zimbra39-e7.priv.proxad.net>
- <324985759.551780546.1424358217833.JavaMail.root@zimbra39-e7.priv.proxad.net>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: [PATCH] git-compat-util.h: remove redundant code
+Date: Mon, 23 Feb 2015 00:07:14 +0000
+Message-ID: <54EA6F32.50301@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git list <git@vger.kernel.org>, dirson@bertin.fr, poulot@bertin.fr
-To: ydirson@free.fr
-X-From: git-owner@vger.kernel.org Mon Feb 23 00:30:37 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: GIT Mailing-list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 23 01:07:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YPfyu-0003jU-Rr
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Feb 2015 00:30:37 +0100
+	id 1YPgYX-0003pW-0X
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Feb 2015 01:07:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752317AbbBVXac (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Feb 2015 18:30:32 -0500
-Received: from mail-ob0-f182.google.com ([209.85.214.182]:51938 "EHLO
-	mail-ob0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752121AbbBVXac (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Feb 2015 18:30:32 -0500
-Received: by mail-ob0-f182.google.com with SMTP id nt9so32767401obb.13
-        for <git@vger.kernel.org>; Sun, 22 Feb 2015 15:30:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=eAun/pWEfu+0IBfZtNvuOfyjPvBRl5ZkgRjnCQadY2U=;
-        b=uULe97BMs5eBowJX4XNz2Ew5qEDm3O1F06L4/udjVbLGd2pOscKRI7p2JILQm3MvRx
-         hQ8ReltdqT2k12wCUHdQqRCH4m+4zM5oKG7yDbVXrxky2Xi1B6FQJQwmL6qHRkbwbonr
-         b5QFoMic9g1lF7vIO4zdIEvrGQ9MIwhIcoRB9HTLZ1lLVGlViEfsauoP45etZovS6qq6
-         eg48U5I4wx540R3RTFE5c1S8UdC5/ln3PPOVvA/p3W7sn3uVbHLvjg4ow4NuD/BUeTOY
-         aNELWlpsdTBVf/1F6o2yfs779afla//6Wk5rJ+einPfo3AAVbt5l1weDC57t+GNVoKv/
-         WA1w==
-X-Received: by 10.182.43.129 with SMTP id w1mr5693543obl.86.1424647831472;
- Sun, 22 Feb 2015 15:30:31 -0800 (PST)
-Received: by 10.202.48.132 with HTTP; Sun, 22 Feb 2015 15:30:11 -0800 (PST)
-In-Reply-To: <324985759.551780546.1424358217833.JavaMail.root@zimbra39-e7.priv.proxad.net>
-X-Google-Sender-Auth: AsMQa-5-nkOsS5M3wH9HZmpMexA
+	id S1752131AbbBWAHU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Feb 2015 19:07:20 -0500
+Received: from mdfmta010.mxout.tbr.inty.net ([91.221.168.51]:37925 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752107AbbBWAHT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Feb 2015 19:07:19 -0500
+Received: from mdfmta010.tbr.inty.net (unknown [127.0.0.1])
+	by mdfmta010.tbr.inty.net (Postfix) with ESMTP id 912AF6F8DA3;
+	Mon, 23 Feb 2015 00:07:02 +0000 (GMT)
+Received: from mdfmta010.tbr.inty.net (unknown [127.0.0.1])
+	by mdfmta010.tbr.inty.net (Postfix) with ESMTP id 4F4E96F8B93;
+	Mon, 23 Feb 2015 00:07:02 +0000 (GMT)
+Received: from [10.0.2.15] (unknown [80.176.147.220])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by mdfmta010.tbr.inty.net (Postfix) with ESMTP;
+	Mon, 23 Feb 2015 00:07:01 +0000 (GMT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
+X-MDF-HostID: 3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264241>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264242>
 
-On Thu, Feb 19, 2015 at 7:03 AM,  <ydirson@free.fr> wrote:
-> I have a (fsck-clean) git tree in which for 2 commits A and B:
->
-> * "git merge-base --is-ancestor A B" returns 0
-> * "git log B..A" returns a non-empty set of commits
->
-> I get this behaviour with 2.3.0 as well as with 2.1.3 and 1.7.12.
->
-> Is that a real bug or am I just misinterpreting something ?
 
-Sounds strange. Is it possible to share the repository (or an
-anonymised copy of it)?
+Since commit 3a0a3a89 ("git-compat-util.h: don't define _XOPEN_SOURCE
+on cygwin", 23-11-2014) removed the definition of _XOPEN_SOURCE on
+cygwin, the code within a pre-processor conditional further down the
+file became redundant. Remove the redundant code.
+
+This effectively reverts commit 41b20017 ("Fix an "implicit function
+definition" warning", 03-03-2007).
+
+Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+---
+
+Hi Junio,
+
+I have a very vague recollection (back in March 2007) of trying to fix
+the problem from commit 41b20017 using the solution in commit 3a0a3a89.
+However, I can't remember the result! :(
+
+I guess, by implication, there is a chance that it failed because (at
+that time) something required _XOPEN_SOURCE to be set on cygwin. It is
+clearly not the case for the current version of cygwin (v1.7.34, x86_64).
+(I also tested on my old 32-bit laptop with an older cygwin - it's been
+about a year since I updated that version of cygwin.)
+
+[Hmm, would it be easier to change the conditional(s) to set _XOPEN_SOURCE
+only for systems that require it (rather than avoid setting it for those
+that don't)! I suspect only sun, AIX 5.3L and OpenBSD need it set. dunno.]
+
+ATB,
+Ramsay Jones
+
+ git-compat-util.h | 6 ------
+ 1 file changed, 6 deletions(-)
+
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 68c07af..49c0637 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -164,16 +164,10 @@
+ typedef long intptr_t;
+ typedef unsigned long uintptr_t;
+ #endif
+-#if defined(__CYGWIN__)
+-#undef _XOPEN_SOURCE
+-#include <grp.h>
+-#define _XOPEN_SOURCE 600
+-#else
+ #undef _ALL_SOURCE /* AIX 5.3L defines a struct list with _ALL_SOURCE. */
+ #include <grp.h>
+ #define _ALL_SOURCE 1
+ #endif
+-#endif
+ 
+ /* used on Mac OS X */
+ #ifdef PRECOMPOSE_UNICODE
+-- 
+2.3.0
