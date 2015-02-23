@@ -1,100 +1,67 @@
-From: Mason <slash.tmp@free.fr>
-Subject: Salvaging borked project history
-Date: Mon, 23 Feb 2015 18:05:27 +0100
-Message-ID: <54EB5DD7.7050202@free.fr>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: [RFC/PATCH] branch: name detached HEAD analogous to status
+Date: Mon, 23 Feb 2015 12:23:11 -0500
+Message-ID: <54EB61FF.1080901@xiplink.com>
+References: <71fc137d8015f6e81ab91cfcbcad4ec0fa0dc3e6.1424626271.git.git@drmicha.warpmail.net> <54EB436E.9060106@xiplink.com> <54EB545A.2040309@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain; charset=windows-1252
 Content-Transfer-Encoding: 7bit
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Feb 23 18:05:38 2015
+To: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 23 18:22:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YPwRt-0004UK-8V
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Feb 2015 18:05:37 +0100
+	id 1YPwi3-0004qS-7R
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Feb 2015 18:22:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752219AbbBWRFd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Feb 2015 12:05:33 -0500
-Received: from smtp2-g21.free.fr ([212.27.42.2]:9481 "EHLO smtp2-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751898AbbBWRFc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Feb 2015 12:05:32 -0500
-Received: from [172.27.0.114] (unknown [83.142.147.193])
-	(Authenticated sender: shill)
-	by smtp2-g21.free.fr (Postfix) with ESMTPSA id A606D4B0293
-	for <git@vger.kernel.org>; Mon, 23 Feb 2015 18:05:16 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:35.0) Gecko/20100101 Firefox/35.0 SeaMonkey/2.32.1
+	id S1752692AbbBWRWO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Feb 2015 12:22:14 -0500
+Received: from smtp74.ord1c.emailsrvr.com ([108.166.43.74]:55842 "EHLO
+	smtp74.ord1c.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752072AbbBWRWN (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 Feb 2015 12:22:13 -0500
+Received: from smtp2.relay.ord1c.emailsrvr.com (localhost.localdomain [127.0.0.1])
+	by smtp2.relay.ord1c.emailsrvr.com (SMTP Server) with ESMTP id EEC5B180914;
+	Mon, 23 Feb 2015 12:22:12 -0500 (EST)
+Received: by smtp2.relay.ord1c.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 8993318028C;
+	Mon, 23 Feb 2015 12:22:12 -0500 (EST)
+X-Sender-Id: mbranchaud@xiplink.com
+Received: from [10.10.1.32] ([UNAVAILABLE]. [192.252.130.194])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA)
+	by 0.0.0.0:465 (trex/5.4.2);
+	Mon, 23 Feb 2015 17:22:12 GMT
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
+In-Reply-To: <54EB545A.2040309@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264274>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264275>
 
-Hello everyone,
+On 15-02-23 11:24 AM, Michael J Gruber wrote:
+> Marc Branchaud venit, vidit, dixit 23.02.2015 16:12:
+>> On 15-02-22 12:38 PM, Michael J Gruber wrote:
+>>> "git status" carefully names a detached HEAD "at" resp. "from" a rev or
+>>> ref depending on whether the detached HEAD has moved since. "git branch"
+>>> always uses "from", which can be confusing, because a status-aware user
+>>> would interpret this as moved detached HEAD.
+>>>
+>>> Make "git branch" use the same logic and wording.
+>>
+>> Except that the wording in "git branch" is more correct, especially if the
+>> detached HEAD contains new commits.
+>>
+>> In other words, "at" is only correct if the detached HEAD matches the ref.
+>> If the HEAD has other commits, it is no longer "at" that ref but instead it
+>> has grown "from" it.
+> 
+> Sure, but that's exactly what git status does. Haven't you tried out?
+> 
+> And it's exactly what I suggest for git branch. It conveys more information.
 
-Here's the situation:
+Oops, right.  Sorry, I got blinded by the various "detached at" examples in
+your patch's notes.
 
-Back in 2012, we cloned a MIPS repo, which was itself a clone of
-a 3.4.2 kernel with ~40 MIPS-specific patches applied.
-
-Then the devs started pushing patches; and once in a while, the
-maintainer would "sync" with the mainline kernel. I don't know
-what tool he used to sync, but he discarded the original patches
-doing so, and git blame now shows him as the author of every
-mainline change since the clone.
-
-Now that we are moving to a more recent kernel, I'm trying to
-"fix" this situation, i.e. I'd like kernel code to have proper
-attribution in git blame, while keeping intact the information
-for "internal" commits.
-
-While I'm at it, I want to minimize history by ignoring patches
-that are now irrelevant:
-
-1) we don't support MIPS anymore, I want to ignore any internal
-change we made in the arch/mips directory
-
-2) for some reason, there was a large amount of create/delete churn
-in arch/arm/configs; so I want to ignore our changes, and I'll commit
-an acceptable config when the process is complete.
-
-3) ignore some internal platform-specific patches
-
-(NB: All these "ignores" are for internal patches, not mainline patches)
-
-Sooo, using git log and grep, I came up with a list of ~300 patches I'd
-like to apply on top of the latest 3.14 kernel. For testing purposes,
-I used git format-patch on the oldest of my 300 patches.
-
-I then made a shiny new clone of linux-stable.git, and tried using git am
-to apply that patch to the tip of linux-stable, expecting having to solve
-a few dozens conflicts, and move on (hoping to automate it at some point).
-
-But 'git am' just gave up. Small sample of errors:
-
-error: patch failed: drivers/block/Kconfig:411
-error: drivers/block/Kconfig: patch does not apply
-error: drivers/tty/serial/8250/8250.c: does not exist in index
-error: patch failed: drivers/tty/serial/8250/8250_early.c:121
-error: drivers/tty/serial/8250/8250_early.c: patch does not apply
-error: patch failed: drivers/video/Kconfig:101
-error: drivers/video/Kconfig: patch does not apply
-...
-Patch failed at 0001 Commit for supporting Sigma Designs' SoCs.
-The copy of the patch that failed is found in:
-    .git/rebase-apply/patch
-When you have resolved this problem, run "git am --continue".
-If you prefer to skip this patch, run "git am --skip" instead.
-To restore the original branch and stop patching, run "git am --abort".
-
-How do I "resolve this problem".
-
-I suppose I am doing this the wrong way.
-What is the correct way to do it?
-(I'm using git 2.3)
-
-Should I use git am -3 in the original repo?
-
-Regards.
+		M.
