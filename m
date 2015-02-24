@@ -1,134 +1,223 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [RFC/PATCH 0/3] protocol v2
-Date: Tue, 24 Feb 2015 15:37:27 -0800
-Message-ID: <CAGZ79kbZHtZuPrb6rEP41vbdnZqJmsMwq+8pNer-_D4U5B1xZw@mail.gmail.com>
-References: <1424747562-5446-1-git-send-email-sbeller@google.com>
-	<CACsJy8BSf2h_xD-Q1tudAg_xCzffRQM+7xzUgprONxD7vM5RYw@mail.gmail.com>
-	<CAPc5daVbrUaU6LFM65evru0+1tBT916+0AOyids=f7DZThTPGw@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [BUG] diffcore-rename with duplicate tree entries can segfault
+Date: Tue, 24 Feb 2015 18:47:37 -0500
+Message-ID: <20150224234737.GA8370@peff.net>
+References: <20150224214311.GA8622@peff.net>
+ <xmqqh9uborrx.fsf@gitster.dls.corp.google.com>
+ <20150224224918.GA24749@peff.net>
+ <xmqqd24yq517.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 25 00:37:34 2015
+X-From: git-owner@vger.kernel.org Wed Feb 25 00:47:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YQP2j-0006nw-FN
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Feb 2015 00:37:33 +0100
+	id 1YQPCb-0004dH-Q2
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Feb 2015 00:47:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752234AbbBXXh3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Feb 2015 18:37:29 -0500
-Received: from mail-ig0-f174.google.com ([209.85.213.174]:55588 "EHLO
-	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751444AbbBXXh2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Feb 2015 18:37:28 -0500
-Received: by mail-ig0-f174.google.com with SMTP id b16so31288706igk.1
-        for <git@vger.kernel.org>; Tue, 24 Feb 2015 15:37:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=2psfXFjiGO3vK22DEVPwm4mXur6h+pf4vcTzdOBiR+I=;
-        b=emO+eUgcWUHbREsBZxr3VSHtZFo/iKfj3r86I5HZMkh3dQBejHyeg6jo2bPLQLBuM1
-         JNKO8P95uKEiQ54Qedg3/QvWHrmI7dCNWxfXfEyBQGCFDRe5lzeMxlnmHeuOfnAJSQgM
-         wCA6nwFRyMVRS8UZqJtG3Zhe6+il4EFAKsUWmQB8jcNTWcpec3jEoICYOi1oeirKV2mi
-         hehtGatYSLuIGQcyO+fRqWzzBGTIA+vnynv6ETGwLkaCAMwJZfRQ7nR3bEa2yUkpNzUQ
-         c8Tx4gQQ67QU9p3LSWogI/HWjl4/WCfPc8GOR+8m08ZYEM7Wq0EojtXBE8xONLY8K0Dw
-         X82Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=2psfXFjiGO3vK22DEVPwm4mXur6h+pf4vcTzdOBiR+I=;
-        b=ajYc0tk3vzwHVo/eSe9G41VVd/XUrYayr3TP+7ttrlukMEFN7BaBBowvj03ND79ifC
-         gzdVwtEC7lO7l+sPw7SNrekzFNZ9FtcgJRpPr0iOZS2YVsksIdB9mgzwuApXV7iuemBY
-         w1FDvSgOXDe4VDcPDxqQC43jW0peab/xrjlORjPuSrjEnsOqHI9Ll1bHZbKf++e7k7VG
-         JhDNLdENzHcLQJ7jiyxA8SPVvlHSIYjPojbl3E7bJjtWhqX9cbyDYguqjw1vFloymPVu
-         hLiOr02mTcES/i7iN65RYyDSKOv3BqOpGe8LszvRJUbTWmj4JA6TOc9TX+BylESuxfto
-         JpCw==
-X-Gm-Message-State: ALoCoQlbFjs1svQG/y3iMREH188Tkven7/ZHbeqTHTipvZFPddh+j2zB9rTuFxicYpFk480a4CfO
-X-Received: by 10.107.130.25 with SMTP id e25mr895235iod.49.1424821047752;
- Tue, 24 Feb 2015 15:37:27 -0800 (PST)
-Received: by 10.107.46.31 with HTTP; Tue, 24 Feb 2015 15:37:27 -0800 (PST)
-In-Reply-To: <CAPc5daVbrUaU6LFM65evru0+1tBT916+0AOyids=f7DZThTPGw@mail.gmail.com>
+	id S1752351AbbBXXrk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Feb 2015 18:47:40 -0500
+Received: from cloud.peff.net ([50.56.180.127]:52941 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750748AbbBXXrj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Feb 2015 18:47:39 -0500
+Received: (qmail 13854 invoked by uid 102); 24 Feb 2015 23:47:39 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 24 Feb 2015 17:47:39 -0600
+Received: (qmail 10526 invoked by uid 107); 24 Feb 2015 23:47:40 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 24 Feb 2015 18:47:40 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 24 Feb 2015 18:47:37 -0500
+Content-Disposition: inline
+In-Reply-To: <xmqqd24yq517.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264361>
 
-On Mon, Feb 23, 2015 at 10:15 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> On Mon, Feb 23, 2015 at 8:02 PM, Duy Nguyen <pclouds@gmail.com> wrote:
->>
->> It's very hard to keep backward compatibility if you want to stop the
->> initial ref adverstisement, costly when there are lots of refs. But we
->> can let both protocols run in parallel, with the old one advertise the
->> presence of the new one. Then the client could switch to new protocol
->> gradually. This way new protocol could forget about backward
->> compatibility. See
->>
->> http://thread.gmane.org/gmane.comp.version-control.git/215054/focus=244325
->
-> Yes, the whole thread is worth a read, but the approach suggested by
-> that article $gmane/244325 is very good for its simplicity. The server
-> end programs, upload-pack and receive-pack, need to only learn to
-> advertise the availability of upload-pack-v2 and receive-pack-v2
-> services and the client side programs, fetch-pack and push-pack,
-> need to only notice the advertisement and record the availability of
-> v2 counterparts for the current remote *and* continue the exchange
-> in v1 protocol. That way, there is very little risk for breaking anything.
+On Tue, Feb 24, 2015 at 03:11:00PM -0800, Junio C Hamano wrote:
 
-Right, I want to add this "learn about v2 on the fly, continue as always"
-to the protocol.
+> Jeff King <peff@peff.net> writes:
+> 
+> > I'm assuming there _is_ a sane sort order. We have two halves of a
+> > filepair, but I think before any of the rename or break detection kicks
+> > in, each pair should either:
+> >
+> >   1. Have a name in pair->one, and an invalid filespec in pair->two
+> >      (i.e., a deletion).
+> >
+> >   2. The opposite (name in pair->two, /dev/null in pair->one). An
+> >      addition.
+> >
+> >   3. The same name in pair->one and pair->two.
+> 
+> I think creation and deletion are expressed with mode=0 and not with
+> /dev/null.
 
->
-> So if we are going to discuss a new protocol, I'd prefer to see the
-> discussion without worrying too much about how to inter-operate
-> with the current vintage of Git. It is no longer an interesting problem,
-> as we know how to solve it with minimum risk. Instead, I'd like to
-> see us design the new protocol in such a way that it is in-line
-> upgradable without repeating our past mistakes.
->
-> I am *not* convinced that we want multiple suite of protocols that
-> must be chosen from to suit the use pattern, as mentioned somewhere
-> upthread, by the way.
+Yeah, or better spelled DIFF_FILE_VALID().
 
-I do think it makes sense to have different protocols or different tunings
-of one protocol, because there are many different situations in which different
-metrics are the key metric.
+So here's a first stab at doing this. There are a couple of issues:
 
-If you are on mobile, you'd possibly be billed by the bytes on the wire, so
-you want to have a protocol with as actual transport as possible and would
-maybe trade off transported bytes to lots of computational overhead.
+  1. It makes the check part of diffcore_std. My thinking was that we
+     can actually correct some problems (like sort order) for all cases,
+     and the duplicate check may want to disable more than renames
+     (e.g., it could turn off any fancy features like break detection).
 
-If you are in Australia (sorry downunder ;) or on satellite internet,
-you may care a lot about latency and roundtrip times.
+     It is possible to run diffcore_rename by itself, which would miss
+     this protection. We don't seem to do that anywhere, though (even
+     for try_to_follow_renames, we set up a new diff_options struct and
+     just call diffcore_std).
 
-If you are in a corporate environment and just cloning from next door,
-you may want to have the overall process (compute+network+
-local reconstruction) just be fast overall.
+  2. It disables rename detection by tweaking the diff_options struct.
+     This is OK for a single diff, but I suspect is wrong for "git log",
+     as we use the same diff_options for each (so one bogus diff would
+     turn off renames for the rest of the commits). We can probably get
+     around this by returning a "bogus, don't do renames" flag from
+     diffcore_sanity and respecting it in diffcore_std.
 
+  3. The sort order check is wrong. :-/ It needs to take into account
+     git's magic "if it's a tree, pretend it has '/' after it" rule.
+     That's not too hard for a single tree (fsck.c:verify_ordered does
+     it). But for filepairs, I'm not sure what to do. Most cases
+     have a single mode/name pair. But what about a D/F typechange? If
+     "foo" becomes "foo/", which do I use to sort?
 
-I can understand, that we maybe want to just provide one generic
-"version 2" of the protocol which is an allrounder not doing bad in
-all of these aspects, but I can see usecases of having the desire to
-replace the wire protocol by your own implementation. To do so
-we could try to offer an API which makes implementing a new
-protocol somewhat easy. The current state of affairs is not providing
-this flexibility.
+     I have a feeling the order in which we queue the pairs may even
+     depend on the direction of the typechange. Or maybe it always
+     matches the p->one version. I'll have to think on it.
 
-I think it would be not much overhead to have such
-flexibility when writing the actual code for the "very little risk" v2
-update. So instead of advertising a boolean flag meaning
-"This server/client speaks version2", we would rather send a list
-"This server speaks v2,v1 and v-custom-optimized-for-high-latency".
+I'm out of time to work on this tonight, but I'll try to get back to it
+tomorrow. Any wisdom is appreciated.
 
-I started looking for academic literature if there are generic solutions
-to finding graph differences, but no real luck for adapting to our
-problem yet.
-
-Thanks for your input,
-Stefan
+---
+diff --git a/Makefile b/Makefile
+index 44f1dd1..838a21c 100644
+--- a/Makefile
++++ b/Makefile
+@@ -690,6 +690,7 @@ LIB_OBJS += diffcore-delta.o
+ LIB_OBJS += diffcore-order.o
+ LIB_OBJS += diffcore-pickaxe.o
+ LIB_OBJS += diffcore-rename.o
++LIB_OBJS += diffcore-sanity.o
+ LIB_OBJS += diff-delta.o
+ LIB_OBJS += diff-lib.o
+ LIB_OBJS += diff-no-index.o
+diff --git a/diff.c b/diff.c
+index d1bd534..5f7c43a 100644
+--- a/diff.c
++++ b/diff.c
+@@ -4768,6 +4768,7 @@ void diffcore_std(struct diff_options *options)
+ 	/* NOTE please keep the following in sync with diff_tree_combined() */
+ 	if (options->skip_stat_unmatch)
+ 		diffcore_skip_stat_unmatch(options);
++	diffcore_sanity(options);
+ 	if (!options->found_follow) {
+ 		/* See try_to_follow_renames() in tree-diff.c */
+ 		if (options->break_opt != -1)
+diff --git a/diffcore-sanity.c b/diffcore-sanity.c
+new file mode 100644
+index 0000000..ab770c9
+--- /dev/null
++++ b/diffcore-sanity.c
+@@ -0,0 +1,84 @@
++#include "cache.h"
++#include "diff.h"
++#include "diffcore.h"
++
++enum sanity_check {
++	SANITY_OK,
++	SANITY_UNSORTED,
++	SANITY_DUPLICATES
++};
++
++static const char *filepair_name(const struct diff_filepair *p)
++{
++	/*
++	 * There's no point in checking that one or the other is valid;
++	 * that invariant is set by earlier code, not by the trees
++	 * themselves.
++	 */
++	if (!DIFF_FILE_VALID(p->one))
++		return p->two->path;
++	if (!DIFF_FILE_VALID(p->two))
++		return p->one->path;
++	/*
++	 * one->path should be the same as two->path here;
++	 * we could check, but again, this invariant comes
++	 * from our diff code, not the tree
++	 */
++	return p->one->path;
++}
++
++static enum sanity_check check_sanity(struct diff_queue_struct *q)
++{
++	int i;
++	for (i = 1; i < q->nr; i++) {
++		int cmp = strcmp(filepair_name(q->queue[i - 1]),
++				 filepair_name(q->queue[i]));
++		if (cmp == 0)
++			return SANITY_DUPLICATES;
++		if (cmp > 0)
++			return SANITY_UNSORTED;
++	}
++	return SANITY_OK;
++}
++
++int cmp_filepair(const void *va, const void *vb)
++{
++	const struct diff_filepair * const *a = va, * const *b = vb;
++	return strcmp(filepair_name(*a), filepair_name(*b));
++}
++
++static void sort_diff_queue(struct diff_queue_struct *q)
++{
++	qsort(q->queue, q->nr, sizeof(*q->queue), cmp_filepair);
++}
++
++void diffcore_sanity(struct diff_options *options)
++{
++	enum sanity_check check = check_sanity(&diff_queued_diff);
++
++	if (check == SANITY_OK)
++		return;
++
++	/*
++	 * We can fix sorting, but once fixed, we have to check
++	 * again to make sure we don't have duplicates, since
++	 * that relies on sort order.
++	 */
++	if (check == SANITY_UNSORTED) {
++		warning("diff entries are not sorted; your trees may be broken");
++		sort_diff_queue(&diff_queued_diff);
++		check = check_sanity(&diff_queued_diff);
++		if (check == SANITY_OK)
++			return;
++	}
++
++	/*
++	 * If we get here, we have duplicates. The rename code isn't ready
++	 * to handle this, so we have to turn it off.
++	 */
++	if (options->detect_rename) {
++		warning("duplicate tree entries found; disabling rename detection");
++		options->detect_rename = 0;
++	}
++	/* XXX break detection, too? */
++}
+diff --git a/diffcore.h b/diffcore.h
+index 33ea2de..fa359ce 100644
+--- a/diffcore.h
++++ b/diffcore.h
+@@ -107,6 +107,7 @@ extern struct diff_filepair *diff_queue(struct diff_queue_struct *,
+ 					struct diff_filespec *);
+ extern void diff_q(struct diff_queue_struct *, struct diff_filepair *);
+ 
++extern void diffcore_sanity(struct diff_options *);
+ extern void diffcore_break(int);
+ extern void diffcore_rename(struct diff_options *);
+ extern void diffcore_merge_broken(void);
