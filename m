@@ -1,112 +1,77 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH 1/4] parse-options: introduce OPT_PATH
-Date: Tue, 24 Feb 2015 16:49:25 +0100
-Message-ID: <54EC9D85.3010301@drmicha.warpmail.net>
-References: <20150223144214.GA31624@peff.net>	<cccf3d14e5582996e5be1467849121a262f9c9f1.1424707497.git.git@drmicha.warpmail.net> <xmqqbnkktoti.fsf@gitster.dls.corp.google.com>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
+Subject: Re: Copyright on wildmatch.c
+Date: Tue, 24 Feb 2015 16:58:35 +0100
+Message-ID: <54EC9FAB.9090506@web.de>
+References: <CAMDzUtyitrK__iE9ykfTuP+Ooq0FwMPp_NVgBfBGbSV52+OPoQ@mail.gmail.com> <CAMDzUtymj21ckMrA87q1TATeWuH6kS_TBrsJ_jVjfeH50CaniA@mail.gmail.com> <CACsJy8Do77QSKSERPE26bKJ0gANB0XmPVBLwb1QKAW4qe0ouAQ@mail.gmail.com> <CAMDzUtz_BhW_tuQLy+AiNY7hz_HXCmHOtUNDgMBc=Taeon_Dwg@mail.gmail.com> <CACsJy8APLtweaf-q8+nCzJC-8J_vNZp-Y=AtNkX4NPuYr1jb=Q@mail.gmail.com> <CAMDzUtxf0gF=JDgEk9EU3W2VWuP-Qy8-Kz-fTx_Y16UeFRGiYA@mail.gmail.com> <CAMDzUtw8ySWwHvx4G+0R=L5JpxKqeFFNQ8Rb6bo5FRGwArzJcA@mail.gmail.com> <CAMDzUtzPxrtwdJN7cRmaMC_Sezmr9zSge=K_pc1OztEA8FVc=g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	=?ISO-8859-15?Q?Nguye=5E=7E?=
-	 =?ISO-8859-15?Q?n_Th=E1i_Ngo=2Ec_Duy?= <pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 24 16:49:41 2015
+Content-Type: text/plain; charset=utf-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: torvalds@linux-foundation.org, gitster@pobox.com, jim@meyering.net,
+	namhyung@gmail.com, Duy Nguyen <pclouds@gmail.com>, peff@peff.net,
+	schnhrr@cs.tu-berlin.de
+To: Guilherme <guibufolo@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Feb 24 16:58:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YQHju-0001ZU-PP
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Feb 2015 16:49:39 +0100
+	id 1YQHsp-0007WT-9B
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Feb 2015 16:58:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753141AbbBXPte (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Feb 2015 10:49:34 -0500
-Received: from plane.gmane.org ([80.91.229.3]:47405 "EHLO plane.gmane.org"
+	id S1752657AbbBXP6q convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Feb 2015 10:58:46 -0500
+Received: from mout.web.de ([212.227.15.14]:62562 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753124AbbBXPtd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Feb 2015 10:49:33 -0500
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1YQHjm-0001UT-T2
-	for git@vger.kernel.org; Tue, 24 Feb 2015 16:49:30 +0100
-Received: from dickson.math.uni-hannover.de ([130.75.46.56])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 24 Feb 2015 16:49:30 +0100
-Received: from git by dickson.math.uni-hannover.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 24 Feb 2015 16:49:30 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: dickson.math.uni-hannover.de
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
-In-Reply-To: <xmqqbnkktoti.fsf@gitster.dls.corp.google.com>
+	id S1751848AbbBXP6o (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Feb 2015 10:58:44 -0500
+Received: from [192.168.178.27] ([79.250.174.212]) by smtp.web.de (mrweb003)
+ with ESMTPSA (Nemesis) id 0MX0VQ-1Y3GqR04cm-00VyVY; Tue, 24 Feb 2015 16:58:39
+ +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
+In-Reply-To: <CAMDzUtzPxrtwdJN7cRmaMC_Sezmr9zSge=K_pc1OztEA8FVc=g@mail.gmail.com>
+X-Provags-ID: V03:K0:q28QP+jiygSlLnseV4HD8rcrK1EgkNSY69wlMAXspqvcVWHWP9G
+ Pe5C9EnM6avWIFBKIgEz8rwwAs9UKCEENcwLTft4CV/9ZSR+1x/tBsUMqxKzMoe80EhaEmc
+ LqedFwpqKcv4EDlROf08L/A/hq89X8LGNZ4e4t+EJN9pC0LE5qvGHhKgKR5dmmF5BeXIESC
+ KxnZzTKIHeuOEzXPvz1AQ==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264333>
 
-Junio C Hamano venit, vidit, dixit 23.02.2015 20:23:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
-> 
->> Many options are paths, but not files. Introduce OPT_PATH which does
->> the same path processing as OPT_FILENAME but allows to name the argument.
->> ...
->> diff --git a/parse-options.h b/parse-options.h
->> index 7940bc7..5127a5d 100644
->> --- a/parse-options.h
->> +++ b/parse-options.h
->> @@ -149,6 +149,8 @@ struct option {
->>  	  PARSE_OPT_NOARG | PARSE_OPT_NONEG, (f) }
->>  #define OPT_FILENAME(s, l, v, h)    { OPTION_FILENAME, (s), (l), (v), \
->>  				       N_("file"), (h) }
->> +#define OPT_PATH(s, l, v, a, h)    { OPTION_FILENAME, (s), (l), (v), \
->> +				       (a), (h) }
-> 
-> I am somewhat disappointed to see this implementation.
-> 
->  - I expected that OPT_FILENAME will be re-implemented in terms of
->    OPT_PATH(), as a thin wrapper.
+Am 24.02.2015 um 13:34 schrieb Guilherme:
+> This is just an email to all the people i have written in private
+> about relicensing the files in need in TSS so they can reply to this
+> email and it be recorded in the mailing list.
+>
+> The files are part of ctypes.c hex.c git-compat-util.h.
+>
+> On Tue, Feb 24, 2015 at 1:22 PM, Guilherme <guibufolo@gmail.com> wrot=
+e:
+>> Hello,
+>>
+>> I'm writing to you in regards to the files ctypes.c
+>> which you have modified part of in the git project.
+>>
+>> I'm currently working on integrating gitignore pattern matching into
+>> the_sivler_searcher(http://github.com/ggreer/the_silver_searcher). P=
+R
+>> https://github.com/ggreer/the_silver_searcher/pull/614
+>>
+>> For that i needed wildmatch.c and it's dependencies. That is parts o=
+f
+>> ctypes.c lines 8 to 31.
+>>
+>> Unfortunately TSS is Apache licensed wheras git is GPL, those licens=
+es
+>> are incompatible and thus i ask if you agree that your portion if th=
+e
+>> code is also licensed under Apache2 for the use in TSS.
 
-Right now they are just two macros. Would
+That's fine with me.
 
-#define OPT_FILENAME(s, l, v, h) OPT_PATH((s), (l), (v), N_("file"), (h))
-
-be more what you expect? I don't consider that thinner but don't mind
-either way.
-
->  - As the original complaint was "checkout --to requires a
->    directory, and a file would not work", I expected this to give
->    the programmer finer controls, such as:
-> 
->     - The name must refer to an existing entity on the filesystem,
->       or an existing entity on the filesystem must not exist, or
->       anything is fine (tristate).
-> 
->     - The name refers to a diretory, or the name refers to a regular
->       file, or the name refers to a symbolic link, or anything goes.
-> 
-> That is merely "somewhat", as the latter _can_ be coded (e.g. if you
-> care that the given path already exists as a directory, stat() it
-> and see if it is, or if you want that the given path does not exist
-> yet, stat() it to make sure you get ENOENT) after the option is
-> parsed by the program that uses the parser.
-> 
-> But the infrastructure to allow the latter would free you from
-> having to say N_("file") or N_("directory"); if a parameter can
-> refer to either a file or a directory, the parse-options library
-> could give you N_("file or directory") because you are already
-> telling what kind(s) of paths are allowed.
-
-So, do you suggest to extend OPTION_FILENAME, and introduce several
-macros using it, or a macro taking a bitfield to be filled with
-PATH_OPT_FILE, PATH_OPT_DIR, PATH_OPT_EXISTS, PATH_OPT_ABSENT,
-PATH_OPT_MASK, PATH_OPT_MODE (require (mode & MASK == MODE))?
-
-Sounds like the big solution to a small problem I had with the word
-"file" for a dir...
-
->>  #define OPT_COLOR_FLAG(s, l, v, h) \
->>  	{ OPTION_CALLBACK, (s), (l), (v), N_("when"), (h), PARSE_OPT_OPTARG, \
->>  		parse_opt_color_flag_cb, (intptr_t)"always" }
+Ren=C3=A9
