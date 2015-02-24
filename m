@@ -1,77 +1,163 @@
-From: "J. R. Westmoreland" <jr@jrw.org>
-Subject: Build error with current source release
-Date: Tue, 24 Feb 2015 07:23:47 -0700
-Message-ID: <03B16590-C319-478F-B19C-7EF3B51952BC@jrw.org>
-Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2087\))
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 24 15:44:47 2015
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] sequencer: preserve commit messages
+Date: Tue, 24 Feb 2015 16:29:01 +0100
+Message-ID: <54EC98BD.7060100@drmicha.warpmail.net>
+References: <1424540906.15539.22.camel@scientia.net>	<f58ae048d7fd468cfdd7f7d369b3b4fc0a564641.1424697676.git.git@drmicha.warpmail.net> <xmqqsidwtq4i.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	Christoph Anton Mitterer <calestyo@scientia.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 24 16:29:10 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YQGip-00063y-IL
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Feb 2015 15:44:27 +0100
+	id 1YQHQ6-0005bO-2J
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Feb 2015 16:29:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752545AbbBXOoN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Feb 2015 09:44:13 -0500
-Received: from www.jrw.org ([207.108.170.162]:46896 "EHLO orthanc.jrw.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752028AbbBXOoM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Feb 2015 09:44:12 -0500
-X-Greylist: delayed 1220 seconds by postgrey-1.27 at vger.kernel.org; Tue, 24 Feb 2015 09:44:12 EST
-Received: from [192.168.1.3] (96.sub-70-208-9.myvzw.com [70.208.9.96])
-	by orthanc.jrw.org (8.14.5/8.14.5) with ESMTP id t1OEMuYW004908
-	for <git@vger.kernel.org>; Tue, 24 Feb 2015 07:22:56 -0700
-X-Mailer: Apple Mail (2.2087)
-X-Spam-Status: No, score=2.4 required=5.0 tests=BAYES_00,RCVD_IN_PBL,
-	RCVD_IN_SORBS_DUL,RDNS_DYNAMIC autolearn=no version=3.3.2
-X-Spam-Level: **
-X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on orthanc.jrw.org
+	id S1752309AbbBXP3F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Feb 2015 10:29:05 -0500
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:48094 "EHLO
+	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751175AbbBXP3E (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Feb 2015 10:29:04 -0500
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+	by mailout.nyi.internal (Postfix) with ESMTP id 2F54A20971
+	for <git@vger.kernel.org>; Tue, 24 Feb 2015 10:29:02 -0500 (EST)
+Received: from frontend1 ([10.202.2.160])
+  by compute2.internal (MEProxy); Tue, 24 Feb 2015 10:29:02 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=x-sasl-enc:message-id:date:from
+	:mime-version:to:cc:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=4p/bwaLc7BAbys/jvDlH4O
+	kKa/Y=; b=kg9TNjtDL4QwcylA7qwJLi067zu3GFBXeTZ019KiJXaRKusLg7pytu
+	XiJ3LTZBapioMZ+jHwprB+4AMQp5RGn7nP3vyH5oh82DYegpGVryIZ5ugkQn1ek5
+	ot7tn8pTbLPWGEheW433UI9PDngZ9aWzLMjUAXmUlnBB4D9bRAeKc=
+X-Sasl-enc: 2bT3ZY2v5lQByz905wm6BPdVBQOGuLmZkpJeK5bqFNv5 1424791742
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 426F1C002A5;
+	Tue, 24 Feb 2015 10:29:02 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
+In-Reply-To: <xmqqsidwtq4i.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264329>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264330>
 
-Hi
+Junio C Hamano venit, vidit, dixit 23.02.2015 19:54:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
+> 
+>> sequencer calls "commit" with default options, which implies
+>> "--cleanup=default" unless the user specified something else in their
+>> config. This leads to cherry-picked commits getting a cleaned up commit
+>> message, which is usually not an intended side-effect.
+>>
+>> Make the sequencer use "--cleanup=verbatim" so that it preserves commit
+>> messages independent of the defaults and user config for "commit".
+> 
+> Hmm, wouldn't it introduce a grave regression for users who
+> explicitly ask to clean crufty messages up (by setting their own
+> commit.cleanup configuration) if you unconditionally force
+> "--cleanup=verbatim" here?
+> 
 
-I hope it is okay to ask such a question here.
+That's what I meant by possible side-effects below.
 
-I cloned the current source tree and tried to build it and I get the fo=
-llowing error.
-Could someone tell me why and if there is an easy way to fix it?=20
-I=E2=80=99m running on a Mac and everything ran fine up to this error. =
-Is is an excerpt from my typescript file.
+There are no side-effects which our tests would catch.
 
-Script started on Mon Feb 23 13:43:01 2015
-    XMLTO git-add.1
-xmlto: /Users/jr/Documents/projects/git/Documentation/git-add.xml does =
-not validate (status 3)
-xmlto: Fix document syntax or use --skip-validation option
-I/O error : Attempt to load network entity http://www.oasis-open.org/do=
-cbook/xml/4.5/docbookx.dtd
-/Users/jr/Documents/projects/git/Documentation/git-add.xml:2: warning: =
-failed to load external entity "http://www.oasis-open.org/docbook/xml/4=
-=2E5/docbookx.dtd"
-D DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docb=
-ookx.dtd"
-                                                                       =
-        ^
-I/O error : Attempt to load network entity http://www.oasis-open.org/do=
-cbook/xml/4.5/docbookx.dtd
-warning: failed to load external entity "http://www.oasis-open.org/docb=
-ook/xml/4.5/docbookx.dtd"
-validity error : Could not load the external subset "http://www.oasis-o=
-pen.org/docbook/xml/4.5/docbookx.dtd"
-Document /Users/jr/Documents/projects/git/Documentation/git-add.xml doe=
-s not validate
-make[1]: *** [git-add.1] Error 13
-Script done on Mon Feb 23 13:43:33 2015
+I don't know sequencer.c well enough to know whether run_git_commit()
+would be run with a user-edited commit message at all. My (possibly
+wrong) understanding is that it is called only when a cherry-pick
+succeeds without any conflicts, so that it is called with a commit
+message from a pre-existing commit, i.e. a message after cleanup which
+is to be preserved as is.
 
-Thanks in advance for suggestions or solutions.
+In case of a conflict, resolution is left to be done by the user. But I
+guess I'm overlooking --edit and --continue here.
 
-Best,
-J. R. Westmoreland
+But git cherry-pick without conflict should no re-cleanup the commit
+message either, should it?
+
+>> Reported-by: Christoph Anton Mitterer <calestyo@scientia.net>
+>> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+>> ---
+>>
+>> Notes:
+>>     All tests run fine with this changed behavior. I don't know
+>>     whether this may have any side-effects on other (untested)
+>>     uses of the sequencer.
+>>
+>>  sequencer.c              |  1 +
+>>  t/t3511-cherry-pick-x.sh | 28 ++++++++++++++++++++++++++++
+>>  2 files changed, 29 insertions(+)
+>>
+>> diff --git a/sequencer.c b/sequencer.c
+>> index 77a1266..35fe9d9 100644
+>> --- a/sequencer.c
+>> +++ b/sequencer.c
+>> @@ -377,6 +377,7 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
+>>  	argv_array_init(&array);
+>>  	argv_array_push(&array, "commit");
+>>  	argv_array_push(&array, "-n");
+>> +	argv_array_push(&array, "--cleanup=verbatim");
+> 
+> 
+> 
+>>  
+>>  	if (opts->gpg_sign)
+>>  		argv_array_pushf(&array, "-S%s", opts->gpg_sign);
+>> diff --git a/t/t3511-cherry-pick-x.sh b/t/t3511-cherry-pick-x.sh
+>> index f977279..b7dff09 100755
+>> --- a/t/t3511-cherry-pick-x.sh
+>> +++ b/t/t3511-cherry-pick-x.sh
+>> @@ -36,6 +36,20 @@ mesg_with_cherry_footer="$mesg_with_footer_sob
+>>  (cherry picked from commit da39a3ee5e6b4b0d3255bfef95601890afd80709)
+>>  Tested-by: C.U. Thor <cuthor@example.com>"
+>>  
+>> +mesg_unclean="$mesg_one_line
+>> +
+>> +
+>> +leading empty lines
+>> +
+>> +
+>> +consecutive empty lines
+>> +
+>> +# hash tag comment
+>> +
+>> +trailing empty lines
+>> +
+>> +
+>> +"
+>>  
+>>  test_expect_success setup '
+>>  	git config advice.detachedhead false &&
+>> @@ -53,6 +67,10 @@ test_expect_success setup '
+>>  	test_commit "$mesg_with_footer_sob" foo b mesg-with-footer-sob &&
+>>  	git reset --hard initial &&
+>>  	test_commit "$mesg_with_cherry_footer" foo b mesg-with-cherry-footer &&
+>> +	git reset --hard initial &&
+>> +	test_config commit.cleanup verbatim &&
+>> +	test_commit "$mesg_unclean" foo b mesg-unclean &&
+>> +	test_unconfig commit.cleanup &&
+>>  	pristine_detach initial &&
+>>  	test_commit conflicting unrelated
+>>  '
+>> @@ -216,4 +234,14 @@ test_expect_success 'cherry-pick -x -s treats "(cherry picked from..." line as p
+>>  	test_cmp expect actual
+>>  '
+>>  
+>> +test_expect_success 'cherry-pick preserves commit message' '
+>> +	pristine_detach initial &&
+>> +	printf "$mesg_unclean" >expect &&
+>> +	git log -1 --pretty=format:%B mesg-unclean >actual &&
+>> +	test_cmp expect actual &&
+>> +	git cherry-pick mesg-unclean &&
+>> +	git log -1 --pretty=format:%B >actual &&
+>> +	test_cmp expect actual
+>> +'
+>> +
+>>  test_done
