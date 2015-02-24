@@ -1,71 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Build error with current source release
-Date: Tue, 24 Feb 2015 11:06:22 -0800
-Message-ID: <xmqqvbirqgcx.fsf@gitster.dls.corp.google.com>
-References: <03B16590-C319-478F-B19C-7EF3B51952BC@jrw.org>
+From: Phillip Susi <psusi@ubuntu.com>
+Subject: Import git log into a spreadsheet
+Date: Tue, 24 Feb 2015 15:06:01 -0500
+Message-ID: <54ECD9A9.4090507@ubuntu.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: "J. R. Westmoreland" <jr@jrw.org>
-X-From: git-owner@vger.kernel.org Tue Feb 24 20:06:32 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 24 21:06:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YQKoR-0002UY-4L
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Feb 2015 20:06:31 +0100
+	id 1YQLkd-0006vf-QA
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Feb 2015 21:06:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753251AbbBXTG0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Feb 2015 14:06:26 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64262 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752769AbbBXTGZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Feb 2015 14:06:25 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id DBB323ACF1;
-	Tue, 24 Feb 2015 14:06:24 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1026FPUX3a2LAEqu1w2RPklEbxE=; b=PLaFqM
-	4ZdVA5C2bn62fKhZQBV7gW6cN7++dbYcMeulUgCl7UR+bVTeFI6VD1GglDyCGTrR
-	SXgjUt3IcLMSDiHQI323BSnxcUB/NccJyyEY4IFikez+J/M8MU6+D/qzJHkx98Dc
-	/SSIRt1d/w0VhEr4cCs4EZEK9b14kJrTHV4fA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=bJ/m2HYUBM2tQfCfKcqbr6rahcPOW3J5
-	zFKnTPx0/SRoF1qX+8BvmYfdSipdYVr7mpSjrQuaAD//w5T0xTvrFWuPjNtLgo7k
-	Ix2rtKZbNHzyeIJj4C34tnUGugCn1vx5Aa+rFwCUw54Hhc4mOwCdregCjFqxSmVP
-	kxlwVAPE92E=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D18C83ACF0;
-	Tue, 24 Feb 2015 14:06:24 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 562ED3ACEE;
-	Tue, 24 Feb 2015 14:06:24 -0500 (EST)
-In-Reply-To: <03B16590-C319-478F-B19C-7EF3B51952BC@jrw.org>
-	(J. R. Westmoreland's message of "Tue, 24 Feb 2015 07:23:47 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 39F78666-BC58-11E4-AEC2-A4119F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1752392AbbBXUGd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Feb 2015 15:06:33 -0500
+Received: from mail-qc0-f176.google.com ([209.85.216.176]:43646 "EHLO
+	mail-qc0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751679AbbBXUGc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Feb 2015 15:06:32 -0500
+Received: by qcxr5 with SMTP id r5so18643602qcx.10
+        for <git@vger.kernel.org>; Tue, 24 Feb 2015 12:06:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        bh=WektHCO/LCxFIFThTCdXup6mL/+tlHGMFDEW1UHDOAw=;
+        b=zUPbsj4IHQFimWkixi8WJ58mQHiilCfogZaWHSug1SekjVA/C93+oycq0eShoM3H0i
+         IeRCrFvriRqe9tRnzn2c0Fd8z7UFG4/O7HxrmlERuK/kAowkZst9PhIfM4iAcdi0QUxo
+         yyDkk3fEAlpvYUjK3mjNJrnZfNlhCJuVIisMq3lzcxpSgq/ERI4/Fvtbvt0CWG3lz/0+
+         Qrou2taaejL5nAzk/2zsyoyjgddRxLenvntxz65dK1+yncb8/C3OokPTZg1K4r/up4ki
+         h1WEcMnb+b3i0Gqybh10evadohlgd0BrVc7uKW/XLgiTvkIYTybdMSJUk1a5+3OyA4Cp
+         UBxQ==
+X-Received: by 10.140.201.84 with SMTP id w81mr41257112qha.19.1424808391595;
+        Tue, 24 Feb 2015 12:06:31 -0800 (PST)
+Received: from [10.1.1.228] (fl-67-77-88-12.sta.embarqhsd.net. [67.77.88.12])
+        by mx.google.com with ESMTPSA id 63sm20130371qhw.30.2015.02.24.12.06.30
+        for <git@vger.kernel.org>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 24 Feb 2015 12:06:31 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264340>
 
-"J. R. Westmoreland" <jr@jrw.org> writes:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> I/O error : Attempt to load network entity http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd
-> /Users/jr/Documents/projects/git/Documentation/git-add.xml:2: warning: failed to load external entity "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd"
+I'm trying to import a git log into a spreadsheet.  I used a simple
+- --pretty=format: switch to select the fields I wanted and separate
+them with commas to generate a CSV file that can be imported.  The
+message body, however, is presenting a problem.  The first problem is
+that it contains newlines itself, which normally signal the start of a
+new record.  It turns out that even when quoting the field, MS Excel
+still fails to import it properly ( good grief MS ), but openoffice
+calc does.  The second problem is that the body itself may contain quotes.
 
-It has been long since I had to deal with a problem like this in my
-set-up but it was a host configuration error that always wanted to
-download these docbook DTDs by not having proper XML catalog entries
-(and failing to download them, which as you can see is the error you
-are getting).
+I can't figure out a good way to deal with these quotes.  It seems
+that replacing them with a pair of quotes should make the CSV valid,
+but how can I replace only those quotes internal to the field without
+replacing the quotes that actually bracket it?  Is it possible to have
+git log use a NULL terminator between records instead of a new line?
+Or is there a better way of going about this?
 
-Sorry, no, I do not do Macintoshes, so even if I remember exact
-steps I took to fix my host configuration error several years ago on
-my Debian box, I suspect that the solution would not apply to you.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.17 (MingW32)
+
+iQEcBAEBAgAGBQJU7NmpAAoJENRVrw2cjl5RWFEH/Re8o38zp+EqQxrOM7ZfypUy
+Ebaqf8Sa3dIs57iJINnNNsy6kTyPGCxPphdI5zbN5DVuduYKldZSMIeQ1S3sysRq
+SPH+E0KL1yxWEv8A0s5CKN/THvPHoUMpl0D7850LBrEmfQzyYNBE4NRBLHSPUL2w
+pbAaDeQQwmTigwF6J1AYdz3FlZZznVGzR6ST/Tios64G33wePzPOulF8QyXjpQJq
+R1QNRc9EmMz+FC1X/BwrPMX0e8YeTipjW+X/s6uMUXB6F9cln0VcNR5QOhDO1JDp
+avbdSwl7nQWRX244cKPfX+eujBgC8RnyrLyz74vSsn1vO8BHtSrLMQ5+1Lbymjo=
+=MTpF
+-----END PGP SIGNATURE-----
