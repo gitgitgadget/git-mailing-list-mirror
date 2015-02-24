@@ -1,80 +1,83 @@
-From: Will Entriken <fulldecent@gmail.com>
-Subject: gc.linkedobjectdir discussion
-Date: Tue, 24 Feb 2015 16:56:55 -0500
-Message-ID: <CAFwrLX7AVbhbP-Ha3Vag+7o5a-8fSaQxxx+z0DRurdzY-pBwkQ@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: assistance with git error
+Date: Tue, 24 Feb 2015 16:56:58 -0500
+Message-ID: <20150224215658.GA23488@peff.net>
+References: <loom.20150224T213812-434@post.gmane.org>
+ <20150224211136.GA32217@peff.net>
+ <COL127-W1624CE9FAAEECB25DBE954A5160@phx.gbl>
+ <20150224214500.GA23245@peff.net>
+ <COL127-W7F78AD18199BF6C38EEA0A5160@phx.gbl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 24 22:57:02 2015
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Thomas Moretto <tdmoretto@hotmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 24 22:57:11 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YQNTQ-0002q0-A9
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Feb 2015 22:57:00 +0100
+	id 1YQNTX-0002uv-14
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Feb 2015 22:57:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752835AbbBXV44 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Feb 2015 16:56:56 -0500
-Received: from mail-ig0-f173.google.com ([209.85.213.173]:61352 "EHLO
-	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752785AbbBXV4z (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Feb 2015 16:56:55 -0500
-Received: by mail-ig0-f173.google.com with SMTP id a13so30613932igq.0
-        for <git@vger.kernel.org>; Tue, 24 Feb 2015 13:56:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=QV8bKZYjLgonnSsTqC7j3u326Rz+jY9ze7R9lJ9oV/Y=;
-        b=Q4jMIrE9wlOQ3/rWyciZQxU9bW6rO221b1O/hxCK9dozWA1RZs0ekRAvsHbkP6cPO5
-         nIDdRC1RE7/APtArIAwZ60/qd2kJf4xbHEhKC+JE6/cSTPtOvDq2/UB4GSs4zTjfZCwd
-         UuqcS9Y1y4lcm6cykgCPzY1s1Ub/nAZvrQHK8Dx3dIkCNJi5LZ2JIysONCT8EwmyekQZ
-         QJFVmgCC1B+QZW0TMMODmy3OvbEc/62+y+MSySdVxbUUPFDOwmDZrPp2jyyEdKrPfb03
-         CCXJTmEJJd3NZpanNJZVqJEMrfNHuKRhB/khfsfrMiJds7jlJNM7s5dIw1qkJ/hio5DP
-         7e5Q==
-X-Received: by 10.50.79.166 with SMTP id k6mr473070igx.27.1424815015187; Tue,
- 24 Feb 2015 13:56:55 -0800 (PST)
-Received: by 10.36.80.201 with HTTP; Tue, 24 Feb 2015 13:56:55 -0800 (PST)
+	id S1752953AbbBXV5B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Feb 2015 16:57:01 -0500
+Received: from cloud.peff.net ([50.56.180.127]:52871 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752941AbbBXV5A (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Feb 2015 16:57:00 -0500
+Received: (qmail 8235 invoked by uid 102); 24 Feb 2015 21:57:00 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 24 Feb 2015 15:57:00 -0600
+Received: (qmail 9420 invoked by uid 107); 24 Feb 2015 21:57:01 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 24 Feb 2015 16:57:01 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 24 Feb 2015 16:56:58 -0500
+Content-Disposition: inline
+In-Reply-To: <COL127-W7F78AD18199BF6C38EEA0A5160@phx.gbl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264350>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264351>
 
-Hello,
+On Tue, Feb 24, 2015 at 04:49:00PM -0500, Thomas Moretto wrote:
 
-This post presents an idea for storing git objects into a hard-linked
-shared directory which would allow performance gains and safety so
-that users can set it and forget it.
+> i also have a question concerning large files.
 
-SETUP:
-Users run `git config --global gc.linkedobjectdir ~/.gitsharedobjects`
+Sure, but let's take it back on-list. Then other people can help answer,
+and later users can benefit from seeing the answers.
 
-USAGE - CACHE MISS:
-During a pull, git will look for the needed object in LINKEDOBJECTDIR,
-similar to how it looks in GIT_ALTERNATE_OBJECT_DIRECTORIES. If it is
-not found, the object is received as normal and then hard linked into
-the object store at LINKEDOBJECTDIR.
+> i ran a check and it said there was a schema.sql file that was 1.2G(i followed this guide:  http://stevelorek.com/how-to-shrink-a-git-repository.html)
 
-USAGE - CACHE HIT:
-During another pull or clone on a different working directory, git
-will find the required object in LINKEDOBJECTDIR and hard link into
-the active repo's object store.
+Running verify-pack like that is slow. If you have a recent version of
+git, you can use:
 
-USAGE - DELETING:
-Whenever deleting an object, git will stat the file to see to see if
-its link count is 2, if so, both copies are deleted.
+  git rev-list --objects --all |
+  git cat-file --batch-check='%(objectsize:disk) %(objectname) %(rest)' |
+  sort -rn
 
-PERIODIC MAINTENANCE:
-Periodically, git will check all objects in LINKEDOBJECTDIR for a link
-count of 1 and delete such files. This will happen if a repository
-with linking is deleted with `rm -rf`.
+to get a sorted list of the largest objects that are reachable. If you
+don't see your big object there, try doing:
 
-This feature would be a benefit to organizations which do lots of
-cloning (think Travis CI) or users that clone the same project
-multiple times or have the same file used across different repos.
+  git rev-list --objects --reflog
 
-Please share your thoughts.
+for the first line, to see if it shows up in the reflog.
 
-Thank you,
-Will
+If the object is only in the reflog, the simplest thing is to expire the
+reflog and repack:
+
+  git reflog expire --expire-unreachable=now --all
+  git gc --prune=now
+
+If it is reachable, then you'll have to actually rewrite history to get
+rid of it. Since you know the sha1 of the object, you can find which
+commit introduced it with:
+
+  sha1=...whatever...
+  git log --all --no-abbrev --raw | less +/$sha1
+
+That will dump you in less, with the sha1 highlighted (if it comes and
+goes through history, you may need to use "/" to find other instances).
+
+-Peff
