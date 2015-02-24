@@ -1,97 +1,126 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Internationalization and yes/no prompts
-Date: Tue, 24 Feb 2015 12:32:35 -0800
-Message-ID: <xmqq1tlfqcd8.fsf@gitster.dls.corp.google.com>
-References: <20150212085211.9112780692@smtp-out.fingerprint.fr>
-	<54EB4B3F.6080706@fingerprint.fr>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: Re: [RFH] GSoC 2015 application
+Date: Tue, 24 Feb 2015 21:33:13 +0100
+Organization: gmx
+Message-ID: <c9ff859363d2d637b3607aaf6cb9295d@www.dscho.org>
+References: <20150218191417.GA7767@peff.net>
+ <20150218193234.GA8298@peff.net>
+ <5f6dbabdf4da3c3c757d92ba00a8b7d1@www.dscho.org>
+ <vpqioerz03s.fsf@anie.imag.fr>
+ <CAPc5daXTLRZW-uk++ZjbtafbR6SB41dyc0Cu1gN=Qy7CEhOq-A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Pierre-Olivier Vares <pierre-olivier.vares@fingerprint.fr>
-X-From: git-owner@vger.kernel.org Tue Feb 24 21:32:45 2015
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=UTF-8
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, Jeff King <peff@peff.net>,
+ Git Mailing List <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: msysgit+bncBCZPH74Q5YNRBFWAWOTQKGQEVCQVYMY@googlegroups.com Tue Feb 24 21:33:28 2015
+Return-path: <msysgit+bncBCZPH74Q5YNRBFWAWOTQKGQEVCQVYMY@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-lb0-f183.google.com ([209.85.217.183])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YQM9q-0006mC-Hk
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Feb 2015 21:32:43 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752739AbbBXUci (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Feb 2015 15:32:38 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:61558 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752700AbbBXUch (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Feb 2015 15:32:37 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id CD8A73A59D;
-	Tue, 24 Feb 2015 15:32:36 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=llZDHQf9VKmeNJ55g9+FCZDyn/A=; b=gPJS8v
-	jJ0VsfYOgbTsUjfdljG3+Si/1KIU7Im051j47TATwz3WFAyYttl5LI7vgT3SHsqv
-	fVJbR6cp9MyExmgDTj4zOoFbIH2ghAKbG4sVO8PLDhE0nABTGGCtO744TaG5UYsv
-	1J1BWhcW8kqX0Kjv4Lx/H/ne2Um2cBMpGyMQA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xAJux7r77UkcbgmszLb6HvXRlt9K2LdY
-	R8Uf05pXitiDIFkiFgz6Bq6z1RrieMHP+S/edCrcUpWfsq9omOF6VwVAxX9wP2oT
-	irvspkahd1SLdTRlwiy1+CkqfM/PUZRl1QrscN6e6/ewLHgRyIIEnmi4ET1SVFsq
-	2prNs9n5xQ0=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id C577E3A59C;
-	Tue, 24 Feb 2015 15:32:36 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4CB423A59A;
-	Tue, 24 Feb 2015 15:32:36 -0500 (EST)
-In-Reply-To: <54EB4B3F.6080706@fingerprint.fr> (Pierre-Olivier Vares's message
-	of "Mon, 23 Feb 2015 16:46:07 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 44B27B04-BC64-11E4-AC63-A4119F42C9D4-77302942!pb-smtp1.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264343>
+	(envelope-from <msysgit+bncBCZPH74Q5YNRBFWAWOTQKGQEVCQVYMY@googlegroups.com>)
+	id 1YQMAZ-0007Fs-PJ
+	for gcvm-msysgit@m.gmane.org; Tue, 24 Feb 2015 21:33:27 +0100
+Received: by lbjf15 with SMTP id f15sf6354764lbj.1
+        for <gcvm-msysgit@m.gmane.org>; Tue, 24 Feb 2015 12:33:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=mime-version:content-type:date:from:to:cc:subject:organization
+         :in-reply-to:references:message-id:user-agent:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe;
+        bh=rIZASckCzh4Uhw6hB5EqpIvCI9pNAVso4aqYUtrRpxI=;
+        b=Sc1wCXMA1aFOw1TPtsPRVToa8MSKhdsnF78Js3KlsHXmrtcsEbKbguh+5116w4SKFM
+         wtUlxg6qbzJ0X0x0HTpEevDscMPvnSgSCj5Z4yo58QzyJU4D0jlfocAfqFR448WBB+uu
+         2pb7FsxTGHUrSoteFzkgr9FgZQX49Fdivve8USPMjGG14e+2xOG+JRpD7pAFbvGWGxb1
+         8KIbrBtWe3qWHxe02WqzLvJHUyvdoudErsxfFd377mgv7or00aguix8oaFigRBvM+TNy
+         6xnxf1a6oQkTbfK/IbNfDyBQVqmMCUSaV0Mqai84BnrvnbCWaDQsW0t3ami73TcMogQF
+         MHLw==
+X-Received: by 10.180.198.148 with SMTP id jc20mr124120wic.17.1424810007481;
+        Tue, 24 Feb 2015 12:33:27 -0800 (PST)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.180.106.101 with SMTP id gt5ls860801wib.28.gmail; Tue, 24 Feb
+ 2015 12:33:25 -0800 (PST)
+X-Received: by 10.180.89.194 with SMTP id bq2mr8354wib.4.1424810005013;
+        Tue, 24 Feb 2015 12:33:25 -0800 (PST)
+Received: from mout.gmx.net (mout.gmx.net. [212.227.17.21])
+        by gmr-mx.google.com with ESMTPS id by11si1207772wib.1.2015.02.24.12.33.24
+        for <msysgit@googlegroups.com>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 24 Feb 2015 12:33:25 -0800 (PST)
+Received-SPF: pass (google.com: domain of johannes.schindelin@gmx.de designates 212.227.17.21 as permitted sender) client-ip=212.227.17.21;
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0ML6XF-1YQdHX29j7-000J4T; Tue, 24 Feb 2015 21:33:14
+ +0100
+In-Reply-To: <CAPc5daXTLRZW-uk++ZjbtafbR6SB41dyc0Cu1gN=Qy7CEhOq-A@mail.gmail.com>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.0
+X-Provags-ID: V03:K0:dOrbgHj5b1Ahv6lDcl6+q78i7awpGV6PasDD7QhvGEG1Xg8JqY7
+ Nw5SObFh87fmH3V2+YU0iNd4MOCqOww4C9/J2g6LZtaphAYT+DtxBldeBhyIaoM4HiVF0uc
+ PjQOCcv5QI1qiaO5O57MHrnA3mhGsuscanTDE6VdlSjnlTLSkfgBVQj8i8UIzhdKVjBlwDw
+ MznJtdiQaaHjnAH1meBkg==
+X-UI-Out-Filterresults: notjunk:1;
+X-Original-Sender: johannes.schindelin@gmx.de
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of johannes.schindelin@gmx.de designates 212.227.17.21 as
+ permitted sender) smtp.mail=johannes.schindelin@gmx.de
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264344>
 
-Pierre-Olivier Vares <pierre-olivier.vares@fingerprint.fr> writes:
+Hi Junio,
 
-> /Supprimer //premier_fichier ? [Remove first_file ?]/
-> Natural answer to this question is 'Oui' [Yes], so I type 'o', rather
-> than 'y'.
-> Once finished, I see no file has been removed (since 'o' has been
-> considered as 'different than yes')
-> Whereas it's not an end-of-the-world thing*, it's annoying as at first
-> sight I didn't understand why it has 'not worked'.
->
-> I thought of a few possibilities (some easy to implement, others more
-> complex; some are stricter for the user) :
+On 2015-02-24 19:25, Junio C Hamano wrote:
+> On Tue, Feb 24, 2015 at 9:32 AM, Matthieu Moy
+> <Matthieu.Moy@grenoble-inp.fr> wrote:
+>> About the proposal:
+>>
+>>   The idea of this project is to dive into the Git source code and
+>>   convert, say, git-add--interactive.perl and/or git stash into proper C
+>>   code, making it a so-called "built-in".
+>>
+>> My advice would be to try converting several small scripts, and avoid
+>> targetting a big one....
+>> add--interactive and stash are relatively complex beasts, perhaps
+>> git-pull.sh would be easier to start with.
+> 
+> Yeah, I think that is a very good suggestion.
 
-> - explicitly put "y/n" in the message. Translaters should be warned to
-> let "y/n",
+Well, git-pull.sh is really small. I did not want to give the impression that the Git project is giving out freebies. But I have no objection to change it if you open that PR.
 
-This may be suboptimal from the end-user's point of view, but it is
-the least risky of breaking anything.
+> Also drop "proper" as if scripted Porcelains are second class citizens ;-)
 
-And it is way better than the status quo.
+If you had to deal with the portability/performance issues of the shell scripts I am frequently faced with, you would not call them first class citizens, either.
 
-> - only allow y and n answers (and variants : yes, no), and reject
-> everything else with a message
+Ciao,
+Dscho
 
-This is not helpful to the users if it does not say why (O)ui was
-rejected, which would mean we would be better off saying [Y/n] in
-the message in the first place.
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
-> - use as 'n', but echoes a message : 'Answer considered as /no/'
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
 
-Unhelpful without stating why (O)ui was considered as 'no'; same
-conclusion as above.
-
-> - accept answers depending on the language used to echo the prompt
-> (y/n for english, o/n for french, j/n for german, ...)
-
-This would be the best for languages where translations for Yes and
-No begin with different letters, but I suspect it might be tricky to
-implement.
+--- 
+You received this message because you are subscribed to the Google Groups "Git for Windows" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
