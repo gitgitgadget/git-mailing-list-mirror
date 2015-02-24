@@ -1,80 +1,109 @@
-From: Phillip Susi <psusi@ubuntu.com>
-Subject: Import git log into a spreadsheet
-Date: Tue, 24 Feb 2015 15:06:01 -0500
-Message-ID: <54ECD9A9.4090507@ubuntu.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] clone: add disassociate alias to dissociate option
+Date: Tue, 24 Feb 2015 12:06:31 -0800
+Message-ID: <xmqqbnkjqdko.fsf@gitster.dls.corp.google.com>
+References: <1424459423-11727-1-git-send-email-mattwhiteley@gmail.com>
+	<1424459423-11727-2-git-send-email-mattwhiteley@gmail.com>
+	<20150221062754.GC29665@peff.net>
+	<xmqqzj87wxck.fsf@gitster.dls.corp.google.com>
+	<20150221073509.GA32548@peff.net>
+	<xmqqvbitx0eh.fsf@gitster.dls.corp.google.com>
+	<54EC3EF8.7040302@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 24 21:06:41 2015
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>, Matt Whiteley <mattwhiteley@gmail.com>,
+	git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Feb 24 21:06:42 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YQLkd-0006vf-QA
+	id 1YQLke-0006vf-Cn
 	for gcvg-git-2@plane.gmane.org; Tue, 24 Feb 2015 21:06:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752392AbbBXUGd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1752729AbbBXUGf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Feb 2015 15:06:35 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:56740 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751679AbbBXUGd (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 24 Feb 2015 15:06:33 -0500
-Received: from mail-qc0-f176.google.com ([209.85.216.176]:43646 "EHLO
-	mail-qc0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751679AbbBXUGc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Feb 2015 15:06:32 -0500
-Received: by qcxr5 with SMTP id r5so18643602qcx.10
-        for <git@vger.kernel.org>; Tue, 24 Feb 2015 12:06:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        bh=WektHCO/LCxFIFThTCdXup6mL/+tlHGMFDEW1UHDOAw=;
-        b=zUPbsj4IHQFimWkixi8WJ58mQHiilCfogZaWHSug1SekjVA/C93+oycq0eShoM3H0i
-         IeRCrFvriRqe9tRnzn2c0Fd8z7UFG4/O7HxrmlERuK/kAowkZst9PhIfM4iAcdi0QUxo
-         yyDkk3fEAlpvYUjK3mjNJrnZfNlhCJuVIisMq3lzcxpSgq/ERI4/Fvtbvt0CWG3lz/0+
-         Qrou2taaejL5nAzk/2zsyoyjgddRxLenvntxz65dK1+yncb8/C3OokPTZg1K4r/up4ki
-         h1WEcMnb+b3i0Gqybh10evadohlgd0BrVc7uKW/XLgiTvkIYTybdMSJUk1a5+3OyA4Cp
-         UBxQ==
-X-Received: by 10.140.201.84 with SMTP id w81mr41257112qha.19.1424808391595;
-        Tue, 24 Feb 2015 12:06:31 -0800 (PST)
-Received: from [10.1.1.228] (fl-67-77-88-12.sta.embarqhsd.net. [67.77.88.12])
-        by mx.google.com with ESMTPSA id 63sm20130371qhw.30.2015.02.24.12.06.30
-        for <git@vger.kernel.org>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 24 Feb 2015 12:06:31 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4F77739EDA;
+	Tue, 24 Feb 2015 15:06:33 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=bFuCWrUZDnvKTp8pFUJV6JZnHgU=; b=YTkZbf
+	k37oH5DQbGGMv4GwjlLnERy/mXUS4gZbEuTj0dA+6BWrdDSN63UBAHPzsReFCDdF
+	xoPezKZOCmYhMs56Da5OtBEbjVnir9FEF/whbT7bQ39yiRrYM69ZU5h9HMsM7JCm
+	3VXeGNtqJlyk9mnxNKlwYw7hyQDspNcfK8AHY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=tHhM9bUHQMEhZ2dQ/j6Orvf2ZfzcOVcf
+	5WFrzkRJP61GAzN0GHyoXL0LCv2ZNmEa6L9ayjw4a4w6I7jms2Ir2agODvr3rIEE
+	/s6rlEbs7afWdaGHgKOxPIiXdMoZPxVYmk2dtigTHbXRk7RpIhttBRY5G5IFbTpB
+	NwYE9klYS/Y=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 46A4239ED9;
+	Tue, 24 Feb 2015 15:06:33 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C0E5F39ED8;
+	Tue, 24 Feb 2015 15:06:32 -0500 (EST)
+In-Reply-To: <54EC3EF8.7040302@alum.mit.edu> (Michael Haggerty's message of
+	"Tue, 24 Feb 2015 10:06:00 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: A0C39148-BC60-11E4-ADA5-A4119F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264341>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-I'm trying to import a git log into a spreadsheet.  I used a simple
-- --pretty=format: switch to select the fields I wanted and separate
-them with commas to generate a CSV file that can be imported.  The
-message body, however, is presenting a problem.  The first problem is
-that it contains newlines itself, which normally signal the start of a
-new record.  It turns out that even when quoting the field, MS Excel
-still fails to import it properly ( good grief MS ), but openoffice
-calc does.  The second problem is that the body itself may contain quotes.
+> On 02/22/2015 07:32 PM, Junio C Hamano wrote:
+>> ...  Both borrow the objects
+>> in order to reduce the network cost, and the difference is that one
+>> keeps borrowing while the other one limits the borrowing to strictly
+>> the initial phase.  The two words, "borrow" and "reference", would
+>> not convey that key distinction. ... and that is why I
+>> call it a cop-out.
+>> ...
+>> We are all on the same page.  We know the cop-out is suboptimal, we
+>> understand why the cop-out is better than "--borrow", and we cannot
+>> come up with a better name that contrasts with the existing
+>> "--reference" to make it clear how the new thing is different.
+>
+> I'll take that as an invitation to brainstorm :-)
+>
+>     --use-objects-from=
+>     --copy-objects-from=
+>     --precopy-objects-from=
+>     --precopy-from=
+>     --donor=
+>     --object-donor=
+>     --steal-from=
+>     --steal-objects-from=
+>
+> Of these, I think I like "--object-donor" the best.
 
-I can't figure out a good way to deal with these quotes.  It seems
-that replacing them with a pair of quotes should make the CSV valid,
-but how can I replace only those quotes internal to the field without
-replacing the quotes that actually bracket it?  Is it possible to have
-git log use a NULL terminator between records instead of a new line?
-Or is there a better way of going about this?
+Donor (somehow the word reminds me of organ harvesting, yuck)?
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.17 (MingW32)
+I didn't think of the word 'copy', but that probably captures the
+essence the best.  "reference-to-borrow-and-then-dissociate" is an
+implementation detail, which, as you say, we do not want the users
+to view this operation as; copying locally instead of over the
+network is what the user wants to do.
 
-iQEcBAEBAgAGBQJU7NmpAAoJENRVrw2cjl5RWFEH/Re8o38zp+EqQxrOM7ZfypUy
-Ebaqf8Sa3dIs57iJINnNNsy6kTyPGCxPphdI5zbN5DVuduYKldZSMIeQ1S3sysRq
-SPH+E0KL1yxWEv8A0s5CKN/THvPHoUMpl0D7850LBrEmfQzyYNBE4NRBLHSPUL2w
-pbAaDeQQwmTigwF6J1AYdz3FlZZznVGzR6ST/Tios64G33wePzPOulF8QyXjpQJq
-R1QNRc9EmMz+FC1X/BwrPMX0e8YeTipjW+X/s6uMUXB6F9cln0VcNR5QOhDO1JDp
-avbdSwl7nQWRX244cKPfX+eujBgC8RnyrLyz74vSsn1vO8BHtSrLMQ5+1Lbymjo=
-=MTpF
------END PGP SIGNATURE-----
+> By the way, once we have stopped thinking about this feature as
+> "--reference" and then "--dissociate", it becomes obvious that a nice
+> generalization would be to allow *any* repository (including remote
+> ones) to serve as the object donor.
+
+As I do not think of a workable approach to implement such a
+mechanism, I'd refrain from being irresponsible and say "Yeah,
+that's a neat idea", which would make me sound like clueless "me
+too, why doesn't Git do that?" crowd.
