@@ -1,223 +1,167 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [BUG] diffcore-rename with duplicate tree entries can segfault
-Date: Tue, 24 Feb 2015 18:47:37 -0500
-Message-ID: <20150224234737.GA8370@peff.net>
-References: <20150224214311.GA8622@peff.net>
- <xmqqh9uborrx.fsf@gitster.dls.corp.google.com>
- <20150224224918.GA24749@peff.net>
- <xmqqd24yq517.fsf@gitster.dls.corp.google.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Re: [RFH] GSoC 2015 application
+Date: Wed, 25 Feb 2015 00:56:45 +0100
+Message-ID: <vpqh9uavp6q.fsf@anie.imag.fr>
+References: <20150218191417.GA7767@peff.net> <20150218193234.GA8298@peff.net>
+	<5f6dbabdf4da3c3c757d92ba00a8b7d1@www.dscho.org>
+	<vpqioerz03s.fsf@anie.imag.fr>
+	<CAPc5daXTLRZW-uk++ZjbtafbR6SB41dyc0Cu1gN=Qy7CEhOq-A@mail.gmail.com>
+	<c9ff859363d2d637b3607aaf6cb9295d@www.dscho.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 25 00:47:46 2015
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Git Mailing List <git@vger.kernel.org>,
+        msysGit <msysgit@googlegroups.com>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: msysgit+bncBC3OZIEKVABBBQ47WSTQKGQEKPEEN6A@googlegroups.com Wed Feb 25 00:56:53 2015
+Return-path: <msysgit+bncBC3OZIEKVABBBQ47WSTQKGQEKPEEN6A@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-lb0-f189.google.com ([209.85.217.189])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YQPCb-0004dH-Q2
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Feb 2015 00:47:46 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752351AbbBXXrk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Feb 2015 18:47:40 -0500
-Received: from cloud.peff.net ([50.56.180.127]:52941 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750748AbbBXXrj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Feb 2015 18:47:39 -0500
-Received: (qmail 13854 invoked by uid 102); 24 Feb 2015 23:47:39 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 24 Feb 2015 17:47:39 -0600
-Received: (qmail 10526 invoked by uid 107); 24 Feb 2015 23:47:40 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 24 Feb 2015 18:47:40 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 24 Feb 2015 18:47:37 -0500
-Content-Disposition: inline
-In-Reply-To: <xmqqd24yq517.fsf@gitster.dls.corp.google.com>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264361>
+	(envelope-from <msysgit+bncBC3OZIEKVABBBQ47WSTQKGQEKPEEN6A@googlegroups.com>)
+	id 1YQPLQ-0001k8-NC
+	for gcvm-msysgit@m.gmane.org; Wed, 25 Feb 2015 00:56:52 +0100
+Received: by lbiz11 with SMTP id z11sf127560lbi.8
+        for <gcvm-msysgit@m.gmane.org>; Tue, 24 Feb 2015 15:56:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type:mailscanner-null-check
+         :x-original-sender:x-original-authentication-results:precedence
+         :mailing-list:list-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe;
+        bh=8ryz8X/JezwOvLz0x/b4TR62lBc8rDjBxZFe1h8HlaY=;
+        b=BSpZp8hsWUnTKrUTYJGs+FB3v/GgDxOssg2uGYbpVJJoMbVbLL3CKodXLIuem+Yt8W
+         tpweh7AlPBJKKr/Yca34l0uzbSWPhIMMLFLi5ousSxSRvBAZ5MRasfxcRF1D3pdNhs+m
+         AJcUpqQFvPE9UuUGbsCXjbYNxtl7SvsWpkkfAO5226uCfhjY4tGmeFB/6eT70BWFGSvg
+         CQdGEBzoexG5lQuKBeeknfjxmp5UzMCDhyKKGU08XWd0CRDjnP5bN/cjzbLj+g7HzFNV
+         Pzq2H8CWyXBaMvkEGUnmGAgkg1Ecp/HF/XsHqAUSNUs1odTmEggKlvTzGvSYfBnTLccF
+         WOlg==
+X-Received: by 10.180.76.167 with SMTP id l7mr133104wiw.8.1424822212446;
+        Tue, 24 Feb 2015 15:56:52 -0800 (PST)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.180.10.131 with SMTP id i3ls876240wib.35.gmail; Tue, 24 Feb
+ 2015 15:56:50 -0800 (PST)
+X-Received: by 10.180.8.67 with SMTP id p3mr2460000wia.7.1424822210616;
+        Tue, 24 Feb 2015 15:56:50 -0800 (PST)
+Received: from rominette.imag.fr (mx2.imag.fr. [2001:660:5301:59::17])
+        by gmr-mx.google.com with ESMTPS id l8si1189296wia.0.2015.02.24.15.56.50
+        for <msysgit@googlegroups.com>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Tue, 24 Feb 2015 15:56:50 -0800 (PST)
+Received-SPF: pass (google.com: domain of Matthieu.Moy@grenoble-inp.fr designates 2001:660:5301:59::17 as permitted sender) client-ip=2001:660:5301:59::17;
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t1ONug08032335
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 25 Feb 2015 00:56:42 +0100
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t1ONujML029213;
+	Wed, 25 Feb 2015 00:56:45 +0100
+In-Reply-To: <c9ff859363d2d637b3607aaf6cb9295d@www.dscho.org> (Johannes
+	Schindelin's message of "Tue, 24 Feb 2015 21:33:13 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 25 Feb 2015 00:56:42 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t1ONug08032335
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1425427004.74176@pPYy67iq1M9kodOEahOfVg
+X-Original-Sender: matthieu.moy@grenoble-inp.fr
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of Matthieu.Moy@grenoble-inp.fr designates
+ 2001:660:5301:59::17 as permitted sender) smtp.mail=Matthieu.Moy@grenoble-inp.fr
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264362>
 
-On Tue, Feb 24, 2015 at 03:11:00PM -0800, Junio C Hamano wrote:
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > I'm assuming there _is_ a sane sort order. We have two halves of a
-> > filepair, but I think before any of the rename or break detection kicks
-> > in, each pair should either:
-> >
-> >   1. Have a name in pair->one, and an invalid filespec in pair->two
-> >      (i.e., a deletion).
-> >
-> >   2. The opposite (name in pair->two, /dev/null in pair->one). An
-> >      addition.
-> >
-> >   3. The same name in pair->one and pair->two.
-> 
-> I think creation and deletion are expressed with mode=0 and not with
-> /dev/null.
+> Hi Junio,
+>
+> On 2015-02-24 19:25, Junio C Hamano wrote:
+>> On Tue, Feb 24, 2015 at 9:32 AM, Matthieu Moy
+>> <Matthieu.Moy@grenoble-inp.fr> wrote:
+>>> About the proposal:
+>>>
+>>>   The idea of this project is to dive into the Git source code and
+>>>   convert, say, git-add--interactive.perl and/or git stash into proper C
+>>>   code, making it a so-called "built-in".
+>>>
+>>> My advice would be to try converting several small scripts, and avoid
+>>> targetting a big one....
+>>> add--interactive and stash are relatively complex beasts, perhaps
+>>> git-pull.sh would be easier to start with.
+>> 
+>> Yeah, I think that is a very good suggestion.
+>
+> Well, git-pull.sh is really small. I did not want to give the impression that the Git project is giving out freebies. But I have no objection to change it if you open that PR.
 
-Yeah, or better spelled DIFF_FILE_VALID().
+To get an idea, I counted the lines of code written by the student I
+mentored last year:
 
-So here's a first stab at doing this. There are a couple of issues:
+$ git log --author tanayabh@gmail.com -p | diffstat -s   
+ 43 files changed, 1225 insertions(+), 367 deletions(-)
 
-  1. It makes the check part of diffcore_std. My thinking was that we
-     can actually correct some problems (like sort order) for all cases,
-     and the duplicate check may want to disable more than renames
-     (e.g., it could turn off any fancy features like break detection).
+I would consider this GSoC as "average" (i.e. not exceptionnally good,
+but certainly not a bad one either), so you may hope for more, but you
+should not _expect_ much more IMHO.
 
-     It is possible to run diffcore_rename by itself, which would miss
-     this protection. We don't seem to do that anywhere, though (even
-     for try_to_follow_renames, we set up a new diff_options struct and
-     just call diffcore_std).
+In comparison:
 
-  2. It disables rename detection by tweaking the diff_options struct.
-     This is OK for a single diff, but I suspect is wrong for "git log",
-     as we use the same diff_options for each (so one bogus diff would
-     turn off renames for the rest of the commits). We can probably get
-     around this by returning a "bogus, don't do renames" flag from
-     diffcore_sanity and respecting it in diffcore_std.
+$ wc -l git-add--interactive.perl
+1654 git-add--interactive.perl
+$ wc -l git-stash.sh
+617 git-stash.sh
 
-  3. The sort order check is wrong. :-/ It needs to take into account
-     git's magic "if it's a tree, pretend it has '/' after it" rule.
-     That's not too hard for a single tree (fsck.c:verify_ordered does
-     it). But for filepairs, I'm not sure what to do. Most cases
-     have a single mode/name pair. But what about a D/F typechange? If
-     "foo" becomes "foo/", which do I use to sort?
+I'd expect a rewrite in C to at least double the number of lines of
+code, so rewriting git-stash would mean writting at least as many lines
+of code as the GSoC above. git-add--interactive.perl would be rather far
+above.
 
-     I have a feeling the order in which we queue the pairs may even
-     depend on the direction of the typechange. Or maybe it always
-     matches the p->one version. I'll have to think on it.
+But my point was not to convert _only_ git-pull.sh, but to have a GSoC
+starting with this one and plan more. Then, depending on how it goes,
+you can adjust the target.
 
-I'm out of time to work on this tonight, but I'll try to get back to it
-tomorrow. Any wisdom is appreciated.
+This all depends on what you intend to do if the student does not finish
+the job. If you're going to do the rewrite yourself anyway, then having
+the student do even half of it is good already. If you're not going to
+finish the job by yourself, then a 95%-done-rewrite means a piece of
+code posted on the mailing list and never merged (and a lot of time
+wasted).
 
----
-diff --git a/Makefile b/Makefile
-index 44f1dd1..838a21c 100644
---- a/Makefile
-+++ b/Makefile
-@@ -690,6 +690,7 @@ LIB_OBJS += diffcore-delta.o
- LIB_OBJS += diffcore-order.o
- LIB_OBJS += diffcore-pickaxe.o
- LIB_OBJS += diffcore-rename.o
-+LIB_OBJS += diffcore-sanity.o
- LIB_OBJS += diff-delta.o
- LIB_OBJS += diff-lib.o
- LIB_OBJS += diff-no-index.o
-diff --git a/diff.c b/diff.c
-index d1bd534..5f7c43a 100644
---- a/diff.c
-+++ b/diff.c
-@@ -4768,6 +4768,7 @@ void diffcore_std(struct diff_options *options)
- 	/* NOTE please keep the following in sync with diff_tree_combined() */
- 	if (options->skip_stat_unmatch)
- 		diffcore_skip_stat_unmatch(options);
-+	diffcore_sanity(options);
- 	if (!options->found_follow) {
- 		/* See try_to_follow_renames() in tree-diff.c */
- 		if (options->break_opt != -1)
-diff --git a/diffcore-sanity.c b/diffcore-sanity.c
-new file mode 100644
-index 0000000..ab770c9
---- /dev/null
-+++ b/diffcore-sanity.c
-@@ -0,0 +1,84 @@
-+#include "cache.h"
-+#include "diff.h"
-+#include "diffcore.h"
-+
-+enum sanity_check {
-+	SANITY_OK,
-+	SANITY_UNSORTED,
-+	SANITY_DUPLICATES
-+};
-+
-+static const char *filepair_name(const struct diff_filepair *p)
-+{
-+	/*
-+	 * There's no point in checking that one or the other is valid;
-+	 * that invariant is set by earlier code, not by the trees
-+	 * themselves.
-+	 */
-+	if (!DIFF_FILE_VALID(p->one))
-+		return p->two->path;
-+	if (!DIFF_FILE_VALID(p->two))
-+		return p->one->path;
-+	/*
-+	 * one->path should be the same as two->path here;
-+	 * we could check, but again, this invariant comes
-+	 * from our diff code, not the tree
-+	 */
-+	return p->one->path;
-+}
-+
-+static enum sanity_check check_sanity(struct diff_queue_struct *q)
-+{
-+	int i;
-+	for (i = 1; i < q->nr; i++) {
-+		int cmp = strcmp(filepair_name(q->queue[i - 1]),
-+				 filepair_name(q->queue[i]));
-+		if (cmp == 0)
-+			return SANITY_DUPLICATES;
-+		if (cmp > 0)
-+			return SANITY_UNSORTED;
-+	}
-+	return SANITY_OK;
-+}
-+
-+int cmp_filepair(const void *va, const void *vb)
-+{
-+	const struct diff_filepair * const *a = va, * const *b = vb;
-+	return strcmp(filepair_name(*a), filepair_name(*b));
-+}
-+
-+static void sort_diff_queue(struct diff_queue_struct *q)
-+{
-+	qsort(q->queue, q->nr, sizeof(*q->queue), cmp_filepair);
-+}
-+
-+void diffcore_sanity(struct diff_options *options)
-+{
-+	enum sanity_check check = check_sanity(&diff_queued_diff);
-+
-+	if (check == SANITY_OK)
-+		return;
-+
-+	/*
-+	 * We can fix sorting, but once fixed, we have to check
-+	 * again to make sure we don't have duplicates, since
-+	 * that relies on sort order.
-+	 */
-+	if (check == SANITY_UNSORTED) {
-+		warning("diff entries are not sorted; your trees may be broken");
-+		sort_diff_queue(&diff_queued_diff);
-+		check = check_sanity(&diff_queued_diff);
-+		if (check == SANITY_OK)
-+			return;
-+	}
-+
-+	/*
-+	 * If we get here, we have duplicates. The rename code isn't ready
-+	 * to handle this, so we have to turn it off.
-+	 */
-+	if (options->detect_rename) {
-+		warning("duplicate tree entries found; disabling rename detection");
-+		options->detect_rename = 0;
-+	}
-+	/* XXX break detection, too? */
-+}
-diff --git a/diffcore.h b/diffcore.h
-index 33ea2de..fa359ce 100644
---- a/diffcore.h
-+++ b/diffcore.h
-@@ -107,6 +107,7 @@ extern struct diff_filepair *diff_queue(struct diff_queue_struct *,
- 					struct diff_filespec *);
- extern void diff_q(struct diff_queue_struct *, struct diff_filepair *);
- 
-+extern void diffcore_sanity(struct diff_options *);
- extern void diffcore_break(int);
- extern void diffcore_rename(struct diff_options *);
- extern void diffcore_merge_broken(void);
+In any case, these are just advices, certainly not objections or hard
+requests to change.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
+
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "Git for Windows" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
