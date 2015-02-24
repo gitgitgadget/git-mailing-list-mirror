@@ -1,113 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFH] GSoC 2015 application
-Date: Tue, 24 Feb 2015 13:02:54 -0800
-Message-ID: <xmqqwq37owe9.fsf@gitster.dls.corp.google.com>
-References: <20150218191417.GA7767@peff.net> <20150218193234.GA8298@peff.net>
-	<5f6dbabdf4da3c3c757d92ba00a8b7d1@www.dscho.org>
-	<vpqioerz03s.fsf@anie.imag.fr>
-	<CAPc5daXTLRZW-uk++ZjbtafbR6SB41dyc0Cu1gN=Qy7CEhOq-A@mail.gmail.com>
-	<c9ff859363d2d637b3607aaf6cb9295d@www.dscho.org>
+From: "Dan Langille (dalangil)" <dalangil@cisco.com>
+Subject: Re: [PATCH v3] remote-curl: fall back to Basic auth if Negotiate
+ fails
+Date: Tue, 24 Feb 2015 21:03:32 +0000
+Message-ID: <ABA76895-9BD2-4EA8-B765-0F9DE71A2CEC@cisco.com>
+References: <1420142187-1025433-1-git-send-email-sandals@crustytoothpaste.net>
+ <1420676960-492860-1-git-send-email-sandals@crustytoothpaste.net>
+ <7930FE25-8206-43A8-9678-C56D789E09CE@cisco.com>
+ <xmqqk30hyock.fsf@gitster.dls.corp.google.com>
+ <CA01B76E-F3D4-40AC-B524-32BFBA930108@cisco.com>
+ <xmqqa90cxg89.fsf@gitster.dls.corp.google.com>
+ <1B14107C-FC87-4F69-AEBE-9EA1BAF50A17@cisco.com>
+ <20150219203556.GC5021@vauxhall.crustytoothpaste.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,  Jeff King <peff@peff.net>,  Git Mailing List <git@vger.kernel.org>,  msysGit <msysgit@googlegroups.com>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: msysgit+bncBCG77UMM3EJRBBGOWOTQKGQEOB5NBHA@googlegroups.com Tue Feb 24 22:03:02 2015
-Return-path: <msysgit+bncBCG77UMM3EJRBBGOWOTQKGQEOB5NBHA@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-qc0-f192.google.com ([209.85.216.192])
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+X-From: git-owner@vger.kernel.org Tue Feb 24 22:03:41 2015
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCG77UMM3EJRBBGOWOTQKGQEOB5NBHA@googlegroups.com>)
-	id 1YQMdB-0001FK-P5
-	for gcvm-msysgit@m.gmane.org; Tue, 24 Feb 2015 22:03:01 +0100
-Received: by qcwb13 with SMTP id b13sf6103309qcw.6
-        for <gcvm-msysgit@m.gmane.org>; Tue, 24 Feb 2015 13:03:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe;
-        bh=rb8cdo338V+SGTdxsHRf+kNS9tqwa2HCfF1szjYjD9Y=;
-        b=CVqVLvZ48MarrEAS+fNt9UdWObvjWlmzHgVB0vJHEHeLjZsbN93S86aaUGvUSvCAlN
-         6tuUoAL/0Ixaq2Ni0iO8oNUieWGjSXCXioClIcFOkTb+HXR+mUXbGfVFgPI0u5iSnIzA
-         qxMrCJxeTAPvZnPtisykzmCkA4i5Cj3oksmBloPnkyhp6CW1Q4OSu0FmeSv67pZDS9M1
-         v7+WS7MjrT2QVWLQXiAV1k+8Mw1WsPCHKU8vWzsVp6rxT2ln9ED6eCqg3dDyByvBvZed
-         ZgwQkj8q0bGEm73U6KXnApO4fMVXgw/5ic3B5GMqUZ7bNid5OhmJYNAq2+ViNKBRzfpT
-         CNlA==
-X-Received: by 10.50.60.71 with SMTP id f7mr317285igr.10.1424811781111;
-        Tue, 24 Feb 2015 13:03:01 -0800 (PST)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.107.164.93 with SMTP id n90ls1930240ioe.7.gmail; Tue, 24 Feb
- 2015 13:03:00 -0800 (PST)
-X-Received: by 10.68.241.163 with SMTP id wj3mr3467562pbc.8.1424811780333;
-        Tue, 24 Feb 2015 13:03:00 -0800 (PST)
-Received: from sasl.smtp.pobox.com (pb-smtp1.int.icgroup.com. [208.72.237.35])
-        by gmr-mx.google.com with ESMTP id ba9si6638910qcb.0.2015.02.24.13.03.00
-        for <msysgit@googlegroups.com>;
-        Tue, 24 Feb 2015 13:03:00 -0800 (PST)
-Received-SPF: pass (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted sender) client-ip=208.72.237.35;
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E2FDB3AFA5;
-	Tue, 24 Feb 2015 16:02:59 -0500 (EST)
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D89C93AFA4;
-	Tue, 24 Feb 2015 16:02:59 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0D9413AF9B;
-	Tue, 24 Feb 2015 16:02:56 -0500 (EST)
-In-Reply-To: <c9ff859363d2d637b3607aaf6cb9295d@www.dscho.org> (Johannes
-	Schindelin's message of "Tue, 24 Feb 2015 21:33:13 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 8163C036-BC68-11E4-BB7A-A4119F42C9D4-77302942!pb-smtp1.pobox.com
-X-Original-Sender: gitster@pobox.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted
- sender) smtp.mail=junio@pobox.com;       dkim=pass header.i=@pobox.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264346>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1YQMdo-0001fM-Gf
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Feb 2015 22:03:40 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1753047AbbBXVDg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Feb 2015 16:03:36 -0500
+Received: from rcdn-iport-4.cisco.com ([173.37.86.75]:3188 "EHLO
+	rcdn-iport-4.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752769AbbBXVDf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Feb 2015 16:03:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=cisco.com; i=@cisco.com; l=1478; q=dns/txt; s=iport;
+  t=1424811815; x=1426021415;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-id:content-transfer-encoding:
+   mime-version;
+  bh=uFC+bloXxVdz2vQCFtUkHh7loJmT8aApF5gSjtwyT0o=;
+  b=jkuyvCuF2LR6RUwvwT/8eD8MHdlEM3tJSZloLY2kWggq689GdrFuqH0w
+   Ez/JWMBqHPLjGCNqIBlxSjxQLETJPJK5vDDhWGd/qgQqYRE6lsB5xAw4y
+   ZREWF1pbnI3INCkNTcEOJxUL72v6wUMoFDnyAmL8TwKNLb8Ye96dICCXZ
+   g=;
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: A0CQBQCX5uxU/5JdJa1bgwZSWgSDBLomhW6FdAIcgRNDAQEBAQEBfIQPAQEBAwEjEUUFCwIBCBgCAiYCAgIwFRACBA4FiCcIvAWYfQEBAQEBAQEBAQEBAQEBAQEBAQEBARMEgSGJcoQ7MweCaC+BFAEEj1uDYIVlkzsig25vgUR/AQEB
+X-IronPort-AV: E=Sophos;i="5.09,641,1418083200"; 
+   d="scan'208";a="398860099"
+Received: from rcdn-core-10.cisco.com ([173.37.93.146])
+  by rcdn-iport-4.cisco.com with ESMTP; 24 Feb 2015 21:03:34 +0000
+Received: from xhc-aln-x15.cisco.com (xhc-aln-x15.cisco.com [173.36.12.89])
+	by rcdn-core-10.cisco.com (8.14.5/8.14.5) with ESMTP id t1OL3Xm1001209
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL);
+	Tue, 24 Feb 2015 21:03:34 GMT
+Received: from xmb-rcd-x03.cisco.com ([169.254.7.147]) by
+ xhc-aln-x15.cisco.com ([173.36.12.89]) with mapi id 14.03.0195.001; Tue, 24
+ Feb 2015 15:03:33 -0600
+Thread-Topic: [PATCH v3] remote-curl: fall back to Basic auth if Negotiate
+ fails
+Thread-Index: AQHQSwqcFAV48lOUvEGHDNPe7JHDHZz2+1uAgAHaeICAB+NbAA==
+In-Reply-To: <20150219203556.GC5021@vauxhall.crustytoothpaste.net>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [64.100.213.175]
+Content-ID: <21F77231B57D1F42BE825FEBA593A3CA@emea.cisco.com>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264347>
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-
->> Also drop "proper" as if scripted Porcelains are second class citizens ;-)
->
-> If you had to deal with the portability/performance issues of the
-> shell scripts I am frequently faced with, you would not call them
-> first class citizens, either.
-
-Perhaps that might be the case.
-
-But I am polite enough to refrain from calling that "not a problem
-on 'proper' platforms".  I expect the same courtesy from others ;-).
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "Git for Windows" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+PiBPbiBGZWIgMTksIDIwMTUsIGF0IDM6MzUgUE0sIGJyaWFuIG0uIGNhcmxzb24gPHNhbmRhbHNA
+Y3J1c3R5dG9vdGhwYXN0ZS5uZXQ+IHdyb3RlOg0KPiANCj4gT24gV2VkLCBGZWIgMTgsIDIwMTUg
+YXQgMDQ6MTc6NDZQTSArMDAwMCwgRGFuIExhbmdpbGxlIChkYWxhbmdpbCkgd3JvdGU6DQo+PiBJ
+IGp1c3QgYnVpbHQgZnJvbSDigJhtYXN0ZXLigJksIG9uIEZyZWVCU0QgOS4zOg0KPj4gDQo+PiBj
+ZCB+L3NyYw0KPj4gZ2l0IGNsb25lIGh0dHBzOi8vZ2l0aHViLmNvbS9naXQvZ2l0LmdpdA0KPj4g
+Y2QgZ2l0DQo+PiBnbWFrZQ0KPj4gDQo+PiBUaGVuIHRyaWVkIH4vc3JjL2dpdC9naXQgY2xvbmUg
+aHR0cHM6Ly9PVVJfUkVQTw0KPj4gDQo+PiBJdCBjb3JlcyB0b28sIGFuZCBJIHNlZTogZ2l0LXJl
+bW90ZS1odHRwcy5jb3JlDQo+IA0KPiBDYW4geW91IGNvbXBpbGUgd2l0aCBkZWJ1Z2dpbmcgc3lt
+Ym9scyBhbmQgcHJvdmlkZSBhIGJhY2t0cmFjZT8gIEknbSBub3QgDQo+IHNlZWluZyBhbnkgc3Vj
+aCBiZWhhdmlvciBvbiBteSBlbmQsIGFuZCBJJ20gbm90IHN1cmUgd2hldGhlciBpdCdzIG15IA0K
+PiBwYXRjaCBvciBzb21ldGhpbmcgZWxzZSB0aGF0IG1pZ2h0IGJlIHByZXNlbnQgaW4gbWFzdGVy
+Lg0KDQpUaGUgcHJvYmxlbSBvcmlnaW5hbGx5IG9jY3VycmVkIHVuZGVyIFZNd2FyZSBGdXNpb24g
+YW5kIEnigJltIHVuYWJsZSB0byBnZXQgYSBiYWNrdHJhY2UgZnJvbSBpdC4NCkkgc3VzcGVjdCBt
+ZW1vcnkgY29uc3RyYWludHMgYXJlIGEgZmFjdG9yLiAgVGhlcmXigJlzIG9ubHkgNUdCIFJBTSBh
+dmFpbGFibGUgdG8gdGhpcyBWTS4NCg0KSSBoYXZlIHRyaWVkIGluIGFub3RoZXIgVk0gYW5kIHRo
+YXQgc3VjY2VlZHMuICBBbGwgZ29vZCB0aGVyZS4gSXQgaGFzIDQwR0IgUkFNLg0KDQpJIGFtIGdv
+aW5nIHRvIHRyeSB0aGlzIG9uIGEgdGhpcmQgc3lzdGVtLiBBdCBwcmVzZW50LCB3ZeKAmXJlIGp1
+c3QgNTAvNTAgb24gc3VjY2Vzcy4NCg0K4oCUIA0KRGFuIExhbmdpbGxlDQpJbmZyYXN0cnVjdHVy
+ZSAmIE9wZXJhdGlvbnMNClRhbG9zIEdyb3VwDQpTb3VyY2VmaXJlLCBJbmMuDQoNCg0KDQo=
