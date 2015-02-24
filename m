@@ -1,68 +1,112 @@
-From: Mauro Condarelli <mc5686@mclink.it>
-Subject: [bug?] renamed file loses changes in merge.
-Date: Tue, 24 Feb 2015 16:33:42 +0100
-Message-ID: <54EC99D6.9010307@mclink.it>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH 1/4] parse-options: introduce OPT_PATH
+Date: Tue, 24 Feb 2015 16:49:25 +0100
+Message-ID: <54EC9D85.3010301@drmicha.warpmail.net>
+References: <20150223144214.GA31624@peff.net>	<cccf3d14e5582996e5be1467849121a262f9c9f1.1424707497.git.git@drmicha.warpmail.net> <xmqqbnkktoti.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Type: text/plain; charset=iso-8859-15
 Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	=?ISO-8859-15?Q?Nguye=5E=7E?=
+	 =?ISO-8859-15?Q?n_Th=E1i_Ngo=2Ec_Duy?= <pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 24 16:49:14 2015
+X-From: git-owner@vger.kernel.org Tue Feb 24 16:49:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YQHjV-0001GT-63
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Feb 2015 16:49:13 +0100
+	id 1YQHju-0001ZU-PP
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Feb 2015 16:49:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753048AbbBXPsw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Feb 2015 10:48:52 -0500
-Received: from relaygw3-17.mclink.it ([77.43.14.243]:36847 "EHLO
-	relaygw3-17.mclink.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752739AbbBXPsv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Feb 2015 10:48:51 -0500
-X-Greylist: delayed 902 seconds by postgrey-1.27 at vger.kernel.org; Tue, 24 Feb 2015 10:48:51 EST
-Received: from [195.110.128.82] (HELO smtpoutgw2.mclink.it)
-  by relaygw3-17.mclink.it (CommuniGate Pro SMTP 6.0.6)
-  with ESMTP id 45298737 for git@vger.kernel.org; Tue, 24 Feb 2015 16:33:45 +0100
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2DhAQBhmexU/7T8/l8NTrRtBQEBAQEBAQaaLgEBAQEBAYVKQD0WGAMCAQIBWAgBAYgwuleaE4YHiheEFQWZG5M3giQcgVGDMQEBAQ
-Received: from host180-252-static.254-95-b.business.telecomitalia.it (HELO [192.168.7.124]) ([95.254.252.180])
-  by smtpoutgw2.mclink.it with ESMTP; 24 Feb 2015 16:33:46 +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
+	id S1753141AbbBXPte (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Feb 2015 10:49:34 -0500
+Received: from plane.gmane.org ([80.91.229.3]:47405 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753124AbbBXPtd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Feb 2015 10:49:33 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1YQHjm-0001UT-T2
+	for git@vger.kernel.org; Tue, 24 Feb 2015 16:49:30 +0100
+Received: from dickson.math.uni-hannover.de ([130.75.46.56])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 24 Feb 2015 16:49:30 +0100
+Received: from git by dickson.math.uni-hannover.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 24 Feb 2015 16:49:30 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: dickson.math.uni-hannover.de
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
+In-Reply-To: <xmqqbnkktoti.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264331>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264332>
 
-I'm unsure it is a bug or a misuse on my part, but:
+Junio C Hamano venit, vidit, dixit 23.02.2015 20:23:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
+> 
+>> Many options are paths, but not files. Introduce OPT_PATH which does
+>> the same path processing as OPT_FILENAME but allows to name the argument.
+>> ...
+>> diff --git a/parse-options.h b/parse-options.h
+>> index 7940bc7..5127a5d 100644
+>> --- a/parse-options.h
+>> +++ b/parse-options.h
+>> @@ -149,6 +149,8 @@ struct option {
+>>  	  PARSE_OPT_NOARG | PARSE_OPT_NONEG, (f) }
+>>  #define OPT_FILENAME(s, l, v, h)    { OPTION_FILENAME, (s), (l), (v), \
+>>  				       N_("file"), (h) }
+>> +#define OPT_PATH(s, l, v, a, h)    { OPTION_FILENAME, (s), (l), (v), \
+>> +				       (a), (h) }
+> 
+> I am somewhat disappointed to see this implementation.
+> 
+>  - I expected that OPT_FILENAME will be re-implemented in terms of
+>    OPT_PATH(), as a thin wrapper.
 
-Situation:
+Right now they are just two macros. Would
 
-There are two distinct repositories (upstream & local), local is a fork of upstream (at tag "v3.7").
-Both repositories were modified (upstream has delivered new version with tag "v3.7.1").
-I need to incorporate local changes into the new upstream release.
+#define OPT_FILENAME(s, l, v, h) OPT_PATH((s), (l), (v), N_("file"), (h))
 
-I did the following:
+be more what you expect? I don't consider that thinner but don't mind
+either way.
 
-git clone upstream
-git checkout v3.7.1 -b v3.7.1_local                       (I do not want anything later than that)
-git remote add local ../local/.git
-git fetch local
-git merge local/current
-... resolve conflicts ...
-git ad --all
-git commit -m ...
+>  - As the original complaint was "checkout --to requires a
+>    directory, and a file would not work", I expected this to give
+>    the programmer finer controls, such as:
+> 
+>     - The name must refer to an existing entity on the filesystem,
+>       or an existing entity on the filesystem must not exist, or
+>       anything is fine (tristate).
+> 
+>     - The name refers to a diretory, or the name refers to a regular
+>       file, or the name refers to a symbolic link, or anything goes.
+> 
+> That is merely "somewhat", as the latter _can_ be coded (e.g. if you
+> care that the given path already exists as a directory, stat() it
+> and see if it is, or if you want that the given path does not exist
+> yet, stat() it to make sure you get ENOENT) after the option is
+> parsed by the program that uses the parser.
+> 
+> But the infrastructure to allow the latter would free you from
+> having to say N_("file") or N_("directory"); if a parameter can
+> refer to either a file or a directory, the parse-options library
+> could give you N_("file or directory") because you are already
+> telling what kind(s) of paths are allowed.
 
-At this point I discovered that one specific file:
-was renamed in upstream
-was changed in local
+So, do you suggest to extend OPTION_FILENAME, and introduce several
+macros using it, or a macro taking a bitfield to be filled with
+PATH_OPT_FILE, PATH_OPT_DIR, PATH_OPT_EXISTS, PATH_OPT_ABSENT,
+PATH_OPT_MASK, PATH_OPT_MODE (require (mode & MASK == MODE))?
 
-What I have on my workspace is the *renamed* file *without* the modifications from local.
+Sounds like the big solution to a small problem I had with the word
+"file" for a dir...
 
-Is this the normal behavior?
-If so I fail to understand the rationale behind it; I would expect git to apply changes to the renamed file.
-
-Thanks in Advance
-Mauro
+>>  #define OPT_COLOR_FLAG(s, l, v, h) \
+>>  	{ OPTION_CALLBACK, (s), (l), (v), N_("when"), (h), PARSE_OPT_OPTARG, \
+>>  		parse_opt_color_flag_cb, (intptr_t)"always" }
