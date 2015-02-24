@@ -1,75 +1,134 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG] diffcore-rename with duplicate tree entries can segfault
-Date: Tue, 24 Feb 2015 15:11:00 -0800
-Message-ID: <xmqqd24yq517.fsf@gitster.dls.corp.google.com>
-References: <20150224214311.GA8622@peff.net>
-	<xmqqh9uborrx.fsf@gitster.dls.corp.google.com>
-	<20150224224918.GA24749@peff.net>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [RFC/PATCH 0/3] protocol v2
+Date: Tue, 24 Feb 2015 15:37:27 -0800
+Message-ID: <CAGZ79kbZHtZuPrb6rEP41vbdnZqJmsMwq+8pNer-_D4U5B1xZw@mail.gmail.com>
+References: <1424747562-5446-1-git-send-email-sbeller@google.com>
+	<CACsJy8BSf2h_xD-Q1tudAg_xCzffRQM+7xzUgprONxD7vM5RYw@mail.gmail.com>
+	<CAPc5daVbrUaU6LFM65evru0+1tBT916+0AOyids=f7DZThTPGw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Feb 25 00:11:11 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 25 00:37:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YQOdC-0007Ds-9H
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Feb 2015 00:11:10 +0100
+	id 1YQP2j-0006nw-FN
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Feb 2015 00:37:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752544AbbBXXLF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Feb 2015 18:11:05 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:60676 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752284AbbBXXLD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Feb 2015 18:11:03 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 45D403B869;
-	Tue, 24 Feb 2015 18:11:02 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=iZR42hgNZa7BizagBRZB+l6Qtu0=; b=Dcj9nl
-	A3kPrLWI5URk1ovefq/ci/klc64kth0G5Yzs2s2mzTExOy7Rggu4CXfkb8oMj/Gx
-	zrmHOZXW+GYZZ6FFZs//aBcgTbEPfGOpW+JwtIQmpNBz0AutKhv9wEJlcfa/SQSf
-	LVaGh2+ci/7Nw8PR1vyBS3iuprLiLouK9XWHU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=sU7KdnPpa8kyyoD6hnMgNtdqad7+tA1t
-	+mMsQ3hiupyg8UavNOY5PimJoX7yx9toJaxLFwB1+swIKObqDRvGA3wc2NrZg1Hh
-	vgc/f6NVVXo6wHqkfY45HlJegrhVzSPo9YmbUXcBbaOvTZlljKR26X5m5HT80i/c
-	0Hvt2KmvRXg=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3AF793B868;
-	Tue, 24 Feb 2015 18:11:02 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8A7213B867;
-	Tue, 24 Feb 2015 18:11:01 -0500 (EST)
-In-Reply-To: <20150224224918.GA24749@peff.net> (Jeff King's message of "Tue,
-	24 Feb 2015 17:49:18 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 664462D0-BC7A-11E4-BDD2-A4119F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1752234AbbBXXh3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Feb 2015 18:37:29 -0500
+Received: from mail-ig0-f174.google.com ([209.85.213.174]:55588 "EHLO
+	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751444AbbBXXh2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Feb 2015 18:37:28 -0500
+Received: by mail-ig0-f174.google.com with SMTP id b16so31288706igk.1
+        for <git@vger.kernel.org>; Tue, 24 Feb 2015 15:37:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=2psfXFjiGO3vK22DEVPwm4mXur6h+pf4vcTzdOBiR+I=;
+        b=emO+eUgcWUHbREsBZxr3VSHtZFo/iKfj3r86I5HZMkh3dQBejHyeg6jo2bPLQLBuM1
+         JNKO8P95uKEiQ54Qedg3/QvWHrmI7dCNWxfXfEyBQGCFDRe5lzeMxlnmHeuOfnAJSQgM
+         wCA6nwFRyMVRS8UZqJtG3Zhe6+il4EFAKsUWmQB8jcNTWcpec3jEoICYOi1oeirKV2mi
+         hehtGatYSLuIGQcyO+fRqWzzBGTIA+vnynv6ETGwLkaCAMwJZfRQ7nR3bEa2yUkpNzUQ
+         c8Tx4gQQ67QU9p3LSWogI/HWjl4/WCfPc8GOR+8m08ZYEM7Wq0EojtXBE8xONLY8K0Dw
+         X82Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=2psfXFjiGO3vK22DEVPwm4mXur6h+pf4vcTzdOBiR+I=;
+        b=ajYc0tk3vzwHVo/eSe9G41VVd/XUrYayr3TP+7ttrlukMEFN7BaBBowvj03ND79ifC
+         gzdVwtEC7lO7l+sPw7SNrekzFNZ9FtcgJRpPr0iOZS2YVsksIdB9mgzwuApXV7iuemBY
+         w1FDvSgOXDe4VDcPDxqQC43jW0peab/xrjlORjPuSrjEnsOqHI9Ll1bHZbKf++e7k7VG
+         JhDNLdENzHcLQJ7jiyxA8SPVvlHSIYjPojbl3E7bJjtWhqX9cbyDYguqjw1vFloymPVu
+         hLiOr02mTcES/i7iN65RYyDSKOv3BqOpGe8LszvRJUbTWmj4JA6TOc9TX+BylESuxfto
+         JpCw==
+X-Gm-Message-State: ALoCoQlbFjs1svQG/y3iMREH188Tkven7/ZHbeqTHTipvZFPddh+j2zB9rTuFxicYpFk480a4CfO
+X-Received: by 10.107.130.25 with SMTP id e25mr895235iod.49.1424821047752;
+ Tue, 24 Feb 2015 15:37:27 -0800 (PST)
+Received: by 10.107.46.31 with HTTP; Tue, 24 Feb 2015 15:37:27 -0800 (PST)
+In-Reply-To: <CAPc5daVbrUaU6LFM65evru0+1tBT916+0AOyids=f7DZThTPGw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264359>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264360>
 
-Jeff King <peff@peff.net> writes:
+On Mon, Feb 23, 2015 at 10:15 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> On Mon, Feb 23, 2015 at 8:02 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+>>
+>> It's very hard to keep backward compatibility if you want to stop the
+>> initial ref adverstisement, costly when there are lots of refs. But we
+>> can let both protocols run in parallel, with the old one advertise the
+>> presence of the new one. Then the client could switch to new protocol
+>> gradually. This way new protocol could forget about backward
+>> compatibility. See
+>>
+>> http://thread.gmane.org/gmane.comp.version-control.git/215054/focus=244325
+>
+> Yes, the whole thread is worth a read, but the approach suggested by
+> that article $gmane/244325 is very good for its simplicity. The server
+> end programs, upload-pack and receive-pack, need to only learn to
+> advertise the availability of upload-pack-v2 and receive-pack-v2
+> services and the client side programs, fetch-pack and push-pack,
+> need to only notice the advertisement and record the availability of
+> v2 counterparts for the current remote *and* continue the exchange
+> in v1 protocol. That way, there is very little risk for breaking anything.
 
-> I'm assuming there _is_ a sane sort order. We have two halves of a
-> filepair, but I think before any of the rename or break detection kicks
-> in, each pair should either:
->
->   1. Have a name in pair->one, and an invalid filespec in pair->two
->      (i.e., a deletion).
->
->   2. The opposite (name in pair->two, /dev/null in pair->one). An
->      addition.
->
->   3. The same name in pair->one and pair->two.
+Right, I want to add this "learn about v2 on the fly, continue as always"
+to the protocol.
 
-I think creation and deletion are expressed with mode=0 and not with
-/dev/null.
+>
+> So if we are going to discuss a new protocol, I'd prefer to see the
+> discussion without worrying too much about how to inter-operate
+> with the current vintage of Git. It is no longer an interesting problem,
+> as we know how to solve it with minimum risk. Instead, I'd like to
+> see us design the new protocol in such a way that it is in-line
+> upgradable without repeating our past mistakes.
+>
+> I am *not* convinced that we want multiple suite of protocols that
+> must be chosen from to suit the use pattern, as mentioned somewhere
+> upthread, by the way.
+
+I do think it makes sense to have different protocols or different tunings
+of one protocol, because there are many different situations in which different
+metrics are the key metric.
+
+If you are on mobile, you'd possibly be billed by the bytes on the wire, so
+you want to have a protocol with as actual transport as possible and would
+maybe trade off transported bytes to lots of computational overhead.
+
+If you are in Australia (sorry downunder ;) or on satellite internet,
+you may care a lot about latency and roundtrip times.
+
+If you are in a corporate environment and just cloning from next door,
+you may want to have the overall process (compute+network+
+local reconstruction) just be fast overall.
+
+
+I can understand, that we maybe want to just provide one generic
+"version 2" of the protocol which is an allrounder not doing bad in
+all of these aspects, but I can see usecases of having the desire to
+replace the wire protocol by your own implementation. To do so
+we could try to offer an API which makes implementing a new
+protocol somewhat easy. The current state of affairs is not providing
+this flexibility.
+
+I think it would be not much overhead to have such
+flexibility when writing the actual code for the "very little risk" v2
+update. So instead of advertising a boolean flag meaning
+"This server/client speaks version2", we would rather send a list
+"This server speaks v2,v1 and v-custom-optimized-for-high-latency".
+
+I started looking for academic literature if there are generic solutions
+to finding graph differences, but no real luck for adapting to our
+problem yet.
+
+Thanks for your input,
+Stefan
