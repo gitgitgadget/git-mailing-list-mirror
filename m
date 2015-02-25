@@ -1,119 +1,80 @@
-From: drathir87 <drathir87@gmail.com>
-Subject: Re: question about resume support.
-Date: Wed, 25 Feb 2015 19:52:16 +0100
-Message-ID: <20150225195216.42c5759c@archus>
-References: <20150221200127.4ade03ad@archus>
-	<20150222155312.GA7906@vps892.directvps.nl>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: feature request: excluding files/paths from "git grep"
+Date: Wed, 25 Feb 2015 11:01:22 -0800
+Message-ID: <xmqqbnkholx9.fsf@gitster.dls.corp.google.com>
+References: <54EDBEC2.8090107@peralex.com>
+	<CACsJy8AM=W4f6u_7YpvmfiBwrJjqfJMJoq6CQYfKOh+qD6rF3Q@mail.gmail.com>
+	<20150225143116.GA13567@peff.net>
+	<xmqqk2z5on72.fsf@gitster.dls.corp.google.com>
+	<20150225185128.GA16569@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: base64
-Cc: git@vger.kernel.org
-To: Kevin Daudt <me@ikke.info>
-X-From: git-owner@vger.kernel.org Wed Feb 25 20:01:36 2015
+Content-Type: text/plain
+Cc: Duy Nguyen <pclouds@gmail.com>, Noel Grandin <noel@peralex.com>,
+	git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Feb 25 20:01:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YQhDB-0000Iy-2Y
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Feb 2015 20:01:33 +0100
+	id 1YQhDG-0000Lo-Fj
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Feb 2015 20:01:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753354AbbBYTBY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Feb 2015 14:01:24 -0500
-Received: from mail-we0-f173.google.com ([74.125.82.173]:43157 "EHLO
-	mail-we0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753078AbbBYTBW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Feb 2015 14:01:22 -0500
-Received: by wesu56 with SMTP id u56so5552569wes.10
-        for <git@vger.kernel.org>; Wed, 25 Feb 2015 11:01:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=PUUol1Vd97qpzhLAqd/vaAP1SYI44VHM8vAdHojZi6I=;
-        b=wOl26DMYKr865oNm+o4xKzoLYDrd8EOb9DxpCkocvrQlQKMQ8aL/t3BMlpBr9oYF6Z
-         ifYTwaDJYpDeQv41zPR5GQ0sWyCIpVo8k3KmlVxMI2AhBGuAe4+51wmzLuNg+0pQqJSl
-         0r6mUg62iNx73zyBSs4GaYDF4X1jC8PUSrzmP60wv+6rVClnlochh0mqHjrN38iNYW50
-         uqwHStM9nmUtiu83GRtxwueeSIOVEXtbwI9UY7knhYIPCfFzqvyFhLpiH51Snaoeo3Py
-         9byKxnZEPTraXHa9nVFTn3HwwkhUFfL1hWzTT5PcJzb7DHc6hgmkD54YIfeaklKZZGjk
-         rhOA==
-X-Received: by 10.180.73.205 with SMTP id n13mr9153939wiv.64.1424890881037;
-        Wed, 25 Feb 2015 11:01:21 -0800 (PST)
-Received: from archus (ns317502.ip-91-121-104.eu. [91.121.104.168])
-        by mx.google.com with ESMTPSA id hv5sm66058485wjb.16.2015.02.25.11.01.19
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 25 Feb 2015 11:01:20 -0800 (PST)
-In-Reply-To: <20150222155312.GA7906@vps892.directvps.nl>
-X-Mailer: Claws Mail 3.11.1 (GTK+ 2.24.26; x86_64-unknown-linux-gnu)
+	id S1753365AbbBYTBb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Feb 2015 14:01:31 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:55056 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753174AbbBYTB3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Feb 2015 14:01:29 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3A3263BD65;
+	Wed, 25 Feb 2015 14:01:24 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=7oboMS5bzV96Zv8hHO+cf7dJ1WE=; b=xxNi7h
+	gQZ1u0TZlgwNWnk0Es5ZqZSndFApx0NWZ6Og/M+VnJgdHgiyXQmWQeY/Pwk6TO3e
+	Swb4ZOHDxj8DFnfI5Mq3zrmZZb6UI221xW/PnsF/QShS/tj+Ylayh/464c7QSS6p
+	DKA+jdvNUcu7GzsZPfk1hAacX/D5VWLjYnFeY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=i9PUsr5/ncS7QwyHwGHIFxSKLf5XwdJs
+	PMcCgf9UacN+e8R4/1WrInQYvLTtXJA7Ujp/IAV2WKNTVv9YnplVK1IeK6s/3EFS
+	vf8IMMpuswQWF5+RbAQip1SBJAGpGBnk6sCdkAVdyDg+UKCy6o1PGtiyIbWl3Gc6
+	laMxELMG4lc=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 295023BD64;
+	Wed, 25 Feb 2015 14:01:24 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9FCD93BD60;
+	Wed, 25 Feb 2015 14:01:23 -0500 (EST)
+In-Reply-To: <20150225185128.GA16569@peff.net> (Jeff King's message of "Wed,
+	25 Feb 2015 13:51:28 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: B126EB6E-BD20-11E4-99DC-A4119F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264404>
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkVEIE1FU1NBR0UtLS0tLQ0KSGFzaDogU0hBNTEyDQoNClRoYW5r
-cyBhIGxvdCBnb29kIHRvIGtub3cgdGhhdCBhbmQgdGhhdCdzIHRydWUgbGl0dGxlIGhhcmQgdG8g
-ZG8gYmMgZXZlbg0KaWYgdHJhY2sgYWx3YXlzIHRoZSBsYXRlc3QgdmVyc2lvbiBzb21lIHJlcG9z
-aXRvcmllcyBjaGFuZ2Ugc28gZmFzdA0KYW5kIHdpbGwgYmUgbmVlZGVkIHNvbWUga2luZCBvZCBl
-Zy4gc25hcHNob3Qgb2YgdXNlciByZXBvc2l0b3J5IGJ5DQphdXRvIHNjcmlwdCBlZyBvbmNlIGF0
-IDEyLTI0aCBhbmQgdGhhdCByZXN1bWUgZGF0YSBzZXJ2ZWQgZnJvbQ0KdGhhdCBzbmFwc2hvdCBh
-bmQgYWZ0ZXIgZG93bmxvYWQgdGhhdCBzbmFwc2hvdCB1cGRhdGUgd2l0aCBwdWxsDQptZXRob2Qu
-Li4gQWdhaW4gdGhhbmtzIGEgbG90Li4uICANCg0KDQpPbiBTdW4sIDIyIEZlYiAyMDE1IDE2OjUz
-OjEyICswMTAwDQpLZXZpbiBEYXVkdCA8bWVAaWtrZS5pbmZvPiB3cm90ZToNCg0KPiBPbiBTYXQs
-IEZlYiAyMSwgMjAxNSBhdCAwODowMToyN1BNICswMTAwLCBkcmF0aGlyODdAZ21haWwuY29tIHdy
-b3RlOg0KPiA+IC0tLS0tQkVHSU4gUEdQIFNJR05FRCBNRVNTQUdFLS0tLS0NCj4gPiBIYXNoOiBT
-SEE1MTINCj4gPiANCj4gPiBIaS4uLiBJbSB3b25kZXIgdGhlcmUgaXMgcGxhbm5lZCBvciBtYXli
-ZSB0aGVyZSBpcyBzdXBwb3J0IG9mDQo+ID4gcmVzdW1pbmcgaW50ZXJydXB0ZWQgZ2l0IG9wZXJh
-dGlvbiBlLmcuIGNsb25pbmcgcmVwb3NpdG9yaWVzPyBOb3QNCj4gPiBzdXJlIGFib3V0IGhvdyBo
-YXJkIHRoYXQgY291bGQgYmUgdG8gaW1wbGVtZW50LCBidXQgZ3JlYXRseSBzaG91bGQNCj4gPiBk
-ZWNyZWFzZSBvZiBiYW5kd2lkdGggdXNlZCBieSBwZXJzb25zIHdpdGggd2VhayBuZXR3b3JrDQo+
-ID4gY29ubmVjdGlvbi4uLiAtLS0tLUJFR0lOIFBHUCBTSUdOQVRVUkUtLS0tLQ0KPiA+IA0KPiA+
-IGlRSjhCQUVCQ2dCbUJRSlU2TllIWHhTQUFBQUFBQzRBS0dsemMzVmxjaTFtY0hKQWJtOTBZWFJw
-YjI1ekxtOXcNCj4gPiBaVzV3WjNBdVptbG1kR2hvYjNKelpXMWhiaTV1WlhSRk1FWkJNVEU1TWpj
-NU1UTTBRVFpGTkRkR1JUazNNRVpCDQo+ID4gUlVFek16azNOVGxHTmpOQ01FWkRBQW9KRUs2ak9Y
-V2ZZN0Q4Q1hzUC8zN0YzY0hOVmdyTmoreHplUjFIMzh4UQ0KPiA+IHE1elNMTk1VWXI3NzFnVVhC
-YWMvcDhNZkRZbFM3Z0t3UlY0QnhobDhBbWZIOXEyOHliajRVRnArNUE5dTFtS0YNCj4gPiBFNHJy
-TUpFNG1yd2YvZE9lWUhNZDRFSzdhQ0ZyRWw5RFZuRDZ1WGxRK1FDNnFRMjNMeVIyV0hWWDN1MWE2
-RVFWDQo+ID4gdHNGSXVHTGgxa0JBVFd0Mi9GaW02MEJxSTZQMy9QWDBnQjJSK2dQZG5tNXZHM2NZ
-NWlOU3cvVWdaVWJSTm1NYQ0KPiA+IFFnekJ3cHhOT1RxbEozR1E5Y1dnTDVDSDgzVnJGbWpxSHFh
-OHhiVmQyQVRWYVdYVGs0cERKRkJCYWZTTkpnOHMNCj4gPiBSTXVtQ0dwV21NWUJFdEFKWS9VZ0Uz
-MkYybXM3cmF2TE9ZMGhqOVBDb1cwRkgrY3pkSTlaTlE4anZkVGhNQnlwDQo+ID4gKzZtSHFVMlN5
-WW9ldG5CY2xjZ1NyT01ka2lDaXZXQjdHYU9Cc2NBNUUxTU0zRnBRQmRKU0JyRGxxNXloczlXRw0K
-PiA+IHVLaHlCcHRzOSs5SWRpVVB2ZDRlajRDVlhYc0U5L0ZLQUVLNytpbHI3SHNMYlJyMHZYZUFp
-V0E3cStrK0F2Y2UNCj4gPiBJaDhud3Q5b25BTTM3T0g3Qm9XOHZhLzRnLzN5SHI5RWFZRmc3ZWE5
-aEpZVW9tVlkzbC9tSVF4ZUcrS1BGWm5DDQo+ID4gWG5DVkFFTVNlTXVqd2pJS3FIVUVXUzhSdUhP
-bHhTK3E4VEVaUzdjYVIvOGF1c29uZGJRdVlLNEhMc1ZoaXdGWg0KPiA+IEFrbHd0TEJtb0lSMnlO
-Rm4rTktmRE93MVJXUHN2SFNON3lLRVFJZStTZFVFRERTOFF2aGZDZUtEVlNENzdlelgNCj4gPiBC
-cFhTUGZOTE1EWXFaTnA1ZitOQg0KPiA+ID0rQm53DQo+ID4gLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0tDQo+IA0KPiBXaGlsZSBub3QgdGhlIGJlc3Qgc29sdXRpb24sIHdoYXQncyBjdXJyZW50
-bHkgcG9zc2libGUgaXMgdG8gcHJvdmlkZQ0KPiBhbiBpbml0aWFsIGdpdCBidW5kbGUgdGhhdCBp
-cyByZWd1bGFybHkgdXBkYXRlZCB3aGljaCBjYW4gYmUNCj4gZG93bmxvYWRlZCB0aHJvdWdoIG90
-aGVyIHByb3RvY29scyB0aGF0IGRvIHByb3ZpZGUgcmVzdW1wdGlvbi4gVXNlcnMNCj4gY2FuIHVz
-ZSB0aGF0IHRvIHNldHVwIHRoZSByZXBvc2l0b3J5LCBhbmQgdGhlbiB1c2UgdGhlIG5vcm1hbCBn
-aXQNCj4gcHJvdG9jb2wgdG8gZ2V0IHRoZSBsYXRlc3QgdXBkYXRlcy4NCj4gDQo+IFRoZSByZWFz
-b24gdGhpcyBpcyBub3QgZWFzeSB0byBmYWNpbGl0YXRlIGlzIHRoYXQgdGhlIHBhY2tzIGdpdA0K
-PiBnZW5lcmF0ZXMgYXJlIG9ubHkgZ2VuZXJhdGVkIGluLW1lbW9yeS4gVGhlc2UgcGFja3Mgd291
-bGQgbmVlZCB0byBiZQ0KPiBjYWNoZWQgb24gZGlzayBhbmQgc29tZWhvdyBoYXZlIGEgbWFwcGlu
-ZyB0byB0aGUgdXNlciB0aGF0IGRvd25sb2FkZWQNCj4gdGhhdCBwYWNrLiBBbHNvIHRoZXJlIHdv
-dWxkIG5lZWQgdG8gYmUgc29tZSBraW5kIG9mIHdheSB0byBleHBpcmUNCj4gdGhlc2UgY2FjaGVk
-IHBhY2tzLiBUaGUgcHJvdG9jb2wgd291bGQgbmVlZCB0byBiZSB1cGRhdGVkIHRvIGluZGljYXRl
-DQo+IGEgdXNlcnMgd2FudHMgdG8gcmVzdW1lIGEgY2xvbmUgKG9yIGZldGNoKSBhbmQgd2hhdCBw
-YXJ0cyBhcmUgc3RpbGwNCj4gbWlzc2luZywgYW5kIHByb2JhYmx5IGxvdHMgb2Ygb3RoZXIgZGV0
-YWlscyBJJ20gbWlzc2luZy4NCj4gDQo+IEtldmluDQoNCi0tLS0tQkVHSU4gUEdQIFNJR05BVFVS
-RS0tLS0tDQoNCmlRSjhCQUVCQ2dCbUJRSlU3aG5nWHhTQUFBQUFBQzRBS0dsemMzVmxjaTFtY0hK
-QWJtOTBZWFJwYjI1ekxtOXcNClpXNXdaM0F1Wm1sbWRHaG9iM0p6WlcxaGJpNXVaWFJGTUVaQk1U
-RTVNamM1TVRNMFFUWkZORGRHUlRrM01FWkINClJVRXpNemszTlRsR05qTkNNRVpEQUFvSkVLNmpP
-WFdmWTdEODZPY1FBSzZSSS9Ub3kwL0V4YU93TTdqdW1jSU0NCkFaWXpFTlh0VUNVRUllVVNRaWs1
-OEUrREYybmhvT3NCQ2tsaHV4R3F3R1hJRklWamtML01ML3JCZTdjcXF2SEUNClV4QXk4elpIQVhO
-NytiZFN6SHpMWnlVV0RPYjlyeU5DU01lWVJjb1crSnRVbnIwc01JZEFxSnVabnBRUUYwS24NCmZW
-c0EwK3BNMERUbEtKMjNDQkdjTGsvVkpkV1BQaTJGcllhWXFha21tOHo0STN6ZHZJeitMaHR0SEg2
-N2VxVGINCmpYS3Y4K3B4U1UvbTBzZGk2UTUwUXRzTDRQL204Mzk4S203Smg5WVU4TVBYSnh4NDAy
-Ni8wdVByY3RIYWdRUU4NCmpVTjdJdlVvWjRMN0E2SmsySzV2MjBGS3hhT3cvRTBoekZGbzZtOHJS
-SWdYb2pwenhaVFllQzV1R2UxY0NBK3gNCkNLSXd5YmZJajF4YVdhOW8xZkVUYnVEcUUvcGxyZFRI
-aVNER1Y3MG1nbjV5Zzc3eFlObmJSN21BeUdkZ0V6ekwNCmRDZXJtRzQxRTU0QTZicXY5ZDFUZGRC
-c3duY3ZFTWRiYXRqaG9VaHBCNTY2Qk5uTWhYNVJ6TWZtbFpwdFl3UmkNCmdyalMyZi9UTzdjWGlY
-My9sb3NBVUFjSStXUmd6MEZjUGd1VXhkbHFDZDRRQjZRWW5xSy81c3BmYXRCT0ZMd1cNCnEwbHJR
-bWZ5Zk1RUnh4eXBmY3VBKzdRQjRscW9ORE5McWNINHAxNnprS0FVMkxhTXhWQUtRNVAvcXhWZGdj
-aXMNCnIwWi83QkhJMjg0dFBOcExzbTVkSkc3Mk1YdjE4MjUrZDEzMzBsZDMwdDJtMDdpS1VodHEx
-WnVTZHZFczc2dUUNCmVSOVZhNEh3eVR1VnM0aFc2RE0wDQo9YjM5dw0KLS0tLS1FTkQgUEdQIFNJ
-R05BVFVSRS0tLS0tDQo=
+Jeff King <peff@peff.net> writes:
+
+> So I think _if_ using "diff" attributes is enough for this purpose, then
+> there is no code to be written.  But if somebody wants to draw a
+> distinction between the uses (I want to diff "foo" files, but never see
+> them in grep) then we could introduce a "grep" attribute (with the
+> fallback being the value of the "diff" attribute for that path).
+
+That is all true.
+
+If we were to have a new 'grep' attribute that can be used to
+express 'It is OK to diff two versions of this path, but hits by
+grep in this path is useless' (and verse versa), the built-in macro
+attribute 'binary' should also be updated with it.  A path being
+'binary' currently means '-diff -merge -text' but it should also
+mean '-grep' in the new world, if we were to go in that direction.
+
+Thanks.
