@@ -1,68 +1,110 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: feature request: excluding files/paths from "git grep"
-Date: Wed, 25 Feb 2015 09:31:16 -0500
-Message-ID: <20150225143116.GA13567@peff.net>
-References: <54EDBEC2.8090107@peralex.com>
- <CACsJy8AM=W4f6u_7YpvmfiBwrJjqfJMJoq6CQYfKOh+qD6rF3Q@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Noel Grandin <noel@peralex.com>, git <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 25 15:31:30 2015
+From: Ryuichi Kokubo <ryu1kkb@gmail.com>
+Subject: [PATCH] git-svn: fix localtime=true on non-glibc environments
+Date: Thu, 26 Feb 2015 01:04:41 +0900
+Message-ID: <1424880281-570-1-git-send-email-ryu1kkb@gmail.com>
+Cc: Ryuichi Kokubo <ryu1kkb@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 25 17:05:05 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YQczo-0002H0-U9
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Feb 2015 15:31:29 +0100
+	id 1YQeSN-0001rq-AD
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Feb 2015 17:05:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752883AbbBYObT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Feb 2015 09:31:19 -0500
-Received: from cloud.peff.net ([50.56.180.127]:53179 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752401AbbBYObT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Feb 2015 09:31:19 -0500
-Received: (qmail 26464 invoked by uid 102); 25 Feb 2015 14:31:18 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Feb 2015 08:31:18 -0600
-Received: (qmail 15565 invoked by uid 107); 25 Feb 2015 14:31:19 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Feb 2015 09:31:19 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Feb 2015 09:31:16 -0500
-Content-Disposition: inline
-In-Reply-To: <CACsJy8AM=W4f6u_7YpvmfiBwrJjqfJMJoq6CQYfKOh+qD6rF3Q@mail.gmail.com>
+	id S1753942AbbBYQE6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Feb 2015 11:04:58 -0500
+Received: from mail-pd0-f179.google.com ([209.85.192.179]:41200 "EHLO
+	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753937AbbBYQE5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Feb 2015 11:04:57 -0500
+Received: by pdno5 with SMTP id o5so5782733pdn.8
+        for <git@vger.kernel.org>; Wed, 25 Feb 2015 08:04:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=uBqUqDOoH+ZtQL21Q38kybsog4B0joE65XK4zT8j0/s=;
+        b=XS7JILJOWFDAEhPmWNBKYFoXc+G0RqqaavIQ/xd/7G91La8Tt86KTT1g1QmL6zbKH8
+         tJYQM4iKZvwNGv7Fgg8eztX4SaB5k/AZ0Vw73MUkHjXiWISZleCG775uqe7EQnxCeQqt
+         x0tyS16ilYuQc9j6LC6AFJf5dbwZe480v/GrqJT/KA7eXjX4NB34b9BQRf3e3bVoYAgv
+         jhbLnmt2Wt7j9xcuWTUCI/UqP5dJxV0Oqw1Dc13Ivs8tl161ifWGrd2aujAKd7k+VV4Y
+         jqXowypdoCmVQacX/VzxWmgp+4RpJBxOr3rTrOc0O6aM3wUCV/jTX2adaxmYlg0bFWVq
+         HU7A==
+X-Received: by 10.70.44.100 with SMTP id d4mr6848658pdm.36.1424880296271;
+        Wed, 25 Feb 2015 08:04:56 -0800 (PST)
+Received: from lab.kkbs.net (124x34x74x180.ap124.ftth.ucom.ne.jp. [124.34.74.180])
+        by mx.google.com with ESMTPSA id fl6sm2845153pdb.23.2015.02.25.08.04.53
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 25 Feb 2015 08:04:55 -0800 (PST)
+X-Mailer: git-send-email 1.7.10.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264396>
 
-On Wed, Feb 25, 2015 at 08:46:37PM +0700, Duy Nguyen wrote:
+git svn uses POSIX::strftime('%s', $sec, $min, ...) to make unix epoch time.
+But lowercase %s formatting character is a GNU extention. This causes problem
+in git svn fetch --localtime on non-glibc systems, such as msys or cygwin.
+Using Time::Local::timelocal($sec, $min, ...) fixes it.
 
-> On Wed, Feb 25, 2015 at 7:23 PM, Noel Grandin <noel@peralex.com> wrote:
-> > What would be nice is a per-user/repo config setting that excludes certain
-> > files and paths from the 'git grep' search.
-> >
-> > Does this sound reasonable/acceptable?
-> 
-> There is no config setting to do that, but since v1.9.5 you can use
-> ':!' or ':(exclude) to exclude paths, for example
-> 
-> git grep foo -- '*.c' ':!src/ ':!*foo*.c'
-> 
-> will exclude .c files in src directory or contains "foo". If you use
-> some exclude patterns often, you can write a short script. Perhaps we
-> could support pathspec macros (similar to git-attr macros), stored in
-> config file. You still need to type, but it'll be a lot shorter.
+Signed-off-by: Ryuichi Kokubo <ryu1kkb@gmail.com>
 
-If it's an attribute of the file, and not the request, maybe
-gitattributes would be a better fit. You can already do this with:
+Notes:
+    lowercase %s format character in strftime is a GNU extension and not widely supported.
+    POSIX::strftime affected by underlying crt's strftime because POSIX::strftime just calls crt's one.
+    Time::Local is good function to replace POSIX::strftime because it's a perl core module function.
+    
+    Document about Time::Local.
+     http://perldoc.perl.org/Time/Local.html
+    
+    These are specifications of strftime.
+    
+    The GNU C Library Reference Manual.
+     http://www.gnu.org/software/libc/manual/html_node/Formatting-Calendar-Time.html
+    
+    perl POSIX module's strftime document. It does not have '%s'.
+     http://perldoc.perl.org/POSIX.html
+    
+    strftime document of Microsort Windows C Run-Time library.
+     https://msdn.microsoft.com/en-us/library/fe06s4ak.aspx
+    
+    The Open Group's old specification does not have '%s' too.
+     http://pubs.opengroup.org/onlinepubs/007908799/xsh/strftime.html
+    
+    On my environment, following problems happened.
+    - msys   : git svn fetch does not progress at all with perl.exe consuming CPU.
+    - cygwin : git svn fetch progresses but time stamp information is dropped.
+       Every commits have unix epoch timestamp.
+    
+    I would like to thank git developer and contibutors.
+    git helps me so much everyday.
+    Thank you.
+---
+ perl/Git/SVN.pm |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-  *.foo -diff
-
-in your .gitattributes file, though that _also_ marks the files as "not
-for diffing", which may not be desired. There's not a separate "grep"
-attribute, but I do not think it would be unreasonable to add one.
-
--Peff
+diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
+index 8e4af71..f243726 100644
+--- a/perl/Git/SVN.pm
++++ b/perl/Git/SVN.pm
+@@ -14,6 +14,7 @@ use IPC::Open3;
+ use Memoize;  # core since 5.8.0, Jul 2002
+ use Memoize::Storable;
+ use POSIX qw(:signal_h);
++use Time::Local;
+ 
+ use Git qw(
+     command
+@@ -1332,7 +1333,7 @@ sub parse_svn_date {
+ 		$ENV{TZ} = 'UTC';
+ 
+ 		my $epoch_in_UTC =
+-		    POSIX::strftime('%s', $S, $M, $H, $d, $m - 1, $Y - 1900);
++		    Time::Local::timelocal($S, $M, $H, $d, $m - 1, $Y - 1900);
+ 
+ 		# Determine our local timezone (including DST) at the
+ 		# time of $epoch_in_UTC.  $Git::SVN::Log::TZ stored the
+-- 
+1.7.10.4
