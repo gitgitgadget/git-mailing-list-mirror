@@ -1,107 +1,142 @@
-From: "Dan Langille (dalangil)" <dalangil@cisco.com>
-Subject: Re: [PATCH v3] remote-curl: fall back to Basic auth if Negotiate
- fails
-Date: Wed, 25 Feb 2015 20:59:19 +0000
-Message-ID: <3E5DD2BE-1E44-4D0A-89A1-627A1239C72A@cisco.com>
-References: <1420142187-1025433-1-git-send-email-sandals@crustytoothpaste.net>
- <1420676960-492860-1-git-send-email-sandals@crustytoothpaste.net>
- <7930FE25-8206-43A8-9678-C56D789E09CE@cisco.com>
- <xmqqk30hyock.fsf@gitster.dls.corp.google.com>
- <CA01B76E-F3D4-40AC-B524-32BFBA930108@cisco.com>
- <xmqqa90cxg89.fsf@gitster.dls.corp.google.com>
- <1B14107C-FC87-4F69-AEBE-9EA1BAF50A17@cisco.com>
- <20150219203556.GC5021@vauxhall.crustytoothpaste.net>
- <ABA76895-9BD2-4EA8-B765-0F9DE71A2CEC@cisco.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] sha1_file: Add sha1_object_type_literally and export it.
+Date: Wed, 25 Feb 2015 13:32:52 -0800
+Message-ID: <xmqq61apoewr.fsf@gitster.dls.corp.google.com>
+References: <54EDACC9.5080204@gmail.com>
+	<1424862460-13514-1-git-send-email-karthik.188@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-X-From: git-owner@vger.kernel.org Wed Feb 25 21:59:28 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 25 22:33:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YQj3I-0001xo-6N
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Feb 2015 21:59:28 +0100
+	id 1YQjZn-0007CW-MY
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Feb 2015 22:33:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753182AbbBYU7Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Feb 2015 15:59:24 -0500
-Received: from rcdn-iport-5.cisco.com ([173.37.86.76]:27229 "EHLO
-	rcdn-iport-5.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752984AbbBYU7X (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Feb 2015 15:59:23 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=cisco.com; i=@cisco.com; l=2390; q=dns/txt; s=iport;
-  t=1424897964; x=1426107564;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-id:content-transfer-encoding:
-   mime-version;
-  bh=mGYnSmPgetadR4/z3GW1H4tJXalqPjDwrqTkpOWeRgI=;
-  b=X/gu1UG2O9+zgE2+m0bjZv/v8J+wmS+eaAxY6nCogSOgyQ9U53giQwi2
-   PaxTipfgbRgQGGhod0+BV1FUXlddH+xoKpzNsYsxjzoq8jCRUiA7pZsp2
-   VkgWIQ1PBUfvlYDEiSoNxg/UJfav4uGvcxIN9PWxkYm2C5nIOOt540paL
-   U=;
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A0AlBgC0Nu5U/49dJa1bgwJSWgSDBboohXKFcAIcgQ1DAQEBAQEBfIQPAQEBAwEjEUUFCwIBCBgCAhQSAgICMBUQAgQOBYgnCA28aJkqAQEBAQEBAQEBAQEBAQEBAQEBAQEBEwSBIYlyhCkSMwcYglAvgRQFjWmBc4NghWWTPiKDbm+BRH8BAQE
-X-IronPort-AV: E=Sophos;i="5.09,647,1418083200"; 
-   d="scan'208";a="399113156"
-Received: from rcdn-core-7.cisco.com ([173.37.93.143])
-  by rcdn-iport-5.cisco.com with ESMTP; 25 Feb 2015 20:59:23 +0000
-Received: from xhc-rcd-x04.cisco.com (xhc-rcd-x04.cisco.com [173.37.183.78])
-	by rcdn-core-7.cisco.com (8.14.5/8.14.5) with ESMTP id t1PKxLhL031357
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL);
-	Wed, 25 Feb 2015 20:59:21 GMT
-Received: from xmb-rcd-x03.cisco.com ([169.254.7.147]) by
- xhc-rcd-x04.cisco.com ([173.37.183.78]) with mapi id 14.03.0195.001; Wed, 25
- Feb 2015 14:59:21 -0600
-Thread-Topic: [PATCH v3] remote-curl: fall back to Basic auth if Negotiate
- fails
-Thread-Index: AQHQSwqcFAV48lOUvEGHDNPe7JHDHZz2+1uAgAHaeICAB+NbAIABkSyA
-In-Reply-To: <ABA76895-9BD2-4EA8-B765-0F9DE71A2CEC@cisco.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [64.100.213.158]
-Content-ID: <7F5A9E62BABD4F40ACB8DC72D1DF9F52@emea.cisco.com>
+	id S1753632AbbBYVc4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Feb 2015 16:32:56 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:58992 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752907AbbBYVcz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Feb 2015 16:32:55 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 790183A0DA;
+	Wed, 25 Feb 2015 16:32:54 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=gH7U4jsaDI8TBYN66I/evxlws28=; b=Xqa0L/
+	CDDt//T3j2wvwhTOACCAmaFEk+uXYGp3m2hnj5/qOywwhVYIZV/7UKofv9jHNtcl
+	v9sRxl0iyeX9Snr2Fvy+VJxMM/ScrFLrVjIPRTzLj/D2T0kiV2qJcvM06GI5LoJX
+	TqRGuI9PmMK++r1PQ3BblPmSrWeRI1EemVXno=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Wcp8YILWGaGJo73W6WNBjic/821frXPE
+	N8qd8/KKRBd+AIbHEVFsl68seQvG58t6auECMxxNOswrYkowoV0gAX/CDWg0/rjX
+	DsCwE9L0+Hm0kKQYB/98qZdpfoCJa8Ft1pBlGLnas7+19E0HhDuqNknr+UNSvXeI
+	1Bfcu7uD3EM=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 707EC3A0D9;
+	Wed, 25 Feb 2015 16:32:54 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EC9B63A0D8;
+	Wed, 25 Feb 2015 16:32:53 -0500 (EST)
+In-Reply-To: <1424862460-13514-1-git-send-email-karthik.188@gmail.com>
+	(Karthik Nayak's message of "Wed, 25 Feb 2015 16:37:40 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: DB664A18-BD35-11E4-AFAA-A4119F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264414>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264415>
 
-PiBPbiBGZWIgMjQsIDIwMTUsIGF0IDQ6MDMgUE0sIERhbiBMYW5naWxsZSAoZGFsYW5naWwpIDxk
-YWxhbmdpbEBjaXNjby5jb20+IHdyb3RlOg0KPiANCj4+IE9uIEZlYiAxOSwgMjAxNSwgYXQgMzoz
-NSBQTSwgYnJpYW4gbS4gY2FybHNvbiA8c2FuZGFsc0BjcnVzdHl0b290aHBhc3RlLm5ldD4gd3Jv
-dGU6DQo+PiANCj4+IE9uIFdlZCwgRmViIDE4LCAyMDE1IGF0IDA0OjE3OjQ2UE0gKzAwMDAsIERh
-biBMYW5naWxsZSAoZGFsYW5naWwpIHdyb3RlOg0KPj4+IEkganVzdCBidWlsdCBmcm9tIOKAmG1h
-c3RlcuKAmSwgb24gRnJlZUJTRCA5LjM6DQo+Pj4gDQo+Pj4gY2Qgfi9zcmMNCj4+PiBnaXQgY2xv
-bmUgaHR0cHM6Ly9naXRodWIuY29tL2dpdC9naXQuZ2l0DQo+Pj4gY2QgZ2l0DQo+Pj4gZ21ha2UN
-Cj4+PiANCj4+PiBUaGVuIHRyaWVkIH4vc3JjL2dpdC9naXQgY2xvbmUgaHR0cHM6Ly9PVVJfUkVQ
-Tw0KPj4+IA0KPj4+IEl0IGNvcmVzIHRvbywgYW5kIEkgc2VlOiBnaXQtcmVtb3RlLWh0dHBzLmNv
-cmUNCj4+IA0KPj4gQ2FuIHlvdSBjb21waWxlIHdpdGggZGVidWdnaW5nIHN5bWJvbHMgYW5kIHBy
-b3ZpZGUgYSBiYWNrdHJhY2U/ICBJJ20gbm90IA0KPj4gc2VlaW5nIGFueSBzdWNoIGJlaGF2aW9y
-IG9uIG15IGVuZCwgYW5kIEknbSBub3Qgc3VyZSB3aGV0aGVyIGl0J3MgbXkgDQo+PiBwYXRjaCBv
-ciBzb21ldGhpbmcgZWxzZSB0aGF0IG1pZ2h0IGJlIHByZXNlbnQgaW4gbWFzdGVyLg0KPiANCj4g
-VGhlIHByb2JsZW0gb3JpZ2luYWxseSBvY2N1cnJlZCB1bmRlciBWTXdhcmUgRnVzaW9uIGFuZCBJ
-4oCZbSB1bmFibGUgdG8gZ2V0IGEgYmFja3RyYWNlIGZyb20gaXQuDQo+IEkgc3VzcGVjdCBtZW1v
-cnkgY29uc3RyYWludHMgYXJlIGEgZmFjdG9yLiAgVGhlcmXigJlzIG9ubHkgNUdCIFJBTSBhdmFp
-bGFibGUgdG8gdGhpcyBWTS4NCj4gDQo+IEkgaGF2ZSB0cmllZCBpbiBhbm90aGVyIFZNIGFuZCB0
-aGF0IHN1Y2NlZWRzLiAgQWxsIGdvb2QgdGhlcmUuIEl0IGhhcyA0MEdCIFJBTS4NCj4gDQo+IEkg
-YW0gZ29pbmcgdG8gdHJ5IHRoaXMgb24gYSB0aGlyZCBzeXN0ZW0uIEF0IHByZXNlbnQsIHdl4oCZ
-cmUganVzdCA1MC81MCBvbiBzdWNjZXNzLg0KDQoNCldlIGhhdmUgbWFkZSBwcm9ncmVzcyBJIHRo
-aW5rLg0KDQpXaXRoIHN0b2NrIGdpdDoNCg0KdGw7ZHI6IDEgLSB3aXRoIGEgdGlja2V0LCB5b3Ug
-Z2V0IHByb21wdGVkLCBidXQgaGl0dGluZyBFTlRFUiBzdWNjZWVkcy4NCiAgICAgICAyIC0gd2l0
-aG91dCBhIHRpY2tldCwgbm90aGluZyB3b3Jrcw0KDQoNCldpdGggcGF0Y2hlZCBnaXQ6DQoNCnRs
-O2RyOiAxIC0gd2l0aCBhIHRpY2tldCwgICAgZW50ZXJpbmcgY3JlZGVudGlhbHMsIFNVQ0NFRURT
-OyBqdXN0IGhpdCBlbnRlciwgZmFpbHVyZQ0KICAgICAgIDIgLSB3aXRob3V0IGEgdGlja2V0LCBl
-bnRlcmluZyBjcmVkZW50aWFscywgU1VDQ0VFRFMNCg0KSGVyZSBpcyBteSB0ZXN0LCB3aXRoIGEg
-dmFsaWQga2VyYmVyb3MgdGlja2V0Og0KDQokIGdpdCBjbG9uZSBodHRwczovL2dpdC5leGFtcGxl
-LmNvbS9naXQvY2xhbWF2LWJ5dGVjb2RlLWNvbXBpbGVyDQpDbG9uaW5nIGludG8gJ2NsYW1hdi1i
-eXRlY29kZS1jb21waWxlcicuLi4NClVzZXJuYW1lIGZvciAnaHR0cHM6Ly9naXQuZXhhbXBsZS5j
-b20nOiANClBhc3N3b3JkIGZvciAnaHR0cHM6Ly9naXQuZXhhbXBsZS5jb20nOiANCl5DbW90ZTog
-Q291bnRpbmcgb2JqZWN0czogMjI0NTQ2ICAgDQokDQoNCg==
+Karthik Nayak <karthik.188@gmail.com> writes:
+
+> +int sha1_object_type_literally(const unsigned char *sha1, char *type)
+> +{
+> +	int status = 0;
+> +	unsigned long mapsize;
+> +	void *map;
+> +	git_zstream stream;
+> +	char hdr[32];
+> +	int i;
+> +
+> +	map = map_sha1_file(sha1, &mapsize);
+> +	if (!map)
+> +		return -1;
+
+I am not sure if it is a good idea to introduce a function with the
+above signature and the semantics in the first place.  It is OK to
+assume that objects with funny typenames only appear as loose
+objects, but it is not OK for "cat-file --literally" to fail to work
+on objects that are of kosher types.
+
+What should "git cat-file --literally -t HEAD~2" do?  I think it
+should say "commit" as long as my current history is at least 3
+commits deep, even when my repository is fully packed.  But I
+suspect the above code does not do that.  
+
+Looking at how we collect information on normal objects, it may make
+more sense to model this after sha1_loose_object_info(), with a
+tweak to struct object_info datatype, and integrate it into
+sha1_object_info_extended() may make more sense, perhaps along the
+lines of the attached patch.
+
+The new helper would mimick what sha1_loose_object_info() is doing,
+in that it may be used to learn on-disk size, object size, typename
+string (returned in oi->typename strbuf that is optional).  There is
+no sensible value to stuff in oi->typep if the incoming object name
+refers to the experimental invalid object, so perhaps you will store
+OBJ_NONE or something there and the "cat-file --literally" would use
+the oi->typename to learn the name of the "type".
+
+
+ cache.h     | 1 +
+ sha1_file.c | 9 +++++++++
+ 2 files changed, 10 insertions(+)
+
+diff --git a/cache.h b/cache.h
+index 4d02efc..72b7cfa 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1296,6 +1296,7 @@ struct object_info {
+ 	unsigned long *sizep;
+ 	unsigned long *disk_sizep;
+ 	unsigned char *delta_base_sha1;
++	struct strbuf *typename;
+ 
+ 	/* Response */
+ 	enum {
+diff --git a/sha1_file.c b/sha1_file.c
+index 69a60ec..2c0e83a 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -2568,6 +2568,8 @@ static int sha1_loose_object_info(const unsigned char *sha1,
+ 	munmap(map, mapsize);
+ 	if (oi->typep)
+ 		*oi->typep = status;
++	if (oi->typename && 0 < status && typename(status))
++		strbuf_add(oi->typename, typename(status));
+ 	return 0;
+ }
+ 
+@@ -2593,6 +2595,13 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi,
+ 	}
+ 
+ 	if (!find_pack_entry(real, &e)) {
++		/* Have we been asked to check possibly invalid ones? */
++		if ((flags & LOOKUP_LITERALLY) &&
++		    !sha1_object_info_literally(real, oi)) {
++			oi->whence = OI_LOOSE;
++			return 0;
++		}
++
+ 		/* Most likely it's a loose object. */
+ 		if (!sha1_loose_object_info(real, oi)) {
+ 			oi->whence = OI_LOOSE;
