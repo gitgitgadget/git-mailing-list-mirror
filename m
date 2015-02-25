@@ -1,85 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH 0/3] protocol v2
-Date: Wed, 25 Feb 2015 10:04:50 -0800
-Message-ID: <xmqqsidtoojh.fsf@gitster.dls.corp.google.com>
-References: <1424747562-5446-1-git-send-email-sbeller@google.com>
-	<CACsJy8BSf2h_xD-Q1tudAg_xCzffRQM+7xzUgprONxD7vM5RYw@mail.gmail.com>
-	<CAPc5daVbrUaU6LFM65evru0+1tBT916+0AOyids=f7DZThTPGw@mail.gmail.com>
-	<CAGZ79kbZHtZuPrb6rEP41vbdnZqJmsMwq+8pNer-_D4U5B1xZw@mail.gmail.com>
-	<CACsJy8BN2imGCW0cueh-jGKfN_nRg3=J-GTX2P5h2z0Tu=id6A@mail.gmail.com>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: [PATCH 1/2] sha1_file: Add sha1_object_type_literally and
+ export it.
+Date: Wed, 25 Feb 2015 13:22:06 -0500
+Organization: Twitter
+Message-ID: <1424888526.2968.3.camel@leckie>
+References: <54EDACC9.5080204@gmail.com>
+	 <1424862460-13514-1-git-send-email-karthik.188@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Stefan Beller <sbeller@google.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 25 19:04:59 2015
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 25 19:22:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YQgKQ-0005Po-H7
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Feb 2015 19:04:58 +0100
+	id 1YQgb9-0008Ul-OG
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Feb 2015 19:22:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752326AbbBYSEy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Feb 2015 13:04:54 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50145 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751479AbbBYSEx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Feb 2015 13:04:53 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 796593A831;
-	Wed, 25 Feb 2015 13:04:52 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=3CDxoKBE5su5lBOTfyiU4Rxs8AU=; b=CUtrnB
-	N+5jMZHZ4UMyQJiHaIuQy0ncWgsaX7j+hPg+ESOxFcFUHfHOjGWA3KM9OlvJMtmB
-	1opCowYUcBuKkk5EMtN2ucvjWxFFqX20US/7pi5t46saPxee3IOX8VT/BajAadzM
-	Htr9ZA5I3tubhc5Hos0FnO/KZiglWglEMq86U=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Yz4j8VGy/tPRdtMWdCdrBMvg1LvuM2Nq
-	VphN7cKHNqn3hirdWarb7YDlipnF6RSyYIyXMSZ0OQuanQpwruCdIks/4gQjcFYO
-	RB/hj4roOWXLJhu0vMUKYfYdgSvc22rHSWA4UpIaM6azIN9BIBu8Mpcdhfhz9aSZ
-	mUXnCCybtXI=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 707BB3A830;
-	Wed, 25 Feb 2015 13:04:52 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E9F9A3A82F;
-	Wed, 25 Feb 2015 13:04:51 -0500 (EST)
-In-Reply-To: <CACsJy8BN2imGCW0cueh-jGKfN_nRg3=J-GTX2P5h2z0Tu=id6A@mail.gmail.com>
-	(Duy Nguyen's message of "Wed, 25 Feb 2015 19:44:41 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: CB8AC820-BD18-11E4-8764-A4119F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1752739AbbBYSWL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Feb 2015 13:22:11 -0500
+Received: from mail-qa0-f42.google.com ([209.85.216.42]:56258 "EHLO
+	mail-qa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752503AbbBYSWK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Feb 2015 13:22:10 -0500
+Received: by mail-qa0-f42.google.com with SMTP id w8so4071767qac.1
+        for <git@vger.kernel.org>; Wed, 25 Feb 2015 10:22:09 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:content-type:mime-version
+         :content-transfer-encoding;
+        bh=7fpT0j7E2jf1fNFFzv8iU125A/F0PrmvBmDCCfFzlxg=;
+        b=SEyNe4EbZNbunaPdwDFUnWMbk2l/Sk5IYjNyexsbdJGhgKvQTxhCrSNuiaTmCKkxpq
+         zILb4WVVw+KRjv713XUHIzoXJxL8p3IPoZuiRZEFICsEalCDRaDsHPmqEUGpOsVIwKN/
+         i+ACknY+Ii+EodgxF/j9ChbLkMwF80sMYt+3N5/4TWv56mEJEj5c1AoEtPmMfSHLo2tp
+         t6gnZB58Odb78jg4C/HN7Qj8acKAJPELiG8xdrsQFUgjlwdahl60B+F6KKYuwHnEJSt4
+         vXYxS5hqeoYX/0MmkHbQb0fdNBcNaQKa2HfUfxRLV7GZOcCPnXMqvW3jElJmLE6rn+NP
+         C/pA==
+X-Gm-Message-State: ALoCoQkZrenEbtDwdlmWR5BlGs/NkpZ1VVUglR/CcGrL5CFhl7eF6txfV5dxwRnpx+9Jha4VhTaO
+X-Received: by 10.140.150.149 with SMTP id 143mr10006777qhw.4.1424888529846;
+        Wed, 25 Feb 2015 10:22:09 -0800 (PST)
+Received: from [172.17.131.24] (ip-66-9-26-66.autorev.intellispace.net. [66.9.26.66])
+        by mx.google.com with ESMTPSA id i48sm31941507qge.34.2015.02.25.10.22.08
+        (version=TLSv1.2 cipher=AES128-GCM-SHA256 bits=128/128);
+        Wed, 25 Feb 2015 10:22:09 -0800 (PST)
+In-Reply-To: <1424862460-13514-1-git-send-email-karthik.188@gmail.com>
+X-Mailer: Evolution 3.10.4-0ubuntu2 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264397>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264398>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+On Wed, 2015-02-25 at 16:37 +0530, Karthik Nayak wrote:
+> +	unsigned long mapsize;
+> ...
+> +	map = map_sha1_file(sha1, &mapsize);
 
-> On Wed, Feb 25, 2015 at 6:37 AM, Stefan Beller <sbeller@google.com> wrote:
->> I can understand, that we maybe want to just provide one generic
->> "version 2" of the protocol which is an allrounder not doing bad in
->> all of these aspects, but I can see usecases of having the desire to
->> replace the wire protocol by your own implementation. To do so
->> we could try to offer an API which makes implementing a new
->> protocol somewhat easy. The current state of affairs is not providing
->> this flexibility.
->
-> I think we are quite flexible after initial ref advertisement.
+I know this is a pre-existing issue, but I'm not sure "unsigned long" is
+the right type here.  Shouldn't it be a size_t?  
 
-Yes, that is exactly where my "I am not convinced" comes from.
+> +	if (!map)
+> +		return -1;
+> +	if (unpack_sha1_header(&stream, map, mapsize, hdr, sizeof(hdr)) < 0)
+> +		status = error("unable to unpack %s header",
+> +			       sha1_to_hex(sha1));
+> +
+> +	for (i = 0; i < 32; i++) {
 
-> After
-> that point the client tells the server its capabilities and the server
-> does the same for the client. Only shared features can be used. So if
-> you want to add a new micro protocol for mobile, just add "mobile"
-> capability to both client and server. A new implementation can support
-> no capabililities and it should work fine with C Git (less efficient
-> though, of course). And we have freedom to mix capabilities any way we
-> want (it's harder to do when you have to follow v2, v2.1, v2.2...)
+This number should probably be a constant.
+
+> +		if (hdr[i] == ' ') {
+> +			type[i] = '\0';
+> +			break;
+> +		}
+> +		type[i] = hdr[i];
+> +	}
+
+type might end up without a trailing \0 here in the case where hdr has
+no space in it.  Is this possible?
