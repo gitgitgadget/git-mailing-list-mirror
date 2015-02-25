@@ -1,110 +1,85 @@
-From: Ryuichi Kokubo <ryu1kkb@gmail.com>
-Subject: [PATCH] git-svn: fix localtime=true on non-glibc environments
-Date: Thu, 26 Feb 2015 01:04:41 +0900
-Message-ID: <1424880281-570-1-git-send-email-ryu1kkb@gmail.com>
-Cc: Ryuichi Kokubo <ryu1kkb@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 25 17:05:05 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH 0/3] protocol v2
+Date: Wed, 25 Feb 2015 10:04:50 -0800
+Message-ID: <xmqqsidtoojh.fsf@gitster.dls.corp.google.com>
+References: <1424747562-5446-1-git-send-email-sbeller@google.com>
+	<CACsJy8BSf2h_xD-Q1tudAg_xCzffRQM+7xzUgprONxD7vM5RYw@mail.gmail.com>
+	<CAPc5daVbrUaU6LFM65evru0+1tBT916+0AOyids=f7DZThTPGw@mail.gmail.com>
+	<CAGZ79kbZHtZuPrb6rEP41vbdnZqJmsMwq+8pNer-_D4U5B1xZw@mail.gmail.com>
+	<CACsJy8BN2imGCW0cueh-jGKfN_nRg3=J-GTX2P5h2z0Tu=id6A@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Stefan Beller <sbeller@google.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 25 19:04:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YQeSN-0001rq-AD
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Feb 2015 17:05:03 +0100
+	id 1YQgKQ-0005Po-H7
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Feb 2015 19:04:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753942AbbBYQE6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Feb 2015 11:04:58 -0500
-Received: from mail-pd0-f179.google.com ([209.85.192.179]:41200 "EHLO
-	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753937AbbBYQE5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Feb 2015 11:04:57 -0500
-Received: by pdno5 with SMTP id o5so5782733pdn.8
-        for <git@vger.kernel.org>; Wed, 25 Feb 2015 08:04:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=uBqUqDOoH+ZtQL21Q38kybsog4B0joE65XK4zT8j0/s=;
-        b=XS7JILJOWFDAEhPmWNBKYFoXc+G0RqqaavIQ/xd/7G91La8Tt86KTT1g1QmL6zbKH8
-         tJYQM4iKZvwNGv7Fgg8eztX4SaB5k/AZ0Vw73MUkHjXiWISZleCG775uqe7EQnxCeQqt
-         x0tyS16ilYuQc9j6LC6AFJf5dbwZe480v/GrqJT/KA7eXjX4NB34b9BQRf3e3bVoYAgv
-         jhbLnmt2Wt7j9xcuWTUCI/UqP5dJxV0Oqw1Dc13Ivs8tl161ifWGrd2aujAKd7k+VV4Y
-         jqXowypdoCmVQacX/VzxWmgp+4RpJBxOr3rTrOc0O6aM3wUCV/jTX2adaxmYlg0bFWVq
-         HU7A==
-X-Received: by 10.70.44.100 with SMTP id d4mr6848658pdm.36.1424880296271;
-        Wed, 25 Feb 2015 08:04:56 -0800 (PST)
-Received: from lab.kkbs.net (124x34x74x180.ap124.ftth.ucom.ne.jp. [124.34.74.180])
-        by mx.google.com with ESMTPSA id fl6sm2845153pdb.23.2015.02.25.08.04.53
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 25 Feb 2015 08:04:55 -0800 (PST)
-X-Mailer: git-send-email 1.7.10.4
+	id S1752326AbbBYSEy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Feb 2015 13:04:54 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50145 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751479AbbBYSEx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Feb 2015 13:04:53 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 796593A831;
+	Wed, 25 Feb 2015 13:04:52 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=3CDxoKBE5su5lBOTfyiU4Rxs8AU=; b=CUtrnB
+	N+5jMZHZ4UMyQJiHaIuQy0ncWgsaX7j+hPg+ESOxFcFUHfHOjGWA3KM9OlvJMtmB
+	1opCowYUcBuKkk5EMtN2ucvjWxFFqX20US/7pi5t46saPxee3IOX8VT/BajAadzM
+	Htr9ZA5I3tubhc5Hos0FnO/KZiglWglEMq86U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Yz4j8VGy/tPRdtMWdCdrBMvg1LvuM2Nq
+	VphN7cKHNqn3hirdWarb7YDlipnF6RSyYIyXMSZ0OQuanQpwruCdIks/4gQjcFYO
+	RB/hj4roOWXLJhu0vMUKYfYdgSvc22rHSWA4UpIaM6azIN9BIBu8Mpcdhfhz9aSZ
+	mUXnCCybtXI=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 707BB3A830;
+	Wed, 25 Feb 2015 13:04:52 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E9F9A3A82F;
+	Wed, 25 Feb 2015 13:04:51 -0500 (EST)
+In-Reply-To: <CACsJy8BN2imGCW0cueh-jGKfN_nRg3=J-GTX2P5h2z0Tu=id6A@mail.gmail.com>
+	(Duy Nguyen's message of "Wed, 25 Feb 2015 19:44:41 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: CB8AC820-BD18-11E4-8764-A4119F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264397>
 
-git svn uses POSIX::strftime('%s', $sec, $min, ...) to make unix epoch time.
-But lowercase %s formatting character is a GNU extention. This causes problem
-in git svn fetch --localtime on non-glibc systems, such as msys or cygwin.
-Using Time::Local::timelocal($sec, $min, ...) fixes it.
+Duy Nguyen <pclouds@gmail.com> writes:
 
-Signed-off-by: Ryuichi Kokubo <ryu1kkb@gmail.com>
+> On Wed, Feb 25, 2015 at 6:37 AM, Stefan Beller <sbeller@google.com> wrote:
+>> I can understand, that we maybe want to just provide one generic
+>> "version 2" of the protocol which is an allrounder not doing bad in
+>> all of these aspects, but I can see usecases of having the desire to
+>> replace the wire protocol by your own implementation. To do so
+>> we could try to offer an API which makes implementing a new
+>> protocol somewhat easy. The current state of affairs is not providing
+>> this flexibility.
+>
+> I think we are quite flexible after initial ref advertisement.
 
-Notes:
-    lowercase %s format character in strftime is a GNU extension and not widely supported.
-    POSIX::strftime affected by underlying crt's strftime because POSIX::strftime just calls crt's one.
-    Time::Local is good function to replace POSIX::strftime because it's a perl core module function.
-    
-    Document about Time::Local.
-     http://perldoc.perl.org/Time/Local.html
-    
-    These are specifications of strftime.
-    
-    The GNU C Library Reference Manual.
-     http://www.gnu.org/software/libc/manual/html_node/Formatting-Calendar-Time.html
-    
-    perl POSIX module's strftime document. It does not have '%s'.
-     http://perldoc.perl.org/POSIX.html
-    
-    strftime document of Microsort Windows C Run-Time library.
-     https://msdn.microsoft.com/en-us/library/fe06s4ak.aspx
-    
-    The Open Group's old specification does not have '%s' too.
-     http://pubs.opengroup.org/onlinepubs/007908799/xsh/strftime.html
-    
-    On my environment, following problems happened.
-    - msys   : git svn fetch does not progress at all with perl.exe consuming CPU.
-    - cygwin : git svn fetch progresses but time stamp information is dropped.
-       Every commits have unix epoch timestamp.
-    
-    I would like to thank git developer and contibutors.
-    git helps me so much everyday.
-    Thank you.
----
- perl/Git/SVN.pm |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Yes, that is exactly where my "I am not convinced" comes from.
 
-diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
-index 8e4af71..f243726 100644
---- a/perl/Git/SVN.pm
-+++ b/perl/Git/SVN.pm
-@@ -14,6 +14,7 @@ use IPC::Open3;
- use Memoize;  # core since 5.8.0, Jul 2002
- use Memoize::Storable;
- use POSIX qw(:signal_h);
-+use Time::Local;
- 
- use Git qw(
-     command
-@@ -1332,7 +1333,7 @@ sub parse_svn_date {
- 		$ENV{TZ} = 'UTC';
- 
- 		my $epoch_in_UTC =
--		    POSIX::strftime('%s', $S, $M, $H, $d, $m - 1, $Y - 1900);
-+		    Time::Local::timelocal($S, $M, $H, $d, $m - 1, $Y - 1900);
- 
- 		# Determine our local timezone (including DST) at the
- 		# time of $epoch_in_UTC.  $Git::SVN::Log::TZ stored the
--- 
-1.7.10.4
+> After
+> that point the client tells the server its capabilities and the server
+> does the same for the client. Only shared features can be used. So if
+> you want to add a new micro protocol for mobile, just add "mobile"
+> capability to both client and server. A new implementation can support
+> no capabililities and it should work fine with C Git (less efficient
+> though, of course). And we have freedom to mix capabilities any way we
+> want (it's harder to do when you have to follow v2, v2.1, v2.2...)
