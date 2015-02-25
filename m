@@ -1,172 +1,64 @@
-From: Christoph Anton Mitterer <calestyo@scientia.net>
-Subject: Re: [PATCH] sequencer: preserve commit messages
-Date: Wed, 25 Feb 2015 14:44:38 +0100
-Message-ID: <1424871878.4688.3.camel@scientia.net>
-References: <1424540906.15539.22.camel@scientia.net>
-	 <f58ae048d7fd468cfdd7f7d369b3b4fc0a564641.1424697676.git.git@drmicha.warpmail.net>
-	 <xmqqsidwtq4i.fsf@gitster.dls.corp.google.com>
-	 <54EC98BD.7060100@drmicha.warpmail.net>
-	 <xmqq8ufnrwm1.fsf@gitster.dls.corp.google.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: feature request: excluding files/paths from "git grep"
+Date: Wed, 25 Feb 2015 20:46:37 +0700
+Message-ID: <CACsJy8AM=W4f6u_7YpvmfiBwrJjqfJMJoq6CQYfKOh+qD6rF3Q@mail.gmail.com>
+References: <54EDBEC2.8090107@peralex.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg="sha-512";
-	protocol="application/x-pkcs7-signature";
-	boundary="=-Gl7XFaATOxnHqk94PhqZ"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 25 14:44:49 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>
+To: Noel Grandin <noel@peralex.com>
+X-From: git-owner@vger.kernel.org Wed Feb 25 14:47:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YQcGe-00089J-2w
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Feb 2015 14:44:48 +0100
+	id 1YQcJ1-00017x-GK
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Feb 2015 14:47:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752739AbbBYNoo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Feb 2015 08:44:44 -0500
-Received: from mailgw02.dd24.net ([193.46.215.43]:44489 "EHLO
-	mailgw02.dd24.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751852AbbBYNon (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Feb 2015 08:44:43 -0500
-Received: from mailpolicy-01.live.igb.homer.key-systems.net (mailpolicy-01.live.igb.homer.key-systems.net [192.168.1.26])
-	by mailgw02.dd24.net (Postfix) with ESMTP id BB4085FC1A
-	for <git@vger.kernel.org>; Wed, 25 Feb 2015 13:44:40 +0000 (UTC)
-X-Virus-Scanned: Debian amavisd-new at
-	mailpolicy-01.live.igb.homer.key-systems.net
-Received: from mailgw02.dd24.net ([192.168.1.36])
-	by mailpolicy-01.live.igb.homer.key-systems.net (mailpolicy-01.live.igb.homer.key-systems.net [192.168.1.26]) (amavisd-new, port 10236)
-	with ESMTP id k8KTCzeu2yRB for <git@vger.kernel.org>;
-	Wed, 25 Feb 2015 13:44:38 +0000 (UTC)
-Received: from heisenberg.fritz.box (ppp-93-104-116-180.dynamic.mnet-online.de [93.104.116.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by mailgw02.dd24.net (Postfix) with ESMTPSA
-	for <git@vger.kernel.org>; Wed, 25 Feb 2015 13:44:38 +0000 (UTC)
-In-Reply-To: <xmqq8ufnrwm1.fsf@gitster.dls.corp.google.com>
-X-Mailer: Evolution 3.12.9-1+b1 
+	id S1752671AbbBYNrJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Feb 2015 08:47:09 -0500
+Received: from mail-ie0-f169.google.com ([209.85.223.169]:35591 "EHLO
+	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752576AbbBYNrI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Feb 2015 08:47:08 -0500
+Received: by iecrl12 with SMTP id rl12so4953475iec.2
+        for <git@vger.kernel.org>; Wed, 25 Feb 2015 05:47:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=UXFiaLdRzIabmUCf0WqWVYCXvKe83Yryq5gUm8nubIE=;
+        b=PDNyXQLVl8e3pUbmzGhw+Xi1AyN8byrUxAv+M3sPQVp5iaHfBFzWSPamq4on+Oe44k
+         gL5jH27mQeU/SLBBuT+IXnH/yOBjYAkI8IeBlalkTRTUnyejJfFFnGUxjkWmxlHp7TZy
+         eA5tBaaA9O8x9wMnNNNdEqCMF2frloPnjhVBSK1x2B4b73mROTRUvoiGSDLb2g5SShON
+         tSMjFk1RuYwsaxZTZtorjLemFMwJwoa192lzN8Ij9EyggwfTzxH2YHwK0tASfqRWuAra
+         ostfZ4Yhf+uRRB0IjFdeTOOqYAiijmaGoHa2vcK0S0UWNWq/8M6Pq9yhS5M1Q0avZA4T
+         Wrlg==
+X-Received: by 10.42.109.20 with SMTP id j20mr3654113icp.27.1424872027687;
+ Wed, 25 Feb 2015 05:47:07 -0800 (PST)
+Received: by 10.107.131.155 with HTTP; Wed, 25 Feb 2015 05:46:37 -0800 (PST)
+In-Reply-To: <54EDBEC2.8090107@peralex.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264393>
 
+On Wed, Feb 25, 2015 at 7:23 PM, Noel Grandin <noel@peralex.com> wrote:
+> What would be nice is a per-user/repo config setting that excludes certain
+> files and paths from the 'git grep' search.
+>
+> Does this sound reasonable/acceptable?
 
---=-Gl7XFaATOxnHqk94PhqZ
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+There is no config setting to do that, but since v1.9.5 you can use
+':!' or ':(exclude) to exclude paths, for example
 
-On Tue, 2015-02-24 at 10:29 -0800, Junio C Hamano wrote:=20
-> Hmm, but if it does not, wouldn't that countermand the wish of the
-> user who explicitly asked to clean crufty messages up by setting
-> their own commit.cleanup configuration?
+git grep foo -- '*.c' ':!src/ ':!*foo*.c'
 
-IMHO it's just wrong behaviour if the commit messages of people who
-intentionally chose "verbatim" to get multiple newline, etc. are mangled
-up, just to allow such people, that also intentionally chose some
-non-default cleanup mode, but changed their mind later, allow easy clean
-up.
-
-Cheers,
-Chris.
-
---=-Gl7XFaATOxnHqk94PhqZ
-Content-Type: application/x-pkcs7-signature; name="smime.p7s"
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Transfer-Encoding: base64
-
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgMFADCABgkqhkiG9w0BBwEAAKCCEZIw
-ggW/MIIDp6ADAgECAgMCOakwDQYJKoZIhvcNAQENBQAwVDEUMBIGA1UEChMLQ0FjZXJ0IEluYy4x
-HjAcBgNVBAsTFWh0dHA6Ly93d3cuQ0FjZXJ0Lm9yZzEcMBoGA1UEAxMTQ0FjZXJ0IENsYXNzIDMg
-Um9vdDAeFw0xNDA2MTIxNjM2MThaFw0xNjA2MTExNjM2MThaMHwxITAfBgNVBAMTGENocmlzdG9w
-aCBBbnRvbiBNaXR0ZXJlcjEkMCIGCSqGSIb3DQEJARYVY2FsZXN0eW9Ac2NpZW50aWEubmV0MTEw
-LwYJKoZIhvcNAQkBFiJtYWlsQGNocmlzdG9waC5hbnRvbi5taXR0ZXJlci5uYW1lMIIBIjANBgkq
-hkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA4phP/j9vT9dZT+k3ffHxvRWMOuzBnu5O3Fl4y2+WL7pL
-rfLiEhWzGXhHvjSqpt4vCNSdqy43453nnu8+hMb+uEtqSIL1AHU5eLhuDNVN9S4bt9E7nA2WKYBU
-LCUi/xCD/GL7ToyJNwhrhzcCZ7pXSc3xVqFoC4f6weU9ExhoEZQNRpTM0BFCOi4fRxvKFNnUYgjK
-hqy0Ta5H0Xx86mAp0Q4dxoD7mhI5iTF6TRkUheELxF24JCuAf04M89Cwft6DRH1FpJ3yvgW2B5U5
-aFSL4ZnF4N/wyCB7Dkm1rQ7RCAvw5btkf0VdPnU7ccDCx8HEc2nxK/lbCjrznvh3sa1CCwIDAQAB
-o4IBcDCCAWwwDAYDVR0TAQH/BAIwADBWBglghkgBhvhCAQ0ESRZHVG8gZ2V0IHlvdXIgb3duIGNl
-cnRpZmljYXRlIGZvciBGUkVFIGhlYWQgb3ZlciB0byBodHRwOi8vd3d3LkNBY2VydC5vcmcwDgYD
-VR0PAQH/BAQDAgOoMEAGA1UdJQQ5MDcGCCsGAQUFBwMEBggrBgEFBQcDAgYKKwYBBAGCNwoDBAYK
-KwYBBAGCNwoDAwYJYIZIAYb4QgQBMDIGCCsGAQUFBwEBBCYwJDAiBggrBgEFBQcwAYYWaHR0cDov
-L29jc3AuY2FjZXJ0Lm9yZzA4BgNVHR8EMTAvMC2gK6AphidodHRwOi8vY3JsLmNhY2VydC5vcmcv
-Y2xhc3MzLXJldm9rZS5jcmwwRAYDVR0RBD0wO4EVY2FsZXN0eW9Ac2NpZW50aWEubmV0gSJtYWls
-QGNocmlzdG9waC5hbnRvbi5taXR0ZXJlci5uYW1lMA0GCSqGSIb3DQEBDQUAA4ICAQBefctiLgGl
-e5baspuozyA4k7Up7SVhGHbif6pQfoFc/9Thx9GXnYpX+U64PMyWBfWwHZIy52Vg0RVkvPi1t6mi
-GyBfoSpC6ooR0bKWtUIogw/ymqKWlTLVR8kbLqRmRk4juMtCXG2K3yMygX/rjkuUSuFj2Bjpkmzg
-CtMojbUMYbszePmhQ7DJ62YEdtKpcjN94QAsI5GWlIAbs3KJazAcaNCRJeXCLcUMchyKHJA+NXH5
-az/ekBxBMBzJP2An20PP88UI4JW18z31KiG9UVGa2uO4l4aWgVe2GnhNEdCD/o48msJEWKAt5vl2
-yMqr7ihmNPocU2+/FW0xPe/vftdOTD9pgXdSGf4prdD+23q2YvpalOCzr2p8yCJZNVBPMxAP4mL0
-3OEktXza4wohqAmceXKfGUNwRGBaPvtIGnPrpLhCQ+2YJDg8g1UEsk23bKyZlJWeKJyVqOBsDJmj
-aBsN/qKhQFnav+zQdqGhMeaSisF/53mD3gyVYg2JRl18apgGbg32kyLmomqa0JbhnY3Dc3FVtZfe
-+P+s2Cyep3pVKvFer2llRoGm8TwraG5Yhyx8Oq/1qETpstjbURJOVBLDCV4AjOEUj0ZnE/tEo/DK
-yexgGaViNvjp+IZdFdJhYmsVjw4Q3vG7O0pfsLiYEyQjeDgjNEWDfa5/MufPywIfxzCCBb8wggOn
-oAMCAQICAwI5qTANBgkqhkiG9w0BAQ0FADBUMRQwEgYDVQQKEwtDQWNlcnQgSW5jLjEeMBwGA1UE
-CxMVaHR0cDovL3d3dy5DQWNlcnQub3JnMRwwGgYDVQQDExNDQWNlcnQgQ2xhc3MgMyBSb290MB4X
-DTE0MDYxMjE2MzYxOFoXDTE2MDYxMTE2MzYxOFowfDEhMB8GA1UEAxMYQ2hyaXN0b3BoIEFudG9u
-IE1pdHRlcmVyMSQwIgYJKoZIhvcNAQkBFhVjYWxlc3R5b0BzY2llbnRpYS5uZXQxMTAvBgkqhkiG
-9w0BCQEWIm1haWxAY2hyaXN0b3BoLmFudG9uLm1pdHRlcmVyLm5hbWUwggEiMA0GCSqGSIb3DQEB
-AQUAA4IBDwAwggEKAoIBAQDimE/+P29P11lP6Td98fG9FYw67MGe7k7cWXjLb5Yvukut8uISFbMZ
-eEe+NKqm3i8I1J2rLjfjneee7z6Exv64S2pIgvUAdTl4uG4M1U31Lhu30TucDZYpgFQsJSL/EIP8
-YvtOjIk3CGuHNwJnuldJzfFWoWgLh/rB5T0TGGgRlA1GlMzQEUI6Lh9HG8oU2dRiCMqGrLRNrkfR
-fHzqYCnRDh3GgPuaEjmJMXpNGRSF4QvEXbgkK4B/Tgzz0LB+3oNEfUWknfK+BbYHlTloVIvhmcXg
-3/DIIHsOSbWtDtEIC/Dlu2R/RV0+dTtxwMLHwcRzafEr+VsKOvOe+HexrUILAgMBAAGjggFwMIIB
-bDAMBgNVHRMBAf8EAjAAMFYGCWCGSAGG+EIBDQRJFkdUbyBnZXQgeW91ciBvd24gY2VydGlmaWNh
-dGUgZm9yIEZSRUUgaGVhZCBvdmVyIHRvIGh0dHA6Ly93d3cuQ0FjZXJ0Lm9yZzAOBgNVHQ8BAf8E
-BAMCA6gwQAYDVR0lBDkwNwYIKwYBBQUHAwQGCCsGAQUFBwMCBgorBgEEAYI3CgMEBgorBgEEAYI3
-CgMDBglghkgBhvhCBAEwMgYIKwYBBQUHAQEEJjAkMCIGCCsGAQUFBzABhhZodHRwOi8vb2NzcC5j
-YWNlcnQub3JnMDgGA1UdHwQxMC8wLaAroCmGJ2h0dHA6Ly9jcmwuY2FjZXJ0Lm9yZy9jbGFzczMt
-cmV2b2tlLmNybDBEBgNVHREEPTA7gRVjYWxlc3R5b0BzY2llbnRpYS5uZXSBIm1haWxAY2hyaXN0
-b3BoLmFudG9uLm1pdHRlcmVyLm5hbWUwDQYJKoZIhvcNAQENBQADggIBAF59y2IuAaV7ltqym6jP
-IDiTtSntJWEYduJ/qlB+gVz/1OHH0Zedilf5Trg8zJYF9bAdkjLnZWDRFWS8+LW3qaIbIF+hKkLq
-ihHRspa1QiiDD/KaopaVMtVHyRsupGZGTiO4y0JcbYrfIzKBf+uOS5RK4WPYGOmSbOAK0yiNtQxh
-uzN4+aFDsMnrZgR20qlyM33hACwjkZaUgBuzcolrMBxo0JEl5cItxQxyHIockD41cflrP96QHEEw
-HMk/YCfbQ8/zxQjglbXzPfUqIb1RUZra47iXhpaBV7YaeE0R0IP+jjyawkRYoC3m+XbIyqvuKGY0
-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
-AukCAQEwWzBUMRQwEgYDVQQKEwtDQWNlcnQgSW5jLjEeMBwGA1UECxMVaHR0cDovL3d3dy5DQWNl
-cnQub3JnMRwwGgYDVQQDExNDQWNlcnQgQ2xhc3MgMyBSb290AgMCOakwDQYJYIZIAWUDBAIDBQCg
-ggFjMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTE1MDIyNTEzNDQz
-OFowTwYJKoZIhvcNAQkEMUIEQLdmpqGfR4ESqA6GwPCca1uVSkPKrI1sUAPt8Shk4q6zdvZ9dbVc
-tcpHesr4OH5sAW0uIMQi0AQi3WxyJz4U9NQwagYJKwYBBAGCNxAEMV0wWzBUMRQwEgYDVQQKEwtD
-QWNlcnQgSW5jLjEeMBwGA1UECxMVaHR0cDovL3d3dy5DQWNlcnQub3JnMRwwGgYDVQQDExNDQWNl
-cnQgQ2xhc3MgMyBSb290AgMCOakwbAYLKoZIhvcNAQkQAgsxXaBbMFQxFDASBgNVBAoTC0NBY2Vy
-dCBJbmMuMR4wHAYDVQQLExVodHRwOi8vd3d3LkNBY2VydC5vcmcxHDAaBgNVBAMTE0NBY2VydCBD
-bGFzcyAzIFJvb3QCAwI5qTANBgkqhkiG9w0BAQEFAASCAQBoONJ8oTL+4TaYLLoE4Ht//KnzgEJI
-LjakoJHllCUF+boJXUiW3AN61MBlDJ+WPJLexn1LHAjl/mh8hj9rlRnq7tc4rvm3ph8+dhxibR0d
-0RnYE3Yp4adVjnH2/VN6bt9/5oBHP02zskPtEzOHMEXbL61IKJJq9EXbNnTYwbqLMtLj4ql1eq+M
-McsyVEl7FOtB84tNHae3aIfcbZT7i+vtat+xJrMQRVaDnC8WJSSggUDaxotdlOeMxhAW/NTl5kno
-rm2JdG2OS8cgGxqWgcshuVVmpQVs0a67Vq84dOVS2FOHbV3Tm5g4ciZ6Pm9rGgsvOrFjP8Rc7XLu
-Nnz6iTRUAAAAAAAA
-
-
---=-Gl7XFaATOxnHqk94PhqZ--
+will exclude .c files in src directory or contains "foo". If you use
+some exclude patterns often, you can write a short script. Perhaps we
+could support pathspec macros (similar to git-attr macros), stored in
+config file. You still need to type, but it'll be a lot shorter.
+-- 
+Duy
