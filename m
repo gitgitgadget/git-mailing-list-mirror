@@ -1,87 +1,119 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: feature request: excluding files/paths from "git grep"
-Date: Wed, 25 Feb 2015 13:51:28 -0500
-Message-ID: <20150225185128.GA16569@peff.net>
-References: <54EDBEC2.8090107@peralex.com>
- <CACsJy8AM=W4f6u_7YpvmfiBwrJjqfJMJoq6CQYfKOh+qD6rF3Q@mail.gmail.com>
- <20150225143116.GA13567@peff.net>
- <xmqqk2z5on72.fsf@gitster.dls.corp.google.com>
+From: drathir87 <drathir87@gmail.com>
+Subject: Re: question about resume support.
+Date: Wed, 25 Feb 2015 19:52:16 +0100
+Message-ID: <20150225195216.42c5759c@archus>
+References: <20150221200127.4ade03ad@archus>
+	<20150222155312.GA7906@vps892.directvps.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Duy Nguyen <pclouds@gmail.com>, Noel Grandin <noel@peralex.com>,
-	git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 25 19:51:36 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: base64
+Cc: git@vger.kernel.org
+To: Kevin Daudt <me@ikke.info>
+X-From: git-owner@vger.kernel.org Wed Feb 25 20:01:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YQh3X-0002A0-Ux
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Feb 2015 19:51:36 +0100
+	id 1YQhDB-0000Iy-2Y
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Feb 2015 20:01:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753221AbbBYSvc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Feb 2015 13:51:32 -0500
-Received: from cloud.peff.net ([50.56.180.127]:53262 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753189AbbBYSvb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Feb 2015 13:51:31 -0500
-Received: (qmail 7571 invoked by uid 102); 25 Feb 2015 18:51:30 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Feb 2015 12:51:30 -0600
-Received: (qmail 17551 invoked by uid 107); 25 Feb 2015 18:51:32 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Feb 2015 13:51:32 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Feb 2015 13:51:28 -0500
-Content-Disposition: inline
-In-Reply-To: <xmqqk2z5on72.fsf@gitster.dls.corp.google.com>
+	id S1753354AbbBYTBY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Feb 2015 14:01:24 -0500
+Received: from mail-we0-f173.google.com ([74.125.82.173]:43157 "EHLO
+	mail-we0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753078AbbBYTBW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Feb 2015 14:01:22 -0500
+Received: by wesu56 with SMTP id u56so5552569wes.10
+        for <git@vger.kernel.org>; Wed, 25 Feb 2015 11:01:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=PUUol1Vd97qpzhLAqd/vaAP1SYI44VHM8vAdHojZi6I=;
+        b=wOl26DMYKr865oNm+o4xKzoLYDrd8EOb9DxpCkocvrQlQKMQ8aL/t3BMlpBr9oYF6Z
+         ifYTwaDJYpDeQv41zPR5GQ0sWyCIpVo8k3KmlVxMI2AhBGuAe4+51wmzLuNg+0pQqJSl
+         0r6mUg62iNx73zyBSs4GaYDF4X1jC8PUSrzmP60wv+6rVClnlochh0mqHjrN38iNYW50
+         uqwHStM9nmUtiu83GRtxwueeSIOVEXtbwI9UY7knhYIPCfFzqvyFhLpiH51Snaoeo3Py
+         9byKxnZEPTraXHa9nVFTn3HwwkhUFfL1hWzTT5PcJzb7DHc6hgmkD54YIfeaklKZZGjk
+         rhOA==
+X-Received: by 10.180.73.205 with SMTP id n13mr9153939wiv.64.1424890881037;
+        Wed, 25 Feb 2015 11:01:21 -0800 (PST)
+Received: from archus (ns317502.ip-91-121-104.eu. [91.121.104.168])
+        by mx.google.com with ESMTPSA id hv5sm66058485wjb.16.2015.02.25.11.01.19
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 25 Feb 2015 11:01:20 -0800 (PST)
+In-Reply-To: <20150222155312.GA7906@vps892.directvps.nl>
+X-Mailer: Claws Mail 3.11.1 (GTK+ 2.24.26; x86_64-unknown-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264402>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264403>
 
-On Wed, Feb 25, 2015 at 10:33:53AM -0800, Junio C Hamano wrote:
-
-> Jeff King <peff@peff.net> writes:
-> 
-> > If it's an attribute of the file, and not the request, maybe
-> > gitattributes would be a better fit. You can already do this with:
-> >
-> >   *.foo -diff
-> >
-> > in your .gitattributes file, though that _also_ marks the files as "not
-> > for diffing", which may not be desired. There's not a separate "grep"
-> > attribute, but I do not think it would be unreasonable to add one.
-> 
-> I have a vague recollection of having a discussion that started with
-> something like this:
-> 
->     "diff" is named as if it is only for "diff" for historical
->     reasons, but it is about "do we want to treat its raw contents
->     as text?"
-
-Yes, I think we had this discussion, and agreed that is a reasonable
-definition...
-
-> I do not recall its conclusion, but it it were "Yes, that is what it
-> means", then it might be reasonable to:
-> 
->  - have "git grep" ignore paths marked with -diff by default
->    (perhaps "-a" option to disable, just like GNU)
-
-...which led to 41b59bf (grep: respect diff attributes for binary-ness,
-2012-02-02)...
-
->  - have "git grep" pay attention to diff.textconv and search in the
->    result of textconv filter.
-
-..and 335ec3b (grep: allow to use textconv filters, 2013-05-10).
-
-So I think _if_ using "diff" attributes is enough for this purpose, then
-there is no code to be written. But if somebody wants to draw a
-distinction between the uses (I want to diff "foo" files, but never see
-them in grep) then we could introduce a "grep" attribute (with the
-fallback being the value of the "diff" attribute for that path).
-
--Peff
+LS0tLS1CRUdJTiBQR1AgU0lHTkVEIE1FU1NBR0UtLS0tLQ0KSGFzaDogU0hBNTEyDQoNClRoYW5r
+cyBhIGxvdCBnb29kIHRvIGtub3cgdGhhdCBhbmQgdGhhdCdzIHRydWUgbGl0dGxlIGhhcmQgdG8g
+ZG8gYmMgZXZlbg0KaWYgdHJhY2sgYWx3YXlzIHRoZSBsYXRlc3QgdmVyc2lvbiBzb21lIHJlcG9z
+aXRvcmllcyBjaGFuZ2Ugc28gZmFzdA0KYW5kIHdpbGwgYmUgbmVlZGVkIHNvbWUga2luZCBvZCBl
+Zy4gc25hcHNob3Qgb2YgdXNlciByZXBvc2l0b3J5IGJ5DQphdXRvIHNjcmlwdCBlZyBvbmNlIGF0
+IDEyLTI0aCBhbmQgdGhhdCByZXN1bWUgZGF0YSBzZXJ2ZWQgZnJvbQ0KdGhhdCBzbmFwc2hvdCBh
+bmQgYWZ0ZXIgZG93bmxvYWQgdGhhdCBzbmFwc2hvdCB1cGRhdGUgd2l0aCBwdWxsDQptZXRob2Qu
+Li4gQWdhaW4gdGhhbmtzIGEgbG90Li4uICANCg0KDQpPbiBTdW4sIDIyIEZlYiAyMDE1IDE2OjUz
+OjEyICswMTAwDQpLZXZpbiBEYXVkdCA8bWVAaWtrZS5pbmZvPiB3cm90ZToNCg0KPiBPbiBTYXQs
+IEZlYiAyMSwgMjAxNSBhdCAwODowMToyN1BNICswMTAwLCBkcmF0aGlyODdAZ21haWwuY29tIHdy
+b3RlOg0KPiA+IC0tLS0tQkVHSU4gUEdQIFNJR05FRCBNRVNTQUdFLS0tLS0NCj4gPiBIYXNoOiBT
+SEE1MTINCj4gPiANCj4gPiBIaS4uLiBJbSB3b25kZXIgdGhlcmUgaXMgcGxhbm5lZCBvciBtYXli
+ZSB0aGVyZSBpcyBzdXBwb3J0IG9mDQo+ID4gcmVzdW1pbmcgaW50ZXJydXB0ZWQgZ2l0IG9wZXJh
+dGlvbiBlLmcuIGNsb25pbmcgcmVwb3NpdG9yaWVzPyBOb3QNCj4gPiBzdXJlIGFib3V0IGhvdyBo
+YXJkIHRoYXQgY291bGQgYmUgdG8gaW1wbGVtZW50LCBidXQgZ3JlYXRseSBzaG91bGQNCj4gPiBk
+ZWNyZWFzZSBvZiBiYW5kd2lkdGggdXNlZCBieSBwZXJzb25zIHdpdGggd2VhayBuZXR3b3JrDQo+
+ID4gY29ubmVjdGlvbi4uLiAtLS0tLUJFR0lOIFBHUCBTSUdOQVRVUkUtLS0tLQ0KPiA+IA0KPiA+
+IGlRSjhCQUVCQ2dCbUJRSlU2TllIWHhTQUFBQUFBQzRBS0dsemMzVmxjaTFtY0hKQWJtOTBZWFJw
+YjI1ekxtOXcNCj4gPiBaVzV3WjNBdVptbG1kR2hvYjNKelpXMWhiaTV1WlhSRk1FWkJNVEU1TWpj
+NU1UTTBRVFpGTkRkR1JUazNNRVpCDQo+ID4gUlVFek16azNOVGxHTmpOQ01FWkRBQW9KRUs2ak9Y
+V2ZZN0Q4Q1hzUC8zN0YzY0hOVmdyTmoreHplUjFIMzh4UQ0KPiA+IHE1elNMTk1VWXI3NzFnVVhC
+YWMvcDhNZkRZbFM3Z0t3UlY0QnhobDhBbWZIOXEyOHliajRVRnArNUE5dTFtS0YNCj4gPiBFNHJy
+TUpFNG1yd2YvZE9lWUhNZDRFSzdhQ0ZyRWw5RFZuRDZ1WGxRK1FDNnFRMjNMeVIyV0hWWDN1MWE2
+RVFWDQo+ID4gdHNGSXVHTGgxa0JBVFd0Mi9GaW02MEJxSTZQMy9QWDBnQjJSK2dQZG5tNXZHM2NZ
+NWlOU3cvVWdaVWJSTm1NYQ0KPiA+IFFnekJ3cHhOT1RxbEozR1E5Y1dnTDVDSDgzVnJGbWpxSHFh
+OHhiVmQyQVRWYVdYVGs0cERKRkJCYWZTTkpnOHMNCj4gPiBSTXVtQ0dwV21NWUJFdEFKWS9VZ0Uz
+MkYybXM3cmF2TE9ZMGhqOVBDb1cwRkgrY3pkSTlaTlE4anZkVGhNQnlwDQo+ID4gKzZtSHFVMlN5
+WW9ldG5CY2xjZ1NyT01ka2lDaXZXQjdHYU9Cc2NBNUUxTU0zRnBRQmRKU0JyRGxxNXloczlXRw0K
+PiA+IHVLaHlCcHRzOSs5SWRpVVB2ZDRlajRDVlhYc0U5L0ZLQUVLNytpbHI3SHNMYlJyMHZYZUFp
+V0E3cStrK0F2Y2UNCj4gPiBJaDhud3Q5b25BTTM3T0g3Qm9XOHZhLzRnLzN5SHI5RWFZRmc3ZWE5
+aEpZVW9tVlkzbC9tSVF4ZUcrS1BGWm5DDQo+ID4gWG5DVkFFTVNlTXVqd2pJS3FIVUVXUzhSdUhP
+bHhTK3E4VEVaUzdjYVIvOGF1c29uZGJRdVlLNEhMc1ZoaXdGWg0KPiA+IEFrbHd0TEJtb0lSMnlO
+Rm4rTktmRE93MVJXUHN2SFNON3lLRVFJZStTZFVFRERTOFF2aGZDZUtEVlNENzdlelgNCj4gPiBC
+cFhTUGZOTE1EWXFaTnA1ZitOQg0KPiA+ID0rQm53DQo+ID4gLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0tDQo+IA0KPiBXaGlsZSBub3QgdGhlIGJlc3Qgc29sdXRpb24sIHdoYXQncyBjdXJyZW50
+bHkgcG9zc2libGUgaXMgdG8gcHJvdmlkZQ0KPiBhbiBpbml0aWFsIGdpdCBidW5kbGUgdGhhdCBp
+cyByZWd1bGFybHkgdXBkYXRlZCB3aGljaCBjYW4gYmUNCj4gZG93bmxvYWRlZCB0aHJvdWdoIG90
+aGVyIHByb3RvY29scyB0aGF0IGRvIHByb3ZpZGUgcmVzdW1wdGlvbi4gVXNlcnMNCj4gY2FuIHVz
+ZSB0aGF0IHRvIHNldHVwIHRoZSByZXBvc2l0b3J5LCBhbmQgdGhlbiB1c2UgdGhlIG5vcm1hbCBn
+aXQNCj4gcHJvdG9jb2wgdG8gZ2V0IHRoZSBsYXRlc3QgdXBkYXRlcy4NCj4gDQo+IFRoZSByZWFz
+b24gdGhpcyBpcyBub3QgZWFzeSB0byBmYWNpbGl0YXRlIGlzIHRoYXQgdGhlIHBhY2tzIGdpdA0K
+PiBnZW5lcmF0ZXMgYXJlIG9ubHkgZ2VuZXJhdGVkIGluLW1lbW9yeS4gVGhlc2UgcGFja3Mgd291
+bGQgbmVlZCB0byBiZQ0KPiBjYWNoZWQgb24gZGlzayBhbmQgc29tZWhvdyBoYXZlIGEgbWFwcGlu
+ZyB0byB0aGUgdXNlciB0aGF0IGRvd25sb2FkZWQNCj4gdGhhdCBwYWNrLiBBbHNvIHRoZXJlIHdv
+dWxkIG5lZWQgdG8gYmUgc29tZSBraW5kIG9mIHdheSB0byBleHBpcmUNCj4gdGhlc2UgY2FjaGVk
+IHBhY2tzLiBUaGUgcHJvdG9jb2wgd291bGQgbmVlZCB0byBiZSB1cGRhdGVkIHRvIGluZGljYXRl
+DQo+IGEgdXNlcnMgd2FudHMgdG8gcmVzdW1lIGEgY2xvbmUgKG9yIGZldGNoKSBhbmQgd2hhdCBw
+YXJ0cyBhcmUgc3RpbGwNCj4gbWlzc2luZywgYW5kIHByb2JhYmx5IGxvdHMgb2Ygb3RoZXIgZGV0
+YWlscyBJJ20gbWlzc2luZy4NCj4gDQo+IEtldmluDQoNCi0tLS0tQkVHSU4gUEdQIFNJR05BVFVS
+RS0tLS0tDQoNCmlRSjhCQUVCQ2dCbUJRSlU3aG5nWHhTQUFBQUFBQzRBS0dsemMzVmxjaTFtY0hK
+QWJtOTBZWFJwYjI1ekxtOXcNClpXNXdaM0F1Wm1sbWRHaG9iM0p6WlcxaGJpNXVaWFJGTUVaQk1U
+RTVNamM1TVRNMFFUWkZORGRHUlRrM01FWkINClJVRXpNemszTlRsR05qTkNNRVpEQUFvSkVLNmpP
+WFdmWTdEODZPY1FBSzZSSS9Ub3kwL0V4YU93TTdqdW1jSU0NCkFaWXpFTlh0VUNVRUllVVNRaWs1
+OEUrREYybmhvT3NCQ2tsaHV4R3F3R1hJRklWamtML01ML3JCZTdjcXF2SEUNClV4QXk4elpIQVhO
+NytiZFN6SHpMWnlVV0RPYjlyeU5DU01lWVJjb1crSnRVbnIwc01JZEFxSnVabnBRUUYwS24NCmZW
+c0EwK3BNMERUbEtKMjNDQkdjTGsvVkpkV1BQaTJGcllhWXFha21tOHo0STN6ZHZJeitMaHR0SEg2
+N2VxVGINCmpYS3Y4K3B4U1UvbTBzZGk2UTUwUXRzTDRQL204Mzk4S203Smg5WVU4TVBYSnh4NDAy
+Ni8wdVByY3RIYWdRUU4NCmpVTjdJdlVvWjRMN0E2SmsySzV2MjBGS3hhT3cvRTBoekZGbzZtOHJS
+SWdYb2pwenhaVFllQzV1R2UxY0NBK3gNCkNLSXd5YmZJajF4YVdhOW8xZkVUYnVEcUUvcGxyZFRI
+aVNER1Y3MG1nbjV5Zzc3eFlObmJSN21BeUdkZ0V6ekwNCmRDZXJtRzQxRTU0QTZicXY5ZDFUZGRC
+c3duY3ZFTWRiYXRqaG9VaHBCNTY2Qk5uTWhYNVJ6TWZtbFpwdFl3UmkNCmdyalMyZi9UTzdjWGlY
+My9sb3NBVUFjSStXUmd6MEZjUGd1VXhkbHFDZDRRQjZRWW5xSy81c3BmYXRCT0ZMd1cNCnEwbHJR
+bWZ5Zk1RUnh4eXBmY3VBKzdRQjRscW9ORE5McWNINHAxNnprS0FVMkxhTXhWQUtRNVAvcXhWZGdj
+aXMNCnIwWi83QkhJMjg0dFBOcExzbTVkSkc3Mk1YdjE4MjUrZDEzMzBsZDMwdDJtMDdpS1VodHEx
+WnVTZHZFczc2dUUNCmVSOVZhNEh3eVR1VnM0aFc2RE0wDQo9YjM5dw0KLS0tLS1FTkQgUEdQIFNJ
+R05BVFVSRS0tLS0tDQo=
