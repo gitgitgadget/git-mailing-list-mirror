@@ -1,186 +1,230 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 2/2] cat-file: add --literally option.
-Date: Wed, 25 Feb 2015 17:14:15 -0500
-Message-ID: <CAPig+cQeHxH=Bc2EyQXOfX=m33XFfUViS2VDi4K+yQoweBo1Nw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] sha1_file: Add sha1_object_type_literally and export it.
+Date: Wed, 25 Feb 2015 14:44:21 -0800
+Message-ID: <xmqqtwy9mx16.fsf@gitster.dls.corp.google.com>
 References: <54EDACC9.5080204@gmail.com>
-	<1424862485-13576-1-git-send-email-karthik.188@gmail.com>
+	<1424862460-13514-1-git-send-email-karthik.188@gmail.com>
+	<xmqq61apoewr.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
+Content-Type: text/plain
+Cc: git@vger.kernel.org
 To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 25 23:14:24 2015
+X-From: git-owner@vger.kernel.org Wed Feb 25 23:44:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YQkDl-0000ll-Mb
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Feb 2015 23:14:22 +0100
+	id 1YQkgv-0003KP-CR
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Feb 2015 23:44:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753638AbbBYWOR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Feb 2015 17:14:17 -0500
-Received: from mail-yh0-f50.google.com ([209.85.213.50]:40629 "EHLO
-	mail-yh0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753011AbbBYWOQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Feb 2015 17:14:16 -0500
-Received: by yhot59 with SMTP id t59so2543983yho.7
-        for <git@vger.kernel.org>; Wed, 25 Feb 2015 14:14:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=4EKJ7mmXOyZ6xfgg0V72VtOU8SMpkl5Qz3ulJ3VxJAw=;
-        b=O7/NyyX4bC8dxTRdPYMBTKKJ5RvwCN/FxG/l7TlOPcRjBiGafaB6mqwRTJma5T2Rld
-         iaRpdvYgFvcA5uqcQSIYQbOk9P3X5gjJ/SrXQDLtF6dd/Bif96CcqTxGvhPa8Jkylne6
-         dBbbxFRKGlDvKMcShfSDrnGoofZa+rG8lFo9pFnOllmqwmt7Q+YvEoGBUEFX/EqHJivf
-         YPQuZKPe9GAHYQOflyIeaNa7JIeOXGrfJIOc7FC9M5RxjBvcdwl5tZxw43iAULzau9OP
-         S2YEO0eT4wm64W8aGu5FHc7OETm90KOT1F2mo1T2JR7sJdoDYy4tYuQOoaXZRXcFWj2c
-         I/fg==
-X-Received: by 10.236.10.5 with SMTP id 5mr5381409yhu.148.1424902455582; Wed,
- 25 Feb 2015 14:14:15 -0800 (PST)
-Received: by 10.170.73.7 with HTTP; Wed, 25 Feb 2015 14:14:15 -0800 (PST)
-In-Reply-To: <1424862485-13576-1-git-send-email-karthik.188@gmail.com>
-X-Google-Sender-Auth: 8pz9WIq7mZ39eBo-9P6wYt04Lws
+	id S1753554AbbBYWoY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Feb 2015 17:44:24 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:54472 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752953AbbBYWoX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Feb 2015 17:44:23 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id EF07E3B8CF;
+	Wed, 25 Feb 2015 17:44:22 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=RD+JIgpoyW0FoU150nFmD7ae8mM=; b=Msm/sZ
+	2FnsaoQQLsW07i59G48xUXdFkbTFtIw/lZgrUARrASDA2KdxEv14db66zyOy15Ch
+	uoid2BErmQphV2SuITJpM5oQ1sw3DLs46LL2HRGKTHJYItvlVvogDbAUrAy8xo7H
+	ifDvIz6XCNV4dm/apOHKJrr2QR34JTeXpr/pc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qAG5dIKcxz9S6bT6ZW+4b2I8Tyfdyu4o
+	k75owuF/CAjr8fooAk0Cwej+hvd35PRgHlZMIUma1E8AzrxkvONTxbjhiw+s2hid
+	caXSAd5Q9ef8irHAeB0FAHtZSuuVR9up5XfZxlBVhQueg75zGZsJjNJ01b4SM/qY
+	PpN4tFF4DU4=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E6D963B8CE;
+	Wed, 25 Feb 2015 17:44:22 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3FE863B8CC;
+	Wed, 25 Feb 2015 17:44:22 -0500 (EST)
+In-Reply-To: <xmqq61apoewr.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Wed, 25 Feb 2015 13:32:52 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: D76BAB88-BD3F-11E4-92DA-A4119F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264419>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264420>
 
-On Wed, Feb 25, 2015 at 6:08 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
-> cat-file: add --literally option.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Style: drop terminating period.
-
-> Add --literally option which when used with -t option
-> gives the type of the object given, irrelevant of the type
-> and its contents.
-
-Confusing: "gives the type [...] irrelevant of the type"?
-
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> ---
-> diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-> index df99df4..1db94fe 100644
-> --- a/builtin/cat-file.c
-> +++ b/builtin/cat-file.c
-> @@ -107,6 +107,29 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name)
->         return 0;
->  }
+> Looking at how we collect information on normal objects, it may make
+> more sense to model this after sha1_loose_object_info(), with a
+> tweak to struct object_info datatype, and integrate it into
+> sha1_object_info_extended() may make more sense, perhaps along the
+> lines of the attached patch.
 >
-> +static int cat_one_file_literally(int opt, const char *exp_type, const char *obj_name)
+> The new helper would mimick what sha1_loose_object_info() is doing,
+> in that it may be used to learn on-disk size, object size, typename
+> string (returned in oi->typename strbuf that is optional).  There is
+> no sensible value to stuff in oi->typep if the incoming object name
+> refers to the experimental invalid object, so perhaps you will store
+> OBJ_NONE or something there and the "cat-file --literally" would use
+> the oi->typename to learn the name of the "type".
 
-Unused arguments: 'opt' and 'exp_type'
+You may be able to even reuse most of the sha1_loose_object_info()
+by doing something like this illustration (read: incomplete) patch:
 
-This function duplicates enough functionality of cat_one_file() that
-it almost seems that it could be folded into the 't' case in that
-function, but for the sake of review, let's assume that you'll keep it
-separate.
+ * add an optional typename pointer to object_info request structure
+   for the caller to ask sha1_object_info() to fill.
 
-> +{
-> +       unsigned char sha1[20];
-> +       unsigned char type[32];
-> +       struct object_context obj_context;
-> +       struct object_info oi = {NULL};
+ * unpack_sha1_header() takes advantage of the fact that the object
+   header of a usual object of known type would fit within 32 bytes,
+   and that otherwise the object is invalid anyway.  A literal
+   reader cannot afford to rely on these assumptions, so introduce a
+   reader that can read into a strbuf, and use it instead from
+   sha1_loose_object_info() when the caller wants to deal with
+   invalid object with a possibly overlong header.
 
-Unused variable: 'oi'
+ * teach sha1_object_info_extended() pass the "flags" parameter from
+   the caller down the callchain to sha1_loose_object_info().
 
-> +       int retval = 0;
-> +
-> +       if (get_sha1_with_context(obj_name, 0, sha1, &obj_context))
 
-You never take advantage of the extra context in 'obj_context', so
-perhaps get_sha1() would be preferable?
+ cache.h     |  3 ++-
+ sha1_file.c | 66 +++++++++++++++++++++++++++++++++++++++++++++++++++++++------
+ 2 files changed, 62 insertions(+), 7 deletions(-)
 
-> +               die("Not a valid object name %s", obj_name);
-> +
-> +       retval = has_sha1_file(sha1);
-> +       if (!retval)
-> +               return retval;
-
-Shouldn't this case be emitting some sort of diagnostic rather than
-exiting silently?
-
-> +       if(sha1_object_type_literally(sha1, type))
-
-Style: space after 'if'
-
-> +               die("git cat-file -t --literally %s: invalid object", obj_name);
-
-Inconsistent error message style with the die() just above this one.
-(cat_one_file() has its own inconsistencies, but new code need not
-follow suit.)
-
-> +
-> +       printf("%s\n", type);
-> +
-> +       return retval;
-> +}
-> +
->  struct expand_data {
->         unsigned char sha1[20];
->         enum object_type type;
-> @@ -324,7 +347,7 @@ static int batch_objects(struct batch_options *opt)
->
->  static const char * const cat_file_usage[] = {
->         N_("git cat-file (-t | -s | -e | -p | <type> | --textconv) <object>"),
-> -       N_("git cat-file (--batch | --batch-check) < <list-of-objects>"),
-> +       N_("git cat-file (-t|-s|-e|-p|<type>|--textconv|-t --literally) <object>"),
-
-This is strange. According to this diff, you've removed the --batch
-and --batch-check options; and you're showing the -t, -s, -e, etc.
-options twice.
-
->         NULL
->  };
->
-> @@ -359,6 +382,7 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
->         int opt = 0;
->         const char *exp_type = NULL, *obj_name = NULL;
->         struct batch_options batch = {0};
-> +       int literally = 0;
-
-Mental note: 'literally' is initialized to false (0).
-
->         const struct option options[] = {
->                 OPT_GROUP(N_("<type> can be one of: blob, tree, commit, tag")),
-> @@ -369,6 +393,8 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
->                 OPT_SET_INT('p', NULL, &opt, N_("pretty-print object's content"), 'p'),
->                 OPT_SET_INT(0, "textconv", &opt,
->                             N_("for blob objects, run textconv on object's content"), 'c'),
-> +               OPT_BOOL( 0, "literally", &literally,
-> +                         N_("show the type of the gicen loose object, use for debugging")),
-
-s/gicen/given/
-
->                 { OPTION_CALLBACK, 0, "batch", &batch, "format",
->                         N_("show info and content of objects fed from the standard input"),
->                         PARSE_OPT_OPTARG, batch_option_callback },
-> @@ -380,7 +406,7 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
->
->         git_config(git_cat_file_config, NULL);
->
-> -       if (argc != 3 && argc != 2)
-> +       if (argc != 3 && argc != 2 && (!literally && argc != 4))
-
-This can't be correct. At this point, 'literally' is unconditionally
-false (0). It's value won't (potentially) change until the options are
-processed, which doesn't happen until parse_options() is invoked
-_after_ this conditional.
-
->                 usage_with_options(cat_file_usage, options);
->
->         argc = parse_options(argc, argv, prefix, options, cat_file_usage, 0);
-> @@ -405,5 +431,10 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
->         if (batch.enabled)
->                 return batch_objects(&batch);
->
-> +       if (literally && opt == 't')
-> +               return cat_one_file_literally(opt, exp_type, obj_name);
-> +       else if (literally)
-> +               usage_with_options(cat_file_usage, options);
-> +
->         return cat_one_file(opt, exp_type, obj_name);
->  }
-> --
-> 2.3.1.129.g11acff1.dirty
+diff --git a/cache.h b/cache.h
+index 4d02efc..34ede34 100644
+--- a/cache.h
++++ b/cache.h
+@@ -828,8 +828,8 @@ char *strip_path_suffix(const char *path, const char *suffix);
+ int daemon_avoid_alias(const char *path);
+ extern int is_ntfs_dotgit(const char *name);
+ 
+-/* object replacement */
+ #define LOOKUP_REPLACE_OBJECT 1
++#define LOOKUP_LITERALLY      2
+ extern void *read_sha1_file_extended(const unsigned char *sha1, enum object_type *type, unsigned long *size, unsigned flag);
+ static inline void *read_sha1_file(const unsigned char *sha1, enum object_type *type, unsigned long *size)
+ {
+@@ -1296,6 +1296,7 @@ struct object_info {
+ 	unsigned long *sizep;
+ 	unsigned long *disk_sizep;
+ 	unsigned char *delta_base_sha1;
++	struct strbuf *typename;
+ 
+ 	/* Response */
+ 	enum {
+diff --git a/sha1_file.c b/sha1_file.c
+index 69a60ec..0f6783e 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1564,6 +1564,36 @@ int unpack_sha1_header(git_zstream *stream, unsigned char *map, unsigned long ma
+ 	return git_inflate(stream, 0);
+ }
+ 
++static int unpack_sha1_header_literally(git_zstream *stream, unsigned char *map,
++					unsigned long mapsize,
++					struct strbuf *header)
++{
++	unsigned char buffer[32], *cp;
++	unsigned long bufsiz = sizeof(buffer);
++	int status;
++
++	/* Get the data stream */
++	memset(stream, 0, sizeof(*stream));
++	stream->next_in = map;
++	stream->avail_in = mapsize;
++	stream->next_out = buffer;
++	stream->avail_out = bufsiz;
++
++	git_inflate_init(stream);
++
++	do {
++		status = git_inflate(stream, 0);
++		strbuf_add(header, buffer, stream->next_out - buffer);
++		for (cp = buffer; cp < stream->next_out; cp++)
++			if (!*cp)
++				/* Found the NUL at the end of the header */
++				return 0;
++		stream->next_out = buffer;
++		stream->avail_out = bufsiz;
++	} while (status == Z_OK);
++	return -1;
++}
++
+ static void *unpack_sha1_rest(git_zstream *stream, void *buffer, unsigned long size, const unsigned char *sha1)
+ {
+ 	int bytes = strlen(buffer) + 1;
+@@ -2524,13 +2554,16 @@ struct packed_git *find_sha1_pack(const unsigned char *sha1,
+ }
+ 
+ static int sha1_loose_object_info(const unsigned char *sha1,
+-				  struct object_info *oi)
++				  struct object_info *oi,
++				  unsigned flags)
+ {
+ 	int status;
+ 	unsigned long mapsize, size;
+ 	void *map;
+ 	git_zstream stream;
+ 	char hdr[32];
++	struct strbuf hdrbuf = STRBUF_INIT;
++	char *hdrp;
+ 
+ 	if (oi->delta_base_sha1)
+ 		hashclr(oi->delta_base_sha1);
+@@ -2557,10 +2590,21 @@ static int sha1_loose_object_info(const unsigned char *sha1,
+ 		return -1;
+ 	if (oi->disk_sizep)
+ 		*oi->disk_sizep = mapsize;
+-	if (unpack_sha1_header(&stream, map, mapsize, hdr, sizeof(hdr)) < 0)
+-		status = error("unable to unpack %s header",
+-			       sha1_to_hex(sha1));
+-	else if ((status = parse_sha1_header(hdr, &size)) < 0)
++	if ((flags & LOOKUP_LITERALLY)) {
++		if (unpack_sha1_header_literally(&stream, map, mapsize, &hdrbuf) < 0)
++			status = error("unable to unpack %s header",
++				       sha1_to_hex(sha1));
++		hdrp = hdrbuf.buf;
++	} else {
++		if (unpack_sha1_header(&stream, map, mapsize, hdr, sizeof(hdr)) < 0)
++			status = error("unable to unpack %s header",
++				       sha1_to_hex(sha1));
++		hdrp = hdr;
++	}
++
++	if (status)
++		; /* we already have error condition */
++	else if ((status = parse_sha1_header(hdrp, &size)) < 0)
+ 		status = error("unable to parse %s header", sha1_to_hex(sha1));
+ 	else if (oi->sizep)
+ 		*oi->sizep = size;
+@@ -2568,6 +2612,16 @@ static int sha1_loose_object_info(const unsigned char *sha1,
+ 	munmap(map, mapsize);
+ 	if (oi->typep)
+ 		*oi->typep = status;
++	if (oi->typename) {
++		if (0 <= status && typename(status))
++			strbuf_addstr(oi->typename, typename(status));
++		else if ((flags & LOOKUP_LITERALLY)) {
++			size_t typelen = strcspn(hdrbuf.buf, " ");
++			strbuf_add(oi->typename, hdrbuf.buf, typelen);
++		}
++	}
++	if (hdrp == hdrbuf.buf)
++		strbuf_release(&hdrbuf);
+ 	return 0;
+ }
+ 
+@@ -2594,7 +2648,7 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi,
+ 
+ 	if (!find_pack_entry(real, &e)) {
+ 		/* Most likely it's a loose object. */
+-		if (!sha1_loose_object_info(real, oi)) {
++		if (!sha1_loose_object_info(real, oi, flags)) {
+ 			oi->whence = OI_LOOSE;
+ 			return 0;
+ 		}
