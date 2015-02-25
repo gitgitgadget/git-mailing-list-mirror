@@ -1,80 +1,60 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: feature request: excluding files/paths from "git grep"
-Date: Wed, 25 Feb 2015 11:01:22 -0800
-Message-ID: <xmqqbnkholx9.fsf@gitster.dls.corp.google.com>
-References: <54EDBEC2.8090107@peralex.com>
-	<CACsJy8AM=W4f6u_7YpvmfiBwrJjqfJMJoq6CQYfKOh+qD6rF3Q@mail.gmail.com>
-	<20150225143116.GA13567@peff.net>
-	<xmqqk2z5on72.fsf@gitster.dls.corp.google.com>
-	<20150225185128.GA16569@peff.net>
+From: Adam Spiers <git@adamspiers.org>
+Subject: new screencast demo: git-deps facilitating porting between branches
+Date: Wed, 25 Feb 2015 19:05:09 +0000
+Message-ID: <CAOkDyE_ZwWJHxomG8Qk5PE-6nzxhWx9drR_3_6jBLVdHq+u+rg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Duy Nguyen <pclouds@gmail.com>, Noel Grandin <noel@peralex.com>,
-	git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Feb 25 20:01:39 2015
+Content-Type: text/plain; charset=UTF-8
+To: git mailing list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Feb 25 20:05:32 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YQhDG-0000Lo-Fj
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Feb 2015 20:01:38 +0100
+	id 1YQhH0-0002zR-Dt
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Feb 2015 20:05:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753365AbbBYTBb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Feb 2015 14:01:31 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:55056 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753174AbbBYTB3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Feb 2015 14:01:29 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3A3263BD65;
-	Wed, 25 Feb 2015 14:01:24 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=7oboMS5bzV96Zv8hHO+cf7dJ1WE=; b=xxNi7h
-	gQZ1u0TZlgwNWnk0Es5ZqZSndFApx0NWZ6Og/M+VnJgdHgiyXQmWQeY/Pwk6TO3e
-	Swb4ZOHDxj8DFnfI5Mq3zrmZZb6UI221xW/PnsF/QShS/tj+Ylayh/464c7QSS6p
-	DKA+jdvNUcu7GzsZPfk1hAacX/D5VWLjYnFeY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=i9PUsr5/ncS7QwyHwGHIFxSKLf5XwdJs
-	PMcCgf9UacN+e8R4/1WrInQYvLTtXJA7Ujp/IAV2WKNTVv9YnplVK1IeK6s/3EFS
-	vf8IMMpuswQWF5+RbAQip1SBJAGpGBnk6sCdkAVdyDg+UKCy6o1PGtiyIbWl3Gc6
-	laMxELMG4lc=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 295023BD64;
-	Wed, 25 Feb 2015 14:01:24 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9FCD93BD60;
-	Wed, 25 Feb 2015 14:01:23 -0500 (EST)
-In-Reply-To: <20150225185128.GA16569@peff.net> (Jeff King's message of "Wed,
-	25 Feb 2015 13:51:28 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: B126EB6E-BD20-11E4-99DC-A4119F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1753517AbbBYTFN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Feb 2015 14:05:13 -0500
+Received: from mail-qg0-f44.google.com ([209.85.192.44]:40767 "EHLO
+	mail-qg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753101AbbBYTFK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Feb 2015 14:05:10 -0500
+Received: by mail-qg0-f44.google.com with SMTP id j5so4749491qga.3
+        for <git@vger.kernel.org>; Wed, 25 Feb 2015 11:05:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:date:message-id:subject:from:to:content-type;
+        bh=cxytXXB0w32m0WhkUojI22Pst3rEEWFgjxxj5DRUo+M=;
+        b=uAuXcfGVmv7r6vUpS77uirQu1/7jx1brI75t1cWkZfpRTEY2qjFYlSQQ6FZrn0CkBS
+         TaaIj2YC2Wyrw4vOkkwZ8M3gFLsK+YO9vi88OQP/5lnc2LGrZA9NZOOrsdiL/1f2ubjO
+         tDRSrHSrC+h+NfU9KcUx+U5XkEnaKT+EL8xKPrAOaH4O1aUJGGwK7oquEkJqoqo3LSeD
+         fFXR5SWUzPMhwlZX3PHYUGsCklZ/oMXIdWDVCW+bOjns4oUa+Ik8oSgAF7+bA/HdOzQc
+         xLA4SQOP7kGdih0mKJmqFJG7pvKVmnny5JJj+3a+t8Ex8SScSc11FE/ZxN7xMduyXyBL
+         pcqg==
+X-Received: by 10.140.48.133 with SMTP id o5mr9994094qga.8.1424891109849; Wed,
+ 25 Feb 2015 11:05:09 -0800 (PST)
+Received: by 10.140.149.70 with HTTP; Wed, 25 Feb 2015 11:05:09 -0800 (PST)
+X-Google-Sender-Auth: zfic738ex6E1GE34DcXIC_gyyz4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264405>
 
-Jeff King <peff@peff.net> writes:
+Hi again,
 
-> So I think _if_ using "diff" attributes is enough for this purpose, then
-> there is no code to be written.  But if somebody wants to draw a
-> distinction between the uses (I want to diff "foo" files, but never see
-> them in grep) then we could introduce a "grep" attribute (with the
-> fallback being the value of the "diff" attribute for that path).
+On 19 January 2015 at 00:11, Adam Spiers <git@adamspiers.org> wrote:
+> I'm pleased to announce this is ready for testing; here are more
+> details along with a short screencast demonstration:
+>
+>     http://blog.adamspiers.org/2015/01/19/git-deps/
 
-That is all true.
+I just quickly made another screencast demo of this tool, this
+time focusing on porting commits between branches:
 
-If we were to have a new 'grep' attribute that can be used to
-express 'It is OK to diff two versions of this path, but hits by
-grep in this path is useless' (and verse versa), the built-in macro
-attribute 'binary' should also be updated with it.  A path being
-'binary' currently means '-diff -merge -text' but it should also
-mean '-grep' in the new world, if we were to go in that direction.
+    http://youtu.be/DVksJMXxVIM
 
-Thanks.
+Hope that's of use / interest!
+
+Adam
