@@ -1,129 +1,144 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: Re: [RFH] GSoC 2015 application
-Date: Wed, 25 Feb 2015 17:02:24 +0700
-Message-ID: <CACsJy8CU5N+3rMh1Png=8YQNMb5s8JT9Py9FdLekae6Dkds3BQ@mail.gmail.com>
-References: <20150218191417.GA7767@peff.net> <20150218193234.GA8298@peff.net>
- <5f6dbabdf4da3c3c757d92ba00a8b7d1@www.dscho.org> <vpqioerz03s.fsf@anie.imag.fr>
- <CAPc5daXTLRZW-uk++ZjbtafbR6SB41dyc0Cu1gN=Qy7CEhOq-A@mail.gmail.com>
- <c9ff859363d2d637b3607aaf6cb9295d@www.dscho.org> <vpqh9uavp6q.fsf@anie.imag.fr>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [msysGit] Re: [RFH] GSoC 2015 application
+Date: Wed, 25 Feb 2015 11:04:06 +0100
+Message-ID: <CAP8UFD2PcBsU6=FK4OHVrB7E98ycohS_0pYcbCBar=of1HLx+Q@mail.gmail.com>
+References: <20150218191417.GA7767@peff.net>
+	<20150218193234.GA8298@peff.net>
+	<5f6dbabdf4da3c3c757d92ba00a8b7d1@www.dscho.org>
+	<vpqioerz03s.fsf@anie.imag.fr>
+	<CAPc5daXTLRZW-uk++ZjbtafbR6SB41dyc0Cu1gN=Qy7CEhOq-A@mail.gmail.com>
+	<c9ff859363d2d637b3607aaf6cb9295d@www.dscho.org>
+	<vpqh9uavp6q.fsf@anie.imag.fr>
+	<3e3da365d9b6021c9b6d8547ad8df788@www.dscho.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>, Junio C Hamano <gitster@pobox.com>, 
-	Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: msysgit+bncBC2ZN5PHQUMBBT53W2TQKGQEDUESCEQ@googlegroups.com Wed Feb 25 11:02:57 2015
-Return-path: <msysgit+bncBC2ZN5PHQUMBBT53W2TQKGQEDUESCEQ@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-ig0-f188.google.com ([209.85.213.188])
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	msysGit <msysgit@googlegroups.com>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Feb 25 11:04:18 2015
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBC2ZN5PHQUMBBT53W2TQKGQEDUESCEQ@googlegroups.com>)
-	id 1YQYnw-0007MB-I1
-	for gcvm-msysgit@m.gmane.org; Wed, 25 Feb 2015 11:02:56 +0100
-Received: by mail-ig0-f188.google.com with SMTP id a13sf970022igq.5
-        for <gcvm-msysgit@m.gmane.org>; Wed, 25 Feb 2015 02:02:55 -0800 (PST)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1YQYpD-00088V-Cz
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Feb 2015 11:04:15 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1753013AbbBYKEK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Feb 2015 05:04:10 -0500
+Received: from mail-ie0-f172.google.com ([209.85.223.172]:44210 "EHLO
+	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751293AbbBYKEH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Feb 2015 05:04:07 -0500
+Received: by iecar1 with SMTP id ar1so3501915iec.11
+        for <git@vger.kernel.org>; Wed, 25 Feb 2015 02:04:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:x-original-sender:x-original-authentication-results
-         :precedence:mailing-list:list-id:list-post:list-help:list-archive
-         :sender:list-subscribe:list-unsubscribe;
-        bh=rgUWI9C+hQufj4XYUkx6TZ+yMpRoJt0x6cSRAgjcmVY=;
-        b=NUoVOAFibQceVeoNtax1uPO31Iwruu5S2GcDnIJFJkL8lB6595sIvU8b0asYZ/oD8a
-         exwbLygbz5MUxYzztjG7z4XIdOh/64NkZx5JB/jif7MhNJrDnglYudhIJ4dJnWvzcHkC
-         YmJ+Ec3VxR5aV2gwOB18Z8ed2qgQ2A3t5JKBgliNMF/ND4e9PxSC6wM2n50VabujADqr
-         uaNKEdmxw1dn5TwkwmKHt4o/5Mdc3J+Tc8Rj2JwdLTmIPR9UON9HETqFD8M/sBctSJET
-         4eDkzD5i69s+38aPgIpTsUTBWHHWof20rDR5V4oGq04HWgLneM797KlpgTHtDxkb/U8Z
-         B3fA==
-X-Received: by 10.140.109.66 with SMTP id k60mr30251qgf.36.1424858575840;
-        Wed, 25 Feb 2015 02:02:55 -0800 (PST)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.140.72.20 with SMTP id l20ls3337034qgc.2.gmail; Wed, 25 Feb
- 2015 02:02:55 -0800 (PST)
-X-Received: by 10.236.26.17 with SMTP id b17mr2266671yha.15.1424858575124;
-        Wed, 25 Feb 2015 02:02:55 -0800 (PST)
-Received: from mail-ig0-x236.google.com (mail-ig0-x236.google.com. [2607:f8b0:4001:c05::236])
-        by gmr-mx.google.com with ESMTPS id nt6si1337690igb.2.2015.02.25.02.02.55
-        for <msysgit@googlegroups.com>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 25 Feb 2015 02:02:55 -0800 (PST)
-Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 2607:f8b0:4001:c05::236 as permitted sender) client-ip=2607:f8b0:4001:c05::236;
-Received: by mail-ig0-x236.google.com with SMTP id h15so4466981igd.3
-        for <msysgit@googlegroups.com>; Wed, 25 Feb 2015 02:02:55 -0800 (PST)
-X-Received: by 10.50.107.7 with SMTP id gy7mr3392587igb.49.1424858574986; Wed,
- 25 Feb 2015 02:02:54 -0800 (PST)
-Received: by 10.107.131.155 with HTTP; Wed, 25 Feb 2015 02:02:24 -0800 (PST)
-In-Reply-To: <vpqh9uavp6q.fsf@anie.imag.fr>
-X-Original-Sender: pclouds@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of pclouds@gmail.com designates 2607:f8b0:4001:c05::236
- as permitted sender) smtp.mail=pclouds@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264377>
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=xSlphbIA+gH2XwXZh8Ma16OTgsjjSLQP99lQXHcmPjw=;
+        b=fus83+rmMZefkaZFBoq9xIV9FCJ/vaiS8JZ6xgS1AJ6VZIvCSbSIO6IOUkzzdl689z
+         Z61gGa+HBzgCB1Cighh3UxDIPJXZ8991GGuNBa1AZjqfYeSSw+6PQGfq+tmptkSYbF3U
+         i0s6v7Hf31p5W0wIoTOT2wGIFbJgXtIyf/g6XT7ZNQBdQRjax6rmXRuLsZ8QA5bulAYk
+         6GdmfAGdxJ4bsnHkORnQKBzVtFoDCEWpWTZaiBw3Xh0SoC2DNdDXkUq9XpeQanovxcw6
+         BlS5LUyBEosi+4wJg8kx/NPMGdoQmtjpOS/OJF2de1qQvQAIyTaP1PiOeW445ePV/BRH
+         VclA==
+X-Received: by 10.107.7.93 with SMTP id 90mr3369892ioh.69.1424858647024; Wed,
+ 25 Feb 2015 02:04:07 -0800 (PST)
+Received: by 10.50.245.144 with HTTP; Wed, 25 Feb 2015 02:04:06 -0800 (PST)
+In-Reply-To: <3e3da365d9b6021c9b6d8547ad8df788@www.dscho.org>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264378>
 
-On Wed, Feb 25, 2015 at 6:56 AM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> To get an idea, I counted the lines of code written by the student I
-> mentored last year:
+On Wed, Feb 25, 2015 at 9:44 AM, Johannes Schindelin
+<johannes.schindelin@gmx.de> wrote:
+> Hi Matthieu,
 >
-> $ git log --author tanayabh@gmail.com -p | diffstat -s
->  43 files changed, 1225 insertions(+), 367 deletions(-)
->
-> I would consider this GSoC as "average" (i.e. not exceptionnally good,
-> but certainly not a bad one either), so you may hope for more, but you
-> should not _expect_ much more IMHO.
->
-> In comparison:
->
-> $ wc -l git-add--interactive.perl
-> 1654 git-add--interactive.perl
-> $ wc -l git-stash.sh
-> 617 git-stash.sh
->
-> I'd expect a rewrite in C to at least double the number of lines of
-> code, so rewriting git-stash would mean writting at least as many lines
-> of code as the GSoC above. git-add--interactive.perl would be rather far
-> above.
->
-> But my point was not to convert _only_ git-pull.sh, but to have a GSoC
-> starting with this one and plan more. Then, depending on how it goes,
-> you can adjust the target.
+> On 2015-02-25 00:56, Matthieu Moy wrote:
+>> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+>>
+>>> On 2015-02-24 19:25, Junio C Hamano wrote:
+>>>> On Tue, Feb 24, 2015 at 9:32 AM, Matthieu Moy
+>>>> <Matthieu.Moy@grenoble-inp.fr> wrote:
+>>>>> About the proposal:
+>>>>>
+>>>>>   The idea of this project is to dive into the Git source code and
+>>>>>   convert, say, git-add--interactive.perl and/or git stash into proper C
+>>>>>   code, making it a so-called "built-in".
+>>>>>
+>>>>> My advice would be to try converting several small scripts, and avoid
+>>>>> targetting a big one....
+>>>>> add--interactive and stash are relatively complex beasts, perhaps
+>>>>> git-pull.sh would be easier to start with.
+>>>>
+>>>> Yeah, I think that is a very good suggestion.
+>>>
+>>> Well, git-pull.sh is really small. I did not want to give the impression that the Git project is giving out freebies. But I have no objection to change it if you open that PR.
+>>
+>> To get an idea, I counted the lines of code written by the student I
+>> mentored last year:
+>>
+>> $ git log --author tanayabh@gmail.com -p | diffstat -s
+>>  43 files changed, 1225 insertions(+), 367 deletions(-)
+>>
+>> I would consider this GSoC as "average" (i.e. not exceptionnally good,
+>> but certainly not a bad one either), so you may hope for more, but you
+>> should not _expect_ much more IMHO.
+>>
+>> In comparison:
+>>
+>> $ wc -l git-add--interactive.perl
+>> 1654 git-add--interactive.perl
+>> $ wc -l git-stash.sh
+>> 617 git-stash.sh
 
-Some data point as I have a half-baked builtin/pull.c in my
-(forgotten) private branch for 3 years. pull.c has 389 lines (with 24
-shell lines left in "#if 0"). git-pull.sh has 340 lines. Let's add 100
-C lines  to pull.c when it's complete, that's 50% more lines. But in
-the git-pull case the student could get a good head start by reusing
-my code, maybe.
--- 
-Duy
+There is also:
 
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+$ wc -l git-bisect.sh
+528 git-bisect.sh
 
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
+And there is already builtin/bisect--helper.c that can be used to
+convert step by step shell code to C. I can mentor or co-mentor this
+convertion by the way, but that would conflict with the other bisect
+related GSoC project if a student takes it.
 
---- 
-You received this message because you are subscribed to the Google Groups "Git for Windows" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+>> I'd expect a rewrite in C to at least double the number of lines of
+>> code, so rewriting git-stash would mean writting at least as many lines
+>> of code as the GSoC above. git-add--interactive.perl would be rather far
+>> above.
+>
+> Sure. You're right, I was thinking too big.
+>
+>> But my point was not to convert _only_ git-pull.sh, but to have a GSoC
+>> starting with this one and plan more. Then, depending on how it goes,
+>> you can adjust the target.
+>
+> That's excellent advice.
+
+Yeah!
+
+>> This all depends on what you intend to do if the student does not finish
+>> the job. If you're going to do the rewrite yourself anyway, then having
+>> the student do even half of it is good already. If you're not going to
+>> finish the job by yourself, then a 95%-done-rewrite means a piece of
+>> code posted on the mailing list and never merged (and a lot of time
+>> wasted).
+>
+> Well, all of this is academic at this point.
+
+Yeah, but it's still worth keeping in many parts of our collective mind :-)
+
+> Let's see whether we get accepted, and then, if a student finds this project compelling enough.
+>
+> If both things happen, I will definitely heed your advice and encourage the student to start with some script that is easily converted, to "get her feet wet".
+
+Great!
+
+Thanks,
+Christian.
