@@ -1,142 +1,119 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] sha1_file: Add sha1_object_type_literally and export it.
-Date: Wed, 25 Feb 2015 13:32:52 -0800
-Message-ID: <xmqq61apoewr.fsf@gitster.dls.corp.google.com>
-References: <54EDACC9.5080204@gmail.com>
-	<1424862460-13514-1-git-send-email-karthik.188@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [BUG] diffcore-rename with duplicate tree entries can segfault
+Date: Wed, 25 Feb 2015 16:40:32 -0500
+Message-ID: <20150225214032.GA32295@peff.net>
+References: <20150224214311.GA8622@peff.net>
+ <xmqqh9uborrx.fsf@gitster.dls.corp.google.com>
+ <20150224224918.GA24749@peff.net>
+ <xmqqd24yq517.fsf@gitster.dls.corp.google.com>
+ <20150224234737.GA8370@peff.net>
+ <xmqq8ufmpouz.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 25 22:33:04 2015
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 25 22:40:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YQjZn-0007CW-MY
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Feb 2015 22:33:04 +0100
+	id 1YQjh9-0003uL-G5
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Feb 2015 22:40:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753632AbbBYVc4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Feb 2015 16:32:56 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:58992 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752907AbbBYVcz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Feb 2015 16:32:55 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 790183A0DA;
-	Wed, 25 Feb 2015 16:32:54 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=gH7U4jsaDI8TBYN66I/evxlws28=; b=Xqa0L/
-	CDDt//T3j2wvwhTOACCAmaFEk+uXYGp3m2hnj5/qOywwhVYIZV/7UKofv9jHNtcl
-	v9sRxl0iyeX9Snr2Fvy+VJxMM/ScrFLrVjIPRTzLj/D2T0kiV2qJcvM06GI5LoJX
-	TqRGuI9PmMK++r1PQ3BblPmSrWeRI1EemVXno=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Wcp8YILWGaGJo73W6WNBjic/821frXPE
-	N8qd8/KKRBd+AIbHEVFsl68seQvG58t6auECMxxNOswrYkowoV0gAX/CDWg0/rjX
-	DsCwE9L0+Hm0kKQYB/98qZdpfoCJa8Ft1pBlGLnas7+19E0HhDuqNknr+UNSvXeI
-	1Bfcu7uD3EM=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 707EC3A0D9;
-	Wed, 25 Feb 2015 16:32:54 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EC9B63A0D8;
-	Wed, 25 Feb 2015 16:32:53 -0500 (EST)
-In-Reply-To: <1424862460-13514-1-git-send-email-karthik.188@gmail.com>
-	(Karthik Nayak's message of "Wed, 25 Feb 2015 16:37:40 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: DB664A18-BD35-11E4-AFAA-A4119F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1753367AbbBYVkf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Feb 2015 16:40:35 -0500
+Received: from cloud.peff.net ([50.56.180.127]:53363 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752761AbbBYVke (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Feb 2015 16:40:34 -0500
+Received: (qmail 15268 invoked by uid 102); 25 Feb 2015 21:40:34 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Feb 2015 15:40:34 -0600
+Received: (qmail 19187 invoked by uid 107); 25 Feb 2015 21:40:36 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Feb 2015 16:40:36 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Feb 2015 16:40:32 -0500
+Content-Disposition: inline
+In-Reply-To: <xmqq8ufmpouz.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264415>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264416>
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+On Tue, Feb 24, 2015 at 09:00:20PM -0800, Junio C Hamano wrote:
 
-> +int sha1_object_type_literally(const unsigned char *sha1, char *type)
-> +{
-> +	int status = 0;
-> +	unsigned long mapsize;
-> +	void *map;
-> +	git_zstream stream;
-> +	char hdr[32];
-> +	int i;
-> +
-> +	map = map_sha1_file(sha1, &mapsize);
-> +	if (!map)
-> +		return -1;
+> Jeff King <peff@peff.net> writes:
+> 
+> >   3. The sort order check is wrong. :-/ It needs to take into account
+> >      git's magic "if it's a tree, pretend it has '/' after it" rule.
+> >      That's not too hard for a single tree (fsck.c:verify_ordered does
+> >      it). But for filepairs, I'm not sure what to do. Most cases
+> >      have a single mode/name pair. But what about a D/F typechange? If
+> >      "foo" becomes "foo/", which do I use to sort?
+> 
+> I think diff-index populates the diff queue in a wrong order and
+> then calls diffcore_fix_diff_index() to fix it up.
+> 
+> I am a bit worried about the effect this stricter input check might
+> have to "diff --no-index" codepath, though.
 
-I am not sure if it is a good idea to introduce a function with the
-above signature and the semantics in the first place.  It is OK to
-assume that objects with funny typenames only appear as loose
-objects, but it is not OK for "cat-file --literally" to fail to work
-on objects that are of kosher types.
+Interesting, I didn't even know about diffcore_fix_diff_index.
 
-What should "git cat-file --literally -t HEAD~2" do?  I think it
-should say "commit" as long as my current history is at least 3
-commits deep, even when my repository is fully packed.  But I
-suspect the above code does not do that.  
+Let's forget about sorting for a moment. Unsorted trees will produce odd
+results, certainly, but the order of your diff is perhaps the least of
+the problems. The only reason we care about it here is to do a cheap
+uniq() operation.
 
-Looking at how we collect information on normal objects, it may make
-more sense to model this after sha1_loose_object_info(), with a
-tweak to struct object_info datatype, and integrate it into
-sha1_object_info_extended() may make more sense, perhaps along the
-lines of the attached patch.
+But we can also do that with a hash table, or an auxiliary sorted array.
+And sure enough, that's exactly what the rename_dst array is. When we
+are inserting into it, we can easily detect duplicates there, and just
+abort the rename operation. Like:
 
-The new helper would mimick what sha1_loose_object_info() is doing,
-in that it may be used to learn on-disk size, object size, typename
-string (returned in oi->typename strbuf that is optional).  There is
-no sensible value to stuff in oi->typep if the incoming object name
-refers to the experimental invalid object, so perhaps you will store
-OBJ_NONE or something there and the "cat-file --literally" would use
-the oi->typename to learn the name of the "type".
+diff --git a/diffcore-rename.c b/diffcore-rename.c
+index 4e132f1..e26dd62 100644
+--- a/diffcore-rename.c
++++ b/diffcore-rename.c
+@@ -27,7 +27,7 @@ static struct diff_rename_dst *locate_rename_dst(struct diff_filespec *two,
+ 		struct diff_rename_dst *dst = &(rename_dst[next]);
+ 		int cmp = strcmp(two->path, dst->two->path);
+ 		if (!cmp)
+-			return dst;
++			return insert_ok ? NULL : dst;
+ 		if (cmp < 0) {
+ 			last = next;
+ 			continue;
+@@ -450,8 +450,10 @@ void diffcore_rename(struct diff_options *options)
+ 			else if (!DIFF_OPT_TST(options, RENAME_EMPTY) &&
+ 				 is_empty_blob_sha1(p->two->sha1))
+ 				continue;
+-			else
+-				locate_rename_dst(p->two, 1);
++			else {
++				if (!locate_rename_dst(p->two, 1))
++					goto cleanup;
++			}
+ 		}
+ 		else if (!DIFF_OPT_TST(options, RENAME_EMPTY) &&
+ 			 is_empty_blob_sha1(p->one->sha1))
 
+which I think is a pretty simple and sane fix. I do notice that
+rename_dst and rename_src are essentially hash tables. They predate
+hashmap.c by quite a bit, but it might be worth moving them. It would
+simplify the code, and I suspect perform better (they progressively
+insert into a sorted list; in the worst case that means O(n^2)
+memmove's, though if the input is sorted we get best-case behavior).
 
- cache.h     | 1 +
- sha1_file.c | 9 +++++++++
- 2 files changed, 10 insertions(+)
+So to go forward, I'm happy to prepare a patch, but I'd like to know:
 
-diff --git a/cache.h b/cache.h
-index 4d02efc..72b7cfa 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1296,6 +1296,7 @@ struct object_info {
- 	unsigned long *sizep;
- 	unsigned long *disk_sizep;
- 	unsigned char *delta_base_sha1;
-+	struct strbuf *typename;
- 
- 	/* Response */
- 	enum {
-diff --git a/sha1_file.c b/sha1_file.c
-index 69a60ec..2c0e83a 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -2568,6 +2568,8 @@ static int sha1_loose_object_info(const unsigned char *sha1,
- 	munmap(map, mapsize);
- 	if (oi->typep)
- 		*oi->typep = status;
-+	if (oi->typename && 0 < status && typename(status))
-+		strbuf_add(oi->typename, typename(status));
- 	return 0;
- }
- 
-@@ -2593,6 +2595,13 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi,
- 	}
- 
- 	if (!find_pack_entry(real, &e)) {
-+		/* Have we been asked to check possibly invalid ones? */
-+		if ((flags & LOOKUP_LITERALLY) &&
-+		    !sha1_object_info_literally(real, oi)) {
-+			oi->whence = OI_LOOSE;
-+			return 0;
-+		}
-+
- 		/* Most likely it's a loose object. */
- 		if (!sha1_loose_object_info(real, oi)) {
- 			oi->whence = OI_LOOSE;
+  1. Does something like the above look reasonable to you (I'd probably
+     refactor it to avoid the bizarre return value semantics from
+     locate_rename_dst, though)?
+
+  2. If so, do you want something minimal like what's above, or do you
+     mind if I build it on top of a hashmap conversion? I suspect the
+     logic may also end up more clear with the hashmap (since inserting
+     versus lookup will be more distinct in the callers).
+
+-Peff
