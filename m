@@ -1,88 +1,123 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG] diffcore-rename with duplicate tree entries can segfault
-Date: Wed, 25 Feb 2015 13:50:38 -0800
-Message-ID: <xmqq1tldoe35.fsf@gitster.dls.corp.google.com>
-References: <20150224214311.GA8622@peff.net>
-	<xmqqh9uborrx.fsf@gitster.dls.corp.google.com>
-	<20150224224918.GA24749@peff.net>
-	<xmqqd24yq517.fsf@gitster.dls.corp.google.com>
-	<20150224234737.GA8370@peff.net>
-	<xmqq8ufmpouz.fsf@gitster.dls.corp.google.com>
-	<20150225214032.GA32295@peff.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 1/2] sha1_file: Add sha1_object_type_literally and export it.
+Date: Wed, 25 Feb 2015 16:55:35 -0500
+Message-ID: <CAPig+cQDLU4CBQtE8vAKLyz4Xv=2DsDDMz787DVjrFwW2tiKXg@mail.gmail.com>
+References: <54EDACC9.5080204@gmail.com>
+	<1424862460-13514-1-git-send-email-karthik.188@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Feb 25 22:51:02 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 25 22:55:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YQjr4-0002FR-Ga
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Feb 2015 22:50:54 +0100
+	id 1YQjvn-0005bu-8t
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Feb 2015 22:55:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753461AbbBYVux (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Feb 2015 16:50:53 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:58748 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752907AbbBYVuv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Feb 2015 16:50:51 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E262B3A742;
-	Wed, 25 Feb 2015 16:50:50 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=cn4pPCabvnkaRLu0u9j3gX/TY+A=; b=fz7fCo
-	FftPj/8ZQkv0KD/V6uSg2FI1/UKD1LGQerQIeja1rDrBTdEwBFoQ3hW4jhFCjJTb
-	T5uvlBZ1OHoeECi1vmEynsucSgZ8mIDbT1Rcdyi+TnBziBAYXNOESqdQGr3rd3I2
-	yrXBprK1U0squgfCu8NJ1VBbkAdV9PhIaU6gY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xqJZryikzKF0Rjr/FpHapqUdbGc3Zb+N
-	dQUY700xrmkwvtGeO8dZBdGpXPuEeQBEFRvs3KEblQLb8YOrceL0f4bckltGvNP1
-	rAKpbQVKtwAoY8/LP0J/RA+Kzdwhb/HGew5U/M5iyZgW6hQgeUdA1vAOE8UJSX7P
-	vbvc1FBBK0Y=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id DA0DE3A741;
-	Wed, 25 Feb 2015 16:50:50 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 51EB93A72E;
-	Wed, 25 Feb 2015 16:50:40 -0500 (EST)
-In-Reply-To: <20150225214032.GA32295@peff.net> (Jeff King's message of "Wed,
-	25 Feb 2015 16:40:32 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 5700C494-BD38-11E4-A8DB-A4119F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1753882AbbBYVzj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Feb 2015 16:55:39 -0500
+Received: from mail-yh0-f46.google.com ([209.85.213.46]:41151 "EHLO
+	mail-yh0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932299AbbBYVzh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Feb 2015 16:55:37 -0500
+Received: by yhaf10 with SMTP id f10so2488621yha.8
+        for <git@vger.kernel.org>; Wed, 25 Feb 2015 13:55:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=3iBnMIg0JxCCY6ozXAmzrS0IJc4K5832/MwGyNfQM98=;
+        b=Rv32ExR/ldB7DovI9MuJTRiAZT572MwlHdEAmDnRC+hZ8npw1N0DZ4ZIUmxWpkp4T1
+         W/m7upJP6UV+DlhJevYgoWeCVvBtTPnBQRNDHzoWishm96jFZ3eeIRswqVxNNp1Xcm0s
+         n3ll9YClfJ94/Dkr7KPcUiod38UKOx4K+UaCRvfSOYvNF7rure2DkWUvZnBI+y76mbul
+         aDpqGUnfKZApLK/xKvR+fNqyhXyPUeEjpDlEZ3ZCnbQRFAFZcdnzN97MZn8w2Y3hENew
+         15SEx21yClwUZPILdZhADiOFlo0OKyEnbYmad9XxPoKkv24xR3Lz8SMgyi9aW2dbkb27
+         58sg==
+X-Received: by 10.170.41.5 with SMTP id 5mr4436275ykj.85.1424901335592; Wed,
+ 25 Feb 2015 13:55:35 -0800 (PST)
+Received: by 10.170.73.7 with HTTP; Wed, 25 Feb 2015 13:55:35 -0800 (PST)
+In-Reply-To: <1424862460-13514-1-git-send-email-karthik.188@gmail.com>
+X-Google-Sender-Auth: a9axXzQyjRPoMDW5LzlhYtUd_d8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264418>
 
-Jeff King <peff@peff.net> writes:
+I had written a longer review but was interrupted for a several hours,
+and upon returning found that David and Junio covered many of the same
+issues or overrode comments I was making, so the below review is pared
+down quite a bit. Junio's proposed approach negates all of the below
+review comments, but they may still be meaningful if kept in mind for
+future submissions.
 
-> But we can also do that with a hash table, or an auxiliary sorted array.
-> And sure enough, that's exactly what the rename_dst array is.
-> ...
-> which I think is a pretty simple and sane fix.
+On Wed, Feb 25, 2015 at 6:07 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
+> sha1_file: Add sha1_object_type_literally and export it.
 
-Yeah, good observation.
+Style: downcase "Add"; drop terminating period.
 
-> So to go forward, I'm happy to prepare a patch, but I'd like to know:
+> sha1_object_type_literally takes a sha value and
+> gives the type of the given loose object, used by
+> git cat-file -t --literally.
 >
->   1. Does something like the above look reasonable to you (I'd probably
->      refactor it to avoid the bizarre return value semantics from
->      locate_rename_dst, though)?
+> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+> ---
+> --- a/sha1_file.c
+> +++ b/sha1_file.c
+> @@ -2635,6 +2635,33 @@ int sha1_object_info(const unsigned char *sha1, unsigned long *sizep)
+>         return type;
+>  }
 >
->   2. If so, do you want something minimal like what's above, or do you
->      mind if I build it on top of a hashmap conversion? I suspect the
->      logic may also end up more clear with the hashmap (since inserting
->      versus lookup will be more distinct in the callers).
+> +int sha1_object_type_literally(const unsigned char *sha1, char *type)
 
-No, I don't mind.  The diff-b-m topic seems to need a lot deeper
-rethink than I originally anticipated anyway, and it can wait for a
-clean-up to use hashmap to stabilize.
+This functionality is very specific to the --literally option you're
+adding to cat-file, so it would make more sense to make it private to
+builtin/cat-file.c rather than publishing it globally.
 
-Thanks.
+Also, this is an unsafe contract. The caller does not know how many
+bytes to allocate for 'type', and this new function may write past the
+end of the buffer. It is more common to also pass in the size of the
+'type' buffer and ensure that you do not write beyond that. Or, if
+this is intended for wider consumption, pass in a strbuf instead.
+
+> +{
+> +       int status = 0;
+> +       unsigned long mapsize;
+> +       void *map;
+> +       git_zstream stream;
+> +       char hdr[32];
+> +       int i;
+> +
+> +       map = map_sha1_file(sha1, &mapsize);
+> +       if (!map)
+> +               return -1;
+> +       if (unpack_sha1_header(&stream, map, mapsize, hdr, sizeof(hdr)) < 0)
+> +               status = error("unable to unpack %s header",
+> +                              sha1_to_hex(sha1));
+
+Since 'hdr' unpacking failed, shouldn't you be returning at this point
+rather than continuing to the 'hdr' processing loop?
+
+> +       for (i = 0; i < 32; i++) {
+> +               if (hdr[i] == ' ') {
+> +                       type[i] = '\0';
+> +                       break;
+> +               }
+> +               type[i] = hdr[i];
+> +       }
+
+David already mentioned that this loop is suspect. Perhaps take a look
+at, sha1_file.c:parse_sha1_header() for an example of cleaner logic.
+
+> +
+> +       return status;
+> +}
+> +
+>  static void *read_packed_sha1(const unsigned char *sha1,
+>                               enum object_type *type, unsigned long *size)
+>  {
+> --
+> 2.3.1.129.g11acff1.dirty
