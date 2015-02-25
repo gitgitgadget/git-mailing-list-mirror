@@ -1,117 +1,163 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Any chance for a Git v2.1.5 release?
-Date: Tue, 24 Feb 2015 21:13:04 -0800
-Message-ID: <xmqq4mqapo9r.fsf@gitster.dls.corp.google.com>
-References: <C5211E53-8905-41C9-9D28-26D7BB51E76A@gmail.com>
-	<xmqqk2z7qe8s.fsf@gitster.dls.corp.google.com>
-	<2D3EB6D1-3029-4F60-AF29-E044E92DB036@gmail.com>
+Subject: [ANNOUNCE] Git v2.3.1
+Date: Tue, 24 Feb 2015 23:02:26 -0800
+Message-ID: <xmqqzj82o4n1.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Git Mailing List <git@vger.kernel.org>
-To: "Kyle J. McKay" <mackyle@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 25 06:13:18 2015
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+Cc: Linux Kernel <linux-kernel@vger.kernel.org>
+To: git@vger.kernel.org
+X-From: linux-kernel-owner@vger.kernel.org Wed Feb 25 08:02:37 2015
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YQUHb-0007Dh-KT
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Feb 2015 06:13:15 +0100
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1YQVzQ-0004ym-3N
+	for glk-linux-kernel-3@plane.gmane.org; Wed, 25 Feb 2015 08:02:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750771AbbBYFNI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Feb 2015 00:13:08 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:61453 "EHLO
+	id S1752245AbbBYHCb (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Wed, 25 Feb 2015 02:02:31 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:57776 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750703AbbBYFNH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Feb 2015 00:13:07 -0500
+	with ESMTP id S1751068AbbBYHC3 (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Wed, 25 Feb 2015 02:02:29 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7531B3CA52;
-	Wed, 25 Feb 2015 00:13:06 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 46DDF36F79;
+	Wed, 25 Feb 2015 02:02:28 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=w8d60HamUPNcUXIHxNQONzw3Feo=; b=Sy5+r+
-	0k3ZsolIb0g9vGvxz+3cuagC1vesj9ez0c3drmL4cfXeBk71qmIl+a2DtduSjcti
-	c1xX1GcrbIspCK3nwQGAjGMSer4TPB5WSJzJEzinJMxagat43jhfVJbFVfOg0psh
-	W2F1PQt91OsjkjjLn2CLBwp23djf8MJsKnnug=
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=8
+	cpcjYD9RCgjViojv8ag3c2qZ4U=; b=WKrsQQUsDGiaBDfLW/KT7OC1ZIxrnxChC
+	xlbo3CYiptnSH6Bbtf/cNMCa7MMdVOZi9DyZxgHTcpfxTplD7LphkP+zpNA9mJwZ
+	IZt2MktP9Qg7p5JjpxYYa2FYCzIS4yH7zNJnom4w8kX66CdmZsHVdvbaTeikTKSY
+	hdFht5/zhA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=p4A72jogOzhz7BTHHwjsuStG8GMaGFnn
-	x/AELxv2pB/MTfL2Ye85IGNiqpyGoP5ZsO/Pkiz/kyDBlqLpQnmdmblD9hr/N6Js
-	VXYwTK2jQfJQoz0e/z0XgxAWye+ENmLoniVY3VHlb2rruB8X3GDmfpz1UNHLlbPj
-	UCizj6amQTc=
+	:subject:date:message-id:mime-version:content-type; q=dns; s=
+	sasl; b=cOJ7yiAl86TYENz9n24iWMDL0uHx/gCYxs4nBzPQz6kElUoYFsvYbHw9
+	fsuNTBx9dv2oD0dceNb17lVGrHvnEpxQl6qbhlEx5H8yWG6gTtr7am2VEuZBCpPr
+	Qr2+NEmz7olvEMJ5ZjwmZ4jWhd+BE/Rq202E30FfAwytFmNg/MI=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6BD3F3CA51;
-	Wed, 25 Feb 2015 00:13:06 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3D4EB36F78;
+	Wed, 25 Feb 2015 02:02:28 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E6D483CA50;
-	Wed, 25 Feb 2015 00:13:05 -0500 (EST)
-In-Reply-To: <2D3EB6D1-3029-4F60-AF29-E044E92DB036@gmail.com> (Kyle J. McKay's
-	message of "Tue, 24 Feb 2015 16:55:26 -0800")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AF66436F75;
+	Wed, 25 Feb 2015 02:02:27 -0500 (EST)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: FB019E56-BCAC-11E4-9BD9-A4119F42C9D4-77302942!pb-smtp1.pobox.com
-Sender: git-owner@vger.kernel.org
+X-Pobox-Relay-ID: 42213BB6-BCBC-11E4-8402-A4119F42C9D4-77302942!pb-smtp1.pobox.com
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264367>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264368>
 
-"Kyle J. McKay" <mackyle@gmail.com> writes:
+The latest maintenance release Git v2.3.1 is now available at
+the usual places.
 
->> I can designate ;-), but I do not think I'd be the right person to
->> maintain or long-term-support it.  Are you volunteering to oversee
->> the "LTS team"?
->
-> I could not promise a team of more than one member.  And that would
-> not be full-time 24/7 either.
+The tarballs are found at:
 
-Heh. Making noises to find like-minded people would be the first
-step to build a viable team, and hopefully you are already doing a
-good job here ;-)
+    https://www.kernel.org/pub/software/scm/git/
 
->> It would involve:
->>
->>    - Monitor "git log --first-parent maint-lts..master" and find
->>      the tip of topic branches that need to be down-merged;
->>
->>    - Down-merge such topics to maint-lts; this might involve
->>      cherry-picking instead of merge, as the bugfix topics may
->>      originally be done on the codebase newer than maint-lts;
->
-> I've been cherry-picking fixes for a while now onto older releases.  I
-> don't suppose down-merging would be that much more difficult with a
-> fallback to cherry-picking.
->
->>    - Use the tip of the maint-lts branch in everyday work.
->>
->> The last item is the most important of the above, because I do not
->> have time for that.  I can help with the first two to some degree,
->> though.
->
-> That's pretty much all I use at this point -- a slightly older release
-> with cherry-picked fixes.  While it did cause me to find the problem
-> with the first version of the loose alternates fix, having only one
-> person use such a release doesn't provide that much coverage.
+The following public repositories all have a copy of the 'v2.3.1'
+tag and the 'maint' branch that the tag points at:
 
-That is why I used the word "team".
+  url = git://repo.or.cz/alt-git.git
+  url = https://code.google.com/p/git-core/
+  url = git://git.sourceforge.jp/gitroot/git-core/git.git
+  url = git://git-core.git.sourceforge.net/gitroot/git-core/git-core
+  url = https://github.com/gitster/git
 
-> It occurs to me that if the "maint-lts" updates were limited to crash
-> fixes, regressions and security issues then often the pre-built man
-> pages and docs from the release it's based on could be used as-is with
-> the exception of the new release notes which might save some time.
+Git v2.3.1 Release Notes
+========================
 
-Cutting release tarballs including the pre-formatting docs might
-consume a lot of machine time, but it does not cost me time at all.
-I have Makefile for that ;-)
+Fixes since v2.3
+----------------
 
-Judging which fixes that have proven themselves to be safe and sound
-(by being in 'next', 'master' and hopefully 'maint' for some time)
-are worthy enough of down-merging to the LTS track is something I'd
-want to farm out to the LTS team.  I am already doing the "safe and
-sound" part by deciding which topics to merge to 'maint' among the
-topics that have gone through 'pu' to 'next' to 'master' branches,
-but not all that are worthy enough to be merged to 'maint' may be
-important enough to bother downmerging and updating LTS track with,
-and picking which ones matter to the LTS users is what the folks who
-are interested in the LTS can help.
+ * The interactive "show a list and let the user choose from it"
+   interface "add -i" used showed and prompted to the user even when
+   the candidate list was empty, against which the only "choice" the
+   user could have made was to choose nothing.
+
+ * "git apply --whitespace=fix" used to under-allocate the memory
+   when the fix resulted in a longer text than the original patch.
+
+ * "git log --help" used to show rev-list options that are irrelevant
+   to the "log" command.
+
+ * The error message from "git commit", when a non-existing author
+   name was given as value to the "--author=" parameter, has been
+   reworded to avoid misunderstanding.
+
+ * A broken pack .idx file in the receiving repository prevented the
+   dumb http transport from fetching a good copy of it from the other
+   side.
+
+ * The documentation incorrectly said that C(opy) and R(ename) are the
+   only ones that can be followed by the score number in the output in
+   the --raw format.
+
+ * Fix a misspelled conditional that is always true.
+
+ * Code to read branch name from various files in .git/ directory
+   would have misbehaved if the code to write them left an empty file.
+
+ * The "git push" documentation made the "--repo=<there>" option
+   easily misunderstood.
+
+ * After attempting and failing a password-less authentication
+   (e.g. kerberos), libcURL refuses to fall back to password based
+   Basic authentication without a bit of help/encouragement.
+
+ * Setting diff.submodule to 'log' made "git format-patch" produce
+   broken patches.
+
+ * "git rerere" (invoked internally from many mergy operations) did
+   not correctly signal errors when told to update the working tree
+   files and failed to do so for whatever reason.
+
+ * "git blame HEAD -- missing" failed to correctly say "HEAD" when it
+   tried to say "No such path 'missing' in HEAD".
+
+Also contains typofixes, documentation updates and trivial code clean-ups.
+
+----------------------------------------------------------------
+
+Changes since v2.3.0 are as follows:
+
+Alexander Kuleshov (1):
+      add -i: return from list_and_choose if there is no candidate
+
+Doug Kelly (2):
+      t4255: test am submodule with diff.submodule
+      format-patch: ignore diff.submodule setting
+
+Jeff King (7):
+      git-compat-util: add xstrdup_or_null helper
+      builtin/apply.c: use xstrdup_or_null instead of null_strdup
+      builtin/commit.c: use xstrdup_or_null instead of envdup
+      use xstrdup_or_null to replace ternary conditionals
+      dumb-http: do not pass NULL path to parse_pack_index
+      read_and_strip_branch: fix typo'd address-of operator
+      do not check truth value of flex arrays
+
+Jonathan Nieder (1):
+      rerere: error out on autoupdate failure
+
+Junio C Hamano (6):
+      apply.c: typofix
+      apply: make update_pre_post_images() sanity check the given postlen
+      apply: count the size of postimage correctly
+      Documentation: what does "git log --indexed-objects" even mean?
+      diff-format doc: a score can follow M for rewrite
+      Git 2.3.1
+
+Lukas Fleischer (1):
+      blame.c: fix garbled error message
+
+Michael J Gruber (2):
+      commit: reword --author error message
+      git-push.txt: document the behavior of --repo
+
+brian m. carlson (1):
+      remote-curl: fall back to Basic auth if Negotiate fails
