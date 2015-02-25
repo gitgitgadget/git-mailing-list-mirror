@@ -1,72 +1,68 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: sparse checkout syntax does not work in git version 1.9.5.msysgit.0
-Date: Wed, 25 Feb 2015 21:06:21 +0700
-Message-ID: <CACsJy8ByEn+Ed6qaBMdjrunghVtCHoEMisj6V8=ezaMKx3aDOg@mail.gmail.com>
-References: <1424731264183-7625887.post@n2.nabble.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: feature request: excluding files/paths from "git grep"
+Date: Wed, 25 Feb 2015 09:31:16 -0500
+Message-ID: <20150225143116.GA13567@peff.net>
+References: <54EDBEC2.8090107@peralex.com>
+ <CACsJy8AM=W4f6u_7YpvmfiBwrJjqfJMJoq6CQYfKOh+qD6rF3Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: samt <sam777t@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 25 15:06:59 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Noel Grandin <noel@peralex.com>, git <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 25 15:31:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YQcc5-0004Sg-Q7
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Feb 2015 15:06:58 +0100
+	id 1YQczo-0002H0-U9
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Feb 2015 15:31:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752166AbbBYOGx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Feb 2015 09:06:53 -0500
-Received: from mail-ig0-f172.google.com ([209.85.213.172]:52940 "EHLO
-	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751848AbbBYOGw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Feb 2015 09:06:52 -0500
-Received: by mail-ig0-f172.google.com with SMTP id l13so35576912iga.5
-        for <git@vger.kernel.org>; Wed, 25 Feb 2015 06:06:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=UKV1QiYcczvg1hPzivbdrVtrIiDSNcXiYy2kLVOUNSs=;
-        b=KSQFRn7+IS3SV8qIpO8E4omZnjxTKY9L8EVN4B461zeVpjWrmf7ESdW7I7mljgSXF0
-         0uSlS6ciSz9RKNHiHvA6AY3YKFTn0ukcAXz2ig8JFMwg5sN3GMlWPvGPlEkF/kn7cMnZ
-         g0ZvYbeqaMZcbHfkeekEz+kJoIJhbGsmFWA1x615vyYNIXL4ePgT0g2kQnL+81m+rOQT
-         04KJpjtJAowWQ8Orot2eZ2Ymi3QEaGfGS4iJULMuPcowZAHLTcwd2sjV1Z3f5htwiTgZ
-         D879RuV0UB42iF1LMurLaeMls/KXn3BOxmb4zq6MxofJEpnjnDvHjD7FPxIYroUCHkAB
-         4W3A==
-X-Received: by 10.107.170.220 with SMTP id g89mr4564484ioj.31.1424873212031;
- Wed, 25 Feb 2015 06:06:52 -0800 (PST)
-Received: by 10.107.131.155 with HTTP; Wed, 25 Feb 2015 06:06:21 -0800 (PST)
-In-Reply-To: <1424731264183-7625887.post@n2.nabble.com>
+	id S1752883AbbBYObT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Feb 2015 09:31:19 -0500
+Received: from cloud.peff.net ([50.56.180.127]:53179 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752401AbbBYObT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Feb 2015 09:31:19 -0500
+Received: (qmail 26464 invoked by uid 102); 25 Feb 2015 14:31:18 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Feb 2015 08:31:18 -0600
+Received: (qmail 15565 invoked by uid 107); 25 Feb 2015 14:31:19 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Feb 2015 09:31:19 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Feb 2015 09:31:16 -0500
+Content-Disposition: inline
+In-Reply-To: <CACsJy8AM=W4f6u_7YpvmfiBwrJjqfJMJoq6CQYfKOh+qD6rF3Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264394>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264395>
 
-On Tue, Feb 24, 2015 at 5:41 AM, samt <sam777t@gmail.com> wrote:
-> The platform is Windows server 2008
-> Git version is 1.9.5.msysgit.0
->
-> I have a repository and I want EVERYTHING in the repository to be checked
-> out into the workspace EXCEPT one directory.  I have a machine with  git
-> version 1.7.8.msysgit.0 and the following syntax in
-> .git/info/sparse-checkout file works fine:
->
-> /*
-> !engine/testdata/scenarios
+On Wed, Feb 25, 2015 at 08:46:37PM +0700, Duy Nguyen wrote:
 
-It works for me. I rebuilt v1.9.5.msysgit.0 on linux and tested that
-version. I changed line ending to cr/lf and it was still ok. Are you
-sure there's no trailing spaces in that file? Maybe you can copy that
-file to another test repo, rename it to .gitignore and see if it
-ignores files correctly.
+> On Wed, Feb 25, 2015 at 7:23 PM, Noel Grandin <noel@peralex.com> wrote:
+> > What would be nice is a per-user/repo config setting that excludes certain
+> > files and paths from the 'git grep' search.
+> >
+> > Does this sound reasonable/acceptable?
+> 
+> There is no config setting to do that, but since v1.9.5 you can use
+> ':!' or ':(exclude) to exclude paths, for example
+> 
+> git grep foo -- '*.c' ':!src/ ':!*foo*.c'
+> 
+> will exclude .c files in src directory or contains "foo". If you use
+> some exclude patterns often, you can write a short script. Perhaps we
+> could support pathspec macros (similar to git-attr macros), stored in
+> config file. You still need to type, but it'll be a lot shorter.
 
-> This syntax does not seem to work with 1.9.5.msysgit.0  version. I have
-> tried to alter the syntax based on some suggestions on the internet, but
-> none of the combinations work. Git still attempts to checkout the directory
-> that I do not want.  Does anyone know what syntax works for version
-> 1.9.5.msysgit.0 ? Thanks.
---
-Duy
+If it's an attribute of the file, and not the request, maybe
+gitattributes would be a better fit. You can already do this with:
+
+  *.foo -diff
+
+in your .gitattributes file, though that _also_ marks the files as "not
+for diffing", which may not be desired. There's not a separate "grep"
+attribute, but I do not think it would be unreasonable to add one.
+
+-Peff
