@@ -1,144 +1,118 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [msysGit] Re: [RFH] GSoC 2015 application
-Date: Wed, 25 Feb 2015 11:04:06 +0100
-Message-ID: <CAP8UFD2PcBsU6=FK4OHVrB7E98ycohS_0pYcbCBar=of1HLx+Q@mail.gmail.com>
-References: <20150218191417.GA7767@peff.net>
-	<20150218193234.GA8298@peff.net>
-	<5f6dbabdf4da3c3c757d92ba00a8b7d1@www.dscho.org>
-	<vpqioerz03s.fsf@anie.imag.fr>
-	<CAPc5daXTLRZW-uk++ZjbtafbR6SB41dyc0Cu1gN=Qy7CEhOq-A@mail.gmail.com>
-	<c9ff859363d2d637b3607aaf6cb9295d@www.dscho.org>
-	<vpqh9uavp6q.fsf@anie.imag.fr>
-	<3e3da365d9b6021c9b6d8547ad8df788@www.dscho.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	Git Mailing List <git@vger.kernel.org>,
-	msysGit <msysgit@googlegroups.com>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Feb 25 11:04:18 2015
+From: "Kyle J. McKay" <mackyle@gmail.com>
+Subject: Re: git svn import failure : write .git/Git_svn_hash_BmjclS: Bad file descriptor
+Date: Wed, 25 Feb 2015 02:19:55 -0800
+Message-ID: <801181a93d829d68b96c4b61d1ebdc3@74d39fa044aa309eaea14b9f57fe79c>
+References: <CABNxngNDwf_Cy77OzvMg__kCNoTz5y1a2KKG1vobYjE_m_aLkQ@mail.gmail.com> <20150129233429.GA7162@dcvr.yhbt.net> <CABNxngPErFiTzUNK6P90Ug5fVtJSYD9XrGrQzK8+mt2u4g=Xyg@mail.gmail.com> <20150130002247.GA22519@dcvr.yhbt.net> <CABNxngMVsaSLmzf0ZsaXZqXhD+hOaRmz-uuSzm0ALDFhKjnrXA@mail.gmail.com> <20150130013017.GA10713@dcvr.yhbt.net> <CAK6Z60cGnvPP0ctnyV4tHfMmBGYRidEJzkAG+J2h9BunmtOAsQ@mail.gmail.com> <CABNxngNH20O52QHSivQLvRFSW2hqnVTYuBv0CWn1L53cL+XoGw@mail.gmail.com> <20150212191807.GA30062@dcvr.yhbt.net> <CAK6Z60dZu_0kNJF2-eJMgnjYVhxfyps53mcfZT41V1DBZZ+zhw@mail.gmail.com> <20150217061707.GA4308@dcvr.yhbt.net>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git mailing list <git@vger.kernel.org>
+To: Eric Wong <normalperson@yhbt.net>, Mike <ipso@snappymail.ca>,
+	Minty <mintywalker@gmail.com>,
+	=?UTF-8?q?Nico=20Schl=C3=B6mer?= <nico.schloemer@gmail.com>,
+	Valery Yundin <yuvalery@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 25 11:20:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YQYpD-00088V-Cz
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Feb 2015 11:04:15 +0100
+	id 1YQZ4l-0000AX-9k
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Feb 2015 11:20:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753013AbbBYKEK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Feb 2015 05:04:10 -0500
-Received: from mail-ie0-f172.google.com ([209.85.223.172]:44210 "EHLO
-	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751293AbbBYKEH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Feb 2015 05:04:07 -0500
-Received: by iecar1 with SMTP id ar1so3501915iec.11
-        for <git@vger.kernel.org>; Wed, 25 Feb 2015 02:04:07 -0800 (PST)
+	id S1752413AbbBYKUH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Feb 2015 05:20:07 -0500
+Received: from mail-pd0-f169.google.com ([209.85.192.169]:39083 "EHLO
+	mail-pd0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751720AbbBYKUF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Feb 2015 05:20:05 -0500
+Received: by pdjy10 with SMTP id y10so3944112pdj.6
+        for <git@vger.kernel.org>; Wed, 25 Feb 2015 02:20:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=xSlphbIA+gH2XwXZh8Ma16OTgsjjSLQP99lQXHcmPjw=;
-        b=fus83+rmMZefkaZFBoq9xIV9FCJ/vaiS8JZ6xgS1AJ6VZIvCSbSIO6IOUkzzdl689z
-         Z61gGa+HBzgCB1Cighh3UxDIPJXZ8991GGuNBa1AZjqfYeSSw+6PQGfq+tmptkSYbF3U
-         i0s6v7Hf31p5W0wIoTOT2wGIFbJgXtIyf/g6XT7ZNQBdQRjax6rmXRuLsZ8QA5bulAYk
-         6GdmfAGdxJ4bsnHkORnQKBzVtFoDCEWpWTZaiBw3Xh0SoC2DNdDXkUq9XpeQanovxcw6
-         BlS5LUyBEosi+4wJg8kx/NPMGdoQmtjpOS/OJF2de1qQvQAIyTaP1PiOeW445ePV/BRH
-         VclA==
-X-Received: by 10.107.7.93 with SMTP id 90mr3369892ioh.69.1424858647024; Wed,
- 25 Feb 2015 02:04:07 -0800 (PST)
-Received: by 10.50.245.144 with HTTP; Wed, 25 Feb 2015 02:04:06 -0800 (PST)
-In-Reply-To: <3e3da365d9b6021c9b6d8547ad8df788@www.dscho.org>
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=APf7tXh2DrqbzejIKug8C64gyq5fV0foWRGmLwh/w1E=;
+        b=FKByic+RerGqHz+uhVSmRZ3G8qDL3pYnJOO4zlOcykbbAPvrFFGUE9MFKWiQEoAGEW
+         TY5MdKfrGuwJ4QMr+JISdyBz7WPYbeBp1t53gU1LOqg9iz6PcTlh0u8sH2vUjg7GN1AD
+         z5AU+s8u1nj8PwP2Q/hRbvD7Td5ark9F2ggG+sEZZOxP9Sez4z6o4btz/MeyC4NPAz8A
+         FoN9GxU8BRZYr6x+nZUOvx/Kkg/ddGgFR3HU7ois0FvHvMuus6iq9B/nBNaaspDsorkq
+         W2fSsfPIRTdE2XQQDREEJvJCycUyrE+rV/ZSzVsvVnG+YuxbArK4ZcOrsxG93cYSnR3g
+         4tCA==
+X-Received: by 10.70.23.69 with SMTP id k5mr4248589pdf.68.1424859604708;
+        Wed, 25 Feb 2015 02:20:04 -0800 (PST)
+Received: from localhost.localdomain ([2002:48c0:ad8d:0:223:12ff:fe05:eebd])
+        by mx.google.com with ESMTPSA id gt10sm37403376pac.32.2015.02.25.02.20.02
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Wed, 25 Feb 2015 02:20:03 -0800 (PST)
+In-Reply-To: <20150217061707.GA4308@dcvr.yhbt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264378>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264379>
 
-On Wed, Feb 25, 2015 at 9:44 AM, Johannes Schindelin
-<johannes.schindelin@gmx.de> wrote:
-> Hi Matthieu,
->
-> On 2015-02-25 00:56, Matthieu Moy wrote:
->> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
->>
->>> On 2015-02-24 19:25, Junio C Hamano wrote:
->>>> On Tue, Feb 24, 2015 at 9:32 AM, Matthieu Moy
->>>> <Matthieu.Moy@grenoble-inp.fr> wrote:
->>>>> About the proposal:
->>>>>
->>>>>   The idea of this project is to dive into the Git source code and
->>>>>   convert, say, git-add--interactive.perl and/or git stash into proper C
->>>>>   code, making it a so-called "built-in".
->>>>>
->>>>> My advice would be to try converting several small scripts, and avoid
->>>>> targetting a big one....
->>>>> add--interactive and stash are relatively complex beasts, perhaps
->>>>> git-pull.sh would be easier to start with.
->>>>
->>>> Yeah, I think that is a very good suggestion.
->>>
->>> Well, git-pull.sh is really small. I did not want to give the impression that the Git project is giving out freebies. But I have no objection to change it if you open that PR.
->>
->> To get an idea, I counted the lines of code written by the student I
->> mentored last year:
->>
->> $ git log --author tanayabh@gmail.com -p | diffstat -s
->>  43 files changed, 1225 insertions(+), 367 deletions(-)
->>
->> I would consider this GSoC as "average" (i.e. not exceptionnally good,
->> but certainly not a bad one either), so you may hope for more, but you
->> should not _expect_ much more IMHO.
->>
->> In comparison:
->>
->> $ wc -l git-add--interactive.perl
->> 1654 git-add--interactive.perl
->> $ wc -l git-stash.sh
->> 617 git-stash.sh
+I believe I have been able to track down this problem and implement a
+fix.  Please report back if this patch fixes the problem for you.
 
-There is also:
+-Kyle
 
-$ wc -l git-bisect.sh
-528 git-bisect.sh
+-- 8< --
+Subject: [PATCH] Git::SVN::Fetcher: avoid premature 'svn_hash' temp file closure
 
-And there is already builtin/bisect--helper.c that can be used to
-convert step by step shell code to C. I can mentor or co-mentor this
-convertion by the way, but that would conflict with the other bisect
-related GSoC project if a student takes it.
+Since b19138b (git-svn: Make it incrementally faster by minimizing temp
+files, v1.6.0), git-svn has been using the Git.pm temp_acquire and
+temp_release mechanism to avoid unnecessary temp file churn and provide
+a speed boost.
 
->> I'd expect a rewrite in C to at least double the number of lines of
->> code, so rewriting git-stash would mean writting at least as many lines
->> of code as the GSoC above. git-add--interactive.perl would be rather far
->> above.
->
-> Sure. You're right, I was thinking too big.
->
->> But my point was not to convert _only_ git-pull.sh, but to have a GSoC
->> starting with this one and plan more. Then, depending on how it goes,
->> you can adjust the target.
->
-> That's excellent advice.
+However, that change introduced a call to temp_acquire inside the
+Git::SVN::Fetcher::close_file function for an 'svn_hash' temp file.
+Because an SVN::Pool is active at the time this function is called, if
+the Git::temp_acquire function ends up actually creating a new
+FileHandle for the temp file (which it will the first time it's called
+with the name 'svn_hash') that FileHandle will end up in the SVN::Pool
+and should that pool have SVN::Pool::clear called on it that FileHandle
+will be closed out from under Git::temp_acquire.
 
-Yeah!
+Since the only call site to Git::temp_acquire with the name 'svn_hash'
+is inside the close_file function, if an 'svn_hash' temp file is ever
+created its FileHandle is guaranteed to be created in the active
+SVN::Pool.
 
->> This all depends on what you intend to do if the student does not finish
->> the job. If you're going to do the rewrite yourself anyway, then having
->> the student do even half of it is good already. If you're not going to
->> finish the job by yourself, then a 95%-done-rewrite means a piece of
->> code posted on the mailing list and never merged (and a lot of time
->> wasted).
->
-> Well, all of this is academic at this point.
+This has not been a problem in the past because the SVN::Pool was not
+being cleared.  However, since dfa72fdb (git-svn: reload RA every
+log-window-size, v2.2.0) the pool has been getting cleared periodically
+at which point the FileHandle for the 'svn_hash' temp file gets closed.
+Any subsequent calls to Git::temp_acquire for 'svn_hash', however,
+succeed without creating/opening a new temporary file since it still has
+the now invalid FileHandle in its cache.  Callers that then attempt to
+use that FileHandle fail with an error.
 
-Yeah, but it's still worth keeping in many parts of our collective mind :-)
+We avoid this problem by making sure the 'svn_hash' temp file is created
+in the same place the 'svn_delta_...' and 'git_blob_...' temp files are
+(and then temp_release'd) so that it can be safely used inside the
+close_file function without having its FileHandle end up in an SVN::Pool
+that gets cleared.
 
-> Let's see whether we get accepted, and then, if a student finds this project compelling enough.
->
-> If both things happen, I will definitely heed your advice and encourage the student to start with some script that is easily converted, to "get her feet wet".
+Signed-off-by: Kyle J. McKay <mackyle@gmail.com>
+---
+ perl/Git/SVN/Fetcher.pm | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-Great!
-
-Thanks,
-Christian.
+diff --git a/perl/Git/SVN/Fetcher.pm b/perl/Git/SVN/Fetcher.pm
+index 10edb277..613055a3 100644
+--- a/perl/Git/SVN/Fetcher.pm
++++ b/perl/Git/SVN/Fetcher.pm
+@@ -322,6 +322,14 @@ sub apply_textdelta {
+ 	# (but $base does not,) so dup() it for reading in close_file
+ 	open my $dup, '<&', $fh or croak $!;
+ 	my $base = $::_repository->temp_acquire("git_blob_${$}_$suffix");
++	# close_file may call temp_acquire on 'svn_hash', but because of the
++	# call chain, if the temp_acquire call from close_file ends up being the
++	# call that first creates the 'svn_hash' temp file, then the FileHandle
++	# that's created as a result will end up in an SVN::Pool that we clear
++	# in SVN::Ra::gs_fetch_loop_common.  Avoid that by making sure the
++	# 'svn_hash' FileHandle is already created before close_file is called.
++	my $tmp_fh = $::_repository->temp_acquire('svn_hash');
++	$::_repository->temp_release($tmp_fh, 1);
+ 
+ 	if ($fb->{blob}) {
+ 		my ($base_is_link, $size);
+--
