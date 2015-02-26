@@ -1,67 +1,61 @@
-From: Mason <slash.tmp@free.fr>
-Subject: Re: Salvaging borked project history
-Date: Thu, 26 Feb 2015 12:54:51 +0100
-Message-ID: <54EF098B.4080803@free.fr>
-References: <54EB5DD7.7050202@free.fr> <xmqq7fv8to7e.fsf@gitster.dls.corp.google.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: feature request: excluding files/paths from "git grep"
+Date: Thu, 26 Feb 2015 18:58:14 +0700
+Message-ID: <CACsJy8Dw5tfQ72kqc-QEfGmbs=ZOePGuXd6+tRtkmApMcdma-A@mail.gmail.com>
+References: <54EDBEC2.8090107@peralex.com> <CACsJy8AM=W4f6u_7YpvmfiBwrJjqfJMJoq6CQYfKOh+qD6rF3Q@mail.gmail.com>
+ <20150225143116.GA13567@peff.net> <xmqqk2z5on72.fsf@gitster.dls.corp.google.com>
+ <20150225185128.GA16569@peff.net> <xmqqbnkholx9.fsf@gitster.dls.corp.google.com>
+ <20150225191108.GA17467@peff.net> <54EF0089.6070605@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 26 12:55:00 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Noel Grandin <noel@peralex.com>, git <git@vger.kernel.org>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Feb 26 12:58:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YQx1u-0007z6-Dm
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Feb 2015 12:54:58 +0100
+	id 1YQx5e-0001Pe-Aj
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Feb 2015 12:58:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753639AbbBZLyy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Feb 2015 06:54:54 -0500
-Received: from smtp2-g21.free.fr ([212.27.42.2]:11726 "EHLO smtp2-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753286AbbBZLyy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Feb 2015 06:54:54 -0500
-Received: from [172.27.0.114] (unknown [83.142.147.193])
-	(Authenticated sender: shill)
-	by smtp2-g21.free.fr (Postfix) with ESMTPSA id 6C2544B018C;
-	Thu, 26 Feb 2015 12:54:32 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:35.0) Gecko/20100101 Firefox/35.0 SeaMonkey/2.32.1
-In-Reply-To: <xmqq7fv8to7e.fsf@gitster.dls.corp.google.com>
+	id S1753643AbbBZL6q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Feb 2015 06:58:46 -0500
+Received: from mail-ie0-f178.google.com ([209.85.223.178]:45187 "EHLO
+	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752978AbbBZL6p (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Feb 2015 06:58:45 -0500
+Received: by iecat20 with SMTP id at20so13809700iec.12
+        for <git@vger.kernel.org>; Thu, 26 Feb 2015 03:58:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=lykQzZDeimYVelVn5SMX3CR4IcHHpp+FXFhEDWXkvuM=;
+        b=PLrbVpnd5k7GDl0Qj8E9OXumiJY/DOvy9Fgm7TdU7epho3uXLhLtxP+NczygUaU+Kw
+         rjjRyCzyi40nNDakgnW3wft/PsmY7/vhMHp3KTldhAYEVTEd84WKHs9Gvmg6n+V1ZDrq
+         FW44lXToZbwGlOski4LXTdqPRwgI6f0MjOAjwQbFqUb6AWBTYtqPS/ULgV6iXiJO3W6x
+         3b3DnUK8WruDz8Wpcjzccy4D9RgZSw/9UrN/fTQg3jTy3lLAyMDTkSwQ3MSBNknD43Xh
+         RPfd4Tb4h10O1zFTFk/OZe8+J7h1VZsNx9unK3Pa+s1nNhWgDX1xDRrmWhtUSPCYfhhN
+         dtxA==
+X-Received: by 10.43.20.71 with SMTP id qn7mr9170008icb.47.1424951924824; Thu,
+ 26 Feb 2015 03:58:44 -0800 (PST)
+Received: by 10.107.131.155 with HTTP; Thu, 26 Feb 2015 03:58:14 -0800 (PST)
+In-Reply-To: <54EF0089.6070605@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264434>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264435>
 
-Junio C Hamano wrote:
+On Thu, Feb 26, 2015 at 6:16 PM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+> So, as a summary of the discussion, it seems it's time to switch the
+> default to --textconv for git grep?
 
-> But I personally think "git am -3" may be easier to handle.
-
-Thanks! At least now, I see the light at the end of the tunnel.
-
-I fetched linux-stable.git inside our repo.
-I created ~300 patches using git format-patch -1 in a loop.
-I can now run 'git am --3way $IGNORE *.patch'
-
-IGNORE is used to --exclude the directories I'm not interested in.
-
-Note: it seems --exclude=arch/mips and --exclude=arch/mips/ are
-not sufficient, I need to write --exclude=arch/mips/* for git-apply
-to ignore changes to files inside arch/mips.
-
-Is that expected behavior?
-
-Another nit: if a patch contains only changes to files inside arch/mips
-then git-apply will create an "empty commit" (one with no diff). Is there
-an option to say "skip empty patches"?
-
-One more thing: "regular" diff -q returns 0 when the files are identical,
-and 1 when they differ. It seems git diff -s does not have that behavior.
-Is that by design?
-
-If there is no option to skip empty patches, I'm thinking I can script
-a fixup step to squash all empty commits. What do you think?
-
-Regards.
+Either that or make it clearer in git-grep.txt about this diff
+attribute. It takes me some time to make the connection after reading
+both git-grep.txt and gitattributes.txt
+-- 
+Duy
