@@ -1,118 +1,90 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] sequencer: preserve commit messages
-Date: Thu, 26 Feb 2015 12:05:27 +0100
-Message-ID: <54EEFDF7.8090306@drmicha.warpmail.net>
-References: <1424540906.15539.22.camel@scientia.net>	<f58ae048d7fd468cfdd7f7d369b3b4fc0a564641.1424697676.git.git@drmicha.warpmail.net>	<xmqqsidwtq4i.fsf@gitster.dls.corp.google.com>	<54EC98BD.7060100@drmicha.warpmail.net>	<xmqq8ufnrwm1.fsf@gitster.dls.corp.google.com>	<54ED9AF7.6080908@drmicha.warpmail.net> <xmqqoaohonpt.fsf@gitster.dls.corp.google.com>
+Subject: Re: feature request: excluding files/paths from "git grep"
+Date: Thu, 26 Feb 2015 12:16:25 +0100
+Message-ID: <54EF0089.6070605@drmicha.warpmail.net>
+References: <54EDBEC2.8090107@peralex.com> <CACsJy8AM=W4f6u_7YpvmfiBwrJjqfJMJoq6CQYfKOh+qD6rF3Q@mail.gmail.com> <20150225143116.GA13567@peff.net> <xmqqk2z5on72.fsf@gitster.dls.corp.google.com> <20150225185128.GA16569@peff.net> <xmqqbnkholx9.fsf@gitster.dls.corp.google.com> <20150225191108.GA17467@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	Christoph Anton Mitterer <calestyo@scientia.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 26 12:05:43 2015
+Cc: Duy Nguyen <pclouds@gmail.com>, Noel Grandin <noel@peralex.com>,
+	git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 26 12:16:44 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YQwGD-0002NI-C1
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Feb 2015 12:05:41 +0100
+	id 1YQwQp-00078n-5G
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Feb 2015 12:16:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753385AbbBZLFa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Feb 2015 06:05:30 -0500
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:60420 "EHLO
+	id S1753500AbbBZLQ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Feb 2015 06:16:29 -0500
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:39207 "EHLO
 	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752762AbbBZLF3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 Feb 2015 06:05:29 -0500
+	by vger.kernel.org with ESMTP id S1752792AbbBZLQ2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 26 Feb 2015 06:16:28 -0500
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailout.nyi.internal (Postfix) with ESMTP id 596B7208FF
-	for <git@vger.kernel.org>; Thu, 26 Feb 2015 06:05:28 -0500 (EST)
+	by mailout.nyi.internal (Postfix) with ESMTP id 5642D20A6B
+	for <git@vger.kernel.org>; Thu, 26 Feb 2015 06:16:27 -0500 (EST)
 Received: from frontend2 ([10.202.2.161])
-  by compute4.internal (MEProxy); Thu, 26 Feb 2015 06:05:29 -0500
+  by compute4.internal (MEProxy); Thu, 26 Feb 2015 06:16:28 -0500
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
 	messagingengine.com; h=x-sasl-enc:message-id:date:from
 	:mime-version:to:cc:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=GTD3Ruyne4dOqw1l9uBNdv
-	+MWdc=; b=eb27dB318KpUmPi2pyqwaSCAX+pdK18IybNgDLc/jWp1fgM0oflO9g
-	ZZ/PKyknbYcrVdBmbn2zIcnDFL+kK1kRLL+6534GM+3Kq897Jb3ffKwJv2Yfow9N
-	5TkiAOa0XQoGY1LVa+wFw91l8moYdCKr0gZGlcz712htHyn4wfxZE=
-X-Sasl-enc: 41AI5q+UDGxga23fqKrRsGx1iKy6TrRS7KnqQt6UAI4n 1424948728
+	:content-transfer-encoding; s=smtpout; bh=A3JPy3sbskGAyNFaqfA+sh
+	1i8zo=; b=QbTM2ZeWGkaKDatIIBUMsF9FZTE0KiCUxOFmNS16QJjycd+0PWdREv
+	kUXLyijcbZsN+4/g3Tjaw4xHCgf3X9wmX5+mnhvyCGVZex4y2Pi+geqGz4R/fO8/
+	aXV4fIWm25a9N9gdtJo7ECKm6vPWa5TPZ4rlnrboZ1/iA6SlEaDFc=
+X-Sasl-enc: cH8F4biAEsuPRoUNmuTC705L9XH/N2lqxjBN5s88rioq 1424949387
 Received: from localhost.localdomain (unknown [188.96.114.76])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 72F0F680122;
-	Thu, 26 Feb 2015 06:05:28 -0500 (EST)
+	by mail.messagingengine.com (Postfix) with ESMTPA id B67A3680122;
+	Thu, 26 Feb 2015 06:16:26 -0500 (EST)
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
-In-Reply-To: <xmqqoaohonpt.fsf@gitster.dls.corp.google.com>
+In-Reply-To: <20150225191108.GA17467@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264432>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264433>
 
-Junio C Hamano venit, vidit, dixit 25.02.2015 19:22:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
+Jeff King venit, vidit, dixit 25.02.2015 20:11:
+> On Wed, Feb 25, 2015 at 11:01:22AM -0800, Junio C Hamano wrote:
 > 
->> Junio C Hamano venit, vidit, dixit 24.02.2015 19:29:
->>> Michael J Gruber <git@drmicha.warpmail.net> writes:
->>>
->>>>> Hmm, wouldn't it introduce a grave regression for users who
->>>>> explicitly ask to clean crufty messages up (by setting their own
->>>>> commit.cleanup configuration) if you unconditionally force
->>>>> "--cleanup=verbatim" here?
->>>>>
->>>>
->>>> That's what I meant by possible side-effects below.
->>>> ...
->>>> But git cherry-pick without conflict should no re-cleanup the commit
->>>> message either, should it?
->>>
->>> Hmm, but if it does not, wouldn't that countermand the wish of the
->>> user who explicitly asked to clean crufty messages up by setting
->>> their own commit.cleanup configuration?
+>> Jeff King <peff@peff.net> writes:
 >>
->> Note that "verbatim" is not the default - we cleanup commits even
->> without being asked to. And this makes sense for "git commit", of course.
+>>> So I think _if_ using "diff" attributes is enough for this purpose, then
+>>> there is no code to be written.  But if somebody wants to draw a
+>>> distinction between the uses (I want to diff "foo" files, but never see
+>>> them in grep) then we could introduce a "grep" attribute (with the
+>>> fallback being the value of the "diff" attribute for that path).
+>>
+>> That is all true.
+>>
+>> If we were to have a new 'grep' attribute that can be used to
+>> express 'It is OK to diff two versions of this path, but hits by
+>> grep in this path is useless' (and verse versa), the built-in macro
+>> attribute 'binary' should also be updated with it.  A path being
+>> 'binary' currently means '-diff -merge -text' but it should also
+>> mean '-grep' in the new world, if we were to go in that direction.
 > 
-> I am fine with the result of the updated code if the user does not
-> have anything in the config and uses the "default".  Not touching in
-> "cherry-pick" would be more desirable than cleaning.  We are in
-> agreement for that obvious case.
-
-I didn't know we were. It's clear now.
-
-> But your response is sidestepping my question, isn't it?
-
-I simply misunderstood it.
-
-> What does your change do to the user who wants that the clean-up to
-> always happen and expresses that desire by setting
-> commit.cleanup=strip in the config?  Doesn't the internal invocation
-> of "commit --cleanup=verbatim" that is unconditional override it?
+> I think it would do so automatically. There is no "grep" attribute
+> given, so we fall back to the "-diff" attribute. But I do not mind
+> modifying the macro to be more explicit.
+> 
+> Note also that I am not volunteering to work on this, nor am I convinced
+> it's actually worth pursuing. I've yet to see a useful case where you
+> would want text diffs but not greps (or vice versa), and if we can avoid
+> cluttering the attribute space, we should. I was mostly pointing it out
+> that it is not logically inconsistent to want such a thing. :)
+> 
+> If somebody does look into it, I suspect the place to start is modifying
+> userdiff_find_by_path to optionally prefer "grep" to "diff".
+> 
+> -Peff
 > 
 
-Yes, it obviously overrides it.
-
-I have to re-check which cleanups rebase does. I hope none.
-
-But I would think that to clean up a commit message according to the
-current config settings, a user should have to "commit --amend" or
-"rebase -i with reword" explicitly.
-
-I still think of rebase and cherry-picks as means to transplant a commit
-as unchanged as possible.
-
-Now, if there are conflicts and the user has to resolve them, they will
-use "git commit" themselves with their current config in effect. That is
-to be effected, and the user can use "git commit --cleanup=..." however
-they want.
-
-That leaves the case of "git cherry-pick --edit". I could easily catch
-that and not overrride config in this case. But the user cannot
-influence that other than by using "git -c commit.cleanup=...
-cherry-pick --edit".
-
-Hmm. With "--edit", current config being in effect should be expected,
-right? So how about:
-
-In case of no conflict: force cleanup=verbatim unless --edit is used?
+So, as a summary of the discussion, it seems it's time to switch the
+default to --textconv for git grep?
 
 Michael
