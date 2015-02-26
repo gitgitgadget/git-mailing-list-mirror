@@ -1,79 +1,70 @@
-From: Mikko Rapeli <mikko.rapeli@iki.fi>
-Subject: Re: [PATCH] Documentation/git-clean.txt: document that -f may need
- to be given twice
-Date: Thu, 26 Feb 2015 14:59:41 +0200
-Message-ID: <20150226125941.GJ12550@lakka.kapsi.fi>
-References: <1424955400-13897-1-git-send-email-mikko.rapeli@iki.fi>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [RFH] GSoC 2015 application
+Date: Thu, 26 Feb 2015 20:10:38 +0700
+Message-ID: <CACsJy8D6nAt3fMw=oh5mwUwfAJKViN1pk9pf9gZSBGyquU_WBQ@mail.gmail.com>
+References: <20150218191417.GA7767@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 26 13:59:48 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Feb 26 14:11:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YQy2d-0003bH-KW
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Feb 2015 13:59:48 +0100
+	id 1YQyDn-0000RV-Cx
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Feb 2015 14:11:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932150AbbBZM7n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Feb 2015 07:59:43 -0500
-Received: from mail.kapsi.fi ([217.30.184.167]:58444 "EHLO mail.kapsi.fi"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932076AbbBZM7n (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Feb 2015 07:59:43 -0500
-Received: from lakka.kapsi.fi ([2001:1bc8:1004::1] ident=Debian-exim)
-	by mail.kapsi.fi with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <mikko.rapeli@iki.fi>)
-	id 1YQy2X-0002B3-LK
-	for git@vger.kernel.org; Thu, 26 Feb 2015 14:59:41 +0200
-Received: from mcfrisk by lakka.kapsi.fi with local (Exim 4.80)
-	(envelope-from <mikko.rapeli@iki.fi>)
-	id 1YQy2X-0004vq-Fd
-	for git@vger.kernel.org; Thu, 26 Feb 2015 14:59:41 +0200
-Content-Disposition: inline
-In-Reply-To: <1424955400-13897-1-git-send-email-mikko.rapeli@iki.fi>
-X-SA-Exim-Connect-IP: 2001:1bc8:1004::1
-X-SA-Exim-Mail-From: mikko.rapeli@iki.fi
-X-SA-Exim-Scanned: No (on mail.kapsi.fi); SAEximRunCond expanded to false
+	id S1753916AbbBZNLK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Feb 2015 08:11:10 -0500
+Received: from mail-ie0-f176.google.com ([209.85.223.176]:45393 "EHLO
+	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753909AbbBZNLI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Feb 2015 08:11:08 -0500
+Received: by iecat20 with SMTP id at20so14696704iec.12
+        for <git@vger.kernel.org>; Thu, 26 Feb 2015 05:11:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=pDFw/XfYZu9i8RSC8Ts5uuQX+d3bvntUSazmqMuM3jQ=;
+        b=jSzWTUVdYInm+neYux1AM015jBsfyev7dI7W7Ef82XMbzYbjp5REgEUb1FGeljGXbw
+         xT3V3ZcG1pNreNdTMoE5yY8pQ86D/KyrBS9cK5ivi4uBNPyzu3yxk+PLKmwhyKUj6N0A
+         rvcTEAVCVy1IbF9wDxteGKtm0VXqevfzBbVun7vlI1W3/jbDNvL0hskcUt6OjlkFpUbf
+         vLIJhHSppaoh3HiBUac+P5IWTpMOKLeyYi31W2NpWoTv/gy7F4AVoXURgN3PQ96Cwd1P
+         vHUUQSegj64GMzMfPhhSVInmpZ1PCIby0d754pMjuqy3uHT63NjCIfU/oH0RlaPUog4f
+         uJdA==
+X-Received: by 10.50.118.97 with SMTP id kl1mr11308676igb.23.1424956268203;
+ Thu, 26 Feb 2015 05:11:08 -0800 (PST)
+Received: by 10.107.131.155 with HTTP; Thu, 26 Feb 2015 05:10:38 -0800 (PST)
+In-Reply-To: <20150218191417.GA7767@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264439>
 
-On Thu, Feb 26, 2015 at 02:56:40PM +0200, Mikko Rapeli wrote:
-> This is needed in build automation where the tree really needs to
-> be reset to known state.
-> 
-> Signed-off-by: Mikko Rapeli <mikko.rapeli@iki.fi>
-> ---
->  Documentation/git-clean.txt |    8 ++++++--
->  1 file changed, 6 insertions(+), 2 deletions(-)
-> 
-> diff --git a/Documentation/git-clean.txt b/Documentation/git-clean.txt
-> index 94b6d19..872ab45 100644
-> --- a/Documentation/git-clean.txt
-> +++ b/Documentation/git-clean.txt
-> @@ -34,8 +34,12 @@ OPTIONS
->  -f::
->  --force::
->  	If the Git configuration variable clean.requireForce is not set
-> -	to false, 'git clean' will refuse to run unless given -f, -n or
-> -	-i.
-> +	to false, 'git clean' will refuse to delete files or directories
-> +	unless given -f, -n or -i. Git will refuse to delete directories
-> +	with .git sub directory or file unless a second -f
-> +	is given. This affects also git submodules where the storage area of
+On Thu, Feb 19, 2015 at 2:14 AM, Jeff King <peff@peff.net> wrote:
+> Where I really need help now is in the "ideas" page:
+>
+>   http://git.github.io/SoC-2015-Ideas.html
 
-Oops, "of" is here twice.
+Is this too ambitious for a summer? I suspect the answer is yes, but anyway..
 
-> +	of the removed submodule under .git/modules/ is not removed until
-> +	-f is give twice.
->  
->  -i::
->  --interactive::
-> -- 
-> 1.7.10.4
-> 
+Due to http limitations and stateless decision, a lot of data is sent
+back and forth during have/want negotiation for smart-http. I wonder
+if we could implement the "long polling" scheme in a CGI program. The
+program terminates HTTP requests and recreates a full duplex
+connection for upload-pack to talk to the client. upload-pack falls
+back to the normal mode, used by git:// and ssh://.
+
+An example of this is BOSH [1]. From a quick glance it does not seem
+to require any special thing, so it's unlikely to cause problems with
+firewalls, proxies.. If this is implemented as cgi (instead of http
+server), we'll need to save session infos somewhere. I suppose shm
+with proper locking is enough.
+
+[1] http://xmpp.org/extensions/xep-0124.html
+-- 
+Duy
