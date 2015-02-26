@@ -1,140 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Any chance for a Git v2.1.5 release?
-Date: Thu, 26 Feb 2015 12:54:59 -0800
-Message-ID: <xmqqvbiol7fg.fsf@gitster.dls.corp.google.com>
-References: <C5211E53-8905-41C9-9D28-26D7BB51E76A@gmail.com>
-	<xmqqk2z7qe8s.fsf@gitster.dls.corp.google.com>
-	<2D3EB6D1-3029-4F60-AF29-E044E92DB036@gmail.com>
-	<xmqq4mqapo9r.fsf@gitster.dls.corp.google.com>
-	<DCB8EEAA-F6C3-4321-833E-39B80673C7E9@gmail.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: compiling master fails
+Date: Thu, 26 Feb 2015 12:57:28 -0800
+Message-ID: <CAGZ79kZ-4-5zD4xZn7sLjvT3WJEueGFKT6Df7V1By77u5uosgA@mail.gmail.com>
+References: <CAGZ79kaRJg1QzFSyj0iAtUn2nUFxzZRy7BsrYC2++kaN0RD1Aw@mail.gmail.com>
+	<CAGZ79kZvVFTGASbsx6vZXvYJUwLjgqDeCGrN0Cz=3pjW58Qbyw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git Mailing List <git@vger.kernel.org>
-To: "Kyle J. McKay" <mackyle@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 26 21:55:13 2015
+Content-Type: text/plain; charset=UTF-8
+To: "git@vger.kernel.org" <git@vger.kernel.org>,
+	eungjun.yi@navercorp.com
+X-From: git-owner@vger.kernel.org Thu Feb 26 21:57:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YR5Si-0004Kt-5C
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Feb 2015 21:55:12 +0100
+	id 1YR5V0-0005Ro-NF
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Feb 2015 21:57:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754089AbbBZUzF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Feb 2015 15:55:05 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:52265 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752169AbbBZUzE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Feb 2015 15:55:04 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B5D243C1FC;
-	Thu, 26 Feb 2015 15:55:02 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=cSW5pYZUuefNjAk6ED5+EVh3cec=; b=oVliM6
-	mEWSRZin/4JmHm48Sssf8eyYRQjEbsfUDA4jHe+IxycJEqeyCIVDw6asBPdp3DrW
-	aRzD6/Zu0ZsorRmR3+MqegBLwDQJseQtg11y62k+9uRWVRZmSchv3IJhPptYBMdI
-	p6kamDMmRw+O70h4Es5OsZjqyN6qcBPSRf0WI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=rvOj4J51FQDDw8iFgS0eUcmwVps1T3k8
-	vjzzW1oy/ANfpraeWOOKZ4M4chI8s1Y9Eva5AQLlkEgdhZCxOc9dikOC76uQ2+mU
-	6SZeQtdF6e2fDSCOZBoQbnp4/0u5ViGeEssZcpn9nYHrsAESeb1t3+j5Vt6RsdL8
-	/zzWjPUNx9w=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id ACBA63C1FB;
-	Thu, 26 Feb 2015 15:55:02 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0EC4D3C1F9;
-	Thu, 26 Feb 2015 15:55:01 -0500 (EST)
-In-Reply-To: <DCB8EEAA-F6C3-4321-833E-39B80673C7E9@gmail.com> (Kyle J. McKay's
-	message of "Wed, 25 Feb 2015 23:40:53 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: BBB2A5C6-BDF9-11E4-B248-29999F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1753966AbbBZU5a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Feb 2015 15:57:30 -0500
+Received: from mail-ie0-f179.google.com ([209.85.223.179]:37280 "EHLO
+	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753475AbbBZU53 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Feb 2015 15:57:29 -0500
+Received: by iecrl12 with SMTP id rl12so21070445iec.4
+        for <git@vger.kernel.org>; Thu, 26 Feb 2015 12:57:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        bh=rFW5TwnOY9p0E62kV++jBkUMMjmAm2m7mO4byODMSW4=;
+        b=b1cCKk8Q+stRKsro9PjKFpF8Oh8HyW1mUA+UT6J5qjKcyAwfcLKtnLSfdcbNJ1QaSJ
+         mXS4Ir68IhnTiMmTruGksfxYAOtZizixjBrr+DH9pwuQliTCft3SNFrw6Pzdd0mMqUIS
+         /gvWiH+8C49XC2H2RnuVwuoTRZeYVM5NS/PlMlV6fNalFFyDtRxgVAzG6wb7pmUDi0oD
+         qRqYMRzSJVUnPa66h3OGW5YeBdRBVwSF3e6x4/EbgsA1KalWsNC74AOeasZYyr6DNBXn
+         PNBCKx7XuQRBy6fCtc8+YqtQjPUNf80atrPZWTj01XkoU8ylJn71m1UMKJ1JIE7DkBgW
+         0qQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:content-type;
+        bh=rFW5TwnOY9p0E62kV++jBkUMMjmAm2m7mO4byODMSW4=;
+        b=YnWy6D5onVg1ITwVXtv0OaJ4yjvfHXfrStDwQFyO8/6238ialm+9qPLCSelz09fCUx
+         4u0W66CEqTomFUUCsB00ix6RrlA8INx0+ooAX+QhIRt0LRpRmi2d7IQxQOcHalgtYazh
+         HpMijIHzv1p8Iuh8Pz9MwZKmeGcT+YaF0fo9+TdQwy1cRBk4QjSNZho2RWIZqlIFeIHs
+         f7SAr0BF5kTQeUaPJnSRAXFpw7kJi80FhO0G1TPHd9+hCDzpP5bBD/wbuLSen8yJGga7
+         nLGrVtWvbdjFmQEcSnIddnWRvQw0lwVim3Ykmu+NfxLk8n2iNv2LnFpmv4N9/B1QFIDc
+         s6hA==
+X-Gm-Message-State: ALoCoQm0f8HdOLMLjGCZxgzc6mbflm7TqOPr+d7t+huBrHoT3rqtuGJjVxKKXXkvnXw8jzc/gm67
+X-Received: by 10.43.100.67 with SMTP id cv3mr12026684icc.92.1424984248820;
+ Thu, 26 Feb 2015 12:57:28 -0800 (PST)
+Received: by 10.107.46.31 with HTTP; Thu, 26 Feb 2015 12:57:28 -0800 (PST)
+In-Reply-To: <CAGZ79kZvVFTGASbsx6vZXvYJUwLjgqDeCGrN0Cz=3pjW58Qbyw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264460>
 
-"Kyle J. McKay" <mackyle@gmail.com> writes:
+> On Thu, Feb 26, 2015 at 12:48 PM, Stefan Beller <sbeller@google.com> wrote:
+>> On Post 2.3 cyle (batch #5) (v2.3.1-167-g7f4ba4b)
+>>
+>>     CC http.o
+>> http.c: In function 'get_preferred_languages':
+>> http.c:1021:2: warning: implicit declaration of function 'setlocale'
+>> [-Wimplicit-function-declaration]
+>>   retval = setlocale(LC_MESSAGES, NULL);
+>>   ^
+>> http.c:1021:21: error: 'LC_MESSAGES' undeclared (first use in this function)
+>>   retval = setlocale(LC_MESSAGES, NULL);
+>>                      ^
+>> http.c:1021:21: note: each undeclared identifier is reported only once
+>> for each function it appears in
+>> make: *** [http.o] Error 1
 
-> I would like to better understand how the various heads are
-> maintained.  I've read MaintNotes and I've got the concepts, but I'm
-> still a little fuzzy on some details.  It looks to me like all topics
-> still only in pu after master has been updated are then rebased onto
-> the new master and then pu is rebuilt.
 
-Topics in 'pu' not yet in 'next' _can_ be rebased, but unless there
-is a good reason to do so, I wouldn't spend extra cycles necessary
-to do such thing.  I even try to keep the same base when replacing
-the contents of a branch with a rerolled series.  For example, today
-I have this:
-
-    $ git config alias.lgf
-    log --oneline --boundary --first-parent
-    $ git lgf master..nd/slim-index-pack-memory-usage
-    3538291 index-pack: kill union delta_base to save memory
-    7b4ff41 FIXUP
-    45b6b71 index-pack: reduce memory footprint a bit
-    - 9874fca Git 2.3
-
-and Duy has a newer iteration of it starting at $gmane/264429.  What
-I would do, after saving these patches in a mbox +nd-index-pack,
-would be to
-
-    $ git checkout 9874fca
-    $ git am -s3c ./+nd-index-pack
-    $ git show-branch HEAD nd/slim-index-pack-memory-usage
-    ... compare corresponding changes between the old and the new
-    ... until I am satisified; otherwise I may tweak the new one
-    $ git rebase -i 9874fca
-    ... and then finally
-    $ git branch -f nd/slim-index-pack-memory-usage HEAD
-
-to update the topic.  Of course, it would be necessary to rebuild
-'pu' by merging all the topics that are in it on top of 'master'.
-
-https://github.com/gitster/git.git has these topic branches broken
-out and you can observe how they change over time from your local
-reflog for refs/remotes/<that repository>/<topic branches>.
-
-> I vaguely recall you may have explained some of this in more detail in
-> the context of explaining how you used the scripts in todo to put
-> everything together when someone asked a question about it on the
-> list.  But I can't seem to find that message anymore.  :(
-
-There may be a copy in Documentaiton/howto/ somewhere.
-
-> I think I mostly understand how master, next and pu are maintained.
-> But MaintNotes says "Whenever a feature release is made, 'maint'
-> branch is forked off from 'master' at that point."  What happens to
-> the previous maint at that time?  Is it just renamed to maint-X.X?
-
-After finishing 2.3.0 release, at some point while 'master' is still
-at 2.3.0, something like this would happen:
-
-    $ git branch -m maint maint-2.2
-    $ git branch maint master
-
-> Also, how do you handle a down merge to maint when you have this:
+On Thu, Feb 26, 2015 at 12:52 PM, Stefan Beller <sbeller@google.com> wrote:
+> Removing config.mak makes it compile again.
+> config.mak contained:
+> CFLAGS += -Wall -g -rdynamic -O0
+> # CFLAGS += -Wextra
+> # CFLAGS += -Werror
+> CFLAGS += -Wno-format-zero-length
+> CFLAGS += -Wdeclaration-after-statement
+> CFLAGS += -Wpointer-arith
+> CFLAGS += -Wstrict-prototypes
+> CFLAGS += -Wold-style-declaration
+> # CFLAGS += -flto
+> # CFLAGS += -fwhole-program
+> CC = /usr/lib/gcc-snapshot/bin/gcc
 >
-> * (master)
-> * merge topic foo
-> |\
-> | * topic foo
-> |/
-> * c
-> * b
-> * a
-> * (tag: vX.X.X, maint)
-> *
+> Mind that compiling did work with this exact version of
+> config.mak, (I did not touch it for a few weeks now),
+> so I suspect new changes in changes to break the
+> compilation.
+>
+>
 
-I don't, and this is done by making sure I do not get into such a
-situation in the first place.
 
-A general rule of thumb when applying a set of patches that are
-fixes eventually worth having in older maintenance tracks is to find
-the oldest maintenance branch and apply them there.
+"git bisect run make" shows
+f18604bbf2c391c689a41fca14cbaeff5e106255 is the first bad commit
+commit f18604bbf2c391c689a41fca14cbaeff5e106255
+Author: Yi EungJun <eungjun.yi@navercorp.com>
+Date:   Wed Jan 28 21:04:37 2015 +0900
+
+Is there an easy way to fix it or is my config.mak bogus now?
