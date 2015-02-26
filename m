@@ -1,107 +1,205 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [RFC/PATCH 0/3] protocol v2
-Date: Thu, 26 Feb 2015 17:15:54 +0700
-Message-ID: <CACsJy8ASR-O-7tozw=p1Ek0ugct5EVZyWtxY_YA2nqcUV_+ECw@mail.gmail.com>
-References: <1424747562-5446-1-git-send-email-sbeller@google.com>
- <CACsJy8BSf2h_xD-Q1tudAg_xCzffRQM+7xzUgprONxD7vM5RYw@mail.gmail.com>
- <CAPc5daVbrUaU6LFM65evru0+1tBT916+0AOyids=f7DZThTPGw@mail.gmail.com>
- <CAGZ79kbZHtZuPrb6rEP41vbdnZqJmsMwq+8pNer-_D4U5B1xZw@mail.gmail.com>
- <CACsJy8BN2imGCW0cueh-jGKfN_nRg3=J-GTX2P5h2z0Tu=id6A@mail.gmail.com>
- <xmqqsidtoojh.fsf@gitster.dls.corp.google.com> <CAGZ79kZE2+tCZgDzeTrQBn6JQv1OWJ7t_8j4kYMQgVaAbsnnxw@mail.gmail.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] versionsort: support reorder prerelease suffixes
+Date: Thu, 26 Feb 2015 17:44:01 +0700
+Message-ID: <1424947441-19134-1-git-send-email-pclouds@gmail.com>
+References: <CAPc5daVJJcC--mwq0PfAczge3zG44ToDKP853FkyZ3x1KUfsig@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Thu Feb 26 11:16:32 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 26 11:43:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YQvUd-0004d9-3n
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Feb 2015 11:16:31 +0100
+	id 1YQvvC-0000ap-0y
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Feb 2015 11:43:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753432AbbBZKQ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Feb 2015 05:16:27 -0500
-Received: from mail-ie0-f169.google.com ([209.85.223.169]:34946 "EHLO
-	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752193AbbBZKQZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Feb 2015 05:16:25 -0500
-Received: by iecrl12 with SMTP id rl12so12823504iec.2
-        for <git@vger.kernel.org>; Thu, 26 Feb 2015 02:16:24 -0800 (PST)
+	id S1753611AbbBZKnx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Feb 2015 05:43:53 -0500
+Received: from mail-pa0-f41.google.com ([209.85.220.41]:45137 "EHLO
+	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753596AbbBZKnw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Feb 2015 05:43:52 -0500
+Received: by pablf10 with SMTP id lf10so12992906pab.12
+        for <git@vger.kernel.org>; Thu, 26 Feb 2015 02:43:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=dZx4Z0UE9ZTDRjDoX37e0V9niIeARlSsJ/ON3C9IU3k=;
-        b=bapnVdRoaPqSlI09dauTHWDXcRWt3v/+qxuB0o6LfZb7YMAFHiaXh7KK/sINzWqWSM
-         PodvWERYz+i/oVzcAfbw+r0pXXK7lg//jxZNCShww+Mx6uafl/J0KPKF8iAUxBGwTTnd
-         0225aTWMZoqqU0+q8F39JOPHEdUuiuAg+2tLiZqIZZI//SsGcRhp7HMGCq4pWYZoDeXd
-         Mseks2zB2p/lgQDe+WQ9O1Ov0BYKBHNYlpjEsq85Tsf6HZ98CgwhaLfvvk1NycSuHmK6
-         ORlMkpZk8lAP6Jvy3qYaH/rWGePVMjd8LFwtE1cB7X3bmx8n6FZpesh0URo3hEJ+pEY3
-         v+vA==
-X-Received: by 10.107.11.140 with SMTP id 12mr10412268iol.5.1424945784768;
- Thu, 26 Feb 2015 02:16:24 -0800 (PST)
-Received: by 10.107.131.155 with HTTP; Thu, 26 Feb 2015 02:15:54 -0800 (PST)
-In-Reply-To: <CAGZ79kZE2+tCZgDzeTrQBn6JQv1OWJ7t_8j4kYMQgVaAbsnnxw@mail.gmail.com>
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=0USVlY+aZ+GqRDHabykCXLGzSysadRgR4EK95z4e9ak=;
+        b=txSi0qOr3FPMeF/nKdGeKkyFbVcgrV9wV8p9uCspNV298eRIR0cCa4TUYqonu92NHk
+         bdvkt0GEZgnlGIM4pfrC0FHmrRM1neFxv2MZ5VXnhz5AsBylSfN/+FUWlZVdndPL3AlN
+         bzfEB3VGveh5XhhTmSHJR4mX8GUz/HUAzONfmA+Cdoh4HdYi7LNAHtFKWOu0S0vZOkJ1
+         t1+bZ8qU67hqjOQxPgk9J9jN/Bj+caPEFDyKNSI8i4kaffgytkyIyKKwytSEQFNASEJP
+         kV896jzx+2C2vVhs4JRou8qPviyWwCJy1VWu9M1lqf4OOxvvQDq546PIAu5XpAPMha2n
+         e1Lg==
+X-Received: by 10.66.219.233 with SMTP id pr9mr14049522pac.8.1424947431990;
+        Thu, 26 Feb 2015 02:43:51 -0800 (PST)
+Received: from lanh ([115.73.213.171])
+        by mx.google.com with ESMTPSA id gi3sm542736pbc.83.2015.02.26.02.43.46
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 26 Feb 2015 02:43:51 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Thu, 26 Feb 2015 17:44:14 +0700
+X-Mailer: git-send-email 2.3.0.rc1.137.g477eb31
+In-Reply-To: <CAPc5daVJJcC--mwq0PfAczge3zG44ToDKP853FkyZ3x1KUfsig@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264427>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264428>
 
-On Thu, Feb 26, 2015 at 2:31 PM, Stefan Beller <sbeller@google.com> wrote:
-> On Wed, Feb 25, 2015 at 10:04 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> Duy Nguyen <pclouds@gmail.com> writes:
->>
->>> On Wed, Feb 25, 2015 at 6:37 AM, Stefan Beller <sbeller@google.com> wrote:
->>>> I can understand, that we maybe want to just provide one generic
->>>> "version 2" of the protocol which is an allrounder not doing bad in
->>>> all of these aspects, but I can see usecases of having the desire to
->>>> replace the wire protocol by your own implementation. To do so
->>>> we could try to offer an API which makes implementing a new
->>>> protocol somewhat easy. The current state of affairs is not providing
->>>> this flexibility.
->>>
->>> I think we are quite flexible after initial ref advertisement.
->>
->> Yes, that is exactly where my "I am not convinced" comes from.
->>
->
-> We are not. (not really at least). We can tune some parameters or
-> change the behavior slightly,
-> but we cannot fix core assumptions made when creating v2 protocol.
-> This you can see when when talking about v1 as well: we cannot fix any
-> wrongdoings of v1 now by adding another capability.
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ Second round. Looking better. We can do
+ "1.0-pre12 < 1.0-rc0 < 1.0 < 1.0-post1" too but it relies on
+ config key's loading order, a bit iffy.
 
-Step 1 then should be identifying these wrongdoings and assumptions.
+ Documentation/config.txt |  7 +++++++
+ t/t7004-tag.sh           | 28 +++++++++++++++++++++++++++
+ versioncmp.c             | 50 ++++++++++++++++++++++++++++++++++++++++=
+++++++++
+ 3 files changed, 85 insertions(+)
 
-We can really go wild with these capabilities. The only thing that
-can't be changed is perhaps sending the first ref. I don't know
-whether we can accept a dummy first ref... After that point, you can
-turn the protocol upside down because both client and server know what
-it would be.
-
-> So from my point
-> of view we don't waste resources when having an advertisement of
-> possible protocols instead of a boolean flag indicating v2 is
-> supported. There is really not much overhead in coding nor bytes
-> exchanged on the wire, so why not accept stuff that comes for free
-> (nearly) ?
-
-You realize you're advertising v2 as a new capability, right? Instead
-of defining v2 feature set then advertise v2, people could simply add
-new features directly. I don't see v2 (at least with these patches)
-adds any value.
-
-> I mean how do we know all the core assumptions made for v2 hold in the
-> future? We don't. That's why I'd propose a plain and easy exchange at
-> first stating the version to talk.
-
-And we already does that, except that we don't state what version (as
-a number) exactly, but what feature that version supports. The focus
-should be the new protocol at daemon.c and maybe remote-curl.c where
-we do know the current protocol is not flexible enough.
--- 
-Duy
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 04e2a71..8e078df 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -2539,6 +2539,13 @@ user.signingkey::
+ 	This option is passed unchanged to gpg's --local-user parameter,
+ 	so you may specify a key using any method that gpg supports.
+=20
++versionsort.prereleaseSuffix::
++	When version sort is used in linkgit:git-tag[1], prerelease
++	tags (e.g. "1.0-rc1") may appear after the main release
++	"1.0". By specifying the suffix "-rc" in this variable,
++	"1.0-rc1" will appear before "1.0". One variable assignment
++	per suffix.
++
+ web.browser::
+ 	Specify a web browser that may be used by some commands.
+ 	Currently only linkgit:git-instaweb[1] and linkgit:git-help[1]
+diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+index 35c805a..8bfeef9 100755
+--- a/t/t7004-tag.sh
++++ b/t/t7004-tag.sh
+@@ -1459,6 +1459,34 @@ test_expect_success 'invalid sort parameter in c=
+onfiguratoin' '
+ 	test_cmp expect actual
+ '
+=20
++test_expect_success 'version sort with prerelease reordering' '
++	git config --unset tag.sort &&
++	git config versionsort.prereleaseSuffix -rc &&
++	git tag foo1.6-rc1 &&
++	git tag foo1.6-rc2 &&
++	git tag -l --sort=3Dversion:refname "foo*" >actual &&
++	cat >expect <<-\EOF &&
++	foo1.3
++	foo1.6-rc1
++	foo1.6-rc2
++	foo1.6
++	foo1.10
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success 'reverse version sort with prerelease reordering' =
+'
++	git tag -l --sort=3D-version:refname "foo*" >actual &&
++	cat >expect <<-\EOF &&
++	foo1.10
++	foo1.6
++	foo1.6-rc2
++	foo1.6-rc1
++	foo1.3
++	EOF
++	test_cmp expect actual
++'
++
+ run_with_limited_stack () {
+ 	(ulimit -s 128 && "$@")
+ }
+diff --git a/versioncmp.c b/versioncmp.c
+index 7511e08..80bfd10 100644
+--- a/versioncmp.c
++++ b/versioncmp.c
+@@ -1,4 +1,5 @@
+ #include "cache.h"
++#include "string-list.h"
+=20
+ /*
+  * versioncmp(): copied from string/strverscmp.c in glibc commit
+@@ -20,6 +21,48 @@
+ #define  CMP    2
+ #define  LEN    3
+=20
++static const struct string_list *prereleases;
++static int initialized;
++
++/*
++ * p1 and p2 point to the first different character in two strings. If
++ * either p1 or p2 starts with a prerelease suffix, it will be forced
++ * to be on top.
++ *
++ * If both p1 and p2 start with (different) suffix, the order is
++ * determined by config file.
++ *
++ * Note that we don't have to deal with the situation when both p1 and
++ * p2 start with the same suffix because the common part is already
++ * consumed by the caller.
++ *
++ * Return non-zero if *diff contains the return value for versioncmp()
++ */
++static int swap_prereleases(const void *p1_,
++			    const void *p2_,
++			    int *diff)
++{
++	const char *p1 =3D p1_;
++	const char *p2 =3D p2_;
++	int i, i1 =3D -1, i2 =3D -1;
++
++	for (i =3D 0; i < prereleases->nr; i++) {
++		const char *suffix =3D prereleases->items[i].string;
++		if (i1 =3D=3D -1 && starts_with(p1, suffix))
++			i1 =3D i;
++		if (i2 =3D=3D -1 && starts_with(p2, suffix))
++			i2 =3D i;
++	}
++	if (i1 =3D=3D -1 && i2 =3D=3D -1)
++		return 0;
++	if (i1 >=3D 0 && i2 >=3D 0)
++		*diff =3D i1 - i2;
++	else if (i1 >=3D 0)
++		*diff =3D -1;
++	else /* if (i2 >=3D 0) */
++		*diff =3D 1;
++	return 1;
++}
+=20
+ /*
+  * Compare S1 and S2 as strings holding indices/version numbers,
+@@ -74,6 +117,13 @@ int versioncmp(const char *s1, const char *s2)
+ 		state +=3D (c1 =3D=3D '0') + (isdigit (c1) !=3D 0);
+ 	}
+=20
++	if (!initialized) {
++		initialized =3D 1;
++		prereleases =3D git_config_get_value_multi("versionsort.prereleasesu=
+ffix");
++	}
++	if (prereleases && swap_prereleases(p1 - 1, p2 - 1, &diff))
++		return diff;
++
+ 	state =3D result_type[state * 3 + (((c2 =3D=3D '0') + (isdigit (c2) !=
+=3D 0)))];
+=20
+ 	switch (state) {
+--=20
+2.3.0.rc1.137.g477eb31
