@@ -1,117 +1,69 @@
-From: Mason <slash.tmp@free.fr>
-Subject: Re: Salvaging borked project history
-Date: Thu, 26 Feb 2015 21:25:49 +0100
-Message-ID: <54EF814D.1020105@free.fr>
-References: <54EB5DD7.7050202@free.fr>	<xmqq7fv8to7e.fsf@gitster.dls.corp.google.com>	<54EF098B.4080803@free.fr> <xmqqh9u8mrha.fsf@gitster.dls.corp.google.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: compiling master fails
+Date: Thu, 26 Feb 2015 12:48:34 -0800
+Message-ID: <CAGZ79kaRJg1QzFSyj0iAtUn2nUFxzZRy7BsrYC2++kaN0RD1Aw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 26 21:26:17 2015
+Content-Type: text/plain; charset=UTF-8
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Feb 26 21:48:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YR50i-0006Wj-2G
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Feb 2015 21:26:16 +0100
+	id 1YR5MN-00012f-V5
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Feb 2015 21:48:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753983AbbBZU0L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Feb 2015 15:26:11 -0500
-Received: from smtpfb1-g21.free.fr ([212.27.42.9]:36695 "EHLO
-	smtpfb1-g21.free.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753817AbbBZU0K (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Feb 2015 15:26:10 -0500
-Received: from smtp4-g21.free.fr (smtp4-g21.free.fr [212.27.42.4])
-	by smtpfb1-g21.free.fr (Postfix) with ESMTP id 9BB012DAF1
-	for <git@vger.kernel.org>; Thu, 26 Feb 2015 21:26:04 +0100 (CET)
-Received: from [192.168.1.37] (unknown [77.207.132.113])
-	(Authenticated sender: shill)
-	by smtp4-g21.free.fr (Postfix) with ESMTPSA id 423144C8042;
-	Thu, 26 Feb 2015 21:25:42 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:35.0) Gecko/20100101 Firefox/35.0 SeaMonkey/2.32.1
-In-Reply-To: <xmqqh9u8mrha.fsf@gitster.dls.corp.google.com>
+	id S1753689AbbBZUsg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Feb 2015 15:48:36 -0500
+Received: from mail-ie0-f171.google.com ([209.85.223.171]:45707 "EHLO
+	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752483AbbBZUsf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Feb 2015 15:48:35 -0500
+Received: by iecat20 with SMTP id at20so20913517iec.12
+        for <git@vger.kernel.org>; Thu, 26 Feb 2015 12:48:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=UXFzJEZ4fZuUj2XxNOeVrJRDsDXsMjUJtPyfcBk4Gz4=;
+        b=GgnXc7XZPIqYHGk5gIeBlPA9GXdGxVYmq0SENEeVu+TpNo02oMWCsIjpgFacR9JOz+
+         4VmiBwjGGz0HTtAPFEQN2DwQiVSm2st6ShFF9KPz1TEjyZ7BxPdB8AUobwCwcRGOAxzh
+         3BtYoElAy41pToJIhoL+Vml9EL/NxwzfqvmP9PHFTsKieU3H99hFz5Tfg8iAGtDNr9ut
+         9kn3027XtMp4KV3zptojRH/QT7rkF+iTnV2ogaLTEVIbosfKRvsdv0V17Rmbw7U+4T/q
+         72hcON6ze1GB7m8Qm5JH1gSXMNW1uO9n9c8dbtmtIzzHqkYl9MFfxvx6cKv9CD0wpHA7
+         gqzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=UXFzJEZ4fZuUj2XxNOeVrJRDsDXsMjUJtPyfcBk4Gz4=;
+        b=M4Tf65WMBWvBZQ7eAruq0PojVooPovpF7Zk8qx2Xldlh2mL+N/a6+8jcFqEtpfFCbn
+         HOd5Eua8mKauowTTukOc1RYpas9Q26C3heDH1GleWg4LKggOPck5DHGAGuFr6oPJxFs1
+         m5cyL4FS3e9w6wEiLHLN66XB6G/8BHnllIcBrMg0iQz6DyANYI7CYdeW73ZxCvWUFWw1
+         lTS99KWYTzu2tZPQHUCh2tqInos84cz/WDcY11hwxv3hMQ7+3Rp+2q++22ge6s8DmhmD
+         ZBewLSCQ4w+jidFBT0wRTFRISw1zTZa6FJzbEFNg80e9isvtAV6fxbo3+Obfe+WxO15o
+         iItw==
+X-Gm-Message-State: ALoCoQmPKe0k2plSZ0D6trCqngrvByKDQB4UE3Rntzbp7my/eaK9RPnAnIT4tZVGA+kR5aZnz0jn
+X-Received: by 10.50.111.202 with SMTP id ik10mr4579166igb.37.1424983714431;
+ Thu, 26 Feb 2015 12:48:34 -0800 (PST)
+Received: by 10.107.46.31 with HTTP; Thu, 26 Feb 2015 12:48:34 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264456>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264457>
 
-Junio C Hamano wrote:
+On Post 2.3 cyle (batch #5) (v2.3.1-167-g7f4ba4b)
 
-> Mason wrote:
-> 
->> I fetched linux-stable.git inside our repo.
->> I created ~300 patches using git format-patch -1 in a loop.
->> I can now run 'git am --3way $IGNORE *.patch'
->>
->> IGNORE is used to --exclude the directories I'm not interested in.
->>
->> Note: it seems --exclude=arch/mips and --exclude=arch/mips/ are
->> not sufficient, I need to write --exclude=arch/mips/* for git-apply
->> to ignore changes to files inside arch/mips.
->>
->> Is that expected behavior?
-> 
-> I have no idea; at least to me, "--exclude" option to "git apply"
-> was invented to name individual paths, not patterns, and I wouldn't
-> be surprised if glob working were merely by accident not by design.
-
-According to the docs, IIUC globbing is by design:
-http://git-scm.com/docs/git-apply
-
---exclude=<path-pattern>
-  Don't apply changes to files matching the given path pattern.
-  This can be useful when importing patchsets, where you want to
-  exclude certain files or directories.
-
-This lead me to believe that --exclude=arch/mips should work.
-
->> Another nit: if a patch contains only changes to files inside arch/mips
->> then git-apply will create an "empty commit" (one with no diff). Is there
->> an option to say "skip empty patches"?
-> 
-> "git am --skip" perhaps?
-
-Nah, as the doc states, --skip "is only meaningful when restarting
-an aborted patch."
-
-> "git am" may pass the "--exclude/--include" options to "git apply"
-> but I wouldn't be surprised if that support was added without
-> thinking.  Perhaps the reason why you discovered that it needed a
-> lot more thinking to properly integrate these options to "git am"
-> only now is because hardly anybody uses it ;-).
-
-I do have a rather obscure use-case (and if I do it right, I will
-never have to do it again).
-
-> Not just passing
-> these options, the code in "git am" to react to the result of patch
-> application to avoid the issue you observed when these options are
-> passed need to be adjusted by changes that started passing them, but
-> I do not think they did, cf. 77e9e496 (am: pass exclude down to
-> apply, 2011-08-03).
-
-Sorry, I could not parse that paragraph :-)
-
->> One more thing: "regular" diff -q returns 0 when the files are identical,
->> and 1 when they differ. It seems git diff -s does not have that behavior.
->> Is that by design?
-> 
-> "diff -s" may be accepted but it is an idiotic thing for a user to
-> say.  The "-s" option is to squelch output from "log" and friends,
-> and it is exposed to "diff" only because these two families of
-> commands share the command line parser.
-
-Here is the use-case:
-
-if diff -q A B; then do_X; else do_Y; fi
-
-It makes sense to prevent diff from writing to stdout.
-
-I was planning to write 'git diff -q commit^ commit'
-to test for empty commits. Looks like I'll be needing
-'git diff commit^ commit | wc -l' instead?
-
-Regards.
+    CC http.o
+http.c: In function 'get_preferred_languages':
+http.c:1021:2: warning: implicit declaration of function 'setlocale'
+[-Wimplicit-function-declaration]
+  retval = setlocale(LC_MESSAGES, NULL);
+  ^
+http.c:1021:21: error: 'LC_MESSAGES' undeclared (first use in this function)
+  retval = setlocale(LC_MESSAGES, NULL);
+                     ^
+http.c:1021:21: note: each undeclared identifier is reported only once
+for each function it appears in
+make: *** [http.o] Error 1
