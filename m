@@ -1,68 +1,106 @@
-From: Michal Hocko <mhocko@suse.cz>
-Subject: Re: git describe --contains doesn't work properly for a commit
-Date: Thu, 26 Feb 2015 15:23:14 +0100
-Message-ID: <20150226142314.GC14878@dhcp22.suse.cz>
-References: <20150226133534.GB14878@dhcp22.suse.cz>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: weird behaviour in git
+Date: Thu, 26 Feb 2015 15:45:13 +0100
+Message-ID: <54EF3179.8030104@drmicha.warpmail.net>
+References: <20150226141234.GP19896@danbala.tuwien.ac.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 26 15:23:33 2015
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+To: Thomas Klausner <tk@giga.or.at>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 26 15:45:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YQzLc-0003Dn-59
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Feb 2015 15:23:28 +0100
+	id 1YQzgs-0005fE-DB
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Feb 2015 15:45:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932344AbbBZOXR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Feb 2015 09:23:17 -0500
-Received: from cantor2.suse.de ([195.135.220.15]:47088 "EHLO mx2.suse.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932302AbbBZOXQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Feb 2015 09:23:16 -0500
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay2.suse.de (charybdis-ext.suse.de [195.135.220.254])
-	by mx2.suse.de (Postfix) with ESMTP id 93BA4ADAE
-	for <git@vger.kernel.org>; Thu, 26 Feb 2015 14:23:14 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20150226133534.GB14878@dhcp22.suse.cz>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S932165AbbBZOpS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Feb 2015 09:45:18 -0500
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:59670 "EHLO
+	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753742AbbBZOpP (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 26 Feb 2015 09:45:15 -0500
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
+	by mailout.nyi.internal (Postfix) with ESMTP id 054BA20A5D
+	for <git@vger.kernel.org>; Thu, 26 Feb 2015 09:45:13 -0500 (EST)
+Received: from frontend2 ([10.202.2.161])
+  by compute6.internal (MEProxy); Thu, 26 Feb 2015 09:45:14 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=x-sasl-enc:message-id:date:from
+	:mime-version:to:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=CDYPb8qQfmDsLzrT9ghFt7
+	H2BP4=; b=a5P93GdVIPKLiSCLl8orIldXyxgG/SH2A4p6DARa12sZbtQZ/7lIc8
+	FpcSUniluGlpgw5m8CGnuAWvHE1wB0QhV6y0FynCRhXZ0w8Ob1HirqQ995YVCa6j
+	dl3s8Rb5Zti9WjG9eyjOe7E8QRN+3J+vZxBc1gSjLMlguBJdB+90E=
+X-Sasl-enc: jdz2Y2tT1sEjsP9tS+MLHGVDSqnZoedk3KTItuT/qPRS 1424961914
+Received: from localhost.localdomain (unknown [188.96.114.76])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 4C329680171;
+	Thu, 26 Feb 2015 09:45:14 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
+In-Reply-To: <20150226141234.GP19896@danbala.tuwien.ac.at>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264444>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264445>
 
-On Thu 26-02-15 14:35:34, Michal Hocko wrote:
-> Hi,
-> I have just encountered an old kernel git commit:
-> commit c854363e80b49dd04a4de18ebc379eb8c8806674
-> Author: Dave Chinner <david@fromorbit.com>
-> Date:   Sat Feb 6 12:39:36 2010 +1100
+Thomas Klausner venit, vidit, dixit 26.02.2015 15:12:
+> Hi!
 > 
->     xfs: Use delayed write for inodes rather than async V2
-> [...]
- 
-OK, I've managed to recreate this in a simple repo with 3 commits:
-$ git log --format="%H %cd"
-ab0efec2b697f2f9f864bb0e2cd77308d1f04561 Thu Feb 26 15:18:36 2015 +0100
-d63972e4e4e7eda0444e56739ad09bfbc476b9bd Wed Feb 26 15:18:30 2014 +0100
-108a0d5972fd2e5f25b2f38cfd2fee73031ff9d3 Thu Feb 26 14:57:29 2015 +0100
+> I've played around with git and found that 'git mv' does not honor
+> what I tell it to do:
+> 
+> wiz@yt:~> mkdir a
+> wiz@yt:~> cd a
+> wiz@yt:~/a> git init .
+> Initialized empty Git repository in /home/wiz/a/.git/
+> wiz@yt:~/a> touch a
+> wiz@yt:~/a> git add a
+> wiz@yt:~/a> git commit -m 'add a'
+> [master (root-commit) 99d0ee7] add a
+>  1 file changed, 0 insertions(+), 0 deletions(-)
+>  create mode 100644 a
+> wiz@yt:~/a> git mv a b
+> wiz@yt:~/a> touch Makefile
+> wiz@yt:~/a> git add Makefile
+> wiz@yt:~/a> git commit
+> 
+> 
+> # Please enter the commit message for your changes. Lines starting
+> # with '#' will be ignored, and an empty message aborts the commit.
+> # On branch master
+> # Changes to be committed:
+> #       renamed:    a -> Makefile
+> #       new file:   b
+> #
+> 
+> This is reproducible for me with "git version 2.3.0" on
+> NetBSD-7.99.5/amd64.
+> 
+> I guess this happens because the checksums of the files are the same
+> and 'Makefile' is earlier when sorting, but since I explicitly told
+> "git mv" old and new name, I think that's a bug nevertheless.
+>  Thomas
+> 
 
-The commit in the middle was ammended to have committer date in the
-past.
-$ git describe --contains d63972e4e4e7eda0444e56739ad09bfbc476b9bd
-tag~1
+git tracks content, not paths.
 
-but
-$ git describe --contains 108a0d5972fd2e5f25b2f38cfd2fee73031ff9d3
-fatal: cannot describe '108a0d5972fd2e5f25b2f38cfd2fee73031ff9d3'
+It does record the path at which the tracked content is, of course. But
+it tracks the history of content, not that of paths.
 
-I guess this is the same issue reported previously here:
-http://git.661346.n2.nabble.com/git-describe-contains-fails-on-given-tree-td5448286.html
+What you see in the diff above is merely one way to interpret the
+history of the content. Saying
 
-Can this be fixed somehow or it would lead to other kind of issues?
--- 
-Michal Hocko
-SUSE Labs
+renamed:  a -> b
+new file: Makefile
+
+leads to the same content at the same paths (with the proper new file
+content).
+
+By default, diff tries to interpret content history in terms of renames
+and copies when possible, in order to help users. Sometimes this fails -
+while still being correct, it confuses them ;)
+
+Michael
