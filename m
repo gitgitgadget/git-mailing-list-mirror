@@ -1,118 +1,117 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH 0/3] protocol v2
-Date: Thu, 26 Feb 2015 12:13:44 -0800
-Message-ID: <xmqqzj80l9c7.fsf@gitster.dls.corp.google.com>
-References: <1424747562-5446-1-git-send-email-sbeller@google.com>
-	<CACsJy8BSf2h_xD-Q1tudAg_xCzffRQM+7xzUgprONxD7vM5RYw@mail.gmail.com>
-	<CAPc5daVbrUaU6LFM65evru0+1tBT916+0AOyids=f7DZThTPGw@mail.gmail.com>
-	<CAGZ79kbZHtZuPrb6rEP41vbdnZqJmsMwq+8pNer-_D4U5B1xZw@mail.gmail.com>
-	<CACsJy8BN2imGCW0cueh-jGKfN_nRg3=J-GTX2P5h2z0Tu=id6A@mail.gmail.com>
-	<xmqqsidtoojh.fsf@gitster.dls.corp.google.com>
-	<CAGZ79kZE2+tCZgDzeTrQBn6JQv1OWJ7t_8j4kYMQgVaAbsnnxw@mail.gmail.com>
-	<CACsJy8ASR-O-7tozw=p1Ek0ugct5EVZyWtxY_YA2nqcUV_+ECw@mail.gmail.com>
+From: Mason <slash.tmp@free.fr>
+Subject: Re: Salvaging borked project history
+Date: Thu, 26 Feb 2015 21:25:49 +0100
+Message-ID: <54EF814D.1020105@free.fr>
+References: <54EB5DD7.7050202@free.fr>	<xmqq7fv8to7e.fsf@gitster.dls.corp.google.com>	<54EF098B.4080803@free.fr> <xmqqh9u8mrha.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Stefan Beller <sbeller@google.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 26 21:13:54 2015
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 26 21:26:17 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YR4oh-0000Nd-Ku
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Feb 2015 21:13:52 +0100
+	id 1YR50i-0006Wj-2G
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Feb 2015 21:26:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932182AbbBZUNs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Feb 2015 15:13:48 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:59868 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753689AbbBZUNr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Feb 2015 15:13:47 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 866BC3B38F;
-	Thu, 26 Feb 2015 15:13:46 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=mRvBZMiY7qWzUQ6FMEiVaSSl7lY=; b=wEkDdS
-	rzIhJHzLf0Hv5Kgubv/p7B4UeZIZrtvixqWM5prnnM7YMjldl8paqMk8oCThRkCq
-	+fABaECKGoszWJksKK32Ahil8PKnDS2DeXaq7fGiEi7mJvglhTSTakgCefFxfX/4
-	1e3IAho3JoHL4ieQnMXHGQoGb9r1SmqTmR6oQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ExrUzE+pa7cwclnHXt4yVphDlElTmOH8
-	x5v1G7BGSO5yEum9e4aTTHTcDZ4QepvY4mLWtjQ6KvmBIdMPgC39Zha1hAD8r4w7
-	AGowupTJ27A/M96S815MSCVRrKWjikqpPHFti2MTOeQ/kLbr/GkrTkbxkuNBQUzj
-	60fJCtgoRB0=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7DC663B38D;
-	Thu, 26 Feb 2015 15:13:46 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CE8533B378;
-	Thu, 26 Feb 2015 15:13:45 -0500 (EST)
-In-Reply-To: <CACsJy8ASR-O-7tozw=p1Ek0ugct5EVZyWtxY_YA2nqcUV_+ECw@mail.gmail.com>
-	(Duy Nguyen's message of "Thu, 26 Feb 2015 17:15:54 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: F7B66CC0-BDF3-11E4-B27F-29999F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1753983AbbBZU0L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Feb 2015 15:26:11 -0500
+Received: from smtpfb1-g21.free.fr ([212.27.42.9]:36695 "EHLO
+	smtpfb1-g21.free.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753817AbbBZU0K (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Feb 2015 15:26:10 -0500
+Received: from smtp4-g21.free.fr (smtp4-g21.free.fr [212.27.42.4])
+	by smtpfb1-g21.free.fr (Postfix) with ESMTP id 9BB012DAF1
+	for <git@vger.kernel.org>; Thu, 26 Feb 2015 21:26:04 +0100 (CET)
+Received: from [192.168.1.37] (unknown [77.207.132.113])
+	(Authenticated sender: shill)
+	by smtp4-g21.free.fr (Postfix) with ESMTPSA id 423144C8042;
+	Thu, 26 Feb 2015 21:25:42 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:35.0) Gecko/20100101 Firefox/35.0 SeaMonkey/2.32.1
+In-Reply-To: <xmqqh9u8mrha.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264456>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Junio C Hamano wrote:
 
-> Step 1 then should be identifying these wrongdoings and assumptions.
->
-> We can really go wild with these capabilities. The only thing that
-> can't be changed is perhaps sending the first ref. I don't know
-> whether we can accept a dummy first ref... After that point, you can
-> turn the protocol upside down because both client and server know what
-> it would be.
+> Mason wrote:
+> 
+>> I fetched linux-stable.git inside our repo.
+>> I created ~300 patches using git format-patch -1 in a loop.
+>> I can now run 'git am --3way $IGNORE *.patch'
+>>
+>> IGNORE is used to --exclude the directories I'm not interested in.
+>>
+>> Note: it seems --exclude=arch/mips and --exclude=arch/mips/ are
+>> not sufficient, I need to write --exclude=arch/mips/* for git-apply
+>> to ignore changes to files inside arch/mips.
+>>
+>> Is that expected behavior?
+> 
+> I have no idea; at least to me, "--exclude" option to "git apply"
+> was invented to name individual paths, not patterns, and I wouldn't
+> be surprised if glob working were merely by accident not by design.
 
-Yes, exactly.  To up/down/side-grade from v1 is technically
-possible, but being technically possible is different from being
-sensible.  The capability-based sidegrade does not solve the problem
-when the problem to be solved is that the server side needs to spend
-a lot of cycles and the network needs to carry megabytes of data
-before capability exchange happens.  Yes, the newer server and the
-newer client can notice that the counterparty is new and start
-talking in new protocol (which may or may not benefit from already
-knowing the result of ref advertisement), but by the time that
-happens, the resource has already been spent and wasted.
+According to the docs, IIUC globbing is by design:
+http://git-scm.com/docs/git-apply
 
-I do not think v1 can be fixed by "send one ref with capability,
-newer client may respond immediately so we can stop enumerating
-remaining refs and older one will get stuck so we can have a timeout
-to see if the connection is from the newer one, and send the rest
-for the older client", because anything that involves such a timeout
-would not reliably work over WAN.
+--exclude=<path-pattern>
+  Don't apply changes to files matching the given path pattern.
+  This can be useful when importing patchsets, where you want to
+  exclude certain files or directories.
 
-> You realize you're advertising v2 as a new capability, right? Instead
-> of defining v2 feature set then advertise v2, people could simply add
-> new features directly. I don't see v2 (at least with these patches)
-> adds any value.
+This lead me to believe that --exclude=arch/mips should work.
 
-I agree with the value assessment of these patches 98%, but these
-bits can be taken as the "we have v2 server availble for you on the
-side, by the way" hint you mentioned in the older thread, I think.
+>> Another nit: if a patch contains only changes to files inside arch/mips
+>> then git-apply will create an "empty commit" (one with no diff). Is there
+>> an option to say "skip empty patches"?
+> 
+> "git am --skip" perhaps?
 
-> And we already does that, except that we don't state what version (as
-> a number) exactly, but what feature that version supports. The focus
-> should be the new protocol at daemon.c and maybe remote-curl.c where
-> we do know the current protocol is not flexible enough.
+Nah, as the doc states, --skip "is only meaningful when restarting
+an aborted patch."
 
-The "first" thing the client tells the server is what service it
-requests.  A request over git:// protocol is read by "git daemon" to
-choose which service to run, and it is read directly by the login
-shell if it comes over ssh:// protocol.
+> "git am" may pass the "--exclude/--include" options to "git apply"
+> but I wouldn't be surprised if that support was added without
+> thinking.  Perhaps the reason why you discovered that it needed a
+> lot more thinking to properly integrate these options to "git am"
+> only now is because hardly anybody uses it ;-).
 
-There is nothing that prevents us from defining that service to be a
-generic "git service", not "upload-pack", "archive", "receive-pack".
-And the early protocol exchange, once "git service" is spawned, with
-the client can be "what real services does the server end support?"
-capability list responded with "wow, you are new enough to support
-the 'trickle-pack' service---please connect me to it" request.
+I do have a rather obscure use-case (and if I do it right, I will
+never have to do it again).
+
+> Not just passing
+> these options, the code in "git am" to react to the result of patch
+> application to avoid the issue you observed when these options are
+> passed need to be adjusted by changes that started passing them, but
+> I do not think they did, cf. 77e9e496 (am: pass exclude down to
+> apply, 2011-08-03).
+
+Sorry, I could not parse that paragraph :-)
+
+>> One more thing: "regular" diff -q returns 0 when the files are identical,
+>> and 1 when they differ. It seems git diff -s does not have that behavior.
+>> Is that by design?
+> 
+> "diff -s" may be accepted but it is an idiotic thing for a user to
+> say.  The "-s" option is to squelch output from "log" and friends,
+> and it is exposed to "diff" only because these two families of
+> commands share the command line parser.
+
+Here is the use-case:
+
+if diff -q A B; then do_X; else do_Y; fi
+
+It makes sense to prevent diff from writing to stdout.
+
+I was planning to write 'git diff -q commit^ commit'
+to test for empty commits. Looks like I'll be needing
+'git diff commit^ commit | wc -l' instead?
+
+Regards.
