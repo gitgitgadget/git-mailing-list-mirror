@@ -1,176 +1,304 @@
-From: "Kyle J. McKay" <mackyle@gmail.com>
-Subject: Re: Any chance for a Git v2.1.5 release?
-Date: Wed, 25 Feb 2015 23:40:53 -0800
-Message-ID: <DCB8EEAA-F6C3-4321-833E-39B80673C7E9@gmail.com>
-References: <C5211E53-8905-41C9-9D28-26D7BB51E76A@gmail.com> <xmqqk2z7qe8s.fsf@gitster.dls.corp.google.com> <2D3EB6D1-3029-4F60-AF29-E044E92DB036@gmail.com> <xmqq4mqapo9r.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 26 08:41:03 2015
+From: =?UTF-8?Q?Nico_Schl=C3=B6mer?= <nico.schloemer@gmail.com>
+Subject: Re: git svn import failure : write .git/Git_svn_hash_BmjclS: Bad file descriptor
+Date: Thu, 26 Feb 2015 10:09:09 +0100
+Message-ID: <CAK6Z60fhyY3wPG6hx7YJ4y7wZsWb=33JhqejmpVBgZLGdB1XMA@mail.gmail.com>
+References: <CAK6Z60ciheWOUGOv1sYcA==B2WR1Rs_eMU+9a=R3FBwc_37CyQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Eric Wong <normalperson@yhbt.net>, Mike <ipso@snappymail.ca>,
+	Minty <mintywalker@gmail.com>,
+	Valery Yundin <yuvalery@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git mailing list <git@vger.kernel.org>
+To: "Kyle J. McKay" <mackyle@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 26 10:09:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YQt49-0004go-QP
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Feb 2015 08:41:02 +0100
+	id 1YQuS1-0000GE-I3
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Feb 2015 10:09:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752110AbbBZHk5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Feb 2015 02:40:57 -0500
-Received: from mail-pa0-f45.google.com ([209.85.220.45]:42974 "EHLO
-	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750822AbbBZHk4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Feb 2015 02:40:56 -0500
-Received: by pablj1 with SMTP id lj1so9557216pab.9
-        for <git@vger.kernel.org>; Wed, 25 Feb 2015 23:40:56 -0800 (PST)
+	id S1753501AbbBZJJk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Feb 2015 04:09:40 -0500
+Received: from mail-la0-f44.google.com ([209.85.215.44]:35400 "EHLO
+	mail-la0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753478AbbBZJJb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 26 Feb 2015 04:09:31 -0500
+Received: by labgm9 with SMTP id gm9so9606206lab.2
+        for <git@vger.kernel.org>; Thu, 26 Feb 2015 01:09:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:in-reply-to:subject:references:message-id:content-type
-         :content-transfer-encoding:mime-version:date:cc;
-        bh=aGOZvHAu9Y7JLn008JX77iJaiLT2Sh3tkDXHkE8BeUE=;
-        b=Sp0cYiEMfZgZzOW8T/8jsHUluqxHJ95OIL1tP/JjUeqhicEIkbKCRlLfoj/dXVPGuP
-         ZA33o9AYsTZej47JHurm00lu56HFUEmvjz7lRjAhD6ouVV9GhHtN+1L7B3ujDPCF+OVR
-         W/2tMgFDMGmcFORC+kYpnarVl1W7uuuhQxqWSyv1EdgDC4Pm5ZXwu6yx5uU9gcfX3+D1
-         bO/2uFv4YatFEMrgJoCCU8rY5SQWl35HOUjCPT3so8TN+lJuY+/TvUBFrLAHsffJwBsJ
-         AkrRtxBYs0icWme9m6JU14ro5N18W8ng/SRbcTJIqEDuKUsr8gMVH9LJByMtm9/khvNT
-         Y9BQ==
-X-Received: by 10.70.123.40 with SMTP id lx8mr12711990pdb.42.1424936456355;
-        Wed, 25 Feb 2015 23:40:56 -0800 (PST)
-Received: from ?IPv6:2002:48c0:ad8d::223:12ff:fe05:eebd? ([2002:48c0:ad8d:0:223:12ff:fe05:eebd])
-        by mx.google.com with ESMTPSA id 2sm113163pdp.0.2015.02.25.23.40.54
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Wed, 25 Feb 2015 23:40:55 -0800 (PST)
-In-Reply-To: <xmqq4mqapo9r.fsf@gitster.dls.corp.google.com>
-X-Mauler: Craptastic (2.936)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=UniOXb2ED9WAMo1+FddFSUEvX8VTZXrtau/ZB4n93cw=;
+        b=j80XMmg7vb1zyPtcIq1dOPKphdeMU0NUvToR/TYIMblbI6Pm75BeeS5zhhpBc7kCDb
+         zFQS5tApDXdj3YCW1jGtmT+h1cxJbQ1NimTxfHRyrleEmUefeKBQ8xTKa3TldmaemnRP
+         IoEzsELI93o90NXR0DAjf5A24qs6WXqxBkLFhOnXfo1GVPMQNSF13+4uao5VdUM+CxLt
+         KHahFEm7mCw3YPQc4blJk7RzjJeFO3czJQBs3lGJZqoDfVHWearglv3RydkkZzFexyZO
+         9YKsXeobUWWK8YT+yTHZQ28+S1MGLLy7fQddNQtQ5KTn5H2cpsFg/6Do785JYZrsORqg
+         6YoQ==
+X-Received: by 10.112.24.235 with SMTP id x11mr6485783lbf.18.1424941769849;
+ Thu, 26 Feb 2015 01:09:29 -0800 (PST)
+Received: by 10.114.11.73 with HTTP; Thu, 26 Feb 2015 01:09:09 -0800 (PST)
+In-Reply-To: <CAK6Z60ciheWOUGOv1sYcA==B2WR1Rs_eMU+9a=R3FBwc_37CyQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264425>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264426>
 
-On Feb 24, 2015, at 21:13, Junio C Hamano wrote:
+All,
 
-> "Kyle J. McKay" <mackyle@gmail.com> writes:
+I applied Kyle's latest patch
+
+> diff --git a/perl/Git/SVN/Ra.pm b/perl/Git/SVN/Ra.pm
+> index 622535e2..96888228 100644
+> --- a/perl/Git/SVN/Ra.pm
+> +++ b/perl/Git/SVN/Ra.pm
+> @@ -391,6 +391,7 @@ sub longest_common_path {
+> sub gs_fetch_loop_common {
+>         my ($self, $base, $head, $gsv, $globs) =3D @_;
+>         return if ($base > $head);
+> +       $::_repository->_open_cat_blob_if_needed;
+>         my $gpool =3D SVN::Pool->new_default;
+>         my $ra_url =3D $self->url;
+>         my $reload_ra =3D sub {
+
+alone and this fixes the bug for me. Thanks a lot, Kyle!
+
+Cheers,
+Nico
+
+On Thu, Feb 26, 2015 at 12:37 AM, Nico Schl=C3=B6mer
+<nico.schloemer@gmail.com> wrote:
+> Kyle,
 >
->>> I can designate ;-), but I do not think I'd be the right person to
->>> maintain or long-term-support it.  Are you volunteering to oversee
->>> the "LTS team"?
+> you are absolutely correct, I used the wrong Git installation in my l=
+ast
+> email. With both your and Eric's patches applied, I'm getting
+> ```
+> [...]
+> r100 =3D e2a9b5baa2cebb18591ecb04ff350410d52f36de (refs/remotes/git-s=
+vn)
+> Unexpected result returned from git cat-file at
+> /home/nschloe/share/perl/5.18.2/Git/SVN/Fetcher.pm line 344.
+> Failed to read object 619f9d1d857fb287d06a70c9dac6b8b534d0de6a at
+> /home/nschloe/share/perl/5.18.2/Git/SVN/Fetcher.pm line 345, <GEN16> =
+line
+> 757.
+>
+> error closing pipe: Bad file descriptor at
+> /home/nschloe/libexec/git-core/git-svn line 0.
+> error closing pipe: Bad file descriptor at
+> /home/nschloe/libexec/git-core/git-svn line 0.
+> ```
+> where line 344 is
+> ```
+> $size =3D $::_repository->cat_blob($fb->{blob}, $base);
+> ```
+> Adding the line in `perl/Git/SVN/Ra.pm` as per your suggestion does n=
+ot
+> change this.
+>
+> Cheers,
+> Nico
+>
+>
+> On Wed, Feb 25, 2015 at 9:34 PM Kyle J. McKay <mackyle@gmail.com> wro=
+te:
 >>
->> I could not promise a team of more than one member.  And that would
->> not be full-time 24/7 either.
->
-> Heh. Making noises to find like-minded people would be the first
-> step to build a viable team, and hopefully you are already doing a
-> good job here ;-)
-
-Doesn't seem to be catching much interest though.  Maybe they're all  
-just watching silently peering through the blinds waiting to see how  
-it turns out.  ;)
-
->>> It would involve:
->>>
->>>   - Monitor "git log --first-parent maint-lts..master" and find
->>>     the tip of topic branches that need to be down-merged;
->>>
->>>   - Down-merge such topics to maint-lts; this might involve
->>>     cherry-picking instead of merge, as the bugfix topics may
->>>     originally be done on the codebase newer than maint-lts;
+>> On Feb 25, 2015, at 07:07, Nico Schl=C3=B6mer wrote:
 >>
->> I've been cherry-picking fixes for a while now onto older  
->> releases.  I
->> don't suppose down-merging would be that much more difficult with a
->> fallback to cherry-picking.
+>> > Thanks Kyle for the patch! I applied it and ran
+>> > ```
+>> > git svn clone https://geuz.org/svn/gmsh/trunk
+>> > ```
+>> > Unfortunately, I'm still getting
+>> > ```
+>> > [...]
+>> > r100 =3D e2a9b5baa2cebb18591ecb04ff350410d52f36de (refs/remotes/gi=
+t-svn)
+>> > error closing pipe: Bad file descriptor at /usr/share/perl5/Git/SV=
+N/
+>> > Fetcher.pm line 335.
+>> > error closing pipe: Bad file descriptor at /usr/share/perl5/Git/SV=
+N/
+>> > Fetcher.pm line 335.
+>> > out pipe went bad at /usr/share/perl5/Git.pm line 955.
+>> > ```
 >>
->>>   - Use the tip of the maint-lts branch in everyday work.
->>>
->>> The last item is the most important of the above, because I do not
->>> have time for that.  I can help with the first two to some degree,
->>> though.
+>> Are you certain you're running with the patch?  I ask because earlie=
+r
+>> you sent this:
 >>
->> That's pretty much all I use at this point -- a slightly older  
->> release
->> with cherry-picked fixes.  While it did cause me to find the problem
->> with the first version of the loose alternates fix, having only one
->> person use such a release doesn't provide that much coverage.
+>> On Jan 31, 2015, at 04:51, Nico Schl=C3=B6mer wrote:
+>>
+>> > I tried the patch and I still get
+>> > ```
+>> > [...]
+>> > r100 =3D e2a9b5baa2cebb18591ecb04ff350410d52f36de (refs/remotes/gi=
+t-svn)
+>> > Unexpected result returned from git cat-file at
+>> > /home/nschloe/share/perl/5.18.2/Git/SVN/Fetcher.pm line 335.
+>> > Failed to read object 619f9d1d857fb287d06a70c9dac6b8b534d0de6a at
+>> > /home/nschloe/share/perl/5.18.2/Git/SVN/Fetcher.pm line 336, <GEN1=
+6>
+>> > line 757.
+>> >
+>> > error closing pipe: Bad file descriptor at
+>> > /home/nschloe/libexec/git-core/git-svn line 0.
+>> > error closing pipe: Bad file descriptor at
+>> > /home/nschloe/libexec/git-core/git-svn line 0.
+>> > ```
+>> > when
+>> > ```
+>> > git svn clone https://geuz.org/svn/gmsh/trunk
+>> > ```
+>>
+>> And as the patch below applies to Fetcher.pm at line 322 and inserts=
+ 8
+>> lines, I do not see how you could be getting the same error message =
+at
+>> line 335 if the patch was present.  Even if you manually applied it =
+by
+>> only inserting the two lines of code, the line numbers would be at
+>> least 337, not 335 as reported above.  I also notice the path to
+>> Fetcher.pm is different from your earlier report.
+>>
+>> That said, the fact that it happens right after r100 (which is when
+>> SVN::Pool::clear is getting called) suggests there's another file
+>> handle getting caught up in the SVN::Pool somehow.  (When I try to
+>> clone gmsh, I got to r4885 before a server disconnection.)
+>>
+>> It could be as simple as the open2 call FileHandle result in later
+>> perl versions ends up in the SVN::Pool whereas in earlier Perl and/o=
+r
+>> svn versions it does not.
+>>
+>> What happens if you add this change on top of the Fetcher.pm change:
+>>
+>> diff --git a/perl/Git/SVN/Ra.pm b/perl/Git/SVN/Ra.pm
+>> index 622535e2..96888228 100644
+>> --- a/perl/Git/SVN/Ra.pm
+>> +++ b/perl/Git/SVN/Ra.pm
+>> @@ -391,6 +391,7 @@ sub longest_common_path {
+>>   sub gs_fetch_loop_common {
+>>         my ($self, $base, $head, $gsv, $globs) =3D @_;
+>>         return if ($base > $head);
+>> +       $::_repository->_open_cat_blob_if_needed;
+>>         my $gpool =3D SVN::Pool->new_default;
+>>         my $ra_url =3D $self->url;
+>>         my $reload_ra =3D sub {
+>>
+>> -Kyle
+>>
+>> > Cheers,
+>> > Nico
+>> >
+>> > On Wed, Feb 25, 2015 at 11:20 AM Kyle J. McKay <mackyle@gmail.com>
+>> > wrote:
+>> > I believe I have been able to track down this problem and implemen=
+t a
+>> > fix.  Please report back if this patch fixes the problem for you.
+>> >
+>> > -Kyle
+>> >
+>> > -- 8< --
+>> > Subject: [PATCH] Git::SVN::Fetcher: avoid premature 'svn_hash' tem=
+p
+>> > file closure
+>> >
+>> > Since b19138b (git-svn: Make it incrementally faster by minimizing
+>> > temp
+>> > files, v1.6.0), git-svn has been using the Git.pm temp_acquire and
+>> > temp_release mechanism to avoid unnecessary temp file churn and
+>> > provide
+>> > a speed boost.
+>> >
+>> > However, that change introduced a call to temp_acquire inside the
+>> > Git::SVN::Fetcher::close_file function for an 'svn_hash' temp file=
+=2E
+>> > Because an SVN::Pool is active at the time this function is called=
+, if
+>> > the Git::temp_acquire function ends up actually creating a new
+>> > FileHandle for the temp file (which it will the first time it's ca=
+lled
+>> > with the name 'svn_hash') that FileHandle will end up in the SVN::=
+Pool
+>> > and should that pool have SVN::Pool::clear called on it that
+>> > FileHandle
+>> > will be closed out from under Git::temp_acquire.
+>> >
+>> > Since the only call site to Git::temp_acquire with the name 'svn_h=
+ash'
+>> > is inside the close_file function, if an 'svn_hash' temp file is e=
+ver
+>> > created its FileHandle is guaranteed to be created in the active
+>> > SVN::Pool.
+>> >
+>> > This has not been a problem in the past because the SVN::Pool was =
+not
+>> > being cleared.  However, since dfa72fdb (git-svn: reload RA every
+>> > log-window-size, v2.2.0) the pool has been getting cleared
+>> > periodically
+>> > at which point the FileHandle for the 'svn_hash' temp file gets
+>> > closed.
+>> > Any subsequent calls to Git::temp_acquire for 'svn_hash', however,
+>> > succeed without creating/opening a new temporary file since it sti=
+ll
+>> > has
+>> > the now invalid FileHandle in its cache.  Callers that then attemp=
+t to
+>> > use that FileHandle fail with an error.
+>> >
+>> > We avoid this problem by making sure the 'svn_hash' temp file is
+>> > created
+>> > in the same place the 'svn_delta_...' and 'git_blob_...' temp file=
+s
+>> > are
+>> > (and then temp_release'd) so that it can be safely used inside the
+>> > close_file function without having its FileHandle end up in an
+>> > SVN::Pool
+>> > that gets cleared.
+>> >
+>> > Signed-off-by: Kyle J. McKay <mackyle@gmail.com>
+>> > ---
+>> >  perl/Git/SVN/Fetcher.pm | 8 ++++++++
+>> >  1 file changed, 8 insertions(+)
+>> >
+>> > diff --git a/perl/Git/SVN/Fetcher.pm b/perl/Git/SVN/Fetcher.pm
+>> > index 10edb277..613055a3 100644
+>> > --- a/perl/Git/SVN/Fetcher.pm
+>> > +++ b/perl/Git/SVN/Fetcher.pm
+>> > @@ -322,6 +322,14 @@ sub apply_textdelta {
+>> >         # (but $base does not,) so dup() it for reading in close_f=
+ile
+>> >         open my $dup, '<&', $fh or croak $!;
+>> >         my $base =3D $::_repository->temp_acquire("git_blob_${$}_
+>> > $suffix");
+>> > +       # close_file may call temp_acquire on 'svn_hash', but
+>> > because of the
+>> > +       # call chain, if the temp_acquire call from close_file end=
+s
+>> > up being the
+>> > +       # call that first creates the 'svn_hash' temp file, then t=
+he
+>> > FileHandle
+>> > +       # that's created as a result will end up in an SVN::Pool
+>> > that we clear
+>> > +       # in SVN::Ra::gs_fetch_loop_common.  Avoid that by making
+>> > sure the
+>> > +       # 'svn_hash' FileHandle is already created before close_fi=
+le
+>> > is called.
+>> > +       my $tmp_fh =3D $::_repository->temp_acquire('svn_hash');
+>> > +       $::_repository->temp_release($tmp_fh, 1);
+>> >
+>> >         if ($fb->{blob}) {
+>> >                 my ($base_is_link, $size);
+>> > --
+>>
 >
-> That is why I used the word "team".
->
->> It occurs to me that if the "maint-lts" updates were limited to crash
->> fixes, regressions and security issues then often the pre-built man
->> pages and docs from the release it's based on could be used as-is  
->> with
->> the exception of the new release notes which might save some time.
->
-> Cutting release tarballs including the pre-formatting docs might
-> consume a lot of machine time, but it does not cost me time at all.
-> I have Makefile for that ;-)
->
-> Judging which fixes that have proven themselves to be safe and sound
-> (by being in 'next', 'master' and hopefully 'maint' for some time)
-> are worthy enough of down-merging to the LTS track is something I'd
-> want to farm out to the LTS team.  I am already doing the "safe and
-> sound" part by deciding which topics to merge to 'maint' among the
-> topics that have gone through 'pu' to 'next' to 'master' branches,
-> but not all that are worthy enough to be merged to 'maint' may be
-> important enough to bother downmerging and updating LTS track with,
-> and picking which ones matter to the LTS users is what the folks who
-> are interested in the LTS can help.
-
-If I were to keep a maint-lts up-to-date somewhere (with suitable down- 
-merges matching the manner in which you maintain your tree) that you  
-could pull from and potentially make releases from.  I would not want  
-to pick up anything that hadn't already made it into master or maint  
-and I don't think any actual release based off maint-lts should have  
-any fix that has not already appeared in another non-maint-lts  
-release.  So any given maint-lts release date would be expected to lag  
-behind the corresponding master/maint release date that contained the  
-same fixes (except possibly for a coordinated security fix release).
-
-That said, there's no reason I couldn't also keep a pu-lts up-to-date  
-somewhere external to your tree that interested parties could grab  
-that would include fixes making their way into maint/master that I  
-believe would be candidates for inclusion in maint-lts once they  
-graduated.
-
-I would like to better understand how the various heads are  
-maintained.  I've read MaintNotes and I've got the concepts, but I'm  
-still a little fuzzy on some details.  It looks to me like all topics  
-still only in pu after master has been updated are then rebased onto  
-the new master and then pu is rebuilt.  MaintNotes doesn't get into  
-the rebasing details.  None of the graphic log viewers I've tried are  
-much help -- too many lines running around although the graphiclog on  
-repo.or.cz helps a bit as it shows --first-parent links as a bolder  
-line, but still after the first page that's not much help either.
-
-I vaguely recall you may have explained some of this in more detail in  
-the context of explaining how you used the scripts in todo to put  
-everything together when someone asked a question about it on the  
-list.  But I can't seem to find that message anymore.  :(
-
-I think I mostly understand how master, next and pu are maintained.   
-But MaintNotes says "Whenever a feature release is made, 'maint'  
-branch is forked off from 'master' at that point."  What happens to  
-the previous maint at that time?  Is it just renamed to maint-X.X?
-
-Also, how do you handle a down merge to maint when you have this:
-
-* (master)
-* merge topic foo
-|\
-| * topic foo
-|/
-* c
-* b
-* a
-* (tag: vX.X.X, maint)
-*
-
-And you want to down merge topic foo into maint (where foo is a topic  
-that didn't even first enter pu until some time after the vX.X.X  
-release).  Won't doing 'checkout maint', 'merge ":/^topic foo"' pull  
-in commits a, b and c as well?  I can think of several things to do  
-here, but how do you normally handle this situation?
-
--Kyle
