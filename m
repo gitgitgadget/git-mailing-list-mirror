@@ -1,97 +1,81 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: feature request: excluding files/paths from "git grep"
-Date: Fri, 27 Feb 2015 11:17:50 -0800
-Message-ID: <xmqq4mq7jh9d.fsf@gitster.dls.corp.google.com>
-References: <54EDBEC2.8090107@peralex.com>
-	<CACsJy8AM=W4f6u_7YpvmfiBwrJjqfJMJoq6CQYfKOh+qD6rF3Q@mail.gmail.com>
-	<20150225143116.GA13567@peff.net>
-	<xmqqk2z5on72.fsf@gitster.dls.corp.google.com>
-	<20150225185128.GA16569@peff.net>
-	<xmqqbnkholx9.fsf@gitster.dls.corp.google.com>
-	<20150225191108.GA17467@peff.net>
-	<54EF0089.6070605@drmicha.warpmail.net>
-	<xmqqr3tcl78o.fsf@gitster.dls.corp.google.com>
-	<54F08989.2050504@drmicha.warpmail.net>
+Subject: Re: [PATCH v2 2/2] index-pack: kill union delta_base to save memory
+Date: Fri, 27 Feb 2015 13:18:58 -0800
+Message-ID: <xmqqzj7zhx31.fsf@gitster.dls.corp.google.com>
+References: <1424397488-22169-1-git-send-email-pclouds@gmail.com>
+	<1424947928-19396-1-git-send-email-pclouds@gmail.com>
+	<1424947928-19396-3-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>,
-	Noel Grandin <noel@peralex.com>, git <git@vger.kernel.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Feb 27 20:18:02 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, msporleder@gmail.com
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 27 22:19:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YRQQ8-0002TB-Uc
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Feb 2015 20:17:57 +0100
+	id 1YRSJZ-0008D3-9t
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Feb 2015 22:19:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754836AbbB0TRx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Feb 2015 14:17:53 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64369 "EHLO
+	id S1754787AbbB0VTM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Feb 2015 16:19:12 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:58655 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753105AbbB0TRw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Feb 2015 14:17:52 -0500
+	with ESMTP id S1754632AbbB0VTL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 27 Feb 2015 16:19:11 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id CD4093AEE2;
-	Fri, 27 Feb 2015 14:17:51 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5AF9F3B304;
+	Fri, 27 Feb 2015 16:19:05 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1uOKJAIV50hyloVdK60W5VESGkQ=; b=OM+mBf
-	co2QRyIw0S3yXmjKVFNXxRP4Y51bbom8FSFwAmokO+/AYj2nGMxUXihGuGTEz88T
-	a9r2bBXaXRMu+mUOiFMEmUTW52VJDuvLBbBWLUzNoINFfcWbKJrKB+h/uoF/YdRa
-	Nkt/yBdF5dpA3/uL3nCuc5ChhxCrf8SbCZtf8=
+	:content-type:content-transfer-encoding; s=sasl; bh=lCldYAIkDuou
+	dNtss/uFCX+oJ88=; b=aKIxN9aO7fKKjkw9MuaD+akw4sZwip+otJhPilf7PT0b
+	FXPRToDNBJxLG3x6SJ+datBF/Zm5hZDWoLCpetystNo+gD7P1mHgPkb6mnFEkoW9
+	3/3zJl4vP+uc0aG4l9ecs4V+9wEEyclM+/vjgzgdSFon6q9ToS7dWGbZMHPLv8A=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Y6NzDW4mxGCL2V058QgmvA46Vr42yYRQ
-	68WexSJ39Qul4LJRHNM9gat+bkJo9NKaAro6yLepu37ks7C+N4QQYb6UaP/tSS5D
-	LEEIOx1cMrcCj9ED3fmP0eClLcTxembFe+MP6oVJXS1GebPUTP9cBbcCr911Bfz4
-	5Gec7pNLKHM=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=u9k0Nv
+	NcVCx4VUaGZ5RmGN8TyKr0rfX/vffoketrKE+SMI6iKLPQwhV5F5Uem80EYSb+9B
+	4IKO6PX2K0plSOOyPlYLXgvkr1mVy3/YFP7G3cMYKdU6tlIi+NJdhuG7FarzbhHb
+	4w8VsNJKQaiwh8mcGiQp63v9p1C4VRGDKtuwA=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id C59833AEE1;
-	Fri, 27 Feb 2015 14:17:51 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 534703B303;
+	Fri, 27 Feb 2015 16:19:05 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 444F23AEDF;
-	Fri, 27 Feb 2015 14:17:51 -0500 (EST)
-In-Reply-To: <54F08989.2050504@drmicha.warpmail.net> (Michael J. Gruber's
-	message of "Fri, 27 Feb 2015 16:13:13 +0100")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6B71E3B2FA;
+	Fri, 27 Feb 2015 16:18:59 -0500 (EST)
+In-Reply-To: <1424947928-19396-3-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Thu, 26
+ Feb 2015 17:52:08 +0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 52B09148-BEB5-11E4-B78A-29999F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 41CAD080-BEC6-11E4-92C0-29999F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264506>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264507>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-> Junio C Hamano venit, vidit, dixit 26.02.2015 21:59:
->
->> So that does not sound to me a summary of the discussion at all.
->
-> Well, your conditional
->
->> I do not recall its conclusion, but it it were "Yes, that is what it
->> means", then it might be reasonable to:
->> 
->>  - have "git grep" ignore paths marked with -diff by default
->>    (perhaps "-a" option to disable, just like GNU)
->> 
->>  - have "git grep" pay attention to diff.textconv and search in the
->>    result of textconv filter.
->
-> and Jeff's "Yes" on that condition certainly read like that to me: Make
-> "git grep" react to "diff", "-diff" attributes in the same way as "git
-> diff".
+> Notice that with "recent" Git versions, ofs-delta objects are
+> preferred over ref-delta objects and ref-delta objects have no reason
+> to be present in a clone pack.
 
-Ah, OK, I missed that flow of thought.
+It is true that we try to use ofs-delta as much as possible, but
+where does "have no reason to be present" come from?
 
-I read the conclusion as "_if_ using "diff" attributes is enough for
-this purpose, then there is no code to be written ... but 'grep' and
-'diff' may want to be different."
+When an object cannot be represented as an ofs-delta (which can only
+refer backwards), don't we use ref-delta, instead of storing it as a
+deflated-full object?
 
-Once we know if they do *not* want to be different, I agree that it
-may make things more consistent to turn --textconv on for binary
-files when running grep.
+Probably "Not so ancient versions of Git tries to use ofs-delta
+encoding whenever possible, so it is expected that objects encoded
+using ref-delta are minority" may be closer to the truth.  And that
+observation does justify why using two separate pools (one with
+8-byte entries for ofs-delta, the other with 20-byte entries for
+ref-delta) is a better idean than using one pool with 20-byte
+entries for both kinds.
