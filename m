@@ -1,148 +1,175 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: Any chance for a Git v2.1.5 release?
-Date: Fri, 27 Feb 2015 22:49:30 -0000
-Organization: OPDS
-Message-ID: <D1DF80CD81FD4C96BA973BFCD998E7B1@PhilipOakley>
-References: <C5211E53-8905-41C9-9D28-26D7BB51E76A@gmail.com> <xmqqk2z7qe8s.fsf@gitster.dls.corp.google.com> <2D3EB6D1-3029-4F60-AF29-E044E92DB036@gmail.com> <xmqq4mqapo9r.fsf@gitster.dls.corp.google.com> <DCB8EEAA-F6C3-4321-833E-39B80673C7E9@gmail.com> <xmqqvbiol7fg.fsf@gitster.dls.corp.google.com> <35E11B78-6FF8-41DE-BBF5-8978DA2F87A6@gmail.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH 0/3] protocol v2
+Date: Fri, 27 Feb 2015 15:05:58 -0800
+Message-ID: <xmqqioenhs4p.fsf@gitster.dls.corp.google.com>
+References: <1424747562-5446-1-git-send-email-sbeller@google.com>
+	<CACsJy8BSf2h_xD-Q1tudAg_xCzffRQM+7xzUgprONxD7vM5RYw@mail.gmail.com>
+	<CAPc5daVbrUaU6LFM65evru0+1tBT916+0AOyids=f7DZThTPGw@mail.gmail.com>
+	<CAGZ79kbZHtZuPrb6rEP41vbdnZqJmsMwq+8pNer-_D4U5B1xZw@mail.gmail.com>
+	<CACsJy8BN2imGCW0cueh-jGKfN_nRg3=J-GTX2P5h2z0Tu=id6A@mail.gmail.com>
+	<xmqqsidtoojh.fsf@gitster.dls.corp.google.com>
+	<CAGZ79kZE2+tCZgDzeTrQBn6JQv1OWJ7t_8j4kYMQgVaAbsnnxw@mail.gmail.com>
+	<CACsJy8ASR-O-7tozw=p1Ek0ugct5EVZyWtxY_YA2nqcUV_+ECw@mail.gmail.com>
+	<xmqqzj80l9c7.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=response
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>,
-	"Adam Spiers" <git@adamspiers.org>,
-	"Junio C Hamano" <gitster@pobox.com>
-To: "Kyle J. McKay" <mackyle@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 27 23:48:17 2015
+Content-Type: text/plain
+Cc: Stefan Beller <sbeller@google.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 28 00:06:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YRThf-0002Em-Aa
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Feb 2015 23:48:15 +0100
+	id 1YRTz4-0004S0-FX
+	for gcvg-git-2@plane.gmane.org; Sat, 28 Feb 2015 00:06:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755472AbbB0WsK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Feb 2015 17:48:10 -0500
-Received: from out1.ip02ir2.opaltelecom.net ([62.24.128.238]:58203 "EHLO
-	out1.ip02ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755454AbbB0WsI (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 27 Feb 2015 17:48:08 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2BTEwAH8/BUPAFMFlxbgwJSWoclun6FagEDAQGBJ04BAQEBAQEFAQEBATg7hAoFAQEBAQMIAQEuHgEBIQsCAwUCAQMVAwklFAEECBIGBwMUBhMIAgECAwEIiAIDFQnEAY1gDYU/IIsSgkSCKoMegRQFiiyFSluDBINsM4JhESiFN4V3SYYKhBE+MYJDAQEB
-X-IPAS-Result: A2BTEwAH8/BUPAFMFlxbgwJSWoclun6FagEDAQGBJ04BAQEBAQEFAQEBATg7hAoFAQEBAQMIAQEuHgEBIQsCAwUCAQMVAwklFAEECBIGBwMUBhMIAgECAwEIiAIDFQnEAY1gDYU/IIsSgkSCKoMegRQFiiyFSluDBINsM4JhESiFN4V3SYYKhBE+MYJDAQEB
-X-IronPort-AV: E=Sophos;i="5.09,663,1418083200"; 
-   d="scan'208";a="26962884"
-Received: from host-92-22-76-1.as13285.net (HELO PhilipOakley) ([92.22.76.1])
-  by out1.ip02ir2.opaltelecom.net with ESMTP; 27 Feb 2015 22:48:05 +0000
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S932355AbbB0XGG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Feb 2015 18:06:06 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:54501 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932342AbbB0XGB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Feb 2015 18:06:01 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 65F873CFB7;
+	Fri, 27 Feb 2015 18:06:00 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=7wUW/ND0COWqMdbb1VaTrQCm5z0=; b=cuSe+X
+	mWtmPjMyHJR20fNBbLrtWUHw1gJgIIe+6jUvf2K+QWICOVrLJt24XCUFcIYxAasy
+	8bY6IUKMFHlCndbRZgG8zgjz2g7NBYB+aXgmudHzlN/FoDBIF2fFUhXCc43o5qsx
+	Yo5s8qgRWmtgYqk5lOtZw3X+tA/PCoW9qylcs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=SK8y48fiPJcIj/+AboM4Ps4lSoz28D/X
+	kkPJG/B4aTpNGhB5ggUlihbg+nIpx7KbRBSV/5ylCe+BYF/CEGgXuzRp+XQrYVlN
+	wDPVfjllwQ8P7SnCb/w98QeSm1/NB8G01VL2EXBZg8C+gQ+uNP6WrMEwSoVX/mX5
+	1GVisNFuRpY=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5C3093CFB4;
+	Fri, 27 Feb 2015 18:06:00 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BA1383CFB3;
+	Fri, 27 Feb 2015 18:05:59 -0500 (EST)
+In-Reply-To: <xmqqzj80l9c7.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Thu, 26 Feb 2015 12:13:44 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 319EDDDC-BED5-11E4-A44B-29999F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264512>
 
-From: "Kyle J. McKay" <mackyle@gmail.com>
-> On Feb 26, 2015, at 12:54, Junio C Hamano wrote:
->
->> "Kyle J. McKay" <mackyle@gmail.com> writes:
->>
->>> I would like to better understand how the various heads are
->>> maintained.  I've read MaintNotes and I've got the concepts, but I'm
->>> still a little fuzzy on some details.  It looks to me like all 
->>> topics
->>> still only in pu after master has been updated are then rebased onto
->>> the new master and then pu is rebuilt.
->>
->> Topics in 'pu' not yet in 'next' _can_ be rebased, but unless there
->> is a good reason to do so, I wouldn't spend extra cycles necessary
->> to do such thing.  I even try to keep the same base when replacing
->> the contents of a branch with a rerolled series.  For example, today
->> I have this:
->>
->>    $ git config alias.lgf
->>    log --oneline --boundary --first-parent
->>    $ git lgf master..nd/slim-index-pack-memory-usage
->>    3538291 index-pack: kill union delta_base to save memory
->>    7b4ff41 FIXUP
->>    45b6b71 index-pack: reduce memory footprint a bit
->>    - 9874fca Git 2.3
->>
->> and Duy has a newer iteration of it starting at $gmane/264429.  What
->> I would do, after saving these patches in a mbox +nd-index-pack,
->> would be to
->>
->>    $ git checkout 9874fca
->>    $ git am -s3c ./+nd-index-pack
->>    $ git show-branch HEAD nd/slim-index-pack-memory-usage
->>    ... compare corresponding changes between the old and the new
->>    ... until I am satisified; otherwise I may tweak the new one
->>    $ git rebase -i 9874fca
->>    ... and then finally
->>    $ git branch -f nd/slim-index-pack-memory-usage HEAD
->>
->> to update the topic.  Of course, it would be necessary to rebuild
->> 'pu' by merging all the topics that are in it on top of 'master'.
->
-> Thanks.  That's helpful.
->
->> After finishing 2.3.0 release, at some point while 'master' is still
->> at 2.3.0, something like this would happen:
->>
->>    $ git branch -m maint maint-2.2
->>    $ git branch maint master
->
-> So the reason I don't notice force-updates to maint when this happens 
-> is because of the "Sync with maint" commits that make sure the new 
-> maint contains the old one.
->
->>> Also, how do you handle a down merge to maint when you have this:
->>>
->>> * (master)
->>> * merge topic foo
->>> |\
->>> | * topic foo
->>> |/
->>> * c
->>> * b
->>> * a
->>> * (tag: vX.X.X, maint)
->>> *
->>
->> I don't, and this is done by making sure I do not get into such a
->> situation in the first place.
->>
->> A general rule of thumb when applying a set of patches that are
->> fixes eventually worth having in older maintenance tracks is to find
->> the oldest maintenance branch and apply them there.
->
-> If I were to keep a maint-lts branch somewhere I would need to cherry- 
-> pick topics with desired fixes that fall into that situation.  That's 
-> what I expected but when you mentioned down merging the fixes I wanted 
-> to make sure I wasn't overlooking something.
+Junio C Hamano <gitster@pobox.com> writes:
 
-<minor bikeshed>
-The announcement a few days ago by Adam Spiers ($gmane/264405) of a new 
-video of his git-deps tool ($gmane/262606) may be of interest for 
-determining the dependency charts. It looked interesting for this type 
-of issue.
+> I do not think v1 can be fixed by "send one ref with capability,
+> newer client may respond immediately so we can stop enumerating
+> remaining refs and older one will get stuck so we can have a timeout
+> to see if the connection is from the newer one, and send the rest
+> for the older client", because anything that involves such a timeout
+> would not reliably work over WAN.
 
-His original blog is http://blog.adamspiers.org/2015/01/19/git-deps/ 
-with repo at https://github.com/aspiers/git-deps
-<\minor bikeshed>
->
-> I'll see about setting up a maint-lts in a local git repository clone 
-> and tracking LTS fixes.  If I'm able to keep that going without it 
-> becoming a black-hole of temporal need that sucks the life right out 
-> of me  ;)  then perhaps we can have a discussion at a future date 
-> about what would be needed for you to consider pulling from it and 
-> issuing LTS releases off it.  :)
->
-> -Kyle
-> --
-Philip 
+Just for fun, I was trying to see if there is a hole in the current
+protocol that allows a new client to talk a valid v1 protocol
+exchange with existing, deployed servers without breaking, while
+letting it to know a new server that it is a new client and it does
+not want to get blasted by megabytes of ref advertisement.
+
+The idea is to find a request that can be sent as the first
+utterance by the client to an old server that is interpreted as a
+no-op and can be recognised by a new server as such a "no-op probe".
+If there is such a request, then the exchange can go like this with
+(new client, old server) pair:
+
+    - new client connects and sends that no-op.
+
+    - old server starts blasting the ref advertisement
+
+    - new client monitors and notices that the other side
+      started speaking, and the ref advertisement lacks the
+      capability bit for new protocol.
+
+    - new client accepts the ref advertisement and does the v1
+      protocol thing as a follow-up to what it already sent.
+
+As long as the first one turns out to be no-op for old server, we
+would be OK.  On the other hand, (new client, new server) pair
+would go like this:
+
+    - new client connects and sends that no-op.
+
+    - new server notices that there is already a data from the
+      client, and recognises the "no-op probe".
+
+    - new server gives the first v2 protocol message with
+      capability.
+
+    - new client notices thqat the other side started speaking, and
+      it is the first v2 protocol message.
+
+    - both sides happily speak v2.
+
+and (old client, new server) pair would go like this:
+
+    - old client connects and waits.
+
+    - new server notices that there is *no* data sent from the
+      client and decides that the other side is a v1 client.  It
+      starts blasting the ref advertisement.
+
+    - both sides happily speak v1 from here on.
+
+A misdetected case between (new client, new server) pair might go
+like this:
+
+    - new client connects and sends that no-op.
+
+    - new server accepts the connection, but that no-op probe has
+      not arrived yet.".  It misdetects the other side as a v1
+      client and it starts blasting the ref advertisement.
+
+    - new client notices that the ref advertisement has the
+      capability bit and the server is capable of v2 protocol.  it
+      waits until the server sends "sorry, I misdetected" message.
+
+    - new server eventually notices the "no-op probe" while blasting
+      the ref advertisement and it can stop in the middle.
+      hopefully this can happen after only sending a few kilobytes
+      among megabytes of ref advertisement data ;-).  The server
+      sends "sorry, I misdetected" message to synchronise.
+
+    - both sides happily speak v2 from here on.
+
+So the topic of this exercise ("just for fun") is to see if there is
+such a no-op request the client side can send as the first thing for
+probing.
+
+On the fetch side, the first response upload-pack expects are one
+of:
+
+  - "want " followed by an object name.
+  - "shallow " followed by an object name.
+  - "deepen " followed by a positive integer.
+
+And there _is_ a hole ;-).  The parsing of "shallow " object name is
+done in such a way that an object name that passes get_sha1_hex()
+that results in a NULL return from parse_object() is _ignored_.  So
+a new client can use "shallow 0{40}" as a no-op probe.
+
+It appears that on the push side, there is a similar hole that can
+be used. receive-pack expects either "shallow ", "push-cert" or the
+refname updates (i.e. two "[0-9a-f]{40}" followed by a refname); the
+parsing of "shallow " is not as loose as the fetch side in that
+using a "shallow 0{40}" as a no-op probe will end up causing
+prepare_shallow_info() sift the "0{40}" object name into "theirs",
+but I think it will be ignored at the end as "unreachable cruft"
+without causing harm.
+
+I am _not_ proposing that we should go this route, at least not yet.
+I am merely pointing out that an in-place sidegrade from v1 to a
+protocol that avoids the megabyte-advertisement-at-the-beginning
+seems to be possible, as a food for thought.
