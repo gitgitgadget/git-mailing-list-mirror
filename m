@@ -1,87 +1,148 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [RFC/PATCH 0/3] protocol v2
-Date: Fri, 27 Feb 2015 14:20:09 -0800
-Message-ID: <CAGZ79ka8zwnT+dn5AHNhvEbMTuaicZiZLZY85baFA=aYSp+OFg@mail.gmail.com>
-References: <1424747562-5446-1-git-send-email-sbeller@google.com>
-	<CACsJy8BSf2h_xD-Q1tudAg_xCzffRQM+7xzUgprONxD7vM5RYw@mail.gmail.com>
-	<CAPc5daVbrUaU6LFM65evru0+1tBT916+0AOyids=f7DZThTPGw@mail.gmail.com>
-	<CAGZ79kbZHtZuPrb6rEP41vbdnZqJmsMwq+8pNer-_D4U5B1xZw@mail.gmail.com>
-	<CACsJy8BN2imGCW0cueh-jGKfN_nRg3=J-GTX2P5h2z0Tu=id6A@mail.gmail.com>
-	<xmqqsidtoojh.fsf@gitster.dls.corp.google.com>
-	<CAGZ79kZE2+tCZgDzeTrQBn6JQv1OWJ7t_8j4kYMQgVaAbsnnxw@mail.gmail.com>
-	<CACsJy8ASR-O-7tozw=p1Ek0ugct5EVZyWtxY_YA2nqcUV_+ECw@mail.gmail.com>
-	<CAGZ79kay+EXKaZ0UibCB=t4s5cVb28zgvUXeVRbd9d+XywhAsw@mail.gmail.com>
-	<CACsJy8DOS_999ZgW7TqsH-dkrUFpjZf0TFQeFUt9s0bNhHY0Bw@mail.gmail.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: Any chance for a Git v2.1.5 release?
+Date: Fri, 27 Feb 2015 22:49:30 -0000
+Organization: OPDS
+Message-ID: <D1DF80CD81FD4C96BA973BFCD998E7B1@PhilipOakley>
+References: <C5211E53-8905-41C9-9D28-26D7BB51E76A@gmail.com> <xmqqk2z7qe8s.fsf@gitster.dls.corp.google.com> <2D3EB6D1-3029-4F60-AF29-E044E92DB036@gmail.com> <xmqq4mqapo9r.fsf@gitster.dls.corp.google.com> <DCB8EEAA-F6C3-4321-833E-39B80673C7E9@gmail.com> <xmqqvbiol7fg.fsf@gitster.dls.corp.google.com> <35E11B78-6FF8-41DE-BBF5-8978DA2F87A6@gmail.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Duy Nguyen <pclouds@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Feb 27 23:20:21 2015
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=response
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>,
+	"Adam Spiers" <git@adamspiers.org>,
+	"Junio C Hamano" <gitster@pobox.com>
+To: "Kyle J. McKay" <mackyle@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 27 23:48:17 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YRTGd-0002Zb-4j
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Feb 2015 23:20:19 +0100
+	id 1YRThf-0002Em-Aa
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Feb 2015 23:48:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755683AbbB0WUM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Feb 2015 17:20:12 -0500
-Received: from mail-ie0-f181.google.com ([209.85.223.181]:40459 "EHLO
-	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755664AbbB0WUK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Feb 2015 17:20:10 -0500
-Received: by iebtr6 with SMTP id tr6so34575705ieb.7
-        for <git@vger.kernel.org>; Fri, 27 Feb 2015 14:20:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        bh=sdmCJRQyJxf4H0vqdrTilIoO9Gic2nvQeV/SapfF/3A=;
-        b=YEC/Zdz7aL2nFM/tjTl1CxSlWZqmWzshuBPCWoshJ5UuvAhD60J0qpwWtNp1s4rUc2
-         GNTlj8NYG9BifRiifZ+vMFtyd8FHhGRYp48ZsF5vUWBCNRDKXVGXe7meCZJE1mVYNYg3
-         ELsYJzRlcsrdktkJvn1bmM49TBP474uEYQMJ+xjaa1QFBhflFfNIBzgwzFC/Nj4YLvxh
-         kC9XPwiL0AFhNyBkvSPTf0/DkXwJE/9ri9vW0HCM6J3aNzpS/b6P7Ccn1FZ4zfNxtdxj
-         xa0vgYTZrAZwPOIqDg6n90n9UOWgxDNcLgaeR9EWtCrEbOmEvKA/IgutqPOTC3M0+Qaf
-         xoTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:content-type;
-        bh=sdmCJRQyJxf4H0vqdrTilIoO9Gic2nvQeV/SapfF/3A=;
-        b=YCakh+EErQkeOLBXYZ3YU5h8eNkhm7kERZ3w46WTcoMVmrVrgUqocbvfujGGmLnb4g
-         k2qDILPOuZONOG6YqVJDomDBXvwnj9hJqbptjmuLwNWUmfJsN2R9mfjDAjilaSInRizG
-         waTPL8PD+axasRJbwYoxyRBu168aoKFf6W2MC9AA+xw03SznIwnynqjub6znXjpp+oKA
-         J+/TyZDzfzue5Y/Qb76jcjJ1XWjJorH5SvXhLyg2tEttdjfzSG7CchLwvI1FQtPkM9yl
-         0akgfT7a+jyXw1S/WrMg9kUCQSzt/6A8mFuM4yqz6+qOG9qbBpeXWWffIMZP61rSPjUO
-         CQBA==
-X-Gm-Message-State: ALoCoQlZMoCsC9ZW//ZuKiSfgKqljXCZPTWB4Llr4h8Px2LVtK0CDT7NISZGv96qbb+4u0WhT7i5
-X-Received: by 10.50.39.65 with SMTP id n1mr6112034igk.37.1425075609673; Fri,
- 27 Feb 2015 14:20:09 -0800 (PST)
-Received: by 10.107.46.31 with HTTP; Fri, 27 Feb 2015 14:20:09 -0800 (PST)
-In-Reply-To: <CACsJy8DOS_999ZgW7TqsH-dkrUFpjZf0TFQeFUt9s0bNhHY0Bw@mail.gmail.com>
+	id S1755472AbbB0WsK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Feb 2015 17:48:10 -0500
+Received: from out1.ip02ir2.opaltelecom.net ([62.24.128.238]:58203 "EHLO
+	out1.ip02ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755454AbbB0WsI (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 27 Feb 2015 17:48:08 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: A2BTEwAH8/BUPAFMFlxbgwJSWoclun6FagEDAQGBJ04BAQEBAQEFAQEBATg7hAoFAQEBAQMIAQEuHgEBIQsCAwUCAQMVAwklFAEECBIGBwMUBhMIAgECAwEIiAIDFQnEAY1gDYU/IIsSgkSCKoMegRQFiiyFSluDBINsM4JhESiFN4V3SYYKhBE+MYJDAQEB
+X-IPAS-Result: A2BTEwAH8/BUPAFMFlxbgwJSWoclun6FagEDAQGBJ04BAQEBAQEFAQEBATg7hAoFAQEBAQMIAQEuHgEBIQsCAwUCAQMVAwklFAEECBIGBwMUBhMIAgECAwEIiAIDFQnEAY1gDYU/IIsSgkSCKoMegRQFiiyFSluDBINsM4JhESiFN4V3SYYKhBE+MYJDAQEB
+X-IronPort-AV: E=Sophos;i="5.09,663,1418083200"; 
+   d="scan'208";a="26962884"
+Received: from host-92-22-76-1.as13285.net (HELO PhilipOakley) ([92.22.76.1])
+  by out1.ip02ir2.opaltelecom.net with ESMTP; 27 Feb 2015 22:48:05 +0000
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264510>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264511>
 
-+git@vger.kernel.org
+From: "Kyle J. McKay" <mackyle@gmail.com>
+> On Feb 26, 2015, at 12:54, Junio C Hamano wrote:
+>
+>> "Kyle J. McKay" <mackyle@gmail.com> writes:
+>>
+>>> I would like to better understand how the various heads are
+>>> maintained.  I've read MaintNotes and I've got the concepts, but I'm
+>>> still a little fuzzy on some details.  It looks to me like all 
+>>> topics
+>>> still only in pu after master has been updated are then rebased onto
+>>> the new master and then pu is rebuilt.
+>>
+>> Topics in 'pu' not yet in 'next' _can_ be rebased, but unless there
+>> is a good reason to do so, I wouldn't spend extra cycles necessary
+>> to do such thing.  I even try to keep the same base when replacing
+>> the contents of a branch with a rerolled series.  For example, today
+>> I have this:
+>>
+>>    $ git config alias.lgf
+>>    log --oneline --boundary --first-parent
+>>    $ git lgf master..nd/slim-index-pack-memory-usage
+>>    3538291 index-pack: kill union delta_base to save memory
+>>    7b4ff41 FIXUP
+>>    45b6b71 index-pack: reduce memory footprint a bit
+>>    - 9874fca Git 2.3
+>>
+>> and Duy has a newer iteration of it starting at $gmane/264429.  What
+>> I would do, after saving these patches in a mbox +nd-index-pack,
+>> would be to
+>>
+>>    $ git checkout 9874fca
+>>    $ git am -s3c ./+nd-index-pack
+>>    $ git show-branch HEAD nd/slim-index-pack-memory-usage
+>>    ... compare corresponding changes between the old and the new
+>>    ... until I am satisified; otherwise I may tweak the new one
+>>    $ git rebase -i 9874fca
+>>    ... and then finally
+>>    $ git branch -f nd/slim-index-pack-memory-usage HEAD
+>>
+>> to update the topic.  Of course, it would be necessary to rebuild
+>> 'pu' by merging all the topics that are in it on top of 'master'.
+>
+> Thanks.  That's helpful.
+>
+>> After finishing 2.3.0 release, at some point while 'master' is still
+>> at 2.3.0, something like this would happen:
+>>
+>>    $ git branch -m maint maint-2.2
+>>    $ git branch maint master
+>
+> So the reason I don't notice force-updates to maint when this happens 
+> is because of the "Sync with maint" commits that make sure the new 
+> maint contains the old one.
+>
+>>> Also, how do you handle a down merge to maint when you have this:
+>>>
+>>> * (master)
+>>> * merge topic foo
+>>> |\
+>>> | * topic foo
+>>> |/
+>>> * c
+>>> * b
+>>> * a
+>>> * (tag: vX.X.X, maint)
+>>> *
+>>
+>> I don't, and this is done by making sure I do not get into such a
+>> situation in the first place.
+>>
+>> A general rule of thumb when applying a set of patches that are
+>> fixes eventually worth having in older maintenance tracks is to find
+>> the oldest maintenance branch and apply them there.
+>
+> If I were to keep a maint-lts branch somewhere I would need to cherry- 
+> pick topics with desired fixes that fall into that situation.  That's 
+> what I expected but when you mentioned down merging the fixes I wanted 
+> to make sure I wasn't overlooking something.
 
-On Thu, Feb 26, 2015 at 5:42 PM, Duy Nguyen <pclouds@gmail.com> wrote:
-> https://github.com/pclouds/git/commits/uploadpack2
+<minor bikeshed>
+The announcement a few days ago by Adam Spiers ($gmane/264405) of a new 
+video of his git-deps tool ($gmane/262606) may be of interest for 
+determining the dependency charts. It looked interesting for this type 
+of issue.
 
-I rebased your branch, changed the order of commits slightly and
-started to add some.
-they are found at https://github.com/stefanbeller/git/commits/uploadpack2
-
-I think the very first patch series which I try to polish now will
-just try to move the
-capabilities negotiation into the beginning of the exchange.
-
-Any 'real' changes such as adding capabilities to the protocol to not
-have all the refs
-advertised will come in a later series.
-
-Thanks for your help!
-Stefan
+His original blog is http://blog.adamspiers.org/2015/01/19/git-deps/ 
+with repo at https://github.com/aspiers/git-deps
+<\minor bikeshed>
+>
+> I'll see about setting up a maint-lts in a local git repository clone 
+> and tracking LTS fixes.  If I'm able to keep that going without it 
+> becoming a black-hole of temporal need that sucks the life right out 
+> of me  ;)  then perhaps we can have a discussion at a future date 
+> about what would be needed for you to consider pulling from it and 
+> issuing LTS releases off it.  :)
+>
+> -Kyle
+> --
+Philip 
