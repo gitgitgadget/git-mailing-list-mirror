@@ -1,59 +1,64 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Git gc removes all packs
-Date: Fri, 27 Feb 2015 08:14:26 -0500
-Message-ID: <20150227131425.GA13005@peff.net>
-References: <CAC+L6n1M7LtGaJy94fnhXm94zJ32HXLNVGMguWSqHm=qqLLDxA@mail.gmail.com>
- <20150205200332.GD15326@peff.net>
- <CAC+L6n3OFYsjm+5PMW3DBzJo7LnUsxRq1TRE4PMvFvWVG6DQ+A@mail.gmail.com>
+Subject: Re: Deadlock during remote update
+Date: Fri, 27 Feb 2015 08:21:13 -0500
+Message-ID: <20150227132113.GB13005@peff.net>
+References: <311995D1237EC0498D6D8FAFA73D6F458F1B67@G9W0762.americas.hpqcorp.net>
+ <CACsJy8AG9ZdhZj_pAb3sZPntBt+GPLj06dXDAV=w+5HyL6D+0Q@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Dmitry Neverov <dmitry.neverov@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 27 14:14:37 2015
+Cc: "Heald, Mike" <mike.heald@hp.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 27 14:21:25 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YRKkW-0007Fs-PX
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Feb 2015 14:14:37 +0100
+	id 1YRKr2-0002JE-9P
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Feb 2015 14:21:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752280AbbB0NO3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Feb 2015 08:14:29 -0500
-Received: from cloud.peff.net ([50.56.180.127]:54115 "HELO cloud.peff.net"
+	id S1752330AbbB0NVQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Feb 2015 08:21:16 -0500
+Received: from cloud.peff.net ([50.56.180.127]:54119 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751899AbbB0NO2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Feb 2015 08:14:28 -0500
-Received: (qmail 25453 invoked by uid 102); 27 Feb 2015 13:14:28 -0000
+	id S1752152AbbB0NVP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Feb 2015 08:21:15 -0500
+Received: (qmail 25762 invoked by uid 102); 27 Feb 2015 13:21:15 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 27 Feb 2015 07:14:28 -0600
-Received: (qmail 943 invoked by uid 107); 27 Feb 2015 13:14:30 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 27 Feb 2015 07:21:15 -0600
+Received: (qmail 986 invoked by uid 107); 27 Feb 2015 13:21:18 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 27 Feb 2015 08:14:30 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 27 Feb 2015 08:14:26 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 27 Feb 2015 08:21:18 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 27 Feb 2015 08:21:13 -0500
 Content-Disposition: inline
-In-Reply-To: <CAC+L6n3OFYsjm+5PMW3DBzJo7LnUsxRq1TRE4PMvFvWVG6DQ+A@mail.gmail.com>
+In-Reply-To: <CACsJy8AG9ZdhZj_pAb3sZPntBt+GPLj06dXDAV=w+5HyL6D+0Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264495>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264496>
 
-On Fri, Feb 27, 2015 at 11:16:09AM +0100, Dmitry Neverov wrote:
+On Fri, Feb 27, 2015 at 06:27:28PM +0700, Duy Nguyen wrote:
 
-> I followed your advice and removed a symlink ref from my repository.
-> But didn't help.. automatic GC has just removed all packs again. May
-> alternates cause such a behavior? Are any ways to make gc log
-> somewhere why it removes packs?
+> > 31638 git-remote-https upstream https://git.openstack.org/openstack/nova
+> >     has pipe:[170381707] (fd 1), waiting for read from pipe:[170384472]
+> > 31642 git fetch-pack --stateless-rpc --lock-pack --include-tag --thin --no-progress https://git.openstack.org/openstack/nova/  efs/heads/master
+> >     has pipe:[170384472] (fd 1), waiting for read from pipe:[170384471] (fd 0) which fd 7 on 31638
+> >
+> > 31638 and 31642 are both waiting to read from a pipe that the other has, and isn't writing to.
+> >
+> > This is git version 1.7.9.5, OS is ubuntu precise.
+> 
+> There's this commit 2a45520 (remote-curl: always parse incoming refs -
+> 2013-02-20) that fixes a deadlock between remote-http(s) and
+> fetch-pack. I'm not sure if it's the same problem. Jeff  knows more
+> about this. The fix is available since v1.8.3
 
-If you have two repositories, A and B, and A points to B via alternates,
-then you cannot safely run "git gc" in B unless it knows about all of
-the refs in A. As we discussed before, symlinking the refs is not
-enough, because those symlinks get stale. But nor is removing the
-symlinks and just not knowing about the refs. :)
+You are more optimistic about my memory than I am. :)
 
-The only safe thing to do is to fetch all of the refs from A into B just
-before running the gc (and consequently, you probably want to disable
-gc.auto in B).
+Given the symptoms of the deadlock above, I agree it is a likely
+culprit. There was a spree of deadlock fixes around the same time, but I
+think that is the only one that was found on the client side of a fetch.
 
 -Peff
