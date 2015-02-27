@@ -1,120 +1,74 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] versionsort: support reorder prerelease suffixes
-Date: Fri, 27 Feb 2015 13:37:50 -0800
-Message-ID: <xmqqvbinhw7l.fsf@gitster.dls.corp.google.com>
-References: <CAPc5daVJJcC--mwq0PfAczge3zG44ToDKP853FkyZ3x1KUfsig@mail.gmail.com>
-	<1424947441-19134-1-git-send-email-pclouds@gmail.com>
+Subject: Re: [PATCH 2/2] diffcore-rename: avoid processing duplicate destinations
+Date: Fri, 27 Feb 2015 13:48:11 -0800
+Message-ID: <xmqqr3tbhvqc.fsf@gitster.dls.corp.google.com>
+References: <20150227013847.GA2983@peff.net> <20150227014227.GB3210@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 27 22:38:00 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Feb 27 22:48:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YRSbe-0002I1-T1
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Feb 2015 22:37:59 +0100
+	id 1YRSlo-0000G9-H4
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Feb 2015 22:48:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755433AbbB0Vhy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Feb 2015 16:37:54 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:61230 "EHLO
+	id S1755244AbbB0VsY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Feb 2015 16:48:24 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:63049 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754632AbbB0Vhx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 27 Feb 2015 16:37:53 -0500
+	with ESMTP id S1755007AbbB0VsX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Feb 2015 16:48:23 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2B3CE3B876;
-	Fri, 27 Feb 2015 16:37:53 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id CA2D73BB36;
+	Fri, 27 Feb 2015 16:48:22 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=bh0Fv6Wf2Kxm
-	upiVPpFddOZzsPc=; b=TcGbmmxA09qjq4JB2r1wys3mcfsgK7Yr/JjbXtP78j9Q
-	HVdCHKgy7bBctVqsS3Kdti15hZ7RTvSaTVZ3X4j1JKmBBbdtts06zDj5bSQlD8cQ
-	ahOtaPUcU8mpOkdMoIr67caIcTwmtvVD+FSm1r1RRnYdUT4I/y63mOT+9o7mnZk=
+	:content-type; s=sasl; bh=sbxPRf3iMjYxo4ct4JfwHWSNaRE=; b=SbI/p5
+	GjRoiWnKrlqnvYdlZ9o3tnKfiH+WACehENWjGjNBMdnX78qYYMv8B6qjiprR3p5D
+	a94yMZ4iwztlNQLXxiYHuXZ3XPHaHvudbtBP5jTrW1lcsMVvFfGlhKXHZy5MD6pb
+	0xP0OJbhLbX56IlguNsMCuNVrOH5Y06m1zoqk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=O5mgCx
-	NXgEs35E3D8XlPSM52GDJ8xm79F8p8NMK25qNZ8XYFo4MyQb+Xevsy9xjnE8MfZ9
-	RupOMkOIAS/9skGRxdYXGs6/QJYFFPpG6hA10tgAKW3QpBDZlUxTDgi7yQprIRup
-	vC+DnGzct4KllbSwT+MNsZJlhpKchyE3862Jg=
+	:content-type; q=dns; s=sasl; b=UoyVuZW0cO+ShgrdBEqAtjoaBvTau1Pf
+	FG15W7bhpYQCsfSIQYxgLgWzCFbgYbSjWfNNq+59E8Q2mwggRCcL/7ViiGLrtOlM
+	iOTVMKnM0xiosPOVtiHH8+27KEOZgLvv+co6MOjPBj/4l3q7+mUOGK/SZXQgewdF
+	yZ7cef2CQnU=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 22D793B875;
-	Fri, 27 Feb 2015 16:37:53 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C29983BB35;
+	Fri, 27 Feb 2015 16:48:22 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8B5413B874;
-	Fri, 27 Feb 2015 16:37:52 -0500 (EST)
-In-Reply-To: <1424947441-19134-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Thu, 26
- Feb 2015 17:44:01 +0700")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 634533BB21;
+	Fri, 27 Feb 2015 16:48:15 -0500 (EST)
+In-Reply-To: <20150227014227.GB3210@peff.net> (Jeff King's message of "Thu, 26
+	Feb 2015 20:42:27 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: E2351DD0-BEC8-11E4-AD27-29999F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 5572A9C4-BECA-11E4-84CD-29999F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264509>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
->  Second round. Looking better. We can do
->  "1.0-pre12 < 1.0-rc0 < 1.0 < 1.0-post1" too but it relies on
->  config key's loading order, a bit iffy.
->
->  Documentation/config.txt |  7 +++++++
->  t/t7004-tag.sh           | 28 +++++++++++++++++++++++++++
->  versioncmp.c             | 50 ++++++++++++++++++++++++++++++++++++++=
-++++++++++
->  3 files changed, 85 insertions(+)
->
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 04e2a71..8e078df 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -2539,6 +2539,13 @@ user.signingkey::
->  	This option is passed unchanged to gpg's --local-user parameter,
->  	so you may specify a key using any method that gpg supports.
-> =20
-> +versionsort.prereleaseSuffix::
-> +	When version sort is used in linkgit:git-tag[1], prerelease
-> +	tags (e.g. "1.0-rc1") may appear after the main release
-> +	"1.0". By specifying the suffix "-rc" in this variable,
-> +	"1.0-rc1" will appear before "1.0". One variable assignment
-> +	per suffix.
+> Like I mentioned before, I'm OK with not checking the actual diff output
+> in the test. It's not like it was planned, and is just what diff_tree()
+> happens to produce.  It does make sense, though....
 
-I think the last half-sentence want to mean that
+When the topic is on processing broken input, I do not think "It
+does make sense, though." is a primary point, unless the result
+expected by these tests is the only possibly sane outcome
+(otherwise, another equally-sensible output will be rejected as a
+test failure).  So I agree that there is a possibility that we might
+regret having the diff output tested here in the future when
+somebody further works in the area.
 
-	[versionsort]
-                prereleaseSuffix =3D -pre
-        	prereleaseSuffix =3D -rc
+But let's not worry too much about it for now.
 
-is the supported way to write, and not
-
-	[versionsort]
-        	prereleaseSuffix =3D -pre -rc
-
-but it probably is unclear unless the reader already knows what it
-is trying to say.  The reader also needs to learn somewhere how the
-order of the entries affects the result.
-
-> +	if (i1 =3D=3D -1 && i2 =3D=3D -1)
-> +		return 0;
-> +	if (i1 >=3D 0 && i2 >=3D 0)
-> +		*diff =3D i1 - i2;
-> +	else if (i1 >=3D 0)
-> +		*diff =3D -1;
-
-p1 is a prerelease and p2 is not, so p1 comes before p2.
-
-> +	else /* if (i2 >=3D 0) */
-> +		*diff =3D 1;
-
-and the other way around.
-
-The math makes sense, I think.
+Thanks; the solution seems reasonable.
