@@ -1,64 +1,82 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Deadlock during remote update
-Date: Fri, 27 Feb 2015 08:21:13 -0500
-Message-ID: <20150227132113.GB13005@peff.net>
-References: <311995D1237EC0498D6D8FAFA73D6F458F1B67@G9W0762.americas.hpqcorp.net>
- <CACsJy8AG9ZdhZj_pAb3sZPntBt+GPLj06dXDAV=w+5HyL6D+0Q@mail.gmail.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] grep: correct help string for --exclude-standard
+Date: Fri, 27 Feb 2015 21:01:58 +0700
+Message-ID: <1425045718-30696-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: "Heald, Mike" <mike.heald@hp.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 27 14:21:25 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 27 15:01:47 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YRKr2-0002JE-9P
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Feb 2015 14:21:20 +0100
+	id 1YRLUA-0006XM-1r
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Feb 2015 15:01:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752330AbbB0NVQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Feb 2015 08:21:16 -0500
-Received: from cloud.peff.net ([50.56.180.127]:54119 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752152AbbB0NVP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Feb 2015 08:21:15 -0500
-Received: (qmail 25762 invoked by uid 102); 27 Feb 2015 13:21:15 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 27 Feb 2015 07:21:15 -0600
-Received: (qmail 986 invoked by uid 107); 27 Feb 2015 13:21:18 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 27 Feb 2015 08:21:18 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 27 Feb 2015 08:21:13 -0500
-Content-Disposition: inline
-In-Reply-To: <CACsJy8AG9ZdhZj_pAb3sZPntBt+GPLj06dXDAV=w+5HyL6D+0Q@mail.gmail.com>
+	id S1753082AbbB0OBh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Feb 2015 09:01:37 -0500
+Received: from mail-pd0-f174.google.com ([209.85.192.174]:35892 "EHLO
+	mail-pd0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752848AbbB0OBg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Feb 2015 09:01:36 -0500
+Received: by pdjp10 with SMTP id p10so21300825pdj.3
+        for <git@vger.kernel.org>; Fri, 27 Feb 2015 06:01:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:mime-version:content-type
+         :content-transfer-encoding;
+        bh=/mDrD0lStA3b6/dFP9raW1gv3tKxlfeJmhbY1b+ibos=;
+        b=iay6SZxwW1zY9cwzVaQDJqFeU7/lILujXf6B0PMsfKt3HkqrDWRdGiFJNYj+/6ChI1
+         kfhsF2scx4getTDrusaalc4zAhIV/ImKmFbpiczkqpwR5fmP14OK8RfGNppdyFesqfwE
+         fcyZM9lzqog25VR5PI+3D87+ity/VkwOSpI6/S5RRYDI/FrQL6Qx5TU1tFJIFWVZgrJV
+         hj5MtB+Qc7yqlqSLae0kMBIRRRuGRKT1+UFUCjaI/UlSM9K+SbTV7FDxNh+QyuGCAK7I
+         hPZuryv1ReiHJpinYFonI014n7YolUbqPH7b8daivNbZCJlfJz8Vfc35o9RjF6vVo1JR
+         AOtQ==
+X-Received: by 10.70.28.99 with SMTP id a3mr23903175pdh.81.1425045695691;
+        Fri, 27 Feb 2015 06:01:35 -0800 (PST)
+Received: from lanh ([115.73.203.245])
+        by mx.google.com with ESMTPSA id s4sm4096783pdc.61.2015.02.27.06.01.32
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 27 Feb 2015 06:01:34 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Fri, 27 Feb 2015 21:02:02 +0700
+X-Mailer: git-send-email 2.3.0.rc1.137.g477eb31
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264496>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264497>
 
-On Fri, Feb 27, 2015 at 06:27:28PM +0700, Duy Nguyen wrote:
+The current help string is about --no-exclude-standard. But "git grep -=
+h"
+would show --exclude-standard instead. Flip the string. See 0a93fb8
+(grep: teach --untracked and --exclude-standard options - 2011-09-27)
+for more info about these options.
 
-> > 31638 git-remote-https upstream https://git.openstack.org/openstack/nova
-> >     has pipe:[170381707] (fd 1), waiting for read from pipe:[170384472]
-> > 31642 git fetch-pack --stateless-rpc --lock-pack --include-tag --thin --no-progress https://git.openstack.org/openstack/nova/  efs/heads/master
-> >     has pipe:[170384472] (fd 1), waiting for read from pipe:[170384471] (fd 0) which fd 7 on 31638
-> >
-> > 31638 and 31642 are both waiting to read from a pipe that the other has, and isn't writing to.
-> >
-> > This is git version 1.7.9.5, OS is ubuntu precise.
-> 
-> There's this commit 2a45520 (remote-curl: always parse incoming refs -
-> 2013-02-20) that fixes a deadlock between remote-http(s) and
-> fetch-pack. I'm not sure if it's the same problem. Jeff  knows more
-> about this. The fix is available since v1.8.3
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ builtin/grep.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-You are more optimistic about my memory than I am. :)
-
-Given the symptoms of the deadlock above, I agree it is a likely
-culprit. There was a spree of deadlock fixes around the same time, but I
-think that is the only one that was found on the client side of a fetch.
-
--Peff
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 4063882..e77f7cf 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -641,7 +641,7 @@ int cmd_grep(int argc, const char **argv, const cha=
+r *prefix)
+ 		OPT_BOOL(0, "untracked", &untracked,
+ 			N_("search in both tracked and untracked files")),
+ 		OPT_SET_INT(0, "exclude-standard", &opt_exclude,
+-			    N_("search also in ignored files"), 1),
++			    N_("ignore files specified via '.gitignore'"), 1),
+ 		OPT_GROUP(""),
+ 		OPT_BOOL('v', "invert-match", &opt.invert,
+ 			N_("show non-matching lines")),
+--=20
+2.3.0.rc1.137.g477eb31
