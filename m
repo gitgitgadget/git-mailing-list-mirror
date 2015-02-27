@@ -1,120 +1,105 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: Easy Non-Fast-Forward Pushes
-Date: Fri, 27 Feb 2015 09:40:46 -0800
-Message-ID: <CAGZ79kZ3_ohE6ebY5MvOk6+QfChppR_OtcmVaw5LBoutTWm3ZA@mail.gmail.com>
-References: <loom.20150227T170215-199@post.gmane.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] sequencer: preserve commit messages
+Date: Fri, 27 Feb 2015 10:31:15 -0800
+Message-ID: <xmqqd24vjjf0.fsf@gitster.dls.corp.google.com>
+References: <1424540906.15539.22.camel@scientia.net>
+	<f58ae048d7fd468cfdd7f7d369b3b4fc0a564641.1424697676.git.git@drmicha.warpmail.net>
+	<xmqqsidwtq4i.fsf@gitster.dls.corp.google.com>
+	<54EC98BD.7060100@drmicha.warpmail.net>
+	<xmqq8ufnrwm1.fsf@gitster.dls.corp.google.com>
+	<54ED9AF7.6080908@drmicha.warpmail.net>
+	<xmqqoaohonpt.fsf@gitster.dls.corp.google.com>
+	<54EEFDF7.8090306@drmicha.warpmail.net>
+	<xmqq61aomp1d.fsf@gitster.dls.corp.google.com>
+	<54F08DE8.3080907@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Lasse Kliemann <lasse@lassekliemann.de>
-X-From: git-owner@vger.kernel.org Fri Feb 27 18:40:53 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org,
+	Christoph Anton Mitterer <calestyo@scientia.net>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Feb 27 19:31:27 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YROuB-00028A-S4
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Feb 2015 18:40:52 +0100
+	id 1YRPh5-00086P-At
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Feb 2015 19:31:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755168AbbB0Rks (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Feb 2015 12:40:48 -0500
-Received: from mail-ig0-f181.google.com ([209.85.213.181]:40604 "EHLO
-	mail-ig0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755110AbbB0Rkr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Feb 2015 12:40:47 -0500
-Received: by igal13 with SMTP id l13so2236785iga.5
-        for <git@vger.kernel.org>; Fri, 27 Feb 2015 09:40:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=3MMoYjsJFI5q1wkubdZuY9h3t2X13d1eeSt6VNJO7nc=;
-        b=XCjxbbCLnAZh1YTZFsn2sLBYZl9sRuTSLaHF0MA0wmkZiBBHwZbdSAx1wWoZaVHK83
-         a8gxM+eJN/GveXt0iM8jVU4HHa2KK5o7wLwSly+pL6GjK/6xedpylElTiY2e80t6H0eh
-         pOjUnC4VHP1+foPaLCBBeCnvfuccAjrf+oteefrJPJYly9h0NMlMGSpf/50Q3Yh1UFLw
-         uOpNzF2fWv4xFj5cyNxiK7HpHBWI+2hwosBm6pu+gNj7u6FjEfgAkFau4ASkly5Pdqrp
-         npnzNcoRlkcMakseM6Je/U7/8nTj6uHcf83Pu31cmPKpwLpJJDWwsrLFfJMe94aAdqUQ
-         mrfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=3MMoYjsJFI5q1wkubdZuY9h3t2X13d1eeSt6VNJO7nc=;
-        b=SsQuXrs1/mHQjGtTsGFWG5IWaaE+jIv/VTY7WH5+uyCFC9Hn1QAU+sfq1OXiT0O5HY
-         A1Hun3uC2fsARU3M77yTkilcDKFf849ue28txVunQPWC8wD5t8r9kTSxBnqcXEn/SHAN
-         +ZzWceHW0LxLFc2mgonJRE3Pkq1HgkP9q/VgZuMBysiDccnyF6B7/mQJZvGMIqPt2ntY
-         I/YXObRYOY1D1KFUj08+2qFcorZXJEOptlM1h9F/vhv4Z85x2VXmhD5jH2iYCPp3bWC+
-         IVdcaopEGLNddDEcHeVsQ0YwWPcUmVAZAaszQqRuirmujphscJdBm0yiLxguTfnGBxPE
-         goAQ==
-X-Gm-Message-State: ALoCoQnJx9IDZb/rdf5tqs7a6DYWzlb36bZsGOmcBvP8uyIOYPBYwSDMLJLl6ZDRDlDBKsgTC7yP
-X-Received: by 10.42.83.147 with SMTP id h19mr16617185icl.95.1425058846395;
- Fri, 27 Feb 2015 09:40:46 -0800 (PST)
-Received: by 10.107.46.31 with HTTP; Fri, 27 Feb 2015 09:40:46 -0800 (PST)
-In-Reply-To: <loom.20150227T170215-199@post.gmane.org>
+	id S1752280AbbB0SbT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Feb 2015 13:31:19 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:61927 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751776AbbB0SbS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Feb 2015 13:31:18 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 824873BF56;
+	Fri, 27 Feb 2015 13:31:17 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=P5Rfx6puNFErCDe0WnMKkVEpeGU=; b=NgiUmm
+	mIjrEIaiyU5UoDcJDmvOAv/QjNxVmM/xjOAebUa1n9H4XhxqgIsaABystsWs7MSV
+	iT6Gx61kpeqpFZwiK+LA7SABVUkQKDBa9fI+KW7MV0OGVqtEbEExHaD8agaWFvrN
+	69vFArzkOe1o3kfLC46AEW9Ia+dwYSpiL0F+w=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Vsjl73J+UKELsQuDHrI9rOxBa8fIrde4
+	2ZhSBFFIzxn+ZbQoxO1GrK6A8uzGkZHkPg+vwnfYe2B6My7WE4SG7dlUaAwdXYFj
+	Vfr/ivwKlb88MR3CTbV4cG1qGU+/xK3pWgz0vycrZa+aCNVXzRuu81FL1BncP/AD
+	T+DAp+vdSu0=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 79E183BF54;
+	Fri, 27 Feb 2015 13:31:17 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BF4273BF51;
+	Fri, 27 Feb 2015 13:31:16 -0500 (EST)
+In-Reply-To: <54F08DE8.3080907@drmicha.warpmail.net> (Michael J. Gruber's
+	message of "Fri, 27 Feb 2015 16:31:52 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: D0FF8BC8-BEAE-11E4-971C-29999F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264504>
 
-On Fri, Feb 27, 2015 at 8:20 AM, Lasse Kliemann <lasse@lassekliemann.de> wrote:
-> As far as I understand, a push will always modify (or add) a ref in the
-> remote repository. When pushing to branch B, then the ref pointing to the
-> last commit in this branch will be moved, provided that this can be done in
-> a fast-forward way. Otherwise the push will fail.
+Michael J Gruber <git@drmicha.warpmail.net> writes:
+
+> Without any config being set the result is certainly what I'm after.
 >
-> The following options exist:
->
-> (1) force the push
-> (2) fetch, merge, then push
-> (3) push to a different branch
->
-> I don't want (1), for obvious reasons.
->
-> Option (2) implies that a particular person has to do the merge, namely the
-> person for whom the push is failing, or in other words: the person
-> unfortunate enough not being the first to push. (This reminds me of
-> Subversion: whoever tries to commit after someone else has committed will
-> have the burden of an update and possible merge.)
->
-> Option (3) allows others to recognize the situation, and anyone with
-> repository access can do a merge. This is a good thing. However, I am
-> confused as to what branch name should be used for this. In Mercurial, we
-> would say that a new "head" is created, and anyone can recognize this by
-> using "hg heads" and do a merge if he feels competent enough. (A "head" in
-> Mercurial is a revision without children.) Can something similar be done in
-> Git? I'd like to provide my co-workers with a command which they can always
-> use to push their changes to a central repository in order that I can see
-> what has happened and do merges accordingly. In Mercurial, such a command
-> would simply be "hg commit && hg push -f".
+> What I'm still wondering about is the case without --edit but with
+> commit.cleanup: It seems to me that "git commit" being involved in a
+> conflict-less cherry-pick is solely an implemention detail (and it could
+> be done differently). Applying commit.* in this situation is a total
+> surpise to the normal user, isn't it? I mean, again, what's the
+> difference to rebase from a user perspective?
 
-For a high level workflow with pure git, everything must be a branch
-or a tag IMHO,
-(I cannot really think of other ways).
+OK, a revised logic with the above input from you may look like
+this:
 
-So maybe you create a bash alias for
-alias gitup='git push origin HEAD:${USER}/$(date -Iseconds)'
-which would push your current tip of the repository to the remote with
-quite a unique name.
+     #if IN_THE_FUTURE
+         if (config_exists(cherrypick.cleanup))
+             mode = config_value(cherrypick.cleanup);
+         else
+     #endif
+         if (editing && config_exists(commit.cleanup))
+             mode = config_value(commit.cleanup);
+         else
+             mode = 'verbatim';
+ 
+         invoke "commit --cleanup=" + mode;
 
-Then you could also do a "git commit -a && gitup" to push your changes
-to the server
-As the integrator you could then integrate branches with
-    "git fetch origin && git merge origin/sbeller/2015-02-27T09:34:47-0800"
+This is a change in behavoiur (I just checked with v1.6.0 codebase
+and we seem to run a clean-up without "--edit"); what is our plan to
+help those who have been relying on the auto clean-up behaviour?
 
-So it is doable. Though I am not convinced of the workflow.
-Maybe you want to look at Gerrit or GitLab  (both are open
-source web userinterfaces, where you can push changes to
-and approve them)
+Also a tangent.
 
-
->Then I can use "hg heads" to see
-> if any new heads have grown, and if so, do merges. Upon their next pull,
-> these merges would manifest themselves in the repositories of my co-workers,
-> and everything will be fine for them. So, im looking for the equivalent of
-> that workflow in Git. Thanks a lot!
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+I recently run "cherry-pick -s" on two commits, and I am not sure if
+"with --edit, and only with -edit, do the usual clean-up" is a
+sensible thing to do, or "-s" or any other option should trigger the
+usual clean-up if it implies that the user understands and asks the
+log message to be different from the original (I am leaning towards
+the latter).
