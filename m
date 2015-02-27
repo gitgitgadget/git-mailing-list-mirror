@@ -1,88 +1,70 @@
-From: Dmitry Neverov <dmitry.neverov@gmail.com>
-Subject: Re: Git gc removes all packs
-Date: Fri, 27 Feb 2015 11:16:09 +0100
-Message-ID: <CAC+L6n3OFYsjm+5PMW3DBzJo7LnUsxRq1TRE4PMvFvWVG6DQ+A@mail.gmail.com>
-References: <CAC+L6n1M7LtGaJy94fnhXm94zJ32HXLNVGMguWSqHm=qqLLDxA@mail.gmail.com>
-	<20150205200332.GD15326@peff.net>
+From: "Heald, Mike" <mike.heald@hp.com>
+Subject: Deadlock during remote update
+Date: Fri, 27 Feb 2015 11:03:18 +0000
+Message-ID: <311995D1237EC0498D6D8FAFA73D6F458F1B67@G9W0762.americas.hpqcorp.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Feb 27 11:16:19 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Feb 27 12:04:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YRHxw-0001PA-VN
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Feb 2015 11:16:17 +0100
+	id 1YRIic-0001hq-TE
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Feb 2015 12:04:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751410AbbB0KQM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Feb 2015 05:16:12 -0500
-Received: from mail-wg0-f46.google.com ([74.125.82.46]:36159 "EHLO
-	mail-wg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751225AbbB0KQK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Feb 2015 05:16:10 -0500
-Received: by wghk14 with SMTP id k14so19083598wgh.3
-        for <git@vger.kernel.org>; Fri, 27 Feb 2015 02:16:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=/TuPtn6D9DCUnz0ndPTCsaAcys3034gCxDVNenhj47U=;
-        b=m6Z5lu/DnmZfmN+1PBxTwPIGzLa+i2xu4SgETPmBAqsDzC5WEn0EVkZcH10rg9IKBE
-         kTOZAu9yVAzBSMFyVyJ95jQ867aon6NkAhTEZcbqiQgMEHmQBPe/mUIvtVRHCvA3kB41
-         dMa86BQ4CwZHH3pVQo4qE9p1XrrveDqIl3YsOINE/QFBfyi3bUGKV6WTpZ3y1Xp82BEW
-         7XL1HWzf+S3iRkPmpCaF9Z+PbDLpvY2TuZgcmHNvKlOrzUCQVTLS20/LdOc6BXbG684G
-         aDWb+PVIxz6Rt0xn2XCyVJhRRaQ1P1eZDkvDR5zV9hid5pktwk8f/3x25vGvkGmrFMUG
-         zFyA==
-X-Received: by 10.195.13.168 with SMTP id ez8mr25797973wjd.30.1425032169467;
- Fri, 27 Feb 2015 02:16:09 -0800 (PST)
-Received: by 10.194.106.9 with HTTP; Fri, 27 Feb 2015 02:16:09 -0800 (PST)
-In-Reply-To: <20150205200332.GD15326@peff.net>
+	id S1751386AbbB0LEX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Feb 2015 06:04:23 -0500
+Received: from g4t3427.houston.hp.com ([15.201.208.55]:55002 "EHLO
+	g4t3427.houston.hp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750752AbbB0LEW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 27 Feb 2015 06:04:22 -0500
+Received: from G4W6310.americas.hpqcorp.net (g4w6310.houston.hp.com [16.210.26.217])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by g4t3427.houston.hp.com (Postfix) with ESMTPS id 1FF9E2D6
+	for <git@vger.kernel.org>; Fri, 27 Feb 2015 11:04:21 +0000 (UTC)
+Received: from G4W6306.americas.hpqcorp.net (16.210.26.231) by
+ G4W6310.americas.hpqcorp.net (16.210.26.217) with Microsoft SMTP Server (TLS)
+ id 14.3.169.1; Fri, 27 Feb 2015 11:03:19 +0000
+Received: from G9W0762.americas.hpqcorp.net ([169.254.10.35]) by
+ G4W6306.americas.hpqcorp.net ([16.210.26.231]) with mapi id 14.03.0169.001;
+ Fri, 27 Feb 2015 11:03:19 +0000
+Thread-Topic: Deadlock during remote update
+Thread-Index: AdBSfP3rbk/FpxODSku96cuqg/GJUQ==
+Accept-Language: en-GB, en-US
+Content-Language: en-GB
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [16.216.65.178]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264492>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264493>
 
-I followed your advice and removed a symlink ref from my repository.
-But didn't help.. automatic GC has just removed all packs again. May
-alternates cause such a behavior? Are any ways to make gc log
-somewhere why it removes packs?
+Hi,
 
-On Thu, Feb 5, 2015 at 9:03 PM, Jeff King <peff@peff.net> wrote:
-> On Thu, Feb 05, 2015 at 04:13:03PM +0100, Dmitry Neverov wrote:
->
->> I'm using git p4 for synchronization with perforce. Sometimes after 'git
->> p4 rebase' git starts a garbage collection. When gc finishes a local
->> repository contains no pack files only loose objects, so I have to
->> re-import repository from perforce. It also doesn't contain a temporary
->> pack git gc was creating.
->
-> It sounds like git didn't find any refs; it will pack only objects which
-> are reachable. Unreachable objects are either:
->
->   1. Exploded into loose objects if the mtime on the pack they contain
->      is less than 2 weeks old (and will eventually expire when they
->      become 2 weeks old).
->
->   2. Dropped completely if older than 2 weeks.
->
->> One more thing about my setup: since git p4 promotes a use of a linear
->> history I use a separate repository for another branch in perforce. In
->> order to be able to cherry-pick between repositories I added this
->> another repo objects dir as an alternate and also added a ref which is a
->> symbolic link to a branch in another repo (so I don't have to do any
->> fetches).
->
-> You can't symlink refs like this. The loose refs in the filesystem may
-> be migrated into the "packed-refs" file, at which point your symlink
-> will be broken. That is a likely reason why git would not find any refs.
->
-> So your setup will not ever work reliably.  But IMHO, it is a bug that
-> git does not notice the broken symlink and abort an operation which is
-> computing reachability in order to drop objects. As you noticed, it
-> means a misconfiguration or filesystem error results in data loss.
->
-> -Peff
+We have a cron job that runs remote update on a number of repositories. Sometimes, the processes deadlock and we have to go -TERM them. Here's a breakdown of what state the processes end up in when the deadlock happens, from one of our production systems yesterday:
+
+31629 git --git-dir=/var/lib/jeepyb/openstack/nova/.git --work-tree=/var/lib/jeepyb/openstack/nova remote update --prune
+    wait4'ing for 31630
+31630 git fetch --prune --multiple --all
+    wait4'ing for 31637
+31637 git fetch --append --prune upstream
+    waiting for read from pipe:[170381707] (fd 25)
+31638 git-remote-https upstream https://git.openstack.org/openstack/nova
+    has pipe:[170381707] (fd 1), waiting for read from pipe:[170384472]
+31642 git fetch-pack --stateless-rpc --lock-pack --include-tag --thin --no-progress https://git.openstack.org/openstack/nova/  efs/heads/master
+    has pipe:[170384472] (fd 1), waiting for read from pipe:[170384471] (fd 0) which fd 7 on 31638
+
+31638 and 31642 are both waiting to read from a pipe that the other has, and isn't writing to.
+
+This is git version 1.7.9.5, OS is ubuntu precise.
+
+Any ideas, or any way I can get more useful info?
+
+Thanks,
+Mike
