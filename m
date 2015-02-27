@@ -1,82 +1,89 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] grep: correct help string for --exclude-standard
-Date: Fri, 27 Feb 2015 21:01:58 +0700
-Message-ID: <1425045718-30696-1-git-send-email-pclouds@gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: feature request: excluding files/paths from "git grep"
+Date: Fri, 27 Feb 2015 16:13:13 +0100
+Message-ID: <54F08989.2050504@drmicha.warpmail.net>
+References: <54EDBEC2.8090107@peralex.com>	<CACsJy8AM=W4f6u_7YpvmfiBwrJjqfJMJoq6CQYfKOh+qD6rF3Q@mail.gmail.com>	<20150225143116.GA13567@peff.net>	<xmqqk2z5on72.fsf@gitster.dls.corp.google.com>	<20150225185128.GA16569@peff.net>	<xmqqbnkholx9.fsf@gitster.dls.corp.google.com>	<20150225191108.GA17467@peff.net>	<54EF0089.6070605@drmicha.warpmail.net> <xmqqr3tcl78o.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 27 15:01:47 2015
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>,
+	Noel Grandin <noel@peralex.com>, git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 27 16:13:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YRLUA-0006XM-1r
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Feb 2015 15:01:46 +0100
+	id 1YRMbS-0003Se-3m
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Feb 2015 16:13:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753082AbbB0OBh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Feb 2015 09:01:37 -0500
-Received: from mail-pd0-f174.google.com ([209.85.192.174]:35892 "EHLO
-	mail-pd0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752848AbbB0OBg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Feb 2015 09:01:36 -0500
-Received: by pdjp10 with SMTP id p10so21300825pdj.3
-        for <git@vger.kernel.org>; Fri, 27 Feb 2015 06:01:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version:content-type
-         :content-transfer-encoding;
-        bh=/mDrD0lStA3b6/dFP9raW1gv3tKxlfeJmhbY1b+ibos=;
-        b=iay6SZxwW1zY9cwzVaQDJqFeU7/lILujXf6B0PMsfKt3HkqrDWRdGiFJNYj+/6ChI1
-         kfhsF2scx4getTDrusaalc4zAhIV/ImKmFbpiczkqpwR5fmP14OK8RfGNppdyFesqfwE
-         fcyZM9lzqog25VR5PI+3D87+ity/VkwOSpI6/S5RRYDI/FrQL6Qx5TU1tFJIFWVZgrJV
-         hj5MtB+Qc7yqlqSLae0kMBIRRRuGRKT1+UFUCjaI/UlSM9K+SbTV7FDxNh+QyuGCAK7I
-         hPZuryv1ReiHJpinYFonI014n7YolUbqPH7b8daivNbZCJlfJz8Vfc35o9RjF6vVo1JR
-         AOtQ==
-X-Received: by 10.70.28.99 with SMTP id a3mr23903175pdh.81.1425045695691;
-        Fri, 27 Feb 2015 06:01:35 -0800 (PST)
-Received: from lanh ([115.73.203.245])
-        by mx.google.com with ESMTPSA id s4sm4096783pdc.61.2015.02.27.06.01.32
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 27 Feb 2015 06:01:34 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Fri, 27 Feb 2015 21:02:02 +0700
-X-Mailer: git-send-email 2.3.0.rc1.137.g477eb31
+	id S1754812AbbB0PNR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Feb 2015 10:13:17 -0500
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:47792 "EHLO
+	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754624AbbB0PNP (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 27 Feb 2015 10:13:15 -0500
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+	by mailout.nyi.internal (Postfix) with ESMTP id 58D662084B
+	for <git@vger.kernel.org>; Fri, 27 Feb 2015 10:13:14 -0500 (EST)
+Received: from frontend2 ([10.202.2.161])
+  by compute2.internal (MEProxy); Fri, 27 Feb 2015 10:13:15 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=x-sasl-enc:message-id:date:from
+	:mime-version:to:cc:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=D9RonbkBTXTri/ggfk4y1o
+	MAdYw=; b=eahPq4ElJCQgkR/HuthULwPai9sjwj3W/72fhsj7HEBHZdv704BAtc
+	/gOE3MLpEmCkxcbxnPd0JSYVcaijJdEndwaozdsL4N42bzuXcqn6QRlB5igtGHjg
+	dsq2ZMA/YP+J7+Y4YGsqgkNJaiLrUJ11Jyr0RdvuL/aqA2HXH2zXI=
+X-Sasl-enc: VDdnm3XfGJSkzILNjdCRFRmmAEsfSw92QXSZer+NVCvG 1425049994
+Received: from localhost.localdomain (unknown [88.71.97.79])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 617256800AF;
+	Fri, 27 Feb 2015 10:13:14 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
+In-Reply-To: <xmqqr3tcl78o.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264498>
 
-The current help string is about --no-exclude-standard. But "git grep -=
-h"
-would show --exclude-standard instead. Flip the string. See 0a93fb8
-(grep: teach --untracked and --exclude-standard options - 2011-09-27)
-for more info about these options.
+Junio C Hamano venit, vidit, dixit 26.02.2015 21:59:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
+> 
+>> So, as a summary of the discussion, it seems it's time to switch the
+>> default to --textconv for git grep?
+> 
+> Hmmm, why?
+> 
+> Nobody seems to be asking for such a change in this thread.  The
+> original issue IIRC was that the grep output was unnecessary for
+> some paths and the repository did not mark these paths as such.
+> Once they are marked as "-diff", there is no reason why you want to
+> trigger textconv to squelch the hits from grep.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- builtin/grep.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Of course not. All that I want, and that I wanted back then, was to have
+diff and grep behave the same.
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 4063882..e77f7cf 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -641,7 +641,7 @@ int cmd_grep(int argc, const char **argv, const cha=
-r *prefix)
- 		OPT_BOOL(0, "untracked", &untracked,
- 			N_("search in both tracked and untracked files")),
- 		OPT_SET_INT(0, "exclude-standard", &opt_exclude,
--			    N_("search also in ignored files"), 1),
-+			    N_("ignore files specified via '.gitignore'"), 1),
- 		OPT_GROUP(""),
- 		OPT_BOOL('v', "invert-match", &opt.invert,
- 			N_("show non-matching lines")),
---=20
-2.3.0.rc1.137.g477eb31
+> So that does not sound to me a summary of the discussion at all.
+> 
+
+Well, your conditional
+
+> I do not recall its conclusion, but it it were "Yes, that is what it
+> means", then it might be reasonable to:
+> 
+>  - have "git grep" ignore paths marked with -diff by default
+>    (perhaps "-a" option to disable, just like GNU)
+> 
+>  - have "git grep" pay attention to diff.textconv and search in the
+>    result of textconv filter.
+
+and Jeff's "Yes" on that condition certainly read like that to me: Make
+"git grep" react to "diff", "-diff" attributes in the same way as "git
+diff".
+
+But I've set up my alias greppp since then and don't care any more, and
+I won't invest anything in this topic any more.
+
+Michael
