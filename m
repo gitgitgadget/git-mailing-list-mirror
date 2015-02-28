@@ -1,199 +1,185 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [RFC/PATCH 2/5] upload-pack: support out of band client capability requests
-Date: Fri, 27 Feb 2015 17:01:55 -0800
-Message-ID: <1425085318-30537-3-git-send-email-sbeller@google.com>
+Subject: [RFC/PATCH 3/5] connect.c: connect to a remote service with some flags
+Date: Fri, 27 Feb 2015 17:01:56 -0800
+Message-ID: <1425085318-30537-4-git-send-email-sbeller@google.com>
 References: <CAGZ79ka8Zg86qqvWByNiP3F6a9QggO-bNY3ZZ9g+A-MdKYQ7NQ@mail.gmail.com>
  <1425085318-30537-1-git-send-email-sbeller@google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: pclouds@gmail.com, gitster@pobox.com,
 	Stefan Beller <sbeller@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 28 02:02:14 2015
+X-From: git-owner@vger.kernel.org Sat Feb 28 02:02:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YRVnJ-0003Vv-MC
-	for gcvg-git-2@plane.gmane.org; Sat, 28 Feb 2015 02:02:14 +0100
+	id 1YRVnO-0003Zx-1s
+	for gcvg-git-2@plane.gmane.org; Sat, 28 Feb 2015 02:02:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752316AbbB1BCI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Feb 2015 20:02:08 -0500
-Received: from mail-ig0-f172.google.com ([209.85.213.172]:43335 "EHLO
-	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750811AbbB1BCE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Feb 2015 20:02:04 -0500
-Received: by igbhn18 with SMTP id hn18so4922051igb.2
-        for <git@vger.kernel.org>; Fri, 27 Feb 2015 17:02:03 -0800 (PST)
+	id S1752280AbbB1BCH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Feb 2015 20:02:07 -0500
+Received: from mail-ig0-f169.google.com ([209.85.213.169]:40941 "EHLO
+	mail-ig0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750875AbbB1BCF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Feb 2015 20:02:05 -0500
+Received: by igal13 with SMTP id l13so4909728iga.5
+        for <git@vger.kernel.org>; Fri, 27 Feb 2015 17:02:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=sAwYt5NQpt5Uv0pm6Oz71e0kGcRosBnO/XlBs0KKEQA=;
-        b=Dyb2wBYWpbXFo6czVlPvXFtTeTE7cQR/M66baF6OP9tXi39XtV6MOWh5R/FHFuDKxg
-         kdI4LG4m25bCZ9qbogXUdYKmElaXMkPUbmofvOHZilw0bH8lbiRBvfXZ5QeOdfvPy0Ty
-         GIhKeb9P0oz0ZASWiamdYRc4nFzBoUI9XI1PaRxCjBfnyJNzg6PA/lRgkirAsDZqmLyM
-         2HBs3/s6Y8nnXJ7egcuexCMqIONOP5YfU3mlryStGq21Q87v5rrtUgcZBzlw447AeS8F
-         a3kG40vELCNnUoNTnvKRLhRXWpzzqEeyhtAZF08xEq2fkRnAwwj9Urd9ztZ5sqnbRNOg
-         Aymg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=NPWVyVRHWTi25xKY4IuNEtXoY8x8eqX/aAU+KLTalZ8=;
+        b=RGTk1wC7vy94ncmU3pRxfGZjfGafNsVSePGRe371jQjuW3Kf6PUwATm23mL1dhiSCx
+         7axE5L/eUzdZ7cFno7E8SgQOLHldOuG3ttTny/blkTMFLrG2BaO0WrSfUB4AK8jpA5c+
+         RuWyjR7q1OyVN/Sqo68Zpabnl1LeeIPEOtEgocX9LVC6UrHd5jLWPvD2iEZ9MwHlHxqa
+         r71pXz2z5m+7Eb7gWazvwSirErsWv2K8uWYZh+tNxEQ5eHnXfbfw/58Edhh4ugrdovI3
+         zmCYfxEq3GHCpL/KvF8joPY4o2IoOMZmm611sdjdYD9wTbAm984f+MmUG1OUbd9vtBnr
+         r1BA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-type:content-transfer-encoding;
-        bh=sAwYt5NQpt5Uv0pm6Oz71e0kGcRosBnO/XlBs0KKEQA=;
-        b=ExfVUp9Nx/h+BGw1MlWGRTwY/frgCvYvec6hGRqHwtM38ipl8CdmHAne4DsV7E3N5b
-         yxPqZ/EX4DXgR8niaYflXnm2QjsqrtTfpfWkIIbzWRMZNtf2b3HIdxM6TZlrj+KFlMmn
-         8pmChVgveryOg8MGyjrTd+2yyz7cJn/oFDJT6m9ltXIaVhweVTSN3WwvA4JBdc5lY1LT
-         Q/taBGUiZOE4Sx+zhanG+Db5U+qIaLxQ+36XGgb8FWlp09bsJmvwpo87z7RmNuPGLMNz
-         BEM9dhMob7QsVAvB3v2ktHw+r23wPfBCoElI4BGLqNLatLKoqqAaM3VSJkWGFh6eviJl
-         2+Hg==
-X-Gm-Message-State: ALoCoQmcUhlT2/4hkpKmHLUZ6GVW8xmYUjGijSR2mZoFmYPv78CDDM4WOthjkOXc/gxftx6lGAsD
-X-Received: by 10.107.132.16 with SMTP id g16mr21861225iod.62.1425085323694;
-        Fri, 27 Feb 2015 17:02:03 -0800 (PST)
+         :references;
+        bh=NPWVyVRHWTi25xKY4IuNEtXoY8x8eqX/aAU+KLTalZ8=;
+        b=Gl5cJ6MO4YzmeyiCPlzpxZ2GiGI/MZ+ZnxQqAM7gGGenHVILkMrWLf6HlX9QLbR0uX
+         ZRY0CwcVsBy3hFFTaOdr5CAydY+lx/4K5w1DzpWf+8CBD32MFOlAXJxrs04qB3m4je6t
+         J2uGIuyKQZDTFfTGdnIfWIaDBfLPH7gSavAx/w0SkZAozbtd4ZMNIfvcPKg5daM6pqSL
+         +Eu9i/jf9HORHKcyRw8hS+gGxUbL/bWgYLPDaGGMM890vfR1pH/lYD0RgNk6ylBF7WGl
+         EvuMuJb+UKqqmlTgbkpDZhK4g9FyMxdw0OLeLJ0ATP2eCGyurYHDyon6n+K/eUesERQ1
+         nibQ==
+X-Gm-Message-State: ALoCoQmqV2l5bTY6csaV+E6zA+GLL4nLLDdSjYMt8gy9G2r2jzv/ncZuvNGxVcdr+jNbu0HweH4c
+X-Received: by 10.50.124.73 with SMTP id mg9mr8047675igb.38.1425085324728;
+        Fri, 27 Feb 2015 17:02:04 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b00:700c:d3d2:5834:b5cc])
-        by mx.google.com with ESMTPSA id c4sm2281813igt.19.2015.02.27.17.02.02
+        by mx.google.com with ESMTPSA id ao5sm2299498igc.3.2015.02.27.17.02.04
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 27 Feb 2015 17:02:03 -0800 (PST)
+        Fri, 27 Feb 2015 17:02:04 -0800 (PST)
 X-Mailer: git-send-email 2.3.0.81.gc37f363
 In-Reply-To: <1425085318-30537-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264519>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264520>
 
-=46rom: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
+If this is over git protocol, the flags is appended as the next
+parameter after host=. If it's ssh, a new argument is appended to the
+command line.
 
-The only difference from the original protocol client capabilities are
-negotiated before initial refs advertisment.
+None of the callers use this now though.
 
-Client capabilities are sent out of band (upload-pack receives it as
-the second command line argument). The server sends one pkt-line back
-advertising its capabilities.
+[sb: originally by pclouds, rebased as jk implemented 1823bea10,
+(git_connect: use argv_array), so any error is mine]
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
+ builtin/fetch-pack.c |  2 +-
+ builtin/send-pack.c  |  2 +-
+ connect.c            | 18 ++++++++++++------
+ connect.h            |  2 +-
+ transport.c          |  3 ++-
+ 5 files changed, 17 insertions(+), 10 deletions(-)
 
-Notes:
-    v1:
-    I am still undecided if the client should then accept/resend
-    the capabilities to confirm them, which would make the client the
-    ultimate decider which capabilities are used.
-   =20
-    My gut feeling is to rather let the server make the final decision
-    for the capabilities, as it will use some requested capabilities
-    already to not send out all the refs.
-
- Documentation/git-upload-pack.txt | 10 +++++++++-
- upload-pack.c                     | 42 +++++++++++++++++++++++++++----=
---------
- 2 files changed, 38 insertions(+), 14 deletions(-)
-
-diff --git a/Documentation/git-upload-pack.txt b/Documentation/git-uplo=
-ad-pack.txt
-index 0abc806..ad3a89d 100644
---- a/Documentation/git-upload-pack.txt
-+++ b/Documentation/git-upload-pack.txt
-@@ -9,7 +9,7 @@ git-upload-pack - Send objects packed back to git-fetch=
--pack
- SYNOPSIS
- --------
- [verse]
--'git-upload-pack' [--strict] [--timeout=3D<n>] <directory>
-+'git-upload-pack' [--strict] [--timeout=3D<n>] <directory> [<capabilit=
-ies>]
-=20
- DESCRIPTION
- -----------
-@@ -34,6 +34,14 @@ OPTIONS
- <directory>::
- 	The repository to sync from.
-=20
-+capabilities::
-+	Historically the capabilities were exchanged inside the protocol of
-+	'git-upload-pack' talking to 'git-fetch-pack'. It turned out this was
-+	too late as 'git-upload-pack' already did work, which may have been
-+	avoided. This allows to pass in the capabilities the client wants to
-+	use as one argument. The capabilites are separated by space.
-+	See technical/protocol-capabilities.txt (TODO: how to make it a link?=
-)
-+
- SEE ALSO
- --------
- linkgit:gitnamespaces[7]
-diff --git a/upload-pack.c b/upload-pack.c
-index d9230ba..2e62c3f 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -31,6 +31,11 @@ static const char upload_pack_usage[] =3D "git uploa=
-d-pack [--strict] [--timeout=3D<
-=20
- static unsigned long oldest_have;
-=20
-+/**
-+ * client capabilities presented as program arguments, dissallow furth=
-er
-+ * capabilities sent by client
-+ */
-+static int capabilities_first;
- static int multi_ack;
- static int no_done;
- static int use_thin_pack, use_ofs_delta, use_include_tag;
-@@ -597,11 +602,14 @@ static void receive_needs(void)
- 			die("git upload-pack: protocol error, "
- 			    "expected to get sha, not '%s'", line);
-=20
--		if (first_want) {
--			parse_features(line + 45);
--			first_want =3D 0;
--		} else if (line[45])
--			die("garbage at the end of 'want' line %s", line + 45);
-+		if (!capabilities_first) {
-+			if (first_want) {
-+				parse_features(line + 45);
-+				first_want =3D 0;
-+			} else if (line[45]) {
-+				die("garbage at the end of 'want' line %s", line + 45);
-+			}
-+		}
-=20
- 		o =3D parse_object(sha1_buf);
- 		if (!o)
-@@ -840,17 +848,25 @@ int main(int argc, char **argv)
- 		}
+diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
+index 4a6b340..7e5b5fd 100644
+--- a/builtin/fetch-pack.c
++++ b/builtin/fetch-pack.c
+@@ -171,7 +171,7 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
+ 		if (args.diag_url)
+ 			flags |= CONNECT_DIAG_URL;
+ 		conn = git_connect(fd, dest, args.uploadpack,
+-				   flags);
++				   NULL, flags);
+ 		if (!conn)
+ 			return args.diag_url ? 0 : 1;
  	}
-=20
--	if (i !=3D argc-1)
--		usage(upload_pack_usage);
-+	switch (argc - i) {
-+		case 2:
-+			capabilities_first =3D 1;
-+			parse_features(argv[i + 1]);
-+			/* fall through*/
-+		case 1:
-+			setup_path();
-=20
--	setup_path();
-+			dir =3D argv[i];
-=20
--	dir =3D argv[i];
-+			if (!enter_repo(dir, strict))
-+				die("'%s' does not appear to be a git repository", dir);
-=20
--	if (!enter_repo(dir, strict))
--		die("'%s' does not appear to be a git repository", dir);
-+			git_config(upload_pack_config, NULL);
-+			upload_pack();
-+			break;
-+		default:
-+			usage(upload_pack_usage);
-+	}
-=20
--	git_config(upload_pack_config, NULL);
--	upload_pack();
+diff --git a/builtin/send-pack.c b/builtin/send-pack.c
+index b961e5a..c2a066a 100644
+--- a/builtin/send-pack.c
++++ b/builtin/send-pack.c
+@@ -261,7 +261,7 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
+ 		fd[0] = 0;
+ 		fd[1] = 1;
+ 	} else {
+-		conn = git_connect(fd, dest, receivepack,
++		conn = git_connect(fd, dest, receivepack, NULL,
+ 			args.verbose ? CONNECT_VERBOSE : 0);
+ 	}
+ 
+diff --git a/connect.c b/connect.c
+index 062e133..7b6b241 100644
+--- a/connect.c
++++ b/connect.c
+@@ -650,7 +650,9 @@ static struct child_process no_fork = CHILD_PROCESS_INIT;
+  * the connection failed).
+  */
+ struct child_process *git_connect(int fd[2], const char *url,
+-				  const char *prog, int flags)
++				  const char *prog,
++				  const char *service_flags,
++				  int flags)
+ {
+ 	char *hostandport, *path;
+ 	struct child_process *conn = &no_fork;
+@@ -685,10 +687,13 @@ struct child_process *git_connect(int fd[2], const char *url,
+ 		 * Note: Do not add any other headers here!  Doing so
+ 		 * will cause older git-daemon servers to crash.
+ 		 */
+-		packet_write(fd[1],
+-			     "%s %s%chost=%s%c",
+-			     prog, path, 0,
+-			     target_host, 0);
++		if (!service_flags)
++			packet_write(fd[1], "%s %s%chost=%s%c",
++				     prog, path, 0, target_host, 0);
++		else
++			packet_write(fd[1], "%s %s%chost=%s%c%s%c",
++				     prog, path, 0, target_host, 0,
++				     service_flags, 0);
+ 		free(target_host);
+ 	} else {
+ 		conn = xmalloc(sizeof(*conn));
+@@ -733,7 +738,8 @@ struct child_process *git_connect(int fd[2], const char *url,
+ 			conn->use_shell = 1;
+ 		}
+ 		argv_array_push(&conn->args, cmd.buf);
+-
++		if (service_flags)
++			argv_array_push(&conn->args, service_flags);
+ 		if (start_command(conn))
+ 			die("unable to fork");
+ 
+diff --git a/connect.h b/connect.h
+index c41a685..c4fa8a1 100644
+--- a/connect.h
++++ b/connect.h
+@@ -3,7 +3,7 @@
+ 
+ #define CONNECT_VERBOSE       (1u << 0)
+ #define CONNECT_DIAG_URL      (1u << 1)
+-extern struct child_process *git_connect(int fd[2], const char *url, const char *prog, int flags);
++extern struct child_process *git_connect(int fd[2], const char *url, const char *prog, const char *service_flags, int flags);
+ extern int finish_connect(struct child_process *conn);
+ extern int git_connection_is_socket(struct child_process *conn);
+ extern int server_supports(const char *feature);
+diff --git a/transport.c b/transport.c
+index 0694a7c..626fd92 100644
+--- a/transport.c
++++ b/transport.c
+@@ -495,6 +495,7 @@ static int connect_setup(struct transport *transport, int for_push, int verbose)
+ 	data->conn = git_connect(data->fd, transport->url,
+ 				 for_push ? data->options.receivepack :
+ 				 data->options.uploadpack,
++				 NULL,
+ 				 verbose ? CONNECT_VERBOSE : 0);
+ 
  	return 0;
- }
---=20
+@@ -850,7 +851,7 @@ static int connect_git(struct transport *transport, const char *name,
+ {
+ 	struct git_transport_data *data = transport->data;
+ 	data->conn = git_connect(data->fd, transport->url,
+-				 executable, 0);
++				 executable, NULL, 0);
+ 	fd[0] = data->fd[0];
+ 	fd[1] = data->fd[1];
+ 	return 0;
+-- 
 2.3.0.81.gc37f363
