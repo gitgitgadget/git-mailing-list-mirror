@@ -1,60 +1,72 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH] diff --shortstat --dirstat: remove duplicate output
-Date: Sat, 28 Feb 2015 15:21:58 +0100
-Message-ID: <CALKQrgcozE4y6ZWezvaedQqhATaQCtrxUScq_etJVDdkuG55kw@mail.gmail.com>
-References: <1425129567-18693-1-git-send-email-marten.kongstad@gmail.com>
+From: Colin Walters <walters@verbum.org>
+Subject: weaning distributions off tarballs: extended verification of git tags
+Date: Sat, 28 Feb 2015 09:48:05 -0500
+Message-ID: <1425134885.3150003.233627665.2E48E28B@webmail.messagingengine.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git mailing list <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: =?UTF-8?Q?M=C3=A5rten_Kongstad?= <marten.kongstad@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 28 15:46:46 2015
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 28 15:48:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YRifF-0004zy-US
-	for gcvg-git-2@plane.gmane.org; Sat, 28 Feb 2015 15:46:46 +0100
+	id 1YRigg-0005KP-HD
+	for gcvg-git-2@plane.gmane.org; Sat, 28 Feb 2015 15:48:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752501AbbB1Oql convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 28 Feb 2015 09:46:41 -0500
-Received: from mail13.copyleft.no ([91.220.196.227]:38059 "EHLO
-	mail13.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750961AbbB1Oqk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 28 Feb 2015 09:46:40 -0500
-X-Greylist: delayed 1472 seconds by postgrey-1.27 at vger.kernel.org; Sat, 28 Feb 2015 09:46:40 EST
-Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
-	by mail13.copyleft.no with esmtp (Exim 4.76)
-	(envelope-from <johan@herland.net>)
-	id 1YRiHN-0000Lw-Da
-	for git@vger.kernel.org; Sat, 28 Feb 2015 15:22:05 +0100
-Received: from mail-pd0-f181.google.com ([209.85.192.181])
-	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.72 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1YRiHN-000CrO-5M
-	for git@vger.kernel.org; Sat, 28 Feb 2015 15:22:05 +0100
-Received: by pdbnh10 with SMTP id nh10so4330654pdb.3
-        for <git@vger.kernel.org>; Sat, 28 Feb 2015 06:21:58 -0800 (PST)
-X-Received: by 10.66.62.201 with SMTP id a9mr32449659pas.101.1425133318699;
- Sat, 28 Feb 2015 06:21:58 -0800 (PST)
-Received: by 10.70.134.133 with HTTP; Sat, 28 Feb 2015 06:21:58 -0800 (PST)
-In-Reply-To: <1425129567-18693-1-git-send-email-marten.kongstad@gmail.com>
+	id S1752557AbbB1OsL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Feb 2015 09:48:11 -0500
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:42781 "EHLO
+	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750961AbbB1OsI (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 28 Feb 2015 09:48:08 -0500
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.nyi.internal (Postfix) with ESMTP id B5085206AD
+	for <git@vger.kernel.org>; Sat, 28 Feb 2015 09:48:04 -0500 (EST)
+Received: from web2 ([10.202.2.212])
+  by compute1.internal (MEProxy); Sat, 28 Feb 2015 09:48:05 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:x-sasl-enc:from:to
+	:mime-version:content-transfer-encoding:content-type:subject
+	:date; s=smtpout; bh=1MmKzEPEPpJPGjFfnaLOcXZPk5o=; b=jq+ojcT9oiC
+	AdIyPU8hlXrVrHIw9cuGacgNIdXgUAGVV4PxGOXkFZWBSj/daorHwMeZrEzVE7vW
+	Aet5yZ83/C48+9NAv3OSKkU2FRLI4v7WSlB7afpZlHhSgPQxB+pJQyB4wLYb5+Vz
+	l0PCsmTFz3Al5POf89ZmHobMX5a7y5eA=
+Received: by web2.nyi.internal (Postfix, from userid 99)
+	id 86B355402BA; Sat, 28 Feb 2015 09:48:05 -0500 (EST)
+X-Sasl-Enc: dBYOrPyp3+5xnggZLjhVY3Qo1hDhAkFWgzDdcm5LuFc7 1425134885
+X-Mailer: MessagingEngine.com Webmail Interface - ajax-4ba7306c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264532>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264533>
 
-On Sat, Feb 28, 2015 at 2:19 PM, M=C3=A5rten Kongstad
-<marten.kongstad@gmail.com> wrote:
-[...]
-> Signed-off-by: M=C3=A5rten Kongstad <marten.kongstad@gmail.com>
+Hi, 
 
-Acked-by: Johan Herland <johan@herland.net>
+TL;DR: Let's define a standard for embedding stronger checksums in tags and commit messages:
+https://github.com/cgwalters/homegit/blob/master/bin/git-evtag
 
---=20
-Johan Herland, <johan@herland.net>
-www.herland.net
+I think tarballs should go away as a source distribution mechanism in favor of pure git.  I won't go into too many details of the "why" here (hopefully most of you agree!) but that's the background.
+
+Now, there are a few things that the classical tarball model provides:
+
+- Version numbers compatible with dpkg/rpm/etc
+  -> Do the same with your tag names, and use a well known scheme like "v$VERSION"
+- The assumption that this source has been run through some tests
+  -> Broken assumption, and regardless you want to rerun tests downstream
+- Hosting providers typically offer a strong checksum over the entire source
+  -> The topic of this post
+
+The above strawman code allows embedding the SHA256(git archive | tar).  Now,
+in order to make this work, the byte output of "git archive" must never change in the
+future.  I'm not sure how valid an assumption this is.  Timestamps are set to the
+commit timestamp, but I could imagine someone wanting to come along later
+and tweak the output to be compatible with some variant of tar or something.
+
+We could define the checksum to be over the stream of raw objects, sorted by their checksum,
+and that way be independent of archiving format variations.
+
+Is there agreement that something like this makes sense in the git core?  Does the
+concept make sense?  Does anything like this exist today?  Other thoughts/objections?
