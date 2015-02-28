@@ -1,72 +1,57 @@
-From: Colin Walters <walters@verbum.org>
-Subject: weaning distributions off tarballs: extended verification of git tags
-Date: Sat, 28 Feb 2015 09:48:05 -0500
-Message-ID: <1425134885.3150003.233627665.2E48E28B@webmail.messagingengine.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+From: Jean-Noel Avila <jn.avila@free.fr>
+Subject: [PATCH] Add hint for translators for y/n reply.
+Date: Sat, 28 Feb 2015 16:39:04 +0100
+Message-ID: <1425137944-13667-1-git-send-email-jn.avila@free.fr>
+References: <xmqq1tlfqcd8.fsf@gitster.dls.corp.google.com>
+Cc: Jean-Noel Avila <jn.avila@free.fr>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 28 15:48:15 2015
+X-From: git-owner@vger.kernel.org Sat Feb 28 16:40:26 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YRigg-0005KP-HD
-	for gcvg-git-2@plane.gmane.org; Sat, 28 Feb 2015 15:48:14 +0100
+	id 1YRjVA-0000Vh-DJ
+	for gcvg-git-2@plane.gmane.org; Sat, 28 Feb 2015 16:40:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752557AbbB1OsL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Feb 2015 09:48:11 -0500
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:42781 "EHLO
-	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750961AbbB1OsI (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 28 Feb 2015 09:48:08 -0500
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.nyi.internal (Postfix) with ESMTP id B5085206AD
-	for <git@vger.kernel.org>; Sat, 28 Feb 2015 09:48:04 -0500 (EST)
-Received: from web2 ([10.202.2.212])
-  by compute1.internal (MEProxy); Sat, 28 Feb 2015 09:48:05 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:x-sasl-enc:from:to
-	:mime-version:content-transfer-encoding:content-type:subject
-	:date; s=smtpout; bh=1MmKzEPEPpJPGjFfnaLOcXZPk5o=; b=jq+ojcT9oiC
-	AdIyPU8hlXrVrHIw9cuGacgNIdXgUAGVV4PxGOXkFZWBSj/daorHwMeZrEzVE7vW
-	Aet5yZ83/C48+9NAv3OSKkU2FRLI4v7WSlB7afpZlHhSgPQxB+pJQyB4wLYb5+Vz
-	l0PCsmTFz3Al5POf89ZmHobMX5a7y5eA=
-Received: by web2.nyi.internal (Postfix, from userid 99)
-	id 86B355402BA; Sat, 28 Feb 2015 09:48:05 -0500 (EST)
-X-Sasl-Enc: dBYOrPyp3+5xnggZLjhVY3Qo1hDhAkFWgzDdcm5LuFc7 1425134885
-X-Mailer: MessagingEngine.com Webmail Interface - ajax-4ba7306c
+	id S1752411AbbB1PkT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Feb 2015 10:40:19 -0500
+Received: from smtpfb1-g21.free.fr ([212.27.42.9]:34104 "EHLO
+	smtpfb1-g21.free.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751896AbbB1PkS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Feb 2015 10:40:18 -0500
+Received: from smtp6-g21.free.fr (smtp6-g21.free.fr [212.27.42.6])
+	by smtpfb1-g21.free.fr (Postfix) with ESMTP id 7790777C6FC
+	for <git@vger.kernel.org>; Sat, 28 Feb 2015 16:40:15 +0100 (CET)
+Received: from localhost.localdomain (unknown [82.239.31.145])
+	by smtp6-g21.free.fr (Postfix) with ESMTP id 4886582298;
+	Sat, 28 Feb 2015 16:39:54 +0100 (CET)
+X-Mailer: git-send-email 2.3.0
+In-Reply-To: <xmqq1tlfqcd8.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264534>
 
-Hi, 
+Signed-off-by: Jean-Noel Avila <jn.avila@free.fr>
+---
+ builtin/clean.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-TL;DR: Let's define a standard for embedding stronger checksums in tags and commit messages:
-https://github.com/cgwalters/homegit/blob/master/bin/git-evtag
-
-I think tarballs should go away as a source distribution mechanism in favor of pure git.  I won't go into too many details of the "why" here (hopefully most of you agree!) but that's the background.
-
-Now, there are a few things that the classical tarball model provides:
-
-- Version numbers compatible with dpkg/rpm/etc
-  -> Do the same with your tag names, and use a well known scheme like "v$VERSION"
-- The assumption that this source has been run through some tests
-  -> Broken assumption, and regardless you want to rerun tests downstream
-- Hosting providers typically offer a strong checksum over the entire source
-  -> The topic of this post
-
-The above strawman code allows embedding the SHA256(git archive | tar).  Now,
-in order to make this work, the byte output of "git archive" must never change in the
-future.  I'm not sure how valid an assumption this is.  Timestamps are set to the
-commit timestamp, but I could imagine someone wanting to come along later
-and tweak the output to be compatible with some variant of tar or something.
-
-We could define the checksum to be over the stream of raw objects, sorted by their checksum,
-and that way be independent of archiving format variations.
-
-Is there agreement that something like this makes sense in the git core?  Does the
-concept make sense?  Does anything like this exist today?  Other thoughts/objections?
+diff --git a/builtin/clean.c b/builtin/clean.c
+index 7e7fdcf..2c98661 100644
+--- a/builtin/clean.c
++++ b/builtin/clean.c
+@@ -754,6 +754,9 @@ static int ask_each_cmd(void)
+ 		/* Ctrl-D should stop removing files */
+ 		if (!eof) {
+ 			qname = quote_path_relative(item->string, NULL, &buf);
++			/*TRANSLATORS: Make sure to include [Y] and [n] in your
++			translation. The program will only accept English input
++			at this point. */
+ 			printf(_("remove %s? "), qname);
+ 			if (strbuf_getline(&confirm, stdin, '\n') != EOF) {
+ 				strbuf_trim(&confirm);
+-- 
+2.3.0
