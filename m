@@ -1,102 +1,93 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [RFC/PATCH 5/5] WIP/Document the http protocol change
-Date: Fri, 27 Feb 2015 17:01:58 -0800
-Message-ID: <1425085318-30537-6-git-send-email-sbeller@google.com>
+Subject: [RFC/PATCH 0/5] protocol v2 for upload-pack
+Date: Fri, 27 Feb 2015 17:01:53 -0800
+Message-ID: <1425085318-30537-1-git-send-email-sbeller@google.com>
 References: <CAGZ79ka8Zg86qqvWByNiP3F6a9QggO-bNY3ZZ9g+A-MdKYQ7NQ@mail.gmail.com>
- <1425085318-30537-1-git-send-email-sbeller@google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: pclouds@gmail.com, gitster@pobox.com,
 	Stefan Beller <sbeller@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 28 02:02:24 2015
+X-From: git-owner@vger.kernel.org Sat Feb 28 02:02:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YRVnT-0003cO-Nf
-	for gcvg-git-2@plane.gmane.org; Sat, 28 Feb 2015 02:02:24 +0100
+	id 1YRVnY-0003gA-0E
+	for gcvg-git-2@plane.gmane.org; Sat, 28 Feb 2015 02:02:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751760AbbB1BCO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Feb 2015 20:02:14 -0500
-Received: from mail-ig0-f172.google.com ([209.85.213.172]:33229 "EHLO
-	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750875AbbB1BCH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Feb 2015 20:02:07 -0500
-Received: by igbhl2 with SMTP id hl2so4483553igb.0
-        for <git@vger.kernel.org>; Fri, 27 Feb 2015 17:02:07 -0800 (PST)
+	id S1752197AbbB1BCD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Feb 2015 20:02:03 -0500
+Received: from mail-ig0-f174.google.com ([209.85.213.174]:43326 "EHLO
+	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750811AbbB1BCB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Feb 2015 20:02:01 -0500
+Received: by igbhn18 with SMTP id hn18so4921870igb.2
+        for <git@vger.kernel.org>; Fri, 27 Feb 2015 17:02:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=H5yQQd4+nRDZR75KQpcFntYIgQNnEvAHckr0Ghx5s4g=;
-        b=YPU9TCJUJ7jGwOFswkVLue1dlUT3FfNO2RIhcrlcHpTt3+FghlPf2hpy9Tq0CQIE07
-         +Aso263V036cRldqZoKYAVjaZ6DGYmgDFQBZPxXO8KKtdI1kj7T3wLpLlNnWiZmpl0il
-         rJHlyMHmtMu0xV03wiEyJIEB7e1Sc+S68uMXbNMdoenjWy/rICxm9vEqWOy7UpaDyTjc
-         y7dSWrbCq8rZe72025+4mqqHw7pxmvUaRZRc8lfTsXy3DhAIS+QHzlalA5DBRJLwq4HH
-         GKZVt1OCkNohE1TSbFhjP8/uw2Vf6ihD74UcxZX7wl92HvT6FXSWpl1bp4oS3JkywKVH
-         wRkg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=rheUyUgNseWTTO8HWMenrIYxJH8t80caCAYEUsT7nZg=;
+        b=IRQo57eR0QQVvT2fggeoNLCoBdAd0+c8C6QLJKM2Et/JXPyqN3tBijDzc8oQxx79a8
+         JXKqmuAg0Zx7/lj1CaFrG+AX7V2sVrPuVXcECa+7B2csBD5lnx226E5Io4jA5l0QQfA3
+         8B9GRip/AmCz1qTnyPuFImcvDD8SylHjmd3K6Hyq7UodusItYz5XUncScQCev9G27zJj
+         nZzGH58YuirRUnP/ggCzS0SoLq728pLLsoWb8Og8v3PYkwB4S41HTow53UZ/lL/bcgXx
+         J2jLXJNtsWJ/TbH2AX0t/3t0HfIWUPowVZXKcOhV3rdJdIhvCviUOIxlJIwXXyGVSk0t
+         GHIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=H5yQQd4+nRDZR75KQpcFntYIgQNnEvAHckr0Ghx5s4g=;
-        b=Dkyxg24v5jzkpJ4LX6BFEQ+10mWuAYRNuOxm+7bR2KRvtOwyAemxhS7CRSVhmb4FJv
-         zsuMplcXZ+V6sxxGlXhzKLcU04AN35RTMviNRXNr7zNrzzX5MsFm1Byj67DTe3F1AHjv
-         eANQNJHdmIvLz+ZnLMFQPfXTtPSERNiy7pccP2gBvvwhoeqUDCihlpdUED+p75Tjwrja
-         iA+fzGVNdcUenEz43UoMalpcFzF7Lgs/505ic52sQmoIbbU4Ye4LG0OAA/vIrJqssscL
-         /s75LsL/ZFetiPY8uTsIXsnHaft0lhq2ZeQoFHXyBXoOxubSZ0FRHlm6xVo9Ql3uQSU3
-         sgZA==
-X-Gm-Message-State: ALoCoQlkSmNbaBJ0T/gGvp8hg+YDGrjRHlsZGgQjMc7sb+JKkucbhLzAnU981Nu/URG9jvWDB8Qn
-X-Received: by 10.50.138.76 with SMTP id qo12mr8254679igb.36.1425085326983;
-        Fri, 27 Feb 2015 17:02:06 -0800 (PST)
+         :references:mime-version:content-type:content-transfer-encoding;
+        bh=rheUyUgNseWTTO8HWMenrIYxJH8t80caCAYEUsT7nZg=;
+        b=GY7Olz5mYf1X9vuvI3Bzvpli0NTGfvF0petsTLaH6/iexVi8vMXBqkw27F0OBEJUYS
+         3DtnGpQ4vTVLV65rGWrCsZPgiUSmcYy4+rLio5EV0S4xF7Ehu/7TplyV1qfzTupQJ/8w
+         BvJZih8Favi3QHSa3OH54X/JDIMpW87jm2JQoNn962mvtWIt1F7CGnnKU5UIVT0tJet7
+         2clbPm8cWM+rJVMdtE2lMy1XnwO+ngM6Z2Y4PG3/L1miSAVKWMso0ki+zKT6NNwOKYJx
+         rujuOrUlRCmhBn7Mz60c2LECjcvsikYKrmEWntvCbl6HXXrTdO2r1r3VYT3Xk0e+jE7Z
+         TeVA==
+X-Gm-Message-State: ALoCoQlr/EROLpFOGnDez8wOUEIfM4pbSOZUr0Kb9ux0iQb+g0TGqeu7DvO2wZ/9Akm9HCkKjIJV
+X-Received: by 10.107.169.42 with SMTP id s42mr22414101ioe.46.1425085321084;
+        Fri, 27 Feb 2015 17:02:01 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b00:700c:d3d2:5834:b5cc])
-        by mx.google.com with ESMTPSA id ao5sm2299555igc.3.2015.02.27.17.02.06
+        by mx.google.com with ESMTPSA id u13sm3341808ioi.6.2015.02.27.17.02.00
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 27 Feb 2015 17:02:06 -0800 (PST)
+        Fri, 27 Feb 2015 17:02:00 -0800 (PST)
 X-Mailer: git-send-email 2.3.0.81.gc37f363
-In-Reply-To: <1425085318-30537-1-git-send-email-sbeller@google.com>
+In-Reply-To: <CAGZ79ka8Zg86qqvWByNiP3F6a9QggO-bNY3ZZ9g+A-MdKYQ7NQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264522>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264523>
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- Documentation/technical/http-protocol.txt         | 4 ++--
- Documentation/technical/protocol-capabilities.txt | 4 ++++
- 2 files changed, 6 insertions(+), 2 deletions(-)
+Heavily inspired by the ideas of Duy, who wrote the first
+patches nearly a year ago.
 
-diff --git a/Documentation/technical/http-protocol.txt b/Documentation/technical/http-protocol.txt
-index 229f845..638819d 100644
---- a/Documentation/technical/http-protocol.txt
-+++ b/Documentation/technical/http-protocol.txt
-@@ -191,10 +191,10 @@ HTTP clients that support the "smart" protocol (or both the
- "smart" and "dumb" protocols) MUST discover references by making
- a parameterized request for the info/refs file of the repository.
- 
--The request MUST contain exactly one query parameter,
-+The request MAY contain parameters. Supported parameters includes
- `service=$servicename`, where `$servicename` MUST be the service
- name the client wishes to contact to complete the operation.
--The request MUST NOT contain additional query parameters.
-+Further parameters are as described in protocol-capabilities.txt
- 
-    C: GET $GIT_URL/info/refs?service=git-upload-pack HTTP/1.0
- 
-diff --git a/Documentation/technical/protocol-capabilities.txt b/Documentation/technical/protocol-capabilities.txt
-index 4f8a7bf..40ddb37 100644
---- a/Documentation/technical/protocol-capabilities.txt
-+++ b/Documentation/technical/protocol-capabilities.txt
-@@ -3,6 +3,10 @@ Git Protocol Capabilities
- 
- Servers SHOULD support all capabilities defined in this document.
- 
-+The client MAY ask for capabilities first out of band to the server.
-+If so the server MUST NOT advertise any capabilities the client did
-+not ask for.
-+
- On the very first line of the initial server response of either
- receive-pack and upload-pack the first reference is followed by
- a NUL byte and then a list of space delimited server capabilities.
--- 
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (2):
+  upload-pack: only accept capabilities on the first "want" line
+  upload-pack: support out of band client capability requests
+
+Stefan Beller (3):
+  connect.c: connect to a remote service with some flags
+  daemon.c: accept extra service arguments
+  WIP/Document the http protocol change
+
+ Documentation/git-upload-pack.txt                 | 10 +++++-
+ Documentation/technical/http-protocol.txt         |  4 +--
+ Documentation/technical/protocol-capabilities.txt |  4 +++
+ builtin/fetch-pack.c                              |  2 +-
+ builtin/send-pack.c                               |  2 +-
+ connect.c                                         | 21 ++++++------
+ connect.h                                         |  2 +-
+ daemon.c                                          | 37 +++++++++++++--=
+------
+ transport.c                                       |  3 +-
+ upload-pack.c                                     | 39 +++++++++++++++=
+++------
+ 10 files changed, 86 insertions(+), 38 deletions(-)
+
+--=20
 2.3.0.81.gc37f363
