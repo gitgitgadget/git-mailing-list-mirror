@@ -1,185 +1,216 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [RFC/PATCH 3/5] connect.c: connect to a remote service with some flags
-Date: Fri, 27 Feb 2015 17:01:56 -0800
-Message-ID: <1425085318-30537-4-git-send-email-sbeller@google.com>
+Subject: [RFC/PATCH 4/5] daemon.c: accept extra service arguments
+Date: Fri, 27 Feb 2015 17:01:57 -0800
+Message-ID: <1425085318-30537-5-git-send-email-sbeller@google.com>
 References: <CAGZ79ka8Zg86qqvWByNiP3F6a9QggO-bNY3ZZ9g+A-MdKYQ7NQ@mail.gmail.com>
  <1425085318-30537-1-git-send-email-sbeller@google.com>
 Cc: pclouds@gmail.com, gitster@pobox.com,
 	Stefan Beller <sbeller@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 28 02:02:21 2015
+X-From: git-owner@vger.kernel.org Sat Feb 28 02:02:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YRVnO-0003Zx-1s
-	for gcvg-git-2@plane.gmane.org; Sat, 28 Feb 2015 02:02:18 +0100
+	id 1YRVnO-0003Zx-KQ
+	for gcvg-git-2@plane.gmane.org; Sat, 28 Feb 2015 02:02:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752280AbbB1BCH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Feb 2015 20:02:07 -0500
-Received: from mail-ig0-f169.google.com ([209.85.213.169]:40941 "EHLO
-	mail-ig0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750875AbbB1BCF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Feb 2015 20:02:05 -0500
-Received: by igal13 with SMTP id l13so4909728iga.5
-        for <git@vger.kernel.org>; Fri, 27 Feb 2015 17:02:04 -0800 (PST)
+	id S1752208AbbB1BCP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Feb 2015 20:02:15 -0500
+Received: from mail-ie0-f181.google.com ([209.85.223.181]:36497 "EHLO
+	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751474AbbB1BCG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Feb 2015 20:02:06 -0500
+Received: by ierx19 with SMTP id x19so35433262ier.3
+        for <git@vger.kernel.org>; Fri, 27 Feb 2015 17:02:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=NPWVyVRHWTi25xKY4IuNEtXoY8x8eqX/aAU+KLTalZ8=;
-        b=RGTk1wC7vy94ncmU3pRxfGZjfGafNsVSePGRe371jQjuW3Kf6PUwATm23mL1dhiSCx
-         7axE5L/eUzdZ7cFno7E8SgQOLHldOuG3ttTny/blkTMFLrG2BaO0WrSfUB4AK8jpA5c+
-         RuWyjR7q1OyVN/Sqo68Zpabnl1LeeIPEOtEgocX9LVC6UrHd5jLWPvD2iEZ9MwHlHxqa
-         r71pXz2z5m+7Eb7gWazvwSirErsWv2K8uWYZh+tNxEQ5eHnXfbfw/58Edhh4ugrdovI3
-         zmCYfxEq3GHCpL/KvF8joPY4o2IoOMZmm611sdjdYD9wTbAm984f+MmUG1OUbd9vtBnr
-         r1BA==
+        bh=kf5l7SAVsoHKskXTWVJMdp9QNIisthFjV1N+2QDwIaE=;
+        b=ZlhbIqx38wMdz9k4f+f4y3hOUvx3sehtwtnK5GpFweUV/GU30yBoxqoV28ILhIO1sj
+         UXZIgFtavWSn1luxqy5lqGDJp0S5K6AxtGoWWbwc4RI5v3Ai+QXlDFFPy7DWVP3piLJO
+         0Oz0uVuhIzK0rDlqxCYoQYRFWXmkD0y8/qL2AOL3yLozr8ELj0GL30qrlvOcevSDaNJx
+         yhTubOx5JPeZOV1X7uz6AXpJ/YIX2O/ZSNy3jp6V1HB2wqqF9tUp2H/LlN8QwZ/HWhFL
+         Q1HsBbxP0D+nVjjRL5SxI2ztoIkwy+L41oSXZWRRLOjxLn/YSgDJalnYIHHUQ9zr24HJ
+         veGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=NPWVyVRHWTi25xKY4IuNEtXoY8x8eqX/aAU+KLTalZ8=;
-        b=Gl5cJ6MO4YzmeyiCPlzpxZ2GiGI/MZ+ZnxQqAM7gGGenHVILkMrWLf6HlX9QLbR0uX
-         ZRY0CwcVsBy3hFFTaOdr5CAydY+lx/4K5w1DzpWf+8CBD32MFOlAXJxrs04qB3m4je6t
-         J2uGIuyKQZDTFfTGdnIfWIaDBfLPH7gSavAx/w0SkZAozbtd4ZMNIfvcPKg5daM6pqSL
-         +Eu9i/jf9HORHKcyRw8hS+gGxUbL/bWgYLPDaGGMM890vfR1pH/lYD0RgNk6ylBF7WGl
-         EvuMuJb+UKqqmlTgbkpDZhK4g9FyMxdw0OLeLJ0ATP2eCGyurYHDyon6n+K/eUesERQ1
-         nibQ==
-X-Gm-Message-State: ALoCoQmqV2l5bTY6csaV+E6zA+GLL4nLLDdSjYMt8gy9G2r2jzv/ncZuvNGxVcdr+jNbu0HweH4c
-X-Received: by 10.50.124.73 with SMTP id mg9mr8047675igb.38.1425085324728;
-        Fri, 27 Feb 2015 17:02:04 -0800 (PST)
+        bh=kf5l7SAVsoHKskXTWVJMdp9QNIisthFjV1N+2QDwIaE=;
+        b=Jb8QY4LLW/gWTC+pQw0Td7mfX9fqCbn4ULE4eSve5zYHuyxj1d33KNxrQU4FCHNrD4
+         eaLmjANhi8gTzpe9dL3c0e3+DsY6FJp7PXKLh/6FcFn3zO9DL2h4DYNW9KCGyFTb38GR
+         WnUVbSiLS1xjYUdiIsZv6mwqIzDLUo2d4T/9Vy9rGOIgOj+nQ2Vfdf/3KJ7jWnda3eFv
+         PLlVigrCOXRqvUIBG2xIWG4Z9D6LzY85w4ib6pybUc5/fCuzNPwk0L7FOU1rWRmbsUMr
+         JQzyn05u20vKSfpDf9tkXzQy/tcePB35e+YGoMJ3SclI7dBxi1DB3amg9fG2rQMbKlhY
+         cF4g==
+X-Gm-Message-State: ALoCoQlefv99MQt1w+CUI+Pq7iwYUWp50KlXAx4NeWg6YRKogCrbmF3wHBRUJLnIWgaTk2sqZskB
+X-Received: by 10.107.9.213 with SMTP id 82mr22406839ioj.56.1425085325786;
+        Fri, 27 Feb 2015 17:02:05 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b00:700c:d3d2:5834:b5cc])
-        by mx.google.com with ESMTPSA id ao5sm2299498igc.3.2015.02.27.17.02.04
+        by mx.google.com with ESMTPSA id r78sm3332561ioi.22.2015.02.27.17.02.05
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 27 Feb 2015 17:02:04 -0800 (PST)
+        Fri, 27 Feb 2015 17:02:05 -0800 (PST)
 X-Mailer: git-send-email 2.3.0.81.gc37f363
 In-Reply-To: <1425085318-30537-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264521>
 
-If this is over git protocol, the flags is appended as the next
-parameter after host=. If it's ssh, a new argument is appended to the
-command line.
+Before 73bb33a (daemon: Strictly parse the "extra arg" part of the
+command - 2009-06-04) a client sending extra arguments could DoS
+git-daemon. 73bb33a fixed it by forbidding extra arguments.
 
-None of the callers use this now though.
+Allow arguments other than "host=" again as a preparation step for
+upload-pack2. "host=" if present must be the first argument
+though. The remaining arguments are concatenated by whitespace.
 
-[sb: originally by pclouds, rebased as jk implemented 1823bea10,
-(git_connect: use argv_array), so any error is mine]
+So far none of supported services support extra arguments. Attempting
+to do will abort the service, just like how it is before. We might
+want to make them silently ignore extra arguments though.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- builtin/fetch-pack.c |  2 +-
- builtin/send-pack.c  |  2 +-
- connect.c            | 18 ++++++++++++------
- connect.h            |  2 +-
- transport.c          |  3 ++-
- 5 files changed, 17 insertions(+), 10 deletions(-)
+ connect.c |  3 ---
+ daemon.c  | 37 ++++++++++++++++++++++++-------------
+ 2 files changed, 24 insertions(+), 16 deletions(-)
 
-diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
-index 4a6b340..7e5b5fd 100644
---- a/builtin/fetch-pack.c
-+++ b/builtin/fetch-pack.c
-@@ -171,7 +171,7 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
- 		if (args.diag_url)
- 			flags |= CONNECT_DIAG_URL;
- 		conn = git_connect(fd, dest, args.uploadpack,
--				   flags);
-+				   NULL, flags);
- 		if (!conn)
- 			return args.diag_url ? 0 : 1;
- 	}
-diff --git a/builtin/send-pack.c b/builtin/send-pack.c
-index b961e5a..c2a066a 100644
---- a/builtin/send-pack.c
-+++ b/builtin/send-pack.c
-@@ -261,7 +261,7 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
- 		fd[0] = 0;
- 		fd[1] = 1;
- 	} else {
--		conn = git_connect(fd, dest, receivepack,
-+		conn = git_connect(fd, dest, receivepack, NULL,
- 			args.verbose ? CONNECT_VERBOSE : 0);
- 	}
- 
 diff --git a/connect.c b/connect.c
-index 062e133..7b6b241 100644
+index 7b6b241..97dd732 100644
 --- a/connect.c
 +++ b/connect.c
-@@ -650,7 +650,9 @@ static struct child_process no_fork = CHILD_PROCESS_INIT;
-  * the connection failed).
-  */
- struct child_process *git_connect(int fd[2], const char *url,
--				  const char *prog, int flags)
-+				  const char *prog,
-+				  const char *service_flags,
-+				  int flags)
- {
- 	char *hostandport, *path;
- 	struct child_process *conn = &no_fork;
-@@ -685,10 +687,13 @@ struct child_process *git_connect(int fd[2], const char *url,
- 		 * Note: Do not add any other headers here!  Doing so
- 		 * will cause older git-daemon servers to crash.
+@@ -683,9 +683,6 @@ struct child_process *git_connect(int fd[2], const char *url,
+ 		/*
+ 		 * Separate original protocol components prog and path
+ 		 * from extended host header with a NUL byte.
+-		 *
+-		 * Note: Do not add any other headers here!  Doing so
+-		 * will cause older git-daemon servers to crash.
  		 */
--		packet_write(fd[1],
--			     "%s %s%chost=%s%c",
--			     prog, path, 0,
--			     target_host, 0);
-+		if (!service_flags)
-+			packet_write(fd[1], "%s %s%chost=%s%c",
-+				     prog, path, 0, target_host, 0);
-+		else
-+			packet_write(fd[1], "%s %s%chost=%s%c%s%c",
-+				     prog, path, 0, target_host, 0,
-+				     service_flags, 0);
- 		free(target_host);
- 	} else {
- 		conn = xmalloc(sizeof(*conn));
-@@ -733,7 +738,8 @@ struct child_process *git_connect(int fd[2], const char *url,
- 			conn->use_shell = 1;
- 		}
- 		argv_array_push(&conn->args, cmd.buf);
--
-+		if (service_flags)
-+			argv_array_push(&conn->args, service_flags);
- 		if (start_command(conn))
- 			die("unable to fork");
+ 		if (!service_flags)
+ 			packet_write(fd[1], "%s %s%chost=%s%c",
+diff --git a/daemon.c b/daemon.c
+index 54a03bd..c45d0d6 100644
+--- a/daemon.c
++++ b/daemon.c
+@@ -221,7 +221,7 @@ static const char *path_ok(const char *directory)
+ 	return NULL;		/* Fallthrough. Deny by default */
+ }
  
-diff --git a/connect.h b/connect.h
-index c41a685..c4fa8a1 100644
---- a/connect.h
-+++ b/connect.h
-@@ -3,7 +3,7 @@
+-typedef int (*daemon_service_fn)(void);
++typedef int (*daemon_service_fn)(const char *);
+ struct daemon_service {
+ 	const char *name;
+ 	const char *config_name;
+@@ -302,7 +302,8 @@ error_return:
+ 	return -1;
+ }
  
- #define CONNECT_VERBOSE       (1u << 0)
- #define CONNECT_DIAG_URL      (1u << 1)
--extern struct child_process *git_connect(int fd[2], const char *url, const char *prog, int flags);
-+extern struct child_process *git_connect(int fd[2], const char *url, const char *prog, const char *service_flags, int flags);
- extern int finish_connect(struct child_process *conn);
- extern int git_connection_is_socket(struct child_process *conn);
- extern int server_supports(const char *feature);
-diff --git a/transport.c b/transport.c
-index 0694a7c..626fd92 100644
---- a/transport.c
-+++ b/transport.c
-@@ -495,6 +495,7 @@ static int connect_setup(struct transport *transport, int for_push, int verbose)
- 	data->conn = git_connect(data->fd, transport->url,
- 				 for_push ? data->options.receivepack :
- 				 data->options.uploadpack,
-+				 NULL,
- 				 verbose ? CONNECT_VERBOSE : 0);
- 
- 	return 0;
-@@ -850,7 +851,7 @@ static int connect_git(struct transport *transport, const char *name,
+-static int run_service(const char *dir, struct daemon_service *service)
++static int run_service(const char *dir, struct daemon_service *service,
++		       const char *args)
  {
- 	struct git_transport_data *data = transport->data;
- 	data->conn = git_connect(data->fd, transport->url,
--				 executable, 0);
-+				 executable, NULL, 0);
- 	fd[0] = data->fd[0];
- 	fd[1] = data->fd[1];
- 	return 0;
+ 	const char *path;
+ 	int enabled = service->enabled;
+@@ -361,7 +362,7 @@ static int run_service(const char *dir, struct daemon_service *service)
+ 	 */
+ 	signal(SIGTERM, SIG_IGN);
+ 
+-	return service->fn();
++	return service->fn(args);
+ }
+ 
+ static void copy_to_log(int fd)
+@@ -403,27 +404,31 @@ static int run_service_command(const char **argv)
+ 	return finish_command(&cld);
+ }
+ 
+-static int upload_pack(void)
++static int upload_pack(const char *args)
+ {
+ 	/* Timeout as string */
+ 	char timeout_buf[64];
+-	const char *argv[] = { "upload-pack", "--strict", NULL, ".", NULL };
++	const char *argv[] = { "upload-pack", "--strict", NULL, ".", NULL, NULL };
+ 
+ 	argv[2] = timeout_buf;
++	argv[4] = args;
+ 
+ 	snprintf(timeout_buf, sizeof timeout_buf, "--timeout=%u", timeout);
+ 	return run_service_command(argv);
+ }
+ 
+-static int upload_archive(void)
++static int upload_archive(const char *args)
+ {
+ 	static const char *argv[] = { "upload-archive", ".", NULL };
++	if (args)
++		die("invalid request");
+ 	return run_service_command(argv);
+ }
+ 
+-static int receive_pack(void)
++static int receive_pack(const char *args)
+ {
+-	static const char *argv[] = { "receive-pack", ".", NULL };
++	static const char *argv[] = { "receive-pack", ".", NULL, NULL };
++	argv[2] = args;
+ 	return run_service_command(argv);
+ }
+ 
+@@ -487,7 +492,7 @@ static void parse_host_and_port(char *hostport, char **host,
+ /*
+  * Read the host as supplied by the client connection.
+  */
+-static void parse_host_arg(char *extra_args, int buflen)
++static void parse_host_arg(char *extra_args, char **remaining_args, int buflen)
+ {
+ 	char *val;
+ 	int vallen;
+@@ -514,8 +519,13 @@ static void parse_host_arg(char *extra_args, int buflen)
+ 			/* On to the next one */
+ 			extra_args = val + vallen;
+ 		}
+-		if (extra_args < end && *extra_args)
+-			die("Invalid request");
++	}
++
++	if (remaining_args) {
++		for (val = extra_args; val < end; val++)
++			if (!*val)
++				*val = ' ';
++		*remaining_args = extra_args;
+ 	}
+ 
+ 	/*
+@@ -577,6 +587,7 @@ static int execute(void)
+ {
+ 	char *line = packet_buffer;
+ 	int pktlen, len, i;
++	char *args = NULL;
+ 	char *addr = getenv("REMOTE_ADDR"), *port = getenv("REMOTE_PORT");
+ 
+ 	if (addr)
+@@ -603,7 +614,7 @@ static int execute(void)
+ 	hostname = canon_hostname = ip_address = tcp_port = NULL;
+ 
+ 	if (len != pktlen)
+-		parse_host_arg(line + len + 1, pktlen - len - 1);
++		parse_host_arg(line + len + 1, &args, pktlen - len - 1);
+ 
+ 	for (i = 0; i < ARRAY_SIZE(daemon_service); i++) {
+ 		struct daemon_service *s = &(daemon_service[i]);
+@@ -616,7 +627,7 @@ static int execute(void)
+ 			 * Note: The directory here is probably context sensitive,
+ 			 * and might depend on the actual service being performed.
+ 			 */
+-			return run_service(arg, s);
++			return run_service(arg, s, args);
+ 		}
+ 	}
+ 
 -- 
 2.3.0.81.gc37f363
