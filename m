@@ -1,72 +1,86 @@
 From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [RFC/PATCH 2/5] upload-pack: support out of band client
- capability requests
-Date: Sat, 28 Feb 2015 18:36:23 +0700
-Message-ID: <CACsJy8D1xHh7tQkX=+4H_FvLdk53RmtNwVPNuo9Ng2x9oQFPjw@mail.gmail.com>
-References: <CAGZ79ka8Zg86qqvWByNiP3F6a9QggO-bNY3ZZ9g+A-MdKYQ7NQ@mail.gmail.com>
- <1425085318-30537-1-git-send-email-sbeller@google.com> <1425085318-30537-3-git-send-email-sbeller@google.com>
+Subject: Re: [PATCH v2 2/2] index-pack: kill union delta_base to save memory
+Date: Sat, 28 Feb 2015 18:44:07 +0700
+Message-ID: <CACsJy8A3MxpQRwboVjyv7akvzgf3y23ZsnAaxuHXkm2U=tUk0A@mail.gmail.com>
+References: <1424397488-22169-1-git-send-email-pclouds@gmail.com>
+ <1424947928-19396-1-git-send-email-pclouds@gmail.com> <1424947928-19396-3-git-send-email-pclouds@gmail.com>
+ <xmqqzj7zhx31.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Sat Feb 28 12:37:04 2015
+	matthew sporleder <msporleder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 28 12:44:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YRfhe-0002hx-SQ
-	for gcvg-git-2@plane.gmane.org; Sat, 28 Feb 2015 12:37:03 +0100
+	id 1YRfp8-0005TD-Nd
+	for gcvg-git-2@plane.gmane.org; Sat, 28 Feb 2015 12:44:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750896AbbB1Lgz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Feb 2015 06:36:55 -0500
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:38335 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750791AbbB1Lgz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Feb 2015 06:36:55 -0500
-Received: by iecrd18 with SMTP id rd18so37238499iec.5
-        for <git@vger.kernel.org>; Sat, 28 Feb 2015 03:36:54 -0800 (PST)
+	id S1751032AbbB1Loj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 28 Feb 2015 06:44:39 -0500
+Received: from mail-ie0-f179.google.com ([209.85.223.179]:43259 "EHLO
+	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750813AbbB1Loi convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 28 Feb 2015 06:44:38 -0500
+Received: by iebtr6 with SMTP id tr6so37203547ieb.10
+        for <git@vger.kernel.org>; Sat, 28 Feb 2015 03:44:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=vntGecxIcljXLMR5C0dPht4uR7feEdallnSIaeCCXao=;
-        b=JzPlnFGkSZ6UEX6CUdIPbv4iDwASQZsR//QDLslf9NJ4C+2uJbkb6LIndkTq8gW+lB
-         S70omd7JBjXisXfY7/2RIcIFlhJB3Em3zsiYwmpFX4xH5R/Ydy9VmW0LQMM4DpD7Mneh
-         haLWf0kWcp/TJ36hKZgFvxwHGl+YMt++JBGiveW29dYwdCVZ76jyhDIbjoD7Bo8a6AI6
-         ortV9Bu8NRahXdFlYzChfhzRSWF1zbvHxs2x9O24akcLbvlulCMwep5XfrLDBdME8qdm
-         dX1IPuDKR3HmIs+c1KhQO2paJo75p3Taoz8gzNpYVrx55a0gky79dmHpNt6bSW60msj8
-         Tj6g==
-X-Received: by 10.107.167.145 with SMTP id q139mr25125475ioe.16.1425123414240;
- Sat, 28 Feb 2015 03:36:54 -0800 (PST)
-Received: by 10.107.131.155 with HTTP; Sat, 28 Feb 2015 03:36:23 -0800 (PST)
-In-Reply-To: <1425085318-30537-3-git-send-email-sbeller@google.com>
+         :cc:content-type:content-transfer-encoding;
+        bh=rKKa129RrtwRfvjsyyhmu3OhQ4c26QBYmk/AP3EZ00g=;
+        b=p0XY8G3WQ7KgmqA79No8Ka+t+Yvwbhzcdz+83G4pPfHN8NaERebRbfFwF3JamAjaid
+         QjGSeicCT9Sr5xCEQjxGxVozaWrCUR9SrDRGkWWLrzAQ8OfPQq7yjcb76abf1ke+XpiF
+         79TzL++PpYyGWzaZ8bezpNDQa6xZmoeJzI4cLbtzPaLccJSc7FDdyVhuqCULW4E5YjtJ
+         KEgbfQJfPwqEMAgmDKZZxnEKLjkejr1iL/gLhXItuHC4aFUOjBDHhbej/19xVDBQ+4LR
+         5RlwpmNM/dq+BsM2JrXxVdlXohAzjBgFfyujv1dW42KEcHTrXy5aa5+oQMjriQLleO+W
+         hoog==
+X-Received: by 10.42.83.147 with SMTP id h19mr20460832icl.95.1425123878025;
+ Sat, 28 Feb 2015 03:44:38 -0800 (PST)
+Received: by 10.107.131.155 with HTTP; Sat, 28 Feb 2015 03:44:07 -0800 (PST)
+In-Reply-To: <xmqqzj7zhx31.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264528>
 
-On Sat, Feb 28, 2015 at 8:01 AM, Stefan Beller <sbeller@google.com> wrote:
-> Notes:
->     v1:
->     I am still undecided if the client should then accept/resend
->     the capabilities to confirm them, which would make the client the
->     ultimate decider which capabilities are used.
+On Sat, Feb 28, 2015 at 4:18 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
+:
 >
->     My gut feeling is to rather let the server make the final decision
->     for the capabilities, as it will use some requested capabilities
->     already to not send out all the refs.
+>> Notice that with "recent" Git versions, ofs-delta objects are
+>> preferred over ref-delta objects and ref-delta objects have no reaso=
+n
+>> to be present in a clone pack.
+>
+> It is true that we try to use ofs-delta as much as possible, but
+> where does "have no reason to be present" come from?
 
-pack-capabilities.txt says
+Lack of knowledge, or writing without double checking the code.
 
-"Client will then send a space separated list of capabilities it wants
-to be in effect. The client MUST NOT ask for capabilities the server
-did not say it supports."
+> When an object cannot be represented as an ofs-delta (which can only
+> refer backwards), don't we use ref-delta, instead of storing it as a
+> deflated-full object?
 
-What was sent out of band is what the client can support, not what it
-wants. So perhaps drop this patch and let the client decide exactly
-what it wants.
--- 
+Ah I think you're right. The decision to choose ofs-delta in
+pack-objects is if ofs-delta is enabled _and_ the offset to base is
+available (i.e. base is already written).
+
+> Probably "Not so ancient versions of Git tries to use ofs-delta
+> encoding whenever possible, so it is expected that objects encoded
+> using ref-delta are minority" may be closer to the truth.  And that
+> observation does justify why using two separate pools (one with
+> 8-byte entries for ofs-delta, the other with 20-byte entries for
+> ref-delta) is a better idean than using one pool with 20-byte
+> entries for both kinds.
+
+Yes. Looks good. Should I send a patch, or you fix the commit message l=
+ocally?
+--=20
 Duy
