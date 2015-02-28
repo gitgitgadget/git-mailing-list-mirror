@@ -1,133 +1,72 @@
 From: Duy Nguyen <pclouds@gmail.com>
 Subject: Re: [RFC/PATCH 2/5] upload-pack: support out of band client
  capability requests
-Date: Sat, 28 Feb 2015 18:22:59 +0700
-Message-ID: <CACsJy8DA86yBoYxvEbgUzoxGOwsKw0mO50iQ0qvNrxaihRNe2g@mail.gmail.com>
+Date: Sat, 28 Feb 2015 18:36:23 +0700
+Message-ID: <CACsJy8D1xHh7tQkX=+4H_FvLdk53RmtNwVPNuo9Ng2x9oQFPjw@mail.gmail.com>
 References: <CAGZ79ka8Zg86qqvWByNiP3F6a9QggO-bNY3ZZ9g+A-MdKYQ7NQ@mail.gmail.com>
  <1425085318-30537-1-git-send-email-sbeller@google.com> <1425085318-30537-3-git-send-email-sbeller@google.com>
- <AB630BA1-8D48-418D-B576-6495DBE67C52@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Stefan Beller <sbeller@google.com>,
-	Git Mailing List <git@vger.kernel.org>,
+Cc: Git Mailing List <git@vger.kernel.org>,
 	Junio C Hamano <gitster@pobox.com>
-To: "Kyle J. McKay" <mackyle@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 28 12:23:38 2015
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Sat Feb 28 12:37:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YRfUf-0005uu-Fj
-	for gcvg-git-2@plane.gmane.org; Sat, 28 Feb 2015 12:23:37 +0100
+	id 1YRfhe-0002hx-SQ
+	for gcvg-git-2@plane.gmane.org; Sat, 28 Feb 2015 12:37:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750835AbbB1LXb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 28 Feb 2015 06:23:31 -0500
-Received: from mail-ie0-f171.google.com ([209.85.223.171]:38763 "EHLO
-	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750761AbbB1LXa convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 28 Feb 2015 06:23:30 -0500
-Received: by iecrd18 with SMTP id rd18so37199737iec.5
-        for <git@vger.kernel.org>; Sat, 28 Feb 2015 03:23:30 -0800 (PST)
+	id S1750896AbbB1Lgz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Feb 2015 06:36:55 -0500
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:38335 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750791AbbB1Lgz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Feb 2015 06:36:55 -0500
+Received: by iecrd18 with SMTP id rd18so37238499iec.5
+        for <git@vger.kernel.org>; Sat, 28 Feb 2015 03:36:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=jByRjjxD2lQjOcy34M0lT2n3dKyfmhYMPI656VMW5+w=;
-        b=OfZ56OWMcWL+pHmgB+pTJ18/WKABG5pTsSfVb/O3qK077+PDTWfLX+f+k/qR8ZnGW3
-         qkvy0bRSxGLZURkQy46X4X40U9ODoElFfjRKDjZLtSnwIcVBCjRJ+oqNd8Ml4IIvm/7I
-         JgPV49iaMA68rzlUZFdsmtvfj/WqTB3kHd0PyMmy/C20XIftmk/ywDxtp5pzB4JFdVon
-         NGZlgXLs9D3d+d/5vJjXIQm8FTNTaRhidIKNOzmc5VFpAzb3q8N4lrDGEwtmegs6vSZB
-         tJDMmHd6dyCYTYW4Z+XmnZaF7QgsFH+lUmk5wdyAvH2seE9bYE62OQvGZkXEXHZOct6U
-         6njQ==
-X-Received: by 10.42.109.20 with SMTP id j20mr19994209icp.27.1425122610111;
- Sat, 28 Feb 2015 03:23:30 -0800 (PST)
-Received: by 10.107.131.155 with HTTP; Sat, 28 Feb 2015 03:22:59 -0800 (PST)
-In-Reply-To: <AB630BA1-8D48-418D-B576-6495DBE67C52@gmail.com>
+         :cc:content-type;
+        bh=vntGecxIcljXLMR5C0dPht4uR7feEdallnSIaeCCXao=;
+        b=JzPlnFGkSZ6UEX6CUdIPbv4iDwASQZsR//QDLslf9NJ4C+2uJbkb6LIndkTq8gW+lB
+         S70omd7JBjXisXfY7/2RIcIFlhJB3Em3zsiYwmpFX4xH5R/Ydy9VmW0LQMM4DpD7Mneh
+         haLWf0kWcp/TJ36hKZgFvxwHGl+YMt++JBGiveW29dYwdCVZ76jyhDIbjoD7Bo8a6AI6
+         ortV9Bu8NRahXdFlYzChfhzRSWF1zbvHxs2x9O24akcLbvlulCMwep5XfrLDBdME8qdm
+         dX1IPuDKR3HmIs+c1KhQO2paJo75p3Taoz8gzNpYVrx55a0gky79dmHpNt6bSW60msj8
+         Tj6g==
+X-Received: by 10.107.167.145 with SMTP id q139mr25125475ioe.16.1425123414240;
+ Sat, 28 Feb 2015 03:36:54 -0800 (PST)
+Received: by 10.107.131.155 with HTTP; Sat, 28 Feb 2015 03:36:23 -0800 (PST)
+In-Reply-To: <1425085318-30537-3-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264526>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264527>
 
-On Sat, Feb 28, 2015 at 2:47 PM, Kyle J. McKay <mackyle@gmail.com> wrot=
-e:
-> On Feb 27, 2015, at 17:01, Stefan Beller wrote:
->>
->> From: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
->>
->> The only difference from the original protocol client capabilities a=
-re
->> negotiated before initial refs advertisment.
->>
->> Client capabilities are sent out of band (upload-pack receives it as
->> the second command line argument). The server sends one pkt-line bac=
-k
->> advertising its capabilities.
->>
->> Signed-off-by: Stefan Beller <sbeller@google.com>
->> ---
->>
->> Notes:
->>    v1:
->>    I am still undecided if the client should then accept/resend
->>    the capabilities to confirm them, which would make the client the
->>    ultimate decider which capabilities are used.
->>
->>    My gut feeling is to rather let the server make the final decisio=
-n
->>    for the capabilities, as it will use some requested capabilities
->>    already to not send out all the refs.
->>
->> Documentation/git-upload-pack.txt | 10 +++++++++-
->> upload-pack.c                     | 42
->> +++++++++++++++++++++++++++------------
->> 2 files changed, 38 insertions(+), 14 deletions(-)
->>
->> diff --git a/Documentation/git-upload-pack.txt
->> b/Documentation/git-upload-pack.txt
->> index 0abc806..ad3a89d 100644
->> --- a/Documentation/git-upload-pack.txt
->> +++ b/Documentation/git-upload-pack.txt
->> @@ -9,7 +9,7 @@ git-upload-pack - Send objects packed back to
->> git-fetch-pack
->> SYNOPSIS
->> --------
->> [verse]
->> -'git-upload-pack' [--strict] [--timeout=3D<n>] <directory>
->> +'git-upload-pack' [--strict] [--timeout=3D<n>] <directory> [<capabi=
-lities>]
+On Sat, Feb 28, 2015 at 8:01 AM, Stefan Beller <sbeller@google.com> wrote:
+> Notes:
+>     v1:
+>     I am still undecided if the client should then accept/resend
+>     the capabilities to confirm them, which would make the client the
+>     ultimate decider which capabilities are used.
 >
->
-> Isn't the problem with this that passing the extra argument to ssh se=
-rvers
-> will cause them to fail?
->
-> Having just looked at the upload-pack.c source it looks to me like tr=
-ying to
-> send "git-upload-pack 'dir' 'capabilities'" to an ssh git server runn=
-ing a
-> current version of the code will just end up failing.  I realize the =
-extra
-> argument is optional, so does that mean there's no out-of-band suppor=
-t for
-> ssh connections since the extra argument would have to be omitted to =
-remain
-> compatible?
+>     My gut feeling is to rather let the server make the final decision
+>     for the capabilities, as it will use some requested capabilities
+>     already to not send out all the refs.
 
-The client should only trigger this behavior when it knows the server
-can deal with it. And that is possible because in the last fetch, the
-server has told the client that it's capable of receiving this
-capabilities argument. Backward compatibility is a concern at client
-side, not server side.
+pack-capabilities.txt says
 
-> I've looked at those links and it's unclear to me how they support an
-> out-of-band option for ssh, they seem to be targeted at git-daemon.  =
-Maybe
-> there's another reference?
+"Client will then send a space separated list of capabilities it wants
+to be in effect. The client MUST NOT ask for capabilities the server
+did not say it supports."
 
-=46or ssh, I think connect.c is the one that constructs and executes ss=
-h command.
---=20
+What was sent out of band is what the client can support, not what it
+wants. So perhaps drop this patch and let the client decide exactly
+what it wants.
+-- 
 Duy
