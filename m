@@ -1,173 +1,117 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH 0/3] protocol v2
-Date: Sun, 01 Mar 2015 15:06:59 -0800
-Message-ID: <xmqqwq30fhbg.fsf@gitster.dls.corp.google.com>
-References: <1424747562-5446-1-git-send-email-sbeller@google.com>
-	<CACsJy8BSf2h_xD-Q1tudAg_xCzffRQM+7xzUgprONxD7vM5RYw@mail.gmail.com>
-	<CAPc5daVbrUaU6LFM65evru0+1tBT916+0AOyids=f7DZThTPGw@mail.gmail.com>
-	<xmqq1tl9gld9.fsf@gitster.dls.corp.google.com>
-	<CACsJy8DKbfU7TBHhT5_qpL0QM3zbxkaF+B4x3hQDpomQ_9OSEg@mail.gmail.com>
+Subject: Re: feature request: excluding files/paths from "git grep"
+Date: Sun, 01 Mar 2015 15:22:11 -0800
+Message-ID: <xmqqr3t8fgm4.fsf@gitster.dls.corp.google.com>
+References: <54EDBEC2.8090107@peralex.com>
+	<CACsJy8AM=W4f6u_7YpvmfiBwrJjqfJMJoq6CQYfKOh+qD6rF3Q@mail.gmail.com>
+	<20150225143116.GA13567@peff.net>
+	<xmqqk2z5on72.fsf@gitster.dls.corp.google.com>
+	<20150225185128.GA16569@peff.net>
+	<xmqqbnkholx9.fsf@gitster.dls.corp.google.com>
+	<20150225191108.GA17467@peff.net>
+	<20150227100441.GA11861@tsaunders-iceball.corp.tor1.mozilla.com>
+	<xmqqvbilh0wn.fsf@gitster.dls.corp.google.com>
+	<20150301130142.GA24782@tsaunders-iceball.corp.tor1.mozilla.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Stefan Beller <sbeller@google.com>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 02 00:07:10 2015
+Cc: Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>,
+	Noel Grandin <noel@peralex.com>, git <git@vger.kernel.org>
+To: Trevor Saunders <tbsaunde@tbsaunde.org>
+X-From: git-owner@vger.kernel.org Mon Mar 02 00:23:24 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YSCx3-0003tK-Eh
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Mar 2015 00:07:09 +0100
+	id 1YSDCi-0000uq-Ss
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Mar 2015 00:23:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753117AbbCAXHF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Mar 2015 18:07:05 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:51317 "EHLO
+	id S1752235AbbCAXWO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Mar 2015 18:22:14 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:57644 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751877AbbCAXHD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Mar 2015 18:07:03 -0500
+	with ESMTP id S1752064AbbCAXWN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Mar 2015 18:22:13 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 001933CE78;
-	Sun,  1 Mar 2015 18:07:01 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id DEDC43D282;
+	Sun,  1 Mar 2015 18:22:12 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=tIe1zqsydECXOObiT/vGyY/hlsw=; b=msuInZ
-	+yDdW+ZlwiPidIM3eFEEUgXy0nyFcQaw+BxqXYopeAc7sco0BY+HxADxnMrbGZHs
-	IhldqauCADaeHgmZBUfH9NNPNJr3OrGUKHx9aRoT/dPTyKSi8WhQqL/ndy170Y76
-	gvynlxLGNyFzXsTZ9So4G6oNjK9BJ3v02Nlec=
+	:content-type; s=sasl; bh=fLwUAa6oFduxo8PHSo/QBMgcENU=; b=T0zouy
+	PuDjXUT6XwU6W0XIgXJx96kIS0x+q8F/SrN7jT6h1AguvOhzQ2axxBXEruPAIprt
+	jdFTxhu1g9f4eknKeJVt+NU/xczyu9mCikhiIPb/TlYnF/nKFPWEz2BohdBY8OcX
+	/nUTy57pmEeoYIaiAMyhbHlUMcgtbkrU3QlC8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=YbhpXJ2CmbOYyQ+0Rd1GW0jt61GhonU+
-	8Lo5ldlolJjBW3rjhxMkuNWwWWcTd5H3s6AVnJXHiWMTJaJgOMbj1WOepq4GkfyO
-	A+ulebzddfUNmLUfgF1kFtgSAkH6m9hIoJSSSyzLoiTo6a2lRV0rJJL4CjqrrSsH
-	qAIifyXdpl8=
+	:content-type; q=dns; s=sasl; b=cbLXI+47r49QOGRRCGAvx3lukw8So3Gx
+	FUEFlCwp4dhQYJfmMJ5rBh3S1ZNJLVKcBPrh0JDoPo9ZjEr6ANDwZ7PIX5YAtzB9
+	ljn8ht3XLAjUELNrQoTJCp2UH3XWYQpQiZpa1Xm6C/PrT1UU3pNb+t0UNHrxz8sE
+	TVQnnz4q1gA=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D9A623CE77;
-	Sun,  1 Mar 2015 18:07:01 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D750D3D281;
+	Sun,  1 Mar 2015 18:22:12 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 090D43CE74;
-	Sun,  1 Mar 2015 18:07:00 -0500 (EST)
-In-Reply-To: <CACsJy8DKbfU7TBHhT5_qpL0QM3zbxkaF+B4x3hQDpomQ_9OSEg@mail.gmail.com>
-	(Duy Nguyen's message of "Sun, 1 Mar 2015 18:32:08 +0700")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 48E953D27F;
+	Sun,  1 Mar 2015 18:22:12 -0500 (EST)
+In-Reply-To: <20150301130142.GA24782@tsaunders-iceball.corp.tor1.mozilla.com>
+	(Trevor Saunders's message of "Sun, 1 Mar 2015 08:03:08 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: AB0CFC2E-C067-11E4-843B-29999F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: CA2A03FC-C069-11E4-B517-29999F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264566>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264567>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Trevor Saunders <tbsaunde@tbsaunde.org> writes:
 
-> On Sun, Mar 1, 2015 at 3:41 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>>  - Because the protocol exchange starts by the server side
->>>    advertising all its refs, even when the fetcher is interested in
->>>    a single ref, the initial overhead is nontrivial, especially when
->>>    you are doing a small incremental update.  The worst case is an
->>>    auto-builder that polls every five minutes, even when there is no
->>>    new commits to be fetched [*3*].
+>> ...  For these "per-invocation" differences, attributes
+>> to declare permenent/inherent nature of the contents is much less
+>> suited than per-invocation inclusion/exclusion mechanism based on
+>> pathspecs, I would think.
 >
-> Maybe you can elaborate about how to handle states X, Y... in your
-> footnote 3. I just don't see how it's actually implemented.  Or is
-> it optional feature that will be provided (via hooks, maybe) by
-> admin?
+> I think that makes some amount of sense, however typing stuff like
+> --exclude=ChangeLog all the time is not terribly easy on the hands.
+> Would it make sense to instead add a config variable grep.exclude?
 
-These footnotes are not the important part (I wanted us to agree on
-the problem, and the ideas outlined with the footnotes are only an
-example that illustrates how a potential solution and the problem to
-be solved are described in relation to each other), but I'll give a
-shot anyway ;-)
+I do not think it makes much more sense for at least three reasons.
+for one thing, It still goes against "per-invocation" nature of what
+is being done.  Your "for this invocation I do not want ChangeLog"
+does not have to be limited to 'grep'.  And also "I end up having to
+give these pathspecs all the time" is not limited to negative ones.
 
-I am actually torn on how the names X, Y, etc. should be defined.
+We have magic pathspecs, like "This pattern is used to match the
+string case-insensitively", "This pattern specifies that the path
+should *not* match it", etc.  How about adding a new feature that
+lets you say "This is a short hand to giving these pathspecs" and
+call that "pathspec macro"?
 
-One side of me wants to leave its computation entirely up to the
-server side.  The client says "Last time I talked with you asking
-for refs/heads/* and successfully updated from you, you told me to
-call that state X" without knowing how X is computed, and then the
-server will update you and then tell you your state is now Y.  That
-way, large hosting sites and server implementations can choose to
-implement it any way they like.
+If you get tired to keep having to type
 
-On the other hand, we could rigidly define it, perhaps like this:
+    $ git log -- Documentation/ ':!Documentation/technical/'
 
- - Imagine that you saved the output from ls-remote that is run
-   against that server, limited to the refs hierarchy you are
-   requesting, the last time you talked with it.
+every time you want to check the end-user facing documentation
+pages, you could for example say (I am using a made-up 'macro'
+pathspec magic that is introduced by ':*' followed by a <macro
+name>):
 
- - Concatenate the above to the list of patterns the client used to
-   ask the refs.  This step is optional.
+    $ git log -- ':*userdoc'
 
- - E.g. if you are asking it for "refs/heads/*", then we are talking
-   something like this (illustrated with optional pattern in front):
+and the same macro specification could be used for all the other
+things that take pathspecs (grep, add, diff, etc.).
 
-        refs/heads/*
-        8004647...      refs/heads/maint
-        7f4ba4b...      refs/heads/master
+You could then have something like this to define your own "nolog"
+macro:
 
- - Run SHA-1 hash over that.  And that is the state name.
+    [pathspecMacro]
+        nolog = ':!ChangeLog' ':!ChangeLog.*'
 
-I.e. if you as a client are doing
+to shorten your invocation of "grep" by appending it when you want
+to exclude some files, i.e.
 
-    [remote "origin"]
-        fetch = refs/heads/*:refs/remotes/origin/*
+    $ git grep -e pattern -- \*.c ':*nolog'
 
-and if the only time your refs/remotes/origin/* hierarchy changes is
-when you fetch from there (which should be the norm), you can look
-into remote.origin.fetch refspec (to learn that "refs/heads*" is
-what you are asking) and your refs/remotes/origin/* refs (and
-reverse the mapping you make when you fetch to make them talk about
-refs/heads/* hierarchy on the server side), you can compute it
-locally.
-
-The latter will have one benefit over "opaque thing the client does
-not know how to compute".  Because I want us avoid sending unchanged
-refs over connection, but I do want to see the protocol has some
-validation mechanism built in, even if we go the latter "client can
-compute what the state name ought to be" route, I want the servrer
-to tell the client what to call that state.  That way, the client
-side can tell when it goes out of sync for any reason and attempt to
-recover.
-
-> Do we need to worry about load balancers?
-
-Unless you are allowing multiple backend servers to serve a same
-repository behind a set of load balancers in an inconsistent way
-(e.g. you push to one while I push to two and you fetch from one and
-you temporarily see my push but then my push will be rejected as
-conflicting and you fetch from one and now you see your push), I do
-not think there is anything you need to worry about them more than
-what you should be worrying about already.
-
-There would be a point where all backend servers would agree "This
-is the set of values of these refs" at some point (e.g. a majority
-of surviving servers vote to decide, laggers that later join the
-party will update to the concensus value before serving the end-user
-traffic), and they would not be showing half-updated values that
-haven't ratified by other servers to end users (otherwise they may
-end up showing reversion).
-
->>    - Is band #2 meant for human consumption, or do we expect the
->>      other end to interpret and act on it?  If the former, would it
->>      make sense to send locale information from the client side and
->>      ask the server side to produce its output with _("message")?
->
-> No producing _(...) is a bad idea. First the client has to verify
-> placeholders and stuff, we can't just feed data from server straight
-> to printf(). Producing _() could complicate server code a lot. And I
-> don't like the idea of using client .po files to translate server
-> strings. There could be custom strings added by admin, which are not
-> available in client .po. String translation should happen at server
-> side.
-
-What I meant to say was (1) the client says "I want the human
-readable message in Vietnamese" and (2) the server uses .po on
-_("message") in its code and send the result to sideband #2.  There
-is no parsing, interpolation, or anything of that sort necessary on
-the server end.
-
-Because potential problem you mention looks to me about a different
-design where the server talks "message" and client side applies
-_($msg) to it, I suspect that you misread what I meant to say.
+and the same pathspec macro can be used in other places, not just
+"grep".  Wouldn't it make more sense?
