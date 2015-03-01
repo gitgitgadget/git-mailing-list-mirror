@@ -1,111 +1,148 @@
-From: Lasse Kliemann <lasse@lassekliemann.de>
-Subject: Re: Easy Non-Fast-Forward Pushes
-Date: Sun, 01 Mar 2015 12:08:46 +0100
-Message-ID: <ygeioel2cw1.fsf@lassekliemann.de>
-References: <loom.20150227T170215-199@post.gmane.org> <CAGZ79kZ3_ohE6ebY5MvOk6+QfChppR_OtcmVaw5LBoutTWm3ZA@mail.gmail.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [RFC/PATCH 0/3] protocol v2
+Date: Sun, 1 Mar 2015 11:56:10 -0800
+Message-ID: <CAGZ79kaHGw=OyrkktWeo-MR0V1_bASB1cioP+c2Ngpt6fkRxBA@mail.gmail.com>
+References: <1424747562-5446-1-git-send-email-sbeller@google.com>
+	<CACsJy8BSf2h_xD-Q1tudAg_xCzffRQM+7xzUgprONxD7vM5RYw@mail.gmail.com>
+	<CAPc5daVbrUaU6LFM65evru0+1tBT916+0AOyids=f7DZThTPGw@mail.gmail.com>
+	<xmqq1tl9gld9.fsf@gitster.dls.corp.google.com>
+	<CACsJy8DKbfU7TBHhT5_qpL0QM3zbxkaF+B4x3hQDpomQ_9OSEg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha1; protocol="application/pgp-signature"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 01 19:22:09 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 01 20:56:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YS8VF-0003zY-El
-	for gcvg-git-2@plane.gmane.org; Sun, 01 Mar 2015 19:22:09 +0100
+	id 1YS9yL-0005wU-IT
+	for gcvg-git-2@plane.gmane.org; Sun, 01 Mar 2015 20:56:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752064AbbCASWF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Mar 2015 13:22:05 -0500
-Received: from smtp-01.snyder.systems ([85.214.28.39]:53213 "EHLO
-	smtp-01.snyder.systems" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751937AbbCASWD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Mar 2015 13:22:03 -0500
-X-Greylist: delayed 305 seconds by postgrey-1.27 at vger.kernel.org; Sun, 01 Mar 2015 13:22:03 EST
-Received: from sunrise.localdomain (unknown [84.141.132.91])
-	(using TLSv1.1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by smtp-01.snyder.systems (Postfix) with ESMTPSA id 224A723F61E10
-	for <git@vger.kernel.org>; Sun,  1 Mar 2015 18:16:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lassekliemann.de;
-	s=2015.01; t=1425233815;
-	bh=alh3PausIlu9QWOc637/oWTSu7GT1hEvaS4cwTGKzVM=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type;
-	b=jyL/bw+rjyTKwiS6aR6fis8Zd6AH+bSngnl5Ozc4CncUCKJ6KDNfgBVhHrgt72BLk
-	 bACmewoCGtf10sZeiyOaooMRSuaCiAWFx06c35j15tUs9xtmT221DzcErKVyNI3e/0
-	 nEA6cNxTatNIKSN/IPLslFxbkLBDsMqHCHAkX1do=
-Received: by sunrise.localdomain (Postfix, from userid 2001)
-	id 0FC152581EED; Sun,  1 Mar 2015 12:08:47 +0100 (CET)
-In-reply-to: <CAGZ79kZ3_ohE6ebY5MvOk6+QfChppR_OtcmVaw5LBoutTWm3ZA@mail.gmail.com>
+	id S1751366AbbCAT4N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Mar 2015 14:56:13 -0500
+Received: from mail-ie0-f178.google.com ([209.85.223.178]:46901 "EHLO
+	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751143AbbCAT4M (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Mar 2015 14:56:12 -0500
+Received: by iecvy18 with SMTP id vy18so42801411iec.13
+        for <git@vger.kernel.org>; Sun, 01 Mar 2015 11:56:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=BdtaD9+V7sIfIFAiGxmlGhIXxTfO8B4ipJAquepxW8w=;
+        b=YmwAJbEF/yt/hf6IkOdYAQ2/Ysiasdaz/Xc2/5GeP/H64nWN3Ow1VNBq5Pe1qaeP8K
+         AGjLvD8BjX5O9e1fAEcpN12RuhnSuhArkppQybr3ZEyNhq9a1+URZoZpbhKm98HYgAVd
+         kPJ3QZiuqjCiK4A0o6uH43SNXzm24mhvdCZlybbuTBqF+vYWrmQnGtDv/JWJp/eFtehE
+         kHYy1I/LgvZ0dbKYE7nLXREKqmtvtbSPoN3wrqH4EomBIYE8JX+/nOOslgPR/Q8Ia6ji
+         h324FuB6/wbFoYRyL2oDg8pEeUAi9uyNbaP3Bxl46TJosMSE26KranxbBcYiDv8iepLk
+         5tqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=BdtaD9+V7sIfIFAiGxmlGhIXxTfO8B4ipJAquepxW8w=;
+        b=W5AxcB3lIivgn2CQueJ0dJR3B5vWGa6FUI2FuOVp+LMu0ckBX4iYlgjACXVV7CRaU9
+         RbOoFzKgXy9LK6ngfUz7p5kPaJ9USF2+/UXClkaLtpa2g5RmzCa+ai3H4NXAAdyETrF4
+         taVol+xU+nO6QkD0QJz7PhwZSv6pGb/7w/G03Sb4z75khvzOhM40Yvm1zJ2uZht9KFNI
+         R5Xd6+sQ+BzD6bSOEo8a7SHNsI/fYNcB/4tOcuhXELaOHMwsmtgi43jl81EEnE794iLk
+         fWNyfVfMx3fpyLjv+h9DhaKgNboCzOfCw9jbEFZfyVmszQFaj30JTS1JmtesSQmaYBT1
+         Vsng==
+X-Gm-Message-State: ALoCoQmtUgxHAU+yF8IYlBqGK1SxyCLhWLN7u9Dw0AsTWtSo/oNOqFNWqv8LdVJDL34wMh8tIoSH
+X-Received: by 10.43.100.67 with SMTP id cv3mr27242208icc.92.1425239770804;
+ Sun, 01 Mar 2015 11:56:10 -0800 (PST)
+Received: by 10.107.46.31 with HTTP; Sun, 1 Mar 2015 11:56:10 -0800 (PST)
+In-Reply-To: <CACsJy8DKbfU7TBHhT5_qpL0QM3zbxkaF+B4x3hQDpomQ_9OSEg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264563>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264564>
 
---=-=-=
-Content-Type: text/plain
-
-Stefan Beller <sbeller@google.com> writes:
-
-> So maybe you create a bash alias for
-> alias gitup='git push origin HEAD:${USER}/$(date -Iseconds)'
-> which would push your current tip of the repository to the remote with
-> quite a unique name.
+On Sun, Mar 1, 2015 at 3:32 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Sun, Mar 1, 2015 at 3:41 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>>  - Because the protocol exchange starts by the server side
+>>>    advertising all its refs, even when the fetcher is interested in
+>>>    a single ref, the initial overhead is nontrivial, especially when
+>>>    you are doing a small incremental update.  The worst case is an
+>>>    auto-builder that polls every five minutes, even when there is no
+>>>    new commits to be fetched [*3*].
 >
-> Then you could also do a "git commit -a && gitup" to push your changes
-> to the server
-> As the integrator you could then integrate branches with
->     "git fetch origin && git merge origin/sbeller/2015-02-27T09:34:47-0800"
+> Maybe you can elaborate about how to handle states X, Y... in your
+> footnote 3. I just don't see how it's actually implemented. Or is it
+> optional feature that will be provided (via hooks, maybe) by admin? Do
+> we need to worry about load balancers? Is it meant to address the
+> excessive state transfer due to stateless nature of smart-http?
+
+The way I understand Junio here is to have predefined points which
+makes it easier to communicate. There are lots of clients and they usually
+want to catch up a different amount of commits, so we need to recompute it
+all the time. The idea is then to compute a small pack from the original point
+to one of these predefined points.
+So a conversion might look like:
+Client: My newest commit is dated 2014-11-17.
+Server: ok here is a pack from 2014-11-17 until 2014-12-01 and then
+I have prepared packs I sent out all the time of 2014-12 and 2015-01
+and 2015-02 and then there will be another custom pack for you describing
+changes of 2015-02-01 until now.
+
+Mind that I choose dates instead of arbitrary sha1 values as I feel
+that explains the
+point better, the packs in between are precomputed because many
+clients need them.
+
+Personally I don't buy that idea, because it produces a lot of question, like
+how large should these packs be? Depending on time or commit counts?
+
+The idea I'd rather favor (I am repeating myself from another post,
+but maybe a bit clearer now):
+
+    Client: The last time I asked for "refs/heads/*" and I got a refs
+        advertisement hashing to $SHA1
+    Server: Ok, here is the diff from that old ref advertisement to the
+        current refs advertisement.
+
+I realize that these two ideas are not contradicting each other, but
+could rather
+help each other as they are orthogonal to each other. One is about
+refs advertising
+while the other is about object transmission.
+
 >
-> So it is doable. Though I am not convinced of the workflow.
-
-This solution is not too bad, I thought, but there should be a way to
-remove those branches once I have integrated them. Otherwise the
-repository might get cluttered, and I found that those branches are
-particularly annoying when viewing a graphical representation of the
-commit graph.
-
-Deleting is possible, using 'git push origin :BRANCH'. But then, anyone
-with pushing capabilities could do this! I don't like the possibility of
-one team member messing up another's commit, be it on purpose or
-accidentally.
-
-In Gitlab, branches can be protected. For this to work, however, I would
-need fixed names. So I would assign one branch to each team member, make
-those branches (let's call them "personal branches" for now) protected,
-and then configure their systems (by shell aliases, scripts, ...) to the
-following:
-
-1. Try pushing to origin/master. If it works, fine. If not, goto 2.
-
-2. Push to the appropriate personal branch.
-
-This system does not prevent someone pushing to another's personal
-branch, thereby possibly making a fast-forward push impossible. So step
-number 2 may fail due to this, but this might be an acceptable risk.
-
-Thanks a lot for your thoughts.
-
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iQIcBAEBAgAGBQJU8vM+AAoJEEKWo+CJA9AY0gEQAI0DVW02+SmPQ820PGpZ1uIV
-6fLzmui/P487ulE7hCcl6wWIephs8yxuK5/oyYN/0WcRm4i3Lap54KYIo1lto9mb
-v75Mwf60TLtMlxsIEOlP3buWgfuVoU93uCK7CRJVgB/vlY+rpVlJpEcpV6/H9J6m
-Xeq/cVmOvE6FBDuz1X6BerC0zsTVOIXBmyps8z3HYE+9K/qnP8Th0nOr/Cu2Q73s
-FAnP7phpx44WWM5lscvfsqJEKTWlUba1Eq5qEFhS0kC6gIszhKIkFsMVvNKyrJCj
-Ec0DQEhWNj82GK5SJXmbEAFMBckli3bULz2T2C1HqVptcLi/tz+4zcjpnfJ3PTdb
-HkUnbpL6WVHggFOuMfqtmbGGtkFyb7Q7dOUkF95ZGqRxsQv6z75XG9P1zk6vDQeT
-elIuyGhXzNehC54em4eGVes3JP/pSCwZiKoa6/Zw1Ug758Jt3TokhyKHJ5p+8lQ0
-ynb91xttAvZtULNZQlHNCw+yYZ55bfHDJSOsMLVY8e2GiChOWFM20yj234kqqzO4
-dbQpcHPQKuyl2lL89kpvIgD5R/5rhryqwlr+at3Lf6KNBuEI6zV9LVm3GjY3RF7b
-1ib+1gzLQbivomCG/hVOTf5Xdodj9ViR9j4uNU1H6a6kO+PNBvcDKxLFjm3SzLkM
-HlynQ+ThKbgZNKPDrAsD
-=x423
------END PGP SIGNATURE-----
---=-=-=--
+>>> I'd like to see a new protocol that lets us overcome the above
+>>> limitations (did I miss others? I am sure people can help here)
+>>> sometime this year.
+>>
+>> Unfortunately, nobody seems to want to help us by responding to "did
+>> I miss others?" RFH, here are a few more from me.
+>
+> Heh.. I did think about it, but I didn't see anything worth mentioning..
+>
+>>  - The semantics of the side-bands are unclear.
+>>
+>>    - Is band #2 meant only for progress output (I think the current
+>>      protocol handlers assume that and unconditionally squelch it
+>>      under --quiet)?  Do we rather want a dedicated "progress" and
+>>      "error message" sidebands instead?
+>>
+>>    - Is band #2 meant for human consumption, or do we expect the
+>>      other end to interpret and act on it?  If the former, would it
+>>      make sense to send locale information from the client side and
+>>      ask the server side to produce its output with _("message")?
+>
+> No producing _(...) is a bad idea. First the client has to verify
+> placeholders and stuff, we can't just feed data from server straight
+> to printf(). Producing _() could complicate server code a lot. And I
+> don't like the idea of using client .po files to translate server
+> strings. There could be custom strings added by admin, which are not
+> available in client .po. String translation should happen at server
+> side.
+>
+> If we want error messages to be handled by machine as well, just add a
+> result code at the beginning, like ftp, http, ... do. Hmm.. this could
+> be the reason to separate progress and error messages.
+> --
+> Duy
