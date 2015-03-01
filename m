@@ -1,73 +1,77 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: does the git over ssh protocol tell the server the hostname?
-Date: Sat, 28 Feb 2015 16:41:37 -0800
-Message-ID: <CAJo=hJtgYp53UMXA0x32TRz2y7jynuE6b31fvuNWJ2FH=iMWuA@mail.gmail.com>
-References: <1424992494.4663.28.camel@scientia.net>
+From: William Di Luigi <williamdiluigi@gmail.com>
+Subject: [Feature request] Commit flag to "ignore" conflicting/unmerged changes
+Date: Sun, 1 Mar 2015 01:43:32 +0100
+Message-ID: <CAJNpUg5RdXBxSGiZoSVHNZK84VbztTARqRXy+v0y0_bSQZ4c4A@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>
-To: Christoph Anton Mitterer <calestyo@scientia.net>
-X-From: git-owner@vger.kernel.org Sun Mar 01 01:42:09 2015
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 01 01:44:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YRrxQ-0000tt-G6
-	for gcvg-git-2@plane.gmane.org; Sun, 01 Mar 2015 01:42:08 +0100
+	id 1YRrzD-0001IG-V4
+	for gcvg-git-2@plane.gmane.org; Sun, 01 Mar 2015 01:44:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752801AbbCAAl7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Feb 2015 19:41:59 -0500
-Received: from mail-yk0-f179.google.com ([209.85.160.179]:43612 "EHLO
-	mail-yk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752714AbbCAAl6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Feb 2015 19:41:58 -0500
-Received: by ykp9 with SMTP id 9so10411534ykp.10
-        for <git@vger.kernel.org>; Sat, 28 Feb 2015 16:41:57 -0800 (PST)
+	id S1752854AbbCAAnz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Feb 2015 19:43:55 -0500
+Received: from mail-lb0-f179.google.com ([209.85.217.179]:46251 "EHLO
+	mail-lb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752425AbbCAAny (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Feb 2015 19:43:54 -0500
+Received: by lbjf15 with SMTP id f15so23607516lbj.13
+        for <git@vger.kernel.org>; Sat, 28 Feb 2015 16:43:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spearce.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=EXESXf2LXu97IE3k/2TMfRsVvmybLnO/kqdESsKwsV0=;
-        b=XFkrTHi11aKZ5b2bm/9WfbzH5743d/RPZdaXomuuj75BwkkNlt3xMwjHB5cIxEcR61
-         Myssu+uLvHXEKb/spsJucuwwxHa/0tRsal+azGvfyspmRgx07+L7zayfKaSow9Asz29I
-         x1pH/RWMsXljqRoRTnXaYRquX6ssgD9hQRj9I=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=EXESXf2LXu97IE3k/2TMfRsVvmybLnO/kqdESsKwsV0=;
-        b=f+J9mrWVmItNduqT+HezVve+hMu2OQYZA3TfSSL7VPPyB42oU868EvPghM2IGrIwCo
-         z1+C6K3x5m4dB2N/Xqy15HirMLOWaCoKDuhuSKWXAo/2v7Q2J+QxqRE9OVL7LvwF/Zi+
-         PfpBZO0cE5zWlsWwfc03W+Eu3RASL0iNxPBYQKqsh4a/TigdmHpYcXZP+Yp943dehJLS
-         EUYt8eq7EpN4lOvVwAGkOyjU7SJ2B9wtvsc+S5+Hrp//KQg8i1UX/iwZ+OOSgbPKW4XS
-         S7wNEqtrfmRdJEzjjg02T0dEsMVjm52KuTGdxQwo956PyLJCeBHBA9xYOt9+stwBO+iw
-         PYrA==
-X-Gm-Message-State: ALoCoQnFvzye2bztlDttsIZhGEslR5HrbTitASW4qUwWPRoNmPZZhZy2/jnELCJx5oTg39CevRuz
-X-Received: by 10.170.136.19 with SMTP id d19mr21162404ykc.2.1425170517780;
- Sat, 28 Feb 2015 16:41:57 -0800 (PST)
-Received: by 10.170.39.19 with HTTP; Sat, 28 Feb 2015 16:41:37 -0800 (PST)
-In-Reply-To: <1424992494.4663.28.camel@scientia.net>
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=wPZcjn0dPW2AoIzaGVGUnKD9k6kdgHa0xlKyD+Oz/5w=;
+        b=zWhhX+RghXwHqaOPX9SrlafPB1PRiGvB3vsivh6f568Q+nUmwlmjMzCezQuSVw48+S
+         M74ZciUSpBM1UWoPbwpflk0kd1gsGMO2b821IQHWUgocdfKoqv+n0aZZGIcOXFUCpSNn
+         tC6qrTF8RjZPPga7DTeMslRq2BjCV+QdpQdK/l3FU1nBP/KkswTuRG7jMXpxG51Qec80
+         MpayoTPItRqnRxqgcIB58FzW7fXkUGxxKo7zodspje4Pz61jT3WgXhEW4QZV1cX1yu2J
+         j/RA3YvEcK4i+U1vvcguz4OPEoj2Heg8jNjQf0k3PzeL1VxhYX+8d55yL1CQ3Sp/E8l/
+         ZUFQ==
+X-Received: by 10.152.10.98 with SMTP id h2mr18660778lab.18.1425170633128;
+ Sat, 28 Feb 2015 16:43:53 -0800 (PST)
+Received: by 10.112.136.196 with HTTP; Sat, 28 Feb 2015 16:43:32 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264543>
 
-On Thu, Feb 26, 2015 at 3:14 PM, Christoph Anton Mitterer
-<calestyo@scientia.net> wrote:
->
-> I saw that when plain git (i.e. git://) is used, the client tells the
-> server the hostname specified on the client side.
-> For http one has the same automatically via http's Host: header.
->
-> But after watching the git's over-ssh protocol, I couldn't find anything
-> like that there? :-(
+Hi, the scenario is as follows: I'm working on a repo where only
+"rebase" is used and never "merge" (which can arguably be a bad
+thing). Anyway, I worked on a separate branch for some time and now I
+need to integrate all the changes introduces by "master" (and prepare
+some "fixup" commits that will be used when the branch will be finally
+rebased).
 
-No, it does not send the host name.
+So I call `git merge --squash --no-commit master` and some conflicts
+come out. Suppose that I now have 100 files automatically merged and
+staged by git, and 10 files which are conflicting ("both modified")
+and I'll need to fix by hand.
 
-The host name in SSH that Git sees could be an alias in the user's
-~/.ssh/config file that is rewritten to a different host. So virtual
-hosting keying off that could be confusing since the end user expects
-to have more control over it than they do with git:// or https://
-where the host name is usually a DNS record the user does not control.
+The point is: I would like to commit *all* the changes that git
+successfully merged (*including* partial changes inside conflicting
+files). After that, I will start to work on the conflicts (which will
+be resolved with several "fixup" commits).
+
+For the moment, the only (quite tedious) way I've found to do it is this:
+1. `git reset HEAD` for each of the 10 conflicting files
+2. `git add -p` and select only the non-conflicted hunks
+3. `git commit` let's call this commit "temp"
+
+Then, I can finally work with *just* the conflicts. When I will rebase
+on master, I will simply discard the "temp" commit and I will apply
+every fixup that piled up.
+
+The feature I'm requesting is something like a flag that allows `git
+commit` to work anyway by "ignoring" unmerged hunks (which can then be
+downgraded to unstaged changes).
+
+What do you think?
+
+Regards,
+William
