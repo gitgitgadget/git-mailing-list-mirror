@@ -1,83 +1,100 @@
-From: Trevor Saunders <tbsaunde@tbsaunde.org>
-Subject: Re: feature request: excluding files/paths from "git grep"
-Date: Sun, 1 Mar 2015 08:03:08 -0500
-Message-ID: <20150301130142.GA24782@tsaunders-iceball.corp.tor1.mozilla.com>
-References: <54EDBEC2.8090107@peralex.com>
- <CACsJy8AM=W4f6u_7YpvmfiBwrJjqfJMJoq6CQYfKOh+qD6rF3Q@mail.gmail.com>
- <20150225143116.GA13567@peff.net>
- <xmqqk2z5on72.fsf@gitster.dls.corp.google.com>
- <20150225185128.GA16569@peff.net>
- <xmqqbnkholx9.fsf@gitster.dls.corp.google.com>
- <20150225191108.GA17467@peff.net>
- <20150227100441.GA11861@tsaunders-iceball.corp.tor1.mozilla.com>
- <xmqqvbilh0wn.fsf@gitster.dls.corp.google.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH v2] diff --shortstat --dirstat: remove duplicate output
+Date: Sun, 01 Mar 2015 15:23:37 +0100
+Message-ID: <54F320E9.1000006@drmicha.warpmail.net>
+References: <xmqqegp9gyof.fsf@gitster.dls.corp.google.com> <1425195546-15637-1-git-send-email-marten.kongstad@gmail.com> <54F2E931.7020200@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>,
-	Noel Grandin <noel@peralex.com>, git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 01 14:03:36 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: gitster@pobox.com, johan@herland.net
+To: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
+	=?UTF-8?B?TcOlcnRlbiBLb25nc3RhZA==?= <marten.kongstad@gmail.com>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 01 15:23:45 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YS3Wx-0001hH-OX
-	for gcvg-git-2@plane.gmane.org; Sun, 01 Mar 2015 14:03:36 +0100
+	id 1YS4mX-0002Df-4w
+	for gcvg-git-2@plane.gmane.org; Sun, 01 Mar 2015 15:23:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752289AbbCANDb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Mar 2015 08:03:31 -0500
-Received: from tbsaunde.org ([66.228.47.254]:54670 "EHLO
-	paperclip.tbsaunde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751394AbbCANDa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Mar 2015 08:03:30 -0500
-Received: from tsaunders-iceball.corp.tor1.mozilla.com (174.141.12.210.nw.nuvox.net [174.141.12.210])
-	by paperclip.tbsaunde.org (Postfix) with ESMTPSA id 36B04C0B1;
-	Sun,  1 Mar 2015 13:03:29 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <xmqqvbilh0wn.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1751985AbbCAOXk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 1 Mar 2015 09:23:40 -0500
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:54545 "EHLO
+	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751048AbbCAOXj (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 1 Mar 2015 09:23:39 -0500
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.nyi.internal (Postfix) with ESMTP id 3ABB820697
+	for <git@vger.kernel.org>; Sun,  1 Mar 2015 09:23:38 -0500 (EST)
+Received: from frontend2 ([10.202.2.161])
+  by compute1.internal (MEProxy); Sun, 01 Mar 2015 09:23:39 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=x-sasl-enc:message-id:date:from
+	:mime-version:to:cc:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=KoPCp3TXzpOX9I5yjW5Aqk
+	0Pcec=; b=Zcae1aMBnAy8grmGqzETclWiz2pbU35PZsAzYRFuhasAOhYqEzURUe
+	f56l9hxn84QbBruEPiT/Y68UUidcle5BLxQ19T0mFwBclIO5VgvLZ6XEfurniniQ
+	dzFZ9w4aUO8nNrprmBIau63YariB/jJ3eQRZOJCmWO5qQAb6+ciGY=
+X-Sasl-enc: XMMLJ9RCDlewpxqnwbMk/syTWIfje3D4s3HIJHyo2x7S 1425219818
+Received: from localhost.localdomain (unknown [88.71.98.191])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 382506800A1;
+	Sun,  1 Mar 2015 09:23:38 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
+In-Reply-To: <54F2E931.7020200@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264558>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264559>
 
-On Sat, Feb 28, 2015 at 07:06:16PM -0800, Junio C Hamano wrote:
-> Trevor Saunders <tbsaunde@tbsaunde.org> writes:
-> 
-> >  There have been cases where I wanted grep to always ignore certain
-> >  files, but to still get text diffs for those files.  One case is people
-> >  insist on using ChangeLog files, and another is people who commit
-> >  generated files of one sort or another.
-> 
-> The attributes are to say "the contents to be stored in this file is
-> of this nature".  Something inherent to the type of the contents,
-> and that is why there is no way to countermand them from the command
-> line.
-> 
-> The "nature of the content" may be "result of comparing two versions
-> of them textually will never make sense to humans", or "result of
-> finding substrings in them will never make sense to humans", which
-> are what "-diff" and hypothetical "-grep" mean, respectively.
-> 
-> "It is inconvenient that I see hits in ChangeLog files when I look
-> for string BUG" does not make ChangeLog inherently "result of
-> finding substrings in it never makes sense to humans"-kind of file
-> type.  Maybe somebody who is playing a role of a coder right now may
-> not look at existing ChangeLog entries, but when that same person
-> plays the role of a release manager next day, running grep on older
-> ChangeLog files may become necessary to find changes related to
-> recent changes.  For these "per-invocation" differences, attributes
-> to declare permenent/inherent nature of the contents is much less
-> suited than per-invocation inclusion/exclusion mechanism based on
-> pathspecs, I would think.
+Torsten B=C3=B6gershausen venit, vidit, dixit 01.03.2015 11:25:
+> On 2015-03-01 08.39, M=C3=A5rten Kongstad wrote:
+> []
+>  index ed7e093..128f7bf 100755
+>> --- a/t/t4047-diff-dirstat.sh
+>> +++ b/t/t4047-diff-dirstat.sh
+>> @@ -973,4 +973,15 @@ test_expect_success 'diff.dirstat=3Dfuture_para=
+m,0,lines should warn, but still wo
+>>  	test_i18ngrep -q "diff\\.dirstat" actual_error
+>>  '
+>> =20
+>> +test_expect_success '--shortstat --dirstat should output only one d=
+irstat' '
+>> +	git diff --shortstat --dirstat=3Dchanges HEAD^..HEAD >actual_diff_=
+shortstat_dirstat_changes &&
+>> +	test $(grep -c " dst/copy/changed/$" actual_diff_shortstat_dirstat=
+_changes) =3D 1 &&
+> How portable is the "grep -c" usage ?
+> (I don't now it either, do we have other opinions ?), but the followi=
+ng seems to be more "Git-style":
+>=20
+> test_expect_success '--shortstat --dirstat should output only one dir=
+stat' '
+> 	git diff --shortstat --dirstat=3Dchanges HEAD^..HEAD >actual_diff_sh=
+ortstat_dirstat_changes &&
+> 	grep " dst/copy/changed/$" actual_diff_shortstat_dirstat_changes >ac=
+tual &&
+> 	test_line_count =3D 1 actual
+>=20
 
-I think that makes some amount of sense, however typing stuff like
---exclude=ChangeLog all the time is not terribly easy on the hands.
-Would it make sense to instead add a config variable grep.exclude?
+If I would have had to guess from the documentation: What does "git dif=
+f
+--dirstat --shortstat" do? I would have answered: It displays both the
+dirstat and the shortstat.
 
-Trev
+So, is what you are trying to "fix" a peculiarity of
+"--dirstat=3Dchanges", or do you simplify prefer --dirstat and --shorts=
+tat
+to override each other?
 
-> 
-> 
+Maybe I'm overlooking something (and that's not a rhetorical
+conditional), but if you specify both options when you want the output
+of only one them, the answer would be the obvious one, not a patch,
+wouldn't it?
+
+If there is indeed a good reason to change the behavior it should be
+documented.
+
+Michael
