@@ -1,9 +1,9 @@
 From: Paul Mackerras <paulus@samba.org>
-Subject: Re: [PATCH v4 2/2] gitk: synchronize config write
-Date: Mon, 2 Mar 2015 11:10:51 +1100
-Message-ID: <20150302001050.GC24862@iris.ozlabs.ibm.com>
+Subject: Re: [PATCH v4 1/2] gitk: write only changed configuration variables
+Date: Mon, 2 Mar 2015 10:47:30 +1100
+Message-ID: <20150301234729.GB24862@iris.ozlabs.ibm.com>
 References: <1415571602-5858-1-git-send-email-max@max630.net>
- <1415571602-5858-3-git-send-email-max@max630.net>
+ <1415571602-5858-2-git-send-email-max@max630.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
@@ -14,101 +14,62 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YSEIu-0007Ay-IB
+	id 1YSEIt-0007Ay-V0
 	for gcvg-git-2@plane.gmane.org; Mon, 02 Mar 2015 01:33:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753289AbbCBAdo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Mar 2015 19:33:44 -0500
-Received: from ozlabs.org ([103.22.144.67]:56651 "EHLO ozlabs.org"
+	id S1753273AbbCBAdm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Mar 2015 19:33:42 -0500
+Received: from ozlabs.org ([103.22.144.67]:46561 "EHLO ozlabs.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753248AbbCBAdm (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1753232AbbCBAdm (ORCPT <rfc822;git@vger.kernel.org>);
 	Sun, 1 Mar 2015 19:33:42 -0500
 Received: by ozlabs.org (Postfix, from userid 1003)
-	id 0E03B1400A0; Mon,  2 Mar 2015 11:33:40 +1100 (AEDT)
+	id 9E4A214010F; Mon,  2 Mar 2015 11:33:40 +1100 (AEDT)
 Content-Disposition: inline
-In-Reply-To: <1415571602-5858-3-git-send-email-max@max630.net>
+In-Reply-To: <1415571602-5858-2-git-send-email-max@max630.net>
 User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264569>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264570>
 
-On Mon, Nov 10, 2014 at 12:20:02AM +0200, Max Kirillov wrote:
-> If several gitk instances are closed simultaneously, safestuff procedure
-> can run at the same time, resulting in a conflict which may cause losing
-> of some of the instance's changes, failing the saving operation or even
-> corrupting the configuration file. This can happen, for example, at user
-> session closing, or at group closing of all instances of an application
-> which is possible in some desktop environments.
+On Mon, Nov 10, 2014 at 12:20:01AM +0200, Max Kirillov wrote:
+> When gitk contains some changed parameter, and there is existing
+> instance of gitk where the parameter is still old, it is reverted to
+> that old value when the instance exits.
 > 
-> To avoid this, make sure that only one saving operation is in progress.
-> It is guarded by existance of $config_file_tmp file. Both creating the
-> file and moving it to $config_file are atomic operations, so it should
-> be reliable.
+> Instead, store a parameter in config only it is has been modified in the
+> exiting instance. Otherwise, preserve the value which currently is in
+> file.  This allows editing the configuration when several instances are
+> running, and don't get rollback of the modification if some other
+> instance where the configuration was not edited is closed last.
 > 
-> Reading does not need to be syncronized, because moving is atomic
-> operation, and the $config_file always refers to full and correct file.
-> But, if there is a stale $config_file_tmp file, report it at gitk start.
-> If such file is detected at saving, just abort the saving, because this
-> is how gitk used to handle errors while saving.
+> For scalar variables, use trace(3tcl) to detect their change. Since `trace` can
+> send bogus events, doublecheck if the value has really been changed, but once
+> it is marked as changed, do not reset it back to unchanged ever, because if
+> user has restored the original value, it's the decision which should be stored
+> as well as modified value.
+> 
+> Treat view list especially: instead of rewriting the whole list, merge
+> individual views. Place old and updated views at their older placed, add
+> new ones to the end of list. Collect modified view explicitly, in newviewok{}
+> and delview{}.
+> 
+> Do not merge geometry values. They are almost always changing because
+> user moves and resises windows, and there is no way to find which one of
+> the geometries is most desired. Just overwrite them unconditionally,
+> like earlier.
 > 
 > Signed-off-by: Max Kirillov <max@max630.net>
 
-The idea looks good; I have a couple of comments on the patch.  First,
-50 tries over 5 seconds seems a bit excessive to me, wouldn't (say) 20
-tries be enough?  Is the 50 the result of some analysis?
+Looks pretty nice; I just have one comment:
 
-> +	    error_popup "Probably there is stale $config_file_tmp file; config saving is going to fail. Check if it is being used by any existing gitk process and remove it otherwise"
+> +		lappend views_modified_names $current_viewname($v)
 
-I would word this as "There appears to be a stale $config_file_tmp
-file, which will prevent gitk from saving its configuration on exit.
-Please remove it if it is not being used by any existing gitk
-process."
+This view_modified_names variable doesn't seem to be used anywhere.
+If you don't mind me taking out this line, I'll do that and apply the
+patch.
 
-> @@ -2811,11 +2824,16 @@ proc savestuff {w} {
->  
->      if {$stuffsaved} return
->      if {![winfo viewable .]} return
-> +    set remove_tmp 0
->      catch {
-> -	if {[file exists $config_file_tmp]} {
-> -	    file delete -force $config_file_tmp
-> +	set try_count 0
-> +	while {[catch {set f [open $config_file_tmp {WRONLY CREAT EXCL}]}]} {
-> +	    if {[incr try_count] > 50} {
-> +		error "Unable to write config file: $config_file_tmp exists"
-> +	    }
-> +	    after 100
->  	}
-> -	set f [open $config_file_tmp w]
-> +	set remove_tmp 1
->  	if {$::tcl_platform(platform) eq {windows}} {
->  	    file attributes $config_file_tmp -hidden true
->  	}
-> @@ -2878,6 +2896,14 @@ proc savestuff {w} {
->  	puts $f "}"
->  	close $f
->  	file rename -force $config_file_tmp $config_file
-> +	set remove_tmp 0
-> +	return ""
-> +    } err
-> +    if {$err ne ""} {
-> +	puts "Error saving config: $err"
-
-I would suggest checking the return from the catch statement, like
-this:
-
-	if {[catch {
-	    ...
-	    file rename -force $config_file_tmp $config_file
-	} err]} {
-	    puts "Error saving config: $err"
-	    if {$remove_tmp} {
-		file delete -force $config_file_tmp
-	    }
-	}
-
-rather than doing a return inside the catch.
-
+Regards,
 Paul.
