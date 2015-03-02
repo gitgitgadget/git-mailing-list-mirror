@@ -1,101 +1,125 @@
-From: Francis Moreau <francis.moro@gmail.com>
-Subject: Re: [PATCH] git-remote.txt: describe behavior without --tags and
- --no-tags
-Date: Mon, 02 Mar 2015 15:56:17 +0100
-Message-ID: <54F47A11.9090701@gmail.com>
-References: <54F431E8.3050009@gmail.com> <932c9cd452718ad5e88677fc90985ef7fafd5078.1425301543.git.git@drmicha.warpmail.net> <54F46758.4070207@gmail.com> <54F47841.6060009@drmicha.warpmail.net>
+From: =?UTF-8?q?M=C3=A5rten=20Kongstad?= <marten.kongstad@gmail.com>
+Subject: [PATCH v3] diff --shortstat --dirstat: remove duplicate output
+Date: Mon,  2 Mar 2015 16:05:39 +0100
+Message-ID: <1425308739-13082-1-git-send-email-marten.kongstad@gmail.com>
+References: <20150302020009.Horde.9sATpKnsrWQkGadaRTvxkA3@webmail.informatik.kit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-To: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 02 15:56:37 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: szeder@ira.uka.de, tboegi@web.de, gitster@pobox.com,
+	johan@herland.net, marten.kongstad@gmail.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 02 16:06:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YSRls-000636-Kc
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Mar 2015 15:56:36 +0100
+	id 1YSRv8-0001XS-18
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Mar 2015 16:06:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754881AbbCBO4Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Mar 2015 09:56:25 -0500
-Received: from mail-wg0-f42.google.com ([74.125.82.42]:42933 "EHLO
-	mail-wg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754755AbbCBO4X (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Mar 2015 09:56:23 -0500
-Received: by wghl2 with SMTP id l2so33967085wgh.9
-        for <git@vger.kernel.org>; Mon, 02 Mar 2015 06:56:21 -0800 (PST)
+	id S1755022AbbCBPGE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Mar 2015 10:06:04 -0500
+Received: from mail-la0-f45.google.com ([209.85.215.45]:43372 "EHLO
+	mail-la0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754618AbbCBPGD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Mar 2015 10:06:03 -0500
+Received: by labgf13 with SMTP id gf13so6288854lab.10
+        for <git@vger.kernel.org>; Mon, 02 Mar 2015 07:06:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=YWmTBebAp8e+AjEgM8XIje0adFtt1hXfl8sttX1QlhA=;
-        b=uqnVPKBDURwI9ukCvGtIgz3MTFy4vYq7LfeohWd8VvGWwopOHOIAutTX/wL9Xv+vsH
-         TjkrFjUewpK3PX99iYVsmVwqWUmZpy3A5thw8Pj3OqVe+rCETmoRnJF04+vh6S4EW6zd
-         FWwuOnZzL7WeZBnMpzqWduHv3/WiUOhJv4fs8H264WBgI6yKOhMMvkxnTSmc4JoYS/Sb
-         uHy+a1DNr8pbSbW/AlW5/yExzinjTf9lX1EC6fShZtF67lK453TuomaygyAX73lCpSx2
-         ODX/2Jl1xVf1cxRsaIFdFWh7ePCp+L6TkDI5JOuNXzgky0+Ely36rflBNUKwzGfZByCK
-         Eeiw==
-X-Received: by 10.194.61.100 with SMTP id o4mr60084418wjr.28.1425308180401;
-        Mon, 02 Mar 2015 06:56:20 -0800 (PST)
-Received: from [192.168.0.17] (gem13-1-78-228-1-221.fbx.proxad.net. [78.228.1.221])
-        by mx.google.com with ESMTPSA id gf11sm1257264wic.18.2015.03.02.06.56.18
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 02 Mar 2015 06:56:18 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
-In-Reply-To: <54F47841.6060009@drmicha.warpmail.net>
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=TT+IUry3o+QWundJ9+sJFYGMbexvHxnzz1FBjyZFK2A=;
+        b=O2CSEIKfnYjsvdVSfCt84trbZfv+L4DYNl3EkgKyJxA6L952B3ejhTcj9OE/YzxuIA
+         PG/ICtzP0WO7VAAZMRtFpFTtj9wCzGtjxtefHi3FYEOUc5ohQotUpbtUp4y7M+n08iHA
+         +xljiziqhwG5ALBTmGGyUsngpC+x1gN7X/SnrWezbpjo4bPo8CDe5UJUGSzTvJFYtH4O
+         dYhyLSFMbvnykP1fkz4ZRNs/UtoK1TcAAclR5IKP+sQkHJHxIYtlIt6NRLmRkhDWhySh
+         XKI6Z2OiuNhgvfImjkIHdlpQU+64nj1+YBobGrYleVyB5iVCaAr0/hWfiw1rZo9x9WIm
+         uOzw==
+X-Received: by 10.112.162.167 with SMTP id yb7mr23969698lbb.76.1425308761173;
+        Mon, 02 Mar 2015 07:06:01 -0800 (PST)
+Received: from localhost.localdomain ([95.109.106.222])
+        by mx.google.com with ESMTPSA id rn9sm2592279lbb.23.2015.03.02.07.06.00
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 02 Mar 2015 07:06:00 -0800 (PST)
+X-Mailer: git-send-email 1.9.1
+In-Reply-To: <20150302020009.Horde.9sATpKnsrWQkGadaRTvxkA3@webmail.informatik.kit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264600>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264601>
 
-On 03/02/2015 03:48 PM, Michael J Gruber wrote:
-> Francis Moreau venit, vidit, dixit 02.03.2015 14:36:
->> Hi,
->>
->> On 03/02/2015 02:08 PM, Michael J Gruber wrote:
->>> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
->>> ---
->>>  Documentation/git-remote.txt | 5 ++++-
->>>  1 file changed, 4 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.txt
->>> index a77607b..f3f6f0d 100644
->>> --- a/Documentation/git-remote.txt
->>> +++ b/Documentation/git-remote.txt
->>> @@ -56,7 +56,10 @@ With `--tags` option, `git fetch <name>` imports every tag from the
->>>  remote repository.
->>>  +
->>>  With `--no-tags` option, `git fetch <name>` does not import tags from
->>>  the remote repository.
->>> ++
->>> +By default, only tags on fetched branches are imported
->>> +(see linkgit:git-fetch[1]).
->>>  +
->>
->> So the default is neither --no-tags nor --tags ?
->>
->> Thanks.
->>
-> 
-> By default, only tags on fetched branches are imported. That is: When
-> the fetch is done, all tags are imported that point to commits that are
-> reachable from refs that you are fetching, in short: "tags on fetched
-> branches". That is in between "none" (--no-tags) and "all" (--tags).
-> 
+When --shortstat is used in conjunction with --dirstat=3Dchanges, git d=
+iff will
+output the dirstat information twice: first as calculated by the 'lines=
+'
+algorithm, then as calculated by the 'changes' algorithm:
 
-just my 2 cents, I would find easier to read it like this:
+    $ git diff --dirstat=3Dchanges,10 --shortstat v2.2.0..v2.2.1
+     23 files changed, 453 insertions(+), 54 deletions(-)
+      33.5% Documentation/RelNotes/
+      26.2% t/
+      46.6% Documentation/RelNotes/
+      16.6% t/
 
------
-By default, only tags on fetched branches are imported. This can be
-changed by the --tags and --no-tags options.
+The same duplication happens for --shortstat together with --dirstat=3D=
+files, but
+not for --shortstat together with --dirstat=3Dlines.
 
-With `--tags` option, `git fetch <name>` imports every tag from the
-remote repository (including not reachable tags from fetched refs).
+Limit output to only include one dirstat part, calculated as specified
+by the --dirstat parameter. Also, add test for this.
 
-With `--no-tags` option, `git fetch <name>` does not import tags from
-the remote repository.
------
+Signed-off-by: M=C3=A5rten Kongstad <marten.kongstad@gmail.com>
+---
+v3: change how tests count (part of) the dirstat number of lines: inste=
+ad of
+'grep -c', use 'grep >filename && test_line_count'. Thanks to Torsten
+B=C3=B6gershausen and SZEDER G=C3=A1bor for pointing out how to improve=
+ the tests.
 
-Thanks.
+ diff.c                  |  2 +-
+ t/t4047-diff-dirstat.sh | 11 +++++++++++
+ 2 files changed, 12 insertions(+), 1 deletion(-)
+
+diff --git a/diff.c b/diff.c
+index d1bd534..abc32c8 100644
+--- a/diff.c
++++ b/diff.c
+@@ -4541,7 +4541,7 @@ void diff_flush(struct diff_options *options)
+ 			show_stats(&diffstat, options);
+ 		if (output_format & DIFF_FORMAT_SHORTSTAT)
+ 			show_shortstats(&diffstat, options);
+-		if (output_format & DIFF_FORMAT_DIRSTAT)
++		if (output_format & DIFF_FORMAT_DIRSTAT && dirstat_by_line)
+ 			show_dirstat_by_line(&diffstat, options);
+ 		free_diffstat_info(&diffstat);
+ 		separator++;
+diff --git a/t/t4047-diff-dirstat.sh b/t/t4047-diff-dirstat.sh
+index ed7e093..065d74f 100755
+--- a/t/t4047-diff-dirstat.sh
++++ b/t/t4047-diff-dirstat.sh
+@@ -973,4 +973,15 @@ test_expect_success 'diff.dirstat=3Dfuture_param,0=
+,lines should warn, but still wo
+ 	test_i18ngrep -q "diff\\.dirstat" actual_error
+ '
+=20
++test_expect_success '--shortstat --dirstat should output only one dirs=
+tat' '
++	git diff --shortstat --dirstat=3Dchanges HEAD^..HEAD | grep " dst/cop=
+y/changed/$" >actual_diff_shortstat_dirstat_changes &&
++	test_line_count =3D 1 actual_diff_shortstat_dirstat_changes &&
++
++	git diff --shortstat --dirstat=3Dlines HEAD^..HEAD | grep " dst/copy/=
+changed/$" >actual_diff_shortstat_dirstat_lines &&
++	test_line_count =3D 1 actual_diff_shortstat_dirstat_lines &&
++
++	git diff --shortstat --dirstat=3Dfiles HEAD^..HEAD | grep " dst/copy/=
+changed/$" >actual_diff_shortstat_dirstat_files &&
++	test_line_count =3D 1 actual_diff_shortstat_dirstat_files
++'
++
+ test_done
+--=20
+1.9.1
