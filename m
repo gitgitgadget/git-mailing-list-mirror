@@ -1,132 +1,86 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: Git Scaling: What factors most affect Git performance for a large repo?
-Date: Mon, 2 Mar 2015 20:42:30 +0100
-Message-ID: <CACBZZX4rjYoQZRkzrfBYp8jOFwGm64Eh2-6JpJJ=KMFNxCOkbg@mail.gmail.com>
-References: <CAH8BJxEr_v+aitpZduXPC4oiRhMuySpc7Wb1aGcYe_p3mWjn+w@mail.gmail.com>
- <CACBZZX6A+35wGBYAYj7E9d4XwLby21TLbTh-zRX+fkSt_e2zeg@mail.gmail.com>
- <CACsJy8DkS65axQNY70FrfqR5s-49oOn8j7SAE9BTiRVNrm+ohQ@mail.gmail.com>
- <CACBZZX4T38j9YU3eiHTfkDoZKsgyJFrnJQNm5WBmb9RDenDOBg@mail.gmail.com>
- <CACBZZX45eCo6YS4EpHvMQjN32+-w5BztfoLiwh_rJTs7FydgoQ@mail.gmail.com> <54EC7241.7000500@alum.mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] t5516-fetch-push: Correct misspelled pushInsteadOf
+Date: Mon, 02 Mar 2015 11:43:03 -0800
+Message-ID: <xmqq385nb2yg.fsf@gitster.dls.corp.google.com>
+References: <alpine.DEB.2.10.1502282316150.7008@buzzword-bingo.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Stephen Morton <stephen.c.morton@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon Mar 02 20:43:13 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Anders Kaseorg <andersk@mit.edu>
+X-From: git-owner@vger.kernel.org Mon Mar 02 20:43:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YSWFD-00029O-PH
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Mar 2015 20:43:12 +0100
+	id 1YSWFI-0002Bs-Gd
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Mar 2015 20:43:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754550AbbCBTmw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Mar 2015 14:42:52 -0500
-Received: from mail-ob0-f179.google.com ([209.85.214.179]:54657 "EHLO
-	mail-ob0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754159AbbCBTmv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 Mar 2015 14:42:51 -0500
-Received: by mail-ob0-f179.google.com with SMTP id wp4so33610477obc.10
-        for <git@vger.kernel.org>; Mon, 02 Mar 2015 11:42:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=8qwH06KonT7IrmEJ6ASFdQ6ccxeHnrRKysw2bEbmnYY=;
-        b=tY1rwgX1O5QzWf/9KanMyo3HNeZv7Go8mw0KGxUIzNVjws6B8jUEY+eg6YNIEoKwm7
-         7o5o3Cvz8s9lhIsGzpDdDiDS142+enmtFT/N1a8k4e0G4zKeq5J+pBrgESnUpkG/DRVs
-         JaXN8AgtJQFLCooP+0uIzqX4NuDt6sdnDKT12C4allxB5PWZgTf17SdAFeq1E9+mv7Hk
-         anMKLXhiY8yWdf67WOajRB2emWP8wYN9E1cvFfdpv2jdO+HemjLFSobEvl8EY9jK2WlC
-         IJP/bW3su27Lv/wYZiez9eP/xk9S3mwSkwaRicukOu5gKioRDgK23W2VHu/JTFrQwuob
-         d4bg==
-X-Received: by 10.202.58.8 with SMTP id h8mr19541402oia.93.1425325370782; Mon,
- 02 Mar 2015 11:42:50 -0800 (PST)
-Received: by 10.76.82.1 with HTTP; Mon, 2 Mar 2015 11:42:30 -0800 (PST)
-In-Reply-To: <54EC7241.7000500@alum.mit.edu>
+	id S1755366AbbCBTnL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Mar 2015 14:43:11 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:63565 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754320AbbCBTnH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Mar 2015 14:43:07 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id BEF223BEF6;
+	Mon,  2 Mar 2015 14:43:06 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=SYdXuCjRmD+9oilHEtp5qrYAyDg=; b=rGw/k1
+	nwuA8VVF6C4X8okA2TRBqrJ8XaDkF4Ao5zO2x8j3u2OioUJ/b5ZNFuBh3DR7qJQN
+	TPowyAvGwCiAQ+Mqwn0knmt0LplY8fbMfZJqRyLflb/JSKm2g2+PGerGO+KtNVjj
+	XWe+sMGGxaS1MM4jsDBnoNgIrYV6BJEDhbBF4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=v/x+pnPpXYAnUb5x48URvf29q5rAiPlL
+	9STF/83oRC5JC3ZZkXdEt8VqNUS07oFmQKeIbsvlgCW+XbzdsPa/xjQMAWFlk2vb
+	wKDnYH1EwLju6EDT1MRrAIub+kzKngDRx+kuYhpZ/FuKOTiJ+64H3nmXpm4ELDdn
+	4PK/OfR0OmM=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B6AB53BEF5;
+	Mon,  2 Mar 2015 14:43:06 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 06D7E3BEF4;
+	Mon,  2 Mar 2015 14:43:04 -0500 (EST)
+In-Reply-To: <alpine.DEB.2.10.1502282316150.7008@buzzword-bingo.mit.edu>
+	(Anders Kaseorg's message of "Sat, 28 Feb 2015 23:18:14 -0500 (EST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 582817FC-C114-11E4-936D-29999F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264612>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264613>
 
-On Tue, Feb 24, 2015 at 1:44 PM, Michael Haggerty <mhagger@alum.mit.edu=
-> wrote:
-> On 02/20/2015 03:25 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> On Fri, Feb 20, 2015 at 1:09 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarma=
-son
->> <avarab@gmail.com> wrote:
->>> On Fri, Feb 20, 2015 at 1:04 AM, Duy Nguyen <pclouds@gmail.com> wro=
-te:
->>>> On Fri, Feb 20, 2015 at 6:29 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjar=
-mason
->>>> <avarab@gmail.com> wrote:
->>>>> Anecdotally I work on a repo at work (where I'm mostly "the Git g=
-uy") that's:
->>>>>
->>>>>  * Around 500k commits
->>>>>  * Around 100k tags
->>>>>  * Around 5k branches
->>>>>  * Around 500 commits/day, almost entirely to the same branch
->>>>>  * 1.5 GB .git checkout.
->>>>>  * Mostly text source, but some binaries (we're trying to cut dow=
-n[1] on those)
->>>>
->>>> Would be nice if you could make an anonymized version of this repo
->>>> public. Working on a "real" large repo is better than an artificia=
-l
->>>> one.
->>>
->>> Yeah, I'll try to do that.
->>
->> tl;dr: After some more testing it turns out the performance issues w=
-e
->> have are almost entirely due to the number of refs. Some of these I
->> knew about and were obvious (e..g. git pull), but some aren't so
->> obvious (why does "git log" without "--all" slow down as a function =
-of
->> the overall number of refs?).
+Anders Kaseorg <andersk@mit.edu> writes:
+
+> Signed-off-by: Anders Kaseorg <andersk@mit.edu>
+> ---
+>  t/t5516-fetch-push.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> I'm assuming that you pack your references periodically. (If not, you
-> should, because reading lots of loose references is very expensive fo=
-r
-> the commands that need to iterate over all references!)
+> diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+> index 85c7fec..594d7a6 100755
+> --- a/t/t5516-fetch-push.sh
+> +++ b/t/t5516-fetch-push.sh
+> @@ -238,7 +238,7 @@ test_expect_success 'push with pushInsteadOf' '
+>  test_expect_success 'push with pushInsteadOf and explicit pushurl (pushInsteadOf should not rewrite)' '
+>  	mk_empty testrepo &&
+>  	test_config "url.trash2/.pushInsteadOf" testrepo/ &&
+> -	test_config "url.trash3/.pusnInsteadOf" trash/wrong &&
+> +	test_config "url.trash3/.pushInsteadOf" trash/wrong &&
+>  	test_config remote.r.url trash/wrong &&
+>  	test_config remote.r.pushurl "testrepo/" &&
+>  	git push r refs/heads/master:refs/remotes/origin/master &&
 
-Yes, as mentioned in another reply of mine, like this:
+Interesting.
 
-    git --git-dir=3D{} gc &&
-    git --git-dir=3D{} pack-refs --all --prune &&
-    git --git-dir=3D{} repack -Ad --window=3D250 --depth=3D100
---write-bitmap-index --pack-kept-objects &&
-
-> On the other hand, packed refs also have a downside, namely that
-> whenever even a single packed reference has to be read, the whole
-> packed-refs file has to be read and parsed. One way that this can bit=
-e
-> you, even with innocuous-seeming commands, is if you haven't disabled
-> the use of replace references (i.e., using "git --no-replace-objects
-> <CMD>" or GIT_NO_REPLACE_OBJECTS). In that case, almost any Git comma=
-nd
-> has to read the "refs/replace/*" namespace, which, in turn, forces th=
-e
-> whole packed-refs file to be read and parsed. This can take a
-> significant amount of time if you have a very large number of referen=
-ces.
-
-Interesting. I tried the rough benchmarks I posted above with
-GIT_NO_REPLACE_OBJECTS=3D1 and couldn't see any differences, although a=
-s
-mentioned in another reply --no-decorate had a big effect on git-log.
-
-> So try your experiments with replace references disabled. If that hel=
-ps,
-> consider disabling them on your server if you don't need them.
->
-> Michael
->
-> --
-> Michael Haggerty
-> mhagger@alum.mit.edu
->
+Now an obvious and natural question after seeing this change is how
+the original test passed with misspelled configuration.  Is a test
+that pushes into "trash/wrong" checking the right outcome?  If the
+reason why the existing tests passed without this patch is because
+they do not test the right thing, then shouldn't they be corrected
+together with the above fix?
