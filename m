@@ -1,115 +1,294 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Duy Nguyen <pclouds@gmail.com>
 Subject: Re: [RFC/PATCH 0/3] protocol v2
-Date: Sun, 01 Mar 2015 19:47:40 -0800
-Message-ID: <xmqqioekawmb.fsf@gitster.dls.corp.google.com>
-References: <1424747562-5446-1-git-send-email-sbeller@google.com>
-	<CACsJy8BSf2h_xD-Q1tudAg_xCzffRQM+7xzUgprONxD7vM5RYw@mail.gmail.com>
-	<CAPc5daVbrUaU6LFM65evru0+1tBT916+0AOyids=f7DZThTPGw@mail.gmail.com>
-	<CAGZ79kbZHtZuPrb6rEP41vbdnZqJmsMwq+8pNer-_D4U5B1xZw@mail.gmail.com>
-	<CACsJy8BN2imGCW0cueh-jGKfN_nRg3=J-GTX2P5h2z0Tu=id6A@mail.gmail.com>
-	<xmqqsidtoojh.fsf@gitster.dls.corp.google.com>
-	<CAGZ79kZE2+tCZgDzeTrQBn6JQv1OWJ7t_8j4kYMQgVaAbsnnxw@mail.gmail.com>
-	<CACsJy8ASR-O-7tozw=p1Ek0ugct5EVZyWtxY_YA2nqcUV_+ECw@mail.gmail.com>
-	<xmqqzj80l9c7.fsf@gitster.dls.corp.google.com>
-	<xmqqioenhs4p.fsf@gitster.dls.corp.google.com>
-	<CAGZ79kY6B4BLvLVS-J50SqCz+t9uGd93WHxCYKmRU1Ey3qVg+A@mail.gmail.com>
-	<CAPc5daXJ6s2oNvqSmtp5d-Dgm-EX6Mb8kY2nOLQVxAT-3wjAmQ@mail.gmail.com>
-	<CAGZ79ka8Zg86qqvWByNiP3F6a9QggO-bNY3ZZ9g+A-MdKYQ7NQ@mail.gmail.com>
+Date: Mon, 2 Mar 2015 16:21:36 +0700
+Message-ID: <20150302092136.GA30278@lanh>
+References: <CACsJy8BN2imGCW0cueh-jGKfN_nRg3=J-GTX2P5h2z0Tu=id6A@mail.gmail.com>
+ <xmqqsidtoojh.fsf@gitster.dls.corp.google.com>
+ <CAGZ79kZE2+tCZgDzeTrQBn6JQv1OWJ7t_8j4kYMQgVaAbsnnxw@mail.gmail.com>
+ <CACsJy8ASR-O-7tozw=p1Ek0ugct5EVZyWtxY_YA2nqcUV_+ECw@mail.gmail.com>
+ <xmqqzj80l9c7.fsf@gitster.dls.corp.google.com>
+ <xmqqioenhs4p.fsf@gitster.dls.corp.google.com>
+ <CAGZ79kY6B4BLvLVS-J50SqCz+t9uGd93WHxCYKmRU1Ey3qVg+A@mail.gmail.com>
+ <CAPc5daXJ6s2oNvqSmtp5d-Dgm-EX6Mb8kY2nOLQVxAT-3wjAmQ@mail.gmail.com>
+ <CAGZ79ka8Zg86qqvWByNiP3F6a9QggO-bNY3ZZ9g+A-MdKYQ7NQ@mail.gmail.com>
+ <xmqqioekawmb.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Duy Nguyen <pclouds@gmail.com>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Stefan Beller <sbeller@google.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Mon Mar 02 04:47:58 2015
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 02 10:21:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YSHKd-0003AB-It
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Mar 2015 04:47:47 +0100
+	id 1YSMXL-00043v-QY
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Mar 2015 10:21:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753444AbbCBDrn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Mar 2015 22:47:43 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:61188 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753148AbbCBDrm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Mar 2015 22:47:42 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 08AA03CB46;
-	Sun,  1 Mar 2015 22:47:42 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=tJZDSmROCxdQnZw2fFYmY1X4Dck=; b=QEXZCl
-	Lrb+ZHrt7D6oACYTm8p8JYPJF6mXyv+C1fCp/VEpTuhlcNYt8MExOrcsW+heEYfc
-	bwLxJk5IBiNBLF4C2ZL0py+f1tltL7squcT+4WV9cvEcF3htDxTfwZBK3qklO5GF
-	l/QYrR0Zucy9AU0tY1prvYbbHz/gajT/BCC/A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ww2Twx+jfb7n5cC6n+ync1g7As25djRK
-	TWudlb8sGkVLGQbkDllWdUyI0oxT51/Mdja1mJYUqNOJuesRSGd3dG9lWuD41Xwj
-	+KoxQ/UbWOUOHg/YsyNCCMhiatN+S49BPegw9IAj5vNXHxPAJffD1mQRyLmYfSOl
-	nBy0YVA89Ks=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id F3A123CB45;
-	Sun,  1 Mar 2015 22:47:41 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7B8753CB44;
-	Sun,  1 Mar 2015 22:47:41 -0500 (EST)
-In-Reply-To: <CAGZ79ka8Zg86qqvWByNiP3F6a9QggO-bNY3ZZ9g+A-MdKYQ7NQ@mail.gmail.com>
-	(Stefan Beller's message of "Fri, 27 Feb 2015 16:46:47 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: E0ABBE16-C08E-11E4-9C83-29999F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751918AbbCBJVL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Mar 2015 04:21:11 -0500
+Received: from mail-pa0-f48.google.com ([209.85.220.48]:39198 "EHLO
+	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751460AbbCBJVI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Mar 2015 04:21:08 -0500
+Received: by pablf10 with SMTP id lf10so42078716pab.6
+        for <git@vger.kernel.org>; Mon, 02 Mar 2015 01:21:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=VQbT8ZHY5hoUmJjrgVNhZBo0Mbx8mYIeQ+WgczOIpA4=;
+        b=ShL/RyZq7D8dDTmEcin3cqlXxyQSRNlFnSfUwQkeDMUcZbiec1Z1YoGN9gyEP7SDLq
+         xfCn5xoBLKrxTkEiv3fuQlVf3oo+Ay2qp/tM5aiQIq24fJubcQ54/OI3YbgT6wThw64W
+         lrhUNHGrxU7ATX5yxBfATTruG2NsDbVNercVSPNcc7sSdGUczc1T/EyibD9PjvbHE3tu
+         MYBa917ptc0ig7sAuwoiyPwuCnVXGd1NjWACv4KS5UuiWI7c/1RHj68aDmlQUmwV8ZQp
+         jPwOpdAzZwdj5LsXTq9QFXzg60fRYiGQ/v9cfE/wAh+oxwiGXnvYr3kLvEHiR2fEMOi2
+         xHEw==
+X-Received: by 10.66.157.231 with SMTP id wp7mr45676700pab.70.1425288068130;
+        Mon, 02 Mar 2015 01:21:08 -0800 (PST)
+Received: from lanh ([115.73.224.188])
+        by mx.google.com with ESMTPSA id y7sm11245587pdp.92.2015.03.02.01.21.04
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 02 Mar 2015 01:21:07 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Mon, 02 Mar 2015 16:21:36 +0700
+Content-Disposition: inline
+In-Reply-To: <xmqqioekawmb.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264577>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264578>
 
-Stefan Beller <sbeller@google.com> writes:
+On Sun, Mar 01, 2015 at 07:47:40PM -0800, Junio C Hamano wrote:
+> It seems, however, that our current thinking is that it is OK to do
+> the "allow new v1 clients to notice the availabilty of v2 servers,
+> so that they can talk v2 the next time" thing, so my preference is
+> to throw this "client first and let server notice" into "maybe
+> doable but not our first choice" bin, at least for now.
 
-> A race condition may be a serious objection then? Once people believe the
-> refs can scale fairly well they will use it, which means blasting the ref
-> advertisement will become very worse over time.
+OK let's see if first choice like this could work. Very draft but it
+should give some idea how to make a prototype to test it out. Note
+that the server still speaks first in this proposal.
 
-I think we are already in agreement about that case:
-
-    A misdetected case between (new client, new server) pair might go
-    like this:
-
-        - new client connects and sends that no-op.
-
-        - new server accepts the connection, but that no-op probe has
-          not arrived yet..  It misdetects the other side as a v1
-          client and it starts blasting the ref advertisement.
-
-        - new client notices that the ref advertisement has the
-          capability bit and the server is capable of v2 protocol.  it
-          waits until the server sends "sorry, I misdetected" message.
-
-        - new server eventually notices the "no-op probe" while blasting
-          the ref advertisement and it can stop in the middle.
-          hopefully this can happen after only sending a few kilobytes
-          among megabytes of ref advertisement data ;-).  The server
-          sends "sorry, I misdetected" message to synchronise.
-
-        - both sides happily speak v2 from here on.
-
-However, I do not think it needs to become worse over time, because
-we can change and adjust as the user population and their use
-patterns evolve.  For example, you can introduce a small delay
-before the new versions of server starts the v1 advertisement, and
-make that delay longer and longer over time, as the population of
-v1-only clients go down, for example.
-
-Difficulty (see J6t's comment) in other implementations may be a
-more important roadblocks.  It seems, however, that our current
-thinking is that it is OK to do the "allow new v1 clients to notice
-the availabilty of v2 servers, so that they can talk v2 the next
-time" thing, so my preference is to throw this "client first and let
-server notice" into "maybe doable but not our first choice" bin, at
-least for now.
-
-Thanks.
+-- 8< --
+diff --git a/Documentation/technical/pack-protocol.txt b/Documentation/technical/pack-protocol.txt
+index 462e206..32a1186 100644
+--- a/Documentation/technical/pack-protocol.txt
++++ b/Documentation/technical/pack-protocol.txt
+@@ -1,11 +1,11 @@
+ Packfile transfer protocols
+ ===========================
+ 
+-Git supports transferring data in packfiles over the ssh://, git:// and
++Git supports transferring data in packfiles over the ssh://, git://, http:// and
+ file:// transports.  There exist two sets of protocols, one for pushing
+ data from a client to a server and another for fetching data from a
+ server to a client.  All three transports (ssh, git, file) use the same
+-protocol to transfer data.
++protocol to transfer data. http is documented in http-protocol.txt.
+ 
+ The processes invoked in the canonical Git implementation are 'upload-pack'
+ on the server side and 'fetch-pack' on the client side for fetching data;
+@@ -14,6 +14,12 @@ data.  The protocol functions to have a server tell a client what is
+ currently on the server, then for the two to negotiate the smallest amount
+ of data to send in order to fully update one or the other.
+ 
++"upload-pack-2" and "receive-pack-2" are the next generation of
++"upload-pack" and "receive-pack" respectively. The first two are
++referred as "version 2" in this document and pack-capabilities.txt
++while the last two are "version 1". Unless stated otherwise, "version 1"
++is implied.
++
+ Transports
+ ----------
+ There are three transports over which the packfile protocol is
+@@ -42,7 +48,8 @@ hostname parameter, terminated by a NUL byte.
+ 
+ --
+    git-proto-request = request-command SP pathname NUL [ host-parameter NUL ]
+-   request-command   = "git-upload-pack" / "git-receive-pack" /
++   request-command   = "git-upload-pack" / "git-upload-pack-2" /
++		       "git-receive-pack" / "git-receive-pack-2" /
+ 		       "git-upload-archive"   ; case sensitive
+    pathname          = *( %x01-ff ) ; exclude NUL
+    host-parameter    = "host=" hostname [ ":" port ]
+@@ -67,7 +74,6 @@ gracefully with an error message.
+   error-line     =  PKT-LINE("ERR" SP explanation-text)
+ ----
+ 
+-
+ SSH Transport
+ -------------
+ 
+@@ -124,9 +130,58 @@ has, the first can 'fetch' from the second.  This operation determines
+ what data the server has that the client does not then streams that
+ data down to the client in packfile format.
+ 
++Capability discovery (v2)
++-------------------------
+ 
+-Reference Discovery
+--------------------
++In version 1, capability discovery is part of reference discovery and
++covered in reference discovery section.
++
++In versino 2, when the client initially connects, the server
++immediately sends its capabilities to the client. Then the client must
++send the list of server capabilities it wants to use to the server.
++
++   S: 00XXcapabilities multi_ack thin-pack ofs-delta lang\n
++   C: 00XXcapabilities thin-pack ofs-delta lang=en\n
++
++----
++  cap              =  PKT-LINE("capabilities" SP capability-list LF)
++  capability-list  =  capability *(SP capability)
++  capability       =  1*(LC_ALPHA / DIGIT / "-" / "_" / "=")
++  LC_ALPHA         =  %x61-7A
++----
++
++The client MUST NOT ask for capabilities the server did not say it
++supports.
++
++Server MUST diagnose and abort if capabilities it does not understand
++was sent.  Server MUST NOT ignore capabilities that client requested
++and server advertised.  As a consequence of these rules, server MUST
++NOT advertise capabilities it does not understand.
++
++See protocol-capabilities.txt for a list of allowed server and client
++capabilities and descriptions.
++
++XXX: this approach wastes one round trip in smart-http because the
++client would speak first. Perhaps we could allow client speculation.
++It can assume what server caps will send and send commands based on that
++assumption. If it turns out true, we save one round trip. E.g. fast
++path:
++
++   C: You are supposed to send caps A, B. I would respond with cap B.
++      Then I would send "want-refs refs/heads/foo".
++   S: (yes we are sending caps A and B), validate client caps,
++      execute "want-refs" and return ref list
++
++and slow path:
++
++   C: You are supposed to send caps A, B. I would respond with cap B.
++      Then I would send "want-refs refs/heads/foo".
++   S: Send caps A, B and C. ignore the rest from client
++   C: Want caps A and C. Send "want-refs foo"
++   S: return ref foo
++
++Reference Discovery (v1)
++------------------------
+ 
+ When the client initially connects the server will immediately respond
+ with a listing of each reference it has (all branches and tags) along
+@@ -178,16 +233,69 @@ MUST peel the ref if it's an annotated tag.
+   shallow          =  PKT-LINE("shallow" SP obj-id)
+ 
+   capability-list  =  capability *(SP capability)
+-  capability       =  1*(LC_ALPHA / DIGIT / "-" / "_")
++  capability       =  1*(LC_ALPHA / DIGIT / "-" / "_" / "=")
+   LC_ALPHA         =  %x61-7A
+ ----
+ 
+ Server and client MUST use lowercase for obj-id, both MUST treat obj-id
+ as case-insensitive.
+ 
++On the very first line of the initial server response of either
++receive-pack and upload-pack the first reference is followed by
++a NUL byte and then a list of space delimited server capabilities.
++These allow the server to declare what it can and cannot support
++to the client.
++
++Client will then send a space separated list of capabilities it wants
++to be in effect. The client MUST NOT ask for capabilities the server
++did not say it supports.
++
++Server MUST diagnose and abort if capabilities it does not understand
++was sent.  Server MUST NOT ignore capabilities that client requested
++and server advertised.  As a consequence of these rules, server MUST
++NOT advertise capabilities it does not understand.
++
+ See protocol-capabilities.txt for a list of allowed server capabilities
+ and descriptions.
+ 
++Reference Discovery (v2)
++------------------------
++
++In version 2, reference discovery is initiated by the client with
++"want-refs" line. The client may skip reference discovery phase
++entirely by not sending "want-refs" (e.g. the client has another way
++to retrieve ref list).
++
++----
++  want-refs  =  PKT-LINE("want-refs" SP mode *argument)
++  mode       =  "all"
++  argument   =  SP arg
++  arg        =  1*(LC_ALPHA / DIGIT / "-" / "_" / "=")
++----
++
++Mode "all" sends all visible refs to the client like in version 1. No
++arguments are accepted in this mode. More modes may be available based
++on capabilities.
++
++----
++  advertised-refs  =  (no-refs / list-of-refs)
++		      *shallow
++		      flush-pkt
++
++  no-refs          =  PKT-LINE(zero-id LF)
++
++  list-of-refs     =  *other-ref
++  other-ref        =  PKT-LINE(other-tip / other-peeled)
++  other-tip        =  obj-id SP refname LF
++  other-peeled     =  obj-id SP refname "^{}" LF
++
++  shallow          =  PKT-LINE("shallow" SP obj-id)
++
++  capability-list  =  capability *(SP capability)
++  capability       =  1*(LC_ALPHA / DIGIT / "-" / "_" / "=")
++  LC_ALPHA         =  %x61-7A
++----
++
+ Packfile Negotiation
+ --------------------
+ After reference and capabilities discovery, the client can decide to
+diff --git a/Documentation/technical/protocol-capabilities.txt b/Documentation/technical/protocol-capabilities.txt
+index 4f8a7bf..ecb0efd 100644
+--- a/Documentation/technical/protocol-capabilities.txt
++++ b/Documentation/technical/protocol-capabilities.txt
+@@ -3,21 +3,6 @@ Git Protocol Capabilities
+ 
+ Servers SHOULD support all capabilities defined in this document.
+ 
+-On the very first line of the initial server response of either
+-receive-pack and upload-pack the first reference is followed by
+-a NUL byte and then a list of space delimited server capabilities.
+-These allow the server to declare what it can and cannot support
+-to the client.
+-
+-Client will then send a space separated list of capabilities it wants
+-to be in effect. The client MUST NOT ask for capabilities the server
+-did not say it supports.
+-
+-Server MUST diagnose and abort if capabilities it does not understand
+-was sent.  Server MUST NOT ignore capabilities that client requested
+-and server advertised.  As a consequence of these rules, server MUST
+-NOT advertise capabilities it does not understand.
+-
+ The 'atomic', 'report-status', 'delete-refs', 'quiet', and 'push-cert'
+ capabilities are sent and recognized by the receive-pack (push to server)
+ process.
+@@ -268,3 +253,10 @@ to accept a signed push certificate, and asks the <nonce> to be
+ included in the push certificate.  A send-pack client MUST NOT
+ send a push-cert packet unless the receive-pack server advertises
+ this capability.
++
++v2
++--
++
++'git-upload-pack' and 'git-receive-pack' may advertise this capability
++if the server supports 'git-upload-pack-2' and 'git-receive-pack-2'
++respectively.
+-- 8< --
