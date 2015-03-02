@@ -1,9 +1,9 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 4/7] struct ref_lock: delete the force_write member
-Date: Mon, 02 Mar 2015 13:44:42 -0800
-Message-ID: <xmqqk2yz9ir9.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH v2 5/7] reflog: improve and update documentation
+Date: Mon, 02 Mar 2015 14:04:59 -0800
+Message-ID: <xmqqfv9n9htg.fsf@gitster.dls.corp.google.com>
 References: <1425288597-20547-1-git-send-email-mhagger@alum.mit.edu>
-	<1425288597-20547-5-git-send-email-mhagger@alum.mit.edu>
+	<1425288597-20547-6-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: Stefan Beller <sbeller@google.com>,
@@ -13,119 +13,128 @@ Cc: Stefan Beller <sbeller@google.com>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Jeff King <peff@peff.net>, git@vger.kernel.org
 To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon Mar 02 22:44:51 2015
+X-From: git-owner@vger.kernel.org Mon Mar 02 23:05:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YSY8w-0008QG-9R
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Mar 2015 22:44:50 +0100
+	id 1YSYSh-0001Ar-FZ
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Mar 2015 23:05:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755535AbbCBVoq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Mar 2015 16:44:46 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:55446 "EHLO
+	id S1754172AbbCBWFJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Mar 2015 17:05:09 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64600 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753846AbbCBVop (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Mar 2015 16:44:45 -0500
+	with ESMTP id S1753846AbbCBWFG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Mar 2015 17:05:06 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5FA283D714;
-	Mon,  2 Mar 2015 16:44:44 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1331B3DF42;
+	Mon,  2 Mar 2015 17:05:06 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Y/bBzWtfoJBkgR4o0svFBo+G+VE=; b=vUePCD
-	+bVshM1BUowr7byWoQSu6l7MWJbyM67EVMUduLxKnYWC0gJOWAldGQiN89WAqC4L
-	i94L7ehSQq3+boaoD9sJx2Q9wxa/s39PLpPNs+TcoFmobhn2eIEiMHF9Ei4UpTVq
-	8StL9cMAtq5mJOv06mQDjfXCSg9D5N3weMTTk=
+	:content-type; s=sasl; bh=lQFk/Re3FEVsTdlZkmY9QZLNE3I=; b=LlHma+
+	U+xCgD+UGX1LiSBdXtmgEY6GXQ2ayTt3NaOX1tUnBKtqrGzmr8qXZZMCGHNjHjPQ
+	KD5/RFitZ/dHIR1aj4wI+ABknSmlh6XYkRV0vhhlPMnCEv0Q3LLVt9lqm3aZIVh6
+	4MbVFUqYzWvsq8MHtax60zJg99rdJZSngZd38=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=XB2TGMjYruZTrkyPE2dsweB1G9r/JIA8
-	UhGX00tB3kMobtuGvYRnyY9XFKuhX5VGpHzBljnc7Ln64xetOAgrAmFvA8MCmBHz
-	LYzA/u3KO96aoRojtPrgffqH5SoppqL7V4Q02ZlKbq1D/sO4c2vInH04ZRC4WFnY
-	uen7dCyNkOw=
+	:content-type; q=dns; s=sasl; b=QaL+NSQU4Z2F04NdxDtB5SQqyQU9sE1i
+	rfzF1VgumvIJ8qQy+BdRB9F+M9oP5Qx+5C1ZY6WwJaeol8HS//eBWNPdF58Udwaj
+	YeIkBTfz2vmA7Wb4pRwglKsIiiT/bgZMJRNQDGd3SB17uUVI9mpil1r+irP3NNne
+	zFYOK4cOYbA=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 55B5D3D713;
-	Mon,  2 Mar 2015 16:44:44 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0A2573DF41;
+	Mon,  2 Mar 2015 17:05:06 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9579D3D710;
-	Mon,  2 Mar 2015 16:44:43 -0500 (EST)
-In-Reply-To: <1425288597-20547-5-git-send-email-mhagger@alum.mit.edu> (Michael
-	Haggerty's message of "Mon, 2 Mar 2015 10:29:54 +0100")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4C9683DF33;
+	Mon,  2 Mar 2015 17:05:00 -0500 (EST)
+In-Reply-To: <1425288597-20547-6-git-send-email-mhagger@alum.mit.edu> (Michael
+	Haggerty's message of "Mon, 2 Mar 2015 10:29:55 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 567E6ABC-C125-11E4-B757-29999F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 2BB3757C-C128-11E4-A27E-29999F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264626>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264627>
 
 Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-> Instead, compute the value when it is needed.
+> +Reference logs, or "reflogs", record when the tips of branches and
+> +other references were updated in the local repository. Reflogs are
+> +useful in various Git commands, to specify the old value of a
+> +reference. For example, `HEAD@{2}` means "where HEAD used to be two
+> +moves ago", `master@{one.week.ago}` means "where master used to point
+> +to one week ago", and so on. See linkgit:gitrevisions[7] for more
+> +details.
 
-> @@ -2318,8 +2317,6 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
->  	lock->ref_name = xstrdup(refname);
->  	lock->orig_ref_name = xstrdup(orig_refname);
->  	ref_file = git_path("%s", refname);
-> -	if ((flags & REF_NODEREF) && (type & REF_ISSYMREF))
-> -		lock->force_write = 1;
+Looks very good, especially the part that mentions "in the local
+repository".  It seems to be a common novice misunderstanding what
+`master@{one.week.ago}` means, and it might be beneficial to be more
+verbose by saying "where master used to point to one week ago in
+this local repository".
+
+> +The "expire" subcommand prunes older reflog entries. Entries older
+> +than `expire` time, or entries older than `expire-unreachable` time
+> +and not reachable from the current tip, are removed from the reflog.
+> +This is typically not used directly by end users -- instead, see
+> +linkgit:git-gc[1].
+> +
+> +The "delete" subcommand deletes single entries from the reflog. Its
+> +argument must be an _exact_ entry (e.g. "`git reflog delete
+> +master@{2}`").
+
+Just like "expire", "delete" should be accompanied by the same
+"typically not".  I do not think it is even worth mentioning that it
+exists merely as an implementation detail for likgit:git-stash[1]
+and for no other reason.
+
+
+> +Options for `expire` and/or `delete`
+> +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+I think this started from a hope that these two share many, but
+looking at the result I notice the shared ones are a tiny and
+trivial minority.  It probably makes sense to retitle this section
+"Options for expire" (and remove "For the expire command only"), and
+add an "Options for delete" section immediately after it that looks
+like:
+
+	Options for `delete`
+        ~~~~~~~~~~~~~~~~~~~~
+
+	--updateref::
+        --rewrite::
+        --dry-run::
+        	The `delete` command takes these options whose
+                meanings are the same as those for `expire`.
+
+> diff --git a/builtin/reflog.c b/builtin/reflog.c
+> index 49c64f9..dd68a72 100644
+> --- a/builtin/reflog.c
+> +++ b/builtin/reflog.c
+> @@ -13,9 +13,9 @@
+>   */
 >  
->   retry:
->  	switch (safe_create_leading_directories(ref_file)) {
-> @@ -3787,8 +3784,13 @@ int ref_transaction_commit(struct ref_transaction *transaction,
->  		struct ref_update *update = updates[i];
+>  static const char reflog_expire_usage[] =
+> -"git reflog expire [--verbose] [--dry-run] [--stale-fix] [--expire=<time>] [--expire-unreachable=<time>] [--all] <refs>...";
+> +"git reflog expire [--expire=<time>] [--expire-unreachable=<time>] [--rewrite] [--updateref] [--stale-fix] [--dry-run | -n] [--verbose] [--all] <refs>...";
+>  static const char reflog_delete_usage[] =
+> -"git reflog delete [--verbose] [--dry-run] [--rewrite] [--updateref] <refs>...";
+> +"git reflog delete [--rewrite] [--updateref] [--dry-run | -n] [--verbose] <refs>...";
 >  
->  		if (!is_null_sha1(update->new_sha1)) {
-> -			if (!update->lock->force_write &&
-> -			    !hashcmp(update->lock->old_sha1, update->new_sha1)) {
-> +			if (!((update->type & REF_ISSYMREF)
-> +			      && (update->flags & REF_NODEREF))
-> +			    && !hashcmp(update->lock->old_sha1, update->new_sha1)) {
-> +				/*
-> +				 * The reference already has the desired
-> +				 * value, so we don't need to write it.
-> +				 */
->  				unlock_ref(update->lock);
->  				update->lock = NULL;
->  			} else if (write_ref_sha1(update->lock, update->new_sha1,
+>  static unsigned long default_reflog_expire;
+>  static unsigned long default_reflog_expire_unreachable;
 
-The code before and after the change are equivalent.
+Thanks for being complete, but I sense that it may be time we
+switched to parse-options here, which gives us the help string for
+free.  Perhaps throw in a comment line before this hunk
 
-It shouldn't be the case, but somehow I find the original slightly
-easier to understand.  The before and after says the same thing,
-i.e. the code used to be:
+	/* NEEDSWORK: switch to parse-options */
 
- - We say "do the write-out without questioning" when we are
-   updating a symbolic ref without dereferencing.
+or something to leave hint for other people?
 
- - Do nothing and unlock if we are not told to "do the write-out
-   without questioning" and the update will be a no-op anyway.
-
-while the code after the change says:
-
- + Do nothing and unlock if we are not handling "update a symbolic
-   ref without dereferencing" and the update will be a no-op anyway.
-
-Perhaps the former has the same effect as "avoid a single complex
-sentence and use two short sentences instead".
-
-The negation in the condition does not help, either.
-
- * If we are updating a symbolic ref without dereferencing, or if we
-   are updating with a different object name, we definitely have to
-   write.
-
-would be easier to understand, perhaps?  I.e.
-
-	if (hashcmp(update->lock->old_sha1, update->lock->new_sha1) ||
-	    ((update->type & REF_ISSYMREF) && (update->flags & REF_NO_DEREF))) {
-		/* do the write-out thing */
-	} else {
-		/* the request to update from the same to the same is a no-op */
-		unlock_ref(update->lock);
-                update->lock = NULL;
-	}
-
-I dunno.
+Thanks.
