@@ -1,53 +1,72 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: [PATCH 0/2] Tweaking the gitk window title.
-Date: Mon, 02 Mar 2015 10:39:47 -0500
-Message-ID: <54F48443.2020007@xiplink.com>
-References: <1420566720-25238-1-git-send-email-marcnarc@xiplink.com>
+From: shawn wilson <ag4ve.us@gmail.com>
+Subject: Re: Move commits not in origin to a branch
+Date: Mon, 2 Mar 2015 10:43:32 -0500
+Message-ID: <CAH_OBicLoSvnKx=2Y1oHCbXK+mUsKpg-TNwMfiaYs816kfsrwA@mail.gmail.com>
+References: <CAH_OBicENXL967L4LubDzrqq2qxuZSqye3o6SPAq6oKM0=94Og@mail.gmail.com>
+ <54F479A1.300@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: Paul Mackerras <paulus@samba.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 02 16:38:35 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Mon Mar 02 16:43:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YSSQU-0006ms-Mk
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Mar 2015 16:38:35 +0100
+	id 1YSSVi-0000U2-6Q
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Mar 2015 16:43:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753773AbbCBPia (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Mar 2015 10:38:30 -0500
-Received: from smtp82.ord1c.emailsrvr.com ([108.166.43.82]:48230 "EHLO
-	smtp82.ord1c.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753635AbbCBPi3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 Mar 2015 10:38:29 -0500
-Received: from smtp3.relay.ord1c.emailsrvr.com (localhost.localdomain [127.0.0.1])
-	by smtp3.relay.ord1c.emailsrvr.com (SMTP Server) with ESMTP id 1CFCD18075A;
-	Mon,  2 Mar 2015 10:38:29 -0500 (EST)
-Received: by smtp3.relay.ord1c.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id CE3D51804C5;
-	Mon,  2 Mar 2015 10:38:28 -0500 (EST)
-X-Sender-Id: mbranchaud@xiplink.com
-Received: from [10.10.1.32] ([UNAVAILABLE]. [192.252.130.194])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA)
-	by 0.0.0.0:465 (trex/5.4.2);
-	Mon, 02 Mar 2015 15:38:29 GMT
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
-In-Reply-To: <1420566720-25238-1-git-send-email-marcnarc@xiplink.com>
+	id S1754124AbbCBPny (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Mar 2015 10:43:54 -0500
+Received: from mail-yh0-f54.google.com ([209.85.213.54]:41811 "EHLO
+	mail-yh0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753910AbbCBPnx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Mar 2015 10:43:53 -0500
+Received: by yhaf10 with SMTP id f10so14966339yha.8
+        for <git@vger.kernel.org>; Mon, 02 Mar 2015 07:43:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=cAGKVaE/JGAzIsCOmiK0byYbLdc7hFkUCIQK5ORm+B4=;
+        b=eVruIg6bMsgJV7esE6QkoMPv6QDhd5DNz9czafEBRyDjHp4z6m5yZOaN6EvBwAjVUo
+         QdciQYHKhRTTC76VDM249BOemot5qzYQ3UKpTm+tyiXf9xHQMhoj2OSxv7xr2f/0/iBw
+         sPyhoOONMmFw6IBkJQH8eIOeWHEVGow+iAO7SBfSdAXJx5EOXirGEgZCHjIG/JeA0VIz
+         wtvDjKkti32fi6kCqP45ukoRGP55HOjsFISV2RVEGetz7rad5mt7yQ9KXSjf571YqoR0
+         fMGTC5Lo9d5iI6CaouXX6+3LSFbTaNM7XpQjI7KEnLlzQyFctS4n2QHlHYooWeW1aAfQ
+         RKqw==
+X-Received: by 10.236.66.33 with SMTP id g21mr27148475yhd.72.1425311032949;
+ Mon, 02 Mar 2015 07:43:52 -0800 (PST)
+Received: by 10.170.205.210 with HTTP; Mon, 2 Mar 2015 07:43:32 -0800 (PST)
+In-Reply-To: <54F479A1.300@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264603>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264604>
 
-On 15-01-06 12:51 PM, Marc Branchaud wrote:
-> The first patch simply changes the title from "gitk: <dir>" to "<dir> - gitk",
-> which is the title layout used by most of the applications on my Kubuntu box.
-> 
-> The second patch is the one that I'm more keen to see accepted.  It relies
-> on the first only in that it follows the new title layout.
+On Mon, Mar 2, 2015 at 9:54 AM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+> shawn wilson venit, vidit, dixit 02.03.2015 14:25:
+>> How do I move commits I haven't pushed into a new branch?
+>>
+>>  % git log origin..master --pretty=format:'%h'
+>> f7d3a19
+>> 1f186c9
+>> 66d99f6
+>>
+>> Which I'd like to be in a new branch.
+>>
+>
+> Do you want them to be on the new branch as they are, i.e. as commits
+> built on top of master? Then
+>
+> git branch mybranch master
+>
 
-Ping?
+Oh cool, I think that's what I wanted. I didn't realize it was that
+easy - I said screw it and went and pushed them, but... for next time
+(or I'll stop being stupid and work in a branch from now on).
 
-		M.
+Thanks
