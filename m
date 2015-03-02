@@ -1,46 +1,46 @@
 From: Michal Sojka <sojkam1@fel.cvut.cz>
-Subject: [PATCH v5] submodule: Improve documentation of update subcommand
-Date: Mon,  2 Mar 2015 23:42:19 +0100
-Message-ID: <1425336139-22566-1-git-send-email-sojkam1@fel.cvut.cz>
+Subject: [PATCH v6] submodule: Improve documentation of update subcommand
+Date: Mon,  2 Mar 2015 23:57:58 +0100
+Message-ID: <1425337078-24154-1-git-send-email-sojkam1@fel.cvut.cz>
 References: <87k2yzrpm8.fsf@steelpick.2x.cz>
 Cc: git@vger.kernel.org, Jens.Lehmann@web.de,
 	Michal Sojka <sojkam1@fel.cvut.cz>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 02 23:42:55 2015
+X-From: git-owner@vger.kernel.org Mon Mar 02 23:58:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YSZ38-0001I2-8M
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Mar 2015 23:42:54 +0100
+	id 1YSZHy-0007Wj-Q6
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Mar 2015 23:58:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754161AbbCBWmu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Mar 2015 17:42:50 -0500
-Received: from max.feld.cvut.cz ([147.32.192.36]:49631 "EHLO max.feld.cvut.cz"
+	id S1753741AbbCBW6K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Mar 2015 17:58:10 -0500
+Received: from max.feld.cvut.cz ([147.32.192.36]:52339 "EHLO max.feld.cvut.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753675AbbCBWmt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Mar 2015 17:42:49 -0500
+	id S1751237AbbCBW6J (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Mar 2015 17:58:09 -0500
 Received: from localhost (unknown [192.168.200.7])
-	by max.feld.cvut.cz (Postfix) with ESMTP id F3F9C19F37AD;
-	Mon,  2 Mar 2015 23:42:47 +0100 (CET)
+	by max.feld.cvut.cz (Postfix) with ESMTP id D102919F37AD;
+	Mon,  2 Mar 2015 23:58:07 +0100 (CET)
 X-Virus-Scanned: IMAP STYX AMAVIS
 Received: from max.feld.cvut.cz ([192.168.200.1])
 	by localhost (styx.feld.cvut.cz [192.168.200.7]) (amavisd-new, port 10044)
-	with ESMTP id cYxkNr6M-6lP; Mon,  2 Mar 2015 23:42:46 +0100 (CET)
+	with ESMTP id OF_tcl3_ffCL; Mon,  2 Mar 2015 23:58:05 +0100 (CET)
 Received: from imap.feld.cvut.cz (imap.feld.cvut.cz [147.32.192.34])
-	by max.feld.cvut.cz (Postfix) with ESMTP id 26D4719F33E7;
-	Mon,  2 Mar 2015 23:42:46 +0100 (CET)
+	by max.feld.cvut.cz (Postfix) with ESMTP id D8F8319F37AC;
+	Mon,  2 Mar 2015 23:58:05 +0100 (CET)
 Received: from wsh by steelpick.2x.cz with local (Exim 4.84)
 	(envelope-from <sojkam1@fel.cvut.cz>)
-	id 1YSZ2u-0005sp-GF; Mon, 02 Mar 2015 23:42:40 +0100
+	id 1YSZHk-0006IB-6V; Mon, 02 Mar 2015 23:58:00 +0100
 X-Mailer: git-send-email 2.1.4
 In-Reply-To: <87k2yzrpm8.fsf@steelpick.2x.cz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264630>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264631>
 
 The documentation of 'git submodule update' has several problems:
 
@@ -65,24 +65,23 @@ Helped-by: Junio C Hamano <gitster@pobox.com>
 Helped-by: Jens Lehmann <Jens.Lehmann@web.de>
 Signed-off-by: Michal Sojka <sojkam1@fel.cvut.cz>
 ---
- Documentation/config.txt        | 15 ++++++----
+ Documentation/config.txt        | 14 +++++----
  Documentation/git-submodule.txt | 66 ++++++++++++++++++++++++++++-------------
  Documentation/gitmodules.txt    | 21 ++++++-------
- 3 files changed, 65 insertions(+), 37 deletions(-)
+ 3 files changed, 64 insertions(+), 37 deletions(-)
 
 diff --git a/Documentation/config.txt b/Documentation/config.txt
-index ae6791d..fb2ae37 100644
+index ae6791d..0a6852d 100644
 --- a/Documentation/config.txt
 +++ b/Documentation/config.txt
-@@ -2411,12 +2411,17 @@ status.submodulesummary::
+@@ -2411,12 +2411,16 @@ status.submodulesummary::
  
  submodule.<name>.path::
  submodule.<name>.url::
 +	The path within this project and URL for a submodule. These
-+	variables are initially populated by 'git submodule init';
-+	edit them to override the URL and other values found in the
-+	`.gitmodules` file. See linkgit:git-submodule[1] and
-+	linkgit:gitmodules[5] for details.
++	variables are initially populated by 'git submodule init'. See
++	linkgit:git-submodule[1] and linkgit:gitmodules[5] for
++	details.
 +
  submodule.<name>.update::
 -	The path within this project, URL, and the updating strategy
@@ -90,7 +89,7 @@ index ae6791d..fb2ae37 100644
 -	by 'git submodule init'; edit them to override the
 -	URL and other values found in the `.gitmodules` file.  See
 -	linkgit:git-submodule[1] and linkgit:gitmodules[5] for details.
-+	The default updating strategy for a submodule. This variable
++	The default update procedure for a submodule. This variable
 +	is populated by `git submodule init` from the
 +	linkgit:gitmodules[5] file. See description of 'update'
 +	command in linkgit:git-submodule[1].
@@ -98,7 +97,7 @@ index ae6791d..fb2ae37 100644
  submodule.<name>.branch::
  	The remote branch name for a submodule, used by `git submodule
 diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-index 8e6af65..067d616 100644
+index 8e6af65..2c25916 100644
 --- a/Documentation/git-submodule.txt
 +++ b/Documentation/git-submodule.txt
 @@ -154,27 +154,51 @@ If `--force` is specified, the submodule's work tree will be removed even if
@@ -119,7 +118,7 @@ index 8e6af65..067d616 100644
 +expects by cloning missing submodules and updating the working tree of
 +the submodules. The "updating" can be done in several ways depending
 +on command line options and the value of `submodule.<name>.update`
-+configuration variable. Supported update methods are:
++configuration variable. Supported update procedures are:
 +
 +	checkout;; the commit recorded in the superproject will be
 +	    checked out in the submodule on a detached HEAD. This is
@@ -133,7 +132,7 @@ index 8e6af65..067d616 100644
 +checked out in the submodule.
 +
 +	rebase;; the current branch of the submodule will be rebased
-+	    onto the commit recoded in the superproject. This is done
++	    onto the commit recorded in the superproject. This is done
 +	    when `--rebase` option is given, or no option is given, and
 +	    `submodule.<name>.update` is set to 'rebase'.
 +
@@ -176,7 +175,7 @@ index 8e6af65..067d616 100644
 -	switching to a different commit; and always run a checkout operation
 -	in the submodule, even if the commit listed in the index of the
 -	containing repository matches the commit checked out in the submodule.
-+	When running update (only effective with the checkout method),
++	When running update (only effective with the checkout procedure),
 +	throw away local changes in submodules when switching to a
 +	different commit; and always run a checkout operation in the
 +	submodule, even if the commit listed in the index of the
@@ -195,7 +194,7 @@ index 8e6af65..067d616 100644
  	set to `checkout`, this option is implicit.
  
 diff --git a/Documentation/gitmodules.txt b/Documentation/gitmodules.txt
-index f6c0dfd..7e8fb87 100644
+index f6c0dfd..ac70eca 100644
 --- a/Documentation/gitmodules.txt
 +++ b/Documentation/gitmodules.txt
 @@ -38,18 +38,15 @@ submodule.<name>.url::
@@ -214,7 +213,7 @@ index f6c0dfd..7e8fb87 100644
 -
 -	This config option is overridden if 'git submodule update' is given
 -	the '--merge', '--rebase' or '--checkout' options.
-+	Defines the default update method for the named submodule,
++	Defines the default update procedure for the named submodule,
 +	i.e. how the submodule is updated by "git submodule update"
 +	command in the superproject. This is only used by `git
 +	submodule init` to initialize the configuration variable of
