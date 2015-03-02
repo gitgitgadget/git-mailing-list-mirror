@@ -1,114 +1,67 @@
-From: Trevor Saunders <tbsaunde@tbsaunde.org>
-Subject: Re: feature request: excluding files/paths from "git grep"
-Date: Mon, 2 Mar 2015 07:50:17 -0500
-Message-ID: <20150302125017.GA4464@tsaunders-iceball.corp.tor1.mozilla.com>
-References: <CACsJy8AM=W4f6u_7YpvmfiBwrJjqfJMJoq6CQYfKOh+qD6rF3Q@mail.gmail.com>
- <20150225143116.GA13567@peff.net>
- <xmqqk2z5on72.fsf@gitster.dls.corp.google.com>
- <20150225185128.GA16569@peff.net>
- <xmqqbnkholx9.fsf@gitster.dls.corp.google.com>
- <20150225191108.GA17467@peff.net>
- <20150227100441.GA11861@tsaunders-iceball.corp.tor1.mozilla.com>
- <xmqqvbilh0wn.fsf@gitster.dls.corp.google.com>
- <20150301130142.GA24782@tsaunders-iceball.corp.tor1.mozilla.com>
- <xmqqr3t8fgm4.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>,
-	Noel Grandin <noel@peralex.com>, git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 02 13:51:36 2015
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCH] git-remote.txt: describe behavior without --tags and --no-tags
+Date: Mon,  2 Mar 2015 14:08:09 +0100
+Message-ID: <932c9cd452718ad5e88677fc90985ef7fafd5078.1425301543.git.git@drmicha.warpmail.net>
+References: <54F431E8.3050009@gmail.com>
+Cc: Francis Moreau <francis.moro@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 02 14:08:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YSPot-0004tl-OX
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Mar 2015 13:51:36 +0100
+	id 1YSQ52-0002qY-GB
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Mar 2015 14:08:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754749AbbCBMvd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Mar 2015 07:51:33 -0500
-Received: from tbsaunde.org ([66.228.47.254]:55512 "EHLO
-	paperclip.tbsaunde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754733AbbCBMv2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Mar 2015 07:51:28 -0500
-Received: from tsaunders-iceball.corp.tor1.mozilla.com (174.141.12.210.nw.nuvox.net [174.141.12.210])
-	by paperclip.tbsaunde.org (Postfix) with ESMTPSA id 46946C0B1;
-	Mon,  2 Mar 2015 12:51:26 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <xmqqr3t8fgm4.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1753680AbbCBNIM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Mar 2015 08:08:12 -0500
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:58004 "EHLO
+	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752662AbbCBNIL (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 2 Mar 2015 08:08:11 -0500
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
+	by mailout.nyi.internal (Postfix) with ESMTP id 7E99C20990
+	for <git@vger.kernel.org>; Mon,  2 Mar 2015 08:08:09 -0500 (EST)
+Received: from frontend2 ([10.202.2.161])
+  by compute6.internal (MEProxy); Mon, 02 Mar 2015 08:08:10 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=x-sasl-enc:from:to:cc:subject:date
+	:message-id:in-reply-to:references; s=smtpout; bh=F02LjiZsBC3s0R
+	CFL4bZS6IfHbU=; b=j/ZAwGePFy/+JwkOqGrIbDlyGfRcD/Rz+0uEphZJJ9gwwp
+	gs7ivjCMd+Xuliq5laPe6KQXGEIc/gVdQ0c3zwNWaBcKa+nV/wQTL0UcZvz0hSSf
+	s7bnioqBX7yL1+WzOLx+V/s8CJh3UtDVkX1B+49UrzhyghJJcbpdnn1McexbE=
+X-Sasl-enc: ZVG7HcD556fjHbzP1YlkbI5n9ZBtuVu+pJKhtgArSjIz 1425301690
+Received: from localhost (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 2C7BE680175;
+	Mon,  2 Mar 2015 08:08:10 -0500 (EST)
+X-Mailer: git-send-email 2.3.1.303.g5174db1
+In-Reply-To: <54F431E8.3050009@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264591>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264592>
 
-On Sun, Mar 01, 2015 at 03:22:11PM -0800, Junio C Hamano wrote:
-> Trevor Saunders <tbsaunde@tbsaunde.org> writes:
-> 
-> >> ...  For these "per-invocation" differences, attributes
-> >> to declare permenent/inherent nature of the contents is much less
-> >> suited than per-invocation inclusion/exclusion mechanism based on
-> >> pathspecs, I would think.
-> >
-> > I think that makes some amount of sense, however typing stuff like
-> > --exclude=ChangeLog all the time is not terribly easy on the hands.
-> > Would it make sense to instead add a config variable grep.exclude?
-> 
-> I do not think it makes much more sense for at least three reasons.
-> for one thing, It still goes against "per-invocation" nature of what
-> is being done.  Your "for this invocation I do not want ChangeLog"
-> does not have to be limited to 'grep'.  And also "I end up having to
-> give these pathspecs all the time" is not limited to negative ones.
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+ Documentation/git-remote.txt | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-I think what is somewhat special about grep is that I want to ignore a
-set of paths such a large majority of the time that I really want to
-change the default.  I could see someone wanting to do the same thing
-for diff or log maybe, and so adding diff.exclude, but personally I
-don't have a use for it.
-
-> We have magic pathspecs, like "This pattern is used to match the
-> string case-insensitively", "This pattern specifies that the path
-> should *not* match it", etc.  How about adding a new feature that
-> lets you say "This is a short hand to giving these pathspecs" and
-> call that "pathspec macro"?
-> 
-> If you get tired to keep having to type
-> 
->     $ git log -- Documentation/ ':!Documentation/technical/'
-> 
-> every time you want to check the end-user facing documentation
-> pages, you could for example say (I am using a made-up 'macro'
-> pathspec magic that is introduced by ':*' followed by a <macro
-> name>):
-> 
->     $ git log -- ':*userdoc'
-> 
-> and the same macro specification could be used for all the other
-> things that take pathspecs (grep, add, diff, etc.).
-
-I can certainly see use cases for that, say
-git log -- :!t/ :!foo/tests/ :!bar/testsuite/
-to see what non test changes have happened in a project that doesn't
-have a standardized name for test directories.
-
-> You could then have something like this to define your own "nolog"
-> macro:
-> 
->     [pathspecMacro]
->         nolog = ':!ChangeLog' ':!ChangeLog.*'
-> 
-> to shorten your invocation of "grep" by appending it when you want
-> to exclude some files, i.e.
-> 
->     $ git grep -e pattern -- \*.c ':*nolog'
-> 
-> and the same pathspec macro can be used in other places, not just
-> "grep".  Wouldn't it make more sense?
-
-I think they solve somewhat different problems, but maybe my problem is
-so specialized I should just have a wrapper around grep that changes
-defaults.
-
-Trev
+diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.txt
+index a77607b..f3f6f0d 100644
+--- a/Documentation/git-remote.txt
++++ b/Documentation/git-remote.txt
+@@ -56,7 +56,10 @@ With `--tags` option, `git fetch <name>` imports every tag from the
+ remote repository.
+ +
+ With `--no-tags` option, `git fetch <name>` does not import tags from
+ the remote repository.
+++
++By default, only tags on fetched branches are imported
++(see linkgit:git-fetch[1]).
+ +
+ With `-t <branch>` option, instead of the default glob
+ refspec for the remote to track all branches under
+-- 
+2.3.1.303.g5174db1
