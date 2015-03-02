@@ -1,72 +1,109 @@
-From: shawn wilson <ag4ve.us@gmail.com>
-Subject: Re: Move commits not in origin to a branch
-Date: Mon, 2 Mar 2015 10:43:32 -0500
-Message-ID: <CAH_OBicLoSvnKx=2Y1oHCbXK+mUsKpg-TNwMfiaYs816kfsrwA@mail.gmail.com>
-References: <CAH_OBicENXL967L4LubDzrqq2qxuZSqye3o6SPAq6oKM0=94Og@mail.gmail.com>
- <54F479A1.300@drmicha.warpmail.net>
+From: Colin Walters <walters@verbum.org>
+Subject: Re: weaning distributions off tarballs: extended verification of git
+ tags
+Date: Mon, 02 Mar 2015 12:09:57 -0500
+Message-ID: <1425316197.895196.234425829.536E6C06@webmail.messagingengine.com>
+References: <1425134885.3150003.233627665.2E48E28B@webmail.messagingengine.com>
+ <CANv4PNmF9sTh8od9xT5tYTOF1Cv0Mev2Muf-qxQDS_6kE7EnOw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Mon Mar 02 16:43:58 2015
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: GIT Mailing List <git@vger.kernel.org>
+To: Morten Welinder <mwelinder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 02 18:10:09 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YSSVi-0000U2-6Q
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Mar 2015 16:43:58 +0100
+	id 1YSTr6-0007CS-N1
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Mar 2015 18:10:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754124AbbCBPny (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Mar 2015 10:43:54 -0500
-Received: from mail-yh0-f54.google.com ([209.85.213.54]:41811 "EHLO
-	mail-yh0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753910AbbCBPnx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Mar 2015 10:43:53 -0500
-Received: by yhaf10 with SMTP id f10so14966339yha.8
-        for <git@vger.kernel.org>; Mon, 02 Mar 2015 07:43:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=cAGKVaE/JGAzIsCOmiK0byYbLdc7hFkUCIQK5ORm+B4=;
-        b=eVruIg6bMsgJV7esE6QkoMPv6QDhd5DNz9czafEBRyDjHp4z6m5yZOaN6EvBwAjVUo
-         QdciQYHKhRTTC76VDM249BOemot5qzYQ3UKpTm+tyiXf9xHQMhoj2OSxv7xr2f/0/iBw
-         sPyhoOONMmFw6IBkJQH8eIOeWHEVGow+iAO7SBfSdAXJx5EOXirGEgZCHjIG/JeA0VIz
-         wtvDjKkti32fi6kCqP45ukoRGP55HOjsFISV2RVEGetz7rad5mt7yQ9KXSjf571YqoR0
-         fMGTC5Lo9d5iI6CaouXX6+3LSFbTaNM7XpQjI7KEnLlzQyFctS4n2QHlHYooWeW1aAfQ
-         RKqw==
-X-Received: by 10.236.66.33 with SMTP id g21mr27148475yhd.72.1425311032949;
- Mon, 02 Mar 2015 07:43:52 -0800 (PST)
-Received: by 10.170.205.210 with HTTP; Mon, 2 Mar 2015 07:43:32 -0800 (PST)
-In-Reply-To: <54F479A1.300@drmicha.warpmail.net>
+	id S1754502AbbCBRKB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Mar 2015 12:10:01 -0500
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:54235 "EHLO
+	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753865AbbCBRKA (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 2 Mar 2015 12:10:00 -0500
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
+	by mailout.nyi.internal (Postfix) with ESMTP id 941C1202B4
+	for <git@vger.kernel.org>; Mon,  2 Mar 2015 12:09:56 -0500 (EST)
+Received: from web4 ([10.202.2.214])
+  by compute6.internal (MEProxy); Mon, 02 Mar 2015 12:09:57 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:x-sasl-enc:from:to:cc
+	:mime-version:content-transfer-encoding:content-type:in-reply-to
+	:references:subject:date; s=smtpout; bh=ElFBU3pxA0yBShT6U8tWu0pa
+	gGs=; b=eeD0L9GDi8kd4PQQo2BBGkOYgus99ujO31pt5C60a/yjRkWGdgArll6w
+	eYDSHL5iJ8qdHm4myEDGe5vxk348tQrMgJV8YS33cJm/o76rdM+JGjLea10pD8hh
+	pHXkXqlcUYHS+g5Y3O4BzIsiTKp3NEaYxbZgHnh0h/MyoGjphrg=
+Received: by web4.nyi.internal (Postfix, from userid 99)
+	id 3818710BC92; Mon,  2 Mar 2015 12:09:57 -0500 (EST)
+X-Sasl-Enc: tj5Ez4jUtB/V46sjEiWA73KZrZUKMQcnn7PKScvNokw6 1425316197
+X-Mailer: MessagingEngine.com Webmail Interface - ajax-4ba7306c
+In-Reply-To: <CANv4PNmF9sTh8od9xT5tYTOF1Cv0Mev2Muf-qxQDS_6kE7EnOw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264604>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264605>
 
-On Mon, Mar 2, 2015 at 9:54 AM, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
-> shawn wilson venit, vidit, dixit 02.03.2015 14:25:
->> How do I move commits I haven't pushed into a new branch?
->>
->>  % git log origin..master --pretty=format:'%h'
->> f7d3a19
->> 1f186c9
->> 66d99f6
->>
->> Which I'd like to be in a new branch.
->>
->
-> Do you want them to be on the new branch as they are, i.e. as commits
-> built on top of master? Then
->
-> git branch mybranch master
->
+On Sat, Feb 28, 2015, at 03:34 PM, Morten Welinder wrote:
+> Is there a point to including a different checksum inside
+> a git tag?  If someone can break the SHA-1 checksum
+> in the repository then the recorded SHA-256 checksum can
+> be changed.  In other words, wouldn't you be just as well
+> off handing someone a SHA-1 commit id?
 
-Oh cool, I think that's what I wanted. I didn't realize it was that
-easy - I said screw it and went and pushed them, but... for next time
-(or I'll stop being stupid and work in a branch from now on).
+The issue is more about what the checksum covers, as
+well as its strength.  Git uses a hash tree, which means
+that an attacker only has to find a collision for *one* of
+the objects, and the signature is still valid.  And that collision
+is valid for *every* commit that contains that object.
 
-Thanks
+This topic has been covered elsewhere pretty extensively,
+here's a link:
+https://www.whonix.org/forum/index.php/topic,538.msg4278.html#msg4278
+
+Now I think rough consensus is still that git is "secure" or
+"secure enough" - but with this proposal I'm just trying
+to overcome the remaining conservatism.  (Also, while those
+discussions were focusing on corrupting an existing repository,
+the attack model of MITM also exists, and there
+you don't have to worry about deltas, particularly if the
+attacker's goal is to get a downstream to do a build
+and thus execute their hostile code inside the downstream
+network).
+
+It's really not that expensive to do once per release,
+basically free for small repositories, and for a large one like
+the Linux kernel:
+
+$ cd ~/src/linux
+$ git describe
+v3.19-7478-g796e1c5
+$ time /bin/sh -c 'git archive --format=tar HEAD|sha256sum'
+4a5c5826cea188abd52fa50c663d17ebe1dfe531109fed4ddbd765a856f1966e  -
+
+real	0m3.772s
+user	0m6.132s
+sys	0m0.279s
+$
+
+With this proposal, the checksum
+covers an entire stream of objects for a given commit at once;
+making it significantly harder to find a collision.  At least as good as 
+checksummed tarballs, and arguably better since it's
+pre-compression.
+
+So to implement this, perhaps something like:
+
+$ git archive --format=raw
+
+as a base primitive, and:
+
+$ git tag --archive-raw-checksum=SHA256 -s -m "..."
+
+?
+
+"git fsck" could also learn to optionally use this.
