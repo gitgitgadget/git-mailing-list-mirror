@@ -1,140 +1,230 @@
 From: Michal Sojka <sojkam1@fel.cvut.cz>
-Subject: Re: [PATCH] submodule: Improve documentation of update subcommand
-Date: Mon, 02 Mar 2015 23:39:11 +0100
-Message-ID: <87k2yzrpm8.fsf@steelpick.2x.cz>
-References: <87egpgdaac.fsf@steelpick.2x.cz> <1424698360-10952-1-git-send-email-sojkam1@fel.cvut.cz> <xmqqvbiss7xb.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Jens.Lehmann@web.de
+Subject: [PATCH v5] submodule: Improve documentation of update subcommand
+Date: Mon,  2 Mar 2015 23:42:19 +0100
+Message-ID: <1425336139-22566-1-git-send-email-sojkam1@fel.cvut.cz>
+References: <87k2yzrpm8.fsf@steelpick.2x.cz>
+Cc: git@vger.kernel.org, Jens.Lehmann@web.de,
+	Michal Sojka <sojkam1@fel.cvut.cz>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 02 23:39:28 2015
+X-From: git-owner@vger.kernel.org Mon Mar 02 23:42:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YSYzm-00086N-4S
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Mar 2015 23:39:26 +0100
+	id 1YSZ38-0001I2-8M
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Mar 2015 23:42:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754122AbbCBWjW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Mar 2015 17:39:22 -0500
-Received: from max.feld.cvut.cz ([147.32.192.36]:48779 "EHLO max.feld.cvut.cz"
+	id S1754161AbbCBWmu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Mar 2015 17:42:50 -0500
+Received: from max.feld.cvut.cz ([147.32.192.36]:49631 "EHLO max.feld.cvut.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753944AbbCBWjV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Mar 2015 17:39:21 -0500
+	id S1753675AbbCBWmt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Mar 2015 17:42:49 -0500
 Received: from localhost (unknown [192.168.200.7])
-	by max.feld.cvut.cz (Postfix) with ESMTP id 9063919F37C2;
-	Mon,  2 Mar 2015 23:39:19 +0100 (CET)
+	by max.feld.cvut.cz (Postfix) with ESMTP id F3F9C19F37AD;
+	Mon,  2 Mar 2015 23:42:47 +0100 (CET)
 X-Virus-Scanned: IMAP STYX AMAVIS
 Received: from max.feld.cvut.cz ([192.168.200.1])
 	by localhost (styx.feld.cvut.cz [192.168.200.7]) (amavisd-new, port 10044)
-	with ESMTP id tvb7Yor2Av7o; Mon,  2 Mar 2015 23:39:17 +0100 (CET)
+	with ESMTP id cYxkNr6M-6lP; Mon,  2 Mar 2015 23:42:46 +0100 (CET)
 Received: from imap.feld.cvut.cz (imap.feld.cvut.cz [147.32.192.34])
-	by max.feld.cvut.cz (Postfix) with ESMTP id B2B6719F37BF;
-	Mon,  2 Mar 2015 23:39:17 +0100 (CET)
+	by max.feld.cvut.cz (Postfix) with ESMTP id 26D4719F33E7;
+	Mon,  2 Mar 2015 23:42:46 +0100 (CET)
 Received: from wsh by steelpick.2x.cz with local (Exim 4.84)
 	(envelope-from <sojkam1@fel.cvut.cz>)
-	id 1YSYzX-0005hx-Pq; Mon, 02 Mar 2015 23:39:11 +0100
-In-Reply-To: <xmqqvbiss7xb.fsf@gitster.dls.corp.google.com>
-User-Agent: Notmuch/0.19+54~g0747f5c (http://notmuchmail.org) Emacs/24.4.1 (x86_64-pc-linux-gnu)
+	id 1YSZ2u-0005sp-GF; Mon, 02 Mar 2015 23:42:40 +0100
+X-Mailer: git-send-email 2.1.4
+In-Reply-To: <87k2yzrpm8.fsf@steelpick.2x.cz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264630>
 
-On Mon, Feb 23 2015, Junio C Hamano wrote:
-> Michal Sojka <sojkam1@fel.cvut.cz> writes:
->
->> The documentation of 'git submodule update' has several problems:
->
-> Thanks, this round looks much better.
->
->> diff --git a/Documentation/config.txt b/Documentation/config.txt
->> index ae6791d..fb2ae37 100644
->> --- a/Documentation/config.txt
->> +++ b/Documentation/config.txt
->> @@ -2411,12 +2411,17 @@ status.submodulesummary::
->>  
->>  submodule.<name>.path::
->>  submodule.<name>.url::
->> +	The path within this project and URL for a submodule. These
->> +	variables are initially populated by 'git submodule init';
->> +	edit them to override the URL and other values found in the
->> +	`.gitmodules` file. See linkgit:git-submodule[1] and
->> +	linkgit:gitmodules[5] for details.
->> +
->
-> The sentence "edit them to override" talks about "other values",
-> which in the original wanted to cover not just "path" but "update"
-> as well.  By splitting 'update' into its own entry, "edit them to
-> override" is lost from 'update'.
->
-> But stepping back a bit, "edit them to override" applies to all
-> configuration variables.  The user edits the configuration file to
-> customize things.  I wonder if we even need to say this for .path
-> and url in the first place?
->
->     Note: not a request to remove it because I hinted so, but a
->     request for comments and discussion, as I do not have a firm
->     opinion.
+The documentation of 'git submodule update' has several problems:
 
-I also thing that "edit them to override" is kind of useless here so I
-removed it.
+1) It mentions that value 'none' of submodule.$name.update can be
+   overridden by --checkout, but other combinations of configuration
+   values and command line options are not mentioned.
 
->
->>  submodule.<name>.update::
->> -	The path within this project, URL, and the updating strategy
->> -	for a submodule.  These variables are initially populated
->> -	by 'git submodule init'; edit them to override the
->> -	URL and other values found in the `.gitmodules` file.  See
->> -	linkgit:git-submodule[1] and linkgit:gitmodules[5] for details.
->> +	The default updating strategy for a submodule. This variable
->> +	is populated by `git submodule init` from the
->> +	linkgit:gitmodules[5] file. See description of 'update'
->> +	command in linkgit:git-submodule[1].
->
->
->
->
->> diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
->> index 8e6af65..067d616 100644
->> --- a/Documentation/git-submodule.txt
->> +++ b/Documentation/git-submodule.txt
->> @@ -154,27 +154,51 @@ If `--force` is specified, the submodule's work tree will be removed even if
->>  it contains local modifications.
->>  
->>  update::
->> -	Update the registered submodules, i.e. clone missing submodules and
->> -	checkout the commit specified in the index of the containing repository.
->> -	This will make the submodules HEAD be detached unless `--rebase` or
->> -	`--merge` is specified or the key `submodule.$name.update` is set to
->> -	`rebase`, `merge` or `none`. `none` can be overridden by specifying
->> -	`--checkout`. Setting the key `submodule.$name.update` to `!command`
->> -	will cause `command` to be run. `command` can be any arbitrary shell
->> -	command that takes a single argument, namely the sha1 to update to.
->>  +
->> +--
->> +Update the registered submodules to match what the superproject
->> +expects by cloning missing submodules and updating the working tree of
->> +the submodules. The "updating" can be done in several ways depending
->> +on command line options and the value of `submodule.<name>.update`
->> +configuration variable. Supported update methods are:
->
-> If you read the description of "--remote" (sorry, I didn't notice it
-> until I formatted the result of this patch and tried to read the
-> whole thing), we already use "update procedure" to mean these modes
-> of updates collectively.  Either use "update procedures" here (and
-> everywhere else in this patch where it is called "update method"),
-> or adjust the existing "update procedure" to "update method".
-> Either way is fine, but because "update procedure" is not wrong
-> per-se, I think it would be better to use that phrasing that may
-> already be familiar with the "git submodule" users.
+2) The documentation of submodule.$name.update is scattered across three
+   places, which is confusing.
 
-OK, I replaced the method (and strategy in config.txt) with procedure.
+3) The documentation of submodule.$name.update in gitmodules.txt is
+   incorrect, because the code always uses the value from .git/config
+   and never from .gitmodules.
 
-In the previous version was also a typo, which is fixed now. v5 will
-follow shortly.
+4) Documentation of --force was incomplete, because it is only effective
+   in case of checkout method of update.
 
-Thanks.
--Michal
+Fix all these problems by documenting submodule.*.update in
+git-submodule.txt and make everybody else refer to it.
+
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Helped-by: Jens Lehmann <Jens.Lehmann@web.de>
+Signed-off-by: Michal Sojka <sojkam1@fel.cvut.cz>
+---
+ Documentation/config.txt        | 15 ++++++----
+ Documentation/git-submodule.txt | 66 ++++++++++++++++++++++++++++-------------
+ Documentation/gitmodules.txt    | 21 ++++++-------
+ 3 files changed, 65 insertions(+), 37 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index ae6791d..fb2ae37 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -2411,12 +2411,17 @@ status.submodulesummary::
+ 
+ submodule.<name>.path::
+ submodule.<name>.url::
++	The path within this project and URL for a submodule. These
++	variables are initially populated by 'git submodule init';
++	edit them to override the URL and other values found in the
++	`.gitmodules` file. See linkgit:git-submodule[1] and
++	linkgit:gitmodules[5] for details.
++
+ submodule.<name>.update::
+-	The path within this project, URL, and the updating strategy
+-	for a submodule.  These variables are initially populated
+-	by 'git submodule init'; edit them to override the
+-	URL and other values found in the `.gitmodules` file.  See
+-	linkgit:git-submodule[1] and linkgit:gitmodules[5] for details.
++	The default updating strategy for a submodule. This variable
++	is populated by `git submodule init` from the
++	linkgit:gitmodules[5] file. See description of 'update'
++	command in linkgit:git-submodule[1].
+ 
+ submodule.<name>.branch::
+ 	The remote branch name for a submodule, used by `git submodule
+diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+index 8e6af65..067d616 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -154,27 +154,51 @@ If `--force` is specified, the submodule's work tree will be removed even if
+ it contains local modifications.
+ 
+ update::
+-	Update the registered submodules, i.e. clone missing submodules and
+-	checkout the commit specified in the index of the containing repository.
+-	This will make the submodules HEAD be detached unless `--rebase` or
+-	`--merge` is specified or the key `submodule.$name.update` is set to
+-	`rebase`, `merge` or `none`. `none` can be overridden by specifying
+-	`--checkout`. Setting the key `submodule.$name.update` to `!command`
+-	will cause `command` to be run. `command` can be any arbitrary shell
+-	command that takes a single argument, namely the sha1 to update to.
+ +
++--
++Update the registered submodules to match what the superproject
++expects by cloning missing submodules and updating the working tree of
++the submodules. The "updating" can be done in several ways depending
++on command line options and the value of `submodule.<name>.update`
++configuration variable. Supported update methods are:
++
++	checkout;; the commit recorded in the superproject will be
++	    checked out in the submodule on a detached HEAD. This is
++	    done when `--checkout` option is given, or no option is
++	    given, and `submodule.<name>.update` is unset, or if it is
++	    set to 'checkout'.
+++
++If `--force` is specified, the submodule will be checked out (using
++`git checkout --force` if appropriate), even if the commit specified
++in the index of the containing repository already matches the commit
++checked out in the submodule.
++
++	rebase;; the current branch of the submodule will be rebased
++	    onto the commit recoded in the superproject. This is done
++	    when `--rebase` option is given, or no option is given, and
++	    `submodule.<name>.update` is set to 'rebase'.
++
++	merge;; the commit recorded in the superproject will be merged
++	    into the current branch in the submodule. This is done
++	    when `--merge` option is given, or no option is given, and
++	    `submodule.<name>.update` is set to 'merge'.
++
++	custom command;; arbitrary shell command that takes a single
++	    argument (the sha1 of the commit recorded in the
++	    superproject) is executed. This is done when no option is
++	    given, and `submodule.<name>.update` has the form of
++	    '!command'.
++
++When no option is given and `submodule.<name>.update` is set to 'none',
++the submodule is not updated.
++
+ If the submodule is not yet initialized, and you just want to use the
+ setting as stored in .gitmodules, you can automatically initialize the
+ submodule with the `--init` option.
+-+
++
+ If `--recursive` is specified, this command will recurse into the
+ registered submodules, and update any nested submodules within.
+-+
+-If `--force` is specified, the submodule will be checked out (using
+-`git checkout --force` if appropriate), even if the commit specified in the
+-index of the containing repository already matches the commit checked out in
+-the submodule.
+-
++--
+ summary::
+ 	Show commit summary between the given commit (defaults to HEAD) and
+ 	working tree/index. For a submodule in question, a series of commits
+@@ -238,10 +262,12 @@ OPTIONS
+ 	When running add, allow adding an otherwise ignored submodule path.
+ 	When running deinit the submodule work trees will be removed even if
+ 	they contain local changes.
+-	When running update, throw away local changes in submodules when
+-	switching to a different commit; and always run a checkout operation
+-	in the submodule, even if the commit listed in the index of the
+-	containing repository matches the commit checked out in the submodule.
++	When running update (only effective with the checkout method),
++	throw away local changes in submodules when switching to a
++	different commit; and always run a checkout operation in the
++	submodule, even if the commit listed in the index of the
++	containing repository matches the commit checked out in the
++	submodule.
+ 
+ --cached::
+ 	This option is only valid for status and summary commands.  These
+@@ -302,7 +328,7 @@ the submodule itself.
+ 	Checkout the commit recorded in the superproject on a detached HEAD
+ 	in the submodule. This is the default behavior, the main use of
+ 	this option is to override `submodule.$name.update` when set to
+-	`merge`, `rebase` or `none`.
++	a value other than `checkout`.
+ 	If the key `submodule.$name.update` is either not explicitly set or
+ 	set to `checkout`, this option is implicit.
+ 
+diff --git a/Documentation/gitmodules.txt b/Documentation/gitmodules.txt
+index f6c0dfd..7e8fb87 100644
+--- a/Documentation/gitmodules.txt
++++ b/Documentation/gitmodules.txt
+@@ -38,18 +38,15 @@ submodule.<name>.url::
+ In addition, there are a number of optional keys:
+ 
+ submodule.<name>.update::
+-	Defines what to do when the submodule is updated by the superproject.
+-	If 'checkout' (the default), the new commit specified in the
+-	superproject will be checked out in the submodule on a detached HEAD.
+-	If 'rebase', the current branch of the submodule will be rebased onto
+-	the commit specified in the superproject. If 'merge', the commit
+-	specified in the superproject will be merged into the current branch
+-	in the submodule.
+-	If 'none', the submodule with name `$name` will not be updated
+-	by default.
+-
+-	This config option is overridden if 'git submodule update' is given
+-	the '--merge', '--rebase' or '--checkout' options.
++	Defines the default update method for the named submodule,
++	i.e. how the submodule is updated by "git submodule update"
++	command in the superproject. This is only used by `git
++	submodule init` to initialize the configuration variable of
++	the same name. Allowed values here are 'checkout', 'rebase',
++	'merge' or 'none'. See description of 'update' command in
++	linkgit:git-submodule[1] for their meaning. Note that the
++	'!command' form is intentionally ignored here for security
++	reasons.
+ 
+ submodule.<name>.branch::
+ 	A remote branch name for tracking updates in the upstream submodule.
+-- 
+2.1.4
