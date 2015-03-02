@@ -1,83 +1,114 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] git: make was_alias non-static
-Date: Sun, 1 Mar 2015 18:44:20 -0500
-Message-ID: <CAPig+cQdFSjN55o7E_F-Xr4HCax+JwzxYG90N0n4UXxe3yxNcg@mail.gmail.com>
-References: <1425192531-11951-1-git-send-email-kuleshovmail@gmail.com>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: [PATCH v4 2/2] gitk: synchronize config write
+Date: Mon, 2 Mar 2015 11:10:51 +1100
+Message-ID: <20150302001050.GC24862@iris.ozlabs.ibm.com>
+References: <1415571602-5858-1-git-send-email-max@max630.net>
+ <1415571602-5858-3-git-send-email-max@max630.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Alexander Kuleshov <kuleshovmail@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 02 00:44:35 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Max Kirillov <max@max630.net>
+X-From: git-owner@vger.kernel.org Mon Mar 02 01:33:50 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YSDXD-0007lE-2s
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Mar 2015 00:44:31 +0100
+	id 1YSEIu-0007Ay-IB
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Mar 2015 01:33:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751967AbbCAXoW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Mar 2015 18:44:22 -0500
-Received: from mail-yh0-f53.google.com ([209.85.213.53]:47002 "EHLO
-	mail-yh0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751313AbbCAXoV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Mar 2015 18:44:21 -0500
-Received: by yhzz6 with SMTP id z6so12960104yhz.13
-        for <git@vger.kernel.org>; Sun, 01 Mar 2015 15:44:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=zHPocTEI2qGmRQF2yb+t8a8j1UZijDqMrTz1q8lGm04=;
-        b=v6AIOme6cgOtmD2phWdCgyhUx3XB0/SteBdCOPrjRTVf5ZtNDKitQP2MKKlA5XJVPC
-         GSZeh/+thx51xD6OOtatvVXw/Z+rPsKZ0aaVo02SLREyfyY3+KtrPKhMf0+9+k34fDF+
-         92zZ5OwarJxbriMJT3sLPB7XGtcH0vOapVVYlJF76cBHD9keC80VsnzAx3DF4fWqMVgr
-         7qTZFEB00xbvJqdoQxWBeUYYXqE11+dcb8+b+f1azxgs4lmcRJuN6fnZ9w7rPD/VM9pU
-         8B+6kKDILH4AEWWHAJT0eYjuV2V8lLSrsyeXtibsIO95nUAyHWFgOzeyprQ7l9kfe5qc
-         zlrA==
-X-Received: by 10.170.136.19 with SMTP id d19mr25330259ykc.2.1425253460320;
- Sun, 01 Mar 2015 15:44:20 -0800 (PST)
-Received: by 10.170.73.7 with HTTP; Sun, 1 Mar 2015 15:44:20 -0800 (PST)
-In-Reply-To: <1425192531-11951-1-git-send-email-kuleshovmail@gmail.com>
-X-Google-Sender-Auth: zXUdhulkv1mAmhfVaq1o6Xwwais
+	id S1753289AbbCBAdo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Mar 2015 19:33:44 -0500
+Received: from ozlabs.org ([103.22.144.67]:56651 "EHLO ozlabs.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753248AbbCBAdm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Mar 2015 19:33:42 -0500
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 0E03B1400A0; Mon,  2 Mar 2015 11:33:40 +1100 (AEDT)
+Content-Disposition: inline
+In-Reply-To: <1415571602-5858-3-git-send-email-max@max630.net>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264568>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264569>
 
-On Sun, Mar 1, 2015 at 1:48 AM, Alexander Kuleshov
-<kuleshovmail@gmail.com> wrote:
-> 'was_alias' variable does not need to store it's value each iteration in the
-> loop, anyway this variable changes it's value with run_argv. So it does not
-> need to be static.
->
-> Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
-> ---
->  git.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/git.c b/git.c
-> index 1780233..b8b6520 100644
-> --- a/git.c
-> +++ b/git.c
-> @@ -682,7 +682,7 @@ int main(int argc, char **av)
->
->         while (1) {
->                 static int done_help = 0;
+On Mon, Nov 10, 2014 at 12:20:02AM +0200, Max Kirillov wrote:
+> If several gitk instances are closed simultaneously, safestuff procedure
+> can run at the same time, resulting in a conflict which may cause losing
+> of some of the instance's changes, failing the saving operation or even
+> corrupting the configuration file. This can happen, for example, at user
+> session closing, or at group closing of all instances of an application
+> which is possible in some desktop environments.
+> 
+> To avoid this, make sure that only one saving operation is in progress.
+> It is guarded by existance of $config_file_tmp file. Both creating the
+> file and moving it to $config_file are atomic operations, so it should
+> be reliable.
+> 
+> Reading does not need to be syncronized, because moving is atomic
+> operation, and the $config_file always refers to full and correct file.
+> But, if there is a stale $config_file_tmp file, report it at gitk start.
+> If such file is detected at saving, just abort the saving, because this
+> is how gitk used to handle errors while saving.
+> 
+> Signed-off-by: Max Kirillov <max@max630.net>
 
-'done_help' could receive similar treatment by dropping 'static' and
-moving it outside the 'while' loop. Doing so would make the logic
-easier to understand.
+The idea looks good; I have a couple of comments on the patch.  First,
+50 tries over 5 seconds seems a bit excessive to me, wouldn't (say) 20
+tries be enough?  Is the 50 the result of some analysis?
 
-> -               static int was_alias = 0;
-> +               int was_alias = 0;
+> +	    error_popup "Probably there is stale $config_file_tmp file; config saving is going to fail. Check if it is being used by any existing gitk process and remove it otherwise"
 
-No need for the 0 initialization since 'was_alias' is being assigned
-immediately below.
+I would word this as "There appears to be a stale $config_file_tmp
+file, which will prevent gitk from saving its configuration on exit.
+Please remove it if it is not being used by any existing gitk
+process."
 
->                 was_alias = run_argv(&argc, &argv);
->                 if (errno != ENOENT)
->                         break;
-> --
-> 2.3.1.422.ge618558.dirty
+> @@ -2811,11 +2824,16 @@ proc savestuff {w} {
+>  
+>      if {$stuffsaved} return
+>      if {![winfo viewable .]} return
+> +    set remove_tmp 0
+>      catch {
+> -	if {[file exists $config_file_tmp]} {
+> -	    file delete -force $config_file_tmp
+> +	set try_count 0
+> +	while {[catch {set f [open $config_file_tmp {WRONLY CREAT EXCL}]}]} {
+> +	    if {[incr try_count] > 50} {
+> +		error "Unable to write config file: $config_file_tmp exists"
+> +	    }
+> +	    after 100
+>  	}
+> -	set f [open $config_file_tmp w]
+> +	set remove_tmp 1
+>  	if {$::tcl_platform(platform) eq {windows}} {
+>  	    file attributes $config_file_tmp -hidden true
+>  	}
+> @@ -2878,6 +2896,14 @@ proc savestuff {w} {
+>  	puts $f "}"
+>  	close $f
+>  	file rename -force $config_file_tmp $config_file
+> +	set remove_tmp 0
+> +	return ""
+> +    } err
+> +    if {$err ne ""} {
+> +	puts "Error saving config: $err"
+
+I would suggest checking the return from the catch statement, like
+this:
+
+	if {[catch {
+	    ...
+	    file rename -force $config_file_tmp $config_file
+	} err]} {
+	    puts "Error saving config: $err"
+	    if {$remove_tmp} {
+		file delete -force $config_file_tmp
+	    }
+	}
+
+rather than doing a return inside the catch.
+
+Paul.
