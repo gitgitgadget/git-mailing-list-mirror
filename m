@@ -1,104 +1,105 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] git: make was_alias and done_help non-static
-Date: Mon, 2 Mar 2015 15:29:18 -0500
-Message-ID: <20150302202918.GA22211@peff.net>
-References: <1425297757-16431-1-git-send-email-kuleshovmail@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Use unsigned char to squash compiler warnings
+Date: Mon, 02 Mar 2015 12:29:49 -0800
+Message-ID: <xmqqoaob9m82.fsf@gitster.dls.corp.google.com>
+References: <1425324151-5480-1-git-send-email-bdwalton@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Alexander Kuleshov <kuleshovmail@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 02 21:29:32 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Ben Walton <bdwalton@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 02 21:30:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YSWy2-0006ed-Fl
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Mar 2015 21:29:30 +0100
+	id 1YSWzK-0007Cy-5t
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Mar 2015 21:30:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753851AbbCBU3V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Mar 2015 15:29:21 -0500
-Received: from cloud.peff.net ([50.56.180.127]:55080 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753447AbbCBU3V (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Mar 2015 15:29:21 -0500
-Received: (qmail 22809 invoked by uid 102); 2 Mar 2015 20:29:20 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 02 Mar 2015 14:29:20 -0600
-Received: (qmail 9759 invoked by uid 107); 2 Mar 2015 20:29:25 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 02 Mar 2015 15:29:25 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 02 Mar 2015 15:29:18 -0500
-Content-Disposition: inline
-In-Reply-To: <1425297757-16431-1-git-send-email-kuleshovmail@gmail.com>
+	id S1754548AbbCBUaq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Mar 2015 15:30:46 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:60010 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754143AbbCBUap (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Mar 2015 15:30:45 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8A0FE3DD5C;
+	Mon,  2 Mar 2015 15:30:44 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=D1B07hqIOU+tPdh6VZF7QTA0v6s=; b=L9fxUp
+	V1SRVD9TnXHZL9RIAPMn9Hy7aG+6J7cUGYH0ZZVDrgicuJoPNS84fabqg7nyubFb
+	oS9QhEeBnNI2A43qx5Mua7MkrVNmEaCN/o6qMnGcw9HwdLqN2MYlORe98MV2rZIi
+	Vq6BNOvlKElk7huS0eqM43JTFJ6RM5tPAP2D8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=HlRSUJT4ULAacYYY39uX/6OjO4OdGrec
+	5qgbi8K99BGO3C32EfRMmGu+IVrznRnGQB13x+Ld/C05NmqjgZL9DRXL654I1h2E
+	EpQR+S1Goen8yG+AT2cAdse2LhTmsuO69WS6kp7lZMauHjJ6omAQ3isFGzrvFnVI
+	puRtfyz4BCU=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 75EA33DD5B;
+	Mon,  2 Mar 2015 15:30:44 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E89C13DD2B;
+	Mon,  2 Mar 2015 15:29:50 -0500 (EST)
+In-Reply-To: <1425324151-5480-1-git-send-email-bdwalton@gmail.com> (Ben
+	Walton's message of "Mon, 2 Mar 2015 19:22:31 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: E09CC99C-C11A-11E4-80B0-29999F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264622>
 
-On Mon, Mar 02, 2015 at 06:02:37PM +0600, Alexander Kuleshov wrote:
+Ben Walton <bdwalton@gmail.com> writes:
 
-> 'was_alias' variable does not need to store it's value on each
-> iteration in the loop, anyway this variable changes it's value with run_argv.
-> 
-> 'done_help' variable does not need to be static variable too if we'll move it
-> out the loop.
-> 
-> So these variables do not need to be static.
-
-Agreed, but...
-
-> diff --git a/git.c b/git.c
-> index 1780233..96723b8 100644
-> --- a/git.c
-> +++ b/git.c
-> @@ -619,6 +619,7 @@ int main(int argc, char **av)
->  {
->  	const char **argv = (const char **) av;
->  	const char *cmd;
-> +	int done_help, was_alias;
-
-Now done_help is not initialized, but we read from it before assigning
-it. And I think there is no need for was_alias to go outside the loop,
-right?
-
->  	startup_info = &git_startup_info;
+> Sun Studio on Solaris issues warnings about improper initialization
+> values being used when defining tolower_trans_tbl in
+> ctype.c. tolower_trans_tbl is defined as char[], which studio's
+> compiler defaults to signed char[] due to the Solaris ABI. To resolve
+> this, instead of supplying -xchar or another option at build time,
+> declare tolower_trans_tbl as unsigned char.  Update all appropriate
+> references to the new type.
+>
+> Signed-off-by: Ben Walton <bdwalton@gmail.com>
+> ---
+>  ctype.c           | 2 +-
+>  git-compat-util.h | 2 +-
+>  kwset.c           | 8 ++++----
+>  kwset.h           | 2 +-
+>  4 files changed, 7 insertions(+), 7 deletions(-)
+>
+> diff --git a/ctype.c b/ctype.c
+> index 0bfebb4..fc0225c 100644
+> --- a/ctype.c
+> +++ b/ctype.c
+> @@ -30,7 +30,7 @@ const unsigned char sane_ctype[256] = {
+>  };
 >  
-> @@ -681,8 +682,6 @@ int main(int argc, char **av)
->  	setup_path();
->  
->  	while (1) {
-> -		static int done_help = 0;
-> -		static int was_alias = 0;
->  		was_alias = run_argv(&argc, &argv);
+>  /* For case-insensitive kwset */
+> -const char tolower_trans_tbl[256] = {
+> +const unsigned char tolower_trans_tbl[256] = {
+>  	0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+>  	0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f,
+>  	0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17,
 
-Dropping the initialization of was_alias is fine, since we always assign
-to it before reading. That becomes more obvious if we leave it in the
-loop, and we can even assign in its declaration.
+It is not obvious from the context but later elements in this array
+have values above 0x7f.  So you are saying your compiler complains
+when you write:
 
-So all together, like:
+	signed char ch = 0xff;
 
-diff --git a/git.c b/git.c
-index acde36a..8dbe12f 100644
---- a/git.c
-+++ b/git.c
-@@ -635,6 +635,7 @@ int main(int argc, char **av)
- {
- 	const char **argv = (const char **) av;
- 	const char *cmd;
-+	int done_help = 0;
- 
- 	startup_info = &git_startup_info;
- 
-@@ -697,9 +698,7 @@ int main(int argc, char **av)
- 	setup_path();
- 
- 	while (1) {
--		static int done_help = 0;
--		static int was_alias = 0;
--		was_alias = run_argv(&argc, &argv);
-+		int was_alias = run_argv(&argc, &argv);
- 		if (errno != ENOENT)
- 			break;
- 		if (was_alias) {
+which sort of makes sense (because you actually are storing -1 not
+255 to the variable).  Throughout our codebase (and kwset is a
+borrowed code that does not count as "our" codebase ;-) we do use
+unsigned when we mean we want 255 and not -1, and this patch fixes
+that borrowed code to be in line with the rest.
+
+The conversion looked good from a cursory view; I didn't check it
+very carefully though.
+
+Thanks.
