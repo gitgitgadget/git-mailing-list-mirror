@@ -1,113 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git for design
-Date: Tue, 03 Mar 2015 12:48:06 -0800
-Message-ID: <xmqqvbihajuh.fsf@gitster.dls.corp.google.com>
-References: <CAAcjnBVBeuYL1kuCG1yF5W1KUNik3hO8e2R0g0DdXDS6u+eOyQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Ernesto Alonso =?utf-8?Q?Monta=C3=B1o_Ram=C3=ADrez?= 
-	<ernestoalonso.mr@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 03 21:48:16 2015
+From: Sudhanshu Shekhar <sudshekhar02@gmail.com>
+Subject: [PATCH] reset: allow "-" short hand for previous commit
+Date: Wed,  4 Mar 2015 02:21:51 +0530
+Message-ID: <1425415911-496-1-git-send-email-sudshekhar02@gmail.com>
+Cc: SudShekhar <sudshekhar02@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 03 21:52:25 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YStjk-0004t8-3g
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Mar 2015 21:48:16 +0100
+	id 1YStnh-00076C-3V
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Mar 2015 21:52:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757295AbbCCUsL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Mar 2015 15:48:11 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:53498 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1757223AbbCCUsK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 Mar 2015 15:48:10 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 372B03D079;
-	Tue,  3 Mar 2015 15:48:09 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=gXbdWUBrldXY
-	pXtKlMoq9C4yKe0=; b=XKpkW6nfrVT0xgMEG+Dp53VpPbfsfBx8IfXEuqmnFqai
-	zCXjE/3TRMa2nR6dkEkKtevxcXX58okscCSgNhUi4+RgqnN+sU7CT9OJt2HWs57X
-	j2nHXMocxiAE3WAoC77MWau1lrtc36CCe6yitU1gLo42l8j87yyumIdhxZ31ax8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=EEj64O
-	nM4JdCGDBcCpaenwpSJ9vqdXngewHjqxDt61JoKi6fPvuwtIkfWubIlu4PqRhqEg
-	UIKEDtaKMqPAbqrqqIVum8MwmHC9foyzSPbei0XvImLT59HXqsQyn2BwugKdAue3
-	wLnQqbqBFgQlLHGAmSXlKmeNlMGU7hELfFIoc=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 300F93D078;
-	Tue,  3 Mar 2015 15:48:09 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A89B43D077;
-	Tue,  3 Mar 2015 15:48:08 -0500 (EST)
-In-Reply-To: <CAAcjnBVBeuYL1kuCG1yF5W1KUNik3hO8e2R0g0DdXDS6u+eOyQ@mail.gmail.com>
-	("Ernesto Alonso =?utf-8?Q?Monta=C3=B1o_Ram=C3=ADrez=22's?= message of
- "Tue, 3 Mar 2015
-	13:23:15 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 99544E58-C1E6-11E4-B345-29999F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1756745AbbCCUwR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Mar 2015 15:52:17 -0500
+Received: from mail-pa0-f47.google.com ([209.85.220.47]:37300 "EHLO
+	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756010AbbCCUwQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Mar 2015 15:52:16 -0500
+Received: by paceu11 with SMTP id eu11so13194287pac.4
+        for <git@vger.kernel.org>; Tue, 03 Mar 2015 12:52:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=0HojFvUCCbtbZIwSRbJR/PdujvI9qATSChscb5pGfD0=;
+        b=fE+nr/JX1wd6P3LdI3SYnemCNVbO5eVwbNGrKtfH/emnaIqj4El6HdZ7rtLT2YWa19
+         I9U66C1+JdyrVe98XVit5NhoK0N+NX1/vdKjdvLscXNnw3zMOvW4hpY+0txYTM4mOWUK
+         jtncU5hRqCsCGfs+Q/zu8bwwkTYN982lQa31u1sJfaCQqgRsaGAjHGVtUOYvacpVHI/x
+         SyzoC4281prSQxjElkrRGihVT+itytB7KgBgBZQvecUen4gBuuJONgfu0JF4t+Xt6ixs
+         vFVYY1y2NVFAO9r3wrCQlrKAjzfs5Bq5BqpNZcLli9lXKJGXeago/l0Cr8GBI13FI6On
+         AbWA==
+X-Received: by 10.68.224.71 with SMTP id ra7mr1081411pbc.140.1425415936153;
+        Tue, 03 Mar 2015 12:52:16 -0800 (PST)
+Received: from shekhar-Inspiron-N5110.iiit.ac.in ([14.139.82.6])
+        by mx.google.com with ESMTPSA id n8sm1846754pdm.45.2015.03.03.12.52.13
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 03 Mar 2015 12:52:15 -0800 (PST)
+X-Mailer: git-send-email 2.3.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264688>
 
-Ernesto Alonso Monta=C3=B1o Ram=C3=ADrez  <ernestoalonso.mr@gmail.com> =
-writes:
+From: SudShekhar <sudshekhar02@gmail.com>
 
-> I've a question about Git, can I use this application for design
-> (architecture, no programming)? for example, controlling the versions
-> of designs on AUTOCAD, PHOTOSHOP, ILLUSTRATOR, etc; management of
-> documents...
+Teach reset the same shorthand as checkout and merge. "-" means the
+"previous commit".
 
-Yes you can use this application.
+Signed-off-by: Sudhanshu Shekhar <sudshekhar02@gmail.com>
+---
+This is done as a microproject for gsoc purposes. I am looking forward to your feedback/comments. Thanks
+builtin/reset.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-But it depends on your definition of "use" how "useful" the end
-result would be.  The features programmers find helpful by placing
-their end products (i.e. the source code and text files in general)
-under control in Git are:
-
- 1. You can go back to any arbitrary version.
-
- 2. You can inspect what the textual differences between two
-    arbitrary versions A and B (but most often, two adjacent
-    versions) are.  This is called "diff".
-
- 3. You can take the "textual differences" from 2. and replay the
-    change between A and C on top of another version C, which lets
-    you pretend as if you did the same work you did going from A to
-    B but starting at version C.  This is "apply", "merge",
-    "cherry-pick", and "rebase".
-
-Using Git (or any version control system) on non-text files, you
-would still get the same benefit 1., obviously.
-
-If the assets you feed Git are not something intelligible as "text"
-(and I am guessing AUTOCAD, PHOTOSHOP and ILLUSTRATOR files are
-not), you would not gain 2. or 3. immediately.
-
-You however can still gain benefit 2., if you have a way to
-"compare" two versions of these files in a non-textual way.  For
-example, I do not know AUTOCAD at all, but if the program "autocad"
-has a mode where it lets you feed two AUTOCAD files and point out
-how the two are different visually (let's assume there is such a
-program "autocad-compare" that takes two filename parameters to
-compare), Git has a way for you to plug into its machinery so that
-"git diff v1.0 v2.0 -- an-autocad-file" will write out the file at
-version 1 and version 2 into two temproary files and call out to
-"autocad-compare tmp1 tmp2" to have them compared.
-
-=46or 3., too, Git has a mechanism to plug in a "merge-driver" of your
-own, e.g. if you have a version of an AUTOCAD file A that was
-modified to B by you and modified to C by your colleague and an
-AUTOCAD program "autocad-merge A B C" is a way to merge the work you
-two did starting from the same A to produce B and C into a single
-unified version, then "git merge" can be told to use such an
-external program as a plug-in to perform the file-level merge.
+diff --git a/builtin/reset.c b/builtin/reset.c
+index 4c08ddc..3e0378b 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -205,6 +205,8 @@ static void parse_args(struct pathspec *pathspec,
+ 	 */
+ 
+ 	if (argv[0]) {
++		if(!strcmp(argv[0],"-"))
++			argv[0]="@{-1}";
+ 		if (!strcmp(argv[0], "--")) {
+ 			argv++; /* reset to HEAD, possibly with paths */
+ 		} else if (argv[1] && !strcmp(argv[1], "--")) {
+-- 
+2.3.1
