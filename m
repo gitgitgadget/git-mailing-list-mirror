@@ -1,7 +1,7 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v3 3/7] lock_ref_sha1_basic(): do not set force_write for missing references
-Date: Tue,  3 Mar 2015 12:43:13 +0100
-Message-ID: <1425382997-24984-4-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH v3 6/7] reflog_expire(): ignore --updateref for symbolic references
+Date: Tue,  3 Mar 2015 12:43:16 +0100
+Message-ID: <1425382997-24984-7-git-send-email-mhagger@alum.mit.edu>
 References: <1425382997-24984-1-git-send-email-mhagger@alum.mit.edu>
 Cc: Stefan Beller <sbeller@google.com>,
 	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
@@ -11,99 +11,142 @@ Cc: Stefan Beller <sbeller@google.com>,
 	Jeff King <peff@peff.net>, git@vger.kernel.org,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 03 12:43:39 2015
+X-From: git-owner@vger.kernel.org Tue Mar 03 12:43:50 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YSlEg-0003kG-3R
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Mar 2015 12:43:38 +0100
+	id 1YSlEp-0003qK-Cp
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Mar 2015 12:43:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756300AbbCCLnf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Mar 2015 06:43:35 -0500
-Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:61125 "EHLO
+	id S1756422AbbCCLnn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Mar 2015 06:43:43 -0500
+Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:61132 "EHLO
 	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755934AbbCCLnd (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 Mar 2015 06:43:33 -0500
-X-AuditID: 1207440f-f792a6d000001284-ff-54f59e658ed4
+	by vger.kernel.org with ESMTP id S1756413AbbCCLnm (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 Mar 2015 06:43:42 -0500
+X-AuditID: 1207440f-f792a6d000001284-11-54f59e6d89fd
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id A8.4F.04740.56E95F45; Tue,  3 Mar 2015 06:43:33 -0500 (EST)
+	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id F9.4F.04740.D6E95F45; Tue,  3 Mar 2015 06:43:41 -0500 (EST)
 Received: from michael.fritz.box (p5DDB193E.dip0.t-ipconnect.de [93.219.25.62])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t23BhJqG016748
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t23BhJqJ016748
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Tue, 3 Mar 2015 06:43:30 -0500
+	Tue, 3 Mar 2015 06:43:39 -0500
 X-Mailer: git-send-email 2.1.4
 In-Reply-To: <1425382997-24984-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrOIsWRmVeSWpSXmKPExsUixO6iqJs672uIwdyDXBZdV7qZLBp6rzBb
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrBIsWRmVeSWpSXmKPExsUixO6iqJs772uIwdGtYhZdV7qZLBp6rzBb
 	vL25hNHi9or5zBbdU94yWvxo6WG26O37xGqxeXM7i8WZN42MDpwef99/YPLYOesuu8eCTaUe
-	z3r3MHpcvKTssfiBl8fnTXIB7FHcNkmJJWXBmel5+nYJ3Bl/Dp5hLmjgr9jw5yZrA+Nv7i5G
-	Tg4JAROJU39uMUHYYhIX7q1n62Lk4hASuMwo8ebHP7CEkMAxJomrH0tBbDYBXYlFPc1gcREB
-	NYmJbYdYQGxmgR9MEodW1ILYwgIxEl2/WhhBbBYBVYn/K1vA6nkFXCQ+PrwGtUxO4vzxn8wg
-	NqeAq8TKtVtZuxg5gHa5SNz6UDGBkXcBI8MqRrnEnNJc3dzEzJzi1GTd4uTEvLzUIl0TvdzM
-	Er3UlNJNjJBA5N/B2LVe5hCjAAejEg/vBPavIUKsiWXFlbmHGCU5mJREeeVnA4X4kvJTKjMS
-	izPii0pzUosPMUpwMCuJ8DLPBcrxpiRWVqUW5cOkpDlYlMR51Zeo+wkJpCeWpGanphakFsFk
-	ZTg4lCR4J4E0ChalpqdWpGXmlCCkmTg4QYZzSYkUp+alpBYllpZkxIPiIr4YGBkgKR6gvT/n
-	gOwtLkjMBYpCtJ5iVJQS55UFmSsAksgozYMbC0svrxjFgb4U5o0HqeIBpia47ldAg5mABt9S
-	/AIyuCQRISXVwLggJs+Lp35RI4eO373eiBIzuSvbpI7Xs4v4JhodWPt79bqAk9zL/u6fxuJi
-	qOssoacetjf+4B3Tb7rKK+8yrIx/uuhnwBmOy25H7tsFaRlmJfrITlFmYZBkaTS7 
+	z3r3MHpcvKTssfiBl8fnTXIB7FHcNkmJJWXBmel5+nYJ3Bl98zezFFyUrmh7O5WlgbFFrIuR
+	k0NCwETiw7EfbBC2mMSFe+uBbC4OIYHLjBInL99mh3COMUmcObGcFaSKTUBXYlFPMxOILSKg
+	JjGx7RALiM0s8INJ4tCKWhBbWCBYoqnrJthUFgFViRmXFoHV8Aq4SOx9NpsZYpucxPnjP8Fs
+	TgFXiZVrtwLN5wBa5iJx60PFBEbeBYwMqxjlEnNKc3VzEzNzilOTdYuTE/PyUot0TfRyM0v0
+	UlNKNzFCQpF/B2PXeplDjAIcjEo8vBPYv4YIsSaWFVfmHmKU5GBSEuWVnw0U4kvKT6nMSCzO
+	iC8qzUktPsQowcGsJMLLPBcox5uSWFmVWpQPk5LmYFES51Vfou4nJJCeWJKanZpakFoEk5Xh
+	4FCS4J0E0ihYlJqeWpGWmVOCkGbi4AQZziUlUpyal5JalFhakhEPioz4YmBsgKR4gPb+nAOy
+	t7ggMRcoCtF6ilFRSpxXFmSuAEgiozQPbiwswbxiFAf6Upg3HqSKB5ic4LpfAQ1mAhp8S/EL
+	yOCSRISUVAOjy7Um1gBXKc+VMtfl1j3i7RcXeO8tbl+/rPhUYMjTANs/cTHOtS6HdxcqLujv
+	fNyZcXF6+sdbsYYPMp9lWdQoWaRN/T01oosl1nWhAfOk2fzu744IXTJT8A96d2Xv 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264652>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264653>
 
-If a reference is missing, its SHA-1 will be null_sha1, which can't
-possibly match a new value that ref_transaction_commit() is trying to
-update it to. So there is no need to set force_write in this scenario.
+If we are expiring reflog entries for a symbolic reference, then how
+should --updateref be handled if the newest reflog entry is expired?
+
+Option 1: Update the referred-to reference. (This is what the current
+code does.) This doesn't make sense, because the referred-to reference
+has its own reflog, which hasn't been rewritten.
+
+Option 2: Update the symbolic reference itself (as in, REF_NODEREF).
+This would convert the symbolic reference into a non-symbolic
+reference (e.g., detaching HEAD), which is surely not what a user
+would expect.
+
+Option 3: Error out. This is plausible, but it would make the
+following usage impossible:
+
+    git reflog expire ... --updateref --all
+
+Option 4: Ignore --updateref for symbolic references.
+
+We choose to implement option 4.
+
+Note: another problem in this code will be fixed in a moment.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs.c | 15 ++++++---------
- 1 file changed, 6 insertions(+), 9 deletions(-)
+ Documentation/git-reflog.txt |  3 ++-
+ refs.c                       | 15 ++++++++++++---
+ 2 files changed, 14 insertions(+), 4 deletions(-)
 
+diff --git a/Documentation/git-reflog.txt b/Documentation/git-reflog.txt
+index 730106c..5e7908e 100644
+--- a/Documentation/git-reflog.txt
++++ b/Documentation/git-reflog.txt
+@@ -88,7 +88,8 @@ Options for `expire`
+ 
+ --updateref::
+ 	Update the reference to the value of the top reflog entry (i.e.
+-	<ref>@\{0\}) if the previous top entry was pruned.
++	<ref>@\{0\}) if the previous top entry was pruned.  (This
++	option is ignored for symbolic references.)
+ 
+ --rewrite::
+ 	If a reflog entry's predecessor is pruned, adjust its "old"
 diff --git a/refs.c b/refs.c
-index dd30bfa..3ed9ea6 100644
+index 7a2f53f..48bb9e8 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -2258,7 +2258,6 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
- 	int type, lflags;
- 	int mustexist = (old_sha1 && !is_null_sha1(old_sha1));
- 	int resolve_flags = 0;
--	int missing = 0;
- 	int attempts_remaining = 3;
+@@ -4028,6 +4028,7 @@ int reflog_expire(const char *refname, const unsigned char *sha1,
+ 	struct ref_lock *lock;
+ 	char *log_file;
+ 	int status = 0;
++	int type;
  
- 	lock = xcalloc(1, sizeof(struct ref_lock));
-@@ -2297,13 +2296,13 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
- 			orig_refname, strerror(errno));
- 		goto error_return;
- 	}
--	missing = is_null_sha1(lock->old_sha1);
--	/* When the ref did not exist and we are creating it,
--	 * make sure there is no existing ref that is packed
--	 * whose name begins with our refname, nor a ref whose
--	 * name is a proper prefix of our refname.
-+	/*
-+	 * If the ref did not exist and we are creating it, make sure
-+	 * there is no existing packed ref whose name begins with our
-+	 * refname, nor a packed ref whose name is a proper prefix of
-+	 * our refname.
+ 	memset(&cb, 0, sizeof(cb));
+ 	cb.flags = flags;
+@@ -4039,7 +4040,7 @@ int reflog_expire(const char *refname, const unsigned char *sha1,
+ 	 * reference itself, plus we might need to update the
+ 	 * reference if --updateref was specified:
  	 */
--	if (missing &&
-+	if (is_null_sha1(lock->old_sha1) &&
- 	     !is_refname_available(refname, skip, get_packed_refs(&ref_cache))) {
- 		last_errno = ENOTDIR;
- 		goto error_return;
-@@ -2319,8 +2318,6 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
- 	lock->ref_name = xstrdup(refname);
- 	lock->orig_ref_name = xstrdup(orig_refname);
- 	ref_file = git_path("%s", refname);
--	if (missing)
--		lock->force_write = 1;
- 	if ((flags & REF_NODEREF) && (type & REF_ISSYMREF))
- 		lock->force_write = 1;
+-	lock = lock_ref_sha1_basic(refname, sha1, NULL, 0, NULL);
++	lock = lock_ref_sha1_basic(refname, sha1, NULL, 0, &type);
+ 	if (!lock)
+ 		return error("cannot lock ref '%s'", refname);
+ 	if (!reflog_exists(refname)) {
+@@ -4076,10 +4077,18 @@ int reflog_expire(const char *refname, const unsigned char *sha1,
+ 	(*cleanup_fn)(cb.policy_cb);
  
+ 	if (!(flags & EXPIRE_REFLOGS_DRY_RUN)) {
++		/*
++		 * It doesn't make sense to adjust a reference pointed
++		 * to by a symbolic ref based on expiring entries in
++		 * the symbolic reference's reflog.
++		 */
++		int update = (flags & EXPIRE_REFLOGS_UPDATE_REF) &&
++			!(type & REF_ISSYMREF);
++
+ 		if (close_lock_file(&reflog_lock)) {
+ 			status |= error("couldn't write %s: %s", log_file,
+ 					strerror(errno));
+-		} else if ((flags & EXPIRE_REFLOGS_UPDATE_REF) &&
++		} else if (update &&
+ 			(write_in_full(lock->lock_fd,
+ 				sha1_to_hex(cb.last_kept_sha1), 40) != 40 ||
+ 			 write_str_in_full(lock->lock_fd, "\n") != 1 ||
+@@ -4090,7 +4099,7 @@ int reflog_expire(const char *refname, const unsigned char *sha1,
+ 		} else if (commit_lock_file(&reflog_lock)) {
+ 			status |= error("unable to commit reflog '%s' (%s)",
+ 					log_file, strerror(errno));
+-		} else if ((flags & EXPIRE_REFLOGS_UPDATE_REF) && commit_ref(lock)) {
++		} else if (update && commit_ref(lock)) {
+ 			status |= error("couldn't set %s", lock->ref_name);
+ 		}
+ 	}
 -- 
 2.1.4
