@@ -1,71 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git: make "git -C '' <cmd>" not to barf
-Date: Tue, 3 Mar 2015 10:00:13 -0800
-Message-ID: <CAPc5daWFAV2P_MCCo=oz2Be=2_L5NVxNweY+rUbU5OcK84wVaQ@mail.gmail.com>
-References: <1425397291-25435-1-git-send-email-karthik.188@gmail.com> <vpq385mgifi.fsf@anie.imag.fr>
+From: Paul Tan <pyokagan@gmail.com>
+Subject: Re: [GSoC15] Interested in contributing to git
+Date: Wed, 4 Mar 2015 02:08:26 +0800
+Message-ID: <CACRoPnTAFXBRR3uv8gL8tGfYNo_ygNutJZuPm=Sq0Ae3obF-kw@mail.gmail.com>
+References: <CACRoPnSrjysUhC77LXVjy5VJxFFPoiRuhD7pMab_8T2Pua_T+A@mail.gmail.com>
+	<vpqbnkagiie.fsf@anie.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Karthik Nayak <karthik.188@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
+Cc: git@vger.kernel.org
 To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Mar 03 19:00:42 2015
+X-From: git-owner@vger.kernel.org Tue Mar 03 19:08:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YSr7W-0003ZP-LY
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Mar 2015 19:00:39 +0100
+	id 1YSrFA-00087G-To
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Mar 2015 19:08:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757058AbbCCSAe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Mar 2015 13:00:34 -0500
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:36266 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755385AbbCCSAd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Mar 2015 13:00:33 -0500
-Received: by obbnt9 with SMTP id nt9so1414851obb.3
-        for <git@vger.kernel.org>; Tue, 03 Mar 2015 10:00:33 -0800 (PST)
+	id S1756366AbbCCSI2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Mar 2015 13:08:28 -0500
+Received: from mail-lb0-f171.google.com ([209.85.217.171]:37692 "EHLO
+	mail-lb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751477AbbCCSI2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Mar 2015 13:08:28 -0500
+Received: by lbvn10 with SMTP id n10so38895901lbv.4
+        for <git@vger.kernel.org>; Tue, 03 Mar 2015 10:08:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=f8TUujyI+0sJC4a1J7V/hswMQOZO/h23zebu6QTE3Is=;
-        b=hFf1ahSHbYSdoLtUNosZ3+AyU7eJLeS0WdbzX6IKXIa18i66WXKveVU1g6mKDw5MKX
-         2BXmrc50NmMiau/r7yxiFuSxU1OdPoiGBlpEgSXTGlsElVuxLt5PFjk9ztvQxRRqjBcQ
-         hcZlvqbAkYU8SKi51Q9sQN8o8GmExlEdoZopsDGxNpxAq3JzGyu5Hep8U7rQ/uU5PvQ1
-         8j77Hv1BpJkW9y5sVlWEwvtDY9IKVF+MhRj2/UsqrtwLTkNkGzEFB+E1wK64jym6XWwP
-         urlV/g502wzSR0BreiWl2Xzmwf4hxphPDebNGeM/6dHpNJ+3As0e0QRRZ3BfWTr7SsfF
-         1TBA==
-X-Received: by 10.182.205.133 with SMTP id lg5mr20544obc.61.1425405633178;
- Tue, 03 Mar 2015 10:00:33 -0800 (PST)
-Received: by 10.202.48.132 with HTTP; Tue, 3 Mar 2015 10:00:13 -0800 (PST)
-In-Reply-To: <vpq385mgifi.fsf@anie.imag.fr>
-X-Google-Sender-Auth: zsq8VPJnQc2rMU_c1ZnlOWveRz8
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=xFvVfXfSGP8I5ZgfZV3Dpxvd7oR7xqf/I94L8CiNqZc=;
+        b=iTZD1sNdxQpecRSbKnlQSYGWdQgLzWX5PRD1SAVCAAtfWH1MN+v01IxCZdtbFII40B
+         0pvzgOo/iYZymKvf+lmlT7PlCYTjEvGHy4Qqe1ajOfkSUtj8dj9vlrwfkQzxLiSitPNj
+         UxB4ems1lWpWx46QRYCb0rXxCZdUo5iiyPB9cRpVYWoBJpCdnCGQu1Kls0xdxGqtvDtS
+         0gTPdqdNkqNMZx8VOFy7qsAsOblFHukfY9Z4STDuLWw/vjLZ/trzw/l44xs5IAXO3JY3
+         aEo6oPlNELm0+tdFnOMR59Cma+fvLQvxxzjGtlNyNhDEW7UQnGVNpwRJjc9OI6Eu7avS
+         GYbw==
+X-Received: by 10.152.205.76 with SMTP id le12mr13208lac.65.1425406106611;
+ Tue, 03 Mar 2015 10:08:26 -0800 (PST)
+Received: by 10.112.130.228 with HTTP; Tue, 3 Mar 2015 10:08:26 -0800 (PST)
+In-Reply-To: <vpqbnkagiie.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264674>
 
-On Tue, Mar 3, 2015 at 8:22 AM, Matthieu Moy
+Hi Matthieu,
+
+On Wed, Mar 4, 2015 at 12:20 AM, Matthieu Moy
 <Matthieu.Moy@grenoble-inp.fr> wrote:
-> Karthik Nayak <karthik.188@gmail.com> writes:
+> Be carefull: a GSoC is a full-time job. The GSoC itself ends on August
+> 21st, so there would be a substantial (too big?) overlap between the
+> GSoC and your studies.
+
+I understand. I will have to try my best to complete most of the work
+before then.
+
+>> I understand that I have to complete a microproject. I would like
+>> complete "Move ~/.git-credentials and ~/.git-credential-cache to
+>> ~/.config/git". I'm thinking that the XDG locations should take
+>> precedence over the non-XDG locations?
 >
->> now it works like cd "" which silently succeeds
+> The logic is different for reading and for writting, see how Git deals
+> with it for ~/.gitconfig for example. Essentially, we read both, and we
+> write to the one which exists if there's only one.
+
+I will try to implement something similar. My idea for credential-store.c is:
+
+* For "get", lookup_credential() on the XDG file first if it exists,
+and if it fails call it on the home file.
+* For "remove", remove_credential() from both the xdg file and the home file.
+* For "store", if the XDG file exists store_credential() in the XDG
+file and remove_credential() from the home file, otherwise just
+store_credential() in the home file.
+* For all operations, if "--file" is provided, use it instead.
+
+> I'm the one who proposed this microproject, and some feedback on the
+> mailing-list was that it was not so "micro" and probably too big
+> already.
+> Both for the microproject and the GSoC itself, don't be too ambitious on
+> the feature you target, and don't underestimate the effort needed to get
+> from "the code looks OK to me" to "the code has been reviewed on list
+> and merged upstream".
+
+Thanks, I will keep that in mind.
+
+Also, quick question, where should the XDG tests go for
+git-credential-store? I see t1306-xdg-files.sh and
+t0302-credentials-store.sh.
+
+> Cheers,
 >
-> Missing "." at end of sentence.
+> --
+> Matthieu Moy
+> http://www-verimag.imag.fr/~moy/
 
-And lack of capitalization at the beginning.
-
-More importantly, lack of justification--why is it a good idea to make
-"it works like cd ''" in the first place?
-
->
->>  git.c | 4 +++-
->
-> That would probably also deserve a test.
-
-Another "huh?" I had on the actual code was if this counts as "envchanged", if
-you are not actually changing the directory at all.
-
-Is this meant as a "micro" for GSoC, by the way?
+Regards,
+Paul
