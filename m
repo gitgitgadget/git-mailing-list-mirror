@@ -1,92 +1,112 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] xmerge.c: fix xdl_merge to conform with the manual
-Date: Tue, 03 Mar 2015 12:32:19 -0800
-Message-ID: <xmqqzj7takks.fsf@gitster.dls.corp.google.com>
-References: <1425404233-89907-1-git-send-email-anton.a.trunov@gmail.com>
+From: Mike Botsko <botsko@gmail.com>
+Subject: Unexpected/unexplained difference between git pull --rebase and git rebase
+Date: Tue, 3 Mar 2015 12:39:31 -0800
+Message-ID: <CAPfvZp6oNnM=M-9BAVqAE052jQApH-O_t3gEoq6JWC2kQrR8gg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, jrnieder@gmail.com, charles@hashpling.org,
-	Johannes.Schindelin@gmx.de
-To: Anton Trunov <anton.a.trunov@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 03 21:32:34 2015
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 03 21:39:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YStUX-0004aN-CD
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Mar 2015 21:32:33 +0100
+	id 1YStbM-00005E-TQ
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Mar 2015 21:39:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755820AbbCCUc3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Mar 2015 15:32:29 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:59572 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751441AbbCCUc2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Mar 2015 15:32:28 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 582FD3DBCD;
-	Tue,  3 Mar 2015 15:32:27 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=rNXTFAsVpSSSh51vsx2R7fBk/Y0=; b=nZEUGi
-	NEmutTkz7zxmoIyempl42RyMB9pgiMZYbCi55IauBCPt0QWlITooL0seTTbVGxxc
-	+ViBtd/r115ejkTwVqySq6oHDiCKUVPYRGgwsjpkqIIL0FlFW7hIFJ0MOiFOhUCe
-	d2jWCwliYft7c7GTcGZp8uOGQg9R+iusVBsNw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ol5zVQBqLEdKrvDseWBq+B0+y4S6wtkw
-	xVBB+80kTg5eo/lMgXY7ol5z1xUQJP+ucdaKixYZtUIdaTyZymYoutH0JMw9Mz1L
-	F/A2AmvwcqtPRWoUnXVwDjnOTarkTmzCIjqd0uUy+fi2bT9fDSOlD8vJX3eToI3o
-	vA2LG2DmpzM=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4F9D03DBCC;
-	Tue,  3 Mar 2015 15:32:27 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 58F623DBBF;
-	Tue,  3 Mar 2015 15:32:21 -0500 (EST)
-In-Reply-To: <1425404233-89907-1-git-send-email-anton.a.trunov@gmail.com>
-	(Anton Trunov's message of "Tue, 3 Mar 2015 20:37:00 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 64AFC90E-C1E4-11E4-8B0B-29999F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1756650AbbCCUjd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Mar 2015 15:39:33 -0500
+Received: from mail-qa0-f47.google.com ([209.85.216.47]:64659 "EHLO
+	mail-qa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756590AbbCCUjc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Mar 2015 15:39:32 -0500
+Received: by mail-qa0-f47.google.com with SMTP id v10so30187752qac.6
+        for <git@vger.kernel.org>; Tue, 03 Mar 2015 12:39:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=Bwn3Jt5I/g1DGaIDoU+Nv14YkmTHr5gBS4azLo5Sr/g=;
+        b=tezOPWmT1zKSoN5kAga0ulVStIp3yo32hFOn4JaPyeinw2Ry1gdxY7r86DF9uOgHpf
+         idFIV+ngS1amgFtYyx298flGuc/YDZ7Q+gap+u4G52wEZUEvQToCLZcunXIfD8BJbh97
+         4ulublnMeidrrfbjgBf6UxVe+a4Nl+TuqefZFZg3ryIP7b643jwnH2Bp2GQgPomPvs9U
+         AZzRlJEWSOlhsRo5aZboMSJPncGqBvs/cPLiO+6o3jq7Ln9BDE8lnqDMptEZE8Sil+B7
+         Vkr9bsAA9bX7Nh9Zd6zXweyZalKk4WstBLfzkzyanbySEZcbeer7JfCsQjVPYv6kKzLs
+         UykQ==
+X-Received: by 10.140.81.74 with SMTP id e68mr1038458qgd.41.1425415171593;
+ Tue, 03 Mar 2015 12:39:31 -0800 (PST)
+Received: by 10.140.80.203 with HTTP; Tue, 3 Mar 2015 12:39:31 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264686>
 
-Anton Trunov <anton.a.trunov@gmail.com> writes:
+Hello,
 
-> The git-merge manual says that the ignore-space-change,
-> ignore-all-space, ignore-space-at-eol options preserve our version
-> if their version only introduces whitespace changes to a line.
->
-> So far if there is whitespace-only changes to both sides
-> in *all* lines their version will be used.
+I'm seeing unexpected behavior between "git pull --rebase" and "git
+rebase" commands, which are supposed to be (and always described as)
+synonymous:
 
-I am having hard time understanding the last sentence, especially
-the "So far" part.  Do you mean "With the current code, if ours and
-theirs change whitespaces on all lines, we take theirs"?
+git pull --rebase upstream our-branch-name
 
-I find the description in the documentation is a bit hard to read.
+and
 
-  * If 'their' version only introduces whitespace changes to a line,
-    'our' version is used;
+git fetch upstream
+git rebase upstream/our-branch-name
 
-  * If 'our' version introduces whitespace changes but 'their'
-    version includes a substantial change, 'their' version is used;
+We have a situation where the upstream/our-branch-name was rebased, to
+incorporate changes from master. Somehow, the person who did the
+rebase discarded a merge commit:
 
-  * Otherwise, the merge proceeds in the usual way.
+634b622 Sue Merge pull request #254 from bob/B-07290
+bc76e5b Bob [B-07290] Order Parts Ship To/Comments
 
-And it is unclear if your reading is correct to me.  In your "So
-far" scenario, 'our' version does introduce whitespace changes and
-'their' version does quite a bit of damage to the file (after all,
-they both change *all* lines, right?).  It does not seem too wrong
-to invoke the second clause above and take 'theirs', at least to me.
+became:
 
-It is an entirely different matter if the behaviour the document
-describes is sane, and I didn't ask "git log" what the reasoning
-behind that second point is, but my guess is that a change made by
-them being "substantial" is a sign that it is a whitespace cleanup
-change and we should take the cleanup in such a case, perhaps?
+c1452be Sue [B-07290] Order Parts Ship To/Comments
+
+
+A developer who had a local branch tried to rebase their work (a
+single commit on top of that feature branch).
+
+At the moment, his now-out-of-date branch looks like this:
+
+92b2194 Rick B-07241
+634b622 Sue Merge pull request #254 from dboyle/B-07290
+bc76e5b Bob [B-07290] Order Parts Ship To/Comments
+
+I've done some debugging, and the above "git pull" command generates
+the following and sends it to eval():
+
+git-rebase --onto c1452be62cf271a25d3d74cc63cd67eca51a127d
+634b622870a1016e717067281c7739b1fe08e08d
+
+This process works perfectly. The old commits are discarded and his
+branch now correctly reflects upstream/our-branch-name, with his
+single new commit at the top.
+
+
+However, if he runs the "git rebase" command above, several of the
+commits that have changed hashes (they've also changed patch id
+slightly, because during the rebase someone fixed a merge conflict)
+are treated as new work, and git tries to re-apply them and we get
+tons of merge conflicts.
+
+The git rebase command above is trying to rebase onto:
+
+revisions = c1452be62cf271a25d3d74cc63cd67eca51a127d..92b2194e3adc29eb3fadd93ddded0ed34513d587
+
+
+These two features should work the same, yet one is choosing a
+different commit hash than the other.
+
+If this is not a bug, I can't find anyone who can explain what's
+happening. I'm using git 2.2.1 on mac, but other people on our team
+have a variety of older versions and we're all seeing the same result.
+
+Thanks!
+
+-- 
+Mike Botsko
+Lead Dev @ Helion3
+Ph: 1-(503)-897-0155
