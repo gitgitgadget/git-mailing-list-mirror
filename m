@@ -1,84 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] reset: allow "-" short hand for previous commit
-Date: Tue, 03 Mar 2015 15:17:53 -0800
-Message-ID: <xmqq1tl5acwu.fsf@gitster.dls.corp.google.com>
-References: <1425415911-496-1-git-send-email-sudshekhar02@gmail.com>
-	<vpq4mq13f69.fsf@anie.imag.fr>
+From: Mike Botsko <botsko@gmail.com>
+Subject: Re: Unexpected/unexplained difference between git pull --rebase and
+ git rebase
+Date: Tue, 3 Mar 2015 15:20:48 -0800
+Message-ID: <CAPfvZp5jTTbWVL0QuZTP83=SWvsvyZWX0BG_q7jPLK5wNNvCgg@mail.gmail.com>
+References: <CAPfvZp6oNnM=M-9BAVqAE052jQApH-O_t3gEoq6JWC2kQrR8gg@mail.gmail.com>
+	<20150303210900.GP890@serenity.lan>
+	<CAPfvZp5KmEwY_903aUJE0p7qKMUbABYpC3Y8JvPSc_Dmd0ppGA@mail.gmail.com>
+	<20150303214653.GQ890@serenity.lan>
+	<xmqq61ahad18.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Sudhanshu Shekhar <sudshekhar02@gmail.com>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Mar 04 00:18:02 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: John Keeping <john@keeping.me.uk>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 04 00:20:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YSw4f-0005Hn-1T
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Mar 2015 00:18:01 +0100
+	id 1YSw7R-0006q5-DB
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Mar 2015 00:20:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756618AbbCCXR5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Mar 2015 18:17:57 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:59344 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755819AbbCCXR4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Mar 2015 18:17:56 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B28BA3E00D;
-	Tue,  3 Mar 2015 18:17:55 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ZDjLOkICVU8H3DAm71ShVGSnQHs=; b=sxqRiz
-	uTR35abpFYIHFEl/gp4rSdeYLN1OeGzaT/+YbvDNAj2HboTUuSXaHk4V7EVNjFuo
-	Oms86bnN2idLlPXRW4mSr3kINTfdFMwnfOJpNeSh0cxt8DZaTdy/afY2n/F8nkIo
-	cfY6SmeJUwxJxseM9r7yaYFWCwTBA45C8FDRc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ObBS2o93Xp4aw6Q9vRAap1rxTXXMiMro
-	InSKCuzwUujhG/vZfcoAyyF+wNXOufoOtZOtZ4BpjX8ETPRfA44YAYFTOMYMBY9q
-	1qV2LTBMy0Shp6wV8Hsy/8d8M885V3GBqzdMLDHtCHC7N8juqYXPixJsZn4XjSvn
-	3wPuDdoai8A=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id AA26B3E00C;
-	Tue,  3 Mar 2015 18:17:55 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2D3923E00A;
-	Tue,  3 Mar 2015 18:17:55 -0500 (EST)
-In-Reply-To: <vpq4mq13f69.fsf@anie.imag.fr> (Matthieu Moy's message of "Tue,
-	03 Mar 2015 23:10:54 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 85B3A8E8-C1FB-11E4-9B1A-29999F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1756809AbbCCXUt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Mar 2015 18:20:49 -0500
+Received: from mail-qa0-f53.google.com ([209.85.216.53]:55842 "EHLO
+	mail-qa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755819AbbCCXUs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Mar 2015 18:20:48 -0500
+Received: by mail-qa0-f53.google.com with SMTP id v8so4764553qal.12
+        for <git@vger.kernel.org>; Tue, 03 Mar 2015 15:20:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=DFokVSNmWnjPiWU/R88qpMJ//v+X8bIkebxQ1Sz5FVQ=;
+        b=HCtpg4qnF4BsmQsB0wAc/CHn7nSXqjqup+Lxh84jm0kgVTtyf0w3hIsOLFanr+HtCs
+         umyexnQFcnaGsICQfy8GjPcu+hxlLcTaNasOxFqR6VzWFZuj6oDqpQ0YoJCynhLsySuE
+         VGqTlyxwTb332fX/NMTuyPw0nup8KY5vJPQQ4nmmfyyNhJVLFRTmzxjPi9rE0cwaVJgZ
+         bEGOuI6f+R0nqxVBS/TMwGHymY7FL/jGw1UV5Bsg9cJ1HZwtJP5u2mHWLOndclRlEipB
+         SQ1POnMDr3lGinefB+5jOtTAFkUbxm2y/fmV+bscQjWAciai7T4+q3DBuE+vEr72asYZ
+         kuUg==
+X-Received: by 10.140.81.74 with SMTP id e68mr1894208qgd.41.1425424848142;
+ Tue, 03 Mar 2015 15:20:48 -0800 (PST)
+Received: by 10.140.80.203 with HTTP; Tue, 3 Mar 2015 15:20:48 -0800 (PST)
+In-Reply-To: <xmqq61ahad18.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264707>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264708>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Maybe I'm lacking the distinction regarding what I'm being specific about.
 
-> Sudhanshu Shekhar <sudshekhar02@gmail.com> writes:
->
->> From: SudShekhar <sudshekhar02@gmail.com>
->
-> Please, set your configuration to have the same identity for commit and
-> send-email. It seems your commiter ID (user.name) does not contain your
-> last name.
+In both examples, I'm asking it specifically to rebase in changes from
+the remote "upstream" and a named branch at that location. I'm giving
+git the same information, it's just interpreting it differently - and
+I'm not understanding why.
 
-Actually, the token does not match either of the two names; it looks
-like two names smashed together into a single nickname token.
+My local branch would have been created from the
+upstream/feature-branch, and will eventually be merged back into it.
+Until I'm ready for that, I regularly rebase the work done on
+upstream/feature-branch so that my local work is always clean and
+above anything else.
 
->> builtin/reset.c | 2 ++
->
-> Doesn't this deserve a test?
->
-> +		if(!strcmp(argv[0],"-"))
-> +			argv[0]="@{-1}";
->
-> Wrong spacing (around = and after ,).
 
-What should worry us even more is what the user would get when @{-1}
-does not resolve to something the command can use.  It would be bad
-if we give an error message with @{-1} in it that the user never
-typed (and may not even understand what it means).
+
+On Tue, Mar 3, 2015 at 3:15 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> John Keeping <john@keeping.me.uk> writes:
+>
+>> git-rebase assumes that if you give an explicit upstream then you want
+>> precisely what you asked for.  From git-rebase(1):
+>>
+>>       If either <upstream> or --root is given on the command line,
+>>       then the default is `--no-fork-point`, otherwise the default is
+>>       `--fork-point`.
+>
+> Correct.
+>
+> You ask it to rebase the history without guessing by being explicit;
+> the command guesses when you are not explicit and being lazy ;-).
+>
+
+
+
+-- 
+Mike Botsko
+Lead Dev @ Helion3
+Ph: 1-(503)-897-0155
