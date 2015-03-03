@@ -1,76 +1,64 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [GSoC idea] Resumable clone
-Date: Tue, 3 Mar 2015 08:02:59 +0700
-Message-ID: <CACsJy8Cue+pxPbddkv1_yMD-SLFO4PjKgdCVX0V7YCn_kUArcQ@mail.gmail.com>
-References: <CACSCj9wkx1cSqcMbkt8+2S0GCzuBNeUjXyb4=n5_K7QzL_jawg@mail.gmail.com>
- <xmqqoaob7yi8.fsf@gitster.dls.corp.google.com>
+From: "Keller, Jacob E" <jacob.e.keller@intel.com>
+Subject: git notes from incoming patch
+Date: Tue, 3 Mar 2015 01:32:38 +0000
+Message-ID: <1425346358.13037.13.camel@intel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Koosha Khajehmoogahi <koosha.khajeh@gmail.com>,
-	git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 03 02:03:36 2015
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Mar 03 02:32:47 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YSbFH-0005R7-A6
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Mar 2015 02:03:35 +0100
+	id 1YSbhW-0007U4-4i
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Mar 2015 02:32:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753960AbbCCBDa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Mar 2015 20:03:30 -0500
-Received: from mail-ig0-f173.google.com ([209.85.213.173]:33054 "EHLO
-	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753529AbbCCBDa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Mar 2015 20:03:30 -0500
-Received: by igbhl2 with SMTP id hl2so20769295igb.0
-        for <git@vger.kernel.org>; Mon, 02 Mar 2015 17:03:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=Tmthw5tAxm/2hOs/XTRJcWxqr/XFBvZ48jyCr0u4bM0=;
-        b=0qihFl8XI5wz6ZpJhd4CxRY7t+kUZeUIaHanaHwWmT6FQV4pk1l0MscQIfWaC61eRG
-         G+0N9GEgnebsTxgOrJIMuqoEVDcDqFqiOhX41XuzVcc3/1DfUbd/0ONnok8Av0DbDiJV
-         MqvHaGTaHSPcXJwA5g8UrQo/5GYxP9hW9dEl3pabqNEw8LdP6/Xa9AhYF5+0zfWnrokL
-         KrRxo6XfF6v4oTJ1aGu92q83KQeFI04fNV76yIqueSBuu3qFMGfIgHa2DHFAZJgnnzNs
-         UDpTpVTRMeV4WAj4uk0mEF//VBQMaWQ3t2aAowaC7+jE9us0VgyeJO9fk6d3iuAoozvS
-         IlvQ==
-X-Received: by 10.43.0.138 with SMTP id nm10mr24085466icb.56.1425344609194;
- Mon, 02 Mar 2015 17:03:29 -0800 (PST)
-Received: by 10.107.131.155 with HTTP; Mon, 2 Mar 2015 17:02:59 -0800 (PST)
-In-Reply-To: <xmqqoaob7yi8.fsf@gitster.dls.corp.google.com>
+	id S1754897AbbCCBcm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Mar 2015 20:32:42 -0500
+Received: from mga02.intel.com ([134.134.136.20]:5219 "EHLO mga02.intel.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754851AbbCCBcl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Mar 2015 20:32:41 -0500
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by orsmga101.jf.intel.com with ESMTP; 02 Mar 2015 17:32:41 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.09,679,1418112000"; 
+   d="scan'208";a="461629845"
+Received: from orsmsx106.amr.corp.intel.com ([10.22.225.133])
+  by FMSMGA003.fm.intel.com with ESMTP; 02 Mar 2015 17:26:31 -0800
+Received: from orsmsx158.amr.corp.intel.com (10.22.240.20) by
+ ORSMSX106.amr.corp.intel.com (10.22.225.133) with Microsoft SMTP Server (TLS)
+ id 14.3.195.1; Mon, 2 Mar 2015 17:32:39 -0800
+Received: from orsmsx115.amr.corp.intel.com ([169.254.10.201]) by
+ ORSMSX158.amr.corp.intel.com ([169.254.10.145]) with mapi id 14.03.0195.001;
+ Mon, 2 Mar 2015 17:32:39 -0800
+Thread-Topic: git notes from incoming patch
+Thread-Index: AQHQVVHv6MaveNGQ+ki00TL1AePDFA==
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [134.134.3.110]
+Content-ID: <CE5F0F2FB0403B458C5267E6BF06C749@intel.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264639>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264640>
 
-On Tue, Mar 3, 2015 at 6:47 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Koosha Khajehmoogahi <koosha.khajeh@gmail.com> writes:
->
->> Among GSoC 2011 ideas of git [1], it was proposed that a GSoC project
->> could be implementing resumable clone for git. AFAIK, this feature is
->> still missing in git but could be a great idea to be implemented. Does
->> that sound OK to the community?
->>
->> [1]: https://git.wiki.kernel.org/index.php/SoC2011Ideas#Resumable_clone
->
-> Depends on how it will be implemented, I guess.
-
-I still want to pursue stable pack approach [1]. It's not a good fit
-for clone case (cached bundles would be much better). On the other
-hand it does not need special support like cached bundles and can work
-with upload-pack-v1. It might fit in gsoc scope. I guess whether it
-may have a chance to get merged after gsoc is the deciding factor.
-
-> I highly suspect that it would not fly well if it is added as a part
-> of the current protocol, as people are actively discussing how to
-> revamp it.  And I have a feeling that the v2 protocol would not
-> ready for a student to build upon by this summer.
-
-[1] http://thread.gmane.org/gmane.comp.version-control.git/184490/focus=184705
-Though what I had in mind (and patches) does not need on-disk caching at all.
--- 
-Duy
+SGksDQoNCkkgYW0gd29uZGVyaW5nIHdoZXRoZXIgaXQgaXMgcG9zc2libGUgdG8gcmVhZCBmcm9t
+IGEgZm9ybWF0LXBhdGNoIGlucHV0DQphbmQgYWRkIG5vdGVzIHdoZW4gd2UgZ2VuZXJhdGUgdGhl
+IGFwcGxpZWQgcGF0Y2guDQoNClRoZSB1c2UgY2FzZSBpcyB0byBiZSBhYmxlIHRvIHNlbmQgcGF0
+Y2hlcyB0aGF0IGhhZCBub3RlcyBhcHBlbmRlZCB2aWENCg0KJGdpdCBmb3JtYXQtcGF0Y2ggLS1u
+b3RlcyAuLi4NCg0KQW5kIGhhdmUgbm90ZXMgb2JqZWN0cyBjcmVhdGVkIG9uIHRoZSByZW1vdGUg
+cmVwb3NpdG9yeSB0byBzdG9yZSB0aGlzDQppbmZvcm1hdGlvbi4NCg0KSXMgdGhlcmUgYW55IHdh
+eSB0byBkbyB0aGlzPyBhbmQvb3IgaXMgdGhlcmUgYSB3YXkgdG8gZ2V0IHRoZSBzYW1lDQpyZXN1
+bHRzIHRoYXQgbWF5YmUgZG9lc24ndCB1c2Ugbm90ZXM/DQoNClRoZSBwcm9ibGVtIHdlIGFyZSB0
+cnlpbmcgdG8gc29sdmUgaXMgYSB3YXkgdG8gdHJhY2sgc29tZSBpbmZvcm1hdGlvbg0KYWJvdXQg
+YSBwYXRjaCB0aGF0IHdlIG5lZWQgaW50ZXJuYWxseSB3aXRob3V0IHN1Ym1pdHRpbmcgaXQgdXBz
+dHJlYW0NCndoZW4gd2Ugc3VibWl0IHRoZSBwYXRjaGVzIGxhdGVyLiBXZSB1c2UgZW1haWwgdG8g
+aGFuZGxlIGludGVybmFsIHBhdGNoDQpxdWV1ZXMsIHNvIGVzc2VudGlhbGx5IHdlIHdhbnQgdG8g
+YmUgYWJsZSB0byBhZGQgbm90ZSBvYmplY3RzIHRvIHRoZQ0KZm9ybWF0LXBhdGNoIGFuZCBzZW5k
+IHRoZW0gdmlhIGVtYWlsLg0KDQpSZWdhcmRzLA0KSmFrZQ0K
