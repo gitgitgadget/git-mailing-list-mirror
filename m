@@ -1,117 +1,84 @@
-From: Jason Woofenden <jason@jasonwoof.com>
-Subject: bug: git mv dir with submodule in dir/sub
-Date: Tue, 3 Mar 2015 10:52:07 -0500
-Message-ID: <20150303155207.GM30045@compy.jasonwoof.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [GSoC15] Interested in contributing to git
+Date: Tue, 03 Mar 2015 17:20:25 +0100
+Message-ID: <vpqbnkagiie.fsf@anie.imag.fr>
+References: <CACRoPnSrjysUhC77LXVjy5VJxFFPoiRuhD7pMab_8T2Pua_T+A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 03 17:12:25 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 03 17:20:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YSpQn-0007Ic-4u
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Mar 2015 17:12:25 +0100
+	id 1YSpYi-0003fc-Ox
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Mar 2015 17:20:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932251AbbCCQMT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Mar 2015 11:12:19 -0500
-Received: from jasonwoof.com ([50.116.60.104]:52767 "EHLO jasonwoof.com"
+	id S1754977AbbCCQUc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Mar 2015 11:20:32 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:46030 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932157AbbCCQLn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Mar 2015 11:11:43 -0500
-X-Greylist: delayed 1173 seconds by postgrey-1.27 at vger.kernel.org; Tue, 03 Mar 2015 11:11:43 EST
-Received: from localhost (jasonwoof.com [127.0.0.1])
-	by jasonwoof.com (Postfix) with ESMTP id B03188E6B3
-	for <git@vger.kernel.org>; Tue,  3 Mar 2015 10:52:09 -0500 (EST)
-X-Spam-Flag: NO
-X-Spam-Score: 0.798
-X-Spam-Level: 
-X-Spam-Status: No, score=0.798 tagged_above=-9999 required=6.31
-	tests=[BAYES_00=-1.9, DNS_FROM_AHBL_RHSBL=2.699, NO_RECEIVED=-0.001,
-	NO_RELAYS=-0.001, URIBL_BLOCKED=0.001] autolearn=no
-Received: from jasonwoof.com ([127.0.0.1])
-	by localhost (jasonwoof.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id wsZ1eV_XPAb3 for <git@vger.kernel.org>;
-	Tue,  3 Mar 2015 10:52:09 -0500 (EST)
-Content-Disposition: inline
+	id S1752042AbbCCQUc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Mar 2015 11:20:32 -0500
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t23GKNkB030556
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 3 Mar 2015 17:20:23 +0100
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t23GKP7k018182;
+	Tue, 3 Mar 2015 17:20:25 +0100
+In-Reply-To: <CACRoPnSrjysUhC77LXVjy5VJxFFPoiRuhD7pMab_8T2Pua_T+A@mail.gmail.com>
+	(Paul Tan's message of "Tue, 3 Mar 2015 23:56:11 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 03 Mar 2015 17:20:24 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t23GKNkB030556
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1426004427.20964@u5ZZVJiyjqfFZ2VBNgnviw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264668>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264669>
 
-Hi all,
+Paul Tan <pyokagan@gmail.com> writes:
 
-First, many thanks for all your work on git. It has been an
-invaluable tool.
+> Hi all,
+>
+> git is one of the projects that I wish to contribute to for Google
+> Summer of Code 2015 as it's an integral part of my workflow. I'm from
+> Singapore, and have been accepted to the National University of
+> Singapore for Computer Engineering, and will only matriculate on 3 Aug
+> 2015.
 
-I believe I've found a bug. Submodules break when I use ``git mv``
-to rename a directory, which contains a submodule as one of its
-_sub_directories.
+Be carefull: a GSoC is a full-time job. The GSoC itself ends on August
+21st, so there would be a substantial (too big?) overlap between the
+GSoC and your studies.
 
-Here's the script I've been using to reproduce:
+> I understand that I have to complete a microproject. I would like
+> complete "Move ~/.git-credentials and ~/.git-credential-cache to
+> ~/.config/git". I'm thinking that the XDG locations should take
+> precedence over the non-XDG locations?
 
-	#!/bin/bash
+The logic is different for reading and for writting, see how Git deals
+with it for ~/.gitconfig for example. Essentially, we read both, and we
+write to the one which exists if there's only one.
 
-	# Settings
-	REPO_TO_CLONE="$HOME/www/wfpl.git"
+I'm the one who proposed this microproject, and some feedback on the
+mailing-list was that it was not so "micro" and probably too big
+already.
 
-	# run in new directory
-	export REPODIR="git-bug-$(date '+%s')"
-	mkdir "$REPODIR" || exit $?
-	cd "$REPODIR" || exit $?
+Both for the microproject and the GSoC itself, don't be too ambitious on
+the feature you target, and don't underestimate the effort needed to get
+from "the code looks OK to me" to "the code has been reviewed on list
+and merged upstream".
 
-	git --version
-
-	# make a git repo with a submodule
-	git init || exit $?
-	mkdir old || exit $?
-	git submodule add ~/www/wfpl.git old/wfpl || exit $?
-
-	# run the command that borks the submodule
-	git mv old new || exit $?
-
-	# demonstrate that it's borked:
-	git status || exit $?
-	# for me this command produces:
-	#     fatal: Could not chdir to '../../../../old/wfpl': No such file or directory
-	#     fatal: 'git status --porcelain' failed in submodule new/wfpl
-
-I run that and get this:
-
-	git version 2.3.1.431.g836cf63
-	Initialized empty Git repository in
-	/home/jasonwoof/git-bug/git-bug-1425397321/.git/
-	Cloning into 'old/wfpl'...
-	done.
-	fatal: Could not chdir to '../../../../old/wfpl': No such file or
-	directory
-	fatal: 'git status --porcelain' failed in submodule new/wfpl
-	zsh: exit 128   ./script.sh
-
-I got this same error (every time) with git-2.1.4-2.1 from debian
-unstable, and from github's master (7f4ba4b6e3ba7), and from
-github's pu branch (836cf6345)
-
-All of the above running on debian unstable.
-
-You'll need to change REPO_TO_CLONE of course.
-
-It's probably worth noting that if I use ``git mv`` on the
-submodule directly, it works fine. eg if I replace the ``git mv``
-line in the above script with:
-
-	mkdir new
-	git mv old/wfpl new/wfpl
-
-then it works fine (no error messages).
-
-
-I am not subscribed to this list, so please remember to reply-all
-if I can be of further assistance.
-
-Thanks you!
+Cheers,
 
 -- 
-Jason
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
