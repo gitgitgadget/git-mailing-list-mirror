@@ -1,70 +1,89 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH] git: make "git -C '' <cmd>" not to barf
-Date: Tue,  3 Mar 2015 21:11:31 +0530
-Message-ID: <1425397291-25435-1-git-send-email-karthik.188@gmail.com>
-Cc: Karthik Nayak <karthik.188@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 03 16:41:59 2015
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] t5516-fetch-push: Correct misspelled pushInsteadOf
+Date: Tue, 03 Mar 2015 16:51:05 +0100
+Message-ID: <54F5D869.4010104@drmicha.warpmail.net>
+References: <alpine.DEB.2.10.1502282316150.7008@buzzword-bingo.mit.edu> <xmqq385nb2yg.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>,
+	Anders Kaseorg <andersk@mit.edu>
+X-From: git-owner@vger.kernel.org Tue Mar 03 16:51:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YSoxI-0005Ug-4T
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Mar 2015 16:41:56 +0100
+	id 1YSp6I-0002lB-20
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Mar 2015 16:51:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756728AbbCCPlv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Mar 2015 10:41:51 -0500
-Received: from mail-pd0-f174.google.com ([209.85.192.174]:46163 "EHLO
-	mail-pd0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755968AbbCCPlu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Mar 2015 10:41:50 -0500
-Received: by pdjy10 with SMTP id y10so49212132pdj.13
-        for <git@vger.kernel.org>; Tue, 03 Mar 2015 07:41:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=rCtv1BAlAV5gl154Ic+KRx4rgLVWrPf5W8Rp9KHxakE=;
-        b=f3Yvl11p+aq5xhh47rqdaBk1LvOts1XlLrqNlqsE8e3W0G2P4GixaM265SlJtx3q2C
-         7ShGeZgQKRE/xoUwUZrzTv0IId14jJFqDMlAbN0JGhT1FogNZ7aFmZY4WncBbkG0j5FZ
-         m8zKv6X8r3j4Nfh3zKUg+3FAryOLBhdGCpEQBIhO+sADAniz9sdYKEybBGIh/dHb6th0
-         kDmALjc3B1r3IOjo+6mP8TF9Idf/fW+9oCoFeRhufEKUiDctCa8PuqAr+AW71FstLpJg
-         Nsr2VsVpGSZRalgQSypTHwMZpH/jL0GEFD3vO2ofNdFjkv7e7m9I7wKJV9cE7m0MIm59
-         bN8g==
-X-Received: by 10.68.232.200 with SMTP id tq8mr56434365pbc.133.1425397310522;
-        Tue, 03 Mar 2015 07:41:50 -0800 (PST)
-Received: from ashley.localdomain ([103.227.98.178])
-        by mx.google.com with ESMTPSA id br15sm1302194pdb.76.2015.03.03.07.41.48
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 03 Mar 2015 07:41:49 -0800 (PST)
-X-Mailer: git-send-email 2.3.1.167.g7f4ba4b.dirty
+	id S1756839AbbCCPvJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Mar 2015 10:51:09 -0500
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:49899 "EHLO
+	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756646AbbCCPvH (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 Mar 2015 10:51:07 -0500
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailout.nyi.internal (Postfix) with ESMTP id 2D9B220AC8
+	for <git@vger.kernel.org>; Tue,  3 Mar 2015 10:51:06 -0500 (EST)
+Received: from frontend2 ([10.202.2.161])
+  by compute5.internal (MEProxy); Tue, 03 Mar 2015 10:51:07 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=x-sasl-enc:message-id:date:from
+	:mime-version:to:cc:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=35vMyUNPh7K9i/7uhdsJtw
+	TLMCM=; b=KfpfetixXnh/uRixLyAgI8LaX2LdD+jNEtmMhaH24x6rXvn55E2rgm
+	gDilHrQ0vGtfk3eDmIx1wIDEFyLdMT6RbukCLThTB4TGMzKba0hBeAxmvLE2wKsQ
+	oCSoE+odTtezt0T1UXGBMVMc9C67HqAwXzen92jcPa49QcfkTNES8=
+X-Sasl-enc: WOh0Gcejl7SLpEmyhYUO9H47rdBg1clPFxiF/2NtedzE 1425397867
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id A833C680158;
+	Tue,  3 Mar 2015 10:51:06 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
+In-Reply-To: <xmqq385nb2yg.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264664>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264665>
 
-now it works like cd "" which silently succeeds
+Junio C Hamano venit, vidit, dixit 02.03.2015 20:43:
+> Anders Kaseorg <andersk@mit.edu> writes:
+> 
+>> Signed-off-by: Anders Kaseorg <andersk@mit.edu>
+>> ---
+>>  t/t5516-fetch-push.sh | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+>> index 85c7fec..594d7a6 100755
+>> --- a/t/t5516-fetch-push.sh
+>> +++ b/t/t5516-fetch-push.sh
+>> @@ -238,7 +238,7 @@ test_expect_success 'push with pushInsteadOf' '
+>>  test_expect_success 'push with pushInsteadOf and explicit pushurl (pushInsteadOf should not rewrite)' '
+>>  	mk_empty testrepo &&
+>>  	test_config "url.trash2/.pushInsteadOf" testrepo/ &&
+>> -	test_config "url.trash3/.pusnInsteadOf" trash/wrong &&
+>> +	test_config "url.trash3/.pushInsteadOf" trash/wrong &&
+>>  	test_config remote.r.url trash/wrong &&
+>>  	test_config remote.r.pushurl "testrepo/" &&
+>>  	git push r refs/heads/master:refs/remotes/origin/master &&
+> 
+> Interesting.
+> 
+> Now an obvious and natural question after seeing this change is how
+> the original test passed with misspelled configuration.  Is a test
+> that pushes into "trash/wrong" checking the right outcome?  If the
+> reason why the existing tests passed without this patch is because
+> they do not test the right thing, then shouldn't they be corrected
+> together with the above fix?
+> 
 
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
----
- git.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+Ha, I was look there, too, just today and was wondering the same.
 
-diff --git a/git.c b/git.c
-index 8c7ee9c..f4c2285 100644
---- a/git.c
-+++ b/git.c
-@@ -204,7 +204,9 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
- 				fprintf(stderr, "No directory given for -C.\n" );
- 				usage(git_usage_string);
- 			}
--			if (chdir((*argv)[1]))
-+			if (*(*argv)[1] == 0)
-+				; /* Ignore "" as a directory */
-+			else if (chdir((*argv)[1]))
- 				die_errno("Cannot change to '%s'", (*argv)[1]);
- 			if (envchanged)
- 				*envchanged = 1;
--- 
-2.3.1.167.g7f4ba4b.dirty
+I guess the test wanted to make sure (among other things) that
+url.trash3/.pushInsteadOf does not affect the push to remote r (which
+has an explicit pushurl)...
+
+Michael
