@@ -1,112 +1,113 @@
-From: Mike Botsko <botsko@gmail.com>
-Subject: Unexpected/unexplained difference between git pull --rebase and git rebase
-Date: Tue, 3 Mar 2015 12:39:31 -0800
-Message-ID: <CAPfvZp6oNnM=M-9BAVqAE052jQApH-O_t3gEoq6JWC2kQrR8gg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Git for design
+Date: Tue, 03 Mar 2015 12:48:06 -0800
+Message-ID: <xmqqvbihajuh.fsf@gitster.dls.corp.google.com>
+References: <CAAcjnBVBeuYL1kuCG1yF5W1KUNik3hO8e2R0g0DdXDS6u+eOyQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 03 21:39:38 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Ernesto Alonso =?utf-8?Q?Monta=C3=B1o_Ram=C3=ADrez?= 
+	<ernestoalonso.mr@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 03 21:48:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YStbM-00005E-TQ
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Mar 2015 21:39:37 +0100
+	id 1YStjk-0004t8-3g
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Mar 2015 21:48:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756650AbbCCUjd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Mar 2015 15:39:33 -0500
-Received: from mail-qa0-f47.google.com ([209.85.216.47]:64659 "EHLO
-	mail-qa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756590AbbCCUjc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Mar 2015 15:39:32 -0500
-Received: by mail-qa0-f47.google.com with SMTP id v10so30187752qac.6
-        for <git@vger.kernel.org>; Tue, 03 Mar 2015 12:39:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=Bwn3Jt5I/g1DGaIDoU+Nv14YkmTHr5gBS4azLo5Sr/g=;
-        b=tezOPWmT1zKSoN5kAga0ulVStIp3yo32hFOn4JaPyeinw2Ry1gdxY7r86DF9uOgHpf
-         idFIV+ngS1amgFtYyx298flGuc/YDZ7Q+gap+u4G52wEZUEvQToCLZcunXIfD8BJbh97
-         4ulublnMeidrrfbjgBf6UxVe+a4Nl+TuqefZFZg3ryIP7b643jwnH2Bp2GQgPomPvs9U
-         AZzRlJEWSOlhsRo5aZboMSJPncGqBvs/cPLiO+6o3jq7Ln9BDE8lnqDMptEZE8Sil+B7
-         Vkr9bsAA9bX7Nh9Zd6zXweyZalKk4WstBLfzkzyanbySEZcbeer7JfCsQjVPYv6kKzLs
-         UykQ==
-X-Received: by 10.140.81.74 with SMTP id e68mr1038458qgd.41.1425415171593;
- Tue, 03 Mar 2015 12:39:31 -0800 (PST)
-Received: by 10.140.80.203 with HTTP; Tue, 3 Mar 2015 12:39:31 -0800 (PST)
+	id S1757295AbbCCUsL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Mar 2015 15:48:11 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:53498 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1757223AbbCCUsK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 Mar 2015 15:48:10 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 372B03D079;
+	Tue,  3 Mar 2015 15:48:09 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=gXbdWUBrldXY
+	pXtKlMoq9C4yKe0=; b=XKpkW6nfrVT0xgMEG+Dp53VpPbfsfBx8IfXEuqmnFqai
+	zCXjE/3TRMa2nR6dkEkKtevxcXX58okscCSgNhUi4+RgqnN+sU7CT9OJt2HWs57X
+	j2nHXMocxiAE3WAoC77MWau1lrtc36CCe6yitU1gLo42l8j87yyumIdhxZ31ax8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=EEj64O
+	nM4JdCGDBcCpaenwpSJ9vqdXngewHjqxDt61JoKi6fPvuwtIkfWubIlu4PqRhqEg
+	UIKEDtaKMqPAbqrqqIVum8MwmHC9foyzSPbei0XvImLT59HXqsQyn2BwugKdAue3
+	wLnQqbqBFgQlLHGAmSXlKmeNlMGU7hELfFIoc=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 300F93D078;
+	Tue,  3 Mar 2015 15:48:09 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A89B43D077;
+	Tue,  3 Mar 2015 15:48:08 -0500 (EST)
+In-Reply-To: <CAAcjnBVBeuYL1kuCG1yF5W1KUNik3hO8e2R0g0DdXDS6u+eOyQ@mail.gmail.com>
+	("Ernesto Alonso =?utf-8?Q?Monta=C3=B1o_Ram=C3=ADrez=22's?= message of
+ "Tue, 3 Mar 2015
+	13:23:15 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 99544E58-C1E6-11E4-B345-29999F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264686>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264687>
 
-Hello,
+Ernesto Alonso Monta=C3=B1o Ram=C3=ADrez  <ernestoalonso.mr@gmail.com> =
+writes:
 
-I'm seeing unexpected behavior between "git pull --rebase" and "git
-rebase" commands, which are supposed to be (and always described as)
-synonymous:
+> I've a question about Git, can I use this application for design
+> (architecture, no programming)? for example, controlling the versions
+> of designs on AUTOCAD, PHOTOSHOP, ILLUSTRATOR, etc; management of
+> documents...
 
-git pull --rebase upstream our-branch-name
+Yes you can use this application.
 
-and
+But it depends on your definition of "use" how "useful" the end
+result would be.  The features programmers find helpful by placing
+their end products (i.e. the source code and text files in general)
+under control in Git are:
 
-git fetch upstream
-git rebase upstream/our-branch-name
+ 1. You can go back to any arbitrary version.
 
-We have a situation where the upstream/our-branch-name was rebased, to
-incorporate changes from master. Somehow, the person who did the
-rebase discarded a merge commit:
+ 2. You can inspect what the textual differences between two
+    arbitrary versions A and B (but most often, two adjacent
+    versions) are.  This is called "diff".
 
-634b622 Sue Merge pull request #254 from bob/B-07290
-bc76e5b Bob [B-07290] Order Parts Ship To/Comments
+ 3. You can take the "textual differences" from 2. and replay the
+    change between A and C on top of another version C, which lets
+    you pretend as if you did the same work you did going from A to
+    B but starting at version C.  This is "apply", "merge",
+    "cherry-pick", and "rebase".
 
-became:
+Using Git (or any version control system) on non-text files, you
+would still get the same benefit 1., obviously.
 
-c1452be Sue [B-07290] Order Parts Ship To/Comments
+If the assets you feed Git are not something intelligible as "text"
+(and I am guessing AUTOCAD, PHOTOSHOP and ILLUSTRATOR files are
+not), you would not gain 2. or 3. immediately.
 
+You however can still gain benefit 2., if you have a way to
+"compare" two versions of these files in a non-textual way.  For
+example, I do not know AUTOCAD at all, but if the program "autocad"
+has a mode where it lets you feed two AUTOCAD files and point out
+how the two are different visually (let's assume there is such a
+program "autocad-compare" that takes two filename parameters to
+compare), Git has a way for you to plug into its machinery so that
+"git diff v1.0 v2.0 -- an-autocad-file" will write out the file at
+version 1 and version 2 into two temproary files and call out to
+"autocad-compare tmp1 tmp2" to have them compared.
 
-A developer who had a local branch tried to rebase their work (a
-single commit on top of that feature branch).
-
-At the moment, his now-out-of-date branch looks like this:
-
-92b2194 Rick B-07241
-634b622 Sue Merge pull request #254 from dboyle/B-07290
-bc76e5b Bob [B-07290] Order Parts Ship To/Comments
-
-I've done some debugging, and the above "git pull" command generates
-the following and sends it to eval():
-
-git-rebase --onto c1452be62cf271a25d3d74cc63cd67eca51a127d
-634b622870a1016e717067281c7739b1fe08e08d
-
-This process works perfectly. The old commits are discarded and his
-branch now correctly reflects upstream/our-branch-name, with his
-single new commit at the top.
-
-
-However, if he runs the "git rebase" command above, several of the
-commits that have changed hashes (they've also changed patch id
-slightly, because during the rebase someone fixed a merge conflict)
-are treated as new work, and git tries to re-apply them and we get
-tons of merge conflicts.
-
-The git rebase command above is trying to rebase onto:
-
-revisions = c1452be62cf271a25d3d74cc63cd67eca51a127d..92b2194e3adc29eb3fadd93ddded0ed34513d587
-
-
-These two features should work the same, yet one is choosing a
-different commit hash than the other.
-
-If this is not a bug, I can't find anyone who can explain what's
-happening. I'm using git 2.2.1 on mac, but other people on our team
-have a variety of older versions and we're all seeing the same result.
-
-Thanks!
-
--- 
-Mike Botsko
-Lead Dev @ Helion3
-Ph: 1-(503)-897-0155
+=46or 3., too, Git has a mechanism to plug in a "merge-driver" of your
+own, e.g. if you have a version of an AUTOCAD file A that was
+modified to B by you and modified to C by your colleague and an
+AUTOCAD program "autocad-merge A B C" is a way to merge the work you
+two did starting from the same A to produce B and C into a single
+unified version, then "git merge" can be told to use such an
+external program as a plug-in to perform the file-level merge.
