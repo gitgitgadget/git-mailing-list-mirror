@@ -1,108 +1,251 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [RFC/PATCH 0/3] protocol v2
-Date: Tue, 3 Mar 2015 20:27:33 -0800
-Message-ID: <CAJo=hJtgda4ATtPeLWbhgDPiTm9h-gzBkpknxsOdRddueUgTbw@mail.gmail.com>
-References: <xmqqsidtoojh.fsf@gitster.dls.corp.google.com> <CAGZ79kZE2+tCZgDzeTrQBn6JQv1OWJ7t_8j4kYMQgVaAbsnnxw@mail.gmail.com>
- <CACsJy8ASR-O-7tozw=p1Ek0ugct5EVZyWtxY_YA2nqcUV_+ECw@mail.gmail.com>
- <xmqqzj80l9c7.fsf@gitster.dls.corp.google.com> <xmqqioenhs4p.fsf@gitster.dls.corp.google.com>
- <CAGZ79kY6B4BLvLVS-J50SqCz+t9uGd93WHxCYKmRU1Ey3qVg+A@mail.gmail.com>
- <CAPc5daXJ6s2oNvqSmtp5d-Dgm-EX6Mb8kY2nOLQVxAT-3wjAmQ@mail.gmail.com>
- <CAGZ79ka8Zg86qqvWByNiP3F6a9QggO-bNY3ZZ9g+A-MdKYQ7NQ@mail.gmail.com>
- <xmqqioekawmb.fsf@gitster.dls.corp.google.com> <20150302092136.GA30278@lanh>
- <20150303103351.GA4922@lanh> <xmqqk2yy80mq.fsf@gitster.dls.corp.google.com> <CACsJy8B_r_0nP9NyKFBnr9bXgwjx8dJkSVkHbZw+Mxin_YpZZw@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [BUG] Segfault with rev-list --bisect
+Date: Wed, 4 Mar 2015 00:33:33 -0500
+Message-ID: <20150304053333.GA9584@peff.net>
+References: <CAMo-WNYNeShbbhNfG455o7krGfY7_9zVU3dMpJ7b4Smh_AiATg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Stefan Beller <sbeller@google.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 04 05:28:01 2015
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Troy Moure <troy.moure@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 04 06:33:47 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YT0ue-0008CU-21
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Mar 2015 05:28:00 +0100
+	id 1YT1wH-0003uc-TM
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Mar 2015 06:33:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758117AbbCDE1z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Mar 2015 23:27:55 -0500
-Received: from mail-yk0-f172.google.com ([209.85.160.172]:46840 "EHLO
-	mail-yk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757985AbbCDE1z (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Mar 2015 23:27:55 -0500
-Received: by ykbq9 with SMTP id q9so3607928ykb.13
-        for <git@vger.kernel.org>; Tue, 03 Mar 2015 20:27:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spearce.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=kxqu/KWbQDxA0qodlorRVm2UXxbQlRVSOjnMKisRwhc=;
-        b=eCk+mhVPrOjISE1TO6hh5Vy/NqkpUf8F85hvY0uPoJfPeKrSI9p0i1MHNI4mH9nuxM
-         RflhXPZVN1zRDqcAGsN2+UsJDXbNijYHjFB3WXNeN9Xhm267zl8dfKloxJj9CDAJXkYm
-         6y/87M8P4SvOoeaKZvMnnUBQBh2zT6iItyoh4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=kxqu/KWbQDxA0qodlorRVm2UXxbQlRVSOjnMKisRwhc=;
-        b=OOs9Q5qwTWmKb74j4rvW5jbGPCRmSGBEw048RCWmL6OS8sjgfc1cg0UY+a7A00Cdmc
-         TpxnxkVFza1kk0qQJzfbCm8T7lN2U9KG62eOqpd1IUnI+NIyZ3b43aLdp8Hl8Mv6I6Qu
-         kj4DhUf9AgUcbUC7wg+aPT4c4AE+CKAyn92wnqNzPqNziDgHj0CE+95ZbybjS+FCyaoS
-         Y3uY+B5qjCO8Gv3758bwxmCwXeACdfnU92/yiPulcB9IrQO/wAtEDNO15iFUrp12VD+P
-         ZlKPds0bPCal4Y45xDVbFg76bFInj5qH9yWmt11ln425o7Ydbc6uGoJzFwykSAQINKRD
-         MVsQ==
-X-Gm-Message-State: ALoCoQlgR10FiVg9lNK7aweaDMaakJ/V8Lavh6MT8cA9k0ndMDr63hXuWjAKPpOjp+DI9EMsQOsW
-X-Received: by 10.170.51.81 with SMTP id 78mr1663959ykt.93.1425443273782; Tue,
- 03 Mar 2015 20:27:53 -0800 (PST)
-Received: by 10.170.39.19 with HTTP; Tue, 3 Mar 2015 20:27:33 -0800 (PST)
-In-Reply-To: <CACsJy8B_r_0nP9NyKFBnr9bXgwjx8dJkSVkHbZw+Mxin_YpZZw@mail.gmail.com>
+	id S1754040AbbCDFdi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Mar 2015 00:33:38 -0500
+Received: from cloud.peff.net ([50.56.180.127]:56008 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750832AbbCDFdg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Mar 2015 00:33:36 -0500
+Received: (qmail 17554 invoked by uid 102); 4 Mar 2015 05:33:36 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 03 Mar 2015 23:33:36 -0600
+Received: (qmail 26904 invoked by uid 107); 4 Mar 2015 05:33:40 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 04 Mar 2015 00:33:40 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 04 Mar 2015 00:33:33 -0500
+Content-Disposition: inline
+In-Reply-To: <CAMo-WNYNeShbbhNfG455o7krGfY7_9zVU3dMpJ7b4Smh_AiATg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264720>
 
-On Tue, Mar 3, 2015 at 5:54 PM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Wed, Mar 4, 2015 at 12:13 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> My recollection is that the consensus from the last time we
->> discussed protocol revamping was to list one capability per packet
->> so that packet length limit does not matter, but you may want to
->> check with the list archive yourself.
->
-> I couldn't find that consensus mail, but this one [1] is good enough
-> evidence that we can hit packet length limit in capability line
-> easily.
-> With an escape hatch to allow maximum packet length up to  uint_max, I
+On Tue, Mar 03, 2015 at 09:19:14AM -0500, Troy Moure wrote:
 
-The symbolic ref thing was done badly. There isn't an escape hatch in
-current v1 protocol sufficient to allow this but each ref should be
-its own pkt-line, or should be a small batch of refs per pkt-line, or
-the ref advertisement should be a data stream in a side-band-64k sort
-of format inside the pkt-line framing.
+> I've found a case where git rev-list --bisect segfaults reproducibly
+> (git version is 2.3.1). This is the commit topology (A2 is the first
+> parent of M):
+> 
+> I - A1 - A2
+>   \        \
+>     - B1 -- M  (HEAD)
 
-At 64k per frame of side-band there is plenty of data to header ratio
-that we don't need  to escape to uint_max.
+Thanks for finding a simple history which shows the problem. I recreated
+this with:
 
-> Looks like one cap per pkt-line is winning..
+    git init repo && cd repo &&
+    echo I >I && git add I && git commit -m I &&
+    echo A1 >A && git add A && git commit -m A1 &&
+    echo A2 >A && git add A && git commit -m A2 &&
+    git checkout -b side HEAD~2 &&
+    echo B1 >B && git add B && git commit -m B1 &&
+    git checkout master &&
+    GIT_EDITOR=: git merge side
 
-Yes.
+and was able to reproduce the segfault with:
 
-> [1] http://thread.gmane.org/gmane.comp.version-control.git/237929
+    git rev-list --bisect --first-parent HEAD --not HEAD~1
 
+(it drops --parents from your command, which is not relevant to the
+segfault). The segfault itself happens because we try to access the
+weight() of B1, even though we never called weight_set() on it.
 
-Let me go on a different tangent a bit from the current protocol.
+And that, I think, is related to --first-parent. We do not set a weight
+because B1 is not an interesting commit to us (it is accessible only as
+a second parent). I am not too familiar with the bisect code, but it
+looks like it is not really ready to handle --first-parent. There are
+several spots where it enumerates the parent list, which is going to
+examine parents other than the first.
 
-http://www.grpc.io/ was recently released and is built on the HTTP/2
-standard. It uses protobuf as a proven extensibility mechanism.
-Including a full C based grpc stack just to speak the Git wire
-protocol is quite likely overkill, but I think the embedding of a
-proven extensible format inside of a bi-directional framed streaming
-system like HTTP/2 offers some good guidance.
+Below is a fairly hacky patch to respect --first-parent through the
+bisection code. Like I said, I'm not very familiar with this code, so I
+basically just blindly limited any traversal of commit->parents. It does
+solve this particular segfault, but I have no clue if it is fixing other
+bugs introducing them. :) E.g., it's changing count_distance(), so
+perhaps our bisection counts were all off with --first-parent, even when
+it didn't segfault?
 
-Network protocol parsing is hard. Especially in languages like C where
-buffer overflows are possible. Or where a client could trivially DoS a
-server by sending a packet of size uint_max and the server naively
-trying to malloc() that buffer. Defining the network protocol in an
-IDL like protobuf 3 and being machine generated from stable well
-maintained code has its advantages.
+diff --git a/bisect.c b/bisect.c
+index 8c6d843..c51f37a 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -31,7 +31,7 @@ static const char *argv_update_ref[] = {"update-ref", "--no-deref", "BISECT_HEAD
+  * We care just barely enough to avoid recursing for
+  * non-merge entries.
+  */
+-static int count_distance(struct commit_list *entry)
++static int count_distance(struct commit_list *entry, int max_parents)
+ {
+ 	int nr = 0;
+ 
+@@ -47,9 +47,10 @@ static int count_distance(struct commit_list *entry)
+ 		p = commit->parents;
+ 		entry = p;
+ 		if (p) {
++			int n = max_parents - 1;
+ 			p = p->next;
+-			while (p) {
+-				nr += count_distance(p);
++			while (p && n-- > 0) {
++				nr += count_distance(p, max_parents);
+ 				p = p->next;
+ 			}
+ 		}
+@@ -79,12 +80,12 @@ static inline void weight_set(struct commit_list *elem, int weight)
+ 	*((int*)(elem->item->util)) = weight;
+ }
+ 
+-static int count_interesting_parents(struct commit *commit)
++static int count_interesting_parents(struct commit *commit, int max_parents)
+ {
+ 	struct commit_list *p;
+ 	int count;
+ 
+-	for (count = 0, p = commit->parents; p; p = p->next) {
++	for (count = 0, p = commit->parents; p && max_parents-- > 0; p = p->next) {
+ 		if (p->item->object.flags & UNINTERESTING)
+ 			continue;
+ 		count++;
+@@ -117,7 +118,7 @@ static inline int halfway(struct commit_list *p, int nr)
+ #define show_list(a,b,c,d) do { ; } while (0)
+ #else
+ static void show_list(const char *debug, int counted, int nr,
+-		      struct commit_list *list)
++		      struct commit_list *list, int max_parents)
+ {
+ 	struct commit_list *p;
+ 
+@@ -132,6 +133,7 @@ static void show_list(const char *debug, int counted, int nr,
+ 		char *buf = read_sha1_file(commit->object.sha1, &type, &size);
+ 		const char *subject_start;
+ 		int subject_len;
++		int n = max_parents;
+ 
+ 		fprintf(stderr, "%c%c%c ",
+ 			(flags & TREESAME) ? ' ' : 'T',
+@@ -142,7 +144,7 @@ static void show_list(const char *debug, int counted, int nr,
+ 		else
+ 			fprintf(stderr, "---");
+ 		fprintf(stderr, " %.*s", 8, sha1_to_hex(commit->object.sha1));
+-		for (pp = commit->parents; pp; pp = pp->next)
++		for (pp = commit->parents; pp && n-- > 0; pp = pp->next)
+ 			fprintf(stderr, " %.*s", 8,
+ 				sha1_to_hex(pp->item->object.sha1));
+ 
+@@ -245,7 +247,7 @@ static struct commit_list *best_bisection_sorted(struct commit_list *list, int n
+  */
+ static struct commit_list *do_find_bisection(struct commit_list *list,
+ 					     int nr, int *weights,
+-					     int find_all)
++					     int find_all, int max_parents)
+ {
+ 	int n, counted;
+ 	struct commit_list *p;
+@@ -257,7 +259,7 @@ static struct commit_list *do_find_bisection(struct commit_list *list,
+ 		unsigned flags = commit->object.flags;
+ 
+ 		p->item->util = &weights[n++];
+-		switch (count_interesting_parents(commit)) {
++		switch (count_interesting_parents(commit, max_parents)) {
+ 		case 0:
+ 			if (!(flags & TREESAME)) {
+ 				weight_set(p, 1);
+@@ -300,7 +302,7 @@ static struct commit_list *do_find_bisection(struct commit_list *list,
+ 			continue;
+ 		if (weight(p) != -2)
+ 			continue;
+-		weight_set(p, count_distance(p));
++		weight_set(p, count_distance(p, max_parents));
+ 		clear_distance(list);
+ 
+ 		/* Does it happen to be at exactly half-way? */
+@@ -315,10 +317,11 @@ static struct commit_list *do_find_bisection(struct commit_list *list,
+ 		for (p = list; p; p = p->next) {
+ 			struct commit_list *q;
+ 			unsigned flags = p->item->object.flags;
++			int n = max_parents;
+ 
+ 			if (0 <= weight(p))
+ 				continue;
+-			for (q = p->item->parents; q; q = q->next) {
++			for (q = p->item->parents; q && n-- > 0; q = q->next) {
+ 				if (q->item->object.flags & UNINTERESTING)
+ 					continue;
+ 				if (0 <= weight(q))
+@@ -357,11 +360,12 @@ static struct commit_list *do_find_bisection(struct commit_list *list,
+ 
+ struct commit_list *find_bisection(struct commit_list *list,
+ 					  int *reaches, int *all,
+-					  int find_all)
++					  int find_all, int first_parent_only)
+ {
+ 	int nr, on_list;
+ 	struct commit_list *p, *best, *next, *last;
+ 	int *weights;
++	int max_parents = first_parent_only ? 1 : INT_MAX;
+ 
+ 	show_list("bisection 2 entry", 0, 0, list);
+ 
+@@ -390,7 +394,7 @@ struct commit_list *find_bisection(struct commit_list *list,
+ 	weights = xcalloc(on_list, sizeof(*weights));
+ 
+ 	/* Do the real work of finding bisection commit. */
+-	best = do_find_bisection(list, nr, weights, find_all);
++	best = do_find_bisection(list, nr, weights, find_all, max_parents);
+ 	if (best) {
+ 		if (!find_all)
+ 			best->next = NULL;
+@@ -916,7 +920,8 @@ int bisect_next_all(const char *prefix, int no_checkout)
+ 	bisect_common(&revs);
+ 
+ 	revs.commits = find_bisection(revs.commits, &reaches, &all,
+-				       !!skipped_revs.nr);
++				       !!skipped_revs.nr,
++				       revs.first_parent_only);
+ 	revs.commits = managed_skipped(revs.commits, &tried);
+ 
+ 	if (!revs.commits) {
+diff --git a/bisect.h b/bisect.h
+index 2a6c831..03d04d1 100644
+--- a/bisect.h
++++ b/bisect.h
+@@ -3,7 +3,7 @@
+ 
+ extern struct commit_list *find_bisection(struct commit_list *list,
+ 					  int *reaches, int *all,
+-					  int find_all);
++					  int find_all, int first_parent_only);
+ 
+ extern struct commit_list *filter_skipped(struct commit_list *list,
+ 					  struct commit_list **tried,
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index ff84a82..3f531d6 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -380,7 +380,8 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+ 		int reaches = reaches, all = all;
+ 
+ 		revs.commits = find_bisection(revs.commits, &reaches, &all,
+-					      bisect_find_all);
++					      bisect_find_all,
++					      revs.first_parent_only);
+ 
+ 		if (bisect_show_vars)
+ 			return show_bisect_vars(&info, reaches, all);
