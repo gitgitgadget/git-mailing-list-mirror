@@ -1,164 +1,175 @@
-From: Anton Trunov <anton.a.trunov@gmail.com>
-Subject: Re: [PATCH] xmerge.c: fix xdl_merge to conform with the manual
-Date: Wed, 04 Mar 2015 12:43:12 +0300
-Message-ID: <54F6D3B0.60600@gmail.com>
-References: <1425404233-89907-1-git-send-email-anton.a.trunov@gmail.com> <xmqqzj7takks.fsf@gitster.dls.corp.google.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] t5516-fetch-push: Correct misspelled pushInsteadOf
+Date: Wed, 04 Mar 2015 10:36:13 +0100
+Message-ID: <54F6D20D.903@drmicha.warpmail.net>
+References: <alpine.DEB.2.10.1502282316150.7008@buzzword-bingo.mit.edu>	<xmqq385nb2yg.fsf@gitster.dls.corp.google.com>	<54F5D869.4010104@drmicha.warpmail.net> <xmqq8ufdc0c7.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
+Content-Type: text/plain; charset=iso-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, jrnieder@gmail.com, tboegi@web.de,
-	sunshine@sunshineco.com, charles@hashpling.org,
-	Johannes.Schindelin@gmx.de
+Cc: Anders Kaseorg <andersk@mit.edu>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 04 10:42:45 2015
+X-From: git-owner@vger.kernel.org Wed Mar 04 10:43:10 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YT5pD-0008R2-Hd
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Mar 2015 10:42:43 +0100
+	id 1YT5pc-0000Ga-MZ
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Mar 2015 10:43:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759161AbbCDJmf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Mar 2015 04:42:35 -0500
-Received: from mail-la0-f49.google.com ([209.85.215.49]:37165 "EHLO
-	mail-la0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759073AbbCDJmc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Mar 2015 04:42:32 -0500
-Received: by labhs14 with SMTP id hs14so43282410lab.4
-        for <git@vger.kernel.org>; Wed, 04 Mar 2015 01:42:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=0AHqETDrFdDQWTEJngAHzQGNe1CkZNyNw5IkCb3lPIE=;
-        b=j6I5NTqZHZNEk2/Fwij++C/6QkGiv7m4L7X5LqH9ezlAoa5uHRy1uF/1qWkIbXxU1D
-         8PfsLiduteKuz5c0DFbfPt9wy0YdI83yeZovqmXyfgy4VEJhmrsJXCsf0TZKeGju1TLr
-         wjkAhknEH8A6iDzMS6M703OxqCxJEbr+ApimbtCZi8IerDm4xIN4triK0gPIGediEVbi
-         4KnQ1byj34Q29sCe1wPJoR1rxHHZHoWvzCDFxr5QjA+NZsBV7rPH482Jc5Va65BQgny2
-         OxQSbTpjH03h8+AH0v0C7J4WTeQYNuZrhlNB7BhVDG1TBFc7XIxwhqsckruCMjKu38BG
-         JX+w==
-X-Received: by 10.152.182.196 with SMTP id eg4mr2640615lac.70.1425462150745;
-        Wed, 04 Mar 2015 01:42:30 -0800 (PST)
-Received: from [192.168.1.185] ([195.191.146.16])
-        by mx.google.com with ESMTPSA id lf3sm671053lbc.2.2015.03.04.01.42.28
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 04 Mar 2015 01:42:29 -0800 (PST)
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
-In-Reply-To: <xmqqzj7takks.fsf@gitster.dls.corp.google.com>
+	id S1759148AbbCDJnA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Mar 2015 04:43:00 -0500
+Received: from out2-smtp.messagingengine.com ([66.111.4.26]:60981 "EHLO
+	out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755160AbbCDJm6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 4 Mar 2015 04:42:58 -0500
+X-Greylist: delayed 403 seconds by postgrey-1.27 at vger.kernel.org; Wed, 04 Mar 2015 04:42:58 EST
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+	by mailout.nyi.internal (Postfix) with ESMTP id 2FC73209B0
+	for <git@vger.kernel.org>; Wed,  4 Mar 2015 04:36:14 -0500 (EST)
+Received: from frontend1 ([10.202.2.160])
+  by compute2.internal (MEProxy); Wed, 04 Mar 2015 04:36:15 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=x-sasl-enc:message-id:date:from
+	:mime-version:to:cc:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=Hrbk7pciuLsEKtcY8bdIzi
+	kgcik=; b=bENTj4kNffLNtRzSXVVcxaD8+rRz4eGx27iNfu7iqzJV/+1I7Lb3uD
+	Zw5zBLqLrGjhOfL4h9UujY65GDftx3kNd52v3CF4BboQhIwi3ugG9OdXNrq7fJN8
+	xqdM5tgErvbHG3A7F8E/xrBNsnGgskN++qxwEIhthbNGSzo6f1uiw=
+X-Sasl-enc: ksEUHvKr44aU1KRxyLwAHg+sTBE/rVIKX1bAMrvwL/7U 1425461775
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id ABF17C00297;
+	Wed,  4 Mar 2015 04:36:14 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
+In-Reply-To: <xmqq8ufdc0c7.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264738>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264739>
 
-On 03/03/15 23:32, Junio C Hamano wrote:
-> Anton Trunov <anton.a.trunov@gmail.com> writes:
+Junio C Hamano venit, vidit, dixit 03.03.2015 21:06:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
 > 
->> The git-merge manual says that the ignore-space-change,
->> ignore-all-space, ignore-space-at-eol options preserve our version
->> if their version only introduces whitespace changes to a line.
+>> Junio C Hamano venit, vidit, dixit 02.03.2015 20:43:
+>>> Anders Kaseorg <andersk@mit.edu> writes:
+>>>
+>>>> Signed-off-by: Anders Kaseorg <andersk@mit.edu>
+>>>> ---
+>>>>  t/t5516-fetch-push.sh | 2 +-
+>>>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>>>
+>>>> diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+>>>> index 85c7fec..594d7a6 100755
+>>>> --- a/t/t5516-fetch-push.sh
+>>>> +++ b/t/t5516-fetch-push.sh
+>>>> @@ -238,7 +238,7 @@ test_expect_success 'push with pushInsteadOf' '
+>>>>  test_expect_success 'push with pushInsteadOf and explicit pushurl (pushInsteadOf should not rewrite)' '
+>>>>  	mk_empty testrepo &&
+>>>>  	test_config "url.trash2/.pushInsteadOf" testrepo/ &&
+>>>> -	test_config "url.trash3/.pusnInsteadOf" trash/wrong &&
+>>>> +	test_config "url.trash3/.pushInsteadOf" trash/wrong &&
+>>>>  	test_config remote.r.url trash/wrong &&
+>>>>  	test_config remote.r.pushurl "testrepo/" &&
+>>>>  	git push r refs/heads/master:refs/remotes/origin/master &&
+>>>
+>>> Interesting.
+>>>
+>>> Now an obvious and natural question after seeing this change is how
+>>> the original test passed with misspelled configuration.  Is a test
+>>> that pushes into "trash/wrong" checking the right outcome?  If the
+>>> reason why the existing tests passed without this patch is because
+>>> they do not test the right thing, then shouldn't they be corrected
+>>> together with the above fix?
+>>>
 >>
->> So far if there is whitespace-only changes to both sides
->> in *all* lines their version will be used.
+>> Ha, I was look there, too, just today and was wondering the same.
+>>
+>> I guess the test wanted to make sure (among other things) that
+>> url.trash3/.pushInsteadOf does not affect the push to remote r (which
+>> has an explicit pushurl)...
 > 
-> I am having hard time understanding the last sentence, especially
-> the "So far" part.  Do you mean "With the current code, if ours and
-> theirs change whitespaces on all lines, we take theirs"?
-
-By "so far" I mean "until now, but not including it", i.e. the code
-before applying the patch.
-
-> I find the description in the documentation is a bit hard to read.
+> OK, so it makes sure the push goes to testrepo/ but it does not make
+> sure trash2 or trash3 are not touched.  Makes sort of sense.
 > 
->   * If 'their' version only introduces whitespace changes to a line,
->     'our' version is used;
+> Thanks.
 > 
->   * If 'our' version introduces whitespace changes but 'their'
->     version includes a substantial change, 'their' version is used;
+> I am not sure how the intention of the commit 1c2eafb8 (Add
+> url.<base>.pushInsteadOf: URL rewriting for push only, 2009-09-07),
+> which introduced the behaviour verified by this test, interacts with
+> the desire to redefine what URL and pushURL mean in our recent past,
+> what e.g. e6196ae1 (remote: add --fetch and --both options to set-url,
+> 2014-11-25) wanted to do, though.  Thoughts?
 > 
->   * Otherwise, the merge proceeds in the usual way.
-> 
-> And it is unclear if your reading is correct to me.  In your "So
-> far" scenario, 'our' version does introduce whitespace changes and
-> 'their' version does quite a bit of damage to the file (after all,
-> they both change *all* lines, right?).  It does not seem too wrong
-> to invoke the second clause above and take 'theirs', at least to me.
 
-Let me elaborate on this a bit.
-It doesn't matter if all lines are changed or not.
-The point is if all the changes in all the *changed* lines are trivial
-(non-whitespace), i.e. there is no one line with substantial change on
-both sides, then we just through away their version and keep our
-whitespace changes.
-We are talking here about non-so-probable corner-case of trivial changes
-in our and their versions, perhaps an uncoordinated tabs-vs-space clean-up.
-So I think I should add "changed lines" to the commit message.
+Wow. That looks strange to me on first read. Sorry I didn't catch it
+back then. "--fetch" sets both url and pushurl??
 
-For the code version before applying this patch the following scenario
-will take place if "git merge -Xignore-all-space remote" gets executed.
+Also, talking about these things (in the commit msg etc.) can be
+confusing very quickly because there are the config names url and
+pushurl, the struct members url und pushurl, and then suddenly the
+notion of "fetch URL" appears.
 
-base file:
-1st line
-2nd line
+So, for definiteness sake, I'll use "url" and "pushurl" for the config
+names and struct members (which the config values end up in), and I'll
+use "URL for fetch" and "URL for push" for the URLs that git will use
+for fetch resp. push.
 
-master file:
-  1st line
-  2nd line with substantial change
+If there is no "pushurl":
+  "url" will be used as the "URL for fetch" and as the "URL for push".
+  if we are pushing and there is "pushinsteadof" for (part of) "url"
+    subsitute that within "url"
+  else if there is "insteadof" for (part of) "url"
+    substitute that within "url"
 
-remote file:
-              1st line
-              2nd line
+If there is a "pushurl":
+  "url" will be used as the "URL for fetch" and "pushurl" as the "URL
+for push".
+  if we are pushing and there is "insteadof" for (part of) "pushurl"
+    substitute that within "pushurl"
+  else if we are fetching and there is "insteadof" for (part of) "url"
+    substiute that within "url"
 
-merge result file:
-  1st line
-  2nd line with substantial change
+I don't know what "remote set-url" does, I think the whole remote
+command as it is does not fit in well with our UI, but that applies to
+other commands with non-option subcommands as well (or bad). I would
+have hoped it is set-url and set-pushurl to set those two config
+options. Maybe that's not useful.
 
-So essentially it does what "git merge -s ours remote" does in case if
-all their changes are trivial.
-This seems like reasonable solution to me: we _are_ trying to ignore
-whitespace changes and we are explicit about it.
+The logic above may look a bit strange regarding pushinsteadof, but it's
+really what makes this useful. An example:
 
-But, in the scenario with trivial changes everywhere we get a completely
-different result:
+[url "git://github.com/"]
+        insteadOf = github:
+[url "github:"]
+        pushinsteadOf = github:
 
-base file:
-1st line
-2nd line
+This allows me to use
+git remote add <remotename> github:<user>/<reponame>
 
-master file:
-  1st line
-  2nd line
+and have fetches over git protocol, pushes over ssh since my ssh_config has:
 
-remote file:
-              1st line
-              2nd line
+host github
+Hostname github.com
+User git
+IdentityFile ~/.ssh/repoor_dsa
 
-merge result file:
-              1st line
-              2nd line
+[url "https://bitbucket.org/"]
+        insteadOf = bitbucket:
+[url "https://grubix@bitbucket.org/"]
+        pushinsteadOf = bitbucket:
 
-In my opinion if we respect the principle of least astonishment this
-behavior should be fixed to:
+This allows me to use
 
-merge result file:
-  1st line
-  2nd line
+git remote add <remotename> bitbucket:<user>/<reponame>
 
-Exactly so does this patch.
+and have fetches over https, pushes over https with my username preset.
 
-> It is an entirely different matter if the behaviour the document
-> describes is sane, and I didn't ask "git log" what the reasoning
-> behind that second point is, but my guess is that a change made by
-> them being "substantial" is a sign that it is a whitespace cleanup
-> change and we should take the cleanup in such a case, perhaps?
+I rarely use pushurl, but could use it to override url, or to do the
+above magic on a case by case level, such as if I need to specify
+different usernames for the same host.
 
-If we want to take in their clean-up why would we use the
--Xignore-space-change option in the first place?
-It looks like we're explicitly saying "we don't want any changes that
-are whitespace-only", right?
-And if we introduced some cleanup too what should we do when the
-cleanups conflict? (exactly our case)
-As far as I am concerned one should either manually resolve that kind of
-conflicts without using the -Xignore-... options or just
-git merge -X theirs remote.
+So, that's my understanding of how these things are supposed to work and
+why it is useful.
+
+Michael
