@@ -1,107 +1,88 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git add to ignore whitespaces, some day?
-Date: Wed, 4 Mar 2015 05:05:50 -0500
-Message-ID: <20150304100549.GA15788@peff.net>
-References: <CAJ+F1CL_X7d3RayLmohU3tMi6w5juVFEwCEBUA_Nf-Z53bq+ew@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] t5516-fetch-push: Correct misspelled pushInsteadOf
+Date: Wed, 04 Mar 2015 11:10:14 +0100
+Message-ID: <54F6DA06.7000602@drmicha.warpmail.net>
+References: <alpine.DEB.2.10.1502282316150.7008@buzzword-bingo.mit.edu> <xmqq385nb2yg.fsf@gitster.dls.corp.google.com> <54F5D869.4010104@drmicha.warpmail.net> <xmqq8ufdc0c7.fsf@gitster.dls.corp.google.com> <54F6D20D.903@drmicha.warpmail.net> <alpine.DEB.2.10.1503040439100.60859@buzzword-bingo.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 04 11:06:01 2015
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Anders Kaseorg <andersk@mit.edu>
+X-From: git-owner@vger.kernel.org Wed Mar 04 11:10:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YT6Bk-0004Ur-Ke
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Mar 2015 11:06:01 +0100
+	id 1YT6G2-0006ut-M6
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Mar 2015 11:10:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932853AbbCDKFz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Mar 2015 05:05:55 -0500
-Received: from cloud.peff.net ([50.56.180.127]:56166 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932792AbbCDKFw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Mar 2015 05:05:52 -0500
-Received: (qmail 384 invoked by uid 102); 4 Mar 2015 10:05:52 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 04 Mar 2015 04:05:52 -0600
-Received: (qmail 29101 invoked by uid 107); 4 Mar 2015 10:05:57 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 04 Mar 2015 05:05:57 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 04 Mar 2015 05:05:50 -0500
-Content-Disposition: inline
-In-Reply-To: <CAJ+F1CL_X7d3RayLmohU3tMi6w5juVFEwCEBUA_Nf-Z53bq+ew@mail.gmail.com>
+	id S1757897AbbCDKKU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Mar 2015 05:10:20 -0500
+Received: from out2-smtp.messagingengine.com ([66.111.4.26]:49256 "EHLO
+	out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755235AbbCDKKQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 4 Mar 2015 05:10:16 -0500
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.nyi.internal (Postfix) with ESMTP id 1B82B20A02
+	for <git@vger.kernel.org>; Wed,  4 Mar 2015 05:10:15 -0500 (EST)
+Received: from frontend2 ([10.202.2.161])
+  by compute1.internal (MEProxy); Wed, 04 Mar 2015 05:10:16 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=x-sasl-enc:message-id:date:from
+	:mime-version:to:cc:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=0oUM1+lqco1rIkx3XVKh5W
+	A24uU=; b=mL62DKeS9KiT7qAvpfOzavZ3JFoGdyIqzHH+UEzdnDyY9niv+2pI1+
+	3pa+50PBVlOCjdOT9US4usWlqScYUBekL35E2mBNoBlcPjGOEJhX3kzcNQVl/zBx
+	Hr0I16fCwfFYkf4+C69M5MuFMfmazXq8/ECgh1aR+GjcSxLz/JK/o=
+X-Sasl-enc: wzK7xyagGUpdZeTYRY06L7Z+m6C0ftkvZPijuXWd49t7 1425463815
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 995BC680089;
+	Wed,  4 Mar 2015 05:10:15 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
+In-Reply-To: <alpine.DEB.2.10.1503040439100.60859@buzzword-bingo.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264745>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264746>
 
-On Fri, Feb 27, 2015 at 01:09:30AM +0100, Marc-Andr=C3=A9 Lureau wrote:
-
-> It would be nice if git-add could be told to ignore whitespace
-> changes, wouldn't it?
+Anders Kaseorg venit, vidit, dixit 04.03.2015 10:43:
+> On Wed, 4 Mar 2015, Michael J Gruber wrote:
+>> If there is no "pushurl":
+>>   "url" will be used as the "URL for fetch" and as the "URL for push=
+".
+>>   if we are pushing and there is "pushinsteadof" for (part of) "url"
+>>     subsitute that within "url"
+>>   else if there is "insteadof" for (part of) "url"
+>>     substitute that within "url"
+>>
+>> If there is a "pushurl":
+>>   "url" will be used as the "URL for fetch" and "pushurl" as the "UR=
+L for push".
+>>   if we are pushing and there is "insteadof" for (part of) "pushurl"
+>>     substitute that within "pushurl"
+>>   else if we are fetching and there is "insteadof" for (part of) "ur=
+l"
+>>     substiute that within "url"
 >=20
-> According to SO, I am not the one to think so:
-> http://stackoverflow.com/questions/3515597/git-add-only-non-whitespac=
-e-changes
+> Speaking of that, I recently had to reimplement most of this logic fo=
+r the=20
+> openstack git-review tool (https://review.openstack.org/160152), whic=
+h is=20
+> why I was staring too closely at t5516 in the first place.  It would =
+be=20
+> nice to have a =E2=80=98git ls-remote --get-push-url=E2=80=99 analogo=
+us to the existing=20
+> =E2=80=98git ls-remote --get-url=E2=80=99.
 >=20
-> A change to add--interactive would be as simple as adding the diff -b
-> or -w option like:
-> my @diff =3D run_cmd_pipe("git", @diff_cmd, "-w", "--", $path);
+> Anders
+>=20
 
-What would it mean to stage such a hunk? For example, consider this
-situation:
+And vice-versa, it would be nice if "git remote" explained where the
+resulting URLs come from. I vaguely remember looking into this, but I
+don't think it was simple.
 
-    git init
+ls-remote and remote don't share code, which is a pitty. GSOC...
 
-    echo 'foo();' >file
-    git add file
-
-    {
-      echo 'if (something) {'
-      echo '    foo();'
-      echo '}'
-    } >file
-
-A regular diff shows:
-
-    diff --git a/file b/file
-    index a280f9a..ce0eeda 100644
-    --- a/file
-    +++ b/file
-    @@ -1 +1,3 @@
-    -foo();
-    +if (something) {
-    +    foo();
-    +}
-
-but "diff -w" would show:
-
-    diff --git a/file b/file
-    index a280f9a..ce0eeda 100644
-    --- a/file
-    +++ b/file
-    @@ -1 +1,3 @@
-    +if (something) {
-         foo();
-    +}
-
-If we try to apply that hunk to what is in the index, it will not work.
-The context line does not exist in the index file. Even if you could
-convince git-apply to massage it into place, it still does not update
-the whitespace in the 'foo();' line. IOW, we did not stage the full hun=
-k
-at all; running "git add -p" again would show that we still have the
-whitespace change to stage.
-
-So if you were to pursue this, it would have to have two copies of each
-hunk: the one to apply, and the "display" copy that we show the user. W=
-e
-do this already for colorization. However, I think we rely there on the
-fact that the two versions of the diff match up, line for line. Whereas
-here, you would not even necessarily have the same number of hunks
-between the regular and "-b" versions.
-
--Peff
+Michael
