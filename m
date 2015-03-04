@@ -1,115 +1,104 @@
-From: "Randall S. Becker" <rsbecker@nexbridge.com>
-Subject: RE: An interesting opinion on DVCS/git
-Date: Tue, 3 Mar 2015 18:55:17 -0500
-Message-ID: <003f01d0560d$80bd7d50$823877f0$@nexbridge.com>
+From: David Lang <david@lang.hm>
+Subject: Re: An interesting opinion on DVCS/git
+Date: Tue, 3 Mar 2015 16:53:34 -0800 (PST)
+Message-ID: <alpine.DEB.2.02.1503031642340.26501@nftneq.ynat.uz>
 References: <54F2CD12.8050609@gmail.com> <CAGZ79kZ8CrjwVh3+OHSV1tv+fRXaDZ_diOO5E7QnSLZ=HTFSfg@mail.gmail.com> <CAJo=hJuKL3akaG3Xh8mH5iij_dAdMkBW8fQgvreOsUHV517gpw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: <git@vger.kernel.org>
-To: "'Shawn Pearce'" <spearce@spearce.org>,
-	"'Stefan Beller'" <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Wed Mar 04 00:55:27 2015
+Content-Type: MULTIPART/MIXED; BOUNDARY="680960-1130144495-1425430414=:26501"
+Cc: Stefan Beller <sbeller@google.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Mar 04 01:53:44 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YSwes-0008UC-J3
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Mar 2015 00:55:26 +0100
+	id 1YSxZH-0005Ru-Rc
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Mar 2015 01:53:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757543AbbCCXzW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Mar 2015 18:55:22 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:21596 "EHLO
-	elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757444AbbCCXzV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 Mar 2015 18:55:21 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from pangea (CPE0023eb577e25-CM602ad06c91a7.cpe.net.cable.rogers.com [99.237.128.150])
-	(authenticated bits=0)
-	by elephants.elehost.com (8.14.9/8.14.9) with ESMTP id t23NtGEm041018
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-	Tue, 3 Mar 2015 18:55:17 -0500 (EST)
-	(envelope-from rsbecker@nexbridge.com)
+	id S1756989AbbCDAxi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Mar 2015 19:53:38 -0500
+Received: from mail.lang.hm ([64.81.33.126]:59739 "EHLO bifrost.lang.hm"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756337AbbCDAxh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Mar 2015 19:53:37 -0500
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id t240rY65004057;
+	Tue, 3 Mar 2015 16:53:34 -0800
+X-X-Sender: dlang@asgard.lang.hm
 In-Reply-To: <CAJo=hJuKL3akaG3Xh8mH5iij_dAdMkBW8fQgvreOsUHV517gpw@mail.gmail.com>
-X-Mailer: Microsoft Outlook 15.0
-Thread-Index: AQEXuc1gLzK22oSKO7FrARSnkZDBBQHFXeO1AgIlMIyeXmV+gA==
-Content-Language: en-ca
+User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264713>
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> On 03 Mar 2015, Shawn Pearce Wrote:
->> On Sun, Mar 1, 2015 at 7:29 PM, Stefan Beller <sbeller@google.com> w=
-rote:
-> > bitquabit.com/post/unorthodocs-abandon-your-dvcs-and-return-to-sani=
-ty
->=20
-> Indeed, a DVCS like Git or Hg does not fit everyone. And neither do c=
-entralized
-> systems like Subversion. Choice is good.
->=20
+--680960-1130144495-1425430414=:26501
+Content-Type: TEXT/PLAIN; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
+
+On Tue, 3 Mar 2015, Shawn Pearce wrote:
+
+> On Sun, Mar 1, 2015 at 7:29 PM, Stefan Beller <sbeller@google.com> wrote:
+>> bitquabit.com/post/unorthodocs-abandon-your-dvcs-and-return-to-sanity
+>
+> Indeed, a DVCS like Git or Hg does not fit everyone. And neither do
+> centralized systems like Subversion. Choice is good.
+>
 > However... I found some passages troubling for Git, e.g.:
->=20
+>
 > ---snip---
-> Git is so amazingly simple to use that APress, a single publisher, ne=
-eds to have
-> three different books on how to use it. It=E2=80=99s so simple that A=
-tlassian and GitHub
-> both felt a need to write their own online tutorials to try to clarif=
-y the main Git
-> tutorial on the actual Git website. It=E2=80=99s so transparent that =
-developers routinely
-> tell me that the easiest way to learn Git is to start with its file f=
-ormats and work
-> up to the commands.
+> Git is so amazingly simple to use that APress, a single publisher,
+> needs to have three different books on how to use it. It’s so simple
+> that Atlassian and GitHub both felt a need to write their own online
+> tutorials to try to clarify the main Git tutorial on the actual Git
+> website. It’s so transparent that developers routinely tell me that
+> the easiest way to learn Git is to start with its file formats and
+> work up to the commands.
 > ---snap---
->=20
-> We have heard this sort of feedback for years. But we have been unabl=
-e to
-> adequately write our own documentation or clean up our man pages to b=
-e
-> useful to the average person who doesn't know why the --no-frobbing o=
-ption
-> doesn't disable the --frobinator option to the --frobbing-subcommand =
-of git
-> frob.  :(
+>
+> We have heard this sort of feedback for years. But we have been unable
+> to adequately write our own documentation or clean up our man pages to
+> be useful to the average person who doesn't know why the --no-frobbing
+> option doesn't disable the --frobinator option to the
+> --frobbing-subcommand of git frob.  :(
+>
+> http://git-man-page-generator.lokaltog.net/ shouldn't exist and
+> shouldn't be funny. Yet it does. :(
 
-In real life, I do process automation, so I'm coming at this from a sli=
-ghtly different point of view. What appeals to me about git is the rich=
-ness of processes that can be implemented with it. You may want to cons=
-ider it a complex process enabler engine that happens to do DVCS. Havin=
-g built one of these also, and being saddled with huge numbers of requi=
-rements, I can say from experience that complexity is a side effect of =
-doing what you need to do. Like many complex products, git takes on a l=
-ife of its own, and obviously chose completeness instead of simplicity =
-as a goal. Personally, I am not complaining, but I hear the complaints =
-too. The bigger complaints are when you cannot do your job because the =
-engine is not rich enough (see anything derived from SCCS - yes saying =
-that shows my hair colour), which forced my company *to* git.=20
+As for the different online tutorials, I'll point out that every university that 
+supports it's students using Thunderbird has it's own version of a tutorial on 
+how to use and configure Thunderbird. The question is if they are coverying 
+their one use case of how to use git with their service, or if they are trying 
+to duplicate the git documentation.
 
-When looking at git, I personally feel that it is important to deploy s=
-imple-to-use scripts and instructions to implement the process you want=
- to use - and I hate to leave a footprint saying this, but, people are =
-fundamentally lazy about non-goal activities. Thinking about mundane ta=
-sks like committing and delivering is outside the typical work-instruct=
-ion box, but if, as a repository manager, you need a rich engine, spend=
- the couple of days and script it. I think the objections in the articl=
-e are essentially sound, from one point of view, but omit the core doma=
-in-space of why git is around and necessary, as opposed to many other u=
-nnamed RCS-like systems that are *not* sufficient.
 
-> http://git-man-page-generator.lokaltog.net/ shouldn't exist and shoul=
-dn't be
-> funny. Yet it does. :(
+There are two reasons for having multiple books out for a piece of software
 
-Mockery is the not the kindest form of flattery, but it sure is the sin=
-cerest. I've been the target of this too. Laugh, and suggest workflows.=
- And, for the record, the only way you will remove atomicity/immutabili=
-ty of changes is out of my cold dead hands. :)
+1. the software is horribly complicated to use, even for beginners
 
-Cheers,
-Randall
+2. the software is extremely powerful, to to understand all the different 
+advanced options, and when to use them, takes a lot of explination
+
+In the case of git, there's a bit of both.
+
+Part of the problem is that there are so many different ways to use it (all in 
+common use) that there isn't one simple set of insructions that will be right in 
+all the different use cases (thus the value of services that force users to 
+operate in one specific model providing a tutorial in how to use it with their 
+service)
+
+At this point, Internet Lore says "git is hard to use", and if you approach any 
+software with that attitude, you will find lots of things to point at to justify 
+your opinion.
+
+I'm not saying that there isn't room for improvement, I'm just saying that the 
+evidence provided is not as one-sided as they make it sound.
+
+David Lang
+--680960-1130144495-1425430414=:26501--
