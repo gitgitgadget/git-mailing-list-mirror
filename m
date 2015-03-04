@@ -1,97 +1,97 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git describe --contains doesn't work properly for a commit
-Date: Wed, 04 Mar 2015 12:41:57 -0800
-Message-ID: <xmqq7fuw8pgq.fsf@gitster.dls.corp.google.com>
-References: <20150226133534.GB14878@dhcp22.suse.cz>
-	<20150226142314.GC14878@dhcp22.suse.cz>
-	<20150304105408.GA19693@peff.net>
-	<54F71F69.3080500@drmicha.warpmail.net>
-	<20150304180529.GA28074@peff.net>
+Subject: Re: feature request: excluding files/paths from "git grep"
+Date: Wed, 04 Mar 2015 12:56:10 -0800
+Message-ID: <xmqq385k8ot1.fsf@gitster.dls.corp.google.com>
+References: <CACsJy8AM=W4f6u_7YpvmfiBwrJjqfJMJoq6CQYfKOh+qD6rF3Q@mail.gmail.com>
+	<20150225143116.GA13567@peff.net>
+	<xmqqk2z5on72.fsf@gitster.dls.corp.google.com>
+	<20150225185128.GA16569@peff.net>
+	<xmqqbnkholx9.fsf@gitster.dls.corp.google.com>
+	<20150225191108.GA17467@peff.net>
+	<20150227100441.GA11861@tsaunders-iceball.corp.tor1.mozilla.com>
+	<xmqqvbilh0wn.fsf@gitster.dls.corp.google.com>
+	<20150301130142.GA24782@tsaunders-iceball.corp.tor1.mozilla.com>
+	<xmqqr3t8fgm4.fsf@gitster.dls.corp.google.com>
+	<20150302125017.GA4464@tsaunders-iceball.corp.tor1.mozilla.com>
+	<54F6EB96.6080500@peralex.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Michal Hocko <mhocko@suse.cz>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 04 21:42:15 2015
+Cc: Trevor Saunders <tbsaunde@tbsaunde.org>, Jeff King <peff@peff.net>,
+	Duy Nguyen <pclouds@gmail.com>, git <git@vger.kernel.org>
+To: Noel Grandin <noel@peralex.com>
+X-From: git-owner@vger.kernel.org Wed Mar 04 21:57:32 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YTG7S-0005yr-BO
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Mar 2015 21:42:14 +0100
+	id 1YTGME-0007SR-VW
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Mar 2015 21:57:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750958AbbCDUmD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Mar 2015 15:42:03 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:58850 "EHLO
+	id S1751166AbbCDU50 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Mar 2015 15:57:26 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:63403 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750934AbbCDUmA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Mar 2015 15:42:00 -0500
+	with ESMTP id S1751096AbbCDU5Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Mar 2015 15:57:25 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 560AE3B486;
-	Wed,  4 Mar 2015 15:41:59 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 999D93B9F5;
+	Wed,  4 Mar 2015 15:57:24 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=VPjN8RwtI+KKa8aszfYstfGwi5I=; b=PplQSX
-	Lr4eW8Xnrn8skPBB0oLYac0qD2csnUoGkuwu9YW18bIq4HtBoo9Y4AN0dBaUtVLN
-	OrV6DCIbrJX5MSAtEj44FInfATewCEKYzZAEAT3hMeZmcV22dlU62lk07a9KgOdi
-	EWWqGfuxHIV7OYl9JTEp1Io7CczYNPNoQpgNg=
+	:content-type; s=sasl; bh=86swNClCJmFFRiTdrGGWKg6aByg=; b=foGTZB
+	aRu0r7V4yQCBxDuNb/0EFzlO07EDd01SkxLvbpb1P5uy3mDZu7ILLeTWyvOlDak3
+	EcKfpMMYL8Tu1kYkcmp2fk78p/uil3CmKb+ePhNdkIZyYu/JgO9QeNf9jotO/qdK
+	UUKbv5qBTDwRnWHG3/mqty/0SnXexsZ2Qb0wg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NADqUOmDu4+DPUglcYdbL/dJphCo4bU6
-	CeL1+JxcPt8CRDlvno/VkJFpwawwXk8/UKxc8Jxw6jGmUXU7h7g/T8vxcgK1EpXw
-	wORHpEy6XRZsXLSnNlEEycFZe8akaF4bB0iwEq2G+4MWxj6Dq5rdadBPZwG01SEz
-	SiiiN+KYSLA=
+	:content-type; q=dns; s=sasl; b=AWTQ9JjLQTp6jOIj6y++m4w6ZXd9iFcD
+	o/epuc8uV80EY+ogia/hbcom4mRhpm2c8tZ37jISgihTRKusR2cz4zy8JoQldz5q
+	zrfcEOOM2bGn1IVTbTQdTzHRWDDjS5Zs0HnKcWQ4aY5TVo8jVN85Y6vNKQe5lPjk
+	QaTJLb4ev+U=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4C91E3B485;
-	Wed,  4 Mar 2015 15:41:59 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 90DED3B9F4;
+	Wed,  4 Mar 2015 15:57:24 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AF2ED3B484;
-	Wed,  4 Mar 2015 15:41:58 -0500 (EST)
-In-Reply-To: <20150304180529.GA28074@peff.net> (Jeff King's message of "Wed, 4
-	Mar 2015 13:05:29 -0500")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6537A3B984;
+	Wed,  4 Mar 2015 15:56:11 -0500 (EST)
+In-Reply-To: <54F6EB96.6080500@peralex.com> (Noel Grandin's message of "Wed,
+	04 Mar 2015 13:25:10 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: E738DD96-C2AE-11E4-8A41-29999F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: E3827BCE-C2B0-11E4-9F46-29999F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264774>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264775>
 
-Jeff King <peff@peff.net> writes:
+Noel Grandin <noel@peralex.com> writes:
 
-> On Wed, Mar 04, 2015 at 04:06:17PM +0100, Michael J Gruber wrote:
+> On 2015-03-02 02:50 PM, Trevor Saunders wrote:
+>> I think they solve somewhat different problems, but maybe my problem
+>> is so specialized I should just have a wrapper around grep that
+>> changes defaults. Trev 
 >
->> Complexity: Was that due to replace refs? Other than that, it seemed to
->> be simple: max(parent generation numbers)+1.
+> I'm with Trevor on this one. While I see the appeal of the generality
+> of a macro solution, this is really just about convenience for me on a
+> per-project basis.
 >
-> Calculating them is simple. Caching and storage is the bigger question.
+> As in, while working on a specific project, I sometimes just want to
+> exclude, for the time being, a bunch of stuff from 'git grep'.
 
-Yes, also having to handle the ones whose generation numbers haven't
-been computed yet adds to the complexity.
+The key word here is "for the time being", though.  What would you
+do once you are done with the "for the time being" activity?  "git
+config --unset"?
 
-This one, and $gmane/264101, are a few instances of this known issue
-raised here recently.  I have been wondering if we can do something
-along the following (these are not alternatives) as a cheaper
-workaround:
+If you forget to do so when the "for the time being" activity ends,
+and then you try to run 'git grep' and see that you did not get
+expected hits from hierarchies that you set to exclude earlier, you
+either (1) get misled to a wrong decison based on that false
+non-hit, or (2) start scratching your head, wasting time trying to
+figure out why 'git grep' is not hitting, no?
 
- (1) Introduce '--skewed-timestamps[=(allow|warn|reject)' to all
-     commands that create new commit objects.  If the committer
-     timestamp being used is older than any of the parent commits,
-     "warn" or "reject" depending on the setting.
-
-     Make 'reject' the default for commands that are purely local
-     (i.e. recording your own progress by cherry-picking,
-     committing, rebasing, reverting, etc.) and 'warn' the default
-     for commands that merge other peoples' history that you may
-     lack the power to rewind and correct (e.g. 'pull' and 'merge'
-     from remote tracking refs).
-
- (2) Compute a bitmap whose timestamps are suspect when we pack to
-     mark commits.  When revision.c:limit_list() tries to see if
-     there still are interesting commits, an UNINTERESTING commit
-     marked as such shouldn't be counted as "not interesting because
-     it is old enough".  Use the same hint in the walker used in
-     "describe --contains".
+I expect the answer might be "No, I won't forget; I am very well
+organized and you do not have to worry for me".  But a feature is an
+invitation for people other than yourself, so...
