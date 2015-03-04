@@ -1,86 +1,154 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [RFC/PATCH 0/3] protocol v2
-Date: Wed, 4 Mar 2015 19:05:08 +0700
-Message-ID: <CACsJy8B=MN412dZYYc=NwpXHVz=Pxv+8wWMT7JNurVgqKrWn8A@mail.gmail.com>
-References: <xmqqsidtoojh.fsf@gitster.dls.corp.google.com> <CAGZ79kZE2+tCZgDzeTrQBn6JQv1OWJ7t_8j4kYMQgVaAbsnnxw@mail.gmail.com>
- <CACsJy8ASR-O-7tozw=p1Ek0ugct5EVZyWtxY_YA2nqcUV_+ECw@mail.gmail.com>
- <xmqqzj80l9c7.fsf@gitster.dls.corp.google.com> <xmqqioenhs4p.fsf@gitster.dls.corp.google.com>
- <CAGZ79kY6B4BLvLVS-J50SqCz+t9uGd93WHxCYKmRU1Ey3qVg+A@mail.gmail.com>
- <CAPc5daXJ6s2oNvqSmtp5d-Dgm-EX6Mb8kY2nOLQVxAT-3wjAmQ@mail.gmail.com>
- <CAGZ79ka8Zg86qqvWByNiP3F6a9QggO-bNY3ZZ9g+A-MdKYQ7NQ@mail.gmail.com>
- <xmqqioekawmb.fsf@gitster.dls.corp.google.com> <20150302092136.GA30278@lanh>
- <20150303103351.GA4922@lanh> <xmqqk2yy80mq.fsf@gitster.dls.corp.google.com>
- <CACsJy8B_r_0nP9NyKFBnr9bXgwjx8dJkSVkHbZw+Mxin_YpZZw@mail.gmail.com> <CAJo=hJtgda4ATtPeLWbhgDPiTm9h-gzBkpknxsOdRddueUgTbw@mail.gmail.com>
+From: SZEDER =?utf-8?b?R8OhYm9y?= <szeder@ira.uka.de>
+Subject: Re: [PATCH] contrib/completion: suppress stderror in bash
+Date: Wed, 04 Mar 2015 15:04:47 +0100
+Message-ID: <20150304150447.Horde.t4rJ5Q_QdRg1uznQKWetMg1@webmail.informatik.kit.edu>
+References: <1423515508-40109-1-git-send-email-MKorostoff@gmail.com>
+ <xmqqy4o6aj1w.fsf@gitster.dls.corp.google.com>
+ <20150210031008.Horde.1WYJ_81O2E96Rgv2xrVmqw1@webmail.informatik.kit.edu>
+ <xmqqegpxwrdc.fsf@gitster.dls.corp.google.com>
+ <20150210201648.Horde.QMVdqmJIJnvLkf0U46NdYA1@webmail.informatik.kit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Stefan Beller <sbeller@google.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Mar 04 13:05:58 2015
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed	DelSp=Yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Matt Korostoff <mkorostoff@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 04 15:05:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YT83h-0007Rd-2X
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Mar 2015 13:05:49 +0100
+	id 1YT9vL-0007nV-8i
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Mar 2015 15:05:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933143AbbCDMFk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Mar 2015 07:05:40 -0500
-Received: from mail-ie0-f178.google.com ([209.85.223.178]:34071 "EHLO
-	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932803AbbCDMFj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Mar 2015 07:05:39 -0500
-Received: by iecvy18 with SMTP id vy18so2447396iec.1
-        for <git@vger.kernel.org>; Wed, 04 Mar 2015 04:05:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=CD0QV6XGBPUmgk/+74Bos4jXHL0bV9XUEZuoXJ00QZw=;
-        b=giFgOFrIZRqBPaFWswICRuGHRvhWYcpHNoR7Qezj9neInTsUau3+gEpwuez1IwOnCb
-         F3Tf/Vf5RfZlwv8HE6K1a/wzaLeldwmN/5dccaDq3Ef8DABwN1Q9/cwE3a1y0AEcH3An
-         +MngsxRMmwfrival/MSlsMCx6jJ8RaByUni1L/IdnYlSYJnyU1uWmiVm+wfqLB6hhyew
-         onoZ6mbGZyXNZ1Q91uMw+z2Se8E8SpZ4RJRKnAClXmJPY1ZPl1bE3hVQqVJbUu+hSKWk
-         tIa2rMWTRn/aPdZU8OoDGR3+uthoPuu4pDUpC6ZqLZxu3/92g77Tz9yb1Ei6ooc/KK/T
-         eh3Q==
-X-Received: by 10.107.35.140 with SMTP id j134mr10459862ioj.11.1425470738234;
- Wed, 04 Mar 2015 04:05:38 -0800 (PST)
-Received: by 10.107.131.155 with HTTP; Wed, 4 Mar 2015 04:05:08 -0800 (PST)
-In-Reply-To: <CAJo=hJtgda4ATtPeLWbhgDPiTm9h-gzBkpknxsOdRddueUgTbw@mail.gmail.com>
+	id S1757755AbbCDOFL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Mar 2015 09:05:11 -0500
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:33115 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756006AbbCDOFK convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 4 Mar 2015 09:05:10 -0500
+Received: from irawebmail.ira.uni-karlsruhe.de ([141.3.10.230] helo=webmail.ira.uka.de)
+	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
+	iface 141.3.10.81 id 1YT9v8-0005cs-7G; Wed, 04 Mar 2015 15:05:06 +0100
+Received: from apache by webmail.ira.uka.de with local (Exim 4.72)
+	(envelope-from <szeder@ira.uka.de>)
+	id 1YT9up-0000JP-4A; Wed, 04 Mar 2015 15:04:47 +0100
+Received: from x590c628a.dyn.telefonica.de (x590c628a.dyn.telefonica.de
+ [89.12.98.138]) by webmail.informatik.kit.edu (Horde Framework) with HTTP;
+ Wed, 04 Mar 2015 15:04:47 +0100
+In-Reply-To: <20150210201648.Horde.QMVdqmJIJnvLkf0U46NdYA1@webmail.informatik.kit.edu>
+User-Agent: Internet Messaging Program (IMP) H5 (6.2.2)
+Content-Disposition: inline
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1425477906.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264758>
 
-On Wed, Mar 4, 2015 at 11:27 AM, Shawn Pearce <spearce@spearce.org> wrote:
-> Let me go on a different tangent a bit from the current protocol.
+Hi,
+
+
+Quoting SZEDER G=C3=A1bor <szeder@ira.uka.de>:
+
+> Hi,
 >
-> http://www.grpc.io/ was recently released and is built on the HTTP/2
-> standard. It uses protobuf as a proven extensibility mechanism.
-> Including a full C based grpc stack just to speak the Git wire
-> protocol is quite likely overkill, but I think the embedding of a
-> proven extensible format inside of a bi-directional framed streaming
-> system like HTTP/2 offers some good guidance.
+> Quoting Junio C Hamano <gitster@pobox.com>:
+>
+>> SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
+>>
+>>>>> @@ -412,7 +412,7 @@ __git_refs_remotes ()
+>>>>> __git_remotes ()
+>>>>> {
+>>>>> 	local i IFS=3D$'\n' d=3D"$(__gitdir)"
+>>>>> -	test -d "$d/remotes" && ls -1 "$d/remotes"
+>>>>> +	test -d "$d/remotes" && ls -1 "$d/remotes" 2>/dev/null
+>>>>> 	for i in $(git --git-dir=3D"$d" config --get-regexp
+>>>>> 'remote\..*\.url' 2>/dev/null); do
+>>>>> 		i=3D"${i#remote.}"
+>>>>> 		echo "${i/.url*/}"
+>>>
+>>> Do I smell some bitrotting here?
+>>>
+>>> This function just lists all the defined remotes, first by listing =
+the
+>>> directories under refs/remotes to get the "legacy" remotes and then
+>>> loops over 'git config's output to get the "modern" ones.  This
+>>> predates the arrival of the 'git remote' command in January 2007, s=
+o
+>>> it was really a long time ago.
+>>>
+>>> We should just run 'git remote' instead, shouldn't we?
+>>
+>> Perhaps.  Is it sufficient to just make __git_remotes() a thin
+>> wrapper around, i.e.
+>>
+>> 	__git_remotes ()
+>> 	{
+>> 		git remotes
+>> 	}
+>>
+>> or do we need to munge its output further (I didn't look)?
+>
+> Well, just like in other cases where we run git from the completion
+> script, we need a '--git-dir=3D"$(__gitdir)"' as well, because the us=
+er can
+> specify the path to a different repo via $GIT_DIR or on the command
+> line.
+> Other than that it seems we are OK.  Docs say "With no arguments,
+> shows a list of existing remotes." and as far as I can tell, on
+> MSysGit, it does so without any funny formatting.
 
-I'll take this as "learn from grpc, not just reuse grpc"
+Oh, look what forgotten treasure did I stumble upon in the vaults:
 
-> Network protocol parsing is hard. Especially in languages like C where
-> buffer overflows are possible. Or where a client could trivially DoS a
-> server by sending a packet of size uint_max and the server naively
-> trying to malloc() that buffer. Defining the network protocol in an
-> IDL like protobuf 3 and being machine generated from stable well
-> maintained code has its advantages.
+   =20
+https://github.com/szeder/git/commit/e4e3760c15b485b9ff4768e13050f4b19b=
+5968b8
 
-I'm still studying the spec, so I can't comment if using IDL/protobuf3
-is a good idea yet.
+A two and a half year old commit in my old git repo doing the same...  =
+=20
+completely forgotten :)
 
-But I think at least we can avoid DoS by changing the pkt-line (again)
-a bit: the length 0xffff means that actual length is 0xfffe and the
-next pkt-line is part of this pkt-line. Higher level (upload-pack or
-fetch-pack, for example) must set an upper limit for packet_read() so
-it won't try to concatenate pkt-lines forever.
--- 
-Duy
+Unfortunately, however, it's not quite that simple, because 'git =20
+remote' doesn't list remotes under '$GIT_DIR/remotes'.  Or at least I =20
+would have expected the following test to work, but it does not:
+
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index 17c6330..6a4c139 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -734,6 +734,15 @@ Pull: refs/heads/master:refs/heads/origin
+  Pull: refs/heads/next:refs/heads/origin2
+  EOF
+
++test_expect_success 'list remote in $GIT_DIR/remotes' '
++	mkdir .git/remotes &&
++	test_when_finished "rm -rf .git/remotes" &&
++	cat remotes_origin >.git/remotes/remote_from_file &&
++	git remote >actual &&
++	echo remote_from_file >expect &&
++	test_cmp expect actual
++'
++
+  test_expect_success 'migrate a remote from named file in $GIT_DIR/rem=
+otes' '
+  	git clone one five &&
+  	origin_url=3D$(pwd)/one &&
+
+because listing remotes is implemented by for_each_remote(), which =20
+only reads remotes from the config file.
+
+Now, considering how old 'git remote' is, there were plenty of time =20
+for someone to miss this functionality and complain about it, but =20
+since it's still not implemented is probably a good sign that noone =20
+has actually missed it.  And I don't think it's worth implementing it =20
+now just to shave off two more lines from the completion script.
+
+Anyway, 'git remote' could still replace that 'git config' query.  I =20
+have the patches ready and it seems I got send-email working, so =20
+they'll follow in a minute or two.
+
+Best,
+G=C3=A1bor
