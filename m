@@ -1,104 +1,84 @@
-From: David Lang <david@lang.hm>
-Subject: Re: An interesting opinion on DVCS/git
-Date: Tue, 3 Mar 2015 16:53:34 -0800 (PST)
-Message-ID: <alpine.DEB.2.02.1503031642340.26501@nftneq.ynat.uz>
-References: <54F2CD12.8050609@gmail.com> <CAGZ79kZ8CrjwVh3+OHSV1tv+fRXaDZ_diOO5E7QnSLZ=HTFSfg@mail.gmail.com> <CAJo=hJuKL3akaG3Xh8mH5iij_dAdMkBW8fQgvreOsUHV517gpw@mail.gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [RFC/PATCH 0/3] protocol v2
+Date: Wed, 4 Mar 2015 08:54:57 +0700
+Message-ID: <CACsJy8B_r_0nP9NyKFBnr9bXgwjx8dJkSVkHbZw+Mxin_YpZZw@mail.gmail.com>
+References: <xmqqsidtoojh.fsf@gitster.dls.corp.google.com> <CAGZ79kZE2+tCZgDzeTrQBn6JQv1OWJ7t_8j4kYMQgVaAbsnnxw@mail.gmail.com>
+ <CACsJy8ASR-O-7tozw=p1Ek0ugct5EVZyWtxY_YA2nqcUV_+ECw@mail.gmail.com>
+ <xmqqzj80l9c7.fsf@gitster.dls.corp.google.com> <xmqqioenhs4p.fsf@gitster.dls.corp.google.com>
+ <CAGZ79kY6B4BLvLVS-J50SqCz+t9uGd93WHxCYKmRU1Ey3qVg+A@mail.gmail.com>
+ <CAPc5daXJ6s2oNvqSmtp5d-Dgm-EX6Mb8kY2nOLQVxAT-3wjAmQ@mail.gmail.com>
+ <CAGZ79ka8Zg86qqvWByNiP3F6a9QggO-bNY3ZZ9g+A-MdKYQ7NQ@mail.gmail.com>
+ <xmqqioekawmb.fsf@gitster.dls.corp.google.com> <20150302092136.GA30278@lanh>
+ <20150303103351.GA4922@lanh> <xmqqk2yy80mq.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="680960-1130144495-1425430414=:26501"
+Content-Type: text/plain; charset=UTF-8
 Cc: Stefan Beller <sbeller@google.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Mar 04 01:53:44 2015
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 04 02:55:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YSxZH-0005Ru-Rc
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Mar 2015 01:53:44 +0100
+	id 1YSyX8-0003Se-E6
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Mar 2015 02:55:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756989AbbCDAxi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Mar 2015 19:53:38 -0500
-Received: from mail.lang.hm ([64.81.33.126]:59739 "EHLO bifrost.lang.hm"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756337AbbCDAxh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Mar 2015 19:53:37 -0500
-Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id t240rY65004057;
-	Tue, 3 Mar 2015 16:53:34 -0800
-X-X-Sender: dlang@asgard.lang.hm
-In-Reply-To: <CAJo=hJuKL3akaG3Xh8mH5iij_dAdMkBW8fQgvreOsUHV517gpw@mail.gmail.com>
-User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
+	id S1754869AbbCDBza (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Mar 2015 20:55:30 -0500
+Received: from mail-ie0-f178.google.com ([209.85.223.178]:43404 "EHLO
+	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752805AbbCDBz3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Mar 2015 20:55:29 -0500
+Received: by iebtr6 with SMTP id tr6so63679750ieb.10
+        for <git@vger.kernel.org>; Tue, 03 Mar 2015 17:55:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=xYkzEQk6JOGuw2FKttj18277F1zPDPcE3NchI07qytE=;
+        b=a5CVMCigPPq01owow8miAQMLcG2ZWXxAnwf7SYzEPiNtyOKfbs+IwoFlKpe9Nykab1
+         YsJMMzv3LgNz+sW3NGxzhcbi792621YtHyrKvtJUmJBk/1VZfx86aFTcOXpDwSHyKZ3F
+         w4icKam2zpnQsROthB4hgTA7+9xwuTEfK7gOeTUM6YGkd2N3vW1C8ZVK3PI8QTz3PzFT
+         XuxZM2cGfya7DJekQ4VdU1k6KLGLH3JeQkGqzoX48iq3KomX0vEu515CN9E7w/zIrpIl
+         odcm9yRNblylCt6BRV+Lx3wNumkgv4/DASXyFIUuHIimTvfvxK/IbvaHdxZU0/LbrMUN
+         hRuQ==
+X-Received: by 10.50.131.196 with SMTP id oo4mr7049433igb.2.1425434128476;
+ Tue, 03 Mar 2015 17:55:28 -0800 (PST)
+Received: by 10.107.131.155 with HTTP; Tue, 3 Mar 2015 17:54:57 -0800 (PST)
+In-Reply-To: <xmqqk2yy80mq.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264714>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Wed, Mar 4, 2015 at 12:13 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> My recollection is that the consensus from the last time we
+> discussed protocol revamping was to list one capability per packet
+> so that packet length limit does not matter, but you may want to
+> check with the list archive yourself.
 
---680960-1130144495-1425430414=:26501
-Content-Type: TEXT/PLAIN; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+I couldn't find that consensus mail, but this one [1] is good enough
+evidence that we can hit packet length limit in capability line
+easily.
 
-On Tue, 3 Mar 2015, Shawn Pearce wrote:
+With an escape hatch to allow maximum packet length up to  uint_max, I
+think we'll be fine for a long time even if we don't send one cap per
+pkt-line. So I'm trying to see if we really want to go with one cap
+per pkt-line..
 
-> On Sun, Mar 1, 2015 at 7:29 PM, Stefan Beller <sbeller@google.com> wrote:
->> bitquabit.com/post/unorthodocs-abandon-your-dvcs-and-return-to-sanity
->
-> Indeed, a DVCS like Git or Hg does not fit everyone. And neither do
-> centralized systems like Subversion. Choice is good.
->
-> However... I found some passages troubling for Git, e.g.:
->
-> ---snip---
-> Git is so amazingly simple to use that APress, a single publisher,
-> needs to have three different books on how to use it. It’s so simple
-> that Atlassian and GitHub both felt a need to write their own online
-> tutorials to try to clarify the main Git tutorial on the actual Git
-> website. It’s so transparent that developers routinely tell me that
-> the easiest way to learn Git is to start with its file formats and
-> work up to the commands.
-> ---snap---
->
-> We have heard this sort of feedback for years. But we have been unable
-> to adequately write our own documentation or clean up our man pages to
-> be useful to the average person who doesn't know why the --no-frobbing
-> option doesn't disable the --frobinator option to the
-> --frobbing-subcommand of git frob.  :(
->
-> http://git-man-page-generator.lokaltog.net/ shouldn't exist and
-> shouldn't be funny. Yet it does. :(
+Pros:
 
-As for the different online tutorials, I'll point out that every university that 
-supports it's students using Thunderbird has it's own version of a tutorial on 
-how to use and configure Thunderbird. The question is if they are coverying 
-their one use case of how to use git with their service, or if they are trying 
-to duplicate the git documentation.
+ - better memory management, current pkt-line static buffer is probably fine
+ - a capability can contain spaces after '='
 
+Cons:
 
-There are two reasons for having multiple books out for a piece of software
+ - some refactoring needed to hide away differences between v1 and v2
 
-1. the software is horribly complicated to use, even for beginners
+Looks like one cap per pkt-line is winning..
 
-2. the software is extremely powerful, to to understand all the different 
-advanced options, and when to use them, takes a lot of explination
-
-In the case of git, there's a bit of both.
-
-Part of the problem is that there are so many different ways to use it (all in 
-common use) that there isn't one simple set of insructions that will be right in 
-all the different use cases (thus the value of services that force users to 
-operate in one specific model providing a tutorial in how to use it with their 
-service)
-
-At this point, Internet Lore says "git is hard to use", and if you approach any 
-software with that attitude, you will find lots of things to point at to justify 
-your opinion.
-
-I'm not saying that there isn't room for improvement, I'm just saying that the 
-evidence provided is not as one-sided as they make it sound.
-
-David Lang
---680960-1130144495-1425430414=:26501--
+[1] http://thread.gmane.org/gmane.comp.version-control.git/237929
+-- 
+Duy
