@@ -1,81 +1,64 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [RFH] GSoC 2015 application
-Date: Wed, 4 Mar 2015 18:21:20 +0700
-Message-ID: <CACsJy8DCBEp9jPrq=vR-dcJ4hSZss=4i900OCDzUFm_NvonvTg@mail.gmail.com>
-References: <20150218191417.GA7767@peff.net> <CACsJy8D6nAt3fMw=oh5mwUwfAJKViN1pk9pf9gZSBGyquU_WBQ@mail.gmail.com>
- <20150304103119.GA19234@peff.net>
+From: Noel Grandin <noel@peralex.com>
+Subject: Re: feature request: excluding files/paths from "git grep"
+Date: Wed, 04 Mar 2015 13:25:10 +0200
+Message-ID: <54F6EB96.6080500@peralex.com>
+References: <CACsJy8AM=W4f6u_7YpvmfiBwrJjqfJMJoq6CQYfKOh+qD6rF3Q@mail.gmail.com> <20150225143116.GA13567@peff.net> <xmqqk2z5on72.fsf@gitster.dls.corp.google.com> <20150225185128.GA16569@peff.net> <xmqqbnkholx9.fsf@gitster.dls.corp.google.com> <20150225191108.GA17467@peff.net> <20150227100441.GA11861@tsaunders-iceball.corp.tor1.mozilla.com> <xmqqvbilh0wn.fsf@gitster.dls.corp.google.com> <20150301130142.GA24782@tsaunders-iceball.corp.tor1.mozilla.com> <xmqqr3t8fgm4.fsf@gitster.dls.corp.google.com> <20150302125017.GA4464@tsaunders-iceball.corp.tor1.mozilla.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 04 12:22:05 2015
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>,
+	git <git@vger.kernel.org>
+To: Trevor Saunders <tbsaunde@tbsaunde.org>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 04 12:25:27 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YT7NG-0006rk-7o
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Mar 2015 12:21:58 +0100
+	id 1YT7Qa-00011s-VO
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Mar 2015 12:25:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759275AbbCDLVx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Mar 2015 06:21:53 -0500
-Received: from mail-ig0-f172.google.com ([209.85.213.172]:41804 "EHLO
-	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759234AbbCDLVw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Mar 2015 06:21:52 -0500
-Received: by igal13 with SMTP id l13so35891478iga.0
-        for <git@vger.kernel.org>; Wed, 04 Mar 2015 03:21:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=NI5091vl6hAL3oI70E/U0e2LqVxUunPOTnvDD/D7Bjw=;
-        b=HyuBXFKxytsJtwG1bSZqeXfnJvKhAKJ/zOncAnBFGd2KMFfFl+V7t8WYbIrL/hyyJ7
-         guXQuSejh5cUnsogiX/6FOaPEuPe6HihAJZYk4GnYqwFAPhRsHIzsRnykJ+ciLXHWVOB
-         1YQohjKHrx+Q4dAZQZmanBy9Ijz0ecsUYeYaiG+Hrgj1IJ47rvcZFJlTOpmrMeB6g098
-         beddWUaGGtEif7ddabiEV094+eJi9Z2ZGdkvuXRIVH8AngqBvpyWl+yPh5jcTvyzIQhd
-         lzYvf40a0hUyvmEfEu4R9z2IePIstaTzHdRYMRB8ZeL/b24aZkEu3Szub3ZlwLwKZxbN
-         LR0Q==
-X-Received: by 10.107.9.88 with SMTP id j85mr612959ioi.60.1425468111846; Wed,
- 04 Mar 2015 03:21:51 -0800 (PST)
-Received: by 10.107.131.155 with HTTP; Wed, 4 Mar 2015 03:21:20 -0800 (PST)
-In-Reply-To: <20150304103119.GA19234@peff.net>
+	id S1759243AbbCDLZS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Mar 2015 06:25:18 -0500
+Received: from mail.peralex.com ([41.164.8.44]:59375 "EHLO mail.peralex.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755693AbbCDLZR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Mar 2015 06:25:17 -0500
+Received: from [192.168.1.95] (noel1.ct [192.168.1.95])
+	by mail.peralex.com (Postfix) with ESMTPSA id 24A00336F5A;
+	Wed,  4 Mar 2015 13:25:14 +0200 (SAST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=peralex.com;
+	s=default; t=1425468314;
+	bh=amyeeq4mcMHqACt9PqXwOv7uI317/Dq8koDf7RuMcG8=;
+	h=Date:From:To:CC:Subject:References:In-Reply-To;
+	b=wSO/Vr896AbPjN54Haofuocg3Dsoq0ykGbFV28GSY4MkYigoIepUUUt0GqafuAg9a
+	 5EB9uDcbpS79biPeG+DbIT94OboCWQuJ3JdXm2RoKt0TMhJ5sKwmCOQjd0VDSpAWTs
+	 y2iLXUZbwMDN7r+i9/++AH0qOt0GFK1stLkMZiGc=
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
+In-Reply-To: <20150302125017.GA4464@tsaunders-iceball.corp.tor1.mozilla.com>
+X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.4.3 (mail.peralex.com); Wed, 04 Mar 2015 13:25:14 +0200 (SAST)
+X-Scanned-By: MIMEDefang 2.74 on 41.164.8.44
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264753>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264754>
 
-On Wed, Mar 4, 2015 at 5:31 PM, Jeff King <peff@peff.net> wrote:
-> On Thu, Feb 26, 2015 at 08:10:38PM +0700, Duy Nguyen wrote:
->
->> On Thu, Feb 19, 2015 at 2:14 AM, Jeff King <peff@peff.net> wrote:
->> > Where I really need help now is in the "ideas" page:
->> >
->> >   http://git.github.io/SoC-2015-Ideas.html
->>
->> Is this too ambitious for a summer? I suspect the answer is yes, but anyway..
->>
->> Due to http limitations and stateless decision, a lot of data is sent
->> back and forth during have/want negotiation for smart-http. I wonder
->> if we could implement the "long polling" scheme in a CGI program. The
->> program terminates HTTP requests and recreates a full duplex
->> connection for upload-pack to talk to the client. upload-pack falls
->> back to the normal mode, used by git:// and ssh://.
->
-> So basically Git-over-TCP-over-HTTP? :)
+On 2015-03-02 02:50 PM, Trevor Saunders wrote:
+> I think they solve somewhat different problems, but maybe my problem is so specialized I should just have a wrapper 
+> around grep that changes defaults. Trev 
 
-Yes. The hidden agenda was, if it works well, we might be able to
-deprecate smart-http one day. That day, if happens, would be in far
-future though. By that time hopefully we could just use http2
-insteadof tcp-over-http1.
+I'm with Trevor on this one. While I see the appeal of the generality of a macro solution, this is really just about 
+convenience for me on a per-project basis.
 
-> I'm not sure it is too ambitious in terms of actual implementation time,
-> but I think the design work may exceed what most students are capable
-> of.
+As in, while working on a specific project, I sometimes just want to exclude, for the time being, a bunch of stuff from 
+'git grep'.
 
-Not to mention that I think it can be man-in-the-middle attacked if
-we're not careful (e.g. send to session token in unencrypted). Which
-makes it less appealing to me.
--- 
-Duy
+Mind you, I use 'git grep' a hang of a lot during development, since it is so powerful, so maybe that's just me.
+
+Thanks, Noel Grandin
+
+
+
+Disclaimer: http://www.peralex.com/disclaimer.html
