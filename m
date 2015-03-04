@@ -1,88 +1,77 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-describe considers WC dirty incorrectly when using --git-dir
-Date: Wed, 04 Mar 2015 11:54:02 -0800
-Message-ID: <xmqqoao88rol.fsf@gitster.dls.corp.google.com>
-References: <CACWYfsCO3O-x8zBsFXoSTFZ8GiaO6CpAszUHRtjM0dCp0Q8ogg@mail.gmail.com>
+Subject: Re: [PATCH 2/2] Disclaimer about the number of slots.
+Date: Wed, 04 Mar 2015 11:55:31 -0800
+Message-ID: <xmqqk2yw8rm4.fsf@gitster.dls.corp.google.com>
+References: <1425453571-8771-1-git-send-email-Matthieu.Moy@imag.fr>
+	<1425453571-8771-2-git-send-email-Matthieu.Moy@imag.fr>
+	<20150304075109.GC28502@peff.net> <vpq1tl5urfs.fsf@anie.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Chris Pimlott <chris@pimlott.net>
-X-From: git-owner@vger.kernel.org Wed Mar 04 20:54:15 2015
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Mar 04 20:55:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YTFMy-0000XL-SV
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Mar 2015 20:54:13 +0100
+	id 1YTFON-0001aH-87
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Mar 2015 20:55:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759342AbbCDTyH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Mar 2015 14:54:07 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64445 "EHLO
+	id S1758644AbbCDTzf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Mar 2015 14:55:35 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64061 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1758246AbbCDTyG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Mar 2015 14:54:06 -0500
+	with ESMTP id S1757219AbbCDTze (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Mar 2015 14:55:34 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5F6E43C43A;
-	Wed,  4 Mar 2015 14:54:04 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A99FB3C4CA;
+	Wed,  4 Mar 2015 14:55:33 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xYs9IXU5EKjzKM3eP57sVLq3U50=; b=WQuRUT
-	+f3Kqie5iHdn9RgFwVUvk1UquYVoXzJ0/u6VcagzxkogVBFkkHBCSlVUdOGAIPiW
-	yCw4BMgbFQ4AWCog5qUga7wGNRhc3gn162JBoS/gmTDPHyJZiKzcFxKbdgwMnpr4
-	7ZkuPqkzKlz6XwRa7rhuXZSm6HC0mDUA7tBW8=
+	:content-type; s=sasl; bh=Hv8Unq8JXIEUbcgPzPUArIrwDBM=; b=PKN/rW
+	XhmDEI67/29IJpWhcN+Fz9w+CFoxjOEQEgEn+JsxK4JQpfSRJSP1I8PrQIfzLy6n
+	D+QxIxuEuEAV/nJF6i1WY+2y4iDuJsPf7GXeNt/G7uAF4qfY+SG3HnBM/m5nlMWr
+	SOMTI/htiEZJXSdnkv/fbUnwuwBwlMcuF0Gf8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cEVimTRcAMG8U/QG0fpTyVtnAHRrYHlG
-	nsFHyHZev0UAcCxED3YeITN1E+ykhPfw2S++d/v2IH7i5eCgnx8g+nR0EX6OwWMe
-	pROa+mBL4qVdGDKwWkQkGi8xrX266mHceo0szlDeK03uSPtW2u2fIz0Bcj1HpiAU
-	F996dfPFlUU=
+	:content-type; q=dns; s=sasl; b=rU0JNTA3em36hY1oMbcN9xnSt7RGT1Yh
+	BTmBOZNIyHmmYgLM5AmYlOP99Gwzn8zX1sOI+dOodF7zvjmyNz5UyNZ0FUKW0jFi
+	MXuntLKO4vYI1VjeqMs9r5w3G35fBYsKAVNOMAfqF35Bwe5/hVuiei7IiEcOW9xZ
+	AFMB94H/2Mk=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5739E3C439;
-	Wed,  4 Mar 2015 14:54:04 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9F21B3C4C3;
+	Wed,  4 Mar 2015 14:55:33 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D17FC3C438;
-	Wed,  4 Mar 2015 14:54:03 -0500 (EST)
-In-Reply-To: <CACWYfsCO3O-x8zBsFXoSTFZ8GiaO6CpAszUHRtjM0dCp0Q8ogg@mail.gmail.com>
-	(Chris Pimlott's message of "Wed, 4 Mar 2015 11:47:32 -0800")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 46E903C4BC;
+	Wed,  4 Mar 2015 14:55:32 -0500 (EST)
+In-Reply-To: <vpq1tl5urfs.fsf@anie.imag.fr> (Matthieu Moy's message of "Wed,
+	04 Mar 2015 08:56:07 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 35AC270A-C2A8-11E4-B434-29999F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 6A61653C-C2A8-11E4-9E56-29999F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264769>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264770>
 
-Chris Pimlott <chris@pimlott.net> writes:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-> It seems that git-describe always thinks that working copy is dirty if
-> you are not in the WC root and you explicitly specify the .git
-> directory location using --git-dir:
+> Jeff King <peff@peff.net> writes:
 >
->   # set up test repo
->   folio:~ chris$ mkdir repo && cd repo
->   folio:repo chris$ mkdir text && echo hi > text/hi.txt
->   folio:repo chris$ git init . && git add . && git commit -m "text/hi.txt"
->   Initialized empty Git repository in /home/chris/repo/.git/
->   [master (root-commit) c0edd63] text/hi.txt
->   1 file changed, 1 insertion(+)
->   create mode 100644 text/hi.txt
+>> Maybe something along the lines of "If you are really excited about
+>> working on git, we would love to see your application; if you are just
+>> looking for a random project, there may be a lot of competition for a
+>> small number of slots". Except I am not quite sure how to phrase "just
+>> looking for a random project" that does not sound quite so demeaning.
 >
->   # git-describe from non-root directory
->   folio:repo chris$ cd text
->   folio:text chris$ git describe --always --dirty
->   c0edd63
->   folio:text chris$ git --git-dir=../.git describe --always --dirty
->   c0edd63-dirty
->   folio:text chris$ git --git-dir=$(git rev-parse
-> --show-toplevel)/.git describe --always --dirty
->   c0edd63-dirty
+> Yes, that's the idea, but I didn't find a way to say "if you're one of
+> the great students we're looking for, please come in, otherwise go
+> away", so I went for a neutral wording that would let the reader infer
+> it by themselves ;-).
 
-I have a feeling that this is not limited to describe at all.  With
-the --git-dir option, you are telling Git that your GIT_DIR is over
-there and (by not using --work-tree together with that option) you
-are telling Git that you do not want Git to guess where the working
-tree is (instead, you are telling Git that you are at the top of the
-working tree), no?
+What is this?  Matt and Jeff's comedy hour?
+
+You two made me laugh hard ;-)
