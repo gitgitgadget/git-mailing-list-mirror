@@ -1,97 +1,123 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: feature request: excluding files/paths from "git grep"
-Date: Wed, 04 Mar 2015 12:56:10 -0800
-Message-ID: <xmqq385k8ot1.fsf@gitster.dls.corp.google.com>
-References: <CACsJy8AM=W4f6u_7YpvmfiBwrJjqfJMJoq6CQYfKOh+qD6rF3Q@mail.gmail.com>
-	<20150225143116.GA13567@peff.net>
-	<xmqqk2z5on72.fsf@gitster.dls.corp.google.com>
-	<20150225185128.GA16569@peff.net>
-	<xmqqbnkholx9.fsf@gitster.dls.corp.google.com>
-	<20150225191108.GA17467@peff.net>
-	<20150227100441.GA11861@tsaunders-iceball.corp.tor1.mozilla.com>
-	<xmqqvbilh0wn.fsf@gitster.dls.corp.google.com>
-	<20150301130142.GA24782@tsaunders-iceball.corp.tor1.mozilla.com>
-	<xmqqr3t8fgm4.fsf@gitster.dls.corp.google.com>
-	<20150302125017.GA4464@tsaunders-iceball.corp.tor1.mozilla.com>
-	<54F6EB96.6080500@peralex.com>
+Subject: Re: [PATCH v2 2/3] sha1_file: implement changes for "cat-file --literally -t"
+Date: Wed, 04 Mar 2015 12:58:23 -0800
+Message-ID: <xmqqy4nc7a4w.fsf@gitster.dls.corp.google.com>
+References: <54F5888B.7040400@gmail.com>
+	<1425377556-25332-1-git-send-email-karthik.188@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Trevor Saunders <tbsaunde@tbsaunde.org>, Jeff King <peff@peff.net>,
-	Duy Nguyen <pclouds@gmail.com>, git <git@vger.kernel.org>
-To: Noel Grandin <noel@peralex.com>
-X-From: git-owner@vger.kernel.org Wed Mar 04 21:57:32 2015
+Cc: git@vger.kernel.org
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 04 21:59:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YTGME-0007SR-VW
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Mar 2015 21:57:31 +0100
+	id 1YTGOG-0000PF-BO
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Mar 2015 21:59:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751166AbbCDU50 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Mar 2015 15:57:26 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:63403 "EHLO
+	id S1751812AbbCDU7b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Mar 2015 15:59:31 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:57427 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751096AbbCDU5Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Mar 2015 15:57:25 -0500
+	with ESMTP id S1751806AbbCDU73 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Mar 2015 15:59:29 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 999D93B9F5;
-	Wed,  4 Mar 2015 15:57:24 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 000903BB12;
+	Wed,  4 Mar 2015 15:59:28 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=86swNClCJmFFRiTdrGGWKg6aByg=; b=foGTZB
-	aRu0r7V4yQCBxDuNb/0EFzlO07EDd01SkxLvbpb1P5uy3mDZu7ILLeTWyvOlDak3
-	EcKfpMMYL8Tu1kYkcmp2fk78p/uil3CmKb+ePhNdkIZyYu/JgO9QeNf9jotO/qdK
-	UUKbv5qBTDwRnWHG3/mqty/0SnXexsZ2Qb0wg=
+	:content-type; s=sasl; bh=VtQ4kpihi6TsrLD+90zOunRM+4A=; b=fzmPoh
+	/l+vug7kxPhK56XHtVhWQVP+/LvaQYVBE2+5N+t4dtPl1qnUItsMcfhAOEQi9ndT
+	niFlO95G8CCWOdqEKtUB85kX6TKMNgmFG5/sJorQdNAc4CUdwYl8SMQMTdIvwFt8
+	XwAqnSxsxmXa0F1KYfSPVITzPLsO1cPmQ6Gvc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=AWTQ9JjLQTp6jOIj6y++m4w6ZXd9iFcD
-	o/epuc8uV80EY+ogia/hbcom4mRhpm2c8tZ37jISgihTRKusR2cz4zy8JoQldz5q
-	zrfcEOOM2bGn1IVTbTQdTzHRWDDjS5Zs0HnKcWQ4aY5TVo8jVN85Y6vNKQe5lPjk
-	QaTJLb4ev+U=
+	:content-type; q=dns; s=sasl; b=EDSdA7u4Crl37/qDjD5Zc82vHqTV797u
+	luhjg5k/3LrU8kKrkgjrrthjXnrLIhJq6cyVQv6KhJuzIKz2umxhsn483ZyTAW4+
+	9+W0wEKVeuZRzRdvVNvPaJeYdBF+JIxDsP0fMr0y1tXAqfQ3CDKe3OIRkq44sa+5
+	p709ooWBMLA=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 90DED3B9F4;
-	Wed,  4 Mar 2015 15:57:24 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id ECFB73BB11;
+	Wed,  4 Mar 2015 15:59:28 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6537A3B984;
-	Wed,  4 Mar 2015 15:56:11 -0500 (EST)
-In-Reply-To: <54F6EB96.6080500@peralex.com> (Noel Grandin's message of "Wed,
-	04 Mar 2015 13:25:10 +0200")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 759263BA9C;
+	Wed,  4 Mar 2015 15:58:24 -0500 (EST)
+In-Reply-To: <1425377556-25332-1-git-send-email-karthik.188@gmail.com>
+	(Karthik Nayak's message of "Tue, 3 Mar 2015 15:42:36 +0530")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: E3827BCE-C2B0-11E4-9F46-29999F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 32C86270-C2B1-11E4-8B88-29999F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264776>
 
-Noel Grandin <noel@peralex.com> writes:
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-> On 2015-03-02 02:50 PM, Trevor Saunders wrote:
->> I think they solve somewhat different problems, but maybe my problem
->> is so specialized I should just have a wrapper around grep that
->> changes defaults. Trev 
+> add "sha1_object_info_literally()" which is to be used when
+> the "literally" option is given to get the type of object
+> and print it, using "sha1_object_info_extended()".
 >
-> I'm with Trevor on this one. While I see the appeal of the generality
-> of a macro solution, this is really just about convenience for me on a
-> per-project basis.
+> add "unpack_sha1_header_literally()" to unpack sha headers
+> which may be greater than 32 bytes, which is the threshold
+> for a regular object header.
 >
-> As in, while working on a specific project, I sometimes just want to
-> exclude, for the time being, a bunch of stuff from 'git grep'.
+> modify "sha1_loose_object_info()" to include a flag argument
+> and also include changes to call "unpack_sha1_header_literally()"
+> when the literally flag is passed. Also copies the obtained
+> type to the typename field of object_info.
+>
+> modify "sha1_object_info_extended()" to call the function
+> "sha1_loose_object_info()" with flags.
+>
+> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+> ---
+>  sha1_file.c | 84 +++++++++++++++++++++++++++++++++++++++++++++++++++++++------
+>  1 file changed, 77 insertions(+), 7 deletions(-)
+>
+> diff --git a/sha1_file.c b/sha1_file.c
+> index 69a60ec..1068ca0 100644
+> --- a/sha1_file.c
+> +++ b/sha1_file.c
+> @@ -1564,6 +1564,36 @@ int unpack_sha1_header(git_zstream *stream, unsigned char *map, unsigned long ma
+>  	return git_inflate(stream, 0);
+>  }
+>  
+> +static int unpack_sha1_header_literally(git_zstream *stream, unsigned char *map,
+> +					unsigned long mapsize,
+> +					struct strbuf *header)
+> +{
+> +...
+> +}
 
-The key word here is "for the time being", though.  What would you
-do once you are done with the "for the time being" activity?  "git
-config --unset"?
+Looks suspiciously familiar...
 
-If you forget to do so when the "for the time being" activity ends,
-and then you try to run 'git grep' and see that you did not get
-expected hits from hierarchies that you set to exclude earlier, you
-either (1) get misled to a wrong decison based on that false
-non-hit, or (2) start scratching your head, wasting time trying to
-figure out why 'git grep' is not hitting, no?
+> +int sha1_object_info_literally(const unsigned char *sha1)
+> +{
+> +	enum object_type type;
+> +	struct strbuf sb = STRBUF_INIT;
+> +	struct object_info oi = {NULL};
+> +
+> +	oi.typename = &sb;
+> +	oi.typep = &type;
+> +	if (sha1_object_info_extended(sha1, &oi, LOOKUP_LITERALLY) < 0)
+> +		return -1;
+> +	if (*oi.typep > 0)
+> +		printf("%s\n", typename(*oi.typep));
+> +	else
+> +		printf("%s\n", oi.typename->buf);
+> +	strbuf_release(oi.typename);
+> +	return 0;
+> +}
+> +
 
-I expect the answer might be "No, I won't forget; I am very well
-organized and you do not have to worry for me".  But a feature is an
-invitation for people other than yourself, so...
+NAK.
+
+Please don't add end-user facing final output to sha1_file.c;
+instead have the caller use a helper function like this one to
+extract necessary information and perform the end-user interaction
+there.
