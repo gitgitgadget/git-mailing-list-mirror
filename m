@@ -1,97 +1,67 @@
-From: Sudhanshu Shekhar <sudshekhar02@gmail.com>
-Subject: [PATCH] reset: allow "-" short hand for previous commit
-Date: Wed,  4 Mar 2015 12:39:56 +0530
-Message-ID: <1425452996-11682-1-git-send-email-sudshekhar02@gmail.com>
-References: <CAODo60qimjiMfWY_FNuOcVaYc=JdbTv_4SJ3BROC-9Jo5qWkdA@mail.gmail.com>
-Cc: Sudhanshu Shekhar <sudshekhar02@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 04 08:10:36 2015
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] reset: allow "-" short hand for previous commit
+Date: Wed, 4 Mar 2015 02:10:55 -0500
+Message-ID: <CAPig+cRXZ+QRqxGPCkHTbW7ZbuPVpJndZU-7mS7GdtnqScfwfg@mail.gmail.com>
+References: <1425415911-496-1-git-send-email-sudshekhar02@gmail.com>
+	<vpq4mq13f69.fsf@anie.imag.fr>
+	<xmqq1tl5acwu.fsf@gitster.dls.corp.google.com>
+	<CAODo60qimjiMfWY_FNuOcVaYc=JdbTv_4SJ3BROC-9Jo5qWkdA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Git List <git@vger.kernel.org>
+To: Sudhanshu Shekhar <sudshekhar02@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 04 08:11:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YT3Rz-0007CK-RR
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Mar 2015 08:10:36 +0100
+	id 1YT3SR-0007Sy-Dp
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Mar 2015 08:11:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934355AbbCDHK3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Mar 2015 02:10:29 -0500
-Received: from mail-pd0-f172.google.com ([209.85.192.172]:44038 "EHLO
-	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933152AbbCDHK0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Mar 2015 02:10:26 -0500
-Received: by pdjz10 with SMTP id z10so4129125pdj.11
-        for <git@vger.kernel.org>; Tue, 03 Mar 2015 23:10:26 -0800 (PST)
+	id S933604AbbCDHK6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Mar 2015 02:10:58 -0500
+Received: from mail-yh0-f53.google.com ([209.85.213.53]:32936 "EHLO
+	mail-yh0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933152AbbCDHK4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Mar 2015 02:10:56 -0500
+Received: by yhl29 with SMTP id 29so21125017yhl.0
+        for <git@vger.kernel.org>; Tue, 03 Mar 2015 23:10:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=P2/W17BETSA5vX+pb7wQYh3Az0/kmALcO0QdaCvGKIo=;
-        b=LKEV+tTt35IU66vUPbOucHFIeEBXxREZpjx/M42C1ymXFwFMn/GRnqa5CjjKEncmju
-         ye8SC8mb4yFq2VYKw1LzvIGo0yOUVD9INsmzWUYa9udqEJadAj8r1TNcADoLtuM5v882
-         2fEfKHgMpkbxzOx/dDD7qYKFFtiaTjbUAdZryjRq3BordTgC1qEj8ihRjenik0USgKcL
-         nxCu256XFpFz1Uke/ejl8v2enudFapTHD+2rzrqzY2WSYtTrasHD5LsZM2Do4yGSJyG/
-         LWMfJD5TemcTVqg4sTH3dOUbpajpVe2kNZSa/8GFdHG5atrm8LQl0ttTnh5NmovJzVv6
-         rrCw==
-X-Received: by 10.68.171.68 with SMTP id as4mr4297872pbc.21.1425453026080;
-        Tue, 03 Mar 2015 23:10:26 -0800 (PST)
-Received: from shekhar-Inspiron-N5110.iiit.ac.in ([14.139.82.6])
-        by mx.google.com with ESMTPSA id py5sm1578232pbc.81.2015.03.03.23.10.23
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 03 Mar 2015 23:10:24 -0800 (PST)
-X-Mailer: git-send-email 2.3.1.168.gfd4bc34.dirty
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=HKfXhQSN8FuVcSK/79b2adOvYvIf9JJTMYmptoVTim4=;
+        b=q5kr69wnwA7i5wl6GwRTOskCaJAT9q/cF8lemkXzUOlzLEjoRSiX/Mjx2xlzYl/ubY
+         dsG12sAkgRrtnH7yBSSW04ptEnGc+Qjoveaiy6caA7zMQo7sbrFELlAe/n3DOOqH64xw
+         yxESBJXrDIdqJBNdfDE+HT3+/q9+92IzPsKadkoe88ixAa1cXU5IZ51CDKBtn9qwcuPy
+         xWT7Y4tKmXphu4YZCbTq++RS4rfOtjcjigCPiVVyJYPvymJEHzp8Qoe2h5hlV2UMybSm
+         NaHSZzvmuGOAL61NxMDQdx3SAPTiuIQslbUnoUOfy/IsEjzILe70PSP9dtlysuAwPN/K
+         8MFw==
+X-Received: by 10.236.63.6 with SMTP id z6mr1780017yhc.65.1425453056054; Tue,
+ 03 Mar 2015 23:10:56 -0800 (PST)
+Received: by 10.170.73.7 with HTTP; Tue, 3 Mar 2015 23:10:55 -0800 (PST)
 In-Reply-To: <CAODo60qimjiMfWY_FNuOcVaYc=JdbTv_4SJ3BROC-9Jo5qWkdA@mail.gmail.com>
+X-Google-Sender-Auth: lScVdRabn0olwqiXSo-Zt7iE7cQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264724>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264725>
 
-Teach reset the same shorthand as checkout and merge. "-" means the
-"previous commit".
+On Wed, Mar 4, 2015 at 2:07 AM, Sudhanshu Shekhar
+<sudshekhar02@gmail.com> wrote:
+>> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+>>> Sudhanshu Shekhar <sudshekhar02@gmail.com> writes:
+>>>> From: SudShekhar <sudshekhar02@gmail.com>
+>>>
+>>> +             if(!strcmp(argv[0],"-"))
+>>> +                     argv[0]="@{-1}";
+>>>
+>>> Wrong spacing (around = and after ,).
+>
+> Thanks for pointing this out. I have corrected it.
 
-Signed-off-by: Sudhanshu Shekhar <sudshekhar02@gmail.com>
----
- builtin/reset.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
-
-diff --git a/builtin/reset.c b/builtin/reset.c
-index 4c08ddc..9f8967d 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -192,6 +192,7 @@ static void parse_args(struct pathspec *pathspec,
- {
- 	const char *rev = "HEAD";
- 	unsigned char unused[20];
-+	int substituted_minus = 0;
- 	/*
- 	 * Possible arguments are:
- 	 *
-@@ -205,6 +206,10 @@ static void parse_args(struct pathspec *pathspec,
- 	 */
- 
- 	if (argv[0]) {
-+		if(!strcmp(argv[0], "-")) {
-+			argv[0] = "@{-1}";
-+			substituted_minus = 1;
-+		}
- 		if (!strcmp(argv[0], "--")) {
- 			argv++; /* reset to HEAD, possibly with paths */
- 		} else if (argv[1] && !strcmp(argv[1], "--")) {
-@@ -225,12 +230,14 @@ static void parse_args(struct pathspec *pathspec,
- 			verify_non_filename(prefix, argv[0]);
- 			rev = *argv++;
- 		} else {
-+			/* We were treating "-" as a commit and not a file */
-+			if(substituted_minus)
-+				argv[0] = "-";
- 			/* Otherwise we treat this as a filename */
- 			verify_filename(prefix, argv[0], 1);
- 		}
- 	}
- 	*rev_ret = rev;
--
- 	if (read_cache() < 0)
- 		die(_("index file corrupt"));
- 
--- 
-2.3.1.168.gfd4bc34.dirty
+Also, add a space after 'if'.
