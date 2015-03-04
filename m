@@ -1,156 +1,123 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 7/7] log --decorate: do not leak "commit" color into the next item
-Date: Wed,  4 Mar 2015 13:33:23 -0800
-Message-ID: <1425504803-16039-8-git-send-email-gitster@pobox.com>
-References: <xmqqpp9628tl.fsf@gitster.dls.corp.google.com>
- <1425504803-16039-1-git-send-email-gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 04 22:34:03 2015
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [RFH] GSoC 2015 application
+Date: Wed, 4 Mar 2015 22:05:03 -0000
+Organization: OPDS
+Message-ID: <70A3994196D94205B75660D9DEFF0A12@PhilipOakley>
+References: <20150218191417.GA7767@peff.net> <54E6C78D.3070506@alum.mit.edu><20150220072924.GC8763@peff.net> <vpqpp94exb5.fsf@anie.imag.fr>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+Mime-Version: 1.0
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "Michael Haggerty" <mhagger@alum.mit.edu>,
+	"Stefan Beller" <sbeller@google.com>,
+	"Junio C Hamano" <gitster@pobox.com>, <git@vger.kernel.org>
+To: "Matthieu Moy" <Matthieu.Moy@grenoble-inp.fr>,
+	"Jeff King" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Mar 04 23:04:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YTGvW-0007RC-Sr
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Mar 2015 22:33:59 +0100
+	id 1YTHPN-00027c-PX
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Mar 2015 23:04:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753106AbbCDVdx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Mar 2015 16:33:53 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:53063 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752173AbbCDVdw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Mar 2015 16:33:52 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2F3C43C7B1;
-	Wed,  4 Mar 2015 16:33:51 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=99X/
-	C2Wgv1kEjDAag2dqT5G+9fM=; b=uENhO8F+vAr7yRYZM9W1urvjYFUzYdVADzcp
-	Udv1M/d5m9BuODvZa8VoWeTYJvacuIEvxktBLWkzsdHli4KY1UTzxd6uyS8vVq2s
-	+Nz2mpcNGpm0fUfYRfsihUYCWRtox/Zmtae4DJZOvJmUk0xrfRZ6doa8cJi9f46r
-	qvMwZHI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=UlxvW0
-	SdW+4Bhr0mJ3xWml3NbTDXyl3DLKKVVPKynsYz2gitVFoq1eN4+wxukqiYgemlO+
-	pJYBjYA82oTvRSi/yJSqBPWbUvQzb/KIMh0nS2X65iLA1r5584QO81MlLNzjCdkx
-	5isjAVcBgS1JtDgkhsUGufkRP4ki/LgaMT25s=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 281233C7B0;
-	Wed,  4 Mar 2015 16:33:51 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9889F3C797;
-	Wed,  4 Mar 2015 16:33:44 -0500 (EST)
-X-Mailer: git-send-email 2.3.1-318-g5233f23
-In-Reply-To: <1425504803-16039-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 227D0CFE-C2B6-11E4-8973-29999F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1752547AbbCDWEp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Mar 2015 17:04:45 -0500
+Received: from out1.ip02ir2.opaltelecom.net ([62.24.128.238]:52935 "EHLO
+	out1.ip02ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752197AbbCDWEo (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 4 Mar 2015 17:04:44 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: A2BEGAA6gPdUPF8vFlxagwJSWocmuXiFawQCgSNOAQEBAQEBBQEBAQE4IBuECgUBAQEBAwgBAS4eAQENFAsCAwUCAQMVAQslFAEEGgYHAxQGARIIAgECAwGIIgnEIpNXAQEIAQEBAQEdixKEOzODHoEUBYV1hD+FT16DBYIYhGyLdYMbg0CCJRyBUD4xAYJCAQEB
+X-IPAS-Result: A2BEGAA6gPdUPF8vFlxagwJSWocmuXiFawQCgSNOAQEBAQEBBQEBAQE4IBuECgUBAQEBAwgBAS4eAQENFAsCAwUCAQMVAQslFAEEGgYHAxQGARIIAgECAwGIIgnEIpNXAQEIAQEBAQEdixKEOzODHoEUBYV1hD+FT16DBYIYhGyLdYMbg0CCJRyBUD4xAYJCAQEB
+X-IronPort-AV: E=Sophos;i="5.11,343,1422921600"; 
+   d="scan'208";a="27513542"
+Received: from host-92-22-47-95.as13285.net (HELO PhilipOakley) ([92.22.47.95])
+  by out1.ip02ir2.opaltelecom.net with ESMTP; 04 Mar 2015 22:04:42 +0000
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264788>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264789>
 
-In "git log --decorate", you would see the commit header like this:
+From: "Matthieu Moy" <Matthieu.Moy@grenoble-inp.fr>
+Sent: Friday, February 20, 2015 9:39 AM
+> Jeff King <peff@peff.net> writes:
+>
+>>   - Matthieu, who also cited time constraints
+>
+> Just to clarify: last year we were co-mentoring with Ram. I ended up
+> having a lot of time and did most of the work (not blaming Ram, and I
+> enjoyed the experience). I'm still motivated to co-mentor, but this 
+> time
+> the co-mentoring has to be more balanced (or unballanced to the other
+> mentor ;-) ).
+>
+>>   - Junio, who contributed some project ideas, but who in the past 
+>> has
+>>     declined to mentor in order to remain impartial as the maintainer
+>>     who evaluates student results (which I think is quite reasonable)
+>
+> Yes, as a mentor I did appreciate having Junio as impartial
+> maintainer/reviewer. And he did for sure contribute even without being 
+> a
+> mentor!
+>
+> From your list, it seems we can target 1 or 2 slots. I'd say it's 
+> still
+> worth applying, but if we don't find more mentors then perhaps it 
+> would
+> make sense to say so explicitely in
+> http://git.github.io/SoC-2015-Ideas.html so that students looking for
+> organization know that we'll have very few slots.
+>
+> -- 
+Hi,
+Given the mention of the GSoC ideas list, I thought it worth writing out 
+one of my little ideas..
 
-    commit ... (HEAD, jc/decorate-leaky-separator-color)
 
-where "commit ... (" is painted in color.diff.commit, "HEAD" in
-color.decorate.head, ", " in color.diff.commit, the branch name in
-color.decorate.branch and then closing ")" in color.diff.commit.
+A possible idea is to add a date based variant of shallow clone :
 
-If you wanted to paint the HEAD and local branch name in the same
-color as the body text (perhaps because cyan and green are too faint
-on a black-on-white terminal to be readable), you would not want to
-have to say
+  'git clone --date <when> ...'
 
-    [color "decorate"]
-        head = black
-        branch = black
+in the same vein as the existing depth (shallow) clone.
 
-because that you would not be able to reuse same configuration on a
-white-on-black terminal.  You would naively expect
+On the wire advertise a 'shallow-date' capability, passing a signed big 
+integer as the unix time for the shallow cut-off point (i.e. future 
+extensible to cover a very wide date range), with optional(?) date+depth 
+hysteresis (clock skew) parameters.
 
-    [color "decorate"]
-        head = normal
-	branch = normal
+Command line interface to use existing date/time formats, (and possibly 
+revision dates?).
 
-to work, but unfortunately it does not.  It paints the string "HEAD"
-and the branch name in the same color as the opening parenthesis or
-comma between the decoration elements.  This is because the code
-forgets to reset the color after printing the "prefix" in its own
-color.
+Extend 'git fetch' to include the --date <when> option.
 
-It theoretically is possible that some people were expecting and
-relying on that the attribute set as the "diff.commit" color, which
-is used to draw these opening parenthesis and inter-item comma, is
-inherited by the drawing of branch names, but it is not how the
-coloring works everywhere else.
+Ensure that 'git push' continues to work with and between 
+shallow/shallow-date clones.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/config.txt         |  7 +++++++
- log-tree.c                       |  1 +
- t/t4207-log-decoration-colors.sh | 16 ++++++++--------
- 3 files changed, 16 insertions(+), 8 deletions(-)
+Update the documentation in line with the capability.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index f1cf571..6d65033 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -155,6 +155,13 @@ color::
-        `reverse`.  The first color given is the foreground; the
-        second is the background.  The position of the attribute, if
-        any, doesn't matter.
-++
-+The attributes are meant to be reset at the beginning of each item
-+in the colored output, so setting color.decorate.branch to `black`
-+will paint that branch name in a plain `black`, even if the previous
-+thing on the same output line (e.g. opening parenthesis before the
-+list of branch names in `log --decorate` output) is set to be
-+painted with `bold` or some other attribute.
- 
- 
- Variables
-diff --git a/log-tree.c b/log-tree.c
-index 1982631..11676d5 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -200,6 +200,7 @@ void format_decorations(struct strbuf *sb,
- 	while (decoration) {
- 		strbuf_addstr(sb, color_commit);
- 		strbuf_addstr(sb, prefix);
-+		strbuf_addstr(sb, color_reset);
- 		strbuf_addstr(sb, decorate_get_color(use_color, decoration->type));
- 		if (decoration->type == DECORATION_REF_TAG)
- 			strbuf_addstr(sb, "tag: ");
-diff --git a/t/t4207-log-decoration-colors.sh b/t/t4207-log-decoration-colors.sh
-index 925f577..6b8ad4f 100755
---- a/t/t4207-log-decoration-colors.sh
-+++ b/t/t4207-log-decoration-colors.sh
-@@ -44,15 +44,15 @@ test_expect_success setup '
- '
- 
- cat >expected <<EOF
--${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_HEAD}HEAD${c_reset}${c_commit},\
-- ${c_tag}tag: v1.0${c_reset}${c_commit},\
-- ${c_tag}tag: B${c_reset}${c_commit},\
-- ${c_branch}master${c_reset}${c_commit})${c_reset} B
--${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_tag}tag: A1${c_reset}${c_commit},\
-- ${c_remoteBranch}other/master${c_reset}${c_commit})${c_reset} A1
--${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_stash}refs/stash${c_reset}${c_commit})${c_reset}\
-+${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_HEAD}HEAD${c_reset}${c_commit},\
-+ ${c_reset}${c_tag}tag: v1.0${c_reset}${c_commit},\
-+ ${c_reset}${c_tag}tag: B${c_reset}${c_commit},\
-+ ${c_reset}${c_branch}master${c_reset}${c_commit})${c_reset} B
-+${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_tag}tag: A1${c_reset}${c_commit},\
-+ ${c_reset}${c_remoteBranch}other/master${c_reset}${c_commit})${c_reset} A1
-+${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_stash}refs/stash${c_reset}${c_commit})${c_reset}\
-  On master: Changes to A.t
--${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_tag}tag: A${c_reset}${c_commit})${c_reset} A
-+${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_tag}tag: A${c_reset}${c_commit})${c_reset} A
- EOF
- 
- # We want log to show all, but the second parent to refs/stash is irrelevant
--- 
-2.3.1-316-g7c93423
+Document any migration plan (if required)
+
+Why
+===
+
+This capability would eliminate the existing confusion over the --depth 
+parameter as different branches may require different depths to reach a 
+"common" start point.
+
+Extra points for an easy method of '--unshallow-date <new_when>' to 
+remove 'old' commits that the user may no longer need locally. 
+(unshallow may not be the right term...)
+
+--
+Philip
