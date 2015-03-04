@@ -1,134 +1,70 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] grep: correct help string for --exclude-standard
-Date: Wed, 4 Mar 2015 05:16:06 -0500
-Message-ID: <20150304101606.GB15788@peff.net>
-References: <1425045718-30696-1-git-send-email-pclouds@gmail.com>
+Subject: Re: [RFH] GSoC 2015 application
+Date: Wed, 4 Mar 2015 05:31:19 -0500
+Message-ID: <20150304103119.GA19234@peff.net>
+References: <20150218191417.GA7767@peff.net>
+ <CACsJy8D6nAt3fMw=oh5mwUwfAJKViN1pk9pf9gZSBGyquU_WBQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 04 11:16:21 2015
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 04 11:31:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YT6Li-0001gW-Vl
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Mar 2015 11:16:19 +0100
+	id 1YT6aU-00027B-Cj
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Mar 2015 11:31:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757921AbbCDKQM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Mar 2015 05:16:12 -0500
-Received: from cloud.peff.net ([50.56.180.127]:56174 "HELO cloud.peff.net"
+	id S1760003AbbCDKb1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Mar 2015 05:31:27 -0500
+Received: from cloud.peff.net ([50.56.180.127]:56180 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753917AbbCDKQJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Mar 2015 05:16:09 -0500
-Received: (qmail 1103 invoked by uid 102); 4 Mar 2015 10:16:09 -0000
+	id S1758605AbbCDKbX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Mar 2015 05:31:23 -0500
+Received: (qmail 2275 invoked by uid 102); 4 Mar 2015 10:31:22 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 04 Mar 2015 04:16:09 -0600
-Received: (qmail 29154 invoked by uid 107); 4 Mar 2015 10:16:14 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 04 Mar 2015 04:31:22 -0600
+Received: (qmail 29230 invoked by uid 107); 4 Mar 2015 10:31:27 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 04 Mar 2015 05:16:14 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 04 Mar 2015 05:16:06 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 04 Mar 2015 05:31:27 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 04 Mar 2015 05:31:19 -0500
 Content-Disposition: inline
-In-Reply-To: <1425045718-30696-1-git-send-email-pclouds@gmail.com>
+In-Reply-To: <CACsJy8D6nAt3fMw=oh5mwUwfAJKViN1pk9pf9gZSBGyquU_WBQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264747>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264748>
 
-On Fri, Feb 27, 2015 at 09:01:58PM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
-=BB=8Dc Duy wrote:
+On Thu, Feb 26, 2015 at 08:10:38PM +0700, Duy Nguyen wrote:
 
-> The current help string is about --no-exclude-standard. But "git grep=
- -h"
-> would show --exclude-standard instead. Flip the string. See 0a93fb8
-> (grep: teach --untracked and --exclude-standard options - 2011-09-27)
-> for more info about these options.
->=20
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
->  builtin/grep.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->=20
-> diff --git a/builtin/grep.c b/builtin/grep.c
-> index 4063882..e77f7cf 100644
-> --- a/builtin/grep.c
-> +++ b/builtin/grep.c
-> @@ -641,7 +641,7 @@ int cmd_grep(int argc, const char **argv, const c=
-har *prefix)
->  		OPT_BOOL(0, "untracked", &untracked,
->  			N_("search in both tracked and untracked files")),
->  		OPT_SET_INT(0, "exclude-standard", &opt_exclude,
-> -			    N_("search also in ignored files"), 1),
-> +			    N_("ignore files specified via '.gitignore'"), 1),
+> On Thu, Feb 19, 2015 at 2:14 AM, Jeff King <peff@peff.net> wrote:
+> > Where I really need help now is in the "ideas" page:
+> >
+> >   http://git.github.io/SoC-2015-Ideas.html
+> 
+> Is this too ambitious for a summer? I suspect the answer is yes, but anyway..
+> 
+> Due to http limitations and stateless decision, a lot of data is sent
+> back and forth during have/want negotiation for smart-http. I wonder
+> if we could implement the "long polling" scheme in a CGI program. The
+> program terminates HTTP requests and recreates a full duplex
+> connection for upload-pack to talk to the client. upload-pack falls
+> back to the normal mode, used by git:// and ssh://.
 
-Hmm. If the default is "--exclude-standard", then what expect people to
-use is "--no-exclude-standard". Would it make more sense to list that i=
-n
-the "-h" output? Sadly I think to do that you have to manually specify
-"--no-exclude-standard" with OPT_NONEG, and then manually specify
-"--exclude-standard" in addition with OPT_HIDDEN.
+So basically Git-over-TCP-over-HTTP? :)
 
-It might be nice if parseopt had a PARSE_OPT_NEGHELP option or somethin=
-g
-to show the "--no-" form. Something like:
+That would be a nice thing to have, though looking over the BOSH link
+(which this is my first exposure to), it does look rather complicated.
+It's not clear to me how easily one could plug in an existing tunneling
+solution, and just stick git programs at the endpoints (in other words,
+let that solution manage all of the connection state and just present a
+socketpair() to git).
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 9262b73..c03c3e7 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -640,8 +640,10 @@ int cmd_grep(int argc, const char **argv, const ch=
-ar *prefix)
- 			 N_("find in contents not managed by git"), 1),
- 		OPT_BOOL(0, "untracked", &untracked,
- 			N_("search in both tracked and untracked files")),
--		OPT_SET_INT(0, "exclude-standard", &opt_exclude,
--			    N_("search also in ignored files"), 1),
-+		{ OPTION_SET_INT, 0, "exclude-standard", &opt_exclude,
-+		  NULL, N_("search also in ignored files"),
-+		  PARSE_OPT_NOARG | PARSE_OPT_NEGHELP,
-+		  NULL, 1 },
- 		OPT_GROUP(""),
- 		OPT_BOOL('v', "invert-match", &opt.invert,
- 			N_("show non-matching lines")),
-diff --git a/parse-options.c b/parse-options.c
-index 80106c0..0ba7dc4 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -599,8 +599,12 @@ static int usage_with_options_internal(struct pars=
-e_opt_ctx_t *ctx,
- 		}
- 		if (opts->long_name && opts->short_name)
- 			pos +=3D fprintf(outfile, ", ");
--		if (opts->long_name)
--			pos +=3D fprintf(outfile, "--%s", opts->long_name);
-+		if (opts->long_name) {
-+			int neg =3D opts->flags & PARSE_OPT_NEGHELP;
-+			pos +=3D fprintf(outfile, "--%s%s",
-+				       neg ? "no-" : "",
-+				       opts->long_name);
-+		}
- 		if (opts->type =3D=3D OPTION_NUMBER)
- 			pos +=3D utf8_fprintf(outfile, _("-NUM"));
-=20
-diff --git a/parse-options.h b/parse-options.h
-index 7940bc7..e688c32 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -37,6 +37,7 @@ enum parse_opt_option_flags {
- 	PARSE_OPT_LASTARG_DEFAULT =3D 16,
- 	PARSE_OPT_NODASH =3D 32,
- 	PARSE_OPT_LITERAL_ARGHELP =3D 64,
-+	PARSE_OPT_NEGHELP =3D 128,
- 	PARSE_OPT_SHELL_EVAL =3D 256
- };
-=20
-
-Though it is annoying that we have to give up the nice OPT_SET_INT macr=
-o
-to specify an extra flag.
+I'm not sure it is too ambitious in terms of actual implementation time,
+but I think the design work may exceed what most students are capable
+of.
 
 -Peff
