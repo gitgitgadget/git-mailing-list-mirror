@@ -1,73 +1,83 @@
-From: "Gondek, Andreas" <Andreas.Gondek@dwpbank.de>
-Subject: Git merge driver / attributes bug in 2.3.1?
-Date: Thu, 5 Mar 2015 13:30:40 +0000
-Message-ID: <D8780C527EB1E642B3150E6D705B46D448E7E48C@DWPWHMS531.dwpbank.local>
+From: Francis Moreau <francis.moro@gmail.com>
+Subject: Possible bug with git-rebase and post-rewrite hook
+Date: Thu, 05 Mar 2015 14:55:12 +0100
+Message-ID: <54F86040.8060205@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Mar 05 14:31:41 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Mar 05 14:55:24 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YTVrT-0005QZ-Qc
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Mar 2015 14:30:48 +0100
+	id 1YTWFG-0005RH-M9
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Mar 2015 14:55:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754967AbbCENan convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Mar 2015 08:30:43 -0500
-Received: from mail2.dwpbank.de ([145.253.155.115]:19440 "EHLO
-	mail2.dwpbank.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754607AbbCENan convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 Mar 2015 08:30:43 -0500
-X-IronPort-AV: E=Sophos;i="5.11,347,1422918000"; 
-   d="scan'208";a="16345675"
-Received: from DWPWHMS531.dwpbank.local ([169.254.2.62]) by
- DWPFRMS530.dwpbank.local ([169.254.3.36]) with mapi id 14.03.0195.001; Thu, 5
- Mar 2015 14:30:41 +0100
-Thread-Topic: Git merge driver / attributes bug in 2.3.1?
-Thread-Index: AdBXSJKXxxr16gR1Rkq4toiUl+/Nog==
-Accept-Language: de-DE, en-US
-Content-Language: de-DE
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.101.236.155]
+	id S1754733AbbCENzQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Mar 2015 08:55:16 -0500
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:44176 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751340AbbCENzP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Mar 2015 08:55:15 -0500
+Received: by wivr20 with SMTP id r20so6929800wiv.3
+        for <git@vger.kernel.org>; Thu, 05 Mar 2015 05:55:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        bh=ODnh2y1JSN6xT1+AaQPgAFVan20amB/B0RrYs463PNQ=;
+        b=RBxBi7IcY7bXNKK46Eo8SLXJVu79WRiHKnGWOnOM3jcsE/a071QvLxubt0zRx/zwto
+         ILsx+Tvxr7ysxFQ4/uEAYmPxKV/McLZpMsbU/Yaf9n3n/EB1hp83FlngOx3vkWjU9J76
+         Pb20cZhO0A6I9hEGd0nqkl5ndcMEZrGIAkyIagr1FPPg/8bJFRjEhOicxKp/BJNL+krq
+         4rdfEweXi9OmpzEKbLkKPb5xQNLiuYTFkAzMRNdefaviSLagJgRZZKEOGNkBCWs2VO2R
+         ZeF+kjHiE4036i8xo3QVR5Tq1/L6tPFc6sVAyaqT+3f2yTiuXoxsLrgpW/w4UwKwMhgw
+         lXOw==
+X-Received: by 10.181.13.146 with SMTP id ey18mr66835577wid.84.1425563713910;
+        Thu, 05 Mar 2015 05:55:13 -0800 (PST)
+Received: from [192.168.0.10] (gem13-1-78-228-1-221.fbx.proxad.net. [78.228.1.221])
+        by mx.google.com with ESMTPSA id kr5sm10649027wjc.1.2015.03.05.05.55.13
+        for <git@vger.kernel.org>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 05 Mar 2015 05:55:13 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264833>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264834>
 
-Hello,
+Hi,
 
-after upgrading the Git installation on one of our development servers =
-from 1.9.0-rc3 to 2.3.1 we are experiencing strange behavior of merge d=
-rivers.
+I have a suspect case which happens when rebasing a branch.
 
-A merge driver registered as "* merge=3D<name_of_merge_driver>" in the =
-=2Egitattributes is now executed even if there isn't any merge conflict=
-=2E This only happens for files that are part of the merge.
+I'm using the post-rewrite hook and during certain circumstance, my hook
+is called by git-rebase with wrong parameters: <old-sha1> argument is
+not related to <new-sha1> one.
 
-This is reproducible in test repositories.
+This actually happens when git-rebase stops and reports:
 
-Greetings
+  The previous cherry-pick is now empty, possibly due to conflict
+  resolution.
+  If you wish to commit it anyway, use:
 
-Andreas Gondek
-Applications
-________________________________
+      git commit --allow-empty
 
-Deutsche WertpapierService Bank AG
-ITTAS
-Derendorfer Allee 2
-40476 D=FCsseldorf
-Tel.: +49 69 5099 9503
-=46ax: +49 69 5099 85 9503
-E-Mail: Andreas.Gondek@dwpbank.de
-http://www.dwpbank.de
+  Otherwise, please use 'git reset'
+  rebase in progress; onto 2889531
+  You are currently rebasing branch 'foo' on '2889531'.
 
-Deutsche WertpapierService Bank AG | Wildunger Stra=DFe 14 | 60487 Fran=
-kfurt am Main
-Sitz der AG: Frankfurt am Main, HRB 56913 | USt.-ID: DE 813759005
-Vorstand: Thomas Klanten, Dr. Christian Tonnesen
-Aufsichtsrat: Wilfried Groos (Vors.)=20
+
+If I decide to skip it by doing 'git rebase --continue' then I get the
+issue when my hook is run.
+
+BTW, I find that the message is not really clear since it tells me to
+run 'git-reset' in the case I want to ignore this empty commit. I'm not
+sure that 'git-reset' is really helping in that case (my index is clean)
+but 'git rebase --continue' would have been more appropriate IMHO.
+
+If I do 'git commit --allow-empty' then there's no issue when the hook
+is run.
+
+Thanks.
