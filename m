@@ -1,87 +1,78 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] versionsort: support reorder prerelease suffixes
-Date: Wed, 04 Mar 2015 17:28:41 -0800
-Message-ID: <xmqqmw3s5j1y.fsf@gitster.dls.corp.google.com>
-References: <CAPc5daVJJcC--mwq0PfAczge3zG44ToDKP853FkyZ3x1KUfsig@mail.gmail.com>
-	<1424947441-19134-1-git-send-email-pclouds@gmail.com>
-	<xmqqvbinhw7l.fsf@gitster.dls.corp.google.com>
+Subject: Re: Easy Non-Fast-Forward Pushes
+Date: Wed, 04 Mar 2015 17:42:53 -0800
+Message-ID: <xmqqfv9k5iea.fsf@gitster.dls.corp.google.com>
+References: <loom.20150227T170215-199@post.gmane.org>
+	<CAGZ79kZ3_ohE6ebY5MvOk6+QfChppR_OtcmVaw5LBoutTWm3ZA@mail.gmail.com>
+	<ygeioel2cw1.fsf@lassekliemann.de>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 05 02:28:59 2015
+Cc: git@vger.kernel.org
+To: Lasse Kliemann <lasse@lassekliemann.de>
+X-From: git-owner@vger.kernel.org Thu Mar 05 02:43:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YTKau-000841-8D
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Mar 2015 02:28:56 +0100
+	id 1YTKoX-0000X6-4c
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Mar 2015 02:43:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753802AbbCEB2s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Mar 2015 20:28:48 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:63555 "EHLO
+	id S1753699AbbCEBm4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Mar 2015 20:42:56 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:58931 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753755AbbCEB2q (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Mar 2015 20:28:46 -0500
+	with ESMTP id S1753612AbbCEBm4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Mar 2015 20:42:56 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 65EED3CE0D;
-	Wed,  4 Mar 2015 20:28:44 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 332E63D23A;
+	Wed,  4 Mar 2015 20:42:55 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=hsDTxe0mxUQZGs3HvS9Y1MUa5YY=; b=i6FyyV
-	EZmGLU7vjd4TrbQb4Wnw5MXP8cD8b49X1HInnRUw3gTp6B6doq1a6bB73l+g3GCt
-	4xkZjuNL8FecvIe/U1jlqL1B3wRV/qGFxFntvy/J7UMWub4B7o7eaam7P8gL3RAr
-	R5ucEjrC+bBLw1xKHABpLfqjQ2BbM5I3Er/fQ=
+	:content-type; s=sasl; bh=fJW/JciaLN7zD/y4MNjU/BF28ZU=; b=Ncn3Hh
+	B27yvrVpnHMO1TJts3eu/jl1JWXaYY62PUWDg2g+sm1rteEjOFr/deNf88hXj8MC
+	V70/xE+b4ZbS+XEq2p234yj89HlO1inmC3SMTToKJi3fqaQVQDJf4pl1Pjpx6sgE
+	nMT0slrFC4eI0UoQMOyP8r7dZDVJwgZftxugk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CwoEFCe3sgroLNjFfutbCFO8n2I86yXr
-	XJ1z0RaMT7cqe4ciN0On5VZatvIL2bPoq3ky/Y7KhFchrrKjEt8BCQsl7S+LoQGV
-	XycHryGR7IOChTUKfuQwSXrpB4qlK9ZEZJtkCJZiFWCR98FVoHqSod1KF+VDyRHI
-	TIAGFaeG1Cc=
+	:content-type; q=dns; s=sasl; b=BhnwtAcLoZBLk+RuGoK8fujq5jmDyo6n
+	Wc8Tg59S+pGds7YLmo0JsDZEkRoDl/I1NQt4xA5Cb20S05dyPHZsxhS7neETrNkp
+	qXIXY7v6i0SNmt5XCMwLP0PRjrnE7BNn9YOPRkBL9/Iq6X55YTnLKnWxjfmXWEyj
+	mvYnywISQUM=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5EDC13CE0C;
-	Wed,  4 Mar 2015 20:28:44 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2BBDA3D239;
+	Wed,  4 Mar 2015 20:42:55 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D7BEB3CE0A;
-	Wed,  4 Mar 2015 20:28:42 -0500 (EST)
-In-Reply-To: <xmqqvbinhw7l.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Fri, 27 Feb 2015 13:37:50 -0800")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A76D73D237;
+	Wed,  4 Mar 2015 20:42:54 -0500 (EST)
+In-Reply-To: <ygeioel2cw1.fsf@lassekliemann.de> (Lasse Kliemann's message of
+	"Sun, 01 Mar 2015 12:08:46 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: F64C8878-C2D6-11E4-9B1A-29999F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: F16A5F5E-C2D8-11E4-A4A2-29999F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264809>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Lasse Kliemann <lasse@lassekliemann.de> writes:
 
->> +versionsort.prereleaseSuffix::
->> +	When version sort is used in linkgit:git-tag[1], prerelease
->> +	tags (e.g. "1.0-rc1") may appear after the main release
->> +	"1.0". By specifying the suffix "-rc" in this variable,
->> +	"1.0-rc1" will appear before "1.0". One variable assignment
->> +	per suffix.
+> 1. Try pushing to origin/master. If it works, fine. If not, goto 2.
 >
-> I think the last half-sentence want to mean that
->
-> 	[versionsort]
->                 prereleaseSuffix = -pre
->         	prereleaseSuffix = -rc
->
-> is the supported way to write, and not
->
-> 	[versionsort]
->         	prereleaseSuffix = -pre -rc
->
-> but it probably is unclear unless the reader already knows what it
-> is trying to say.  The reader also needs to learn somewhere how the
-> order of the entries affects the result.
+> 2. Push to the appropriate personal branch.
 
-This is already in 'next', so could you fix that half-sentence in
-the documentation via an incremental update?
+I wonder what happens to this user _after_ that change gets
+integrated on the project side.  Presumably somebody picks up the
+change from the "personal branch", does necessary merge and updates
+the master, so the next time "git pull" is done, it will
+fast-forward?
 
-Thanks.
+I have a feeling that running trivial merges on the server-side when
+a push is made, and immedately pulling that result back might help
+such userbase who does not care too much about the history better,
+instead of using the bare-metal 'git pull' and 'git push'.  You'd be
+scripting on the client side to do the above two steps for your end
+users anyway, so it would not be too much of a stretch to make that
+script a bit smarter still?
