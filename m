@@ -1,55 +1,66 @@
-From: Amate Yolande <yolandeamate@gmail.com>
-Subject: Interest in contributing to the Git for GSOC 2015
-Date: Thu, 5 Mar 2015 01:19:11 +0100
-Message-ID: <CAFAMDXYJAaunegAXFoCK8N-CAaoUXpv-WObhnDC5Wdgy_U99OQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFH] GSoC 2015 application
+Date: Wed, 4 Mar 2015 16:22:18 -0800
+Message-ID: <CAPc5daV_igiExbvY1eH0T2SKxgawO86F0eZyoai_QK-dXc5fDg@mail.gmail.com>
+References: <20150218191417.GA7767@peff.net> <54E6C78D.3070506@alum.mit.edu>
+ <20150220072924.GC8763@peff.net> <vpqpp94exb5.fsf@anie.imag.fr>
+ <70A3994196D94205B75660D9DEFF0A12@PhilipOakley> <CAGZ79kaNZsBP19gLvsrDx6RLyQ7QhmbKAgSDcXg71Uwcvf9tNQ@mail.gmail.com>
+ <75FBE31490904D8EA82F5C445F1F33E1@PhilipOakley>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 05 01:19:18 2015
+Cc: Stefan Beller <sbeller@google.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Jeff King <peff@peff.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Git Mailing List <git@vger.kernel.org>
+To: Philip Oakley <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Thu Mar 05 01:22:45 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YTJVV-0003M6-BK
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Mar 2015 01:19:17 +0100
+	id 1YTJYp-0005YT-RW
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Mar 2015 01:22:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753151AbbCEATN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Mar 2015 19:19:13 -0500
-Received: from mail-wg0-f51.google.com ([74.125.82.51]:43991 "EHLO
-	mail-wg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752887AbbCEATN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Mar 2015 19:19:13 -0500
-Received: by wggy19 with SMTP id y19so50075168wgg.10
-        for <git@vger.kernel.org>; Wed, 04 Mar 2015 16:19:11 -0800 (PST)
+	id S1752710AbbCEAWj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Mar 2015 19:22:39 -0500
+Received: from mail-oi0-f53.google.com ([209.85.218.53]:41242 "EHLO
+	mail-oi0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752373AbbCEAWi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Mar 2015 19:22:38 -0500
+Received: by oiav63 with SMTP id v63so8907495oia.8
+        for <git@vger.kernel.org>; Wed, 04 Mar 2015 16:22:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=Kiz7IxMN6pZqBvVTopwHT/IAnl/Rr7zFxxCwDJ+7QS0=;
-        b=vhy91bypvO8+/cAxvnVi+7i6lGQd1ovNmB6WokltaTEAiMZ5OgqNF47CfGt3iodEv+
-         JiyqejgVfQgV3caY1RO8jUc7+0iuJQaL6HaRLOoFwmvb3JrinTKMU3kk21m39H28neUf
-         yHMuHHzhqGh6/uOiV3oKUOxcyUr7+laSzziO3qxF6YAK0Nnl4e10wX5049325f5Ro6Z/
-         mfYvaH31km7EwhyhvVDBbHtqWESPHS/X0X0hvRoS13KdB2b3b/9ZT28Isv6cugiLLcVx
-         rYJTNKOkmE0m6jH8Gbn9IxgyGxrRxqD8kzSr6lYrvAU3KHERon2ajEjEBYeW8OvzHkKR
-         E0qg==
-X-Received: by 10.194.200.196 with SMTP id ju4mr12620258wjc.47.1425514751719;
- Wed, 04 Mar 2015 16:19:11 -0800 (PST)
-Received: by 10.27.206.135 with HTTP; Wed, 4 Mar 2015 16:19:11 -0800 (PST)
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=78X+/WqG7SDgokAJxL5jf5YLQbu4fJqKUKU8bY1pyVQ=;
+        b=hC8lRfFFEtS7BkRwlf+FDYjovtnm4BbsTetoNoK1oOd1GO3HQHjyX1fdBHpFCem9KT
+         rsoBinInpMKimrtr5Q0QGA9iWFQRHRkBa62Ba2aZcMd7aWwoQvyGqXzdLxpDqQf+TWNU
+         di2yb085DrtZ7ThVkFY1qiuIhTjOOGcFwoQiTvblEPUG59nLn778D+KbGc1WiSBmKmHA
+         N/yZ7hxi/YBQ9hEKzbQxsN5oEoKlXwSRx+cuZBuyIWl0S209jAIWqK4RmMm1wWio0yau
+         QdWOnLCYI0qoAdjdUwjT8cWNyc9qO4j5eOqIEAhNKl+21dw8L73IZZxxUijjzORepJsX
+         M8qg==
+X-Received: by 10.202.209.23 with SMTP id i23mr4739878oig.108.1425514958329;
+ Wed, 04 Mar 2015 16:22:38 -0800 (PST)
+Received: by 10.202.48.132 with HTTP; Wed, 4 Mar 2015 16:22:18 -0800 (PST)
+In-Reply-To: <75FBE31490904D8EA82F5C445F1F33E1@PhilipOakley>
+X-Google-Sender-Auth: _o_XJdInjRDEHjSVY6JN63vrHCU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264798>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264799>
 
-Hello
+On Wed, Mar 4, 2015 at 4:17 PM, Philip Oakley <philipoakley@iee.org> wrote:
+>>
+>>    git clone --since 2.weeks.ago <url>
+>>    git clone --since v2.10 <url>
+>
+> The use of --since instead of --date would be an equally valid way of
+> spelling the option (coders choice;-)
 
-        My name is Amate Yolande a first year computer science student
-from Cameroon. I would like to participate in the google summer fo
-code 2015 with the Git community. I have done one of the micro project
-and I hope it gets reviewed soon so I could update it. I would like to
-work on the Unifying git branch -l, git tag -l, and git for-each-ref
-project for GSOC 2015 and I hope I can get more directives on how to
-move on with this project.
-
-Thanks
-Yolande
+I think it is a demonstration of poor taste. Everywhere else, --since
+is a way to
+specify the date, not a revision. Why should this one alone should be different?
