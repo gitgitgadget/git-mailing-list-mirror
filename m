@@ -1,94 +1,115 @@
-From: Luis Ressel <aranea@aixah.de>
-Subject: Re: [GSoC microproject] Add XDG support to the credential-store
- helper
-Date: Fri, 6 Mar 2015 00:41:39 +0100
-Message-ID: <20150306004139.2dac2502@gentp.lnet>
-References: <20150305215146.394caa71@gentp.lnet>
-	<CAP8UFD3kHKsUWqmfr3mEtTYwVFwGGqMF_wJgVQyoaH=2i9Ge=A@mail.gmail.com>
-	<20150306001534.06882282@gentp.lnet>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 2/3] sha1_file: implement changes for "cat-file --literally -t"
+Date: Thu, 05 Mar 2015 15:45:42 -0800
+Message-ID: <xmqq61af100p.fsf@gitster.dls.corp.google.com>
+References: <54F89D90.6090505@gmail.com>
+	<1425579560-18898-1-git-send-email-karthik.188@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- boundary="Sig_/N/iYxWi5DS+fjA4wfFmH=97"; protocol="application/pgp-signature"
-Cc: Christian Couder <christian.couder@gmail.com>,
-	Paul Tan <pyokagan@gmail.com>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Mar 06 00:41:55 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 06 00:45:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YTfOp-0004Ng-IY
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Mar 2015 00:41:51 +0100
+	id 1YTfSg-0007UT-DP
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Mar 2015 00:45:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753485AbbCEXlr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Mar 2015 18:41:47 -0500
-Received: from wp260.webpack.hosteurope.de ([80.237.133.29]:47602 "EHLO
-	wp260.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751197AbbCEXlp (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 Mar 2015 18:41:45 -0500
-Received: from hsi-kbw-046-005-229-078.hsi8.kabel-badenwuerttemberg.de ([46.5.229.78] helo=gentp.lnet); authenticated
-	by wp260.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	id 1YTfOh-00053y-KJ; Fri, 06 Mar 2015 00:41:43 +0100
-Received: from gentp.lnet (gentp.lnet [IPv6:::1])
-	by gentp.lnet (Postfix) with ESMTP id D42B1260166;
-	Fri,  6 Mar 2015 00:41:42 +0100 (CET)
-In-Reply-To: <20150306001534.06882282@gentp.lnet>
-X-Mailer: Claws Mail 3.11.1 (GTK+ 2.24.25; x86_64-pc-linux-gnu)
-X-bounce-key: webpack.hosteurope.de;aranea@aixah.de;1425598905;1d91a6eb;
+	id S1753537AbbCEXpq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Mar 2015 18:45:46 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:54799 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751009AbbCEXpp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Mar 2015 18:45:45 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7EA153E1DF;
+	Thu,  5 Mar 2015 18:45:44 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=NtRNtP+rQ6A1/2a/ko2pTqFIIOk=; b=RtY6Np
+	E9wpS/Zdmtm7BzRSo5iYERhIH+FpzUcu2xt2q9fdMnh3dCbsKYiaCTHmaBvg8P/4
+	epbrQJ2s69XwnkC6REFMeqW0VyNAU9VwENYZ5EDbV53zRPAT/L0Uk6Vz8lSzVWLt
+	DnyCbWSgoGlE09vT+khMEYGakitGkYdVLadfI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KTxaM5i0LarSEn/5XtHucue9l65oE2uZ
+	AP5ucMX8OENC13/TZsb87LZtOBzXMwxszaJdkXFi8ggCHU4ZiVOXUJ/3tOwjOOyv
+	bdGt2fL73aEqK1aQ/ZCowKOl1NLJP27V9jPD46qhyxnRi5Xupym6DiOxgi41iOOe
+	cegiNcURlbU=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6C04E3E1DE;
+	Thu,  5 Mar 2015 18:45:44 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D64393E1DD;
+	Thu,  5 Mar 2015 18:45:43 -0500 (EST)
+In-Reply-To: <1425579560-18898-1-git-send-email-karthik.188@gmail.com>
+	(Karthik Nayak's message of "Thu, 5 Mar 2015 23:49:20 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: BD247946-C391-11E4-9599-29999F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264880>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264881>
 
---Sig_/N/iYxWi5DS+fjA4wfFmH=97
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-Okay, I've had a look at Paul's patch for this. Sorry again for the
-dupe, I must've missed it before. I guess I'll attempt another
-microproject.
+> +const char *sha1_object_info_literally(const unsigned char *sha1)
+> +{
+> +	enum object_type type;
+> +	struct strbuf sb = STRBUF_INIT;
+> +	struct object_info oi = {NULL};
+> +
+> +	oi.typename = &sb;
+> +	oi.typep = &type;
+> +	if (sha1_object_info_extended(sha1, &oi, LOOKUP_LITERALLY) < 0)
+> +		return NULL;
+> +	if (*oi.typep > 0) {
+> +		strbuf_release(oi.typename);
+> +		return typename(*oi.typep);
+> +	}
+> +	return oi.typename->buf;
+> +}
 
-However, I feel like my patch is really all that's neccessary; I don't
-think we should try to use both files if they exist -- I consider
-Paul's approach to be a bit overcomplicated.
+After calling this function to ask the textual type of an object,
+should the caller free the result it obtains from this function?
 
-My patch still uses ~/.git-credentials as a default location, which
-should be sufficient for compability. A user that wants to use
-~/.config/git/credentials instead has to manually create that file
-first, which he just shouldn't do if he has to stay compatible to
-previous git versions.
+oi.typename points at the strbuf on stack and its buf member points
+at an allocated piece of memory.  That must be freed.
 
-Of course, my patch is definitly lacking a test case, and the
-documentation could be a tad better, too.
+On the other hand, typename(*oi.typep) is a pointer into static
+piece of memory, which must never be freed.
 
+This patch introduces this function without introducing any caller,
+which makes it unnecessarily harder to judge if this problem is
+caused by choosing a wrong calling convention, and/or if so what
+better calling convention can be used to correct the problem, but
+without looking at the caller that (presumably) will be introduced
+in a later patch, I suspect that the caller should supply a pointer
+to struct object_info, i.e. something along these lines:
 
-Regards,
-Luis Ressel
+    struct object_info oi = { NULL };
+    struct strbuf sb = STRBUF_INIT;
+    enum object_type type;
 
---Sig_/N/iYxWi5DS+fjA4wfFmH=97
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
+    ...
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+    oi.typename = &sb;
+    sha1_object_info_literally(sha1, &oi);
+    if (!sb.len)
+        that is an error;
+    else
+        use sb.buf as the name;
 
-iQJ8BAEBCgBmBQJU+OmzXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25zLm9w
-ZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXRBMjU3MDBFQTc5QkYzMkY4NEQzMTFGNDlD
-NzE4OTFBNkEwRUZCN0U5AAoJEMcYkaag77fp5W0P/jJrI3rrTq6Q9jXipoZqDm+z
-gOeFj4n4rtbhs3wBJA40W8GMfEiPNPntmJgy5RWTwU+/nyOrbZau7jvW7L6R1jv1
-4M9ev0fcZJmqG7uT0QQBksVBvlmi+Hdt6bUHg5tSypzAcvpN9S4dmiuF02v0psj1
-iXcvAn919vCdgzDIdhl1vjOTiAr+R8zwLErElltvM4Ewiz9osIb1F/dPA5B5lRWC
-dfJM8r++AiUeX5qCqvqGCwfslsPeYqZEaNi09bhLH5DEnn1rxEU3C4rMDh1c4qfV
-iusLBtenBCKtv9TqYkhga55j9633JcdoKuxG9ZQDY1ha6gPYu+U2NwlDk1H2qn/B
-MGtVgcS94BrI4Rar3bJE8hy+pkBrHQofgHq8MB2l7bVAsFmZ4mv41T3pnvzESXzK
-9K6YdtsrfggHoqcpwpGWkK2s7jsuuPovx+2xCPtOU5N1TDzCEXdYhqIL42GS1v4I
-j3xT41KGJ4EpouUAANZbJDoS6fdCL4HJbhsxqcBAl2pdBdUnMHAu8opvDMVKzb0Q
-7ZPLh34PHqpZ8fqEttiR5/mrTEhvBmu0u6ylpOsos4jVeqlo1aGtNXPzA9s/WJ0P
-8Y/PCxjJAw+mXnA5DeWuWVrXjY7Ysh+LMNGsebQnB2Xui0GQ/4jSWXifnzscDxk5
-siQ3koXIFjDbg6tjQWq2
-=B173
------END PGP SIGNATURE-----
+    strbuf_release(&sb);
 
---Sig_/N/iYxWi5DS+fjA4wfFmH=97--
+As sha1_object_info_extended() takes oi and fills oi.typename when
+it is supplied for _all_ types, not just the bogus ones, a caller of
+that function, including sha1_object_info_literally() and its
+caller, shouldn't have to worry about "is that a known one?  then
+use typename() to convert the enum type to a string.  Otherwise use
+the oi.typename->buf" at all, I would think.
