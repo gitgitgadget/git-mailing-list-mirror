@@ -1,93 +1,112 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/2] git-C: Add test to check "git -C ''"
-Date: Thu, 05 Mar 2015 13:39:29 -0800
-Message-ID: <xmqq1tl32kfi.fsf@gitster.dls.corp.google.com>
-References: <1425553031-22264-1-git-send-email-karthik.188@gmail.com>
+Subject: Re: Surprising interaction of "binary" and "eol" gitattributes
+Date: Thu, 05 Mar 2015 14:08:24 -0800
+Message-ID: <xmqqwq2v14iv.fsf@gitster.dls.corp.google.com>
+References: <54F88684.3020905@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 05 22:39:44 2015
+Cc: git discussion list <git@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Thu Mar 05 23:08:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YTdUd-0006Ep-Ov
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Mar 2015 22:39:44 +0100
+	id 1YTdwW-0005Lt-6y
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Mar 2015 23:08:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751381AbbCEVjj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Mar 2015 16:39:39 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:52939 "EHLO
+	id S1751338AbbCEWI2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Mar 2015 17:08:28 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:61137 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751378AbbCEVji (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Mar 2015 16:39:38 -0500
+	with ESMTP id S1750921AbbCEWI1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Mar 2015 17:08:27 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 272303DD1C;
-	Thu,  5 Mar 2015 16:39:38 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 62A733E647;
+	Thu,  5 Mar 2015 17:08:26 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=6sawBsWCkdwyPZuXBjjLglR7F4Q=; b=UW/Yw5gxTLyrymgFcnyo
-	v51y1pphWSc0zNY+FfS6cDKdtBGUZIetxzEriU1h6+BwjkdjkaOFM4PPXZ92c5ds
-	gK1PAE5IP/rR6O1zRykk+z7ZnfOwjv9uyJDfGS+hRtca+DWyKioy5H8UF9vJQyaf
-	C/wq61SlMZ3hiWJA7cEkhbQ=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=H8gLpFt5uYAdz1MR6nQy2kuhegw=; b=k0mG5c
+	VqSTFkuln4P9bmu8fGDXccS/72u7beQRaiZlOiNkKmuagaaMEDuK6N/5S5r74Yd/
+	jOmxvdtnL44X1P4gv4gEC9TnMx7BI45LBIDuviPfQUnQfVNvoq+Kt3ZCr+U9x4MR
+	42ZpQe34KUNFEasrrIXVPR2v/Bn2GX2TH/fTc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=wb7QFPR5xHcetwgyOOlF7teDSmqiDUcTLAkAy+NVsgQo0L
-	S2f/reJqQK3XbPtAf0s7zQvcuoO1RSNsnYtY+nVEKQ2jIfZo2MiY8iAEVlVsvfdx
-	6Cwbi4Esl67dJd4L0QdJaq+PKVyYUXaeggICPLmXwYVEedkkuF3XrZ7numo1U=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=nN/bXrVZEZe2ghPDM29jgbST7YkrqO1r
+	9fFWIVyNdAK0RDXbN4MAri8kOCWhQkAJWva4zNO8DLb6PJa7nw50ymJAV7dL/DDY
+	M5nlOlcEQ5NsoQx1J+UPxKFEeo0xP1dp7SsZK6S87fMmqD2QTjrzrcy63tudqjD1
+	fido6IhPrGU=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1B6903DD1B;
-	Thu,  5 Mar 2015 16:39:38 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 598BA3E646;
+	Thu,  5 Mar 2015 17:08:26 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 18F0B3DD16;
-	Thu,  5 Mar 2015 16:39:31 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BC13A3E645;
+	Thu,  5 Mar 2015 17:08:25 -0500 (EST)
+In-Reply-To: <54F88684.3020905@alum.mit.edu> (Michael Haggerty's message of
+	"Thu, 05 Mar 2015 17:38:28 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 1B6A49C0-C380-11E4-99FB-29999F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 255C4006-C384-11E4-A9B6-29999F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264872>
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-> Add a test to check whether "git -C ''" works without giving an
-> error. This is achieved by adding a commit and checking the log
-> using "git -C ''" and comparing the log message with the commit
-> message.
+> I would expect that the following .gitattributes file
+>
+>     *       eol=crlf
+>     *.png   -text
+>
+> would leave EOL translation turned off for PNG files. In other words, I
+> would expect that explicitly setting "-text" would take precedence over
+> the fact that setting "eol" implies that a file should be considered to
+> be "text".
+>
+> I would even more strongly expect
+>
+>     *       eol=crlf
+>     *.png   binary
+>
+> to turn off EOL translation for PNG files.
+>
+> But in fact, in both of the above cases, EOL translation is turned *on*
+> for PNG files.
+>
+> I propose that "-text" should override any setting for "eol" (which
+> would of course fix both problems, since "binary" is equivalent to
+> "-diff -merge -text"). What do people think?
 
-Why choose something complex like commit and log, though?
+Hmm, is there really something that needs a new proposal and
+opinions?
 
-Wouldn't something like this match the series of current tests
-better?  Also I think a small change with a small test like these
-should be in a single patch, not two separate ones.
+The way I read the flow in convert.c is:
 
-Thanks.
+    convert_to_git() uses input_crlf_action() to figure out what
+    crlf_to_git() conversion is necessary.
 
- t/t0056-git-C.sh | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+    input_crlf_action() looks at text_attr and says CRLF_BINARY when
+    it is CRLF_BINARY without looking at eol_attr at all.
 
-diff --git a/t/t0056-git-C.sh b/t/t0056-git-C.sh
-index 99c0377..551d806 100755
---- a/t/t0056-git-C.sh
-+++ b/t/t0056-git-C.sh
-@@ -14,6 +14,16 @@ test_expect_success '"git -C <path>" runs git from the directory <path>' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success '"git -C <path>" with an empty <path> is a no-op' '
-+	(
-+		mkdir -p dir1/subdir &&
-+		cd dir1/subdir &&
-+		git -C "" rev-parse --show-prefix >actual &&
-+		echo subdir/ >expect
-+		test_cmp expect actual
-+	)
-+'
-+
- test_expect_success 'Multiple -C options: "-C dir1 -C dir2" is equivalent to "-C dir1/dir2"' '
- 	test_create_repo dir1/dir2 &&
- 	echo 1 >dir1/dir2/b.txt &&
+    text_attr above is ca.crlf_action in convert_to_git().
+
+    The whole ca.* comes from convert_attrs() inspecting attributes
+    on the incoming path.
+
+    convert_attrs() inspects "eol" and "text" attributes, among
+    others, and sets crlf_action by calling git_path_check_crlf().
+
+    git_path_check_crlf() looks at the 'text' attribute; if it is
+    set to false, it returns CRLF_BINARY.
+
+    crlf_to_git() when given crlf_action==CRLF_BINARY is a no-op.
+
+So, with the above attributes where anything is eol=crlf by default
+and in addition *.png is binary (which contains -text), we shouldn't
+get any crlf munging.  Am I reading/following the code incorrectly?
+
+Puzzled....
