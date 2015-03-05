@@ -1,108 +1,93 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] diff --shortstat --dirstat: remove duplicate output
-Date: Thu, 05 Mar 2015 13:38:21 -0800
-Message-ID: <xmqq8ufb2khe.fsf@gitster.dls.corp.google.com>
-References: <20150302020009.Horde.9sATpKnsrWQkGadaRTvxkA3@webmail.informatik.kit.edu>
-	<1425308739-13082-1-git-send-email-marten.kongstad@gmail.com>
+Subject: Re: [PATCH v2 2/2] git-C: Add test to check "git -C ''"
+Date: Thu, 05 Mar 2015 13:39:29 -0800
+Message-ID: <xmqq1tl32kfi.fsf@gitster.dls.corp.google.com>
+References: <1425553031-22264-1-git-send-email-karthik.188@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, szeder@ira.uka.de, tboegi@web.de,
-	johan@herland.net
-To: =?utf-8?Q?M=C3=A5rten?= Kongstad <marten.kongstad@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 05 22:38:40 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 05 22:39:44 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YTdTS-0005F9-Vg
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Mar 2015 22:38:31 +0100
+	id 1YTdUd-0006Ep-Ov
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Mar 2015 22:39:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751232AbbCEVi0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Mar 2015 16:38:26 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:62456 "EHLO
+	id S1751381AbbCEVjj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Mar 2015 16:39:39 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:52939 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750906AbbCEViZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 Mar 2015 16:38:25 -0500
+	with ESMTP id S1751378AbbCEVji (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Mar 2015 16:39:38 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B127A3DCD1;
-	Thu,  5 Mar 2015 16:38:24 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 272303DD1C;
+	Thu,  5 Mar 2015 16:39:38 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=RYLOzUatVKE8MV3okztTKag4R
-	Ao=; b=mD7w/nfbfs7o8vE6yh3KSdZ7FGI2L4Wsmro1VxzPWx9asv4in0ezmB+2E
-	GN3Uv5pnFHaMoeh5sAzOy1cY/heU2h0JGNIROpQsofhYpSK+eDQi6JeXfh8yothT
-	ELahG92BXL1JSESaObhVNtuw4rhCRxT9n3o8/CvXFeH2RNcvPg=
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=6sawBsWCkdwyPZuXBjjLglR7F4Q=; b=UW/Yw5gxTLyrymgFcnyo
+	v51y1pphWSc0zNY+FfS6cDKdtBGUZIetxzEriU1h6+BwjkdjkaOFM4PPXZ92c5ds
+	gK1PAE5IP/rR6O1zRykk+z7ZnfOwjv9uyJDfGS+hRtca+DWyKioy5H8UF9vJQyaf
+	C/wq61SlMZ3hiWJA7cEkhbQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=XLtB8EEkOxFgFqCHtYk
-	1zvYe7oTXrTSN2oAQOvU/0fT9wZNmGhbqqOYZgG76qRyXsWrkgijctQBn3PiWX8s
-	01833jXXpAFM/tZ0xArRNz0CS89Qnd1YfRoO+xQrHysAfstJYyxeHefWzV0OPKif
-	PNH2Rzl7Bemz8yPqog9eunKo=
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=wb7QFPR5xHcetwgyOOlF7teDSmqiDUcTLAkAy+NVsgQo0L
+	S2f/reJqQK3XbPtAf0s7zQvcuoO1RSNsnYtY+nVEKQ2jIfZo2MiY8iAEVlVsvfdx
+	6Cwbi4Esl67dJd4L0QdJaq+PKVyYUXaeggICPLmXwYVEedkkuF3XrZ7numo1U=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id A38C83DCCF;
-	Thu,  5 Mar 2015 16:38:24 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1B6903DD1B;
+	Thu,  5 Mar 2015 16:39:38 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 128E93DCCE;
-	Thu,  5 Mar 2015 16:38:24 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 18F0B3DD16;
+	Thu,  5 Mar 2015 16:39:31 -0500 (EST)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: F381DA9A-C37F-11E4-A764-29999F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 1B6A49C0-C380-11E4-99FB-29999F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264871>
 
-M=C3=A5rten Kongstad <marten.kongstad@gmail.com> writes:
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-> v3: change how tests count (part of) the dirstat number of lines: ins=
-tead of
-> 'grep -c', use 'grep >filename && test_line_count'. Thanks to Torsten
-> B=C3=B6gershausen and SZEDER G=C3=A1bor for pointing out how to impro=
-ve the tests.
+> Add a test to check whether "git -C ''" works without giving an
+> error. This is achieved by adding a commit and checking the log
+> using "git -C ''" and comparing the log message with the commit
+> message.
+
+Why choose something complex like commit and log, though?
+
+Wouldn't something like this match the series of current tests
+better?  Also I think a small change with a small test like these
+should be in a single patch, not two separate ones.
 
 Thanks.
 
-I'd squash the following on top before queuing it.
+ t/t0056-git-C.sh | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-The overlong lines that ignores the exit status from "git diff"
-looked problematic to me.
-
- t/t4047-diff-dirstat.sh | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
-
-diff --git a/t/t4047-diff-dirstat.sh b/t/t4047-diff-dirstat.sh
-index 065d74f..0d50dce 100755
---- a/t/t4047-diff-dirstat.sh
-+++ b/t/t4047-diff-dirstat.sh
-@@ -974,13 +974,16 @@ test_expect_success 'diff.dirstat=3Dfuture_param,=
-0,lines should warn, but still wo
+diff --git a/t/t0056-git-C.sh b/t/t0056-git-C.sh
+index 99c0377..551d806 100755
+--- a/t/t0056-git-C.sh
++++ b/t/t0056-git-C.sh
+@@ -14,6 +14,16 @@ test_expect_success '"git -C <path>" runs git from the directory <path>' '
+ 	test_cmp expected actual
  '
-=20
- test_expect_success '--shortstat --dirstat should output only one dirs=
-tat' '
--	git diff --shortstat --dirstat=3Dchanges HEAD^..HEAD | grep " dst/cop=
-y/changed/$" >actual_diff_shortstat_dirstat_changes &&
-+	git diff --shortstat --dirstat=3Dchanges HEAD^..HEAD >out &&
-+	grep " dst/copy/changed/$" out >actual_diff_shortstat_dirstat_changes=
- &&
- 	test_line_count =3D 1 actual_diff_shortstat_dirstat_changes &&
-=20
--	git diff --shortstat --dirstat=3Dlines HEAD^..HEAD | grep " dst/copy/=
-changed/$" >actual_diff_shortstat_dirstat_lines &&
-+	git diff --shortstat --dirstat=3Dlines HEAD^..HEAD >out &&
-+	grep " dst/copy/changed/$" out >actual_diff_shortstat_dirstat_lines &=
-&
- 	test_line_count =3D 1 actual_diff_shortstat_dirstat_lines &&
-=20
--	git diff --shortstat --dirstat=3Dfiles HEAD^..HEAD | grep " dst/copy/=
-changed/$" >actual_diff_shortstat_dirstat_files &&
-+	git diff --shortstat --dirstat=3Dfiles HEAD^..HEAD >out &&
-+	grep " dst/copy/changed/$" out >actual_diff_shortstat_dirstat_files &=
-&
- 	test_line_count =3D 1 actual_diff_shortstat_dirstat_files
- '
-=20
+ 
++test_expect_success '"git -C <path>" with an empty <path> is a no-op' '
++	(
++		mkdir -p dir1/subdir &&
++		cd dir1/subdir &&
++		git -C "" rev-parse --show-prefix >actual &&
++		echo subdir/ >expect
++		test_cmp expect actual
++	)
++'
++
+ test_expect_success 'Multiple -C options: "-C dir1 -C dir2" is equivalent to "-C dir1/dir2"' '
+ 	test_create_repo dir1/dir2 &&
+ 	echo 1 >dir1/dir2/b.txt &&
