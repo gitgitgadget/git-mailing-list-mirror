@@ -1,82 +1,140 @@
 From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCHv3 0/3]More diffs for commit/status
-Date: Thu, 05 Mar 2015 11:25:48 -0800
-Message-ID: <xmqqtwxz2qmb.fsf@gitster.dls.corp.google.com>
+Date: Thu, 05 Mar 2015 12:15:16 -0800
+Message-ID: <xmqqlhjb2obv.fsf@gitster.dls.corp.google.com>
 References: <xmqqr3t479ey.fsf@gitster.dls.corp.google.com>
 	<cover.1425564336.git.git@drmicha.warpmail.net>
+	<xmqqtwxz2qmb.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>
 To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Mar 05 20:25:57 2015
+X-From: git-owner@vger.kernel.org Thu Mar 05 21:15:32 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YTbPA-0006B5-Bg
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Mar 2015 20:25:56 +0100
+	id 1YTcB8-0002qo-2J
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Mar 2015 21:15:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758222AbbCETZw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Mar 2015 14:25:52 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:57195 "EHLO
+	id S1757082AbbCEUPZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Mar 2015 15:15:25 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:55643 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755863AbbCETZv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Mar 2015 14:25:51 -0500
+	with ESMTP id S1752174AbbCEUPY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Mar 2015 15:15:24 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 67E7B3D485;
-	Thu,  5 Mar 2015 14:25:50 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 57DF03E437;
+	Thu,  5 Mar 2015 15:15:18 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Iv+oiSQD3vu1Jm1nXFGBR1zyMc0=; b=MAI+e3
-	j14veL1gsucFb2GnRNEvR/J216pk73g3ANRdgdSR2LDBrUV+GQA1a0UyMHbqjsiA
-	Bd8St+c5mzDhs0oIlAbxTXxLI9j6fIjrHHABcMay0d4Vi5W0TKyPmZQngNCM7pVI
-	01rlP91FMhcFB5Qmpyj5mTGxLDVS5qhjev5y4=
+	:content-type; s=sasl; bh=DD5zrew34MJPcYCzAbguYrtzNSE=; b=XU9Syh
+	zPgU093ox7ADGGXQpoFCgAeFn+mKJGH7P8rgLx51C4kIC9aYPwJrDWl+uNJJFFWX
+	FXAsepo2oMCEhvZnhGua2a5a/KHmluGsSgwUS9mNJrbJtN96Csg6gHDAAFdjncSh
+	RF2srSfKxGiOM1riUqSocgWnSFXFH8itETBzY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=E2kJRhNq8yQZt0L0KE3BBcUn2LXOKmJA
-	rdWXKg6Pp8gip1aBbvY8EmK1bovmrge5zt5+bS4jQCefqoEXwaVHliekZAt59iYj
-	FzW3iafyVgZIwLpeagHrE0yqtObzoIE/k5AjvIyWzdP/AAhP5CVsrMiFMczk8DUj
-	ePxUGM3Ahks=
+	:content-type; q=dns; s=sasl; b=jebtXn8G3Pwao+7iDBJeML4AAX5A9gP3
+	yqXh1O3QO33i5eZnV1YFQlA9m766Z0nPmD4945FP6pFLmHLJ40JarhzEe2iBAHJF
+	WADDS6qLqGYvNZLztJriR4Dsle8SF7sb7yJaSEDf+q/nqsYVPPml2WugSpr3SX0A
+	FRpLvBEqRu8=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5D5463D484;
-	Thu,  5 Mar 2015 14:25:50 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4DE093E435;
+	Thu,  5 Mar 2015 15:15:18 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A2E383D47E;
-	Thu,  5 Mar 2015 14:25:49 -0500 (EST)
-In-Reply-To: <cover.1425564336.git.git@drmicha.warpmail.net> (Michael
-	J. Gruber's message of "Thu, 5 Mar 2015 15:13:01 +0100")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C9E3A3E434;
+	Thu,  5 Mar 2015 15:15:17 -0500 (EST)
+In-Reply-To: <xmqqtwxz2qmb.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Thu, 05 Mar 2015 11:25:48 -0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 6E44C548-C36D-11E4-9898-29999F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 576DF900-C374-11E4-8FFE-29999F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264863>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> v3 has the following changes:
-> - new leading patch by Junio to clean up t7508 (slightly modified by myself)
-> - adjust tests accordingly
-> - revert back to standard c/,i/ resp. i/,w/ diff prefixes with a header line
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
 >
-> Open questionis for 3/3:
-> - Do we need the header to stick out even more? (I don't think so, although
->   having the STATUS_HEADER color to be different may help.)
+>> - Do we want the header line also for "status -v"? (I would say yes, but that
+>>   would be a change to current behaviour.)
+>
+> I would not object to it very strongly, but I do not see a point in
+> changing the behaviour.
+>
+> And I do not see why a new user would want it anyway.  There is no
+> need to differenciate the changes to be committed from the changes
+> left in the working tree when the latter is not even shown.
 
-If we have more than one paths in each category, I would think at
-least a separator line (I used -{50} in my illustration you are
-replying to) before the verbal "Changes to be committed" would help.
+Extending this line of thought further.
 
-> - Do we want the header line also for "status -v"? (I would say yes, but that
->   would be a change to current behaviour.)
+If I am reading your patch 3/3 right, "status -v -v" shows the
+header when there are patches to be shown for the category.  I am
+not sure if that is the most helpful way for the users, when either
+c/i xor i/w diffs is missing.
 
-I would not object to it very strongly, but I do not see a point in
-changing the behaviour.
+There are four cases, obviously ;-)
 
-And I do not see why a new user would want it anyway.  There is no
-need to differenciate the changes to be committed from the changes
-left in the working tree when the latter is not even shown.
+1. When there are changes to be committed:
+
+ a) When there is no change left in the working tree, the proposed
+    output would be the same as the more familiar "status -v"
+    output.  Showing changes to be committed header would of course
+    help.
+
+    I wondered if the proposed behaviour hurts the user by hiding
+    the header for changes to be left out, though.  By seeing that
+    the second header alone and no diff, the user will be assured
+    that there is no changes left in the working tree, forgotten to
+    be added.  But this point is minor.  As the users get used to
+    the behaviour of "-v -v", they will learn to read the emptyness
+    and find its proper meaning that there is no change left out.
+    So I think the proposed behaviour would be OK in this case.  In
+    fact, not showing the second header when there is no change left
+    in the working tree will help potential issues with case 2-b).
+
+ b) When there is change left in the working tree, the proposed
+    output is fine.  Two headers are shown to indicate what the
+    following diff is about and cleanly shows where the boundary of
+    the two classes are (especially if you resurrect the -{50}
+    separator line I suggested, at least for the second header).
+
+
+2. When there is no change to be committed:
+
+ a) When there is no change left in the working tree, the proposed
+    output is fine.  There is no output (no header, no diff), and
+    the user immediately knows that the working tree and the index
+    are clean.
+
+ b) When there are changes left in the working tree, the user sees
+    one header followed by a diff in the proposed output.  Visually,
+    the single line heading (even with the separateor line) may be
+    so small in the context of the whole output, and the user needs
+    to READ it to notice that the diff being shown are not what is
+    going to be committed.  In other words, it is too similar to the
+    proposed output in case 1-a).
+
+    If we show the "to be committed" header followed by no diff, and
+    then the second header followed by diff, it would be crystial
+    clear to the user, because it looks unusual, that what is shown
+    is different from case 1-a).  This would especially be true if
+    you resurrected -{50} separator line after the heading.
+
+
+So, my recommendation for "status -v -v" would be:
+
+    if (there are changes to be committed, or
+	there are changes left in the working tree) {
+	show "to be committed" with -{50};
+        show c/i diff;
+    }
+    if (there are changes left in the working tree) {
+	show "left in the working tree" with -{50};
+        show i/w diff;
+    }
