@@ -1,94 +1,82 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/5] Retry if fdopen() fails due to ENOMEM
-Date: Thu, 05 Mar 2015 11:19:36 -0800
-Message-ID: <xmqqy4nb2qwn.fsf@gitster.dls.corp.google.com>
-References: <1425571669-22800-1-git-send-email-mhagger@alum.mit.edu>
+Subject: Re: [PATCHv3 0/3]More diffs for commit/status
+Date: Thu, 05 Mar 2015 11:25:48 -0800
+Message-ID: <xmqqtwxz2qmb.fsf@gitster.dls.corp.google.com>
+References: <xmqqr3t479ey.fsf@gitster.dls.corp.google.com>
+	<cover.1425564336.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Thu Mar 05 20:19:46 2015
+Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Mar 05 20:25:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YTbJB-0000ov-Lp
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Mar 2015 20:19:46 +0100
+	id 1YTbPA-0006B5-Bg
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Mar 2015 20:25:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757966AbbCETTk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Mar 2015 14:19:40 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:51292 "EHLO
+	id S1758222AbbCETZw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Mar 2015 14:25:52 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:57195 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1757220AbbCETTj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Mar 2015 14:19:39 -0500
+	with ESMTP id S1755863AbbCETZv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Mar 2015 14:25:51 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 450EE3D2BD;
-	Thu,  5 Mar 2015 14:19:38 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 67E7B3D485;
+	Thu,  5 Mar 2015 14:25:50 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Sw+AY7QYANUVP5h0ufiFR8uVQxs=; b=BAeHIx
-	lkcKUtbXuu6yEi9iDNxqeGu4uATnt31HX453DXjpvgkWH8bhGyI/1oa3FdkMH2aE
-	rfSSzJSsIAggjdul+jn1a4TUZAkiB4Hl6ukfNeurXaERmKOQKVd42tsMf5RKU+au
-	j7ZTgSQ6ti/l2s7nytSB3kCVE8OMoObVj39v0=
+	:content-type; s=sasl; bh=Iv+oiSQD3vu1Jm1nXFGBR1zyMc0=; b=MAI+e3
+	j14veL1gsucFb2GnRNEvR/J216pk73g3ANRdgdSR2LDBrUV+GQA1a0UyMHbqjsiA
+	Bd8St+c5mzDhs0oIlAbxTXxLI9j6fIjrHHABcMay0d4Vi5W0TKyPmZQngNCM7pVI
+	01rlP91FMhcFB5Qmpyj5mTGxLDVS5qhjev5y4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=EgMApIP+12RgY3FtKhTJWHsEeP+XP2Gc
-	VDiRn6IB9zer0xchFoEDSHk2JxdocvwMMupPav1gsx8yniF4jZovHyb0KgwxVVFy
-	g+nS/l3zBTpBB1UI53O53tpIY3QuJCXoTyy32mV5bGUUX8m3fA2C9ZKNUMW4e+9f
-	i2FB1itO6nE=
+	:content-type; q=dns; s=sasl; b=E2kJRhNq8yQZt0L0KE3BBcUn2LXOKmJA
+	rdWXKg6Pp8gip1aBbvY8EmK1bovmrge5zt5+bS4jQCefqoEXwaVHliekZAt59iYj
+	FzW3iafyVgZIwLpeagHrE0yqtObzoIE/k5AjvIyWzdP/AAhP5CVsrMiFMczk8DUj
+	ePxUGM3Ahks=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3C8593D2BC;
-	Thu,  5 Mar 2015 14:19:38 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5D5463D484;
+	Thu,  5 Mar 2015 14:25:50 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B84983D2BB;
-	Thu,  5 Mar 2015 14:19:37 -0500 (EST)
-In-Reply-To: <1425571669-22800-1-git-send-email-mhagger@alum.mit.edu> (Michael
-	Haggerty's message of "Thu, 5 Mar 2015 17:07:44 +0100")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A2E383D47E;
+	Thu,  5 Mar 2015 14:25:49 -0500 (EST)
+In-Reply-To: <cover.1425564336.git.git@drmicha.warpmail.net> (Michael
+	J. Gruber's message of "Thu, 5 Mar 2015 15:13:01 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 9097B0DE-C36C-11E4-90EE-29999F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 6E44C548-C36D-11E4-9898-29999F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264861>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264862>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-> One likely reason for fdopen() to fail is the lack of memory for
-> allocating a FILE structure. When that happens, try freeing some
-> memory and calling fdopen() again in the hope that it will work the
-> second time.
-
-In codepaths where we are likely under memory pressure, the above
-might help, but I have to wonder
-
-    (1) if update-server-info and daemon fall into that category; and
-
-    (2) if Git continues to work under such a memory pressure to
-        cause even fdopen() to fail.
-
-In other words, I do not see a reason not to do this change, but I
-am not sure how much it would help us in practice.
-
-We call fopen() from a lot more places than we call fdopen().  Do we
-want to do the same, or is there a good reason why this does not
-matter to callers of fopen(), and if so why doesn't the same reason
-apply to callers of fdopen()?
-
-> Michael Haggerty (5):
->   xfdopen(): if first attempt fails, free memory and try again
->   fdopen_lock_file(): use fdopen_with_retry()
->   copy_to_log(): use fdopen_with_retry()
->   update_info_file(): use fdopen_with_retry()
->   buffer_fdinit(): use fdopen_with_retry()
+> v3 has the following changes:
+> - new leading patch by Junio to clean up t7508 (slightly modified by myself)
+> - adjust tests accordingly
+> - revert back to standard c/,i/ resp. i/,w/ diff prefixes with a header line
 >
->  daemon.c              |  4 ++--
->  git-compat-util.h     | 11 +++++++++++
->  lockfile.c            |  2 +-
->  server-info.c         |  2 +-
->  vcs-svn/line_buffer.c |  2 +-
->  wrapper.c             | 28 +++++++++++++++++++++++++---
->  6 files changed, 41 insertions(+), 8 deletions(-)
+> Open questionis for 3/3:
+> - Do we need the header to stick out even more? (I don't think so, although
+>   having the STATUS_HEADER color to be different may help.)
+
+If we have more than one paths in each category, I would think at
+least a separator line (I used -{50} in my illustration you are
+replying to) before the verbal "Changes to be committed" would help.
+
+> - Do we want the header line also for "status -v"? (I would say yes, but that
+>   would be a change to current behaviour.)
+
+I would not object to it very strongly, but I do not see a point in
+changing the behaviour.
+
+And I do not see why a new user would want it anyway.  There is no
+need to differenciate the changes to be committed from the changes
+left in the working tree when the latter is not even shown.
