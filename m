@@ -1,98 +1,111 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [ANNOUNCE] Git Merge Contributors Summit, April 8th, Paris
-Date: Thu, 5 Mar 2015 21:53:06 +0100
-Message-ID: <CAP8UFD27xaJU3QFuQZqADmh=ZseiN=Y1WCFPk4v4RzizK=2Xtg@mail.gmail.com>
-References: <20150224220923.GA23344@peff.net>
+From: Stephen Morton <stephen.c.morton@gmail.com>
+Subject: Slow git pushes: sitting 1 minute in pack-objects
+Date: Thu, 5 Mar 2015 16:03:07 -0500
+Message-ID: <CAH8BJxH1uVv9J7yLx1D4GRPKfWYqDw8SRFZKGR_yhjcoTCCT2g@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>, git@sfconservancy.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Mar 05 21:53:14 2015
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Mar 05 22:03:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YTcld-0004rp-OT
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Mar 2015 21:53:14 +0100
+	id 1YTcvJ-0003wt-Km
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Mar 2015 22:03:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752691AbbCEUxJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Mar 2015 15:53:09 -0500
-Received: from mail-ig0-f181.google.com ([209.85.213.181]:41991 "EHLO
-	mail-ig0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751434AbbCEUxH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Mar 2015 15:53:07 -0500
-Received: by igkb16 with SMTP id b16so49440572igk.1
-        for <git@vger.kernel.org>; Thu, 05 Mar 2015 12:53:06 -0800 (PST)
+	id S1753488AbbCEVDK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Mar 2015 16:03:10 -0500
+Received: from mail-wg0-f51.google.com ([74.125.82.51]:46445 "EHLO
+	mail-wg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751193AbbCEVDI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Mar 2015 16:03:08 -0500
+Received: by wggy19 with SMTP id y19so55966582wgg.13
+        for <git@vger.kernel.org>; Thu, 05 Mar 2015 13:03:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=SGqxKHGQleJqXmTn8YFJ37WSOH7LDrkN7pGpgoQ42tI=;
-        b=i2ZqnMYLrRlkg6aYaAEuywg85+JZnGPJ0+P8ozmZ5TXfl/Mq6SxrIx3HmGtPyGCLdY
-         83NCMl7/TBCXvOyCdnu8BtZl81bP21dIb3OP3NFGnBH1vH25D2fElk5ikbykRyVUf3Up
-         dbITfpJ7Mhy+qwMQo0FjU+WCV1vIGVSuRLGfZIwbGHJ1wQV6IdplScLzuaPWwU3hjEz/
-         JgGUljR4YrIs9CShG8mcOM38PhzJNIvTyKp2Ezp6sk9iVUeNeSm0KGACUsPk29GaWqc5
-         5BxDH2CJyL+KUrZh0KfFRX4N9rb7FIgopFdgkZqpGq0dlx0OIT1YErSCkqeCyAVOS65W
-         YqGw==
-X-Received: by 10.50.66.235 with SMTP id i11mr23398791igt.40.1425588786797;
- Thu, 05 Mar 2015 12:53:06 -0800 (PST)
-Received: by 10.50.245.144 with HTTP; Thu, 5 Mar 2015 12:53:06 -0800 (PST)
-In-Reply-To: <20150224220923.GA23344@peff.net>
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=Pz3dYORMWzGP/kBtHJ5Lh8uvNp07g+7C84TzQFMffxQ=;
+        b=ArEEvmZhfeNhqiUAmYg9dupEJT8I4MZmZ2Nz1lemYYzBVThPVXsk/uhHm8iw8lECKR
+         CRtoP0ZHZsfqj4vTscp3kQWRxpH8/M46kTKRgJEslbVvwqGYKU1fKM6N1N66qRoE5M4E
+         3eBXIpA2vwyRQ/KH5V7ssBg0Y8hXo1fEw7xGBWzGtciYPK5CLPASS3Gs4JGu3v6rGfeM
+         w8dRXXfTNicYkK0NBN0bjWlWqbcq9hqwoZwcRbm4K8EI3MM/mU9Im7SbljlUrQuSzzvz
+         SwIwdmXIWstP5tosH4XKBwgLi3TkZH2+so3xXRHS71uvVdSIfUyzfDQ81T5HGubgAOvL
+         4O6A==
+X-Received: by 10.194.236.200 with SMTP id uw8mr21969122wjc.10.1425589387058;
+ Thu, 05 Mar 2015 13:03:07 -0800 (PST)
+Received: by 10.194.159.98 with HTTP; Thu, 5 Mar 2015 13:03:07 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264866>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264867>
 
-Hi,
+(Apologies, after a day I'm cross-posting from git.users. I think the question
+is maybe too technical for that group.)
 
-On Tue, Feb 24, 2015 at 11:09 PM, Jeff King <peff@peff.net> wrote:
-> I wanted to make one more announcement about this, since a few more
-> details have been posted at:
->
->   http://git-merge.com/
->
-> since my last announcement. Specifically, I wanted to call attention to
-> the contributor's summit on the 8th. Basically, there will be a space
-> that can hold up to 50 people, it's open only to git (and JGit and
-> libgit2) devs, and there isn't a planned agenda. So I want to:
->
->   1. Encourage developers to come. You might meet some folks in person
->      you've worked with online. And you can see how beautiful we all
->      are.
->
->   2. Get people thinking about what they would like to talk about.  In
->      past GitTogethers, it's been a mix of people with prepared things
->      to talk about, group discussions of areas, and general kibitzing.
->      We can be spontaneous on the day of the event, but if you have a
->      topic you want to bring up, you may want to give it some thought
->      beforehand.
->
-> If you are a git dev and want to come, please RSVP to Chris Kelly
-> <amateurhuman@github.com> who is organizing the event. If you would like
-> to come, but finances make it hard (either for travel, or for the
-> conference fee), please talk to me off-list, and we may be able to help.
+I'm experiencing very slow git pushes. On the order of 1 minute to push a
+trivial one-line change. When I set GIT_TRACE=1, I see that it seems to be
+taking a lot of time in the pack-objects phase.
 
-I'd like the Git project to set up a more organized way to pay back
-the travel costs and the conference fee to the developers who come.
-For example the Git project could say that it will at least pay back:
+Others are not seeing this with the same repo, but I'm the only one working
+in a VM.
 
-- all the travel costs to the 5 most important Git developers who come and ask,
-- half the travel costs to the 5 next most important Git developers
-who come and ask,
-- all the conference fee to the 15 most important Git developers who
-come and ask,
+```
+~/ws/git/repo.1/repo > date; git push mortons; date
+Wed Mar  4 15:03:11 EST 2015
+15:03:11.086758 git.c:349               trace: built-in: git 'push' 'mortons'
+15:03:11.126665 run-command.c:341       trace: run_command: 'ssh' '-p'
+'7999' 'git@privacy.privacy' 'git-receive-pack
+'\''~mortons/repo.git'\'''
+15:03:20.383341 run-command.c:341       trace: run_command:
+'pack-objects' '--all-progress-implied' '--revs' '--stdout' '--thin'
+'--delta-base-offset' '--progress'
+15:03:20.383945 exec_cmd.c:134          trace: exec: 'git'
+'pack-objects' '--all-progress-implied' '--revs' '--stdout' '--thin'
+'--delta-base-offset' '--progress'
+15:03:20.385168 git.c:349               trace: built-in: git
+'pack-objects' '--all-progress-implied' '--revs' '--stdout' '--thin'
+'--delta-base-offset' '--progress'
+Counting objects: 4, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (4/4), done.
+Writing objects: 100% (4/4), 20.86 KiB | 0 bytes/s, done.
+Total 4 (delta 0), reused 0 (delta 0)
+To ssh://git@privacy.privacy:7999/~mortons/repo.git
+   5fe662f..a137bda  my_branch -> my_branch
+Wed Mar  4 15:04:22 EST 2015
 
-I think it could help developers decide to come, and it looks like
-enough funding could be available, thanks to GitHub and the GSoC
-money. What do you think?
+```
 
-Apart from that it's also possible to find ways to accommodate some
-developers for free, if they don't mind crashing in someone's spare
-room.
+After it was slow at first, I tried setting these which did not help
 
-So please don't hesitate to ask if you would like to come.
+repack.writebitmaps=true
+pack.windowmemory=100m
 
+
+
+Details:
+git version 2.1.4
+OS: CentOS 6.6 64-bit in a VM.
+repo size: huge. 6 GB .git directory, around 800 MB working tree.
+VM has 8 MB RAM and 8 cores.
+CPU: i7, 8 core (4 cores hyperthreaded)
+
+It is an ext4 filesystem on the guest linux drive.
+    On the host side, it is a .vmdk file and the virtualization software used is
+virtualbox. While the drive is dynamically allocated, after I ran into
+this issue,
+    I used fallocate to create a 50GB dummy file and then delete it to
+ensure that
+there was headroom in the drive and that dynamic allocation slowness was not the
+issue, and subsequent pushes were still slow.
+    I have not experienced any filesystem slowness issues in the
+months I've been using this vm.
+
+
+Any ideas? I'm evaluating a move to git and this is the kind of thing
+that could derail it.
 Thanks,
-Christian.
+
+Stephen
