@@ -1,81 +1,98 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: Surprising interaction of "binary" and "eol" gitattributes
-Date: Thu, 05 Mar 2015 21:49:22 +0100
-Message-ID: <54F8C152.7010203@web.de>
-References: <54F88684.3020905@alum.mit.edu>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [ANNOUNCE] Git Merge Contributors Summit, April 8th, Paris
+Date: Thu, 5 Mar 2015 21:53:06 +0100
+Message-ID: <CAP8UFD27xaJU3QFuQZqADmh=ZseiN=Y1WCFPk4v4RzizK=2Xtg@mail.gmail.com>
+References: <20150224220923.GA23344@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: Michael Haggerty <mhagger@alum.mit.edu>,
-	git discussion list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Mar 05 21:49:35 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>, git@sfconservancy.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Mar 05 21:53:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YTci2-0001zs-IP
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Mar 2015 21:49:30 +0100
+	id 1YTcld-0004rp-OT
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Mar 2015 21:53:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753493AbbCEUt0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Mar 2015 15:49:26 -0500
-Received: from mout.web.de ([212.227.15.3]:64859 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750888AbbCEUtZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Mar 2015 15:49:25 -0500
-Received: from macce.local ([217.211.68.12]) by smtp.web.de (mrweb002) with
- ESMTPSA (Nemesis) id 0MFcPd-1YHr0Q1oUn-00Eck7; Thu, 05 Mar 2015 21:49:23
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
-In-Reply-To: <54F88684.3020905@alum.mit.edu>
-X-Provags-ID: V03:K0:i5q3bQYAq7DOBStIlXU6pn9x2aKUgvS5My02Pz6vpoHRhXGBSgm
- Jqx7OLVXMSoJTODoTqTSS4+TBkGKt7DFRdCXIxG5BTLSjCAyc3Vlo73Y0Uhov7UHW651Dzn
- yYKs0fEi5k4jI9FJak0XpNRG/H84KtXzC92E2SsvhQF9D8gGeCZMmtb92pstsdPAncWzlTA
- ZsMpLvsYxLzVPASMhOpkA==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1752691AbbCEUxJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Mar 2015 15:53:09 -0500
+Received: from mail-ig0-f181.google.com ([209.85.213.181]:41991 "EHLO
+	mail-ig0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751434AbbCEUxH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Mar 2015 15:53:07 -0500
+Received: by igkb16 with SMTP id b16so49440572igk.1
+        for <git@vger.kernel.org>; Thu, 05 Mar 2015 12:53:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=SGqxKHGQleJqXmTn8YFJ37WSOH7LDrkN7pGpgoQ42tI=;
+        b=i2ZqnMYLrRlkg6aYaAEuywg85+JZnGPJ0+P8ozmZ5TXfl/Mq6SxrIx3HmGtPyGCLdY
+         83NCMl7/TBCXvOyCdnu8BtZl81bP21dIb3OP3NFGnBH1vH25D2fElk5ikbykRyVUf3Up
+         dbITfpJ7Mhy+qwMQo0FjU+WCV1vIGVSuRLGfZIwbGHJ1wQV6IdplScLzuaPWwU3hjEz/
+         JgGUljR4YrIs9CShG8mcOM38PhzJNIvTyKp2Ezp6sk9iVUeNeSm0KGACUsPk29GaWqc5
+         5BxDH2CJyL+KUrZh0KfFRX4N9rb7FIgopFdgkZqpGq0dlx0OIT1YErSCkqeCyAVOS65W
+         YqGw==
+X-Received: by 10.50.66.235 with SMTP id i11mr23398791igt.40.1425588786797;
+ Thu, 05 Mar 2015 12:53:06 -0800 (PST)
+Received: by 10.50.245.144 with HTTP; Thu, 5 Mar 2015 12:53:06 -0800 (PST)
+In-Reply-To: <20150224220923.GA23344@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264866>
 
-On 2015-03-05 17.38, Michael Haggerty wrote:
-> I would expect that the following .gitattributes file
-> 
->     *       eol=crlf
->     *.png   -text
-> 
-> would leave EOL translation turned off for PNG files. In other words, I
-> would expect that explicitly setting "-text" would take precedence over
-> the fact that setting "eol" implies that a file should be considered to
-> be "text".
-> 
-> I would even more strongly expect
-> 
->     *       eol=crlf
->     *.png   binary
-> 
-> to turn off EOL translation for PNG files.
-> 
-> But in fact, in both of the above cases, EOL translation is turned *on*
-> for PNG files.
-> 
-> I propose that "-text" should override any setting for "eol" (which
-> would of course fix both problems, since "binary" is equivalent to
-> "-diff -merge -text"). What do people think?
-> 
-> Michael
-> 
+Hi,
 
-("binary" is not supported, we need "-text")
-Beside that,  
+On Tue, Feb 24, 2015 at 11:09 PM, Jeff King <peff@peff.net> wrote:
+> I wanted to make one more announcement about this, since a few more
+> details have been posted at:
+>
+>   http://git-merge.com/
+>
+> since my last announcement. Specifically, I wanted to call attention to
+> the contributor's summit on the 8th. Basically, there will be a space
+> that can hold up to 50 people, it's open only to git (and JGit and
+> libgit2) devs, and there isn't a planned agenda. So I want to:
+>
+>   1. Encourage developers to come. You might meet some folks in person
+>      you've worked with online. And you can see how beautiful we all
+>      are.
+>
+>   2. Get people thinking about what they would like to talk about.  In
+>      past GitTogethers, it's been a mix of people with prepared things
+>      to talk about, group discussions of areas, and general kibitzing.
+>      We can be spontaneous on the day of the event, but if you have a
+>      topic you want to bring up, you may want to give it some thought
+>      beforehand.
+>
+> If you are a git dev and want to come, please RSVP to Chris Kelly
+> <amateurhuman@github.com> who is organizing the event. If you would like
+> to come, but finances make it hard (either for travel, or for the
+> conference fee), please talk to me off-list, and we may be able to help.
 
->     *       eol=crlf
->     *.png   -text
-should work as you describe.
+I'd like the Git project to set up a more organized way to pay back
+the travel costs and the conference fee to the developers who come.
+For example the Git project could say that it will at least pay back:
 
-Do you think you make a test case for this ?
-In best case as a real patch :-)
+- all the travel costs to the 5 most important Git developers who come and ask,
+- half the travel costs to the 5 next most important Git developers
+who come and ask,
+- all the conference fee to the 15 most important Git developers who
+come and ask,
 
-(I know that attributes should take precedence over eol settings in the
-config file, and this is not always the case)
+I think it could help developers decide to come, and it looks like
+enough funding could be available, thanks to GitHub and the GSoC
+money. What do you think?
+
+Apart from that it's also possible to find ways to accommodate some
+developers for free, if they don't mind crashing in someone's spare
+room.
+
+So please don't hesitate to ask if you would like to come.
+
+Thanks,
+Christian.
