@@ -1,691 +1,218 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: What's cooking in git.git (Mar 2015, #02; Thu, 5)
-Date: Thu, 05 Mar 2015 14:44:43 -0800
-Message-ID: <xmqqh9tz12uc.fsf@gitster.dls.corp.google.com>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
+Subject: [PATCH] zlib: initialize git_zstream in git_deflate_init{,_gzip,_raw}
+Date: Thu, 05 Mar 2015 23:49:46 +0100
+Message-ID: <54F8DD8A.8020202@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 05 23:45:02 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Mar 05 23:50:11 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YTeVh-0001xv-MG
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Mar 2015 23:44:54 +0100
+	id 1YTeao-0006MF-EB
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Mar 2015 23:50:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752299AbbCEWos (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Mar 2015 17:44:48 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:60708 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752162AbbCEWoq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Mar 2015 17:44:46 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2E36E3D04C;
-	Thu,  5 Mar 2015 17:44:45 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=2
-	EArJKsIGHbRMlefAu6VUKHUhpY=; b=RVPX2GXZzh584FeTz5ybJcxiJ0bd092qs
-	qakk91pFOjdA9w3/Qh1nj6DAhLgtOSu1MBTnsYP14BOVBqZrAOdzPWRwXRQXZM4E
-	mfWAoMKAYnW/7f0RSmIH4TAy8xfJ08eLRMa+FKvd452sbb2wwVoh2ucdw2x0njdr
-	PQVZ8R0G3A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=TGg
-	GSFimMyx+J4U/XCpK7kW0qjzUn2Inj06Vm6i0aIjvz9EebHh5pw7zV7NzmYFp94R
-	436795L3K+FxCX+K9yl0h3ow4eGDEP5u0/OllnWJEXHxGKQMtq7Ak8t0U5K5mqx7
-	bh95zkbTkVMHATiHoBQzLVlvn3z6PSMbhNcs+qI8=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1B4D23D04B;
-	Thu,  5 Mar 2015 17:44:45 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4D2493D047;
-	Thu,  5 Mar 2015 17:44:44 -0500 (EST)
-X-master-at: 83036f8541ad8999974863db9d2ac02a814e6395
-X-next-at: e3086922e7b3f8f159b5b6631ba0052d0b37bcfc
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 37DF6C44-C389-11E4-B153-29999F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1752868AbbCEWuF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Mar 2015 17:50:05 -0500
+Received: from mout.web.de ([212.227.17.11]:52189 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751419AbbCEWuE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Mar 2015 17:50:04 -0500
+Received: from [192.168.178.27] ([79.250.191.206]) by smtp.web.de (mrweb102)
+ with ESMTPSA (Nemesis) id 0MZUWH-1YB9CX0UaT-00LDoS; Thu, 05 Mar 2015 23:50:00
+ +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
+X-Provags-ID: V03:K0:92LwdmY6MmQS7RymH/u7AqzRGZvts4YgDUZ5DGISKkgkQ3c4p0X
+ PI9O9laqLPj2Q+1GD2WhRn17yPxyGzGNCClk8Xwt/ASysFo1sgAqFUlJ+sXM44n0kgBWxKZ
+ huV5RhkM7mvZjTr4homQrmRk1DM7GczcJSrWWjTWKKqiqLkWpLEnke7r1GSO+juBOVfzb5z
+ cbWJZwZbGSKvLnQf5JPHQ==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264876>
-
-Here are the topics that have been cooking.  Commits prefixed with
-'-' are only in 'pu' (proposed updates) while commits prefixed with
-'+' are in 'next'.
-
-A few more batches of topics have been merged to 'master', including
-both fixes and enhancements. First maintenance release for v2.3 was
-cut with many fixes that have already been merged to 'master', and
-the v2.3.2 will also appear shortly.
-
-You can find the changes described here in the integration branches
-of the repositories listed at
-
-    http://git-blame.blogspot.com/p/git-public-repositories.html
-
---------------------------------------------------
-[Graduated to "master"]
-
-* ew/svn-fixes (2015-02-26) 2 commits
-  (merged to 'next' on 2015-03-03 at 18e4684)
- + Merge branch 'svn-maint-fixes' into svn-fixes
- + git-svn: lazy load some modules
- (this branch uses ew/svn-maint-fixes.)
-
-
-* ew/svn-maint-fixes (2015-02-26) 2 commits
-  (merged to 'next' on 2015-03-03 at 776b563)
- + Git::SVN::*: avoid premature FileHandle closure
- + git-svn: fix localtime=true on non-glibc environments
- (this branch is used by ew/svn-fixes.)
-
- Correct a breakage to git-svn around v2.2 era that triggers
- premature closing of FileHandle.
-
-
-* jc/apply-beyond-symlink (2015-02-10) 4 commits
-  (merged to 'next' on 2015-02-18 at 4109de1)
- + apply: do not touch a file beyond a symbolic link
- + apply: do not read from beyond a symbolic link
- + apply: do not read from the filesystem under --index
- + apply: reject input that touches outside the working area
-
- "git apply" was not very careful about reading from, removing,
- updating and creating paths outside the working tree (under
- --index/--cached) or the current directory (when used as a
- replacement for GNU patch).
-
-
-* jc/apply-ws-fix-expands-report (2015-01-22) 1 commit
-  (merged to 'next' on 2015-02-18 at b571668)
- + apply: detect and mark whitespace errors in context lines when fixing
-
- "git apply --whitespace=fix" fixed whitespace errors in the common
- context lines but did so without reporting.
-
-
-* jc/diff-test-updates (2015-02-23) 7 commits
-  (merged to 'next' on 2015-02-23 at 9e863a7)
- + test_ln_s_add: refresh stat info of fake symbolic links
-  (merged to 'next' on 2015-02-18 at f152c9f)
- + t4008: modernise style
- + t/diff-lib: check exact object names in compare_diff_raw
- + tests: do not borrow from COPYING and README from the real source
- + t4010: correct expected object names
- + t9300: correct expected object names
- + t4008: correct stale comments
- (this branch is used by jc/diff-b-m.)
-
- Test clean-up.
-
-
-* jk/daemon-interpolate (2015-02-17) 3 commits
-  (merged to 'next' on 2015-02-20 at 21118a7)
- + daemon: sanitize incoming virtual hostname
- + t5570: test git-daemon's --interpolated-path option
- + git_connect: let user override virtual-host we send to daemon
-
- The "interpolated-path" option of "git daemon" inserted any string
- client declared on the "host=" capability request without checking.
- Sanitize and limit %H and %CH to a saner and a valid DNS name.
-
-
-* km/send-email-getopt-long-workarounds (2015-02-16) 1 commit
-  (merged to 'next' on 2015-02-18 at 84c1597)
- + git-send-email.perl: support no- prefix with older GetOptions
-
- Even though we officially haven't dropped Perl 5.8 support, the
- Getopt::Long package that came with it does not support "--no-"
- prefix to negate a boolean option; manually add support to help
- people with older Getopt::Long package.
-
-
-* mh/refs-have-new (2015-02-17) 13 commits
-  (merged to 'next' on 2015-02-23 at b8929db)
- + refs.h: remove duplication in function docstrings
- + update_ref(): improve documentation
- + ref_transaction_verify(): new function to check a reference's value
- + ref_transaction_delete(): check that old_sha1 is not null_sha1
- + ref_transaction_create(): check that new_sha1 is valid
- + commit: avoid race when creating orphan commits
- + commit: add tests of commit races
- + ref_transaction_delete(): remove "have_old" parameter
- + ref_transaction_update(): remove "have_old" parameter
- + struct ref_update: move "have_old" into "flags"
- + refs.c: change some "flags" to "unsigned int"
- + refs: remove the gap in the REF_* constant values
- + refs: move REF_DELETING to refs.c
-
- Simplify the ref transaction API around how "the ref should be
- pointing at this object" is specified.
-
-
-* mm/am-c-doc (2015-02-20) 2 commits
-  (merged to 'next' on 2015-02-23 at 1cd9b0f)
- + Documentation/git-am.txt: mention mailinfo.scissors config variable
- + Documentation/config.txt: document mailinfo.scissors
-
- The configuration variable 'mailinfo.scissors' was hard to
- discover in the documentation.
-
-
-* rj/no-xopen-source-for-cygwin (2015-02-22) 1 commit
-  (merged to 'next' on 2015-02-23 at 323ac75)
- + git-compat-util.h: remove redundant code
-
- Code cleanups.
-
-
-* rs/daemon-interpolate (2015-02-17) 2 commits
-  (merged to 'next' on 2015-02-18 at c0f5750)
- + daemon: use callback to build interpolated path
- + daemon: look up client-supplied hostname lazily
-
- "git daemon" looked up the hostname even when "%CH" and "%IP"
- interpolations are not requested, which was unnecessary.
-
-
-* rs/simple-cleanups (2015-02-22) 4 commits
-  (merged to 'next' on 2015-02-23 at a89f034)
- + sha1_name: use strlcpy() to copy strings
- + pretty: use starts_with() to check for a prefix
- + for-each-ref: use skip_prefix() to avoid duplicate string comparison
- + connect: use strcmp() for string comparison
-
- Code cleanups.
-
-
-* tb/connect-ipv6-parse-fix (2015-02-22) 3 commits
-  (merged to 'next' on 2015-02-24 at 6658564)
- + t5500: show user name and host in diag-url
- + t5601: add more test cases for IPV6
- + connect.c: allow ssh://user@[2001:db8::1]/repo.git
-
- We did not parse username followed by literal IPv6 address in SSH
- transport URLs, e.g. ssh://user@[2001:db8::1]:22/repo.git
- correctly.
-
---------------------------------------------------
-[New Topics]
-
-* ak/t5516-typofix (2015-03-03) 1 commit
-  (merged to 'next' on 2015-03-03 at c37a677)
- + t5516: correct misspelled pushInsteadOf
-
- Will merge to 'master'.
-
-
-* bw/kwset-use-unsigned (2015-03-02) 1 commit
-  (merged to 'next' on 2015-03-05 at fd124ba)
- + kwset: use unsigned char to store values with high-bit set
-
- The borrowed code in kwset API did not follow our usual convention
- to use "unsigned char" to store values that range from 0-255.
-
- Will merge to 'master'.
-
-
-* mg/doc-remote-tags-or-not (2015-03-02) 1 commit
-  (merged to 'next' on 2015-03-03 at 1630171)
- + git-remote.txt: describe behavior without --tags and --no-tags
-
- "git remote add" mentioned "--tags" and "--no-tags" and was not
- clear that fetch from the remote in the future will use the default
- behaviour when neither is given to override it.
-
- Will merge to 'master'.
-
-
-* mg/status-v-v (2015-03-03) 2 commits
- - commit/status: show the index-worktree diff with -v -v
- - t7508: test git status -v
-
- "git status" now allows the "-v" to be given twice to show the
- differences that are left in the working tree not to be committed.
-
- $gmane/264750
-
---------------------------------------------------
-[Stalled]
-
-* mg/sequencer-commit-messages-always-verbatim (2015-02-23) 1 commit
- - sequencer: preserve commit messages
-
- Always replay the original commit message verbatim, regardless of
- the commit.cleanup configuration settings by the user.
-
- $gmane/264504
-
-
-* mg/detached-head-report (2015-02-23) 1 commit
- - branch: name detached HEAD analogous to status
-
- "git branch" on a detached HEAD always said "(detached from xyz)",
- even when "git status" would report "detached at xyz".  The HEAD is
- actually at xyz and haven't been moved since it was detached in
- such a case, but the user cannot read what the current value of
- HEAD is when "detached from" is used.
-
- The goal is sound.  May want to share code between branch and
- status in a reroll?  Are there other commands that give the same
- information that share the code, too?
-
- ($gmane/264251)
-
-
-* jk/push-config (2015-02-17) 4 commits
- - [NEEDSACK] push: allow --follow-tags to be set by config push.followTags
- - cmd_push: pass "flags" pointer to config callback
- - cmd_push: set "atomic" bit directly
- - git_push_config: drop cargo-culted wt_status pointer
-
- Waiting for Ack and/or update for the tip one from Dave Olszewski
- ($gmane/263880, $gmane/263991).
-
-
-* nd/untracked-cache (2015-02-09) 24 commits
- - git-status.txt: advertisement for untracked cache
- - untracked cache: guard and disable on system changes
- - mingw32: add uname()
- - t7063: tests for untracked cache
- - update-index: test the system before enabling untracked cache
- - update-index: manually enable or disable untracked cache
- - status: enable untracked cache
- - untracked-cache: temporarily disable with $GIT_DISABLE_UNTRACKED_CACHE
- - untracked cache: mark index dirty if untracked cache is updated
- - untracked cache: print stats with $GIT_TRACE_UNTRACKED_STATS
- - untracked cache: avoid racy timestamps
- - read-cache.c: split racy stat test to a separate function
- - untracked cache: invalidate at index addition or removal
- - untracked cache: load from UNTR index extension
- - untracked cache: save to an index extension
- - ewah: add convenient wrapper ewah_serialize_strbuf()
- - untracked cache: don't open non-existent .gitignore
- - untracked cache: mark what dirs should be recursed/saved
- - untracked cache: record/validate dir mtime and reuse cached output
- - untracked cache: make a wrapper around {open,read,close}dir()
- - untracked cache: invalidate dirs recursively if .gitignore changes
- - untracked cache: initial untracked cache validation
- - untracked cache: record .gitignore information and dir hierarchy
- - dir.c: optionally compute sha-1 of a .gitignore file
-
- Need extra sets of eyes to review this.
-
-
-* ak/stash-store-create-help (2015-01-13) 1 commit
- - stash: show "create" and "store" subcommands in usage-help
-
- Will discard.
-
-
-* bp/diff-relative-config (2015-01-07) 2 commits
- - diff: teach diff.relative to give default to --relative=<value>
- - diff: teach --no-relative to override earlier --relative
-
- No comments?  No interests?
-
-
-* jc/diff-b-m (2015-02-23) 5 commits
- . WIPWIP
- . WIP: diff-b-m
- - diffcore-rename: allow easier debugging
- - diffcore-rename.c: add locate_rename_src()
- - diffcore-break: allow debugging
-
- "git diff -B -M" produced incorrect patch when the postimage of a
- completely rewritten file is similar to the preimage of a removed
- file; such a resulting file must not be expressed as a rename from
- other place.
-
- The fix in this patch is broken, unfortunately.
-
-
-* pw/remote-set-url-fetch (2014-11-26) 1 commit
- - remote: add --fetch and --both options to set-url
-
- Expecting a reroll.
-
-
-* je/quiltimport-no-fuzz (2014-10-21) 2 commits
- - git-quiltimport: flip the default not to allow fuzz
- - git-quiltimport.sh: allow declining fuzz with --exact option
-
- "quiltimport" drove "git apply" always with -C1 option to reduce
- context of the patch in order to give more chance to somewhat stale
- patches to apply.  Add an "--exact" option to disable, and also
- "-C$n" option to customize this behaviour.  The top patch
- optionally flips the default to "--exact".
-
- Tired of waiting for an Ack
- Will discard.
-
-
-* tr/remerge-diff (2014-11-10) 9 commits
- - t4213: avoid "|" in sed regexp
- - log --remerge-diff: show what the conflict resolution changed
- - name-hash: allow dir hashing even when !ignore_case
- - merge-recursive: allow storing conflict hunks in index
- - merge_diff_mode: fold all merge diff variants into an enum
- - combine-diff: do not pass revs->dense_combined_merges redundantly
- - merge-recursive: -Xindex-only to leave worktree unchanged
- - merge-recursive: internal flag to avoid touching the worktree
- - merge-recursive: remove dead conditional in update_stages()
-
- "log -p" output learns a new way to let users inspect a merge
- commit by showing the differences between the automerged result
- with conflicts the person who recorded the merge would have seen
- and the final conflict resolution that was recorded in the merge.
-
- Waiting for a reroll ($gmane/256591).
-
-
-* hv/submodule-config (2014-11-11) 4 commits
- - do not die on error of parsing fetchrecursesubmodules option
- - use new config API for worktree configurations of submodules
- - extract functions for submodule config set and lookup
- - implement submodule config cache for lookup of submodule names
-
- Kicked back to 'pu' per request ($gmane/255610).
-
-
-* ab/add-interactive-show-diff-func-name (2014-05-12) 2 commits
- - SQUASH??? git-add--interactive: Preserve diff heading when splitting hunks
- - git-add--interactive: Preserve diff heading when splitting hunks
-
- Waiting for a reroll.
-
-
-* jn/gitweb-utf8-in-links (2014-05-27) 1 commit
- - gitweb: Harden UTF-8 handling in generated links
-
- $gmane/250758?
-
-
-* ss/userdiff-update-csharp-java (2014-06-02) 2 commits
- - userdiff: support Java try keyword
- - userdiff: support C# async methods and correct C# keywords
-
- Reviews sent; waiting for a response.
-
-
-* bg/rebase-off-of-previous-branch (2014-04-16) 1 commit
- - git-rebase: print name of rev when using shorthand
-
- Teach "git rebase -" to report the concrete name of the branch
- (i.e. the previous one).
-
- But it stops short and does not do the same for "git rebase @{-1}".
- Expecting a reroll.
-
-
-* rb/merge-prepare-commit-msg-hook (2014-01-10) 4 commits
- - merge: drop unused arg from abort_commit method signature
- - merge: make prepare_to_commit responsible for write_merge_state
- - t7505: ensure cleanup after hook blocks merge
- - t7505: add missing &&
-
- Expose more merge states (e.g. $GIT_DIR/MERGE_MODE) to hooks that
- run during "git merge".  The log message stresses too much on one
- hook, prepare-commit-msg, but it would equally apply to other hooks
- like post-merge, I think.
-
- Waiting for a reroll.
-
-
-* jc/graph-post-root-gap (2013-12-30) 3 commits
- - WIP: document what we want at the end
- - graph: remove unused code a bit
- - graph: stuff the current commit into graph->columns[]
-
- This was primarily a RFH ($gmane/239580).
-
-
-* tg/perf-lib-test-perf-cleanup (2013-09-19) 2 commits
- - perf-lib: add test_perf_cleanup target
- - perf-lib: split starting the test from the execution
-
- Add test_perf_cleanup shell function to the perf suite, that allows
- the script writers to define a test with a clean-up action.
-
- Will hold.
-
-
-* jc/show-branch (2014-03-24) 5 commits
- - show-branch: use commit slab to represent bitflags of arbitrary width
- - show-branch.c: remove "all_mask"
- - show-branch.c: abstract out "flags" operation
- - show-branch.c: lift all_mask/all_revs to a global static
- - show-branch.c: update comment style
-
- Waiting for the final step to lift the hard-limit before sending it out.
-
---------------------------------------------------
-[Cooking]
-
-* mr/doc-clean-f-f (2015-02-26) 1 commit
-  (merged to 'next' on 2015-03-03 at 67a77a2)
- + Documentation/git-clean.txt: document that -f may need to be given twice
-
- Documentation update.
-
- Will merge to 'master'.
-
-
-* ye/http-accept-language (2015-02-26) 1 commit
-  (merged to 'next' on 2015-03-03 at 58d195e)
- + gettext.c: move get_preferred_languages() from http.c
-
- Compilation fix for a recent topic in 'master'.
-
- Will merge to 'master'.
-
-
-* jk/diffcore-rename-duplicate (2015-02-27) 2 commits
-  (merged to 'next' on 2015-03-03 at 1d5a2d2)
- + diffcore-rename: avoid processing duplicate destinations
- + diffcore-rename: split locate_rename_dst into two functions
-
- A corrupt input to "git diff -M" can cause us to segfault.
-
- Will merge to 'master'.
-
-
-* nd/grep-exclude-standard-help-fix (2015-02-27) 1 commit
-  (merged to 'next' on 2015-03-03 at 61c9587)
- + grep: correct help string for --exclude-standard
-
- Description given by "grep -h" for its --exclude-standard option
- was phrased poorly.
-
- Will merge to 'master'.
-
-
-* nd/versioncmp-prereleases (2015-02-27) 1 commit
-  (merged to 'next' on 2015-03-03 at 6ab29cf)
- + versionsort: support reorder prerelease suffixes
-
- The versionsort.prerelease configuration variable can be used to
- specify that v1.0-pre1 comes before v1.0.
-
- Will merge to 'master'.
-
-
-* ja/clean-confirm-i18n (2015-03-02) 1 commit
-  (merged to 'next' on 2015-03-03 at 314c322)
- + Add hint interactive cleaning
-
- The prompt string "remove?" used when "git clean -i" asks the user
- if a path should be removed was localizable, but the code always
- expects a substring of "yes" to tell it to go ahead.  Always show
- [y/N] as part of this prompt to hint that the answer is not (yet)
- localized.
-
- Will merge to 'master'.
-
-
-* mk/diff-shortstat-dirstat-fix (2015-03-02) 1 commit
-  (merged to 'next' on 2015-03-03 at 42c282e)
- + diff --shortstat --dirstat: remove duplicate output
-
- "git diff --shortstat --dirstat=changes" showed a dirstat based on
- lines that was never asked by the end user in addition to the
- dirstat that the user asked for.
-
- Will merge to 'master'.
-
-
-* nd/slim-index-pack-memory-usage (2015-02-27) 2 commits
- - index-pack: kill union delta_base to save memory
- - index-pack: reduce object_entry size to save memory
-
- Memory usage of "git index-pack" has been trimmed by tens of
- per-cent.
-
-
-* nd/list-files (2015-02-09) 21 commits
- - t3080: tests for git-list-files
- - list-files: -M aka diff-cached
- - list-files -F: show submodules with the new indicator '&'
- - list-files: add -F/--classify
- - list-files: show directories as well as files
- - list-files: do not show duplicate cached entries
- - list-files: sort output and remove duplicates
- - list-files: add -t back
- - list-files: add -1 short for --no-column
- - list-files: add -R/--recursive short for --max-depth=-1
- - list-files: -u does not imply showing stages
- - list-files: make alias 'ls' default to 'list-files'
- - list-files: a user friendly version of ls-files and more
- - ls-files: support --max-depth
- - ls-files: add --column
- - ls-files: add --color to highlight file names
- - ls-files: buffer full item in strbuf before printing
- - ls_colors.c: highlight submodules like directories
- - ls_colors.c: add a function to color a file name
- - ls_colors.c: parse color.ls.* from config file
- - ls_colors.c: add $LS_COLORS parsing code
-
- A new "git list-files" Porcelain command, "ls-files" with bells and
- whistles.
-
-
-* jc/decorate-leaky-separator-color (2015-03-04) 7 commits
- - log --decorate: do not leak "commit" color into the next item
- - Documentation/config.txt: simplify boolean description in the syntax section
- - Documentation/config.txt: describe 'color' value type in the "Values" section
- - Documentation/config.txt: have a separate "Values" section
- - Documentation/config.txt: describe the structure first and then meaning
- - Documentation/config.txt: explain multi-valued variables once
- - Documentation/config.txt: avoid unnecessary negation
-
- "git log --decorate" did not reset colors correctly around the
- branch names.
-
- Waiting for reviews.
-
-
-* ms/submodule-update-config-doc (2015-03-02) 1 commit
-  (merged to 'next' on 2015-03-03 at b94da4b)
- + submodule: improve documentation of update subcommand
-
- The interaction between "git submodule update" and the
- submodule.*.update configuration was not clearly documented.
-
- Will merge to 'master'.
-
-
-* mh/expire-updateref-fixes (2015-03-05) 9 commits
-  (merged to 'next' on 2015-03-05 at 1caf9a6)
- + reflog_expire(): never update a reference to null_sha1
- + reflog_expire(): ignore --updateref for symbolic references
- + reflog: improve and update documentation
- + struct ref_lock: delete the force_write member
- + lock_ref_sha1_basic(): do not set force_write for missing references
- + write_ref_sha1(): move write elision test to callers
- + write_ref_sha1(): remove check for lock == NULL
- + Merge branch 'sb/atomic-push' into mh/ref-trans-value-check
- + Merge branch 'mh/reflog-expire' into mh/ref-trans-value-check
-
- Various issues around "reflog expire", e.g. using --updateref when
- expiring a reflog for a symbolic reference, have been corrected
- and/or made saner.
-
- Will merge to 'master'.
-
-
-* js/fsck-opt (2015-01-21) 19 commits
- - fsck: support ignoring objects in `git fsck` via fsck.skiplist
- - fsck: git receive-pack: support excluding objects from fsck'ing
- - fsck: introduce `git fsck --quick`
- - fsck: support demoting errors to warnings
- - fsck: document the new receive.fsck.* options
- - fsck: allow upgrading fsck warnings to errors
- - fsck: optionally ignore specific fsck issues completely
- - fsck: disallow demoting grave fsck errors to warnings
- - fsck: add a simple test for receive.fsck.*
- - fsck: make fsck_tag() warn-friendly
- - fsck: handle multiple authors in commits specially
- - fsck: make fsck_commit() warn-friendly
- - fsck: make fsck_ident() warn-friendly
- - fsck: report the ID of the error/warning
- - fsck: allow demoting errors to warnings via receive.fsck.warn = <key>
- - fsck: offer a function to demote fsck errors to warnings
- - fsck: provide a function to parse fsck message IDs
- - fsck: introduce identifiers for fsck messages
- - fsck: introduce fsck options
-
- "fsck.warnings = <list of error tokens>" I suggested turned out to
- be an unpopular choice (sorry Dscho).
-
- Expecting a reroll.
-
-
-* nd/multiple-work-trees (2015-01-27) 38 commits
-  (merged to 'next' on 2015-02-18 at b51f696)
- + t2026 needs procondition SANITY
- + git-checkout.txt: a note about multiple checkout support for submodules
- + checkout: add --ignore-other-wortrees
- + checkout: pass whole struct to parse_branchname_arg instead of individual flags
- + git-common-dir: make "modules/" per-working-directory directory
- + checkout: do not fail if target is an empty directory
- + t2025: add a test to make sure grafts is working from a linked checkout
- + checkout: don't require a work tree when checking out into a new one
- + git_path(): keep "info/sparse-checkout" per work-tree
- + count-objects: report unused files in $GIT_DIR/worktrees/...
- + gc: support prune --worktrees
- + gc: factor out gc.pruneexpire parsing code
- + gc: style change -- no SP before closing parenthesis
- + checkout: clean up half-prepared directories in --to mode
- + checkout: reject if the branch is already checked out elsewhere
- + prune: strategies for linked checkouts
- + checkout: support checking out into a new working directory
- + use new wrapper write_file() for simple file writing
- + wrapper.c: wrapper to open a file, fprintf then close
- + setup.c: support multi-checkout repo setup
- + setup.c: detect $GIT_COMMON_DIR check_repository_format_gently()
- + setup.c: convert check_repository_format_gently to use strbuf
- + setup.c: detect $GIT_COMMON_DIR in is_git_directory()
- + setup.c: convert is_git_directory() to use strbuf
- + git-stash: avoid hardcoding $GIT_DIR/logs/....
- + *.sh: avoid hardcoding $GIT_DIR/hooks/...
- + git-sh-setup.sh: use rev-parse --git-path to get $GIT_DIR/objects
- + $GIT_COMMON_DIR: a new environment variable
- + commit: use SEQ_DIR instead of hardcoding "sequencer"
- + fast-import: use git_path() for accessing .git dir instead of get_git_dir()
- + reflog: avoid constructing .lock path with git_path
- + *.sh: respect $GIT_INDEX_FILE
- + git_path(): be aware of file relocation in $GIT_DIR
- + path.c: group git_path(), git_pathdup() and strbuf_git_path() together
- + path.c: rename vsnpath() to do_git_path()
- + git_snpath(): retire and replace with strbuf_git_path()
- + path.c: make get_pathname() call sites return const char *
- + path.c: make get_pathname() return strbuf instead of static buffer
-
- A replacement for contrib/workdir/git-new-workdir that does not
- rely on symbolic links and make sharing of objects and refs safer
- by making the borrowee and borrowers aware of each other.
-
- Will cook in 'next'.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264877>
+
+Clear the git_zstream variable at the start of git_deflate_init() etc.
+so that callers don't have to do that.
+
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ archive-zip.c          | 2 --
+ builtin/index-pack.c   | 1 -
+ builtin/pack-objects.c | 2 --
+ bulk-checkin.c         | 1 -
+ diff.c                 | 1 -
+ fast-import.c          | 3 ---
+ http-push.c            | 1 -
+ remote-curl.c          | 1 -
+ sha1_file.c            | 1 -
+ zlib.c                 | 2 ++
+ 10 files changed, 2 insertions(+), 13 deletions(-)
+
+diff --git a/archive-zip.c b/archive-zip.c
+index 4bde019..1a54e1b 100644
+--- a/archive-zip.c
++++ b/archive-zip.c
+@@ -120,7 +120,6 @@ static void *zlib_deflate_raw(void *data, unsigned long size,
+ 	void *buffer;
+ 	int result;
+ 
+-	memset(&stream, 0, sizeof(stream));
+ 	git_deflate_init_raw(&stream, compression_level);
+ 	maxsize = git_deflate_bound(&stream, size);
+ 	buffer = xmalloc(maxsize);
+@@ -349,7 +348,6 @@ static int write_zip_entry(struct archiver_args *args,
+ 		size_t out_len;
+ 		unsigned char compressed[STREAM_BUFFER_SIZE * 2];
+ 
+-		memset(&zstream, 0, sizeof(zstream));
+ 		git_deflate_init_raw(&zstream, args->compression_level);
+ 
+ 		compressed_size = 0;
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 4632117..cf654df 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -1204,7 +1204,6 @@ static int write_compressed(struct sha1file *f, void *in, unsigned int size)
+ 	int status;
+ 	unsigned char outbuf[4096];
+ 
+-	memset(&stream, 0, sizeof(stream));
+ 	git_deflate_init(&stream, zlib_compression_level);
+ 	stream.next_in = in;
+ 	stream.avail_in = size;
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index d816587..c3a7516 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -125,7 +125,6 @@ static unsigned long do_compress(void **pptr, unsigned long size)
+ 	void *in, *out;
+ 	unsigned long maxsize;
+ 
+-	memset(&stream, 0, sizeof(stream));
+ 	git_deflate_init(&stream, pack_compression_level);
+ 	maxsize = git_deflate_bound(&stream, size);
+ 
+@@ -153,7 +152,6 @@ static unsigned long write_large_blob_data(struct git_istream *st, struct sha1fi
+ 	unsigned char obuf[1024 * 16];
+ 	unsigned long olen = 0;
+ 
+-	memset(&stream, 0, sizeof(stream));
+ 	git_deflate_init(&stream, pack_compression_level);
+ 
+ 	for (;;) {
+diff --git a/bulk-checkin.c b/bulk-checkin.c
+index 0c4b8a7..8d157eb 100644
+--- a/bulk-checkin.c
++++ b/bulk-checkin.c
+@@ -105,7 +105,6 @@ static int stream_to_pack(struct bulk_checkin_state *state,
+ 	int write_object = (flags & HASH_WRITE_OBJECT);
+ 	off_t offset = 0;
+ 
+-	memset(&s, 0, sizeof(s));
+ 	git_deflate_init(&s, pack_compression_level);
+ 
+ 	hdrlen = encode_in_pack_object_header(type, size, obuf);
+diff --git a/diff.c b/diff.c
+index d1bd534..dad875c 100644
+--- a/diff.c
++++ b/diff.c
+@@ -2093,7 +2093,6 @@ static unsigned char *deflate_it(char *data,
+ 	unsigned char *deflated;
+ 	git_zstream stream;
+ 
+-	memset(&stream, 0, sizeof(stream));
+ 	git_deflate_init(&stream, zlib_compression_level);
+ 	bound = git_deflate_bound(&stream, size);
+ 	deflated = xmalloc(bound);
+diff --git a/fast-import.c b/fast-import.c
+index aac2c24..77fb2ff 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -1062,7 +1062,6 @@ static int store_object(
+ 	} else
+ 		delta = NULL;
+ 
+-	memset(&s, 0, sizeof(s));
+ 	git_deflate_init(&s, pack_compression_level);
+ 	if (delta) {
+ 		s.next_in = delta;
+@@ -1090,7 +1089,6 @@ static int store_object(
+ 			free(delta);
+ 			delta = NULL;
+ 
+-			memset(&s, 0, sizeof(s));
+ 			git_deflate_init(&s, pack_compression_level);
+ 			s.next_in = (void *)dat->buf;
+ 			s.avail_in = dat->len;
+@@ -1190,7 +1188,6 @@ static void stream_blob(uintmax_t len, unsigned char *sha1out, uintmax_t mark)
+ 
+ 	crc32_begin(pack_file);
+ 
+-	memset(&s, 0, sizeof(s));
+ 	git_deflate_init(&s, pack_compression_level);
+ 
+ 	hdrlen = encode_in_pack_object_header(OBJ_BLOB, len, out_buf);
+diff --git a/http-push.c b/http-push.c
+index 0beb7ab..bfb1c96 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -365,7 +365,6 @@ static void start_put(struct transfer_request *request)
+ 	hdrlen = sprintf(hdr, "%s %lu", typename(type), len) + 1;
+ 
+ 	/* Set it up */
+-	memset(&stream, 0, sizeof(stream));
+ 	git_deflate_init(&stream, zlib_compression_level);
+ 	size = git_deflate_bound(&stream, len + hdrlen);
+ 	strbuf_init(&request->buffer.buf, size);
+diff --git a/remote-curl.c b/remote-curl.c
+index deb4bfe..af7b678 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -567,7 +567,6 @@ retry:
+ 		git_zstream stream;
+ 		int ret;
+ 
+-		memset(&stream, 0, sizeof(stream));
+ 		git_deflate_init_gzip(&stream, Z_BEST_COMPRESSION);
+ 		gzip_size = git_deflate_bound(&stream, rpc->len);
+ 		gzip_body = xmalloc(gzip_size);
+diff --git a/sha1_file.c b/sha1_file.c
+index 69a60ec..88f06ba 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -2943,7 +2943,6 @@ static int write_loose_object(const unsigned char *sha1, char *hdr, int hdrlen,
+ 	}
+ 
+ 	/* Set it up */
+-	memset(&stream, 0, sizeof(stream));
+ 	git_deflate_init(&stream, zlib_compression_level);
+ 	stream.next_out = compressed;
+ 	stream.avail_out = sizeof(compressed);
+diff --git a/zlib.c b/zlib.c
+index 61e6df0..4223f1a 100644
+--- a/zlib.c
++++ b/zlib.c
+@@ -159,6 +159,7 @@ void git_deflate_init(git_zstream *strm, int level)
+ {
+ 	int status;
+ 
++	memset(strm, 0, sizeof(*strm));
+ 	zlib_pre_call(strm);
+ 	status = deflateInit(&strm->z, level);
+ 	zlib_post_call(strm);
+@@ -172,6 +173,7 @@ static void do_git_deflate_init(git_zstream *strm, int level, int windowBits)
+ {
+ 	int status;
+ 
++	memset(strm, 0, sizeof(*strm));
+ 	zlib_pre_call(strm);
+ 	status = deflateInit2(&strm->z, level,
+ 				  Z_DEFLATED, windowBits,
+-- 
+2.3.1
