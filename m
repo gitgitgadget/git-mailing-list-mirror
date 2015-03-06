@@ -1,125 +1,215 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [ANNOUNCE] Git Merge Contributors Summit, April 8th, Paris
-Date: Fri, 6 Mar 2015 13:55:02 +0100
-Message-ID: <CAP8UFD2qGBPiNaDmx1OELM45TZqSqKkHZkdVOqupWKKxPxbvOw@mail.gmail.com>
-References: <20150224220923.GA23344@peff.net>
-	<CAP8UFD27xaJU3QFuQZqADmh=ZseiN=Y1WCFPk4v4RzizK=2Xtg@mail.gmail.com>
-	<xmqqlhjb13s3.fsf@gitster.dls.corp.google.com>
-	<54F986D6.5000607@drmicha.warpmail.net>
+From: Dongcan Jiang <dongcan.jiang@gmail.com>
+Subject: Re: [PATCH] [GSoC][MICRO] Forbid "log --graph --no-walk"
+Date: Fri, 6 Mar 2015 21:13:26 +0800
+Message-ID: <CABwkPcoBG61YY0N4b33gdMq2cC1oQ_wFV7KaGGu3wYfuY9inGw@mail.gmail.com>
+References: <1425632110-31863-1-git-send-email-dongcan.jiang@gmail.com>
+	<CAPig+cQDAurk2WeTNZPVTnQ8GJSQOpWyDxHNCK_ww25ZdLtFwQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	git <git@vger.kernel.org>, git@sfconservancy.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Mar 06 13:55:14 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Mar 06 14:13:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YTrmX-0001h0-3d
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Mar 2015 13:55:09 +0100
+	id 1YTs4P-00087e-Ec
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Mar 2015 14:13:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753057AbbCFMzE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Mar 2015 07:55:04 -0500
-Received: from mail-ig0-f182.google.com ([209.85.213.182]:33382 "EHLO
-	mail-ig0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751398AbbCFMzD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Mar 2015 07:55:03 -0500
-Received: by igbhl2 with SMTP id hl2so3313482igb.0
-        for <git@vger.kernel.org>; Fri, 06 Mar 2015 04:55:02 -0800 (PST)
+	id S1752009AbbCFNN2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 Mar 2015 08:13:28 -0500
+Received: from mail-pd0-f171.google.com ([209.85.192.171]:46981 "EHLO
+	mail-pd0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750785AbbCFNN1 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 Mar 2015 08:13:27 -0500
+Received: by pdev10 with SMTP id v10so14568945pde.13
+        for <git@vger.kernel.org>; Fri, 06 Mar 2015 05:13:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=tEf6cYJIo1QmDgZuuHWa5bcN6Ov0uzaKQ1suPwXRcdk=;
-        b=FriefAqe609B64AEtHrL9y62M6hjNpL9NvygzTLOBmSR9O5vN2Qfl0xNri6L/N4T6c
-         7M24pnWVUIm268FD4sleA7+RQHC6CpmHGE96d2fV/0e2qqDHtJYXuEX6bbMLebTDioM/
-         1X+eHEgeOxoZwedgEEI0SLE51RGzmwLNFUAT8G95YbZUeHm9uw9hvAi6poeBZhoScv1V
-         gxzEYLmxbLiiuQgPd9gxTUw8hlvtJ1JmtcxJOk4oldtUfU7Uc4Af5G/CAfCt5hx/FmPx
-         7j6PNFRW9bwrMYc+RbFOcv2xgUQ/wFGFXpmHIT5FHeKBxGc1XLYcXqLes5AdpYatFOQb
-         mWFA==
-X-Received: by 10.42.76.6 with SMTP id c6mr9705614ick.52.1425646502537; Fri,
- 06 Mar 2015 04:55:02 -0800 (PST)
-Received: by 10.50.245.144 with HTTP; Fri, 6 Mar 2015 04:55:02 -0800 (PST)
-In-Reply-To: <54F986D6.5000607@drmicha.warpmail.net>
+         :content-type:content-transfer-encoding;
+        bh=2IxqtdZqVBpqArxUwqXlB8MhRlC20ItAPFAwEGfrcAk=;
+        b=Ki4bpuimRlxMqfOswsuNCgkEY+q985MF8PlE4cQpf/wl1LZwUh3FGDNOf2yZ03NGbR
+         w3LI0rQUVqV0evDMr0lta1ciUxcKHXQZVjSARngCl5zQ4+rd8JnBtKpN1BYYgl5QIfms
+         XvV1hCnFF9rktiuR1Ln+haQ7S/XESc4qu1/nSHrVQ3j6DYp/BxqFkYQ+IUhw3WrFiCFe
+         qYkZLWPFqYETFU7ezJfLIOJ4p6vmGAYXrGc2IK6DIBAIjr2NQWakK1iLspLDJMRmgk/V
+         7lrTiMNxUeYHDhsfpHkYZKTQ1r5TSkArMqxsSuvP1vSkeeh4e5Ph3b3GV9XXfZOYi3BX
+         8/ZA==
+X-Received: by 10.67.21.201 with SMTP id hm9mr25137129pad.58.1425647606433;
+ Fri, 06 Mar 2015 05:13:26 -0800 (PST)
+Received: by 10.70.78.225 with HTTP; Fri, 6 Mar 2015 05:13:26 -0800 (PST)
+In-Reply-To: <CAPig+cQDAurk2WeTNZPVTnQ8GJSQOpWyDxHNCK_ww25ZdLtFwQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264920>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264921>
 
-On Fri, Mar 6, 2015 at 11:52 AM, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
-> Junio C Hamano venit, vidit, dixit 05.03.2015 23:24:
->> Christian Couder <christian.couder@gmail.com> writes:
->>
->>>
->>> I'd like the Git project to set up a more organized way to pay back
->>> the travel costs and the conference fee to the developers who come.
->>> For example the Git project could say that it will at least pay back:
->>>
->>> - all the travel costs to the 5 most important Git developers who come and ask,
->>> - half the travel costs to the 5 next most important Git developers
->>> who come and ask,
->>> - all the conference fee to the 15 most important Git developers who
->>> come and ask,
->>>
->>> I think it could help developers decide to come, and it looks like
->>> enough funding could be available, thanks to GitHub and the GSoC
->>> money. What do you think?
->>
->> I personally perfer things to be kept informal---it would keep
->> things simpler for everybody.  You do not have to wonder what you
->> should do when you think you are among the five most important
->> people and you also know your employer will pay for the conference
->> if you asked, for example.
->>
->> It feels to me that the suggestion Peff gave in his announce to ask
->> privately for case-by-case arrangement strikes the balance much
->> better.
->>
->>> Apart from that it's also possible to find ways to accommodate some
->>> developers for free, if they don't mind crashing in someone's spare
->>> room.
->>>
->>> So please don't hesitate to ask if you would like to come.
->>
->> These five lines, by not explicitly saying something like "the first
->> 2 people who ask can crash in Christian's spare bedroom", is doing
->> exactly the same thing as Peff did by saying "please talk to me
->> off-list", it seems to me at least.  Both keep things informal and
->> simple, and both arrange things on case-by-case basis as needed.
->>
->> And I think that is better than setting a seemingly hard rules
->> upfront, and causing more problems unnecessarily (e.g. who decides
->> who are the 5 most important, for example?).
+Hi, Eric and Ren=C3=A9
+
+Thanks for your suggestions. Good ideas!
+
+> Genuine question: Despite the GSoC micro-project mentioning only
+> 'log', is it ever meaningful for these two options to be specified
+> together? I suspect not, but it would be nice to hear from someone
+> more familiar with the issue. If not specific to 'log', then the > pa=
+tch
+> can be simplified a good deal.
+
+> Why only for git log?  Doesn't the justification given in the
+> commit message above apply in general?
+
+At first, I also tried to only judge the value of "revs->no_walk &&
+revs->graph", but unfortunately, it failed to pass all cases in
+t4052-stat-output.sh.
+e.g. command "git show --stat --graph" failed to get the correct result=
+=2E
+
+=46inally, this is because that "revs->no_walk" gets set when it comes
+to "git show --stat". That's why I add the parameter
+"revs->cmd_is_log" as judgement. Of course, it causes the limitation
+you've mentioned. I will consider better solution in the next patch
+edition as soon as possible.
+
+Best Regards
+
+Dongcan
+
+2015-03-06 17:56 GMT+08:00 Eric Sunshine <sunshine@sunshineco.com>:
+> On Fri, Mar 6, 2015 at 3:55 AM, Dongcan Jiang <dongcan.jiang@gmail.co=
+m> wrote:
+>> Forbid "log --graph --no-walk
 >
-> Oh yes, that would be an interesting metric to define...
+> Style: drop capitalization in the Subject: line. Also prefix with the
+> command or module being modified, followed by a colon. So:
 >
-> OTOH I can see where Christian's question is coming from:
-> Who is even supposed to ask for support? Not just as in "who is a
-> developer", but also "what are finance hardships":
+>     log: forbid combining --graph and --no-walk
 >
-> At scientific conferences which I'm going to, there is often "support
-> for those who need it", and that typically means participants from "less
-> fortunate countries" (to avoid the usual world-counting term). Everyone
-> else is expected to be covered by their academic employer - and if not,
-> it's not even okay to ask the organisers. I guess that's what some of us
-> are having in mind.
+> or:
+>
+>     revision: forbid combining --graph and --no-walk
+>
+>> Because --graph is about connected history while --no-walk is about =
+discrete points.
+>
+> Okay. You might also want to cite the wider discussion[1].
+>
+> [1]: http://article.gmane.org/gmane.comp.version-control.git/216083
+>
+>> revision.c: Judge whether --graph and --no-walk come together when r=
+unning git-log.
+>> buildin/log.c: Set git-log cmd flag.
+>> Documentation/rev-list-options.txt: Add specification on the forbidd=
+en usage.
+>
+> No need to repeat in prose what the patch itself states more clearly
+> and concisely.
+>
+> Also, such a change should be accompanied by new test(s).
+>
+>> Signed-off-by: Dongcan Jiang <dongcan.jiang@gmail.com>
+>> ---
+>> diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-=
+list-options.txt
+>> index 4ed8587..eea2c0a 100644
+>> --- a/Documentation/rev-list-options.txt
+>> +++ b/Documentation/rev-list-options.txt
+>> @@ -679,6 +679,7 @@ endif::git-rev-list[]
+>>         given on the command line. Otherwise (if `sorted` or no argu=
+ment
+>>         was given), the commits are shown in reverse chronological o=
+rder
+>>         by commit time.
+>> +       Cannot be combined with `--graph` when running git-log.
+>>
+>>  --do-walk::
+>>         Overrides a previous `--no-walk`.
+>> @@ -781,6 +782,7 @@ you would get an output like this:
+>>         on the left hand side of the output.  This may cause extra l=
+ines
+>>         to be printed in between commits, in order for the graph his=
+tory
+>>         to be drawn properly.
+>> +       Cannot be combined with `--no-walk` when running git-log.
+>
+> Nice to see documentation updates. More below.
+>
+>>  This enables parent rewriting, see 'History Simplification' below.
+>>  +
+>> diff --git a/builtin/log.c b/builtin/log.c
+>> index dd8f3fc..7bf5adb 100644
+>> --- a/builtin/log.c
+>> +++ b/builtin/log.c
+>> @@ -627,6 +627,7 @@ int cmd_log(int argc, const char **argv, const c=
+har *prefix)
+>>         git_config(git_log_config, NULL);
+>>
+>>         init_revisions(&rev, prefix);
+>> +       rev.cmd_is_log =3D 1;
+>>         rev.always_show_header =3D 1;
+>>         memset(&opt, 0, sizeof(opt));
+>>         opt.def =3D "HEAD";
+>> diff --git a/revision.c b/revision.c
+>> index 66520c6..5f62c89 100644
+>> --- a/revision.c
+>> +++ b/revision.c
+>> @@ -1399,6 +1399,8 @@ void init_revisions(struct rev_info *revs, con=
+st char *prefix)
+>>
+>>         revs->commit_format =3D CMIT_FMT_DEFAULT;
+>>
+>> +       revs->cmd_is_log =3D 0;
+>> +
+>>         init_grep_defaults();
+>>         grep_init(&revs->grep_filter, prefix);
+>>         revs->grep_filter.status_only =3D 1;
+>> @@ -2339,6 +2341,8 @@ int setup_revisions(int argc, const char **arg=
+v, struct rev_info *revs, struct s
+>>
+>>         if (revs->reflog_info && revs->graph)
+>>                 die("cannot combine --walk-reflogs with --graph");
+>> +       if (revs->no_walk && revs->graph && revs->cmd_is_log)
+>
+> Placing 'revs->cmd_is_log' first would make it clear at a glance that
+> this restriction impacts 'log' only (but see question below):
+>
+>     if (revs->cmd_is_log && revs->no_walk && revs->graph)
+>
+>> +               die("cannot combine --no-walk with --graph when runn=
+ing git-log");
+>>         if (!revs->reflog_info && revs->grep_filter.use_reflog_filte=
+r)
+>>                 die("cannot use --grep-reflog without --walk-reflogs=
+");
+>>
+>> diff --git a/revision.h b/revision.h
+>> index 0ea8b4e..255982a 100644
+>> --- a/revision.h
+>> +++ b/revision.h
+>> @@ -146,6 +146,9 @@ struct rev_info {
+>>                         track_first_time:1,
+>>                         linear:1;
+>>
+>> +       /* cmd type */
+>> +       unsigned int  cmd_is_log:1;
+>
+> Genuine question: Despite the GSoC micro-project mentioning only
+> 'log', is it ever meaningful for these two options to be specified
+> together? I suspect not, but it would be nice to hear from someone
+> more familiar with the issue. If not specific to 'log', then the patc=
+h
+> can be simplified a good deal.
+>
+>>         enum date_mode date_mode;
+>>
+>>         unsigned int    abbrev;
+>> --
 
-I had more in mind the people who mentored GSoC students (and this way
-helped the Git project get some money) and the 200 or so developers
-who contributed between 10 and 50 patches, though I agree it could
-also be useful for others too. As far as I know very few people have
-asked for funding and it would be sad that people don't come because
-they think they would not be payed back the costs when in fact they
-would.
 
-> That still leaves the question:
-> Is there any space left in Christian's spare bedroom? :)
 
-Yes, no one as asked yet, so I shoud be able to accommodate you if you want :-)
-
-See you soon,
-Christian.
+--=20
+=E6=B1=9F=E4=B8=9C=E7=81=BF=EF=BC=88Dongcan Jiang=EF=BC=89
+Team of Search Engine & Web Mining
+School of Electronic Engineering & Computer Science
+Peking University, Beijing, 100871, P.R.China
