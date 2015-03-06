@@ -1,118 +1,105 @@
-From: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Re: Surprising interaction of "binary" and "eol" gitattributes
-Date: Fri, 06 Mar 2015 06:59:09 +0100
-Message-ID: <54F9422D.2020800@web.de>
-References: <54F88684.3020905@alum.mit.edu> <xmqqwq2v14iv.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git discussion list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri Mar 06 06:59:34 2015
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: [PATCH v3] git: make "git -C '' <cmd>" not to barf
+Date: Fri,  6 Mar 2015 12:35:34 +0530
+Message-ID: <1425625534-11869-1-git-send-email-karthik.188@gmail.com>
+Cc: gitster@pobox.com, Karthik Nayak <karthik.188@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 06 08:06:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YTlIL-0007fN-N6
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Mar 2015 06:59:34 +0100
+	id 1YTmKw-0003th-90
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Mar 2015 08:06:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755799AbbCFF73 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Mar 2015 00:59:29 -0500
-Received: from mout.web.de ([212.227.17.12]:60246 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755750AbbCFF72 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Mar 2015 00:59:28 -0500
-Received: from [192.168.88.199] ([194.47.243.242]) by smtp.web.de (mrweb103)
- with ESMTPSA (Nemesis) id 0LilJB-1XtLCz0zZV-00cywf; Fri, 06 Mar 2015 06:59:24
- +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:31.0) Gecko/20100101 Icedove/31.4.0
-In-Reply-To: <xmqqwq2v14iv.fsf@gitster.dls.corp.google.com>
-X-Provags-ID: V03:K0:7qxpxltVg5qFhxa/Mcl9EgBtjr5+Ni1B8BIyjQRSt3Df4YoVvX8
- XcBcc9C2Qs3jZe/QL6PQC2mMHkP7S7TGfA3CN/4jCKzJDCNAeh35p5hNn7liPKD1pJG4w9b
- zxUsMp/byM1y1a1k+ho1vOG4OXiNqpFnqPeag7J3iVxjr6W92hf5+dTDxqsAcOf6po83Wg5
- PbokserVhSzzqdAsDgGkQ==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1752268AbbCFHGN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Mar 2015 02:06:13 -0500
+Received: from mail-pd0-f170.google.com ([209.85.192.170]:37516 "EHLO
+	mail-pd0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752226AbbCFHGJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Mar 2015 02:06:09 -0500
+Received: by pdbnh10 with SMTP id nh10so47033833pdb.4
+        for <git@vger.kernel.org>; Thu, 05 Mar 2015 23:06:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=Dnja50K5PJD+PB203kUC65ty+RXmu484OlHZ5s6DEBk=;
+        b=t0JWQuN2b8nb/5s15nu3/4IT3DUnJtD4Ey0gAqJDWo4Hx1k9gpG9szpyduXZDPWmGp
+         mrEr4Tv+TiAIuJzw/TeVjBRr2mcFszwrByWH41F6HhHPxvI1+Oy5l+qo6iAGYgQZ/OR6
+         qY2SAsP3VA1SsoBXE8c5nPaPKw43mhtPSp/8wLkFZPgK0Lm/KkvULsL2YPvyRIhT3V0Y
+         jtSUWHgk5aUisM9n+RiAJ5GQJoS/i5tOARaWrDyrdSjbAQ71kK8w38pJl18L3E/QVpT2
+         IASP6FoYwMl9VLeY9SPYsd481xYLUOkkqYb6tRY8lUo6N51XsVTk9YilsHHl1WiZVROi
+         e28g==
+X-Received: by 10.68.134.5 with SMTP id pg5mr22929095pbb.31.1425625569189;
+        Thu, 05 Mar 2015 23:06:09 -0800 (PST)
+Received: from ashley.localdomain ([182.48.234.2])
+        by mx.google.com with ESMTPSA id bl2sm8805135pad.15.2015.03.05.23.06.05
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 05 Mar 2015 23:06:08 -0800 (PST)
+X-Mailer: git-send-email 2.3.1.167.g7f4ba4b.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264891>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264892>
 
-On 03/05/2015 11:08 PM, Junio C Hamano wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
->
->> I would expect that the following .gitattributes file
->>
->>      *       eol=crlf
->>      *.png   -text
->>
->> would leave EOL translation turned off for PNG files. In other words, I
->> would expect that explicitly setting "-text" would take precedence over
->> the fact that setting "eol" implies that a file should be considered to
->> be "text".
->>
->> I would even more strongly expect
->>
->>      *       eol=crlf
->>      *.png   binary
->>
->> to turn off EOL translation for PNG files.
->>
->> But in fact, in both of the above cases, EOL translation is turned *on*
->> for PNG files.
->>
->> I propose that "-text" should override any setting for "eol" (which
->> would of course fix both problems, since "binary" is equivalent to
->> "-diff -merge -text"). What do people think?
-> Hmm, is there really something that needs a new proposal and
-> opinions?
->
-> The way I read the flow in convert.c is:
->
->      convert_to_git() uses input_crlf_action() to figure out what
->      crlf_to_git() conversion is necessary.
->
->      input_crlf_action() looks at text_attr and says CRLF_BINARY when
->      it is CRLF_BINARY without looking at eol_attr at all.
->
->      text_attr above is ca.crlf_action in convert_to_git().
->
->      The whole ca.* comes from convert_attrs() inspecting attributes
->      on the incoming path.
->
->      convert_attrs() inspects "eol" and "text" attributes, among
->      others, and sets crlf_action by calling git_path_check_crlf().
->
->      git_path_check_crlf() looks at the 'text' attribute; if it is
->      set to false, it returns CRLF_BINARY.
->
->      crlf_to_git() when given crlf_action==CRLF_BINARY is a no-op.
->
-> So, with the above attributes where anything is eol=crlf by default
-> and in addition *.png is binary (which contains -text), we shouldn't
-> get any crlf munging.  Am I reading/following the code incorrectly?
->
-> Puzzled....
-> --
+It now acts like "cd ''" and does not barf and treats
+it as a no-op. This is useful if a caller function
+does not want to change directory and hence gives no
+path value, which would have generally caused git to
+output an undesired error message.
 
-I need to admit that I can't reproduce it here,
-the following should trigger it, but all test cases pass
+Included a simple test to check the same, as suggested
+by Junio.
 
+Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+---
+ git.c            | 12 ++++++++----
+ t/t0056-git-C.sh |  8 ++++++++
+ 2 files changed, 16 insertions(+), 4 deletions(-)
 
-diff --git a/t/t0027-auto-crlf.sh b/t/t0027-auto-crlf.sh
-
-index 452320d..22f031d 100755
---- a/t/t0027-auto-crlf.sh
-+++ b/t/t0027-auto-crlf.sh
-@@ -37,7 +37,8 @@ create_gitattributes () {
-                 echo "*.txt text" >.gitattributes
-                 ;;
-                 -text)
--               echo "*.txt -text" >.gitattributes
-+               echo "* eol=crlf" >.gitattributes
-+               echo "*.txt -text" >>.gitattributes
-                 ;;
-                 crlf)
-                 echo "*.txt eol=crlf" >.gitattributes
+diff --git a/git.c b/git.c
+index 8c7ee9c..d734afa 100644
+--- a/git.c
++++ b/git.c
+@@ -204,10 +204,14 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
+ 				fprintf(stderr, "No directory given for -C.\n" );
+ 				usage(git_usage_string);
+ 			}
+-			if (chdir((*argv)[1]))
+-				die_errno("Cannot change to '%s'", (*argv)[1]);
+-			if (envchanged)
+-				*envchanged = 1;
++			if (*((*argv)[1]) == 0)
++				; /* DO not change directory if no directory is given*/
++			else {
++				if (chdir((*argv)[1]))
++					die_errno("Cannot change to '%s'", (*argv)[1]);
++				if (envchanged)
++					*envchanged = 1;
++			}
+ 			(*argv)++;
+ 			(*argc)--;
+ 		} else {
+diff --git a/t/t0056-git-C.sh b/t/t0056-git-C.sh
+index 99c0377..a6b52f1 100755
+--- a/t/t0056-git-C.sh
++++ b/t/t0056-git-C.sh
+@@ -14,6 +14,14 @@ test_expect_success '"git -C <path>" runs git from the directory <path>' '
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success '"git -C <path>" with an empty <path> is a no-op' '
++	mkdir -p dir1/subdir &&
++	cd dir1/subdir &&
++	git -C "" rev-parse --show-prefix >actual &&
++	echo subdir/ >expect
++	test_cmp expect actual
++'
++
+ test_expect_success 'Multiple -C options: "-C dir1 -C dir2" is equivalent to "-C dir1/dir2"' '
+ 	test_create_repo dir1/dir2 &&
+ 	echo 1 >dir1/dir2/b.txt &&
+-- 
+2.3.1.167.g7f4ba4b.dirty
