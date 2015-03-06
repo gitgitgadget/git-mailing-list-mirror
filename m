@@ -1,87 +1,87 @@
-From: "Phil Hord (hordp)" <hordp@cisco.com>
-Subject: Checkout --force without complete overwrite?
-Date: Fri, 6 Mar 2015 02:39:58 +0000
-Message-ID: <D289021BF8782144A9BEB8ED592B380D2B106BA9@xmb-aln-x02.cisco.com>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: An interesting opinion on DVCS/git
+Date: Fri, 06 Mar 2015 08:55:25 +0530
+Message-ID: <54F91E25.4050008@gmail.com>
+References: <54F2CD12.8050609@gmail.com> <CAGZ79kZ8CrjwVh3+OHSV1tv+fRXaDZ_diOO5E7QnSLZ=HTFSfg@mail.gmail.com> <CAJo=hJuKL3akaG3Xh8mH5iij_dAdMkBW8fQgvreOsUHV517gpw@mail.gmail.com> <alpine.DEB.2.02.1503031642340.26501@nftneq.ynat.uz> <54F723D3.1050805@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Mar 06 03:49:35 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Stefan Beller <sbeller@google.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Michael J Gruber <git@drmicha.warpmail.net>,
+	David Lang <david@lang.hm>, Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Mar 06 04:26:06 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YTiKS-0003H9-3J
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Mar 2015 03:49:32 +0100
+	id 1YTitO-0000a3-3L
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Mar 2015 04:25:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752176AbbCFCt1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Mar 2015 21:49:27 -0500
-Received: from rcdn-iport-4.cisco.com ([173.37.86.75]:28576 "EHLO
-	rcdn-iport-4.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751599AbbCFCtZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 Mar 2015 21:49:25 -0500
-X-Greylist: delayed 566 seconds by postgrey-1.27 at vger.kernel.org; Thu, 05 Mar 2015 21:49:25 EST
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=cisco.com; i=@cisco.com; l=2140; q=dns/txt; s=iport;
-  t=1425610167; x=1426819767;
-  h=from:to:subject:date:message-id:
-   content-transfer-encoding:mime-version;
-  bh=EVl91aJttT4TVewd15IroDrA0J1IE/yjq++MG3Yeezc=;
-  b=CXq7Jqtd1ifQsOTznnrW0jOehbBS8afktbekcaCOu9+QXEfVcvPg3Cd8
-   drWQMnMX3GJctta+Ebb38vmrmzi1v0VZo7UFAJP7fR2Y8QGp+cvK+K8vm
-   AuRy63+YAcW42AgXPRtMvGMP+dcNRcD1EACYb4a0tujZAV+K5LcYwRUl0
-   Q=;
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A0AJBQDhEvlU/4QNJK1cgwaBMMczAoE9TQEBAQEBAXyEEQEEOlEBKhRCJgEEG4gnqUuqKQEBAQEGAQEBAR6PVINPgRQFkAeKZ4MmglSJGYNCI4NugjN/AQEB
-X-IronPort-AV: E=Sophos;i="5.11,350,1422921600"; 
-   d="scan'208";a="401410082"
-Received: from alln-core-10.cisco.com ([173.36.13.132])
-  by rcdn-iport-4.cisco.com with ESMTP; 06 Mar 2015 02:40:00 +0000
-Received: from xhc-aln-x11.cisco.com (xhc-aln-x11.cisco.com [173.36.12.85])
-	by alln-core-10.cisco.com (8.14.5/8.14.5) with ESMTP id t262dwrg028031
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL)
-	for <git@vger.kernel.org>; Fri, 6 Mar 2015 02:39:58 GMT
-Received: from xmb-aln-x02.cisco.com ([169.254.5.138]) by
- xhc-aln-x11.cisco.com ([173.36.12.85]) with mapi id 14.03.0195.001; Thu, 5
- Mar 2015 20:39:58 -0600
-Thread-Topic: Checkout --force without complete overwrite?
-Thread-Index: AdBXtMlTz0sCpojGR2Win/fUsVe3dQ==
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.116.169.214]
+	id S1754259AbbCFDZe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Mar 2015 22:25:34 -0500
+Received: from mail-pa0-f44.google.com ([209.85.220.44]:36367 "EHLO
+	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754251AbbCFDZd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Mar 2015 22:25:33 -0500
+Received: by padfa1 with SMTP id fa1so41813231pad.3
+        for <git@vger.kernel.org>; Thu, 05 Mar 2015 19:25:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=P2joss9WqAVDYeJU9yGsB80tB0XSaGZ9aFyFervfhHU=;
+        b=exZ5M6Ir7lijZDCE+pJL1rFIEtROgi8lA7xiPxmB53G8zho/MUnrfKUioJxOmwtEOO
+         wtwIz0+W+/Selhv7NCyhn6F3g65ZvHUe8YhprxWGFksfPvoGiG/x5WtWdaIH8nsjwB5I
+         MJRl3JNFJoyD45AK8pEiDkB70p6haHNyvIjnB59JcfH5WZdwCRk5MPboHakM+CeBpbp0
+         jLJQmHyWN2WJYQIAGAHaEjB+uDB8i3FR4vL5bmVI/y/K1pk0jxacnowh4t/O3NLP8h/N
+         avKySRvhFg+OYYOjWtEDZJyszRCCKOIwBcpNr3nWndscnXuyvOD2Q43CtvGS4OIspOTE
+         ItzA==
+X-Received: by 10.66.141.109 with SMTP id rn13mr21345450pab.113.1425612332815;
+        Thu, 05 Mar 2015 19:25:32 -0800 (PST)
+Received: from sita-lt.atc.tcs.com ([117.216.213.80])
+        by mx.google.com with ESMTPSA id di5sm8239002pbc.36.2015.03.05.19.25.28
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 05 Mar 2015 19:25:31 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
+In-Reply-To: <54F723D3.1050805@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264886>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264887>
 
-I have a repo whose workdir tends to get pretty dirty as I jump around from branch to branch tending weeds and whatnot.   Sometimes when I try to switch branches git refuses because of local file changes.
+On 03/04/2015 08:55 PM, Michael J Gruber wrote:
 
-  git checkout otherbranch
-  error: Your local changes to the following files would be overwritten by checkout:
-	foo.txt
-	bar.c
-  Please, commit your changes or stash them before you can switch branches.
-  Aborting
+> Yes, that article has a few really weak lines of arguments, such as t=
+he
+> tutorial count.
 
-I resolve this by examining my local changes and deciding if I want to keep them or not.  I keep the changes in the conflicting files that I want, and then I discard the rest.
+Here's his definition of the main draw of a DVCS:
 
-One way to "discard the rest" is to say 
-   git checkout HEAD -- foo.txt bar.c && git checkout otherbranch
+    No, the only thing that a DVCS gets you, by definition, is that
+    everyone gets a copy of the full offline history of the entire
+    repository to do with as you please.
 
-But sometimes the list of local-change conflicts I want to discard is too long and this recipe seems like a good alternative to me:
-   git checkout -f otherbranch
+That completely misses the point.  What about committing while offline,
+'git blame' months-old changes offline, or local branches that don't
+have to make it to the server until they have cooked for a while, and s=
+o
+on and on?
 
-But this is disastrous, because I have been focused on examining the conflicting local changes in foo.txt and bar.c, but I forgot about my non-conflicting changes to baz.c, lost as it is in a sea of untracked files making up the majority of my workdir local changes.  So all my untracked files make the leap unscathed, but my precious forgotten changes in baz.c get wiped out by the checkout --force, even though the baz.c in index and in otherbranch are the same.
+We're not all "facebooks" with multi-GB repos, and I certainly don't
+care as much about disk space or bandwidth if losing those features is
+the cost.
 
-I've read the documentation for 'git checkout --force' several times and I have a hard time deciding what it means to do.  But I'm sure it's doing what it's designed to do and what the man page says it will.  (English is my first language, btw.)
+It gets worse:
 
-What I am seeking is some way to checkout the other branch and replace my conflicted local changes while ignoring my non-conflicting local changes in tracked files.  Something like --force-gently, maybe.  Does such an option exist?
+    Let me tell you something. Of all the time I have ever used DVCSes,
+    over the last twenty years if we count Smalltalk changesets and
+    twelve or so if you don=E2=80=99t, I have wanted to have the full h=
+istory
+    while offline a grand total of maybe about six times.
 
-I could script something, but it comes up only often enough to bite me, so I'm sure I'd forget I had scripted it.
-
-Thanks,
-Phil
+I don't know how you can work on anything reasonably complex and
+multi-developer without using some of those features six times in a
+*week* (sometimes, six times in a *weekend*) let alone 12 years.
