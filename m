@@ -1,115 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 2/3] sha1_file: implement changes for "cat-file --literally -t"
-Date: Thu, 05 Mar 2015 15:45:42 -0800
-Message-ID: <xmqq61af100p.fsf@gitster.dls.corp.google.com>
-References: <54F89D90.6090505@gmail.com>
-	<1425579560-18898-1-git-send-email-karthik.188@gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: Slow git pushes: sitting 1 minute in pack-objects
+Date: Fri, 6 Mar 2015 07:25:45 +0700
+Message-ID: <CACsJy8CKdcHSNEpRZDTtR36Xcv+SF2tUizNjXd_sAb1eUBgTzA@mail.gmail.com>
+References: <CAH8BJxH1uVv9J7yLx1D4GRPKfWYqDw8SRFZKGR_yhjcoTCCT2g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 06 00:45:55 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Stephen Morton <stephen.c.morton@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 06 01:26:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YTfSg-0007UT-DP
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Mar 2015 00:45:50 +0100
+	id 1YTg6A-0003tq-92
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Mar 2015 01:26:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753537AbbCEXpq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Mar 2015 18:45:46 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:54799 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751009AbbCEXpp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Mar 2015 18:45:45 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7EA153E1DF;
-	Thu,  5 Mar 2015 18:45:44 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=NtRNtP+rQ6A1/2a/ko2pTqFIIOk=; b=RtY6Np
-	E9wpS/Zdmtm7BzRSo5iYERhIH+FpzUcu2xt2q9fdMnh3dCbsKYiaCTHmaBvg8P/4
-	epbrQJ2s69XwnkC6REFMeqW0VyNAU9VwENYZ5EDbV53zRPAT/L0Uk6Vz8lSzVWLt
-	DnyCbWSgoGlE09vT+khMEYGakitGkYdVLadfI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KTxaM5i0LarSEn/5XtHucue9l65oE2uZ
-	AP5ucMX8OENC13/TZsb87LZtOBzXMwxszaJdkXFi8ggCHU4ZiVOXUJ/3tOwjOOyv
-	bdGt2fL73aEqK1aQ/ZCowKOl1NLJP27V9jPD46qhyxnRi5Xupym6DiOxgi41iOOe
-	cegiNcURlbU=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6C04E3E1DE;
-	Thu,  5 Mar 2015 18:45:44 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D64393E1DD;
-	Thu,  5 Mar 2015 18:45:43 -0500 (EST)
-In-Reply-To: <1425579560-18898-1-git-send-email-karthik.188@gmail.com>
-	(Karthik Nayak's message of "Thu, 5 Mar 2015 23:49:20 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: BD247946-C391-11E4-9599-29999F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751415AbbCFA0R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Mar 2015 19:26:17 -0500
+Received: from mail-ig0-f182.google.com ([209.85.213.182]:40768 "EHLO
+	mail-ig0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752452AbbCFA0Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Mar 2015 19:26:16 -0500
+Received: by igal13 with SMTP id l13so50638022iga.5
+        for <git@vger.kernel.org>; Thu, 05 Mar 2015 16:26:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=7lbawYc/sYy4lBpDn4xaYofdYANsFftzJWVW8VqeLiM=;
+        b=bWBdNKUa6s1X0lzLC/BqoHImRpdRMGBzLEUuzaKwtWplSAoiyzKvqSafK/zMUCqk9X
+         lxq1YzRlpfmz8xn/nwRQl+5MHGNXL2MrzvbsL/dZ0LVw9sPUOIxo2cp9ewrxzd4Oh/YJ
+         gCVRg+KDqIX4s6glvwZNigfrzw+W9qSSiWDVEQcVQvNlfVXT+DKshY7EdR/0tGqO4RdJ
+         dgsPizHM257Az2VeODXz5KUu36BZO870tEGoWPyNe9weub1OslCAvvyA6a7SKAGmQ7GS
+         Ai+lmaQHl4EuNA2yLn+9beqECqxpEfjY5dg1eyy1EyQMRbpC2CXPw28FSsWXUNL7Hlfv
+         mXGQ==
+X-Received: by 10.107.8.215 with SMTP id h84mr620747ioi.89.1425601576125; Thu,
+ 05 Mar 2015 16:26:16 -0800 (PST)
+Received: by 10.107.131.155 with HTTP; Thu, 5 Mar 2015 16:25:45 -0800 (PST)
+In-Reply-To: <CAH8BJxH1uVv9J7yLx1D4GRPKfWYqDw8SRFZKGR_yhjcoTCCT2g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264881>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264882>
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+On Fri, Mar 6, 2015 at 4:03 AM, Stephen Morton
+<stephen.c.morton@gmail.com> wrote:
+> I'm experiencing very slow git pushes. On the order of 1 minute to push a
+> trivial one-line change. When I set GIT_TRACE=1, I see that it seems to be
+> taking a lot of time in the pack-objects phase.
+>
+> Others are not seeing this with the same repo, but I'm the only one working
+> in a VM.
+>
+> ...
+>
+> Details:
+> git version 2.1.4
+> OS: CentOS 6.6 64-bit in a VM.
+> repo size: huge. 6 GB .git directory, around 800 MB working tree.
+> VM has 8 MB RAM and 8 cores.
 
-> +const char *sha1_object_info_literally(const unsigned char *sha1)
-> +{
-> +	enum object_type type;
-> +	struct strbuf sb = STRBUF_INIT;
-> +	struct object_info oi = {NULL};
-> +
-> +	oi.typename = &sb;
-> +	oi.typep = &type;
-> +	if (sha1_object_info_extended(sha1, &oi, LOOKUP_LITERALLY) < 0)
-> +		return NULL;
-> +	if (*oi.typep > 0) {
-> +		strbuf_release(oi.typename);
-> +		return typename(*oi.typep);
-> +	}
-> +	return oi.typename->buf;
-> +}
+Is it 8 GB or MB RAM?
 
-After calling this function to ask the textual type of an object,
-should the caller free the result it obtains from this function?
-
-oi.typename points at the strbuf on stack and its buf member points
-at an allocated piece of memory.  That must be freed.
-
-On the other hand, typename(*oi.typep) is a pointer into static
-piece of memory, which must never be freed.
-
-This patch introduces this function without introducing any caller,
-which makes it unnecessarily harder to judge if this problem is
-caused by choosing a wrong calling convention, and/or if so what
-better calling convention can be used to correct the problem, but
-without looking at the caller that (presumably) will be introduced
-in a later patch, I suspect that the caller should supply a pointer
-to struct object_info, i.e. something along these lines:
-
-    struct object_info oi = { NULL };
-    struct strbuf sb = STRBUF_INIT;
-    enum object_type type;
-
-    ...
-
-    oi.typename = &sb;
-    sha1_object_info_literally(sha1, &oi);
-    if (!sb.len)
-        that is an error;
-    else
-        use sb.buf as the name;
-
-    strbuf_release(&sb);
-
-As sha1_object_info_extended() takes oi and fills oi.typename when
-it is supplied for _all_ types, not just the bogus ones, a caller of
-that function, including sha1_object_info_literally() and its
-caller, shouldn't have to worry about "is that a known one?  then
-use typename() to convert the enum type to a string.  Otherwise use
-the oi.typename->buf" at all, I would think.
+> CPU: i7, 8 core (4 cores hyperthreaded)
+-- 
+Duy
