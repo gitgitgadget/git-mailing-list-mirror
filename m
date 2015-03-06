@@ -1,269 +1,130 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
-Subject: [PATCH] daemon: use strbuf for hostname info
-Date: Fri, 06 Mar 2015 09:57:22 +0100
-Message-ID: <54F96BF2.5000504@web.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Mar 06 09:58:08 2015
+From: Dongcan Jiang <dongcan.jiang@gmail.com>
+Subject: [PATCH] [GSoC][MICRO] Forbid "log --graph --no-walk"
+Date: Fri,  6 Mar 2015 16:55:10 +0800
+Message-ID: <1425632110-31863-1-git-send-email-dongcan.jiang@gmail.com>
+Cc: Dongcan Jiang <dongcan.jiang@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 06 10:28:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YTo4y-0004DO-Jd
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Mar 2015 09:57:57 +0100
+	id 1YToYc-0004yb-TL
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Mar 2015 10:28:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753460AbbCFI5w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Mar 2015 03:57:52 -0500
-Received: from mout.web.de ([212.227.15.3]:52550 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751855AbbCFI5v (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Mar 2015 03:57:51 -0500
-Received: from [192.168.178.27] ([79.253.128.80]) by smtp.web.de (mrweb001)
- with ESMTPSA (Nemesis) id 0MAdb9-1YJ2iI25PP-00BvCk; Fri, 06 Mar 2015 09:57:37
- +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
-X-Provags-ID: V03:K0:CNec8Z1zdKbyr2/lwRwfcJpO01Gu8vT/v4So1URcnvh870YhL0n
- TkVAl79nvRCqFcnzaG3XEFYaF/83A7wc8oCYqtkiGJBQJMSqbPWdNhsE+5t6FU3lZGbj3dL
- yKgzgNrKztXZn3G2t2A6OlJUsf4wVRkpS9pgOFhxbY66ej0OyyTOTtr4Ngh5v/cQBW3JtU2
- aw/2ot3BWTcJ82DPpFQdw==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1752930AbbCFJ2a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Mar 2015 04:28:30 -0500
+Received: from mail-pa0-f46.google.com ([209.85.220.46]:37272 "EHLO
+	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751470AbbCFJ20 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Mar 2015 04:28:26 -0500
+Received: by paceu11 with SMTP id eu11so36221744pac.4
+        for <git@vger.kernel.org>; Fri, 06 Mar 2015 01:28:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=wysa9zFTGoaUGANBPUdB9gFe/hbAMcVr661T3zgSuN4=;
+        b=hiJE3f8VC23UKzNNx9NPtFDXHNJ7HE5uEMc53A4sOYS6wqn55jBw6CNZU/fr7dxjv1
+         RuQ09t3tZDzbt6czI4yVJx/fOJjIGdo24JiowFo8OW26iHtDtdN9MKO/Ji72L7nJm85h
+         qVA3MgHNkOfxEJclSR5/AcX+tzEP+8slkmXigXUplWZDoDrKz5use13oNqPJzddb/02H
+         +htJ5q2iV+J3K/l9Vu/o5drgNWymE9d1dJtalIJZQ4Io2uqLvQ1LiU7TVD9B9D7RuZUx
+         hvBW4O1FBoZRfSj5Kgc+GDRxVMme7F/Hdk/2C9JBLz05h7TYeuaGwxTBir6yNMH+Kl7g
+         DG/g==
+X-Received: by 10.70.40.167 with SMTP id y7mr24016889pdk.164.1425634106245;
+        Fri, 06 Mar 2015 01:28:26 -0800 (PST)
+Received: from localhost.localdomain ([162.105.205.253])
+        by mx.google.com with ESMTPSA id ey1sm5088979pdb.30.2015.03.06.01.28.24
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 06 Mar 2015 01:28:25 -0800 (PST)
+X-Mailer: git-send-email 2.3.1.251.g83036f8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264899>
 
-Convert hostname, canon_hostname, ip_address and tcp_port to strbuf.
-This allows to get rid of the helpers strbuf_addstr_or_null() and STRARG
-because a strbuf always represents a valid (initially empty) string.
-sanitize_client() becomes unused and is removed as well.
+Because --graph is about connected history while --no-walk is about discrete points.
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
+revision.c: Judge whether --graph and --no-walk come together when running git-log.
+buildin/log.c: Set git-log cmd flag.
+Documentation/rev-list-options.txt: Add specification on the forbidden usage.
+
+Signed-off-by: Dongcan Jiang <dongcan.jiang@gmail.com>
 ---
- daemon.c | 98 +++++++++++++++++++++++++++-------------------------------------
- 1 file changed, 41 insertions(+), 57 deletions(-)
+ Documentation/rev-list-options.txt | 2 ++
+ builtin/log.c                      | 1 +
+ revision.c                         | 4 ++++
+ revision.h                         | 3 +++
+ 4 files changed, 10 insertions(+)
 
-diff --git a/daemon.c b/daemon.c
-index c3edd96..c04315e 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -56,10 +56,10 @@ static const char *user_path;
- static unsigned int timeout;
- static unsigned int init_timeout;
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index 4ed8587..eea2c0a 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -679,6 +679,7 @@ endif::git-rev-list[]
+ 	given on the command line. Otherwise (if `sorted` or no argument
+ 	was given), the commits are shown in reverse chronological order
+ 	by commit time.
++	Cannot be combined with `--graph` when running git-log.
  
--static char *hostname;
--static char *canon_hostname;
--static char *ip_address;
--static char *tcp_port;
-+static struct strbuf hostname = STRBUF_INIT;
-+static struct strbuf canon_hostname = STRBUF_INIT;
-+static struct strbuf ip_address = STRBUF_INIT;
-+static struct strbuf tcp_port = STRBUF_INIT;
+ --do-walk::
+ 	Overrides a previous `--no-walk`.
+@@ -781,6 +782,7 @@ you would get an output like this:
+ 	on the left hand side of the output.  This may cause extra lines
+ 	to be printed in between commits, in order for the graph history
+ 	to be drawn properly.
++	Cannot be combined with `--no-walk` when running git-log.
+ +
+ This enables parent rewriting, see 'History Simplification' below.
+ +
+diff --git a/builtin/log.c b/builtin/log.c
+index dd8f3fc..7bf5adb 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -627,6 +627,7 @@ int cmd_log(int argc, const char **argv, const char *prefix)
+ 	git_config(git_log_config, NULL);
  
- static int hostname_lookup_done;
+ 	init_revisions(&rev, prefix);
++	rev.cmd_is_log = 1;
+ 	rev.always_show_header = 1;
+ 	memset(&opt, 0, sizeof(opt));
+ 	opt.def = "HEAD";
+diff --git a/revision.c b/revision.c
+index 66520c6..5f62c89 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1399,6 +1399,8 @@ void init_revisions(struct rev_info *revs, const char *prefix)
  
-@@ -68,13 +68,13 @@ static void lookup_hostname(void);
- static const char *get_canon_hostname(void)
- {
- 	lookup_hostname();
--	return canon_hostname;
-+	return canon_hostname.buf;
- }
+ 	revs->commit_format = CMIT_FMT_DEFAULT;
  
- static const char *get_ip_address(void)
- {
- 	lookup_hostname();
--	return ip_address;
-+	return ip_address.buf;
- }
++	revs->cmd_is_log = 0;
++
+ 	init_grep_defaults();
+ 	grep_init(&revs->grep_filter, prefix);
+ 	revs->grep_filter.status_only = 1;
+@@ -2339,6 +2341,8 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
  
- static void logreport(int priority, const char *err, va_list params)
-@@ -122,12 +122,6 @@ static void NORETURN daemon_die(const char *err, va_list params)
- 	exit(1);
- }
+ 	if (revs->reflog_info && revs->graph)
+ 		die("cannot combine --walk-reflogs with --graph");
++	if (revs->no_walk && revs->graph && revs->cmd_is_log)
++		die("cannot combine --no-walk with --graph when running git-log");
+ 	if (!revs->reflog_info && revs->grep_filter.use_reflog_filter)
+ 		die("cannot use --grep-reflog without --walk-reflogs");
  
--static void strbuf_addstr_or_null(struct strbuf *sb, const char *s)
--{
--	if (s)
--		strbuf_addstr(sb, s);
--}
--
- struct expand_path_context {
- 	const char *directory;
- };
-@@ -138,22 +132,22 @@ static size_t expand_path(struct strbuf *sb, const char *placeholder, void *ctx)
+diff --git a/revision.h b/revision.h
+index 0ea8b4e..255982a 100644
+--- a/revision.h
++++ b/revision.h
+@@ -146,6 +146,9 @@ struct rev_info {
+ 			track_first_time:1,
+ 			linear:1;
  
- 	switch (placeholder[0]) {
- 	case 'H':
--		strbuf_addstr_or_null(sb, hostname);
-+		strbuf_addbuf(sb, &hostname);
- 		return 1;
- 	case 'C':
- 		if (placeholder[1] == 'H') {
--			strbuf_addstr_or_null(sb, get_canon_hostname());
-+			strbuf_addstr(sb, get_canon_hostname());
- 			return 2;
- 		}
- 		break;
- 	case 'I':
- 		if (placeholder[1] == 'P') {
--			strbuf_addstr_or_null(sb, get_ip_address());
-+			strbuf_addstr(sb, get_ip_address());
- 			return 2;
- 		}
- 		break;
- 	case 'P':
--		strbuf_addstr_or_null(sb, tcp_port);
-+		strbuf_addbuf(sb, &tcp_port);
- 		return 1;
- 	case 'D':
- 		strbuf_addstr(sb, context->directory);
-@@ -301,16 +295,14 @@ static int run_access_hook(struct daemon_service *service, const char *dir, cons
- 	char *eol;
- 	int seen_errors = 0;
++	/* cmd type */
++	unsigned int  cmd_is_log:1;
++
+ 	enum date_mode date_mode;
  
--#define STRARG(x) ((x) ? (x) : "")
- 	*arg++ = access_hook;
- 	*arg++ = service->name;
- 	*arg++ = path;
--	*arg++ = STRARG(hostname);
--	*arg++ = STRARG(get_canon_hostname());
--	*arg++ = STRARG(get_ip_address());
--	*arg++ = STRARG(tcp_port);
-+	*arg++ = hostname.buf;
-+	*arg++ = get_canon_hostname();
-+	*arg++ = get_ip_address();
-+	*arg++ = tcp_port.buf;
- 	*arg = NULL;
--#undef STRARG
- 
- 	child.use_shell = 1;
- 	child.argv = argv;
-@@ -556,23 +548,14 @@ static void sanitize_client_strbuf(struct strbuf *out, const char *in)
- 		strbuf_setlen(out, out->len - 1);
- }
- 
--static char *sanitize_client(const char *in)
--{
--	struct strbuf out = STRBUF_INIT;
--	sanitize_client_strbuf(&out, in);
--	return strbuf_detach(&out, NULL);
--}
--
- /*
-- * Like sanitize_client, but we also perform any canonicalization
-+ * Like sanitize_client_strbuf, but we also perform any canonicalization
-  * to make life easier on the admin.
-  */
--static char *canonicalize_client(const char *in)
-+static void canonicalize_client_strbuf(struct strbuf *out, const char *in)
- {
--	struct strbuf out = STRBUF_INIT;
--	sanitize_client_strbuf(&out, in);
--	strbuf_tolower(&out);
--	return strbuf_detach(&out, NULL);
-+	sanitize_client_strbuf(out, in);
-+	strbuf_tolower(out);
- }
- 
- /*
-@@ -595,11 +578,11 @@ static void parse_host_arg(char *extra_args, int buflen)
- 				char *port;
- 				parse_host_and_port(val, &host, &port);
- 				if (port) {
--					free(tcp_port);
--					tcp_port = sanitize_client(port);
-+					strbuf_reset(&tcp_port);
-+					sanitize_client_strbuf(&tcp_port, port);
- 				}
--				free(hostname);
--				hostname = canonicalize_client(host);
-+				strbuf_reset(&hostname);
-+				canonicalize_client_strbuf(&hostname, host);
- 				hostname_lookup_done = 0;
- 			}
- 
-@@ -616,7 +599,7 @@ static void parse_host_arg(char *extra_args, int buflen)
-  */
- static void lookup_hostname(void)
- {
--	if (!hostname_lookup_done && hostname) {
-+	if (!hostname_lookup_done && hostname.len) {
- #ifndef NO_IPV6
- 		struct addrinfo hints;
- 		struct addrinfo *ai;
-@@ -626,19 +609,21 @@ static void lookup_hostname(void)
- 		memset(&hints, 0, sizeof(hints));
- 		hints.ai_flags = AI_CANONNAME;
- 
--		gai = getaddrinfo(hostname, NULL, &hints, &ai);
-+		gai = getaddrinfo(hostname.buf, NULL, &hints, &ai);
- 		if (!gai) {
- 			struct sockaddr_in *sin_addr = (void *)ai->ai_addr;
- 
- 			inet_ntop(AF_INET, &sin_addr->sin_addr,
- 				  addrbuf, sizeof(addrbuf));
--			free(ip_address);
--			ip_address = xstrdup(addrbuf);
-+			strbuf_reset(&ip_address);
-+			strbuf_addstr(&ip_address, addrbuf);
- 
--			free(canon_hostname);
--			canon_hostname = ai->ai_canonname ?
--				sanitize_client(ai->ai_canonname) :
--				xstrdup(ip_address);
-+			strbuf_reset(&canon_hostname);
-+			if (ai->ai_canonname)
-+				sanitize_client_strbuf(&canon_hostname,
-+						       ai->ai_canonname);
-+			else
-+				strbuf_addbuf(&canon_hostname, &ip_address);
- 
- 			freeaddrinfo(ai);
- 		}
-@@ -648,7 +633,7 @@ static void lookup_hostname(void)
- 		char **ap;
- 		static char addrbuf[HOST_NAME_MAX + 1];
- 
--		hent = gethostbyname(hostname);
-+		hent = gethostbyname(hostname.buf);
- 		if (hent) {
- 			ap = hent->h_addr_list;
- 			memset(&sa, 0, sizeof sa);
-@@ -659,10 +644,10 @@ static void lookup_hostname(void)
- 			inet_ntop(hent->h_addrtype, &sa.sin_addr,
- 				  addrbuf, sizeof(addrbuf));
- 
--			free(canon_hostname);
--			canon_hostname = sanitize_client(hent->h_name);
--			free(ip_address);
--			ip_address = xstrdup(addrbuf);
-+			strbuf_reset(&canon_hostname);
-+			sanitize_client_strbuf(&canon_hostname, hent->h_name);
-+			strbuf_reset(&ip_address);
-+			strbuf_addstr(&ip_address, addrbuf);
- 		}
- #endif
- 		hostname_lookup_done = 1;
-@@ -693,11 +678,10 @@ static int execute(void)
- 		pktlen--;
- 	}
- 
--	free(hostname);
--	free(canon_hostname);
--	free(ip_address);
--	free(tcp_port);
--	hostname = canon_hostname = ip_address = tcp_port = NULL;
-+	strbuf_reset(&hostname);
-+	strbuf_reset(&canon_hostname);
-+	strbuf_reset(&ip_address);
-+	strbuf_reset(&tcp_port);
- 
- 	if (len != pktlen)
- 		parse_host_arg(line + len + 1, pktlen - len - 1);
+ 	unsigned int	abbrev;
 -- 
-2.3.1
+2.3.1.251.g83036f8
