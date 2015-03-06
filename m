@@ -1,130 +1,387 @@
-From: Dongcan Jiang <dongcan.jiang@gmail.com>
-Subject: [PATCH] [GSoC][MICRO] Forbid "log --graph --no-walk"
-Date: Fri,  6 Mar 2015 16:55:10 +0800
-Message-ID: <1425632110-31863-1-git-send-email-dongcan.jiang@gmail.com>
-Cc: Dongcan Jiang <dongcan.jiang@gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCHv4 1/3] t7508: .gitignore 'expect' and 'output' files
+Date: Fri,  6 Mar 2015 10:43:33 +0100
+Message-ID: <488ba82f7a2a7901b2f8d083d5079a9b49b06cbe.1425634616.git.git@drmicha.warpmail.net>
+References: <mqqfv9j2nqu.fsf@gitster.dls.corp.google.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 06 10:28:36 2015
+X-From: git-owner@vger.kernel.org Fri Mar 06 10:43:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YToYc-0004yb-TL
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Mar 2015 10:28:35 +0100
+	id 1YTonP-0000yg-Tj
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Mar 2015 10:43:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752930AbbCFJ2a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Mar 2015 04:28:30 -0500
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:37272 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751470AbbCFJ20 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Mar 2015 04:28:26 -0500
-Received: by paceu11 with SMTP id eu11so36221744pac.4
-        for <git@vger.kernel.org>; Fri, 06 Mar 2015 01:28:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=wysa9zFTGoaUGANBPUdB9gFe/hbAMcVr661T3zgSuN4=;
-        b=hiJE3f8VC23UKzNNx9NPtFDXHNJ7HE5uEMc53A4sOYS6wqn55jBw6CNZU/fr7dxjv1
-         RuQ09t3tZDzbt6czI4yVJx/fOJjIGdo24JiowFo8OW26iHtDtdN9MKO/Ji72L7nJm85h
-         qVA3MgHNkOfxEJclSR5/AcX+tzEP+8slkmXigXUplWZDoDrKz5use13oNqPJzddb/02H
-         +htJ5q2iV+J3K/l9Vu/o5drgNWymE9d1dJtalIJZQ4Io2uqLvQ1LiU7TVD9B9D7RuZUx
-         hvBW4O1FBoZRfSj5Kgc+GDRxVMme7F/Hdk/2C9JBLz05h7TYeuaGwxTBir6yNMH+Kl7g
-         DG/g==
-X-Received: by 10.70.40.167 with SMTP id y7mr24016889pdk.164.1425634106245;
-        Fri, 06 Mar 2015 01:28:26 -0800 (PST)
-Received: from localhost.localdomain ([162.105.205.253])
-        by mx.google.com with ESMTPSA id ey1sm5088979pdb.30.2015.03.06.01.28.24
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 06 Mar 2015 01:28:25 -0800 (PST)
-X-Mailer: git-send-email 2.3.1.251.g83036f8
+	id S932924AbbCFJnr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Mar 2015 04:43:47 -0500
+Received: from out2-smtp.messagingengine.com ([66.111.4.26]:54748 "EHLO
+	out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932903AbbCFJnj (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 Mar 2015 04:43:39 -0500
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+	by mailout.nyi.internal (Postfix) with ESMTP id E7DC120C03
+	for <git@vger.kernel.org>; Fri,  6 Mar 2015 04:43:37 -0500 (EST)
+Received: from frontend2 ([10.202.2.161])
+  by compute2.internal (MEProxy); Fri, 06 Mar 2015 04:43:39 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=x-sasl-enc:from:to:cc:subject:date
+	:message-id:in-reply-to:references:in-reply-to:references; s=
+	smtpout; bh=JkJ5PQ8b3/dJzAkmv7Jo4gBy0/s=; b=Zz0hm8nLLi5lEnsz2dmH
+	2qMDnscQZzT7gChdpwp40Nxx9kPFvX2gC4wlOH9fNjdBjrZuQrexMSxEXaXikQJG
+	hRKWcwcU6ZAxlvLAAxZe5XGU18LtgPKEbgPEIzUXsVPwhIAnoh6h2TdIiL9569Ci
+	4WokzhQtk0hK+S8WudENLZU=
+X-Sasl-enc: fGFGk+HFOeC6sG5iB3fwezZ3mmbe1uvNkxNxqsP/vZSW 1425635018
+Received: from localhost (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 8ADE26800F3;
+	Fri,  6 Mar 2015 04:43:38 -0500 (EST)
+X-Mailer: git-send-email 2.3.1.303.g5174db1
+In-Reply-To: <mqqfv9j2nqu.fsf@gitster.dls.corp.google.com>
+In-Reply-To: <cover.1425634616.git.git@drmicha.warpmail.net>
+References: <cover.1425634616.git.git@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264899>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264901>
 
-Because --graph is about connected history while --no-walk is about discrete points.
+From: Junio C Hamano <gitster@pobox.com>
 
-revision.c: Judge whether --graph and --no-walk come together when running git-log.
-buildin/log.c: Set git-log cmd flag.
-Documentation/rev-list-options.txt: Add specification on the forbidden usage.
+These files are used to observe the behaviour of the 'status'
+command and if there weren't any such observer, the expected
+output from 'status' wouldn't even mention them.
 
-Signed-off-by: Dongcan Jiang <dongcan.jiang@gmail.com>
+Place them in .gitignore to unclutter the output expected by the
+tests.  An added benefit is that future tests can add such files
+that are purely for use by the observer, i.e. the tests themselves,
+by naming them as expect-foo and/or output-bar.
+
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
 ---
- Documentation/rev-list-options.txt | 2 ++
- builtin/log.c                      | 1 +
- revision.c                         | 4 ++++
- revision.h                         | 3 +++
- 4 files changed, 10 insertions(+)
+ t/t7508-status.sh | 78 ++++++++++---------------------------------------------
+ 1 file changed, 13 insertions(+), 65 deletions(-)
 
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index 4ed8587..eea2c0a 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -679,6 +679,7 @@ endif::git-rev-list[]
- 	given on the command line. Otherwise (if `sorted` or no argument
- 	was given), the commits are shown in reverse chronological order
- 	by commit time.
-+	Cannot be combined with `--graph` when running git-log.
+diff --git a/t/t7508-status.sh b/t/t7508-status.sh
+index 8ed5788..514df67 100755
+--- a/t/t7508-status.sh
++++ b/t/t7508-status.sh
+@@ -66,6 +66,12 @@ strip_comments () {
+ 	rm "$1" && mv "$1".tmp "$1"
+ }
  
- --do-walk::
- 	Overrides a previous `--no-walk`.
-@@ -781,6 +782,7 @@ you would get an output like this:
- 	on the left hand side of the output.  This may cause extra lines
- 	to be printed in between commits, in order for the graph history
- 	to be drawn properly.
-+	Cannot be combined with `--no-walk` when running git-log.
- +
- This enables parent rewriting, see 'History Simplification' below.
- +
-diff --git a/builtin/log.c b/builtin/log.c
-index dd8f3fc..7bf5adb 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -627,6 +627,7 @@ int cmd_log(int argc, const char **argv, const char *prefix)
- 	git_config(git_log_config, NULL);
- 
- 	init_revisions(&rev, prefix);
-+	rev.cmd_is_log = 1;
- 	rev.always_show_header = 1;
- 	memset(&opt, 0, sizeof(opt));
- 	opt.def = "HEAD";
-diff --git a/revision.c b/revision.c
-index 66520c6..5f62c89 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1399,6 +1399,8 @@ void init_revisions(struct rev_info *revs, const char *prefix)
- 
- 	revs->commit_format = CMIT_FMT_DEFAULT;
- 
-+	revs->cmd_is_log = 0;
++cat >.gitignore <<\EOF
++.gitignore
++expect*
++output*
++EOF
 +
- 	init_grep_defaults();
- 	grep_init(&revs->grep_filter, prefix);
- 	revs->grep_filter.status_only = 1;
-@@ -2339,6 +2341,8 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+ test_expect_success 'status --column' '
+ 	cat >expect <<\EOF &&
+ # On branch master
+@@ -83,8 +89,8 @@ test_expect_success 'status --column' '
+ # Untracked files:
+ #   (use "git add <file>..." to include in what will be committed)
+ #
+-#	dir1/untracked dir2/untracked output
+-#	dir2/modified  expect         untracked
++#	dir1/untracked dir2/untracked
++#	dir2/modified  untracked
+ #
+ EOF
+ 	COLUMNS=50 git -c status.displayCommentPrefix=true status --column="column dense" >output &&
+@@ -116,8 +122,6 @@ cat >expect <<\EOF
+ #	dir1/untracked
+ #	dir2/modified
+ #	dir2/untracked
+-#	expect
+-#	output
+ #	untracked
+ #
+ EOF
+@@ -167,8 +171,6 @@ Untracked files:
+ 	dir1/untracked
+ 	dir2/modified
+ 	dir2/untracked
+-	expect
+-	output
+ 	untracked
  
- 	if (revs->reflog_info && revs->graph)
- 		die("cannot combine --walk-reflogs with --graph");
-+	if (revs->no_walk && revs->graph && revs->cmd_is_log)
-+		die("cannot combine --no-walk with --graph when running git-log");
- 	if (!revs->reflog_info && revs->grep_filter.use_reflog_filter)
- 		die("cannot use --grep-reflog without --walk-reflogs");
+ EOF
+@@ -186,8 +188,6 @@ A  dir2/added
+ ?? dir1/untracked
+ ?? dir2/modified
+ ?? dir2/untracked
+-?? expect
+-?? output
+ ?? untracked
+ EOF
  
-diff --git a/revision.h b/revision.h
-index 0ea8b4e..255982a 100644
---- a/revision.h
-+++ b/revision.h
-@@ -146,6 +146,9 @@ struct rev_info {
- 			track_first_time:1,
- 			linear:1;
+@@ -320,7 +320,11 @@ EOF
+ 	test_i18ncmp expect output
+ '
  
-+	/* cmd type */
-+	unsigned int  cmd_is_log:1;
-+
- 	enum date_mode date_mode;
+-rm -f .gitignore
++cat >.gitignore <<\EOF
++.gitignore
++expect*
++output*
++EOF
  
- 	unsigned int	abbrev;
+ cat >expect <<\EOF
+ ## master
+@@ -329,8 +333,6 @@ A  dir2/added
+ ?? dir1/untracked
+ ?? dir2/modified
+ ?? dir2/untracked
+-?? expect
+-?? output
+ ?? untracked
+ EOF
+ 
+@@ -434,8 +436,6 @@ Untracked files:
+ 	dir2/modified
+ 	dir2/untracked
+ 	dir3/
+-	expect
+-	output
+ 	untracked
+ 
+ EOF
+@@ -456,8 +456,6 @@ A  dir2/added
+ ?? dir2/modified
+ ?? dir2/untracked
+ ?? dir3/
+-?? expect
+-?? output
+ ?? untracked
+ EOF
+ test_expect_success 'status -s -unormal' '
+@@ -493,8 +491,6 @@ Untracked files:
+ 	dir2/untracked
+ 	dir3/untracked1
+ 	dir3/untracked2
+-	expect
+-	output
+ 	untracked
+ 
+ EOF
+@@ -518,8 +514,6 @@ A  dir2/added
+ ?? dir1/untracked
+ ?? dir2/modified
+ ?? dir2/untracked
+-?? expect
+-?? output
+ ?? untracked
+ EOF
+ test_expect_success 'status -s -uall' '
+@@ -554,8 +548,6 @@ Untracked files:
+ 	untracked
+ 	../dir2/modified
+ 	../dir2/untracked
+-	../expect
+-	../output
+ 	../untracked
+ 
+ EOF
+@@ -569,8 +561,6 @@ A  ../dir2/added
+ ?? untracked
+ ?? ../dir2/modified
+ ?? ../dir2/untracked
+-?? ../expect
+-?? ../output
+ ?? ../untracked
+ EOF
+ test_expect_success 'status -s with relative paths' '
+@@ -586,8 +576,6 @@ A  dir2/added
+ ?? dir1/untracked
+ ?? dir2/modified
+ ?? dir2/untracked
+-?? expect
+-?? output
+ ?? untracked
+ EOF
+ 
+@@ -625,8 +613,6 @@ Untracked files:
+ 	<BLUE>dir1/untracked<RESET>
+ 	<BLUE>dir2/modified<RESET>
+ 	<BLUE>dir2/untracked<RESET>
+-	<BLUE>expect<RESET>
+-	<BLUE>output<RESET>
+ 	<BLUE>untracked<RESET>
+ 
+ EOF
+@@ -647,8 +633,6 @@ cat >expect <<\EOF
+ <BLUE>??<RESET> dir1/untracked
+ <BLUE>??<RESET> dir2/modified
+ <BLUE>??<RESET> dir2/untracked
+-<BLUE>??<RESET> expect
+-<BLUE>??<RESET> output
+ <BLUE>??<RESET> untracked
+ EOF
+ 
+@@ -676,8 +660,6 @@ cat >expect <<\EOF
+ <BLUE>??<RESET> dir1/untracked
+ <BLUE>??<RESET> dir2/modified
+ <BLUE>??<RESET> dir2/untracked
+-<BLUE>??<RESET> expect
+-<BLUE>??<RESET> output
+ <BLUE>??<RESET> untracked
+ EOF
+ 
+@@ -694,8 +676,6 @@ A  dir2/added
+ ?? dir1/untracked
+ ?? dir2/modified
+ ?? dir2/untracked
+-?? expect
+-?? output
+ ?? untracked
+ EOF
+ 
+@@ -755,8 +735,6 @@ Untracked files:
+ 	dir1/untracked
+ 	dir2/modified
+ 	dir2/untracked
+-	expect
+-	output
+ 	untracked
+ 
+ EOF
+@@ -772,8 +750,6 @@ A  dir2/added
+ ?? dir1/untracked
+ ?? dir2/modified
+ ?? dir2/untracked
+-?? expect
+-?? output
+ ?? untracked
+ EOF
+ 
+@@ -798,8 +774,6 @@ Untracked files:
+ 
+ 	dir1/untracked
+ 	dir2/
+-	expect
+-	output
+ 	untracked
+ 
+ EOF
+@@ -848,8 +822,6 @@ Untracked files:
+ 	dir1/untracked
+ 	dir2/modified
+ 	dir2/untracked
+-	expect
+-	output
+ 	untracked
+ 
+ EOF
+@@ -870,8 +842,6 @@ A  sm
+ ?? dir1/untracked
+ ?? dir2/modified
+ ?? dir2/untracked
+-?? expect
+-?? output
+ ?? untracked
+ EOF
+ test_expect_success 'status -s submodule summary is disabled by default' '
+@@ -913,8 +883,6 @@ Untracked files:
+ 	dir1/untracked
+ 	dir2/modified
+ 	dir2/untracked
+-	expect
+-	output
+ 	untracked
+ 
+ EOF
+@@ -940,8 +908,6 @@ A  sm
+ ?? dir1/untracked
+ ?? dir2/modified
+ ?? dir2/untracked
+-?? expect
+-?? output
+ ?? untracked
+ EOF
+ test_expect_success 'status -s submodule summary' '
+@@ -964,8 +930,6 @@ Untracked files:
+ 	dir1/untracked
+ 	dir2/modified
+ 	dir2/untracked
+-	expect
+-	output
+ 	untracked
+ 
+ no changes added to commit (use "git add" and/or "git commit -a")
+@@ -983,8 +947,6 @@ cat >expect <<EOF
+ ?? dir1/untracked
+ ?? dir2/modified
+ ?? dir2/untracked
+-?? expect
+-?? output
+ ?? untracked
+ EOF
+ test_expect_success 'status -s submodule summary (clean submodule)' '
+@@ -1025,8 +987,6 @@ Untracked files:
+ 	dir1/untracked
+ 	dir2/modified
+ 	dir2/untracked
+-	expect
+-	output
+ 	untracked
+ 
+ EOF
+@@ -1080,8 +1040,6 @@ Untracked files:
+ 	dir1/untracked
+ 	dir2/modified
+ 	dir2/untracked
+-	expect
+-	output
+ 	untracked
+ 
+ EOF
+@@ -1192,8 +1150,6 @@ Untracked files:
+ 	dir1/untracked
+ 	dir2/modified
+ 	dir2/untracked
+-	expect
+-	output
+ 	untracked
+ 
+ EOF
+@@ -1254,8 +1210,6 @@ Untracked files:
+ 	dir1/untracked
+ 	dir2/modified
+ 	dir2/untracked
+-	expect
+-	output
+ 	untracked
+ 
+ EOF
+@@ -1336,8 +1290,6 @@ cat > expect << EOF
+ ;	dir1/untracked
+ ;	dir2/modified
+ ;	dir2/untracked
+-;	expect
+-;	output
+ ;	untracked
+ ;
+ EOF
+@@ -1369,8 +1321,6 @@ Untracked files:
+ 	dir1/untracked
+ 	dir2/modified
+ 	dir2/untracked
+-	expect
+-	output
+ 	untracked
+ 
+ no changes added to commit (use "git add" and/or "git commit -a")
+@@ -1400,8 +1350,6 @@ Untracked files:
+ 	dir1/untracked
+ 	dir2/modified
+ 	dir2/untracked
+-	expect
+-	output
+ 	untracked
+ 
+ EOF
 -- 
-2.3.1.251.g83036f8
+2.3.1.303.g5174db1
