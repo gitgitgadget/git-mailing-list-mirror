@@ -1,125 +1,83 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Why is "git fetch --prune" so much slower than "git remote prune"?
-Date: Fri, 6 Mar 2015 17:48:39 +0100
-Message-ID: <CACBZZX5n5tTCSa-_A5gQzbzboF_v8a3_oVUjdjyFtKHHe8h-NA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [ANNOUNCE] Git Merge Contributors Summit, April 8th, Paris
+Date: Fri, 6 Mar 2015 09:03:28 -0800
+Message-ID: <CAPc5daVo5tDpx2ybt7eMXgrMfGCh+pu5HDc=EpM9XqGLyyih7Q@mail.gmail.com>
+References: <20150224220923.GA23344@peff.net> <CAP8UFD27xaJU3QFuQZqADmh=ZseiN=Y1WCFPk4v4RzizK=2Xtg@mail.gmail.com>
+ <xmqqlhjb13s3.fsf@gitster.dls.corp.google.com> <54F986D6.5000607@drmicha.warpmail.net>
+ <CAP8UFD2qGBPiNaDmx1OELM45TZqSqKkHZkdVOqupWKKxPxbvOw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Jay Soffian <jaysoffian@gmail.com>,
-	=?UTF-8?Q?Bj=C3=B6rn_Gustavsson?= <bgustavsson@gmail.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Mar 06 17:49:18 2015
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Jeff King <peff@peff.net>, git <git@vger.kernel.org>,
+	"git@sfconservancy.org" <git@sfconservancy.org>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 06 18:03:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YTvR0-0003tK-2u
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Mar 2015 17:49:10 +0100
+	id 1YTvfG-0007Iy-Ou
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Mar 2015 18:03:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756213AbbCFQtC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Mar 2015 11:49:02 -0500
-Received: from mail-ob0-f181.google.com ([209.85.214.181]:38378 "EHLO
-	mail-ob0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751838AbbCFQtA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Mar 2015 11:49:00 -0500
-Received: by obcwo20 with SMTP id wo20so21732219obc.5
-        for <git@vger.kernel.org>; Fri, 06 Mar 2015 08:49:00 -0800 (PST)
+	id S932083AbbCFRDu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Mar 2015 12:03:50 -0500
+Received: from mail-oi0-f49.google.com ([209.85.218.49]:43321 "EHLO
+	mail-oi0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751814AbbCFRDt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Mar 2015 12:03:49 -0500
+Received: by oibg201 with SMTP id g201so18677674oib.10
+        for <git@vger.kernel.org>; Fri, 06 Mar 2015 09:03:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:cc:content-type;
-        bh=X3ersejABmK6PaPFxcvyph6pP5ZocHbRrx+hbPjORrQ=;
-        b=O33MJAMILlOn0iBsnPPvgMoYC2xjLNrIlnhK5CXsy2NSU8gGYYDZ4aJdSKkCGTXTGC
-         viApwb688IXR80Uw+hyMsYAtYhyaW1oFH5eWvpEPRP7rHkJtoO/GbST+Py/8P7QNiTWG
-         u7FlDjdO8c5DOX3qFFjd7laGDiy4AYOiLmmZxHIesCzQHFCKA2m8yaSKktyLmOvJbf1C
-         Zfx4giQv1c4RLnFpuNxYUWB3Z3xzzVHmTHv/6RcbjqHhaJdQ4L+665v7VoAFA5ZCDraZ
-         zPWxDz1DYVMUSAQHe3TrLTbR/zx9PcDURnfghzXJKEfKNig9n60rcN0VzVQnxg8RIejI
-         sIIQ==
-X-Received: by 10.182.60.197 with SMTP id j5mr11544856obr.85.1425660539981;
- Fri, 06 Mar 2015 08:48:59 -0800 (PST)
-Received: by 10.76.82.1 with HTTP; Fri, 6 Mar 2015 08:48:39 -0800 (PST)
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=R7dsJkoygtqMKrWhUBZKK/7syJIykwNZ6esIeXl1s90=;
+        b=U9R/SbYYKPhrjB5BmCGgQvnJK9ztqQeO78VE0EbdvuddF8rj/gI4qKJ33kOdUwmmli
+         /QLmO75C5KE/iHtgIIUOzPNKjAbpHBKG2tRz9fWnDeCBt9kjCq2TCfsOwFDaZzod3YxM
+         y6E6j4vPcacivF4yvw/sF5VYAzHjc6rAKE7WL1yfws3sgjcjMZVllnHDlKKWvoF9Kakz
+         zZNtMM6Wcx8GEgkfrI1hk9iNhOgmhkPOgvQdJ9h0AnhMLHTFo6FSm8vqd0etFhzGWrTZ
+         zWDm4mzFFMlV/T7P0W9nhlxBTkTiwQ480/B4DkqrnJFbpibi9IWyac05MxaNI4E/1MPM
+         m9nA==
+X-Received: by 10.202.188.66 with SMTP id m63mr11184914oif.14.1425661428860;
+ Fri, 06 Mar 2015 09:03:48 -0800 (PST)
+Received: by 10.202.48.132 with HTTP; Fri, 6 Mar 2015 09:03:28 -0800 (PST)
+In-Reply-To: <CAP8UFD2qGBPiNaDmx1OELM45TZqSqKkHZkdVOqupWKKxPxbvOw@mail.gmail.com>
+X-Google-Sender-Auth: KQuU2Um5oJIBBkvvUasR6sEzQz0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264941>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264942>
 
-The --prune option to fetch added in v1.6.5-8-gf360d84 seems to be
-around 20-30x slower than the equivalent operation with git remote
-prune. I'm wondering if I'm missing something and fetch does something
-more, but it doesn't seem so.
+On Fri, Mar 6, 2015 at 4:55 AM, Christian Couder
+<christian.couder@gmail.com> wrote:
+>
+> I had more in mind the people who mentored GSoC students (and this way
+> helped the Git project get some money)...
 
-To test this clone git.git, create 1000 branches it in, create two
-local clones of that clone and then delete the 1000 branches in the
-original. I have a script to do this at
-https://gist.github.com/avar/497c8c8fbd641fb756ef
+Just on this part, because I want to avoid giving a wrong impression
+to discourage
+potential mentors to participate and help GSoC.
 
-Then in each of the clones:
+The Git project does not require mentors to donate their mentorship
+stipend to the
+project. IIRC The pool started because the stipend was a small amount of money
+($500 or so) that still counted as income to whoever is getting, and
+all mentors found
+it not worth their time having to deal with the hassle individually.
+That is how our
+association with Software Freedom Conservancy started: have a legal entity hold
+such money as a non-profit.
 
-    $ git branch -a|wc -l; time (~/g/git/git-fetch --prune origin
->/dev/null 2>&1); git branch -a | wc -l
-1003
-    real    0m3.337s
-    user    0m2.996s
-    sys     0m0.336s
-    3
+If a mentor wants to keep his mentorship stipend, the Git project (the
+legal entity)
+is perfectly OK with that.
 
-    $ git branch -a|wc -l; time (~/g/git/git-remote prune origin
->/dev/null 2>&1); git branch -a | wc -l
-    1003
-    real    0m0.067s
-    user    0m0.020s
-    sys     0m0.040s
-    3
-
-Both of these ends up doing a "git fetch", so it's not that. I'm quite
-rusty in C profiling but here's a gprof of the git-fetch command:
-
-$ gprof ~/g/git/git-fetch|head -n 20
-Flat profile:
-
-Each sample counts as 0.01 seconds.
-  %   cumulative   self              self     total
- time   seconds   seconds    calls   s/call   s/call  name
- 26.42      0.33     0.33  1584583     0.00     0.00  strbuf_getwholeline
- 14.63      0.51     0.18 90601347     0.00     0.00  strbuf_grow
- 13.82      0.68     0.17  1045676     0.00     0.00  find_pack_entry_one
-  8.13      0.78     0.10  1050062     0.00     0.00  check_refname_format
-  6.50      0.86     0.08  1584675     0.00     0.00  get_sha1_hex
-  5.69      0.93     0.07  2100529     0.00     0.00  starts_with
-  3.25      0.97     0.04  1044043     0.00     0.00  refname_is_safe
-  3.25      1.01     0.04     8007     0.00     0.00  get_packed_ref_cache
-  2.44      1.04     0.03  2605595     0.00     0.00  search_ref_dir
-  2.44      1.07     0.03  1040500     0.00     0.00  peel_entry
-  1.63      1.09     0.02  2632661     0.00     0.00  get_ref_dir
-  1.63      1.11     0.02  1044043     0.00     0.00  create_ref_entry
-  1.63      1.13     0.02     8024     0.00     0.00  do_for_each_entry_in_dir
-  0.81      1.14     0.01  2155105     0.00     0.00  memory_limit_check
-  0.81      1.15     0.01  1580503     0.00     0.00  sha1_to_hex
-
-And of the git-remote command:
-
-$ gprof ~/g/git/git-remote|head -n 20
-Flat profile:
-
-Each sample counts as 0.01 seconds.
- no time accumulated
-
-  %   cumulative   self              self     total
- time   seconds   seconds    calls  Ts/call  Ts/call  name
-  0.00      0.00     0.00   197475     0.00     0.00  strbuf_grow
-  0.00      0.00     0.00    24214     0.00     0.00  sort_ref_dir
-  0.00      0.00     0.00    24190     0.00     0.00  search_ref_dir
-  0.00      0.00     0.00    21661     0.00     0.00  memory_limit_check
-  0.00      0.00     0.00    20236     0.00     0.00  get_ref_dir
-  0.00      0.00     0.00     9187     0.00     0.00  xrealloc
-  0.00      0.00     0.00     7048     0.00     0.00  strbuf_add
-  0.00      0.00     0.00     6348     0.00     0.00  do_xmalloc
-  0.00      0.00     0.00     6126     0.00     0.00  xcalloc
-  0.00      0.00     0.00     6056     0.00     0.00  cleanup_path
-  0.00      0.00     0.00     6050     0.00     0.00  get_git_dir
-  0.00      0.00     0.00     6050     0.00     0.00  vsnpath
-  0.00      0.00     0.00     5554     0.00     0.00  config_file_fgetc
-
-Aside from the slowness of git-fetch it seems git-remote can be sped
-up quite a bit by more aggressively allocating a larger string buffer
-from the get-go.
+Of course, I am hoping that all the mentors are doing GSoC not for money but out
+of love of our software and our community, but the above sounded as if you are
+saying that the past mentors were robbed by the project and are
+entitled to crawl
+their money back. I just wanted to make sure that mentors will not be
+robbed (and
+the past ones weren't robbed) against their will.
