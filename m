@@ -1,180 +1,129 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 1/2] git-credential-store: support XDG config dir
-Date: Fri, 06 Mar 2015 10:57:13 +0100
-Message-ID: <vpqfv9ila86.fsf@anie.imag.fr>
-References: <1425414299-24000-1-git-send-email-pyokagan@gmail.com>
-	<1425414299-24000-2-git-send-email-pyokagan@gmail.com>
-	<20150304094505.GA15593@peff.net>
-	<CACRoPnTBmqtB+mvx9wFG3EUDRjfrsM==GQsso6V3q9NHH1k-YA@mail.gmail.com>
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <l.s.r@web.de>
+Subject: Re: [PATCH] [GSoC][MICRO] Forbid "log --graph --no-walk"
+Date: Fri, 06 Mar 2015 11:07:00 +0100
+Message-ID: <54F97C44.8070204@web.de>
+References: <1425632110-31863-1-git-send-email-dongcan.jiang@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 06 10:57:51 2015
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Dongcan Jiang <dongcan.jiang@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 06 11:07:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YTp0s-0004v6-4J
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Mar 2015 10:57:46 +0100
+	id 1YTpAD-0005fy-DY
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Mar 2015 11:07:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753451AbbCFJ5g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Mar 2015 04:57:36 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:51696 "EHLO rominette.imag.fr"
+	id S932410AbbCFKHT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Mar 2015 05:07:19 -0500
+Received: from mout.web.de ([212.227.17.11]:59959 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932106AbbCFJ5c (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Mar 2015 04:57:32 -0500
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t269vCiV030650
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 6 Mar 2015 10:57:12 +0100
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t269vDc3018348;
-	Fri, 6 Mar 2015 10:57:13 +0100
-In-Reply-To: <CACRoPnTBmqtB+mvx9wFG3EUDRjfrsM==GQsso6V3q9NHH1k-YA@mail.gmail.com>
-	(Paul Tan's message of "Thu, 5 Mar 2015 14:26:39 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 06 Mar 2015 10:57:14 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t269vCiV030650
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1426240635.6074@arDRK77WercpfqyA4HCrug
+	id S932309AbbCFKHR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Mar 2015 05:07:17 -0500
+Received: from [192.168.178.27] ([79.253.128.80]) by smtp.web.de (mrweb102)
+ with ESMTPSA (Nemesis) id 0MDxGV-1YFjsS2d2t-00HQQO; Fri, 06 Mar 2015 11:07:15
+ +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <1425632110-31863-1-git-send-email-dongcan.jiang@gmail.com>
+X-Provags-ID: V03:K0:u+Z4veCmGTH960z0OPCAbpWXpjacQoNBJ18PxtGAhriIRxlUeE5
+ ttfTwFaPjAqkAKKmCEye3S6r8uWV411LIzvJ9pSAE6OK8S/hk957tUmFMp7wRlwXvqKfrrr
+ eT8CxPfFS2WEgmmVHaYLzddtB9y56yhbMLZnd65Gv/1JERK3cOh5fBOVNCqP4HPW+sZcQAG
+ nqMUOyxkk0Bi09Mf2CUqQ==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264907>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264908>
 
-Paul Tan <pyokagan@gmail.com> writes:
-
-> Hi all,
+Am 06.03.2015 um 09:55 schrieb Dongcan Jiang:
+> Because --graph is about connected history while --no-walk is about discrete points.
 >
-> Thanks for the review. I apologize for rushing the patch out as I
-> wanted to get feedback on the new behavior before committing to any
-> more code changes.
-
-There is no problem sending unfinished versions for discussions. If
-unsure, send it as [RFC/PATCH].
-
->> When writting a commit message, always insist on _why_ [...]
+> revision.c: Judge whether --graph and --no-walk come together when running git-log.
+> buildin/log.c: Set git-log cmd flag.
+> Documentation/rev-list-options.txt: Add specification on the forbidden usage.
 >
-> Generally, I would like git to have full support for the XDG base dir
-> spec
-
-The point is not only why you implement XDG spec (which is not very
-controversial), but also why you did it the way you did.
-
-> In fact, thinking about it again, I think the behavior implemented in
-> the patch may not be suitable. Comments below.
-
-Writting more arguments in the commit message helps getting these
-thoughts earlier ;-).
-
->>> Likewise,
->>> lookup_credential() returns 1 if it could find the credential, and 0 if
->>> it could not.
->>
->> Err, you're changing the calling convention, and you're not the only
->> caller (git grep lookup_credential).
->>
->> If you need to change this existing function, best is to start your
->> series with a preparatory patch that does the calling convention change,
->> adapts the other caller, and then write your change on top, as [PATCH 2].
+> Signed-off-by: Dongcan Jiang <dongcan.jiang@gmail.com>
+> ---
+>   Documentation/rev-list-options.txt | 2 ++
+>   builtin/log.c                      | 1 +
+>   revision.c                         | 4 ++++
+>   revision.h                         | 3 +++
+>   4 files changed, 10 insertions(+)
 >
-> Eh? I thought lookup_credential has static linkage. The only other use
-> of lookup_credential is in credential-cache--daemon.c, and that has
-> its own function definition with static linkage.
-
-Indeed, it was only me looking at "git grep" too fast. You're right.
-
->>> -     if (!strcmp(op, "get"))
->>> -             lookup_credential(file, &c);
->>> -     else if (!strcmp(op, "erase"))
->>> -             remove_credential(file, &c);
->>> -     else if (!strcmp(op, "store"))
->>> -             store_credential(file, &c);
->>> -     else
->>> +     if (!strcmp(op, "get")) {
->>> +             if (file) {
->>> +                     lookup_credential(file, &c);
->>> +             } else {
->>> +                     if (xdg_file && access_or_warn(xdg_file, R_OK, 0) == 0)
->>> +                             ret = lookup_credential(xdg_file, &c);
->>> +                     if (!ret && home_file && access_or_warn(home_file, R_OK, 0) == 0)
->>> +                             lookup_credential(home_file, &c);
->>> +             }
->>> +     } else if (!strcmp(op, "erase")) {
->>> +             if (file) {
->>> +                     remove_credential(file, &c);
->>> +             } else {
->>> +                     if (xdg_file && access(xdg_file, F_OK) == 0)
->>> +                             remove_credential(xdg_file, &c);
->>> +                     if (home_file && access(home_file, F_OK) == 0)
->>> +                             remove_credential(home_file, &c);
->>
->> Why is it somethimes access_or_warn and sometimes just access? (genuine
->> question)
+> diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+> index 4ed8587..eea2c0a 100644
+> --- a/Documentation/rev-list-options.txt
+> +++ b/Documentation/rev-list-options.txt
+> @@ -679,6 +679,7 @@ endif::git-rev-list[]
+>   	given on the command line. Otherwise (if `sorted` or no argument
+>   	was given), the commits are shown in reverse chronological order
+>   	by commit time.
+> +	Cannot be combined with `--graph` when running git-log.
 >
-> For "get" even though the xdg file cannot be read I believe it should
-> not be a fatal error because the credential may be found in the home
-> file. We should still warn the user though because it may not be what
-> the user wants.
-
-IMHO, this would deserve a short comment in the code, e.g. /* Warn the
-user, but we may recover by finding credential in another file */ or so.
-
-It's less sensitive, but there was more subtle breakages with the config
-file (should Git do something at all when the config files can't be read
-completely?).
-
-> However, I see now that I mistakenly broke compatibility with the old
-> behavior, which errors out if the home credential file could not be
-> read.
-
-You changed the behavior, but it's not really a compatibility breakage:
-I doubt people _rely_ on Git dying in this case.
-
-I have no strong opinion on what behavior is the best, I think yours
-makes sense, but if you go for it, it should be documented in the commit
-message (or even better: the change could be extracted into a separate
-patch)
-
->> I'm not convinced you need to remove the credential from home_file if
->> the xdg_file takes precedence. Not saying you shouldn't, but you should
->> argue more at least.
+>   --do-walk::
+>   	Overrides a previous `--no-walk`.
+> @@ -781,6 +782,7 @@ you would get an output like this:
+>   	on the left hand side of the output.  This may cause extra lines
+>   	to be printed in between commits, in order for the graph history
+>   	to be drawn properly.
+> +	Cannot be combined with `--no-walk` when running git-log.
+>   +
+>   This enables parent rewriting, see 'History Simplification' below.
+>   +
+> diff --git a/builtin/log.c b/builtin/log.c
+> index dd8f3fc..7bf5adb 100644
+> --- a/builtin/log.c
+> +++ b/builtin/log.c
+> @@ -627,6 +627,7 @@ int cmd_log(int argc, const char **argv, const char *prefix)
+>   	git_config(git_log_config, NULL);
 >
-> Indeed, I committed a reasoning error there. I was thinking about what
-> happens if the user runs "store" on the new version of git, then
-> switches to an old one. Actually, "store" should write to both, so
-> that users will get the updated credentials regardless of whether they
-> use the old or new git.
+>   	init_revisions(&rev, prefix);
+> +	rev.cmd_is_log = 1;
+>   	rev.always_show_header = 1;
+>   	memset(&opt, 0, sizeof(opt));
+>   	opt.def = "HEAD";
+> diff --git a/revision.c b/revision.c
+> index 66520c6..5f62c89 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -1399,6 +1399,8 @@ void init_revisions(struct rev_info *revs, const char *prefix)
+>
+>   	revs->commit_format = CMIT_FMT_DEFAULT;
+>
+> +	revs->cmd_is_log = 0;
+> +
+>   	init_grep_defaults();
+>   	grep_init(&revs->grep_filter, prefix);
+>   	revs->grep_filter.status_only = 1;
+> @@ -2339,6 +2341,8 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+>
+>   	if (revs->reflog_info && revs->graph)
+>   		die("cannot combine --walk-reflogs with --graph");
+> +	if (revs->no_walk && revs->graph && revs->cmd_is_log)
+> +		die("cannot combine --no-walk with --graph when running git-log");
 
-Actually, your version made sense too. Credentials are usually
-confidential data that you don't want to replicate too much. One reason
-for using "store" can be that you want to overwrite your old password
-with something else, and not leave your old password lying around
-(because, e.g. it's the same password you use for your bank account and
-nuclear launch code, and you haven't changed it there yet).
+Why only for git log?  Doesn't the justification given in the commit 
+message above apply in general?
 
-> In fact, the priority needs to be changed. To summarize, for
-> compatibility with older versions, git should read from the home
-> credentials file first, then the XDG one (since store will handle
-> updating of both). For writing, git should write to both files. For
-> erasing, git should erase from both files.
-
-OTOH, if you really want compatibility with old versions, just don't
-create .config/git/ and git will still write to ~/.git-credentials,
-right? As long as XDG remains an opt-in feature, I wouldn't care too
-much about backward compatibility.
-
-At some point, I personnally think XDG should become the default, but we
-can wait as much as needed to do that (and not everybody may agree with
-me here).
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+>   	if (!revs->reflog_info && revs->grep_filter.use_reflog_filter)
+>   		die("cannot use --grep-reflog without --walk-reflogs");
+>
+> diff --git a/revision.h b/revision.h
+> index 0ea8b4e..255982a 100644
+> --- a/revision.h
+> +++ b/revision.h
+> @@ -146,6 +146,9 @@ struct rev_info {
+>   			track_first_time:1,
+>   			linear:1;
+>
+> +	/* cmd type */
+> +	unsigned int  cmd_is_log:1;
+> +
+>   	enum date_mode date_mode;
+>
+>   	unsigned int	abbrev;
+>
