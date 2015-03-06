@@ -1,94 +1,141 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Bashing freelancers
-Date: Fri, 06 Mar 2015 14:06:57 -0800
-Message-ID: <xmqq8uf9ye4e.fsf@gitster.dls.corp.google.com>
-References: <20150224220923.GA23344@peff.net>
-	<CAP8UFD27xaJU3QFuQZqADmh=ZseiN=Y1WCFPk4v4RzizK=2Xtg@mail.gmail.com>
-	<xmqqlhjb13s3.fsf@gitster.dls.corp.google.com>
-	<54F986D6.5000607@drmicha.warpmail.net>
-	<CAP8UFD2qGBPiNaDmx1OELM45TZqSqKkHZkdVOqupWKKxPxbvOw@mail.gmail.com>
-	<CAPc5daVo5tDpx2ybt7eMXgrMfGCh+pu5HDc=EpM9XqGLyyih7Q@mail.gmail.com>
-	<8761aeowff.fsf_-_@fencepost.gnu.org>
-	<xmqq1tl210g1.fsf@gitster.dls.corp.google.com>
-	<871tl1q25i.fsf@fencepost.gnu.org>
+From: Soren Brinkmann <soren.brinkmann@xilinx.com>
+Subject: [PATCH] send-email: Add CCs from additional commit tags
+Date: Fri, 6 Mar 2015 13:59:21 -0800
+Message-ID: <1425679161-13963-1-git-send-email-soren.brinkmann@xilinx.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git <git@vger.kernel.org>
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Fri Mar 06 23:07:19 2015
+Cc: <git@vger.kernel.org>, Soren Brinkmann <soren.brinkmann@xilinx.com>
+To: <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 06 23:32:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YU0Os-0006DZ-C9
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Mar 2015 23:07:18 +0100
+	id 1YU0nM-0003SU-1w
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Mar 2015 23:32:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754938AbbCFWHJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Mar 2015 17:07:09 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:60936 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754883AbbCFWHB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Mar 2015 17:07:01 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 896C73E1BA;
-	Fri,  6 Mar 2015 17:07:00 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=vibWeTDRMzg/wmhgjG2lzalSobA=; b=mvVCJA
-	Hmq98zLUcQ6wGYWrsJRcy+5bPsBsPvPrlSaXCplNDaOjXIeBlNT8yEqMFZPN42+s
-	VeLv8dks3yzkUB3j09z9reCDP70sq2t6UYVYbWyzG5jysssT8lgBkTBghDdDRwU1
-	Kh68sgQ2C0ia8ouh+l7ZJAvUfx8XG4/fzJyvE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=S6pxtFn2RaqoxoCdbux1J+stZv4L/o44
-	PrGT74MVWvYwgV+5GnH43OkshCk2Hbh8IeKkRjL5CNxwfAhZ/5+v0TJDrHiIeYUb
-	0NhUqewSR152E5ui+8qzR+D4CArZz/FFcTEhmWWKDzT3wSzLzKoAUEDNFw1FgD03
-	FxcLrCaYgNg=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7D1503E1B8;
-	Fri,  6 Mar 2015 17:07:00 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D28663E1B6;
-	Fri,  6 Mar 2015 17:06:59 -0500 (EST)
-In-Reply-To: <871tl1q25i.fsf@fencepost.gnu.org> (David Kastrup's message of
-	"Fri, 06 Mar 2015 21:52:41 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 1C9107C6-C44D-11E4-ADCE-29999F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1755749AbbCFWcb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Mar 2015 17:32:31 -0500
+Received: from mail-bl2on0066.outbound.protection.outlook.com ([65.55.169.66]:8816
+	"EHLO na01-bl2-obe.outbound.protection.outlook.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1754313AbbCFWca (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Mar 2015 17:32:30 -0500
+X-Greylist: delayed 1041 seconds by postgrey-1.27 at vger.kernel.org; Fri, 06 Mar 2015 17:32:30 EST
+Received: from BY2FFO11FD029.protection.gbl (10.1.14.31) by
+ BY2FFO11HUB007.protection.gbl (10.1.14.213) with Microsoft SMTP Server (TLS)
+ id 15.1.112.13; Fri, 6 Mar 2015 21:59:44 +0000
+Received: from xsj-tvapsmtpgw01 (149.199.60.96) by
+ BY2FFO11FD029.mail.protection.outlook.com (10.1.14.212) with Microsoft SMTP
+ Server (TLS) id 15.1.112.13 via Frontend Transport; Fri, 6 Mar 2015 21:59:44
+ +0000
+Received: from 172-16-1-203.xilinx.com ([172.16.1.203]:41762 helo=xsj-tvapsmtp02.xilinx.com)
+	by xsj-tvapsmtpgw01 with esmtp (Exim 4.63)
+	(envelope-from <soren.brinkmann@xilinx.com>)
+	id 1YU0Da-0005Jk-78; Fri, 06 Mar 2015 13:55:38 -0800
+Received: from [127.0.0.1] (port=39337 helo=xsj-tvapsmtp02)
+	by xsj-tvapsmtp02.xilinx.com with esmtp (Exim 4.63)
+	(envelope-from <soren.brinkmann@xilinx.com>)
+	id 1YU0HX-0002hB-Qn; Fri, 06 Mar 2015 13:59:43 -0800
+Received: from [172.19.74.49] (port=36842 helo=xsjsorenbubuntu.xilinx.com)
+	by xsj-tvapsmtp02 with esmtp (Exim 4.63)
+	(envelope-from <soren.brinkmann@xilinx.com>)
+	id 1YU0HX-0002h8-By; Fri, 06 Mar 2015 13:59:43 -0800
+X-Mailer: git-send-email 2.3.1.2.g90df61e.dirty
+X-TM-AS-MML: disable
+X-TM-AS-Product-Ver: IMSS-7.1.0.1679-7.5.0.1018-21380.002
+X-TM-AS-Result: No--6.441-7.0-31-10
+X-imss-scan-details: No--6.441-7.0-31-10
+X-TMASE-MatchedRID: yvDAzrttxFW71D3eW4MsP5UJP7vFynrRtZN20SHV1TSyviDTFB4Ln9/9
+	N6lK9KH6lTJXKqh1ne2b7quYRXJ/JsFeWQ9rEC3V/c0+LJTMrN2w3bSBLOCKsiejgKDUPU+kPH1
+	YQV8stCdrpI/D8jslP4Ay6p60ZV62fJ5/bZ6npdg7AFczfjr/7E2bAORjTG0LWNhp6fjzTgqoft
+	njKuiODqzW+Twct4KOOpClPH3M2CQ=
+X-EOPAttributedMessage: 0
+Received-SPF: Fail (protection.outlook.com: domain of xilinx.com does not
+ designate 149.199.60.96 as permitted sender) receiver=protection.outlook.com;
+ client-ip=149.199.60.96; helo=xsj-tvapsmtpgw01;
+Authentication-Results: spf=fail (sender IP is 149.199.60.96)
+ smtp.mailfrom=soren.brinkmann@xilinx.com; pobox.com; dkim=none (message not
+ signed) header.d=none;
+X-Forefront-Antispam-Report: CIP:149.199.60.96;CTRY:US;IPV:NLI;EFV:NLI;BMV:1;SFV:NSPM;SFS:(10009020)(6009001)(339900001)(189002)(199003)(105606002)(33646002)(110136001)(77096005)(77156002)(6806004)(64026002)(19580395003)(62966003)(19580405001)(36756003)(47776003)(71366001)(2351001)(50466002)(87936001)(50986999)(50226001)(16796002)(85426001)(229853001)(46102003)(48376002)(92566002)(86362001)(7059030)(107986001);DIR:OUT;SFP:1101;SCL:1;SRVR:BY2FFO11HUB007;H:xsj-tvapsmtpgw01;FPR:;SPF:Fail;MLV:sfv;MX:1;A:1;LANG:en;
+X-Microsoft-Antispam: UriScan:;BCL:0;PCL:0;RULEID:;SRVR:BY2FFO11HUB007;
+X-Microsoft-Antispam-PRVS: <BY2FFO11HUB007EF6FC518508A600FC3618C1C0@BY2FFO11HUB007.protection.gbl>
+X-Exchange-Antispam-Report-Test: UriScan:;
+X-Exchange-Antispam-Report-CFA-Test: BCL:0;PCL:0;RULEID:(601004)(5005006)(5002007);SRVR:BY2FFO11HUB007;BCL:0;PCL:0;RULEID:;SRVR:BY2FFO11HUB007;
+X-Forefront-PRVS: 05079D8470
+X-OriginatorOrg: xilinx.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Mar 2015 21:59:44.6721
+ (UTC)
+X-MS-Exchange-CrossTenant-Id: 657af505-d5df-48d0-8300-c31994686c5c
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=657af505-d5df-48d0-8300-c31994686c5c;Ip=[149.199.60.96];Helo=[xsj-tvapsmtpgw01]
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY2FFO11HUB007
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264968>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264969>
 
-David Kastrup <dak@gnu.org> writes:
+Add email addresses from additional commonly used tags to the CC-list of
+patches. Additional tags are:
+ - Acked-by
+ - Reviewed-by
+ - Tested-by
+ - Reported-by
+ - Reviewed-and-tested-by
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> David Kastrup <dak@gnu.org> writes:
->>
->>> Good work is worth good money. Suggesting that people who are not able
->>> to work for free are morally inferior is not conducive for a cooperative
->>> work atmosphere.
->>
->> Yes, but I do not think anybody did any such thing.
->
-> "Of course, I am hoping that all the mentors are doing GSoC not for
-> money but out of love of our software and our community,"
->
-> Huh.
+--suppress-cc=ack suppresses these additional CCs.
 
-I did not intend any moral judgement in that statement, but after
-re-reading it, I would say that "not for money" would have been
-better phrased as "not only for money".
+Signed-off-by: Soren Brinkmann <soren.brinkmann@xilinx.com>
+---
+ Documentation/git-send-email.txt | 3 +++
+ git-send-email.perl              | 5 +++--
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-Let me clarify.
-
-There _could_ be a mentor who hates Git the software and Git the
-community, who wants to mentor students only for the mentorship
-stipend.  I do not want to see such mentors.  I would imagine that
-such a person surely can find something else that is more enjoyable
-and do the mentoring there for money, if competent enough to mentor
-others.  And that would be good for everybody.
+diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
+index f248a8665e1f..1b521446ca11 100644
+--- a/Documentation/git-send-email.txt
++++ b/Documentation/git-send-email.txt
+@@ -293,6 +293,9 @@ Automating
+   patch body (commit message) except for self (use 'self' for that).
+ - 'sob' will avoid including anyone mentioned in Signed-off-by lines except
+    for self (use 'self' for that).
++- 'ack' will avoid including anyone who acked the  patch (mentioned in
++  Acked-by, Reviewed-by, Tested-by, Reviewed-and-tested-by lines except for
++  self (use 'self' for that).
+ - 'cccmd' will avoid running the --cc-cmd.
+ - 'body' is equivalent to 'sob' + 'bodycc'
+ - 'all' will suppress all auto cc values.
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 3092ab356c76..18eb8a5139a4 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -407,7 +407,7 @@ my(%suppress_cc);
+ if (@suppress_cc) {
+ 	foreach my $entry (@suppress_cc) {
+ 		die "Unknown --suppress-cc field: '$entry'\n"
+-			unless $entry =~ /^(?:all|cccmd|cc|author|self|sob|body|bodycc)$/;
++			unless $entry =~ /^(?:all|cccmd|cc|author|self|sob|body|bodycc|ack)$/;
+ 		$suppress_cc{$entry} = 1;
+ 	}
+ }
+@@ -1452,7 +1452,7 @@ foreach my $t (@files) {
+ 	# Now parse the message body
+ 	while(<$fh>) {
+ 		$message .=  $_;
+-		if (/^(Signed-off-by|Cc): (.*)$/i) {
++		if (/^(Signed-off-by|Cc|Acked-by|Reviewed-by|Tested-by|Reported-by|Reviewed-and-tested-by): (.*)$/i) {
+ 			chomp;
+ 			my ($what, $c) = ($1, $2);
+ 			chomp $c;
+@@ -1462,6 +1462,7 @@ foreach my $t (@files) {
+ 			} else {
+ 				next if $suppress_cc{'sob'} and $what =~ /Signed-off-by/i;
+ 				next if $suppress_cc{'bodycc'} and $what =~ /Cc/i;
++				next if $suppress_cc{'ack'} and $what =~ /(Acked-by|Reviewed-by|Tested-by|Reported-by|Reviewed-and-tested-by)/i;
+ 			}
+ 			push @cc, $c;
+ 			printf("(body) Adding cc: %s from line '%s'\n",
+-- 
+2.3.1.2.g90df61e.dirty
