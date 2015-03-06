@@ -1,56 +1,53 @@
-From: "Gondek, Andreas" <Andreas.Gondek@dwpbank.de>
-Subject: AW: Git merge driver / attributes bug in 2.3.1?
-Date: Fri, 6 Mar 2015 13:31:52 +0000
-Message-ID: <D8780C527EB1E642B3150E6D705B46D448E8058B@DWPWHMS531.dwpbank.local>
-References: <D8780C527EB1E642B3150E6D705B46D448E7E48C@DWPWHMS531.dwpbank.local>
- <54F98EBE.8080903@drmicha.warpmail.net>
+From: Andreas@gondek.de
+Subject: AW: Git merge driver / attributes bug in =?UTF-8?Q?=32=2E=33=2E?=
+ =?UTF-8?Q?=31=3F?=
+Date: Fri, 06 Mar 2015 14:40:27 +0100
+Message-ID: <201d303af6e888edf54fd610c7397caf@imap.euserv.de>
 Mime-Version: 1.0
 Content-Type: multipart/mixed;
-	boundary="_002_D8780C527EB1E642B3150E6D705B46D448E8058BDWPWHMS531dwpba_"
-To: Michael J Gruber <git@drmicha.warpmail.net>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Mar 06 14:32:07 2015
+ boundary="=_e016a425c4799d19d624ed52915cb108"
+To: Michael J Gruber <git@drmicha.warpmail.net>, <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Mar 06 14:46:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YTsME-0005xn-1C
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Mar 2015 14:32:02 +0100
+	id 1YTsaD-0000mI-4M
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Mar 2015 14:46:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752055AbbCFNb5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Mar 2015 08:31:57 -0500
-Received: from mail2.dwpbank.de ([145.253.155.115]:45847 "EHLO
-	mail2.dwpbank.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750890AbbCFNb4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Mar 2015 08:31:56 -0500
-X-IronPort-AV: E=Sophos;i="5.11,352,1422918000"; 
-   d="sh'?zip'48?scan'48,48,208";a="16362611"
-Received: from DWPWHMS531.dwpbank.local ([169.254.2.62]) by
- DWPWHMS530.dwpbank.local ([169.254.1.242]) with mapi id 14.03.0195.001; Fri,
- 6 Mar 2015 14:31:52 +0100
-Thread-Topic: Git merge driver / attributes bug in 2.3.1?
-Thread-Index: AdBXSJKXxxr16gR1Rkq4toiUl+/NogAr1gcAAAZ0pLA=
-In-Reply-To: <54F98EBE.8080903@drmicha.warpmail.net>
-Accept-Language: de-DE, en-US
-Content-Language: de-DE
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.101.236.155]
+	id S1753392AbbCFNqM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Mar 2015 08:46:12 -0500
+Received: from mail-out1.kundencontroller.de ([85.31.184.34]:53055 "EHLO
+	mail-out1.kundencontroller.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753134AbbCFNqK (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 Mar 2015 08:46:10 -0500
+X-Greylist: delayed 338 seconds by postgrey-1.27 at vger.kernel.org; Fri, 06 Mar 2015 08:46:09 EST
+Received: from support.euserv.de (85-31-185-104.blue.kundencontroller.de [85.31.185.104])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	(Authenticated sender: pop86484-200602251457580)
+	by mail-out1.kundencontroller.de (Postfix) with ESMTPSA id F178A1800BC6;
+	Fri,  6 Mar 2015 14:40:27 +0100 (CET)
+X-Sender: Andreas@gondek.de
+User-Agent: EUserv Webmail
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264922>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264923>
 
---_002_D8780C527EB1E642B3150E6D705B46D448E8058BDWPWHMS531dwpba_
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+--=_e016a425c4799d19d624ed52915cb108
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
 
-The archive contains my test repository, the merge driver and the .gitconfi=
-g of the user. We don't have a global .gitconfig.
+The archive contains my test repository, the merge driver and the 
+.gitconfig of the user. We don't have a global .gitconfig.
 
-Mit freundlichen Gr=FC=DFen
+The merge was tried from master to test.
+
+Greetings
 
 Andreas Gondek
 Applications
@@ -59,52 +56,55 @@ ________________________________
 Deutsche WertpapierService Bank AG
 ITTAS
 Derendorfer Allee 2
-40476 D=FCsseldorf
+40476 Düsseldorf
 Tel.: +49 69 5099 9503
 Fax: +49 69 5099 85 9503
 E-Mail: Andreas.Gondek@dwpbank.de
 http://www.dwpbank.de
 
-Deutsche WertpapierService Bank AG | Wildunger Stra=DFe 14 | 60487 Frankfur=
-t am Main=20
-Sitz der AG: Frankfurt am Main, HRB 56913 | USt.-ID: DE 813759005=20
+Deutsche WertpapierService Bank AG | Wildunger Straße 14 | 60487 
+Frankfurt am Main
+Sitz der AG: Frankfurt am Main, HRB 56913 | USt.-ID: DE 813759005
 Vorstand: Thomas Klanten, Dr. Christian Tonnesen
 Aufsichtsrat: Wilfried Groos (Vors.)
------Urspr=FCngliche Nachricht-----
-Von: Michael J Gruber [mailto:git@drmicha.warpmail.net]=20
-Gesendet: Freitag, 6. M=E4rz 2015 12:26
+
+-----Ursprüngliche Nachricht-----
+Von: Michael J Gruber [mailto:git@drmicha.warpmail.net]
+Gesendet: Freitag, 6. März 2015 12:26
 An: Gondek, Andreas; git@vger.kernel.org
 Betreff: Re: Git merge driver / attributes bug in 2.3.1?
 
 Gondek, Andreas venit, vidit, dixit 05.03.2015 14:30:
 > Hello,
->=20
-> after upgrading the Git installation on one of our development servers=20
-> from 1.9.0-rc3 to 2.3.1 we are experiencing strange behavior of merge=20
+>
+> after upgrading the Git installation on one of our development 
+> servers
+> from 1.9.0-rc3 to 2.3.1 we are experiencing strange behavior of merge
 > drivers.
->=20
-> A merge driver registered as "* merge=3D<name_of_merge_driver>" in the=20
-> .gitattributes is now executed even if there isn't any merge conflict.=20
+>
+> A merge driver registered as "* merge=<name_of_merge_driver>" in the
+> .gitattributes is now executed even if there isn't any merge 
+> conflict.
 > This only happens for files that are part of the merge.
->=20
+>
 > This is reproducible in test repositories.
 
 Can you share a minimal test repo?
 
 I've been trying to reproduce this, unsuccessfully so far.
 
-I guess it depends on how exactly those files are "part of the merge", and =
-how the merge driver is set up. (I've tried with and without recursive.)
+I guess it depends on how exactly those files are "part of the merge", 
+and how the merge driver is set up. (I've tried with and without 
+recursive.)
 
 Michael
 
---_002_D8780C527EB1E642B3150E6D705B46D448E8058BDWPWHMS531dwpba_
-Content-Type: application/x-zip-compressed; name="testRepo.zip"
-Content-Description: testRepo.zip
-Content-Disposition: attachment; filename="testRepo.zip"; size=30277;
-	creation-date="Fri, 06 Mar 2015 13:30:20 GMT";
-	modification-date="Fri, 06 Mar 2015 13:29:28 GMT"
+--=_e016a425c4799d19d624ed52915cb108
 Content-Transfer-Encoding: base64
+Content-Type: application/zip;
+ name=testRepo.zip
+Content-Disposition: attachment;
+ filename=testRepo.zip
 
 UEsDBAoAAAAAAKhzZkYAAAAAAAAAAAAAAAAJABUAdGVzdFJlcG8vVVQJAAOsq/lUuKv5VFV4BABj
 CMgAUEsDBAoAAAAAAHBzZkYAAAAAAAAAAAAAAAAfABUAdGVzdFJlcG8vdGVzdE1lcmdlRHJpdmVy
@@ -638,5 +638,4 @@ enNmRhGqxim2AAAA+QAAABMADQAAAAAAAQAAALSBoE4AAHRlc3RSZXBvLy5naXRjb25maWdVVAUA
 A1er+VRVeAAAUEsBAhcDCgAAAAAAgnNmRoAxZm07AAAAOwAAACIADQAAAAAAAQAAAO2BnE8AAHRl
 c3RSZXBvL2NyZWF0ZUNPTkZMSUNUU2VtYXBob3Iuc2hVVAUAA2Sr+VRVeAAAUEsFBgAAAABUAFQA
 AyYAACxQAAAAAA==
-
---_002_D8780C527EB1E642B3150E6D705B46D448E8058BDWPWHMS531dwpba_--
+--=_e016a425c4799d19d624ed52915cb108--
