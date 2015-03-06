@@ -1,87 +1,63 @@
-From: Akshay Aurora <akshayaurora@yahoo.com>
-Subject: Re: [GSoC microproject help] Allow "-" as a short-hand for "@{-1}" in
- more places
-Date: Sat, 7 Mar 2015 02:13:04 +0530
-Message-ID: <CAPGnZZ=12707HPSfGmqSMohdoT4h+Y13+vBGT6AX_Syr4Onx8w@mail.gmail.com>
-References: <loom.20150306T210409-558@post.gmane.org>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: Bashing freelancers
+Date: Fri, 06 Mar 2015 21:52:41 +0100
+Message-ID: <871tl1q25i.fsf@fencepost.gnu.org>
+References: <20150224220923.GA23344@peff.net>
+	<CAP8UFD27xaJU3QFuQZqADmh=ZseiN=Y1WCFPk4v4RzizK=2Xtg@mail.gmail.com>
+	<xmqqlhjb13s3.fsf@gitster.dls.corp.google.com>
+	<54F986D6.5000607@drmicha.warpmail.net>
+	<CAP8UFD2qGBPiNaDmx1OELM45TZqSqKkHZkdVOqupWKKxPxbvOw@mail.gmail.com>
+	<CAPc5daVo5tDpx2ybt7eMXgrMfGCh+pu5HDc=EpM9XqGLyyih7Q@mail.gmail.com>
+	<8761aeowff.fsf_-_@fencepost.gnu.org>
+	<xmqq1tl210g1.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Sundararajan R <dyoucme@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 06 21:43:13 2015
+Content-Type: text/plain
+Cc: git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 06 21:55:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YTz5S-00088e-Jn
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Mar 2015 21:43:10 +0100
+	id 1YTzHk-00024O-Bi
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Mar 2015 21:55:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756604AbbCFUnH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Mar 2015 15:43:07 -0500
-Received: from mail-we0-f179.google.com ([74.125.82.179]:39047 "EHLO
-	mail-we0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755098AbbCFUnF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Mar 2015 15:43:05 -0500
-Received: by wesu56 with SMTP id u56so18327181wes.6
-        for <git@vger.kernel.org>; Fri, 06 Mar 2015 12:43:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=4TmCwCqUVqwPp+VCwScN92CWo/CA8+p8hWwgP2lMy2U=;
-        b=L6HO4QpVC4DHgnwqMBdw6chwcEaeJoqbniXO9fXdaw/zgGOU72im48qtwtMbxqAK9Z
-         LwSkUqmzOt31Skj+j5plNDj2bx8sdgMnWQOXIObGXSuehjJb6vuxkQj9mf+u9HEbORR+
-         zEMbXr1uAdtLWK7Jphtu7qA1F5eq/xOPfSScnIVa5foweUFb0Yt4f0JKyxPO0wKyV6E9
-         S9q0aDWEUjrVCExTcNC4wjpdczJPwgYqELtwbphnUBf/zlrK4FTLfi9GaH6bSVq3zdsd
-         zjEX4W86JyF2n4emEiPkGBSrd9UeyIzuiiUEuSPGyeTOlOS9MAHcbxT1UTtSZm11e3Il
-         m0oQ==
-X-Received: by 10.180.75.233 with SMTP id f9mr7846344wiw.5.1425674584113; Fri,
- 06 Mar 2015 12:43:04 -0800 (PST)
-Received: by 10.27.45.1 with HTTP; Fri, 6 Mar 2015 12:43:04 -0800 (PST)
-In-Reply-To: <loom.20150306T210409-558@post.gmane.org>
-X-Google-Sender-Auth: Jjg1ok_eExJFx06Zzt8pearfxDg
+	id S1751994AbbCFUzs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Mar 2015 15:55:48 -0500
+Received: from fencepost.gnu.org ([208.118.235.10]:38499 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751276AbbCFUzr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Mar 2015 15:55:47 -0500
+Received: from localhost ([127.0.0.1]:37541 helo=lola)
+	by fencepost.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <dak@gnu.org>)
+	id 1YTzHe-00051c-KT; Fri, 06 Mar 2015 15:55:46 -0500
+Received: by lola (Postfix, from userid 1000)
+	id B262DE6836; Fri,  6 Mar 2015 21:52:41 +0100 (CET)
+In-Reply-To: <xmqq1tl210g1.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Fri, 06 Mar 2015 09:48:46 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.0.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264959>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264960>
 
-Hi Sundararajan,
+Junio C Hamano <gitster@pobox.com> writes:
 
-Welcome to Git Community.
-
-You need to look for commands dealing with branches, and allow  '-' as
-shorthand for @{-1}.
-
-You can look at patches already sent for this microproject. One of the
-students has already started working on git reset command [0].
-
-Junio, has raised some key issues you'll need to tackle on that
-thread. Hopefully it should get you started.
-
-Make sure the existing tests pass after making changes. You might also
-need to add a new test case for your microproject.
-
-[0] - http://thread.gmane.org/gmane.comp.version-control.git/264688
-
-On Sat, Mar 7, 2015 at 1:35 AM, Sundararajan R <dyoucme@gmail.com> wrote:
-> Hi All,
+> David Kastrup <dak@gnu.org> writes:
 >
-> I am a sophomore at Indian Institute of Technology Kanpur and am a GSoC
-> aspirant for git. Although I have been using git from a long time, this is
-> the first occasion when I have picked up reading its source code. Can
-> somebody please help me by telling me how to start off with the above
-> mentioned microproject?
+>> Good work is worth good money. Suggesting that people who are not able
+>> to work for free are morally inferior is not conducive for a cooperative
+>> work atmosphere.
 >
-> Thank you very much.
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> Yes, but I do not think anybody did any such thing.
 
+"Of course, I am hoping that all the mentors are doing GSoC not for
+money but out of love of our software and our community,"
 
+Huh.
 
 -- 
-AA
+David Kastrup
