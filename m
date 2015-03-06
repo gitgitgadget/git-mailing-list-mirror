@@ -1,80 +1,62 @@
-From: "Reni Dimitrova ." <announcement@wopu.org>
-Subject: Reminder for Invited Authors:  Upload it until March 20, 2015. Extended Versions of all the Invited papers will be promoted for direct publication in 36 Collaborating ISI/SCI Journals (with Impact Factor from Thomson Reuters)
-Date: Fri, 6 Mar 2015 12:30:42 +0200
-Message-ID: <20150306103041.79E063D3167E@genf174.server4you.net>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [PATCH v3] git: make "git -C '' <cmd>" not to barf
+Date: Fri, 06 Mar 2015 16:57:28 +0100
+Message-ID: <87d24mnmon.fsf@igel.home>
+References: <1425625534-11869-1-git-send-email-karthik.188@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Mar 06 16:43:09 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 06 16:57:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YTuP3-00081Y-4g
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Mar 2015 16:43:05 +0100
+	id 1YTud7-0003Kq-WD
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Mar 2015 16:57:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755208AbbCFPnA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Mar 2015 10:43:00 -0500
-Received: from genf174.server4you.net ([217.172.184.70]:56986 "EHLO
-	genf174.server4you.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755339AbbCFPm7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 Mar 2015 10:42:59 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by genf174.server4you.net (Postfix) with ESMTP id B33BA3D3633F
-	for <git@vger.kernel.org>; Fri,  6 Mar 2015 15:29:47 +0100 (CET)
-Received: from genf174.server4you.net ([127.0.0.1])
-	by localhost (genf174.server4you.net [127.0.0.1]) (amavisd-new, port 10032)
-	with ESMTP id X1zhtW-bUlO8 for <git@vger.kernel.org>;
-	Fri,  6 Mar 2015 15:29:47 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by genf174.server4you.net (Postfix) with ESMTP id 62A673D2B122
-	for <git@vger.kernel.org>; Fri,  6 Mar 2015 12:37:08 +0100 (CET)
-X-Virus-Scanned: amavisd-new at genf174.server4you.net
-Received: from genf174.server4you.net ([127.0.0.1])
-	by localhost (genf174.server4you.net [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id YTkU9JXPHx51 for <git@vger.kernel.org>;
-	Fri,  6 Mar 2015 12:37:08 +0100 (CET)
-Received: from 10.0.2.15 (genf174.server4you.net [217.172.184.70])
-	by genf174.server4you.net (Postfix) with SMTP id 79E063D3167E
-	for <git@vger.kernel.org>; Fri,  6 Mar 2015 11:30:40 +0100 (CET)
-X-Priority: 1 (Highest)
+	id S1753595AbbCFP5d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Mar 2015 10:57:33 -0500
+Received: from mail-out.m-online.net ([212.18.0.10]:35322 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753037AbbCFP5c (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Mar 2015 10:57:32 -0500
+Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3kzD9P0GRhz3hmrq;
+	Fri,  6 Mar 2015 16:57:29 +0100 (CET)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
+	by mail.m-online.net (Postfix) with ESMTP id 3kzD9N6vCXzvhMb;
+	Fri,  6 Mar 2015 16:57:28 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.182])
+	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
+	with ESMTP id d8pfeNmhNiC7; Fri,  6 Mar 2015 16:57:28 +0100 (CET)
+X-Auth-Info: bzNd668bIRyKl0E2n3+KmKbk+gyAgiN1rGWuvttzXNdCw/n0ICjQ1Q5DdtqNB6no
+Received: from igel.home (ppp-88-217-108-54.dynamic.mnet-online.de [88.217.108.54])
+	by mail.mnet-online.de (Postfix) with ESMTPA;
+	Fri,  6 Mar 2015 16:57:28 +0100 (CET)
+Received: by igel.home (Postfix, from userid 1000)
+	id 093642C0682; Fri,  6 Mar 2015 16:57:28 +0100 (CET)
+X-Yow: I want a WESSON OIL lease!!
+In-Reply-To: <1425625534-11869-1-git-send-email-karthik.188@gmail.com>
+	(Karthik Nayak's message of "Fri, 6 Mar 2015 12:35:34 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4.90 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264932>
 
-Dear Invited Author,
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-We can host your Invited Paper in our new international conferences in Barcelona,
-Spain, April 7-9, 2015 (Tuesday 7, Wednesday 8, Thursday 9)  www.inase.org 
-provided that you will upload it until March 20, 2015.
+> +			if (*((*argv)[1]) == 0)
 
-As you know the invited papers have double time for presentation, their authors
-appear in the conference program as invited authors and you can publish, after the
-conference, the extended versions of your paper in one of our 36 ISI/SCI Journals
-(with Impact Factor from Thomson Reuters). Only a 4-5% of the conference papers have
-the privilege of invited papers. The major privilege is the publication in an
-ISI/SCI/SCOPUS Journal.
+IMHO (*argv)[1][0] is easier to understand.
 
-When you upload your paper, include the code INVITED-DIMITROVA in the Field of Short
-CV
-Upload now your INVITED paper via  www. inase. org until March 20
+Andreas.
 
-If you have participated in our INASE. org conferences in 2013, 2014, 2015 and your
-paper has not been indexed in ISI and/or SCOPUS, contact me now to resolve the
-problem
-
-The Proceedings will be distributed to you in CD-ROM and Hard-Copy (10 volumes)
-and will be indexed in SCOPUS , ISI, DBLP, Zentrablatt, ACM, ASM, IET, British
-library, Scholar Google and all the other major indices.
-
-
-Many Thanks
-
-Reni Dimitrova
-
-If you do not want to receive other invitations from me, reply
-with Subject (with the email address, please):  --  NO git@vger.kernel.org --
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
