@@ -1,157 +1,148 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] log: decorate detached HEAD differently
-Date: Fri, 06 Mar 2015 11:03:40 -0800
-Message-ID: <xmqq61aeymlv.fsf@gitster.dls.corp.google.com>
-References: <CAPc5daWz-Xa7q6f9RzgTP4has8DcCG4QgK7SMGNbH6KGnEyr2Q@mail.gmail.com>
-	<015d6992d2c2165045117f763d9ce3131979c2db.1425658434.git.git@drmicha.warpmail.net>
+From: Paul Tan <pyokagan@gmail.com>
+Subject: Re: [GSoC microproject] Add XDG support to the credential-store helper
+Date: Sat, 7 Mar 2015 03:21:02 +0800
+Message-ID: <CACRoPnQe67OFta276aQRiAoMcWdWO-3njHpnx8MHnkm5kieW=Q@mail.gmail.com>
+References: <20150305215146.394caa71@gentp.lnet>
+	<CAP8UFD3kHKsUWqmfr3mEtTYwVFwGGqMF_wJgVQyoaH=2i9Ge=A@mail.gmail.com>
+	<20150306001534.06882282@gentp.lnet>
+	<20150306004139.2dac2502@gentp.lnet>
+	<CACRoPnR3i3pTyqcxm0iELP0uR9cL2kvm9fd7BQPVpbLB0UBNVw@mail.gmail.com>
+	<vpqa8zq9grq.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Julien Cretel <j.cretel@umail.ucc.ie>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Mar 06 20:03:50 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Luis Ressel <aranea@aixah.de>, git@vger.kernel.org,
+	Christian Couder <christian.couder@gmail.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Fri Mar 06 20:21:11 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YTxXI-0005nW-ER
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Mar 2015 20:03:49 +0100
+	id 1YTxo5-00041v-OG
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Mar 2015 20:21:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755902AbbCFTDo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Mar 2015 14:03:44 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:65367 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755595AbbCFTDn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Mar 2015 14:03:43 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B10663D973;
-	Fri,  6 Mar 2015 14:03:42 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Um0NEs4vOwpl6XsCKqMfO7J5bEQ=; b=kGCDoV
-	RtPeuZTyNKVHL3VpjvzDg+stbL0IYy+MzwvPjbsq6rMfo44tLNSQXfpi3Tw7EKrw
-	ggROpZ69CXWtu19s2arveWz8YJG7SUK43jfhWQ76dVqBx0ib2YU6sYEB9ghP1ukM
-	8esXbmy5d6KBHmJ1VxwqpVnhje+AHZ7nYDnfY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=yaHQY51q6lmfB+cT1I02j8isC66FlLip
-	H5HVU1IAZHUM50rHhdiw9rM9HDxvzKp0LTFFojbtloMWY+Pth4Ow5Un+ertdOrX9
-	Kg9OgBU32srjDn4MG6aMNGK4qFXW8EaO2B3SmD+C109vb/ViskEuDImY8jbQKIzO
-	KCnygYyC6cw=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id A82853D972;
-	Fri,  6 Mar 2015 14:03:42 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4E4013D971;
-	Fri,  6 Mar 2015 14:03:41 -0500 (EST)
-In-Reply-To: <015d6992d2c2165045117f763d9ce3131979c2db.1425658434.git.git@drmicha.warpmail.net>
-	(Michael J. Gruber's message of "Fri, 6 Mar 2015 17:15:16 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 80ECF1FE-C433-11E4-B2AA-29999F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1756031AbbCFTVF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Mar 2015 14:21:05 -0500
+Received: from mail-la0-f53.google.com ([209.85.215.53]:46928 "EHLO
+	mail-la0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755984AbbCFTVD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Mar 2015 14:21:03 -0500
+Received: by labgq15 with SMTP id gq15so5674785lab.13
+        for <git@vger.kernel.org>; Fri, 06 Mar 2015 11:21:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=ZT2My6+GH/txGt1dsC7LIDoj+KtwpM02CI3m8V/NhUQ=;
+        b=g0CKt6Yi1pQjBDqhD6m2o/vGATks+ogmErIaXP/1glp1K4kTg2sKwlKydtQKivpD20
+         P3CQdbo0KnjH/JkwfVrDCRHkdmF4mTPIB9E9zo1Ne7z45Ga7XYftaS87yqq3jwCaRE82
+         DVff+W7BBztk92mXoRU2+GDRdNy5/yaTptLyFJUJyS/YgOi652sUIesDnQkhGgQKhl4W
+         H4MJDjEjnRZHjHJBCNucAD8yXmrbg+oxfzpyCjD0GBwij25Tf0Onvpyj+8GXfxmRTbpG
+         lke5BrkjdjQgBLBNB/NeBNjUP1HbQYxcZjwh1O6ZbR7Io2eoYzVa//GHNqUgYMHCBF3b
+         Bmxg==
+X-Received: by 10.112.140.74 with SMTP id re10mr14609120lbb.80.1425669662195;
+ Fri, 06 Mar 2015 11:21:02 -0800 (PST)
+Received: by 10.112.130.228 with HTTP; Fri, 6 Mar 2015 11:21:02 -0800 (PST)
+In-Reply-To: <vpqa8zq9grq.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264953>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264954>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+Hi,
 
-> "git status" and "git branch" let the user know when the HEAD is
-> detached, as well as the current branch, while "git log --decorate" does not.
->
-> Change the decoration by a non-detached HEAD pointing to branch foo to
-> "HEAD->foo". This can be seen as giving more information about the
-> decoration item itself in the same way as we prefix tags by "tag: ".
->
-> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
-> ---
->
-> Notes:
->     v2 decorates the HEAD pointing to master as "HEAD->master", a detached
->     HEAD just as "HEAD". The "->" hopefully conveys the symlink nature - a
->     "=" would be confusing.
->     
->     Somehow I still prefer "detached HEAD", dunno. Maybe in addition?
->     
->     Note that now a checked branch is listed twice, once as target of the
->     HEAD, once as branch: They are two different refs and colored differently.
+Reading my previous message again, I apologize if it sounded
+conflicting. Truth to be told, I see merits in both proposed
+behaviors, but it all depends on whether we want git-credentials-store
+to support an arbitrary number of config files (now or in the future)
+or just two. I'm not sitting on the fence though, personally I think
+that we should go with supporting an arbitrary number of config files
+(and the behavior it entails for xdg file vs home file), because it
+will open up more possibilities in the future with regards to
+supporting multiple config sources.
 
-The pointee of HEAD would always be branch and will always appear on
-the output when you show HEAD->$name_of_that_branch; is it feasible
-to drop the duplicate, I wonder?
+On Sat, Mar 7, 2015 at 1:28 AM, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> The fact that I suggested doing it this way does not mean it _has_ to be
+> done this way. Decisions are taken by trying to reach a consensus with
+> discussion, so everyone is welcome to argue.
 
->
->  log-tree.c                             | 8 +++++++-
->  t/t4013/diff.log_--decorate=full_--all | 2 +-
->  t/t4013/diff.log_--decorate_--all      | 2 +-
->  t/t4207-log-decoration-colors.sh       | 2 +-
->  4 files changed, 10 insertions(+), 4 deletions(-)
->
-> diff --git a/log-tree.c b/log-tree.c
-> index 7f0890e..38862bb 100644
-> --- a/log-tree.c
-> +++ b/log-tree.c
-> @@ -118,8 +118,11 @@ static int add_ref_decoration(const char *refname, const unsigned char *sha1, in
->  		type = DECORATION_REF_TAG;
->  	else if (!strcmp(refname, "refs/stash"))
->  		type = DECORATION_REF_STASH;
-> -	else if (!strcmp(refname, "HEAD"))
-> +	else if (!strcmp(refname, "HEAD")) {
-> +		unsigned char junk_sha1[20];
->  		type = DECORATION_REF_HEAD;
-> +		refname = resolve_ref_unsafe("HEAD", 0, junk_sha1, NULL);
-> +	}
->  
->  	if (!cb_data || *(int *)cb_data == DECORATE_SHORT_REFS)
->  		refname = prettify_refname(refname);
-> @@ -198,6 +201,9 @@ void format_decorations_extended(struct strbuf *sb,
->  		strbuf_addstr(sb, decorate_get_color(use_color, decoration->type));
->  		if (decoration->type == DECORATION_REF_TAG)
->  			strbuf_addstr(sb, "tag: ");
-> +		else if (decoration->type == DECORATION_REF_HEAD &&
-> +			 strcmp(decoration->name, "HEAD"))
-> +			strbuf_addstr(sb, "HEAD->");
->  		strbuf_addstr(sb, decoration->name);
->  		strbuf_addstr(sb, color_reset);
->  		prefix = separator;
-> diff --git a/t/t4013/diff.log_--decorate=full_--all b/t/t4013/diff.log_--decorate=full_--all
-> index 44d4525..3758ae9 100644
-> --- a/t/t4013/diff.log_--decorate=full_--all
-> +++ b/t/t4013/diff.log_--decorate=full_--all
-> @@ -5,7 +5,7 @@ Date:   Mon Jun 26 00:06:00 2006 +0000
->  
->      Rearranged lines in dir/sub
->  
-> -commit 59d314ad6f356dd08601a4cd5e530381da3e3c64 (HEAD, refs/heads/master)
-> +commit 59d314ad6f356dd08601a4cd5e530381da3e3c64 (HEAD->refs/heads/master, refs/heads/master)
->  Merge: 9a6d494 c7a2ab9
->  Author: A U Thor <author@example.com>
->  Date:   Mon Jun 26 00:04:00 2006 +0000
-> diff --git a/t/t4013/diff.log_--decorate_--all b/t/t4013/diff.log_--decorate_--all
-> index 27d3eab..df702ae 100644
-> --- a/t/t4013/diff.log_--decorate_--all
-> +++ b/t/t4013/diff.log_--decorate_--all
-> @@ -5,7 +5,7 @@ Date:   Mon Jun 26 00:06:00 2006 +0000
->  
->      Rearranged lines in dir/sub
->  
-> -commit 59d314ad6f356dd08601a4cd5e530381da3e3c64 (HEAD, master)
-> +commit 59d314ad6f356dd08601a4cd5e530381da3e3c64 (HEAD->master, master)
->  Merge: 9a6d494 c7a2ab9
->  Author: A U Thor <author@example.com>
->  Date:   Mon Jun 26 00:04:00 2006 +0000
-> diff --git a/t/t4207-log-decoration-colors.sh b/t/t4207-log-decoration-colors.sh
-> index 925f577..0437ff2 100755
-> --- a/t/t4207-log-decoration-colors.sh
-> +++ b/t/t4207-log-decoration-colors.sh
-> @@ -44,7 +44,7 @@ test_expect_success setup '
->  '
->  
->  cat >expected <<EOF
-> -${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_HEAD}HEAD${c_reset}${c_commit},\
-> +${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_HEAD}HEAD->master${c_reset}${c_commit},\
->   ${c_tag}tag: v1.0${c_reset}${c_commit},\
->   ${c_tag}tag: B${c_reset}${c_commit},\
->   ${c_branch}master${c_reset}${c_commit})${c_reset} B
+Well, I think we need to decide if git is going to implement support
+for XDG_CONFIG_DIRS as well, as support for reading/writing an
+arbitrary number of config files will affect my views on the behavior.
+Personally, I think git-credentials-store should implement support for
+XDG_CONFIG_DIRS because, as I mentioned in the previous message,
+administrators may wish to provide users with default saved
+credentials.
+
+If machinery is being added to support reading/writing to an arbitrary
+number of config files, it would lead to simpler behavior (and simpler
+code) if the old ~/.git-credentials is just treated as just another
+config file to load from. (So yes, I agree with implementing your
+proposed behavior)
+
+However, if we are just going to support 2 configuration files (the
+xdg file and the home file), then I think Luis' proposed behavior has
+some merit. See below.
+
+(Just mentioning for completeness) The third option would be to
+implement a hybrid of the above two approaches (support arbitrary
+number of config files, but only choose 1 between the xdg file and
+home file), but this behavior is unnecessarily complex.
+
+> I don't remember all the discussions we had about the ~/.gitconfig, but
+> one issue with considering only one file is if you create
+> ~/.git/config/foo and initially make sure you don't have ~/.gitfoo, and
+> then one tool creates ~/.gitfoo (either an old Git, or another tool
+> trying to edit the config file), then you totally break your
+> configuration.
+> I argued for not taking backward compatibility too much into account in
+> another thread, but that was about precedence of one file over the other
+> which is far less important. Here, any tool creating even an empty home
+> file would break your configuration.
+
+Luis mentioned that if the user expects to use an old version of git,
+the user would (or should) not create the xdg file in the first place.
+I think that automated tools (and users) should call git-config to
+edit the config files anyway and not roll their own. In fact, I think
+that this issue will not occur at all if git prioritized
+~/.config/git/foo over ~/.gitfoo instead of the other way around. When
+the user creates the xdg file, the user is signaling that old versions
+of git will not be used. Thus, if a tool creates/updates the old home
+file (and it should not if it calls git-config), then configuration
+changes won't take effect at all, and it _shouldn't_ because the tool
+is _broken_.
+
+But yes, the above strategy does not scale at all for multiple
+configuration sources, which there will be if support for
+XDG_CONFIG_DIRS is implemented.
+
+(As an aside, I find it weird that git-config allows values in
+~/.gitconfig to override ~/.config/git/config, given that the xdg file
+is opt-in and introduced after ~/.gitconfig. Furthermore, it conflicts
+with its writing behavior -- it writes to ~/.config/git/config and not
+~/.gitconfig if it exists.)
+
+> That also breaks the least surprise principle if you have a ~/.gitfoo
+> file that you forgot about: edit ~/.config/git/foo, nothing is taken
+> into account, at all (or the other way around, depending on the
+> precedence you choose). I remember loosing some time with two vlc
+> configuration files like this.
+
+Hmm, I don't know the exact specifics of what happened with VLC, so I
+can't judge. As mentioned above, if the user wants compatibility with
+old tools, the user will not create the xdg file. If the user has an
+updated toolset, the user will create the xdg file and delete the old
+home file. The old home file will not be created at all because all
+tools would have been updated to support the xdg file, and hence the
+user will not be confused.
+
+Of course, in the context of git-config, it has to read the files in
+/etc/gitconfig, $GIT_DIR/config etc, and thus as mentioned above,
+reading from the home file as well would lead to simpler behavior and
+code.
+
+Regards,
+Paul
