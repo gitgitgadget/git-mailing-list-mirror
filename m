@@ -1,93 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [GSoC microproject help] Allow "-" as a short-hand for "@{-1}" in more places
-Date: Fri, 06 Mar 2015 12:37:38 -0800
-Message-ID: <xmqqpp8lyi99.fsf@gitster.dls.corp.google.com>
+From: Akshay Aurora <akshayaurora@yahoo.com>
+Subject: Re: [GSoC microproject help] Allow "-" as a short-hand for "@{-1}" in
+ more places
+Date: Sat, 7 Mar 2015 02:13:04 +0530
+Message-ID: <CAPGnZZ=12707HPSfGmqSMohdoT4h+Y13+vBGT6AX_Syr4Onx8w@mail.gmail.com>
 References: <loom.20150306T210409-558@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
 To: Sundararajan R <dyoucme@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 06 21:37:49 2015
+X-From: git-owner@vger.kernel.org Fri Mar 06 21:43:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YTz0G-0003SN-JJ
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Mar 2015 21:37:48 +0100
+	id 1YTz5S-00088e-Jn
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Mar 2015 21:43:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756494AbbCFUho (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Mar 2015 15:37:44 -0500
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:53327 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752368AbbCFUhm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Mar 2015 15:37:42 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 151253D803;
-	Fri,  6 Mar 2015 15:37:42 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=pGx/WqSLKBcMuyQW2+/MP9tYsYA=; b=PNmXdG
-	ai3mxH12WnkXMmbw3PuILc9YX16fcnKcNEIQb4REIaRproouIZ3nhfpoFlpObZak
-	opnRKCM4bET2VDcb4pw/VDDIMRiGaE72l1gfApcvGcMxFjeXs0+SkzlV+RzOsV3E
-	oQLIXarvCsr0IgQcB55N/WdYmlN5XpfOngxOY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uq645POX4DGWNkk/EDwZBxCD0NPNn8z3
-	N8V78GfQ1pYEJDKEVYCdOj1FPSY4X6gerFJz3kWLG2CiC31/NgjwvyGYtKCr7dRo
-	JFZCuq84S46nyOQj902OzRWGzQjdRuUYf5ZtooTSmYGmFPNZQfR/5MDdy1kY9YuO
-	+joNvLNRXBo=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0D4F83D802;
-	Fri,  6 Mar 2015 15:37:42 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6AD963D7FE;
-	Fri,  6 Mar 2015 15:37:39 -0500 (EST)
-In-Reply-To: <loom.20150306T210409-558@post.gmane.org> (Sundararajan R.'s
-	message of "Fri, 6 Mar 2015 20:05:50 +0000 (UTC)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: A181344A-C440-11E4-8ABE-29999F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1756604AbbCFUnH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Mar 2015 15:43:07 -0500
+Received: from mail-we0-f179.google.com ([74.125.82.179]:39047 "EHLO
+	mail-we0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755098AbbCFUnF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Mar 2015 15:43:05 -0500
+Received: by wesu56 with SMTP id u56so18327181wes.6
+        for <git@vger.kernel.org>; Fri, 06 Mar 2015 12:43:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=4TmCwCqUVqwPp+VCwScN92CWo/CA8+p8hWwgP2lMy2U=;
+        b=L6HO4QpVC4DHgnwqMBdw6chwcEaeJoqbniXO9fXdaw/zgGOU72im48qtwtMbxqAK9Z
+         LwSkUqmzOt31Skj+j5plNDj2bx8sdgMnWQOXIObGXSuehjJb6vuxkQj9mf+u9HEbORR+
+         zEMbXr1uAdtLWK7Jphtu7qA1F5eq/xOPfSScnIVa5foweUFb0Yt4f0JKyxPO0wKyV6E9
+         S9q0aDWEUjrVCExTcNC4wjpdczJPwgYqELtwbphnUBf/zlrK4FTLfi9GaH6bSVq3zdsd
+         zjEX4W86JyF2n4emEiPkGBSrd9UeyIzuiiUEuSPGyeTOlOS9MAHcbxT1UTtSZm11e3Il
+         m0oQ==
+X-Received: by 10.180.75.233 with SMTP id f9mr7846344wiw.5.1425674584113; Fri,
+ 06 Mar 2015 12:43:04 -0800 (PST)
+Received: by 10.27.45.1 with HTTP; Fri, 6 Mar 2015 12:43:04 -0800 (PST)
+In-Reply-To: <loom.20150306T210409-558@post.gmane.org>
+X-Google-Sender-Auth: Jjg1ok_eExJFx06Zzt8pearfxDg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264959>
 
-Sundararajan R <dyoucme@gmail.com> writes:
+Hi Sundararajan,
 
-> Although I have been using git from a long time, this is 
-> the first occasion when I have picked up reading its source code. Can 
-> somebody please help me by telling me how to start off with the above 
+Welcome to Git Community.
+
+You need to look for commands dealing with branches, and allow  '-' as
+shorthand for @{-1}.
+
+You can look at patches already sent for this microproject. One of the
+students has already started working on git reset command [0].
+
+Junio, has raised some key issues you'll need to tackle on that
+thread. Hopefully it should get you started.
+
+Make sure the existing tests pass after making changes. You might also
+need to add a new test case for your microproject.
+
+[0] - http://thread.gmane.org/gmane.comp.version-control.git/264688
+
+On Sat, Mar 7, 2015 at 1:35 AM, Sundararajan R <dyoucme@gmail.com> wrote:
+> Hi All,
+>
+> I am a sophomore at Indian Institute of Technology Kanpur and am a GSoC
+> aspirant for git. Although I have been using git from a long time, this is
+> the first occasion when I have picked up reading its source code. Can
+> somebody please help me by telling me how to start off with the above
 > mentioned microproject?
+>
+> Thank you very much.
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
-A good place to start on the specific coding side is to see how
-existing changes for the same objective were done.
 
-Hints:
 
-  Does reading "git log --grep='@{-1}'" help you?  When was @{-1}
-  introduced, and how is it connected to the "-" short-hand that is
-  exposed to the end-user by what mechanism in commits surrounding
-  the one that introduces the @{-1} mechanism?
-
-  Does reading "git grep '@{-1}'" help you?  Where does it appear?
-  What code interprets it to find the last branch before you
-  switched and how?  Who calls that code?  Is there something that
-  turns a user-supplied "-" into "@{-1}" before calling that code?
-  What did that caller looked like before it started noticing "-"?
-  Does running "git blame -L<line range>" on that caller help you to
-  find out which commit made the change, and does running "git show"
-  on that commit help you understand how the change was done?
-
-At the same time, GSoC is about working _with_ the development
-community, so another good place to start (you need to start on both
-fronts) is to subscribe and read this mailing list and also to dig
-the list archive (hint: the search interface of gmane often let you
-find gems) to understand how other people propose new changes and
-how their changes are discussed, reviewed and polished.  You'll be
-part of that kind of exchanges yourself once you become part of the
-project.
-
-Welcome.
+-- 
+AA
