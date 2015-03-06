@@ -1,87 +1,106 @@
-From: Anton Trunov <anton.a.trunov@gmail.com>
-Subject: Re: [PATCH] xmerge.c: fix xdl_merge to conform with the manual
-Date: Fri, 06 Mar 2015 11:02:45 +0300
-Message-ID: <54F95F25.9090300@gmail.com>
-References: <1425404233-89907-1-git-send-email-anton.a.trunov@gmail.com>	<xmqqzj7takks.fsf@gitster.dls.corp.google.com>	<54F6D3B0.60600@gmail.com> <xmqqfv9k8rcs.fsf@gitster.dls.corp.google.com>
+From: Paul Tan <pyokagan@gmail.com>
+Subject: Re: [GSoC microproject] Add XDG support to the credential-store helper
+Date: Fri, 6 Mar 2015 16:04:39 +0800
+Message-ID: <CACRoPnR3i3pTyqcxm0iELP0uR9cL2kvm9fd7BQPVpbLB0UBNVw@mail.gmail.com>
+References: <20150305215146.394caa71@gentp.lnet>
+	<CAP8UFD3kHKsUWqmfr3mEtTYwVFwGGqMF_wJgVQyoaH=2i9Ge=A@mail.gmail.com>
+	<20150306001534.06882282@gentp.lnet>
+	<20150306004139.2dac2502@gentp.lnet>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, jrnieder@gmail.com, tboegi@web.de,
-	sunshine@sunshineco.com, charles@hashpling.org,
-	Johannes.Schindelin@gmx.de
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 06 09:02:07 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
+To: Luis Ressel <aranea@aixah.de>
+X-From: git-owner@vger.kernel.org Fri Mar 06 09:04:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YTnCu-0008HD-Vn
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Mar 2015 09:02:05 +0100
+	id 1YTnFY-00028U-DK
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Mar 2015 09:04:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754284AbbCFIBz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Mar 2015 03:01:55 -0500
-Received: from mail-lb0-f171.google.com ([209.85.217.171]:37248 "EHLO
-	mail-lb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754227AbbCFIBy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Mar 2015 03:01:54 -0500
-Received: by lbdu10 with SMTP id u10so9106808lbd.4
-        for <git@vger.kernel.org>; Fri, 06 Mar 2015 00:01:52 -0800 (PST)
+	id S1754340AbbCFIEn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Mar 2015 03:04:43 -0500
+Received: from mail-la0-f49.google.com ([209.85.215.49]:38638 "EHLO
+	mail-la0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754304AbbCFIEk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Mar 2015 03:04:40 -0500
+Received: by labgf13 with SMTP id gf13so31474680lab.5
+        for <git@vger.kernel.org>; Fri, 06 Mar 2015 00:04:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=NMRjMHga6AUwbZ0UOn+6yFQccWOWjTI6hHtLtZdaa5A=;
-        b=y5xcWDbRV+voOYZr0mSqwSEHelrc31WKrKReie13PLi5Fnm3NUci5bxOF/8eALGLF5
-         HTjYYj6mus3RHt+aYm5MkTpXevCxW1tZqXHHp4+JhF16sL/hjeVSYrWQ01zRvrmgT4F+
-         1SUXBwzOxYQW+fmAvm24QAKg6PdnolvmkZwqrlro3A0pRTi/9cFa8MHWU9MF/btheHoC
-         QloT5mL8kSFUH6zXz+at10pARsUYSPUCpfsFY9SrMCa9Ez4/6lpsXt9I9BynHeH4EPYK
-         I/wLIa+9dNFSqvxlhqjRWM34jImmAfWqJcgs9ep3cTet6X0+GrIZin9mN515YpNgkkLj
-         y8ug==
-X-Received: by 10.152.29.68 with SMTP id i4mr11492319lah.5.1425628912704;
-        Fri, 06 Mar 2015 00:01:52 -0800 (PST)
-Received: from [192.168.1.185] ([195.191.146.16])
-        by mx.google.com with ESMTPSA id x5sm1590298laa.44.2015.03.06.00.01.51
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 06 Mar 2015 00:01:51 -0800 (PST)
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
-In-Reply-To: <xmqqfv9k8rcs.fsf@gitster.dls.corp.google.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=09hajDhBA2A5SbZp2/4v4c+xl+PDvRgIXV9PIPO6wU4=;
+        b=fmiraKsL96VjC0KGslscp1DFFHwQ2IBq1cG3nKQcpaIXpOGNHUb9jQoN/SLEhvuPT2
+         CjJjj2xWOOhXXgZnMtTLksTyYcYStLsC2FQQ9rC6O3Dqv73SS+LlVm6/itefHWsk4dXn
+         fcwf26+DO3UBPwgMuV1Fiwa3XyjEjV+FaKDegAVz/20vt2KahgA49cknVj6nKixXEKhg
+         x+svEdE5LmpZJTHZe+CCi1dq+SLGVwTXrWyrPfF3gaOwalnW7+uq+dWO2TLYZL7DtvPg
+         GEB5yKZ9FjvN+10kBkXOV16GDOsVrkQ27ni0UTVMF04QB82AhZbA7yCWfBVIIl9TeXWz
+         8vCA==
+X-Received: by 10.152.87.115 with SMTP id w19mr6227082laz.66.1425629079125;
+ Fri, 06 Mar 2015 00:04:39 -0800 (PST)
+Received: by 10.112.130.228 with HTTP; Fri, 6 Mar 2015 00:04:39 -0800 (PST)
+In-Reply-To: <20150306004139.2dac2502@gentp.lnet>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264895>
 
-On 04/03/15 23:01, Junio C Hamano wrote:
-> [] 
+Hi Luis,
 
-My apologies for pushing this topic, but what would you recommend?
-Should we treat both sides line-wise or should we correct the documentation?
+On Fri, Mar 6, 2015 at 7:41 AM, Luis Ressel <aranea@aixah.de> wrote:
+> Okay, I've had a look at Paul's patch for this. Sorry again for the
+> dupe, I must've missed it before. I guess I'll attempt another
+> microproject.
+>
+> However, I feel like my patch is really all that's neccessary; I don't
+> think we should try to use both files if they exist -- I consider
+> Paul's approach to be a bit overcomplicated.
+>
+> My patch still uses ~/.git-credentials as a default location, which
+> should be sufficient for compability.
 
-Current version for git help merge:
+Indeed, that was my initial plan for implementation as well[1]. Matthieu,
+however, wanted the behavior to follow that of git-config[2].
 
-...
-ignore-space-change, ignore-all-space, ignore-space-at-eol
-    Treats lines with the indicated type of whitespace change as
-unchanged for the sake of a three-way merge. Whitespace
-    changes mixed with other changes to a line are not ignored. See also
-git-diff(1)-b, -w, and --ignore-space-at-eol.
+[1] http://article.gmane.org/gmane.comp.version-control.git/264666
+[2] http://article.gmane.org/gmane.comp.version-control.git/264669
 
-    o   If their version only introduces whitespace changes to a line,
-our version is used;
+> A user that wants to use
+> ~/.config/git/credentials instead has to manually create that file
+> first, which he just shouldn't do if he has to stay compatible to
+> previous git versions.
 
-    o   If our version introduces whitespace changes but their version
-includes a substantial change, their version is used;
+Yes, I totally agree. I wonder if the current behavior to read the home
+config file in addition to the xdg config file is actually
+useful to the end-user. (However, that behavior has been in git since 2012, so
+for consistency purposes it may not be desirable to make credential-store act
+differently from git-config.)
 
-    o   Otherwise, the merge proceeds in the usual way.
-...
+What I do believe, however, is that there *should* be a way for
+credential-store to lookup, erase and (maybe) store credentials to multiple
+files. This opens the door for git to be fully xdg base dir spec compliant
+by supporing both $XDG_CONFIG_HOME and $XDG_CONFIG_DIRS.
+I quote from the spec[3]:
 
+    The order of base directories denotes their importance; the first directory
+    listed is the most important. When the same information is defined in
+    multiple places the information defined relative to the more important base
+    directory takes precedent. The base directory defined by $XDG_DATA_HOME is
+    considered more important than any of the base directories defined by
+    $XDG_DATA_DIRS. The base directory defined by $XDG_CONFIG_HOME is
+    considered more important than any of the base directories defined by
+    $XDG_CONFIG_DIRS.
 
-The 1st bullet point could be changed into
-    o   If their version only introduces whitespace changes to *all
-changed lines*, our version is used;
+[3] http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html
 
-And the 2nd one into:
-    o   If our version only introduces whitespace changes to all changed
-lines, but their version includes at least one substantially changed
-line, all lines from their version are used;
+Reading from multiple credential stores could be useful, for example, if the
+system administrator wanted to setup credentials for all users on the system.
+
+Thus, if we are implementing the machinery for the XDG dir spec, it would make
+sense to just add the home git-credentials file to the search path as well.
+
+Regards,
+Paul
