@@ -1,154 +1,168 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
-Subject: Re: [PATCH] daemon: use strbuf for hostname info
-Date: Sat, 07 Mar 2015 01:20:22 +0100
-Message-ID: <54FA4446.5050103@web.de>
-References: <54F96BF2.5000504@web.de> <20150306210627.GA24267@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] protocol upload-pack-v2
+Date: Fri, 06 Mar 2015 16:28:16 -0800
+Message-ID: <xmqqr3t1vefz.fsf@gitster.dls.corp.google.com>
+References: <20150302092136.GA30278@lanh>
+	<1425685087-21633-1-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Mar 07 01:21:22 2015
+Content-Type: text/plain
+Cc: pclouds@gmail.com, git@vger.kernel.org
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Sat Mar 07 01:28:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YU2Ub-0006nv-PD
-	for gcvg-git-2@plane.gmane.org; Sat, 07 Mar 2015 01:21:22 +0100
+	id 1YU2bQ-0004VG-Di
+	for gcvg-git-2@plane.gmane.org; Sat, 07 Mar 2015 01:28:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755997AbbCGAVR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 Mar 2015 19:21:17 -0500
-Received: from mout.web.de ([212.227.15.14]:52795 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756019AbbCGAVQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Mar 2015 19:21:16 -0500
-Received: from [192.168.178.27] ([79.253.128.80]) by smtp.web.de (mrweb001)
- with ESMTPSA (Nemesis) id 0MGzFy-1YGLN10Kn4-00DokU; Sat, 07 Mar 2015 01:20:37
- +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
-In-Reply-To: <20150306210627.GA24267@peff.net>
-X-Provags-ID: V03:K0:bwzBK05fi++4c9WyniBEgRST9hMTs+p8MVXzpGZHqDGAUKT1E9u
- h4TCzPE9CvQxhT53Pib+Zc14jH9NX6Z4FtK3MWjbVJ5/+p6XOJQa2CVfjjdhhRwalso0O/3
- U6IXS7UGNRefiutOwBWcAMXL5GvzrK18ddum73h9CyH0QATzEPLi/FTaC5W8sKZnFd4B38l
- cnjnltT5+J/PSDGqxasLQ==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1751442AbbCGA2T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Mar 2015 19:28:19 -0500
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:59481 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750979AbbCGA2S (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Mar 2015 19:28:18 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B11393E4F3;
+	Fri,  6 Mar 2015 19:28:17 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=wdYAq2nY/zOOPLA3OGzzAnDq5TI=; b=Jk63Ap
+	JsjG83uUe0v/SNPAeOjdbvrWOa9NQL9TrPW6Z5JKsLDkvlfBj/HRHAAMSP7HjhAJ
+	TXKi2NqY0G39QilNvA6RilsNFFxy3SrpAY25mHawb8FVl7BOaPjeapwhAfKWQ6mx
+	qmPk/mrVRuXx6Pp6m2z8z8wFVgTkh85eS+1Bs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=vIDY0hS7fh3e7dEWgn0d7rW4rEIIldiM
+	VUx4f5yOmqy5lRsbyW1Xtf6Lrpab/A625pe1GcjdopUcpndOkpPkYDVoCzxaij6P
+	9cXi/58k+eE8tw8FUw+fO1HaWBy3pVX4p5NJ2mVbSup7tLrYYxkr4+KEgpjnx3bw
+	wg6HW7fui3Q=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A8D473E4F2;
+	Fri,  6 Mar 2015 19:28:17 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 354DC3E4F1;
+	Fri,  6 Mar 2015 19:28:17 -0500 (EST)
+In-Reply-To: <1425685087-21633-1-git-send-email-sbeller@google.com> (Stefan
+	Beller's message of "Fri, 6 Mar 2015 15:38:07 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: D97738B6-C460-11E4-AA8D-29999F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264980>
 
-Am 06.03.2015 um 22:06 schrieb Jeff King:
-> On Fri, Mar 06, 2015 at 09:57:22AM +0100, Ren=C3=A9 Scharfe wrote:
->=20
->> Convert hostname, canon_hostname, ip_address and tcp_port to strbuf.
->> This allows to get rid of the helpers strbuf_addstr_or_null() and ST=
-RARG
->> because a strbuf always represents a valid (initially empty) string.
->> sanitize_client() becomes unused and is removed as well.
->=20
-> Makes sense. I had a feeling that we might have cared about NULL vers=
-us
-> the empty string somewhere, but I did not see it in the patch below, =
-so
-> I think it is fine.
->=20
->> -static char *sanitize_client(const char *in)
->> -{
->> -	struct strbuf out =3D STRBUF_INIT;
->> -	sanitize_client_strbuf(&out, in);
->> -	return strbuf_detach(&out, NULL);
->> -}
->=20
-> Not a big deal, but do we want to rename sanitize_client_strbuf to
-> sanitize_client? It only had the unwieldy name to distinguish it from
-> this one.
+Stefan Beller <sbeller@google.com> writes:
 
-A patch would look like this.  The result is shorter, but no win in
-terms of vertical space (number of lines).
+> @@ -67,7 +74,6 @@ gracefully with an error message.
+>    error-line     =  PKT-LINE("ERR" SP explanation-text)
+>  ----
+>  
+> -
+>  SSH Transport
 
--- >8 --
-Subject: daemon: drop _strbuf suffix of sanitize and canonicalize funct=
-ions
+Noise?
 
-Now that only the strbuf variants of the functions remain, remove the
-"_strbuf" part from their names.
+> @@ -124,9 +130,56 @@ has, the first can 'fetch' from the second.  This operation determines
+>  what data the server has that the client does not then streams that
+>  data down to the client in packfile format.
+>  
+> +Capability discovery (v2)
+> +-------------------------
+>  
+> +In version 1, capability discovery is part of reference discovery and
+> +covered in reference discovery section.
+> +
+> +In version 2, when the client initially connects, the server
+> +immediately sends its capabilities to the client. Then the client must
+> +send the list of server capabilities it wants to use to the server.
+> +
+> +   S: 00XXcapabilities 4\n
+> +   S: 00XXcap:lang\n
+> +   S: 00XXcap:thin-pack\n
+> +   S: 00XXcap:ofs-delta\n
+> +   S: 00XXagent:agent=git/2:3.4.5+custom-739-gb850f98\n
+> +
+> +   C: 00XXcapabilities 3
+> +   C: 00XXcap:thin-pack\n
+> +   C: 00XXcap:ofs-delta\n
+> +   C: 00XXcap:lang=en\n
+> +   C: 00XXagent:agent=git/custom_string\n
 
-Suggested-by: Jeff King <peff@peff.net>
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
- daemon.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+I do not see a good reason why we want "I am sending N caps"
+upfront, instead of "this, that, and here is the end of the group".
+If you expect the recipient to benefit by being able to pre-allocate
+N slots, then that might make sense, but otherwise, I'd rather see
+us stick to a (weaker) flush that says "group ends here".
 
-diff --git a/daemon.c b/daemon.c
-index c04315e..0412f8c 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -534,7 +534,7 @@ static void parse_host_and_port(char *hostport, cha=
-r **host,
-  * trailing and leading dots, which means that the client cannot escap=
-e
-  * our base path via ".." traversal.
-  */
--static void sanitize_client_strbuf(struct strbuf *out, const char *in)
-+static void sanitize_client(struct strbuf *out, const char *in)
- {
- 	for (; *in; in++) {
- 		if (*in =3D=3D '/')
-@@ -549,12 +549,12 @@ static void sanitize_client_strbuf(struct strbuf =
-*out, const char *in)
- }
-=20
- /*
-- * Like sanitize_client_strbuf, but we also perform any canonicalizati=
-on
-+ * Like sanitize_client, but we also perform any canonicalization
-  * to make life easier on the admin.
-  */
--static void canonicalize_client_strbuf(struct strbuf *out, const char =
-*in)
-+static void canonicalize_client(struct strbuf *out, const char *in)
- {
--	sanitize_client_strbuf(out, in);
-+	sanitize_client(out, in);
- 	strbuf_tolower(out);
- }
-=20
-@@ -579,10 +579,10 @@ static void parse_host_arg(char *extra_args, int =
-buflen)
- 				parse_host_and_port(val, &host, &port);
- 				if (port) {
- 					strbuf_reset(&tcp_port);
--					sanitize_client_strbuf(&tcp_port, port);
-+					sanitize_client(&tcp_port, port);
- 				}
- 				strbuf_reset(&hostname);
--				canonicalize_client_strbuf(&hostname, host);
-+				canonicalize_client(&hostname, host);
- 				hostname_lookup_done =3D 0;
- 			}
-=20
-@@ -620,8 +620,8 @@ static void lookup_hostname(void)
-=20
- 			strbuf_reset(&canon_hostname);
- 			if (ai->ai_canonname)
--				sanitize_client_strbuf(&canon_hostname,
--						       ai->ai_canonname);
-+				sanitize_client(&canon_hostname,
-+						ai->ai_canonname);
- 			else
- 				strbuf_addbuf(&canon_hostname, &ip_address);
-=20
-@@ -645,7 +645,7 @@ static void lookup_hostname(void)
- 				  addrbuf, sizeof(addrbuf));
-=20
- 			strbuf_reset(&canon_hostname);
--			sanitize_client_strbuf(&canon_hostname, hent->h_name);
-+			sanitize_client(&canon_hostname, hent->h_name);
- 			strbuf_reset(&ip_address);
- 			strbuf_addstr(&ip_address, addrbuf);
- 		}
---=20
-2.3.1
+Besides, I do not know how you counted 4 on the S: side and 3 on
+the C: side in the above example and missing LF after 3 ;-).
+
+> +----
+> +  cap              =  PKT-LINE("capabilities" SP size LF list)
+
+Isn't a cap packet terminated by LF without any "list" following it?
+The notation PKT-LINE(<blah>) is "wrap <blah> in a single packet",
+and I do not think you meant to send the capability line and a series
+of cap:foo entries in a single packet.
+
+> +  size             =  *DIGIT
+> +  capability-list  =  *(capability) [agent LF]
+> +  capability       =  "cap:" keyvaluepair LF
+> +  agent            =  keyvaluepair LF
+
+I do not see a reason to make 'agent' as part of capability.  That
+was an implementation detail of v1 but v2 does not have an
+obligation to consider agent announcement as capability.
+
+server-announcement = PKT-LINE("capabilities" ...) capability-list [agent-announcement]
+capability-list = as you have it w/o "[agent LF]"
+agent-announcement = PKT-LINE("agent=" agent-token LF)
+
+or something, perhaps?
+
+> +The client MUST ignore any data before the pkt-line starting with "capabilities"
+> +for future easy of extension.
+
+s/easy/ease/; but I am not sure if this makes sense.  Without
+knowing the extended preamble, you cannot even tell if a packet line
+that happens to start with "capabilities" is a proper beginning of
+0-th iteration of v2 protocol, or an embedded data in the preamble,
+no?
+
+> +Reference Discovery (v2)
+> +------------------------
+> +
+> +In version 2, reference discovery is initiated by the client with
+> +"want-refs" line. The client may skip reference discovery phase
+> +entirely by not sending "want-refs" (e.g. the client has another way
+> +to retrieve ref list).
+> +
+> +----
+> +  want-refs  =  PKT-LINE("want-refs" SP mode *argument)
+> +  mode       =  "all"
+> +  argument   =  SP arg
+> +  arg        =  1*(LC_ALPHA / DIGIT / "-" / "_" / "=")
+> +----
+> +
+> +Mode "all" sends all visible refs to the client like in version 1. No
+> +arguments are accepted in this mode. More modes may be available based
+> +on capabilities.
+
+I tend to agree with Duy that the protocol must anticipate that args
+can become longer.
+
+> +----
+> +  advertised-refs  =  (no-refs / list-of-refs)
+> +		      *shallow
+> +		      flush-pkt
+
+I am not sure if defining "shallow" as part of "refs advertisement"
+is a good idea.  The latter lives in the same place in the v1
+protocol merely because that was how it was later bolted onto the
+protocol.  But this concern can easily be allayed by retitling
+"advertised-refs" to something else.
