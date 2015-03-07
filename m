@@ -1,83 +1,68 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: [GSoC] small project idea from my todo list.. Bundle Symbolic links
-Date: Sat, 7 Mar 2015 16:22:16 -0000
-Organization: OPDS
-Message-ID: <0B989088FC644299B6707429908D1D1D@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH 10/24] untracked cache: save to an index extension
+Date: Sat, 7 Mar 2015 11:08:10 -0800
+Message-ID: <CAGZ79kbM4aeGibZi0cpP69KHoObkEKcRnLBF8ZvhvbfRmDCcLA@mail.gmail.com>
+References: <1423385748-19825-1-git-send-email-pclouds@gmail.com>
+	<1423385748-19825-11-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-To: "Git List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Mar 07 17:21:43 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 07 20:08:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YUHTy-0000j2-AH
-	for gcvg-git-2@plane.gmane.org; Sat, 07 Mar 2015 17:21:42 +0100
+	id 1YUK5B-00046G-3q
+	for gcvg-git-2@plane.gmane.org; Sat, 07 Mar 2015 20:08:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750971AbbCGQVg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Mar 2015 11:21:36 -0500
-Received: from out1.ip04ir2.opaltelecom.net ([62.24.128.240]:60806 "EHLO
-	out1.ip04ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750839AbbCGQVf (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 7 Mar 2015 11:21:35 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2BaWQDIJPtUPLW1BlxcgwUBAVEvK4ckq2uOdBGFaAEDAYEnTgEBAQEBAQUBAQEBOCAbhAoUAQEuHgEBLAIIAgEkOQEEGgYHAxobAgECAwEKiBgJoTGHRo5VlBeTI4EUBYo3hVBegwWHBDmLPoZegWgBCgEBAYIbPjIBAYJAAQEB
-X-IPAS-Result: A2BaWQDIJPtUPLW1BlxcgwUBAVEvK4ckq2uOdBGFaAEDAYEnTgEBAQEBAQUBAQEBOCAbhAoUAQEuHgEBLAIIAgEkOQEEGgYHAxobAgECAwEKiBgJoTGHRo5VlBeTI4EUBYo3hVBegwWHBDmLPoZegWgBCgEBAYIbPjIBAYJAAQEB
-X-IronPort-AV: E=Sophos;i="5.11,358,1422921600"; 
-   d="scan'208";a="489470825"
-Received: from host-92-6-181-181.as43234.net (HELO PhilipOakley) ([92.6.181.181])
-  by out1.ip04ir2.opaltelecom.net with ESMTP; 07 Mar 2015 16:21:33 +0000
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1752066AbbCGTIN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 Mar 2015 14:08:13 -0500
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:42841 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751628AbbCGTIL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 7 Mar 2015 14:08:11 -0500
+Received: by iecvy18 with SMTP id vy18so29598660iec.9
+        for <git@vger.kernel.org>; Sat, 07 Mar 2015 11:08:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=scvZd2+lwFGjBH+lqX/vShFveBD1/XPCw1u5gTrBVag=;
+        b=cNWSQsyjqd/k0U4umrawVFyg8aedNlGNfVnnke+oEc/7Ai1jUl+nJpylsKFMt7umEs
+         CaHD3DtllCQg3ZULN8t5SZyx5EHyTJsN11qpC7Ou+lmervAvdVrvtdtMhLrdzycNFl+7
+         GOYggTLRdPb5gDkpd/uB995r3yp3m9sTZOpPW0v/W9PgP66ijpGUp5+/cvg2kgAPmPcB
+         Xd3yNoRnPL1sLuKtFYqffjEInDMAohqLt24xnWxklguFAGZtjARWlCckV9rNJsvQp6JB
+         m5uT+vLFTaaVSA9IIENI1fPtAKVrff5Del1N1v2dZVFGm0wwevJu0sG5EzjAkomR0uON
+         Wqqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=scvZd2+lwFGjBH+lqX/vShFveBD1/XPCw1u5gTrBVag=;
+        b=mdJxoBZgx2Qha7Y1MiCow/GnOs1fis61J8PlkEbDQ0Ww68Dy7Q/TznH+H7Ixi1AIow
+         UBxWdL/PjXFUyMi/A0IQnQpQ0D4RPPvewwGllz7Un6aF1stGLUtVmzPB/OwuKA61s5fm
+         5d905RzqaZsekJ48xNvD3ALDj/mpn5J8t7PQBC6pfc23OGtS1XrsshHCyxdbUxeotCRf
+         FqA+tI+htyo/bAcMDsXROxuK2hmUNeNzU+1e07eedS/aykyE1zS/s9Ud369ItHnnXFoH
+         iFqrvT0YIkmLRlW2Q9FQXyVEx722qX0umZCBVq3377NcoI1eRsZU4qcK5O+/qT5zHVL1
+         SbAA==
+X-Gm-Message-State: ALoCoQk6itDvjoebXTxfPemEQ5hqO1XWNW47pgtUKsaXDxXWnDW8KkAL0kfZCSC78E4jJeNc2d3k
+X-Received: by 10.50.254.4 with SMTP id ae4mr36057573igd.10.1425755290764;
+ Sat, 07 Mar 2015 11:08:10 -0800 (PST)
+Received: by 10.107.46.31 with HTTP; Sat, 7 Mar 2015 11:08:10 -0800 (PST)
+In-Reply-To: <1423385748-19825-11-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265001>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265002>
 
-Hi folks,
+On Sun, Feb 8, 2015 at 12:55 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
+Duy <pclouds@gmail.com> wrote:
+> +       ouc =3D xmalloc(sizeof(*ouc) + len + 1);
 
-This is one of my small/mini projects from late year that got pushed 
-down my stack that may be suitable for someone on the GSoC small project 
-list:
-
- - Embed symbolic link references into the Bundle processing.
-
-Currently git bundle gets 'confused' when there are multiple refs using 
-the same HEAD ref, with only a heuristic to guess which ref should be 
-allocate to HEAD. The issue is to update the 'heuristic' process to get 
-it right, while still being backward compatible.
-
-A potential solution was identified in [1], and a similar problem (where 
-does HEAD point to..) was recently covered in patch [2] (and discussions 
-either side) .
-
-I'd be quite happy for a GSoC candidate/student to have a go at it, 
-especially as I've let it languish! ;-)
---
-Philip
-
---
-Essentially, hide the clues as to where the Symbolic refs point to 
-(other symrefs) after a null char in the line format..
-
-Perhaps also add a 'Rev #<n>' after the bundle's version line as well ?
-
-[1] 
-http://thread.gmane.org/gmane.comp.version-control.git/258827/focus=259087 
-(addition of symref=refs/heads/master after a \0 null at the end of the 
-refs line.)
-[2] 
-http://thread.gmane.org/gmane.comp.version-control.git/263922/focus=264936
-[3] http://thread.gmane.org/gmane.comp.version-control.git/234053 has an 
-older discussion regarding the same issue ('where does HEAD point to') 
-on cloning. Linked from 
-http://thread.gmane.org/gmane.comp.version-control.git/258365/focus=258463
+Do we need to free `ouc` at the end of the function as well?
