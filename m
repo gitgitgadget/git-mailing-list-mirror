@@ -1,214 +1,92 @@
-From: Sudhanshu Shekhar <sudshekhar02@gmail.com>
-Subject: [PATCH 1/2] reset: allow "-" short hand for previous commit
-Date: Sun,  8 Mar 2015 02:34:04 +0530
-Message-ID: <1425762244-8629-1-git-send-email-sudshekhar02@gmail.com>
-References: <xmqq1tl4705j.fsf@gitster.dls.corp.google.com>
-Cc: Matthieu.Moy@grenoble-inp.fr, gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 07 22:04:26 2015
+From: Kevin Daudt <me@ikke.info>
+Subject: [PATCH] rev-list: refuse --first-parent combined with --bisect
+Date: Sat,  7 Mar 2015 22:31:16 +0100
+Message-ID: <1425763876-15573-1-git-send-email-me@ikke.info>
+References: <xmqq61ag72gc.fsf@gitster.dls.corp.google.com>
+Cc: git@vger.kernel.org, Kevin Daudt <me@ikke.info>
+To: "Junio C. Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Mar 07 22:32:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YULtY-0003Vc-Kd
-	for gcvg-git-2@plane.gmane.org; Sat, 07 Mar 2015 22:04:24 +0100
+	id 1YUMKS-0005Zc-IN
+	for gcvg-git-2@plane.gmane.org; Sat, 07 Mar 2015 22:32:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752766AbbCGVET (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Mar 2015 16:04:19 -0500
-Received: from mail-pd0-f172.google.com ([209.85.192.172]:41410 "EHLO
-	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752693AbbCGVET (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Mar 2015 16:04:19 -0500
-Received: by pdjy10 with SMTP id y10so14521154pdj.8
-        for <git@vger.kernel.org>; Sat, 07 Mar 2015 13:04:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=gRrpD7FwL1F2PcUaAX2F/qnomBz/ww/3DsS717QYVM8=;
-        b=LPREHnvHyC72oWEqeAIMbKqrI5zLORdtcSSj/YRqpCYEcV+QRF1BdCKu4g9Lf12sTJ
-         zn2fHbjOHjueQ8Cd2elDJUOVNB1yj2Ninb/9jpEjSC69cmuaamk8jxIbK47A6R2En1Lh
-         MUF6Oa+6w0bCJ7VVRNARgBXH5G6FjAqfucrIW5SeZqmEaDE0WlJ/M9nGVh1NBJjqnf8Q
-         c6rrcwm28eqH4sll1yJz3RNmkx38R9AHY4PpsuNuV6OWvXGJRYBZKTUneIpTpy3VUQY2
-         hJ4ohLv8Uo+ufQ5uYxecEjYyocMDZ0RIs39EZQCUemBs8TFA+Pr3QHcPr4SzSKSPGeXQ
-         67eg==
-X-Received: by 10.68.215.65 with SMTP id og1mr37692393pbc.79.1425762258819;
-        Sat, 07 Mar 2015 13:04:18 -0800 (PST)
-Received: from shekhar-Inspiron-N5110.iiit.ac.in ([14.139.82.6])
-        by mx.google.com with ESMTPSA id vf6sm13158482pbc.18.2015.03.07.13.04.14
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 07 Mar 2015 13:04:16 -0800 (PST)
-X-Mailer: git-send-email 2.3.1.168.g0c82976.dirty
-In-Reply-To: <xmqq1tl4705j.fsf@gitster.dls.corp.google.com>
+	id S1752757AbbCGVcH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Mar 2015 16:32:07 -0500
+Received: from ikke.info ([178.21.113.177]:36086 "EHLO vps892.directvps.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750892AbbCGVcG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Mar 2015 16:32:06 -0500
+Received: by vps892.directvps.nl (Postfix, from userid 182)
+	id 7F6671DCF6D; Sat,  7 Mar 2015 22:32:05 +0100 (CET)
+Received: from ikke-laptop.ikke (unknown [10.8.0.6])
+	by vps892.directvps.nl (Postfix) with ESMTP id 3F3954400AE;
+	Sat,  7 Mar 2015 22:32:03 +0100 (CET)
+X-Mailer: git-send-email 2.3.1.184.g97c12a8.dirty
+In-Reply-To: <xmqq61ag72gc.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265003>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265004>
 
-Teach reset the same shorthand as checkout and merge. "-" means the
-"previous commit".
+rev-list --bisect is used by git bisect, but never together with
+--first-parent. Because rev-list --bisect together with --first-parent
+is not handled currently, and even leads to segfaults, refuse to use
+both options together.
 
-Signed-off-by: Sudhanshu Shekhar <sudshekhar02@gmail.com>
+Signed-off-by: Kevin Daudt <me@ikke.info>
 ---
- builtin/reset.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+This is my first code patch, and thought this was a nice exercise.
 
-diff --git a/builtin/reset.c b/builtin/reset.c
-index 4c08ddc..9f8967d 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -192,6 +192,7 @@ static void parse_args(struct pathspec *pathspec,
- {
- 	const char *rev = "HEAD";
- 	unsigned char unused[20];
-+	int substituted_minus = 0;
- 	/*
- 	 * Possible arguments are:
- 	 *
-@@ -205,6 +206,10 @@ static void parse_args(struct pathspec *pathspec,
- 	 */
+ Documentation/rev-list-options.txt | 3 ++-
+ builtin/rev-list.c                 | 3 +++
+ t/t6000-rev-list-misc.sh           | 4 ++++
+ 3 files changed, 9 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index 4ed8587..05c3f6d 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -123,7 +123,8 @@ parents) and `--max-parents=-1` (negative numbers denote no upper limit).
+ 	because merges into a topic branch tend to be only about
+ 	adjusting to updated upstream from time to time, and
+ 	this option allows you to ignore the individual commits
+-	brought in to your history by such a merge.
++	brought in to your history by such a merge. Cannot be
++	combined with --bisect.
  
- 	if (argv[0]) {
-+		if(!strcmp(argv[0], "-")) {
-+			argv[0] = "@{-1}";
-+			substituted_minus = 1;
-+		}
- 		if (!strcmp(argv[0], "--")) {
- 			argv++; /* reset to HEAD, possibly with paths */
- 		} else if (argv[1] && !strcmp(argv[1], "--")) {
-@@ -225,12 +230,14 @@ static void parse_args(struct pathspec *pathspec,
- 			verify_non_filename(prefix, argv[0]);
- 			rev = *argv++;
- 		} else {
-+			/* We were treating "-" as a commit and not a file */
-+			if(substituted_minus)
-+				argv[0] = "-";
- 			/* Otherwise we treat this as a filename */
- 			verify_filename(prefix, argv[0], 1);
- 		}
- 	}
- 	*rev_ret = rev;
--
- 	if (read_cache() < 0)
- 		die(_("index file corrupt"));
+ --not::
+ 	Reverses the meaning of the '{caret}' prefix (or lack thereof)
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index ff84a82..c271e15 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -291,6 +291,9 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+ 	if (revs.bisect)
+ 		bisect_list = 1;
  
--- 
-2.3.1.168.g0c82976.dirty
-
-
->From 21f0298c17768aaa11ff0a677cdefc8f54ac9515 Mon Sep 17 00:00:00 2001
-From: Sudhanshu Shekhar <sudshekhar02@gmail.com>
-Date: Sun, 8 Mar 2015 02:13:57 +0530
-Subject: [PATCH 2/2] Added test cases for reset -
-
-Four test cases have been added
-
-1) when user does reset - without any previous branch => Leads to error
-2) when user does reset - with a previous branch      => Ensure it
-behaves like @{-1}
-
-Other two deal with the situation when we have a file named '-'. We
-ignore such a file and - is always treated either as a previous branch
-or a bad filename. Users who wish to reset a file named '-' should specify
-it as './-'
----
- builtin/reset.c  |  4 ++--
- t/t7102-reset.sh | 62 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 64 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/reset.c b/builtin/reset.c
-index 9f8967d..02f33ef 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -206,7 +206,7 @@ static void parse_args(struct pathspec *pathspec,
- 	 */
- 
- 	if (argv[0]) {
--		if(!strcmp(argv[0], "-")) {
-+		if (!strcmp(argv[0], "-")) {
- 			argv[0] = "@{-1}";
- 			substituted_minus = 1;
- 		}
-@@ -231,7 +231,7 @@ static void parse_args(struct pathspec *pathspec,
- 			rev = *argv++;
- 		} else {
- 			/* We were treating "-" as a commit and not a file */
--			if(substituted_minus)
-+			if (substituted_minus)
- 				argv[0] = "-";
- 			/* Otherwise we treat this as a filename */
- 			verify_filename(prefix, argv[0], 1);
-diff --git a/t/t7102-reset.sh b/t/t7102-reset.sh
-index 98bcfe2..4b8d7f5 100755
---- a/t/t7102-reset.sh
-+++ b/t/t7102-reset.sh
-@@ -568,4 +568,66 @@ test_expect_success 'reset --mixed sets up work tree' '
++	if(revs.first_parent_only && revs.bisect)
++		die(_("--first-parent is incompattible with --bisect"));
++
+ 	if (DIFF_OPT_TST(&revs.diffopt, QUICK))
+ 		info.flags |= REV_LIST_QUIET;
+ 	for (i = 1 ; i < argc; i++) {
+diff --git a/t/t6000-rev-list-misc.sh b/t/t6000-rev-list-misc.sh
+index 2602086..1f58b46 100755
+--- a/t/t6000-rev-list-misc.sh
++++ b/t/t6000-rev-list-misc.sh
+@@ -96,4 +96,8 @@ test_expect_success 'rev-list can show index objects' '
  	test_cmp expect actual
  '
  
-+cat > expect << EOF
-+fatal: bad flag '-' used after filename
-+EOF
-+
-+test_expect_success 'reset - with no previous branch' '
-+	git init no_previous --quiet &&
-+	(
-+	cd no_previous
-+	) &&
-+	test_must_fail git reset - 2> output &&
-+	test_cmp expect output
-+'
-+
-+test_expect_success 'reset - while having file named - and no previous branch' '
-+	git init no_previous --quiet &&
-+	(
-+	cd no_previous &&
-+	touch ./-
-+	) &&
-+	test_must_fail git reset - 2> output &&
-+	test_cmp expect output
-+'
-+
-+cat > expect << EOF
-+Unstaged changes after reset:
-+M	-
-+M	1
-+EOF
-+
-+test_expect_success 'reset - in the prescence of file named - with previou branch' '
-+	git init no_previous --quiet &&
-+	cd no_previous &&
-+	touch ./- 1 &&
-+	git add 1 - &&
-+	git commit -m "add base files" &&
-+	git checkout -b new_branch &&
-+	echo "random" > ./- &&
-+	echo "wow" > 1 &&
-+	git add 1 - &&
-+	git reset - > output &&
-+	test_cmp output ../expect
-+'
-+test_expect_success 'reset - works same as reset @{-1}' '
-+	git init no_previous --quiet &&
-+	cd no_previous &&
-+	echo "random" > random &&
-+	git add random &&
-+	git commit -m "base commit" &&
-+	git checkout -b temp &&
-+	echo new-file > new-file &&
-+	git add new-file &&
-+	git commit -m "added new-file" &&
-+	git reset - &&
-+
-+	git status > ../first &&
-+	git add new-file &&
-+	git commit -m "added new-file" &&
-+	git reset @{-1} &&
-+	git status > ../second &&
-+	test_cmp ../first ../second
++test_expect_success '--bisect and --first-parent can not be combined' '
++	test_must_fail git rev-list --bisect --first-parent HEAD
 +'
 +
  test_done
 -- 
-2.3.1.168.g0c82976.dirty
+2.3.1.184.g97c12a8.dirty
