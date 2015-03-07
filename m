@@ -1,31 +1,31 @@
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH v2 09/10] patch-id: convert to use struct object_id
-Date: Sat,  7 Mar 2015 23:24:04 +0000
-Message-ID: <1425770645-628957-10-git-send-email-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 06/10] bulk-checkin.c: convert to use struct object_id
+Date: Sat,  7 Mar 2015 23:24:01 +0000
+Message-ID: <1425770645-628957-7-git-send-email-sandals@crustytoothpaste.net>
 References: <1425770645-628957-1-git-send-email-sandals@crustytoothpaste.net>
 Cc: Michael Haggerty <mhagger@alum.mit.edu>,
 	Andreas Schwab <schwab@linux-m68k.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 08 00:24:40 2015
+X-From: git-owner@vger.kernel.org Sun Mar 08 00:24:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YUO5H-0001mM-0U
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Mar 2015 00:24:39 +0100
+	id 1YUO5I-0001mM-AG
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Mar 2015 00:24:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753226AbbCGXYa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Mar 2015 18:24:30 -0500
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:49844 "EHLO
+	id S1753266AbbCGXYe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Mar 2015 18:24:34 -0500
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:49837 "EHLO
 	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753037AbbCGXYT (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 7 Mar 2015 18:24:19 -0500
+	by vger.kernel.org with ESMTP id S1752955AbbCGXYR (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 7 Mar 2015 18:24:17 -0500
 Received: from vauxhall.crustytoothpaste.net (unknown [172.16.2.247])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id B3E3D28095;
-	Sat,  7 Mar 2015 23:24:18 +0000 (UTC)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 0493C28092;
+	Sat,  7 Mar 2015 23:24:17 +0000 (UTC)
 X-Mailer: git-send-email 2.2.1.209.g41e5f3a
 In-Reply-To: <1425770645-628957-1-git-send-email-sandals@crustytoothpaste.net>
 X-Spam-Score: -2.5 ALL_TRUSTED,BAYES_00
@@ -33,112 +33,50 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265016>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265017>
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/patch-id.c | 34 +++++++++++++++++-----------------
- 1 file changed, 17 insertions(+), 17 deletions(-)
+ bulk-checkin.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/builtin/patch-id.c b/builtin/patch-id.c
-index 77db873..c208e7e 100644
---- a/builtin/patch-id.c
-+++ b/builtin/patch-id.c
-@@ -1,14 +1,14 @@
- #include "builtin.h"
+diff --git a/bulk-checkin.c b/bulk-checkin.c
+index 0c4b8a7..e50f60e 100644
+--- a/bulk-checkin.c
++++ b/bulk-checkin.c
+@@ -24,7 +24,7 @@ static struct bulk_checkin_state {
  
--static void flush_current_id(int patchlen, unsigned char *id, unsigned char *result)
-+static void flush_current_id(int patchlen, struct object_id *id, struct object_id *result)
+ static void finish_bulk_checkin(struct bulk_checkin_state *state)
  {
- 	char name[50];
- 
- 	if (!patchlen)
- 		return;
- 
--	memcpy(name, sha1_to_hex(id), 41);
--	printf("%s %s\n", sha1_to_hex(result), name);
-+	memcpy(name, oid_to_hex(id), GIT_SHA1_HEXSZ + 1);
-+	printf("%s %s\n", oid_to_hex(result), name);
- }
- 
- static int remove_space(char *line)
-@@ -53,23 +53,23 @@ static int scan_hunk_header(const char *p, int *p_before, int *p_after)
- 	return 1;
- }
- 
--static void flush_one_hunk(unsigned char *result, git_SHA_CTX *ctx)
-+static void flush_one_hunk(struct object_id *result, git_SHA_CTX *ctx)
- {
--	unsigned char hash[20];
-+	unsigned char hash[GIT_SHA1_RAWSZ];
- 	unsigned short carry = 0;
+-	unsigned char sha1[20];
++	struct object_id oid;
+ 	struct strbuf packname = STRBUF_INIT;
  	int i;
  
- 	git_SHA1_Final(hash, ctx);
- 	git_SHA1_Init(ctx);
- 	/* 20-byte sum, with carry */
--	for (i = 0; i < 20; ++i) {
--		carry += result[i] + hash[i];
--		result[i] = carry;
-+	for (i = 0; i < GIT_SHA1_RAWSZ; ++i) {
-+		carry += result->sha1[i] + hash[i];
-+		result->sha1[i] = carry;
- 		carry >>= 8;
+@@ -36,11 +36,11 @@ static void finish_bulk_checkin(struct bulk_checkin_state *state)
+ 		unlink(state->pack_tmp_name);
+ 		goto clear_exit;
+ 	} else if (state->nr_written == 1) {
+-		sha1close(state->f, sha1, CSUM_FSYNC);
++		sha1close(state->f, oid.sha1, CSUM_FSYNC);
+ 	} else {
+-		int fd = sha1close(state->f, sha1, 0);
+-		fixup_pack_header_footer(fd, sha1, state->pack_tmp_name,
+-					 state->nr_written, sha1,
++		int fd = sha1close(state->f, oid.sha1, 0);
++		fixup_pack_header_footer(fd, oid.sha1, state->pack_tmp_name,
++					 state->nr_written, oid.sha1,
+ 					 state->offset);
+ 		close(fd);
  	}
- }
+@@ -48,7 +48,7 @@ static void finish_bulk_checkin(struct bulk_checkin_state *state)
+ 	strbuf_addf(&packname, "%s/pack/pack-", get_object_directory());
+ 	finish_tmp_packfile(&packname, state->pack_tmp_name,
+ 			    state->written, state->nr_written,
+-			    &state->pack_idx_opts, sha1);
++			    &state->pack_idx_opts, oid.sha1);
+ 	for (i = 0; i < state->nr_written; i++)
+ 		free(state->written[i]);
  
--static int get_one_patchid(unsigned char *next_sha1, unsigned char *result,
-+static int get_one_patchid(struct object_id *next_oid, struct object_id *result,
- 			   struct strbuf *line_buf, int stable)
- {
- 	int patchlen = 0, found_next = 0;
-@@ -77,7 +77,7 @@ static int get_one_patchid(unsigned char *next_sha1, unsigned char *result,
- 	git_SHA_CTX ctx;
- 
- 	git_SHA1_Init(&ctx);
--	hashclr(result);
-+	oidclr(result);
- 
- 	while (strbuf_getwholeline(line_buf, stdin, '\n') != EOF) {
- 		char *line = line_buf->buf;
-@@ -93,7 +93,7 @@ static int get_one_patchid(unsigned char *next_sha1, unsigned char *result,
- 		else if (!memcmp(line, "\\ ", 2) && 12 < strlen(line))
- 			continue;
- 
--		if (!get_sha1_hex(p, next_sha1)) {
-+		if (!get_oid_hex(p, next_oid)) {
- 			found_next = 1;
- 			break;
- 		}
-@@ -143,7 +143,7 @@ static int get_one_patchid(unsigned char *next_sha1, unsigned char *result,
- 	}
- 
- 	if (!found_next)
--		hashclr(next_sha1);
-+		oidclr(next_oid);
- 
- 	flush_one_hunk(result, &ctx);
- 
-@@ -152,15 +152,15 @@ static int get_one_patchid(unsigned char *next_sha1, unsigned char *result,
- 
- static void generate_id_list(int stable)
- {
--	unsigned char sha1[20], n[20], result[20];
-+	struct object_id oid, n, result;
- 	int patchlen;
- 	struct strbuf line_buf = STRBUF_INIT;
- 
--	hashclr(sha1);
-+	oidclr(&oid);
- 	while (!feof(stdin)) {
--		patchlen = get_one_patchid(n, result, &line_buf, stable);
--		flush_current_id(patchlen, sha1, result);
--		hashcpy(sha1, n);
-+		patchlen = get_one_patchid(&n, &result, &line_buf, stable);
-+		flush_current_id(patchlen, &oid, &result);
-+		oidcpy(&oid, &n);
- 	}
- 	strbuf_release(&line_buf);
- }
 -- 
 2.2.1.209.g41e5f3a
