@@ -1,250 +1,361 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH] protocol upload-pack-v2
-Date: Fri, 6 Mar 2015 20:28:17 -0800
-Message-ID: <CAGZ79kZBYFSwR6E86BF6Dt7xdh0zs07tkGnQAKfEJpSduTK-aw@mail.gmail.com>
-References: <20150302092136.GA30278@lanh>
-	<1425685087-21633-1-git-send-email-sbeller@google.com>
-	<xmqqr3t1vefz.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 07 05:28:35 2015
+From: "Kyle J. McKay" <mackyle@gmail.com>
+Subject: Is the Git Mailing List dropping messages?
+Date: Fri, 6 Mar 2015 21:12:45 -0800
+Message-ID: <43504C6C-5F97-480F-8543-350E04041C11@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v936)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Mar 07 06:13:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YU6Ln-0002Dv-2O
-	for gcvg-git-2@plane.gmane.org; Sat, 07 Mar 2015 05:28:31 +0100
+	id 1YU72s-00060k-SY
+	for gcvg-git-2@plane.gmane.org; Sat, 07 Mar 2015 06:13:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753078AbbCGE2U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Mar 2015 23:28:20 -0500
-Received: from mail-ig0-f178.google.com ([209.85.213.178]:42921 "EHLO
-	mail-ig0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752645AbbCGE2T (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Mar 2015 23:28:19 -0500
-Received: by igkb16 with SMTP id b16so8979313igk.1
-        for <git@vger.kernel.org>; Fri, 06 Mar 2015 20:28:18 -0800 (PST)
+	id S1751063AbbCGFMu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Mar 2015 00:12:50 -0500
+Received: from mail-pd0-f169.google.com ([209.85.192.169]:45349 "EHLO
+	mail-pd0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750724AbbCGFMt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Mar 2015 00:12:49 -0500
+Received: by pdjy10 with SMTP id y10so10482924pdj.12
+        for <git@vger.kernel.org>; Fri, 06 Mar 2015 21:12:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=a6QOkwLTNs6E/X15meOfarsdC9857qtRUugDH8Jqbcw=;
-        b=PNX4dSyF04KzA49fxAXd31gvleJdxKmc6KR1uqTnYPQTntk2ix+NXYxnxu3bGnaD46
-         b7liKwowAkaKhHg/paw2n39uu6WMCzud8KwkXYsHOUL7hQ4BJ2Nl/Alvvvbt8BCQKsH0
-         foDFHFew2owrkzrMj6c9Bkq1Wlz8/KXBztYnIUcVW16aluSJtqAr16WNxLGa0oKIv0aF
-         zRq0ctcwUfboAQ1zPpFHsn0JvGmX3c9R+zd1I7qgbhgC0e+I3xmZggBmJ8yNP+pYG58x
-         ndeJXWunhNafzIUFc2xyiAsVlBQIqmg6XPssETO61D49bIcU6wVhpFJrohC2YKS1TJ0j
-         hmuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=a6QOkwLTNs6E/X15meOfarsdC9857qtRUugDH8Jqbcw=;
-        b=ahj1e6IXf9zQLIMojicns3H3G0VP5MIj9Cevg8wTP/aB5a2rqXQIaqjrjdA7ielRO+
-         C2s935rIDihNMXeGtcrkKaWVTYQXGFxe7KdT+SA13CeeWpFuqcGjz6FiPIFG4AUBaTnq
-         AdJdc0iuhwTvCh5ygKXJjb3msbjvEwQbcqDGF8z9luOBJBIGgDkUfo3MYWM5bKKAClaH
-         cPELbtGCzTPPsRMYTX7Iz5J9GEy+rjGj0RRHmSWdErrBKLPJhw55j2xII2PfbWF5rTnM
-         c9JUluB1q8SWx4MsOWDrfa4CGBA3yMfCcT5iRmfSR9MsLXEdYI/XXrEFg65053qbFLCX
-         1cxA==
-X-Gm-Message-State: ALoCoQlqsXtrPRp4VuC8UEb6UXykd3h4oakR6tFs6WVK3fmfgDEFGtFIYtwRXVjwTSRe1vpy27CV
-X-Received: by 10.42.92.16 with SMTP id r16mr14086923icm.95.1425702498068;
- Fri, 06 Mar 2015 20:28:18 -0800 (PST)
-Received: by 10.107.46.31 with HTTP; Fri, 6 Mar 2015 20:28:17 -0800 (PST)
-In-Reply-To: <xmqqr3t1vefz.fsf@gitster.dls.corp.google.com>
+        d=gmail.com; s=20120113;
+        h=message-id:from:to:content-type:content-transfer-encoding:subject
+         :mime-version:date;
+        bh=xdAEw4fsn32MtqwwGp/Ya8m7GlTdt8zlZ6CzX7ZbHno=;
+        b=rX/2R6gmDowEfNSZ+l/sS95ohUZ9TuYdiWEqR3tcck8V8LAnpwMwb4JkuAHw5raHEq
+         6REddJo4tP4TaQ05BiJSGfEFr5VrcI+Fxk6meCvf8s3QsO083lGUL/2igZ/gyOBuMeWV
+         Pyro0RsU+oVsJqquioynlC8EqwbgIza/Wv4DmVg/fn7B8pYl8T8YVf9MJxwCLll43wqK
+         2a1MgaNlx07h8l5Rvg8N8m9EAMyRX1VvKr/MOv4fLeFz+1NM7LBkjDrDsKUIY6tLeQKf
+         7Aso41BggjlExX6riQhPPNgxIYIJPG+v6F2VwRNLbSXdwgzgtPkwv0zoakN8g2Rb/rmd
+         tP+w==
+X-Received: by 10.70.88.137 with SMTP id bg9mr8110691pdb.92.1425705168493;
+        Fri, 06 Mar 2015 21:12:48 -0800 (PST)
+Received: from ?IPv6:2002:48c0:ad8d::223:12ff:fe05:eebd? ([2002:48c0:ad8d:0:223:12ff:fe05:eebd])
+        by mx.google.com with ESMTPSA id y8sm10989690pbt.71.2015.03.06.21.12.46
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Fri, 06 Mar 2015 21:12:47 -0800 (PST)
+X-Mauler: Craptastic (2.936)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264989>
 
-On Fri, Mar 6, 2015 at 4:28 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> @@ -67,7 +74,6 @@ gracefully with an error message.
->>    error-line     =  PKT-LINE("ERR" SP explanation-text)
->>  ----
->>
->> -
->>  SSH Transport
->
-> Noise?
->
->> @@ -124,9 +130,56 @@ has, the first can 'fetch' from the second.  This operation determines
->>  what data the server has that the client does not then streams that
->>  data down to the client in packfile format.
->>
->> +Capability discovery (v2)
->> +-------------------------
->>
->> +In version 1, capability discovery is part of reference discovery and
->> +covered in reference discovery section.
->> +
->> +In version 2, when the client initially connects, the server
->> +immediately sends its capabilities to the client. Then the client must
->> +send the list of server capabilities it wants to use to the server.
->> +
->> +   S: 00XXcapabilities 4\n
->> +   S: 00XXcap:lang\n
->> +   S: 00XXcap:thin-pack\n
->> +   S: 00XXcap:ofs-delta\n
->> +   S: 00XXagent:agent=git/2:3.4.5+custom-739-gb850f98\n
->> +
->> +   C: 00XXcapabilities 3
->> +   C: 00XXcap:thin-pack\n
->> +   C: 00XXcap:ofs-delta\n
->> +   C: 00XXcap:lang=en\n
->> +   C: 00XXagent:agent=git/custom_string\n
->
-> I do not see a good reason why we want "I am sending N caps"
-> upfront, instead of "this, that, and here is the end of the group".
+About 10 days ago I sent out this message (just reproducing the  
+relevant headers here):
 
-I thought about having an end marker, so something like
-capabilities start
-thin-pack
-lang
-ofs-delta
-capabilities done
+> From: Kyle J. McKay <mackyle@gmail.com>
+> Date: February 24, 2015 09:16:05 PST
+> To: Junio C Hamano <gitster@pobox.com>
+> Cc: Git Mailing List <git@vger.kernel.org>
+> Subject: Any chance for a Git v2.1.5 release?
+> Message-Id: <C5211E53-8905-41C9-9D28-26D7BB51E76A@gmail.com>
+> Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 
-(Each line a pkt-line)
+And I got back a reply (again just the relevant headers):
 
-Though all decisions I thought through I tried to put more weight on
-future expandability. Now that I think about it again, it makes no
-difference, whether to use a counter or an end marker.
+> From: Junio C Hamano <gitster@pobox.com>
+> Date: February 24, 2015 11:52:03 PST
+> To: Kyle J. McKay <mackyle@gmail.com>
+> Cc: Git Mailing List <git@vger.kernel.org>
+> Subject: Re: Any chance for a Git v2.1.5 release?
+> Message-Id: <xmqqk2z7qe8s.fsf@gitster.dls.corp.google.com>
+> Content-Type: text/plain
 
-> If you expect the recipient to benefit by being able to pre-allocate
-> N slots, then that might make sense, but otherwise, I'd rather see
-> us stick to a (weaker) flush that says "group ends here".
+And I responded and that response and the rest of the thread are  
+available on gmane [1], but the first two messages are not.  I waited  
+10 days just to make sure there were no bounce emails or undeliverable  
+notifications coming back and none did.  I have checked the other list  
+archives [2] and cannot find the first two messages there either.
 
-I think it's not about pre allocating but counting down. Then you know
-at the beginning how much to expect which might become relevant if
-that section grows large again. ("The server really wants to send 1500
-capability lines? Nope I'll just disconnect because I am on mobile!")
+I have therefore concluded that the git@vger mailing list ate them for  
+a late breakfast snack on 2015-02-24.
 
-Implementation wise an end marker is easier though (you don't need
-to count down, so it feels more stateless to me).
+Has anyone else noticed any problems with their messages to the  
+git@vger list not showing up on the archives?
 
->
-> Besides, I do not know how you counted 4 on the S: side and 3 on
-> the C: side in the above example and missing LF after 3 ;-).
->
+-Kyle
 
-Sorry about that, I added one answer late and forgot to increment the 3.
+[1] http://thread.gmane.org/gmane.comp.version-control.git/264365
+[2] https://git.wiki.kernel.org/index.php/ 
+GitCommunity#Mailing_List_Archives
 
->> +----
->> +  cap              =  PKT-LINE("capabilities" SP size LF list)
->
-> Isn't a cap packet terminated by LF without any "list" following it?
-> The notation PKT-LINE(<blah>) is "wrap <blah> in a single packet",
-> and I do not think you meant to send the capability line and a series
-> of cap:foo entries in a single packet.
+P.S. The full text of the two first messages is included below:
 
-Yeah I meant to use one packet per line
-So after considering your input, you'd want to have
-PKT-LINE("capabilities start")
-PKT-LINE("no-prefix-for-capabilities")
-PKT-LINE("ofs-delta")
-PKT-LINE("agent-as-capability-2.6")
-PKT-LINE("capabilities end")
+---- BEGIN FIRST MESSAGE ----
+From: Kyle J. McKay <mackyle@gmail.com>
+Date: February 24, 2015 09:16:05 PST
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Git Mailing List <git@vger.kernel.org>
+Subject: Any chance for a Git v2.1.5 release?
+Message-Id: <C5211E53-8905-41C9-9D28-26D7BB51E76A@gmail.com>
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 
-And additionally to that a PKT-LINE should have the ability to grow larger than
-0xffff, which would be encoded with 0xffff being an escape character
-indicating the
-length is encoded somehow different. (Maybe take the next 8 bytes
-instead of just 4).
+As you know, I help out with repo.or.cz.  Recently the admins have  
+been discussing upgrading the version of Git we use in order to  
+support newer features such as pack bitmaps.  While we do use a  
+slightly customized gitweb, we have always stuck to an official Git  
+release for everything else.
+
+Repo.or.cz provides fetch (git, http, https, ssh), browsing (gitweb)  
+and push (ssh, https).  Additionally, created repositories can be  
+mirrors (no push allowed) of other repositories (including svn via git- 
+svn).  Email notification of ref changes (along with diffs) can also  
+be requested.
+
+We are finding that in order to upgrade Git at this point we would  
+need to build a custom Git with cherry picked fixes for various issues  
+that have come up or they would likely be triggered by one of the  
+services repo.or.cz provides.  In addition, as there are numerous  
+reports of an unresolved issue with git-svn starting with v2.2.0  
+upgrading to v2.2.0 or later presents a problem since we have several  
+mirrors that rely on git-svn.
+
+Which brings us back to the subject of this email, is there any chance  
+for a v2.1.5 release?
+
+After reviewing a few release dates:
+
+2011-06-26T12:41:26-07:00 v1.7.6
+2012-02-05T23:51:07-08:00 v1.7.6.6
+
+2013-11-27T12:14:52-08:00 v1.8.5
+2014-02-13T13:42:01-08:00 v1.8.5.5
+
+2014-02-14T11:36:11-08:00 v1.9.0
+2014-05-30T10:15:10-07:00 v1.9.4
+
+2014-05-28T11:04:29-07:00 v2.0.0
+2014-07-30T14:20:01-07:00 v2.0.4
+
+2014-08-15T15:09:28-07:00 v2.1.0
+2014-10-29T10:48:57-07:00 v2.1.3
+
+2014-11-26T13:18:43-08:00 v2.2.0
+2015-01-12T14:06:20-08:00 v2.2.2
+
+2015-02-05T13:24:05-08:00 v2.3.0
+
+(I have omitted the dates of the 5 security releases on 2014-12-17 as  
+that seems like an extraordinary event unlikely to be repeated.)
+
+It appears that the average support lifespan of a Git release from  
+initial release date through last released maintenance update is  
+approximately 2-3 months with the 1.7.6 release being an exception at  
+a little over 7 months.
+
+If a v2.1.5 release is out of the question, would it be possible to  
+periodically designate certain Git releases as "long term support"  
+releases?  Meaning that they would receive maintenance updates (e.g.  
+fixes for invalid memory accesses/crashes, regressions or security  
+issues) for an extended period of time, say at least 6 months?
 
 
->
->> +  size             =  *DIGIT
->> +  capability-list  =  *(capability) [agent LF]
->> +  capability       =  "cap:" keyvaluepair LF
->> +  agent            =  keyvaluepair LF
->
-> I do not see a reason to make 'agent' as part of capability.  That
-> was an implementation detail of v1 but v2 does not have an
-> obligation to consider agent announcement as capability.
+Here's the analysis that led to this request:
 
-So I think we don't want to drop the agent announcement as it may
-reveal useful information ("How many outdated clients connect to our
-$HOSTING_SITE?", "I need to debug failures which happen only rarely,
-Oh! it can be narrowed down to clients with agent xyz.")
 
-So then we need to decide where to put the agent. And as it is only small
-but useful (meta?)-information I'd rather put it at the beginning of the
-data exchange, so in case the other side seems to be missbehaving,
-it is easier to debug in the hope the agent transmission was still
-successful.
+Goal 1: add support for symref=HEAD:refs/... capability
 
->
-> server-announcement = PKT-LINE("capabilities" ...) capability-list [agent-announcement]
-> capability-list = as you have it w/o "[agent LF]"
-> agent-announcement = PKT-LINE("agent=" agent-token LF)
->
-> or something, perhaps?
+Goal 2: add support for pack bitmaps
 
-This looks like me as if all capabilities are in one PKT-LINE, which
-you seemed to oppose?
+Nice to have: The CVE-2014-9390 fix, but repo.or.cz does not create  
+any working trees so it's not mandatory.
 
->
->> +The client MUST ignore any data before the pkt-line starting with "capabilities"
->> +for future easy of extension.
->
-> s/easy/ease/; but I am not sure if this makes sense.  Without
-> knowing the extended preamble, you cannot even tell if a packet line
-> that happens to start with "capabilities" is a proper beginning of
-> 0-th iteration of v2 protocol, or an embedded data in the preamble,
-> no?
 
-I rather thought about the case where the implementation would
-just close the connection on sight of unknown preamble.
-If we want to extend the protocol again and the string
-"capabilites" should be part before the actual capabilities start,
-we will think about escaping it in the future as then we can still
-talk to clients as of this design.
+Goal 1:
 
-In case we'd close the connection we would have a similar problem as
-of now, it cannot be really extended.
+symref=HEAD:refs/... requires at least Git 1.8.4.3.  However,  
+repo.or.cz runs git-daemon with read-only access to the repositories  
+and since Git 1.8.4.2 shallow clones require write access.
 
->
->> +Reference Discovery (v2)
->> +------------------------
->> +
->> +In version 2, reference discovery is initiated by the client with
->> +"want-refs" line. The client may skip reference discovery phase
->> +entirely by not sending "want-refs" (e.g. the client has another way
->> +to retrieve ref list).
->> +
->> +----
->> +  want-refs  =  PKT-LINE("want-refs" SP mode *argument)
->> +  mode       =  "all"
->> +  argument   =  SP arg
->> +  arg        =  1*(LC_ALPHA / DIGIT / "-" / "_" / "=")
->> +----
->> +
->> +Mode "all" sends all visible refs to the client like in version 1. No
->> +arguments are accepted in this mode. More modes may be available based
->> +on capabilities.
->
-> I tend to agree with Duy that the protocol must anticipate that args
-> can become longer.
+This was corrected in v2.0.0.  So at least v2.0.0 would be needed for  
+symref=HEAD:refs/....
 
-ok, so PKT-LINE needs to be able to deal with larger lines, I'll add that.
 
->
->> +----
->> +  advertised-refs  =  (no-refs / list-of-refs)
->> +                   *shallow
->> +                   flush-pkt
->
-> I am not sure if defining "shallow" as part of "refs advertisement"
-> is a good idea.  The latter lives in the same place in the v1
-> protocol merely because that was how it was later bolted onto the
-> protocol.  But this concern can easily be allayed by retitling
-> "advertised-refs" to something else.
+Goal 2:
 
-I don't quite understand this. What are your concerns about shallow here?
+Pack bitmap support was added in v2.0.0, but it's probably not a good  
+idea to run without 21134714 (pack-objects: turn off bitmaps when we  
+split packs) just in case which requires at least v2.1.3.
 
-Thanks on the feedback!
-Stefan
+
+Nice to have:
+
+If at least v2.1.3 is required, then we might as well use v2.1.4 since  
+the primary change from v2.1.3 to v2.1.4 is the addition of the  
+CVE-2014-9390 fix.
+
+
+What about a later release, v2.2.0 or later?
+
+
+git-svn is reported to suffer from occasional ".git/ 
+Git_svn_hash_XXXXXX: Bad file descriptor" errors since v2.2.0 making  
+that a non-starter.  No fix is currently available in the Git  
+repository.
+
+Since 660c889e (sha1_file: add for_each iterators for loose and packed  
+objects) loose objects in alternates directories may not be found when  
+pruning.  This affects v2.2.0 and later.  A fix is currently in  
+master.  This is an absolute must have for repo.or.cz as alternates  
+are used to implement repository forks.
+
+Since d38379e (make update-server-info more robust), affecting v2.2.x,  
+the files used by non-smart HTTP clients could have the wrong  
+permissions.  This might preclude them from being updated correctly on  
+repo.or.cz.  It would require research to see if repo.or.cz is  
+affected.  The fix for this d91175b2 (update-server-info: create info/ 
+* with mode 0666) was released in v2.3.0.
+
+
+So why not v2.1.4 then?
+
+
+There's an XDL_FAST_HASH performance regression that affects v1.7.11  
+and later [1].  But that can be turned off in config.mak.
+
+New repositories have an extra +x on the config file since v2.1.0  
+(fixed in v2.2.2), but we can compensate with a chmod after creating a  
+new repository.
+
+Git blame has a crashing regression since ea02ffa3 (mailmap: simplify  
+map_user() interface) that affects v1.8.2 and later.  The fix is  
+currently in master.  repo.or.cz enables blame in the gitweb interface  
+so that would be a serious regression.
+
+There's an issue with ungetting EOF.  That would seem unlikely to  
+affect repo.or.cz, but, I wonder if any of the displays used by gitweb  
+could trigger attempts to read a .mailmap or .gitattributes blob?  I  
+don't know.  Would require research to be certain or just picking up  
+the fix which is currently in master.
+
+There's a decimal_width overflow regression since dc801e7 (diff -- 
+stat: use less columns for change counts) affecting v1.7.11 and later  
+that can lead to an infinite loop in some cases.  Presumably either  
+gitweb or the diffs sent out by the ref update email notification  
+mechanism could trigger this.  A fix is currently in master.
+
+There is a regression since v1.7.1.1 where a fetch from a non-smart  
+HTTP source could potentially fail to retrieve the correct objects.   
+As repo.or.cz has several mirrors set up from non-smart HTTP sources a  
+fix for this (currently in master) would be nice but is probably not  
+mandatory since repo.or.cz is currently running a version of Git with  
+this regression and has not received any reports of failures that  
+could be related to this.
+
+Since fbd4a703 (list-objects: mark more commits as edges in  
+mark_edges_uninteresting) affecting v1.8.4.2 and later combined with  
+200abe74 (list-objects: only look at cmdline trees with edge_hint)  
+affecting v1.9.0 and later there is a performance regression when  
+pushing with lots of refs to non-shallow repos.  The fix 2dacf26d  
+(pack-objects: use --objects-edge-aggressive for shallow repos) was  
+released in v2.3.0.
+
+
+-Kyle
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/261638
+---- END FIRST MESSAGE ----
+
+---- BEGIN SECOND MESSAGE ----
+From: Junio C Hamano <gitster@pobox.com>
+Date: February 24, 2015 11:52:03 PST
+To: Kyle J. McKay <mackyle@gmail.com>
+Cc: Git Mailing List <git@vger.kernel.org>
+Subject: Re: Any chance for a Git v2.1.5 release?
+Message-Id: <xmqqk2z7qe8s.fsf@gitster.dls.corp.google.com>
+Content-Type: text/plain
+
+Kyle J. McKay <mackyle@gmail.com> writes:
+
+> Which brings us back to the subject of this email, is there any chance
+> for a v2.1.5 release?
+> ...
+> It appears that the average support lifespan of a Git release from
+> initial release date through last released maintenance update is
+> approximately 2-3 months with the 1.7.6 release being an exception at
+> a little over 7 months.
+
+That matches my expectation.
+
+A typical cycle lasts for 8-12 weeks, and during that time, topics
+that are bugfixes that have graduated to the 'master' branch are
+merged to the 'maint' branch with some lag and then the tip of
+'maint' gets tagged as a maintenance release from time to time.
+Some important but trivial fixes are further merged to older
+maitenance tracks like 'maint-2.2', 'maint-2.1', etc.
+
+But these topics downmerged to older maint-* branches have to be
+very trivial for an obvious reason: there are only 24 hours a day
+and 7 days in a week, and bugs that affect real world use cases are
+found by using the software in real world use cases.  Usually I use
+something a bit ahead of 'next' exactly for this reason---we would
+want to catch bugs before topics are merged to 'master'.  Although I
+sometimes have "let's use 'maint' for my work" day once or twice
+every month, I cannot afford to do that for anything older than the
+tip of 'maint' myself.
+
+The consequence of the above is this.  v2.1.1 may be more stable
+than v2.1.0 and v2.1.2 may be more stable than v2.1.1, but later
+tagged versions on older maintenance tracks are made by merging
+topics only after "ah, these are obvious enough" eyeballing without
+real use (at least by me), once newer feature release is made and
+there is a newer maintenance track.  I would not be surprised if
+v2.1.5, if it is made, has hidden interactions between the changes
+since v2.1.4 and the older codebase to cause unforeseen bugs.
+
+When I say "the tip of 'master' is meant to be more stable than any
+tagged versions", I do mean it.
+
+Having said all that, if I were to tag maint-2.1 branch as 2.1.5
+today, we would have
+
+    6aaf956 is_hfs_dotgit: loosen over-eager match of \u{..47}
+
+that does not exist in 2.1.4.  Is that what you want?
+
+> If a v2.1.5 release is out of the question, would it be possible to
+> periodically designate certain Git releases as "long term support"
+> releases?
+
+I can designate ;-), but I do not think I'd be the right person to
+maintain or long-term-support it.  Are you volunteering to oversee
+the "LTS team"?  It would involve:
+
+    - Monitor "git log --first-parent maint-lts..master" and find
+      the tip of topic branches that need to be down-merged;
+
+    - Down-merge such topics to maint-lts; this might involve
+      cherry-picking instead of merge, as the bugfix topics may
+      originally be done on the codebase newer than maint-lts;
+
+    - Use the tip of the maint-lts branch in everyday work.
+
+The last item is the most important of the above, because I do not
+have time for that.  I can help with the first two to some degree,
+though.
+
+If the lts releases need to be tagged and published by me, then lts
+team can have me pull from the tip of maint-lts they are confident
+with and have me sign it and push it out.
+
+If the primary concern you have with the currently maintained
+releases is git-svn, perhaps a better way forward for you,
+especially if you are willing to maintain your own "release plus
+patches", might be to keep a patch that reverts recent git-svn
+changes back to v2.1.whatever and deploy the up-to-date release
+and that patch on top?
+
+> Nice to have: The CVE-2014-9390 fix, but repo.or.cz does not create
+> any working trees so it's not mandatory.
+
+Even if you do not have a working tree, people who use you as the
+meeting place and push into you and fetch from you do, so I do not
+necessarily agree with your assessment.
+---- END SECOND MESSAGE ----
