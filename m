@@ -1,77 +1,83 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: Git very slow ?
-Date: Sun, 08 Mar 2015 17:21:22 +0100
-Message-ID: <87zj7nmpdp.fsf@fencepost.gnu.org>
-References: <20150307013007.GA13250@milliways>
-	<20150308155136.GA6273@vps892.directvps.nl>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] t5528: do not fail with FreeBSD shell
+Date: Sun, 8 Mar 2015 13:56:25 -0400
+Message-ID: <20150308175624.GA30399@peff.net>
+References: <e3bfc53363b14826d828e1adffbbeea@74d39fa044aa309eaea14b9f57fe79c>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Ken Moffat <zarniwhoop@ntlworld.com>, git@vger.kernel.org
-To: Kevin D <me@ikke.info>
-X-From: git-owner@vger.kernel.org Sun Mar 08 17:21:43 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git mailing list <git@vger.kernel.org>
+To: "Kyle J. McKay" <mackyle@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 08 18:56:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YUdxV-0000jF-HH
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Mar 2015 17:21:41 +0100
+	id 1YUfRJ-0002rc-S1
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Mar 2015 18:56:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752659AbbCHQVh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Mar 2015 12:21:37 -0400
-Received: from fencepost.gnu.org ([208.118.235.10]:52027 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752569AbbCHQVg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Mar 2015 12:21:36 -0400
-Received: from localhost ([127.0.0.1]:51070 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1YUdxO-0006Kz-N4; Sun, 08 Mar 2015 12:21:35 -0400
-Received: by lola (Postfix, from userid 1000)
-	id E50BBE04F4; Sun,  8 Mar 2015 17:21:22 +0100 (CET)
-In-Reply-To: <20150308155136.GA6273@vps892.directvps.nl> (Kevin D.'s message
-	of "Sun, 8 Mar 2015 16:51:36 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.0.50 (gnu/linux)
+	id S932133AbbCHR43 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Mar 2015 13:56:29 -0400
+Received: from cloud.peff.net ([50.56.180.127]:58862 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932078AbbCHR42 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Mar 2015 13:56:28 -0400
+Received: (qmail 5825 invoked by uid 102); 8 Mar 2015 17:56:28 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 08 Mar 2015 12:56:28 -0500
+Received: (qmail 556 invoked by uid 107); 8 Mar 2015 17:56:35 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.2)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 08 Mar 2015 13:56:35 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 08 Mar 2015 13:56:25 -0400
+Content-Disposition: inline
+In-Reply-To: <e3bfc53363b14826d828e1adffbbeea@74d39fa044aa309eaea14b9f57fe79c>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265098>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265099>
 
-Kevin D <me@ikke.info> writes:
+On Sun, Mar 08, 2015 at 08:37:50AM -0700, Kyle J. McKay wrote:
 
-> On Sat, Mar 07, 2015 at 01:30:07AM +0000, Ken Moffat wrote:
->> Hi, please CC me if that is not your usual fashion, because I am not
->> subscribed.
->> 
->> I use git for my build scripts - those are accessed over nfs.  Since
->> I started using 2.1 and later (I don't think I used 2.0) commands
->> such as 'commit' take a long time before anything happens.  I
->> assumed that the newer version meant this would take longer.
->> 
->> But today^Wyesterday I was bisecting the kernel on a local
->> filesystem - even when the number of revisions left to test was in
->> the single digits, git bisect took a long time to decide which
->> revision should be the next one to test.  The filesystems are ext4.
->> Is this sort of delay normal now?
->> 
->> What really prompted me to ask is that I ran git blame on a script,
->> to see when I made a particular change so that I could add that
->> information to a ticket, and almost gave up waiting because it felt
->> as if it was taking for ever.
->> 
->
-> What kind of repository are we talking about? How many files, how big?
-> Git should not have become significantly slower recently.
+> The FreeBSD shell converts this expression:
+> 
+>   git ${1:+-c push.default="$1"} push
+> 
+> to this when "$1" is not empty:
+> 
+>   git "-c push.default=$1" push
+> 
+> which causes git to fail.
 
-Particularly not git-blame in 2.1.  I should be quite surprised to see
-any git-blame call running noticeably slower in 2.1 than in any
-preceding version.
+Hmph, just when I thought I knew about all of the weird shell quirks. :)
 
-What may have happened is that the repository recently got repacked
-aggressively and thus any access to older revisions got slower.
-However, that change would be mostly tied to the repository rather than
-the version of Git you access it with.
+I am not convinced this isn't a violation of POSIX (which specifies that
+field splitting is done on the results of parameter expansions outside
+of double-quotes). But whether it is or not, we have to live with it.
 
--- 
-David Kastrup
+For my own curiosity, what does:
+
+  foo='with space'
+  printf "%s\n" ${foo:+first "$foo"}
+
+print? That is, are the double-quotes even doing anything on such a
+shell? On bash and dash, it prints:
+
+  first
+  with space
+
+which is what I would expect. So does "ash" (0.5.7, packaged for
+Debian), which is what I _thought_ FreeBSD's shell was based on. But
+clearly there is some divergence.
+
+I guess they are getting eaten by your shell, otherwise we would pass
+them along to git in the test script, which would complain.
+
+> ---
+>  t/t5528-push-default.sh | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+
+Patch itself looks obviously correct.
+
+-Peff
