@@ -1,295 +1,126 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH 23/24] untracked cache: guard and disable on system changes
-Date: Sun,  8 Mar 2015 17:12:46 +0700
-Message-ID: <1425809567-25518-24-git-send-email-pclouds@gmail.com>
-References: <1425809567-25518-1-git-send-email-pclouds@gmail.com>
+From: karthik nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v4] git: treat "-C <treat>" as a no-op when <path> is
+ empty
+Date: Sun, 08 Mar 2015 15:45:16 +0530
+Message-ID: <54FC2134.3030806@gmail.com>
+References: <1425640688-26513-1-git-send-email-karthik.188@gmail.com>	<CAPig+cTkC1Y1sWJLpG0iUHju3GOMnvOT-nsAU51GykeV2QB+vA@mail.gmail.com>	<54FAD7D7.4030008@gmail.com>	<CAPig+cRDkoH-zmYhk9ag+Yiwg1h452hOpS2fx2H5xmu5KUNqiQ@mail.gmail.com> <xmqqvbict0y9.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 08 11:15:29 2015
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Sun Mar 08 11:15:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YUYF3-0004hV-IG
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Mar 2015 11:15:26 +0100
+	id 1YUYF7-0004kF-Pf
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Mar 2015 11:15:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752132AbbCHKPW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 Mar 2015 06:15:22 -0400
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:36720 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751541AbbCHKPT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Mar 2015 06:15:19 -0400
-Received: by padfa1 with SMTP id fa1so58549048pad.3
-        for <git@vger.kernel.org>; Sun, 08 Mar 2015 03:15:19 -0700 (PDT)
+	id S1752159AbbCHKPZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Mar 2015 06:15:25 -0400
+Received: from mail-pa0-f47.google.com ([209.85.220.47]:44697 "EHLO
+	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752104AbbCHKPU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Mar 2015 06:15:20 -0400
+Received: by padet14 with SMTP id et14so40748470pad.11
+        for <git@vger.kernel.org>; Sun, 08 Mar 2015 03:15:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=1ToNNYmY8TDaPEmG7ZkM/MunS2EqhgkhLN5TpYwDqag=;
-        b=KU0ILO50kzGTOe3NHohDAPnq9+01EWxXPbFn0rxFe3HefJy0+M03SfX/vcPa548Yx6
-         E2+SKf4sjpZuUMaEw0DjvAkWxeNmmf3ldjjdzTsmKrA1nFE/m1cV9/XOBUdPb5mqvSYc
-         c5Hx7DI0lwiwjBrJ0GbfyC+dSO0WxbvL7H8HIFEjd9dPH6gUPq1FRdq2QQzobbmCmvwn
-         ZIv5SjKzStsEONWisdRuX8nnMA2B7pJfIJSGbxrEnIoonmhPu6CHNEZidvyoZsmHSKaA
-         xuPi0EAQzdNo7xP/GXSh6OmXVYWOtsKzX8fmFZlDLx6to2khPh8hTrZ68bzhD2cw21lN
-         Mimw==
-X-Received: by 10.68.65.33 with SMTP id u1mr41514619pbs.114.1425809718941;
-        Sun, 08 Mar 2015 03:15:18 -0700 (PDT)
-Received: from lanh ([115.73.247.162])
-        by mx.google.com with ESMTPSA id fz15sm199758pdb.54.2015.03.08.03.15.16
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=vZXGMzzZv7guaDxFZE8WEPWI8NBH1KHK3/escxvjfWU=;
+        b=hIf9tzmTPaX0t1yDEpoDZPEaftESiuoOz/uezenqKEruy5sIt31pingjVR7PErjYt3
+         WLJCbKvk9eBXoJT55nsas+8gCRoTGVNf/E9IJXDeAkuKA6FCLmn/VYdvGKmA4KoVN/Q+
+         O5wm6kt89FHbPVfAe8HNuKab/nTMYcC/IqpkMIj9v5Jcvapwr7MF+pEv2BNY4j/L7p3y
+         vquj/Xgwz00l6+f/HwARlqysooVpAfhx2S+6prSRF7Lykc6j8zyhNlWO5bqZBrkaDD+r
+         jx+iDaDg+Sqc4m/F4B680FMouxNN2HenWgNixrUqu99xbjLX4/LBZXKTqzOARBzK+cUG
+         LgRA==
+X-Received: by 10.68.101.130 with SMTP id fg2mr41719574pbb.118.1425809720090;
+        Sun, 08 Mar 2015 03:15:20 -0700 (PDT)
+Received: from [192.168.0.102] ([103.227.98.178])
+        by mx.google.com with ESMTPSA id ki2sm14427745pdb.33.2015.03.08.03.15.17
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 08 Mar 2015 03:15:18 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Sun, 08 Mar 2015 17:15:14 +0700
-X-Mailer: git-send-email 2.3.0.rc1.137.g477eb31
-In-Reply-To: <1425809567-25518-1-git-send-email-pclouds@gmail.com>
+        Sun, 08 Mar 2015 03:15:19 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
+In-Reply-To: <xmqqvbict0y9.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265078>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265079>
 
-If the user enables untracked cache, then
 
- - move worktree to an unsupported filesystem
- - or simply upgrade OS
- - or move the whole (portable) disk from one machine to another
- - or access a shared fs from another machine
 
-there's no guarantee that untracked cache can still function properly.
-Record the worktree location and OS footprint in the cache. If it
-changes, err on the safe side and disable the cache. The user can
-'update-index --untracked-cache' again to make sure all conditions are
-met.
+On 03/08/2015 12:44 PM, Junio C Hamano wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+>
+>> On Sat, Mar 7, 2015 at 5:49 AM, karthik nayak <karthik.188@gmail.com> wrote:
+>>
+>>> Also "*(*argv)[1]" seems more readable to me, maybe more of a perspective?
+>>
+>> I also had considered suggesting (*argv)[1][0] as more readable, but
+>> it is primarily personal taste, and I didn't want to bike-shed the
+>> issue.
+>
+> I didn't mention that in earlier review rounds for the same reason,
+> but I saw Andreas Schwab also independently made the same comment,
+> so that makes three of us.
+>
+> That does not change the fact that this is merely a matter of
+> preference; I wouldn't even call this one a "taste" (use of which
+> implies that there are judgement involved, as in "good taste" and
+> "bad taste").
+>
+> But because it is "preference", the only time we can discuss is when
+> a new code is submitted and is under review.  Once it is in the
+> tree, it is not really worth extra patch noise to go and change.
+>
+> As everybody knows, POINTER[0] and *POINTER are equivalent.  We have
+> quite a few places where we say "let's treat passing an empty string
+> the same as not passing an argument at all" with
+>
+> 	if (!POINTER || !*POINTER)
+>          	; /* no-op */
+> 	else {
+>          	/* do something with POINTER */
+>                  fn(POINTER);
+> 	}
+>
+> and we could say !POINTER[0] instead of !*POINTER, interchangeably.
+>
+> We tend to prefer (again, I do not think this is particularly a
+> "taste" thing) *POINTER over POINTER[0] when POINTER is just a
+> single variable in the above pattern we often see in our code.
+>
+> But when POINTER is an expression like (*argv)[1], where you unwrap
+> the operators according to their precedences, it often is easier to
+> read if you do not have to flip your eyes left and right too often.
+>
+> You first look at "argv", then notice the prefix "*" (you have to
+> move your eyes to the left here) and know argv points at a location
+> that holds a pointer.  Then you notice the suffix [1] (now to the
+> right) and know that pointer points at an array and the expression
+> is talking about in its second element.
+>
+> Now, you want to say that second element is actually a pointer to a
+> string and want to talk about the beginning of that string.  If you
+> express it as "*(*argv)[1]", it forces the reader to go back to the
+> left end once more.  If you write it as "(*argv)[1][0]", the reader
+> can keep going to the right, starting from the last thing the reader
+> read and understood (which is the "[1]" at the right end).
+>
+> At least, that is how I analyze _my_ preference---the latter feels
+> easier on my eyes.
+>
+> But as I said this is a mere preference thing.
+>
 
-This adds a new requirement that setup_git_directory* must be called
-before read_cache() because we need worktree location by then, or the
-cache is dropped.
+The way you put it, it makes a lot of sense that most would prefer 
+"(*argv)[1][0]" rather than "*(*argv)[1]".
 
-This change does not cover all bases, you can fool it if you try
-hard. The point is to stop accidents.
-
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-Helped-by: brian m. carlson <sandals@crustytoothpaste.net>
-Helped-by: Torsten B=C3=B6gershausen <tboegi@web.de>
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/technical/index-format.txt |  4 +++
- builtin/update-index.c                   | 16 ++++++----
- dir.c                                    | 55 ++++++++++++++++++++++++=
-+++++++-
- dir.h                                    |  2 ++
- git-compat-util.h                        |  1 +
- test-dump-untracked-cache.c              |  1 +
- 6 files changed, 72 insertions(+), 7 deletions(-)
-
-diff --git a/Documentation/technical/index-format.txt b/Documentation/t=
-echnical/index-format.txt
-index 899dd3d..e24b4bc 100644
---- a/Documentation/technical/index-format.txt
-+++ b/Documentation/technical/index-format.txt
-@@ -242,6 +242,10 @@ Git index format
-=20
-   The extension starts with
-=20
-+  - A sequence of NUL-terminated strings, preceded by the size of the
-+    sequence in variable width encoding. Each string describes the
-+    environment where the cache can be used.
-+
-   - Stat data of $GIT_DIR/info/exclude. See "Index entry" section from
-     ctime field until "file size".
-=20
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index f5f6689..fc5e108 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -1103,7 +1103,7 @@ int cmd_update_index(int argc, const char **argv,=
- const char *prefix)
- 		the_index.split_index =3D NULL;
- 		the_index.cache_changed |=3D SOMETHING_CHANGED;
- 	}
--	if (untracked_cache > 0 && !the_index.untracked) {
-+	if (untracked_cache > 0) {
- 		struct untracked_cache *uc;
-=20
- 		if (untracked_cache < 2) {
-@@ -1111,11 +1111,15 @@ int cmd_update_index(int argc, const char **arg=
-v, const char *prefix)
- 			if (!test_if_untracked_cache_is_supported())
- 				return 1;
- 		}
--		uc =3D xcalloc(1, sizeof(*uc));
--		uc->exclude_per_dir =3D ".gitignore";
--		/* should be the same flags used by git-status */
--		uc->dir_flags =3D DIR_SHOW_OTHER_DIRECTORIES | DIR_HIDE_EMPTY_DIRECT=
-ORIES;
--		the_index.untracked =3D uc;
-+		if (!the_index.untracked) {
-+			uc =3D xcalloc(1, sizeof(*uc));
-+			strbuf_init(&uc->ident, 100);
-+			uc->exclude_per_dir =3D ".gitignore";
-+			/* should be the same flags used by git-status */
-+			uc->dir_flags =3D DIR_SHOW_OTHER_DIRECTORIES | DIR_HIDE_EMPTY_DIREC=
-TORIES;
-+			the_index.untracked =3D uc;
-+		}
-+		add_untracked_ident(the_index.untracked);
- 		the_index.cache_changed |=3D UNTRACKED_CHANGED;
- 	} else if (!untracked_cache && the_index.untracked) {
- 		the_index.untracked =3D NULL;
-diff --git a/dir.c b/dir.c
-index 853df93..8a037ee 100644
---- a/dir.c
-+++ b/dir.c
-@@ -1794,6 +1794,40 @@ static int treat_leading_path(struct dir_struct =
-*dir,
- 	return rc;
- }
-=20
-+static const char *get_ident_string(void)
-+{
-+	static struct strbuf sb =3D STRBUF_INIT;
-+	struct utsname uts;
-+
-+	if (sb.len)
-+		return sb.buf;
-+	if (uname(&uts))
-+		die_errno(_("failed to get kernel name and information"));
-+	strbuf_addf(&sb, "Location %s, system %s %s %s", get_git_work_tree(),
-+		    uts.sysname, uts.release, uts.version);
-+	return sb.buf;
-+}
-+
-+static int ident_in_untracked(const struct untracked_cache *uc)
-+{
-+	const char *end =3D uc->ident.buf + uc->ident.len;
-+	const char *p   =3D uc->ident.buf;
-+
-+	for (p =3D uc->ident.buf; p < end; p +=3D strlen(p) + 1)
-+		if (!strcmp(p, get_ident_string()))
-+			return 1;
-+	return 0;
-+}
-+
-+void add_untracked_ident(struct untracked_cache *uc)
-+{
-+	if (ident_in_untracked(uc))
-+		return;
-+	strbuf_addstr(&uc->ident, get_ident_string());
-+	/* this strbuf contains a list of strings, save NUL too */
-+	strbuf_addch(&uc->ident, 0);
-+}
-+
- static struct untracked_cache_dir *validate_untracked_cache(struct dir=
-_struct *dir,
- 						      int base_len,
- 						      const struct pathspec *pathspec)
-@@ -1860,6 +1894,11 @@ static struct untracked_cache_dir *validate_untr=
-acked_cache(struct dir_struct *d
- 		if (ce_skip_worktree(active_cache[i]))
- 			return NULL;
-=20
-+	if (!ident_in_untracked(dir->untracked)) {
-+		warning(_("Untracked cache is disabled on this system."));
-+		return NULL;
-+	}
-+
- 	if (!dir->untracked->root) {
- 		const int len =3D sizeof(*dir->untracked->root);
- 		dir->untracked->root =3D xmalloc(len);
-@@ -2264,6 +2303,11 @@ void write_untracked_extension(struct strbuf *ou=
-t, struct untracked_cache *untra
- 	hashcpy(ouc->excludes_file_sha1, untracked->ss_excludes_file.sha1);
- 	ouc->dir_flags =3D htonl(untracked->dir_flags);
- 	memcpy(ouc->exclude_per_dir, untracked->exclude_per_dir, len + 1);
-+
-+	varint_len =3D encode_varint(untracked->ident.len, varbuf);
-+	strbuf_add(out, varbuf, varint_len);
-+	strbuf_add(out, untracked->ident.buf, untracked->ident.len);
-+
- 	strbuf_add(out, ouc, ouc_size(len));
- 	free(ouc);
- 	ouc =3D NULL;
-@@ -2449,17 +2493,26 @@ struct untracked_cache *read_untracked_extensio=
-n(const void *data, unsigned long
- 	struct untracked_cache *uc;
- 	struct read_data rd;
- 	const unsigned char *next =3D data, *end =3D (const unsigned char *)d=
-ata + sz;
--	int len;
-+	const char *ident;
-+	int ident_len, len;
-=20
- 	if (sz <=3D 1 || end[-1] !=3D '\0')
- 		return NULL;
- 	end--;
-=20
-+	ident_len =3D decode_varint(&next);
-+	if (next + ident_len > end)
-+		return NULL;
-+	ident =3D (const char *)next;
-+	next +=3D ident_len;
-+
- 	ouc =3D (const struct ondisk_untracked_cache *)next;
- 	if (next + ouc_size(0) > end)
- 		return NULL;
-=20
- 	uc =3D xcalloc(1, sizeof(*uc));
-+	strbuf_init(&uc->ident, ident_len);
-+	strbuf_add(&uc->ident, ident, ident_len);
- 	load_sha1_stat(&uc->ss_info_exclude, &ouc->info_exclude_stat,
- 		       ouc->info_exclude_sha1);
- 	load_sha1_stat(&uc->ss_excludes_file, &ouc->excludes_file_stat,
-diff --git a/dir.h b/dir.h
-index 2ce7dd3..6ccbc45 100644
---- a/dir.h
-+++ b/dir.h
-@@ -127,6 +127,7 @@ struct untracked_cache {
- 	struct sha1_stat ss_info_exclude;
- 	struct sha1_stat ss_excludes_file;
- 	const char *exclude_per_dir;
-+	struct strbuf ident;
- 	/*
- 	 * dir_struct#flags must match dir_flags or the untracked
- 	 * cache is ignored.
-@@ -305,4 +306,5 @@ void untracked_cache_add_to_index(struct index_stat=
-e *, const char *);
- void free_untracked_cache(struct untracked_cache *);
- struct untracked_cache *read_untracked_extension(const void *data, uns=
-igned long sz);
- void write_untracked_extension(struct strbuf *out, struct untracked_ca=
-che *untracked);
-+void add_untracked_ident(struct untracked_cache *);
- #endif
-diff --git a/git-compat-util.h b/git-compat-util.h
-index f587749..e9502a1 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -132,6 +132,7 @@
- #elif defined(_MSC_VER)
- #include "compat/msvc.h"
- #else
-+#include <sys/utsname.h>
- #include <sys/wait.h>
- #include <sys/resource.h>
- #include <sys/socket.h>
-diff --git a/test-dump-untracked-cache.c b/test-dump-untracked-cache.c
-index 710441e..25d855d 100644
---- a/test-dump-untracked-cache.c
-+++ b/test-dump-untracked-cache.c
-@@ -44,6 +44,7 @@ int main(int ac, char **av)
- {
- 	struct untracked_cache *uc;
- 	struct strbuf base =3D STRBUF_INIT;
-+	setup_git_directory();
- 	if (read_cache() < 0)
- 		die("unable to read index file");
- 	uc =3D the_index.untracked;
---=20
-2.3.0.rc1.137.g477eb31
+Thanks for clearing that out.
+Regards
+-Karthik
