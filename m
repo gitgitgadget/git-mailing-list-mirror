@@ -1,58 +1,96 @@
-From: Diego Viola <diego.viola@gmail.com>
+From: "Kyle J. McKay" <mackyle@gmail.com>
 Subject: Re: Please consider adding a -f switch to git-clone (or something similar)
-Date: Sat, 7 Mar 2015 22:53:13 -0300
-Message-ID: <CA+ToGPFSbOjfd5gJg+r-7WkwMB=m=4sOupaZo1WUn+O0bxAAXw@mail.gmail.com>
-References: <CA+ToGPEZN7TBcYF3o5YgbayjZ8WKok-fjTPeq5nbt2vAG1wDDQ@mail.gmail.com>
-	<87d24kzbor.fsf@igel.home>
-	<CA+ToGPHOM9mu_ng4wVc7QUGyvf09y=nDjE32oSh9JzKbpbzN2Q@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Sun Mar 08 02:53:23 2015
+Date: Sat, 7 Mar 2015 18:32:47 -0800
+Message-ID: <569EEC82-664C-48A7-990D-BFCDB7D78D16@gmail.com>
+References: <CA+ToGPEZN7TBcYF3o5YgbayjZ8WKok-fjTPeq5nbt2vAG1wDDQ@mail.gmail.com> <87d24kzbor.fsf@igel.home> <CA+ToGPHOM9mu_ng4wVc7QUGyvf09y=nDjE32oSh9JzKbpbzN2Q@mail.gmail.com> <CA+ToGPFSbOjfd5gJg+r-7WkwMB=m=4sOupaZo1WUn+O0bxAAXw@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v936)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Diego Viola <diego.viola@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 08 03:33:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YUQPC-0000O3-8J
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Mar 2015 02:53:22 +0100
+	id 1YUR1Z-0001aM-8J
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Mar 2015 03:33:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750832AbbCHBxQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Mar 2015 20:53:16 -0500
-Received: from mail-la0-f54.google.com ([209.85.215.54]:38223 "EHLO
-	mail-la0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750741AbbCHBxP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Mar 2015 20:53:15 -0500
-Received: by labgf13 with SMTP id gf13so40053672lab.5
-        for <git@vger.kernel.org>; Sat, 07 Mar 2015 17:53:13 -0800 (PST)
+	id S1750960AbbCHCcw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Mar 2015 21:32:52 -0500
+Received: from mail-pa0-f44.google.com ([209.85.220.44]:44444 "EHLO
+	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750930AbbCHCcv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Mar 2015 21:32:51 -0500
+Received: by padet14 with SMTP id et14so38724585pad.11
+        for <git@vger.kernel.org>; Sat, 07 Mar 2015 18:32:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=OwXQbyPHO8FS/RVeK1D1WJ2LJILRTbOhyttgSaF3fGM=;
-        b=0A2ebks1rmWZevhSGmo9wVTcrpJIpaplcF5s5gxtOHpdJANdNAr41zEJdZ7O7v7WAb
-         kDM9Vn19oTfT9CfFph0INTZkSQ0XMoI+L6m0hH8adC6asw8t+W8NjsKCxFUHYzu7BgpF
-         tCAm5G7htKBA0sRF54IHuLP4ZruwXfM/n4cWcPcq1DMV0hrOxtWMGXkpUocw5nn5j08O
-         nG9KjR+wI1tH5GCZgj3cI3+ZDek/0HGGABSSuwp27LgMgQGyqQZjaF8bXfoLaz63YcI9
-         TAG8gnZo4yifh/9ZxKVVRLDYOk0SCfnaVgedCQe9xi1gsu9YQMF8ufk5MpMv1DCw8q/8
-         HVCg==
-X-Received: by 10.112.12.196 with SMTP id a4mr19598659lbc.8.1425779593898;
- Sat, 07 Mar 2015 17:53:13 -0800 (PST)
-Received: by 10.114.1.208 with HTTP; Sat, 7 Mar 2015 17:53:13 -0800 (PST)
-In-Reply-To: <CA+ToGPHOM9mu_ng4wVc7QUGyvf09y=nDjE32oSh9JzKbpbzN2Q@mail.gmail.com>
+        h=from:to:in-reply-to:subject:references:message-id:content-type
+         :content-transfer-encoding:mime-version:date:cc;
+        bh=D/6PWYAss9BPYv+IIyusBKaUR7nusROt5mJ0FA7dSEk=;
+        b=SZVLOsdYNzsZvEmJI7gs9EJTgmUWP7iTrYAbKpbgKPhQIgQeMFKJd0ya4m0mo2ErBF
+         87+sS+8cQUL4miUzGFUK5Ah4iU1QAnsBXLau2qK6vY9tyIE/FjA7n/SapkQuI76FZFoA
+         w563S5glnCdXNLIz10r9QwFraMdSQaibbTTLchv0rj2ALobfI5NGpxZUldgXCSImHI3B
+         EcfTc5z/imBoJT9uCYfZpsaqIA6jMMSjDi/NXLN5LjvP8XbUa8yaVE5i9JPgnn+5o3V3
+         tyc4Jmw8DsTXNDmBSEQmR9Fc8UUzmIcccxSHKhTuIGMlkJWw+grbna23jELsziJ+Nuu4
+         N6kg==
+X-Received: by 10.66.141.42 with SMTP id rl10mr39148871pab.124.1425781970838;
+        Sat, 07 Mar 2015 18:32:50 -0800 (PST)
+Received: from ?IPv6:2002:48c0:ad8d::223:12ff:fe05:eebd? ([2002:48c0:ad8d:0:223:12ff:fe05:eebd])
+        by mx.google.com with ESMTPSA id in3sm13491622pbd.50.2015.03.07.18.32.49
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Sat, 07 Mar 2015 18:32:50 -0800 (PST)
+In-Reply-To: <CA+ToGPFSbOjfd5gJg+r-7WkwMB=m=4sOupaZo1WUn+O0bxAAXw@mail.gmail.com>
+X-Mauler: Craptastic (2.936)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265024>
 
-Something like this is the scenario I'm talking about:
+On Mar 7, 2015, at 17:53, Diego Viola wrote:
+> Something like this is the scenario I'm talking about:
+>
+> $ mkdir non-empty-dir
+> $ cd non-empty-dir
+> $ touch foo bar baz
+> $ git clone -f url:user/dotfiles.git .
+> $ git status
+> On branch master
+> Your branch is up-to-date with 'origin/master'.
+> Untracked files:
+>  (use "git add <file>..." to include in what will be committed)
+>
+>    bar
+>    baz
+>    foo
+>
+> nothing added to commit but untracked files present (use "git add"  
+> to track)
+
+Have you considered using an alias?
+
+git config --global alias.irfc \
+   '!sh -c '\''git init && git remote add origin "$1" && git fetch &&  
+git checkout "${2:-master}"'\'' sh'
+
+(You'll likely have to carefully unwrap that line above.)
+
+Then you get
+
+   git irfc <URL> [<branch>]
+
+where <branch> defaults to master.
+So your scenario would become just:
+
+
 
 $ mkdir non-empty-dir
 $ cd non-empty-dir
 $ touch foo bar baz
-$ git clone -f url:user/dotfiles.git .
+$ git irfc url:user/dotfiles.git
 $ git status
 On branch master
 Your branch is up-to-date with 'origin/master'.
@@ -63,29 +101,11 @@ Untracked files:
     baz
     foo
 
-nothing added to commit but untracked files present (use "git add" to track)
+nothing added to commit but untracked files present (use "git add" to  
+track)
 
 
-On Sat, Mar 7, 2015 at 9:02 PM, Diego Viola <diego.viola@gmail.com> wrote:
-> Sorry, I wanted to say: I know I can git-clone in a empty directory
-> and then move the files over to $HOME.
->
-> I know I can git init in a non-empty directory. :-)
->
-> Thanks,
->
-> Diego
->
-> On Sat, Mar 7, 2015 at 7:26 PM, Andreas Schwab <schwab@linux-m68k.org> wrote:
->> Diego Viola <diego.viola@gmail.com> writes:
->>
->>> I know I could git-init in a empty directory
->>
->> You can also git init a non-empty directory.
->>
->> Andreas.
->>
->> --
->> Andreas Schwab, schwab@linux-m68k.org
->> GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
->> "And now for something completely different."
+-Kyle
+
+P.S. irfc = init, remote, fetch, checkout.  But do make up a better  
+name. :)
