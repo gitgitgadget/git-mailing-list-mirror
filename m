@@ -1,123 +1,91 @@
-From: Paul Tan <pyokagan@gmail.com>
-Subject: [PATCH v2 0/4] git-credential-store: XDG user-specific config file support
-Date: Sun,  8 Mar 2015 15:58:48 +0800
-Message-ID: <1425801532-8483-1-git-send-email-pyokagan@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Jeff King <peff@peff.net>, Paul Tan <pyokagan@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 08 08:59:19 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] rev-list: refuse --first-parent combined with --bisect
+Date: Sun, 08 Mar 2015 00:00:12 -0800
+Message-ID: <xmqq1tkzudf7.fsf@gitster.dls.corp.google.com>
+References: <xmqq61ag72gc.fsf@gitster.dls.corp.google.com>
+	<1425763876-15573-1-git-send-email-me@ikke.info>
+	<20150307231305.GA15619@vps892.directvps.nl>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Kevin Daudt <me@ikke.info>
+X-From: git-owner@vger.kernel.org Sun Mar 08 09:00:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YUW7J-0000iO-9a
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Mar 2015 08:59:17 +0100
+	id 1YUW8L-0001vk-Vk
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Mar 2015 09:00:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751494AbbCHH7L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Mar 2015 03:59:11 -0400
-Received: from mail-pa0-f50.google.com ([209.85.220.50]:45748 "EHLO
-	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751473AbbCHH7E (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Mar 2015 03:59:04 -0400
-Received: by padbj1 with SMTP id bj1so30533641pad.12
-        for <git@vger.kernel.org>; Sat, 07 Mar 2015 23:59:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=gK6f1jSsOnYnKu7TK22/7q51/xjtcgfmVfSyJuQkZEw=;
-        b=Xs9iTxyT2Yn8f8E0CBLpEVuPAA3SWnqg3U2ANkSd7XZGxdjEE2j+3tkQNGwePHF4yM
-         7TSefLG+otibpPaff7zSym0SMjY52tQmhtbd2A2zTDZV2nCWzqubW8Xx+PFSPMqQGcq4
-         XoP6UpQVn2H4gvL/wX0NMamjxbawHaz/FPoRx8LZygqm8FV0YE9/QBYd5+qVjiFtbZrj
-         9c61ubtUvnmVV3RC8Hrfym6EdhIYa60ZbqGdqisttLU7NqynwOF+4eik4bQ8U0NCyiI6
-         NiPgx/NZDBzDVuUlnquFzlS5mHjYV5LwgkqbPiVEGmGI21dqdV8i80I10leLtQMRiWaD
-         cEyg==
-X-Received: by 10.66.227.169 with SMTP id sb9mr1761722pac.11.1425801544159;
-        Sat, 07 Mar 2015 23:59:04 -0800 (PST)
-Received: from yoshi.chippynet.com ([101.127.143.183])
-        by mx.google.com with ESMTPSA id d9sm14199416pdk.3.2015.03.07.23.58.59
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 07 Mar 2015 23:59:00 -0800 (PST)
-Received: from pyokagan by yoshi.chippynet.com with local (Exim 4.84)
-	(envelope-from <pyokagan@yoshi.chippynet.com>)
-	id 1YUW6z-0002Dn-BZ; Sun, 08 Mar 2015 15:58:57 +0800
-X-Mailer: git-send-email 2.1.4
+	id S1751456AbbCHIAR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Mar 2015 04:00:17 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:59430 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751026AbbCHIAQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Mar 2015 04:00:16 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id AC7B7378BF;
+	Sun,  8 Mar 2015 04:00:15 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=O3acvfPAHDDvqAPIe8ddt5d8Zy0=; b=c2pMgh
+	fqlCiwm+JcaQ+yVSq/KTWRF4rGu3XGsXWEcxnoa4bHsPRVMEvcmJbQPcR8EojXD6
+	d/2KZymQTo6LF2OxinsDeLqO7BkSsmIPZhrtYww6jrzWpq5Y+kcWQFKlX2h/xEwb
+	3e2qd/m2roV9yED4DVCX1R8CaPuCZ7mTVEhtQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=g/yx1atlooXAo/cT6g/nl/PhiHbxhNDh
+	kWUzWuITkIb0qd0v71iDdF2E88fHDaKAYZLIOtIpZ0WHGu0lyVBNVgKT1MX0tGJv
+	AvlrNvb6aenQsT+LZLZDE2waqptTkZM0m0GX3i1Mja6edl+MB02DbwoAoerNhFec
+	9S4cFujo5Pc=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A4D21378BD;
+	Sun,  8 Mar 2015 04:00:15 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 19AF7378B6;
+	Sun,  8 Mar 2015 04:00:14 -0400 (EDT)
+In-Reply-To: <20150307231305.GA15619@vps892.directvps.nl> (Kevin Daudt's
+	message of "Sun, 8 Mar 2015 00:13:05 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 26CD3238-C569-11E4-86CB-29999F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265042>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265043>
 
-The previous patch series can be found at [1].
+Kevin Daudt <me@ikke.info> writes:
 
-[1] http://thread.gmane.org/gmane.comp.version-control.git/264682
+> On Sat, Mar 07, 2015 at 10:31:16PM +0100, Kevin Daudt wrote:
+>> diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+>> index ff84a82..c271e15 100644
+>> --- a/builtin/rev-list.c
+>> +++ b/builtin/rev-list.c
+>> @@ -291,6 +291,9 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+>>  	if (revs.bisect)
+>>  		bisect_list = 1;
+>>  
+>> +	if(revs.first_parent_only && revs.bisect)
+>
+> I should have added a space after the if.
 
-The changes are as follows:
+Since you are practicing, let me say that a better way to do this is
+to reroll the whole patch and have that comment after the three-dash
+line.
 
-* Code refactor: instead of a gigantic blob of code in main(),
-  store_credential(), remove_credential() and lookup_credential() have been
-  modified to take a string_list of precedence-ordered file paths. Although in
-  this patch only support for XDG_CONFIG_HOME (user-specific config files) are
-  implemented, this opens the door for support of XDG_CONFIG_DIRS (system-wide
-  config files) to be implemented as well.
+That is, you respond to your message with a new patch that corrects
+the above, and where you said "This is my first code patch, and
+thought this was a nice exercise." in your first message, you would
+say
 
-* parse_credential_file() returns the value of found_credential at all times.
-  (Thanks Junio for pointing this out)
+  ---
 
-* parse_credential_file(), and thus "get" ignores unreadable/non-existing files
-  instead of warning the user. This is done to follow the XDG base dir spec,
-  which states that: "if for any reason a file in a certain directory is
-  unaccessible, e.g. because the directory is non-existant, the file is
-  non-existant or the user is not authorized to open the file, then the
-  processing of the file in that directory should be skipped."[2]
+   * changes from v1: corrected coding guideline violation that
+     missed a SP between "if("
 
-[2] http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html
+or something like that.
 
-* "store" now only write to a single file instead of writing to one and erasing
-  from the rest, unlike the behavior in the 1st patch, as the complexity
-  introduced by implementing this behavior is probably unnecessary. If the user
-  really wanted all matching credentials to be erased, the user can simply just
-  issue an erase. (Thanks Matthieu, Junio and Jeff for this suggestion)
-
-* ~/.git-credentials now has greater precedence than the xdg credentials file.
-  This is to be consistent with the behavior of git-config.
-
-* Support for $XDG_CONFIG_HOME/git/credentials has been documented in
-  git-credentials-store.
-
-The changes for the tests are as follows:
-
-* Instead of repeating ${XDG_CONFIG_HOME:-$HOME/.config} all over
-  the place, add tests that test for $HOME/.config/git/credentials (when
-  XDG_CONFIG_HOME is unset) and for $XDG_CONFIG_HOME/git/credentials with a
-  custom $XDG_CONFIG_HOME directory set. This is to test that the new code
-  respects the $XDG_CONFIG_HOME environment variable. (Thanks Junio)
-
-* Use test_path_is_missing to test if files exist. (Thanks Matthieu)
-
-* All code is now within test_expect_success and will now fail if any
-  error occurs in the code block through the use of "&&". Furthermore, tests do
-  not rely on previous tests passing as the credential files are overwritten in
-  each test. (Thanks Matthieu and Junio for your code review)
-
-The most current version of the patch queue is published in the xdg branch
-at [3]. I try to push -f regularly.
-
-For your feedback, please.
-
-[3] https://github.com/pyokagan/git
-
-Paul Tan (4):
-  git-credential-store: support multiple credential files
-  git-credential-store: support XDG_CONFIG_HOME
-  docs/git-credential-store: document XDG file and precedence
-  t0302: test credential-store support for XDG_CONFIG_HOME
-
- Documentation/git-credential-store.txt | 37 +++++++++++++-
- credential-store.c                     | 86 +++++++++++++++++++++----------
- t/t0302-credential-store.sh            | 92 ++++++++++++++++++++++++++++++++++
- 3 files changed, 186 insertions(+), 29 deletions(-)
-
--- 
-2.1.4
+Thanks.
