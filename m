@@ -1,37 +1,37 @@
 From: Kevin Daudt <me@ikke.info>
 Subject: [PATCH v3] rev-list: refuse --first-parent combined with --bisect
-Date: Sun,  8 Mar 2015 16:02:23 +0100
-Message-ID: <1425826943-9535-1-git-send-email-me@ikke.info>
+Date: Sun,  8 Mar 2015 16:03:25 +0100
+Message-ID: <1425827005-9602-1-git-send-email-me@ikke.info>
 References: <1425824339-8036-1-git-send-email-me@ikke.info>
 Cc: git@vger.kernel.org, Kevin Daudt <me@ikke.info>
-To: gistster@pobox.com
-X-From: git-owner@vger.kernel.org Sun Mar 08 16:02:37 2015
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sun Mar 08 16:03:45 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YUciv-0003rx-Io
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Mar 2015 16:02:33 +0100
+	id 1YUck0-0004MB-DJ
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Mar 2015 16:03:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752252AbbCHPC3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Mar 2015 11:02:29 -0400
-Received: from ikke.info ([178.21.113.177]:36846 "EHLO vps892.directvps.nl"
+	id S1752558AbbCHPDb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Mar 2015 11:03:31 -0400
+Received: from ikke.info ([178.21.113.177]:36854 "EHLO vps892.directvps.nl"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751786AbbCHPC2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Mar 2015 11:02:28 -0400
+	id S1751541AbbCHPDb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Mar 2015 11:03:31 -0400
 Received: by vps892.directvps.nl (Postfix, from userid 182)
-	id 874C44400AF; Sun,  8 Mar 2015 16:02:27 +0100 (CET)
+	id DFCF91DCF6D; Sun,  8 Mar 2015 16:03:29 +0100 (CET)
 Received: from ikke-laptop.ikke (unknown [10.8.0.6])
-	by vps892.directvps.nl (Postfix) with ESMTP id 5EDEC4400AE;
-	Sun,  8 Mar 2015 16:02:27 +0100 (CET)
+	by vps892.directvps.nl (Postfix) with ESMTP id C2D054400AE;
+	Sun,  8 Mar 2015 16:03:29 +0100 (CET)
 X-Mailer: git-send-email 2.3.1.184.g97c12a8.dirty
 In-Reply-To: <1425824339-8036-1-git-send-email-me@ikke.info>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265093>
 
 rev-list --bisect is used by git bisect, but never together with
 --first-parent. Because rev-list --bisect together with --first-parent
