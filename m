@@ -1,61 +1,91 @@
-From: Amate Yolande <yolandeamate@gmail.com>
-Subject: Re: Delivery Status Notification (Failure)
-Date: Sun, 8 Mar 2015 01:36:51 +0100
-Message-ID: <CAFAMDXaVZy+XNbNtWs=N1vqmfMp+gg5T0JM5+7prrPxM9v7COg@mail.gmail.com>
-References: <CAFAMDXb-_8WAMw7qOdAyJQKuLwtg+kAYOJO7xivCq7OTMyB26Q@mail.gmail.com>
-	<047d7b2ed8ab924fe60510bc0ea0@google.com>
+From: Diego Viola <diego.viola@gmail.com>
+Subject: Re: Please consider adding a -f switch to git-clone (or something similar)
+Date: Sat, 7 Mar 2015 22:53:13 -0300
+Message-ID: <CA+ToGPFSbOjfd5gJg+r-7WkwMB=m=4sOupaZo1WUn+O0bxAAXw@mail.gmail.com>
+References: <CA+ToGPEZN7TBcYF3o5YgbayjZ8WKok-fjTPeq5nbt2vAG1wDDQ@mail.gmail.com>
+	<87d24kzbor.fsf@igel.home>
+	<CA+ToGPHOM9mu_ng4wVc7QUGyvf09y=nDjE32oSh9JzKbpbzN2Q@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 08 01:36:58 2015
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Sun Mar 08 02:53:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YUPDF-0001vz-UV
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Mar 2015 01:36:58 +0100
+	id 1YUQPC-0000O3-8J
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Mar 2015 02:53:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751256AbbCHAgx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Mar 2015 19:36:53 -0500
-Received: from mail-wi0-f174.google.com ([209.85.212.174]:37196 "EHLO
-	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751166AbbCHAgw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Mar 2015 19:36:52 -0500
-Received: by wibhm9 with SMTP id hm9so11772704wib.2
-        for <git@vger.kernel.org>; Sat, 07 Mar 2015 16:36:51 -0800 (PST)
+	id S1750832AbbCHBxQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Mar 2015 20:53:16 -0500
+Received: from mail-la0-f54.google.com ([209.85.215.54]:38223 "EHLO
+	mail-la0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750741AbbCHBxP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Mar 2015 20:53:15 -0500
+Received: by labgf13 with SMTP id gf13so40053672lab.5
+        for <git@vger.kernel.org>; Sat, 07 Mar 2015 17:53:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=1x1mzVc4v5PlQCKt2hdlMUk0/xBuwLqQtYFlFnSGKO4=;
-        b=OzdyRWya7DxMRjzl9MuhxxHvoydLMj85H1NreK07y0WM7ysaVyrH50cNhcLGfQBa0q
-         BDTLodGI07d2R2Z/Usp21oCV7FgSCvVjR+WugGexCGWt254yiKMkUNYbyaKLr1zGzYD/
-         Eychc3qFUiSUn9aahzcdGxPPFF1cYxoHkBdXYXMeInbvmR8WaMqBwjh+vt10XS6Y/ngc
-         1mjIC8qkYUU2zJbROMn+hRII5d8xXi9lQQwo61QRaqkQNgfsJRnKqcrDeG+IiChQCxh3
-         o7J5Ebe7aMalstWMdOTDzDkSzUFFs1fpD7xx7KeNnQ+ycSTy0k2ZLNPfxT5kcoyOtvNF
-         1jrA==
-X-Received: by 10.180.89.173 with SMTP id bp13mr88309335wib.91.1425775011420;
- Sat, 07 Mar 2015 16:36:51 -0800 (PST)
-Received: by 10.27.206.135 with HTTP; Sat, 7 Mar 2015 16:36:51 -0800 (PST)
-In-Reply-To: <047d7b2ed8ab924fe60510bc0ea0@google.com>
+        bh=OwXQbyPHO8FS/RVeK1D1WJ2LJILRTbOhyttgSaF3fGM=;
+        b=0A2ebks1rmWZevhSGmo9wVTcrpJIpaplcF5s5gxtOHpdJANdNAr41zEJdZ7O7v7WAb
+         kDM9Vn19oTfT9CfFph0INTZkSQ0XMoI+L6m0hH8adC6asw8t+W8NjsKCxFUHYzu7BgpF
+         tCAm5G7htKBA0sRF54IHuLP4ZruwXfM/n4cWcPcq1DMV0hrOxtWMGXkpUocw5nn5j08O
+         nG9KjR+wI1tH5GCZgj3cI3+ZDek/0HGGABSSuwp27LgMgQGyqQZjaF8bXfoLaz63YcI9
+         TAG8gnZo4yifh/9ZxKVVRLDYOk0SCfnaVgedCQe9xi1gsu9YQMF8ufk5MpMv1DCw8q/8
+         HVCg==
+X-Received: by 10.112.12.196 with SMTP id a4mr19598659lbc.8.1425779593898;
+ Sat, 07 Mar 2015 17:53:13 -0800 (PST)
+Received: by 10.114.1.208 with HTTP; Sat, 7 Mar 2015 17:53:13 -0800 (PST)
+In-Reply-To: <CA+ToGPHOM9mu_ng4wVc7QUGyvf09y=nDjE32oSh9JzKbpbzN2Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265023>
 
-Hello Junio
+Something like this is the scenario I'm talking about:
 
-          Thanks for the quick review and I apologize for the poorly
-constructed code. I am
-new to open source and git, and that was my first time coming across
-the git source
-code so I hoped to submit a working patch first, with the intention of
-amending it later since
-I did not really understand the requirements. With your clarification
-and getting my self
-familiar with the git commands, I hope to submit an accurate patch.
+$ mkdir non-empty-dir
+$ cd non-empty-dir
+$ touch foo bar baz
+$ git clone -f url:user/dotfiles.git .
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
 
-Thanks
+    bar
+    baz
+    foo
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+
+On Sat, Mar 7, 2015 at 9:02 PM, Diego Viola <diego.viola@gmail.com> wrote:
+> Sorry, I wanted to say: I know I can git-clone in a empty directory
+> and then move the files over to $HOME.
+>
+> I know I can git init in a non-empty directory. :-)
+>
+> Thanks,
+>
+> Diego
+>
+> On Sat, Mar 7, 2015 at 7:26 PM, Andreas Schwab <schwab@linux-m68k.org> wrote:
+>> Diego Viola <diego.viola@gmail.com> writes:
+>>
+>>> I know I could git-init in a empty directory
+>>
+>> You can also git init a non-empty directory.
+>>
+>> Andreas.
+>>
+>> --
+>> Andreas Schwab, schwab@linux-m68k.org
+>> GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+>> "And now for something completely different."
