@@ -1,124 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] [GSoC Microproject]Adding "-" shorthand for "@{-1}" in RESET command
-Date: Sun, 08 Mar 2015 14:59:09 -0700
-Message-ID: <xmqqpp8j882a.fsf@gitster.dls.corp.google.com>
-References: <loom.20150308T120618-983@post.gmane.org>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH] t7510: do not fail when gpg warns about insecure memory
+Date: Sun, 8 Mar 2015 22:04:25 +0000
+Message-ID: <20150308220424.GD4245@vauxhall.crustytoothpaste.net>
+References: <2652cb72a82d4ca4be3ea90bafd263e@74d39fa044aa309eaea14b9f57fe79c>
+ <CAPig+cQXJgZJAoyQVYg3CNNzd70eA=ttdL7=g6wabtBkWBijeQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Sundararajan R <dyoucme@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 08 22:59:18 2015
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="kvUQC+jR9YzypDnK"
+Cc: "Kyle J. McKay" <mackyle@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Git mailing list <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Sun Mar 08 23:04:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YUjED-000481-L3
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Mar 2015 22:59:18 +0100
+	id 1YUjJN-0001c1-VI
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Mar 2015 23:04:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752649AbbCHV7N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Mar 2015 17:59:13 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:55621 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752609AbbCHV7M (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Mar 2015 17:59:12 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 830703E667;
-	Sun,  8 Mar 2015 17:59:11 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=3mrLM/EJsNCwA2p75szWtuVlFBE=; b=X8ynyV
-	v/EMXa5DMihHD9rZS8WS0P8jYYxYfnx2ypAaWze+2EJ0l63z7NSEnAfocUT7Ex2M
-	0WaSODt9R1nQgkIMMYncPZvtgeGSLejMhQ1Py6LAQO3WOud8gwwMe3SgSdJTGfP5
-	wBab1S+ySpktn/1WtkQqS6joLZTmFDskZSkVM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=N/UGXoLry/pDgbPjmD8PXpG4nWyMHf8P
-	xaE+88TgnpOeAbZ23BoT7SctWlTlgZ7yRBDqg32o5Wlar6WqPcwEHHlk00fS13e9
-	Rx9dxiQf2SNAkmr0qUGAaEzfmYNDPYaSOCtILboIpTmDQBuo6VGTVfyvBugRb50U
-	hO760DNvnvo=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7AE473E666;
-	Sun,  8 Mar 2015 17:59:11 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	id S1753037AbbCHWEe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Mar 2015 18:04:34 -0400
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:49937 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752932AbbCHWEc (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 8 Mar 2015 18:04:32 -0400
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:e0df:a888:a4a7:fd4e])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 05D543E665;
-	Sun,  8 Mar 2015 17:59:10 -0400 (EDT)
-In-Reply-To: <loom.20150308T120618-983@post.gmane.org> (Sundararajan R.'s
-	message of "Sun, 8 Mar 2015 11:09:45 +0000 (UTC)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 59F11772-C5DE-11E4-8C41-29999F42C9D4-77302942!pb-smtp1.pobox.com
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id D4E7F2808F;
+	Sun,  8 Mar 2015 22:04:30 +0000 (UTC)
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	"Kyle J. McKay" <mackyle@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Git mailing list <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <CAPig+cQXJgZJAoyQVYg3CNNzd70eA=ttdL7=g6wabtBkWBijeQ@mail.gmail.com>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 3.19.0-trunk-amd64)
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265112>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265113>
 
-Sundararajan R <dyoucme@gmail.com> writes:
 
-> I am sorry for the mistakes in the code formatting. It was because I was in 
-> a hurry that day and I wanted to submit a working patch.
+--kvUQC+jR9YzypDnK
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-No need to apologize for mistakes.  Mistakes are expected part of
-being human and the review process is designed to catch exactly
-that.
+On Sun, Mar 08, 2015 at 05:43:41PM -0400, Eric Sunshine wrote:
+>On Sun, Mar 8, 2015 at 11:40 AM, Kyle J. McKay <mackyle@gmail.com> wrote:
+>> Depending on how gpg was built, it may issue the following
+>> message to stderr when run:
+>>
+>>   Warning: using insecure memory!
+>>
+>> Unfortunately when running the test, that message gets
+>> collected in the stdout result of git show -s --show-signature
+>> but is collected in the stderr result of git verify-commit -v
+>
+>I'm having trouble parsing this. Is there a word missing?
+>
+>> causing both the stdout and stderr result comparisions to fail.
 
-The development is not a race to see who gets there first.  It is a
-collaborative process to get to a better place together.  Once you
-got something "working", stop and review your work to see if your
-definition of "working" is sensible.  Is there a corner case you
-missed?  Is the code formatted in a similar way as the existing code
-around the area you are touching?  Are there better ways to do what
-you did?  Take your time to make sure you would be happy with what
-you are sending out.
+Perhaps this is better?
 
-> In the new patch I 
-> am making, I am using check_filename() to see if there are files named "-" 
-> and "@{-1}" in the working tree . Is this an appropriate way to check or is 
-> there something else suggested? 
+  Unfortunately when running the test, that message is found in the=20
+  standard output of git show -s --show-signature, but in the standard=20
+  error of git verify-commit -v causing the comparisons of both standard=20
+  output and standard error to fail.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
 
-I think you are making it unnecessarily hard.  With your patch, the
-code would look like this:
+--kvUQC+jR9YzypDnK
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
- 	if (argv[0]) {
-+		if (!strcmp(argv[0], "-") && !argv[1])  /* "-" is the only argument */
-+		{
-+			argv[0]="@{-1}";
-+			flag=1;
-+		}
- 		if (!strcmp(argv[0], "--")) {
- 			argv++; /* reset to HEAD, possibly with paths */
- 		} else if (argv[1] && !strcmp(argv[1], "--")) {
- 			rev = argv[0];
- 			argv += 2;
- 		}
- 		/*
- 		 * Otherwise, argv[0] could be either <rev> or <paths> and
- 		 * has to be unambiguous. If there is a single argument, it
- 		 * can not be a tree
- 		 */
- 		else if ((!argv[1] && !get_sha1_committish(argv[0], unused)) ||
- 			 (argv[1] && !get_sha1_treeish(argv[0], unused))) {
- 			/*
- 			 * Ok, argv[0] looks like a commit/tree; it should not
- 			 * be a filename.
- 			 */
- 			verify_non_filename(prefix, argv[0]);
- 			rev = *argv++;
- 		} else {
- 			/* Otherwise we treat this as a filename */
-+			if(flag)
-+				argv[0]="-";
- 			verify_filename(prefix, argv[0], 1);
- 		}
- 	}
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-I was wondering what you are passing to verify_non_filename() that
-you did not touch.  It would see "@{-1}", try to make sure that the
-working tree does not have a file with that name, and if there is
-the end user would be warned about ambiguity.
+iQIcBAEBCgAGBQJU/MdoAAoJEL9TXYEfUvaLtP0P/1MlTjp3e4fbo92U56xdj79X
+dsM54XQupVKkVsBHrW4JToNXgJJefKGkyIGPr2nQjhtkQQw9J+Hfckwx1YoVW6tK
+5h7mZmIMvXKUfPuMjuuH1hrG3dIu85BggLG9vuomw9QSWjT2Ls8K3K9J8x3yyTN9
+zmZCHFmQ5st2SHvWLCcE05Pz7dAj79wVdCSIShy7FWBp23ARaXSp/ffyT9iNKutc
+gOBiD8ogWsU8wRN8pYtrzfXCWqq16Nj8Rzz/C40YSjWHdMkhTHsf2DT5d4pEaC7n
+50dRCr3Of6b1tGw5IT5dBF0zEhyqFM2aUMHVO4bYwozfNWdwvEgpSgdGMXF4wTkm
+oGR7IkudctMSFOKzKD2rqwr2tD9Up58+FeEhtLtA184D5fXPnqJMqP7+oraPwl1e
+cnkEGxIjZWsTF21DGooFtcXCiN9mwU6v/rUYoZQLmO+MEZRxGIQr6OiCnM3bMJ2I
+IWYo+opPhH1JH3dLjWLvpYGiORrO8FZgNZrGvz9OmDcrkJ/q2PN3yuDaX+/t9pc+
+TI0RYcurf5EtGxEMeOrFznOTCw638botZNH3dkIUTNOOnywSMNzqxPYU7wM3u1kR
+8zGy3CE+xB7OX5BnaaiuQs8+0jAWkF7vyGSO3ZFoAd5f3J/MEb2Tb5HIRDI2EUx1
+l7IpY9vgLHYNq/YSmBdy
+=2YbH
+-----END PGP SIGNATURE-----
 
-If the user typed "git reset @{-1}", then that warning is very
-sensible, but when the end user only typed "git reset -", is there
-any ambiguity?
+--kvUQC+jR9YzypDnK--
