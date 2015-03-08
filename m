@@ -1,122 +1,147 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4] git: treat "-C <treat>" as a no-op when <path> is empty
-Date: Sat, 07 Mar 2015 23:14:54 -0800
-Message-ID: <xmqqvbict0y9.fsf@gitster.dls.corp.google.com>
-References: <1425640688-26513-1-git-send-email-karthik.188@gmail.com>
-	<CAPig+cTkC1Y1sWJLpG0iUHju3GOMnvOT-nsAU51GykeV2QB+vA@mail.gmail.com>
-	<54FAD7D7.4030008@gmail.com>
-	<CAPig+cRDkoH-zmYhk9ag+Yiwg1h452hOpS2fx2H5xmu5KUNqiQ@mail.gmail.com>
+Subject: Re: [PATCH] [GSoC Microproject]Adding "-" shorthand for "@{-1}" in RESET command
+Date: Sat, 07 Mar 2015 23:34:29 -0800
+Message-ID: <xmqqfv9gt01m.fsf@gitster.dls.corp.google.com>
+References: <1425693456-21163-1-git-send-email-dyoucme@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: karthik nayak <karthik.188@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Sun Mar 08 08:15:11 2015
+Cc: git@vger.kernel.org
+To: Sundararajan R <dyoucme@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 08 08:34:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YUVQc-0005Cn-Ge
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Mar 2015 08:15:10 +0100
+	id 1YUVjR-0000GP-PP
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Mar 2015 08:34:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751221AbbCHHPE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Mar 2015 03:15:04 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:60113 "EHLO
+	id S1751239AbbCHHec (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Mar 2015 03:34:32 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:60196 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750904AbbCHHPD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Mar 2015 03:15:03 -0400
+	with ESMTP id S1751210AbbCHHeb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Mar 2015 03:34:31 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 63F80370E9;
-	Sun,  8 Mar 2015 03:14:56 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B83683749A;
+	Sun,  8 Mar 2015 03:34:30 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bk/BqZB5rn1ELN02V7PRD5IG+nA=; b=WyF+vw
-	rqSVgiqVkYUNPp6o1rBF7RqzQaQjV6NICzHNw3cz2Z8xuaAnohSc/lWMwSq0Wf+6
-	MVZrcJmfZrEeu9teiNsiZfHqhlWdq36FJIaX4+mPwjQ8QO8a2dR6gJtqwBTKZoBb
-	2XId8xr+eofG6+cTmFnlb5jPSAGrFDjVMS9WY=
+	:content-type; s=sasl; bh=rHkcoiQ1jPiRH1bPivga8TDzUVU=; b=g70aXn
+	A64rkmX5uSVRGmGGFarwiNG3OK1McIV+h/Z5aSMaCdcCEcUuEVSpivZmg8ZgVoII
+	Q4DZtKIrjJoWzywW+w3OlXe7b1wF/TT/MWLxryUqNS1bZW36kG/hbb55nuz3+hBZ
+	6HGhSthyooqXqXnielld6j+gxHGrdDUi4DH8s=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Nyfpe7LPq0uUznMg1U12KIdPSSXeSmL3
-	FXAPT6sjWxgQ8htlQw594x7ChraA7Tx45v1GVIhCHZ7I7yO8PhiMXLqwFmVxecap
-	odZdDObcyD+Jrx5Hi9cnZrqKgf5fCnHjfuB6KKnXJetoXz5dkE9ImwjScZ5S0XUD
-	rm9IRjGf3fE=
+	:content-type; q=dns; s=sasl; b=qUM9TgS3Rm0Rz6l2VIYzizPwM7du0/80
+	CwOa5YTmAmGFexAGOj7fkUSQlYH+fA+KIh/i27y+xm0h6kuFXDwPfe+oQ0EEUEvq
+	kh1Iawu6kR7NSqoz3zE8nhvyvYOITWMCVqLxWEizANkBg1uhDPuxEqfqvswUb7AT
+	vS7h/F15vLw=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5C0A1370E7;
-	Sun,  8 Mar 2015 03:14:56 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B146037499;
+	Sun,  8 Mar 2015 03:34:30 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C606C370E5;
-	Sun,  8 Mar 2015 03:14:55 -0400 (EDT)
-In-Reply-To: <CAPig+cRDkoH-zmYhk9ag+Yiwg1h452hOpS2fx2H5xmu5KUNqiQ@mail.gmail.com>
-	(Eric Sunshine's message of "Sat, 7 Mar 2015 23:38:47 -0500")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 37B2F37498;
+	Sun,  8 Mar 2015 03:34:30 -0400 (EDT)
+In-Reply-To: <1425693456-21163-1-git-send-email-dyoucme@gmail.com>
+	(Sundararajan R.'s message of "Sat, 7 Mar 2015 07:27:36 +0530")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: D292F1C2-C562-11E4-8891-29999F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 8E94D6FE-C565-11E4-ABA6-29999F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265035>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Sundararajan R <dyoucme@gmail.com> writes:
 
-> On Sat, Mar 7, 2015 at 5:49 AM, karthik nayak <karthik.188@gmail.com> wrote:
->
->> Also "*(*argv)[1]" seems more readable to me, maybe more of a perspective?
->
-> I also had considered suggesting (*argv)[1][0] as more readable, but
-> it is primarily personal taste, and I didn't want to bike-shed the
-> issue.
+> diff --git a/builtin/reset.c b/builtin/reset.c
+> index 4c08ddc..62764d4 100644
+> --- a/builtin/reset.c
+> +++ b/builtin/reset.c
+> @@ -203,8 +203,16 @@ static void parse_args(struct pathspec *pathspec,
+>  	 *
+>  	 * At this point, argv points immediately after [-opts].
+>  	 */
+> -
+> +	int flag=0; /* 
+> +		     *  "-" may refer to filename in which case we should be giving more precedence 
+> +		     *  to filename than equating argv[0] to "@{-1}" 
+> +		     */
 
-I didn't mention that in earlier review rounds for the same reason,
-but I saw Andreas Schwab also independently made the same comment,
-so that makes three of us.
+Comment on a separate line.  More importantly, think if you can give
+the variable a more meaningful name so that you do not have to
+explain.
 
-That does not change the fact that this is merely a matter of
-preference; I wouldn't even call this one a "taste" (use of which
-implies that there are judgement involved, as in "good taste" and
-"bad taste").
+You are missing SPs requested by the coding guideline everywhere in
+your patch.
 
-But because it is "preference", the only time we can discuss is when
-a new code is submitted and is under review.  Once it is in the
-tree, it is not really worth extra patch noise to go and change.
 
-As everybody knows, POINTER[0] and *POINTER are equivalent.  We have
-quite a few places where we say "let's treat passing an empty string
-the same as not passing an argument at all" with
+>  	if (argv[0]) {
+> +		if (!strcmp(argv[0], "-") && !argv[1])  /* "-" is the only argument */
+> +		{
+> +			argv[0]="@{-1}";
+> +			flag=1;
+> +		}
+>  		if (!strcmp(argv[0], "--")) {
+>  			argv++; /* reset to HEAD, possibly with paths */
+>  		} else if (argv[1] && !strcmp(argv[1], "--")) {
+> @@ -226,6 +234,8 @@ static void parse_args(struct pathspec *pathspec,
 
-	if (!POINTER || !*POINTER)
-        	; /* no-op */
-	else {
-        	/* do something with POINTER */
-                fn(POINTER);
-	}
+Around here not shown by this patch there are a few uses of argv[0],
+and the most important one is
 
-and we could say !POINTER[0] instead of !*POINTER, interchangeably.
+			verify_non_filename(prefix, argv[0]);
 
-We tend to prefer (again, I do not think this is particularly a
-"taste" thing) *POINTER over POINTER[0] when POINTER is just a
-single variable in the above pattern we often see in our code.
+just before the line below (see below).
 
-But when POINTER is an expression like (*argv)[1], where you unwrap
-the operators according to their precedences, it often is easier to
-read if you do not have to flip your eyes left and right too often.
+>  			rev = *argv++;
+>  		} else {
+>  			/* Otherwise we treat this as a filename */
+> +			if(flag)
+> +				argv[0]="-";
+>  			verify_filename(prefix, argv[0], 1);
+>  		}
+>  	}
 
-You first look at "argv", then notice the prefix "*" (you have to
-move your eyes to the left here) and know argv points at a location
-that holds a pointer.  Then you notice the suffix [1] (now to the
-right) and know that pointer points at an array and the expression
-is talking about in its second element.
+By the way, do you understand the intent of the existing checks in
+this codepath that uses verify_filename() and verify_non_filename()?
 
-Now, you want to say that second element is actually a pointer to a
-string and want to talk about the beginning of that string.  If you
-express it as "*(*argv)[1]", it forces the reader to go back to the
-left end once more.  If you write it as "(*argv)[1][0]", the reader
-can keep going to the right, starting from the last thing the reader
-read and understood (which is the "[1]" at the right end).
+The idea is to allow users to write "git reset X" and "git reset Y
+Z" safely in an unambiguous way.
 
-At least, that is how I analyze _my_ preference---the latter feels
-easier on my eyes.
+ * X could be a commit (e.g. "git reset master"), to update the
+   current branch to point at the same commit as 'master' and update
+   the index to match.
 
-But as I said this is a mere preference thing.
+ * X could be a pathspec (e.g. "git reset hello.c"), to grab the
+   blob object for X out of the HEAD and put it in the index.
+
+ * Y could be a tree-ish and Z a pathspec (e.g. "git reset HEAD^
+   hello.c"), to grab the blob object for Z out of tree-ish Y and
+   put it to the index.
+
+ * Both Y and Z could be pathspecs (e.g. "git reset hello.c
+   goodbye.c"), to revert the index entries for these two paths to
+   what the HEAD records.
+
+If you happen to have a file whose name is 'master', and if you are
+working on your 'topic' branch, what would this do?
+
+    $ git reset master
+
+Is this a request to revert the index entry for path 'master' from
+the HEAD?  Or is it a request to update the current branch to be the
+same as the 'master' branch and repopulate the index from there?
+
+What does the existing code try to do, and how does it do it?  It
+detects the ambiguity and refuses to do either, to make sure it
+causes no harm.
+
+Now, with your change, does the result still honor this "when
+ambiguous, stop without causing harm to the user" principle?  What
+happens when your user has a file whose name is "-" in the working
+tree?  What happens when your user has a file whose name is "@{-1}"
+in the working tree?
