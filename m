@@ -1,91 +1,83 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] rev-list: refuse --first-parent combined with --bisect
-Date: Sun, 08 Mar 2015 00:00:12 -0800
-Message-ID: <xmqq1tkzudf7.fsf@gitster.dls.corp.google.com>
-References: <xmqq61ag72gc.fsf@gitster.dls.corp.google.com>
-	<1425763876-15573-1-git-send-email-me@ikke.info>
-	<20150307231305.GA15619@vps892.directvps.nl>
+Subject: Re: [PATCH] xmerge.c: fix xdl_merge to conform with the manual
+Date: Sun, 08 Mar 2015 00:06:49 -0800
+Message-ID: <xmqqtwxvsyjq.fsf@gitster.dls.corp.google.com>
+References: <1425404233-89907-1-git-send-email-anton.a.trunov@gmail.com>
+	<xmqqzj7takks.fsf@gitster.dls.corp.google.com>
+	<54F6D3B0.60600@gmail.com>
+	<xmqqfv9k8rcs.fsf@gitster.dls.corp.google.com>
+	<54F95F25.9090300@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Kevin Daudt <me@ikke.info>
-X-From: git-owner@vger.kernel.org Sun Mar 08 09:00:22 2015
+Cc: git@vger.kernel.org, jrnieder@gmail.com, tboegi@web.de,
+	sunshine@sunshineco.com, charles@hashpling.org,
+	Johannes.Schindelin@gmx.de
+To: Anton Trunov <anton.a.trunov@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 08 09:07:06 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YUW8L-0001vk-Vk
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Mar 2015 09:00:22 +0100
+	id 1YUWEr-0000Zg-PX
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Mar 2015 09:07:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751456AbbCHIAR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Mar 2015 04:00:17 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:59430 "EHLO
+	id S1751393AbbCHIHA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Mar 2015 04:07:00 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:60718 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751026AbbCHIAQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Mar 2015 04:00:16 -0400
+	with ESMTP id S1751368AbbCHIG4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Mar 2015 04:06:56 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id AC7B7378BF;
-	Sun,  8 Mar 2015 04:00:15 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 797E2379DD;
+	Sun,  8 Mar 2015 04:06:51 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=O3acvfPAHDDvqAPIe8ddt5d8Zy0=; b=c2pMgh
-	fqlCiwm+JcaQ+yVSq/KTWRF4rGu3XGsXWEcxnoa4bHsPRVMEvcmJbQPcR8EojXD6
-	d/2KZymQTo6LF2OxinsDeLqO7BkSsmIPZhrtYww6jrzWpq5Y+kcWQFKlX2h/xEwb
-	3e2qd/m2roV9yED4DVCX1R8CaPuCZ7mTVEhtQ=
+	:content-type; s=sasl; bh=S5nsH0i5MrHykX8R//2TJO4qBBU=; b=a63yJe
+	b9EgLcAgretSerjFv9qwb3FoNsI/9OzWrmfqyz0eXNZlG4z5xroSET8XkJRB3bOt
+	QOaLmg/s0YQaqPX8dQwcn1gCdRYn/+BHLPXaN+8vdsqDXtaPnlQRyThBmvNdzvaL
+	KnUejZ+schFMKwOthR8QezewvmqqDXO7yPFGM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=g/yx1atlooXAo/cT6g/nl/PhiHbxhNDh
-	kWUzWuITkIb0qd0v71iDdF2E88fHDaKAYZLIOtIpZ0WHGu0lyVBNVgKT1MX0tGJv
-	AvlrNvb6aenQsT+LZLZDE2waqptTkZM0m0GX3i1Mja6edl+MB02DbwoAoerNhFec
-	9S4cFujo5Pc=
+	:content-type; q=dns; s=sasl; b=CDH86xRVWCruJloEt1sAxm+b0SwncfEN
+	HiIwfZwzmsrbJg9ADXQUJCY96UWRwkJwq/vJC5anNVf332OnAcSF8OsE6E6lIfWz
+	zSdi6GWbUsBdnsH4dfy2tRHb7nJhS1sX5xAUYk4HxgDTbH70waiTp1tNsa4Kik+5
+	JE1tcB+XHnw=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id A4D21378BD;
-	Sun,  8 Mar 2015 04:00:15 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6F713379DB;
+	Sun,  8 Mar 2015 04:06:51 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 19AF7378B6;
-	Sun,  8 Mar 2015 04:00:14 -0400 (EDT)
-In-Reply-To: <20150307231305.GA15619@vps892.directvps.nl> (Kevin Daudt's
-	message of "Sun, 8 Mar 2015 00:13:05 +0100")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DB58C379DA;
+	Sun,  8 Mar 2015 04:06:50 -0400 (EDT)
+In-Reply-To: <54F95F25.9090300@gmail.com> (Anton Trunov's message of "Fri, 06
+	Mar 2015 11:02:45 +0300")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 26CD3238-C569-11E4-86CB-29999F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 1359B7A2-C56A-11E4-B514-29999F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265044>
 
-Kevin Daudt <me@ikke.info> writes:
+Anton Trunov <anton.a.trunov@gmail.com> writes:
 
-> On Sat, Mar 07, 2015 at 10:31:16PM +0100, Kevin Daudt wrote:
->> diff --git a/builtin/rev-list.c b/builtin/rev-list.c
->> index ff84a82..c271e15 100644
->> --- a/builtin/rev-list.c
->> +++ b/builtin/rev-list.c
->> @@ -291,6 +291,9 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
->>  	if (revs.bisect)
->>  		bisect_list = 1;
->>  
->> +	if(revs.first_parent_only && revs.bisect)
+> On 04/03/15 23:01, Junio C Hamano wrote:
 >
-> I should have added a space after the if.
+> My apologies for pushing this topic, but what would you recommend?
+> Should we treat both sides line-wise or should we correct the documentation?
 
-Since you are practicing, let me say that a better way to do this is
-to reroll the whole patch and have that comment after the three-dash
-line.
+My gut feeling is that the change to swap which side is examined
+first would end up to be a patch to rob Peter to pay Paul, and a
+line-by-line approach might end up paying too expensive a runtime
+cost in practice (and it should not really matter which side's
+whitespace the end result matches, because the user says "I do not
+care about whitespace changes", so paying that cost is not something
+we would want to do).  So it may be that the best course of action
+may be documentation updates.
 
-That is, you respond to your message with a new patch that corrects
-the above, and where you said "This is my first code patch, and
-thought this was a nice exercise." in your first message, you would
-say
-
-  ---
-
-   * changes from v1: corrected coding guideline violation that
-     missed a SP between "if("
-
-or something like that.
+But I haven't had a chance to think about it through yet to form a
+definite opinion.
 
 Thanks.
