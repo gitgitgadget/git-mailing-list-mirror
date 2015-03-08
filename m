@@ -1,80 +1,77 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2 02/10] Define utility functions for object IDs.
-Date: Sun, 8 Mar 2015 16:57:36 +0700
-Message-ID: <CACsJy8DBpRPq34=JwJJEOp=DoCP_dkRQB60xPCyqoBFjui416A@mail.gmail.com>
-References: <1425770645-628957-1-git-send-email-sandals@crustytoothpaste.net> <1425770645-628957-3-git-send-email-sandals@crustytoothpaste.net>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] Suggest applicants to participate in review of other peoples' patches
+Date: Sun, 08 Mar 2015 11:10:02 +0100
+Message-ID: <vpq61ab6br9.fsf@anie.imag.fr>
+References: <CAPc5daV7Dv8K8itmQhdf1CG-opMVw7DYyheHdcdL0r_9zFQR-Q@mail.gmail.com>
+	<1425642837-31651-1-git-send-email-Matthieu.Moy@imag.fr>
+	<20150306211048.GB24267@peff.net>
+	<xmqqd24lyejv.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Andreas Schwab <schwab@linux-m68k.org>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-X-From: git-owner@vger.kernel.org Sun Mar 08 10:58:30 2015
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Mar 08 11:10:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YUXyQ-0003PI-OI
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Mar 2015 10:58:15 +0100
+	id 1YUYAE-0007h3-O9
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Mar 2015 11:10:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751523AbbCHJ6K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Mar 2015 05:58:10 -0400
-Received: from mail-ie0-f173.google.com ([209.85.223.173]:44619 "EHLO
-	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751136AbbCHJ6H (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Mar 2015 05:58:07 -0400
-Received: by iery20 with SMTP id y20so2787589ier.11
-        for <git@vger.kernel.org>; Sun, 08 Mar 2015 01:58:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=dHOyVK9lhRmlx+3BQdVnEFDwn5zTxnbRvpO7movw/5c=;
-        b=zishOaG+ob+WDEdPER4YPndFSxnKaWH1kD/U9fnM8n8uvblJZPUwHrEnamKJJyoxjR
-         S90twlE2PFptXBtile9RIJDMoRn8WBoX5oMBoURyrnRcwHZoU8GlkVUScQWhXMfZKe5Y
-         HY/4gV+QgzU2OxA38Z26rffahRRNKPUP3SRFTo9lNKIZhL2omX9hTiegjhmhJIMkMlKR
-         fo3To+NXpWjaeAgIm0xzGGBqwPUrQka0M+bZDztuIS9fwZaFsSZ94b/CzUzJ2DOSMwQ5
-         RssfSuMHyIYwDdU6WxtxMQ9ApvRtSHsFQjNmhvTYbsv7dkASeV9txXA8elLHNUwtvteV
-         co1g==
-X-Received: by 10.107.8.215 with SMTP id h84mr15290096ioi.89.1425808686975;
- Sun, 08 Mar 2015 01:58:06 -0800 (PST)
-Received: by 10.107.131.33 with HTTP; Sun, 8 Mar 2015 01:57:36 -0800 (PST)
-In-Reply-To: <1425770645-628957-3-git-send-email-sandals@crustytoothpaste.net>
+	id S1751606AbbCHKKW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Mar 2015 06:10:22 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:60199 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751389AbbCHKKV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Mar 2015 06:10:21 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t28AA1nw004002
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 8 Mar 2015 11:10:02 +0100
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t28AA2po020450;
+	Sun, 8 Mar 2015 11:10:02 +0100
+In-Reply-To: <xmqqd24lyejv.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Fri, 06 Mar 2015 13:57:40 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sun, 08 Mar 2015 11:10:02 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t28AA1nw004002
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1426414207.25875@orjWC+ciJVLeFJ7LAwrohg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265051>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265052>
 
-On Sun, Mar 8, 2015 at 6:23 AM, brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
-> There are several utility functions (hashcmp and friends) that are used
-> for comparing object IDs (SHA-1 values).  Using these functions, which
-> take pointers to unsigned char, with struct object_id requires tiresome
-> access to the sha1 member, which bloats code and violates the desired
-> encapsulation.  Provide wrappers around these functions for struct
-> object_id for neater, more maintainable code.  Use the new constants to
-> avoid the hard-coded 20s and 40s throughout the original functions.
->
-> These functions simply call the underlying pointer-to-unsigned-char
-> versions to ensure that any performance improvements will be passed
-> through to the new functions.
->
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> ---
-> I'm not very excited about having to put the #include in the middle of
-> cache.h.  The alternative, of course, is to move enum object_type up,
-> which I can do if necessary.  Another alternative is to simply move the
-> struct object_id definitions to cache.h instead of object.h, which might
-> be cleaner.
->
-> I'm interested in hearing opinions about the best way to go forward.
+Junio C Hamano <gitster@pobox.com> writes:
 
-I think declaring struct object_id in cache.h would be simplest.
-Another alternative is do it in git-compat-util.h. This is not the
-first abuse of git-compat-util.h (because it's included everywhere).
-starts_with(), ends_with() and friends are already in
-git-compat-util.h
+> Jeff King <peff@peff.net> writes:
+>
+>> On Fri, Mar 06, 2015 at 12:53:57PM +0100, Matthieu Moy wrote:
+>>
+>>> Idea and most of the wording comes from Junio's message on the list. I
+>>> added a hint to include links to review in the application (which makes
+>>> the suggestion a bit stronger since it implies that it will be taken into
+>>> account in the selection).
+>>
+>> Seems reasonable. I do not know what the quality of reviews will be from
+>> applicants, but I guess we will find out. :)
+>
+> I actually was hoping to see an applicant replaying the review
+> comments given to him to another applicant that makes the same kind
+> of mistakes.
+
+I'm also hoping that applicants just watch the mailing-list better, and
+even if the don't actually write much, that they read a bit more what's
+going on here.
+
+I pushed my patch.
+
 -- 
-Duy
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
