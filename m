@@ -1,69 +1,113 @@
 From: "Kyle J. McKay" <mackyle@gmail.com>
-Subject: [PATCH 2/2] help.c: use SHELL_PATH instead of hard-coded "/bin/sh"
-Date: Sat,  7 Mar 2015 21:08:00 -0800
-Message-ID: <0ebc0373b21c75fa88adb5aefd098e9@74d39fa044aa309eaea14b9f57fe79c>
-References: <38be9195b966a027cb050e5a1b47526@74d39fa044aa309eaea14b9f57fe79c>
+Subject: [PATCH] imap-send: use cURL automatically when NO_OPENSSL defined
+Date: Sat,  7 Mar 2015 21:13:55 -0800
+Message-ID: <66ffbcf60233c62b6f0e443bd7d922c@74d39fa044aa309eaea14b9f57fe79c>
 Cc: Git mailing list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 08 06:08:19 2015
+To: Junio C Hamano <gitster@pobox.com>,
+	Bernhard Reiter <ockham@raz.or.at>
+X-From: git-owner@vger.kernel.org Sun Mar 08 06:14:10 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YUTRp-0008Mt-4I
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Mar 2015 06:08:17 +0100
+	id 1YUTXV-00065m-J2
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Mar 2015 06:14:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750899AbbCHFIJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Mar 2015 00:08:09 -0500
-Received: from mail-pd0-f182.google.com ([209.85.192.182]:40350 "EHLO
-	mail-pd0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750707AbbCHFIG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Mar 2015 00:08:06 -0500
-Received: by pdbfp1 with SMTP id fp1so49042497pdb.7
-        for <git@vger.kernel.org>; Sat, 07 Mar 2015 21:08:06 -0800 (PST)
+	id S1750985AbbCHFOF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Mar 2015 00:14:05 -0500
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:39242 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750772AbbCHFOC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Mar 2015 00:14:02 -0500
+Received: by pabrd3 with SMTP id rd3so29828660pab.6
+        for <git@vger.kernel.org>; Sat, 07 Mar 2015 21:14:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ebToOgMW6oFQwUpwuBB9cOZYTgH3on+ZIDeMN+mBdNA=;
-        b=duI4OFME5Vmbg9ksKWGQF4NYQwJ/KLav38vTdSnyAPe1gX/qkDyANb8iND1Rv8ypbC
-         ttPtMAjn+DBqzSedTXzWed+3GtVldjtvnJI0cIrfIawaHvChE3YCzrsYNxAgFiVm5xnb
-         IxktypFkmmSz+CmiWclQLo6sSfjJlSNOy7BIX6aBKhnbur7MV1QAiLUR2K6h8Q2RqWLP
-         t/Gm0BQqHNjM06gTG//V/RRSMPxOdpEDIM/dqxUxtseLvRZ1D/VX+hYKdMLtTiEZj3ck
-         kS1ufreYkPX0Obv9Tb/dzhMZLP4wRXEdXYAvB+kJ6jmX7hRX6MLnnFCKrpkXBa6y9+Wo
-         gTEA==
-X-Received: by 10.68.142.169 with SMTP id rx9mr39088214pbb.41.1425791286047;
-        Sat, 07 Mar 2015 21:08:06 -0800 (PST)
+        h=from:to:cc:subject:date:message-id;
+        bh=HSmGaHYuzRti8eWDBfVx+Ap++wDQXLmPNto1IEbm2Yg=;
+        b=jvALMNzj37KAnwrg2OgvKlmgtBhNztgha7PKkU/mA5UJPIzOMZo50iqRozUj+LD5U5
+         34sx/K/opjMnCRTvzx5szoe0NwtNLAg2uQNuAmnuUY+vSfViGk0C+0vWRe6kwuqLu4mF
+         Qyp3GTKfwZeN0eH9dgh6FdIKHV11WI2HUA/S74b0Sp9bGZ/K7FbAScNowd5XYTjJKll2
+         WeFQ03KTkRsRqss0DpZfpXwkWo+7UKAebKM2AJ9bVW0cVmOeuGVb5u6swYihz9VAhL+N
+         QycXp+HFxIgaPMRTGtJmgXUyvu8EHjlQ46P1qS2AefmTdxsfbmkwx2DgdyBmu+hq0bCJ
+         EBBg==
+X-Received: by 10.68.135.136 with SMTP id ps8mr40243869pbb.130.1425791641263;
+        Sat, 07 Mar 2015 21:14:01 -0800 (PST)
 Received: from localhost.localdomain ([2002:48c0:ad8d:0:223:12ff:fe05:eebd])
-        by mx.google.com with ESMTPSA id om9sm13762729pbb.34.2015.03.07.21.08.04
+        by mx.google.com with ESMTPSA id bl2sm13885316pad.15.2015.03.07.21.14.00
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Sat, 07 Mar 2015 21:08:05 -0800 (PST)
-In-Reply-To: <38be9195b966a027cb050e5a1b47526@74d39fa044aa309eaea14b9f57fe79c>
+        Sat, 07 Mar 2015 21:14:00 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265030>
 
-If the user has set SHELL_PATH in the Makefile then we
-should respect that value and use it.
+If both USE_CURL_FOR_IMAP_SEND and NO_OPENSSL are defined do
+not force the user to add --curl to get a working git imap-send
+command.
+
+Instead automatically select --curl and warn and ignore the
+--no-curl option.  And while we're in there, correct the
+warning message when --curl is requested but not supported.
 
 Signed-off-by: Kyle J. McKay <mackyle@gmail.com>
 ---
- builtin/help.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/git-imap-send.txt |  3 ++-
+ imap-send.c                     | 17 +++++++++++++++--
+ 2 files changed, 17 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/help.c b/builtin/help.c
-index 6133fe49..2ae8a1e9 100644
---- a/builtin/help.c
-+++ b/builtin/help.c
-@@ -171,7 +171,7 @@ static void exec_man_cmd(const char *cmd, const char *page)
- {
- 	struct strbuf shell_cmd = STRBUF_INIT;
- 	strbuf_addf(&shell_cmd, "%s %s", cmd, page);
--	execl("/bin/sh", "sh", "-c", shell_cmd.buf, (char *)NULL);
-+	execl(SHELL_PATH, SHELL_PATH, "-c", shell_cmd.buf, (char *)NULL);
- 	warning(_("failed to exec '%s': %s"), cmd, strerror(errno));
- }
+diff --git a/Documentation/git-imap-send.txt b/Documentation/git-imap-send.txt
+index 77aacf13..5d1e4c80 100644
+--- a/Documentation/git-imap-send.txt
++++ b/Documentation/git-imap-send.txt
+@@ -44,7 +44,8 @@ OPTIONS
  
+ --no-curl::
+ 	Talk to the IMAP server using git's own IMAP routines instead of
+-	using libcurl.
++	using libcurl.  Ignored if Git was built with the NO_OPENSSL option
++	set.
+ 
+ 
+ CONFIGURATION
+diff --git a/imap-send.c b/imap-send.c
+index d69887da..37ac4aa8 100644
+--- a/imap-send.c
++++ b/imap-send.c
+@@ -34,8 +34,16 @@ typedef void *SSL;
+ #include "http.h"
+ #endif
+ 
++#if defined(USE_CURL_FOR_IMAP_SEND) && defined(NO_OPENSSL)
++/* only available option */
++#define USE_CURL_DEFAULT 1
++#else
++/* strictly opt in */
++#define USE_CURL_DEFAULT 0
++#endif
++
+ static int verbosity;
+-static int use_curl; /* strictly opt in */
++static int use_curl = USE_CURL_DEFAULT;
+ 
+ static const char * const imap_send_usage[] = { "git imap-send [-v] [-q] [--[no-]curl] < <mbox>", NULL };
+ 
+@@ -1504,9 +1512,14 @@ int main(int argc, char **argv)
+ 
+ #ifndef USE_CURL_FOR_IMAP_SEND
+ 	if (use_curl) {
+-		warning("--use-curl not supported in this build");
++		warning("--curl not supported in this build");
+ 		use_curl = 0;
+ 	}
++#elif defined(NO_OPENSSL)
++	if (!use_curl) {
++		warning("--no-curl not supported in this build");
++		use_curl = 1;
++	}
+ #endif
+ 
+ 	if (!server.port)
 ---
