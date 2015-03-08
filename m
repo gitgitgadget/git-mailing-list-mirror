@@ -1,105 +1,101 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v2 02/10] Define utility functions for object IDs.
-Date: Sun, 8 Mar 2015 14:48:16 +0000
-Message-ID: <20150308144816.GB4245@vauxhall.crustytoothpaste.net>
-References: <1425770645-628957-1-git-send-email-sandals@crustytoothpaste.net>
- <1425770645-628957-3-git-send-email-sandals@crustytoothpaste.net>
- <CACsJy8DBpRPq34=JwJJEOp=DoCP_dkRQB60xPCyqoBFjui416A@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="NMuMz9nt05w80d4+"
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Andreas Schwab <schwab@linux-m68k.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 08 15:48:29 2015
+From: Sudhanshu Shekhar <sudshekhar02@gmail.com>
+Subject: [PATCH 1/2] Teach reset the same short-hand as checkout
+Date: Sun,  8 Mar 2015 20:28:39 +0530
+Message-ID: <1425826720-5899-1-git-send-email-sudshekhar02@gmail.com>
+References: <vpqioeb22y8.fsf@anie.imag.fr>
+Cc: Matthieu.Moy@grenoble-inp.fr, gitster@pobox.com,
+	Sudhanshu Shekhar <sudshekhar02@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 08 15:59:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YUcVG-0004Lr-NN
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Mar 2015 15:48:27 +0100
+	id 1YUcg2-0000Fy-0t
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Mar 2015 15:59:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752938AbbCHOsW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Mar 2015 10:48:22 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:49866 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752556AbbCHOsV (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 8 Mar 2015 10:48:21 -0400
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:e0df:a888:a4a7:fd4e])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 07AC62808F;
-	Sun,  8 Mar 2015 14:48:20 +0000 (UTC)
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Andreas Schwab <schwab@linux-m68k.org>
-Content-Disposition: inline
-In-Reply-To: <CACsJy8DBpRPq34=JwJJEOp=DoCP_dkRQB60xPCyqoBFjui416A@mail.gmail.com>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.19.0-trunk-amd64)
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
+	id S1752441AbbCHO7a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Mar 2015 10:59:30 -0400
+Received: from mail-pd0-f176.google.com ([209.85.192.176]:40849 "EHLO
+	mail-pd0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751824AbbCHO73 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Mar 2015 10:59:29 -0400
+Received: by pdbfp1 with SMTP id fp1so51396045pdb.7
+        for <git@vger.kernel.org>; Sun, 08 Mar 2015 07:59:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=GQUv3xGbbnb/MZIPmP1Czt2oL/p8raRV8KouI2Z+TK8=;
+        b=SpgyvaYAPAq6K4rKXiYwftWQJkGxJ+ZOl1++KMQjZNxV9eLY9nEz8rZbOq9QSrbLuM
+         a+VUXS80m8Np3vyd1oRmQ5HIYlE/ahYRu/RqhCwe9qSEBU5EeRUTf3Wt/Hdt/QTiis3f
+         TgbDcKxDBa083fiC8Ah1zvVZjKUT9c0PjcnY6zhGUnNx8GODQmxWvYOPwmeJaY6WyRq5
+         h0a0aiUOg3QwDA/bFlZSwGnRTWazRlduKPWnQd9URuVlylcO4nJB8En06G0CAyzXjh98
+         PlpDjWheKyQJXPkagMYvAJAbSHvMmdt8yo3N0R5McrbsrXs1r2kQfYtqYUkLP3Gbw2LV
+         x4ag==
+X-Received: by 10.66.97.7 with SMTP id dw7mr43145697pab.56.1425826768822;
+        Sun, 08 Mar 2015 07:59:28 -0700 (PDT)
+Received: from shekhar-Inspiron-N5110.iiit.ac.in ([14.139.82.6])
+        by mx.google.com with ESMTPSA id 1sm6975875pdi.38.2015.03.08.07.59.25
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 08 Mar 2015 07:59:27 -0700 (PDT)
+X-Mailer: git-send-email 2.3.1.168.g0c82976.dirty
+In-Reply-To: <vpqioeb22y8.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265089>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265090>
+
+"-" now means the previous branch.
+
+Signed-off-by: Sudhanshu Shekhar <sudshekhar02@gmail.com>
+Thanks-to: Junio C Hamano, Matthieu Moy, Eric Sunshine
+---
+Thank you all for your feedback. Please let me know if I am missing out on anything else.
 
 
---NMuMz9nt05w80d4+
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+ builtin/reset.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-On Sun, Mar 08, 2015 at 04:57:36PM +0700, Duy Nguyen wrote:
->On Sun, Mar 8, 2015 at 6:23 AM, brian m. carlson
-><sandals@crustytoothpaste.net> wrote:
->> I'm not very excited about having to put the #include in the middle of
->> cache.h.  The alternative, of course, is to move enum object_type up,
->> which I can do if necessary.  Another alternative is to simply move the
->> struct object_id definitions to cache.h instead of object.h, which might
->> be cleaner.
->>
->> I'm interested in hearing opinions about the best way to go forward.
->
->I think declaring struct object_id in cache.h would be simplest.
->Another alternative is do it in git-compat-util.h. This is not the
->first abuse of git-compat-util.h (because it's included everywhere).
->starts_with(), ends_with() and friends are already in
->git-compat-util.h
-
-cache.h is so ubiquitous due to the hash* functions that I didn't need=20
-to include it anywhere, so I don't see a reason to abuse=20
-git-compat-util.h for that purpose.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
-
---NMuMz9nt05w80d4+
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCgAGBQJU/GEwAAoJEL9TXYEfUvaL0VkP/3LMJSCYctBydnddjvYL9gqk
-tVxQLj7YEjnV3rPnulrIxagHnkNg650rexoXHvc+f+gMe5ssdvIdaW2/1xrurF8O
-8cdLaOfj5AsXkEzIo/w9E2nK34w3jgBpLvhcOlQ+t9BsPJe4QXN1flntxkMg38jA
-P77IXcJc47cg80JBedt7J88f9HuxwWh5y1ABGnqJ672p+ZVAS8JVzUAiqr1f3EVV
-KXQcedsUdE3utb1/pme82+lMrmbv9BX9xJqsad/IQkX8FxA6L9kkdOj93EFnzIsA
-moZRFX4WMEpZdrQ3p/AROPYAHpzav7og9QPiPHfjp9UxHc5sEL616bzOESc2C+56
-G1n7DdEpAhiz7LyRLAn260U5URJsxyCtkKpVmIIIMX4TFH8f/UX6FOla1iDPHxxq
-MrmeyJFqndGsH5pyFDYKtXNmIeN1ZoX0shx7xR3TMk50z0T7SP/qlqKXAgT1oNBq
-QbSV7iyJn38EysEGBEx27vXvZV7zDzKXCamPm2BxOwbfW7Q9apzcpmiVZA1BrH+p
-2Nzywoe1sR+HxuAGPRvQkZlBkqzSnR3B8EuSIinUo0yIvGsMJuoPtQvNT4VEnCiI
-IBFCElq+rMPMja7FjCRaOOiiJU59Hl2+g6dCnnCNCK2WihoQ5TGNwyFANM/nHO5k
-kRxfydLZM7A2dSZFzJPQ
-=9xnR
------END PGP SIGNATURE-----
-
---NMuMz9nt05w80d4+--
+diff --git a/builtin/reset.c b/builtin/reset.c
+index 4c08ddc..02f33ef 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -192,6 +192,7 @@ static void parse_args(struct pathspec *pathspec,
+ {
+ 	const char *rev = "HEAD";
+ 	unsigned char unused[20];
++	int substituted_minus = 0;
+ 	/*
+ 	 * Possible arguments are:
+ 	 *
+@@ -205,6 +206,10 @@ static void parse_args(struct pathspec *pathspec,
+ 	 */
+ 
+ 	if (argv[0]) {
++		if (!strcmp(argv[0], "-")) {
++			argv[0] = "@{-1}";
++			substituted_minus = 1;
++		}
+ 		if (!strcmp(argv[0], "--")) {
+ 			argv++; /* reset to HEAD, possibly with paths */
+ 		} else if (argv[1] && !strcmp(argv[1], "--")) {
+@@ -225,12 +230,14 @@ static void parse_args(struct pathspec *pathspec,
+ 			verify_non_filename(prefix, argv[0]);
+ 			rev = *argv++;
+ 		} else {
++			/* We were treating "-" as a commit and not a file */
++			if (substituted_minus)
++				argv[0] = "-";
+ 			/* Otherwise we treat this as a filename */
+ 			verify_filename(prefix, argv[0], 1);
+ 		}
+ 	}
+ 	*rev_ret = rev;
+-
+ 	if (read_cache() < 0)
+ 		die(_("index file corrupt"));
+ 
+-- 
+2.3.1.168.g0c82976.dirty
