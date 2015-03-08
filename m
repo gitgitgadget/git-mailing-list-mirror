@@ -1,160 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2/GSoC/MICRO] revision: forbid combining --graph and --no-walk
-Date: Sun, 08 Mar 2015 12:40:10 -0700
-Message-ID: <xmqqwq2rqnvp.fsf@gitster.dls.corp.google.com>
-References: <1425632110-31863-1-git-send-email-dongcan.jiang@gmail.com>
-	<3de5837561c07fbf8d6187578fc37b3dbf2ea5f7.1425702676.git.dongcan.jiang@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Git very slow ?
+Date: Sun, 8 Mar 2015 12:46:07 -0700
+Message-ID: <CA+55aFzDRg4kHHGGHd91kVxfj8eX0g1w5T7SyN_CouCf=_tW3A@mail.gmail.com>
+References: <20150307013007.GA13250@milliways>
+	<20150308155136.GA6273@vps892.directvps.nl>
+	<87zj7nmpdp.fsf@fencepost.gnu.org>
+	<20150308192045.GB32504@milliways>
+	<87sidfmgag.fsf@fencepost.gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: sunshine@sunshineco.com, l.s.r@web.de, git@vger.kernel.org
-To: Dongcan Jiang <dongcan.jiang@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 08 20:40:20 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Ken Moffat <zarniwhoop@ntlworld.com>, Kevin D <me@ikke.info>,
+	Git Mailing List <git@vger.kernel.org>
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Sun Mar 08 20:46:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YUh3k-0001yl-GE
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Mar 2015 20:40:20 +0100
+	id 1YUh9S-0000C2-7h
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Mar 2015 20:46:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752015AbbCHTkP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 Mar 2015 15:40:15 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:63400 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751576AbbCHTkN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 8 Mar 2015 15:40:13 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D3EBE3E4A5;
-	Sun,  8 Mar 2015 15:40:12 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=bs1FV1q0/2F1
-	+8EJQgZMRQ/j7Y4=; b=ltnX4R6E/awpcbOarSxki+NlQGPV00ylusXDDUwRVZQb
-	Mh9q1TN6gsvB2p0OI6TU+ESWS+Jm2dHFaMp3JxPLgVZEaZ8x3bSDyRJWIh3eG5QO
-	2wt5qMSnBeLuPM7E921ZSfg2gbe14vA184iD84KxsfMOXRnp+eXe1RXgMX/yF2o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=uNkw6J
-	AaFWBy92NHx22fcKLbQgrOTEBMgB3m2FQNTsM863npgtB2OSodjLkf18dib3O9Lj
-	Uj/cBH57UAFa4Y3M3B+dlFuYs0u2WaNCtIUApjenhPVR+EClarpA8hkvTbg30l3K
-	RxOrBHUOpOd/p10NCPffChbdzBB44cMV1Bw3I=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id CCFBE3E4A4;
-	Sun,  8 Mar 2015 15:40:12 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4075D3E4A1;
-	Sun,  8 Mar 2015 15:40:12 -0400 (EDT)
-In-Reply-To: <3de5837561c07fbf8d6187578fc37b3dbf2ea5f7.1425702676.git.dongcan.jiang@gmail.com>
-	(Dongcan Jiang's message of "Sat, 7 Mar 2015 12:56:47 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: EFA7F880-C5CA-11E4-8F15-29999F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751767AbbCHTqJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Mar 2015 15:46:09 -0400
+Received: from mail-ie0-f182.google.com ([209.85.223.182]:39998 "EHLO
+	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751343AbbCHTqI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Mar 2015 15:46:08 -0400
+Received: by iecrp18 with SMTP id rp18so29906855iec.7
+        for <git@vger.kernel.org>; Sun, 08 Mar 2015 12:46:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=BJJ/aoROw17FPtaQct+amwyuWJ368zAbUz4p/f+7MkA=;
+        b=Po8GBKj0X8O3OsiDcOFSY79l/EplK821ZThY0qWYZtLv8RkC0YpkDDdyJwZUYzEMTf
+         Du7bBgI+/iBlBTP0alhvrAq0UOMkLAjozgojU9iy2k3yIRRlSFClcm5Go5E2oN8//bXV
+         R5SUH54/978iJgvLG0oMw/rwqs+Ad9sN9uTeMy5NrGr2LpaA7tnhSSIUW9HKdb74RtLh
+         x/BQrzMYqmGcgZIx8M04Jlnq3yb8vZtLoiT04shvHaaZ0RQoG3nKzrGVdnKLS0afDK56
+         MGGBRDGrf7ofJ8YNAkvdzUsRMraCnOLh/g9LGy9TDRrsu/ZlueSX7pmdZLolEsNv6tbV
+         WFZA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=BJJ/aoROw17FPtaQct+amwyuWJ368zAbUz4p/f+7MkA=;
+        b=B3k4Nl0roqyHqrH+OQTz0vWU/nuXuMCl1DEiQjRCB+G/gyf79a73YoHQnV0VHH3Cqt
+         JgnSHbDC1aFW0E1wJ99pYh9l1KzwptAV+omqEPqxCL4uHPTJMF8DMGE06HUnG7j27RDg
+         QCVEGsDt/aMff0KBLeZqLEHtlXoZKE439ni/w=
+X-Received: by 10.50.49.43 with SMTP id r11mr69657343ign.18.1425843967383;
+ Sun, 08 Mar 2015 12:46:07 -0700 (PDT)
+Received: by 10.36.60.9 with HTTP; Sun, 8 Mar 2015 12:46:07 -0700 (PDT)
+In-Reply-To: <87sidfmgag.fsf@fencepost.gnu.org>
+X-Google-Sender-Auth: 802iz01C6JxPYQggge3PxppVY6Q
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265108>
 
-Dongcan Jiang <dongcan.jiang@gmail.com> writes:
-
-> Because --graph is about connected history while
-> --no-walk is about discrete points. [1]
-
-The convention around here is that the title of the patch on the
-Subject line is *not* the beginning part of the first sentence, you
-would need to phrase the above more like:
-
-        Because "--graph" is about ... discrete points, it does not
-        make sense to allow giving these two options at the same
-        time.
-
-to make it a complete sentence.
-
-> It's a pity that git-show has to allow such combination
-> in order to make t4052-stat-output.sh compatible. [2]
-
-If you feel "It's a pity", it actually is OK to make a good argument
-for "fixing" the test without adding the workaround.  A replacement
-commit message for the above two lines for such an approach might
-look like:
-
-        This change makes a few calls to "show --graph" fail in
-        t4052, but asking to show one commit _with_ graph is a
-        nonsensical thing to do.  Correct these offending tests that
-        expected "--graph" to be useful by removing "--graph" in
-        their invocations (and adjusting the expected output, of
-        course).
-
-That way, people who do find it actually useful that "show --graph HEAD=
-"
-that shows something like this
-
-        $ git show --graph -s 52d5bf778
-        *   commit 52d5bf77875275bbfc1bf1d7b690f355d5c869e4
-        |\  Merge: 36ab768 189c860
-        | | Author: Junio C Hamano <gitster@pobox.com>
-        | | Date:   Fri Mar 6 15:02:33 2015 -0800
-        | |=20
-        | |     Merge branch 'bw/kwset-use-unsigned'
-        ...
-
-can react and argue why it is useful to them. =20
-
-It is important to notice that your "It's a pity" will no longer
-apply, if we are keeping the feature because it is useful.  It would
-be clear that we would be keeping the feature not because we are too
-lazy to correct tests, but because it is actually useful.
-
-> Signed-off-by: Dongcan Jiang <dongcan.jiang@gmail.com>
+On Sun, Mar 8, 2015 at 12:37 PM, David Kastrup <dak@gnu.org> wrote:
 >
-> Thanks-to: Eric Sunshine, Ren=C3=A9 Scharfe, Junio C Hamano
+> Since git blame outputs everything once it is finished ("the first
+> screen" is purely the pager's business), it needs to unpack the entire
+> history of the file (unless no blameable lines remain at all) and look
+> at it.  6 seconds tends not to be all that excessive for extracting more
+> than 5 years of a file's history.
 
-These look unusual for a few reasons: S-o-b is not at the end, we
-usually say Helped-by: instead, and we do not use Thanks-to: with
-multiple names on a single line.
+Yeah, "git blame" can easily be several seconds without anything being wrong.
 
-Please do not try to be original without a good reason.  We may
-start counting the number of times people appear on these footers to
-see how much contribution those who do not directly author commits
-(read: those who mentor others) are making.
+But "git commit" should be fairly instantaneous. Even over NFS.
 
-> diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-> index 5f2b290..fed162e 100755
-> --- a/t/t4202-log.sh
-> +++ b/t/t4202-log.sh
-> @@ -887,4 +887,10 @@ test_expect_success GPG 'log --graph --show-sign=
-ature for merged tag' '
->  	grep "^| | gpg: Good signature" actual
->  '
->
-> +test_expect_success 'log --graph --no-walk is forbidden' '
-> +	echo "fatal: cannot combine --no-walk with --graph" >expect-error &=
-&
-> +	test_must_fail git log --graph --no-walk 2>error &&
-> +	test_cmp expect-error error
-> +'
+That said, on NFS in particular, make sure you don't have
 
-I do not think we want to check exact phrasing of the error
-message here.  Just the second line (without the " 2>error &&"
-at the end) should be sufficient.
+    [core]
+        PreloadIndex = false
 
-> +test_expect_success 'rev-list --graph --no-walk is forbidden' '
-> +	echo "fatal: cannot combine --no-walk with --graph" >expect-error &=
-&
-> +	test_must_fail git rev-list --graph --no-walk 2>error &&
-> +	test_cmp expect-error error
-> +'
+in your .gitconfig to disable the threaded index preloading.
 
-The same comment (about preferring not to check the error message)
-applies here, and more importantly, this is not a good test because
-"git rev-list --graph" without the forbidden "--no-walk" would fail
-for other reasons.  Perhaps
+But "core.preloadindex" _should_ be enabled by default in anything but
+the most ancient git versions, and it can make a huge difference on
+NFS because it allows the 'lstat()' calls to check that the index is
+up-to-date to be done in parallel. Without that, git on NFS can be a
+bit sluggish.
 
-	test_must_fail git rev-list --graph --no-walk HEAD
+On local filesystems it normally doesn't make as much of a difference,
+since things tend to be either cached or seek-limited.
 
-or something, assuming that there is already a commit pointed by
-HEAD at this point in the test (I didn't check).
-
-Thanks.
+                             Linus
