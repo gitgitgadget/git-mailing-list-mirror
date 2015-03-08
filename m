@@ -1,77 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Efficient parsing of `status -z` output
-Date: Sun, 08 Mar 2015 00:14:06 -0800
-Message-ID: <xmqqlhj7sy7l.fsf@gitster.dls.corp.google.com>
-References: <CAMJduDuxBDoJ9_ETY8FCRoANf+taAS7-1acf5CFRGXDFyL72Rg@mail.gmail.com>
+From: karthik nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v3 2/3] sha1_file: implement changes for "cat-file --literally
+ -t"
+Date: Sun, 08 Mar 2015 14:18:14 +0530
+Message-ID: <54FC0CCE.70009@gmail.com>
+References: <54F89D90.6090505@gmail.com>	<1425579560-18898-1-git-send-email-karthik.188@gmail.com>	<xmqq61af100p.fsf@gitster.dls.corp.google.com>	<54F9E6B6.4070105@gmail.com>	<xmqq1tl2ylfo.fsf@gitster.dls.corp.google.com>	<54FACD30.6080005@gmail.com> <xmqqpp8jsyel.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Matthew Rothenberg <mrothenberg@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 08 09:14:20 2015
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Mar 08 09:48:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YUWLr-0008Ec-Us
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Mar 2015 09:14:20 +0100
+	id 1YUWst-000112-1V
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Mar 2015 09:48:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751475AbbCHION (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Mar 2015 04:14:13 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:59385 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751382AbbCHIOJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Mar 2015 04:14:09 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6E85C37A98;
-	Sun,  8 Mar 2015 04:14:08 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=3cJIeNcjvbqnxv2Mr7Wkb4Mh9/c=; b=eKVV8k
-	p9moEwhQQE0p9TkckvvqKQDBlz6VmbI3P6iWeAu8p7yPToG/mzqYcfeqa0pSyyTD
-	OLFNq46on1j5GE4/4ELPYTOlRV3O0zYMw3x8BI0r7XqGc4XUeW2b8tWpIMLRYI+B
-	flsRUNE/UnmcI2StZzhB6twGkqAlAUKLnTZ7Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=lTNuh34bqGu0iGs4Zsw4k9CT9QU14Mbi
-	OM//O1wNHtGUqNJxvj740coIdHEdkyyOHNjKmWVVVl4JYN3ueZCQSl8r8SyM5Os9
-	mcN9m8tlsHmBBvps6+1Si3D3i27Epc+zCB4uGKE1qvRc/C9DDCmKRF4GsKlOf8+O
-	cIvDl6tm4r4=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 655D437A97;
-	Sun,  8 Mar 2015 04:14:08 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D617A37A96;
-	Sun,  8 Mar 2015 04:14:07 -0400 (EDT)
-In-Reply-To: <CAMJduDuxBDoJ9_ETY8FCRoANf+taAS7-1acf5CFRGXDFyL72Rg@mail.gmail.com>
-	(Matthew Rothenberg's message of "Sat, 7 Mar 2015 18:00:42 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 17C4DB72-C56B-11E4-91F7-29999F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751746AbbCHIsW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Mar 2015 04:48:22 -0400
+Received: from mail-pa0-f46.google.com ([209.85.220.46]:44635 "EHLO
+	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751476AbbCHIsS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Mar 2015 04:48:18 -0400
+Received: by padet14 with SMTP id et14so40377565pad.11
+        for <git@vger.kernel.org>; Sun, 08 Mar 2015 00:48:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=Hb8IvhshgJUez2hE14XF+P84WqvcswYj/ewAICdcJC8=;
+        b=JTq7kMNsLao5aSkgBCQ8gjVBjNcXNzXSuZiFM8kcArztisuFgnrxbA7+Q9T5/uy/eC
+         2UPtwVLaQkXoITf97KESVC/AdabGlmuXODi+lFObatZLtINsJ7d130nk0Enm58puIttf
+         710L7sl7H4ltOGbQdsFV0OkviBdVUzqVY6rEF/X2XVPfd88+XKxYJKift+p8XSBglJkG
+         2xvH2Vriq3kLqjTeH6cS3gcJQywMedP0jpPL9sgT1rLCZibooM1xtEM6olIzc8pl4L2W
+         xcgYDCmnIrId1eZfalyaKIlaifVmmfGuI2zNlXDnyJj4M/TK4xSWcEegbEPJyU9Ps9HK
+         MoNg==
+X-Received: by 10.70.48.5 with SMTP id h5mr2917101pdn.58.1425804498184;
+        Sun, 08 Mar 2015 00:48:18 -0800 (PST)
+Received: from [192.168.0.102] ([103.227.98.178])
+        by mx.google.com with ESMTPSA id yf6sm14321287pab.26.2015.03.08.00.48.16
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 08 Mar 2015 00:48:17 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
+In-Reply-To: <xmqqpp8jsyel.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265047>
 
-Matthew Rothenberg <mrothenberg@gmail.com> writes:
 
->  2. Read from buffer until the first NUL, parse the entry status
-> codes, and if the entry status code represents a status that *should*
-> have multiple filenames, read from buffer until a second NUL is found,
-> and then reparse that entry with both filenames. The issues I see with
-> this approach:
->    a.) One has to know exactly which status code combinations will end
-> up with two filenames, and this list has to be exhaustive. As far as I
-> can tell, there is no canonical documentation for this?
->    b.) It seems a bit brittle, because if the logic from the above is
-> wrong and we miss an extended entry or ask for one when it doesn't
-> exist we will leave the buffer an essentially corrupt state for future
-> reads.
 
-I think this is how -z was designed to be used, and if that isn't
-clear, then the documentation must be updated to clarify.  Rename
-and Copy are the only ones that needs two pathnames, and I suspect
-that whoever did the original description of the short format in the
-documentation knew Git too well that he forgot to mention it ;-)
+On 03/08/2015 01:39 PM, Junio C Hamano wrote:
+> karthik nayak <karthik.188@gmail.com> writes:
+>
+>> On 03/07/2015 12:58 AM, Junio C Hamano wrote:
+>>
+>> case 't':
+>> 	oi.typep = &type;
+>> 	oi.typename = &sb;
+>> 	sha1_object_info_extended(sha1, &oi, flags);
+>> 	if (sb.len) {
+>> 		printf("%s\n", sb.buf);
+>> 		strbuf_release(&sb);
+>> 		return 0;
+>> 	} else if (type) {
+>> 		printf("%s\n", typename(type));
+>> 		return 0;
+>> 	}
+>> 	break;
+>>
+>> This works but I need an else statement to check the type if not
+>> getting the type literally, which is because if not called literally
+>> the oi.typename is not set,...
+>
+> Hmph, when I outlined that change to object-info-extended, I meant
+> to do it in such a way that when the optional oi->typename is set,
+> it is always filled whether "literally" is asked for andr whether
+> the object is a kosher one or a bogus one.
+>
+> Without parsing the header, we wouldn't know how long the object
+> would be, so I do not know if not doing some variant of parse_header
+> is an option.
+>
+> Thanks.
+>
+
+What parse_sha1_header() does to get the type is just find the first 
+occurrence of a " " manually and store everything before it as the type. 
+Then it finds the size of the object if needed. And finally returns the 
+type by calling type_from_string(). This is where we get the undefined 
+type error.
+When getting the type "literally" we could just find the first 
+occurrence of a " " using strcspn() copy the type to oi->typename and 
+avoid calling parse_sha1_header(). Even your code went along these lines.
+If "literally" is not set we could call parse_sha1_header() like we 
+regularly would.
+
+Thanks
+Karthik
