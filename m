@@ -1,81 +1,85 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [GSoC][PATCH 2/2] attrs: add "css" to the list of userdiff
- bulit-in patterns
-Date: Sun, 8 Mar 2015 19:02:44 -0400
-Message-ID: <CAPig+cTTy+Thkpb-jR9e5PGq_NN2Z+wgRB=csgo5Z0Y39M_ZFg@mail.gmail.com>
+Subject: Re: [GSoC][PATCH 1/2] userdiff: add built-in patterns for CSS
+Date: Sun, 8 Mar 2015 19:08:31 -0400
+Message-ID: <CAPig+cTEbX+cD39-_5EC8o7uciBw7uL58C31ePMXCJ3SLzYJtg@mail.gmail.com>
 References: <1425812624-6671-1-git-send-email-sh19910711@gmail.com>
-	<1425812624-6671-2-git-send-email-sh19910711@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git List <git@vger.kernel.org>
 To: Hiroyuki Sano <sh19910711@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 09 00:02:51 2015
+X-From: git-owner@vger.kernel.org Mon Mar 09 00:08:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YUkDj-0007Ho-1d
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Mar 2015 00:02:51 +0100
+	id 1YUkJJ-0005IE-1A
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Mar 2015 00:08:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751586AbbCHXCp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Mar 2015 19:02:45 -0400
-Received: from mail-yh0-f54.google.com ([209.85.213.54]:41385 "EHLO
-	mail-yh0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750918AbbCHXCp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Mar 2015 19:02:45 -0400
-Received: by yhai57 with SMTP id i57so6210823yha.8
-        for <git@vger.kernel.org>; Sun, 08 Mar 2015 16:02:44 -0700 (PDT)
+	id S1752536AbbCHXId (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Mar 2015 19:08:33 -0400
+Received: from mail-yk0-f172.google.com ([209.85.160.172]:40785 "EHLO
+	mail-yk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752510AbbCHXIb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Mar 2015 19:08:31 -0400
+Received: by ykq142 with SMTP id 142so5757335ykq.7
+        for <git@vger.kernel.org>; Sun, 08 Mar 2015 16:08:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc:content-type;
-        bh=ADuwrFQj0nGI82WI51w+EyBqKhfPKW3x9/5904Y5Mmg=;
-        b=oxtFbxS5qk8PH7JDFPzep+/J5WGSEmASqTbPEnGg9V17xS4IxKx53B2aSuObKwUxPn
-         P6m9I/0q/qAFmFnr8GkyihVbKEVZGNCmf41AQhI+bpFkpOfUS6LdP/tBOTMwAkgb49jx
-         fST3VYj4RLfBHwP1HFertjrLmaSnvjfKvAyj7F/JBrqfd04Q/KBwm/4x/jPA4nYzR/KR
-         IR2/iuiJ+k5bpXfbtMFZfS/aauR80M/FDtINWCyUlyS+XsQdHkGVlHXzDrE7vgCSyOo1
-         zMuTssz2wPvHQxRFb5vhSlimVT3j+TSib5u9Jp/IdPe55ptlJpbXI186Jo2ozay8KM0u
-         yjtg==
-X-Received: by 10.170.188.10 with SMTP id f10mr27764190yke.22.1425855764449;
- Sun, 08 Mar 2015 16:02:44 -0700 (PDT)
-Received: by 10.170.73.7 with HTTP; Sun, 8 Mar 2015 16:02:44 -0700 (PDT)
-In-Reply-To: <1425812624-6671-2-git-send-email-sh19910711@gmail.com>
-X-Google-Sender-Auth: u6JG1ykYjLuEcS_cXVr6UkrnvZQ
+        bh=+oT84Jh8JxSy4l5Tp52sRHiFaXvXDdBGFeogAzEsNqA=;
+        b=kNPeRgQ6Y25WtRlvz9rhV/mMQQQkqF97dIDiRKOBamWdqmgZAP3hIFG5uuqpY8QsqW
+         Omww5z6bfivsneEyKJ2RaVJwtZe7iyBQIESwA1I6OQ16H2JtO5W4rRgrxWP1J3ZzCkct
+         RbfHM7jZcUHpgBH5H3ja4E3o735O/krgtqqTj7OjBLq1kQqTlvldrVzxuAwSE2kYRsov
+         EAxut62jF3N1jG9PKL8fxmIO+lMGaVHmYSzevVWWx//vSK8GUac/jmtlB1hl6NZps8E4
+         OAcChijD9C4RBP0412Sdx12joIWGPMmopSHyE90g6p8IWUDgeeBotCXpXlPeLw+GVcpn
+         cSqg==
+X-Received: by 10.236.70.100 with SMTP id o64mr24166334yhd.94.1425856111346;
+ Sun, 08 Mar 2015 16:08:31 -0700 (PDT)
+Received: by 10.170.73.7 with HTTP; Sun, 8 Mar 2015 16:08:31 -0700 (PDT)
+In-Reply-To: <1425812624-6671-1-git-send-email-sh19910711@gmail.com>
+X-Google-Sender-Auth: dgS92onNAMbHAxdDVPFAc6n6bYM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265117>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265118>
 
 On Sun, Mar 8, 2015 at 7:03 AM, Hiroyuki Sano <sh19910711@gmail.com> wrote:
-> attrs: add "css" to the list of userdiff bulit-in patterns
-
-s/bulit/built/
-
+> Add regex patterns for CSS. The word regex maches selectors, properties,
+> and values. On the other hand, the funcname regex matches lines contains
+> the curly brace character.
+>
 > Signed-off-by: Hiroyuki Sano <sh19910711@gmail.com>
 > ---
-> diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-> index c892ffa..8904a2a 100644
-> --- a/Documentation/gitattributes.txt
-> +++ b/Documentation/gitattributes.txt
-> @@ -525,6 +525,8 @@ patterns are available:
->
->  - `csharp` suitable for source code in the C# language.
->
-> +- `css` suitable for source code in the CSS documents.
+> diff --git a/t/t4034/css/post b/t/t4034/css/post
+> new file mode 100644
+> index 0000000..7e64463
+> --- /dev/null
+> +++ b/t/t4034/css/post
+> @@ -0,0 +1,32 @@
+> [...]
+> +.class, elm:hover, elm:first-child, elm:lang(en), #id, elm#id, .num123{
 
-Taking a hint from the 'html' case, it might make more sense to say:
+Mental note: colon and parentheses are present
 
-    `css` suitable for CSS documents.
+> diff --git a/userdiff.c b/userdiff.c
+> index 2ccbee5..8374a2a 100644
+> --- a/userdiff.c
+> +++ b/userdiff.c
+> @@ -37,6 +37,9 @@ IPATTERN("fortran",
+>          "|//|\\*\\*|::|[/<>=]="),
+>  PATTERNS("html", "^[ \t]*(<[Hh][1-6][ \t].*>.*)$",
+>          "[^<>= \t]+"),
+> +PATTERNS("css",
+> +        "^.*[{].*$",
+> +        "[-_\\.,#a-zA-Z0-9]+"),
 
-Considering how directly related this change is to those in patch 1,
-it's not clear why this change needs a separate patch, so folding them
-into a single patch might be sensible.
+Is the intention that this should match "elm:lang(en)" as an atom, or
+separately match "elm", "lang", and "en"?
 
-> +
->  - `fortran` suitable for source code in the Fortran language.
->
->  - `html` suitable for HTML/XHTML documents.
+>  PATTERNS("java",
+>          "!^[ \t]*(catch|do|for|if|instanceof|new|return|switch|throw|while)\n"
+>          "^[ \t]*(([A-Za-z_][A-Za-z_0-9]*[ \t]+)+[A-Za-z_][A-Za-z_0-9]*[ \t]*\\([^;]*)$",
 > --
-> 2.3.1
