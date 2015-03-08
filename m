@@ -1,103 +1,163 @@
-From: karthik nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v3 2/3] sha1_file: implement changes for "cat-file --literally
- -t"
-Date: Sun, 08 Mar 2015 14:18:14 +0530
-Message-ID: <54FC0CCE.70009@gmail.com>
-References: <54F89D90.6090505@gmail.com>	<1425579560-18898-1-git-send-email-karthik.188@gmail.com>	<xmqq61af100p.fsf@gitster.dls.corp.google.com>	<54F9E6B6.4070105@gmail.com>	<xmqq1tl2ylfo.fsf@gitster.dls.corp.google.com>	<54FACD30.6080005@gmail.com> <xmqqpp8jsyel.fsf@gitster.dls.corp.google.com>
+From: Dongcan Jiang <dongcan.jiang@gmail.com>
+Subject: Re: [GSoC/RFC] Ideas on git fetch --deepen
+Date: Sun, 8 Mar 2015 16:57:34 +0800
+Message-ID: <CABwkPcoWUcK2vzqUBcEcuNzizYMtP=qUiew2HmDgqtivfDXbDg@mail.gmail.com>
+References: <CABwkPcoHPyid0gKjjg0NiXY4TYtCbeSJe6XK5HEDFNKR+-_tFQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 08 09:48:28 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Mar 08 09:58:07 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YUWst-000112-1V
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Mar 2015 09:48:27 +0100
+	id 1YUX2E-0002kX-3v
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Mar 2015 09:58:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751746AbbCHIsW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Mar 2015 04:48:22 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:44635 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751476AbbCHIsS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Mar 2015 04:48:18 -0400
-Received: by padet14 with SMTP id et14so40377565pad.11
-        for <git@vger.kernel.org>; Sun, 08 Mar 2015 00:48:18 -0800 (PST)
+	id S1751773AbbCHI6A convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 Mar 2015 04:58:00 -0400
+Received: from mail-pd0-f176.google.com ([209.85.192.176]:37629 "EHLO
+	mail-pd0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751655AbbCHI5z convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 8 Mar 2015 04:57:55 -0400
+Received: by pdbnh10 with SMTP id nh10so61302998pdb.4
+        for <git@vger.kernel.org>; Sun, 08 Mar 2015 00:57:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=Hb8IvhshgJUez2hE14XF+P84WqvcswYj/ewAICdcJC8=;
-        b=JTq7kMNsLao5aSkgBCQ8gjVBjNcXNzXSuZiFM8kcArztisuFgnrxbA7+Q9T5/uy/eC
-         2UPtwVLaQkXoITf97KESVC/AdabGlmuXODi+lFObatZLtINsJ7d130nk0Enm58puIttf
-         710L7sl7H4ltOGbQdsFV0OkviBdVUzqVY6rEF/X2XVPfd88+XKxYJKift+p8XSBglJkG
-         2xvH2Vriq3kLqjTeH6cS3gcJQywMedP0jpPL9sgT1rLCZibooM1xtEM6olIzc8pl4L2W
-         xcgYDCmnIrId1eZfalyaKIlaifVmmfGuI2zNlXDnyJj4M/TK4xSWcEegbEPJyU9Ps9HK
-         MoNg==
-X-Received: by 10.70.48.5 with SMTP id h5mr2917101pdn.58.1425804498184;
-        Sun, 08 Mar 2015 00:48:18 -0800 (PST)
-Received: from [192.168.0.102] ([103.227.98.178])
-        by mx.google.com with ESMTPSA id yf6sm14321287pab.26.2015.03.08.00.48.16
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 08 Mar 2015 00:48:17 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
-In-Reply-To: <xmqqpp8jsyel.fsf@gitster.dls.corp.google.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type:content-transfer-encoding;
+        bh=ZQqmv34+4vvWsL/NDyeKe8gAYcKI29YYy91HP8gkbK0=;
+        b=iJm6IQci4onk2IrKeTtGOrTzpbUygHeWtPqBjG1DVjVy5rNVOQpAs0VX9GvnQzH5SY
+         BLV8lMs3j6u1dxzImQx2+aa346g00scUlO/Pe8Ls0ie4Mt85MuDRomvEi6dXBNfpEC2g
+         J5zBmcI9RAy/JTSEjwgU1E4ADIQk9n307VjLPcIdZNEeJtMFC9Z95rnahoIEXaF2au+l
+         kCCYvqSDVhDGhiVaHgtg5Rgg6rKrEr+ncwmglv5AKZbkvMchD+alUQTifqm8hB46B447
+         vaR0bRIWTJLMN0wY9+x3l+Bu7NsizxDn2t2AVtbYX4dAce08dIuIS7NO9NG3N4RgBjzx
+         uAGQ==
+X-Received: by 10.68.65.75 with SMTP id v11mr41092171pbs.10.1425805074614;
+ Sun, 08 Mar 2015 00:57:54 -0800 (PST)
+Received: by 10.70.78.225 with HTTP; Sun, 8 Mar 2015 00:57:34 -0800 (PST)
+In-Reply-To: <CABwkPcoHPyid0gKjjg0NiXY4TYtCbeSJe6XK5HEDFNKR+-_tFQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265048>
 
+Hi, all
 
+After digging into how "git fetch" works, I have found that my previous
+understanding was too rash. I'm sorry for that.
 
-On 03/08/2015 01:39 PM, Junio C Hamano wrote:
-> karthik nayak <karthik.188@gmail.com> writes:
+I find that the current workflow of "git fetch --depth" is as follows:
+
+  1. 'fetch module' calls 'git-upload-pack service' via 'transport modu=
+le'
+     to fetch ref with `depth`.
+  2. Such call is finished by pipe I/O.
+  3. git-upload-pack receives arguments such as 'depth' to fetch commit=
+s,
+     and send back to the caller.
+
+Therefore, if we want to implement "--deepen" for "git fetch", we have =
+to
+modify the arguments protocol of git-upload-pack service by adding the
+'shallow commit' hash.
+Then, we can fetch `depth` commits before the 'shallow commit' in
+git-upload-pack service.
+Apparently, we have to output error message when the 'shallow commit' h=
+ash
+is not in the repository.
+
+However, I still have a question for [1]. I am not quite following this=
+:
+
+> If you want the new history leading to the updated tip,
+> you can just say:
 >
->> On 03/07/2015 12:58 AM, Junio C Hamano wrote:
+>    git fetch
+>
+> without any --depth nor --deepen option to end up with:
+>
+>  (you)
+>                  A---B---C---D---E---F---...---W---X---Y---Z
+
+As far as I know, git fetch --depth would fetch new history to the
+local remotes' refs.
+Does it mean that we have to change the behavior of "git fetch --depth"=
+?
+
+I hope you can give me some comments or suggestions, letting me know
+whether I am in the right way.
+
+Thanks.
+
+[1] http://article.gmane.org/gmane.comp.version-control.git/212950
+
+2015-03-07 14:32 GMT+08:00 Dongcan Jiang <dongcan.jiang@gmail.com>:
+> Hi all,
+>
+> My name is Dongcan Jiang. I am studying for my Master Degree at Pekin=
+g
+> University
+> majoring in Computer Science. I have been using Git to manage my proj=
+ects
+> for about half a year. It's really exciting that Git has been helping=
+ me make
+> revision control much more convenient. Therefore, I am very intereste=
+d in
+> doing some works for Git in GSoC 2015.
+>
+> I have submitted my v2 patch on a microproject recently, and I am wai=
+ting
+> for comments on v2 now.
+>
+> In the meantime, I have been scanning ideas on the git gsoc page and
+> their related mails. I find that I am interested in most of them, esp=
+ecially
+> "git fetch --deepen" idea.
+>
+> Here is my understanding about this idea.
+>
+> Although "deepen" and "depth" have different behavior, "deepen" can b=
+e
+> achieved by "depth" with some extra calculation. If we know the
+> distance between "my history bottom" and "your tips", we can set the =
+sum
+> of "deepen" step and this distance as "depth" step. Then we can reuse
+> the logics of processing "depth" to complete it.
+>
+> Take graph in [1] as an example.
+>
+>>  (upstream)
+>>   ---o---o---o---A---B
 >>
->> case 't':
->> 	oi.typep = &type;
->> 	oi.typename = &sb;
->> 	sha1_object_info_extended(sha1, &oi, flags);
->> 	if (sb.len) {
->> 		printf("%s\n", sb.buf);
->> 		strbuf_release(&sb);
->> 		return 0;
->> 	} else if (type) {
->> 		printf("%s\n", typename(type));
->> 		return 0;
->> 	}
->> 	break;
->>
->> This works but I need an else statement to check the type if not
->> getting the type literally, which is because if not called literally
->> the oi.typename is not set,...
+>>  (you)
+>>                  A---B
 >
-> Hmph, when I outlined that change to object-info-extended, I meant
-> to do it in such a way that when the optional oi->typename is set,
-> it is always filled whether "literally" is asked for andr whether
-> the object is a kosher one or a bogus one.
+> the distance of "my history bottom"(A) and "your tips"(B) is 1, then
+> "git fetch --deepen=3D3" can be achieved by "git fetch --depth=3D4"
 >
-> Without parsing the header, we wouldn't know how long the object
-> would be, so I do not know if not doing some variant of parse_header
-> is an option.
+> However, I am a little worried about whether this idea is enough for =
+a
+> GSoC project. I hope you can give me some comments and suggestions.
 >
-> Thanks.
+> [1] http://article.gmane.org/gmane.comp.version-control.git/212950
 >
+> Thanks,
+> Dongcan
+>
+> --
+> =E6=B1=9F=E4=B8=9C=E7=81=BF=EF=BC=88Dongcan Jiang=EF=BC=89
+> Team of Search Engine & Web Mining
+> School of Electronic Engineering & Computer Science
+> Peking University, Beijing, 100871, P.R.China
 
-What parse_sha1_header() does to get the type is just find the first 
-occurrence of a " " manually and store everything before it as the type. 
-Then it finds the size of the object if needed. And finally returns the 
-type by calling type_from_string(). This is where we get the undefined 
-type error.
-When getting the type "literally" we could just find the first 
-occurrence of a " " using strcspn() copy the type to oi->typename and 
-avoid calling parse_sha1_header(). Even your code went along these lines.
-If "literally" is not set we could call parse_sha1_header() like we 
-regularly would.
 
-Thanks
-Karthik
+
+--=20
+=E6=B1=9F=E4=B8=9C=E7=81=BF=EF=BC=88Dongcan Jiang=EF=BC=89
+Team of Search Engine & Web Mining
+School of Electronic Engineering & Computer Science
+Peking University, Beijing, 100871, P.R.China
