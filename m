@@ -1,76 +1,92 @@
-From: karthik nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v4] git: treat "-C <treat>" as a no-op when <path> is
- empty
-Date: Sun, 08 Mar 2015 11:06:13 +0530
-Message-ID: <54FBDFCD.9030703@gmail.com>
-References: <1425640688-26513-1-git-send-email-karthik.188@gmail.com> <CAPig+cTkC1Y1sWJLpG0iUHju3GOMnvOT-nsAU51GykeV2QB+vA@mail.gmail.com> <54FAD7D7.4030008@gmail.com> <CAPig+cRDkoH-zmYhk9ag+Yiwg1h452hOpS2fx2H5xmu5KUNqiQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Sun Mar 08 06:39:02 2015
+From: "Kyle J. McKay" <mackyle@gmail.com>
+Subject: [PATCH 2/2] thread-utils.c: detect CPU count on older BSD-like systems
+Date: Sat,  7 Mar 2015 23:14:37 -0800
+Message-ID: <087595269450d378dbaf0188e8f65c5@74d39fa044aa309eaea14b9f57fe79c>
+References: <e85cd4def375e8247ab210983e44e75@74d39fa044aa309eaea14b9f57fe79c>
+Cc: Git mailing list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Mar 08 08:14:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YUTva-000788-73
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Mar 2015 06:39:02 +0100
+	id 1YUVQP-0004vc-LX
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Mar 2015 08:14:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750852AbbCHFgS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Mar 2015 00:36:18 -0500
-Received: from mail-pa0-f52.google.com ([209.85.220.52]:46449 "EHLO
-	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750836AbbCHFgR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Mar 2015 00:36:17 -0500
-Received: by pabli10 with SMTP id li10so63479123pab.13
-        for <git@vger.kernel.org>; Sat, 07 Mar 2015 21:36:16 -0800 (PST)
+	id S1751209AbbCHHOu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Mar 2015 03:14:50 -0400
+Received: from mail-pd0-f176.google.com ([209.85.192.176]:45452 "EHLO
+	mail-pd0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751079AbbCHHOr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Mar 2015 03:14:47 -0400
+Received: by pdjy10 with SMTP id y10so16950063pdj.12
+        for <git@vger.kernel.org>; Sat, 07 Mar 2015 23:14:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=FneyEeHnvjJKch61Q8PzGQ+/c9Ax649KscwFqRAQ69w=;
-        b=WBP7L/W4X5XJfFAwLnk6Z8KYpLFx9hs1c6asL94LM4XhVFFKqiNDC7s7ujCdPjrdRX
-         kQK7ES/psNP9dC71D1yKhdoK90nZSS77zEEEycQD5TmQ1PDXotLmKhI85Nd+IDeFWfha
-         KXJ4d3+x6cibm2D0d17J65vkIczoNNj4Bbl/nw4tshcK4Ry8RSYlpGL2O6KNfMNTt/lL
-         4KE/BWa73hOyX+lNddewIc2AtHEplstT8mC0c20YJUVuyXNV27DLdstkP+XKQQxpmyv5
-         6i8SkTAWCryaRHhxQd5NQpgbCQqlImpH9DlChtgOkaYqHv5u5xZu7Ymgp0PMdiRujprX
-         n24g==
-X-Received: by 10.68.68.240 with SMTP id z16mr40027410pbt.77.1425792976840;
-        Sat, 07 Mar 2015 21:36:16 -0800 (PST)
-Received: from [192.168.0.102] ([103.227.98.178])
-        by mx.google.com with ESMTPSA id bt2sm13932293pad.12.2015.03.07.21.36.14
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 07 Mar 2015 21:36:15 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
-In-Reply-To: <CAPig+cRDkoH-zmYhk9ag+Yiwg1h452hOpS2fx2H5xmu5KUNqiQ@mail.gmail.com>
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=mDMu06Q13uBCI1fMltyOWxukXzULPP+cnzdJNZYQcJ0=;
+        b=YFH5QTXzZ/UXE4ym1PUbH6zqBlPb1AW5wAh/pG4XXFl9e6NnHJnBuHjDfG4v/AsZ1v
+         vK7K7O1pEO59kUJToGtj/wLcEG1HPjm/PH2Gf56n6Ixu9G+kEKiDY6f0jTGatFW2YZlu
+         7lnA/aPwEryMQumVGzQkuxPPAbME7ahVv6PkjGVwPx0TCsoh1aWvKr3Silz32YxTz9eh
+         kiaLeTb+0Iez4e2kalhGqPhI4LMbBpgwDvanQLqbqQ1uUfnzI1p7ba9xYBnttE8XIwW0
+         2voALL+meIebWWsTnpLW+Ke5oQPbmbB2QvicetIZMdt17G/6qFcGitozFBOhZm05+jlI
+         q1ng==
+X-Received: by 10.68.68.141 with SMTP id w13mr40322433pbt.97.1425798886590;
+        Sat, 07 Mar 2015 23:14:46 -0800 (PST)
+Received: from localhost.localdomain ([2002:48c0:ad8d:0:223:12ff:fe05:eebd])
+        by mx.google.com with ESMTPSA id rx1sm14067028pbc.5.2015.03.07.23.14.45
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Sat, 07 Mar 2015 23:14:46 -0800 (PST)
+In-Reply-To: <e85cd4def375e8247ab210983e44e75@74d39fa044aa309eaea14b9f57fe79c>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265032>
 
+Not all systems support using sysconf to detect the number
+of available CPU cores.  Older BSD and BSD-derived systems
+only provide the information via the sysctl function.
 
-On 03/08/2015 10:08 AM, Eric Sunshine wrote:
-> On Sat, Mar 7, 2015 at 5:49 AM, karthik nayak <karthik.188@gmail.com> wrote:
-> >> This iteration looks sensible, except that the Subject reads
-> >> strange.  Will queue with minor tweaks to the log message,
-> >> and perhaps with a fix to unreadable *(*argv)[1] that was
-> >> mentioned elsewhere.
-> >
-> > Hey could you tell me what seems strange, so I can improve on
-> > it the next time.
->
-> Junio means that you somehow botched the Subject: line when you copied
-> the commit message I suggested into your new version of the patch.
-> Instead of <path>, you wrote <treat>.
->
-Oops! I'm too anxious i guess.
-> > Also "*(*argv)[1]" seems more readable to me, maybe more of a perspective?
->
-> I also had considered suggesting (*argv)[1][0] as more readable, but
-> it is primarily personal taste, and I didn't want to bike-shed the
-> issue.
->
-Thanks.
+If HAVE_BSD_SYSCTL is defined attempt to retrieve the number
+of available CPU cores using the sysctl function.
+
+If HAVE_BSD_SYSCTL is not defined or the sysctl function
+fails, we still attempt to get the information via sysconf.
+
+Signed-off-by: Kyle J. McKay <mackyle@gmail.com>
+---
+ thread-utils.c | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
+
+diff --git a/thread-utils.c b/thread-utils.c
+index 97396a75..a2135e07 100644
+--- a/thread-utils.c
++++ b/thread-utils.c
+@@ -35,7 +35,23 @@ int online_cpus(void)
+ 
+ 	if (!pstat_getdynamic(&psd, sizeof(psd), (size_t)1, 0))
+ 		return (int)psd.psd_proc_cnt;
+-#endif
++#elif defined(HAVE_BSD_SYSCTL) && defined(HW_NCPU)
++	int mib[2];
++	size_t len;
++	int cpucount;
++
++	mib[0] = CTL_HW;
++#  ifdef HW_AVAILCPU
++	mib[1] = HW_AVAILCPU;
++	len = sizeof(cpucount);
++	if (!sysctl(mib, 2, &cpucount, &len, NULL, 0))
++		return cpucount;
++#  endif /* HW_AVAILCPU */
++	mib[1] = HW_NCPU;
++	len = sizeof(cpucount);
++	if (!sysctl(mib, 2, &cpucount, &len, NULL, 0))
++		return cpucount;
++#endif /* defined(HAVE_BSD_SYSCTL) && defined(HW_NCPU) */
+ 
+ #ifdef _SC_NPROCESSORS_ONLN
+ 	if ((ncpus = (long)sysconf(_SC_NPROCESSORS_ONLN)) > 0)
+---
