@@ -1,109 +1,63 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: Promoting Git developers
-Date: Mon, 9 Mar 2015 18:32:24 -0000
-Organization: OPDS
-Message-ID: <57996D0058AA4535AA2B61662D7B3051@PhilipOakley>
-References: <CAP8UFD1+rC0FjisSddDcyn1E_75wtBU9pEpUcQX5zNtd4zKYFQ@mail.gmail.com><54FDA6B5.8050505@drmicha.warpmail.net> <87385emedc.fsf@fencepost.gnu.org>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH 1/3] connect.c: Fix memory leak
+Date: Mon, 09 Mar 2015 20:23:59 +0100
+Message-ID: <54FDF34F.60608@web.de>
+References: <1425920304-22360-1-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
+Content-Type: text/plain; charset=windows-1252
 Content-Transfer-Encoding: 7bit
-Cc: "Christian Couder" <christian.couder@gmail.com>,
-	"Junio C Hamano" <gitster@pobox.com>, "git" <git@vger.kernel.org>
-To: "David Kastrup" <dak@gnu.org>,
-	"Michael J Gruber" <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Mon Mar 09 19:31:47 2015
+Cc: git@vger.kernel.org
+To: Stefan Beller <sbeller@google.com>, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Mar 09 20:24:25 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YV2Sv-0008Pb-PQ
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Mar 2015 19:31:46 +0100
+	id 1YV3Hp-0000KL-8T
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Mar 2015 20:24:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752961AbbCISbl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Mar 2015 14:31:41 -0400
-Received: from out1.ip04ir2.opaltelecom.net ([62.24.128.240]:7160 "EHLO
-	out1.ip04ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752812AbbCISbk (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Mar 2015 14:31:40 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2ACGgDj5f1UPDmpEVxcgwZSWocku0mFagEDAQGBK04BAQEBAQEFAQEBATggG4QKBQEBAQEDCAEBLh4BASELAgMFAgEDDgcDCSUUAQQaBgcDFAYBEggCAQIDAQOIBwMVCaxSjyghhSABAQEHAgEfixeEboMegRYFijuFVF+DBYdCkiGCJRyBUD4xAQEBgkABAQE
-X-IPAS-Result: A2ACGgDj5f1UPDmpEVxcgwZSWocku0mFagEDAQGBK04BAQEBAQEFAQEBATggG4QKBQEBAQEDCAEBLh4BASELAgMFAgEDDgcDCSUUAQQaBgcDFAYBEggCAQIDAQOIBwMVCaxSjyghhSABAQEHAgEfixeEboMegRYFijuFVF+DBYdCkiGCJRyBUD4xAQEBgkABAQE
-X-IronPort-AV: E=Sophos;i="5.11,369,1422921600"; 
-   d="scan'208";a="489551461"
-Received: from host-92-17-169-57.as13285.net (HELO PhilipOakley) ([92.17.169.57])
-  by out1.ip04ir2.opaltelecom.net with ESMTP; 09 Mar 2015 18:31:38 +0000
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1753199AbbCITYS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Mar 2015 15:24:18 -0400
+Received: from mout.web.de ([212.227.15.4]:57257 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752377AbbCITYR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Mar 2015 15:24:17 -0400
+Received: from macce.local ([217.211.68.12]) by smtp.web.de (mrweb001) with
+ ESMTPSA (Nemesis) id 0MGRI8-1YHnk33fZg-00DGkq; Mon, 09 Mar 2015 20:24:03
+ +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
+In-Reply-To: <1425920304-22360-1-git-send-email-sbeller@google.com>
+X-Provags-ID: V03:K0:iMRFP82KraV4CAsjxygQFFr8SOD83lOrjS6g7SjL4YM3sjtMEz6
+ j3GdGdBSfUPN9fJcj7BLrqm61B1WsWnWUf/UGzRVIGuGisb92fiFeVlSFdOKosg/uU2dVjx
+ Sbuy3xb1Q+fiTPutq9DqC54aJYn+cDEwPvn18mSkBppmH1a5RjSQUfalZ0KmBSa14bl06Qn
+ YYGy10vh8czt6rPx9z3Ig==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265188>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265189>
 
-From: "David Kastrup" <dak@gnu.org>
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
->
->> Christian Couder venit, vidit, dixit 07.03.2015 08:18:
->>> Hi,
->>>
->>> On Fri, Mar 6, 2015 at 6:41 PM, David Kastrup <dak@gnu.org> wrote:
->>>
->>>> At some point of time I think it may be worth reevaluating the 
->>>> toxic
->>>> atmosphere against freelancers doing Git development.
->>>
->>> My opinion on this is that the Git community has not been good
->>> especially lately at promoting its own developers.
->>>
->>
->> I guess we have at least 3 kinds of people here:
->>
->> A) Paid to do Git development, at least as part of their job.
->> B) Freelancers who don't get paid directly for "doing git" but hope 
->> to
->> profit from their git efforts directly or indirectly.
->> C) Doing it in their freetime (or as minor, inofficial part of their
->> non-programming job).
->>
->> I'm in camp C and honestly wasn't aware of camp B until now.
->
-> My guess is that camp B is dead and intentionally so.  For the
-> rationale, see for example
-> <URL:http://article.gmane.org/gmane.comp.version-control.git/247165/>.
-> It is considered tasteless to even mention camp B.
->
-
-There seems to be some talking past each other going on.
-
-A common problem [1] is that the apparent middle ground "B" is actually 
-split two ways, (because A and C are not opposites but embed different 
-ethos)
-
-There maybe those B's who are well paid independent programmers, who are 
-able to choose how to use their spare time in the same manner as those 
-in "C".
-
-And there are those who, like some of the "A"s , need some payment to 
-use their hours to the benefit of Git. This will be particularly true of 
-those who are not well remunerated from their independent work. If they 
-are giving up precious work time then they would at least hope for a 
-little acknowledgment.
-
-To me it sounds as if Junio is thinking more of the former while David 
-is thinking of the latter. These misunderstandings are difficult to 
-resolve, or at least reconcile, without a proper understanding of the 
-root causes of the differences.
-
-
---
-Philip
-[1] This common problem is summarised in the Competing Values Framework 
-(CVF), which is usually applied to management philosophies, but is a 
-common styling in many disputes and misunderstandings.
+On 2015-03-09 17.58, Stefan Beller wrote:
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  connect.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/connect.c b/connect.c
+> index ce0e121..6090211 100644
+> --- a/connect.c
+> +++ b/connect.c
+> @@ -739,6 +739,7 @@ struct child_process *git_connect(int fd[2], const char *url,
+>  
+>  				free(hostandport);
+>  				free(path);
+> +				free(conn);
+>  				return NULL;
+>  			} else {
+>  				ssh = getenv("GIT_SSH_COMMAND");
+> 
+Nice catch, thanks.
+(Even if it is not sooo serious today, the current implementation of Git just dies
+when connection is NULL)
