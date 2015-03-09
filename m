@@ -1,88 +1,81 @@
-From: "Kyle J. McKay" <mackyle@gmail.com>
-Subject: [PATCH v2] t7510: do not fail when gpg warns about insecure memory
-Date: Mon,  9 Mar 2015 13:03:01 -0700
-Message-ID: <b822f2716d8bdfcb6576ad0dc502af5@74d39fa044aa309eaea14b9f57fe79c>
-References: <2652cb72a82d4ca4be3ea90bafd263e@74d39fa044aa309eaea14b9f57fe79c> <CAPig+cQXJgZJAoyQVYg3CNNzd70eA=ttdL7=g6wabtBkWBijeQ@mail.gmail.com> <20150308220424.GD4245@vauxhall.crustytoothpaste.net> <CAPig+cTj_z0xpDmnSvb-S_wEbwzdcFsGwUkFdGWgcJhwZpfMFQ@mail.gmail.com> <20150309012214.GE4245@vauxhall.crustytoothpaste.net> <E72F95BF-BE00-433E-9D05-0DDF1CACCCC1@gmail.com> <54FD6C22.4020808@drmicha.warpmail.net>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git mailing list <git@vger.kernel.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Mon Mar 09 21:03:21 2015
+From: David Kastrup <dak@gnu.org>
+Subject: Re: git-scm.com website
+Date: Mon, 09 Mar 2015 21:18:50 +0100
+Message-ID: <878uf5lyad.fsf@fencepost.gnu.org>
+References: <CAJo=hJsbbfK-_qX6sg3Azk30Kz5ebLfyMbVF98VzHZe8YyaLcQ@mail.gmail.com>
+	<87y4n6kvdu.fsf@fencepost.gnu.org>
+	<CAJo=hJt_PHMEdpfRA0EKQyoH4XhYh89tvajewM28pgxzZ9ONMg@mail.gmail.com>
+	<87twxuktzc.fsf@fencepost.gnu.org>
+	<CAP8UFD1y86wqg5fpRn1wsMnn8JT9KXuDMgzcseH=sv8NBWO6wA@mail.gmail.com>
+	<CAP2yMaJWLppUw2QY3rL7dZPaqVUf6G-UYVrvi35A_t03ow6E_w@mail.gmail.com>
+	<20150309192409.GA4733@peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Scott Chacon <schacon@gmail.com>,
+	Christian Couder <christian.couder@gmail.com>,
+	Shawn Pearce <spearce@spearce.org>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Mar 09 21:18:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YV3tU-0007J0-8U
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Mar 2015 21:03:16 +0100
+	id 1YV48f-0007Td-1T
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Mar 2015 21:18:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753487AbbCIUDM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Mar 2015 16:03:12 -0400
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:43300 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753314AbbCIUDK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Mar 2015 16:03:10 -0400
-Received: by pablj1 with SMTP id lj1so65944626pab.10
-        for <git@vger.kernel.org>; Mon, 09 Mar 2015 13:03:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=l4D224ZFk+StmR7xRjSEyOUc4WALjDCnztmOZ8kQOy4=;
-        b=tTqtMprs4HRizXCplMfF+sbTkGuhrl8H0hERs9IQQj+KPT5OWnyf1T+mvdmxPKbvRA
-         vNtq/82LZ41neSoP4ewXHYj01h+tpxkjB5QVhae4NdJlE2ZOgQX7Vk+HButTNSwWdsZ3
-         nBmJV/BWvtXAxR/MctTSGb8Ph9Vn1LsEw14GRQKzq9d1qlJcOZxnYpVTJlGYzxdK4Lr8
-         pRqWldcLr/bkw2Dm951Mbm6SyThJwN9NUGsi7FtWeyk+qtWZWHdvc9j1JmFc0GGHu1rA
-         CzbNVtf3gGgmV7YSX3MJeEBCsL/2xw0njh3PnDjCciXIpc2U0H6x8BNqeLRV3TscYh9C
-         f98w==
-X-Received: by 10.66.101.35 with SMTP id fd3mr58294492pab.50.1425931390134;
-        Mon, 09 Mar 2015 13:03:10 -0700 (PDT)
-Received: from localhost.localdomain ([2002:48c0:ad8d:0:223:12ff:fe05:eebd])
-        by mx.google.com with ESMTPSA id qn14sm20654538pab.33.2015.03.09.13.03.08
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Mon, 09 Mar 2015 13:03:09 -0700 (PDT)
-In-Reply-To: <54FD6C22.4020808@drmicha.warpmail.net>
+	id S1753662AbbCIUSx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Mar 2015 16:18:53 -0400
+Received: from fencepost.gnu.org ([208.118.235.10]:53124 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752352AbbCIUSw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Mar 2015 16:18:52 -0400
+Received: from localhost ([127.0.0.1]:52162 helo=lola)
+	by fencepost.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <dak@gnu.org>)
+	id 1YV48Y-0003JJ-G6; Mon, 09 Mar 2015 16:18:50 -0400
+Received: by lola (Postfix, from userid 1000)
+	id 19B97E062D; Mon,  9 Mar 2015 21:18:50 +0100 (CET)
+In-Reply-To: <20150309192409.GA4733@peff.net> (Jeff King's message of "Mon, 9
+	Mar 2015 15:24:10 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.0.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265192>
 
-Depending on how gpg was built, it may issue the following
-message to stderr when run:
+Jeff King <peff@peff.net> writes:
 
-  Warning: using insecure memory!
+> If people don't like git-scm.com and want to have an alternate site,
 
-When the test is collecting gpg output it is therefore not
-enough to just match on a "gpg: " prefix it must also match
-on a "Warning: " prefix wherever it needs to match lines
-that have been produced by gpg.
+I think that's the basic problem here.  As long as people want to _have_
+an alternate site rather than want to _write_ and _maintain_ an
+alternate site, any site will only be as representative of the Git
+community as the person(s) working on the site feel they are
+representative of the Git community.
 
-Signed-off-by: Kyle J. McKay <mackyle@gmail.com>
----
+Scott says that he tried his best to create a neutral site, and that's
+what the site is.  When a guardian votes instead of his ward in an
+election, he might vote different from his own vote in order to better
+reflect the interest of his ward.  It may still well be different from
+who the ward would have voted for.
 
-How about this patch instead.  It just treats "Warning:" lines as gpg  
-output and the test still passes when "Warning: using insecure memory"  
-shows up.
+For me, the Git-scm site has the air of a third-party site, and that's
+what it is essentially.  I don't see that Scott could do any better here
+when basically left on his own and it seems pointless to complain to him
+about that.
 
--Kyle
+That is one case where the "central repository" approach has at least
+some psychological advantage over the "one personal repository is what
+is considered canonical" approach used by the Linux kernel, Git, the
+Git-scm site and possibly by most of the GitHub hosted projects: with a
+central repository, there is somewhat less of a feeling that one person
+"owns" the project (even admin rights come into play only for
+exceptional circumstances rather than everyday work).  Possibly that
+makes it a bit harder to say "not my field of responsibility".
 
- t/t7510-signed-commit.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
-index 474dab38..3cef18cf 100755
---- a/t/t7510-signed-commit.sh
-+++ b/t/t7510-signed-commit.sh
-@@ -86,8 +86,8 @@ test_expect_success GPG 'show signed commit with signature' '
- 	git show -s --show-signature initial >show &&
- 	git verify-commit -v initial >verify.1 2>verify.2 &&
- 	git cat-file commit initial >cat &&
--	grep -v "gpg: " show >show.commit &&
--	grep "gpg: " show >show.gpg &&
-+	grep -v -e "gpg: " -e "Warning: " show >show.commit &&
-+	grep -e "gpg: " -e "Warning: " show >show.gpg &&
- 	grep -v "^ " cat | grep -v "^gpgsig " >cat.commit &&
- 	test_cmp show.commit commit &&
- 	test_cmp show.gpg verify.2 &&
----
+-- 
+David Kastrup
