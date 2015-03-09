@@ -1,63 +1,89 @@
-From: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH 1/3] connect.c: Fix memory leak
-Date: Mon, 09 Mar 2015 20:23:59 +0100
-Message-ID: <54FDF34F.60608@web.de>
-References: <1425920304-22360-1-git-send-email-sbeller@google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: git-scm.com website
+Date: Mon, 9 Mar 2015 15:24:10 -0400
+Message-ID: <20150309192409.GA4733@peff.net>
+References: <CAJo=hJsbbfK-_qX6sg3Azk30Kz5ebLfyMbVF98VzHZe8YyaLcQ@mail.gmail.com>
+ <87y4n6kvdu.fsf@fencepost.gnu.org>
+ <CAJo=hJt_PHMEdpfRA0EKQyoH4XhYh89tvajewM28pgxzZ9ONMg@mail.gmail.com>
+ <87twxuktzc.fsf@fencepost.gnu.org>
+ <CAP8UFD1y86wqg5fpRn1wsMnn8JT9KXuDMgzcseH=sv8NBWO6wA@mail.gmail.com>
+ <CAP2yMaJWLppUw2QY3rL7dZPaqVUf6G-UYVrvi35A_t03ow6E_w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Stefan Beller <sbeller@google.com>, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Mar 09 20:24:25 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Christian Couder <christian.couder@gmail.com>,
+	David Kastrup <dak@gnu.org>,
+	Shawn Pearce <spearce@spearce.org>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+To: Scott Chacon <schacon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 09 20:24:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YV3Hp-0000KL-8T
+	id 1YV3Ho-0000KL-LO
 	for gcvg-git-2@plane.gmane.org; Mon, 09 Mar 2015 20:24:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753199AbbCITYS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Mar 2015 15:24:18 -0400
-Received: from mout.web.de ([212.227.15.4]:57257 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752377AbbCITYR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Mar 2015 15:24:17 -0400
-Received: from macce.local ([217.211.68.12]) by smtp.web.de (mrweb001) with
- ESMTPSA (Nemesis) id 0MGRI8-1YHnk33fZg-00DGkq; Mon, 09 Mar 2015 20:24:03
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
-In-Reply-To: <1425920304-22360-1-git-send-email-sbeller@google.com>
-X-Provags-ID: V03:K0:iMRFP82KraV4CAsjxygQFFr8SOD83lOrjS6g7SjL4YM3sjtMEz6
- j3GdGdBSfUPN9fJcj7BLrqm61B1WsWnWUf/UGzRVIGuGisb92fiFeVlSFdOKosg/uU2dVjx
- Sbuy3xb1Q+fiTPutq9DqC54aJYn+cDEwPvn18mSkBppmH1a5RjSQUfalZ0KmBSa14bl06Qn
- YYGy10vh8czt6rPx9z3Ig==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1753015AbbCITYP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Mar 2015 15:24:15 -0400
+Received: from cloud.peff.net ([50.56.180.127]:59349 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752873AbbCITYO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Mar 2015 15:24:14 -0400
+Received: (qmail 7367 invoked by uid 102); 9 Mar 2015 19:24:14 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 09 Mar 2015 14:24:14 -0500
+Received: (qmail 9715 invoked by uid 107); 9 Mar 2015 19:24:21 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.2)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 09 Mar 2015 15:24:21 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 09 Mar 2015 15:24:10 -0400
+Content-Disposition: inline
+In-Reply-To: <CAP2yMaJWLppUw2QY3rL7dZPaqVUf6G-UYVrvi35A_t03ow6E_w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265189>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265190>
 
-On 2015-03-09 17.58, Stefan Beller wrote:
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
->  connect.c | 1 +
->  1 file changed, 1 insertion(+)
+On Mon, Mar 09, 2015 at 10:52:34AM -0700, Scott Chacon wrote:
+
+> > * some of the pull request can be rejected even if the developers want
+> > them, like this pull request to add back a list of contributors was:
+> >
+> > https://github.com/git/git-scm.com/pull/216
+> >
+> > (By the way this pull request talks about bugs in
+> > https://github.com/git/git/graphs/contributors that are still not
+> > fixed...)
+> >
 > 
-> diff --git a/connect.c b/connect.c
-> index ce0e121..6090211 100644
-> --- a/connect.c
-> +++ b/connect.c
-> @@ -739,6 +739,7 @@ struct child_process *git_connect(int fd[2], const char *url,
->  
->  				free(hostandport);
->  				free(path);
-> +				free(conn);
->  				return NULL;
->  			} else {
->  				ssh = getenv("GIT_SSH_COMMAND");
-> 
-Nice catch, thanks.
-(Even if it is not sooo serious today, the current implementation of Git just dies
-when connection is NULL)
+> It should be noted that Peff has write access to this repository and I
+> think the SFC manages the DNS for the site as well, so technically it
+> is maintained "by us". If he had felt strongly about the addition, I
+> easily could have been convinced to do it, but I didn't think it was
+> helpful in a larger sense.
+
+Yes, this. It was _my_ pull request, and as I noted in my final comment,
+I agreed with closing it. That is not "rejected", but "withdrawn".
+
+If somebody wants to open their own pull request, they can. But it has
+been over 2 years, and I haven't seen anybody talk about this, let alone
+offer to work on it.
+
+If people don't like git-scm.com and want to have an alternate site,
+especially one targeted at Git _developers_, I don't see a reason not
+to. http://git.github.io is where I have been collecting GSoC materials,
+and any community member who asks is welcome to have push access (and I
+have offered to apply patches for people who do not want to use GitHub).
+But aside from that GSoC content, there is nothing there (and the design
+is awful; any takers?).
+
+There is also the wiki at http://git.wiki.kernel.org. I prefer the
+git.github.io site, because it is easier to manipulate using git, but if
+having both is fracturing things, I'd be happy to shut it down.
+
+So if anyone wants to contribute to Git's web presence, it seems there
+are quite a few opportunities to do so.
+
+-Peff
