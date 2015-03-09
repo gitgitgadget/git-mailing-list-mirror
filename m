@@ -1,117 +1,122 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] t7510: do not fail when gpg warns about insecure memory
-Date: Mon, 09 Mar 2015 10:47:14 +0100
-Message-ID: <54FD6C22.4020808@drmicha.warpmail.net>
-References: <2652cb72a82d4ca4be3ea90bafd263e@74d39fa044aa309eaea14b9f57fe79c> <CAPig+cQXJgZJAoyQVYg3CNNzd70eA=ttdL7=g6wabtBkWBijeQ@mail.gmail.com> <20150308220424.GD4245@vauxhall.crustytoothpaste.net> <CAPig+cTj_z0xpDmnSvb-S_wEbwzdcFsGwUkFdGWgcJhwZpfMFQ@mail.gmail.com> <20150309012214.GE4245@vauxhall.crustytoothpaste.net> <E72F95BF-BE00-433E-9D05-0DDF1CACCCC1@gmail.com>
+From: Anton Trunov <anton.a.trunov@gmail.com>
+Subject: Re: [PATCH] xmerge.c: fix xdl_merge to conform with the manual
+Date: Mon, 09 Mar 2015 13:07:54 +0300
+Message-ID: <54FD70FA.1080606@gmail.com>
+References: <1425404233-89907-1-git-send-email-anton.a.trunov@gmail.com>	<xmqqzj7takks.fsf@gitster.dls.corp.google.com>	<54F6D3B0.60600@gmail.com>	<xmqqfv9k8rcs.fsf@gitster.dls.corp.google.com>	<54F95F25.9090300@gmail.com> <xmqqtwxvsyjq.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Git mailing list <git@vger.kernel.org>
-To: "Kyle J. McKay" <mackyle@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon Mar 09 10:47:28 2015
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, jrnieder@gmail.com, tboegi@web.de,
+	sunshine@sunshineco.com, charles@hashpling.org,
+	Johannes.Schindelin@gmx.de
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 09 11:07:07 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YUuHS-0004P8-AZ
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Mar 2015 10:47:22 +0100
+	id 1YUuaY-00073x-A5
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Mar 2015 11:07:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753799AbbCIJrR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Mar 2015 05:47:17 -0400
-Received: from out2-smtp.messagingengine.com ([66.111.4.26]:55417 "EHLO
-	out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753531AbbCIJrQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Mar 2015 05:47:16 -0400
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
-	by mailout.nyi.internal (Postfix) with ESMTP id B86902163F
-	for <git@vger.kernel.org>; Mon,  9 Mar 2015 05:47:14 -0400 (EDT)
-Received: from frontend2 ([10.202.2.161])
-  by compute6.internal (MEProxy); Mon, 09 Mar 2015 05:47:16 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=x-sasl-enc:message-id:date:from
-	:mime-version:to:cc:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=EPkCdhcHJAqxN6rjytElJb
-	2/L7I=; b=rge6X3HgFNFG3pI+8vaO5uzF97rVdmoW1GhVCyIGq5h1hyiUYwQtGj
-	i5Nh8kItXwhZqcXXWeq4xuQEVFlkpasQogTV674J9rLPPF6YGZUjVJMzSYLG+4fN
-	KTaVyagdE3ttxXHJnC5O/SG7cWvnTUXRXJRmzsp6XShsmrJhwGoFo=
-X-Sasl-enc: +ySr5I7lZLt6u8UGTRSuOpzGGlAPANyKV3o1Ic+n84Jy 1425894435
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 4AD1C680123;
-	Mon,  9 Mar 2015 05:47:15 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
-In-Reply-To: <E72F95BF-BE00-433E-9D05-0DDF1CACCCC1@gmail.com>
+	id S1753987AbbCIKG6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Mar 2015 06:06:58 -0400
+Received: from mail-lb0-f179.google.com ([209.85.217.179]:40161 "EHLO
+	mail-lb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753869AbbCIKGs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Mar 2015 06:06:48 -0400
+Received: by lbiw7 with SMTP id w7so30470529lbi.7
+        for <git@vger.kernel.org>; Mon, 09 Mar 2015 03:06:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=yu0y25fSnr+m4P5C8sZzlkcrdoDLlBNi4MXSL3iBmdI=;
+        b=VmyQUd6hGgQGyD3NKHCfNPmjzp/iHVlQULi5dCzkxJB1ZeFdEv2cBJhDdYXTXAPd0z
+         XIkrFZgSTOFLAmx/0v/Tt70FfFIanydX9H4D9cKE0xZ9basCBoFTn1nAJbf2vMdurcVM
+         jfQPrDmxvYA/C8vaM5P7YQyeKz52GNxiKkSQDepRkUcByEWPIBe8IRM2KbDiy2sOe1+Q
+         2dLsfG9bVptzbFIyQ6njDcgXti/Grmcs2n0HSC0+ntQolcQP52OQBrSyk6bIkuVPaUaP
+         nyT/yrU6fac88JvmGVyyHhry2CAxQg3DIm4N97mhl4m3BR5PYVfGJEabAg7OX/kq8cid
+         OrPQ==
+X-Received: by 10.152.120.134 with SMTP id lc6mr24423648lab.72.1425895607094;
+        Mon, 09 Mar 2015 03:06:47 -0700 (PDT)
+Received: from [192.168.1.185] ([195.191.146.16])
+        by mx.google.com with ESMTPSA id q10sm488541laa.22.2015.03.09.03.06.45
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 09 Mar 2015 03:06:46 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
+In-Reply-To: <xmqqtwxvsyjq.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265141>
 
-Kyle J. McKay venit, vidit, dixit 09.03.2015 06:32:
-> On Mar 8, 2015, at 18:22, brian m. carlson wrote:
->=20
->> On Sun, Mar 08, 2015 at 06:15:55PM -0400, Eric Sunshine wrote:
->>> On Sun, Mar 8, 2015 at 6:04 PM, brian m. carlson
->>> <sandals@crustytoothpaste.net> wrote:
->>>> Perhaps this is better?
->>>>
->>>> Unfortunately when running the test, that message is found in the =
- =20
->>>> standard
->>>> output of git show -s --show-signature, but in the standard  error=
- =20
->>>> of git
->>>> verify-commit -v causing the comparisons of both standard  output =
-=20
->>>> and
->>>> standard error to fail.
->>>
->>> That doesn't help me parse it any better.  It's the "but" without a
->>> corresponding "not" which seems to be throwing me off. Typically, o=
-ne
->>> would write "this but not that" or "not this but that". I can't tel=
-l
->>> if there is a "not" missing or if the "but" is supposed to be an =20
->>> "and"
->>> or if something else was intended.
+On 08/03/15 11:06, Junio C Hamano wrote:
+> Anton Trunov <anton.a.trunov@gmail.com> writes:
+> 
+>> On 04/03/15 23:01, Junio C Hamano wrote:
 >>
->> The intended meaning is "and" with the additional sense of contrast.=
- =20
->> The sentence, if read with verbal emphasis, is, "=85is found in the =
-=20
->> standard *output* of git show -s --signature, but in the standard =20
->> *error* of git verify-commit -v", thus demonstrating why the test =20
->> fails: the pairs of output files don't match up.
->>
->> Maybe you can suggest a less confusing wording.
->=20
-> I like Brian's wording, but how about this slight variation, does thi=
-s =20
-> parse any better for you?
->=20
-> Unfortunately when running the test, while that message is found in
-> the standard output of git show -s --show-signature, it is found in
-> the standard error of git verify-commit -v causing the comparisons
-> of both standard output and standard error to fail.
->=20
-> -Kyle
->=20
+>> My apologies for pushing this topic, but what would you recommend?
+>> Should we treat both sides line-wise or should we correct the documentation?
+> 
+> My gut feeling is that the change to swap which side is examined
+> first would end up to be a patch to rob Peter to pay Paul, and a
+> line-by-line approach might end up paying too expensive a runtime
+> cost in practice (and it should not really matter which side's
+> whitespace the end result matches, because the user says "I do not
+> care about whitespace changes", so paying that cost is not something
+> we would want to do).  So it may be that the best course of action
+> may be documentation updates.
 
-That still makes it sound as if we'd rather fix "git show" than adjust
-the test to such surprising behavior.
+Thanks for your reply.
+I agree with your point on performance penalty.
+But I don't want to commit a robbery, just to commit a nice expected
+merge result (pun intended).
 
-But in fact, "git verify-commit" uses stdout and stderr to separate its
-output appropriately, whereas "git show" lumps everything together on
-stdout, so that the test has to split it up again.
+I believe merge is inherently asymmetric operation: as git help merge
+says it "incorporates changes from the named commits ... into the
+current branch." We have a notion of direction here, right?
+So my approach would be "if their changes are insignificant don't take
+them at all, just keep my version".
 
-Now, if I read it correctly, the patch suggests ignoring the insecure
-memory warning from both outputs rather than putting it on the correct
-side of the split.
+I guess, the case "but if our version contains only trivial changes, and
+theirs has some real work in it" can be solved in different ways:
+  1) take their complete version, discarding our whitespace changes;
+  2) or merge their and our versions line-wise, keeping our lines with
+trivial changes when their corresponding lines also have only trivial
+changes.
 
-I'd rather put it on the correct side (or silence gpg by setting its
-config).
+First solution may be a bit surprising at first glance (as you commented
+earlier), but if we don't want to pay performance price then (with
+proper documentation correction) it could be the solution.
 
-Michael
+In addition, if they changed something and polished indentation
+alongside then we should accept their work as a whole, and not mix our
+(indented) lines with theirs, shouldn't we?
+
+And one more. Let's consider merging master with two branches
+(one-by-one, as octopus doesn't work with ignore-options).
+Here I assume all changes in all branches to be whitespace-only.
+
+git merge -Xignore-all-space -m'merge2' test-branch-2
+git merge -Xignore-all-space -m'merge1' test-branch-1
+
+git merge -Xignore-all-space -m'merge1' test-branch-1
+git merge -Xignore-all-space -m'merge2' test-branch-2
+
+Those merges should produce the same results, right?
+But with current code version that is not true.
+And the patch resolves this issue too, because it discards all
+insignificant changes in _other_ branches.
+
+So let me sum this up.
+I think we should keep the patch, but
+ - change the commit message adding some of the explanations from
+current email-thread;
+ - add more tests to cover the situation when we don't have any
+significant changes and they do (resolve it in favor of their *file*);
+ - correct the documentation to clarify those corner cases.
+
+I'm sorry for my long reply (maybe too long for this topic).
+Thank you.
