@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 15/16] list-files: delete redundant cached entries
-Date: Mon,  9 Mar 2015 17:18:33 +0700
-Message-ID: <1425896314-10941-16-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 16/16] list-files: make alias 'ls' default to 'list-files'
+Date: Mon,  9 Mar 2015 17:18:34 +0700
+Message-ID: <1425896314-10941-17-git-send-email-pclouds@gmail.com>
 References: <1425896314-10941-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,122 +11,84 @@ Cc: Junio C Hamano <gitster@pobox.com>, git@drmicha.warpmail.net,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 09 11:20:32 2015
+X-From: git-owner@vger.kernel.org Mon Mar 09 11:20:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YUunW-0002ly-Jc
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Mar 2015 11:20:30 +0100
+	id 1YUund-0002tW-AU
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Mar 2015 11:20:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932204AbbCIKU0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Mar 2015 06:20:26 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:39621 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932069AbbCIKUY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Mar 2015 06:20:24 -0400
-Received: by pabrd3 with SMTP id rd3so38088010pab.6
-        for <git@vger.kernel.org>; Mon, 09 Mar 2015 03:20:24 -0700 (PDT)
+	id S932207AbbCIKUd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Mar 2015 06:20:33 -0400
+Received: from mail-pd0-f179.google.com ([209.85.192.179]:43603 "EHLO
+	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932069AbbCIKUb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Mar 2015 06:20:31 -0400
+Received: by pdjp10 with SMTP id p10so56796206pdj.10
+        for <git@vger.kernel.org>; Mon, 09 Mar 2015 03:20:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=cTxKH0dLOS3zstksf0ZqWbRgBf89xKOWHM4gxPtsvOo=;
-        b=HZCosD+M/B2keHcUSjqNui1Bcu6DBhHPRZ/E/zRVbvpOjj9QFGNM7AaBUcqNPfLx3o
-         rTRfHikapUi2INZZIq3CrzGeeCm65finPANVNsA98xAoze9qYymCiPkdJ+VLT96rf2dm
-         PMJ/jVDceNpKubjTOWWYIJxJqQVhJqI4vF+ZXpsHFzAhzI/AHVNU276E9DMZLua633dn
-         0IFsG0nFFCSvUDewa/QiqddVsYMjBjOF4tdquQGUEhhi6zCfqzJSp4gSrZ2W2d8+DtaO
-         4kGPcR9EvFgLpgsyQELcL20ppTc8k6ZgRV6UXBJS10nSjPzKP2kZJyW3uEpaz02aFzYp
-         0ICg==
-X-Received: by 10.66.66.230 with SMTP id i6mr51595713pat.108.1425896424424;
-        Mon, 09 Mar 2015 03:20:24 -0700 (PDT)
+        bh=jf8TZKZQ4tgK8dm2+52L8bHCsbRoLd07Y4afQQK82EU=;
+        b=uXcf4fC7r+l+/FMWHJYszkkcs3cxxoDYVQlUZUZN4HtD7ykTaTPOJem7RceFADdzGu
+         8mW0NLyS5u8Tav9Oq/6ilIaIoHKZ8d9JKgs0QVGBxXE6xM2wIxFw6nmTUHbJsrA36JD2
+         tR0nmkRQVp2se+48Ziu2vUMGIu5rK+1MYsMUZNxXqEVYoqbc4iWHtLFxNSFe6GBe4G3L
+         DAVsahbLSJ4iBbAbGYqZ2joFOoLQRMcEe7SqxoDqrddL0S8//IBl0HI6qMin8jeU/vBm
+         jXJ4Cr6c9ce9o0d6jSWPFtlx4ZveWzBClVET7ZrsjCFT4O7AEjxwhd356McOgC3wjjeI
+         pgDQ==
+X-Received: by 10.70.55.65 with SMTP id q1mr13149790pdp.35.1425896430829;
+        Mon, 09 Mar 2015 03:20:30 -0700 (PDT)
 Received: from lanh ([115.73.245.123])
-        by mx.google.com with ESMTPSA id nw3sm14346558pdb.71.2015.03.09.03.20.21
+        by mx.google.com with ESMTPSA id d4sm18437178pdm.50.2015.03.09.03.20.27
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 09 Mar 2015 03:20:23 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Mon, 09 Mar 2015 17:20:20 +0700
+        Mon, 09 Mar 2015 03:20:29 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Mon, 09 Mar 2015 17:20:26 +0700
 X-Mailer: git-send-email 2.3.0.rc1.137.g477eb31
 In-Reply-To: <1425896314-10941-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265157>
-
-When both --cached and one of -amdAMD is used together we may have two
-entries of the same path, e.g. "  foo" and "MM foo". In this case it's
-pretty clear that "foo" must be tracked, no need to display "   foo".
-The new function does that.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265158>
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/list-files.c | 34 +++++++++++++++++++++++++++++++++-
- 1 file changed, 33 insertions(+), 1 deletion(-)
+ config.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/builtin/list-files.c b/builtin/list-files.c
-index 74836f6..49fb820 100644
---- a/builtin/list-files.c
-+++ b/builtin/list-files.c
-@@ -153,7 +153,10 @@ static int compare_output(const void *a_, const vo=
-id *b_)
- {
- 	const struct string_list_item *a =3D a_;
- 	const struct string_list_item *b =3D b_;
--	return strcmp(a->util, b->util);
-+	int ret =3D strcmp(a->util, b->util);
-+	if (ret)
-+		return ret;
-+	return strncmp(a->string, b->string, 2);
- }
+diff --git a/config.c b/config.c
+index 15a2983..16209c6 100644
+--- a/config.c
++++ b/config.c
+@@ -40,6 +40,10 @@ static struct config_source *cf;
 =20
- static void populate_cached_entries(struct string_list *result,
-@@ -305,6 +308,34 @@ static void wt_status_populate(struct string_list =
-*result,
- 	string_list_remove_duplicates(result, 0);
- }
+ static int zlib_compression_seen;
 =20
-+static void delete_duplicate_cached_entries(struct string_list *result=
-)
-+{
-+	struct string_list_item *src, *dst;
++static const char *builtin_config =3D
++	"[alias]\n"
++	"	ls =3D list-files\n";
 +
-+	if (show_unmerged || !show_cached || !show_changed)
-+		return;
-+
-+	src =3D dst =3D result->items;
-+	while (src + 1 < result->items + result->nr) {
-+		const char *s0 =3D dst->string;
-+		const char *s1 =3D src[1].string;
-+
-+		if (s0[0] =3D=3D ' ' && s0[1] =3D=3D ' ' &&
-+		    !strcmp(s0 + 3, s1 + 3)) {
-+			src++;
-+		} else {
-+			dst++;
-+			src++;
-+		}
-+		if (src !=3D dst)
-+			*dst =3D *src;
-+	}
-+	if (src !=3D dst)
-+		*dst =3D *src;
-+	result->nr =3D dst - result->items;
-+
-+}
-+
- static void cleanup_tags(struct string_list *result)
- {
- 	int i, same_1 =3D 1, same_2 =3D 1, pos, len;
-@@ -418,6 +449,7 @@ int cmd_list_files(int argc, const char **argv, con=
-st char *cmd_prefix)
+ /*
+  * Default config_set that contains key-value pairs from the usual set=
+ of config
+  * config files (i.e repo specific .git/config, user wide ~/.gitconfig=
+, XDG
+@@ -1175,6 +1179,10 @@ int git_config_early(config_fn_t fn, void *data,=
+ const char *repo_config)
 =20
- 	populate_cached_entries(&result, &the_index);
- 	wt_status_populate(&result, &the_index);
-+	delete_duplicate_cached_entries(&result);
- 	cleanup_tags(&result);
- 	display(&result);
- 	string_list_clear(&result, 0);
+ 	home_config_paths(&user_config, &xdg_config, "config");
+=20
++	if (git_config_system())
++		git_config_from_buf(fn, "<builtin>", builtin_config,
++				    strlen(builtin_config), data);
++
+ 	if (git_config_system() && !access_or_die(git_etc_gitconfig(), R_OK, =
+0)) {
+ 		ret +=3D git_config_from_file(fn, git_etc_gitconfig(),
+ 					    data);
 --=20
 2.3.0.rc1.137.g477eb31
