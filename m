@@ -1,146 +1,111 @@
 From: karthik nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v3 3/3] cat-file: add "--literally" option
-Date: Mon, 09 Mar 2015 18:23:29 +0530
-Message-ID: <54FD97C9.40909@gmail.com>
-References: <54F89D90.6090505@gmail.com>	<1425579578-18955-1-git-send-email-karthik.188@gmail.com> <CAPig+cTWJcWuhbgbaHWYcFxXhCEN-ou3g=AP6k1KJ-+hgN_+Dg@mail.gmail.com>
+Subject: Re: [PATCH v3 1/3] cache: modify for "cat-file --literally -t"
+Date: Mon, 09 Mar 2015 18:26:56 +0530
+Message-ID: <54FD9898.8040801@gmail.com>
+References: <54F89D90.6090505@gmail.com>	<1425579499-18780-1-git-send-email-karthik.188@gmail.com> <CAPig+cT-AG2pnHJnkUcnHXzWu9jp2Q7ZBE7Re5jimFU7mOWLhQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Cc: Git List <git@vger.kernel.org>
 To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon Mar 09 13:53:47 2015
+X-From: git-owner@vger.kernel.org Mon Mar 09 13:57:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YUxBo-0005eJ-8A
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Mar 2015 13:53:44 +0100
+	id 1YUxF4-0000Ln-2o
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Mar 2015 13:57:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752119AbbCIMxe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Mar 2015 08:53:34 -0400
-Received: from mail-pd0-f176.google.com ([209.85.192.176]:40141 "EHLO
-	mail-pd0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751438AbbCIMxd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Mar 2015 08:53:33 -0400
-Received: by pdbfp1 with SMTP id fp1so57590776pdb.7
-        for <git@vger.kernel.org>; Mon, 09 Mar 2015 05:53:33 -0700 (PDT)
+	id S1753413AbbCIM5B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Mar 2015 08:57:01 -0400
+Received: from mail-pd0-f171.google.com ([209.85.192.171]:44195 "EHLO
+	mail-pd0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752801AbbCIM47 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Mar 2015 08:56:59 -0400
+Received: by pdjz10 with SMTP id z10so43817164pdj.11
+        for <git@vger.kernel.org>; Mon, 09 Mar 2015 05:56:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=message-id:date:from:user-agent:mime-version:to:cc:subject
          :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=1iJAYlU4kSzrfrEnxeZTxvO+081GmMOSPSebk42aAmA=;
-        b=zSlSdlsMkK4nisRt9OOMVHnE8r4dFgmhvwqLAjNQR3md0oYfOBNWjADBOGciaJNDVP
-         julNeJrNcHwHhcZhk6JelNzXFPX1jA+AWO5Pe14FmcoIR4GCTpXu8JWRqg8vkY6uRaE1
-         30VGEVzXlyL8eGhHUpu2Jp30KQrpocROip+qNpdSjIyQUkHQp07oyWrpprCjTxO1PSaU
-         ZeZkJ7XQzNVbg2Af5f3vQjYWEnRyfNM2d9ApnZiP0xaf7m2eVyiOdhVmD2f97rtNHwuK
-         U2DH7VIANV5HHFKgCen5VVlli1Af73GNn7bni01O5S29HYfOQwhF5fmkasNAKn3jvapu
-         lWfw==
-X-Received: by 10.66.62.137 with SMTP id y9mr53729071par.87.1425905613100;
-        Mon, 09 Mar 2015 05:53:33 -0700 (PDT)
+        bh=9ZqT6+PtZG6TFB8dXs0X0OynM07dP+3UF7ZVgxe7NFw=;
+        b=u6jwI00GlfUeWqA4K3fQAnC8QkfPgvJfCKi9IwYLDmXs63TJuS6tUTHpCeqYiGKAze
+         2ReB4pZn+IlUdz05nLsXcJGiTmCmOHDKCrJLZpnoMRqmyIm9fdf0AdVDyOX18t2aGOh4
+         6E5t3DxrxNG3objlWJ8wNUaWWKB63Vzkzurw0JHypOhGZQS6qbdN5SxeR1f0NN23BCyf
+         DJ5DUCH1G+HE7QGP+8yUOtSmuOKR1Mcf6cK49M/FJDsoXyQPBH3BfFjSuk64wVN7DtPr
+         dSZmH02olBE9AxpfRA+K2nBsiWJzkCD2owEN5AlK0Hi0IsaAjn05nMFly4LmflJooLqv
+         7lYw==
+X-Received: by 10.66.65.234 with SMTP id a10mr54998470pat.120.1425905819506;
+        Mon, 09 Mar 2015 05:56:59 -0700 (PDT)
 Received: from [192.168.0.102] ([103.227.98.178])
-        by mx.google.com with ESMTPSA id k5sm19101270pdf.95.2015.03.09.05.53.30
+        by mx.google.com with ESMTPSA id bt2sm19313700pad.12.2015.03.09.05.56.57
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 09 Mar 2015 05:53:31 -0700 (PDT)
+        Mon, 09 Mar 2015 05:56:58 -0700 (PDT)
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
-In-Reply-To: <CAPig+cTWJcWuhbgbaHWYcFxXhCEN-ou3g=AP6k1KJ-+hgN_+Dg@mail.gmail.com>
+In-Reply-To: <CAPig+cT-AG2pnHJnkUcnHXzWu9jp2Q7ZBE7Re5jimFU7mOWLhQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265163>
 
 
 
-On 03/09/2015 04:20 AM, Eric Sunshine wrote:
-> On Thu, Mar 5, 2015 at 1:19 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
->> made changes to "cat-file" to include a "--literally"
+On 03/09/2015 03:55 AM, Eric Sunshine wrote:
+> On Thu, Mar 5, 2015 at 1:18 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
+>> cache: modify for "cat-file --literally -t"
 >
-> Write in imperative mood: "Teach cat-file a --literally option..."
+> It is desirable for the first line of the commit message to explain,
+> as well as possible, the intent of the patch. The bulk of the commit
+> message then elaborates. Unfortunately, this line says almost nothing.
+> All patches modify, so writing "modify" here is not helpful and merely
+> wastes precious horizontal real estate. A more informative summary
+> might say something like:
 >
->> option which prints the type of the object without any
->> complaints.
+>      cache: add object_info::typename in support of 'cat-file --literally'
 >
-> Unfortunately, this explanation is quite lacking. What "complaints"?
-> What problem is --literally trying to solve? To answer these
-> questions, you will probably want to say something about the sort of
-> object which requires --literally, and how cat-file fails or behaves
-> without it.
+>> Add a "struct strbuf *typename" to object_info to hold the
+>> typename when the literally option is used. Add a flag to
+>> notify functions when literally is used.
+>
+> It's good to split up changes such that each patch comprises one
+> logical step, however, this patch does not really do anything on its
+> own, so having it stand-alone doesn't make much sense. It would make
+> more sense to fold it into the patch which actually requires these
+> changes.
 >
 >> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 >> ---
->> diff --git a/builtin/cat-file.c b/builtin/cat-file.c
->> index df99df4..60b9ec4 100644
->> --- a/builtin/cat-file.c
->> +++ b/builtin/cat-file.c
->> @@ -323,7 +332,7 @@ static int batch_objects(struct batch_options *opt)
->>   }
+>> diff --git a/cache.h b/cache.h
+>> index 4d02efc..949ef4c 100644
+>> --- a/cache.h
+>> +++ b/cache.h
+>> @@ -830,6 +830,7 @@ extern int is_ntfs_dotgit(const char *name);
 >>
->>   static const char * const cat_file_usage[] = {
->> -       N_("git cat-file (-t | -s | -e | -p | <type> | --textconv) <object>"),
->> +       N_("git cat-file (-t|-s|-e|-p|<type>|--textconv|-t --literally) <object>"),
->
-> This might read more naturally as:
->
->      git cat-file (-t [--literally] | -s | -e | -p | <type> |
-> --textconv) <object>
->
-> rather than repeating the -t option.
->
->>          N_("git cat-file (--batch | --batch-check) < <list-of-objects>"),
->>          NULL
->>   };
->> @@ -369,6 +379,8 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
->>                  OPT_SET_INT('p', NULL, &opt, N_("pretty-print object's content"), 'p'),
->>                  OPT_SET_INT(0, "textconv", &opt,
->>                              N_("for blob objects, run textconv on object's content"), 'c'),
->> +               OPT_BOOL( 0, "literally", &literally,
->> +                         N_("show the type of the given loose object, use for debugging")),
->
-> Taking other help strings into account, there is no need for the
-> long-winded "type of the given loose object" when "loose object's
-> type" will suffice. More importantly, thought, you should try to say
-> something about how --literally is actually useful, such as for
-> "broken" objects or objects not of a known type.
->
->>                  { OPTION_CALLBACK, 0, "batch", &batch, "format",
->>                          N_("show info and content of objects fed from the standard input"),
->>                          PARSE_OPT_OPTARG, batch_option_callback },
->> @@ -380,7 +392,7 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
+>>   /* object replacement */
+>>   #define LOOKUP_REPLACE_OBJECT 1
+>> +#define LOOKUP_LITERALLY 2
+>>   extern void *read_sha1_file_extended(const unsigned char *sha1, enum object_type *type, unsigned long *size, unsigned flag);
+>>   static inline void *read_sha1_file(const unsigned char *sha1, enum object_type *type, unsigned long *size)
+>>   {
+>> @@ -1296,6 +1297,7 @@ struct object_info {
+>>          unsigned long *sizep;
+>>          unsigned long *disk_sizep;
+>>          unsigned char *delta_base_sha1;
+>> +       struct strbuf *typename;
 >>
->>          git_config(git_cat_file_config, NULL);
->>
->> -       if (argc != 3 && argc != 2)
->> +       if (argc != 3 && argc != 2 && argc != 4)
->
-> Perhaps it's time to rephrase this as "if (argc < 2 || argc > 4)"?
->
->>                  usage_with_options(cat_file_usage, options);
->>
->>          argc = parse_options(argc, argv, prefix, options, cat_file_usage, 0);
->> @@ -405,5 +417,10 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
->>          if (batch.enabled)
->>                  return batch_objects(&batch);
->>
->> -       return cat_one_file(opt, exp_type, obj_name);
->> +       if (literally && opt == 't')
->> +               return cat_one_file(opt, exp_type, obj_name, literally);
->> +       else if (literally)
->> +               usage_with_options(cat_file_usage, options);
->
-> I realize that existing cases in cat-file are already guilty of this
-> transgression, but it is quite annoying when a program merely spits
-> out its usage statement without actually telling you what you did
-> wrong; and it's often difficult to figure out why it was rejected. It
-> would be much more helpful in a case like this to state explicitly
-> that --literally was given without -t. (But perhaps such a
-> "friendliness" change is fodder for a separate patch.)
->
->> +
->> +       return cat_one_file(opt, exp_type, obj_name, literally);
->>   }
+>>          /* Response */
+>>          enum {
 >> --
 >> 2.3.1.167.g7f4ba4b.dirty
 
-Thanks for the feedback.
-Will fix everything you stated in the next patch.
+Hey Eric!
+Thanks for the feedback, I guess I need to stick to different patches 
+only for logical changes, not considering different files.
+Have been reading old commit messages to get a hang of it. Also found 
+some blog posts explaining why we should use imperative sentences while 
+writing Git commit messages. All makes sense now.
+
+Regards
+-Karthik
