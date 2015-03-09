@@ -1,124 +1,88 @@
-From: Scott Chacon <schacon@gmail.com>
+From: Stefan Beller <sbeller@google.com>
 Subject: Re: git-scm.com website
-Date: Mon, 9 Mar 2015 10:14:43 -0700
-Message-ID: <CAP2yMa+Bw0KCSz9YEtviZUykAp4jpdsEWSK-jRxtd9MjzjHKfg@mail.gmail.com>
+Date: Mon, 9 Mar 2015 10:30:48 -0700
+Message-ID: <CAGZ79kY_Kb63C6fKeHHx52sEn8j-Ho62-dh97-J8irhjGxaBqA@mail.gmail.com>
 References: <CAJo=hJsbbfK-_qX6sg3Azk30Kz5ebLfyMbVF98VzHZe8YyaLcQ@mail.gmail.com>
- <87y4n6kvdu.fsf@fencepost.gnu.org>
+	<87y4n6kvdu.fsf@fencepost.gnu.org>
+	<CAP2yMa+Bw0KCSz9YEtviZUykAp4jpdsEWSK-jRxtd9MjzjHKfg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Shawn Pearce <spearce@spearce.org>,
+Cc: David Kastrup <dak@gnu.org>, Shawn Pearce <spearce@spearce.org>,
 	Michael J Gruber <git@drmicha.warpmail.net>,
 	Christian Couder <christian.couder@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Mar 09 18:15:11 2015
+To: Scott Chacon <schacon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 09 18:31:03 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YV1Go-0002tG-CE
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Mar 2015 18:15:10 +0100
+	id 1YV1W9-00037M-06
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Mar 2015 18:31:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754034AbbCIRPF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Mar 2015 13:15:05 -0400
-Received: from mail-ob0-f178.google.com ([209.85.214.178]:37059 "EHLO
-	mail-ob0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752635AbbCIRPE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Mar 2015 13:15:04 -0400
-Received: by obcwp4 with SMTP id wp4so28145348obc.4
-        for <git@vger.kernel.org>; Mon, 09 Mar 2015 10:15:03 -0700 (PDT)
+	id S1753387AbbCIRax (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Mar 2015 13:30:53 -0400
+Received: from mail-ig0-f177.google.com ([209.85.213.177]:44030 "EHLO
+	mail-ig0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753364AbbCIRat (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Mar 2015 13:30:49 -0400
+Received: by igbhn18 with SMTP id hn18so23380596igb.2
+        for <git@vger.kernel.org>; Mon, 09 Mar 2015 10:30:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=C6h7eAG//VVksok4YL6Y4odGQX8tWX+0vS54godiFxQ=;
-        b=n3T79agasYc9BEgZTT+DpaG0mSMGy9o2oymdipZ+Ez6H1+zr4zP8uSBylVa02+my8s
-         qeASH8uaLXxmAqEGSiCl2yh5n6QuwvsLptocur1IPjg0cRj8MR8W5nBkkLbXebicCN7s
-         zeaR8WSL5PG9SIl6tCoEHTVK3kJ/TAG4DDP4Ti1TuvxgZT1KPTO7RrgjKV2PKr1qOwKy
-         mx+7BMaetYwCl840miEvexu91tMlDbu1wPJ07berxruq9XrbkPcD6UiY3ySHTj57MCbN
-         +FXex0oN6X1HjGLF0aUn5Hj7qeG9ojG6WeqR9F3MWQTb7TpGFcBV+EwkHjA/UJr2KVnO
-         6x4g==
-X-Received: by 10.202.63.132 with SMTP id m126mr20971630oia.33.1425921303516;
- Mon, 09 Mar 2015 10:15:03 -0700 (PDT)
-Received: by 10.182.220.8 with HTTP; Mon, 9 Mar 2015 10:14:43 -0700 (PDT)
-In-Reply-To: <87y4n6kvdu.fsf@fencepost.gnu.org>
+        bh=UjorLYbfh9GGuxW8wSl2+A3DmHTCzfh5GBFrDKcBhVw=;
+        b=me1vndTYn6Ps5405x/5gT2CfY/FRY4p4khrPZG5P1fCp6GXKDGhVCEl19x7OBKEGnf
+         lxGxAOkzZTO2Sh5pT0wHrxwobVPZw3y7cczx6U9WL0DHrhidXAOZhxKmSex/FcFDelm3
+         vp4KywdtQfzWOcKdgZkl/FTaeZMdKkLdrkmoL9VOs3YgWtloPRtngS8y4Maai4qhasi7
+         2N0kYYDzvkCPg8G248D6RHY35X89db5jKsofKQSGjOSBvlkGWJ8az2nKRQ8Af53HQ314
+         SJO1Eoc5wL2FBnr4rkM7ZPfZMhGEydGxHTLbVk2KKYEzQkyb1E2o26Cs7KtQoF6jqFIv
+         dQCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=UjorLYbfh9GGuxW8wSl2+A3DmHTCzfh5GBFrDKcBhVw=;
+        b=YRRxNGmkCHzV6mQmTBvEsz61VTQ0yL1RaqCpWTcTDXO44/uFEGazIeGuPflJppVx3l
+         zehZy4ii/fO8KZvugI+KgGKhN2kCNsCncc0KeQtRAdLQszI5wzHENR+sLv+iDgZPA9JM
+         0j92QyqxC8SBL5oMdgQ1iLmVaoR2qinEIyXE9hmQLYf/fVqkXIUgrpNUYBUG2x8NoNXx
+         P35Now2keyvwFVwbCZ600XoCB9hg6Vw2g3WrfsVPBbFAXnm1Y39pL+GtUhcYLaPQbgkh
+         eHgFc5d/moxJS5ylztfHlA2MMgp68i1AlDgqTlWDRa/rZrDVYe0BiV7+f98xxBHHl/Ut
+         yZmA==
+X-Gm-Message-State: ALoCoQnro7XMu+sCvSPPTGZSR4MNzon9/m/5n/XAWM3YwlSh1YGHILH8CeQZ5p110PK7xx1L/Pg0
+X-Received: by 10.42.81.195 with SMTP id a3mr29172559icl.76.1425922248599;
+ Mon, 09 Mar 2015 10:30:48 -0700 (PDT)
+Received: by 10.107.46.31 with HTTP; Mon, 9 Mar 2015 10:30:48 -0700 (PDT)
+In-Reply-To: <CAP2yMa+Bw0KCSz9YEtviZUykAp4jpdsEWSK-jRxtd9MjzjHKfg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265182>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265183>
 
-Hey,
+On Mon, Mar 9, 2015 at 10:14 AM, Scott Chacon <schacon@gmail.com> wrote:
+> >
+> > It might make sense to reduce this list just to "Projects" since those
+> > are actually more tangible and verifiable.  Or scrap it altogether.
+> Sorry, I disagree with this. I think it's helpful for people to see
+> some important corporations that are using it, since many people
+> coming to the page are doing research to figure out if they want to
+> switch to it in their companies. It also demonstrates that these large
+> companies are participating in the open source community and it may
+> help them decide to open source internal corporate projects as well,
+> which I think is beneficial to everyone.
 
-On Mon, Mar 9, 2015 at 9:06 AM, David Kastrup <dak@gnu.org> wrote:
-> > On Mon, Mar 9, 2015 at 6:57 AM, Michael J Gruber
-> > <git@drmicha.warpmail.net> wrote:
-> >>
-> >> Since we're talking business: git-scm.com still looks a bit like a
-> >> ProGit/Github promotion site. I don't have anything against either, and
-> >> git-scm.com provides a lot of the information that users are looking
-> >> for, and that are hard to find anywhere else; it's a landing page. It
-> >> just does not look like a "project home".
+Yeah I'd agree on that. I'd even go a step further and claim it would be best
+to show projects and companies coming from most different branches of
+business.
 
-I'm sorry that you feel this way, but I've tried pretty hard to make
-sure the site is as neutral as possible. The only actual place the
-string "GitHub" occurs on the landing page is at the bottom where it
-says "This open sourced site is hosted on GitHub."  I don't even
-mention anywhere that GitHub pays for hosting it. Also, all the Amazon
-referrals from Pro Git sales are donated to the Software Freedom
-Conservancy and all my personal royalties are donated to charity. It
-also very clearly states that the book is free to read online in it's
-entirety (which is actually relatively expensive for me personally,
-since I personally pay the S3 hosting and bandwidth costs for all the
-eBook downloads).
+("Can I switch my business over to Git? Oh well only these internet hacker
+companies are using it, I -as an air drier firmware writer shop-
+cannot relate to,
+so I keep using RCS.")
 
-I'm not sure why you think it doesn't look like a "project home". It
-has basically all the same information on it that you would find on
-any other project home page: a description, direct links to downloads,
-source code, documentation, a book, community and development
-information, etc. These are basically all the same things found on
-sites like http://www.gnu.org/software/emacs/ or
-https://subversion.apache.org/.
-
->
-> It features "Companies & Projects Using Git" at the bottom.  Not
-> "supporting" but "using".
->
-> Linux is point 10 on that list.  The first 6 items are Google, facebook,
-> Microsoft, Twitter, LinkedIn, and Netflix.
->
-> Even for an OpenSource project that does not buy into the Free Software
-> philosophy, that is a mostly embarrassing list of companies to advertise
-> for.
-
-Well, there are 16 groups listed on that page and 10 are open source
-projects and the remaining 6 are large companies using Git and open
-sourcing things using it. The idea of the list is to give people new
-to Git confidence that it is widely adopted both in the open source
-and corporate worlds. I also am not sure what's "embarrassing" about
-these companies - they all heavily participate in the open source
-community and many of them sponsor development of projects like Linux
-and Git.
-
->
-> Personally, I consider the recent migration of the Emacs repository to
-> Git a bigger endorsement but then that's me.
-
-I would love to have Emacs on that page, actually. If you guys want me
-to add that, I'm happy to. I didn't know they moved over, I thought
-they were still a bzr shop.
-
->
-> It might make sense to reduce this list just to "Projects" since those
-> are actually more tangible and verifiable.  Or scrap it altogether.
-
-Sorry, I disagree with this. I think it's helpful for people to see
-some important corporations that are using it, since many people
-coming to the page are doing research to figure out if they want to
-switch to it in their companies. It also demonstrates that these large
-companies are participating in the open source community and it may
-help them decide to open source internal corporate projects as well,
-which I think is beneficial to everyone.
-
-Scott
+Also looking at the open source projects, most of them seem to me as
+large-ish umbrella projects, so a smaller(?) project like emacs would be
+huge win to show off Git can work well with all kinds of projects.
