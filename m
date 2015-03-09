@@ -1,112 +1,87 @@
-From: James <purpleidea@gmail.com>
-Subject: [PATCH] Add --recursive flag to git bash completion script.
-Date: Sun, 08 Mar 2015 20:00:16 -0400
-Message-ID: <1425859216.8244.40.camel@gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] versionsort: support reorder prerelease suffixes
+Date: Mon, 9 Mar 2015 08:01:21 +0700
+Message-ID: <CACsJy8Bpta0rw1rjN8ROcUykPK508bvH_bvAJzLQQa6L6OmH7w@mail.gmail.com>
+References: <CAPc5daVJJcC--mwq0PfAczge3zG44ToDKP853FkyZ3x1KUfsig@mail.gmail.com>
+ <1424947441-19134-1-git-send-email-pclouds@gmail.com> <xmqqvbinhw7l.fsf@gitster.dls.corp.google.com>
+ <xmqqmw3s5j1y.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature";
-	boundary="=-7b33dLWyfarj3p1ywwgK"
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Mar 09 01:00:26 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 09 02:02:03 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YUl7R-0006TX-OE
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Mar 2015 01:00:26 +0100
+	id 1YUm51-0008Ja-4j
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Mar 2015 02:01:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752500AbbCIAAV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Mar 2015 20:00:21 -0400
-Received: from mail-qc0-f169.google.com ([209.85.216.169]:41709 "EHLO
-	mail-qc0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751738AbbCIAAU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Mar 2015 20:00:20 -0400
-Received: by qcrw7 with SMTP id w7so1404123qcr.8
-        for <git@vger.kernel.org>; Sun, 08 Mar 2015 17:00:19 -0700 (PDT)
+	id S1752907AbbCIBBy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Mar 2015 21:01:54 -0400
+Received: from mail-ie0-f172.google.com ([209.85.223.172]:34927 "EHLO
+	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751615AbbCIBBx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Mar 2015 21:01:53 -0400
+Received: by iebtr6 with SMTP id tr6so25724888ieb.2
+        for <git@vger.kernel.org>; Sun, 08 Mar 2015 18:01:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:subject:from:to:date:content-type:mime-version;
-        bh=8+tuchakq2H6gVODwtwkv3SmG1DuBocQzvFD5UEkeQg=;
-        b=F+++o+yRJRjV2HpzLygQeoEvPL+9Y6SE22WO5n6P7033jL2eycTvXZdB7PTrCnoUYU
-         +mbp0Ldlk0TUZ7TgfaxehrFX0w1cJNw38AdBxAh2cwVgSvozJ1HnECOBqhzdtCaZLNeP
-         iopRnJ/ShXdyyCPHmaoZ1potgwl+dR8MjkgJKrfid5HtSH3r1qAGfoiI02Bf3BUMXGBc
-         +AxSmIHDhSAIMvciB4vhlwCoqqaNFwOjOeX+RS+jcFkL5hpcJBI8jPv4Q3fuJKWce7Rx
-         0YB7FTiqNg9KxA7KGGrexTI7cHd//Yap0DeY/GiBBal8Tyhp5GN+7WC7eRpd2myJ58PE
-         /xTQ==
-X-Received: by 10.140.27.129 with SMTP id 1mr31278121qgx.64.1425859219614;
-        Sun, 08 Mar 2015 17:00:19 -0700 (PDT)
-Received: from freed ([216.252.90.33])
-        by mx.google.com with ESMTPSA id c99sm7249393qkh.37.2015.03.08.17.00.18
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 08 Mar 2015 17:00:18 -0700 (PDT)
-X-Mailer: Evolution 3.12.11 (3.12.11-1.fc21) 
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=7qOVPIsRegUtBzwbynPDrZ6yNVz4qupuzSqj+cHus8c=;
+        b=X2ExtPByY0e6xYsLmw1mT79B5pGuhzHG+DvrB5wQRdZQGrS8fV+Q55WcT94N9uP4zI
+         47d2hXK7LLJ5NjAlgPyZR6g5WzV7DpUJUEP5jh76zqVHCC6O8hi2pEph3uFplCAZzVfb
+         xEE8/hXxEUAiK45SiRUrcrMc2gKpFpgeeGw5RCW77wwh91E9WB2xGQ+Y8aqVAs4nrRM5
+         lNHlbGSPNhJi3VFUs85dNVye6LBjhLx6CXzlTrbC0ZWkPhRYjkeQrRCiRWrQCIArZ784
+         k/DZzhKfx/iEkNw0NENagC6sx2LX23mJf4R46XBsFuvyPWpRK6KXSKbnBnULoSzrrBMW
+         ZOpg==
+X-Received: by 10.107.35.140 with SMTP id j134mr43818949ioj.11.1425862912705;
+ Sun, 08 Mar 2015 18:01:52 -0700 (PDT)
+Received: by 10.107.131.33 with HTTP; Sun, 8 Mar 2015 18:01:21 -0700 (PDT)
+In-Reply-To: <xmqqmw3s5j1y.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265120>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265121>
 
+On Thu, Mar 5, 2015 at 8:28 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>>> +versionsort.prereleaseSuffix::
+>>> +    When version sort is used in linkgit:git-tag[1], prerelease
+>>> +    tags (e.g. "1.0-rc1") may appear after the main release
+>>> +    "1.0". By specifying the suffix "-rc" in this variable,
+>>> +    "1.0-rc1" will appear before "1.0". One variable assignment
+>>> +    per suffix.
+>>
+>> I think the last half-sentence want to mean that
+>>
+>>       [versionsort]
+>>                 prereleaseSuffix = -pre
+>>               prereleaseSuffix = -rc
+>>
+>> is the supported way to write, and not
+>>
+>>       [versionsort]
+>>               prereleaseSuffix = -pre -rc
+>>
+>> but it probably is unclear unless the reader already knows what it
+>> is trying to say.  The reader also needs to learn somewhere how the
+>> order of the entries affects the result.
+>
+> This is already in 'next', so could you fix that half-sentence in
+> the documentation via an incremental update?
 
---=-7b33dLWyfarj3p1ywwgK
-Content-Type: multipart/mixed; boundary="=-Uc4C0wDEzx01UJiy1VhI"
+How about..
 
-
---=-Uc4C0wDEzx01UJiy1VhI
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-This is a patch to add a much needed option to the bash completion
-script. I'm not subscribed to this list, so please include me in your
-reply if you'd like me to see your response.
-
-Thanks,
-James
-
-
---=-Uc4C0wDEzx01UJiy1VhI
-Content-Disposition: attachment; filename="completion-recursive.patch"
-Content-Type: text/x-patch; name="completion-recursive.patch"; charset="UTF-8"
-Content-Transfer-Encoding: base64
-
-RnJvbSBjYTk3NmRlNWJmZWNjYzliZDY5YzIyMTgzZjgyYjlkMWU1OWQyNTQ3IE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBKYW1lcyBTaHViaW4gPGphbWVzQHNodWJpbi5jYT4KRGF0ZTog
-U3VuLCA4IE1hciAyMDE1IDE5OjU3OjE3IC0wNDAwClN1YmplY3Q6IFtQQVRDSF0gQWRkIC0tcmVj
-dXJzaXZlIGZsYWcgdG8gZ2l0IGJhc2ggY29tcGxldGlvbiBzY3JpcHQuCgpUaGlzIGZsYWcgd2Fz
-IG1pc3NpbmcgZnJvbSB0aGUgbGlzdCwgYW5kIEkgdXNlIGl0IHF1aXRlIG9mdGVuIDopCgpTaWdu
-ZWQtb2ZmLWJ5OiBKYW1lcyBTaHViaW4gPGphbWVzQHNodWJpbi5jYT4KLS0tCiBjb250cmliL2Nv
-bXBsZXRpb24vZ2l0LWNvbXBsZXRpb24uYmFzaCB8IDEgKwogMSBmaWxlIGNoYW5nZWQsIDEgaW5z
-ZXJ0aW9uKCspCgpkaWZmIC0tZ2l0IGEvY29udHJpYi9jb21wbGV0aW9uL2dpdC1jb21wbGV0aW9u
-LmJhc2ggYi9jb250cmliL2NvbXBsZXRpb24vZ2l0LWNvbXBsZXRpb24uYmFzaAppbmRleCBjMjEx
-OTBkLi42Y2I3ZmY1IDEwMDY0NAotLS0gYS9jb250cmliL2NvbXBsZXRpb24vZ2l0LWNvbXBsZXRp
-b24uYmFzaAorKysgYi9jb250cmliL2NvbXBsZXRpb24vZ2l0LWNvbXBsZXRpb24uYmFzaApAQCAt
-MTA5MCw2ICsxMDkwLDcgQEAgX2dpdF9jbG9uZSAoKQogCQkJLS1uby1oYXJkbGlua3MKIAkJCS0t
-c2hhcmVkCiAJCQktLXJlZmVyZW5jZQorCQkJLS1yZWN1cnNpdmUKIAkJCS0tcXVpZXQKIAkJCS0t
-bm8tY2hlY2tvdXQKIAkJCS0tYmFyZQotLSAKMi4xLjAKCg==
-
-
---=-Uc4C0wDEzx01UJiy1VhI--
-
---=-7b33dLWyfarj3p1ywwgK
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAABAgAGBQJU/OKQAAoJEKDo88AkCQ1madkP/Ah/RquozrX5tq2Jk+VWb1GT
-z5RhTlZFz53MIuRi7ZiVGA/AVzquIpF7AA/v77c+anQoYOpCQ90lF4uAhbQlxLQZ
-juybgtlwUK/9LxURIPzKkG0ClEoJZ///5/9pwelhFURrJV8dmyGPgWB0/f3jKjVS
-8uruGtMuFKRfKalZhZWUolTS5nKVton1/MUK3BwuxLZdV0tT+mQQ1nSBI4J7CEpe
-S89TnEDKDdTAL87vGxN/aB/PSv8Tb8TN7RqpKioUnO2Gz6gmiqJ2+XWatYlM0/U/
-yYjLDz2iGpMCBzbkb2STitwcp1cIkrwSvOBKLGRhhi25cK7gWgT0z/9NELthNFAX
-6nF5jMsKHGIxDsKK6mTFiCiSit9ejkqT5iKAHwLYG2q0sXJGRGQTqY9JPg8X5ijC
-D4lfLyr9gQUEywDI0Q/sMir8tUneUUDH27zhdRBLSo3sU2lO2jhdUyWZGh1CMHY9
-+c67PEZLqSyyWWsPYLMJ64vhw7usuurMJ0OifAU6oH1eX/fbcwZd+ldIhYVGVqa+
-387zm4ZL9+/gWwIUPm9iix/75n6ZbdbBWf9K9yTSrWek0Gdcv0rH/ovlLGKzOlbq
-uJ3iIajBT2zLZwYPKqqYG2DdX+5/WftH2VEgGLzseyyMkaARiWT6Q9luhzfkXdpy
-NDBgmPDfgQuOBMvlqPj/
-=0p0z
------END PGP SIGNATURE-----
-
---=-7b33dLWyfarj3p1ywwgK--
+".. "1.0-rc1" will appear before "1.0".  This key can be specified
+multiple times, one for each suffix. The order of suffixes in the
+config file determines the sorting order (e.g. if "-pre" appears
+before "-rc" in the config file then 1.0-preXX is sorted before
+1.0-rcXX). The sorting order between different suffixes is undefined
+if they are in multiple config files"
+-- 
+Duy
