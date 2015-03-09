@@ -1,75 +1,83 @@
-From: Thomas Ferris Nicolaisen <tfnico@gmail.com>
-Subject: Re: [PATCH] Add --recursive flag to git bash completion script.
-Date: Mon, 9 Mar 2015 11:43:53 +0100
-Message-ID: <CAEcj5uVCudOV3a9BaWnwY=dvAOGmPfYfBeFBS9y2vyrzBBZbOQ@mail.gmail.com>
-References: <1425859216.8244.40.camel@gmail.com>
+From: Kevin Daudt <me@ikke.info>
+Subject: Re: [PATCH v3] rev-list: refuse --first-parent combined with --bisect
+Date: Mon, 9 Mar 2015 12:57:33 +0100
+Message-ID: <20150309115733.GB6273@vps892.directvps.nl>
+References: <1425824339-8036-1-git-send-email-me@ikke.info>
+ <1425827005-9602-1-git-send-email-me@ikke.info>
+ <CAPig+cROEyWvJDW7uf1D7owdL-FwLHMtEBwWSNwS1M=vMcozLQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: James <purpleidea@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 09 11:44:00 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Mon Mar 09 12:57:47 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YUvAF-0008Sl-3R
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Mar 2015 11:43:59 +0100
+	id 1YUwJY-0003na-PS
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Mar 2015 12:57:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751385AbbCIKnz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Mar 2015 06:43:55 -0400
-Received: from mail-qg0-f46.google.com ([209.85.192.46]:40882 "EHLO
-	mail-qg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751330AbbCIKny (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Mar 2015 06:43:54 -0400
-Received: by qgdq107 with SMTP id q107so27128480qgd.7
-        for <git@vger.kernel.org>; Mon, 09 Mar 2015 03:43:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=GPuXCsp77sGxOgdqw96Q+aAHxtN2K/ASiiZco0xx+MM=;
-        b=NCvH81waLhL0UmecvxsiUcnoQwv6cxBIikh6uJZ19qPhiWDyyrh6kfbteQ2vNMdbvX
-         LOgp6NEreIvBa9PZzuAll/FScftBwX1HruE2VCpG6Gy6qviCzgr3/behnOev5KcbjNYj
-         gA6OvHnhqNKUTf0JZDmTF2AAVDIOslD14+lNYTfjpibjfYbTX4m8pm1nVg0j2aUtImd9
-         bysKSfw3wdSw4na0+++ZNLRuR29vcTSGhD9+HHc79zIFDVlOFGKeFLUYIF6GtnZjuC/U
-         004uUTRqg2+ZKonPx2Fqk752kpBZoBXOMBus34WjnDzHJAFUXKhzolF7IImSVoEJMq+H
-         am7g==
-X-Received: by 10.140.148.195 with SMTP id 186mr34445503qhu.60.1425897833774;
- Mon, 09 Mar 2015 03:43:53 -0700 (PDT)
-Received: by 10.140.102.55 with HTTP; Mon, 9 Mar 2015 03:43:53 -0700 (PDT)
-In-Reply-To: <1425859216.8244.40.camel@gmail.com>
+	id S1751530AbbCIL5g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Mar 2015 07:57:36 -0400
+Received: from ikke.info ([178.21.113.177]:37903 "EHLO vps892.directvps.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750933AbbCIL5f (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Mar 2015 07:57:35 -0400
+Received: by vps892.directvps.nl (Postfix, from userid 1001)
+	id B6E701DCF6D; Mon,  9 Mar 2015 12:57:33 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <CAPig+cROEyWvJDW7uf1D7owdL-FwLHMtEBwWSNwS1M=vMcozLQ@mail.gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265159>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265160>
 
-On Mon, Mar 9, 2015 at 1:00 AM, James <purpleidea@gmail.com> wrote:
-> This is a patch to add a much needed option to the bash completion
-> script. I'm not subscribed to this list, so please include me in your
-> reply if you'd like me to see your response.
+On Sun, Mar 08, 2015 at 05:58:24PM -0400, Eric Sunshine wrote:
+> On Sun, Mar 8, 2015 at 11:03 AM, Kevin Daudt <me@ikke.info> wrote:
+> > rev-list --bisect is used by git bisect, but never together with
+> > --first-parent. Because rev-list --bisect together with --first-parent
+> > is not handled currently, and even leads to segfaults, refuse to use
+> > both options together.
+> >
+> > Signed-off-by: Kevin Daudt <me@ikke.info>
+> > Suggested-by: Junio C. Hamano <gitster@pobox.com>
+> 
+> It's customary for your sign-off to be last.
+> 
 
-Please read the guide on how to submit patches [1].
+Ok, noted
 
-Although the change is trivial, some immediate problems I see are:
+> > ---
+> > diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+> > index 4ed8587..05c3f6d 100644
+> > --- a/Documentation/rev-list-options.txt
+> > +++ b/Documentation/rev-list-options.txt
+> > @@ -123,7 +123,8 @@ parents) and `--max-parents=-1` (negative numbers denote no upper limit).
+> >         because merges into a topic branch tend to be only about
+> >         adjusting to updated upstream from time to time, and
+> >         this option allows you to ignore the individual commits
+> > -       brought in to your history by such a merge.
+> > +       brought in to your history by such a merge. Cannot be
+> > +       combined with --bisect.
+> 
+> A couple questions:
+> 
+> Should the documentation for ---bisect be updated to mention this
+> restriction also?
 
-* The patch is attached rather than being inlined.
-* The fix should also be made for the other shells (zsh and tcsh)
-* The commit message contains an unnecessary smiley, personal
-digression, and a period in the first line.
-* The change or the problem it is solving is not clearly described. I
-think it would be better if you write something like this in the first
-line:
+Was doubting whether that was necessary as --bisect can be seen as a
+mode, and --first-parent modifying that mode. But it can make sense to
+also add it to that section.
 
-"completion: add --recursive flag to git clone"
+> 
+> Should this change be protected by a "ifndef::git-rev-list[]" as are
+> all other mentions of "bisect" in rev-list-options.txt?
 
-And for good measure, add another sentence below explaining why this
-should be available for completion.
+Yes, I see why. git log also uses rev-list-options.txt and it has a
+--bisect option that is unrelated to this one, so that comment doesn't
+make sense for git log.
 
-Do a `git log --grep completion` to see how others have formulated
-changes in the same place in the past. You want to be consistent with
-them.
-
-[1] https://raw.githubusercontent.com/git/git/master/Documentation/SubmittingPatches
+Will reroll this later.
