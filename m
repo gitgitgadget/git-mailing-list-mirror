@@ -1,110 +1,94 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] help.c: use SHELL_PATH instead of hard-coded
- "/bin/sh"
-Date: Mon, 9 Mar 2015 03:20:40 -0400
-Message-ID: <20150309072040.GA28148@peff.net>
-References: <38be9195b966a027cb050e5a1b47526@74d39fa044aa309eaea14b9f57fe79c>
- <0ebc0373b21c75fa88adb5aefd098e9@74d39fa044aa309eaea14b9f57fe79c>
- <xmqq61acsz7k.fsf@gitster.dls.corp.google.com>
- <C611A125-D641-46E6-A5AD-1010D70582F0@gmail.com>
+Subject: Re: Bug? git submodule add SSL certificate problem: unable to get
+ local issuer certificate
+Date: Mon, 9 Mar 2015 03:43:39 -0400
+Message-ID: <20150309074339.GA31866@peff.net>
+References: <F24DBF8D-40EE-4C8D-AE9C-463E59C4AAD7@aschemann.net>
+ <27F61CEE-F1D3-4B7F-B394-8D06A4AD8976@aschemann.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git mailing list <git@vger.kernel.org>
-To: "Kyle J. McKay" <mackyle@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 09 08:20:49 2015
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Heiko Voigt <hvoigt@hvoigt.net>, git@vger.kernel.org
+To: Aschemann Gerd <gerd@aschemann.net>
+X-From: git-owner@vger.kernel.org Mon Mar 09 08:43:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YUrzc-0002P8-77
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Mar 2015 08:20:48 +0100
+	id 1YUsLw-00026q-V2
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Mar 2015 08:43:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752589AbbCIHUo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Mar 2015 03:20:44 -0400
-Received: from cloud.peff.net ([50.56.180.127]:59041 "HELO cloud.peff.net"
+	id S1752750AbbCIHnq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Mar 2015 03:43:46 -0400
+Received: from cloud.peff.net ([50.56.180.127]:59045 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752057AbbCIHUn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Mar 2015 03:20:43 -0400
-Received: (qmail 8087 invoked by uid 102); 9 Mar 2015 07:20:43 -0000
+	id S1753129AbbCIHnn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Mar 2015 03:43:43 -0400
+Received: (qmail 9050 invoked by uid 102); 9 Mar 2015 07:43:42 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 09 Mar 2015 02:20:43 -0500
-Received: (qmail 4441 invoked by uid 107); 9 Mar 2015 07:20:50 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 09 Mar 2015 02:43:42 -0500
+Received: (qmail 4603 invoked by uid 107); 9 Mar 2015 07:43:49 -0000
 Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.2)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 09 Mar 2015 03:20:50 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 09 Mar 2015 03:20:40 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 09 Mar 2015 03:43:49 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 09 Mar 2015 03:43:39 -0400
 Content-Disposition: inline
-In-Reply-To: <C611A125-D641-46E6-A5AD-1010D70582F0@gmail.com>
+In-Reply-To: <27F61CEE-F1D3-4B7F-B394-8D06A4AD8976@aschemann.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265133>
 
-On Sun, Mar 08, 2015 at 11:32:22PM -0700, Kyle J. McKay wrote:
+On Thu, Mar 05, 2015 at 04:20:10PM +0100, Aschemann Gerd wrote:
 
-> >It is a common convention to make the first argument the command
-> >name without its path, and this change breaks that convention.
+> seems to be a bug: If adding a submodule from an https URL with a certificate issued by StartSSL (or even a private/self-signed one?) leads to the following error:
 > 
-> Hmpf.  I present these for your consideration:
+>   $ git -c http.sslverify=false submodule add https://example.com/git/xxx.git
+>   Cloning into 'xxx'...
+>   fatal: unable to access 'https://example.com/git/xxx.git/': server certificate verification failed. CAfile: /etc/ssl/certs/ca-certificates.crt CRLfile: none
+>   Clone of 'https://example.com/git/xxx.git' into submodule path 'xxx' failed
 > 
-> $ sh -c 'echo $0'
-> sh
-> $ /bin/sh -c 'echo $0'
-> /bin/sh
-> $ cd /etc
-> $ ../bin/sh -c 'echo $0'
-> ../bin/sh
+> Performing a simple clone works well:
 > 
-> I always thought it was the actual argument used to invoke the item.  If the
-> item is in the PATH and was invoked with a bare word then arg0 would be just
-> the bare word or possibly the actual full pathname as found in PATH.
-> Whereas if it's invoked with a path (relative or absolute) that would passed
-> instead.
+>   $ git -c http.sslverify=false clone https://example.com/git/xxx.git
+>   Cloning into 'xxx'...
+>   Password for 'https://example.com':
 
-Yes, you are correct. When there is a full path, that typically gets
-passed instead (unless you are trying to convey something specific to
-the program, like telling bash "pretend to be POSIX sh"; that's usually
-done with a symlink, but the caller might want to override it).
+I think the problem is that the submodule code wipes all "local"
+environment variables before executing the submodule clone, and that
+includes the variable containing command-line config.
 
-If we were starting from scratch, I would say that SHELL_PATH is
-supposed to be a replacement POSIX shell, and so we should call:
+Config like this is in a funny boat. We do not want it to cross
+transport boundaries, so that if we run:
 
-  execl(SHELL_PATH, "sh", "-c", ...);
+  git -c foo=bar clone /some/local/path
 
-to tell shells like bash to operate in POSIX mode.
+the process serving /some/local/path should not see the "foo" option[1].
+But for submodules in the same repository, keeping the shared config is
+probably more reasonable (I can imagine a config variable that you might
+want to behave differently between the submodule and the main project,
+but I could not think of any off-hand, and I expect it would be a rare
+exception).
 
-However, that is _not_ what we currently do with run-command's
-use_shell directive. There we put SHELL_PATH as argv[0], and run:
-
-  execv(argv[0], argv);
-
-I doubt it matters much in practice (after all, these are just "-c"
-snippets, not whole scripts). But it's possible that by passing "-c" we
-would introduce bugs (e.g., if somebody has a really complicated inline
-alias, and sets SHELL_PATH to /path/to/bash, they'll get full-on bash
-with the current code).
-
-> I also have no objection to changing it to:
-> 
-> >-	execl("/bin/sh", "sh", "-c", shell_cmd.buf, (char *)NULL);
-> >+	execl(SHELL_PATH, basename(SHELL_PATH), "-c", shell_cmd.buf, (char
-> >*)NULL);
-> 
-> just to maintain the current behavior.
-
-If we want to maintain consistency with the rest of our uses of
-run-command, it would be just your original:
-
-  execl(SHELL_PATH, SHELL_PATH, "-c", shell_cmd.buf, NULL);
-
-That makes the most sense to me, unless we are changing run-command's
-behavior, too. 
-
-There's no point in calling basename(). Shells like bash which
-behave differently when called as "sh" are smart enough to check the
-basename themselves (this would matter, e.g., if you set SHELL_PATH to
-"/path/to/my/sh" and that was actually a symlink to bash).
+Submodule folks (cc'd) may have opinions.
 
 -Peff
+
+[1] This behavior comes from 655e8d9 (do not pass "git -c foo=bar"
+    params to transport helpers, 2010-08-24), and the original
+    discussion is here:
+
+      http://thread.gmane.org/gmane.comp.version-control.git/154241/focus=154255
+
+    I am tempted to simply drop the transport-layer blocking of config
+    options. It is not buying us anything security-wise, and it could
+    actually be convenient to pass options to the "other side". But it's
+    probably a bad idea, if only because it would not be consistently
+    applied to repos on the other side of git://, http://, or ssh
+    sessions.
+
+    So the sanest fix, if we want submodules to inherit the command-line
+    config, would be to drop GIT_CONFIG_PARAMETERS from local_repo_env,
+    and have the transport code suppress it manually.
