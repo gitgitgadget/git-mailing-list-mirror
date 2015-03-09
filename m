@@ -1,77 +1,68 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
-Subject: [PATCH] use isxdigit() for checking if a character is a hexadecimal
- digit
-Date: Mon, 09 Mar 2015 23:46:54 +0100
-Message-ID: <54FE22DE.8090007@web.de>
+From: Matthew Rothenberg <mrothenberg@gmail.com>
+Subject: Re: Efficient parsing of `status -z` output
+Date: Mon, 9 Mar 2015 19:40:43 -0400
+Message-ID: <CAMJduDvuBF6KwLjmnxmMgfeSYfO6uDVfnkF=VTLTr8t8qowb0w@mail.gmail.com>
+References: <CAMJduDuxBDoJ9_ETY8FCRoANf+taAS7-1acf5CFRGXDFyL72Rg@mail.gmail.com>
+ <xmqqlhj7sy7l.fsf@gitster.dls.corp.google.com> <CAMJduDvDO4GesL+eru3h1YHrbF5hFmyycX3f4ADQOo+VnD7GDg@mail.gmail.com>
+ <20150309061920.GB27128@peff.net> <20150309064939.GA30819@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Mar 09 23:47:44 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Mar 10 00:41:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YV6Sd-0003nu-4U
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Mar 2015 23:47:43 +0100
+	id 1YV7IN-0004oP-5J
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Mar 2015 00:41:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753416AbbCIWr0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Mar 2015 18:47:26 -0400
-Received: from mout.web.de ([212.227.17.11]:61605 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751532AbbCIWrZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Mar 2015 18:47:25 -0400
-Received: from [192.168.178.27] ([79.253.131.164]) by smtp.web.de (mrweb101)
- with ESMTPSA (Nemesis) id 0LgpVS-1XhB6N41zC-00oEgN; Mon, 09 Mar 2015 23:47:22
- +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
-X-Provags-ID: V03:K0:Y85o24Wq6BV3GSbshbZXokJgckqLEcJhi2bnO/JO1yltyBnNI2F
- indlUiw8q8O9joEr21+WpbdgbagaIZvYpuRsuPt0Y2q64QdAL7tZ6BGL19xOTGcQsZVuXya
- HGLYe6MJi5KmztwCYQZZ+0zXan/5/XPYkHpgzdvu2uz6odcaLk5GLaRpbWCvIR0p6hl5kS8
- hUK1Cywe+zOYdMMLU3NAA==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1751111AbbCIXlF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Mar 2015 19:41:05 -0400
+Received: from mail-ig0-f181.google.com ([209.85.213.181]:35710 "EHLO
+	mail-ig0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751571AbbCIXlE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Mar 2015 19:41:04 -0400
+Received: by igqa13 with SMTP id a13so25838212igq.0
+        for <git@vger.kernel.org>; Mon, 09 Mar 2015 16:41:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=gWAkZoO9tcUdz781q5trPdur9ELY+jfPqdwVFDnUGyg=;
+        b=0aFp6YFXIdJnX7NkBytMpkU6JLC8VPqgbfzUx5a+T2oionwGW9xZ2U35DE0qaxGeLe
+         Aa4bk/gbNVmatBCmNrUnSl4gy99It3L40KyQmd7TMt83vLwVgwRAEAJuwfhepJlEFsAx
+         GoReccqs10e7iqA81VtYJV0dWhK1VfRqO0EmdWbzzrZSt61KNFn1bJ7JXVA6e2zY7VH8
+         FdsBgw7P0xGSerw0ZXP3nL//hzL0Ht4sBHCXEmT1OUNKd8WJa7OLDjiBU7TFSLtFS5hf
+         WvTbRMlwm13jzGTxoX9l9B17VFg64dhSx1nh/1119Ldxk+BlzLLNk+yT9tW3/bhh3vI7
+         G6Bg==
+X-Received: by 10.107.16.42 with SMTP id y42mr54021682ioi.41.1425944463873;
+ Mon, 09 Mar 2015 16:41:03 -0700 (PDT)
+Received: by 10.36.25.74 with HTTP; Mon, 9 Mar 2015 16:40:43 -0700 (PDT)
+In-Reply-To: <20150309064939.GA30819@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265201>
 
-Use the standard function isxdigit() to make the intent clearer and
-avoid using magic constants.
+On Mon, Mar 9, 2015 at 2:49 AM, Jeff King <peff@peff.net> wrote:
+>   $ git init
+>   $ seq 1 1000 >file && git add file && git commit -m base
+>   $ mv file other
+>   $ echo foo >file
+>   $ git add .
+>   $ git status --short
+>   M  file
+>   C  file -> other
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
- sha1_name.c | 2 +-
- transport.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+Fantastic, I am able to replicate with these steps and will build
+tests around this case.
 
-diff --git a/sha1_name.c b/sha1_name.c
-index 95f9f8f..6d10f05 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -757,7 +757,7 @@ static int get_describe_name(const char *name, int len, unsigned char *sha1)
- 
- 	for (cp = name + len - 1; name + 2 <= cp; cp--) {
- 		char ch = *cp;
--		if (hexval(ch) & ~0377) {
-+		if (!isxdigit(ch)) {
- 			/* We must be looking at g in "SOMETHING-g"
- 			 * for it to be describe output.
- 			 */
-diff --git a/transport.c b/transport.c
-index 0694a7c..00f39d9 100644
---- a/transport.c
-+++ b/transport.c
-@@ -117,7 +117,7 @@ static void insert_packed_refs(const char *packed_refs, struct ref **list)
- 			return;
- 		}
- 
--		if (hexval(buffer[0]) > 0xf)
-+		if (!isxdigit(buffer[0]))
- 			continue;
- 		len = strlen(buffer);
- 		if (len && buffer[len - 1] == '\n')
--- 
-2.3.1
+For future proofing, from the documentation for git status is appears
+the other two codes I would want to check for in addition to 'C '
+(which this test cases generates) may be 'CM' and 'CD'? And all of
+those should always have the additional PATH2 column present?
+
+Thank you for your help!
