@@ -1,81 +1,146 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v2 4/4] t0302: test credential-store support for XDG_CONFIG_HOME
-Date: Mon, 09 Mar 2015 13:36:41 +0100
-Message-ID: <vpqk2yqcppi.fsf@anie.imag.fr>
-References: <1425801532-8483-1-git-send-email-pyokagan@gmail.com>
-	<1425801532-8483-5-git-send-email-pyokagan@gmail.com>
+From: karthik nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v3 3/3] cat-file: add "--literally" option
+Date: Mon, 09 Mar 2015 18:23:29 +0530
+Message-ID: <54FD97C9.40909@gmail.com>
+References: <54F89D90.6090505@gmail.com>	<1425579578-18955-1-git-send-email-karthik.188@gmail.com> <CAPig+cTWJcWuhbgbaHWYcFxXhCEN-ou3g=AP6k1KJ-+hgN_+Dg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>
-To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 09 13:37:02 2015
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Mon Mar 09 13:53:47 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YUwvd-0007ks-DJ
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Mar 2015 13:37:01 +0100
+	id 1YUxBo-0005eJ-8A
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Mar 2015 13:53:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751500AbbCIMg6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Mar 2015 08:36:58 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:43246 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751374AbbCIMg4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Mar 2015 08:36:56 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t29Cae2V011799
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 9 Mar 2015 13:36:40 +0100
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t29CafCZ010915;
-	Mon, 9 Mar 2015 13:36:41 +0100
-In-Reply-To: <1425801532-8483-5-git-send-email-pyokagan@gmail.com> (Paul Tan's
-	message of "Sun, 8 Mar 2015 15:58:52 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 09 Mar 2015 13:36:40 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t29Cae2V011799
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1426509402.63751@ptnjm/mARGok4bgPmNW2jg
+	id S1752119AbbCIMxe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Mar 2015 08:53:34 -0400
+Received: from mail-pd0-f176.google.com ([209.85.192.176]:40141 "EHLO
+	mail-pd0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751438AbbCIMxd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Mar 2015 08:53:33 -0400
+Received: by pdbfp1 with SMTP id fp1so57590776pdb.7
+        for <git@vger.kernel.org>; Mon, 09 Mar 2015 05:53:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=1iJAYlU4kSzrfrEnxeZTxvO+081GmMOSPSebk42aAmA=;
+        b=zSlSdlsMkK4nisRt9OOMVHnE8r4dFgmhvwqLAjNQR3md0oYfOBNWjADBOGciaJNDVP
+         julNeJrNcHwHhcZhk6JelNzXFPX1jA+AWO5Pe14FmcoIR4GCTpXu8JWRqg8vkY6uRaE1
+         30VGEVzXlyL8eGhHUpu2Jp30KQrpocROip+qNpdSjIyQUkHQp07oyWrpprCjTxO1PSaU
+         ZeZkJ7XQzNVbg2Af5f3vQjYWEnRyfNM2d9ApnZiP0xaf7m2eVyiOdhVmD2f97rtNHwuK
+         U2DH7VIANV5HHFKgCen5VVlli1Af73GNn7bni01O5S29HYfOQwhF5fmkasNAKn3jvapu
+         lWfw==
+X-Received: by 10.66.62.137 with SMTP id y9mr53729071par.87.1425905613100;
+        Mon, 09 Mar 2015 05:53:33 -0700 (PDT)
+Received: from [192.168.0.102] ([103.227.98.178])
+        by mx.google.com with ESMTPSA id k5sm19101270pdf.95.2015.03.09.05.53.30
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 09 Mar 2015 05:53:31 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
+In-Reply-To: <CAPig+cTWJcWuhbgbaHWYcFxXhCEN-ou3g=AP6k1KJ-+hgN_+Dg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265161>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265162>
 
-Paul Tan <pyokagan@gmail.com> writes:
 
-> diff --git a/t/t0302-credential-store.sh b/t/t0302-credential-store.sh
-> index f61b40c..7fe832d 100755
-> --- a/t/t0302-credential-store.sh
-> +++ b/t/t0302-credential-store.sh
-> @@ -5,5 +5,97 @@ test_description='credential-store tests'
->  . "$TEST_DIRECTORY"/lib-credential.sh
->  
->  helper_test store
-> +test_expect_success '~/.git-credentials is written to when xdg credentials file does not exist' '
-> +	test -s "$HOME/.git-credentials"
-> +'
-> +test_expect_success 'xdg credentials file will not be created if it does not exist' '
 
-We usually put a blank line between tests.
+On 03/09/2015 04:20 AM, Eric Sunshine wrote:
+> On Thu, Mar 5, 2015 at 1:19 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
+>> made changes to "cat-file" to include a "--literally"
+>
+> Write in imperative mood: "Teach cat-file a --literally option..."
+>
+>> option which prints the type of the object without any
+>> complaints.
+>
+> Unfortunately, this explanation is quite lacking. What "complaints"?
+> What problem is --literally trying to solve? To answer these
+> questions, you will probably want to say something about the sort of
+> object which requires --literally, and how cat-file fails or behaves
+> without it.
+>
+>> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+>> ---
+>> diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+>> index df99df4..60b9ec4 100644
+>> --- a/builtin/cat-file.c
+>> +++ b/builtin/cat-file.c
+>> @@ -323,7 +332,7 @@ static int batch_objects(struct batch_options *opt)
+>>   }
+>>
+>>   static const char * const cat_file_usage[] = {
+>> -       N_("git cat-file (-t | -s | -e | -p | <type> | --textconv) <object>"),
+>> +       N_("git cat-file (-t|-s|-e|-p|<type>|--textconv|-t --literally) <object>"),
+>
+> This might read more naturally as:
+>
+>      git cat-file (-t [--literally] | -s | -e | -p | <type> |
+> --textconv) <object>
+>
+> rather than repeating the -t option.
+>
+>>          N_("git cat-file (--batch | --batch-check) < <list-of-objects>"),
+>>          NULL
+>>   };
+>> @@ -369,6 +379,8 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
+>>                  OPT_SET_INT('p', NULL, &opt, N_("pretty-print object's content"), 'p'),
+>>                  OPT_SET_INT(0, "textconv", &opt,
+>>                              N_("for blob objects, run textconv on object's content"), 'c'),
+>> +               OPT_BOOL( 0, "literally", &literally,
+>> +                         N_("show the type of the given loose object, use for debugging")),
+>
+> Taking other help strings into account, there is no need for the
+> long-winded "type of the given loose object" when "loose object's
+> type" will suffice. More importantly, thought, you should try to say
+> something about how --literally is actually useful, such as for
+> "broken" objects or objects not of a known type.
+>
+>>                  { OPTION_CALLBACK, 0, "batch", &batch, "format",
+>>                          N_("show info and content of objects fed from the standard input"),
+>>                          PARSE_OPT_OPTARG, batch_option_callback },
+>> @@ -380,7 +392,7 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
+>>
+>>          git_config(git_cat_file_config, NULL);
+>>
+>> -       if (argc != 3 && argc != 2)
+>> +       if (argc != 3 && argc != 2 && argc != 4)
+>
+> Perhaps it's time to rephrase this as "if (argc < 2 || argc > 4)"?
+>
+>>                  usage_with_options(cat_file_usage, options);
+>>
+>>          argc = parse_options(argc, argv, prefix, options, cat_file_usage, 0);
+>> @@ -405,5 +417,10 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
+>>          if (batch.enabled)
+>>                  return batch_objects(&batch);
+>>
+>> -       return cat_one_file(opt, exp_type, obj_name);
+>> +       if (literally && opt == 't')
+>> +               return cat_one_file(opt, exp_type, obj_name, literally);
+>> +       else if (literally)
+>> +               usage_with_options(cat_file_usage, options);
+>
+> I realize that existing cases in cat-file are already guilty of this
+> transgression, but it is quite annoying when a program merely spits
+> out its usage statement without actually telling you what you did
+> wrong; and it's often difficult to figure out why it was rejected. It
+> would be much more helpful in a case like this to state explicitly
+> that --literally was given without -t. (But perhaps such a
+> "friendliness" change is fodder for a separate patch.)
+>
+>> +
+>> +       return cat_one_file(opt, exp_type, obj_name, literally);
+>>   }
+>> --
+>> 2.3.1.167.g7f4ba4b.dirty
 
-> +helper_test store
-
-That seems a bit "brute force" to me to re-run all tests several times.
-It's probably OK since the tests are quite fast though.
-
-> +test_expect_success 'set up custom XDG_CONFIG_HOME credential file' '
-> +	XDG_CONFIG_HOME="$HOME/xdg" && export XDG_CONFIG_HOME &&
-> +	mkdir -p "$HOME/xdg/git" &&
-
-I'd spell that "$XDG_CONFIG_HOME"/git instead, but that's not really
-important.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Thanks for the feedback.
+Will fix everything you stated in the next patch.
