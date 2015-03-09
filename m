@@ -1,122 +1,78 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: git-scm.com website
-Date: Mon, 09 Mar 2015 17:37:11 +0100
-Message-ID: <87twxuktzc.fsf@fencepost.gnu.org>
-References: <CAJo=hJsbbfK-_qX6sg3Azk30Kz5ebLfyMbVF98VzHZe8YyaLcQ@mail.gmail.com>
-	<87y4n6kvdu.fsf@fencepost.gnu.org>
-	<CAJo=hJt_PHMEdpfRA0EKQyoH4XhYh89tvajewM28pgxzZ9ONMg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Christian Couder <christian.couder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Mar 09 17:37:22 2015
+From: Adrien Schildknecht <adrien+dev@schischi.me>
+Subject: [GSoC][PATCH] userdiff: funcname and word patterns for sh
+Date: Mon,  9 Mar 2015 17:36:38 +0100
+Message-ID: <1425918999-11992-1-git-send-email-adrien+dev@schischi.me>
+Cc: Adrien Schildknecht <adrien+dev@schischi.me>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 09 17:37:32 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YV0gD-00061B-Ov
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Mar 2015 17:37:22 +0100
+	id 1YV0gN-0006Cn-Td
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Mar 2015 17:37:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754761AbbCIQhR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Mar 2015 12:37:17 -0400
-Received: from fencepost.gnu.org ([208.118.235.10]:48500 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753550AbbCIQhN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Mar 2015 12:37:13 -0400
-Received: from localhost ([127.0.0.1]:47540 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1YV0g4-00056R-CG; Mon, 09 Mar 2015 12:37:12 -0400
-Received: by lola (Postfix, from userid 1000)
-	id E0712DF8B7; Mon,  9 Mar 2015 17:37:11 +0100 (CET)
-In-Reply-To: <CAJo=hJt_PHMEdpfRA0EKQyoH4XhYh89tvajewM28pgxzZ9ONMg@mail.gmail.com>
-	(Shawn Pearce's message of "Mon, 9 Mar 2015 09:19:28 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.0.50 (gnu/linux)
+	id S932481AbbCIQh0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Mar 2015 12:37:26 -0400
+Received: from mail-wi0-f176.google.com ([209.85.212.176]:34775 "EHLO
+	mail-wi0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754549AbbCIQhZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Mar 2015 12:37:25 -0400
+Received: by wiwl15 with SMTP id l15so21364459wiw.1
+        for <git@vger.kernel.org>; Mon, 09 Mar 2015 09:37:24 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=oh0oJ9zhffT5QIzjPTJhi7g78HppBPH6apQnXw9JAgo=;
+        b=HfzQoWzXmFPZ+pSDpcC67AgxXS4Pz3W31So6RzhpZR29c2W7zVutxZRlsjM0A5Rnm4
+         OS050r7elEtcp81os1VVyYW2N5xFKp8ajbaA5wli7fAPqiqci3U2jpBoh5tWbTC0vBTN
+         MBREUC7jQ23FqCsiVc70GNfGS3J+e2/fvy+Sa65niyxAMppdxJwtyfxZE7ueDrMyLVSW
+         HxDyMB+SqdUirSniA/Q9G5rR4Vs0rV7zYmRGjVmRmCTYRknSNZbpsAyuM7YUNTWaBels
+         jTA6T4C5ZI+QQzDxqEMkpFPwjQ8AFgrqEiZImiYHLwkxBnFxPt0kOq1yFXru7V0sX1KH
+         2uGg==
+X-Gm-Message-State: ALoCoQkoOoiZjicQNDBmkmoinIPZ1qHdVIblQVn8YVEAkvNnVV4b8t5MPYf2WpIqfeuwk4HO8KT+
+X-Received: by 10.180.90.166 with SMTP id bx6mr60826943wib.65.1425919044021;
+        Mon, 09 Mar 2015 09:37:24 -0700 (PDT)
+Received: from archischi.lse.epita.fr (lse.epita.fr. [163.5.55.17])
+        by mx.google.com with ESMTPSA id cn10sm16218646wib.15.2015.03.09.09.37.22
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 09 Mar 2015 09:37:23 -0700 (PDT)
+X-Mailer: git-send-email 2.3.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265176>
 
-Shawn Pearce <spearce@spearce.org> writes:
+Hi,
+I'm a french student from EPITA and I plan to apply for the GSoC.
 
-> On Mon, Mar 9, 2015 at 9:06 AM, David Kastrup <dak@gnu.org> wrote:
->> Shawn Pearce <spearce@spearce.org> writes:
->>
->>> On Mon, Mar 9, 2015 at 6:57 AM, Michael J Gruber
->>> <git@drmicha.warpmail.net> wrote:
->>>>
->>>> Since we're talking business: git-scm.com still looks a bit like a
->>>> ProGit/Github promotion site. I don't have anything against either=
-, and
->>>> git-scm.com provides a lot of the information that users are looki=
-ng
->>>> for, and that are hard to find anywhere else; it's a landing page.=
- It
->>>> just does not look like a "project home".
->>>
->>> Yes, git-scm.com is a place to point people.
->>
->> It features "Companies & Projects Using Git" at the bottom.  Not
->> "supporting" but "using".
->>
->> Linux is point 10 on that list.  The first 6 items are Google, faceb=
-ook,
->> Microsoft, Twitter, LinkedIn, and Netflix.
->>
->> Even for an OpenSource project that does not buy into the Free Softw=
-are
->> philosophy, that is a mostly embarrassing list of companies to adver=
-tise
->> for.
->>
->> Personally, I consider the recent migration of the Emacs repository =
-to
->> Git a bigger endorsement but then that's me.
->>
->> It might make sense to reduce this list just to "Projects" since tho=
-se
->> are actually more tangible and verifiable.  Or scrap it altogether.
->
-> At the bottom of the git-scm.com page there is this blurb:
->
->   This open sourced site is hosted on GitHub.
->   Patches, suggestions and comments are welcome
->
-> And that text contains a link to the GitHub repository[1] where anyon=
-e
-> can propose modifications to the page. Unfortunately I don't know of
-> anyone paying out contribution stipends for content changes made to
-> git-scm.com.
+Adrien Schildknecht (1):
+  userdiff: funcname and word patterns for sh
 
-Yeah, thanks for the cheap shot.  I already understood that category=A0=
-B
-is subject to contempt.  Congrats on being category=A0A or C.
+ Documentation/gitattributes.txt |  2 ++
+ t/t4018-diff-funcname.sh        |  1 +
+ t/t4018/sh-function             |  4 ++++
+ t/t4018/sh-function-comment     |  6 ++++++
+ t/t4018/sh-function-nested      |  7 +++++++
+ t/t4018/sh-function-prefix      |  4 ++++
+ t/t4018/sh-function-string      |  4 ++++
+ t/t4034-diff-words.sh           |  1 +
+ t/t4034/sh/expect               | 46 +++++++++++++++++++++++++++++++++++++++++
+ t/t4034/sh/post                 | 36 ++++++++++++++++++++++++++++++++
+ t/t4034/sh/pre                  | 36 ++++++++++++++++++++++++++++++++
+ userdiff.c                      |  7 +++++++
+ 12 files changed, 154 insertions(+)
+ create mode 100644 t/t4018/sh-function
+ create mode 100644 t/t4018/sh-function-comment
+ create mode 100644 t/t4018/sh-function-nested
+ create mode 100644 t/t4018/sh-function-prefix
+ create mode 100644 t/t4018/sh-function-string
+ create mode 100644 t/t4034/sh/expect
+ create mode 100644 t/t4034/sh/post
+ create mode 100644 t/t4034/sh/pre
 
-> [1] https://github.com/git/git-scm.com/blob/master/README.md#contribu=
-ting
-
-Turns out that "anyone" is actually "anyone accepting the conditions fo=
-r
-a GitHub account":
-
-    If you wish to contribute to this website, please fork it on GitHub=
-,
-    push your change to a named branch, then send a pull request.
-
-I've read the rather longish Terms&Conditions of GitHub and found mysel=
-f
-unwilling to agree to them.  Which does not mean that changing the ways
-of contributing to the Git website to accommodate me would make any
-sense since obviously I don't have a clue what a member of the "Git
-community" should be proud of and ashamed of and thus would be unable t=
-o
-make a meaningful proposal anyway even if I were into website
-programming.
-
---=20
-David Kastrup
+-- 
+Adrien Schildknecht
+http://schischi.me
