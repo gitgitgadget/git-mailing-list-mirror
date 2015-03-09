@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 14/16] list-files: add file modification options -[admADM]
-Date: Mon,  9 Mar 2015 17:18:32 +0700
-Message-ID: <1425896314-10941-15-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 15/16] list-files: delete redundant cached entries
+Date: Mon,  9 Mar 2015 17:18:33 +0700
+Message-ID: <1425896314-10941-16-git-send-email-pclouds@gmail.com>
 References: <1425896314-10941-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,185 +11,122 @@ Cc: Junio C Hamano <gitster@pobox.com>, git@drmicha.warpmail.net,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 09 11:20:26 2015
+X-From: git-owner@vger.kernel.org Mon Mar 09 11:20:32 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YUunQ-0002fR-Do
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Mar 2015 11:20:24 +0100
+	id 1YUunW-0002ly-Jc
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Mar 2015 11:20:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754249AbbCIKUU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Mar 2015 06:20:20 -0400
-Received: from mail-pd0-f169.google.com ([209.85.192.169]:33792 "EHLO
-	mail-pd0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754236AbbCIKUS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Mar 2015 06:20:18 -0400
-Received: by pdno5 with SMTP id o5so19843916pdn.1
-        for <git@vger.kernel.org>; Mon, 09 Mar 2015 03:20:18 -0700 (PDT)
+	id S932204AbbCIKU0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Mar 2015 06:20:26 -0400
+Received: from mail-pa0-f46.google.com ([209.85.220.46]:39621 "EHLO
+	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932069AbbCIKUY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Mar 2015 06:20:24 -0400
+Received: by pabrd3 with SMTP id rd3so38088010pab.6
+        for <git@vger.kernel.org>; Mon, 09 Mar 2015 03:20:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=WRJfVhyav23kNwOSAxK+EF+UqennkFK5LGLwKCKi24w=;
-        b=py81tf9t/PHQbHXYu5iJr9+yK+l6AjDZJUBevcn0cwy6z9kV2jQFD7Tc/UE6Q33WrB
-         9vm7k6gxoPtazB0DObR0SAUmPd+UeGnEUgkgiqH8xWR1GKSetwL795e+BfDEH0kiiD/J
-         I/udiZrCLT4PHPpq3AN3vX2TiXUm0TGX0R8x1kyMT0BJ3UjNNAc+mPg94gONOMAgUPig
-         fx/YUvRWgo3wEs4fIi+4e1IaEo+RcDWmdQp9VLeASR1QKCkLdSzjgr73oENlpG+zMvaO
-         9dSC3CUfQeZnIe1y9YmtOf4vloAf2D6WXCZQEYN/qkTWdb1olfbmmbREn68i7jtKSaW+
-         bIKA==
-X-Received: by 10.66.184.106 with SMTP id et10mr53410711pac.138.1425896418004;
-        Mon, 09 Mar 2015 03:20:18 -0700 (PDT)
+        bh=cTxKH0dLOS3zstksf0ZqWbRgBf89xKOWHM4gxPtsvOo=;
+        b=HZCosD+M/B2keHcUSjqNui1Bcu6DBhHPRZ/E/zRVbvpOjj9QFGNM7AaBUcqNPfLx3o
+         rTRfHikapUi2INZZIq3CrzGeeCm65finPANVNsA98xAoze9qYymCiPkdJ+VLT96rf2dm
+         PMJ/jVDceNpKubjTOWWYIJxJqQVhJqI4vF+ZXpsHFzAhzI/AHVNU276E9DMZLua633dn
+         0IFsG0nFFCSvUDewa/QiqddVsYMjBjOF4tdquQGUEhhi6zCfqzJSp4gSrZ2W2d8+DtaO
+         4kGPcR9EvFgLpgsyQELcL20ppTc8k6ZgRV6UXBJS10nSjPzKP2kZJyW3uEpaz02aFzYp
+         0ICg==
+X-Received: by 10.66.66.230 with SMTP id i6mr51595713pat.108.1425896424424;
+        Mon, 09 Mar 2015 03:20:24 -0700 (PDT)
 Received: from lanh ([115.73.245.123])
-        by mx.google.com with ESMTPSA id ba12sm18552142pac.23.2015.03.09.03.20.14
+        by mx.google.com with ESMTPSA id nw3sm14346558pdb.71.2015.03.09.03.20.21
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 09 Mar 2015 03:20:17 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Mon, 09 Mar 2015 17:20:14 +0700
+        Mon, 09 Mar 2015 03:20:23 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Mon, 09 Mar 2015 17:20:20 +0700
 X-Mailer: git-send-email 2.3.0.rc1.137.g477eb31
 In-Reply-To: <1425896314-10941-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265156>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265157>
+
+When both --cached and one of -amdAMD is used together we may have two
+entries of the same path, e.g. "  foo" and "MM foo". In this case it's
+pretty clear that "foo" must be tracked, no need to display "   foo".
+The new function does that.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/list-files.c | 71 ++++++++++++++++++++++++++++++++++++++++++++=
-++++----
- 1 file changed, 66 insertions(+), 5 deletions(-)
+ builtin/list-files.c | 34 +++++++++++++++++++++++++++++++++-
+ 1 file changed, 33 insertions(+), 1 deletion(-)
 
 diff --git a/builtin/list-files.c b/builtin/list-files.c
-index a82410d..74836f6 100644
+index 74836f6..49fb820 100644
 --- a/builtin/list-files.c
 +++ b/builtin/list-files.c
-@@ -17,8 +17,10 @@ static int max_depth;
- static int show_dirs;
- static int use_color =3D -1;
- static int show_indicator;
--static int show_cached, show_untracked, show_unmerged;
-+static int show_cached, show_untracked, show_unmerged, show_changed;
- static int show_ignored;
-+static int show_added, show_deleted, show_modified;
-+static int show_wt_added, show_wt_deleted, show_wt_modified;
-=20
- static const char * const ls_usage[] =3D {
- 	N_("git list-files [options] [<pathspec>...]"),
-@@ -35,6 +37,18 @@ struct option ls_options[] =3D {
- 		 N_("show ignored files")),
- 	OPT_BOOL('u', "unmerged", &show_unmerged,
- 		 N_("show unmerged files")),
-+	OPT_BOOL('a', "added", &show_added,
-+		 N_("show added files compared to HEAD")),
-+	OPT_BOOL('d', "deleted", &show_deleted,
-+		 N_("show deleted files compared to HEAD")),
-+	OPT_BOOL('m', "modified", &show_modified,
-+		 N_("show modified files compared to HEAD")),
-+	OPT_BOOL('A', "wt-added", &show_wt_added,
-+		 N_("show added files in worktree")),
-+	OPT_BOOL('D', "wt-deleted", &show_wt_deleted,
-+		 N_("show deleted files in worktree")),
-+	OPT_BOOL('M', "wt-modified", &show_wt_modified,
-+		 N_("show modified files on worktree")),
-=20
- 	OPT_GROUP(N_("Other")),
- 	OPT_COLUMN('C', "column", &colopts, N_("show files in columns")),
-@@ -221,12 +235,52 @@ static void populate_unmerged(struct string_list =
-*result,
- 	}
+@@ -153,7 +153,10 @@ static int compare_output(const void *a_, const vo=
+id *b_)
+ {
+ 	const struct string_list_item *a =3D a_;
+ 	const struct string_list_item *b =3D b_;
+-	return strcmp(a->util, b->util);
++	int ret =3D strcmp(a->util, b->util);
++	if (ret)
++		return ret;
++	return strncmp(a->string, b->string, 2);
  }
 =20
-+static void populate_changed(struct string_list *result,
-+			     const struct string_list *change)
+ static void populate_cached_entries(struct string_list *result,
+@@ -305,6 +308,34 @@ static void wt_status_populate(struct string_list =
+*result,
+ 	string_list_remove_duplicates(result, 0);
+ }
+=20
++static void delete_duplicate_cached_entries(struct string_list *result=
+)
 +{
-+	int i;
++	struct string_list_item *src, *dst;
 +
-+	for (i =3D 0; i < change->nr; i++) {
-+		const struct string_list_item *item =3D change->items + i;
-+		struct wt_status_change_data *d =3D item->util;
-+		const char *name =3D item->string;
-+		struct stat st;
-+		char tag[2];
++	if (show_unmerged || !show_cached || !show_changed)
++		return;
 +
-+		switch (d->stagemask)
-+			continue;
++	src =3D dst =3D result->items;
++	while (src + 1 < result->items + result->nr) {
++		const char *s0 =3D dst->string;
++		const char *s1 =3D src[1].string;
 +
-+		tag[0] =3D d->index_status ? d->index_status : ' ';
-+		tag[1] =3D d->worktree_status ? d->worktree_status : ' ';
-+
-+		if ((show_added       && tag[0] =3D=3D 'A') ||
-+		    (show_deleted     && tag[0] =3D=3D 'D') ||
-+		    (show_modified    && tag[0] !=3D ' ') ||
-+		    (show_wt_added    && tag[1] =3D=3D 'A') ||
-+		    (show_wt_deleted  && tag[1] =3D=3D 'D') ||
-+		    (show_wt_modified && tag[1] !=3D ' '))
-+			;	/* keep going */
-+		else
-+			continue;
-+
-+		if (lstat(name, &st))
-+			/* color_filename() treats this as an orphan file */
-+			st.st_mode =3D 0;
-+
-+		if (!matched(result, name, st.st_mode))
-+			continue;
-+
-+		add_one(result, name, st.st_mode, tag);
++		if (s0[0] =3D=3D ' ' && s0[1] =3D=3D ' ' &&
++		    !strcmp(s0 + 3, s1 + 3)) {
++			src++;
++		} else {
++			dst++;
++			src++;
++		}
++		if (src !=3D dst)
++			*dst =3D *src;
 +	}
++	if (src !=3D dst)
++		*dst =3D *src;
++	result->nr =3D dst - result->items;
++
 +}
 +
- static void wt_status_populate(struct string_list *result,
- 			       struct index_state *istate)
- {
- 	struct wt_status ws;
-=20
--	if (!show_untracked && !show_ignored && !show_unmerged)
-+	if (!show_untracked && !show_ignored &&
-+	    !show_unmerged && !show_changed)
- 		return;
-=20
- 	wt_status_prepare(&ws);
-@@ -244,6 +298,8 @@ static void wt_status_populate(struct string_list *=
-result,
- 		populate_untracked(result, &ws.ignored, "!!");
- 	if (show_unmerged)
- 		populate_unmerged(result, &ws.change);
-+	if (show_changed)
-+		populate_changed(result, &ws.change);
-=20
- 	qsort(result->items, result->nr, sizeof(*result->items), compare_outp=
-ut);
- 	string_list_remove_duplicates(result, 0);
-@@ -253,8 +309,9 @@ static void cleanup_tags(struct string_list *result=
-)
+ static void cleanup_tags(struct string_list *result)
  {
  	int i, same_1 =3D 1, same_2 =3D 1, pos, len;
+@@ -418,6 +449,7 @@ int cmd_list_files(int argc, const char **argv, con=
+st char *cmd_prefix)
 =20
--	if (show_cached + show_untracked + show_ignored > 1 ||
--	    show_unmerged)
-+	if (show_cached + show_untracked + show_ignored +
-+	    show_added + show_deleted + show_wt_added + show_wt_deleted > 1 |=
-|
-+	    show_unmerged || show_modified || show_wt_modified)
- 		return;
-=20
- 	for (i =3D 1; i < result->nr && (same_1 || same_2); i++) {
-@@ -334,7 +391,11 @@ int cmd_list_files(int argc, const char **argv, co=
-nst char *cmd_prefix)
-=20
- 	argc =3D parse_options(argc, argv, prefix, ls_options, ls_usage, 0);
-=20
--	if (!show_cached && !show_untracked && !show_ignored && !show_unmerge=
-d)
-+	show_changed =3D
-+		show_added || show_deleted || show_modified ||
-+		show_wt_added || show_wt_deleted || show_wt_modified;
-+	if (!show_cached && !show_untracked && !show_ignored &&
-+	    !show_unmerged && !show_changed)
- 		show_cached =3D 1;
-=20
- 	if (want_color(use_color))
+ 	populate_cached_entries(&result, &the_index);
+ 	wt_status_populate(&result, &the_index);
++	delete_duplicate_cached_entries(&result);
+ 	cleanup_tags(&result);
+ 	display(&result);
+ 	string_list_clear(&result, 0);
 --=20
 2.3.0.rc1.137.g477eb31
