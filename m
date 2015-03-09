@@ -1,107 +1,123 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: Bug? git submodule add SSL certificate problem: unable to get
- local issuer certificate
-Date: Tue, 10 Mar 2015 21:56:42 +1300
-Message-ID: <54FEB1CA.7020204@web.de>
-References: <F24DBF8D-40EE-4C8D-AE9C-463E59C4AAD7@aschemann.net> <27F61CEE-F1D3-4B7F-B394-8D06A4AD8976@aschemann.net> <20150309074339.GA31866@peff.net>
+From: "Zoe Michel ." <cscc2015@gmail.com>
+Subject: I am sending you my new invitation for special session, workshops and invited papers
+Date: Mon, 9 Mar 2015 23:39:52 +0200
+Message-ID: <20150309213952.7527C3D91D8A@genf174.server4you.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>, Aschemann Gerd <gerd@aschemann.net>
-X-From: git-owner@vger.kernel.org Tue Mar 10 10:17:23 2015
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Mar 10 10:31:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YVGHz-0006yt-37
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Mar 2015 10:17:23 +0100
+	id 1YVGV9-0003sV-5P
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Mar 2015 10:30:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752211AbbCJJRR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Mar 2015 05:17:17 -0400
-Received: from mout-xforward.web.de ([82.165.159.34]:49163 "EHLO
-	mout-xforward.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752186AbbCJJRL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Mar 2015 05:17:11 -0400
-X-Greylist: delayed 1212 seconds by postgrey-1.27 at vger.kernel.org; Tue, 10 Mar 2015 05:17:11 EDT
-Received: from [192.168.3.124] ([101.98.211.54]) by smtp.web.de (mrweb103)
- with ESMTPSA (Nemesis) id 0LzKEH-1XRPi12P6f-014TUF; Tue, 10 Mar 2015 09:56:53
- +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
-In-Reply-To: <20150309074339.GA31866@peff.net>
-X-Provags-ID: V03:K0:ecslyRYKZmqmbZkQnABirAC6RqI0jsjXjNgy0wiw/STjZFSfZVb
- 0Em08yec4iuuUS8Pkk0dXyjZfeJcP0tTyTUvIh36MGNT6lz/Bwc/WNr7qkdspcZDtuOMFaN
- 2U6wOaqQTwtJW0wMjYG2piHFceARpnRGSilscFS+cnrY9Y1MPGtX7/HzkuMB6wrqi8Jc6nP
- 7f4t/DbGKcxFfXs2aeUzg==
-X-UI-Out-Filterresults: junk:10;
+	id S1751257AbbCJJak (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Mar 2015 05:30:40 -0400
+Received: from genf174.server4you.net ([217.172.184.70]:45710 "EHLO
+	genf174.server4you.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750976AbbCJJag convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Mar 2015 05:30:36 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by genf174.server4you.net (Postfix) with ESMTP id 6FC403DB4D90
+	for <git@vger.kernel.org>; Tue, 10 Mar 2015 07:21:44 +0100 (CET)
+Received: from genf174.server4you.net ([127.0.0.1])
+	by localhost (genf174.server4you.net [127.0.0.1]) (amavisd-new, port 10032)
+	with ESMTP id 5qpcztoLQFLW for <git@vger.kernel.org>;
+	Tue, 10 Mar 2015 07:21:43 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by genf174.server4you.net (Postfix) with ESMTP id C3A2C3DA2BD0
+	for <git@vger.kernel.org>; Tue, 10 Mar 2015 00:59:38 +0100 (CET)
+X-Virus-Scanned: amavisd-new at genf174.server4you.net
+Received: from genf174.server4you.net ([127.0.0.1])
+	by localhost (genf174.server4you.net [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id xTWR-XR8lISW for <git@vger.kernel.org>;
+	Tue, 10 Mar 2015 00:59:38 +0100 (CET)
+Received: from 10.0.2.15 (genf174.server4you.net [217.172.184.70])
+	by genf174.server4you.net (Postfix) with SMTP id 7527C3D91D8A
+	for <git@vger.kernel.org>; Mon,  9 Mar 2015 22:39:51 +0100 (CET)
+X-Priority: 1 (Highest)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265222>
 
-Am 09.03.2015 um 20:43 schrieb Jeff King:
-> On Thu, Mar 05, 2015 at 04:20:10PM +0100, Aschemann Gerd wrote:
->
->> seems to be a bug: If adding a submodule from an https URL with a certificate issued by StartSSL (or even a private/self-signed one?) leads to the following error:
->>
->>    $ git -c http.sslverify=false submodule add https://example.com/git/xxx.git
->>    Cloning into 'xxx'...
->>    fatal: unable to access 'https://example.com/git/xxx.git/': server certificate verification failed. CAfile: /etc/ssl/certs/ca-certificates.crt CRLfile: none
->>    Clone of 'https://example.com/git/xxx.git' into submodule path 'xxx' failed
->>
->> Performing a simple clone works well:
->>
->>    $ git -c http.sslverify=false clone https://example.com/git/xxx.git
->>    Cloning into 'xxx'...
->>    Password for 'https://example.com':
->
-> I think the problem is that the submodule code wipes all "local"
-> environment variables before executing the submodule clone, and that
-> includes the variable containing command-line config.
->
-> Config like this is in a funny boat. We do not want it to cross
-> transport boundaries, so that if we run:
->
->    git -c foo=bar clone /some/local/path
->
-> the process serving /some/local/path should not see the "foo" option[1].
-> But for submodules in the same repository, keeping the shared config is
-> probably more reasonable (I can imagine a config variable that you might
-> want to behave differently between the submodule and the main project,
-> but I could not think of any off-hand, and I expect it would be a rare
-> exception).
->
-> Submodule folks (cc'd) may have opinions.
+Dear Authors,
 
-I tend to rather not share configs. While I agree that for the example
-which started this it would be correct to simply pass http.sslverify,
-that doesn't always make sense (e.g. it never does for a setting like
-core.worktree).
+We would like to invite you to organize a Special Session or a Workshop 
+in CSCC 2015: Circuits, Systems, Communications and Computers
+www.cscc.co in conjuction with several parallel conferences of INASE.org
 
-We already have two options for submodule add and update that are
-passed to the clone command (--reference & --depth), maybe it is time
-to add another one for passing config options to clone (which then get
-set permanently in the submodule's config).
+We would like to invite you also to present an Invited Lecture (you know the privileges
+from my former invitations) in CSCC.org and/org in 
+INASE.org Conferences
+* Pure Mathematics, Applied Mathematics and Computational Methods
+* Continuum Mechanics, * Mechatronics and Robotics, Structural Analysis
+* Energy, Environment, Development and Economics
+* Civil Engineering, * Water Resources, Hydraulics & Hydrology
+* Geology and Seismology, * Education and Modern Educational Technologies 
+* Materials, * Industrial Engineering, * Maritime and Naval Science and Engineering
 
-> -Peff
->
-> [1] This behavior comes from 655e8d9 (do not pass "git -c foo=bar"
->      params to transport helpers, 2010-08-24), and the original
->      discussion is here:
->
->        http://thread.gmane.org/gmane.comp.version-control.git/154241/focus=154255
->
->      I am tempted to simply drop the transport-layer blocking of config
->      options. It is not buying us anything security-wise, and it could
->      actually be convenient to pass options to the "other side". But it's
->      probably a bad idea, if only because it would not be consistently
->      applied to repos on the other side of git://, http://, or ssh
->      sessions.
->
->      So the sanest fix, if we want submodules to inherit the command-line
->      config, would be to drop GIT_CONFIG_PARAMETERS from local_repo_env,
->      and have the transport code suppress it manually.
->
+CSCC.org  and INASE.org  received more than 1400 papers in July of 2014. From them after
+evaluation about 600 papers were accepted. See photos from 2014:
+inase-news.blogspot.com/2014/12/post-conference-report-inase_15.html 
+
+The deadline for paper submission for Special Sessions and Workshops of CSCC.co and
+INASE.org conferences will be April 30, 2015 
+
+We would like to invite you to organize a Special Session or Workshop. For successful
+Special
+Session / Workshop organizers we give financial support (honorarium) and free
+publication, or even air tickets and hotel expenses in case of great sucess in their
+special session / workshop. 
+Contact us for more details. Successful special session organizers
+will be automatically included in the committee of CSCC 2016, as well as we will
+jointly examine their participation in the Editorial Board in one of our 36
+collaborating ISI/SCI Journals. Special Session organizers are also appointed
+Associate Editors in the conference Proceedings. We will also give several mailing
+lists and web sites to the Session Organizers to send their own Call For Papers.
+
+So, far we have 36 Special Sessions and we believe that we will reach more than 100
+until July. Send the proposal of your Special Session to us now following the
+instructions of cscc.co
+
+The list of the reviewers that will undertake the peer review process and their
+emails is included in the proceedings and is also sent to ISI, SCOPUS and other
+indexes.
+
+The  CSCC.co and INASE.org conferences Conference are organized in the
+wonderful and historical island of Zakynthos in Greece (July 16,17,18,19,20,21 2015
+/ Five days).
+The conferences are indexed in ISI, SCOPUS, Engineering Villeage, EI Compendex, IET etc
+and has collaboration with important scientific societies and 3 universities:
+More Details: www.cscc.co
+Last year the Proceedings of  CSCC.co and INASE.org conferences were published in 12
+Volumes (hard-copy) and one
+CD (containing the material of these 12 volumes) and this material was distributed
+to our authors.
+See a full report and many wonderful photos from the  CSCC.co and INASE.org conferences
+here:
+inase-news.blogspot.com/2014/12/post-conference-report-inase_15.html  www.cscc14.org
+
+CSCC has always famous plenary speakers from prestigious universities, IEEE Fellows
+(www.cscc.co / last year: www.cscc14.org) and this year we have arranged
+post-conference publication of all the extended version of all the accepted papers
+in 36 ISI/SCI Indexed Journals. We have also 4 Tutorials by well-known colleagues.
+
+
+See you in Zakynthos, Greece in July
+
+Dr. Z. Michel
+
+
+******************************************************************************************
+******************
+Should you wish not to receive further invitations,
+please send an email to cscc2015@gmail.com with the exact phrase " REMOVE
+git@vger.kernel.org " in the subject line.
+Do not include this exact phrase in the body of your email please, but only in the
+Subject Line of your Email!
