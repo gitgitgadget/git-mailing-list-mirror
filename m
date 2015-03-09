@@ -1,195 +1,96 @@
 From: Sudhanshu Shekhar <sudshekhar02@gmail.com>
-Subject: [PATCH v2 2/2] Added test cases for git reset -
-Date: Mon,  9 Mar 2015 13:45:36 +0530
-Message-ID: <1425888936-23370-2-git-send-email-sudshekhar02@gmail.com>
-References: <1425888936-23370-1-git-send-email-sudshekhar02@gmail.com>
+Subject: [PATCH v2 1/2] Teach reset the same short-hand as checkout
+Date: Mon,  9 Mar 2015 13:45:35 +0530
+Message-ID: <1425888936-23370-1-git-send-email-sudshekhar02@gmail.com>
 Cc: Matthieu.Moy@grenoble-inp.fr, gitster@pobox.com, davvid@gmail.com,
 	sunshine@sunshineco.com, Sudhanshu Shekhar <sudshekhar02@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 09 09:16:17 2015
+X-From: git-owner@vger.kernel.org Mon Mar 09 09:16:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YUsrI-0001Nt-Jh
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Mar 2015 09:16:16 +0100
+	id 1YUsrJ-0001Nt-5x
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Mar 2015 09:16:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752498AbbCIIQH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Mar 2015 04:16:07 -0400
-Received: from mail-pa0-f41.google.com ([209.85.220.41]:36867 "EHLO
-	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751715AbbCIIQE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Mar 2015 04:16:04 -0400
-Received: by paceu11 with SMTP id eu11so56944723pac.4
-        for <git@vger.kernel.org>; Mon, 09 Mar 2015 01:16:04 -0700 (PDT)
+	id S1752509AbbCIIQM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Mar 2015 04:16:12 -0400
+Received: from mail-pd0-f173.google.com ([209.85.192.173]:33951 "EHLO
+	mail-pd0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751668AbbCIIPu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Mar 2015 04:15:50 -0400
+Received: by pdno5 with SMTP id o5so19132130pdn.1
+        for <git@vger.kernel.org>; Mon, 09 Mar 2015 01:15:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=hXl3pPyEUjIBEcr7qWZBBB0YXrzg4lJIoV425Klh/+Y=;
-        b=xs3wa+NfaLWzTG7Wbr0mAc0JITGXaLCNg4ForAQfhEXaek6UEoHP27YGbli3K3nrlw
-         Zd1OaUHP2Yy1tSVyDCdefXt0wH6b5npuQ95KpjjJ9aRIChyIejiVj+xHrGwqqb6xWggz
-         j4hsEuUFdmDD+CaVIWz1IZi/34/FZKC6SFUYRfUqVpugM/3eWWPHv7JaceIonaEyo301
-         4SfYoUTqwUqtIyfjh9GgqkB7CKoke3pNPLRpxqFpMikRNLIOtLO2DZxTS46qGgU4Aod9
-         o2/hj+ci/u3VxXWNeT2Gc3PqqaV7Igh4KC/ONseWwanJWF3P9xWDBQpsRag2oFzcoKwp
-         /LUQ==
-X-Received: by 10.66.100.138 with SMTP id ey10mr46330456pab.142.1425888964030;
-        Mon, 09 Mar 2015 01:16:04 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id;
+        bh=baWHmAYH8WYTQShBqLXwZ8H9pczJBOWvm5zdkbIld24=;
+        b=XLfgTEmpAXmcMMqBgE7jwwiinWL3P13bWv4h8d3dAzpixvJrrSSUk09WjJ33zo0WJm
+         gi05kBZE9JXPFEllse7yztlO/ujCdWHWM3tMqnpLDrmdd36e7r2lM9WreZohUTomLG0q
+         1Atn+BKUwQcuB7tNc9tDve411SL9liOjHOCa+FTL9shSk8sYqKxfXT0gg79EuxQw9Duo
+         oV9aC2UsGTM14a3ah1f/fELKrBhggQsIQAt1fsvyADWva3ZhZmSFOSplr/Ef7iQyxEDV
+         mQ5GMTB54vNGwOoed6LAweT9Iphey/OLT+kzgv/2QKFeD+SYQjLj75/riiz/0dFukkrD
+         pI+w==
+X-Received: by 10.66.160.197 with SMTP id xm5mr50995421pab.51.1425888950386;
+        Mon, 09 Mar 2015 01:15:50 -0700 (PDT)
 Received: from shekhar-Inspiron-N5110.iiit.ac.in ([14.139.82.6])
-        by mx.google.com with ESMTPSA id d4sm17782033pdm.50.2015.03.09.01.16.00
+        by mx.google.com with ESMTPSA id d4sm17782033pdm.50.2015.03.09.01.15.46
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 09 Mar 2015 01:16:02 -0700 (PDT)
+        Mon, 09 Mar 2015 01:15:48 -0700 (PDT)
 X-Mailer: git-send-email 2.3.1.168.g0c82976.dirty
-In-Reply-To: <1425888936-23370-1-git-send-email-sudshekhar02@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265136>
 
-1) Confirm error message when git reset is used with no previous branch
-2) Confirm git reset - works like git reset @{-1}
-3) Confirm "-" is always treated as a commit unless the -- file option
-is specified
+"-" now means the previous branch.
 
-Signed-off-by: Sudhanshu Shekhar<sudshekhar02@gmail.com>
-Thanks-to: David Aguilar<davvid@gmail.com>
+Signed-off-by: Sudhanshu Shekhar <sudshekhar02@gmail.com>
+Thanks-to: Eric Sunshine, Junio C Hamano, Matthieu Moy
 ---
-David, thank you for your remarks. I have tried to incorporate your suggestions into this patch.
-Please let me know if I have missed out on anything else.
+ builtin/reset.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
- t/t7102-reset.sh | 121 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 121 insertions(+)
-
-diff --git a/t/t7102-reset.sh b/t/t7102-reset.sh
-index 98bcfe2..fe43f64 100755
---- a/t/t7102-reset.sh
-+++ b/t/t7102-reset.sh
-@@ -568,4 +568,125 @@ test_expect_success 'reset --mixed sets up work tree' '
- 	test_cmp expect actual
- '
+diff --git a/builtin/reset.c b/builtin/reset.c
+index 4c08ddc..02f33ef 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -192,6 +192,7 @@ static void parse_args(struct pathspec *pathspec,
+ {
+ 	const char *rev = "HEAD";
+ 	unsigned char unused[20];
++	int substituted_minus = 0;
+ 	/*
+ 	 * Possible arguments are:
+ 	 *
+@@ -205,6 +206,10 @@ static void parse_args(struct pathspec *pathspec,
+ 	 */
  
-+cat >expect <<EOF
-+fatal: bad flag '-' used after filename
-+EOF
-+
-+test_expect_success 'reset - with no previous branch' '
-+	git init no_previous --quiet &&
-+	(
-+		cd no_previous &&
-+		test_must_fail git reset - 2>output
-+	) &&
-+	test_cmp expect no_previous/output
-+'
-+
-+test_expect_success 'reset - while having file named - and no previous branch' '
-+	git init no_previous --quiet &&
-+	(
-+		cd no_previous &&
-+		touch ./- &&
-+		test_must_fail git reset - 2>output
-+	) &&
-+	test_cmp expect no_previous/output
-+'
-+
-+cat >expect <<EOF
-+Unstaged changes after reset:
-+M	-
-+M	1
-+EOF
-+
-+test_expect_success 'reset - in the prescence of file named - with previous branch' '
-+	git init no_previous --quiet &&
-+	(
-+		cd no_previous &&
-+		touch ./- 1 &&
-+		git add 1 - &&
-+		git commit -m "add base files" &&
-+		git checkout -b new_branch &&
-+		echo "random" >./- &&
-+		echo "wow" >1 &&
-+		git add 1 - &&
-+		git reset - >../output
-+	) &&
-+	rm -rf no_previous &&
-+	test_cmp output expect
-+'
-+test_expect_success 'reset - in the presence of file named - with -- option' '
-+	git init no_previous --quiet &&
-+	(
-+		cd no_previous &&
-+		touch ./- 1 &&
-+		git add 1 - &&
-+		git commit -m "add base files" &&
-+		git checkout -b new_branch &&
-+		echo "random" >./- &&
-+		echo "wow" >1 &&
-+		git add 1 - &&
-+		git reset - -- >../output
-+	) &&
-+	rm -rf no_previous &&
-+	test_cmp output expect
-+'
-+
-+cat >expect <<EOF
-+Unstaged changes after reset:
-+M	-
-+EOF
-+
-+test_expect_success 'reset - in the presence of file named - with -- file option' '
-+	git init no_previous --quiet &&
-+	(
-+		cd no_previous &&
-+		touch ./- 1 &&
-+		git add 1 - &&
-+		git commit -m "add base files" &&
-+		git checkout -b new_branch &&
-+		echo "random" >./- &&
-+		echo "wow" >1 &&
-+		git add 1 - &&
-+		git reset -- - >../output
-+	) &&
-+	rm -rf no_previous
-+	test_cmp output expect
-+'
-+test_expect_success 'reset - in the presence of file named - with both pre and post -- option' '
-+	git init no_previous --quiet &&
-+	(
-+		cd no_previous &&
-+		touch ./- 1 &&
-+		git add 1 - &&
-+		git commit -m "add base files" &&
-+		git checkout -b new_branch &&
-+		echo "random" >./- &&
-+		echo "wow" >1 &&
-+		git add 1 - &&
-+		git reset - -- - >../output
-+	) &&
-+	rm -rf no_previous
-+	test_cmp output expect
-+'
-+
-+test_expect_success 'reset - works same as reset @{-1}' '
-+	git init no_previous --quiet &&
-+	(
-+		cd no_previous &&
-+		echo "random" >random &&
-+		git add random &&
-+		git commit -m "base commit" &&
-+		git checkout -b temp &&
-+		echo new-file >new-file &&
-+		git add new-file &&
-+		git commit -m "added new-file" &&
-+		git reset - &&
-+		git status --porcelain >../first &&
-+		git add new-file &&
-+		git commit -m "added new-file" &&
-+		git reset @{-1} &&
-+		git status --porcelain >../second
-+	) &&
-+	test_cmp first second
-+'
-+
- test_done
+ 	if (argv[0]) {
++		if (!strcmp(argv[0], "-")) {
++			argv[0] = "@{-1}";
++			substituted_minus = 1;
++		}
+ 		if (!strcmp(argv[0], "--")) {
+ 			argv++; /* reset to HEAD, possibly with paths */
+ 		} else if (argv[1] && !strcmp(argv[1], "--")) {
+@@ -225,12 +230,14 @@ static void parse_args(struct pathspec *pathspec,
+ 			verify_non_filename(prefix, argv[0]);
+ 			rev = *argv++;
+ 		} else {
++			/* We were treating "-" as a commit and not a file */
++			if (substituted_minus)
++				argv[0] = "-";
+ 			/* Otherwise we treat this as a filename */
+ 			verify_filename(prefix, argv[0], 1);
+ 		}
+ 	}
+ 	*rev_ret = rev;
+-
+ 	if (read_cache() < 0)
+ 		die(_("index file corrupt"));
+ 
 -- 
 2.3.1.168.g0c82976.dirty
