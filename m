@@ -1,135 +1,185 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: A branch question
-Date: Tue, 10 Mar 2015 14:13:59 -0700
-Message-ID: <xmqqoao0zhbc.fsf@gitster.dls.corp.google.com>
-References: <6AC11CE0-764C-4CC5-89CD-05FFB6D29EA3@jrw.org>
+Subject: Re: [PATCH v3/GSoC/MICRO] revision: forbid combining --graph and --no-walk
+Date: Tue, 10 Mar 2015 14:39:38 -0700
+Message-ID: <xmqqegowzg4l.fsf@gitster.dls.corp.google.com>
+References: <1425632110-31863-1-git-send-email-dongcan.jiang@gmail.com>
+	<297580e4cf8a1152224394ce27f67e2457657615.1425865346.git.dongcan.jiang@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-2022-jp
-Cc: git@vger.kernel.org
-To: "J. R. Westmoreland" <jr@jrw.org>
-X-From: git-owner@vger.kernel.org Tue Mar 10 22:14:11 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, sunshine@sunshineco.com, l.s.r@web.de
+To: Dongcan Jiang <dongcan.jiang@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 10 22:40:08 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YVRTd-0001Mp-4s
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Mar 2015 22:14:09 +0100
+	id 1YVRsl-0004El-DA
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Mar 2015 22:40:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753143AbbCJVOF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Mar 2015 17:14:05 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:53716 "EHLO
+	id S1752978AbbCJVkB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Mar 2015 17:40:01 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:62495 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753045AbbCJVOD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Mar 2015 17:14:03 -0400
+	with ESMTP id S1752691AbbCJVkA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Mar 2015 17:40:00 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id C741A3E5AB;
-	Tue, 10 Mar 2015 17:14:01 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E41263EF56;
+	Tue, 10 Mar 2015 17:39:59 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=rNFQrolqqUxBjJdaftcZ5IF5fBU=; b=IWisRR
-	K4NaY2rN4TLuj7wrZuhAvppB24XpWZTyggBTO6y2hnKdzIeGN2iL4g22NNHyQh63
-	/keh6j4l3unYddcFIsWRvCK+tGlsVVefbi+8adFqfd1avVXMu3CS2qT1yhBf3lBQ
-	SJTq3f6cstQPBDuxb5MLMtE9BY4nVg9U4vqQU=
+	:content-type; s=sasl; bh=ovTyehFlDtGPvdrMFAmCQs9UeRg=; b=jSkKH2
+	tM/yIGGr9Y8dcd1TCJGBZ1ObeX44rClSNoDSJMggJtMj+AmP3HjiKAM93UgHuAwg
+	1vZpPt8oUOYuPgEXuFHojwMhrLH/BcICeboNFY56GwpTtozTAA7Qii8esryBxQ48
+	/fd67LLkeRfsZAyFwnG5D0O6hsjsNfxURZ9Lo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=XYaSmZLLg6jR1EqwN40s8dXIPv9asmuz
-	khFOFlaUSmV/w/FtjLzJM9DRpJK7YzMwyMjqXpTe+0OKriuHgJeFUfrmeeD0IrDg
-	MgUlCKKYAcSpf50gFojyq6OcVpILH2P2rCkrRJlzGh5rKXiSpQkbXMtX089d4i5u
-	C7vFLR/PJL8=
+	:content-type; q=dns; s=sasl; b=I3b8c9tQHxfHHQAeNJlXC8NO1HQBEBCF
+	DxgSjzgu3sSveMVH47/pmpDgLb3zjaIE9RUsmmTRliHUvjPfQIIU0kEyBI07SKqn
+	ywSnl2xI/A1Cub/FFM2cCXThCyrlDwIqNx46PkkdJ6in+Yzpgk7zLY9exSBKKFLX
+	rGKvwSNSWHU=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B289D3E5AA;
-	Tue, 10 Mar 2015 17:14:01 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id DB42D3EF55;
+	Tue, 10 Mar 2015 17:39:59 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 955053E5A6;
-	Tue, 10 Mar 2015 17:14:00 -0400 (EDT)
-In-Reply-To: <6AC11CE0-764C-4CC5-89CD-05FFB6D29EA3@jrw.org>
-	(J. R. Westmoreland's message of "Tue, 10 Mar 2015 14:56:40 -0600")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1C3523EF34;
+	Tue, 10 Mar 2015 17:39:40 -0400 (EDT)
+In-Reply-To: <297580e4cf8a1152224394ce27f67e2457657615.1425865346.git.dongcan.jiang@gmail.com>
+	(Dongcan Jiang's message of "Mon, 9 Mar 2015 12:09:54 +0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 5F4B6474-C76A-11E4-A665-29999F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: F4DC013A-C76D-11E4-8D13-29999F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265264>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265265>
 
-"J. R. Westmoreland" <jr@jrw.org> writes:
+Dongcan Jiang <dongcan.jiang@gmail.com> writes:
 
-> I have a number of repos that were converted from svn to git. After
-> the conversion the branches that contained each release were named
-> something like “branches/version_<version-number>”. We want to
-> modify the repo so the branches are named something like
-> “release/<version-number>”.
+> Because "--graph" is about connected history while --no-walk
+> is about discrete points, it does not make sense to allow
+> giving these two options at the same time. [1]
 >
-> I currently do a command sequence like this:
-> git checkout <existing-branch>
-> git branch -m <existing-branch> <new-branch>
-> git push origin :<old-branch>
-> git push origin <new-branch>
-> Then I do a:
-> git checkout master
-> git branch -D <new-branch>
-> to cleanup my local area.
->
-> Note: These branches are only kept for historical purposes and not
-> modified except occasionally the latest release may have an update so
-> fix a bug.
->
-> Finally, as we move forward, what is the accepted best practice for doing a release?
+> This change allows git-show to have such options' combination
+> as a special case, because git-show itself has underlying
+> --no-walk option, while "git show --graph" is a legal and
+> useful operation which is tested in t4052. [2,3]
 
-A few comments:
+Hmph, I actually was hoping to see that you would either (1) explain
+why this special case is not useful, fix t4052 and do without
+cmd_is_show bit, or (2) explain why this special case _is_ useful in
+a more concrete terms.
 
- 1. You can rename a branch without checking it out, can't you?
+"X is legal and tested" does not automatically imply that whatever
+random thing the implementation does, and the test whose expectation
+matches what it does, is a well-thought-out and a useful operation.
+If you are going in the direction (2), it would have been better if
+the reason why "git show --graph one_commit" is useful is given here
+in your own words.
 
-    $ git branch -m version_1.0 v1.0
-    $ git branch -m version_1.1 v1.1
-    ...
+You do not want to force those who are reading this log message 6
+months down the road to visit [2,3] for more details.
 
- 2. If you want to only correct what is shown at origin to the other
-    people, then you do not have to update your local repository.
+> diff --git a/builtin/log.c b/builtin/log.c
+> index dd8f3fc..5b5d028 100644
+> --- a/builtin/log.c
+> +++ b/builtin/log.c
+> @@ -524,6 +524,7 @@ int cmd_show(int argc, const char **argv, const char *prefix)
+>  
+>  	memset(&match_all, 0, sizeof(match_all));
+>  	init_revisions(&rev, prefix);
+> +	rev.cmd_is_show = 1;
+>  	rev.diff = 1;
+>  	rev.always_show_header = 1;
+>  	rev.no_walk = REVISION_WALK_NO_WALK_SORTED;
 
-    $ git push origin version_1.0 v1.0
-    $ git push origin version_1.1 v1.1
-    ...
+OK.
 
- 3. If these old ones are meant to be immutable, then storing them as
-    tags instead of leaving them as branches might make more sense,
-    i.e.
+> diff --git a/revision.c b/revision.c
+> index 66520c6..5d6fbef 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -1399,6 +1399,8 @@ void init_revisions(struct rev_info *revs, const char *prefix)
+>  
+>  	revs->commit_format = CMIT_FMT_DEFAULT;
+>  
+> +	revs->cmd_is_show = 0;
+> +
 
-    $ git push origin version_1.0 tags/v1.0
-    $ git push origin version_1.1 tags/v1.1
-    ...
+The new assignment and a blank line shouldn't be necessary; the
+memset() at the beginning is there so that you do not have to do
+this.
 
-   If you are still actively maintaining an older release, you would
-   still want to have release points marked on the maintenance
-   branch, so 2. and 3. can be combined.  Branch v1.0 may be used to
-   backport fixes to produce v1.0.x releases, each of which would be
-   tagged individually, perhaps like this:
+> diff --git a/revision.h b/revision.h
+> index 0ea8b4e..378c3bf 100644
+> --- a/revision.h
+> +++ b/revision.h
+> @@ -146,6 +146,9 @@ struct rev_info {
+>  			track_first_time:1,
+>  			linear:1;
+>  
+> +	/* cmd type */
+> +	unsigned int  cmd_is_show:1;
 
-    $ git checkout version_1.0
-    
-    : rename it to maint-1.0 to clarify this is for 1.0.x series
-    : maintenance
-    $ git branch -m maint-1.0
+If you are going to comment, imagine that somebody will want to add
+a new subcommand in "git log" family in the future, and try to help
+him decide if he wants to flip this bit for his subcommand with that
+comment.  He would scratch his head, reading "cmd type?", and wonder
+"Hmmmm, what makes 'show' special?  Is my new command also special
+like 'show' is?  What makes my new command the same cmd type as
+'show' (or different)?"  The comment does not help him answer these
+questions very much.
 
-    : tag the released version, with GPG signature
-    $ git tag -s v1.0 maint-1.0
+An alternative is to not to add the misleading comment; cmd_is_show
+is clear enough indication for such a person that he does not want
+the bit set because whatever new subcommand he is adding is not
+'show'.
 
-    : push the whole thing out
-    $ git push origin maint-1.0 v1.0
+This is becoming to appear more and more that cmd_is_show is "allow
+combined use of graph and no-walk only to avoid breaking a few
+tests", not "in the context of show, graph and no-walk is useful",
+at least to me.  Perhaps the comment should say
 
-    : when it is time to do more on the older maintenance track
-    $ git checkout maint-1.0
-    : hack hack hack to prepare maintenance release
-    $ git commit
+	/*
+         * special case to prevent 'git show --graph' that does not
+         * walk from triggering the usual "--no-walk and --graph cannot
+         * be used together" error.
+         */
+	unsigned int cmd_is_show:1;
 
-    : sign the release tag
-    $ git tag -s v1.0.1
+or even name the variable more explicitly, i.e.
 
-    : push the whole thing out
-    $ git push origin maint-1.0 v1.0.1
+	unsigned int allow_graph_and_no_walk:1;
 
+I dunno.
 
-3. is what I would be using if I were you.
+The tests look fine.  Thanks.
+
+> diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+> index 5f2b290..f111705 100755
+> --- a/t/t4202-log.sh
+> +++ b/t/t4202-log.sh
+> @@ -887,4 +887,8 @@ test_expect_success GPG 'log --graph --show-signature for merged tag' '
+>  	grep "^| | gpg: Good signature" actual
+>  '
+>  
+> +test_expect_success 'log --graph --no-walk is forbidden' '
+> +	test_must_fail git log --graph --no-walk
+> +'
+> +
+>  test_done
+> diff --git a/t/t6014-rev-list-all.sh b/t/t6014-rev-list-all.sh
+> index 991ab4a..c9bedd2 100755
+> --- a/t/t6014-rev-list-all.sh
+> +++ b/t/t6014-rev-list-all.sh
+> @@ -35,4 +35,8 @@ test_expect_success 'repack does not lose detached HEAD' '
+>  
+>  '
+>  
+> +test_expect_success 'rev-list --graph --no-walk is forbidden' '
+> +	test_must_fail git rev-list --graph --no-walk HEAD
+> +'
+> +
+>  test_done
