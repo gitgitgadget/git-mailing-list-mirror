@@ -1,79 +1,66 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v3 2/2] Added tests for reset -
-Date: Tue, 10 Mar 2015 14:26:38 +0100
-Message-ID: <vpqa8zlx9td.fsf@anie.imag.fr>
-References: <1425984728-27996-1-git-send-email-sudshekhar02@gmail.com>
-	<1425984728-27996-2-git-send-email-sudshekhar02@gmail.com>
+From: Paul Tan <pyokagan@gmail.com>
+Subject: Re: [PATCH v2 2/4] git-credential-store: support XDG_CONFIG_HOME
+Date: Tue, 10 Mar 2015 21:43:03 +0800
+Message-ID: <CACRoPnRoY=c5NukCCS0OPMaL1TvqSuSL036-mK+4sae_6VgrVA@mail.gmail.com>
+References: <1425801532-8483-1-git-send-email-pyokagan@gmail.com>
+	<1425801532-8483-3-git-send-email-pyokagan@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, gitster@pobox.com, davvid@gmail.com,
-	sunshine@sunshineco.com
-To: Sudhanshu Shekhar <sudshekhar02@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 10 14:26:55 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Jeff King <peff@peff.net>, Paul Tan <pyokagan@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 10 14:43:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YVKBS-0007BN-O3
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Mar 2015 14:26:55 +0100
+	id 1YVKRD-00074Y-F0
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Mar 2015 14:43:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752863AbbCJN0u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Mar 2015 09:26:50 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:51757 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751285AbbCJN0t (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Mar 2015 09:26:49 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t2ADQb0g018950
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 10 Mar 2015 14:26:37 +0100
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t2ADQcPP004468;
-	Tue, 10 Mar 2015 14:26:38 +0100
-In-Reply-To: <1425984728-27996-2-git-send-email-sudshekhar02@gmail.com>
-	(Sudhanshu Shekhar's message of "Tue, 10 Mar 2015 16:22:08 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 10 Mar 2015 14:26:37 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t2ADQb0g018950
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1426598800.55393@zvDofPNUj+zEYoif0losow
+	id S1752199AbbCJNnH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Mar 2015 09:43:07 -0400
+Received: from mail-la0-f49.google.com ([209.85.215.49]:44996 "EHLO
+	mail-la0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751026AbbCJNnF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Mar 2015 09:43:05 -0400
+Received: by labgm9 with SMTP id gm9so1719282lab.11
+        for <git@vger.kernel.org>; Tue, 10 Mar 2015 06:43:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=VxjyTtaAjF0lNuk6SEEEsKnMOaQV+/Z6Vf/6QKxC1eg=;
+        b=kf8aHL/Ug4pUxuBPaI3F0D3io1uchFS1/tPEwgx8phiWGFWBzvonHaXssOFm0KuOhx
+         CPwzCK/CcORRGA3GA2mnZ/4KHnJYJh3obAwXFKqoMpp77USWA6c2WqGw07ZRvLlRwNKI
+         eeRxz2TPhlX8XV3FwNgsZPf8/R3OYcQcvSyrTLQJDdpXeBiVlAH+8L1yLZu/WrAahp5u
+         xNvXHC88knAXBw8JRvpVdxhW4sQ9Kc/SdHRKDTparni/yG6PqSEe2zAPKmaQsm2lXprd
+         PSmXc/3QFR5kVgJTUg4p22fmHgGzsgp+BO+hNSN5t1m8yMC0AX3Fx3wp785bKJpuwo9h
+         DaOg==
+X-Received: by 10.152.19.9 with SMTP id a9mr30922503lae.80.1425994983639; Tue,
+ 10 Mar 2015 06:43:03 -0700 (PDT)
+Received: by 10.112.130.228 with HTTP; Tue, 10 Mar 2015 06:43:03 -0700 (PDT)
+In-Reply-To: <1425801532-8483-3-git-send-email-pyokagan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265234>
 
-Sudhanshu Shekhar <sudshekhar02@gmail.com> writes:
+On Sun, Mar 8, 2015 at 3:58 PM, Paul Tan <pyokagan@gmail.com> wrote:
+>                 remove_credential(&fns, &c);
+>         else if (!strcmp(op, "store"))
+> -               store_credential(&fns, &c, fns.nr - 1);
+> +               store_credential(&fns, &c, 0);
+>         else
+>                 ; /* Ignore unknown operation. */
 
-> +test_expect_success 'reset - while having file named - and no previous branch' '
+Whoops, seems like I squashed some commits in the wrong order (but
+there is no functional difference). Will re-roll the patch series.
 
-I like having the expected behavior in the test name too. e.g. add
-"fails" at the end of the sentence.
+Also, store_credential() should take a string as the default filename
+instead of an index into the filename string_list for extra API
+flexibility.
 
-> +test_expect_success 'reset - in the presence of file named - with previous branch' '
-> +	echo "Unstaged changes after reset:" >expect &&
-> +	echo "M	-" >>expect &&
-> +	echo "M	1" >>expect &&
-
-Here and elsewhere: why not
-
-	cat >expect <<-EOF
-	Unstaged changes after reset:
-	M -
-	M 1
-
-?
-
-> +	rm -rf no_previous &&
-
-That would be best done in a test_when_finished, so that the directory
-is removed regardless of whether the test failed before this line or
-not.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Thanks.
