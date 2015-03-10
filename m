@@ -1,140 +1,241 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4] rev-list: refuse --first-parent combined with --bisect
-Date: Tue, 10 Mar 2015 15:09:54 -0700
-Message-ID: <xmqqa8zkzeq5.fsf@gitster.dls.corp.google.com>
-References: <1425827005-9602-1-git-send-email-me@ikke.info>
-	<1425934575-19581-1-git-send-email-me@ikke.info>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Kevin Daudt <me@ikke.info>
-X-From: git-owner@vger.kernel.org Tue Mar 10 23:10:03 2015
+From: Sudhanshu Shekhar <sudshekhar02@gmail.com>
+Subject: [PATCH v3 2/2] t7102: add 'reset -' tests
+Date: Wed, 11 Mar 2015 03:40:09 +0530
+Message-ID: <1426025409-18758-1-git-send-email-sudshekhar02@gmail.com>
+References: <CAPig+cSU7X=1Ket8bAXU2JivaSVWw7C_M9ttAhJ_gQur3utsUA@mail.gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, davvid@gmail.com,
+	Matthieu.Moy@grenoble-inp.fr,
+	Sudhanshu Shekhar <sudshekhar02@gmail.com>
+To: sunshine@sunshineco.com
+X-From: git-owner@vger.kernel.org Tue Mar 10 23:10:47 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YVSLi-00021q-Du
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Mar 2015 23:10:02 +0100
+	id 1YVSMP-0002mA-HP
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Mar 2015 23:10:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753354AbbCJWJ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Mar 2015 18:09:57 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:58508 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753293AbbCJWJ4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Mar 2015 18:09:56 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D8B6B3F957;
-	Tue, 10 Mar 2015 18:09:55 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=U5U3k4XDA9Pmny6uBJaiiJAAJqg=; b=pawRMK
-	F4yQwmxJXd9u3dBrHpJzpMibyV+5iIfNn/OgXZmfOtjguRctc8KOCt66AqYQ79S5
-	2Lqbg+nPV/2EB/vcJpLP1hJDW4Aflyz1O6e9MRNy0FWrMHGRqCZq+2sj16DlcbM/
-	myAUagfMG/Cwk43V9bdBhuoCrBUuNFGoJXeGI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ceL+75oAfb8To+cQP0KFW1ClQDvo6wLL
-	jDWq0S4S/XK/aa5EC611mOt+tqw3UyWJ+UazraAGZjgFAD0v52mRVWotXzsk0wtv
-	MyAI97NRUYLZ1+E6UXBdMsoYQHgUbuj/TC2Et443nUbOiLSA/zPMIGhsFKX+pHn/
-	xu6k5hI4QZ4=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id CFA903F955;
-	Tue, 10 Mar 2015 18:09:55 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4ED003F954;
-	Tue, 10 Mar 2015 18:09:55 -0400 (EDT)
-In-Reply-To: <1425934575-19581-1-git-send-email-me@ikke.info> (Kevin Daudt's
-	message of "Mon, 9 Mar 2015 21:56:15 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 2ECD507A-C772-11E4-AE4E-29999F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1753407AbbCJWKl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Mar 2015 18:10:41 -0400
+Received: from mail-pd0-f171.google.com ([209.85.192.171]:44352 "EHLO
+	mail-pd0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752311AbbCJWKj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Mar 2015 18:10:39 -0400
+Received: by pdjz10 with SMTP id z10so5535491pdj.11
+        for <git@vger.kernel.org>; Tue, 10 Mar 2015 15:10:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=UMlt3V1/DdAhRDU1zChOpXMhq9MjHgHwBXWTKEv7BjI=;
+        b=EWcfQDz2sOKrjnSXAcmM5SbhH+ElQW0mXtst1B1s+QqJzoZ4TP0CkEOThhGqmEz+cJ
+         VspG/AuCdFp8fzJFMIYbteQXxIk4xoQpdtH03ZoPZke7gE+LIsO9adxvbeQHf/dDfWKz
+         WZ+jPf1qgLzzRy2eImzs5ECWwaT/GoZBjoNvPILtSAAw6h+vDs2qPkUqYsE1JurM2xZK
+         dY6HkC4WMWDGyswCJnuILk1Tv0xQK6jDwvK1IfMjeZ69Z8RsCjc8+doNxajN6j4FPsVe
+         fRoupJifwoBVjoOkRs1y68auKBbxXtc+7aBjPC5nw77Fj0c+H/8e2Fmj9EjWn5ABkde0
+         Jbdw==
+X-Received: by 10.70.61.202 with SMTP id s10mr44561383pdr.86.1426025439243;
+        Tue, 10 Mar 2015 15:10:39 -0700 (PDT)
+Received: from shekhar-Inspiron-N5110.iiit.ac.in ([14.139.82.6])
+        by mx.google.com with ESMTPSA id z2sm2474955pde.94.2015.03.10.15.10.35
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 10 Mar 2015 15:10:38 -0700 (PDT)
+X-Mailer: git-send-email 2.3.1.278.ge5c7b1f.dirty
+In-Reply-To: <CAPig+cSU7X=1Ket8bAXU2JivaSVWw7C_M9ttAhJ_gQur3utsUA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265268>
 
-Kevin Daudt <me@ikke.info> writes:
+Add following test cases:
 
-> rev-list --bisect is used by git bisect, but never together with
-> --first-parent. Because rev-list --bisect together with --first-parent
-> is not handled currently, and even leads to segfaults, refuse to use
-> both options together.
->
-> Suggested-by: Junio C. Hamano <gitster@pobox.com>
-> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-> Signed-off-by: Kevin Daudt <me@ikke.info>
-> ---
-> Changes since v3:
->
-> * Added an ifdef::git-rev-list[] guard around the warning in the
->   --first-parent section so that it only shows up in `man git-rev-list`
->   and not in `man git log`
->
-> * Added the warning also to the --bisect section.
+1) Confirm error message when git reset is used with no previous branch
+2) Confirm git reset - works like git reset @{-1}
+3) Confirm "-" is always treated as a commit unless the -- file option is specified
+4) Confirm "git reset -" works normally even when a file named @{-1} is present
 
-I wonder what "git log --first-parent --bisect A..B" should do,
-though.
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Helped-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Helped-by: David Aguilar <davvid@gmail.com>
+Signed-off-by: Sudhanshu Shekhar <sudshekhar02@gmail.com>
+---
+First of all, thank you for being so incredibly patient and helpful. I am very grateful for your remarks and reviews. I have implemented your suggestions in this patch. Please let me know if I have missed out on anything else. Also, sorry for sending PATCH 1/2 on the wrong thread, I entered the Message-ID incorrectly (still getting used to send-email :/ ).
 
-Wouldn't the rejection belong to revision.c::setup_revisions(),
-where we reject combined use of (--reverse, --walk-reflogs) and
-(--children, --parents), to apply this to all commands in the "log"
-family that uses the revision walker machinery?
+Regards,
+Sudhanshu
 
->
->  Documentation/rev-list-options.txt | 4 ++++
->  builtin/rev-list.c                 | 3 +++
->  t/t6000-rev-list-misc.sh           | 4 ++++
->  3 files changed, 11 insertions(+)
->
-> diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-> index 4ed8587..a148672 100644
-> --- a/Documentation/rev-list-options.txt
-> +++ b/Documentation/rev-list-options.txt
-> @@ -124,6 +124,9 @@ parents) and `--max-parents=-1` (negative numbers denote no upper limit).
->  	adjusting to updated upstream from time to time, and
->  	this option allows you to ignore the individual commits
->  	brought in to your history by such a merge.
-> +ifdef::git-rev-list[]
-> +	Cannot be combined with --bisect.
-> +endif::git-rev-list[]
->  
->  --not::
->  	Reverses the meaning of the '{caret}' prefix (or lack thereof)
-> @@ -567,6 +570,7 @@ would be of roughly the same length.  Finding the change which
->  introduces a regression is thus reduced to a binary search: repeatedly
->  generate and test new 'midpoint's until the commit chain is of length
->  one.
-> +Cannot be combined with --first-parent.
->  
->  --bisect-vars::
->  	This calculates the same as `--bisect`, except that refs in
-> diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-> index ff84a82..f5da2a4 100644
-> --- a/builtin/rev-list.c
-> +++ b/builtin/rev-list.c
-> @@ -291,6 +291,9 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
->  	if (revs.bisect)
->  		bisect_list = 1;
->  
-> +	if (revs.first_parent_only && revs.bisect)
-> +		die(_("--first-parent is incompattible with --bisect"));
-> +
->  	if (DIFF_OPT_TST(&revs.diffopt, QUICK))
->  		info.flags |= REV_LIST_QUIET;
->  	for (i = 1 ; i < argc; i++) {
-> diff --git a/t/t6000-rev-list-misc.sh b/t/t6000-rev-list-misc.sh
-> index 2602086..1f58b46 100755
-> --- a/t/t6000-rev-list-misc.sh
-> +++ b/t/t6000-rev-list-misc.sh
-> @@ -96,4 +96,8 @@ test_expect_success 'rev-list can show index objects' '
->  	test_cmp expect actual
->  '
->  
-> +test_expect_success '--bisect and --first-parent can not be combined' '
-> +	test_must_fail git rev-list --bisect --first-parent HEAD
-> +'
-> +
->  test_done
+ t/t7102-reset.sh | 159 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 159 insertions(+)
+
+diff --git a/t/t7102-reset.sh b/t/t7102-reset.sh
+index 98bcfe2..d3a5874 100755
+--- a/t/t7102-reset.sh
++++ b/t/t7102-reset.sh
+@@ -568,4 +568,163 @@ test_expect_success 'reset --mixed sets up work tree' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'reset - with no previous branch fails' '
++	git init no_previous &&
++	test_when_finished rm -rf no_previous &&
++	(
++		cd no_previous &&
++		test_must_fail git reset - 2>actual
++	) &&
++	test_i18ngrep "bad flag" no_previous/actual
++'
++
++test_expect_success 'reset - while having file named - and no previous branch fails' '
++	git init no_previous &&
++	test_when_finished rm -rf no_previous &&
++	(
++		cd no_previous &&
++		>- &&
++		test_must_fail git reset - 2>actual
++	) &&
++	test_i18ngrep "bad flag" no_previous/actual
++'
++
++test_expect_success \
++	'reset - in the presence of file named - with previous branch resets commit' '
++	cat >expect <<-\EOF
++	Unstaged changes after reset:
++	M	-
++	M	file
++	EOF &&
++	git init no_previous &&
++	test_when_finished rm -rf no_previous &&
++	(
++		cd no_previous &&
++		>- &&
++		>file &&
++		git add file - &&
++		git commit -m "add base files" &&
++		git checkout -b new_branch &&
++		echo "random" >- &&
++		echo "wow" >file &&
++		git add file - &&
++		git reset - >../actual
++	) &&
++	test_cmp expect actual
++'
++
++test_expect_success \
++	'reset - in the presence of file named - with -- option resets commit' '
++	cat >expect <<-\EOF
++	Unstaged changes after reset:
++	M	-
++	M	file
++	EOF &&
++	git init no_previous &&
++	test_when_finished rm -rf no_previous &&
++	(
++		cd no_previous &&
++		>- &&
++		>file &&
++		git add file - &&
++		git commit -m "add base files" &&
++		git checkout -b new_branch &&
++		echo "random" >- &&
++		echo "wow" >file &&
++		git add file - &&
++		git reset - -- >../actual
++	) &&
++	test_cmp expect actual
++'
++
++test_expect_success 'reset - in the presence of file named - with -- file option resets file' '
++	cat >expect <<-\EOF
++	Unstaged changes after reset:
++	M	-
++	M	file
++	EOF &&
++	git init no_previous &&
++	test_when_finished rm -rf no_previous &&
++	(
++		cd no_previous &&
++		>- &&
++		>file &&
++		git add file - &&
++		git commit -m "add base files" &&
++		git checkout -b new_branch &&
++		echo "random" >- &&
++		echo "wow" >file &&
++		git add file - &&
++		git reset -- - >../actual
++	) &&
++	test_cmp expect actual
++'
++
++test_expect_success \
++	'reset - in the presence of file named - with both pre and post -- option resets file' '
++	cat >expect <<-\EOF
++	Unstaged changes after reset:" >expect &&
++	M	-
++	EOF &&
++	git init no_previous &&
++	test_when_finished rm -rf no_previous &&
++	(
++		cd no_previous &&
++		>- &&
++		>file &&
++		git add file - &&
++		git commit -m "add base files" &&
++		git checkout -b new_branch &&
++		echo "random" >- &&
++		echo "wow" >file &&
++		git add file - &&
++		git reset - -- - >../actual
++	) &&
++	test_cmp expect actual
++'
++
++test_expect_success 'reset - works same as reset @{-1}' '
++	git init no_previous &&
++	test_when_finished rm -rf no_previous &&
++	(
++		cd no_previous &&
++		echo "file1" >file1 &&
++		git add file1 &&
++		git commit -m "base commit" &&
++		git checkout -b temp &&
++		echo "new file" >file &&
++		git add file &&
++		git commit -m "added file" &&
++		git reset - &&
++		git status --porcelain >../actual &&
++		git add file &&
++		git commit -m "added file" &&
++		git reset @{-1} &&
++		git status --porcelain >../expect
++	) &&
++	test_cmp expect actual
++'
++
++test_expect_success 'reset - with file named @{-1} succeeds' '
++	cat >expect <<EOF
++	Unstaged changes after reset:
++	M	file
++	M	@{-1}
++	EOF &&
++	git init no_previous &&
++	test_when_finished rm -rf no_previous &&
++	(
++		cd no_previous &&
++		echo "random" >@{-1} &&
++		echo "random" >file &&
++		git add @{-1} file &&
++		git commit -m "base commit" &&
++		git checkout -b new_branch &&
++		echo "additional stuff" >>file &&
++		echo "additional stuff" >>@{-1} &&
++		git add file @{-1} &&
++		git reset - >../actual
++	) &&
++	test_cmp expect actual
++'
++
+ test_done
+-- 
+2.3.1.278.ge5c7b1f.dirty
