@@ -1,88 +1,94 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 2/3] bundle.c: fix memory leak
-Date: Tue, 10 Mar 2015 16:08:32 -0700
-Message-ID: <CAGZ79kZ5=Q3WE6Ztr7PJ2Kv2xdKdCB2cD+_MH1GcqEDiZpU11w@mail.gmail.com>
-References: <1425920304-22360-1-git-send-email-sbeller@google.com>
-	<1425920304-22360-2-git-send-email-sbeller@google.com>
-	<xmqq1tkwzdbj.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4] rev-list: refuse --first-parent combined with --bisect
+Date: Tue, 10 Mar 2015 16:12:18 -0700
+Message-ID: <xmqqoao0xx9p.fsf@gitster.dls.corp.google.com>
+References: <1425827005-9602-1-git-send-email-me@ikke.info>
+	<1425934575-19581-1-git-send-email-me@ikke.info>
+	<xmqqa8zkzeq5.fsf@gitster.dls.corp.google.com>
+	<20150310225509.GA5442@vps892.directvps.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 11 00:08:42 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Kevin Daudt <me@ikke.info>
+X-From: git-owner@vger.kernel.org Wed Mar 11 00:12:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YVTGR-0005DE-NL
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Mar 2015 00:08:40 +0100
+	id 1YVTK6-0000md-4y
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Mar 2015 00:12:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750772AbbCJXId (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Mar 2015 19:08:33 -0400
-Received: from mail-ie0-f173.google.com ([209.85.223.173]:33302 "EHLO
-	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750707AbbCJXId (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Mar 2015 19:08:33 -0400
-Received: by iecvj10 with SMTP id vj10so35004927iec.0
-        for <git@vger.kernel.org>; Tue, 10 Mar 2015 16:08:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=7LC552jVRnyE0FF9XHL9bGFj6faN8rA6PzfWdB7EISY=;
-        b=gjucpWIQHf0JSHqJ4iFBpe0OcY3Na9kFePmhvhSsGMWIawE5Rh3vHjigLgQtL8QWTo
-         RuuPmKT+5BDkyNEoyrUZS3Mdc8dzzkoGkk6Zc05c46wp2MT43BfeZkuQ736teUbDg8Sl
-         yle1mojKMTzTODNo2iD5rZPUMZP9JupdU1PHcpsQ8D1Unqvx2V/YB505w/AQK8SFMtZc
-         jEGaCuA57qw/Et5dy9GEyKcT3+Vs+vVOHtH8rRWKrHvBGUP6C1BUw8Hz2b8tEi/LiBrW
-         hKBqmqxrc9JNsZhWBEWMpa1zyYn7rY8QZ1UTKfVjAIt0db5BI/wmnJewfXKvsOlGOfoz
-         zxKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=7LC552jVRnyE0FF9XHL9bGFj6faN8rA6PzfWdB7EISY=;
-        b=FYiJpdNo1PBqDpO/BysR2rbkqoW6HWsWkvU1HOtsC+tWRXWF/w6LtpKvc+hMHDfnZV
-         Psk5iLYFIvJjzClWQNEaEW8y14LXJBS13MzOQR/nnCNvxUZRFn/auKYH0/waM3lzepp1
-         4H82J1AF2AMct7cRY2Hutw3oe2vPS0a5hFvMahFH1+NXOuI+S9nN7ddnvpzXrMRivccx
-         SKF9izmSmMomiB/ClQYy1Tw7txU9fjVCPu993e8cNhVcGlAvTLOWTXpH+9jhB3yr5UdW
-         /YET/vq/37jWrXwvtTTv+4/x1SzreU5PR+pOskRXmYEHbKtpcaZ3XNrWbD888ydm1AR3
-         ouCA==
-X-Gm-Message-State: ALoCoQm0MZPeNikfqtTqNjd4Q/cUyPG5FeiGY9Xq6Bm0YcAjW11s5Zv7ymjhmsrycc/7/y69+9NT
-X-Received: by 10.50.107.36 with SMTP id gz4mr60976810igb.25.1426028912307;
- Tue, 10 Mar 2015 16:08:32 -0700 (PDT)
-Received: by 10.107.46.31 with HTTP; Tue, 10 Mar 2015 16:08:32 -0700 (PDT)
-In-Reply-To: <xmqq1tkwzdbj.fsf@gitster.dls.corp.google.com>
+	id S1751026AbbCJXMV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Mar 2015 19:12:21 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:55717 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750707AbbCJXMU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Mar 2015 19:12:20 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id F3F493EE27;
+	Tue, 10 Mar 2015 19:12:19 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ga5aoh3TtKElbYqr9AFDsonYHD0=; b=tzjdX+
+	GRno0+V7MWF5Bg+wdQ70nI5uPj54h1R0u11JPZLeCJFl29mXGHfpa0H8PLmClkG0
+	ZOr34c/z7vFRiBp3Ai/GQyNmS7whiiVBsbtB3/400jZHUauUpHikjbDOMjiqYBv0
+	aQh2kJc/aqoR4FDQqNuZkx6NkhlGfljeYjp/c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=XuGK4BtsgkzkBYsfRpledvQgw47t85MO
+	GFOEAWMIJ1tTuPBywAIw/m18cSs/2MVXTrJBMwSFqVwiDhr49eoffaDwgOUEUCCp
+	W3Ievet1lX45jJ6zHh7ojO8ZsvoIY75gDS6hz+EN6dpJFHTDSX4y8YDTi50XR8RI
+	ihTBbdh2ybQ=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id EC4C83EE25;
+	Tue, 10 Mar 2015 19:12:19 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 59D333EE21;
+	Tue, 10 Mar 2015 19:12:19 -0400 (EDT)
+In-Reply-To: <20150310225509.GA5442@vps892.directvps.nl> (Kevin Daudt's
+	message of "Tue, 10 Mar 2015 23:55:09 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: E66D5826-C77A-11E4-BACA-29999F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265280>
 
-On Tue, Mar 10, 2015 at 3:40 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
+Kevin Daudt <me@ikke.info> writes:
+
+> git log --bisect seems to do something different then git rev-list
+> --bisect
 >
->> The continue statements nearby also have an accompanying free(ref);
->>
->> Signed-off-by: Stefan Beller <sbeller@google.com>
->> ---
+> From git-log(1):
 >
-> I wonder what happens when dwim_ref() returned 2 or more, though.
+>     Pretend as if the bad bisection ref refs/bisect/bad was listed and
+>     as if it was followed by --not and the good bisection refs
+>     refs/bisect/good-* on the command line.
+>
+> This seems to just add addition refs to the log command, which seems
+> unrelated to what rev-list --bisect does.
+>
+> So I don't see why git log --bisect --first-parent should be prohibited
+> (unless this combination doesn't make sense on itself).
 
-That should also be fixed I guess. I'll look into it.
+Well, but think if your "unless" holds true or not yourself first
+and then say "I do not think this combination doesn't make sense",
+if you truly mean "I don't see why ... should be prohibited".
 
-These one liner fixes are mostly done as a side project
-having fun, just doing what the code analysis tools says,
-sorry for not catching that one.
+What does such a command line _mean_?  It tells us this:
 
-Maybe instead of the reoccuring pattern
+    Define a set by having the "bad" ref as a positive end, and
+    having all the "good" refs as negative (uninteresting) boundary.
 
-    free(ref);
-    continue;
+That is a way to show commits that are reachable from the bad one
+and excluding the ones that are reachable from any of the known-good
+commits.  The area of the graph in the current bisection that
+contains suspect commits.
 
-we could just have a
-
-    goto cleanup
-
-which goes to the end of the loop where we have
-the free anyway.
+Now, what does it mean to pull only the first-parent chain starting
+from the bad one in such a set in the first place?  What does the
+resulting set of commits mean?
