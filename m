@@ -1,115 +1,114 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
 Subject: Re: Surprising interaction of "binary" and "eol" gitattributes
-Date: Tue, 10 Mar 2015 23:16:03 +0100
-Message-ID: <54FF6D23.4060301@alum.mit.edu>
-References: <54F88684.3020905@alum.mit.edu>	<xmqqwq2v14iv.fsf@gitster.dls.corp.google.com>	<54F9422D.2020800@web.de> <54F9E907.4040703@alum.mit.edu>	<54FA1C7B.3040906@web.de> <54FF450F.7040506@alum.mit.edu> <xmqq385c1v13.fsf@gitster.dls.corp.google.com>
+Date: Tue, 10 Mar 2015 23:24:27 +0100
+Message-ID: <54FF6F1B.2030900@alum.mit.edu>
+References: <54F88684.3020905@alum.mit.edu> <xmqqwq2v14iv.fsf@gitster.dls.corp.google.com> <54F9422D.2020800@web.de> <54F9E907.4040703@alum.mit.edu> <54FA1C7B.3040906@web.de> <54FF450F.7040506@alum.mit.edu> <54FF5376.7070500@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Cc: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
-	git discussion list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 10 23:16:17 2015
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git discussion list <git@vger.kernel.org>
+To: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 10 23:24:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YVSRk-000060-7u
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Mar 2015 23:16:16 +0100
+	id 1YVSZo-0000ZA-J0
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Mar 2015 23:24:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752094AbbCJWQM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Mar 2015 18:16:12 -0400
-Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:54943 "EHLO
-	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750920AbbCJWQJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Mar 2015 18:16:09 -0400
-X-AuditID: 12074411-f79fa6d000006b8a-14-54ff6d26d424
+	id S1753047AbbCJWYc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Mar 2015 18:24:32 -0400
+Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:61488 "EHLO
+	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752497AbbCJWYb (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Mar 2015 18:24:31 -0400
+X-AuditID: 12074412-f79e46d0000036b4-37-54ff6f1e086d
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id F8.10.27530.62D6FF45; Tue, 10 Mar 2015 18:16:06 -0400 (EDT)
+	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 1A.02.14004.E1F6FF45; Tue, 10 Mar 2015 18:24:30 -0400 (EDT)
 Received: from [192.168.69.130] (p4FC962B5.dip0.t-ipconnect.de [79.201.98.181])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t2AMG3XJ000491
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t2AMORug000933
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Tue, 10 Mar 2015 18:16:04 -0400
+	Tue, 10 Mar 2015 18:24:28 -0400
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.5.0
-In-Reply-To: <xmqq385c1v13.fsf@gitster.dls.corp.google.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprIKsWRmVeSWpSXmKPExsUixO6iqKuW+z/EYPc/EYuuK91MFg29V5gt
-	Oju+Mjowe1y8pOzxeZOcx+1n21gCmKO4bZISS8qCM9Pz9O0SuDOWTv3BVLBXqOLy6hb2BsZz
-	fF2MHBwSAiYSc79WdDFyApliEhfurWfrYuTiEBK4zCgxf+tUVgjnPJPEvQV/2UGqeAW0JS7O
-	62UGsVkEVCWm/nkNZrMJ6Eos6mlmArFFBYIkXt76ywhRLyhxcuYTFhBbREBNYmLbITCbWaBA
-	4vzy86wgtrCAu8Tq5Uehlv1llLiydAHYUE4Ba4kJ1/+zQjSoS/yZd4kZwpaXaN46m3kCo8As
-	JDtmISmbhaRsASPzKka5xJzSXN3cxMyc4tRk3eLkxLy81CJdU73czBK91JTSTYyQ4BXcwTjj
-	pNwhRgEORiUe3hWG/0KEWBPLiitzDzFKcjApifLei/4fIsSXlJ9SmZFYnBFfVJqTWnyIUYKD
-	WUmEN80EKMebklhZlVqUD5OS5mBREuflW6LuJySQnliSmp2aWpBaBJOV4eBQkuDdlw3UKFiU
-	mp5akZaZU4KQZuLgBBnOJSVSnJqXklqUWFqSEQ+K1fhiYLSCpHiA9k4CaectLkjMBYpCtJ5i
-	VJQS590EkhAASWSU5sGNhaWkV4ziQF8K814HqeIBpjO47ldAg5mABrNYgw0uSURISTUwKsmJ
-	vVgsm/OjRsFA7fK0Bpm7adtaSnP45iybvoH5gZ3Plalqzyw2JsdP0CyNOeuRkaP4ac6ukonM
-	bOdYtkTZfT6bGVPetHurSX9IjqffimnTmY/3yu5gSQqxWiW4/vTk3sIZuiZ9M3Ks 
+In-Reply-To: <54FF5376.7070500@web.de>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprAKsWRmVeSWpSXmKPExsUixO6iqCuX/z/EYP8mEYuuK91MFg29V5gt
+	Oju+Mjowe1y8pOzxeZOcx+1n21gCmKO4bZISS8qCM9Pz9O0SuDPmPT/NWvCfp+L6z8OsDYwd
+	XF2MnBwSAiYSTxs6mSFsMYkL99azgdhCApcZJfo6FbsYuYDs80wSszo3sYIkeAW0JZr+7QIr
+	YhFQlWj/3sMOYrMJ6Eos6mlmArFFBYIkXt76ywhRLyhxcuYTFhBbRCBL4tunL0BzODiYgeof
+	vkkECQsLuEusXn6UFWLXC0aJ5hmfwGZyCqhJ7D+0Amwms4CexI7rv1ghbHmJ5q2zmScwCsxC
+	smIWkrJZSMoWMDKvYpRLzCnN1c1NzMwpTk3WLU5OzMtLLdI108vNLNFLTSndxAgJXaEdjOtP
+	yh1iFOBgVOLhXWH4L0SINbGsuDL3EKMkB5OSKO+96P8hQnxJ+SmVGYnFGfFFpTmpxYcYJTiY
+	lUR400yAcrwpiZVVqUX5MClpDhYlcd6fi9X9hATSE0tSs1NTC1KLYLIyHBxKEryyeUCNgkWp
+	6akVaZk5JQhpJg5OkOFcUiLFqXkpqUWJpSUZ8aBIjS8GxipIigdoryZIO29xQWIuUBSi9RSj
+	opQ475VcoIQASCKjNA9uLCwhvWIUB/pSmDcMpJ0HmMzgul8BDWYCGsxiDTa4JBEhJdXAmPhL
+	rOJHtkhBEbNfzs7D25g3v/GSO3zvGoucg/n1uMjGpEm/D79ktQzgdT1+7X+trm9DVbvqD/PE
+	0Dj+lxxZVTnJ1seaNyUy611+w+j8cmpni29XU+sf9UVl3f0fHpes+Z52R11v37+k 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265270>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265271>
 
-On 03/10/2015 09:01 PM, Junio C Hamano wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
+On 03/10/2015 09:26 PM, Torsten B=F6gershausen wrote:
+> On 10.03.15 20:25, Michael Haggerty wrote:
 >> [...]
->> It seems to me that setting "text=auto" should mean that Git uses its
->> heuristic to guess whether a particular file is text or not, and then
->> treats the file as if it had "text" or "-text" set. If the latter, then
->> EOL translation should be suppressed.
-> 
-> ... I think this makes even more sense. I do not think the code is
-> set up to do so.  To be honest, eol_attr thing introduced in
-> fd6cce9e (Add per-repository eol normalization, 2010-05-19) always
-> confuses me whenever I follow this codepath.
+>> I'm still trying to infer the spirit of the current behavior, so cav=
+eats
+>> here.
+>>
+>> This comes from a real-life scenario where a user, somewhere early i=
+n
+>> .gitattributes, had
+>>
+>>     * text
+>>     * eol=3Dcrlf
+>>
+>> and then later (this could be in a subdirectory) tried to carve out
+>> exceptions to this rule by using
+>>
+>>     *.png binary
+>>     * text=3Dauto
+> Hm,
+> I can see 2 problems here:
+> the "binary" attribute does not exist at all.
+>
+> I sometimes which we had it, but we don't.
+> There is "text" and "-text", and that is it.
 
-Would this change be "backwards-compatible enough" that it can be made
-without waiting for Git 3.0?
+There is a "binary" macro that is equivalent to "-diff -merge -text". I=
+t
+is documented in gitattributes(5) under "USING MACRO ATTRIBUTES" and
+"DEFINING MACRO ATTRIBUTES".
 
->> It also seems to me that "binary" should imply "-eol".
-> 
-> I thought that "eol" attribute is not even looked at when you say
-> "binary"; that is what I recall finding out when I dug into this
-> earlier in the thread.
+> The other problem is the order of the lines, which is fully
+> intuitive for each person who has ever written a "matching parser".
+>=20
+> The parser matches each file namr on it's own, depending on the match=
+ing:
+>=20
+> *.png -text
+> * text=3Dauto
+> means that all png files are binary, and ALL files are "auto".
+>=20
+> Guess what happens to the png's ?
+>=20
+> The second rule wins, as it is the last rule processed.
+>=20
+> git check-attr text *
+> A.png: text: auto
+> B.txt: text: auto
 
-Well, that's true, but the "eol" attribute can regain its effect if
-"binary" is followed by "text" or "text=auto". So I guess the simplest
-question is as follows. Suppose I have the following .gitattributes:
-
-    a.foo eol=crlf
-    a.foo binary
-    a.foo text
-
-It is obvious in this case that a.foo should be treated as a text file.
-Should it be processed with "eol=crlf", or should the intervening
-"binary" imply "-eol"?
-
-I guess it would be more natural to process it with "eol=crlf". So I
-withdraw my proposal that "binary" should imply "-eol", provided the
-first change (that "text=auto" is treated the same as "-text" for binary
-files) is implemented.
-
-So I guess the proposed new behavior WRT these attributes is:
-
-* "text" determines whether a file should be subject to EOL
-  translation.
-* "text=auto" has the same effect as "text" or "-text", depending
-  on the outcome of the binary detection heuristic; in particular,
-  it causes EOL translation to be suppressed for files determined
-  to be binary.
-* "eol" determines what EOLs should be translated to *if* the
-  file is determined to be a text file.
-* If "text" is unspecified but "eol" is specified, then do EOL
-  translation without a heuristic check.
-
-But I still have to work out how core.autocrlf and the "crlf" attribute
-fit into all this.
+That much is perfectly clear. The question is, what should happen when
+the contents-based heuristic, whose use was requested by "text=3Dauto",
+determines that A.png is in fact a binary file? Should it be subjected
+to EOL translation anyway? I think not.
 
 Michael
 
--- 
+--=20
 Michael Haggerty
 mhagger@alum.mit.edu
