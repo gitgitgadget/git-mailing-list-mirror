@@ -1,232 +1,160 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [JFF] "-" and "@{-1}" on various programs
-Date: Tue, 10 Mar 2015 13:20:18 -0700
-Message-ID: <xmqqy4n4zjst.fsf@gitster.dls.corp.google.com>
+From: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: Surprising interaction of "binary" and "eol" gitattributes
+Date: Tue, 10 Mar 2015 21:26:30 +0100
+Message-ID: <54FF5376.7070500@web.de>
+References: <54F88684.3020905@alum.mit.edu> <xmqqwq2v14iv.fsf@gitster.dls.corp.google.com> <54F9422D.2020800@web.de> <54F9E907.4040703@alum.mit.edu> <54FA1C7B.3040906@web.de> <54FF450F.7040506@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 10 21:20:26 2015
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git discussion list <git@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>,
+	=?windows-1252?Q?Torsten_B?= =?windows-1252?Q?=F6gershausen?= 
+	<tboegi@web.de>, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 10 21:26:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YVQdd-00033p-PM
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Mar 2015 21:20:26 +0100
+	id 1YVQjl-0001B3-US
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Mar 2015 21:26:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752869AbbCJUUV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Mar 2015 16:20:21 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:53844 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752198AbbCJUUU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Mar 2015 16:20:20 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 054223F5CE;
-	Tue, 10 Mar 2015 16:20:20 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=k
-	13xpfLyX8+P3BE3c81m5xrvhGs=; b=mCDD9YnlIZp7ApSaT3w4eQO583tSYCYfJ
-	+Bv96oVDHrhIlxElGUWrlAWuj9d7W6HP0woTlvtrgRdYuR9um0Du/uXGjayL8Sxw
-	0cyasNmc1HmQPWf0LOfd8sBEd3NTskCV47vrGwTGWQNktca4nqHyktwM7VBQ2trv
-	4sfrvPf0LI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=qWG
-	VlySB369M16jZVafstnW10LrQhdtAF702ZmELgZeuTv9yIRlysQPG8BBOIiK8Ut/
-	KKbYOpp/eQqtdqitEq7FGD1D62g63GuYUc+5WUn8Iabgy02kdeWqgcL6BigI7qny
-	yozUW0bLVNa3cX8lbq1B9MPEptNqfqBrqT8mSXNs=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id F123D3F5CD;
-	Tue, 10 Mar 2015 16:20:19 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 523AB3F5CC;
-	Tue, 10 Mar 2015 16:20:19 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: DF3562FA-C762-11E4-B165-29999F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1752899AbbCJU0l convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Mar 2015 16:26:41 -0400
+Received: from mout.web.de ([212.227.15.4]:64549 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751984AbbCJU0l (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Mar 2015 16:26:41 -0400
+Received: from birne.local ([217.211.68.12]) by smtp.web.de (mrweb003) with
+ ESMTPSA (Nemesis) id 0MK233-1YU3gg21Cf-001TiQ; Tue, 10 Mar 2015 21:26:31
+ +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
+In-Reply-To: <54FF450F.7040506@alum.mit.edu>
+X-Provags-ID: V03:K0:V4x8noFLCYvRmk9Hg7n4/qWVGUxFVW8YkIRXiyMzlD94lOC0Dkh
+ rwoWgjBCZyk6Xad9fk2ZmKlf4T3UDfBeNwG1CzozheUf6cZnMCPoteEPLN9+/406Qnk8592
+ dKGANih4Yo6YcEt1LCsHHsaLkXOxgZqnJmG6Q8y0NLhHzNdBg7t0VV8XCZCCINw6jsPC5Ck
+ O0Urw3tD5qDHH5Vy5ITQg==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265260>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265261>
 
-JFF stands for just for fun.
+On 10.03.15 20:25, Michael Haggerty wrote:
+> On 03/06/2015 10:30 PM, Torsten B=F6gershausen wrote:
+>>
+>>> Oops, I misunderstood an internal bug report. In seems that it is t=
+he
+>>> following scenario that is incorrect:
+>>>
+>>>     *.png text=3Dauto eol=3Dcrlf
+>> Hm, I don't know if we support this combination at all.
+>=20
+> The user can specify this combination in a .gitattributes file and we
+> have to react to it *some way*. Theoretically we could document that
+> this combination is undefined and/or emit an error if we see this
+> combination, but we don't do so.
+>=20
+>> The current logic supports auto-detection of text/binary,
+>> * text=3Dauto
+>> (the files will get the line ending from core.eol or core.autocrlf)
+>>
+>> or the  the setting of a line ending:
+>> *.sh eol=3Dlf
+>> *.bat eol=3Dcrlf
+>>
+>>
+>> Is there a special use-case, which needs the combination of both ?
+>=20
+> I'm still trying to infer the spirit of the current behavior, so cave=
+ats
+> here.
+>=20
+> This comes from a real-life scenario where a user, somewhere early in
+> .gitattributes, had
+>=20
+>     * text
+>     * eol=3Dcrlf
+>=20
+> and then later (this could be in a subdirectory) tried to carve out
+> exceptions to this rule by using
+>=20
+>     *.png binary
+>     * text=3Dauto
+Hm,
+I can see 2 problems here:
+the "binary" attribute does not exist at all.
 
-This is not meant to give out a model answer and is known to be
-incomplete, but I was wondering if it would be a better direction to
-allow "-" as a stand-in for "@{-1}" everywhere we allow a branch
-name, losing workarounds at the surface level we have for checkout,
-merge and revert.
+I sometimes which we had it, but we don't.
+There is "text" and "-text", and that is it.
 
-The first three paths are to remove the surface workarounds that
-become unnecessary.  The one in sha1_name.c is the central change.
+The other problem is the order of the lines, which is fully
+intuitive for each person who has ever written a "matching parser".
 
-The change in revision.c is to allow a single "-" to be recognized
-as a potential revision name (without this change, what begins with
-"-" is either an option or an unknown option).
+The parser matches each file namr on it's own, depending on the matchin=
+g:
 
-So you could do things like "git reset - $path" but also things like
-"git log -" after switching out of a branch.
+*.png -text
+* text=3Dauto
+means that all png files are binary, and ALL files are "auto".
 
-What does not work are what needs further tweaking in revision.c
-parser.  "git checkout master && git checkout next && git log -.."
-should show what next has on top of master but I didn't touch the
-range notation so it does not work, for example.
+Guess what happens to the png's ?
 
- builtin/checkout.c |  3 ---
- builtin/merge.c    |  3 +--
- builtin/revert.c   |  2 --
- revision.c         |  2 +-
- sha1_name.c        | 57 +++++++++++++++++++++++++++++++++---------------------
- 5 files changed, 37 insertions(+), 30 deletions(-)
+The second rule wins, as it is the last rule processed.
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 7e2d144..8f52a92 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -1169,9 +1169,6 @@ static int parse_branchname_arg(int argc, const char **argv,
- 	else if (dash_dash_pos >= 2)
- 		die(_("only one reference expected, %d given."), dash_dash_pos);
- 
--	if (!strcmp(arg, "-"))
--		arg = "@{-1}";
--
- 	if (get_sha1_mb(arg, rev)) {
- 		/*
- 		 * Either case (3) or (4), with <something> not being
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 90dd5e6..569dda3 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -1164,8 +1164,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 				argc = setup_with_upstream(&argv);
- 			else
- 				die(_("No commit specified and merge.defaultToUpstream not set."));
--		} else if (argc == 1 && !strcmp(argv[0], "-"))
--			argv[0] = "@{-1}";
-+		}
- 	}
- 	if (!argc)
- 		usage_with_options(builtin_merge_usage,
-diff --git a/builtin/revert.c b/builtin/revert.c
-index 56a2c36..dc98b4e 100644
---- a/builtin/revert.c
-+++ b/builtin/revert.c
-@@ -170,8 +170,6 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
- 		opts->revs->no_walk = REVISION_WALK_NO_WALK_UNSORTED;
- 		if (argc < 2)
- 			usage_with_options(usage_str, options);
--		if (!strcmp(argv[1], "-"))
--			argv[1] = "@{-1}";
- 		memset(&s_r_opt, 0, sizeof(s_r_opt));
- 		s_r_opt.assume_dashdash = 1;
- 		argc = setup_revisions(argc, argv, opts->revs, &s_r_opt);
-diff --git a/revision.c b/revision.c
-index e1321d5..17709a1 100644
---- a/revision.c
-+++ b/revision.c
-@@ -2195,7 +2195,7 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
- 	read_from_stdin = 0;
- 	for (left = i = 1; i < argc; i++) {
- 		const char *arg = argv[i];
--		if (*arg == '-') {
-+		if (arg[0] == '-' && arg[1]) {
- 			int opts;
- 
- 			opts = handle_revision_pseudo_opt(submodule,
-diff --git a/sha1_name.c b/sha1_name.c
-index 95f9f8f..7a621ba 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -483,6 +483,8 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1,
- 				break;
- 			}
- 		}
-+	} else if (len == 1 && str[0] == '-') {
-+		nth_prior = 1;
- 	}
- 
- 	/* Accept only unambiguous ref paths. */
-@@ -491,13 +493,16 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1,
- 
- 	if (nth_prior) {
- 		struct strbuf buf = STRBUF_INIT;
--		int detached;
-+		int status;
- 
- 		if (interpret_nth_prior_checkout(str, len, &buf) > 0) {
--			detached = (buf.len == 40 && !get_sha1_hex(buf.buf, sha1));
-+			if (get_sha1(buf.buf, sha1))
-+				/* bad---the previous branch no longer exists? */
-+				status = -1;
-+			else
-+				status = 0; /* detached */
- 			strbuf_release(&buf);
--			if (detached)
--				return 0;
-+			return status;
- 		}
- 	}
- 
-@@ -931,35 +936,43 @@ static int interpret_nth_prior_checkout(const char *name, int namelen,
- 					struct strbuf *buf)
- {
- 	long nth;
--	int retval;
-+	int consumed;
- 	struct grab_nth_branch_switch_cbdata cb;
--	const char *brace;
--	char *num_end;
- 
--	if (namelen < 4)
--		return -1;
--	if (name[0] != '@' || name[1] != '{' || name[2] != '-')
--		return -1;
--	brace = memchr(name, '}', namelen);
--	if (!brace)
--		return -1;
--	nth = strtol(name + 3, &num_end, 10);
--	if (num_end != brace)
--		return -1;
--	if (nth <= 0)
--		return -1;
-+	if (namelen == 1 && name[0] == '-') {
-+		nth = 1;
-+		consumed = 1;
-+	} else {
-+		const char *brace;
-+		char *num_end;
-+
-+		if (namelen < 4)
-+			return -1;
-+		if (name[0] != '@' || name[1] != '{' || name[2] != '-')
-+			return -1;
-+		brace = memchr(name, '}', namelen);
-+		if (!brace)
-+			return -1;
-+		nth = strtol(name + 3, &num_end, 10);
-+		if (num_end != brace)
-+			return -1;
-+		if (nth <= 0)
-+			return -1;
-+		consumed = brace - name + 1;
-+	}
-+
- 	cb.remaining = nth;
- 	strbuf_init(&cb.buf, 20);
- 
--	retval = 0;
- 	if (0 < for_each_reflog_ent_reverse("HEAD", grab_nth_branch_switch, &cb)) {
- 		strbuf_reset(buf);
- 		strbuf_addbuf(buf, &cb.buf);
--		retval = brace - name + 1;
-+	} else {
-+		consumed = 0;
- 	}
- 
- 	strbuf_release(&cb.buf);
--	return retval;
-+	return consumed;
- }
- 
- int get_sha1_mb(const char *name, unsigned char *sha1)
+git check-attr text *
+A.png: text: auto
+B.txt: text: auto
+---
+If we reverse the order in .gitattributes, things look better:
+* text=3Dauto
+*.png -text
+
+git check-attr text *
+A.png: text: unset
+B.txt: text: auto
+
+
+--------------------
+This is not very intuitive or even surprising, at least for many people=
+=2E
+
+Unless I mis-understand the problem, it may be that the documentation m=
+ay be updated ?
+
+The general rule for writing .gitattributes=20
+is to specify the "wider" rules first, and then the more specific rules=
+ after that.
+
+It could be that=20
+Documentation/gitattributes.txt
+should mention this instead:
+------------------------
+*		-text
+*.txt		text
+*.vcproj	eol=3Dcrlf
+*.sh		eol=3Dlf
+------------------------
+
+
+The other thing is to promote/mention the command=20
+"git  check-attr text *"
+
+at a prominent place.
+
+> Intuitively it *feels* like either of the later lines should suppress
+> EOL translation in PNG files (assuming the PNG file has a NUL byte in
+> the first 8k, which this one did).
+>=20
+> It seems to me that setting "text=3Dauto" should mean that Git uses i=
+ts
+> heuristic to guess whether a particular file is text or not, and then
+> treats the file as if it had "text" or "-text" set. If the latter, th=
+en
+> EOL translation should be suppressed.
+>=20
+> It also seems to me that "binary" should imply "-eol".
+>=20
+> Michael
+>=20
