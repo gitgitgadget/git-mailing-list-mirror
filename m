@@ -1,80 +1,53 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] config.txt: stick to CamelCase naming convention
-Date: Tue, 10 Mar 2015 16:22:33 -0700
-Message-ID: <xmqqfv9cxwsm.fsf@gitster.dls.corp.google.com>
-References: <1425983981-634-1-git-send-email-pclouds@gmail.com>
-	<CAPig+cRkV++D9-yYWOv3FmBtTuWz1_Et23Xk=8cg8=7_E1PZug@mail.gmail.com>
+From: Koosha Khajehmoogahi <koosha.khajeh@gmail.com>
+Subject: Clarification required for microproject "Add configuration options
+ for some commonly used command-line options"
+Date: Wed, 11 Mar 2015 00:29:39 +0100
+Message-ID: <54FF7E63.3030902@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Wed Mar 11 00:23:07 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Mar 11 00:30:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YVTUP-0003WS-Hr
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Mar 2015 00:23:05 +0100
+	id 1YVTbg-0003BQ-Dr
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Mar 2015 00:30:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751509AbbCJXWg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Mar 2015 19:22:36 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:53990 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751257AbbCJXWf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Mar 2015 19:22:35 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id EB12C3F146;
-	Tue, 10 Mar 2015 19:22:34 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+Vac0SnQEBSHR0/6u5a1YnJMlqw=; b=l00Juy
-	RyNdfjOsMUUCd+twJZsONm2qYiBUuEytO8VuKW8Y9OU44iHRpqvVdiOEG4VPAPxQ
-	l8Pw8tgUFturgQ63y7fRQFhIc4qSMXIfv7OWkN/E/huQHzJImeJuTXrVy3WRw9FT
-	BQS2iGaXbrQssZ4B+fRkl8Uz9CZaov84HoXQg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=dXEGZQ6xNPQjsIIV90XhSYIO22eI8KJM
-	T3dvqZkFFHtjpk/QQxZPlBTZThA27pGr9s+SCw6Xb+Wq41S2/yCNUK53x1ZJ0jvm
-	kNRls5BxJuPAj+3yq94YZZPEFlAWTfxQCZ94Qn7IvHwtb6JA2voG3/r/IJXSycNt
-	pZ3rrEKaG5U=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E2C403F145;
-	Tue, 10 Mar 2015 19:22:34 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6A5723F144;
-	Tue, 10 Mar 2015 19:22:34 -0400 (EDT)
-In-Reply-To: <CAPig+cRkV++D9-yYWOv3FmBtTuWz1_Et23Xk=8cg8=7_E1PZug@mail.gmail.com>
-	(Eric Sunshine's message of "Tue, 10 Mar 2015 16:34:35 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 55090E6E-C77C-11E4-A053-29999F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751566AbbCJXac (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Mar 2015 19:30:32 -0400
+Received: from mail-wi0-f173.google.com ([209.85.212.173]:34162 "EHLO
+	mail-wi0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750855AbbCJXab (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Mar 2015 19:30:31 -0400
+Received: by wiwl15 with SMTP id l15so32564268wiw.1
+        for <git@vger.kernel.org>; Tue, 10 Mar 2015 16:30:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        bh=/5HX2bzJmapL/QeISIkZN3iVV3HziwL3zTgiPl7zJVk=;
+        b=m/tF0hMBWMt9KtLuKyrl2TZzwwf6rWgM4BLD6Q+Uz6RE12rC5Dsflr1KJyu7FsOLI/
+         69Tze9QKl6VbxLRk1JARDgKSsdlQc+qlsUDRRV36joL08CB+S/9SpLnCs8M2e/4AWi+V
+         TUm5kWV0lNErUasdbTKbp7n9QUqGL7tc1V5C5CGpRZ+elTARuSOGnYcIiJuSZlSngy8D
+         cHAimDEzQRY6vXEWKxeMnl1T9RVe4qBK6y5mAM8FhSx89UdoKb7MWDfE2tvPGzc8pWXf
+         5PoGNPEI2h2DngPzqcldK600qSANljx5+9nyJpMcHwYhsmZVQcWNVzaxiNY2tvYRV58c
+         pCjQ==
+X-Received: by 10.194.177.132 with SMTP id cq4mr69676594wjc.99.1426030230310;
+        Tue, 10 Mar 2015 16:30:30 -0700 (PDT)
+Received: from [10.148.69.170] (host135-2.natpool.mwn.de. [138.246.2.135])
+        by mx.google.com with ESMTPSA id bd1sm22299484wib.13.2015.03.10.16.30.29
+        for <git@vger.kernel.org>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 10 Mar 2015 16:30:29 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.5.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265282>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265283>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
-
->> @@ -2308,14 +2308,14 @@ sendemail.identity::
->>         See linkgit:git-send-email[1] for description.  Note that this
->>         setting is not subject to the 'identity' mechanism.
->>
->> -sendemail.smtpssl (deprecated)::
->> +sendemail.smtpSSL (deprecated)::
->
-> Here, "SSL"...
-
-and not "SMTP".  Now what should the rule be when two acronyms sit
-next to each other?
-
-I personally feel that we should first fix the obvious
-"multipleWords" ones without worrying about abbreviations like ctx
-and acronyms and then debate to come up with the rules for the
-latter two classes.  Most of the ones in the patch look like
-"multipleWords" kind that should be uncontroversial.
-
-Duy, thanks for starting this.
+Does this microproject require the feature to be a generic one for every
+possible command or should it be limited to some particular commands?
