@@ -1,99 +1,122 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 3/3] builtin/help.c: fix memory leak
-Date: Tue, 10 Mar 2015 16:50:33 -0700
-Message-ID: <CAGZ79kYSBsfbR_gH1Ur12vMpcK5S0K6wrOpMhNVvgffAb683Bw@mail.gmail.com>
-References: <1425920304-22360-1-git-send-email-sbeller@google.com>
-	<1425920304-22360-3-git-send-email-sbeller@google.com>
-	<xmqqwq2oxyli.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 11 00:56:13 2015
+Subject: [PATCH 2/3] bundle.c: fix memory leak
+Date: Tue, 10 Mar 2015 16:51:48 -0700
+Message-ID: <1426031508-7575-1-git-send-email-sbeller@google.com>
+References: <xmqqk2yoxx1u.fsf@gitster.dls.corp.google.com>
+Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Wed Mar 11 00:58:27 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YVU0S-0004yo-Ah
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Mar 2015 00:56:12 +0100
+	id 1YVU2c-0007If-3X
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Mar 2015 00:58:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751660AbbCJX4F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Mar 2015 19:56:05 -0400
-Received: from mail-ie0-f172.google.com ([209.85.223.172]:34295 "EHLO
-	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750985AbbCJX4C (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Mar 2015 19:56:02 -0400
-Received: by iecsl2 with SMTP id sl2so877975iec.1
-        for <git@vger.kernel.org>; Tue, 10 Mar 2015 16:56:01 -0700 (PDT)
+	id S1751899AbbCJX6V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Mar 2015 19:58:21 -0400
+Received: from mail-ie0-f173.google.com ([209.85.223.173]:33538 "EHLO
+	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750872AbbCJX6U (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Mar 2015 19:58:20 -0400
+Received: by iecvj10 with SMTP id vj10so1032801iec.0
+        for <git@vger.kernel.org>; Tue, 10 Mar 2015 16:58:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=esojwWa5qQEukwWRIvPzfcgQW/F1EPMY+7cO1gPNYVk=;
-        b=mKYn05pZGmMPLey9BOPET05daFUTFte2zQapoSpuPtnrTfqIN8Ak16q2SHyR2Uem5S
-         gestZ0rxqrlcoganhY/XJPOYtUOAmicM0WmxwodIS9ITsuY0Xfb702MqHWnwEgpB2fjx
-         Pi/AfgDuZBnw5h7MZuTWvJOganh6VfbTtLtAl8+av8jUIX2jTQubmHgtmkxtRZa4VJqN
-         zDM991xluMt1bRggWZ0kQ3NcM4W3aMshPvhlkwKT4JK48WVRCNMUEkOqtZPt70vSyPyw
-         aYj+9iRXm1xz48neao4gEI5y8qaBTTDlgFgv8BG31VDbJrfr8USarBHQ5Re7FtUhAkUH
-         6/Yg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=kaXWf4SJJ/axMR1Lx1R3KClm9c9n6mDM6/De8OjNd2Q=;
+        b=pPjipo0qSnE5LvraSBqC6qoEGb4PPS2sIweUn9coCsXFRO72ySemfRrzHe3fnSiTY4
+         PdslBsLiPlEGHyBqt6g3ycb5BzCCBmlLA0VaMSQ8kUhAixgpaSgfdQm6fo6XBT3COG4H
+         dwLCuaeo1ahQXrI43TzWMfZVVDhIoc1+xQPbTX/C1FPolXd+xKJJn/9ZIbB0apWj4YK6
+         h3AgeStDeqGiOqVPcNiDD7RqaW1QgpGj82LJfUCRlYSwybV7qRDDIo5ps659f8QbIj+Z
+         uhe0B5sInL4q0onCN3rX/OGPIGUBBqiW9ODyblMlu+pSX7fQUL796shjE6i5R9cLUv60
+         qHoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=esojwWa5qQEukwWRIvPzfcgQW/F1EPMY+7cO1gPNYVk=;
-        b=VxE58qm56RmA5qAO1W+hVrp86EaBnKbwTyv716YFMPZIkm5mTLFYwQSvb3rDwg/+91
-         0BQWZzq/e3xaOB5GQC6IAne45+UzSQnq3rBxPxlK7bOdwZ/mJnFm450mYXGwicMc8wRk
-         IXejeFGlIbnfQhX07yVC8WBuwHLboGa0EmpO9EkY7ZVtuvyfdpbTyEP6WESdp9TLXu9f
-         3WuPTFL064k0VrrTmmKNwZFuHoLjACunqEvEmjiZgzPksihjix+Yphqxw5pRGweO9/pX
-         Zr6sGpGCH2m4qyKhk+WSeVqLfC2ifhxtXnUKDj+h5ris2Mmx5orXKtO5hWrFszm9+Di2
-         i2hw==
-X-Gm-Message-State: ALoCoQkMU9hCW08PPjHxj6rgij2mLqtYAV1r8wauADeB4glncHWElW5yiB2tPleI9pK74FNMqMNh
-X-Received: by 10.42.92.16 with SMTP id r16mr37670843icm.95.1426031433562;
- Tue, 10 Mar 2015 16:50:33 -0700 (PDT)
-Received: by 10.107.46.31 with HTTP; Tue, 10 Mar 2015 16:50:33 -0700 (PDT)
-In-Reply-To: <xmqqwq2oxyli.fsf@gitster.dls.corp.google.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=kaXWf4SJJ/axMR1Lx1R3KClm9c9n6mDM6/De8OjNd2Q=;
+        b=U8FdaMhuocjXAGSK1ZUDNweJckdHRWhLs1vsaU/kGldrynk1t7BaOe3DI0sI1TeThD
+         xO1JeQa0CJE3XKUcI/q3tDULfEmWyfcadmY6RDkQcCgf993aOVoVbZGxlKPv+cH/C8qH
+         1NKq7HlgEyDJm0PUYMxa+0yt92Ba98l/Gc+JEfkvxmM2ScAEe6zfZO9KNJ2LbbPv+kM7
+         kQMKAzZMomSNQfM29ZpQDOBFtpAQawCP9ux63Gw+R14OM5YeQN9PUOB2KJnnk93/Wl+T
+         7/Zj3tqmvbqeikOJAPAFZSFGuV/a4qddmK8Q2x1PSAeVVmgba8R6uPfcUB/gkppb90m5
+         WZAg==
+X-Gm-Message-State: ALoCoQnslR3IFXFDBzYBxtZL1fyLVwLPb8k0i2rt6iFgckAzXAknkD89otxJ4WUvlbAjmVe2V13d
+X-Received: by 10.107.15.155 with SMTP id 27mr42863749iop.49.1426031511856;
+        Tue, 10 Mar 2015 16:51:51 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b00:89e3:41de:f077:72dc])
+        by mx.google.com with ESMTPSA id i20sm1423761igh.16.2015.03.10.16.51.51
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 10 Mar 2015 16:51:51 -0700 (PDT)
+X-Mailer: git-send-email 2.3.0.81.gc37f363
+In-Reply-To: <xmqqk2yoxx1u.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265286>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265287>
 
-On Tue, Mar 10, 2015 at 3:43 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> Signed-off-by: Stefan Beller <sbeller@google.com>
->> ---
->>  builtin/help.c | 3 ++-
->>  1 file changed, 2 insertions(+), 1 deletion(-)
->>
->> diff --git a/builtin/help.c b/builtin/help.c
->> index 6133fe4..a1f5a0a 100644
->> --- a/builtin/help.c
->> +++ b/builtin/help.c
->> @@ -456,7 +456,7 @@ static void list_common_guides_help(void)
->>  int cmd_help(int argc, const char **argv, const char *prefix)
->>  {
->>       int nongit;
->> -     const char *alias;
->> +     char *alias;
->>       enum help_format parsed_help_format;
->>
->>       argc = parse_options(argc, argv, prefix, builtin_help_options,
->> @@ -499,6 +499,7 @@ int cmd_help(int argc, const char **argv, const char *prefix)
->>       alias = alias_lookup(argv[0]);
->>       if (alias && !is_git_command(argv[0])) {
->>               printf_ln(_("`git %s' is aliased to `%s'"), argv[0], alias);
->> +             free(alias);
->
-> Hmph, does this memory belong to us, or are we peeking into the
-> cached data in the config cache layer?
+There was one continue statement without an accompanying `free(ref)`.
+Instead of adding that, replace all the free&&continue with a goto
+just after writing the refs, where we'd do the free anyway and then
+reloop.
 
-So  alias_lookup(..) is a wrapper around git_config_string essentially
-(some more git_config_functions are involved, but we eventually reach
-git_config_string), where we have
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ bundle.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-    *dest = xstrdup(value);
-
-so I think we need to free that memory, as the config cache layer doesn't
-care any more.
+diff --git a/bundle.c b/bundle.c
+index 2e2dbd5..f732c92 100644
+--- a/bundle.c
++++ b/bundle.c
+@@ -334,7 +334,7 @@ static int write_bundle_refs(int bundle_fd, struct rev_info *revs)
+ 		if (e->item->flags & UNINTERESTING)
+ 			continue;
+ 		if (dwim_ref(e->name, strlen(e->name), sha1, &ref) != 1)
+-			continue;
++			goto skip_write_ref;
+ 		if (read_ref_full(e->name, RESOLVE_REF_READING, sha1, &flag))
+ 			flag = 0;
+ 		display_ref = (flag & REF_ISSYMREF) ? e->name : ref;
+@@ -342,7 +342,7 @@ static int write_bundle_refs(int bundle_fd, struct rev_info *revs)
+ 		if (e->item->type == OBJ_TAG &&
+ 				!is_tag_in_date_range(e->item, revs)) {
+ 			e->item->flags |= UNINTERESTING;
+-			continue;
++			goto skip_write_ref;
+ 		}
+ 
+ 		/*
+@@ -357,8 +357,7 @@ static int write_bundle_refs(int bundle_fd, struct rev_info *revs)
+ 		if (!(e->item->flags & SHOWN) && e->item->type == OBJ_COMMIT) {
+ 			warning(_("ref '%s' is excluded by the rev-list options"),
+ 				e->name);
+-			free(ref);
+-			continue;
++			goto skip_write_ref;
+ 		}
+ 		/*
+ 		 * If you run "git bundle create bndl v1.0..v2.0", the
+@@ -388,8 +387,7 @@ static int write_bundle_refs(int bundle_fd, struct rev_info *revs)
+ 				obj->flags |= SHOWN;
+ 				add_pending_object(revs, obj, e->name);
+ 			}
+-			free(ref);
+-			continue;
++			goto skip_write_ref;
+ 		}
+ 
+ 		ref_count++;
+@@ -397,6 +395,7 @@ static int write_bundle_refs(int bundle_fd, struct rev_info *revs)
+ 		write_or_die(bundle_fd, " ", 1);
+ 		write_or_die(bundle_fd, display_ref, strlen(display_ref));
+ 		write_or_die(bundle_fd, "\n", 1);
++ skip_write_ref:
+ 		free(ref);
+ 	}
+ 
+-- 
+2.3.0.81.gc37f363
