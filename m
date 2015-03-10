@@ -1,121 +1,88 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] send-email: Add CCs from additional commit tags
-Date: Tue, 10 Mar 2015 19:00:13 -0400
-Message-ID: <CAPig+cSJkGQ8YHb7D5XV2DvNCyxdAf4GksRNAqEt-kEXznaNUw@mail.gmail.com>
-References: <1425679161-13963-1-git-send-email-soren.brinkmann@xilinx.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH 2/3] bundle.c: fix memory leak
+Date: Tue, 10 Mar 2015 16:08:32 -0700
+Message-ID: <CAGZ79kZ5=Q3WE6Ztr7PJ2Kv2xdKdCB2cD+_MH1GcqEDiZpU11w@mail.gmail.com>
+References: <1425920304-22360-1-git-send-email-sbeller@google.com>
+	<1425920304-22360-2-git-send-email-sbeller@google.com>
+	<xmqq1tkwzdbj.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Soren Brinkmann <soren.brinkmann@xilinx.com>
-X-From: git-owner@vger.kernel.org Wed Mar 11 00:00:21 2015
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 11 00:08:42 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YVT8O-0004vX-4y
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Mar 2015 00:00:20 +0100
+	id 1YVTGR-0005DE-NL
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Mar 2015 00:08:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750985AbbCJXAQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Mar 2015 19:00:16 -0400
-Received: from mail-yk0-f174.google.com ([209.85.160.174]:33576 "EHLO
-	mail-yk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750852AbbCJXAO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Mar 2015 19:00:14 -0400
-Received: by ykt10 with SMTP id 10so2296786ykt.0
-        for <git@vger.kernel.org>; Tue, 10 Mar 2015 16:00:13 -0700 (PDT)
+	id S1750772AbbCJXId (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Mar 2015 19:08:33 -0400
+Received: from mail-ie0-f173.google.com ([209.85.223.173]:33302 "EHLO
+	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750707AbbCJXId (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Mar 2015 19:08:33 -0400
+Received: by iecvj10 with SMTP id vj10so35004927iec.0
+        for <git@vger.kernel.org>; Tue, 10 Mar 2015 16:08:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=f8blJhy/eWdmLf+w20n3ep/Mr4EgaRcZvbU5GmcUJyA=;
-        b=R7DuooTna7eViq99QoRNu0dA2lqQuBbjssCC4Gd6mK/qgK58zipCCbj+Cr8q1sWVdx
-         SuuI4EvN921GlAJPTyq7T6wdwYL8AHtnEgueUYxOJZg9tSGiu8iX4lqbrh70TF89V0Q9
-         FVbn+eTbH4PHBORfjgWUvOpuE7aq2dVV9o1NvjqqM7lSdeDWMn1V0/NLynHE8RFFEtEa
-         vaVWvsCKoVHIrL7wvjKEAyjw+EfL3atErPpm97uu6BLNpkUh53Uvs08sFNXLF+IgEPER
-         ZF+TAMHspbF6l1QeHQDIgcxDKxdylqHC4rCYiXA10xJoBIuYW2Xr2H4u84JYXvzgolVx
-         LXiw==
-X-Received: by 10.236.63.6 with SMTP id z6mr34424595yhc.65.1426028413517; Tue,
- 10 Mar 2015 16:00:13 -0700 (PDT)
-Received: by 10.170.73.7 with HTTP; Tue, 10 Mar 2015 16:00:13 -0700 (PDT)
-In-Reply-To: <1425679161-13963-1-git-send-email-soren.brinkmann@xilinx.com>
-X-Google-Sender-Auth: EaiqeMCUefK2NGs85_H_LZvAtKg
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=7LC552jVRnyE0FF9XHL9bGFj6faN8rA6PzfWdB7EISY=;
+        b=gjucpWIQHf0JSHqJ4iFBpe0OcY3Na9kFePmhvhSsGMWIawE5Rh3vHjigLgQtL8QWTo
+         RuuPmKT+5BDkyNEoyrUZS3Mdc8dzzkoGkk6Zc05c46wp2MT43BfeZkuQ736teUbDg8Sl
+         yle1mojKMTzTODNo2iD5rZPUMZP9JupdU1PHcpsQ8D1Unqvx2V/YB505w/AQK8SFMtZc
+         jEGaCuA57qw/Et5dy9GEyKcT3+Vs+vVOHtH8rRWKrHvBGUP6C1BUw8Hz2b8tEi/LiBrW
+         hKBqmqxrc9JNsZhWBEWMpa1zyYn7rY8QZ1UTKfVjAIt0db5BI/wmnJewfXKvsOlGOfoz
+         zxKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=7LC552jVRnyE0FF9XHL9bGFj6faN8rA6PzfWdB7EISY=;
+        b=FYiJpdNo1PBqDpO/BysR2rbkqoW6HWsWkvU1HOtsC+tWRXWF/w6LtpKvc+hMHDfnZV
+         Psk5iLYFIvJjzClWQNEaEW8y14LXJBS13MzOQR/nnCNvxUZRFn/auKYH0/waM3lzepp1
+         4H82J1AF2AMct7cRY2Hutw3oe2vPS0a5hFvMahFH1+NXOuI+S9nN7ddnvpzXrMRivccx
+         SKF9izmSmMomiB/ClQYy1Tw7txU9fjVCPu993e8cNhVcGlAvTLOWTXpH+9jhB3yr5UdW
+         /YET/vq/37jWrXwvtTTv+4/x1SzreU5PR+pOskRXmYEHbKtpcaZ3XNrWbD888ydm1AR3
+         ouCA==
+X-Gm-Message-State: ALoCoQm0MZPeNikfqtTqNjd4Q/cUyPG5FeiGY9Xq6Bm0YcAjW11s5Zv7ymjhmsrycc/7/y69+9NT
+X-Received: by 10.50.107.36 with SMTP id gz4mr60976810igb.25.1426028912307;
+ Tue, 10 Mar 2015 16:08:32 -0700 (PDT)
+Received: by 10.107.46.31 with HTTP; Tue, 10 Mar 2015 16:08:32 -0700 (PDT)
+In-Reply-To: <xmqq1tkwzdbj.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265278>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265279>
 
-On Fri, Mar 6, 2015 at 4:59 PM, Soren Brinkmann
-<soren.brinkmann@xilinx.com> wrote:
-> Add email addresses from additional commonly used tags to the CC-list of
-> patches. Additional tags are:
->  - Acked-by
->  - Reviewed-by
->  - Tested-by
->  - Reported-by
->  - Reviewed-and-tested-by
+On Tue, Mar 10, 2015 at 3:40 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
 >
-> --suppress-cc=ack suppresses these additional CCs.
-
-This and similar suggestions have come up a number of times. Rather
-than hard-coding an ever-growing list of tags, general consensus seems
-to be that it would be better to provide some sort of mechanism for
-people to customize the list for their needs. See, for instance, [1].
-Such ability would also be a better fit for non-standard, potentially
-contested tags, such as Reviewed-and-tested-by:.
-
-[1]: http://thread.gmane.org/gmane.comp.version-control.git/233003/focus=233739
-
-> Signed-off-by: Soren Brinkmann <soren.brinkmann@xilinx.com>
-> ---
->  Documentation/git-send-email.txt | 3 +++
->  git-send-email.perl              | 5 +++--
->  2 files changed, 6 insertions(+), 2 deletions(-)
+>> The continue statements nearby also have an accompanying free(ref);
+>>
+>> Signed-off-by: Stefan Beller <sbeller@google.com>
+>> ---
 >
-> diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-> index f248a8665e1f..1b521446ca11 100644
-> --- a/Documentation/git-send-email.txt
-> +++ b/Documentation/git-send-email.txt
-> @@ -293,6 +293,9 @@ Automating
->    patch body (commit message) except for self (use 'self' for that).
->  - 'sob' will avoid including anyone mentioned in Signed-off-by lines except
->     for self (use 'self' for that).
-> +- 'ack' will avoid including anyone who acked the  patch (mentioned in
-> +  Acked-by, Reviewed-by, Tested-by, Reviewed-and-tested-by lines except for
-> +  self (use 'self' for that).
->  - 'cccmd' will avoid running the --cc-cmd.
->  - 'body' is equivalent to 'sob' + 'bodycc'
->  - 'all' will suppress all auto cc values.
-> diff --git a/git-send-email.perl b/git-send-email.perl
-> index 3092ab356c76..18eb8a5139a4 100755
-> --- a/git-send-email.perl
-> +++ b/git-send-email.perl
-> @@ -407,7 +407,7 @@ my(%suppress_cc);
->  if (@suppress_cc) {
->         foreach my $entry (@suppress_cc) {
->                 die "Unknown --suppress-cc field: '$entry'\n"
-> -                       unless $entry =~ /^(?:all|cccmd|cc|author|self|sob|body|bodycc)$/;
-> +                       unless $entry =~ /^(?:all|cccmd|cc|author|self|sob|body|bodycc|ack)$/;
->                 $suppress_cc{$entry} = 1;
->         }
->  }
-> @@ -1452,7 +1452,7 @@ foreach my $t (@files) {
->         # Now parse the message body
->         while(<$fh>) {
->                 $message .=  $_;
-> -               if (/^(Signed-off-by|Cc): (.*)$/i) {
-> +               if (/^(Signed-off-by|Cc|Acked-by|Reviewed-by|Tested-by|Reported-by|Reviewed-and-tested-by): (.*)$/i) {
->                         chomp;
->                         my ($what, $c) = ($1, $2);
->                         chomp $c;
-> @@ -1462,6 +1462,7 @@ foreach my $t (@files) {
->                         } else {
->                                 next if $suppress_cc{'sob'} and $what =~ /Signed-off-by/i;
->                                 next if $suppress_cc{'bodycc'} and $what =~ /Cc/i;
-> +                               next if $suppress_cc{'ack'} and $what =~ /(Acked-by|Reviewed-by|Tested-by|Reported-by|Reviewed-and-tested-by)/i;
->                         }
->                         push @cc, $c;
->                         printf("(body) Adding cc: %s from line '%s'\n",
-> --
-> 2.3.1.2.g90df61e.dirty
+> I wonder what happens when dwim_ref() returned 2 or more, though.
+
+That should also be fixed I guess. I'll look into it.
+
+These one liner fixes are mostly done as a side project
+having fun, just doing what the code analysis tools says,
+sorry for not catching that one.
+
+Maybe instead of the reoccuring pattern
+
+    free(ref);
+    continue;
+
+we could just have a
+
+    goto cleanup
+
+which goes to the end of the loop where we have
+the free anyway.
