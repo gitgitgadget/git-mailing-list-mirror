@@ -1,145 +1,86 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 1/2] Adding - shorthand for @{-1} in RESET command
-Date: Tue, 10 Mar 2015 02:54:52 -0400
-Message-ID: <CAPig+cRAB-LQctj6UOKUXps-MEh2C_EbSp_3=wfgxtWx6xCbhw@mail.gmail.com>
-References: <1425934010-8780-1-git-send-email-dyoucme@gmail.com>
+From: Sudhanshu Shekhar <sudshekhar02@gmail.com>
+Subject: Re: [PATCH v2 1/2] Teach reset the same short-hand as checkout
+Date: Tue, 10 Mar 2015 13:07:31 +0530
+Message-ID: <CAODo60pDGeX+VtuhvByduBzvmFabH4GVH-xe-dcMou_Zz=C7vg@mail.gmail.com>
+References: <1425888936-23370-1-git-send-email-sudshekhar02@gmail.com> <xmqq385d60o3.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Sundararajan R <dyoucme@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 10 07:54:59 2015
+Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	davvid <davvid@gmail.com>, sunshine <sunshine@sunshineco.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 10 08:38:02 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YVE4A-0004sk-9k
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Mar 2015 07:54:58 +0100
+	id 1YVEjo-0005Uu-Gr
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Mar 2015 08:38:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751424AbbCJGyx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Mar 2015 02:54:53 -0400
-Received: from mail-yk0-f170.google.com ([209.85.160.170]:45183 "EHLO
-	mail-yk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751083AbbCJGyw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Mar 2015 02:54:52 -0400
-Received: by ykp131 with SMTP id 131so8097530ykp.12
-        for <git@vger.kernel.org>; Mon, 09 Mar 2015 23:54:52 -0700 (PDT)
+	id S1750969AbbCJHh4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Mar 2015 03:37:56 -0400
+Received: from mail-la0-f44.google.com ([209.85.215.44]:45260 "EHLO
+	mail-la0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750780AbbCJHhz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Mar 2015 03:37:55 -0400
+Received: by lamq1 with SMTP id q1so12273179lam.12
+        for <git@vger.kernel.org>; Tue, 10 Mar 2015 00:37:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=lIdPk3hD88YdGIg0Un6ArOxjoQWKNBQpUQNzrDN1TTg=;
-        b=y3dYNZvz8Uo61u9BSLti47a/J3xWZWNH1vBPjW4Ctkud5Nuoa4cygwtpswSMAR9Voq
-         /FJtQ5KlPpuKx0msw9+0t9SvUqXZZ2eePFv7KR8GneCFLykGhNw6HGGkSru9Voi+KX5M
-         ax4lq8r5uAUDzoL23NhBC6cmULXksv2rjQHjVc7QA6hepGXJ6bEahzmcUJO0C5Q328yO
-         omRam3w9YB9KzwXv7JTLDlTq177Roo1lltNvpFqckR4Yo5iissb4U8idNpjzbfQmEOSM
-         W2hP2xhbK5SVFJ+r4mRwg692vDKk3g9pcuOJSWhY7jGX666s9/5J5EnhIsWRIzSAuJX2
-         yD9Q==
-X-Received: by 10.236.70.100 with SMTP id o64mr30276912yhd.94.1425970492217;
- Mon, 09 Mar 2015 23:54:52 -0700 (PDT)
-Received: by 10.170.73.7 with HTTP; Mon, 9 Mar 2015 23:54:52 -0700 (PDT)
-In-Reply-To: <1425934010-8780-1-git-send-email-dyoucme@gmail.com>
-X-Google-Sender-Auth: SsIg_sPH79lNAFw7iZZ2G6gj2j8
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=vV0/sY6zFhxLRbuzPxvBuceYu97BST4rEhXs4lhvdUM=;
+        b=KTtkmp1M8VBqJuE3TEcurn/5Q6sFg77jsuPX6SzfMObQ/dt+Ua0xPvpoepXUD0bzCG
+         JxswzjHL7Ze64hm8txAmJjUFBDtFPaCP0HwXLP+8kkW6Chkf4/jpvxb4du+OWoDHe2z/
+         ioCrQQ+VuBYZAbJJqBfdaxhOK0TKKfqtEq+4m/Jn1g62ekWOvQhMwbZoYfgpH1VcuSuY
+         DqMa7kPDcZd4uIejo6DHVZp6z0sLQePWYFYp8opApObIHHLELZz5VafLi4pOBGQdGgvR
+         YsHq3hGeZ84AjMIFwWqQ2xPiFAqhVhKFFbIUThAtxqTmLfL/x/98jf4aEFQ1ASGoTVLl
+         R+LQ==
+X-Received: by 10.152.23.233 with SMTP id p9mr29376754laf.123.1425973073575;
+ Tue, 10 Mar 2015 00:37:53 -0700 (PDT)
+Received: by 10.152.43.138 with HTTP; Tue, 10 Mar 2015 00:37:31 -0700 (PDT)
+In-Reply-To: <xmqq385d60o3.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265214>
 
-On Mon, Mar 9, 2015 at 4:46 PM, Sundararajan R <dyoucme@gmail.com> wrote:
-> Please give feedback and suggest things I may have missed out on.
-> I hope I have incorporated all the suggestions.
+Hi,
 
-If you haven't already, read Documentation/SubmittingPatches. Pay
-particular attention to section #2 which explains how to write a good
-commit message, and to section #4 to learn where to place patch
-commentary not intended as part of the permanent commit history. The
-above lines are commentary, not meant as part of the commit message.
-Place such commentary below the '---' line just before the diffstat.
-
-> Subject: Adding - shorthand for @{-1} in RESET command
-
-Prefix the first line of the commit message with the module or command
-you re changing. Drop capitalization. Write in imperative mood. For
-instance:
-
-    reset: add '-' shorthand for '@{-1}'
-
-> Signed-off-by: Sundararajan R <dyoucme@gmail.com>
-> Thanks-to: Junio C Hamano
-
-Place your sign-off last. Use Helped-by: rather than Thanks-to: and
-include the person's full name and email address.
-
-> ---
-
-Here, just below the '---' line is where you should place commentary
-not intended for the permanent commit record.
-
-> I have attempted to resolve the ambiguity when there exists a file named -
-> by communicating to the user that he/she can use ./- when he/she wants to refer
-> to the - file. I perform this check using the check_filename() function.
-
-This is important information for the commit message itself above the
-'---' line, though you would want to rephrase it just to state the
-facts. No need to mention "I did this" or "I did that" since the patch
-itself implies that you made the changes.
-
->  builtin/reset.c | 16 +++++++++++++++-
->  1 file changed, 15 insertions(+), 1 deletion(-)
+On Tue, Mar 10, 2015 at 8:04 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Sudhanshu Shekhar <sudshekhar02@gmail.com> writes:
 >
-> diff --git a/builtin/reset.c b/builtin/reset.c
-> index 4c08ddc..2bdd5cd 100644
-> --- a/builtin/reset.c
-> +++ b/builtin/reset.c
-> @@ -192,6 +192,7 @@ static void parse_args(struct pathspec *pathspec,
->  {
->         const char *rev = "HEAD";
->         unsigned char unused[20];
-> +       int file_named_minus=0;
-
-Style: Here and elsewhere, add a space around '='.
-
->         /*
->          * Possible arguments are:
->          *
-> @@ -205,6 +206,12 @@ static void parse_args(struct pathspec *pathspec,
->          */
+>> "-" now means the previous branch.
+>>
+>> Signed-off-by: Sudhanshu Shekhar <sudshekhar02@gmail.com>
+>> Thanks-to: Eric Sunshine, Junio C Hamano, Matthieu Moy
+>> ---
 >
->         if (argv[0]) {
-> +               if (!strcmp(argv[0], "-") && !argv[1]) {
-> +                       if(!check_filename(prefix,"-"))
+>
+> These look unusual for a few reasons: your S-o-b should be at the
+> end, we usually say Helped-by: instead, and we do not use these with
+> multiple names on a single line.
+>
+> Please do not try to be original without a good reason.  We may
+> start counting the number of times people appear on these footers to
+> see how much contribution those who do not directly author commits
+> (read: those who mentor others) are making.
 
-Style: Here and elsewhere, add space after 'if'.
-Style: Add space after comma.
+Thank you for telling me this. I will it keep it in mind from next
+time onwards.
 
-> +                               argv[0]="@{-1}";
-> +                       else
-> +                               file_named_minus=1;
-> +               }
->                 if (!strcmp(argv[0], "--")) {
->                         argv++; /* reset to HEAD, possibly with paths */
->                 } else if (argv[1] && !strcmp(argv[1], "--")) {
-> @@ -226,7 +233,14 @@ static void parse_args(struct pathspec *pathspec,
->                         rev = *argv++;
->                 } else {
->                         /* Otherwise we treat this as a filename */
-> -                       verify_filename(prefix, argv[0], 1);
-> +                       if(file_named_minus) {
-> +                               die(_("ambiguous argument '-': both revision and filename\n"
-> +                                       "Use ./- for file named -\n"
-> +                                       "Use '--' to separate paths from revisions, like this:\n"
-> +                                       "'git <command> [<revision>...] -- [<file>...]'"));
+>
+>>  builtin/reset.c | 9 ++++++++-
+>>  1 file changed, 8 insertions(+), 1 deletion(-)
+>
+> The comment I gave in the thread that ends at $gmane/265112 would
+> apply equally to this patch, I think.
+>
+> cf. http://thread.gmane.org/gmane.comp.version-control.git/264986/focus=265112
+I have rectified this in my new patch and will send it soon.
+Kindly do let me know if there are any other changes required.
 
-This seems odd. If arguments following '--' are unconditionally
-treated as paths, why is it be necessary to tell the user to spell out
-file '-' as './-'? Shouldn't "git reset -- -" be sufficient?
-
-> +                       }
-> +                       else
-> +                               verify_filename(prefix, argv[0], 1);
->                 }
->         }
->         *rev_ret = rev;
-> --
-> 2.1.0
+Thank you.
+Regards,
+Sudhanshu
