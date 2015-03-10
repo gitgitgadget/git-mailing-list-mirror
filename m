@@ -1,108 +1,115 @@
-From: Sudhanshu Shekhar <sudshekhar02@gmail.com>
-Subject: [PATCH v3 1/2] reset: enable '-' short-hand for previous branch
-Date: Wed, 11 Mar 2015 03:42:15 +0530
-Message-ID: <1426025535-18857-1-git-send-email-sudshekhar02@gmail.com>
-References: <CAPig+cQdSHQTVwOwb9hee6On_Bv4qrh0MhiR-aRDMXqhw5L9wQ@mail.gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, davvid@gmail.com,
-	Matthieu.Moy@grenoble-inp.fr,
-	Sudhanshu Shekhar <sudshekhar02@gmail.com>
-To: sunshine@sunshineco.com
-X-From: git-owner@vger.kernel.org Tue Mar 10 23:12:34 2015
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: Surprising interaction of "binary" and "eol" gitattributes
+Date: Tue, 10 Mar 2015 23:16:03 +0100
+Message-ID: <54FF6D23.4060301@alum.mit.edu>
+References: <54F88684.3020905@alum.mit.edu>	<xmqqwq2v14iv.fsf@gitster.dls.corp.google.com>	<54F9422D.2020800@web.de> <54F9E907.4040703@alum.mit.edu>	<54FA1C7B.3040906@web.de> <54FF450F.7040506@alum.mit.edu> <xmqq385c1v13.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Cc: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
+	git discussion list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 10 23:16:17 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YVSO9-0004e0-RP
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Mar 2015 23:12:34 +0100
+	id 1YVSRk-000060-7u
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Mar 2015 23:16:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752477AbbCJWM3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Mar 2015 18:12:29 -0400
-Received: from mail-pd0-f181.google.com ([209.85.192.181]:38799 "EHLO
-	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752183AbbCJWM3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Mar 2015 18:12:29 -0400
-Received: by pdbfl12 with SMTP id fl12so5619860pdb.5
-        for <git@vger.kernel.org>; Tue, 10 Mar 2015 15:12:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=hhJdyE+9J3MBxrn3+8hcLHRZ9EnhQX84t7TtjGSdCzM=;
-        b=i8BFapZTnChSwCg7oBl1IdfpxDAvehKns6zM+9TCsxoCv8ING9sK2lP9fxKKq25y2m
-         ja5L22g+liuOte0QIvxqCU/WVMB8CsM7lAbyyImKMLxXKtjZqqPLxVXXiL63aHxBwPGA
-         OyS4Io2ohhFq6XjG8gGCJLqqWAzFbnzzKZj+e2Cx8pPlYC7c/LQy1jehirHY0I8xCrOa
-         HWhirULLW4t85c1+vU/hnT343cci9WGihdrLvNfNG+lGa2Ff99N3wMkvPDa+5KTvZdG2
-         9pkvtToUrpeth0V1N6AFyKFmyZyT1VpwQo3SPJc98kdBq3YGhLgEBEzOMs7pl+NF9eCo
-         ZKTQ==
-X-Received: by 10.66.101.73 with SMTP id fe9mr71398323pab.156.1426025548446;
-        Tue, 10 Mar 2015 15:12:28 -0700 (PDT)
-Received: from shekhar-Inspiron-N5110.iiit.ac.in ([14.139.82.6])
-        by mx.google.com with ESMTPSA id pm9sm2582373pdb.59.2015.03.10.15.12.24
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 10 Mar 2015 15:12:27 -0700 (PDT)
-X-Mailer: git-send-email 2.3.1.278.ge5c7b1f.dirty
-In-Reply-To: <CAPig+cQdSHQTVwOwb9hee6On_Bv4qrh0MhiR-aRDMXqhw5L9wQ@mail.gmail.com>
+	id S1752094AbbCJWQM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Mar 2015 18:16:12 -0400
+Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:54943 "EHLO
+	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750920AbbCJWQJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Mar 2015 18:16:09 -0400
+X-AuditID: 12074411-f79fa6d000006b8a-14-54ff6d26d424
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id F8.10.27530.62D6FF45; Tue, 10 Mar 2015 18:16:06 -0400 (EDT)
+Received: from [192.168.69.130] (p4FC962B5.dip0.t-ipconnect.de [79.201.98.181])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t2AMG3XJ000491
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Tue, 10 Mar 2015 18:16:04 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.5.0
+In-Reply-To: <xmqq385c1v13.fsf@gitster.dls.corp.google.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprIKsWRmVeSWpSXmKPExsUixO6iqKuW+z/EYPc/EYuuK91MFg29V5gt
+	Oju+Mjowe1y8pOzxeZOcx+1n21gCmKO4bZISS8qCM9Pz9O0SuDOWTv3BVLBXqOLy6hb2BsZz
+	fF2MHBwSAiYSc79WdDFyApliEhfurWfrYuTiEBK4zCgxf+tUVgjnPJPEvQV/2UGqeAW0JS7O
+	62UGsVkEVCWm/nkNZrMJ6Eos6mlmArFFBYIkXt76ywhRLyhxcuYTFhBbREBNYmLbITCbWaBA
+	4vzy86wgtrCAu8Tq5Uehlv1llLiydAHYUE4Ba4kJ1/+zQjSoS/yZd4kZwpaXaN46m3kCo8As
+	JDtmISmbhaRsASPzKka5xJzSXN3cxMyc4tRk3eLkxLy81CJdU73czBK91JTSTYyQ4BXcwTjj
+	pNwhRgEORiUe3hWG/0KEWBPLiitzDzFKcjApifLei/4fIsSXlJ9SmZFYnBFfVJqTWnyIUYKD
+	WUmEN80EKMebklhZlVqUD5OS5mBREuflW6LuJySQnliSmp2aWpBaBJOV4eBQkuDdlw3UKFiU
+	mp5akZaZU4KQZuLgBBnOJSVSnJqXklqUWFqSEQ+K1fhiYLSCpHiA9k4CaectLkjMBYpCtJ5i
+	VJQS590EkhAASWSU5sGNhaWkV4ziQF8K814HqeIBpjO47ldAg5mABrNYgw0uSURISTUwKsmJ
+	vVgsm/OjRsFA7fK0Bpm7adtaSnP45iybvoH5gZ3Plalqzyw2JsdP0CyNOeuRkaP4ac6ukonM
+	bOdYtkTZfT6bGVPetHurSX9IjqffimnTmY/3yu5gSQqxWiW4/vTk3sIZuiZ9M3Ks 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265269>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265270>
 
-git reset -' will reset to the previous branch. It will behave similar
-to @{-1} except when a file named '@{-1}' is present. To refer to a file
-named '-', use ./- or the -- flag.
+On 03/10/2015 09:01 PM, Junio C Hamano wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+>> [...]
+>> It seems to me that setting "text=auto" should mean that Git uses its
+>> heuristic to guess whether a particular file is text or not, and then
+>> treats the file as if it had "text" or "-text" set. If the latter, then
+>> EOL translation should be suppressed.
+> 
+> ... I think this makes even more sense. I do not think the code is
+> set up to do so.  To be honest, eol_attr thing introduced in
+> fd6cce9e (Add per-repository eol normalization, 2010-05-19) always
+> confuses me whenever I follow this codepath.
 
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-Helped-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Signed-off-by: Sudhanshu Shekhar <sudshekhar02@gmail.com>
----
-Eric, I have added a user_input variable to record the input entered by the user. This way I can avoid the multiple 'if' clauses. Thank you for the suggestion.
-I have also removed the unrelated change that I had unintentionally committed. I am sending this patch on the thread for further review. Once both the patches are reviewed and accepted, I will create a new mail for it. Hope that is okay.
+Would this change be "backwards-compatible enough" that it can be made
+without waiting for Git 3.0?
 
-Regards,
-Sudhanshu
+>> It also seems to me that "binary" should imply "-eol".
+> 
+> I thought that "eol" attribute is not even looked at when you say
+> "binary"; that is what I recall finding out when I dug into this
+> earlier in the thread.
 
- builtin/reset.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+Well, that's true, but the "eol" attribute can regain its effect if
+"binary" is followed by "text" or "text=auto". So I guess the simplest
+question is as follows. Suppose I have the following .gitattributes:
 
-diff --git a/builtin/reset.c b/builtin/reset.c
-index 4c08ddc..b428241 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -192,6 +192,8 @@ static void parse_args(struct pathspec *pathspec,
- {
- 	const char *rev = "HEAD";
- 	unsigned char unused[20];
-+	int substituted_minus = 0;
-+	char *user_input = argv[0];
- 	/*
- 	 * Possible arguments are:
- 	 *
-@@ -205,6 +207,10 @@ static void parse_args(struct pathspec *pathspec,
- 	 */
- 
- 	if (argv[0]) {
-+		if (!strcmp(argv[0], "-")) {
-+			argv[0] = "@{-1}";
-+			substituted_minus = 1;
-+		}
- 		if (!strcmp(argv[0], "--")) {
- 			argv++; /* reset to HEAD, possibly with paths */
- 		} else if (argv[1] && !strcmp(argv[1], "--")) {
-@@ -222,9 +228,12 @@ static void parse_args(struct pathspec *pathspec,
- 			 * Ok, argv[0] looks like a commit/tree; it should not
- 			 * be a filename.
- 			 */
--			verify_non_filename(prefix, argv[0]);
-+			verify_non_filename(prefix, user_input);
- 			rev = *argv++;
- 		} else {
-+			/* We were treating "-" as a commit and not a file */
-+			if (substituted_minus)
-+				argv[0] = "-";
- 			/* Otherwise we treat this as a filename */
- 			verify_filename(prefix, argv[0], 1);
- 		}
+    a.foo eol=crlf
+    a.foo binary
+    a.foo text
+
+It is obvious in this case that a.foo should be treated as a text file.
+Should it be processed with "eol=crlf", or should the intervening
+"binary" imply "-eol"?
+
+I guess it would be more natural to process it with "eol=crlf". So I
+withdraw my proposal that "binary" should imply "-eol", provided the
+first change (that "text=auto" is treated the same as "-text" for binary
+files) is implemented.
+
+So I guess the proposed new behavior WRT these attributes is:
+
+* "text" determines whether a file should be subject to EOL
+  translation.
+* "text=auto" has the same effect as "text" or "-text", depending
+  on the outcome of the binary detection heuristic; in particular,
+  it causes EOL translation to be suppressed for files determined
+  to be binary.
+* "eol" determines what EOLs should be translated to *if* the
+  file is determined to be a text file.
+* If "text" is unspecified but "eol" is specified, then do EOL
+  translation without a heuristic check.
+
+But I still have to work out how core.autocrlf and the "crlf" attribute
+fit into all this.
+
+Michael
+
 -- 
-2.3.1.278.ge5c7b1f.dirty
+Michael Haggerty
+mhagger@alum.mit.edu
