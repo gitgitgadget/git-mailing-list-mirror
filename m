@@ -1,123 +1,85 @@
-From: "Zoe Michel ." <cscc2015@gmail.com>
-Subject: I am sending you my new invitation for special session, workshops and invited papers
-Date: Mon, 9 Mar 2015 23:39:52 +0200
-Message-ID: <20150309213952.7527C3D91D8A@genf174.server4you.net>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] config.txt: update versioncmp.prereleaseSuffix
+Date: Tue, 10 Mar 2015 17:16:35 +0700
+Message-ID: <1425982595-32026-1-git-send-email-pclouds@gmail.com>
+References: <xmqqmw3s5j1y.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Mar 10 10:31:00 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 10 11:16:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YVGV9-0003sV-5P
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Mar 2015 10:30:59 +0100
+	id 1YVHDY-00080j-Cd
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Mar 2015 11:16:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751257AbbCJJak (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Mar 2015 05:30:40 -0400
-Received: from genf174.server4you.net ([217.172.184.70]:45710 "EHLO
-	genf174.server4you.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750976AbbCJJag convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Mar 2015 05:30:36 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by genf174.server4you.net (Postfix) with ESMTP id 6FC403DB4D90
-	for <git@vger.kernel.org>; Tue, 10 Mar 2015 07:21:44 +0100 (CET)
-Received: from genf174.server4you.net ([127.0.0.1])
-	by localhost (genf174.server4you.net [127.0.0.1]) (amavisd-new, port 10032)
-	with ESMTP id 5qpcztoLQFLW for <git@vger.kernel.org>;
-	Tue, 10 Mar 2015 07:21:43 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by genf174.server4you.net (Postfix) with ESMTP id C3A2C3DA2BD0
-	for <git@vger.kernel.org>; Tue, 10 Mar 2015 00:59:38 +0100 (CET)
-X-Virus-Scanned: amavisd-new at genf174.server4you.net
-Received: from genf174.server4you.net ([127.0.0.1])
-	by localhost (genf174.server4you.net [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id xTWR-XR8lISW for <git@vger.kernel.org>;
-	Tue, 10 Mar 2015 00:59:38 +0100 (CET)
-Received: from 10.0.2.15 (genf174.server4you.net [217.172.184.70])
-	by genf174.server4you.net (Postfix) with SMTP id 7527C3D91D8A
-	for <git@vger.kernel.org>; Mon,  9 Mar 2015 22:39:51 +0100 (CET)
-X-Priority: 1 (Highest)
+	id S1751354AbbCJKQs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Mar 2015 06:16:48 -0400
+Received: from mail-pd0-f172.google.com ([209.85.192.172]:32772 "EHLO
+	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751188AbbCJKQr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Mar 2015 06:16:47 -0400
+Received: by pdev10 with SMTP id v10so731414pde.0
+        for <git@vger.kernel.org>; Tue, 10 Mar 2015 03:16:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=4vZM/2+r25gGD3xjmLOY7HpLqYpnVQ2lzHTW06jAlX0=;
+        b=xE4VxPyLnYgBs007O7leVV+nzVCFgLddXOpbUQKchFRGHTj6Yovl+TEdIc8KaCEHMX
+         e/DM2C1Ehj/Huzmpkk0LZJoa+vlrOCUw9Vg7aeXPbtejfQBOWIa0+FifsN28EQa/dkWv
+         X2Pwpua7az7bTzgRppFKV4nvyFiCeaAMIAU+CxL3QQ8+CpSLUEjsckT8WtF7L0pTdfbE
+         8ciTO4dvmqsrLRmyMydGzvGXLHoUEF4kIotoUpIUU+tyB21cg1DxPYcBe8efHYnMPHBa
+         D0LYfgyM8KAs5Yewiw5Uwkidt6+lb0ypE9xZRwf66idcB3p7iAykakVEeKtnm3xlykoQ
+         zaUQ==
+X-Received: by 10.70.38.195 with SMTP id i3mr64266775pdk.76.1425982606488;
+        Tue, 10 Mar 2015 03:16:46 -0700 (PDT)
+Received: from lanh ([115.73.245.123])
+        by mx.google.com with ESMTPSA id dr5sm170313pdb.48.2015.03.10.03.16.43
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 10 Mar 2015 03:16:45 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Tue, 10 Mar 2015 17:16:43 +0700
+X-Mailer: git-send-email 2.3.0.rc1.137.g477eb31
+In-Reply-To: <xmqqmw3s5j1y.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265222>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265223>
 
-Dear Authors,
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ Documentation/config.txt | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-We would like to invite you to organize a Special Session or a Workshop 
-in CSCC 2015: Circuits, Systems, Communications and Computers
-www.cscc.co in conjuction with several parallel conferences of INASE.org
-
-We would like to invite you also to present an Invited Lecture (you know the privileges
-from my former invitations) in CSCC.org and/org in 
-INASE.org Conferences
-* Pure Mathematics, Applied Mathematics and Computational Methods
-* Continuum Mechanics, * Mechatronics and Robotics, Structural Analysis
-* Energy, Environment, Development and Economics
-* Civil Engineering, * Water Resources, Hydraulics & Hydrology
-* Geology and Seismology, * Education and Modern Educational Technologies 
-* Materials, * Industrial Engineering, * Maritime and Naval Science and Engineering
-
-CSCC.org  and INASE.org  received more than 1400 papers in July of 2014. From them after
-evaluation about 600 papers were accepted. See photos from 2014:
-inase-news.blogspot.com/2014/12/post-conference-report-inase_15.html 
-
-The deadline for paper submission for Special Sessions and Workshops of CSCC.co and
-INASE.org conferences will be April 30, 2015 
-
-We would like to invite you to organize a Special Session or Workshop. For successful
-Special
-Session / Workshop organizers we give financial support (honorarium) and free
-publication, or even air tickets and hotel expenses in case of great sucess in their
-special session / workshop. 
-Contact us for more details. Successful special session organizers
-will be automatically included in the committee of CSCC 2016, as well as we will
-jointly examine their participation in the Editorial Board in one of our 36
-collaborating ISI/SCI Journals. Special Session organizers are also appointed
-Associate Editors in the conference Proceedings. We will also give several mailing
-lists and web sites to the Session Organizers to send their own Call For Papers.
-
-So, far we have 36 Special Sessions and we believe that we will reach more than 100
-until July. Send the proposal of your Special Session to us now following the
-instructions of cscc.co
-
-The list of the reviewers that will undertake the peer review process and their
-emails is included in the proceedings and is also sent to ISI, SCOPUS and other
-indexes.
-
-The  CSCC.co and INASE.org conferences Conference are organized in the
-wonderful and historical island of Zakynthos in Greece (July 16,17,18,19,20,21 2015
-/ Five days).
-The conferences are indexed in ISI, SCOPUS, Engineering Villeage, EI Compendex, IET etc
-and has collaboration with important scientific societies and 3 universities:
-More Details: www.cscc.co
-Last year the Proceedings of  CSCC.co and INASE.org conferences were published in 12
-Volumes (hard-copy) and one
-CD (containing the material of these 12 volumes) and this material was distributed
-to our authors.
-See a full report and many wonderful photos from the  CSCC.co and INASE.org conferences
-here:
-inase-news.blogspot.com/2014/12/post-conference-report-inase_15.html  www.cscc14.org
-
-CSCC has always famous plenary speakers from prestigious universities, IEEE Fellows
-(www.cscc.co / last year: www.cscc14.org) and this year we have arranged
-post-conference publication of all the extended version of all the accepted papers
-in 36 ISI/SCI Indexed Journals. We have also 4 Tutorials by well-known colleagues.
-
-
-See you in Zakynthos, Greece in July
-
-Dr. Z. Michel
-
-
-******************************************************************************************
-******************
-Should you wish not to receive further invitations,
-please send an email to cscc2015@gmail.com with the exact phrase " REMOVE
-git@vger.kernel.org " in the subject line.
-Do not include this exact phrase in the body of your email please, but only in the
-Subject Line of your Email!
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 69a7345..fe8705d 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -2527,8 +2527,13 @@ versionsort.prereleaseSuffix::
+ 	When version sort is used in linkgit:git-tag[1], prerelease
+ 	tags (e.g. "1.0-rc1") may appear after the main release
+ 	"1.0". By specifying the suffix "-rc" in this variable,
+-	"1.0-rc1" will appear before "1.0". One variable assignment
+-	per suffix.
++	"1.0-rc1" will appear before "1.0".
+++
++This variable can be specified multiple times, once per suffix. The
++order of suffixes in the config file determines the sorting order
++(e.g. if "-pre" appears before "-rc" in the config file then 1.0-preXX
++is sorted before 1.0-rcXX). The sorting order between different
++suffixes is undefined if they are in multiple config files.
+=20
+ web.browser::
+ 	Specify a web browser that may be used by some commands.
+--=20
+2.3.0.rc1.137.g477eb31
