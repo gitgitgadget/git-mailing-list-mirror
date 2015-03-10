@@ -1,98 +1,107 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH v2] t7510: do not fail when gpg warns about insecure memory
-Date: Tue, 10 Mar 2015 10:10:13 +0100
-Message-ID: <54FEB4F5.4060602@drmicha.warpmail.net>
-References: <2652cb72a82d4ca4be3ea90bafd263e@74d39fa044aa309eaea14b9f57fe79c> <CAPig+cQXJgZJAoyQVYg3CNNzd70eA=ttdL7=g6wabtBkWBijeQ@mail.gmail.com> <20150308220424.GD4245@vauxhall.crustytoothpaste.net> <CAPig+cTj_z0xpDmnSvb-S_wEbwzdcFsGwUkFdGWgcJhwZpfMFQ@mail.gmail.com> <20150309012214.GE4245@vauxhall.crustytoothpaste.net> <E72F95BF-BE00-433E-9D05-0DDF1CACCCC1@gmail.com> <54FD6C22.4020808@drmicha.warpmail.net> <b822f2716d8bdfcb6576ad0dc502af5@74d39fa044aa309eaea14b9f57fe79c>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: Bug? git submodule add SSL certificate problem: unable to get
+ local issuer certificate
+Date: Tue, 10 Mar 2015 21:56:42 +1300
+Message-ID: <54FEB1CA.7020204@web.de>
+References: <F24DBF8D-40EE-4C8D-AE9C-463E59C4AAD7@aschemann.net> <27F61CEE-F1D3-4B7F-B394-8D06A4AD8976@aschemann.net> <20150309074339.GA31866@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git mailing list <git@vger.kernel.org>
-To: "Kyle J. McKay" <mackyle@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 10 10:10:23 2015
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>, Aschemann Gerd <gerd@aschemann.net>
+X-From: git-owner@vger.kernel.org Tue Mar 10 10:17:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YVGBB-0008I4-Pe
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Mar 2015 10:10:22 +0100
+	id 1YVGHz-0006yt-37
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Mar 2015 10:17:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751553AbbCJJKS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Mar 2015 05:10:18 -0400
-Received: from out2-smtp.messagingengine.com ([66.111.4.26]:44039 "EHLO
-	out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751057AbbCJJKP (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Mar 2015 05:10:15 -0400
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.nyi.internal (Postfix) with ESMTP id CC73920F4A
-	for <git@vger.kernel.org>; Tue, 10 Mar 2015 05:10:13 -0400 (EDT)
-Received: from frontend1 ([10.202.2.160])
-  by compute3.internal (MEProxy); Tue, 10 Mar 2015 05:10:15 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=x-sasl-enc:message-id:date:from
-	:mime-version:to:cc:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=OzH0kexy8YCYariztwd63N
-	2PLzQ=; b=L1iPxJLzFVf5KgBhBBn8qjLPsG4ZZjvJfQcoVuby4MQFGcJhSFWM8w
-	7CztldVY+KFxoblVP7+M8BkznnD90qGQjSQhlmjTiN3OFlohmugc5fIujj5G7BBc
-	kChXKm9mmcj4Vx6amaatOb3eKVcNlYLw7uOqx8jkKQMxwYjENrQ4c=
-X-Sasl-enc: rz5xfoiJMF/FqEKAv35s2mPAsDStfXBQsJxojybEejQw 1425978615
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 7398DC002A4;
-	Tue, 10 Mar 2015 05:10:14 -0400 (EDT)
+	id S1752211AbbCJJRR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Mar 2015 05:17:17 -0400
+Received: from mout-xforward.web.de ([82.165.159.34]:49163 "EHLO
+	mout-xforward.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752186AbbCJJRL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Mar 2015 05:17:11 -0400
+X-Greylist: delayed 1212 seconds by postgrey-1.27 at vger.kernel.org; Tue, 10 Mar 2015 05:17:11 EDT
+Received: from [192.168.3.124] ([101.98.211.54]) by smtp.web.de (mrweb103)
+ with ESMTPSA (Nemesis) id 0LzKEH-1XRPi12P6f-014TUF; Tue, 10 Mar 2015 09:56:53
+ +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
-In-Reply-To: <b822f2716d8bdfcb6576ad0dc502af5@74d39fa044aa309eaea14b9f57fe79c>
+In-Reply-To: <20150309074339.GA31866@peff.net>
+X-Provags-ID: V03:K0:ecslyRYKZmqmbZkQnABirAC6RqI0jsjXjNgy0wiw/STjZFSfZVb
+ 0Em08yec4iuuUS8Pkk0dXyjZfeJcP0tTyTUvIh36MGNT6lz/Bwc/WNr7qkdspcZDtuOMFaN
+ 2U6wOaqQTwtJW0wMjYG2piHFceARpnRGSilscFS+cnrY9Y1MPGtX7/HzkuMB6wrqi8Jc6nP
+ 7f4t/DbGKcxFfXs2aeUzg==
+X-UI-Out-Filterresults: junk:10;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265220>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265221>
 
-Kyle J. McKay venit, vidit, dixit 09.03.2015 21:03:
-> Depending on how gpg was built, it may issue the following
-> message to stderr when run:
-> 
->   Warning: using insecure memory!
-> 
-> When the test is collecting gpg output it is therefore not
-> enough to just match on a "gpg: " prefix it must also match
-> on a "Warning: " prefix wherever it needs to match lines
-> that have been produced by gpg.
-> 
-> Signed-off-by: Kyle J. McKay <mackyle@gmail.com>
-> ---
-> 
-> How about this patch instead.  It just treats "Warning:" lines as gpg  
-> output
+Am 09.03.2015 um 20:43 schrieb Jeff King:
+> On Thu, Mar 05, 2015 at 04:20:10PM +0100, Aschemann Gerd wrote:
+>
+>> seems to be a bug: If adding a submodule from an https URL with a certificate issued by StartSSL (or even a private/self-signed one?) leads to the following error:
+>>
+>>    $ git -c http.sslverify=false submodule add https://example.com/git/xxx.git
+>>    Cloning into 'xxx'...
+>>    fatal: unable to access 'https://example.com/git/xxx.git/': server certificate verification failed. CAfile: /etc/ssl/certs/ca-certificates.crt CRLfile: none
+>>    Clone of 'https://example.com/git/xxx.git' into submodule path 'xxx' failed
+>>
+>> Performing a simple clone works well:
+>>
+>>    $ git -c http.sslverify=false clone https://example.com/git/xxx.git
+>>    Cloning into 'xxx'...
+>>    Password for 'https://example.com':
+>
+> I think the problem is that the submodule code wipes all "local"
+> environment variables before executing the submodule clone, and that
+> includes the variable containing command-line config.
+>
+> Config like this is in a funny boat. We do not want it to cross
+> transport boundaries, so that if we run:
+>
+>    git -c foo=bar clone /some/local/path
+>
+> the process serving /some/local/path should not see the "foo" option[1].
+> But for submodules in the same repository, keeping the shared config is
+> probably more reasonable (I can imagine a config variable that you might
+> want to behave differently between the submodule and the main project,
+> but I could not think of any off-hand, and I expect it would be a rare
+> exception).
+>
+> Submodule folks (cc'd) may have opinions.
 
-(They are, but gpg fails tp prefix them.)
+I tend to rather not share configs. While I agree that for the example
+which started this it would be correct to simply pass http.sslverify,
+that doesn't always make sense (e.g. it never does for a setting like
+core.worktree).
 
-> and the test still passes when "Warning: using insecure memory"  
-> shows up.
-> 
-> -Kyle
+We already have two options for submodule add and update that are
+passed to the clone command (--reference & --depth), maybe it is time
+to add another one for passing config options to clone (which then get
+set permanently in the submodule's config).
 
-Perfect, thanks!
-
->  t/t7510-signed-commit.sh | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
-> index 474dab38..3cef18cf 100755
-> --- a/t/t7510-signed-commit.sh
-> +++ b/t/t7510-signed-commit.sh
-> @@ -86,8 +86,8 @@ test_expect_success GPG 'show signed commit with signature' '
->  	git show -s --show-signature initial >show &&
->  	git verify-commit -v initial >verify.1 2>verify.2 &&
->  	git cat-file commit initial >cat &&
-> -	grep -v "gpg: " show >show.commit &&
-> -	grep "gpg: " show >show.gpg &&
-> +	grep -v -e "gpg: " -e "Warning: " show >show.commit &&
-> +	grep -e "gpg: " -e "Warning: " show >show.gpg &&
->  	grep -v "^ " cat | grep -v "^gpgsig " >cat.commit &&
->  	test_cmp show.commit commit &&
->  	test_cmp show.gpg verify.2 &&
-> ---
-> 
+> -Peff
+>
+> [1] This behavior comes from 655e8d9 (do not pass "git -c foo=bar"
+>      params to transport helpers, 2010-08-24), and the original
+>      discussion is here:
+>
+>        http://thread.gmane.org/gmane.comp.version-control.git/154241/focus=154255
+>
+>      I am tempted to simply drop the transport-layer blocking of config
+>      options. It is not buying us anything security-wise, and it could
+>      actually be convenient to pass options to the "other side". But it's
+>      probably a bad idea, if only because it would not be consistently
+>      applied to repos on the other side of git://, http://, or ssh
+>      sessions.
+>
+>      So the sanest fix, if we want submodules to inherit the command-line
+>      config, would be to drop GIT_CONFIG_PARAMETERS from local_repo_env,
+>      and have the transport code suppress it manually.
+>
