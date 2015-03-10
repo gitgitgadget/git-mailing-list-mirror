@@ -1,216 +1,106 @@
-From: Sudhanshu Shekhar <sudshekhar02@gmail.com>
-Subject: [PATCH v3 2/2] Added tests for reset -
-Date: Tue, 10 Mar 2015 16:22:08 +0530
-Message-ID: <1425984728-27996-2-git-send-email-sudshekhar02@gmail.com>
-References: <1425984728-27996-1-git-send-email-sudshekhar02@gmail.com>
-Cc: Matthieu.Moy@grenoble-inp.fr, gitster@pobox.com, davvid@gmail.com,
-	sunshine@sunshineco.com, Sudhanshu Shekhar <sudshekhar02@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 10 11:53:07 2015
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 0/5] Retry if fdopen() fails due to ENOMEM
+Date: Tue, 10 Mar 2015 12:42:56 +0100
+Message-ID: <54FED8C0.7060104@alum.mit.edu>
+References: <1425571669-22800-1-git-send-email-mhagger@alum.mit.edu> <xmqqy4nb2qwn.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 8bit
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 10 12:43:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YVHmb-00035k-K8
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Mar 2015 11:53:05 +0100
+	id 1YVIZD-0003zp-DX
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Mar 2015 12:43:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752378AbbCJKxA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Mar 2015 06:53:00 -0400
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:44245 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751097AbbCJKw7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Mar 2015 06:52:59 -0400
-Received: by padet14 with SMTP id et14so810976pad.11
-        for <git@vger.kernel.org>; Tue, 10 Mar 2015 03:52:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=O/717FrcnCpTrON351qZQsMLC9F4D6oAF23o5n5c0rc=;
-        b=KGqYp1S6gu4pkaM8/zzaa24FF00APfR07f4YjFHVXmFA0qfCWMGMXX9UIStrAP5VSu
-         Wui47FsKjnAwnFOEpjwstOsu2F+vuH5hHCq5e10mOkBZGmk5Xb5baZk/4N2Ijmz9CjTK
-         5ZB+V/OTAZ3Vu1QmQ9zoIWcqgr8p2eBdeD65UudZBYUkv2BQJHD4vfwHIb4gB/9CEOy0
-         qgq+tULh5S04oi3HL95rKXdpIoYsQAIPXWh82ogS3nrqj45vlEakpinRdp5Lqtbpb0Ab
-         NkTEXPjJZJkAOVihl0P3OJMUqPVqtG9cvVpIjXrbLdYs/6JqXyvyodF0jumxiJrD3Yy4
-         3ypw==
-X-Received: by 10.66.66.230 with SMTP id i6mr64005783pat.108.1425984778756;
-        Tue, 10 Mar 2015 03:52:58 -0700 (PDT)
-Received: from shekhar-Inspiron-N5110.iiit.ac.in ([14.139.82.6])
-        by mx.google.com with ESMTPSA id um16sm453888pab.7.2015.03.10.03.52.55
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 10 Mar 2015 03:52:57 -0700 (PDT)
-X-Mailer: git-send-email 2.3.1.279.gd534259
-In-Reply-To: <1425984728-27996-1-git-send-email-sudshekhar02@gmail.com>
+	id S1751710AbbCJLnO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Mar 2015 07:43:14 -0400
+Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:45448 "EHLO
+	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751218AbbCJLnM (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Mar 2015 07:43:12 -0400
+X-AuditID: 12074414-f797f6d000004084-3f-54fed8c3fdfc
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 7D.79.16516.3C8DEF45; Tue, 10 Mar 2015 07:42:59 -0400 (EDT)
+Received: from [192.168.69.130] (p4FC962B5.dip0.t-ipconnect.de [79.201.98.181])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t2ABgvtF002159
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Tue, 10 Mar 2015 07:42:58 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.5.0
+In-Reply-To: <xmqqy4nb2qwn.fsf@gitster.dls.corp.google.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupnleLIzCtJLcpLzFFi42IRYndR1D1841+IwamZqhZdV7qZLBp6rzBb
+	vL25hNGB2WPnrLvsHhcvKXt83iQXwBzFbZOUWFIWnJmep2+XwJ2x7u1r9oJHghWv2s8yNzB+
+	5+1i5OCQEDCR2HFEo4uRE8gUk7hwbz1bFyMXh5DAZUaJhZt72SGc80wSj27tYwWp4hXQlujr
+	38kOYrMIqEpM3XMCLM4moCuxqKeZCcQWFQiSeHnrLyNEvaDEyZlPWEBsEQE1iYlth1hAFjML
+	2EpsfcIMEhYWsJM4fPYhWKuQQLHEzxcPwcZzClhLzO5rBGtlFtCT2HH9FyuELS/RvHU28wRG
+	gVlINsxCUjYLSdkCRuZVjHKJOaW5urmJmTnFqcm6xcmJeXmpRboWermZJXqpKaWbGCGBK7KD
+	8chJuUOMAhyMSjy8Kwz/hQixJpYVV+YeYpTkYFIS5W26AhTiS8pPqcxILM6ILyrNSS0+xCjB
+	wawkwlt6FCjHm5JYWZValA+TkuZgURLn/bZY3U9IID2xJDU7NbUgtQgmK8PBoSTBu+46UKNg
+	UWp6akVaZk4JQpqJgxNkOJeUSHFqXkpqUWJpSUY8KE7ji4GRCpLiAdq7CqSdt7ggMRcoCtF6
+	ilFRSpw3FSQhAJLIKM2DGwtLR68YxYG+FOblBCYnIR5gKoPrfgU0mAloMDvzH5DBJYkIKakG
+	RmHhA3vVmsUiynr8tNdwr/Q6PnceL2PxvDaRZTZC3MsWHI7wnuv7M2Mqt9TZ3orJJ7b0v8mb
+	9DZj2wav71J9H53rX048Wf775N6rHyev2b9S+ez3X2W+T10+TjTgXJq/yLzmexzf 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265228>
 
-Added the following test cases:
-    1) Confirm error message when git reset is used with no previous branch
-    2) Confirm git reset - works like git reset @{-1}
-    3) Confirm "-" is always treated as a commit unless the -- file option
-    is specified
-    4) Confirm "git reset -" works normally even when a file named @{-1} is
-    present
+On 03/05/2015 08:19 PM, Junio C Hamano wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+> 
+>> One likely reason for fdopen() to fail is the lack of memory for
+>> allocating a FILE structure. When that happens, try freeing some
+>> memory and calling fdopen() again in the hope that it will work the
+>> second time.
+> 
+> In codepaths where we are likely under memory pressure, the above
+> might help, but I have to wonder
+> 
+>     (1) if update-server-info and daemon fall into that category; and
+> 
+>     (2) if Git continues to work under such a memory pressure to
+>         cause even fdopen() to fail.
+> 
+> In other words, I do not see a reason not to do this change, but I
+> am not sure how much it would help us in practice.
+> 
+> We call fopen() from a lot more places than we call fdopen().  Do we
+> want to do the same, or is there a good reason why this does not
+> matter to callers of fopen(), and if so why doesn't the same reason
+> apply to callers of fdopen()?
 
-Helped-by: David Aguilar <davvid@gmail.com>
-Signed-off-by: Sudhanshu Shekhar <sudshekhar02@gmail.com>
----
-I have tried to keep each test self sufficient. Please let me know if any changes are required.
-Thank you!
+To be honest, I was hoping that Jonathan would jump in and respond to
+this thread, as he is the one who suggested this change.
 
- t/t7102-reset.sh | 139 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 139 insertions(+)
+I agree that it seems rather unlikely that a call to fdopen() is the
+straw that breaks the camel's back. But I've never looked very closely
+at Git's facility for freeing up memory when an allocation fails and
+don't really have a mental model for how it is used.
 
-diff --git a/t/t7102-reset.sh b/t/t7102-reset.sh
-index 98bcfe2..0faf241 100755
---- a/t/t7102-reset.sh
-+++ b/t/t7102-reset.sh
-@@ -568,4 +568,143 @@ test_expect_success 'reset --mixed sets up work tree' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'reset - with no previous branch' '
-+	git init no_previous &&
-+	(
-+		cd no_previous &&
-+		test_must_fail git reset - 2>output
-+	) &&
-+	test_i18ngrep "bad flag" no_previous/output
-+'
-+
-+test_expect_success 'reset - while having file named - and no previous branch' '
-+	git init no_previous &&
-+	(
-+		cd no_previous &&
-+		>./- &&
-+		test_must_fail git reset - 2>output
-+	) &&
-+	test_i18ngrep "bad flag" no_previous/output
-+'
-+
-+
-+test_expect_success 'reset - in the presence of file named - with previous branch' '
-+	echo "Unstaged changes after reset:" >expect &&
-+	echo "M	-" >>expect &&
-+	echo "M	1" >>expect &&
-+	git init no_previous &&
-+	(
-+		cd no_previous &&
-+		>./- &&
-+		>1 &&
-+		git add 1 - &&
-+		git commit -m "add base files" &&
-+		git checkout -b new_branch &&
-+		echo "random" >./- &&
-+		echo "wow" >1 &&
-+		git add 1 - &&
-+		git reset - >../output
-+	) &&
-+	rm -rf no_previous &&
-+	test_cmp output expect
-+'
-+test_expect_success 'reset - in the presence of file named - with -- option' '
-+	echo "Unstaged changes after reset:" >expect &&
-+	echo "M	-" >>expect &&
-+	echo "M	1" >>expect &&
-+	git init no_previous &&
-+	(
-+		cd no_previous &&
-+		>./- &&
-+		>1 &&
-+		git add 1 - &&
-+		git commit -m "add base files" &&
-+		git checkout -b new_branch &&
-+		echo "random" >./- &&
-+		echo "wow" >1 &&
-+		git add 1 - &&
-+		git reset - -- >../output
-+	) &&
-+	rm -rf no_previous &&
-+	test_cmp output expect
-+'
-+
-+test_expect_success 'reset - in the presence of file named - with -- file option' '
-+	echo "Unstaged changes after reset:" >expect &&
-+	echo "M	-" >>expect &&
-+	git init no_previous &&
-+	(
-+		cd no_previous &&
-+		>./- &&
-+		>1 &&
-+		git add 1 - &&
-+		git commit -m "add base files" &&
-+		git checkout -b new_branch &&
-+		echo "random" >./- &&
-+		echo "wow" >1 &&
-+		git add 1 - &&
-+		git reset -- - >../output
-+	) &&
-+	rm -rf no_previous
-+	test_cmp output expect
-+'
-+test_expect_success 'reset - in the presence of file named - with both pre and post -- option' '
-+	echo "Unstaged changes after reset:" >expect &&
-+	echo "M	-" >>expect &&
-+	git init no_previous &&
-+	(
-+		cd no_previous &&
-+		>./- &&
-+		>1 &&
-+		git add 1 - &&
-+		git commit -m "add base files" &&
-+		git checkout -b new_branch &&
-+		echo "random" >./- &&
-+		echo "wow" >1 &&
-+		git add 1 - &&
-+		git reset - -- - >../output
-+	) &&
-+	rm -rf no_previous
-+	test_cmp output expect
-+'
-+
-+test_expect_success 'reset - works same as reset @{-1}' '
-+	git init no_previous &&
-+	(
-+		cd no_previous &&
-+		echo "random" >random &&
-+		git add random &&
-+		git commit -m "base commit" &&
-+		git checkout -b temp &&
-+		echo new-file >new-file &&
-+		git add new-file &&
-+		git commit -m "added new-file" &&
-+		git reset - &&
-+		git status --porcelain >../first &&
-+		git add new-file &&
-+		git commit -m "added new-file" &&
-+		git reset @{-1} &&
-+		git status --porcelain >../second
-+	) &&
-+	test_cmp first second
-+'
-+
-+test_expect_success 'reset - with file named @{-1}' '
-+	echo "Unstaged changes after reset:" >expect &&
-+	echo "M	@{-1}" >>expect &&
-+	git init no_previous &&
-+	(
-+		cd no_previous &&
-+		echo "random" >./@{-1} &&
-+		git add ./@{-1} &&
-+		git commit -m "base commit" &&
-+		git checkout -b new_branch &&
-+		echo "additional stuff" >>./@{-1} &&
-+		git add ./@{-1} &&
-+		git reset - >../output
-+	) &&
-+	rm -rf no_previous &&
-+	test_cmp output expect
-+'
-+
- test_done
+If memory is allocated profligately under the expectation that it can be
+freed if necessary (i.e., if calls to try_to_free_routine() are
+relatively routine and tend to free a lot of memory), then it seems
+important that as many memory allocation paths as possible call it and
+retry when there is an error. This would be the garbage-collection
+model, in which a failure to call the garbage collector at the right
+time unnecessarily turns a routine event into a fatal error.
+
+On the other hand, if calling try_to_free_routine() is an act of
+desperation and typically results in little or no memory being freed,
+then calling it in this code path is probably not very useful.
+
+You also make a good point that if this rigmarole makes sense for
+fdopen(), then it probably also makes sense for fopen().
+
+Michael
+
 -- 
-2.3.1.279.gd534259
+Michael Haggerty
+mhagger@alum.mit.edu
