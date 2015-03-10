@@ -1,79 +1,144 @@
-From: Harsh Bhatt <creative2innovative@yahoo.in>
-Subject: Connecting git with Mathematics
-Date: Tue, 10 Mar 2015 19:52:32 +0000 (UTC)
-Message-ID: <1138230357.20947.1426017152123.JavaMail.yahoo@mail.yahoo.com>
-Reply-To: Harsh Bhatt <creative2innovative@yahoo.in>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Surprising interaction of "binary" and "eol" gitattributes
+Date: Tue, 10 Mar 2015 13:01:44 -0700
+Message-ID: <xmqq385c1v13.fsf@gitster.dls.corp.google.com>
+References: <54F88684.3020905@alum.mit.edu>
+	<xmqqwq2v14iv.fsf@gitster.dls.corp.google.com>
+	<54F9422D.2020800@web.de> <54F9E907.4040703@alum.mit.edu>
+	<54FA1C7B.3040906@web.de> <54FF450F.7040506@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Mar 10 20:52:40 2015
+Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	git discussion list <git@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Mar 10 21:01:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YVQCl-0007Wq-1l
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Mar 2015 20:52:39 +0100
+	id 1YVQLh-0000Wu-5p
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Mar 2015 21:01:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753330AbbCJTwe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Mar 2015 15:52:34 -0400
-Received: from nm11-vm7.bullet.mail.gq1.yahoo.com ([98.136.218.174]:49086 "EHLO
-	nm11-vm7.bullet.mail.gq1.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752756AbbCJTwd convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Mar 2015 15:52:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.in; s=s2048; t=1426017153; bh=jIAUAz13IHLgUG+FzTSVKG7EzxEgvagcApCiutunfXo=; h=Date:From:Reply-To:To:Subject:From:Subject; b=jS0UFQQyX+xpp+ENPLZeKRw5dc+AqTDqeLOYQUQwwaIeqO931ZNvQjSy5eluj4kksUCqCScvT48oGxsSPst7EyoTbB1R2h/DfrlYOrEasSgdAmPQ42577iVf0QPHq337aochqNagArLMOGI5SmZGILbGwxWfjMnRlDSM2mUvAw67/vJlQVBa0nOf4woPIVm+kSZSHOpYdfDKvevuvFcBtfl3nt5mBSR4E3xlGHAE5rHe88ONuL+Ss+Ev2qGT3HTfzlYueQjhXwmt5Wm3tR6hXNBjq6djWrCM2FwqL41enkXTQdT3+aLlxjuImQSfY8ULttUVYhEWvjQWurHao37gMQ==
-Received: from [98.137.12.188] by nm11.bullet.mail.gq1.yahoo.com with NNFMP; 10 Mar 2015 19:52:33 -0000
-Received: from [106.10.166.61] by tm9.bullet.mail.gq1.yahoo.com with NNFMP; 10 Mar 2015 19:52:33 -0000
-Received: from [106.10.151.170] by tm18.bullet.mail.sg3.yahoo.com with NNFMP; 10 Mar 2015 19:52:32 -0000
-Received: from [127.0.0.1] by omp1010.mail.sg3.yahoo.com with NNFMP; 10 Mar 2015 19:52:32 -0000
-X-Yahoo-Newman-Property: ymail-4
-X-Yahoo-Newman-Id: 817234.5682.bm@omp1010.mail.sg3.yahoo.com
-X-YMail-OSG: E3IuwfAVM1lctQhlRPQX1iP0DVO0MCFZev2DsZNxWALRjAVZfcIzP3XKsw.QWlG
- a8Fa38nsy765qzxqXXYo6lx5tOVY7i7zUylbHWJXdcDU4GoqvRtv8m3AFeCbei7dobwe5wLs2R2d
- Z.fxtOBRrSolirduZ0ZxxnDgSMbD_HKDqiM4mQRBhgD8DwPNUAldafwvmonXiwezcGV2CHEJrZQR
- J_C0cmsVy3VYFe.4Tpj0V.M9N8UYLDyPqTjR1RK1I_HRJRVFttkgL.h9GMh7Y1H7SEJjE2LscLHO
- lR5wempAVNyKvZVumD3HDwtETSAIEcZgLYJoEkrLHe8xT7.ajDnlU.PDhs5Bj3UcbXiHpXPw1fNC
- FdCL6K_BUELv0RY1UpTYvSx3LQnkGI1oM_2Sz1YtnwI.bZii4kU_M._gZu060S9Q0OJeWMp75WNC
- GLtnG11titbVuL8rBIBficqcu3xVRQI4Zt6frar6sNKIuiPtqwgXps4Q46hRI2empBwpLYs5dTim
- WHQ4fjEBGiB22QGd3qhjf5kJImNdyNnOgJFxsTOatwklUYraLT0sAu5_IUM_lII3OwKZKEbkQiYI
- LNEcMeUO560mBsdSjehgY9z0sQrHMM34GAxWi0dmsoHUTP1k5oqfavwCPdCHzxl6zgm9Vu3LCxeB
- cOnjSpYAitVfugO_VGk9Br4pYW73b8sM-
-Received: by 106.10.196.91; Tue, 10 Mar 2015 19:52:32 +0000 
+	id S1752490AbbCJUBs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Mar 2015 16:01:48 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:59742 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751563AbbCJUBr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Mar 2015 16:01:47 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8B6A73F11B;
+	Tue, 10 Mar 2015 16:01:46 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=mUwGYBrGpiZN
+	n+/HCkZzJWZM4fU=; b=rWveX7jX8zjcQ1AoxIah5j8ooMjCoxwu8mx5/Tx+NnbB
+	CtvvdsI1lskMhl2hUCrzMWh+vskV7qA9FVpoTlM0GjUJG8k8jApxkuLq8sX3Pxji
+	LoliRmL3oxmRdutAqJUTHEJmxCDzgsn5RxjqFsTuYOJL/iesQcJ0etGBkWOGuHQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=vQFtz9
+	/MGXZijHL5eOQydF3/ZnWRpNgXM17qDDqYAEMP5Okh7nkMenqACLos79aR73wD0D
+	219zAkyc9mPp5VKJieJr93mXGuu1Oe2ka+RsLTs1bdr6wJ94VFcKe1HOzH8hE9nc
+	4WQWzuHpzuL2ofQ1utSp/zD8SRLbKFbGp+/H8=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 818563F11A;
+	Tue, 10 Mar 2015 16:01:46 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E893C3F117;
+	Tue, 10 Mar 2015 16:01:45 -0400 (EDT)
+In-Reply-To: <54FF450F.7040506@alum.mit.edu> (Michael Haggerty's message of
+	"Tue, 10 Mar 2015 20:25:03 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 4794CA96-C760-11E4-8A5A-29999F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265258>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265259>
 
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
+> On 03/06/2015 10:30 PM, Torsten B=C3=B6gershausen wrote:
+>>=20
+>>> Oops, I misunderstood an internal bug report. In seems that it is t=
+he
+>>> following scenario that is incorrect:
+>>>
+>>>     *.png text=3Dauto eol=3Dcrlf
+>> Hm, I don't know if we support this combination at all.
+>
+> The user can specify this combination in a .gitattributes file and we
+> have to react to it *some way*.
+>
+> Theoretically we could document that
+> this combination is undefined and/or emit an error if we see this
+> combination, but we don't do so.
+>
+>> The current logic supports auto-detection of text/binary,
+>> * text=3Dauto
+>> (the files will get the line ending from core.eol or core.autocrlf)
+>>=20
+>> or the  the setting of a line ending:
+>> *.sh eol=3Dlf
+>> *.bat eol=3Dcrlf
+>>=20
+>>=20
+>> Is there a special use-case, which needs the combination of both ?
+>
+> I'm still trying to infer the spirit of the current behavior, so cave=
+ats
+> here.
+>
+> This comes from a real-life scenario where a user, somewhere early in
+> .gitattributes, had
+>
+>     * text
+>     * eol=3Dcrlf
+>
+> and then later (this could be in a subdirectory) tried to carve out
+> exceptions to this rule by using
+>
+>     *.png binary
+>     * text=3Dauto
+>
+> Intuitively it *feels* like either of the later lines should suppress
+> EOL translation in PNG files (assuming the PNG file has a NUL byte in
+> the first 8k, which this one did).
 
+The way I read the description of "eol" was that that was a more
+specific way to do what used to be done with "text" (meaning "OK,
+that may be a text file, but how exactly is the end-of-line
+handled?"), so I would say if the above behaved the same way as
 
-Hello Everyone,
-=20
-                                  I am glad to be here and would be eve=
-n more happier if I am able to do the work that I have undertaken, that=
- is representation of git using mathematics. Even I have taken up this =
-as my final year project, currently I am student of Applied Mathematics=
-=2E I am doing this because I love git + mathematics =3D awesomeness. S=
-o want to combine and experience their fusion in mathematical form.
-=20
-    I have searched the internet and googled to get as much info as pos=
-sible in this regard  and this is the  best and more close to what I am=
- searching for -> 1. http://eagain.net/articles/git-for-computer-scient=
-ists/ . This site gave me hope that it must be possible to achieve my g=
-oal, i.e. to represent all the feautures and functions of git in mathem=
-atical form. If that=E2=80=99s really possible .. umm..  it must be pos=
-sible so pls guide me and give your valuable suggestions.
+    *.png eol=3Dcrlf text
 
+that would be the least surprising to me.  But perhaps that is only
+because I know which one came first and which one came later for
+what purpose.
 
-I must not forget to mention that this the video that brought me very c=
-lose to git.=20
-2. Tech Talk: Linus Torvalds on git which was at google. -> www.youtube=
-=2Ecom/watch?v=3D9hIQjrMHTv4
+But ...
 
- =20
-            =20
-Tech Talk: Linus Torvalds on git =20
-View on www.youtube.com Preview by Yahoo=20
+> It seems to me that setting "text=3Dauto" should mean that Git uses i=
+ts
+> heuristic to guess whether a particular file is text or not, and then
+> treats the file as if it had "text" or "-text" set. If the latter, th=
+en
+> EOL translation should be suppressed.
+
+=2E.. I think this makes even more sense. I do not think the code is
+set up to do so.  To be honest, eol_attr thing introduced in
+fd6cce9e (Add per-repository eol normalization, 2010-05-19) always
+confuses me whenever I follow this codepath.
+
+> It also seems to me that "binary" should imply "-eol".
+
+I thought that "eol" attribute is not even looked at when you say
+"binary"; that is what I recall finding out when I dug into this
+earlier in the thread.
+
+http://thread.gmane.org/gmane.comp.version-control.git/264850/focus=3D2=
+64872
