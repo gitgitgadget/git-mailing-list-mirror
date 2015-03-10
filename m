@@ -1,74 +1,131 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] versionsort: support reorder prerelease suffixes
-Date: Tue, 10 Mar 2015 04:03:13 -0400
-Message-ID: <CAPig+cRVSFfmEYAEq0EVS_N5TxxoMrXaLuk7rN63iFO5p9CUYw@mail.gmail.com>
-References: <CAPc5daVJJcC--mwq0PfAczge3zG44ToDKP853FkyZ3x1KUfsig@mail.gmail.com>
-	<1424947441-19134-1-git-send-email-pclouds@gmail.com>
-	<xmqqvbinhw7l.fsf@gitster.dls.corp.google.com>
-	<xmqqmw3s5j1y.fsf@gitster.dls.corp.google.com>
-	<CACsJy8Bpta0rw1rjN8ROcUykPK508bvH_bvAJzLQQa6L6OmH7w@mail.gmail.com>
-	<xmqqvbi91e84.fsf@gitster.dls.corp.google.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: git-scm.com website
+Date: Tue, 10 Mar 2015 10:07:39 +0100
+Message-ID: <54FEB45B.3020601@drmicha.warpmail.net>
+References: <CAJo=hJsbbfK-_qX6sg3Azk30Kz5ebLfyMbVF98VzHZe8YyaLcQ@mail.gmail.com> <87y4n6kvdu.fsf@fencepost.gnu.org> <CAP2yMa+Bw0KCSz9YEtviZUykAp4jpdsEWSK-jRxtd9MjzjHKfg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 10 09:03:23 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Shawn Pearce <spearce@spearce.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+To: Scott Chacon <schacon@gmail.com>, David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Tue Mar 10 10:07:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YVF8L-0001H6-W0
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Mar 2015 09:03:22 +0100
+	id 1YVG8n-0005ip-3u
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Mar 2015 10:07:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752393AbbCJIDR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Mar 2015 04:03:17 -0400
-Received: from mail-yh0-f46.google.com ([209.85.213.46]:35562 "EHLO
-	mail-yh0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752378AbbCJIDO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Mar 2015 04:03:14 -0400
-Received: by yhnv1 with SMTP id v1so22058549yhn.2
-        for <git@vger.kernel.org>; Tue, 10 Mar 2015 01:03:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=nHldPHiOtNmS+IajpMSPc1Far3odSxSdz5hI8uQNkKM=;
-        b=tZHi4bmlSaTwfqAYd8f+u/r73tyGZiPktY+G7GFMAcqmmVj4uvZReiXdHB5vWHqeWL
-         rtr41ApO/h5sFLleDSIampyteQFMdRIDzeZ6tKy10PZXYFv6A0xqgW8r/sjet6VBLxIy
-         9OQYveMJLoCF3CKFQbJOt9pHyb9Jhlf7b1WRAqW1FAPkG4ItLaYfxhHDPaTqIklu5uJj
-         nAy+aQU0EeLwDuhXv5iF2y/lCFUhPt+P6HUKlhK0pDw3KyBWf2SLVowoeLLxdPRxl8V7
-         NrpKp9EGXo42TPxqEB4uiQYUcA2MwGGGlICl+rdHIkU7XRDTqY/WLUTFEgYx9UiW7MlT
-         PlJg==
-X-Received: by 10.170.194.7 with SMTP id l7mr901948yke.91.1425974593543; Tue,
- 10 Mar 2015 01:03:13 -0700 (PDT)
-Received: by 10.170.73.7 with HTTP; Tue, 10 Mar 2015 01:03:13 -0700 (PDT)
-In-Reply-To: <xmqqvbi91e84.fsf@gitster.dls.corp.google.com>
-X-Google-Sender-Auth: 2SmGMjvu75s6Lka2Itx9hN1JviA
+	id S1752115AbbCJJHs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Mar 2015 05:07:48 -0400
+Received: from out2-smtp.messagingengine.com ([66.111.4.26]:38853 "EHLO
+	out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751173AbbCJJHo (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Mar 2015 05:07:44 -0400
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailout.nyi.internal (Postfix) with ESMTP id 2C791211DA
+	for <git@vger.kernel.org>; Tue, 10 Mar 2015 05:07:40 -0400 (EDT)
+Received: from frontend2 ([10.202.2.161])
+  by compute4.internal (MEProxy); Tue, 10 Mar 2015 05:07:41 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=x-sasl-enc:message-id:date:from
+	:mime-version:to:cc:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=kh/jqEv+cqBPJySV4eOoSQ
+	GuNIc=; b=MPMFHaZL1/rPCHe4Geu0b3tP2SqDVX6TGN6s1qqy59RxkhOgvr5ESq
+	jMB8eP90q/jL3EdOsFlsZi36VsV7LdMuKBSOQ8Xx692TSLQaBy02X5dY3iJsjRBf
+	2OioTjgZSFEBMvOGN5nKppItYqqmTsA1a8nsqOnJIwdSRi804tWxM=
+X-Sasl-enc: oPEiiccC4cBh1qHmz7hB0vfBGiiQAKRXUXvVyMPaXyRF 1425978461
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id A097A680109;
+	Tue, 10 Mar 2015 05:07:40 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
+In-Reply-To: <CAP2yMa+Bw0KCSz9YEtviZUykAp4jpdsEWSK-jRxtd9MjzjHKfg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265218>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265219>
 
-On Tue, Mar 10, 2015 at 3:52 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Duy Nguyen <pclouds@gmail.com> writes:
->> How about..
->>
->> ".. "1.0-rc1" will appear before "1.0".  This key can be specified
->> multiple times, one for each suffix. The order of suffixes in the
+Scott Chacon venit, vidit, dixit 09.03.2015 18:14:
+> Hey,
+> 
+> On Mon, Mar 9, 2015 at 9:06 AM, David Kastrup <dak@gnu.org> wrote:
+>>> On Mon, Mar 9, 2015 at 6:57 AM, Michael J Gruber
+>>> <git@drmicha.warpmail.net> wrote:
+>>>>
+>>>> Since we're talking business: git-scm.com still looks a bit like a
+>>>> ProGit/Github promotion site. I don't have anything against either, and
+>>>> git-scm.com provides a lot of the information that users are looking
+>>>> for, and that are hard to find anywhere else; it's a landing page. It
+>>>> just does not look like a "project home".
+> 
+> I'm sorry that you feel this way, but I've tried pretty hard to make
+> sure the site is as neutral as possible. The only actual place the
+> string "GitHub" occurs on the landing page is at the bottom where it
+> says "This open sourced site is hosted on GitHub."  I don't even
+> mention anywhere that GitHub pays for hosting it. Also, all the Amazon
+> referrals from Pro Git sales are donated to the Software Freedom
+> Conservancy and all my personal royalties are donated to charity. It
+> also very clearly states that the book is free to read online in it's
+> entirety (which is actually relatively expensive for me personally,
+> since I personally pay the S3 hosting and bandwidth costs for all the
+> eBook downloads).
+> 
+> I'm not sure why you think it doesn't look like a "project home". It
+> has basically all the same information on it that you would find on
+> any other project home page: a description, direct links to downloads,
+> source code, documentation, a book, community and development
+> information, etc. These are basically all the same things found on
+> sites like http://www.gnu.org/software/emacs/ or
+> https://subversion.apache.org/.
 
-Minor bike-shedding: s/one for each suffix/once per suffix/
+Since quotes from several people got put together here and below (which
+I cut out), I'd just like to reemphasize that I "don't have anything
+against either", as I wrote. Github has done a lot to promote Git - as a
+business, sure, but why not, and Git as a project has profited from
+that, too. It goes without saying that stating "Hosted on Github" is
+appropriate, not just because git-scm.com is hosted there, but because
+it shows what kind of services Git empowers.
+And I don't mind a listing of companies that use Git - it's not an
+endorsement of those companies, rather the other way round. (I hope it's
+legally OK to use their names and logos for that, I'm not a laywer, but
+I'm confident you've checked.)
 
->> config file determines the sorting order (e.g. if "-pre" appears
->> before "-rc" in the config file then 1.0-preXX is sorted before
->> 1.0-rcXX). The sorting order between different suffixes is undefined
->> if they are in multiple config files"
->
-> OK. Later we might resurrect that "How would we spell 'reset this
-> variable' in our configuration file? Is that even a good idea in
-> the first place?" topic and at that time the last sentence may have
-> to change to make it more useful, but because we are not there yet,
-> the above would be a reasonable description.
+"This is the web application for the git-scm.com site. It is meant to be
+the first place a person new to Git will land and download or learn
+about the Git SCM system." says the README, and that's what the site is.
+A landing page for people new to Git. It's good that we have one.
+
+Maybe my use of the term "project home" was misleading. What I meant is:
+it's not a home *for* the developer community. That's just a factual
+statement without assigning blame. For example, Documentation/technical
+is not linked there, and the blog doesn't carry release announcements or
+Junio's technical posts. Development discussions take place on the
+mailing list, and when we talk about user experience, it's UI and man
+pages that we have in mind, not git-scm.com. When we need a web page for
+GSoC or such, it's "something on github" that at least mentally is not
+part of git-scm.com.
+
+Now, unfortunately, git-scm.com is also not *from* the developer
+community, if you define "developer := git ml regular" (and not :=
+mostly not) and look at
+https://github.com/git/git-scm.com/graphs/contributors. There's probably
+no point in going into the historical reasons for that - after all,
+we're not all German ;)
+
+Seriously, I think "we" could try to put more stuff on git-scm.com.
+Having GSoC and microprojects stuff ported there would be nice, I guess
+that would require someone who knows a bit about the underlying web app
+to get the framework right.
+
+Maybe there's a painless way to get release announcements or similar
+posts on the blog, so that there is more visible activity? Or collect
+some external blogs?
+
+I'm a no-ruby-no-rails guy, sorry, but I'll commit at least to looking
+over some content especially in the man page/documentation area.
+
+Michael
