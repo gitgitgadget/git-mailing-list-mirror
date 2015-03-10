@@ -1,160 +1,157 @@
-From: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Re: Surprising interaction of "binary" and "eol" gitattributes
-Date: Tue, 10 Mar 2015 21:26:30 +0100
-Message-ID: <54FF5376.7070500@web.de>
-References: <54F88684.3020905@alum.mit.edu> <xmqqwq2v14iv.fsf@gitster.dls.corp.google.com> <54F9422D.2020800@web.de> <54F9E907.4040703@alum.mit.edu> <54FA1C7B.3040906@web.de> <54FF450F.7040506@alum.mit.edu>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] config.txt: stick to CamelCase naming convention
+Date: Tue, 10 Mar 2015 16:34:35 -0400
+Message-ID: <CAPig+cRkV++D9-yYWOv3FmBtTuWz1_Et23Xk=8cg8=7_E1PZug@mail.gmail.com>
+References: <1425983981-634-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git discussion list <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>,
-	=?windows-1252?Q?Torsten_B?= =?windows-1252?Q?=F6gershausen?= 
-	<tboegi@web.de>, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 10 21:26:46 2015
+Cc: Git List <git@vger.kernel.org>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 10 21:34:42 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YVQjl-0001B3-US
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Mar 2015 21:26:46 +0100
+	id 1YVQrR-00019j-Dr
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Mar 2015 21:34:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752899AbbCJU0l convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Mar 2015 16:26:41 -0400
-Received: from mout.web.de ([212.227.15.4]:64549 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751984AbbCJU0l (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Mar 2015 16:26:41 -0400
-Received: from birne.local ([217.211.68.12]) by smtp.web.de (mrweb003) with
- ESMTPSA (Nemesis) id 0MK233-1YU3gg21Cf-001TiQ; Tue, 10 Mar 2015 21:26:31
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
-In-Reply-To: <54FF450F.7040506@alum.mit.edu>
-X-Provags-ID: V03:K0:V4x8noFLCYvRmk9Hg7n4/qWVGUxFVW8YkIRXiyMzlD94lOC0Dkh
- rwoWgjBCZyk6Xad9fk2ZmKlf4T3UDfBeNwG1CzozheUf6cZnMCPoteEPLN9+/406Qnk8592
- dKGANih4Yo6YcEt1LCsHHsaLkXOxgZqnJmG6Q8y0NLhHzNdBg7t0VV8XCZCCINw6jsPC5Ck
- O0Urw3tD5qDHH5Vy5ITQg==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1753337AbbCJUeh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Mar 2015 16:34:37 -0400
+Received: from mail-yk0-f174.google.com ([209.85.160.174]:35966 "EHLO
+	mail-yk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752725AbbCJUeg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Mar 2015 16:34:36 -0400
+Received: by ykp9 with SMTP id 9so1942732ykp.3
+        for <git@vger.kernel.org>; Tue, 10 Mar 2015 13:34:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=UGEZmROUxHBzFWzLCfkgxtSj1PldZrcK/lkjSe7R98E=;
+        b=fe4B5/drgy5IVdjNV1AD3TJbFvQcBWn8Xw1q+CFSiSq0X/vIbEp/jccxhbfVsMln6e
+         NLbaOdBYEyFFoLVJKO1Bqi9KZyyzr3qSpepIp+EWZcTUigokh8YbsCwAuoz+//lroxWw
+         utOqpQJmwqOfMM+F1nq68+wNf4T8npZwry3ycZ4tVM1ShNkGKvtDRg9+E7Syz7O5FmZA
+         re0rz8H04bkm6G9DivGPJY4MTb+YznTqseezjKlm3i+erkdxZi5Gh49cccLC4uFAPyw/
+         GGzMag83ar4J56Y7rGl7QPcGjT9Cv+cPNRCi3S6YXPq2iylAvYrPT5zq5IEBnwnEX0y6
+         h9JQ==
+X-Received: by 10.236.45.106 with SMTP id o70mr34305894yhb.180.1426019675701;
+ Tue, 10 Mar 2015 13:34:35 -0700 (PDT)
+Received: by 10.170.73.7 with HTTP; Tue, 10 Mar 2015 13:34:35 -0700 (PDT)
+In-Reply-To: <1425983981-634-1-git-send-email-pclouds@gmail.com>
+X-Google-Sender-Auth: aL0cdeLjX8op9T8WWR0PfWExVB0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265261>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265262>
 
-On 10.03.15 20:25, Michael Haggerty wrote:
-> On 03/06/2015 10:30 PM, Torsten B=F6gershausen wrote:
->>
->>> Oops, I misunderstood an internal bug report. In seems that it is t=
-he
->>> following scenario that is incorrect:
->>>
->>>     *.png text=3Dauto eol=3Dcrlf
->> Hm, I don't know if we support this combination at all.
->=20
-> The user can specify this combination in a .gitattributes file and we
-> have to react to it *some way*. Theoretically we could document that
-> this combination is undefined and/or emit an error if we see this
-> combination, but we don't do so.
->=20
->> The current logic supports auto-detection of text/binary,
->> * text=3Dauto
->> (the files will get the line ending from core.eol or core.autocrlf)
->>
->> or the  the setting of a line ending:
->> *.sh eol=3Dlf
->> *.bat eol=3Dcrlf
->>
->>
->> Is there a special use-case, which needs the combination of both ?
->=20
-> I'm still trying to infer the spirit of the current behavior, so cave=
-ats
-> here.
->=20
-> This comes from a real-life scenario where a user, somewhere early in
-> .gitattributes, had
->=20
->     * text
->     * eol=3Dcrlf
->=20
-> and then later (this could be in a subdirectory) tried to carve out
-> exceptions to this rule by using
->=20
->     *.png binary
->     * text=3Dauto
-Hm,
-I can see 2 problems here:
-the "binary" attribute does not exist at all.
+On Tue, Mar 10, 2015 at 6:39 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
+Duy <pclouds@gmail.com> wrote:
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 1530255..b4cc577 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -257,20 +257,20 @@ core.protectNTFS::
+>         8.3 "short" names.
+>         Defaults to `true` on Windows, and `false` elsewhere.
+>
+> -core.trustctime::
+> +core.trustCTime::
 
-I sometimes which we had it, but we don't.
-There is "text" and "-text", and that is it.
+I personally find this a bit odd. 'ctime' is always typed exactly like
+that; never 'cTime' or 'Ctime' or 'CTime'.
 
-The other problem is the order of the lines, which is fully
-intuitive for each person who has ever written a "matching parser".
+>         If false, the ctime differences between the index and the
+>         working tree are ignored; useful when the inode change time
+>         is regularly modified by something outside Git (file system
+>         crawlers and some backup systems).
+>         See linkgit:git-update-index[1]. True by default.
+>
+> @@ -290,7 +290,7 @@ core.eol::
+>         linkgit:gitattributes[5] for more information on end-of-line
+>         conversion.
+>
+> -core.safecrlf::
+> +core.safeCRLF::
 
-The parser matches each file namr on it's own, depending on the matchin=
-g:
+Here, you uppercase the entire acronym, "CRLF"...
 
-*.png -text
-* text=3Dauto
-means that all png files are binary, and ALL files are "auto".
+>         If true, makes Git check if converting `CRLF` is reversible w=
+hen
+>         end-of-line conversion is active.  Git will verify if a comma=
+nd
+>         modifies a file in the work tree either directly or indirectl=
+y.
+> @@ -1281,11 +1281,11 @@ gitcvs.enabled::
+>         Path to a log file where the CVS server interface well... log=
+s
+>         various stuff. See linkgit:git-cvsserver[1].
+>
+> -gitcvs.usecrlfattr::
+> +gitcvs.useCrlfAttr::
 
-Guess what happens to the png's ?
+But, here you only capitalized it: "Crlf".
 
-The second rule wins, as it is the last rule processed.
+>         If true, the server will look up the end-of-line conversion
+>         attributes for files to determine the '-k' modes to use. If
+>         the attributes force Git to treat a file as text,
+> @@ -1403,39 +1403,39 @@ gui.encoding::
+>         "true" if linkgit:git-gui[1] should prune remote-tracking bra=
+nches when
+>         performing a fetch. The default value is "false".
+>
+> -gui.trustmtime::
+> +gui.trustMTime::
 
-git check-attr text *
-A.png: text: auto
-B.txt: text: auto
----
-If we reverse the order in .gitattributes, things look better:
-* text=3Dauto
-*.png -text
+Ditto comment regarding strangeness of seeing 'mtime' typed any way
+other than 'mtime'.
 
-git check-attr text *
-A.png: text: unset
-B.txt: text: auto
+>         Determines if linkgit:git-gui[1] should trust the file modifi=
+cation
+>         timestamp or not. By default the timestamps are not trusted.
+>
+>         Specifies the threshold to use in 'git gui blame' original lo=
+cation
+>         detection, measured in alphanumeric characters. See the
+>         linkgit:git-blame[1] manual for more information on copy dete=
+ction.
+>
+> -gui.blamehistoryctx::
+> +gui.blameHistoryCTX::
 
+You've uppercased acronyms (such as CRLF, URL, SSL), however, "ctx" is
+merely an abbreviation of "context", not an acronym. As such, "Ctx"
+seems more correct.
 
---------------------
-This is not very intuitive or even surprising, at least for many people=
+>         Specifies the radius of history context in days to show in
+>         linkgit:gitk[1] for the selected commit, when the `Show Histo=
+ry
+>         Context` menu item is invoked from 'git gui blame'. If this
+> @@ -2308,14 +2308,14 @@ sendemail.identity::
+>         See linkgit:git-send-email[1] for description.  Note that thi=
+s
+>         setting is not subject to the 'identity' mechanism.
+>
+> -sendemail.smtpssl (deprecated)::
+> +sendemail.smtpSSL (deprecated)::
+
+Here, "SSL"...
+
+>         Deprecated alias for 'sendemail.smtpencryption =3D ssl'.
+>
+> -sendemail.smtpsslcertpath::
+> +sendemail.smtpSslCertPath::
+
+But here, inconsistently, "Ssl".
+
+>         Path to ca-certificates (either a directory or a single file)=
 =2E
-
-Unless I mis-understand the problem, it may be that the documentation m=
-ay be updated ?
-
-The general rule for writing .gitattributes=20
-is to specify the "wider" rules first, and then the more specific rules=
- after that.
-
-It could be that=20
-Documentation/gitattributes.txt
-should mention this instead:
-------------------------
-*		-text
-*.txt		text
-*.vcproj	eol=3Dcrlf
-*.sh		eol=3Dlf
-------------------------
-
-
-The other thing is to promote/mention the command=20
-"git  check-attr text *"
-
-at a prominent place.
-
-> Intuitively it *feels* like either of the later lines should suppress
-> EOL translation in PNG files (assuming the PNG file has a NUL byte in
-> the first 8k, which this one did).
->=20
-> It seems to me that setting "text=3Dauto" should mean that Git uses i=
-ts
-> heuristic to guess whether a particular file is text or not, and then
-> treats the file as if it had "text" or "-text" set. If the latter, th=
-en
-> EOL translation should be suppressed.
->=20
-> It also seems to me that "binary" should imply "-eol".
->=20
-> Michael
->=20
+>         Set it to an empty string to disable certificate verification=
+=2E
+>
