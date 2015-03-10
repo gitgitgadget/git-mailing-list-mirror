@@ -1,85 +1,89 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] config.txt: update versioncmp.prereleaseSuffix
-Date: Tue, 10 Mar 2015 17:16:35 +0700
-Message-ID: <1425982595-32026-1-git-send-email-pclouds@gmail.com>
-References: <xmqqmw3s5j1y.fsf@gitster.dls.corp.google.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] log: decorate detached HEAD differently
+Date: Tue, 10 Mar 2015 11:34:56 +0100
+Message-ID: <54FEC8D0.2060304@drmicha.warpmail.net>
+References: <CAPc5daWz-Xa7q6f9RzgTP4has8DcCG4QgK7SMGNbH6KGnEyr2Q@mail.gmail.com>	<015d6992d2c2165045117f763d9ce3131979c2db.1425658434.git.git@drmicha.warpmail.net>	<xmqq61aeymlv.fsf@gitster.dls.corp.google.com>	<54FD64D1.6080103@drmicha.warpmail.net> <xmqqh9tt623d.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 10 11:16:53 2015
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Julien Cretel <j.cretel@umail.ucc.ie>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 10 11:35:07 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YVHDY-00080j-Cd
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Mar 2015 11:16:52 +0100
+	id 1YVHVC-0001LY-RD
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Mar 2015 11:35:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751354AbbCJKQs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Mar 2015 06:16:48 -0400
-Received: from mail-pd0-f172.google.com ([209.85.192.172]:32772 "EHLO
-	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751188AbbCJKQr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Mar 2015 06:16:47 -0400
-Received: by pdev10 with SMTP id v10so731414pde.0
-        for <git@vger.kernel.org>; Tue, 10 Mar 2015 03:16:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=4vZM/2+r25gGD3xjmLOY7HpLqYpnVQ2lzHTW06jAlX0=;
-        b=xE4VxPyLnYgBs007O7leVV+nzVCFgLddXOpbUQKchFRGHTj6Yovl+TEdIc8KaCEHMX
-         e/DM2C1Ehj/Huzmpkk0LZJoa+vlrOCUw9Vg7aeXPbtejfQBOWIa0+FifsN28EQa/dkWv
-         X2Pwpua7az7bTzgRppFKV4nvyFiCeaAMIAU+CxL3QQ8+CpSLUEjsckT8WtF7L0pTdfbE
-         8ciTO4dvmqsrLRmyMydGzvGXLHoUEF4kIotoUpIUU+tyB21cg1DxPYcBe8efHYnMPHBa
-         D0LYfgyM8KAs5Yewiw5Uwkidt6+lb0ypE9xZRwf66idcB3p7iAykakVEeKtnm3xlykoQ
-         zaUQ==
-X-Received: by 10.70.38.195 with SMTP id i3mr64266775pdk.76.1425982606488;
-        Tue, 10 Mar 2015 03:16:46 -0700 (PDT)
-Received: from lanh ([115.73.245.123])
-        by mx.google.com with ESMTPSA id dr5sm170313pdb.48.2015.03.10.03.16.43
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 10 Mar 2015 03:16:45 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Tue, 10 Mar 2015 17:16:43 +0700
-X-Mailer: git-send-email 2.3.0.rc1.137.g477eb31
-In-Reply-To: <xmqqmw3s5j1y.fsf@gitster.dls.corp.google.com>
+	id S1752242AbbCJKfA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Mar 2015 06:35:00 -0400
+Received: from out2-smtp.messagingengine.com ([66.111.4.26]:40379 "EHLO
+	out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751666AbbCJKe7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Mar 2015 06:34:59 -0400
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.nyi.internal (Postfix) with ESMTP id F00A6210E6
+	for <git@vger.kernel.org>; Tue, 10 Mar 2015 06:34:56 -0400 (EDT)
+Received: from frontend2 ([10.202.2.161])
+  by compute3.internal (MEProxy); Tue, 10 Mar 2015 06:34:58 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=x-sasl-enc:message-id:date:from
+	:mime-version:to:cc:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=LgrS9dMzi+stM19OTengKY
+	iguaI=; b=jSRxVQHR1mR3VQFrbVX5Z8dTS6Y86E3kR1aInriPmfYVwwECwPZPTy
+	gWJv0wRzpZqXKTSlSMOdkiksj/rrFvO6yRoWQmo+lNw6nXQ8F4hJahsZSJb9+hxv
+	LHRbSGMYbzXYnN3M6bVKImf4IcfaUGCKOzQsRfRWth42BOSEyiGrw=
+X-Sasl-enc: +wkPOxe/spEo8j0AFdM7+yVrqjouNVbsAu5OdxfAkBxq 1425983698
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id CC5856800AA;
+	Tue, 10 Mar 2015 06:34:57 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
+In-Reply-To: <xmqqh9tt623d.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265223>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265224>
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- Documentation/config.txt | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+Junio C Hamano venit, vidit, dixit 10.03.2015 03:03:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
+> 
+>> Junio C Hamano venit, vidit, dixit 06.03.2015 20:03:
+>>> Michael J Gruber <git@drmicha.warpmail.net> writes:
+>>>>     
+>>>>     Note that now a checked branch is listed twice, once as target of the
+>>>>     HEAD, once as branch: They are two different refs and colored differently.
+>>>
+>>> The pointee of HEAD would always be branch and will always appear on
+>>> the output when you show HEAD->$name_of_that_branch; is it feasible
+>>> to drop the duplicate, I wonder?
+>>
+>> It's doable but not nice, because we cannot take the order in which refs
+>> are processed for granted.
+> 
+> That is true, but when we format them into a single line in the
+> header in response to --decorate (or %d), don't we have all of them
+> already at hand---does the order still matter?
+> 
+> Here is an illustration of what I had in mind, made on a random
+> commit I happened to have checked out that does not have your
+> patches on this topic.  Half of the change is a new helper function,
+> and the other half is mostly reindenting.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 69a7345..fe8705d 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2527,8 +2527,13 @@ versionsort.prereleaseSuffix::
- 	When version sort is used in linkgit:git-tag[1], prerelease
- 	tags (e.g. "1.0-rc1") may appear after the main release
- 	"1.0". By specifying the suffix "-rc" in this variable,
--	"1.0-rc1" will appear before "1.0". One variable assignment
--	per suffix.
-+	"1.0-rc1" will appear before "1.0".
-++
-+This variable can be specified multiple times, once per suffix. The
-+order of suffixes in the config file determines the sorting order
-+(e.g. if "-pre" appears before "-rc" in the config file then 1.0-preXX
-+is sorted before 1.0-rcXX). The sorting order between different
-+suffixes is undefined if they are in multiple config files.
-=20
- web.browser::
- 	Specify a web browser that may be used by some commands.
---=20
-2.3.0.rc1.137.g477eb31
+Yes, the patch illustrates pretty well what I meant by "doable but not
+nice" :)
+
+But I also said:
+
+> Also, HEAD and foo are two different refs, so even if HEAD has the value
+> "foo", I think we should really show them both anyways.
+> 
+> Alternatively, we could decorate by (HEAD, *foo, master, tag: release)
+> if foo is checked out, just like branch does.
+
+I guess I will have to apply your patch and feel what it's like in
+practical use in order to change my mind...
+
+Michael
