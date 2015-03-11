@@ -1,122 +1,93 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 2/3] bundle.c: fix memory leak
-Date: Tue, 10 Mar 2015 16:51:48 -0700
-Message-ID: <1426031508-7575-1-git-send-email-sbeller@google.com>
-References: <xmqqk2yoxx1u.fsf@gitster.dls.corp.google.com>
-Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Mar 11 00:58:27 2015
+From: "Jason St. John" <jstjohn@purdue.edu>
+Subject: Re: Promoting Git developers
+Date: Tue, 10 Mar 2015 21:04:33 -0400
+Message-ID: <CAEjxke-6DuTW0-ZyDtUUdCWhEtuw6x3X6LuM_Fj22QztUvFfjQ@mail.gmail.com>
+References: <CAP8UFD1+rC0FjisSddDcyn1E_75wtBU9pEpUcQX5zNtd4zKYFQ@mail.gmail.com>
+ <54FDA6B5.8050505@drmicha.warpmail.net> <CAP8UFD0KNbPBB_dOzw_dAj+ws190_cO8g7_jb_V33x1jxgvnqQ@mail.gmail.com>
+ <xmqqk2yo22ce.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Christian Couder <christian.couder@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	David Kastrup <dak@gnu.org>, git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 11 02:22:24 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YVU2c-0007If-3X
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Mar 2015 00:58:26 +0100
+	id 1YVVLr-0001ps-C4
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Mar 2015 02:22:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751899AbbCJX6V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Mar 2015 19:58:21 -0400
-Received: from mail-ie0-f173.google.com ([209.85.223.173]:33538 "EHLO
-	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750872AbbCJX6U (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Mar 2015 19:58:20 -0400
-Received: by iecvj10 with SMTP id vj10so1032801iec.0
-        for <git@vger.kernel.org>; Tue, 10 Mar 2015 16:58:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=kaXWf4SJJ/axMR1Lx1R3KClm9c9n6mDM6/De8OjNd2Q=;
-        b=pPjipo0qSnE5LvraSBqC6qoEGb4PPS2sIweUn9coCsXFRO72ySemfRrzHe3fnSiTY4
-         PdslBsLiPlEGHyBqt6g3ycb5BzCCBmlLA0VaMSQ8kUhAixgpaSgfdQm6fo6XBT3COG4H
-         dwLCuaeo1ahQXrI43TzWMfZVVDhIoc1+xQPbTX/C1FPolXd+xKJJn/9ZIbB0apWj4YK6
-         h3AgeStDeqGiOqVPcNiDD7RqaW1QgpGj82LJfUCRlYSwybV7qRDDIo5ps659f8QbIj+Z
-         uhe0B5sInL4q0onCN3rX/OGPIGUBBqiW9ODyblMlu+pSX7fQUL796shjE6i5R9cLUv60
-         qHoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=kaXWf4SJJ/axMR1Lx1R3KClm9c9n6mDM6/De8OjNd2Q=;
-        b=U8FdaMhuocjXAGSK1ZUDNweJckdHRWhLs1vsaU/kGldrynk1t7BaOe3DI0sI1TeThD
-         xO1JeQa0CJE3XKUcI/q3tDULfEmWyfcadmY6RDkQcCgf993aOVoVbZGxlKPv+cH/C8qH
-         1NKq7HlgEyDJm0PUYMxa+0yt92Ba98l/Gc+JEfkvxmM2ScAEe6zfZO9KNJ2LbbPv+kM7
-         kQMKAzZMomSNQfM29ZpQDOBFtpAQawCP9ux63Gw+R14OM5YeQN9PUOB2KJnnk93/Wl+T
-         7/Zj3tqmvbqeikOJAPAFZSFGuV/a4qddmK8Q2x1PSAeVVmgba8R6uPfcUB/gkppb90m5
-         WZAg==
-X-Gm-Message-State: ALoCoQnslR3IFXFDBzYBxtZL1fyLVwLPb8k0i2rt6iFgckAzXAknkD89otxJ4WUvlbAjmVe2V13d
-X-Received: by 10.107.15.155 with SMTP id 27mr42863749iop.49.1426031511856;
-        Tue, 10 Mar 2015 16:51:51 -0700 (PDT)
-Received: from localhost ([2620:0:1000:5b00:89e3:41de:f077:72dc])
-        by mx.google.com with ESMTPSA id i20sm1423761igh.16.2015.03.10.16.51.51
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 10 Mar 2015 16:51:51 -0700 (PDT)
-X-Mailer: git-send-email 2.3.0.81.gc37f363
-In-Reply-To: <xmqqk2yoxx1u.fsf@gitster.dls.corp.google.com>
+	id S1751500AbbCKBWP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Mar 2015 21:22:15 -0400
+Received: from mailhub246.itcs.purdue.edu ([128.210.5.246]:44348 "EHLO
+	mailhub246.itcs.purdue.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751532AbbCKBWL (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Mar 2015 21:22:11 -0400
+X-Greylist: delayed 1036 seconds by postgrey-1.27 at vger.kernel.org; Tue, 10 Mar 2015 21:22:11 EDT
+Received: from mail-qc0-f182.google.com (mail-qc0-f182.google.com [209.85.216.182])
+	(authenticated bits=0)
+	by mailhub246.itcs.purdue.edu (8.14.4/8.14.4/mta-auth.smtp.purdue.edu) with ESMTP id t2B14sSV032240
+	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=NOT)
+	for <git@vger.kernel.org>; Tue, 10 Mar 2015 21:04:55 -0400
+Received: by qcvp6 with SMTP id p6so6703571qcv.1
+        for <git@vger.kernel.org>; Tue, 10 Mar 2015 18:04:54 -0700 (PDT)
+X-Received: by 10.55.26.2 with SMTP id a2mr54013612qka.100.1426035894722; Tue,
+ 10 Mar 2015 18:04:54 -0700 (PDT)
+Received: by 10.140.102.73 with HTTP; Tue, 10 Mar 2015 18:04:33 -0700 (PDT)
+In-Reply-To: <xmqqk2yo22ce.fsf@gitster.dls.corp.google.com>
+X-PMX-Version: 6.0.2.2308539
+X-PerlMx-URL-Scanned: Yes
+X-PerlMx-Virus-Scanned: Yes
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265287>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265288>
 
-There was one continue statement without an accompanying `free(ref)`.
-Instead of adding that, replace all the free&&continue with a goto
-just after writing the refs, where we'd do the free anyway and then
-reloop.
+On Tue, Mar 10, 2015 at 1:23 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Christian Couder <christian.couder@gmail.com> writes:
+>
+>> I don't want to write again about each of these points now. I am more
+>> interested in discussing a good strategy to try to revert the sad
+>> trend of Git developers being promoted less and less, because I think
+>> that it is really very important.
+>
+> I would suspect that those who agree with you would appreciate if
+> you or somebody volunteered to act as our CKDO (chief kudos
+> distribution officer).  I do not think I have enough time to do that
+> well.  One good place to start might be to scan the list and
+> summarize something like the following on weekly or monthly basis,
+> as these are not something you can get by pointing people to "git
+> shortlog" output.
+>
+>  - Those who gave helpful review comments, "how about going this
+>    way" illustration patches, etc.  Bonus points to those who helped
+>    onboarding newcomers.
+>
+>  - Those who asked pertinent questions on common pain points, and
+>    those who answered them helpfully.
+>
+> If you are more ambitious, the source of the kudos may want to cover
+> activities outside of this mailing list (e.g. giving talks and
+> tutorials at conferences, etc.).
+>
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- bundle.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+I don't know how feasible or desirable this would be, but I'll offer
+it anyway. In the Git release notes for something like "git foo
+learned a new option --bar", a simple "(Thanks|Kudos) to John Smith"
+at the end of each bullet point may be a good way to recognize
+developers in a concise manner without needing to dig through the
+output of "git log" or "git shortlog".
 
-diff --git a/bundle.c b/bundle.c
-index 2e2dbd5..f732c92 100644
---- a/bundle.c
-+++ b/bundle.c
-@@ -334,7 +334,7 @@ static int write_bundle_refs(int bundle_fd, struct rev_info *revs)
- 		if (e->item->flags & UNINTERESTING)
- 			continue;
- 		if (dwim_ref(e->name, strlen(e->name), sha1, &ref) != 1)
--			continue;
-+			goto skip_write_ref;
- 		if (read_ref_full(e->name, RESOLVE_REF_READING, sha1, &flag))
- 			flag = 0;
- 		display_ref = (flag & REF_ISSYMREF) ? e->name : ref;
-@@ -342,7 +342,7 @@ static int write_bundle_refs(int bundle_fd, struct rev_info *revs)
- 		if (e->item->type == OBJ_TAG &&
- 				!is_tag_in_date_range(e->item, revs)) {
- 			e->item->flags |= UNINTERESTING;
--			continue;
-+			goto skip_write_ref;
- 		}
- 
- 		/*
-@@ -357,8 +357,7 @@ static int write_bundle_refs(int bundle_fd, struct rev_info *revs)
- 		if (!(e->item->flags & SHOWN) && e->item->type == OBJ_COMMIT) {
- 			warning(_("ref '%s' is excluded by the rev-list options"),
- 				e->name);
--			free(ref);
--			continue;
-+			goto skip_write_ref;
- 		}
- 		/*
- 		 * If you run "git bundle create bndl v1.0..v2.0", the
-@@ -388,8 +387,7 @@ static int write_bundle_refs(int bundle_fd, struct rev_info *revs)
- 				obj->flags |= SHOWN;
- 				add_pending_object(revs, obj, e->name);
- 			}
--			free(ref);
--			continue;
-+			goto skip_write_ref;
- 		}
- 
- 		ref_count++;
-@@ -397,6 +395,7 @@ static int write_bundle_refs(int bundle_fd, struct rev_info *revs)
- 		write_or_die(bundle_fd, " ", 1);
- 		write_or_die(bundle_fd, display_ref, strlen(display_ref));
- 		write_or_die(bundle_fd, "\n", 1);
-+ skip_write_ref:
- 		free(ref);
- 	}
- 
--- 
-2.3.0.81.gc37f363
+Or if that would make the release notes too cumbersome to review, what
+about using systemd's method? systemd's release notes include a
+"contributions from" section at the very end that lists everyone with
+a patch included in the release.
+
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
