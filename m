@@ -1,114 +1,88 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: Promoting Git developers
-Date: Wed, 11 Mar 2015 14:53:11 +0100
-Message-ID: <CAP8UFD37v_zOjRkUPLy-ChDs=+NetsDY7Q14-4rYA-WhnTRYyA@mail.gmail.com>
-References: <CAP8UFD1+rC0FjisSddDcyn1E_75wtBU9pEpUcQX5zNtd4zKYFQ@mail.gmail.com>
-	<54FDA6B5.8050505@drmicha.warpmail.net>
-	<CAP8UFD0KNbPBB_dOzw_dAj+ws190_cO8g7_jb_V33x1jxgvnqQ@mail.gmail.com>
-	<xmqqk2yo22ce.fsf@gitster.dls.corp.google.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v2 04/10] archive.c: convert to use struct object_id
+Date: Wed, 11 Mar 2015 15:20:08 +0100
+Message-ID: <55004F18.4070609@alum.mit.edu>
+References: <1425770645-628957-1-git-send-email-sandals@crustytoothpaste.net> <1425770645-628957-5-git-send-email-sandals@crustytoothpaste.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	David Kastrup <dak@gnu.org>, git <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>, Scott Chacon <schacon@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 11 14:53:20 2015
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 8bit
+Cc: Andreas Schwab <schwab@linux-m68k.org>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 11 15:20:32 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YVh4Y-0000oY-8y
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Mar 2015 14:53:18 +0100
+	id 1YVhUr-00088T-KP
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Mar 2015 15:20:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752129AbbCKNxN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Mar 2015 09:53:13 -0400
-Received: from mail-ie0-f176.google.com ([209.85.223.176]:34275 "EHLO
-	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752009AbbCKNxM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Mar 2015 09:53:12 -0400
-Received: by iecsl2 with SMTP id sl2so29462263iec.1
-        for <git@vger.kernel.org>; Wed, 11 Mar 2015 06:53:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=Ibyw8PAIPsKPFnOHsJr1hW4X1l9z2mp8QMudb2jEw8Y=;
-        b=MYr40opPYASgojhoT005w2giwciFEBp8IDbkPtN1xwC025PPSKxvj2m+ur8m5EOWRl
-         PKZblUwBVjACEHQ07ej7kizzpkBKDnlVLMF5xEPLlUheQRqiZJQ3vZGOa4Qs5L155jXc
-         haWoEiQpKD8j9DZHEuRZDj5ATOsnpATRHzxg4R/o63JwktJWzY2exIXTsv9SrUGEREAg
-         99qI3FUeOm7HUFF0N0fFnZsJaOsFn+EQZK5aUsz6Ywv/V9tjWyjiRKhUmxhyAsPKXhyb
-         eNSc9Z4R1yyWj0tBWwpXZUJ8k0J6dqC9A66gMaOywWAbxTvDaeYMfiLTIP8N3R+pCr2N
-         rd1w==
-X-Received: by 10.50.66.235 with SMTP id i11mr65938977igt.40.1426081991265;
- Wed, 11 Mar 2015 06:53:11 -0700 (PDT)
-Received: by 10.50.245.144 with HTTP; Wed, 11 Mar 2015 06:53:11 -0700 (PDT)
-In-Reply-To: <xmqqk2yo22ce.fsf@gitster.dls.corp.google.com>
+	id S1752940AbbCKOUT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Mar 2015 10:20:19 -0400
+Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:58651 "EHLO
+	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752904AbbCKOUP (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Mar 2015 10:20:15 -0400
+X-AuditID: 12074411-f79fa6d000006b8a-a6-55004f1af708
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 96.1A.27530.A1F40055; Wed, 11 Mar 2015 10:20:10 -0400 (EDT)
+Received: from [192.168.69.130] (p4FC960B5.dip0.t-ipconnect.de [79.201.96.181])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t2BEK8S7007933
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Wed, 11 Mar 2015 10:20:09 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.5.0
+In-Reply-To: <1425770645-628957-5-git-send-email-sandals@crustytoothpaste.net>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprHKsWRmVeSWpSXmKPExsUixO6iqCvlzxBqcLZR0qLrSjeTRdvMH0wW
+	/Us72ByYPZbf/MvkcehwB6PH501yAcxR3DZJiSVlwZnpefp2CdwZKyYsZiu4wlax+tEztgbG
+	eaxdjJwcEgImEmdnLmWCsMUkLtxbzwZiCwlcZpSYu9Gpi5ELyD7PJPF91UFGkASvgLbE/4X7
+	2UFsFgFViTm928Ca2QR0JRb1NIPZogJBEi9v/YWqF5Q4OfMJC4gtIuAlMf/RDLDFzAJaEhMn
+	rwRbJizgIdExcTc7xLJ+RokjTTvBFnAK+ElM2/+GBaJBT2LH9V9QzfISzVtnM09gFJiFZMcs
+	JGWzkJQtYGRexSiXmFOaq5ubmJlTnJqsW5ycmJeXWqRrqpebWaKXmlK6iRESvoI7GGeclDvE
+	KMDBqMTD6zDjf4gQa2JZcWXuIUZJDiYlUV5mV4ZQIb6k/JTKjMTijPii0pzU4kOMEhzMSiK8
+	4j5AOd6UxMqq1KJ8mJQ0B4uSOC/fEnU/IYH0xJLU7NTUgtQimKwMB4eSBC+jL1CjYFFqempF
+	WmZOCUKaiYMTZDiXlEhxal5KalFiaUlGPChW44uB0QqS4gHaexNsb3FBYi5QFKL1FKMux4L2
+	/TOZhFjy8vNSpcR534EUCYAUZZTmwa2AJatXjOJAHwvzuoNcwgNMdHCTXgEtYQJawmINDAve
+	4pJEhJRUAyNbbNLhUotJfQr7fiW9/m/+2FbxdOdba0Z2/o9Nv55tEp/imOz+QiZe68Le9e92
+	99caRHGvK2K0dQ4VujcrIrqlcoc81+/QDdO8Fp9KCzed09+fEqawuP0Yn4J5fpLY 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265325>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265326>
 
-On Tue, Mar 10, 2015 at 6:23 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Christian Couder <christian.couder@gmail.com> writes:
->
->> I don't want to write again about each of these points now. I am more
->> interested in discussing a good strategy to try to revert the sad
->> trend of Git developers being promoted less and less, because I think
->> that it is really very important.
->
-> I would suspect that those who agree with you would appreciate if
-> you or somebody volunteered to act as our CKDO (chief kudos
-> distribution officer).  I do not think I have enough time to do that
-> well.  One good place to start might be to scan the list and
-> summarize something like the following on weekly or monthly basis,
-> as these are not something you can get by pointing people to "git
-> shortlog" output.
->
->  - Those who gave helpful review comments, "how about going this
->    way" illustration patches, etc.  Bonus points to those who helped
->    onboarding newcomers.
->
->  - Those who asked pertinent questions on common pain points, and
->    those who answered them helpfully.
+On 03/08/2015 12:23 AM, brian m. carlson wrote:
+> Convert a hard-coded 20 as well.
+> 
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
+>  archive.c | 18 +++++++++---------
+>  1 file changed, 9 insertions(+), 9 deletions(-)
+> 
+> diff --git a/archive.c b/archive.c
+> index 96057ed..46d9025 100644
+> --- a/archive.c
+> +++ b/archive.c
+> @@ -101,7 +101,7 @@ static void setup_archive_check(struct git_attr_check *check)
+>  
+>  struct directory {
+>  	struct directory *up;
+> -	unsigned char sha1[20];
+> +	unsigned char sha1[GIT_SHA1_RAWSZ];
 
-Ok, I can start something about this two points every week or every
-few week. It would be best if I could get help from at least one
-person as I think it is a lot of work.
+This is a local struct, and I think it is only a three-line change to
+change the sha1 member to
 
-We can perhaps use the Git Developer Site at
-https://github.com/git/git.github.io to edit a new page
-collaboratively that would be published on http://git.github.io/ and
-after that send an email to the mailing list.
+        struct object_id oid;
 
-> If you are more ambitious, the source of the kudos may want to cover
-> activities outside of this mailing list (e.g. giving talks and
-> tutorials at conferences, etc.).
+Though perhaps you are delaying that change for some concrete reason.
 
-First I don't know if we should really give kudos (or badges) or have
-something more like the former Git Traffic you talk about in another
-email (or perhaps both).
+> [...]
 
-And then I expect that if people give talks or tutorials at
-conferences or publish a blog post or have other news they want to
-share, they could edit the web page themselves on GitHub (or fork it
-and send a pull request if they don't have the rights).
+Michael
 
-I also appreciate very much that you are willing to improve the
-release notes by adding a summary with people's names.
-
-It would be nice if we could also have somewhere on a web page at
-least a good listing of the authors and how many commits they had
-contributed (since the beginning and maybe also during the last year).
-We could also add other listings made using the Helped-by and
-Reviewed-by trailers.
-
-I don't think we should rely on an external web site like OpenHub
-(which is still giving me a 504 Gateway Time-out on the contributor
-page) or even the (broken) contributor graph on GitHub for that. If
-Scott and Peff don't want it on git-scm.com then it is of course
-better on git.github.io than nowhere.
-
-Thanks,
-Christian.
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
