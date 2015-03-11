@@ -1,109 +1,114 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 3/4] docs/git-credential-store: document XDG file and precedence
-Date: Wed, 11 Mar 2015 03:47:02 -0400
-Message-ID: <CAPig+cTvX-yZpwC8BvN2CmgkBrOKUaotvJHdwXwfU8YnqLi4nQ@mail.gmail.com>
-References: <1426056553-9364-1-git-send-email-pyokagan@gmail.com>
-	<1426056553-9364-4-git-send-email-pyokagan@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Promoting Git developers
+Date: Wed, 11 Mar 2015 03:54:29 -0400
+Message-ID: <20150311075429.GA10300@peff.net>
+References: <CAP8UFD1+rC0FjisSddDcyn1E_75wtBU9pEpUcQX5zNtd4zKYFQ@mail.gmail.com>
+ <54FDA6B5.8050505@drmicha.warpmail.net>
+ <CAP8UFD0KNbPBB_dOzw_dAj+ws190_cO8g7_jb_V33x1jxgvnqQ@mail.gmail.com>
+ <xmqqk2yo22ce.fsf@gitster.dls.corp.google.com>
+ <CAEjxke-6DuTW0-ZyDtUUdCWhEtuw6x3X6LuM_Fj22QztUvFfjQ@mail.gmail.com>
+ <xmqqmw3kuuod.fsf@gitster.dls.corp.google.com>
+ <20150311073129.GA5947@peff.net>
+ <CAPc5daUVVk+SYgwCj9JftzXgV7=9kPprdBPCWHS5XQOa5uF69Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 11 08:47:09 2015
+Content-Type: text/plain; charset=utf-8
+Cc: "Jason St. John" <jstjohn@purdue.edu>,
+	Christian Couder <christian.couder@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	David Kastrup <dak@gnu.org>, git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 11 08:54:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YVbMC-0006KJ-N3
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Mar 2015 08:47:09 +0100
+	id 1YVbTR-0005iz-TS
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Mar 2015 08:54:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751375AbbCKHrE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Mar 2015 03:47:04 -0400
-Received: from mail-yk0-f182.google.com ([209.85.160.182]:40053 "EHLO
-	mail-yk0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750832AbbCKHrD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Mar 2015 03:47:03 -0400
-Received: by ykq142 with SMTP id 142so3210295ykq.7
-        for <git@vger.kernel.org>; Wed, 11 Mar 2015 00:47:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=JQ+vZfcupMzFqcTzNU2Vp95qGgca4R7mYrD85ciAWAA=;
-        b=MdgzIrWXD+jJuiaMvUlQtnr5BJz/LbeDpXTMPYxthDOBMaC9PUbxDMswqxDBCuxtYf
-         S6lbi4/ovV06q0VAQiQWF/mziNOzPpXvhfEP2evWaaxJrBMAtj7O4X7hIoTELiFr2xNa
-         9c6zZ+u6CAQ/RJEWuBSu1nz4XBDjf4M/DpHO/4i/zh52cfSNN8A4zFVxlkZDKTFhEnqo
-         E7EgwPO8DpxOfgJlHkrqi1Atz1YVT0wCXBJvZRE1k4V1SVwrhMrOjhmZ8aX1vu/n6HBM
-         T1wwMUsWctBrAAj8pjqA1ovQSgE8Oeqz+d6sd/HGkD1tV803N8NDM4Xmt4VKbB+Ub1n4
-         Mmxw==
-X-Received: by 10.170.194.7 with SMTP id l7mr6430952yke.91.1426060022354; Wed,
- 11 Mar 2015 00:47:02 -0700 (PDT)
-Received: by 10.170.73.7 with HTTP; Wed, 11 Mar 2015 00:47:02 -0700 (PDT)
-In-Reply-To: <1426056553-9364-4-git-send-email-pyokagan@gmail.com>
-X-Google-Sender-Auth: 21hI5OWRio8nDC6VYeXBxrA94Wo
+	id S1751740AbbCKHyd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Mar 2015 03:54:33 -0400
+Received: from cloud.peff.net ([50.56.180.127]:60095 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751300AbbCKHyc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Mar 2015 03:54:32 -0400
+Received: (qmail 3207 invoked by uid 102); 11 Mar 2015 07:54:33 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 11 Mar 2015 02:54:33 -0500
+Received: (qmail 25312 invoked by uid 107); 11 Mar 2015 07:54:41 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.2)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 11 Mar 2015 03:54:41 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 11 Mar 2015 03:54:29 -0400
+Content-Disposition: inline
+In-Reply-To: <CAPc5daUVVk+SYgwCj9JftzXgV7=9kPprdBPCWHS5XQOa5uF69Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265313>
 
-On Wed, Mar 11, 2015 at 2:49 AM, Paul Tan <pyokagan@gmail.com> wrote:
-> git-credential-store now supports an additional default credential file
-> at $XDG_CONFIG_HOME/git/credentials. However, ~/.git-credentials takes
-> precedence over it for backwards compatibility. To make the precedence
-> ordering explicit, add a new section FILES that lists out the credential
-> file paths in their order of precedence, and explains how the ordering
-> affects the lookup, storage and erase operations.
->
-> Also update documentation for --store to briefly explain the operations
-> on multiple files if the --store option is not provided.
->
-> Signed-off-by: Paul Tan <pyokagan@gmail.com>
-> ---
-> diff --git a/Documentation/git-credential-store.txt b/Documentation/git-credential-store.txt
-> index bc97071..451c4fa 100644
-> --- a/Documentation/git-credential-store.txt
-> +++ b/Documentation/git-credential-store.txt
-> @@ -31,10 +31,43 @@ OPTIONS
-> +[[FILES]]
-> +FILES
-> +-----
-> +
-> +If not set explicitly with '--file', there are two files where
-> +git-credential-store will search for credentials in order of precedence:
-> +
-> +~/.git-credentials::
-> +       User-specific credentials file.
-> +
-> +$XDG_CONFIG_HOME/git/credentials::
-> +       Second user-specific credentials file. If '$XDG_CONFIG_HOME' is not set
-> +       or empty, `$HOME/.config/git/credentials` will be used. Any credentials
-> +       stored in this file will not be used if `~/.git-credentials` has a
-> +       matching credential as well. It is a good idea not to create this file
-> +       if you sometimes use older versions of Git, as support for this file
-> +       was added fairly recently.
+On Wed, Mar 11, 2015 at 12:38:21AM -0700, Junio C Hamano wrote:
 
-The final sentence won't age well: "fairly recently" is too nebulous.
-It may be sufficient merely to advise the reader to avoid this file if
-she also uses an older version of Git which doesn't support XDG for
-credentials.
+> >> I can add "shortlog --no-merges -s -n v2.3.0..v2.4.0" at the end of
+> >> the e-mail when the release notes is sent out. That might be a good
+> >> enough balance between the usefulness of the release notes to its
+> >> customers and giving credits to individuals in a way a bit more
+> >> visible than "if you are interested, run shortlog yourself" [*4*].
+> >
+> > I somehow thought you already did this, but it looks like you just do
+> > shortlog (without the "-ns") for the "maint" release announcement.
+> 
+> That is because (a) it is scripted in Meta/Announce, and (b) I strip it
+> out for feature releases, as the plain shortlog output with full feature
+> list is usually ends up being just too long for the announce message.
 
-Other than this minor point, the patch series seems well prepared and
-quite nicely done. Thanks.
+Yeah, I figured the length was the reason.
 
-> +For credential lookups, the files are read in the order given above, with the
-> +first matching credential found taking precedence over credentials found in
-> +files further down the list.
-> +
-> +Credential storage will per default write to the first existing file in the
-> +list. If none of these files exist, `~/.git-credentials` will be created and
-> +written to.
-> +
-> +When erasing credentials, matching credentials will be erased from all files.
->
->  EXAMPLES
->  --------
-> --
-> 2.1.4
+> Perhaps I'll add "shortlog -s | pr -3" or something at the end for both
+> maintenance track and feature releases. Names only, unordered and
+> hopefully not overly long.
+
+Yes, I was thinking something along those lines. Maybe:
+
+  # example
+  old=v2.2.0
+  new=v2.3.0
+
+  # like "shortlog -s", but we do not even care about the numbers
+  shortlog () {
+	git log --format=%aN "$@" | sort -u
+  }
+
+  compact () {
+	perl -lne 'push @x, $_; END { print join(", ", @x) }' |
+	fold -s
+  }
+
+  count () {
+	shortlog $old..$new | wc -l
+  }
+
+  newbies () {
+	comm -23 <(shortlog $old..$new) <(shortlog $old) | compact
+  }
+
+  oldtimers () {
+	comm -12 <(shortlog $old..$new) <(shortlog $old) | compact
+  }
+
+  cat <<EOF
+  Git $new was developed with commits from $(count) people. Thanks very
+  much to our returning developers:
+
+  $(oldtimers)
+
+  and welcome to new contributors in this release:
+
+  $(newbies)
+  EOF
+
+Or something along those lines. The wording and indentation of the
+message could probably use tweaking. And there is a bash-ism in the
+script. :)
+
+-Peff
