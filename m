@@ -1,78 +1,109 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Promoting Git developers
-Date: Wed, 11 Mar 2015 00:38:21 -0700
-Message-ID: <CAPc5daUVVk+SYgwCj9JftzXgV7=9kPprdBPCWHS5XQOa5uF69Q@mail.gmail.com>
-References: <CAP8UFD1+rC0FjisSddDcyn1E_75wtBU9pEpUcQX5zNtd4zKYFQ@mail.gmail.com>
- <54FDA6B5.8050505@drmicha.warpmail.net> <CAP8UFD0KNbPBB_dOzw_dAj+ws190_cO8g7_jb_V33x1jxgvnqQ@mail.gmail.com>
- <xmqqk2yo22ce.fsf@gitster.dls.corp.google.com> <CAEjxke-6DuTW0-ZyDtUUdCWhEtuw6x3X6LuM_Fj22QztUvFfjQ@mail.gmail.com>
- <xmqqmw3kuuod.fsf@gitster.dls.corp.google.com> <20150311073129.GA5947@peff.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 3/4] docs/git-credential-store: document XDG file and precedence
+Date: Wed, 11 Mar 2015 03:47:02 -0400
+Message-ID: <CAPig+cTvX-yZpwC8BvN2CmgkBrOKUaotvJHdwXwfU8YnqLi4nQ@mail.gmail.com>
+References: <1426056553-9364-1-git-send-email-pyokagan@gmail.com>
+	<1426056553-9364-4-git-send-email-pyokagan@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: "Jason St. John" <jstjohn@purdue.edu>,
-	Christian Couder <christian.couder@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	David Kastrup <dak@gnu.org>, git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 11 08:38:48 2015
+Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 11 08:47:09 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YVbE7-0005xH-Nf
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Mar 2015 08:38:48 +0100
+	id 1YVbMC-0006KJ-N3
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Mar 2015 08:47:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750853AbbCKHim (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Mar 2015 03:38:42 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:36530 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750784AbbCKHim (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Mar 2015 03:38:42 -0400
-Received: by obcva2 with SMTP id va2so7104601obc.3
-        for <git@vger.kernel.org>; Wed, 11 Mar 2015 00:38:41 -0700 (PDT)
+	id S1751375AbbCKHrE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Mar 2015 03:47:04 -0400
+Received: from mail-yk0-f182.google.com ([209.85.160.182]:40053 "EHLO
+	mail-yk0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750832AbbCKHrD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Mar 2015 03:47:03 -0400
+Received: by ykq142 with SMTP id 142so3210295ykq.7
+        for <git@vger.kernel.org>; Wed, 11 Mar 2015 00:47:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=gtSYypp0wI5Q2zYGRMsOTe5o4aMGzNLNBkhxcKBAc9Y=;
-        b=TRReqGJii6vTphGWHy2r96ZxAO+TaEnitpRGU42y+7rO+D3ibpIQCoR1UzckUCbLcT
-         PIoyo5PtNZj0wE/WqwDtqltbG7oqIq7gK/czNZVS9dLrPpJr6jy56jsiGcSvQJWnIzFg
-         MA+5HbE/bKDo8X+PEcJx8oIfqRNVIAEb+JVa9F8ZgCbJ4qZXLGMWPE3RHRG3AU9zXcX8
-         sRqHjZw24vQkhxzkXCgY0w06ikXtQYRIkjrPUcb56PGjTi+kDa5b9BIPqHigZFcJ1112
-         5RFp/BX+IWKkoKuccYJFS/huEC2X9sfT5R14YGG4nsoDZOkFgQHp37/2Vx33iO+dt0lS
-         7eTQ==
-X-Received: by 10.60.145.137 with SMTP id su9mr15781121oeb.40.1426059521655;
- Wed, 11 Mar 2015 00:38:41 -0700 (PDT)
-Received: by 10.202.48.143 with HTTP; Wed, 11 Mar 2015 00:38:21 -0700 (PDT)
-In-Reply-To: <20150311073129.GA5947@peff.net>
-X-Google-Sender-Auth: _cHoGUUjg3nbf8lCUenxHtio9Uk
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=JQ+vZfcupMzFqcTzNU2Vp95qGgca4R7mYrD85ciAWAA=;
+        b=MdgzIrWXD+jJuiaMvUlQtnr5BJz/LbeDpXTMPYxthDOBMaC9PUbxDMswqxDBCuxtYf
+         S6lbi4/ovV06q0VAQiQWF/mziNOzPpXvhfEP2evWaaxJrBMAtj7O4X7hIoTELiFr2xNa
+         9c6zZ+u6CAQ/RJEWuBSu1nz4XBDjf4M/DpHO/4i/zh52cfSNN8A4zFVxlkZDKTFhEnqo
+         E7EgwPO8DpxOfgJlHkrqi1Atz1YVT0wCXBJvZRE1k4V1SVwrhMrOjhmZ8aX1vu/n6HBM
+         T1wwMUsWctBrAAj8pjqA1ovQSgE8Oeqz+d6sd/HGkD1tV803N8NDM4Xmt4VKbB+Ub1n4
+         Mmxw==
+X-Received: by 10.170.194.7 with SMTP id l7mr6430952yke.91.1426060022354; Wed,
+ 11 Mar 2015 00:47:02 -0700 (PDT)
+Received: by 10.170.73.7 with HTTP; Wed, 11 Mar 2015 00:47:02 -0700 (PDT)
+In-Reply-To: <1426056553-9364-4-git-send-email-pyokagan@gmail.com>
+X-Google-Sender-Auth: 21hI5OWRio8nDC6VYeXBxrA94Wo
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265311>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265312>
 
-On Wed, Mar 11, 2015 at 12:31 AM, Jeff King <peff@peff.net> wrote:
-> On Tue, Mar 10, 2015 at 07:36:34PM -0700, Junio C Hamano wrote:
+On Wed, Mar 11, 2015 at 2:49 AM, Paul Tan <pyokagan@gmail.com> wrote:
+> git-credential-store now supports an additional default credential file
+> at $XDG_CONFIG_HOME/git/credentials. However, ~/.git-credentials takes
+> precedence over it for backwards compatibility. To make the precedence
+> ordering explicit, add a new section FILES that lists out the credential
+> file paths in their order of precedence, and explains how the ordering
+> affects the lookup, storage and erase operations.
 >
->> > Or if that would make the release notes too cumbersome to review, what
->> > about using systemd's method? systemd's release notes include a
->> > "contributions from" section at the very end that lists everyone with
->> > a patch included in the release.
->>
->> I can add "shortlog --no-merges -s -n v2.3.0..v2.4.0" at the end of
->> the e-mail when the release notes is sent out. That might be a good
->> enough balance between the usefulness of the release notes to its
->> customers and giving credits to individuals in a way a bit more
->> visible than "if you are interested, run shortlog yourself" [*4*].
+> Also update documentation for --store to briefly explain the operations
+> on multiple files if the --store option is not provided.
 >
-> I somehow thought you already did this, but it looks like you just do
-> shortlog (without the "-ns") for the "maint" release announcement.
+> Signed-off-by: Paul Tan <pyokagan@gmail.com>
+> ---
+> diff --git a/Documentation/git-credential-store.txt b/Documentation/git-credential-store.txt
+> index bc97071..451c4fa 100644
+> --- a/Documentation/git-credential-store.txt
+> +++ b/Documentation/git-credential-store.txt
+> @@ -31,10 +31,43 @@ OPTIONS
+> +[[FILES]]
+> +FILES
+> +-----
+> +
+> +If not set explicitly with '--file', there are two files where
+> +git-credential-store will search for credentials in order of precedence:
+> +
+> +~/.git-credentials::
+> +       User-specific credentials file.
+> +
+> +$XDG_CONFIG_HOME/git/credentials::
+> +       Second user-specific credentials file. If '$XDG_CONFIG_HOME' is not set
+> +       or empty, `$HOME/.config/git/credentials` will be used. Any credentials
+> +       stored in this file will not be used if `~/.git-credentials` has a
+> +       matching credential as well. It is a good idea not to create this file
+> +       if you sometimes use older versions of Git, as support for this file
+> +       was added fairly recently.
 
-That is because (a) it is scripted in Meta/Announce, and (b) I strip it
-out for feature releases, as the plain shortlog output with full feature
-list is usually ends up being just too long for the announce message.
+The final sentence won't age well: "fairly recently" is too nebulous.
+It may be sufficient merely to advise the reader to avoid this file if
+she also uses an older version of Git which doesn't support XDG for
+credentials.
 
-Perhaps I'll add "shortlog -s | pr -3" or something at the end for both
-maintenance track and feature releases. Names only, unordered and
-hopefully not overly long.
+Other than this minor point, the patch series seems well prepared and
+quite nicely done. Thanks.
+
+> +For credential lookups, the files are read in the order given above, with the
+> +first matching credential found taking precedence over credentials found in
+> +files further down the list.
+> +
+> +Credential storage will per default write to the first existing file in the
+> +list. If none of these files exist, `~/.git-credentials` will be created and
+> +written to.
+> +
+> +When erasing credentials, matching credentials will be erased from all files.
+>
+>  EXAMPLES
+>  --------
+> --
+> 2.1.4
