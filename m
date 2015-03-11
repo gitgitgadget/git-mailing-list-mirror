@@ -1,296 +1,165 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v2 08/10] commit: convert parts to struct object_id
-Date: Wed, 11 Mar 2015 15:46:43 +0100
-Message-ID: <55005553.9060704@alum.mit.edu>
-References: <1425770645-628957-1-git-send-email-sandals@crustytoothpaste.net> <1425770645-628957-9-git-send-email-sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v2 00/10] Use a structure for object IDs.
+Date: Wed, 11 Mar 2015 17:08:58 +0100
+Message-ID: <5500689A.5090101@alum.mit.edu>
+References: <1425770645-628957-1-git-send-email-sandals@crustytoothpaste.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=windows-1252
 Content-Transfer-Encoding: 8bit
-Cc: Andreas Schwab <schwab@linux-m68k.org>
+Cc: Andreas Schwab <schwab@linux-m68k.org>,
+	"Kyle J. McKay" <mackyle@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j6t@kdbg.org>, David Kastrup <dak@gnu.org>,
+	James Denholm <nod.helm@gmail.com>
 To: "brian m. carlson" <sandals@crustytoothpaste.net>,
 	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 11 15:47:13 2015
+X-From: git-owner@vger.kernel.org Wed Mar 11 17:09:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YVhuh-0006Yw-Uw
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Mar 2015 15:47:12 +0100
+	id 1YVjC8-0005Fe-KE
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Mar 2015 17:09:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753229AbbCKOrB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Mar 2015 10:47:01 -0400
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:54462 "EHLO
-	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752363AbbCKOrA (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Mar 2015 10:47:00 -0400
-X-AuditID: 12074413-f79f26d0000030e7-dd-550055558879
+	id S1751494AbbCKQJM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Mar 2015 12:09:12 -0400
+Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:52845 "EHLO
+	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751056AbbCKQJK (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Mar 2015 12:09:10 -0400
+X-AuditID: 12074414-f797f6d000004084-6e-5500689e2f47
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 0C.84.12519.55550055; Wed, 11 Mar 2015 10:46:45 -0400 (EDT)
+	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 1D.DC.16516.E9860055; Wed, 11 Mar 2015 12:09:02 -0400 (EDT)
 Received: from [192.168.69.130] (p4FC960B5.dip0.t-ipconnect.de [79.201.96.181])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t2BEkheI009157
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t2BG8wK2013298
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Wed, 11 Mar 2015 10:46:44 -0400
+	Wed, 11 Mar 2015 12:09:00 -0400
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.5.0
-In-Reply-To: <1425770645-628957-9-git-send-email-sandals@crustytoothpaste.net>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprAKsWRmVeSWpSXmKPExsUixO6iqBsayhBqsPy2rkXXlW4mi7aZP5gs
-	+pd2sDkweyy/+ZfJ49DhDkaPz5vkApijuG2SEkvKgjPT8/TtErgzHn9tYy+44lzx6rJyA+MN
-	0y5GTg4JAROJLc82skPYYhIX7q1n62Lk4hASuMwoMXPlXxaQhJDAeSaJ/e+Luxg5OHgFtCV+
-	9amBhFkEVCUW3DjNBmKzCehKLOppZgKxRQWCJF7e+ssIYvMKCEqcnPkEbIyIgJfE/EczWEFs
-	ZgEtiYmTV4L1Cgu4S+w++hNqbz+jxNOj18ASnAJ+Em2TW5ggGvQkdlz/BdUsL9G8dTbzBEaB
-	WUh2zEJSNgtJ2QJG5lWMcok5pbm6uYmZOcWpybrFyYl5ealFuuZ6uZkleqkppZsYIaErvINx
-	10m5Q4wCHIxKPLwzZ/0PEWJNLCuuzD3EKMnBpCTKu8yPIVSILyk/pTIjsTgjvqg0J7X4EKME
-	B7OSCO+OQKAcb0piZVVqUT5MSpqDRUmcV22Jup+QQHpiSWp2ampBahFMVoaDQ0mCd0YwUKNg
-	UWp6akVaZk4JQpqJgxNkOJeUSHFqXkpqUWJpSUY8KE7ji4GRCpLiAdqbA9LOW1yQmAsUhWg9
-	xagoJc67CyQhAJLIKM2DGwtLSK8YxYG+FOa9C1LFA0xmcN2vgAYzAQ1msQb6n7e4JBEhJdXA
-	KHTac0dwwxUrs9kXJH6XPLx48QdbyrLiJwddT1aphK7z9nt34u+aq74Xl1z2cDj0uuKdUGTu
-	KomDRyW36irvD3ro9Oh02emGy5PshM++1RUMuRknOTvwrlcRw77MIC5pr4CGPq+U 
+In-Reply-To: <1425770645-628957-1-git-send-email-sandals@crustytoothpaste.net>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrEKsWRmVeSWpSXmKPExsUixO6iqDsvgyHUYP4JU4vZN7axWXRd6Way
+	aOi9wmzxZO5dZovLe5ezWPy/N4/FonvKW0aLtpk/mCz6l3awOXB6LL/5l8lj56y77B5t08w8
+	Hr7qYvc4dLiD0ePiJWWPz5vkAtijuG2SEkvKgjPT8/TtErgzbv/iLnioWnH92xrGBsZuuS5G
+	Tg4JAROJ2SeOMEHYYhIX7q1n62Lk4hASuMwo0f3oGiOEc55JYvuj6WwgVbwC2hJ/djSA2SwC
+	qhJNf1+zgthsAroSi3qawSaJCgRJvLz1lxGiXlDi5MwnLCC2iICXxPxHM1hBhjILLGCSeHz8
+	JFhCWMBW4snsNrBmIQFfiZdnj7CD2JwCfhITWi+B1TAL6EnsuP6LFcKWl2jeOpt5AqPALCQ7
+	ZiEpm4WkbAEj8ypGucSc0lzd3MTMnOLUZN3i5MS8vNQiXQu93MwSvdSU0k2MkPgQ2cF45KTc
+	IUYBDkYlHt4Zs/6HCLEmlhVX5h5ilORgUhLlDUhmCBXiS8pPqcxILM6ILyrNSS0+xCjBwawk
+	wrsjECjHm5JYWZValA+TkuZgURLn/bZY3U9IID2xJDU7NbUgtQgmK8PBoSTBuzkdqFGwKDU9
+	tSItM6cEIc3EwQkynEtKpDg1LyW1KLG0JCMeFKvxxcBoBUnxAO1dANLOW1yQmAsUhWg9xago
+	Jc67ASQhAJLIKM2DGwtLeq8YxYG+FOZdAlLFA0yYcN2vgAYzAQ1msQb6n7e4JBEhJdXAKGA/
+	Z1f/07onxjOT7Pc5/qiq/BrBurPlbZbclTxDh59B9S+Yb9xZc/9J+iaxmZ+khL48 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265327>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265328>
 
-On 03/08/2015 12:24 AM, brian m. carlson wrote:
-> Convert struct commit_graft and necessary local parts of commit.c.
+On 03/08/2015 12:23 AM, brian m. carlson wrote:
+> This is a patch series to convert some of the relevant uses of unsigned
+> char [20] to struct object_id.
 > 
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> ---
->  commit.c      | 32 ++++++++++++++++----------------
->  commit.h      |  4 ++--
->  log-tree.c    |  2 +-
->  send-pack.c   |  2 +-
->  shallow.c     |  8 ++++----
->  upload-pack.c |  2 +-
->  6 files changed, 25 insertions(+), 25 deletions(-)
+> The goal of this series to improve type-checking in the codebase and to
+> make it easier to move to a different hash function if the project
+> decides to do that.  This series does not convert all of the codebase,
+> but only parts.  I've dropped some of the patches from earlier (which no
+> longer apply) and added others.
 > 
-> diff --git a/commit.c b/commit.c
-> index a8c7577..89c207e 100644
-> --- a/commit.c
-> +++ b/commit.c
-> @@ -55,12 +55,12 @@ struct commit *lookup_commit(const unsigned char *sha1)
->  
->  struct commit *lookup_commit_reference_by_name(const char *name)
->  {
-> -	unsigned char sha1[20];
-> +	struct object_id oid;
->  	struct commit *commit;
->  
-> -	if (get_sha1_committish(name, sha1))
-> +	if (get_sha1_committish(name, oid.sha1))
->  		return NULL;
-> -	commit = lookup_commit_reference(sha1);
-> +	commit = lookup_commit_reference(oid.sha1);
->  	if (parse_commit(commit))
->  		return NULL;
->  	return commit;
-> @@ -99,7 +99,7 @@ static int commit_graft_alloc, commit_graft_nr;
->  static const unsigned char *commit_graft_sha1_access(size_t index, void *table)
->  {
->  	struct commit_graft **commit_graft_table = table;
-> -	return commit_graft_table[index]->sha1;
-> +	return commit_graft_table[index]->oid.sha1;
->  }
->  
->  static int commit_graft_pos(const unsigned char *sha1)
-> @@ -110,7 +110,7 @@ static int commit_graft_pos(const unsigned char *sha1)
->  
->  int register_commit_graft(struct commit_graft *graft, int ignore_dups)
->  {
-> -	int pos = commit_graft_pos(graft->sha1);
-> +	int pos = commit_graft_pos(graft->oid.sha1);
->  
->  	if (0 <= pos) {
->  		if (ignore_dups)
-> @@ -148,12 +148,12 @@ struct commit_graft *read_graft_line(char *buf, int len)
->  	i = (len + 1) / 41 - 1;
->  	graft = xmalloc(sizeof(*graft) + 20 * i);
->  	graft->nr_parent = i;
-> -	if (get_sha1_hex(buf, graft->sha1))
-> +	if (get_oid_hex(buf, &graft->oid))
->  		goto bad_graft_data;
->  	for (i = 40; i < len; i += 41) {
->  		if (buf[i] != ' ')
->  			goto bad_graft_data;
-> -		if (get_sha1_hex(buf + i + 1, graft->parent[i/41]))
-> +		if (get_sha1_hex(buf + i + 1, graft->parent[i/41].sha1))
->  			goto bad_graft_data;
->  	}
-
-There are a bunch of constants in this function related to
-GIT_SHA1_RAWSZ and GIT_SHA1_HEXSZ.
-
->  	return graft;
-> @@ -302,7 +302,7 @@ int parse_commit_buffer(struct commit *item, const void *buffer, unsigned long s
->  {
->  	const char *tail = buffer;
->  	const char *bufptr = buffer;
-> -	unsigned char parent[20];
-> +	struct object_id parent;
->  	struct commit_list **pptr;
->  	struct commit_graft *graft;
->  
-> @@ -312,10 +312,10 @@ int parse_commit_buffer(struct commit *item, const void *buffer, unsigned long s
->  	tail += size;
->  	if (tail <= bufptr + 46 || memcmp(bufptr, "tree ", 5) || bufptr[45] != '\n')
->  		return error("bogus commit object %s", sha1_to_hex(item->object.sha1));
-> -	if (get_sha1_hex(bufptr + 5, parent) < 0)
-> +	if (get_sha1_hex(bufptr + 5, parent.sha1) < 0)
->  		return error("bad tree pointer in commit %s",
->  			     sha1_to_hex(item->object.sha1));
-> -	item->tree = lookup_tree(parent);
-> +	item->tree = lookup_tree(parent.sha1);
->  	bufptr += 46; /* "tree " + "hex sha1" + "\n" */
->  	pptr = &item->parents;
->  
-
-Here, too; e.g.,
-
-* "45" -> GIT_SHA1_HEXSZ + 5
-* "46" -> GIT_SHA1_HEXSZ + 5 + 1
-
-and below,
-
-* "47" -> GIT_SHA1_HEXSZ + 7
-* "48" -> GIT_SHA1_HEXSZ + 7 + 1
-
-
-> @@ -324,7 +324,7 @@ int parse_commit_buffer(struct commit *item, const void *buffer, unsigned long s
->  		struct commit *new_parent;
->  
->  		if (tail <= bufptr + 48 ||
-> -		    get_sha1_hex(bufptr + 7, parent) ||
-> +		    get_sha1_hex(bufptr + 7, parent.sha1) ||
->  		    bufptr[47] != '\n')
->  			return error("bad parents in commit %s", sha1_to_hex(item->object.sha1));
->  		bufptr += 48;
-> @@ -334,7 +334,7 @@ int parse_commit_buffer(struct commit *item, const void *buffer, unsigned long s
->  		 */
->  		if (graft && (graft->nr_parent < 0 || grafts_replace_parents))
->  			continue;
-> -		new_parent = lookup_commit(parent);
-> +		new_parent = lookup_commit(parent.sha1);
->  		if (new_parent)
->  			pptr = &commit_list_insert(new_parent, pptr)->next;
->  	}
-> @@ -342,7 +342,7 @@ int parse_commit_buffer(struct commit *item, const void *buffer, unsigned long s
->  		int i;
->  		struct commit *new_parent;
->  		for (i = 0; i < graft->nr_parent; i++) {
-> -			new_parent = lookup_commit(graft->parent[i]);
-> +			new_parent = lookup_commit(graft->parent[i].sha1);
->  			if (!new_parent)
->  				continue;
->  			pptr = &commit_list_insert(new_parent, pptr)->next;
-> @@ -1580,10 +1580,10 @@ struct commit *get_merge_parent(const char *name)
->  {
->  	struct object *obj;
->  	struct commit *commit;
-> -	unsigned char sha1[20];
-> -	if (get_sha1(name, sha1))
-> +	struct object_id oid;
-> +	if (get_sha1(name, oid.sha1))
->  		return NULL;
-> -	obj = parse_object(sha1);
-> +	obj = parse_object(oid.sha1);
->  	commit = (struct commit *)peel_to_type(name, 0, obj, OBJ_COMMIT);
->  	if (commit && !commit->util) {
->  		struct merge_remote_desc *desc;
-> diff --git a/commit.h b/commit.h
-> index 9f189cb..ed3a1d5 100644
-> --- a/commit.h
-> +++ b/commit.h
-> @@ -226,9 +226,9 @@ enum rev_sort_order {
->  void sort_in_topological_order(struct commit_list **, enum rev_sort_order);
->  
->  struct commit_graft {
-> -	unsigned char sha1[20];
-> +	struct object_id oid;
->  	int nr_parent; /* < 0 if shallow commit */
-> -	unsigned char parent[FLEX_ARRAY][20]; /* more */
-> +	struct object_id parent[FLEX_ARRAY]; /* more */
->  };
->  typedef int (*each_commit_graft_fn)(const struct commit_graft *, void *);
->  
-> diff --git a/log-tree.c b/log-tree.c
-> index 7f0890e..f6b7801 100644
-> --- a/log-tree.c
-> +++ b/log-tree.c
-> @@ -137,7 +137,7 @@ static int add_ref_decoration(const char *refname, const unsigned char *sha1, in
->  
->  static int add_graft_decoration(const struct commit_graft *graft, void *cb_data)
->  {
-> -	struct commit *commit = lookup_commit(graft->sha1);
-> +	struct commit *commit = lookup_commit(graft->oid.sha1);
->  	if (!commit)
->  		return 0;
->  	add_name_decoration(DECORATION_GRAFTED, "grafted", &commit->object);
-> diff --git a/send-pack.c b/send-pack.c
-> index 9d2b0c5..e8389a4 100644
-> --- a/send-pack.c
-> +++ b/send-pack.c
-> @@ -182,7 +182,7 @@ static int advertise_shallow_grafts_cb(const struct commit_graft *graft, void *c
->  {
->  	struct strbuf *sb = cb;
->  	if (graft->nr_parent == -1)
-> -		packet_buf_write(sb, "shallow %s\n", sha1_to_hex(graft->sha1));
-> +		packet_buf_write(sb, "shallow %s\n", sha1_to_hex(graft->oid.sha1));
->  	return 0;
->  }
->  
-> diff --git a/shallow.c b/shallow.c
-> index d8bf40a..9ff2d4c 100644
-> --- a/shallow.c
-> +++ b/shallow.c
-> @@ -31,7 +31,7 @@ int register_shallow(const unsigned char *sha1)
->  		xmalloc(sizeof(struct commit_graft));
->  	struct commit *commit = lookup_commit(sha1);
->  
-> -	hashcpy(graft->sha1, sha1);
-> +	hashcpy(graft->oid.sha1, sha1);
->  	graft->nr_parent = -1;
->  	if (commit && commit->object.parsed)
->  		commit->parents = NULL;
-> @@ -159,11 +159,11 @@ struct write_shallow_data {
->  static int write_one_shallow(const struct commit_graft *graft, void *cb_data)
->  {
->  	struct write_shallow_data *data = cb_data;
-> -	const char *hex = sha1_to_hex(graft->sha1);
-> +	const char *hex = oid_to_hex(&graft->oid);
->  	if (graft->nr_parent != -1)
->  		return 0;
->  	if (data->flags & SEEN_ONLY) {
-> -		struct commit *c = lookup_commit(graft->sha1);
-> +		struct commit *c = lookup_commit(graft->oid.sha1);
->  		if (!c || !(c->object.flags & SEEN)) {
->  			if (data->flags & VERBOSE)
->  				printf("Removing %s from .git/shallow\n",
-> @@ -282,7 +282,7 @@ static int advertise_shallow_grafts_cb(const struct commit_graft *graft, void *c
->  {
->  	int fd = *(int *)cb;
->  	if (graft->nr_parent == -1)
-> -		packet_write(fd, "shallow %s\n", sha1_to_hex(graft->sha1));
-> +		packet_write(fd, "shallow %s\n", oid_to_hex(&graft->oid));
->  	return 0;
->  }
->  
-> diff --git a/upload-pack.c b/upload-pack.c
-> index b531a32..0566ce0 100644
-> --- a/upload-pack.c
-> +++ b/upload-pack.c
-> @@ -74,7 +74,7 @@ static int write_one_shallow(const struct commit_graft *graft, void *cb_data)
->  {
->  	FILE *fp = cb_data;
->  	if (graft->nr_parent == -1)
-> -		fprintf(fp, "--shallow %s\n", sha1_to_hex(graft->sha1));
-> +		fprintf(fp, "--shallow %s\n", oid_to_hex(&graft->oid));
->  	return 0;
->  }
->  
+> Certain parts of the code have to be converted before others to keep the
+> patch sizes small, maintainable, and bisectable, so functions and
+> structures that are used across the codebase (e.g. struct object) will
+> be converted later.  Conversion has been done in a somewhat haphazard
+> manner by converting modules with leaf functions and less commonly used
+> structs first.
 > 
+> Since part of the goal is to ease a move to a different hash function if
+> the project decides to do that, I've adopted Michael Haggerty's
+> suggestion of using variables named "oid", naming the structure member
+> "sha1", and using GIT_SHA1_RAWSZ and GIT_SHA1_HEXSZ as the constants.
+> 
+> I've been holding on to this series for a long time in hopes of
+> converting more of the code before submitting, but realized that this
+> deprived others of the ability to use the new structure and required me
+> to rebase extremely frequently.
+> [...]
 
+I've added CC to several people who commented on v1.
+
+I think this is a really interesting project and I hope that it works out.
+
+In my opinion, the biggest risk (aside from the sheer amount of work
+required) is the issue that was brought up on the mailing list when you
+submitted v1 [1]: Converting an arbitrary (unsigned char *) to a (struct
+object_id *) is not allowed, because the alignment requirements of the
+latter might be stricter than those of the former. This means that if,
+for example, we are reading some data from disk or from the network, and
+we expect the 20 bytes starting with byte number 17 to be a SHA-1 in
+binary format, we used to be able to do
+
+    unsigned char *sha1 = buf + 17;
+
+and use sha1 like any other SHA-1, without the need for any copying. But
+we can't do the analogous
+
+    struct object_id *oid = (struct object_id *)(buf + 17);
+
+because the alignment is not necessarily correct. So in a pure "struct
+object_id" world, I think we would be forced to change such code to
+
+    struct object_id oid;
+    hashcpy(oid.sha1, buf + 17);
+
+This uses additional memory and introduces copying overhead. Also, the
+lifetime of oid might exceed the scope of a function, so oid might have
+to be allocated on the heap and later freed. This adds more
+computational overhead, more memory overhead, and more programming
+effort to get it all right.
+
+So as much as I like the idea of wrapping SHA-1s in objects, I think it
+would be a good idea to first make sure that we can all agree on a plan
+for dealing with situations like this. I can think of the following
+possibilities:
+
+1. Maybe code that needs to handle SHA-1s with screwy alignment does not
+exist, or maybe it does the copying anyway. I haven't actually checked.
+
+2. Maybe somebody can prove that
+
+       struct object_id *oid = (struct object_id *)(buf + 17);
+
+   somehow *is* allowed by the C standard, or at least that it is
+sufficiently portable for our purposes.
+
+3. We accept the additional runtime costs and development effort for the
+extra copies. To accept this approach, we would need some idea of which
+areas of the code will be affected, and some estimate of how much
+additional memory it would cost.
+
+4. We continue to support working with SHA-1s declared to be (unsigned
+char *) in some performance-critical code, even as we migrate most other
+code to using SHA-1s embedded within a (struct object_id). This will
+cost some duplication of code. To accept this approach, we would need an
+idea of *how much* code duplication would be needed. E.g., how many
+functions will need both (unsigned char *) versions and (struct
+object_id *) versions?
+
+5. We only make the change opportunistically. Whenever we find a
+function that needs to work with non-struct-aligned SHA-1s, we leave the
+function as-is rather than converting it or creating a second version
+that works with object_id objects. This approach would leave the
+codebase somewhat schizophrenic.
+
+I'm not trying to dissuade you from this project, but I think that for
+your project to have a chance of success, we need an answer to this
+question. So let's confront it now rather than after you have invested
+lots more time and/or gotten patches merged.
+
+Michael
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/248054
 
 -- 
 Michael Haggerty
