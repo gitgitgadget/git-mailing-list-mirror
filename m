@@ -1,107 +1,114 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v2 02/10] Define utility functions for object IDs.
-Date: Wed, 11 Mar 2015 13:44:56 +0100
-Message-ID: <550038C8.80601@alum.mit.edu>
-References: <1425770645-628957-1-git-send-email-sandals@crustytoothpaste.net> <1425770645-628957-3-git-send-email-sandals@crustytoothpaste.net>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: Promoting Git developers
+Date: Wed, 11 Mar 2015 14:53:11 +0100
+Message-ID: <CAP8UFD37v_zOjRkUPLy-ChDs=+NetsDY7Q14-4rYA-WhnTRYyA@mail.gmail.com>
+References: <CAP8UFD1+rC0FjisSddDcyn1E_75wtBU9pEpUcQX5zNtd4zKYFQ@mail.gmail.com>
+	<54FDA6B5.8050505@drmicha.warpmail.net>
+	<CAP8UFD0KNbPBB_dOzw_dAj+ws190_cO8g7_jb_V33x1jxgvnqQ@mail.gmail.com>
+	<xmqqk2yo22ce.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: Andreas Schwab <schwab@linux-m68k.org>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 11 13:45:24 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	David Kastrup <dak@gnu.org>, git <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>, Scott Chacon <schacon@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 11 14:53:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YVg0o-0007or-83
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Mar 2015 13:45:22 +0100
+	id 1YVh4Y-0000oY-8y
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Mar 2015 14:53:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753034AbbCKMpT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Mar 2015 08:45:19 -0400
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:53913 "EHLO
-	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752277AbbCKMpO (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Mar 2015 08:45:14 -0400
-X-AuditID: 12074413-f79f26d0000030e7-22-550038cc94ab
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 67.90.12519.CC830055; Wed, 11 Mar 2015 08:45:00 -0400 (EDT)
-Received: from [192.168.69.130] (p4FC960B5.dip0.t-ipconnect.de [79.201.96.181])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t2BCivEk003552
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Wed, 11 Mar 2015 08:44:59 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.5.0
-In-Reply-To: <1425770645-628957-3-git-send-email-sandals@crustytoothpaste.net>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprEKsWRmVeSWpSXmKPExsUixO6iqHvGgiHU4OUzPouuK91MFm0zfzBZ
-	9C/tYHNg9lh+8y+Tx6HDHYwenzfJBTBHcdskJZaUBWem5+nbJXBnPP+whLHgBV/F8pkvGBsY
-	P3F3MXJySAiYSHy83cAOYYtJXLi3ng3EFhK4zCjxe5F3FyMXkH2eSeJT23tmkASvgKbEpynv
-	wRpYBFQlNl2ZwQJiswnoSizqaWYCsUUFgiRe3vrLCFEvKHFy5hOwGhEBL4n5j2awgtjMAloS
-	EyevBFsmLOAmse5nFxPEsn5GiRfL3oE1cAr4SSxYepQRokFPYsf1X1DN8hLb385hnsAoMAvJ
-	jllIymYhKVvAyLyKUS4xpzRXNzcxM6c4NVm3ODkxLy+1SNdcLzezRC81pXQTIyR8hXcw7jop
-	d4hRgINRiYd35qz/IUKsiWXFlbmHGCU5mJREeaNNGEKF+JLyUyozEosz4otKc1KLDzFKcDAr
-	ifCeVgXK8aYkVlalFuXDpKQ5WJTEedWWqPsJCaQnlqRmp6YWpBbBZGU4OJQkeA+bAzUKFqWm
-	p1akZeaUIKSZODhBhnNJiRSn5qWkFiWWlmTEg2I1vhgYrSApHqC9X0DaeYsLEnOBohCtpxgV
-	pcR5d4AkBEASGaV5cGNhSekVozjQl8K8l0GqeIAJDa77FdBgJqDBLNZA//MWlyQipKQaGKcn
-	fha7HyQ5sUBmwVl3E+FldxaoM8jyO2q45z2tvLB2zuGn9rWRfVOt//t2L2pTrVY8Z3swY5ei
-	8NrLm7e3J2cIvjfT5tkQKWlqIr1tEfNT+3SV6cdVuNMOqa7fv9zs1Kbsqc77VGIm 
+	id S1752129AbbCKNxN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Mar 2015 09:53:13 -0400
+Received: from mail-ie0-f176.google.com ([209.85.223.176]:34275 "EHLO
+	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752009AbbCKNxM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Mar 2015 09:53:12 -0400
+Received: by iecsl2 with SMTP id sl2so29462263iec.1
+        for <git@vger.kernel.org>; Wed, 11 Mar 2015 06:53:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=Ibyw8PAIPsKPFnOHsJr1hW4X1l9z2mp8QMudb2jEw8Y=;
+        b=MYr40opPYASgojhoT005w2giwciFEBp8IDbkPtN1xwC025PPSKxvj2m+ur8m5EOWRl
+         PKZblUwBVjACEHQ07ej7kizzpkBKDnlVLMF5xEPLlUheQRqiZJQ3vZGOa4Qs5L155jXc
+         haWoEiQpKD8j9DZHEuRZDj5ATOsnpATRHzxg4R/o63JwktJWzY2exIXTsv9SrUGEREAg
+         99qI3FUeOm7HUFF0N0fFnZsJaOsFn+EQZK5aUsz6Ywv/V9tjWyjiRKhUmxhyAsPKXhyb
+         eNSc9Z4R1yyWj0tBWwpXZUJ8k0J6dqC9A66gMaOywWAbxTvDaeYMfiLTIP8N3R+pCr2N
+         rd1w==
+X-Received: by 10.50.66.235 with SMTP id i11mr65938977igt.40.1426081991265;
+ Wed, 11 Mar 2015 06:53:11 -0700 (PDT)
+Received: by 10.50.245.144 with HTTP; Wed, 11 Mar 2015 06:53:11 -0700 (PDT)
+In-Reply-To: <xmqqk2yo22ce.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265324>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265325>
 
-On 03/08/2015 12:23 AM, brian m. carlson wrote:
-> There are several utility functions (hashcmp and friends) that are used
-> for comparing object IDs (SHA-1 values).  Using these functions, which
-> take pointers to unsigned char, with struct object_id requires tiresome
-> access to the sha1 member, which bloats code and violates the desired
-> encapsulation.  Provide wrappers around these functions for struct
-> object_id for neater, more maintainable code.  Use the new constants to
-> avoid the hard-coded 20s and 40s throughout the original functions.
-> 
-> These functions simply call the underlying pointer-to-unsigned-char
-> versions to ensure that any performance improvements will be passed
-> through to the new functions.
-> 
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> ---
-> I'm not very excited about having to put the #include in the middle of
-> cache.h.  The alternative, of course, is to move enum object_type up,
-> which I can do if necessary.  Another alternative is to simply move the
-> struct object_id definitions to cache.h instead of object.h, which might
-> be cleaner.
-> 
-> I'm interested in hearing opinions about the best way to go forward.
-> 
->  cache.h | 37 +++++++++++++++++++++++++++++++++----
->  hex.c   | 16 +++++++++++++---
->  2 files changed, 46 insertions(+), 7 deletions(-)
-> 
-> diff --git a/cache.h b/cache.h
-> index 761c570..f9addcc 100644
-> --- a/cache.h
-> +++ b/cache.h
-> [...]
-> @@ -724,20 +729,42 @@ static inline int hashcmp(const unsigned char *sha1, const unsigned char *sha2)
->  	return 0;
->  }
->  
-> +static inline int oidcmp(const struct object_id *o1, const struct object_id *o2)
-> +{
-> +	return hashcmp(o1->sha1, o2->sha1);
-> +}
-> +
+On Tue, Mar 10, 2015 at 6:23 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Christian Couder <christian.couder@gmail.com> writes:
+>
+>> I don't want to write again about each of these points now. I am more
+>> interested in discussing a good strategy to try to revert the sad
+>> trend of Git developers being promoted less and less, because I think
+>> that it is really very important.
+>
+> I would suspect that those who agree with you would appreciate if
+> you or somebody volunteered to act as our CKDO (chief kudos
+> distribution officer).  I do not think I have enough time to do that
+> well.  One good place to start might be to scan the list and
+> summarize something like the following on weekly or monthly basis,
+> as these are not something you can get by pointing people to "git
+> shortlog" output.
+>
+>  - Those who gave helpful review comments, "how about going this
+>    way" illustration patches, etc.  Bonus points to those who helped
+>    onboarding newcomers.
+>
+>  - Those who asked pertinent questions on common pain points, and
+>    those who answered them helpfully.
 
-Maybe rename o1 -> oid1 and o2 -> oid2 just to make things blindingly
-obvious?
+Ok, I can start something about this two points every week or every
+few week. It would be best if I could get help from at least one
+person as I think it is a lot of work.
 
-> [...]
+We can perhaps use the Git Developer Site at
+https://github.com/git/git.github.io to edit a new page
+collaboratively that would be published on http://git.github.io/ and
+after that send an email to the mailing list.
 
-Michael
+> If you are more ambitious, the source of the kudos may want to cover
+> activities outside of this mailing list (e.g. giving talks and
+> tutorials at conferences, etc.).
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
+First I don't know if we should really give kudos (or badges) or have
+something more like the former Git Traffic you talk about in another
+email (or perhaps both).
+
+And then I expect that if people give talks or tutorials at
+conferences or publish a blog post or have other news they want to
+share, they could edit the web page themselves on GitHub (or fork it
+and send a pull request if they don't have the rights).
+
+I also appreciate very much that you are willing to improve the
+release notes by adding a summary with people's names.
+
+It would be nice if we could also have somewhere on a web page at
+least a good listing of the authors and how many commits they had
+contributed (since the beginning and maybe also during the last year).
+We could also add other listings made using the Helped-by and
+Reviewed-by trailers.
+
+I don't think we should rely on an external web site like OpenHub
+(which is still giving me a 504 Gateway Time-out on the contributor
+page) or even the (broken) contributor graph on GitHub for that. If
+Scott and Peff don't want it on git-scm.com then it is of course
+better on git.github.io than nowhere.
+
+Thanks,
+Christian.
