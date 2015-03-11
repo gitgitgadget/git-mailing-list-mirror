@@ -1,157 +1,143 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Promoting Git developers
-Date: Tue, 10 Mar 2015 19:36:34 -0700
-Message-ID: <xmqqmw3kuuod.fsf@gitster.dls.corp.google.com>
-References: <CAP8UFD1+rC0FjisSddDcyn1E_75wtBU9pEpUcQX5zNtd4zKYFQ@mail.gmail.com>
-	<54FDA6B5.8050505@drmicha.warpmail.net>
-	<CAP8UFD0KNbPBB_dOzw_dAj+ws190_cO8g7_jb_V33x1jxgvnqQ@mail.gmail.com>
-	<xmqqk2yo22ce.fsf@gitster.dls.corp.google.com>
-	<CAEjxke-6DuTW0-ZyDtUUdCWhEtuw6x3X6LuM_Fj22QztUvFfjQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Christian Couder <christian.couder@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	David Kastrup <dak@gnu.org>, git <git@vger.kernel.org>
-To: "Jason St. John" <jstjohn@purdue.edu>
-X-From: git-owner@vger.kernel.org Wed Mar 11 03:36:52 2015
+From: "Kyle J. McKay" <mackyle@gmail.com>
+Subject: Re: [PATCH v2 00/10] Use a structure for object IDs.
+Date: Tue, 10 Mar 2015 19:38:28 -0700
+Message-ID: <82A92572-98E5-4911-87A6-DF5377579436@gmail.com>
+References: <1425770645-628957-1-git-send-email-sandals@crustytoothpaste.net>
+Mime-Version: 1.0 (Apple Message framework v936)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: "repo.or.cz admin team" <admin@repo.or.cz>,
+	Git mailing list <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Andreas Schwab <schwab@linux-m68k.org>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 11 03:38:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YVWVu-0002MT-Ns
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Mar 2015 03:36:51 +0100
+	id 1YVWXe-0004EM-V9
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Mar 2015 03:38:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750967AbbCKCgn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Mar 2015 22:36:43 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:55486 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750785AbbCKCgm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Mar 2015 22:36:42 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 57CC63F640;
-	Tue, 10 Mar 2015 22:36:36 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=CqAiDAsibJdoO/eMN6UYjjvzN98=; b=RbcyRT
-	chZbXvIcxbNrkObJHj6yNNUu88e9cPxN3vEqsDqUkOtjFViWIrpnLKMbWqUsNHLR
-	dl1g5JPB0mjvVUNyAxSeREWgEhxU+ZS9IEnwwsZ2cRDgH6j+nirn0ioAbjd6hyMI
-	DNPIRDT/AoqEUmk1nVJkinaczps2SfnNUd2hE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gV5K4/hmmiCeQDFQmpoBqHRh9IfVIiSy
-	xlK8s7dCuYyqsMURTr60UxYq6bxLISuN0GQdfkHD3vkZWxFEWTr4g2dM/cUyT7uV
-	2HO7ByKf7cFlMaTniMOyF8ldymuqAFx0U1bD4bimlzCiT5q+1qkCuj41nGqdyl0u
-	N1fLGpe2vPI=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5044F3F63E;
-	Tue, 10 Mar 2015 22:36:36 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B9C873F63D;
-	Tue, 10 Mar 2015 22:36:35 -0400 (EDT)
-In-Reply-To: <CAEjxke-6DuTW0-ZyDtUUdCWhEtuw6x3X6LuM_Fj22QztUvFfjQ@mail.gmail.com>
-	(Jason St. John's message of "Tue, 10 Mar 2015 21:04:33 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 6FCEEDD4-C797-11E4-B36C-A2259F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751476AbbCKCie (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Mar 2015 22:38:34 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:46947 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751012AbbCKCid (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Mar 2015 22:38:33 -0400
+Received: by pabli10 with SMTP id li10so7245730pab.13
+        for <git@vger.kernel.org>; Tue, 10 Mar 2015 19:38:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:in-reply-to:subject:references:message-id:content-type
+         :content-transfer-encoding:mime-version:date:cc;
+        bh=XhPjyHDF+03/no31wGPzY6ztncjQKtCG9I5T9tYNjJQ=;
+        b=JfcFIAZVJhtQ0wmAuaCPi0qtU/+TBkkO4q7kgsLYemlu5PphiDm4jwVEW2I9i77imE
+         GfaAj/ygKOp5o95OJa5CWixd7TNrFbzTWobPPWFBk8lpqvgMdqNEeFJ2iDafZFpzlswy
+         /BLE1tQ3e+0yDFTp5PIXS9YLNYqGbLUDfvBX8cesaXOCVVpwtIO6/Cbfd1tQ7PGSx3in
+         rvC0tMaMPHGcR7mdLRFlxRkrGQwGTfGAB9t3Qu948cIJoadiyjB9tyuA3+TibXOuSYI7
+         B6WdtZ0COSZe2N7fnoBnyPQVj1PrdhddTHH1AsnyVyKnTp6Tm7BwQjgvj5xxMyU5sDhH
+         1sHA==
+X-Received: by 10.66.141.71 with SMTP id rm7mr72076746pab.114.1426041512551;
+        Tue, 10 Mar 2015 19:38:32 -0700 (PDT)
+Received: from ?IPv6:2002:48c0:ad8d::223:12ff:fe05:eebd? ([2002:48c0:ad8d:0:223:12ff:fe05:eebd])
+        by mx.google.com with ESMTPSA id z4sm3063236pdi.90.2015.03.10.19.38.30
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Tue, 10 Mar 2015 19:38:31 -0700 (PDT)
+In-Reply-To: <1425770645-628957-1-git-send-email-sandals@crustytoothpaste.net>
+X-Mauler: Craptastic (2.936)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265291>
 
-"Jason St. John" <jstjohn@purdue.edu> writes:
+On Mar 7, 2015, at 15:23, brian m. carlson wrote:
+> This is a patch series to convert some of the relevant uses of  
+> unsigned
+> char [20] to struct object_id.
+>
+> brian m. carlson (10):
 
-> In the Git release notes for something like "git foo
-> learned a new option --bar", a simple "(Thanks|Kudos) to John Smith"
-> at the end of each bullet point may be a good way to recognize
-> developers in a concise manner without needing to dig through the
-> output of "git log" or "git shortlog".
+All patches applied for me (to master) and all tests pass.
 
-I doubt cluttering the list of features and fixes with peoples'
-names is such a good idea. Earlier we did not have any detailed
-release notes and instead said "you can go read 'git log'", which
-did not help the end users who need to know what changed before or
-after updating their Git, and I started doing the release notes in
-the current format to help them. We must not forget that the primary
-audience of this list of features and fixes is the end user. They
-need a brief birds-eye summary, and the briefer and the cleaner we
-keep it, the better.
-
-Besides, it will be a lot of work to dig "log" for topics and then
-go back to list archives to see who originally raised the issue
-before even the first edition of the patch was written and who
-contributed the ideas to help the author during the review
-cycles. Doing that for a topic that needed to get rerolled multiple
-times will take a lot of work, as the backlinks to previous round of
-discussions are often available only in human-readable form.  And
-the list of people who helped will have to be updated when a
-follow-up bugfix topics are merged [*1*].
-
-All of the above would add too much busywork on my plate [*2*].
-
-Do people want to see me doing busywork, or spending that time on
-reviewing, suggesting improvements, rejecting crap and applying
-patches [*3*]?
-
-> Or if that would make the release notes too cumbersome to review, what
-> about using systemd's method? systemd's release notes include a
-> "contributions from" section at the very end that lists everyone with
-> a patch included in the release.
-
-I can add "shortlog --no-merges -s -n v2.3.0..v2.4.0" at the end of
-the e-mail when the release notes is sent out. That might be a good
-enough balance between the usefulness of the release notes to its
-customers and giving credits to individuals in a way a bit more
-visible than "if you are interested, run shortlog yourself" [*4*].
-
-Thanks.
+Tested-by: Kyle J. McKay
 
 
-[Footnote]
+>  Define a structure for object IDs.
 
-*1* Anybody remember "Git traffic" [*5*]? There was this great guy
-who have been summarizing the kernel traffic and soon after Git
-project started he did one edition of "Git traffic", summarizing a
-few weeks' worth of Git mailing list discussions, who came up with
-what idea, how that idea was discarded, what decisions were made, in
-readble form. Unfortunately, there was only a single edition of "Git
-traffic" ever published---and I can understand why. During that
-"inflation" age of Git, we discussed so many topics and so much was
-achieved in a very short period of time. It would have been
-impossible for any single person to follow and report on all that
-was happening in the Git land, unless that person wasn't Linus or me
-or a handful of other people---but all of us were too busy with the
-discussion and programming to do a summary. I really wished the
-publication continued, but that was wishing for an impossible.
+Comments in reply to the patch.
 
-If you want the point-by-point kudos, you do need somebody who can
-invest time to do a good job at this, and that person cannot be me
-or anybody who commits text to the release notes but an attentive
-and devoted reporter. An algorithm would not cut it. I suspect that
-a workflow "improvement" to help a dumb tool to automatically
-produce it would be too constricting and will slow me down.
 
-*2* What we need is a group of people who are interested in this
-enough to volunteer themselves to keep helping whatever kudo-giving
-that is needed in an ongoing basis. We do not need people who pile
-more on _my_ plate telling _me_ how to make the world better for
-them and then go away without doing anything themselves. We can find
-them dozen a dime and they won't help this project run any smoother.
+>  Define utility functions for object IDs.
+>  bisect.c: convert leaf functions to use struct object_id
+>  archive.c: convert to use struct object_id
+>  zip: use GIT_SHA1_HEXSZ for trailers
+>  bulk-checkin.c: convert to use struct object_id
+>  diff: convert struct combine_diff_path to object_id
+>  commit: convert parts to struct object_id
+>  patch-id: convert to use struct object_id
+>  apply: convert threeway_stage to object_id
 
-*3* Rhetorical question. I have long learned that the key to make
-sure the project runs smoothly is to push as much work off of my
-plate to make sure I won't become the bottleneck.
+These all look good, the conversions are simple and easy to follow.
 
-*4* Note that it does not capture anything but "these people did the
-final versions of the patches". We would not be giving credit to
-others who may have offered crucial insights to help these people.
-But that would give the same amount of rough estimate as the old
-contributors' list Christian misses from git-scm.com, and it might
-be good enough for somebody to see his name on it and feel good
-about it.
 
-*5* The site is gone, but wayback machine has a copy.
+On Mar 7, 2015, at 23:43, Junio C Hamano wrote:
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+>
+>> Certain parts of the code have to be converted before others to  
+>> keep the
+>> patch sizes small, maintainable, and bisectable, so functions and
+>> structures that are used across the codebase (e.g. struct object)  
+>> will
+>> be converted later.  Conversion has been done in a somewhat haphazard
+>> manner by converting modules with leaf functions and less commonly  
+>> used
+>> structs first.
+>
+> That "leaf-first" approach sounds very sensible.
+>
+> In the medium term, I wonder if the changes can progress faster and
+> in a less error prone way if you first used GIT_SHA1_RAWSZ in places
+> that cannot be immediately converted to the struct yet.  That way,
+> we will be easily tell by "git grep GIT_SHA1_RAWSZ" how many more
+> places need treatment.  I do not know if that is all that useful
+> offhand, though.  Those places need to be touched in the second pass
+> to use the struct again, after the "s/\[20\]/[GIT_SHA1_RAWSZ]/"
+> first pass.
 
-https://web.archive.org/web/20050514083018/http://www.kerneltraffic.org/git/gt20050502_1.html
+I definitely noticed the leaf-first approach as I was looking through  
+the patches where, for example (03/10), this prototype was left  
+unchanged:
+
+static int register_ref(const char *refname, const unsigned char *sha1,
+                         int flags, void *cb_data)
+
+but its contents got the update leaving it half converted.  As  
+mentioned above this makes the patches more manageable, maintainable  
+and bisectable.  However, these functions could be converted to take a  
+typedef (a quick grep of 'CodingGuidelines' does not mention typedef)  
+and perhaps, as Junio mentions above, help the changes progress faster  
+by making it easier to find the affected code (e.g. changing or  
+removing the typedef would make the compiler find them for you).
+
+For example, if we added this to object.h:
+
+     typedef unsigned char sha1raw_t[GIT_SHA1_RAWSZ];
+
+then the above prototype could be immediately converted to (and this  
+does compile and pass all the tests):
+
+static int register_ref(const char *refname, const sha1raw_t sha,
+                         int flags, void *cb_data)
+
+So that together with Junio's suggestion above (and perhaps also a  
+sha1hex_t type) would help mark everything in the first pass that  
+needs to be touched again in the second pass.  (I'm just throwing out  
+some typedef names as an example, there may be more preferable names  
+to "sha1raw_t" and "sha1hex_t", but those names would end up being  
+replaced eventually anyway.)
+
+-Kyle 
