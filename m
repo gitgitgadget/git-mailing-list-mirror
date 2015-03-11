@@ -1,154 +1,95 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Promoting Git developers
-Date: Wed, 11 Mar 2015 14:28:03 -0700
-Message-ID: <xmqqbnjz5in0.fsf@gitster.dls.corp.google.com>
-References: <CAP8UFD1+rC0FjisSddDcyn1E_75wtBU9pEpUcQX5zNtd4zKYFQ@mail.gmail.com>
-	<54FDA6B5.8050505@drmicha.warpmail.net>
-	<CAP8UFD0KNbPBB_dOzw_dAj+ws190_cO8g7_jb_V33x1jxgvnqQ@mail.gmail.com>
-	<xmqqk2yo22ce.fsf@gitster.dls.corp.google.com>
-	<CAEjxke-6DuTW0-ZyDtUUdCWhEtuw6x3X6LuM_Fj22QztUvFfjQ@mail.gmail.com>
-	<xmqqmw3kuuod.fsf@gitster.dls.corp.google.com>
-	<20150311073129.GA5947@peff.net>
-	<CAPc5daUVVk+SYgwCj9JftzXgV7=9kPprdBPCWHS5XQOa5uF69Q@mail.gmail.com>
-	<20150311075429.GA10300@peff.net>
+Subject: Re: Surprising interaction of "binary" and "eol" gitattributes
+Date: Wed, 11 Mar 2015 14:31:33 -0700
+Message-ID: <xmqq7fun5ih6.fsf@gitster.dls.corp.google.com>
+References: <54F88684.3020905@alum.mit.edu>
+	<xmqqwq2v14iv.fsf@gitster.dls.corp.google.com>
+	<54F9422D.2020800@web.de> <54F9E907.4040703@alum.mit.edu>
+	<54FA1C7B.3040906@web.de> <54FF450F.7040506@alum.mit.edu>
+	<xmqq385c1v13.fsf@gitster.dls.corp.google.com>
+	<54FF6D23.4060301@alum.mit.edu>
+	<xmqqsidcxy2q.fsf@gitster.dls.corp.google.com>
+	<5500A5F7.1000503@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Jason St. John" <jstjohn@purdue.edu>,
-	Christian Couder <christian.couder@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	David Kastrup <dak@gnu.org>, git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 11 22:28:14 2015
+Content-Type: text/plain
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Torsten =?utf-8?Q?B=C3=B6ger?= =?utf-8?Q?shausen?= 
+	<tboegi@web.de>, git discussion list <git@vger.kernel.org>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Wed Mar 11 22:31:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YVoAn-0001R8-Sm
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Mar 2015 22:28:14 +0100
+	id 1YVoE8-00051l-Vg
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Mar 2015 22:31:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751928AbbCKV2K convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Mar 2015 17:28:10 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:57341 "EHLO
+	id S1752180AbbCKVbg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Mar 2015 17:31:36 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:62009 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751300AbbCKV2H convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Mar 2015 17:28:07 -0400
+	with ESMTP id S1752104AbbCKVbf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Mar 2015 17:31:35 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 609693FE89;
-	Wed, 11 Mar 2015 17:28:05 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E59733FF66;
+	Wed, 11 Mar 2015 17:31:34 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=S2yy0wnz1rJ7
-	2PsBil9aMZS81kc=; b=C4jz+XepYeZmjA20e7FAc6RXMTjcS8/HKN2Zi82p5zak
-	RwJWBVKKGrgyRSozR05oBEbO/AuU7ADMvy+iJTslRKWk4GmP7hN6BOXHjUdsyST2
-	CZuaMALiOqNi5PklBCCPRk4grjbhozlMFlhKfOfMvp2bXkJ0mfku5vxzXIKcZYM=
+	:content-type; s=sasl; bh=UCnBMravlO0KMVollcvLnjxJiRo=; b=BMqwUH
+	rUVLCrKv/v7k/S45ccyNWyYyyXHtz/vyYLaoOHHnr3yGeGXuDOnmaOeaLbkirPbb
+	O8BR4dvRDHMy1YzAnYXi274CGIaYPNWJOV8ybkwIXl0HtI4imLXEnSllZ0e3LbG1
+	jODUzO4NmVRKd3VABWwrM8gWvsnoYv4+Cn2Gc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=wODCNk
-	oe+uSWXF+TCu1PpDaa1Dk6lwyOG9ByZOMLFUmygR0jvG2xbNnF3hYJoQJ9KszuQM
-	OChcnB9Chp0gnN+mdZREWkouOoxEq+ki8PfeF0PVhHiSWzuzBk6s4kwUvbCz2o6S
-	J6LePeFPbVCrlLC7YhdNeIjLxN/EUpb/uw7eY=
+	:content-type; q=dns; s=sasl; b=nagB9eKyUUegCviBQUGyQUnpZWGZ6pA5
+	gkdnJROzAowEJw9s+vHjjW0DDWA+yDM5y1SClDyBANhUS9CZEEMXuzMYZQsAHYdU
+	7i59glN0X0G95kR545I5IV/R7gdSwigHpPvYFagiSn0K7slLk0e3KVCVN7ANJtgY
+	RESZZsIbcoM=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 58B513FE88;
-	Wed, 11 Mar 2015 17:28:05 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id DD6973FF65;
+	Wed, 11 Mar 2015 17:31:34 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CDF5E3FE87;
-	Wed, 11 Mar 2015 17:28:04 -0400 (EDT)
-In-Reply-To: <20150311075429.GA10300@peff.net> (Jeff King's message of "Wed,
-	11 Mar 2015 03:54:29 -0400")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 568C03FF64;
+	Wed, 11 Mar 2015 17:31:34 -0400 (EDT)
+In-Reply-To: <5500A5F7.1000503@kdbg.org> (Johannes Sixt's message of "Wed, 11
+	Mar 2015 21:30:47 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 80DA836A-C835-11E4-A72C-A2259F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: FDBB2844-C835-11E4-BA3A-A2259F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265340>
 
-Jeff King <peff@peff.net> writes:
+Johannes Sixt <j6t@kdbg.org> writes:
 
-> Or something along those lines. The wording and indentation of the
-> message could probably use tweaking. And there is a bash-ism in the
-> script. :)
+>> I would say former.  You find out what attributes apply to a path
+>> and then consider the collective effect of these attributes that
+>> survived.
+>>
+>> So the second "No it is not text" which is overruled by the "oops,
+>> no that is text" later should not get in the picture, I would say.
+>>
+>> As binary is not just -text and turns other things off, those other
+>> things will be off after these three.
+>
+> Is that how attribute lookup works? I.e., given a path, all attributes
+> are collected?
+>
+> Isn't it more like: Here we are interested in the "eol" attribute of
+> this file named "a.foo". And the lookup would find the first line that
+> says "eol=crlf". Elsewhere, we are interested in the "binary"
+> attribute of the file named "a.foo", and lookup would find the second
+> line that sets the "binary" attribute. And again elsewhere, we ask for
+> the "text" attribute, and we find the last line that sets the "text"
+> property.
+>
+> Am I totally off track?
 
-OK, I've updated the Announce script on the 'todo' branch.  The
-announcement for 2.3.2 I sent out earlier as $gmane/264975 would
-have looked like this.
-
--- >8 --
-To: git@vger.kernel.org
-Cc: Linux Kernel <linux-kernel@vger.kernel.org>
-Bcc: lwn@lwn.net
-Subject: [ANNOUNCE] Git v2.3.2
-
-The latest maintenance release Git v2.3.2 is now available at the
-usual places.  It comprises of 41 non-merge commits since v2.3.1,
-contributed by 19 people, 5 of which are new faces.
-
-The tarballs are found at:
-
-    https://www.kernel.org/pub/software/scm/git/
-
-The following public repositories all have a copy of the 'v2.3.2'
-tag and the 'maint' branch that the tag points at:
-
-  url =3D https://kernel.googlesource.com/pub/scm/git/git
-  url =3D git://repo.or.cz/alt-git.git
-  url =3D https://code.google.com/p/git-core/
-  url =3D git://git.sourceforge.jp/gitroot/git-core/git.git
-  url =3D git://git-core.git.sourceforge.net/gitroot/git-core/git-core
-  url =3D https://github.com/gitster/git
-
-New contributors who made this release possible are as follows.
-Welcome to the Git development community!
-
-  Aleksander Boruch-Gruszecki, Aleksey Vasenev, Patrick Steinhardt,
-  Ryuichi Kokubo, and Tom G. Christensen.
-
-Returning contributors who helped this release are as follows.
-Thanks for your continued support.
-
-  Alexander Kuleshov, Eric Sunshine, Jeff King, Jonathon Mah,
-  Junio C Hamano, Kirill A. Shutemov, Kyle J. McKay, Matthieu Moy,
-  Mike Hommey, Ramsay Allan Jones, Ren=C3=A9 Scharfe, Stefan Beller,
-  Torsten B=C3=B6gershausen, and =D0=94=D0=B8=D0=BB=D1=8F=D0=BD =D0=9F=D0=
-=B0=D0=BB=D0=B0=D1=83=D0=B7=D0=BE=D0=B2.
-
-----------------------------------------------------------------
-
-Git v2.3.2 Release Notes
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-=46ixes since v2.3.1
-------------------
-
- * "update-index --refresh" used to leak when an entry cannot be
-   refreshed for whatever reason.
-
- ...
-
- * Even though we officially haven't dropped Perl 5.8 support, the
-   Getopt::Long package that came with it does not support "--no-"
-   prefix to negate a boolean option; manually add support to help
-   people with older Getopt::Long package.
-
-Also contains typofixes, documentation updates and trivial code clean-u=
-ps.
-
-----------------------------------------------------------------
-
-Changes since v2.3.1 are as follows:
-
-Aleksander Boruch-Gruszecki (1):
-      merge-file: correctly open files when in a subdir
-
-Aleksey Vasenev (1):
-      wincred: fix get credential if username has "@"
-
-=2E..
-
-=D0=94=D0=B8=D0=BB=D1=8F=D0=BD =D0=9F=D0=B0=D0=BB=D0=B0=D1=83=D0=B7=D0=BE=
-=D0=B2 (1):
-      do not include the same header twice
+In the codepath in question, we say "we are interested in text and
+eol attributes", grab the values (set/unset/set-to-value/unspecified)
+for these two for the path we are interested in from all the
+applicable gitattributes file and then act on the result.
