@@ -1,82 +1,96 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git commit --amend safety check?
-Date: Wed, 11 Mar 2015 10:56:20 -0700
-Message-ID: <xmqq1tkv770b.fsf@gitster.dls.corp.google.com>
-References: <CAJo=hJuwdOzNZSVBRAPDz97Gdoi6JWvYxE0ufY+Hd9K8jjCqfA@mail.gmail.com>
-	<xmqq8uf46ru8.fsf@gitster.dls.corp.google.com>
-	<alpine.DEB.2.00.1503110931100.26355@ds9.cixit.se>
+Subject: Re: Surprising interaction of "binary" and "eol" gitattributes
+Date: Wed, 11 Mar 2015 10:59:58 -0700
+Message-ID: <xmqqwq2n5s9t.fsf@gitster.dls.corp.google.com>
+References: <54F88684.3020905@alum.mit.edu>
+	<xmqqwq2v14iv.fsf@gitster.dls.corp.google.com>
+	<54F9422D.2020800@web.de> <54F9E907.4040703@alum.mit.edu>
+	<54FA1C7B.3040906@web.de> <54FF450F.7040506@alum.mit.edu>
+	<xmqq385c1v13.fsf@gitster.dls.corp.google.com>
+	<54FF6D23.4060301@alum.mit.edu>
+	<xmqqsidcxy2q.fsf@gitster.dls.corp.google.com>
+	<54FFD89A.9050306@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Shawn Pearce <spearce@spearce.org>, git <git@vger.kernel.org>
-To: Peter Krefting <peter@softwolves.pp.se>
-X-From: git-owner@vger.kernel.org Wed Mar 11 18:56:41 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	git discussion list <git@vger.kernel.org>
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Wed Mar 11 19:00:27 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YVks4-00033B-Bt
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Mar 2015 18:56:40 +0100
+	id 1YVkvi-0006jb-3V
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Mar 2015 19:00:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751622AbbCKR4f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Mar 2015 13:56:35 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:56335 "EHLO
+	id S1751488AbbCKSAV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Mar 2015 14:00:21 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:57744 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751052AbbCKR4e (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Mar 2015 13:56:34 -0400
+	with ESMTP id S1750770AbbCKSAU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Mar 2015 14:00:20 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E84DB3DA25;
-	Wed, 11 Mar 2015 13:56:33 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id EEEA63DBDA;
+	Wed, 11 Mar 2015 14:00:19 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=V4PmJXAnh4krtxjjQL92/MkM6xU=; b=QfUwMY
-	M4Xzchotgivrsr4z/PY5qQENPtmVxO/H8S8cVF+i6+mKSnVaSl6/uZdwvqQ6LFZ6
-	UVMCDTx6FipAb3tKVuTzjgRn8QPOnULBL+WF9n//+Fi45TOQBFEsqToy+CSKaR/1
-	n3yc97vaCwF0hGeHy/eGDPWJGRAW5Tbh8sxJY=
+	:content-type:content-transfer-encoding; s=sasl; bh=UJPSXDckXudM
+	UdvmskdXoAl06XU=; b=HTuJvG5bZppSAdVP+DgCu1D54SrqOer16NLFZpVYcvZU
+	cPiLqgB/Y4g4CIFpUJH03OV0WLknw0Qut9WCJkWxmi+niCyEP9hfrtKPUaOamzjQ
+	HUC5oY9desAtZOUB33Uy4sjRK7R7fRYf7J/4de0iLM9DAT+1oAZhrCncJBGEasM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=S2qku9HCDV4lWAiJYI2LLhvDOYeCHgOi
-	0PVvpq658pf7oJI+M8J6Ycl3loyjEESORntjz/CE8Tl6PZdehNDBATduuKya3Hqh
-	Q9EzuuPtkeYYbMzU9ex/10ZtXUSKwPciZFHXgfy3vQiAGDj5z66MZeIsBRcbLWG8
-	hElI4zZwvks=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=QJ5O2l
+	9Wcm7dVJjaosrbYbmER9XxnFOEt94RNAom9XDtY3N23yr3fHqWNShqiH0FsZpbmW
+	TwXj5gitEgPHm+rvRVbODDnROCnqEWv/mu8hB5mFv94gIRrPjmcl3NeIaZsMMZjj
+	crGcp/xPcdEjH5+iVIochr6BbbMb4gp5b0Zwo=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id DFC503DA24;
-	Wed, 11 Mar 2015 13:56:33 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E75D73DBD9;
+	Wed, 11 Mar 2015 14:00:19 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 173903DA12;
-	Wed, 11 Mar 2015 13:56:22 -0400 (EDT)
-In-Reply-To: <alpine.DEB.2.00.1503110931100.26355@ds9.cixit.se> (Peter
-	Krefting's message of "Wed, 11 Mar 2015 09:37:09 +0100 (CET)")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6F8F93DB99;
+	Wed, 11 Mar 2015 13:59:59 -0400 (EDT)
+In-Reply-To: <54FFD89A.9050306@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
+ =?utf-8?Q?en=22's?= message of
+	"Wed, 11 Mar 2015 06:54:34 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: ED6C8B72-C817-11E4-B8AE-A2259F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 6EFBA998-C818-11E4-B9C8-A2259F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265329>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265330>
 
-Peter Krefting <peter@softwolves.pp.se> writes:
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
-> For commit --amend, I would say it would refuse to amend if the commit
-> you are trying to amend
->
->  1. was not authored by yourself (and --reset-author was not given), or
->  2. is reachable (or is the tip?) from an upstream branch.
+> On 03/10/2015 11:54 PM, Junio C Hamano wrote:
+>> Michael Haggerty <mhagger@alum.mit.edu> writes:
+>>
+>>> Well, that's true, but the "eol" attribute can regain its effect if
+>>> "binary" is followed by "text" or "text=3Dauto". So I guess the sim=
+plest
+>>> question is as follows. Suppose I have the following .gitattributes=
+:
+>>>
+>>>      a.foo eol=3Dcrlf
+>>>      a.foo binary
+>>>      a.foo text
+>>>
+>> As binary is not just -text and turns other things off, those other
+>> things will be off after these three.
+> Not sure if I follow:
+> Whenever you specify -text, the eol doesn't matter, or what do I miss=
+ ?
 
-I agree that 2. is a safe check without too much risk to trigger a
-false positive (and the tip of origin/master is reachable from
-origin/master, so we do not have to single out "is the tip").
+Something unrelated to the main theme of this topic ;-).
 
-On the other hand, 1. may be good in training wheel mode, but once
-you start allowing amends and rebases, I do not see why it should be
-considered possibly bad as long as check 2. says it is OK to rewrite.
-
-> At least (1) would have saved myself from mistakes that take time and
-> effort to clean up (I have used Git for eight years or so already, and
-> I *still* do that kind of mistake every now and then).
-
-Isn't your friend reflog helping you to clean things up?  The
-difference between the state before you started amending and the
-current state is what you did since then, so...?
+I was just saying that saying "a.foo text" is not a way to take your
+earlier mistake of saying "a.foo binary" back, if that "binary" was
+placed on the path by mistake or an over-eager globbing.  The 'text'
+attribute will be reset, but -diff you placed on the path by saying
+"binary" is still there after these three attribute lines and running
+"git diff a.foo" would sill show the effect from it.
