@@ -1,52 +1,42 @@
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v3] remote-curl: fall back to Basic auth if Negotiate
- fails
-Date: Wed, 11 Mar 2015 21:59:20 +0000
-Message-ID: <20150311215919.GA46326@vauxhall.crustytoothpaste.net>
-References: <xmqqk30hyock.fsf@gitster.dls.corp.google.com>
- <CA01B76E-F3D4-40AC-B524-32BFBA930108@cisco.com>
- <xmqqa90cxg89.fsf@gitster.dls.corp.google.com>
- <1B14107C-FC87-4F69-AEBE-9EA1BAF50A17@cisco.com>
- <20150219203556.GC5021@vauxhall.crustytoothpaste.net>
- <ABA76895-9BD2-4EA8-B765-0F9DE71A2CEC@cisco.com>
- <3E5DD2BE-1E44-4D0A-89A1-627A1239C72A@cisco.com>
- <E53D99DB-E894-4FA8-9351-39E23FFD677E@cisco.com>
- <20150310222907.GA36141@vauxhall.crustytoothpaste.net>
- <68DFACB3-5EA7-4414-9B74-B4E6F6A417B9@cisco.com>
+Subject: Re: [PATCH v2 01/10] Define a structure for object IDs.
+Date: Wed, 11 Mar 2015 22:08:25 +0000
+Message-ID: <20150311220825.GB46326@vauxhall.crustytoothpaste.net>
+References: <1425770645-628957-1-git-send-email-sandals@crustytoothpaste.net>
+ <1425770645-628957-2-git-send-email-sandals@crustytoothpaste.net>
+ <CEA07500-9F47-4B24-AD5D-1423A601A4DD@gmail.com>
 Mime-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="AhhlLboLdkugWU4S"
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>
-To: "Dan Langille (dalangil)" <dalangil@cisco.com>
-X-From: git-owner@vger.kernel.org Wed Mar 11 22:59:34 2015
+	protocol="application/pgp-signature"; boundary="2B/JsCI69OhZNC5r"
+Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
+	Andreas Schwab <schwab@linux-m68k.org>
+To: "Kyle J. McKay" <mackyle@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 11 23:08:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YVof6-0005yH-J1
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Mar 2015 22:59:32 +0100
+	id 1YVonr-0005EY-2s
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Mar 2015 23:08:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751609AbbCKV72 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Mar 2015 17:59:28 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:50024 "EHLO
+	id S1751658AbbCKWIb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Mar 2015 18:08:31 -0400
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:50026 "EHLO
 	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751501AbbCKV71 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Mar 2015 17:59:27 -0400
+	by vger.kernel.org with ESMTP id S1751437AbbCKWIa (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Mar 2015 18:08:30 -0400
 Received: from vauxhall.crustytoothpaste.net (ng1.cptxoffice.net [208.74.121.102])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 670F42808F;
-	Wed, 11 Mar 2015 21:59:26 +0000 (UTC)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 8455C2808F;
+	Wed, 11 Mar 2015 22:08:29 +0000 (UTC)
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	"Dan Langille (dalangil)" <dalangil@cisco.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>
+	"Kyle J. McKay" <mackyle@gmail.com>, git@vger.kernel.org,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Andreas Schwab <schwab@linux-m68k.org>
 Content-Disposition: inline
-In-Reply-To: <68DFACB3-5EA7-4414-9B74-B4E6F6A417B9@cisco.com>
+In-Reply-To: <CEA07500-9F47-4B24-AD5D-1423A601A4DD@gmail.com>
 X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
  3.19.0-trunk-amd64)
 User-Agent: Mutt/1.5.23 (2014-03-12)
@@ -55,58 +45,68 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265343>
 
 
---AhhlLboLdkugWU4S
-Content-Type: text/plain; charset=utf-8; format=flowed
+--2B/JsCI69OhZNC5r
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Mar 11, 2015 at 07:33:05PM +0000, Dan Langille (dalangil) wrote:
->> On Mar 10, 2015, at 6:29 PM, brian m. carlson <sandals@crustytoothpaste.=
-net> wrote:
->> Does it work with a ticket if you specify a username, as in the
->> following URL?
->> https://bmc@git.crustytoothpaste.net/git/bmc/homedir.git
+On Tue, Mar 10, 2015 at 07:38:42PM -0700, Kyle J. McKay wrote:
+>GIT_SHA1_HEXSZ will always be exactly 2 * GIT_SHA1_RAWSZ, right?  In
+>fact, if it's not things will almost certainly break, yes?
 >
->Yes, that does work.  Our project is 98% of the way there now.
+>Does it make more sense then to reflect this requirement by using:
 >
->I looked at both libcurl and git environment variables to see if there
->was a way to specify the user without putting it in the URL.  I didn=E2=80=
-=99t see one.
+>  #define GIT_SHA1_HEXSZ (2 * GIT_SHA1_RAWSZ)
 >
->My next step is the git configuration, either server or client.  Do you kn=
-ow
->if I should stop looking now because it=E2=80=99s not there?
+>instead?
 
-You might try looking at git config --help.  It looks like there's a
-credential.username option that might do what you want.
+Yes.  I'll make that change in the next version.
+
+>I don't see anything wrong with this.  However, in part 02/10 the
+>utility functions all use "oid" in their names, so I'm thinking that
+>it may make more sense to just go with:
+>
+>struct object_id {
+>	unsigned char oid[GIT_SHA1_RAWSZ];
+>};
+>
+>to match?
+
+Michael Haggerty recommended that I call the structure element sha1
+instead of oid in case we want to turn this into a union if we decide to
+go the additional hash route.
+
+I think it can also improve readability if we use "oid" only for the
+instances of the struct itself, especially since it makes it more
+obvious what code has been converted already.
 --=20
 brian m. carlson / brian with sandals: Houston, Texas, US
 +1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
 OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
 
---AhhlLboLdkugWU4S
+--2B/JsCI69OhZNC5r
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: Digital signature
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCgAGBQJVALq3AAoJEL9TXYEfUvaLkdoP/iZ3E8sXyhmi7CWe+poaxo3O
-8+VenypkWKJff9470AFwPGcw9EXpUmdbJLagrAHZTnKuYXIrTkYZc0Ero8WWTAUc
-GcyY3SVQjvcnQkIRYqsTlCPVXJha7A5BM0hDCQo5IjROylJgJzcqXjAokCjoEm+r
-FEq4P+05OavDUO/sEFGoyuOIUICoH5p8zDkTvzH/fgkw6K93+QT4Wj2dOuexc9F+
-Od+Ni1+Qex/5lx0zkCwMx+PWvLK9EL35phphcA0qmQlXUaCQkPyfytuPl5rJS1nt
-uPh/nK6akCNNt/H+Y2UVsCvmGNL5d8dYdQJg43qHiqnOfS3yE22c6MQ66B1FgRq/
-npZm4pp/VQokBk9nQZVj3FPB2zpgv3kAKn48IiNDIXPFfCUAYcth7fb/yDT+NxE3
-S3dHTTLOkWmAczL2GdHgNnhD0UaZFqVO9IGFnY2KC+/0VdsSmv1g5X79dpb73jce
-rr4cdow1cBnudYO2Lz7wO6vFauhOI8gNor7MGOAhBEyNKNLqgVGo760A4Pxh0qW3
-EEOuVFFjw4Ng3/2kK23pCuq4nRCFWAcmwjRfDs3aXcA9kgXZSpiOZySFZ7+mnMi0
-m/mhfUmA9ZZuZDNpRrzTrNJotJeldg45NMym6+ia0ghP9ChMfvcCMEfifA69f1AE
-4Zfc6joCiwZDQjnGQbcO
-=/Dif
+iQIcBAEBCgAGBQJVALzZAAoJEL9TXYEfUvaL4SEQAI9qvAZZ+guNQ9qDMPdX3AmP
+TWrmENqh1ZgD66wJYxtzqTR0/L8Vn4PcO6NeAmknWdZIsFnlWURBxV2VctKIJqeM
+Fofy7FKt1IMYu8VQ765i1OIi4jKJn7LcHNWacEoCEn885fl1OJYtHACKEz4nBCKk
+wezNrJtYBWIurVzRfpbV78GlKRgKvCaUm1y2biRmrfiO/k1QUOxnHKeUQrUHVv8D
+Q9J0jJYcFlAOpbjd89u44mQASG79WoOjIZF07q+41ab1se3I61FaP+clwM/R2GUA
+nvt1SMMZUHoE7j/pXSGPrxElJWlchl8LwIICHJU4nYxe4mQnirjL4Af6tAAzXvmu
+kw8vfe0WaZtVZDkHhMwLTt8zf3nKuXKMfOf0ukqX2n3wFc2pP1pH+T6RustPXYL+
+xFXnB1WWpF2/oHEX9YH6i1ci2NsYfYmKw2Z5n/c+8bAQu8v7J4SpdNGFWVq5KYWI
+LqTAblEFuzHVG6FIPwHsICSa7OcXkk7oKOBgQzhHxYgg6eJ+PbHZ9xjs0vq6RFUu
+dfJwD9enIIJpkEu+4UdkPBDiWyAWPvjx09Tle8S0c13j2sjM2Cf0M/XmKqeF4l9f
+5shhXEflxfbTWqy6EMo3fq1xH0GzxL8dJTEswbQk6vIo3/kvuC8NmFgQLGDTLKFF
+cCjtGkSrdDEgwT8AUnGJ
+=q/th
 -----END PGP SIGNATURE-----
 
---AhhlLboLdkugWU4S--
+--2B/JsCI69OhZNC5r--
