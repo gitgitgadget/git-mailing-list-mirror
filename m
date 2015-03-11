@@ -1,114 +1,85 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Promoting Git developers
-Date: Wed, 11 Mar 2015 03:54:29 -0400
-Message-ID: <20150311075429.GA10300@peff.net>
-References: <CAP8UFD1+rC0FjisSddDcyn1E_75wtBU9pEpUcQX5zNtd4zKYFQ@mail.gmail.com>
- <54FDA6B5.8050505@drmicha.warpmail.net>
- <CAP8UFD0KNbPBB_dOzw_dAj+ws190_cO8g7_jb_V33x1jxgvnqQ@mail.gmail.com>
- <xmqqk2yo22ce.fsf@gitster.dls.corp.google.com>
- <CAEjxke-6DuTW0-ZyDtUUdCWhEtuw6x3X6LuM_Fj22QztUvFfjQ@mail.gmail.com>
- <xmqqmw3kuuod.fsf@gitster.dls.corp.google.com>
- <20150311073129.GA5947@peff.net>
- <CAPc5daUVVk+SYgwCj9JftzXgV7=9kPprdBPCWHS5XQOa5uF69Q@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCHv2 0/2] log decorations for HEAD
+Date: Wed, 11 Mar 2015 09:02:38 +0100
+Message-ID: <54FFF69E.3090104@drmicha.warpmail.net>
+References: <54FEC8D0.2060304@drmicha.warpmail.net>	<cover.1425995310.git.git@drmicha.warpmail.net> <xmqqr3sw234j.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: "Jason St. John" <jstjohn@purdue.edu>,
-	Christian Couder <christian.couder@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	David Kastrup <dak@gnu.org>, git <git@vger.kernel.org>
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Julien Cretel <j.cretel@umail.ucc.ie>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 11 08:54:41 2015
+X-From: git-owner@vger.kernel.org Wed Mar 11 09:02:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YVbTR-0005iz-TS
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Mar 2015 08:54:38 +0100
+	id 1YVbbM-0005Ij-JZ
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Mar 2015 09:02:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751740AbbCKHyd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Mar 2015 03:54:33 -0400
-Received: from cloud.peff.net ([50.56.180.127]:60095 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751300AbbCKHyc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Mar 2015 03:54:32 -0400
-Received: (qmail 3207 invoked by uid 102); 11 Mar 2015 07:54:33 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 11 Mar 2015 02:54:33 -0500
-Received: (qmail 25312 invoked by uid 107); 11 Mar 2015 07:54:41 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.2)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 11 Mar 2015 03:54:41 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 11 Mar 2015 03:54:29 -0400
-Content-Disposition: inline
-In-Reply-To: <CAPc5daUVVk+SYgwCj9JftzXgV7=9kPprdBPCWHS5XQOa5uF69Q@mail.gmail.com>
+	id S1751148AbbCKICn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Mar 2015 04:02:43 -0400
+Received: from out2-smtp.messagingengine.com ([66.111.4.26]:44338 "EHLO
+	out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750848AbbCKICk (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Mar 2015 04:02:40 -0400
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailout.nyi.internal (Postfix) with ESMTP id 6B27C20886
+	for <git@vger.kernel.org>; Wed, 11 Mar 2015 04:02:38 -0400 (EDT)
+Received: from frontend2 ([10.202.2.161])
+  by compute5.internal (MEProxy); Wed, 11 Mar 2015 04:02:40 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=x-sasl-enc:message-id:date:from
+	:mime-version:to:cc:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=wu0198N7zlmqFxVPriR69Q
+	ojXEo=; b=cxwl8Bbw8e80S57HqhDbh1cezneEaruKVchg853SOsrQzMa6wJ/8eH
+	tNH0tkbCT7kwVDS1nI6Pjpz0AdpfgP9ZGw5vtd1b7qYtTt7wohPUODdPtx6ovqdR
+	pW/ypd96q28YKNn5LDwG/x1k9RjeXr5BXoTleJKF+1cXjOb3qBvgk=
+X-Sasl-enc: 8mjbPsWVsfI9TCBSWa/TW3xlEPC6EOwO4SfmKR3HR5zE 1426060959
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 70CE968018B;
+	Wed, 11 Mar 2015 04:02:39 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
+In-Reply-To: <xmqqr3sw234j.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265313>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265314>
 
-On Wed, Mar 11, 2015 at 12:38:21AM -0700, Junio C Hamano wrote:
-
-> >> I can add "shortlog --no-merges -s -n v2.3.0..v2.4.0" at the end of
-> >> the e-mail when the release notes is sent out. That might be a good
-> >> enough balance between the usefulness of the release notes to its
-> >> customers and giving credits to individuals in a way a bit more
-> >> visible than "if you are interested, run shortlog yourself" [*4*].
-> >
-> > I somehow thought you already did this, but it looks like you just do
-> > shortlog (without the "-ns") for the "maint" release announcement.
+Junio C Hamano venit, vidit, dixit 10.03.2015 18:06:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
 > 
-> That is because (a) it is scripted in Meta/Announce, and (b) I strip it
-> out for feature releases, as the plain shortlog output with full feature
-> list is usually ends up being just too long for the announce message.
+>> So it didn't take too long to convince me after all :)
+>>
+>> Here comes Junio's version, preceded by a cleanup of the color
+>> setting and resetting for decorations.
+>>
+>> Junio C Hamano (1):
+>>   log: decorate HEAD with branch name
+>>
+>> Michael J Gruber (1):
+>>   log-tree: properly reset colors
+>>
+>>  log-tree.c                        | 76 ++++++++++++++++++++++++++++++++++-----
+>>  t/t4013/diff.log_--decorate_--all |  2 +-
+>>  t/t4207-log-decoration-colors.sh  | 16 ++++-----
+>>  3 files changed, 77 insertions(+), 17 deletions(-)
+> 
+> Hmph, is the "do not leak commit color" one the same as 5ee87585
+> (log --decorate: do not leak "commit" color into the next item,
+> 2015-03-04) aka $gmane/264788 [*1*] or is there something I missed?
+> 
 
-Yeah, I figured the length was the reason.
+Uh, I missed that one. The commit msg confuses me somewhat (color.diff
+vs color.decorate), but the patch to log-tree.c is the same, and so I
+assume the patch to t4207 is the same, too. 2/2 from here should go on
+top of 7/7 from there, accordingly.
 
-> Perhaps I'll add "shortlog -s | pr -3" or something at the end for both
-> maintenance track and feature releases. Names only, unordered and
-> hopefully not overly long.
-
-Yes, I was thinking something along those lines. Maybe:
-
-  # example
-  old=v2.2.0
-  new=v2.3.0
-
-  # like "shortlog -s", but we do not even care about the numbers
-  shortlog () {
-	git log --format=%aN "$@" | sort -u
-  }
-
-  compact () {
-	perl -lne 'push @x, $_; END { print join(", ", @x) }' |
-	fold -s
-  }
-
-  count () {
-	shortlog $old..$new | wc -l
-  }
-
-  newbies () {
-	comm -23 <(shortlog $old..$new) <(shortlog $old) | compact
-  }
-
-  oldtimers () {
-	comm -12 <(shortlog $old..$new) <(shortlog $old) | compact
-  }
-
-  cat <<EOF
-  Git $new was developed with commits from $(count) people. Thanks very
-  much to our returning developers:
-
-  $(oldtimers)
-
-  and welcome to new contributors in this release:
-
-  $(newbies)
-  EOF
-
-Or something along those lines. The wording and indentation of the
-message could probably use tweaking. And there is a bash-ism in the
-script. :)
-
--Peff
+> [References]
+> 
+> *1* http://thread.gmane.org/gmane.comp.version-control.git/264063/focus=264788
+> 
+> 
+> 
+> 
