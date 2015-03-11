@@ -1,85 +1,114 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCHv2 0/2] log decorations for HEAD
-Date: Wed, 11 Mar 2015 09:02:38 +0100
-Message-ID: <54FFF69E.3090104@drmicha.warpmail.net>
-References: <54FEC8D0.2060304@drmicha.warpmail.net>	<cover.1425995310.git.git@drmicha.warpmail.net> <xmqqr3sw234j.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: git commit --amend safety check?
+Date: Wed, 11 Mar 2015 04:13:29 -0400
+Message-ID: <20150311081329.GA11087@peff.net>
+References: <CAJo=hJuwdOzNZSVBRAPDz97Gdoi6JWvYxE0ufY+Hd9K8jjCqfA@mail.gmail.com>
+ <xmqq8uf46ru8.fsf@gitster.dls.corp.google.com>
+ <CAJo=hJtxeZGyP=VxLSdDzoMOtVZTFNsNTqPpNUTXUOBDZKzY9Q@mail.gmail.com>
+ <CAPc5daVMec1okdBW3Wo_gEr7W3FwRwmH5pmiiMaAgGoN7MGa_A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Julien Cretel <j.cretel@umail.ucc.ie>
+Content-Type: text/plain; charset=utf-8
+Cc: Shawn Pearce <spearce@spearce.org>, git <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 11 09:02:51 2015
+X-From: git-owner@vger.kernel.org Wed Mar 11 09:13:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YVbbM-0005Ij-JZ
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Mar 2015 09:02:48 +0100
+	id 1YVbm2-00076i-Mv
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Mar 2015 09:13:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751148AbbCKICn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Mar 2015 04:02:43 -0400
-Received: from out2-smtp.messagingengine.com ([66.111.4.26]:44338 "EHLO
-	out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750848AbbCKICk (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Mar 2015 04:02:40 -0400
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailout.nyi.internal (Postfix) with ESMTP id 6B27C20886
-	for <git@vger.kernel.org>; Wed, 11 Mar 2015 04:02:38 -0400 (EDT)
-Received: from frontend2 ([10.202.2.161])
-  by compute5.internal (MEProxy); Wed, 11 Mar 2015 04:02:40 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=x-sasl-enc:message-id:date:from
-	:mime-version:to:cc:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=wu0198N7zlmqFxVPriR69Q
-	ojXEo=; b=cxwl8Bbw8e80S57HqhDbh1cezneEaruKVchg853SOsrQzMa6wJ/8eH
-	tNH0tkbCT7kwVDS1nI6Pjpz0AdpfgP9ZGw5vtd1b7qYtTt7wohPUODdPtx6ovqdR
-	pW/ypd96q28YKNn5LDwG/x1k9RjeXr5BXoTleJKF+1cXjOb3qBvgk=
-X-Sasl-enc: 8mjbPsWVsfI9TCBSWa/TW3xlEPC6EOwO4SfmKR3HR5zE 1426060959
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 70CE968018B;
-	Wed, 11 Mar 2015 04:02:39 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
-In-Reply-To: <xmqqr3sw234j.fsf@gitster.dls.corp.google.com>
+	id S1751504AbbCKINg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Mar 2015 04:13:36 -0400
+Received: from cloud.peff.net ([50.56.180.127]:60106 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751279AbbCKINc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Mar 2015 04:13:32 -0400
+Received: (qmail 4013 invoked by uid 102); 11 Mar 2015 08:13:32 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 11 Mar 2015 03:13:32 -0500
+Received: (qmail 25908 invoked by uid 107); 11 Mar 2015 08:13:40 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.2)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 11 Mar 2015 04:13:40 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 11 Mar 2015 04:13:29 -0400
+Content-Disposition: inline
+In-Reply-To: <CAPc5daVMec1okdBW3Wo_gEr7W3FwRwmH5pmiiMaAgGoN7MGa_A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265315>
 
-Junio C Hamano venit, vidit, dixit 10.03.2015 18:06:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
-> 
->> So it didn't take too long to convince me after all :)
->>
->> Here comes Junio's version, preceded by a cleanup of the color
->> setting and resetting for decorations.
->>
->> Junio C Hamano (1):
->>   log: decorate HEAD with branch name
->>
->> Michael J Gruber (1):
->>   log-tree: properly reset colors
->>
->>  log-tree.c                        | 76 ++++++++++++++++++++++++++++++++++-----
->>  t/t4013/diff.log_--decorate_--all |  2 +-
->>  t/t4207-log-decoration-colors.sh  | 16 ++++-----
->>  3 files changed, 77 insertions(+), 17 deletions(-)
-> 
-> Hmph, is the "do not leak commit color" one the same as 5ee87585
-> (log --decorate: do not leak "commit" color into the next item,
-> 2015-03-04) aka $gmane/264788 [*1*] or is there something I missed?
-> 
+On Tue, Mar 10, 2015 at 11:18:45PM -0700, Junio C Hamano wrote:
 
-Uh, I missed that one. The commit msg confuses me somewhat (color.diff
-vs color.decorate), but the patch to log-tree.c is the same, and so I
-assume the patch to t4207 is the same, too. 2/2 from here should go on
-top of 7/7 from there, accordingly.
+> Even though we cannot prevent the user from rewriting what _he_
+> already pushed out to refs/for/master (as we do not have the record
+> of what the last thing we pushed there and its history via a reflog),
+> we could at least detect when he attempts to rewrite what he
+> obtained directly from the upstream by noticing where origin/master
+> is. If HEAD is _at_ that commit, or its ancestor, then he is trying to
+> rewrite what he got from elsewhere.
+> 
+> It would catch your original "commit --amend -m 'my first'" scenario.
+> Run is_ancestor(HEAD, @{upstream}) we can notice. That may be
+> better than nothing, but I do not offhand know if that is sufficient.
 
-> [References]
+I think rebase basically suffers the same problem, too. Perhaps it
+happens less there because we choose @{upstream} as the default fork
+point. But rewriting commits is a potential problem any time they are
+referenced somewhere else. For example, if you do this:
+
+  git checkout -b topic origin/master
+  ... commit commit commit ...
+  git checkout -b subtopic
+  ... commit commit commit ...
+  git checkout topic
+  git rebase ;# or git pull --rebase
+
+you are left with doppelganger commits in "subtopic", which you probably
+want to handle by rebasing it (with --fork-point).
+
+I kind of wonder if the check should just be "is the commit you are
+rewriting mentioned in _any_ ref except the current HEAD?".
+
+In theory we could even give advice based on the command and the ref we
+find that contains the commit (e.g., if it's another local branch,
+suggest rebasing that branch. If it's in @{upstream}, suggest "commit"
+without "--amend" if that was the command given). But I'm not at all
+confident that we could cover all cases thoroughly enough to do more
+good than harm.
+
+> > Another way users get into a bind is they pull someone else's branch
+> > (so they can build on top of her work), then `git commit --amend -a`
+> > by mistake instead of making a new commit.
 > 
-> *1* http://thread.gmane.org/gmane.comp.version-control.git/264063/focus=264788
+> One thing we already do is to give an extra "Author: " line in the
+> comment when the user edits the log message, so that it is clear
+> that what is being edited is not their own work but hers. We obviously
+> can add the extra warning, when the is_ancestor() thing triggers, to
+> say YOU ARE REWRITING PUBLISHED HISTORY in blinking red
+> bold letters there.
 > 
-> 
-> 
-> 
+> But the symptom indicates that they are not reading these warning
+> comment. Perhaps it is necessary to introduce a training wheel mode
+> where you cannot use "--amend" and "-m" options from the command
+> line until you ask nicely to override it?
+
+It's entirely possible to me that the "Author" line is too subtle, and a
+bigger warning might do the trick.
+
+At the very least printing a warning that can be suppressed with
+advice.* would match our usual technique for dealing with possible
+mistakes like this (as opposed to blocking the action entirely). And we
+can always bump the severity of the warning (or introduce blocking) if
+it doesn't have an effect.
+
+I dunno. It feels like such a warning would probably trigger as a false
+positive way too often and get in people's way. But then, I am not
+exactly the target audience for the warning, so my perspective is a bit
+skewed. I do think it has a reasonable chance of irritating old-timers,
+even with an escape hatch. Were you thinking that training-wheel mode
+would have to be turned on explicitly?
+
+-Peff
