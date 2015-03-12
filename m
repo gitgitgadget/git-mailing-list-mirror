@@ -1,101 +1,93 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Promoting Git developers
-Date: Thu, 12 Mar 2015 11:43:00 -0700
-Message-ID: <xmqqegou2h1n.fsf@gitster.dls.corp.google.com>
-References: <CAP8UFD1+rC0FjisSddDcyn1E_75wtBU9pEpUcQX5zNtd4zKYFQ@mail.gmail.com>
-	<54FDA6B5.8050505@drmicha.warpmail.net>
-	<CAP8UFD0KNbPBB_dOzw_dAj+ws190_cO8g7_jb_V33x1jxgvnqQ@mail.gmail.com>
-	<xmqqk2yo22ce.fsf@gitster.dls.corp.google.com>
-	<CAEjxke-6DuTW0-ZyDtUUdCWhEtuw6x3X6LuM_Fj22QztUvFfjQ@mail.gmail.com>
-	<CACsJy8CHmdSRTfspKfSqtg7VXT7D6uxqr49KQQe8dhE5popakg@mail.gmail.com>
-	<xmqqd24g6uf1.fsf@gitster.dls.corp.google.com>
-	<CACsJy8D38Lx5zvpOGPvnYVNXh4EYbF+rLL8kwb9pwP7EqCqfxQ@mail.gmail.com>
-	<xmqqbnjy4y0t.fsf@gitster.dls.corp.google.com>
-	<20150312074511.GB12418@paksenarrion.iveqy.com>
+Subject: Re: [PATCH v2 01/10] Define a structure for object IDs.
+Date: Thu, 12 Mar 2015 11:44:31 -0700
+Message-ID: <xmqqa8zi2gz4.fsf@gitster.dls.corp.google.com>
+References: <1425770645-628957-1-git-send-email-sandals@crustytoothpaste.net>
+	<1425770645-628957-2-git-send-email-sandals@crustytoothpaste.net>
+	<CEA07500-9F47-4B24-AD5D-1423A601A4DD@gmail.com>
+	<20150311220825.GB46326@vauxhall.crustytoothpaste.net>
+	<xmqqr3sv3vsf.fsf@gitster.dls.corp.google.com>
+	<55016A3A.6010100@alum.mit.edu>
+	<20150312104651.GF46326@vauxhall.crustytoothpaste.net>
+	<CACsJy8AL0jGwzTfWDSszkvyqzNtPA7o7vQRT5NFaBYrVU02nOA@mail.gmail.com>
+	<xmqqwq2m2hwf.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	"Jason St. John" <jstjohn@purdue.edu>,
-	Christian Couder <christian.couder@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	David Kastrup <dak@gnu.org>, git <git@vger.kernel.org>
-To: Fredrik Gustafsson <iveqy@iveqy.com>
-X-From: git-owner@vger.kernel.org Thu Mar 12 19:43:11 2015
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	"Kyle J. McKay" <mackyle@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Andreas Schwab <schwab@linux-m68k.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 12 19:44:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YW84b-0005k2-K0
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Mar 2015 19:43:09 +0100
+	id 1YW862-0007Dj-QE
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Mar 2015 19:44:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751616AbbCLSnF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Mar 2015 14:43:05 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:65529 "EHLO
+	id S1751384AbbCLSoe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Mar 2015 14:44:34 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:55035 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751376AbbCLSnD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Mar 2015 14:43:03 -0400
+	with ESMTP id S1751295AbbCLSoe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Mar 2015 14:44:34 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9C29F3F6B1;
-	Thu, 12 Mar 2015 14:43:02 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4DBBE3F724;
+	Thu, 12 Mar 2015 14:44:33 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=jWbi3kDCpU5Ises2AavgM1w4sw0=; b=JBvf6Z
-	zgnro0teci1kO0qW1XwLIHft8JH638IGWRLR3XvGvjpJAsaKT9kGVtYwY5euat5S
-	mU+AgZOCbgnIOGNwwH1dn/4RIyAyjYEmRR7tRUVEz8nikZdzAKn9eiCapJB8iIfZ
-	+OhOgW9eExgo8K983692khBOEXewBoPrLJh1o=
+	:content-type; s=sasl; bh=L/dYHLfW+rCRHHEnl12mNrWSbtI=; b=ZehTsR
+	DP7OLy0TIfPbL6zZm9BtQzwHH5nkubnga5fkZkdcbjfx8NVrlKaMLobjxqNr4Nev
+	dEj7DnprseQA/3MNldCyK6WbaHnBKrynbZXjV/jH5twaBWz7y9zF+l//H4NDgFgf
+	ZN/hP5EL2CoVa1ZikPIqZGEk7gl/wug49zbQE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=leSof8Eqy61BSzKEasH0z5CoXhU4cIPY
-	g5fF48W2i/0U5Cat/tvYsgNiPRutPz64eNIW6e0AwaELuMvVKiAXhXphItbJayFg
-	EfTR3gq8ck0JUTdBhnijtZV8BCe59rLfrHKVl0n327EWBLdngsfzWOG8Cg+XvMOJ
-	TNd6v9lMufk=
+	:content-type; q=dns; s=sasl; b=RpCqwmOZOEPYP0j5f0Tz3wwM1z0iwuqN
+	NEYkr2UDeIjuzmO+4/AAcNufHspr0psOpfpuuBYKaYLYU9FemNzJAB3QChU3yJ2y
+	V3YbNHIJ8TR/Cp+ZG4Xg80m6OtZn9ZC+0zFelXKTDi6l3oiuLG/DWAxGxrexkoAT
+	4yCo7BZm1eQ=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 941113F6B0;
-	Thu, 12 Mar 2015 14:43:02 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 45B443F723;
+	Thu, 12 Mar 2015 14:44:33 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 098373F6AB;
-	Thu, 12 Mar 2015 14:43:02 -0400 (EDT)
-In-Reply-To: <20150312074511.GB12418@paksenarrion.iveqy.com> (Fredrik
-	Gustafsson's message of "Thu, 12 Mar 2015 08:45:11 +0100")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9DB993F722;
+	Thu, 12 Mar 2015 14:44:32 -0400 (EDT)
+In-Reply-To: <xmqqwq2m2hwf.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Thu, 12 Mar 2015 11:24:32 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 9CC673F6-C8E7-11E4-85F9-A2259F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: D2C826F2-C8E7-11E4-ADC8-A2259F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265367>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265368>
 
-Fredrik Gustafsson <iveqy@iveqy.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On Wed, Mar 11, 2015 at 09:53:22PM -0700, Junio C Hamano wrote:
->> I'd first suggest to employ "icase" to unify *-By and *-by.  Perhaps
->> we would want a recommended list somewhere in SubmittingPatches to
->> discourage people from getting too creative?
+> Duy Nguyen <pclouds@gmail.com> writes:
 >
-> There's already such list in SubmittingPatches, so there's already quite
-> a few to choose from:
+>> This may or may not fall into the "mix different hash functions"
+>> category. In pack files version 4, trees are encoded to point to other
+>> trees or blobs by a (pack, offset) tuple. It would be great if the new
+>> object_id could support carrying this kind of object id around because
+>> it could help reduce object lookup cost a lot. (pack, offset) can be
+>> converted back to SHA-1 so no info is lost and hashcmp() can compare
+>> (pack, tuple) against an SHA-1 just fine.
 >
-> Also notice that a real name is used in the Signed-off-by: line. Please
-> don't hide your real name.
->
-> If you like, you can put extra tags at the end:
->
-> 1. "Reported-by:" is used to credit someone who found the bug that
-> 	the patch attempts to fix.
-> 2. "Acked-by:" says that the person who is more familiar with the
-> 	area the patch attempts to modify liked the patch.
-> 3. "Reviewed-by:", unlike the other tags, can only be offered by
-> 	the reviewer and means that she is completely satisfied that the
-> 	patch is ready for application.  It is usually offered only after
-> 	a detailed review.
-> 4. "Tested-by:" is used to indicate that the person
-> 	applied the patch and found it to have the desired effect.
->
-> You can also create your own tag or use one that's in common usage such as
-> "Thanks-to:", "Based-on-patch-by:", or "Mentored-by:".
+> You mean "if it came in <pack, offset> format, convert it down to
+> <sha1> until the last second that it is needed (e.g. need to put
+> that in a tree object in order to compute the object name of the
+> containing tree object)"?
 
-Hmph, the first step might be to drop that last sentence, I guess,
-if we consider this a "mess" and if we want to clean it up.
+Sorry, obviously I meant "do not convert until the last second".
+
+> To me, <pack, offset> information smells to belong more to a "struct
+> object" (or its subclass) as an optional annotation---when a caller
+> is asked to parse_object(), you would bypass the sha1_read_file()
+> that goes and looks the object name up from the list of pack .idx
+> and instead go there straight using that annotation.
