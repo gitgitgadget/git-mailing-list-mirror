@@ -1,103 +1,102 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 6/7] t5541: move run_with_cmdline_limit to test-lib.sh
-Date: Fri, 13 Mar 2015 02:45:59 -0400
-Message-ID: <CAPig+cQg8yhSAVi5w1w967iyTxYEgXBnSYw7wFoV0GqTk9KP+A@mail.gmail.com>
-References: <20150313044101.GA18476@peff.net>
-	<20150313045307.GF18532@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [Documentation] Submitting Patches
+Date: Fri, 13 Mar 2015 00:02:15 -0700
+Message-ID: <xmqqa8zhz8g8.fsf@gitster.dls.corp.google.com>
+References: <CAHWMk2YuUvYYb-nxdANVxZ0tLsyttnqNzpF74Nxz1zpFcGEnGg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Mar 13 07:46:15 2015
+Content-Type: text/plain
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Cody Taylor <cody.taylor@maternityneighborhood.com>
+X-From: git-owner@vger.kernel.org Fri Mar 13 08:02:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YWJMK-0002bc-1y
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Mar 2015 07:46:12 +0100
+	id 1YWJby-00027g-It
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Mar 2015 08:02:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751618AbbCMGqA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Mar 2015 02:46:00 -0400
-Received: from mail-yk0-f169.google.com ([209.85.160.169]:40289 "EHLO
-	mail-yk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751121AbbCMGqA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Mar 2015 02:46:00 -0400
-Received: by ykq142 with SMTP id 142so9639898ykq.7
-        for <git@vger.kernel.org>; Thu, 12 Mar 2015 23:45:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=AdPD21UbeEbqyeu7K7/o2tM0mFnw3YcqDS1vvOFBCIU=;
-        b=yxjjLL3OSivVL7v+71DNcnl72j8P/R3UbNY9n6LytPDghODMJfffVI8tHJfAp8iv0p
-         VU7MXQNYuGdXMrX8O/3J2JR0AIydYI0ySncjrARE4Z8Ubv1HXD1e882mao8Sh9GGUaOu
-         rpG1R9+tZpxIo4ILc6qQhxTIKxRJYbtajtOzUSyKwZqr+MxY/1U7yBKKvrES3D1TbKYh
-         i2hZrtepKvlWPx+mYQAQv0CUVuvVJpflJW3x5nwjKfgkCHrM2w05OI1ez/xjH15T4fbK
-         FPcZn2oFGfLkYXYQDFLkGhw54LDpUTUXuLTzTILkMhOb2mNhvTcrG8A8CD9gTTvGrXGR
-         GmVA==
-X-Received: by 10.236.63.6 with SMTP id z6mr46257549yhc.65.1426229159590; Thu,
- 12 Mar 2015 23:45:59 -0700 (PDT)
-Received: by 10.170.73.7 with HTTP; Thu, 12 Mar 2015 23:45:59 -0700 (PDT)
-In-Reply-To: <20150313045307.GF18532@peff.net>
-X-Google-Sender-Auth: -JzAiG3Jfn0jgxWmvUXL9ywVULs
+	id S1751913AbbCMHCS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Mar 2015 03:02:18 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:56880 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751769AbbCMHCR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Mar 2015 03:02:17 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id EDE1E3A8FA;
+	Fri, 13 Mar 2015 03:02:16 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=hCsRQ/cSMC2drKZOd4eZJ+7IBBU=; b=R0yaA6
+	CqZMcwTdwZipZFIqOiD2i26a3jHKodZH0pDIOcXTfgKVbQjItQkRy6ns+UmaqJgW
+	MYPkKrMyDvav2uD0vewm3gAhCPoLp+LOrKVRg5+CNqmvxyZVI+SoorzY3dZ+mp4z
+	R7/DuA9Xtc9WK+RPWclSbKvfkEYt1XUjvM2CE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hox6+vqZ8we1El9tbN3K0sbQiDHYvdRb
+	EF5e+sGl9uIterc8CJjVKmyBgHVREcJA7AFHBVVzes39YqTm1dYkcTI2UKPTZRU0
+	XTecp6g0igtxVGfmPuHDS6sg82OGfY0I6iuPcNEsi2BKFSbLTeKzkccpQECr3jGi
+	RFdpFoZEgik=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E63F03A8F9;
+	Fri, 13 Mar 2015 03:02:16 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5B38B3A8F8;
+	Fri, 13 Mar 2015 03:02:16 -0400 (EDT)
+In-Reply-To: <CAHWMk2YuUvYYb-nxdANVxZ0tLsyttnqNzpF74Nxz1zpFcGEnGg@mail.gmail.com>
+	(Cody Taylor's message of "Fri, 13 Mar 2015 02:31:30 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: E1FA82B6-C94E-11E4-A495-A2259F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265406>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265407>
 
-On Fri, Mar 13, 2015 at 12:53 AM, Jeff King <peff@peff.net> wrote:
-> We use this to test http pushing with a restricted
-> commandline. Other scripts (like t5551, which does http
-> fetching) will want to use it, too.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> As we discussed a while ago, this is the exact same code that
-> run_with_limited_stack uses in t7004. However, I think they are
-> conceptually two different things, and I could imagine a platform where
-> they have distinct implementations. So I did not refactor t7004 to make
-> use of this.
+Cody Taylor <cody.taylor@maternityneighborhood.com> writes:
 
-Perhaps this commentary should be moved to the commit message so that
-the next person who notices that run_with_limited_stack() is the same
-will understand why it was left alone.
+> Anyway, this brings up the point that `git send-email` should at least
+> get a mention in the "Documentation/SubmittingPatches" file. Likely
+> the best place for this is a paragraph after `git format-patch` is
+> mentioned in section 4 ("Sending your patches.").
 
->  t/t5541-http-push-smart.sh | 6 ------
->  t/test-lib.sh              | 6 ++++++
->  2 files changed, 6 insertions(+), 6 deletions(-)
->
-> diff --git a/t/t5541-http-push-smart.sh b/t/t5541-http-push-smart.sh
-> index d2c681e..1ecb588 100755
-> --- a/t/t5541-http-push-smart.sh
-> +++ b/t/t5541-http-push-smart.sh
-> @@ -324,12 +324,6 @@ test_expect_success 'push into half-auth-complete requires password' '
->         test_cmp expect actual
->  '
->
-> -run_with_limited_cmdline () {
-> -       (ulimit -s 128 && "$@")
-> -}
-> -
-> -test_lazy_prereq CMDLINE_LIMIT 'run_with_limited_cmdline true'
-> -
->  test_expect_success CMDLINE_LIMIT 'push 2000 tags over http' '
->         sha1=$(git rev-parse HEAD) &&
->         test_seq 2000 |
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index 7dd4b4d..9914d3e 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -1062,3 +1062,9 @@ test_lazy_prereq UNZIP '
->         "$GIT_UNZIP" -v
->         test $? -ne 127
->  '
-> +
-> +run_with_limited_cmdline () {
-> +       (ulimit -s 128 && "$@")
-> +}
-> +
-> +test_lazy_prereq CMDLINE_LIMIT 'run_with_limited_cmdline true'
-> --
-> 2.3.2.472.geadab3c
+[removed others who are not to be blamed for the lack of doc from cc]
+
+I very much agree with that---actually I am somewhat surprised that
+the documentation doesn't do so already.
+
+Perhaps something like this?
+
+-- >8 --
+Subject: SubmittingPatches: nudge to use send-email
+
+In step "(4) Sending your patches", we instruct users to do an
+inline patch, avoid breaking whitespaces, avoid attachments,
+use [PATCH v2] for second round, etc., all of which send-email
+knows how to do.
+
+Mention send-email at least once to gently nudge the user to (learn
+to) use it.
+
+Suggested-by: Cody Taylor <cody.taylor@maternityneighborhood.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/SubmittingPatches | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+index ef0eeb4..2b10569 100644
+--- a/Documentation/SubmittingPatches
++++ b/Documentation/SubmittingPatches
+@@ -154,7 +154,8 @@ you send off a message in the correct encoding.
+ 
+ WARNING: Be wary of your MUAs word-wrap
+ corrupting your patch.  Do not cut-n-paste your patch; you can
+-lose tabs that way if you are not careful.
++lose tabs that way if you are not careful.  If you can use the
++"git send-email" command, please do so.
+ 
+ It is a common convention to prefix your subject line with
+ [PATCH].  This lets people easily distinguish patches from other
