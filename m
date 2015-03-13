@@ -1,8 +1,9 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v5 1/2] reset: enable '-' short-hand for previous branch
-Date: Fri, 13 Mar 2015 16:48:10 -0400
-Message-ID: <CAPig+cTuCtS6EKr9AqGkH_dDkxdYtk9ZfkpCLDLY9XYQO04ANA@mail.gmail.com>
+Subject: Re: [PATCH v5 2/2] t7102: add 'reset -' tests
+Date: Fri, 13 Mar 2015 17:10:43 -0400
+Message-ID: <CAPig+cRQ9ZZ9573SvA9HPNLtE6s0U6TGnDfgpRD-osReAQgJJA@mail.gmail.com>
 References: <1426270716-22405-1-git-send-email-sudshekhar02@gmail.com>
+	<1426270716-22405-2-git-send-email-sudshekhar02@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git List <git@vger.kernel.org>,
@@ -10,179 +11,271 @@ Cc: Git List <git@vger.kernel.org>,
 	Junio C Hamano <gitster@pobox.com>,
 	David Aguilar <davvid@gmail.com>
 To: Sudhanshu Shekhar <sudshekhar02@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 13 21:48:17 2015
+X-From: git-owner@vger.kernel.org Fri Mar 13 22:10:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YWWVE-0000Vj-Iz
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Mar 2015 21:48:17 +0100
+	id 1YWWr3-0005f6-Mk
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Mar 2015 22:10:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754300AbbCMUsL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Mar 2015 16:48:11 -0400
-Received: from mail-yh0-f53.google.com ([209.85.213.53]:44048 "EHLO
-	mail-yh0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752116AbbCMUsL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Mar 2015 16:48:11 -0400
-Received: by yhzz6 with SMTP id z6so13085104yhz.11
-        for <git@vger.kernel.org>; Fri, 13 Mar 2015 13:48:10 -0700 (PDT)
+	id S1752552AbbCMVKp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Mar 2015 17:10:45 -0400
+Received: from mail-yk0-f171.google.com ([209.85.160.171]:39416 "EHLO
+	mail-yk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752543AbbCMVKo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Mar 2015 17:10:44 -0400
+Received: by ykp131 with SMTP id 131so11659015ykp.6
+        for <git@vger.kernel.org>; Fri, 13 Mar 2015 14:10:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc:content-type;
-        bh=6uLK13uxh5iIawDN8dd3m09QtCKhVbMz03vynt5Fd5k=;
-        b=bZyaWuuF+XUqIoxOEw87nE5+Xb2GPWDuXHK7qLfQT+JKnWqNNRnbq8g8ZTzdz3zfZC
-         GKK/Mhb6ef6L+yG+DO/7s/pEtWtGAe8Tss9fplOVxAPwsMslJiOYKo0IQgPBGZ3ktUTn
-         bcVxdVf5bt+Jvxa13scryV1Fa68U9SfQzPZhtB2iZkr9s4AWzSPRAxuujk9TUBYc+n9h
-         IgTs6R0Mlxg0vV5+xM9U5+eXlMceIss99DsMeoE5+UBKugqd7sxadWnlXhxufGSOV9Y4
-         X5aAXdeRljyR7bj2sPg/lXhSjuvA4x4VQC+3k0EkVjxoEsKCunbbu/gysor1MQv0JsuL
-         DSKQ==
-X-Received: by 10.170.56.80 with SMTP id 77mr12893181yky.2.1426279690223; Fri,
- 13 Mar 2015 13:48:10 -0700 (PDT)
-Received: by 10.170.73.7 with HTTP; Fri, 13 Mar 2015 13:48:10 -0700 (PDT)
-In-Reply-To: <1426270716-22405-1-git-send-email-sudshekhar02@gmail.com>
-X-Google-Sender-Auth: Nyv5Do48KMLcn3B_-onpz80v20k
+        bh=gD8mfgMZE6HoGPIsz5/kJ7Nh4BOQOn4eptm425Q+MOc=;
+        b=C5rZ03Xu927o5uZyCAdGIKAw8u2J8Q2tdnWtL0092ebeV3+PXcHbn1pduuFwqii01Y
+         Fp/+NSaZJRlX5LH+tAPAavEJ+uyxUwi/pNxgOLl1OgXTZvkRA4xhUBJdQ6txUzdlK9A+
+         Jj5l/UQbsDLprAeHkatnDhRnj+EY5RLOTrCbY9YZpHcjfVKbXuEuk+ke56oloyQ53Akg
+         aM+ln6Un/2t7CL/lixxMulnOvZSu9nca3uSYyHCFnRo6fV0xCeTJYbD7JrUp5oeDyS+Z
+         aygEPgSbzVyUDlB27v8obsm6S6+p7fHMr5TCqrKRnvmESxSorYIfv4D+dv2NHgCiK5D7
+         ZTrg==
+X-Received: by 10.236.202.238 with SMTP id d74mr49033664yho.166.1426281043360;
+ Fri, 13 Mar 2015 14:10:43 -0700 (PDT)
+Received: by 10.170.73.7 with HTTP; Fri, 13 Mar 2015 14:10:43 -0700 (PDT)
+In-Reply-To: <1426270716-22405-2-git-send-email-sudshekhar02@gmail.com>
+X-Google-Sender-Auth: zA3mMzcBuncK7ju4MwHUWr0qTkY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265421>
 
 On Fri, Mar 13, 2015 at 2:18 PM, Sudhanshu Shekhar
 <sudshekhar02@gmail.com> wrote:
-> git reset '-' will reset to the previous branch. To reset a file named
-> "-" use either "git reset ./-" or "git reset -- -".
+> Add following test cases:
+> 1) Confirm error message when git reset is used with no previous branch
+> 2) Confirm git reset - works like git reset @{-1}
+> 3) Confirm "-" is always treated as a commit unless the -- file option
+> is specified
+> 4) Confirm "git reset -" works normally even when a file named @{-1} is
+> present
 >
-> Change error message to treat single "-" as an ambigous revision or
-> path rather than a bad flag.
->
-> Helped-by: Junio C Hamano <gitster@pobox.com>
 > Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 > Helped-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+> Helped-by: David Aguilar <davvid@gmail.com>
 > Signed-off-by: Sudhanshu Shekhar <sudshekhar02@gmail.com>
 > ---
-> I have changed the logic to ensure argv[0] isn't changed at any point.
-> Creating a modified_argv0 variable let's me do that.
+> Eric: Thank you for pointing out the mistake. The '&&' after the Here
+> Docs was causing the issue. I have removed the concatenation from
+> there, hope that's okay.
+
+The && needs to go on the first line, not the last line of the here-doc.
+
+However, that was not my main concern in the previous review. What
+disturbed me was that the new tests, which were supposed to be
+checking if "-" behaved as @{-1}, were succeeding even without patch
+1/2 applied which implemented the "-" alias for @{-1}. That seems
+wrong. I don't think you particularly addressed that issue in this
+version (even though the first couple tests will now fail without 1/2
+due to the changed error message).
+
+> Regarding the @{-1} test case, I created it as a check for Junio's
+> comment on the error message generated by "git reset -" when a file
+> named @{-1} is there.  Since, in this situation "git reset @{-1}" will
+> return an error (but "reset -" shouldn't).
+
+Reminder: Wrap commentary to about column 72, as you would the commit
+message. (I re-wrapped it manually to reply to it.)
+
+> I have renamed the folder to 'dash' as suggested by you, keeping the
+> old name only where it made sense.
+
+Considering that the test titles already tell us the intent of the
+tests, I don't find that the directory name "no_previous" adds much
+value to tests checking the behavior of "-" with no previous branch. A
+single, consistent name used throughout all these tests would be less
+surprising and place smaller cognitive load on the reader.
+
+More below.
+
+> diff --git a/t/t7102-reset.sh b/t/t7102-reset.sh
+> index 98bcfe2..18523c1 100755
+> --- a/t/t7102-reset.sh
+> +++ b/t/t7102-reset.sh
+> @@ -568,4 +568,162 @@ test_expect_success 'reset --mixed sets up work tree' '
+>         test_cmp expect actual
+>  '
 >
-> I couldn't think of any other way to achieve this, apart from changing things
-> directly in the sha1_name.c file (like Junio's changes). Please let me know
-> if some further changes are needed.
->
-> diff --git a/builtin/reset.c b/builtin/reset.c
-> index 4c08ddc..bc50e14 100644
-> --- a/builtin/reset.c
-> +++ b/builtin/reset.c
-> @@ -192,6 +192,7 @@ static void parse_args(struct pathspec *pathspec,
->  {
->         const char *rev = "HEAD";
->         unsigned char unused[20];
-> +       const char *modified_argv0 = argv[0];
+> +test_expect_success 'reset - with no previous branch fails' '
+> +       git init no_previous &&
+> +       test_when_finished rm -rf no_previous &&
+> +       (
+> +               cd no_previous &&
+> +               test_must_fail git reset - 2>actual
+> +       ) &&
+> +       test_i18ngrep "ambiguous argument" no_previous/actual
+> +'
+> +
+> +test_expect_success 'reset - while having file named - and no previous branch fails' '
+> +       git init no_previous &&
+> +       test_when_finished rm -rf no_previous &&
+> +       (
+> +               cd no_previous &&
+> +               >- &&
+> +               test_must_fail git reset - 2>actual
+> +       ) &&
+> +       test_i18ngrep "ambiguous argument" no_previous/actual
+> +'
+> +
+> +
 
-This variable is only needed inside the 'if (argv[0])' block below, so
-its declaration should be moved there. Also the initialization to
-argv[0] is wasted since the assignment is overwritten below.
+Style: Unnecessary extra blank line.
 
-The variable name itself could be better. Unlike a name such as
-'orig_arg0', "modified" doesn't tell us much. Modified how? Modified
-to be what? Consideration where and how the variable is used, we can
-see that it will be holding a value that _might_ be a "rev". This
-suggests a better name such as 'maybe_rev' or something similar.
+> +test_expect_success \
+> +       'reset - in the presence of file named - with previous branch resets commit' '
+> +       cat >expect <<-EOF
 
->         /*
->          * Possible arguments are:
->          *
-> @@ -205,10 +206,17 @@ static void parse_args(struct pathspec *pathspec,
->          */
->
->         if (argv[0]) {
-> +               if (!strcmp(argv[0], "-")) {
-> +                       modified_argv0 = "@{-1}";
-> +               }
-> +               else {
+Place the && at the end of this line. Also, prefix EOF with a
+backslash to indicate that you don't intend any interpolation to occur
+within the here-doc. So:
 
-Style: cuddle the 'else' and braces: "} else {"
+    cat >expect <<-\EOF &&
 
-> +                       modified_argv0 = argv[0];
-> +               }
+Ditto for the remaining tests.
 
-The unnecessary braces make this harder to read than it could be since
-it is so spread out vertically. Dropping the braces would help. The
-ternary operator ?: might improve readability (though it might also
-make it worse).
-
->                 if (!strcmp(argv[0], "--")) {
->                         argv++; /* reset to HEAD, possibly with paths */
->                 } else if (argv[1] && !strcmp(argv[1], "--")) {
-> -                       rev = argv[0];
-> +                       rev = modified_argv0;
->                         argv += 2;
->                 }
->                 /*
-> @@ -216,14 +224,15 @@ static void parse_args(struct pathspec *pathspec,
->                  * has to be unambiguous. If there is a single argument, it
->                  * can not be a tree
->                  */
-> -               else if ((!argv[1] && !get_sha1_committish(argv[0], unused)) ||
-> -                        (argv[1] && !get_sha1_treeish(argv[0], unused))) {
-> +               else if ((!argv[1] && !get_sha1_committish(modified_argv0, unused)) ||
-> +                        (argv[1] && !get_sha1_treeish(modified_argv0, unused))) {
->                         /*
->                          * Ok, argv[0] looks like a commit/tree; it should not
->                          * be a filename.
->                          */
->                         verify_non_filename(prefix, argv[0]);
-> -                       rev = *argv++;
-> +                       rev = modified_argv0;
-> +                       argv++;
-
-Good. This is much better than the previous rounds, and is the sort of
-solution I had hoped to see when prodding you in previous reviews to
-avoid argv[] kludges. Unlike the previous band-aid approach, this
-demonstrates that you took the time to understand the overall logic
-flow rather than merely plopping in a "quick fix".
-
->                 } else {
->                         /* Otherwise we treat this as a filename */
->                         verify_filename(prefix, argv[0], 1);
-> diff --git a/setup.c b/setup.c
-> index 979b13f..b621b62 100644
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -200,7 +200,7 @@ void verify_filename(const char *prefix,
->                      int diagnose_misspelt_rev)
->  {
->         if (*arg == '-')
-> -               die("bad flag '%s' used after filename", arg);
-> +               die("ambiguous argument '%s': unknown revision or path", arg);
-
-The conditional is only checking if the first character of 'arg' is
-hyphen; it's not checking if 'arg' is exactly "-". It's purpose is to
-recognize -flags or --flags, so it's inappropriate to change the error
-message like this. I think this also doesn't help the case when there
-really is a file named "-", since this conditional will just claim
-that it's ambiguous.
-
-It might or might not be appropriate to add a special case here to
-allow an exact "-" to fall through to the check_filename() call below,
-however, it would be necessary to thoroughly check for possible
-repercussions first. (I haven't checked.) If all else fails, you could
-change parse_args() to do something a bit ugly like this:
-
-    const char *f = strcmp(argv[0], "-") ? argv[0] : "./-";
-    verify_filename(prefix, f);
-
->         if (check_filename(prefix, arg))
->                 return;
->         die_verify_filename(prefix, arg, diagnose_misspelt_rev);
+> +       Unstaged changes after reset:
+> +       M       -
+> +       M       file
+> +       EOF
+> +       git init dash &&
+> +       test_when_finished rm -rf dash &&
+> +       (
+> +               cd dash &&
+> +               >- &&
+> +               >file &&
+> +               git add file - &&
+> +               git commit -m "add base files" &&
+> +               git checkout -b new_branch &&
+> +               echo "random" >- &&
+> +               echo "wow" >file &&
+> +               git add file - &&
+> +               git reset - >../actual
+> +       ) &&
+> +       test_cmp expect actual
+> +'
+> +test_expect_success \
+> +       'reset - in the presence of file named - with -- option resets commit' '
+> +       cat >expect <<-EOF
+> +       Unstaged changes after reset:
+> +       M       -
+> +       M       file
+> +       EOF
+> +       git init dash &&
+> +       test_when_finished rm -rf dash &&
+> +       (
+> +               cd dash &&
+> +               >- &&
+> +               >file &&
+> +               git add file - &&
+> +               git commit -m "add base files" &&
+> +               git checkout -b new_branch &&
+> +               echo "random" >- &&
+> +               echo "wow" >file &&
+> +               git add file - &&
+> +               git reset - -- >../actual
+> +       ) &&
+> +       test_cmp expect actual
+> +'
+> +
+> +test_expect_success 'reset - in the presence of file named - with -- file option resets file' '
+> +       cat >expect <<-EOF
+> +       Unstaged changes after reset:
+> +       M       -
+> +       EOF
+> +       git init dash &&
+> +       test_when_finished rm -rf dash &&
+> +       (
+> +               cd dash &&
+> +               >- &&
+> +               >file &&
+> +               git add file - &&
+> +               git commit -m "add base files" &&
+> +               git checkout -b new_branch &&
+> +               echo "random" >- &&
+> +               echo "wow" >file &&
+> +               git add file - &&
+> +               git reset -- - >../actual
+> +       ) &&
+> +       test_cmp expect actual
+> +'
+> +test_expect_success \
+> +       'reset - in the presence of file named - with both pre and post -- option resets file' '
+> +       cat >expect <<-EOF
+> +       Unstaged changes after reset:
+> +       M       -
+> +       EOF
+> +       git init dash &&
+> +       test_when_finished rm -rf dash &&
+> +       (
+> +               cd dash &&
+> +               >- &&
+> +               >file &&
+> +               git add file - &&
+> +               git commit -m "add base files" &&
+> +               git checkout -b new_branch &&
+> +               echo "random" >- &&
+> +               echo "wow" >file &&
+> +               git add file - &&
+> +               git reset - -- - >../actual
+> +       ) &&
+> +       test_cmp expect actual
+> +'
+> +
+> +test_expect_success 'reset - works same as reset @{-1}' '
+> +       git init dash &&
+> +       test_when_finished rm -rf dash &&
+> +       (
+> +               cd dash &&
+> +               echo "file1" >file1 &&
+> +               git add file1 &&
+> +               git commit -m "base commit" &&
+> +               git checkout -b temp &&
+> +               echo "new file" >file &&
+> +               git add file &&
+> +               git commit -m "added file" &&
+> +               git reset - &&
+> +               git status --porcelain >../actual &&
+> +               git add file &&
+> +               git commit -m "added file" &&
+> +               git reset @{-1} &&
+> +               git status --porcelain >../expect
+> +       ) &&
+> +       test_cmp expect actual
+> +'
+> +
+> +test_expect_success 'reset - with file named @{-1} succeeds' '
+> +       cat >expect <<-EOF
+> +       Unstaged changes after reset:
+> +       M       @{-1}
+> +       M       file
+> +       EOF
+> +       git init dash &&
+> +       test_when_finished rm -rf dash &&
+> +       (
+> +               cd dash &&
+> +               echo "random" >@{-1} &&
+> +               echo "random" >file &&
+> +               git add @{-1} file &&
+> +               git commit -m "base commit" &&
+> +               git checkout -b new_branch &&
+> +               echo "additional stuff" >>file &&
+> +               echo "additional stuff" >>@{-1} &&
+> +               git add file @{-1} &&
+> +               git reset - >../actual
+> +       ) &&
+> +       test_cmp expect actual
+> +'
+> +
+>  test_done
 > --
-
-By now, you've had a taste of what it's like to participate in the Git
-project and what will be expected of you, and GSoC mentors have
-(hopefully) formed an opinion of your abilities and how you interact
-with reviewers, so I'm not sure that it makes sense for you to
-resubmit again. Junio's proposal[1] to generalize "-" recognition as
-an alias for @{-1} may be worth pursing by someone, but may be too
-large for a micro-project.
-
-[1]: http://thread.gmane.org/gmane.comp.version-control.git/265260
+> 2.3.1.277.gd67f9d5.dirty
