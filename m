@@ -1,7 +1,7 @@
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH v2 07/10] diff: convert struct combine_diff_path to object_id
-Date: Fri, 13 Mar 2015 23:39:33 +0000
-Message-ID: <1426289976-568060-8-git-send-email-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 08/10] commit: convert parts to struct object_id
+Date: Fri, 13 Mar 2015 23:39:34 +0000
+Message-ID: <1426289976-568060-9-git-send-email-sandals@crustytoothpaste.net>
 References: <1426289976-568060-1-git-send-email-sandals@crustytoothpaste.net>
 Cc: Andreas Schwab <schwab@linux-m68k.org>,
 	"Kyle J. McKay" <mackyle@gmail.com>,
@@ -10,25 +10,25 @@ Cc: Andreas Schwab <schwab@linux-m68k.org>,
 	Johannes Sixt <j6t@kdbg.org>, David Kastrup <dak@gnu.org>,
 	James Denholm <nod.helm@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 14 00:40:34 2015
+X-From: git-owner@vger.kernel.org Sat Mar 14 00:40:26 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YWZBx-00007q-Ok
-	for gcvg-git-2@plane.gmane.org; Sat, 14 Mar 2015 00:40:34 +0100
+	id 1YWZBp-0008Qk-1n
+	for gcvg-git-2@plane.gmane.org; Sat, 14 Mar 2015 00:40:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755223AbbCMXk3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Mar 2015 19:40:29 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:50119 "EHLO
+	id S1755160AbbCMXkU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Mar 2015 19:40:20 -0400
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:50126 "EHLO
 	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750849AbbCMXkN (ORCPT
+	by vger.kernel.org with ESMTP id S1752973AbbCMXkN (ORCPT
 	<rfc822;git@vger.kernel.org>); Fri, 13 Mar 2015 19:40:13 -0400
 Received: from vauxhall.crustytoothpaste.net (unknown [172.16.2.247])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 2CEB328092;
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id D35AA28093;
 	Fri, 13 Mar 2015 23:40:12 +0000 (UTC)
 X-Mailer: git-send-email 2.2.1.209.g41e5f3a
 In-Reply-To: <1426289976-568060-1-git-send-email-sandals@crustytoothpaste.net>
@@ -37,306 +37,258 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265429>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265430>
 
-Also, convert a constant to GIT_SHA1_HEXSZ.
+Convert struct commit_graft and necessary local parts of commit.c.
+Also, convert several constants based on the hex length of an SHA-1 to
+use GIT_SHA1_HEXSZ, and move several magic constants into variables for
+readability.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- combine-diff.c | 56 ++++++++++++++++++++++++++++----------------------------
- diff-lib.c     | 10 +++++-----
- diff.h         |  5 +++--
- tree-diff.c    | 10 +++++-----
- 4 files changed, 41 insertions(+), 40 deletions(-)
+ commit.c      | 56 ++++++++++++++++++++++++++++++--------------------------
+ commit.h      |  4 ++--
+ log-tree.c    |  2 +-
+ send-pack.c   |  2 +-
+ shallow.c     |  8 ++++----
+ upload-pack.c |  2 +-
+ 6 files changed, 39 insertions(+), 35 deletions(-)
 
-diff --git a/combine-diff.c b/combine-diff.c
-index 91edce5..8eb7278 100644
---- a/combine-diff.c
-+++ b/combine-diff.c
-@@ -44,9 +44,9 @@ static struct combine_diff_path *intersect_paths(struct combine_diff_path *curr,
- 			memset(p->parent, 0,
- 			       sizeof(p->parent[0]) * num_parent);
+diff --git a/commit.c b/commit.c
+index a8c7577..2d9de80 100644
+--- a/commit.c
++++ b/commit.c
+@@ -55,12 +55,12 @@ struct commit *lookup_commit(const unsigned char *sha1)
  
--			hashcpy(p->sha1, q->queue[i]->two->sha1);
-+			hashcpy(p->oid.hash, q->queue[i]->two->sha1);
- 			p->mode = q->queue[i]->two->mode;
--			hashcpy(p->parent[n].sha1, q->queue[i]->one->sha1);
-+			hashcpy(p->parent[n].oid.hash, q->queue[i]->one->sha1);
- 			p->parent[n].mode = q->queue[i]->one->mode;
- 			p->parent[n].status = q->queue[i]->status;
- 			*tail = p;
-@@ -77,7 +77,7 @@ static struct combine_diff_path *intersect_paths(struct combine_diff_path *curr,
- 			continue;
- 		}
- 
--		hashcpy(p->parent[n].sha1, q->queue[i]->one->sha1);
-+		hashcpy(p->parent[n].oid.hash, q->queue[i]->one->sha1);
- 		p->parent[n].mode = q->queue[i]->one->mode;
- 		p->parent[n].status = q->queue[i]->status;
- 
-@@ -284,7 +284,7 @@ static struct lline *coalesce_lines(struct lline *base, int *lenbase,
- 	return base;
- }
- 
--static char *grab_blob(const unsigned char *sha1, unsigned int mode,
-+static char *grab_blob(const struct object_id *oid, unsigned int mode,
- 		       unsigned long *size, struct userdiff_driver *textconv,
- 		       const char *path)
+ struct commit *lookup_commit_reference_by_name(const char *name)
  {
-@@ -294,20 +294,20 @@ static char *grab_blob(const unsigned char *sha1, unsigned int mode,
- 	if (S_ISGITLINK(mode)) {
- 		blob = xmalloc(100);
- 		*size = snprintf(blob, 100,
--				 "Subproject commit %s\n", sha1_to_hex(sha1));
--	} else if (is_null_sha1(sha1)) {
-+				 "Subproject commit %s\n", oid_to_hex(oid));
-+	} else if (is_null_oid(oid)) {
- 		/* deleted blob */
- 		*size = 0;
- 		return xcalloc(1, 1);
- 	} else if (textconv) {
- 		struct diff_filespec *df = alloc_filespec(path);
--		fill_filespec(df, sha1, 1, mode);
-+		fill_filespec(df, oid->hash, 1, mode);
- 		*size = fill_textconv(textconv, df, &blob);
- 		free_filespec(df);
- 	} else {
--		blob = read_sha1_file(sha1, &type, size);
-+		blob = read_sha1_file(oid->hash, &type, size);
- 		if (type != OBJ_BLOB)
--			die("object '%s' is not a blob!", sha1_to_hex(sha1));
-+			die("object '%s' is not a blob!", oid_to_hex(oid));
- 	}
- 	return blob;
- }
-@@ -389,7 +389,7 @@ static void consume_line(void *state_, char *line, unsigned long len)
- 	}
- }
- 
--static void combine_diff(const unsigned char *parent, unsigned int mode,
-+static void combine_diff(const struct object_id *parent, unsigned int mode,
- 			 mmfile_t *result_file,
- 			 struct sline *sline, unsigned int cnt, int n,
- 			 int num_parent, int result_deleted,
-@@ -897,7 +897,7 @@ static void show_combined_header(struct combine_diff_path *elem,
- 				 int show_file_header)
- {
- 	struct diff_options *opt = &rev->diffopt;
--	int abbrev = DIFF_OPT_TST(opt, FULL_INDEX) ? 40 : DEFAULT_ABBREV;
-+	int abbrev = DIFF_OPT_TST(opt, FULL_INDEX) ? GIT_SHA1_HEXSZ : DEFAULT_ABBREV;
- 	const char *a_prefix = opt->a_prefix ? opt->a_prefix : "a/";
- 	const char *b_prefix = opt->b_prefix ? opt->b_prefix : "b/";
- 	const char *c_meta = diff_get_color_opt(opt, DIFF_METAINFO);
-@@ -914,11 +914,11 @@ static void show_combined_header(struct combine_diff_path *elem,
- 			 "", elem->path, line_prefix, c_meta, c_reset);
- 	printf("%s%sindex ", line_prefix, c_meta);
- 	for (i = 0; i < num_parent; i++) {
--		abb = find_unique_abbrev(elem->parent[i].sha1,
-+		abb = find_unique_abbrev(elem->parent[i].oid.hash,
- 					 abbrev);
- 		printf("%s%s", i ? "," : "", abb);
- 	}
--	abb = find_unique_abbrev(elem->sha1, abbrev);
-+	abb = find_unique_abbrev(elem->oid.hash, abbrev);
- 	printf("..%s%s\n", abb, c_reset);
- 
- 	if (mode_differs) {
-@@ -991,7 +991,7 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
- 
- 	/* Read the result of merge first */
- 	if (!working_tree_file)
--		result = grab_blob(elem->sha1, elem->mode, &result_size,
-+		result = grab_blob(&elem->oid, elem->mode, &result_size,
- 				   textconv, elem->path);
- 	else {
- 		/* Used by diff-tree to read from the working tree */
-@@ -1013,12 +1013,12 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
- 			result = strbuf_detach(&buf, NULL);
- 			elem->mode = canon_mode(st.st_mode);
- 		} else if (S_ISDIR(st.st_mode)) {
--			unsigned char sha1[20];
--			if (resolve_gitlink_ref(elem->path, "HEAD", sha1) < 0)
--				result = grab_blob(elem->sha1, elem->mode,
-+			struct object_id oid;
-+			if (resolve_gitlink_ref(elem->path, "HEAD", oid.hash) < 0)
-+				result = grab_blob(&elem->oid, elem->mode,
- 						   &result_size, NULL, NULL);
- 			else
--				result = grab_blob(sha1, elem->mode,
-+				result = grab_blob(&oid, elem->mode,
- 						   &result_size, NULL, NULL);
- 		} else if (textconv) {
- 			struct diff_filespec *df = alloc_filespec(elem->path);
-@@ -1090,7 +1090,7 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
- 		for (i = 0; !is_binary && i < num_parent; i++) {
- 			char *buf;
- 			unsigned long size;
--			buf = grab_blob(elem->parent[i].sha1,
-+			buf = grab_blob(&elem->parent[i].oid,
- 					elem->parent[i].mode,
- 					&size, NULL, NULL);
- 			if (buffer_is_binary(buf, size))
-@@ -1139,14 +1139,14 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
- 	for (i = 0; i < num_parent; i++) {
- 		int j;
- 		for (j = 0; j < i; j++) {
--			if (!hashcmp(elem->parent[i].sha1,
--				     elem->parent[j].sha1)) {
-+			if (!oidcmp(&elem->parent[i].oid,
-+				     &elem->parent[j].oid)) {
- 				reuse_combine_diff(sline, cnt, i, j);
- 				break;
- 			}
- 		}
- 		if (i <= j)
--			combine_diff(elem->parent[i].sha1,
-+			combine_diff(&elem->parent[i].oid,
- 				     elem->parent[i].mode,
- 				     &result_file, sline,
- 				     cnt, i, num_parent, result_deleted,
-@@ -1206,9 +1206,9 @@ static void show_raw_diff(struct combine_diff_path *p, int num_parent, struct re
- 
- 		/* Show sha1's */
- 		for (i = 0; i < num_parent; i++)
--			printf(" %s", diff_unique_abbrev(p->parent[i].sha1,
-+			printf(" %s", diff_unique_abbrev(p->parent[i].oid.hash,
- 							 opt->abbrev));
--		printf(" %s ", diff_unique_abbrev(p->sha1, opt->abbrev));
-+		printf(" %s ", diff_unique_abbrev(p->oid.hash, opt->abbrev));
- 	}
- 
- 	if (opt->output_format & (DIFF_FORMAT_RAW | DIFF_FORMAT_NAME_STATUS)) {
-@@ -1271,16 +1271,16 @@ static struct diff_filepair *combined_pair(struct combine_diff_path *p,
- 	for (i = 0; i < num_parent; i++) {
- 		pair->one[i].path = p->path;
- 		pair->one[i].mode = p->parent[i].mode;
--		hashcpy(pair->one[i].sha1, p->parent[i].sha1);
--		pair->one[i].sha1_valid = !is_null_sha1(p->parent[i].sha1);
-+		hashcpy(pair->one[i].sha1, p->parent[i].oid.hash);
-+		pair->one[i].sha1_valid = !is_null_oid(&p->parent[i].oid);
- 		pair->one[i].has_more_entries = 1;
- 	}
- 	pair->one[num_parent - 1].has_more_entries = 0;
- 
- 	pair->two->path = p->path;
- 	pair->two->mode = p->mode;
--	hashcpy(pair->two->sha1, p->sha1);
--	pair->two->sha1_valid = !is_null_sha1(p->sha1);
-+	hashcpy(pair->two->sha1, p->oid.hash);
-+	pair->two->sha1_valid = !is_null_oid(&p->oid);
- 	return pair;
- }
- 
-diff --git a/diff-lib.c b/diff-lib.c
-index a85c497..241a843 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -125,7 +125,7 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
- 			dpath->next = NULL;
- 			memcpy(dpath->path, ce->name, path_len);
- 			dpath->path[path_len] = '\0';
--			hashclr(dpath->sha1);
-+			oidclr(&dpath->oid);
- 			memset(&(dpath->parent[0]), 0,
- 			       sizeof(struct combine_diff_parent)*5);
- 
-@@ -155,7 +155,7 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
- 				if (2 <= stage) {
- 					int mode = nce->ce_mode;
- 					num_compare_stages++;
--					hashcpy(dpath->parent[stage-2].sha1, nce->sha1);
-+					hashcpy(dpath->parent[stage-2].oid.hash, nce->sha1);
- 					dpath->parent[stage-2].mode = ce_mode_from_stat(nce, mode);
- 					dpath->parent[stage-2].status =
- 						DIFF_STATUS_MODIFIED;
-@@ -339,14 +339,14 @@ static int show_modified(struct rev_info *revs,
- 		memcpy(p->path, new->name, pathlen);
- 		p->path[pathlen] = 0;
- 		p->mode = mode;
--		hashclr(p->sha1);
-+		oidclr(&p->oid);
- 		memset(p->parent, 0, 2 * sizeof(struct combine_diff_parent));
- 		p->parent[0].status = DIFF_STATUS_MODIFIED;
- 		p->parent[0].mode = new->ce_mode;
--		hashcpy(p->parent[0].sha1, new->sha1);
-+		hashcpy(p->parent[0].oid.hash, new->sha1);
- 		p->parent[1].status = DIFF_STATUS_MODIFIED;
- 		p->parent[1].mode = old->ce_mode;
--		hashcpy(p->parent[1].sha1, old->sha1);
-+		hashcpy(p->parent[1].oid.hash, old->sha1);
- 		show_combined_diff(p, 2, revs->dense_combined_merges, revs);
- 		free(p);
- 		return 0;
-diff --git a/diff.h b/diff.h
-index b4a624d..f6fdf49 100644
---- a/diff.h
-+++ b/diff.h
-@@ -6,6 +6,7 @@
- 
- #include "tree-walk.h"
- #include "pathspec.h"
-+#include "object.h"
- 
- struct rev_info;
- struct diff_options;
-@@ -207,11 +208,11 @@ struct combine_diff_path {
- 	struct combine_diff_path *next;
- 	char *path;
- 	unsigned int mode;
 -	unsigned char sha1[20];
 +	struct object_id oid;
- 	struct combine_diff_parent {
- 		char status;
- 		unsigned int mode;
--		unsigned char sha1[20];
-+		struct object_id oid;
- 	} parent[FLEX_ARRAY];
- };
- #define combine_diff_path_size(n, l) \
-diff --git a/tree-diff.c b/tree-diff.c
-index e7b378c..290a1da 100644
---- a/tree-diff.c
-+++ b/tree-diff.c
-@@ -64,7 +64,7 @@ static int emit_diff_first_parent_only(struct diff_options *opt, struct combine_
+ 	struct commit *commit;
+ 
+-	if (get_sha1_committish(name, sha1))
++	if (get_sha1_committish(name, oid.hash))
+ 		return NULL;
+-	commit = lookup_commit_reference(sha1);
++	commit = lookup_commit_reference(oid.hash);
+ 	if (parse_commit(commit))
+ 		return NULL;
+ 	return commit;
+@@ -99,7 +99,7 @@ static int commit_graft_alloc, commit_graft_nr;
+ static const unsigned char *commit_graft_sha1_access(size_t index, void *table)
  {
- 	struct combine_diff_parent *p0 = &p->parent[0];
- 	if (p->mode && p0->mode) {
--		opt->change(opt, p0->mode, p->mode, p0->sha1, p->sha1,
-+		opt->change(opt, p0->mode, p->mode, p0->oid.hash, p->oid.hash,
- 			1, 1, p->path, 0, 0);
- 	}
- 	else {
-@@ -74,11 +74,11 @@ static int emit_diff_first_parent_only(struct diff_options *opt, struct combine_
- 
- 		if (p->mode) {
- 			addremove = '+';
--			sha1 = p->sha1;
-+			sha1 = p->oid.hash;
- 			mode = p->mode;
- 		} else {
- 			addremove = '-';
--			sha1 = p0->sha1;
-+			sha1 = p0->oid.hash;
- 			mode = p0->mode;
- 		}
- 
-@@ -151,7 +151,7 @@ static struct combine_diff_path *path_appendnew(struct combine_diff_path *last,
- 	memcpy(p->path + base->len, path, pathlen);
- 	p->path[len] = 0;
- 	p->mode = mode;
--	hashcpy(p->sha1, sha1 ? sha1 : null_sha1);
-+	hashcpy(p->oid.hash, sha1 ? sha1 : null_sha1);
- 
- 	return p;
+ 	struct commit_graft **commit_graft_table = table;
+-	return commit_graft_table[index]->sha1;
++	return commit_graft_table[index]->oid.hash;
  }
-@@ -238,7 +238,7 @@ static struct combine_diff_path *emit_path(struct combine_diff_path *p,
- 			}
  
- 			p->parent[i].mode = mode_i;
--			hashcpy(p->parent[i].sha1, sha1_i ? sha1_i : null_sha1);
-+			hashcpy(p->parent[i].oid.hash, sha1_i ? sha1_i : null_sha1);
- 		}
+ static int commit_graft_pos(const unsigned char *sha1)
+@@ -110,7 +110,7 @@ static int commit_graft_pos(const unsigned char *sha1)
  
- 		keep = 1;
+ int register_commit_graft(struct commit_graft *graft, int ignore_dups)
+ {
+-	int pos = commit_graft_pos(graft->sha1);
++	int pos = commit_graft_pos(graft->oid.hash);
+ 
+ 	if (0 <= pos) {
+ 		if (ignore_dups)
+@@ -138,22 +138,23 @@ struct commit_graft *read_graft_line(char *buf, int len)
+ 	/* The format is just "Commit Parent1 Parent2 ...\n" */
+ 	int i;
+ 	struct commit_graft *graft = NULL;
++	const int entry_size = GIT_SHA1_HEXSZ + 1;
+ 
+ 	while (len && isspace(buf[len-1]))
+ 		buf[--len] = '\0';
+ 	if (buf[0] == '#' || buf[0] == '\0')
+ 		return NULL;
+-	if ((len + 1) % 41)
++	if ((len + 1) % entry_size)
+ 		goto bad_graft_data;
+-	i = (len + 1) / 41 - 1;
+-	graft = xmalloc(sizeof(*graft) + 20 * i);
++	i = (len + 1) / entry_size - 1;
++	graft = xmalloc(sizeof(*graft) + GIT_SHA1_RAWSZ * i);
+ 	graft->nr_parent = i;
+-	if (get_sha1_hex(buf, graft->sha1))
++	if (get_oid_hex(buf, &graft->oid))
+ 		goto bad_graft_data;
+-	for (i = 40; i < len; i += 41) {
++	for (i = GIT_SHA1_HEXSZ; i < len; i += entry_size) {
+ 		if (buf[i] != ' ')
+ 			goto bad_graft_data;
+-		if (get_sha1_hex(buf + i + 1, graft->parent[i/41]))
++		if (get_sha1_hex(buf + i + 1, graft->parent[i/entry_size].hash))
+ 			goto bad_graft_data;
+ 	}
+ 	return graft;
+@@ -302,39 +303,42 @@ int parse_commit_buffer(struct commit *item, const void *buffer, unsigned long s
+ {
+ 	const char *tail = buffer;
+ 	const char *bufptr = buffer;
+-	unsigned char parent[20];
++	struct object_id parent;
+ 	struct commit_list **pptr;
+ 	struct commit_graft *graft;
++	const int tree_entry_len = GIT_SHA1_HEXSZ + 5;
++	const int parent_entry_len = GIT_SHA1_HEXSZ + 7;
+ 
+ 	if (item->object.parsed)
+ 		return 0;
+ 	item->object.parsed = 1;
+ 	tail += size;
+-	if (tail <= bufptr + 46 || memcmp(bufptr, "tree ", 5) || bufptr[45] != '\n')
++	if (tail <= bufptr + tree_entry_len + 1 || memcmp(bufptr, "tree ", 5) ||
++			bufptr[tree_entry_len] != '\n')
+ 		return error("bogus commit object %s", sha1_to_hex(item->object.sha1));
+-	if (get_sha1_hex(bufptr + 5, parent) < 0)
++	if (get_sha1_hex(bufptr + 5, parent.hash) < 0)
+ 		return error("bad tree pointer in commit %s",
+ 			     sha1_to_hex(item->object.sha1));
+-	item->tree = lookup_tree(parent);
+-	bufptr += 46; /* "tree " + "hex sha1" + "\n" */
++	item->tree = lookup_tree(parent.hash);
++	bufptr += tree_entry_len + 1; /* "tree " + "hex sha1" + "\n" */
+ 	pptr = &item->parents;
+ 
+ 	graft = lookup_commit_graft(item->object.sha1);
+-	while (bufptr + 48 < tail && !memcmp(bufptr, "parent ", 7)) {
++	while (bufptr + parent_entry_len < tail && !memcmp(bufptr, "parent ", 7)) {
+ 		struct commit *new_parent;
+ 
+-		if (tail <= bufptr + 48 ||
+-		    get_sha1_hex(bufptr + 7, parent) ||
+-		    bufptr[47] != '\n')
++		if (tail <= bufptr + parent_entry_len + 1 ||
++		    get_sha1_hex(bufptr + 7, parent.hash) ||
++		    bufptr[parent_entry_len] != '\n')
+ 			return error("bad parents in commit %s", sha1_to_hex(item->object.sha1));
+-		bufptr += 48;
++		bufptr += parent_entry_len + 1;
+ 		/*
+ 		 * The clone is shallow if nr_parent < 0, and we must
+ 		 * not traverse its real parents even when we unhide them.
+ 		 */
+ 		if (graft && (graft->nr_parent < 0 || grafts_replace_parents))
+ 			continue;
+-		new_parent = lookup_commit(parent);
++		new_parent = lookup_commit(parent.hash);
+ 		if (new_parent)
+ 			pptr = &commit_list_insert(new_parent, pptr)->next;
+ 	}
+@@ -342,7 +346,7 @@ int parse_commit_buffer(struct commit *item, const void *buffer, unsigned long s
+ 		int i;
+ 		struct commit *new_parent;
+ 		for (i = 0; i < graft->nr_parent; i++) {
+-			new_parent = lookup_commit(graft->parent[i]);
++			new_parent = lookup_commit(graft->parent[i].hash);
+ 			if (!new_parent)
+ 				continue;
+ 			pptr = &commit_list_insert(new_parent, pptr)->next;
+@@ -1580,10 +1584,10 @@ struct commit *get_merge_parent(const char *name)
+ {
+ 	struct object *obj;
+ 	struct commit *commit;
+-	unsigned char sha1[20];
+-	if (get_sha1(name, sha1))
++	struct object_id oid;
++	if (get_sha1(name, oid.hash))
+ 		return NULL;
+-	obj = parse_object(sha1);
++	obj = parse_object(oid.hash);
+ 	commit = (struct commit *)peel_to_type(name, 0, obj, OBJ_COMMIT);
+ 	if (commit && !commit->util) {
+ 		struct merge_remote_desc *desc;
+diff --git a/commit.h b/commit.h
+index 9f189cb..ed3a1d5 100644
+--- a/commit.h
++++ b/commit.h
+@@ -226,9 +226,9 @@ enum rev_sort_order {
+ void sort_in_topological_order(struct commit_list **, enum rev_sort_order);
+ 
+ struct commit_graft {
+-	unsigned char sha1[20];
++	struct object_id oid;
+ 	int nr_parent; /* < 0 if shallow commit */
+-	unsigned char parent[FLEX_ARRAY][20]; /* more */
++	struct object_id parent[FLEX_ARRAY]; /* more */
+ };
+ typedef int (*each_commit_graft_fn)(const struct commit_graft *, void *);
+ 
+diff --git a/log-tree.c b/log-tree.c
+index 7f0890e..51cc695 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -137,7 +137,7 @@ static int add_ref_decoration(const char *refname, const unsigned char *sha1, in
+ 
+ static int add_graft_decoration(const struct commit_graft *graft, void *cb_data)
+ {
+-	struct commit *commit = lookup_commit(graft->sha1);
++	struct commit *commit = lookup_commit(graft->oid.hash);
+ 	if (!commit)
+ 		return 0;
+ 	add_name_decoration(DECORATION_GRAFTED, "grafted", &commit->object);
+diff --git a/send-pack.c b/send-pack.c
+index 9d2b0c5..b2fd767 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -182,7 +182,7 @@ static int advertise_shallow_grafts_cb(const struct commit_graft *graft, void *c
+ {
+ 	struct strbuf *sb = cb;
+ 	if (graft->nr_parent == -1)
+-		packet_buf_write(sb, "shallow %s\n", sha1_to_hex(graft->sha1));
++		packet_buf_write(sb, "shallow %s\n", oid_to_hex(&graft->oid));
+ 	return 0;
+ }
+ 
+diff --git a/shallow.c b/shallow.c
+index d8bf40a..d08d264 100644
+--- a/shallow.c
++++ b/shallow.c
+@@ -31,7 +31,7 @@ int register_shallow(const unsigned char *sha1)
+ 		xmalloc(sizeof(struct commit_graft));
+ 	struct commit *commit = lookup_commit(sha1);
+ 
+-	hashcpy(graft->sha1, sha1);
++	hashcpy(graft->oid.hash, sha1);
+ 	graft->nr_parent = -1;
+ 	if (commit && commit->object.parsed)
+ 		commit->parents = NULL;
+@@ -159,11 +159,11 @@ struct write_shallow_data {
+ static int write_one_shallow(const struct commit_graft *graft, void *cb_data)
+ {
+ 	struct write_shallow_data *data = cb_data;
+-	const char *hex = sha1_to_hex(graft->sha1);
++	const char *hex = oid_to_hex(&graft->oid);
+ 	if (graft->nr_parent != -1)
+ 		return 0;
+ 	if (data->flags & SEEN_ONLY) {
+-		struct commit *c = lookup_commit(graft->sha1);
++		struct commit *c = lookup_commit(graft->oid.hash);
+ 		if (!c || !(c->object.flags & SEEN)) {
+ 			if (data->flags & VERBOSE)
+ 				printf("Removing %s from .git/shallow\n",
+@@ -282,7 +282,7 @@ static int advertise_shallow_grafts_cb(const struct commit_graft *graft, void *c
+ {
+ 	int fd = *(int *)cb;
+ 	if (graft->nr_parent == -1)
+-		packet_write(fd, "shallow %s\n", sha1_to_hex(graft->sha1));
++		packet_write(fd, "shallow %s\n", oid_to_hex(&graft->oid));
+ 	return 0;
+ }
+ 
+diff --git a/upload-pack.c b/upload-pack.c
+index b531a32..0566ce0 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -74,7 +74,7 @@ static int write_one_shallow(const struct commit_graft *graft, void *cb_data)
+ {
+ 	FILE *fp = cb_data;
+ 	if (graft->nr_parent == -1)
+-		fprintf(fp, "--shallow %s\n", sha1_to_hex(graft->sha1));
++		fprintf(fp, "--shallow %s\n", oid_to_hex(&graft->oid));
+ 	return 0;
+ }
+ 
 -- 
 2.2.1.209.g41e5f3a
