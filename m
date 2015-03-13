@@ -1,281 +1,126 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v5 2/2] t7102: add 'reset -' tests
-Date: Fri, 13 Mar 2015 17:10:43 -0400
-Message-ID: <CAPig+cRQ9ZZ9573SvA9HPNLtE6s0U6TGnDfgpRD-osReAQgJJA@mail.gmail.com>
-References: <1426270716-22405-1-git-send-email-sudshekhar02@gmail.com>
-	<1426270716-22405-2-git-send-email-sudshekhar02@gmail.com>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v2 00/10] Use a structure for object IDs.
+Date: Fri, 13 Mar 2015 22:45:24 +0000
+Message-ID: <20150313224524.GG46326@vauxhall.crustytoothpaste.net>
+References: <1425770645-628957-1-git-send-email-sandals@crustytoothpaste.net>
+ <5500689A.5090101@alum.mit.edu>
+ <xmqqk2yn5l39.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>,
-	David Aguilar <davvid@gmail.com>
-To: Sudhanshu Shekhar <sudshekhar02@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 13 22:10:51 2015
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="gvF4niNJ+uBMJnEh"
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
+	Andreas Schwab <schwab@linux-m68k.org>,
+	"Kyle J. McKay" <mackyle@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Johannes Sixt <j6t@kdbg.org>, David Kastrup <dak@gnu.org>,
+	James Denholm <nod.helm@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 13 23:45:42 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YWWr3-0005f6-Mk
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Mar 2015 22:10:50 +0100
+	id 1YWYKp-0001ve-QT
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Mar 2015 23:45:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752552AbbCMVKp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Mar 2015 17:10:45 -0400
-Received: from mail-yk0-f171.google.com ([209.85.160.171]:39416 "EHLO
-	mail-yk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752543AbbCMVKo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Mar 2015 17:10:44 -0400
-Received: by ykp131 with SMTP id 131so11659015ykp.6
-        for <git@vger.kernel.org>; Fri, 13 Mar 2015 14:10:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=gD8mfgMZE6HoGPIsz5/kJ7Nh4BOQOn4eptm425Q+MOc=;
-        b=C5rZ03Xu927o5uZyCAdGIKAw8u2J8Q2tdnWtL0092ebeV3+PXcHbn1pduuFwqii01Y
-         Fp/+NSaZJRlX5LH+tAPAavEJ+uyxUwi/pNxgOLl1OgXTZvkRA4xhUBJdQ6txUzdlK9A+
-         Jj5l/UQbsDLprAeHkatnDhRnj+EY5RLOTrCbY9YZpHcjfVKbXuEuk+ke56oloyQ53Akg
-         aM+ln6Un/2t7CL/lixxMulnOvZSu9nca3uSYyHCFnRo6fV0xCeTJYbD7JrUp5oeDyS+Z
-         aygEPgSbzVyUDlB27v8obsm6S6+p7fHMr5TCqrKRnvmESxSorYIfv4D+dv2NHgCiK5D7
-         ZTrg==
-X-Received: by 10.236.202.238 with SMTP id d74mr49033664yho.166.1426281043360;
- Fri, 13 Mar 2015 14:10:43 -0700 (PDT)
-Received: by 10.170.73.7 with HTTP; Fri, 13 Mar 2015 14:10:43 -0700 (PDT)
-In-Reply-To: <1426270716-22405-2-git-send-email-sudshekhar02@gmail.com>
-X-Google-Sender-Auth: zA3mMzcBuncK7ju4MwHUWr0qTkY
+	id S1752661AbbCMWpe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Mar 2015 18:45:34 -0400
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:50088 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751437AbbCMWpd (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 13 Mar 2015 18:45:33 -0400
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:d0c6:418b:e1a:b913])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id B58D12808F;
+	Fri, 13 Mar 2015 22:45:30 +0000 (UTC)
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
+	Andreas Schwab <schwab@linux-m68k.org>,
+	"Kyle J. McKay" <mackyle@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Johannes Sixt <j6t@kdbg.org>, David Kastrup <dak@gnu.org>,
+	James Denholm <nod.helm@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <xmqqk2yn5l39.fsf@gitster.dls.corp.google.com>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 3.19.0-trunk-amd64)
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265421>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265423>
 
-On Fri, Mar 13, 2015 at 2:18 PM, Sudhanshu Shekhar
-<sudshekhar02@gmail.com> wrote:
-> Add following test cases:
-> 1) Confirm error message when git reset is used with no previous branch
-> 2) Confirm git reset - works like git reset @{-1}
-> 3) Confirm "-" is always treated as a commit unless the -- file option
-> is specified
-> 4) Confirm "git reset -" works normally even when a file named @{-1} is
-> present
+
+--gvF4niNJ+uBMJnEh
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Wed, Mar 11, 2015 at 01:35:06PM -0700, Junio C Hamano wrote:
+>Michael Haggerty <mhagger@alum.mit.edu> writes:
+>> 4. We continue to support working with SHA-1s declared to be (unsigned
+>> char *) in some performance-critical code, even as we migrate most other
+>> code to using SHA-1s embedded within a (struct object_id). This will
+>> cost some duplication of code. To accept this approach, we would need an
+>> idea of *how much* code duplication would be needed. E.g., how many
+>> functions will need both (unsigned char *) versions and (struct
+>> object_id *) versions?
 >
-> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-> Helped-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-> Helped-by: David Aguilar <davvid@gmail.com>
-> Signed-off-by: Sudhanshu Shekhar <sudshekhar02@gmail.com>
-> ---
-> Eric: Thank you for pointing out the mistake. The '&&' after the Here
-> Docs was causing the issue. I have removed the concatenation from
-> there, hope that's okay.
-
-The && needs to go on the first line, not the last line of the here-doc.
-
-However, that was not my main concern in the previous review. What
-disturbed me was that the new tests, which were supposed to be
-checking if "-" behaved as @{-1}, were succeeding even without patch
-1/2 applied which implemented the "-" alias for @{-1}. That seems
-wrong. I don't think you particularly addressed that issue in this
-version (even though the first couple tests will now fail without 1/2
-due to the changed error message).
-
-> Regarding the @{-1} test case, I created it as a check for Junio's
-> comment on the error message generated by "git reset -" when a file
-> named @{-1} is there.  Since, in this situation "git reset @{-1}" will
-> return an error (but "reset -" shouldn't).
-
-Reminder: Wrap commentary to about column 72, as you would the commit
-message. (I re-wrapped it manually to reply to it.)
-
-> I have renamed the folder to 'dash' as suggested by you, keeping the
-> old name only where it made sense.
-
-Considering that the test titles already tell us the intent of the
-tests, I don't find that the directory name "no_previous" adds much
-value to tests checking the behavior of "-" with no previous branch. A
-single, consistent name used throughout all these tests would be less
-surprising and place smaller cognitive load on the reader.
-
-More below.
-
-> diff --git a/t/t7102-reset.sh b/t/t7102-reset.sh
-> index 98bcfe2..18523c1 100755
-> --- a/t/t7102-reset.sh
-> +++ b/t/t7102-reset.sh
-> @@ -568,4 +568,162 @@ test_expect_success 'reset --mixed sets up work tree' '
->         test_cmp expect actual
->  '
+>Ideally, only the ones that knows the underlying hash function is
+>SHA-1 (i.e. anybody who mentions git_SHA_CTX), moves bytes from/to
+>in-core object name field and raw range of bytes (e.g. sha1hash());
+>everybody else like hashcpy() and hashcmp() should be able to do its
+>thing only on structs and a generic-looking constant that denotes
+>how many bytes there are in the hash (or even sizeof(struct oid)).
 >
-> +test_expect_success 'reset - with no previous branch fails' '
-> +       git init no_previous &&
-> +       test_when_finished rm -rf no_previous &&
-> +       (
-> +               cd no_previous &&
-> +               test_must_fail git reset - 2>actual
-> +       ) &&
-> +       test_i18ngrep "ambiguous argument" no_previous/actual
-> +'
-> +
-> +test_expect_success 'reset - while having file named - and no previous branch fails' '
-> +       git init no_previous &&
-> +       test_when_finished rm -rf no_previous &&
-> +       (
-> +               cd no_previous &&
-> +               >- &&
-> +               test_must_fail git reset - 2>actual
-> +       ) &&
-> +       test_i18ngrep "ambiguous argument" no_previous/actual
-> +'
-> +
-> +
+>I do not know what kind of code duplication you are worried about,
+>though.  If a callee needs "unsigned char *", the caller that has a
+>"struct object_id *o" should pass o->hash to the callee.
 
-Style: Unnecessary extra blank line.
+That's the plan.  My goal (which may or may not be achievable) is to
+make hashcpy, hashcmp, and similar functions an implementation detail of
+struct object_id functions.  If we have to use o->hash somewhere, okay.
+I'm much more interested in practicality than theoretical purity.  I
+want these changes to provide easier-to-change, more maintainable code,
+not more complex and difficult code.
 
-> +test_expect_success \
-> +       'reset - in the presence of file named - with previous branch resets commit' '
-> +       cat >expect <<-EOF
+>And please do not suggest switching to C++; all it would do to
+>overload these into a single name is to make the callers harder to
+>read.
 
-Place the && at the end of this line. Also, prefix EOF with a
-backslash to indicate that you don't intend any interpolation to occur
-within the here-doc. So:
+I'm not considering that.  I've attempted to compile git with g++
+before as an idle curiosity, and I gave up almost immediately because it
+looked like a bunch of work.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
 
-    cat >expect <<-\EOF &&
+--gvF4niNJ+uBMJnEh
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
-Ditto for the remaining tests.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-> +       Unstaged changes after reset:
-> +       M       -
-> +       M       file
-> +       EOF
-> +       git init dash &&
-> +       test_when_finished rm -rf dash &&
-> +       (
-> +               cd dash &&
-> +               >- &&
-> +               >file &&
-> +               git add file - &&
-> +               git commit -m "add base files" &&
-> +               git checkout -b new_branch &&
-> +               echo "random" >- &&
-> +               echo "wow" >file &&
-> +               git add file - &&
-> +               git reset - >../actual
-> +       ) &&
-> +       test_cmp expect actual
-> +'
-> +test_expect_success \
-> +       'reset - in the presence of file named - with -- option resets commit' '
-> +       cat >expect <<-EOF
-> +       Unstaged changes after reset:
-> +       M       -
-> +       M       file
-> +       EOF
-> +       git init dash &&
-> +       test_when_finished rm -rf dash &&
-> +       (
-> +               cd dash &&
-> +               >- &&
-> +               >file &&
-> +               git add file - &&
-> +               git commit -m "add base files" &&
-> +               git checkout -b new_branch &&
-> +               echo "random" >- &&
-> +               echo "wow" >file &&
-> +               git add file - &&
-> +               git reset - -- >../actual
-> +       ) &&
-> +       test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'reset - in the presence of file named - with -- file option resets file' '
-> +       cat >expect <<-EOF
-> +       Unstaged changes after reset:
-> +       M       -
-> +       EOF
-> +       git init dash &&
-> +       test_when_finished rm -rf dash &&
-> +       (
-> +               cd dash &&
-> +               >- &&
-> +               >file &&
-> +               git add file - &&
-> +               git commit -m "add base files" &&
-> +               git checkout -b new_branch &&
-> +               echo "random" >- &&
-> +               echo "wow" >file &&
-> +               git add file - &&
-> +               git reset -- - >../actual
-> +       ) &&
-> +       test_cmp expect actual
-> +'
-> +test_expect_success \
-> +       'reset - in the presence of file named - with both pre and post -- option resets file' '
-> +       cat >expect <<-EOF
-> +       Unstaged changes after reset:
-> +       M       -
-> +       EOF
-> +       git init dash &&
-> +       test_when_finished rm -rf dash &&
-> +       (
-> +               cd dash &&
-> +               >- &&
-> +               >file &&
-> +               git add file - &&
-> +               git commit -m "add base files" &&
-> +               git checkout -b new_branch &&
-> +               echo "random" >- &&
-> +               echo "wow" >file &&
-> +               git add file - &&
-> +               git reset - -- - >../actual
-> +       ) &&
-> +       test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'reset - works same as reset @{-1}' '
-> +       git init dash &&
-> +       test_when_finished rm -rf dash &&
-> +       (
-> +               cd dash &&
-> +               echo "file1" >file1 &&
-> +               git add file1 &&
-> +               git commit -m "base commit" &&
-> +               git checkout -b temp &&
-> +               echo "new file" >file &&
-> +               git add file &&
-> +               git commit -m "added file" &&
-> +               git reset - &&
-> +               git status --porcelain >../actual &&
-> +               git add file &&
-> +               git commit -m "added file" &&
-> +               git reset @{-1} &&
-> +               git status --porcelain >../expect
-> +       ) &&
-> +       test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'reset - with file named @{-1} succeeds' '
-> +       cat >expect <<-EOF
-> +       Unstaged changes after reset:
-> +       M       @{-1}
-> +       M       file
-> +       EOF
-> +       git init dash &&
-> +       test_when_finished rm -rf dash &&
-> +       (
-> +               cd dash &&
-> +               echo "random" >@{-1} &&
-> +               echo "random" >file &&
-> +               git add @{-1} file &&
-> +               git commit -m "base commit" &&
-> +               git checkout -b new_branch &&
-> +               echo "additional stuff" >>file &&
-> +               echo "additional stuff" >>@{-1} &&
-> +               git add file @{-1} &&
-> +               git reset - >../actual
-> +       ) &&
-> +       test_cmp expect actual
-> +'
-> +
->  test_done
-> --
-> 2.3.1.277.gd67f9d5.dirty
+iQIcBAEBCgAGBQJVA2iEAAoJEL9TXYEfUvaLGuAQAIL1oa29PXw6sOwjbAT4jn1f
+aKKi0yhP8PKGLbIx57burmVNP3E6VGJbfyYonNXFpno0urdkcCEXBc8MkblcMxLc
+tofGFD8r0ZPviAjiKHbRkQWEdgx8b/hMUV5qGmnFy/0F1hqPNwylkARbAoNFiyj6
+ejHnUYXDs0ZUyQSIraoC90o4OiBlI10dkiJrXTL4V1whsZnKhQgtObwtXO3NFmnb
++FfwIKt+ZU3srj0MHI2ZQ6PWcSHC5hxAfON/GK904pNG/L/u7iqfMsaxwgdjcdPX
+in0aeamkV0Euw+N22Sa6y8nanrvwcRUTAGyltlcRSdlgYnOYCP20SoF5kT6plNrJ
+MQO49JfJubo0EqwAYp3AxGcGzdiCGcdKr96/Y4ZXtXUumE5gaSD0ZyOqSmpZGiTt
+lzOk6K25Ow5FdnKvMvQKEnYkCDeEJagNO7x6kmj9hw8YvPy4c8qsQUYNZKTithFE
+IKvGq5qhXFytH5LzimDA7c5Wx1n2kRVdJh56P7p8fB5xNSZz9nGodefuqikszDD6
+zA0WGTfnCDUjnnTnN44TEJHa5jP6PfDgDCAEmlJv4p1M7s99fgXEJnYzIrVbEgbX
+QOVrhrwyzIND9GdKrZx59y+OMZfDYFq7L3RP2rfY3X80apwhEIoxvNFLToUF0Iqq
+jN7FauxvXJiyr6p7Dfrj
+=18TM
+-----END PGP SIGNATURE-----
+
+--gvF4niNJ+uBMJnEh--
