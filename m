@@ -1,7 +1,7 @@
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH v2 02/10] Define utility functions for object IDs.
-Date: Fri, 13 Mar 2015 23:39:28 +0000
-Message-ID: <1426289976-568060-3-git-send-email-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 03/10] bisect.c: convert leaf functions to use struct object_id
+Date: Fri, 13 Mar 2015 23:39:29 +0000
+Message-ID: <1426289976-568060-4-git-send-email-sandals@crustytoothpaste.net>
 References: <1426289976-568060-1-git-send-email-sandals@crustytoothpaste.net>
 Cc: Andreas Schwab <schwab@linux-m68k.org>,
 	"Kyle J. McKay" <mackyle@gmail.com>,
@@ -10,26 +10,26 @@ Cc: Andreas Schwab <schwab@linux-m68k.org>,
 	Johannes Sixt <j6t@kdbg.org>, David Kastrup <dak@gnu.org>,
 	James Denholm <nod.helm@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 14 00:40:55 2015
+X-From: git-owner@vger.kernel.org Sat Mar 14 00:40:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YWZCG-0000Q0-Cg
+	id 1YWZCF-0000Q0-QL
 	for gcvg-git-2@plane.gmane.org; Sat, 14 Mar 2015 00:40:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751289AbbCMXkn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Mar 2015 19:40:43 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:50110 "EHLO
+	id S1755340AbbCMXkl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Mar 2015 19:40:41 -0400
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:50119 "EHLO
 	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751831AbbCMXkK (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 13 Mar 2015 19:40:10 -0400
+	by vger.kernel.org with ESMTP id S1751289AbbCMXkL (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 13 Mar 2015 19:40:11 -0400
 Received: from vauxhall.crustytoothpaste.net (unknown [172.16.2.247])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id DF6B128093;
-	Fri, 13 Mar 2015 23:40:09 +0000 (UTC)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 616D128094;
+	Fri, 13 Mar 2015 23:40:10 +0000 (UTC)
 X-Mailer: git-send-email 2.2.1.209.g41e5f3a
 In-Reply-To: <1426289976-568060-1-git-send-email-sandals@crustytoothpaste.net>
 X-Spam-Score: -2.5 ALL_TRUSTED,BAYES_00
@@ -37,146 +37,168 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265433>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265434>
 
-There are several utility functions (hashcmp and friends) that are used
-for comparing object IDs (SHA-1 values).  Using these functions, which
-take pointers to unsigned char, with struct object_id requires tiresome
-access to the sha1 member, which bloats code and violates the desired
-encapsulation.  Provide wrappers around these functions for struct
-object_id for neater, more maintainable code.  Use the new constants to
-avoid the hard-coded 20s and 40s throughout the original functions.
-
-These functions simply call the underlying pointer-to-unsigned-char
-versions to ensure that any performance improvements will be passed
-through to the new functions.
+Convert some constants to GIT_SHA1_HEXSZ.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- cache.h | 32 ++++++++++++++++++++++++++++----
- hex.c   | 16 +++++++++++++---
- 2 files changed, 41 insertions(+), 7 deletions(-)
+ bisect.c | 40 ++++++++++++++++++++--------------------
+ 1 file changed, 20 insertions(+), 20 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index 6582c35..95206a3 100644
---- a/cache.h
-+++ b/cache.h
-@@ -718,13 +718,13 @@ extern char *sha1_pack_name(const unsigned char *sha1);
- extern char *sha1_pack_index_name(const unsigned char *sha1);
+diff --git a/bisect.c b/bisect.c
+index 8c6d843..10f5e57 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -15,7 +15,7 @@
+ static struct sha1_array good_revs;
+ static struct sha1_array skipped_revs;
  
- extern const char *find_unique_abbrev(const unsigned char *sha1, int);
--extern const unsigned char null_sha1[20];
-+extern const unsigned char null_sha1[GIT_SHA1_RAWSZ];
+-static unsigned char *current_bad_sha1;
++static struct object_id *current_bad_oid;
  
- static inline int hashcmp(const unsigned char *sha1, const unsigned char *sha2)
+ static const char *argv_checkout[] = {"checkout", "-q", NULL, "--", NULL};
+ static const char *argv_show_branch[] = {"show-branch", NULL, NULL};
+@@ -404,8 +404,8 @@ static int register_ref(const char *refname, const unsigned char *sha1,
+ 			int flags, void *cb_data)
  {
- 	int i;
+ 	if (!strcmp(refname, "bad")) {
+-		current_bad_sha1 = xmalloc(20);
+-		hashcpy(current_bad_sha1, sha1);
++		current_bad_oid = xmalloc(sizeof(*current_bad_oid));
++		hashcpy(current_bad_oid->hash, sha1);
+ 	} else if (starts_with(refname, "good-")) {
+ 		sha1_array_append(&good_revs, sha1);
+ 	} else if (starts_with(refname, "skip-")) {
+@@ -564,7 +564,7 @@ static struct commit_list *skip_away(struct commit_list *list, int count)
  
--	for (i = 0; i < 20; i++, sha1++, sha2++) {
-+	for (i = 0; i < GIT_SHA1_RAWSZ; i++, sha1++, sha2++) {
- 		if (*sha1 != *sha2)
- 			return *sha1 - *sha2;
+ 	for (i = 0; cur; cur = cur->next, i++) {
+ 		if (i == index) {
+-			if (hashcmp(cur->item->object.sha1, current_bad_sha1))
++			if (hashcmp(cur->item->object.sha1, current_bad_oid->hash))
+ 				return cur;
+ 			if (previous)
+ 				return previous;
+@@ -607,7 +607,7 @@ static void bisect_rev_setup(struct rev_info *revs, const char *prefix,
+ 
+ 	/* rev_argv.argv[0] will be ignored by setup_revisions */
+ 	argv_array_push(&rev_argv, "bisect_rev_setup");
+-	argv_array_pushf(&rev_argv, bad_format, sha1_to_hex(current_bad_sha1));
++	argv_array_pushf(&rev_argv, bad_format, oid_to_hex(current_bad_oid));
+ 	for (i = 0; i < good_revs.nr; i++)
+ 		argv_array_pushf(&rev_argv, good_format,
+ 				 sha1_to_hex(good_revs.sha1[i]));
+@@ -628,7 +628,7 @@ static void bisect_common(struct rev_info *revs)
+ }
+ 
+ static void exit_if_skipped_commits(struct commit_list *tried,
+-				    const unsigned char *bad)
++				    const struct object_id *bad)
+ {
+ 	if (!tried)
+ 		return;
+@@ -637,12 +637,12 @@ static void exit_if_skipped_commits(struct commit_list *tried,
+ 	       "The first bad commit could be any of:\n");
+ 	print_commit_list(tried, "%s\n", "%s\n");
+ 	if (bad)
+-		printf("%s\n", sha1_to_hex(bad));
++		printf("%s\n", oid_to_hex(bad));
+ 	printf("We cannot bisect more!\n");
+ 	exit(2);
+ }
+ 
+-static int is_expected_rev(const unsigned char *sha1)
++static int is_expected_rev(const struct object_id *oid)
+ {
+ 	const char *filename = git_path("BISECT_EXPECTED_REV");
+ 	struct stat st;
+@@ -658,7 +658,7 @@ static int is_expected_rev(const unsigned char *sha1)
+ 		return 0;
+ 
+ 	if (strbuf_getline(&str, fp, '\n') != EOF)
+-		res = !strcmp(str.buf, sha1_to_hex(sha1));
++		res = !strcmp(str.buf, oid_to_hex(oid));
+ 
+ 	strbuf_release(&str);
+ 	fclose(fp);
+@@ -719,7 +719,7 @@ static struct commit **get_bad_and_good_commits(int *rev_nr)
+ 	struct commit **rev = xmalloc(len * sizeof(*rev));
+ 	int i, n = 0;
+ 
+-	rev[n++] = get_commit_reference(current_bad_sha1);
++	rev[n++] = get_commit_reference(current_bad_oid->hash);
+ 	for (i = 0; i < good_revs.nr; i++)
+ 		rev[n++] = get_commit_reference(good_revs.sha1[i]);
+ 	*rev_nr = n;
+@@ -729,8 +729,8 @@ static struct commit **get_bad_and_good_commits(int *rev_nr)
+ 
+ static void handle_bad_merge_base(void)
+ {
+-	if (is_expected_rev(current_bad_sha1)) {
+-		char *bad_hex = sha1_to_hex(current_bad_sha1);
++	if (is_expected_rev(current_bad_oid)) {
++		char *bad_hex = oid_to_hex(current_bad_oid);
+ 		char *good_hex = join_sha1_array_hex(&good_revs, ' ');
+ 
+ 		fprintf(stderr, "The merge base %s is bad.\n"
+@@ -750,7 +750,7 @@ static void handle_bad_merge_base(void)
+ static void handle_skipped_merge_base(const unsigned char *mb)
+ {
+ 	char *mb_hex = sha1_to_hex(mb);
+-	char *bad_hex = sha1_to_hex(current_bad_sha1);
++	char *bad_hex = sha1_to_hex(current_bad_oid->hash);
+ 	char *good_hex = join_sha1_array_hex(&good_revs, ' ');
+ 
+ 	warning("the merge base between %s and [%s] "
+@@ -781,7 +781,7 @@ static void check_merge_bases(int no_checkout)
+ 
+ 	for (; result; result = result->next) {
+ 		const unsigned char *mb = result->item->object.sha1;
+-		if (!hashcmp(mb, current_bad_sha1)) {
++		if (!hashcmp(mb, current_bad_oid->hash)) {
+ 			handle_bad_merge_base();
+ 		} else if (0 <= sha1_array_lookup(&good_revs, mb)) {
+ 			continue;
+@@ -838,7 +838,7 @@ static void check_good_are_ancestors_of_bad(const char *prefix, int no_checkout)
+ 	struct stat st;
+ 	int fd;
+ 
+-	if (!current_bad_sha1)
++	if (!current_bad_oid)
+ 		die("a bad revision is needed");
+ 
+ 	/* Check if file BISECT_ANCESTORS_OK exists. */
+@@ -903,7 +903,7 @@ int bisect_next_all(const char *prefix, int no_checkout)
+ 	struct commit_list *tried;
+ 	int reaches = 0, all = 0, nr, steps;
+ 	const unsigned char *bisect_rev;
+-	char bisect_rev_hex[41];
++	char bisect_rev_hex[GIT_SHA1_HEXSZ + 1];
+ 
+ 	if (read_bisect_refs())
+ 		die("reading bisect refs failed");
+@@ -927,7 +927,7 @@ int bisect_next_all(const char *prefix, int no_checkout)
+ 		exit_if_skipped_commits(tried, NULL);
+ 
+ 		printf("%s was both good and bad\n",
+-		       sha1_to_hex(current_bad_sha1));
++		       oid_to_hex(current_bad_oid));
+ 		exit(1);
  	}
-@@ -732,20 +732,42 @@ static inline int hashcmp(const unsigned char *sha1, const unsigned char *sha2)
- 	return 0;
- }
  
-+static inline int oidcmp(const struct object_id *oid1, const struct object_id *oid2)
-+{
-+	return hashcmp(oid1->hash, oid2->hash);
-+}
-+
- static inline int is_null_sha1(const unsigned char *sha1)
- {
- 	return !hashcmp(sha1, null_sha1);
- }
+@@ -938,10 +938,10 @@ int bisect_next_all(const char *prefix, int no_checkout)
+ 	}
  
-+static inline int is_null_oid(const struct object_id *oid)
-+{
-+	return !hashcmp(oid->hash, null_sha1);
-+}
-+
- static inline void hashcpy(unsigned char *sha_dst, const unsigned char *sha_src)
- {
--	memcpy(sha_dst, sha_src, 20);
-+	memcpy(sha_dst, sha_src, GIT_SHA1_RAWSZ);
- }
-+
-+static inline void oidcpy(struct object_id *dst, const struct object_id *src)
-+{
-+	hashcpy(dst->hash, src->hash);
-+}
-+
- static inline void hashclr(unsigned char *hash)
- {
--	memset(hash, 0, 20);
-+	memset(hash, 0, GIT_SHA1_RAWSZ);
- }
+ 	bisect_rev = revs.commits->item->object.sha1;
+-	memcpy(bisect_rev_hex, sha1_to_hex(bisect_rev), 41);
++	memcpy(bisect_rev_hex, sha1_to_hex(bisect_rev), GIT_SHA1_HEXSZ + 1);
  
-+static inline void oidclr(struct object_id *oid)
-+{
-+	hashclr(oid->hash);
-+}
-+
-+
- #define EMPTY_TREE_SHA1_HEX \
- 	"4b825dc642cb6eb9a060e54bf8d69288fbee4904"
- #define EMPTY_TREE_SHA1_BIN_LITERAL \
-@@ -952,8 +974,10 @@ extern int for_each_abbrev(const char *prefix, each_abbrev_fn, void *);
-  * null-terminated string.
-  */
- extern int get_sha1_hex(const char *hex, unsigned char *sha1);
-+extern int get_oid_hex(const char *hex, struct object_id *sha1);
- 
- extern char *sha1_to_hex(const unsigned char *sha1);	/* static buffer result! */
-+extern char *oid_to_hex(const struct object_id *oid);	/* same static buffer as sha1_to_hex */
- extern int read_ref_full(const char *refname, int resolve_flags,
- 			 unsigned char *sha1, int *flags);
- extern int read_ref(const char *refname, unsigned char *sha1);
-diff --git a/hex.c b/hex.c
-index cfd9d72..899b74a 100644
---- a/hex.c
-+++ b/hex.c
-@@ -38,7 +38,7 @@ const signed char hexval_table[256] = {
- int get_sha1_hex(const char *hex, unsigned char *sha1)
- {
- 	int i;
--	for (i = 0; i < 20; i++) {
-+	for (i = 0; i < GIT_SHA1_RAWSZ; i++) {
- 		unsigned int val;
- 		/*
- 		 * hex[1]=='\0' is caught when val is checked below,
-@@ -56,15 +56,20 @@ int get_sha1_hex(const char *hex, unsigned char *sha1)
- 	return 0;
- }
- 
-+int get_oid_hex(const char *hex, struct object_id *oid)
-+{
-+	return get_sha1_hex(hex, oid->hash);
-+}
-+
- char *sha1_to_hex(const unsigned char *sha1)
- {
- 	static int bufno;
--	static char hexbuffer[4][41];
-+	static char hexbuffer[4][GIT_SHA1_HEXSZ + 1];
- 	static const char hex[] = "0123456789abcdef";
- 	char *buffer = hexbuffer[3 & ++bufno], *buf = buffer;
- 	int i;
- 
--	for (i = 0; i < 20; i++) {
-+	for (i = 0; i < GIT_SHA1_RAWSZ; i++) {
- 		unsigned int val = *sha1++;
- 		*buf++ = hex[val >> 4];
- 		*buf++ = hex[val & 0xf];
-@@ -73,3 +78,8 @@ char *sha1_to_hex(const unsigned char *sha1)
- 
- 	return buffer;
- }
-+
-+char *oid_to_hex(const struct object_id *oid)
-+{
-+	return sha1_to_hex(oid->hash);
-+}
+-	if (!hashcmp(bisect_rev, current_bad_sha1)) {
+-		exit_if_skipped_commits(tried, current_bad_sha1);
++	if (!hashcmp(bisect_rev, current_bad_oid->hash)) {
++		exit_if_skipped_commits(tried, current_bad_oid);
+ 		printf("%s is the first bad commit\n", bisect_rev_hex);
+ 		show_diff_tree(prefix, revs.commits->item);
+ 		/* This means the bisection process succeeded. */
 -- 
 2.2.1.209.g41e5f3a
