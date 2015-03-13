@@ -1,83 +1,71 @@
-From: Cody A Taylor <cody.taylor@maternityneighborhood.com>
-Subject: [PATCH v2] git prompt: Use toplevel to find untracked files.
-Date: Thu, 12 Mar 2015 19:24:50 -0700 (PDT)
-Message-ID: <20150313021910.11996.54041@catuvm>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 0/7] fix transfer.hiderefs with smart http
+Date: Fri, 13 Mar 2015 00:41:01 -0400
+Message-ID: <20150313044101.GA18476@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	=?utf-8?q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Mar 13 03:24:59 2015
+Content-Type: text/plain; charset=utf-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 13 05:41:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YWFHU-00035l-3U
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Mar 2015 03:24:56 +0100
+	id 1YWHPK-00086x-Sx
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Mar 2015 05:41:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753848AbbCMCYv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Mar 2015 22:24:51 -0400
-Received: from mail-qc0-f181.google.com ([209.85.216.181]:35563 "EHLO
-	mail-qc0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752256AbbCMCYv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Mar 2015 22:24:51 -0400
-Received: by qcwr17 with SMTP id r17so23632317qcw.2
-        for <git@vger.kernel.org>; Thu, 12 Mar 2015 19:24:50 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:content-type:mime-version
-         :content-transfer-encoding:to:cc:subject:message-id;
-        bh=HZYn+61FQgeXwLbIC/lf5nr8Ng5iaCEntwtTEleZNrc=;
-        b=eAIX5Oi7zhaiOswD3m7Z5J/O+roMWmI4W4MwgaNjiuUsB4rEztw1SMdAFY7rK8AGfx
-         P/Zt2NHDOfu/rQTA2Vd107GYqDam2KluC4/q5TCrf2adlz6ELvRkjNvfQ1MLedKdDlzV
-         utCqVyKCOIV3VY74eTIdvLrBKdpxUUeG8j7TB54O4c7f4+eD7jK01CRAaba4CUasgVUO
-         ciVLr2754mteO6qjrtpJhmPSJWXBET9WAnJUHwPP6VJUTA/oP/Cep1TNl/Bs48MizwH7
-         I9Tk76v0tHpdoOPrmKSyg2h8Qjb3F0OoSXRyhqjkU5Jq9E3peZ9wrqOZZ7CSfOoIRieU
-         EnTA==
-X-Gm-Message-State: ALoCoQnbhfHhMrjRXutQIcp+J3oUMDSbpYVluur+PtHyiIkVjLom0qCAjdX7PrHtIafRFSft2X4G
-X-Received: by 10.140.239.150 with SMTP id k144mr59496511qhc.77.1426213490437;
-        Thu, 12 Mar 2015 19:24:50 -0700 (PDT)
-Received: from [127.0.1.1] ([216.197.66.13])
-        by mx.google.com with ESMTPSA id 4sm525216qky.7.2015.03.12.19.24.49
-        for <git@vger.kernel.org>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 12 Mar 2015 19:24:50 -0700 (PDT)
-X-Google-Original-From: Cody A Taylor <codemister99@yahoo.com>
+	id S1751019AbbCMElG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Mar 2015 00:41:06 -0400
+Received: from cloud.peff.net ([50.56.180.127]:60806 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750740AbbCMElF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Mar 2015 00:41:05 -0400
+Received: (qmail 30363 invoked by uid 102); 13 Mar 2015 04:41:05 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 12 Mar 2015 23:41:05 -0500
+Received: (qmail 9449 invoked by uid 107); 13 Mar 2015 04:41:12 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 13 Mar 2015 00:41:12 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 13 Mar 2015 00:41:01 -0400
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265391>
 
->From c861d5cb401110ce7d86b76c1eaa8e89e80f484e Mon Sep 17 00:00:00 2001
-From: Cody A Taylor <codemister99@yahoo.com>
-Date: Thu, 12 Mar 2015 20:36:44 -0400
-Subject: [PATCH] git prompt: Use toplevel to find untracked files.
+I'm experimenting with using transfer.hiderefs on a server, and it's
+rather easy to cause a git client to hang when fetching from such a repo
+over smart http. Details are in the first patch.
 
-The __git_ps1() prompt function would not show an untracked
-state when the current working directory was not a parent of
-the untracked file.
+There are 7 patches here, but the entirety of the fix is contained in
+the first one. The rest are cleanups and test enhancements I found along
+the way. I moved the fix to the front of the series as we probably want
+it to go to "maint", but the others can wait (being mostly test
+modifications, they should not cause regressions, but they'd possibly
+want more cooking time in case I broke the test suite for somebody).
 
-Signed-off-by: Cody A Taylor <codemister99@yahoo.com>
----
- contrib/completion/git-prompt.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+The patches are:
 
-diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
-index 214e859f99e7..f18aedc73be9 100644
---- a/contrib/completion/git-prompt.sh
-+++ b/contrib/completion/git-prompt.sh
-@@ -487,7 +487,7 @@ __git_ps1 ()
- 
- 		if [ -n "${GIT_PS1_SHOWUNTRACKEDFILES-}" ] &&
- 		   [ "$(git config --bool bash.showUntrackedFiles)" != "false" ] &&
--		   git ls-files --others --exclude-standard --error-unmatch -- '*' >/dev/null 2>/dev/null
-+		   git ls-files --others --exclude-standard --error-unmatch -- ':/*' >/dev/null 2>/dev/null
- 		then
- 			u="%${ZSH_VERSION+%}"
- 		fi
--- 
-2.3.2
+  [1/7]: upload-pack: fix transfer.hiderefs over smart-http
+
+    The fix.
+
+  [2/7]: upload-pack: do not check NULL return of lookup_unknown_object
+
+    A nearby cleanup.
+
+  [3/7]: t: translate SIGINT to an exit
+  [4/7]: t: redirect stderr GIT_TRACE to descriptor 4
+  [5/7]: t: pass GIT_TRACE through Apache
+
+    These all solve irritations I had when trying to debug the test.
+
+  [6/7]: t5541: move run_with_cmdline_limit to test-lib.sh
+  [7/7]: t5551: make EXPENSIVE test cheaper
+
+    I had thought at first that the problem was related to large http
+    fetches, but it turned out not to be. But I think these cleanups
+    are a good thing, as they increase the default test coverage.
+
+-Peff
