@@ -1,73 +1,152 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 0/7] fix transfer.hiderefs with smart http
-Date: Fri, 13 Mar 2015 12:21:11 +0700
-Message-ID: <CACsJy8B+dWoq+ide2_-zJuLqFzg2WM3XuyL2B77PrR=PdrBfeQ@mail.gmail.com>
-References: <20150313044101.GA18476@peff.net> <20150313045952.GA18853@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 01/10] Define a structure for object IDs.
+Date: Thu, 12 Mar 2015 23:03:05 -0700
+Message-ID: <xmqqwq2lzb6u.fsf@gitster.dls.corp.google.com>
+References: <1425770645-628957-1-git-send-email-sandals@crustytoothpaste.net>
+	<1425770645-628957-2-git-send-email-sandals@crustytoothpaste.net>
+	<CEA07500-9F47-4B24-AD5D-1423A601A4DD@gmail.com>
+	<20150311220825.GB46326@vauxhall.crustytoothpaste.net>
+	<xmqqr3sv3vsf.fsf@gitster.dls.corp.google.com>
+	<55016A3A.6010100@alum.mit.edu>
+	<20150312104651.GF46326@vauxhall.crustytoothpaste.net>
+	<CACsJy8AL0jGwzTfWDSszkvyqzNtPA7o7vQRT5NFaBYrVU02nOA@mail.gmail.com>
+	<xmqqwq2m2hwf.fsf@gitster.dls.corp.google.com>
+	<CACsJy8CMZbwyBayX-bbWmGwV=AWC000Yx6LfzOcB2irq2X6qHQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Mar 13 06:21:49 2015
+Content-Type: text/plain
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	"Kyle J. McKay" <mackyle@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Andreas Schwab <schwab@linux-m68k.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 13 07:03:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YWI2c-0005P1-R6
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Mar 2015 06:21:47 +0100
+	id 1YWIgl-0002uy-J1
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Mar 2015 07:03:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751120AbbCMFVm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Mar 2015 01:21:42 -0400
-Received: from mail-ie0-f179.google.com ([209.85.223.179]:36695 "EHLO
-	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751019AbbCMFVl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Mar 2015 01:21:41 -0400
-Received: by iegc3 with SMTP id c3so85715316ieg.3
-        for <git@vger.kernel.org>; Thu, 12 Mar 2015 22:21:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=cOtWKHp2YPaWlAMvDxm1yDgY7wr8OA93bFQIZk4+gzY=;
-        b=jtUO7kTqKl9ClwERURirbYK6CIwd57lhz+MiLsEr6kRpM7piNr7SauxEHvocquuRZO
-         YLKzPjw3Dl+Oyn0ZmIhasoj3ro856Nj01egtayn40XAlJYRBFRS9ESlkW1tZA+9OapLG
-         DRtP6HfmsyePuYHgCPFLy+Qd21/6cso6ZjU3iTXjuwFk/+J3DhV/wYkdO5VRxQMBlnIv
-         UdRKqPadNl7qokVTttK5Y5y4POzKf16GigiD5gtsywHQZ98j8RGNzzIm+pD78qNqOSva
-         +Z1CAWlskKDj4e91gynzh3Ehc2AmWrNtjGrJPq13AxB5F7pM7mTr8QsGL60NZq7dTVFm
-         Wl0g==
-X-Received: by 10.43.13.200 with SMTP id pn8mr55747448icb.0.1426224101190;
- Thu, 12 Mar 2015 22:21:41 -0700 (PDT)
-Received: by 10.107.131.33 with HTTP; Thu, 12 Mar 2015 22:21:11 -0700 (PDT)
-In-Reply-To: <20150313045952.GA18853@peff.net>
+	id S1751905AbbCMGDL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Mar 2015 02:03:11 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:59478 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751141AbbCMGDI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Mar 2015 02:03:08 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B8F6538F8C;
+	Fri, 13 Mar 2015 02:03:07 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=BqTEwt0cupnE59J2AYHlZLKJ/Qs=; b=RNHNjM
+	4KAr9d0OtCGdHlzsEFGCVuYEJXCHuQJK0d8Nni56yhqPJT3grQ56DD8k/txSZA9h
+	PJTsAEUSpS7SSaDTSaZW04V3NifiVIwOZEA4QhajuYjT1LxZaPycx372rCxHrC+y
+	qjOsXIsCWK/QbhMO5BTerqa3q6lanzgJeUHAo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KYq4G3WBYRGDyZk568Un2LrewC92X00G
+	V/zo94TadRDPGvMtDrZvdyU9x1LQ1lAksA+huZx5zqG54M+YriSExaykSO193hpw
+	8uw/Ng4lIXvvCJpsYKiIDe/WLlcO7kd1cw/mF7i8lQYuQLOAPXH+KxUXNFxeZhsJ
+	bfKphYz3I9s=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id AFA9838F8B;
+	Fri, 13 Mar 2015 02:03:07 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C1AAC38F8A;
+	Fri, 13 Mar 2015 02:03:06 -0400 (EDT)
+In-Reply-To: <CACsJy8CMZbwyBayX-bbWmGwV=AWC000Yx6LfzOcB2irq2X6qHQ@mail.gmail.com>
+	(Duy Nguyen's message of "Fri, 13 Mar 2015 07:58:20 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 9E4DFD52-C946-11E4-B270-A2259F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265401>
 
-On Fri, Mar 13, 2015 at 11:59 AM, Jeff King <peff@peff.net> wrote:
-> On Fri, Mar 13, 2015 at 12:41:01AM -0400, Jeff King wrote:
->
->> I'm experimenting with using transfer.hiderefs on a server, and it's
->> rather easy to cause a git client to hang when fetching from such a repo
->> over smart http. Details are in the first patch.
->
-> A note on this hang. What happens is that upload-pack sees a bogus
-> "want" line and calls die(). The client then sits there forever, but I'm
-> not exactly sure what it's waiting for.
->
-> This series fixes the bug that caused us to erroneously call die() in
-> upload-pack, so the hang is "fixed". But there are other reasons to call
-> die(); it would probably be a good thing if the client side noticed the
-> problem and aborted.
+Duy Nguyen <pclouds@gmail.com> writes:
 
-Maybe we could install a custom die handler that also sends "ERR" line
-to the client before dying. Even with old clients where ERR lines are
-not recognized, they would see that as a sign of error and abort. The
-only thing to be careful is not sending ERR while we're in the middle
-of sending some pkt-line, and that only happens when die() is called
-inside packet_write() and we can catch that easily. This is for
-upload-pack only as the client side can also use packet_buf_write(), a
-bit harder to know if some pkt-line is being sent.
--- 
-Duy
+>> You mean "if it came in <pack, offset> format, convert it down to
+>> <sha1> until the last second that it is needed (e.g. need to put
+>> that in a tree object in order to compute the object name of the
+>> containing tree object)"?
+>
+> I picked my words poorly. It should be <pack, the index in pack>
+> instead of the _byte_ offset.
+
+Thanks for a clarification, but I do not think it affects the main
+point of the discussion very much.  If we use "union in struct",
+where we can store either an SHA-1 hash or some other identifying
+information for the object, but not both, then at some point you
+would need to convert <pack, nth> to <sha-1> in a codepath that
+needs the sha-1 hash value (e.g. if the object A, that is known to
+you as <pack, nth>, is placed in a tree object B, you need the
+object name of A in <sha-1> representation in order to compute the
+object name of the tree object B.  You can choose to keep it in
+<pack, nth> form in "struct object_id { union }" and look up the
+<sha-1> from the pack index every time, or you can choose to give
+up the <pack, nth> form and upgrade the "struct object_id" to store
+<sha-1> at that point.
+
+If you keep both <pack, nth> *and* <sha-1> in "struct object_id" at
+the same time, you can choose whichever is convenient, but it would
+bloat everything in core.  Not just it bloats "struct object" and
+its subclasses, the in-core index entries, which is what I meant
+by ...
+
+>> Unless you fix that "union in struct" assumption, that is.
+
+... this.
+
+>> To me, <pack, offset> information smells to belong more to a "struct
+>> object" (or its subclass) as an optional annotation---when a caller
+>> is asked to parse_object(), you would bypass the sha1_read_file()
+>> that goes and looks the object name up from the list of pack .idx
+>> and instead go there straight using that annotation.
+>
+> For pack v4, commits and trees can be encoded this way.
+
+Even if your in-pack representation of a commit object allowed to
+store the tree pointer in <pack, nth> format, its object name must
+be computed as if you have the commit object in the traditional
+format and computed the hash of that (together with the standard
+"<type> <size>\0" header), and at that point, you need the contained
+object's name in <sha-1> format (imagine how you would implement the
+commit-tree command).  Hence, I do not think the v4 encoding changes
+the discussion very much.  I see the primary value of v4 encoding is
+to shorten the length of various fields take on-disk and in-pack.
+If it were <pack, offset>, it could be argued that it would also be
+faster to get to the packed data in the packfile, and going from
+<pack, nth> to the .idx file and then going to the location in the
+data in the packfile would be faster than going from <sha-1> to a
+particular pack and its in-pack offset, with the difference of cost
+around log(n)*m where n is the number of objects in a pack and m is
+the total number of packs in the repository.
+
+It is true that <nth> format (force that the referred-to object
+lives in the same pack as the referrer) can help speed up
+interpretation of extended SHA-1 expression, e.g. "v1.0^0:t", which
+can read v1.0 tag in v4 format, find the <nth> info for the commit
+pointed by the tag and get to that data in the pack, find the <nth>
+info for the top-tree recorded in that commit and directly get to
+the data of that tree, and then find the entry for "t", which will
+give the object name for that subtree again in <nth> format, and at
+that point you can find the <sha-1> of that final object, without
+having to know any object names of the intermediate objects
+(i.e. you must start from <sha-1> of the tag you obtain from the
+refs API, but you didn't use the object name of the commit and its
+top-level tree).  So for such a codepath, I would say it would be
+sufficient to use a "union in struct" people have been envisioning
+and convert <pack, nth> to <sha-1> when the latter form becomes
+necessary for the first time for the object.
+
+Anyway, wouldn't this be all academic?  I do not see how you would
+keep the object name in the <pack, nth> format in-core, as the
+obj_hash[] is a hashtable keyed by <sha-1>, and even when we switch
+to a different hash, I cannot see how such a table to ensure the
+singleton-ness of in-core objects can be keyed sometimes by <hash>
+and by <pack, nth> in some other time.
