@@ -1,169 +1,125 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/7] upload-pack: fix transfer.hiderefs over smart-http
-Date: Thu, 12 Mar 2015 23:21:09 -0700
-Message-ID: <xmqqioe5zacq.fsf@gitster.dls.corp.google.com>
-References: <20150313044101.GA18476@peff.net>
-	<20150313044212.GA18532@peff.net>
+From: Cody Taylor <cody.taylor@maternityneighborhood.com>
+Subject: [Documentation] Submitting Patches
+Date: Fri, 13 Mar 2015 02:31:30 -0400
+Message-ID: <CAHWMk2YuUvYYb-nxdANVxZ0tLsyttnqNzpF74Nxz1zpFcGEnGg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Mar 13 07:21:22 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Duy Nguyen <pclouds@gmail.com>,
+	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 13 07:31:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YWIyH-0003Xk-Iy
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Mar 2015 07:21:21 +0100
+	id 1YWJ8E-0005Bl-Kf
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Mar 2015 07:31:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751872AbbCMGVP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Mar 2015 02:21:15 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:55664 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751862AbbCMGVN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Mar 2015 02:21:13 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2AE6E3A296;
-	Fri, 13 Mar 2015 02:21:11 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=7Goi5aqKRepF3C2ueytQfAr8Ngc=; b=wYTgI0
-	MaPvPgDnU8AFOv3atpUODh35zum1QUmhvbTV8riMcLQSEyjgbkWhVb/yQrXP7sSH
-	I+GcN4EBr7EOJjK+Hh7Jq8na8x8sGlJXGXsmhaxAg5N2vh72XAh/XjbSi7yvJCtS
-	H5E3NQbd+r1hJNYj7ialjxnrh4OzIRCGmOBuo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gvNZ0bO0OzcxOa3PuPPW7/EOewff6o8J
-	uEp2swKyIa+i9XOPAD8rdd3PY9JT+66JcmXLJatkg/MwiZrrRclGizUwMabBYmLt
-	tn+yqjCzyvpWOXzqdAughg6JQPLd1h+laqjzA8YuDsGMG2Xcwyo/qM5DGsKR4NOY
-	u/6NYMDxaYM=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2168A3A295;
-	Fri, 13 Mar 2015 02:21:11 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 980013A293;
-	Fri, 13 Mar 2015 02:21:10 -0400 (EDT)
-In-Reply-To: <20150313044212.GA18532@peff.net> (Jeff King's message of "Fri,
-	13 Mar 2015 00:42:12 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 24467220-C949-11E4-8BBA-A2259F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751384AbbCMGbe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Mar 2015 02:31:34 -0400
+Received: from mail-ie0-f177.google.com ([209.85.223.177]:34973 "EHLO
+	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751324AbbCMGbe (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Mar 2015 02:31:34 -0400
+Received: by ieclw3 with SMTP id lw3so87155852iec.2
+        for <git@vger.kernel.org>; Thu, 12 Mar 2015 23:31:33 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to:cc
+         :content-type;
+        bh=iRyIskYvmWUYttfpeozgYbMhKa9CwOaeNMs+ZYc68vk=;
+        b=Patgt36zHIT6mrpg2dQVFD4ZMzasLJFX1W5A9bqRvFLf12NMkrqYd7sU9bF+luo0I9
+         R5n+wy+fICffUpG+6H4ItbsscQreP+PSa/++ldn3JdDC0o6LPbd7qgZVaWs4zl6sk9YQ
+         j+ZGCVnPTAf7FiJRDGsBoPm5Bo7OhgzI7ucoP+kQpNqAGUF51NDtGJ3dN3U6MmQvyHCt
+         6MdMbhp40awn1ybbKk1eg+Y2gYpYlcDYnYbnRD7Cr48C5pNLv11VAHkx8Vdp4IrPvkNr
+         v/ADIXs70plPLnp+tLzwDK1FaDk1B98LBqYNTpzJg6gSqJDiwA3m3kfT048yc5+NzZ5D
+         k/1Q==
+X-Gm-Message-State: ALoCoQkLZMdbutkO0Exr0aaSMk42JWfjDbJ3+6m/xldpuCuvxeKjf1GTuw57maSVJw2C91m/sgOr
+X-Received: by 10.202.194.212 with SMTP id s203mr35258509oif.115.1426228290749;
+ Thu, 12 Mar 2015 23:31:30 -0700 (PDT)
+Received: by 10.76.109.37 with HTTP; Thu, 12 Mar 2015 23:31:30 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265405>
 
-Jeff King <peff@peff.net> writes:
+Apologies for the poorly formatted e-mail. I realized after I sent the
+message that the `git send-mail` command was an option. I was trying
+to use python to modify the e-mail before sending it, and the three
+different "From" fields got mumbled.
 
-> When upload-pack advertises the refs (either for a normal,
-> non-stateless request, or for the initial contact in a
-> stateless one), we call for_each_ref with the send_ref
-> function as its callback. send_ref, in turn, calls
-> mark_our_ref, which checks whether the ref is hidden, and
-> sets OUR_REF or HIDDEN_REF on the object as appropriate.  If
-> it is hidden, mark_our_ref also returns "1" to signal
-> send_ref that the ref should not be advertised.
+Anyway, this brings up the point that `git send-email` should at least
+get a mention in the "Documentation/SubmittingPatches" file. Likely
+the best place for this is a paragraph after `git format-patch` is
+mentioned in section 4 ("Sending your patches.").
+
+On Fri, Mar 13, 2015 at 2:16 AM, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> If we are not advertising refs, (i.e., the follow-up
-> invocation by an http client to send its "want" lines), we
-> use mark_our_ref directly as a callback to for_each_ref. Its
-> marking does the right thing, but when it then returns "1"
-> to for_each_ref, the latter interprets this as an error and
-> stops iterating. As a result, we skip marking all of the
-> refs that come lexicographically after it. Any "want" lines
-> from the client asking for those objects will fail, as they
-> were not properly marked with OUR_REF.
-
-Nicely described in a way that the reason of the breakage and the
-fix is obvious to those who already know what the codepath is
-supposed to be doing.
-
-> To solve this, we introduce a wrapper callback around
-> mark_our_ref which always returns 0 (even if the ref is
-> hidden, we want to keep iterating). We also tweak the
-> signature of mark_our_ref to exclude unnecessary parameters
-> that were present only to conform to the callback interface.
-> This should make it less likely for somebody to accidentally
-> use it as a callback in the future.
-
-I especially love this kind of future-proofing ;-).
-
-Thanks, will queue.
-
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  t/t5551-http-fetch-smart.sh | 11 +++++++++++
->  upload-pack.c               | 14 ++++++++++----
->  2 files changed, 21 insertions(+), 4 deletions(-)
+> Cody A Taylor <cody.taylor@maternityneighborhood.com> writes:
 >
-> diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
-> index 6cbc12d..b970773 100755
-> --- a/t/t5551-http-fetch-smart.sh
-> +++ b/t/t5551-http-fetch-smart.sh
-> @@ -213,6 +213,17 @@ test_expect_success 'cookies stored in http.cookiefile when http.savecookies set
->  	test_cmp expect_cookies.txt cookies_tail.txt
->  '
->  
-> +test_expect_success 'transfer.hiderefs works over smart-http' '
-> +	test_commit hidden &&
-> +	test_commit visible &&
-> +	git push public HEAD^:refs/heads/a HEAD:refs/heads/b &&
-> +	git --git-dir="$HTTPD_DOCUMENT_ROOT_PATH/repo.git" \
-> +		config transfer.hiderefs refs/heads/a &&
-> +	git clone --bare "$HTTPD_URL/smart/repo.git" hidden.git &&
-> +	test_must_fail git -C hidden.git rev-parse --verify a &&
-> +	git -C hidden.git rev-parse --verify b
-> +'
-> +
->  test_expect_success EXPENSIVE 'create 50,000 tags in the repo' '
->  	(
->  	cd "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
-> diff --git a/upload-pack.c b/upload-pack.c
-> index b531a32..c8e8713 100644
-> --- a/upload-pack.c
-> +++ b/upload-pack.c
-> @@ -681,7 +681,7 @@ static void receive_needs(void)
->  }
->  
->  /* return non-zero if the ref is hidden, otherwise 0 */
-> -static int mark_our_ref(const char *refname, const unsigned char *sha1, int flag, void *cb_data)
-> +static int mark_our_ref(const char *refname, const unsigned char *sha1)
->  {
->  	struct object *o = lookup_unknown_object(sha1);
->  
-> @@ -695,6 +695,12 @@ static int mark_our_ref(const char *refname, const unsigned char *sha1, int flag
->  	return 0;
->  }
->  
-> +static int check_ref(const char *refname, const unsigned char *sha1, int flag, void *cb_data)
-> +{
-> +	mark_our_ref(refname, sha1);
-> +	return 0;
-> +}
-> +
->  static void format_symref_info(struct strbuf *buf, struct string_list *symref)
->  {
->  	struct string_list_item *item;
-> @@ -713,7 +719,7 @@ static int send_ref(const char *refname, const unsigned char *sha1, int flag, vo
->  	const char *refname_nons = strip_namespace(refname);
->  	unsigned char peeled[20];
->  
-> -	if (mark_our_ref(refname, sha1, flag, NULL))
-> +	if (mark_our_ref(refname, sha1))
->  		return 0;
->  
->  	if (capabilities) {
-> @@ -767,8 +773,8 @@ static void upload_pack(void)
->  		advertise_shallow_grafts(1);
->  		packet_flush(1);
->  	} else {
-> -		head_ref_namespaced(mark_our_ref, NULL);
-> -		for_each_namespaced_ref(mark_our_ref, NULL);
-> +		head_ref_namespaced(check_ref, NULL);
-> +		for_each_namespaced_ref(check_ref, NULL);
->  	}
->  	string_list_clear(&symref, 1);
->  	if (advertise_refs)
+> > From c861d5cb401110ce7d86b76c1eaa8e89e80f484e Mon Sep 17 00:00:00 2001
+> > From: Cody A Taylor <codemister99@yahoo.com>
+> > Date: Thu, 12 Mar 2015 20:36:44 -0400
+> > Subject: [PATCH] git prompt: Use toplevel to find untracked files.
+>
+> All of the above four lines are unwanted in the e-mail body.
+>
+>  * The first line is a separating line to make format-patch output
+>    look like a mbox file, and does not even belong to this patch.
+>
+>  * From: line, when you are not relaying somebody else's patch,
+>    should not be necessary, as long as you set up your MUA correctly
+>    so that the e-mail shows a correct From: in its header.
+>
+>  * Date: is the same; unless you are relaying somebody else's patch,
+>    in which case you might want to preserve the author timestamp,
+>    the first time _we_ the recipients see your patch matters more,
+>    which should be available from the e-mail header.
+>
+>  * Subject: should be in the e-mail header.  Sometimes when sending
+>    a patch to an ongoing discussion that has its own subject, it is
+>    handy to be able to override the title with in-body Subject:, but
+>    this patch submission is not such a case.  The subjects are the
+>    same in the fourth line in the body (which should be dropped) and
+>    in the header anyway in this message, so please edit it out.
+>
+> In short
+>
+>  (1) If you cannot convince your mailer to show your @yahoo.com
+>      address on the e-mail header From: line, then having the
+>      in-body From: line above (i.e. the second line) is OK as a
+>      workaround.  We however would prefer if you didn't.
+>
+>  (2) Edit the other three lines out.
+>
+> > The __git_ps1() prompt function would not show an untracked
+> > state when the current working directory was not a parent of
+> > the untracked file.
+>
+> Good find, and nicely explained.  I wonder if we can add a test
+> or two to t9903-bash-prompt.sh?
+>
+> The patch itself makes sense.  Thanks.
+>
+> > Signed-off-by: Cody A Taylor <codemister99@yahoo.com>
+> > ---
+> >  contrib/completion/git-prompt.sh | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
+> > index 214e859f99e7..f18aedc73be9 100644
+> > --- a/contrib/completion/git-prompt.sh
+> > +++ b/contrib/completion/git-prompt.sh
+> > @@ -487,7 +487,7 @@ __git_ps1 ()
+> >
+> >               if [ -n "${GIT_PS1_SHOWUNTRACKEDFILES-}" ] &&
+> >                  [ "$(git config --bool bash.showUntrackedFiles)" != "false" ] &&
+> > -                git ls-files --others --exclude-standard --error-unmatch -- '*' >/dev/null 2>/dev/null
+> > +                git ls-files --others --exclude-standard --error-unmatch -- ':/*' >/dev/null 2>/dev/null
+> >               then
+> >                       u="%${ZSH_VERSION+%}"
+> >               fi
