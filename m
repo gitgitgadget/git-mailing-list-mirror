@@ -1,243 +1,106 @@
-From: Sudhanshu Shekhar <sudshekhar02@gmail.com>
-Subject: [PATCH v5 2/2] t7102: add 'reset -' tests
-Date: Fri, 13 Mar 2015 23:48:36 +0530
-Message-ID: <1426270716-22405-2-git-send-email-sudshekhar02@gmail.com>
-References: <1426270716-22405-1-git-send-email-sudshekhar02@gmail.com>
-Cc: Matthieu.Moy@grenoble-inp.fr, gitster@pobox.com, davvid@gmail.com,
-	sunshine@sunshineco.com, Sudhanshu Shekhar <sudshekhar02@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 13 19:20:06 2015
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH/GSoC/RFC] fetch: git fetch --deepen
+Date: Fri, 13 Mar 2015 15:42:06 -0400
+Message-ID: <CAPig+cS07W6gtW8L5wbQwZuxSLxb-r0s6KNO4eDO5BYdBDbWjw@mail.gmail.com>
+References: <1426251846-1604-1-git-send-email-dongcan.jiang@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
+To: Dongcan Jiang <dongcan.jiang@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 13 20:42:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YWUBp-0003am-5J
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Mar 2015 19:20:05 +0100
+	id 1YWVTJ-0001cD-6Q
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Mar 2015 20:42:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030366AbbCMST7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Mar 2015 14:19:59 -0400
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:34016 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030363AbbCMST5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Mar 2015 14:19:57 -0400
-Received: by paceu11 with SMTP id eu11so31377103pac.1
-        for <git@vger.kernel.org>; Fri, 13 Mar 2015 11:19:56 -0700 (PDT)
+	id S1754358AbbCMTmJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Mar 2015 15:42:09 -0400
+Received: from mail-yk0-f172.google.com ([209.85.160.172]:35999 "EHLO
+	mail-yk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752982AbbCMTmH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Mar 2015 15:42:07 -0400
+Received: by ykp9 with SMTP id 9so11473727ykp.3
+        for <git@vger.kernel.org>; Fri, 13 Mar 2015 12:42:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=k3tOmelnWOGs9etxwhqrnR/5Gw37pXHyrD/e9K3AYpU=;
-        b=Gyj6ZtQ5bRIi9Bs6cPrKup+YxVbQQguslnp5QtVfNQ/+F6PRNU1FSX6LF+WvEJFIL0
-         YyeptMAwb5o9rkvLPhIusfEvnfFRNN9Teei65jYsWJQjj5g8H8qmDj+qEOxqdI+G+GrD
-         LGj0nNLlsmiKgJn/pTB50hu9ZL/0JDeIhJqCmtfzhWgc1KhMrC8GVBhXT5e6nMgeCG92
-         aDQmYqRXiC6dEU8BFrAzAYIWPfZouaZdqvk+zrZ+obaTDYpIwMzGmMNYrXSd8xdT5Wr3
-         RFygWUD8gCM91SSsSOGPoSMyqf/PSiNWStRKReecJgm+u7d788Z9O2w9OFxbsvFy9j9K
-         3HYg==
-X-Received: by 10.66.124.227 with SMTP id ml3mr106232660pab.28.1426270796235;
-        Fri, 13 Mar 2015 11:19:56 -0700 (PDT)
-Received: from shekhar-Inspiron-N5110.iiit.ac.in ([14.139.82.6])
-        by mx.google.com with ESMTPSA id g10sm4611117pdm.29.2015.03.13.11.19.51
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 13 Mar 2015 11:19:55 -0700 (PDT)
-X-Mailer: git-send-email 2.3.1.279.ga2b2924
-In-Reply-To: <1426270716-22405-1-git-send-email-sudshekhar02@gmail.com>
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=QKAFEN9t7p5wdXrMfy4k3sjlnpFcjo97OkGxSIJJNZw=;
+        b=nthC1+c5xmpkFh9fRwuwhU1JBo2eJz7mC1bkmX5jRNh3+sdDScggJgzQg1CskBrXyJ
+         I5MX61aIybZyxf8GIQEn8W0EHyY4tbiygJ7cYrzsU8hUXwEgJTrW69/3+DvWhH+fXGMW
+         6AAi7odar2Ri8A1s0IwnZ05gKcy/3JMHIO4ERYtRtV39EkgZQLfCfVWnR2CJcBx5awe0
+         rLFOuyV43jQiQysW++J7LR3qx3tAAaWySepiEBJIytkBZkNIPDqVvaEOBZH0G0vAkHBe
+         /bI3vz7WBUTr5GgCCCZbX6dTd16LTqQoPi98aOiXlmWzl8BiLKTDbPNtAID1LkY8rduR
+         tPkg==
+X-Received: by 10.236.70.33 with SMTP id o21mr532376yhd.94.1426275726528; Fri,
+ 13 Mar 2015 12:42:06 -0700 (PDT)
+Received: by 10.170.73.7 with HTTP; Fri, 13 Mar 2015 12:42:06 -0700 (PDT)
+In-Reply-To: <1426251846-1604-1-git-send-email-dongcan.jiang@gmail.com>
+X-Google-Sender-Auth: UBtCk0h0duM642pfU8aMrLJYUnU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265418>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265419>
 
-Add following test cases:
-1) Confirm error message when git reset is used with no previous branch
-2) Confirm git reset - works like git reset @{-1}
-3) Confirm "-" is always treated as a commit unless the -- file option
-is specified
-4) Confirm "git reset -" works normally even when a file named @{-1} is
-present
+On Fri, Mar 13, 2015 at 9:04 AM, Dongcan Jiang <dongcan.jiang@gmail.com> wrote:
+> This patch is just for discusstion. An option --deepen is added to
+> 'git fetch'. When it comes to '--deepen', git should fetch N more
+> commits ahead the local shallow commit, where N is indicated by
+> '--depth=N'. [1]
+> [...]
+> Of course, as a patch for discussion, it remains a long way to go
+> before being complete.
+> [...]
+> Signed-off-by: Dongcan Jiang <dongcan.jiang@gmail.com>
+> ---
+> diff --git a/fetch-pack.c b/fetch-pack.c
+> index 655ee64..6f4adca 100644
+> --- a/fetch-pack.c
+> +++ b/fetch-pack.c
+> @@ -295,6 +295,7 @@ static int find_common(struct fetch_pack_args *args,
+>                         if (no_done)            strbuf_addstr(&c, " no-done");
+>                         if (use_sideband == 2)  strbuf_addstr(&c, " side-band-64k");
+>                         if (use_sideband == 1)  strbuf_addstr(&c, " side-band");
+> +                       if (args->depth_deepen)  strbuf_addstr(&c, " depth_deepen");
 
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-Helped-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Helped-by: David Aguilar <davvid@gmail.com>
-Signed-off-by: Sudhanshu Shekhar <sudshekhar02@gmail.com>
----
-Eric: Thank you for pointing out the mistake. The '&&' after the Here Docs
-was causing the issue. I have removed the concatenation from there, hope
-that's okay.
-Regarding the @{-1} test case, I created it as a check for Junio's comment
-on the error message generated by "git reset -" when a file named @{-1} is there.
-Since, in this situation "git reset @{-1}" will return an error (but "reset -"
-shouldn't).
-I have renamed the folder to 'dash' as suggested by you, keeping the old name only
-where it made sense.
- t/t7102-reset.sh | 158 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 158 insertions(+)
+For consistency, should this be "depth-deepen" rather than "depth_deepen"?
 
-diff --git a/t/t7102-reset.sh b/t/t7102-reset.sh
-index 98bcfe2..18523c1 100755
---- a/t/t7102-reset.sh
-+++ b/t/t7102-reset.sh
-@@ -568,4 +568,162 @@ test_expect_success 'reset --mixed sets up work tree' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'reset - with no previous branch fails' '
-+	git init no_previous &&
-+	test_when_finished rm -rf no_previous &&
-+	(
-+		cd no_previous &&
-+		test_must_fail git reset - 2>actual
-+	) &&
-+	test_i18ngrep "ambiguous argument" no_previous/actual
-+'
-+
-+test_expect_success 'reset - while having file named - and no previous branch fails' '
-+	git init no_previous &&
-+	test_when_finished rm -rf no_previous &&
-+	(
-+		cd no_previous &&
-+		>- &&
-+		test_must_fail git reset - 2>actual
-+	) &&
-+	test_i18ngrep "ambiguous argument" no_previous/actual
-+'
-+
-+
-+test_expect_success \
-+	'reset - in the presence of file named - with previous branch resets commit' '
-+	cat >expect <<-EOF
-+	Unstaged changes after reset:
-+	M	-
-+	M	file
-+	EOF
-+	git init dash &&
-+	test_when_finished rm -rf dash &&
-+	(
-+		cd dash &&
-+		>- &&
-+		>file &&
-+		git add file - &&
-+		git commit -m "add base files" &&
-+		git checkout -b new_branch &&
-+		echo "random" >- &&
-+		echo "wow" >file &&
-+		git add file - &&
-+		git reset - >../actual
-+	) &&
-+	test_cmp expect actual
-+'
-+test_expect_success \
-+	'reset - in the presence of file named - with -- option resets commit' '
-+	cat >expect <<-EOF
-+	Unstaged changes after reset:
-+	M	-
-+	M	file
-+	EOF
-+	git init dash &&
-+	test_when_finished rm -rf dash &&
-+	(
-+		cd dash &&
-+		>- &&
-+		>file &&
-+		git add file - &&
-+		git commit -m "add base files" &&
-+		git checkout -b new_branch &&
-+		echo "random" >- &&
-+		echo "wow" >file &&
-+		git add file - &&
-+		git reset - -- >../actual
-+	) &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'reset - in the presence of file named - with -- file option resets file' '
-+	cat >expect <<-EOF
-+	Unstaged changes after reset:
-+	M	-
-+	EOF
-+	git init dash &&
-+	test_when_finished rm -rf dash &&
-+	(
-+		cd dash &&
-+		>- &&
-+		>file &&
-+		git add file - &&
-+		git commit -m "add base files" &&
-+		git checkout -b new_branch &&
-+		echo "random" >- &&
-+		echo "wow" >file &&
-+		git add file - &&
-+		git reset -- - >../actual
-+	) &&
-+	test_cmp expect actual
-+'
-+test_expect_success \
-+	'reset - in the presence of file named - with both pre and post -- option resets file' '
-+	cat >expect <<-EOF
-+	Unstaged changes after reset:
-+	M	-
-+	EOF
-+	git init dash &&
-+	test_when_finished rm -rf dash &&
-+	(
-+		cd dash &&
-+		>- &&
-+		>file &&
-+		git add file - &&
-+		git commit -m "add base files" &&
-+		git checkout -b new_branch &&
-+		echo "random" >- &&
-+		echo "wow" >file &&
-+		git add file - &&
-+		git reset - -- - >../actual
-+	) &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'reset - works same as reset @{-1}' '
-+	git init dash &&
-+	test_when_finished rm -rf dash &&
-+	(
-+		cd dash &&
-+		echo "file1" >file1 &&
-+		git add file1 &&
-+		git commit -m "base commit" &&
-+		git checkout -b temp &&
-+		echo "new file" >file &&
-+		git add file &&
-+		git commit -m "added file" &&
-+		git reset - &&
-+		git status --porcelain >../actual &&
-+		git add file &&
-+		git commit -m "added file" &&
-+		git reset @{-1} &&
-+		git status --porcelain >../expect
-+	) &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'reset - with file named @{-1} succeeds' '
-+	cat >expect <<-EOF
-+	Unstaged changes after reset:
-+	M	@{-1}
-+	M	file
-+	EOF
-+	git init dash &&
-+	test_when_finished rm -rf dash &&
-+	(
-+		cd dash &&
-+		echo "random" >@{-1} &&
-+		echo "random" >file &&
-+		git add @{-1} file &&
-+		git commit -m "base commit" &&
-+		git checkout -b new_branch &&
-+		echo "additional stuff" >>file &&
-+		echo "additional stuff" >>@{-1} &&
-+		git add file @{-1} &&
-+		git reset - >../actual
-+	) &&
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-2.3.1.277.gd67f9d5.dirty
+>                         if (args->use_thin_pack) strbuf_addstr(&c, " thin-pack");
+>                         if (args->no_progress)   strbuf_addstr(&c, " no-progress");
+>                         if (args->include_tag)   strbuf_addstr(&c, " include-tag");
+> diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+> index d78f320..6738006 100755
+> --- a/t/t5510-fetch.sh
+> +++ b/t/t5510-fetch.sh
+> @@ -708,4 +708,15 @@ test_expect_success 'fetching a one-level ref works' '
+>         )
+>  '
+>
+> +test_expect_success 'fetching deepen' '
+> +       git clone . deepen --depth=1 &&
+> +       cd deepen &&
+
+When this tests ends, the working directory will still be 'deepen',
+which will likely break tests added after this one. If you wrap the
+'cd' and following statements in a subshell via '(' and ')', then the
+'cd' will affect the subshell but leave the parent shell's working
+directory alone, and thus not negatively impact subsequent tests.
+
+> +       git fetch .. foo --depth=1
+> +       git show foo
+> +       test_must_fail git show foo~
+> +       git fetch .. foo --depth=1 --deepen
+> +       git show foo~
+> +       test_must_fail git show foo~2
+
+Broken &&-chain throughout.
+
+> +'
+> +
+>  test_done
