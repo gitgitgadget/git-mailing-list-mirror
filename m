@@ -1,111 +1,134 @@
-From: Sveinung Kvilhaugsvik <sveinung84@users.sourceforge.net>
-Subject: Re: [PATCH] git-completion: add stashes for gitk
-Date: Fri, 13 Mar 2015 18:25:48 +0100
-Message-ID: <CANAO8VEUu9erxMLU523vQhg1hyfwVASH-Ng6YGKTN0RiB+H9FQ@mail.gmail.com>
-References: <1426120961-2273-1-git-send-email-sveinung84@users.sourceforge.net>
-	<xmqq1tku3x3c.fsf@gitster.dls.corp.google.com>
-	<xmqqioe62h5g.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 13 18:25:59 2015
+From: Sudhanshu Shekhar <sudshekhar02@gmail.com>
+Subject: [PATCH v5 1/2] reset: enable '-' short-hand for previous branch
+Date: Fri, 13 Mar 2015 23:48:35 +0530
+Message-ID: <1426270716-22405-1-git-send-email-sudshekhar02@gmail.com>
+Cc: Matthieu.Moy@grenoble-inp.fr, gitster@pobox.com, davvid@gmail.com,
+	sunshine@sunshineco.com, Sudhanshu Shekhar <sudshekhar02@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 13 19:20:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YWTLO-0001i4-Lm
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Mar 2015 18:25:55 +0100
+	id 1YWUBj-0003UE-Fb
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Mar 2015 19:19:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752380AbbCMRZu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Mar 2015 13:25:50 -0400
-Received: from mail-ig0-f179.google.com ([209.85.213.179]:45328 "EHLO
-	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751233AbbCMRZt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Mar 2015 13:25:49 -0400
-Received: by igjz20 with SMTP id z20so1892875igj.4
-        for <git@vger.kernel.org>; Fri, 13 Mar 2015 10:25:48 -0700 (PDT)
+	id S1030344AbbCMSTy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Mar 2015 14:19:54 -0400
+Received: from mail-pd0-f172.google.com ([209.85.192.172]:34900 "EHLO
+	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753019AbbCMSTl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Mar 2015 14:19:41 -0400
+Received: by pdbfp1 with SMTP id fp1so30677479pdb.2
+        for <git@vger.kernel.org>; Fri, 13 Mar 2015 11:19:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=1ZzwPmJu3Sh4Kjfmwzuh7TsO7CCu4YzQR5pGbMujnSw=;
-        b=TLCSdDMM+ets8yNpjDtj5vItzElLKwCFEdFZtMOuwdsdSoKBQH8MIhJDpWIrkwUPo+
-         aAMrGEinX7pordvQ0aaiaQCmGKecM52LLd7lFDtoTkYUVDjjtgDgTfFH2X3UOzLs6Ktd
-         JLqneP2/R20KiDOZElzothWgz3THSXwU7MKdBmLRxOE6AxtujlHT/qZQQ5eQ3jk7Vbz4
-         SMskKuByJU1CAqXwNGpNaSajMSecL8C1bz6gjmG8HMkVANOI4x5KU/K07tPRyIYYxwHS
-         fys6tOCEmQWmodhHnluMvhTY3oL1la/7IBfIQDw7etJQR9twX5uZNvndrr6qTJi4J6RL
-         CAEA==
-X-Received: by 10.107.37.132 with SMTP id l126mr86625089iol.42.1426267548348;
- Fri, 13 Mar 2015 10:25:48 -0700 (PDT)
-Received: by 10.36.1.205 with HTTP; Fri, 13 Mar 2015 10:25:48 -0700 (PDT)
-In-Reply-To: <xmqqioe62h5g.fsf@gitster.dls.corp.google.com>
-X-Google-Sender-Auth: QEPCZS_41ZnE2L3TTXGFjFFDzyE
+        h=from:to:cc:subject:date:message-id;
+        bh=jgQBVsrxIPRCpRljR7eNZRmtqb1V8lTGV7lLEXlCUxY=;
+        b=UjM1/HPByeABGvhtBVShZJv6xcq0TExn1PXo7jWG+Yb1eqZFfv4VX9+OvRA3qLOGYf
+         KIz5PhbF5dP2YNj4T1kTToplgoDAiIKYwdMGfBbVXp4n+gioK9H0NAmkFcQCjirR1rEd
+         1XF8Gp40bniHRrsYF2wtQeMH35wLMFmgRmMiFjtImKyRdAnqr+vM12T1IUZ7WXGpX2UL
+         3yFITGEiUEP/Jackpux5gV8071h+ejPjkOfeEIdEg+kHpiwLNqHP8beh425QWA4SjPh5
+         EjpSSVD1Hu2Jh3AD5e79VAWSKB6qxE7f+u+L4nV3/KVONq8JRu1ScwOsgToG34/II7Se
+         CA2A==
+X-Received: by 10.66.234.2 with SMTP id ua2mr83728185pac.137.1426270780528;
+        Fri, 13 Mar 2015 11:19:40 -0700 (PDT)
+Received: from shekhar-Inspiron-N5110.iiit.ac.in ([14.139.82.6])
+        by mx.google.com with ESMTPSA id g10sm4611117pdm.29.2015.03.13.11.19.35
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 13 Mar 2015 11:19:38 -0700 (PDT)
+X-Mailer: git-send-email 2.3.1.279.ga2b2924
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265417>
 
-Thank you for the review.
+git reset '-' will reset to the previous branch. To reset a file named
+"-" use either "git reset ./-" or "git reset -- -".
 
-I now understand that the commit message should have provided way more
-context about my use case.
+Change error message to treat single "-" as an ambigous revision or
+path rather than a bad flag.
 
-I used Bazaar almost exclusively until about a year ago. Git's ability
-to put stuff in the index without committing and the power of "git
-rebase" covers many of the use cases I would have used shelves
-("stashes") for in Bazaar. But a stash is still, as far as I know Git,
-the best solution in some cases.
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Helped-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Signed-off-by: Sudhanshu Shekhar <sudshekhar02@gmail.com>
+---
+I have changed the logic to ensure argv[0] isn't changed at any point.
+Creating a modified_argv0 variable let's me do that.
 
-A Bazaar shelve ("stash") has a stable number. (Applying a shelve from
-the middle of the list won't cause a renumbering) A git stash will
-change its number when a new stash is added. (On the positive side
-this allows stash@{2.hours.ago}) The renumbering makes it more
-difficult to keep track of what is there. I therefore have more need
-of a quick way to get an overview of the stashes in git than in
-bazaar. You idea of using a stash's message to refer to it would solve
-this.
+I couldn't think of any other way to achieve this, apart from changing things
+directly in the sha1_name.c file (like Junio's changes). Please let me know
+if some further changes are needed.
 
-In Bazaar I can quickly get an overview of the shelves ("stashes") by
-typing "bzr qshelve" and clicking on the "View shelved changes" tab.
-Its has a list of my shelves including their number and message at the
-top. Under it the diff of the currently selected shelve is displayed.
-This makes it fast to get an overview of the shelves.
+ builtin/reset.c | 17 +++++++++++++----
+ setup.c         |  2 +-
+ 2 files changed, 14 insertions(+), 5 deletions(-)
 
-The objective the patch tries to achieve is to speed up getting an
-overview of stashed changes in gitk. A big stash in "git stash list
--p" can force a user to read it slowly or risk skipping the next
-stash. By typing "gitk stash@{<TAB>" all stashes are listed. The user
-can then know if there are more stashes that haven't been viewed yet
-and stop reading a stash when he knows what the current stash is. (If
-I understand things right "gitk stash@{.}" would have the problem of
-burying old stashed under the commits above it)
-
-> A bigger question is why this change is made to gitk completion.  If
-> this completion were useful for "gitk", wouoldn't it be equally
-> useful for "git log"?
-I must admit that I didn't know that "git log" could display the
-content of a stashed change. After trying "git log -p -m stash@{0}" I
-would say that adding stashes for "git log" would be slightly less
-useful. "gitk stash@{0}" allows me to look at the stashed change and
-find out what it contains. "git log -p" (note: no "-m" since the user
-don't know that a stash is a merge commit) won't let me do that.
-Another reason is that "git stash show -p stash@{0}" already is
-autocompleted for those that wish to view their stash diff on the
-command line)
-
-> If there were a way for users to say "The one I made to stash away
-> that change" from the command line (I do not mean "git stash list |
-> grep 'that change'"), it would be good.
-Great idea.
-
+diff --git a/builtin/reset.c b/builtin/reset.c
+index 4c08ddc..bc50e14 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -192,6 +192,7 @@ static void parse_args(struct pathspec *pathspec,
+ {
+ 	const char *rev = "HEAD";
+ 	unsigned char unused[20];
++	const char *modified_argv0 = argv[0];
+ 	/*
+ 	 * Possible arguments are:
+ 	 *
+@@ -205,10 +206,17 @@ static void parse_args(struct pathspec *pathspec,
+ 	 */
+ 
+ 	if (argv[0]) {
++		if (!strcmp(argv[0], "-")) {
++			modified_argv0 = "@{-1}";
++		}
++		else {
++			modified_argv0 = argv[0];
++		}
++
+ 		if (!strcmp(argv[0], "--")) {
+ 			argv++; /* reset to HEAD, possibly with paths */
+ 		} else if (argv[1] && !strcmp(argv[1], "--")) {
+-			rev = argv[0];
++			rev = modified_argv0;
+ 			argv += 2;
+ 		}
+ 		/*
+@@ -216,14 +224,15 @@ static void parse_args(struct pathspec *pathspec,
+ 		 * has to be unambiguous. If there is a single argument, it
+ 		 * can not be a tree
+ 		 */
+-		else if ((!argv[1] && !get_sha1_committish(argv[0], unused)) ||
+-			 (argv[1] && !get_sha1_treeish(argv[0], unused))) {
++		else if ((!argv[1] && !get_sha1_committish(modified_argv0, unused)) ||
++			 (argv[1] && !get_sha1_treeish(modified_argv0, unused))) {
+ 			/*
+ 			 * Ok, argv[0] looks like a commit/tree; it should not
+ 			 * be a filename.
+ 			 */
+ 			verify_non_filename(prefix, argv[0]);
+-			rev = *argv++;
++			rev = modified_argv0;
++			argv++;
+ 		} else {
+ 			/* Otherwise we treat this as a filename */
+ 			verify_filename(prefix, argv[0], 1);
+diff --git a/setup.c b/setup.c
+index 979b13f..b621b62 100644
+--- a/setup.c
++++ b/setup.c
+@@ -200,7 +200,7 @@ void verify_filename(const char *prefix,
+ 		     int diagnose_misspelt_rev)
+ {
+ 	if (*arg == '-')
+-		die("bad flag '%s' used after filename", arg);
++		die("ambiguous argument '%s': unknown revision or path", arg);
+ 	if (check_filename(prefix, arg))
+ 		return;
+ 	die_verify_filename(prefix, arg, diagnose_misspelt_rev);
 -- 
-Helsing
-Sveinung
-
-"The Lord requires of his saints confession of sins during their whole
-lives, and that without ceasing, and promises pardon. How presumptuous,
-then, to exempt them from sin, or when they have stumbled, to exclude them
-altogether from grace?" (sitat John Calvin)
+2.3.1.277.gd67f9d5.dirty
