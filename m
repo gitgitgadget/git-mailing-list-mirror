@@ -1,154 +1,164 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 1/2] reset: enable '-' short-hand for previous branch
-Date: Fri, 13 Mar 2015 06:11:48 -0400
-Message-ID: <CAPig+cQWZ7_ayMRFnm1U-Xza6FS9aTbHnyXYpAx-2-H4e6vcNA@mail.gmail.com>
+Subject: Re: [PATCH v3 2/2] t7102: add 'reset -' tests
+Date: Fri, 13 Mar 2015 06:27:46 -0400
+Message-ID: <CAPig+cSxuS0Khg2a0K1+K3UXH-TTgMREH30qYMt4cs0eCMbjiQ@mail.gmail.com>
 References: <CAPig+cSU7X=1Ket8bAXU2JivaSVWw7C_M9ttAhJ_gQur3utsUA@mail.gmail.com>
-	<1426025006-18669-1-git-send-email-sudshekhar02@gmail.com>
+	<1426025409-18758-1-git-send-email-sudshekhar02@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
 	David Aguilar <davvid@gmail.com>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 To: Sudhanshu Shekhar <sudshekhar02@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 13 11:11:58 2015
+X-From: git-owner@vger.kernel.org Fri Mar 13 11:27:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YWMZP-0003BO-Lc
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Mar 2015 11:11:56 +0100
+	id 1YWMov-0001Cn-LI
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Mar 2015 11:27:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752117AbbCMKLv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Mar 2015 06:11:51 -0400
-Received: from mail-yk0-f169.google.com ([209.85.160.169]:44487 "EHLO
-	mail-yk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750996AbbCMKLu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Mar 2015 06:11:50 -0400
-Received: by ykbq200 with SMTP id q200so10000291ykb.11
-        for <git@vger.kernel.org>; Fri, 13 Mar 2015 03:11:49 -0700 (PDT)
+	id S1752170AbbCMK1s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Mar 2015 06:27:48 -0400
+Received: from mail-yk0-f176.google.com ([209.85.160.176]:42048 "EHLO
+	mail-yk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750890AbbCMK1r (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Mar 2015 06:27:47 -0400
+Received: by ykbq9 with SMTP id q9so10038496ykb.9
+        for <git@vger.kernel.org>; Fri, 13 Mar 2015 03:27:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc:content-type;
-        bh=zGtqSZLRcXtWBTvatHYRkSZOsfSrA+qVF1OLsfYwukg=;
-        b=hkbksgatBbx1uaIYqrSR/YumR0zCMrTZHudigaS5gWZNX6i4Nif+MS/NbesHH5/F2N
-         LGjv1B8GsNbqYtJxfHbLRkC5hu4u1HmRPzINjNmehdKdjDMVy/f7LNTGS+Rcx3wKdY1V
-         LZGGRMGrZ69mZ/d7usH0ryhP+08YLegLuTnqnkfAoK1ENNpNGMCDtnJv3EkmLgCEeH0X
-         WBBa8vLeH+/fYQYJw/JU/c83zfS+LBiknnXnDWK20y8QElkMqTcznaM1ieV31PdRPVws
-         eFM4oABzHDAcM2OPwlcSDIUqxRiRbolCz9/JCfIhQ89KIkFDGowD4FL8HYhYqe6AHke6
-         7ATQ==
-X-Received: by 10.236.10.5 with SMTP id 5mr45891546yhu.148.1426241508983; Fri,
- 13 Mar 2015 03:11:48 -0700 (PDT)
-Received: by 10.170.73.7 with HTTP; Fri, 13 Mar 2015 03:11:48 -0700 (PDT)
-In-Reply-To: <1426025006-18669-1-git-send-email-sudshekhar02@gmail.com>
-X-Google-Sender-Auth: ehel27AOWuO-dQgNAIJLwk8Hkco
+        bh=S2xtwUVc8FPKhA3e47dZtZB5IcyyIhizhDbusIeGWpM=;
+        b=dotuM4814yj54bnqSy4JHGhe6BJ+Y+uJ/ASiN040U0waPLvbaL45EANuD4mRGtBxew
+         wx2D53fH4Rw+IruwGMoJVRwO8i3P3ojhWVYJrwroOg8ZHhP4CbICvk5N/CSz4cZaCJle
+         Wj4Ss+PWo/2geOBbvKHIs3JK5mRVNsMQR5sO57s412wk8bd16FeB2y3WbPc+Rc3QCqzk
+         qTeScIng9ikZydaM+J6xX3GJqF/1cRjQs4Oj8CRTO19L5zYD1CMwakjo309oC9N2GfeA
+         fbUZI1f9gtT+kQa3Zysr/whUMVQ18n+gdFRa6J2BKfvvcLIk70No62Rdwg74AiNrePOy
+         5d8Q==
+X-Received: by 10.236.41.78 with SMTP id g54mr32904009yhb.112.1426242466647;
+ Fri, 13 Mar 2015 03:27:46 -0700 (PDT)
+Received: by 10.170.73.7 with HTTP; Fri, 13 Mar 2015 03:27:46 -0700 (PDT)
+In-Reply-To: <1426025409-18758-1-git-send-email-sudshekhar02@gmail.com>
+X-Google-Sender-Auth: CNcMyKzBWsQOiCPeynTWFE9lSCA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265412>
 
-On Tue, Mar 10, 2015 at 6:03 PM, Sudhanshu Shekhar
+On Tue, Mar 10, 2015 at 6:10 PM, Sudhanshu Shekhar
 <sudshekhar02@gmail.com> wrote:
-> [PATCH v3 1/2] reset: enable '-' short-hand for previous branch
+> Add following test cases:
+>
+> 1) Confirm error message when git reset is used with no previous branch
+> 2) Confirm git reset - works like git reset @{-1}
+> 3) Confirm "-" is always treated as a commit unless the -- file option is specified
+> 4) Confirm "git reset -" works normally even when a file named @{-1} is present
 
-This should be v4, I think, not v3.
+Does it concern you that all new tests pass except the last one even
+when patch 1/2 is not applied? I would have expected most or all of
+these tests to fail without patch 1/2.
 
-> git reset -' will reset to the previous branch. It will behave similar
-> to @{-1} except when a file named '@{-1}' is present.
-
-The way this is phrased, the reader is left hanging: "What happens
-when a file named @{-1} is present?"
-
-> To refer to a file named '-', use ./- or the -- flag.
-
-A documentation update to reflect this change would be appropriate.
-See, for instance, 696acf45 (checkout: implement "-" abbreviation, add
-docs and tests;  2009-01-17).
-
-> Helped-by: Junio C Hamano <gitster@pobox.com>
 > Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 > Helped-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+> Helped-by: David Aguilar <davvid@gmail.com>
 > Signed-off-by: Sudhanshu Shekhar <sudshekhar02@gmail.com>
 > ---
-> Eric, I have added a user_input variable to record the input entered
-> by the user. This way I can avoid the multiple 'if' clauses. Thank you
-> for the suggestion.
+> diff --git a/t/t7102-reset.sh b/t/t7102-reset.sh
+> index 98bcfe2..d3a5874 100755
+> --- a/t/t7102-reset.sh
+> +++ b/t/t7102-reset.sh
+> @@ -568,4 +568,163 @@ test_expect_success 'reset --mixed sets up work tree' '
+>         test_cmp expect actual
+>  '
 >
-> I have also removed the unrelated change that I had unintentionally
-> committed. I am sending this patch on the thread for further review.
-> Once both the patches are reviewed and accepted, I will create a new
-> mail for it. Hope that is okay.
+> +test_expect_success 'reset - with no previous branch fails' '
+> +       git init no_previous &&
 
-Please wrap commentary to about 72 columns, just as you would the
-commit message, rather than typing it all on a single line. (I wrapped
-it manually here in order to reply to it.)
+I understand the intention of the name "no_previous" in tests for
+which there is no @{-1}, however...
 
-> diff --git a/builtin/reset.c b/builtin/reset.c
-> index 4c08ddc..b428241 100644
-> --- a/builtin/reset.c
-> +++ b/builtin/reset.c
-> @@ -192,6 +192,8 @@ static void parse_args(struct pathspec *pathspec,
->  {
->         const char *rev = "HEAD";
->         unsigned char unused[20];
-> +       int substituted_minus = 0;
-> +       char *user_input = argv[0];
+> +       test_when_finished rm -rf no_previous &&
+> +       (
+> +               cd no_previous &&
+> +               test_must_fail git reset - 2>actual
+> +       ) &&
+> +       test_i18ngrep "bad flag" no_previous/actual
+> +'
+> +
+> +test_expect_success 'reset - while having file named - and no previous branch fails' '
+> +       git init no_previous &&
+> +       test_when_finished rm -rf no_previous &&
+> +       (
+> +               cd no_previous &&
+> +               >- &&
+> +               test_must_fail git reset - 2>actual
+> +       ) &&
+> +       test_i18ngrep "bad flag" no_previous/actual
+> +'
+> +
+> +test_expect_success \
+> +       'reset - in the presence of file named - with previous branch resets commit' '
+> +       cat >expect <<-\EOF
+> +       Unstaged changes after reset:
+> +       M       -
+> +       M       file
+> +       EOF &&
+> +       git init no_previous &&
 
-You're assigning a 'const char *' to a 'char *'. The compiler should
-have warned about it.
+I don't understand the name "no_previous" in tests for which @{-1} can
+resolve. It probably would be better to choose a more generic name and
+use it for all these tests. For instance, "resetdash" or just "dash"
+or something better.
 
-This variable name is not as expressive as it could be. Try to name
-the variable after what you expect it to represent, for instance
-"maybe_rev" or "rev_or_path" or something more suitable. Even
-"orig_argv0" would be more informative than "user_input".
+> +       test_when_finished rm -rf no_previous &&
+> +       (
+> +               cd no_previous &&
+> +               >- &&
+> +               >file &&
+> +               git add file - &&
+> +               git commit -m "add base files" &&
+> +               git checkout -b new_branch &&
+> +               echo "random" >- &&
+> +               echo "wow" >file &&
+> +               git add file - &&
+> +               git reset - >../actual
+> +       ) &&
+> +       test_cmp expect actual
+> +'
+> +
+> +test_expect_success 'reset - with file named @{-1} succeeds' '
 
->         /*
->          * Possible arguments are:
->          *
-> @@ -205,6 +207,10 @@ static void parse_args(struct pathspec *pathspec,
->          */
->
->         if (argv[0]) {
-> +               if (!strcmp(argv[0], "-")) {
-> +                       argv[0] = "@{-1}";
-> +                       substituted_minus = 1;
-> +               }
->                 if (!strcmp(argv[0], "--")) {
->                         argv++; /* reset to HEAD, possibly with paths */
->                 } else if (argv[1] && !strcmp(argv[1], "--")) {
-> @@ -222,9 +228,12 @@ static void parse_args(struct pathspec *pathspec,
->                          * Ok, argv[0] looks like a commit/tree; it should not
->                          * be a filename.
->                          */
-> -                       verify_non_filename(prefix, argv[0]);
-> +                       verify_non_filename(prefix, user_input);
->                         rev = *argv++;
->                 } else {
-> +                       /* We were treating "-" as a commit and not a file */
-> +                       if (substituted_minus)
-> +                               argv[0] = "-";
+I may be missing something obvious, but why is it necessary to single
+out a file named @{-1} at all, particuarly when there are so many
+other ways to specify revisions, and there may be files mirroring
+those spellings, as well?
 
-In my review of the previous version[1], I mentioned that it was ugly
-to muck with argv[0]; moreover that it was particularly ugly to have
-to muck with it multiple times, undoing and redoing assignments.
-Although you've eliminated some reassignments via 'user_input', my
-intent, by asking if you could rework the logic, was to prompt you to
-take a couple steps back and examine the overall logic of the function
-more closely. The munging of argv[0] is effectively a fragile and
-undesirable band-aid approach. It is possible to support '-' as an
-alias for '@{-1}' without having to resort to such kludges at all.
-
-One other concern: When there is no previous branch, and no file named
-"-", then 'git reset -' misleadingly complains "bad flag '-' used
-after filename", rather than the more appropriate "ambiguous argument
-'-': unknown revision or path".
-
-[1]: http://article.gmane.org/gmane.comp.version-control.git/265255
-
->                         /* Otherwise we treat this as a filename */
->                         verify_filename(prefix, argv[0], 1);
->                 }
+> +       cat >expect <<EOF
+> +       Unstaged changes after reset:
+> +       M       file
+> +       M       @{-1}
+> +       EOF &&
+> +       git init no_previous &&
+> +       test_when_finished rm -rf no_previous &&
+> +       (
+> +               cd no_previous &&
+> +               echo "random" >@{-1} &&
+> +               echo "random" >file &&
+> +               git add @{-1} file &&
+> +               git commit -m "base commit" &&
+> +               git checkout -b new_branch &&
+> +               echo "additional stuff" >>file &&
+> +               echo "additional stuff" >>@{-1} &&
+> +               git add file @{-1} &&
+> +               git reset - >../actual
+> +       ) &&
+> +       test_cmp expect actual
+> +'
+> +
+>  test_done
 > --
 > 2.3.1.278.ge5c7b1f.dirty
