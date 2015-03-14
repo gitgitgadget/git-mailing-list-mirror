@@ -1,93 +1,116 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v2 00/10] Use a structure for object IDs.
-Date: Sat, 14 Mar 2015 14:16:19 +0000
-Message-ID: <20150314141619.GI46326@vauxhall.crustytoothpaste.net>
-References: <1426289976-568060-1-git-send-email-sandals@crustytoothpaste.net>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v2] userdiff: funcname and word patterns for sh
+Date: Sat, 14 Mar 2015 18:19:27 +0100
+Message-ID: <vpqoanvjy3k.fsf@anie.imag.fr>
+References: <1425918999-11992-2-git-send-email-adrien+dev@schischi.me>
+	<1425944432-23642-1-git-send-email-adrien+dev@schischi.me>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="MFZs98Tklfu0WsCO"
-Cc: Andreas Schwab <schwab@linux-m68k.org>,
-	"Kyle J. McKay" <mackyle@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j6t@kdbg.org>, David Kastrup <dak@gnu.org>,
-	James Denholm <nod.helm@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 14 15:16:29 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Adrien Schildknecht <adrien+dev@schischi.me>
+X-From: git-owner@vger.kernel.org Sat Mar 14 18:19:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YWmrc-000838-5X
-	for gcvg-git-2@plane.gmane.org; Sat, 14 Mar 2015 15:16:28 +0100
+	id 1YWpiy-0008Pa-Bs
+	for gcvg-git-2@plane.gmane.org; Sat, 14 Mar 2015 18:19:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755829AbbCNOQZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Mar 2015 10:16:25 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:50182 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755561AbbCNOQY (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 14 Mar 2015 10:16:24 -0400
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:d0c6:418b:e1a:b913])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 5309E2808F;
-	Sat, 14 Mar 2015 14:16:23 +0000 (UTC)
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	git@vger.kernel.org, Andreas Schwab <schwab@linux-m68k.org>,
-	"Kyle J. McKay" <mackyle@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
-	David Kastrup <dak@gnu.org>, James Denholm <nod.helm@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <1426289976-568060-1-git-send-email-sandals@crustytoothpaste.net>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.19.0-trunk-amd64)
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
+	id S1751149AbbCNRTi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Mar 2015 13:19:38 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:58145 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751019AbbCNRTh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Mar 2015 13:19:37 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t2EHJPpc013060
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 14 Mar 2015 18:19:25 +0100
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t2EHJRr6031057;
+	Sat, 14 Mar 2015 18:19:27 +0100
+In-Reply-To: <1425944432-23642-1-git-send-email-adrien+dev@schischi.me>
+	(Adrien Schildknecht's message of "Tue, 10 Mar 2015 00:40:32 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sat, 14 Mar 2015 18:19:26 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t2EHJPpc013060
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1426958371.01443@BiZcSk8QmQVhs1QAFC88Qg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265451>
 
+On overall, the patch looks good. Some suggestions to improve the tests
+and a minor nitpick below.
 
---MFZs98Tklfu0WsCO
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Adrien Schildknecht <adrien+dev@schischi.me> writes:
 
-On Fri, Mar 13, 2015 at 11:39:26PM +0000, brian m. carlson wrote:
->
->Changes since v1:
+> +++ b/t/t4034/sh/post
+> @@ -0,0 +1,36 @@
+> +foo() {ls&echo}
 
-I just realized that I sent this out as v2 instead of v3.  It really is
-v3.  My apologies for the error.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+This part is unchanged here and in the pre file. What does it test?
 
---MFZs98Tklfu0WsCO
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+> +$((x++))
+> +$((x--))
+> +$((--x))
+> +$((++x))
+> +$((x*y))
+> +$((x&y))
+> +$((x**y))
+> +$((x/y))
+> +$((x%y))
+> +$((x+y))
+> +$((x-y))
+> +[ x<=y ]
+> +[ x>=y ]
+> +[ x==y ]
+> +[ x!=y ]
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Not sure what the last ones are testing. If it's "[" as "the test
+command, spelled as [", then spaces are mandatory around the operators
+(and equality should be written =, not == in POSIX).
 
-iQIcBAEBCgAGBQJVBEKzAAoJEL9TXYEfUvaLQEAQAM7MhtTKdGBNQbz4fKAqEl7O
-nDCnImoBajMAnuevv+yFox3rZLBtlEI+iom4fUaWlc7fyRHSqe/kpe7YLA1bKXlQ
-iyMCHO4KergkYFTnJl3oBUG2Tskkl31V1lOR7EZjFog8EXPki93Byu/uPHbYs3EN
-uDC7sXcIekkIzWpX/w7iPe1MrX7mw8sTzoFQF1tjSjE3jbco5XwcG4h1hY/Hw4C4
-xfZJRd8FRuAGhqwusU7ml4eNioaXiTrAsnkZme9qUJEyKrg+IUajmakZuEPA4Irn
-g6slpxdgGwPH4Hy9U2XMm+77WxQdrkd0JfCoH53OnKv1rThCHh/5AoMJbFOMF5Dj
-FGOVmL1q2IZiT3hFWD1Yp9xl407YmnxYShmkbXLs5xYCrjPomii9/jljRLUpfMc3
-/phHovd9scw5hct5zBGfv4rYr/hAT+xcsjC2m1386+LSN9KanrZOAIl0jnZkI5dL
-I1Hrwjrt9Y95rbkRYXYDrEW1yXx6hEJ5YJ2i85S4hotVIVMk/907AoFn295c0Fe4
-HZsJW2RQXBfGjGGH/xCHuzULiwgF6MPnX06x0f1PPsZM6PzzrBnOQlYFipz0WmPK
-7MBeZ/KkumsZjeKCHi+NYkovvhdiTefhVQpPK0oLqLRGTuQmstf9Un0/1rdX8F5/
-szq52slYigON1XlzPkYs
-=KADI
------END PGP SIGNATURE-----
+> +x<<y x>>y x<<-y x<y x>y x>|y x<&y x>&y x<>y
+> +x&y
+> +x&&y
+> +x|y
+> +x||y
+> +x=y
+> +$((x+=y))
+> +$((x-=y))
+> +$((x*=y))
+> +$((x/=y))
+> +$((x%=y))
+> +$((x<<=y))
+> +$((x>>=y))
+> +$((x&=y))
+> +$((x^=y))
+> +$((x|=y))
 
---MFZs98Tklfu0WsCO--
+I think you should test the case of multiple-letters identifiers. One of
+the benefit of having a proper word-diff pattern is that e.g.
+
+- pre=foo
++ post=bar
+
+will consider the change "pre" -> "post", and not an unmodified "p" with
+the change "re" -> "ost" (otherwise, --color-words=. just works).
+
+> +PATTERNS("sh",
+> +	"^([ \t]*(function[ \t]+)?[a-zA-Z_][a-zA-Z0-9_]*[ \t]*\\([ \t]*\\).*)$",
+> +	/* -- */
+> +	 "[a-zA-Z0-9_]+"
+
+Nitpick: the indentation is not homogeneous. You should add a space
+after the tab on the first two lines to get a correct alignment.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
