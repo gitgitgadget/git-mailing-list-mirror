@@ -1,204 +1,100 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH v2 03/10] bisect.c: convert leaf functions to use struct object_id
-Date: Fri, 13 Mar 2015 23:39:29 +0000
-Message-ID: <1426289976-568060-4-git-send-email-sandals@crustytoothpaste.net>
-References: <1426289976-568060-1-git-send-email-sandals@crustytoothpaste.net>
-Cc: Andreas Schwab <schwab@linux-m68k.org>,
-	"Kyle J. McKay" <mackyle@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j6t@kdbg.org>, David Kastrup <dak@gnu.org>,
-	James Denholm <nod.helm@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 14 00:40:56 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] userdiff: funcname and word patterns for sh
+Date: Fri, 13 Mar 2015 22:13:09 -0700
+Message-ID: <xmqqy4n0xiu2.fsf@gitster.dls.corp.google.com>
+References: <1425918999-11992-2-git-send-email-adrien+dev@schischi.me>
+	<1425944432-23642-1-git-send-email-adrien+dev@schischi.me>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Matthieu.Moy@grenoble-inp.fr
+To: Adrien Schildknecht <adrien+dev@schischi.me>
+X-From: git-owner@vger.kernel.org Sat Mar 14 06:13:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YWZCF-0000Q0-QL
-	for gcvg-git-2@plane.gmane.org; Sat, 14 Mar 2015 00:40:52 +0100
+	id 1YWeO9-000192-En
+	for gcvg-git-2@plane.gmane.org; Sat, 14 Mar 2015 06:13:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755340AbbCMXkl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Mar 2015 19:40:41 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:50119 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751289AbbCMXkL (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 13 Mar 2015 19:40:11 -0400
-Received: from vauxhall.crustytoothpaste.net (unknown [172.16.2.247])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+	id S1750848AbbCNFNN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Mar 2015 01:13:13 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:62016 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750739AbbCNFNM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Mar 2015 01:13:12 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id EB4B941EAC;
+	Sat, 14 Mar 2015 01:13:10 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=qcyVsMWPJGrVJEB0lHxMQOlLiXM=; b=BRyKFS
+	1+6I8nwDm9Zo/MXUFJS41QnyUuVmKyNtDAues5F6Vbm+L7GjEQlplLqHmnCmnITh
+	st+A2wxTv+zzXBE6CaoHrNpgXx8RbFRgWEO1a+/eIrBOj+i4vFTgrkxhPvulE5sN
+	RGXeMnRNc9DNJ/LMSPNlzjAO3C8V3HNK+EBwI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=dvrRKP5dQ4MWYV222WoR4PAGJUjTd0xF
+	5CpZDpgAfLl1Dlf5sEJOyi0r9K4rqBdV8jnalx/sg12MRUAJ4H7TG1X3SFGh4baU
+	5+4T7EQ1F0bAJrPwnOXUk0YbmbtW9H4nEjuOEhkgyYOM/7nC9+TiccfjIn6/jys4
+	L9aI0GYMI7k=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D516A41EAB;
+	Sat, 14 Mar 2015 01:13:10 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 616D128094;
-	Fri, 13 Mar 2015 23:40:10 +0000 (UTC)
-X-Mailer: git-send-email 2.2.1.209.g41e5f3a
-In-Reply-To: <1426289976-568060-1-git-send-email-sandals@crustytoothpaste.net>
-X-Spam-Score: -2.5 ALL_TRUSTED,BAYES_00
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5FDF341EAA;
+	Sat, 14 Mar 2015 01:13:10 -0400 (EDT)
+In-Reply-To: <1425944432-23642-1-git-send-email-adrien+dev@schischi.me>
+	(Adrien Schildknecht's message of "Tue, 10 Mar 2015 00:40:32 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: CEAED36E-CA08-11E4-93D9-A2259F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265434>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265435>
 
-Convert some constants to GIT_SHA1_HEXSZ.
+Adrien Schildknecht <adrien+dev@schischi.me> writes:
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- bisect.c | 40 ++++++++++++++++++++--------------------
- 1 file changed, 20 insertions(+), 20 deletions(-)
+> Add regexp based on the "Shell Command Language" specifications.
+> Because of the lax syntax of sh, some corner cases may not be
+> handled properly.
+>
+> Signed-off-by: Adrien Schildknecht <adrien+dev@schischi.me>
+> ---
 
-diff --git a/bisect.c b/bisect.c
-index 8c6d843..10f5e57 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -15,7 +15,7 @@
- static struct sha1_array good_revs;
- static struct sha1_array skipped_revs;
- 
--static unsigned char *current_bad_sha1;
-+static struct object_id *current_bad_oid;
- 
- static const char *argv_checkout[] = {"checkout", "-q", NULL, "--", NULL};
- static const char *argv_show_branch[] = {"show-branch", NULL, NULL};
-@@ -404,8 +404,8 @@ static int register_ref(const char *refname, const unsigned char *sha1,
- 			int flags, void *cb_data)
- {
- 	if (!strcmp(refname, "bad")) {
--		current_bad_sha1 = xmalloc(20);
--		hashcpy(current_bad_sha1, sha1);
-+		current_bad_oid = xmalloc(sizeof(*current_bad_oid));
-+		hashcpy(current_bad_oid->hash, sha1);
- 	} else if (starts_with(refname, "good-")) {
- 		sha1_array_append(&good_revs, sha1);
- 	} else if (starts_with(refname, "skip-")) {
-@@ -564,7 +564,7 @@ static struct commit_list *skip_away(struct commit_list *list, int count)
- 
- 	for (i = 0; cur; cur = cur->next, i++) {
- 		if (i == index) {
--			if (hashcmp(cur->item->object.sha1, current_bad_sha1))
-+			if (hashcmp(cur->item->object.sha1, current_bad_oid->hash))
- 				return cur;
- 			if (previous)
- 				return previous;
-@@ -607,7 +607,7 @@ static void bisect_rev_setup(struct rev_info *revs, const char *prefix,
- 
- 	/* rev_argv.argv[0] will be ignored by setup_revisions */
- 	argv_array_push(&rev_argv, "bisect_rev_setup");
--	argv_array_pushf(&rev_argv, bad_format, sha1_to_hex(current_bad_sha1));
-+	argv_array_pushf(&rev_argv, bad_format, oid_to_hex(current_bad_oid));
- 	for (i = 0; i < good_revs.nr; i++)
- 		argv_array_pushf(&rev_argv, good_format,
- 				 sha1_to_hex(good_revs.sha1[i]));
-@@ -628,7 +628,7 @@ static void bisect_common(struct rev_info *revs)
- }
- 
- static void exit_if_skipped_commits(struct commit_list *tried,
--				    const unsigned char *bad)
-+				    const struct object_id *bad)
- {
- 	if (!tried)
- 		return;
-@@ -637,12 +637,12 @@ static void exit_if_skipped_commits(struct commit_list *tried,
- 	       "The first bad commit could be any of:\n");
- 	print_commit_list(tried, "%s\n", "%s\n");
- 	if (bad)
--		printf("%s\n", sha1_to_hex(bad));
-+		printf("%s\n", oid_to_hex(bad));
- 	printf("We cannot bisect more!\n");
- 	exit(2);
- }
- 
--static int is_expected_rev(const unsigned char *sha1)
-+static int is_expected_rev(const struct object_id *oid)
- {
- 	const char *filename = git_path("BISECT_EXPECTED_REV");
- 	struct stat st;
-@@ -658,7 +658,7 @@ static int is_expected_rev(const unsigned char *sha1)
- 		return 0;
- 
- 	if (strbuf_getline(&str, fp, '\n') != EOF)
--		res = !strcmp(str.buf, sha1_to_hex(sha1));
-+		res = !strcmp(str.buf, oid_to_hex(oid));
- 
- 	strbuf_release(&str);
- 	fclose(fp);
-@@ -719,7 +719,7 @@ static struct commit **get_bad_and_good_commits(int *rev_nr)
- 	struct commit **rev = xmalloc(len * sizeof(*rev));
- 	int i, n = 0;
- 
--	rev[n++] = get_commit_reference(current_bad_sha1);
-+	rev[n++] = get_commit_reference(current_bad_oid->hash);
- 	for (i = 0; i < good_revs.nr; i++)
- 		rev[n++] = get_commit_reference(good_revs.sha1[i]);
- 	*rev_nr = n;
-@@ -729,8 +729,8 @@ static struct commit **get_bad_and_good_commits(int *rev_nr)
- 
- static void handle_bad_merge_base(void)
- {
--	if (is_expected_rev(current_bad_sha1)) {
--		char *bad_hex = sha1_to_hex(current_bad_sha1);
-+	if (is_expected_rev(current_bad_oid)) {
-+		char *bad_hex = oid_to_hex(current_bad_oid);
- 		char *good_hex = join_sha1_array_hex(&good_revs, ' ');
- 
- 		fprintf(stderr, "The merge base %s is bad.\n"
-@@ -750,7 +750,7 @@ static void handle_bad_merge_base(void)
- static void handle_skipped_merge_base(const unsigned char *mb)
- {
- 	char *mb_hex = sha1_to_hex(mb);
--	char *bad_hex = sha1_to_hex(current_bad_sha1);
-+	char *bad_hex = sha1_to_hex(current_bad_oid->hash);
- 	char *good_hex = join_sha1_array_hex(&good_revs, ' ');
- 
- 	warning("the merge base between %s and [%s] "
-@@ -781,7 +781,7 @@ static void check_merge_bases(int no_checkout)
- 
- 	for (; result; result = result->next) {
- 		const unsigned char *mb = result->item->object.sha1;
--		if (!hashcmp(mb, current_bad_sha1)) {
-+		if (!hashcmp(mb, current_bad_oid->hash)) {
- 			handle_bad_merge_base();
- 		} else if (0 <= sha1_array_lookup(&good_revs, mb)) {
- 			continue;
-@@ -838,7 +838,7 @@ static void check_good_are_ancestors_of_bad(const char *prefix, int no_checkout)
- 	struct stat st;
- 	int fd;
- 
--	if (!current_bad_sha1)
-+	if (!current_bad_oid)
- 		die("a bad revision is needed");
- 
- 	/* Check if file BISECT_ANCESTORS_OK exists. */
-@@ -903,7 +903,7 @@ int bisect_next_all(const char *prefix, int no_checkout)
- 	struct commit_list *tried;
- 	int reaches = 0, all = 0, nr, steps;
- 	const unsigned char *bisect_rev;
--	char bisect_rev_hex[41];
-+	char bisect_rev_hex[GIT_SHA1_HEXSZ + 1];
- 
- 	if (read_bisect_refs())
- 		die("reading bisect refs failed");
-@@ -927,7 +927,7 @@ int bisect_next_all(const char *prefix, int no_checkout)
- 		exit_if_skipped_commits(tried, NULL);
- 
- 		printf("%s was both good and bad\n",
--		       sha1_to_hex(current_bad_sha1));
-+		       oid_to_hex(current_bad_oid));
- 		exit(1);
- 	}
- 
-@@ -938,10 +938,10 @@ int bisect_next_all(const char *prefix, int no_checkout)
- 	}
- 
- 	bisect_rev = revs.commits->item->object.sha1;
--	memcpy(bisect_rev_hex, sha1_to_hex(bisect_rev), 41);
-+	memcpy(bisect_rev_hex, sha1_to_hex(bisect_rev), GIT_SHA1_HEXSZ + 1);
- 
--	if (!hashcmp(bisect_rev, current_bad_sha1)) {
--		exit_if_skipped_commits(tried, current_bad_sha1);
-+	if (!hashcmp(bisect_rev, current_bad_oid->hash)) {
-+		exit_if_skipped_commits(tried, current_bad_oid);
- 		printf("%s is the first bad commit\n", bisect_rev_hex);
- 		show_diff_tree(prefix, revs.commits->item);
- 		/* This means the bisection process succeeded. */
--- 
-2.2.1.209.g41e5f3a
+Those of you who helped in the first round of review, any comments,
+"This round looks good"'s, ...?
+
+> +PATTERNS("sh",
+> +	"^([ \t]*(function[ \t]+)?[a-zA-Z_][a-zA-Z0-9_]*[ \t]*\\([ \t]*\\).*)$",
+> +	/* -- */
+
+I do not think it is wrong per-se to try to be as precise as
+possible, but I wonder if it is sufficient to cheat and make these
+"what is a word?" expressions a bit looser, by declaring that it is
+OK if a simpler pattern allows something that are syntactically
+illegal in shell, as long as it splits valid shell construct
+correctly.  For example:
+
+> +	 "[a-zA-Z0-9_]+"
+> +	 "|[-+0-9]+"
+
+The first one matches an identifier (e.g. If you have frotz="a b c"
+and $frotz, two appearances of 'frotz' are matched) and the second
+one I think is trying to catch possibly signed integers, but the
+latter also matches 0+1+++2 which is already loose (but I do not
+think it is a problem).  Perhaps it is sufficient to collapse the
+above into a single "[-+a-zA-Z0-9_$]+"?
+
+> +	 "|[-+*/<>%&^|=!]=|>>=?|<<=?|\\+\\+|--|\\*\\*|&&|\\|\\||\\[\\[|\\]\\]"
+> +	 "|>\\||[<>]+&|<>|<<-|;;"),
+
+Likewise.  I wonder if something like "[-~!@#%^&*+=|;/]+" gives too
+many false matches.
+
+>  { "default", NULL, -1, { NULL, 0 } },
+>  };
+>  #undef PATTERNS
