@@ -1,68 +1,63 @@
-From: Dave Olszewski <cxreg@pobox.com>
-Subject: Re: [PATCH 3/3] push: allow --follow-tags to be set by config
- push.followTags
-Date: Sat, 14 Mar 2015 10:50:20 -0700 (PDT)
-Message-ID: <alpine.DEB.2.11.1503141049080.16979@narbuckle.genericorp.net>
-References: <20150216061051.GA29895@peff.net> <20150216061619.GC32381@peff.net> <xmqqh9toxgdd.fsf@gitster.dls.corp.google.com>
+From: Henning Moll <newsScott@gmx.de>
+Subject: protect branches against deletion from remote
+Date: Sat, 14 Mar 2015 19:28:40 +0100
+Message-ID: <55047DD8.703@gmx.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Dave Olszewski <cxreg@pobox.com>, Jeff King <peff@peff.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 14 18:50:29 2015
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Mar 14 19:28:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YWqCj-0003Zf-7G
-	for gcvg-git-2@plane.gmane.org; Sat, 14 Mar 2015 18:50:29 +0100
+	id 1YWqnq-0000FC-AQ
+	for gcvg-git-2@plane.gmane.org; Sat, 14 Mar 2015 19:28:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751793AbbCNRuY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Mar 2015 13:50:24 -0400
-Received: from 63.f9.1243.static.theplanet.com ([67.18.249.99]:35543 "EHLO
-	62.f9.1243.static.theplanet.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751153AbbCNRuX (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 14 Mar 2015 13:50:23 -0400
-X-Envelope-From: cxreg@pobox.com
-Received: from localhost (count@narbuckle [127.0.0.1])
-	(authenticated bits=0)
-	by 62.f9.1243.static.theplanet.com (8.14.4/8.14.4/Debian-8) with ESMTP id t2EHoK0s021433
-	(version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sat, 14 Mar 2015 12:50:20 -0500
-X-X-Sender: count@narbuckle.genericorp.net
-In-Reply-To: <xmqqh9toxgdd.fsf@gitster.dls.corp.google.com>
-User-Agent: Alpine 2.11 (DEB 23 2013-08-11)
+	id S1751467AbbCNS2o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Mar 2015 14:28:44 -0400
+Received: from mout.gmx.net ([212.227.17.21]:60426 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751153AbbCNS2n (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Mar 2015 14:28:43 -0400
+Received: from [192.168.178.22] ([88.217.113.107]) by mail.gmx.com (mrgmx102)
+ with ESMTPSA (Nemesis) id 0LhTjQ-1ZJKht2A2S-00mXdS for <git@vger.kernel.org>;
+ Sat, 14 Mar 2015 19:28:41 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
+X-Provags-ID: V03:K0:qrag4R24G8lA6expRXYAnWTzIZx4oZIa+o9Pt5Co+lCbXmheKaN
+ LGp6kCGAlJUmm/rvKaA42wHZfoikmzKn1cbRXp05hkL3NsZ2SIcCm0pzfMNpR/QWTwftiXw
+ Of9afvvxD7JwECb2K1b3SVgAPv2Z3RU+TABziyHtXl16Y++VkB95gXOF2N91ckKZXWQ/UkX
+ Bewwm27WoPahHIk1aTL6w==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265456>
 
-On Fri, 13 Mar 2015, Junio C Hamano wrote:
+Hi,
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > From: Dave Olszewski <cxreg@pobox.com>
-> >
-> > Signed-off-by: Dave Olszewski <cxreg@pobox.com>
-> > ---
-> > Again, this is just a preview. Dave should send the final when he thinks
-> > it is good.
-> 
-> Dave?
-> 
-> I do not see anything wrong with this version that builds on top of
-> the previous 2 clean-up.  Personally I find that these clean-up
-> changes more valuable than I care about this particular feature, and
-> it is unfortunate that waiting an Ack or reroll of this one kept
-> them stalled.
-> 
-> I am tempted to throw "Helped-by: Peff" into the log message and
-> merge the result to 'next', unless I hear otherwise in a few days.
+If you try to delete a local branch "feature" which is not merged into 
+another branch, you will get the following warning:
 
-Sorry, work has kept me very busy lately, I haven't had time to re-visit
-this.  Jeff's version looks great to me, please go ahead with it.
-Thanks everyone.
+. error: The branch 'feature' is not fully merged.
+. If you are sure you want to delete it, run 'git branch -D feature'.
 
-    Dave
+If a local branch is worth to be protected in such a way, why not the 
+remote tracking one:
+
+$ git push origin :feature
+
+no warning, just deleted.
+
+Well i can set "receive.denyDeletes" on the remote repository, but this 
+completely removes the ability to delete remote branches.
+
+How to achieve a similar behavior as with local branches?
+
+(BTW. with "git push . :feature" it is also possible to force deletion 
+of local, unmerged branches)
+
+Best regards
+Henning
