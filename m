@@ -1,159 +1,61 @@
-From: Sudhanshu Shekhar <sudshekhar02@gmail.com>
-Subject: Re: [PATCH v5 2/2] t7102: add 'reset -' tests
-Date: Mon, 16 Mar 2015 12:44:51 +0530
-Message-ID: <CAODo60q-jNEyOncEdtCHqR_xgBY1Ju-vx_Ywj=YxbYWYVJ4rHQ@mail.gmail.com>
-References: <1426270716-22405-1-git-send-email-sudshekhar02@gmail.com>
- <1426270716-22405-2-git-send-email-sudshekhar02@gmail.com> <CAPig+cRQ9ZZ9573SvA9HPNLtE6s0U6TGnDfgpRD-osReAQgJJA@mail.gmail.com>
+From: "Sarah Boj" <sarahbojing@chewies.com>
+Subject: Hello
+Date: Sat, 14 Mar 2015 23:03:34 -0700
+Message-ID: <20150315134930.2362712F585@bibracte.fr>
+Reply-To: sarah-bojing@asia-mail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>,
-	David Aguilar <davvid@gmail.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon Mar 16 08:15:21 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: Recipients <sarahbojing@chewies.com>
+X-From: git-owner@vger.kernel.org Mon Mar 16 08:55:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YXPFA-0006iG-9t
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Mar 2015 08:15:20 +0100
+	id 1YXPs0-0005uv-Se
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Mar 2015 08:55:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751338AbbCPHPO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Mar 2015 03:15:14 -0400
-Received: from mail-lb0-f179.google.com ([209.85.217.179]:35607 "EHLO
-	mail-lb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750736AbbCPHPN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Mar 2015 03:15:13 -0400
-Received: by lbcgn8 with SMTP id gn8so14370252lbc.2
-        for <git@vger.kernel.org>; Mon, 16 Mar 2015 00:15:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=an4+rrbmLbO0lXlXJsWBI5KZ3wZiPKnsfpYwwwHjJcw=;
-        b=YFbgp8ugtrwWfiNiyzsh3CzGQsR5297nn85z0/XFRE9b3wEESfVhxRv1hOt3nmLZ9f
-         xe1PZTpxuAvvJEdNCIL/CVm4haC/ws4zdmbElJ777jFe7W5JGY6tX/+88domTjQd7CuF
-         15AErvga1jKOTlXTPtNxZdj6ipj9ibntiA47DXpHFXuybLbS5eJPnKwK5PgkVYUofSbc
-         I4nM6UkSPsEvk3hm6YuQBzD0/kklGd/h7snhxDER9YJrBQOgrLZ55yLZaqigeOhIWVl0
-         3/t7IzMdmIsKNjMlEfT63BpDfw5rj8Xf9MokHjhVWB1YBoqMAF3C2pvjyFiz04eiXITX
-         cO5A==
-X-Received: by 10.152.36.37 with SMTP id n5mr54245836laj.40.1426490112022;
- Mon, 16 Mar 2015 00:15:12 -0700 (PDT)
-Received: by 10.152.43.138 with HTTP; Mon, 16 Mar 2015 00:14:51 -0700 (PDT)
-In-Reply-To: <CAPig+cRQ9ZZ9573SvA9HPNLtE6s0U6TGnDfgpRD-osReAQgJJA@mail.gmail.com>
+	id S1751731AbbCPHzX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Mar 2015 03:55:23 -0400
+Received: from mail.bibracte.fr ([212.83.150.114]:36512 "EHLO bibracte.fr"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1750967AbbCPHzW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 Mar 2015 03:55:22 -0400
+X-Greylist: delayed 55376 seconds by postgrey-1.27 at vger.kernel.org; Mon, 16 Mar 2015 03:55:22 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by bibracte.fr (Postfix) with ESMTP id 3E20713692B;
+	Sun, 15 Mar 2015 17:20:54 +0100 (CET)
+Received: from bibracte.fr ([127.0.0.1])
+	by localhost (bibracte.fr [127.0.0.1]) (amavisd-new, port 10032)
+	with ESMTP id 9QZRbxGq4F_y; Sun, 15 Mar 2015 17:20:53 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by bibracte.fr (Postfix) with ESMTP id 4357712E66D;
+	Sun, 15 Mar 2015 15:47:55 +0100 (CET)
+X-Virus-Scanned: amavisd-new at bibracte.fr
+Received: from bibracte.fr ([127.0.0.1])
+	by localhost (bibracte.fr [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id moPWopXpWJlt; Sun, 15 Mar 2015 15:47:54 +0100 (CET)
+Received: from [5.39.223.88] (unknown [5.39.223.88])
+	by bibracte.fr (Postfix) with ESMTPSA id 2362712F585;
+	Sun, 15 Mar 2015 14:49:29 +0100 (CET)
+Content-Description: Mail message body
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265547>
+X-Spam-Report: 8.4 points;
+ *  1.9 DATE_IN_PAST_06_12 Date: is 6 to 12 hours before Received: date
+ *  3.2 RCVD_ILLEGAL_IP Received: contains illegal IP address
+ *  1.2 US_DOLLARS_3 BODY: Mentions millions of $ ($NN,NNN,NNN.NN)
+ *  2.2 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
+ *      [Blocked - see <http://www.spamcop.net/bl.shtml?5.39.223.88>]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265548>
 
-Hi,
-On Sat, Mar 14, 2015 at 2:40 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Fri, Mar 13, 2015 at 2:18 PM, Sudhanshu Shekhar
-> <sudshekhar02@gmail.com> wrote:
->> Add following test cases:
->> 1) Confirm error message when git reset is used with no previous branch
->> 2) Confirm git reset - works like git reset @{-1}
->> 3) Confirm "-" is always treated as a commit unless the -- file option
->> is specified
->> 4) Confirm "git reset -" works normally even when a file named @{-1} is
->> present
->>
->> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
->> Helped-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
->> Helped-by: David Aguilar <davvid@gmail.com>
->> Signed-off-by: Sudhanshu Shekhar <sudshekhar02@gmail.com>
->> ---
->> Eric: Thank you for pointing out the mistake. The '&&' after the Here
->> Docs was causing the issue. I have removed the concatenation from
->> there, hope that's okay.
->
-> The && needs to go on the first line, not the last line of the here-doc.
->
-> However, that was not my main concern in the previous review. What
-> disturbed me was that the new tests, which were supposed to be
-> checking if "-" behaved as @{-1}, were succeeding even without patch
-> 1/2 applied which implemented the "-" alias for @{-1}. That seems
-> wrong. I don't think you particularly addressed that issue in this
-> version (even though the first couple tests will now fail without 1/2
-> due to the changed error message).
+Good day,
 
-Actually, The issue was caused due a HERE docs error. If you run this
-patch now, you will see that 7 out of the 8 test cases fail.
-
->
->> Regarding the @{-1} test case, I created it as a check for Junio's
->> comment on the error message generated by "git reset -" when a file
->> named @{-1} is there.  Since, in this situation "git reset @{-1}" will
->> return an error (but "reset -" shouldn't).
->
-> Reminder: Wrap commentary to about column 72, as you would the commit
-> message. (I re-wrapped it manually to reply to it.)
->
->> I have renamed the folder to 'dash' as suggested by you, keeping the
->> old name only where it made sense.
->
-> Considering that the test titles already tell us the intent of the
-> tests, I don't find that the directory name "no_previous" adds much
-> value to tests checking the behavior of "-" with no previous branch. A
-> single, consistent name used throughout all these tests would be less
-> surprising and place smaller cognitive load on the reader.
->
-> More below.
->
->> diff --git a/t/t7102-reset.sh b/t/t7102-reset.sh
->> index 98bcfe2..18523c1 100755
->> --- a/t/t7102-reset.sh
->> +++ b/t/t7102-reset.sh
->> @@ -568,4 +568,162 @@ test_expect_success 'reset --mixed sets up work tree' '
->>         test_cmp expect actual
->>  '
->>
->> +test_expect_success 'reset - with no previous branch fails' '
->> +       git init no_previous &&
->> +       test_when_finished rm -rf no_previous &&
->> +       (
->> +               cd no_previous &&
->> +               test_must_fail git reset - 2>actual
->> +       ) &&
->> +       test_i18ngrep "ambiguous argument" no_previous/actual
->> +'
->> +
->> +test_expect_success 'reset - while having file named - and no previous branch fails' '
->> +       git init no_previous &&
->> +       test_when_finished rm -rf no_previous &&
->> +       (
->> +               cd no_previous &&
->> +               >- &&
->> +               test_must_fail git reset - 2>actual
->> +       ) &&
->> +       test_i18ngrep "ambiguous argument" no_previous/actual
->> +'
->> +
->> +
->
-> Style: Unnecessary extra blank line.
->
->> +test_expect_success \
->> +       'reset - in the presence of file named - with previous branch resets commit' '
->> +       cat >expect <<-EOF
->
-> Place the && at the end of this line. Also, prefix EOF with a
-> backslash to indicate that you don't intend any interpolation to occur
-> within the here-doc. So:
->
->     cat >expect <<-\EOF &&
->
-> Ditto for the remaining tests.
->
-Thank you for taking the time out to point out these style changes to
-me. There is a lot I have to learn about open source contribution yet
-and I believe during the course of this microproject, I did learn
-something about this (By making some very silly mistakes). Thank you
-to all the developers who took time out to review my code and point
-out the mistakes I had done.
+I believe that you will be anxious to know the kind of business proposition that I have for you. Well, I am soliciting your assistance to be able to transfer a huge amount of money $20,500,000.00 from my bank that is lying idle with no one ever coming to lay claim to it. Let me know if you are interested.
 
 Regards,
-Sudhanshu
+Sarah Bojing
+email: sarah-bojing@asia-mail.com
