@@ -1,118 +1,156 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] git prompt: Use toplevel to find untracked files.
-Date: Sun, 15 Mar 2015 14:18:50 -0700
-Message-ID: <xmqqd24at0w5.fsf@gitster.dls.corp.google.com>
-References: <xmqqmw3hzakn.fsf@gitster.dls.corp.google.com>
-	<1426420144-10584-1-git-send-email-szeder@ira.uka.de>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH/RFC][GSoC] make "git diff --no-index $directory $file"
+ DWIM better.
+Date: Sun, 15 Mar 2015 17:28:43 -0400
+Message-ID: <CAPig+cRFCktpG2ksNnRZiFxDqmQnq38MafkA1E-LC6CHtcuk9g@mail.gmail.com>
+References: <CAHLaBN+93mp6PQmtfjOHSvfW7iwDXwPitGQ5W1am9KBm9EZV2Q@mail.gmail.com>
+	<CAPig+cQgvwd=5hLGeOpY1r_476HbpUarumsu_QDU4HwB7ynXmw@mail.gmail.com>
+	<CAHLaBN+RVpDrG9OewUS7LCYaEOvVqsTY3znapgMj7VrMJWHaDw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Cody A Taylor <cody.taylor@maternityneighborhood.com>
-To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Sun Mar 15 22:19:00 2015
+Cc: Git List <git@vger.kernel.org>
+To: Yurii Shevtsov <ungetch@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 15 22:28:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YXFw1-0001Xb-EX
-	for gcvg-git-2@plane.gmane.org; Sun, 15 Mar 2015 22:18:57 +0100
+	id 1YXG5Z-0000X8-VD
+	for gcvg-git-2@plane.gmane.org; Sun, 15 Mar 2015 22:28:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751350AbbCOVSx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 Mar 2015 17:18:53 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:56844 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751300AbbCOVSw convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 15 Mar 2015 17:18:52 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3CFAA3FCEA;
-	Sun, 15 Mar 2015 17:18:52 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=Gi2YckweAZsv
-	G4guSz0OKNunqZQ=; b=eYhIO9RygzPET9MPZ1xTysg0+QQgFwkC0Kzfm39Tt5Tn
-	AeBWneEM/RXUKVFeDA0ohfV3DdXkvos8+kQWlbsKzChcVlzUbRrzneJ9IGh6Lv7A
-	TMjqbihUA3R2ni2DLJwC/mjcwnxHOJhxAjvbE7eeqabbRB0rvpTn1CxtOsN+PQo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=xqfiCq
-	8HYKUkMCEC7cDwt46b8TvV65zz8y/ktMWg2/LhKRFCQR/WK4+FIbD/1uxVLkKJcS
-	6Ib3Bpa+Q+EEA6uG8Kv3J03EZFs2kB840WPc1rgKGpdu7VxrcojHPoWC3d/bc50/
-	KY/c88li7YKwZkkWjiHrZvUauFo7HA3ZS/p14=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 338103FCE9;
-	Sun, 15 Mar 2015 17:18:52 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B01B13FCE8;
-	Sun, 15 Mar 2015 17:18:51 -0400 (EDT)
-In-Reply-To: <1426420144-10584-1-git-send-email-szeder@ira.uka.de> ("SZEDER
-	=?utf-8?Q?G=C3=A1bor=22's?= message of "Sun, 15 Mar 2015 12:49:04 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: E0D208E4-CB58-11E4-A3C4-A2259F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751430AbbCOV2p convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 Mar 2015 17:28:45 -0400
+Received: from mail-yh0-f41.google.com ([209.85.213.41]:34842 "EHLO
+	mail-yh0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751166AbbCOV2o convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 15 Mar 2015 17:28:44 -0400
+Received: by yhct68 with SMTP id t68so11548904yhc.2
+        for <git@vger.kernel.org>; Sun, 15 Mar 2015 14:28:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=KAXarSQZr+bx50nfrH6XjM1jqJ610Qts56fFDx2HP14=;
+        b=wcLKcv90nRTXPJfwQi8yAwQW39ynKf2s06mdPPaFteiRtp3hZC+v/q/DAcg2awpYjR
+         GXqEkIJfW1ocAhygufGvtDBKC6/PJyPhj3cqMGr5X8A64BDLpum+ASEAW31A0bHhBLO5
+         HRPE8fKJxTyTwvvo1z+vEG9UVHTQjJCBIIHMJNV9UpgzafzMHmY+4ChTOBpsZ1yDoyVZ
+         PyfcPAZ9T0hhaR1outZBrhPhnQ75zF1YDULAbiHiQdc7WK8pAsj0dYtYYzE7/mc03ToQ
+         QoiURhLkaEjFEMFugCTLQoYXLsxmZsI6cfXKqVEV3VVfvARcZ3ptbJe0PtUeU+L68r2D
+         y7mA==
+X-Received: by 10.236.105.210 with SMTP id k58mr57726869yhg.52.1426454923449;
+ Sun, 15 Mar 2015 14:28:43 -0700 (PDT)
+Received: by 10.170.73.7 with HTTP; Sun, 15 Mar 2015 14:28:43 -0700 (PDT)
+In-Reply-To: <CAHLaBN+RVpDrG9OewUS7LCYaEOvVqsTY3znapgMj7VrMJWHaDw@mail.gmail.com>
+X-Google-Sender-Auth: MZ0kCj7ysBzFxlFfv-2OGbnKwAs
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265526>
 
-SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
+[re-adding cc:git]
 
-> Hi,
->
-> Quoting Junio C Hamano <gitster@pobox.com>:
->
->> Cody A Taylor <cody.taylor@maternityneighborhood.com> writes:
->>> The __git_ps1() prompt function would not show an untracked
->>> state when the current working directory was not a parent of
->>> the untracked file.
+On Sun, Mar 15, 2015 at 2:45 PM, Yurii Shevtsov <ungetch@gmail.com> wro=
+te:
+>> On Sun, Mar 15, 2015 at 11:35 AM, Yurii Shevtsov <ungetch@gmail.com>=
+ wrote:
+>>> make "git diff --no-index $directory $file" DWIM better.
 >>
->> Good find, and nicely explained.
+>> Specify the area affected by the change, followed by a colon, follow=
+ed
+>> by the change summary. Drop the period at the end. So, something lik=
+e:
+>>
+>>     diff: improve '--no-index <directory> <file>' DWIMing
+>>
+>>> Changes 'git diff --no-index $directory $file' behaviour.
+>>> Now it is transformed to 'git diff --no-index $directory/&file $fil=
+e'
+>>> instead of throwing an error.
+>>
+>> Write in imperative mood, so "Change" rather than "Changes". By
+>> itself, the first sentence isn't saying much; it would read better i=
+f
+>> you combined the two sentences into one.
 >
-> Somehow I had a hard time making sense out of "when the current worki=
-ng
-> directory was not a parent of the untracked file".  Perhaps "when the
-> untracked files are outside of the current working directory" would b=
-e
-> easier to grok?
+> Got it! My commit message requires improvements
+>>> ---
+>>> -       if (mode1 && mode2 && S_ISDIR(mode1) !=3D S_ISDIR(mode2))
+>>> -               return error("file/directory conflict: %s, %s", nam=
+e1, name2);
+>>> +       if (mode1 && mode2 && S_ISDIR(mode1) !=3D S_ISDIR(mode2)) {
+>>> +               struct strbuf dirnfile;
+>>
+>> Is this name supposed to stand for "dir'n'file", a shorthand for
+>> "dir-and-file"? Perhaps a simpler more idiomatic name such as "path"
+>> would suffice. Also, you can initialize the strbuf here at point of
+>> declaration:
+>>
+>>     struct strbuf path =3D STRBUF_INIT;
+>
+> Yes it is supposed to be "dir-and-file" I thought "path" isn't
+> descriptive enough because it could be path to dir. But if you insist=
+,
+> no problems
 
-Sounds good; let me use that when squashing your test updates in.
+The reason I asked was because it is not uncommon for variable names
+with an 'n' suffix to mean "length" of something, so the 'n' in 'dirn'
+was a bit confusing. I personally find the idiomatic name 'path'
+easier to grok, however, Junio, of course, has final say-so. It's okay
+to argue for your choice in naming if you feel strongly that it is
+better.
 
-Thanks, both.
+>>> +               const char *dir, *file;
+>>> +               char *filename;
+>>> +               int ret =3D 0;
+>>> +
+>>> +               dir =3D S_ISDIR(mode1) ? name1 : name2;
+>>> +               file =3D (dir =3D=3D name1) ? name2 : name1;
+>>> +               strbuf_init(&dirnfile, strlen(name1) + strlen(name2=
+) + 2);
+>>
+>> Unless this is a performance critical loop where you want to avoid
+>> multiple re-allocations, it's customary to pass 0 for the second
+>> argument. Doing so makes the code a bit easier to read and understan=
+d,
+>> and avoids questions like this one: Why are you adding 2 to the
+>> requested length? I presume that you're taking the "/" and NUL into
+>> account, however, strbuf takes NUL into account on its own as part o=
+f
+>> its contract, so you probably wanted to add only 1.
+>
+> Yes I thought about performance. I thought it is reasonable since I
+> always know size of resulting string. Checked strbuf.c one more time,
+> yo=D0=B3 are right I should really add only 1
 
+A few reasons I probably would just pass 0 in this case: (1) this
+string construction is not performance critical; (2) a person reading
+the code has to spend extra time double-checking the math; (3) the
+math may become outdated if someone later alters the string
+construction in some way, thus it's a potential maintenance burden;
+(4) terser code tends to be easier to read and understand at a glance,
+so the less verbose the code, the better.
+
+However, as usual, it's entirely acceptable to argue for your version
+if you feel strongly about it.
+
+>>> +               strbuf_addstr(&dirnfile, dir);
+>>> +               if (dirnfile.buf[dirnfile.len - 1] !=3D '/')
+>>
+>> I don't know how others feel about it, but it makes me a bit
+>> uncomfortable to see potential access of array item -1. I suppose, i=
+n
+>> this case, neither name will be zero-length, however, I'd still feel
+>> more comfortable seeing that documented formally, either via assert(=
+):
+>>
+>>     assert(dirnfile.len > 0);
+>>     if (dirnfile.buf[dirnfile.len - 1] !=3D '/')
+>>
+>> or:
+>>
+>>     if (dirnfile.len > 0 && dirnfile.buf[dirnfile.len - 1] !=3D '/')
 >
->> I wonder if we can add a test
->> or two to t9903-bash-prompt.sh?
->
-> This test fails without the patch in question and succeeds with it.
->
-> -- 8< --
->
-> diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
-> index 51ecd3e..3d1a95f 100755
-> --- a/t/t9903-bash-prompt.sh
-> +++ b/t/t9903-bash-prompt.sh
-> @@ -397,6 +397,16 @@ test_expect_success 'prompt - untracked files st=
-atus indicator - untracked files
->  	test_cmp expected "$actual"
->  '
-> =20
-> +test_expect_success 'prompt - untracked files status indicator - unt=
-racked files outside cwd' '
-> +	printf " (master %%)" >expected &&
-> +	(
-> +		cd ignored_dir &&
-> +		GIT_PS1_SHOWUNTRACKEDFILES=3Dy &&
-> +		__git_ps1 >"$actual"
-> +	) &&
-> +	test_cmp expected "$actual"
-> +'
-> +
->  test_expect_success 'prompt - untracked files status indicator - she=
-ll variable unset with config disabled' '
->  	printf " (master)" >expected &&
->  	test_config bash.showUntrackedFiles false &&
+> My fault again
