@@ -1,114 +1,117 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] contrib/completion: escape the forward slash in __git_match_ctag
-Date: Sat, 14 Mar 2015 18:58:26 -0700
-Message-ID: <xmqq7fujvx6l.fsf@gitster.dls.corp.google.com>
-References: <1426340439-7171-1-git-send-email-john@szakmeister.net>
+Subject: Re: [PATCH] git.c: two memory leak fixes
+Date: Sat, 14 Mar 2015 19:18:24 -0700
+Message-ID: <xmqq3857vw9b.fsf@gitster.dls.corp.google.com>
+References: <1426358613-30180-1-git-send-email-kuleshovmail@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: John Szakmeister <john@szakmeister.net>
-X-From: git-owner@vger.kernel.org Sun Mar 15 02:59:58 2015
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
+To: Alexander Kuleshov <kuleshovmail@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 15 03:18:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YWxqP-0006vF-Vx
-	for gcvg-git-2@plane.gmane.org; Sun, 15 Mar 2015 02:59:58 +0100
+	id 1YWy8P-0001PR-US
+	for gcvg-git-2@plane.gmane.org; Sun, 15 Mar 2015 03:18:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751350AbbCOB63 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Mar 2015 21:58:29 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:59616 "EHLO
+	id S1751351AbbCOCS1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Mar 2015 22:18:27 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:53469 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751249AbbCOB63 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Mar 2015 21:58:29 -0400
+	with ESMTP id S1751133AbbCOCS0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Mar 2015 22:18:26 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5AF82410BC;
-	Sat, 14 Mar 2015 21:58:28 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E2D9541454;
+	Sat, 14 Mar 2015 22:18:25 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=vvHlg0U+m2+A3x0I6XGuBbgrrNo=; b=SWha14
-	usjTc4pCvjGhWk4By9l9373c8qn4i+L1j19zbczvolP3DKTp/iJdzzKeWDo0W2tx
-	sG1146kW/KSN86IaM7Dllwz2yBPtWzmy67SRqeuooteiGKwyCaj5YL04DgxqO2Vz
-	1cFhJv7WFnY7fd3sCKp77UAAMZQwh2zmp/JSU=
+	:content-type; s=sasl; bh=+0NS7tzLCRqF3t5gw/pXC323UkI=; b=Wpt/Y7
+	WbmPzeZl8LFMqLlsABMvBiBLdUHXeyWRmF1VKZp4zBJIe+Ja+1SWY9Ixd0sM/wBi
+	nArdmMRkZBh79hYt1O0ZmuLdXpeRGawhqMYKZa2XQqHKtATyOC7a8ASjXx1E1Qdt
+	DGHqzDQFR4kvKm2gXA8rfrfBg2ljvqfy3xwJI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=SbHer024DtMWeVyYK8avuJ0k9aKwYNeP
-	TdoEHW2kLw8V+I4FDQRzv1AXm7jygS6zzHVUXZ83m4Pp03AM5oig2ChhGbJn8Ry1
-	gi9C17SUdoVOJUbG8DMwRSRqUUcvM+pL1VtWl5XrKLbX0WIKdXxzq0IycZXD5BYI
-	q+9ORaawT/M=
+	:content-type; q=dns; s=sasl; b=MHpG+v0L0W82V/8rvnXJNvUHs9MKvRKu
+	cbVnm+bTCTvinaf52t5G8S7HEcE23mVLI1iiSu25kEqyQTzTVwKM7WqZPVdFam5O
+	34oLncEkyzF1ahMrTw+R7HyNgFP0fv2lZizu8F62jRaf1Po176DFxrbzxBJGKCpj
+	HsZ0QOJo+mA=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 52C88410BB;
-	Sat, 14 Mar 2015 21:58:28 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id DBD0841452;
+	Sat, 14 Mar 2015 22:18:25 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C8DC3410BA;
-	Sat, 14 Mar 2015 21:58:27 -0400 (EDT)
-In-Reply-To: <1426340439-7171-1-git-send-email-john@szakmeister.net> (John
-	Szakmeister's message of "Sat, 14 Mar 2015 09:40:39 -0400")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5AACB41451;
+	Sat, 14 Mar 2015 22:18:25 -0400 (EDT)
+In-Reply-To: <1426358613-30180-1-git-send-email-kuleshovmail@gmail.com>
+	(Alexander Kuleshov's message of "Sun, 15 Mar 2015 00:43:33 +0600")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: C5BDDD28-CAB6-11E4-A78D-A2259F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 8F894370-CAB9-11E4-A98D-A2259F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265477>
 
-John Szakmeister <john@szakmeister.net> writes:
+Alexander Kuleshov <kuleshovmail@gmail.com> writes:
 
-> The current definition results in an incorrect expansion of the term under zsh.
-> For instance "/^${1////\\/}/" under zsh with the argument "hi" results in:
->     /^/\/h/\/i/
+> This patch provides fixes for two minor memory leaks in the
+> handle_alias function:
 >
-> This results in an output similar to this when trying to complete `git grep
-> chartab` under zsh:
->
->     :: git grep chartabawk: cmd. line:1: /^/\/c/\/h/\/a/\/r/\/t/\/a/\/b/ { print $1 }
->     awk: cmd. line:1:    ^ backslash not last character on line
->     awk: cmd. line:1: /^/\/c/\/h/\/a/\/r/\/t/\/a/\/b/ { print $1 }
->     awk: cmd. line:1:    ^ syntax error
->
-> Leaving the prompt in a goofy state until the user hits a key.
->
-> Escaping the literal / in the parameter expansion (using "/^${1//\//\\/}/")
-> results in:
->     /^chartab/
->
-> allowing the completion to work correctly.
->
-> This formulation also works under bash.
->
-> Signed-off-by: John Szakmeister <john@szakmeister.net>
+> 1. We allocate memory for alias_argv with the xmalloc function call,
+> after run_command_v_opt function will be executed we no need in this
+> variable anymore, so let's free it.
+
+This is technically correct, but do we really care about it?
+
+We have finished running the command and all that is left is either
+to exit(ret) or to die(); either will let the operating system clear
+the memory together with the entire process for us.
+
+The "normal exit" codepath still holds a live "alias_string" when it
+calls exist(ret), but you do not free it even after this patch,
+which is an inconsistent stance to take.  I think it is OK not to
+bother freeing alias_string just before exit(), and I would apply
+the same reasoning to alias_argv[], too.
+
+> 2. Memory allocated for alias_string variable in the alias_lookup function,
+> need to free it.
+
+I think it is wrong to free alias_string after passing it to
+split_cmdline() and while you still need to use the new_argv.
+
+Reading the split_cmdline() implementation again, the new argv which
+is an array of pointers is newly allocated, but I think the pointers
+in the array point into the cmdline parameter.  From the caller's
+point of view, new_argv[0] points at the beginning of alias_string,
+new_argv[1] points at the beginning of the second "word" of
+alias_string, etc., all of which will become invalid if you free
+alias_string, no?
+
+> Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
 > ---
+>  git.c | 2 ++
+>  1 file changed, 2 insertions(+)
 >
-> I've been bit by this bug quite a bit, but didn't have time to track it down
-> until today.  I hope the proposed solution is acceptable.
->
->  contrib/completion/git-completion.bash | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index c21190d..a899234 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -1305,7 +1305,7 @@ _git_gitk ()
->  }
+> diff --git a/git.c b/git.c
+> index 086fac1..501e5bd 100644
+> --- a/git.c
+> +++ b/git.c
+> @@ -252,6 +252,7 @@ static int handle_alias(int *argcp, const char ***argv)
+>  			alias_argv[argc] = NULL;
 >  
->  __git_match_ctag() {
-> -	awk "/^${1////\\/}/ { print \$1 }" "$2"
-> +	awk "/^${1//\//\\/}/ { print \$1 }" "$2"
-
-The updated pattern look sensible to me. / to start the pattern
-part, extra / to say "repeatedly replace all", \/ to say "a single
-slash is what is to be replaced, / to say "here is where the pattern
-ends", and then \\/ to say "replace with backslash-slash".
-
-In fact, I have to suspect that the original working by pure
-accident or a bug.
-
-Thanks.
-
->  }
+>  			ret = run_command_v_opt(alias_argv, RUN_USING_SHELL);
+> +			free(alias_argv);
+>  			if (ret >= 0)   /* normal exit */
+>  				exit(ret);
 >  
->  _git_grep ()
+> @@ -259,6 +260,7 @@ static int handle_alias(int *argcp, const char ***argv)
+>  			    alias_command, alias_string + 1);
+>  		}
+>  		count = split_cmdline(alias_string, &new_argv);
+> +		free(alias_string);
+>  		if (count < 0)
+>  			die("Bad alias.%s string: %s", alias_command,
+>  			    split_cmdline_strerror(count));
