@@ -1,94 +1,157 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: GSoC 2015. Microprojects
-Date: Sat, 14 Mar 2015 19:59:08 -0700
-Message-ID: <xmqqtwxnufsz.fsf@gitster.dls.corp.google.com>
-References: <CAHLaBNLX8KGUhROzW80SiM507=YpbfqdSiPm7Vm9vwK6vW-Z+Q@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Yurii Shevtsov <ungetch@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 15 03:59:19 2015
+From: "Kyle J. McKay" <mackyle@gmail.com>
+Subject: Bug in fetch-pack.c, please confirm
+Date: Sat, 14 Mar 2015 23:37:37 -0700
+Message-ID: <0758b2029b41448a77a4e4df1c4e406@74d39fa044aa309eaea14b9f57fe79c>
+Cc: Git mailing list <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Mar 15 07:37:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YWylp-0000k7-AS
-	for gcvg-git-2@plane.gmane.org; Sun, 15 Mar 2015 03:59:17 +0100
+	id 1YX2BN-0005lT-TU
+	for gcvg-git-2@plane.gmane.org; Sun, 15 Mar 2015 07:37:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751262AbbCOC7M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Mar 2015 22:59:12 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:57384 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751260AbbCOC7L (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Mar 2015 22:59:11 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id BE2C64190E;
-	Sat, 14 Mar 2015 22:59:10 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=05D0Ar/gcZTzQtDB7KctYysnjWQ=; b=TwNTjE
-	o9DHFDE51wFn75q9rfYQow143LgJwFNB3Selzf8FwzW8YT4nGdw8uvhU7FvQvkbX
-	QFKvhNxtrK1zDOj7ZWHyDaBFgSdiyWKQ8Oskv2sWhE/8mBhY1iZiVV+uPUW2RwPE
-	6f9UqJWRrujVNNE9YoUr8hOzxmX0Q1yV+fnC0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=aAaNr7R+6KH1P0AoxmOrL6sNJg8m9fAP
-	3haaR2hV4ycbBPx7X8wDDaFB30czyPbBd83vjbyLQ2dAw+70S5L92xZjjkppXZht
-	FKWdhhMgkPDq47iFvz2GJdLTcQNwVmd/w0OmCcm6H3XN/hm7sczGMF9vBAFdbCqC
-	fI1ixL9Z92s=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id ACF0E4190D;
-	Sat, 14 Mar 2015 22:59:10 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 13F2D4190C;
-	Sat, 14 Mar 2015 22:59:10 -0400 (EDT)
-In-Reply-To: <CAHLaBNLX8KGUhROzW80SiM507=YpbfqdSiPm7Vm9vwK6vW-Z+Q@mail.gmail.com>
-	(Yurii Shevtsov's message of "Sat, 14 Mar 2015 22:24:10 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 40B211F4-CABF-11E4-9696-A2259F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751368AbbCOGhs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Mar 2015 02:37:48 -0400
+Received: from mail-pd0-f179.google.com ([209.85.192.179]:32851 "EHLO
+	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751166AbbCOGhr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Mar 2015 02:37:47 -0400
+Received: by pdnc3 with SMTP id c3so26172818pdn.0
+        for <git@vger.kernel.org>; Sat, 14 Mar 2015 23:37:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=MzyNQEEeuRRSy8IcAlnIuBzduVvWx1dloX1OG8v/7I4=;
+        b=d2rMmK1NQisHwiSFRnn99zg/dJaxhBH5GEDhJsXDTN5EPm0YNXNG1ov8wxoOF1Ju6E
+         JPGm8Viqvf1NyaX4/KDK2phhF2AdHwbVzWSO7OkwniTVB1aa5Kp172DoS7KuXo0p3BeY
+         KBlg4axvJZXU+GRoAPsy1C4LVxWziq4vud2xIWrx6FqSNFTetzqeIgmMaiTRTsdjl4Qk
+         KC0lqVR0q/OuUbeLA/azN1nhNaNZFlq4VPsyl7ndVH47WlrlfBeJlsjjP2Tr0eOVpBI3
+         HFO4lrWx4dc6mXy5YbLUO3VFNgtYmdTdMsjGDI4vo70z75f50RTTIQKpWEJduJslq/v4
+         OItA==
+X-Received: by 10.66.169.202 with SMTP id ag10mr121549788pac.19.1426401467068;
+        Sat, 14 Mar 2015 23:37:47 -0700 (PDT)
+Received: from localhost.localdomain ([2002:48c0:ad8d:0:223:12ff:fe05:eebd])
+        by mx.google.com with ESMTPSA id ht2sm11058637pdb.23.2015.03.14.23.37.45
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Sat, 14 Mar 2015 23:37:46 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265479>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265480>
 
-Yurii Shevtsov <ungetch@gmail.com> writes:
+Hi guys,
 
-> As I understood there are four unsolved microprojects. I think I can
-> deal with "Make "git diff --no-index $directory $file" DWIM better"
-> but I don't understand what exactly should I do.
+So I was looking at fetch-pack.c (from master @ 52cae643, but I think  
+it's the same everywhere):
 
-OK.
+# Lines 626-648
 
-> I tried to run 'git
-> diff --no-index ~/git/ diff.h' cmd on git sources but it says 'error:
-> file/directory conflict: /home/localhost/git/, diff.h'.
+     for (retval = 1, ref = *refs; ref ; ref = ref->next) {
+             const unsigned char *remote = ref->old_sha1;
+             unsigned char local[20];
+             struct object *o;
 
-There you have it.  Do you think erroring out is useful?  
+             o = lookup_object(remote);
+             if (!o || !(o->flags & COMPLETE)) {
+                     retval = 0;
+                     if (!args->verbose)
+                             continue;
+                     fprintf(stderr,
+                             "want %s (%s)\n", sha1_to_hex(remote),
+                             ref->name);
+                     continue;
+             }
 
-Imagine a user who is used to the way ordinary "diff" command (not
-"git diff") operates.  What would be the behaviour that may match
-the expectation of such a user better?
+             hashcpy(ref->new_sha1, local);
+             if (!args->verbose)
+                     continue;
+             fprintf(stderr,
+                     "already have %s (%s)\n", sha1_to_hex(remote),
+                     ref->name);
+     }
 
-In other words, if you have the source tree of git in ~/git and
-then you have "diff.h" in your current directory, perhaps prepared
-by doing something like this:
+Peff, weren't you having some issue with want and have and hide refs?
 
-    $ cd $HOME
-    $ git clone git://git.kernel.org/pub/scm/git/git.git git
-    $ mkdir junk
-    $ cp git/diff.h junk
-    $ cd junk
-    $ echo hello >>diff.h
+Tell me please how the "local" variable above gets initialized?
 
-what would the ordinary "diff" say when you do these commands (still
-in that ~/junk directory)?
+It's declared on the stack inside the for loop scope so only  
+guaranteed to have garbage.
 
-    $ diff -u ~/git diff.h
-    $ diff -u diff.h ~/git
+It's passed to hashcpy which has this prototype:
 
-Wouldn't it be wonderful if "git diff --no-index" worked the same
-way as these?
+  inline void hashcpy(unsigned char *sha_dst, const unsigned char *sha_src);
+
+So it looks to me like garbage is copied into rev->new_sha1, yes?
+
+Something's very wrong here.
+
+It looks to me like the bug was introduced in 49bb805e (Do not ask for  
+objects known to be complete. 2005-10-19).
+
+I've taken a stab a a fix below.
+
+-Kyle
+
+-- 8< --
+Subject: [PATCH] fetch-pack.c: do not use uninitialized sha1 value
+
+Since 49bb805e (Do not ask for objects known to be complete. 2005-10-19)
+when the read_ref call was replaced with a parse_object call, the
+automatic variable 'local' containing an sha1 has been left uninitialized.
+
+Subsequently in 1baaae5e (Make maximal use of the remote refs, 2005-10-28)
+the parse_object call was replaced with a lookup_object call but still
+the 'local' variable was left uninitialized.
+
+However, it's used as the source to update another sha1 value in the case
+that we already have it and in that case the other ref will end up with
+whatever garbage was in the 'local' variable.
+
+Fix this by removing the 'local' variable and using the value from the
+result of the lookup_object call instead.
+
+Signed-off-by: Kyle J. McKay <mackyle@gmail.com>
+---
+ fetch-pack.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 655ee642..c0b4d84f 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -621,29 +621,28 @@ static int everything_local(struct fetch_pack_args *args,
+ 		}
+ 	}
+ 
+ 	filter_refs(args, refs, sought, nr_sought);
+ 
+ 	for (retval = 1, ref = *refs; ref ; ref = ref->next) {
+ 		const unsigned char *remote = ref->old_sha1;
+-		unsigned char local[20];
+ 		struct object *o;
+ 
+ 		o = lookup_object(remote);
+ 		if (!o || !(o->flags & COMPLETE)) {
+ 			retval = 0;
+ 			if (!args->verbose)
+ 				continue;
+ 			fprintf(stderr,
+ 				"want %s (%s)\n", sha1_to_hex(remote),
+ 				ref->name);
+ 			continue;
+ 		}
+ 
+-		hashcpy(ref->new_sha1, local);
++		hashcpy(ref->new_sha1, o->sha1);
+ 		if (!args->verbose)
+ 			continue;
+ 		fprintf(stderr,
+ 			"already have %s (%s)\n", sha1_to_hex(remote),
+ 			ref->name);
+ 	}
+ 	return retval;
+---
