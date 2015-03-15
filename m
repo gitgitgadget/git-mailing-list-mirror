@@ -1,137 +1,89 @@
-From: t.gummerer@gmail.com
-Subject: Re: [PATCH/RFC][GSoC] make "git diff --no-index $directory $file"
- DWIM better.
-Date: Sun, 15 Mar 2015 19:13:22 +0100
-Message-ID: <20150315181322.GC17591@hank>
-References: <CAHLaBN+93mp6PQmtfjOHSvfW7iwDXwPitGQ5W1am9KBm9EZV2Q@mail.gmail.com>
- <20150315173451.GB17591@hank>
- <CAHLaBNLQ8-JzEBjypvJDDzhW8SwfzujuOknC_QWar+cL18cR3A@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 2/3] Documentation/git-add.txt: describe --exclude option
+Date: Sun, 15 Mar 2015 14:14:42 -0400
+Message-ID: <CAPig+cRP-63zZTBXMMje6QGmkftNThDNQU_P_3Od4SbwdV-JUQ@mail.gmail.com>
+References: <1426427399-22423-1-git-send-email-kuleshovmail@gmail.com>
+	<1426427425-23309-1-git-send-email-kuleshovmail@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Yurii Shevtsov <ungetch@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 15 19:13:35 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Alexander Kuleshov <kuleshovmail@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 15 19:14:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YXD2Y-0007td-VV
-	for gcvg-git-2@plane.gmane.org; Sun, 15 Mar 2015 19:13:31 +0100
+	id 1YXD3n-0000Yo-Cs
+	for gcvg-git-2@plane.gmane.org; Sun, 15 Mar 2015 19:14:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752600AbbCOSN0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Mar 2015 14:13:26 -0400
-Received: from mail-wi0-f171.google.com ([209.85.212.171]:37816 "EHLO
-	mail-wi0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752530AbbCOSN0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Mar 2015 14:13:26 -0400
-Received: by wixw10 with SMTP id w10so25562357wix.0
-        for <git@vger.kernel.org>; Sun, 15 Mar 2015 11:13:24 -0700 (PDT)
+	id S1752544AbbCOSOn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Mar 2015 14:14:43 -0400
+Received: from mail-yk0-f169.google.com ([209.85.160.169]:33265 "EHLO
+	mail-yk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751627AbbCOSOm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Mar 2015 14:14:42 -0400
+Received: by ykek76 with SMTP id k76so10373457yke.0
+        for <git@vger.kernel.org>; Sun, 15 Mar 2015 11:14:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=9OMrcY1pBDX9j08RrL77eMg+b1uk1KfFrOZHwitPKlg=;
-        b=toVv/8yhqG5Z3uzV4ozMWlzsFNwsaQm7zhKyk7280Uv2+KUF6inh2h0pQGHQU4HAzn
-         /sDXlRKwEbfyYaAMkAzgEAp9ddD4gdLjgfmHFmE6MCeemFov363eSOwJnJJInzJj5dsG
-         c0RWsEzAg1wpxwTH0oBOHSzn2pl4Y12tJmz/kMaBqgvPBUr6Ree18Ivg+ZVoJS0lBOMo
-         wzAtIPqsT2UhBi5EzeZGx8umMaosrVLAnqud/sNCSLVh8Fm/Ix8FQoYAEjkzNMsCgkaX
-         oFoMLvhnwl3xQJDTkFkhH16+be9P1ZG1PEoFTlt2kDJRlsLONaxFuOosDDZ2/KpsKQFf
-         aomg==
-X-Received: by 10.194.90.7 with SMTP id bs7mr78959098wjb.7.1426443204629;
-        Sun, 15 Mar 2015 11:13:24 -0700 (PDT)
-Received: from localhost (213-66-41-37-no99.tbcn.telia.com. [213.66.41.37])
-        by mx.google.com with ESMTPSA id lj13sm11896584wic.9.2015.03.15.11.13.23
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 15 Mar 2015 11:13:23 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CAHLaBNLQ8-JzEBjypvJDDzhW8SwfzujuOknC_QWar+cL18cR3A@mail.gmail.com>
-User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=fnHmGmTcx8LG4tAUsrX1KKedAHaVV+ESQ3sbr3GtpOs=;
+        b=bZ8huGhLxAkkI6NJHuJWbL0++KW+WBj0uusgzFjZgkaPpboFkGbm4DgzGGOwa4gLrb
+         xGM0NIfwNZFU7rR10/GOfFXLlN22DUHDi3HQkd0RLDkOGTavprm6/bWhrMT0/ifG1NwL
+         vGL3rGzTZc9GC6js/hHUWXy62/RivGLd8jC5lqhBJSZ5JNya54zce6SwEDdHxs7AiYwN
+         ENwWg9uS+GIF0PSjLAN/RJD8CI7r/fngXJlaiS8Vfh1PxqEBfOoxy5JK2yiFFlepbj3R
+         SJd+YPgg7VxtXBzBkXXA75Vb87uPvB0hkql4YZ0PrkKuRNpiXPwhOsUl288QseNeLZi6
+         2gvg==
+X-Received: by 10.236.105.210 with SMTP id k58mr57116873yhg.52.1426443282069;
+ Sun, 15 Mar 2015 11:14:42 -0700 (PDT)
+Received: by 10.170.73.7 with HTTP; Sun, 15 Mar 2015 11:14:42 -0700 (PDT)
+In-Reply-To: <1426427425-23309-1-git-send-email-kuleshovmail@gmail.com>
+X-Google-Sender-Auth: MW20GKIz2rp2fMRVG6Y8CC1ObJc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265510>
 
-[re-added cc to the list]
+On Sun, Mar 15, 2015 at 9:50 AM, Alexander Kuleshov
+<kuleshovmail@gmail.com> wrote:
+> Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
+> ---
+> diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
+> index f2eb907..4bc156a 100644
+> --- a/Documentation/git-add.txt
+> +++ b/Documentation/git-add.txt
+> @@ -9,7 +9,7 @@ SYNOPSIS
+>  --------
+>  [verse]
+>  'git add' [--verbose | -v] [--dry-run | -n] [--force | -f] [--interactive | -i] [--patch | -p]
+> -         [--edit | -e] [--[no-]all | --[no-]ignore-removal | [--update | -u]]
+> +         [--edit | -e] [--[no-]all | --[no-]ignore-removal | [--update | -u]] [--exclude=<pattern>]
+>           [--intent-to-add | -N] [--refresh] [--ignore-errors] [--ignore-missing]
+>           [--] [<pathspec>...]
+>
+> @@ -164,6 +164,10 @@ for "git add --no-all <pathspec>...", i.e. ignored removed files.
+>         be ignored, no matter if they are already present in the work
+>         tree or not.
+>
+> +--exclude=<pattern>::
+> +       Do not add files to the index in addition which are found in
+> +       the .gitignore.
 
-On 03/15, Yurii Shevtsov wrote:
-> Hi, and thank for your reply
-> 
-> >>  1 files changed, 19 insertions(+), 2 deletions(-)
-> >>
-> >> diff --git a/diff-no-index.c b/diff-no-index.c
-> >> index 265709b..4e71b36 100644
-> >> --- a/diff-no-index.c
-> >> +++ b/diff-no-index.c
-> >> @@ -97,8 +97,25 @@ static int queue_diff(struct diff_options *o,
-> >>         if (get_mode(name1, &mode1) || get_mode(name2, &mode2))
-> >>                 return -1;
-> >>
-> >> -       if (mode1 && mode2 && S_ISDIR(mode1) != S_ISDIR(mode2))
-> >> -               return error("file/directory conflict: %s, %s", name1, name2);
-> >> +       if (mode1 && mode2 && S_ISDIR(mode1) != S_ISDIR(mode2)) {
-> >> +               struct strbuf dirnfile;
-> >> +               const char *dir, *file;
-> >> +               char *filename;
-> >> +               int ret = 0;
-> >> +
-> >> +               dir = S_ISDIR(mode1) ? name1 : name2;
-> >> +               file = (dir == name1) ? name2 : name1;
-> >
-> > This makes git diff --no-index $directory $file the same as
-> > git diff --no-index $file $directory.  Shouldn't these commands give
-> > different results?  (See the behaviour of diff in this case, and
-> > compare it to the behaviour you introduced here)
-> 
-> I really checked behavior of usual diff. And swapping arguments
-> doesn't affect result. At first I had doubts about task formulation,
-> so I asked about it and got the answer:
-> gmane.comp.version-control.git/265479 Am I misunderstood it again?
+This is difficult to understand. Perhaps something like:
 
-Using the same example as in that thread, I get the following output:
+    Also ignore files matching <pattern>, a .gitignore-like
+    pattern.
 
-tommy at hank in work[1]  $ diff -u git junk/diff.h
---- git/diff.h	 2014-12-26 21:00:20.690774933 +0100
-+++ junk/diff.h	 2015-03-15 18:02:03.441049918 +0100
-@@ -357,3 +357,4 @@
- extern void setup_diff_pager(struct diff_options *);
+This option can be specified multiple times, can't it? The
+documentation should say so.
 
- #endif /* DIFF_H */
- +hello
-tommy at hank in work $ diff -u junk/diff.h git
---- junk/diff.h	 2015-03-15 18:02:03.441049918 +0100
-+++ git/diff.h	 2014-12-26 21:00:20.690774933 +0100
-@@ -357,4 +357,3 @@
- extern void setup_diff_pager(struct diff_options *);
-
- #endif /* DIFF_H */
- -hello
-
-Notice the +hello vs. -hello in the last line off the diff.  Git with
-your patch on the other hand gives me +hello in both cases.
-
-tommy at hank in work[1]  $ g diff --no-index git junk/diff.h
-diff --git a/git/diff.h b/junk/diff.h
-index b4a624d..81671dd 100644
---- a/git/diff.h
-+++ b/junk/diff.h
-@@ -357,3 +357,4 @@ extern int print_stat_summary(FILE *fp, int files,
- extern void setup_diff_pager(struct diff_options *);
-
- #endif /* DIFF_H */
- +hello
-tommy at hank in work[1]  $ g diff --no-index junk/diff.h git
-diff --git a/git/diff.h b/junk/diff.h
-index b4a624d..81671dd 100644
---- a/git/diff.h
-+++ b/junk/diff.h
-@@ -357,3 +357,4 @@ extern int print_stat_summary(FILE *fp, int files,
- extern void setup_diff_pager(struct diff_options *);
-
- #endif /* DIFF_H */
- +hello
-
-So while I think the behaviour with git diff --no-index $directory $file
-is correct (minus the comments by Matthieu), git diff --no-index $file
-$directory is not, I think.
+> +
+>  \--::
+>         This option can be used to separate command-line options from
+>         the list of files, (useful when filenames might be mistaken
+> --
+> 2.3.3.472.g20ceeac
