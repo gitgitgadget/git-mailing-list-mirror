@@ -1,59 +1,69 @@
-From: "Randall S. Becker" <rsbecker@nexbridge.com>
-Subject: RE: Promoting Git developers
-Date: Sun, 15 Mar 2015 18:43:49 -0400
-Message-ID: <003001d05f71$81845160$848cf420$@nexbridge.com>
-References: <CAP8UFD1+rC0FjisSddDcyn1E_75wtBU9pEpUcQX5zNtd4zKYFQ@mail.gmail.com>	<54FDA6B5.8050505@drmicha.warpmail.net>	<CAP8UFD0KNbPBB_dOzw_dAj+ws190_cO8g7_jb_V33x1jxgvnqQ@mail.gmail.com>	<xmqqk2yo22ce.fsf@gitster.dls.corp.google.com>	<CAP8UFD37v_zOjRkUPLy-ChDs=+NetsDY7Q14-4rYA-WhnTRYyA@mail.gmail.com>	<xmqqfv9b5krc.fsf@gitster.dls.corp.google.com>	<CAP8UFD2ba3jQSsQrGGWM-8HTfGR+zZhmbkxiEBhSR+Ho=B0MuA@mail.gmail.com> <xmqqvbi1sy4h.fsf@gitster.dls.corp.google.com>
+From: Robert Dailey <rcdailey.lists@gmail.com>
+Subject: What is XDG_CONFIG_HOME for exactly?
+Date: Sun, 15 Mar 2015 18:37:39 -0500
+Message-ID: <CAHd499CmxwGJeW6gMARhc+cT+r3TK98m+LyyS+eCFXz8qKHrFw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: "'Michael J Gruber'" <git@drmicha.warpmail.net>,
-	"'David Kastrup'" <dak@gnu.org>, "'git'" <git@vger.kernel.org>,
-	"'Jeff King'" <peff@peff.net>, "'Scott Chacon'" <schacon@gmail.com>
-To: "'Junio C Hamano'" <gitster@pobox.com>,
-	"'Christian Couder'" <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 15 23:44:14 2015
+Content-Type: text/plain; charset=UTF-8
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Mar 16 00:37:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YXHGV-0002H7-Sn
-	for gcvg-git-2@plane.gmane.org; Sun, 15 Mar 2015 23:44:12 +0100
+	id 1YXI6Q-0003W8-P6
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Mar 2015 00:37:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751772AbbCOWoF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Mar 2015 18:44:05 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:17709 "EHLO
-	elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751296AbbCOWoD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Mar 2015 18:44:03 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from pangea (CPE0023eb577e25-CM602ad06c91a7.cpe.net.cable.rogers.com [99.237.128.150])
-	(authenticated bits=0)
-	by elephants.elehost.com (8.14.9/8.14.9) with ESMTP id t2FMhnM5031046
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-	Sun, 15 Mar 2015 18:43:49 -0400 (EDT)
-	(envelope-from rsbecker@nexbridge.com)
-In-Reply-To: <xmqqvbi1sy4h.fsf@gitster.dls.corp.google.com>
-X-Mailer: Microsoft Outlook 15.0
-Thread-Index: AQGvm/gxlAATf7yoTGqg0OicaldIMgGG/3ybAXV8kuABnc4iQwFR/jfHAP6oqTgBxnOpUQHi+I1PnQsHRcA=
-Content-Language: en-ca
+	id S1752121AbbCOXhl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Mar 2015 19:37:41 -0400
+Received: from mail-ie0-f172.google.com ([209.85.223.172]:33214 "EHLO
+	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751997AbbCOXhk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Mar 2015 19:37:40 -0400
+Received: by iecvj10 with SMTP id vj10so153638588iec.0
+        for <git@vger.kernel.org>; Sun, 15 Mar 2015 16:37:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:date:message-id:subject:from:to:content-type;
+        bh=e3BP4UMB7rlhmMslh9gt8+kbMj/8LXJiXV0pLjDxe08=;
+        b=OpzRjd7CjhlD+ZIEsY/EvGllh+wUW6IixlwRk30k/VNSbtsveCTyTfPVKZhfA7/qOD
+         nfH40mYwT8HgQveKBBsMwjjs/u4pvR5zcE706KRE8lgQ2VQs08iQvmhzU7SotF8KrTWz
+         OyerHGA3fvc401fCbtXNifl37SK7FmQLq9wdqYLhirWvuUPxFFr+jqEhAkzAwM9H5o5Y
+         Uubu3jAG6vkSHhFXDpAw5kleoKqtnaRO+MdEpfW7kU4zKBqgzfe4k0CjpJT9HZdhkFs1
+         qAO93vOROHL5baRoVasMqyLju1rTHBJprsvyDrE34l8hqi+0O9A2GBPBYxzgPNmknWAu
+         +38g==
+X-Received: by 10.50.79.230 with SMTP id m6mr102600576igx.33.1426462659880;
+ Sun, 15 Mar 2015 16:37:39 -0700 (PDT)
+X-Google-Sender-Delegation: rcdailey@gmail.com
+Received: by 10.36.49.138 with HTTP; Sun, 15 Mar 2015 16:37:39 -0700 (PDT)
+X-Google-Sender-Auth: 75KuEmjFBgaZnU_9BN3Z8Z_BGeI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265533>
 
-> On March 15, 2015 6:19 PM Christian Couder wrote:
-<snip>
-> Just one suggestion on the name and half a comment.
-> 
-> How would "Git Review" (or "Git Monthly Review", or replace your favourite
-> "how-often-per-period-ly" in its name) sound?  I meant it to sound similar
-to
-> academic journals that summarize and review contemporary works in the
-field
-> and keeps your original "pun" about our culture around "patch reviews".
+My understanding is that git reads the priority of configuration as follows:
 
-If I may humbly offer the suggestion that "Git Blame" would be a far more
-appropriate pun as a name :)
+1. <local_repo>/.git/config
+2. $HOME/.gitconfig
+3. $XDG_CONFIG_HOME/git/config
+4. system level git config (not sure exactly where this is; not
+relevant to me on Windows)
+
+I have a .gitconfig in Dropbox that I symlink to my home directory on
+different platforms. Specifically, I share this gitconfig across
+Cygwin/msys on Windows and Ubuntu.
+
+If I can use XDG_CONFIG_HOME to leverage platform-specific settings,
+I'd be able to keep platform-agnostic settings in my $HOME/.gitconfig
+and put platform-specific settings in $XDG_CONFIG_HOME/git/config and
+simply give XDG_CONFIG_HOME a different name on different platforms.
+
+Is this what it was designed for? If not, what would be the best
+approach for this? I was thinking of contributing a patch that would
+let you specify the name of your git config in the home directory, but
+I'm not sure if that is necessary. Something like this:
+
+$HOME/$GIT_CONFIG_FILENAME, where GIT_CONFIG_FILENAME defaults to
+".gitconfig" if it is not set or empty.
