@@ -1,89 +1,83 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v3 1/4] git-credential-store: support multiple credential files
-Date: Sun, 15 Mar 2015 12:44:06 +0100
-Message-ID: <vpqbnju7aex.fsf@anie.imag.fr>
-References: <1426056553-9364-1-git-send-email-pyokagan@gmail.com>
-	<1426056553-9364-2-git-send-email-pyokagan@gmail.com>
-	<20150313061530.GA24588@peff.net>
-	<CACRoPnR9pTc2LC87Vf0bMAgTj-FnbsRBpjn+3RCxCP6yrzsCkw@mail.gmail.com>
-	<xmqqfv97w7k5.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Paul Tan <pyokagan@gmail.com>, Jeff King <peff@peff.net>,
-	Git List <git@vger.kernel.org>
+From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH v2] git prompt: Use toplevel to find untracked files.
+Date: Sun, 15 Mar 2015 12:49:04 +0100
+Message-ID: <1426420144-10584-1-git-send-email-szeder@ira.uka.de>
+References: <xmqqmw3hzakn.fsf@gitster.dls.corp.google.com>
+Cc: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>,
+	Git Mailing List <git@vger.kernel.org>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Cody A Taylor <cody.taylor@maternityneighborhood.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 15 12:44:38 2015
+X-From: git-owner@vger.kernel.org Sun Mar 15 12:49:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YX6yD-0005nL-JA
-	for gcvg-git-2@plane.gmane.org; Sun, 15 Mar 2015 12:44:37 +0100
+	id 1YX72y-0002NW-Uy
+	for gcvg-git-2@plane.gmane.org; Sun, 15 Mar 2015 12:49:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752309AbbCOLo2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Mar 2015 07:44:28 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:44370 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751720AbbCOLoX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Mar 2015 07:44:23 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t2FBi5vZ011737
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 15 Mar 2015 12:44:05 +0100
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t2FBi6Mi008031;
-	Sun, 15 Mar 2015 12:44:06 +0100
-In-Reply-To: <xmqqfv97w7k5.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Sat, 14 Mar 2015 15:14:18 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sun, 15 Mar 2015 12:44:06 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t2FBi5vZ011737
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1427024649.19422@NvUAJKR4z/cUjDO2OF4Siw
+	id S1752762AbbCOLt3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Mar 2015 07:49:29 -0400
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:42316 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752202AbbCOLtZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 15 Mar 2015 07:49:25 -0400
+Received: from x590c5c95.dyn.telefonica.de ([89.12.92.149] helo=localhost)
+	by iramx2.ira.uni-karlsruhe.de with esmtpsa port 587 
+	iface 141.3.10.81 id 1YX72m-0005Cs-QA; Sun, 15 Mar 2015 12:49:22 +0100
+X-Mailer: git-send-email 1.9.5.msysgit.0
+In-Reply-To: <xmqqmw3hzakn.fsf@gitster.dls.corp.google.com>
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1426420162.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265489>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265490>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi,
 
-> Paul Tan <pyokagan@gmail.com> writes:
+Quoting Junio C Hamano <gitster@pobox.com>:
+
+> Cody A Taylor <cody.taylor@maternityneighborhood.com> writes:
+>> The __git_ps1() prompt function would not show an untracked
+>> state when the current working directory was not a parent of
+>> the untracked file.
 >
->>> I think you could even get away without passing default_fn here, and
->>> just use the rule "the first file in the list is the default". Unless
->>> you are anticipating ever passing something else, but I couldn't think
->>> of a case where that would be useful.
->>
->> Even though in this case the store_credential() function is not used
->> anywhere else, from my personal API design experience I think that
->> cementing the rule of "the first file in the list is the default" in
->> the behavior of the function is not a good thing. For example, in the
->> future, we may wish to keep the precedence ordering the same, but if
->> none of the credential files exist, we create the XDG file by default
->> instead.
->
-> I am not sure if this is not a premature over-engineering
+> Good find, and nicely explained.
 
-I would say so if having this default_fn made the code more complex, but
-here the code is basically
+Somehow I had a hard time making sense out of "when the current working
+directory was not a parent of the untracked file".  Perhaps "when the
+untracked files are outside of the current working directory" would be
+easier to grok?
 
-+	if (default_fn)
-+		store_credential_file(default_fn, c);
+> I wonder if we can add a test
+> or two to t9903-bash-prompt.sh?
 
-and
+This test fails without the patch in question and succeeds with it.
 
--		store_credential(file, &c);
-+		store_credential(&fns, &c, fns.items[0].string);
+-- 8< --
 
-Taking the first element in the list wouldn't change much.
-
-I'm personally fine with both versions.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
+index 51ecd3e..3d1a95f 100755
+--- a/t/t9903-bash-prompt.sh
++++ b/t/t9903-bash-prompt.sh
+@@ -397,6 +397,16 @@ test_expect_success 'prompt - untracked files status indicator - untracked files
+ 	test_cmp expected "$actual"
+ '
+ 
++test_expect_success 'prompt - untracked files status indicator - untracked files outside cwd' '
++	printf " (master %%)" >expected &&
++	(
++		cd ignored_dir &&
++		GIT_PS1_SHOWUNTRACKEDFILES=y &&
++		__git_ps1 >"$actual"
++	) &&
++	test_cmp expected "$actual"
++'
++
+ test_expect_success 'prompt - untracked files status indicator - shell variable unset with config disabled' '
+ 	printf " (master)" >expected &&
+ 	test_config bash.showUntrackedFiles false &&
