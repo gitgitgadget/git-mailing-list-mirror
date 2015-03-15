@@ -1,140 +1,137 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH RFC 1/3] add: add new --exclude option to git add
-Date: Sun, 15 Mar 2015 14:12:22 -0400
-Message-ID: <CAPig+cR52GKNZkgsytUrb0m3wwY2T68cxjNB_OV+uLxvQUh=VA@mail.gmail.com>
-References: <1426427399-22423-1-git-send-email-kuleshovmail@gmail.com>
+From: t.gummerer@gmail.com
+Subject: Re: [PATCH/RFC][GSoC] make "git diff --no-index $directory $file"
+ DWIM better.
+Date: Sun, 15 Mar 2015 19:13:22 +0100
+Message-ID: <20150315181322.GC17591@hank>
+References: <CAHLaBN+93mp6PQmtfjOHSvfW7iwDXwPitGQ5W1am9KBm9EZV2Q@mail.gmail.com>
+ <20150315173451.GB17591@hank>
+ <CAHLaBNLQ8-JzEBjypvJDDzhW8SwfzujuOknC_QWar+cL18cR3A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Alexander Kuleshov <kuleshovmail@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 15 19:12:33 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Yurii Shevtsov <ungetch@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 15 19:13:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YXD1Z-0006y9-Sg
-	for gcvg-git-2@plane.gmane.org; Sun, 15 Mar 2015 19:12:30 +0100
+	id 1YXD2Y-0007td-VV
+	for gcvg-git-2@plane.gmane.org; Sun, 15 Mar 2015 19:13:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751997AbbCOSMY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Mar 2015 14:12:24 -0400
-Received: from mail-yh0-f49.google.com ([209.85.213.49]:34929 "EHLO
-	mail-yh0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751855AbbCOSMX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Mar 2015 14:12:23 -0400
-Received: by yhct68 with SMTP id t68so10746127yhc.2
-        for <git@vger.kernel.org>; Sun, 15 Mar 2015 11:12:22 -0700 (PDT)
+	id S1752600AbbCOSN0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Mar 2015 14:13:26 -0400
+Received: from mail-wi0-f171.google.com ([209.85.212.171]:37816 "EHLO
+	mail-wi0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752530AbbCOSN0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Mar 2015 14:13:26 -0400
+Received: by wixw10 with SMTP id w10so25562357wix.0
+        for <git@vger.kernel.org>; Sun, 15 Mar 2015 11:13:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=XB9CZOMuxeefXYS4xmq7q/XMq5xLEp7Go2toKH5rZyM=;
-        b=F+kBtvQJXXo8cjZu/pYR0rTC8byZ8r9amF7AXY3SkRFYAAe7PiTicqhmofDHhZtG9l
-         nqIMr1KJiHytcTbyGA6Dp48aB4GqXEXNYZB07IOXHuOCZLcsrQ1ppSU0sU42UyzeOuuk
-         NRDcM60nPZz3Fw1qnq/11NRxggZo0yJvMeAIUwbyOtnuy92F5aHwelGEReGvG931wQ7V
-         p5zbAKXizSMtavlFwU4HOKlBL32+lKY1T37ZOJ5KVC7dkEP1j6xJEgyXN1Ym2DfsBfA9
-         EQWvFy5FCm9IzHcTHdLNMBjyvbKaPIPGOjqEDBZXuS/Je9cp2mH3JGGiQwAGhD3hDXQD
-         TdPg==
-X-Received: by 10.170.134.198 with SMTP id a189mr53862117ykc.103.1426443142590;
- Sun, 15 Mar 2015 11:12:22 -0700 (PDT)
-Received: by 10.170.73.7 with HTTP; Sun, 15 Mar 2015 11:12:22 -0700 (PDT)
-In-Reply-To: <1426427399-22423-1-git-send-email-kuleshovmail@gmail.com>
-X-Google-Sender-Auth: H6Du8Jc-UqGfwBTKWFHEvsqDMbA
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=9OMrcY1pBDX9j08RrL77eMg+b1uk1KfFrOZHwitPKlg=;
+        b=toVv/8yhqG5Z3uzV4ozMWlzsFNwsaQm7zhKyk7280Uv2+KUF6inh2h0pQGHQU4HAzn
+         /sDXlRKwEbfyYaAMkAzgEAp9ddD4gdLjgfmHFmE6MCeemFov363eSOwJnJJInzJj5dsG
+         c0RWsEzAg1wpxwTH0oBOHSzn2pl4Y12tJmz/kMaBqgvPBUr6Ree18Ivg+ZVoJS0lBOMo
+         wzAtIPqsT2UhBi5EzeZGx8umMaosrVLAnqud/sNCSLVh8Fm/Ix8FQoYAEjkzNMsCgkaX
+         oFoMLvhnwl3xQJDTkFkhH16+be9P1ZG1PEoFTlt2kDJRlsLONaxFuOosDDZ2/KpsKQFf
+         aomg==
+X-Received: by 10.194.90.7 with SMTP id bs7mr78959098wjb.7.1426443204629;
+        Sun, 15 Mar 2015 11:13:24 -0700 (PDT)
+Received: from localhost (213-66-41-37-no99.tbcn.telia.com. [213.66.41.37])
+        by mx.google.com with ESMTPSA id lj13sm11896584wic.9.2015.03.15.11.13.23
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 15 Mar 2015 11:13:23 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CAHLaBNLQ8-JzEBjypvJDDzhW8SwfzujuOknC_QWar+cL18cR3A@mail.gmail.com>
+User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265509>
 
-In addition to points raised by Philip and Torsten...
+[re-added cc to the list]
 
-On Sun, Mar 15, 2015 at 9:49 AM, Alexander Kuleshov
-<kuleshovmail@gmail.com> wrote:
-> add: add new --exclude option to git add
+On 03/15, Yurii Shevtsov wrote:
+> Hi, and thank for your reply
+> 
+> >>  1 files changed, 19 insertions(+), 2 deletions(-)
+> >>
+> >> diff --git a/diff-no-index.c b/diff-no-index.c
+> >> index 265709b..4e71b36 100644
+> >> --- a/diff-no-index.c
+> >> +++ b/diff-no-index.c
+> >> @@ -97,8 +97,25 @@ static int queue_diff(struct diff_options *o,
+> >>         if (get_mode(name1, &mode1) || get_mode(name2, &mode2))
+> >>                 return -1;
+> >>
+> >> -       if (mode1 && mode2 && S_ISDIR(mode1) != S_ISDIR(mode2))
+> >> -               return error("file/directory conflict: %s, %s", name1, name2);
+> >> +       if (mode1 && mode2 && S_ISDIR(mode1) != S_ISDIR(mode2)) {
+> >> +               struct strbuf dirnfile;
+> >> +               const char *dir, *file;
+> >> +               char *filename;
+> >> +               int ret = 0;
+> >> +
+> >> +               dir = S_ISDIR(mode1) ? name1 : name2;
+> >> +               file = (dir == name1) ? name2 : name1;
+> >
+> > This makes git diff --no-index $directory $file the same as
+> > git diff --no-index $file $directory.  Shouldn't these commands give
+> > different results?  (See the behaviour of diff in this case, and
+> > compare it to the behaviour you introduced here)
+> 
+> I really checked behavior of usual diff. And swapping arguments
+> doesn't affect result. At first I had doubts about task formulation,
+> so I asked about it and got the answer:
+> gmane.comp.version-control.git/265479 Am I misunderstood it again?
 
-No need for redundant "to git add", since you already have the "add:" prefix.
+Using the same example as in that thread, I get the following output:
 
-> This patch introduces new --exclude option for the git add
-> command.
+tommy at hank in work[1]  $ diff -u git junk/diff.h
+--- git/diff.h	 2014-12-26 21:00:20.690774933 +0100
++++ junk/diff.h	 2015-03-15 18:02:03.441049918 +0100
+@@ -357,3 +357,4 @@
+ extern void setup_diff_pager(struct diff_options *);
 
-This line merely repeats the Subject: line, thus can be dropped.
+ #endif /* DIFF_H */
+ +hello
+tommy at hank in work $ diff -u junk/diff.h git
+--- junk/diff.h	 2015-03-15 18:02:03.441049918 +0100
++++ git/diff.h	 2014-12-26 21:00:20.690774933 +0100
+@@ -357,4 +357,3 @@
+ extern void setup_diff_pager(struct diff_options *);
 
-> We already have core.excludesfile configuration variable which indicates
-> a path to file which contains patterns to exclude. This patch provides
-> ability to pass --exclude option to the git add command to exclude paths
-> from command line in addition to which found in the ignore files.
+ #endif /* DIFF_H */
+ -hello
 
-The commit message is missing the important justification for why this
-new option is desirable, and why only git-add needs it.
+Notice the +hello vs. -hello in the last line off the diff.  Git with
+your patch on the other hand gives me +hello in both cases.
 
-> Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
-> ---
-> diff --git a/builtin/add.c b/builtin/add.c
-> index 3390933..5c602a6 100644
-> --- a/builtin/add.c
-> +++ b/builtin/add.c
-> @@ -244,6 +244,16 @@ static int ignore_removal_cb(const struct option *opt, const char *arg, int unse
->         return 0;
->  }
->
-> +struct string_list exclude_list = STRING_LIST_INIT_NODUP;
+tommy at hank in work[1]  $ g diff --no-index git junk/diff.h
+diff --git a/git/diff.h b/junk/diff.h
+index b4a624d..81671dd 100644
+--- a/git/diff.h
++++ b/junk/diff.h
+@@ -357,3 +357,4 @@ extern int print_stat_summary(FILE *fp, int files,
+ extern void setup_diff_pager(struct diff_options *);
 
-Shouldn't this be declared static?
+ #endif /* DIFF_H */
+ +hello
+tommy at hank in work[1]  $ g diff --no-index junk/diff.h git
+diff --git a/git/diff.h b/junk/diff.h
+index b4a624d..81671dd 100644
+--- a/git/diff.h
++++ b/junk/diff.h
+@@ -357,3 +357,4 @@ extern int print_stat_summary(FILE *fp, int files,
+ extern void setup_diff_pager(struct diff_options *);
 
-> +struct exclude_list *el;
+ #endif /* DIFF_H */
+ +hello
 
-Why is this declared globally when it's only needed locally by cmd_add()?
-
-> +static int exclude_cb(const struct option *opt, const char *arg, int unset)
-> +{
-> +       struct string_list *exclude_list = opt->value;
-> +       string_list_append(exclude_list, arg);
-> +       return 0;
-> +}
-> +
->  static struct option builtin_add_options[] = {
->         OPT__DRY_RUN(&show_only, N_("dry run")),
->         OPT__VERBOSE(&verbose, N_("be verbose")),
-> @@ -255,6 +265,9 @@ static struct option builtin_add_options[] = {
->         OPT_BOOL('u', "update", &take_worktree_changes, N_("update tracked files")),
->         OPT_BOOL('N', "intent-to-add", &intent_to_add, N_("record only the fact that the path will be added later")),
->         OPT_BOOL('A', "all", &addremove_explicit, N_("add changes from all tracked and untracked files")),
-> +       { OPTION_CALLBACK, 0, "exclude", &exclude_list, N_("pattern"),
-> +         N_("do no add files matching pattern to index"),
-> +         0, exclude_cb },
-
-Can this just be OPT_STRING_LIST instead of OPTION_CALLBACK?
-
->         { OPTION_CALLBACK, 0, "ignore-removal", &addremove_explicit,
->           NULL /* takes no arguments */,
->           N_("ignore paths removed in the working tree (same as --no-all)"),
-> @@ -298,6 +311,7 @@ static int add_files(struct dir_struct *dir, int flags)
->
->  int cmd_add(int argc, const char **argv, const char *prefix)
->  {
-> +       int i;
->         int exit_status = 0;
->         struct pathspec pathspec;
->         struct dir_struct dir;
-> @@ -381,6 +395,11 @@ int cmd_add(int argc, const char **argv, const char *prefix)
->                 if (!ignored_too) {
->                         dir.flags |= DIR_COLLECT_IGNORED;
->                         setup_standard_excludes(&dir);
-> +
-> +                       el = add_exclude_list(&dir, EXC_CMDL, "--exclude option");
-> +                       for (i = 0; i < exclude_list.nr; i++)
-> +                               add_exclude(exclude_list.items[i].string, "", 0, el, -(i+1));
-> +
->                 }
->
->                 memset(&empty_pathspec, 0, sizeof(empty_pathspec));
-> @@ -446,5 +465,6 @@ finish:
->                         die(_("Unable to write new index file"));
->         }
->
-> +       string_list_clear(&exclude_list, 0);
->         return exit_status;
->  }
-> --
-> 2.3.3.472.g20ceeac
+So while I think the behaviour with git diff --no-index $directory $file
+is correct (minus the comments by Matthieu), git diff --no-index $file
+$directory is not, I think.
