@@ -1,81 +1,83 @@
 From: Alexander Kuleshov <kuleshovmail@gmail.com>
-Subject: [PATCH 2/3 v2] Documentation/git-add.txt: describe --exclude option
-Date: Mon, 16 Mar 2015 01:06:56 +0600
-Message-ID: <1426446416-5753-1-git-send-email-kuleshovmail@gmail.com>
+Subject: [PATCH 3/3 v2] t3700-add: added test for --exclude option
+Date: Mon, 16 Mar 2015 01:07:08 +0600
+Message-ID: <1426446428-6279-1-git-send-email-kuleshovmail@gmail.com>
 References: <1426446383-5264-1-git-send-email-kuleshovmail@gmail.com>
 Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
 	Alexander Kuleshov <kuleshovmail@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 15 20:07:09 2015
+X-From: git-owner@vger.kernel.org Sun Mar 15 20:07:25 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YXDsS-0003QH-PO
-	for gcvg-git-2@plane.gmane.org; Sun, 15 Mar 2015 20:07:09 +0100
+	id 1YXDsh-0003dL-0Z
+	for gcvg-git-2@plane.gmane.org; Sun, 15 Mar 2015 20:07:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752580AbbCOTHE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Mar 2015 15:07:04 -0400
-Received: from mail-la0-f53.google.com ([209.85.215.53]:35874 "EHLO
-	mail-la0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751485AbbCOTHD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Mar 2015 15:07:03 -0400
-Received: by lamx15 with SMTP id x15so24057117lam.3
-        for <git@vger.kernel.org>; Sun, 15 Mar 2015 12:07:01 -0700 (PDT)
+	id S1752713AbbCOTHS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Mar 2015 15:07:18 -0400
+Received: from mail-la0-f52.google.com ([209.85.215.52]:34756 "EHLO
+	mail-la0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752600AbbCOTHR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Mar 2015 15:07:17 -0400
+Received: by lagg8 with SMTP id g8so24034496lag.1
+        for <git@vger.kernel.org>; Sun, 15 Mar 2015 12:07:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=eKk9r0tAp7FfTW9E/MTAX1VhTkrpiXn2RR5NyKxe35A=;
-        b=wqMsMRhDP6gECElpSIvzER5WiJJRfx32fW8CQGU9YXz/TaBAHjOqj3Ry3iLlVF9uI/
-         qryRaqpQgTiX0Y01boGp28tqCP+x15RwcWPrHv+fyOr3OQRDDdmeJNG302VpoYSFkypy
-         7sbiy59JfexNcapvLLporWkEwLTW6jIcWaU5HPQdyVc0dKqu6kA1rfeKJvscQKMJpTz0
-         z9eA/z+HznhWgCkk4YrN+dQB41xmn1lu+GXGVFu1gihODmJ0Y0597VwVnDfD1s1+rPkH
-         aFocVIEUujN5qsdDH5kLi6OdqzzUfT2X3+0IZr+TBrQzyUHM0NoPopPsodQB8tZuxVcj
-         os1w==
-X-Received: by 10.112.26.209 with SMTP id n17mr46648029lbg.84.1426446421253;
-        Sun, 15 Mar 2015 12:07:01 -0700 (PDT)
+        bh=fDS2PE1J+m0aUp2zMPYtWIIX2cOdtgvz+RTGxScX9tg=;
+        b=xq8E4LsYzjYBAgp4bTySzASlEqVHruZKgOgm9wsUNS9wzrMsmsCdud5RPYPRcpUX0g
+         //N6fTEpHwW+pgyUKcdeh8dEjQQ7dWm+hZb2JfbVtTzWxitW7U+ZuF4Jao2Xg11exdXw
+         zP8d0+DmCFbeLm+QMP1as0G5yau0hhXer6IdoQGjLhE/lRK0q4VTw+Cu27buuilD0HUe
+         TTw+Le8pIHxKeOo6F0htw8tR374zHK/k5sOPga/XUBU8OAmcNiaUT7953SyyyE8nqtFO
+         ZBhTgE8DCX7nb96o4s5VVZeXGu1hPpleV0pNED7adt/eQ2AvayHLq4O0my8eqyi4D83h
+         uJ+g==
+X-Received: by 10.152.198.203 with SMTP id je11mr43725247lac.85.1426446436178;
+        Sun, 15 Mar 2015 12:07:16 -0700 (PDT)
 Received: from localhost.localdomain ([95.56.108.218])
-        by mx.google.com with ESMTPSA id wt7sm1721806lbb.24.2015.03.15.12.06.59
+        by mx.google.com with ESMTPSA id dz1sm1715602lbc.47.2015.03.15.12.07.14
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 15 Mar 2015 12:07:00 -0700 (PDT)
+        Sun, 15 Mar 2015 12:07:15 -0700 (PDT)
 X-Mailer: git-send-email 2.3.3.472.g20ceeac.dirty
 In-Reply-To: <1426446383-5264-1-git-send-email-kuleshovmail@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265513>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265514>
 
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
 ---
- Documentation/git-add.txt | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ t/t3700-add.sh | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
-index f2eb907..fee97ed 100644
---- a/Documentation/git-add.txt
-+++ b/Documentation/git-add.txt
-@@ -9,7 +9,7 @@ SYNOPSIS
- --------
- [verse]
- 'git add' [--verbose | -v] [--dry-run | -n] [--force | -f] [--interactive | -i] [--patch | -p]
--	  [--edit | -e] [--[no-]all | --[no-]ignore-removal | [--update | -u]]
-+	  [--edit | -e] [--[no-]all | --[no-]ignore-removal | [--update | -u]] [--exclude=<pattern>]
- 	  [--intent-to-add | -N] [--refresh] [--ignore-errors] [--ignore-missing]
- 	  [--] [<pathspec>...]
+diff --git a/t/t3700-add.sh b/t/t3700-add.sh
+index f7ff1f5..6f71c67 100755
+--- a/t/t3700-add.sh
++++ b/t/t3700-add.sh
+@@ -332,4 +332,22 @@ test_expect_success 'git add --dry-run --ignore-missing of non-existing file out
+ 	test_i18ncmp expect.err actual.err
+ '
  
-@@ -164,6 +164,10 @@ for "git add --no-all <pathspec>...", i.e. ignored removed files.
- 	be ignored, no matter if they are already present in the work
- 	tree or not.
- 
-+--exclude=<pattern>::
-+	Also ignore files matching <pattern>, a .gitignore-like
-+	pattern. Option can be used multiply times.
++test_expect_success 'Test that "git add --exclude" works' '
++	>foo &&
++	>bar &&
++	git add --exclude=bar . &&
++	! (git ls-files | grep bar)
++	(git ls-files | grep foo)
++'
 +
- \--::
- 	This option can be used to separate command-line options from
- 	the list of files, (useful when filenames might be mistaken
++test_expect_success 'Test multiply --exclude' '
++	>foo &&
++	>bar &&
++	>"b a z" &&
++	git add --exclude="bar" --exclude="b a z" . &&
++	(git ls-files | grep foo)
++	! (git ls-files | grep "b a z")
++	! (git ls-files | grep "baz")
++'
++
+ test_done
 -- 
 2.3.3.472.g20ceeac.dirty
