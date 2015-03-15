@@ -1,127 +1,77 @@
-From: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+From: Alexander Kuleshov <kuleshovmail@gmail.com>
 Subject: Re: [PATCH RFC 1/3] add: add new --exclude option to git add
-Date: Sun, 15 Mar 2015 18:51:57 +0100
-Message-ID: <5505C6BD.5000809@web.de>
+Date: Mon, 16 Mar 2015 00:00:41 +0600
+Message-ID: <CANCZXo5hi2C0oPe2TvY6MwaQJdaZhb1BgM+Sa_yi0nzaX6tT9g@mail.gmail.com>
 References: <1426427399-22423-1-git-send-email-kuleshovmail@gmail.com>
+	<5505C6BD.5000809@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Alexander Kuleshov <kuleshovmail@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 15 18:52:32 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+	philipoakley@iee.org
+X-From: git-owner@vger.kernel.org Sun Mar 15 19:00:50 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YXCiD-0006Ml-6j
-	for gcvg-git-2@plane.gmane.org; Sun, 15 Mar 2015 18:52:29 +0100
+	id 1YXCqF-00058E-Ja
+	for gcvg-git-2@plane.gmane.org; Sun, 15 Mar 2015 19:00:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751498AbbCORwK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Mar 2015 13:52:10 -0400
-Received: from mout.web.de ([212.227.17.11]:57089 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751106AbbCORwI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Mar 2015 13:52:08 -0400
-Received: from macce.local ([217.211.68.12]) by smtp.web.de (mrweb103) with
- ESMTPSA (Nemesis) id 0M8iPI-1Yh8sH2wUG-00CCgJ; Sun, 15 Mar 2015 18:52:01
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
-In-Reply-To: <1426427399-22423-1-git-send-email-kuleshovmail@gmail.com>
-X-Provags-ID: V03:K0:O7O/XzLunPuYf0kxFK/s868B6KXz4b2AwG1Hoy5hoJtlx18gYPL
- I3ENJx0O2/NbQ/CYl3093LnXdxFCCJgfyhO5zNc0Z2osCA2vWRNxqx8NNRiZgHbcN3zAJrz
- JKhWfkWEW2NebCPfOhqy+lp/z6LkDrlBNAbag0ZUnXKEIIny+s1BzTiFQLvXx8bd39rPe5s
- 7lN3yMggTLWh1gwd8ofPQ==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1751562AbbCOSAm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 Mar 2015 14:00:42 -0400
+Received: from mail-oi0-f47.google.com ([209.85.218.47]:35057 "EHLO
+	mail-oi0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751249AbbCOSAm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 15 Mar 2015 14:00:42 -0400
+Received: by oiag65 with SMTP id g65so21277870oia.2
+        for <git@vger.kernel.org>; Sun, 15 Mar 2015 11:00:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=JgAWubKf/q+H6FFCIX6Yf9fhJ82VXXEBNgJvch+dJVY=;
+        b=L1EHFciH9RPBwoJinIWE2wScY671Y7SESeTV1nte0bIc6no0ARjsv4sWvLEizOE6Hq
+         k98NR5vxOqtLGXa39GmlnwM4ihyzXQD/ygKA9Rzt7k2NeipW1MmKJlXzR0wrIql5aD3R
+         9rL5wqV7LevhYJIAIoLEzfGFAEIqNXej3PdbU7ON+CUf5GnPJ8tPoYgSwJB/nypZTj1x
+         8UegrA3wkDk6YeFsDzvJK+GGofDAz437RrlszGFRP+hR1gbcrSYMzTgpaL3V8lbi2eJS
+         0NDG5SV8gP+UQ6dg73z9nkbQOE6eU6iM0B15O/l7Toj0DHLBbH75ZZMbAzie92C+bJ+r
+         DB9w==
+X-Received: by 10.202.94.66 with SMTP id s63mr7000375oib.94.1426442441339;
+ Sun, 15 Mar 2015 11:00:41 -0700 (PDT)
+Received: by 10.182.197.10 with HTTP; Sun, 15 Mar 2015 11:00:41 -0700 (PDT)
+In-Reply-To: <5505C6BD.5000809@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265504>
 
-On 2015-03-15 14.49, Alexander Kuleshov wrote:
+Hello All,
 
-Thanks for working on Git, some minor remarks/suggestions inline.
-> This patch introduces new --exclude option for the git add
-> command.
-"This patch" is redundant. Shorter may be:
-Introduce the --exclude option for git add
+>> s /no/not/   ??
 
-> 
-> We already have core.excludesfile configuration variable which indicates
-> a path to file which contains patterns to exclude. This patch provides
-same here: Provide the ability to pass ....
-> ability to pass --exclude option to the git add command to exclude paths
-> from command line in addition to which found in the ignore files.
-"found" ?? Would "specified" be better?
-> 
-> Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
-> ---
->  builtin/add.c | 20 ++++++++++++++++++++
->  1 file changed, 20 insertions(+)
-> 
-> diff --git a/builtin/add.c b/builtin/add.c
-> index 3390933..5c602a6 100644
-> --- a/builtin/add.c
-> +++ b/builtin/add.c
-> @@ -244,6 +244,16 @@ static int ignore_removal_cb(const struct option *opt, const char *arg, int unse
->  	return 0;
->  }
->  
-> +struct string_list exclude_list = STRING_LIST_INIT_NODUP;
-> +struct exclude_list *el;
-> +
-> +static int exclude_cb(const struct option *opt, const char *arg, int unset)
-> +{
-> +	struct string_list *exclude_list = opt->value;
-> +	string_list_append(exclude_list, arg);
-> +	return 0;
-When we always return 0, the function can be void ?
-> +}
-> +
->  static struct option builtin_add_options[] = {
->  	OPT__DRY_RUN(&show_only, N_("dry run")),
->  	OPT__VERBOSE(&verbose, N_("be verbose")),
-> @@ -255,6 +265,9 @@ static struct option builtin_add_options[] = {
->  	OPT_BOOL('u', "update", &take_worktree_changes, N_("update tracked files")),
->  	OPT_BOOL('N', "intent-to-add", &intent_to_add, N_("record only the fact that the path will be added later")),
->  	OPT_BOOL('A', "all", &addremove_explicit, N_("add changes from all tracked and untracked files")),
-> +	{ OPTION_CALLBACK, 0, "exclude", &exclude_list, N_("pattern"),
-What does pattern mean ?
-Is it the same as a "pathspec", used in Documentation/git-add.txt
-> +	  N_("do no add files matching pattern to index"),
-> +	  0, exclude_cb },
->  	{ OPTION_CALLBACK, 0, "ignore-removal", &addremove_explicit,
->  	  NULL /* takes no arguments */,
->  	  N_("ignore paths removed in the working tree (same as --no-all)"),
-> @@ -298,6 +311,7 @@ static int add_files(struct dir_struct *dir, int flags)
->  
->  int cmd_add(int argc, const char **argv, const char *prefix)
->  {
-> +	int i;
-Do we need "i" here ?
->  	int exit_status = 0;
->  	struct pathspec pathspec;
->  	struct dir_struct dir;
-> @@ -381,6 +395,11 @@ int cmd_add(int argc, const char **argv, const char *prefix)
->  		if (!ignored_too) {
-or could it be declared here  ?
->  			dir.flags |= DIR_COLLECT_IGNORED;
->  			setup_standard_excludes(&dir);
-> +
-> +			el = add_exclude_list(&dir, EXC_CMDL, "--exclude option");
-> +			for (i = 0; i < exclude_list.nr; i++)
-> +				add_exclude(exclude_list.items[i].string, "", 0, el, -(i+1));
-> +
->  		}
->  
->  		memset(&empty_pathspec, 0, sizeof(empty_pathspec));
-> @@ -446,5 +465,6 @@ finish:
->  			die(_("Unable to write new index file"));
->  	}
->  
-> +	string_list_clear(&exclude_list, 0);
->  	return exit_status;
->  }
-> 
+Thank you Philip.
+
+2015-03-15 23:51 GMT+06:00 Torsten B=C3=B6gershausen <tboegi@web.de>:
+> On 2015-03-15 14.49, Alexander Kuleshov wrote:
+>
+> Thanks for working on Git, some minor remarks/suggestions inline.
+>> This patch introduces new --exclude option for the git add
+>> command.
+> "This patch" is redundant. Shorter may be:
+> Introduce the --exclude option for git add
+>
+>>....
+>>
+
+Thank you Torsten for you feedback. I will make all fixes and resend pa=
+tch.
+
+One little question, how to better resend it? Just send v2 for the 1/3
+or resend all with v2? Or maybe will be better to make one patch from
+these 3 pathes?
+
+Thank you.
