@@ -1,83 +1,104 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Bug in fetch-pack.c, please confirm
-Date: Sun, 15 Mar 2015 00:30:06 -0700
-Message-ID: <xmqq3856vhtt.fsf@gitster.dls.corp.google.com>
-References: <0758b2029b41448a77a4e4df1c4e406@74d39fa044aa309eaea14b9f57fe79c>
-	<xmqqa8zevhya.fsf@gitster.dls.corp.google.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: Promoting Git developers
+Date: Sun, 15 Mar 2015 09:46:28 +0100
+Message-ID: <CAP8UFD2ba3jQSsQrGGWM-8HTfGR+zZhmbkxiEBhSR+Ho=B0MuA@mail.gmail.com>
+References: <CAP8UFD1+rC0FjisSddDcyn1E_75wtBU9pEpUcQX5zNtd4zKYFQ@mail.gmail.com>
+	<54FDA6B5.8050505@drmicha.warpmail.net>
+	<CAP8UFD0KNbPBB_dOzw_dAj+ws190_cO8g7_jb_V33x1jxgvnqQ@mail.gmail.com>
+	<xmqqk2yo22ce.fsf@gitster.dls.corp.google.com>
+	<CAP8UFD37v_zOjRkUPLy-ChDs=+NetsDY7Q14-4rYA-WhnTRYyA@mail.gmail.com>
+	<xmqqfv9b5krc.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>, Git mailing list <git@vger.kernel.org>
-To: "Kyle J. McKay" <mackyle@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 15 08:30:23 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	David Kastrup <dak@gnu.org>, git <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>, Scott Chacon <schacon@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Mar 15 09:46:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YX309-0000qp-Fs
-	for gcvg-git-2@plane.gmane.org; Sun, 15 Mar 2015 08:30:21 +0100
+	id 1YX4By-0002w9-Sq
+	for gcvg-git-2@plane.gmane.org; Sun, 15 Mar 2015 09:46:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751286AbbCOHaK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Mar 2015 03:30:10 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:52918 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751180AbbCOHaJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Mar 2015 03:30:09 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 130C938A8B;
-	Sun, 15 Mar 2015 03:30:09 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=kVGhO+8kFj/L2tKFPilbXb8+vwc=; b=fn7m4h
-	Clkv4R9gTYLvuyHsEqxFKqj3jTTdqZN2QO3PtbCC9LgMpT3IA4OnbpXOMrLWh6an
-	slFDX4pwr+B9zASpJ3cTLYzqtUfN+ETbAKzmLRIoCM280Lr9UMJPcfAdmoj/cs59
-	0YXkZcBStYXWR/FY20sttSml+jplPiDvxIuvs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=jviztWT2h3A9XzQiC3b0X7JMQ41JvT5K
-	Ii8E0hRRQwYkx9BSW14FaqZbjvN6upfZqZDSDky1J9sPPMiZOub2zBR9tlv7N0DM
-	dunCk2xm4T+eIPo/dqmxdSB6RW9FAQZ/X5Hi3IBQTp5V6mqGUeFxAurFWjttoyGl
-	zz4ojpm/d20=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0C9C738A8A;
-	Sun, 15 Mar 2015 03:30:09 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 94EFD38A89;
-	Sun, 15 Mar 2015 03:30:07 -0400 (EDT)
-In-Reply-To: <xmqqa8zevhya.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Sun, 15 Mar 2015 00:27:25 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 1AF01490-CAE5-11E4-B2C2-A2259F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751500AbbCOIqe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Mar 2015 04:46:34 -0400
+Received: from mail-ig0-f173.google.com ([209.85.213.173]:33967 "EHLO
+	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751245AbbCOIq3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Mar 2015 04:46:29 -0400
+Received: by igbue6 with SMTP id ue6so14979274igb.1
+        for <git@vger.kernel.org>; Sun, 15 Mar 2015 01:46:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=GlJkohTgdQxKqc1saqk1NqWL3Tpyvp+GeOAaC/uWz+s=;
+        b=G5xFuS63t+olGnStIQiPF1SdYByinRxugQigaRaK230Z+9KRzGoAdcrqdhaqC3ELU4
+         5wZ9gwYGla04n4T+mKtQ0fyElVBxlDtEQ0d1ZiEoMd3hH1pIFS8Z4Rgw9tT90fSvg5J3
+         /114q7/GoOa/zdwcPBzbS1fiQm3LhyCbSY4fD/gtSh22CyL6TL6fTz9h58Guk9KyyPsr
+         dKn0I8USLqUvFwlZzC8++hj5gwWXlWRpj+iCw/wXKj6LY8Ag0W1Cf/0WPtTEg3dXX2i7
+         RlBZlBFO2URaeWLFs/rRVuJ4am4B04zD/Iwln+JTi8qGH5Cx3VBxoSCBBPtjY1tAIch6
+         HIVQ==
+X-Received: by 10.50.79.163 with SMTP id k3mr124420492igx.30.1426409188114;
+ Sun, 15 Mar 2015 01:46:28 -0700 (PDT)
+Received: by 10.50.245.144 with HTTP; Sun, 15 Mar 2015 01:46:28 -0700 (PDT)
+In-Reply-To: <xmqqfv9b5krc.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265486>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> "Kyle J. McKay" <mackyle@gmail.com> writes:
+On Wed, Mar 11, 2015 at 9:42 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Christian Couder <christian.couder@gmail.com> writes:
 >
->> Hi guys,
+>> On Tue, Mar 10, 2015 at 6:23 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>>
+>>> I would suspect that those who agree with you would appreciate if
+>>> you or somebody volunteered to act as our CKDO (chief kudos
+>>> distribution officer).  I do not think I have enough time to do that
+>>> well.  One good place to start might be to scan the list and
+>>> summarize something like the following on weekly or monthly basis,
+>>> as these are not something you can get by pointing people to "git
+>>> shortlog" output.
+>>>
+>>>  - Those who gave helpful review comments, "how about going this
+>>>    way" illustration patches, etc.  Bonus points to those who helped
+>>>    onboarding newcomers.
+>>>
+>>>  - Those who asked pertinent questions on common pain points, and
+>>>    those who answered them helpfully.
 >>
->> So I was looking at fetch-pack.c (from master @ 52cae643, but I think  
->> it's the same everywhere):
->>
-> ...
->> -		hashcpy(ref->new_sha1, local);
->> +		hashcpy(ref->new_sha1, o->sha1);
->>  		if (!args->verbose)
->>  			continue;
->>  		fprintf(stderr,
->>  			"already have %s (%s)\n", sha1_to_hex(remote),
->>  			ref->name);
->>  	}
->>  	return retval;
->> ---
+>> Ok, I can start something about this two points every week or every
+>> few week. It would be best if I could get help from at least one
+>> person as I think it is a lot of work.
+>
+> No kidding; even though it may no longer be an impossibly large task
+> as in the infrationary epoch reported in the Git Traffic, this forum
+> is still a high traffic place.
 
-One thing I wonder is if this hashcpy() is doing anything useful,
-though.  Is ref->new_sha1 used after we are done in this codepath,
-or is the reason nobody noticed it is because it does not matter
-whatever garbage is in that field nobody looks at it?
+I wrote something about a potential Git Rev News news letter:
+
+https://github.com/git/git.github.io/pull/15
+
+Peff, could you give me write access so that I don't need to send pull requests?
+If some people are interested to contribute even if it is only
+sporadically, I would suggest they ask for write access too.
+
+>> I also appreciate very much that you are willing to improve the
+>> release notes by adding a summary with people's names.
+>
+> Just in case you misunderstood, I do not think it is a good idea to
+> add names to release notes and I will not do so.
+>
+> I was and am planning add the list of contributors at the end of the
+> e-mail when the release notes is sent out, i.e. in the "Announce"
+> message that is sent to the list (and CC'ed to lwn.net).
+
+Ok, that is already very nice.
+
+Thanks,
+Christian.
