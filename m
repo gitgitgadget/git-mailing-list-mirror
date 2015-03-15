@@ -1,83 +1,98 @@
-From: Alexander Kuleshov <kuleshovmail@gmail.com>
-Subject: [PATCH 3/3 v2] t3700-add: added test for --exclude option
-Date: Mon, 16 Mar 2015 01:07:08 +0600
-Message-ID: <1426446428-6279-1-git-send-email-kuleshovmail@gmail.com>
-References: <1426446383-5264-1-git-send-email-kuleshovmail@gmail.com>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Alexander Kuleshov <kuleshovmail@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 15 20:07:25 2015
+From: Koosha Khajehmoogahi <koosha@posteo.de>
+Subject: [PATCH] [GSoC] Add configuration options for some commonly used command-line
+ options
+Date: Sun, 15 Mar 2015 20:29:33 +0100
+Message-ID: <5505DD9D.8010102@posteo.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Mar 15 20:30:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YXDsh-0003dL-0Z
-	for gcvg-git-2@plane.gmane.org; Sun, 15 Mar 2015 20:07:23 +0100
+	id 1YXEF3-0006VA-Kp
+	for gcvg-git-2@plane.gmane.org; Sun, 15 Mar 2015 20:30:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752713AbbCOTHS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Mar 2015 15:07:18 -0400
-Received: from mail-la0-f52.google.com ([209.85.215.52]:34756 "EHLO
-	mail-la0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752600AbbCOTHR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Mar 2015 15:07:17 -0400
-Received: by lagg8 with SMTP id g8so24034496lag.1
-        for <git@vger.kernel.org>; Sun, 15 Mar 2015 12:07:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=fDS2PE1J+m0aUp2zMPYtWIIX2cOdtgvz+RTGxScX9tg=;
-        b=xq8E4LsYzjYBAgp4bTySzASlEqVHruZKgOgm9wsUNS9wzrMsmsCdud5RPYPRcpUX0g
-         //N6fTEpHwW+pgyUKcdeh8dEjQQ7dWm+hZb2JfbVtTzWxitW7U+ZuF4Jao2Xg11exdXw
-         zP8d0+DmCFbeLm+QMP1as0G5yau0hhXer6IdoQGjLhE/lRK0q4VTw+Cu27buuilD0HUe
-         TTw+Le8pIHxKeOo6F0htw8tR374zHK/k5sOPga/XUBU8OAmcNiaUT7953SyyyE8nqtFO
-         ZBhTgE8DCX7nb96o4s5VVZeXGu1hPpleV0pNED7adt/eQ2AvayHLq4O0my8eqyi4D83h
-         uJ+g==
-X-Received: by 10.152.198.203 with SMTP id je11mr43725247lac.85.1426446436178;
-        Sun, 15 Mar 2015 12:07:16 -0700 (PDT)
-Received: from localhost.localdomain ([95.56.108.218])
-        by mx.google.com with ESMTPSA id dz1sm1715602lbc.47.2015.03.15.12.07.14
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 15 Mar 2015 12:07:15 -0700 (PDT)
-X-Mailer: git-send-email 2.3.3.472.g20ceeac.dirty
-In-Reply-To: <1426446383-5264-1-git-send-email-kuleshovmail@gmail.com>
+	id S1752286AbbCOTaY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Mar 2015 15:30:24 -0400
+Received: from mx02.posteo.de ([89.146.194.165]:34549 "EHLO mx02.posteo.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751922AbbCOTaY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Mar 2015 15:30:24 -0400
+Received: from dovecot03.posteo.de (unknown [185.67.36.28])
+	by mx02.posteo.de (Postfix) with ESMTPS id 50B5A25A3DDF
+	for <git@vger.kernel.org>; Sun, 15 Mar 2015 20:30:22 +0100 (CET)
+Received: from mail.posteo.de (localhost [127.0.0.1])
+	by dovecot03.posteo.de (Postfix) with ESMTPSA id 3l4rSt0BNyz5vN5
+	for <git@vger.kernel.org>; Sun, 15 Mar 2015 20:30:21 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.5.0
+X-Forwarded-Message-Id: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265514>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265515>
 
-Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
+This patch adds a 'showmerges' config. option for git-log.
+This option determines whether the log should contain merge
+commits or not. In essence, if this option is set to true,
+git-log will be run as 'git-log --no-merges'.
+
+Signed-off-by: Koosha Khajehmoogahi <koosha@posteo.de>
 ---
- t/t3700-add.sh | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ Documentation/config.txt | 3 +++
+ builtin/log.c            | 8 ++++++++
+ 2 files changed, 11 insertions(+)
 
-diff --git a/t/t3700-add.sh b/t/t3700-add.sh
-index f7ff1f5..6f71c67 100755
---- a/t/t3700-add.sh
-+++ b/t/t3700-add.sh
-@@ -332,4 +332,22 @@ test_expect_success 'git add --dry-run --ignore-missing of non-existing file out
- 	test_i18ncmp expect.err actual.err
- '
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 1530255..7775b8c 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1735,6 +1735,9 @@ log.showroot::
+ 	Tools like linkgit:git-log[1] or linkgit:git-whatchanged[1], which
+ 	normally hide the root commit will now show it. True by default.
  
-+test_expect_success 'Test that "git add --exclude" works' '
-+	>foo &&
-+	>bar &&
-+	git add --exclude=bar . &&
-+	! (git ls-files | grep bar)
-+	(git ls-files | grep foo)
-+'
++log.showmerges::
++	If true, merges will be shown in the log list. True by default.
 +
-+test_expect_success 'Test multiply --exclude' '
-+	>foo &&
-+	>bar &&
-+	>"b a z" &&
-+	git add --exclude="bar" --exclude="b a z" . &&
-+	(git ls-files | grep foo)
-+	! (git ls-files | grep "b a z")
-+	! (git ls-files | grep "baz")
-+'
+ log.mailmap::
+ 	If true, makes linkgit:git-log[1], linkgit:git-show[1], and
+ 	linkgit:git-whatchanged[1] assume `--use-mailmap`.
+diff --git a/builtin/log.c b/builtin/log.c
+index dd8f3fc..bb36f61 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -31,6 +31,7 @@ static const char *default_date_mode = NULL;
+ 
+ static int default_abbrev_commit;
+ static int default_show_root = 1;
++static int default_max_parents = -1;
+ static int decoration_style;
+ static int decoration_given;
+ static int use_mailmap_config;
+@@ -108,6 +109,7 @@ static void cmd_log_init_defaults(struct rev_info *rev)
+ 	rev->diffopt.stat_graph_width = -1; /* respect statGraphWidth config */
+ 	rev->abbrev_commit = default_abbrev_commit;
+ 	rev->show_root_diff = default_show_root;
++	rev->max_parents = default_max_parents;
+ 	rev->subject_prefix = fmt_patch_subject_prefix;
+ 	DIFF_OPT_SET(&rev->diffopt, ALLOW_TEXTCONV);
+ 
+@@ -390,6 +392,12 @@ static int git_log_config(const char *var, const char *value, void *cb)
+ 		default_show_root = git_config_bool(var, value);
+ 		return 0;
+ 	}
 +
- test_done
++	if (!strcmp(var, "log.showmerges")) {
++		default_max_parents = git_config_bool(var, value) ? -1 : 1;
++		return 0;
++	}
++
+ 	if (skip_prefix(var, "color.decorate.", &slot_name))
+ 		return parse_decorate_color_config(var, slot_name, value);
+ 	if (!strcmp(var, "log.mailmap")) {
 -- 
-2.3.3.472.g20ceeac.dirty
+1.9.1
