@@ -1,116 +1,102 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC][GSoC] make "git diff --no-index $directory $file" DWIM better.
-Date: Sun, 15 Mar 2015 13:17:28 -0700
-Message-ID: <xmqqpp8at3qf.fsf@gitster.dls.corp.google.com>
-References: <CAHLaBN+93mp6PQmtfjOHSvfW7iwDXwPitGQ5W1am9KBm9EZV2Q@mail.gmail.com>
+Subject: Re: [PATCH] [GSoC] Add configuration options for some commonly used command-line options
+Date: Sun, 15 Mar 2015 13:24:06 -0700
+Message-ID: <xmqqlhiyt3fd.fsf@gitster.dls.corp.google.com>
+References: <5505DD9D.8010102@posteo.de>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Yurii Shevtsov <ungetch@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 15 21:17:41 2015
+Cc: git <git@vger.kernel.org>
+To: Koosha Khajehmoogahi <koosha@posteo.de>
+X-From: git-owner@vger.kernel.org Sun Mar 15 21:24:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YXEyf-0004sN-7D
-	for gcvg-git-2@plane.gmane.org; Sun, 15 Mar 2015 21:17:37 +0100
+	id 1YXF54-0001kH-Q9
+	for gcvg-git-2@plane.gmane.org; Sun, 15 Mar 2015 21:24:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751670AbbCOURb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Mar 2015 16:17:31 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:58903 "EHLO
+	id S1751986AbbCOUYL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Mar 2015 16:24:11 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:53239 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751102AbbCOURa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Mar 2015 16:17:30 -0400
+	with ESMTP id S1751448AbbCOUYJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Mar 2015 16:24:09 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E37483F13A;
-	Sun, 15 Mar 2015 16:17:29 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id BCE7B3F244;
+	Sun, 15 Mar 2015 16:24:08 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Wm3yaXD3anchMO0Bcisnut7DV1Y=; b=UDOI8L
-	xi5HMshgfqxNpwZj95PhyrwMPZJ8HknHUrNA8TXxnfPphE0M88lWPYcFIRFXzdxz
-	eiNXKhAfr2yqTfUWJ3j/VwLZJMBTT+HScf/9umpL1gtVDoHLv1SLJVOEjTVO1nDC
-	ZSoam2ygg8R8synHPFvMpaM9tAQQELXB8oWNE=
+	:content-type; s=sasl; bh=ag2uTiUm0TshJQ32ePp0T8YjZT0=; b=qajYuY
+	DxDuMztnsautTWPG99lJ1oRcPfud+j5MV6gPh5OvIiAtXt3mD/gakONcIWCS9eEc
+	Bq7uj7+1e4pfnSy4oYailn7bbEBUYxp5sGkGaglvARd+itfKsyt70sa+F3H/yYZC
+	lcV1NnJaeEzbfvyZF3suhniR2ZAtFFIN1H2sk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=d5F+1jdCQfkvYhThMKT9s+NaupveUs8v
-	j7p6dJWrbj6NlY+zu8m0zArRaxjlIYEpm7qrlPD4Ml8M8hIH8RsPGzpJ/gDJjX/x
-	HinJPrwBNm7yqIW3kXL4wr+UDr4fHKULyTjP7nNLi6qjoTUC1rEu2X5sKqiN78RC
-	XEzzVfXxjdQ=
+	:content-type; q=dns; s=sasl; b=cOmXtEOad36AvKZXWny8fHvUdbSO6HbU
+	QQhE+fqdpuj1JKXjd5gnUdcwsoYPz+AsB1ZYdM28Z/ZOA4nE99mosEUN63LCc+b8
+	4As3td1h+NQ4mlCZ7lhrb0g5cv0BZdEm9ooIRYLm/Y9DW9no1EsV1fge2Yi0Ea8L
+	4WeDZ2l95hE=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id DABEF3F138;
-	Sun, 15 Mar 2015 16:17:29 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B44C03F243;
+	Sun, 15 Mar 2015 16:24:08 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 620803F137;
-	Sun, 15 Mar 2015 16:17:29 -0400 (EDT)
-In-Reply-To: <CAHLaBN+93mp6PQmtfjOHSvfW7iwDXwPitGQ5W1am9KBm9EZV2Q@mail.gmail.com>
-	(Yurii Shevtsov's message of "Sun, 15 Mar 2015 17:35:27 +0200")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 357BB3F242;
+	Sun, 15 Mar 2015 16:24:08 -0400 (EDT)
+In-Reply-To: <5505DD9D.8010102@posteo.de> (Koosha Khajehmoogahi's message of
+	"Sun, 15 Mar 2015 20:29:33 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 4DFBD99E-CB50-11E4-9E10-A2259F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 3BB2F654-CB51-11E4-92A1-A2259F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265519>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265520>
 
-Yurii Shevtsov <ungetch@gmail.com> writes:
+Koosha Khajehmoogahi <koosha@posteo.de> writes:
 
-> Changes 'git diff --no-index $directory $file' behaviour.
-> Now it is transformed to 'git diff --no-index $directory/&file $file'
-> instead of throwing an error.
-
-Is this asymmetric?  Shouldn't "git diff --no-index $file $directory"
-behave the same way, i.e. turned into "$file $directory/$file"?
-
-If you intended the patch to do so, perhaps
-
-    "git diff --no-index directory/ file" used to error out, saying
-    that you cannot compare a directory and a file (with the
-    parameters swapped, "git diff --no-index file directory/" failed
-    the same way).
-
-    With normal "diff", "diff D/ F" acts as if it were told to
-    compare D/F and F (when D/F exists---if there isn't, then it
-    shows a creation of F), and behaving the same way would be more
-    natural to the users.
-
-or something?
-
-> Signed-off-by: Yurii Shevtsov <ungetch <at> gmail.com>
+> This patch adds a 'showmerges' config. option for git-log.
+> This option determines whether the log should contain merge
+> commits or not. In essence, if this option is set to true,
+> git-log will be run as 'git-log --no-merges'.
+>
+> Signed-off-by: Koosha Khajehmoogahi <koosha@posteo.de>
 > ---
->  diff-no-index.c |   21 +++++++++++++++++++--
->  1 files changed, 19 insertions(+), 2 deletions(-)
+>  Documentation/config.txt | 3 +++
+>  builtin/log.c            | 8 ++++++++
+>  2 files changed, 11 insertions(+)
 >
-> diff --git a/diff-no-index.c b/diff-no-index.c
-> index 265709b..4e71b36 100644
-> --- a/diff-no-index.c
-> +++ b/diff-no-index.c
-> @@ -97,8 +97,25 @@ static int queue_diff(struct diff_options *o,
->         if (get_mode(name1, &mode1) || get_mode(name2, &mode2))
->                 return -1;
->
-> -       if (mode1 && mode2 && S_ISDIR(mode1) != S_ISDIR(mode2))
-> -               return error("file/directory conflict: %s, %s", name1, name2);
-> +       if (mode1 && mode2 && S_ISDIR(mode1) != S_ISDIR(mode2)) {
-> +               struct strbuf dirnfile;
-> +               const char *dir, *file;
-> +               char *filename;
-> +               int ret = 0;
-> +
-> +               dir = S_ISDIR(mode1) ? name1 : name2;
-> +               file = (dir == name1) ? name2 : name1;
-> +               strbuf_init(&dirnfile, strlen(name1) + strlen(name2) + 2);
-> +               strbuf_addstr(&dirnfile, dir);
-> +               if (dirnfile.buf[dirnfile.len - 1] != '/')
-> +                       strbuf_addch(&dirnfile, '/');
-> +               filename = strrchr(file, '/');
-> +               strbuf_addstr(&dirnfile, filename ? (filename + 1) : file);
-> +               ret = queue_diff(o, dirnfile.buf, file);
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 1530255..7775b8c 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -1735,6 +1735,9 @@ log.showroot::
+>  	Tools like linkgit:git-log[1] or linkgit:git-whatchanged[1], which
+>  	normally hide the root commit will now show it. True by default.
+>  
+> +log.showmerges::
+> +	If true, merges will be shown in the log list. True by default.
 
-Hmm, it appears that you are turning "diff F D/" into "diff D/F F",
-which is the other way around here, or am I mis-reading queue_diff().
+When you have to help your colleague by inspecting the history in
+her repository, and your colleague has this set to false, and you do
+want your "git log" to show merge commits, how would you override
+this setting?
 
-Does queue_diff() do the right thing when D/F does not exist (not a
-rhetorical question; I just did not check it myself)?
+	git log --merges
+
+is not it.
+
+Avoid introducing a configuration that users cannot override it from
+the command line.  If there is a way to override (and for the
+purpose of this discussion, "git -c log.showmerges=yes" does not
+count), document it here.
+
+Tests need to make sure that (1) with configuration without command
+line override, the various settings of the variable give behaviour
+you wanted to give, and (2) with configuration with command line
+override, the values set to the variable does not have any effect to
+the behaviour (i.e. the command line override wins).
+
+Thanks.
