@@ -1,83 +1,58 @@
-From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: Re: [PATCH v2] git prompt: Use toplevel to find untracked files.
-Date: Sun, 15 Mar 2015 12:49:04 +0100
-Message-ID: <1426420144-10584-1-git-send-email-szeder@ira.uka.de>
-References: <xmqqmw3hzakn.fsf@gitster.dls.corp.google.com>
-Cc: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Cody A Taylor <cody.taylor@maternityneighborhood.com>
+From: Alexander Kuleshov <kuleshovmail@gmail.com>
+Subject: Re: [PATCH] git.c: two memory leak fixes
+Date: Sun, 15 Mar 2015 17:53:14 +0600
+Message-ID: <CANCZXo4rJWJohDpeb+nt3t=WBjmq14473+ynuPhvOuPd9+Vs_w@mail.gmail.com>
+References: <1426358613-30180-1-git-send-email-kuleshovmail@gmail.com>
+	<xmqq3857vw9b.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 15 12:49:33 2015
+X-From: git-owner@vger.kernel.org Sun Mar 15 12:53:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YX72y-0002NW-Uy
-	for gcvg-git-2@plane.gmane.org; Sun, 15 Mar 2015 12:49:33 +0100
+	id 1YX76e-0006A1-DU
+	for gcvg-git-2@plane.gmane.org; Sun, 15 Mar 2015 12:53:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752762AbbCOLt3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Mar 2015 07:49:29 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:42316 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752202AbbCOLtZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 15 Mar 2015 07:49:25 -0400
-Received: from x590c5c95.dyn.telefonica.de ([89.12.92.149] helo=localhost)
-	by iramx2.ira.uni-karlsruhe.de with esmtpsa port 587 
-	iface 141.3.10.81 id 1YX72m-0005Cs-QA; Sun, 15 Mar 2015 12:49:22 +0100
-X-Mailer: git-send-email 1.9.5.msysgit.0
-In-Reply-To: <xmqqmw3hzakn.fsf@gitster.dls.corp.google.com>
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1426420162.
+	id S1752032AbbCOLxQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Mar 2015 07:53:16 -0400
+Received: from mail-ob0-f180.google.com ([209.85.214.180]:33519 "EHLO
+	mail-ob0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751848AbbCOLxP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Mar 2015 07:53:15 -0400
+Received: by obcxo2 with SMTP id xo2so17842813obc.0
+        for <git@vger.kernel.org>; Sun, 15 Mar 2015 04:53:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=Tdr39IM7ictVmGwaexcKZT8n4rTKvRdIeSPu9XYqLuk=;
+        b=MbFNo8Mo7ZG1IsJgu5p9pqdfMAq35TavcO5ejHYtg9l22ko33dAKZNNh7y4/nIUitY
+         75/czfeNj+Kc79a4iw7VpqCWfnlfL9I4ZRramRShIHU6FkF7Tdpri7V+9RZmZKy2pgEg
+         IOnJDkpyt3vOKPVBP1O/7FO9M4hrOReUK5OoTZtn1VQkdCeTmwIZidprqKvzxLsURzLX
+         2xqWsjA1UKkdGSRg885Gi8a8oT4wKwx5z3iGFmTBeFQnHujYaWZ4hsM+RAHGqXjh18c/
+         CeHWqm1x4SRTATWVB+fPyyznh5/6JANdOeffBd119UliZYxVtStpBXGI+IWePr9Z1Dkm
+         nAeQ==
+X-Received: by 10.202.176.4 with SMTP id z4mr41273063oie.43.1426420394994;
+ Sun, 15 Mar 2015 04:53:14 -0700 (PDT)
+Received: by 10.182.197.10 with HTTP; Sun, 15 Mar 2015 04:53:14 -0700 (PDT)
+In-Reply-To: <xmqq3857vw9b.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265490>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265491>
 
-Hi,
+Hello Junio,
 
-Quoting Junio C Hamano <gitster@pobox.com>:
+>>This is technically correct, but do we really care about it?
 
-> Cody A Taylor <cody.taylor@maternityneighborhood.com> writes:
->> The __git_ps1() prompt function would not show an untracked
->> state when the current working directory was not a parent of
->> the untracked file.
->
-> Good find, and nicely explained.
+Yes, as i saw handle_alias called once, and we no need to care about it.
 
-Somehow I had a hard time making sense out of "when the current working
-directory was not a parent of the untracked file".  Perhaps "when the
-untracked files are outside of the current working directory" would be
-easier to grok?
+>>I think it is wrong to free alias_string after passing it to
+>>split_cmdline() and while you still need to use the new_argv.
 
-> I wonder if we can add a test
-> or two to t9903-bash-prompt.sh?
-
-This test fails without the patch in question and succeeds with it.
-
--- 8< --
-
-diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
-index 51ecd3e..3d1a95f 100755
---- a/t/t9903-bash-prompt.sh
-+++ b/t/t9903-bash-prompt.sh
-@@ -397,6 +397,16 @@ test_expect_success 'prompt - untracked files status indicator - untracked files
- 	test_cmp expected "$actual"
- '
- 
-+test_expect_success 'prompt - untracked files status indicator - untracked files outside cwd' '
-+	printf " (master %%)" >expected &&
-+	(
-+		cd ignored_dir &&
-+		GIT_PS1_SHOWUNTRACKEDFILES=y &&
-+		__git_ps1 >"$actual"
-+	) &&
-+	test_cmp expected "$actual"
-+'
-+
- test_expect_success 'prompt - untracked files status indicator - shell variable unset with config disabled' '
- 	printf " (master)" >expected &&
- 	test_config bash.showUntrackedFiles false &&
+Yes, right. sorry for the noise.
