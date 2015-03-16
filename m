@@ -1,134 +1,152 @@
-From: Dongcan Jiang <dongcan.jiang@gmail.com>
-Subject: Re: [PATCH/GSoC/RFC] fetch: git fetch --deepen
-Date: Tue, 17 Mar 2015 00:04:40 +0800
-Message-ID: <CABwkPcoRK9SGx=euPy3wjk58_TcOgN_uQYhvWvPyEn3JyrogGw@mail.gmail.com>
-References: <1426251846-1604-1-git-send-email-dongcan.jiang@gmail.com> <CAPig+cS07W6gtW8L5wbQwZuxSLxb-r0s6KNO4eDO5BYdBDbWjw@mail.gmail.com>
+From: Koosha Khajehmoogahi <koosha.khajeh@gmail.com>
+Subject: [PATCH] [RFC] Add a new config. option for skipping merges in git-log
+Date: Mon, 16 Mar 2015 17:04:41 +0100
+Message-ID: <5506FF19.1050307@gmail.com>
+References: <5506F652.7050700@posteo.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon Mar 16 17:05:10 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Mar 16 17:05:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YXXVs-0006c5-Jq
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Mar 2015 17:05:08 +0100
+	id 1YXXWM-00073u-MW
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Mar 2015 17:05:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935408AbbCPQFE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Mar 2015 12:05:04 -0400
-Received: from mail-pd0-f180.google.com ([209.85.192.180]:34284 "EHLO
-	mail-pd0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933806AbbCPQFB convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 16 Mar 2015 12:05:01 -0400
-Received: by pdbni2 with SMTP id ni2so62055347pdb.1
-        for <git@vger.kernel.org>; Mon, 16 Mar 2015 09:05:01 -0700 (PDT)
+	id S935412AbbCPQFe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Mar 2015 12:05:34 -0400
+Received: from mail-wi0-f173.google.com ([209.85.212.173]:36097 "EHLO
+	mail-wi0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933806AbbCPQFd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Mar 2015 12:05:33 -0400
+Received: by wibg7 with SMTP id g7so41622742wib.1
+        for <git@vger.kernel.org>; Mon, 16 Mar 2015 09:05:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=FL/CWQFlay51ChVt9ha4GuetGvPz+YrYok/gYim0s6M=;
-        b=WHSXLjhL0K1iM0L8zjXtxp4IR0eEQGdHisBUZbY38ymhWJ5cigobMQnSKlSnmMZGio
-         JjSFurFvKMfBbbyutMeLGIfCDc6YUirwd8fw1ec/2IY8tYak5zuAiFYjoyIKGcG05AlD
-         xvvruOpq8kOLDKIznsIrz7URsK5MYhpVO69ckj4jdPVdsjPUxHxeoPGj+YV3cg//qIu7
-         +ihFsxQqCdDVGLO8hFAM0tdZ9hWW18SpL4oIPBUCqN4LxqNHldjANm9niLgiJcIkxijf
-         8FGWl3eU1o4d4MmWzZpLlwHJtA+szdfvhA8tbd1NEhojXlPaG1inbjTxB4NUOmB1AUd2
-         UlYQ==
-X-Received: by 10.66.185.230 with SMTP id ff6mr140713127pac.102.1426521901082;
- Mon, 16 Mar 2015 09:05:01 -0700 (PDT)
-Received: by 10.70.78.225 with HTTP; Mon, 16 Mar 2015 09:04:40 -0700 (PDT)
-In-Reply-To: <CAPig+cS07W6gtW8L5wbQwZuxSLxb-r0s6KNO4eDO5BYdBDbWjw@mail.gmail.com>
+        h=message-id:date:from:user-agent:mime-version:to:subject:references
+         :in-reply-to:content-type:content-transfer-encoding;
+        bh=RHNmd+vi7hKTbfnS2c7gNPmmsBStlvTRooSNjuzdZhM=;
+        b=zu46DVBQ0LOylmWRcs3gmyoyYC0BD9ICntv3OH7CIJ0nG2iPTSznMllxI6OIcMdAev
+         vE7sW0cvNN2cmn+x5Xh3SIuohOm/uRI1NFH2XdqSCYug4mJocdQhSdX5AHlUrfAeX+aE
+         RYWEYTIwcjVystFshlEs0XPm3HlfuXnyZJqlUcDJ0Mk2RDE3YYuC/l0lwTTj4Zu6uiI/
+         WZqOzfz2Vi8AX9u4T4VrZ1u7R00walOkeRhywi00vukITFpQCk1DLixmdXbVFEKRLcfF
+         f9jdjSj7PLHgyxy//LjHrO+nF6KTV6SnBgP97AWJc0fA4v9OcrVNU5NBstx63tbKyqFA
+         E2Ww==
+X-Received: by 10.180.198.110 with SMTP id jb14mr122686687wic.57.1426521932130;
+        Mon, 16 Mar 2015 09:05:32 -0700 (PDT)
+Received: from [10.148.69.170] (host135-2.natpool.mwn.de. [138.246.2.135])
+        by mx.google.com with ESMTPSA id pa4sm16011197wjb.11.2015.03.16.09.05.30
+        for <git@vger.kernel.org>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 16 Mar 2015 09:05:31 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.5.0
+In-Reply-To: <5506F652.7050700@posteo.de>
+X-Forwarded-Message-Id: <5506F652.7050700@posteo.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265568>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265569>
 
-Hi Eric,
+This patch adds a 'showmerges' config. option for git-log.
+This option determines whether the log should contain merge
+commits or not. In essence, if this option is set to false,
+git-log will be run as 'git-log --no-merges'.
 
-Sorry for my late response. Thank you for your suggestions! I will try
-to use them in my next patch version.
+To force git-log to show merges even if 'log.showmerges' is
+set, we use --include-merges command line option.
 
-Best Regards,
-Dongcan
+Signed-off-by: Koosha Khajehmoogahi <koosha.khajeh@gmail.com>
+---
+ Documentation/config.txt | 3 +++
+ builtin/log.c            | 9 +++++++++
+ revision.c               | 2 ++
+ revision.h               | 1 +
+ 4 files changed, 15 insertions(+)
 
-2015-03-14 3:42 GMT+08:00 Eric Sunshine <sunshine@sunshineco.com>:
-> On Fri, Mar 13, 2015 at 9:04 AM, Dongcan Jiang <dongcan.jiang@gmail.c=
-om> wrote:
->> This patch is just for discusstion. An option --deepen is added to
->> 'git fetch'. When it comes to '--deepen', git should fetch N more
->> commits ahead the local shallow commit, where N is indicated by
->> '--depth=3DN'. [1]
->> [...]
->> Of course, as a patch for discussion, it remains a long way to go
->> before being complete.
->> [...]
->> Signed-off-by: Dongcan Jiang <dongcan.jiang@gmail.com>
->> ---
->> diff --git a/fetch-pack.c b/fetch-pack.c
->> index 655ee64..6f4adca 100644
->> --- a/fetch-pack.c
->> +++ b/fetch-pack.c
->> @@ -295,6 +295,7 @@ static int find_common(struct fetch_pack_args *a=
-rgs,
->>                         if (no_done)            strbuf_addstr(&c, " =
-no-done");
->>                         if (use_sideband =3D=3D 2)  strbuf_addstr(&c=
-, " side-band-64k");
->>                         if (use_sideband =3D=3D 1)  strbuf_addstr(&c=
-, " side-band");
->> +                       if (args->depth_deepen)  strbuf_addstr(&c, "=
- depth_deepen");
->
-> For consistency, should this be "depth-deepen" rather than "depth_dee=
-pen"?
->
->>                         if (args->use_thin_pack) strbuf_addstr(&c, "=
- thin-pack");
->>                         if (args->no_progress)   strbuf_addstr(&c, "=
- no-progress");
->>                         if (args->include_tag)   strbuf_addstr(&c, "=
- include-tag");
->> diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
->> index d78f320..6738006 100755
->> --- a/t/t5510-fetch.sh
->> +++ b/t/t5510-fetch.sh
->> @@ -708,4 +708,15 @@ test_expect_success 'fetching a one-level ref w=
-orks' '
->>         )
->>  '
->>
->> +test_expect_success 'fetching deepen' '
->> +       git clone . deepen --depth=3D1 &&
->> +       cd deepen &&
->
-> When this tests ends, the working directory will still be 'deepen',
-> which will likely break tests added after this one. If you wrap the
-> 'cd' and following statements in a subshell via '(' and ')', then the
-> 'cd' will affect the subshell but leave the parent shell's working
-> directory alone, and thus not negatively impact subsequent tests.
->
->> +       git fetch .. foo --depth=3D1
->> +       git show foo
->> +       test_must_fail git show foo~
->> +       git fetch .. foo --depth=3D1 --deepen
->> +       git show foo~
->> +       test_must_fail git show foo~2
->
-> Broken &&-chain throughout.
->
->> +'
->> +
->>  test_done
+This is the third time I send this patch as it seems it didn't
+get delivered even after one hour!
 
+Please help me with this patch. It seems that my --include-merges
+command-line option does not have have any effect on the behavior
+of git-log. I don't know why the value of force_show_merges is
+always 0!
 
-
---=20
-=E6=B1=9F=E4=B8=9C=E7=81=BF=EF=BC=88Dongcan Jiang=EF=BC=89
-Team of Search Engine & Web Mining
-School of Electronic Engineering & Computer Science
-Peking University, Beijing, 100871, P.R.China
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 1530255..7775b8c 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1735,6 +1735,9 @@ log.showroot::
+ 	Tools like linkgit:git-log[1] or linkgit:git-whatchanged[1], which
+ 	normally hide the root commit will now show it. True by default.
+ 
++log.showmerges::
++	If true, merges will be shown in the log list. True by default.
++
+ log.mailmap::
+ 	If true, makes linkgit:git-log[1], linkgit:git-show[1], and
+ 	linkgit:git-whatchanged[1] assume `--use-mailmap`.
+diff --git a/builtin/log.c b/builtin/log.c
+index dd8f3fc..867bcf2 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -31,6 +31,7 @@ static const char *default_date_mode = NULL;
+ 
+ static int default_abbrev_commit;
+ static int default_show_root = 1;
++static int default_max_parents = -1;
+ static int decoration_style;
+ static int decoration_given;
+ static int use_mailmap_config;
+@@ -108,6 +109,8 @@ static void cmd_log_init_defaults(struct rev_info *rev)
+ 	rev->diffopt.stat_graph_width = -1; /* respect statGraphWidth config */
+ 	rev->abbrev_commit = default_abbrev_commit;
+ 	rev->show_root_diff = default_show_root;
++	if (rev->force_show_merges == 0)
++		rev->max_parents = default_max_parents;
+ 	rev->subject_prefix = fmt_patch_subject_prefix;
+ 	DIFF_OPT_SET(&rev->diffopt, ALLOW_TEXTCONV);
+ 
+@@ -390,6 +393,12 @@ static int git_log_config(const char *var, const char *value, void *cb)
+ 		default_show_root = git_config_bool(var, value);
+ 		return 0;
+ 	}
++
++	if (!strcmp(var, "log.showmerges")) {
++		default_max_parents = git_config_bool(var, value) ? -1 : 1;
++		return 0;
++	}
++
+ 	if (skip_prefix(var, "color.decorate.", &slot_name))
+ 		return parse_decorate_color_config(var, slot_name, value);
+ 	if (!strcmp(var, "log.mailmap")) {
+diff --git a/revision.c b/revision.c
+index 66520c6..e7073b8 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1804,6 +1804,8 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 		revs->min_parents = 2;
+ 	} else if (!strcmp(arg, "--no-merges")) {
+ 		revs->max_parents = 1;
++	} else if (!strcmp(arg, "--include-merges")) {
++		revs->force_show_merges = 1;
+ 	} else if (starts_with(arg, "--min-parents=")) {
+ 		revs->min_parents = atoi(arg+14);
+ 	} else if (starts_with(arg, "--no-min-parents")) {
+diff --git a/revision.h b/revision.h
+index 0ea8b4e..f496472 100644
+--- a/revision.h
++++ b/revision.h
+@@ -145,6 +145,7 @@ struct rev_info {
+ 	unsigned int	track_linear:1,
+ 			track_first_time:1,
+ 			linear:1;
++	unsigned int force_show_merges:1;
+ 
+ 	enum date_mode date_mode;
+ 
+-- 
+1.9.1
