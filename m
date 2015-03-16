@@ -1,121 +1,143 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC][GSoC] make "git diff --no-index $directory $file" DWIM better.
-Date: Mon, 16 Mar 2015 10:14:15 -0700
-Message-ID: <xmqq61a0sw48.fsf@gitster.dls.corp.google.com>
-References: <CAHLaBN+93mp6PQmtfjOHSvfW7iwDXwPitGQ5W1am9KBm9EZV2Q@mail.gmail.com>
-	<vpq1tkq5fsw.fsf@anie.imag.fr>
-	<xmqqr3spsir2.fsf@gitster.dls.corp.google.com>
-	<CAHLaBNJxRx9jkNHCM+djq7KEZBV2n5PFZN0-UUtzhO=ikR+Kuw@mail.gmail.com>
+From: Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: [PATCH] refs.c: get_ref_cache: use a bucket hash
+Date: Mon, 16 Mar 2015 18:19:10 +0100
+Message-ID: <20150316171909.GA8618@hank>
+References: <20150316142026.GJ7847@inner.h.apk.li>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Yurii Shevtsov <ungetch@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 16 18:14:44 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Andreas Krey <a.krey@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Mar 16 18:19:27 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YXYb6-0008KB-C2
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Mar 2015 18:14:36 +0100
+	id 1YXYfm-0003bB-DH
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Mar 2015 18:19:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933167AbbCPROc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Mar 2015 13:14:32 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50465 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932398AbbCPROa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Mar 2015 13:14:30 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id A427D40BB7;
-	Mon, 16 Mar 2015 13:14:29 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=4PPOvxQrwRnz+dwosMdlBvLGDDc=; b=Rx/8Qu
-	W8/ff9ppukyF8prMU5MtHDz2x+Rla+dOvoV1x9O9iE2O2LOo2roFZ98+RscBleEg
-	d7kWIjzOmkre+JTkCPF3hWRII4I4REmiX/mDDcDOxrGRnFcMZ4XUdRojNAn+AkU5
-	hoqqb/AXrAJ07nF4Sgc2w/aFytFPy8uTOhI6k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=grxHA4bW74CQcVDHoT8C2t0kkW6lKfM7
-	RHKQy6O3uDYKIdbOhqPhZ6G24u7W3s75XVon1lVdOHV6FTMFC1qZC13Mb6u9TZ3d
-	JiV6m1AClggdLmxhcoJj4dP5pXN+b335PW8qJvC5wHCZtbKIIJ6ZCF87BC7YRfFO
-	s4ziX9OUnnc=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9CDFD40BB6;
-	Mon, 16 Mar 2015 13:14:29 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B413D40BAC;
-	Mon, 16 Mar 2015 13:14:16 -0400 (EDT)
-In-Reply-To: <CAHLaBNJxRx9jkNHCM+djq7KEZBV2n5PFZN0-UUtzhO=ikR+Kuw@mail.gmail.com>
-	(Yurii Shevtsov's message of "Mon, 16 Mar 2015 18:23:49 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: E0424892-CBFF-11E4-BEB3-A2259F42C9D4-77302942!pb-smtp1.pobox.com
+	id S932398AbbCPRTP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Mar 2015 13:19:15 -0400
+Received: from mail-we0-f169.google.com ([74.125.82.169]:35226 "EHLO
+	mail-we0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754134AbbCPRTN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Mar 2015 13:19:13 -0400
+Received: by webcq43 with SMTP id cq43so43317246web.2
+        for <git@vger.kernel.org>; Mon, 16 Mar 2015 10:19:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=R4xcUTs9ijfoKflk7HxbpxZrla5H2BU2w4pMjYJUfUU=;
+        b=KfK+AhcZYk+A4crP6rJXXpaPmIepBo+/KQCJO2Wn00cLvhEMEeZs0I5KKDVvkmX7eH
+         hgJ/hNoyqbrKwaAazmswoG+2vSBdNLzItSWaoSnKNJPg4ZhddyBFvYr+M4b/PunaqzUQ
+         KvlZV+3hCYwBN81EBMpQaQYS3kl8A0d2fU/TbVnec7IsadqR7cNTpB5feFRDXBVcJA8/
+         tbHuoX0hZC6xxR20ix4Nn3Z04qwVyQxxy5mSJwt/oJy/EY73ooozqMhweFuly55zdpMd
+         bgOvdGrGVLO0U1kBoRm2MH0OHUZIvtI4dM4dqSdI0zZCgSLBbI4i53dvMOxJ7EaXGj7c
+         5VYA==
+X-Received: by 10.180.76.4 with SMTP id g4mr166234855wiw.43.1426526352000;
+        Mon, 16 Mar 2015 10:19:12 -0700 (PDT)
+Received: from localhost (213-66-41-37-no99.tbcn.telia.com. [213.66.41.37])
+        by mx.google.com with ESMTPSA id gj16sm16187490wic.24.2015.03.16.10.19.10
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 16 Mar 2015 10:19:11 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20150316142026.GJ7847@inner.h.apk.li>
+User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265577>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265578>
 
-Yurii Shevtsov <ungetch@gmail.com> writes:
+Hi,
 
->> ...  As it stands now, even before we think about dwimming
->> "diff D/ F" into "diff D/F F", a simple formulation like this will
->> error out.
->>
->>     $ mkdir -p a/sub b
->>     $ touch a/file b/file b/sub a/sub/file
->>     $ git diff --no-index a b
->>     error: file/directory conflict: a/sub, b/sub
->>
->> Admittedly, that is how ordinary "diff -r" works, but I am not sure
->> if we want to emulate that aspect of GNU diff.  If the old tree a
->> has a directory 'sub' with 'file' under it (i.e. a/sub/file) where
->> the new tree has a file at 'sub', then the recursive diff can show
->> the removal of sub/file and creation of sub, no?  That is what we
->> show for normal "git diff".
->>
->> But I _think_ fixing that is way outside the scope of GSoC Micro.
-> 
-> So you want me to convert args ("diff D/ F" into "diff D/F F") before
-> calling queue_diff()? But why?
+On 03/16, Andreas Krey wrote:
+> get_ref_cache used a linear list, which obviously is O(n^2).
+> Use a fixed bucket hash which just takes a factor of 100000
+> (~ 317^2) out of the n^2 - which is enough.
+>
+> Signed-off-by: Andreas Krey <a.krey@gmx.de>
+> ---
+>
+> This brings 'git clean -ndx' times down from 17 minutes
+> to 11 seconds on one of our workspaces (which accumulated
+> a lot of ignored directories). Actuallly using adaptive
+> hashing or other structures seems overkill.
+>
+>  refs.c | 13 ++++++++-----
+>  1 file changed, 8 insertions(+), 5 deletions(-)
+>
+> diff --git a/refs.c b/refs.c
+> index e23542b..8198d9e 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -982,6 +982,8 @@ struct packed_ref_cache {
+>  	struct stat_validity validity;
+>  };
+>
+> +#define REF_CACHE_HASH 317
+> +
+>  /*
+>   * Future: need to be in "struct repository"
+>   * when doing a full libification.
+> @@ -996,7 +998,7 @@ static struct ref_cache {
+>  	 * is initialized correctly.
+>  	 */
+>  	char name[1];
+> -} ref_cache, *submodule_ref_caches;
+> +} ref_cache, *submodule_ref_caches[REF_CACHE_HASH];
+>
+>  /* Lock used for the main packed-refs file: */
+>  static struct lock_file packlock;
+> @@ -1065,18 +1067,19 @@ static struct ref_cache *create_ref_cache(const char *submodule)
+>   */
+>  static struct ref_cache *get_ref_cache(const char *submodule)
+>  {
+> -	struct ref_cache *refs;
+> +	struct ref_cache *refs, **bucketp;
+> +	bucketp = submodule_ref_caches + strhash(submodule) % REF_CACHE_HASH;
+>
 
-Because it is wrong to do this inside queue_diff()?
+This breaks the test-suite for me, in the cases where submodule is
+NULL.  How about something like this on top?
 
-Have you actually read what I wrote, tried the above sample
-scenario, and thought what is happening in the codepath?
+diff --git a/refs.c b/refs.c
+index 8198d9e..311faf2 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1068,7 +1068,9 @@ static struct ref_cache *create_ref_cache(const char *submodule)
+ static struct ref_cache *get_ref_cache(const char *submodule)
+ {
+        struct ref_cache *refs, **bucketp;
+-       bucketp = submodule_ref_caches + strhash(submodule) % REF_CACHE_HASH;
++       bucketp = submodule_ref_caches;
++       if (submodule)
++               bucketp += strhash(submodule) % REF_CACHE_HASH;
 
-When the user asks to compare directory a/ and b/, the top-level
-diff_no_index() would have paths[0]=="a" and paths[1]=="b", and
-queue_diff() is called with these in name1 and name2.  Once it
-learns that both of these are directories, it _recurses_ into itself
-by appending the paths in these directories after these two names.
-It finds that both of these directories have "sub" underneath, so it
-makes a recursive call to itself to compare "a/sub" and "b/sub".
+        if (!submodule || !*submodule)
+                return &ref_cache;
 
-That call would notice that one is a directory and the other is
-not.  That is where you are getting the "f/d conflict" error.
-
-At that point, do you think it is sensible to rewrite that recursed
-part of the diff into a comparison between "a/sub/sub" (which does
-not exist, and which the user did not mean to compare with b/sub)
-and "b/sub" (which is a file)?  I hope not.
-
-> queue_diff() already check args' types and decides which
-> comparison to do.
-
-Yes, and I already hinted that that is an independent issue we may
-want to fix, which I suspect is larger than GSoC Micro.  Also the
-fix would be different.  Right now, it checks the types of paths and
-then refuses to compare a directory and a file.  If we wanted to
-change it to closer to what the rest of Git does, we would want it
-to report that the directory and everything under it are removed and
-then a new file is created (if the directory is on the left hand
-side of the comparision and the file is on the right hand side) or
-the other way around.  That will not involve "append the name of the
-file at the end of the directory".
-
-In short, "append the name of the file at the end of the directory"
-logic has no place to live inside queue_diff() which handles the
-recursion part of the operation.
+>  	if (!submodule || !*submodule)
+>  		return &ref_cache;
+>
+> -	for (refs = submodule_ref_caches; refs; refs = refs->next)
+> +	for (refs = *bucketp; refs; refs = refs->next)
+>  		if (!strcmp(submodule, refs->name))
+>  			return refs;
+>
+>  	refs = create_ref_cache(submodule);
+> -	refs->next = submodule_ref_caches;
+> -	submodule_ref_caches = refs;
+> +	refs->next = *bucketp;
+> +	*bucketp = refs;
+>  	return refs;
+>  }
+>
+> --
+> 2.3.2.223.g7a9409c
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
