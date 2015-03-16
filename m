@@ -1,123 +1,124 @@
-From: Yurii Shevtsov <ungetch@gmail.com>
-Subject: Re: [PATCH/RFC][GSoC] make "git diff --no-index $directory $file"
- DWIM better.
-Date: Mon, 16 Mar 2015 19:47:27 +0200
-Message-ID: <CAHLaBN+FZ5LLwU-6VnFoPva=omtPpCEPzmdvY_3H43dag8kqxg@mail.gmail.com>
-References: <CAHLaBN+93mp6PQmtfjOHSvfW7iwDXwPitGQ5W1am9KBm9EZV2Q@mail.gmail.com>
-	<vpq1tkq5fsw.fsf@anie.imag.fr>
-	<xmqqr3spsir2.fsf@gitster.dls.corp.google.com>
-	<CAHLaBNJxRx9jkNHCM+djq7KEZBV2n5PFZN0-UUtzhO=ikR+Kuw@mail.gmail.com>
-	<xmqq61a0sw48.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] [RFC] Add a new config. option for skipping merges in git-log
+Date: Mon, 16 Mar 2015 10:53:43 -0700
+Message-ID: <xmqqpp88rfq0.fsf@gitster.dls.corp.google.com>
+References: <5506E751.8010506@posteo.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 16 18:47:36 2015
+Content-Type: text/plain
+Cc: git <git@vger.kernel.org>
+To: Koosha Khajehmoogahi <koosha@posteo.de>
+X-From: git-owner@vger.kernel.org Mon Mar 16 18:53:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YXZ6z-0007yS-EE
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Mar 2015 18:47:33 +0100
+	id 1YXZD6-0004J5-Ob
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Mar 2015 18:53:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757126AbbCPRr3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Mar 2015 13:47:29 -0400
-Received: from mail-oi0-f48.google.com ([209.85.218.48]:34979 "EHLO
-	mail-oi0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756950AbbCPRr2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Mar 2015 13:47:28 -0400
-Received: by oiag65 with SMTP id g65so44493421oia.2
-        for <git@vger.kernel.org>; Mon, 16 Mar 2015 10:47:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=QtTrw9YYRyneV46aXjo2RQbXmkJc/I/wgzBwlRwSJqM=;
-        b=AghT+JrrX6/pvoLZkRw9E66TnfD7QF0/RhxbpBk/cmK5ck+8ulA1CNJW/7aDGrobmg
-         25/86tBUtiPdh2F18NmXLdjCrtV0nKA7A2d7WUDz56Aqv0r2vVu/44GfO51M9dxIf0Dc
-         RqbzM8fritJmNCaYMaX66GJwmN65H6rQcM50G01h+2FMB9o6BYKVvoxdqrzk4YCOj/VO
-         RDFgxdFIDC/16f48yNyfnCi4u9dQ7STmN1H3anqNnx6OC3SAhz/fE9kMYodQPbH/36kl
-         FkpSma3h2YLJQGV7lRB+2R07AhLNYzzWP4Lkv7ZvPgQRcBESMHoxUIakMVA9H+YUZ1D/
-         ZLBw==
-X-Received: by 10.202.87.215 with SMTP id l206mr24202658oib.84.1426528047440;
- Mon, 16 Mar 2015 10:47:27 -0700 (PDT)
-Received: by 10.76.10.170 with HTTP; Mon, 16 Mar 2015 10:47:27 -0700 (PDT)
-In-Reply-To: <xmqq61a0sw48.fsf@gitster.dls.corp.google.com>
+	id S1754742AbbCPRxs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Mar 2015 13:53:48 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:52453 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754706AbbCPRxr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Mar 2015 13:53:47 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8CD9E3F729;
+	Mon, 16 Mar 2015 13:53:46 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=LPVz/t+TzGpST9DIrYWXnNQQF6M=; b=pE77/2
+	zA9KdRFUCa6Hoq329Iy3nZ6bDONIFOU/r8LNvoIxvzH4TeMlRVEvBHvjMcyuBuqB
+	u4ZyLUo+pUKpaiP++Mnwk6IPhsIw1d5kRmFf8LctpTPTK9C/JdDqnF5dvh4gpsOY
+	/X6W5LNYZcAr7MA4qrarS57o5FmSwGyjp0uwQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=H35ccDIOSVVdIK5a/qn6jwvKek2Na2qi
+	qKMCI5ugPNWl/JpYdPNpnS5Pp3Z2BpXUFQhx4Va/AQbid0tuXW/sLPXpjz3++GBB
+	u3Feei5u3umBb8uLGGSStPXSRSQzC2+azvSqScPPWy8DV5g1pr23JmdsP8Uny9kg
+	/qO4cgxRbvQ=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8612E3F728;
+	Mon, 16 Mar 2015 13:53:46 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C27EF3F725;
+	Mon, 16 Mar 2015 13:53:45 -0400 (EDT)
+In-Reply-To: <5506E751.8010506@posteo.de> (Koosha Khajehmoogahi's message of
+	"Mon, 16 Mar 2015 15:23:13 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 6453EE60-CC05-11E4-8336-A2259F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265581>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265582>
 
-Yes, I have red what you wrote several times and tried your example.
-I'm really sorry if I sound like I just ignored it. I just got a
-little bit lost about which procedure needs patching. You're
-absolutely right, queue_diff() is wrong place for it. So do you agree
-that "append the name of the file at the end of the directory" logic
-should be put to diff_no_index() which will also include calling
-get_mode() for each path[] member? Sorry again for asking so much
-questions
+Koosha Khajehmoogahi <koosha@posteo.de> writes:
 
-2015-03-16 19:14 GMT+02:00 Junio C Hamano <gitster@pobox.com>:
-> Yurii Shevtsov <ungetch@gmail.com> writes:
+> This patch adds a 'showmerges' config. option for git-log.
+> This option determines whether the log should contain merge
+> commits or not. In essence, if this option is set to false,
+> git-log will be run as 'git-log --no-merges'.
 >
->>> ...  As it stands now, even before we think about dwimming
->>> "diff D/ F" into "diff D/F F", a simple formulation like this will
->>> error out.
->>>
->>>     $ mkdir -p a/sub b
->>>     $ touch a/file b/file b/sub a/sub/file
->>>     $ git diff --no-index a b
->>>     error: file/directory conflict: a/sub, b/sub
->>>
->>> Admittedly, that is how ordinary "diff -r" works, but I am not sure
->>> if we want to emulate that aspect of GNU diff.  If the old tree a
->>> has a directory 'sub' with 'file' under it (i.e. a/sub/file) where
->>> the new tree has a file at 'sub', then the recursive diff can show
->>> the removal of sub/file and creation of sub, no?  That is what we
->>> show for normal "git diff".
->>>
->>> But I _think_ fixing that is way outside the scope of GSoC Micro.
->>
->> So you want me to convert args ("diff D/ F" into "diff D/F F") before
->> calling queue_diff()? But why?
->
-> Because it is wrong to do this inside queue_diff()?
->
-> Have you actually read what I wrote, tried the above sample
-> scenario, and thought what is happening in the codepath?
->
-> When the user asks to compare directory a/ and b/, the top-level
-> diff_no_index() would have paths[0]=="a" and paths[1]=="b", and
-> queue_diff() is called with these in name1 and name2.  Once it
-> learns that both of these are directories, it _recurses_ into itself
-> by appending the paths in these directories after these two names.
-> It finds that both of these directories have "sub" underneath, so it
-> makes a recursive call to itself to compare "a/sub" and "b/sub".
->
-> That call would notice that one is a directory and the other is
-> not.  That is where you are getting the "f/d conflict" error.
->
-> At that point, do you think it is sensible to rewrite that recursed
-> part of the diff into a comparison between "a/sub/sub" (which does
-> not exist, and which the user did not mean to compare with b/sub)
-> and "b/sub" (which is a file)?  I hope not.
->
->> queue_diff() already check args' types and decides which
->> comparison to do.
->
-> Yes, and I already hinted that that is an independent issue we may
-> want to fix, which I suspect is larger than GSoC Micro.  Also the
-> fix would be different.  Right now, it checks the types of paths and
-> then refuses to compare a directory and a file.  If we wanted to
-> change it to closer to what the rest of Git does, we would want it
-> to report that the directory and everything under it are removed and
-> then a new file is created (if the directory is on the left hand
-> side of the comparision and the file is on the right hand side) or
-> the other way around.  That will not involve "append the name of the
-> file at the end of the directory".
->
-> In short, "append the name of the file at the end of the directory"
-> logic has no place to live inside queue_diff() which handles the
-> recursion part of the operation.
+> To force git-log to show merges even if 'log.showmerges' is
+> set, we use --include-merges command line option.
+
+Yuck.
+
+I agree that there is currently no way to revert the setting that is
+touched by --merges and --no-merges back to the default, but I think
+the right way to fix that is by streamlining these two options,
+instead of piling yet another kludge --include-merges on top.
+
+When we think about possible "canned" selection modes:
+
+ (do we show merge commits?) * (do we show non-merge commits?)
+
+we have four combinations.  Answering the above two questions with
+No/No would end up showing nothing, which is meaningless, so that
+leaves us three choices (of course, the user could choose to futz
+directly with min/max-parents to select only Octopus merges, but
+that is a more advanced/exotic usage).
+
+Wouldn't it make more sense to spell which selection mode the user
+wants with:
+
+	git log --merges=<selection-mode>
+
+by naming the three meaningful selection modes with short and sweet
+names?  Perhaps
+
+    default? show? both? -- show both merge commits and non-merge commits
+    only -- show only merge commits
+    skip -- show only non-merge commits
+
+or something?
+
+Now, as I always say, I am not great at naming things, so do not
+take these names as the final suggestion, but I think you got the
+idea.
+
+Of course, then the traditional "--merges" option can be kept as a
+short-hand for "--merges=only", and "--no-merges" would become a
+short-hand for "--merges=skip".
+
+Once we have done that streamlining of the command line options, it
+will naturally follow that "log.merges = show | only | skip" would
+be a useful configuration option.
+
+I doubt we need an extra bit in rev_info to implement such a syntax
+sugar.
+
+> diff --git a/revision.h b/revision.h
+> index 0ea8b4e..f496472 100644
+> --- a/revision.h
+> +++ b/revision.h
+> @@ -145,6 +145,7 @@ struct rev_info {
+>  	unsigned int	track_linear:1,
+>  			track_first_time:1,
+>  			linear:1;
+> +	unsigned int force_show_merges:1;
+>  
+>  	enum date_mode date_mode;
