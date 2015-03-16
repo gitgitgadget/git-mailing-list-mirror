@@ -1,114 +1,85 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: [PATCH] show-branch: show all local heads when only giving one rev along --topics
-Date: Mon, 16 Mar 2015 17:38:06 +0900
-Message-ID: <1426495086-31507-1-git-send-email-mh@glandium.org>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 16 09:38:19 2015
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: Promoting Git developers
+Date: Mon, 16 Mar 2015 10:10:28 +0100
+Message-ID: <CAP8UFD08xoJ2H8XgfDbPfHddX9YFpFgbrY+PZ5Tphuot7JwGvw@mail.gmail.com>
+References: <CAP8UFD1+rC0FjisSddDcyn1E_75wtBU9pEpUcQX5zNtd4zKYFQ@mail.gmail.com>
+	<54FDA6B5.8050505@drmicha.warpmail.net>
+	<CAP8UFD0KNbPBB_dOzw_dAj+ws190_cO8g7_jb_V33x1jxgvnqQ@mail.gmail.com>
+	<xmqqk2yo22ce.fsf@gitster.dls.corp.google.com>
+	<CAP8UFD37v_zOjRkUPLy-ChDs=+NetsDY7Q14-4rYA-WhnTRYyA@mail.gmail.com>
+	<xmqqfv9b5krc.fsf@gitster.dls.corp.google.com>
+	<CAP8UFD2ba3jQSsQrGGWM-8HTfGR+zZhmbkxiEBhSR+Ho=B0MuA@mail.gmail.com>
+	<xmqqvbi1sy4h.fsf@gitster.dls.corp.google.com>
+	<003001d05f71$81845160$848cf420$@nexbridge.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	David Kastrup <dak@gnu.org>, git <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>, Scott Chacon <schacon@gmail.com>
+To: "Randall S. Becker" <rsbecker@nexbridge.com>
+X-From: git-owner@vger.kernel.org Mon Mar 16 10:10:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YXQXS-0001Jb-Mm
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Mar 2015 09:38:19 +0100
+	id 1YXR2h-0005sy-8w
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Mar 2015 10:10:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751905AbbCPIiP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Mar 2015 04:38:15 -0400
-Received: from ks3293202.kimsufi.com ([5.135.186.141]:33366 "EHLO glandium.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751221AbbCPIiN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Mar 2015 04:38:13 -0400
-Received: from glandium by zenigata with local (Exim 4.84)
-	(envelope-from <glandium@glandium.org>)
-	id 1YXQXG-0008Cq-AS; Mon, 16 Mar 2015 17:38:06 +0900
-X-Mailer: git-send-email 2.3.3.3.g6c0eb00
+	id S1751430AbbCPJKb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Mar 2015 05:10:31 -0400
+Received: from mail-ie0-f170.google.com ([209.85.223.170]:36858 "EHLO
+	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750822AbbCPJK3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Mar 2015 05:10:29 -0400
+Received: by iegc3 with SMTP id c3so168347717ieg.3
+        for <git@vger.kernel.org>; Mon, 16 Mar 2015 02:10:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=f2VIPketcjZa2Hes9hyNu2QktikOBbC3HEKTNZ087gY=;
+        b=pFB7a5oOwbACTjbxatk/Gg1oSSY9XHYPqynW71gWqVqIzfzEwAIKRJo6JbXU5fn3rj
+         662IUQHNZE9cbA6GSQ2W2QP9nSNpAsIPfNG+tqTdr/G8v9ufd3IiH8KjM7QxwOE1UI29
+         /aaBJtM9Ynfjn/f59CNskqYTFuFuX+Ckwcj1gJCHTVkKqmzGkojOQqmXdITiP1lg8+In
+         bg4SAtr687YPppalEf2ZKKBbv1a1uOLdJ9umaGlzwAQhR/YriHemcHtNWAesY/etae4+
+         47/JuohNhACehsnfPlnfL7ZnmNTOU4I2TsDzEerTWOIM3XFB6w5WOzkDoO/zi5b7Dwbl
+         ZsTg==
+X-Received: by 10.42.79.15 with SMTP id p15mr77525783ick.54.1426497029096;
+ Mon, 16 Mar 2015 02:10:29 -0700 (PDT)
+Received: by 10.50.245.168 with HTTP; Mon, 16 Mar 2015 02:10:28 -0700 (PDT)
+In-Reply-To: <003001d05f71$81845160$848cf420$@nexbridge.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265551>
 
-"git show-branch --topics <rev> <revs>..." displays ancestry graph, only
-considering commits that are in all given revs, except the first one.
+On Sun, Mar 15, 2015 at 11:43 PM, Randall S. Becker
+<rsbecker@nexbridge.com> wrote:
+>> On March 15, 2015 6:19 PM Christian Couder wrote:
+> <snip>
+>> Just one suggestion on the name and half a comment.
+>>
+>> How would "Git Review" (or "Git Monthly Review", or replace your favourite
+>> "how-often-per-period-ly" in its name) sound?  I meant it to sound similar
+> to
+>> academic journals that summarize and review contemporary works in the
+> field
+>> and keeps your original "pun" about our culture around "patch reviews".
 
-"git show-branch" displays ancestry graph for all local branches.
+I would be ok for that but there is already this Gerrit related command:
 
-Unfortunately, "git show-branch --topics <rev>" only prints out the rev
-info for the given rev, and nothing else, e.g.:
+http://www.mediawiki.org/wiki/Gerrit/git-review
 
-  $ git show-branch --topics origin/master
-  [origin/master] Sync with 2.3.3
+Maybe I can just use "Git Rev", but it doesn't tell that it is about news?
 
-While there is an option to add all remote-tracking branches (-r), and
-another to add all local+remote branches (-a), there is no option to add
-only local branches. Adding such an option could be considered, but a
-user would likely already expect that the above command line considers
-the lack of rev other than for --topics as meaning all local branches,
-like when there is no argument at all.
+> If I may humbly offer the suggestion that "Git Blame" would be a far more
+> appropriate pun as a name :)
 
-Moreover, when using -r and -a along with --topics, the first local or
-remote-tracking branch, depending on alphabetic order is used instead of
-the one given after --topics (any rev given on the command line is
-actually simply ignored when either -r or -a is given). And if no rev is
-given at all, the fact that the first alphetical branch is the base of
-topics is probably not expected by users (Maybe --topics should always
-require one rev on the command line?)
+You don't want me to steal Junio's blog title:
 
-This change makes
-  "show-branch --topics $rev"
-act as
-  "show-branch --topics $rev $(git for-each-ref refs/heads
-                               --format='%(refname:short)')"
+http://git-blame.blogspot.fr/
 
-  "show-branch -r --topics $rev ..."
-act as
-  "show-branch --topics $rev ... $(git for-each-ref refs/remotes
-                                   --format='%(refname:short)')"
-instead of
-  "show-branch --topics $(git for-each-ref refs/remotes
-                          --format='%(refname:short)')"
-
-and
-  "show-branch -a --topics $rev ..."
-act as
-  "show-branch --topics $rev ... $(git for-each-ref refs/heads refs/remotes
-                                   --format='%(refname:short)')"
-instead of
-  "show-branch --topics $(git for-each-ref refs/heads refs/remotes
-                          --format='%(refname:short)')"
----
- builtin/show-branch.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/builtin/show-branch.c b/builtin/show-branch.c
-index 365228a..ef9e719 100644
---- a/builtin/show-branch.c
-+++ b/builtin/show-branch.c
-@@ -718,7 +718,7 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
- 	}
- 
- 	/* If nothing is specified, show all branches by default */
--	if (ac + all_heads + all_remotes == 0)
-+	if (ac <= topics && all_heads + all_remotes == 0)
- 		all_heads = 1;
- 
- 	if (reflog) {
-@@ -785,13 +785,13 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
- 		}
- 		free(ref);
- 	}
--	else if (all_heads + all_remotes)
--		snarf_refs(all_heads, all_remotes);
- 	else {
- 		while (0 < ac) {
- 			append_one_rev(*av);
- 			ac--; av++;
- 		}
-+		if (all_heads + all_remotes)
-+			snarf_refs(all_heads, all_remotes);
- 	}
- 
- 	head_p = resolve_ref_unsafe("HEAD", RESOLVE_REF_READING,
--- 
-2.3.3.3.g6c0eb00
+don't you?
