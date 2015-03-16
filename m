@@ -1,99 +1,47 @@
-From: Kevin Daudt <me@ikke.info>
-Subject: Re: [PATCH v4] rev-list: refuse --first-parent combined with --bisect
-Date: Mon, 16 Mar 2015 17:33:06 +0100
-Message-ID: <20150316163306.GB11832@vps892.directvps.nl>
-References: <1425827005-9602-1-git-send-email-me@ikke.info>
- <1425934575-19581-1-git-send-email-me@ikke.info>
- <xmqqa8zkzeq5.fsf@gitster.dls.corp.google.com>
- <20150310225509.GA5442@vps892.directvps.nl>
- <xmqqoao0xx9p.fsf@gitster.dls.corp.google.com>
- <20150311184512.GB5442@vps892.directvps.nl>
- <xmqqsidb5m2r.fsf@gitster.dls.corp.google.com>
+From: Yurii Shevtsov <ungetch@gmail.com>
+Subject: [GSoC] Applying for conversion scripts to builtins
+Date: Mon, 16 Mar 2015 18:49:59 +0200
+Message-ID: <CAHLaBNJkL1CUJEk=cH=CLcDvZtoAr+PiCo2KHjfMLUKsugtRPA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 16 17:33:24 2015
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 16 17:50:09 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YXXx4-0002aX-8i
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Mar 2015 17:33:14 +0100
+	id 1YXYDQ-0006j2-BL
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Mar 2015 17:50:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932398AbbCPQdJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Mar 2015 12:33:09 -0400
-Received: from ikke.info ([178.21.113.177]:46201 "EHLO vps892.directvps.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755821AbbCPQdI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Mar 2015 12:33:08 -0400
-Received: by vps892.directvps.nl (Postfix, from userid 1001)
-	id 207971DCF6D; Mon, 16 Mar 2015 17:33:06 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <xmqqsidb5m2r.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S933273AbbCPQuE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Mar 2015 12:50:04 -0400
+Received: from mail-oi0-f51.google.com ([209.85.218.51]:33629 "EHLO
+	mail-oi0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933222AbbCPQuD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Mar 2015 12:50:03 -0400
+Received: by oibu204 with SMTP id u204so43019501oib.0
+        for <git@vger.kernel.org>; Mon, 16 Mar 2015 09:49:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=pRWCkeiaDlDJSqyNAQ+znK/03EAALV8+zTypfvhrQGo=;
+        b=C6qiN+YjOgvIXXpzYHQvPlOY2ahf6RBeTzSo3Yag+g/SoopxXgD+yU8XV+oh8eLLUs
+         DNHjyhmZvx6nzdiHZnNX1fxUOdGjdap05AJ2fTQjK1/xyvw+nYVXKr5yfZZCV0kg2teE
+         3Bxgj7ksB1DYnvM3LqJyolFj+LBpiscS8XpmRDtcRr0JlLT0yb3rJPGvEi1kH72/ZU/A
+         WvOCPnBPWwQJv1OWBMubEhef5BZiDSENNXeYSMoenue5uGoGoDvpWzvLq4QqTN152S2i
+         slrF7g/9J/S2tla26fA8w7A1q56xz+zX1e+YAYQQAvdT0NFKOMetl2nKhhmSlKIPYa+e
+         42Ng==
+X-Received: by 10.182.42.133 with SMTP id o5mr49350558obl.36.1426524599818;
+ Mon, 16 Mar 2015 09:49:59 -0700 (PDT)
+Received: by 10.76.10.170 with HTTP; Mon, 16 Mar 2015 09:49:59 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265574>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265575>
 
-On Wed, Mar 11, 2015 at 01:13:48PM -0700, Junio C Hamano wrote:
-> Kevin Daudt <me@ikke.info> writes:
-> 
-> > On Tue, Mar 10, 2015 at 04:12:18PM -0700, Junio C Hamano wrote:
-> >
-> 
-> Step back and think why "git bisect --first-parent" is sometimes
-> desired in the first place.
-> 
-> It is because in the regular bisection, you will almost always end
-> up on a commit that is _not_ on the first-parent chain and asked to
-> check that commit at a random place on a side branch in the first
-> place. And you mark such a commit as "bad".
-> 
-> The thing is, traversing from that "bad" commit that is almost
-> always is on a side branch, following the first-parent chain, will
-> not be a useful history that "leaves out any merged in branches".
-> 
-> When "git bisect --first-parent" feature gets implemented, "do not
-> use --first-parent with --bisect" limitation has to be lifted
-> anyway, but until then, not allowing "--first-parent --bisect" for
-> "rev-list" but allowing it for "log" does not buy our users much.
-> The output does not give us a nice "show me which merges on the
-> trunk may have caused the breakage to be examined with the remainder
-> of this bisect session".
-> 
-> So, yes, there is a use case for "log --bisect --first-parent", once
-> there is a working "bisect --first-parent", but not until then, the
-> command is not useful, I would think.
-
-Thank you for you explanation. My confusion came from incorrectly
-assuming refs/bisect/bad and refs/bisect/good-* were pointing to the
-initially specified good and bad commits, in which case the combination
-does make sense.
-
-I was looking in the manpages for the meaning of the bisect refs, but
-could only find something about refs/bisect/bad:
-
-git-bisect(1):
-> Eventually there will be no more revisions left to bisect, and you
-> will have been left with the first bad kernel revision in
-> "refs/bisect/bad
-
-So this ref changes to the bad commit.
-
-For refs/bisect/good-*, I could only find an example snippet:
-
-> GOOD=$(git for-each-ref "--format=%(objectname)" refs/bisect/good-*)
-
-But it's not really clear what * might be expanded to, nor what they
-mean. I guess this could use some clarrification in the documentation.
-
-Knowing this, I agree that the combination log --bisect --first-parent
-doesn't make sense either.
-
-I will send in a new patch.
-
-Kevin
+I'm going to write for this idea. As I know good proposal should
+contain timeline and Todo estimations. What should I write in my
+proposal, since there is no clear plan for converting scripts to
+builtins. Thanks in advance!
