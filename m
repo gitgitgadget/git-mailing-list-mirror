@@ -1,139 +1,69 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Slow git pushes: sitting 1 minute in pack-objects
-Date: Mon, 16 Mar 2015 18:15:33 -0400
-Message-ID: <20150316221532.GA16679@peff.net>
-References: <CAH8BJxH1uVv9J7yLx1D4GRPKfWYqDw8SRFZKGR_yhjcoTCCT2g@mail.gmail.com>
- <20150309075302.GB31866@peff.net>
- <CAH8BJxHQnMkXq1J_wMi2KktTH5uHjj+vd69ihXuYGRfq9cOt=g@mail.gmail.com>
+From: David Lang <david@lang.hm>
+Subject: Re: Promoting Git developers
+Date: Mon, 16 Mar 2015 16:39:12 -0700 (PDT)
+Message-ID: <alpine.DEB.2.02.1503161637210.31344@nftneq.ynat.uz>
+References: <CAP8UFD1+rC0FjisSddDcyn1E_75wtBU9pEpUcQX5zNtd4zKYFQ@mail.gmail.com> <54FDA6B5.8050505@drmicha.warpmail.net> <CAP8UFD0KNbPBB_dOzw_dAj+ws190_cO8g7_jb_V33x1jxgvnqQ@mail.gmail.com> <xmqqk2yo22ce.fsf@gitster.dls.corp.google.com>
+ <CAP8UFD37v_zOjRkUPLy-ChDs=+NetsDY7Q14-4rYA-WhnTRYyA@mail.gmail.com> <xmqqfv9b5krc.fsf@gitster.dls.corp.google.com> <CAP8UFD2ba3jQSsQrGGWM-8HTfGR+zZhmbkxiEBhSR+Ho=B0MuA@mail.gmail.com> <xmqqvbi1sy4h.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Stephen Morton <stephen.c.morton@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 16 23:15:43 2015
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+Cc: Christian Couder <christian.couder@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	David Kastrup <dak@gnu.org>, git <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>, Scott Chacon <schacon@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 17 00:39:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YXdIT-0002ay-Au
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Mar 2015 23:15:41 +0100
+	id 1YXebi-000325-5o
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Mar 2015 00:39:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932414AbbCPWPg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Mar 2015 18:15:36 -0400
-Received: from cloud.peff.net ([50.56.180.127]:33792 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754207AbbCPWPf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Mar 2015 18:15:35 -0400
-Received: (qmail 466 invoked by uid 102); 16 Mar 2015 22:15:35 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 16 Mar 2015 17:15:35 -0500
-Received: (qmail 20287 invoked by uid 107); 16 Mar 2015 22:15:46 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 16 Mar 2015 18:15:45 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Mar 2015 18:15:33 -0400
-Content-Disposition: inline
-In-Reply-To: <CAH8BJxHQnMkXq1J_wMi2KktTH5uHjj+vd69ihXuYGRfq9cOt=g@mail.gmail.com>
+	id S1754575AbbCPXjd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Mar 2015 19:39:33 -0400
+Received: from mail.lang.hm ([64.81.33.126]:51037 "EHLO bifrost.lang.hm"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752691AbbCPXjc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Mar 2015 19:39:32 -0400
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id t2GNdDxE023740;
+	Mon, 16 Mar 2015 15:39:13 -0800
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <xmqqvbi1sy4h.fsf@gitster.dls.corp.google.com>
+User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265598>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265599>
 
-On Mon, Mar 09, 2015 at 09:37:25PM -0400, Stephen Morton wrote:
+On Sun, 15 Mar 2015, Junio C Hamano wrote:
 
-> 3. Not sure how long this part takes. It takes 1/3 - 1/2 of the time
-> when straced, but I think it's much less, as little as 10s when not
-> straced.
-> It then reads a bunch of what look like objects from filehandle 0
-> (presumably stdin, read from the remote end?)
-> It then tries to lstat() these filenames in .git/<sha1>
-> ./git/refs/<sha1>, .git/heads/<sha>, etc. It always fails ENOENT.
-> It fails some 120,000 times. This could be a problem. Though I haven't
-> checked to see if this happens on a fast push on another machine.
+> Christian Couder <christian.couder@gmail.com> writes:
+>
+>> I wrote something about a potential Git Rev News news letter:
+>
+> I read it.  Sounds promising.
+>
+> Just one suggestion on the name and half a comment.
+>
+> How would "Git Review" (or "Git Monthly Review", or replace your
+> favourite "how-often-per-period-ly" in its name) sound?  I meant it
+> to sound similar to academic journals that summarize and review
+> contemporary works in the field and keeps your original "pun" about
+> our culture around "patch reviews".
+>
+> I obviously do not know how the actual contents would look like at
+> this point, but depending on the quality of the publication I might
+> be able to steal some descriptions when keeping the notes on topics
+> in flight that appear in my "What's cooking" report.  And it can go
+> the other way around, too.  The publication may want to peek my
+> "What's cooking" report for hints on how to characterize each topic
+> and assess its impact to the evolution of Git.
 
-Hmm. The "push" process must feed the set of object boundaries to
-"pack-objects" so it knows what to pack (i.e., what we want to send, and
-what the other side has).
+I'll bet that LWN would publish, or at least link to, such articles on a regular 
+basis, and if you end up doing an in-depth writeup on a particularly discussed 
+topic, they would probably give it pretty good visibility.
 
-120,000 is an awfully large number of objects to be pass there, though.
-Does the repo you are pushing to by any chance have an extremely large
-number of refs (e.g., on the order of 120K tags)?
-
-Can you try building git with this patch which would tell us more about
-where those objects are coming from?
-
-diff --git a/send-pack.c b/send-pack.c
-index 9d2b0c5..17ace1f 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -74,10 +74,19 @@ static int pack_objects(int fd, struct ref *refs, struct sha1_array *extra, stru
- 	 * We feed the pack-objects we just spawned with revision
- 	 * parameters by writing to the pipe.
- 	 */
-+	warning("feeding %d .have objects", extra->nr);
- 	for (i = 0; i < extra->nr; i++)
- 		if (!feed_object(extra->sha1[i], po.in, 1))
- 			break;
- 
-+	{
-+		struct ref *p;
-+		int count = 0;
-+		for (p = refs; p; p = p->next)
-+			count++;
-+		warning("feeding %d refs", count);
-+	}
-+
- 	while (refs) {
- 		if (!is_null_sha1(refs->old_sha1) &&
- 		    !feed_object(refs->old_sha1, po.in, 1))
-
-> 4. Then it just sits there for almost 1 minute. It uses up almost 100%
-> of a single core during this period. It spends a lot of time running
-> lots of brk() (memory allocation) commands and then getting (polled
-> by?) a SIGALRM every 1s.
-> About 5.5+ GB (about the repo size) of VIRT memory is allocated. Only
-> about 400M is ever RES.
-
-The SIGALRM is normal. That's the progress code checking in every 2
-seconds to see if there's anything to print. My guess is that the
-allocation is probably coming as part of the "preferred base" code. This
-is a fancy term for "stuff we are not going to send, but which we could
-use as delta bases for objects we are sending".
-
-Does the patch below speed things up (it is not a good thing to do in
-general, but would let us know if that is the problematic area):
-
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index d816587..c90a352 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -2307,7 +2307,6 @@ static void show_object(struct object *obj,
- 
- static void show_edge(struct commit *commit)
- {
--	add_preferred_base(commit->object.sha1);
- }
- 
- struct in_pack_object {
-
-If not, then the slowdown may come before we even get there, and
-possibly this patch would help:
-
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index d816587..473c0a3 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -2531,6 +2531,8 @@ static void get_object_list(int ac, const char **av)
- 			}
- 			die("not a rev '%s'", line);
- 		}
-+		if (*line == '^')
-+			continue;
- 		if (handle_revision_arg(line, &revs, flags, REVARG_CANNOT_BE_FILENAME))
- 			die("bad revision '%s'", line);
- 	}
-
-Those are all rather blunt debugging methods, but hopefully it can get
-us a sense of where the time is going.
-
--Peff
+David Lang
