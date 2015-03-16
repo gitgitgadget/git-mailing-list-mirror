@@ -1,152 +1,90 @@
-From: Koosha Khajehmoogahi <koosha.khajeh@gmail.com>
-Subject: [PATCH] [RFC] Add a new config. option for skipping merges in git-log
-Date: Mon, 16 Mar 2015 17:04:41 +0100
-Message-ID: <5506FF19.1050307@gmail.com>
-References: <5506F652.7050700@posteo.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] diff-lib.c: adjust position of i-t-a entries in diff
+Date: Mon, 16 Mar 2015 09:05:45 -0700
+Message-ID: <xmqqa8zdrkpy.fsf@gitster.dls.corp.google.com>
+References: <1425910445-27383-2-git-send-email-pclouds@gmail.com>
+	<1426514206-30949-1-git-send-email-pclouds@gmail.com>
+	<5506F3A9.1020704@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Mar 16 17:05:48 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Mon Mar 16 17:05:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YXXWM-00073u-MW
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Mar 2015 17:05:39 +0100
+	id 1YXXWb-0007Ck-Pt
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Mar 2015 17:05:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935412AbbCPQFe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Mar 2015 12:05:34 -0400
-Received: from mail-wi0-f173.google.com ([209.85.212.173]:36097 "EHLO
-	mail-wi0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933806AbbCPQFd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Mar 2015 12:05:33 -0400
-Received: by wibg7 with SMTP id g7so41622742wib.1
-        for <git@vger.kernel.org>; Mon, 16 Mar 2015 09:05:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=RHNmd+vi7hKTbfnS2c7gNPmmsBStlvTRooSNjuzdZhM=;
-        b=zu46DVBQ0LOylmWRcs3gmyoyYC0BD9ICntv3OH7CIJ0nG2iPTSznMllxI6OIcMdAev
-         vE7sW0cvNN2cmn+x5Xh3SIuohOm/uRI1NFH2XdqSCYug4mJocdQhSdX5AHlUrfAeX+aE
-         RYWEYTIwcjVystFshlEs0XPm3HlfuXnyZJqlUcDJ0Mk2RDE3YYuC/l0lwTTj4Zu6uiI/
-         WZqOzfz2Vi8AX9u4T4VrZ1u7R00walOkeRhywi00vukITFpQCk1DLixmdXbVFEKRLcfF
-         f9jdjSj7PLHgyxy//LjHrO+nF6KTV6SnBgP97AWJc0fA4v9OcrVNU5NBstx63tbKyqFA
-         E2Ww==
-X-Received: by 10.180.198.110 with SMTP id jb14mr122686687wic.57.1426521932130;
-        Mon, 16 Mar 2015 09:05:32 -0700 (PDT)
-Received: from [10.148.69.170] (host135-2.natpool.mwn.de. [138.246.2.135])
-        by mx.google.com with ESMTPSA id pa4sm16011197wjb.11.2015.03.16.09.05.30
-        for <git@vger.kernel.org>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 16 Mar 2015 09:05:31 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.5.0
-In-Reply-To: <5506F652.7050700@posteo.de>
-X-Forwarded-Message-Id: <5506F652.7050700@posteo.de>
+	id S934539AbbCPQFt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Mar 2015 12:05:49 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:62984 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S933806AbbCPQFs convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 Mar 2015 12:05:48 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D51AE3FAAA;
+	Mon, 16 Mar 2015 12:05:47 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=0TEnJpSqTyu7
+	pXGi3E/WBhNkQsM=; b=oP8/UalfRWw04hS2/ayi3par39UPtjzXoiDiG9/gSs5l
+	pM+RQ73lRjV/WppL9cGtTAYVKG8jmIeaQrX3k0AmZi/yuAcoMtPNehxbJLFOgiLT
+	6WBlz0yZrWLhiJAoPcnieMw1N4wC43HhXB8GZv4qJQH8cZDDyFmVYKLYuDYZUQw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=f5xMej
+	BcsdyF10U1w26RFns2V/28EMy1GC8cJt7ExGY9qO1uPVbnRLCHhmV8M3bBIPbEQ/
+	af7bLUK1iZpw4/ZViWQ+Db4RdUbi2sBPJix327b4y347mmm3bubjVqQNt6bj19/a
+	oZq12lfXEpF0P/PcaA77zre8SaPVsLLJrVe8A=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C77CF3FAA9;
+	Mon, 16 Mar 2015 12:05:47 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 22E323FAA8;
+	Mon, 16 Mar 2015 12:05:47 -0400 (EDT)
+In-Reply-To: <5506F3A9.1020704@drmicha.warpmail.net> (Michael J. Gruber's
+	message of "Mon, 16 Mar 2015 16:15:53 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 4EC30888-CBF6-11E4-9F14-A2259F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265569>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265570>
 
-This patch adds a 'showmerges' config. option for git-log.
-This option determines whether the log should contain merge
-commits or not. In essence, if this option is set to false,
-git-log will be run as 'git-log --no-merges'.
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-To force git-log to show merges even if 'log.showmerges' is
-set, we use --include-merges command line option.
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy venit, vidit, dixit 16.03.2=
+015 14:56:
+>
+>> The test "cache-tree invalidates i-t-a paths" is marked failure
+>> because I don't think removing "--cached" from "git diff" is the rig=
+ht
+>> fix. This test relies on "diff --cached" behavior but the behavior n=
+ow
+>> has changed. We may need to revisit this test at some point in futur=
+e.
+>
+> I can't quite follow that reasoning. If the test describes expected
+> behavior which the patch breaks, then we should not apply the patch. =
+If
+> the patch changes behavior in an expected way, then we should change =
+the
+> test to match.
 
-Signed-off-by: Koosha Khajehmoogahi <koosha.khajeh@gmail.com>
----
- Documentation/config.txt | 3 +++
- builtin/log.c            | 9 +++++++++
- revision.c               | 2 ++
- revision.h               | 1 +
- 4 files changed, 15 insertions(+)
-
-This is the third time I send this patch as it seems it didn't
-get delivered even after one hour!
-
-Please help me with this patch. It seems that my --include-merges
-command-line option does not have have any effect on the behavior
-of git-log. I don't know why the value of force_show_merges is
-always 0!
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 1530255..7775b8c 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1735,6 +1735,9 @@ log.showroot::
- 	Tools like linkgit:git-log[1] or linkgit:git-whatchanged[1], which
- 	normally hide the root commit will now show it. True by default.
- 
-+log.showmerges::
-+	If true, merges will be shown in the log list. True by default.
-+
- log.mailmap::
- 	If true, makes linkgit:git-log[1], linkgit:git-show[1], and
- 	linkgit:git-whatchanged[1] assume `--use-mailmap`.
-diff --git a/builtin/log.c b/builtin/log.c
-index dd8f3fc..867bcf2 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -31,6 +31,7 @@ static const char *default_date_mode = NULL;
- 
- static int default_abbrev_commit;
- static int default_show_root = 1;
-+static int default_max_parents = -1;
- static int decoration_style;
- static int decoration_given;
- static int use_mailmap_config;
-@@ -108,6 +109,8 @@ static void cmd_log_init_defaults(struct rev_info *rev)
- 	rev->diffopt.stat_graph_width = -1; /* respect statGraphWidth config */
- 	rev->abbrev_commit = default_abbrev_commit;
- 	rev->show_root_diff = default_show_root;
-+	if (rev->force_show_merges == 0)
-+		rev->max_parents = default_max_parents;
- 	rev->subject_prefix = fmt_patch_subject_prefix;
- 	DIFF_OPT_SET(&rev->diffopt, ALLOW_TEXTCONV);
- 
-@@ -390,6 +393,12 @@ static int git_log_config(const char *var, const char *value, void *cb)
- 		default_show_root = git_config_bool(var, value);
- 		return 0;
- 	}
-+
-+	if (!strcmp(var, "log.showmerges")) {
-+		default_max_parents = git_config_bool(var, value) ? -1 : 1;
-+		return 0;
-+	}
-+
- 	if (skip_prefix(var, "color.decorate.", &slot_name))
- 		return parse_decorate_color_config(var, slot_name, value);
- 	if (!strcmp(var, "log.mailmap")) {
-diff --git a/revision.c b/revision.c
-index 66520c6..e7073b8 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1804,6 +1804,8 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 		revs->min_parents = 2;
- 	} else if (!strcmp(arg, "--no-merges")) {
- 		revs->max_parents = 1;
-+	} else if (!strcmp(arg, "--include-merges")) {
-+		revs->force_show_merges = 1;
- 	} else if (starts_with(arg, "--min-parents=")) {
- 		revs->min_parents = atoi(arg+14);
- 	} else if (starts_with(arg, "--no-min-parents")) {
-diff --git a/revision.h b/revision.h
-index 0ea8b4e..f496472 100644
---- a/revision.h
-+++ b/revision.h
-@@ -145,6 +145,7 @@ struct rev_info {
- 	unsigned int	track_linear:1,
- 			track_first_time:1,
- 			linear:1;
-+	unsigned int force_show_merges:1;
- 
- 	enum date_mode date_mode;
- 
--- 
-1.9.1
+The offending one came from eec3e7e4 (cache-tree: invalidate i-t-a
+paths after generating trees, 2012-12-16), which was a fix to an
+earlier bug where a cache-tree written out of an index with i-t-a
+entries had incorrect information and still claimed it is fully
+valid after write-tree rebuilt it.  The test probably should add
+another path without i-t-a bit, run the same "diff --cached" with
+updated expectation before write-tre, and run the "diff --cached"
+again to make sure it produces a result that match the updated
+expectation.
