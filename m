@@ -1,61 +1,55 @@
-From: "Sarah Boj" <sarahbojing@chewies.com>
-Subject: Hello
-Date: Sat, 14 Mar 2015 23:03:34 -0700
-Message-ID: <20150315134930.2362712F585@bibracte.fr>
-Reply-To: sarah-bojing@asia-mail.com
+From: Mike Hommey <mh@glandium.org>
+Subject: Bug in git-verify-pack or in its documentation?
+Date: Mon, 16 Mar 2015 17:05:58 +0900
+Message-ID: <20150316080558.GA30234@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: Recipients <sarahbojing@chewies.com>
-X-From: git-owner@vger.kernel.org Mon Mar 16 08:55:30 2015
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 16 09:06:17 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YXPs0-0005uv-Se
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Mar 2015 08:55:29 +0100
+	id 1YXQ2O-0004zN-MR
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Mar 2015 09:06:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751731AbbCPHzX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Mar 2015 03:55:23 -0400
-Received: from mail.bibracte.fr ([212.83.150.114]:36512 "EHLO bibracte.fr"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1750967AbbCPHzW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 16 Mar 2015 03:55:22 -0400
-X-Greylist: delayed 55376 seconds by postgrey-1.27 at vger.kernel.org; Mon, 16 Mar 2015 03:55:22 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by bibracte.fr (Postfix) with ESMTP id 3E20713692B;
-	Sun, 15 Mar 2015 17:20:54 +0100 (CET)
-Received: from bibracte.fr ([127.0.0.1])
-	by localhost (bibracte.fr [127.0.0.1]) (amavisd-new, port 10032)
-	with ESMTP id 9QZRbxGq4F_y; Sun, 15 Mar 2015 17:20:53 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by bibracte.fr (Postfix) with ESMTP id 4357712E66D;
-	Sun, 15 Mar 2015 15:47:55 +0100 (CET)
-X-Virus-Scanned: amavisd-new at bibracte.fr
-Received: from bibracte.fr ([127.0.0.1])
-	by localhost (bibracte.fr [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id moPWopXpWJlt; Sun, 15 Mar 2015 15:47:54 +0100 (CET)
-Received: from [5.39.223.88] (unknown [5.39.223.88])
-	by bibracte.fr (Postfix) with ESMTPSA id 2362712F585;
-	Sun, 15 Mar 2015 14:49:29 +0100 (CET)
-Content-Description: Mail message body
+	id S1752307AbbCPIGH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Mar 2015 04:06:07 -0400
+Received: from ks3293202.kimsufi.com ([5.135.186.141]:33299 "EHLO glandium.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750899AbbCPIGG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Mar 2015 04:06:06 -0400
+Received: from glandium by zenigata with local (Exim 4.84)
+	(envelope-from <glandium@glandium.org>)
+	id 1YXQ2A-00083J-T2
+	for git@vger.kernel.org; Mon, 16 Mar 2015 17:05:58 +0900
+Content-Disposition: inline
+X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 8.4 points;
- *  1.9 DATE_IN_PAST_06_12 Date: is 6 to 12 hours before Received: date
- *  3.2 RCVD_ILLEGAL_IP Received: contains illegal IP address
- *  1.2 US_DOLLARS_3 BODY: Mentions millions of $ ($NN,NNN,NNN.NN)
- *  2.2 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
- *      [Blocked - see <http://www.spamcop.net/bl.shtml?5.39.223.88>]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265548>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265549>
 
-Good day,
+Hi,
 
-I believe that you will be anxious to know the kind of business proposition that I have for you. Well, I am soliciting your assistance to be able to transfer a huge amount of money $20,500,000.00 from my bank that is lying idle with no one ever coming to lay claim to it. Let me know if you are interested.
+git-verify-pack's man page says the following about --stat-only:
 
-Regards,
-Sarah Bojing
-email: sarah-bojing@asia-mail.com
+   Do not verify the pack contents; only show the histogram of delta
+   chain length. With --verbose, list of objects is also shown.
+
+However, there is no difference of output between --verbose and
+--verbose --stat-only (and in fact, looking at the code, only one of
+them has an effect, --stat-only having precedence).
+
+The text above also implies that this should only display the stats
+without doing any sha1 validation, but afaict from a quick glance at
+the index-pack code, they are always performed.
+
+Is it an implementation problem or a documentation problem?
+
+Cheers,
+
+Mike
