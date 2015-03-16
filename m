@@ -1,148 +1,106 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Bug in fetch-pack.c, please confirm
-Date: Sun, 15 Mar 2015 21:13:43 -0400
-Message-ID: <20150316011343.GA928@peff.net>
-References: <0758b2029b41448a77a4e4df1c4e406@74d39fa044aa309eaea14b9f57fe79c>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC][GSoC] make "git diff --no-index $directory $file" DWIM better.
+Date: Sun, 15 Mar 2015 20:50:41 -0700
+Message-ID: <xmqqr3spsir2.fsf@gitster.dls.corp.google.com>
+References: <CAHLaBN+93mp6PQmtfjOHSvfW7iwDXwPitGQ5W1am9KBm9EZV2Q@mail.gmail.com>
+	<vpq1tkq5fsw.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git mailing list <git@vger.kernel.org>
-To: "Kyle J. McKay" <mackyle@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 16 02:16:06 2015
+Content-Type: text/plain
+Cc: Yurii Shevtsov <ungetch@gmail.com>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Mar 16 04:52:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YXJdS-0000pq-Ed
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Mar 2015 02:16:02 +0100
+	id 1YXM5K-0007L8-MH
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Mar 2015 04:52:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751731AbbCPBNq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Mar 2015 21:13:46 -0400
-Received: from cloud.peff.net ([50.56.180.127]:33421 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751562AbbCPBNp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Mar 2015 21:13:45 -0400
-Received: (qmail 7040 invoked by uid 102); 16 Mar 2015 01:13:45 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 15 Mar 2015 20:13:45 -0500
-Received: (qmail 13233 invoked by uid 107); 16 Mar 2015 01:13:55 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 15 Mar 2015 21:13:55 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 15 Mar 2015 21:13:43 -0400
-Content-Disposition: inline
-In-Reply-To: <0758b2029b41448a77a4e4df1c4e406@74d39fa044aa309eaea14b9f57fe79c>
+	id S1751221AbbCPDwx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Mar 2015 23:52:53 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:56605 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750937AbbCPDwx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Mar 2015 23:52:53 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E513A41479;
+	Sun, 15 Mar 2015 23:50:43 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=97ytjyC2J5wLY2dxsVmEpzAQY40=; b=arnYc1
+	ehdMt+qqrOysM876kVrrvvMI7nIHsiBDcrKpDEfPLnM1FnVJY35a0eg2mNLF+kuP
+	9foNvqR9g6tgiPbl4egnWXfBQQhChAKFJgPgS3+KTuzSyUO7zlZvLE+bkUw5nUdL
+	b5iM3+wQ1ibeVzYRi/i5IMwDCp+A+FI5K12/E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ljAcPxRsDNctajNoOP3tFs4RmtvFYF9O
+	UJ0uoDdDIXT4rxaOTZkd/RohoEjVKJYbf8d2JvVsqjgcZEpWLmndFUifBm88tA6z
+	uPwdTQbNvMxKLg76bAyJ8t8v2B1vGsniY9R37AL4pyrEI3fSS4+gJ6NQzisv3oph
+	wE9yomQw7Qk=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id DE79A41478;
+	Sun, 15 Mar 2015 23:50:43 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6969C41476;
+	Sun, 15 Mar 2015 23:50:42 -0400 (EDT)
+In-Reply-To: <vpq1tkq5fsw.fsf@anie.imag.fr> (Matthieu Moy's message of "Sun,
+	15 Mar 2015 18:30:39 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 9E4B5DD6-CB8F-11E4-8BBD-A2259F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265541>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265543>
 
-On Sat, Mar 14, 2015 at 11:37:37PM -0700, Kyle J. McKay wrote:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-> Peff, weren't you having some issue with want and have and hide refs?
+>> --- a/diff-no-index.c
+>> +++ b/diff-no-index.c
+>> @@ -97,8 +97,25 @@ static int queue_diff(struct diff_options *o,
+>>         if (get_mode(name1, &mode1) || get_mode(name2, &mode2))
+>>                 return -1;
+>>
+>> -       if (mode1 && mode2 && S_ISDIR(mode1) != S_ISDIR(mode2))
+>> -               return error("file/directory conflict: %s, %s", name1, name2);
+>
+> I'm surprised to see this error message totally go away. The idea of the
+> microproject was to DWIM (do what I mean) better, but the dwim should
+> apply only when $directory/$file actually exists. Otherwise, the error
+> message should actually be raised.
 
-Yes, but the problem was on the server side. I didn't look at this code
-at all. :)
+I actually think this check, when we really fixed "diff --no-index"
+to work sensibly, should go away and be replaced with something
+sensible.  As it stands now, even before we think about dwimming
+"diff D/ F" into "diff D/F F", a simple formulation like this will
+error out.
 
-> Tell me please how the "local" variable above gets initialized?
+    $ mkdir -p a/sub b
+    $ touch a/file b/file b/sub a/sub/file
+    $ git diff --no-index a b
+    error: file/directory conflict: a/sub, b/sub
 
-So I think we all agree that this is bogus code, and the fix you
-proposed is reasonable (but spoiler alert, if you read to the end, I
-think we can do something even more extreme). Like Junio, I am puzzled
-not by the bug itself, but by its lack of effect over the past 10 years.
+Admittedly, that is how ordinary "diff -r" works, but I am not sure
+if we want to emulate that aspect of GNU diff.  If the old tree a
+has a directory 'sub' with 'file' under it (i.e. a/sub/file) where
+the new tree has a file at 'sub', then the recursive diff can show
+the removal of sub/file and creation of sub, no?  That is what we
+show for normal "git diff".
 
-I'm not all that familiar with this code, so I started with some rather
-blunt-hammer tracing.
+But I _think_ fixing that is way outside the scope of GSoC Micro.
 
-If you replace that hashcpy with "exit(1)", you get quite a few failures
-in the test suite. So we really are running the code. Interestingly, if
-you replace it with "hashclr(ref->old_sha1)" (note old, not new, so
-impacting the sha1 that we know is actually valid), you still get some
-failures, but many fewer.
+And patching this function, because it is recursively called from
+within it, to "dwim" is simply wrong.  When we see a/sub that is a
+directory and b/sub that is a file, we do *NOT* want to rewrite the
+comparison to comparison between a/sub/sub and b/sub.
 
-It looks like one of the ways to hit this code path is by doing a clone
-in which we don't actually need any objects (e.g., using "--reference").
-Clone runs fetch-pack to acquire the objects, but then throws away the
-returned refs and writes its own.
+What needs to be fixed for the Micro is the top-level call to
+queue_diff() that is made blindly between paths[0] and paths[1]
+without checking what kind of things these are.
 
-But there are still some failures, so clearly some code paths actually
-do look at the resulting ref. But nobody seems to care about
-ref->new_sha1. Let's take one of the cases that the hashclr() experiment
-found and trace that. In t1507, we do a "git fetch" that hits this case.
-I instrumented it like this:
 
-diff --git a/t/t1507-rev-parse-upstream.sh b/t/t1507-rev-parse-upstream.sh
-index 1978947..e2a192d 100755
---- a/t/t1507-rev-parse-upstream.sh
-+++ b/t/t1507-rev-parse-upstream.sh
-@@ -82,7 +82,7 @@ test_expect_success 'refs/heads/my-side@{upstream} does not resolve to my-side{u
- test_expect_success 'my-side@{u} resolves to correct commit' '
- 	git checkout side &&
- 	test_commit 5 &&
--	(cd clone && git fetch) &&
-+	(cd clone && gdb --args ../../../git fetch </dev/tty >/dev/tty) &&
- 	test 2 = "$(commit_subject my-side)" &&
- 	test 5 = "$(commit_subject my-side@{u})"
- '
 
-If we break in everything_local at that hashcpy, we can see:
-
-  (gdb) print ref->name
-  $1 = 0x8422b0 "refs/heads/master"
-  (gdb) print sha1_to_hex(ref->old_sha1)
-  $2 = 0x815a40 <hexbuffer> "8f489d01d0cc65c3b0f09504ec50b5ed02a70bd5"
-  (gdb) print sha1_to_hex(ref->new_sha1)
-  $3 = 0x815a69 <hexbuffer+41> "f2795a000000000056134b", '0' <repeats 11 times>, "8000000"
-
-So that's the bogus value copied in. Presumably it's random bytes and
-not bleed over from some other sha1, as it's rather unlikely to have
-that many zeroes in a real hash.
-
-If we then leave everything_local, we see that the bogus value comes out
-to do_fetch_pack via the "ref" parameter. We feed that into find_common,
-but it only looks at ref->old_sha1, the other side. We keep going, and
-do_fetch_pack returns the bogus ref up to fetch_pack(). That in turn
-passes it up to fetch_refs_via_pack.
- 
-And there we stop. We don't pass the "refs" list out of that function
-(which, as an aside, is probably a leak). Instead, we depend on the list
-of heads we already knew in the "to_fetch" array. That comes from
-processing the earlier list of refs returned from get_refs_via_connect.
-
-I think it was the case once upon a time that fetch-pack did more of the
-"which refs to fetch, and how to update them" logic. The pipeline for
-fetch is now more like:
-
-  1. get_refs_via_connect returns a list of refs
-
-  2. caller munges the list of refs, based on refspecs
-
-  3. fetch_refs_via_pack takes that list of refs as input
-
-Of course, this being git, there's always a way to try to access the
-"old" code paths. :)
-
-You can do something like:
-
-  git init
-  git commit --allow-empty -m foo
-  git fetch-pack --all .
-
-which hits the same code path, but actually retains the return value
-from fetch_pack(). But even there, it looks like we don't look at
-ref->new_sha1 at all. fetch-pack doesn't update refs at all, but just
-prints the list of new values to stdout.
-
-So I think there is literally no code path that ever looks at the bogus
-sha1. We could just drop that hashcpy() entirely.
-
-That doesn't mean there isn't an additional bug lurking. That is,
-_should_ somebody be caring about that value? I don't think so. The
-old/new pairs in a "struct ref" are meaningful as "I proposed to update
-to X, and we are at Y". But this list of refs does not have anything to
-do with the update of local refs. It is only "what is the value of the
-ref on the other side". The local refs are taken care of in a separate
-list.
-
--Peff
+    
