@@ -1,106 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC][GSoC] make "git diff --no-index $directory $file" DWIM better.
-Date: Sun, 15 Mar 2015 20:50:41 -0700
-Message-ID: <xmqqr3spsir2.fsf@gitster.dls.corp.google.com>
-References: <CAHLaBN+93mp6PQmtfjOHSvfW7iwDXwPitGQ5W1am9KBm9EZV2Q@mail.gmail.com>
-	<vpq1tkq5fsw.fsf@anie.imag.fr>
+From: Arup Rakshit <aruprakshit@rocketmail.com>
+Subject: Re: fatal: Unable to mark file .ruby-version
+Date: Mon, 16 Mar 2015 05:29:12 +0000 (UTC)
+Message-ID: <186241547.130512.1426483752551.JavaMail.yahoo@mail.yahoo.com>
+References: <20150315174543.GA11832@vps892.directvps.nl>
+Reply-To: Arup Rakshit <aruprakshit@rocketmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Yurii Shevtsov <ungetch@gmail.com>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Mar 16 04:52:59 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Mar 16 06:39:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YXM5K-0007L8-MH
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Mar 2015 04:52:59 +0100
+	id 1YXNkP-0008BN-5u
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Mar 2015 06:39:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751221AbbCPDwx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Mar 2015 23:52:53 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:56605 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750937AbbCPDwx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Mar 2015 23:52:53 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E513A41479;
-	Sun, 15 Mar 2015 23:50:43 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=97ytjyC2J5wLY2dxsVmEpzAQY40=; b=arnYc1
-	ehdMt+qqrOysM876kVrrvvMI7nIHsiBDcrKpDEfPLnM1FnVJY35a0eg2mNLF+kuP
-	9foNvqR9g6tgiPbl4egnWXfBQQhChAKFJgPgS3+KTuzSyUO7zlZvLE+bkUw5nUdL
-	b5iM3+wQ1ibeVzYRi/i5IMwDCp+A+FI5K12/E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ljAcPxRsDNctajNoOP3tFs4RmtvFYF9O
-	UJ0uoDdDIXT4rxaOTZkd/RohoEjVKJYbf8d2JvVsqjgcZEpWLmndFUifBm88tA6z
-	uPwdTQbNvMxKLg76bAyJ8t8v2B1vGsniY9R37AL4pyrEI3fSS4+gJ6NQzisv3oph
-	wE9yomQw7Qk=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id DE79A41478;
-	Sun, 15 Mar 2015 23:50:43 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6969C41476;
-	Sun, 15 Mar 2015 23:50:42 -0400 (EDT)
-In-Reply-To: <vpq1tkq5fsw.fsf@anie.imag.fr> (Matthieu Moy's message of "Sun,
-	15 Mar 2015 18:30:39 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 9E4B5DD6-CB8F-11E4-8BBD-A2259F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1750937AbbCPFjZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Mar 2015 01:39:25 -0400
+Received: from nm32-vm10.bullet.mail.gq1.yahoo.com ([98.136.216.233]:33867
+	"EHLO nm32-vm10.bullet.mail.gq1.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750822AbbCPFjX (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 Mar 2015 01:39:23 -0400
+X-Greylist: delayed 409 seconds by postgrey-1.27 at vger.kernel.org; Mon, 16 Mar 2015 01:39:23 EDT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rocketmail.com; s=s2048; t=1426483953; bh=m17p1+6csZL4+MH1aoQVhp+3ZJ/jXLKtAtFUm8zwliI=; h=Date:From:Reply-To:To:In-Reply-To:References:Subject:From:Subject; b=gd9sK/0xJar8evSWVtMIyrgOtt5Zjg5/Tz3zG/34u0tZ1wvu7ls/pfYA63b8UtaQvYtLrnqb4a5Be8WrGd0P63eOV5eJi337/i3w+fRdk9yxs8nVi5HsUHqyO+GUfhQueZviRjHJbCbyekkxBLF4dRo2xQBHQ7Td/p4UZZ+CCMLgraJ+XDYoUzr6fGqEEkzCZX/0hbLpXgnv6IffciL7zhR7Dma03ifgyQMemSLQFkL/+hjcWvT53UGzEUVqduwB379JQKsZqnCkYx7KcmTzf0pzO3cNgtEgFnaMPF8Y8CA5eN2HO7OBzD+eCkmNs7ybAq/uJRfKwoq6OWtHWmUkKg==
+Received: from [127.0.0.1] by nm32.bullet.mail.gq1.yahoo.com with NNFMP; 16 Mar 2015 05:32:33 -0000
+Received: from [98.137.12.175] by nm32.bullet.mail.gq1.yahoo.com with NNFMP; 16 Mar 2015 05:29:32 -0000
+Received: from [106.10.166.118] by tm14.bullet.mail.gq1.yahoo.com with NNFMP; 16 Mar 2015 05:29:32 -0000
+Received: from [106.10.151.15] by tm7.bullet.mail.sg3.yahoo.com with NNFMP; 16 Mar 2015 05:29:31 -0000
+Received: from [127.0.0.1] by omp1020.mail.sg3.yahoo.com with NNFMP; 16 Mar 2015 05:29:31 -0000
+X-Yahoo-Newman-Property: ymail-4
+X-Yahoo-Newman-Id: 856794.78172.bm@omp1020.mail.sg3.yahoo.com
+X-YMail-OSG: HbfTFnUVM1mhyNNpEIoNNUpWB3WRHr00T6YsnTts5Ollm6BBFpoNtlGd5I37268
+ AaNI59AeYUYc0T0PG5Zi7v1_PWbm.dPlMX3kygCQ5TbIAZ22JaP1KzQzGSZO3hxqH3IE85zVRMQl
+ cZVw1AhfG6yy8Gk05GPfJ_xhMaQdf9Tab9tGKLikdXVUA539.sE_.LJfNLjJWK0YaqnrOhfhe0ww
+ uBPWufxuS7ilo69Vyc1JHMmCz7XIIwdCA7v9.kuVWHfu1OlJo1i2CJrpm5qJq4yR9Rea_vVaF2Y8
+ qhRr9AcXWZcJBRRzWmUVhTqE41GpdPECfZ_tOb7_hwdY8Nh_3BdSrCPWe4lqYTfFjifI9LXx9fah
+ 2RtVkyB8iORiw16g3gTVU8S._8BsYrSD.fJvZp0oN.0wqsk_B3motID8jYo8vVUp_MRYBtWNRnjI
+ gH3cIY_g_zvjBW1rnYD7flOr2QEIbxbxWNCEHT.jON5ToxPhfCEloQysQnJYI.ke5pYKACPbC6PW
+ ONA2uHDbz0XE94PLezdxG0IWl6DLgLodWZwoyj1Cp4zUyCGjfyc_k1WY8WfOnm8uGZkwTDxlJZNA
+ eXSpJGRmOpwUKraFFqtHJYC0VFWQ91Cv3JDo-
+Received: by 106.10.196.176; Mon, 16 Mar 2015 05:29:31 +0000 
+In-Reply-To: <20150315174543.GA11832@vps892.directvps.nl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265543>
-
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
-
->> --- a/diff-no-index.c
->> +++ b/diff-no-index.c
->> @@ -97,8 +97,25 @@ static int queue_diff(struct diff_options *o,
->>         if (get_mode(name1, &mode1) || get_mode(name2, &mode2))
->>                 return -1;
->>
->> -       if (mode1 && mode2 && S_ISDIR(mode1) != S_ISDIR(mode2))
->> -               return error("file/directory conflict: %s, %s", name1, name2);
->
-> I'm surprised to see this error message totally go away. The idea of the
-> microproject was to DWIM (do what I mean) better, but the dwim should
-> apply only when $directory/$file actually exists. Otherwise, the error
-> message should actually be raised.
-
-I actually think this check, when we really fixed "diff --no-index"
-to work sensibly, should go away and be replaced with something
-sensible.  As it stands now, even before we think about dwimming
-"diff D/ F" into "diff D/F F", a simple formulation like this will
-error out.
-
-    $ mkdir -p a/sub b
-    $ touch a/file b/file b/sub a/sub/file
-    $ git diff --no-index a b
-    error: file/directory conflict: a/sub, b/sub
-
-Admittedly, that is how ordinary "diff -r" works, but I am not sure
-if we want to emulate that aspect of GNU diff.  If the old tree a
-has a directory 'sub' with 'file' under it (i.e. a/sub/file) where
-the new tree has a file at 'sub', then the recursive diff can show
-the removal of sub/file and creation of sub, no?  That is what we
-show for normal "git diff".
-
-But I _think_ fixing that is way outside the scope of GSoC Micro.
-
-And patching this function, because it is recursively called from
-within it, to "dwim" is simply wrong.  When we see a/sub that is a
-directory and b/sub that is a file, we do *NOT* want to rewrite the
-comparison to comparison between a/sub/sub and b/sub.
-
-What needs to be fixed for the Micro is the top-level call to
-queue_diff() that is made blindly between paths[0] and paths[1]
-without checking what kind of things these are.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265544>
 
 
 
-    
+On Sunday, 15 March 2015 11:15 PM, Kevin D <me@ikke.info> wrote:
+On Sun, Mar 15, 2015 at 05:58:19PM +0100, t.gummerer@gmail.com wrote:
+> On 03/15, Arup Rakshit wrote:
+> > On Sunday, March 15, 2015 01:30:04 PM you wrote:
+> > > 
+> > > With --assume-unchanged you're promising git that you will not change
+> > > a file that is already in the repository.  Git doesn't check those
+> > > files for changes anymore, which can improve performance.
+> > > 
+> > 
+> > I didn't understand your point. Could you please elaborate more on it ?
+> 
+> --assume-unchanged only works on files that you added on the
+> repository, not on untracked files.  Because you don't seem to want
+> these files in the repository, update-index --assume-unchanged will
+> not work for you.
+> 
+
+And to elaborate what on what t.gummerer meant earlier: git update-index
+--assume-unchanged is often abused to ignore already tracked files,
+thinking that they can change the file while git happily ignores it.
+
+--assume-unchanged was neaver built for this purpose, it's built for
+large code bases where parts of the code base never changes, and git
+checking this part would only slow it down. So that's why it's called a
+promise to git that the file never changes, because git doesn't check
+the status of the file everytime you run git status.
+
+But because the file is still tracked, any commit that changes the file
+causes git to still update that file, but git will then protest, because
+it found it the file actually changed in the mean time, and you broke
+that promise.
+
+But also already said, this only applies to tracked files, so not to files
+that aren't being tracked in the first place.
+
+Kevin
+
+
+Thanks both of you. As per your suggestions I resolved it. I found a good link on this topic too 
+https://help.github.com/articles/ignoring-files/.
+
+
+Regards,
+Arup Rakshit
