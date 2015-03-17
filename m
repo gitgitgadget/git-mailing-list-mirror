@@ -1,78 +1,90 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] refs.c: get_ref_cache: use a bucket hash
-Date: Tue, 17 Mar 2015 01:48:00 -0400
-Message-ID: <20150317054759.GA16860@peff.net>
-References: <20150316142026.GJ7847@inner.h.apk.li>
- <xmqq1tkosvpi.fsf@gitster.dls.corp.google.com>
- <20150316184040.GA8902@inner.h.apk.li>
- <20150317024005.GA26313@peff.net>
- <xmqqd248p4o9.fsf@gitster.dls.corp.google.com>
+From: David Lang <david@lang.hm>
+Subject: Re: Promoting Git developers
+Date: Mon, 16 Mar 2015 22:56:18 -0700 (PDT)
+Message-ID: <alpine.DEB.2.02.1503162254080.22474@nftneq.ynat.uz>
+References: <CAP8UFD1+rC0FjisSddDcyn1E_75wtBU9pEpUcQX5zNtd4zKYFQ@mail.gmail.com> <54FDA6B5.8050505@drmicha.warpmail.net> <CAP8UFD0KNbPBB_dOzw_dAj+ws190_cO8g7_jb_V33x1jxgvnqQ@mail.gmail.com> <xmqqk2yo22ce.fsf@gitster.dls.corp.google.com>
+ <CAP8UFD37v_zOjRkUPLy-ChDs=+NetsDY7Q14-4rYA-WhnTRYyA@mail.gmail.com> <xmqqfv9b5krc.fsf@gitster.dls.corp.google.com> <CAP8UFD2ba3jQSsQrGGWM-8HTfGR+zZhmbkxiEBhSR+Ho=B0MuA@mail.gmail.com> <xmqqvbi1sy4h.fsf@gitster.dls.corp.google.com>
+ <alpine.DEB.2.02.1503161637210.31344@nftneq.ynat.uz> <xmqqh9tkp54u.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Andreas Krey <a.krey@gmx.de>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+Cc: Christian Couder <christian.couder@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	David Kastrup <dak@gnu.org>, git <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>, Scott Chacon <schacon@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 17 06:48:10 2015
+X-From: git-owner@vger.kernel.org Tue Mar 17 06:56:43 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YXkMK-0004ST-92
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Mar 2015 06:48:08 +0100
+	id 1YXkUb-00022c-3B
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Mar 2015 06:56:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752310AbbCQFsE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Mar 2015 01:48:04 -0400
-Received: from cloud.peff.net ([50.56.180.127]:33883 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751451AbbCQFsD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Mar 2015 01:48:03 -0400
-Received: (qmail 21164 invoked by uid 102); 17 Mar 2015 05:48:03 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 17 Mar 2015 00:48:03 -0500
-Received: (qmail 22331 invoked by uid 107); 17 Mar 2015 05:48:13 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 17 Mar 2015 01:48:13 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 17 Mar 2015 01:48:00 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqqd248p4o9.fsf@gitster.dls.corp.google.com>
+	id S1751144AbbCQF4g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Mar 2015 01:56:36 -0400
+Received: from mail.lang.hm ([64.81.33.126]:33018 "EHLO bifrost.lang.hm"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750799AbbCQF4f (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Mar 2015 01:56:35 -0400
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id t2H5uIXO025124;
+	Mon, 16 Mar 2015 21:56:18 -0800
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <xmqqh9tkp54u.fsf@gitster.dls.corp.google.com>
+User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265609>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265610>
 
-On Mon, Mar 16, 2015 at 10:35:18PM -0700, Junio C Hamano wrote:
+On Mon, 16 Mar 2015, Junio C Hamano wrote:
 
-> > It looks like we don't even really care about the value of HEAD. We just
-> > want to know "is it a git directory?". I think in other places (like
-> > "git add"), we just do an existence check for "$dir/.git". That would
-> > not catch a bare repository, but I do not think the current check does
-> > either (it is looking for submodules, which always have a .git).
-> 
-> If we wanted to be consistent, perhaps we should be reusing the "is
-> this a git repository?" check used by the auto-discovery codepath
-> (setup.c:is_git_directory(), perhaps?), but the idea looks simple
-> enough and sounds sensible.
+> David Lang <david@lang.hm> writes:
+>
+>> On Sun, 15 Mar 2015, Junio C Hamano wrote:
+>>
+>>> Christian Couder <christian.couder@gmail.com> writes:
+>>>
+>>>> I wrote something about a potential Git Rev News news letter:
+>>>
+>>> I read it.  Sounds promising.
+>>>
+>>> Just one suggestion on the name and half a comment.
+>>>
+>>> How would "Git Review" (or "Git Monthly Review", or replace your
+>>> favourite "how-often-per-period-ly" in its name) sound?  I meant it
+>>> to sound similar to academic journals that summarize and review
+>>> contemporary works in the field and keeps your original "pun" about
+>>> our culture around "patch reviews".
+>> ...
+>> I'll bet that LWN would publish, or at least link to, such articles on
+>> a regular basis, and if you end up doing an in-depth writeup on a
+>> particularly discussed topic, they would probably give it pretty good
+>> visibility.
+>
+> I hope you are right, but my observation of our coverage by lwn.net
+> is somewhat pessimistic.  In our early days, our progress often used
+> to appear on the "Kernel Development" page, which I presume is the
+> most important page of the weekly for the kernel developers, but in
+> several months, the mention of us has moved two pages back to
+> "Development" and listed together with folks like OCaml Weekly,
+> PostgreSQL Weekly, etc.  I would not count that as "pretty good
+> visibility" particularly.
+>
+> I am taking it as a positive change, though.  Once we got stable
+> enough not to be a roadblock for the kernel folks and proven
+> ourselves not to regress, our progress probably ceased to be
+> newsworthy to them ;-)
 
-Yeah, I almost suggested that, but I'm concerned that would make us
-inconsistent with how we report untracked files. I thought that dir.c
-used ".git" as a magic token there.
+It ceased to be about kernel development, and fell into the normal development 
+bucket :-)
 
-But it seems I'm wrong. We do ignore ".git" directly in treat_path(),
-but treat_directory actually checks resolve_gitlink_ref. I think this
-will suffer the same problem as Andreas's original issue (e.g., if you
-run "git ls-files -o").
+Routine release notes (like your notes from the maintainer) do end up just 
+getting links to them as you have seen. But if someone is summarizing the 
+discussions on the mailing list, those will be a bit more interesting, and if 
+there is a particularly hot topic, the summary of that discussion can be a full 
+fledged article on it's own.
 
-Likewise, I think dir.c:remove_dir_recurse is in a similar boat.
-Grepping for resolve_gitlink_ref, it looks like there may be others,
-too.
-
-All of these should be using the same test, I think. Doing that with
-is_git_directory() is probably OK. It is a little more expensive than we
-might want for mass-use (it actually opens and parses the HEAD file in
-each directory), but it quits early when we _don't_ see a git directory,
-which would be the common case here.
-
--Peff
+David Lang
