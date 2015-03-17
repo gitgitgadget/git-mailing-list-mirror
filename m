@@ -1,276 +1,104 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v4 2/2] sha1_file: refactor sha1_file.c to support 'cat-file --literally'
-Date: Tue, 17 Mar 2015 10:46:59 +0530
-Message-ID: <1426569419-8266-1-git-send-email-karthik.188@gmail.com>
-References: <5507B7EE.1070403@gmail.com>
-Cc: Karthik Nayak <karthik.188@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 17 06:17:25 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Promoting Git developers
+Date: Mon, 16 Mar 2015 22:25:21 -0700
+Message-ID: <xmqqh9tkp54u.fsf@gitster.dls.corp.google.com>
+References: <CAP8UFD1+rC0FjisSddDcyn1E_75wtBU9pEpUcQX5zNtd4zKYFQ@mail.gmail.com>
+	<54FDA6B5.8050505@drmicha.warpmail.net>
+	<CAP8UFD0KNbPBB_dOzw_dAj+ws190_cO8g7_jb_V33x1jxgvnqQ@mail.gmail.com>
+	<xmqqk2yo22ce.fsf@gitster.dls.corp.google.com>
+	<CAP8UFD37v_zOjRkUPLy-ChDs=+NetsDY7Q14-4rYA-WhnTRYyA@mail.gmail.com>
+	<xmqqfv9b5krc.fsf@gitster.dls.corp.google.com>
+	<CAP8UFD2ba3jQSsQrGGWM-8HTfGR+zZhmbkxiEBhSR+Ho=B0MuA@mail.gmail.com>
+	<xmqqvbi1sy4h.fsf@gitster.dls.corp.google.com>
+	<alpine.DEB.2.02.1503161637210.31344@nftneq.ynat.uz>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Christian Couder <christian.couder@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	David Kastrup <dak@gnu.org>, git <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>, Scott Chacon <schacon@gmail.com>
+To: David Lang <david@lang.hm>
+X-From: git-owner@vger.kernel.org Tue Mar 17 06:25:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YXjsZ-0008Ud-SI
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Mar 2015 06:17:24 +0100
+	id 1YXk0R-0005fQ-6r
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Mar 2015 06:25:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751307AbbCQFRT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Mar 2015 01:17:19 -0400
-Received: from mail-pd0-f171.google.com ([209.85.192.171]:34031 "EHLO
-	mail-pd0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751163AbbCQFRS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Mar 2015 01:17:18 -0400
-Received: by pdbni2 with SMTP id ni2so79325934pdb.1
-        for <git@vger.kernel.org>; Mon, 16 Mar 2015 22:17:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Wp6616YszqB9ytoKxdapyVYvCDs0lotbfVuQVxMpft4=;
-        b=RzYeQORfYEvEWHnEMJkn3kNZDRkBqAihTTAue5l0zvYJ/tzTLEGOYBnV7g+hbLYa1N
-         VLMFxEDI6j+N4BcWJiva2BtxGzs2a0Vr91+d1a7rGiQS8JG0mr8386J0usQlnJ8X3YZu
-         t+b1ehYGRv0/hkv6HXvM/v2JDLqYC8RUW0TRFYdWXlUyURkqoWyuLC2e02n0mFZXK4vT
-         dKMuE3oreI09IEwgrG4LY43B+eHf9+mU5+t21DyauIAFA2H2toThCrSEdxSpaF66wAs9
-         tVOBEtuEnRy3OmcHMiNYr/K6UnNqdd319kdHdXLiWv2KwJZ+6U0aT4gT+VuRrqG5765o
-         +4Qw==
-X-Received: by 10.66.254.34 with SMTP id af2mr68282046pad.1.1426569437956;
-        Mon, 16 Mar 2015 22:17:17 -0700 (PDT)
-Received: from ashley.localdomain ([103.227.98.178])
-        by mx.google.com with ESMTPSA id h9sm6795753pdo.5.2015.03.16.22.17.16
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 16 Mar 2015 22:17:17 -0700 (PDT)
-X-Mailer: git-send-email 2.3.1.307.gf3db8a5
-In-Reply-To: <5507B7EE.1070403@gmail.com>
+	id S1750799AbbCQFZZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Mar 2015 01:25:25 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64446 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750777AbbCQFZY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Mar 2015 01:25:24 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id CA11A3673A;
+	Tue, 17 Mar 2015 01:25:23 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=JxXUfpLGwBn5lM49EKkYg337sfE=; b=emlgOz
+	0aXFTmrEQ5gY/abKkyVD5o38ZzoIZ7Oi9rPcniQhBywUeNQTA8PQRc8Vm8N5IrEM
+	Rq7NjhH515MYa/fy9DDtYuuHHwXufQrjDZ/zQ1vEA8Wj7HgEOWCgRSyy+tIN+2dF
+	zmU4jHxu3+8AKdhjs9PUnNqsL3BlKa0y9CCzk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=px3DxnllWfT8w4Yc/UFMCAlqhBucWm42
+	Xn/BTyQ3TB+TsmH+NqzIOQrtsa8awfrSNvrDTyrYHtsy0UAf+SyADYIyrno/2sj0
+	VPdoVV40X31YMCNP0jiiz9Nu2zuntbFyDtUoPmQ8NYs4UZdwKG8j3Nl6dmIsl3Sm
+	vPxto+OpxtA=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C0D0336739;
+	Tue, 17 Mar 2015 01:25:23 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 447D636738;
+	Tue, 17 Mar 2015 01:25:22 -0400 (EDT)
+In-Reply-To: <alpine.DEB.2.02.1503161637210.31344@nftneq.ynat.uz> (David
+	Lang's message of "Mon, 16 Mar 2015 16:39:12 -0700 (PDT)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 0233D2E8-CC66-11E4-85B5-A2259F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265607>
 
-Modify sha1_loose_object_info() to support 'cat-file --literally'
-by accepting flags and also make changes to copy the type to
-object_info::typename.
+David Lang <david@lang.hm> writes:
 
-Add parse_sha1_header_extended() which acts as a wrapper around
-parse_sha1_header() allowing for more information to be obtained
-based on the given flags.
+> On Sun, 15 Mar 2015, Junio C Hamano wrote:
+>
+>> Christian Couder <christian.couder@gmail.com> writes:
+>>
+>>> I wrote something about a potential Git Rev News news letter:
+>>
+>> I read it.  Sounds promising.
+>>
+>> Just one suggestion on the name and half a comment.
+>>
+>> How would "Git Review" (or "Git Monthly Review", or replace your
+>> favourite "how-often-per-period-ly" in its name) sound?  I meant it
+>> to sound similar to academic journals that summarize and review
+>> contemporary works in the field and keeps your original "pun" about
+>> our culture around "patch reviews".
+> ...
+> I'll bet that LWN would publish, or at least link to, such articles on
+> a regular basis, and if you end up doing an in-depth writeup on a
+> particularly discussed topic, they would probably give it pretty good
+> visibility.
 
-Add unpack_sha1_header_literally() to unpack sha1 headers of
-unknown/corrupt objects which have a unknown sha1 header size.
-This was written by Junio C Hamano but tested by me.
+I hope you are right, but my observation of our coverage by lwn.net
+is somewhat pessimistic.  In our early days, our progress often used
+to appear on the "Kernel Development" page, which I presume is the
+most important page of the weekly for the kernel developers, but in
+several months, the mention of us has moved two pages back to
+"Development" and listed together with folks like OCaml Weekly,
+PostgreSQL Weekly, etc.  I would not count that as "pretty good
+visibility" particularly.
 
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
----
- sha1_file.c | 121 ++++++++++++++++++++++++++++++++++++++++++++++++------------
- 1 file changed, 97 insertions(+), 24 deletions(-)
-
-diff --git a/sha1_file.c b/sha1_file.c
-index 69a60ec..e31e9e2 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1564,6 +1564,36 @@ int unpack_sha1_header(git_zstream *stream, unsigned char *map, unsigned long ma
- 	return git_inflate(stream, 0);
- }
- 
-+static int unpack_sha1_header_literally(git_zstream *stream, unsigned char *map,
-+					unsigned long mapsize,
-+					struct strbuf *header)
-+{
-+	unsigned char buffer[32], *cp;
-+	unsigned long bufsiz = sizeof(buffer);
-+	int status;
-+
-+	/* Get the data stream */
-+	memset(stream, 0, sizeof(*stream));
-+	stream->next_in = map;
-+	stream->avail_in = mapsize;
-+	stream->next_out = buffer;
-+	stream->avail_out = bufsiz;
-+
-+	git_inflate_init(stream);
-+
-+	do {
-+		status = git_inflate(stream, 0);
-+		strbuf_add(header, buffer, stream->next_out - buffer);
-+		for (cp = buffer; cp < stream->next_out; cp++)
-+			if (!*cp)
-+				/* Found the NUL at the end of the header */
-+				return 0;
-+		stream->next_out = buffer;
-+		stream->avail_out = bufsiz;
-+	} while (status == Z_OK);
-+	return -1;
-+}
-+
- static void *unpack_sha1_rest(git_zstream *stream, void *buffer, unsigned long size, const unsigned char *sha1)
- {
- 	int bytes = strlen(buffer) + 1;
-@@ -1609,32 +1639,24 @@ static void *unpack_sha1_rest(git_zstream *stream, void *buffer, unsigned long s
- 	return NULL;
- }
- 
--/*
-- * We used to just use "sscanf()", but that's actually way
-- * too permissive for what we want to check. So do an anal
-- * object header parse by hand.
-- */
--int parse_sha1_header(const char *hdr, unsigned long *sizep)
-+int parse_sha1_header_extended(const char *hdr, struct object_info *oi,
-+			       int flags)
- {
--	char type[10];
--	int i;
-+	struct strbuf typename = STRBUF_INIT;
- 	unsigned long size;
-+	int type;
- 
- 	/*
- 	 * The type can be at most ten bytes (including the
- 	 * terminating '\0' that we add), and is followed by
- 	 * a space.
- 	 */
--	i = 0;
- 	for (;;) {
- 		char c = *hdr++;
- 		if (c == ' ')
- 			break;
--		type[i++] = c;
--		if (i >= sizeof(type))
--			return -1;
-+		strbuf_addch(&typename, c);
- 	}
--	type[i] = 0;
- 
- 	/*
- 	 * The length must follow immediately, and be in canonical
-@@ -1652,12 +1674,45 @@ int parse_sha1_header(const char *hdr, unsigned long *sizep)
- 			size = size * 10 + c;
- 		}
- 	}
--	*sizep = size;
-+
-+	type = type_from_string_gently(typename.buf, -1, 1);
-+	if (oi->sizep)
-+		*oi->sizep = size;
-+	if (oi->typename)
-+		strbuf_addstr(oi->typename, typename.buf);
-+	if (oi->typep)
-+		*oi->typep = type;
-+	strbuf_release(&typename);
-+
-+	/*
-+	 * Set type to 0 if its an unknown object and
-+	 * we're obtaining the type using '--literally'
-+	 * option.
-+	 */
-+	if ((flags & LOOKUP_LITERALLY) && (type == -1))
-+		type = 0;
-+	else if (type == -1)
-+		die("invalid object type");
- 
- 	/*
- 	 * The length must be followed by a zero byte
- 	 */
--	return *hdr ? -1 : type_from_string(type);
-+	return *hdr ? -1 : type;
-+}
-+
-+/*
-+ * We used to just use "sscanf()", but that's actually way
-+ * too permissive for what we want to check. So do an anal
-+ * object header parse by hand. Calls the extended function.
-+ */
-+int parse_sha1_header(const char *hdr, unsigned long *sizep)
-+{
-+	struct object_info oi;
-+
-+	oi.sizep = sizep;
-+	oi.typename = NULL;
-+	oi.typep = NULL;
-+	return parse_sha1_header_extended(hdr, &oi, LOOKUP_REPLACE_OBJECT);
- }
- 
- static void *unpack_sha1_file(void *map, unsigned long mapsize, enum object_type *type, unsigned long *size, const unsigned char *sha1)
-@@ -2524,13 +2579,15 @@ struct packed_git *find_sha1_pack(const unsigned char *sha1,
- }
- 
- static int sha1_loose_object_info(const unsigned char *sha1,
--				  struct object_info *oi)
-+				  struct object_info *oi,
-+				  int flags)
- {
--	int status;
-+	int status = 0;
- 	unsigned long mapsize, size;
- 	void *map;
- 	git_zstream stream;
- 	char hdr[32];
-+	struct strbuf hdrbuf = STRBUF_INIT;
- 
- 	if (oi->delta_base_sha1)
- 		hashclr(oi->delta_base_sha1);
-@@ -2557,17 +2614,29 @@ static int sha1_loose_object_info(const unsigned char *sha1,
- 		return -1;
- 	if (oi->disk_sizep)
- 		*oi->disk_sizep = mapsize;
--	if (unpack_sha1_header(&stream, map, mapsize, hdr, sizeof(hdr)) < 0)
--		status = error("unable to unpack %s header",
--			       sha1_to_hex(sha1));
--	else if ((status = parse_sha1_header(hdr, &size)) < 0)
--		status = error("unable to parse %s header", sha1_to_hex(sha1));
--	else if (oi->sizep)
-+	if ((flags & LOOKUP_LITERALLY)) {
-+		if (unpack_sha1_header_literally(&stream, map, mapsize, &hdrbuf) < 0)
-+			status = error("unable to unpack %s header with --literally",
-+				       sha1_to_hex(sha1));
-+		else if ((status = parse_sha1_header_extended(hdrbuf.buf, oi, flags)) < 0)
-+			status = error("unable to parse %s header", sha1_to_hex(sha1));
-+	} else {
-+		if (unpack_sha1_header(&stream, map, mapsize, hdr, sizeof(hdr)) < 0)
-+			status = error("unable to unpack %s header",
-+				       sha1_to_hex(sha1));
-+		else if ((status = parse_sha1_header(hdr, &size)) < 0)
-+			status = error("unable to parse %s header", sha1_to_hex(sha1));
-+	}
-+	if (oi->sizep)
- 		*oi->sizep = size;
- 	git_inflate_end(&stream);
- 	munmap(map, mapsize);
- 	if (oi->typep)
- 		*oi->typep = status;
-+	if (oi->typename && !(oi->typename->len))
-+		strbuf_addstr(oi->typename, typename(status));
-+	if (hdrbuf.buf)
-+		strbuf_release(&hdrbuf);
- 	return 0;
- }
- 
-@@ -2588,13 +2657,15 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi,
- 			*(oi->disk_sizep) = 0;
- 		if (oi->delta_base_sha1)
- 			hashclr(oi->delta_base_sha1);
-+		if (oi->typename)
-+			strbuf_addstr(oi->typename, typename(co->type));
- 		oi->whence = OI_CACHED;
- 		return 0;
- 	}
- 
- 	if (!find_pack_entry(real, &e)) {
- 		/* Most likely it's a loose object. */
--		if (!sha1_loose_object_info(real, oi)) {
-+		if (!sha1_loose_object_info(real, oi, flags)) {
- 			oi->whence = OI_LOOSE;
- 			return 0;
- 		}
-@@ -2618,6 +2689,8 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi,
- 		oi->u.packed.is_delta = (rtype == OBJ_REF_DELTA ||
- 					 rtype == OBJ_OFS_DELTA);
- 	}
-+	if (oi->typename)
-+		strbuf_addstr(oi->typename, typename(rtype));
- 
- 	return 0;
- }
--- 
-2.3.1.307.gf3db8a5
+I am taking it as a positive change, though.  Once we got stable
+enough not to be a roadblock for the kernel folks and proven
+ourselves not to regress, our progress probably ceased to be
+newsworthy to them ;-)
