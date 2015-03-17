@@ -1,76 +1,142 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 09/14] opt_arg(): val is always non-NULL
-Date: Tue, 17 Mar 2015 17:00:11 +0100
-Message-ID: <1426608016-2978-10-git-send-email-mhagger@alum.mit.edu>
-References: <1426608016-2978-1-git-send-email-mhagger@alum.mit.edu>
-Cc: Jeff King <peff@peff.org>, git@vger.kernel.org,
-	Michael Haggerty <mhagger@alum.mit.edu>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH v4] rev-list: refuse --first-parent combined with --bisect
+Date: Tue, 17 Mar 2015 17:09:53 +0100
+Message-ID: <CAP8UFD12UX+3psD2=9_RsGv8JA2C8N54qAYGydYgr7n5ta7dzw@mail.gmail.com>
+References: <1425827005-9602-1-git-send-email-me@ikke.info>
+	<1425934575-19581-1-git-send-email-me@ikke.info>
+	<xmqqa8zkzeq5.fsf@gitster.dls.corp.google.com>
+	<20150310225509.GA5442@vps892.directvps.nl>
+	<xmqqoao0xx9p.fsf@gitster.dls.corp.google.com>
+	<20150311184512.GB5442@vps892.directvps.nl>
+	<xmqqsidb5m2r.fsf@gitster.dls.corp.google.com>
+	<20150316163306.GB11832@vps892.directvps.nl>
+	<xmqqbnjsrcyz.fsf@gitster.dls.corp.google.com>
+	<065AE7977A54488198B39564E3E174E6@PhilipOakley>
+	<xmqqr3sops9f.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Philip Oakley <philipoakley@iee.org>, Kevin Daudt <me@ikke.info>,
+	git <git@vger.kernel.org>,
+	Christian Couder <chriscool@tuxfamily.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 17 17:01:17 2015
+X-From: git-owner@vger.kernel.org Tue Mar 17 17:10:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YXtvd-0001Om-Ol
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Mar 2015 17:01:14 +0100
+	id 1YXu47-00074G-Cl
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Mar 2015 17:09:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932557AbbCQQBI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Mar 2015 12:01:08 -0400
-Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:62618 "EHLO
-	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932183AbbCQQAd (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Mar 2015 12:00:33 -0400
-X-AuditID: 1207440f-f792a6d000001284-a2-55084fa1aea2
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id F6.79.04740.1AF48055; Tue, 17 Mar 2015 12:00:33 -0400 (EDT)
-Received: from michael.fritz.box (p4FC96AAE.dip0.t-ipconnect.de [79.201.106.174])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t2HG0LSk023811
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Tue, 17 Mar 2015 12:00:32 -0400
-X-Mailer: git-send-email 2.1.4
-In-Reply-To: <1426608016-2978-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrHIsWRmVeSWpSXmKPExsUixO6iqLvQnyPUoHG2oEXXlW4mi4beK8wW
-	t1fMZ7Z4fGsCkwOLx9/3H5g85t639Lh4Sdnj8ya5AJYobpukxJKy4Mz0PH27BO6MlicPWQsm
-	sVb07L7A1sD4i7mLkZNDQsBE4tbXFihbTOLCvfVsXYxcHEIClxklZmy7yAjhnGSSONX5iAmk
-	ik1AV2JRTzOYLSKgJjGx7RALiM0skCLR+ecOO4gtLGAhMfvfNVYQm0VAVWLyzXlsIDavgItE
-	3+1LrBDb5CTOH/8JtpkTKP7iz2tGEFtIwFli7bTJbBMYeRcwMqxilEvMKc3VzU3MzClOTdYt
-	Tk7My0st0jXRy80s0UtNKd3ECAkf/h2MXetlDjEKcDAq8fA25LGHCrEmlhVX5h5ilORgUhLl
-	zfPgCBXiS8pPqcxILM6ILyrNSS0+xCjBwawkwnvHHSjHm5JYWZValA+TkuZgURLnVV+i7ick
-	kJ5YkpqdmlqQWgSTleHgUJLg1fEDahQsSk1PrUjLzClBSDNxcIIM55ISKU7NS0ktSiwtyYgH
-	xUZ8MTA6QFI8QHsrQNp5iwsSc4GiEK2nGHU57kz5v4hJiCUvPy9VSpw3CKRIAKQoozQPbgUs
-	WbxiFAf6WJh3DkgVDzDRwE16BbSECWhJSzsbyJKSRISUVAPjqop55ouDjj/K6mLTzv0XlWsv
-	pRh9OJqP9+GSexJWr7kUQvcyFcuz/JOZ3qA4sejvraUWvLGxlfLnujYWHb+hnj5pxTXvXdY/
-	Z7JsT4oQyFHyOGstvna+ptr9SxMf+Ef8bOx3D5M6m3ngiLVt0oSNR1OdAiYWbHMU 
+	id S932098AbbCQQJy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Mar 2015 12:09:54 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:36672 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753823AbbCQQJx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Mar 2015 12:09:53 -0400
+Received: by iegc3 with SMTP id c3so14906385ieg.3
+        for <git@vger.kernel.org>; Tue, 17 Mar 2015 09:09:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=xNiudB/MTHepYHgPYxvUlAOHWyRfvo+pImAzvraBU1Y=;
+        b=kifUD+wuf5tZn6Hpjo2vWabqS9oLcbKdhyACDTczi6UBAcFdJ0RBTL9bupWP/QtLMm
+         Tyk4BXkT2foWvlO7PpQUl9tgi0gpAMZ6HZc/vonxARL9cwm8Wp81Vz/S5uHmwpCHvj4b
+         wOkGYxp3Wi7j3DgaDCyWoDD2ZPSKuHfbZRwlOnfMqVC0EG1N2BzdtiT/utr4BIPAxh5D
+         RFtS0sIp3EWyl1HBzhw81HGgqj2Y4OoK8xhDzJTQbWzsMjI0n915c1b1T++Lxdb5g6/3
+         hhCeavAafG2r8q3qakHr5gQ9fo2ZpZWMRJLTf6giJSkJRR1gs4nSRK4WIB4KG7svEggU
+         sYAg==
+X-Received: by 10.50.79.163 with SMTP id k3mr146673467igx.30.1426608593228;
+ Tue, 17 Mar 2015 09:09:53 -0700 (PDT)
+Received: by 10.50.245.168 with HTTP; Tue, 17 Mar 2015 09:09:53 -0700 (PDT)
+In-Reply-To: <xmqqr3sops9f.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265645>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265646>
 
-opt_arg() is never called with val set to NULL, so remove the code for
-handling that eventuality (which anyway wasn't handled consistently in
-the function).
+On Mon, Mar 16, 2015 at 10:05 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> "Philip Oakley" <philipoakley@iee.org> writes:
+>
+>> From: "Junio C Hamano" <gitster@pobox.com>
+>>
+>>> Hence, if you have a history that looks like this:
+>>>
+>>>
+>>>   G...1---2---3---4---6---8---B
+>>>                    \
+>>>                     5---7---B
+>>>
+>>> it follows that 4 must also be "bad".  It used to be good long time
+>>> ago somewhere before 1, and somewhere along way on the history,
+>>> there was a single breakage event that we are hunting for.  That
+>>> single event cannot be 5, 6, 7 or 8 because breakage at say 5 would
+>>> not explain why the tip of the upper branch is broken---its breakage
+>>> has no way to propagate there.  The breakage must have happened at 4
+>>> or before that commit.
+>>
+>> Is it not worth at least confirming the assertion that 4 is bad before
+>> proceding, or at least an option to confirm that in complex scenarios
+>> where the fault may be devious.
+>
+> That raises a somewhat interesting tangent.
+>
+> Christian seems to be forever interested in bisect, so I'll add him
+> to the Cc list ;-)
+>
+> There is no way to give multiple "bad" from the command line.  You
+> can say "git bisect start rev rev rev..." but that gives only one
+> bad and everything else is good.  And once you specify one of the
+> above two bad ones (say, the child of 8), then we will not even
+> offer the other one (i.e. the child of 7) as a candidate to be
+> tested.  So in that sense, "confirm that 4 is bad before proceeding"
+> is a moot point.
+>
+> However, you can say "git bisect bad <rev>" (and "git bisect good
+> <rev>" for that matter) on a rev that is unrelated to what the
+> current bisection state is.  E.g. after you mark the child of 8 as
+> "bad", the bisected graph would become
+>
+>    G...1---2---3---4---6---8---B
+>
+> and you would be offered to test somewhere in the middle, say, 4.
+> But it is perfectly OK for you to respond with "git bisect bad 7",
+> if you know 7 is bad.
+>
+> I _think_ the current code blindly overwrites the "bad" pointer,
+> making the bisection state into this graph if you do so.
+>
+>    G...1---2---3---4
+>                     \
+>                      5---B
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
- diff.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Yes, we keep only one "bad" pointer.
 
-diff --git a/diff.c b/diff.c
-index a350677..6e3f498 100644
---- a/diff.c
-+++ b/diff.c
-@@ -3367,7 +3367,7 @@ static int opt_arg(const char *arg, int arg_short, const char *arg_long, int *va
- 		c = *++arg;
- 		if (!c)
- 			return 1;
--		if (val && isdigit(c)) {
-+		if (isdigit(c)) {
- 			char *end;
- 			int n = strtoul(arg, &end, 10);
- 			if (*end)
--- 
-2.1.4
+> This is very suboptimal.  The side branch 4-to-7 could be much
+> longer than the original trunk 4-to-the-tip, in which case we would
+> have made the suspect space _larger_, not smaller.
+
+Yes, but the user is supposed to not change the "bad" pointer for no
+good reason. For example maybe a mistake was made and the first commit
+marked as "bad" was not actually bad.
+
+> We certainly should be able to take advantage of the fact that the
+> current "bad" commit (i.e. the child of 8) and the newly given "bad"
+> commit (i.e. 7) are both known to be bad and mark 4 as "bad" instead
+> when that happens, instead of doing the suboptimal thing the code
+> currently does.
+
+Yeah, we could do that, but we would have to allow it only if a
+special option is passed on the command line, for example:
+
+git bisect bad --alternate <commitish>
+
+and/or we could make "git bisect bad" accept any number of bad commitishs.
+
+That could give additional bonus points to the GSoC student who would
+implement it :-)
+
+Thanks,
+Christian.
