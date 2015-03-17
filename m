@@ -1,96 +1,192 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 4/5] repack: turn on "ref paranoia" when doing a destructive
- repack
-Date: Tue, 17 Mar 2015 03:31:02 -0400
-Message-ID: <20150317073102.GD25191@peff.net>
+Subject: [PATCH 5/5] refs.c: drop curate_packed_refs
+Date: Tue, 17 Mar 2015 03:31:57 -0400
+Message-ID: <20150317073157.GE25191@peff.net>
 References: <20150317072750.GA22155@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Michael Haggerty <mhagger@alum.mit.edu>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 17 08:31:13 2015
+X-From: git-owner@vger.kernel.org Tue Mar 17 08:32:06 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YXly2-0005QF-2y
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Mar 2015 08:31:10 +0100
+	id 1YXlyv-00060d-2k
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Mar 2015 08:32:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752101AbbCQHbG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Mar 2015 03:31:06 -0400
-Received: from cloud.peff.net ([50.56.180.127]:33924 "HELO cloud.peff.net"
+	id S1752044AbbCQHcA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Mar 2015 03:32:00 -0400
+Received: from cloud.peff.net ([50.56.180.127]:33927 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752015AbbCQHbF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Mar 2015 03:31:05 -0400
-Received: (qmail 25642 invoked by uid 102); 17 Mar 2015 07:31:05 -0000
+	id S1752015AbbCQHb7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Mar 2015 03:31:59 -0400
+Received: (qmail 25687 invoked by uid 102); 17 Mar 2015 07:31:59 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 17 Mar 2015 02:31:05 -0500
-Received: (qmail 22838 invoked by uid 107); 17 Mar 2015 07:31:15 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 17 Mar 2015 02:31:59 -0500
+Received: (qmail 22855 invoked by uid 107); 17 Mar 2015 07:32:10 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 17 Mar 2015 03:31:15 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 17 Mar 2015 03:31:02 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 17 Mar 2015 03:32:10 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 17 Mar 2015 03:31:57 -0400
 Content-Disposition: inline
 In-Reply-To: <20150317072750.GA22155@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265617>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265618>
 
-If we are repacking with "-ad", we will drop any unreachable
-objects. Likewise, using "-Ad --unpack-unreachable=<time>"
-will drop any old, unreachable objects. In these cases, we
-want to make sure the reachability we compute with "--all"
-is complete. We can do this by passing GIT_REF_PARANOIA=1 in
-the environment to pack-objects.
+When we delete a ref, we have to rewrite the entire
+packed-refs file. We take this opportunity to "curate" the
+packed-refs file and drop any entries that are crufty or
+broken.
 
-Note that "-Ad" is safe already, because it only loosens
-unreachable objects. It is up to "git prune" to avoid
-deleting them.
+Dropping broken entries (e.g., with bogus names, or ones
+that point to missing objects) is actively a bad idea, as it
+means that we lose any notion that the data was there in the
+first place. Aside from the general hackiness that we might
+lose any information about ref "foo" while deleting an
+unrelated ref "bar", this may seriously hamper any attempts
+by the user at recovering from the corruption in "foo".
+
+They will lose the sha1 and name of "foo"; the exact pointer
+may still be useful even if they recover missing objects
+from a different copy of the repository. But worse, once the
+ref is gone, there is no trace of the corruption. A
+follow-up "git prune" may delete objects, even though it
+would otherwise bail when seeing corruption.
+
+We could just drop the "broken" bits from
+curate_packed_refs, and continue to drop the "crufty" bits:
+refs whose loose counterpart exists in the filesystem. This
+is not wrong to do, and it does have the advantage that we
+may write out a slightly smaller packed-refs file. But it
+has two disadvantages:
+
+  1. It is a potential source of races or mistakes with
+     respect to these refs that are otherwise unrelated to
+     the operation. To my knowledge, there aren't any active
+     problems in this area, but it seems like an unnecessary
+     risk.
+
+  2. We have to spend time looking up the matching loose
+     refs for every item in the packed-refs file. If you
+     have a large number of packed refs that do not change,
+     that outweights the benefit from writing out a smaller
+     packed-refs file (it doesn't get smaller, and you do a
+     bunch of directory traversal to find that out).
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/repack.c            | 8 ++++++--
- t/t5312-prune-corruption.sh | 2 +-
- 2 files changed, 7 insertions(+), 3 deletions(-)
+I'll admit my argument against curate_packed_refs is a bit hand-wavy. I
+won't be _too_ sad if somebody insists on cutting this back to just
+keeping "broken" refs around, and still curating the "crufty" ones.
 
-diff --git a/builtin/repack.c b/builtin/repack.c
-index 28fbc70..f2edeb0 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -228,13 +228,17 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 		get_non_kept_pack_filenames(&existing_packs);
+ refs.c                      | 67 +--------------------------------------------
+ t/t5312-prune-corruption.sh |  2 +-
+ 2 files changed, 2 insertions(+), 67 deletions(-)
+
+diff --git a/refs.c b/refs.c
+index 7f0e7be..47e4e53 100644
+--- a/refs.c
++++ b/refs.c
+@@ -2621,68 +2621,10 @@ int pack_refs(unsigned int flags)
+ 	return 0;
+ }
  
- 		if (existing_packs.nr && delete_redundant) {
--			if (unpack_unreachable)
-+			if (unpack_unreachable) {
- 				argv_array_pushf(&cmd.args,
- 						"--unpack-unreachable=%s",
- 						unpack_unreachable);
--			else if (pack_everything & LOOSEN_UNREACHABLE)
-+				argv_array_push(&cmd.env_array, "GIT_REF_PARANOIA=1");
-+			} else if (pack_everything & LOOSEN_UNREACHABLE) {
- 				argv_array_push(&cmd.args,
- 						"--unpack-unreachable");
-+			} else {
-+				argv_array_push(&cmd.env_array, "GIT_REF_PARANOIA=1");
-+			}
- 		}
- 	} else {
- 		argv_array_push(&cmd.args, "--unpacked");
+-/*
+- * If entry is no longer needed in packed-refs, add it to the string
+- * list pointed to by cb_data.  Reasons for deleting entries:
+- *
+- * - Entry is broken.
+- * - Entry is overridden by a loose ref.
+- * - Entry does not point at a valid object.
+- *
+- * In the first and third cases, also emit an error message because these
+- * are indications of repository corruption.
+- */
+-static int curate_packed_ref_fn(struct ref_entry *entry, void *cb_data)
+-{
+-	struct string_list *refs_to_delete = cb_data;
+-
+-	if (entry->flag & REF_ISBROKEN) {
+-		/* This shouldn't happen to packed refs. */
+-		error("%s is broken!", entry->name);
+-		string_list_append(refs_to_delete, entry->name);
+-		return 0;
+-	}
+-	if (!has_sha1_file(entry->u.value.sha1)) {
+-		unsigned char sha1[20];
+-		int flags;
+-
+-		if (read_ref_full(entry->name, 0, sha1, &flags))
+-			/* We should at least have found the packed ref. */
+-			die("Internal error");
+-		if ((flags & REF_ISSYMREF) || !(flags & REF_ISPACKED)) {
+-			/*
+-			 * This packed reference is overridden by a
+-			 * loose reference, so it is OK that its value
+-			 * is no longer valid; for example, it might
+-			 * refer to an object that has been garbage
+-			 * collected.  For this purpose we don't even
+-			 * care whether the loose reference itself is
+-			 * invalid, broken, symbolic, etc.  Silently
+-			 * remove the packed reference.
+-			 */
+-			string_list_append(refs_to_delete, entry->name);
+-			return 0;
+-		}
+-		/*
+-		 * There is no overriding loose reference, so the fact
+-		 * that this reference doesn't refer to a valid object
+-		 * indicates some kind of repository corruption.
+-		 * Report the problem, then omit the reference from
+-		 * the output.
+-		 */
+-		error("%s does not point to a valid object!", entry->name);
+-		string_list_append(refs_to_delete, entry->name);
+-		return 0;
+-	}
+-
+-	return 0;
+-}
+-
+ int repack_without_refs(struct string_list *refnames, struct strbuf *err)
+ {
+ 	struct ref_dir *packed;
+-	struct string_list refs_to_delete = STRING_LIST_INIT_DUP;
+-	struct string_list_item *refname, *ref_to_delete;
++	struct string_list_item *refname;
+ 	int ret, needs_repacking = 0, removed = 0;
+ 
+ 	assert(err);
+@@ -2718,13 +2660,6 @@ int repack_without_refs(struct string_list *refnames, struct strbuf *err)
+ 		return 0;
+ 	}
+ 
+-	/* Remove any other accumulated cruft */
+-	do_for_each_entry_in_dir(packed, 0, curate_packed_ref_fn, &refs_to_delete);
+-	for_each_string_list_item(ref_to_delete, &refs_to_delete) {
+-		if (remove_entry(packed, ref_to_delete->string) == -1)
+-			die("internal error");
+-	}
+-
+ 	/* Write what remains */
+ 	ret = commit_packed_refs();
+ 	if (ret)
 diff --git a/t/t5312-prune-corruption.sh b/t/t5312-prune-corruption.sh
-index cccab58..e3e9994 100755
+index e3e9994..8b54d16 100755
 --- a/t/t5312-prune-corruption.sh
 +++ b/t/t5312-prune-corruption.sh
-@@ -38,7 +38,7 @@ test_expect_success 'put bogus object into pack' '
- 	verbose git cat-file -e $bogus
+@@ -95,7 +95,7 @@ test_expect_success 'pack-refs does not silently delete broken packed ref' '
+ 	test_cmp expect actual
  '
  
--test_expect_failure 'destructive repack keeps packed object' '
-+test_expect_success 'destructive repack keeps packed object' '
- 	test_might_fail git repack -Ad --unpack-unreachable=now &&
- 	verbose git cat-file -e $bogus &&
- 	test_might_fail git repack -ad &&
+-test_expect_failure 'pack-refs does not drop broken refs during deletion' '
++test_expect_success 'pack-refs does not drop broken refs during deletion' '
+ 	git update-ref -d refs/heads/other &&
+ 	git rev-parse refs/heads/master >actual &&
+ 	test_cmp expect actual
 -- 
 2.3.3.520.g3cfbb5d
