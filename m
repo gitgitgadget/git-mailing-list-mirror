@@ -1,117 +1,182 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 00/14] numparse module: systematically tighten up integer
- parsing
-Date: Tue, 17 Mar 2015 20:46:59 +0100
-Message-ID: <550884B3.5010102@alum.mit.edu>
-References: <1426608016-2978-1-git-send-email-mhagger@alum.mit.edu> <xmqqk2yfo3y0.fsf@gitster.dls.corp.google.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH v4] rev-list: refuse --first-parent combined with --bisect
+Date: Tue, 17 Mar 2015 20:49:50 +0100
+Message-ID: <CAP8UFD0Mn3SPimYU3fdF5pV1MDAHXhKUVSutfJKrXzPpaXM=bA@mail.gmail.com>
+References: <1425827005-9602-1-git-send-email-me@ikke.info>
+	<1425934575-19581-1-git-send-email-me@ikke.info>
+	<xmqqa8zkzeq5.fsf@gitster.dls.corp.google.com>
+	<20150310225509.GA5442@vps892.directvps.nl>
+	<xmqqoao0xx9p.fsf@gitster.dls.corp.google.com>
+	<20150311184512.GB5442@vps892.directvps.nl>
+	<xmqqsidb5m2r.fsf@gitster.dls.corp.google.com>
+	<20150316163306.GB11832@vps892.directvps.nl>
+	<xmqqbnjsrcyz.fsf@gitster.dls.corp.google.com>
+	<065AE7977A54488198B39564E3E174E6@PhilipOakley>
+	<xmqqr3sops9f.fsf@gitster.dls.corp.google.com>
+	<CAP8UFD12UX+3psD2=9_RsGv8JA2C8N54qAYGydYgr7n5ta7dzw@mail.gmail.com>
+	<xmqqtwxjo4nf.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 8bit
-Cc: Jeff King <peff@peff.org>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Cc: Philip Oakley <philipoakley@iee.org>, Kevin Daudt <me@ikke.info>,
+	git <git@vger.kernel.org>,
+	Christian Couder <chriscool@tuxfamily.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 17 20:47:21 2015
+X-From: git-owner@vger.kernel.org Tue Mar 17 20:49:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YXxSO-0003tR-8d
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Mar 2015 20:47:16 +0100
+	id 1YXxUy-0005Nx-Kq
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Mar 2015 20:49:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753778AbbCQTrM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Mar 2015 15:47:12 -0400
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:44444 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752669AbbCQTrK (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Mar 2015 15:47:10 -0400
-X-AuditID: 12074414-f797f6d000004084-fa-550884b67ff2
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id E7.75.16516.6B488055; Tue, 17 Mar 2015 15:47:02 -0400 (EDT)
-Received: from [192.168.69.130] (p4FC96AAE.dip0.t-ipconnect.de [79.201.106.174])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t2HJl05r003777
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Tue, 17 Mar 2015 15:47:01 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.5.0
-In-Reply-To: <xmqqk2yfo3y0.fsf@gitster.dls.corp.google.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupjleLIzCtJLcpLzFFi42IRYndR1N3WwhFqcOkWv0XXlW4mi4beK8wW
-	j29NYHJg9ph739Lj4iVlj8+b5AKYo7htkhJLyoIz0/P07RK4M1qm+Rd0CFYcnvuKrYFxCW8X
-	IyeHhICJxJqJl5kgbDGJC/fWs3UxcnEICVxmlFh6vZ0VwrnAJHF642yWLkYODl4BbYlnk4VB
-	GlgEVCUOd2xkBbHZBHQlFvU0gw0SFQiSeHnrLyOIzSsgKHFy5hMWEFtEQE1iYtshMJtZwEhi
-	1o0zYL3CAuESS+/NBusVEiiSWPDwDxuIzSlgLdHTdJAZol5PYsf1X6wQtrxE89bZzBMYBWYh
-	WTELSdksJGULGJlXMcol5pTm6uYmZuYUpybrFicn5uWlFula6OVmluilppRuYoSErcgOxiMn
-	5Q4xCnAwKvHwNuSxhwqxJpYVV+YeYpTkYFIS5WXN5QgV4kvKT6nMSCzOiC8qzUktPsQowcGs
-	JMJ7xx0ox5uSWFmVWpQPk5LmYFES5/22WN1PSCA9sSQ1OzW1ILUIJivDwaEkwfuyGahRsCg1
-	PbUiLTOnBCHNxMEJMpxLSqQ4NS8ltSixtCQjHhSn8cXASAVJ8QDt/QbSzltckJgLFIVoPcWo
-	KCXOuxEkIQCSyCjNgxsLS0avGMWBvhTmZQemJiEeYCKD634FNJgJaHBLOxvI4JJEhJRUA6Pj
-	gnCNyJT0h9NNkyy0173pmPPqwWSejHNSj6yE66a/cbx54n6VFPvq6fX5Ig+ZAh9s/Vghl8i7
-	0umzEVdCSY7T1R0P3L+8zHU/xxidtuWHpPxJ2VUbjyp3p+9KW/PP51sRXy4HR2H6 
+	id S1753267AbbCQTtw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Mar 2015 15:49:52 -0400
+Received: from mail-ie0-f182.google.com ([209.85.223.182]:34825 "EHLO
+	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752679AbbCQTtu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Mar 2015 15:49:50 -0400
+Received: by ieclw3 with SMTP id lw3so20207056iec.2
+        for <git@vger.kernel.org>; Tue, 17 Mar 2015 12:49:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=E9e0pqXy4wq68ZRnDqX+hTohXkysRUbw58J15YvE/OE=;
+        b=TU5bxSLe4ipwhu1LD5KKrdu/4fvF/eslB6SGFfct+Et5FCCW63RPVvc7sFC0AWJ94K
+         Aib1PBbBfmtGm7peSBnTpbU/JjjaT9w/iya9nK/RmqPEkfU/koEbUdjhWpMjZ+QsHEOG
+         kEoTxXR9SCBFErihcmUEt+UraqMZNhNmgEu1uISe1SR+FvB7MHPiRzoLlKYscspr6DN7
+         rXMp9+rfyj6CSfEs5OC/hSFf5L56/p1+zFaKLVYuvcVG34BZSQZkM9jRXvZ0OynbaKrP
+         6jKoPZ+jy4jnFnoGHwqe865uFJbolIJ9gc5Nb5ruB9Hg3gV+Xw5krFNN1nHgAb1FvqDn
+         SQ8g==
+X-Received: by 10.42.79.15 with SMTP id p15mr91076312ick.54.1426621790207;
+ Tue, 17 Mar 2015 12:49:50 -0700 (PDT)
+Received: by 10.50.245.168 with HTTP; Tue, 17 Mar 2015 12:49:50 -0700 (PDT)
+In-Reply-To: <xmqqtwxjo4nf.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265657>
 
-On 03/17/2015 07:48 PM, Junio C Hamano wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
-> 
->> When I looked around, I found scores of sites that call atoi(),
->> strtoul(), and strtol() carelessly. And it's understandable. Calling
->> any of these functions safely is so much work as to be completely
->> impractical in day-to-day code.
+On Tue, Mar 17, 2015 at 7:33 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Christian Couder <christian.couder@gmail.com> writes:
+>
+>> On Mon, Mar 16, 2015 at 10:05 PM, Junio C Hamano <gitster@pobox.com> wrote:
 >>
->> git-compat-util.h has two functions, strtoul_ui() and strtol_i(), that
->> try to make parsing integers a little bit easier.
-> 
-> Exactly.  They were introduced to prevent sloppy callers from
-> passing NULL to the &end parameter to underlying strtoul(3).  The
-> first thing that came to my mind while reading your message up to
-> this point was "why not use them more, tighten them, adding
-> different variants if necessary, instead of introducing an entirely
-> new set of functions in a new namespace?"
-
-Here were my thoughts:
-
-* I wanted to change the interface to look less like
-  strtol()/strtoul(), so it seemed appropriate to make the names
-  more dissimilar.
-
-* The functions seemed long enough that they shouldn't be inline,
-  and I wanted to put them in their own module rather than put
-  them in git-compat-util.h.
-
-* It wasn't obvious to me how to generalize the names, strtoul_ui()
-  and strtol_i(), to the eight functions that I wanted.
-
-That being said, I'm not married to the names. Suggestions are
-welcome--but we would need names for 8 functions, not 4 [1].
-
-Michael
-
-> For example:
-> 
->> * Am I making callers too strict? In many cases where a positive
->>   integer is expected (e.g., "--abbrev=<num>"), I have been replacing
->>   code like
+>>> However, you can say "git bisect bad <rev>" (and "git bisect good
+>>> <rev>" for that matter) on a rev that is unrelated to what the
+>>> current bisection state is.  E.g. after you mark the child of 8 as
+>>> "bad", the bisected graph would become
+>>>
+>>>    G...1---2---3---4---6---8---B
+>>>
+>>> and you would be offered to test somewhere in the middle, say, 4.
+>>> But it is perfectly OK for you to respond with "git bisect bad 7",
+>>> if you know 7 is bad.
+>>>
+>>> I _think_ the current code blindly overwrites the "bad" pointer,
+>>> making the bisection state into this graph if you do so.
+>>>
+>>>    G...1---2---3---4
+>>>                     \
+>>>                      5---B
 >>
->>       result = strtoul(s, NULL, 10);
+>> Yes, we keep only one "bad" pointer.
 >>
->>   with
+>>> This is very suboptimal.  The side branch 4-to-7 could be much
+>>> longer than the original trunk 4-to-the-tip, in which case we would
+>>> have made the suspect space _larger_, not smaller.
 >>
->>       if (convert_i(s, 10, &result))
->>               die("...");
-> 
-> I think strictness would be good and those who did "--abbrev='  20'"
-> deserve what they get from the additional strictness, but 
-> 
-> 	if (strtol_i(s, 10, &result))
-> 
-> would have been more familiar.
+>> Yes, but the user is supposed to not change the "bad" pointer for no
+>> good reason.
+>
+> That is irrelevant, no?  Nobody is questioning that the user is
+> supposed to judge if a commit is "good" or "bad" correctly.
 
-[1] It could be that when we're done, it will turn out that some of the
-eight variants are not needed. If so, we can delete them then.
+So if there is already a bad commit and the user gives another
+bad commit, that means that the user knows that it will replace the
+existing bad commit with the new one and that it's done for this
+purpose.
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
+> And nobody sane is dreaming that "Git could do better and detect
+> user's mistakes when the user says 'bad' for a commit that is
+> actually 'good'"; if Git can do that, then it should be able to do
+> the bisect without any user input (including "bisect run") at all
+> ;-).
+>
+>>> We certainly should be able to take advantage of the fact that the
+>>> current "bad" commit (i.e. the child of 8) and the newly given "bad"
+>>> commit (i.e. 7) are both known to be bad and mark 4 as "bad" instead
+>>> when that happens, instead of doing the suboptimal thing the code
+>>> currently does.
+>>
+>> Yeah, we could do that, but we would have to allow it only if a
+>> special option is passed on the command line, for example:
+>> git bisect bad --alternate <commitish>
+>
+> I am not quite sure if I am correctly getting what you meant to say,
+> but if you meant "only when --alternate is given, we should do the
+> merge-base thing; we should keep losing the current 'bad' and
+> replace it with the new one without the --alternate option", I would
+> see that as an exercise of a bad taste.
+
+What I wanted to say is that if we change "git bisect bad <commitish>",
+so that now it means "add a new bad commit" instead of the previous
+"replace the current bad commit, if any, with this one", then experienced
+users might see that change as a regression in the user interface and
+it might even break scripts.
+
+That's why I suggested to use a new option to mean
+"add a new bad commit", though --alternate might not be the best
+name for this option.
+
+> Because the merge-base thing is using both the current and the new
+> one, such a use is not "alternate" in the first place.
+>
+> If the proposal were "with a new option, the user can say 'oh, I
+> made a mistake earlier and said that a commit that is not bad as
+> 'bad'.  Let me replace the commit currently marked as 'bad' with
+> this one.", I would find it very sensible, actually.
+
+What I find sensible is to not break the semantics of the current
+interface.
+
+> I can see that such an operation can be called "alternate", but
+> "--fix" might be shorter-and-sweeter-and-to-the-point.
+>
+> In the "normal" case, the commit we offer the user to check (and
+> respond with "git bisect bad" without any commit parameter) is
+> always an ancestor of the current 'bad', so the merge-base with
+> 'bad' and the commit that was just checked would always be the
+> current commit.  Using the merge-base thing will be transparent to
+> the end users in the normal case, and when the user has off-line
+> knowledge that some other commit that is not an ancestor of the
+> current 'bad' commit is bad, the merge-base thing will give a better
+> behaviour than the current implementation that blindly replaces.
+
+Yes, I agree that it could be an improvement to make it possible for the
+user to specify another bad commit. I just think it should be done with
+a new option if there is already a bad commit...
+
+>> and/or we could make "git bisect bad" accept any number of bad
+>> commitishs.
+
+... or by allowing any number of bad commits after "git bisect bad".
+
+> Yes, that is exactly what I meant.
+>
+> The way I understand the Philip's point is that the user may have
+> a-priori knowledge that a breakage from the same cause appears in
+> both tips of these branches.  In such a case, we can start bisection
+> after marking the merge-base of two 'bad' commits, e.g. 4 in the
+> illustration in the message you are responding to, instead of
+> including 5, 6, and 8 in the suspect set.
+
+Yeah, I agree that we can do better in this case.
+
+> You need to be careful, though.  An obvious pitfall is what you
+> should do when there is a criss-cross merge.
+
+Yeah, it is not as simple as it might look like, neither for the interface
+nor for the behavior.
