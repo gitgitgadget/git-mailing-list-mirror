@@ -1,96 +1,87 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/5] Retry if fdopen() fails due to ENOMEM
-Date: Tue, 17 Mar 2015 15:32:18 -0700
-Message-ID: <xmqqlhivmf0t.fsf@gitster.dls.corp.google.com>
-References: <1425571669-22800-1-git-send-email-mhagger@alum.mit.edu>
-	<54F9365E.2000705@web.de> <54FED916.6020607@alum.mit.edu>
+Subject: Re: [PATCH 0/5] not making corruption worse
+Date: Tue, 17 Mar 2015 15:54:02 -0700
+Message-ID: <xmqqh9tjme0l.fsf@gitster.dls.corp.google.com>
+References: <20150317072750.GA22155@peff.net>
+	<20150317073730.GA25267@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue Mar 17 23:32:48 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Mar 17 23:54:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YY02E-0006Cm-EB
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Mar 2015 23:32:26 +0100
+	id 1YY0NH-0001jS-GY
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Mar 2015 23:54:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754114AbbCQWcW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 Mar 2015 18:32:22 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:53721 "EHLO
+	id S932538AbbCQWyG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Mar 2015 18:54:06 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:63806 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750958AbbCQWcV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Mar 2015 18:32:21 -0400
+	with ESMTP id S1750958AbbCQWyF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Mar 2015 18:54:05 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 703E43F01A;
-	Tue, 17 Mar 2015 18:32:20 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id BB8213F571;
+	Tue, 17 Mar 2015 18:54:04 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=y/gMcqdf4Gh9
-	ZU4LoHbY2yAkvQU=; b=m9sfqFc/m+qQLwj7xZzkL57Ce1rixbos4xJJcTI2lA6e
-	BMWxz8R3F2zHeXpWEoMh12OG1QSIFvqfkEOoDs2rFRWpabnHedKw1bzZlzgXzOZp
-	/bgvMchPim+B7KagHF+Yti5f5CYpcfY1gAjVbufJmACCS1snlP8JbCgydkNRGU8=
+	:content-type; s=sasl; bh=fR3AVYtdm3MYZiUDegvotAcqpXI=; b=mmALl9
+	SibLLUwc1CKUDIQeXF3tCKg5ME2RUIPOiJf0df5xy3oEJ6ySLZ8JtEr+0GD/2LNE
+	iCuQTXHot2JpEREaDSJdVOSfz6O2yriMGXS+PTil0DqTaS6tshBXBwcqThfJ+f0b
+	rIgbEm6PMLjz/0WrtaG0eVdfLqXZsmjSGo9+c=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=XHRWx6
-	Ac/03v9ELMv/IE8x7+f0OWIzWjSGS0j0iPVjBy7YmlW5qRVQzNi26xhDF3cS2hXg
-	wRzFIk5YGqowXJoh9ORcz6K4U7BQ8+aLak96CRWH+vK9IDCq4dK5xebBqvbgxjRI
-	H87R26TTTAVHsNMPL4H+SV6snpImS6dGMJoCo=
+	:content-type; q=dns; s=sasl; b=uuzGB+VI6LzriGcusmm6TINi9vQD1fOE
+	0fqub7igZ2O2nvN1ujZxgg64QnBsvsYStStKIRIBrNU6DvIOxJwFctzvaowCm7tr
+	NFEcxGFPy4UXy1UXjm3035dsBAzIm6V2ubk9t6ZhYTpR30Acm1RxrMBuwqLvVIMD
+	zhgrJ4HpeLs=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 691663F019;
-	Tue, 17 Mar 2015 18:32:20 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B3CCE3F570;
+	Tue, 17 Mar 2015 18:54:04 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D48F73F018;
-	Tue, 17 Mar 2015 18:32:19 -0400 (EDT)
-In-Reply-To: <54FED916.6020607@alum.mit.edu> (Michael Haggerty's message of
-	"Tue, 10 Mar 2015 12:44:22 +0100")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 31D963F56F;
+	Tue, 17 Mar 2015 18:54:04 -0400 (EDT)
+In-Reply-To: <20150317073730.GA25267@peff.net> (Jeff King's message of "Tue,
+	17 Mar 2015 03:37:31 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 791B4CDA-CCF5-11E4-9FD7-A2259F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 828CB0A8-CCF8-11E4-896C-A2259F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265674>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+Jeff King <peff@peff.net> writes:
 
-> On 03/06/2015 06:08 AM, Torsten B=C3=B6gershausen wrote:
->> On 03/05/2015 05:07 PM, Michael Haggerty wrote:
->>> One likely reason for fdopen() to fail is the lack of memory for
->>> allocating a FILE structure. When that happens, try freeing some
->>> memory and calling fdopen() again in the hope that it will work the
->>> second time.
->>>
->>> This change was suggested by Jonathan Nieder [1]
->>>
->>> In the first patch it is unsatisfying that try_to_free_routine() is
->>> called with a magic number (1000) rather than sizeof(FILE). But the=
- C
->>> standard doesn't guarantee that FILE is a complete type, so I can't
->>> think of a better approach. Suggestions, anybody?
->>=20
->> it's not the sizeof(FILE) which is critical, it is the size of the b=
-uffer
->> associated with a FILE
->>=20
->> http://pubs.opengroup.org/onlinepubs/009695399/basedefs/stdio.h.html
->>=20
->> BUFSIZ may be  your friend, and if it is not defined, 4096 may be a
->> useful default.
->
-> Good point. If this patch series is not dropped as being useless, I w=
-ill
-> make this change.
+> But it strikes me as weird that we consider the _tips_ of history to be
+> special for ignoring breakage. If the tip of "bar" is broken, we omit
+> it. But if the tip is fine, and there's breakage three commits down in
+> the history, then doing a clone is going to fail horribly, as
+> pack-objects realizes it can't generate the pack. So in practice, I'm
+> not sure how much you're buying with the "don't mention broken refs"
+> code.
 
-OK, it has been a week since anybody mentioned this series.  What's
-the verdict?  Taking what you said in $gmane/265228 into account, I
-am taking the lack of reroll or follow-up as a sign of lost interest,
-and if that is the case I'd drop the series before it hits 'next'.
+I think this is a trade-off between strictness and convenience.  Is
+it preferrable that every time you try to clone a repository you get
+reminded that one of its refs point at a bogus object and you
+instead have to do "git fetch $there" with a refspec that excludes
+the broken one, or is it OK to allow clones and fetches silently
+succeed as if nothing is broken?
 
-Thanks.
+If the breakage in the reachability chain is somewhere that affects
+a branch that is actively in use by the project, with or without
+hiding a broken tip, you will be hit by object transfer failure and
+you need to really go in there and fix things anyway.  If it is just
+a no-longer-used experimental branch that lost necessary objects,
+it may be more convenient if the system automatically ignored it.
+
+In some parts of the system there is a movement to make this trade
+off tweakable (hint: what happened to the knobs to fsck that allow
+certain kinds of broken objects in the object store?  did the topic
+go anywhere?). This one so far lacked such a knob to tweak, and I
+view your paranoia bit as such a knob.
