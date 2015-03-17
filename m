@@ -1,111 +1,85 @@
-From: Patrick Steinhardt <ps@pks.im>
+From: Fredrik Gustafsson <iveqy@iveqy.com>
 Subject: Re: [RFC] git submodule purge
-Date: Tue, 17 Mar 2015 09:18:26 +0100
-Message-ID: <20150317081826.GB354@pks-pc>
+Date: Tue, 17 Mar 2015 09:25:56 +0100
+Message-ID: <20150317082556.GI3766@paksenarrion.iveqy.com>
 References: <20150316134407.GA31794@pks-tp.elego.de>
  <xmqqmw3drl7s.fsf@gitster.dls.corp.google.com>
+ <20150317081826.GB354@pks-pc>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="3uo+9/B/ebqu+fSQ"
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 17 09:19:13 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Patrick Steinhardt <ps@pks.im>
+X-From: git-owner@vger.kernel.org Tue Mar 17 09:26:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YXmiV-00044D-L9
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Mar 2015 09:19:12 +0100
+	id 1YXmpE-0000N0-VT
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Mar 2015 09:26:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752928AbbCQITE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Mar 2015 04:19:04 -0400
-Received: from sender1.zohomail.com ([74.201.84.155]:30259 "EHLO
-	sender1.zohomail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753314AbbCQISx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Mar 2015 04:18:53 -0400
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; 
-  s=mail; d=pks.im; 
-  h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; 
-  b=tLSIPzIJvvApDp8Us+Iqmx+PWwQqQaWw1lvhyXd3F/j+wq2YrBjCxcfcJR2sa76sP7Plr/IeEVqf
-    AzePQTtnoWARxy0jEBUKIwe7hZ9Psx9saPmLOZsr/kzPM9Ed7RmzK90T9wj6GtuPBXrjGmibAURo
-    k9esPopwSAXMpNpxZds=  
-Received: from localhost (g225000112.adsl.alicedsl.de [92.225.0.112]) by mx.zohomail.com
-	with SMTPS id 1426580331306675.2598130269747; Tue, 17 Mar 2015 01:18:51 -0700 (PDT)
+	id S1752189AbbCQI0E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Mar 2015 04:26:04 -0400
+Received: from mail-lb0-f175.google.com ([209.85.217.175]:36103 "EHLO
+	mail-lb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752003AbbCQI0A (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Mar 2015 04:26:00 -0400
+Received: by lbcds1 with SMTP id ds1so1645885lbc.3
+        for <git@vger.kernel.org>; Tue, 17 Mar 2015 01:25:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=wbS/PUrdGKYR17q9x5/x1Zw16e+FpfODacbqP4IFrRY=;
+        b=SOCjj5dmVFy28iy42S7jARyzDuLduaA8+Af0fq1DRbLNLdXtwhR9iKmzjrjesHacKG
+         5caYTJ38SFqVWeUj9nHBHo5sBGjkDVLdenP3g8DjAJpb6nlYfGD0Ma07OPaBcl/qOi83
+         EYHMXFKqQ7NCWzuNj5NZEv56iDHXTQ4Y6w3F6c5lzPMLDolf19ZJBeFE1/1f35OeahAb
+         0f/B3Ej5lqEwPaZLhYcY7+zrPDGlpGjWonQO8sayG5ogAWkx/3cluFwvvMMcmHgmrCAv
+         AUhqWuJLeM0CJFPdC4ueSMZsp59M8vgEKHnL+4TRWzgxmjvJCocUPapm8I73MmY4j/5Q
+         9n3Q==
+X-Received: by 10.152.36.138 with SMTP id q10mr58028722laj.113.1426580758943;
+        Tue, 17 Mar 2015 01:25:58 -0700 (PDT)
+Received: from paksenarrion.paks.iveqy.com (c83-249-10-52.bredband.comhem.se. [83.249.10.52])
+        by mx.google.com with ESMTPSA id n15sm2658113laa.36.2015.03.17.01.25.57
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 17 Mar 2015 01:25:58 -0700 (PDT)
+Received: from iveqy by paksenarrion.paks.iveqy.com with local (Exim 4.84)
+	(envelope-from <iveqy@paksenarrion.iveqy.com>)
+	id 1YXmp2-0004jx-Rc; Tue, 17 Mar 2015 09:25:56 +0100
 Content-Disposition: inline
-In-Reply-To: <xmqqmw3drl7s.fsf@gitster.dls.corp.google.com>
-X-Zoho-Virus-Status: 1
-X-ZohoMailClient: External
+In-Reply-To: <20150317081826.GB354@pks-pc>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265622>
 
+On Tue, Mar 17, 2015 at 09:18:26AM +0100, Patrick Steinhardt wrote:
+> Is it even possible to create a new submodule without any
+> upstream repository? At least `git submodule init` does not work
+> without a corresponding entry in .gitmodules which the user would
+> have needed to create himself manually. In this case one _could_
+> assume that the user knows what he is doing and expect him not to
+> call `submodule purge` (or whatever the command will be called)
+> on the authoritative copy. Other than that I've got no idea how
+> to assure safety.
 
---3uo+9/B/ebqu+fSQ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Look at git/t/t7400-submodule-basic.sh for example at the test starting
+at line 84 on how to add a submodule without any upstream.
 
-On Mon, Mar 16, 2015 at 08:55:03AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
->=20
-> > I think there should be a command that is able to remove those
-> > dangling repositories if the following conditions are met:
-> >
-> > - the submodule should not be initialized
-> >
-> > - the submodule should not have an entry in .gitmodules in the
-> >   currently checked out revision
-> >
-> > - the submodule should not contain any commits that are not
-> >   upstream
-> >
-> > - the submodule should not contain other submodules that do not
-> >   meet those conditions
->=20
-> I do not have a strong opinion on whether it is a good idea to make
-> it possible to remove the .git/modules/*, but should it be a
-> separate subcommand, or should it be an option to the 'deinit'
-> subcommand?
+Git has already a disadvantage against other SCM (like mercurial)
+because it's "too easy to loose data with git". Meaning that we purge
+unrefered commits. (Yes this is up to debate if this is good or bad, but
+here's not the place).
 
-See my response to Jonathan.
+I think we should be very carefully with adding commands that
+permanently removes data. They should be really well crafted so that
+there's no way to do this by mistake.
 
-> Also, how would you apply the safety to a repository without
-> "upstream", i.e. the authoritative copy?
+-- 
+Fredrik Gustafsson
 
-Is it even possible to create a new submodule without any
-upstream repository? At least `git submodule init` does not work
-without a corresponding entry in .gitmodules which the user would
-have needed to create himself manually. In this case one _could_
-assume that the user knows what he is doing and expect him not to
-call `submodule purge` (or whatever the command will be called)
-on the authoritative copy. Other than that I've got no idea how
-to assure safety.
-
-Regards
-Patrick
-
---3uo+9/B/ebqu+fSQ
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAABCAAGBQJVB+NSAAoJEBF8Z7aeq/EsnroP/1YKDiUPBkR6gEHDZmg8tNKS
-b7HVvl+eGxH4i8NbrtSI+CPxkCVZrrWNHIJsR0ZYqKt+I0+PvQQWOTCBxDde7nZS
-j4ycYllse5YTLl4FJhNdtcJA5KHYtB8MGdbx63RAW9nnkIK+7L/75UtxrsDlmkbJ
-Z2TwL8NCsEViPFdClJ39hMxq2pkORXWknLtCtrsnYqNtxbnatgi1jJQz9D4abQql
-2c3Rawy0S4bj+kNUF3F1vMZ1jrj9r/DhMOzDybM9x+7HAsIYJslSWX9f5VJ0Cj4B
-AWkljVq95XeeFNaH5kZjDf/es+0NtKosfzbNGOqLLBLMqvArXvtAwZu+/Oznxnch
-CqSdjeWxQHppfT3R2bf83vl44eh20I9etUeY4A/tFwP0I6dXzQeq53abdFW9X7Q6
-aZLxoGlVO3QFyoZzOJvLzS/j9WlVSuoAwSCUdpyoTuXrzzRdL6PlpJv6BYwIqZ5q
-7mj8AYaa/UmxBtFbw2H/mu0JBle8nIMhDdbXsW2y9mscDWgrX+0ps+c+8aLlTKrN
-RqzPwsmt4rcw0jZ6u/omP1uw//xJdAi8CWfUhq2VY+HW1hn4AQ/GUYyFDC2Ad5MA
-PmtIFEaCUbpdnpcgRXMBEPvizj3xEEqEmkCXc3uQRxxmdumg355690JoYRqK0i/Q
-GECqKdeRYmAot/Vo3hIz
-=WGPB
------END PGP SIGNATURE-----
-
---3uo+9/B/ebqu+fSQ--
+phone: +46 733-608274
+e-mail: iveqy@iveqy.com
+website: http://www.iveqy.com
