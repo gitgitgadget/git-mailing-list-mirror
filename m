@@ -1,63 +1,98 @@
-From: "Dr. Henry Cheng Kar-shun" <budiningsari@ugm.ac.id>
-Subject: Dr. Henry Cheng Kar-shun
-Date: Tue, 17 Mar 2015 03:07:44 -0600
-Message-ID: <20150317090759.60FEE43864@mail.bacgiang.gov.vn>
-Reply-To: henrychengkar@gmail.com
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH/GSoC/RFC] fetch: git fetch --deepen
+Date: Tue, 17 Mar 2015 17:44:18 +0700
+Message-ID: <CACsJy8AO1w0tYmYkOLjB6osw50gYpc01_6iUt5JZLqL0xtDPrw@mail.gmail.com>
+References: <1426251846-1604-1-git-send-email-dongcan.jiang@gmail.com>
+ <CACsJy8AAsAO6gjWg0nsdiOXFEsZ4583pH9mkUx1Js3Yop5KHHQ@mail.gmail.com> <CABwkPcrF9oFvNkbp6rFV28U3w-szyV9k4LFviYyFkoJvp8pjbA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: Recipients <budiningsari@ugm.ac.id>
-X-From: git-owner@vger.kernel.org Tue Mar 17 11:12:02 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Dongcan Jiang <dongcan.jiang@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 17 11:44:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YXoTg-00057s-Jo
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Mar 2015 11:12:00 +0100
+	id 1YXozZ-0000Op-NV
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Mar 2015 11:44:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932274AbbCQKL4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Mar 2015 06:11:56 -0400
-Received: from mail.bacgiang.gov.vn ([123.30.49.4]:57442 "EHLO
-	mail.bacgiang.gov.vn" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753627AbbCQKLy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Mar 2015 06:11:54 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.bacgiang.gov.vn (Postfix) with ESMTP id B116643879;
-	Tue, 17 Mar 2015 16:08:15 +0700 (ICT)
-Received: from mail.bacgiang.gov.vn ([127.0.0.1])
-	by localhost (mail.bacgiang.gov.vn [127.0.0.1]) (amavisd-new, port 10032)
-	with ESMTP id vCiqKqKVlHMx; Tue, 17 Mar 2015 16:08:14 +0700 (ICT)
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.bacgiang.gov.vn (Postfix) with ESMTP id 3DF9E4387F;
-	Tue, 17 Mar 2015 16:08:14 +0700 (ICT)
-X-Virus-Scanned: amavisd-new at bacgiang.gov.vn
-Received: from mail.bacgiang.gov.vn ([127.0.0.1])
-	by localhost (mail.bacgiang.gov.vn [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id py1PNzvkopJt; Tue, 17 Mar 2015 16:08:13 +0700 (ICT)
-Received: from [74.208.75.178] (unknown [74.208.75.178])
-	by mail.bacgiang.gov.vn (Postfix) with ESMTPSA id 60FEE43864;
-	Tue, 17 Mar 2015 16:07:59 +0700 (ICT)
-Content-Description: Mail message body
+	id S1753960AbbCQKox (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Mar 2015 06:44:53 -0400
+Received: from mail-ie0-f171.google.com ([209.85.223.171]:34273 "EHLO
+	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753407AbbCQKot (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Mar 2015 06:44:49 -0400
+Received: by iecsl2 with SMTP id sl2so5861354iec.1
+        for <git@vger.kernel.org>; Tue, 17 Mar 2015 03:44:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=3zuFan5kzpDy1CuAfL3g4EpBI4O768+1clbcqHmkypU=;
+        b=ehcHJH1lG5e2HqJYLy4PcIotTvwsCkoOKiMqh/RiyDPyL1IYGR/jfpCUOxoj3R5eHZ
+         04P31hm+xG+INDyNQDum41pu18LYyJbHG+9C1CiTBNmcdik1RurPwk47s5ZJ5SbtQh5N
+         1KSt0zTW1D1b5lIF/ba1tub7WVbhaDlOs1lxJ2/GiXrHyZ7VHSjOdHJ6aWN57rqzn0e6
+         +x9eB08tApxSHygbJJwFdX/Tl/VaZ0ZO47NzcmhV0n8/L+9DpIcRSTmMOO7q+Vtka+a4
+         xTrrIWYqRhOlu8QUiUsnQzng50Km5xZotfaatKh/uv5feYQ/mYxekrx+eBUDPeQeATs1
+         FfuQ==
+X-Received: by 10.50.25.166 with SMTP id d6mr42125240igg.41.1426589088924;
+ Tue, 17 Mar 2015 03:44:48 -0700 (PDT)
+Received: by 10.107.131.33 with HTTP; Tue, 17 Mar 2015 03:44:18 -0700 (PDT)
+In-Reply-To: <CABwkPcrF9oFvNkbp6rFV28U3w-szyV9k4LFviYyFkoJvp8pjbA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 9.5 points;
- *  2.7 DEAR_FRIEND BODY: Dear Friend? That's not very dear!
- *  1.2 US_DOLLARS_3 BODY: Mentions millions of $ ($NN,NNN,NNN.NN)
- *  2.2 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
- *      [Blocked - see <http://www.spamcop.net/bl.shtml?123.30.49.4>]
- *  2.0 ADVANCE_FEE_2 Appears to be advance fee fraud (Nigerian 419)
- *  1.4 ADVANCE_FEE_3 Appears to be advance fee fraud (Nigerian 419)
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265624>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265625>
 
-Dear Friend,
+On Mon, Mar 16, 2015 at 11:10 PM, Dongcan Jiang <dongcan.jiang@gmail.com> wrote:
+> Hi Duy,
+>
+> Sorry for my late response.
+>
+>> we need to make sure that upload-pack barf if some client sends both "deepen" and
+>> "depth".
+>
+> Actually, in my current design, when client just wants "depth", it
+> sends "depth N";
+> when it want "deepen", it sends "depth N" as well as "depth_deepen".
+> For the latter
+> case, it tells upload-pack to collect objects for "deepen N".
+>
+> Thus, I'm not so sure whether upload-pack needs to check their exclusion.
 
-Good Day, I am Dr. Henry Cheng Kar-shun a Director of Non Independent Non-executive Board Hang Seng Bank Limited, Hong Kong. I have funds worth $17,500.000.00 to secretly secure (Transfer) 
-to your account in your country from our affiliated bank for our benefit. 
+C Git is not the only client that can talk to upload-pack. A buggy
+client may send both. The least we need is make sure it would not
+crash or break the server security in any way. But if we have to
+consider that, we may as well reject with a clear message, which would
+help the client writer. And speaking of clients..
 
-Please if you are interested to help me, do and write me for more details. Here is my Email: (henrychengkar@gmail.com)
+On Mon, Mar 16, 2015 at 11:08 PM, Dongcan Jiang <dongcan.jiang@gmail.com> wrote:
+>>> -             if (starts_with(line, "deepen ")) {
+>>> +             if (starts_with(line, "depth ")) {
+>>>                       char *end;
+>>> -                     depth = strtol(line + 7, &end, 0);
+>>> -                     if (end == line + 7 || depth <= 0)
+>>> -                             die("Invalid deepen: %s", line);
+>>> +                     depth = strtol(line + 6, &end, 0);
+>>> +                     if (end == line + 6 || depth <= 0)
+>>> +                             die("Invalid depth: %s", line);
+>>>                       continue;
+>>>               }
+>>>               if (!starts_with(line, "want ") ||
+>>
+>> I do not quite understand this hunk.  What happens when this program
+>> is talking to an existing fetch-pack that requested "deepen"?
+>
+> In this hunk, I actually just changed the one command name in upload-pack
+> service from "deepen" to "depth". I made this change because the name
+> "deepen" here is quite misleading, as it just means "depth". Of course,
+> I've changed the caller's sent pack from "deepen" to "depth" too (See below).
 
-Regards,
-Dr. Henry Cheng Kar-shun
+You missed Junio's keyword "existing". Your new client will work well
+with your new server. But it breaks "git clone --depth" (or "git fetch
+--depth") for all existing git installations.
+-- 
+Duy
