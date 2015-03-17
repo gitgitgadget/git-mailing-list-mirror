@@ -1,102 +1,96 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 3/5] prune: turn on ref_paranoia flag
-Date: Tue, 17 Mar 2015 03:30:52 -0400
-Message-ID: <20150317073052.GC25191@peff.net>
+Subject: [PATCH 4/5] repack: turn on "ref paranoia" when doing a destructive
+ repack
+Date: Tue, 17 Mar 2015 03:31:02 -0400
+Message-ID: <20150317073102.GD25191@peff.net>
 References: <20150317072750.GA22155@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Michael Haggerty <mhagger@alum.mit.edu>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 17 08:31:03 2015
+X-From: git-owner@vger.kernel.org Tue Mar 17 08:31:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YXlxr-0005Il-Nf
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Mar 2015 08:31:00 +0100
+	id 1YXly2-0005QF-2y
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Mar 2015 08:31:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752073AbbCQHa4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Mar 2015 03:30:56 -0400
-Received: from cloud.peff.net ([50.56.180.127]:33920 "HELO cloud.peff.net"
+	id S1752101AbbCQHbG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Mar 2015 03:31:06 -0400
+Received: from cloud.peff.net ([50.56.180.127]:33924 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751387AbbCQHaz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Mar 2015 03:30:55 -0400
-Received: (qmail 25633 invoked by uid 102); 17 Mar 2015 07:30:55 -0000
+	id S1752015AbbCQHbF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Mar 2015 03:31:05 -0400
+Received: (qmail 25642 invoked by uid 102); 17 Mar 2015 07:31:05 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 17 Mar 2015 02:30:55 -0500
-Received: (qmail 22821 invoked by uid 107); 17 Mar 2015 07:31:06 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 17 Mar 2015 02:31:05 -0500
+Received: (qmail 22838 invoked by uid 107); 17 Mar 2015 07:31:15 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 17 Mar 2015 03:31:06 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 17 Mar 2015 03:30:52 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 17 Mar 2015 03:31:15 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 17 Mar 2015 03:31:02 -0400
 Content-Disposition: inline
 In-Reply-To: <20150317072750.GA22155@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265616>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265617>
 
-Prune should know about broken objects at the tips of refs,
-so that we can feed them to our traversal rather than
-ignoring them. It's better for us to abort the operation on
-the broken object than it is to start deleting objects with
-an incomplete view of the reachability namespace.
+If we are repacking with "-ad", we will drop any unreachable
+objects. Likewise, using "-Ad --unpack-unreachable=<time>"
+will drop any old, unreachable objects. In these cases, we
+want to make sure the reachability we compute with "--all"
+is complete. We can do this by passing GIT_REF_PARANOIA=1 in
+the environment to pack-objects.
 
-Note that for missing objects, aborting is the best we can
-do. For a badly-named ref, we technically could use its sha1
-as a reachability tip. However, the iteration code just
-feeds us a null sha1, so there would be a reasonable amount
-of code involved to pass down our wishes. It's not really
-worth trying to do better, because this is a case that
-should happen extremely rarely, and the message we provide:
-
-  fatal: unable to parse object: refs/heads/bogus:name
-
-is probably enough to point the user in the right direction.
+Note that "-Ad" is safe already, because it only loosens
+unreachable objects. It is up to "git prune" to avoid
+deleting them.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-Note that we should already be aborting for non-tip objects. I guess we
-could test that explicitly, too, but I didn't here.
+ builtin/repack.c            | 8 ++++++--
+ t/t5312-prune-corruption.sh | 2 +-
+ 2 files changed, 7 insertions(+), 3 deletions(-)
 
- builtin/prune.c             | 1 +
- t/t5312-prune-corruption.sh | 4 ++--
- 2 files changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/prune.c b/builtin/prune.c
-index 04d3b12..17094ad 100644
---- a/builtin/prune.c
-+++ b/builtin/prune.c
-@@ -115,6 +115,7 @@ int cmd_prune(int argc, const char **argv, const char *prefix)
- 	expire = ULONG_MAX;
- 	save_commit_buffer = 0;
- 	check_replace_refs = 0;
-+	ref_paranoia = 1;
- 	init_revisions(&revs, prefix);
+diff --git a/builtin/repack.c b/builtin/repack.c
+index 28fbc70..f2edeb0 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -228,13 +228,17 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 		get_non_kept_pack_filenames(&existing_packs);
  
- 	argc = parse_options(argc, argv, prefix, options, prune_usage, 0);
+ 		if (existing_packs.nr && delete_redundant) {
+-			if (unpack_unreachable)
++			if (unpack_unreachable) {
+ 				argv_array_pushf(&cmd.args,
+ 						"--unpack-unreachable=%s",
+ 						unpack_unreachable);
+-			else if (pack_everything & LOOSEN_UNREACHABLE)
++				argv_array_push(&cmd.env_array, "GIT_REF_PARANOIA=1");
++			} else if (pack_everything & LOOSEN_UNREACHABLE) {
+ 				argv_array_push(&cmd.args,
+ 						"--unpack-unreachable");
++			} else {
++				argv_array_push(&cmd.env_array, "GIT_REF_PARANOIA=1");
++			}
+ 		}
+ 	} else {
+ 		argv_array_push(&cmd.args, "--unpacked");
 diff --git a/t/t5312-prune-corruption.sh b/t/t5312-prune-corruption.sh
-index 167031e..cccab58 100755
+index cccab58..e3e9994 100755
 --- a/t/t5312-prune-corruption.sh
 +++ b/t/t5312-prune-corruption.sh
-@@ -25,7 +25,7 @@ test_expect_success 'create history reachable only from a bogus-named ref' '
- 	git reset --hard HEAD^
- '
- 
--test_expect_failure 'pruning does not drop bogus object' '
-+test_expect_success 'pruning does not drop bogus object' '
- 	test_when_finished "git hash-object -w -t commit saved" &&
- 	test_might_fail git prune --expire=now &&
+@@ -38,7 +38,7 @@ test_expect_success 'put bogus object into pack' '
  	verbose git cat-file -e $bogus
-@@ -62,7 +62,7 @@ test_expect_success 'create history with missing tip commit' '
- 	test_must_fail git cat-file -e $missing
  '
  
--test_expect_failure 'pruning with a corrupted tip does not drop history' '
-+test_expect_success 'pruning with a corrupted tip does not drop history' '
- 	test_when_finished "git hash-object -w -t commit saved" &&
- 	test_might_fail git prune --expire=now &&
- 	verbose git cat-file -e $recoverable
+-test_expect_failure 'destructive repack keeps packed object' '
++test_expect_success 'destructive repack keeps packed object' '
+ 	test_might_fail git repack -Ad --unpack-unreachable=now &&
+ 	verbose git cat-file -e $bogus &&
+ 	test_might_fail git repack -ad &&
 -- 
 2.3.3.520.g3cfbb5d
