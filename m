@@ -1,64 +1,91 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH 1/5] t5312: test object deletion code paths in a corrupted
- repository
-Date: Tue, 17 Mar 2015 19:34:02 +0100
-Message-ID: <5508739A.5030608@kdbg.org>
-References: <20150317072750.GA22155@peff.net> <20150317072844.GA25191@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [GSoC] Applying for conversion scripts to builtins
+Date: Tue, 17 Mar 2015 11:38:39 -0700
+Message-ID: <xmqqpp87o4eo.fsf@gitster.dls.corp.google.com>
+References: <CAHLaBNJkL1CUJEk=cH=CLcDvZtoAr+PiCo2KHjfMLUKsugtRPA@mail.gmail.com>
+	<CACRoPnQDopKNW2oc=UiLhupBBSh5ZmUHR7hU5aeguD4OVd1uPQ@mail.gmail.com>
+	<4355599932558291b22313f244eda9bd@www.dscho.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Michael Haggerty <mhagger@alum.mit.edu>
-To: Jeff King <peff@peff.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 17 19:34:18 2015
+Content-Type: text/plain
+Cc: Paul Tan <pyokagan@gmail.com>, Yurii Shevtsov <ungetch@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Mar 17 19:38:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YXwJl-0002Ia-RS
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Mar 2015 19:34:18 +0100
+	id 1YXwOF-00053q-It
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Mar 2015 19:38:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753193AbbCQSeI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Mar 2015 14:34:08 -0400
-Received: from bsmtp8.bon.at ([213.33.87.20]:22790 "EHLO bsmtp4.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752679AbbCQSeH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Mar 2015 14:34:07 -0400
-Received: from bsmtp.bon.at (unknown [192.168.181.106])
-	by bsmtp4.bon.at (Postfix) with ESMTPS id 3l63716RQzz5v31
-	for <git@vger.kernel.org>; Tue, 17 Mar 2015 19:34:05 +0100 (CET)
-Received: from dx.site (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTPSA id 3l636y4f4sz5tlH;
-	Tue, 17 Mar 2015 19:34:02 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.site (Postfix) with ESMTP id 2AAE151F7;
-	Tue, 17 Mar 2015 19:34:02 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
-In-Reply-To: <20150317072844.GA25191@peff.net>
+	id S932477AbbCQSip (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Mar 2015 14:38:45 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64301 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932237AbbCQSim (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Mar 2015 14:38:42 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9524C3EA2F;
+	Tue, 17 Mar 2015 14:38:41 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=HVmlJhYpbfQjA+5lyh6h46tC/L0=; b=d3vhOw
+	Ifcg86xchtFelKH9ldeC6fInBJ1WiS6x2h6yVDSLqtN0TLZ8WbhV2Oz/rrfdoZ1l
+	cGyYYDjHzAYD6UpCHcKH5PEN1ZMbN2djTAuGtgxGntLbmTtXZtMxG82dd0+MaiSf
+	1cNm2gm4q2a9v44CghVBZfZfdc29s6hsTwAa0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=US38cl0ZMSD9eZpPEt1/Ac8cWc0ZJ7U+
+	kFbWZwv36r515DzMDtsRS3ZFK+DbWBPs+JaMOFsDFS1+E50qTb2DB9FSvAIn7KPN
+	nv6ezzT3ONR8p7V8FgJ20U8jyBMT8t9aMx652ofTdb+efyy6emWtjnRIQCXnOrR3
+	4HSu9HxE/6k=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8DE583EA2C;
+	Tue, 17 Mar 2015 14:38:41 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C7BB73EA29;
+	Tue, 17 Mar 2015 14:38:40 -0400 (EDT)
+In-Reply-To: <4355599932558291b22313f244eda9bd@www.dscho.org> (Johannes
+	Schindelin's message of "Tue, 17 Mar 2015 12:56:15 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: D51A4192-CCD4-11E4-BC21-A2259F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265651>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265652>
 
-Am 17.03.2015 um 08:28 schrieb Jeff King:
-> +test_expect_success 'create history reachable only from a bogus-named ref' '
-> +	test_tick && git commit --allow-empty -m master &&
-> +	base=$(git rev-parse HEAD) &&
-> +	test_tick && git commit --allow-empty -m bogus &&
-> +	bogus=$(git rev-parse HEAD) &&
-> +	git cat-file commit $bogus >saved &&
-> +	echo $bogus >.git/refs/heads/bogus:name &&
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-This causes headaches on Windows: It creates an empty file, named 
-"bogus", with all the data diverted to the alternate data stream named 
-"name". Needless to say that this...
+> Therefore, I would wager a bet that just the mere conversion of a
+> shell script into even a primitive `run_command()`-based builtin would
+> help performance on Windows in a noticeable manner.
 
-> +test_expect_success 'clean up bogus ref' '
-> +	rm .git/refs/heads/bogus:name
-> +'
+As you correctly allege, if a patch rewrote a shell-scripted
+porcelain by using series of run_command() and doing nothing else, I
+would have asked "is that an improvement?", without knowing that.
 
-does not remove the file "bogus", but only the alternate data stream (if 
-at all---I forgot to check). How about .git/refs/heads/bogus..nam.e?
+> Of course, it would be *even nicer* to avoid the spawning altogether.
 
--- Hannes
+Yeah, that, too ;-)
+
+> The biggest benefit of avoiding needless parsing, however, is not
+> performance. It is avoiding quoting issues. This is particularly so on
+> Windows, where Git is sometimes called from outside a shell
+> environment, where we have to deal with inconsistent quoting because
+> it is every Windows program's own job to parse the command-line,
+> including the quoting.
+>
+> Concrete example: on Windows, we have file locking issues because
+> files that are in use cannot be deleted. For that reason, we have
+> Windows-specific code that is "nice" by trying harder to delete files,
+> giving programs a little time to let their locks go. This locking
+> issue happens also when a virus scanner "uses"...
+
+These are definitely good advices from the area expert.
+
+Thanks for a bunch of good input.
