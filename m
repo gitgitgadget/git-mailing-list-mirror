@@ -1,71 +1,63 @@
-From: Thomas Ferris Nicolaisen <tfnico@gmail.com>
-Subject: Re: Promoting Git developers
-Date: Tue, 17 Mar 2015 10:43:32 +0100
-Message-ID: <CAEcj5uX_v2PUkTAR9xr-i-D-pmf+8EBLhu7FMkA+RKxc6vye5w@mail.gmail.com>
-References: <CAP8UFD1+rC0FjisSddDcyn1E_75wtBU9pEpUcQX5zNtd4zKYFQ@mail.gmail.com>
-	<54FDA6B5.8050505@drmicha.warpmail.net>
-	<CAP8UFD0KNbPBB_dOzw_dAj+ws190_cO8g7_jb_V33x1jxgvnqQ@mail.gmail.com>
-	<xmqqk2yo22ce.fsf@gitster.dls.corp.google.com>
-	<CAP8UFD37v_zOjRkUPLy-ChDs=+NetsDY7Q14-4rYA-WhnTRYyA@mail.gmail.com>
-	<xmqqfv9b5krc.fsf@gitster.dls.corp.google.com>
-	<CAP8UFD2ba3jQSsQrGGWM-8HTfGR+zZhmbkxiEBhSR+Ho=B0MuA@mail.gmail.com>
+From: "Dr. Henry Cheng Kar-shun" <budiningsari@ugm.ac.id>
+Subject: Dr. Henry Cheng Kar-shun
+Date: Tue, 17 Mar 2015 03:07:44 -0600
+Message-ID: <20150317090759.60FEE43864@mail.bacgiang.gov.vn>
+Reply-To: henrychengkar@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	David Kastrup <dak@gnu.org>, git <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>, Scott Chacon <schacon@gmail.com>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 17 10:43:51 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: Recipients <budiningsari@ugm.ac.id>
+X-From: git-owner@vger.kernel.org Tue Mar 17 11:12:02 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YXo2L-0003E8-S7
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Mar 2015 10:43:46 +0100
+	id 1YXoTg-00057s-Jo
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Mar 2015 11:12:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932982AbbCQJng (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Mar 2015 05:43:36 -0400
-Received: from mail-qc0-f176.google.com ([209.85.216.176]:33501 "EHLO
-	mail-qc0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932115AbbCQJnd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Mar 2015 05:43:33 -0400
-Received: by qcyi15 with SMTP id i15so3050159qcy.0
-        for <git@vger.kernel.org>; Tue, 17 Mar 2015 02:43:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=6CN4NPd7poxRx2ILDe1j1f0zg8CuWOfPckuMzFZI64M=;
-        b=zZKaQn3h93uMAw4B7twmypRXQVOvyYZVXIyBUMr6LrMFk12uDJvtzXWi0GXHNF368m
-         lhGLW03Xp+qSp40yOAMfihFYkCiWH5/llXgesxVcrsl+fINPEC/jeACXqFeTWOj1u2/3
-         J48D3bm4TriN26Fn84whxuNYx51Svafv3oddBpKQ6gCEhyVzIUIyg7dc2ICm+qtWhV2/
-         vG65mvXH8B6WHajMCgac2Aoc0IvybvOJD5It8EObVwmWpgLN5FwqpzXq1izpU5o2+MaT
-         XIQ6uXQFRkkRIXRDcbaicfMikCpZ8sKlc1DzJT0WuBR42q6TAIo5zuBCi8fxX0GHeTfK
-         3PgQ==
-X-Received: by 10.140.28.36 with SMTP id 33mr79445659qgy.6.1426585412866; Tue,
- 17 Mar 2015 02:43:32 -0700 (PDT)
-Received: by 10.140.102.55 with HTTP; Tue, 17 Mar 2015 02:43:32 -0700 (PDT)
-In-Reply-To: <CAP8UFD2ba3jQSsQrGGWM-8HTfGR+zZhmbkxiEBhSR+Ho=B0MuA@mail.gmail.com>
+	id S932274AbbCQKL4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Mar 2015 06:11:56 -0400
+Received: from mail.bacgiang.gov.vn ([123.30.49.4]:57442 "EHLO
+	mail.bacgiang.gov.vn" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753627AbbCQKLy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 Mar 2015 06:11:54 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.bacgiang.gov.vn (Postfix) with ESMTP id B116643879;
+	Tue, 17 Mar 2015 16:08:15 +0700 (ICT)
+Received: from mail.bacgiang.gov.vn ([127.0.0.1])
+	by localhost (mail.bacgiang.gov.vn [127.0.0.1]) (amavisd-new, port 10032)
+	with ESMTP id vCiqKqKVlHMx; Tue, 17 Mar 2015 16:08:14 +0700 (ICT)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.bacgiang.gov.vn (Postfix) with ESMTP id 3DF9E4387F;
+	Tue, 17 Mar 2015 16:08:14 +0700 (ICT)
+X-Virus-Scanned: amavisd-new at bacgiang.gov.vn
+Received: from mail.bacgiang.gov.vn ([127.0.0.1])
+	by localhost (mail.bacgiang.gov.vn [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id py1PNzvkopJt; Tue, 17 Mar 2015 16:08:13 +0700 (ICT)
+Received: from [74.208.75.178] (unknown [74.208.75.178])
+	by mail.bacgiang.gov.vn (Postfix) with ESMTPSA id 60FEE43864;
+	Tue, 17 Mar 2015 16:07:59 +0700 (ICT)
+Content-Description: Mail message body
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265623>
+X-Spam-Report: 9.5 points;
+ *  2.7 DEAR_FRIEND BODY: Dear Friend? That's not very dear!
+ *  1.2 US_DOLLARS_3 BODY: Mentions millions of $ ($NN,NNN,NNN.NN)
+ *  2.2 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
+ *      [Blocked - see <http://www.spamcop.net/bl.shtml?123.30.49.4>]
+ *  2.0 ADVANCE_FEE_2 Appears to be advance fee fraud (Nigerian 419)
+ *  1.4 ADVANCE_FEE_3 Appears to be advance fee fraud (Nigerian 419)
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265624>
 
-On Sun, Mar 15, 2015 at 9:46 AM, Christian Couder
-<christian.couder@gmail.com> wrote:
->
-> I wrote something about a potential Git Rev News news letter:
->
-> https://github.com/git/git.github.io/pull/15
->
+Dear Friend,
 
-I would love to have/use something like this in the GitMinutes
-podcast. Perhaps in addition to the very random interview format that
-I have now, I could do a more regular episodes about Git news, where I
-incorporate this.
+Good Day, I am Dr. Henry Cheng Kar-shun a Director of Non Independent Non-executive Board Hang Seng Bank Limited, Hong Kong. I have funds worth $17,500.000.00 to secretly secure (Transfer) 
+to your account in your country from our affiliated bank for our benefit. 
 
-I also volunteer to help with the production, if you'll allow list
-lurkers like myself to contribute ;)
+Please if you are interested to help me, do and write me for more details. Here is my Email: (henrychengkar@gmail.com)
+
+Regards,
+Dr. Henry Cheng Kar-shun
