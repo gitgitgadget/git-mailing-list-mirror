@@ -1,154 +1,139 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4] rev-list: refuse --first-parent combined with --bisect
-Date: Tue, 17 Mar 2015 13:46:05 -0700
-Message-ID: <xmqq3853nyia.fsf@gitster.dls.corp.google.com>
-References: <1425827005-9602-1-git-send-email-me@ikke.info>
-	<1425934575-19581-1-git-send-email-me@ikke.info>
-	<xmqqa8zkzeq5.fsf@gitster.dls.corp.google.com>
-	<20150310225509.GA5442@vps892.directvps.nl>
-	<xmqqoao0xx9p.fsf@gitster.dls.corp.google.com>
-	<20150311184512.GB5442@vps892.directvps.nl>
-	<xmqqsidb5m2r.fsf@gitster.dls.corp.google.com>
-	<20150316163306.GB11832@vps892.directvps.nl>
-	<xmqqbnjsrcyz.fsf@gitster.dls.corp.google.com>
-	<065AE7977A54488198B39564E3E174E6@PhilipOakley>
-	<xmqqr3sops9f.fsf@gitster.dls.corp.google.com>
-	<CAP8UFD12UX+3psD2=9_RsGv8JA2C8N54qAYGydYgr7n5ta7dzw@mail.gmail.com>
-	<xmqqtwxjo4nf.fsf@gitster.dls.corp.google.com>
-	<CAP8UFD0Mn3SPimYU3fdF5pV1MDAHXhKUVSutfJKrXzPpaXM=bA@mail.gmail.com>
+From: Ryan Lortie <desrt@desrt.ca>
+Subject: Re: git submodule: update=!command
+Date: Tue, 17 Mar 2015 16:48:22 -0400
+Message-ID: <1426625302.1806008.241713717.52A37086@webmail.messagingengine.com>
+References: <1426620537.1785877.241673949.72FB3B40@webmail.messagingengine.com>
+ <20150317195030.GA18725@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Philip Oakley <philipoakley@iee.org>, Kevin Daudt <me@ikke.info>,
-	git <git@vger.kernel.org>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 17 21:46:22 2015
+Content-Type: multipart/mixed; boundary="_----------=_142662530218060082";
+ charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Chris Packham <judge.packham@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Mar 17 21:48:32 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YXyNY-0004VW-HY
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Mar 2015 21:46:20 +0100
+	id 1YXyPd-0005kj-Al
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Mar 2015 21:48:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754212AbbCQUqP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Mar 2015 16:46:15 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50844 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753294AbbCQUqO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Mar 2015 16:46:14 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id EA8EC3F015;
-	Tue, 17 Mar 2015 16:46:13 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=SN9gh8ykdSzWcn5IdCaWEN/gRbQ=; b=IxlY/7
-	Bkrdz3862GG+Pfm5ch2oLYTGTgL/2KDGUrgojcd8iB1zqi94+Q3f5AwhxtMFlldX
-	1Jq+GnkR9YJalePQ22Ldd2Y3871CTu2Q1rrg8pHELxwjqehqs+Kvc63pm0FtjZ4w
-	z0jA3H62fFCFe7qCKvNnQ8Ks0rorC1JJ+O+SA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wUW7JV+LQAWOFSRyL30ko8o7eniTKNBA
-	JqmnhxShKkm2fxi9bmujOvoJ39JOA4lrEhAi00q/HHaWzDzRVueYLY1vp+AHei0D
-	BvfijCQ4uJJg5UNaijLH2v4hU0gCaXYCvngp/rttcF2hAXt5qlVDo+evOURXycaZ
-	7coNKxVAQPw=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E17783F014;
-	Tue, 17 Mar 2015 16:46:13 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 14D313F008;
-	Tue, 17 Mar 2015 16:46:07 -0400 (EDT)
-In-Reply-To: <CAP8UFD0Mn3SPimYU3fdF5pV1MDAHXhKUVSutfJKrXzPpaXM=bA@mail.gmail.com>
-	(Christian Couder's message of "Tue, 17 Mar 2015 20:49:50 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: A2AD4F94-CCE6-11E4-933B-A2259F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1753933AbbCQUsY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Mar 2015 16:48:24 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:54374 "EHLO
+	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752997AbbCQUsX (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 Mar 2015 16:48:23 -0400
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailout.nyi.internal (Postfix) with ESMTP id 1F53B202F4
+	for <git@vger.kernel.org>; Tue, 17 Mar 2015 16:48:21 -0400 (EDT)
+Received: from web1 ([10.202.2.211])
+  by compute5.internal (MEProxy); Tue, 17 Mar 2015 16:48:23 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=desrt.ca; h=
+	message-id:x-sasl-enc:from:to:cc:mime-version
+	:content-transfer-encoding:content-type:in-reply-to:references
+	:subject:date; s=mesmtp; bh=hOHZofRxFHoMJX0MlrU84UIqonM=; b=oThB
+	YtctUy84MWVPwS50RwGoDf/9KmK4XxPSE8kM5CyG+wAw8VVcaf3h0weoHZJE6NpX
+	yOfoCNpVfADDHe/oINW+ojDwQn93zVBD5lfUAa47r80V722lNJ2YwSLkjI+mm4aW
+	YaA2qo3d7MmLF4iCsY5dQaW7BtcaCT/nRRS2Zrg=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:x-sasl-enc:from:to:cc
+	:mime-version:content-transfer-encoding:content-type:in-reply-to
+	:references:subject:date; s=smtpout; bh=hOHZofRxFHoMJX0MlrU84UIq
+	onM=; b=qqSH2Zg+pNcsZba4o/JAvx2zzn26rFViXjHeMuXC7IUxk/gYQtUMPSQ4
+	Gd1w4MvPeGUWnIlvuAB8QPbxSqBlb4G6X6DO4K2SBt7JoX8zW/03maKKE1W67Wpe
+	omLBNCXw6GC0Ey1VevnOfxw0bcJFwsetgtZv4fYw4FHd/PvqMuw=
+Received: by web1.nyi.internal (Postfix, from userid 99)
+	id F325CAF3502; Tue, 17 Mar 2015 16:48:22 -0400 (EDT)
+X-Sasl-Enc: V+QS4W2VGzcqipqMh0oZFl4Trn4D2nyF7jfUiIXBiL9F 1426625302
+X-Mailer: MessagingEngine.com Webmail Interface - ajax-15db86eb
+In-Reply-To: <20150317195030.GA18725@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265664>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265665>
 
-Christian Couder <christian.couder@gmail.com> writes:
+This is a multi-part message in MIME format.
 
-> On Tue, Mar 17, 2015 at 7:33 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Christian Couder <christian.couder@gmail.com> writes:
->>
->>> Yes, but the user is supposed to not change the "bad" pointer for no
->>> good reason.
->>
->> That is irrelevant, no?  Nobody is questioning that the user is
->> supposed to judge if a commit is "good" or "bad" correctly.
->
-> So if there is already a bad commit and the user gives another
-> bad commit, that means that the user knows that it will replace the
-> existing bad commit with the new one and that it's done for this
-> purpose.
+--_----------=_142662530218060082
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-ECANNOTQUITEPARSE.  The user may say "git bisect bad $that" and we
-do not question $that is bad. Git does not know better than the
-user.
+On Tue, Mar 17, 2015, at 15:50, Jeff King wrote:
+> Yeah, spelling out the security model more explicitly would be good.
 
-But that does not mean Git does not know better than the user how
-the current bad commit and $that commit are related.  The user is
-not interested in "replacing" at all.  The user is telling just one
-single fact, that is, "$that is bad".
+Please see the attached patch.
 
->> I am not quite sure if I am correctly getting what you meant to say,
->> but if you meant "only when --alternate is given, we should do the
->> merge-base thing; we should keep losing the current 'bad' and
->> replace it with the new one without the --alternate option", I would
->> see that as an exercise of a bad taste.
->
-> What I wanted to say is that if we change "git bisect bad <commitish>",
-> so that now it means "add a new bad commit" instead of the previous
-> "replace the current bad commit, if any, with this one", then experienced
-> users might see that change as a regression in the user interface and
-> it might even break scripts.
+Cheers
 
-Huh?  
+--_----------=_142662530218060082
+Content-Disposition: attachment; filename="0001-docs-clarify-command-submodule-update-policy.patch"
+Content-Id: <1426625253.1805943.d70af37051bf9d66e0142621c7187f204b835469.5D1C2AD5@content.messagingengine.com>
+Content-Transfer-Encoding: base64
+Content-Type: application/octet-stream;
+ name="0001-docs-clarify-command-submodule-update-policy.patch"
 
-Step back a bit.  The place you need to start from is to admit the
-fact that what "git bisect bad <committish>" currently does is
-broken.
+RnJvbSBhNmQ3MDA1NmYyMWYwMzlkYjg2NzZmNzJhMWRlY2EwMGMzOTEyMWJk
+IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBSeWFuIExvcnRpZSA8
+ZGVzcnRAZGVzcnQuY2E+CkRhdGU6IFR1ZSwgMTcgTWFyIDIwMTUgMTY6Mjk6
+NTEgLTA0MDAKU3ViamVjdDogW1BBVENIXSBkb2NzOiBjbGFyaWZ5ICFjb21t
+YW5kIHN1Ym1vZHVsZSB1cGRhdGUgcG9saWN5CgpDbGFyaWZ5IHRoYXQgdGhl
+ICFjb21tYW5kIHN1Ym1vZHVsZSB1cGRhdGUgcG9saWN5IGlzIG5vdCBhdmFp
+bGFibGUgZnJvbQouZ2l0bW9kdWxlcyBmaWxlcy4KClRoaXMgc2hvdWxkIGhl
+bHAgY2FsbSBhbnkgZmVhcnMgcGVvcGxlIGhhdmUgYWJvdXQgdGhlIHNlY3Vy
+aXR5CmltcGxpY2F0aW9ucyBvZiB0aGlzIG90aGVyd2lzZSBzY2FyeS1sb29r
+aW5nIGZlYXR1cmUuCgpTaWduZWQtb2ZmLWJ5OiBSeWFuIExvcnRpZSA8ZGVz
+cnRAZGVzcnQuY2E+Ci0tLQogRG9jdW1lbnRhdGlvbi9naXQtc3VibW9kdWxl
+LnR4dCB8IDEwICsrKysrKystLS0KIERvY3VtZW50YXRpb24vZ2l0bW9kdWxl
+cy50eHQgICAgfCAxMSArKysrKysrKy0tLQogMiBmaWxlcyBjaGFuZ2VkLCAx
+NSBpbnNlcnRpb25zKCspLCA2IGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBh
+L0RvY3VtZW50YXRpb24vZ2l0LXN1Ym1vZHVsZS50eHQgYi9Eb2N1bWVudGF0
+aW9uL2dpdC1zdWJtb2R1bGUudHh0CmluZGV4IDhlNmFmNjUuLmEwMzNlMjYg
+MTAwNjQ0Ci0tLSBhL0RvY3VtZW50YXRpb24vZ2l0LXN1Ym1vZHVsZS50eHQK
+KysrIGIvRG9jdW1lbnRhdGlvbi9naXQtc3VibW9kdWxlLnR4dApAQCAtMTU5
+LDkgKzE1OSwxMyBAQCB1cGRhdGU6OgogCVRoaXMgd2lsbCBtYWtlIHRoZSBz
+dWJtb2R1bGVzIEhFQUQgYmUgZGV0YWNoZWQgdW5sZXNzIGAtLXJlYmFzZWAg
+b3IKIAlgLS1tZXJnZWAgaXMgc3BlY2lmaWVkIG9yIHRoZSBrZXkgYHN1Ym1v
+ZHVsZS4kbmFtZS51cGRhdGVgIGlzIHNldCB0bwogCWByZWJhc2VgLCBgbWVy
+Z2VgIG9yIGBub25lYC4gYG5vbmVgIGNhbiBiZSBvdmVycmlkZGVuIGJ5IHNw
+ZWNpZnlpbmcKLQlgLS1jaGVja291dGAuIFNldHRpbmcgdGhlIGtleSBgc3Vi
+bW9kdWxlLiRuYW1lLnVwZGF0ZWAgdG8gYCFjb21tYW5kYAotCXdpbGwgY2F1
+c2UgYGNvbW1hbmRgIHRvIGJlIHJ1bi4gYGNvbW1hbmRgIGNhbiBiZSBhbnkg
+YXJiaXRyYXJ5IHNoZWxsCi0JY29tbWFuZCB0aGF0IHRha2VzIGEgc2luZ2xl
+IGFyZ3VtZW50LCBuYW1lbHkgdGhlIHNoYTEgdG8gdXBkYXRlIHRvLgorCWAt
+LWNoZWNrb3V0YC4KKysKK1NldHRpbmcgdGhlIGtleSBgc3VibW9kdWxlLiRu
+YW1lLnVwZGF0ZWAgaW4gYC5naXQvY29uZmlnYCB0bworYCFjb21tYW5kYCB3
+aWxsIGNhdXNlIGBjb21tYW5kYCB0byBiZSBydW4uIGBjb21tYW5kYCBjYW4g
+YmUgYW55CithcmJpdHJhcnkgc2hlbGwgY29tbWFuZCB0aGF0IHRha2VzIGEg
+c2luZ2xlIGFyZ3VtZW50LCBuYW1lbHkgdGhlIHNoYTEKK3RvIHVwZGF0ZSB0
+by4gIEZvciBzZWN1cml0eSByZWFzb25zLCB0aGlzIGZlYXR1cmUgaXMgbm90
+IHN1cHBvcnRlZAorZnJvbSB0aGUgYC5naXRtb2R1bGVzYCBmaWxlLgogKwog
+SWYgdGhlIHN1Ym1vZHVsZSBpcyBub3QgeWV0IGluaXRpYWxpemVkLCBhbmQg
+eW91IGp1c3Qgd2FudCB0byB1c2UgdGhlCiBzZXR0aW5nIGFzIHN0b3JlZCBp
+biAuZ2l0bW9kdWxlcywgeW91IGNhbiBhdXRvbWF0aWNhbGx5IGluaXRpYWxp
+emUgdGhlCmRpZmYgLS1naXQgYS9Eb2N1bWVudGF0aW9uL2dpdG1vZHVsZXMu
+dHh0IGIvRG9jdW1lbnRhdGlvbi9naXRtb2R1bGVzLnR4dAppbmRleCBmNmMw
+ZGZkLi5mMTFlODcyIDEwMDY0NAotLS0gYS9Eb2N1bWVudGF0aW9uL2dpdG1v
+ZHVsZXMudHh0CisrKyBiL0RvY3VtZW50YXRpb24vZ2l0bW9kdWxlcy50eHQK
+QEAgLTQ3LDkgKzQ3LDE0IEBAIHN1Ym1vZHVsZS48bmFtZT4udXBkYXRlOjoK
+IAlpbiB0aGUgc3VibW9kdWxlLgogCUlmICdub25lJywgdGhlIHN1Ym1vZHVs
+ZSB3aXRoIG5hbWUgYCRuYW1lYCB3aWxsIG5vdCBiZSB1cGRhdGVkCiAJYnkg
+ZGVmYXVsdC4KLQotCVRoaXMgY29uZmlnIG9wdGlvbiBpcyBvdmVycmlkZGVu
+IGlmICdnaXQgc3VibW9kdWxlIHVwZGF0ZScgaXMgZ2l2ZW4KLQl0aGUgJy0t
+bWVyZ2UnLCAnLS1yZWJhc2UnIG9yICctLWNoZWNrb3V0JyBvcHRpb25zLgor
+KworVGhpcyBjb25maWcgb3B0aW9uIGlzIG92ZXJyaWRkZW4gaWYgJ2dpdCBz
+dWJtb2R1bGUgdXBkYXRlJyBpcyBnaXZlbgordGhlICctLW1lcmdlJywgJy0t
+cmViYXNlJyBvciAnLS1jaGVja291dCcgb3B0aW9ucy4KKysKK09ubHkgdGhl
+IHZhbHVlcyAnY2hlY2tvdXQnLCAncmViYXNlJywgJ21lcmdlJyBhbmQgJ25v
+bmUnIGFyZQorcmVjb2duaXplZCB3aGVuIHRoaXMga2V5IGFwcGVhcnMgaW4g
+dGhlIGAuZ2l0bW9kdWxlc2AgZmlsZS4gIEluCitwYXJ0aWN1bGFyLCAnIWNv
+bW1hbmQnIGlzIG5vdCByZWNvZ25pc2VkLCBhbmQgd2lsbCBiZSByZXdyaXR0
+ZW4gdG8KKydub25lJyBieSAiZ2l0IHN1Ym1vZHVsZSBpbml0Ii4KIAogc3Vi
+bW9kdWxlLjxuYW1lPi5icmFuY2g6OgogCUEgcmVtb3RlIGJyYW5jaCBuYW1l
+IGZvciB0cmFja2luZyB1cGRhdGVzIGluIHRoZSB1cHN0cmVhbSBzdWJtb2R1
+bGUuCi0tIAoyLjEuNAoK
 
-Try creating this history yourself
-
-    a---b---c---d---e---f
-
-and start bisection this way:
-
-    $ git bisect start f c
-    $ git bisect bad a
-
-Immediately after the second command, "git bisect" moans
-
-    Some good revs are not ancestor of the bad rev.
-    git bisect cannot work properly in this case.
-    Maybe you mistake good and bad revs?
-
-when it notices that the good rev (i.e. 'c') is no longer an
-ancestor of the 'bad', which now points at 'a'.
-
-But that is because "git bisect bad" _blindly_ moved 'bad' that used
-to point at 'f' to 'a', making a good rev (i.e. 'c') an ancestor of
-the bad rev, without even bothering to check.
-
-Now, if we fixed this bug and made the bisect_state function more
-careful (namely, when accepting "bad", make sure it is not beyond
-any existing "good", or barf like the above, _without_ moving the
-bad pointer), the user interface and behaviour would be changed.  Is
-that a regression?  No, it is a usability fix and a progress.
-
-Simply put, bisect_state function can become more careful and
-intelligent to help users.
-
-I view this "user goes out of way to tell us a commit that is known
-to be bad as bad, even though it is not what we offered to test and
-is not an ancestor of the commit that currently marked as bad" case
-the same way.  We by now hopefully understand that blindly replacing
-the current 'bad' is suboptimal.  By teaching bisect_state to do the
-"merge-base thing", we would be fixing that.
-
-Why is it a regression?
+--_----------=_142662530218060082--
