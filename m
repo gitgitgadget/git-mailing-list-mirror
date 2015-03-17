@@ -1,86 +1,83 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git submodule: update=!command
-Date: Tue, 17 Mar 2015 15:50:31 -0400
-Message-ID: <20150317195030.GA18725@peff.net>
-References: <1426620537.1785877.241673949.72FB3B40@webmail.messagingengine.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: Promoting Git developers
+Date: Tue, 17 Mar 2015 20:51:54 +0100
+Message-ID: <CAP8UFD0iuTJ8g4O5j8PfxdENwY92BR--gcAdTDy2mt74ovfYog@mail.gmail.com>
+References: <CAP8UFD1+rC0FjisSddDcyn1E_75wtBU9pEpUcQX5zNtd4zKYFQ@mail.gmail.com>
+	<54FDA6B5.8050505@drmicha.warpmail.net>
+	<CAP8UFD0KNbPBB_dOzw_dAj+ws190_cO8g7_jb_V33x1jxgvnqQ@mail.gmail.com>
+	<xmqqk2yo22ce.fsf@gitster.dls.corp.google.com>
+	<CAP8UFD37v_zOjRkUPLy-ChDs=+NetsDY7Q14-4rYA-WhnTRYyA@mail.gmail.com>
+	<xmqqfv9b5krc.fsf@gitster.dls.corp.google.com>
+	<CAP8UFD2ba3jQSsQrGGWM-8HTfGR+zZhmbkxiEBhSR+Ho=B0MuA@mail.gmail.com>
+	<CAEcj5uX_v2PUkTAR9xr-i-D-pmf+8EBLhu7FMkA+RKxc6vye5w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Chris Packham <judge.packham@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Ryan Lortie <desrt@desrt.ca>
-X-From: git-owner@vger.kernel.org Tue Mar 17 20:50:39 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	David Kastrup <dak@gnu.org>, git <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>, Scott Chacon <schacon@gmail.com>
+To: Thomas Ferris Nicolaisen <tfnico@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 17 20:52:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YXxVd-0005nP-Uv
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Mar 2015 20:50:38 +0100
+	id 1YXxWy-0006ar-0D
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Mar 2015 20:52:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753411AbbCQTue (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Mar 2015 15:50:34 -0400
-Received: from cloud.peff.net ([50.56.180.127]:34197 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752814AbbCQTud (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Mar 2015 15:50:33 -0400
-Received: (qmail 26847 invoked by uid 102); 17 Mar 2015 19:50:33 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 17 Mar 2015 14:50:33 -0500
-Received: (qmail 27729 invoked by uid 107); 17 Mar 2015 19:50:44 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 17 Mar 2015 15:50:44 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 17 Mar 2015 15:50:31 -0400
-Content-Disposition: inline
-In-Reply-To: <1426620537.1785877.241673949.72FB3B40@webmail.messagingengine.com>
+	id S1753125AbbCQTv4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Mar 2015 15:51:56 -0400
+Received: from mail-ie0-f180.google.com ([209.85.223.180]:33403 "EHLO
+	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752602AbbCQTvz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Mar 2015 15:51:55 -0400
+Received: by iecvj10 with SMTP id vj10so21012779iec.0
+        for <git@vger.kernel.org>; Tue, 17 Mar 2015 12:51:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=F8QqU6g5MJBCj/LZAWzXKPnnYYlLcYNb6CdIkX+/rbo=;
+        b=V6PLx0kXeMN1WpoptVFhjhd6c3OJZJAMd7MgVi9GV9gWwxXVLGsQKibp/K7vOA9n9p
+         c9Mh9aPUNuGTQvK/oZT9zh7GUNjZcpSqJNTFZXa0vCKkfLsCUW6Hd5bIMlL+v5AJIP7k
+         0h1LcD5Uih53jSEc53WTaRq2Ghbt5vIBMQoJsB+4UwrC+RlAx9D2xJIRVqBaxH2QIfr1
+         W/oSXINkLjdQVAhixOU312nvXhMEHpz0I50BMWOg4/Lodxjj3jUdMpsrCg76gH7FCK6K
+         CloO+h6tOKjaFMrdh2r4FXFw0ynQaVaAnQXUXWoRHPn8y8xxW5w0BZZH5cB0OifPjgPx
+         gxIQ==
+X-Received: by 10.107.18.87 with SMTP id a84mr84110657ioj.67.1426621914309;
+ Tue, 17 Mar 2015 12:51:54 -0700 (PDT)
+Received: by 10.50.245.168 with HTTP; Tue, 17 Mar 2015 12:51:54 -0700 (PDT)
+In-Reply-To: <CAEcj5uX_v2PUkTAR9xr-i-D-pmf+8EBLhu7FMkA+RKxc6vye5w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265658>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265659>
 
-On Tue, Mar 17, 2015 at 03:28:57PM -0400, Ryan Lortie wrote:
+On Tue, Mar 17, 2015 at 10:43 AM, Thomas Ferris Nicolaisen
+<tfnico@gmail.com> wrote:
+> On Sun, Mar 15, 2015 at 9:46 AM, Christian Couder
+> <christian.couder@gmail.com> wrote:
+>>
+>> I wrote something about a potential Git Rev News news letter:
+>>
+>> https://github.com/git/git.github.io/pull/15
+>>
+>
+> I would love to have/use something like this in the GitMinutes
+> podcast. Perhaps in addition to the very random interview format that
+> I have now, I could do a more regular episodes about Git news, where I
+> incorporate this.
 
-> The first is a question about git's basic policy with respect to things
-> like this.  I hope that it's safe to assume that running 'git' commands
-> on repositories downloaded from potentially-hostile places will never
-> result in the authors of those repositories being able to run code on my
-> machine.
+Yeah, no problem.
 
-Definitely, our policy is that downloading a git repository should not
-result in arbitrary code being run. If there is a case of that, it would
-be a serious security bug.
+> I also volunteer to help with the production, if you'll allow list
+> lurkers like myself to contribute ;)
 
-I am not an expert on submodules, but I think the security module there
-is:
+Yes of course, you are very welcome!
 
-  1. You can do whatever you like in submodule.*.update entries in
-     .git/config, including arbitrary code. Nobody but the user can
-     write to it.
+Peff, could you also give the rights on the repo to Thomas?
 
-  2. The submodule code may migrate entries from .gitmodules into
-     .git/config, but does so with an allow-known-good whitelist (see
-     git-submodule.sh lines 622-637).
-
-So AFAICT there's no bug here, and the system is working as designed.
-It might be worth mentioning that restriction in the submodule
-documentation, if only to prevent non-malicious people from wondering
-why adding "!foo" does not work in .gitmodules.
-
-> If that is true then, the second request would be to spell this out more
-> explicitly in the relevant documentation.  I'm happy to write a patch to
-> do that, if it is deemed appropriate.
-
-Yeah, spelling out the security model more explicitly would be good.
-There is also some subtlety around hooks. Doing:
-
-  git clone user@host:/path/to/repo.git local
-
-should never run code controlled by "repo.git" as "user@host". But
-doing:
-
-  ssh user@host 'cd /path/to/repo.git && git log'
-
-will respect the .git/config in repo.git, which may include arbitrary
-commands.
-
--Peff
+Thanks both,
+Christian.
