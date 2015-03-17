@@ -1,74 +1,82 @@
-From: Ryan Lortie <desrt@desrt.ca>
-Subject: Re: git submodule: update=!command
-Date: Tue, 17 Mar 2015 17:11:41 -0400
-Message-ID: <1426626701.1812977.241723449.1C0F64BD@webmail.messagingengine.com>
-References: <1426620537.1785877.241673949.72FB3B40@webmail.messagingengine.com>
- <xmqqy4mvmjs9.fsf@gitster.dls.corp.google.com>
- <1426625989.1809668.241718517.07249CD6@webmail.messagingengine.com>
- <xmqqtwxjmj21.fsf@gitster.dls.corp.google.com>
+From: Kenny Lee Sin Cheong <kenny.lee28@gmail.com>
+Subject: Re: [PATCH 2/2] Add revision range support on "-" and "@{-1}"
+Date: Tue, 17 Mar 2015 17:25:33 -0400
+Message-ID: <87egons4du.fsf@gmail.com>
+References: <1426518703-15785-1-git-send-email-kenny.lee28@gmail.com>
+	<1426518703-15785-3-git-send-email-kenny.lee28@gmail.com>
+	<xmqqlhiwredj.fsf@gitster.dls.corp.google.com>
+	<xmqq8uewp183.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Chris Packham <judge.packham@gmail.com>
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 17 22:11:49 2015
+X-From: git-owner@vger.kernel.org Tue Mar 17 22:25:27 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YXymC-0002Hc-5j
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Mar 2015 22:11:48 +0100
+	id 1YXyzN-0001iv-Rj
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Mar 2015 22:25:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753411AbbCQVLm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Mar 2015 17:11:42 -0400
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:44166 "EHLO
-	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752392AbbCQVLl (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Mar 2015 17:11:41 -0400
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailout.nyi.internal (Postfix) with ESMTP id 522F9207CC
-	for <git@vger.kernel.org>; Tue, 17 Mar 2015 17:11:39 -0400 (EDT)
-Received: from web1 ([10.202.2.211])
-  by compute5.internal (MEProxy); Tue, 17 Mar 2015 17:11:41 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=desrt.ca; h=
-	message-id:x-sasl-enc:from:to:cc:mime-version
-	:content-transfer-encoding:content-type:in-reply-to:references
-	:subject:date; s=mesmtp; bh=hmJ6GmDshql3Sx5nbFQkeBorAe8=; b=bvzD
-	sv/o1x++vFzHrLPcEi+4RRuAhE7cf3WJLLYrJcoZV/x+s8TAbddexQuDwpH0bJGE
-	YZR5uoA4hYuUNd77ShlUNDLmvBVsQ0NbXQ07RxMH760KMO/KG53CrrTkF9AlrLLS
-	z3TUQQS6XWVKAF4HH4Bmnh5DxbXBZtgjFOpOrFo=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:x-sasl-enc:from:to:cc
-	:mime-version:content-transfer-encoding:content-type:in-reply-to
-	:references:subject:date; s=smtpout; bh=hmJ6GmDshql3Sx5nbFQkeBor
-	Ae8=; b=XpLUOa0JdQMj3nfYCMrDeMmQA2VNHenVEoOeY9xYJFUUQDUzwPXbnkZQ
-	/UcpEG3BKf+cTgoX2YahJd6IVjFlJ4cgpJeJUq6BKGqeIIATA0aqPn3TBHuXG9mP
-	Vf9xRVUeJX7QvTX/QIjZbbMk4DtzrS2KyRgI8J93SxiaRF3PzSg=
-Received: by web1.nyi.internal (Postfix, from userid 99)
-	id 3930BAF35A2; Tue, 17 Mar 2015 17:11:41 -0400 (EDT)
-X-Sasl-Enc: bhgfwT9BBGYRl+xDgBVh93f9A+HJ9y3FcfF2T4HrtWAG 1426626701
-X-Mailer: MessagingEngine.com Webmail Interface - ajax-15db86eb
-In-Reply-To: <xmqqtwxjmj21.fsf@gitster.dls.corp.google.com>
+	id S1754228AbbCQVZV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Mar 2015 17:25:21 -0400
+Received: from mail-qg0-f52.google.com ([209.85.192.52]:33045 "EHLO
+	mail-qg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754114AbbCQVZU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Mar 2015 17:25:20 -0400
+Received: by qgfa8 with SMTP id a8so21095266qgf.0
+        for <git@vger.kernel.org>; Tue, 17 Mar 2015 14:25:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=Y7XNKdAfosCWkLwX3q9Jl/3YopjCPwTHYPlPnfb10z0=;
+        b=hFlAnCAciFVZSpUs+DqVIuUxeLxUoMH+rVCpUBr663+VF6REy0RRBrGq2TH22j1LPm
+         r+zl44AxGitP2ys1NW0GpSYWXV350nzlMXK9DAbO/NXLGk0lWzVRxl0xLpvi+PVve9e6
+         TEdQY9UPJzdEMKm273MnaGbLqbP2Emmk1mMg2supenNJ2DjVUrNh4scJxWhz2rVfCS6N
+         Y+090ID12GXE7F0mra6nwamIU+cuKq91u4SeLzhLkoStOx9ukr/VbRXfwfYsMDMdmmhS
+         1urpk+YWlij8yw5KlTQI5cpIvaAHvggHaXRwYw+vnyTlVOxITRtoH4huflJP0KbjLfGi
+         eYzA==
+X-Received: by 10.55.25.194 with SMTP id 63mr97297010qkz.53.1426627519830;
+        Tue, 17 Mar 2015 14:25:19 -0700 (PDT)
+Received: from fujitsu ([132.205.236.24])
+        by mx.google.com with ESMTPSA id w186sm10446788qkw.27.2015.03.17.14.25.18
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 17 Mar 2015 14:25:19 -0700 (PDT)
+In-Reply-To: <xmqq8uewp183.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Mon, 16 Mar 2015 23:49:48 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265669>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265670>
 
-kara,
+On Tue, Mar 17 2015 at 02:49:48 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+> 	if (try to see if it is a revision or regvision range) {
+>         	/* if failed ... */
+> 		if (starts with '-') {
+>                 	do the option thing;
+>                         continue;
+> 		}
+> 		/* args must be pathspecs from here on */
+>                 check the  '--' disambiguation;
+>                 add pathspec to prune-data;
+> 	} else {
+> 		got_rev_arg = 1;
+> 	}
+>
+> but I didn't trace the logic myself to see if that would work.
 
-On Tue, Mar 17, 2015, at 17:05, Junio C Hamano wrote:
-> If you check the output from
-> 
->     git diff 30a52c1d^ 30a52c1d
-> 
-> and find it appropriately address the problem you originally had,
-> that would be wonderful, and if you can suggest further improvement,
-> that is equally good.
+You're right. I was actually going to try and check all possible
+suffixes of "-" but your solution saves us from doing that, and it
+didn't break any tests.
 
-Indeed, the new version of the docs looks much better.  I'm particularly
-happy about the change to the format to make it easier to visually scan
-for the possible update modes.
-
-Cheers
+On a similar note, would it be relevant to add similar changes to
+rev-parse? While trying to write some test, I noticed that rev-parse
+doesn't support "-". If I'm not mistaking it assumes everything that starts with "-"
+must be an option. But since it is a plumbing tool I don't know if it
+would be worth it or even an improvement.
