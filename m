@@ -1,87 +1,84 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: git submodule: update=!command
-Date: Wed, 18 Mar 2015 20:45:17 +1300
-Message-ID: <CAFOYHZBAZ+Oy-tFDGuiUmA7JcwPG=LPPkmX=Z=Rpg4gV+cXFMg@mail.gmail.com>
-References: <1426620537.1785877.241673949.72FB3B40@webmail.messagingengine.com>
-	<xmqqy4mvmjs9.fsf@gitster.dls.corp.google.com>
-	<1426625989.1809668.241718517.07249CD6@webmail.messagingengine.com>
-	<xmqqtwxjmj21.fsf@gitster.dls.corp.google.com>
-	<CAFOYHZC2Af80EgNgnd7a_DyYnaivthA6vnDEdknQ4ebQfgdGmA@mail.gmail.com>
+From: Ephrim Khong <dr.khong@gmail.com>
+Subject: Re: [PATCH 0/3] nd/multiple-work-trees updates
+Date: Wed, 18 Mar 2015 09:04:45 +0100
+Message-ID: <5509319D.9070109@gmail.com>
+References: <1420278087-14613-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Ryan Lortie <desrt@desrt.ca>, GIT <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 18 08:45:26 2015
+Content-Type: text/plain; charset=utf-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 18 09:04:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YY8fM-00059l-Fb
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Mar 2015 08:45:24 +0100
+	id 1YY8yF-0005A3-MV
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Mar 2015 09:04:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754848AbbCRHpU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Mar 2015 03:45:20 -0400
-Received: from mail-pd0-f173.google.com ([209.85.192.173]:33832 "EHLO
-	mail-pd0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754651AbbCRHpS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Mar 2015 03:45:18 -0400
-Received: by pdbni2 with SMTP id ni2so35367349pdb.1
-        for <git@vger.kernel.org>; Wed, 18 Mar 2015 00:45:17 -0700 (PDT)
+	id S1754926AbbCRIEu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Mar 2015 04:04:50 -0400
+Received: from mail-wg0-f54.google.com ([74.125.82.54]:33743 "EHLO
+	mail-wg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754887AbbCRIEs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Mar 2015 04:04:48 -0400
+Received: by wgbcc7 with SMTP id cc7so28087053wgb.0
+        for <git@vger.kernel.org>; Wed, 18 Mar 2015 01:04:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=a9sfCa+TTMmAn8O9cMR2Bq/Yi8/tyqNzzKtdLCDHKD8=;
-        b=RA4c3Y9uT8gVwETj2RVqzdY3fYJTLkgiXzXR/LMUoTkeVoQFIXktHCe//T8mtgkDIZ
-         5c7EG9Jwv1wfSe1VJzcEULtQe1G8ovxGij2rF5NduwR0lz4G0A1AH/FH4upscxT8ev76
-         If2tbEQDmiYWYbN/ByX8CgHZjFxpLmg1dOGvkRlW0Fn8G8d6EycFTVQ+LMEeMFwdxWZq
-         n2EjJ72neu/Gz64wGqV65/MsbP4hv4O8QcVECKN8Ymz1uk685ND7EiI3QQcFVV2f89Cg
-         mItSoGx93TL++QVU5L6JImRIwHpFbgO8xJuazfzdoO8VxIT5JCoMDoZU4yJ61MJScaWw
-         1zcg==
-X-Received: by 10.66.164.66 with SMTP id yo2mr159346165pab.59.1426664717815;
- Wed, 18 Mar 2015 00:45:17 -0700 (PDT)
-Received: by 10.70.0.171 with HTTP; Wed, 18 Mar 2015 00:45:17 -0700 (PDT)
-In-Reply-To: <CAFOYHZC2Af80EgNgnd7a_DyYnaivthA6vnDEdknQ4ebQfgdGmA@mail.gmail.com>
+        h=message-id:date:from:user-agent:mime-version:to:subject:references
+         :in-reply-to:content-type:content-transfer-encoding;
+        bh=MdMJbwa57m9OZgwF32fF3QtkVt+Kpje8XvSoxosHEvY=;
+        b=BHrLBkg8FWNapOR7X/ZhAFgzbjaO4dw6REABsQjJKtqB/WdTTSYgEKsCjkhkZLdAuT
+         xwMUKS8Vsjjqz49W8pAE2WaTf9t5aDeX7ywNzgXXo4j0U3rCIvHGBm7t6hLOhhJ9eTRd
+         tCYkPFpkSgDpxDRgrvI+P+rpLHgqVIPnmaR4Dd+ubiRM66zNaJI4bpG0at9v/QmBOqFU
+         iP1STT2DjIHhg253z4dRCCS1xWj0g+U52xXtuWzQxFk5W4INgAJu+qU3PDgA70Bu0MMy
+         AniOutfgas+g3XjWFYFk17Bwis2TW63jv/F5+JRnL/stqPL+DP9ECPIDHhXEfHquRcTb
+         j/ew==
+X-Received: by 10.194.122.232 with SMTP id lv8mr134226842wjb.146.1426665887064;
+        Wed, 18 Mar 2015 01:04:47 -0700 (PDT)
+Received: from [10.0.100.231] (merlin.mvtec.com. [62.96.232.130])
+        by mx.google.com with ESMTPSA id vq9sm23318295wjc.6.2015.03.18.01.04.45
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 18 Mar 2015 01:04:46 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
+In-Reply-To: <1420278087-14613-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265690>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265691>
 
-On Wed, Mar 18, 2015 at 8:43 PM, Chris Packham <judge.packham@gmail.com> wrote:
-> On Wed, Mar 18, 2015 at 10:05 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> Ryan Lortie <desrt@desrt.ca> writes:
->>
->>> On Tue, Mar 17, 2015, at 16:49, Junio C Hamano wrote:
->>>> With more recent versions of Git, namely, the versions after
->>>> 30a52c1d (Merge branch 'ms/submodule-update-config-doc' into maint,
->>>> 2015-03-13), the documentation pages already have updated
->>>> descriptions around this area.
->>>
->>> sigh.
->>>
->>> That's what I get for forgetting to type 'git pull' before writing a
->>> patch.
->>>
->>> Sorry for the noise!
->>
->> Nothing to apologise or sigh about.  You re-confirmed that the old
->> documentation was lacking, which led to an earlier discussion which
->> in turn led to Michal to update the documentation.  If you check the
->> output from
->>
->>     git diff 30a52c1d^ 30a52c1d
->>
->> and find it appropriately address the problem you originally had,
->> that would be wonderful, and if you can suggest further improvement,
->> that is equally good.
->
-> I think 30a52c1d could be improved with the following snippet from Ryans patch.
->
-> "For security reasons, this feature is not supported from the
-> `.gitmodules` file"
->
-> Or something along those lines.
+Without having looked into this and nd/multiple-work-trees, but with=20
+"make multiple checkouts aware of each other" in mind: Could this=20
+mechanism be re-used to make alternates aware of each other, to mitigat=
+e=20
+the dangers of having  git gc  on an alternate remove objects that are=20
+used by a referencing repository?
 
-Which is actually down the bottom if I take the time to read the whole diff.
+Thanks
+- Eph
+
+On 03.01.2015 10:41, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+> These patches are on top of what's in 'pu'. They add
+> --ignore-other-worktrees and make a note about current submodule
+> support status. I don't think submodule support is ready yet even
+> with Max Kirillov's series [1]. His 03/03 is already fixed in 'pu'
+> though, so only 01/03 and 02/03 are new.
+>
+> [1] http://thread.gmane.org/gmane.comp.version-control.git/261107
+>
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (3):
+>    checkout: pass whole struct to parse_branchname_arg instead of ind=
+ividual flags
+>    checkout: add --ignore-other-wortrees
+>    git-checkout.txt: a note about multiple checkout support for submo=
+dules
+>
+>   Documentation/git-checkout.txt |  9 +++++++++
+>   builtin/checkout.c             | 19 +++++++++++--------
+>   t/t2025-checkout-to.sh         |  7 +++++++
+>   3 files changed, 27 insertions(+), 8 deletions(-)
+>
