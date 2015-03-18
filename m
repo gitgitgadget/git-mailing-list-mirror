@@ -1,276 +1,310 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4 4/4] t0302: test credential-store support for XDG_CONFIG_HOME
-Date: Wed, 18 Mar 2015 15:26:42 -0400
-Message-ID: <CAPig+cR-87-dWXUKoKvphrdb_Y=7268G5uerAiPYDsj-UQiuRw@mail.gmail.com>
-References: <1426662276-8728-1-git-send-email-pyokagan@gmail.com>
-	<1426662276-8728-4-git-send-email-pyokagan@gmail.com>
+From: karthik nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v4 2/2] sha1_file: refactor sha1_file.c to support 'cat-file
+ --literally'
+Date: Thu, 19 Mar 2015 01:05:08 +0530
+Message-ID: <5509D36C.6000908@gmail.com>
+References: <5507B7EE.1070403@gmail.com>	<1426569419-8266-1-git-send-email-karthik.188@gmail.com> <xmqqbnjro05k.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 18 20:26:50 2015
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 18 20:35:24 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YYJc8-0000XX-Tr
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Mar 2015 20:26:49 +0100
+	id 1YYJkP-00055k-Hm
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Mar 2015 20:35:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933216AbbCRT0o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Mar 2015 15:26:44 -0400
-Received: from mail-yh0-f52.google.com ([209.85.213.52]:36446 "EHLO
-	mail-yh0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932923AbbCRT0n (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Mar 2015 15:26:43 -0400
-Received: by yhjf44 with SMTP id f44so18518231yhj.3
-        for <git@vger.kernel.org>; Wed, 18 Mar 2015 12:26:42 -0700 (PDT)
+	id S1755211AbbCRTfP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Mar 2015 15:35:15 -0400
+Received: from mail-pd0-f177.google.com ([209.85.192.177]:36407 "EHLO
+	mail-pd0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755041AbbCRTfM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Mar 2015 15:35:12 -0400
+Received: by pdbcz9 with SMTP id cz9so51905085pdb.3
+        for <git@vger.kernel.org>; Wed, 18 Mar 2015 12:35:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=yOT59alWQYBk78zb28OXleEL+HtHTNM/8CJyM1ZLV9s=;
-        b=BrKRnIpClmJtwA8UVY2I2sAWe052H3vgc1KlDUzjL4lIPxRDCVzFI8yP7ST2PWjdAA
-         I1ywhRRExUc5jLuCys1GyacLIymkw17pzSLWfVYFhl3W/3D9Uu21xk+a/OlMd/oRRRW/
-         uP2zkLXmF5yjL00VfjNqs5Hg7utSFViE8Ixcin4q8wIPZnZCMSHL5ruzvMjuty6zpyjp
-         mKX5dw0smJo9LB8bI9Iry41vXFjpL17WRLrVEX+qXPJ2I9WhBEaMhXONp7l/YDvEA98E
-         gyEELYAA11iPCj6RXiK/ZNCk8KwjQgYyDrIMzA9I0H7oWlF2TTCDGaaxeATY+QvW/7k4
-         t0Xg==
-X-Received: by 10.236.202.238 with SMTP id d74mr74232499yho.166.1426706802707;
- Wed, 18 Mar 2015 12:26:42 -0700 (PDT)
-Received: by 10.170.73.7 with HTTP; Wed, 18 Mar 2015 12:26:42 -0700 (PDT)
-In-Reply-To: <1426662276-8728-4-git-send-email-pyokagan@gmail.com>
-X-Google-Sender-Auth: AgSGMYOtER-SSStl0KsI_T7xNHY
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=sJ+xzU6j3KXjiTMQz8Ga5C1j5+uZbjgRnYLJVs0Jr8M=;
+        b=p+Tsk3SkwhWVV08hHCMVoNMLcBH1fsupCsGswexBGC0jUAwMcxGPx1PTwyIs27aPHB
+         A+USJNR63DEz4b1qwDwmMMDLjWMznKssbarrEXqFt+qDvUgKhy3/0fHtSYo4h8Pr9tcp
+         0zkXLB11gPFIPuiaMjrjMZ6M30ODCP3VqjRISCNp/fL1H+wgwcqFrZ/ogjY9NjhdKpyD
+         uIZ9TMgVZ3gtl+0SuCeM0vZ+5Tqpbt5dbTKTf/O53qbj5WQ+I51WaYWlmlesuYUociW0
+         fOG3qDFoZh7YPJ+m1/5pDIAE22Aphk4HpqCjlDmIQCvZ/6yo6zELbDIYLzRHcj4QWocq
+         W3MA==
+X-Received: by 10.70.44.100 with SMTP id d4mr165577812pdm.36.1426707311828;
+        Wed, 18 Mar 2015 12:35:11 -0700 (PDT)
+Received: from [192.168.0.103] ([103.227.98.178])
+        by mx.google.com with ESMTPSA id fm3sm10633094pdb.73.2015.03.18.12.35.09
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 18 Mar 2015 12:35:10 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
+In-Reply-To: <xmqqbnjro05k.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265751>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265752>
 
-On Wed, Mar 18, 2015 at 3:04 AM, Paul Tan <pyokagan@gmail.com> wrote:
-> t0302 now tests git-credential-store's support for the XDG user-specific
-> configuration file $XDG_CONFIG_HOME/git/credentials. Specifically:
-> ---
+
+
+On 03/18/2015 01:40 AM, Junio C Hamano wrote:
+> Karthik Nayak <karthik.188@gmail.com> writes:
 >
-> The previous version can be found at [1].
+>> Subject: Re: [PATCH v4 2/2] sha1_file: refactor sha1_file.c to support 'cat-file --literally'
 >
-> [1] http://thread.gmane.org/gmane.comp.version-control.git/265305/focus=265308
+>> Modify sha1_loose_object_info() to support 'cat-file --literally'
+>> by accepting flags and also make changes to copy the type to
+>> object_info::typename.
 >
-> * Merge related, but previously separate, tests together in order to
->   make the test suite easier to understand.
+> It would be more descriptive to mention the central point on the
+> title regarding what it takes to "support cat-file --literally".
 >
-> * Instead of setting/unsetting XDG_CONFIG_HOME in separate tests, set
->   it, and unset it immediately before and after "helper_test store" is
->   called in order to make it localized to only the command that it
->   should affect.
+> For example:
 >
-> * Add test, previously missing, to check that only the home credentials
->   file is written to if both the xdg and home files exist.
+>    sha1_file.c: support reading from a loose object of a bogus type
 >
-> * Correct mislabelling of "home-user"/"home-pass" to the proper
->   "xdg-user"/"xdg-pass".
+>    Update sha1_loose_object_info() to optionally allow it to read
+>    from a loose object file of unknown/bogus type; as the function
+>    usually returns the type of the object it read in the form of enum
+>    for known types, add an optional "typename" field to receive the
+>    name of the type in textual form.
 >
-> * Use "rm -f" instead of "test_might_fail rm".
-
-This round looks much better. Thanks.
-
-Most of the comments below are just nit-picky, with one or two genuine
-(minor) issues.
-
-> Thanks Eric for the code review.
+> By the way, I think your 1/2 would not even compile unless you have
+> this change; the patches in these two patch series must be swapped,
+> no?
 >
-> diff --git a/t/t0302-credential-store.sh b/t/t0302-credential-store.sh
-> index f61b40c..5b0a666 100755
-> --- a/t/t0302-credential-store.sh
-> +++ b/t/t0302-credential-store.sh
-> @@ -6,4 +6,115 @@ test_description='credential-store tests'
+Noted. Yes it wouldn't. I thought both would be applied together and 
+didn't give it much thought, but yeah, I should pay more attention to that.
+>> diff --git a/sha1_file.c b/sha1_file.c
+>> index 69a60ec..e31e9e2 100644
+>> --- a/sha1_file.c
+>> +++ b/sha1_file.c
+>> @@ -1564,6 +1564,36 @@ int unpack_sha1_header(git_zstream *stream, unsigned char *map, unsigned long ma
+>>   	return git_inflate(stream, 0);
+>>   }
+>>
+>> +static int unpack_sha1_header_literally(git_zstream *stream, unsigned char *map,
+>> +					unsigned long mapsize,
+>> +					struct strbuf *header)
+>> +{
+>> +	unsigned char buffer[32], *cp;
+>> +	unsigned long bufsiz = sizeof(buffer);
+>> +	int status;
+>> +
+>> +	/* Get the data stream */
+>> +	memset(stream, 0, sizeof(*stream));
+>> +	stream->next_in = map;
+>> +	stream->avail_in = mapsize;
+>> +	stream->next_out = buffer;
+>> +	stream->avail_out = bufsiz;
+>> +
+>> +	git_inflate_init(stream);
+>> +
+>> +	do {
+>> +		status = git_inflate(stream, 0);
+>> +		strbuf_add(header, buffer, stream->next_out - buffer);
+>> +		for (cp = buffer; cp < stream->next_out; cp++)
+>> +			if (!*cp)
+>> +				/* Found the NUL at the end of the header */
+>> +				return 0;
+>> +		stream->next_out = buffer;
+>> +		stream->avail_out = bufsiz;
+>> +	} while (status == Z_OK);
+>> +	return -1;
+>> +}
+>> +
 >
->  helper_test store
+> There is nothing "literal" about this function.
 >
-> +test_expect_success 'when xdg credentials file does not exist, only write to ~/.git-credentials; do not create xdg file' '
+> The only difference between the original and this one is that this
+> uses a strbuf, instead of a buffer of a fixed size allocated by the
+> caller, to return the early part of the inflated data.
+>
+> I wonder if it incurs too much overhead to the existing callers if
+> you reimplementated unpack_sha1_header() as a thin wrapper around
+> this function, something like
+>
+> 	int unpack_sha1_header(git_zstream *stream,
+> 				unsigned char *map, unsigned long mapsize,
+>                                  void *buffer, unsigned long bufsiz)
+> 	{
+>                  int status;
+> 		struct strbuf header = STRBUF_INIT;
+>
+>                  status = unpack_sha1_header_to_strbuf(stream, map, mapsize, &header);
+> 		if (bufsiz < header.len)
+>                  	die("object header too long");
+> 		memcpy(buffer, header.buf, header.len);
+>                  return status;
+> 	}
+>      			
+> Note that I am *not* suggesting to do this blindly.  If there is no
+> downside from performance point of view, however, the above would be
+> a way to avoid code duplication.
+>
+> Another way to avoid code duplication may be to implement
+> unpack_sha1_header_to_strbuf() in terms of unpack_sha1_header(),
+> perhaps like this:
+>
+> 	static int unpack_sha1_header_to_strbuf(...)
+>          {
+> 		unsigned char buffer[32], *cp;
+>                  unsigned long bufsiz = sizeof(buffer);
+>          	int status = unpack_sha1_header(stream, map, mapsize, buffer, bufsiz);
+>
+> 		if (status)
+>                  	return status;
+> 		do {
+> 			strbuf_add(header, buffer, stream->next_out - buffer);
+> 			for (cp = buffer; cp < stream->next_out; cp++)
+> 				if (!*cp)
+> 					/* Found the NUL at the end of the header */
+> 					return 0;
+> 			stream->next_out = buffer;
+> 			stream->avail_out = bufsiz;
+> 		} while (status == Z_OK);
+> 		return -1;
+> 	}
+>
+> which may be more in line with how we read data from loose objects.
 
-These test descriptions are quite long, often mirroring in prose what
-the test body already says more concisely. I generally try to keep
-descriptions short while still being descriptive enough to give a
-general idea about what is being tested. I've rewritten a few test
-descriptions (below) to be very short, in fact probably too terse; but
-perhaps better descriptions would lie somewhere between the two
-extremes. First example, for this test:
+Agreed there is code duplication with unpack_sha1_header() and 
+unpack_sha1_header_extended(). But I thought there would be a 
+performance trade off, Any way I could test this?
+Also the second suggestion you have given seems to be more practical, As 
+there is no performance overhead, if called by existing code.
+>
+>> +int parse_sha1_header_extended(const char *hdr, struct object_info *oi,
+>> +			       int flags)
+>
+> Unless we are taking advantage of the fact that MSB is special in
+> signed integral types, I would prefer to see us use an unsigned type
+> to store these bits in a variable of an integral type.  That would
+> let the readers assume that they have fewer tricky things possibly
+> going on in the code (also see the footnote to $gmane/263751).
 
-    "!xdg: >.git-credentials !xdg"
+Thanks for the link. Will change to unsigned.
+>
+>> @@ -1652,12 +1674,45 @@ int parse_sha1_header(const char *hdr, unsigned long *sizep)
+>>   			size = size * 10 + c;
+>>   		}
+>>   	}
+>> -	*sizep = size;
+>> +
+>> +	type = type_from_string_gently(typename.buf, -1, 1);
+>
+> Doesn't the code know how long the typename is at this point?
+Yes, will change.
+>
+>> +	if (oi->sizep)
+>> +		*oi->sizep = size;
+>> +	if (oi->typename)
+>> +		strbuf_addstr(oi->typename, typename.buf);
+>
+> Likewise.  Perhaps strbuf_addbuf()?
+That also calls strbuf_add(). But does improve readability
+>
+>> +	if (oi->typep)
+>> +		*oi->typep = type;
+>
+> Do you want to store -1 to *oi->typep when the caller asked to do
+> the "literally" thing?  Shouldn't it match what is returned from
+> this function?
+Yes it should. Will make changes.
+>
+>> +	return *hdr ? -1 : type;
+>> +}
+>> +
+>> +/*
+>> + * We used to just use "sscanf()", but that's actually way
+>> + * too permissive for what we want to check. So do an anal
+>> + * object header parse by hand. Calls the extended function.
+>> + */
+>
+> The comment "let's do better than sscanf() by parsing ourselves"
+> applies to the implementation of _extended() function, not this one,
+> no?  It is clear to everybody that it "Calls the extended function",
+> so why mention it?
+>
+>> +int parse_sha1_header(const char *hdr, unsigned long *sizep)
+>> +{
+>> +	struct object_info oi;
+>> +
+>> +	oi.sizep = sizep;
+>> +	oi.typename = NULL;
+>> +	oi.typep = NULL;
+>> +	return parse_sha1_header_extended(hdr, &oi, LOOKUP_REPLACE_OBJECT);
+>>   }
+>
+>> @@ -2524,13 +2579,15 @@ struct packed_git *find_sha1_pack(const unsigned char *sha1,
+>>   }
+>>
+>>   static int sha1_loose_object_info(const unsigned char *sha1,
+>> -				  struct object_info *oi)
+>> +				  struct object_info *oi,
+>> +				  int flags)
+>>   {
+>> -	int status;
+>> +	int status = 0;
+>>   	unsigned long mapsize, size;
+>>   	void *map;
+>>   	git_zstream stream;
+>>   	char hdr[32];
+>> +	struct strbuf hdrbuf = STRBUF_INIT;
+>>
+>>   	if (oi->delta_base_sha1)
+>>   		hashclr(oi->delta_base_sha1);
+>> @@ -2557,17 +2614,29 @@ static int sha1_loose_object_info(const unsigned char *sha1,
+>>   		return -1;
+>>   	if (oi->disk_sizep)
+>>   		*oi->disk_sizep = mapsize;
+>> -	if (unpack_sha1_header(&stream, map, mapsize, hdr, sizeof(hdr)) < 0)
+>> -		status = error("unable to unpack %s header",
+>> -			       sha1_to_hex(sha1));
+>> -	else if ((status = parse_sha1_header(hdr, &size)) < 0)
+>> -		status = error("unable to parse %s header", sha1_to_hex(sha1));
+>> -	else if (oi->sizep)
+>> +	if ((flags & LOOKUP_LITERALLY)) {
+>> +		if (unpack_sha1_header_literally(&stream, map, mapsize, &hdrbuf) < 0)
+>> +			status = error("unable to unpack %s header with --literally",
+>> +				       sha1_to_hex(sha1));
+>> +		else if ((status = parse_sha1_header_extended(hdrbuf.buf, oi, flags)) < 0)
+>> +			status = error("unable to parse %s header", sha1_to_hex(sha1));
+>> +	} else {
+>> +		if (unpack_sha1_header(&stream, map, mapsize, hdr, sizeof(hdr)) < 0)
+>> +			status = error("unable to unpack %s header",
+>> +				       sha1_to_hex(sha1));
+>> +		else if ((status = parse_sha1_header(hdr, &size)) < 0)
+>> +			status = error("unable to parse %s header", sha1_to_hex(sha1));
+>> +	}
+>> +	if (oi->sizep)
+>>   		*oi->sizep = size;
+>
+> Have you considered calling parse_sha1_header_extended() for both
+> literally and normal cases?  Then you wouldn't have to do any of the
+> "if (oi->blah) *oi->blah = value", no?
+>
+>>   	git_inflate_end(&stream);
+>>   	munmap(map, mapsize);
+>>   	if (oi->typep)
+>>   		*oi->typep = status;
+>
+> Likewise.
+>
+>> +	if (oi->typename && !(oi->typename->len))
+>> +		strbuf_addstr(oi->typename, typename(status));
+>
+> Likewise.
+>
 
-Key: Space-separated items. Items before ":" are the pre-conditions,
-and items after are the post-state. "!" file does not exist; ">"
-output goes here.
+No. I have not considered that. will look into this.
+Thanks for the suggestions.
 
-> +       test -s "$HOME/.git-credentials" &&
-> +       test_path_is_missing "$HOME/.config/git/credentials"
-> +'
-> +
-> +test_expect_success 'create $XDG_CONFIG_HOME/git/credentials file' '
-
-It's customary to call this "setup" rather than "create".
-
-Terse version: "setup: -.git-redentials +xdg"
-
-Key: "-" file removed; "+" file created.
-
-> +       rm -f "$HOME/.git-credentials" &&
-> +       mkdir -p "$HOME/.config/git" &&
-> +       >"$HOME/.config/git/credentials"
-> +'
-> +
-> +helper_test store
-> +
-> +test_expect_success 'when xdg credentials file exists, only write to xdg file; do not create ~/.git-credentials' '
-
-Terse version: "!.git-credentials xdg: !.git-credentials >xdg"
-
-> +       test -s "$HOME/.config/git/credentials" &&
-> +       test_path_is_missing "$HOME/.git-credentials"
-> +'
-> +
-> +test_expect_success 'set up custom XDG_CONFIG_HOME credential file at ~/xdg/git/credentials' '
-
-s/set up/setup/
-
-Terse: "setup custom-xdg"
-
-> +       mkdir -p "$HOME/xdg/git" &&
-> +       rm -f "$HOME/.config/git/credentials" &&
-> +       >"$HOME/xdg/git/credentials"
-
-It would be easier to read this if you placed the two lines together
-which refer to the custom xdg file. Also, for completeness and to be
-self-contained, don't you want to remove ~/.git-credentials?
-
-    rm -f "$HOME/.git-credentials" &&
-    rm -f "$HOME/.config/git/credentials" &&
-    mkdir -p "$HOME/xdg/git" &&
-    >"$HOME/xdg/git/credentials"
-
-> +'
-> +
-> +XDG_CONFIG_HOME="$HOME/xdg" && export XDG_CONFIG_HOME && helper_test store
-> +unset XDG_CONFIG_HOME
-
-It's hard to spot the "helper_test store" at the end of line. I'd
-place it on a line by itself so that it is easy to see that it is
-wrapped by the setting and unsetting of the environment variable.
-
-> +test_expect_success 'if custom XDG_CONFIG_HOME credentials file ~/xdg/git/credentials exists, it will only be written to; ~/.config/git/credentials and ~/.git-credentials will not be created' '
-
-Terse: "!.git-credentials !xdg custom-xdg: !.git-credentials !xdg >custom-xdg"
-
-> +       test_when_finished "rm -f $HOME/xdg/git/credentials" &&
-> +       test -s "$HOME/xdg/git/credentials" &&
-> +       test_path_is_missing "$HOME/.config/git/credentials"
-
-Matthieu already pointed out the broken &&-chain.
-
-> +       test_path_is_missing "$HOME/.git-credentials"
-> +'
-> +
-> +test_expect_success 'get: return credentials from home file if matches are found in both home and xdg files' '
-
-Terse: ".git-credentials xdg: <.git-credentials"
-
-Key: "<" taken from here.
-
-> +       mkdir -p "$HOME/.config/git" &&
-> +       echo "https://xdg-user:xdg-pass@example.com" >"$HOME/.config/git/credentials" &&
-> +       echo "https://home-user:home-pass@example.com" >"$HOME/.git-credentials" &&
-> +       check fill store <<-\EOF
-> +       protocol=https
-> +       host=example.com
-> +       --
-> +       protocol=https
-> +       host=example.com
-> +       username=home-user
-> +       password=home-pass
-> +       --
-> +       EOF
-> +'
-> +
-> +test_expect_success 'get: return credentials from xdg file if the home files do not have them' '
-
-Terse: "!.git-credentials xdg: <xdg"
-
-> +       mkdir -p "$HOME/.config/git" &&
-> +       >"$HOME/.git-credentials" &&
-> +       echo "https://xdg-user:xdg-pass@example.com" >"$HOME/.config/git/credentials" &&
-> +       check fill store <<-\EOF
-> +       protocol=https
-> +       host=example.com
-> +       --
-> +       protocol=https
-> +       host=example.com
-> +       username=xdg-user
-> +       password=xdg-pass
-> +       --
-> +       EOF
-> +'
-> +
-> +test_expect_success 'get: return credentials from home file if xdg files are unreadable' '
-
-An earlier test showed that the home file is preferred if both it and
-the xdg file exist, so is this test actually telling us anything new?
-Did you mean instead to reverse the case and make the home file
-unreadable?
-
-> +       mkdir -p "$HOME/.config/git" &&
-> +       echo "https://xdg-user:xdg-pass@example.com" >"$HOME/.config/git/credentials" &&
-> +       echo "https://home-user:home-pass@example.com" >"$HOME/.git-credentials" &&
-> +       chmod -r "$HOME/.config/git/credentials" &&
-
-It would be a bit easier to see that the 'chmod' applies to the xdg
-file if it directly followed creation of the xdg file.
-
-> +       check fill store <<-\EOF
-> +       protocol=https
-> +       host=example.com
-> +       --
-> +       protocol=https
-> +       host=example.com
-> +       username=home-user
-> +       password=home-pass
-> +       --
-> +       EOF
-> +'
-> +
-> +test_expect_success 'store: If both xdg and home files exist, only store in home file' '
-
-Inconsistent capitalization: s/If/if/
-
-> +       mkdir -p "$HOME/.config/git" &&
-> +       >"$HOME/.config/git/credentials" &&
-> +       >"$HOME/.git-credentials" &&
-> +       check approve store <<-\EOF &&
-> +       protocol=https
-> +       host=example.com
-> +       username=store-user
-> +       password=store-pass
-> +       EOF
-> +       echo "https://store-user:store-pass@example.com" >expected &&
-> +       test_cmp expected "$HOME/.git-credentials" &&
-> +       test_must_be_empty "$HOME/.config/git/credentials"
-> +'
-> +
-> +
-> +test_expect_success 'erase: erase matching credentials from both xdg and home files' '
-> +       mkdir -p "$HOME/.config/git" &&
-> +       echo "https://xdg-user:xdg-pass@example.com" >"$HOME/.config/git/credentials" &&
-> +       echo "https://home-user:home-pass@example.com" >"$HOME/.git-credentials" &&
-> +       check reject store <<-\EOF &&
-> +       protocol=https
-> +       host=example.com
-> +       EOF
-> +       test_must_be_empty "$HOME/.config/git/credentials" &&
-> +       test_must_be_empty "$HOME/.git-credentials"
-> +'
-> +
->  test_done
-> --
-> 2.1.4
+Regards
+-Karthik
