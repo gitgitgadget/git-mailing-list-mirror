@@ -1,77 +1,120 @@
-From: "Stephen Robin" <stephen.robin@gmail.com>
-Subject: RE: [PATCH/RFC/GSOC] make git-pull a builtin
-Date: Wed, 18 Mar 2015 08:38:09 -0000
-Message-ID: <000701d06156$dd3145e0$9793d1a0$@gmail.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH/RFC/GSOC] make git-pull a builtin
+Date: Wed, 18 Mar 2015 10:00:40 +0100
+Organization: gmx
+Message-ID: <4cae16222697894b19856d12b062f68e@www.dscho.org>
 References: <1426600662-32276-1-git-send-email-pyokagan@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: "'Johannes Schindelin'" <johannes.schindelin@gmx.de>,
-	"'Duy Nguyen'" <pclouds@gmail.com>
-To: "'Paul Tan'" <pyokagan@gmail.com>, <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Mar 18 09:38:14 2015
+Cc: git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 18 10:00:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YY9US-0001pX-Cx
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Mar 2015 09:38:12 +0100
+	id 1YY9qO-000328-7P
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Mar 2015 10:00:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754563AbbCRIiH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Mar 2015 04:38:07 -0400
-Received: from mail-wi0-f171.google.com ([209.85.212.171]:34881 "EHLO
-	mail-wi0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751975AbbCRIiF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Mar 2015 04:38:05 -0400
-Received: by wibdy8 with SMTP id dy8so83671095wib.0
-        for <git@vger.kernel.org>; Wed, 18 Mar 2015 01:38:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:references:in-reply-to:subject:date:message-id
-         :mime-version:content-type:content-transfer-encoding:thread-index
-         :content-language;
-        bh=VVKyyLy6nTBm8bzWXe5EYcovsNcHkCcKAw4zB8ZJofI=;
-        b=LxehqXmYgtbn1/2JqVUINkcfO53Oytr/txsKLzLASuwP4UJ9Xe/gXjbo4ddxrPa10m
-         hwNb5Zl9N4KolKPvpUB8wjyBdtwiAON1euV4UjznlsiS2mAjYE+BQ19gJfF/YarASnzo
-         xVnBkOPc5sUshJm/4Ev5Mmh5Uu4cglN4N9PYXT3v/U2KcyCXxuXCAHGKWdNCHRChBDn9
-         MdWdA0SzrpqnIe7LAdpt7WLasv78h7NsbUbvkvTLJQvjnNsEGeqbHqXMifwT/xWGnSeM
-         4U6qOpF/p8iHZdmmPKkudhuvjvrM/1rlXqtmIf0SglYPY8qKi+g6mUrOzbXLRtY3pgfA
-         S1cQ==
-X-Received: by 10.180.11.180 with SMTP id r20mr4791665wib.36.1426667883926;
-        Wed, 18 Mar 2015 01:38:03 -0700 (PDT)
-Received: from StephenFlaptop ([141.0.152.225])
-        by mx.google.com with ESMTPSA id a13sm23425054wjx.30.2015.03.18.01.38.03
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 18 Mar 2015 01:38:03 -0700 (PDT)
+	id S1755275AbbCRJAr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Mar 2015 05:00:47 -0400
+Received: from mout.gmx.net ([212.227.15.15]:51376 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755222AbbCRJAo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Mar 2015 05:00:44 -0400
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0Ma1tv-1YozEl3qdb-00LliZ; Wed, 18 Mar 2015 10:00:40
+ +0100
 In-Reply-To: <1426600662-32276-1-git-send-email-pyokagan@gmail.com>
-X-Mailer: Microsoft Outlook 15.0
-Thread-Index: AQMbyJILp4mrvYyi6lhr0guzQYfa1pqLF5ow
-Content-Language: en-gb
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.0
+X-Provags-ID: V03:K0:P8fSHKuqf47eBXlcs8szJKJ9psKBDTEYhSjYgD98cDfsL3P6/sM
+ OVwIy8FewikEnkONVrHx10hjTLGn8BDl2qk6cPniXPBr06nxz5P385fJQIo2Nx0k4vaTRHd
+ 7ufK9Lo5kuYBJ4ruClPwsGZnPb93DHo4DFGt3q4PRfN8CI7UchF+k/t+no2sMw+GmXEI04m
+ uc8T/YGwc8D8EOQPWhpqg==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265697>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265698>
+
+Hi Paul,
+
+thank you for this very detailed mail. It was a real pleasure to read this well-researched document.
+
+In the following, I will pick out only parts from the mail, in the interest of both of our time. Please assume that I agree with everything that I do not quote below (and even the with quoted parts I agree mostly ;-)).
+
+On 2015-03-17 14:57, Paul Tan wrote:
+
+> on Windows the runtime fell from 8m 25s to 1m 3s.
+
+This is *exactly* the type of benefit that makes this project so important! Nice one.
+
+> A simpler, but less perfect strategy might be to just convert the shell
+> scripts directly statement by statement to C, using the run_command*()
+> functions as Duy Nguyen[2] suggested, before changing the code to use
+> the internal API.
+
+Yeah, the idea is to have a straight-forward strategy to convert the scripts in as efficient manner as possible. It also makes reviewing easier if the first step is an almost one-to-one translation to `run_command*()`-based builtins.
+
+Plus, it is rewarding to have concise steps that can be completed in a timely manner.
 
 
-> Paul Tan writes:
-> I would like to share this very rough prototype with everyone. 
-...
-> I started this as a just-for-fun exercise to learn about the git internal
-API
+> +/* NOTE: git-pull.sh only supports --log and --no-log, as opposed to what
+> + * man git-pull says. */
+> +static int opt_shortlog_len;
 
-I started to rewrite git-pull for similar reasons a couple of months ago,
-but I haven't had time to complete it.  It looks like my version has less
-work remaining than yours, would you like me to share it?
+This comment might want to live in the commit message instead... It is prone to get stale in the code while it will always be correct (and easier to spot) in the commit message.
 
-> Finally, there is the possibility that in the process of conversion bugs
-or incompatible behavioral changes may be introduced which are not caught by
-the test suite. Ideally, I think the solution is to improve the test suite
-and make it as comprehensive as possible, but writing a comprehensive test
-suite may be too time consuming. 
+> +/**
+> + * Returns default rebase option value
+> + */
+> +static int rebase_config_default(void)
+> +{
+> +	struct strbuf name = STRBUF_INIT;
+> +	const char *value = NULL;
+> +	int boolval;
+> +
+> +	strbuf_addf(&name, "branch.%s.rebase", head_name_short);
+> +	if (git_config_get_value(name.buf, &value))
+> +		git_config_get_value("pull.rebase", &value);
+> +	strbuf_release(&name);
+> +	if (!value)
+> +		return REBASE_FALSE;
+> +	boolval = git_config_maybe_bool("pull.rebase", value);
+> +	if (boolval >= 0)
+> +		return boolval ? REBASE_TRUE : REBASE_FALSE;
+> +	else if (value && !strcmp(value, "preserve"))
+> +		return REBASE_PRESERVE;
+> +	die(_("invalid value for branch.%s.rebase \"%s\""), head_name_short, value);
+> +}
 
-This is why I haven't had time to finish and submit my patch.  While the c
-code is pretty much complete, I felt the test suite needed some extension
-before I could be confident the new code is correct.
+Personally, I would use a couple of empty lines for enhanced structure. Conceptually, there are four parts: the variable declarations, querying the config, parsing the value, and `die()`ing in case of error. There is already an empty line between the first two parts, and I would imagine that readability would be improved further by having an empty line after the `strbuf_release()` and the `return REBASE_PRESERVE` statement, respectively.
+
+> +static int parse_opt_rebase(const struct option *opt, const char
+> *arg, int unset)
+> +{
+> +	if (arg)
+> +		*(int *)opt->value = parse_rebase(arg);
+> +	else
+> +		*(int *)opt->value = unset ? REBASE_FALSE : REBASE_TRUE;
+> +	return (*(int *)opt->value) >= 0 ? 0 : -1;
+> +}
+
+In this function (and also in other places below), there is this pattern that a `struct option` pointer is passed to the function, but then only `*(int *)opt->value` is written to. Therefore, I would suggest to change the signature of the function and pass `(int *)opt->value` as function parameter.
+
+> +static int has_unstaged_changes(void)
+
+Yeah, this function, as well as the ones below it, look as if they are so common that they *should* be already somewhere in libgit.a. But I did not find them, either...
+
+Of course it *would* be nice to identify places where essentially the same code is needed, and refactor accordingly. But I think that is outside the scope of this project.
+
+The rest looks pretty good (and you realize that my comments above are really more nit picks than anything else).
+
+The FIXMEs should be relatively easy to address. It would be my pleasure to work with you.
+
+Ciao,
+Johannes
