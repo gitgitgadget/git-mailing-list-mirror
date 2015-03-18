@@ -1,86 +1,105 @@
-From: Wilhelm Schuermann <wimschuermann@googlemail.com>
-Subject: [PATCH/RFC] grep: fix "--quiet" overwriting current output
-Date: Wed, 18 Mar 2015 19:00:13 +0100
-Message-ID: <1426701613-12533-1-git-send-email-wimschuermann@googlemail.com>
-Cc: Wilhelm Schuermann <wimschuermann@googlemail.com>
+From: Spencer Nelson <s@spenczar.com>
+Subject: git clone doesn't cleanup on failure when getcwd fails
+Date: Wed, 18 Mar 2015 11:03:30 -0700
+Message-ID: <etPan.5509bdf2.7a1ae87d.1766@ttvadmins-MacBook-Pro.local>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 18 19:00:32 2015
+X-From: git-owner@vger.kernel.org Wed Mar 18 19:03:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YYIGc-0006HB-SF
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Mar 2015 19:00:31 +0100
+	id 1YYIJd-0007vX-Pe
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Mar 2015 19:03:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755579AbbCRSA0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Mar 2015 14:00:26 -0400
-Received: from mail-wg0-f45.google.com ([74.125.82.45]:34343 "EHLO
-	mail-wg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755185AbbCRSAZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Mar 2015 14:00:25 -0400
-Received: by wggv3 with SMTP id v3so42015444wgg.1
-        for <git@vger.kernel.org>; Wed, 18 Mar 2015 11:00:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=F3X9Van+AD1ICx6wUUdCtjCTAkC6uxfqX1/SFWLzIGk=;
-        b=0CiAdhaeTvyGu41VNfeA9SUMQ8R2oDlnfQuCw2Ne2LHpo/dy4MbXFBKTF+f1EAVuBi
-         UCpwBCmm9UBI7Ockcvo8tUBcT3tpSZUCKVvFSawcpL2qOhDgJQvvcAKVkLy/hyxQNDxs
-         0NV3uq+h+tTfeIUSx7FC00mwqFJfvr5cBqcAcFnSrc9zGfz7lGYX0497b/UnLYh/wwon
-         njR5wZs0lC1Q3gllyvmXybKatuUPxLL+wXfbczSnHXKY0cQPPhRk/zac04oO2LxkKVYe
-         BAHb61U+durQxn/3YZNhSVoClDZcANgHYUZ9h2u1zU0xm4tFyd+Z1sSSxe9Gzaf+7+lT
-         /5bA==
-X-Received: by 10.194.176.162 with SMTP id cj2mr79514025wjc.93.1426701624342;
-        Wed, 18 Mar 2015 11:00:24 -0700 (PDT)
-Received: from localhost (dslb-146-060-121-085.146.060.pools.vodafone-ip.de. [146.60.121.85])
-        by mx.google.com with ESMTPSA id pa4sm25465068wjb.11.2015.03.18.11.00.23
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 18 Mar 2015 11:00:23 -0700 (PDT)
-X-Mailer: git-send-email 1.9.1
+	id S1755343AbbCRSDd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Mar 2015 14:03:33 -0400
+Received: from mail-pa0-f54.google.com ([209.85.220.54]:35592 "EHLO
+	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755077AbbCRSDc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Mar 2015 14:03:32 -0400
+Received: by pabyw6 with SMTP id yw6so49371361pab.2
+        for <git@vger.kernel.org>; Wed, 18 Mar 2015 11:03:32 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:message-id:subject:mime-version
+         :content-type:content-transfer-encoding:content-disposition;
+        bh=C+z+WoxILcpqz38CE6DJcoZfaxDkgYsDkxzux/0iS+8=;
+        b=jub88gH6fe1cEQVMEj4NfLoGghDlIGLq9lwRowCAh8tarCGFSIUPpmEbvRTDeu1+X+
+         qJTGY3sCJI3EFNMOUVfeCMJbaiZh4R6S/AfSXevKeisU63rph6wSWOAJT+y1yhymOfBk
+         MUSt/eWuKk1HAfl4IXuDSvNUpH3tDDmbO1E6SmV71ge8nm0Hg1giy8mv0s+y8rCpEm/B
+         brO6Ijop1DbbTSnCWNmiNNk4BUl7neBm9cHPAtYSu3Q3B9lpV9+XdCVdt84NZPkrDn7/
+         mc2Gs8uITpiz2wc9c125BfUUm0/syOFgVcjK3l4J8EUQlZaSoU6jARzi6mIIBU8N2dLG
+         fgsA==
+X-Gm-Message-State: ALoCoQmIpnLtMBUx3GTOQSYuk48POtnegtyiIJ4VDIDXOkkckGPvJbI+3SFFN9Ahs+hq/HYldX/+
+X-Received: by 10.66.102.34 with SMTP id fl2mr163905464pab.40.1426701812080;
+        Wed, 18 Mar 2015 11:03:32 -0700 (PDT)
+Received: from ttvadmins-MacBook-Pro.local ([2002:ae3e:4da0:0:f0c4:8d5d:66be:6aa7])
+        by mx.google.com with ESMTPSA id zd14sm28708644pab.20.2015.03.18.11.03.31
+        for <git@vger.kernel.org>
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 18 Mar 2015 11:03:31 -0700 (PDT)
+X-Mailer: Airmail Beta (297)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265744>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265745>
 
-When grep is called with the --quiet option, the pager is initialized
-despite not being used.  When the pager is "less", anything output by
-previous commands and not ended with a newline is overwritten.
+=C2=A0
+If you=E2=80=99re in a shell in a directory which no longer exists (bec=
+ause, say, another terminal removed it), then getcwd() will fail, at le=
+ast on OS X Yosemite 10.10.2. In this case, git clone will fail. That=E2=
+=80=99s totally reasonable. =20
 
-$ echo -n aaa; echo bbb
-aaabbb
-$ echo -n aaa; git grep -q foo; echo bbb
-bbb
+If you invoke git clone with the git clone <repo> <dir> syntax, then <d=
+ir> will be created, but it will be empty.
 
-This can be worked around, for example, by making sure STDOUT is not a
-TTY or more directly by setting git's pager to "cat":
+This was unexpected - I would think the failure case shouldn=E2=80=99t =
+leave this empty directory, but should instead clean up after itself.
 
-$ echo -n aaa; git grep -q foo > /dev/null; echo bbb
-aaabbb
-$ echo -n aaa; PAGER=cat git grep -q foo; echo bbb
-aaabbb
+I=E2=80=99m not alone: golang=E2=80=99s go get command for installing t=
+hird-party packages performs a `git clone <repo> <dir>` only if <dir> d=
+oes not already exist - if it does exist, then go believes that the pac=
+kage is already installed, and so does nothing. So, if you call go get =
+from within a directory which no longer exists, git will create the emp=
+ty directory, putting go get into a bad state.
 
-This patch prevents calling the pager in the first place, saving an
-unnecessary fork() call.
 
-Signed-off-by: Wilhelm Schuermann <wimschuermann@googlemail.com>
----
- builtin/grep.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Concrete example:
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index e77f7cf..fe7b9fd 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -885,7 +885,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 		}
- 	}
- 
--	if (!show_in_pager)
-+	if (!show_in_pager && !opt.status_only)
- 		setup_pager();
- 
- 	if (!use_index && (untracked || cached))
--- 
-2.3.3.dirty
+Make a dummy repo in /tmp/somerepo:
+tty1:
+$ cd /tmp
+$ git init somerepo
+
+In another tty, make a /tmp/poof and enter it
+tty2:
+$ mkdir /tmp/poof
+$ cd /tmp/poof
+
+In the first tty, delete /tmp/poof
+tty1:
+$ rmdir /tmp/poof
+
+=46inally, in the second tty, clone:
+tty2:
+$ git clone /tmp/somerepo /tmp/newcopy
+fatal: Could not get current working directory: No such file or directo=
+ry
+$ ls /tmp/newcopy && echo "yes, it exists"
+yes, it exists
+
+
+My version details:
+
+$ git version
+git version 2.3.2
+
+$ uname -a
+Darwin mbp.local 14.1.0 Darwin Kernel Version 14.1.0: Thu Feb 26 19:26:=
+47 PST 2015; root:xnu-2782.10.73~1/RELEASE_X86_64 x86_64
