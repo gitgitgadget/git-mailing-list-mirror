@@ -1,126 +1,107 @@
-From: Paul Tan <pyokagan@gmail.com>
-Subject: [PATCH v4 2/4] git-credential-store: support XDG_CONFIG_HOME
-Date: Wed, 18 Mar 2015 15:04:34 +0800
-Message-ID: <1426662276-8728-2-git-send-email-pyokagan@gmail.com>
-References: <1426662276-8728-1-git-send-email-pyokagan@gmail.com>
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Paul Tan <pyokagan@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 18 08:05:46 2015
+From: Chris Packham <judge.packham@gmail.com>
+Subject: Re: git submodule: update=!command
+Date: Wed, 18 Mar 2015 20:38:31 +1300
+Message-ID: <CAFOYHZA=d94swSvfrR0+RdfVrf8a5RwwnYPphtnKz44O_nFeCg@mail.gmail.com>
+References: <1426620537.1785877.241673949.72FB3B40@webmail.messagingengine.com>
+	<20150317195030.GA18725@peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Ryan Lortie <desrt@desrt.ca>, GIT <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Mar 18 08:38:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YY82u-0004Cx-Ee
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Mar 2015 08:05:40 +0100
+	id 1YY8Yo-00027D-D3
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Mar 2015 08:38:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754864AbbCRHF3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Mar 2015 03:05:29 -0400
-Received: from mail-pd0-f172.google.com ([209.85.192.172]:33739 "EHLO
-	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753351AbbCRHF1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Mar 2015 03:05:27 -0400
-Received: by pdnc3 with SMTP id c3so34418189pdn.0
-        for <git@vger.kernel.org>; Wed, 18 Mar 2015 00:05:26 -0700 (PDT)
+	id S1755256AbbCRHid (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Mar 2015 03:38:33 -0400
+Received: from mail-pa0-f54.google.com ([209.85.220.54]:34729 "EHLO
+	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754744AbbCRHic (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Mar 2015 03:38:32 -0400
+Received: by pacwe9 with SMTP id we9so34764103pac.1
+        for <git@vger.kernel.org>; Wed, 18 Mar 2015 00:38:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=UkZ1ESHMllAWEOUelUH31+5wKjLnfJbwAWLr/hNgyaM=;
-        b=DuPLj1+bcetsR/PgBKw7vfxh39ppTMAjH1Rfz8haNc9nEnF7nfJmrt/zdpd5bNLFvr
-         Lfl/1D5OFguVI2zNe3p6ivXoz6tmeTQCdRzg67tTGZvf8Q6kcLudEmD/IorLU+Zj3LeC
-         xf0tFuPPieVNHmYUrOiHC8/Kn6RFh9wnB7+BDeFJfL9gNn11HoJ2fxmXkBEzN1N2lsWF
-         Mlr2Ykq1LIs0cL6acd5f+G9TGWXDmpXeUx/sQwAR5QA1IUnfqh7QURcIHTUIEUh1lEH0
-         dztfklQJ7BjjEnx2+mKj+enPZHA9qr+MrWyXAU/IfJD+nYuyVxEWXcYDMtXQLsD8p4tl
-         GOZw==
-X-Received: by 10.70.53.196 with SMTP id d4mr3041709pdp.6.1426662326677;
-        Wed, 18 Mar 2015 00:05:26 -0700 (PDT)
-Received: from yoshi.chippynet.com ([101.127.143.183])
-        by mx.google.com with ESMTPSA id qj3sm25815436pac.31.2015.03.18.00.05.24
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 18 Mar 2015 00:05:24 -0700 (PDT)
-Received: from pyokagan by yoshi.chippynet.com with local (Exim 4.84)
-	(envelope-from <pyokagan@yoshi.chippynet.com>)
-	id 1YY82b-0002MF-Ud; Wed, 18 Mar 2015 15:05:21 +0800
-X-Mailer: git-send-email 2.1.4
-In-Reply-To: <1426662276-8728-1-git-send-email-pyokagan@gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=+5j2e6a95++pArLymkn1kWsUNkRtaB9e70d+PMAL97o=;
+        b=FIPBzlK4LOzCulCfIma0uSeQ2ZGjRSJB6sUXzj29cfeOS0LSq3TncFQgYw40+ouuXm
+         Hl3xNySun6PJ7xZKEbdGS/ozQDeYTuvGfLvZrpiQkLqa+FIitL/Bah1pGO3MmLXxT0mj
+         Z7wQhlJb0MAYKh5Uv0rTJhCZAQuh6aMju6487cl7hpJC4rXXg0z88Q/z/Bt4h+v8f0Lf
+         j+tG38OzXtDj2Vft2HUX1UTmj4C2tsIGJ/qKhhF9PE9Pv6QNF5VOdHq2CJf/0zNum4U9
+         mpg54y3bDfWCu6f20RA1A3J/DNLpuC7tuSl93Cm1TRF4hFMtp40CtJ+wVX+NA8JkURxi
+         s71w==
+X-Received: by 10.70.127.140 with SMTP id ng12mr135466228pdb.24.1426664311938;
+ Wed, 18 Mar 2015 00:38:31 -0700 (PDT)
+Received: by 10.70.0.171 with HTTP; Wed, 18 Mar 2015 00:38:31 -0700 (PDT)
+In-Reply-To: <20150317195030.GA18725@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265686>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265688>
 
-Add $XDG_CONFIG_HOME/git/credentials to the default credential search
-path of git-credential-store. This allows git-credential-store to
-support user-specific configuration files in accordance with the XDG
-base directory specification[1].
+A little late to this thread
 
-[1] http://standards.freedesktop.org/basedir-spec/basedir-spec-0.7.html
+On Wed, Mar 18, 2015 at 8:50 AM, Jeff King <peff@peff.net> wrote:
+> On Tue, Mar 17, 2015 at 03:28:57PM -0400, Ryan Lortie wrote:
+>
+>> The first is a question about git's basic policy with respect to things
+>> like this.  I hope that it's safe to assume that running 'git' commands
+>> on repositories downloaded from potentially-hostile places will never
+>> result in the authors of those repositories being able to run code on my
+>> machine.
+>
+> Definitely, our policy is that downloading a git repository should not
+> result in arbitrary code being run. If there is a case of that, it would
+> be a serious security bug.
+>
+> I am not an expert on submodules, but I think the security module there
+> is:
+>
+>   1. You can do whatever you like in submodule.*.update entries in
+>      .git/config, including arbitrary code. Nobody but the user can
+>      write to it.
 
-~/.git-credentials has a higher precedence than
-$XDG_CONFIG_HOME/git/credentials when looking up credentials.  This
-means that if any duplicate matching credentials are found in the xdg
-file (due to ~/.git-credentials being updated by old versions of git or
-outdated tools), they will not be used at all. This is to give the user
-some leeway in switching to old versions of git while keeping the xdg
-directory. This is consistent with the behavior of git-config.
+Which was always the intention of the !command feature. It's for users
+who want to use additional git porcelains that need some help dealing
+with submodule updates (e.g stgit).
 
-However, the higher precedence of ~/.git-credentials means that as long
-as ~/.git-credentials exist, all credentials will be written to the
-~/.git-credentials file even if the user has an xdg file as having a
-~/.git-credentials file indicates that the user wants to preserve
-backwards-compatibility. This is also consistent with the behavior of
-git-config.
+>   2. The submodule code may migrate entries from .gitmodules into
+>      .git/config, but does so with an allow-known-good whitelist (see
+>      git-submodule.sh lines 622-637).
+>
+> So AFAICT there's no bug here, and the system is working as designed.
+> It might be worth mentioning that restriction in the submodule
+> documentation, if only to prevent non-malicious people from wondering
+> why adding "!foo" does not work in .gitmodules.
 
-Since the xdg file will not be used unless it actually exists, to
-prevent the situation where some credentials are present in the xdg file
-while some are present in the home file, users are recommended to not
-create the xdg file if they require compatibility with old versions of
-git or outdated tools. Note, though, that "erase" can be used to
-explicitly erase matching credentials from all files.
+At the time the !command feature and copying of update config from
+.gitmodules slid past each other on the list. But out of that I think
+we got a much better handling that provides security and version
+compatibility.
 
-Helped-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Paul Tan <pyokagan@gmail.com>
----
-
-The previous version can be found at [1].
-
-[1] http://thread.gmane.org/gmane.comp.version-control.git/265305/focus=265308
-
-There are no changes in this version.
-
- credential-store.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
-
-diff --git a/credential-store.c b/credential-store.c
-index 8dad479..d805df7 100644
---- a/credential-store.c
-+++ b/credential-store.c
-@@ -163,11 +163,16 @@ int main(int argc, char **argv)
- 		usage_with_options(usage, options);
- 	op = argv[0];
- 
--	if (!file)
--		file = expand_user_path("~/.git-credentials");
--	if (file)
-+	if (file) {
- 		string_list_append(&fns, file);
--	else
-+	} else {
-+		if ((file = expand_user_path("~/.git-credentials")))
-+			string_list_append_nodup(&fns, file);
-+		home_config_paths(NULL, &file, "credentials");
-+		if (file)
-+			string_list_append_nodup(&fns, file);
-+	}
-+	if (!fns.nr)
- 		die("unable to set up default path; use --file");
- 
- 	if (credential_read(&c, stdin) < 0)
--- 
-2.1.4
+>> If that is true then, the second request would be to spell this out more
+>> explicitly in the relevant documentation.  I'm happy to write a patch to
+>> do that, if it is deemed appropriate.
+>
+> Yeah, spelling out the security model more explicitly would be good.
+> There is also some subtlety around hooks. Doing:
+>
+>   git clone user@host:/path/to/repo.git local
+>
+> should never run code controlled by "repo.git" as "user@host". But
+> doing:
+>
+>   ssh user@host 'cd /path/to/repo.git && git log'
+>
+> will respect the .git/config in repo.git, which may include arbitrary
+> commands.
+>
+> -Peff
