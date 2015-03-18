@@ -1,94 +1,110 @@
-From: Ephrim Khong <dr.khong@gmail.com>
-Subject: [Bug] git gc with alternates tries accessing non-existing directory
-Date: Wed, 18 Mar 2015 09:11:48 +0100
-Message-ID: <55093344.9030500@gmail.com>
+From: Chris Packham <judge.packham@gmail.com>
+Subject: Re: Need help deciding between subtree and submodule
+Date: Wed, 18 Mar 2015 21:20:58 +1300
+Message-ID: <CAFOYHZCCUUjLnv3qpMBVPExR+4jdu09y5c8BcN8SNT0HWzqpHw@mail.gmail.com>
+References: <CAHd499DN1FUzxGYBtUmZ_gKcCvXWJdR6-6XYXsN6BRn0LVO84g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: GIT Mailing-list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Mar 18 09:12:00 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git <git@vger.kernel.org>
+To: Robert Dailey <rcdailey.lists@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 18 09:21:09 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YY954-0007t8-IG
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Mar 2015 09:11:58 +0100
+	id 1YY9Dw-0003FJ-CO
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Mar 2015 09:21:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754995AbbCRILy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Mar 2015 04:11:54 -0400
-Received: from mail-we0-f180.google.com ([74.125.82.180]:36688 "EHLO
-	mail-we0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754887AbbCRILv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Mar 2015 04:11:51 -0400
-Received: by wetk59 with SMTP id k59so25758063wet.3
-        for <git@vger.kernel.org>; Wed, 18 Mar 2015 01:11:50 -0700 (PDT)
+	id S1755319AbbCRIVD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Mar 2015 04:21:03 -0400
+Received: from mail-pd0-f182.google.com ([209.85.192.182]:36221 "EHLO
+	mail-pd0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755303AbbCRIU6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Mar 2015 04:20:58 -0400
+Received: by pdbcz9 with SMTP id cz9so36100548pdb.3
+        for <git@vger.kernel.org>; Wed, 18 Mar 2015 01:20:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        bh=T1bsTkAW+kKSNvmvfL8p09iFXQLIpBy5L4YIBvlebcw=;
-        b=WtQwM9T1IdCaIf0vz/lwXOKwew8T9Beb4I1zsYDx9xDFfGOMzomIiUSx6g3nv4VSYb
-         CEgNuOU7bP6Egx2Rp5cb9IssaGE9Lhnr40SU82WV9lrN1FGLeantJjMzAiqV2kMUPT+w
-         510+rxmD6AwLeNdBb9RKeUUgfBsqpL/LRrLNoKuOPP2dmzi1KLhbCptvGxp5tEfWXIyU
-         8I7Gd3Z5UhcE7Yz8FkOTBCyVH5ZLQ7JK3ktVUdNHpSPDJ3Cx60guz064TK5k8jqAUCze
-         yHigzfB671OQ3P6rl01dl9wXdoxFYlcXQTY+8yyE0hLYOV3GhHjVqvDbp+DzcNz8ROn8
-         INPQ==
-X-Received: by 10.180.35.72 with SMTP id f8mr4520713wij.31.1426666310255;
-        Wed, 18 Mar 2015 01:11:50 -0700 (PDT)
-Received: from [10.0.100.231] (merlin.mvtec.com. [62.96.232.130])
-        by mx.google.com with ESMTPSA id nd15sm2051327wic.8.2015.03.18.01.11.49
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 18 Mar 2015 01:11:49 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=j4J8QDaoTJRcA0YPYoKFR7CpNxZnVilToKi274Y7KPM=;
+        b=xVNvsFrhiOkb581Nr7Yvfc+VJp54yC5tyPQ2AmnBc5THt2OASbB2d2FAw80tE63ppW
+         E/AV21gQMuidLMQhRVpwWsHEZlR0w1PCFuY3a7sFx6QpVqs9njAx+S9Z9iSmIdisdfqS
+         6sMJvxw5fBtdPVNf/JwT6OMd2ys/vPmoyOQg+BeNruUI+6pQ6T3Qm1VdLgCaJiOE+D/n
+         oL0qKnF1jzu3EMkhRvQ0y9gNrnMGhmfPYvoFNlrgd9/2R/LC0TQ0atYQdkrtI3oWSRcN
+         liwrxK+VEZhKP+WXYklQPhYch3cZnneqgLyX7VqQ9R10JqM+8YssTZoBRTmD7Ofq4Xx6
+         TZuw==
+X-Received: by 10.70.118.134 with SMTP id km6mr155528127pdb.162.1426666858389;
+ Wed, 18 Mar 2015 01:20:58 -0700 (PDT)
+Received: by 10.70.0.171 with HTTP; Wed, 18 Mar 2015 01:20:58 -0700 (PDT)
+In-Reply-To: <CAHd499DN1FUzxGYBtUmZ_gKcCvXWJdR6-6XYXsN6BRn0LVO84g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265692>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265693>
 
-I have a non-bare repository /home/a set up with an alternate to the 
-bare repository /b. Running  git gc  on /home/a produces below's error
+My $0.02 based on $dayjob
 
-   error: unable to open 
-/b/objects/56/b969ffdf64343777a069260f41761dc0551bfa/00: Not a directory
+(disclaimer I've never used subtree)
 
-The referenced file
+On Wed, Mar 18, 2015 at 11:14 AM, Robert Dailey
+<rcdailey.lists@gmail.com> wrote:
+> At my workplace, the team is using Atlassian Stash + git
+>
+> We have a "Core" library that is our common code between various
+> projects. To avoid a single monolithic repository and to allow our
+> apps and tools to be modularized into their own repos, I have
+> considered moving Core to a subtree or submodule.
 
-   /b/objects/56/b969ffdf64343777a069260f41761dc0551bfa
+Our environment is slightly different. Our projects are made up
+entirely of submodules, we don't embed submodules within a repo with
+actual code (side note: I know syslog-ng does so it might be worth
+having a look around there).
 
-exists, but is not a directory.
+Day to day development is done at the submodule level. A developer
+working on a particular feature is generally only touching one repo
+notwithstanding a little bit of to-and-fro as they work on the UI
+aspects. When changes do touch multiple submodules the pushes can
+generally be ordered in a sane manner. Things get a little complicated
+when there are interdependent changes, then those pushes require
+co-operation between submodule owners.
 
-Thanks,
-- Eph
+The key to making this work is our build system. It is the thing that
+updates the project repo. After a successful build for all targets (we
+hope to add unit/regression tests one day) the submodules sha1s are
+updated and a new baseline (to borrow a clearcase term) is published.
+Developers can do "git pull && git submodule update" to get the latest
+stable baseline, but they can also run git pull in a submodule if they
+want to be on the bleeding edge.
 
- > git --version
-git version 2.3.0
+> I tried subtree and this is definitely far more transparent and simple
+> to the team (simplicity is very important), however I notice it has
+> problems with unnecessary conflicts when you do not do `git subtree
+> push` for each `git subtree pull`. This is unnecessary overhead and
+> complicates the log graph which I don't like.
+>
+> Submodule functionally works but it is complicated. We make heavy use
+> of pull requests for code reviews (they are required due to company
+> policy). Instead of a pull request being atomic and containing any app
+> changes + accompanying Core changes, we now need to create two pull
+> requests and manage them in proper order. Things also become more
+> difficult when branching. All around it just feels like submodule
+> would interfere and add more administration overhead on a day to day
+> basis, affecting productivity.
 
- > cat /home/a/.git/objects/info/alternates
-/b/objects
+We do have policies around review etc. With submodules it does
+sometimes require engaging owners/reviewers from multiple
+repositories. Tools like Gerrit can help, particularly where multiple
+changes and reviewers are involved.
 
- > cd /home/a && git gc
-Counting objects: 4046, done.
-Delta compression using up to 32 threads.
-Compressing objects: 100% (970/970), done.
-Writing objects: 100% (4046/4046), done.
-Total 4046 (delta 3074), reused 4046 (delta 3074)
-error: unable to open 
-/b/objects/56/b969ffdf64343777a069260f41761dc0551bfa/00: Not a directory
-fatal: unable to mark recent objects
-error: failed to run prune
+> Is there a third option here I'm missing? If only that issue with
+> subtree could be addressed (the conflicts), it would be perfect enough
+> for us I think. I have done all the stackoverflow reading and research
+> I can manage at this point. I would really love some feedback from the
+> actual git community on what would be a practical solution and
+> structure here from a company perspective.
 
- > ls -al /b/objects/56
--r--r--r-- ##   199 Mar 11 11:21 0ae39e1f65160f0256aa1411d6c3c6d36cb79a
--r--r--r-- ##  1717 Mar 10 17:15 0c22f578c0f47c54bcd9de899701fceb08607a
--r--r--r-- ##   477 Mar  5 11:34 0dc6b1dac39e4366c739ede698232ce1a02d1a
--r--r--r-- ##    51 Mar  5 09:04 14ee4b890b61b9e8ac07a05b878d44ed2138da
--r--r----- ##   431 Mar  5 15:58 161adcb8a02868940f2fab2e7eb084de9a106a
--r--r--r-- ##   264 Mar 11 14:35 30af07890c31e54bc92da16ee6557d9ffba21a
--r--r----- ##   795 Mar 13 09:35 4ab2cb69f2f2e22215772f2ae604d24863ab9a
--r--r--r-- ##   181 Mar  9 12:38 ad631112e5971e872a88946cbae8176b4563ba
--r--r----- ## 14574 Mar  2 16:25 b969ffdf64343777a069260f41761dc0551bfa
--r--r--r-- ##   821 Mar  6 11:16 c55b01a68613c0ea1946869bb9b72370b8738a
--r--r--r-- ##  8199 Mar  4 12:14 cb732d06ae2adf04150766a70ca079e11801aa
--r--r----- ##   261 Mar 10 09:47 fadac9ce2f87392986438737b329fc6cab18ca
+There's the thing google use for android, I think it's called "repo".
+There's a few googlers around here so mybe one of them will chime in.
