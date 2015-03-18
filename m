@@ -1,212 +1,152 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 01/14] numparse: new module for parsing integral numbers
-Date: Wed, 18 Mar 2015 14:27:56 -0400
-Message-ID: <CAPig+cTyCS2-gys0MQSsA4K_k2gnGRvitXzDybyhO5q41OMD_w@mail.gmail.com>
-References: <1426608016-2978-1-git-send-email-mhagger@alum.mit.edu>
-	<1426608016-2978-2-git-send-email-mhagger@alum.mit.edu>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] clone: initialize atexit cleanup handler earlier
+Date: Wed, 18 Mar 2015 14:55:32 -0400
+Message-ID: <20150318185531.GA650@peff.net>
+References: <etPan.5509bdf2.7a1ae87d.1766@ttvadmins-MacBook-Pro.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.org>,
-	Git List <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Mar 18 19:28:05 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Spencer Nelson <s@spenczar.com>
+X-From: git-owner@vger.kernel.org Wed Mar 18 19:55:45 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YYIhI-0003U2-B8
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Mar 2015 19:28:04 +0100
+	id 1YYJ80-0000wM-Op
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Mar 2015 19:55:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756088AbbCRS2A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Mar 2015 14:28:00 -0400
-Received: from mail-yk0-f169.google.com ([209.85.160.169]:34118 "EHLO
-	mail-yk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755095AbbCRS15 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Mar 2015 14:27:57 -0400
-Received: by ykfc206 with SMTP id c206so19468460ykf.1
-        for <git@vger.kernel.org>; Wed, 18 Mar 2015 11:27:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=TZS8drYmxW2Y6o9DU3yeLQJy7e9J3bmI93a5Cv6f2r4=;
-        b=gEfjyLcDWraZo/iUqag4+YiC2YvuOWsvIsFqTdIcJpK9OAtMarN5wNZW4mnDreSOzP
-         D+niG5r/+fxqnqT6e8WXbBMCOq1+oAphszAVfiWF3ywcGC9e3z/Qa39ZGh4unaCOFMUp
-         5W9627o2Ir30r0qIDua4pI3KtoI9fMGardARAwmBzlJ8Yc7NdhxUGrQIiq1OBZ5y0FX3
-         BOyHb61USztwgNod8wmU1P9oX1ue+oWWiHHZkKIflWPu9N/2sjU9LaldTuv5Dnq00Row
-         WO/iBCEbtM5irbG1PP3fwSwckANcy055oepa0X61D84rllgEwPFHE/O49QTeytHWkewV
-         L7rg==
-X-Received: by 10.170.134.198 with SMTP id a189mr72610658ykc.103.1426703276293;
- Wed, 18 Mar 2015 11:27:56 -0700 (PDT)
-Received: by 10.170.73.7 with HTTP; Wed, 18 Mar 2015 11:27:56 -0700 (PDT)
-In-Reply-To: <1426608016-2978-2-git-send-email-mhagger@alum.mit.edu>
-X-Google-Sender-Auth: 61VEyDnpFEwLyFTUakC2hhrJMHA
+	id S1755379AbbCRSzf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Mar 2015 14:55:35 -0400
+Received: from cloud.peff.net ([50.56.180.127]:34772 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754887AbbCRSze (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Mar 2015 14:55:34 -0400
+Received: (qmail 24150 invoked by uid 102); 18 Mar 2015 18:55:34 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 18 Mar 2015 13:55:34 -0500
+Received: (qmail 5744 invoked by uid 107); 18 Mar 2015 18:55:45 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 18 Mar 2015 14:55:45 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Mar 2015 14:55:32 -0400
+Content-Disposition: inline
+In-Reply-To: <etPan.5509bdf2.7a1ae87d.1766@ttvadmins-MacBook-Pro.local>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265747>
 
-On Tuesday, March 17, 2015, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> Implement wrappers for strtol() and strtoul() that are safer and more
-> convenient to use.
->
-> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
-> ---
-> diff --git a/numparse.c b/numparse.c
-> new file mode 100644
-> index 0000000..90b44ce
-> --- /dev/null
-> +++ b/numparse.c
-> @@ -0,0 +1,180 @@
-> +int parse_l(const char *s, unsigned int flags, long *result, char **endptr)
-> +{
-> +       long l;
-> +       const char *end;
-> +       int err = 0;
-> +
-> +       err = parse_precheck(s, &flags);
-> +       if (err)
-> +               return err;
-> +       /*
-> +        * Now let strtol() do the heavy lifting:
-> +        */
+On Wed, Mar 18, 2015 at 11:03:30AM -0700, Spencer Nelson wrote:
 
-Perhaps use a /* one-line style comment */ to reduce vertical space
-consumption a bit, thus make it (very slightly) easier to run the eye
-over the code.
+> If you=E2=80=99re in a shell in a directory which no longer exists (b=
+ecause,
+> say, another terminal removed it), then getcwd() will fail, at least
+> on OS X Yosemite 10.10.2. In this case, git clone will fail. That=E2=80=
+=99s
+> totally reasonable.
 
-> +       errno = 0;
-> +       l = strtol(s, (char **)&end, flags & NUM_BASE_MASK);
-> +       if (errno) {
-> +               if (errno == ERANGE) {
-> +                       if (!(flags & NUM_SATURATE))
-> +                               return -NUM_SATURATE;
-> +               } else {
-> +                       return -NUM_OTHER_ERROR;
-> +               }
-> +       }
+Yeah, we fail in set_git_work_tree, which calls real_path() on the new
+directory, which fails because it cannot get the current working
+directory. In the example you gave, we already have an absolute path to
+the new directory, and it is outside the "disappeared" directory. So I
+would think we could get by without having a cwd. It looks like we do s=
+o
+because we have to chdir() away from the cwd as part of real_path, and
+then need to be able to chdir back. So I'm not sure there's an easy way
+to fix it.
 
-Would it reduce cognitive load slightly (and reduce vertical space
-consumption) to rephrase the conditionals as:
+Anyway, that's tangential to your actual problem...
 
-    if (errno == ERANGE && !(flags & NUM_SATURATE))
-        return -NUM_SATURATE;
+> If you invoke git clone with the git clone <repo> <dir> syntax, then
+> <dir> will be created, but it will be empty.
 
-    if (errno && errno != ERANGE)
-        return -NUM_OTHER_ERROR;
+I think the original code just didn't expect set_git_work_tree to fail,
+and doesn't install the cleanup code until after it is called. This
+patch fixes it.
 
-or something similar?
+-- >8 --
+Subject: clone: initialize atexit cleanup handler earlier
 
-More below.
+If clone fails, we generally try to clean up any directories
+we've created. We do this by installing an atexit handler,
+so that we don't have to manually trigger cleanup. However,
+since we install this after touching the filesystem, any
+errors between our initial mkdir() and our atexit() call
+will result in us leaving a crufty directory around.
 
-> +       if (end == s)
-> +               return -NUM_NO_DIGITS;
-> +
-> +       if (*end && !(flags & NUM_TRAILING))
-> +               return -NUM_TRAILING;
-> +
-> +       /* Everything was OK */
-> +       *result = l;
-> +       if (endptr)
-> +               *endptr = (char *)end;
-> +       return 0;
-> +}
-> diff --git a/numparse.h b/numparse.h
-> new file mode 100644
-> index 0000000..4de5e10
-> --- /dev/null
-> +++ b/numparse.h
-> @@ -0,0 +1,207 @@
-> +#ifndef NUMPARSE_H
-> +#define NUMPARSE_H
-> +
-> +/*
-> + * Functions for parsing integral numbers.
-> + *
-> + * Examples:
-> + *
-> + * - Convert s into a signed int, interpreting prefix "0x" to mean
-> + *   hexadecimal and "0" to mean octal. If the value doesn't fit in an
-> + *   unsigned int, set result to INT_MIN or INT_MAX.
+We can fix this by moving our atexit() call earlier. It's OK
+to do it before the junk_work_tree variable is set, because
+remove_junk makes sure the variable is initialized. This
+means we "activate" the handler by assigning to the
+junk_work_tree variable, which we now bump down to just
+after we call mkdir(). We probably do not want to do it
+before, because a plausible reason for mkdir() to fail is
+EEXIST (i.e., we are racing with another "git init"), and we
+would not want to remove their work.
 
-Did you mean s/unsigned int/signed int/ ?
+OTOH, this is probably not that big a deal; we will allow
+cloning into an empty directory (and skip the mkdir), which
+is already racy (i.e., one clone may see the other's empty
+dir and start writing into it). Still, it does not hurt to
+err on the side of caution here.
 
-> + *
-> + *     if (convert_i(s, NUM_SLOPPY, &result))
-> + *             die("...");
-> + */
-> +
-> +/*
-> + * The lowest 6 bits of flags hold the numerical base that should be
-> + * used to parse the number, 2 <= base <= 36. If base is set to 0,
-> + * then NUM_BASE_SPECIFIER must be set too; in this case, the base is
-> + * detected automatically from the string's prefix.
+Note that writing into junk_work_tree and junk_git_dir after
+installing the handler is also technically racy, as we call
+our handler on an async signal.  Depending on the platform,
+we could see a sheared write to the variables. Traditionally
+we have not worried about this, and indeed we already do
+this later in the function. If we want to address that, it
+can come as a separate topic.
 
-Does this restriction go against the goal of making these functions
-convenient, even while remaining strict? Is there a strong reason for
-not merely inferring NUM_BASE_SPECIFIER when base is 0? Doing so would
-make it consistent with strto*l() without (I think) introducing any
-ambiguity.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+Sheesh, for such a little change, there are a lot of racy things to
+think about. Note that even if we did want to make two racing clone
+processes atomic in creating the working tree, the whole git_dir
+initialization is still not (and explicitly ignores EEXIST). I think if
+somebody wants atomicity here, they should do the mkdir themselves, and
+then have git fill in the rest.
 
-> + */
-> +/*
-> + * Number parsing functions:
-> + *
-> + * The following functions parse a number (long, unsigned long, int,
-> + * or unsigned int respectively) from the front of s, storing the
-> + * value to *result and storing a pointer to the first character after
-> + * the number to *endptr. flags specifies how the number should be
-> + * parsed, including which base should be used. flags is a combination
-> + * of the numerical base (2-36) and the NUM_* constants above (see).
+No test. I seem to recall that Windows is tricky with making the cwd go
+away (can you even do it there while a process is still in it?), and I
+don't think such a minor thing is worth the portability headcaches in
+the test suite.
 
-"(see)" what?
+ builtin/clone.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-> + * Return 0 on success or a negative value if there was an error. On
-> + * failure, *result and *entptr are left unchanged.
-> + *
-> + * Please note that if NUM_TRAILING is not set, then it is
-> + * nevertheless an error if there are any characters between the end
-> + * of the number and the end of the string.
-
-Again, on the subject of convenience, why this restriction? The stated
-purpose of the parse_*() functions is to parse the number from the
-front of the string and return a pointer to the first non-numeric
-character following. As  a reader of this API, I interpret that as
-meaning that NUM_TRAILING is implied. Is there a strong reason for not
-inferring NUM_TRAILING for the parse_*() functions at the API level?
-(I realize that the convert_*() functions are built atop parse_*(),
-but that's an implementation detail.)
-
-> + */
-> +
-> +int parse_l(const char *s, unsigned int flags,
-> +           long *result, char **endptr);
-
-Do we want to perpetuate the ugly (char **) convention for 'endptr'
-from strto*l()? Considering that the incoming string is const, it
-seems undesirable to return a non-const pointer to some place inside
-that string.
-
-> +/*
-> + * Number conversion functions:
-> + *
-> + * The following functions parse a string into a number. They are
-> + * identical to the parse_*() functions above, except that the endptr
-> + * is not returned. These are most useful when parsing a whole string
-> + * into a number; i.e., when (flags & NUM_TRAILING) is unset.
-
-I can formulate arguments for allowing or disallowing NUM_TRAILING
-with convert_*(), however, given their purpose of parsing the entire
-string into a number, as a reader of the API, I would kind of expect
-the convert_*() functions to ensure that NUM_TRAILING is not set
-(either by forcibly clearing it or erroring out as an inconsistent
-request if it is set).
-
-> + */
-> +static inline int convert_l(const char *s, unsigned int flags,
-> +                           long *result)
-> +{
-> +       return parse_l(s, flags, result, NULL);
-> +}
+diff --git a/builtin/clone.c b/builtin/clone.c
+index aa01437..53a2e5a 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -842,20 +842,21 @@ int cmd_clone(int argc, const char **argv, const =
+char *prefix)
+ 		git_dir =3D mkpathdup("%s/.git", dir);
+ 	}
+=20
++	atexit(remove_junk);
++	sigchain_push_common(remove_junk_on_signal);
++
+ 	if (!option_bare) {
+-		junk_work_tree =3D work_tree;
+ 		if (safe_create_leading_directories_const(work_tree) < 0)
+ 			die_errno(_("could not create leading directories of '%s'"),
+ 				  work_tree);
+ 		if (!dest_exists && mkdir(work_tree, 0777))
+ 			die_errno(_("could not create work tree dir '%s'"),
+ 				  work_tree);
++		junk_work_tree =3D work_tree;
+ 		set_git_work_tree(work_tree);
+ 	}
+-	junk_git_dir =3D git_dir;
+-	atexit(remove_junk);
+-	sigchain_push_common(remove_junk_on_signal);
+=20
++	junk_git_dir =3D git_dir;
+ 	if (safe_create_leading_directories_const(git_dir) < 0)
+ 		die(_("could not create leading directories of '%s'"), git_dir);
+=20
+--=20
+2.3.3.520.g3cfbb5d
