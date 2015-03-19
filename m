@@ -1,108 +1,111 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: Why is "git fetch --prune" so much slower than "git remote prune"?
-Date: Thu, 19 Mar 2015 15:49:08 +0100
-Message-ID: <550AE1E4.7020407@alum.mit.edu>
-References: <CACBZZX5n5tTCSa-_A5gQzbzboF_v8a3_oVUjdjyFtKHHe8h-NA@mail.gmail.com> <20150306225917.GA1589@peff.net>
+From: Tony Finch <dot@dotat.at>
+Subject: [PATCH 4/5] gitweb: optionally set project category from its
+ pathname
+Date: Thu, 19 Mar 2015 15:40:16 +0000
+Message-ID: <alpine.LSU.2.00.1503191540150.23307@hermes-1.csi.cam.ac.uk>
+References: <5e56772f50d3d1498361d8831c4f2fba38d197b4.1426779553.git.dot@dotat.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Stefan Beller <sbeller@google.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jay Soffian <jaysoffian@gmail.com>,
-	=?UTF-8?B?QmrDtnJuIEd1c3RhdnNzb24=?= <bgustavsson@gmail.com>
-To: Jeff King <peff@peff.net>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFz?= =?UTF-8?B?b24=?= 
-	<avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 19 15:49:45 2015
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 19 16:50:09 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YYblJ-00056R-SB
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Mar 2015 15:49:30 +0100
+	id 1YYchn-00017j-LO
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Mar 2015 16:49:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753015AbbCSOtY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Mar 2015 10:49:24 -0400
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:56696 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751475AbbCSOtX (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 Mar 2015 10:49:23 -0400
-X-AuditID: 12074414-f797f6d000004084-b6-550ae1e7cfc7
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 23.94.16516.7E1EA055; Thu, 19 Mar 2015 10:49:11 -0400 (EDT)
-Received: from [192.168.69.130] (p4FC9661B.dip0.t-ipconnect.de [79.201.102.27])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t2JEn99W022059
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Thu, 19 Mar 2015 10:49:09 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.5.0
-In-Reply-To: <20150306225917.GA1589@peff.net>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrCKsWRmVeSWpSXmKPExsUixO6iqPv8IVeowZx/vBZrn91hsph/bDGz
-	RdeVbiaLhg/OFj9aepgtNm9uZ3Fg89g56y67x4JNpR7PevcwenzeJBfAEsVtk5RYUhacmZ6n
-	b5fAnfHjgVBBO1/FsV2vmRsYF3J3MXJySAiYSCy7dpIRwhaTuHBvPVsXIxeHkMBlRoldbYtZ
-	IJzzTBK7j2wCq+IV0Ja4s3kWK4jNIqAq0fpmCRuIzSagK7Gop5kJxBYVCJJ4eesvVL2gxMmZ
-	T1hAbBGBKolzh/vAhjILHGGUWPnrCliRsIC/xPYbZ8GKhAQKJX7tPAVmcwINnfTnMthQZgF1
-	iT/zLjFD2PISzVtnM09gFJiFZMcsJGWzkJQtYGRexSiXmFOaq5ubmJlTnJqsW5ycmJeXWqRr
-	oZebWaKXmlK6iRES4iI7GI+clDvEKMDBqMTDK+DKFSrEmlhWXJl7iFGSg0lJlJdrBVCILyk/
-	pTIjsTgjvqg0J7X4EKMEB7OSCG/IbaAcb0piZVVqUT5MSpqDRUmc99tidT8hgfTEktTs1NSC
-	1CKYrAwHh5IEryAwloUEi1LTUyvSMnNKENJMHJwgw7mkRIpT81JSixJLSzLiQbEaXwyMVpAU
-	D9Dekw9A9hYXJOYCRSFaTzEqSonzsoLMFQBJZJTmwY2FJa5XjOJAXwrzvgRp5wEmPbjuV0CD
-	mYAG/6sFG1ySiJCSamBskvPKfa8083mVbJbFot9L309N2JN52Oi+9qv29W/2+Nmci7BMjryS
-	dWRF/OfPr5dsu/UxsXXT5KR3DDF92+y33D4pwRXmY/5oUZXnZ/aLOx7MZ1x867tL 
+	id S1751767AbbCSPtu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Mar 2015 11:49:50 -0400
+Received: from ppsw-40.csi.cam.ac.uk ([131.111.8.140]:50282 "EHLO
+	ppsw-40.csi.cam.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750951AbbCSPtt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Mar 2015 11:49:49 -0400
+X-Greylist: delayed 594 seconds by postgrey-1.27 at vger.kernel.org; Thu, 19 Mar 2015 11:49:49 EDT
+X-Cam-AntiVirus: no malware found
+X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
+Received: from hermes-1.csi.cam.ac.uk ([131.111.8.51]:44287)
+	by ppsw-40.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.156]:25)
+	with esmtpa (EXTERNAL:fanf2) id 1YYcYS-000076-kG (Exim 4.82_3-c0e5623) for git@vger.kernel.org
+	(return-path <fanf2@hermes.cam.ac.uk>); Thu, 19 Mar 2015 15:40:16 +0000
+Received: from fanf2 by hermes-1.csi.cam.ac.uk (hermes.cam.ac.uk)
+	with local id 1YYcYS-0007yN-7T (Exim 4.72) for git@vger.kernel.org
+	(return-path <fanf2@hermes.cam.ac.uk>); Thu, 19 Mar 2015 15:40:16 +0000
+X-X-Sender: fanf2@hermes-1.csi.cam.ac.uk
+In-Reply-To: <5e56772f50d3d1498361d8831c4f2fba38d197b4.1426779553.git.dot@dotat.at>
+User-Agent: Alpine 2.00 (LSU 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265806>
 
-On 03/06/2015 11:59 PM, Jeff King wrote:
-> On Fri, Mar 06, 2015 at 05:48:39PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0=
- Bjarmason wrote:
->=20
->> The --prune option to fetch added in v1.6.5-8-gf360d84 seems to be
->> around 20-30x slower than the equivalent operation with git remote
->> prune. I'm wondering if I'm missing something and fetch does somethi=
-ng
->> more, but it doesn't seem so.
->=20
-> [...]
-> We spend a lot of time checking refs here. Probably this comes from
-> writing the `packed-refs` file out 1000 times in your example, becaus=
-e
-> fetch handles each ref individually. Whereas since c9e768b (remote:
-> repack packed-refs once when deleting multiple refs, 2014-05-23),
-> git-remote does it in one pass.
->=20
-> Now that we have ref_transaction_*, I think if git-fetch fed all of t=
-he
-> deletes (along with the updates) into a single transaction, we would =
-get
-> the same optimization for free. Maybe that is even part of some of th=
-e
-> pending ref_transaction work from Stefan or Michael (both cc'd). I
-> haven't kept up very well with what is cooking in pu.
+When repositories are organized in a hierarchial directory tree
+it is convenient if gitweb project categories can be set
+automatically based on their parent directory, so that users
+do not have to set the same information twice.
 
-I am looking into this now.
+Signed-off-by: Tony Finch <dot@dotat.at>
+---
+ Documentation/gitweb.conf.txt |  6 ++++++
+ gitweb/gitweb.perl            | 13 ++++++++++---
+ 2 files changed, 16 insertions(+), 3 deletions(-)
 
-=46or pruning, we can't use a ref_transaction as it is currently
-implemented because it would fail if any of the reference deletions
-failed. But in this case I think if any deletions fail, we would prefer
-to emit a warning but keep going.
+diff --git a/Documentation/gitweb.conf.txt b/Documentation/gitweb.conf.txt
+index 29f1e06..7c0de18 100644
+--- a/Documentation/gitweb.conf.txt
++++ b/Documentation/gitweb.conf.txt
+@@ -492,6 +492,12 @@ $projects_list_group_categories::
+ 	`$GIT_DIR/category` file or the `gitweb.category` variable in each
+ 	repository's configuration.  Disabled by default (set to 0).
 
-I'm trying to decide whether to have a separate function in the refs AP=
-I
-to "delete as many of the following refs as possible", or whether to ad=
-d
-a flag to ref_transaction_update() that says "try this update, but don'=
-t
-fail the transaction if it fails". The latter would probably be more
-work because we would need to invent a way to return multiple error
-messages from a single transaction.
++$projects_list_directory_is_category::
++	Whether to set a project's category to its parent directory, i.e. its
++	pathname excluding the `/repo.git` leaf name. This is only used if
++	the repo has no explicit setting, and if the pathname has more than
++	one component. Disabled by default (set to 0).
++
+ $project_list_default_category::
+ 	Default category for projects for which none is specified.  If this is
+ 	set to the empty string, such projects will remain uncategorized and
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 9abc5bc..0aab3e0 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -133,6 +133,10 @@ our $projects_list_description_width = 25;
+ # (enabled if this variable evaluates to true)
+ our $projects_list_group_categories = 0;
 
-Michael
++# project's category defaults to its parent directory
++# (enabled if this variable evaluates to true)
++our $projects_list_directory_is_category = 0;
++
+ # default category if none specified
+ # (leave the empty string for no category)
+ our $project_list_default_category = "";
+@@ -2908,7 +2912,11 @@ sub git_get_project_description {
 
---=20
-Michael Haggerty
-mhagger@alum.mit.edu
+ sub git_get_project_category {
+ 	my $path = shift;
+-	return git_get_file_or_project_config($path, 'category');
++	my $cat = git_get_file_or_project_config($path, 'category');
++	return $cat if $cat;
++	return $1 if $projects_list_directory_is_category
++		  && $path =~ m,^(.*)/[^/]*$,;
++	return $project_list_default_category;
+ }
+
+
+@@ -5622,8 +5630,7 @@ sub fill_project_list_info {
+ 		}
+ 		if ($projects_list_group_categories &&
+ 		    project_info_needs_filling($pr, $filter_set->('category'))) {
+-			my $cat = git_get_project_category($pr->{'path'}) ||
+-			                                   $project_list_default_category;
++			my $cat = git_get_project_category($pr->{'path'});
+ 			$pr->{'category'} = to_utf8($cat);
+ 		}
+
+-- 
+2.2.1.68.g56d9796
