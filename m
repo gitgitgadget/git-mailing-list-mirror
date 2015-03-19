@@ -1,88 +1,196 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4 4/4] t0302: test credential-store support for XDG_CONFIG_HOME
-Date: Thu, 19 Mar 2015 17:53:10 -0400
-Message-ID: <CAPig+cS3rZgTZRYsC2ofNAFHs9WsGO1AqW01dt734AZf6edBzQ@mail.gmail.com>
-References: <1426662276-8728-1-git-send-email-pyokagan@gmail.com>
-	<1426662276-8728-4-git-send-email-pyokagan@gmail.com>
-	<CAPig+cR-87-dWXUKoKvphrdb_Y=7268G5uerAiPYDsj-UQiuRw@mail.gmail.com>
+From: Robert Dailey <rcdailey.lists@gmail.com>
+Subject: Re: Need help deciding between subtree and submodule
+Date: Thu, 19 Mar 2015 16:56:52 -0500
+Message-ID: <CAHd499B39YBAq3Q7TBxiRfy=fRZLdN=Xb0qgPE=iqjWmOh9Ayg@mail.gmail.com>
+References: <CAHd499DN1FUzxGYBtUmZ_gKcCvXWJdR6-6XYXsN6BRn0LVO84g@mail.gmail.com>
+	<CAFOYHZCCUUjLnv3qpMBVPExR+4jdu09y5c8BcN8SNT0HWzqpHw@mail.gmail.com>
+	<CAEtYS8T6STrgVW2AWkUKbxjeazXvLT2+0bRCA_L9hpUj2Ag4GA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 19 22:53:17 2015
+Cc: Chris Packham <judge.packham@gmail.com>, Git <git@vger.kernel.org>
+To: Doug Kelly <dougk.ff7@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 19 22:57:02 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YYiNQ-0001eM-6h
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Mar 2015 22:53:16 +0100
+	id 1YYiR1-0004p5-3U
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Mar 2015 22:56:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751207AbbCSVxM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Mar 2015 17:53:12 -0400
-Received: from mail-yh0-f50.google.com ([209.85.213.50]:33587 "EHLO
-	mail-yh0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750839AbbCSVxK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Mar 2015 17:53:10 -0400
-Received: by yhpt93 with SMTP id t93so31573000yhp.0
-        for <git@vger.kernel.org>; Thu, 19 Mar 2015 14:53:10 -0700 (PDT)
+	id S1751032AbbCSV4y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Mar 2015 17:56:54 -0400
+Received: from mail-ie0-f170.google.com ([209.85.223.170]:34614 "EHLO
+	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750916AbbCSV4x (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Mar 2015 17:56:53 -0400
+Received: by iecsl2 with SMTP id sl2so78180547iec.1
+        for <git@vger.kernel.org>; Thu, 19 Mar 2015 14:56:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc:content-type;
-        bh=53HuMnIEIW8HKBrd4t87imZapWK+8kefdToQnGWOuZA=;
-        b=EVBx8iGW2CXJVhskFvqOouDYSLFuFoFRsQbhcbLqAjNhxw19HBesrXeB0mnUtCCJvs
-         dTIJTLjgNlsG0Mf78sqRBac1F87RfRM6FiKIjZ5dGWhqQb895SzwuyPJYO/xENdu5poB
-         lZYjFGIxqeZq8VNb7d7/PjB7COoH4Z8X85ohCYhLBjEnU5pxv6r0wojWyCJub3EctnDp
-         0enA67whE9EpwekoYJ34G1VkWkTi0Nf1aEkEdRUhnFmK13DOVHE/I4Lt3H5lp/q6FLeU
-         WNsBCbM6ZLiQq3f2dJB4u6i140f6k808Bdy6UMGl3+/lhVHGAvLthYTZHMuQ8E6+R9IL
-         1UVQ==
-X-Received: by 10.170.174.196 with SMTP id q187mr16918549ykd.2.1426801990267;
- Thu, 19 Mar 2015 14:53:10 -0700 (PDT)
-Received: by 10.170.73.7 with HTTP; Thu, 19 Mar 2015 14:53:10 -0700 (PDT)
-In-Reply-To: <CAPig+cR-87-dWXUKoKvphrdb_Y=7268G5uerAiPYDsj-UQiuRw@mail.gmail.com>
-X-Google-Sender-Auth: 81DaBX6XY9YxdIFkLI-yelMGC6M
+        bh=5Nu/GTFM8VlpVe3/wCF8dt4g9+4vdk8ts2AIq26RNfo=;
+        b=QvYFeEF68TBJ4knLTc7S2UNUvDE4Gkg3+kQvGiLl+011oMdEIIbqzNmbFwvl1+wvB3
+         We4hiZsSahCz1KZmPgIaTkfyx6bnFwmEA/tNHxNyVCaCuqdsW2mVC22mgQDEKqMC9sgu
+         2B8s3os+muRjDW/FBPJf84Hd5rYo17wA6c9us/ZRbGrfvRYa0mX72+SP6GmhamrBRfhJ
+         dbWmoRWPW88Ii0rz+dULTrXVXSmwge9EdUr5UCw76ZsrDokmrrrtsDPI+TlFGBtSUepT
+         TI/4E8fGL6ciWEvekZmarsj8WIF5KP6U+DgMlgeL3Zx2rXnTxQkm84v7gQp84vbjQUW9
+         C//A==
+X-Received: by 10.107.32.73 with SMTP id g70mr104142218iog.55.1426802212519;
+ Thu, 19 Mar 2015 14:56:52 -0700 (PDT)
+X-Google-Sender-Delegation: rcdailey@gmail.com
+Received: by 10.36.49.138 with HTTP; Thu, 19 Mar 2015 14:56:52 -0700 (PDT)
+In-Reply-To: <CAEtYS8T6STrgVW2AWkUKbxjeazXvLT2+0bRCA_L9hpUj2Ag4GA@mail.gmail.com>
+X-Google-Sender-Auth: ppLvwnN_nLAhWEVf_7pfQyjdFmw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265844>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265845>
 
-On Wed, Mar 18, 2015 at 3:26 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Wed, Mar 18, 2015 at 3:04 AM, Paul Tan <pyokagan@gmail.com> wrote:
->> t0302 now tests git-credential-store's support for the XDG user-specific
->> configuration file $XDG_CONFIG_HOME/git/credentials. Specifically:
->> ---
+On Wed, Mar 18, 2015 at 6:04 PM, Doug Kelly <dougk.ff7@gmail.com> wrote:
+> On Wed, Mar 18, 2015 at 3:20 AM, Chris Packham <judge.packham@gmail.com> wrote:
+>> My $0.02 based on $dayjob
 >>
->> The previous version can be found at [1].
+>> (disclaimer I've never used subtree)
 >>
->> [1] http://thread.gmane.org/gmane.comp.version-control.git/265305/focus=265308
->>
->> * Merge related, but previously separate, tests together in order to
->>   make the test suite easier to understand.
->>
->> * Instead of setting/unsetting XDG_CONFIG_HOME in separate tests, set
->>   it, and unset it immediately before and after "helper_test store" is
->>   called in order to make it localized to only the command that it
->>   should affect.
->>
->> * Add test, previously missing, to check that only the home credentials
->>   file is written to if both the xdg and home files exist.
->>
->> * Correct mislabelling of "home-user"/"home-pass" to the proper
->>   "xdg-user"/"xdg-pass".
->>
->> * Use "rm -f" instead of "test_might_fail rm".
+>> On Wed, Mar 18, 2015 at 11:14 AM, Robert Dailey
+>> <rcdailey.lists@gmail.com> wrote:
+>>> At my workplace, the team is using Atlassian Stash + git
+>>>
+>>> We have a "Core" library that is our common code between various
+>>> projects. To avoid a single monolithic repository and to allow our
+>>> apps and tools to be modularized into their own repos, I have
+>>> considered moving Core to a subtree or submodule.
 >
-> This round looks much better. Thanks.
+> $DAYJOB has actually tried both... with varying levels of success.  As
+> you note, subtree looks wonderful from a user perspective, but behind
+> the scenes, it does have issues.  In our case, subtree support was
+> modified into Gerrit, and this became cumbersome and difficult to
+> maintain (which is the reason we eventually dropped support for
+> subtree).  Submodules have more of a labor-intensive aspect, but
+> are far more obvious about what actions have been taken (IMHO).
+> Either way, both our developers' needs were satisfied: the code was
+> tracked cleanly, and there wasn't a configuration mismatch where
+> a dependency was able to change versions without implicit direction.
 >
-> Most of the comments below are just nit-picky, with one or two genuine
-> (minor) issues.
+>>
+>> Our environment is slightly different. Our projects are made up
+>> entirely of submodules, we don't embed submodules within a repo with
+>> actual code (side note: I know syslog-ng does so it might be worth
+>> having a look around there).
+>>
+>> Day to day development is done at the submodule level. A developer
+>> working on a particular feature is generally only touching one repo
+>> notwithstanding a little bit of to-and-fro as they work on the UI
+>> aspects. When changes do touch multiple submodules the pushes can
+>> generally be ordered in a sane manner. Things get a little complicated
+>> when there are interdependent changes, then those pushes require
+>> co-operation between submodule owners.
+>
+> We've done both (all of the above? a hybrid approach?)... We've gone so
+> far to create 30 modules for every conceivable component, then tried to
+> work that way with submodule, and our developers quickly revolted as it
+> became too much of a maintenance burden.  The other direction (with
+> hugely monolithic code) is also problematic since the module boundaries
+> become blurred.  For us, usually cooperation between modules isn't so
+> difficult, but the problem comes about when attempting to merge the
+> changes.  Sometimes, it can take significant effort to ensure conflict-free
+> merges (going so far as to require "merge lock" emails to ask other
+> developers to hold off on merging commits until the change lands
+> completely and the project is stable).
+>
+>>
+>> The key to making this work is our build system. It is the thing that
+>> updates the project repo. After a successful build for all targets (we
+>> hope to add unit/regression tests one day) the submodules sha1s are
+>> updated and a new baseline (to borrow a clearcase term) is published.
+>> Developers can do "git pull && git submodule update" to get the latest
+>> stable baseline, but they can also run git pull in a submodule if they
+>> want to be on the bleeding edge.
+>>
+>>> I tried subtree and this is definitely far more transparent and simple
+>>> to the team (simplicity is very important), however I notice it has
+>>> problems with unnecessary conflicts when you do not do `git subtree
+>>> push` for each `git subtree pull`. This is unnecessary overhead and
+>>> complicates the log graph which I don't like.
+>>>
+>>> Submodule functionally works but it is complicated. We make heavy use
+>>> of pull requests for code reviews (they are required due to company
+>>> policy). Instead of a pull request being atomic and containing any app
+>>> changes + accompanying Core changes, we now need to create two pull
+>>> requests and manage them in proper order. Things also become more
+>>> difficult when branching. All around it just feels like submodule
+>>> would interfere and add more administration overhead on a day to day
+>>> basis, affecting productivity.
+>>
+>> We do have policies around review etc. With submodules it does
+>> sometimes require engaging owners/reviewers from multiple
+>> repositories. Tools like Gerrit can help, particularly where multiple
+>> changes and reviewers are involved.
+>
+> Conflicts are definitely going to be a difficulty with either subtree or
+> submodule (if multiple users could be changing the submodule), but
+> if you have additional tools, such as Gerrit to look out for, submodule
+> is the way to go since subtrees aren't supported within Gerrit. (Other
+> tools may support it better: I'm honestly not sure?)  That would be
+> my one word of caution: I don't know how well Stash supports subtree.
+>
+> You are absolutely correct about the difficulty of integrating submodule
+> pull requests taking two steps.  This was an issue we worked hard
+> to mitigate here, but at the end of the day, the work is necessary.
+> Basically, we could also use a feature within Gerrit to automatically
+> bring up a specific branch of the "superproject" when the submodule
+> project on a certain branch changes, but this also rolls the dice a bit
+> since it bypasses any code review or CI step.
+>
+>>
+>>> Is there a third option here I'm missing? If only that issue with
+>>> subtree could be addressed (the conflicts), it would be perfect enough
+>>> for us I think. I have done all the stackoverflow reading and research
+>>> I can manage at this point. I would really love some feedback from the
+>>> actual git community on what would be a practical solution and
+>>> structure here from a company perspective.
+>>
+>> There's the thing google use for android, I think it's called "repo".
+>> There's a few googlers around here so mybe one of them will chime in.
+>
+> Repo is an interesting middle ground.  It does expect to interact with Gerrit,
+> I believe, and it handles the splitting of changes/commits and reassembling
+> them. (And, since it uses a manifest to track the submodules, it can handle
+> pointing to a specific commit, the latest commit on a branch, etc.) The rumor
+> I've heard around repo, however, is that there are plans to ensure parity
+> (as much as possible) in submodule and eventually remove the need for
+> repo.  But, this could also be a pipe dream...
+>
+> Perhaps it's worth noting another possibility: using and releasing the core
+> library as an actual "library" which is tracked independently from the
+> remainder of the code, and integrated at build/run time by your build tools.
+> This would be closer to Maven's approach in the Java world, or a package
+> manager in a system environment.  Even in the embedded world, tools in
+> the Yocto project can handle gathering the dependencies in some sort of
+> "recipe." I know this is a somewhat idealistic view, however... after all,
+> there are reasons we're still using submodules ourself. :)
+>
+> --Doug
 
-I should add that the nit-picky items are not necessarily actionable.
-As the person doing the actual work, it's okay if you disagree and
-feel that they are not worth the effort of addressing.
+Really appreciate the feedback guys. Maybe I'm trying too hard to keep
+things from changing when they should. Modularized repositories will
+inherently involve more work since they are now separate entities.
 
-(The genuine issues, on the other hand, ought to be addressed.)
+>From a risk perspective, do you feel it is better to use submodules
+than subtrees? Subtrees seem a bit dangerous since they involve
+history mutation and it seems possible to get into a messy state.
+
+Submodules on the other hand are pretty difficult to manage when you
+get submodule SHA1 conflicts. It's not obvious from the diff what has
+changed between the 2 submodule commits, so some deep investigation
+will be necessary.
+
+No one on my team is experienced with Git. In fact, I do as much as I
+can to help educate them. I feel like adding either of these will
+cause them to get a negative outlook on Git itself. I already have to
+listen to some of them tease me about how SVN never had problems :-(
+
+Thanks again guys I'll keep thinking about it.
