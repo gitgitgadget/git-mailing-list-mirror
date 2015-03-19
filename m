@@ -1,75 +1,123 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5] rev-list: refuse --first-parent combined with --bisect
-Date: Thu, 19 Mar 2015 15:43:57 -0700
-Message-ID: <xmqqh9tghaky.fsf@gitster.dls.corp.google.com>
-References: <1425934575-19581-1-git-send-email-me@ikke.info>
-	<1426803248-6905-1-git-send-email-me@ikke.info>
+From: Thomas Braun <thomas.braun@virtuell-zuhause.de>
+Subject: Git for Windows 1.9.5.msysgit.1
+Date: Fri, 20 Mar 2015 00:03:43 +0100
+Message-ID: <550B55CF.4090701@virtuell-zuhause.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Kevin Daudt <me@ikke.info>
-X-From: git-owner@vger.kernel.org Thu Mar 19 23:44:12 2015
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=UTF-8
+Cc: GIT Mailing-list <git@vger.kernel.org>
+To: msysGit <msysgit@googlegroups.com>
+X-From: msysgit+bncBCL7JHHTPAINHK5NVACRUBHR7G5WY@googlegroups.com Fri Mar 20 00:03:48 2015
+Return-path: <msysgit+bncBCL7JHHTPAINHK5NVACRUBHR7G5WY@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-wg0-f59.google.com ([74.125.82.59])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YYjAf-000360-J5
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Mar 2015 23:44:09 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752079AbbCSWoF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Mar 2015 18:44:05 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:51047 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751458AbbCSWoA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Mar 2015 18:44:00 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B84FF42106;
-	Thu, 19 Mar 2015 18:43:59 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=H1e6rjdWxFnxr0/pBS+89KyU/9w=; b=v5sqsR
-	eqAl3xSK8gSa09X5JNDx6tqWAYEvWWWfGXkROcevrHRAr0biIUqwXNSm7wXchnNZ
-	nNBMDG7Oo2dALfZB0Z891/fQh7IAB3fXPwgDIUBiY7o/1xl61kbvh90t1mLznsqW
-	fibRn/ZbNgWVpVvkRRoNEX7LDrk5q50+RWoh8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Q+TC/3E1EmrrG0rH2/XzW3MYFYcrpc65
-	2jH4/bI67ZHeXZhOWHZ9e+uzJMQXcuRz7baXETjB8C5c20LODvrTB/gdDdKbL4RP
-	zu/yj4fi847Lxj9bACb0JKyJKFfO8WZxBE4xbePG0xc+WzjBceyLAjMdXBeFaCgA
-	GgMSUqTkvnw=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B213542104;
-	Thu, 19 Mar 2015 18:43:59 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 54FC642103;
-	Thu, 19 Mar 2015 18:43:58 -0400 (EDT)
-In-Reply-To: <1426803248-6905-1-git-send-email-me@ikke.info> (Kevin Daudt's
-	message of "Thu, 19 Mar 2015 23:14:08 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 6E42357C-CE89-11E4-A94E-FAE19E42C9D4-77302942!pb-smtp1.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265849>
+	(envelope-from <msysgit+bncBCL7JHHTPAINHK5NVACRUBHR7G5WY@googlegroups.com>)
+	id 1YYjTg-0001Q2-72
+	for gcvm-msysgit@m.gmane.org; Fri, 20 Mar 2015 00:03:48 +0100
+Received: by wggz12 with SMTP id z12sf27916027wgg.0
+        for <gcvm-msysgit@m.gmane.org>; Thu, 19 Mar 2015 16:03:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :content-type:x-original-sender:x-original-authentication-results
+         :precedence:mailing-list:list-id:list-post:list-help:list-archive
+         :sender:list-subscribe:list-unsubscribe;
+        bh=SC5+VtddDJz6IOHIMkNBqBXLOJXy27tuyIAaRP9awf0=;
+        b=zAyXkjd7gr9e27Nv11x1ZvFlQTzx7fKTrY4mkYNPO6vCkt0+k9Mxt4/6M9UQQKqd/8
+         tDmssBKzmX0JO+fqs0Yr6FOYIYJt+gIFHfzpUb4SNSJHPXQ8/OAoQnta2D5fpapHwcFi
+         aZmXR3vvgtEp0anhyFx/DNMFL3Um5GOrMBHHINBU01ssF3isfkJ3+bRuddrXPE/THpw0
+         eZuaf9C8EfouPZO71JigdC7+crxG0T5vijsn3fj4rEJ1Q7stHFWk2whN5yqI3QmOnS8b
+         CC7YxjRXWSv3HTWFp9RmWkksBoI1FmN9JxkCgFsKH0sh1jk/Kng4bfte9WlAnTUi7ePo
+         wtqw==
+X-Received: by 10.180.76.167 with SMTP id l7mr140060wiw.8.1426806227583;
+        Thu, 19 Mar 2015 16:03:47 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.180.23.100 with SMTP id l4ls225715wif.7.gmail; Thu, 19 Mar
+ 2015 16:03:46 -0700 (PDT)
+X-Received: by 10.180.80.35 with SMTP id o3mr971512wix.0.1426806226841;
+        Thu, 19 Mar 2015 16:03:46 -0700 (PDT)
+Received: from wp156.webpack.hosteurope.de (wp156.webpack.hosteurope.de. [80.237.132.163])
+        by gmr-mx.google.com with ESMTPS id el6si24428wib.0.2015.03.19.16.03.46
+        for <msysgit@googlegroups.com>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Thu, 19 Mar 2015 16:03:46 -0700 (PDT)
+Received-SPF: none (google.com: thomas.braun@virtuell-zuhause.de does not designate permitted sender hosts) client-ip=80.237.132.163;
+Received: from p5ddc2b9d.dip0.t-ipconnect.de ([93.220.43.157] helo=[192.168.100.43]); authenticated
+	by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	id 1YYjTe-0005hC-A3; Fri, 20 Mar 2015 00:03:46 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
+X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1426806226;09ffb9fa;
+X-Original-Sender: thomas.braun@virtuell-zuhause.de
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=none
+ (google.com: thomas.braun@virtuell-zuhause.de does not designate permitted
+ sender hosts) smtp.mail=thomas.braun@virtuell-zuhause.de
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265850>
 
-Kevin Daudt <me@ikke.info> writes:
+Hi,
 
-> rev-list --bisect is used by git bisect, but never together with
-> --first-parent. Because rev-list --bisect together with --first-parent
-> is not handled currently, and even leads to segfaults, refuse to use
-> both options together.
->
-> Because this is not supported, it makes little sense to use git log
-> --bisect --first parent either, because refs/heads/bad is not limited to
-> the first parent chain.
->
-> Helped-by: Junio C. Hamano <gitster@pobox.com>
-> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-> Signed-off-by: Kevin Daudt <me@ikke.info>
-> ---
+the Git for Windows team just released the first maintenance release of
+the Windows-specific installers for git 1.9.5.
 
-Thanks; will queue.
+It can be downloaded from the usual place [1] and I also attached some
+(although non-gpg-signed) SHA sums [2].
+
+New Features
+- Comes with Git 1.9.5 plus Windows-specific patches.
+- Make vimdiff usable with git mergetool.
+
+Security Updates
+- Mingw-openssl to 0.9.8zf and msys-openssl to 1.0.1m
+- Bash to 3.1.23(6)
+- Curl to 7.41.0
+
+Bugfixes
+- ssh-agent: only ask for password if not already loaded
+- Reenable perl debugging ("perl -de 1" possible again)
+- Set icon background color for Windows 8 tiles
+- poll: honor the timeout on Win32
+- For git.exe alone, use the same HOME directory fallback mechanism as
+/etc/profile
+
+Have phun,
+Thomas
+
+[1]:
+https://github.com/msysgit/msysgit/releases/download/Git-1.9.5-preview20150319/Git-1.9.5-preview20150319.exe
+[2]:
+SHA1(Git-1.9.5-preview20150319.exe)=
+a8658bae0de8c8d3e40aa97a236a4fcf81de50df
+SHA1(PortableGit-1.9.5-preview20150319.7z)=
+44e7f249797af9a3833b88e17575bcbf22c282df
+SHA1(msysGit-netinstall-1.9.5-preview20150319.exe)=
+60b73db7959fb841b7d29286608e2333f429ca85
+
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "Git for Windows" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
