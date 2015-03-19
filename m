@@ -1,111 +1,92 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 00/14] numparse module: systematically tighten up integer
- parsing
-Date: Thu, 19 Mar 2015 01:26:20 -0400
-Message-ID: <20150319052620.GA30645@peff.net>
-References: <1426608016-2978-1-git-send-email-mhagger@alum.mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] diff-lib.c: adjust position of i-t-a entries in diff
+Date: Wed, 18 Mar 2015 23:00:43 -0700
+Message-ID: <xmqqlhitle5w.fsf@gitster.dls.corp.google.com>
+References: <1425910445-27383-2-git-send-email-pclouds@gmail.com>
+	<1426514206-30949-1-git-send-email-pclouds@gmail.com>
+	<5506F3A9.1020704@drmicha.warpmail.net>
+	<xmqqa8zdrkpy.fsf@gitster.dls.corp.google.com>
+	<20150317140704.GA7248@lanh>
+	<xmqq1tknpkwd.fsf@gitster.dls.corp.google.com>
+	<CACsJy8Beoz=qcHrOG=akCR+gOQRjBcsQHaXdL_=PW70BOf4q3g@mail.gmail.com>
+	<xmqqtwxikpz6.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.org>,
-	git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Thu Mar 19 06:26:33 2015
+Content-Type: text/plain
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 19 07:00:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YYSyU-0003Cb-Q0
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Mar 2015 06:26:31 +0100
+	id 1YYTVk-00061B-2L
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Mar 2015 07:00:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751313AbbCSF0Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Mar 2015 01:26:24 -0400
-Received: from cloud.peff.net ([50.56.180.127]:35039 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750891AbbCSF0X (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Mar 2015 01:26:23 -0400
-Received: (qmail 3544 invoked by uid 102); 19 Mar 2015 05:26:23 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 19 Mar 2015 00:26:23 -0500
-Received: (qmail 10159 invoked by uid 107); 19 Mar 2015 05:26:34 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 19 Mar 2015 01:26:34 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 19 Mar 2015 01:26:20 -0400
-Content-Disposition: inline
-In-Reply-To: <1426608016-2978-1-git-send-email-mhagger@alum.mit.edu>
+	id S1750915AbbCSGAr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Mar 2015 02:00:47 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:60779 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750840AbbCSGAq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Mar 2015 02:00:46 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2F30B3A1A0;
+	Thu, 19 Mar 2015 02:00:45 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=FEAhlSRICEdu6tZ7pYT7KpmJ5N0=; b=OZcpOZ
+	vdATV2UUaMFlZp8S0j6xgWi2j3RMT9zIfO9UA3Nhy7c46YF3y3h0AI8utx4jvcz1
+	/QAJCUhFi0oG3SLItwriJ57xfufchp/fOt6UIjqJSO5XhGMzrpImlqn8lzaSr2jp
+	px/xpyR3Nplt0Es2Ia1rEni03ZnlxgmYDEaaE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=CRcxU/tICotU+G+SBqjyYiAm5Zt53+U2
+	hoPV4nJRsPIa0LrySUEUjNRyRgOf9/kjowhfviWmNhd7e/sdXPpvH7LNqes6SB7b
+	kitl01OjUtHGUD0U4dGe+ALxdIeiRm/TmUes6rf9cjHwS6UQKhOiuOZXWJ3nLto0
+	AGmPWRjKlKM=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 19D4C3A19F;
+	Thu, 19 Mar 2015 02:00:45 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5DB6D3A19E;
+	Thu, 19 Mar 2015 02:00:44 -0400 (EDT)
+In-Reply-To: <xmqqtwxikpz6.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Wed, 18 Mar 2015 13:30:53 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 47DBDDD4-CDFD-11E4-8520-FAE19E42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265785>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265786>
 
-On Tue, Mar 17, 2015 at 05:00:02PM +0100, Michael Haggerty wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> My main questions:
-> 
-> * Do people like the API? My main goal was to make these functions as
->   painless as possible to use correctly, because there are so many
->   call sites.
-> 
-> * Is it too gimmicky to encode the base together with other options in
->   `flags`? (I think it is worth it to avoid the need for another
->   parameter, which callers could easily put in the wrong order.)
+> Ah, wait.
+>
+> I suspect that it all cancels out.
+> ...
+> Now, as you mentioned, there _may_ be codepaths that uses the same
+> definition of "what's in the index" as what diff-cache used to take
+> before your patches, and they may be broken by removing the
+> invalidation.  If we find such codepaths, we should treat their old
+> behaviour as buggy and fix them, instead of reintroducing the
+> invalidation and keep their current behaviour, as the new world
+> order is "i-t-a entries in the index does not yet exist."
 
-I definitely like the overall direction of this. My first thought was
-that it does seem like there are a lot of possible options to the
-functions (and OR-ing the flags with the base does seem weird, though I
-can't think of a plausible case where it would actually cause errors).
-Many of those options don't seem used in the example conversions (I'm
-not clear who would want NUM_SATURATE, for example).
-
-I wondered if we could do away with the radix entirely. Wouldn't we be
-asking for base 10 most of the time? Of course, your first few patches
-show octal parsing, but I wonder if we should actually have a separate
-parse_mode() for that, since that seems to be the general reason for
-doing octal parsing. 100000644 does not overflow an int, but it is
-hardly a reasonable mode.
-
-I also wondered if we could get rid of NUM_SIGN in favor of just having
-the type imply it (e.g., convert_l would always allow negative numbers,
-whereas convert_ul would not). But I suppose there are times when we end
-up using an "int" to store an unsigned value for a good reason (e.g.,
-"-1" is a sentinel value, but we expect only positive values from the
-user). So that might be a bad idea.
-
-I notice that you go up to "unsigned long" here for sizes. If we want to
-use this everywhere, we'll need something larger for parsing off_t
-values on 32-bit machines (though I would not at all be surprised with
-the current code if 32-bit machines have a hard time configuring a
-pack.packSizeLimit above 4G).
-
-I wonder how much of the boilerplate in the parse_* functions could be
-factored out to use a uintmax_t, with the caller just providing the
-range. That would make it easier to add new types like off_t, and
-possibly even constrained types (e.g., an integer from 0 to 100). On the
-other hand, you mentioned to me elsewhere that there may be some bugs in
-the range-checks of config.c's integer parsing. I suspect they are
-related to exactly this kind of refactoring, so perhaps writing things
-out is best.
-
-> * Am I making callers too strict? In many cases where a positive
->   integer is expected (e.g., "--abbrev=<num>"), I have been replacing
->   code like
-> [...]
-
-IMHO most of the tightening happening here is a good thing, and means we
-are more likely to notice mistakes rather than silently doing something
-stupid.
-
-For sites that currently allow it, I could imagine people using hex
-notation for some values, though, depending on the context. It looks
-there aren't many of them ((it is just when the radix is "0", right?).
-Some of them look to be accidental (does anybody really ask for
---threads=0x10?), but others might not be (the pack index-version
-contains an offset field that might be quite big).
-
-
-Feel free to ignore any or all of that. It is not so much criticism as
-a dump of thoughts I had while reading the patches. Perhaps you can pick
-something useful out of that, and perhaps not. :)
-
--Peff
+One potential negative consequence of the new world order I can
+immediately think of is this.  In many operations, we try to be
+lenient to changes in the working tree as long as the index is
+clean.  "read-tree -m" is the most visible one, where we require
+that the index and HEAD matches while allowing changes to working
+tree paths as long as they do not interfere with the paths that are
+involved in the merge.  We need to make sure that the path dir/bar
+added by "add -N dir/bar", which in the new world order does not
+count as "index is not clean and there is a difference from HEAD",
+(1) does not interfere with the mergy operation that wants to touch
+dir (which _could_ even be expected to be a file) or dir/bar, and
+(2) is not lost because the mergy operation wants to touch dir or
+dir/bar, for example.
