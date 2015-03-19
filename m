@@ -1,77 +1,51 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: Seems to be pushing more than necessary
-Date: Thu, 19 Mar 2015 17:59:19 +0700
-Message-ID: <CACsJy8B=Dx2+OWch1zx_xg91de9yhttVMwgE1SxDOuSTns2b_w@mail.gmail.com>
-References: <CAABECY3HbZ4q3uo82outUmCyQLXO39H+Fd2m8bLwkaubE9gJCw@mail.gmail.com>
- <CAABECY1_L34sq0VPmD9UwRcwb3Fuh95OFcF26LM2eX1z-+8vkQ@mail.gmail.com>
- <CACsJy8Au48iFoC=Eo4T-fm6r6tA7VffRJyH2JbuC==wa61=G5A@mail.gmail.com>
- <CAABECY2_MQWAkOu=6rR=mN=wKz-Yfzsu8o2+wb6F+h4FjBe9Mw@mail.gmail.com>
- <CACsJy8DdjDnacVGU83iUDj5Na1xxS6kNDbK2D0Apfv0LAuzDvA@mail.gmail.com>
- <CAABECY2_A83tWaqb_6YzXwr0Tv5AYVq0KW70j+EHqrx69k2P_A@mail.gmail.com>
- <CACsJy8AFi8-EgUJNr+KTOngeUaGfi_O5f_=qba08qJs1jcEj=w@mail.gmail.com>
- <CACsJy8BqA2dm8DpDrrFN4FxHG+4gnG3Q7c3kM=YmBrkuHftvog@mail.gmail.com>
- <CAABECY13XT3+rEGGtKfe3Xwg4RtzcWtpL=Nm7aivv4_35TvL0w@mail.gmail.com>
- <CACsJy8D16ERGH=P4etGRpZM_3BR9iYZBsUnWBGAbayVqmEhhXw@mail.gmail.com> <CAABECY2x=G+nYdSyxpz8MvE4G6RSwcGSXu1LzwAKYG7Mqwk1kA@mail.gmail.com>
+From: Sundararajan R <dyoucme@gmail.com>
+Subject: [GSoC Project Help] Unifying git branch -l, git tag -l and git for-each-ref
+Date: Thu, 19 Mar 2015 11:22:19 +0000 (UTC)
+Message-ID: <loom.20150319T121328-232@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Graham Hay <grahamrhay@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 19 11:59:57 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: base64
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 19 12:23:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YYYB9-0000fy-CS
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Mar 2015 11:59:55 +0100
+	id 1YYYXS-0001yn-3i
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Mar 2015 12:22:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752725AbbCSK7u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Mar 2015 06:59:50 -0400
-Received: from mail-ie0-f178.google.com ([209.85.223.178]:35463 "EHLO
-	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752189AbbCSK7u (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Mar 2015 06:59:50 -0400
-Received: by ieclw3 with SMTP id lw3so62248319iec.2
-        for <git@vger.kernel.org>; Thu, 19 Mar 2015 03:59:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=o31wE6rRjg7jYdPqh/uu2eRdhYza87h3j9ESkWtIvFY=;
-        b=lRIrmGv46wBt1TS5LZ8KzmijzXn1Z7JZQuqNXws2yX9/xeb5ojl2TO9IthSy4FOeP0
-         C8m5BmmNzoo/BNBB66BiNq/CVEsUI6+YEz6zKBSZNaW3kFVMzBxDSE8VxkLIY2jNDIM5
-         DmICzLt7X6V8a1FPspvLJW++u/N1lfuUOKPk9WG6I3Jby5rVfro8KAlrwPVzvNx9cOWz
-         jx2ptqYcq1E/sTW7BeGthzzvrxkgklZwTlKMx43Rmm00Gq3ScvU9gaY87pCTUHO+wRPi
-         1fpPVUer3E+wUMMotcBZWawmJNsYMZYOrq58FhZPpDXGgKwOQMCJpsb77/R+XNe6geJF
-         Kjyg==
-X-Received: by 10.107.29.21 with SMTP id d21mr8030452iod.11.1426762789443;
- Thu, 19 Mar 2015 03:59:49 -0700 (PDT)
-Received: by 10.107.131.33 with HTTP; Thu, 19 Mar 2015 03:59:19 -0700 (PDT)
-In-Reply-To: <CAABECY2x=G+nYdSyxpz8MvE4G6RSwcGSXu1LzwAKYG7Mqwk1kA@mail.gmail.com>
+	id S1752096AbbCSLWy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Mar 2015 07:22:54 -0400
+Received: from plane.gmane.org ([80.91.229.3]:49743 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751948AbbCSLWw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Mar 2015 07:22:52 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1YYYX8-0001la-I7
+	for git@vger.kernel.org; Thu, 19 Mar 2015 12:22:42 +0100
+Received: from 202.3.77.220 ([202.3.77.220])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 19 Mar 2015 12:22:38 +0100
+Received: from dyoucme by 202.3.77.220 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 19 Mar 2015 12:22:38 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 202.3.77.220 (Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.115 Safari/537.36)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265797>
+X-Spam-Report: 5.4 points;
+ *  2.6 RCVD_NUMERIC_HELO Received: contains an IP address used for HELO
+ *  2.8 BASE64_LENGTH_79_INF BODY: BASE64_LENGTH_79_INF
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265798>
 
-On Wed, Mar 18, 2015 at 10:14 PM, Graham Hay <grahamrhay@gmail.com> wrote:
-> Got there eventually!
->
-> $ git verify-pack --verbose bar.pack
-> e13e21a1f49704ed35ddc3b15b6111a5f9b34702 commit 220 152 12
-> 03691863451ef9db6c69493da1fa556f9338a01d commit 334 227 164
-> ... snip ...
-> chain length = 50: 2 objects
-> bar.pack: ok
->
-> Now what do I do with it :)
-
-Try "fast-export --anonymize" as that would help us understand this.
-Or you can try to see if these commits exist in the remote repo. If
-yes, that only confirms that push sends more that it should, but it's
-hard to know why. Maybe if you fire up gitk and mark them commits,
-you'll figure out a connection. There are actually objects in this
-pack that are expected to exist in remote repo, but it's hard to
-tell..
--- 
-Duy
+SGkgYWxsLAoKSSBhbSBhIENvbXB1dGVyIFNjaWVuY2Ugc29waG9tb3JlIGF0IElJVCBLYW5wdXIuIEkgYW0gaW50ZXJlc3RlZCBpbiAKY29udHJpYnV0aW5nIHRvIGdpdCBpbiBHU29DIDIwMTUuIEkgaGF2ZSBiZWVuIHVzaW5nIGdpdCBmb3IgdGhlIHBhc3Qgb25lIHllYXIgCmFuZCBhbSBwcmV0dHkgY29tZm9ydGFibGUgd2l0aCBpdHMgY29tbWFuZHMgd2hpY2ggaXMgd2hhdCBtYWRlIG1lIHRoaW5rIGFib3V0IApjb250cmlidXRpbmcgdG8gZ2l0LiBJIGhhdmUgYXR0ZW1wdGVkIHRoZSBtaWNyb3Byb2plY3Qg4oCcYWRkaW5nIOKAmC3igJkgYXMgYSAKc2hvcnRoYW5kIHRvIEB7LTF9IGluIHRoZSByZXNldCBjb21tYW5k4oCdIFsxXSBbMl0gZnJvbSB3aGljaCBJIGxlYXJudCBhYm91dCAKaG93IGNvZGUgaXMgcmV2aWV3ZWQgaW4gdGhlIGNvbW11bml0eSBhbmQgaG93IGEgc2VlbWluZ2x5IHNtYWxsIGNoYW5nZSBjYW4gCmVuZCB1cCBiZWluZyBtdWNoIG1vcmUgZGlmZmljdWx0LiBCdXQgdGhlIHRoaW5nIEkgbGlrZWQgdGhlIG1vc3QgaXMgdGhlIHdhcm0gCmFuZCB3ZWxjb21pbmcgYXR0aXR1ZGUgb2YgZXZlcnlvbmUgaW4gdGhlIGNvbW11bml0eSB0
+ b3dhcmRzIGEgbmV3Y29tZXIgbGlrZSAKbWUuIEkgd2lzaCB0byB0YWtlIHVwIHRoZSBwcm9qZWN0IGlkZWEg4oCcVW5pZnlpbmcgZ2l0IGJyYW5jaCAtbCwgZ2l0IHRhZyAtbCAKYW5kIGdpdCBmb3ItZWFjaC1yZWbigJ0uIEkgYW0gaW4gdGhlIHByb2Nlc3Mgb2YgcmVhZGluZyBhbmQgdW5kZXJzdGFuZGluZyB0aGUgCmNvZGVzIG9mIHRoZXNlIHRocmVlIGNvbW1hbmRzIGFuZCBmaWd1cmluZyBvdXQgc2ltaWxhcml0aWVzIGFuZCBkaWZmZXJlbmNlcyAKaW4gdGhlbS4gSSBoYXZlIGdvbmUgdGhyb3VnaCBzb21lIG9mIHRoZSBkaXNjdXNzaW9ucyByZWdhcmRpbmcgdGhpcyBvbiB0aGUgCmFyY2hpdmUgYW5kIGhhdmUgYWxzbyByZWFkIEp1bmlv4oCZcyByZXBseSB0byBBbWF0ZSBZb2xhbmRlIFszXSwgYnV0IEkgaGF2ZW7igJl0IApiZWVuIGFibGUgdG8gZmluZCBwYXRjaGVzIHdoaWNoIGF0dGVtcHQgdG8gdW5pZnkgdGhlIHNlbGVjdGlvbiBwcm9jZXNzIGFzIAptZW50aW9uZWQgaW4gdGhlIGRlc2NyaXB0aW9uIG9mIHRoZSBpZGVhLiBJdCB3b3VsZCBiZSBncmVhdCBpZiBzb21lb25lIGNvdWxkIApwb2ludCBtZSB0b3dhcmRzIHRoZXNlIHBhdGNoZX
+ Mgd2hpY2ggd291bGQgaGVscCBtZSB3aGVuIEkgc3RhcnQgZGVzaWduaW5nIHRoZSAKZGV0YWlscyBvZiB0aGUgdW5pZmllZCBpbXBsZW1lbnRhdGlvbi4gVGhhbmtzIGEgbG90IGZvciB5b3VyIHRpbWUuCgpSZWdhcmRzLApSIFN1bmRhcmFyYWphbi4gCgpbMV0gOiBodHRwOi8vbWFyYy5pbmZvLz9sPWdpdCZtPTE0MjY2Njc0MDQxNTgxNiZ3PTIKWzJdIDogaHR0cDovL21hcmMuaW5mby8/bD1naXQmbT0xNDI2NjY3NzMzMTU4OTkmdz0yClszXSA6IGh0dHA6Ly9hcnRpY2xlLmdtYW5lLm9yZy9nbWFuZS5jb21wLnZlcnNpb24tY29udHJvbC5naXQvMjY0OTY2
