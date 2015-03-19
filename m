@@ -1,196 +1,103 @@
-From: Robert Dailey <rcdailey.lists@gmail.com>
-Subject: Re: Need help deciding between subtree and submodule
-Date: Thu, 19 Mar 2015 16:56:52 -0500
-Message-ID: <CAHd499B39YBAq3Q7TBxiRfy=fRZLdN=Xb0qgPE=iqjWmOh9Ayg@mail.gmail.com>
-References: <CAHd499DN1FUzxGYBtUmZ_gKcCvXWJdR6-6XYXsN6BRn0LVO84g@mail.gmail.com>
-	<CAFOYHZCCUUjLnv3qpMBVPExR+4jdu09y5c8BcN8SNT0HWzqpHw@mail.gmail.com>
-	<CAEtYS8T6STrgVW2AWkUKbxjeazXvLT2+0bRCA_L9hpUj2Ag4GA@mail.gmail.com>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH] git=p4.py rebase now honor's client spec
+Date: Thu, 19 Mar 2015 21:58:17 +0000
+Message-ID: <20150319215816.GI612775@vauxhall.crustytoothpaste.net>
+References: <D1303946.5CED%Sam.Bishop@blackboard.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Chris Packham <judge.packham@gmail.com>, Git <git@vger.kernel.org>
-To: Doug Kelly <dougk.ff7@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 19 22:57:02 2015
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="q5r20fdKX+PFtYHw"
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Sam Bishop <Sam.Bishop@blackboard.com>
+X-From: git-owner@vger.kernel.org Thu Mar 19 22:58:32 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YYiR1-0004p5-3U
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Mar 2015 22:56:59 +0100
+	id 1YYiSU-000645-7o
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Mar 2015 22:58:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751032AbbCSV4y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Mar 2015 17:56:54 -0400
-Received: from mail-ie0-f170.google.com ([209.85.223.170]:34614 "EHLO
-	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750916AbbCSV4x (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Mar 2015 17:56:53 -0400
-Received: by iecsl2 with SMTP id sl2so78180547iec.1
-        for <git@vger.kernel.org>; Thu, 19 Mar 2015 14:56:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=5Nu/GTFM8VlpVe3/wCF8dt4g9+4vdk8ts2AIq26RNfo=;
-        b=QvYFeEF68TBJ4knLTc7S2UNUvDE4Gkg3+kQvGiLl+011oMdEIIbqzNmbFwvl1+wvB3
-         We4hiZsSahCz1KZmPgIaTkfyx6bnFwmEA/tNHxNyVCaCuqdsW2mVC22mgQDEKqMC9sgu
-         2B8s3os+muRjDW/FBPJf84Hd5rYo17wA6c9us/ZRbGrfvRYa0mX72+SP6GmhamrBRfhJ
-         dbWmoRWPW88Ii0rz+dULTrXVXSmwge9EdUr5UCw76ZsrDokmrrrtsDPI+TlFGBtSUepT
-         TI/4E8fGL6ciWEvekZmarsj8WIF5KP6U+DgMlgeL3Zx2rXnTxQkm84v7gQp84vbjQUW9
-         C//A==
-X-Received: by 10.107.32.73 with SMTP id g70mr104142218iog.55.1426802212519;
- Thu, 19 Mar 2015 14:56:52 -0700 (PDT)
-X-Google-Sender-Delegation: rcdailey@gmail.com
-Received: by 10.36.49.138 with HTTP; Thu, 19 Mar 2015 14:56:52 -0700 (PDT)
-In-Reply-To: <CAEtYS8T6STrgVW2AWkUKbxjeazXvLT2+0bRCA_L9hpUj2Ag4GA@mail.gmail.com>
-X-Google-Sender-Auth: ppLvwnN_nLAhWEVf_7pfQyjdFmw
+	id S1750889AbbCSV60 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Mar 2015 17:58:26 -0400
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:50606 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750731AbbCSV6Z (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 Mar 2015 17:58:25 -0400
+Received: from vauxhall.crustytoothpaste.net (wsip-184-177-1-73.no.no.cox.net [184.177.1.73])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 1E4072808F;
+	Thu, 19 Mar 2015 21:58:24 +0000 (UTC)
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Sam Bishop <Sam.Bishop@blackboard.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <D1303946.5CED%Sam.Bishop@blackboard.com>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 3.19.0-trunk-amd64)
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Spam-Score: 0.163 () BAYES_00,RDNS_DYNAMIC
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265845>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265846>
 
-On Wed, Mar 18, 2015 at 6:04 PM, Doug Kelly <dougk.ff7@gmail.com> wrote:
-> On Wed, Mar 18, 2015 at 3:20 AM, Chris Packham <judge.packham@gmail.com> wrote:
->> My $0.02 based on $dayjob
->>
->> (disclaimer I've never used subtree)
->>
->> On Wed, Mar 18, 2015 at 11:14 AM, Robert Dailey
->> <rcdailey.lists@gmail.com> wrote:
->>> At my workplace, the team is using Atlassian Stash + git
->>>
->>> We have a "Core" library that is our common code between various
->>> projects. To avoid a single monolithic repository and to allow our
->>> apps and tools to be modularized into their own repos, I have
->>> considered moving Core to a subtree or submodule.
->
-> $DAYJOB has actually tried both... with varying levels of success.  As
-> you note, subtree looks wonderful from a user perspective, but behind
-> the scenes, it does have issues.  In our case, subtree support was
-> modified into Gerrit, and this became cumbersome and difficult to
-> maintain (which is the reason we eventually dropped support for
-> subtree).  Submodules have more of a labor-intensive aspect, but
-> are far more obvious about what actions have been taken (IMHO).
-> Either way, both our developers' needs were satisfied: the code was
-> tracked cleanly, and there wasn't a configuration mismatch where
-> a dependency was able to change versions without implicit direction.
->
->>
->> Our environment is slightly different. Our projects are made up
->> entirely of submodules, we don't embed submodules within a repo with
->> actual code (side note: I know syslog-ng does so it might be worth
->> having a look around there).
->>
->> Day to day development is done at the submodule level. A developer
->> working on a particular feature is generally only touching one repo
->> notwithstanding a little bit of to-and-fro as they work on the UI
->> aspects. When changes do touch multiple submodules the pushes can
->> generally be ordered in a sane manner. Things get a little complicated
->> when there are interdependent changes, then those pushes require
->> co-operation between submodule owners.
->
-> We've done both (all of the above? a hybrid approach?)... We've gone so
-> far to create 30 modules for every conceivable component, then tried to
-> work that way with submodule, and our developers quickly revolted as it
-> became too much of a maintenance burden.  The other direction (with
-> hugely monolithic code) is also problematic since the module boundaries
-> become blurred.  For us, usually cooperation between modules isn't so
-> difficult, but the problem comes about when attempting to merge the
-> changes.  Sometimes, it can take significant effort to ensure conflict-free
-> merges (going so far as to require "merge lock" emails to ask other
-> developers to hold off on merging commits until the change lands
-> completely and the project is stable).
->
->>
->> The key to making this work is our build system. It is the thing that
->> updates the project repo. After a successful build for all targets (we
->> hope to add unit/regression tests one day) the submodules sha1s are
->> updated and a new baseline (to borrow a clearcase term) is published.
->> Developers can do "git pull && git submodule update" to get the latest
->> stable baseline, but they can also run git pull in a submodule if they
->> want to be on the bleeding edge.
->>
->>> I tried subtree and this is definitely far more transparent and simple
->>> to the team (simplicity is very important), however I notice it has
->>> problems with unnecessary conflicts when you do not do `git subtree
->>> push` for each `git subtree pull`. This is unnecessary overhead and
->>> complicates the log graph which I don't like.
->>>
->>> Submodule functionally works but it is complicated. We make heavy use
->>> of pull requests for code reviews (they are required due to company
->>> policy). Instead of a pull request being atomic and containing any app
->>> changes + accompanying Core changes, we now need to create two pull
->>> requests and manage them in proper order. Things also become more
->>> difficult when branching. All around it just feels like submodule
->>> would interfere and add more administration overhead on a day to day
->>> basis, affecting productivity.
->>
->> We do have policies around review etc. With submodules it does
->> sometimes require engaging owners/reviewers from multiple
->> repositories. Tools like Gerrit can help, particularly where multiple
->> changes and reviewers are involved.
->
-> Conflicts are definitely going to be a difficulty with either subtree or
-> submodule (if multiple users could be changing the submodule), but
-> if you have additional tools, such as Gerrit to look out for, submodule
-> is the way to go since subtrees aren't supported within Gerrit. (Other
-> tools may support it better: I'm honestly not sure?)  That would be
-> my one word of caution: I don't know how well Stash supports subtree.
->
-> You are absolutely correct about the difficulty of integrating submodule
-> pull requests taking two steps.  This was an issue we worked hard
-> to mitigate here, but at the end of the day, the work is necessary.
-> Basically, we could also use a feature within Gerrit to automatically
-> bring up a specific branch of the "superproject" when the submodule
-> project on a certain branch changes, but this also rolls the dice a bit
-> since it bypasses any code review or CI step.
->
->>
->>> Is there a third option here I'm missing? If only that issue with
->>> subtree could be addressed (the conflicts), it would be perfect enough
->>> for us I think. I have done all the stackoverflow reading and research
->>> I can manage at this point. I would really love some feedback from the
->>> actual git community on what would be a practical solution and
->>> structure here from a company perspective.
->>
->> There's the thing google use for android, I think it's called "repo".
->> There's a few googlers around here so mybe one of them will chime in.
->
-> Repo is an interesting middle ground.  It does expect to interact with Gerrit,
-> I believe, and it handles the splitting of changes/commits and reassembling
-> them. (And, since it uses a manifest to track the submodules, it can handle
-> pointing to a specific commit, the latest commit on a branch, etc.) The rumor
-> I've heard around repo, however, is that there are plans to ensure parity
-> (as much as possible) in submodule and eventually remove the need for
-> repo.  But, this could also be a pipe dream...
->
-> Perhaps it's worth noting another possibility: using and releasing the core
-> library as an actual "library" which is tracked independently from the
-> remainder of the code, and integrated at build/run time by your build tools.
-> This would be closer to Maven's approach in the Java world, or a package
-> manager in a system environment.  Even in the embedded world, tools in
-> the Yocto project can handle gathering the dependencies in some sort of
-> "recipe." I know this is a somewhat idealistic view, however... after all,
-> there are reasons we're still using submodules ourself. :)
->
-> --Doug
 
-Really appreciate the feedback guys. Maybe I'm trying too hard to keep
-things from changing when they should. Modularized repositories will
-inherently involve more work since they are now separate entities.
+--q5r20fdKX+PFtYHw
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
->From a risk perspective, do you feel it is better to use submodules
-than subtrees? Subtrees seem a bit dangerous since they involve
-history mutation and it seems possible to get into a messy state.
+On Thu, Mar 19, 2015 at 12:28:09PM +0000, Sam Bishop wrote:
+> When using the git-p4.py script, I found that if I used a client spec when
+> cloning out a perforce repository, and then using a git-p4.py rebase, that
+> the rebase command would be using the current perforce client spec,
+> instead of the one used when doing the initial clone. My proposed patch
+> causes the rebase command to switch to the perforce client spec used when
+> doing the initial git-p4.py clone.
+>=20
+> This email and any attachments may contain confidential and
+> proprietary information of Blackboard that is for the sole use of the
+> intended recipient. If you are not the intended recipient, disclosure,
+> copying, re-distribution or other use of any of this information is
+> strictly prohibited. Please immediately notify the sender and delete
+> this transmission if you received this email in error.
 
-Submodules on the other hand are pretty difficult to manage when you
-get submodule SHA1 conflicts. It's not obvious from the diff what has
-changed between the 2 submodule commits, so some deep investigation
-will be necessary.
+You might want to read Documentation/SubmittingPatches for information
+on patch submission procedures.  Most notably, you'll need to sign-off
+your work to indicate that you can submit it under the appropriate
+license.
 
-No one on my team is experienced with Git. In fact, I do as much as I
-can to help educate them. I feel like adding either of these will
-cause them to get a negative outlook on Git itself. I already have to
-listen to some of them tease me about how SVN never had problems :-(
+The confidentiality notice above is not only inappropriate for a public
+mailing list, it discourages people from even looking at your patch, as
+you just claimed it was confidential and proprietary and nobody wants to
+be sued.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
 
-Thanks again guys I'll keep thinking about it.
+--q5r20fdKX+PFtYHw
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCgAGBQJVC0Z4AAoJEL9TXYEfUvaLoeoP/3LvOk3WShMJ1TzGsM9Wz0tT
+RJEVaAhgBfeQNNma+YcngCLNtS5o9UMchoADJYkZ7y6K9fapJC+dh/naGi/MlovX
+2rTlGrzuaJIKUHBf9bp6gc5SFmucM08ISo6bi8Nxu66JVSJ2L6MSZ2dozspqgH+U
+L7hheSvlUPQrqTE0L6jkmQQYamKIlIz4vCB/GzdWsmJNJ2n4B+wcBQHbbCVvV6i7
+UAFDAvR0H7ygHImZZS2nzpKz7YOs+uyVkgo2jM3nOyDF+COMpuJ4Z2lDYWyq47mm
+GgwSfk6Xar4fRw8V6k9abfhPwQ2qiUKndBN7d0qSEjY9+tlgp6+sd4xjlAVsxUQk
+ptrbkjRV7ZIJkfNpdT0uUF7ZEN6ajDwSPPX6eV6glSGNKrECpFs065Bd61B/7jOy
+QMqPrpnkS/S8SmNOruqT4bDFS7pPN6vfsgBr1Gs/5kdte1tJ8kjnfWd23GUL1ZGg
+MyIG2CuWWWkvtUNGj2wTfvRpZkIvcfEQytcdOH9f305mKCd3esAWnIUKxSddAlKL
+jobYxLG3Xyu0yTJrHNIZ/T6TGSdKkC17iP9/cajN4tP3AYGxvcHAC4ntRW1H+DNH
+oNXWpavUupGjSCLK3ZZIgNq/IAGM05AbeKGoLqAaBG1E92a9RDFrb5zv2JP9V85y
+s2NLW810uEsL2fkmTmcX
+=WN4t
+-----END PGP SIGNATURE-----
+
+--q5r20fdKX+PFtYHw--
