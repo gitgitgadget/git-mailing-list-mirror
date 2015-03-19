@@ -1,78 +1,98 @@
-From: "Reni Dimitrova ." <our.conferences@wopu.org>
-Subject: Upload your Invited Paper until March 20, 2015. Extended Versions of all the Invited papers will be promoted for direct publication in 36 Collaborating ISI/SCI Journals (with Impact Factor from Thomson Reuters)
-Date: Wed, 18 Mar 2015 19:50:02 +0200
-Message-ID: <20150318175002.BD06433F6098@genf174.server4you.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+From: Bharat Suvarna <bharat.bs84@icloud.com>
+Subject: Re: Git with Lader logic
+Date: Thu, 19 Mar 2015 07:14:52 +0000
+Message-ID: <E914A3D7-1BF0-4962-8B4E-F0E19477926B@icloud.com>
+References: <5F9B9EBF-CD4D-42A8-8A0C-9806702231A1@icloud.com>
+ <00bd01d061b5$331874c0$99495e40$@nexbridge.com>
+ <CAEtYS8R6xz3vMD72h_j0R6W=FRfY7SjMi-q9z+qfKhqoq5ExCg@mail.gmail.com>
+Mime-Version: 1.0 (1.0)
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 8BIT
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Mar 19 07:47:59 2015
+Cc: "Randall S. Becker" <rsbecker@nexbridge.com>,
+	Git List <git@vger.kernel.org>
+To: Doug Kelly <dougk.ff7@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 19 08:15:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YYUFK-000364-3D
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Mar 2015 07:47:58 +0100
+	id 1YYUfz-0001G7-Nz
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Mar 2015 08:15:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750860AbbCSGry (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Mar 2015 02:47:54 -0400
-Received: from genf174.server4you.net ([217.172.184.70]:36408 "EHLO
-	genf174.server4you.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750729AbbCSGrx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 Mar 2015 02:47:53 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by genf174.server4you.net (Postfix) with ESMTP id E1932368DA59
-	for <git@vger.kernel.org>; Thu, 19 Mar 2015 04:39:04 +0100 (CET)
-Received: from genf174.server4you.net ([127.0.0.1])
-	by localhost (genf174.server4you.net [127.0.0.1]) (amavisd-new, port 10032)
-	with ESMTP id 84fFriQN9536 for <git@vger.kernel.org>;
-	Thu, 19 Mar 2015 04:39:04 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by genf174.server4you.net (Postfix) with ESMTP id 19D2936898DF
-	for <git@vger.kernel.org>; Wed, 18 Mar 2015 23:44:43 +0100 (CET)
-X-Virus-Scanned: amavisd-new at genf174.server4you.net
-Received: from genf174.server4you.net ([127.0.0.1])
-	by localhost (genf174.server4you.net [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id 3L4RjWgsbJkx for <git@vger.kernel.org>;
-	Wed, 18 Mar 2015 23:44:41 +0100 (CET)
-Received: from 10.0.2.15 (genf174.server4you.net [217.172.184.70])
-	by genf174.server4you.net (Postfix) with SMTP id BD06433F6098
-	for <git@vger.kernel.org>; Wed, 18 Mar 2015 18:50:01 +0100 (CET)
-X-Priority: 1 (Highest)
+	id S1754748AbbCSHP0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Mar 2015 03:15:26 -0400
+Received: from st11p01mm-asmtpout002.mac.com ([17.172.204.237]:42340 "EHLO
+	st11p01mm-asmtp002.mac.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754709AbbCSHPX convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Mar 2015 03:15:23 -0400
+Received: from [192.168.1.123]
+ (host31-52-159-201.range31-52.btcentralplus.com [31.52.159.201])
+ by st11p01mm-asmtp002.mac.com
+ (Oracle Communications Messaging Server 7.0.5.35.0 64bit (built Dec  4 2014))
+ with ESMTPSA id <0NLG001IU6STS040@st11p01mm-asmtp002.mac.com> for
+ git@vger.kernel.org; Thu, 19 Mar 2015 07:14:56 +0000 (GMT)
+X-Proofpoint-Virus-Version: vendor=fsecure
+ engine=2.50.10432:5.13.68,1.0.33,0.0.0000
+ definitions=2015-03-19_02:2015-03-19,2015-03-19,1970-01-01 signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ suspectscore=0 phishscore=0 adultscore=0 bulkscore=0 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=7.0.1-1412110000 definitions=main-1503190072
+X-Mailer: iPhone Mail (12D508)
+In-reply-to: <CAEtYS8R6xz3vMD72h_j0R6W=FRfY7SjMi-q9z+qfKhqoq5ExCg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265793>
 
-Dear Invited Author,
+Thanks all .. I will have a look. But could I just set this up on my laptop and checking this works on system first before installing one of Git on server
 
-Have you uploaded your invited paper for our conferences in Barcelona, Spain
-7-9 April 2015? If not, kindly, upload now your INVITED paper via  www. inase. org until
-March 20, 2015.
+Sent from my iPhone
 
-We have collaboration with 36 Journals, all with Impact Factor from ISI (Thomson Reuters)
-and we can publish the extended version of your paper after the conference.
-INASE Staff works very hard every day to establish these collaborations by extending the
-list of our ISI/SCI/SCOPUS collaborating Journals.
-
-Write INVITED-by-RENI-DIMITROVA in the Field of Short CV of the Web Form to condider your
-paper as Invited Paper.
-
-If you have participated in our INASE. org conferences in 2013, 2014, 2015 and your paper
-has not been indexed in ISI and/or SCOPUS, contact me now to resolve the problem now. All
-the papers of our previous conferences (in the conference version OR in their extended
-version in Journals are now indexed in ISI/SCI and SCOPUS. Contact me.)
-
-The Proceedings will be distributed to you in CD-ROM and Hard-Copy (10 volumes)
-and will be indexed in SCOPUS , ISI, DBLP, Zentrablatt, ACM, ASM, IET, British library,
-Scholar Google and all the other major indices.
-
-
-Many Thanks
-
-Reni Dimitrova
----------------------
-If you do not want to receive other invitations from me, reply
-with Subject (with the email address, please):  - BLOCK git@vger.kernel.org -
+> On 18 Mar 2015, at 22:28, Doug Kelly <dougk.ff7@gmail.com> wrote:
+> 
+> On Wed, Mar 18, 2015 at 2:53 PM, Randall S. Becker
+> <rsbecker@nexbridge.com> wrote:
+>> On March 17, 2015 7:34 PM, Bharat Suvarna wrote:
+>>> I am trying to find a way of using version control on PLC programmers like
+>> Allen
+>>> Bradley PLC. I can't find a way of this.
+>>> 
+>>> Could you please give me an idea if it will work with Plc programs. Which
+>> are
+>>> basically Ladder logic.
+>> 
+>> Many PLC programs either store their project code in XML, L5K or L5X (for
+>> example), TXT, CSV, or some other text format or can import and export to
+>> text forms. If you have a directory structure that represents your project,
+>> and the file formats have reasonable line separators so that diffs can be
+>> done easily, git very likely would work out for you. You do not have to have
+>> the local .git repository in the same directory as your working area if your
+>> tool has issues with that or .gitignore. You may want to use a GUI client to
+>> manage your local repository and handle the commit/push/pull/merge/rebase
+>> functions as I expect whatever PLC system you are using does not have git
+>> built-in.
+>> 
+>> To store binary PLC data natively, which some tools use, I expect that those
+>> who are better at git-conjuring than I, could provide guidance on how to
+>> automate binary diffs for your tool's particular file format.
+> 
+> The one thing I find interesting about RSLogix in general (caveat: I
+> only have very limited experience with RSLogix 500 / 5000; if I do
+> anything nowadays, it's in the micro series using RSLogix Micro
+> Starter Lite)... they do have some limited notion of version control
+> inside the application itself, though it seems rudimentary to me.
+> This could prove to be helpful or extremely annoying, since even when
+> I connect to a PLC and go online, just to reset the RTC, it still
+> prompts me to save again (even though nothing changed, other than the
+> processor state).
+> 
+> You may also find this link on stackexchange helpful:
+> http://programmers.stackexchange.com/questions/102487/are-there-realistic-useful-solutions-for-source-control-for-ladder-logic-program
+> 
+> As Randall noted, L5K is just text, and RSLogix 5000 uses it,
+> according to this post.  It may work okay.
+> 
+> --Doug
