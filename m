@@ -1,83 +1,69 @@
-From: Jeff King <peff@peff.net>
+From: Duy Nguyen <pclouds@gmail.com>
 Subject: Re: git pull & git gc
-Date: Thu, 19 Mar 2015 00:14:53 -0400
-Message-ID: <20150319041453.GB29437@peff.net>
-References: <5509836D.2020304@aegee.org>
- <CACsJy8ChKgwr5OBRDG1p5nxwPC0vei7J=Lr3NefLYoReTMuhPA@mail.gmail.com>
- <55098A49.1020003@aegee.org>
- <CACsJy8AtoeSv7uZc3P2xXN0A15gpj-OUTRyNhMe__=HqtTkD2Q@mail.gmail.com>
+Date: Thu, 19 Mar 2015 11:15:19 +0700
+Message-ID: <CACsJy8CUbe4-f4rpieAKYzHb4rpKg8JW+uXB5yA4c1HFG6r4dg@mail.gmail.com>
+References: <5509836D.2020304@aegee.org> <CACsJy8ChKgwr5OBRDG1p5nxwPC0vei7J=Lr3NefLYoReTMuhPA@mail.gmail.com>
+ <55098A49.1020003@aegee.org> <CACsJy8AtoeSv7uZc3P2xXN0A15gpj-OUTRyNhMe__=HqtTkD2Q@mail.gmail.com>
  <CACsJy8DCdF1YmfFF1aCuhMJ0v4+FW7EkDiwBnBF2OFhE=kcbFg@mail.gmail.com>
- <20150318145815.GN1369@serenity.lan>
- <20150318210458.GA3376@peff.net>
- <CACsJy8AJfx8id+oHmhsLODBJeNLgRqD+5B295TtS+c-hrC5raQ@mail.gmail.com>
- <20150319012722.GA26867@peff.net>
- <20150319020117.GA31689@glandium.org>
+ <20150318145815.GN1369@serenity.lan> <20150318210458.GA3376@peff.net>
+ <CACsJy8AJfx8id+oHmhsLODBJeNLgRqD+5B295TtS+c-hrC5raQ@mail.gmail.com> <20150319012722.GA26867@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Duy Nguyen <pclouds@gmail.com>, John Keeping <john@keeping.me.uk>,
-	=?utf-8?B?0JTQuNC70Y/QvSDQn9Cw0LvQsNGD0LfQvtCy?= 
+Content-Type: text/plain; charset=UTF-8
+Cc: John Keeping <john@keeping.me.uk>,
+	=?UTF-8?B?0JTQuNC70Y/QvSDQn9Cw0LvQsNGD0LfQvtCy?= 
 	<dilyan.palauzov@aegee.org>, Git Mailing List <git@vger.kernel.org>
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Thu Mar 19 05:15:02 2015
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Mar 19 05:15:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YYRrI-0002Pv-SU
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Mar 2015 05:15:01 +0100
+	id 1YYRsA-0003Cl-9t
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Mar 2015 05:15:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750840AbbCSEO4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Mar 2015 00:14:56 -0400
-Received: from cloud.peff.net ([50.56.180.127]:35008 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750796AbbCSEO4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Mar 2015 00:14:56 -0400
-Received: (qmail 31974 invoked by uid 102); 19 Mar 2015 04:14:56 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 18 Mar 2015 23:14:56 -0500
-Received: (qmail 9743 invoked by uid 107); 19 Mar 2015 04:15:07 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 19 Mar 2015 00:15:07 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 19 Mar 2015 00:14:53 -0400
-Content-Disposition: inline
-In-Reply-To: <20150319020117.GA31689@glandium.org>
+	id S1750821AbbCSEPu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Mar 2015 00:15:50 -0400
+Received: from mail-ig0-f182.google.com ([209.85.213.182]:35154 "EHLO
+	mail-ig0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750732AbbCSEPt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Mar 2015 00:15:49 -0400
+Received: by igcau2 with SMTP id au2so82586918igc.0
+        for <git@vger.kernel.org>; Wed, 18 Mar 2015 21:15:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=pCokNS5hovPSxBmbk+ntmyIFJahbwIknAby9RJbrOes=;
+        b=Q61UQDDIlmUJ/m6iek857GplqiV+o6lqvevUOEqIkgsGlez4goppTLxwJ9mQA4Wl8q
+         e+HRxGLnXdrJ7Zu/bRLo27mAGiDdR0qpLCSpLlKDRAcnxpQIPCgbzJ6k469zpg492rPV
+         Lj9LMYqvmmGS76RDqCSq6VgA9MmFGXqIsnuM/QyPq+k7wyzHYP+JchiMffyr42my6aze
+         AqXQR4K0oIBhCFHOuyeHAsIMgdjv7neGy4KKRACY7FS6UrmLWI+k/zTh4x+4KygfU/b+
+         cuAboLgpHB7RPiOQPqASW9aObVj4C+5GfWY89bHwpDrY3E7At/tABAAPMv1cVO+XNicA
+         t/7g==
+X-Received: by 10.50.1.48 with SMTP id 16mr12916555igj.45.1426738549326; Wed,
+ 18 Mar 2015 21:15:49 -0700 (PDT)
+Received: by 10.107.131.33 with HTTP; Wed, 18 Mar 2015 21:15:19 -0700 (PDT)
+In-Reply-To: <20150319012722.GA26867@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265780>
 
-On Thu, Mar 19, 2015 at 11:01:17AM +0900, Mike Hommey wrote:
+On Thu, Mar 19, 2015 at 8:27 AM, Jeff King <peff@peff.net> wrote:
+> Keeping a file that says "I ran gc at time T, and there were still N
+> objects left over" is probably the best bet. When the next "gc --auto"
+> runs, if T is recent enough, subtract N from the estimated number of
+> objects. I'm not sure of the right value for "recent enough" there,
+> though. If it is too far back, you will not gc when you could. If it is
+> too close, then you will end up running gc repeatedly, waiting for those
+> objects to leave the expiration window.
 
-> > I don't think packing the unreachables is a good plan. They just end up
-> > accumulating then, and they never expire, because we keep refreshing
-> > their mtime at each pack (unless you pack them once and then leave them
-> > to expire, but then you end up with a large number of packs).
-> 
-> Note, sometimes I wish unreachables were packed. Recently, I ended up in
-> a situation where running gc created something like 3GB of data as per
-> du, because I suddenly had something like 600K unreachable objects, each
-> of them, as a loose object, taking at least 4K on disk. This made my
-> .git take 5GB instead of 2GB. That surely didn't feel like garbage
-> collection.
-
-That's definitely a thing that happens, but it is a bit of a corner
-case. It's unusual to have such a large number of unreferenced objects
-all at once.
-
-I don't suppose you happen to remember the details, but would a lower
-expiration time (e.g., 1 day or 1 hour) have made all of those objects
-go away? Or were they really from some extremely recent event (of
-course, "event" here might just have been "I did a full repack right
-before rewriting history" which would freshen the mtimes on everything
-in the pack).
-
-Certainly the "loosening" behavior for unreachable objects has corner
-cases like this, and they suck when you hit one. Leaving the objects
-packed would be better, but IMHO is not a viable alternative unless
-somebody comes up with a plan for segregating the "old" objects in a way
-that they actually expire eventually, and don't just keep getting
-repacked and freshened over and over.
-
--Peff
+And would not be hard to implement either. git-gc is already prepared
+to deal with stale gc.pid, which would stop git-gc for a day or so
+before it deletes gc.pid and starts anyway. All we need to do is check
+at the end of git-gc, if we know for sure the next 'gc --auto' is a
+waste, then leave gc.pid behind.
+-- 
+Duy
