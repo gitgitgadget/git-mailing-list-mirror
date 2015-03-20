@@ -1,83 +1,82 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 26/27] t/*svn*: fix moderate &&-chain breakage
-Date: Fri, 20 Mar 2015 11:04:42 -0700
-Message-ID: <xmqqy4mree9x.fsf@gitster.dls.corp.google.com>
-References: <550C2E7B.3030203@drmicha.warpmail.net>
-	<317e6b1e70f3e1c50d62207c53f4d038ad027c9d.1426861743.git.git@drmicha.warpmail.net>
+Subject: Re: [PATCH] t1700: make test pass with index-v4
+Date: Fri, 20 Mar 2015 11:06:53 -0700
+Message-ID: <xmqqtwxfee6a.fsf@gitster.dls.corp.google.com>
+References: <1426864165-7334-1-git-send-email-t.gummerer@gmail.com>
+	<xmqqsiczfuqa.fsf@gitster.dls.corp.google.com>
+	<20150320173750.GA6545@hank>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Eric Wong <normalperson@yhbt.net>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Mar 20 19:05:01 2015
+Cc: git@vger.kernel.org,
+	=?utf-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc?= =?utf-8?Q?_Duy?= 
+	<pclouds@gmail.com>
+To: Thomas Gummerer <t.gummerer@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 20 19:07:05 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YZ1Hz-0001cd-7d
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Mar 2015 19:04:55 +0100
+	id 1YZ1K1-0003XI-JF
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Mar 2015 19:07:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751310AbbCTSEu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Mar 2015 14:04:50 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50016 "EHLO
+	id S1751445AbbCTSG5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Mar 2015 14:06:57 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50913 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751163AbbCTSEt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Mar 2015 14:04:49 -0400
+	with ESMTP id S1750956AbbCTSG4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Mar 2015 14:06:56 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4207B40E96;
-	Fri, 20 Mar 2015 14:04:49 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9FFE140F20;
+	Fri, 20 Mar 2015 14:06:55 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=pTqSPojboEO5vo/dqMFAybGR9V0=; b=uqAAzE
-	lT0n6D+DSA7WvL4XbDybAUlpxGkgC74R+vXTuyAEp8DOFq6MWKWCei8CN33gE2kz
-	wb0zzBxMMpzo75pjx3e6IztNnOEW8yDyJmGeJwsSIhDtSHPj426JuPTTGTsVICcv
-	veRG1eMbS6J6ZB7eSNjnygzXUuZbCKBsGw7a4=
+	:content-type; s=sasl; bh=fQ4VzSzs1gKJFmU4EJEY/B9cN1w=; b=t0Elfv
+	xWppr3sftRKiwWcxFUtPeFkFY2Ih3bgOoUMx+CTacwtP9ELT+eIGkOfH12xeU07G
+	tEmC7B1QVBje7KJ5EhiaN5pLZE/+moXFSgRkkCEHlN4DOhbH9Cmpi8xAs4c/rIG1
+	jHHsVvQd5TMdZHWqks1dKBFj8iicJudbtLdVQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=HVp/VajZs3CxMuxXFEbFYyj9Fq2XN+h4
-	oC4Q8elWHFwWQ1bqDzo88GCjrviQ84EwmTcOXNsfhR5PlX/DXTf8SWuHnysADpCA
-	DsEtm36Gc1QDovtQGF1W50aMqS2mMs5dmjPODBrgNeJ1ONhGOSn0JY2+q4NQUjfr
-	v5KrjqpZThM=
+	:content-type; q=dns; s=sasl; b=i/Pz962lPF7EW4xxZn1wx/hiqhVhtr+T
+	T2O8N0/sX1Lo9kYJf4mAVt/Tob1Equs6xbrKYq2HVduPD2rSWqRxggWirTjEo+ql
+	l5ulvXVt374kp5MiEVtUUUS3l1mQl9LSXOwhlrbHZnLikGJULaiykmf6HfDv+Vm0
+	i/cQEqZFIZs=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3A3CD40E95;
-	Fri, 20 Mar 2015 14:04:49 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 97D4440F1F;
+	Fri, 20 Mar 2015 14:06:55 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8570240E8D;
-	Fri, 20 Mar 2015 14:04:43 -0400 (EDT)
-In-Reply-To: <317e6b1e70f3e1c50d62207c53f4d038ad027c9d.1426861743.git.git@drmicha.warpmail.net>
-	(Michael J. Gruber's message of "Fri, 20 Mar 2015 15:32:55 +0100")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EF77A40F1E;
+	Fri, 20 Mar 2015 14:06:54 -0400 (EDT)
+In-Reply-To: <20150320173750.GA6545@hank> (Thomas Gummerer's message of "Fri,
+	20 Mar 2015 18:37:50 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 960B0A28-CF2B-11E4-8415-FAE19E42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: E460F8D6-CF2B-11E4-84CE-FAE19E42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265927>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265928>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+Thomas Gummerer <t.gummerer@gmail.com> writes:
 
-> All of these cases are moderate since they would most probably not
-> lead to missed failing tests: Either they would fail otherwise,
-> or fail a rm in test_when_finished only.
+> On 03/20, Junio C Hamano wrote:
+>> Thomas Gummerer <t.gummerer@gmail.com> writes:
+>>
+>> > The different index versions have different sha-1 checksums.  Those
+>> > checksums are checked in t1700, which makes it fail when run with index
+>> > v4.  Fix it.
+>>
+>> I am more interested to see how you managed to use index v4 in the
+>> tests be described next to "when run with index v4".  I thought we
+>> were controling these things fairly tightly (e.g. we disable hooks,
+>> move $HOME to avoid getting affected by your personal settings,
+>> etc.).
 >
-> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
-> ---
->  t/t2026-prune-linked-checkouts.sh |  4 ++--
->  t/t9158-git-svn-mergeinfo.sh      |  4 ++--
->  t/t9161-git-svn-mergeinfo-push.sh | 10 +++++-----
->  3 files changed, 9 insertions(+), 9 deletions(-)
+> The tests can be run with index-v4 by setting TEST_GIT_INDEX_VERSION
+> in config.mak.  This configuration was introduced in 5d9fc88 test-lib:
+> allow setting the index format version.
 
-Ahh, it seems that I should have read everything in my inbox before
-starting my day X-<.  I already queued an identical patch for 2026
-on nd/multiple-work-trees, and its new tip is in 'next' now.
-
-Which branches are the git-svn ones meant to apply?  Are they meant
-to fix an existing bug already in master, or are they new ones added
-by still-in-flight topics?  Can you split if necessary and mark them
-for individual topios in flight if that is the case, so that we can
-apply them independently from GIT_TEST_CHAIN_LINT series?
-
-Thanks.
+An updated patch to mention "when run with TEST_GIT_INDEX_VERSION=4"
+in the log message was what I was asking for ;-)
