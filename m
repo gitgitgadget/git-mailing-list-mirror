@@ -1,7 +1,7 @@
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH 09/16] refs: convert for_each_replace_ref to struct object_id
-Date: Fri, 20 Mar 2015 19:28:29 +0000
-Message-ID: <1426879716-47835-10-git-send-email-sandals@crustytoothpaste.net>
+Subject: [PATCH 08/16] refs: convert for_each_ref to struct object_id
+Date: Fri, 20 Mar 2015 19:28:28 +0000
+Message-ID: <1426879716-47835-9-git-send-email-sandals@crustytoothpaste.net>
 References: <1426879716-47835-1-git-send-email-sandals@crustytoothpaste.net>
 Cc: Andreas Schwab <schwab@linux-m68k.org>,
 	"Kyle J. McKay" <mackyle@gmail.com>,
@@ -9,26 +9,26 @@ Cc: Andreas Schwab <schwab@linux-m68k.org>,
 	Johannes Sixt <j6t@kdbg.org>, David Kastrup <dak@gnu.org>,
 	James Denholm <nod.helm@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 20 20:29:50 2015
+X-From: git-owner@vger.kernel.org Fri Mar 20 20:29:45 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YZ2br-0001va-FI
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Mar 2015 20:29:31 +0100
+	id 1YZ2bs-0001va-2c
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Mar 2015 20:29:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751696AbbCTT3V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Mar 2015 15:29:21 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:50677 "EHLO
+	id S1751730AbbCTT32 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Mar 2015 15:29:28 -0400
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:50668 "EHLO
 	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751246AbbCTT2x (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Mar 2015 15:28:53 -0400
+	by vger.kernel.org with ESMTP id S1751037AbbCTT2w (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Mar 2015 15:28:52 -0400
 Received: from vauxhall.crustytoothpaste.net (wsip-184-177-1-73.no.no.cox.net [184.177.1.73])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 2A6352809A;
-	Fri, 20 Mar 2015 19:28:52 +0000 (UTC)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id EB10D28099;
+	Fri, 20 Mar 2015 19:28:49 +0000 (UTC)
 X-Mailer: git-send-email 2.2.1.209.g41e5f3a
 In-Reply-To: <1426879716-47835-1-git-send-email-sandals@crustytoothpaste.net>
 X-Spam-Score: 0.163 () BAYES_00,RDNS_DYNAMIC
@@ -36,108 +36,767 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265952>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265953>
 
-Update callbacks to take the proper parameters and use struct object_id
-elsewhere in the callbacks.
+Convert for_each_ref, for_each_glob_ref, and for_each_glob_ref_in to use
+struct object_id, as the latter two call the former with the function
+pointer they are provided.
+
+Convert callers to refer to properly-typed functions.  Convert uses of
+the constant 20 to GIT_SHA1_RAWSZ.  Where possible, convert modified
+functions to use struct object_id instead of unsigned char [20].
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/replace.c | 14 +++++++-------
- refs.c            |  4 ++--
- refs.h            |  2 +-
- replace_object.c  |  4 ++--
- 4 files changed, 12 insertions(+), 12 deletions(-)
+ builtin/checkout.c     |  4 ++--
+ builtin/fetch.c        |  6 +++---
+ builtin/name-rev.c     |  6 +++---
+ builtin/pack-objects.c | 10 +++++-----
+ builtin/receive-pack.c |  4 ++--
+ builtin/reflog.c       |  4 ++--
+ builtin/remote.c       | 14 +++++++-------
+ builtin/rev-parse.c    | 10 +++++-----
+ builtin/show-branch.c  | 24 ++++++++++++------------
+ builtin/show-ref.c     |  4 ++--
+ fetch-pack.c           | 18 ++++++++++++++----
+ help.c                 |  2 +-
+ log-tree.c             |  2 +-
+ notes.c                |  2 +-
+ reachable.c            |  2 +-
+ refs.c                 | 16 ++++++++--------
+ refs.h                 |  6 +++---
+ remote.c               |  8 ++++----
+ revision.c             |  8 ++++----
+ server-info.c          |  6 +++---
+ sha1_name.c            |  4 ++--
+ shallow.c              |  6 +++---
+ submodule.c            |  4 ++--
+ transport.c            | 10 +++++-----
+ walker.c               |  4 ++--
+ 25 files changed, 97 insertions(+), 87 deletions(-)
 
-diff --git a/builtin/replace.c b/builtin/replace.c
-index 85d39b5..c873180 100644
---- a/builtin/replace.c
-+++ b/builtin/replace.c
-@@ -35,7 +35,7 @@ struct show_data {
- 	enum replace_format format;
- };
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 52d6cbb..f59616f 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -685,10 +685,10 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
+ }
  
--static int show_reference(const char *refname, const unsigned char *sha1,
-+static int show_reference(const char *refname, const struct object_id *oid,
- 			  int flag, void *cb_data)
+ static int add_pending_uninteresting_ref(const char *refname,
+-					 const unsigned char *sha1,
++					 const struct object_id *oid,
+ 					 int flags, void *cb_data)
  {
- 	struct show_data *data = cb_data;
-@@ -44,19 +44,19 @@ static int show_reference(const char *refname, const unsigned char *sha1,
- 		if (data->format == REPLACE_FORMAT_SHORT)
- 			printf("%s\n", refname);
- 		else if (data->format == REPLACE_FORMAT_MEDIUM)
--			printf("%s -> %s\n", refname, sha1_to_hex(sha1));
-+			printf("%s -> %s\n", refname, oid_to_hex(oid));
- 		else { /* data->format == REPLACE_FORMAT_LONG */
--			unsigned char object[20];
-+			struct object_id object;
- 			enum object_type obj_type, repl_type;
+-	add_pending_sha1(cb_data, refname, sha1, UNINTERESTING);
++	add_pending_sha1(cb_data, refname, oid->hash, UNINTERESTING);
+ 	return 0;
+ }
  
--			if (get_sha1(refname, object))
-+			if (get_sha1(refname, object.hash))
- 				return error("Failed to resolve '%s' as a valid ref.", refname);
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 75a55e5..37223b3 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -179,13 +179,13 @@ static void add_merge_config(struct ref **head,
+ 	}
+ }
  
--			obj_type = sha1_object_info(object, NULL);
--			repl_type = sha1_object_info(sha1, NULL);
-+			obj_type = sha1_object_info(object.hash, NULL);
-+			repl_type = sha1_object_info(oid->hash, NULL);
+-static int add_existing(const char *refname, const unsigned char *sha1,
++static int add_existing(const char *refname, const struct object_id *oid,
+ 			int flag, void *cbdata)
+ {
+ 	struct string_list *list = (struct string_list *)cbdata;
+ 	struct string_list_item *item = string_list_insert(list, refname);
+-	item->util = xmalloc(20);
+-	hashcpy(item->util, sha1);
++	item->util = xmalloc(GIT_SHA1_RAWSZ);
++	hashcpy(item->util, oid->hash);
+ 	return 0;
+ }
  
- 			printf("%s (%s) -> %s (%s)\n", refname, typename(obj_type),
--			       sha1_to_hex(sha1), typename(repl_type));
-+			       oid_to_hex(oid), typename(repl_type));
+diff --git a/builtin/name-rev.c b/builtin/name-rev.c
+index 3c8f319..31f576d 100644
+--- a/builtin/name-rev.c
++++ b/builtin/name-rev.c
+@@ -138,9 +138,9 @@ static int tipcmp(const void *a_, const void *b_)
+ 	return hashcmp(a->sha1, b->sha1);
+ }
+ 
+-static int name_ref(const char *path, const unsigned char *sha1, int flags, void *cb_data)
++static int name_ref(const char *path, const struct object_id *oid, int flags, void *cb_data)
+ {
+-	struct object *o = parse_object(sha1);
++	struct object *o = parse_object(oid->hash);
+ 	struct name_ref_data *data = cb_data;
+ 	int can_abbreviate_output = data->tags_only && data->name_only;
+ 	int deref = 0;
+@@ -160,7 +160,7 @@ static int name_ref(const char *path, const unsigned char *sha1, int flags, void
  		}
  	}
  
+-	add_to_tip_table(sha1, path, can_abbreviate_output);
++	add_to_tip_table(oid->hash, path, can_abbreviate_output);
+ 
+ 	while (o && o->type == OBJ_TAG) {
+ 		struct tag *t = (struct tag *) o;
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 65eb4fe..586bb3b 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -2101,14 +2101,14 @@ static void ll_find_deltas(struct object_entry **list, unsigned list_size,
+ #define ll_find_deltas(l, s, w, d, p)	find_deltas(l, &s, w, d, p)
+ #endif
+ 
+-static int add_ref_tag(const char *path, const unsigned char *sha1, int flag, void *cb_data)
++static int add_ref_tag(const char *path, const struct object_id *oid, int flag, void *cb_data)
+ {
+-	unsigned char peeled[20];
++	struct object_id peeled;
+ 
+ 	if (starts_with(path, "refs/tags/") && /* is a tag? */
+-	    !peel_ref(path, peeled)        && /* peelable? */
+-	    packlist_find(&to_pack, peeled, NULL))      /* object packed? */
+-		add_object_entry(sha1, OBJ_TAG, NULL, 0);
++	    !peel_ref(path, peeled.hash)    && /* peelable? */
++	    packlist_find(&to_pack, peeled.hash, NULL))      /* object packed? */
++		add_object_entry(oid->hash, OBJ_TAG, NULL, 0);
+ 	return 0;
+ }
+ 
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 8266c1f..40ad5c5 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -187,7 +187,7 @@ static void show_ref(const char *path, const unsigned char *sha1)
+ 	}
+ }
+ 
+-static int show_ref_cb(const char *path, const unsigned char *sha1, int flag, void *unused)
++static int show_ref_cb(const char *path, const struct object_id *oid, int flag, void *unused)
+ {
+ 	path = strip_namespace(path);
+ 	/*
+@@ -200,7 +200,7 @@ static int show_ref_cb(const char *path, const unsigned char *sha1, int flag, vo
+ 	 */
+ 	if (!path)
+ 		path = ".have";
+-	show_ref(path, sha1);
++	show_ref(path, oid->hash);
+ 	return 0;
+ }
+ 
+diff --git a/builtin/reflog.c b/builtin/reflog.c
+index 2d85d26..66ee402 100644
+--- a/builtin/reflog.c
++++ b/builtin/reflog.c
+@@ -336,13 +336,13 @@ static int expire_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
+ 	return 0;
+ }
+ 
+-static int push_tip_to_list(const char *refname, const unsigned char *sha1, int flags, void *cb_data)
++static int push_tip_to_list(const char *refname, const struct object_id *oid, int flags, void *cb_data)
+ {
+ 	struct commit_list **list = cb_data;
+ 	struct commit *tip_commit;
+ 	if (flags & REF_ISSYMREF)
+ 		return 0;
+-	tip_commit = lookup_commit_reference_gently(sha1, 1);
++	tip_commit = lookup_commit_reference_gently(oid->hash, 1);
+ 	if (!tip_commit)
+ 		return 0;
+ 	commit_list_insert(tip_commit, list);
+diff --git a/builtin/remote.c b/builtin/remote.c
+index b4ff468..ba186e7 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -509,7 +509,7 @@ struct branches_for_remote {
+ };
+ 
+ static int add_branch_for_removal(const char *refname,
+-	const unsigned char *sha1, int flags, void *cb_data)
++	const struct object_id *oid, int flags, void *cb_data)
+ {
+ 	struct branches_for_remote *branches = cb_data;
+ 	struct refspec refspec;
+@@ -544,8 +544,8 @@ static int add_branch_for_removal(const char *refname,
+ 		return unlink(git_path("%s", refname));
+ 
+ 	item = string_list_append(branches->branches, refname);
+-	item->util = xmalloc(20);
+-	hashcpy(item->util, sha1);
++	item->util = xmalloc(GIT_SHA1_RAWSZ);
++	hashcpy(item->util, oid->hash);
+ 
+ 	return 0;
+ }
+@@ -557,20 +557,20 @@ struct rename_info {
+ };
+ 
+ static int read_remote_branches(const char *refname,
+-	const unsigned char *sha1, int flags, void *cb_data)
++	const struct object_id *oid, int flags, void *cb_data)
+ {
+ 	struct rename_info *rename = cb_data;
+ 	struct strbuf buf = STRBUF_INIT;
+ 	struct string_list_item *item;
+ 	int flag;
+-	unsigned char orig_sha1[20];
++	struct object_id orig_oid;
+ 	const char *symref;
+ 
+ 	strbuf_addf(&buf, "refs/remotes/%s/", rename->old);
+ 	if (starts_with(refname, buf.buf)) {
+ 		item = string_list_append(rename->remote_branches, xstrdup(refname));
+ 		symref = resolve_ref_unsafe(refname, RESOLVE_REF_READING,
+-					    orig_sha1, &flag);
++					    orig_oid.hash, &flag);
+ 		if (flag & REF_ISSYMREF)
+ 			item->util = xstrdup(symref);
+ 		else
+@@ -867,7 +867,7 @@ static void free_remote_ref_states(struct ref_states *states)
+ }
+ 
+ static int append_ref_to_tracked_list(const char *refname,
+-	const unsigned char *sha1, int flags, void *cb_data)
++	const struct object_id *oid, int flags, void *cb_data)
+ {
+ 	struct ref_states *states = cb_data;
+ 	struct refspec refspec;
+diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
+index ec0ca86..74eae6a 100644
+--- a/builtin/rev-parse.c
++++ b/builtin/rev-parse.c
+@@ -650,7 +650,7 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+ 				continue;
+ 			}
+ 			if (!strcmp(arg, "--all")) {
+-				for_each_ref(show_reference, NULL);
++				for_each_ref(show_reference_oid, NULL);
+ 				continue;
+ 			}
+ 			if (starts_with(arg, "--disambiguate=")) {
+@@ -663,7 +663,7 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+ 				continue;
+ 			}
+ 			if (starts_with(arg, "--branches=")) {
+-				for_each_glob_ref_in(show_reference, arg + 11,
++				for_each_glob_ref_in(show_reference_oid, arg + 11,
+ 					"refs/heads/", NULL);
+ 				clear_ref_exclusion(&ref_excludes);
+ 				continue;
+@@ -674,7 +674,7 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+ 				continue;
+ 			}
+ 			if (starts_with(arg, "--tags=")) {
+-				for_each_glob_ref_in(show_reference, arg + 7,
++				for_each_glob_ref_in(show_reference_oid, arg + 7,
+ 					"refs/tags/", NULL);
+ 				clear_ref_exclusion(&ref_excludes);
+ 				continue;
+@@ -685,12 +685,12 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+ 				continue;
+ 			}
+ 			if (starts_with(arg, "--glob=")) {
+-				for_each_glob_ref(show_reference, arg + 7, NULL);
++				for_each_glob_ref(show_reference_oid, arg + 7, NULL);
+ 				clear_ref_exclusion(&ref_excludes);
+ 				continue;
+ 			}
+ 			if (starts_with(arg, "--remotes=")) {
+-				for_each_glob_ref_in(show_reference, arg + 10,
++				for_each_glob_ref_in(show_reference_oid, arg + 10,
+ 					"refs/remotes/", NULL);
+ 				clear_ref_exclusion(&ref_excludes);
+ 				continue;
+diff --git a/builtin/show-branch.c b/builtin/show-branch.c
+index 365228a..89d8818 100644
+--- a/builtin/show-branch.c
++++ b/builtin/show-branch.c
+@@ -394,32 +394,32 @@ static int append_ref(const char *refname, const unsigned char *sha1,
+ 	return 0;
+ }
+ 
+-static int append_head_ref(const char *refname, const unsigned char *sha1, int flag, void *cb_data)
++static int append_head_ref(const char *refname, const struct object_id *oid, int flag, void *cb_data)
+ {
+-	unsigned char tmp[20];
++	struct object_id tmp;
+ 	int ofs = 11;
+ 	if (!starts_with(refname, "refs/heads/"))
+ 		return 0;
+ 	/* If both heads/foo and tags/foo exists, get_sha1 would
+ 	 * get confused.
+ 	 */
+-	if (get_sha1(refname + ofs, tmp) || hashcmp(tmp, sha1))
++	if (get_sha1(refname + ofs, tmp.hash) || oidcmp(&tmp, oid))
+ 		ofs = 5;
+-	return append_ref(refname + ofs, sha1, 0);
++	return append_ref(refname + ofs, oid->hash, 0);
+ }
+ 
+-static int append_remote_ref(const char *refname, const unsigned char *sha1, int flag, void *cb_data)
++static int append_remote_ref(const char *refname, const struct object_id *oid, int flag, void *cb_data)
+ {
+-	unsigned char tmp[20];
++	struct object_id tmp;
+ 	int ofs = 13;
+ 	if (!starts_with(refname, "refs/remotes/"))
+ 		return 0;
+ 	/* If both heads/foo and tags/foo exists, get_sha1 would
+ 	 * get confused.
+ 	 */
+-	if (get_sha1(refname + ofs, tmp) || hashcmp(tmp, sha1))
++	if (get_sha1(refname + ofs, tmp.hash) || oidcmp(&tmp, oid))
+ 		ofs = 5;
+-	return append_ref(refname + ofs, sha1, 0);
++	return append_ref(refname + ofs, oid->hash, 0);
+ }
+ 
+ static int append_tag_ref(const char *refname, const unsigned char *sha1, int flag, void *cb_data)
+@@ -440,7 +440,7 @@ static int count_slash(const char *s)
+ 	return cnt;
+ }
+ 
+-static int append_matching_ref(const char *refname, const unsigned char *sha1, int flag, void *cb_data)
++static int append_matching_ref(const char *refname, const struct object_id *oid, int flag, void *cb_data)
+ {
+ 	/* we want to allow pattern hold/<asterisk> to show all
+ 	 * branches under refs/heads/hold/, and v0.99.9? to show
+@@ -456,10 +456,10 @@ static int append_matching_ref(const char *refname, const unsigned char *sha1, i
+ 	if (wildmatch(match_ref_pattern, tail, 0, NULL))
+ 		return 0;
+ 	if (starts_with(refname, "refs/heads/"))
+-		return append_head_ref(refname, sha1, flag, cb_data);
++		return append_head_ref(refname, oid, flag, cb_data);
+ 	if (starts_with(refname, "refs/tags/"))
+-		return append_tag_ref(refname, sha1, flag, cb_data);
+-	return append_ref(refname, sha1, 0);
++		return append_tag_ref(refname, oid->hash, flag, cb_data);
++	return append_ref(refname, oid->hash, 0);
+ }
+ 
+ static void snarf_refs(int head, int remotes)
+diff --git a/builtin/show-ref.c b/builtin/show-ref.c
+index d499f93..136c9b9 100644
+--- a/builtin/show-ref.c
++++ b/builtin/show-ref.c
+@@ -93,7 +93,7 @@ static int show_ref_oid(const char *refname, const struct object_id *oid, int fl
+ 	return show_ref(refname, oid->hash, flag, cbdata);
+ }
+ 
+-static int add_existing(const char *refname, const unsigned char *sha1, int flag, void *cbdata)
++static int add_existing(const char *refname, const struct object_id *oid, int flag, void *cbdata)
+ {
+ 	struct string_list *list = (struct string_list *)cbdata;
+ 	string_list_insert(list, refname);
+@@ -231,7 +231,7 @@ int cmd_show_ref(int argc, const char **argv, const char *prefix)
+ 
+ 	if (show_head)
+ 		head_ref(show_ref_oid, NULL);
+-	for_each_ref(show_ref, NULL);
++	for_each_ref(show_ref_oid, NULL);
+ 	if (!found_match) {
+ 		if (verify && !quiet)
+ 			die("No match");
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 655ee64..10061b7 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -70,9 +70,14 @@ static int rev_list_insert_ref(const char *refname, const unsigned char *sha1, i
+ 	return 0;
+ }
+ 
+-static int clear_marks(const char *refname, const unsigned char *sha1, int flag, void *cb_data)
++static int rev_list_insert_ref_oid(const char *refname, const struct object_id *oid, int flag, void *cb_data)
+ {
+-	struct object *o = deref_tag(parse_object(sha1), refname, 0);
++	return rev_list_insert_ref(refname, oid->hash, flag, cb_data);
++}
++
++static int clear_marks(const char *refname, const struct object_id *oid, int flag, void *cb_data)
++{
++	struct object *o = deref_tag(parse_object(oid->hash), refname, 0);
+ 
+ 	if (o && o->type == OBJ_COMMIT)
+ 		clear_commit_marks((struct commit *)o,
+@@ -263,7 +268,7 @@ static int find_common(struct fetch_pack_args *args,
+ 		for_each_ref(clear_marks, NULL);
+ 	marked = 1;
+ 
+-	for_each_ref(rev_list_insert_ref, NULL);
++	for_each_ref(rev_list_insert_ref_oid, NULL);
+ 	for_each_alternate_ref(insert_one_alternate_ref, NULL);
+ 
+ 	fetching = 0;
+@@ -487,6 +492,11 @@ static int mark_complete(const char *refname, const unsigned char *sha1, int fla
+ 	return 0;
+ }
+ 
++static int mark_complete_oid(const char *refname, const struct object_id *oid, int flag, void *cb_data)
++{
++	return mark_complete(refname, oid->hash, flag, cb_data);
++}
++
+ static void mark_recent_complete_commits(struct fetch_pack_args *args,
+ 					 unsigned long cutoff)
+ {
+@@ -596,7 +606,7 @@ static int everything_local(struct fetch_pack_args *args,
+ 	}
+ 
+ 	if (!args->depth) {
+-		for_each_ref(mark_complete, NULL);
++		for_each_ref(mark_complete_oid, NULL);
+ 		for_each_alternate_ref(mark_alternate_complete, NULL);
+ 		commit_list_sort_by_date(&complete);
+ 		if (cutoff)
+diff --git a/help.c b/help.c
+index 2072a87..6f3415b 100644
+--- a/help.c
++++ b/help.c
+@@ -407,7 +407,7 @@ struct similar_ref_cb {
+ 	struct string_list *similar_refs;
+ };
+ 
+-static int append_similar_ref(const char *refname, const unsigned char *sha1,
++static int append_similar_ref(const char *refname, const struct object_id *oid,
+ 			      int flags, void *cb_data)
+ {
+ 	struct similar_ref_cb *cb = (struct similar_ref_cb *)(cb_data);
+diff --git a/log-tree.c b/log-tree.c
+index 9288b37..ff15bcb 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -154,7 +154,7 @@ void load_ref_decorations(int flags)
+ 	static int loaded;
+ 	if (!loaded) {
+ 		loaded = 1;
+-		for_each_ref(add_ref_decoration, &flags);
++		for_each_ref(add_ref_decoration_oid, &flags);
+ 		head_ref(add_ref_decoration_oid, &flags);
+ 		for_each_commit_graft(add_graft_decoration, NULL);
+ 	}
+diff --git a/notes.c b/notes.c
+index 2be4d7f..df08209 100644
+--- a/notes.c
++++ b/notes.c
+@@ -918,7 +918,7 @@ out:
+ 	return ret;
+ }
+ 
+-static int string_list_add_one_ref(const char *refname, const unsigned char *sha1,
++static int string_list_add_one_ref(const char *refname, const struct object_id *oid,
+ 				   int flag, void *cb)
+ {
+ 	struct string_list *refs = cb;
+diff --git a/reachable.c b/reachable.c
+index d49385a..f808e2f 100644
+--- a/reachable.c
++++ b/reachable.c
+@@ -171,7 +171,7 @@ void mark_reachable_objects(struct rev_info *revs, int mark_reflog,
+ 	add_index_objects_to_pending(revs, 0);
+ 
+ 	/* Add all external refs */
+-	for_each_ref(add_one_ref, revs);
++	for_each_ref(add_one_ref_oid, revs);
+ 
+ 	/* detached HEAD is not included in the list above */
+ 	head_ref(add_one_ref_oid, revs);
 diff --git a/refs.c b/refs.c
-index 4d07dec..0d9b340 100644
+index 758bdd9..4d07dec 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -2010,9 +2010,9 @@ int for_each_remote_ref_submodule(const char *submodule, each_ref_fn_oid fn, voi
- 	return for_each_ref_in_submodule(submodule, "refs/remotes/", fn, cb_data);
+@@ -1630,7 +1630,7 @@ char *resolve_refdup(const char *ref, int resolve_flags, unsigned char *sha1, in
+ /* The argument to filter_refs */
+ struct ref_filter {
+ 	const char *pattern;
+-	each_ref_fn *fn;
++	each_ref_fn_oid *fn;
+ 	void *cb_data;
+ };
+ 
+@@ -1652,13 +1652,13 @@ int ref_exists(const char *refname)
+ 	return !!resolve_ref_unsafe(refname, RESOLVE_REF_READING, sha1, NULL);
  }
  
--int for_each_replace_ref(each_ref_fn fn, void *cb_data)
-+int for_each_replace_ref(each_ref_fn_oid fn, void *cb_data)
+-static int filter_refs(const char *refname, const unsigned char *sha1, int flags,
+-		       void *data)
++static int filter_refs(const char *refname, const struct object_id *oid,
++			   int flags, void *data)
  {
--	return do_for_each_ref(&ref_cache, "refs/replace/", fn, 13, 0, cb_data);
-+	return do_for_each_ref_oid(&ref_cache, "refs/replace/", fn, 13, 0, cb_data);
+ 	struct ref_filter *filter = (struct ref_filter *)data;
+ 	if (wildmatch(filter->pattern, refname, 0, NULL))
+ 		return 0;
+-	return filter->fn(refname, sha1, flags, filter->cb_data);
++	return filter->fn(refname, oid, flags, filter->cb_data);
  }
  
- int head_ref_namespaced(each_ref_fn fn, void *cb_data)
+ enum peel_status {
+@@ -1959,9 +1959,9 @@ int head_ref_submodule(const char *submodule, each_ref_fn_oid fn, void *cb_data)
+ 	return do_head_ref(submodule, fn, cb_data);
+ }
+ 
+-int for_each_ref(each_ref_fn fn, void *cb_data)
++int for_each_ref(each_ref_fn_oid fn, void *cb_data)
+ {
+-	return do_for_each_ref(&ref_cache, "", fn, 0, 0, cb_data);
++	return do_for_each_ref_oid(&ref_cache, "", fn, 0, 0, cb_data);
+ }
+ 
+ int for_each_ref_submodule(const char *submodule, each_ref_fn_oid fn, void *cb_data)
+@@ -2040,7 +2040,7 @@ int for_each_namespaced_ref(each_ref_fn fn, void *cb_data)
+ 	return ret;
+ }
+ 
+-int for_each_glob_ref_in(each_ref_fn fn, const char *pattern,
++int for_each_glob_ref_in(each_ref_fn_oid fn, const char *pattern,
+ 	const char *prefix, void *cb_data)
+ {
+ 	struct strbuf real_pattern = STRBUF_INIT;
+@@ -2070,7 +2070,7 @@ int for_each_glob_ref_in(each_ref_fn fn, const char *pattern,
+ 	return ret;
+ }
+ 
+-int for_each_glob_ref(each_ref_fn fn, const char *pattern, void *cb_data)
++int for_each_glob_ref(each_ref_fn_oid fn, const char *pattern, void *cb_data)
+ {
+ 	return for_each_glob_ref_in(fn, pattern, NULL, cb_data);
+ }
 diff --git a/refs.h b/refs.h
-index 2c78450..951e465 100644
+index d3ff0b1..2c78450 100644
 --- a/refs.h
 +++ b/refs.h
-@@ -101,7 +101,7 @@ extern int for_each_ref_in(const char *, each_ref_fn_oid, void *);
+@@ -96,14 +96,14 @@ typedef int each_ref_fn_oid(const char *refname,
+  * stop the iteration.
+  */
+ extern int head_ref(each_ref_fn_oid, void *);
+-extern int for_each_ref(each_ref_fn, void *);
++extern int for_each_ref(each_ref_fn_oid, void *);
+ extern int for_each_ref_in(const char *, each_ref_fn_oid, void *);
  extern int for_each_tag_ref(each_ref_fn_oid, void *);
  extern int for_each_branch_ref(each_ref_fn_oid, void *);
  extern int for_each_remote_ref(each_ref_fn_oid, void *);
--extern int for_each_replace_ref(each_ref_fn, void *);
-+extern int for_each_replace_ref(each_ref_fn_oid, void *);
- extern int for_each_glob_ref(each_ref_fn_oid, const char *pattern, void *);
- extern int for_each_glob_ref_in(each_ref_fn_oid, const char *pattern, const char* prefix, void *);
+ extern int for_each_replace_ref(each_ref_fn, void *);
+-extern int for_each_glob_ref(each_ref_fn, const char *pattern, void *);
+-extern int for_each_glob_ref_in(each_ref_fn, const char *pattern, const char* prefix, void *);
++extern int for_each_glob_ref(each_ref_fn_oid, const char *pattern, void *);
++extern int for_each_glob_ref_in(each_ref_fn_oid, const char *pattern, const char* prefix, void *);
  
-diff --git a/replace_object.c b/replace_object.c
-index 0ab2dc1..f0b39f0 100644
---- a/replace_object.c
-+++ b/replace_object.c
-@@ -53,7 +53,7 @@ static int register_replace_object(struct replace_object *replace,
+ extern int head_ref_submodule(const char *submodule, each_ref_fn_oid fn, void *cb_data);
+ extern int for_each_ref_submodule(const char *submodule, each_ref_fn_oid fn, void *cb_data);
+diff --git a/remote.c b/remote.c
+index 7b71ebf..e9fdee8 100644
+--- a/remote.c
++++ b/remote.c
+@@ -2024,7 +2024,7 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb)
+ 	return 1;
  }
  
- static int register_replace_ref(const char *refname,
--				const unsigned char *sha1,
-+				const struct object_id *oid,
- 				int flag, void *cb_data)
+-static int one_local_ref(const char *refname, const unsigned char *sha1, int flag, void *cb_data)
++static int one_local_ref(const char *refname, const struct object_id *oid, int flag, void *cb_data)
  {
- 	/* Get sha1 from refname */
-@@ -68,7 +68,7 @@ static int register_replace_ref(const char *refname,
+ 	struct ref ***local_tail = cb_data;
+ 	struct ref *ref;
+@@ -2036,7 +2036,7 @@ static int one_local_ref(const char *refname, const unsigned char *sha1, int fla
+ 
+ 	len = strlen(refname) + 1;
+ 	ref = xcalloc(1, sizeof(*ref) + len);
+-	hashcpy(ref->new_sha1, sha1);
++	hashcpy(ref->new_sha1, oid->hash);
+ 	memcpy(ref->name, refname, len);
+ 	**local_tail = ref;
+ 	*local_tail = &ref->next;
+@@ -2099,7 +2099,7 @@ struct stale_heads_info {
+ };
+ 
+ static int get_stale_heads_cb(const char *refname,
+-	const unsigned char *sha1, int flags, void *cb_data)
++	const struct object_id *oid, int flags, void *cb_data)
+ {
+ 	struct stale_heads_info *info = cb_data;
+ 	struct string_list matches = STRING_LIST_INIT_DUP;
+@@ -2128,7 +2128,7 @@ static int get_stale_heads_cb(const char *refname,
+ 
+ 	if (stale) {
+ 		struct ref *ref = make_linked_ref(refname, &info->stale_refs_tail);
+-		hashcpy(ref->new_sha1, sha1);
++		hashcpy(ref->new_sha1, oid->hash);
  	}
  
- 	/* Copy sha1 from the read ref */
--	hashcpy(repl_obj->replacement, sha1);
-+	hashcpy(repl_obj->replacement, oid->hash);
+ clean_exit:
+diff --git a/revision.c b/revision.c
+index 1fea8c5..ffd3528 100644
+--- a/revision.c
++++ b/revision.c
+@@ -2110,7 +2110,7 @@ static int handle_revision_pseudo_opt(const char *submodule,
+ 	} else if ((argcount = parse_long_opt("glob", argv, &optarg))) {
+ 		struct all_refs_cb cb;
+ 		init_all_refs_cb(&cb, revs, *flags);
+-		for_each_glob_ref(handle_one_ref, optarg, &cb);
++		for_each_glob_ref(handle_one_ref_oid, optarg, &cb);
+ 		clear_ref_exclusion(&revs->ref_excludes);
+ 		return argcount;
+ 	} else if ((argcount = parse_long_opt("exclude", argv, &optarg))) {
+@@ -2119,17 +2119,17 @@ static int handle_revision_pseudo_opt(const char *submodule,
+ 	} else if (starts_with(arg, "--branches=")) {
+ 		struct all_refs_cb cb;
+ 		init_all_refs_cb(&cb, revs, *flags);
+-		for_each_glob_ref_in(handle_one_ref, arg + 11, "refs/heads/", &cb);
++		for_each_glob_ref_in(handle_one_ref_oid, arg + 11, "refs/heads/", &cb);
+ 		clear_ref_exclusion(&revs->ref_excludes);
+ 	} else if (starts_with(arg, "--tags=")) {
+ 		struct all_refs_cb cb;
+ 		init_all_refs_cb(&cb, revs, *flags);
+-		for_each_glob_ref_in(handle_one_ref, arg + 7, "refs/tags/", &cb);
++		for_each_glob_ref_in(handle_one_ref_oid, arg + 7, "refs/tags/", &cb);
+ 		clear_ref_exclusion(&revs->ref_excludes);
+ 	} else if (starts_with(arg, "--remotes=")) {
+ 		struct all_refs_cb cb;
+ 		init_all_refs_cb(&cb, revs, *flags);
+-		for_each_glob_ref_in(handle_one_ref, arg + 10, "refs/remotes/", &cb);
++		for_each_glob_ref_in(handle_one_ref_oid, arg + 10, "refs/remotes/", &cb);
+ 		clear_ref_exclusion(&revs->ref_excludes);
+ 	} else if (!strcmp(arg, "--reflog")) {
+ 		add_reflogs_to_pending(revs, *flags);
+diff --git a/server-info.c b/server-info.c
+index 34b0253..11f21bd 100644
+--- a/server-info.c
++++ b/server-info.c
+@@ -47,14 +47,14 @@ out:
+ 	return ret;
+ }
  
- 	/* Register new object */
- 	if (register_replace_object(repl_obj, 1))
+-static int add_info_ref(const char *path, const unsigned char *sha1, int flag, void *cb_data)
++static int add_info_ref(const char *path, const struct object_id *oid, int flag, void *cb_data)
+ {
+ 	FILE *fp = cb_data;
+-	struct object *o = parse_object(sha1);
++	struct object *o = parse_object(oid->hash);
+ 	if (!o)
+ 		return -1;
+ 
+-	if (fprintf(fp, "%s	%s\n", sha1_to_hex(sha1), path) < 0)
++	if (fprintf(fp, "%s	%s\n", oid_to_hex(oid), path) < 0)
+ 		return -1;
+ 
+ 	if (o->type == OBJ_TAG) {
+diff --git a/sha1_name.c b/sha1_name.c
+index 95f9f8f..a00c2c7 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -832,10 +832,10 @@ static int get_sha1_1(const char *name, int len, unsigned char *sha1, unsigned l
+ #define ONELINE_SEEN (1u<<20)
+ 
+ static int handle_one_ref(const char *path,
+-		const unsigned char *sha1, int flag, void *cb_data)
++		const struct object_id *oid, int flag, void *cb_data)
+ {
+ 	struct commit_list **list = cb_data;
+-	struct object *object = parse_object(sha1);
++	struct object *object = parse_object(oid->hash);
+ 	if (!object)
+ 		return 0;
+ 	if (object->type == OBJ_TAG) {
+diff --git a/shallow.c b/shallow.c
+index 8ca3256..af61162 100644
+--- a/shallow.c
++++ b/shallow.c
+@@ -550,7 +550,7 @@ void assign_shallow_commits_to_refs(struct shallow_info *info,
+ 	 * have to go down to the current shallow commits.
+ 	 */
+ 	head_ref(mark_uninteresting_oid, NULL);
+-	for_each_ref(mark_uninteresting, NULL);
++	for_each_ref(mark_uninteresting_oid, NULL);
+ 
+ 	/* Mark potential bottoms so we won't go out of bound */
+ 	for (i = 0; i < nr_shallow; i++) {
+@@ -655,7 +655,7 @@ static void post_assign_shallow(struct shallow_info *info,
+ 
+ 	memset(&ca, 0, sizeof(ca));
+ 	head_ref(add_ref_oid, &ca);
+-	for_each_ref(add_ref, &ca);
++	for_each_ref(add_ref_oid, &ca);
+ 
+ 	/* Remove unreachable shallow commits from "ours" */
+ 	for (i = dst = 0; i < info->nr_ours; i++) {
+@@ -689,7 +689,7 @@ int delayed_reachability_test(struct shallow_info *si, int c)
+ 			struct commit_array ca;
+ 			memset(&ca, 0, sizeof(ca));
+ 			head_ref(add_ref_oid, &ca);
+-			for_each_ref(add_ref, &ca);
++			for_each_ref(add_ref_oid, &ca);
+ 			si->commits = ca.commits;
+ 			si->nr_commits = ca.nr;
+ 		}
+diff --git a/submodule.c b/submodule.c
+index d615a42..8a000e2 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -618,10 +618,10 @@ static void submodule_collect_changed_cb(struct diff_queue_struct *q,
+ 	}
+ }
+ 
+-static int add_sha1_to_array(const char *ref, const unsigned char *sha1,
++static int add_sha1_to_array(const char *ref, const struct object_id *oid,
+ 			     int flags, void *data)
+ {
+-	sha1_array_append(data, sha1);
++	sha1_array_append(data, oid->hash);
+ 	return 0;
+ }
+ 
+diff --git a/transport.c b/transport.c
+index 08bcd3a..bce1f42 100644
+--- a/transport.c
++++ b/transport.c
+@@ -278,7 +278,7 @@ static int fetch_objs_via_rsync(struct transport *transport,
+ 	return run_command(&rsync);
+ }
+ 
+-static int write_one_ref(const char *name, const unsigned char *sha1,
++static int write_one_ref(const char *name, const struct object_id *oid,
+ 		int flags, void *data)
+ {
+ 	struct strbuf *buf = data;
+@@ -293,7 +293,7 @@ static int write_one_ref(const char *name, const unsigned char *sha1,
+ 	strbuf_addstr(buf, name);
+ 	if (safe_create_leading_directories(buf->buf) ||
+ 			!(f = fopen(buf->buf, "w")) ||
+-			fprintf(f, "%s\n", sha1_to_hex(sha1)) < 0 ||
++			fprintf(f, "%s\n", oid_to_hex(oid)) < 0 ||
+ 			fclose(f))
+ 		return error("problems writing temporary file %s", buf->buf);
+ 	strbuf_setlen(buf, len);
+@@ -306,13 +306,13 @@ static int write_refs_to_temp_dir(struct strbuf *temp_dir,
+ 	int i;
+ 
+ 	for (i = 0; i < refspec_nr; i++) {
+-		unsigned char sha1[20];
++		struct object_id oid;
+ 		char *ref;
+ 
+-		if (dwim_ref(refspec[i], strlen(refspec[i]), sha1, &ref) != 1)
++		if (dwim_ref(refspec[i], strlen(refspec[i]), oid.hash, &ref) != 1)
+ 			return error("Could not get ref %s", refspec[i]);
+ 
+-		if (write_one_ref(ref, sha1, 0, temp_dir)) {
++		if (write_one_ref(ref, &oid, 0, temp_dir)) {
+ 			free(ref);
+ 			return -1;
+ 		}
+diff --git a/walker.c b/walker.c
+index 483da4e..d555ad0 100644
+--- a/walker.c
++++ b/walker.c
+@@ -200,9 +200,9 @@ static int interpret_target(struct walker *walker, char *target, unsigned char *
+ 	return -1;
+ }
+ 
+-static int mark_complete(const char *path, const unsigned char *sha1, int flag, void *cb_data)
++static int mark_complete(const char *path, const struct object_id *oid, int flag, void *cb_data)
+ {
+-	struct commit *commit = lookup_commit_reference_gently(sha1, 1);
++	struct commit *commit = lookup_commit_reference_gently(oid->hash, 1);
+ 	if (commit) {
+ 		commit->object.flags |= COMPLETE;
+ 		commit_list_insert(commit, &complete);
 -- 
 2.2.1.209.g41e5f3a
