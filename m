@@ -1,105 +1,157 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH 27/27] t9104: fix test for following larger parents
-Date: Fri, 20 Mar 2015 15:32:56 +0100
-Message-ID: <43da457ddd8840ac5cf131e59d488fc41cdc8a52.1426861743.git.git@drmicha.warpmail.net>
+Subject: [PATCH 26/27] t/*svn*: fix moderate &&-chain breakage
+Date: Fri, 20 Mar 2015 15:32:55 +0100
+Message-ID: <317e6b1e70f3e1c50d62207c53f4d038ad027c9d.1426861743.git.git@drmicha.warpmail.net>
 References: <550C2E7B.3030203@drmicha.warpmail.net>
 Cc: Jeff King <peff@peff.net>, Eric Wong <normalperson@yhbt.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 20 15:33:13 2015
+X-From: git-owner@vger.kernel.org Fri Mar 20 15:33:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YYxz4-0004Jg-0w
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Mar 2015 15:33:11 +0100
+	id 1YYxyy-0004HY-HA
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Mar 2015 15:33:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751622AbbCTOdD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Mar 2015 10:33:03 -0400
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:54803 "EHLO
+	id S1751564AbbCTOc7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Mar 2015 10:32:59 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:55431 "EHLO
 	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751131AbbCTOdA (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Mar 2015 10:33:00 -0400
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.nyi.internal (Postfix) with ESMTP id 74A8120C66
-	for <git@vger.kernel.org>; Fri, 20 Mar 2015 10:32:57 -0400 (EDT)
-Received: from frontend2 ([10.202.2.161])
-  by compute1.internal (MEProxy); Fri, 20 Mar 2015 10:32:59 -0400
+	by vger.kernel.org with ESMTP id S1751131AbbCTOc6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Mar 2015 10:32:58 -0400
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailout.nyi.internal (Postfix) with ESMTP id EF49720A91
+	for <git@vger.kernel.org>; Fri, 20 Mar 2015 10:32:55 -0400 (EDT)
+Received: from frontend1 ([10.202.2.160])
+  by compute4.internal (MEProxy); Fri, 20 Mar 2015 10:32:58 -0400
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=
 	x-sasl-enc:from:to:cc:subject:date:message-id:in-reply-to
-	:references:in-reply-to:references; s=mesmtp; bh=BJJ5zjbW0J/xrON
-	bPTCGg03ADqk=; b=jW+MfLlearSVil23PrGYNczA8gGyYJHiE9FiciTM+3rStMK
-	nLPhDlmwHv+SuqrVv3/PS7BETjR0SmfB3YROogDYORoWTYOzptHfUyArW9hfUBK5
-	GS6Ltk9OSX/6JBKIqxn8zUBmcBf21wWrS3evJFmfmwisfwsadukHxoXeMWF0=
+	:references; s=mesmtp; bh=uyLZ0HLRlx/8CBTJy8ql6id6jfk=; b=CNzCy/
+	13KH/MaGDbcOeD5NP0lH/dgHunhmZsh4k6bkcl/EhUd2Y2qGBMyot4WI4ps8H1ki
+	td0hY3mGhOS0NlQSkJEQsANXjYn20+0s7DOifRfDuJIO/gjQLNmhF5saBk0toTZQ
+	KTa9BaJ2pIQXXHbLKAEE21y19LxKdEJiN+01o=
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
 	messagingengine.com; h=x-sasl-enc:from:to:cc:subject:date
-	:message-id:in-reply-to:references:in-reply-to:references; s=
-	smtpout; bh=BJJ5zjbW0J/xrONbPTCGg03ADqk=; b=jDgL2cOEwZ+c1qZDtNqE
-	qaRWb2QEjFyD+aRRB2pKSCadinyEE9uZHKCPhSfD+WmUpLE+bz7PoVSUYgBvFTNZ
-	CjysY7yu+op0fTau6RTOU21Eg7CVPpZRCzyDOJ/A2htunm24E5ZzpqwjSQEQIi/l
-	c15VtzjV0pQUmLn8smDVqkk=
-X-Sasl-enc: WwDaCXzQZva3xhebekq33hyY/6gwSvJDq94mb+Um/70s 1426861979
+	:message-id:in-reply-to:references; s=smtpout; bh=uyLZ0HLRlx/8CB
+	TJy8ql6id6jfk=; b=qLcRskfKcKtD338bkRnSXOhBz6bGN0Os4ErfwKv5ZdIkyA
+	8xewFO+B0GP/G+La6PY2hXt/si1brLf7iBwWfGkOstWt7BUa/yRJckrfnRtU2tUD
+	DLox/MJD2yhF90+Af6jYVQR5Yqa0i3ItNk080TQo+LvVNVXvbFqsQ+19guAM0=
+X-Sasl-enc: qZJUFP3gRCdrtO5hFhrT2yozcKa+472nw/aUYrf0WWmm 1426861977
 Received: from localhost (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 4AECE6800F3;
-	Fri, 20 Mar 2015 10:32:59 -0400 (EDT)
+	by mail.messagingengine.com (Postfix) with ESMTPA id C2798C00013;
+	Fri, 20 Mar 2015 10:32:57 -0400 (EDT)
 X-Mailer: git-send-email 2.3.3.438.g7254779
 In-Reply-To: <550C2E7B.3030203@drmicha.warpmail.net>
-In-Reply-To: <317e6b1e70f3e1c50d62207c53f4d038ad027c9d.1426861743.git.git@drmicha.warpmail.net>
-References: <317e6b1e70f3e1c50d62207c53f4d038ad027c9d.1426861743.git.git@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265906>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265907>
 
-This test is special for several reasons:
-It ends with a "true" statement, which should be a no-op.
-It is not because the &&-chain is broken right before it.
-
-Also, looking at what the test intended to test according to
-7f578c5 (git-svn: --follow-parent now works on sub-directories of larger
-branches, 2007-01-24)
-it is not clear how it would achieve that with the given steps.
-
-Amend the test to include the second svn id to be tested for, and
-change the tested refs to the ones which are to be expected, and which
-make the test pass.
+All of these cases are moderate since they would most probably not
+lead to missed failing tests: Either they would fail otherwise,
+or fail a rm in test_when_finished only.
 
 Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
 ---
-In fact, these merge-base tests look kind of ugly, too.
-But they appear in many more places here and should best be rewritten
-separately.
+ t/t2026-prune-linked-checkouts.sh |  4 ++--
+ t/t9158-git-svn-mergeinfo.sh      |  4 ++--
+ t/t9161-git-svn-mergeinfo-push.sh | 10 +++++-----
+ 3 files changed, 9 insertions(+), 9 deletions(-)
 
- t/t9104-git-svn-follow-parent.sh | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
-
-diff --git a/t/t9104-git-svn-follow-parent.sh b/t/t9104-git-svn-follow-parent.sh
-index 13b179e..1bd1022 100755
---- a/t/t9104-git-svn-follow-parent.sh
-+++ b/t/t9104-git-svn-follow-parent.sh
-@@ -72,16 +72,18 @@ test_expect_success 'follow larger parent' '
-         svn import -m "import a larger parent" import "$svnrepo"/larger-parent &&
-         svn cp -m "hi" "$svnrepo"/larger-parent "$svnrepo"/another-larger &&
-         git svn init --minimize-url -i larger \
--          "$svnrepo"/another-larger/trunk/thunk/bump/thud &&
-+          "$svnrepo"/larger-parent/trunk/thunk/bump/thud &&
-         git svn fetch -i larger &&
-+        git svn init --minimize-url -i larger-parent \
-+          "$svnrepo"/another-larger/trunk/thunk/bump/thud &&
-+        git svn fetch -i larger-parent &&
-         git rev-parse --verify refs/remotes/larger &&
-         git rev-parse --verify \
--           refs/remotes/larger-parent/trunk/thunk/bump/thud &&
-+           refs/remotes/larger-parent &&
-         test "`git merge-base \
--                 refs/remotes/larger-parent/trunk/thunk/bump/thud \
-+                 refs/remotes/larger-parent \
-                  refs/remotes/larger`" = \
-              "`git rev-parse refs/remotes/larger`"
--        true
-         '
+diff --git a/t/t2026-prune-linked-checkouts.sh b/t/t2026-prune-linked-checkouts.sh
+index 2936d52..e885baf 100755
+--- a/t/t2026-prune-linked-checkouts.sh
++++ b/t/t2026-prune-linked-checkouts.sh
+@@ -65,7 +65,7 @@ test_expect_success 'prune directories with gitdir pointing to nowhere' '
+ '
  
- test_expect_success 'follow higher-level parent' '
+ test_expect_success 'not prune locked checkout' '
+-	test_when_finished rm -r .git/worktrees
++	test_when_finished rm -r .git/worktrees &&
+ 	mkdir -p .git/worktrees/ghi &&
+ 	: >.git/worktrees/ghi/locked &&
+ 	git prune --worktrees &&
+@@ -73,7 +73,7 @@ test_expect_success 'not prune locked checkout' '
+ '
+ 
+ test_expect_success 'not prune recent checkouts' '
+-	test_when_finished rm -r .git/worktrees
++	test_when_finished rm -r .git/worktrees &&
+ 	mkdir zz &&
+ 	mkdir -p .git/worktrees/jlm &&
+ 	echo "$(pwd)"/zz >.git/worktrees/jlm/gitdir &&
+diff --git a/t/t9158-git-svn-mergeinfo.sh b/t/t9158-git-svn-mergeinfo.sh
+index 8c9539e..13f78f2 100755
+--- a/t/t9158-git-svn-mergeinfo.sh
++++ b/t/t9158-git-svn-mergeinfo.sh
+@@ -34,7 +34,7 @@ test_expect_success 'change svn:mergeinfo' '
+ '
+ 
+ test_expect_success 'verify svn:mergeinfo' '
+-	mergeinfo=$(svn_cmd propget svn:mergeinfo "$svnrepo"/trunk)
++	mergeinfo=$(svn_cmd propget svn:mergeinfo "$svnrepo"/trunk) &&
+ 	test "$mergeinfo" = "/branches/foo:1-10"
+ '
+ 
+@@ -46,7 +46,7 @@ test_expect_success 'change svn:mergeinfo multiline' '
+ '
+ 
+ test_expect_success 'verify svn:mergeinfo multiline' '
+-	mergeinfo=$(svn_cmd propget svn:mergeinfo "$svnrepo"/trunk)
++	mergeinfo=$(svn_cmd propget svn:mergeinfo "$svnrepo"/trunk) &&
+ 	test "$mergeinfo" = "/branches/bar:1-10
+ /branches/other:3-5,8,10-11"
+ '
+diff --git a/t/t9161-git-svn-mergeinfo-push.sh b/t/t9161-git-svn-mergeinfo-push.sh
+index 6cb0909..f113aca 100755
+--- a/t/t9161-git-svn-mergeinfo-push.sh
++++ b/t/t9161-git-svn-mergeinfo-push.sh
+@@ -24,7 +24,7 @@ test_expect_success 'propagate merge information' '
+ 	'
+ 
+ test_expect_success 'check svn:mergeinfo' '
+-	mergeinfo=$(svn_cmd propget svn:mergeinfo "$svnrepo"/branches/svnb1)
++	mergeinfo=$(svn_cmd propget svn:mergeinfo "$svnrepo"/branches/svnb1) &&
+ 	test "$mergeinfo" = "/branches/svnb2:3,8"
+ 	'
+ 
+@@ -34,7 +34,7 @@ test_expect_success 'merge another branch' '
+ 	'
+ 
+ test_expect_success 'check primary parent mergeinfo respected' '
+-	mergeinfo=$(svn_cmd propget svn:mergeinfo "$svnrepo"/branches/svnb1)
++	mergeinfo=$(svn_cmd propget svn:mergeinfo "$svnrepo"/branches/svnb1) &&
+ 	test "$mergeinfo" = "/branches/svnb2:3,8
+ /branches/svnb3:4,9"
+ 	'
+@@ -45,7 +45,7 @@ test_expect_success 'merge existing merge' '
+ 	'
+ 
+ test_expect_success "check both parents' mergeinfo respected" '
+-	mergeinfo=$(svn_cmd propget svn:mergeinfo "$svnrepo"/branches/svnb1)
++	mergeinfo=$(svn_cmd propget svn:mergeinfo "$svnrepo"/branches/svnb1) &&
+ 	test "$mergeinfo" = "/branches/svnb2:3,8
+ /branches/svnb3:4,9
+ /branches/svnb4:5-6,10-12
+@@ -70,7 +70,7 @@ test_expect_success 'second forward merge' '
+ 	'
+ 
+ test_expect_success 'check new mergeinfo added' '
+-	mergeinfo=$(svn_cmd propget svn:mergeinfo "$svnrepo"/branches/svnb1)
++	mergeinfo=$(svn_cmd propget svn:mergeinfo "$svnrepo"/branches/svnb1) &&
+ 	test "$mergeinfo" = "/branches/svnb2:3,8,16-17
+ /branches/svnb3:4,9
+ /branches/svnb4:5-6,10-12
+@@ -84,7 +84,7 @@ test_expect_success 'reintegration merge' '
+ 	'
+ 
+ test_expect_success 'check reintegration mergeinfo' '
+-	mergeinfo=$(svn_cmd propget svn:mergeinfo "$svnrepo"/branches/svnb4)
++	mergeinfo=$(svn_cmd propget svn:mergeinfo "$svnrepo"/branches/svnb4) &&
+ 	test "$mergeinfo" = "/branches/svnb1:2-4,7-9,13-18
+ /branches/svnb2:3,8,16-17
+ /branches/svnb3:4,9
 -- 
 2.3.3.438.g7254779
