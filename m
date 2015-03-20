@@ -1,84 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: test &&-chain lint
-Date: Fri, 20 Mar 2015 10:34:51 -0700
-Message-ID: <xmqqoannfu84.fsf@gitster.dls.corp.google.com>
-References: <20150317072750.GA22155@peff.net>
-	<20150317072844.GA25191@peff.net>
-	<CAPig+cTfqWr9un=4+QGs0jcUaV9U=z5Xyg3-r-D6dABGXUkmzg@mail.gmail.com>
-	<20150320013217.GA15302@peff.net>
-	<CAPig+cQKhBw8air5y3NJaP5Rx9pXVaz9Lmvhe20AimW7pCsWBw@mail.gmail.com>
-	<20150320020851.GC15302@peff.net> <20150320022532.GA5502@peff.net>
-	<xmqqd244go0h.fsf@gitster.dls.corp.google.com>
-	<xmqq384zha6s.fsf@gitster.dls.corp.google.com>
-	<20150320172406.GA15172@peff.net>
+From: Olaf Hering <olaf@aepfle.de>
+Subject: cover letter and cc list
+Date: Fri, 20 Mar 2015 18:35:04 +0100
+Message-ID: <20150320173504.GA6162@aepfle.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Mar 20 18:35:06 2015
+Content-Type: text/plain; charset=utf-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 20 18:35:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YZ0p7-00007N-N6
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Mar 2015 18:35:06 +0100
+	id 1YZ0pH-0000GU-3Z
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Mar 2015 18:35:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752047AbbCTRe7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Mar 2015 13:34:59 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:52564 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751381AbbCTRey (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Mar 2015 13:34:54 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id DA21D40768;
-	Fri, 20 Mar 2015 13:34:53 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=LweciIngHHcEFLoKPIiO3NVjB7g=; b=R5Cd2w
-	+q9SDNG7zyBQ6smzrVNGvY7nuOSrz+feV6rJ/KJVMvjBGuI8BLP4y+tC4efhqWKt
-	/+c7R3WNpbO2b6PD/7GK5j23fLwrbJDeVaUZ91iqiIygaAid0zY8nvtnduhSm7DK
-	2PWv1FBrivfPsQfB8oS3+OKnO5CKg/rO3ReCk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gbQUjTTsgFD8e/DjIGgEHjjSTtLaR0ea
-	aVdWkiJANwYyG/wwn+UmY8whHyyJGNj+Ut9ju5lYmghvMGsMDsQcotfk+u3erdSG
-	KoROcynJ1bEfUIKQPKnTv6UiAhJ6jeihrmh8oSG/xz1xaqU7sGDedYL5KA84FvWC
-	z9obydFNZkw=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id CFF2540767;
-	Fri, 20 Mar 2015 13:34:53 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AAB4540766;
-	Fri, 20 Mar 2015 13:34:52 -0400 (EDT)
-In-Reply-To: <20150320172406.GA15172@peff.net> (Jeff King's message of "Fri,
-	20 Mar 2015 13:24:07 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 6A9B81DC-CF27-11E4-9295-FAE19E42C9D4-77302942!pb-smtp1.pobox.com
+	id S1752058AbbCTRfK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Mar 2015 13:35:10 -0400
+Received: from mo4-p00-ob.smtp.rzone.de ([81.169.146.161]:52907 "EHLO
+	mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751381AbbCTRfG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Mar 2015 13:35:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1426872904; l=448;
+	s=domk; d=aepfle.de;
+	h=Content-Disposition:Content-Type:MIME-Version:Subject:To:From:Date;
+	bh=bPKlsjEfEUEeRV6x77wTa4LCWZmR8+639ck5GtwuDvM=;
+	b=WMkOO1uOtVpM1JGwzMEpIpXpi4JKCU4DWUeVefxDQ2tNNS7qdfoF6Bvw2EzHb4HS9AI
+	IJZ2Dj/of2AfZVDpXXjuFVo1TnKSeDX3tMH7X0VvH4wtSczrjMkgqDLpXoMIHnemNpra9
+	OQRUggtpKRUOvH9k8vihdAyVMm6D2YV9MHU=
+X-RZG-AUTH: :P2EQZWCpfu+qG7CngxMFH1J+yackYocTD1iAi8x+OWi/zfN1cLnBYfssDItSR5Gliv93fjczMS8dqZ7ZQnPKi0CzW59KJg==
+X-RZG-CLASS-ID: mo00
+Received: from probook.fritz.box ([2001:a60:1085:1c01:1ec1:deff:feb9:bb48])
+	by smtp.strato.de (RZmta 37.4 AUTH)
+	with ESMTPSA id J0345cr2KHZ4Z93
+	(using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	for <git@vger.kernel.org>;
+	Fri, 20 Mar 2015 18:35:04 +0100 (CET)
+Received: by probook.fritz.box (Postfix, from userid 1000)
+	id 4960650278; Fri, 20 Mar 2015 18:35:04 +0100 (CET)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.22.rev6346 (2013-10-29)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265915>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265916>
 
-Jeff King <peff@peff.net> writes:
 
-> Your case above is actually better spelled as test_expect_code, but
-> there are more complex one-off cases that I solved using a {} block.
+What does it take to send the cover letter to all people which are
+listed in the Cc: list of the following patches? Each patch has a
+different Cc: list. The "git send-email --help" command suggests that
+this cmdline should do it. But the cover letter goes just to the address
+listed in --to=:
 
-Just for the record, test_expect_code expects only one possible good
-exit status and it does not allow us to say "0 is OK and 1 is also
-OK, everything else is bad", so it is not quite appropriate there.
+env TMPDIR=/dev/shm LC_ALL=C git send-email -M --stat --annotate \
+        --cover-letter --cc-cover --to=$address \
+        $base..$head
 
-> ...
-> So I dunno. I think "set -e" is kind of a dangerous lure.
+Thanks,
 
-Yes, I think we should stay away from it.  &&-chaining is simpler to
-see what is going on, even though it is a bit more to type.
-
-Thanks.
+Olaf
