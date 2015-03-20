@@ -1,7 +1,7 @@
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH 03/16] refs: convert remaining users of for_each_ref_in to object_id
-Date: Fri, 20 Mar 2015 19:28:23 +0000
-Message-ID: <1426879716-47835-4-git-send-email-sandals@crustytoothpaste.net>
+Subject: [PATCH 16/16] refs: convert struct ref_lock to struct object_id
+Date: Fri, 20 Mar 2015 19:28:36 +0000
+Message-ID: <1426879716-47835-17-git-send-email-sandals@crustytoothpaste.net>
 References: <1426879716-47835-1-git-send-email-sandals@crustytoothpaste.net>
 Cc: Andreas Schwab <schwab@linux-m68k.org>,
 	"Kyle J. McKay" <mackyle@gmail.com>,
@@ -9,26 +9,26 @@ Cc: Andreas Schwab <schwab@linux-m68k.org>,
 	Johannes Sixt <j6t@kdbg.org>, David Kastrup <dak@gnu.org>,
 	James Denholm <nod.helm@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 20 20:29:46 2015
+X-From: git-owner@vger.kernel.org Fri Mar 20 20:29:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YZ2c1-0002Ex-A3
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Mar 2015 20:29:41 +0100
+	id 1YZ2bk-0001va-LW
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Mar 2015 20:29:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751759AbbCTT3c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Mar 2015 15:29:32 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:50652 "EHLO
+	id S1751564AbbCTT3H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Mar 2015 15:29:07 -0400
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:50668 "EHLO
 	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751164AbbCTT2r (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Mar 2015 15:28:47 -0400
+	by vger.kernel.org with ESMTP id S1751475AbbCTT27 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Mar 2015 15:28:59 -0400
 Received: from vauxhall.crustytoothpaste.net (wsip-184-177-1-73.no.no.cox.net [184.177.1.73])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 631E028094;
-	Fri, 20 Mar 2015 19:28:46 +0000 (UTC)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id DEA4D28093;
+	Fri, 20 Mar 2015 19:28:58 +0000 (UTC)
 X-Mailer: git-send-email 2.2.1.209.g41e5f3a
 In-Reply-To: <1426879716-47835-1-git-send-email-sandals@crustytoothpaste.net>
 X-Spam-Score: 0.163 () BAYES_00,RDNS_DYNAMIC
@@ -36,154 +36,116 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265947>
-
-Remove the temporary for_each_ref_in_oid function and update the users
-of it.  Convert the users of for_each_branch_ref and
-for_each_remote_ref (which use for_each_ref_in under the hood) as well.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265948>
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- bisect.c            |  8 ++++----
- builtin/rev-parse.c | 10 +++++-----
- refs.c              | 13 ++++---------
- refs.h              |  6 +++---
- 4 files changed, 16 insertions(+), 21 deletions(-)
+ refs.c | 22 +++++++++++-----------
+ refs.h |  2 +-
+ 2 files changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/bisect.c b/bisect.c
-index 10f5e57..03d5cd9 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -400,16 +400,16 @@ struct commit_list *find_bisection(struct commit_list *list,
- 	return best;
- }
- 
--static int register_ref(const char *refname, const unsigned char *sha1,
-+static int register_ref(const char *refname, const struct object_id *oid,
- 			int flags, void *cb_data)
- {
- 	if (!strcmp(refname, "bad")) {
- 		current_bad_oid = xmalloc(sizeof(*current_bad_oid));
--		hashcpy(current_bad_oid->hash, sha1);
-+		oidcpy(current_bad_oid, oid);
- 	} else if (starts_with(refname, "good-")) {
--		sha1_array_append(&good_revs, sha1);
-+		sha1_array_append(&good_revs, oid->hash);
- 	} else if (starts_with(refname, "skip-")) {
--		sha1_array_append(&skipped_revs, sha1);
-+		sha1_array_append(&skipped_revs, oid->hash);
- 	}
- 
- 	return 0;
-diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-index ba5f3a0..ec0ca86 100644
---- a/builtin/rev-parse.c
-+++ b/builtin/rev-parse.c
-@@ -203,9 +203,9 @@ static int show_reference_oid(const char *refname, const struct object_id *oid,
- 	return show_reference(refname, oid->hash, flag, cb_data);
- }
- 
--static int anti_reference(const char *refname, const unsigned char *sha1, int flag, void *cb_data)
-+static int anti_reference(const char *refname, const struct object_id *oid, int flag, void *cb_data)
- {
--	show_rev(REVERSED, sha1, refname);
-+	show_rev(REVERSED, oid->hash, refname);
- 	return 0;
- }
- 
-@@ -658,7 +658,7 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
- 				continue;
- 			}
- 			if (!strcmp(arg, "--bisect")) {
--				for_each_ref_in("refs/bisect/bad", show_reference, NULL);
-+				for_each_ref_in("refs/bisect/bad", show_reference_oid, NULL);
- 				for_each_ref_in("refs/bisect/good", anti_reference, NULL);
- 				continue;
- 			}
-@@ -669,7 +669,7 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
- 				continue;
- 			}
- 			if (!strcmp(arg, "--branches")) {
--				for_each_branch_ref(show_reference, NULL);
-+				for_each_branch_ref(show_reference_oid, NULL);
- 				clear_ref_exclusion(&ref_excludes);
- 				continue;
- 			}
-@@ -696,7 +696,7 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
- 				continue;
- 			}
- 			if (!strcmp(arg, "--remotes")) {
--				for_each_remote_ref(show_reference, NULL);
-+				for_each_remote_ref(show_reference_oid, NULL);
- 				clear_ref_exclusion(&ref_excludes);
- 				continue;
- 			}
 diff --git a/refs.c b/refs.c
-index 2fe934f..2c7bbd4 100644
+index 941e466..b54525a 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -1969,16 +1969,11 @@ int for_each_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
- 	return do_for_each_ref(get_ref_cache(submodule), "", fn, 0, 0, cb_data);
- }
- 
--static int for_each_ref_in_oid(const char *prefix, each_ref_fn_oid fn, void *cb_data)
-+int for_each_ref_in(const char *prefix, each_ref_fn_oid fn, void *cb_data)
+@@ -2099,16 +2099,16 @@ static struct ref_lock *verify_lock(struct ref_lock *lock,
  {
- 	return do_for_each_ref_oid(&ref_cache, prefix, fn, strlen(prefix), 0, cb_data);
- }
+ 	if (read_ref_full(lock->ref_name,
+ 			  mustexist ? RESOLVE_REF_READING : 0,
+-			  lock->old_sha1, NULL)) {
++			  lock->old_oid.hash, NULL)) {
+ 		int save_errno = errno;
+ 		error("Can't verify ref %s", lock->ref_name);
+ 		unlock_ref(lock);
+ 		errno = save_errno;
+ 		return NULL;
+ 	}
+-	if (hashcmp(lock->old_sha1, old_sha1)) {
++	if (hashcmp(lock->old_oid.hash, old_sha1)) {
+ 		error("Ref %s is at %s but expected %s", lock->ref_name,
+-			sha1_to_hex(lock->old_sha1), sha1_to_hex(old_sha1));
++			oid_to_hex(&lock->old_oid), sha1_to_hex(old_sha1));
+ 		unlock_ref(lock);
+ 		errno = EBUSY;
+ 		return NULL;
+@@ -2254,7 +2254,7 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
+ 	}
  
--int for_each_ref_in(const char *prefix, each_ref_fn fn, void *cb_data)
--{
--	return do_for_each_ref(&ref_cache, prefix, fn, strlen(prefix), 0, cb_data);
--}
--
- int for_each_ref_in_submodule(const char *submodule, const char *prefix,
- 		each_ref_fn fn, void *cb_data)
- {
-@@ -1987,7 +1982,7 @@ int for_each_ref_in_submodule(const char *submodule, const char *prefix,
- 
- int for_each_tag_ref(each_ref_fn_oid fn, void *cb_data)
- {
--	return for_each_ref_in_oid("refs/tags/", fn, cb_data);
-+	return for_each_ref_in("refs/tags/", fn, cb_data);
- }
- 
- int for_each_tag_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
-@@ -1995,7 +1990,7 @@ int for_each_tag_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_d
- 	return for_each_ref_in_submodule(submodule, "refs/tags/", fn, cb_data);
- }
- 
--int for_each_branch_ref(each_ref_fn fn, void *cb_data)
-+int for_each_branch_ref(each_ref_fn_oid fn, void *cb_data)
- {
- 	return for_each_ref_in("refs/heads/", fn, cb_data);
- }
-@@ -2005,7 +2000,7 @@ int for_each_branch_ref_submodule(const char *submodule, each_ref_fn fn, void *c
- 	return for_each_ref_in_submodule(submodule, "refs/heads/", fn, cb_data);
- }
- 
--int for_each_remote_ref(each_ref_fn fn, void *cb_data)
-+int for_each_remote_ref(each_ref_fn_oid fn, void *cb_data)
- {
- 	return for_each_ref_in("refs/remotes/", fn, cb_data);
- }
+ 	refname = resolve_ref_unsafe(refname, resolve_flags,
+-				     lock->old_sha1, &type);
++				     lock->old_oid.hash, &type);
+ 	if (!refname && errno == EISDIR) {
+ 		/* we are trying to lock foo but we used to
+ 		 * have foo/bar which now does not exist;
+@@ -2268,7 +2268,7 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
+ 			goto error_return;
+ 		}
+ 		refname = resolve_ref_unsafe(orig_refname, resolve_flags,
+-					     lock->old_sha1, &type);
++					     lock->old_oid.hash, &type);
+ 	}
+ 	if (type_p)
+ 	    *type_p = type;
+@@ -2278,7 +2278,7 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
+ 			orig_refname, strerror(errno));
+ 		goto error_return;
+ 	}
+-	missing = is_null_sha1(lock->old_sha1);
++	missing = is_null_oid(&lock->old_oid);
+ 	/* When the ref did not exist and we are creating it,
+ 	 * make sure there is no existing ref that is packed
+ 	 * whose name begins with our refname, nor a ref whose
+@@ -2866,7 +2866,7 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
+ 		goto rollback;
+ 	}
+ 	lock->force_write = 1;
+-	hashcpy(lock->old_sha1, orig_sha1);
++	hashcpy(lock->old_oid.hash, orig_sha1);
+ 	if (write_ref_sha1(lock, orig_sha1, logmsg)) {
+ 		error("unable to write current sha1 into %s", newrefname);
+ 		goto rollback;
+@@ -3069,7 +3069,7 @@ static int write_ref_sha1(struct ref_lock *lock,
+ 		errno = EINVAL;
+ 		return -1;
+ 	}
+-	if (!lock->force_write && !hashcmp(lock->old_sha1, sha1)) {
++	if (!lock->force_write && !hashcmp(lock->old_oid.hash, sha1)) {
+ 		unlock_ref(lock);
+ 		return 0;
+ 	}
+@@ -3098,9 +3098,9 @@ static int write_ref_sha1(struct ref_lock *lock,
+ 		return -1;
+ 	}
+ 	clear_loose_ref_cache(&ref_cache);
+-	if (log_ref_write(lock->ref_name, lock->old_sha1, sha1, logmsg) < 0 ||
++	if (log_ref_write(lock->ref_name, lock->old_oid.hash, sha1, logmsg) < 0 ||
+ 	    (strcmp(lock->ref_name, lock->orig_ref_name) &&
+-	     log_ref_write(lock->orig_ref_name, lock->old_sha1, sha1, logmsg) < 0)) {
++	     log_ref_write(lock->orig_ref_name, lock->old_oid.hash, sha1, logmsg) < 0)) {
+ 		unlock_ref(lock);
+ 		return -1;
+ 	}
+@@ -3124,7 +3124,7 @@ static int write_ref_sha1(struct ref_lock *lock,
+ 					      head_sha1, &head_flag);
+ 		if (head_ref && (head_flag & REF_ISSYMREF) &&
+ 		    !strcmp(head_ref, lock->ref_name))
+-			log_ref_write("HEAD", lock->old_sha1, sha1, logmsg);
++			log_ref_write("HEAD", lock->old_oid.hash, sha1, logmsg);
+ 	}
+ 	if (commit_ref(lock)) {
+ 		error("Couldn't set %s", lock->ref_name);
 diff --git a/refs.h b/refs.h
-index 8a5f92f..ff1a41a 100644
+index b893f4a..538391c 100644
 --- a/refs.h
 +++ b/refs.h
-@@ -97,10 +97,10 @@ typedef int each_ref_fn_oid(const char *refname,
-  */
- extern int head_ref(each_ref_fn, void *);
- extern int for_each_ref(each_ref_fn, void *);
--extern int for_each_ref_in(const char *, each_ref_fn, void *);
-+extern int for_each_ref_in(const char *, each_ref_fn_oid, void *);
- extern int for_each_tag_ref(each_ref_fn_oid, void *);
--extern int for_each_branch_ref(each_ref_fn, void *);
--extern int for_each_remote_ref(each_ref_fn, void *);
-+extern int for_each_branch_ref(each_ref_fn_oid, void *);
-+extern int for_each_remote_ref(each_ref_fn_oid, void *);
- extern int for_each_replace_ref(each_ref_fn, void *);
- extern int for_each_glob_ref(each_ref_fn, const char *pattern, void *);
- extern int for_each_glob_ref_in(each_ref_fn, const char *pattern, const char* prefix, void *);
+@@ -7,7 +7,7 @@ struct ref_lock {
+ 	char *ref_name;
+ 	char *orig_ref_name;
+ 	struct lock_file *lk;
+-	unsigned char old_sha1[20];
++	struct object_id old_oid;
+ 	int lock_fd;
+ 	int force_write;
+ };
 -- 
 2.2.1.209.g41e5f3a
