@@ -1,93 +1,77 @@
-From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH] t1700: make test pass with index-v4
-Date: Fri, 20 Mar 2015 16:09:24 +0100
-Message-ID: <1426864165-7334-1-git-send-email-t.gummerer@gmail.com>
-Cc: Thomas Gummerer <t.gummerer@gmail.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
+From: Jason Karns <karns.17@gmail.com>
+Subject: bug in bash completion for git-branch --set-upstream-to on OSX
+Date: Fri, 20 Mar 2015 11:15:09 -0400
+Message-ID: <CAKNmmv3wu-5s9UB_RFO5Wptdo+a71Lmzn2Zs4kb=MwnFoTctCg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 20 16:09:53 2015
+X-From: git-owner@vger.kernel.org Fri Mar 20 16:15:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YYyYW-0007po-0S
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Mar 2015 16:09:48 +0100
+	id 1YYydp-0003zX-Mf
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Mar 2015 16:15:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751196AbbCTPJo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Mar 2015 11:09:44 -0400
-Received: from mail-wi0-f173.google.com ([209.85.212.173]:38299 "EHLO
-	mail-wi0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751043AbbCTPJn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Mar 2015 11:09:43 -0400
-Received: by wibgn9 with SMTP id gn9so17228900wib.1
-        for <git@vger.kernel.org>; Fri, 20 Mar 2015 08:09:42 -0700 (PDT)
+	id S1752097AbbCTPPN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Mar 2015 11:15:13 -0400
+Received: from mail-wi0-f180.google.com ([209.85.212.180]:32938 "EHLO
+	mail-wi0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751394AbbCTPPK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Mar 2015 11:15:10 -0400
+Received: by wixw10 with SMTP id w10so28318964wix.0
+        for <git@vger.kernel.org>; Fri, 20 Mar 2015 08:15:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=mM7y+FyhDX9ZzLF/yrdjl+YLRqn0nsIuK2YtkTv2mFg=;
-        b=zH3pn13uICPRTPxHBGo2QKfFwjEz4NTLgIBrS9MnqLPMSuCk39JYn+IwdFl1tTIPNu
-         lCQk+R+VoF3sEpavhjQrwkZD+wLSyQXh03TTLeIUzGX745jcTxl2Hzo11hsXAERUdjtj
-         Pq6hCO6xlAFHkTJG+Det5HZ0wstz0lQznsoefLEhdSDlII5S5/hmuXsGyWALexhaV20T
-         7JmpJhQ5vV54U6csUAaML9rp/ZNC695Kb68I6N1FsTOdNacY+QzfhKy6mPPZkUIgtSDj
-         A7ppqz3Q11edCu6GVwBzJ4+AEVZsKvsER+4ZAI99eUwbLk3BGmMRg23CcU4d0o0KrjLr
-         oPcA==
-X-Received: by 10.194.177.195 with SMTP id cs3mr158586121wjc.141.1426864182018;
-        Fri, 20 Mar 2015 08:09:42 -0700 (PDT)
-Received: from localhost (213-66-41-37-no99.tbcn.telia.com. [213.66.41.37])
-        by mx.google.com with ESMTPSA id n3sm6730269wja.36.2015.03.20.08.09.40
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 20 Mar 2015 08:09:41 -0700 (PDT)
-X-Mailer: git-send-email 2.3.3.377.gdac1145
+        h=mime-version:sender:date:message-id:subject:from:to:content-type;
+        bh=AEOvDGxufqzmE/FiRiTHPOkNIJXlN3vQLbMzk/+kGaE=;
+        b=rr9uCdJ7lrUPnt8JcLKQ/mGghJSI2mfyYrkXQtSIvcH9EKoUOLSBNyhKKgQ2znAhTc
+         0i93q/luQthM2kw0ZGLqSNRWFM7fOjURvm5e7Wdjzhtx7/wK97LHiGLP4zlWkGjlZG8Z
+         Rp1r8iYbTRRxiXuCLIImCtVLmicre8y2pS6+JPiWTJ18u6OqUOCIoTf/nFzWLLFTalnX
+         ZWaZL1MmOk+ZHmp1qzkLCZB3+QdJHJejLParNkUYwE0uV2NCwOR5rh5MbYyE/k8sqOFB
+         MT2tcDyzk8GICuMWskdMtRY8iZ6mipSN/Y9Ekeq+ZaNJBYFEajxxGrJKkJvvQPI9MLjo
+         CYhw==
+X-Received: by 10.180.100.170 with SMTP id ez10mr6103726wib.81.1426864509669;
+ Fri, 20 Mar 2015 08:15:09 -0700 (PDT)
+Received: by 10.27.48.131 with HTTP; Fri, 20 Mar 2015 08:15:09 -0700 (PDT)
+X-Google-Sender-Auth: jMpRpNHzR7hB6veBQ7DkOmMTOs8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265909>
 
-The different index versions have different sha-1 checksums.  Those
-checksums are checked in t1700, which makes it fail when run with index
-v4.  Fix it.
+There appears to be a bug in the bash completion for git-branch when
+attempting to complete the remote ref argument for --set-upstream-to=
 
-Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
----
- t/t1700-split-index.sh | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+When:
 
-diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
-index 94fb473..92f7298 100755
---- a/t/t1700-split-index.sh
-+++ b/t/t1700-split-index.sh
-@@ -10,9 +10,18 @@ sane_unset GIT_TEST_SPLIT_INDEX
- test_expect_success 'enable split index' '
- 	git update-index --split-index &&
- 	test-dump-split-index .git/index >actual &&
-+	indexversion=$(test-index-version <.git/index) &&
-+	if test "$indexversion" = "4"
-+	then
-+		own=432ef4b63f32193984f339431fd50ca796493569
-+		base=508851a7f0dfa8691e9f69c7f055865389012491
-+	else
-+		own=8299b0bcd1ac364e5f1d7768efb62fa2da79a339
-+		base=39d890139ee5356c7ef572216cebcd27aa41f9df
-+	fi &&
- 	cat >expect <<EOF &&
--own 8299b0bcd1ac364e5f1d7768efb62fa2da79a339
--base 39d890139ee5356c7ef572216cebcd27aa41f9df
-+own $own
-+base $base
- replacements:
- deletions:
- EOF
-@@ -30,7 +39,7 @@ EOF
- 
- 	test-dump-split-index .git/index | sed "/^own/d" >actual &&
- 	cat >expect <<EOF &&
--base 39d890139ee5356c7ef572216cebcd27aa41f9df
-+base $base
- 100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	one
- replacements:
- deletions:
--- 
-2.3.3.377.gdac1145
+$ git branch --set-upstream-to=origin/mast<TAB>
+
+I would expect it to complete to:
+
+$ git branch --set-upstream-to=origin/master
+
+However, the completion for --set-upstream-to= completes the ref
+correctly, but completely wipes the --set-upstream option; resulting
+in:
+
+$ git branch origin/master
+
+
+I'm running on OS X 10.9.5 with git from homebrew:
+$ bash --version
+GNU bash, version 4.3.33(1)-release (x86_64-apple-darwin13.4.0)
+$ git --version
+git version 2.3.3
+
+The same behavior does *not* manifest (it works as expected) on CentOS
+6.5, bash 4.1.2.1 (GNU bash, version 4.1.2(1)-release
+(x86_64-redhat-linux-gnu)). I'm running git 2.0.3 on CentOs but
+sourcing the shell completion script from latest source: 9ab698f
+
+I also cloned down latest git source on OS X and the bug still
+manifests when sourcing the completion script at 9ab698f.
+
+~ Jason
