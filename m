@@ -1,54 +1,74 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 26/27] t/*svn*: fix moderate &&-chain breakage
-Date: Fri, 20 Mar 2015 16:13:21 -0400
-Message-ID: <20150320201321.GA21945@peff.net>
-References: <550C2E7B.3030203@drmicha.warpmail.net>
- <317e6b1e70f3e1c50d62207c53f4d038ad027c9d.1426861743.git.git@drmicha.warpmail.net>
- <xmqqy4mree9x.fsf@gitster.dls.corp.google.com>
- <xmqqh9tfea1v.fsf@gitster.dls.corp.google.com>
- <20150320200239.GA25506@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Documentation: Add target to build PDF manpages
+Date: Fri, 20 Mar 2015 13:21:41 -0700
+Message-ID: <xmqq4mpfe7xm.fsf@gitster.dls.corp.google.com>
+References: <1426850584-9951-1-git-send-email-thosch97@gmail.com>
+	<CAGZ79ka7tPA17Y-vPPp5W_4-0UMnHMfM9+eQ8jc4eu23FpM2ug@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org,
-	Eric Wong <normalperson@yhbt.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 20 21:13:40 2015
+Content-Type: text/plain
+Cc: Thomas Schneider <thosch97@gmail.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Fri Mar 20 21:22:02 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YZ3IP-0000K9-Fg
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Mar 2015 21:13:29 +0100
+	id 1YZ3Qa-0007o4-Bh
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Mar 2015 21:21:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751805AbbCTUN0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Mar 2015 16:13:26 -0400
-Received: from cloud.peff.net ([50.56.180.127]:36154 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751797AbbCTUNY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Mar 2015 16:13:24 -0400
-Received: (qmail 1176 invoked by uid 102); 20 Mar 2015 20:13:23 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 20 Mar 2015 15:13:23 -0500
-Received: (qmail 28200 invoked by uid 107); 20 Mar 2015 20:13:35 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 20 Mar 2015 16:13:35 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 20 Mar 2015 16:13:21 -0400
-Content-Disposition: inline
-In-Reply-To: <20150320200239.GA25506@peff.net>
+	id S1751522AbbCTUVv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Mar 2015 16:21:51 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:65370 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751440AbbCTUVu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Mar 2015 16:21:50 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E608C411ED;
+	Fri, 20 Mar 2015 16:21:49 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=BVv/d3IIls9wNDoRh6wRiQs4jKw=; b=poNau1
+	+VM9kzvL4f0qAJJJX+kjLV4uxwPKHutpNaw/G+/g7K4dcNOdvAUebKwLSp3lRjAz
+	Q8F2U5wSzfbZjC6+YATOUTcW2EhtT40BxmyDgWI59PxEQfji8E7oc3DE3GKgBNjH
+	6Famwsb4od5HP3S4g6SVk4ufGb+4PGlhnUZC4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=XfHol3BnIALEYZ8AsCxSaKxMZy24El5/
+	AO8nIknd2fxtH4a6JG3UxIBjcsqKuiLZ+RZqkKpSM/gRCFJ45ZtY36Ey8e1LTlRC
+	OA5rqAoTDbZXjHrd0HFQlTi+TEy6yefX7RQRP8Er/GPhBIwnPhXWrVJwFmZm8kon
+	cSCpmMgRbcI=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id DF5B1411EC;
+	Fri, 20 Mar 2015 16:21:49 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 09677411D4;
+	Fri, 20 Mar 2015 16:21:42 -0400 (EDT)
+In-Reply-To: <CAGZ79ka7tPA17Y-vPPp5W_4-0UMnHMfM9+eQ8jc4eu23FpM2ug@mail.gmail.com>
+	(Stefan Beller's message of "Fri, 20 Mar 2015 10:19:36 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: BC38AB16-CF3E-11E4-9A55-6DD39F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265962>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265963>
 
-On Fri, Mar 20, 2015 at 04:02:39PM -0400, Jeff King wrote:
+Stefan Beller <sbeller@google.com> writes:
 
-> Yeah, that was my impression, too. I don't have svn installed on my
-> system, so I missed those ones. I don't have CVS either. That might be
-> worth following up on.
+> ... though how would I read man pages in pdf
+> format? I tried searching the web and all I can find is how
+> to convert the a man page to pdf. So is there a conveniant
+> way to tell `man` to prefer opening pdfs when available?
 
-Hmm, that turned out rather easy. No breakages at all in the cvs tests.
-It almost makes me think I ran the tests wrong. ;)
+I presume that "man -Tpdf git.1" is not what you are looking for, as
+that would literally be how you get the manpages in PDF format?
 
--Peff
+Personally, I honestly am not quite sure why anybody wants to
+generate manpages in the PDF format like this patch does, unless
+they are planning to print them on paper, in which case the existing
+manpages (git.1 and friends) or html pages (git.html and friends)
+should be an already available source format.
