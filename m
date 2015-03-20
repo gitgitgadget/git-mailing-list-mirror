@@ -1,133 +1,91 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH] Documentation: Add target to build PDF manpages
-Date: Fri, 20 Mar 2015 19:32:32 -0000
-Organization: OPDS
-Message-ID: <E4A75513C64F43B5A03A05B043426F55@PhilipOakley>
-References: <1426850584-9951-1-git-send-email-thosch97@gmail.com> <CAGZ79ka7tPA17Y-vPPp5W_4-0UMnHMfM9+eQ8jc4eu23FpM2ug@mail.gmail.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 26/27] t/*svn*: fix moderate &&-chain breakage
+Date: Fri, 20 Mar 2015 12:35:56 -0700
+Message-ID: <xmqqh9tfea1v.fsf@gitster.dls.corp.google.com>
+References: <550C2E7B.3030203@drmicha.warpmail.net>
+	<317e6b1e70f3e1c50d62207c53f4d038ad027c9d.1426861743.git.git@drmicha.warpmail.net>
+	<xmqqy4mree9x.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed	reply-type=original
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: <git@vger.kernel.org>
-To: "Stefan Beller" <sbeller@google.com>,
-	"Thomas Schneider" <thosch97@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 20 20:32:34 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Eric Wong <normalperson@yhbt.net>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Mar 20 20:36:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YZ2ed-0004bl-HI
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Mar 2015 20:32:23 +0100
+	id 1YZ2iC-00084I-L8
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Mar 2015 20:36:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751196AbbCTTcO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 Mar 2015 15:32:14 -0400
-Received: from out1.ip03ir2.opaltelecom.net ([62.24.128.239]:9309 "EHLO
-	out1.ip03ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750990AbbCTTcN (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Mar 2015 15:32:13 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2C3CgB+dAxVPAu8BlxcgwZSWoMOhBqvRI9JHQqFbwEDAQGBNU0BAQEBAQEGAQEBATggG4QPBQEBAQEDCAEBGQ8BBRYIAQEWCwsCAwUCAQMOBwMCAgUhAgIUAQQIEAIGBwMUBgEHCwgCAQIDAQMJBId6AxUJsVGGU44nDYVCIIEhigCCRoFLZIJvL4EWBZBPYYMNhDOBTYEaOoVPhl+GJoIkHIFQPjEBgQGBQQEBAQ
-X-IPAS-Result: A2C3CgB+dAxVPAu8BlxcgwZSWoMOhBqvRI9JHQqFbwEDAQGBNU0BAQEBAQEGAQEBATggG4QPBQEBAQEDCAEBGQ8BBRYIAQEWCwsCAwUCAQMOBwMCAgUhAgIUAQQIEAIGBwMUBgEHCwgCAQIDAQMJBId6AxUJsVGGU44nDYVCIIEhigCCRoFLZIJvL4EWBZBPYYMNhDOBTYEaOoVPhl+GJoIkHIFQPjEBgQGBQQEBAQ
-X-IronPort-AV: E=Sophos;i="5.11,438,1422921600"; 
-   d="scan'208";a="545826870"
-Received: from host-92-6-188-11.as43234.net (HELO PhilipOakley) ([92.6.188.11])
-  by out1.ip03ir2.opaltelecom.net with ESMTP; 20 Mar 2015 19:32:11 +0000
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1751403AbbCTTgA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Mar 2015 15:36:00 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:51862 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751037AbbCTTf7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Mar 2015 15:35:59 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 99412405BF;
+	Fri, 20 Mar 2015 15:35:58 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=sSsQuZt9q0gTTBMPQK/mBUiupsA=; b=J2AZFY
+	aqMOBpaqcWUXyD6wbwRNmU6DPfz26gwdJVUqUoocnK12w6ZCUBiBbqhnsrQHDQi+
+	nFQ8eYRpHisCBOqfsdF5JqhNAB5vNW2uRqYPNuhrPUCYi83I9jus9AmLQnqh+BxJ
+	+9fjQCVQLhVjqSE3VfBiqGO4pOvjmR0qlzbqI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=x2fJ1OIj3pMvcGmZ1mTmGVaLGJ6mZTmj
+	KW2Kk9pdlFymAfllsTWmK+iXvkNPRmdmP898fTe9np8rRSIYlUikxT7MRDwuBdNB
+	NlH0Zz2M6X4t0EVRetgH1EpCrOGmBvwJ/koJophW7m6NKhc+ameFzWkDE1iGgPaY
+	hBBEMmoaowE=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8FB82405BE;
+	Fri, 20 Mar 2015 15:35:58 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 149B7405BB;
+	Fri, 20 Mar 2015 15:35:58 -0400 (EDT)
+In-Reply-To: <xmqqy4mree9x.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Fri, 20 Mar 2015 11:04:42 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 551C0B68-CF38-11E4-82E4-6DD39F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265955>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265956>
 
-=46rom: "Stefan Beller" <sbeller@google.com>
-> On Fri, Mar 20, 2015 at 4:23 AM, Thomas Schneider <thosch97@gmail.com=
->=20
-> wrote:
->> Signed-off-by: Thomas Schneider <thosch97@gmail.com>
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
+>
+>> All of these cases are moderate since they would most probably not
+>> lead to missed failing tests: Either they would fail otherwise,
+>> or fail a rm in test_when_finished only.
+>>
+>> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
 >> ---
->> dblatex does print some warnings, but they seem to be irrelevant.
->> Besides, first patch I submit to git or even to any project using a
->> mailing list =E2=80=A6 let=E2=80=99s hope I did everything right :)
+>>  t/t2026-prune-linked-checkouts.sh |  4 ++--
+>>  t/t9158-git-svn-mergeinfo.sh      |  4 ++--
+>>  t/t9161-git-svn-mergeinfo-push.sh | 10 +++++-----
+>>  3 files changed, 9 insertions(+), 9 deletions(-)
 >
-> Welcome to the git community!
+> Ahh, it seems that I should have read everything in my inbox before
+> starting my day X-<.  I already queued an identical patch for 2026
+> on nd/multiple-work-trees, and its new tip is in 'next' now.
 >
-> The patch itself applies cleanly and the generated pdfs look
-> really great, though how would I read man pages in pdf
-> format? I tried searching the web and all I can find is how
-> to convert the a man page to pdf. So is there a conveniant
-> way to tell `man` to prefer opening pdfs when available?
+> Which branches are the git-svn ones meant to apply?  Are they meant
+> to fix an existing bug already in master, or are they new ones added
+> by still-in-flight topics?  Can you split if necessary and mark them
+> for individual topios in flight if that is the case, so that we can
+> apply them independently from GIT_TEST_CHAIN_LINT series?
+>
+> Thanks.
 
-My remembering of the help code (from when I added help's ability to=20
-list the guides), there isn't currently a mechanism to fire up a pdf=20
-reader of whatever hue. The MsysGit version encodes --web (html) as it'=
-s=20
-preferred reader.
-
-So if anyone wants to have a go it shouldn't be that hard to add a --pd=
-f=20
-option ;-)
-
->>
->>  Documentation/Makefile | 9 ++++++++-
->>  1 file changed, 8 insertions(+), 1 deletion(-)
->>
->> diff --git a/Documentation/Makefile b/Documentation/Makefile
->> index 3e39e28..158cbd9 100644
->> --- a/Documentation/Makefile
->> +++ b/Documentation/Makefile
->> @@ -38,6 +38,7 @@ MAN7_TXT +=3D gitworkflows.txt
->>  MAN_TXT =3D $(MAN1_TXT) $(MAN5_TXT) $(MAN7_TXT)
->>  MAN_XML =3D $(patsubst %.txt,%.xml,$(MAN_TXT))
->>  MAN_HTML =3D $(patsubst %.txt,%.html,$(MAN_TXT))
->> +MAN_PDF =3D $(patsubst %.txt,%.pdf,$(MAN_TXT))
->>
->>  OBSOLETE_HTML +=3D everyday.html
->>  OBSOLETE_HTML +=3D git-remote-helpers.html
->> @@ -223,7 +224,7 @@ man7: $(DOC_MAN7)
->>
->>  info: git.info gitman.info
->>
->> -pdf: user-manual.pdf
->> +pdf: user-manual.pdf $(MAN_PDF)
->>
->>  install: install-man
->>
->> @@ -248,6 +249,7 @@ install-info: info
->>  install-pdf: pdf
->>         $(INSTALL) -d -m 755 $(DESTDIR)$(pdfdir)
->>         $(INSTALL) -m 644 user-manual.pdf $(DESTDIR)$(pdfdir)
->> +       $(INSTALL) -m 644 $(MAN_PDF) $(DESTDIR)$(pdfdir)
->>
->>  install-html: html
->>         '$(SHELL_PATH_SQ)' ./install-webdoc.sh $(DESTDIR)$(htmldir)
->> @@ -328,6 +330,11 @@ manpage-base-url.xsl: manpage-base-url.xsl.in
->>         $(QUIET_XMLTO)$(RM) $@ && \
->>         $(XMLTO) -m $(MANPAGE_XSL) $(XMLTO_EXTRA) man $<
->>
->> +%.pdf: %.xml
->> +       $(QUIET_DBLATEX)$(RM) $@+ $@ && \
->> +       $(DBLATEX) -o $@+ -p=20
->> $(ASCIIDOC_DBLATEX_DIR)/asciidoc-dblatex.xsl -s=20
->> $(ASCIIDOC_DBLATEX_DIR)/asciidoc-dblatex.sty $< && \
->> +       mv $@+ $@
->> +
->>  %.xml : %.txt asciidoc.conf
->>         $(QUIET_ASCIIDOC)$(RM) $@+ $@ && \
->>         $(TXT_TO_XML) -d manpage -o $@+ $< && \
->> --
->> 2.1.0
->>
->> --
->> To unsubscribe from this list: send the line "unsubscribe git" in
->> the body of a message to majordomo@vger.kernel.org
->> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->=20
+OK, I think I figured it out.  All the git-svn bits in 26 and 27 are
+for 'master', and should be part of Peff's original 25-patch series.
+I'll drop 2026 from your 26/25 and queue it together with your 27/25
+on top off it.
