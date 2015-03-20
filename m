@@ -1,107 +1,128 @@
-From: Graham Hay <grahamrhay@gmail.com>
-Subject: Re: Fwd: Seems to be pushing more than necessary
-Date: Fri, 20 Mar 2015 09:20:18 +0000
-Message-ID: <CAABECY1vOre+RbXKCnZqHr4rZSHHpYA=tnRK6fSnkjeyFv2ZAg@mail.gmail.com>
-References: <CAABECY3HbZ4q3uo82outUmCyQLXO39H+Fd2m8bLwkaubE9gJCw@mail.gmail.com>
-	<CAABECY1_L34sq0VPmD9UwRcwb3Fuh95OFcF26LM2eX1z-+8vkQ@mail.gmail.com>
-	<xmqq3850kf6d.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 0/25] detecting &&-chain breakage
+Date: Fri, 20 Mar 2015 06:04:30 -0400
+Message-ID: <20150320100429.GA17354@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 20 10:20:28 2015
+Content-Type: text/plain; charset=utf-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 20 11:04:50 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YYt6Q-00035k-Ua
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Mar 2015 10:20:27 +0100
+	id 1YYtnJ-0007AE-JC
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Mar 2015 11:04:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751318AbbCTJUW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Mar 2015 05:20:22 -0400
-Received: from mail-ob0-f172.google.com ([209.85.214.172]:34626 "EHLO
-	mail-ob0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751316AbbCTJUT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Mar 2015 05:20:19 -0400
-Received: by obbgg8 with SMTP id gg8so73780340obb.1
-        for <git@vger.kernel.org>; Fri, 20 Mar 2015 02:20:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=rz3dR7KPkT37QW0eBjdZQn86+DmyGGvOxwFQzzwKWro=;
-        b=f0rrveP1xsAQgIG8Qy5taIR4k49yUpfkbhvS6Z7lsOQe/07rvvHwvq3b18O9fIYX4+
-         GEMvSZJtNqiqc7f/tZYA2A6EOu/SyuvACuia6QG40iBieHKwPM9vLvnU1j6olj3lwoaB
-         bnkg+xPnY5db2lCnBGgWdmKUFhHvHPSkhVXwk5+MYeWCaPhFsVRevTt4WnWe8yL2+N2E
-         emFpKEBewwgfFBI0Eh10ArHvKRmfRSozdTz1NFo3OQFsls97MiVss0uaVQ3R1Nr2OTKG
-         Izasw4Ph/uz/ZBULKJJ8aM0yNrRJKKvFdu8tEUNkrlXNCCh+CzqZk8kmoZVeeDqXwCns
-         81zA==
-X-Received: by 10.182.221.193 with SMTP id qg1mr7971269obc.57.1426843218977;
- Fri, 20 Mar 2015 02:20:18 -0700 (PDT)
-Received: by 10.76.13.8 with HTTP; Fri, 20 Mar 2015 02:20:18 -0700 (PDT)
-In-Reply-To: <xmqq3850kf6d.fsf@gitster.dls.corp.google.com>
+	id S1751941AbbCTKEk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Mar 2015 06:04:40 -0400
+Received: from cloud.peff.net ([50.56.180.127]:35662 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751875AbbCTKEd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Mar 2015 06:04:33 -0400
+Received: (qmail 5458 invoked by uid 102); 20 Mar 2015 10:04:33 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 20 Mar 2015 05:04:33 -0500
+Received: (qmail 21360 invoked by uid 107); 20 Mar 2015 10:04:45 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 20 Mar 2015 06:04:45 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 20 Mar 2015 06:04:30 -0400
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265873>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265874>
 
-That all seems quite reasonable, and is what I would expect to happen.
+This is a cleanup of the &&-chain lint I posted earlier:
 
-However at the moment, if I create a branch from master and edit one
-line in one file,
-with no other changes on the remote, it takes me over an hour to push
-the new branch.
+  http://thread.gmane.org/gmane.comp.version-control.git/265613/focus=265859
 
-On 19 March 2015 at 18:36, Junio C Hamano <gitster@pobox.com> wrote:
-> Graham Hay <grahamrhay@gmail.com> writes:
->
->> We have a fairly large repo (~2.4GB), mainly due to binary resources
->> (for an ios app). I know this can generally be a problem, but I have a
->> specific question.
->>
->> If I cut a branch, and edit a few (non-binary) files, and push, what
->> should be uploaded? I assumed it was just the diff (I know whole
->> compressed files are used, I mean the differences between my branch
->> and where I cut it from). Is that correct?
->
-> If you start from this state:
->
->  (the 'origin')                    (you)
->     ---Z---A         clone ->    ---Z---A
->
-> and edit a few files, say, a/b, a/c and d/e/f, and committed to make
-> the history look like this:
->
->  (the 'origin')                    (you)
->     ---Z---A                     ---Z---A---B
->
-> i.e. "git diff --name-only A B" would show these three files, then
-> the next push from you to the origin, i.e.
->
->  (the 'origin')                    (you)
->     ---Z---A---B    <- push      ---Z---A---B
->
-> would involve transferring from you to the origin of the following:
->
->  * The commit object that holds the message, authorship, etc. for B
->  * The top-level tree object of commit B (as that is different from
->    that of A)
->  * The tree object for 'a', 'd', 'd/e' and the blob object for
->    'a/b', 'a/c', and 'd/e/f'.
->
-> However, that assumes that nothing is happening on the 'origin'
-> side.
->
-> If the 'origin', for example, rewound its head to Z before you
-> attempt to push your B, then you may end up sending objects that do
-> not exist in Z that are reachable from B.  Just like the above
-> bullet points enumerated what is different between A and B, you
-> can enumerate what is different between Z and A and add that to the
-> above set.  That would be what will be sent.
->
-> If the 'origin' updated its tip to a commit you do not even know
-> about, normally you will be prevented from pushing B because we
-> would not want you to lose somebody else's work.  If you forced such
-> push, then you may end up sending a lot more.
+I don't know who came up with the idea for it originally, but the
+concept certainly was floating in the back of my mind from Jonathan's
+earlier version that is referenced in that thread.
+
+The general idea is to detect &&-chain breakage that can lead to our
+tests yielding false success. The first patch implements and discusses
+the lint-check itself, which is quite simple. The bulk of the work was
+fixing all of the issues in the existing tests. :)
+
+That didn't all need to happen immediately. I mainly wanted to start on
+it to answer two questions:
+
+  1. Are &&-chain breakages actually preventing us from seeing any test
+     failures? Or is it mostly just pedantry, and we miss out only on
+     knowing whether "cat >expect <<-\EOF" failed (which presumably it
+     never does).
+
+  2. How bad are the false positives? Both how common, and how bad to
+     work around.
+
+But after a few hours, I reached a zen state and just kept going. So at
+the end of this series, the whole test suite is --chain-lint clean
+(modulo any tests that are skipped on my platform). We could even switch
+the checks on by default at the end of the series, but I didn't do that
+here. I think it would be sane to run them all the time, though; in the
+normal success case, they don't add any forks (the shell just runs
+"(exit) && ...", and realizes that the whole thing is one big &&-chain).
+I couldn't measure any time difference running the suite with and
+without it.
+
+Anyway, to answer the questions: Yes, there were definitely tests whose
+values were being thrown away, and we would not have noticed if they
+failed. The good news is that all of them did pass once we started
+checking their results. Hooray.
+
+There were a number of false positives, though as a percentage of the
+test suite, probably not many (it's just that we have quite a lot of
+tests).  Most of them were in rather old tests, and IMHO the fixes I did
+actually improved the readability of the result. So overall I think this
+is a very positive change; I doubt it will get in people's way very
+often, and I look forward to having one less thing to worry about
+handling manually in review. The biggest downside is that I may have
+automated Eric Sunshine out of a job. :)
+
+The patches are:
+
+  [01/25]: t/test-lib: introduce --chain-lint option
+  [02/25]: t: fix severe &&-chain breakage
+  [03/25]: t: fix moderate &&-chain breakage
+  [04/25]: t: fix trivial &&-chain breakage
+  [05/25]: t: assume test_cmp produces verbose output
+  [06/25]: t: use verbose instead of hand-rolled errors
+  [07/25]: t: use test_must_fail instead of hand-rolled blocks
+  [08/25]: t: fix &&-chaining issues around setup which might fail
+  [09/25]: t: use test_might_fail for diff and grep
+  [10/25]: t: use test_expect_code instead of hand-rolled comparison
+  [11/25]: t: wrap complicated expect_code users in a block
+  [12/25]: t: avoid using ":" for comments
+  [13/25]: t3600: fix &&-chain breakage for setup commands
+  [14/25]: t7201: fix &&-chain breakage
+  [15/25]: t9502: fix &&-chain breakage
+  [16/25]: t6030: use modern test_* helpers
+  [17/25]: t0020: use modern test_* helpers
+  [18/25]: t1301: use modern test_* helpers
+  [19/25]: t6034: use modern test_* helpers
+  [20/25]: t4117: use modern test_* helpers
+  [21/25]: t9001: use test_when_finished
+  [22/25]: t0050: appease --chain-lint
+  [23/25]: t7004: fix embedded single-quotes
+  [24/25]: t0005: fix broken &&-chains
+  [25/25]: t4104: drop hand-rolled error reporting
+
+It's a lot of patches, and a few of them are long. I tried to group
+them by functionality rather than file (though as you can see, some of
+the tests were unique enough snowflakes that it made sense to discuss
+their issues separately). I'm hoping it should be an easy review, if
+not a short one.
+
+I'll spare you the full per-file diffstat, but the total is a very
+satisfying:
+
+   84 files changed, 397 insertions(+), 647 deletions(-)
+
+That's a lot of changes in a lot of hunks, but most of them are in files
+that haven't been touched in a while. The series merges cleanly with
+"pu", so I don't think I've stepped on anyone's topics in flight.
+
+-Peff
