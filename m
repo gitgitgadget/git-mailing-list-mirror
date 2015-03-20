@@ -1,102 +1,66 @@
-From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v2] t1700: make test pass with index-v4
-Date: Fri, 20 Mar 2015 19:20:30 +0100
-Message-ID: <1426875630-17481-1-git-send-email-t.gummerer@gmail.com>
-References: <xmqqtwxfee6a.fsf@gitster.dls.corp.google.com>
-Cc: Thomas Gummerer <t.gummerer@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 20 19:21:37 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/25] detecting &&-chain breakage
+Date: Fri, 20 Mar 2015 11:33:46 -0700
+Message-ID: <xmqqlhirecxh.fsf@gitster.dls.corp.google.com>
+References: <20150320100429.GA17354@peff.net>
+	<xmqqegojftsj.fsf@gitster.dls.corp.google.com>
+	<xmqq384zft22.fsf@gitster.dls.corp.google.com>
+	<20150320180448.GC11844@peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Mar 20 19:34:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YZ1Y6-0007wg-I5
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Mar 2015 19:21:34 +0100
+	id 1YZ1k6-0002Wy-HI
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Mar 2015 19:33:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751133AbbCTSVa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Mar 2015 14:21:30 -0400
-Received: from mail-wi0-f176.google.com ([209.85.212.176]:36708 "EHLO
-	mail-wi0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750993AbbCTSV3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Mar 2015 14:21:29 -0400
-Received: by wibg7 with SMTP id g7so151333661wib.1
-        for <git@vger.kernel.org>; Fri, 20 Mar 2015 11:21:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=qvhR43aEpWJqyEHpXD9Vpf9UNRu8unhTrIm6io19kp0=;
-        b=bCBtRnAHHq8LKowi2KLJkCmQVh8L0prYCMJTL+Zw41WKu6M5WV9LdjeZHEu7LS+MZV
-         v9LWKuoyajHg9Vp6u2OYos2nfq3BSndieFx6EJeQDpynXBcpDkuVgsjhnyKWB9v04ium
-         XvgjT1Hy9B0r0I4EY3U6DT9111XgK3RwiByxwUuWCiTARKJdoVTmGH345u+q/wPF5Or4
-         a7BNHZFeYZe4y9d05erJzHMwU0q0HFmXnECdlphJFL9ZO6K3141FYiKU6vkhLjZQLE+U
-         7Oy2WjXBF2knFYw3BQYw9pKNjfHMimhlQSkFaU0HrsruuZjWNLujfBeaqole5GsMJmEf
-         fNNw==
-X-Received: by 10.180.75.140 with SMTP id c12mr26932432wiw.14.1426875688839;
-        Fri, 20 Mar 2015 11:21:28 -0700 (PDT)
-Received: from localhost (213-66-41-37-no99.tbcn.telia.com. [213.66.41.37])
-        by mx.google.com with ESMTPSA id wo10sm7385982wjb.35.2015.03.20.11.21.27
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 20 Mar 2015 11:21:28 -0700 (PDT)
-X-Mailer: git-send-email 2.3.3.377.gdac1145
-In-Reply-To: <xmqqtwxfee6a.fsf@gitster.dls.corp.google.com>
+	id S1751191AbbCTSdy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Mar 2015 14:33:54 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:59570 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750821AbbCTSdx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Mar 2015 14:33:53 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0C58541531;
+	Fri, 20 Mar 2015 14:33:48 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Q/BFI0Cp//Y41ZA4VMKzckmkxkk=; b=BOhysh
+	amxZmJXgRI8H+yqF/DU+gfk7M92L2rxrZbIeZYZQ4UPDgH9Fh0ZX8dZDsQekjMDa
+	xDqkzvi0bv60PtA7R/qViJ3tCtgEiYY+/uhOffL28A08SIdayGzMC+v5eAugsYaX
+	xsvZ7ieYaoyTNyoYifX9dpPVhi34PG2aZ9w1U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=bavpfUF6Yv2e4ZSleU/Fwn2Ead8YukW+
+	tJZ7raC+6BFena0H0K1yKpa7M5jmDs2iY+VNArxgP/E/KHXm4iYMMTdzn1Be9WZ8
+	gaP7ArbgyvLwIL0QMAIrKmYHd1cpRoEYxhgqiVcJYgwEDpTL5yN/E7yEHBEQlg8v
+	B2SfmnLj6jw=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 01FE441530;
+	Fri, 20 Mar 2015 14:33:48 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7FD644152F;
+	Fri, 20 Mar 2015 14:33:47 -0400 (EDT)
+In-Reply-To: <20150320180448.GC11844@peff.net> (Jeff King's message of "Fri,
+	20 Mar 2015 14:04:48 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: A585B1B6-CF2F-11E4-9026-FAE19E42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265931>
 
-The different index versions have different sha-1 checksums.  Those
-checksums are checked in t1700, which makes it fail when the test suite
-is run with TEST_GIT_INDEX_VERSION=4.  Fix it.
+Jeff King <peff@peff.net> writes:
 
-Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
----
-> An updated patch to mention "when run with TEST_GIT_INDEX_VERSION=4"
-> in the log message was what I was asking for ;-)
+> I'm actually about to send out a re-roll of that, as I think all of the
+> review comments have been addressed.
 
-Sorry I didn't catch that.  Here it is.
-					      
-
- t/t1700-split-index.sh | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
-
-diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
-index 94fb473..92f7298 100755
---- a/t/t1700-split-index.sh
-+++ b/t/t1700-split-index.sh
-@@ -10,9 +10,18 @@ sane_unset GIT_TEST_SPLIT_INDEX
- test_expect_success 'enable split index' '
- 	git update-index --split-index &&
- 	test-dump-split-index .git/index >actual &&
-+	indexversion=$(test-index-version <.git/index) &&
-+	if test "$indexversion" = "4"
-+	then
-+		own=432ef4b63f32193984f339431fd50ca796493569
-+		base=508851a7f0dfa8691e9f69c7f055865389012491
-+	else
-+		own=8299b0bcd1ac364e5f1d7768efb62fa2da79a339
-+		base=39d890139ee5356c7ef572216cebcd27aa41f9df
-+	fi &&
- 	cat >expect <<EOF &&
--own 8299b0bcd1ac364e5f1d7768efb62fa2da79a339
--base 39d890139ee5356c7ef572216cebcd27aa41f9df
-+own $own
-+base $base
- replacements:
- deletions:
- EOF
-@@ -30,7 +39,7 @@ EOF
- 
- 	test-dump-split-index .git/index | sed "/^own/d" >actual &&
- 	cat >expect <<EOF &&
--base 39d890139ee5356c7ef572216cebcd27aa41f9df
-+base $base
- 100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	one
- replacements:
- deletions:
--- 
-2.3.3.377.gdac1145
+Thanks.
