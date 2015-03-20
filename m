@@ -1,85 +1,103 @@
-From: <mdconf@seznam.cz>
-Subject: Git ignore help
-Date: Fri, 20 Mar 2015 11:36:51 +0100 (CET)
-Message-ID: <47F.3lxhK.7IviRa5Gutr.1L2}X3@seznam.cz>
-Mime-Version: 1.0 (szn-mime-2.0.2)
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Mar 20 11:37:04 2015
+From: Thomas Schneider <thosch97@gmail.com>
+Subject: [PATCH] Documentation: Add target to build PDF manpages
+Date: Fri, 20 Mar 2015 12:23:04 +0100
+Message-ID: <1426850584-9951-1-git-send-email-thosch97@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Thomas Schneider <thosch97@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 20 12:23:32 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YYuIZ-0001Lz-He
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Mar 2015 11:37:04 +0100
+	id 1YYv1U-0006HX-St
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Mar 2015 12:23:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751890AbbCTKgz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Mar 2015 06:36:55 -0400
-Received: from mxf2.seznam.cz ([77.75.76.123]:56987 "EHLO mxf2.seznam.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751830AbbCTKgx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Mar 2015 06:36:53 -0400
-Received: from email.seznam.cz
-	by email-smtpc6a.ng.seznam.cz (email-smtpc6a.ng.seznam.cz [10.23.10.165])
-	id 671753e6bf8da35364a8e916;
-	Fri, 20 Mar 2015 11:36:52 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=seznam.cz; s=beta;
-	t=1426847812; bh=j9jUaW2y3qAy6tRQb0NlOCOFBYuOoPMxTvbaVokruZY=;
-	h=Received:From:To:Subject:Date:Message-Id:Mime-Version:X-Mailer:
-	 Content-Type:Content-Transfer-Encoding;
-	b=YaoQ43y0CiaoGMMf4m8uxnTC6fp9tSV8VOtoGyKMSzVd+ydI4MAF74G8lMr8mCTf2
-	 32jjBJuo2qyHvcMGv/JYfbAQkbILq4DRgbmhG1xMJqg6Wsj1DMF8Aq5vtZViTnL6q5
-	 /Kuv4bFMbakzITfe6mojJR3vKdH4Foio+pWEX8F8=
-Received: from ip-94-113-145-153.net.upcbroadband.cz
-	(ip-94-113-145-153.net.upcbroadband.cz [94.113.145.153])
-	by email.seznam.cz (szn-ebox-4.4.269) with HTTP;
-	Fri, 20 Mar 2015 11:36:51 +0100 (CET)
-X-Mailer: szn-ebox-4.4.269
+	id S1751463AbbCTLXY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 Mar 2015 07:23:24 -0400
+Received: from mail-wi0-f177.google.com ([209.85.212.177]:37895 "EHLO
+	mail-wi0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751033AbbCTLXM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Mar 2015 07:23:12 -0400
+Received: by wibgn9 with SMTP id gn9so11142290wib.1
+        for <git@vger.kernel.org>; Fri, 20 Mar 2015 04:23:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:mime-version:content-type
+         :content-transfer-encoding;
+        bh=9CxSE8Kj+GQLlD5FyGE1vyFEdwfPmJtjajmVPUZqaxk=;
+        b=dSK9VCmmu4qycHWdZJODCp0VM+quO9unLFKg1zBMyR0iwlLv8jv6HD7gf2WlLcpIE/
+         veHtB5pQo6hFgGAtB8oJUSpYOsaziBV4M69jFFxnNzPOFJqa6Az9tlOVeUBUu/75E4bd
+         kKxezVanWjFmr87lrFaKy4FIe5Tl3PB9980EGeXRSUsUbVDI2m8GXc9tJ4J86mp5N5c+
+         ciK0ZLszKUpYV3YSR3KciYmUSarhuair6+iEt3OdOeTHW0Wi3LU5M6Yg2m/wsUZFNZkT
+         rnUpefNw9dZHfd5eibiBc/BgvZsEPfU4pmPJlXMtZ6KkrHNSHTvL01g6j3xHUH1+DP2Q
+         DAdw==
+X-Received: by 10.194.143.20 with SMTP id sa20mr108379104wjb.75.1426850590995;
+        Fri, 20 Mar 2015 04:23:10 -0700 (PDT)
+Received: from tatooine.fritz.box (p4FEF8755.dip0.t-ipconnect.de. [79.239.135.85])
+        by mx.google.com with ESMTPSA id hl8sm5921832wjb.38.2015.03.20.04.23.09
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 20 Mar 2015 04:23:10 -0700 (PDT)
+X-Mailer: git-send-email 2.1.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265901>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265902>
 
-Hello,
-I am trying to setup my git ignore (resp. .git/info/exclude) so that I exclude
- all directories and files except the content of directories that I 
-specifically include (incl. anything within them recursively).
+Signed-off-by: Thomas Schneider <thosch97@gmail.com>
+---
+dblatex does print some warnings, but they seem to be irrelevant.
+Besides, first patch I submit to git or even to any project using a
+mailing list =E2=80=A6 let=E2=80=99s hope I did everything right :)
 
-I set the .git/info/exclude with the following content:
+ Documentation/Makefile | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-========
-# Exclude everything
-/*
-# Except the below that we include
-!/db/data/load/base/bootstraponly
-!/db/data/load/base/safetoload
-!/db/ddl
-!/labels
-!/reports/usrint
-!/scripts
-!/src/cmdsrc/usrint
-========
-
-However it does not do what I anticipated. It indeed excludes everything but 
-the include part does not work - it only works for !/labels and !/scripts 
-directories (i.e. the first level directories). All other are still ignored - 
-so when I create file /db/data/load/base/bootstraponly/somefile.txt git still 
-ignores it...
-
-Any idea what I am doing wrong?
-
-I tried all of the following combinations but still with the same result:
-!/db/data/load/base/bootstraponly
-!/db/data/load/base/bootstraponly/
-!/db/data/load/base/bootstraponly/*
-!/db/data/load/base/bootstraponly/**
-
-When I add just "!/db" to exclude then it works. But that's not what I want - 
-I really want to include just the /db/data/load/base/bootstraponly and its
-all content...
-
-Thank you,
-Martin
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 3e39e28..158cbd9 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -38,6 +38,7 @@ MAN7_TXT +=3D gitworkflows.txt
+ MAN_TXT =3D $(MAN1_TXT) $(MAN5_TXT) $(MAN7_TXT)
+ MAN_XML =3D $(patsubst %.txt,%.xml,$(MAN_TXT))
+ MAN_HTML =3D $(patsubst %.txt,%.html,$(MAN_TXT))
++MAN_PDF =3D $(patsubst %.txt,%.pdf,$(MAN_TXT))
+=20
+ OBSOLETE_HTML +=3D everyday.html
+ OBSOLETE_HTML +=3D git-remote-helpers.html
+@@ -223,7 +224,7 @@ man7: $(DOC_MAN7)
+=20
+ info: git.info gitman.info
+=20
+-pdf: user-manual.pdf
++pdf: user-manual.pdf $(MAN_PDF)
+=20
+ install: install-man
+=20
+@@ -248,6 +249,7 @@ install-info: info
+ install-pdf: pdf
+ 	$(INSTALL) -d -m 755 $(DESTDIR)$(pdfdir)
+ 	$(INSTALL) -m 644 user-manual.pdf $(DESTDIR)$(pdfdir)
++	$(INSTALL) -m 644 $(MAN_PDF) $(DESTDIR)$(pdfdir)
+=20
+ install-html: html
+ 	'$(SHELL_PATH_SQ)' ./install-webdoc.sh $(DESTDIR)$(htmldir)
+@@ -328,6 +330,11 @@ manpage-base-url.xsl: manpage-base-url.xsl.in
+ 	$(QUIET_XMLTO)$(RM) $@ && \
+ 	$(XMLTO) -m $(MANPAGE_XSL) $(XMLTO_EXTRA) man $<
+=20
++%.pdf: %.xml
++	$(QUIET_DBLATEX)$(RM) $@+ $@ && \
++	$(DBLATEX) -o $@+ -p $(ASCIIDOC_DBLATEX_DIR)/asciidoc-dblatex.xsl -s =
+$(ASCIIDOC_DBLATEX_DIR)/asciidoc-dblatex.sty $< && \
++	mv $@+ $@
++
+ %.xml : %.txt asciidoc.conf
+ 	$(QUIET_ASCIIDOC)$(RM) $@+ $@ && \
+ 	$(TXT_TO_XML) -d manpage -o $@+ $< && \
+--=20
+2.1.0
