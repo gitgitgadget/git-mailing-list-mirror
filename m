@@ -1,80 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation: Add target to build PDF manpages
-Date: Fri, 20 Mar 2015 15:42:35 -0700
-Message-ID: <xmqqiodvcmuc.fsf@gitster.dls.corp.google.com>
-References: <1426850584-9951-1-git-send-email-thosch97@gmail.com>
-	<CAGZ79ka7tPA17Y-vPPp5W_4-0UMnHMfM9+eQ8jc4eu23FpM2ug@mail.gmail.com>
-	<xmqq4mpfe7xm.fsf@gitster.dls.corp.google.com>
-	<CAGZ79kaDnRiUQ6=3gVvsPrkSzkNbACRvgQBSo8gmpRZ8bka84g@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 0/25] detecting &&-chain breakage
+Date: Fri, 20 Mar 2015 19:18:47 -0400
+Message-ID: <CAPig+cRCbhMR58_PSFnsWoyo_aZoTOVZM2YeYC6Tvo7iXMZwBA@mail.gmail.com>
+References: <20150320100429.GA17354@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Thomas Schneider <thosch97@gmail.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>,
-	"Philip Oakley" <philipoakley@iee.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Fri Mar 20 23:42:51 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Mar 21 00:18:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YZ5co-0003Sn-Sb
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Mar 2015 23:42:43 +0100
+	id 1YZ6Bp-0003Op-9A
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Mar 2015 00:18:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751281AbbCTWmi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Mar 2015 18:42:38 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:58866 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751131AbbCTWmh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Mar 2015 18:42:37 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 578C64233B;
-	Fri, 20 Mar 2015 18:42:37 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xry9cxgQqCU1TBgrNr/YctdTS78=; b=VxiCYS
-	tNhy66mS+OAA7gMVmrtIeCHUPpr+3OZ5ghM+Ooq8/NPGEhau7i6VL9Zmc7Vnuc1j
-	CnJ1oWUF14pG5+U5SJtmglUJHhpIwUXD8py6Cpup7zIr+3py+hfy5b6+9BrurJec
-	0bA48ODu3rQcfD2I4Xfpw1rzHJmnkPjKpBOD4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=YaibYEZYkFgHP45eCcuCQ0DerEIrL9It
-	u6nQYilPW3Du5VKZamlPpUE8LCQVR2JDQsF1H5j0frC9LK9tov5CZbSmlk0dgzLS
-	2nnZZ2qU5FE4r7NmHkX0O1cW+4FxP5mJiIwjBvNq3DwHiy3PNjEjpHCL5IYIsyRf
-	Hg4xf28w6NI=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4E53C4233A;
-	Fri, 20 Mar 2015 18:42:37 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A2B4D42339;
-	Fri, 20 Mar 2015 18:42:36 -0400 (EDT)
-In-Reply-To: <CAGZ79kaDnRiUQ6=3gVvsPrkSzkNbACRvgQBSo8gmpRZ8bka84g@mail.gmail.com>
-	(Stefan Beller's message of "Fri, 20 Mar 2015 15:19:04 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 67FCE3D2-CF52-11E4-81F1-6DD39F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751712AbbCTXSs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Mar 2015 19:18:48 -0400
+Received: from mail-yk0-f169.google.com ([209.85.160.169]:33694 "EHLO
+	mail-yk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751164AbbCTXSs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Mar 2015 19:18:48 -0400
+Received: by ykek76 with SMTP id k76so49788308yke.0
+        for <git@vger.kernel.org>; Fri, 20 Mar 2015 16:18:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=bh0kSTKGrzuRO6uj60CGnncff/t0FNtHzAlWrMS+tQU=;
+        b=g1kcJPZ+hxsBKBUOicpzgmvCoxJgnNEKdSDgmBla8R8jwV75IIk5EUWQK2uSZllM4H
+         m/fXFPkK0VYlYckMfKUvHmYzTSlBMEkI7VuKJUn/Yoawrm5KnfRvtWW/FiC8jeqsh+gh
+         pG53AMgyUgmHW+Ctz3b5mmKuCYuTWItZfjbg0wwDN53h6uq8PObDlwglwOBrEHksdEP3
+         jZYdCB/QDKyvQx4py3eEUNjCFX5iw/jmqEanouRsqY8PFUTvryjiALzlj3sepOgKQ/7y
+         rajTVJJ1QWFGq42Dwe9ZKPUGGQ1W/5DTDkVZBDrAA+Tqdx0bK0sWOez7LuEsTdeG1w+b
+         hrzQ==
+X-Received: by 10.236.10.5 with SMTP id 5mr84130466yhu.148.1426893527209; Fri,
+ 20 Mar 2015 16:18:47 -0700 (PDT)
+Received: by 10.170.73.7 with HTTP; Fri, 20 Mar 2015 16:18:47 -0700 (PDT)
+In-Reply-To: <20150320100429.GA17354@peff.net>
+X-Google-Sender-Auth: H-OYYZ6C3JOOnstuVbICqw6YCtk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265977>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265978>
 
-Stefan Beller <sbeller@google.com> writes:
+On Fri, Mar 20, 2015 at 6:04 AM, Jeff King <peff@peff.net> wrote:
+> [...]
+> There were a number of false positives, though as a percentage of the
+> test suite, probably not many (it's just that we have quite a lot of
+> tests).  Most of them were in rather old tests, and IMHO the fixes I did
+> actually improved the readability of the result. So overall I think this
+> is a very positive change; I doubt it will get in people's way very
+> often, and I look forward to having one less thing to worry about
+> handling manually in review. The biggest downside is that I may have
+> automated Eric Sunshine out of a job. :)
 
-> ... I'd rather be looking for
->
->    man_or_pdf_when_possible git add
->
-> and I could alias man_or_pdf_when_possible to a short name.
+Heh. I won't mind. Thanks for doing a thorough job.
 
-The help framework can choose the backend and the format and it
-wouldn't be too outlandish to do "git help --pdf add" as Philip
-mentioned already.
-
-In any case, this, together with some patches on unrelated topics
-that didn't cut today's "What's cooking" are parked on 'pu', so
-hopefully people will play with it and report how they find it
-useful.
-
-Thanks, all.
+Ironically, one of the broken here-doc &&-links you detected with
+--chain-lint and fixed in 4/25 was from a patch from me: 5a9830cb
+(t8001/t8002 (blame): add blame -L :funcname tests, 2013-07-17).
