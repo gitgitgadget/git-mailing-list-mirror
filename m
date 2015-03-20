@@ -1,77 +1,67 @@
-From: Jason Karns <karns.17@gmail.com>
-Subject: bug in bash completion for git-branch --set-upstream-to on OSX
-Date: Fri, 20 Mar 2015 11:15:09 -0400
-Message-ID: <CAKNmmv3wu-5s9UB_RFO5Wptdo+a71Lmzn2Zs4kb=MwnFoTctCg@mail.gmail.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: A git hook that does git cherry-pick and push automatically
+Date: Fri, 20 Mar 2015 09:51:45 -0700
+Message-ID: <CAGZ79kYsuY1u6_j=_9dBx3cK8o6kV3L4cOGafBv+doDVdJFUuQ@mail.gmail.com>
+References: <CAA4Z6SXzekMdPgKKaXqAObPcpFXDWpaQvNhJg6DEsOxbMOy3Lw@mail.gmail.com>
+	<20150320071625.GA90632@gmail.com>
+	<65D8F41C-9576-4899-B700-F779A30A1F42@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 20 16:15:23 2015
+Cc: David Aguilar <davvid@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Ray Xie <samuiotoko925@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 20 17:51:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YYydp-0003zX-Mf
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Mar 2015 16:15:18 +0100
+	id 1YZ09H-0004v7-Ea
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Mar 2015 17:51:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752097AbbCTPPN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Mar 2015 11:15:13 -0400
-Received: from mail-wi0-f180.google.com ([209.85.212.180]:32938 "EHLO
-	mail-wi0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751394AbbCTPPK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Mar 2015 11:15:10 -0400
-Received: by wixw10 with SMTP id w10so28318964wix.0
-        for <git@vger.kernel.org>; Fri, 20 Mar 2015 08:15:09 -0700 (PDT)
+	id S1751593AbbCTQvr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Mar 2015 12:51:47 -0400
+Received: from mail-ie0-f178.google.com ([209.85.223.178]:33502 "EHLO
+	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750870AbbCTQvq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Mar 2015 12:51:46 -0400
+Received: by iecvj10 with SMTP id vj10so97678273iec.0
+        for <git@vger.kernel.org>; Fri, 20 Mar 2015 09:51:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:date:message-id:subject:from:to:content-type;
-        bh=AEOvDGxufqzmE/FiRiTHPOkNIJXlN3vQLbMzk/+kGaE=;
-        b=rr9uCdJ7lrUPnt8JcLKQ/mGghJSI2mfyYrkXQtSIvcH9EKoUOLSBNyhKKgQ2znAhTc
-         0i93q/luQthM2kw0ZGLqSNRWFM7fOjURvm5e7Wdjzhtx7/wK97LHiGLP4zlWkGjlZG8Z
-         Rp1r8iYbTRRxiXuCLIImCtVLmicre8y2pS6+JPiWTJ18u6OqUOCIoTf/nFzWLLFTalnX
-         ZWaZL1MmOk+ZHmp1qzkLCZB3+QdJHJejLParNkUYwE0uV2NCwOR5rh5MbYyE/k8sqOFB
-         MT2tcDyzk8GICuMWskdMtRY8iZ6mipSN/Y9Ekeq+ZaNJBYFEajxxGrJKkJvvQPI9MLjo
-         CYhw==
-X-Received: by 10.180.100.170 with SMTP id ez10mr6103726wib.81.1426864509669;
- Fri, 20 Mar 2015 08:15:09 -0700 (PDT)
-Received: by 10.27.48.131 with HTTP; Fri, 20 Mar 2015 08:15:09 -0700 (PDT)
-X-Google-Sender-Auth: jMpRpNHzR7hB6veBQ7DkOmMTOs8
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=MQgM3en78ljWdiT6q1mT9q2f/d9jvqMR7tsB+YovH1M=;
+        b=g5CowI1BvYsIp2PY+ITdD+lCNQiqwFi5VQ0SGadu1wqkLORvuFYdYI/mPkCMfpggoW
+         ftX3/WTJuWAtZ+49jThfF3FY5KCKsQ0eH9wZ5+q6EzGoeUSdSNiEFVpD3jlzwjvp8hZM
+         j5XgoJv+F5unNUC4g9E1ph5+/sCMiBX6HdWVRI09PIlru8nYORO9OzqjnJl2ehMODRjV
+         OURhr5DjLOaVixFL6IavGYm/JYCc0p0hx7isbn3KhOGOVeG6GlHzTyXGLaCo9EVhSbYe
+         UTQ6J9VUdydE64Z83jGnEZufslA/OqiTQymNJjt1R8zbHIkmKXkZoGaZtgBNqisjVAqL
+         IfHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=MQgM3en78ljWdiT6q1mT9q2f/d9jvqMR7tsB+YovH1M=;
+        b=bPVFdHz0KrFY+elUdNnqfcWrs8sskwnraYHamr2jXlGp2wje4404Yrzq0ui1rq2c9b
+         tCAxCTZKBDwVfdZ6u2kc/GosnD6INo9hKhEkYKTsILMRQ1jRASQ5miWaLc03ow6hPeqT
+         C3vaxAbGBhy0tZf8QCMDsbkt+eOwJJdUJmik/G4M8tFtygNI4ldNszJlzAsz621tCZUy
+         wM5rm/CLMsr6CrxWe29mT1sJa23V8GS1kQLIAsjTUn8zqmw9EaoCKjrnaUWvgNVGkB6M
+         3DAgPyfpW36y3HIi6jvPq8T8jYaJV4jb4bMMGdFamidx7fOA4kic4kM9asu34ZOZATE9
+         Nlxg==
+X-Gm-Message-State: ALoCoQkOcD641SbUtp8SBa0koqEyBKW5Wf4CHAUG9pxRP3ENuHQjz3ojubYBI5fMz9ILXOnnBSlq
+X-Received: by 10.107.15.155 with SMTP id 27mr131085782iop.49.1426870305751;
+ Fri, 20 Mar 2015 09:51:45 -0700 (PDT)
+Received: by 10.107.46.31 with HTTP; Fri, 20 Mar 2015 09:51:45 -0700 (PDT)
+In-Reply-To: <65D8F41C-9576-4899-B700-F779A30A1F42@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265909>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265910>
 
-There appears to be a bug in the bash completion for git-branch when
-attempting to complete the remote ref argument for --set-upstream-to=
+> so it's a sever side hook that it's forced down to all developers.
 
-When:
+How does that work?
 
-$ git branch --set-upstream-to=origin/mast<TAB>
-
-I would expect it to complete to:
-
-$ git branch --set-upstream-to=origin/master
-
-However, the completion for --set-upstream-to= completes the ref
-correctly, but completely wipes the --set-upstream option; resulting
-in:
-
-$ git branch origin/master
-
-
-I'm running on OS X 10.9.5 with git from homebrew:
-$ bash --version
-GNU bash, version 4.3.33(1)-release (x86_64-apple-darwin13.4.0)
-$ git --version
-git version 2.3.3
-
-The same behavior does *not* manifest (it works as expected) on CentOS
-6.5, bash 4.1.2.1 (GNU bash, version 4.1.2(1)-release
-(x86_64-redhat-linux-gnu)). I'm running git 2.0.3 on CentOs but
-sourcing the shell completion script from latest source: 9ab698f
-
-I also cloned down latest git source on OS X and the bug still
-manifests when sourcing the completion script at 9ab698f.
-
-~ Jason
+/me is just curious
