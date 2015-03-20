@@ -1,215 +1,115 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 06/25] t: use verbose instead of hand-rolled errors
-Date: Fri, 20 Mar 2015 06:09:00 -0400
-Message-ID: <20150320100900.GF12543@peff.net>
+Subject: [PATCH 07/25] t: use test_must_fail instead of hand-rolled blocks
+Date: Fri, 20 Mar 2015 06:09:22 -0400
+Message-ID: <20150320100922.GG12543@peff.net>
 References: <20150320100429.GA17354@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 20 11:09:10 2015
+X-From: git-owner@vger.kernel.org Fri Mar 20 11:09:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YYtrY-0002HR-P9
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Mar 2015 11:09:09 +0100
+	id 1YYtry-0002Xy-KC
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Mar 2015 11:09:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751678AbbCTKJE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Mar 2015 06:09:04 -0400
-Received: from cloud.peff.net ([50.56.180.127]:35680 "HELO cloud.peff.net"
+	id S1751819AbbCTKJZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Mar 2015 06:09:25 -0400
+Received: from cloud.peff.net ([50.56.180.127]:35683 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751449AbbCTKJD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Mar 2015 06:09:03 -0400
-Received: (qmail 5691 invoked by uid 102); 20 Mar 2015 10:09:03 -0000
+	id S1751332AbbCTKJZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Mar 2015 06:09:25 -0400
+Received: (qmail 5697 invoked by uid 102); 20 Mar 2015 10:09:25 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 20 Mar 2015 05:09:03 -0500
-Received: (qmail 21485 invoked by uid 107); 20 Mar 2015 10:09:15 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 20 Mar 2015 05:09:25 -0500
+Received: (qmail 21501 invoked by uid 107); 20 Mar 2015 10:09:37 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 20 Mar 2015 06:09:15 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 20 Mar 2015 06:09:00 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 20 Mar 2015 06:09:37 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 20 Mar 2015 06:09:22 -0400
 Content-Disposition: inline
 In-Reply-To: <20150320100429.GA17354@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265880>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265881>
 
-Many tests that predate the "verbose" helper function use a
-pattern like:
+These test scripts likely predate test_must_fail, and can be
+made simpler by using it (in addition to making them pass
+--chain-lint).
 
-  test ... || {
-	  echo ...
-	  false
-  }
-
-to give more verbose output. Using the helper, we can do
-this with a single line, and avoid a || which interacts
-badly with &&-chaining (besides fooling --chain-lint, we hit
-the error block no matter which command in the chain failed,
-so we may often show useless results).
-
-In most cases, the messages printed by "verbose" are equally
-good (in some cases better; t6006 accidentally redirects the
-message to a file!). The exception is t7001, whose output
-suffers slightly. However, it's still enough to show the
-user which part failed, given that we will have just printed
-the test script to stderr.
+The case in t6036 loses some verbosity in the failure case,
+but it is so tied to a specific failure mode that it is not
+worth keeping around (and the outcome of the test is not
+affected at all).
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- t/t4022-diff-rewrite.sh    |  5 +----
- t/t4202-log.sh             | 30 +++++-------------------------
- t/t6006-rev-list-format.sh |  5 +----
- t/t7001-mv.sh              |  5 +----
- t/t7300-clean.sh           | 10 ++--------
- 5 files changed, 10 insertions(+), 45 deletions(-)
+ t/t4124-apply-ws-rule.sh          | 5 ++---
+ t/t6036-recursive-corner-cases.sh | 7 +------
+ t/t9300-fast-import.sh            | 7 ++-----
+ 3 files changed, 5 insertions(+), 14 deletions(-)
 
-diff --git a/t/t4022-diff-rewrite.sh b/t/t4022-diff-rewrite.sh
-index 2d030a4..cb51d9f 100755
---- a/t/t4022-diff-rewrite.sh
-+++ b/t/t4022-diff-rewrite.sh
-@@ -20,10 +20,7 @@ test_expect_success setup '
- test_expect_success 'detect rewrite' '
+diff --git a/t/t4124-apply-ws-rule.sh b/t/t4124-apply-ws-rule.sh
+index c6474de..d350065 100755
+--- a/t/t4124-apply-ws-rule.sh
++++ b/t/t4124-apply-ws-rule.sh
+@@ -99,9 +99,8 @@ test_expect_success 'whitespace=warn, default rule' '
  
- 	actual=$(git diff-files -B --summary test) &&
--	expr "$actual" : " rewrite test ([0-9]*%)$" || {
--		echo "Eh? <<$actual>>"
--		false
--	}
-+	verbose expr "$actual" : " rewrite test ([0-9]*%)$"
+ test_expect_success 'whitespace=error-all, default rule' '
  
- '
- 
-diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index a22ac7c..85230a8 100755
---- a/t/t4202-log.sh
-+++ b/t/t4202-log.sh
-@@ -113,11 +113,7 @@ test_expect_success 'diff-filter=M' '
- 
- 	actual=$(git log --pretty="format:%s" --diff-filter=M HEAD) &&
- 	expect=$(echo second) &&
--	test "$actual" = "$expect" || {
--		echo Oops
--		echo "Actual: $actual"
--		false
--	}
-+	verbose test "$actual" = "$expect"
+-	apply_patch --whitespace=error-all && return 1
+-	test -s target && return 1
+-	: happy
++	test_must_fail apply_patch --whitespace=error-all &&
++	! test -s target
  
  '
  
-@@ -125,11 +121,7 @@ test_expect_success 'diff-filter=D' '
+diff --git a/t/t6036-recursive-corner-cases.sh b/t/t6036-recursive-corner-cases.sh
+index 8923b04..9d6621c 100755
+--- a/t/t6036-recursive-corner-cases.sh
++++ b/t/t6036-recursive-corner-cases.sh
+@@ -195,12 +195,7 @@ test_expect_success 'git detects differently handled merges conflict' '
+ 	git reset --hard &&
+ 	git checkout D^0 &&
  
- 	actual=$(git log --pretty="format:%s" --diff-filter=D HEAD) &&
- 	expect=$(echo sixth ; echo third) &&
--	test "$actual" = "$expect" || {
--		echo Oops
--		echo "Actual: $actual"
--		false
+-	git merge -s recursive E^0 && {
+-		echo "BAD: should have conflicted"
+-		test "Incorrectly merged content" = "$(cat new_a)" &&
+-			echo "BAD: Silently accepted wrong content"
+-		return 1
 -	}
-+	verbose test "$actual" = "$expect"
++	test_must_fail git merge -s recursive E^0 &&
  
- '
+ 	test 3 = $(git ls-files -s | wc -l) &&
+ 	test 3 = $(git ls-files -u | wc -l) &&
+diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
+index 584b538..aac126f 100755
+--- a/t/t9300-fast-import.sh
++++ b/t/t9300-fast-import.sh
+@@ -2853,8 +2853,8 @@ test_expect_success 'S: notemodify with garbage after mark commit-ish must fail'
+ # from
+ #
+ test_expect_success 'S: from with garbage after mark must fail' '
+-	# no &&
+-	git fast-import --import-marks=marks --export-marks=marks <<-EOF 2>err
++	test_must_fail \
++	git fast-import --import-marks=marks --export-marks=marks <<-EOF 2>err &&
+ 	commit refs/heads/S2
+ 	mark :303
+ 	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
+@@ -2865,9 +2865,6 @@ test_expect_success 'S: from with garbage after mark must fail' '
+ 	M 100644 :403 hello.c
+ 	EOF
  
-@@ -137,11 +129,7 @@ test_expect_success 'diff-filter=R' '
+-	ret=$? &&
+-	echo returned $ret &&
+-	test $ret -ne 0 && # failed, but it created the commit
  
- 	actual=$(git log -M --pretty="format:%s" --diff-filter=R HEAD) &&
- 	expect=$(echo third) &&
--	test "$actual" = "$expect" || {
--		echo Oops
--		echo "Actual: $actual"
--		false
--	}
-+	verbose test "$actual" = "$expect"
- 
- '
- 
-@@ -149,11 +137,7 @@ test_expect_success 'diff-filter=C' '
- 
- 	actual=$(git log -C -C --pretty="format:%s" --diff-filter=C HEAD) &&
- 	expect=$(echo fourth) &&
--	test "$actual" = "$expect" || {
--		echo Oops
--		echo "Actual: $actual"
--		false
--	}
-+	verbose test "$actual" = "$expect"
- 
- '
- 
-@@ -161,11 +145,7 @@ test_expect_success 'git log --follow' '
- 
- 	actual=$(git log --follow --pretty="format:%s" ichi) &&
- 	expect=$(echo third ; echo second ; echo initial) &&
--	test "$actual" = "$expect" || {
--		echo Oops
--		echo "Actual: $actual"
--		false
--	}
-+	verbose test "$actual" = "$expect"
- 
- '
- 
-diff --git a/t/t6006-rev-list-format.sh b/t/t6006-rev-list-format.sh
-index 2b7c0f0..b77d4c9 100755
---- a/t/t6006-rev-list-format.sh
-+++ b/t/t6006-rev-list-format.sh
-@@ -358,10 +358,7 @@ test_expect_success 'empty email' '
- 	test_tick &&
- 	C=$(GIT_AUTHOR_EMAIL= git commit-tree HEAD^{tree} </dev/null) &&
- 	A=$(git show --pretty=format:%an,%ae,%ad%n -s $C) &&
--	test "$A" = "A U Thor,,Thu Apr 7 15:14:13 2005 -0700" || {
--		echo "Eh? $A" >failure
--		false
--	}
-+	verbose test "$A" = "A U Thor,,Thu Apr 7 15:14:13 2005 -0700"
- '
- 
- test_expect_success 'del LF before empty (1)' '
-diff --git a/t/t7001-mv.sh b/t/t7001-mv.sh
-index 69f11bd..7b56081 100755
---- a/t/t7001-mv.sh
-+++ b/t/t7001-mv.sh
-@@ -161,10 +161,7 @@ test_expect_success "Michael Cassar's test case" '
- 	git mv papers/unsorted/Thesis.pdf papers/all-papers/moo-blah.pdf &&
- 
- 	T=`git write-tree` &&
--	git ls-tree -r $T | grep partA/outline.txt || {
--		git ls-tree -r $T
--		(exit 1)
--	}
-+	git ls-tree -r $T | verbose grep partA/outline.txt
- '
- 
- rm -fr papers partA path?
-diff --git a/t/t7300-clean.sh b/t/t7300-clean.sh
-index 04118ad..99be5d9 100755
---- a/t/t7300-clean.sh
-+++ b/t/t7300-clean.sh
-@@ -119,10 +119,7 @@ test_expect_success C_LOCALE_OUTPUT 'git clean with relative prefix' '
- 		git clean -n ../src |
- 		sed -n -e "s|^Would remove ||p"
- 	) &&
--	test "$would_clean" = ../src/part3.c || {
--		echo "OOps <$would_clean>"
--		false
--	}
-+	verbose test "$would_clean" = ../src/part3.c
- '
- 
- test_expect_success C_LOCALE_OUTPUT 'git clean with absolute path' '
-@@ -134,10 +131,7 @@ test_expect_success C_LOCALE_OUTPUT 'git clean with absolute path' '
- 		git clean -n "$(pwd)/../src" |
- 		sed -n -e "s|^Would remove ||p"
- 	) &&
--	test "$would_clean" = ../src/part3.c || {
--		echo "OOps <$would_clean>"
--		false
--	}
-+	verbose test "$would_clean" = ../src/part3.c
- '
- 
- test_expect_success 'git clean with out of work tree relative path' '
+ 	# go create the commit, need it for merge test
+ 	git fast-import --import-marks=marks --export-marks=marks <<-EOF &&
 -- 
 2.3.3.520.g3cfbb5d
