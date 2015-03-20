@@ -1,112 +1,167 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t1700: make test pass with index-v4
-Date: Fri, 20 Mar 2015 10:23:57 -0700
-Message-ID: <xmqqsiczfuqa.fsf@gitster.dls.corp.google.com>
-References: <1426864165-7334-1-git-send-email-t.gummerer@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: test &&-chain lint
+Date: Fri, 20 Mar 2015 13:24:07 -0400
+Message-ID: <20150320172406.GA15172@peff.net>
+References: <20150317072750.GA22155@peff.net>
+ <20150317072844.GA25191@peff.net>
+ <CAPig+cTfqWr9un=4+QGs0jcUaV9U=z5Xyg3-r-D6dABGXUkmzg@mail.gmail.com>
+ <20150320013217.GA15302@peff.net>
+ <CAPig+cQKhBw8air5y3NJaP5Rx9pXVaz9Lmvhe20AimW7pCsWBw@mail.gmail.com>
+ <20150320020851.GC15302@peff.net>
+ <20150320022532.GA5502@peff.net>
+ <xmqqd244go0h.fsf@gitster.dls.corp.google.com>
+ <xmqq384zha6s.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-To: Thomas Gummerer <t.gummerer@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 20 18:24:21 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 20 18:24:32 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YZ0ec-0007D8-2S
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Mar 2015 18:24:14 +0100
+	id 1YZ0eh-0007K9-Ui
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Mar 2015 18:24:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751739AbbCTRYJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Mar 2015 13:24:09 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:51560 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751704AbbCTRYF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Mar 2015 13:24:05 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E125D40411;
-	Fri, 20 Mar 2015 13:23:59 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=RUVrN2BAbF8RG/g76+q7RSIk2Qg=; b=LjD2SA
-	2bvlSoExKc+bHgxLYItFlhUaTdNn3s7eXjRchewBWGV6reXx/uSj59E89DCQDIk3
-	29tno5EPPZwaVKF6y6sRJw0ScvCjpNarrjE4oSgoFGGl0Z0SNl/a4z/d1uBdGGAT
-	r7nsjhg2nMBKnnK8xOoXehUWqT91hJBmEa03k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=XDsa+4qn8wZdi3CixfKPZ2P4Pr0nsH8x
-	gt/I8MSTD0M6VMJi9UleMglOvvU0kRTQ+0LdfDvnq+p4FjoC3Msnqx5VajKVNVns
-	6qKOz51IH8jEzOY6hXYw+67+9gHCK05FBYF+fNfmSk4Nk+rc3AdCPuYo3CfxDxCh
-	K5BmW4mZFvE=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D909740410;
-	Fri, 20 Mar 2015 13:23:59 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4BBE24040F;
-	Fri, 20 Mar 2015 13:23:59 -0400 (EDT)
-In-Reply-To: <1426864165-7334-1-git-send-email-t.gummerer@gmail.com> (Thomas
-	Gummerer's message of "Fri, 20 Mar 2015 16:09:24 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: E52804F4-CF25-11E4-80E0-FAE19E42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751774AbbCTRYN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Mar 2015 13:24:13 -0400
+Received: from cloud.peff.net ([50.56.180.127]:35899 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751710AbbCTRYK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Mar 2015 13:24:10 -0400
+Received: (qmail 25581 invoked by uid 102); 20 Mar 2015 17:24:09 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 20 Mar 2015 12:24:09 -0500
+Received: (qmail 25334 invoked by uid 107); 20 Mar 2015 17:24:21 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 20 Mar 2015 13:24:21 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 20 Mar 2015 13:24:07 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqq384zha6s.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265914>
 
-Thomas Gummerer <t.gummerer@gmail.com> writes:
+On Fri, Mar 20, 2015 at 10:04:43AM -0700, Junio C Hamano wrote:
 
-> The different index versions have different sha-1 checksums.  Those
-> checksums are checked in t1700, which makes it fail when run with index
-> v4.  Fix it.
+> One case where this might misdetect a good test would be this one:
+> 
+>     test_expect_success 'either succeed or fail with status 1' '
+> 	git subcmd || case "$?" in 1) : happy ;; *) false failure ;; esac
+>     '
 
-I am more interested to see how you managed to use index v4 in the
-tests be described next to "when run with index v4".  I thought we
-were controling these things fairly tightly (e.g. we disable hooks,
-move $HOME to avoid getting affected by your personal settings,
-etc.).
+Yes. Any use of "||" is going to cause problems. See the conversions in
+the series I posted a few hours ago. The solution is to adapt the test
+style to encase any "||" inside a block. I don't like having to modify
+the tests to match our lint check, but it is a fairly rare case, and the
+modification is not complex. And in fact I think it often highlights to
+the reader that something funny is going on; a snippet like the one
+above is OK to run at the start of a test, but:
 
-Thanks.
+  foo &&
+  bar ||
+  case "$?"
+   ...
+
+is potentially dangerous. You do not know if you are checking the $? of
+"foo" or "bar" in that case statement.
+
+Your case above is actually better spelled as test_expect_code, but
+there are more complex one-off cases that I solved using a {} block.
+
+> I wonder if another valid way to make it harder for us to commit
+> "broken && chain" errors in our test may be to make it not an error
+> in the first place.  Do we know how buggy various implementations of
+> shells are with respect to their handling of "set -e"?
+
+Certainly that is a thought that occurred to me while writing the
+series. At GitHub, we have a shell-based test harness for internal
+projects that is somewhat like Git's t/test-lib.sh, but uses "-e" to
+catch errors.
+
+It's mostly OK, but there are some surprising bits. For instance, try
+this sequence of snippets:
+
+     set -e
+     false
+     echo should not reach
+
+That should print nothing. So far so good. How about in a subshell:
+
+     set -e
+     (
+       false
+       echo 1
+     )
+     echo 2
+
+That also prints nothing. Good. But "set -e" is suppressed in a
+conditional or in the presence of logic operators like "||".  So you'd
+expect this:
+
+     set -e
+     (
+       false
+       echo 1
+     ) || {
+         echo outcome=$?
+         false
+     }
+     echo 2
+
+to break out of the subshell, print the failed outcome, and then exit.
+But it doesn't. It prints "1" and "2". The suppression of "set -e"
+continues inside the subshell, even though the inner commands are not
+part of their own conditionals.
+
+OK, so when we open a subshell we have to re-iterate our desire for "set
+-e":
+
+    set -e
+    (
+      set -e
+      false
+      echo 1
+    ) || {
+        echo outcome=$?
+	false
+    }
+    echo 2
+
+Nope, does nothing, at least in bash and dash. The ||-operator
+suppression is clearly not "turn off set -e", but "globally make -e
+useless inside here".
+
+So you end up having to use manual exits to jump out of the subshell,
+like:
+
+     set -e
+     (
+       false || exit 1
+       echo 1
+     ) || {
+         echo outcome=$?
+         false
+     }
+     echo 2
 
 
-> Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
-> ---
->  t/t1700-split-index.sh | 15 ++++++++++++---
->  1 file changed, 12 insertions(+), 3 deletions(-)
->
-> diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
-> index 94fb473..92f7298 100755
-> --- a/t/t1700-split-index.sh
-> +++ b/t/t1700-split-index.sh
-> @@ -10,9 +10,18 @@ sane_unset GIT_TEST_SPLIT_INDEX
->  test_expect_success 'enable split index' '
->  	git update-index --split-index &&
->  	test-dump-split-index .git/index >actual &&
-> +	indexversion=$(test-index-version <.git/index) &&
-> +	if test "$indexversion" = "4"
-> +	then
-> +		own=432ef4b63f32193984f339431fd50ca796493569
-> +		base=508851a7f0dfa8691e9f69c7f055865389012491
-> +	else
-> +		own=8299b0bcd1ac364e5f1d7768efb62fa2da79a339
-> +		base=39d890139ee5356c7ef572216cebcd27aa41f9df
-> +	fi &&
->  	cat >expect <<EOF &&
-> -own 8299b0bcd1ac364e5f1d7768efb62fa2da79a339
-> -base 39d890139ee5356c7ef572216cebcd27aa41f9df
-> +own $own
-> +base $base
->  replacements:
->  deletions:
->  EOF
-> @@ -30,7 +39,7 @@ EOF
->  
->  	test-dump-split-index .git/index | sed "/^own/d" >actual &&
->  	cat >expect <<EOF &&
-> -base 39d890139ee5356c7ef572216cebcd27aa41f9df
-> +base $base
->  100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	one
->  replacements:
->  deletions:
+That snippet produces "outcome=1", which is what I expect.
+
+Of course most tests are not so complicated to have subshells with
+conditional operators on the side. But I did not just type out that
+example right now from scratch. I cut-and-pasted it from a real-world
+commit message.
+
+So I dunno. I think "set -e" is kind of a dangerous lure. It works so
+well _most_ of the time that you start to rely on it, but it really does
+have some funny corner cases (even on modern shells, and for all I know,
+the behavior above is mandated by POSIX).
+
+-Peff
