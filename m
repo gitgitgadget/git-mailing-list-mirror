@@ -1,314 +1,161 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 17/25] t0020: use modern test_* helpers
-Date: Fri, 20 Mar 2015 06:13:08 -0400
-Message-ID: <20150320101308.GQ12543@peff.net>
+Subject: [PATCH 20/25] t4117: use modern test_* helpers
+Date: Fri, 20 Mar 2015 06:13:18 -0400
+Message-ID: <20150320101318.GT12543@peff.net>
 References: <20150320100429.GA17354@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 20 11:13:33 2015
+X-From: git-owner@vger.kernel.org Fri Mar 20 11:13:27 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YYtvf-0005qT-6X
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Mar 2015 11:13:23 +0100
+	id 1YYtvh-0005qT-Oj
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Mar 2015 11:13:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752047AbbCTKNN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Mar 2015 06:13:13 -0400
-Received: from cloud.peff.net ([50.56.180.127]:35709 "HELO cloud.peff.net"
+	id S1752063AbbCTKNX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Mar 2015 06:13:23 -0400
+Received: from cloud.peff.net ([50.56.180.127]:35720 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752017AbbCTKNL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Mar 2015 06:13:11 -0400
-Received: (qmail 5912 invoked by uid 102); 20 Mar 2015 10:13:11 -0000
+	id S1751385AbbCTKNV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Mar 2015 06:13:21 -0400
+Received: (qmail 5931 invoked by uid 102); 20 Mar 2015 10:13:21 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 20 Mar 2015 05:13:11 -0500
-Received: (qmail 21629 invoked by uid 107); 20 Mar 2015 10:13:23 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 20 Mar 2015 05:13:21 -0500
+Received: (qmail 21666 invoked by uid 107); 20 Mar 2015 10:13:33 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 20 Mar 2015 06:13:23 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 20 Mar 2015 06:13:08 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 20 Mar 2015 06:13:33 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 20 Mar 2015 06:13:18 -0400
 Content-Disposition: inline
 In-Reply-To: <20150320100429.GA17354@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265894>
 
-This test contains a lot of hand-rolled messages to show
-when the test fails. We can omit most of these by using
-"verbose" and "test_must_fail". A few of them are for
-update-index, but we can assume it produces reasonable error
-messages when it fails.
+We can use test_must_fail and test_path_* to avoid some
+hand-rolled if statements. This makes the code shorter, and
+makes it more obvious when we are breaking the &&-chain.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- t/t0020-crlf.sh | 144 +++++++++++---------------------------------------------
- 1 file changed, 28 insertions(+), 116 deletions(-)
+ t/t4117-apply-reject.sh | 66 ++++++++-----------------------------------------
+ 1 file changed, 10 insertions(+), 56 deletions(-)
 
-diff --git a/t/t0020-crlf.sh b/t/t0020-crlf.sh
-index d2e51a8..9fa26df 100755
---- a/t/t0020-crlf.sh
-+++ b/t/t0020-crlf.sh
-@@ -104,18 +104,12 @@ test_expect_success 'update with autocrlf=input' '
- 	for f in one dir/two
- 	do
- 		append_cr <$f >tmp && mv -f tmp $f &&
--		git update-index -- $f || {
--			echo Oops
--			false
--			break
--		}
-+		git update-index -- $f ||
-+		break
- 	done &&
+diff --git a/t/t4117-apply-reject.sh b/t/t4117-apply-reject.sh
+index 8e15ecb..d80187d 100755
+--- a/t/t4117-apply-reject.sh
++++ b/t/t4117-apply-reject.sh
+@@ -56,23 +56,13 @@ test_expect_success 'apply --reject is incompatible with --3way' '
  
- 	differs=$(git diff-index --cached HEAD) &&
--	test -z "$differs" || {
--		echo Oops "$differs"
--		false
--	}
-+	verbose test -z "$differs"
+ test_expect_success 'apply without --reject should fail' '
  
- '
- 
-@@ -128,18 +122,12 @@ test_expect_success 'update with autocrlf=true' '
- 	for f in one dir/two
- 	do
- 		append_cr <$f >tmp && mv -f tmp $f &&
--		git update-index -- $f || {
--			echo "Oops $f"
--			false
--			break
--		}
-+		git update-index -- $f ||
-+		break
- 	done &&
- 
- 	differs=$(git diff-index --cached HEAD) &&
--	test -z "$differs" || {
--		echo Oops "$differs"
--		false
--	}
-+	verbose test -z "$differs"
- 
- '
- 
-@@ -152,19 +140,13 @@ test_expect_success 'checkout with autocrlf=true' '
- 	for f in one dir/two
- 	do
- 		remove_cr <"$f" >tmp && mv -f tmp $f &&
--		git update-index -- $f || {
--			echo "Eh? $f"
--			false
--			break
--		}
-+		verbose git update-index -- $f ||
-+		break
- 	done &&
- 	test "$one" = $(git hash-object --stdin <one) &&
- 	test "$two" = $(git hash-object --stdin <dir/two) &&
- 	differs=$(git diff-index --cached HEAD) &&
--	test -z "$differs" || {
--		echo Oops "$differs"
--		false
--	}
-+	verbose test -z "$differs"
- '
- 
- test_expect_success 'checkout with autocrlf=input' '
-@@ -187,10 +169,7 @@ test_expect_success 'checkout with autocrlf=input' '
- 	test "$one" = $(git hash-object --stdin <one) &&
- 	test "$two" = $(git hash-object --stdin <dir/two) &&
- 	differs=$(git diff-index --cached HEAD) &&
--	test -z "$differs" || {
--		echo Oops "$differs"
--		false
--	}
-+	verbose test -z "$differs"
- '
- 
- test_expect_success 'apply patch (autocrlf=input)' '
-@@ -200,10 +179,7 @@ test_expect_success 'apply patch (autocrlf=input)' '
- 	git read-tree --reset -u HEAD &&
- 
- 	git apply patch.file &&
--	test "$patched" = "$(git hash-object --stdin <one)" || {
--		echo "Eh?  apply without index"
--		false
--	}
-+	verbose test "$patched" = "$(git hash-object --stdin <one)"
- '
- 
- test_expect_success 'apply patch --cached (autocrlf=input)' '
-@@ -213,10 +189,7 @@ test_expect_success 'apply patch --cached (autocrlf=input)' '
- 	git read-tree --reset -u HEAD &&
- 
- 	git apply --cached patch.file &&
--	test "$patched" = $(git rev-parse :one) || {
--		echo "Eh?  apply with --cached"
--		false
--	}
-+	verbose test "$patched" = $(git rev-parse :one)
- '
- 
- test_expect_success 'apply patch --index (autocrlf=input)' '
-@@ -226,11 +199,8 @@ test_expect_success 'apply patch --index (autocrlf=input)' '
- 	git read-tree --reset -u HEAD &&
- 
- 	git apply --index patch.file &&
--	test "$patched" = $(git rev-parse :one) &&
--	test "$patched" = $(git hash-object --stdin <one) || {
--		echo "Eh?  apply with --index"
--		false
--	}
-+	verbose test "$patched" = $(git rev-parse :one) &&
-+	verbose test "$patched" = $(git hash-object --stdin <one)
- '
- 
- test_expect_success 'apply patch (autocrlf=true)' '
-@@ -240,10 +210,7 @@ test_expect_success 'apply patch (autocrlf=true)' '
- 	git read-tree --reset -u HEAD &&
- 
- 	git apply patch.file &&
--	test "$patched" = "$(remove_cr <one | git hash-object --stdin)" || {
--		echo "Eh?  apply without index"
--		false
--	}
-+	verbose test "$patched" = "$(remove_cr <one | git hash-object --stdin)"
- '
- 
- test_expect_success 'apply patch --cached (autocrlf=true)' '
-@@ -253,10 +220,7 @@ test_expect_success 'apply patch --cached (autocrlf=true)' '
- 	git read-tree --reset -u HEAD &&
- 
- 	git apply --cached patch.file &&
--	test "$patched" = $(git rev-parse :one) || {
--		echo "Eh?  apply without index"
--		false
--	}
-+	verbose test "$patched" = $(git rev-parse :one)
- '
- 
- test_expect_success 'apply patch --index (autocrlf=true)' '
-@@ -266,11 +230,8 @@ test_expect_success 'apply patch --index (autocrlf=true)' '
- 	git read-tree --reset -u HEAD &&
- 
- 	git apply --index patch.file &&
--	test "$patched" = $(git rev-parse :one) &&
--	test "$patched" = "$(remove_cr <one | git hash-object --stdin)" || {
--		echo "Eh?  apply with --index"
--		false
--	}
-+	verbose test "$patched" = $(git rev-parse :one) &&
-+	verbose test "$patched" = "$(remove_cr <one | git hash-object --stdin)"
- '
- 
- test_expect_success '.gitattributes says two is binary' '
-@@ -326,21 +287,8 @@ test_expect_success '.gitattributes says two and three are text' '
- 	echo "t* crlf" >.gitattributes &&
- 	git read-tree --reset -u HEAD &&
- 
--	if has_cr dir/two
+-	if git apply patch.1
 -	then
--		: happy
--	else
--		echo "Huh?"
--		false
--	fi &&
--
--	if has_cr three
--	then
--		: happy
--	else
--		echo "Huh?"
--		false
+-		echo "Eh? Why?"
+-		exit 1
 -	fi
-+	verbose has_cr dir/two &&
-+	verbose has_cr three
+-
++	test_must_fail git apply patch.1 &&
+ 	test_cmp file1 saved.file1
  '
  
- test_expect_success 'in-tree .gitattributes (1)' '
-@@ -352,17 +300,8 @@ test_expect_success 'in-tree .gitattributes (1)' '
- 	rm -rf tmp one dir .gitattributes patch.file three &&
- 	git read-tree --reset -u HEAD &&
+ test_expect_success 'apply without --reject should fail' '
  
--	if has_cr one
+-	if git apply --verbose patch.1
 -	then
--		echo "Eh? one should not have CRLF"
--		false
--	else
--		: happy
--	fi &&
--	has_cr three || {
--		echo "Eh? three should still have CRLF"
--		false
--	}
-+	test_must_fail has_cr one &&
-+	verbose has_cr three
+-		echo "Eh? Why?"
+-		exit 1
+-	fi
+-
++	test_must_fail git apply --verbose patch.1 &&
+ 	test_cmp file1 saved.file1
  '
  
- test_expect_success 'in-tree .gitattributes (2)' '
-@@ -371,17 +310,8 @@ test_expect_success 'in-tree .gitattributes (2)' '
- 	git read-tree --reset HEAD &&
- 	git checkout-index -f -q -u -a &&
+@@ -81,21 +71,11 @@ test_expect_success 'apply with --reject should fail but update the file' '
+ 	cat saved.file1 >file1 &&
+ 	rm -f file1.rej file2.rej &&
  
--	if has_cr one
+-	if git apply --reject patch.1
 -	then
--		echo "Eh? one should not have CRLF"
--		false
--	else
--		: happy
--	fi &&
--	has_cr three || {
--		echo "Eh? three should still have CRLF"
--		false
--	}
-+	test_must_fail has_cr one &&
-+	verbose has_cr three
- '
+-		echo "succeeds with --reject?"
+-		exit 1
+-	fi
+-
++	test_must_fail git apply --reject patch.1 &&
+ 	test_cmp file1 expected &&
  
- test_expect_success 'in-tree .gitattributes (3)' '
-@@ -391,17 +321,8 @@ test_expect_success 'in-tree .gitattributes (3)' '
- 	git checkout-index -u .gitattributes &&
- 	git checkout-index -u one dir/two three &&
- 
--	if has_cr one
+ 	cat file1.rej &&
+-
+-	if test -f file2.rej
 -	then
--		echo "Eh? one should not have CRLF"
--		false
--	else
--		: happy
--	fi &&
--	has_cr three || {
--		echo "Eh? three should still have CRLF"
--		false
--	}
-+	test_must_fail has_cr one &&
-+	verbose has_cr three
+-		echo "file2 should not have been touched"
+-		exit 1
+-	fi
++	test_path_is_missing file2.rej
  '
  
- test_expect_success 'in-tree .gitattributes (4)' '
-@@ -411,17 +332,8 @@ test_expect_success 'in-tree .gitattributes (4)' '
- 	git checkout-index -u one dir/two three &&
- 	git checkout-index -u .gitattributes &&
+ test_expect_success 'apply with --reject should fail but update the file' '
+@@ -103,25 +83,12 @@ test_expect_success 'apply with --reject should fail but update the file' '
+ 	cat saved.file1 >file1 &&
+ 	rm -f file1.rej file2.rej file2 &&
  
--	if has_cr one
+-	if git apply --reject patch.2 >rejects
 -	then
--		echo "Eh? one should not have CRLF"
--		false
--	else
--		: happy
--	fi &&
--	has_cr three || {
--		echo "Eh? three should still have CRLF"
--		false
+-		echo "succeeds with --reject?"
+-		exit 1
+-	fi
+-
+-	test -f file1 && {
+-		echo "file1 still exists?"
+-		exit 1
 -	}
-+	test_must_fail has_cr one &&
-+	verbose has_cr three
++	test_must_fail git apply --reject patch.2 >rejects &&
++	test_path_is_missing file1 &&
+ 	test_cmp file2 expected &&
+ 
+ 	cat file2.rej &&
+-
+-	if test -f file1.rej
+-	then
+-		echo "file2 should not have been touched"
+-		exit 1
+-	fi
++	test_path_is_missing file1.rej
+ 
  '
  
- test_expect_success 'checkout with existing .gitattributes' '
+@@ -130,25 +97,12 @@ test_expect_success 'the same test with --verbose' '
+ 	cat saved.file1 >file1 &&
+ 	rm -f file1.rej file2.rej file2 &&
+ 
+-	if git apply --reject --verbose patch.2 >rejects
+-	then
+-		echo "succeeds with --reject?"
+-		exit 1
+-	fi
+-
+-	test -f file1 && {
+-		echo "file1 still exists?"
+-		exit 1
+-	}
++	test_must_fail git apply --reject --verbose patch.2 >rejects &&
++	test_path_is_missing file1 &&
+ 	test_cmp file2 expected &&
+ 
+ 	cat file2.rej &&
+-
+-	if test -f file1.rej
+-	then
+-		echo "file2 should not have been touched"
+-		exit 1
+-	fi
++	test_path_is_missing file1.rej
+ 
+ '
+ 
 -- 
 2.3.3.520.g3cfbb5d
