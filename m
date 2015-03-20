@@ -1,157 +1,93 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH 26/27] t/*svn*: fix moderate &&-chain breakage
-Date: Fri, 20 Mar 2015 15:32:55 +0100
-Message-ID: <317e6b1e70f3e1c50d62207c53f4d038ad027c9d.1426861743.git.git@drmicha.warpmail.net>
-References: <550C2E7B.3030203@drmicha.warpmail.net>
-Cc: Jeff King <peff@peff.net>, Eric Wong <normalperson@yhbt.net>
+From: Thomas Gummerer <t.gummerer@gmail.com>
+Subject: [PATCH] t1700: make test pass with index-v4
+Date: Fri, 20 Mar 2015 16:09:24 +0100
+Message-ID: <1426864165-7334-1-git-send-email-t.gummerer@gmail.com>
+Cc: Thomas Gummerer <t.gummerer@gmail.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 20 15:33:14 2015
+X-From: git-owner@vger.kernel.org Fri Mar 20 16:09:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YYxyy-0004HY-HA
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Mar 2015 15:33:04 +0100
+	id 1YYyYW-0007po-0S
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Mar 2015 16:09:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751564AbbCTOc7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Mar 2015 10:32:59 -0400
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:55431 "EHLO
-	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751131AbbCTOc6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Mar 2015 10:32:58 -0400
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailout.nyi.internal (Postfix) with ESMTP id EF49720A91
-	for <git@vger.kernel.org>; Fri, 20 Mar 2015 10:32:55 -0400 (EDT)
-Received: from frontend1 ([10.202.2.160])
-  by compute4.internal (MEProxy); Fri, 20 Mar 2015 10:32:58 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=
-	x-sasl-enc:from:to:cc:subject:date:message-id:in-reply-to
-	:references; s=mesmtp; bh=uyLZ0HLRlx/8CBTJy8ql6id6jfk=; b=CNzCy/
-	13KH/MaGDbcOeD5NP0lH/dgHunhmZsh4k6bkcl/EhUd2Y2qGBMyot4WI4ps8H1ki
-	td0hY3mGhOS0NlQSkJEQsANXjYn20+0s7DOifRfDuJIO/gjQLNmhF5saBk0toTZQ
-	KTa9BaJ2pIQXXHbLKAEE21y19LxKdEJiN+01o=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=x-sasl-enc:from:to:cc:subject:date
-	:message-id:in-reply-to:references; s=smtpout; bh=uyLZ0HLRlx/8CB
-	TJy8ql6id6jfk=; b=qLcRskfKcKtD338bkRnSXOhBz6bGN0Os4ErfwKv5ZdIkyA
-	8xewFO+B0GP/G+La6PY2hXt/si1brLf7iBwWfGkOstWt7BUa/yRJckrfnRtU2tUD
-	DLox/MJD2yhF90+Af6jYVQR5Yqa0i3ItNk080TQo+LvVNVXvbFqsQ+19guAM0=
-X-Sasl-enc: qZJUFP3gRCdrtO5hFhrT2yozcKa+472nw/aUYrf0WWmm 1426861977
-Received: from localhost (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id C2798C00013;
-	Fri, 20 Mar 2015 10:32:57 -0400 (EDT)
-X-Mailer: git-send-email 2.3.3.438.g7254779
-In-Reply-To: <550C2E7B.3030203@drmicha.warpmail.net>
+	id S1751196AbbCTPJo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Mar 2015 11:09:44 -0400
+Received: from mail-wi0-f173.google.com ([209.85.212.173]:38299 "EHLO
+	mail-wi0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751043AbbCTPJn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Mar 2015 11:09:43 -0400
+Received: by wibgn9 with SMTP id gn9so17228900wib.1
+        for <git@vger.kernel.org>; Fri, 20 Mar 2015 08:09:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=mM7y+FyhDX9ZzLF/yrdjl+YLRqn0nsIuK2YtkTv2mFg=;
+        b=zH3pn13uICPRTPxHBGo2QKfFwjEz4NTLgIBrS9MnqLPMSuCk39JYn+IwdFl1tTIPNu
+         lCQk+R+VoF3sEpavhjQrwkZD+wLSyQXh03TTLeIUzGX745jcTxl2Hzo11hsXAERUdjtj
+         Pq6hCO6xlAFHkTJG+Det5HZ0wstz0lQznsoefLEhdSDlII5S5/hmuXsGyWALexhaV20T
+         7JmpJhQ5vV54U6csUAaML9rp/ZNC695Kb68I6N1FsTOdNacY+QzfhKy6mPPZkUIgtSDj
+         A7ppqz3Q11edCu6GVwBzJ4+AEVZsKvsER+4ZAI99eUwbLk3BGmMRg23CcU4d0o0KrjLr
+         oPcA==
+X-Received: by 10.194.177.195 with SMTP id cs3mr158586121wjc.141.1426864182018;
+        Fri, 20 Mar 2015 08:09:42 -0700 (PDT)
+Received: from localhost (213-66-41-37-no99.tbcn.telia.com. [213.66.41.37])
+        by mx.google.com with ESMTPSA id n3sm6730269wja.36.2015.03.20.08.09.40
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 20 Mar 2015 08:09:41 -0700 (PDT)
+X-Mailer: git-send-email 2.3.3.377.gdac1145
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265907>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265908>
 
-All of these cases are moderate since they would most probably not
-lead to missed failing tests: Either they would fail otherwise,
-or fail a rm in test_when_finished only.
+The different index versions have different sha-1 checksums.  Those
+checksums are checked in t1700, which makes it fail when run with index
+v4.  Fix it.
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
- t/t2026-prune-linked-checkouts.sh |  4 ++--
- t/t9158-git-svn-mergeinfo.sh      |  4 ++--
- t/t9161-git-svn-mergeinfo-push.sh | 10 +++++-----
- 3 files changed, 9 insertions(+), 9 deletions(-)
+ t/t1700-split-index.sh | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/t/t2026-prune-linked-checkouts.sh b/t/t2026-prune-linked-checkouts.sh
-index 2936d52..e885baf 100755
---- a/t/t2026-prune-linked-checkouts.sh
-+++ b/t/t2026-prune-linked-checkouts.sh
-@@ -65,7 +65,7 @@ test_expect_success 'prune directories with gitdir pointing to nowhere' '
- '
+diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
+index 94fb473..92f7298 100755
+--- a/t/t1700-split-index.sh
++++ b/t/t1700-split-index.sh
+@@ -10,9 +10,18 @@ sane_unset GIT_TEST_SPLIT_INDEX
+ test_expect_success 'enable split index' '
+ 	git update-index --split-index &&
+ 	test-dump-split-index .git/index >actual &&
++	indexversion=$(test-index-version <.git/index) &&
++	if test "$indexversion" = "4"
++	then
++		own=432ef4b63f32193984f339431fd50ca796493569
++		base=508851a7f0dfa8691e9f69c7f055865389012491
++	else
++		own=8299b0bcd1ac364e5f1d7768efb62fa2da79a339
++		base=39d890139ee5356c7ef572216cebcd27aa41f9df
++	fi &&
+ 	cat >expect <<EOF &&
+-own 8299b0bcd1ac364e5f1d7768efb62fa2da79a339
+-base 39d890139ee5356c7ef572216cebcd27aa41f9df
++own $own
++base $base
+ replacements:
+ deletions:
+ EOF
+@@ -30,7 +39,7 @@ EOF
  
- test_expect_success 'not prune locked checkout' '
--	test_when_finished rm -r .git/worktrees
-+	test_when_finished rm -r .git/worktrees &&
- 	mkdir -p .git/worktrees/ghi &&
- 	: >.git/worktrees/ghi/locked &&
- 	git prune --worktrees &&
-@@ -73,7 +73,7 @@ test_expect_success 'not prune locked checkout' '
- '
- 
- test_expect_success 'not prune recent checkouts' '
--	test_when_finished rm -r .git/worktrees
-+	test_when_finished rm -r .git/worktrees &&
- 	mkdir zz &&
- 	mkdir -p .git/worktrees/jlm &&
- 	echo "$(pwd)"/zz >.git/worktrees/jlm/gitdir &&
-diff --git a/t/t9158-git-svn-mergeinfo.sh b/t/t9158-git-svn-mergeinfo.sh
-index 8c9539e..13f78f2 100755
---- a/t/t9158-git-svn-mergeinfo.sh
-+++ b/t/t9158-git-svn-mergeinfo.sh
-@@ -34,7 +34,7 @@ test_expect_success 'change svn:mergeinfo' '
- '
- 
- test_expect_success 'verify svn:mergeinfo' '
--	mergeinfo=$(svn_cmd propget svn:mergeinfo "$svnrepo"/trunk)
-+	mergeinfo=$(svn_cmd propget svn:mergeinfo "$svnrepo"/trunk) &&
- 	test "$mergeinfo" = "/branches/foo:1-10"
- '
- 
-@@ -46,7 +46,7 @@ test_expect_success 'change svn:mergeinfo multiline' '
- '
- 
- test_expect_success 'verify svn:mergeinfo multiline' '
--	mergeinfo=$(svn_cmd propget svn:mergeinfo "$svnrepo"/trunk)
-+	mergeinfo=$(svn_cmd propget svn:mergeinfo "$svnrepo"/trunk) &&
- 	test "$mergeinfo" = "/branches/bar:1-10
- /branches/other:3-5,8,10-11"
- '
-diff --git a/t/t9161-git-svn-mergeinfo-push.sh b/t/t9161-git-svn-mergeinfo-push.sh
-index 6cb0909..f113aca 100755
---- a/t/t9161-git-svn-mergeinfo-push.sh
-+++ b/t/t9161-git-svn-mergeinfo-push.sh
-@@ -24,7 +24,7 @@ test_expect_success 'propagate merge information' '
- 	'
- 
- test_expect_success 'check svn:mergeinfo' '
--	mergeinfo=$(svn_cmd propget svn:mergeinfo "$svnrepo"/branches/svnb1)
-+	mergeinfo=$(svn_cmd propget svn:mergeinfo "$svnrepo"/branches/svnb1) &&
- 	test "$mergeinfo" = "/branches/svnb2:3,8"
- 	'
- 
-@@ -34,7 +34,7 @@ test_expect_success 'merge another branch' '
- 	'
- 
- test_expect_success 'check primary parent mergeinfo respected' '
--	mergeinfo=$(svn_cmd propget svn:mergeinfo "$svnrepo"/branches/svnb1)
-+	mergeinfo=$(svn_cmd propget svn:mergeinfo "$svnrepo"/branches/svnb1) &&
- 	test "$mergeinfo" = "/branches/svnb2:3,8
- /branches/svnb3:4,9"
- 	'
-@@ -45,7 +45,7 @@ test_expect_success 'merge existing merge' '
- 	'
- 
- test_expect_success "check both parents' mergeinfo respected" '
--	mergeinfo=$(svn_cmd propget svn:mergeinfo "$svnrepo"/branches/svnb1)
-+	mergeinfo=$(svn_cmd propget svn:mergeinfo "$svnrepo"/branches/svnb1) &&
- 	test "$mergeinfo" = "/branches/svnb2:3,8
- /branches/svnb3:4,9
- /branches/svnb4:5-6,10-12
-@@ -70,7 +70,7 @@ test_expect_success 'second forward merge' '
- 	'
- 
- test_expect_success 'check new mergeinfo added' '
--	mergeinfo=$(svn_cmd propget svn:mergeinfo "$svnrepo"/branches/svnb1)
-+	mergeinfo=$(svn_cmd propget svn:mergeinfo "$svnrepo"/branches/svnb1) &&
- 	test "$mergeinfo" = "/branches/svnb2:3,8,16-17
- /branches/svnb3:4,9
- /branches/svnb4:5-6,10-12
-@@ -84,7 +84,7 @@ test_expect_success 'reintegration merge' '
- 	'
- 
- test_expect_success 'check reintegration mergeinfo' '
--	mergeinfo=$(svn_cmd propget svn:mergeinfo "$svnrepo"/branches/svnb4)
-+	mergeinfo=$(svn_cmd propget svn:mergeinfo "$svnrepo"/branches/svnb4) &&
- 	test "$mergeinfo" = "/branches/svnb1:2-4,7-9,13-18
- /branches/svnb2:3,8,16-17
- /branches/svnb3:4,9
+ 	test-dump-split-index .git/index | sed "/^own/d" >actual &&
+ 	cat >expect <<EOF &&
+-base 39d890139ee5356c7ef572216cebcd27aa41f9df
++base $base
+ 100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	one
+ replacements:
+ deletions:
 -- 
-2.3.3.438.g7254779
+2.3.3.377.gdac1145
