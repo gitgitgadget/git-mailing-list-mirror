@@ -1,7 +1,7 @@
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH 13/16] refs: convert for_each_reflog to struct object_id
-Date: Fri, 20 Mar 2015 19:28:33 +0000
-Message-ID: <1426879716-47835-14-git-send-email-sandals@crustytoothpaste.net>
+Subject: [PATCH 11/16] refs: convert for_each_rawref to struct object_id.
+Date: Fri, 20 Mar 2015 19:28:31 +0000
+Message-ID: <1426879716-47835-12-git-send-email-sandals@crustytoothpaste.net>
 References: <1426879716-47835-1-git-send-email-sandals@crustytoothpaste.net>
 Cc: Andreas Schwab <schwab@linux-m68k.org>,
 	"Kyle J. McKay" <mackyle@gmail.com>,
@@ -9,26 +9,26 @@ Cc: Andreas Schwab <schwab@linux-m68k.org>,
 	Johannes Sixt <j6t@kdbg.org>, David Kastrup <dak@gnu.org>,
 	James Denholm <nod.helm@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 20 20:29:35 2015
+X-From: git-owner@vger.kernel.org Fri Mar 20 20:29:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YZ2bk-0001va-21
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Mar 2015 20:29:24 +0100
+	id 1YZ2bl-0001va-SO
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Mar 2015 20:29:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751550AbbCTT3G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Mar 2015 15:29:06 -0400
+	id S1751624AbbCTT3T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Mar 2015 15:29:19 -0400
 Received: from castro.crustytoothpaste.net ([173.11.243.49]:50668 "EHLO
 	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751397AbbCTT25 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Mar 2015 15:28:57 -0400
+	by vger.kernel.org with ESMTP id S1751363AbbCTT2z (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Mar 2015 15:28:55 -0400
 Received: from vauxhall.crustytoothpaste.net (wsip-184-177-1-73.no.no.cox.net [184.177.1.73])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 4812328094;
-	Fri, 20 Mar 2015 19:28:56 +0000 (UTC)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id A3E2228092;
+	Fri, 20 Mar 2015 19:28:54 +0000 (UTC)
 X-Mailer: git-send-email 2.2.1.209.g41e5f3a
 In-Reply-To: <1426879716-47835-1-git-send-email-sandals@crustytoothpaste.net>
 X-Spam-Score: 0.163 () BAYES_00,RDNS_DYNAMIC
@@ -36,113 +36,212 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265951>
+
+Convert callbacks to use struct object_id internally as well.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/fsck.c   |  2 +-
- builtin/reflog.c |  4 ++--
- refs.c           | 10 +++++-----
- refs.h           |  2 +-
- revision.c       |  2 +-
- 5 files changed, 10 insertions(+), 10 deletions(-)
+ builtin/branch.c       |  4 ++--
+ builtin/describe.c     | 12 ++++++------
+ builtin/for-each-ref.c |  4 ++--
+ builtin/fsck.c         | 16 ++++++++--------
+ refs.c                 | 10 +++++-----
+ refs.h                 |  2 +-
+ 6 files changed, 24 insertions(+), 24 deletions(-)
 
+diff --git a/builtin/branch.c b/builtin/branch.c
+index dc6f0b2..e591651 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -328,7 +328,7 @@ static int match_patterns(const char **pattern, const char *refname)
+ 	return 0;
+ }
+ 
+-static int append_ref(const char *refname, const unsigned char *sha1, int flags, void *cb_data)
++static int append_ref(const char *refname, const struct object_id *oid, int flags, void *cb_data)
+ {
+ 	struct append_ref_cb *cb = (struct append_ref_cb *)(cb_data);
+ 	struct ref_list *ref_list = cb->ref_list;
+@@ -365,7 +365,7 @@ static int append_ref(const char *refname, const unsigned char *sha1, int flags,
+ 
+ 	commit = NULL;
+ 	if (ref_list->verbose || ref_list->with_commit || merge_filter != NO_FILTER) {
+-		commit = lookup_commit_reference_gently(sha1, 1);
++		commit = lookup_commit_reference_gently(oid->hash, 1);
+ 		if (!commit) {
+ 			cb->ret = error(_("branch '%s' does not point at a commit"), refname);
+ 			return 0;
+diff --git a/builtin/describe.c b/builtin/describe.c
+index 9103193..f88ad16 100644
+--- a/builtin/describe.c
++++ b/builtin/describe.c
+@@ -119,10 +119,10 @@ static void add_to_known_names(const char *path,
+ 	}
+ }
+ 
+-static int get_name(const char *path, const unsigned char *sha1, int flag, void *cb_data)
++static int get_name(const char *path, const struct object_id *oid, int flag, void *cb_data)
+ {
+ 	int is_tag = starts_with(path, "refs/tags/");
+-	unsigned char peeled[20];
++	struct object_id peeled;
+ 	int is_annotated, prio;
+ 
+ 	/* Reject anything outside refs/tags/ unless --all */
+@@ -134,10 +134,10 @@ static int get_name(const char *path, const unsigned char *sha1, int flag, void
+ 		return 0;
+ 
+ 	/* Is it annotated? */
+-	if (!peel_ref(path, peeled)) {
+-		is_annotated = !!hashcmp(sha1, peeled);
++	if (!peel_ref(path, peeled.hash)) {
++		is_annotated = !!oidcmp(oid, &peeled);
+ 	} else {
+-		hashcpy(peeled, sha1);
++		oidcpy(&peeled, oid);
+ 		is_annotated = 0;
+ 	}
+ 
+@@ -154,7 +154,7 @@ static int get_name(const char *path, const unsigned char *sha1, int flag, void
+ 	else
+ 		prio = 0;
+ 
+-	add_to_known_names(all ? path + 5 : path + 10, peeled, prio, sha1);
++	add_to_known_names(all ? path + 5 : path + 10, peeled.hash, prio, oid->hash);
+ 	return 0;
+ }
+ 
+diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
+index 008513c..36dc48d 100644
+--- a/builtin/for-each-ref.c
++++ b/builtin/for-each-ref.c
+@@ -840,7 +840,7 @@ struct grab_ref_cbdata {
+  * A call-back given to for_each_ref().  Filter refs and keep them for
+  * later object processing.
+  */
+-static int grab_single_ref(const char *refname, const unsigned char *sha1, int flag, void *cb_data)
++static int grab_single_ref(const char *refname, const struct object_id *oid, int flag, void *cb_data)
+ {
+ 	struct grab_ref_cbdata *cb = cb_data;
+ 	struct refinfo *ref;
+@@ -878,7 +878,7 @@ static int grab_single_ref(const char *refname, const unsigned char *sha1, int f
+ 	 */
+ 	ref = xcalloc(1, sizeof(*ref));
+ 	ref->refname = xstrdup(refname);
+-	hashcpy(ref->objectname, sha1);
++	hashcpy(ref->objectname, oid->hash);
+ 	ref->flag = flag;
+ 
+ 	cnt = cb->grab_cnt;
 diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 05616a0..91eb4f6 100644
+index a27515a..05616a0 100644
 --- a/builtin/fsck.c
 +++ b/builtin/fsck.c
-@@ -476,7 +476,7 @@ static int fsck_handle_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
+@@ -25,7 +25,7 @@ static int include_reflogs = 1;
+ static int check_full = 1;
+ static int check_strict;
+ static int keep_cache_objects;
+-static unsigned char head_sha1[20];
++static struct object_id head_oid;
+ static const char *head_points_at;
+ static int errors_found;
+ static int write_lost_and_found;
+@@ -482,13 +482,13 @@ static int fsck_handle_reflog(const char *logname, const unsigned char *sha1, in
  	return 0;
  }
  
--static int fsck_handle_reflog(const char *logname, const unsigned char *sha1, int flag, void *cb_data)
-+static int fsck_handle_reflog(const char *logname, const struct object_id *oid, int flag, void *cb_data)
+-static int fsck_handle_ref(const char *refname, const unsigned char *sha1, int flag, void *cb_data)
++static int fsck_handle_ref(const char *refname, const struct object_id *oid, int flag, void *cb_data)
  {
- 	for_each_reflog_ent(logname, fsck_handle_reflog_ent, NULL);
- 	return 0;
-diff --git a/builtin/reflog.c b/builtin/reflog.c
-index 66ee402..bf03fd7 100644
---- a/builtin/reflog.c
-+++ b/builtin/reflog.c
-@@ -449,14 +449,14 @@ static int expire_reflog(const char *ref, const unsigned char *sha1, int unused,
- 	return status;
- }
+ 	struct object *obj;
  
--static int collect_reflog(const char *ref, const unsigned char *sha1, int unused, void *cb_data)
-+static int collect_reflog(const char *ref, const struct object_id *oid, int unused, void *cb_data)
+-	obj = parse_object(sha1);
++	obj = parse_object(oid->hash);
+ 	if (!obj) {
+-		error("%s: invalid sha1 pointer %s", refname, sha1_to_hex(sha1));
++		error("%s: invalid sha1 pointer %s", refname, oid_to_hex(oid));
+ 		errors_found |= ERROR_REACHABLE;
+ 		/* We'll continue with the rest despite the error.. */
+ 		return 0;
+@@ -504,8 +504,8 @@ static int fsck_handle_ref(const char *refname, const unsigned char *sha1, int f
+ 
+ static void get_default_heads(void)
  {
- 	struct collected_reflog *e;
- 	struct collect_reflog_cb *cb = cb_data;
- 	size_t namelen = strlen(ref);
+-	if (head_points_at && !is_null_sha1(head_sha1))
+-		fsck_handle_ref("HEAD", head_sha1, 0, NULL);
++	if (head_points_at && !is_null_oid(&head_oid))
++		fsck_handle_ref("HEAD", &head_oid, 0, NULL);
+ 	for_each_rawref(fsck_handle_ref, NULL);
+ 	if (include_reflogs)
+ 		for_each_reflog(fsck_handle_reflog, NULL);
+@@ -556,7 +556,7 @@ static int fsck_head_link(void)
+ 	if (verbose)
+ 		fprintf(stderr, "Checking HEAD link\n");
  
- 	e = xmalloc(sizeof(*e) + namelen + 1);
--	hashcpy(e->sha1, sha1);
-+	hashcpy(e->sha1, oid->hash);
- 	memcpy(e->reflog, ref, namelen + 1);
- 	ALLOC_GROW(cb->e, cb->nr + 1, cb->alloc);
- 	cb->e[cb->nr++] = e;
+-	head_points_at = resolve_ref_unsafe("HEAD", 0, head_sha1, &flag);
++	head_points_at = resolve_ref_unsafe("HEAD", 0, head_oid.hash, &flag);
+ 	if (!head_points_at)
+ 		return error("Invalid HEAD");
+ 	if (!strcmp(head_points_at, "HEAD"))
+@@ -565,7 +565,7 @@ static int fsck_head_link(void)
+ 	else if (!starts_with(head_points_at, "refs/heads/"))
+ 		return error("HEAD points to something strange (%s)",
+ 			     head_points_at);
+-	if (is_null_sha1(head_sha1)) {
++	if (is_null_oid(&head_oid)) {
+ 		if (null_is_error)
+ 			return error("HEAD: detached HEAD points at nothing");
+ 		fprintf(stderr, "notice: HEAD points to an unborn branch (%s)\n",
 diff --git a/refs.c b/refs.c
-index de7ac1c..bbcb044 100644
+index 1fa2ec0..025b3c0 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -3491,7 +3491,7 @@ int for_each_reflog_ent(const char *refname, each_reflog_ent_fn fn, void *cb_dat
-  * must be empty or end with '/'.  Name will be used as a scratch
-  * space, but its contents will be restored before return.
-  */
--static int do_for_each_reflog(struct strbuf *name, each_ref_fn fn, void *cb_data)
-+static int do_for_each_reflog(struct strbuf *name, each_ref_fn_oid fn, void *cb_data)
+@@ -1793,17 +1793,17 @@ struct warn_if_dangling_data {
+ 	const char *msg_fmt;
+ };
+ 
+-static int warn_if_dangling_symref(const char *refname, const unsigned char *sha1,
++static int warn_if_dangling_symref(const char *refname, const struct object_id *oid,
+ 				   int flags, void *cb_data)
  {
- 	DIR *d = opendir(git_path("logs/%s", name->buf));
- 	int retval = 0;
-@@ -3516,11 +3516,11 @@ static int do_for_each_reflog(struct strbuf *name, each_ref_fn fn, void *cb_data
- 				strbuf_addch(name, '/');
- 				retval = do_for_each_reflog(name, fn, cb_data);
- 			} else {
--				unsigned char sha1[20];
--				if (read_ref_full(name->buf, 0, sha1, NULL))
-+				struct object_id oid;
-+				if (read_ref_full(name->buf, 0, oid.hash, NULL))
- 					retval = error("bad ref for %s", name->buf);
- 				else
--					retval = fn(name->buf, sha1, 0, cb_data);
-+					retval = fn(name->buf, &oid, 0, cb_data);
- 			}
- 			if (retval)
- 				break;
-@@ -3531,7 +3531,7 @@ static int do_for_each_reflog(struct strbuf *name, each_ref_fn fn, void *cb_data
- 	return retval;
+ 	struct warn_if_dangling_data *d = cb_data;
+ 	const char *resolves_to;
+-	unsigned char junk[20];
++	struct object_id junk;
+ 
+ 	if (!(flags & REF_ISSYMREF))
+ 		return 0;
+ 
+-	resolves_to = resolve_ref_unsafe(refname, 0, junk, NULL);
++	resolves_to = resolve_ref_unsafe(refname, 0, junk.hash, NULL);
+ 	if (!resolves_to
+ 	    || (d->refname
+ 		? strcmp(resolves_to, d->refname)
+@@ -2075,9 +2075,9 @@ int for_each_glob_ref(each_ref_fn_oid fn, const char *pattern, void *cb_data)
+ 	return for_each_glob_ref_in(fn, pattern, NULL, cb_data);
  }
  
--int for_each_reflog(each_ref_fn fn, void *cb_data)
-+int for_each_reflog(each_ref_fn_oid fn, void *cb_data)
+-int for_each_rawref(each_ref_fn fn, void *cb_data)
++int for_each_rawref(each_ref_fn_oid fn, void *cb_data)
  {
- 	int retval;
- 	struct strbuf name;
+-	return do_for_each_ref(&ref_cache, "", fn, 0,
++	return do_for_each_ref_oid(&ref_cache, "", fn, 0,
+ 			       DO_FOR_EACH_INCLUDE_BROKEN, cb_data);
+ }
+ 
 diff --git a/refs.h b/refs.h
-index 89217a7..c491c44 100644
+index 6d2d66d..89217a7 100644
 --- a/refs.h
 +++ b/refs.h
-@@ -249,7 +249,7 @@ int for_each_reflog_ent_reverse(const char *refname, each_reflog_ent_fn fn, void
-  * Calls the specified function for each reflog file until it returns nonzero,
-  * and returns the value
-  */
--extern int for_each_reflog(each_ref_fn, void *);
-+extern int for_each_reflog(each_ref_fn_oid, void *);
- 
- #define REFNAME_ALLOW_ONELEVEL 1
- #define REFNAME_REFSPEC_PATTERN 2
-diff --git a/revision.c b/revision.c
-index ffd3528..b491d22 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1283,7 +1283,7 @@ static int handle_one_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
- 	return 0;
+@@ -122,7 +122,7 @@ static inline const char *has_glob_specials(const char *pattern)
  }
  
--static int handle_one_reflog(const char *path, const unsigned char *sha1, int flag, void *cb_data)
-+static int handle_one_reflog(const char *path, const struct object_id *oid, int flag, void *cb_data)
- {
- 	struct all_refs_cb *cb = cb_data;
- 	cb->warned_bad_reflog = 0;
+ /* can be used to learn about broken ref and symref */
+-extern int for_each_rawref(each_ref_fn, void *);
++extern int for_each_rawref(each_ref_fn_oid, void *);
+ 
+ extern void warn_dangling_symref(FILE *fp, const char *msg_fmt, const char *refname);
+ extern void warn_dangling_symrefs(FILE *fp, const char *msg_fmt, const struct string_list *refnames);
 -- 
 2.2.1.209.g41e5f3a
