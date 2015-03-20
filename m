@@ -1,137 +1,150 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 11/25] t: wrap complicated expect_code users in a block
-Date: Fri, 20 Mar 2015 06:12:29 -0400
-Message-ID: <20150320101229.GK12543@peff.net>
+Subject: [PATCH 12/25] t: avoid using ":" for comments
+Date: Fri, 20 Mar 2015 06:12:37 -0400
+Message-ID: <20150320101237.GL12543@peff.net>
 References: <20150320100429.GA17354@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 20 11:12:41 2015
+X-From: git-owner@vger.kernel.org Fri Mar 20 11:12:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YYtux-0005Eq-Lr
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Mar 2015 11:12:40 +0100
+	id 1YYtv5-0005Ml-0n
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Mar 2015 11:12:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751827AbbCTKMf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Mar 2015 06:12:35 -0400
-Received: from cloud.peff.net ([50.56.180.127]:35697 "HELO cloud.peff.net"
+	id S1752000AbbCTKMn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Mar 2015 06:12:43 -0400
+Received: from cloud.peff.net ([50.56.180.127]:35700 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751385AbbCTKMc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Mar 2015 06:12:32 -0400
-Received: (qmail 5851 invoked by uid 102); 20 Mar 2015 10:12:32 -0000
+	id S1751842AbbCTKMk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Mar 2015 06:12:40 -0400
+Received: (qmail 5857 invoked by uid 102); 20 Mar 2015 10:12:40 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 20 Mar 2015 05:12:32 -0500
-Received: (qmail 21572 invoked by uid 107); 20 Mar 2015 10:12:44 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 20 Mar 2015 05:12:40 -0500
+Received: (qmail 21575 invoked by uid 107); 20 Mar 2015 10:12:52 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 20 Mar 2015 06:12:44 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 20 Mar 2015 06:12:29 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 20 Mar 2015 06:12:52 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 20 Mar 2015 06:12:37 -0400
 Content-Disposition: inline
 In-Reply-To: <20150320100429.GA17354@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265886>
 
-If we are expecting a command to produce a particular exit
-code, we can use test_expect_code. However, some cases are
-more complicated, and want to accept one of a range of exit
-codes. For these, we end up with something like:
+The ":" is not a comment marker, but rather a noop command.
+Using it as a comment like:
 
-  cmd;
-  case "$?" in
-  ...
+  : do something
+  cmd1 &&
 
-That unfortunately breaks the &&-chain and fools
---chain-lint. Since these special cases are so few, we can
-wrap them in a block, like this:
+  : something else
+  cmd2
 
-  { cmd; ret=$?; } &&
-  case "$ret" in
-  ...
-
-This accomplishes the same thing, and retains the &&-chain
-(the exit status fed to the && is that of the assignment,
-which should always be true). It's technically longer, but
-it is probably a good thing for unusual code like this to
-stand out.
+breaks the &&-chain, and we would fail to notice if "cmd1"
+failed in this instance. We can just use regular "#"
+comments instead.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- t/t0005-signals.sh              | 4 ++--
- t/t4026-color.sh                | 6 +++---
- t/t5004-archive-corner-cases.sh | 6 ++++--
- t/t5512-ls-remote.sh            | 6 ++++--
- 4 files changed, 13 insertions(+), 9 deletions(-)
+ t/t4104-apply-boundary.sh | 18 +++++++++---------
+ t/t5533-push-cas.sh       |  2 +-
+ 2 files changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/t/t0005-signals.sh b/t/t0005-signals.sh
-index aeea50c..5c5707d 100755
---- a/t/t0005-signals.sh
-+++ b/t/t0005-signals.sh
-@@ -10,8 +10,8 @@ one
- EOF
+diff --git a/t/t4104-apply-boundary.sh b/t/t4104-apply-boundary.sh
+index c97aad1..497afdc 100755
+--- a/t/t4104-apply-boundary.sh
++++ b/t/t4104-apply-boundary.sh
+@@ -18,7 +18,7 @@ test_expect_success setup '
+ 	cat victim >original &&
+ 	git update-index --add victim &&
  
- test_expect_success 'sigchain works' '
--	test-sigchain >actual
--	case "$?" in
-+	{ test-sigchain >actual; ret=$?; } &&
-+	case "$ret" in
- 	143) true ;; # POSIX w/ SIGTERM=15
- 	271) true ;; # ksh w/ SIGTERM=15
- 	  3) true ;; # Windows
-diff --git a/t/t4026-color.sh b/t/t4026-color.sh
-index 4d20fea..2b32c4f 100755
---- a/t/t4026-color.sh
-+++ b/t/t4026-color.sh
-@@ -111,9 +111,9 @@ test_expect_success 'unknown color slots are ignored (branch)' '
+-	: add to the head
++	# add to the head
+ 	for i in a b '"$L"' y
+ 	do
+ 		echo $i
+@@ -27,7 +27,7 @@ test_expect_success setup '
+ 	git diff victim >add-a-patch.with &&
+ 	git diff --unified=0 >add-a-patch.without &&
+ 
+-	: insert at line two
++	# insert at line two
+ 	for i in b a '"$L"' y
+ 	do
+ 		echo $i
+@@ -36,7 +36,7 @@ test_expect_success setup '
+ 	git diff victim >insert-a-patch.with &&
+ 	git diff --unified=0 >insert-a-patch.without &&
+ 
+-	: modify at the head
++	# modify at the head
+ 	for i in a '"$L"' y
+ 	do
+ 		echo $i
+@@ -45,16 +45,16 @@ test_expect_success setup '
+ 	git diff victim >mod-a-patch.with &&
+ 	git diff --unified=0 >mod-a-patch.without &&
+ 
+-	: remove from the head
++	# remove from the head
+ 	for i in '"$L"' y
+ 	do
+ 		echo $i
+ 	done >victim &&
+ 	cat victim >del-a-expect &&
+-	git diff victim >del-a-patch.with
++	git diff victim >del-a-patch.with &&
+ 	git diff --unified=0 >del-a-patch.without &&
+ 
+-	: add to the tail
++	# add to the tail
+ 	for i in b '"$L"' y z
+ 	do
+ 		echo $i
+@@ -63,7 +63,7 @@ test_expect_success setup '
+ 	git diff victim >add-z-patch.with &&
+ 	git diff --unified=0 >add-z-patch.without &&
+ 
+-	: modify at the tail
++	# modify at the tail
+ 	for i in b '"$L"' z
+ 	do
+ 		echo $i
+@@ -72,7 +72,7 @@ test_expect_success setup '
+ 	git diff victim >mod-z-patch.with &&
+ 	git diff --unified=0 >mod-z-patch.without &&
+ 
+-	: remove from the tail
++	# remove from the tail
+ 	for i in b '"$L"'
+ 	do
+ 		echo $i
+@@ -81,7 +81,7 @@ test_expect_success setup '
+ 	git diff victim >del-z-patch.with &&
+ 	git diff --unified=0 >del-z-patch.without
+ 
+-	: done
++	# done
  '
  
- test_expect_success 'unknown color slots are ignored (status)' '
--	git config color.status.nosuchslotwilleverbedefined white || exit
--	git status
--	case $? in 0|1) : ok ;; *) false ;; esac
-+	git config color.status.nosuchslotwilleverbedefined white &&
-+	{ git status; ret=$?; } &&
-+	case $ret in 0|1) : ok ;; *) false ;; esac
- '
+ for with in with without
+diff --git a/t/t5533-push-cas.sh b/t/t5533-push-cas.sh
+index dccf8a6..c402d8d 100755
+--- a/t/t5533-push-cas.sh
++++ b/t/t5533-push-cas.sh
+@@ -14,7 +14,7 @@ setup_srcdst_basic () {
+ }
  
- test_done
-diff --git a/t/t5004-archive-corner-cases.sh b/t/t5004-archive-corner-cases.sh
-index 305bcac..654adda 100755
---- a/t/t5004-archive-corner-cases.sh
-+++ b/t/t5004-archive-corner-cases.sh
-@@ -66,8 +66,10 @@ test_expect_success UNZIP 'zip archive of empty tree is empty' '
- 	# handle the empty repo at all, making our later check of its exit code
- 	# a no-op). But we cannot do anything reasonable except skip the test
- 	# on such platforms anyway, and this is the moral equivalent.
--	"$GIT_UNZIP" "$TEST_DIRECTORY"/t5004/empty.zip
--	expect_code=$?
-+	{
-+		"$GIT_UNZIP" "$TEST_DIRECTORY"/t5004/empty.zip
-+		expect_code=$?
-+	} &&
- 
- 	git archive --format=zip HEAD >empty.zip &&
- 	make_dir extract &&
-diff --git a/t/t5512-ls-remote.sh b/t/t5512-ls-remote.sh
-index 321c3e5..3bd9759 100755
---- a/t/t5512-ls-remote.sh
-+++ b/t/t5512-ls-remote.sh
-@@ -103,8 +103,10 @@ test_expect_success 'confuses pattern as remote when no remote specified' '
- '
- 
- test_expect_success 'die with non-2 for wrong repository even with --exit-code' '
--	git ls-remote --exit-code ./no-such-repository ;# not &&
--	status=$? &&
-+	{
-+		git ls-remote --exit-code ./no-such-repository
-+		status=$?
-+	} &&
- 	test $status != 2 && test $status != 0
- '
- 
+ test_expect_success setup '
+-	: create template repository
++	# create template repository
+ 	test_commit A &&
+ 	test_commit B &&
+ 	test_commit C
 -- 
 2.3.3.520.g3cfbb5d
