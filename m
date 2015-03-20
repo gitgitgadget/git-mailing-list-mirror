@@ -1,7 +1,7 @@
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH 05/16] refs: convert head_ref to struct object_id
-Date: Fri, 20 Mar 2015 19:28:25 +0000
-Message-ID: <1426879716-47835-6-git-send-email-sandals@crustytoothpaste.net>
+Subject: [PATCH 10/16] refs: convert namespaced ref iteration functions to object_id
+Date: Fri, 20 Mar 2015 19:28:30 +0000
+Message-ID: <1426879716-47835-11-git-send-email-sandals@crustytoothpaste.net>
 References: <1426879716-47835-1-git-send-email-sandals@crustytoothpaste.net>
 Cc: Andreas Schwab <schwab@linux-m68k.org>,
 	"Kyle J. McKay" <mackyle@gmail.com>,
@@ -9,26 +9,26 @@ Cc: Andreas Schwab <schwab@linux-m68k.org>,
 	Johannes Sixt <j6t@kdbg.org>, David Kastrup <dak@gnu.org>,
 	James Denholm <nod.helm@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 20 20:29:09 2015
+X-From: git-owner@vger.kernel.org Fri Mar 20 20:29:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YZ2bP-0001gd-6O
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Mar 2015 20:29:03 +0100
+	id 1YZ2bR-0001gd-5a
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Mar 2015 20:29:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751337AbbCTT2w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Mar 2015 15:28:52 -0400
+	id S1751427AbbCTT25 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Mar 2015 15:28:57 -0400
 Received: from castro.crustytoothpaste.net ([173.11.243.49]:50652 "EHLO
 	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751037AbbCTT2s (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Mar 2015 15:28:48 -0400
+	by vger.kernel.org with ESMTP id S1751129AbbCTT2y (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Mar 2015 15:28:54 -0400
 Received: from vauxhall.crustytoothpaste.net (wsip-184-177-1-73.no.no.cox.net [184.177.1.73])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id DD46B28096;
-	Fri, 20 Mar 2015 19:28:47 +0000 (UTC)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id D09902808F;
+	Fri, 20 Mar 2015 19:28:52 +0000 (UTC)
 X-Mailer: git-send-email 2.2.1.209.g41e5f3a
 In-Reply-To: <1426879716-47835-1-git-send-email-sandals@crustytoothpaste.net>
 X-Spam-Score: 0.163 () BAYES_00,RDNS_DYNAMIC
@@ -36,233 +36,206 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265940>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265941>
 
-Convert head_ref and head_ref_submodule to use struct object_id.
-Introduce some wrappers in some of the callers to handle
-incompatibilities between each_ref_fn and each_ref_fn_oid.
+Convert head_ref_namespaced and for_each_namespaced_ref to use struct
+object_id.  Update the various callbacks to use struct object_id
+internally as well.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/show-ref.c |  7 ++++++-
- log-tree.c         |  7 ++++++-
- reachable.c        |  7 ++++++-
- refs.c             | 16 ++++++++--------
- refs.h             |  4 ++--
- revision.c         |  2 +-
- shallow.c          | 19 ++++++++++++++++---
- 7 files changed, 45 insertions(+), 17 deletions(-)
+ http-backend.c | 14 +++++++-------
+ refs.c         | 12 ++++++------
+ refs.h         |  4 ++--
+ upload-pack.c  | 28 ++++++++++++++--------------
+ 4 files changed, 29 insertions(+), 29 deletions(-)
 
-diff --git a/builtin/show-ref.c b/builtin/show-ref.c
-index 5ba1f30..d499f93 100644
---- a/builtin/show-ref.c
-+++ b/builtin/show-ref.c
-@@ -88,6 +88,11 @@ match:
- 	return 0;
+diff --git a/http-backend.c b/http-backend.c
+index b6c0484..e0d6627 100644
+--- a/http-backend.c
++++ b/http-backend.c
+@@ -350,16 +350,16 @@ static void run_service(const char **argv)
+ 		exit(1);
  }
  
-+static int show_ref_oid(const char *refname, const struct object_id *oid, int flag, void *cbdata)
-+{
-+	return show_ref(refname, oid->hash, flag, cbdata);
-+}
-+
- static int add_existing(const char *refname, const unsigned char *sha1, int flag, void *cbdata)
+-static int show_text_ref(const char *name, const unsigned char *sha1,
++static int show_text_ref(const char *name, const struct object_id *oid,
+ 	int flag, void *cb_data)
  {
- 	struct string_list *list = (struct string_list *)cbdata;
-@@ -225,7 +230,7 @@ int cmd_show_ref(int argc, const char **argv, const char *prefix)
+ 	const char *name_nons = strip_namespace(name);
+ 	struct strbuf *buf = cb_data;
+-	struct object *o = parse_object(sha1);
++	struct object *o = parse_object(oid->hash);
+ 	if (!o)
+ 		return 0;
+ 
+-	strbuf_addf(buf, "%s\t%s\n", sha1_to_hex(sha1), name_nons);
++	strbuf_addf(buf, "%s\t%s\n", oid_to_hex(oid), name_nons);
+ 	if (o->type == OBJ_TAG) {
+ 		o = deref_tag(o, name, 0);
+ 		if (!o)
+@@ -402,21 +402,21 @@ static void get_info_refs(char *arg)
+ 	strbuf_release(&buf);
+ }
+ 
+-static int show_head_ref(const char *refname, const unsigned char *sha1,
++static int show_head_ref(const char *refname, const struct object_id *oid,
+ 	int flag, void *cb_data)
+ {
+ 	struct strbuf *buf = cb_data;
+ 
+ 	if (flag & REF_ISSYMREF) {
+-		unsigned char unused[20];
++		struct object_id unused;
+ 		const char *target = resolve_ref_unsafe(refname,
+ 							RESOLVE_REF_READING,
+-							unused, NULL);
++							unused.hash, NULL);
+ 		const char *target_nons = strip_namespace(target);
+ 
+ 		strbuf_addf(buf, "ref: %s\n", target_nons);
+ 	} else {
+-		strbuf_addf(buf, "%s\n", sha1_to_hex(sha1));
++		strbuf_addf(buf, "%s\n", oid_to_hex(oid));
  	}
  
- 	if (show_head)
--		head_ref(show_ref, NULL);
-+		head_ref(show_ref_oid, NULL);
- 	for_each_ref(show_ref, NULL);
- 	if (!found_match) {
- 		if (verify && !quiet)
-diff --git a/log-tree.c b/log-tree.c
-index 51cc695..9288b37 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -135,6 +135,11 @@ static int add_ref_decoration(const char *refname, const unsigned char *sha1, in
  	return 0;
- }
- 
-+static int add_ref_decoration_oid(const char *refname, const struct object_id *oid, int flags, void *cb_data)
-+{
-+	return add_ref_decoration(refname, oid->hash, flags, cb_data);
-+}
-+
- static int add_graft_decoration(const struct commit_graft *graft, void *cb_data)
- {
- 	struct commit *commit = lookup_commit(graft->oid.hash);
-@@ -150,7 +155,7 @@ void load_ref_decorations(int flags)
- 	if (!loaded) {
- 		loaded = 1;
- 		for_each_ref(add_ref_decoration, &flags);
--		head_ref(add_ref_decoration, &flags);
-+		head_ref(add_ref_decoration_oid, &flags);
- 		for_each_commit_graft(add_graft_decoration, NULL);
- 	}
- }
-diff --git a/reachable.c b/reachable.c
-index a647267..d49385a 100644
---- a/reachable.c
-+++ b/reachable.c
-@@ -32,6 +32,11 @@ static int add_one_ref(const char *path, const unsigned char *sha1, int flag, vo
- 	return 0;
- }
- 
-+static int add_one_ref_oid(const char *path, const struct object_id *oid, int flag, void *cb_data)
-+{
-+	return add_one_ref(path, oid->hash, flag, cb_data);
-+}
-+
- /*
-  * The traversal will have already marked us as SEEN, so we
-  * only need to handle any progress reporting here.
-@@ -169,7 +174,7 @@ void mark_reachable_objects(struct rev_info *revs, int mark_reflog,
- 	for_each_ref(add_one_ref, revs);
- 
- 	/* detached HEAD is not included in the list above */
--	head_ref(add_one_ref, revs);
-+	head_ref(add_one_ref_oid, revs);
- 
- 	/* Add all reflog info */
- 	if (mark_reflog)
 diff --git a/refs.c b/refs.c
-index 710bd6a..75d8970 100644
+index 0d9b340..1fa2ec0 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -1931,30 +1931,30 @@ static int do_for_each_ref_oid(struct ref_cache *refs, const char *base,
- 	return do_for_each_entry(refs, base, do_one_ref, &data);
+@@ -2015,27 +2015,27 @@ int for_each_replace_ref(each_ref_fn_oid fn, void *cb_data)
+ 	return do_for_each_ref_oid(&ref_cache, "refs/replace/", fn, 13, 0, cb_data);
  }
  
--static int do_head_ref(const char *submodule, each_ref_fn fn, void *cb_data)
-+static int do_head_ref(const char *submodule, each_ref_fn_oid fn, void *cb_data)
+-int head_ref_namespaced(each_ref_fn fn, void *cb_data)
++int head_ref_namespaced(each_ref_fn_oid fn, void *cb_data)
  {
+ 	struct strbuf buf = STRBUF_INIT;
+ 	int ret = 0;
 -	unsigned char sha1[20];
 +	struct object_id oid;
  	int flag;
  
- 	if (submodule) {
--		if (resolve_gitlink_ref(submodule, "HEAD", sha1) == 0)
--			return fn("HEAD", sha1, 0, cb_data);
-+		if (resolve_gitlink_ref(submodule, "HEAD", oid.hash) == 0)
-+			return fn("HEAD", &oid, 0, cb_data);
+ 	strbuf_addf(&buf, "%sHEAD", get_git_namespace());
+-	if (!read_ref_full(buf.buf, RESOLVE_REF_READING, sha1, &flag))
+-		ret = fn(buf.buf, sha1, flag, cb_data);
++	if (!read_ref_full(buf.buf, RESOLVE_REF_READING, oid.hash, &flag))
++		ret = fn(buf.buf, &oid, flag, cb_data);
+ 	strbuf_release(&buf);
  
- 		return 0;
- 	}
- 
--	if (!read_ref_full("HEAD", RESOLVE_REF_READING, sha1, &flag))
--		return fn("HEAD", sha1, flag, cb_data);
-+	if (!read_ref_full("HEAD", RESOLVE_REF_READING, oid.hash, &flag))
-+		return fn("HEAD", &oid, flag, cb_data);
- 
- 	return 0;
+ 	return ret;
  }
  
--int head_ref(each_ref_fn fn, void *cb_data)
-+int head_ref(each_ref_fn_oid fn, void *cb_data)
+-int for_each_namespaced_ref(each_ref_fn fn, void *cb_data)
++int for_each_namespaced_ref(each_ref_fn_oid fn, void *cb_data)
  {
- 	return do_head_ref(NULL, fn, cb_data);
- }
- 
--int head_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
-+int head_ref_submodule(const char *submodule, each_ref_fn_oid fn, void *cb_data)
- {
- 	return do_head_ref(submodule, fn, cb_data);
+ 	struct strbuf buf = STRBUF_INIT;
+ 	int ret;
+ 	strbuf_addf(&buf, "%srefs/", get_git_namespace());
+-	ret = do_for_each_ref(&ref_cache, buf.buf, fn, 0, 0, cb_data);
++	ret = do_for_each_ref_oid(&ref_cache, buf.buf, fn, 0, 0, cb_data);
+ 	strbuf_release(&buf);
+ 	return ret;
  }
 diff --git a/refs.h b/refs.h
-index 7fe7a39..6c4a8c0 100644
+index 951e465..6d2d66d 100644
 --- a/refs.h
 +++ b/refs.h
-@@ -95,7 +95,7 @@ typedef int each_ref_fn_oid(const char *refname,
-  * modifies the reference also returns a nonzero value to immediately
-  * stop the iteration.
-  */
--extern int head_ref(each_ref_fn, void *);
-+extern int head_ref(each_ref_fn_oid, void *);
- extern int for_each_ref(each_ref_fn, void *);
- extern int for_each_ref_in(const char *, each_ref_fn_oid, void *);
- extern int for_each_tag_ref(each_ref_fn_oid, void *);
-@@ -105,7 +105,7 @@ extern int for_each_replace_ref(each_ref_fn, void *);
- extern int for_each_glob_ref(each_ref_fn, const char *pattern, void *);
- extern int for_each_glob_ref_in(each_ref_fn, const char *pattern, const char* prefix, void *);
+@@ -113,8 +113,8 @@ extern int for_each_tag_ref_submodule(const char *submodule, each_ref_fn_oid fn,
+ extern int for_each_branch_ref_submodule(const char *submodule, each_ref_fn_oid fn, void *cb_data);
+ extern int for_each_remote_ref_submodule(const char *submodule, each_ref_fn_oid fn, void *cb_data);
  
--extern int head_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data);
-+extern int head_ref_submodule(const char *submodule, each_ref_fn_oid fn, void *cb_data);
- extern int for_each_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data);
- extern int for_each_ref_in_submodule(const char *submodule, const char *prefix,
- 		each_ref_fn_oid fn, void *cb_data);
-diff --git a/revision.c b/revision.c
-index 6b9cf3a..7b05c89 100644
---- a/revision.c
-+++ b/revision.c
-@@ -2100,7 +2100,7 @@ static int handle_revision_pseudo_opt(const char *submodule,
- 	 */
- 	if (!strcmp(arg, "--all")) {
- 		handle_refs(submodule, revs, *flags, for_each_ref_submodule);
--		handle_refs(submodule, revs, *flags, head_ref_submodule);
-+		handle_refs_oid(submodule, revs, *flags, head_ref_submodule);
- 		clear_ref_exclusion(&revs->ref_excludes);
- 	} else if (!strcmp(arg, "--branches")) {
- 		handle_refs_oid(submodule, revs, *flags, for_each_branch_ref_submodule);
-diff --git a/shallow.c b/shallow.c
-index 2487203..8ca3256 100644
---- a/shallow.c
-+++ b/shallow.c
-@@ -487,6 +487,13 @@ static int mark_uninteresting(const char *refname,
- 	return 0;
- }
+-extern int head_ref_namespaced(each_ref_fn fn, void *cb_data);
+-extern int for_each_namespaced_ref(each_ref_fn fn, void *cb_data);
++extern int head_ref_namespaced(each_ref_fn_oid fn, void *cb_data);
++extern int for_each_namespaced_ref(each_ref_fn_oid fn, void *cb_data);
  
-+static int mark_uninteresting_oid(const char *refname,
-+				const struct object_id *oid,
-+				int flags, void *cb_data)
-+{
-+	return mark_uninteresting(refname, oid->hash, flags, cb_data);
-+}
-+
- static void post_assign_shallow(struct shallow_info *info,
- 				struct ref_bitmap *ref_bitmap,
- 				int *ref_status);
-@@ -542,7 +549,7 @@ void assign_shallow_commits_to_refs(struct shallow_info *info,
- 	 * connect to old refs. If not (e.g. force ref updates) it'll
- 	 * have to go down to the current shallow commits.
- 	 */
--	head_ref(mark_uninteresting, NULL);
-+	head_ref(mark_uninteresting_oid, NULL);
- 	for_each_ref(mark_uninteresting, NULL);
- 
- 	/* Mark potential bottoms so we won't go out of bound */
-@@ -595,6 +602,12 @@ static int add_ref(const char *refname,
- 	return 0;
- }
- 
-+static int add_ref_oid(const char *refname,
-+		   const struct object_id *oid, int flags, void *cb_data)
-+{
-+	return add_ref(refname, oid->hash, flags, cb_data);
-+}
-+
- static void update_refstatus(int *ref_status, int nr, uint32_t *bitmap)
+ static inline const char *has_glob_specials(const char *pattern)
  {
- 	int i;
-@@ -641,7 +654,7 @@ static void post_assign_shallow(struct shallow_info *info,
- 	info->nr_theirs = dst;
+diff --git a/upload-pack.c b/upload-pack.c
+index 0566ce0..2105bc2 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -681,16 +681,16 @@ static void receive_needs(void)
+ }
  
- 	memset(&ca, 0, sizeof(ca));
--	head_ref(add_ref, &ca);
-+	head_ref(add_ref_oid, &ca);
- 	for_each_ref(add_ref, &ca);
+ /* return non-zero if the ref is hidden, otherwise 0 */
+-static int mark_our_ref(const char *refname, const unsigned char *sha1, int flag, void *cb_data)
++static int mark_our_ref(const char *refname, const struct object_id *oid, int flag, void *cb_data)
+ {
+-	struct object *o = lookup_unknown_object(sha1);
++	struct object *o = lookup_unknown_object(oid->hash);
  
- 	/* Remove unreachable shallow commits from "ours" */
-@@ -675,7 +688,7 @@ int delayed_reachability_test(struct shallow_info *si, int c)
- 		if (!si->commits) {
- 			struct commit_array ca;
- 			memset(&ca, 0, sizeof(ca));
--			head_ref(add_ref, &ca);
-+			head_ref(add_ref_oid, &ca);
- 			for_each_ref(add_ref, &ca);
- 			si->commits = ca.commits;
- 			si->nr_commits = ca.nr;
+ 	if (ref_is_hidden(refname)) {
+ 		o->flags |= HIDDEN_REF;
+ 		return 1;
+ 	}
+ 	if (!o)
+-		die("git upload-pack: cannot find object %s:", sha1_to_hex(sha1));
++		die("git upload-pack: cannot find object %s:", oid_to_hex(oid));
+ 	o->flags |= OUR_REF;
+ 	return 0;
+ }
+@@ -705,15 +705,15 @@ static void format_symref_info(struct strbuf *buf, struct string_list *symref)
+ 		strbuf_addf(buf, " symref=%s:%s", item->string, (char *)item->util);
+ }
+ 
+-static int send_ref(const char *refname, const unsigned char *sha1, int flag, void *cb_data)
++static int send_ref(const char *refname, const struct object_id *oid, int flag, void *cb_data)
+ {
+ 	static const char *capabilities = "multi_ack thin-pack side-band"
+ 		" side-band-64k ofs-delta shallow no-progress"
+ 		" include-tag multi_ack_detailed";
+ 	const char *refname_nons = strip_namespace(refname);
+-	unsigned char peeled[20];
++	struct object_id peeled;
+ 
+-	if (mark_our_ref(refname, sha1, flag, NULL))
++	if (mark_our_ref(refname, oid, flag, NULL))
+ 		return 0;
+ 
+ 	if (capabilities) {
+@@ -721,7 +721,7 @@ static int send_ref(const char *refname, const unsigned char *sha1, int flag, vo
+ 
+ 		format_symref_info(&symref_info, cb_data);
+ 		packet_write(1, "%s %s%c%s%s%s%s agent=%s\n",
+-			     sha1_to_hex(sha1), refname_nons,
++			     oid_to_hex(oid), refname_nons,
+ 			     0, capabilities,
+ 			     allow_tip_sha1_in_want ? " allow-tip-sha1-in-want" : "",
+ 			     stateless_rpc ? " no-done" : "",
+@@ -729,24 +729,24 @@ static int send_ref(const char *refname, const unsigned char *sha1, int flag, vo
+ 			     git_user_agent_sanitized());
+ 		strbuf_release(&symref_info);
+ 	} else {
+-		packet_write(1, "%s %s\n", sha1_to_hex(sha1), refname_nons);
++		packet_write(1, "%s %s\n", oid_to_hex(oid), refname_nons);
+ 	}
+ 	capabilities = NULL;
+-	if (!peel_ref(refname, peeled))
+-		packet_write(1, "%s %s^{}\n", sha1_to_hex(peeled), refname_nons);
++	if (!peel_ref(refname, peeled.hash))
++		packet_write(1, "%s %s^{}\n", oid_to_hex(&peeled), refname_nons);
+ 	return 0;
+ }
+ 
+-static int find_symref(const char *refname, const unsigned char *sha1, int flag,
+-		       void *cb_data)
++static int find_symref(const char *refname, const struct object_id *oid,
++			   int flag, void *cb_data)
+ {
+ 	const char *symref_target;
+ 	struct string_list_item *item;
+-	unsigned char unused[20];
++	struct object_id unused;
+ 
+ 	if ((flag & REF_ISSYMREF) == 0)
+ 		return 0;
+-	symref_target = resolve_ref_unsafe(refname, 0, unused, &flag);
++	symref_target = resolve_ref_unsafe(refname, 0, unused.hash, &flag);
+ 	if (!symref_target || (flag & REF_ISSYMREF) == 0)
+ 		die("'%s' is a symref but it is not?", refname);
+ 	item = string_list_append(cb_data, refname);
 -- 
 2.2.1.209.g41e5f3a
