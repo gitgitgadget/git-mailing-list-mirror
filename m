@@ -1,102 +1,66 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: test &&-chain lint (was: [PATCH 1/5] t5312: test object deletion
- code paths in a corrupted repository)
-Date: Thu, 19 Mar 2015 22:25:32 -0400
-Message-ID: <20150320022532.GA5502@peff.net>
-References: <20150317072750.GA22155@peff.net>
- <20150317072844.GA25191@peff.net>
- <CAPig+cTfqWr9un=4+QGs0jcUaV9U=z5Xyg3-r-D6dABGXUkmzg@mail.gmail.com>
- <20150320013217.GA15302@peff.net>
- <CAPig+cQKhBw8air5y3NJaP5Rx9pXVaz9Lmvhe20AimW7pCsWBw@mail.gmail.com>
- <20150320020851.GC15302@peff.net>
+From: Ray Xie <samuiotoko925@gmail.com>
+Subject: A git hook that does git cherry-pick and push automatically
+Date: Thu, 19 Mar 2015 21:07:28 -0700
+Message-ID: <CAA4Z6SXzekMdPgKKaXqAObPcpFXDWpaQvNhJg6DEsOxbMOy3Lw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Fri Mar 20 03:25:47 2015
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 20 05:07:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YYmd7-0000gk-Cq
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Mar 2015 03:25:45 +0100
+	id 1YYoDe-0003m9-KU
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Mar 2015 05:07:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751190AbbCTCZf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Mar 2015 22:25:35 -0400
-Received: from cloud.peff.net ([50.56.180.127]:35595 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750965AbbCTCZf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Mar 2015 22:25:35 -0400
-Received: (qmail 18050 invoked by uid 102); 20 Mar 2015 02:25:35 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 19 Mar 2015 21:25:35 -0500
-Received: (qmail 19557 invoked by uid 107); 20 Mar 2015 02:25:46 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 19 Mar 2015 22:25:46 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 19 Mar 2015 22:25:32 -0400
-Content-Disposition: inline
-In-Reply-To: <20150320020851.GC15302@peff.net>
+	id S1750914AbbCTEHa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Mar 2015 00:07:30 -0400
+Received: from mail-ie0-f175.google.com ([209.85.223.175]:33021 "EHLO
+	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750782AbbCTEH3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Mar 2015 00:07:29 -0400
+Received: by iecvj10 with SMTP id vj10so84009142iec.0
+        for <git@vger.kernel.org>; Thu, 19 Mar 2015 21:07:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=9hpXbbULYr18Bq7iaSm8EMJLi2HJzhQo86P+1jQftGI=;
+        b=YdTbuywVA8Y6QuWD7gEAX5KXSTTG/9lfi1CpqmHXobTsusrNXUYWcMm/dv24LfHMJ3
+         zqlrbW8ko2Dyei8uqOXXSfmG4z3dsp32CimvAFCUibwLYSKb3HJx8lf7TmRm5QWXuoXD
+         6uekm5TupihQcRu9SaaVf3gvTsQpT0TrF7o5C6KU9C2IphJwe63T9zgqr1mVYDBBFz/d
+         uTwxFnXyKSwL5tL3CfjSNjqIot+IUQYXo6Fg2F8ra1MiZk4usWHLMrTYEul0ruGJOeSc
+         zqWUL3BjyU7jsQWHCiO0FWbuvAb9vcU5GCTx5HlYeVemhOOlAqVneQ44JTDzL0cYtKUe
+         iQ9g==
+X-Received: by 10.50.79.230 with SMTP id m6mr1856077igx.33.1426824448761; Thu,
+ 19 Mar 2015 21:07:28 -0700 (PDT)
+Received: by 10.107.24.66 with HTTP; Thu, 19 Mar 2015 21:07:28 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265860>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265861>
 
-[+cc Jonathan, whose patch I apparently subconsciously copied]
+So today I had a shocking moment while I was doing my cherry-pick,
+after I performed all the pre-checkin duties (the usual build the
+code, run the test to make sure the cherry-pick infact works), I found
+out that my original commit was already cherry-picked, then I found
+out someone in engineering make the decision to do an automate
+cherry-pick from that branch to another so he added a git hook to run
+do cherry-pick and push on every commit, yes, a simple cherry-pick
+then push; mind you, these are not feature / dev branch, these are
+release branches, both of them.
 
-On Thu, Mar 19, 2015 at 10:08:51PM -0400, Jeff King wrote:
+Then after I came back from the shock, made a big protest about how
+this is the worst thing I have seen and I will never live with it, and
+that's why "git cherry-pick" and "git push" are 2 separate commands,
+as any reasonable developer, you do your very best to ensure you are
+not pushing something that is fundamentally broken; however for the
+life of me and talk these few people into senses.
 
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index c096778..02a03d5 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -524,6 +524,21 @@ test_eval_ () {
->  test_run_ () {
->  	test_cleanup=:
->  	expecting_failure=$2
-> +
-> +	if test -n "$GIT_TEST_CHAIN_LINT"; then
-> +		# 117 is unlikely to match the exit code of
-> +		# another part of the chain
-> +		test_eval_ "(exit 117) && $1"
-> +		if test "$?" != 117; then
-> +			# all bets are off for continuing with other tests;
-> +			# we expected none of the rest of the test commands to
-> +			# run, but at least some did. Who knows what weird
-> +			# state we're in? Just bail, and the user can diagnose
-> +			# by running in --verbose mode
-> +			error "bug in the test script: broken &&-chain"
-> +		fi
-> +	fi
-> +
->  	setup_malloc_check
->  	test_eval_ "$1"
->  	eval_ret=$?
-> 
-> This turns up an appalling number of failures, but AFAICT they are all
-> "real" in the sense that the &&-chains are broken. In some cases these
-> are real, but in others the tests are of an older style where they did
-> not expect some early commands to fail (and we would catch their bogus
-> output if they did). E.g., in the patch below, I think the first one is
-> a real potential bug, and the other two are mostly noise. I do not mind
-> setting a rule and fixing all of them, though.
-> 
-> I seem to recall people looked at doing this sort of lint a while ago,
-> but we never ended up committing anything. I wonder if it was because of
-> all of these "false positives".
+So, I am sending this to seek for some expert advice how I can drive
+some sense into these people so they don't screw up my life as an
+developer.
 
-This turns out to be rather annoying to grep for in the list archives,
-but I found at least one discussion:
-
-  http://article.gmane.org/gmane.comp.version-control.git/235913
-
-I don't know why we didn't follow it up then. Perhaps because the patch
-there (which is rather similar to what I have above) was not
-conditional, so whole chunks of the test suite needed fixing. There are
-enough problems that we would probably want to do this conditionally,
-fix them over time, and then finally flip the feature on by default.
-
--Peff
+Regards,
+Desperate developer, Ray.
