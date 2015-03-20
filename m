@@ -1,110 +1,104 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: A git hook that does git cherry-pick and push automatically
-Date: Fri, 20 Mar 2015 00:16:26 -0700
-Message-ID: <20150320071625.GA90632@gmail.com>
-References: <CAA4Z6SXzekMdPgKKaXqAObPcpFXDWpaQvNhJg6DEsOxbMOy3Lw@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: test &&-chain lint (was: [PATCH 1/5] t5312: test object deletion
+ code paths in a corrupted repository)
+Date: Fri, 20 Mar 2015 03:18:23 -0400
+Message-ID: <CAPig+cQ29Ab7-2RWB6HXUk=oikhpF=1J7qnLcw6kqvTR7p_tow@mail.gmail.com>
+References: <20150317072750.GA22155@peff.net>
+	<20150317072844.GA25191@peff.net>
+	<CAPig+cTfqWr9un=4+QGs0jcUaV9U=z5Xyg3-r-D6dABGXUkmzg@mail.gmail.com>
+	<20150320013217.GA15302@peff.net>
+	<CAPig+cQKhBw8air5y3NJaP5Rx9pXVaz9Lmvhe20AimW7pCsWBw@mail.gmail.com>
+	<20150320020851.GC15302@peff.net>
+	<20150320022532.GA5502@peff.net>
+	<20150320051051.GA30803@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Ray Xie <samuiotoko925@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 20 08:16:32 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Mar 20 08:18:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YYrAT-0005B5-Mt
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Mar 2015 08:16:30 +0100
+	id 1YYrCQ-00073q-5Q
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Mar 2015 08:18:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751115AbbCTHQZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Mar 2015 03:16:25 -0400
-Received: from mail-pd0-f179.google.com ([209.85.192.179]:35039 "EHLO
-	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751004AbbCTHQY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Mar 2015 03:16:24 -0400
-Received: by pdbop1 with SMTP id op1so100617189pdb.2
-        for <git@vger.kernel.org>; Fri, 20 Mar 2015 00:16:24 -0700 (PDT)
+	id S1751361AbbCTHS0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Mar 2015 03:18:26 -0400
+Received: from mail-yh0-f45.google.com ([209.85.213.45]:34497 "EHLO
+	mail-yh0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750840AbbCTHSY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Mar 2015 03:18:24 -0400
+Received: by yhch68 with SMTP id h68so36088810yhc.1
+        for <git@vger.kernel.org>; Fri, 20 Mar 2015 00:18:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=mLKE0qlUnyMk1eBw14WsOdxwth/5MJfIAjMjFrVtohc=;
-        b=w3AhbW4UV+KjGN/uMuF2f+cm0QA9MfNrJM40e22S3k5CDF9pttWGWaNzLya+wp/DGL
-         Z/sZZhVrqwUsYrMZ9YohqMkt8QVwZlke9H0tP1+mhIWVI7XUYWABKDoL8eYrCxdhuc+d
-         eC38I7L4PG/4zqWi5WPoYyj6iE/TtXwqOKY1bOHEROfaBzKc31l1xVDYx5VdHsu166Uk
-         XvN9+cYPzYU0SBGRFZ2dAhysoWDHaqg389DLH6SieANMlhYTwk2HjrpkgGyZTuHC54oT
-         0hsGzZopa597yMFRUGnJD49jIf8K6qsPPQoQC8nTBEKYfAyWDnfB/f5TFgYouOCIW46F
-         E3rg==
-X-Received: by 10.66.66.108 with SMTP id e12mr186457044pat.31.1426835784149;
-        Fri, 20 Mar 2015 00:16:24 -0700 (PDT)
-Received: from gmail.com (208-106-56-2.static.sonic.net. [208.106.56.2])
-        by mx.google.com with ESMTPSA id fu14sm6421224pad.44.2015.03.20.00.16.22
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Fri, 20 Mar 2015 00:16:23 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CAA4Z6SXzekMdPgKKaXqAObPcpFXDWpaQvNhJg6DEsOxbMOy3Lw@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=kI3LhIijIwqnzVar1X1ierXnFOWqXEOzsdooTEf7858=;
+        b=nyfduOHZF6L59YXkBe626A2xpRgaMf81lcdtgI6ypQiurS67FZptBPmgIU8embCf4j
+         ampkbvKntEjzPH8C8d+VTxccs0ys13M5fkGi+DE4EWlPNtTdkYjJ1pg5Efrjx1cn0Bi1
+         B/3Wrl8LfNt9Pyl+Tk1lYZ/zOiz97Ftlh0OWbi5ejbdlSDlm7/Cw1k5BHysB5MSCwdfe
+         xQ1gy7kOWHX1advaTLV5LLDuFgLGzrOIof8ae9AJfbRceDYMPISYSpeKfkCRqyP2nR08
+         jR0rXwuWsulf5CjQCU51IL/8rSF/RHmeHQAlmB/v/j6OgLXRbZhSuk+pOxIG7y2eTqLN
+         tn/A==
+X-Received: by 10.236.105.210 with SMTP id k58mr80906082yhg.52.1426835903709;
+ Fri, 20 Mar 2015 00:18:23 -0700 (PDT)
+Received: by 10.170.73.7 with HTTP; Fri, 20 Mar 2015 00:18:23 -0700 (PDT)
+In-Reply-To: <20150320051051.GA30803@peff.net>
+X-Google-Sender-Auth: c_hlTB1NjryNhRS5dg_LFxKiBWA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265866>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265867>
 
-On Thu, Mar 19, 2015 at 09:07:28PM -0700, Ray Xie wrote:
-> So today I had a shocking moment while I was doing my cherry-pick,
-> after I performed all the pre-checkin duties (the usual build the
-> code, run the test to make sure the cherry-pick infact works), I found
-> out that my original commit was already cherry-picked, then I found
-> out someone in engineering make the decision to do an automate
-> cherry-pick from that branch to another so he added a git hook to run
-> do cherry-pick and push on every commit, yes, a simple cherry-pick
-> then push; mind you, these are not feature / dev branch, these are
-> release branches, both of them.
-> 
-> Then after I came back from the shock, made a big protest about how
-> this is the worst thing I have seen and I will never live with it, and
-> that's why "git cherry-pick" and "git push" are 2 separate commands,
-> as any reasonable developer, you do your very best to ensure you are
-> not pushing something that is fundamentally broken; however for the
-> life of me and talk these few people into senses.
-> 
-> So, I am sending this to seek for some expert advice how I can drive
-> some sense into these people so they don't screw up my life as an
-> developer.
-> 
-> Regards,
-> Desperate developer, Ray.
+On Fri, Mar 20, 2015 at 1:10 AM, Jeff King <peff@peff.net> wrote:
+> On Thu, Mar 19, 2015 at 10:25:32PM -0400, Jeff King wrote:
+>> > diff --git a/t/test-lib.sh b/t/test-lib.sh
+>> > index c096778..02a03d5 100644
+>> > --- a/t/test-lib.sh
+>> > +++ b/t/test-lib.sh
+>> > @@ -524,6 +524,21 @@ test_eval_ () {
+>> >  test_run_ () {
+>> > +   if test -n "$GIT_TEST_CHAIN_LINT"; then
+>> > +           # 117 is unlikely to match the exit code of
+>> > +           # another part of the chain
+>> > +           test_eval_ "(exit 117) && $1"
+>> > +           if test "$?" != 117; then
+>> > +                   # all bets are off for continuing with other tests;
+>> > +                   # we expected none of the rest of the test commands to
+>> > +                   # run, but at least some did. Who knows what weird
+>> > +                   # state we're in? Just bail, and the user can diagnose
+>> > +                   # by running in --verbose mode
+>> > +                   error "bug in the test script: broken &&-chain"
+>> > +           fi
+>> > +   fi
 
-It's interesting that your clone picked up the hooks that they
-added.  Do you have a centrally managed git installation, where
-perhaps they are modifying the default .git/hooks/ template that
-is used to seed the initial repo when cloning?
+Clever (Jonathan's too); much nicer than trying to special case only here-doc.
 
-One way to check that is to look at your git installation.
-If your git is installed as /usr/bin/git then check
-/usr/share/git-core/templates and see if the hook is present
-there.
+>> > This turns up an appalling number of failures, but AFAICT they are all
+>> > "real" in the sense that the &&-chains are broken. In some cases these
+>> > are real, but in others the tests are of an older style where they did
+>> > not expect some early commands to fail (and we would catch their bogus
+>> > output if they did). E.g., in the patch below, I think the first one is
+>> > a real potential bug, and the other two are mostly noise. I do not mind
+>> > setting a rule and fixing all of them, though.
+>
+> FWIW, I have spent about a few hours wading through the errors, and am
+> about 75% done. There are definitely some broken chains that were
+> causing test results to be ignored (as opposed to just minor setup steps
+> that we would not expect to fail). In most cases, the tests do passed. I
+> have a few that I still need to examine more closely, but there may be
+> some where there are actual test failures (but it's possible that I just
+> screwed it up while fixing the &&-chaining).
+>
+> I hope to post something tonight, but I wanted to drop a note on the off
+> chance that you were actively looking at it at the same time.
 
-Assuming that you have the ability to create your own clones,
-and that you are not all working in a common shared sandbox,
-then the simplest solution would be to simply delete your
-.git/hooks/* when cloning a new repo.
-
-That way you can at least have your sandboxes work the way
-you want them to work.  Hooks are local to your sandbox so you
-have full control over them.
-
-Is this hook resilient to rebasing?  Does it cause havoc if you
-a feature onto this branch?  Those are the kinds of things that
-sound scary based on your description of the hook.
-
-I don't have any tips on how to convince people.  One thing that
-might help is to remember that people are self-motivated ~ try
-to focus on what *they* stand to benefit from not having this
-hook.  If you can convince them that they are better-off without
-the hook, from their POV, not from yours, then you might have a
-better chance of persuading them.
-
-Good luck,
--- 
-David
+Thanks for working on this. It looks like this technique should be a
+valuable addition to test-lint. (I had intended, but haven't yet found
+time to dig into it, so I'm happy to hear of your progress.)
