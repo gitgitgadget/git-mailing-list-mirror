@@ -1,67 +1,63 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 24/25] t0005: fix broken &&-chains
-Date: Fri, 20 Mar 2015 06:13:32 -0400
-Message-ID: <20150320101332.GX12543@peff.net>
+Subject: [PATCH 23/25] t7004: fix embedded single-quotes
+Date: Fri, 20 Mar 2015 06:13:29 -0400
+Message-ID: <20150320101328.GW12543@peff.net>
 References: <20150320100429.GA17354@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 20 11:13:53 2015
+X-From: git-owner@vger.kernel.org Fri Mar 20 11:13:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YYtvw-00064y-P1
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Mar 2015 11:13:41 +0100
+	id 1YYtvw-00064y-6F
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Mar 2015 11:13:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752079AbbCTKNh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Mar 2015 06:13:37 -0400
-Received: from cloud.peff.net ([50.56.180.127]:35732 "HELO cloud.peff.net"
+	id S1752076AbbCTKNd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Mar 2015 06:13:33 -0400
+Received: from cloud.peff.net ([50.56.180.127]:35729 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752070AbbCTKNf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Mar 2015 06:13:35 -0400
-Received: (qmail 5955 invoked by uid 102); 20 Mar 2015 10:13:35 -0000
+	id S1752070AbbCTKNb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Mar 2015 06:13:31 -0400
+Received: (qmail 5948 invoked by uid 102); 20 Mar 2015 10:13:31 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 20 Mar 2015 05:13:35 -0500
-Received: (qmail 21754 invoked by uid 107); 20 Mar 2015 10:13:47 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 20 Mar 2015 05:13:31 -0500
+Received: (qmail 21727 invoked by uid 107); 20 Mar 2015 10:13:43 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 20 Mar 2015 06:13:47 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 20 Mar 2015 06:13:32 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 20 Mar 2015 06:13:43 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 20 Mar 2015 06:13:29 -0400
 Content-Disposition: inline
 In-Reply-To: <20150320100429.GA17354@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265899>
 
-The ":" noop command always returns true, so it is fine to
-include these lines in an &&-chain (and it appeases
---chain-lint).
+This test uses single quotes inside the single-quoted test
+snippet, which effectively makes the contents unquoted.
+Since they don't need quoted anyway, this isn't a problem,
+but let's switch them to double-quotes to make it more
+obviously correct.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- t/t0005-signals.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/t7004-tag.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t0005-signals.sh b/t/t0005-signals.sh
-index 5c5707d..e7f27eb 100755
---- a/t/t0005-signals.sh
-+++ b/t/t0005-signals.sh
-@@ -40,12 +40,12 @@ test_expect_success 'create blob' '
- '
- 
- test_expect_success !MINGW 'a constipated git dies with SIGPIPE' '
--	OUT=$( ((large_git; echo $? 1>&3) | :) 3>&1 )
-+	OUT=$( ((large_git; echo $? 1>&3) | :) 3>&1 ) &&
- 	test "$OUT" -eq 141
- '
- 
- test_expect_success !MINGW 'a constipated git dies with SIGPIPE even if parent ignores it' '
--	OUT=$( ((trap "" PIPE; large_git; echo $? 1>&3) | :) 3>&1 )
-+	OUT=$( ((trap "" PIPE; large_git; echo $? 1>&3) | :) 3>&1 ) &&
- 	test "$OUT" -eq 141
+diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+index 347d3be..efb08c3 100755
+--- a/t/t7004-tag.sh
++++ b/t/t7004-tag.sh
+@@ -1181,7 +1181,7 @@ test_expect_success \
+ 	'message in editor has initial comment: remainder' '
+ 	# remove commented lines from the remainder -- should be empty
+ 	>rest.expect &&
+-	sed -e 1d -e '/^#/d' <actual >rest.actual &&
++	sed -e 1d -e "/^#/d" <actual >rest.actual &&
+ 	test_cmp rest.expect rest.actual
  '
  
 -- 
