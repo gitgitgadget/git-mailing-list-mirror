@@ -1,91 +1,113 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 26/27] t/*svn*: fix moderate &&-chain breakage
-Date: Fri, 20 Mar 2015 12:35:56 -0700
-Message-ID: <xmqqh9tfea1v.fsf@gitster.dls.corp.google.com>
-References: <550C2E7B.3030203@drmicha.warpmail.net>
-	<317e6b1e70f3e1c50d62207c53f4d038ad027c9d.1426861743.git.git@drmicha.warpmail.net>
-	<xmqqy4mree9x.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH v2] t1700: make test pass with index-v4
+Date: Fri, 20 Mar 2015 12:38:37 -0700
+Message-ID: <xmqqd243e9xe.fsf@gitster.dls.corp.google.com>
+References: <xmqqtwxfee6a.fsf@gitster.dls.corp.google.com>
+	<1426875630-17481-1-git-send-email-t.gummerer@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Eric Wong <normalperson@yhbt.net>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Mar 20 20:36:15 2015
+Cc: git@vger.kernel.org,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+To: Thomas Gummerer <t.gummerer@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 20 20:38:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YZ2iC-00084I-L8
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Mar 2015 20:36:05 +0100
+	id 1YZ2kp-0002AR-RM
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Mar 2015 20:38:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751403AbbCTTgA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Mar 2015 15:36:00 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:51862 "EHLO
+	id S1751314AbbCTTim (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Mar 2015 15:38:42 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:59978 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751037AbbCTTf7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Mar 2015 15:35:59 -0400
+	with ESMTP id S1750994AbbCTTik (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Mar 2015 15:38:40 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 99412405BF;
-	Fri, 20 Mar 2015 15:35:58 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id BCFD940659;
+	Fri, 20 Mar 2015 15:38:39 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=sSsQuZt9q0gTTBMPQK/mBUiupsA=; b=J2AZFY
-	aqMOBpaqcWUXyD6wbwRNmU6DPfz26gwdJVUqUoocnK12w6ZCUBiBbqhnsrQHDQi+
-	nFQ8eYRpHisCBOqfsdF5JqhNAB5vNW2uRqYPNuhrPUCYi83I9jus9AmLQnqh+BxJ
-	+9fjQCVQLhVjqSE3VfBiqGO4pOvjmR0qlzbqI=
+	:content-type; s=sasl; bh=pfpkMOGuhr2p0Eo7MRcNidV3uzA=; b=NaVM4N
+	7emlAMHf36eobvr0qhSZhufU7AyB17itBNHaVSib5nrHGFYqCcTA0HL011my0fmK
+	Cuo+69dVHjEDiTonC2S5eBPTlKf/ew/9J1hPtbsRr2zWfGPnOEeAIvc0M/kQFGRp
+	xjaZig/QEw8Ph5IsSwt/F44kcYkbkzxP1KAVE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=x2fJ1OIj3pMvcGmZ1mTmGVaLGJ6mZTmj
-	KW2Kk9pdlFymAfllsTWmK+iXvkNPRmdmP898fTe9np8rRSIYlUikxT7MRDwuBdNB
-	NlH0Zz2M6X4t0EVRetgH1EpCrOGmBvwJ/koJophW7m6NKhc+ameFzWkDE1iGgPaY
-	hBBEMmoaowE=
+	:content-type; q=dns; s=sasl; b=CVZwFCuV6gANJ923BQwroCuuVdEzywil
+	00sMNTQltpqbiaBJ/3q4mLGZ9fd++mQrthBNWCNN1FOcBIFuWOSeU6SXYzAvYEjE
+	BFqUeIQJUyqADzzIJ4Oe6sY4dLA9juB0lUq+lKjS+c2rSB9D5N78HNAOu5Bfwg82
+	dH47D3TxsJ4=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8FB82405BE;
-	Fri, 20 Mar 2015 15:35:58 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B30A540658;
+	Fri, 20 Mar 2015 15:38:39 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 149B7405BB;
-	Fri, 20 Mar 2015 15:35:58 -0400 (EDT)
-In-Reply-To: <xmqqy4mree9x.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Fri, 20 Mar 2015 11:04:42 -0700")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1521840653;
+	Fri, 20 Mar 2015 15:38:38 -0400 (EDT)
+In-Reply-To: <1426875630-17481-1-git-send-email-t.gummerer@gmail.com> (Thomas
+	Gummerer's message of "Fri, 20 Mar 2015 19:20:30 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 551C0B68-CF38-11E4-82E4-6DD39F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: B5146006-CF38-11E4-85D9-6DD39F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265957>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Thomas Gummerer <t.gummerer@gmail.com> writes:
 
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
+> The different index versions have different sha-1 checksums.  Those
+> checksums are checked in t1700, which makes it fail when the test suite
+> is run with TEST_GIT_INDEX_VERSION=4.  Fix it.
 >
->> All of these cases are moderate since they would most probably not
->> lead to missed failing tests: Either they would fail otherwise,
->> or fail a rm in test_when_finished only.
->>
->> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
->> ---
->>  t/t2026-prune-linked-checkouts.sh |  4 ++--
->>  t/t9158-git-svn-mergeinfo.sh      |  4 ++--
->>  t/t9161-git-svn-mergeinfo-push.sh | 10 +++++-----
->>  3 files changed, 9 insertions(+), 9 deletions(-)
+> Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+> ---
+>> An updated patch to mention "when run with TEST_GIT_INDEX_VERSION=4"
+>> in the log message was what I was asking for ;-)
 >
-> Ahh, it seems that I should have read everything in my inbox before
-> starting my day X-<.  I already queued an identical patch for 2026
-> on nd/multiple-work-trees, and its new tip is in 'next' now.
->
-> Which branches are the git-svn ones meant to apply?  Are they meant
-> to fix an existing bug already in master, or are they new ones added
-> by still-in-flight topics?  Can you split if necessary and mark them
-> for individual topios in flight if that is the case, so that we can
-> apply them independently from GIT_TEST_CHAIN_LINT series?
->
-> Thanks.
+> Sorry I didn't catch that.  Here it is.
 
-OK, I think I figured it out.  All the git-svn bits in 26 and 27 are
-for 'master', and should be part of Peff's original 25-patch series.
-I'll drop 2026 from your 26/25 and queue it together with your 27/25
-on top off it.
+Thanks.  Is this the only one that fails with v4?
+
+> 					      
+>
+>  t/t1700-split-index.sh | 15 ++++++++++++---
+>  1 file changed, 12 insertions(+), 3 deletions(-)
+>
+> diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
+> index 94fb473..92f7298 100755
+> --- a/t/t1700-split-index.sh
+> +++ b/t/t1700-split-index.sh
+> @@ -10,9 +10,18 @@ sane_unset GIT_TEST_SPLIT_INDEX
+>  test_expect_success 'enable split index' '
+>  	git update-index --split-index &&
+>  	test-dump-split-index .git/index >actual &&
+> +	indexversion=$(test-index-version <.git/index) &&
+> +	if test "$indexversion" = "4"
+> +	then
+> +		own=432ef4b63f32193984f339431fd50ca796493569
+> +		base=508851a7f0dfa8691e9f69c7f055865389012491
+> +	else
+> +		own=8299b0bcd1ac364e5f1d7768efb62fa2da79a339
+> +		base=39d890139ee5356c7ef572216cebcd27aa41f9df
+> +	fi &&
+>  	cat >expect <<EOF &&
+> -own 8299b0bcd1ac364e5f1d7768efb62fa2da79a339
+> -base 39d890139ee5356c7ef572216cebcd27aa41f9df
+> +own $own
+> +base $base
+>  replacements:
+>  deletions:
+>  EOF
+> @@ -30,7 +39,7 @@ EOF
+>  
+>  	test-dump-split-index .git/index | sed "/^own/d" >actual &&
+>  	cat >expect <<EOF &&
+> -base 39d890139ee5356c7ef572216cebcd27aa41f9df
+> +base $base
+>  100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	one
+>  replacements:
+>  deletions:
