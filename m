@@ -1,73 +1,101 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t6039: fix broken && chain
-Date: Sat, 21 Mar 2015 11:04:16 -0700
-Message-ID: <xmqqy4mqcjmn.fsf@gitster.dls.corp.google.com>
-References: <550D1811.3040802@web.de> <550D1B78.5090703@web.de>
+Subject: Re: [PATCH/RFC][GSoC] diff-no-index: transform "$directory $file" args to "$directory/$file $file"
+Date: Sat, 21 Mar 2015 11:18:25 -0700
+Message-ID: <xmqqsicyciz2.fsf@gitster.dls.corp.google.com>
+References: <CAHLaBN+x3SVL9+jDzeSEMapVd2BVrwQuVx_7ENspjbUPrium_A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Sat Mar 21 19:04:28 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Yurii Shevtsov <ungetch@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 21 19:18:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YZNl2-0000o1-J7
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Mar 2015 19:04:25 +0100
+	id 1YZNyi-00068a-O5
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Mar 2015 19:18:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751819AbbCUSEU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 21 Mar 2015 14:04:20 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:57099 "EHLO
+	id S1751547AbbCUSS2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Mar 2015 14:18:28 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:54850 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751605AbbCUSET convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 21 Mar 2015 14:04:19 -0400
+	with ESMTP id S1751470AbbCUSS1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Mar 2015 14:18:27 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id EA1CB3EC6E;
-	Sat, 21 Mar 2015 14:04:18 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B31E53EFC3;
+	Sat, 21 Mar 2015 14:18:26 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=b+7rvFsz8kwm
-	VDrJiBeNF5NY/Kc=; b=VfVj5PDI0Vpa4aX5dfsIohuED1Q4R3p8XxLFGVRFf9Ad
-	JsBdENx1Z+B+YFHfAciICK7x5R/O8/shC5XbE3hJYWVv7H3nVvuPBDaVTdyi57/2
-	ep/FGI+zPE/DstwL9ry6vFwA0BgjzvyWVq/GOeQ2Q5sDFRtV0A1h6f2CxuODvPM=
+	:content-type; s=sasl; bh=E0Qb7ByimTKlvbzOZ7Mqc3xw14E=; b=cztp6U
+	7r2NBjF5UPt5s0BddM7inJIkfHdBniwuvlMpfo0kzzpvonvURcx8ysxKjLrw8e1g
+	uU9aDErrWXjDo/JEFHPgwsiHBYyLUrA0vY8FijM0HgfvHgNUktZuVTXiRM4ez0CZ
+	7R6Ql44+zmzGG5lXL1SJFDa8W6zIyIjO+YgSQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=sSkZkn
-	OdHnUYows9HLwyY6McAQ9E0CfkAO3jHiXwNaZcMAWe1L1lKZx9r8HHVSt2Ayu+k4
-	4lTAFMTLvJLWUIzIo0wiCDi9yv3+5E4TmHKbG/SyosX06nCGzakHBb4EY4RXhtr6
-	oone2pZGBKHshjilmoTwwwsGNEkdEqNs/CCCQ=
+	:content-type; q=dns; s=sasl; b=ZMRUb+MWFTCaVbtl9oStBLZuP/qSiqxH
+	f+Kbhjvj2FbaiSyEtveZA5M9eSvdaXveOPtxQedcDX0xayBL7jLhn3Bb5yGhoJcZ
+	LUK6i3ECDGratXyz8iTVOHojElj7JsLsXCN2jF52Kj6kNMlusOf1g8BPqLFR1ucs
+	wydy1uMXZ8c=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E37113EC6D;
-	Sat, 21 Mar 2015 14:04:18 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id ACFC53EFC2;
+	Sat, 21 Mar 2015 14:18:26 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 466AE3EC6B;
-	Sat, 21 Mar 2015 14:04:18 -0400 (EDT)
-In-Reply-To: <550D1B78.5090703@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
- =?utf-8?Q?en=22's?= message of
-	"Sat, 21 Mar 2015 08:19:20 +0100")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 355943EFC1;
+	Sat, 21 Mar 2015 14:18:26 -0400 (EDT)
+In-Reply-To: <CAHLaBN+x3SVL9+jDzeSEMapVd2BVrwQuVx_7ENspjbUPrium_A@mail.gmail.com>
+	(Yurii Shevtsov's message of "Sat, 21 Mar 2015 14:50:32 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: B1636846-CFF4-11E4-A155-6DD39F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: AACAEF34-CFF6-11E4-BEEC-6DD39F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266030>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+Yurii Shevtsov <ungetch@gmail.com> writes:
 
-> On 2015-03-21 08.04, Torsten B=C3=B6gershausen wrote:
->> Add missing %%, detected by the --chain-lint option
-> Oh, early morning typo, should be
-> Add missing &&, detected by the --chain-lint option
+> diff --git a/diff-no-index.c b/diff-no-index.c
+> index 265709b..9a3439a 100644
+> --- a/diff-no-index.c
+> +++ b/diff-no-index.c
+> @@ -97,8 +97,39 @@ static int queue_diff(struct diff_options *o,
+>      if (get_mode(name1, &mode1) || get_mode(name2, &mode2))
+>          return -1;
 >
-> (I'll re-run the testsuite with the  --chain-lint in a minute,
->  thanks everybody for this nice feature)
+> -    if (mode1 && mode2 && S_ISDIR(mode1) != S_ISDIR(mode2))
+> -        return error("file/directory conflict: %s, %s", name1, name2);
+> +    if (mode1 && mode2 && S_ISDIR(mode1) != S_ISDIR(mode2)) {
+> +        struct strbuf path;
+> +        const char *dir, *file;
+> +        char *filename, *dirname = 0;
+> +        int i, ret = 0;
 
-Yes, it is nice to see people helping prereq holes other people
-may inevitably have.
+If you have two directories, a and b, under which there are two
+files a/sub/file and b/sub (i.e. 'sub' in a/ is a directory and b/
+is a file), and if you say "git diff --no-index a b", what happens?
 
-Sign-off?
+ - the caller of this function gives a and b in name1 and name2;
+
+ - we do not come in this codepath as both are directories;
+
+ - we read from a/ and b/ and fill p1 and p2 with names of paths in
+   the directories -- p1 and p2 will both have 'sub';
+
+ - queue_diff() is recursively called to compare a/sub and b/sub;
+
+   - now we have name1 = a/sub and name2 = b/sub;
+
+   - we come in this codepath, and they are turned into comparison
+     between a/sub/sub and b/sub.
+
+The last step is simply crazy.
+
+Hmmmm, is vger reinjecting an old message, or you sent an older and
+wrong version of a patch by mistake?  We discussed why doing this in
+queue_diff() is wrong in the thread that has $gmane/265543 in it,
+and I was expecting to see a logic like this in the caller.
+
+Puzzled...
