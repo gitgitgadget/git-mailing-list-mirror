@@ -1,85 +1,135 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 03/15] read-cache: free cache entry in add_to_index in
- case of early return
-Date: Fri, 20 Mar 2015 22:10:44 -0700
-Message-ID: <CAGZ79kYVWUofm+Hc2tWv8vLBxc01HqCGM=efYyb0jdGB-64zBg@mail.gmail.com>
+Subject: Re: [PATCH 02/15] read-cache: Improve readability
+Date: Fri, 20 Mar 2015 22:11:47 -0700
+Message-ID: <CAGZ79kaLJgC6rWdRSeVVQSBYn0soJuzqnrK_bNtgAPWimPYE8w@mail.gmail.com>
 References: <1426897692-18322-1-git-send-email-sbeller@google.com>
-	<1426897692-18322-4-git-send-email-sbeller@google.com>
-	<xmqq1tkjc9g6.fsf@gitster.dls.corp.google.com>
+	<1426897692-18322-3-git-send-email-sbeller@google.com>
+	<xmqqbnjnaso7.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: "git@vger.kernel.org" <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 21 06:10:58 2015
+X-From: git-owner@vger.kernel.org Sat Mar 21 06:11:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YZBgW-0000Ja-Q2
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Mar 2015 06:10:57 +0100
+	id 1YZBhS-0001Fv-5q
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Mar 2015 06:11:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751077AbbCUFKp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Mar 2015 01:10:45 -0400
-Received: from mail-ig0-f182.google.com ([209.85.213.182]:37843 "EHLO
-	mail-ig0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751004AbbCUFKp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Mar 2015 01:10:45 -0400
-Received: by igcqo1 with SMTP id qo1so4087485igc.0
-        for <git@vger.kernel.org>; Fri, 20 Mar 2015 22:10:44 -0700 (PDT)
+	id S1751004AbbCUFLt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Mar 2015 01:11:49 -0400
+Received: from mail-ig0-f174.google.com ([209.85.213.174]:37213 "EHLO
+	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750801AbbCUFLs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Mar 2015 01:11:48 -0400
+Received: by igcqo1 with SMTP id qo1so4096161igc.0
+        for <git@vger.kernel.org>; Fri, 20 Mar 2015 22:11:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=1OsSYeolzJUWXs29eYBsTNQTVBkNEcZCHzmOlVdNGLs=;
-        b=hZQfm/aRlWQMOqkHwtbsuxxdQxqDsJs7C+85xeTtHXWRfJkcUHjJKwJM9+qKT36TUb
-         xdggQcKcPClqZYi5+5hLnK16/GOsKssGbbJd2K2T/14TuMiw096JGwCyOS8ZWeWtHuGW
-         rMceL/1ch8R1Bagpyjwx8nTH/MEvqKCNSsQHuBVsAdTqcTcKhYvM4z+eEVqnHyhcgdh7
-         TluA0XD424Dyof+7X9+ej3B3xF4JvOowFDWalyi8fEw/GN/5quLmStn+yGVCyxWMQlKV
-         CmCsJkmvxtI/1XZJnfzMRpCegeLtDVWfxBhPOdLVp+WlZ2M1YBZ8V2mvzHg9HmCveV1g
-         hy2g==
+        bh=1VV6beQI9gjmkYKziwVr+Fh+HgQab9X8988yy+ZPCBs=;
+        b=pM9iPOWUH4l4TSVq4Lqtnp8r3iABzlhrjsGfGnMjZWKLrJmQ7POoPtlcqRcdb8gHMj
+         QIQz4t6h3JPsgNPLXE5xvad2IsPxM84jm1UMDiLF0PIYG06rCo7oEZje++sUXQYwFIFK
+         tLRw2u+utVDM3hbVRCZIq1lPTwu3yJDLp7G7CL7is55yAPLsU+nRT5MGg0r43rt3+jB6
+         Otetb1UXKAGYsK+JlbZ/j6+NQEK1KI9UPQr8hhV5wkRHmZ/CQ58hAr4CX0AHeMStKgXw
+         8HiP2HiQhtC57xnQisXa1c/CpWOQ1nxqpjtqn4PwV0b+BF87+h1PfxF0TwYkPZkH6tv4
+         mdDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:date
          :message-id:subject:from:to:cc:content-type;
-        bh=1OsSYeolzJUWXs29eYBsTNQTVBkNEcZCHzmOlVdNGLs=;
-        b=W/5+E2/YW/TjvEKtR/ZTVwfK1f9mqvwBUTi5ugWnXOjusOxLp4EkHzYS8wuu9R5T7A
-         va+ChHzIinlbuh8ILAvw+8NnUrrjK+Wwj46Hd33BbgO4HJsuVMT+A0O0nUXCJujsepVQ
-         atrFol5+uok02d7MT6muZseOXwSWZC8vlVf57BVO5T5huqI7jhPVVQwZ74P2RubwG5qd
-         Z9j29Q0A7gb1eA3nTBr1rGLyKOhXzvG7clxF/rZyoZYgJNb/dqOM3YEzal26/gtJ8+nR
-         VIJgt9aHcDOpHjP59Dt7k1R0z3XRgzBeO+c9DCtMo/dmmp5Bo4Z2SKWHNm5mH9gLpt7S
-         JIxA==
-X-Gm-Message-State: ALoCoQmbT3buqiAS0QDET/gg8FnI4zj4E9vtv7xRNfgfhOEs7Ul5W3SpJ2WlWeUofE6fZ+n/AKsH
-X-Received: by 10.107.16.158 with SMTP id 30mr57505723ioq.2.1426914644287;
- Fri, 20 Mar 2015 22:10:44 -0700 (PDT)
-Received: by 10.107.46.31 with HTTP; Fri, 20 Mar 2015 22:10:44 -0700 (PDT)
-In-Reply-To: <xmqq1tkjc9g6.fsf@gitster.dls.corp.google.com>
+        bh=1VV6beQI9gjmkYKziwVr+Fh+HgQab9X8988yy+ZPCBs=;
+        b=PEUDdT85CzyKZLCBKCfv8KtQqJnnMy9LqlaDuL0oiyo2TyGxD25yyPo48s3kGSIMSi
+         FxxdugFrN46fOiS4XDNn7xFQB49GFtJj0h5jZioOfWaY3mtuKl/8WjfgTBZGQjH40SxF
+         oB+1jSxchMDhzXnmT2GRNFiMMblY7GCdeZwRBm75xyyf0EdpJq0tdCxHDto1La7W79Ei
+         6Lqgzpu/AfX5TYhJpK5hiCuHZF0RqAguFjTnIx8dadNeuz4mXh9FOaS95I4ue1QyJpx+
+         i3Y7LqDEYvb/uC22wIQlovT8slTBFqhP5fMsFbCMJcLWGoNtmXy91ordCXR4gldBz6tQ
+         bd6g==
+X-Gm-Message-State: ALoCoQn4gDowODxV5dS/oSLWneN/1woDZ9YHXXxlGYnyHmMsYd3q6L4YqT9ffy1WZObbu/azPnq8
+X-Received: by 10.50.56.82 with SMTP id y18mr1368762igp.25.1426914707566; Fri,
+ 20 Mar 2015 22:11:47 -0700 (PDT)
+Received: by 10.107.46.31 with HTTP; Fri, 20 Mar 2015 22:11:47 -0700 (PDT)
+In-Reply-To: <xmqqbnjnaso7.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266009>
 
-On Fri, Mar 20, 2015 at 8:31 PM, Junio C Hamano <gitster@pobox.com> wrote:
+On Fri, Mar 20, 2015 at 9:19 PM, Junio C Hamano <gitster@pobox.com> wrote:
 > Stefan Beller <sbeller@google.com> writes:
 >
->> This frees `ce` would be leaking in the error path.
+>> Signed-off-by: Stefan Beller <sbeller@google.com>
+>> ---
+>>  read-cache.c | 4 +---
+>>  1 file changed, 1 insertion(+), 3 deletions(-)
+>>
+>> diff --git a/read-cache.c b/read-cache.c
+>> index f72ea9f..769897e 100644
+>> --- a/read-cache.c
+>> +++ b/read-cache.c
+>> @@ -703,9 +703,7 @@ int add_to_index(struct index_state *istate, const char *path, struct stat *st,
+>>                   !hashcmp(alias->sha1, ce->sha1) &&
+>>                   ce->ce_mode == alias->ce_mode);
+>>
+>> -     if (pretend)
+>> -             ;
+>> -     else if (add_index_entry(istate, ce, add_option))
+>> +     if (!pretend && add_index_entry(istate, ce, add_option))
+>>               return error("unable to add %s to index",path);
+>>       if (verbose && !was_same)
+>>               printf("add '%s'\n", path);
 >
-> At this point ce is not yet added to the index, so it is clear it is
-> safe to free it---otherwise we will leak it.  Good.
+> I have a moderately strong feeling against this change, as the code
+> was done this way quite deliberately to keep it readable, namely, to
+> avoid using && to concatenate two boolean expressions that are in
+> totally different class inside condition part of if/while, where A
+> is a precondition guard for B (i.e. you cannot evaluate B unless A
+> holds) and B is called primarily for its side effect.  The problem
+> is that, once you start liberally doing
 >
->> Additionally a free is moved towards the return.
+>         if (A && B && C && D ...)
 >
-> I am on the fence on this one between two schools and do not have a
-> strong preference.  One school is to free as soon as you know you do
-> not need it, which is a valid stance to take.  Another is, as you
-> did, not to care about the minimum necessary lifetime of the storage
-> and free them all at the end, which is also valid.  Technically, the
-> former could be more performant while the latter is easier on the
-> eyes.
+> with booleans with mixed semantics (guards and actions), it will
+> quickly get harder to tell which one is which.
+>
+> I could have written it as
+>
+>         if (!pretend) {
+>                 if (add_index_entry(...))
+>                         return error(...);
+>         }
 
-I only recall to have seen the latter school so far, which is why I
-made the change in the first place assuming the school of freeing
-ASAP has no strong supporters inside the git community.
+This makes sense to point out the different semantics to me.
+Maybe I have read too much of the refs code lately as there we
+have these long chains which combine precondition with error
+checking. :/ That's why I thought it would be global to git to not
+care much about this semantics distinction.
 
-I can resend the patch dropping the reordering, if you prefer.
+>
+> and that would have been just as readable as the original; it
+> clearly separates the guard (i.e. only do the add-index thing when
+> we are not pretending) and the operation that is done for the side
+> effect.
+>
+> But I find the original tells you "if pretend mode, do *nothing*"
+> and "otherwise, try add_index_entry() and act on its error" very
+> clearly.  Of course, I am biased as the original is my code from
+> 38ed1d89 ("git-add -n -u" should not add but just report,
+> 2008-05-21).
+>
+> FYI, between preference and taste, I'd say this one is much closer
+> to the latter than the former.
+>
+> By the way, aren't we leaking ce when we are merely pretending?
+
+Yes we are, that's how I found this spot. (coverity pointed out ce was
+leaking, so I was refactoring to actually make it easier to fix it, and then
+heavily reordered the patch series afterwards. That spot was forgotten
+apparently.
+
+>
+>
