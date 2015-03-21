@@ -1,70 +1,82 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: Re: What's cooking in git.git (Mar 2015, #07; Fri, 20)
-Date: Fri, 20 Mar 2015 16:29:21 -0700
-Message-ID: <CAGZ79kapUtq0DbcD65v_aKmCXHz3hjSkEh1MJH1nWr2DhSa5hw@mail.gmail.com>
-References: <xmqqr3sjcopt.fsf@gitster.dls.corp.google.com>
-	<423416FC-1048-4D3A-B997-F1F796627242@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: "Kyle J. McKay" <mackyle@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 21 00:29:28 2015
+Subject: [PATCH 02/15] read-cache: Improve readability
+Date: Fri, 20 Mar 2015 17:27:59 -0700
+Message-ID: <1426897692-18322-3-git-send-email-sbeller@google.com>
+References: <1426897692-18322-1-git-send-email-sbeller@google.com>
+Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sat Mar 21 01:28:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YZ6M3-0004uQ-6W
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Mar 2015 00:29:27 +0100
+	id 1YZ7H7-0001Z4-IV
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Mar 2015 01:28:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751502AbbCTX3X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Mar 2015 19:29:23 -0400
-Received: from mail-ie0-f180.google.com ([209.85.223.180]:34685 "EHLO
-	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751196AbbCTX3W (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Mar 2015 19:29:22 -0400
-Received: by iedfl3 with SMTP id fl3so1421334ied.1
-        for <git@vger.kernel.org>; Fri, 20 Mar 2015 16:29:21 -0700 (PDT)
+	id S1752293AbbCUA2W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Mar 2015 20:28:22 -0400
+Received: from mail-ig0-f172.google.com ([209.85.213.172]:34871 "EHLO
+	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752280AbbCUA2U (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Mar 2015 20:28:20 -0400
+Received: by igcau2 with SMTP id au2so1634008igc.0
+        for <git@vger.kernel.org>; Fri, 20 Mar 2015 17:28:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=geMUq0crr7PbGlRF18nl0RmtpVeCDe08nMntfDDJ5Yg=;
-        b=GESZj5yvJ1UEj8SvOGZrZ4+UNhA1QxIiDhPV4jAE3I8ORQkyGjNf8kaK+iYiY9j4IP
-         JQvR9Fj0vkfRg0BSITakhzMblBOrGc9a2AvbuVcVIX0H3h7kYe65hz9WsHPeJuy6MFLV
-         /bbqxMKSxsz1xMt0223hZamcW9ch2qa/hYjcvjfCsLAMz04Pj39zp6B7RyAEOOri3iW0
-         X2KFRZsSQRO9IWWNCbPDvGMG4jD3zJuVu3jKkI5eZcI0vl6gfdF6zUqZXUWZfErEe3Z1
-         YmgKrkSGYWK4pZB9xuANuSIG32id5qD/AiX6+uMb7iWv4Xn8xB6Mt2WxYyl2meO/Gf/5
-         WuBA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=VYMYUzHx7jbLFM2sJjvwZdNFckbAVTa5BzaaLIuBq9E=;
+        b=gjDdmKqdHs5HfiuNMCIqFtl+yxDxV0GNTZ/nzX8M4c1aCpqtE/RRvIbVjYmEvJAJZs
+         zSS0x3DYDhRFkvkQBGEP4jlX0k9+ts/qObXbIG17iRKBy3eHlLZmYjd+ZOXjkZaOvMav
+         vhhJhDpehAE5s718SDz8TMjy3IKbZF48Hh5q14yPQGHgA56JUsPk87GuJrlH3EZgxff3
+         6Z5GrB0MyDXhin5QTcSI/pUnunwH5ogcxXrL78ZVkUfdmg4+XZMGA4x+LCGVZ6MAjagj
+         8Ah9SKJbt7uzb2ihj2sgxBwBn1HsqSgiUYQPqMF4niJuQq/Q/Ka7M/tUDZe0s3LwT7QT
+         1v/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=geMUq0crr7PbGlRF18nl0RmtpVeCDe08nMntfDDJ5Yg=;
-        b=eOBNKXjDKoMw8mJ7cyzHpA8vazXvrZ9724AIxsc36/Bso42fc94hIt2ScY8XkTE1/b
-         12ZlJX9Q60+wsKJDStu0m0NKy25ToP9PY4MPuv4Zf/CJzwKPg7WJmN5BMYg+y5mQSM9K
-         9sypGIKNnoETWCM6gKbwJzYTzGecxP2KAYfAQ8sfeTEjWoK0wO2MdkpUOXumFsZEUe/o
-         WE3mr0vdsjxUwbod4PvhhH6TJdJHafaNhr2MQ8AmHRpLAnotxNpn49bJiqBglxdRuYkM
-         0S4yRzCdc7SXY0HEd60d+qIT/a3q63/3jBjKbqSLRI75DOWo+i+8o3CRd1ePBl28bPEx
-         Ytxw==
-X-Gm-Message-State: ALoCoQmY0EEYSQrDMJqk3ct27/TQJMEit4DVn+8OX6VUIQNe1xDktDXv4qc+6havuJlnp9jZh+Fi
-X-Received: by 10.50.122.68 with SMTP id lq4mr262835igb.10.1426894161554; Fri,
- 20 Mar 2015 16:29:21 -0700 (PDT)
-Received: by 10.107.46.31 with HTTP; Fri, 20 Mar 2015 16:29:21 -0700 (PDT)
-In-Reply-To: <423416FC-1048-4D3A-B997-F1F796627242@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=VYMYUzHx7jbLFM2sJjvwZdNFckbAVTa5BzaaLIuBq9E=;
+        b=XqAzT4/vFohbOrTEo4R4rcX9izeCMcmXWgaC9c1w9F7OFIEBNAFOl9Hz08Q0vZLIhb
+         CCb6r9/gX7iwO9VrbqlVjOX/QBmaBtrw990gC/ftn5UvcBgqn5sUsqYytLnJzBvGPqYf
+         hF2tH8s5iv5JYOITaO3QhuvtOz+tEPu8jfYlzFTnsLMZLhzU1YtZ2UVrV3sWJbfw2Zf9
+         Qro8RcHTysn0ZZ8UdrGr6moUbkXZYyDOnDLrM4IWyO1lycwG9J35HqMXHYaLTY5ylR56
+         1sRtS6pRVGo3afxQUJYNO5sM94/qJxF1GRRPv4DxbpqCXArkTy7ZCyQAhfs+JGHxrgWB
+         0rdQ==
+X-Gm-Message-State: ALoCoQlnC8R4HdWYIeECxOet0uw8AkOglP8M/b/r4dozm1jRiZwizRBU5wv1ul9O/4NrNraE6MGo
+X-Received: by 10.50.234.194 with SMTP id ug2mr417742igc.39.1426897699852;
+        Fri, 20 Mar 2015 17:28:19 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b00:c4ad:7c66:d5e8:7112])
+        by mx.google.com with ESMTPSA id qr1sm164044igb.18.2015.03.20.17.28.19
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 20 Mar 2015 17:28:19 -0700 (PDT)
+X-Mailer: git-send-email 2.3.0.81.gc37f363
+In-Reply-To: <1426897692-18322-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265980>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265981>
 
-On Fri, Mar 20, 2015 at 4:24 PM, Kyle J. McKay <mackyle@gmail.com> wrote:
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ read-cache.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-> Has this been merged to 'next'?
-
-Usually Junio writes the mail first and then does a git push <all the branches>
-just before being done for the day. At least that's my suspicion as an
-observer of
-the timing when git fetch returns new shiny stuff and when these
-emails are sent.
+diff --git a/read-cache.c b/read-cache.c
+index f72ea9f..769897e 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -703,9 +703,7 @@ int add_to_index(struct index_state *istate, const char *path, struct stat *st,
+ 		    !hashcmp(alias->sha1, ce->sha1) &&
+ 		    ce->ce_mode == alias->ce_mode);
+ 
+-	if (pretend)
+-		;
+-	else if (add_index_entry(istate, ce, add_option))
++	if (!pretend && add_index_entry(istate, ce, add_option))
+ 		return error("unable to add %s to index",path);
+ 	if (verbose && !was_same)
+ 		printf("add '%s'\n", path);
+-- 
+2.3.0.81.gc37f363
