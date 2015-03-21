@@ -1,97 +1,124 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH/RFC/GSOC] make git-pull a builtin
-Date: Sat, 21 Mar 2015 18:35:23 +0100
-Organization: gmx
-Message-ID: <4388b6e4005c2872aa7f5f83024f021d@www.dscho.org>
-References: <1426600662-32276-1-git-send-email-pyokagan@gmail.com>
- <vpqwq2eyyzl.fsf@anie.imag.fr>
- <CACRoPnQp-3RGAPmoo1aM2KUA-phi138J2o82FwP9annM+xvOXA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/25] detecting &&-chain breakage
+Date: Sat, 21 Mar 2015 11:01:43 -0700
+Message-ID: <xmqq384ydybc.fsf@gitster.dls.corp.google.com>
+References: <20150320100429.GA17354@peff.net>
+	<CAPig+cRCbhMR58_PSFnsWoyo_aZoTOVZM2YeYC6Tvo7iXMZwBA@mail.gmail.com>
+	<20150321081909.GA8221@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Git List <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>
-To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 21 18:35:34 2015
+Content-Type: text/plain
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Git List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Mar 21 19:01:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YZNJ5-00073b-Is
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Mar 2015 18:35:31 +0100
+	id 1YZNie-0006pL-Hq
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Mar 2015 19:01:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751539AbbCURf1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Mar 2015 13:35:27 -0400
-Received: from mout.gmx.net ([212.227.15.15]:62992 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751474AbbCURf0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Mar 2015 13:35:26 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0LkOeR-1Z6Uvg21Ep-00cPBw; Sat, 21 Mar 2015 18:35:23
- +0100
-In-Reply-To: <CACRoPnQp-3RGAPmoo1aM2KUA-phi138J2o82FwP9annM+xvOXA@mail.gmail.com>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:wYdtw+HN4DeIoIy4EW9xM8QyYbTqhD/oNIkH1A5G6icrTqg5Uv9
- BrF+Criy/sC1D8Yhi7DCgdktZJuBmcPWQGv1r6H1E0zAZnKDljZnOpZlXxOHfhnE8Mf7il4
- OlIWj1BMGCQbXo058uaFDfzvhGJhCJalWZNKspLhwxHMTg+cx+FiMRa8gDUgKRLGzzdxXi5
- l4dgn5h2Jy5OllNrP0avg==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1751636AbbCUSBw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Mar 2015 14:01:52 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:54528 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751608AbbCUSBv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Mar 2015 14:01:51 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 605353EBD0;
+	Sat, 21 Mar 2015 14:01:45 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=WuOe57dfWvA102Zn4LouNEp8ocM=; b=uo1fXY
+	3lzHTGp9hRC6RM794NkVy1PM4VvmhYDYF/2JRlJc1v8J0L4L8YM1uzsWE7X6nQJd
+	FmbHz23r3/v8/Yf32AfUAbIQjKyk6zUf/XjSOBM2pFdGSZdUZamKjl2e1NzKaz5v
+	kM7XRYyPw686Ujr31jGOJS95ubjsn4VJdY0Jg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=yOP15Ry4Rusg6RnuhZYcyxmVpFerUhv0
+	t3wb/haBukN/b+HWEP56y4d8LZt94fr4FR4mg5e+sAvxnp1x9y+6nEhrlYKaIy6v
+	DiDnn9XS5XCDKKeS0+V8m1vG/Tvze+07swIPRBvRIQN60X6uI1yg5r1IA5x4EtWm
+	aj+ln1FOWr8=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 585343EBCF;
+	Sat, 21 Mar 2015 14:01:45 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CCC593EBC9;
+	Sat, 21 Mar 2015 14:01:44 -0400 (EDT)
+In-Reply-To: <20150321081909.GA8221@peff.net> (Jeff King's message of "Sat, 21
+	Mar 2015 04:19:09 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 55ECD682-CFF4-11E4-BF33-6DD39F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266027>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266028>
 
-Hi Paul,
+Jeff King <peff@peff.net> writes:
 
-On 2015-03-21 14:23, Paul Tan wrote:
+> Running:
+>
+>   git diff origin origin/jk/test-chain-lint |
+>   perl diff-blame.pl jk/test-chain-lint |
+>   grep EOF
+>
+> was fun. At least I am not the only one. :)
 
-> Thanks for the review, though I would like to work on the proposal now
-> before the deadline passes :)
+The parameter to diff-blame.pl should be origin, instead of
+jk/test-chain-lint, I presume?  You are grabbing the preimage line
+numbers and asking blame to find out who wrote them.
 
-That makes sense.
+> Nor the worst in the "severe" category.
 
-> On Thu, Mar 19, 2015 at 1:52 AM, Matthieu Moy
-> <Matthieu.Moy@grenoble-inp.fr> wrote:
->> Paul Tan <pyokagan@gmail.com> writes:
->>
->>> Ideally, I think the solution is to
->>> improve the test suite and make it as comprehensive as possible, but
->>> writing a comprehensive test suite may be too time consuming.
->>
->> time-consuming, but also very beneficial since the code would end up
->> being better tested. For sure, a rewrite is a good way to break stuff,
->> but anything untested can also be broken by mistake rather easily at any
->> time.
->>
->> I'd suggest doing a bit of manual mutation testing: take your C code,
->> comment-out a few lines of code, see if the tests still pass, and if
->> they do, add a failing test that passes again once you uncomment the
->> code.
-> 
-> Maybe code coverage tools could help here so we only need to focus on
-> the code paths that are untested by the test suite. At the minimum,
-> all of the non-trivial code paths in both the shell script and the
-> converted builtin must be covered by tests. This should help to
-> eliminate most sources of breakages. Anything further than that would
-> require an experienced understanding of all the possible important
-> inputs to be tested, which I personally feel would make the project
-> quite tedious.
-> 
-> I see git already has gcov support. For shell scripts, maybe kcov[1]
-> could be used. With some slight code changes, I managed to generate a
-> report for the git-pull tests[2] which should at least provide a good
-> starting point for how the tests can be improved.
+I do not quite get what this means---the script does not seem to
+judge what is severe and what is not, so I presume that this is to
+be judged by whoever is reading the output from the above pipeline
+after replacing "grep EOF" with "less" or something?
 
-While it is often a tempting idea to make test suites as thorough as possible, there lies a true danger herein. True war story: in one of the projects I was involved in, the test suite grew to a size that one complete run lasted two weeks. Yes, that is fourteen days. Needless to say: this test suite was run rarely. How useful is a test suite that is run rarely? More useful than a non-existent one, to be sure, but it is still more of a burden than a boon.
+> # diff-blame.pl
+> use warnings FATAL => 'all';
+> use strict;
+>
+> my $head = shift
+>   or die "usage: git diff <start> <end> | $0 <start> [blame-opts]";
+>
+> my $file;
+> my @lines;
+> my $line_nr;
+>
+> while (<STDIN>) {
+>   if (m{^--- .*?/(.*)}) {
 
-Now, on Windows the test suite takes almost three hours to run. This really, really slows down development.
+This may match a removal of a line that begins with "^-- something/" ;-)
 
-So while we are not yet at the "too large to be useful state", I would caution against trying to get there.
+>     flush();
+>     $file = $1;
+>     @lines = ();
+>   }
+>   elsif (m{^@@ -(\d+)}) {
+>     $line_nr = $1;
+>   }
+>   elsif (m{^ }) {
+>     $line_nr++;
+>   }
+>   elsif (m{^-}) {
+>     push @lines, $line_nr++;
+>   }
+> }
+> flush();
+> exit 0;
+>
+> sub flush {
+>   return unless defined $file && @lines > 0;
+>
+>   # XXX coalesce blocks of adjacent lines into ranges?
+>   system(qw(git --no-pager blame), @ARGV,
 
-Instead, I would really like to focus on the *usage*. Calling `git grep "git pull" t/` should give you an idea what usage of `git pull` is already tested. It should be pretty easy to come up with a list of *common* use cases, and if any of them are not covered, adding tests for them is simple and straight-forward, too.
+You may want to pass an option to always show the filename here.
 
-Ciao,
-Johannes
+>          (map { "-L$_,$_" } @lines), $head, $file);
+> }
