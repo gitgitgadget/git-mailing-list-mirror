@@ -1,90 +1,66 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: What's cooking in git.git (Mar 2015, #07; Fri, 20)
-Date: Sat, 21 Mar 2015 20:15:30 +0000
-Message-ID: <20150321201530.GM612775@vauxhall.crustytoothpaste.net>
-References: <xmqqr3sjcopt.fsf@gitster.dls.corp.google.com>
- <423416FC-1048-4D3A-B997-F1F796627242@gmail.com>
- <xmqqegojc9yd.fsf@gitster.dls.corp.google.com>
+From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Subject: Re: [PATCH] clone: Warn if clone lacks LICENSE or COPYING file
+Date: Sat, 21 Mar 2015 21:21:02 +0100
+Message-ID: <1426969262.3756.1.camel@kaarsemaker.net>
+References: <E1YZNn7-0002Lc-7O@rmm6prod02.runbox.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Vy1A5eXR7jld12ZH"
-Cc: "Kyle J. McKay" <mackyle@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 21 21:15:49 2015
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>
+To: dwheeler@dwheeler.com
+X-From: git-owner@vger.kernel.org Sat Mar 21 21:21:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YZPo9-0007BB-70
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Mar 2015 21:15:45 +0100
+	id 1YZPtP-0003yg-GZ
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Mar 2015 21:21:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751761AbbCUUPj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Mar 2015 16:15:39 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:50757 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751646AbbCUUPj (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 21 Mar 2015 16:15:39 -0400
-Received: from vauxhall.crustytoothpaste.net (wsip-184-177-1-73.no.no.cox.net [184.177.1.73])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 3FF762808F;
-	Sat, 21 Mar 2015 20:15:36 +0000 (UTC)
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	"Kyle J. McKay" <mackyle@gmail.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <xmqqegojc9yd.fsf@gitster.dls.corp.google.com>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.19.0-trunk-amd64)
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Spam-Score: 0.163 () BAYES_00,RDNS_DYNAMIC
+	id S1751804AbbCUUVH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Mar 2015 16:21:07 -0400
+Received: from mail-wi0-f182.google.com ([209.85.212.182]:36154 "EHLO
+	mail-wi0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751694AbbCUUVF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Mar 2015 16:21:05 -0400
+Received: by wibg7 with SMTP id g7so15218778wib.1
+        for <git@vger.kernel.org>; Sat, 21 Mar 2015 13:21:04 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:content-type:mime-version:content-transfer-encoding;
+        bh=SVaHwOirJ1lZc95pDQhEmcEx0kX39zpYWdFcbcsmqWk=;
+        b=hpfYp7Tb9rwFf97chb1mI3ie48UpUSuon1IMegtlq4HA8wUMTVwLu1RNK3i6/yJW7+
+         o2hTTZNQvHuP9QomnosUNDtRKO22/7k4kyt4bYzHcxQiZKMdrRk0w31rx8/yXWbKEsBC
+         7tKRkAsjV+it1yL/BaMsb/ELzXggEY9+j2EVngQcHRqQgKmMxlDGD0Y28fMsIcophBWw
+         0u/wEvXxXe//mu5ffu38MfISJS8NCXZP5gfcMaWDDbcIiglpc+WO6zS0nNXbK+VajB6+
+         elVXpSx3NcEPtlGNge+u8Y8LlZdBtRroSeo10RYLL+bEKsmHeI57He57goiC3pCGLnEQ
+         W7uw==
+X-Gm-Message-State: ALoCoQlkPwKU8xa7E2nuqUlRqwuWy+UZuHe5Cy+WPs4WnsfcXB+1Ffd64GpRIGN+QJRTtqePUYql
+X-Received: by 10.194.171.100 with SMTP id at4mr149494558wjc.122.1426969264483;
+        Sat, 21 Mar 2015 13:21:04 -0700 (PDT)
+Received: from spirit.home.kaarsemaker.net (82-171-80-33.ip.telfort.nl. [82.171.80.33])
+        by mx.google.com with ESMTPSA id cj9sm11986682wjc.42.2015.03.21.13.21.03
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 21 Mar 2015 13:21:03 -0700 (PDT)
+In-Reply-To: <E1YZNn7-0002Lc-7O@rmm6prod02.runbox.com>
+X-Mailer: Evolution 3.12.10-0ubuntu1~14.10.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266033>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266034>
 
+On za, 2015-03-21 at 14:06 -0400, David A. Wheeler wrote:
+> Warn cloners if there is no LICENSE* or COPYING* file that makes
+> the license clear.  This is a useful warning, because if there is
+> no license somewhere, then local copyright laws (which forbid many uses)
+> and terms of service apply - and the cloner may not be expecting that.
 
---Vy1A5eXR7jld12ZH
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Please no, especially not without an option to switch this off. Git is
+not only used in open source settings, this would be highly annoying at
+$work, where no repo has (or needs) such a file.
 
-On Fri, Mar 20, 2015 at 08:20:58PM -0700, Junio C Hamano wrote:
-> I had an impression that the series may see at least one reroll to
-> polish it further before it gets ready for 'next', as I only saw
-> discussions on the tangent (e.g. possible futures) and didn't see
-> serious reviews of the code that we will actually be using.
-
-If people have suggestions on how to improve it, I'm eager to hear them
-and submit a reroll or follow-up patches, as appropriate.  Making
-changes now would be much better than having to do it down the line.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
-
---Vy1A5eXR7jld12ZH
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCgAGBQJVDdFiAAoJEL9TXYEfUvaLHNMP/2jkOPRo/3YH37Sgfb0Jlbu0
-LUEKV1dD4XvrM+GyWqeR058Pd9iFK65lCsMcTnUUn5dTwjP6wE90/dttYd0msjQS
-hGFgtc4qd/02TzKXmntxfFtm5EETCLBuZI9vNjC5p/ODpf5vD8vthedKjwcS9YEY
-7w7RESp0ASm5sNWxbswm9BmYbUF6HGc4Xs12ZaIop8euzeVOXkNNCRaKl+4zrgcK
-i7jLEKaN+MHGQwOOr5DB8rvfXbreBL9d2rPptw9HCYCYSZuLtbedEBkW6mZsUH/M
-zxvB5orAEklEt0tpMQlT0N5aRbRsuHzl0OeXsimqSvIl9ZmmeAQ5xvjjGvC/Ewoz
-vTfvnRBkUEsNxdydKvPD3qNEi/6IPH5fZGT5o9TfRdM0ao1S1AooxYfr3o1pYbbN
-ws5f0lsF2tWKnWSbnBmVnz/MVUJO4PS6NWunhinXdww9I90R5vWhBS4pFG3WCbc8
-p/a4kwfJI34c2Ov6m8Pvimes1Yk88KFSigJlDZhrKaitZIqtTgBMWyRZhJDOQEOU
-1QeLCA/0i4W55ytutBFkM5B3BKHFc09WbbY60Ab9a8I+ibLvBiwztrgBd2OKUYY3
-Hm7TR4yJWS++8y0ILftsa45CJC3h+4oE4hMSEVfF1kNx/cqGy1pyCicpu34Ctk39
-ki25+7AORzJOmslTZsEy
-=mx2g
------END PGP SIGNATURE-----
-
---Vy1A5eXR7jld12ZH--
+-- 
+Dennis Kaarsemaker
+www.kaarsemaker.net
