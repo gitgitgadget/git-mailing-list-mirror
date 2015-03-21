@@ -1,48 +1,57 @@
-From: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH] t6039: fix broken && chain
-Date: Sat, 21 Mar 2015 08:19:20 +0100
-Message-ID: <550D1B78.5090703@web.de>
+Date: Sat, 21 Mar 2015 03:35:04 -0400
+Message-ID: <20150321073504.GA27780@peff.net>
 References: <550D1811.3040802@web.de>
+ <550D1B78.5090703@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 21 08:19:49 2015
+Cc: git@vger.kernel.org
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Sat Mar 21 08:35:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YZDhE-0001Tb-8y
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Mar 2015 08:19:48 +0100
+	id 1YZDwK-00006m-DR
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Mar 2015 08:35:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751140AbbCUHTY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 21 Mar 2015 03:19:24 -0400
-Received: from mout.web.de ([212.227.17.11]:56298 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751132AbbCUHTY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Mar 2015 03:19:24 -0400
-Received: from macce.local ([217.211.68.12]) by smtp.web.de (mrweb103) with
- ESMTPSA (Nemesis) id 0MhDgb-1Yuzf62uAL-00MH4b; Sat, 21 Mar 2015 08:19:21
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
-In-Reply-To: <550D1811.3040802@web.de>
-X-Provags-ID: V03:K0:7EsclzOgh+sHjSfE6HG9uB7EV0Wh+lFHqa+exFLaDybG/RtQ7Af
- hRleB4jWzJYhUFQZPLoc9+Zt6xuwThugkFkWMpEu7fTdobJ5dRbuPV0yFqhmCzQylriXol9
- HzKdaEyutBXPXDbHWliQImqwzAarHdjutNp3IDPaGEuGnmSVC0tOI9HIlDsrk6omXHYMGID
- JvlufuSvMA3Q3RWrSfLrg==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1751191AbbCUHfH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 21 Mar 2015 03:35:07 -0400
+Received: from cloud.peff.net ([50.56.180.127]:36397 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751164AbbCUHfH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Mar 2015 03:35:07 -0400
+Received: (qmail 30184 invoked by uid 102); 21 Mar 2015 07:35:07 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 21 Mar 2015 02:35:07 -0500
+Received: (qmail 32257 invoked by uid 107); 21 Mar 2015 07:35:19 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 21 Mar 2015 03:35:18 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 21 Mar 2015 03:35:04 -0400
+Content-Disposition: inline
+In-Reply-To: <550D1B78.5090703@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266014>
 
-On 2015-03-21 08.04, Torsten B=F6gershausen wrote:
-> Add missing %%, detected by the --chain-lint option
-Oh, early morning typo, should be
-Add missing &&, detected by the --chain-lint option
+On Sat, Mar 21, 2015 at 08:19:20AM +0100, Torsten B=C3=B6gershausen wro=
+te:
 
-(I'll re-run the testsuite with the  --chain-lint in a minute,
- thanks everybody for this nice feature)
+> On 2015-03-21 08.04, Torsten B=C3=B6gershausen wrote:
+> > Add missing %%, detected by the --chain-lint option
+> Oh, early morning typo, should be
+> Add missing &&, detected by the --chain-lint option
+>=20
+> (I'll re-run the testsuite with the  --chain-lint in a minute,
+>  thanks everybody for this nice feature)
+
+Yay! I'm glad to see it detecting something, and people trying it out o=
+n
+platforms with different prereqs than mine.
+
+-Peff
