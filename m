@@ -1,64 +1,65 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: =?UTF-8?B?UmU6IFtQQVRDSCAxLzFdIGwxMG46IGRlLnBvOiB1c2UgImJsYSDigKYiIGluc3RlYWQgbw==?=
-	=?UTF-8?B?ZiAiYmxhLi4uIg==?=
-Date: Sat, 21 Mar 2015 22:21:19 +0100
-Message-ID: <CAN0XMO+JLfzkYwP5rKkT6RyLJ-XuH1k=9vKmi1X0xb1SjTOdvg@mail.gmail.com>
-References: <1426942357-5618-1-git-send-email-phillip.szelat@gmail.com>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: [PATCH v2] t6039: fix broken && chain
+Date: Sat, 21 Mar 2015 22:40:02 +0100
+Message-ID: <550DE532.3010803@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>, Thomas Rast <tr@thomasrast.ch>,
-	=?UTF-8?Q?Jan_Kr=C3=BCger?= <jk@jk.gs>,
-	Christian Stimming <stimming@tuhh.de>,
-	=?UTF-8?Q?Matthias_R=C3=BCster?= <matthias.ruester@gmail.com>,
-	=?UTF-8?Q?Magnus_G=C3=B6rlitz?= <magnus.goerlitz@googlemail.com>
-To: Phillip Sz <phillip.szelat@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 21 22:21:30 2015
+Cc: tboegi@web.de
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 21 22:46:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YZQpi-0003VH-Cb
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Mar 2015 22:21:26 +0100
+	id 1YZRDn-0002Wc-P7
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Mar 2015 22:46:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751422AbbCUVVV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 21 Mar 2015 17:21:21 -0400
-Received: from mail-we0-f179.google.com ([74.125.82.179]:36736 "EHLO
-	mail-we0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751343AbbCUVVV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 21 Mar 2015 17:21:21 -0400
-Received: by wetk59 with SMTP id k59so107825235wet.3
-        for <git@vger.kernel.org>; Sat, 21 Mar 2015 14:21:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=27NfV5yOfQFhN5XNuqKZEZR9EjPWN6uXWIr8XoKq/zw=;
-        b=YmMQsgbsR76Y49AKHUFQZH7coPSmIi5LbbDxmriz6G9WgEX+k80zstW1p0+WVABX4d
-         LLWLaTgx0hpGRncOXqjekcpeSlVBmdhuxpQq9uZnNeTGUiribyDj7bF5LgWbuKY1u4YZ
-         OLp4TKFW9whypCg5onJfDQoyLbB36oC/O7Z6bXx24SRRPcS/WSQ09xBorGPlBgYUrWds
-         eRFe579H5yAfCB8xa6v0qv1mm5KOmAknhpUMjeNiugb25+XLqB+oKmdWgcuo9BFhxEFe
-         O6rt+O6P5ebprD2gHavZENQrQJ4gaJ3KKxheqT5O9jWtVvGKvZg35iXi9R6CPaI+j6/M
-         TuWw==
-X-Received: by 10.180.105.136 with SMTP id gm8mr7153664wib.13.1426972879840;
- Sat, 21 Mar 2015 14:21:19 -0700 (PDT)
-Received: by 10.194.72.5 with HTTP; Sat, 21 Mar 2015 14:21:19 -0700 (PDT)
-In-Reply-To: <1426942357-5618-1-git-send-email-phillip.szelat@gmail.com>
+	id S1751982AbbCUVkI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 21 Mar 2015 17:40:08 -0400
+Received: from mout.web.de ([212.227.17.12]:62974 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751946AbbCUVkF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Mar 2015 17:40:05 -0400
+Received: from macce.local ([217.211.68.12]) by smtp.web.de (mrweb102) with
+ ESMTPSA (Nemesis) id 0MOAnY-1YckVT1KeS-005bGO; Sat, 21 Mar 2015 22:40:03
+ +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
+X-Provags-ID: V03:K0:XnliGUwbgyrfYT9Jl29r+Ftn2HIvnZJt0b45tvAp+6kEHR8uWxv
+ ob5iAMMTYdbqdxqX/MIMOsBdNMRpm8V8l4lr+X3cUlenE8icZWVu+3HqZjj9uYG/lXkzmj4
+ oXPcpRCfT5ZGCkCc4Jah4OcN5KZsjushXkcAsxs2ZyTJ+GXpENpxFRESVaK6yg4hw5970uY
+ VmY7CDgPg2giNxpWuHCjQ==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266036>
 
-Am 21. M=C3=A4rz 2015 um 13:52 schrieb Phillip Sz <phillip.szelat@gmail=
-=2Ecom>:
->
-> I think we should use it like this, as most open-source projects do.
-> Also we should use a space before the three dots as per http://www.du=
-den.de/sprachwissen/rechtschreibregeln/auslassungspunkte
->
+Add missing &&, detected by the --chain-lint option
 
-I don't think this rule of ellipsis applies here as the dots are meant
-to be a pattern to tell users that an argument can be passed multiple
-times.
+Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+---
+
+side note: All other tests passed on jk/test-chain-lint
+
+ t/t6039-merge-ignorecase.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/t/t6039-merge-ignorecase.sh b/t/t6039-merge-ignorecase.sh
+index a977653..531850d 100755
+--- a/t/t6039-merge-ignorecase.sh
++++ b/t/t6039-merge-ignorecase.sh
+@@ -15,7 +15,7 @@ test_expect_success 'merge with case-changing rename'=
+ '
+ 	>TestCase &&
+ 	git add TestCase &&
+ 	git commit -m "add TestCase" &&
+-	git tag baseline
++	git tag baseline &&
+ 	git checkout -b with-camel &&
+ 	>foo &&
+ 	git add foo &&
+--=20
+2.2.0.rc1.790.ge19fcd2
