@@ -1,66 +1,64 @@
-From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: Re: [PATCH] clone: Warn if clone lacks LICENSE or COPYING file
-Date: Sat, 21 Mar 2015 21:21:02 +0100
-Message-ID: <1426969262.3756.1.camel@kaarsemaker.net>
-References: <E1YZNn7-0002Lc-7O@rmm6prod02.runbox.com>
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: =?UTF-8?B?UmU6IFtQQVRDSCAxLzFdIGwxMG46IGRlLnBvOiB1c2UgImJsYSDigKYiIGluc3RlYWQgbw==?=
+	=?UTF-8?B?ZiAiYmxhLi4uIg==?=
+Date: Sat, 21 Mar 2015 22:21:19 +0100
+Message-ID: <CAN0XMO+JLfzkYwP5rKkT6RyLJ-XuH1k=9vKmi1X0xb1SjTOdvg@mail.gmail.com>
+References: <1426942357-5618-1-git-send-email-phillip.szelat@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: dwheeler@dwheeler.com
-X-From: git-owner@vger.kernel.org Sat Mar 21 21:21:13 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git <git@vger.kernel.org>, Thomas Rast <tr@thomasrast.ch>,
+	=?UTF-8?Q?Jan_Kr=C3=BCger?= <jk@jk.gs>,
+	Christian Stimming <stimming@tuhh.de>,
+	=?UTF-8?Q?Matthias_R=C3=BCster?= <matthias.ruester@gmail.com>,
+	=?UTF-8?Q?Magnus_G=C3=B6rlitz?= <magnus.goerlitz@googlemail.com>
+To: Phillip Sz <phillip.szelat@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 21 22:21:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YZPtP-0003yg-GZ
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Mar 2015 21:21:11 +0100
+	id 1YZQpi-0003VH-Cb
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Mar 2015 22:21:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751804AbbCUUVH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Mar 2015 16:21:07 -0400
-Received: from mail-wi0-f182.google.com ([209.85.212.182]:36154 "EHLO
-	mail-wi0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751694AbbCUUVF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Mar 2015 16:21:05 -0400
-Received: by wibg7 with SMTP id g7so15218778wib.1
-        for <git@vger.kernel.org>; Sat, 21 Mar 2015 13:21:04 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:content-type:mime-version:content-transfer-encoding;
-        bh=SVaHwOirJ1lZc95pDQhEmcEx0kX39zpYWdFcbcsmqWk=;
-        b=hpfYp7Tb9rwFf97chb1mI3ie48UpUSuon1IMegtlq4HA8wUMTVwLu1RNK3i6/yJW7+
-         o2hTTZNQvHuP9QomnosUNDtRKO22/7k4kyt4bYzHcxQiZKMdrRk0w31rx8/yXWbKEsBC
-         7tKRkAsjV+it1yL/BaMsb/ELzXggEY9+j2EVngQcHRqQgKmMxlDGD0Y28fMsIcophBWw
-         0u/wEvXxXe//mu5ffu38MfISJS8NCXZP5gfcMaWDDbcIiglpc+WO6zS0nNXbK+VajB6+
-         elVXpSx3NcEPtlGNge+u8Y8LlZdBtRroSeo10RYLL+bEKsmHeI57He57goiC3pCGLnEQ
-         W7uw==
-X-Gm-Message-State: ALoCoQlkPwKU8xa7E2nuqUlRqwuWy+UZuHe5Cy+WPs4WnsfcXB+1Ffd64GpRIGN+QJRTtqePUYql
-X-Received: by 10.194.171.100 with SMTP id at4mr149494558wjc.122.1426969264483;
-        Sat, 21 Mar 2015 13:21:04 -0700 (PDT)
-Received: from spirit.home.kaarsemaker.net (82-171-80-33.ip.telfort.nl. [82.171.80.33])
-        by mx.google.com with ESMTPSA id cj9sm11986682wjc.42.2015.03.21.13.21.03
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 21 Mar 2015 13:21:03 -0700 (PDT)
-In-Reply-To: <E1YZNn7-0002Lc-7O@rmm6prod02.runbox.com>
-X-Mailer: Evolution 3.12.10-0ubuntu1~14.10.1 
+	id S1751422AbbCUVVV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 21 Mar 2015 17:21:21 -0400
+Received: from mail-we0-f179.google.com ([74.125.82.179]:36736 "EHLO
+	mail-we0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751343AbbCUVVV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 21 Mar 2015 17:21:21 -0400
+Received: by wetk59 with SMTP id k59so107825235wet.3
+        for <git@vger.kernel.org>; Sat, 21 Mar 2015 14:21:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=27NfV5yOfQFhN5XNuqKZEZR9EjPWN6uXWIr8XoKq/zw=;
+        b=YmMQsgbsR76Y49AKHUFQZH7coPSmIi5LbbDxmriz6G9WgEX+k80zstW1p0+WVABX4d
+         LLWLaTgx0hpGRncOXqjekcpeSlVBmdhuxpQq9uZnNeTGUiribyDj7bF5LgWbuKY1u4YZ
+         OLp4TKFW9whypCg5onJfDQoyLbB36oC/O7Z6bXx24SRRPcS/WSQ09xBorGPlBgYUrWds
+         eRFe579H5yAfCB8xa6v0qv1mm5KOmAknhpUMjeNiugb25+XLqB+oKmdWgcuo9BFhxEFe
+         O6rt+O6P5ebprD2gHavZENQrQJ4gaJ3KKxheqT5O9jWtVvGKvZg35iXi9R6CPaI+j6/M
+         TuWw==
+X-Received: by 10.180.105.136 with SMTP id gm8mr7153664wib.13.1426972879840;
+ Sat, 21 Mar 2015 14:21:19 -0700 (PDT)
+Received: by 10.194.72.5 with HTTP; Sat, 21 Mar 2015 14:21:19 -0700 (PDT)
+In-Reply-To: <1426942357-5618-1-git-send-email-phillip.szelat@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266035>
 
-On za, 2015-03-21 at 14:06 -0400, David A. Wheeler wrote:
-> Warn cloners if there is no LICENSE* or COPYING* file that makes
-> the license clear.  This is a useful warning, because if there is
-> no license somewhere, then local copyright laws (which forbid many uses)
-> and terms of service apply - and the cloner may not be expecting that.
+Am 21. M=C3=A4rz 2015 um 13:52 schrieb Phillip Sz <phillip.szelat@gmail=
+=2Ecom>:
+>
+> I think we should use it like this, as most open-source projects do.
+> Also we should use a space before the three dots as per http://www.du=
+den.de/sprachwissen/rechtschreibregeln/auslassungspunkte
+>
 
-Please no, especially not without an option to switch this off. Git is
-not only used in open source settings, this would be highly annoying at
-$work, where no repo has (or needs) such a file.
-
--- 
-Dennis Kaarsemaker
-www.kaarsemaker.net
+I don't think this rule of ellipsis applies here as the dots are meant
+to be a pattern to tell users that an argument can be passed multiple
+times.
