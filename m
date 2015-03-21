@@ -1,91 +1,83 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 10/15] commit.c: fix a memory leak
-Date: Fri, 20 Mar 2015 17:28:07 -0700
-Message-ID: <1426897692-18322-11-git-send-email-sbeller@google.com>
+Subject: [PATCH 15/15] ls-files: fix a memleak
+Date: Fri, 20 Mar 2015 17:28:12 -0700
+Message-ID: <1426897692-18322-16-git-send-email-sbeller@google.com>
 References: <1426897692-18322-1-git-send-email-sbeller@google.com>
 Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat Mar 21 01:28:40 2015
+X-From: git-owner@vger.kernel.org Sat Mar 21 01:28:43 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YZ7HE-0001gw-Qp
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Mar 2015 01:28:33 +0100
+	id 1YZ7HO-0001p5-Eo
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Mar 2015 01:28:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752326AbbCUA2a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Mar 2015 20:28:30 -0400
-Received: from mail-ig0-f170.google.com ([209.85.213.170]:36093 "EHLO
-	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752320AbbCUA23 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Mar 2015 20:28:29 -0400
-Received: by igbud6 with SMTP id ud6so1551106igb.1
-        for <git@vger.kernel.org>; Fri, 20 Mar 2015 17:28:28 -0700 (PDT)
+	id S1752355AbbCUA2h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Mar 2015 20:28:37 -0400
+Received: from mail-ig0-f176.google.com ([209.85.213.176]:32801 "EHLO
+	mail-ig0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752345AbbCUA2e (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Mar 2015 20:28:34 -0400
+Received: by ignm3 with SMTP id m3so1310149ign.0
+        for <git@vger.kernel.org>; Fri, 20 Mar 2015 17:28:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=T416E1Zv/9RBSNTsD3bhQUDIbDCbCJwinYF4EVlakzQ=;
-        b=aemRsNrVeZx2kjIX9Qk4K3vunVxr0asjzGMfAyhNpqcTXD1rr4gZWcFzJkfmOQmE/P
-         VBqU+bFRFc9u9y5FhFt8ErP6uYx6qVVqWZNG3V1w+e7sy7LseZMikplAn4vIMA0Mx/4g
-         NSP1T0OQvCIAOA1vf/rxei99AA5BziiSnM8UahfUkPLuwqtsbS7yK+NNEBp/xxjNNYfB
-         yBkv/b9V9Qqakn9I+En0BhLRGPb8PHiikYWNIW5kVYqnSBXiUzf83sL/i+AgVcS1U/UG
-         bZl5/jym0dFw+PU78lDG0PYK5tlLsWOWCnjcTjMUbwuJWsT2Xwg+6gD/xGF7DZKQnX2R
-         PWGw==
+        bh=kJytlmr4OZTQ5PRsyowIQdZLOVGzGOQuKMu+z71kvqI=;
+        b=bXRu4rQ6tZ2v5jTzqG1RUrpHifiPvm+ieH375NXPjjTHkgIoQGjdOM++pU9tKcZwv2
+         cdl9c7u+frBDbOMpK6uhEzDBITQRcRPZ93yQgR63wqdkTcfRgCLa00pLiR0/tUF+7jnL
+         xGA/27BtLdec2XwNqVZ88MnabUZAAmQSOan2lknxPBNhqncHvcbDZB3ug+PuR4FQolfN
+         2iRrcAL9C+2XyHnBqynI0TZzDdkrJkuPp7000DRnQo2+RqnUAV5kUYmpohfPDR3ml1sn
+         ND2NnjrvCiz9kfLhGVrIphKpJye8USS9DBmXTIyFQxMUexXin+zBYNFREFnqtftLH27A
+         VytA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=T416E1Zv/9RBSNTsD3bhQUDIbDCbCJwinYF4EVlakzQ=;
-        b=YWCzgoX7iEGT025ZL7G/0l4RPvT+h1qF/OiZu/p+L3wChmyQmWti3IPv9PoJVz3EKB
-         ZqpcgcyQTaOURALfoVJoUAxO3szKpXoH1sDfk1Vo9XqZxhFUXhoazN81DbmSLe0lnCW9
-         iKK9GpteUgAEfZNN7e4X/ru2qZwHHkhFx++WFBH8IWf5/KOgAYtZ/+zc+WpMjee17ygR
-         e0Hgbfm7/0S9YNj3ga36si3MEkmQLnp1kehQsWm533bHnLJHQPlfzoaOL3uwRCHVvbur
-         w2cEy/0dlp/aR9yiyr7+F0trFCD+iEDpzkF78EHPx6PNwx+/TSWqlRwOdkUBkGo3ksr6
-         FegA==
-X-Gm-Message-State: ALoCoQlGEMp+F+WKkwOOl4z5DOzYVphuq9W3iEyXc1NKIJN4HNQbtF2BW63iCqv17PyJB/QIehb9
-X-Received: by 10.107.25.68 with SMTP id 65mr54191205ioz.44.1426897708420;
-        Fri, 20 Mar 2015 17:28:28 -0700 (PDT)
+        bh=kJytlmr4OZTQ5PRsyowIQdZLOVGzGOQuKMu+z71kvqI=;
+        b=UHic9Ftw/jf5dop8ae08hVwEB51Bt94KJsUykA7E36J55DrZptGzyvVPq/0zsRiZaz
+         RlFFwyZ2pvIP5yR7Px9Ktgg9FIpNqtAlhzdvI5lFaV+bBB/vk/MuniXsTUIiumvaEK0Y
+         4Fi3EUB0u4NU4s0hXw/Z5eGMsUEOLVl8UrUBiDLYbpJvr/81ggzMnHu8lFmeslnAgTPK
+         eQ4sJM17nVJpd41ixNG+FE6tMObI2XhtxDJuPXPX8xDDktE3CIcB9Gitdrdp2MRc62Lu
+         QY9AxrVdTBplLk3SKzS6JqLM+lNVL0QBfg8ULCOYwe5LtzjXD/5Mbmi5lQpVHFgIfbYG
+         TbwQ==
+X-Gm-Message-State: ALoCoQlw7o2IVUHiXpfd/ZOm7YLs+JYEdxfNLfEEZ2XRcLkTf8jQ2fyp0+Qy946mYoD7uAQXNPw/
+X-Received: by 10.107.164.140 with SMTP id d12mr105838790ioj.13.1426897713813;
+        Fri, 20 Mar 2015 17:28:33 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b00:c4ad:7c66:d5e8:7112])
-        by mx.google.com with ESMTPSA id j126sm3596480ioe.22.2015.03.20.17.28.27
+        by mx.google.com with ESMTPSA id q78sm4230909ioi.28.2015.03.20.17.28.33
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 20 Mar 2015 17:28:28 -0700 (PDT)
+        Fri, 20 Mar 2015 17:28:33 -0700 (PDT)
 X-Mailer: git-send-email 2.3.0.81.gc37f363
 In-Reply-To: <1426897692-18322-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265986>
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- builtin/commit.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 961e467..da79ac4 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -229,7 +229,7 @@ static int commit_index_files(void)
- static int list_paths(struct string_list *list, const char *with_tree,
- 		      const char *prefix, const struct pathspec *pattern)
- {
--	int i;
-+	int i, ret;
- 	char *m;
+Notes:
+    see discussion
+
+ builtin/ls-files.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index 914054d..306defa 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -590,6 +590,7 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
+ 		if (bad)
+ 			fprintf(stderr, "Did you forget to 'git add'?\n");
  
- 	if (!pattern->nr)
-@@ -256,7 +256,9 @@ static int list_paths(struct string_list *list, const char *with_tree,
- 			item->util = item; /* better a valid pointer than a fake one */
++		free(ps_matched);
+ 		return bad ? 1 : 0;
  	}
  
--	return report_path_error(m, pattern, prefix);
-+	ret = report_path_error(m, pattern, prefix);
-+	free(m);
-+	return ret;
- }
- 
- static void add_remove_files(struct string_list *list)
 -- 
 2.3.0.81.gc37f363
