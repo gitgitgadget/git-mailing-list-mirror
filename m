@@ -1,101 +1,117 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC][GSoC] diff-no-index: transform "$directory $file" args to "$directory/$file $file"
-Date: Sat, 21 Mar 2015 11:18:25 -0700
-Message-ID: <xmqqsicyciz2.fsf@gitster.dls.corp.google.com>
-References: <CAHLaBN+x3SVL9+jDzeSEMapVd2BVrwQuVx_7ENspjbUPrium_A@mail.gmail.com>
+From: "David A. Wheeler" <dwheeler@dwheeler.com>
+Subject: [PATCH] clone: Warn if clone lacks LICENSE or COPYING file
+Date: Sat, 21 Mar 2015 14:06:33 -0400 (EDT)
+Message-ID: <E1YZNn7-0002Lc-7O@rmm6prod02.runbox.com>
+Reply-To: dwheeler@dwheeler.com
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Yurii Shevtsov <ungetch@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 21 19:18:39 2015
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+To: "git" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Mar 21 19:27:11 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YZNyi-00068a-O5
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Mar 2015 19:18:33 +0100
+	id 1YZO71-00065B-DU
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Mar 2015 19:27:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751547AbbCUSS2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Mar 2015 14:18:28 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:54850 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751470AbbCUSS1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Mar 2015 14:18:27 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B31E53EFC3;
-	Sat, 21 Mar 2015 14:18:26 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=E0Qb7ByimTKlvbzOZ7Mqc3xw14E=; b=cztp6U
-	7r2NBjF5UPt5s0BddM7inJIkfHdBniwuvlMpfo0kzzpvonvURcx8ysxKjLrw8e1g
-	uU9aDErrWXjDo/JEFHPgwsiHBYyLUrA0vY8FijM0HgfvHgNUktZuVTXiRM4ez0CZ
-	7R6Ql44+zmzGG5lXL1SJFDa8W6zIyIjO+YgSQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZMRUb+MWFTCaVbtl9oStBLZuP/qSiqxH
-	f+Kbhjvj2FbaiSyEtveZA5M9eSvdaXveOPtxQedcDX0xayBL7jLhn3Bb5yGhoJcZ
-	LUK6i3ECDGratXyz8iTVOHojElj7JsLsXCN2jF52Kj6kNMlusOf1g8BPqLFR1ucs
-	wydy1uMXZ8c=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id ACFC53EFC2;
-	Sat, 21 Mar 2015 14:18:26 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 355943EFC1;
-	Sat, 21 Mar 2015 14:18:26 -0400 (EDT)
-In-Reply-To: <CAHLaBN+x3SVL9+jDzeSEMapVd2BVrwQuVx_7ENspjbUPrium_A@mail.gmail.com>
-	(Yurii Shevtsov's message of "Sat, 21 Mar 2015 14:50:32 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: AACAEF34-CFF6-11E4-BEEC-6DD39F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751663AbbCUS1D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Mar 2015 14:27:03 -0400
+Received: from aibo.runbox.com ([91.220.196.211]:47641 "EHLO aibo.runbox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751592AbbCUS1B convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 21 Mar 2015 14:27:01 -0400
+X-Greylist: delayed 1226 seconds by postgrey-1.27 at vger.kernel.org; Sat, 21 Mar 2015 14:27:01 EDT
+Received: from [10.9.9.241] (helo=rmm6prod02.runbox.com)
+	by bars.runbox.com with esmtp (Exim 4.71)
+	(envelope-from <dwheeler@dwheeler.com>)
+	id 1YZNn7-0006JK-1W
+	for git@vger.kernel.org; Sat, 21 Mar 2015 19:06:33 +0100
+Received: from mail by rmm6prod02.runbox.com with local (Exim 4.76)
+	(envelope-from <dwheeler@dwheeler.com>)
+	id 1YZNn7-0002Lc-7O
+	for git@vger.kernel.org; Sat, 21 Mar 2015 19:06:33 +0100
+Content-Disposition: inline
+Received: from [Authenticated user (258406)] by secure.runbox.com with
+ http (RMM6); for <git@vger.kernel.org>; Sat, 21 Mar 2015 18:06:33 GMT
+X-Mailer: RMM6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266030>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266031>
 
-Yurii Shevtsov <ungetch@gmail.com> writes:
+Warn cloners if there is no LICENSE* or COPYING* file that makes
+the license clear.  This is a useful warning, because if there is
+no license somewhere, then local copyright laws (which forbid many uses)
+and terms of service apply - and the cloner may not be expecting that.
+Many projects accidentally omit a license, so this is common enough to note.
+For more info on the issue, feel free to see:
+http://choosealicense.com/no-license/
+http://www.wired.com/2013/07/github-licenses/
+https://twitter.com/stephenrwalli/status/247597785069789184
 
-> diff --git a/diff-no-index.c b/diff-no-index.c
-> index 265709b..9a3439a 100644
-> --- a/diff-no-index.c
-> +++ b/diff-no-index.c
-> @@ -97,8 +97,39 @@ static int queue_diff(struct diff_options *o,
->      if (get_mode(name1, &mode1) || get_mode(name2, &mode2))
->          return -1;
->
-> -    if (mode1 && mode2 && S_ISDIR(mode1) != S_ISDIR(mode2))
-> -        return error("file/directory conflict: %s, %s", name1, name2);
-> +    if (mode1 && mode2 && S_ISDIR(mode1) != S_ISDIR(mode2)) {
-> +        struct strbuf path;
-> +        const char *dir, *file;
-> +        char *filename, *dirname = 0;
-> +        int i, ret = 0;
+Signed-off-by: David A. Wheeler <dwheeler@dwheeler.com>
+---
+ builtin/clone.c | 38 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 38 insertions(+)
 
-If you have two directories, a and b, under which there are two
-files a/sub/file and b/sub (i.e. 'sub' in a/ is a directory and b/
-is a file), and if you say "git diff --no-index a b", what happens?
-
- - the caller of this function gives a and b in name1 and name2;
-
- - we do not come in this codepath as both are directories;
-
- - we read from a/ and b/ and fill p1 and p2 with names of paths in
-   the directories -- p1 and p2 will both have 'sub';
-
- - queue_diff() is recursively called to compare a/sub and b/sub;
-
-   - now we have name1 = a/sub and name2 = b/sub;
-
-   - we come in this codepath, and they are turned into comparison
-     between a/sub/sub and b/sub.
-
-The last step is simply crazy.
-
-Hmmmm, is vger reinjecting an old message, or you sent an older and
-wrong version of a patch by mistake?  We discussed why doing this in
-queue_diff() is wrong in the thread that has $gmane/265543 in it,
-and I was expecting to see a logic like this in the caller.
-
-Puzzled...
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 9572467..9863b04 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -748,6 +748,41 @@ static void dissociate_from_references(void)
+ 		die_errno(_("cannot unlink temporary alternates file"));
+ }
+ 
++static int starts_with_ignore_case(const char *str, const char *prefix)
++{
++	for (; ; str++, prefix++)
++		if (!*prefix)
++			return 1;
++		else if (tolower(*str) != tolower(*prefix))
++			return 0;
++}
++
++static int contains_license(void)
++{
++	DIR *dir = opendir("."); /* Examine current directory for license. */
++	struct dirent *e;
++	struct stat st;
++	int ret = 0;
++
++	if (!dir)
++		return 0;
++
++	while ((e = readdir(dir)) != NULL)
++		if (starts_with_ignore_case(e->d_name, "license") ||
++		    starts_with_ignore_case(e->d_name, "copyright")) {
++			if (stat(e->d_name, &st))
++				continue;
++			if (st.st_size > 1) {
++				ret = 1;
++				break;
++			}
++		}
++
++	closedir(dir);
++	return ret;
++}
++
++
+ int cmd_clone(int argc, const char **argv, const char *prefix)
+ {
+ 	int is_bundle = 0, is_local;
+@@ -1016,6 +1051,9 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	junk_mode = JUNK_LEAVE_REPO;
+ 	err = checkout();
+ 
++	if (!option_no_checkout && !contains_license())
++		warning(_("Repository has no LICENSE or COPYING file with content."));
++
+ 	strbuf_release(&reflog_msg);
+ 	strbuf_release(&branch_top);
+ 	strbuf_release(&key);
+-- 
+2.1.4
