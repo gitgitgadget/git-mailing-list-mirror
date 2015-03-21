@@ -1,135 +1,296 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 02/15] read-cache: Improve readability
-Date: Fri, 20 Mar 2015 22:11:47 -0700
-Message-ID: <CAGZ79kaLJgC6rWdRSeVVQSBYn0soJuzqnrK_bNtgAPWimPYE8w@mail.gmail.com>
-References: <1426897692-18322-1-git-send-email-sbeller@google.com>
-	<1426897692-18322-3-git-send-email-sbeller@google.com>
-	<xmqqbnjnaso7.fsf@gitster.dls.corp.google.com>
+From: Paul Tan <pyokagan@gmail.com>
+Subject: Re: [PATCH v4 4/4] t0302: test credential-store support for XDG_CONFIG_HOME
+Date: Sat, 21 Mar 2015 13:46:13 +0800
+Message-ID: <CACRoPnTXH+HDD42H2ca7b+OPF15v2TxM+y+NRRi2CS_Xg3tGEw@mail.gmail.com>
+References: <1426662276-8728-1-git-send-email-pyokagan@gmail.com>
+	<1426662276-8728-4-git-send-email-pyokagan@gmail.com>
+	<CAPig+cR-87-dWXUKoKvphrdb_Y=7268G5uerAiPYDsj-UQiuRw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 21 06:11:56 2015
+Cc: Git List <git@vger.kernel.org>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Sat Mar 21 06:46:25 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YZBhS-0001Fv-5q
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Mar 2015 06:11:54 +0100
+	id 1YZCEm-0001qJ-Qo
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Mar 2015 06:46:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751004AbbCUFLt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Mar 2015 01:11:49 -0400
-Received: from mail-ig0-f174.google.com ([209.85.213.174]:37213 "EHLO
-	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750801AbbCUFLs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Mar 2015 01:11:48 -0400
-Received: by igcqo1 with SMTP id qo1so4096161igc.0
-        for <git@vger.kernel.org>; Fri, 20 Mar 2015 22:11:47 -0700 (PDT)
+	id S1752092AbbCUFqQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Mar 2015 01:46:16 -0400
+Received: from mail-we0-f178.google.com ([74.125.82.178]:36549 "EHLO
+	mail-we0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751612AbbCUFqP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Mar 2015 01:46:15 -0400
+Received: by wetk59 with SMTP id k59so96974181wet.3
+        for <git@vger.kernel.org>; Fri, 20 Mar 2015 22:46:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
+        d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=1VV6beQI9gjmkYKziwVr+Fh+HgQab9X8988yy+ZPCBs=;
-        b=pM9iPOWUH4l4TSVq4Lqtnp8r3iABzlhrjsGfGnMjZWKLrJmQ7POoPtlcqRcdb8gHMj
-         QIQz4t6h3JPsgNPLXE5xvad2IsPxM84jm1UMDiLF0PIYG06rCo7oEZje++sUXQYwFIFK
-         tLRw2u+utVDM3hbVRCZIq1lPTwu3yJDLp7G7CL7is55yAPLsU+nRT5MGg0r43rt3+jB6
-         Otetb1UXKAGYsK+JlbZ/j6+NQEK1KI9UPQr8hhV5wkRHmZ/CQ58hAr4CX0AHeMStKgXw
-         8HiP2HiQhtC57xnQisXa1c/CpWOQ1nxqpjtqn4PwV0b+BF87+h1PfxF0TwYkPZkH6tv4
-         mdDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=1VV6beQI9gjmkYKziwVr+Fh+HgQab9X8988yy+ZPCBs=;
-        b=PEUDdT85CzyKZLCBKCfv8KtQqJnnMy9LqlaDuL0oiyo2TyGxD25yyPo48s3kGSIMSi
-         FxxdugFrN46fOiS4XDNn7xFQB49GFtJj0h5jZioOfWaY3mtuKl/8WjfgTBZGQjH40SxF
-         oB+1jSxchMDhzXnmT2GRNFiMMblY7GCdeZwRBm75xyyf0EdpJq0tdCxHDto1La7W79Ei
-         6Lqgzpu/AfX5TYhJpK5hiCuHZF0RqAguFjTnIx8dadNeuz4mXh9FOaS95I4ue1QyJpx+
-         i3Y7LqDEYvb/uC22wIQlovT8slTBFqhP5fMsFbCMJcLWGoNtmXy91ordCXR4gldBz6tQ
-         bd6g==
-X-Gm-Message-State: ALoCoQn4gDowODxV5dS/oSLWneN/1woDZ9YHXXxlGYnyHmMsYd3q6L4YqT9ffy1WZObbu/azPnq8
-X-Received: by 10.50.56.82 with SMTP id y18mr1368762igp.25.1426914707566; Fri,
- 20 Mar 2015 22:11:47 -0700 (PDT)
-Received: by 10.107.46.31 with HTTP; Fri, 20 Mar 2015 22:11:47 -0700 (PDT)
-In-Reply-To: <xmqqbnjnaso7.fsf@gitster.dls.corp.google.com>
+        bh=Fy9AbPsnrVL09R9s+C5V4Zn1AmpCjo5ESvaiB1r6j38=;
+        b=y2DqIUbD4ToXNzYTePimjjZz4mcMTVraNyWI+wb8tcZVohFsKZOnt/I+kKVbv4tXfQ
+         +C6/JPJxg/7Pw+MMAO7Qz48B7pRtstVQNEf2qRnde00Sf2a5IDlmODGLvrwoQXZnPTXU
+         JYK2zA6SSVolxQ5ytXki4Ne8tFvpB7GjjpQajX307shuDJQzMwdIlMM5H6po3Fm9BZIY
+         RHR0BnDLL2yEzRgyDzfpNcmFEX6CLlAOoa2rTLlZN0orK2xacZp07ilb/SHFeLryqOz6
+         qs+vIhKqpjfcEBY/n9Lj6uuVZklgBkp4QDur5HvfVDDEJ7VQ4X7tw/TAzlLconGoaWvN
+         SrcQ==
+X-Received: by 10.180.106.225 with SMTP id gx1mr1940777wib.53.1426916773896;
+ Fri, 20 Mar 2015 22:46:13 -0700 (PDT)
+Received: by 10.194.64.69 with HTTP; Fri, 20 Mar 2015 22:46:13 -0700 (PDT)
+In-Reply-To: <CAPig+cR-87-dWXUKoKvphrdb_Y=7268G5uerAiPYDsj-UQiuRw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266009>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266010>
 
-On Fri, Mar 20, 2015 at 9:19 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> Signed-off-by: Stefan Beller <sbeller@google.com>
->> ---
->>  read-cache.c | 4 +---
->>  1 file changed, 1 insertion(+), 3 deletions(-)
+Hi,
+
+On Thu, Mar 19, 2015 at 3:26 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Wed, Mar 18, 2015 at 3:04 AM, Paul Tan <pyokagan@gmail.com> wrote:
+>> diff --git a/t/t0302-credential-store.sh b/t/t0302-credential-store.sh
+>> index f61b40c..5b0a666 100755
+>> --- a/t/t0302-credential-store.sh
+>> +++ b/t/t0302-credential-store.sh
+>> @@ -6,4 +6,115 @@ test_description='credential-store tests'
 >>
->> diff --git a/read-cache.c b/read-cache.c
->> index f72ea9f..769897e 100644
->> --- a/read-cache.c
->> +++ b/read-cache.c
->> @@ -703,9 +703,7 @@ int add_to_index(struct index_state *istate, const char *path, struct stat *st,
->>                   !hashcmp(alias->sha1, ce->sha1) &&
->>                   ce->ce_mode == alias->ce_mode);
+>>  helper_test store
 >>
->> -     if (pretend)
->> -             ;
->> -     else if (add_index_entry(istate, ce, add_option))
->> +     if (!pretend && add_index_entry(istate, ce, add_option))
->>               return error("unable to add %s to index",path);
->>       if (verbose && !was_same)
->>               printf("add '%s'\n", path);
+>> +test_expect_success 'when xdg credentials file does not exist, only write to ~/.git-credentials; do not create xdg file' '
 >
-> I have a moderately strong feeling against this change, as the code
-> was done this way quite deliberately to keep it readable, namely, to
-> avoid using && to concatenate two boolean expressions that are in
-> totally different class inside condition part of if/while, where A
-> is a precondition guard for B (i.e. you cannot evaluate B unless A
-> holds) and B is called primarily for its side effect.  The problem
-> is that, once you start liberally doing
+> These test descriptions are quite long, often mirroring in prose what
+> the test body already says more concisely. I generally try to keep
+> descriptions short while still being descriptive enough to give a
+> general idea about what is being tested. I've rewritten a few test
+> descriptions (below) to be very short, in fact probably too terse; but
+> perhaps better descriptions would lie somewhere between the two
+> extremes. First example, for this test:
 >
->         if (A && B && C && D ...)
+>     "!xdg: >.git-credentials !xdg"
 >
-> with booleans with mixed semantics (guards and actions), it will
-> quickly get harder to tell which one is which.
->
-> I could have written it as
->
->         if (!pretend) {
->                 if (add_index_entry(...))
->                         return error(...);
->         }
+> Key: Space-separated items. Items before ":" are the pre-conditions,
+> and items after are the post-state. "!" file does not exist; ">"
+> output goes here.
 
-This makes sense to point out the different semantics to me.
-Maybe I have read too much of the refs code lately as there we
-have these long chains which combine precondition with error
-checking. :/ That's why I thought it would be global to git to not
-care much about this semantics distinction.
+I will make the test descriptions shorter. However, I don't think the
+test descriptions need to be so terse such that a separate key is
+required. e.g. I will shorten the above to "when xdg file does not
+exist, it's not created.", or even terser: "when xdg file not exists,
+it's not created.". I don't think symbols should be used, as many
+other test descriptions do not use them.
+
+>> +       test -s "$HOME/.git-credentials" &&
+>> +       test_path_is_missing "$HOME/.config/git/credentials"
+>> +'
+>> +
+>> +test_expect_success 'create $XDG_CONFIG_HOME/git/credentials file' '
+>
+> It's customary to call this "setup" rather than "create".
+
+Will fix.
+
+> Terse version: "setup: -.git-redentials +xdg"
+>
+> Key: "-" file removed; "+" file created.
+
+How about just "setup xdg file" (the fact that ~/.git-credentials is
+not created/deleted is implied in the next test)
+
+>> +       rm -f "$HOME/.git-credentials" &&
+>> +       mkdir -p "$HOME/.config/git" &&
+>> +       >"$HOME/.config/git/credentials"
+>> +'
+>> +
+>> +helper_test store
+>> +
+>> +test_expect_success 'when xdg credentials file exists, only write to xdg file; do not create ~/.git-credentials' '
+>
+> Terse version: "!.git-credentials xdg: !.git-credentials >xdg"
+
+How about "when xdg file exists, home file not created"
+
+>> +       test -s "$HOME/.config/git/credentials" &&
+>> +       test_path_is_missing "$HOME/.git-credentials"
+>> +'
+>> +
+>> +test_expect_success 'set up custom XDG_CONFIG_HOME credential file at ~/xdg/git/credentials' '
+>
+> s/set up/setup/
+
+Will fix. Thanks.
+
+> Terse: "setup custom-xdg"
+
+It's a matter of taste, but I personally don't see the need for
+hyphenation. How about: "setup custom xdg file"
 
 >
-> and that would have been just as readable as the original; it
-> clearly separates the guard (i.e. only do the add-index thing when
-> we are not pretending) and the operation that is done for the side
-> effect.
+>> +       mkdir -p "$HOME/xdg/git" &&
+>> +       rm -f "$HOME/.config/git/credentials" &&
+>> +       >"$HOME/xdg/git/credentials"
 >
-> But I find the original tells you "if pretend mode, do *nothing*"
-> and "otherwise, try add_index_entry() and act on its error" very
-> clearly.  Of course, I am biased as the original is my code from
-> 38ed1d89 ("git-add -n -u" should not add but just report,
-> 2008-05-21).
->
-> FYI, between preference and taste, I'd say this one is much closer
-> to the latter than the former.
->
-> By the way, aren't we leaking ce when we are merely pretending?
+> It would be easier to read this if you placed the two lines together
+> which refer to the custom xdg file.
+> Also, for completeness and to be
+> self-contained, don't you want to remove ~/.git-credentials?
 
-Yes we are, that's how I found this spot. (coverity pointed out ce was
-leaking, so I was refactoring to actually make it easier to fix it, and then
-heavily reordered the patch series afterwards. That spot was forgotten
-apparently.
+Ah yes, thanks for the suggestion.
+
+>     rm -f "$HOME/.git-credentials" &&
+>     rm -f "$HOME/.config/git/credentials" &&
+>     mkdir -p "$HOME/xdg/git" &&
+>     >"$HOME/xdg/git/credentials"
+>
+>> +'
+>> +
+>> +XDG_CONFIG_HOME="$HOME/xdg" && export XDG_CONFIG_HOME && helper_test store
+>> +unset XDG_CONFIG_HOME
+>
+> It's hard to spot the "helper_test store" at the end of line. I'd
+> place it on a line by itself so that it is easy to see that it is
+> wrapped by the setting and unsetting of the environment variable.
+
+Thanks, will fix. Although now it looks weird that the "export" is the
+only one with a continuation on a single line, so I split all of them
+so that they each have their own line.
+
+>> +test_expect_success 'if custom XDG_CONFIG_HOME credentials file ~/xdg/git/credentials exists, it will only be written to; ~/.config/git/credentials and ~/.git-credentials will not be created' '
+>
+> Terse: "!.git-credentials !xdg custom-xdg: !.git-credentials !xdg >custom-xdg"
+>
+>> +       test_when_finished "rm -f $HOME/xdg/git/credentials" &&
+>> +       test -s "$HOME/xdg/git/credentials" &&
+>> +       test_path_is_missing "$HOME/.config/git/credentials"
+>
+> Matthieu already pointed out the broken &&-chain.
+
+Will fix. Thanks for catching it.
 
 >
+>> +       test_path_is_missing "$HOME/.git-credentials"
+>> +'
+>> +
+>> +test_expect_success 'get: return credentials from home file if matches are found in both home and xdg files' '
 >
+> Terse: ".git-credentials xdg: <.git-credentials"
+>
+> Key: "<" taken from here.
+
+How about "use home file if both home and xdg files have matches". I
+wish to make it explicit that which files are used depends on whether
+they have the matching credential, not if they exist.
+
+>
+>> +       mkdir -p "$HOME/.config/git" &&
+>> +       echo "https://xdg-user:xdg-pass@example.com" >"$HOME/.config/git/credentials" &&
+>> +       echo "https://home-user:home-pass@example.com" >"$HOME/.git-credentials" &&
+>> +       check fill store <<-\EOF
+>> +       protocol=https
+>> +       host=example.com
+>> +       --
+>> +       protocol=https
+>> +       host=example.com
+>> +       username=home-user
+>> +       password=home-pass
+>> +       --
+>> +       EOF
+>> +'
+>> +
+>> +test_expect_success 'get: return credentials from xdg file if the home files do not have them' '
+>
+> Terse: "!.git-credentials xdg: <xdg"
+
+How about "use xdg file if home file has no matches".
+
+>
+>> +       mkdir -p "$HOME/.config/git" &&
+>> +       >"$HOME/.git-credentials" &&
+>> +       echo "https://xdg-user:xdg-pass@example.com" >"$HOME/.config/git/credentials" &&
+>> +       check fill store <<-\EOF
+>> +       protocol=https
+>> +       host=example.com
+>> +       --
+>> +       protocol=https
+>> +       host=example.com
+>> +       username=xdg-user
+>> +       password=xdg-pass
+>> +       --
+>> +       EOF
+>> +'
+>> +
+>> +test_expect_success 'get: return credentials from home file if xdg files are unreadable' '
+>
+> An earlier test showed that the home file is preferred if both it and
+> the xdg file exist, so is this test actually telling us anything new?
+> Did you mean instead to reverse the case and make the home file
+> unreadable?
+
+Ah yes, this is embarrassing. Apparently this test was written with
+the old precedence ordering. Thank you so much for catching this fatal
+error.
+
+>> +       mkdir -p "$HOME/.config/git" &&
+>> +       echo "https://xdg-user:xdg-pass@example.com" >"$HOME/.config/git/credentials" &&
+>> +       echo "https://home-user:home-pass@example.com" >"$HOME/.git-credentials" &&
+>> +       chmod -r "$HOME/.config/git/credentials" &&
+>
+> It would be a bit easier to see that the 'chmod' applies to the xdg
+> file if it directly followed creation of the xdg file.
+
+Will fix (will chmod the home file instead)
+
+>
+>> +       check fill store <<-\EOF
+>> +       protocol=https
+>> +       host=example.com
+>> +       --
+>> +       protocol=https
+>> +       host=example.com
+>> +       username=home-user
+>> +       password=home-pass
+>> +       --
+>> +       EOF
+>> +'
+>> +
+>> +test_expect_success 'store: If both xdg and home files exist, only store in home file' '
+>
+> Inconsistent capitalization: s/If/if/
+
+Will fix.
+
+>
+>> +       mkdir -p "$HOME/.config/git" &&
+>> +       >"$HOME/.config/git/credentials" &&
+>> +       >"$HOME/.git-credentials" &&
+>> +       check approve store <<-\EOF &&
+>> +       protocol=https
+>> +       host=example.com
+>> +       username=store-user
+>> +       password=store-pass
+>> +       EOF
+>> +       echo "https://store-user:store-pass@example.com" >expected &&
+>> +       test_cmp expected "$HOME/.git-credentials" &&
+>> +       test_must_be_empty "$HOME/.config/git/credentials"
+>> +'
+>> +
+>> +
+>> +test_expect_success 'erase: erase matching credentials from both xdg and home files' '
+>> +       mkdir -p "$HOME/.config/git" &&
+>> +       echo "https://xdg-user:xdg-pass@example.com" >"$HOME/.config/git/credentials" &&
+>> +       echo "https://home-user:home-pass@example.com" >"$HOME/.git-credentials" &&
+>> +       check reject store <<-\EOF &&
+>> +       protocol=https
+>> +       host=example.com
+>> +       EOF
+>> +       test_must_be_empty "$HOME/.config/git/credentials" &&
+>> +       test_must_be_empty "$HOME/.git-credentials"
+>> +'
+>> +
+>>  test_done
+
+Thanks so much Eric and Matthieu for the review.
