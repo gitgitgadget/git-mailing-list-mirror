@@ -1,96 +1,91 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 00/15] Fixing memory leaks
-Date: Fri, 20 Mar 2015 17:27:57 -0700
-Message-ID: <1426897692-18322-1-git-send-email-sbeller@google.com>
+Subject: [PATCH 10/15] commit.c: fix a memory leak
+Date: Fri, 20 Mar 2015 17:28:07 -0700
+Message-ID: <1426897692-18322-11-git-send-email-sbeller@google.com>
+References: <1426897692-18322-1-git-send-email-sbeller@google.com>
 Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat Mar 21 01:28:26 2015
+X-From: git-owner@vger.kernel.org Sat Mar 21 01:28:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YZ7H6-0001Z4-Vq
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Mar 2015 01:28:25 +0100
+	id 1YZ7HE-0001gw-Qp
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Mar 2015 01:28:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752277AbbCUA2T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Mar 2015 20:28:19 -0400
-Received: from mail-ig0-f171.google.com ([209.85.213.171]:34851 "EHLO
-	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752079AbbCUA2S (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Mar 2015 20:28:18 -0400
-Received: by igcau2 with SMTP id au2so1633475igc.0
-        for <git@vger.kernel.org>; Fri, 20 Mar 2015 17:28:17 -0700 (PDT)
+	id S1752326AbbCUA2a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Mar 2015 20:28:30 -0400
+Received: from mail-ig0-f170.google.com ([209.85.213.170]:36093 "EHLO
+	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752320AbbCUA23 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Mar 2015 20:28:29 -0400
+Received: by igbud6 with SMTP id ud6so1551106igb.1
+        for <git@vger.kernel.org>; Fri, 20 Mar 2015 17:28:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=szih/WfQOdKle6pdKVbDowOlQPSq46gSirsdP0YdjG4=;
-        b=E0Bsps0XchdUQI61IntDPi/e54sGw+mr0DDrMR3tulr2m3szY9JR7kvjRuRSu71UXV
-         5Lhw6zgkhhyhY30vv9+9WTAG+u2fPdh+B8VsAw+FmiDvysa+jQFp1BKzzWRwI7Vp6kDg
-         T1/en2FVG4c7Y9qr4rDIFuyZH5ZKXI+s2OVtzkwS8v8oehD0EOqp/uyXfwb+lcqWhyRm
-         M8PsHtNBJe/bodOZ4FSj5zgdfhgFsPt6zWepmhWRqQQFmQaBnr14wsZNVmloUA/JV5LD
-         d94f8B7hFodYu/lZDkeTzW+RHCc5RX5FVhV4C++xCE9HpQVx1eGMKuY4qXjugBQgbdnu
-         VckQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=T416E1Zv/9RBSNTsD3bhQUDIbDCbCJwinYF4EVlakzQ=;
+        b=aemRsNrVeZx2kjIX9Qk4K3vunVxr0asjzGMfAyhNpqcTXD1rr4gZWcFzJkfmOQmE/P
+         VBqU+bFRFc9u9y5FhFt8ErP6uYx6qVVqWZNG3V1w+e7sy7LseZMikplAn4vIMA0Mx/4g
+         NSP1T0OQvCIAOA1vf/rxei99AA5BziiSnM8UahfUkPLuwqtsbS7yK+NNEBp/xxjNNYfB
+         yBkv/b9V9Qqakn9I+En0BhLRGPb8PHiikYWNIW5kVYqnSBXiUzf83sL/i+AgVcS1U/UG
+         bZl5/jym0dFw+PU78lDG0PYK5tlLsWOWCnjcTjMUbwuJWsT2Xwg+6gD/xGF7DZKQnX2R
+         PWGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=szih/WfQOdKle6pdKVbDowOlQPSq46gSirsdP0YdjG4=;
-        b=fkWa23UVwswZsMEahlEN5Fq8iZiSBY+iJo1uTs141tCtxNRr8ocX/FVeJRA/9xfVbL
-         hV5Qq0vsj4/oppPbwRnQEGcmRlWkWff/oNg3mScW9yAtJ3C0wfA/17phWkoRY/g0bc4H
-         4TlBwkdpl3fNUO1VJMLyteJp8I2kQ8WDFk71zoyVxtNIg3uuTZlk0il/j2kWHQnOixwo
-         KgcZrC+vIeG/Y1dagzoeYnt7h0quuRgba5HtykAfX4DwnnokkETasC8tow1CELOqRdb3
-         F2J/722haYpvO6WixZv4hUBf6OwVybzv4yk/OTa5tawaj+ZE+cL6NAm+iG9D0ImzLZN1
-         GV8g==
-X-Gm-Message-State: ALoCoQkRZeQDpnvj0Go2URcaWb2kqCxTCjk1qW2C3OxX1gB6wEso5V+oYtzw1w7QDpQW1bIYPlTw
-X-Received: by 10.107.47.216 with SMTP id v85mr149248175iov.86.1426897697674;
-        Fri, 20 Mar 2015 17:28:17 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=T416E1Zv/9RBSNTsD3bhQUDIbDCbCJwinYF4EVlakzQ=;
+        b=YWCzgoX7iEGT025ZL7G/0l4RPvT+h1qF/OiZu/p+L3wChmyQmWti3IPv9PoJVz3EKB
+         ZqpcgcyQTaOURALfoVJoUAxO3szKpXoH1sDfk1Vo9XqZxhFUXhoazN81DbmSLe0lnCW9
+         iKK9GpteUgAEfZNN7e4X/ru2qZwHHkhFx++WFBH8IWf5/KOgAYtZ/+zc+WpMjee17ygR
+         e0Hgbfm7/0S9YNj3ga36si3MEkmQLnp1kehQsWm533bHnLJHQPlfzoaOL3uwRCHVvbur
+         w2cEy/0dlp/aR9yiyr7+F0trFCD+iEDpzkF78EHPx6PNwx+/TSWqlRwOdkUBkGo3ksr6
+         FegA==
+X-Gm-Message-State: ALoCoQlGEMp+F+WKkwOOl4z5DOzYVphuq9W3iEyXc1NKIJN4HNQbtF2BW63iCqv17PyJB/QIehb9
+X-Received: by 10.107.25.68 with SMTP id 65mr54191205ioz.44.1426897708420;
+        Fri, 20 Mar 2015 17:28:28 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b00:c4ad:7c66:d5e8:7112])
-        by mx.google.com with ESMTPSA id h19sm172314igq.10.2015.03.20.17.28.17
+        by mx.google.com with ESMTPSA id j126sm3596480ioe.22.2015.03.20.17.28.27
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 20 Mar 2015 17:28:17 -0700 (PDT)
+        Fri, 20 Mar 2015 17:28:28 -0700 (PDT)
 X-Mailer: git-send-email 2.3.0.81.gc37f363
+In-Reply-To: <1426897692-18322-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/265985>
 
-So here comes another bunch of mem leak fixes. While 
-I consider the first 10 patches a pretty safe bet,
-the last 5 hopefully spark a discussion if we want 
-patches which just clean up before the program ends.
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ builtin/commit.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-Stefan Beller (15):
-  read-cache: fix memleak
-  read-cache: Improve readability
-  read-cache: free cache entry in add_to_index in case of early return
-  update-index: fix a memleak
-  builtin/apply.c: fix a memleak
-  merge-blobs.c: Fix a memleak
-  merge-recursive: fix memleaks
-  http-push: Remove unneeded cleanup
-  http: release the memory of a http pack request as well
-  commit.c: fix a memory leak
-  builtin/check-attr: fix a memleak
-  builtin/merge-base: fix memleak
-  builtin/unpack-file: fix a memleak
-  builtin/cat-file: free memleak
-  ls-files: fix a memleak
-
- builtin/apply.c        |  1 +
- builtin/cat-file.c     |  1 +
- builtin/check-attr.c   |  2 ++
- builtin/commit.c       |  6 ++++--
- builtin/ls-files.c     |  1 +
- builtin/merge-base.c   |  1 +
- builtin/unpack-file.c  |  1 +
- builtin/update-index.c |  1 +
- http-push.c            |  1 -
- http.c                 |  1 +
- merge-blobs.c          |  4 +++-
- merge-recursive.c      |  3 +++
- read-cache.c           | 13 ++++++++-----
- 13 files changed, 27 insertions(+), 9 deletions(-)
-
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 961e467..da79ac4 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -229,7 +229,7 @@ static int commit_index_files(void)
+ static int list_paths(struct string_list *list, const char *with_tree,
+ 		      const char *prefix, const struct pathspec *pattern)
+ {
+-	int i;
++	int i, ret;
+ 	char *m;
+ 
+ 	if (!pattern->nr)
+@@ -256,7 +256,9 @@ static int list_paths(struct string_list *list, const char *with_tree,
+ 			item->util = item; /* better a valid pointer than a fake one */
+ 	}
+ 
+-	return report_path_error(m, pattern, prefix);
++	ret = report_path_error(m, pattern, prefix);
++	free(m);
++	return ret;
+ }
+ 
+ static void add_remove_files(struct string_list *list)
 -- 
 2.3.0.81.gc37f363
