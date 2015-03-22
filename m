@@ -1,95 +1,133 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/25] detecting &&-chain breakage
-Date: Sat, 21 Mar 2015 18:23:04 -0400
-Message-ID: <20150321222304.GA27850@peff.net>
-References: <20150320100429.GA17354@peff.net>
- <CAPig+cRCbhMR58_PSFnsWoyo_aZoTOVZM2YeYC6Tvo7iXMZwBA@mail.gmail.com>
- <20150321081909.GA8221@peff.net>
- <xmqq384ydybc.fsf@gitster.dls.corp.google.com>
+From: "David A. Wheeler" <dwheeler@dwheeler.com>
+Subject: [PATCH] clone: Warn if LICENSE or COPYING file lacking and
+ !clone.skiplicensecheck
+Date: Sat, 21 Mar 2015 20:16:40 -0400 (EDT)
+Message-ID: <E1YZTZI-0002QE-3r@rmm6prod02.runbox.com>
+Reply-To: dwheeler@dwheeler.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 21 23:23:15 2015
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+To: "git" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Mar 22 01:17:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YZRnV-0003ty-SV
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Mar 2015 23:23:14 +0100
+	id 1YZTZZ-0005PW-RN
+	for gcvg-git-2@plane.gmane.org; Sun, 22 Mar 2015 01:16:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751630AbbCUWXI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Mar 2015 18:23:08 -0400
-Received: from cloud.peff.net ([50.56.180.127]:36549 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751463AbbCUWXH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Mar 2015 18:23:07 -0400
-Received: (qmail 2843 invoked by uid 102); 21 Mar 2015 22:23:06 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 21 Mar 2015 17:23:06 -0500
-Received: (qmail 3634 invoked by uid 107); 21 Mar 2015 22:23:19 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 21 Mar 2015 18:23:19 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 21 Mar 2015 18:23:04 -0400
+	id S1751454AbbCVAQm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Mar 2015 20:16:42 -0400
+Received: from aibo.runbox.com ([91.220.196.211]:35627 "EHLO aibo.runbox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751432AbbCVAQm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 21 Mar 2015 20:16:42 -0400
+Received: from [10.9.9.241] (helo=rmm6prod02.runbox.com)
+	by bars.runbox.com with esmtp (Exim 4.71)
+	(envelope-from <dwheeler@dwheeler.com>)
+	id 1YZTZH-0000pJ-U1
+	for git@vger.kernel.org; Sun, 22 Mar 2015 01:16:39 +0100
+Received: from mail by rmm6prod02.runbox.com with local (Exim 4.76)
+	(envelope-from <dwheeler@dwheeler.com>)
+	id 1YZTZI-0002QE-3r
+	for git@vger.kernel.org; Sun, 22 Mar 2015 01:16:40 +0100
 Content-Disposition: inline
-In-Reply-To: <xmqq384ydybc.fsf@gitster.dls.corp.google.com>
+Received: from [Authenticated user (258406)] by secure.runbox.com with
+ http (RMM6); for <git@vger.kernel.org>; Sun, 22 Mar 2015 00:16:40 GMT
+X-Mailer: RMM6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266039>
 
-On Sat, Mar 21, 2015 at 11:01:43AM -0700, Junio C Hamano wrote:
+Warn cloners if there is no LICENSE* or COPYING* file that makes
+the license clear.  This is a useful warning, because if there is
+no license somewhere, then local copyright laws (which forbid many uses)
+and terms of service apply - and the cloner may not be expecting that.
+Many projects accidentally omit a license, so this is common enough to note.
 
-> > Running:
-> >
-> >   git diff origin origin/jk/test-chain-lint |
-> >   perl diff-blame.pl jk/test-chain-lint |
-> >   grep EOF
-> >
-> > was fun. At least I am not the only one. :)
-> 
-> The parameter to diff-blame.pl should be origin, instead of
-> jk/test-chain-lint, I presume?  You are grabbing the preimage line
-> numbers and asking blame to find out who wrote them.
+You can disable this warning by setting "clone.skiplicensecheck" to "true".
 
-Yes, sorry, that was an error translating from what I actually ran in
-the shell into the email. It should be "origin". And if the script
-really wanted to be user-friendly, it should probably take two endpoints
-and just run the diff itself (when I started it, I assume that you could
-process any diff, but of course you must know the start point to get a
-reasonable blame).
+For more info on the issue, feel free to see:
+http://choosealicense.com/no-license/
+http://www.wired.com/2013/07/github-licenses/
+https://twitter.com/stephenrwalli/status/247597785069789184
 
-> > Nor the worst in the "severe" category.
-> 
-> I do not quite get what this means---the script does not seem to
-> judge what is severe and what is not, so I presume that this is to
-> be judged by whoever is reading the output from the above pipeline
-> after replacing "grep EOF" with "less" or something?
+Signed-off-by: David A. Wheeler <dwheeler@dwheeler.com>
+---
+ builtin/clone.c | 44 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 44 insertions(+)
 
-That was the exercise I left to the reader. :) In this case, it is
-possible because I have already split the patches into "severe",
-"moderate", and "trivial" cases, so you can blame only the severe patch
-(using its parent as the start-point).
-
-> > while (<STDIN>) {
-> >   if (m{^--- .*?/(.*)}) {
-> 
-> This may match a removal of a line that begins with "^-- something/" ;-)
-
-True. I was trying to avoid being stateful in my diff parsing. I guess
-it would be enough to parse the hunk headers to know how many lines are
-in the hunk. Not worth it for this one-off, but a good thing if somebody
-wanted to pick this idea up for a "real" tool.
-
-> >   # XXX coalesce blocks of adjacent lines into ranges?
-> >   system(qw(git --no-pager blame), @ARGV,
-> 
-> You may want to pass an option to always show the filename here.
-
-I left that to the user. I actually found "--line-porcelain" useful for
-gathering statistics (e.g., piped to "grep '^author ' | sort | uniq -c").
-
--Peff
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 9572467..a3e8584 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -50,6 +50,7 @@ static int option_progress = -1;
+ static struct string_list option_config;
+ static struct string_list option_reference;
+ static int option_dissociate;
++static int skip_license_check;
+ 
+ static int opt_parse_reference(const struct option *opt, const char *arg, int unset)
+ {
+@@ -748,6 +749,44 @@ static void dissociate_from_references(void)
+ 		die_errno(_("cannot unlink temporary alternates file"));
+ }
+ 
++static int starts_with_ignore_case(const char *str, const char *prefix)
++{
++	for (; ; str++, prefix++)
++		if (!*prefix)
++			return 1;
++		else if (tolower(*str) != tolower(*prefix))
++			return 0;
++}
++
++static int missing_license(void)
++{
++	DIR *dir = opendir("."); /* Examine current directory for license. */
++	struct dirent *e;
++	struct stat st;
++	int ret = 0;
++
++	if (!dir)
++		return 0; /* Empty directory, no need for license. */
++
++	while ((e = readdir(dir)) != NULL) {
++		if (starts_with_ignore_case(e->d_name, "license") ||
++		    starts_with_ignore_case(e->d_name, "copyright")) {
++			if (stat(e->d_name, &st) || st.st_size < 2)
++				continue;
++			ret = 0;
++			break;
++		}
++		if (!strcmp(e->d_name, ".") || !strcmp(e->d_name, "..") ||
++		    !strcmp(e->d_name, ".git"))
++			continue;
++		ret = 1; /* Non-empty directory */
++	}
++
++	closedir(dir);
++	return ret;
++}
++
++
+ int cmd_clone(int argc, const char **argv, const char *prefix)
+ {
+ 	int is_bundle = 0, is_local;
+@@ -1016,6 +1055,11 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	junk_mode = JUNK_LEAVE_REPO;
+ 	err = checkout();
+ 
++	git_config_get_bool("clone.skiplicensecheck", &skip_license_check);
++	if (!option_no_checkout && !skip_license_check &&
++	    missing_license())
++		warning(_("Repository has no LICENSE or COPYING file with content."));
++
+ 	strbuf_release(&reflog_msg);
+ 	strbuf_release(&branch_top);
+ 	strbuf_release(&key);
+-- 
+2.3.3.221.g33aa87e.dirty
