@@ -1,133 +1,105 @@
-From: "David A. Wheeler" <dwheeler@dwheeler.com>
-Subject: [PATCH] clone: Warn if LICENSE or COPYING file lacking and
- !clone.skiplicensecheck
-Date: Sat, 21 Mar 2015 20:16:40 -0400 (EDT)
-Message-ID: <E1YZTZI-0002QE-3r@rmm6prod02.runbox.com>
-Reply-To: dwheeler@dwheeler.com
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH/RFC][GSoC] diff-no-index: transform "$directory $file"
+ args to "$directory/$file $file"
+Date: Sat, 21 Mar 2015 22:39:02 -0400
+Message-ID: <CAPig+cShOv0TQ2x_22j8rXyp+kNbBVwAs8E1U==9qkijvffxoA@mail.gmail.com>
+References: <CAHLaBN+x3SVL9+jDzeSEMapVd2BVrwQuVx_7ENspjbUPrium_A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-To: "git" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Mar 22 01:17:00 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Yurii Shevtsov <ungetch@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 22 03:39:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YZTZZ-0005PW-RN
-	for gcvg-git-2@plane.gmane.org; Sun, 22 Mar 2015 01:16:58 +0100
+	id 1YZVnA-0002e4-Gy
+	for gcvg-git-2@plane.gmane.org; Sun, 22 Mar 2015 03:39:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751454AbbCVAQm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Mar 2015 20:16:42 -0400
-Received: from aibo.runbox.com ([91.220.196.211]:35627 "EHLO aibo.runbox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751432AbbCVAQm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 21 Mar 2015 20:16:42 -0400
-Received: from [10.9.9.241] (helo=rmm6prod02.runbox.com)
-	by bars.runbox.com with esmtp (Exim 4.71)
-	(envelope-from <dwheeler@dwheeler.com>)
-	id 1YZTZH-0000pJ-U1
-	for git@vger.kernel.org; Sun, 22 Mar 2015 01:16:39 +0100
-Received: from mail by rmm6prod02.runbox.com with local (Exim 4.76)
-	(envelope-from <dwheeler@dwheeler.com>)
-	id 1YZTZI-0002QE-3r
-	for git@vger.kernel.org; Sun, 22 Mar 2015 01:16:40 +0100
-Content-Disposition: inline
-Received: from [Authenticated user (258406)] by secure.runbox.com with
- http (RMM6); for <git@vger.kernel.org>; Sun, 22 Mar 2015 00:16:40 GMT
-X-Mailer: RMM6
+	id S1751769AbbCVCjE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Mar 2015 22:39:04 -0400
+Received: from mail-yk0-f172.google.com ([209.85.160.172]:34127 "EHLO
+	mail-yk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751585AbbCVCjC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Mar 2015 22:39:02 -0400
+Received: by ykfc206 with SMTP id c206so58253152ykf.1
+        for <git@vger.kernel.org>; Sat, 21 Mar 2015 19:39:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=MybxWmVmLrxEdYk08TvWHZ5zU+cup/U2W6BnwmgZ30I=;
+        b=u53UYxlB0NWx2xASKEJqV416+ZaFFviHiECJgVKhtiKrXWd1v0YU/HKVK33h/urXT9
+         WGlQ1Nl7AdS0u6o4llNEASpsezFxrdpkX52ao5ycvFh4BTLakM/pfuzu5sjyYk6rNgEe
+         rZ++7giqs7g7NjYyHKCg+FgAend1GLLSWq/3JUexVZ0NyV7Z/oTqMNsdEf4bNlr4AY6j
+         W/9LoaN3/4UwWnk1Jbn0lNAGuZ2/sEQCflh5AqWro0dmUQ+sgBWRBfPF6Bv5RC6Wubgn
+         EupX/CGfhK5WUrrR6TI0/3Mxd27UYGLLzublG6iaBmtMzQKwzCKQhOuqgc4wRMiLBDNV
+         Cs9Q==
+X-Received: by 10.170.126.204 with SMTP id s195mr328235ykb.22.1426991942129;
+ Sat, 21 Mar 2015 19:39:02 -0700 (PDT)
+Received: by 10.170.73.7 with HTTP; Sat, 21 Mar 2015 19:39:02 -0700 (PDT)
+In-Reply-To: <CAHLaBN+x3SVL9+jDzeSEMapVd2BVrwQuVx_7ENspjbUPrium_A@mail.gmail.com>
+X-Google-Sender-Auth: iRL4mZh3ZW6QcD9jOCC2Exha2fY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266039>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266040>
 
-Warn cloners if there is no LICENSE* or COPYING* file that makes
-the license clear.  This is a useful warning, because if there is
-no license somewhere, then local copyright laws (which forbid many uses)
-and terms of service apply - and the cloner may not be expecting that.
-Many projects accidentally omit a license, so this is common enough to note.
+On Sat, Mar 21, 2015 at 8:50 AM, Yurii Shevtsov <ungetch@gmail.com> wrote:
+> Signed-off-by: Yurii Shevtsov <ungetch@gmail.com>
+> ---
+> diff --git a/diff-no-index.c b/diff-no-index.c
+> index 265709b..9a3439a 100644
+> --- a/diff-no-index.c
+> +++ b/diff-no-index.c
+> @@ -97,8 +97,39 @@ static int queue_diff(struct diff_options *o,
+>      if (get_mode(name1, &mode1) || get_mode(name2, &mode2))
+>          return -1;
 
-You can disable this warning by setting "clone.skiplicensecheck" to "true".
+Somehow, you lost all the tabs in the patch, and everything is instead
+indented with spaces (including context lines).
 
-For more info on the issue, feel free to see:
-http://choosealicense.com/no-license/
-http://www.wired.com/2013/07/github-licenses/
-https://twitter.com/stephenrwalli/status/247597785069789184
+> -    if (mode1 && mode2 && S_ISDIR(mode1) != S_ISDIR(mode2))
+> -        return error("file/directory conflict: %s, %s", name1, name2);
+> +    if (mode1 && mode2 && S_ISDIR(mode1) != S_ISDIR(mode2)) {
+> +        struct strbuf path;
+> +        const char *dir, *file;
+> +        char *filename, *dirname = 0;
+> +        int i, ret = 0;
+> +
+> +        dir = S_ISDIR(mode1) ? name1 : name2;
+> +        file = (dir == name1) ? name2 : name1;
+> +        strbuf_init(&path, strlen(name1) + strlen(name2) + 1);
+> +        strbuf_addstr(&path, dir);
+> +        filename = strrchr(file, '/');
+> +        if (path.len && path.buf[path.len - 1] != '/')
+> +            strbuf_addch(&path, '/');
+> +        for (i = path.len - 2; i >= 0; i--)
+> +            if (path.buf[i] == '/') {
+> +                dirname = &path.buf[i];
+> +                break;
+> +            }
+> +        if (dirname == 0)
+> +            dirname = path.buf;
+> +
+> +        if (!strncmp(dirname, filename, strlen(filename)))
+> +            return error("file/directory conflict: %s, %s", name1, name2);
 
-Signed-off-by: David A. Wheeler <dwheeler@dwheeler.com>
----
- builtin/clone.c | 44 ++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 44 insertions(+)
+Leaking 'path' strbuf.
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 9572467..a3e8584 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -50,6 +50,7 @@ static int option_progress = -1;
- static struct string_list option_config;
- static struct string_list option_reference;
- static int option_dissociate;
-+static int skip_license_check;
- 
- static int opt_parse_reference(const struct option *opt, const char *arg, int unset)
- {
-@@ -748,6 +749,44 @@ static void dissociate_from_references(void)
- 		die_errno(_("cannot unlink temporary alternates file"));
- }
- 
-+static int starts_with_ignore_case(const char *str, const char *prefix)
-+{
-+	for (; ; str++, prefix++)
-+		if (!*prefix)
-+			return 1;
-+		else if (tolower(*str) != tolower(*prefix))
-+			return 0;
-+}
-+
-+static int missing_license(void)
-+{
-+	DIR *dir = opendir("."); /* Examine current directory for license. */
-+	struct dirent *e;
-+	struct stat st;
-+	int ret = 0;
-+
-+	if (!dir)
-+		return 0; /* Empty directory, no need for license. */
-+
-+	while ((e = readdir(dir)) != NULL) {
-+		if (starts_with_ignore_case(e->d_name, "license") ||
-+		    starts_with_ignore_case(e->d_name, "copyright")) {
-+			if (stat(e->d_name, &st) || st.st_size < 2)
-+				continue;
-+			ret = 0;
-+			break;
-+		}
-+		if (!strcmp(e->d_name, ".") || !strcmp(e->d_name, "..") ||
-+		    !strcmp(e->d_name, ".git"))
-+			continue;
-+		ret = 1; /* Non-empty directory */
-+	}
-+
-+	closedir(dir);
-+	return ret;
-+}
-+
-+
- int cmd_clone(int argc, const char **argv, const char *prefix)
- {
- 	int is_bundle = 0, is_local;
-@@ -1016,6 +1055,11 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	junk_mode = JUNK_LEAVE_REPO;
- 	err = checkout();
- 
-+	git_config_get_bool("clone.skiplicensecheck", &skip_license_check);
-+	if (!option_no_checkout && !skip_license_check &&
-+	    missing_license())
-+		warning(_("Repository has no LICENSE or COPYING file with content."));
-+
- 	strbuf_release(&reflog_msg);
- 	strbuf_release(&branch_top);
- 	strbuf_release(&key);
--- 
-2.3.3.221.g33aa87e.dirty
+> +
+> +        strbuf_addstr(&path, filename ? (filename + 1) : file);
+> +        if (file == name1)
+> +            ret = queue_diff(o, file, path.buf);
+> +        else
+> +            ret = queue_diff(o, path.buf, file);
+> +        strbuf_release(&path);
+> +
+> +        return ret;
+> +    }
+>
+>      if (S_ISDIR(mode1) || S_ISDIR(mode2)) {
+>          struct strbuf buffer1 = STRBUF_INIT;
+> --
