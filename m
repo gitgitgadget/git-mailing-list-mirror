@@ -1,86 +1,105 @@
 From: Koosha Khajehmoogahi <koosha@posteo.de>
-Subject: [PATCH 5/5] Update Bash completion script to include git log --merges option
-Date: Sun, 22 Mar 2015 19:28:41 +0100
-Message-ID: <1427048921-28677-5-git-send-email-koosha@posteo.de>
-References: <1427048921-28677-1-git-send-email-koosha@posteo.de>
+Subject: [PATCH 1/5] Add a new option 'merges' to revision.c
+Date: Sun, 22 Mar 2015 19:28:37 +0100
+Message-ID: <1427048921-28677-1-git-send-email-koosha@posteo.de>
 Cc: Koosha Khajehmoogahi <koosha@posteo.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 22 19:30:28 2015
+X-From: git-owner@vger.kernel.org Sun Mar 22 19:30:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YZkdn-0003PJ-95
-	for gcvg-git-2@plane.gmane.org; Sun, 22 Mar 2015 19:30:27 +0100
+	id 1YZkdo-0003PJ-GW
+	for gcvg-git-2@plane.gmane.org; Sun, 22 Mar 2015 19:30:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751830AbbCVSaN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Mar 2015 14:30:13 -0400
-Received: from mx02.posteo.de ([89.146.194.165]:41312 "EHLO mx02.posteo.de"
+	id S1751842AbbCVSaQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Mar 2015 14:30:16 -0400
+Received: from mx02.posteo.de ([89.146.194.165]:41304 "EHLO mx02.posteo.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751822AbbCVSaL (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1751811AbbCVSaL (ORCPT <rfc822;git@vger.kernel.org>);
 	Sun, 22 Mar 2015 14:30:11 -0400
 Received: from dovecot03.posteo.de (unknown [185.67.36.28])
-	by mx02.posteo.de (Postfix) with ESMTPS id C7A8A1F5E873;
+	by mx02.posteo.de (Postfix) with ESMTPS id 400041F5E882;
 	Sun, 22 Mar 2015 19:30:09 +0100 (CET)
 Received: from mail.posteo.de (localhost [127.0.0.1])
-	by dovecot03.posteo.de (Postfix) with ESMTPSA id 3l96p94bklz5vNB;
-	Sun, 22 Mar 2015 19:30:09 +0100 (CET)
+	by dovecot03.posteo.de (Postfix) with ESMTPSA id 3l96p90kGSz5vND;
+	Sun, 22 Mar 2015 19:30:08 +0100 (CET)
 X-Mailer: git-send-email 2.3.3.263.g095251d.dirty
-In-Reply-To: <1427048921-28677-1-git-send-email-koosha@posteo.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266076>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266077>
+
+revision.c: add a new option 'merges' with
+possible values of 'only', 'show' and 'hide'.
+The option is used when showing the list of commits.
+The value 'only' lists only merges. The value 'show'
+is the default behavior which shows the commits as well
+as merges and the value 'hide' makes it just list commit
+items.
 
 Signed-off-by: Koosha Khajehmoogahi <koosha@posteo.de>
 ---
- contrib/completion/git-completion.bash | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ revision.c | 22 ++++++++++++++++++++++
+ revision.h |  1 +
+ 2 files changed, 23 insertions(+)
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 731c289..b63bb95 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1406,7 +1406,7 @@ _git_ls_tree ()
- __git_log_common_options="
- 	--not --all
- 	--branches --tags --remotes
--	--first-parent --merges --no-merges
-+	--first-parent --merges --merges= --no-merges
- 	--max-count=
- 	--max-age= --since= --after=
- 	--min-age= --until= --before=
-@@ -1451,6 +1451,10 @@ _git_log ()
- 		__gitcomp "long short" "" "${cur##--decorate=}"
- 		return
- 		;;
-+    --merges=*)
-+        __gitcomp "show hide only" "" "${cur##--merges=}"
-+        return
-+        ;;
- 	--*)
- 		__gitcomp "
- 			$__git_log_common_options
-@@ -1861,6 +1865,10 @@ _git_config ()
- 		__gitcomp "$__git_log_date_formats"
- 		return
- 		;;
-+	log.merges)
-+		__gitcomp "show hide only"
-+		return
-+		;;
- 	sendemail.aliasesfiletype)
- 		__gitcomp "mutt mailrc pine elm gnus"
- 		return
-@@ -2150,6 +2158,7 @@ _git_config ()
- 		interactive.singlekey
- 		log.date
- 		log.decorate
-+		log.merges
- 		log.showroot
- 		mailmap.file
- 		man.
+diff --git a/revision.c b/revision.c
+index 66520c6..edb7bed 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1678,6 +1678,23 @@ static void add_message_grep(struct rev_info *revs, const char *pattern)
+ 	add_grep(revs, pattern, GREP_PATTERN_BODY);
+ }
+ 
++int parse_merges_opt(struct rev_info *revs, const char *param)
++{
++	if (!strcmp(param, "show")) {
++		revs->min_parents = 0;
++		revs->max_parents = -1;
++	} else if (!strcmp(param, "only")) {
++		revs->min_parents = 2;
++		revs->max_parents = -1;
++	} else if (!strcmp(param, "hide")) {
++		revs->min_parents = 0;
++		revs->max_parents = 1;
++	} else {
++		return -1;
++	}
++	return 0;
++}
++
+ static int handle_revision_opt(struct rev_info *revs, int argc, const char **argv,
+ 			       int *unkc, const char **unkv)
+ {
+@@ -1800,9 +1817,14 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 		revs->show_all = 1;
+ 	} else if (!strcmp(arg, "--remove-empty")) {
+ 		revs->remove_empty_trees = 1;
++	} else if (starts_with(arg, "--merges=")) {
++		if (parse_merges_opt(revs, arg + 9))
++			die("unknown option: %s", arg);
+ 	} else if (!strcmp(arg, "--merges")) {
++		revs->max_parents = -1;
+ 		revs->min_parents = 2;
+ 	} else if (!strcmp(arg, "--no-merges")) {
++		revs->min_parents = 0;
+ 		revs->max_parents = 1;
+ 	} else if (starts_with(arg, "--min-parents=")) {
+ 		revs->min_parents = atoi(arg+14);
+diff --git a/revision.h b/revision.h
+index 0ea8b4e..f9df58c 100644
+--- a/revision.h
++++ b/revision.h
+@@ -240,6 +240,7 @@ extern int setup_revisions(int argc, const char **argv, struct rev_info *revs,
+ extern void parse_revision_opt(struct rev_info *revs, struct parse_opt_ctx_t *ctx,
+ 			       const struct option *options,
+ 			       const char * const usagestr[]);
++extern int parse_merges_opt(struct rev_info *, const char *);
+ #define REVARG_CANNOT_BE_FILENAME 01
+ #define REVARG_COMMITTISH 02
+ extern int handle_revision_arg(const char *arg, struct rev_info *revs,
 -- 
 2.3.3.263.g095251d.dirty
