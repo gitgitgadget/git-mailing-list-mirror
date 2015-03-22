@@ -1,86 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/5] Add a new option 'merges' to revision.c
-Date: Sun, 22 Mar 2015 16:31:23 -0700
-Message-ID: <xmqqoankbodw.fsf@gitster.dls.corp.google.com>
-References: <1427048921-28677-1-git-send-email-koosha@posteo.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/7] strbuf: introduce strbuf_read_cmd helper
+Date: Sun, 22 Mar 2015 19:34:49 -0400
+Message-ID: <20150322233448.GA21518@peff.net>
+References: <20150322095924.GA24651@peff.net>
+ <20150322100724.GC11615@peff.net>
+ <CAPig+cR5Ur4xOKZ6K=bOwOVM8bHHjJJXHxzCbvYBhqOTtD6dXg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Koosha Khajehmoogahi <koosha@posteo.de>
-X-From: git-owner@vger.kernel.org Mon Mar 23 00:31:32 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Wincent Colaiuta <win@wincent.com>, Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Mon Mar 23 00:35:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YZpL9-0005kk-Ei
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Mar 2015 00:31:31 +0100
+	id 1YZpOS-0000cJ-SO
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Mar 2015 00:34:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752620AbbCVXb1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Mar 2015 19:31:27 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:53962 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752190AbbCVXb0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Mar 2015 19:31:26 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8188B4239E;
-	Sun, 22 Mar 2015 19:31:25 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=84DUZYVZ/gnGFo7w7obpcCFBcII=; b=LooyvX
-	Ba4nTbE5+rqQV+q6suB/9rtHibMrMl3oOhKUwuLHGE9RnRszW9JgtGXusQqkOUF8
-	aKrPfwqqORxZqHN1CR4ladepyas7mVVe+BmsdAagUXCtfaVqM6rtqDFAxPmDsDMP
-	pSKLmB8pVNyyIyZerPXCmEFtv4gbH0FPxCj2w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=tbRjtMpHuIX8LFnNCUtpROaga7kIjMQG
-	JDRlf72/mgZfJtL4kKXjgDD6/yyG4y8KdeQs/JjGZ4YcZwOiNGH9R54x+sqcoXyk
-	md5MTZSPfW80x3jqlwG8rVbifC25gT3xu7yphmuyScaPLMZigV5ILwOpvno85Eer
-	t13PX2uO8SI=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7A5B64239D;
-	Sun, 22 Mar 2015 19:31:25 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F06DB4239C;
-	Sun, 22 Mar 2015 19:31:24 -0400 (EDT)
-In-Reply-To: <1427048921-28677-1-git-send-email-koosha@posteo.de> (Koosha
-	Khajehmoogahi's message of "Sun, 22 Mar 2015 19:28:37 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 8E395C02-D0EB-11E4-8202-6DD39F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1752090AbbCVXew (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Mar 2015 19:34:52 -0400
+Received: from cloud.peff.net ([50.56.180.127]:36936 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751962AbbCVXew (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Mar 2015 19:34:52 -0400
+Received: (qmail 2673 invoked by uid 102); 22 Mar 2015 23:34:52 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 22 Mar 2015 18:34:52 -0500
+Received: (qmail 10999 invoked by uid 107); 22 Mar 2015 23:35:05 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 22 Mar 2015 19:35:05 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 22 Mar 2015 19:34:49 -0400
+Content-Disposition: inline
+In-Reply-To: <CAPig+cR5Ur4xOKZ6K=bOwOVM8bHHjJJXHxzCbvYBhqOTtD6dXg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266106>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266107>
 
-Koosha Khajehmoogahi <koosha@posteo.de> writes:
+On Sun, Mar 22, 2015 at 03:36:01PM -0400, Eric Sunshine wrote:
 
-> @@ -1800,9 +1817,14 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
->  		revs->show_all = 1;
->  	} else if (!strcmp(arg, "--remove-empty")) {
->  		revs->remove_empty_trees = 1;
-> +	} else if (starts_with(arg, "--merges=")) {
-> +		if (parse_merges_opt(revs, arg + 9))
-> +			die("unknown option: %s", arg);
+> > This is really at the intersection of the strbuf and
+> > run-command APIs, so you could argue for it being part of
+> > either It is logically quite like the strbuf_read_file()
+> > function, so I put it there.
+> 
+> It does feel like a layering violation. If moved to the run-command
+> API, it could given one of the following names or something better:
 
-This one makes sense to me (so does what the parse_merges_opt()
-does).
+A layering violation implies there is an ordering to the APIs. Certainly
+we call APIs from other APIs all the time. I guess you could argue that
+these are the "same" layer, and should be next to each, and not building
+on each other (i.e., that strbuf has dependencies only on system APIs
+like stdio.h, and run-command only on system APIs like unistd.h, etc).
 
->  	} else if (!strcmp(arg, "--merges")) {
-> +		revs->max_parents = -1;
->  		revs->min_parents = 2;
+But then reversing the order of the dependency does not really solve
+that. You would have to introduce a new higher-level API that combines
+them. But that seems silly for a single function (and I do not foresee
+any other similar functions).
 
-But is this change warranted?  An existing user who is not at all
-interested in the new --merges= option may be relying on the fact
-that "--merges" does not affect the value of max_parents and she can
-say "log --max-parents=2 --merges" to see only the two-way merges,
-for example.  This change just broke her, and I do not see why it is
-a good thing.
+That being said, I'm not opposed to one of the reverse names if people
+feel strongly (I also considered making it an option flag to
+run_command_v_opt, but it ended up tangling things quite a bit more).
 
->  	} else if (!strcmp(arg, "--no-merges")) {
-> +		revs->min_parents = 0;
->  		revs->max_parents = 1;
-
-Likewise.
+-Peff
