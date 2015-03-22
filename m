@@ -1,7 +1,8 @@
 From: Koosha Khajehmoogahi <koosha@posteo.de>
-Subject: [PATCH 1/5] Add a new option 'merges' to revision.c
-Date: Sun, 22 Mar 2015 19:28:37 +0100
-Message-ID: <1427048921-28677-1-git-send-email-koosha@posteo.de>
+Subject: [PATCH 3/5] Update documentations for git-log to include the new --merges option and also its corresponding config option.
+Date: Sun, 22 Mar 2015 19:28:39 +0100
+Message-ID: <1427048921-28677-3-git-send-email-koosha@posteo.de>
+References: <1427048921-28677-1-git-send-email-koosha@posteo.de>
 Cc: Koosha Khajehmoogahi <koosha@posteo.de>
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Sun Mar 22 19:30:30 2015
@@ -10,96 +11,65 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YZkdo-0003PJ-GW
+	id 1YZkdn-0003PJ-Sc
 	for gcvg-git-2@plane.gmane.org; Sun, 22 Mar 2015 19:30:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751842AbbCVSaQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Mar 2015 14:30:16 -0400
-Received: from mx02.posteo.de ([89.146.194.165]:41304 "EHLO mx02.posteo.de"
+	id S1751837AbbCVSaO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Mar 2015 14:30:14 -0400
+Received: from mx02.posteo.de ([89.146.194.165]:41306 "EHLO mx02.posteo.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751811AbbCVSaL (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1751826AbbCVSaL (ORCPT <rfc822;git@vger.kernel.org>);
 	Sun, 22 Mar 2015 14:30:11 -0400
 Received: from dovecot03.posteo.de (unknown [185.67.36.28])
-	by mx02.posteo.de (Postfix) with ESMTPS id 400041F5E882;
+	by mx02.posteo.de (Postfix) with ESMTPS id 8DA2A1F5E884;
 	Sun, 22 Mar 2015 19:30:09 +0100 (CET)
 Received: from mail.posteo.de (localhost [127.0.0.1])
-	by dovecot03.posteo.de (Postfix) with ESMTPSA id 3l96p90kGSz5vND;
-	Sun, 22 Mar 2015 19:30:08 +0100 (CET)
+	by dovecot03.posteo.de (Postfix) with ESMTPSA id 3l96p92cQwz5vNK;
+	Sun, 22 Mar 2015 19:30:09 +0100 (CET)
 X-Mailer: git-send-email 2.3.3.263.g095251d.dirty
+In-Reply-To: <1427048921-28677-1-git-send-email-koosha@posteo.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266077>
-
-revision.c: add a new option 'merges' with
-possible values of 'only', 'show' and 'hide'.
-The option is used when showing the list of commits.
-The value 'only' lists only merges. The value 'show'
-is the default behavior which shows the commits as well
-as merges and the value 'hide' makes it just list commit
-items.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266078>
 
 Signed-off-by: Koosha Khajehmoogahi <koosha@posteo.de>
 ---
- revision.c | 22 ++++++++++++++++++++++
- revision.h |  1 +
- 2 files changed, 23 insertions(+)
+ Documentation/git-log.txt          | 3 +++
+ Documentation/rev-list-options.txt | 6 ++++++
+ 2 files changed, 9 insertions(+)
 
-diff --git a/revision.c b/revision.c
-index 66520c6..edb7bed 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1678,6 +1678,23 @@ static void add_message_grep(struct rev_info *revs, const char *pattern)
- 	add_grep(revs, pattern, GREP_PATTERN_BODY);
- }
+diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
+index 1f7bc67..506125a 100644
+--- a/Documentation/git-log.txt
++++ b/Documentation/git-log.txt
+@@ -190,6 +190,9 @@ log.showroot::
+ 	`git log -p` output would be shown without a diff attached.
+ 	The default is `true`.
  
-+int parse_merges_opt(struct rev_info *revs, const char *param)
-+{
-+	if (!strcmp(param, "show")) {
-+		revs->min_parents = 0;
-+		revs->max_parents = -1;
-+	} else if (!strcmp(param, "only")) {
-+		revs->min_parents = 2;
-+		revs->max_parents = -1;
-+	} else if (!strcmp(param, "hide")) {
-+		revs->min_parents = 0;
-+		revs->max_parents = 1;
-+	} else {
-+		return -1;
-+	}
-+	return 0;
-+}
++log.merges::
++    Default for `--merges` option. Defaults to `show`.
 +
- static int handle_revision_opt(struct rev_info *revs, int argc, const char **argv,
- 			       int *unkc, const char **unkv)
- {
-@@ -1800,9 +1817,14 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 		revs->show_all = 1;
- 	} else if (!strcmp(arg, "--remove-empty")) {
- 		revs->remove_empty_trees = 1;
-+	} else if (starts_with(arg, "--merges=")) {
-+		if (parse_merges_opt(revs, arg + 9))
-+			die("unknown option: %s", arg);
- 	} else if (!strcmp(arg, "--merges")) {
-+		revs->max_parents = -1;
- 		revs->min_parents = 2;
- 	} else if (!strcmp(arg, "--no-merges")) {
-+		revs->min_parents = 0;
- 		revs->max_parents = 1;
- 	} else if (starts_with(arg, "--min-parents=")) {
- 		revs->min_parents = atoi(arg+14);
-diff --git a/revision.h b/revision.h
-index 0ea8b4e..f9df58c 100644
---- a/revision.h
-+++ b/revision.h
-@@ -240,6 +240,7 @@ extern int setup_revisions(int argc, const char **argv, struct rev_info *revs,
- extern void parse_revision_opt(struct rev_info *revs, struct parse_opt_ctx_t *ctx,
- 			       const struct option *options,
- 			       const char * const usagestr[]);
-+extern int parse_merges_opt(struct rev_info *, const char *);
- #define REVARG_CANNOT_BE_FILENAME 01
- #define REVARG_COMMITTISH 02
- extern int handle_revision_arg(const char *arg, struct rev_info *revs,
+ mailmap.*::
+ 	See linkgit:git-shortlog[1].
+ 
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index 4ed8587..398e657 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -99,6 +99,12 @@ if it is part of the log message.
+ --merges::
+ 	Print only merge commits. This is exactly the same as `--min-parents=2`.
+ 
++--merges=show|hide|only::
++	If show is specified, merge commits will be shown in conjunction with
++	other commits. If hide is specified, it will work like `--no-merges`.
++	If only is specified, it will work like `--merges`. The default option
++	is show.
++
+ --no-merges::
+ 	Do not print commits with more than one parent. This is
+ 	exactly the same as `--max-parents=1`.
 -- 
 2.3.3.263.g095251d.dirty
