@@ -1,103 +1,120 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2/GSoC/RFC] fetch: git fetch --deepen
-Date: Mon, 23 Mar 2015 06:23:28 +0700
-Message-ID: <CACsJy8A6ffMvySRUhfx8VCvTe2z+s7R-F6z+S+dex_xQ4kORKg@mail.gmail.com>
-References: <1426251846-1604-1-git-send-email-dongcan.jiang@gmail.com> <39ef84113d77ee6fa371ac2f23bbb0ef321323ba.1427031746.git.dongcan.jiang@gmail.com>
+From: submitarticles@global-proofreading.com
+Subject: Proofreading/Editing of Research Papers
+Date: Sun, 22 Mar 2015 17:41:18 -0500
+Message-ID: <20150322174118.0uwczaa3kgccog0k@webmail.opentransfer.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Dongcan Jiang <dongcan.jiang@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 23 00:24:09 2015
+Content-Type: text/plain; charset=ISO-8859-1;
+	DelSp=Yes	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: undisclosed-recipients:;
+X-From: git-owner@vger.kernel.org Mon Mar 23 00:27:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YZpE0-00074M-4I
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Mar 2015 00:24:08 +0100
+	id 1YZpH7-0001l1-5d
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Mar 2015 00:27:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752600AbbCVXYD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Mar 2015 19:24:03 -0400
-Received: from mail-ig0-f172.google.com ([209.85.213.172]:35635 "EHLO
-	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752586AbbCVXX7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Mar 2015 19:23:59 -0400
-Received: by igcau2 with SMTP id au2so28570229igc.0
-        for <git@vger.kernel.org>; Sun, 22 Mar 2015 16:23:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=7BAziBt/E054ZTlhrvW2aWhJFLAF+OloIKnhH0SkiTE=;
-        b=G4cagGe01YZlG/5qVOT1oqqQ9R0Dgqc/BSoOEF+v209869Xwm+j5j9d5L6z8odmkic
-         yzAd/bPn0B3UupKhfz+habYL84/2Ej+AsVD6gE1f1vp9CipRQ386FGOgadia2q+rHCov
-         KV9SoOSivfdfP7pZszyvA9Y7p6kUo8LSS4fKAtQBvN8tu5/CtZp+kwl8LfROWxVHhHfF
-         +KAABrwgDLCUfRzdYVbFu0x7MWltnmTfJKVzTAkSe11wyXorMt8+grZXodvEKz6h1Abc
-         kCGg4C4ERgyZqS2yW0i08n33+uSFBB6sSSf5dZGZh5dULlgZADTqLOoYmajf57/nU1AT
-         n6BQ==
-X-Received: by 10.43.36.82 with SMTP id sz18mr16625839icb.65.1427066638505;
- Sun, 22 Mar 2015 16:23:58 -0700 (PDT)
-Received: by 10.107.131.33 with HTTP; Sun, 22 Mar 2015 16:23:28 -0700 (PDT)
-In-Reply-To: <39ef84113d77ee6fa371ac2f23bbb0ef321323ba.1427031746.git.dongcan.jiang@gmail.com>
+	id S1752014AbbCVX1P convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 22 Mar 2015 19:27:15 -0400
+Received: from smh05.opentransfer.com ([98.130.1.173]:43380 "EHLO
+	smh05.opentransfer.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751997AbbCVX1O convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 22 Mar 2015 19:27:14 -0400
+X-Greylist: delayed 2746 seconds by postgrey-1.27 at vger.kernel.org; Sun, 22 Mar 2015 19:27:14 EDT
+Received: by smh05.opentransfer.com (Postfix, from userid 8)
+	id 13D3B8F33B; Sun, 22 Mar 2015 18:41:19 -0400 (EDT)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on
+	smh05.opentransfer.com
+X-Spam-Level: 
+X-Spam-Status: No, score=0.1 required=5.0 tests=RDNS_NONE autolearn=disabled
+	version=3.2.5
+Received: from webmail5.opentransfer.com (unknown [69.49.230.6])
+	by smh05.opentransfer.com (Postfix) with ESMTP id CE0748F339;
+	Sun, 22 Mar 2015 18:41:18 -0400 (EDT)
+Received: from webmail5.opentransfer.com (localhost [127.0.0.1] (may be forged))
+	by webmail5.opentransfer.com (8.13.8/8.13.8) with ESMTP id t2MMfQ8P002093;
+	Sun, 22 Mar 2015 17:41:26 -0500
+Received: (from nobody@localhost)
+	by webmail5.opentransfer.com (8.13.8/8.13.8/Submit) id t2MMfIPP002092;
+	Sun, 22 Mar 2015 17:41:18 -0500
+X-Authentication-Warning: webmail5.opentransfer.com: nobody set sender to submitarticles@global-proofreading.com using -f
+Received: from 41.220.69.191 ([41.220.69.191]) by webmail.opentransfer.com
+	(Horde MIME library) with HTTP; for
+	<submitarticles@global-proofreading.com>; Sun, 22 Mar 2015 17:41:18 -0500
+X-Opentransfer-Authenticated: submitarticles@global-proofreading.com
+Content-Disposition: inline
+User-Agent: Internet Messaging Program (IMP) H3 (4.1.4)
+X-Originating-IP: 41.220.69.191
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266104>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266105>
 
-On Sun, Mar 22, 2015 at 10:24 PM, Dongcan Jiang <dongcan.jiang@gmail.com> wrote:
-> This patch is just for discusstion. An option --deepen is added to
-> 'git fetch'. When it comes to '--deepen', git should fetch N more
-> commits ahead the local shallow commit, where N is indicated by
-> '--depth=N'. [1]
->
-> e.g.
->
->>  (upstream)
->>   ---o---o---o---A---B
->>
->>  (you)
->>                  A---B
->
-> After excuting "git fetch --depth=1 --deepen", (you) get one more
-> tip and it becomes
->
->>  (you)
->>              o---A---B
->
-> '--deepen' is designed to be a boolean option in this patch, which
-> is a little different from [1]. It's designed in this way, because
-> it can reuse '--depth' in the program, and just costs one more bit
-> in some data structure, such as fetch_pack_args,
-> git_transport_options.
->
-> Of course, as a patch for discussion, it remains a long way to go
-> before being complete.
->
->         1) Documents should be completed.
->         2) More test cases, expecially corner cases, should be added.
->         3) No need to get remote refs when it comes to '--deepen' option.
->         4) Validity on options combination should be checked.
->         5) smart-http protocol remains to be supported. [2]
+Dear Colleague,
 
-Quick notes before $DAYJOB starts. Cool pictures, perhaps they could
-be part of the commit message too.
+I wish to inform you that Global Proofreading is still accepting =20
+research papers, theses, commentaries, dissertations and write-ups for =
+=20
+proofreading. Our major aim is to help researchers publish quality =20
+research works devoid of grammatical errors. We are therefore =20
+requesting authors to send their research works for thorough =20
+grammatical editing. If interested, kindly submit papers or direct =20
+your colleague(s) to any of the following email addresses:
 
-Personally i still don't think not moving the refs is worth the effort
-(and it's a waste if we have to send then drop objects for these
-updated refs, but I didn't check carefully). So if you we don't needs
-ref updates, we probably don't need to send "want" lines and sort of
-simplify processing at upload-pack side.
+submitpapers@global-proofreading.com
+submitarticles@global-proofreading.com
+call4papers@globalproofreading.com
+call4manuscripts@globalproofreading.com
+gproofreading@gmail.com
+gproofediting@gmail.com
 
-And it makes me realise, we're loosing security a bit here. We
-normally don't send anything that's not reachable from the visible ref
-set. But we now would accept any shallow sha-1 and send some objects
-regardless if these sha-1 are connected to any refs. We may need some
-more checking in place to avoid this. See check_non_sha1_tip() for a
-way to do it. Pack bitmaps may help as well, but I think that's behind
-the scene (i.e. behind rev-list and we already can take advantage of
-it).
--- 
-Duy
+The research paper should be in the format Arial, font size 12 and 1.5 =
+=20
+line spacing. Upon receipt of your work, an acknowledgement letter and =
+=20
+the amount charged will be sent to you.
+
+Our rate is categorized below:
+    $40 (USD) for research papers in the range of 1-10 pages
+    $60 (USD) for research papers in the range of 11-15 pages
+    $80 (USD) for research papers in the range of 16-20 pages
+    $100 (USD) for research papers in the range of 21-25 pages
+    $120(USD) for research papers in the range of 26-30 pages
+    $140 (USD) for research papers in the range of 31-35 pages
+    $ 3 (USD) is charged per page for lengthy research works e.g =20
+monographs dissertations and theses.
+
+Payment for proofread research paper is via any of the following ways b=
+elow:
+=95	Bank Transfer
+=95	PayPal
+=95	Western Union Money Transfer
+=95	Ria Money Transfer
+=95	MoneyGram
+
+Our effective editing board makes sure that each paper you send to us =20
+gets back to you within 96 hours (4 days) upon receipt of payment =20
+confirmation. Our services include:
+=95	Proofreading
+=95	Editing grammatical errors
+=95	Proper punctuation
+=95	Paraphrasing and editing of sentences, aligning of articles
+and any other errors
+
+Two copies of your work will be sent back to the author after proofread=
+ing:
+(1)	Edited copy of research paper with track changes
+(2)	Edited copy of research paper without track changes
+
+=46inally, we wish you the best.
+
+Kind Regards,
+
+Miss Blessing Udeji
+Editorial Assistant (3)
+Global Proofreading
+gprcall4papers@gmail.com
+editorialassistant3@global-proofreading.com
