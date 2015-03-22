@@ -1,97 +1,82 @@
-From: SZEDER =?utf-8?b?R8OhYm9y?= <szeder@ira.uka.de>
-Subject: Re: bug in bash completion for git-branch --set-upstream-to on OSX
-Date: Sun, 22 Mar 2015 12:06:12 +0100
-Message-ID: <20150322120612.Horde.LAxCkP-VMKE3Ur7ZXII3Hg1@webmail.informatik.kit.edu>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: Draft of Git Rev News edition 1
+Date: Sun, 22 Mar 2015 12:21:44 +0100
+Message-ID: <87lhipnupj.fsf@fencepost.gnu.org>
+References: <CAP8UFD1WtwKri8cWABnzeRvxKhdNmUfVw5xm=F4oLrevuOGyUA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed	DelSp=Yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jason Karns <karns.17@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 22 12:07:03 2015
+Content-Type: text/plain
+Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Paul Tan <pyokagan@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Dongcan Jiang <dongcan.jiang@gmail.com>,
+	Jeff King <peff@peff.net>, Doug Kelly <dougk.ff7@gmail.com>,
+	Bharat Suvarna <bharat.bs84@icloud.com>,
+	Kevin D <me@ikke.info>,
+	"Randall S. Becker" <rsbecker@nexbridge.com>,
+	Stephen Robin <stephen.robin@gmail.com>,
+	Thomas Ferris Nicolaisen <tfnico@gmail.com>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 22 12:24:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YZdie-0002OL-Jc
-	for gcvg-git-2@plane.gmane.org; Sun, 22 Mar 2015 12:07:00 +0100
+	id 1YZdzd-0001yT-Ja
+	for gcvg-git-2@plane.gmane.org; Sun, 22 Mar 2015 12:24:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751669AbbCVLG4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 22 Mar 2015 07:06:56 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:48927 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751070AbbCVLGz convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Mar 2015 07:06:55 -0400
-Received: from irawebmail.ira.uni-karlsruhe.de ([141.3.10.230] helo=webmail.ira.uka.de)
-	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
-	iface 141.3.10.81 id 1YZdiY-0005AE-2h; Sun, 22 Mar 2015 12:06:54 +0100
-Received: from apache by webmail.ira.uka.de with local (Exim 4.72)
-	(envelope-from <szeder@ira.uka.de>)
-	id 1YZdi2-0005Ue-Ce; Sun, 22 Mar 2015 12:06:22 +0100
-Received: from x590d7fa5.dyn.telefonica.de (x590d7fa5.dyn.telefonica.de
- [89.13.127.165]) by webmail.informatik.kit.edu (Horde Framework) with HTTP;
- Sun, 22 Mar 2015 12:06:12 +0100
-User-Agent: Internet Messaging Program (IMP) H5 (6.2.2)
-Content-Disposition: inline
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1427022414.
+	id S1751671AbbCVLYV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Mar 2015 07:24:21 -0400
+Received: from fencepost.gnu.org ([208.118.235.10]:33239 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751283AbbCVLYV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Mar 2015 07:24:21 -0400
+Received: from localhost ([127.0.0.1]:60509 helo=lola)
+	by fencepost.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <dak@gnu.org>)
+	id 1YZdzN-0006Am-Tk; Sun, 22 Mar 2015 07:24:18 -0400
+Received: by lola (Postfix, from userid 1000)
+	id 6F496DF3D9; Sun, 22 Mar 2015 12:21:44 +0100 (CET)
+In-Reply-To: <CAP8UFD1WtwKri8cWABnzeRvxKhdNmUfVw5xm=F4oLrevuOGyUA@mail.gmail.com>
+	(Christian Couder's message of "Sun, 22 Mar 2015 12:03:28 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.0.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266068>
 
+Christian Couder <christian.couder@gmail.com> writes:
 
-Hi,
-
-Quoting Jason Karns <karns.17@gmail.com>:
-
-> There appears to be a bug in the bash completion for git-branch when
-> attempting to complete the remote ref argument for --set-upstream-to=3D
+> Hi,
 >
-> When:
+> A draft of Git Rev News edition 1 is available here:
 >
-> $ git branch --set-upstream-to=3Dorigin/mast<TAB>
+> https://github.com/git/git.github.io/blob/master/rev_news/draft/edition-1.md
 >
-> I would expect it to complete to:
+> Everyone is welcome to contribute in any section either by editing the
+> above page on GitHub and sending a pull request, or by commenting on
+> this GitHub issue:
 >
-> $ git branch --set-upstream-to=3Dorigin/master
+> https://github.com/git/git.github.io/issues/17
 >
-> However, the completion for --set-upstream-to=3D completes the ref
-> correctly, but completely wipes the --set-upstream option; resulting
-> in:
->
-> $ git branch origin/master
+> You can also reply to this email.
 
-Strange.
+I've seen
 
-The code in question
+    David Kastrup (dak at gnu.org) previously reimplemented significant
+    parts of "git blame" for a vast gain in performance with complex
+    histories and large files. As working on free software is his sole
+    source of income, please consider contributing to his remuneration
+    if you find this kind of improvements useful.
 
-    case "$cur" in
-    --set-upstream-to=3D*)
-            __gitcomp "$(__git_refs)" "" "${cur##--set-upstream-to=3D}"
-            ;;
+Thank you very much for this heads-up.  However, I'd replace
+"previously" with "as of version 2.1.0".  That's where the big
+difference is, so if people actually are impacted they'll know whether
+and what to benchmark and/or upgrade.
 
-looks unsuspicious, this is the "standard" way to complete
-'--option=3D<TAB>' (except that we should use __gitcomp_nl() for =20
-completing refs, but that should have no effect on this issue).  Does =20
-the same issue affect other 'git cmd --option=3D<TAB>' completions as =20
-well, e.g. 'git log --date=3D<TAB>' or 'git commit --reuse-message=3D<T=
-AB>'?
-
-We had a similar issue with ':' on the command line a looong while
-ago, see v1.5.6.4~9^2 (bash completion: Resolve git show ref:path<tab>
-losing ref: portion, 2008-07-15).  Maybe we are dealing with the same =20
-issue here, just a different character?
-
-What does
-
-    printf "$COMP_WORDBREAKS" |tr ' \t\n' STN
-
-print out?  Is the '=3D' missing, perhaps?  If that's indeed the case,
-does adding it back (COMP_WORDBREAKS=3D"$COMP_WORDBREAKS"=3D) fix the i=
-ssue?
-
-G=C3=A1bor
+-- 
+David Kastrup
