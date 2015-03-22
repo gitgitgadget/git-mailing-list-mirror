@@ -1,135 +1,108 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 02/15] read-cache: Improve readability
-Date: Sun, 22 Mar 2015 12:26:02 -0700
-Message-ID: <xmqq619sdeb9.fsf@gitster.dls.corp.google.com>
-References: <1426897692-18322-1-git-send-email-sbeller@google.com>
-	<1426897692-18322-3-git-send-email-sbeller@google.com>
-	<xmqqbnjnaso7.fsf@gitster.dls.corp.google.com>
-	<CAGZ79kaLJgC6rWdRSeVVQSBYn0soJuzqnrK_bNtgAPWimPYE8w@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 3/7] strbuf: introduce strbuf_read_cmd helper
+Date: Sun, 22 Mar 2015 15:36:01 -0400
+Message-ID: <CAPig+cR5Ur4xOKZ6K=bOwOVM8bHHjJJXHxzCbvYBhqOTtD6dXg@mail.gmail.com>
+References: <20150322095924.GA24651@peff.net>
+	<20150322100724.GC11615@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Sun Mar 22 20:26:14 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Wincent Colaiuta <win@wincent.com>, Git List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Mar 22 20:36:10 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YZlVi-0006TZ-O7
-	for gcvg-git-2@plane.gmane.org; Sun, 22 Mar 2015 20:26:11 +0100
+	id 1YZlfN-0007g5-MB
+	for gcvg-git-2@plane.gmane.org; Sun, 22 Mar 2015 20:36:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751883AbbCVT0G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Mar 2015 15:26:06 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:60698 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751826AbbCVT0F (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Mar 2015 15:26:05 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6921641DC9;
-	Sun, 22 Mar 2015 15:26:04 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=jxBcf01w5ckP+dLFkaHcU0mCHRQ=; b=dPyL5s
-	0HO0e4KPeGaJ6YqFxMNl9Ppz/A1JWkudYGrES7HeuvaDeh+ENEjWiJH0GxAgFng6
-	Wblr9618YfJ6FjL3avat8AXCEB/7e1QhXKOFyqyVwVg2LweVE9PTSYA+JEIkIUe7
-	CGQ2NjVE9EnDq5JNLpS5P4HsTn9zA4X7p388I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=X1Hv4yibDNbhLPsO6mhShC6/Z9h/Vz5U
-	VJWSuJQx2zmnJn/tYB9gQYaoyBP9QVXECmvzExGrN2znvtOexX5rFSWOZnRPhqnG
-	36o+syZozgzu18lc8I/J2EEq+lLRZNqJxoYX5f7Ha+tcUySLpOat8z+B0JV03lne
-	2vA8KuHTC2c=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6139041DC8;
-	Sun, 22 Mar 2015 15:26:04 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D762B41DC6;
-	Sun, 22 Mar 2015 15:26:03 -0400 (EDT)
-In-Reply-To: <CAGZ79kaLJgC6rWdRSeVVQSBYn0soJuzqnrK_bNtgAPWimPYE8w@mail.gmail.com>
-	(Stefan Beller's message of "Fri, 20 Mar 2015 22:11:47 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 47C45230-D0C9-11E4-ACF0-6DD39F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751906AbbCVTgF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Mar 2015 15:36:05 -0400
+Received: from mail-yk0-f179.google.com ([209.85.160.179]:33664 "EHLO
+	mail-yk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751900AbbCVTgC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Mar 2015 15:36:02 -0400
+Received: by ykek76 with SMTP id k76so63401820yke.0
+        for <git@vger.kernel.org>; Sun, 22 Mar 2015 12:36:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=EvhPzIIoGZiCFWjj5N4se8ROyeKi5G4V1VVFD8Qy2dQ=;
+        b=vz9UtS14wNqXSJWD1iU8EMzfu9FJVEDQqQfI/LFjErH6Uc0VlBzeCM780dqAvOajQl
+         bLFafBzvdUJq/GS+3GzvCxlhE0a6LWG0Wa80DKeMOtivnYsDxGkJyPEpjXVqkqV+JxZW
+         LKtOZmqJQYXe4G/l+Rn5k4LuWYM5DaRC8vlgBPo1d9nRQa0WorvFl+khv1K9Efd52LXh
+         OJ4vcUUAy5XLlb0q6QI6dQEC4KviSA0q3+os6wPId2AVk3gkP4ZdD7ya5LJTus3nOmd9
+         u5eBOlmJi9o9tfC/7B6I4es78GPxjiAU/j6mFdCf0aa3uLt3ZL7kOQtG0Lhw7U4/n99T
+         fj7w==
+X-Received: by 10.236.63.6 with SMTP id z6mr92441461yhc.65.1427052961284; Sun,
+ 22 Mar 2015 12:36:01 -0700 (PDT)
+Received: by 10.170.73.7 with HTTP; Sun, 22 Mar 2015 12:36:01 -0700 (PDT)
+In-Reply-To: <20150322100724.GC11615@peff.net>
+X-Google-Sender-Auth: 9FcPA8JsfLgoflTvx6bDO4-5tbk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266086>
 
-Stefan Beller <sbeller@google.com> writes:
-
-> Maybe I have read too much of the refs code lately as there we
-> have these long chains which combine precondition with error
-> checking.
-
-Of course, things are not so black-and-white in the real world.  
-
-You can also take an extreme stance and view
-
-	if (!pretend && do_it_and_report_error())
-        	error(...);
-
-differently.  I would explain that what the whole thing is trying to
-achieve as "'do it' part is the primary thing we want to do, but it
-only can be done when we are not pretending, and we show an error
-when the 'do it' part fails." and would suggest structuring it more
-like this:
-
-	if (pretend)
-        	; /* nothing */
-	else if (do_it_and_report_error())
-        	error(...);
-
-or
-
-	if (!pretend) {
-        	if (do_it_and_report_error())
-                	error(...);
-	}
-
-But you could say "The final objective of the whole thing is to show
-an error message, but if we are pretending or if our attempt to 'do
-it' succeeds, we do not have to show the error", and such a view may
-make sense depending on what that 'do it' is.  The original may be
-justified under such an interpretation.
-
-We may be tempted to write (note: each boolean term may be a call
-with many complex arguments)
-
-    if (A && B && C && D && E)
-	...
-
-when it is in fact logically is more like this:
-
-    /* does not make sense to attempt C when A && B does not hold */
-    if (A && B) {
-    	if (C && D && E)
-        	...
-    }
-
-But it becomes a judgement call if splitting that into nested two if
-statements is better for overall readability when the top-level if
-statement has an else clause.  You cannot turn it into
-
-    /* does not make sense to attempt C when A && B does not hold */
-    if (A && B) {
-    	if (C && D && E)
-        	...
-    } else {
-        ... /* this cannot be what the original's else clause did */
-    }
-
-blindly.  It would need further restructuring.  I think the code
-inside the refs.c is a result of making such judgement calls.
-
->> By the way, aren't we leaking ce when we are merely pretending?
+On Sun, Mar 22, 2015 at 6:07 AM, Jeff King <peff@peff.net> wrote:
+> Something as simple as reading the stdout from a command
+> turns out to be rather hard to do right. Doing:
 >
-> Yes we are, that's how I found this spot. (coverity pointed out ce was
-> leaking, so I was refactoring to actually make it easier to fix it, and then
-> heavily reordered the patch series afterwards. That spot was forgotten
-> apparently.
+>   if (!run_command(&cmd))
+>         strbuf_read(&buf, cmd.out, 0);
+>
+> can result in deadlock if the child process produces a large
+> amount of output. [...]
+>
+> Let's introduce a strbuf helper that can make this a bit
+> simpler for callers to do right.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> This is really at the intersection of the strbuf and
+> run-command APIs, so you could argue for it being part of
+> either It is logically quite like the strbuf_read_file()
+> function, so I put it there.
 
-I dropped 2/15 and expect the real fix in the future; no rush,
-though.
+It does feel like a layering violation. If moved to the run-command
+API, it could given one of the following names or something better:
+
+    run_command_capture()
+    capture_command()
+    command_capture()
+    run_command_with_output()
+    capture_output()
+
+> diff --git a/strbuf.h b/strbuf.h
+> index 1883494..93a50da 100644
+> --- a/strbuf.h
+> +++ b/strbuf.h
+> @@ -1,6 +1,8 @@
+>  #ifndef STRBUF_H
+>  #define STRBUF_H
+>
+> +struct child_process;
+> +
+>  /**
+>   * strbuf's are meant to be used with all the usual C string and memory
+>   * APIs. Given that the length of the buffer is known, it's often better to
+> @@ -373,6 +375,14 @@ extern int strbuf_read_file(struct strbuf *sb, const char *path, size_t hint);
+>  extern int strbuf_readlink(struct strbuf *sb, const char *path, size_t hint);
+>
+>  /**
+> + * Execute the given command, capturing its stdout in the given strbuf.
+> + * Returns -1 if starting the command fails or reading fails, and otherwise
+> + * returns the exit code of the command. The output collected in the
+> + * buffer is kept even if the command returns a non-zero exit.
+> + */
+> +int strbuf_read_cmd(struct strbuf *sb, struct child_process *cmd, size_t hint);
+> +
+> +/**
+>   * Read a line from a FILE *, overwriting the existing contents
+>   * of the strbuf. The second argument specifies the line
+>   * terminator character, typically `'\n'`.
+> --
+> 2.3.3.618.ga041503
