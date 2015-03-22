@@ -1,109 +1,79 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 5/5] Update Bash completion script to include git log
- --merges option
-Date: Sun, 22 Mar 2015 17:24:25 -0400
-Message-ID: <CAPig+cTnyKZWAogK_7zyswg4JaPfA_=p_G+wVC4hAZe6t7ogGw@mail.gmail.com>
-References: <1427048921-28677-1-git-send-email-koosha@posteo.de>
-	<1427048921-28677-5-git-send-email-koosha@posteo.de>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: Draft of Git Rev News edition 1
+Date: Sun, 22 Mar 2015 22:24:04 +0100
+Message-ID: <87fv8wd8uj.fsf@fencepost.gnu.org>
+References: <CAP8UFD1WtwKri8cWABnzeRvxKhdNmUfVw5xm=F4oLrevuOGyUA@mail.gmail.com>
+	<87lhipnupj.fsf@fencepost.gnu.org>
+	<CAEcj5uWcybmPbbXNHgSAj=0yi4GjR+-VW744+i1+Gg2p_3g4wA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Koosha Khajehmoogahi <koosha@posteo.de>
-X-From: git-owner@vger.kernel.org Sun Mar 22 22:24:32 2015
+Content-Type: text/plain
+Cc: Christian Couder <christian.couder@gmail.com>,
+	git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Paul Tan <pyokagan@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Dongcan Jiang <dongcan.jiang@gmail.com>,
+	Jeff King <peff@peff.net>, Doug Kelly <dougk.ff7@gmail.com>,
+	Bharat Suvarna <bharat.bs84@icloud.com>,
+	Kevin D <me@ikke.info>,
+	"Randall S. Becker" <rsbecker@nexbridge.com>,
+	Stephen Robin <stephen.robin@gmail.com>
+To: Thomas Ferris Nicolaisen <tfnico@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 22 22:25:17 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YZnMF-0001fJ-6l
-	for gcvg-git-2@plane.gmane.org; Sun, 22 Mar 2015 22:24:31 +0100
+	id 1YZnMt-0002I9-6R
+	for gcvg-git-2@plane.gmane.org; Sun, 22 Mar 2015 22:25:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751899AbbCVVY1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Mar 2015 17:24:27 -0400
-Received: from mail-yh0-f54.google.com ([209.85.213.54]:33159 "EHLO
-	mail-yh0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751820AbbCVVY0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Mar 2015 17:24:26 -0400
-Received: by yhpt93 with SMTP id t93so60565699yhp.0
-        for <git@vger.kernel.org>; Sun, 22 Mar 2015 14:24:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=KsBmH5WAT02tpxBgsUA7ev+DqrhRLomeJqmW6ayC7iw=;
-        b=tQxyZiATQlJKDhQ6CL6kT/pvHKLAKjFeBVsVEM89C6b+tybKTop8sltUG0CSSBOtQk
-         WIwmPWmsGXLTj/OOsNvDu/BjOd6eqZArcWRJf6SK/mbcGNg+Y/JPUt7S2PdOlHMkxvLu
-         /5j3B81SNUPByrE1pbObiDcKnzyxIi6wQJaDgHeEUUiK1gVBjkgguNm0oFelEdUcOO30
-         naACtQqYSxVPOmD37KS+uP+B/plQQExV7f3jH66zzUefWfR3IH7kq/h5+8qoWOWeO2yD
-         KVtNtNUci5XGbp74LS4DTO8I1ttsqiphOMngfxXSuO20vuQEmQxyG231XlhZ+RpxHw9T
-         bTpg==
-X-Received: by 10.236.45.106 with SMTP id o70mr93263891yhb.180.1427059465560;
- Sun, 22 Mar 2015 14:24:25 -0700 (PDT)
-Received: by 10.170.73.7 with HTTP; Sun, 22 Mar 2015 14:24:25 -0700 (PDT)
-In-Reply-To: <1427048921-28677-5-git-send-email-koosha@posteo.de>
-X-Google-Sender-Auth: NXsOfIosPQgfhBgYoLRJwLvTWA4
+	id S1751915AbbCVVZH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Mar 2015 17:25:07 -0400
+Received: from fencepost.gnu.org ([208.118.235.10]:53968 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751832AbbCVVZF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Mar 2015 17:25:05 -0400
+Received: from localhost ([127.0.0.1]:53002 helo=lola)
+	by fencepost.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <dak@gnu.org>)
+	id 1YZnMl-0002Vn-Lr; Sun, 22 Mar 2015 17:25:04 -0400
+Received: by lola (Postfix, from userid 1000)
+	id 180E7E06B2; Sun, 22 Mar 2015 22:24:04 +0100 (CET)
+In-Reply-To: <CAEcj5uWcybmPbbXNHgSAj=0yi4GjR+-VW744+i1+Gg2p_3g4wA@mail.gmail.com>
+	(Thomas Ferris Nicolaisen's message of "Sun, 22 Mar 2015 21:52:58
+	+0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.0.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266096>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266097>
 
-On Sun, Mar 22, 2015 at 2:28 PM, Koosha Khajehmoogahi <koosha@posteo.de> wrote:
-> Subject: Update Bash completion script to include git log --merges option
+Thomas Ferris Nicolaisen <tfnico@gmail.com> writes:
 
-Nice to see a patch covering this oft-overlooked corner of the project.
+> On Sun, Mar 22, 2015 at 12:21 PM, David Kastrup <dak@gnu.org> wrote:
+>>     David Kastrup (dak at gnu.org) previously reimplemented significant
+>>     parts of "git blame" for a vast gain in performance with complex
+>>     histories and large files. As working on free software is his sole
+>>     source of income, please consider contributing to his remuneration
+>>     if you find this kind of improvements useful.
+>>
+>> Thank you very much for this heads-up.
+>
+> Do you have a link to where people can go to donate/contribute? I
+> searched around a bit but couldn't find anything.
 
-It's misleading to say that you're updating it to include the --merges
-option, which it already knows about. Spell it out explicitly as
---merges=. Also, drop capitalization, mention area you're touching,
-followed by colon, followed by short summary:
+My Email address is linked at PayPal.  However, it's the more affordable
+option in the Euro zone (which most definitely does not include GB) to
+ask me for my bank account data: SEPA-region transfers are by EU law
+required not to differentiate between in-country or cross-country
+payments.
 
-    completion: teach about git-log --merges= and log.merges
+I don't maintain a personal home page or a blog or similar, so there is
+really not much to point people to than my Email address.
 
-> Signed-off-by: Koosha Khajehmoogahi <koosha@posteo.de>
-> ---
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index 731c289..b63bb95 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -1406,7 +1406,7 @@ _git_ls_tree ()
->  __git_log_common_options="
->         --not --all
->         --branches --tags --remotes
-> -       --first-parent --merges --no-merges
-> +       --first-parent --merges --merges= --no-merges
->         --max-count=
->         --max-age= --since= --after=
->         --min-age= --until= --before=
-> @@ -1451,6 +1451,10 @@ _git_log ()
->                 __gitcomp "long short" "" "${cur##--decorate=}"
->                 return
->                 ;;
-> +    --merges=*)
-> +        __gitcomp "show hide only" "" "${cur##--merges=}"
-> +        return
-> +        ;;
->         --*)
->                 __gitcomp "
->                         $__git_log_common_options
-> @@ -1861,6 +1865,10 @@ _git_config ()
->                 __gitcomp "$__git_log_date_formats"
->                 return
->                 ;;
-> +       log.merges)
-> +               __gitcomp "show hide only"
-> +               return
-> +               ;;
->         sendemail.aliasesfiletype)
->                 __gitcomp "mutt mailrc pine elm gnus"
->                 return
-> @@ -2150,6 +2158,7 @@ _git_config ()
->                 interactive.singlekey
->                 log.date
->                 log.decorate
-> +               log.merges
->                 log.showroot
->                 mailmap.file
->                 man.
-> --
-> 2.3.3.263.g095251d.dirty
+-- 
+David Kastrup
