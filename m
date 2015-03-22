@@ -1,111 +1,116 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [RFC/PATCH] align D/F handling of "diff --no-index" with that of normal Git
-Date: Sat, 21 Mar 2015 22:11:27 -0700
-Message-ID: <xmqqiodtd3b4.fsf@gitster.dls.corp.google.com>
+From: Wincent Colaiuta <win@wincent.com>
+Subject: status hangs trying to get submodule summary
+Date: Sat, 21 Mar 2015 22:56:54 -0700
+Message-ID: <CAPx-p4sKD0Nut3E1jnWfPPx4=--ZOxBgiVdt3RRb5tktw31qDg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 22 06:12:58 2015
+X-From: git-owner@vger.kernel.org Sun Mar 22 06:57:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YZYBy-0000sk-F1
-	for gcvg-git-2@plane.gmane.org; Sun, 22 Mar 2015 06:12:54 +0100
+	id 1YZYsw-0001ni-MR
+	for gcvg-git-2@plane.gmane.org; Sun, 22 Mar 2015 06:57:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751499AbbCVFLb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Mar 2015 01:11:31 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50581 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751322AbbCVFLa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Mar 2015 01:11:30 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6B7783E208;
-	Sun, 22 Mar 2015 01:11:29 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=2
-	7+gIpU25uPHMh+ROGkGcbsbiy0=; b=bEYfIK+cQQlLiigL3aNTCw+QrPiiEqABM
-	jdytyd1hSHKw8d1KvFVRz2IngsjRCn6rRKgH6ch5vgLfFWpRTjAltpdFLRa7HsL+
-	lDNi6VJGSKxGaPvcbgCExp3v3QOsQyhsHmMnaJw1PUNYqX0wFZ0hHTOqL/BV+5uy
-	JlxiMYQjmA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=ig9
-	comVZc4SHC9IV12WAPW+xd7rOv36TBZ66f1TsVY8wZ+Xgt+aa/S0V+cztvMrRvWL
-	dlWtDsXEAXS0xYYiuxVRf0rpp5DaGX61C6jZQDk3yyPDlflf/StGpwHSPcaDl6Cr
-	spZrArNPvoclPEhl8MzSASxdffazv/p3Vno/WMLM=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 656063E207;
-	Sun, 22 Mar 2015 01:11:29 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DD8C03E206;
-	Sun, 22 Mar 2015 01:11:28 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: E57EE670-D051-11E4-BF62-6DD39F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751583AbbCVF5M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Mar 2015 01:57:12 -0400
+Received: from mail-wg0-f51.google.com ([74.125.82.51]:35382 "EHLO
+	mail-wg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751556AbbCVF5M (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Mar 2015 01:57:12 -0400
+Received: by wgdm6 with SMTP id m6so120990946wgd.2
+        for <git@vger.kernel.org>; Sat, 21 Mar 2015 22:57:10 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-type;
+        bh=/xXjcXli6vXEKJGwSgvmKLhyyuoeYq+J7qY6sjciTgM=;
+        b=Zuqn9LOj3uG8Tm4bWcD94hGt24t+bpxXUqeYAUl5MH7bFXpiVSY+kVMtvMMbhoEIWQ
+         u824tpStsmmnXbwRYry2NMjGhosy39ceaGEro8OD5TN03DSnY+12t7R8mj5dnwDmO77m
+         U8jVL66DXPdEbw3B7uRURDpImaQZguOP9pfRHHTcqKGrI8l7wP2DOakF/mcpIdTjcmNu
+         RAixL3eQ6Qx6KVzx2rSiejxwKvIaUxQ3dMspEGUT39Wx75XZf+DJoWvCcxIuSivxt4pp
+         RBk1+u0hFTV1Xat3+JchA+h1tD/AcR+3lVf3gUraMVajK9VeGe2WSO6v+PADVdu60JdU
+         qnXA==
+X-Gm-Message-State: ALoCoQkfrpVA/P6gL0Vd75mDurDxbNsLzhQHJJP65apKRJU+h081vZx7u3SfSV9JQ1oXskVfF3n2
+X-Received: by 10.180.7.194 with SMTP id l2mr9221132wia.39.1427003830450; Sat,
+ 21 Mar 2015 22:57:10 -0700 (PDT)
+Received: by 10.194.86.131 with HTTP; Sat, 21 Mar 2015 22:56:54 -0700 (PDT)
+X-Originating-IP: [24.130.114.144]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266051>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266052>
 
-When a commit changes a path P that used to be a file to a directory
-and create a new path P/X in it, "git show" would say that file P
-was removed and file P/X was created for such a commit.
+Hi,
 
-However, if we compare two directories, D1 and D2, where D1 has a
-file D1/P in it and D2 has a directory D2/P under which there is a
-file D2/P/X, and ask "git diff --no-index D1 D2" to show their
-differences, we simply get a refusal "file/directory conflict".
+I just ran into some odd behavior trying to update a submodule in one
+of my projects where it would hang indefinitely trying to run either
+`git status` or `git commit`.
 
-The "diff --no-index" implementation has an underlying machinery
-that can make it more in line with the normal Git if it wanted to,
-but somehow it is not being exercised.  The only thing we need to
-do, when we see a file P and a directory P/ (or the other way
-around) is to show the removal of a file P and then pretend as if we
-are comparing nothing with a whole directory P/, as the code is
-fully prepared to express a creation of everything in a directory
-(and if the comparison is between a directory P/ and a file P, then
-show the creation of the file and then let the existing code remove
-everything in P/).
+Here's the minimal repro recipe:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- diff-no-index.c | 23 +++++++++++++++++++++--
- 1 file changed, 21 insertions(+), 2 deletions(-)
+mkdir demo
+cd demo
+git init
+git submodule add git://github.com/ansible/ansible.git ansible
+(cd ansible && git checkout v1.6.10)
+git add ansible
+git commit -m "initial commit"
+(cd ansible && git checkout v1.8.4)
+git config status.submodulesummary true
+git status # hangs...
+git commit # hangs...
 
-diff --git a/diff-no-index.c b/diff-no-index.c
-index 265709b..52e9546 100644
---- a/diff-no-index.c
-+++ b/diff-no-index.c
-@@ -97,8 +97,27 @@ static int queue_diff(struct diff_options *o,
- 	if (get_mode(name1, &mode1) || get_mode(name2, &mode2))
- 		return -1;
- 
--	if (mode1 && mode2 && S_ISDIR(mode1) != S_ISDIR(mode2))
--		return error("file/directory conflict: %s, %s", name1, name2);
-+	if (mode1 && mode2 && S_ISDIR(mode1) != S_ISDIR(mode2)) {
-+		struct diff_filespec *d1, *d2;
-+
-+		if (S_ISDIR(mode1)) {
-+			/* 2 is file that is created */
-+			d1 = noindex_filespec(NULL, 0);
-+			d2 = noindex_filespec(name2, mode2);
-+			name2 = NULL;
-+			mode2 = 0;
-+		} else {
-+			/* 1 is file that is deleted */
-+			d1 = noindex_filespec(name1, mode2);
-+			d2 = noindex_filespec(NULL, 0);
-+			name1 = NULL;
-+			mode1 = 0;
-+		}
-+		/* emit that file */
-+		diff_queue(&diff_queued_diff, d1, d2);
-+
-+		/* and then let the entire directory created or deleted */
-+	}
- 
- 	if (S_ISDIR(mode1) || S_ISDIR(mode2)) {
- 		struct strbuf buffer1 = STRBUF_INIT;
+At the time `git status` is hanging, these are the Git processes
+running on the system:
+
+12431 git status
+12462 git submodule summary --files --for-status --summary-limit -1
+12463 /bin/sh /usr/libexec/git-core/git-submodule summary --files
+--for-status --summary-limit -1
+12507 /bin/sh /usr/libexec/git-core/git-submodule summary --files
+--for-status --summary-limit -1
+12522 git log --pretty=format:  %m %s --first-parent
+8959338284f6c6e44890b8911434285848f34859...ebc8d48d34296fe010096f044e2b7591df37a622
+
+And `strace` shows the processes `wait4`-ing, except for the `git log`
+one which is doing a `write` but apparently blocked:
+
+# strace -p 12431
+Process 12431 attached
+wait4(12462, ^CProcess 12431 detached
+ <detached ...>
+# strace -p 12462
+Process 12462 attached
+wait4(12463, ^CProcess 12462 detached
+ <detached ...>
+# strace -p 12463
+Process 12463 attached
+wait4(-1, ^CProcess 12463 detached
+ <detached ...>
+# strace -p 12507
+Process 12507 attached
+wait4(-1, ^CProcess 12507 detached
+ <detached ...>
+# strace -p 12522
+Process 12522 attached
+write(1, "\n  > Merge pull request #7814 fr"..., 108^CProcess 12522 detached
+ <detached ...>
+
+This repros for me on Mac OS X 10.10.2 with Git 1.9.5 and Git 2.3.3,
+and on the Amazon LInux (a RHEL-like OS) with Git 2.1.0. Both of these
+with an empty .gitconfig (other than user.email, user.name and the
+status.submodulesummary value already mentioned above).
+
+I've never seen this hang before despite frequent use of submodules.
+Oddly, I was able to work around the hang by moving the submodule in
+two hops (one from Ansible v1.6.10 to v1.7.0, then from v1.7.0 to
+v1.8.4). I am not sure if this is specific to the Ansible repo, or
+whether the length of the summary is crossing some threshold that
+triggers the bug to manifest. If I run the forked commands manually
+from an interactive shell, they complete just fine.
+
+-Greg
