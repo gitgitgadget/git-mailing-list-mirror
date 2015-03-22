@@ -1,120 +1,86 @@
-From: submitarticles@global-proofreading.com
-Subject: Proofreading/Editing of Research Papers
-Date: Sun, 22 Mar 2015 17:41:18 -0500
-Message-ID: <20150322174118.0uwczaa3kgccog0k@webmail.opentransfer.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/5] Add a new option 'merges' to revision.c
+Date: Sun, 22 Mar 2015 16:31:23 -0700
+Message-ID: <xmqqoankbodw.fsf@gitster.dls.corp.google.com>
+References: <1427048921-28677-1-git-send-email-koosha@posteo.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	DelSp=Yes	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: undisclosed-recipients:;
-X-From: git-owner@vger.kernel.org Mon Mar 23 00:27:22 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Koosha Khajehmoogahi <koosha@posteo.de>
+X-From: git-owner@vger.kernel.org Mon Mar 23 00:31:32 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YZpH7-0001l1-5d
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Mar 2015 00:27:21 +0100
+	id 1YZpL9-0005kk-Ei
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Mar 2015 00:31:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752014AbbCVX1P convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 22 Mar 2015 19:27:15 -0400
-Received: from smh05.opentransfer.com ([98.130.1.173]:43380 "EHLO
-	smh05.opentransfer.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751997AbbCVX1O convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 22 Mar 2015 19:27:14 -0400
-X-Greylist: delayed 2746 seconds by postgrey-1.27 at vger.kernel.org; Sun, 22 Mar 2015 19:27:14 EDT
-Received: by smh05.opentransfer.com (Postfix, from userid 8)
-	id 13D3B8F33B; Sun, 22 Mar 2015 18:41:19 -0400 (EDT)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on
-	smh05.opentransfer.com
-X-Spam-Level: 
-X-Spam-Status: No, score=0.1 required=5.0 tests=RDNS_NONE autolearn=disabled
-	version=3.2.5
-Received: from webmail5.opentransfer.com (unknown [69.49.230.6])
-	by smh05.opentransfer.com (Postfix) with ESMTP id CE0748F339;
-	Sun, 22 Mar 2015 18:41:18 -0400 (EDT)
-Received: from webmail5.opentransfer.com (localhost [127.0.0.1] (may be forged))
-	by webmail5.opentransfer.com (8.13.8/8.13.8) with ESMTP id t2MMfQ8P002093;
-	Sun, 22 Mar 2015 17:41:26 -0500
-Received: (from nobody@localhost)
-	by webmail5.opentransfer.com (8.13.8/8.13.8/Submit) id t2MMfIPP002092;
-	Sun, 22 Mar 2015 17:41:18 -0500
-X-Authentication-Warning: webmail5.opentransfer.com: nobody set sender to submitarticles@global-proofreading.com using -f
-Received: from 41.220.69.191 ([41.220.69.191]) by webmail.opentransfer.com
-	(Horde MIME library) with HTTP; for
-	<submitarticles@global-proofreading.com>; Sun, 22 Mar 2015 17:41:18 -0500
-X-Opentransfer-Authenticated: submitarticles@global-proofreading.com
-Content-Disposition: inline
-User-Agent: Internet Messaging Program (IMP) H3 (4.1.4)
-X-Originating-IP: 41.220.69.191
+	id S1752620AbbCVXb1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Mar 2015 19:31:27 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:53962 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752190AbbCVXb0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Mar 2015 19:31:26 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8188B4239E;
+	Sun, 22 Mar 2015 19:31:25 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=84DUZYVZ/gnGFo7w7obpcCFBcII=; b=LooyvX
+	Ba4nTbE5+rqQV+q6suB/9rtHibMrMl3oOhKUwuLHGE9RnRszW9JgtGXusQqkOUF8
+	aKrPfwqqORxZqHN1CR4ladepyas7mVVe+BmsdAagUXCtfaVqM6rtqDFAxPmDsDMP
+	pSKLmB8pVNyyIyZerPXCmEFtv4gbH0FPxCj2w=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=tbRjtMpHuIX8LFnNCUtpROaga7kIjMQG
+	JDRlf72/mgZfJtL4kKXjgDD6/yyG4y8KdeQs/JjGZ4YcZwOiNGH9R54x+sqcoXyk
+	md5MTZSPfW80x3jqlwG8rVbifC25gT3xu7yphmuyScaPLMZigV5ILwOpvno85Eer
+	t13PX2uO8SI=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7A5B64239D;
+	Sun, 22 Mar 2015 19:31:25 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F06DB4239C;
+	Sun, 22 Mar 2015 19:31:24 -0400 (EDT)
+In-Reply-To: <1427048921-28677-1-git-send-email-koosha@posteo.de> (Koosha
+	Khajehmoogahi's message of "Sun, 22 Mar 2015 19:28:37 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 8E395C02-D0EB-11E4-8202-6DD39F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266105>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266106>
 
-Dear Colleague,
+Koosha Khajehmoogahi <koosha@posteo.de> writes:
 
-I wish to inform you that Global Proofreading is still accepting =20
-research papers, theses, commentaries, dissertations and write-ups for =
-=20
-proofreading. Our major aim is to help researchers publish quality =20
-research works devoid of grammatical errors. We are therefore =20
-requesting authors to send their research works for thorough =20
-grammatical editing. If interested, kindly submit papers or direct =20
-your colleague(s) to any of the following email addresses:
+> @@ -1800,9 +1817,14 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+>  		revs->show_all = 1;
+>  	} else if (!strcmp(arg, "--remove-empty")) {
+>  		revs->remove_empty_trees = 1;
+> +	} else if (starts_with(arg, "--merges=")) {
+> +		if (parse_merges_opt(revs, arg + 9))
+> +			die("unknown option: %s", arg);
 
-submitpapers@global-proofreading.com
-submitarticles@global-proofreading.com
-call4papers@globalproofreading.com
-call4manuscripts@globalproofreading.com
-gproofreading@gmail.com
-gproofediting@gmail.com
+This one makes sense to me (so does what the parse_merges_opt()
+does).
 
-The research paper should be in the format Arial, font size 12 and 1.5 =
-=20
-line spacing. Upon receipt of your work, an acknowledgement letter and =
-=20
-the amount charged will be sent to you.
+>  	} else if (!strcmp(arg, "--merges")) {
+> +		revs->max_parents = -1;
+>  		revs->min_parents = 2;
 
-Our rate is categorized below:
-    $40 (USD) for research papers in the range of 1-10 pages
-    $60 (USD) for research papers in the range of 11-15 pages
-    $80 (USD) for research papers in the range of 16-20 pages
-    $100 (USD) for research papers in the range of 21-25 pages
-    $120(USD) for research papers in the range of 26-30 pages
-    $140 (USD) for research papers in the range of 31-35 pages
-    $ 3 (USD) is charged per page for lengthy research works e.g =20
-monographs dissertations and theses.
+But is this change warranted?  An existing user who is not at all
+interested in the new --merges= option may be relying on the fact
+that "--merges" does not affect the value of max_parents and she can
+say "log --max-parents=2 --merges" to see only the two-way merges,
+for example.  This change just broke her, and I do not see why it is
+a good thing.
 
-Payment for proofread research paper is via any of the following ways b=
-elow:
-=95	Bank Transfer
-=95	PayPal
-=95	Western Union Money Transfer
-=95	Ria Money Transfer
-=95	MoneyGram
+>  	} else if (!strcmp(arg, "--no-merges")) {
+> +		revs->min_parents = 0;
+>  		revs->max_parents = 1;
 
-Our effective editing board makes sure that each paper you send to us =20
-gets back to you within 96 hours (4 days) upon receipt of payment =20
-confirmation. Our services include:
-=95	Proofreading
-=95	Editing grammatical errors
-=95	Proper punctuation
-=95	Paraphrasing and editing of sentences, aligning of articles
-and any other errors
-
-Two copies of your work will be sent back to the author after proofread=
-ing:
-(1)	Edited copy of research paper with track changes
-(2)	Edited copy of research paper without track changes
-
-=46inally, we wish you the best.
-
-Kind Regards,
-
-Miss Blessing Udeji
-Editorial Assistant (3)
-Global Proofreading
-gprcall4papers@gmail.com
-editorialassistant3@global-proofreading.com
+Likewise.
