@@ -1,67 +1,65 @@
 From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH 3/7] strbuf: introduce strbuf_read_cmd helper
-Date: Sun, 22 Mar 2015 19:34:49 -0400
-Message-ID: <20150322233448.GA21518@peff.net>
+Date: Sun, 22 Mar 2015 19:36:53 -0400
+Message-ID: <20150322233653.GB21518@peff.net>
 References: <20150322095924.GA24651@peff.net>
  <20150322100724.GC11615@peff.net>
- <CAPig+cR5Ur4xOKZ6K=bOwOVM8bHHjJJXHxzCbvYBhqOTtD6dXg@mail.gmail.com>
+ <xmqqsicwbos5.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Wincent Colaiuta <win@wincent.com>, Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon Mar 23 00:35:00 2015
+Cc: Wincent Colaiuta <win@wincent.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 23 00:37:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YZpOS-0000cJ-SO
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Mar 2015 00:34:57 +0100
+	id 1YZpQS-0002f5-Lx
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Mar 2015 00:37:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752090AbbCVXew (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Mar 2015 19:34:52 -0400
-Received: from cloud.peff.net ([50.56.180.127]:36936 "HELO cloud.peff.net"
+	id S1752581AbbCVXg4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Mar 2015 19:36:56 -0400
+Received: from cloud.peff.net ([50.56.180.127]:36942 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751962AbbCVXew (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Mar 2015 19:34:52 -0400
-Received: (qmail 2673 invoked by uid 102); 22 Mar 2015 23:34:52 -0000
+	id S1752117AbbCVXg4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Mar 2015 19:36:56 -0400
+Received: (qmail 2797 invoked by uid 102); 22 Mar 2015 23:36:56 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 22 Mar 2015 18:34:52 -0500
-Received: (qmail 10999 invoked by uid 107); 22 Mar 2015 23:35:05 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 22 Mar 2015 18:36:56 -0500
+Received: (qmail 11018 invoked by uid 107); 22 Mar 2015 23:37:09 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 22 Mar 2015 19:35:05 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 22 Mar 2015 19:34:49 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 22 Mar 2015 19:37:09 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 22 Mar 2015 19:36:53 -0400
 Content-Disposition: inline
-In-Reply-To: <CAPig+cR5Ur4xOKZ6K=bOwOVM8bHHjJJXHxzCbvYBhqOTtD6dXg@mail.gmail.com>
+In-Reply-To: <xmqqsicwbos5.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266108>
 
-On Sun, Mar 22, 2015 at 03:36:01PM -0400, Eric Sunshine wrote:
+On Sun, Mar 22, 2015 at 04:22:50PM -0700, Junio C Hamano wrote:
 
-> > This is really at the intersection of the strbuf and
-> > run-command APIs, so you could argue for it being part of
-> > either It is logically quite like the strbuf_read_file()
-> > function, so I put it there.
+> > +/**
+> >   * Read a line from a FILE *, overwriting the existing contents
+> >   * of the strbuf. The second argument specifies the line
+> >   * terminator character, typically `'\n'`.
 > 
-> It does feel like a layering violation. If moved to the run-command
-> API, it could given one of the following names or something better:
+> It is an unfortunate tangent that this is a bugfix that may want to
+> go to 'maint' and older, but our earlier jk/strbuf-doc-to-header
+> topic introduces an unnecessary merge conflicts.
 
-A layering violation implies there is an ordering to the APIs. Certainly
-we call APIs from other APIs all the time. I guess you could argue that
-these are the "same" layer, and should be next to each, and not building
-on each other (i.e., that strbuf has dependencies only on system APIs
-like stdio.h, and run-command only on system APIs like unistd.h, etc).
+Yeah, that is the worst part of refactoring and cleanup. Even when you
+make sure you are not hurting any topics in flight, you cannot know when
+a new topic will take off in your general area.
 
-But then reversing the order of the dependency does not really solve
-that. You would have to introduce a new higher-level API that combines
-them. But that seems silly for a single function (and I do not foresee
-any other similar functions).
+> I've wiggled this part and moved the doc elsewhere, only to remove
+> that in the merge, which may not be optimal from the point of view
+> of what I have to do when merging this topic down from pu to next
+> to master to maint, but I do not see a good way around it.
 
-That being said, I'm not opposed to one of the reverse names if people
-feel strongly (I also considered making it an option flag to
-run_command_v_opt, but it ended up tangling things quite a bit more).
+I'd suggest just dropping the documentation in the "maint" version
+(i.e., make it a moral cherry-pick of the function declaration only).
 
 -Peff
