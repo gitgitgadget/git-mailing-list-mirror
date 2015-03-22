@@ -1,99 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/7] strbuf: introduce strbuf_read_cmd helper
-Date: Sun, 22 Mar 2015 16:22:50 -0700
-Message-ID: <xmqqsicwbos5.fsf@gitster.dls.corp.google.com>
-References: <20150322095924.GA24651@peff.net>
-	<20150322100724.GC11615@peff.net>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v2/GSoC/RFC] fetch: git fetch --deepen
+Date: Mon, 23 Mar 2015 06:23:28 +0700
+Message-ID: <CACsJy8A6ffMvySRUhfx8VCvTe2z+s7R-F6z+S+dex_xQ4kORKg@mail.gmail.com>
+References: <1426251846-1604-1-git-send-email-dongcan.jiang@gmail.com> <39ef84113d77ee6fa371ac2f23bbb0ef321323ba.1427031746.git.dongcan.jiang@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Wincent Colaiuta <win@wincent.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Mar 23 00:23:05 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Dongcan Jiang <dongcan.jiang@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 23 00:24:09 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YZpCv-00060m-HT
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Mar 2015 00:23:01 +0100
+	id 1YZpE0-00074M-4I
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Mar 2015 00:24:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752509AbbCVXW4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Mar 2015 19:22:56 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:56332 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751980AbbCVXWx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Mar 2015 19:22:53 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B0A5D421AB;
-	Sun, 22 Mar 2015 19:22:52 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=CQKeUPbmJUsqytKTJkVRfZVD4U0=; b=PYPkXZ
-	TEoiiflHjYk0f9bwLfqPZ7PokYZ9V7LJeLVnD6Ua+wJiakygU+QbVG8dFC88lkjS
-	EerfLH+k18BFLWhGtMFKC4k8YH9lwQnBtm9tc9/FwbaSTQhJ0ATslpzzxdtgG8P0
-	E5+RFaSFdeXAQUWUoRN/hmnaOFdzxE17TtzV8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=aPSofkTrS4Ayr806L1/M60+uXQVZ9dAk
-	m+0R2sKPs2BtUQNd5uTy8yD+mbAtnr/t2YpxwQge5HWKaWugNo3+dSwoAWs+zDhq
-	44JVegK4AuuAg58HC4QeifrC7tvJy8kb1MgjoTMOq18//mfPR6E0cranCgiAfu7d
-	O2GvqSp1NJM=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id A7CC9421AA;
-	Sun, 22 Mar 2015 19:22:52 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 08717421A9;
-	Sun, 22 Mar 2015 19:22:51 -0400 (EDT)
-In-Reply-To: <20150322100724.GC11615@peff.net> (Jeff King's message of "Sun,
-	22 Mar 2015 06:07:25 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 5C7B6B2A-D0EA-11E4-A435-6DD39F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1752600AbbCVXYD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Mar 2015 19:24:03 -0400
+Received: from mail-ig0-f172.google.com ([209.85.213.172]:35635 "EHLO
+	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752586AbbCVXX7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Mar 2015 19:23:59 -0400
+Received: by igcau2 with SMTP id au2so28570229igc.0
+        for <git@vger.kernel.org>; Sun, 22 Mar 2015 16:23:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=7BAziBt/E054ZTlhrvW2aWhJFLAF+OloIKnhH0SkiTE=;
+        b=G4cagGe01YZlG/5qVOT1oqqQ9R0Dgqc/BSoOEF+v209869Xwm+j5j9d5L6z8odmkic
+         yzAd/bPn0B3UupKhfz+habYL84/2Ej+AsVD6gE1f1vp9CipRQ386FGOgadia2q+rHCov
+         KV9SoOSivfdfP7pZszyvA9Y7p6kUo8LSS4fKAtQBvN8tu5/CtZp+kwl8LfROWxVHhHfF
+         +KAABrwgDLCUfRzdYVbFu0x7MWltnmTfJKVzTAkSe11wyXorMt8+grZXodvEKz6h1Abc
+         kCGg4C4ERgyZqS2yW0i08n33+uSFBB6sSSf5dZGZh5dULlgZADTqLOoYmajf57/nU1AT
+         n6BQ==
+X-Received: by 10.43.36.82 with SMTP id sz18mr16625839icb.65.1427066638505;
+ Sun, 22 Mar 2015 16:23:58 -0700 (PDT)
+Received: by 10.107.131.33 with HTTP; Sun, 22 Mar 2015 16:23:28 -0700 (PDT)
+In-Reply-To: <39ef84113d77ee6fa371ac2f23bbb0ef321323ba.1427031746.git.dongcan.jiang@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266103>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266104>
 
-Jeff King <peff@peff.net> writes:
+On Sun, Mar 22, 2015 at 10:24 PM, Dongcan Jiang <dongcan.jiang@gmail.com> wrote:
+> This patch is just for discusstion. An option --deepen is added to
+> 'git fetch'. When it comes to '--deepen', git should fetch N more
+> commits ahead the local shallow commit, where N is indicated by
+> '--depth=N'. [1]
+>
+> e.g.
+>
+>>  (upstream)
+>>   ---o---o---o---A---B
+>>
+>>  (you)
+>>                  A---B
+>
+> After excuting "git fetch --depth=1 --deepen", (you) get one more
+> tip and it becomes
+>
+>>  (you)
+>>              o---A---B
+>
+> '--deepen' is designed to be a boolean option in this patch, which
+> is a little different from [1]. It's designed in this way, because
+> it can reuse '--depth' in the program, and just costs one more bit
+> in some data structure, such as fetch_pack_args,
+> git_transport_options.
+>
+> Of course, as a patch for discussion, it remains a long way to go
+> before being complete.
+>
+>         1) Documents should be completed.
+>         2) More test cases, expecially corner cases, should be added.
+>         3) No need to get remote refs when it comes to '--deepen' option.
+>         4) Validity on options combination should be checked.
+>         5) smart-http protocol remains to be supported. [2]
 
-> diff --git a/strbuf.h b/strbuf.h
-> index 1883494..93a50da 100644
-> --- a/strbuf.h
-> +++ b/strbuf.h
-> @@ -1,6 +1,8 @@
->  #ifndef STRBUF_H
->  #define STRBUF_H
->  
-> +struct child_process;
-> +
->  /**
->   * strbuf's are meant to be used with all the usual C string and memory
->   * APIs. Given that the length of the buffer is known, it's often better to
-> @@ -373,6 +375,14 @@ extern int strbuf_read_file(struct strbuf *sb, const char *path, size_t hint);
->  extern int strbuf_readlink(struct strbuf *sb, const char *path, size_t hint);
->  
->  /**
-> + * Execute the given command, capturing its stdout in the given strbuf.
-> + * Returns -1 if starting the command fails or reading fails, and otherwise
-> + * returns the exit code of the command. The output collected in the
-> + * buffer is kept even if the command returns a non-zero exit.
-> + */
-> +int strbuf_read_cmd(struct strbuf *sb, struct child_process *cmd, size_t hint);
-> +
-> +/**
->   * Read a line from a FILE *, overwriting the existing contents
->   * of the strbuf. The second argument specifies the line
->   * terminator character, typically `'\n'`.
+Quick notes before $DAYJOB starts. Cool pictures, perhaps they could
+be part of the commit message too.
 
-It is an unfortunate tangent that this is a bugfix that may want to
-go to 'maint' and older, but our earlier jk/strbuf-doc-to-header
-topic introduces an unnecessary merge conflicts.
+Personally i still don't think not moving the refs is worth the effort
+(and it's a waste if we have to send then drop objects for these
+updated refs, but I didn't check carefully). So if you we don't needs
+ref updates, we probably don't need to send "want" lines and sort of
+simplify processing at upload-pack side.
 
-I've wiggled this part and moved the doc elsewhere, only to remove
-that in the merge, which may not be optimal from the point of view
-of what I have to do when merging this topic down from pu to next
-to master to maint, but I do not see a good way around it.
-
-Thanks.  The whole series looks very sensible.
+And it makes me realise, we're loosing security a bit here. We
+normally don't send anything that's not reachable from the visible ref
+set. But we now would accept any shallow sha-1 and send some objects
+regardless if these sha-1 are connected to any refs. We may need some
+more checking in place to avoid this. See check_non_sha1_tip() for a
+way to do it. Pack bitmaps may help as well, but I think that's behind
+the scene (i.e. behind rev-list and we already can take advantage of
+it).
+-- 
+Duy
