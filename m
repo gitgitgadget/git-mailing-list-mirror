@@ -1,84 +1,78 @@
-From: Graham Hay <grahamrhay@gmail.com>
-Subject: Re: Seems to be pushing more than necessary
-Date: Mon, 23 Mar 2015 10:35:42 +0000
-Message-ID: <CAABECY2xqH9ya3WGO_VR54c4Yi4CJ2355Wdh=cggpUV348D6cg@mail.gmail.com>
-References: <CAABECY3HbZ4q3uo82outUmCyQLXO39H+Fd2m8bLwkaubE9gJCw@mail.gmail.com>
-	<CAABECY1_L34sq0VPmD9UwRcwb3Fuh95OFcF26LM2eX1z-+8vkQ@mail.gmail.com>
-	<CACsJy8Au48iFoC=Eo4T-fm6r6tA7VffRJyH2JbuC==wa61=G5A@mail.gmail.com>
-	<CAABECY2_MQWAkOu=6rR=mN=wKz-Yfzsu8o2+wb6F+h4FjBe9Mw@mail.gmail.com>
-	<CACsJy8DdjDnacVGU83iUDj5Na1xxS6kNDbK2D0Apfv0LAuzDvA@mail.gmail.com>
-	<CAABECY2_A83tWaqb_6YzXwr0Tv5AYVq0KW70j+EHqrx69k2P_A@mail.gmail.com>
-	<CACsJy8AFi8-EgUJNr+KTOngeUaGfi_O5f_=qba08qJs1jcEj=w@mail.gmail.com>
-	<CACsJy8BqA2dm8DpDrrFN4FxHG+4gnG3Q7c3kM=YmBrkuHftvog@mail.gmail.com>
-	<CAABECY13XT3+rEGGtKfe3Xwg4RtzcWtpL=Nm7aivv4_35TvL0w@mail.gmail.com>
-	<CACsJy8D16ERGH=P4etGRpZM_3BR9iYZBsUnWBGAbayVqmEhhXw@mail.gmail.com>
-	<CAABECY2x=G+nYdSyxpz8MvE4G6RSwcGSXu1LzwAKYG7Mqwk1kA@mail.gmail.com>
-	<CACsJy8B=Dx2+OWch1zx_xg91de9yhttVMwgE1SxDOuSTns2b_w@mail.gmail.com>
-	<CAABECY063__YDW2jXPSnuvxp0kj=jB+k09mOEW3suEn5syAyXQ@mail.gmail.com>
-	<CACsJy8AqrBc4HKEKSHmkSq2wKwUgUEWrZu3=9-WGsM+txR8S-g@mail.gmail.com>
+From: Julien Cretel <j.cretel@umail.ucc.ie>
+Subject: Re: [PATCHv2 0/2] log decorations for HEAD
+Date: Mon, 23 Mar 2015 10:36:43 +0000
+Message-ID: <CACdBeKkpH8O+tXbB9dK0GDBZc3gPMTf-WDt_FOk9mjZT2ranMQ@mail.gmail.com>
+References: <54FEC8D0.2060304@drmicha.warpmail.net>
+	<cover.1425995310.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 23 11:36:00 2015
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Mon Mar 23 11:36:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YZzi0-0000Is-NA
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Mar 2015 11:35:49 +0100
+	id 1YZziy-0000uw-SG
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Mar 2015 11:36:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752350AbbCWKfp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Mar 2015 06:35:45 -0400
-Received: from mail-ob0-f181.google.com ([209.85.214.181]:36470 "EHLO
-	mail-ob0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752013AbbCWKfn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Mar 2015 06:35:43 -0400
-Received: by obdfc2 with SMTP id fc2so119731808obd.3
-        for <git@vger.kernel.org>; Mon, 23 Mar 2015 03:35:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=i0X1LjqX1iALkNL+aedL4tlCdrL/iLPEfWYlu37KrZw=;
-        b=aHZRjs18JPaXrYbzJShb+FLzEIIxxytOrFppnkHayytjcC3onUPrrvCspFC302J8vD
-         CenZZqd8zUfGe33PsEv3jtS7Wdew7tMy0GLJIhIFXDPqrRWMIJ+wRInVqX6GhZ5G2X81
-         /5STdOQO/HmjMur+NCxo29y416KCDht8Ffv5yH7VBRuIFT7bDMQTlJqCDi4XkNc6ALrY
-         SWE4QeVaMuF77yC/YuiUEJ/FY5jpp+cNTKkazzFyMiCJyfAM7tNTMBaScemG3hwVKH12
-         /+b6QdDyuZCFMOZmxbEHoQEmVzGfB9lpMTz1cpEi9r1VMbLFc/e2PWtUProjCGPZ2l4l
-         Af8w==
-X-Received: by 10.202.190.135 with SMTP id o129mr10625711oif.106.1427106943052;
- Mon, 23 Mar 2015 03:35:43 -0700 (PDT)
-Received: by 10.76.13.8 with HTTP; Mon, 23 Mar 2015 03:35:42 -0700 (PDT)
-In-Reply-To: <CACsJy8AqrBc4HKEKSHmkSq2wKwUgUEWrZu3=9-WGsM+txR8S-g@mail.gmail.com>
+	id S1752204AbbCWKgo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Mar 2015 06:36:44 -0400
+Received: from mail-yk0-f173.google.com ([209.85.160.173]:33074 "EHLO
+	mail-yk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752091AbbCWKgo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Mar 2015 06:36:44 -0400
+Received: by ykek76 with SMTP id k76so69727358yke.0
+        for <git@vger.kernel.org>; Mon, 23 Mar 2015 03:36:43 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=O1Hxk0ggHgwin6Wp1xfdSY77F4XMsonwi34WUHuRN68=;
+        b=WFXlbQvk13yJu36/irvafkWvj23kKAAv2FytdnkbJrwQbqxQ/1r3LBBl0lrJERflpq
+         QAZKMIKCm7XoCbGUf+XVSipw8zoMd7h/W0zqkCcl1UHQOM7QNF8C2gQjBwgx41K4lH32
+         d1IsxYOxxphyY0Jfgx6g+6KPcBttiEdNcETCVvu0XafuEO1NAvBSWiHjXrpH4Ejpxnm+
+         p3EwUt/gntCveBQaFTeRsrWLi2N8btysa5vp3crGAmaO1uOgtW8hCqwiaPDjhjBamM/b
+         EFGnOEzXr5/KTtQx4RTIE+llpS4ZvKNYpFQ9TGj/t91enD8nFtG/LPoxNyLfX27AcLcp
+         ThWg==
+X-Gm-Message-State: ALoCoQnOw9mYD/B1IQJedamxP+NS9+NoWql+jPsVzpfj1/Ou0DXbM6oWPtNustFAk3dnAcDWITvk
+X-Received: by 10.170.206.84 with SMTP id x81mr37383920yke.122.1427107003341;
+ Mon, 23 Mar 2015 03:36:43 -0700 (PDT)
+Received: by 10.170.54.15 with HTTP; Mon, 23 Mar 2015 03:36:43 -0700 (PDT)
+In-Reply-To: <cover.1425995310.git.git@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266135>
 
-Hmm. I'm using a "private" fork of a repo, I pull from one and push to
-the other, e.g.
-
-git fetch foo
-git rebase foo/master
-git push --set-upstream origin bar
-
-It's quite possible my workflow is causing the problem, but I'm not
-sure what I could do differently. What do you mean by a "no-share
-remote"?
-
-On 23 March 2015 at 10:05, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Thu, Mar 19, 2015 at 6:11 PM, Graham Hay <grahamrhay@gmail.com> wrote:
->>> Try "fast-export --anonymize" as that would help us understand this.
->>
->> Attached.
+On Tue, Mar 10, 2015 at 1:53 PM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
 >
-> The bad news is it seems to be working for me (I recreated the remote
-> repo from this dump). I notice that you have two remotes, one shares
-> many refs (the remote "ref39"). The other, "ref2", does not share any
-> SHA-1 with refs in ".git/refs/heads/". Any chance you push to a
-> no-share remote, which results in a lot of objects to be sent?
+> So it didn't take too long to convince me after all :)
+>
+> Here comes Junio's version, preceded by a cleanup of the color
+> setting and resetting for decorations.
+>
+> Junio C Hamano (1):
+>   log: decorate HEAD with branch name
+>
+> Michael J Gruber (1):
+>   log-tree: properly reset colors
+>
+>  log-tree.c                        | 76 ++++++++++++++++++++++++++++++++++-----
+>  t/t4013/diff.log_--decorate_--all |  2 +-
+>  t/t4207-log-decoration-colors.sh  | 16 ++++-----
+>  3 files changed, 77 insertions(+), 17 deletions(-)
+>
 > --
-> Duy
+> 2.3.2.346.gb6960c9
+>
+
+I'm so glad you've implemented this. Thanks again.
+
+I hope I'll get familiar enough with the Git codebase to start posting
+patches of my own, in the future.
+
+Jubobs
