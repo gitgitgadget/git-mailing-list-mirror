@@ -1,80 +1,80 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH/RFC/GSOC] make git-pull a builtin
-Date: Mon, 23 Mar 2015 10:07:39 +0100
-Organization: gmx
-Message-ID: <4f9cfb776b8a1418ba1b3bc07b10f577@www.dscho.org>
-References: <1426600662-32276-1-git-send-email-pyokagan@gmail.com>
- <vpqwq2eyyzl.fsf@anie.imag.fr>
- <CACRoPnQp-3RGAPmoo1aM2KUA-phi138J2o82FwP9annM+xvOXA@mail.gmail.com>
- <4388b6e4005c2872aa7f5f83024f021d@www.dscho.org>
- <CACRoPnT04p-6o2u984a21RvHkk6CqpZWRyafg=T+WAPOD3hiTg@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH 26/27] t/*svn*: fix moderate &&-chain breakage
+Date: Mon, 23 Mar 2015 10:36:54 +0100
+Message-ID: <550FDEB6.8050809@drmicha.warpmail.net>
+References: <550C2E7B.3030203@drmicha.warpmail.net> <317e6b1e70f3e1c50d62207c53f4d038ad027c9d.1426861743.git.git@drmicha.warpmail.net> <xmqqy4mree9x.fsf@gitster.dls.corp.google.com> <xmqqh9tfea1v.fsf@gitster.dls.corp.google.com> <20150320200239.GA25506@peff.net> <20150320201321.GA21945@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Git List <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>
-To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 23 10:07:47 2015
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 23 10:37:27 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YZyKo-00044e-Ok
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Mar 2015 10:07:47 +0100
+	id 1YZynU-0005eg-TL
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Mar 2015 10:37:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752101AbbCWJHm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Mar 2015 05:07:42 -0400
-Received: from mout.gmx.net ([212.227.15.15]:58475 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752089AbbCWJHl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Mar 2015 05:07:41 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0LbM2k-1ZF7eD3HZ4-00kvxE; Mon, 23 Mar 2015 10:07:39
- +0100
-In-Reply-To: <CACRoPnT04p-6o2u984a21RvHkk6CqpZWRyafg=T+WAPOD3hiTg@mail.gmail.com>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:10gPd21f4Bn0AvhdzeJkEmuRbnQZYO7FTTneCwa1o34A2gY+Tia
- MFOxziI3V5fWC977k0yeYMNgdhxu091YSUoTT0T+0NUgtXoN8r/ctoDd4EaneRM9FWYUkNP
- ir9o1Dc4F3/6G+ugGMv/EHN9n687CFjE3jSIm2FmT/QNoOUnwd51T2nVKVBGkPyFLlzzyK3
- vejB46uvECkchgTs0+8HA==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1752369AbbCWJhT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Mar 2015 05:37:19 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:38359 "EHLO
+	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752019AbbCWJhS (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 Mar 2015 05:37:18 -0400
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+	by mailout.nyi.internal (Postfix) with ESMTP id 0E7FD20AC0
+	for <git@vger.kernel.org>; Mon, 23 Mar 2015 05:37:13 -0400 (EDT)
+Received: from frontend1 ([10.202.2.160])
+  by compute2.internal (MEProxy); Mon, 23 Mar 2015 05:37:16 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=
+	x-sasl-enc:message-id:date:from:mime-version:to:cc:subject
+	:references:in-reply-to:content-type:content-transfer-encoding;
+	 s=mesmtp; bh=g3xIguHtD97GqD2xglyuJqB3Qfo=; b=DlSJszLH+Zy+K6UZ4U
+	fblWVIkYO23cGPhbQIYGhN6w/a5OGerI4TtgiPTa4XpULBnHVnK6apglDSVbcQZw
+	IosgfU6Ff8nbjqEpzIjogSYiYcCF1aR7/KEHDD6sCsrgOdDk6KuqzWqTqqciwWYc
+	3DjaGYHVJG474qOb9XeDbSN8I=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=x-sasl-enc:message-id:date:from
+	:mime-version:to:cc:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=g3xIguHtD97GqD2xglyuJq
+	B3Qfo=; b=K2bGTyn08CaqpMaHglkC8t1jioIaoQRYToouLmBQmWxO0aP0HKLbpm
+	cBw1DYC/VVc7+QSJuSCH3SvkzxxVeTQ+J+xZxFCOe9N4iiFKbNAJtAEe83KZUgaQ
+	Nxu2EdYCAmMlTRz4jlRAZ0GR+CZXwOgExRAaC0tehjDm1kdo6Pdew=
+X-Sasl-enc: a+GmNVg53MIENtSEgvGrVGC5CrtpxLhjKzeX3Dqzp+vK 1427103415
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 7E482C00027;
+	Mon, 23 Mar 2015 05:36:55 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
+In-Reply-To: <20150320201321.GA21945@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266128>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266129>
 
-Hi Paul,
-
-On 2015-03-22 18:39, Paul Tan wrote:
-
-> The code coverage tools can help here as well. The kcov output clearly
-> shows which options of git-pull are currently not being tested. But
-> yes, I agree that the test suite shouldn't be relied too much on
-> compared to code inspection and review.
-
-Fully agree.
-
-> On another important topic, though, along with git-pull.sh, I'm
-> looking for another script to convert in parallel with git-pull.sh so
-> that there will be no blocks due to patch review. Generally, I think
-> rewriting scripts that are called frequently by users, or spawn a lot
-> of processes due to loops, would be most desirable because the runtime
-> gains would be much higher. A quick review of the scripts shows that
-> git-am.sh, git-rebase--interactive.sh and git-quiltimport.sh have
-> pretty heavy loops with lots of process spawning that grows with
-> input.
+Jeff King venit, vidit, dixit 20.03.2015 21:13:
+> On Fri, Mar 20, 2015 at 04:02:39PM -0400, Jeff King wrote:
 > 
-> I'm currently leaning with git-am because not only is it a frequently
-> used command, git-rebase--am.sh (for non-interactive rebase) calls it
-> as well. In fact, quick tests show that it takes up 98% of
-> git-rebase's execution time on Windows, so if git-am's performance
-> improves it would be a huge win on many fronts. git-am's code also
-> seems to be manageable for a 3-month project.
+>> Yeah, that was my impression, too. I don't have svn installed on my
+>> system, so I missed those ones. I don't have CVS either. That might be
+>> worth following up on.
+> 
+> Hmm, that turned out rather easy. No breakages at all in the cvs tests.
+> It almost makes me think I ran the tests wrong. ;)
+> 
+> -Peff
+> 
 
-Yeah, `git am` is definitely a good pick.
+Yes, sorry, just catching up.
 
-Thanks!
-Johannes
+I applied to Jeff's series to next at 9c5cf4d, and I run with svn and
+cvs tests. Full suite except for:
+
+expensive, ext. cred. helper, mac fs, svnserve, svn-info, git-cvsserver, p4.
+
+I guess I should recheck some prerequisites and adjust the svn-info test
+to newer svn...
+
+Michael
