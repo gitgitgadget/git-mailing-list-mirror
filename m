@@ -1,80 +1,80 @@
-From: Olaf Hering <olaf@aepfle.de>
-Subject: Re: cover letter and cc list
-Date: Mon, 23 Mar 2015 09:18:40 +0100
-Message-ID: <20150323081840.GB9332@aepfle.de>
-References: <20150320173504.GA6162@aepfle.de>
- <xmqqpp83ee2z.fsf@gitster.dls.corp.google.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH/RFC/GSOC] make git-pull a builtin
+Date: Mon, 23 Mar 2015 10:07:39 +0100
+Organization: gmx
+Message-ID: <4f9cfb776b8a1418ba1b3bc07b10f577@www.dscho.org>
+References: <1426600662-32276-1-git-send-email-pyokagan@gmail.com>
+ <vpqwq2eyyzl.fsf@anie.imag.fr>
+ <CACRoPnQp-3RGAPmoo1aM2KUA-phi138J2o82FwP9annM+xvOXA@mail.gmail.com>
+ <4388b6e4005c2872aa7f5f83024f021d@www.dscho.org>
+ <CACRoPnT04p-6o2u984a21RvHkk6CqpZWRyafg=T+WAPOD3hiTg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 23 09:19:26 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Git List <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 23 10:07:47 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YZxZw-0000YY-CI
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Mar 2015 09:19:20 +0100
+	id 1YZyKo-00044e-Ok
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Mar 2015 10:07:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752053AbbCWITN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Mar 2015 04:19:13 -0400
-Received: from mo4-p00-ob.smtp.rzone.de ([81.169.146.217]:25058 "EHLO
-	mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751935AbbCWITM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Mar 2015 04:19:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1427098748; l=1164;
-	s=domk; d=aepfle.de;
-	h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Subject:Cc:To:From:Date;
-	bh=qUrlT2Eggk+nISQ6LVPl3X4fJU1SHE3LDSlzX2uNKYs=;
-	b=uaUMa2QXcwKv+POup5hcpmNbSdCHFQk6tXxTHox02M+ZeT5FimAObMMn4jCRhVQRvxs
-	ZPJKFth8EErHetmh6Ylg+9p2lNnss1H8tcl83sDzaqEGs7yi+KmKue/tkB4QxMPlHuivl
-	leMvPIKK/rshcV+tJRJe9szeK3VYFqrnWHc=
-X-RZG-AUTH: :P2EQZWCpfu+qG7CngxMFH1J+yackYocTD1iAi8x+OWtrWFmrD4pjkQ2b4qvS
-X-RZG-CLASS-ID: mo00
-Received: from probook.fritz.box (charybdis-ext.suse.de [195.135.221.2])
-	by smtp.strato.de (RZmta 37.4 AUTH)
-	with ESMTPSA id 4036cfr2N8J8xYh
-	(using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate);
-	Mon, 23 Mar 2015 09:19:08 +0100 (CET)
-Received: by probook.fritz.box (Postfix, from userid 1000)
-	id 99D7E50278; Mon, 23 Mar 2015 09:18:40 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <xmqqpp83ee2z.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.22.rev6346 (2013-10-29)
+	id S1752101AbbCWJHm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Mar 2015 05:07:42 -0400
+Received: from mout.gmx.net ([212.227.15.15]:58475 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752089AbbCWJHl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Mar 2015 05:07:41 -0400
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0LbM2k-1ZF7eD3HZ4-00kvxE; Mon, 23 Mar 2015 10:07:39
+ +0100
+In-Reply-To: <CACRoPnT04p-6o2u984a21RvHkk6CqpZWRyafg=T+WAPOD3hiTg@mail.gmail.com>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.0
+X-Provags-ID: V03:K0:10gPd21f4Bn0AvhdzeJkEmuRbnQZYO7FTTneCwa1o34A2gY+Tia
+ MFOxziI3V5fWC977k0yeYMNgdhxu091YSUoTT0T+0NUgtXoN8r/ctoDd4EaneRM9FWYUkNP
+ ir9o1Dc4F3/6G+ugGMv/EHN9n687CFjE3jSIm2FmT/QNoOUnwd51T2nVKVBGkPyFLlzzyK3
+ vejB46uvECkchgTs0+8HA==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266127>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266128>
 
-On Fri, Mar 20, Junio C Hamano wrote:
+Hi Paul,
 
-> Olaf Hering <olaf@aepfle.de> writes:
+On 2015-03-22 18:39, Paul Tan wrote:
+
+> The code coverage tools can help here as well. The kcov output clearly
+> shows which options of git-pull are currently not being tested. But
+> yes, I agree that the test suite shouldn't be relied too much on
+> compared to code inspection and review.
+
+Fully agree.
+
+> On another important topic, though, along with git-pull.sh, I'm
+> looking for another script to convert in parallel with git-pull.sh so
+> that there will be no blocks due to patch review. Generally, I think
+> rewriting scripts that are called frequently by users, or spawn a lot
+> of processes due to loops, would be most desirable because the runtime
+> gains would be much higher. A quick review of the scripts shows that
+> git-am.sh, git-rebase--interactive.sh and git-quiltimport.sh have
+> pretty heavy loops with lots of process spawning that grows with
+> input.
 > 
-> > What does it take to send the cover letter to all people which are
-> > listed in the Cc: list of the following patches? Each patch has a
-> > different Cc: list. The "git send-email --help" command suggests that
-> > this cmdline should do it. But the cover letter goes just to the address
-> > listed in --to=:
-> >
-> > env TMPDIR=/dev/shm LC_ALL=C git send-email -M --stat --annotate \
-> >         --cover-letter --cc-cover --to=$address \
-> >         $base..$head
-> 
-> First step is not to drive format-patch from within send-email I
-> would think.  Instead prepare them in files in a directory (with
-> format-patch -o $dir).  You can edit Cc: header in 0000-*.patch
-> message while you proof-read what you are going to send out.
+> I'm currently leaning with git-am because not only is it a frequently
+> used command, git-rebase--am.sh (for non-interactive rebase) calls it
+> as well. In fact, quick tests show that it takes up 98% of
+> git-rebase's execution time on Windows, so if git-am's performance
+> improves it would be a huge win on many fronts. git-am's code also
+> seems to be manageable for a 3-month project.
 
-Thanks. Then I misinterpreted what --cc-cover actually means. All Cc:
-lines have to be present in the cover letter already. Would be nice if
-git would run a command like this to put the list into the coverletter:
+Yeah, `git am` is definitely a good pick.
 
- # git log --format=%b $base..$head | grep -iw ^cc: | sort -u
-
-In the meantime I will remember to do that step manually.
-
-Olaf
+Thanks!
+Johannes
