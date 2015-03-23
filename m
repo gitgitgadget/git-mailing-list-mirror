@@ -1,80 +1,128 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH] clone: Warn if clone lacks LICENSE or COPYING file
-Date: Mon, 23 Mar 2015 22:00:31 +0100
-Message-ID: <CACBZZX7JRAavMV4W91k-3ABYj8NPevBvF+CQKSMASYMjghB5pg@mail.gmail.com>
-References: <xmqqoanld3v1.fsf@gitster.dls.corp.google.com> <E1Ya5V2-0001bT-QE@rmm6prod02.runbox.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [RFC] git submodule purge
+Date: Mon, 23 Mar 2015 22:32:27 +0100
+Message-ID: <5510866B.40501@web.de>
+References: <20150316134407.GA31794@pks-tp.elego.de> <20150316200353.GB5186@google.com> <20150317075636.GA354@pks-pc>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>, stefanbeller <stefanbeller@gmail.com>,
-	dennis <dennis@kaarsemaker.net>, gitster <gitster@pobox.com>
-To: "David A. Wheeler" <dwheeler@dwheeler.com>
-X-From: git-owner@vger.kernel.org Mon Mar 23 22:00:59 2015
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Heiko Voigt <hvoigt@hvoigt.net>
+To: Patrick Steinhardt <ps@pks.im>,
+	Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 23 22:32:42 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ya9Sz-0003oW-Nw
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Mar 2015 22:00:58 +0100
+	id 1Ya9xc-0000IB-Bt
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Mar 2015 22:32:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752565AbbCWVAx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Mar 2015 17:00:53 -0400
-Received: from mail-oi0-f47.google.com ([209.85.218.47]:33003 "EHLO
-	mail-oi0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752508AbbCWVAw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Mar 2015 17:00:52 -0400
-Received: by oifl3 with SMTP id l3so121628583oif.0
-        for <git@vger.kernel.org>; Mon, 23 Mar 2015 14:00:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=jJlgFZLWArES8KWdYApwHCng+/5GNJMhbBzLmwdt7tw=;
-        b=mQ3wS7E5cs1vGtDdUS4tUL6WXJESkvxsbGH3VeUXJov7jFqlLjYPOXFxzDgVAlgw1M
-         9dS+sjI/B+rZFI6eAc+3wgdlc8Sy8ZzwZs3CBEXtfUw1DOSMlDEmYuHoxsKWZOTnesCN
-         dPI4jsOPB53i9JdMJ+DrDo2SeKcx+6NaqQgVfctf9cJvJ0zkDlPHONRQz/JcpPMbnTs1
-         JTQ3GsGsS25kF8sw2Et/07q2mE+enAzdo/+Hn/53/p44vFqgntut6fGr6inv7iX4KzVV
-         dtKUk+tMMMCqclZi9SfD+y30QGKlneaNzwCLGa5GGbVGzFYNLHUJ9f1Ph38GrSK/lkzO
-         iETQ==
-X-Received: by 10.202.108.84 with SMTP id h81mr793632oic.90.1427144452004;
- Mon, 23 Mar 2015 14:00:52 -0700 (PDT)
-Received: by 10.76.82.1 with HTTP; Mon, 23 Mar 2015 14:00:31 -0700 (PDT)
-In-Reply-To: <E1Ya5V2-0001bT-QE@rmm6prod02.runbox.com>
+	id S1752881AbbCWVcc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Mar 2015 17:32:32 -0400
+Received: from mout.web.de ([212.227.17.11]:61340 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752508AbbCWVcb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Mar 2015 17:32:31 -0400
+Received: from [192.168.178.41] ([79.211.96.44]) by smtp.web.de (mrweb102)
+ with ESMTPSA (Nemesis) id 0Lpw6t-1Z6l1X20F5-00fl8B; Mon, 23 Mar 2015 22:32:28
+ +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
+In-Reply-To: <20150317075636.GA354@pks-pc>
+X-Provags-ID: V03:K0:aL/Jg4txoS0LptbOQUv/vSzgiLogj1lbBSiV7XCyiaFCOosiQfz
+ Rc8cZ6ESzrN1uXPpj+ZW0er1fPVvTrhdrHax2/YVxBlbvDaTmNR1GRy42Y8A0IULuz68cq+
+ nmRsyYy0N6uuzneTK3GHjTX8wt/XuqB6YKsRWpXWsDHnUPpiDzqDj9khVEimMXni5SGkHmk
+ eIL9PydJ23d2v+Fai2dfQ==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266163>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266164>
 
-On Mon, Mar 23, 2015 at 5:46 PM, David A. Wheeler <dwheeler@dwheeler.com> wrote:
-> Junio C Hamano:
->>    An approach that checks only the top-level directory for fixed
->>    filename pattern would not be an effective way to protect the
->>    cloners, either.
+Am 17.03.2015 um 08:56 schrieb Patrick Steinhardt:
+> On Mon, Mar 16, 2015 at 01:03:53PM -0700, Jonathan Nieder wrote:
+>> (+cc: Jens and Heiko, submodule experts)
+>> Hi,
+>>
+>> Patrick Steinhardt wrote:
+>>
+>>> This proposal is just for discussion. If there is any interest I
+>>> will implement the feature and send some patches.
+>>>
+>>> Currently it is hard to properly remove submodules. That is when
+>>> a submodule is deinitialized and removed from a repository the
+>>> directory '.git/modules/<SM_NAME>' will still be present and
+>>> there is no way to remove it despite manually calling `rm` on it.
+>>> I think there should be a command that is able to remove those
+>>> dangling repositories if the following conditions are met:
+>>>
+>>> - the submodule should not be initialized
+>>>
+>>> - the submodule should not have an entry in .gitmodules in the
+>>>    currently checked out revision
+>>>
+>>> - the submodule should not contain any commits that are not
+>>>    upstream
+>>>
+>>> - the submodule should not contain other submodules that do not
+>>>    meet those conditions
+>>>
+>>> This would ensure that it is hard to loose any commits that may
+>>> be of interest. In the case that the user knows what he is doing
+>>> we may provide a '--force' switch to override those checks.
+>>
+>> Those conditions look simultaneously too strong and too weak. ;-)
+>>
+>> In principle, it should be safe to remove .git/modules/<name> as
+>> long as
+>>
+>>   (1) it (and its submodules, sub-sub-modules, etc) doesn't have any
+>>       un-pushed local commits.
+>>
+>>   (2) it is not being referred to by a .git file in the work tree of
+>>       the parent repository.
+>>
+>> Condition (1) can be relaxed if the user knows what they are losing
+>> and is okay with that.  Condition (2) can be avoided by removing
+>> (de-initing) the copy of that submodule in the worktree at the same
+>> time.
+>>
+>> The functionality sounds like a useful thing to have, whether as an
+>> option to 'git submodule deinit' or as a new subcommand.  In the long
+>> term I would like it to be possible to do everything 'git submodule'
+>> can do using normal git commands instead of that specialized
+>> interface.  What command do you think this would eventually belong in?
+>> (An option to "git gc", maybe?)
+>>
+>> Thanks,
+>> Jonathan
 >
-> I disagree, I think it's remarkably effective. *Many* projects
-> do this, including git itself. After all, many humans need to find out the licensing
-> basics too; having a simple convention for *finding* it helps humans and tools alike.
-> It's not even limited to open source software; developers of proprietary materials
-> (software or now) *also* typically want to declare licensing.
+> Thanks for your feedback.
 >
-> Sure, the top-level licensing text might be incomplete, but having that information
-> provides a big help, and it's what most people rely on anyway. Indeed, a *lack*
-> of this is a sign of trouble, which is exactly what warnings are good for.
+> Considering that purging the submodule is tightly coupled with
+> de-initializing it, it might make sense to provide this
+> functionality as part of `git submodule deinit`. Maybe something
+> like `git submodule deinit --purge` would work for the user.
+> Problem is if the user first removes the submodule and does not
+> first deinitialize it he is not able to purge the repository
+> afterwards as deinit will complain about the submodule not being
+> matched anymore. We could just make `deinit --purge` work with
+> removed submodules, but that does not feel very natural to me.
 
-I don't think you're going to find people disagreeing with you that
-it's good to have license information where appropriate, but Git is
-the wrong tool to warn about this.
+Hmm, cmd_deinit() seems to cope with submodules removed by the
+user just fine (as long as they are still present in the index).
+To me it feels natural to extend deinit to remove the repo from
+.git/modules too when --purge is given (as long as no unpushed
+commits are present or -f is given).
 
-It's a generic content tracking tool, it shouldn't be warning on the
-assumption that what you're tracking is a) an open source project and
-b) that you care to be notified about some arbitrary files being
-missing.
+> `git gc` feels saner in that regard, but I don't think it would
+> be easy to spot for users as this command is in general not used
+> very frequently by them. One could argue though that it does not
+> need to be discoverable.
 
-A lot of Git repositories don't care at all about licensing, and
-having git-clone warn about this would just be useless noise most of
-the time. E.g. anything I put on gist.github.com, the code hundreds of
-people contribute to at work (we never distribute it anywhere, so a
-license would be pointless). I even have open source projects myself
-where there's no LICENSE or COPYING files since that would be
-redundant to notices in the files themselves, but I digress.
+The error message of "git submodule deinit --purge" for a
+submodule that isn't recorded in the index anymore could point
+the user to the appropriate gc command. But how do we tell gc
+which submodule it should purge? "--purge=<submodule-name>"
+maybe?
