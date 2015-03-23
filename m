@@ -1,92 +1,85 @@
-From: Shanti Swarup Tunga <b112041@iiit-bh.ac.in>
-Subject: about Starter project;implementing log --size in the print_commit function.
-Date: Mon, 23 Mar 2015 20:45:11 +0530
-Message-ID: <CABJeaiqhL5eNPkaPpheG_Y47Rapj4ys3igHhFH6YuiroECVGDA@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] Documentation: Add target to build PDF manpages
+Date: Mon, 23 Mar 2015 16:46:45 +0100
+Message-ID: <55103565.9040000@drmicha.warpmail.net>
+References: <1426850584-9951-1-git-send-email-thosch97@gmail.com>	<CAGZ79ka7tPA17Y-vPPp5W_4-0UMnHMfM9+eQ8jc4eu23FpM2ug@mail.gmail.com>	<xmqq4mpfe7xm.fsf@gitster.dls.corp.google.com>	<CAGZ79kaDnRiUQ6=3gVvsPrkSzkNbACRvgQBSo8gmpRZ8bka84g@mail.gmail.com> <xmqqmw37cn18.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Mar 23 16:15:27 2015
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Thomas Schneider <thosch97@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>,
+	Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Mon Mar 23 16:46:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ya44V-0006Kq-0a
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Mar 2015 16:15:19 +0100
+	id 1Ya4Z4-0002ew-16
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Mar 2015 16:46:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752251AbbCWPPO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Mar 2015 11:15:14 -0400
-Received: from mail-la0-f51.google.com ([209.85.215.51]:36613 "EHLO
-	mail-la0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752185AbbCWPPN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Mar 2015 11:15:13 -0400
-Received: by labe2 with SMTP id e2so61337163lab.3
-        for <git@vger.kernel.org>; Mon, 23 Mar 2015 08:15:12 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=I6b/jouCx22cBXe9Hh5bUzowySUmvs3nsHkFLg07YyU=;
-        b=EOTLWyfMihNRE2NHTqaphS+xpxYL3k+8e3+Xc/GO4RHL9cZQYc0DIYSpndpbSCabAY
-         ZN0Nhm46heHgXYmlNEm0rrU1ShsCvbOrg5v7LJhnc8o2KqyVm+NSnArcYBMCJH5hDgMM
-         dmyY1oAQRbwvatLovxGRtyV9o7yCyzt6oi4Jto9zZ113Y3BUxgefCSFeFhonhTctqbYX
-         P/GEZv6k5Ut5p09singCX4gxk3Yf88N1hTn6i/dQyY4ZrDRMEyUMam0IkzhZ1OLA9KgC
-         sjbRcmJ6F2gOLZKxCi5ESUfhWo9dpJlp2lsOrU7mfCI1hnreqT8HC3HGHGP4xop0vt8J
-         zBBg==
-X-Gm-Message-State: ALoCoQnwV5D1jPIJsSoF3R4PXKBgrya35tmDyti2huUefHEmu0Zxycy434nvii6f5fxigy0eCvjh
-X-Received: by 10.152.87.115 with SMTP id w19mr79442996laz.66.1427123711805;
- Mon, 23 Mar 2015 08:15:11 -0700 (PDT)
-Received: by 10.112.61.233 with HTTP; Mon, 23 Mar 2015 08:15:11 -0700 (PDT)
+	id S1752511AbbCWPqt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Mar 2015 11:46:49 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:48191 "EHLO
+	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752135AbbCWPqs (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 Mar 2015 11:46:48 -0400
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailout.nyi.internal (Postfix) with ESMTP id 038F720480
+	for <git@vger.kernel.org>; Mon, 23 Mar 2015 11:46:44 -0400 (EDT)
+Received: from frontend1 ([10.202.2.160])
+  by compute5.internal (MEProxy); Mon, 23 Mar 2015 11:46:47 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=
+	x-sasl-enc:message-id:date:from:mime-version:to:cc:subject
+	:references:in-reply-to:content-type:content-transfer-encoding;
+	 s=mesmtp; bh=EOQ9aHX4H+Ld/SGQnel1OKM/RSY=; b=TuZXrrSS5Zdf8Xnpyn
+	2R5JnGj23EIhdh5ZFDTANkNnO/ctfoP1MGfr9/fzpMYqtkyWJheMRm/ch+trnkaD
+	LmNcb8cby7UsA2KhJ5oyGA6GMCrq1a2g15n7J5pfTDJPwm0tXR1pIZ42Is9JrlBS
+	P9G3uPYXDI8M+wv6JxOGqV+ac=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=x-sasl-enc:message-id:date:from
+	:mime-version:to:cc:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=EOQ9aHX4H+Ld/SGQnel1OK
+	M/RSY=; b=aPMWIaCIerPXMIZRsZ21Lr1obZ8txVJtVLInjc68ouP0iCkVkIaJ0m
+	X/Frv6+l+2MX6w2b377OYvAl6usJlnbpMXw7wkqvhlLK1IakiYKSIY/jboq+7rk3
+	CaT2P7uNzSHkP7vRbhUV3CUdzhIzEI8paInOn73o1ZLeOLfew8V6w=
+X-Sasl-enc: JgNSkw4lstnR/5LEkNa1laRBw3YRxk2SE3TjqwJoukb9 1427125607
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id C899BC00011;
+	Mon, 23 Mar 2015 11:46:46 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
+In-Reply-To: <xmqqmw37cn18.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266143>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266144>
 
-I inserted a size variable of int type and calculated size in each
-cases of print_commit(). The function is
+Junio C Hamano venit, vidit, dixit 20.03.2015 23:38:
+> Stefan Beller <sbeller@google.com> writes:
+> 
+>> Thomas referencing reading the man page offline, made me wonder
+>> why you wouldn't read the man pages itself as they can also be
+>> carried around offline. But the striking point is "on an iPad", which
+>> doesn't offer you the convenience of a shell etc, but pdf is fine to read
+>> there. Also you can add comments to pdfs more easily that html pages
+>> I'd guess.
+>>
+>> So the patch makes sense to me now. It's just a use case I'm personally
+>> not interested in for now, but I don't oppose it as is.
+> 
+> Well, my comment was not about opposing to it, but was about
+> questioning the usefulness of it, iow, who would
+> benefit from having this patch in my tree?
+> 
+> I didn't see (and I still do not quite see) why people would want to
+> have separate pdf files for all the subcommands (instead of say an
+> .epub or .pdf that binds all the man pages and perhaps user-manual,
+> just like we do for .texi/.info).
 
-static void print_commit(git_commit *commit)
-{
-    char buf[GIT_OID_HEXSZ + 1];
-    int i, count;
-    const git_signature *sig;
-    const char *scan, *eol;
-    int size=0;
+Exactly. For PDF, a combined document is more natural and will hopefully
+make crosslinks work as crossrefs within one document, rather than links
+to external documents. I'd say that would make a valuable target.
 
-    git_oid_tostr(buf, sizeof(buf), git_commit_id(commit));
-    printf("commit %s\n", buf);
-
-    if ((count = (int)git_commit_parentcount(commit)) > 1) {
-        printf("Merge:");
-        for (i = 0; i < count; ++i) {
-            git_oid_tostr(buf, 8, git_commit_parent_id(commit, i));
-            size=size+strlen(buf);
-            printf(" %s", buf);
-        }
-        printf("\n");
-
-    }
-
-    if ((sig = git_commit_author(commit)) != NULL) {
-        size=size+strlen(sig->name)+strlen(sig->email);
-        printf("Author: %s <%s>\n", sig->name, sig->email);
-        print_time(&sig->when, "Date:   ");
-    }
-    printf("\n");
-
-    for (scan = git_commit_message(commit); scan && *scan; ) {
-        for (eol = scan; *eol && *eol != '\n'; ++eol) /* find eol */;
-
-        size=size+strlen(scan);
-        printf("    %.*s\n", (int)(eol - scan), scan);
-        scan = *eol ? eol + 1 : NULL;
-    }
-    printf("\n");
-    printf("%d",size);
-}
-
-
-
-
-Will that approach is going to work for the following problem.?
+Michael
