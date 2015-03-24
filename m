@@ -1,134 +1,116 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: Sparse checkout not working as expected (colons in filenames on Windows)
-Date: Tue, 24 Mar 2015 23:50:25 -0000
-Organization: OPDS
-Message-ID: <90D5D4B5F2ED41A6AB07E291004AA615@PhilipOakley>
-References: <BE2660C974C9415E997F20A49ABC766E@PhilipOakley> <CACsJy8BOuhohQzaGzD+4cthqOaL4sz1ADRD-ekhFhKt4wMcg7A@mail.gmail.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: SZEDER =?utf-8?b?R8OhYm9y?= <szeder@ira.uka.de>
+Subject: Re: [PATCH 18/25] t1301: use modern test_* helpers
+Date: Wed, 25 Mar 2015 00:51:20 +0100
+Message-ID: <20150325005120.Horde.ClYI1WJflnvTzVgcL6i8Sg8@webmail.informatik.kit.edu>
+References: <20150320100429.GA17354@peff.net>
+ <20150320101311.GR12543@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="UTF-8";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "Git List" <git@vger.kernel.org>,
-	"Yue Lin Ho" <yuelinho777@gmail.com>
-To: "Duy Nguyen" <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 25 00:49:28 2015
+Content-Type: text/plain; charset=UTF-8; format=flowed; DelSp=Yes
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Mar 25 00:51:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YaYZZ-0006E0-M1
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Mar 2015 00:49:26 +0100
+	id 1YaYbe-0007q3-KP
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Mar 2015 00:51:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752542AbbCXXtV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Mar 2015 19:49:21 -0400
-Received: from out1.ip07ir2.opaltelecom.net ([62.24.128.243]:52931 "EHLO
-	out1.ip07ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752103AbbCXXtU (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Mar 2015 19:49:20 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2DfGQCB9xFVPHgvBlxcgwZSWoMShBq/I4VtBAKBTE0BAQEBAQEGAQEBATggG0EBg00FAQEBAQMIAQEZFR4BASELAgMFAgEDDgcDAgIFIQICFAEECBIGBwMGAQ0GEwgCAQIDAYgKAxUJrmWGU411DYVEDBwEgSGKAIJHgi+Cby+BFgWQUGGDDoQzgmiMHEyGKYIkHIFQPjGCQwEBAQ
-X-IPAS-Result: A2DfGQCB9xFVPHgvBlxcgwZSWoMShBq/I4VtBAKBTE0BAQEBAQEGAQEBATggG0EBg00FAQEBAQMIAQEZFR4BASELAgMFAgEDDgcDAgIFIQICFAEECBIGBwMGAQ0GEwgCAQIDAYgKAxUJrmWGU411DYVEDBwEgSGKAIJHgi+Cby+BFgWQUGGDDoQzgmiMHEyGKYIkHIFQPjGCQwEBAQ
-X-IronPort-AV: E=Sophos;i="5.11,461,1422921600"; 
-   d="scan'208";a="139307700"
-Received: from host-92-6-47-120.as43234.net (HELO PhilipOakley) ([92.6.47.120])
-  by out1.ip07ir2.opaltelecom.net with ESMTP; 24 Mar 2015 23:49:17 +0000
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1752580AbbCXXva (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Mar 2015 19:51:30 -0400
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:43971 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751874AbbCXXva (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Mar 2015 19:51:30 -0400
+Received: from irawebmail.ira.uni-karlsruhe.de ([141.3.10.230] helo=webmail.ira.uka.de)
+	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
+	iface 141.3.10.81 id 1YaYbY-00033q-W1; Wed, 25 Mar 2015 00:51:29 +0100
+Received: from apache by webmail.ira.uka.de with local (Exim 4.72)
+	(envelope-from <szeder@ira.uka.de>)
+	id 1YaYbQ-0008T4-Cn; Wed, 25 Mar 2015 00:51:20 +0100
+Received: from x590cf8a1.dyn.telefonica.de (x590cf8a1.dyn.telefonica.de
+ [89.12.248.161]) by webmail.informatik.kit.edu (Horde Framework) with HTTP;
+ Wed, 25 Mar 2015 00:51:20 +0100
+In-Reply-To: <20150320101311.GR12543@peff.net>
+User-Agent: Internet Messaging Program (IMP) H5 (6.2.2)
+Content-Disposition: inline
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1427241089.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266240>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266241>
 
-From: "Duy Nguyen" <pclouds@gmail.com>
-> On Fri, Mar 20, 2015 at 6:07 AM, Philip Oakley <philipoakley@iee.org> 
-> wrote:
->> Hi, I was expecting that sparse checkout could be used to avoid the 
->> checking
->> out, by git, of files which have colons in their name into the 
->> worktree when
->> on Windows.
->>
->> Yue Lin Ho reported on the Msygit list [1] that he had a repo where 
->> there
->> was already committed a file with a colon in it's name, which was a 
->> needed
->> file and had been committed by a Linux user. The problem was how to 
->> work
->> with that repo on a Windows box where such a file is prohibited to 
->> exist on
->> the FS (hence the expectation that a sparse checkout would suffice). 
->> Yue has
->> created a short test repo [2]
->>
->> Even after getting the pathspec escaping right, I still haven't been 
->> able to
->> make this expected behaviour work [3].
->>
->> Am I wrong to expect that sparse checkout (and the skip-worktree bit) 
->> can be
->> used to avoid files with undesirable filenames hitting the OS's file 
->> system?
->>
->> If it should be OK, what's the correct recipe?
->>
->> --
->> Philip
->>
->> [1]
->> https://groups.google.com/forum/?hl=en_US?hl%3Den#!topic/msysgit/D4HcHRpxPgU
->> "How to play around with the filename with colon on Windows?"
->> [2] Test repo https://github.com/t-pascal/tortoisegit-colons
->>
->> [3] test sequence::
->> $ mkdir colons && cd colons
->> $ git clone -n https://github.com/t-pascal/tortoisegit-colons
->> $ cd tortoisegit-colons/
->> $ git config core.sparseCheckout true
->> $ cat .git/info/sparse-checkout # external editor
->> /*
->> !ifcfg-eth0\:0
+
+Quoting Jeff King <peff@peff.net>:
+
+> This shortens the code and fixes some &&-chaining.
 >
-> Colons have no special meaning in gitignore rules and therefore need
-> not be escaped. The backslash is considered a literal character in
-> this case, probably not what you want.
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>   t/t1301-shared-repo.sh | 20 +++++++-------------
+>   1 file changed, 7 insertions(+), 13 deletions(-)
 >
->> $ git update-index --skip-worktree -- ifcfg-eth0\:0
->> Ignoring path ifcfg-eth0:0
->> $ git checkout -b test 7f35d34bc6160cc # tip commit, we are still 
->> unborn!
->> error: Invalid path 'ifcfg-eth0:0
->> D       ifcfg-eth0:0
->> Switched to a new branch 'test'
-> -- 
-I've corrected the sparse-checkout, but won't the command line 'git 
-update-index --skip-worktree' will still need it? (demo commands below)
+> diff --git a/t/t1301-shared-repo.sh b/t/t1301-shared-repo.sh
+> index 7eecfb8..ac10875 100755
+> --- a/t/t1301-shared-repo.sh
+> +++ b/t/t1301-shared-repo.sh
+> @@ -12,12 +12,11 @@ setfacl -k . 2>/dev/null
+>
+>   # User must have read permissions to the repo -> failure on --shared=0400
+>   test_expect_success 'shared = 0400 (faulty permission u-w)' '
+> +	test_when_finished "rm -rf sub" &&
+>   	mkdir sub && (
+> -		cd sub && git init --shared=0400
+> +		cd sub &&
+> +		test_must_fail git init --shared=0400
+>   	)
+> -	ret="$?"
+> -	rm -rf sub
+> -	test $ret != "0"
+>   '
+>
+>   modebits () {
+> @@ -33,7 +32,7 @@ do
+>   			git init --shared=1 &&
+>   			test 1 = "$(git config core.sharedrepository)"
+>   		) &&
+> -		actual=$(ls -l sub/.git/HEAD)
+> +		actual=$(ls -l sub/.git/HEAD) &&
+>   		case "$actual" in
+>   		-rw-rw-r--*)
+>   			: happy
 
-That said, the final error (which I'd missed in the earlier post) is:
-fatal: make_cache_entry failed for path 'ifcfg-eth0:0'
+This hunk could go into the "moderate &&-chain breakage" patch.
+Doesn't really matter, what matters most is that it's fixed, but I  
+really liked your classification of missing &&s in the early patches.
 
-This is on the Windows (pre-compiled msysgit at v1.9.5) Git bash, so 
-could be a catch path in that code for make_cache_entry (I've not 
-checked the code yet). So at the moment it doesn't look like sparse 
-checkout can be used to avoid colons in windows on-disk files based on 
-the current code.
---
-Philip
-
-Philip@PHILIPOAKLEY /d/Git_repos/colons
-$ cd tortoisegit-colons/
-
-Philip@PHILIPOAKLEY /d/Git_repos/colons/tortoisegit-colons (test)
-$ git update-index --skip-worktree -- ifcfg-eth0\:0
-Ignoring path ifcfg-eth0:0
-
-Philip@PHILIPOAKLEY /d/Git_repos/colons/tortoisegit-colons (test)
-$ git reset
-error: Invalid path 'ifcfg-eth0:0'
-fatal: make_cache_entry failed for path 'ifcfg-eth0:0'
+> @@ -90,10 +89,8 @@ do
+>   		rm -f .git/info/refs &&
+>   		git update-server-info &&
+>   		actual="$(modebits .git/info/refs)" &&
+> -		test "x$actual" = "x-$y" || {
+> -			ls -lt .git/info
+> -			false
+> -		}
+> +		verbose test "x$actual" = "x-$y"
+> +
+>   	'
+>
+>   	umask 077 &&
+> @@ -102,10 +99,7 @@ do
+>   		rm -f .git/info/refs &&
+>   		git update-server-info &&
+>   		actual="$(modebits .git/info/refs)" &&
+> -		test "x$actual" = "x-$x" || {
+> -			ls -lt .git/info
+> -			false
+> -		}
+> +		verbose test "x$actual" = "x-$x"
+>
+>   	'
+>
+> --
+> 2.3.3.520.g3cfbb5d
