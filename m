@@ -1,65 +1,75 @@
 From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 10/15] commit.c: fix a memory leak
-Date: Tue, 24 Mar 2015 20:42:17 +0700
-Message-ID: <CACsJy8A3CptGYNAZ=+k0ykBCp6SGoOLY0nX20WkWQp=qUnxwWg@mail.gmail.com>
-References: <1426897692-18322-1-git-send-email-sbeller@google.com>
- <1426897692-18322-11-git-send-email-sbeller@google.com> <xmqqk2ybatm1.fsf@gitster.dls.corp.google.com>
+Subject: Re: per-repository and per-worktree config variables
+Date: Tue, 24 Mar 2015 20:48:49 +0700
+Message-ID: <CACsJy8CYgMDY_zGi6o=UtD7QV+DQUcaDgwxo6tGrfktRXj+QSw@mail.gmail.com>
+References: <1423401394-13675-1-git-send-email-pclouds@gmail.com>
+ <54D79EAB.6060301@web.de> <20150318213342.GA25692@wheezy.local>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Stefan Beller <sbeller@google.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 24 14:43:07 2015
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Max Kirillov <max@max630.net>
+X-From: git-owner@vger.kernel.org Tue Mar 24 14:49:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YaP6o-0000X8-Vc
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Mar 2015 14:43:07 +0100
+	id 1YaPD3-00046t-67
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Mar 2015 14:49:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752694AbbCXNmw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Mar 2015 09:42:52 -0400
-Received: from mail-ig0-f172.google.com ([209.85.213.172]:36657 "EHLO
-	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752632AbbCXNms (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Mar 2015 09:42:48 -0400
-Received: by igbud6 with SMTP id ud6so71947453igb.1
-        for <git@vger.kernel.org>; Tue, 24 Mar 2015 06:42:47 -0700 (PDT)
+	id S1752445AbbCXNtW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Mar 2015 09:49:22 -0400
+Received: from mail-ie0-f182.google.com ([209.85.223.182]:33413 "EHLO
+	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752035AbbCXNtV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Mar 2015 09:49:21 -0400
+Received: by iecvj10 with SMTP id vj10so60577885iec.0
+        for <git@vger.kernel.org>; Tue, 24 Mar 2015 06:49:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=22hFlphcFY7rdXyLFpexb1BCZXcgAWGdfYbL/eTeNgg=;
-        b=qsP5o84PzTkcJZL2D4a+Qp+KyoXPU0m3aj5EvH8+ctzPI0CWrVbjdtm7+CzW8AXM6U
-         wq5Qiycoa8YoFYSDsdwcBFmp676InqnWW/CJ8COQ2ciNrhwvxBhAtDeyMzcI6QwNuazG
-         q07DC0gsaP2PfyT9MXGBCOdUz95uRtiVCoyI7c+bs+TU/zFTRtF8U2dZMob4p5gu5A4G
-         LUu7IfvHG4KTx9ASCI9/FR1ORZ+5xNA/+D2aeJB0d0vdgGXXZB4Gf60eawiSW3OGOfBW
-         n6iN7q7GQbmk+Ci333FSW8hNJojZU7Cirs8cZvDAMQjSbI8fSTYexNSB6ABQbCY6DSPw
-         2RtA==
-X-Received: by 10.50.131.196 with SMTP id oo4mr22437066igb.2.1427204567818;
- Tue, 24 Mar 2015 06:42:47 -0700 (PDT)
-Received: by 10.107.131.33 with HTTP; Tue, 24 Mar 2015 06:42:17 -0700 (PDT)
-In-Reply-To: <xmqqk2ybatm1.fsf@gitster.dls.corp.google.com>
+        bh=pmUpkcGvicle4972khRo9nC2oQCnyhtgK702tuLjYzg=;
+        b=fvqDU/V5qe1Z5JpFW7CrXF8s6ZZXWmbAExCaM6jo+Wx1fCvEIeVlSWFHuEPFqHYuIH
+         g2DmwE9B+UBm5qQoKIPGGEwPvRIcH3JZth+gfKbsPsSXt6fm9waqMK1eIoRF4zNm0lXR
+         ZDs1S0KWxRxy1MKkkw4p0Sp4YtLgz3ueGKEmUFk83nmQ2Qa8SYeE15Y+HoZHZcsfXRis
+         1u/Fw4GZJb1M27b3ywjskTQ8FxAgD+4GGBGPOfCLTBgjyC2pRF2vqqzQRQNRPw3U7nNp
+         vze4Jq2K7b54Iqc0l0zcMZWR7gZrNH+BcCd4VNngvpZdC1d3I9RHCtayTKGha8Fws8We
+         WRYQ==
+X-Received: by 10.50.57.78 with SMTP id g14mr3153981igq.41.1427204960995; Tue,
+ 24 Mar 2015 06:49:20 -0700 (PDT)
+Received: by 10.107.131.33 with HTTP; Tue, 24 Mar 2015 06:48:49 -0700 (PDT)
+In-Reply-To: <20150318213342.GA25692@wheezy.local>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266187>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266188>
 
-On Sat, Mar 21, 2015 at 10:59 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> A further tangent (Duy Cc'ed for this point).  We might want to
-> rethink the interface to ce_path_match() and report_path_error()
-> so that we do not have to do a separate allocation of "has this
-> pathspec been used?" array.  This was a remnant from the olden days
-> back when pathspec were mere "const char **" where we did not have
-> any room to add per-item bit---these days pathspec is repreasented
-> as an array of "struct pathspec" and we can afford to add a bit
-> to the structure---which will make this kind of leak much less
-> likely to happen.
+On Thu, Mar 19, 2015 at 4:33 AM, Max Kirillov <max@max630.net> wrote:
+> On Sun, Feb 08, 2015 at 09:36:43AM -0800, Jens Lehmann wrote:
+>> I wonder if it's worth all the hassle to invent new names. Wouldn't
+>> it be much better to just keep a list of per-worktree configuration
+>> value names and use that inside the config code to decide where to
+>> find them for multiple work trees. That would also work easily for
+>> stuff like EOL-config and would push the complexity in the config
+>> machinery and not onto the user.
+>
+> I actually thought about the same, and now tend to think
+> that most of config variables make sense to be per-worktree
+> in some cases. Only few variable must always be per
+> repository. I tried to summarize the variables which now
+> (in current pu) should be common, also listed all the rest
+> so somebody could scan through the list and spot anything I
+> could miss.
 
-I just want to say "noted" (and therefore in my backlog). But no
-promise that it will happen any time soon. Low hanging fruit, perhaps
-some people may be interested..
+Thanks for compiling the list. At this point I think it may not be
+sensible to hard code some config vars (e.g. core.worktree) to be
+local or shared. So I'm thinking (out loud) that we may have a file
+$GIT_DIR/worktrees/<id>/local-config-patterns (or some other name)
+that would define what vars are local. gitignore syntax will be reused
+for this. The file would provide more flexibility..
 -- 
 Duy
