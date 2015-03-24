@@ -1,257 +1,91 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: Re: [PATCH 1/1] l10n: de.po: =?utf-8?Q?use?=
- =?utf-8?B?ICJibGEg4oCmIg==?= instead of "bla..."
-Date: Tue, 24 Mar 2015 18:10:44 +0100
-Message-ID: <20150324171044.GA4414@ralf-ubuntu>
-References: <1426942357-5618-1-git-send-email-phillip.szelat@gmail.com>
- <CAN0XMO+JLfzkYwP5rKkT6RyLJ-XuH1k=9vKmi1X0xb1SjTOdvg@mail.gmail.com>
- <551190F2.10808@drmicha.warpmail.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] read-cache: fix reading of split index
+Date: Tue, 24 Mar 2015 10:19:42 -0700
+Message-ID: <xmqqpp7y71ox.fsf@gitster.dls.corp.google.com>
+References: <20150320195943.GB6545@hank>
+	<1426887794-9655-1-git-send-email-t.gummerer@gmail.com>
+	<1426887794-9655-3-git-send-email-t.gummerer@gmail.com>
+	<CACsJy8CYi+hYu8zwOy=m7zZk3-8fr+Jq9uT4kEf8fLCOcjHJzw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Phillip Sz <phillip.szelat@gmail.com>, git <git@vger.kernel.org>,
-	Thomas Rast <tr@thomasrast.ch>,
-	Jan =?iso-8859-1?Q?Kr=FCger?= <jk@jk.gs>,
-	Christian Stimming <stimming@tuhh.de>,
-	Matthias =?iso-8859-1?Q?R=FCster?= <matthias.ruester@gmail.com>,
-	Magnus =?iso-8859-1?Q?G=F6rlitz?= 
-	<magnus.goerlitz@googlemail.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Mar 24 18:11:09 2015
+Content-Type: text/plain
+Cc: Thomas Gummerer <t.gummerer@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Jaime Soriano Pastor <jsorianopastor@gmail.com>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 24 18:19:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YaSLy-0008Aq-4n
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Mar 2015 18:10:58 +0100
+	id 1YaSUb-0005Ig-Lk
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Mar 2015 18:19:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932147AbbCXRKw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Mar 2015 13:10:52 -0400
-Received: from mail-wg0-f43.google.com ([74.125.82.43]:33248 "EHLO
-	mail-wg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752298AbbCXRKs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Mar 2015 13:10:48 -0400
-Received: by wgbcc7 with SMTP id cc7so176278600wgb.0
-        for <git@vger.kernel.org>; Tue, 24 Mar 2015 10:10:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=xbCVCD1C8VRqP4jF9MkFxTDvzpefry9mQh1BGoR5CDo=;
-        b=juF+sPng/Xe5hfsWBtbKKAycCBbmxx6WT30rSyyl5BUsVo+2ZpeGUlAtx8fL3NDHUM
-         1HldEP6mP/XN1Ej+Zs8qkrjM0FFOJE1pTTnuNcXPf4fThRKpZ4Jc4ewnAezPxgDAVuyb
-         oiHZlEBQiAuNnHdt4DF4cR/QnOFzqyFs0CY2N+gvaytvvfeB3zWO7MIcHPLtwCOwOS7C
-         mFM7y6qbv2+l9F4ngrjXVezzmgEOMsPMjSfyzNB2spmUOEn8JnfFs1lFp15JIx4Zz3YM
-         nObqaBJYqNYIg6plxfDId6NkmG7FSjdylP2XtnFvPMW28Vjh2Rot4YL9fqpHrDtRYT8q
-         0Q3Q==
-X-Received: by 10.194.6.228 with SMTP id e4mr9581829wja.63.1427217046384;
-        Tue, 24 Mar 2015 10:10:46 -0700 (PDT)
-Received: from localhost (dslb-178-000-084-015.178.000.pools.vodafone-ip.de. [178.0.84.15])
-        by mx.google.com with ESMTPSA id fm10sm407442wib.7.2015.03.24.10.10.45
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 24 Mar 2015 10:10:45 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <551190F2.10808@drmicha.warpmail.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1756326AbbCXRTt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Mar 2015 13:19:49 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:54677 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1756324AbbCXRTp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Mar 2015 13:19:45 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 99A65411A5;
+	Tue, 24 Mar 2015 13:19:44 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=kuvw7mpDqvuwylygH7UUzDaORF0=; b=HBuELc
+	uGfD7UpfhhQS29c4lE5DFH+kNBMY32+rYCrK5vnUklJ7dEsfq9or54stwBG/hL7F
+	ECBTZ7wauMPqQ35yYVTbV5xSbrm8PbIMSExRVfmbkp6NFUE1K5ta6lrnG4+CQeIf
+	7PRHtkh5yJOOx85fpv+6sbB9WscGZJbmrqiYE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=neSZ3jHLHUE47Lnh7Jn/C6OJROUV5I7s
+	oqoxzYn/9uqMQE+zLUyWnvOWTizeg6zSrMw08lA/to7CudQaFVVtq9Y0wi+snYz9
+	COEzW1ILmIL/cm4//QJ2tD1hcz1IIiGjX2/0BL+hHi+GrimgosHyxp49eIP9PEo0
+	x6szDU7jd8k=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 91B9C411A4;
+	Tue, 24 Mar 2015 13:19:44 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0897A411A2;
+	Tue, 24 Mar 2015 13:19:43 -0400 (EDT)
+In-Reply-To: <CACsJy8CYi+hYu8zwOy=m7zZk3-8fr+Jq9uT4kEf8fLCOcjHJzw@mail.gmail.com>
+	(Duy Nguyen's message of "Tue, 24 Mar 2015 20:02:36 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: F6A658E4-D249-11E4-B46F-11859F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266202>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266203>
 
-Michael J Gruber <git@drmicha.warpmail.net> wrote:
-> Ralf Thielow venit, vidit, dixit 21.03.2015 22:21:
-> > Am 21. M=E4rz 2015 um 13:52 schrieb Phillip Sz <phillip.szelat@gmai=
-l.com>:
-> >>
-> >> I think we should use it like this, as most open-source projects d=
-o.
-> >> Also we should use a space before the three dots as per http://www=
-=2Eduden.de/sprachwissen/rechtschreibregeln/auslassungspunkte
-> >>
-> >=20
-> > I don't think this rule of ellipsis applies here as the dots are me=
-ant
-> > to be a pattern to tell users that an argument can be passed multip=
-le
-> > times.
-> >=20
->=20
-> "..." is used in (at least) 2 cases:
->=20
-> * ellipsis
-> * continuation arguments
->=20
-> The patch changes both, but the Duden rule applies to the first case
-> only (and is different from "legacy rules", I think).
->=20
-> Also, you might want to check the format of other commit messages and
-> reword yours accordingly.
->=20
+Duy Nguyen <pclouds@gmail.com> writes:
 
-Let's apply this instead.
+> Thank you for catching this. I was about to write "would be nice to
+> point out what tests fail so the reviewer has easier time trying
+> themselves", but whoa.. quite a few of them!
+>
+> May I suggest a slight modification. Even though stage info is messed
+> up before the index is merged, I think we should still check that both
+> front and base indexes have all the names sorted correctly (and even
+> stronger, the base index should never contain staged entries).
 
--- >8 --
-=46rom: Phillip Sz <phillip.szelat@gmail.com>
-Date: Sat, 21 Mar 2015 13:52:37 +0100
-Subject: [PATCH] l10n: de.po: add space before ellipsis
+I smell a slight layering violation here, though.  As far as the
+code to check the validity of the index is concerned, it is only
+about the in-core index other code uses at runtime, and how that
+in-core index is prepared, and most importantly, what is recorded in
+the istate before it gets ready to be used by other code, is not its
+concern.  The state immediately after the base index is read but
+before it gets fixed up by the split-index code can have quirks
+specific to how split-index code does things and it is perfectly OK
+if it does not pass the check for the final shape.
 
-Signed-off-by: Phillip Sz <phillip.szelat@gmail.com>
-Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
----
- po/de.po | 32 ++++++++++++++++----------------
- 1 file changed, 16 insertions(+), 16 deletions(-)
-
-diff --git a/po/de.po b/po/de.po
-index 11fbd0f..9fa3f4c 100644
---- a/po/de.po
-+++ b/po/de.po
-@@ -616,7 +616,7 @@ msgstr ""
- #: help.c:373
- #, c-format
- msgid "in %0.1f seconds automatically..."
--msgstr "Automatische Ausf=FChrung in %0.1f Sekunden..."
-+msgstr "Automatische Ausf=FChrung in %0.1f Sekunden ..."
-=20
- #: help.c:380
- #, c-format
-@@ -1271,12 +1271,12 @@ msgstr "Kann keine Commit-Beschreibung f=FCr %s=
- bekommen"
- #: sequencer.c:611
- #, c-format
- msgid "could not revert %s... %s"
--msgstr "Konnte \"revert\" nicht auf %s ausf=FChren... %s"
-+msgstr "Konnte \"revert\" nicht auf %s ausf=FChren ... %s"
-=20
- #: sequencer.c:612
- #, c-format
- msgid "could not apply %s... %s"
--msgstr "Konnte %s nicht anwenden... %s"
-+msgstr "Konnte %s nicht anwenden ... %s"
-=20
- #: sequencer.c:648
- msgid "empty commit set passed"
-@@ -2436,7 +2436,7 @@ msgstr "%s: Patch konnte nicht angewendet werden"
- #: builtin/apply.c:3653
- #, c-format
- msgid "Checking patch %s..."
--msgstr "Pr=FCfe Patch %s..."
-+msgstr "Pr=FCfe Patch %s ..."
-=20
- #: builtin/apply.c:3746 builtin/checkout.c:231 builtin/reset.c:135
- #, c-format
-@@ -4091,7 +4091,7 @@ msgstr "Konnte zu klonenden Remote-Branch %s nich=
-t finden."
- #: builtin/clone.c:561
- #, c-format
- msgid "Checking connectivity... "
--msgstr "Pr=FCfe Konnektivit=E4t... "
-+msgstr "Pr=FCfe Konnektivit=E4t ... "
-=20
- #: builtin/clone.c:564
- msgid "remote did not send all necessary objects"
-@@ -4165,12 +4165,12 @@ msgstr "Konnte Arbeitsverzeichnis '%s' nicht er=
-stellen."
- #: builtin/clone.c:870
- #, c-format
- msgid "Cloning into bare repository '%s'...\n"
--msgstr "Klone in Bare-Repository '%s'...\n"
-+msgstr "Klone in Bare-Repository '%s' ...\n"
-=20
- #: builtin/clone.c:872
- #, c-format
- msgid "Cloning into '%s'...\n"
--msgstr "Klone nach '%s'...\n"
-+msgstr "Klone nach '%s' ...\n"
-=20
- #: builtin/clone.c:897
- msgid "--dissociate given, but there is no --reference"
-@@ -4600,7 +4600,7 @@ msgstr ""
- #: builtin/commit.c:1199
- msgid "Clever... amending the last one with dirty index."
- msgstr ""
--"Klug... den letzten Commit mit einer ge=E4nderten Staging-Area nachbe=
-ssern."
-+"Klug ... den letzten Commit mit einer ge=E4nderten Staging-Area nachb=
-essern."
-=20
- #: builtin/commit.c:1201
- msgid "Explicit paths specified without -i or -o; assuming --only path=
-s..."
-@@ -7335,7 +7335,7 @@ msgstr "Aktualisiere %s..%s\n"
- #: builtin/merge.c:1388
- #, c-format
- msgid "Trying really trivial in-index merge...\n"
--msgstr "Probiere wirklich trivialen \"in-index\"-Merge...\n"
-+msgstr "Probiere wirklich trivialen \"in-index\"-Merge ...\n"
-=20
- #: builtin/merge.c:1395
- #, c-format
-@@ -7349,12 +7349,12 @@ msgstr "Vorspulen nicht m=F6glich, breche ab."
- #: builtin/merge.c:1450 builtin/merge.c:1529
- #, c-format
- msgid "Rewinding the tree to pristine...\n"
--msgstr "R=FCcklauf des Verzeichnisses bis zum Ursprung...\n"
-+msgstr "R=FCcklauf des Verzeichnisses bis zum Ursprung ...\n"
-=20
- #: builtin/merge.c:1454
- #, c-format
- msgid "Trying merge strategy %s...\n"
--msgstr "Probiere Merge-Strategie %s...\n"
-+msgstr "Probiere Merge-Strategie %s ...\n"
-=20
- #: builtin/merge.c:1520
- #, c-format
-@@ -7682,7 +7682,7 @@ msgstr "git notes copy [<Optionen>] <von-Objekt> =
-<nach-Objekt>"
-=20
- #: builtin/notes.c:51
- msgid "git notes copy --stdin [<from-object> <to-object>]..."
--msgstr "git notes copy --stdin [<von-Objekt> <nach-Objekt>]..."
-+msgstr "git notes copy --stdin [<von-Objekt> <nach-Objekt>] ..."
-=20
- #: builtin/notes.c:56
- msgid "git notes append [<options>] [<object>]"
-@@ -8689,7 +8689,7 @@ msgstr "git remote prune [<Optionen>] <Name>"
-=20
- #: builtin/remote.c:64
- msgid "git remote update [<options>] [<group> | <remote>]..."
--msgstr "git remote update [<Optionen>] [<Gruppe> | <externesRepository=
->]..."
-+msgstr "git remote update [<Optionen>] [<Gruppe> | <externesRepository=
->] ..."
-=20
- #: builtin/remote.c:88
- #, c-format
-@@ -9865,7 +9865,7 @@ msgstr "fehlerhaftes Objekt bei '%s'"
- #: builtin/tag.c:301
- #, c-format
- msgid "tag name too long: %.*s..."
--msgstr "Tagname zu lang: %.*s..."
-+msgstr "Tagname zu lang: %.*s ..."
-=20
- #: builtin/tag.c:306
- #, c-format
-@@ -10450,7 +10450,7 @@ msgstr ""
-=20
- #: git-am.sh:166
- msgid "Falling back to patching base and 3-way merge..."
--msgstr "Falle zur=FCck zum Patchen der Basis und des 3-Wege-Merges..."
-+msgstr "Falle zur=FCck zum Patchen der Basis und des 3-Wege-Merges ...=
-"
-=20
- #: git-am.sh:182
- msgid "Failed to merge in the changes."
-@@ -10943,7 +10943,7 @@ msgstr "=C4nderungen von $mb zu $onto:"
- msgid "First, rewinding head to replay your work on top of it..."
- msgstr ""
- "Zun=E4chst wird der Branch zur=FCckgespult, um Ihre =C4nderungen\n"
--"darauf neu anzuwenden..."
-+"darauf neu anzuwenden ..."
-=20
- #: git-rebase.sh:620
- #, sh-format
---=20
-2.3.3.434.g642b19b
+The above does not change if the current split-index code happens to
+promise certain properties in that intermediate state.  It is fine
+if the split-index codepath wants to add its own validator to the
+intermediate state for added robustness, but the rules for the
+intermediate state and the rules for the final state can be
+different, and from the maintainability's point of view, it is
+better if we keep the validator for the final-shape oblivious to
+what split-index does.
