@@ -1,75 +1,79 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: =?UTF-8?B?UmU6IFtQQVRDSCAxLzFdIGwxMG46IGRlLnBvOiB1c2UgImJsYSDigKYiIGluc3RlYWQgbw==?=
-	=?UTF-8?B?ZiAiYmxhLi4uIg==?=
-Date: Tue, 24 Mar 2015 18:34:16 +0100
-Message-ID: <CAN0XMOLq5WLy2kQzm6kxuEk0=sxvREO-rqv8x56CPsY7JkR34A@mail.gmail.com>
-References: <1426942357-5618-1-git-send-email-phillip.szelat@gmail.com>
-	<CAN0XMO+JLfzkYwP5rKkT6RyLJ-XuH1k=9vKmi1X0xb1SjTOdvg@mail.gmail.com>
-	<551190F2.10808@drmicha.warpmail.net>
-	<20150324171044.GA4414@ralf-ubuntu>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: Git ignore help
+Date: Tue, 24 Mar 2015 13:37:29 -0400
+Message-ID: <CAPig+cQE6-BaOPZQuQJV-ENX+M7oXhozuZmY0LwkdbwDp8xQhw@mail.gmail.com>
+References: <47F.3lxhK.7IviRa5Gutr.1L2}X3@seznam.cz>
+	<CAPig+cRU38sNHRsn=8=60wPO_AoQt-zn1dicFHwjG0OK-9tecQ@mail.gmail.com>
+	<CACsJy8CGuuRTGycj13cT9d-n=HavzL4LVWC7xjD4Ac=KQGEhBg@mail.gmail.com>
+	<CAPig+cT5=3kzEu4CzfYW3QtKqDDHn5uSwocoscFLU-T9M-+wiw@mail.gmail.com>
+	<CACsJy8DDC2FbKnu7o1cJR6F6Lh-NabaYtMYOKbm0xbn8PuKoEg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Phillip Sz <phillip.szelat@gmail.com>, git <git@vger.kernel.org>,
-	Thomas Rast <tr@thomasrast.ch>,
-	=?UTF-8?Q?Jan_Kr=C3=BCger?= <jk@jk.gs>,
-	Christian Stimming <stimming@tuhh.de>,
-	=?UTF-8?Q?Matthias_R=C3=BCster?= <matthias.ruester@gmail.com>,
-	=?UTF-8?Q?Magnus_G=C3=B6rlitz?= <magnus.goerlitz@googlemail.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Mar 24 18:34:27 2015
+Cc: mdconf@seznam.cz, Git List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 24 18:37:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YaSig-0005bq-4u
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Mar 2015 18:34:26 +0100
+	id 1YaSm1-0007dE-Mh
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Mar 2015 18:37:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933317AbbCXReT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Mar 2015 13:34:19 -0400
-Received: from mail-we0-f178.google.com ([74.125.82.178]:35280 "EHLO
-	mail-we0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752875AbbCXReS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Mar 2015 13:34:18 -0400
-Received: by weoy45 with SMTP id y45so19513290weo.2
-        for <git@vger.kernel.org>; Tue, 24 Mar 2015 10:34:16 -0700 (PDT)
+	id S1755252AbbCXRhg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Mar 2015 13:37:36 -0400
+Received: from mail-la0-f43.google.com ([209.85.215.43]:34287 "EHLO
+	mail-la0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755211AbbCXRhb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Mar 2015 13:37:31 -0400
+Received: by lagg8 with SMTP id g8so165524634lag.1
+        for <git@vger.kernel.org>; Tue, 24 Mar 2015 10:37:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=wi7Iq8pqALHK4UulvXqw7zwwR783WnoAZOLzMjPwAYw=;
-        b=Rm2RdyqsksgHferRzsVHeDqYEVuvjRf01YBh2hZKShk4Cek+Xj8FhliRDwRmwgrNCS
-         KmJKwZVpZ6xuW+eOsyn713DWkJfPflC2RRXvLbUKOr5lHSDe1nAgwTdYvzQK96usHv0y
-         a/Tu3m6EbpmFTIfmM8KeQmAvV7tWVd+f/YHpEHHFUIgrkWli7hJZLIHD/9OYkvpSjCGN
-         QkkOg2irnCuIyvsuBjyCabqjmrKKvMWkyiclTB9uwrCI+xjZi8VksGkcd2vGdmHIhcEt
-         FkGc4st8eYhXdvNYvlyHqwazXtWMlbSBdB0IFHJ9nfQFwlq6zhJcnOeJWh/8UnF+ANfV
-         mJuA==
-X-Received: by 10.194.76.69 with SMTP id i5mr10249701wjw.3.1427218456671; Tue,
- 24 Mar 2015 10:34:16 -0700 (PDT)
-Received: by 10.194.72.5 with HTTP; Tue, 24 Mar 2015 10:34:16 -0700 (PDT)
-In-Reply-To: <20150324171044.GA4414@ralf-ubuntu>
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=PoC5k775rk1WCYGq5DQR5PhjJqDCZg9K1AnBuRtA5rI=;
+        b=Q5vSewU3dFUcDNzDpWFYNyNEC4D3q6DZKL3SQhmA69Q/Q5Ye4ZxsxpLqfQDDw3Jhjp
+         BinCr1CbOAPsJlMgrSdxSm+7fQ4uhmUz/oh5qANPsOUJKgrUkQdwBdffuYMnbvnw1vQM
+         FOCaEwS4/B2rro+tHl6yrRLwJDMOeGa5VUZDsP9BYPl0CgvD5qAubt7gyc1nRZRNnnwf
+         SkTsHRydQiesqm9f2JU/L7FLoYJnuXq3gPW5t+nJq/QZQjP7soU0BDhcwL5OMWlzQVfe
+         3MYLpzVpZfkcKR+xlXkgn/nEwCGsIJF/qO2UUNKevkiUE9mEE+w31/cRxZyfUGmc9x7o
+         X5lA==
+X-Received: by 10.152.219.2 with SMTP id pk2mr4573223lac.107.1427218649837;
+ Tue, 24 Mar 2015 10:37:29 -0700 (PDT)
+Received: by 10.114.78.69 with HTTP; Tue, 24 Mar 2015 10:37:29 -0700 (PDT)
+In-Reply-To: <CACsJy8DDC2FbKnu7o1cJR6F6Lh-NabaYtMYOKbm0xbn8PuKoEg@mail.gmail.com>
+X-Google-Sender-Auth: vGn3ANPklmkxYscSU_Qn0YCx00g
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266206>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266207>
 
-2015-03-24 18:10 GMT+01:00 Ralf Thielow <ralf.thielow@gmail.com>:
-> Let's apply this instead.
+On Tue, Mar 24, 2015 at 5:39 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Tue, Mar 24, 2015 at 8:55 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>>> e.g. "db", "reports" or "scripts", we could keep going for a while. I
+>>> think I attempted to do this in the past and failed (don't remember
+>>> exactly why). Maybe I'll try again some time in future.
+>>
+>> I also was pretty sure that you had attempted this, but couldn't find
+>> a reference to it, so I didn't mention it in my response. However,
+>> with some more digging, I finally located it[1].
+>>
+>> [1]: http://article.gmane.org/gmane.comp.version-control.git/259870
 >
-> -- >8 --
+> Thank you. I only looked at my repo and no branch name suggested it
+> (if only there is google search for a git repository..). So I gave up
+> because of performance reasons again but that was for enabling it
+> unconditionaly. If we enable it via a config variable and the user is
+> made aware of the performance implications, I guess it would be ok. So
+> it's back in my back log.
 
->  #: builtin/notes.c:51
->  msgid "git notes copy --stdin [<from-object> <to-object>]..."
-> -msgstr "git notes copy --stdin [<von-Objekt> <nach-Objekt>]..."
-> +msgstr "git notes copy --stdin [<von-Objekt> <nach-Objekt>] ..."
->
->  #: builtin/remote.c:64
->  msgid "git remote update [<options>] [<group> | <remote>]..."
-> -msgstr "git remote update [<Optionen>] [<Gruppe> | <externesRepository>]..."
-> +msgstr "git remote update [<Optionen>] [<Gruppe> | <externesRepository>] ..."
->
-
-Oops.
-I'll remove the space in these two messages as the dots aren't
-ellipsis obviously.
+How much does a config variable actually help? In a sense, one could
+argue that this is already an opt-in feature since it requires
+crafting gitignore in a particular fashion. Existing projects which
+have (properly) functioning gitignore rules won't trigger this
+behavior. In many cases, Git already allows people to shoot themselves
+in the foot if they desire, thus, as long as the potential performance
+impact is properly documented, this could be considered another such
+instance.
