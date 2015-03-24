@@ -1,76 +1,130 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 00/14] numparse module: systematically tighten up integer parsing
-Date: Tue, 24 Mar 2015 08:58:38 -0700
-Message-ID: <xmqq619q8k0h.fsf@gitster.dls.corp.google.com>
-References: <1426608016-2978-1-git-send-email-mhagger@alum.mit.edu>
-	<xmqq7fudld61.fsf@gitster.dls.corp.google.com>
-	<551185D9.6050200@alum.mit.edu>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 00/14] numparse module: systematically tighten up integer
+ parsing
+Date: Tue, 24 Mar 2015 17:06:12 +0100
+Message-ID: <55118B74.1030201@alum.mit.edu>
+References: <1426608016-2978-1-git-send-email-mhagger@alum.mit.edu>	<20150319052620.GA30645@peff.net> <xmqqk2ydjvcd.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 8bit
 Cc: Jeff King <peff@peff.org>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue Mar 24 16:58:52 2015
+To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Mar 24 17:06:47 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YaRE8-0004Wl-8Y
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Mar 2015 16:58:48 +0100
+	id 1YaRLp-00019K-A5
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Mar 2015 17:06:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753327AbbCXP6n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Mar 2015 11:58:43 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:63550 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752139AbbCXP6l (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Mar 2015 11:58:41 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7796D406BA;
-	Tue, 24 Mar 2015 11:58:40 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=39LywMwJ6nIgfvoNbXRmGHaBokk=; b=UIvVfK
-	upMjztdZWOMNFTFXKGzq/tgHxOV5WpBzsFcITXecq/3wO52lih+0mTbh/PwgGOjW
-	q36R20G4O06+/GdjI7UWjM8FupCgLo22n3w+u+Uy1YX9hKFARUVGf1Poh9Y3KJJj
-	NHJ1X3WOyXKNI7wdsnnuj25Wg/x300j5+1zW4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=O+Y413DkSNUV3JNDshTslSgifd425nWd
-	NXWGKH9s+V6KsjX242DoAbgluQp2Ry45E6lYEs+TbVebVR8SDKNYW11YwqCB+DId
-	lNYyX4EG3CiDbA6wC2loZIDaL1av5PSJPKu45dEA362sKyfAyqPEQiRzKEXyMIWr
-	BgPL1gMracE=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 70846406B9;
-	Tue, 24 Mar 2015 11:58:40 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id ECD71406B7;
-	Tue, 24 Mar 2015 11:58:39 -0400 (EDT)
-In-Reply-To: <551185D9.6050200@alum.mit.edu> (Michael Haggerty's message of
-	"Tue, 24 Mar 2015 16:42:17 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: A3713DB6-D23E-11E4-855C-11859F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1754498AbbCXQGk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Mar 2015 12:06:40 -0400
+Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:62704 "EHLO
+	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753359AbbCXQGS (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Mar 2015 12:06:18 -0400
+X-AuditID: 1207440c-f79376d00000680a-8b-55118b762d37
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id BC.51.26634.67B81155; Tue, 24 Mar 2015 12:06:14 -0400 (EDT)
+Received: from [192.168.69.130] (p4FC9745A.dip0.t-ipconnect.de [79.201.116.90])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t2OG6CfX011426
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Tue, 24 Mar 2015 12:06:13 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.5.0
+In-Reply-To: <xmqqk2ydjvcd.fsf@gitster.dls.corp.google.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprFKsWRmVeSWpSXmKPExsUixO6iqFvWLRhq8P+VokXXlW4mi4beK8wW
+	P1p6mC0e35rA5MDi8ax3D6PH3PuWHhcvKXt83iQXwBLFbZOUWFIWnJmep2+XwJ2xfMlupoI5
+	4hV/T3WyNzBuE+xi5OSQEDCRuN+1kgnCFpO4cG89WxcjF4eQwGVGif1X9jJDOOeZJJb8PMkO
+	UsUroC1xftIXxi5GDg4WAVWJTyeFQMJsAroSi3qawQaJCgRJvLz1lxGiXFDi5MwnLCC2iICj
+	xIkH11lBbGYBI4lZN86A2cIC4RJL781mgtg1hVHi14cTYAlOAWuJ61samSEa9CR2XP8F1Swv
+	0bx1NvMERoFZSHbMQlI2C0nZAkbmVYxyiTmlubq5iZk5xanJusXJiXl5qUW6hnq5mSV6qSml
+	mxgh4cyzg/HbOplDjAIcjEo8vAFLBEKFWBPLiitzDzFKcjApifJOdxIMFeJLyk+pzEgszogv
+	Ks1JLT7EKMHBrCTC+7wdKMebklhZlVqUD5OS5mBREudVXaLuJySQnliSmp2aWpBaBJOV4eBQ
+	kuDV7wJqFCxKTU+tSMvMKUFIM3FwggznkhIpTs1LSS1KLC3JiAfFanwxMFpBUjxAe81B2nmL
+	CxJzgaIQracYFaXEeR92AiUEQBIZpXlwY2FJ6hWjONCXwrzhIO08wAQH1/0KaDAT0OBz+Xwg
+	g0sSEVJSDYxZG1r7Ew69bnknxWD5+Tw3k8yiPdJXZGeX2kYzCCzIUP2v+zhw77HrAs2zRN/8
+	mmO0yuXDxD6jIq8ay5a/z3v21+2+ku6Xd43D24KFcen5jKrppsX5l3ZFFj/+xWn0 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266193>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266194>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+On 03/19/2015 08:32 AM, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+> 
+>> I wonder how much of the boilerplate in the parse_* functions could be
+>> factored out to use a uintmax_t, with the caller just providing the
+>> range. That would make it easier to add new types like off_t, and
+>> possibly even constrained types (e.g., an integer from 0 to 100). On the
+>> other hand, you mentioned to me elsewhere that there may be some bugs in
+>> the range-checks of config.c's integer parsing. I suspect they are
+>> related to exactly this kind of refactoring, so perhaps writing things
+>> out is best.
+> 
+> I like this idea very well.  I wonder if we can implement the family
+> of
+> 
+>     parse_{type}(const char *, unsigned int flags,
+>     		 const char **endptr, {type} *result)
+> 
+> functions by calls a helper that internally deals with the numbers
+> in uintmax_t, and then checks if the value fits within the possible
+> range of the *result before returning.
+> 
+>     int parse_i(const char *str, unsigned flags,
+> 		const char **endptr, int *result) {
+> 	uintmax_t val;
+>         int sign = 1, status;
+>         if (*str == '-') {
+> 		sign = -1; 
+>                 str++;
+> 	}
+>         status = parse_num(str, flags, endptr, &val, INT_MAX);
+>         if (status < 0)
+>         	return status;
+> 	*result = sign < 0 ? -val : val;
+>         return 0;
+>     }
+> 
+> (assuming the last parameter to parse_num is used to check if the
+> result fits within that range).  Or that may be easier and cleaner
+> to be done in the caller with or something like that:
+> 
+> 	status = parse_num(str, flags, endptr, &val);
+>         if (status < 0)
+>         	return status;
+> 	if (INT_MAX <= val * sign || val * sign <= INT_MIN) {
+>         	errno = ERANGE;
+>                 return -1;
+> 	}
+> 
+> If we wanted to, we may even be able to avoid duplication of
+> boilerplate by wrapping the above pattern within a macro,
+> parameterizing the TYPE_{MIN,MAX} and using token pasting, to
+> expand to four necessary result types.
+> 
+> There is no reason for the implementation of the parse_num() helper
+> to be using strtoul(3) or strtoull(3); its behaviour will be under
+> our total control.  It can become fancier by enriching the flags
+> bits (e.g. allow scaling factor, etc.) only once and all variants
+> for various result types will get the same feature.
 
-> It is easy to allow "--abbrev=+7"; I would just need to add NUM_PLUS to
-> those call sites. Should I do so?
+Parsing numbers is not rocket science, but there are a lot of pitfalls,
+especially around overflow. It's even harder to write such code via
+macros and the result is less readable.
 
-The more relevant question to ask from my point of view is why you
-need to "add" NUM_PLUS to "enable" it.  What valid reason do you
-have to forbid it anywhere?  Only because you do not accept it by
-default, you need to "add" to "enable".
+This patch series is mostly about finding a reasonable API and whipping
+the callers into shape. That seems ambitious enough for me. I'd rather
+stick with boring wrappers for now and lean on strtol()/strtoul() to do
+the dirty work. It will be easy for a motivated person to change the
+implementation later.
 
->> Why is it a problem to allow "git cmd --hexval=0x1234", even if "git
->> cmd --hexval=1234" would suffice?
->
-> In some cases we would like to allow that flexibility; in some cases
-> not. But the strtol()/strtoul() functions *always* allow it.
+Michael
 
-The same issue.  Whare are these "some cases"?
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
