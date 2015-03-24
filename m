@@ -1,89 +1,128 @@
-From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: Re: [PATCH] read-cache: tighten checks for do_read_index
-Date: Tue, 24 Mar 2015 22:51:04 +0100
-Message-ID: <20150324215104.GB2006@hank>
-References: <CACsJy8CYi+hYu8zwOy=m7zZk3-8fr+Jq9uT4kEf8fLCOcjHJzw@mail.gmail.com>
- <1427216429-15569-1-git-send-email-t.gummerer@gmail.com>
- <xmqq384u5be7.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] gc: save log from daemonized gc --auto and print it next time
+Date: Tue, 24 Mar 2015 15:07:22 -0700
+Message-ID: <xmqqy4mm3v8l.fsf@gitster.dls.corp.google.com>
+References: <1427199448-28278-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
-	Jaime Soriano Pastor <jsorianopastor@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 24 22:51:18 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 24 23:07:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YaWjC-0002Dt-Pf
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Mar 2015 22:51:15 +0100
+	id 1YaWz2-0005xm-JF
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Mar 2015 23:07:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752366AbbCXVvK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Mar 2015 17:51:10 -0400
-Received: from mail-wg0-f46.google.com ([74.125.82.46]:36627 "EHLO
-	mail-wg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751976AbbCXVvI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Mar 2015 17:51:08 -0400
-Received: by wgra20 with SMTP id a20so5498249wgr.3
-        for <git@vger.kernel.org>; Tue, 24 Mar 2015 14:51:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=LoihTJZhxQp9Sx7N1pPiQYDBF42jwi2ac+iNikoKGZs=;
-        b=vpiG+vV00gXQ0Cb/2pPMMXxIBlYuV5fISuLz1aWCTH0CQ4x9/mgKP9vzHAmf/lMLUn
-         QpUwaiaW9m4PUBNxouw2HJDZfmx4CS+0vDDn3TzBaakhJToxHFUR5cFgRY1KkgJgJ905
-         5jmD1W+KLz0R1HQNB7dT82wx82Q65eo2K+qmRoTuvMyEkdAnFJNwuBUKyhSP2FIJu+5U
-         UE1PvIJo+nP9fF7zKoesMuriv6aCckChMwGYqWRD/LjeTGg2uDhcn7TEe2kqLNoHNMHY
-         gfM7PqOMF7KWJriDJk5OP0Og+XcIvd959ZQcEqU22gvOBqq/01wrIB2S9VYkD6d6nI0q
-         tUGw==
-X-Received: by 10.194.76.146 with SMTP id k18mr11878918wjw.115.1427233866896;
-        Tue, 24 Mar 2015 14:51:06 -0700 (PDT)
-Received: from localhost (213-66-41-37-no99.tbcn.telia.com. [213.66.41.37])
-        by mx.google.com with ESMTPSA id ew13sm1345666wid.1.2015.03.24.14.51.05
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 24 Mar 2015 14:51:06 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <xmqq384u5be7.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
+	id S1752699AbbCXWHa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Mar 2015 18:07:30 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:61350 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752117AbbCXWHZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Mar 2015 18:07:25 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2E8834318D;
+	Tue, 24 Mar 2015 18:07:24 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=7xYZ8syEe6Gf
+	btf7WVYySXa5wOY=; b=A6CujHZYUkR7jPw140TVte9uLkwJMDxKtQtB6QiaefrR
+	dp1ZwszVM18ui45P7NlBN7Y+FbNR3CQz/SHAhBnZYoVimpnAguTCkFaz5yCSfyGt
+	ubKmCOCbPqW+rz8/1ghG+JfB6yWbyKnjcx8L+8m0Df46QqJDntX5AADMhdjmzFY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Z5RV63
+	vGZJ/7VY+pRyHWdCI6ak7iLUrG53yplCeCGAsEGWJiAhpW5bx0/OvMt6/1zI05Nh
+	gtzjESZvX5nsSysqWKR7DZwEipz+dLNpYXqC4uXA6uQ1SjERssqeuHvTlLq2EkgK
+	e60eUEPFk6psru1XjXL3PheOacJEpGFUAyVdg=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 255584318C;
+	Tue, 24 Mar 2015 18:07:24 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 91FDD4318A;
+	Tue, 24 Mar 2015 18:07:23 -0400 (EDT)
+In-Reply-To: <1427199448-28278-1-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Tue, 24
+ Mar 2015 19:17:28 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 26262914-D272-11E4-9F09-11859F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266231>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266232>
 
-On 03/24, Junio C Hamano wrote:
-> Thomas Gummerer <t.gummerer@gmail.com> writes:
->
-> > 03f15a7 read-cache: fix reading of split index moved the checks for the
-> > correct order of index entries out of do_read_index.  This loosens the
-> > checks more than necessary.  Re-introduce the checks for the order, but
-> > don't error out when we have multiple stage-0 entries in the index.
-> > Return a flag for the caller instead, if we have multiple stage-0
-> > entries and let the caller decide if we need to error out.
-> >
-> > Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
-> > ---
-> >
-> > This is a patch on top of my previous patch, as that one has already
-> > been merged to next.
->
-> I am not convinced that this is a good change in the first place.
->
-> The original before your fix was wrong exactly because it was too
-> tightly tied to the implementation of the index file format where
-> there was only one file whose contents must be sorted, and that is
-> why it was a broken check in a new world with split-index.  And your
-> fix in 'next' is the right fix---it makes the verification happen
-> only on the result is given to the caller for its consumption.
->
-> It may be true that entries may have to be sorted in a certain order
-> when reading the original index file format and also reading some
-> steps in reading the split-index, but that merely happens to be an
-> imprementation detail of the two format currently supported, and as
-> we improve these formats (or even introduce yet another one) in the
-> longer term, this patch would re-introduce the same issue your
-> earlier fix corrected, wouldn't it?
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-Yes, after looking at it again I completely agree.  Sorry for the noise.
+> While commit 9f673f9 (gc: config option for running --auto in
+> background - 2014-02-08) helps reduce some complaints about 'gc
+> --auto' hogging the terminal, it creates another set of problems.
+>
+> The latest in this set is, as the result of daemonizing, stderr is
+> closed and all warnings are lost. This warning at the end of cmd_gc()
+> is particularly important because it tells the user how to avoid "gc
+> --auto" running repeatedly. Because stderr is closed, the user does
+> not know, naturally they complain about 'gc --auto' wasting CPU.
+>
+> Besides reverting 9f673f9 and looking at the problem from another
+> angle, we could save the stderr in $GIT_DIR/gc.log. Next time, 'gc
+> --auto' will print the saved warnings, delete gc.log and exit.
+
+I wonder what this buys us if multiple auto-gc's are triggered
+because the user is running a long svn import or something similar.
+
+> diff --git a/t/t6500-gc.sh b/t/t6500-gc.sh
+> index 63194d8..54bc9c4 100755
+> --- a/t/t6500-gc.sh
+> +++ b/t/t6500-gc.sh
+> @@ -30,4 +30,24 @@ test_expect_success 'gc -h with invalid configurat=
+ion' '
+>  	test_i18ngrep "[Uu]sage" broken/usage
+>  '
+> =20
+> +test_expect_success !MINGW 'gc --auto and logging' '
+> +	git init abc &&
+> +	(
+> +		cd abc &&
+> +		# These create blobs starting with the magic number "17"
+> +		for i in 901 944; do
+
+There are numbers smaller than these, like 263 and 410 ;-)
+
+> +			echo $i >test && git hash-object -w test >/dev/null
+
+"hash-object --stdin"?
+
+> +		done &&
+> +		git config gc.auto 1 &&
+
+test_config?
+
+> +		LANG=3DC git gc --auto &&
+> +		sleep 1 && # give it time to daemonize
+> +		while test -f .git/gc.pid; do sleep 1; done &&
+
+Yuck...
+
+> +		grep "too many unreachable loose objects" .git/gc.log &&
+> +		LANG=3DC git gc --auto 2>error &&
+> +		grep skipped error &&
+> +		grep "too many unreachable loose objects" error &&
+> +		! test -f .git/gc.log
+> +	)
+> +'
+
+=46or that "17/ has very many loose objects that are still young and
+unreachable" issue, I wonder if the right solution is somehow to
+flag the repository and prevent "gc --auto" from running until the
+situation improves.  "I checked at this time and found too many in
+17/"; upon finding that flag file (with a timestamp), if there are
+new files in 17/ or if there are other reasons to do a gc (perhaps
+there are too many packfiles to be consolidated?), then do the gc
+but otherwise quite silently before spending too many cycles on it,
+or something along that line?
