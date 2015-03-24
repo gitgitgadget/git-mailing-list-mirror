@@ -1,109 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 00/14] numparse module: systematically tighten up integer parsing
-Date: Tue, 24 Mar 2015 11:08:20 -0700
-Message-ID: <xmqq1tke6zfv.fsf@gitster.dls.corp.google.com>
-References: <1426608016-2978-1-git-send-email-mhagger@alum.mit.edu>
-	<xmqq7fudld61.fsf@gitster.dls.corp.google.com>
-	<551185D9.6050200@alum.mit.edu>
-	<xmqq619q8k0h.fsf@gitster.dls.corp.google.com>
-	<5511A166.3090009@alum.mit.edu>
+From: Trevor Saunders <tbsaunde@tbsaunde.org>
+Subject: Re: [PATCH, RFC] checkout: Attempt to checkout submodules
+Date: Tue, 24 Mar 2015 14:30:13 -0400
+Message-ID: <20150324183013.GA15658@tsaunders-iceball.corp.tor1.mozilla.com>
+References: <1426681643-7516-1-git-send-email-tbsaunde@tbsaunde.org>
+ <xmqqy4msizu1.fsf@gitster.dls.corp.google.com>
+ <20150319201509.GB21536@tsaunders-iceball.corp.tor1.mozilla.com>
+ <xmqq3850it94.fsf@gitster.dls.corp.google.com>
+ <20150320001345.GC21536@tsaunders-iceball.corp.tor1.mozilla.com>
+ <5510712C.5090906@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-2022-jp
-Cc: Jeff King <peff@peff.org>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue Mar 24 19:08:33 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Tue Mar 24 19:31:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YaTFf-0000GC-4z
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Mar 2015 19:08:31 +0100
+	id 1YaTbG-0004jM-Pm
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Mar 2015 19:30:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752708AbbCXSIZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Mar 2015 14:08:25 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:57726 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752346AbbCXSIY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Mar 2015 14:08:24 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6F62041004;
-	Tue, 24 Mar 2015 14:08:23 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1R/mj5Ag5Q8CEN8g1eSmTcCuXrA=; b=bEntTD
-	Dryv5BAaTph2awl6vjKqI2npPxFc7l36yfkcB6P9djwrvWzXT9gFE3RG+ZyUwoyz
-	wD65CgYPdeou+N2HDN5IgNa23RA38Z3Hf4C8ShpULvAhOQ7csDuq1y6yruYBuqep
-	Zxdg1NFc5pXAhZJRvOlZvNo79BrZ6rBv2wYYA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=hYw8Un0oryPzLpwjMw3IFbuTnY+S41xx
-	3RzIg/nWZs23LodvFU0VKwS0/9rgsIzxe/452XTke+CwI8U/QzS7pUan6A66WtMP
-	QhlpWj/k48iqFIdkRtJUdHYB5boAz/JeEjvVIVuziexl5z9W9qzNYMQgwg0Am/QY
-	5ln7PwsaFiU=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 681BD41003;
-	Tue, 24 Mar 2015 14:08:23 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 751B542000;
-	Tue, 24 Mar 2015 14:08:21 -0400 (EDT)
-In-Reply-To: <5511A166.3090009@alum.mit.edu> (Michael Haggerty's message of
-	"Tue, 24 Mar 2015 18:39:50 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: C194A1A4-D250-11E4-9AB4-11859F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1753527AbbCXSap (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Mar 2015 14:30:45 -0400
+Received: from tbsaunde.org ([66.228.47.254]:34316 "EHLO
+	paperclip.tbsaunde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752879AbbCXSao (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Mar 2015 14:30:44 -0400
+Received: from tsaunders-iceball.corp.tor1.mozilla.com (unknown [66.207.208.102])
+	by paperclip.tbsaunde.org (Postfix) with ESMTPSA id 6D84FC0A8;
+	Tue, 24 Mar 2015 18:30:43 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <5510712C.5090906@web.de>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266217>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266218>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+On Mon, Mar 23, 2015 at 09:01:48PM +0100, Jens Lehmann wrote:
+> Am 20.03.2015 um 01:13 schrieb Trevor Saunders:
+> >On Thu, Mar 19, 2015 at 02:15:19PM -0700, Junio C Hamano wrote:
+> >>Trevor Saunders <tbsaunde@tbsaunde.org> writes:
+> >>I have a feeling that an optional feature that allows "git submodule
+> >>update" to happen automatically from this codepath might be
+> >>acceptable by the submodule folks, and they might even say it does
+> >>not even have to be optional but should be enabled by default.
+> >
+> >ok, that seems fairly reasonable.  I do kind of wonder though if it
+> >shouldn't be 'git submodule update --checkout' but that would get us
+> >kind of back to where we started.  I guess since the default is checkout
+> >if you set the pref then you can be assumed to have some amount of idea
+> >what your doing.
+> 
+> Me thinks it should be "git checkout" for those submodules that have
+> their update setting set to 'checkout' (or not set at all). I'm not
+> sure yet if it makes sense to attempt a rebase or merge here, but that
+> can be added later if necessary.
 
-> Regarding specifically allowing/disallowing a leading '+': I saw a
-> couple of callsites that explicitly check that the first character is a
-> digit before calling strtol(). I assumed that is to disallow sign
-> characters [1]. For example,
->
->     diff.c: optarg()
+sgtm
 
-This one I know is from "if not a digit we know it is not a number";
-it is not an attempt to say "we must forbid numbers to be spelled
-with '+'", but more about "we do not need it and this is easier to
-code without a full fledged str-to-num helper API" sloppiness.
+> >>But I do not think it would fly well to unconditionally run
+> >>"checkout -f" here.
+> >
+> >agreed
+> 
+> Using -f here is ok when you extend the appropriate verify functions
+> in unpack-trees.c to check that no modifications will be lost (unless
+> the original checkout is used with -f). See the commit 76dbdd62
+> ("submodule: teach unpack_trees() to update submodules") in my github
+> repo at https://github.com/jlehmann/git-submod-enhancements for
+> the basic concept (There is already a fixup! for that a bit further
+> down the branch which handles submodule to file conversion, maybe one
+> or two other changes will be needed when the test suite covers all
+> relevant cases).
 
->     builtin/apply.c: parse_num()
+ah, I see your already working a more complete solution to this sort of
+issue.  I'll get out of your way then unless you want help.
 
-This parses "@@ -l,k +m,n @@@" after stripping the punctuation
-around the numbers, so this is a valid reason why you would want an
-optional feature "CANNOT_HAVE_SIGN" in the str-to-num parser and use
-it.
+Trev
 
->     maybe date.c: match_multi_number()
-
-The approxidate callers parse random garbage input and attempt to
-make best sense out of it, so they tend to try limitting the damage
-caused by incorrect guesses by insisting "we do not consider +0 to
-be zero" and such.  So this is a valid reason why you would want an
-optional feature "CANNOT_HAVE_SIGN" in the str-to-num parser and use
-it.
-
-> I'm coming around to an alternate plan:
->
-> Step 1: write a NUM_DEFAULT combination-of-options that gives the new
-> functions behavior very like strtol()/strtoul() but without their insane
-> features.
->
-> Step 2: rewrite all callers to use that option (and usually endptr=NULL,
-> meaning no trailing characters) unless it is manifestly clear that they
-> are already trying to forbid some other features. This will already
-> produce the largest benefit: avoiding overflows, missing error checking,
-> etc.
->
-> Steps 3 through ∞: as time allows, rewrite individual callsites to be
-> stricter where appropriate.
->
-> Hopefully steps 1 and 2 will not be too controversial.
-
-All sounds sensible to me.
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
