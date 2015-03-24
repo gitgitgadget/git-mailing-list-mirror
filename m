@@ -1,279 +1,187 @@
 From: Paul Tan <pyokagan@gmail.com>
-Subject: [PATCH v5 1/3] git-credential-store: support multiple credential files
-Date: Tue, 24 Mar 2015 13:20:27 +0800
-Message-ID: <1427174429-5876-1-git-send-email-pyokagan@gmail.com>
+Subject: [PATCH v5 2/3] git-credential-store: support XDG_CONFIG_HOME
+Date: Tue, 24 Mar 2015 13:20:28 +0800
+Message-ID: <1427174429-5876-2-git-send-email-pyokagan@gmail.com>
+References: <1427174429-5876-1-git-send-email-pyokagan@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Paul Tan <pyokagan@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 24 06:22:02 2015
+X-From: git-owner@vger.kernel.org Tue Mar 24 06:22:05 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YaHHt-0002u6-Kn
+	id 1YaHHt-0002u6-1A
 	for gcvg-git-2@plane.gmane.org; Tue, 24 Mar 2015 06:22:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752828AbbCXFV4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Mar 2015 01:21:56 -0400
-Received: from mail-pd0-f170.google.com ([209.85.192.170]:36013 "EHLO
-	mail-pd0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751275AbbCXFVy (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1752751AbbCXFVy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Tue, 24 Mar 2015 01:21:54 -0400
-Received: by pdbcz9 with SMTP id cz9so209921981pdb.3
-        for <git@vger.kernel.org>; Mon, 23 Mar 2015 22:21:53 -0700 (PDT)
+Received: from mail-pd0-f179.google.com ([209.85.192.179]:33019 "EHLO
+	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751935AbbCXFVx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Mar 2015 01:21:53 -0400
+Received: by pdnc3 with SMTP id c3so210218143pdn.0
+        for <git@vger.kernel.org>; Mon, 23 Mar 2015 22:21:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=D53Fv/reCP4ci+033lORks7XIzd7bk3b5oX0MnxXUeA=;
-        b=aFEDIFVqt9wI2mXx8YM0d7ccFjSEZxw/wIFXsoU578okCddw+6Rf618Z2uNfvpegwC
-         Gb373kb8RUEIXD08f4e401RQAujpP5yZakyqqfmXIbZo51CfAZ/eaTq7cQVnfukDKJwL
-         Mj8W9ZAzSGUvc2GwLoTEUO6UvqhZLOrv8P8pzotQM6zyKd/v2O1zlx0U4lgxudlLKeME
-         zxRuSpJ8JgZYCVT9KucEu/3ik9T2omePwmHQ6pJVtf30FgDaaHFTfNbpX4EZJUdYQ3mI
-         5SxWpyRPiCEuDBKPZEmHcNMDmHaYQ07MSUKF3WNCkOvX4PMge3StZdh8Qa13NvrHmabR
-         gvFw==
-X-Received: by 10.68.194.233 with SMTP id hz9mr4389111pbc.55.1427174513325;
-        Mon, 23 Mar 2015 22:21:53 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=L4Qkuwi0KxQJiN4EMrTX9HPc8MXQwrpJnRz2i/H6Fds=;
+        b=NZB8TkD2z2EjZcM4c74B/+V8bzus55+fJvcQa/eai7kFda/lfZ7lMlpUtWnFEHeEsd
+         kT/l1f+2LL/TxD/DCRGKdAWVSRvBWZEJVO1w+a83VQT3/lgiC5GsqAuBLHtH4wfRYk3O
+         4oh8bhSV3QZoiBBkmAysyHVlxsCfntMSwAE7eIsDKWgrumlMp3kNY16jEMTct6y4OeCx
+         e7cm2Z2zDBzNovIuI4E6stgBnCKRa8nQgi4xMg0tOiCmTtVLOgOb3KIGY2O1aUsFMYzV
+         yXsiC7ASAvs+SNaCdXBKP7aATGI8P+9+qGaUE8MvXSC52aWhhqYjBQSSBtfrER9cydF4
+         CYaA==
+X-Received: by 10.66.55.104 with SMTP id r8mr4279214pap.75.1427174512718;
+        Mon, 23 Mar 2015 22:21:52 -0700 (PDT)
 Received: from yoshi.chippynet.com ([116.86.172.217])
-        by mx.google.com with ESMTPSA id x3sm2807985pdo.0.2015.03.23.22.21.50
+        by mx.google.com with ESMTPSA id pb2sm2753854pdb.33.2015.03.23.22.21.50
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
         Mon, 23 Mar 2015 22:21:51 -0700 (PDT)
 Received: from pyokagan by yoshi.chippynet.com with local (Exim 4.84)
 	(envelope-from <pyokagan@yoshi.chippynet.com>)
-	id 1YaHHg-0001du-CT; Tue, 24 Mar 2015 13:21:48 +0800
+	id 1YaHHg-0001dy-DP; Tue, 24 Mar 2015 13:21:48 +0800
 X-Mailer: git-send-email 2.1.4
+In-Reply-To: <1427174429-5876-1-git-send-email-pyokagan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266176>
 
-Previously, git-credential-store only supported storing credentials in a
-single file: ~/.git-credentials. In order to support the XDG base
-directory specification[1], git-credential-store needs to be able to
-lookup and erase credentials from multiple files, as well as to pick the
-appropriate file to write to so that the credentials can be found on
-subsequent lookups.
+Add $XDG_CONFIG_HOME/git/credentials to the default credential search
+path of git-credential-store. This allows git-credential-store to
+support user-specific configuration files in accordance with the XDG
+base directory specification[1].
 
 [1] http://standards.freedesktop.org/basedir-spec/basedir-spec-0.7.html
 
-Note that some credential storage files may not be owned, readable or
-writable by the user, as they may be system-wide files that are meant to
-apply to every user.
+~/.git-credentials has a higher precedence than
+$XDG_CONFIG_HOME/git/credentials when looking up credentials.  This
+means that if any duplicate matching credentials are found in the xdg
+file (due to ~/.git-credentials being updated by old versions of git or
+outdated tools), they will not be used at all. This is to give the user
+some leeway in switching to old versions of git while keeping the xdg
+directory. This is consistent with the behavior of git-config.
 
-Instead of a single file path, lookup_credential(), remove_credential()
-and store_credential() now take a precedence-ordered string_list of
-file paths. lookup_credential() expects both user-specific and
-system-wide credential files to be provided to support the use case of
-system administrators setting default credentials for users.
-remove_credential() and store_credential() expect only the user-specific
-credential files to be provided as usually the only config files that
-users are allowed to edit are their own user-specific ones.
+However, the higher precedence of ~/.git-credentials means that as long
+as ~/.git-credentials exist, all credentials will be written to the
+~/.git-credentials file even if the user has an xdg file as having a
+~/.git-credentials file indicates that the user wants to preserve
+backwards-compatibility. This is also consistent with the behavior of
+git-config.
 
-lookup_credential() will read these (user-specific and system-wide) file
-paths in order until it finds the 1st matching credential and print it.
-As some files may be private and thus unreadable, any file which cannot
-be read will be ignored silently.
+To make this precedence explicit in docs/git-credential-store, add a new
+section FILES that lists out the credential file paths in their order of
+precedence, and explain how the ordering affects the lookup, storage and
+erase operations.
 
-remove_credential() will erase credentials from all (user-specific)
-files in the list.  This is because if credentials are only erased from
-the file with the highest precedence, a matching credential may still be
-found in a file further down the list. (Note that due to the lockfile
-code, this requires the directory to be writable, which should be so for
-user-specific config files)
+Also, update the documentation for --file to briefly explain the
+operations on multiple files if the --file option is not provided.
 
-store_credential() will write the credentials to the first existing
-(user-specific) file in the list. If none of the files in the list
-exist, store_credential() will write to the filename specified by the
-first item of the filename list. For backwards compatibility, this
-filename should be "~/.git-credentials".
+Since the xdg file will not be used unless it actually exists, to
+prevent the situation where some credentials are present in the xdg file
+while some are present in the home file, users are recommended to not
+create the xdg file if they require compatibility with old versions of
+git or outdated tools. Note, though, that "erase" can be used to
+explicitly erase matching credentials from all files.
 
 Helped-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 Helped-by: Junio C Hamano <gitster@pobox.com>
 Helped-by: Jeff King <peff@peff.net>
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 Signed-off-by: Paul Tan <pyokagan@gmail.com>
 ---
 
-The previous version can be found at [1].
+This patch is a combination of 2 patches [1][2].
 
-[1] http://thread.gmane.org/gmane.comp.version-control.git/265683
+[1] http://thread.gmane.org/gmane.comp.version-control.git/265683/focus=265686
+
+[2] http://thread.gmane.org/gmane.comp.version-control.git/265683/focus=265685
 
 The changes are as follows:
 
-* Fix comment formatting error. Thanks Matthieu.
+* s/per default/by default/ in the documentation. Thanks Matthieu.
 
- credential-store.c | 81 +++++++++++++++++++++++++++++++++++++-----------------
- 1 file changed, 56 insertions(+), 25 deletions(-)
+ Documentation/git-credential-store.txt | 35 ++++++++++++++++++++++++++++++++--
+ credential-store.c                     | 13 +++++++++----
+ 2 files changed, 42 insertions(+), 6 deletions(-)
 
+diff --git a/Documentation/git-credential-store.txt b/Documentation/git-credential-store.txt
+index bc97071..e3c8f27 100644
+--- a/Documentation/git-credential-store.txt
++++ b/Documentation/git-credential-store.txt
+@@ -31,10 +31,41 @@ OPTIONS
+ 
+ --file=<path>::
+ 
+-	Use `<path>` to store credentials. The file will have its
++	Use `<path>` to lookup and store credentials. The file will have its
+ 	filesystem permissions set to prevent other users on the system
+ 	from reading it, but will not be encrypted or otherwise
+-	protected. Defaults to `~/.git-credentials`.
++	protected. If not specified, credentials will be searched for from
++	`~/.git-credentials` and `$XDG_CONFIG_HOME/git/credentials`, and
++	credentials will be written to `~/.git-credentials` if it exists, or
++	`$XDG_CONFIG_HOME/git/credentials` if it exists and the former does
++	not. See also <<FILES>>.
++
++[[FILES]]
++FILES
++-----
++
++If not set explicitly with '--file', there are two files where
++git-credential-store will search for credentials in order of precedence:
++
++~/.git-credentials::
++	User-specific credentials file.
++
++$XDG_CONFIG_HOME/git/credentials::
++	Second user-specific credentials file. If '$XDG_CONFIG_HOME' is not set
++	or empty, `$HOME/.config/git/credentials` will be used. Any credentials
++	stored in this file will not be used if `~/.git-credentials` has a
++	matching credential as well. It is a good idea not to create this file
++	if you sometimes use older versions of Git that do not support it.
++
++For credential lookups, the files are read in the order given above, with the
++first matching credential found taking precedence over credentials found in
++files further down the list.
++
++Credential storage will by default write to the first existing file in the
++list. If none of these files exist, `~/.git-credentials` will be created and
++written to.
++
++When erasing credentials, matching credentials will be erased from all files.
+ 
+ EXAMPLES
+ --------
 diff --git a/credential-store.c b/credential-store.c
-index 925d3f4..d700a93 100644
+index d700a93..8b22251 100644
 --- a/credential-store.c
 +++ b/credential-store.c
-@@ -6,7 +6,7 @@
+@@ -165,11 +165,16 @@ int main(int argc, char **argv)
+ 		usage_with_options(usage, options);
+ 	op = argv[0];
  
- static struct lock_file credential_lock;
- 
--static void parse_credential_file(const char *fn,
-+static int parse_credential_file(const char *fn,
- 				  struct credential *c,
- 				  void (*match_cb)(struct credential *),
- 				  void (*other_cb)(struct strbuf *))
-@@ -14,18 +14,20 @@ static void parse_credential_file(const char *fn,
- 	FILE *fh;
- 	struct strbuf line = STRBUF_INIT;
- 	struct credential entry = CREDENTIAL_INIT;
-+	int found_credential = 0;
- 
- 	fh = fopen(fn, "r");
- 	if (!fh) {
--		if (errno != ENOENT)
-+		if (errno != ENOENT && errno != EACCES)
- 			die_errno("unable to open %s", fn);
--		return;
-+		return found_credential;
- 	}
- 
- 	while (strbuf_getline(&line, fh, '\n') != EOF) {
- 		credential_from_url(&entry, line.buf);
- 		if (entry.username && entry.password &&
- 		    credential_match(c, &entry)) {
-+			found_credential = 1;
- 			if (match_cb) {
- 				match_cb(&entry);
- 				break;
-@@ -38,6 +40,7 @@ static void parse_credential_file(const char *fn,
- 	credential_clear(&entry);
- 	strbuf_release(&line);
- 	fclose(fh);
-+	return found_credential;
- }
- 
- static void print_entry(struct credential *c)
-@@ -64,21 +67,10 @@ static void rewrite_credential_file(const char *fn, struct credential *c,
- 		die_errno("unable to commit credential store");
- }
- 
--static void store_credential(const char *fn, struct credential *c)
-+static void store_credential_file(const char *fn, struct credential *c)
- {
- 	struct strbuf buf = STRBUF_INIT;
- 
--	/*
--	 * Sanity check that what we are storing is actually sensible.
--	 * In particular, we can't make a URL without a protocol field.
--	 * Without either a host or pathname (depending on the scheme),
--	 * we have no primary key. And without a username and password,
--	 * we are not actually storing a credential.
--	 */
--	if (!c->protocol || !(c->host || c->path) ||
--	    !c->username || !c->password)
--		return;
--
- 	strbuf_addf(&buf, "%s://", c->protocol);
- 	strbuf_addstr_urlencode(&buf, c->username, 1);
- 	strbuf_addch(&buf, ':');
-@@ -95,8 +87,37 @@ static void store_credential(const char *fn, struct credential *c)
- 	strbuf_release(&buf);
- }
- 
--static void remove_credential(const char *fn, struct credential *c)
-+static void store_credential(const struct string_list *fns, struct credential *c)
- {
-+	struct string_list_item *fn;
-+
-+	/*
-+	 * Sanity check that what we are storing is actually sensible.
-+	 * In particular, we can't make a URL without a protocol field.
-+	 * Without either a host or pathname (depending on the scheme),
-+	 * we have no primary key. And without a username and password,
-+	 * we are not actually storing a credential.
-+	 */
-+	if (!c->protocol || !(c->host || c->path) || !c->username || !c->password)
-+		return;
-+
-+	for_each_string_list_item(fn, fns)
-+		if (!access(fn->string, F_OK)) {
-+			store_credential_file(fn->string, c);
-+			return;
-+		}
-+	/*
-+	 * Write credential to the filename specified by fns->items[0], thus
-+	 * creating it
-+	 */
-+	if (fns->nr)
-+		store_credential_file(fns->items[0].string, c);
-+}
-+
-+static void remove_credential(const struct string_list *fns, struct credential *c)
-+{
-+	struct string_list_item *fn;
-+
- 	/*
- 	 * Sanity check that we actually have something to match
- 	 * against. The input we get is a restrictive pattern,
-@@ -105,14 +126,20 @@ static void remove_credential(const char *fn, struct credential *c)
- 	 * to empty input. So explicitly disallow it, and require that the
- 	 * pattern have some actual content to match.
- 	 */
--	if (c->protocol || c->host || c->path || c->username)
--		rewrite_credential_file(fn, c, NULL);
-+	if (!c->protocol && !c->host && !c->path && !c->username)
-+		return;
-+	for_each_string_list_item(fn, fns)
-+		if (!access(fn->string, F_OK))
-+			rewrite_credential_file(fn->string, c, NULL);
- }
- 
--static int lookup_credential(const char *fn, struct credential *c)
-+static void lookup_credential(const struct string_list *fns, struct credential *c)
- {
--	parse_credential_file(fn, c, print_entry, NULL);
--	return c->username && c->password;
-+	struct string_list_item *fn;
-+
-+	for_each_string_list_item(fn, fns)
-+		if (parse_credential_file(fn->string, c, print_entry, NULL))
-+			return; /* Found credential */
- }
- 
- int main(int argc, char **argv)
-@@ -123,6 +150,7 @@ int main(int argc, char **argv)
- 	};
- 	const char *op;
- 	struct credential c = CREDENTIAL_INIT;
-+	struct string_list fns = STRING_LIST_INIT_DUP;
- 	char *file = NULL;
- 	struct option options[] = {
- 		OPT_STRING(0, "file", &file, "path",
-@@ -139,20 +167,23 @@ int main(int argc, char **argv)
- 
- 	if (!file)
- 		file = expand_user_path("~/.git-credentials");
 -	if (!file)
-+	if (file)
-+		string_list_append(&fns, file);
-+	else
+-		file = expand_user_path("~/.git-credentials");
+-	if (file)
++	if (file) {
+ 		string_list_append(&fns, file);
+-	else
++	} else {
++		if ((file = expand_user_path("~/.git-credentials")))
++			string_list_append_nodup(&fns, file);
++		home_config_paths(NULL, &file, "credentials");
++		if (file)
++			string_list_append_nodup(&fns, file);
++	}
++	if (!fns.nr)
  		die("unable to set up default path; use --file");
  
  	if (credential_read(&c, stdin) < 0)
- 		die("unable to read credential");
- 
- 	if (!strcmp(op, "get"))
--		lookup_credential(file, &c);
-+		lookup_credential(&fns, &c);
- 	else if (!strcmp(op, "erase"))
--		remove_credential(file, &c);
-+		remove_credential(&fns, &c);
- 	else if (!strcmp(op, "store"))
--		store_credential(file, &c);
-+		store_credential(&fns, &c);
- 	else
- 		; /* Ignore unknown operation. */
- 
-+	string_list_clear(&fns, 0);
- 	return 0;
- }
 -- 
 2.1.4
