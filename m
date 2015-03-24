@@ -1,87 +1,65 @@
 From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: Git ignore help
-Date: Tue, 24 Mar 2015 20:11:12 +0700
-Message-ID: <CACsJy8CY20niCrFYq04KHxS-8xsWdGWcr_vLBvcphcSznbJzFw@mail.gmail.com>
-References: <CAPig+cT5=3kzEu4CzfYW3QtKqDDHn5uSwocoscFLU-T9M-+wiw@mail.gmail.com>
- <47F.3lxhK.7IviRa5Gutr.1L2}X3@seznam.cz> <CAPig+cRU38sNHRsn=8=60wPO_AoQt-zn1dicFHwjG0OK-9tecQ@mail.gmail.com>
- <CACsJy8CGuuRTGycj13cT9d-n=HavzL4LVWC7xjD4Ac=KQGEhBg@mail.gmail.com>
- <CACsJy8DDC2FbKnu7o1cJR6F6Lh-NabaYtMYOKbm0xbn8PuKoEg@mail.gmail.com> <1PE.3lxh4.2cruo5kZ0hh.1L4LoZ@seznam.cz>
+Subject: Re: [PATCH 10/15] commit.c: fix a memory leak
+Date: Tue, 24 Mar 2015 20:42:17 +0700
+Message-ID: <CACsJy8A3CptGYNAZ=+k0ykBCp6SGoOLY0nX20WkWQp=qUnxwWg@mail.gmail.com>
+References: <1426897692-18322-1-git-send-email-sbeller@google.com>
+ <1426897692-18322-11-git-send-email-sbeller@google.com> <xmqqk2ybatm1.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-Cc: Git List <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: mdconf@seznam.cz
-X-From: git-owner@vger.kernel.org Tue Mar 24 14:12:06 2015
+Cc: Stefan Beller <sbeller@google.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 24 14:43:07 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YaOcW-0007lM-2d
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Mar 2015 14:11:48 +0100
+	id 1YaP6o-0000X8-Vc
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Mar 2015 14:43:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752192AbbCXNLn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Mar 2015 09:11:43 -0400
-Received: from mail-ig0-f169.google.com ([209.85.213.169]:35046 "EHLO
-	mail-ig0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752161AbbCXNLm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Mar 2015 09:11:42 -0400
-Received: by igcau2 with SMTP id au2so71048208igc.0
-        for <git@vger.kernel.org>; Tue, 24 Mar 2015 06:11:42 -0700 (PDT)
+	id S1752694AbbCXNmw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Mar 2015 09:42:52 -0400
+Received: from mail-ig0-f172.google.com ([209.85.213.172]:36657 "EHLO
+	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752632AbbCXNms (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Mar 2015 09:42:48 -0400
+Received: by igbud6 with SMTP id ud6so71947453igb.1
+        for <git@vger.kernel.org>; Tue, 24 Mar 2015 06:42:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=8+4d+IiaioHTscSbw+C4xvKA1FoBlsOFEJ5f+vIPJW8=;
-        b=Z+b1i+c+duYai4u4A6DPmOouyLlCFfY6oxEht25NhyAzgLG9mfkhSRtYJrHokB7MC3
-         C6ethC61Sc8Jg6rWWxSZ5VIezo2+MptT8i/joqBOjFxCobmR2CGcLzdRGJJ37TAkeTdl
-         WKOEsFadx9elfB05hYmDjYSjuGX1W2ZNOJ2QZwijkPeZ/lDnu12PQy8Du2/r+WaL+NwA
-         n+afRlAEBwtsLPDZNY9o7rLSiZRrrhYqKntnxPvQJ9xW9s6ZszLC90y8VkgcU4wfCt0Z
-         WUhgzglo3q7ZzNxCwDXhf0xz2fkNl/BCSixwV9lHIJsTulzuSMn6irv91Zaw35aQrupA
-         xVHg==
-X-Received: by 10.50.122.5 with SMTP id lo5mr21903584igb.37.1427202702249;
- Tue, 24 Mar 2015 06:11:42 -0700 (PDT)
-Received: by 10.107.131.33 with HTTP; Tue, 24 Mar 2015 06:11:12 -0700 (PDT)
-In-Reply-To: <1PE.3lxh4.2cruo5kZ0hh.1L4LoZ@seznam.cz>
+         :cc:content-type;
+        bh=22hFlphcFY7rdXyLFpexb1BCZXcgAWGdfYbL/eTeNgg=;
+        b=qsP5o84PzTkcJZL2D4a+Qp+KyoXPU0m3aj5EvH8+ctzPI0CWrVbjdtm7+CzW8AXM6U
+         wq5Qiycoa8YoFYSDsdwcBFmp676InqnWW/CJ8COQ2ciNrhwvxBhAtDeyMzcI6QwNuazG
+         q07DC0gsaP2PfyT9MXGBCOdUz95uRtiVCoyI7c+bs+TU/zFTRtF8U2dZMob4p5gu5A4G
+         LUu7IfvHG4KTx9ASCI9/FR1ORZ+5xNA/+D2aeJB0d0vdgGXXZB4Gf60eawiSW3OGOfBW
+         n6iN7q7GQbmk+Ci333FSW8hNJojZU7Cirs8cZvDAMQjSbI8fSTYexNSB6ABQbCY6DSPw
+         2RtA==
+X-Received: by 10.50.131.196 with SMTP id oo4mr22437066igb.2.1427204567818;
+ Tue, 24 Mar 2015 06:42:47 -0700 (PDT)
+Received: by 10.107.131.33 with HTTP; Tue, 24 Mar 2015 06:42:17 -0700 (PDT)
+In-Reply-To: <xmqqk2ybatm1.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266186>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266187>
 
-On Tue, Mar 24, 2015 at 7:46 PM,  <mdconf@seznam.cz> wrote:
-> Duy, you wrote:
->
-> "This is true. To elaborate, if we have to recurse in excluded directories so that we can include some back, then the reason for excluding is already defeated as we may need to traverse the entire directory structure. However in this particular case where we do know in advance that only certain directories may have "re-include" rules, e.g. "db", "reports" or "scripts", we could keep going for a while."
->
-> ... so according to that it sounds like including /db, /reports, /scripts should actually also NOT work. But it does work - i.e. when I add the following:
->
-> # exclude
-> /*
->
-> # except
-> !/db
-> !/reports
-> !/scripts
->
-> then any content within those 3 directories (and their sub directories) is included and not ignored...
->
-> It ONLY does not work when I add more levels - e.g.:
->
-> !/reports/something
->
-> In this case neither /reports nor /reports/something or any sub directory is included.
+On Sat, Mar 21, 2015 at 10:59 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> A further tangent (Duy Cc'ed for this point).  We might want to
+> rethink the interface to ce_path_match() and report_path_error()
+> so that we do not have to do a separate allocation of "has this
+> pathspec been used?" array.  This was a remnant from the olden days
+> back when pathspec were mere "const char **" where we did not have
+> any room to add per-item bit---these days pathspec is repreasented
+> as an array of "struct pathspec" and we can afford to add a bit
+> to the structure---which will make this kind of leak much less
+> likely to happen.
 
-Yes. It's the subtlety of optimizing ;-) If you read the man page
-really carefully (*), "if the _parent_ directory of that file(**) is
-excluded" and the parent of these three directories is _not_ excluded.
-
-(*) I'm not saying this is a good thing. Only docs such as language
-spec or RFCs need that level of attention. But I'm not a good document
-writer myself, can't blame others. Improvements are welcome though.
-
-(**) "that file" should be "that file or directory" but I guess
-simplification here is ok
+I just want to say "noted" (and therefore in my backlog). But no
+promise that it will happen any time soon. Low hanging fruit, perhaps
+some people may be interested..
 -- 
 Duy
