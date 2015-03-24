@@ -1,136 +1,98 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 00/14] numparse module: systematically tighten up integer
- parsing
-Date: Tue, 24 Mar 2015 18:39:50 +0100
-Message-ID: <5511A166.3090009@alum.mit.edu>
-References: <1426608016-2978-1-git-send-email-mhagger@alum.mit.edu>	<xmqq7fudld61.fsf@gitster.dls.corp.google.com>	<551185D9.6050200@alum.mit.edu> <xmqq619q8k0h.fsf@gitster.dls.corp.google.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [RFC/PATCH 0/3] protocol v2
+Date: Tue, 24 Mar 2015 10:42:12 -0700
+Message-ID: <CAGZ79kZ22Fo5xGrk3x5+hV6WdbUg0A0h1fXgPBukenOxqyxVZw@mail.gmail.com>
+References: <xmqqsidtoojh.fsf@gitster.dls.corp.google.com>
+	<CAGZ79kZE2+tCZgDzeTrQBn6JQv1OWJ7t_8j4kYMQgVaAbsnnxw@mail.gmail.com>
+	<CACsJy8ASR-O-7tozw=p1Ek0ugct5EVZyWtxY_YA2nqcUV_+ECw@mail.gmail.com>
+	<xmqqzj80l9c7.fsf@gitster.dls.corp.google.com>
+	<xmqqioenhs4p.fsf@gitster.dls.corp.google.com>
+	<CAGZ79kY6B4BLvLVS-J50SqCz+t9uGd93WHxCYKmRU1Ey3qVg+A@mail.gmail.com>
+	<CAPc5daXJ6s2oNvqSmtp5d-Dgm-EX6Mb8kY2nOLQVxAT-3wjAmQ@mail.gmail.com>
+	<CAGZ79ka8Zg86qqvWByNiP3F6a9QggO-bNY3ZZ9g+A-MdKYQ7NQ@mail.gmail.com>
+	<xmqqioekawmb.fsf@gitster.dls.corp.google.com>
+	<20150302092136.GA30278@lanh>
+	<20150303103351.GA4922@lanh>
+	<xmqqk2yy80mq.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.org>, git@vger.kernel.org
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 24 18:40:21 2015
+X-From: git-owner@vger.kernel.org Tue Mar 24 18:42:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YaSoI-0000cZ-US
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Mar 2015 18:40:15 +0100
+	id 1YaSqX-00022A-70
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Mar 2015 18:42:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932109AbbCXRkG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Mar 2015 13:40:06 -0400
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:65437 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753598AbbCXRkB (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Mar 2015 13:40:01 -0400
-X-AuditID: 12074414-f797f6d000004084-3d-5511a169ed63
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 23.F5.16516.961A1155; Tue, 24 Mar 2015 13:39:53 -0400 (EDT)
-Received: from [192.168.69.130] (p4FC9745A.dip0.t-ipconnect.de [79.201.116.90])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t2OHdox7015963
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Tue, 24 Mar 2015 13:39:52 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.5.0
-In-Reply-To: <xmqq619q8k0h.fsf@gitster.dls.corp.google.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupnleLIzCtJLcpLzFFi42IRYndR1M1cKBhq8Ocss0XXlW4mi4beK8wW
-	j29NYHJg9ph739Lj4iVlj8+b5AKYo7htkhJLyoIz0/P07RK4M443NjEVnBKruNN/lrmBsV2o
-	i5GTQ0LAROL45FXMELaYxIV769m6GLk4hAQuM0q0zZjHDuGcZ5J4ce05G0gVr4C2xKQ17xlB
-	bBYBVYkdn96xg9hsAroSi3qamUBsUYEgiZe3/jJC1AtKnJz5hAXEFhFQk5jYdgjMZhYwkph1
-	4wwriC0sEC6x9N5sJohlBxklnq88BzaIU8Ba4nrPaaAGDqAGdYn184QgeuUlmrfOZp7AKDAL
-	yYpZCFWzkFQtYGRexSiXmFOaq5ubmJlTnJqsW5ycmJeXWqRroZebWaKXmlK6iRESuCI7GI+c
-	lDvEKMDBqMTDG7BEIFSINbGsuDL3EKMkB5OSKG/DLMFQIb6k/JTKjMTijPii0pzU4kOMEhzM
-	SiK8z9uBcrwpiZVVqUX5MClpDhYlcd5vi9X9hATSE0tSs1NTC1KLYLIyHBxKErxNC4AaBYtS
-	01Mr0jJzShDSTBycIMO5pESKU/NSUosSS0sy4kGRGl8MjFWQFA/Q3haQdt7igsRcoChE6ylG
-	RSlx3iyQhABIIqM0D24sLB29YhQH+lKYlxmkigeYyuC6XwENZgIafC6fD2RwSSJCSqqBUcZP
-	2Dxx1s/65SmpDS96Yp06HZwa5z4+VCteKSt/xrM08ZpKkxYTU+ZdhccmayY2nCwyK/369l3W
-	BgetRayTbumffrsjNvv0aVa+lO7ZggIFBn6zji/8t/9LAc8y/y81D7grPvyxFdt+ 
+	id S1753564AbbCXRm2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Mar 2015 13:42:28 -0400
+Received: from mail-ie0-f181.google.com ([209.85.223.181]:35114 "EHLO
+	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753474AbbCXRmN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Mar 2015 13:42:13 -0400
+Received: by ieclw3 with SMTP id lw3so3510126iec.2
+        for <git@vger.kernel.org>; Tue, 24 Mar 2015 10:42:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=FWgnN84hRsWtuzrpxHM3uS8Imfq1HtP39/fgqIDfjzs=;
+        b=HV74TzjaxGwJFiGtX8HyCpIsPtqKwiv/w3xezyhQERoJgJws/BnlRjEI2WKSIQNNEi
+         ublTQPO4rbc6onjKqMTpeFG34+p+THNHXP6v2CmlyrH2QnTUgFM3in5ezPT8iIZdmKdS
+         xxd4lcs1nJKoQ5ZjPqjaPrYb09JX3z2p+66HZwCDnnMfXLWUy59R+kjkyRcUT9pn6lgX
+         XI8BK0eR392orEYasQneTBZBkZzC2qcJ38TX/eNq92mhWUBYVOQu5YJ/cC1PKm0IZPOy
+         VSzc8KvQsPje0oGMeesdOKGL+7UxzmC2/6vko1/lYU4G6kZvf+9XvY7PtZzz1QDTzlfi
+         3i1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=FWgnN84hRsWtuzrpxHM3uS8Imfq1HtP39/fgqIDfjzs=;
+        b=hvTI45XobTjlk2wTeQWNS89atQzaCQia9X0B0+r0wm4TSZgyu7ZmXYjiEvbauOLQs1
+         q0RXcznk+UVRYUPTttyxz6zqSBG5ZiaCdTiLmb1KY9E2VP++p5HgqWHw/ZvAdyzHrfxb
+         aFRkUdKdFG90GcZogr+9i4EPg7yZT5ZWlc7UHpYfFefDAsWwBin3jKeVBbLgq0etY+J9
+         3jLpJ5R2/q8IJzIGXvh/KGKNuH4wj1CvpELMbdsMbmUp5aaeDKpiXptl7sLFedXFkZLh
+         K8PmMkY49NeWXW+LDPqZEiFWlTixjnIW98865jG8SZ4HHhptc8Bbhl8KbqRQboK7fOhe
+         /JsQ==
+X-Gm-Message-State: ALoCoQllcGAC62Y/W7KHoQnMiUbVROaG/nA3hsx/DJRbWPAxbN4dZ/KpE09yJ+6La7KgOvfrz+m/
+X-Received: by 10.42.30.139 with SMTP id v11mr23015103icc.76.1427218932536;
+ Tue, 24 Mar 2015 10:42:12 -0700 (PDT)
+Received: by 10.107.46.31 with HTTP; Tue, 24 Mar 2015 10:42:12 -0700 (PDT)
+In-Reply-To: <xmqqk2yy80mq.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266209>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266210>
 
-On 03/24/2015 04:58 PM, Junio C Hamano wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
->=20
->> It is easy to allow "--abbrev=3D+7"; I would just need to add NUM_PL=
-US to
->> those call sites. Should I do so?
->=20
-> The more relevant question to ask from my point of view is why you
-> need to "add" NUM_PLUS to "enable" it.  What valid reason do you
-> have to forbid it anywhere?  Only because you do not accept it by
-> default, you need to "add" to "enable".
+On Tue, Mar 3, 2015 at 9:13 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Duy Nguyen <pclouds@gmail.com> writes:
+>
+>> Junio pointed out in private that I didn't address the packet length
+>> limit (64k). I thought I could get away with a new capability
+>> (i.e. not worry about it now) but I finally admit that was a bad
+>> hack. So perhaps this on top.
+>
+> No, I didn't ;-) but I tend to agree that "perhaps 4GB huge packet?"
+> is a bad idea.
+>
+> The problem I had with the version in your write-up was that it
+> still assumed that all capabilities must come on one packet-line.
+>
 
-I want to be able to plunge into this project without first auditing al=
-l
-call sites to see which features will turn out to be needed. So I'm
-erring on the side of flexibility. For now, I want to be able to
-prohibit '+' signs.
+So I started looking into extending the buffer size as another 'first step'
+towards the protocol version 2 again. But now I think the packed length
+limit of 64k is actually a good and useful thing to have and should be
+extended/fixed if and only if we run into serious trouble with too small
+packets later.
 
-Currently all of the flags cause additional features to be enabled. My
-guess was that most callers *won't* need most features, so it seemed
-easiest and most consistent to have all features be turned off by
-default and let the caller add the features that it wants to allow.
-
-Regarding specifically allowing/disallowing a leading '+': I saw a
-couple of callsites that explicitly check that the first character is a
-digit before calling strtol(). I assumed that is to disallow sign
-characters [1]. For example,
-
-    diff.c: optarg()
-    builtin/apply.c: parse_num()
-    maybe date.c: match_multi_number()
-
-There are other callsites that call strtoul(), but store the result in =
-a
-signed variable. Those would presumably not want to allow leading '-',
-but I'm not sure.
-
-I also imagine that there are places in protocols or file formats where
-signs should not be allowed (e.g., timestamps in commits?).
-
->>> Why is it a problem to allow "git cmd --hexval=3D0x1234", even if "=
-git
->>> cmd --hexval=3D1234" would suffice?
->>
->> In some cases we would like to allow that flexibility; in some cases
->> not. But the strtol()/strtoul() functions *always* allow it.
->=20
-> The same issue.  Whare are these "some cases"?
-
-I admit I'm not sure there are such places for hexadecimal numbers.
-
-I'm coming around to an alternate plan:
-
-Step 1: write a NUM_DEFAULT combination-of-options that gives the new
-functions behavior very like strtol()/strtoul() but without their insan=
-e
-features.
-
-Step 2: rewrite all callers to use that option (and usually endptr=3DNU=
-LL,
-meaning no trailing characters) unless it is manifestly clear that they
-are already trying to forbid some other features. This will already
-produce the largest benefit: avoiding overflows, missing error checking=
-,
-etc.
-
-Steps 3 through =E2=88=9E: as time allows, rewrite individual callsites=
- to be
-stricter where appropriate.
-
-Hopefully steps 1 and 2 will not be too controversial.
-
-Michael
-
-[1] That assumption is based on a rather quick look over the code,
-because with well over 100 callsites, it is not practical to study each
-callsite carefully.
-
---=20
-Michael Haggerty
-mhagger@alum.mit.edu
+I mean we can add the possibility now by introducing these
+special length 0xFFFF or 0xFFFE to mean we'd want to extend it in the
+future. But when doing this we need to be extra careful with buffer allocation.
+As it is easy to produce a denial of service attack if the receiving side
+blindly trusts the length and allocates as much memory. So having a 64k
+limit actually helps preventing this attack a bit as it is a very small number.
