@@ -1,79 +1,110 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] git.txt: list index versions in plain English
-Date: Tue, 24 Mar 2015 07:28:33 +0700
-Message-ID: <1427156913-4491-1-git-send-email-pclouds@gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: Git ignore help
+Date: Tue, 24 Mar 2015 08:00:23 +0700
+Message-ID: <CACsJy8CGuuRTGycj13cT9d-n=HavzL4LVWC7xjD4Ac=KQGEhBg@mail.gmail.com>
+References: <47F.3lxhK.7IviRa5Gutr.1L2}X3@seznam.cz> <CAPig+cRU38sNHRsn=8=60wPO_AoQt-zn1dicFHwjG0OK-9tecQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 24 01:29:04 2015
+Cc: mdconf@seznam.cz, Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Tue Mar 24 02:02:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YaCiM-0008V6-59
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Mar 2015 01:29:02 +0100
+	id 1YaDE9-0001t4-2w
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Mar 2015 02:01:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753627AbbCXA26 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Mar 2015 20:28:58 -0400
-Received: from mail-pd0-f175.google.com ([209.85.192.175]:33726 "EHLO
-	mail-pd0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752266AbbCXA25 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Mar 2015 20:28:57 -0400
-Received: by pdnc3 with SMTP id c3so203494843pdn.0
-        for <git@vger.kernel.org>; Mon, 23 Mar 2015 17:28:56 -0700 (PDT)
+	id S1752036AbbCXBAz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Mar 2015 21:00:55 -0400
+Received: from mail-ig0-f170.google.com ([209.85.213.170]:35981 "EHLO
+	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751935AbbCXBAz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 Mar 2015 21:00:55 -0400
+Received: by igbud6 with SMTP id ud6so58781934igb.1
+        for <git@vger.kernel.org>; Mon, 23 Mar 2015 18:00:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version:content-type
-         :content-transfer-encoding;
-        bh=4Ilucxe1FzZIuQ0WZ1xevGpdjfomj+4qRjH2Qdzb8oI=;
-        b=e5UpCFVLaRNouk2HfEJEpufe6ZaYmFaadSxalL3/VUgF7aGOiEkmyqA1qIeqbCyBEM
-         0wz/SBNvnb/tl7+y8c50FK0/TgPF8PQyLbSpZBGEhz/rnVfd2zWTsnLTjGONoVADPaA3
-         6OibyEEdFwtYRMh0l+EG2Yv82UP1IqpcEoJGoi8EcwxhxNEyO3vzG9PpUe9Tel8nPDe3
-         h1qjInYKlGU2lQZeyaIVjH4mnEnuPaxH9yxBIZlB34j1K+nxgYGSYNdEwS4f0Kx5adFO
-         gDbCsZ8ZFdck4QMbosX4BY17sz7TX2Ns+A69fypxVunsncucaIGnN2OwI/Ur7tfLSzhd
-         adbw==
-X-Received: by 10.66.160.197 with SMTP id xm5mr2747448pab.51.1427156936667;
-        Mon, 23 Mar 2015 17:28:56 -0700 (PDT)
-Received: from duynguyen-vnpc.dek-tpc.internal ([14.161.14.188])
-        by mx.google.com with ESMTPSA id qv9sm2203213pab.27.2015.03.23.17.28.54
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 23 Mar 2015 17:28:55 -0700 (PDT)
-X-Mailer: git-send-email 2.2.0.513.g477eb31
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=zSUlgpE+KcTOzUlbPDQzi0Ze0eQI2VRUh65MsA3EG8Y=;
+        b=lwbEnOFlf7lYTI2zgtRE7pyeSRKOaBCq0sI8xCv2fbQgVKgnSBDEAI2Pfo2xdtX9nf
+         jKqmOLvAzoPMvtYW0yG3vTpHICgxLtuKE0Sz+xHaeaj6/zJl6US3T3FlbME0k63HRBO2
+         R1ql4kf8IG7GZCOkNAUMJ9hS+Pz8Kcz8KaotP5fptKQ4jWI/LdOtr3XN9WzZ/iD4BQl4
+         U/kbG1Cj2xP5PR1bck53+hJE5EEWKOp86iozfsxRg927uoaVRIcKKS/uh409TKi2VMzO
+         rHTgKp4lgyYEvztU8WtRRCZ8niEtBLCFyT98mCWObaJ/d0vBL2BXgQFEl+22/CmyWKY5
+         Wipg==
+X-Received: by 10.50.118.97 with SMTP id kl1mr11395250igb.23.1427158854208;
+ Mon, 23 Mar 2015 18:00:54 -0700 (PDT)
+Received: by 10.107.131.33 with HTTP; Mon, 23 Mar 2015 18:00:23 -0700 (PDT)
+In-Reply-To: <CAPig+cRU38sNHRsn=8=60wPO_AoQt-zn1dicFHwjG0OK-9tecQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266169>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266170>
 
-At the first look, a user may think the default version is "23". Even
-with UNIX background, there's no reference anywhere close that may
-indicate this is glob or regex.
+On Sun, Mar 22, 2015 at 10:33 AM, Eric Sunshine <sunshine@sunshineco.co=
+m> wrote:
+> On Fri, Mar 20, 2015 at 6:36 AM,  <mdconf@seznam.cz> wrote:
+>> I am trying to setup my git ignore (resp. .git/info/exclude) so that=
+ I exclude
+>>  all directories and files except the content of directories that I
+>> specifically include (incl. anything within them recursively).
+>>
+>> I set the .git/info/exclude with the following content:
+>>
+>> =3D=3D=3D=3D=3D=3D=3D=3D
+>> # Exclude everything
+>> /*
+>> # Except the below that we include
+>> !/db/data/load/base/bootstraponly
+>> !/db/data/load/base/safetoload
+>> !/db/ddl
+>> !/labels
+>> !/reports/usrint
+>> !/scripts
+>> !/src/cmdsrc/usrint
+>> =3D=3D=3D=3D=3D=3D=3D=3D
+>>
+>> However it does not do what I anticipated. It indeed excludes everyt=
+hing but
+>> the include part does not work - it only works for !/labels and !/sc=
+ripts
+>> directories (i.e. the first level directories). All other are still =
+ignored -
+>> so when I create file /db/data/load/base/bootstraponly/somefile.txt =
+git still
+>> ignores it...
+>>
+>> Any idea what I am doing wrong?
+>
+> The fourth bullet point of the "Pattern Format" section of the
+> gitignore man page has this to say, which explains the behavior you'r=
+e
+> seeing:
+>
+>     An optional prefix "!" which negates the pattern; any matching
+>     file excluded by a previous pattern will become included again.
+>     It is not possible to re-include a file if a parent directory of
+>     that file is excluded. Git doesn=E2=80=99t list excluded director=
+ies for
+>     performance reasons, so any patterns on contained files have no
+>     effect, no matter where they are defined.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- Documentation/git.txt | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+This is true. To elaborate, if we have to recurse in excluded
+directories so that we can include some back, then the reason for
+excluding is already defeated as we may need to traverse the entire
+directory structure. However in this particular case where we do know
+in advance that only certain directories may have "re-include" rules,
+e.g. "db", "reports" or "scripts", we could keep going for a while. I
+think I attempted to do this in the past and failed (don't remember
+exactly why). Maybe I'll try again some time in future.
 
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index b37f1ab..29d9257 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -766,7 +766,8 @@ Git so take care if using Cogito etc.
- 'GIT_INDEX_VERSION'::
- 	This environment variable allows the specification of an index
- 	version for new repositories.  It won't affect existing index
--	files.  By default index file version [23] is used.
-+	files.  By default index file version 2 or 3 is used. See
-+	linkgit:git-update-index[1] for more information.
-=20
- 'GIT_OBJECT_DIRECTORY'::
- 	If the object storage directory is specified via this
+Another option is, if the user is willing to accept performance
+degradation (in many small repos, it does not matter anyway), then we
+could keep digging in.
 --=20
-2.2.0.513.g477eb31
+Duy
