@@ -1,88 +1,190 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git.txt: list index versions in plain English
-Date: Tue, 24 Mar 2015 08:06:30 -0700
-Message-ID: <xmqqd23y8mfd.fsf@gitster.dls.corp.google.com>
-References: <1427156913-4491-1-git-send-email-pclouds@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 24 16:06:50 2015
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [RFH/PATCH] git-svn: adjust info to svn 1.7 and 1.8
+Date: Tue, 24 Mar 2015 16:10:18 +0100
+Message-ID: <2036c42d7eae00d9cce33fc5fafc729f16a0b451.1427209737.git.git@drmicha.warpmail.net>
+Cc: Eric Wong <normalperson@yhbt.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 24 16:10:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YaQPf-0005f8-3o
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Mar 2015 16:06:39 +0100
+	id 1YaQTL-00080V-Kl
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Mar 2015 16:10:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752957AbbCXPGf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Mar 2015 11:06:35 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:52093 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752580AbbCXPGe convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Mar 2015 11:06:34 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 43E5D3F58A;
-	Tue, 24 Mar 2015 11:06:33 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=aqxgpnNtqjP8
-	PiA4gWrd/fMsD+8=; b=qsDhIElK4/OT30qFqLTMC2PaI4xgVxn78h1EzYtoVb6E
-	pEL0WH8yc9ADPEkfcVMuJMOrkMkFJnxCsB3ZZHbddz2/p9GWIH4TP2Gbvx92mdZi
-	wYUFAn6icchF3PBWbuCelf6lC2uQtvyXcnuYAx/fN1e0iopG+lmBd9Yl0hR+UlA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=WsIzlV
-	Nq+hlhIzIhGsDWPyaENL1bRDJtIJeGcECflt0d4XaUCCUpLpLpun9fWAHRxQlJ6z
-	RRHwSVqJ+RPaTnR7Np6Rj+9nvSmDL301Emx0XnV82gZIaFEKD9MlsUx1aDXBSoMI
-	majzc2T8G632Kp+JL+LY6BHLkYslFh9rrLxUA=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3CE383F589;
-	Tue, 24 Mar 2015 11:06:33 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 931FC3F588;
-	Tue, 24 Mar 2015 11:06:32 -0400 (EDT)
-In-Reply-To: <1427156913-4491-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Tue, 24
- Mar 2015 07:28:33 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 5B62827A-D237-11E4-9616-11859F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1752144AbbCXPKX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Mar 2015 11:10:23 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:44342 "EHLO
+	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752096AbbCXPKW (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Mar 2015 11:10:22 -0400
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.nyi.internal (Postfix) with ESMTP id BA71920310
+	for <git@vger.kernel.org>; Tue, 24 Mar 2015 11:10:17 -0400 (EDT)
+Received: from frontend2 ([10.202.2.161])
+  by compute1.internal (MEProxy); Tue, 24 Mar 2015 11:10:20 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=
+	x-sasl-enc:from:to:cc:subject:date:message-id; s=mesmtp; bh=AQIH
+	dy57OkjA61/OWrdBuInMsxA=; b=CYEBjdZnNtS2G75P1faAWogY+us3ZQdc3y3J
+	c1fiat9kfq/lV+CwzGcbf0GAcszGKkTyKyH4Bt5jsIsG/qgUJUQfpjhrx1B8ujJy
+	4zLy8kJX3wyydKD/p9/fQ+tT7KOcSYubbveGcR5h5yWkTdDxHWM8WoIVe6ZVyMR0
+	XW+i4/w=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=x-sasl-enc:from:to:cc:subject:date
+	:message-id; s=smtpout; bh=AQIHdy57OkjA61/OWrdBuInMsxA=; b=YHA/b
+	hTAbQkOrEDj3Ha8bkxAGdIDayg7nccnaeYdgG5bOxZ9AThyF1mZqwSI7at99s/Z7
+	2eYF41rWeyIA15pgmuKIoNh9v8uLnkPCvA3Vcl+2EdSvCsrkXrNcRZHxjzirmxD7
+	9mJ5BjYD/0uOSygGeScOO+iZnNO4M44TNIdDOQ=
+X-Sasl-enc: xw0aPqaxw+nmwXjVI53WOonK72m/z7YRBfsieTeFmpZ3 1427209819
+Received: from localhost (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id E8DFC6801D0;
+	Tue, 24 Mar 2015 11:10:19 -0400 (EDT)
+X-Mailer: git-send-email 2.3.4.518.g406241f
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266190>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266191>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+t9119 refuses to run with svn versions greater than 1.6 since "git svn
+info" does not even try to match the output of "svn info" for later
+versions.
 
-> At the first look, a user may think the default version is "23". Even
-> with UNIX background, there's no reference anywhere close that may
-> indicate this is glob or regex.
->
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
+Adjust "git svn info" to match these versions and make t9119 run with
+them. This requires the following changes:
 
-Thanks.
+* compute checksums with SHA1 instead of MD5 with svn >= 1.7.0
+* omit the line "Revision: 0" for added content with svn >= 1.8.0 (TBC)
+* print the "Repository UUID" line even for added content with svn >=
+  1.8.0 (TBC)
+* add a "Relative URL" line for svn >= 1.8.0
+* add a "Working Copy Root Path" line for svn >= 1.8.0 (TBC, RFH)
 
->  Documentation/git.txt | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/Documentation/git.txt b/Documentation/git.txt
-> index b37f1ab..29d9257 100644
-> --- a/Documentation/git.txt
-> +++ b/Documentation/git.txt
-> @@ -766,7 +766,8 @@ Git so take care if using Cogito etc.
->  'GIT_INDEX_VERSION'::
->  	This environment variable allows the specification of an index
->  	version for new repositories.  It won't affect existing index
-> -	files.  By default index file version [23] is used.
-> +	files.  By default index file version 2 or 3 is used. See
-> +	linkgit:git-update-index[1] for more information.
-> =20
->  'GIT_OBJECT_DIRECTORY'::
->  	If the object storage directory is specified via this
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+
+Notes:
+    While trying to increase my test run coverage I noticed that most of us won't
+    run t9119 at all. Bad bad.
+    
+    My svn is 1.8.11 (r1643975) on Fedora 21.
+    
+    I would appreciate help with the following items:
+    
+    TBC = to be confirmed: confirm the svn version where this change kicked it,
+    or run this patch and t9119 with an svn version other than mine. Please
+    run with "-v" to make sure only the RFH item fails, see below.
+    
+    RFH = request for help: I couldn't figure out how to get the working
+    copy root path in cmd_info.
+    
+    18 subtests will fail because of the RFH item.
+
+ git-svn.perl            | 38 +++++++++++++++++++++++++++++++++-----
+ t/t9119-git-svn-info.sh |  2 +-
+ 2 files changed, 34 insertions(+), 6 deletions(-)
+
+diff --git a/git-svn.perl b/git-svn.perl
+index 36f7240..00c9cc1 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -1580,6 +1580,7 @@ sub cmd_info {
+ 	}
+ 
+ 	# canonicalize_path() will return "" to make libsvn 1.5.x happy,
++	my $rpath = $path;
+ 	$path = "." if $path eq "";
+ 
+ 	my $full_url = canonicalize_url( add_path_to_url( $url, $path ) );
+@@ -1591,7 +1592,9 @@ sub cmd_info {
+ 
+ 	my $result = "Path: $path_arg\n";
+ 	$result .= "Name: " . basename($path) . "\n" if $file_type ne "dir";
++	$result .= "Working Copy Root Path: " . $gs->path . "\n" if ::compare_svn_version('1.7.0') >= 0; #TODO
+ 	$result .= "URL: $full_url\n";
++	$result .= "Relative URL: ^/" . $rpath . "\n" if ::compare_svn_version('1.8.0')>=0;
+ 
+ 	eval {
+ 		my $repos_root = $gs->repos_root;
+@@ -1603,8 +1606,10 @@ sub cmd_info {
+ 	}
+ 	::_req_svn();
+ 	$result .= "Repository UUID: $uuid\n" unless $diff_status eq "A" &&
++		::compare_svn_version('1.8.0') < 0 &&
+ 		(::compare_svn_version('1.5.4') <= 0 || $file_type ne "dir");
+-	$result .= "Revision: " . ($diff_status eq "A" ? 0 : $rev) . "\n";
++	$result .= "Revision: " . ($diff_status eq "A" ? 0 : $rev) . "\n" unless
++		$diff_status eq "A" && ::compare_svn_version('1.8.0') >= 0;
+ 
+ 	$result .= "Node Kind: " .
+ 		   ($file_type eq "dir" ? "directory" : "file") . "\n";
+@@ -1653,19 +1658,19 @@ sub cmd_info {
+ 			    command_output_pipe(qw(cat-file blob), "HEAD:$path");
+ 			if ($file_type eq "link") {
+ 				my $file_name = <$fh>;
+-				$checksum = md5sum("link $file_name");
++				$checksum = md5sha1sum("link $file_name");
+ 			} else {
+-				$checksum = md5sum($fh);
++				$checksum = md5sha1sum($fh);
+ 			}
+ 			command_close_pipe($fh, $ctx);
+ 		} elsif ($file_type eq "link") {
+ 			my $file_name =
+ 			    command(qw(cat-file blob), "HEAD:$path");
+ 			$checksum =
+-			    md5sum("link " . $file_name);
++			    md5sha1sum("link " . $file_name);
+ 		} else {
+ 			open FILE, "<", $path or die $!;
+-			$checksum = md5sum(\*FILE);
++			$checksum = md5sha1sum(\*FILE);
+ 			close FILE or die $!;
+ 		}
+ 		$result .= "Checksum: " . $checksum . "\n";
+@@ -2135,6 +2140,29 @@ sub md5sum {
+ 	return $md5->hexdigest();
+ }
+ 
++sub md5sha1sum {
++	my $arg = shift;
++	my $ref = ref $arg;
++	my $md5;
++	if (::compare_svn_version('1.7.0') < 0)	{
++		require Digest::MD5;
++		$md5 = Digest::MD5->new();
++	} else {
++		require Digest::SHA1;
++		$md5 = Digest::SHA1->new();
++	}
++        if ($ref eq 'GLOB' || $ref eq 'IO::File' || $ref eq 'File::Temp') {
++		$md5->addfile($arg) or croak $!;
++	} elsif ($ref eq 'SCALAR') {
++		$md5->add($$arg) or croak $!;
++	} elsif (!$ref) {
++		$md5->add($arg) or croak $!;
++	} else {
++		fatal "Can't provide MD5 hash for unknown ref type: '", $ref, "'";
++	}
++	return $md5->hexdigest();
++}
++
+ sub gc_directory {
+ 	if (can_compress() && -f $_ && basename($_) eq "unhandled.log") {
+ 		my $out_filename = $_ . ".gz";
+diff --git a/t/t9119-git-svn-info.sh b/t/t9119-git-svn-info.sh
+index f16f323..b7476c7 100755
+--- a/t/t9119-git-svn-info.sh
++++ b/t/t9119-git-svn-info.sh
+@@ -10,7 +10,7 @@ test_description='git svn info'
+ # Tested with: svn, version 1.6.[12345689]
+ v=`svn_cmd --version | sed -n -e 's/^svn, version \(1\.[0-9]*\.[0-9]*\).*$/\1/p'`
+ case $v in
+-1.[456].*)
++1.[45678].*)
+ 	;;
+ *)
+ 	skip_all="skipping svn-info test (SVN version: $v not supported)"
+-- 
+2.3.4.518.g406241f
