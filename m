@@ -1,95 +1,205 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] diff-lib.c: adjust position of i-t-a entries in diff
-Date: Tue, 24 Mar 2015 10:00:43 -0700
-Message-ID: <xmqqtwxa72kk.fsf@gitster.dls.corp.google.com>
-References: <1425910445-27383-2-git-send-email-pclouds@gmail.com>
-	<1426514206-30949-1-git-send-email-pclouds@gmail.com>
-	<5506F3A9.1020704@drmicha.warpmail.net>
-	<xmqqa8zdrkpy.fsf@gitster.dls.corp.google.com>
-	<20150317140704.GA7248@lanh>
-	<xmqq1tknpkwd.fsf@gitster.dls.corp.google.com>
-	<CACsJy8Beoz=qcHrOG=akCR+gOQRjBcsQHaXdL_=PW70BOf4q3g@mail.gmail.com>
-	<xmqqtwxikpz6.fsf@gitster.dls.corp.google.com>
-	<xmqqlhitle5w.fsf@gitster.dls.corp.google.com>
-	<CACsJy8BczCNxm3WHK1gtkXiZCbDkFD-67oOMR+eK8uwOBfQXuw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 24 18:51:45 2015
+From: Thomas Gummerer <t.gummerer@gmail.com>
+Subject: [PATCH] read-cache: tighten checks for do_read_index
+Date: Tue, 24 Mar 2015 18:00:29 +0100
+Message-ID: <1427216429-15569-1-git-send-email-t.gummerer@gmail.com>
+References: <CACsJy8CYi+hYu8zwOy=m7zZk3-8fr+Jq9uT4kEf8fLCOcjHJzw@mail.gmail.com>
+Cc: Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+	Jaime Soriano Pastor <jsorianopastor@gmail.com>,
+	Thomas Gummerer <t.gummerer@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 24 18:52:42 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YaSzJ-0007ZO-LL
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Mar 2015 18:51:38 +0100
+	id 1YaT0G-00086c-3D
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Mar 2015 18:52:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755574AbbCXRBD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Mar 2015 13:01:03 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:62241 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755564AbbCXRA6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Mar 2015 13:00:58 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7675F3FB98;
-	Tue, 24 Mar 2015 13:00:57 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ADJ+tMSOHGjLar+e6HWeV5Ympig=; b=dzsx7q
-	h8fimcvM8eWOeaVJaNN5GzeGnaHgSKN0l+PK9Ui0NkMbzW3uvZMlwixmIH8vVGO2
-	6yM1M+2m9+/r+zgUN6Q8PDO/ppso6HOJpMrua5deKg/pOhTCOkYgDcPjV5K+AP5T
-	UBPsx8Dcr7gdLTRysFxZQYKIkx/+33dvN/t/Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qnZaA5dWpM3VQHnhgyuHQ0WQABThaXsG
-	e4fVTy4gJn3qGiwSt2YB1QzcN0j9qfO3jk3dkaABCLRlhqo0S+LXE3/YsrQcXW8o
-	61eQ9fXlpUu8TuWNnQEgDqc3n+QGUZ3UubbSivVmXTEWFP3EmHGPPI8p/BbYflE0
-	2EueiCutQ1c=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6FCFB3FB95;
-	Tue, 24 Mar 2015 13:00:57 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0C2DB3FB75;
-	Tue, 24 Mar 2015 13:00:44 -0400 (EDT)
-In-Reply-To: <CACsJy8BczCNxm3WHK1gtkXiZCbDkFD-67oOMR+eK8uwOBfQXuw@mail.gmail.com>
-	(Duy Nguyen's message of "Tue, 24 Mar 2015 08:15:50 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 4FC2C0DC-D247-11E4-AB0F-11859F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1752932AbbCXRwc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Mar 2015 13:52:32 -0400
+Received: from mail-wg0-f45.google.com ([74.125.82.45]:35415 "EHLO
+	mail-wg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752444AbbCXRAh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Mar 2015 13:00:37 -0400
+Received: by wgdm6 with SMTP id m6so176220377wgd.2
+        for <git@vger.kernel.org>; Tue, 24 Mar 2015 10:00:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=tZpmVIQtAz1/yg8GDDT6hb6d7pCx8ZEWpTBaYyckNZs=;
+        b=0BNJKMzxSJO2naEOAbejKhoqqOCL0iriWK/lSVWuoBuM46R1en9FI3kDmHmygfD6/Q
+         fkqQRIoIZ1jUPb1+I9H1jZXAAeoJVXeoMfZKMDZ9v1f0nNe/Dctz8/w/T8ILopMz/7CK
+         Jwiviip3Q36c6n2ve0h5HRM+jy2JFMYZasKKlmG9p+lZ/4+rvn3KO9tzcKuc5yp6BXCD
+         onmlo9UVz6Xha1wwMwsj0F05J+/hidjJPcOu0BDHVUYY0pbkXBPyzEMs+jA0Sm9AMnrh
+         maSomySS5CQxqi4x1sx2a2sQAhYqAuijveUfqsDrjLtb+5ZKnE+vIPq+Lf5iwING64NA
+         mpWg==
+X-Received: by 10.194.185.68 with SMTP id fa4mr9373387wjc.111.1427216436086;
+        Tue, 24 Mar 2015 10:00:36 -0700 (PDT)
+Received: from localhost (213-66-41-37-no99.tbcn.telia.com. [213.66.41.37])
+        by mx.google.com with ESMTPSA id z13sm6863877wjr.44.2015.03.24.10.00.34
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 24 Mar 2015 10:00:35 -0700 (PDT)
+X-Mailer: git-send-email 2.1.0.264.g0463184.dirty
+In-Reply-To: <CACsJy8CYi+hYu8zwOy=m7zZk3-8fr+Jq9uT4kEf8fLCOcjHJzw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266214>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+03f15a7 read-cache: fix reading of split index moved the checks for the
+correct order of index entries out of do_read_index.  This loosens the
+checks more than necessary.  Re-introduce the checks for the order, but
+don't error out when we have multiple stage-0 entries in the index.
+Return a flag for the caller instead, if we have multiple stage-0
+entries and let the caller decide if we need to error out.
 
-> "read-tree -m" does not invoke diff, does it? If I went with my
-> previous approach (modifying unpack-trees to ignore i-t-a entries)
-> then this could be a problem, but because unpack-trees is untouched,
-> merge operations should not be impacted by this patch.
+Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+---
 
-Theoretically yes, but not quite.
+This is a patch on top of my previous patch, as that one has already
+been merged to next.
 
-I wouldn't be surprised if an enterprising soul saw an optimization
-opportunity in the "read-tree -m A B" codepath.  When it finds that
-a tree in A and a valid cache-tree entry that corresponds to the
-tree matches, it could blow away all index entries covered by the
-cache-tree entry and replace them with B, either
+ cache.h                 |  2 +-
+ read-cache.c            | 54 ++++++++++++++++++++++++++++++++-----------------
+ test-dump-split-index.c |  2 +-
+ 3 files changed, 37 insertions(+), 21 deletions(-)
 
- (1) unconditionally when "-u" is not given; or
-
- (2) as long as the working tree matches the index inside that
-     directory when running with "-u".
-
-And such an optimization used to be a valid thing to do in the old
-world; but (1) will break in the new world, if we drop that
-invalidation---the i-t-a entries will be discarded from the index.
-
-As i-t-a is not a norm but an abberration, I'd rather keep the
-pessimizing invalidation to keep the door open for such an
-optimization for a more common case, and there may be other cases
-in which our correctness around i-t-a depends on.
+diff --git a/cache.h b/cache.h
+index e7b24a2..3eaa258 100644
+--- a/cache.h
++++ b/cache.h
+@@ -487,7 +487,7 @@ struct lock_file;
+ extern int read_index(struct index_state *);
+ extern int read_index_preload(struct index_state *, const struct pathspec *pathspec);
+ extern int do_read_index(struct index_state *istate, const char *path,
+-			 int must_exist); /* for testting only! */
++			 int must_exist, int *multiple_stage_entries); /* for testting only! */
+ extern int read_index_from(struct index_state *, const char *path);
+ extern int is_index_unborn(struct index_state *);
+ extern int read_index_unmerged(struct index_state *);
+diff --git a/read-cache.c b/read-cache.c
+index 36ff89f..2ba67ce 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1488,30 +1488,39 @@ static struct cache_entry *create_from_disk(struct ondisk_cache_entry *ondisk,
+ 	return ce;
+ }
+ 
+-static void check_ce_order(struct index_state *istate)
++static int check_ce_order(struct cache_entry *ce, struct cache_entry *next_ce,
++			   int gentle_multiple_stage)
+ {
+-	unsigned int i;
+-
+-	for (i = 1; i < istate->cache_nr; i++) {
+-		struct cache_entry *ce = istate->cache[i - 1];
+-		struct cache_entry *next_ce = istate->cache[i];
+-		int name_compare = strcmp(ce->name, next_ce->name);
++	int name_compare = strcmp(ce->name, next_ce->name);
+ 
+-		if (0 < name_compare)
+-			die("unordered stage entries in index");
+-		if (!name_compare) {
+-			if (!ce_stage(ce))
++	if (0 < name_compare)
++		die("unordered stage entries in index");
++	if (!name_compare) {
++		if (!ce_stage(ce)) {
++			if (gentle_multiple_stage)
++				return 1;
++			else
+ 				die("multiple stage entries for merged file '%s'",
+ 				    ce->name);
+-			if (ce_stage(ce) > ce_stage(next_ce))
+-				die("unordered stage entries for '%s'",
+-				    ce->name);
+ 		}
++		if (ce_stage(ce) > ce_stage(next_ce))
++			die("unordered stage entries for '%s'",
++			    ce->name);
+ 	}
++	return 0;
++}
++
++static void check_istate_order(struct index_state *istate)
++{
++	unsigned int i;
++
++	for (i = 1; i < istate->cache_nr; i++)
++		check_ce_order(istate->cache[i - 1], istate->cache[i], 0);
+ }
+ 
+ /* remember to discard_cache() before reading a different cache! */
+-int do_read_index(struct index_state *istate, const char *path, int must_exist)
++int do_read_index(struct index_state *istate, const char *path, int must_exist,
++		  int *multiple_stage_entries)
+ {
+ 	int fd, i;
+ 	struct stat st;
+@@ -1571,6 +1580,11 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
+ 		ce = create_from_disk(disk_ce, &consumed, previous_name);
+ 		set_index_entry(istate, i, ce);
+ 
++		if (i > 0)
++			if (check_ce_order(istate->cache[i - 1], ce, 1) > 0 &&
++			    multiple_stage_entries)
++				*multiple_stage_entries |= 1;
++
+ 		src_offset += consumed;
+ 	}
+ 	strbuf_release(&previous_name_buf);
+@@ -1607,15 +1621,17 @@ int read_index_from(struct index_state *istate, const char *path)
+ {
+ 	struct split_index *split_index;
+ 	int ret;
++	int multiple_stage_entries = 0;
+ 
+ 	/* istate->initialized covers both .git/index and .git/sharedindex.xxx */
+ 	if (istate->initialized)
+ 		return istate->cache_nr;
+ 
+-	ret = do_read_index(istate, path, 0);
++	ret = do_read_index(istate, path, 0, &multiple_stage_entries);
+ 	split_index = istate->split_index;
+ 	if (!split_index || is_null_sha1(split_index->base_sha1)) {
+-		check_ce_order(istate);
++		if (multiple_stage_entries)
++			check_istate_order(istate);
+ 		return ret;
+ 	}
+ 
+@@ -1625,7 +1641,7 @@ int read_index_from(struct index_state *istate, const char *path)
+ 		split_index->base = xcalloc(1, sizeof(*split_index->base));
+ 	ret = do_read_index(split_index->base,
+ 			    git_path("sharedindex.%s",
+-				     sha1_to_hex(split_index->base_sha1)), 1);
++				     sha1_to_hex(split_index->base_sha1)), 1, NULL);
+ 	if (hashcmp(split_index->base_sha1, split_index->base->sha1))
+ 		die("broken index, expect %s in %s, got %s",
+ 		    sha1_to_hex(split_index->base_sha1),
+@@ -1633,7 +1649,7 @@ int read_index_from(struct index_state *istate, const char *path)
+ 				     sha1_to_hex(split_index->base_sha1)),
+ 		    sha1_to_hex(split_index->base->sha1));
+ 	merge_base_index(istate);
+-	check_ce_order(istate);
++	check_istate_order(istate);
+ 	return ret;
+ }
+ 
+diff --git a/test-dump-split-index.c b/test-dump-split-index.c
+index 9cf3112..fc9ced7 100644
+--- a/test-dump-split-index.c
++++ b/test-dump-split-index.c
+@@ -12,7 +12,7 @@ int main(int ac, char **av)
+ 	struct split_index *si;
+ 	int i;
+ 
+-	do_read_index(&the_index, av[1], 1);
++	do_read_index(&the_index, av[1], 1, NULL);
+ 	printf("own %s\n", sha1_to_hex(the_index.sha1));
+ 	si = the_index.split_index;
+ 	if (!si) {
+-- 
+2.1.0.264.g0463184.dirty
