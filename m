@@ -1,129 +1,171 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/GSoC] Proposal: Make git-pull and git-am builtins
-Date: Tue, 24 Mar 2015 11:37:02 -0700
-Message-ID: <xmqqwq265jjl.fsf@gitster.dls.corp.google.com>
-References: <20150324163730.GA8366@yoshi.chippynet.com>
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: [PATCH 1/2] l10n: de.po: add space before ellipsis
+Date: Tue, 24 Mar 2015 19:42:06 +0100
+Message-ID: <1427222527-4086-1-git-send-email-ralf.thielow@gmail.com>
+References: <CAN0XMOKVAebs6xNuLLNvzi8gkARsmSgNC1k+TuS23BxqCffOig@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git List <git@vger.kernel.org>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 24 19:37:36 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@drmicha.warpmail.net, phillip.szelat@gmail.com,
+	tr@thomasrast.ch, jk@jk.gs, stimming@tuhh.de,
+	matthias.ruester@gmail.com, magnus.goerlitz@googlemail.com,
+	Ralf Thielow <ralf.thielow@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 24 19:42:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YaThh-00008V-Af
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Mar 2015 19:37:29 +0100
+	id 1YaTmL-0003dS-9W
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Mar 2015 19:42:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754701AbbCXShM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Mar 2015 14:37:12 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:61033 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753677AbbCXShK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Mar 2015 14:37:10 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 31F3341854;
-	Tue, 24 Mar 2015 14:37:04 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Bsvi57ePsu1rEvhkBUUtSgFa/S0=; b=UIykjd
-	HFLmxR6oq9BjvM935flp3CM7IE5loLfU4SXeCcBP6/hoJlDwWirBTXpI3G4Qsht5
-	fpm6YJ8g6KzgR92o2+cAlOMdoZGx4KeEbXTLEeDCp4CoVXHUCIBOZXdIDsCsHs4w
-	MTaxsiDCro4M5UJcjuxJQAwUdeEdhueN/7+Hc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZN8S4j88BbxEJjiNb9qRNd6fuy3ZTrqW
-	TGZ+aRKmronXQRRHGHYcwF7eBLabOvSfmeq4JWJSyuU7rNO4PdXd3h50DZDLKhnb
-	eFmaj4NnJl+HLpaX6bjHkZvlNJ8dvWfVUZ8qRRwg5V+chi2Ej90+ftfgRDJEbU3k
-	4/ZahGy0kAc=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2B70A41853;
-	Tue, 24 Mar 2015 14:37:04 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 97BE341852;
-	Tue, 24 Mar 2015 14:37:03 -0400 (EDT)
-In-Reply-To: <20150324163730.GA8366@yoshi.chippynet.com> (Paul Tan's message
-	of "Wed, 25 Mar 2015 00:37:30 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: C40EB470-D254-11E4-84C2-11859F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1753683AbbCXSmN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Mar 2015 14:42:13 -0400
+Received: from mail-we0-f171.google.com ([74.125.82.171]:35291 "EHLO
+	mail-we0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752854AbbCXSmL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Mar 2015 14:42:11 -0400
+Received: by weoy45 with SMTP id y45so1375097weo.2
+        for <git@vger.kernel.org>; Tue, 24 Mar 2015 11:42:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=P5wEm39tjY3SEoaAs89d+DNQUyJnlKO9386tdEKJbHs=;
+        b=asJVkpOlDDzt4U/RDHUtTmC0VKEC/aWsiSbsslMV+K16WIdivBgnJJ5akgF0TL96mh
+         EgpZmNfcIVOnpJAGmBJFqlWNPV2mQ24QubrLH7EgVG6e10eitvMAxoXR3dxMa4HTBnJv
+         S+e7zGX2hTp1Qk8Z+Om6jvw0tRw8t6zGlhdmQUPC1UTkdi5mp3HWrZQAkn0W8P+IW6ej
+         g2ekEYQbIljqWcq+/SEpTX85vE5Qj7YJfYawbvevwFH/ziBPO6cTKdI+bu6yWksre8/z
+         DXDLoHpclUkpUoR8sf+dJgIwFxfypQ1pXdIreDRx44HQwfjTJ4xJj4oqmJAdg19c2jS0
+         e3IA==
+X-Received: by 10.180.12.84 with SMTP id w20mr31626968wib.9.1427222530561;
+        Tue, 24 Mar 2015 11:42:10 -0700 (PDT)
+Received: from localhost (dslb-178-000-084-015.178.000.pools.vodafone-ip.de. [178.0.84.15])
+        by mx.google.com with ESMTPSA id hl8sm101869wjb.38.2015.03.24.11.42.09
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 24 Mar 2015 11:42:09 -0700 (PDT)
+X-Mailer: git-send-email 2.3.3.434.g642b19b
+In-Reply-To: <CAN0XMOKVAebs6xNuLLNvzi8gkARsmSgNC1k+TuS23BxqCffOig@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266220>
 
-Paul Tan <pyokagan@gmail.com> writes:
+=46rom: Phillip Sz <phillip.szelat@gmail.com>
 
-> ..., I propose the following requirements for the rewritten code:
->
-> 1. No spawning of external git processes. This is to support systems with high
->    ``fork()`` or process creation overhead, and to reduce redundant IO by
->    taking advantage of the internal object, index and configuration cache.
+Signed-off-by: Phillip Sz <phillip.szelat@gmail.com>
+Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+---
+ po/de.po | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-I suspect this may probably be too strict in practice.
-
-True, we should never say "run_command_capture()" just to to read
-from "git rev-parse"---we should just call get_sha1() instead.
-
-But for a complex command whose execution itself far outweighs the
-cost of forking, I do not think it is fair to say your project
-failed if you chose to run_command() it.  For example, it may be
-perfectly OK to invoke "git merge" via run_command().
-
-> 3. The resulting builtin should not have wildly different behavior or bugs
->    compared to the shell script.
-
-This on the other hand is way too loose.
-
-The original and the port must behave identically, unless the
-difference is fixing bugs in the original.
-
-> Potential difficulties
-> =======================
->
-> Rewriting code may introduce bugs
-> ...
-
-Yes, but that is a reasonable risk you need to manage to gain the
-benefit from this project.
-
-> Of course, the downside of following this too strictly is that if there were
-> any logical bugs in the original code, or if the original code is unclear, the
-> rewritten code would inherit these problems too.
-
-I'd repeat my comment on the 3. above.  Identifying and fixing bugs
-is great, but otherwise don't worry about this too much.
-
-Being bug-to-bug compatible with the original is way better than
-introducing new bugs of an unknown nature.
-
-> Rewritten code may become harder to understand
-> ...
-
-And also it may become harder to modify.
-
-That is the largest problem with any rewrite, and we should spend
-the most effort to avoid it.
-
-A new bugs introduced we can later fix as long as the result is
-understandable and maintainable.
-
-> For the purpose of reducing git's dependencies, the rewritten C code should not
-> depend on other libraries or executables other than what is already available
-> to git builtins.
-
-Perhaps misphrased; see below.
-
-> We can see that the C version requires much more lines compared to the shell
-> pipeline,...
-
-That is something you would solve by introducing reusable code in
-run_command API, isn't it?  That is how various rewrites in the past
-did, and this project should do so too.  You should aim to do this
-project by not just using "what is already available", but adding
-what you discover is a useful reusable pattern into a set of new
-functions in the "already available" API set.
+diff --git a/po/de.po b/po/de.po
+index 11fbd0f..7b30f62 100644
+--- a/po/de.po
++++ b/po/de.po
+@@ -616,7 +616,7 @@ msgstr ""
+ #: help.c:373
+ #, c-format
+ msgid "in %0.1f seconds automatically..."
+-msgstr "Automatische Ausf=C3=BChrung in %0.1f Sekunden..."
++msgstr "Automatische Ausf=C3=BChrung in %0.1f Sekunden ..."
+=20
+ #: help.c:380
+ #, c-format
+@@ -2436,7 +2436,7 @@ msgstr "%s: Patch konnte nicht angewendet werden"
+ #: builtin/apply.c:3653
+ #, c-format
+ msgid "Checking patch %s..."
+-msgstr "Pr=C3=BCfe Patch %s..."
++msgstr "Pr=C3=BCfe Patch %s ..."
+=20
+ #: builtin/apply.c:3746 builtin/checkout.c:231 builtin/reset.c:135
+ #, c-format
+@@ -4091,7 +4091,7 @@ msgstr "Konnte zu klonenden Remote-Branch %s nich=
+t finden."
+ #: builtin/clone.c:561
+ #, c-format
+ msgid "Checking connectivity... "
+-msgstr "Pr=C3=BCfe Konnektivit=C3=A4t... "
++msgstr "Pr=C3=BCfe Konnektivit=C3=A4t ... "
+=20
+ #: builtin/clone.c:564
+ msgid "remote did not send all necessary objects"
+@@ -4165,12 +4165,12 @@ msgstr "Konnte Arbeitsverzeichnis '%s' nicht er=
+stellen."
+ #: builtin/clone.c:870
+ #, c-format
+ msgid "Cloning into bare repository '%s'...\n"
+-msgstr "Klone in Bare-Repository '%s'...\n"
++msgstr "Klone in Bare-Repository '%s' ...\n"
+=20
+ #: builtin/clone.c:872
+ #, c-format
+ msgid "Cloning into '%s'...\n"
+-msgstr "Klone nach '%s'...\n"
++msgstr "Klone nach '%s' ...\n"
+=20
+ #: builtin/clone.c:897
+ msgid "--dissociate given, but there is no --reference"
+@@ -4600,7 +4600,7 @@ msgstr ""
+ #: builtin/commit.c:1199
+ msgid "Clever... amending the last one with dirty index."
+ msgstr ""
+-"Klug... den letzten Commit mit einer ge=C3=A4nderten Staging-Area nac=
+hbessern."
++"Klug ... den letzten Commit mit einer ge=C3=A4nderten Staging-Area na=
+chbessern."
+=20
+ #: builtin/commit.c:1201
+ msgid "Explicit paths specified without -i or -o; assuming --only path=
+s..."
+@@ -7335,7 +7335,7 @@ msgstr "Aktualisiere %s..%s\n"
+ #: builtin/merge.c:1388
+ #, c-format
+ msgid "Trying really trivial in-index merge...\n"
+-msgstr "Probiere wirklich trivialen \"in-index\"-Merge...\n"
++msgstr "Probiere wirklich trivialen \"in-index\"-Merge ...\n"
+=20
+ #: builtin/merge.c:1395
+ #, c-format
+@@ -7349,12 +7349,12 @@ msgstr "Vorspulen nicht m=C3=B6glich, breche ab=
+=2E"
+ #: builtin/merge.c:1450 builtin/merge.c:1529
+ #, c-format
+ msgid "Rewinding the tree to pristine...\n"
+-msgstr "R=C3=BCcklauf des Verzeichnisses bis zum Ursprung...\n"
++msgstr "R=C3=BCcklauf des Verzeichnisses bis zum Ursprung ...\n"
+=20
+ #: builtin/merge.c:1454
+ #, c-format
+ msgid "Trying merge strategy %s...\n"
+-msgstr "Probiere Merge-Strategie %s...\n"
++msgstr "Probiere Merge-Strategie %s ...\n"
+=20
+ #: builtin/merge.c:1520
+ #, c-format
+@@ -10450,7 +10450,7 @@ msgstr ""
+=20
+ #: git-am.sh:166
+ msgid "Falling back to patching base and 3-way merge..."
+-msgstr "Falle zur=C3=BCck zum Patchen der Basis und des 3-Wege-Merges.=
+=2E."
++msgstr "Falle zur=C3=BCck zum Patchen der Basis und des 3-Wege-Merges =
+=2E.."
+=20
+ #: git-am.sh:182
+ msgid "Failed to merge in the changes."
+@@ -10943,7 +10943,7 @@ msgstr "=C3=84nderungen von $mb zu $onto:"
+ msgid "First, rewinding head to replay your work on top of it..."
+ msgstr ""
+ "Zun=C3=A4chst wird der Branch zur=C3=BCckgespult, um Ihre =C3=84nderu=
+ngen\n"
+-"darauf neu anzuwenden..."
++"darauf neu anzuwenden ..."
+=20
+ #: git-rebase.sh:620
+ #, sh-format
+--=20
+2.3.3.434.g642b19b
