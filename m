@@ -1,69 +1,45 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Mar 2015, #08; Mon, 23)
-Date: Tue, 24 Mar 2015 15:26:21 -0700
-Message-ID: <xmqqpp7y3ucy.fsf@gitster.dls.corp.google.com>
-References: <xmqqmw338khu.fsf@gitster.dls.corp.google.com>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: A good time to pull from your gitk tree?
+Date: Wed, 25 Mar 2015 10:06:05 +1100
+Message-ID: <20150324230605.GB12410@iris.ozlabs.ibm.com>
+References: <xmqqegofa646.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
-	Michael Wagner <mail@mwagner.org>
-X-From: git-owner@vger.kernel.org Tue Mar 24 23:26:54 2015
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 25 00:06:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YaXHW-0002Tq-6G
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Mar 2015 23:26:42 +0100
+	id 1YaXtq-0007L3-9E
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Mar 2015 00:06:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752811AbbCXW0i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Mar 2015 18:26:38 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:63516 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752444AbbCXW0f (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Mar 2015 18:26:35 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id DE5CA436A3;
-	Tue, 24 Mar 2015 18:26:34 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:references:date:in-reply-to:message-id
-	:mime-version:content-type; s=sasl; bh=+wqr5XKU/TyKJY5orYgAONTLQ
-	7E=; b=OJUUaF6mt6JWeWmSBDhwSdDe3wF1qu3yL3gQE4wdxXyYQ2rfJspwQf86m
-	DtC4ud5LAq0+OhSlpAZWUG1RIpWq8WlzudxeyHsl+kgDccFbdal2eaw24u89pZpb
-	3kABfD1tPS63PKY2tNwGr3mhcqorilGQmoEcYqdVuPb6RbXlGE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:references:date:in-reply-to:message-id
-	:mime-version:content-type; q=dns; s=sasl; b=Bh43OOhq4n0NlinMBr0
-	vb62WLzyRTn6mmpUkI24ZVBwcph1ZyDaEHY0F7teod3LY7FHzRNdi2+J3IwOCKN5
-	5x9Sr4k8GuAXTuq9pVsOC6m/CA1NOFGukydHqrSxiexF/nlKjQ9jEouOHDSlidsg
-	G2nEQCQLp9gJD6AJUkyApZkI=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D6982436A2;
-	Tue, 24 Mar 2015 18:26:34 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 840854368A;
-	Tue, 24 Mar 2015 18:26:22 -0400 (EDT)
-References: <538F69DA.9010201@gmail.com>
-In-Reply-To: <xmqqmw338khu.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Mon, 23 Mar 2015 14:35:57 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: CD0311C8-D274-11E4-8A16-11859F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1752632AbbCXXGO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Mar 2015 19:06:14 -0400
+Received: from ozlabs.org ([103.22.144.67]:55902 "EHLO ozlabs.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751928AbbCXXGL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Mar 2015 19:06:11 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id C3BFA14016B; Wed, 25 Mar 2015 10:06:08 +1100 (AEDT)
+Content-Disposition: inline
+In-Reply-To: <xmqqegofa646.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266235>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266236>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Mon, Mar 23, 2015 at 12:03:37PM -0700, Junio C Hamano wrote:
+> 
+> Is it a good time for me to pull from you, or do you recommend me to
+> wait for a bit, expecting more?  We'll go in the pre-release freeze
+> soon-ish, so I thought I should ping.
 
-> * jn/gitweb-utf8-in-links (2014-05-27) 1 commit
->  - gitweb: Harden UTF-8 handling in generated links
+Now is a good time to pull from the usual place, thanks.
 
-This has been lingering in my 'pu' branch without seeing any updates
-since $gmane/250758; is anybody still interested in resurrecting it
-and moving it forward?
-
-Thanks.
+Regards,
+Paul.
