@@ -1,94 +1,96 @@
 From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2] diff-lib.c: adjust position of i-t-a entries in diff
-Date: Tue, 24 Mar 2015 08:15:50 +0700
-Message-ID: <CACsJy8BczCNxm3WHK1gtkXiZCbDkFD-67oOMR+eK8uwOBfQXuw@mail.gmail.com>
-References: <1425910445-27383-2-git-send-email-pclouds@gmail.com>
- <1426514206-30949-1-git-send-email-pclouds@gmail.com> <5506F3A9.1020704@drmicha.warpmail.net>
- <xmqqa8zdrkpy.fsf@gitster.dls.corp.google.com> <20150317140704.GA7248@lanh>
- <xmqq1tknpkwd.fsf@gitster.dls.corp.google.com> <CACsJy8Beoz=qcHrOG=akCR+gOQRjBcsQHaXdL_=PW70BOf4q3g@mail.gmail.com>
- <xmqqtwxikpz6.fsf@gitster.dls.corp.google.com> <xmqqlhitle5w.fsf@gitster.dls.corp.google.com>
+Subject: Re: Sparse checkout not working as expected (colons in filenames on Windows)
+Date: Tue, 24 Mar 2015 08:21:12 +0700
+Message-ID: <CACsJy8BOuhohQzaGzD+4cthqOaL4sz1ADRD-ekhFhKt4wMcg7A@mail.gmail.com>
+References: <BE2660C974C9415E997F20A49ABC766E@PhilipOakley>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 24 02:16:32 2015
+Cc: Git List <git@vger.kernel.org>, Yue Lin Ho <yuelinho777@gmail.com>
+To: Philip Oakley <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Tue Mar 24 02:21:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YaDSE-0001oI-Ka
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Mar 2015 02:16:26 +0100
+	id 1YaDXQ-0004pF-CQ
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Mar 2015 02:21:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752211AbbCXBQW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Mar 2015 21:16:22 -0400
-Received: from mail-ie0-f173.google.com ([209.85.223.173]:33686 "EHLO
-	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752058AbbCXBQV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Mar 2015 21:16:21 -0400
-Received: by iecvj10 with SMTP id vj10so49808297iec.0
-        for <git@vger.kernel.org>; Mon, 23 Mar 2015 18:16:20 -0700 (PDT)
+	id S1752099AbbCXBVo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Mar 2015 21:21:44 -0400
+Received: from mail-ie0-f177.google.com ([209.85.223.177]:33443 "EHLO
+	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752114AbbCXBVn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Mar 2015 21:21:43 -0400
+Received: by iecvj10 with SMTP id vj10so49877744iec.0
+        for <git@vger.kernel.org>; Mon, 23 Mar 2015 18:21:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=XKkhAGgL1/7RlZ8t7+kba428QLH/8jsQDw6Z/XUylOE=;
-        b=INjzvcrn9ThuXD7zB/lGRdNYlmCn2cCdCGghSOL9EhSo+XaWdEIi2hbJhnUZGJaeIV
-         JU/DHHmUo5VGlX815IHL4iRuDDKtQaJ/6wnWxw2uH+GebZZMutfunbEyW73D2YhzwohP
-         0l3T6j2ylaT6z0iErefLvK5jNvkYuwnvobs9nYAXr1KrGKk4CG/TVeHIgd5sGt2OTUfY
-         +tX+tECYVNujSodfO16Cxg1sHAI6Bz8BKZxcq8R0I/w8izjG6+L3esjkZJKktys6kCWM
-         8brEYoI+FZoLs+cxVTBV8F2Am9TQVgTO+Ht39Vw8ABLCBN0u9WS51XErxYzL0NUwqulV
-         2+QA==
-X-Received: by 10.50.66.243 with SMTP id i19mr18555868igt.7.1427159780507;
- Mon, 23 Mar 2015 18:16:20 -0700 (PDT)
-Received: by 10.107.131.33 with HTTP; Mon, 23 Mar 2015 18:15:50 -0700 (PDT)
-In-Reply-To: <xmqqlhitle5w.fsf@gitster.dls.corp.google.com>
+        bh=mPs9HzpE+8tuR2er3s0P8c41UXT5cqPSKAHEOv8YZSU=;
+        b=VgjQQrZi1g0U/TWNhUlOvCDUmADM99dyJxlsrFR6ujlRKIzxbIjLHM7dZpyHDDZwUx
+         AthU8LIZP8w6D0UbRHwG22U3QdcA0xtd7kQIXDwXU5ybAo9o4wTEWVBwQY/Ie4mY/r0h
+         xkSuUJ9/KkC+rhWr2O31RyoJFX93/uQuIW7v4HeiULBqoUt8JmnLxSKPFmPR/q5hDouc
+         SaBYhxX1E8F4JCxeVVGUZIro6cW5m+cYIcjJCPhcCILGld2aIAqJ0neoMAP+FuA/b1OC
+         la1PVaeowNTiNXmVLjfbcdovF36rd4ZDZfWIiMQppnn3cO27NLgDV4BaI0zl57d5QCEq
+         yEbg==
+X-Received: by 10.50.137.99 with SMTP id qh3mr18597413igb.7.1427160102913;
+ Mon, 23 Mar 2015 18:21:42 -0700 (PDT)
+Received: by 10.107.131.33 with HTTP; Mon, 23 Mar 2015 18:21:12 -0700 (PDT)
+In-Reply-To: <BE2660C974C9415E997F20A49ABC766E@PhilipOakley>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266171>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266172>
 
-On Thu, Mar 19, 2015 at 1:00 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
+On Fri, Mar 20, 2015 at 6:07 AM, Philip Oakley <philipoakley@iee.org> wrote:
+> Hi, I was expecting that sparse checkout could be used to avoid the checking
+> out, by git, of files which have colons in their name into the worktree when
+> on Windows.
 >
->> Ah, wait.
->>
->> I suspect that it all cancels out.
->> ...
->> Now, as you mentioned, there _may_ be codepaths that uses the same
->> definition of "what's in the index" as what diff-cache used to take
->> before your patches, and they may be broken by removing the
->> invalidation.  If we find such codepaths, we should treat their old
->> behaviour as buggy and fix them, instead of reintroducing the
->> invalidation and keep their current behaviour, as the new world
->> order is "i-t-a entries in the index does not yet exist."
+> Yue Lin Ho reported on the Msygit list [1] that he had a repo where there
+> was already committed a file with a colon in it's name, which was a needed
+> file and had been committed by a Linux user. The problem was how to work
+> with that repo on a Windows box where such a file is prohibited to exist on
+> the FS (hence the expectation that a sparse checkout would suffice). Yue has
+> created a short test repo [2]
 >
-> One potential negative consequence of the new world order I can
-> immediately think of is this.  In many operations, we try to be
-> lenient to changes in the working tree as long as the index is
-> clean.  "read-tree -m" is the most visible one, where we require
-> that the index and HEAD matches while allowing changes to working
-> tree paths as long as they do not interfere with the paths that are
-> involved in the merge.  We need to make sure that the path dir/bar
-> added by "add -N dir/bar", which in the new world order does not
-> count as "index is not clean and there is a difference from HEAD",
-> (1) does not interfere with the mergy operation that wants to touch
-> dir (which _could_ even be expected to be a file) or dir/bar, and
-> (2) is not lost because the mergy operation wants to touch dir or
-> dir/bar, for example.
+> Even after getting the pathspec escaping right, I still haven't been able to
+> make this expected behaviour work [3].
+>
+> Am I wrong to expect that sparse checkout (and the skip-worktree bit) can be
+> used to avoid files with undesirable filenames hitting the OS's file system?
+>
+> If it should be OK, what's the correct recipe?
+>
+> --
+> Philip
+>
+> [1]
+> https://groups.google.com/forum/?hl=en_US?hl%3Den#!topic/msysgit/D4HcHRpxPgU
+> "How to play around with the filename with colon on Windows?"
+> [2] Test repo https://github.com/t-pascal/tortoisegit-colons
+>
+> [3] test sequence::
+> $ mkdir colons && cd colons
+> $ git clone -n https://github.com/t-pascal/tortoisegit-colons
+> $ cd tortoisegit-colons/
+> $ git config core.sparseCheckout true
+> $ cat .git/info/sparse-checkout # external editor
+> /*
+> !ifcfg-eth0\:0
 
-"read-tree -m" does not invoke diff, does it? If I went with my
-previous approach (modifying unpack-trees to ignore i-t-a entries)
-then this could be a problem, but because unpack-trees is untouched,
-merge operations should not be impacted by this patch. Even if some
-other command does "diff --cached" first to abort early, if "diff
---cached" fails to report "HEAD and index are different" as you
-described, I would expect unpack-trees to be able to deal with it
-anyway.
+Colons have no special meaning in gitignore rules and therefore need
+not be escaped. The backslash is considered a literal character in
+this case, probably not what you want.
 
-PS. Sorry for the late response, busy fighting the evil last weekend.
-I blame Steam on Linux.
+> $ git update-index --skip-worktree -- ifcfg-eth0\:0
+> Ignoring path ifcfg-eth0:0
+> $ git checkout -b test 7f35d34bc6160cc # tip commit, we are still unborn!
+> error: Invalid path 'ifcfg-eth0:0
+> D       ifcfg-eth0:0
+> Switched to a new branch 'test'
 -- 
 Duy
