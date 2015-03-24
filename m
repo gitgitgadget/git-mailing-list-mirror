@@ -1,124 +1,95 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: =?UTF-8?B?UmU6IFtQQVRDSCAxLzFdIGwxMG46IGRlLnBvOiB1c2UgImJsYSDigKYiIGluc3RlYWQgbw==?=
-	=?UTF-8?B?ZiAiYmxhLi4uIg==?=
-Date: Tue, 24 Mar 2015 18:51:06 +0100
-Message-ID: <CAN0XMOKVAebs6xNuLLNvzi8gkARsmSgNC1k+TuS23BxqCffOig@mail.gmail.com>
-References: <1426942357-5618-1-git-send-email-phillip.szelat@gmail.com>
-	<CAN0XMO+JLfzkYwP5rKkT6RyLJ-XuH1k=9vKmi1X0xb1SjTOdvg@mail.gmail.com>
-	<551190F2.10808@drmicha.warpmail.net>
-	<20150324171044.GA4414@ralf-ubuntu>
-	<xmqqlhim713w.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] diff-lib.c: adjust position of i-t-a entries in diff
+Date: Tue, 24 Mar 2015 10:00:43 -0700
+Message-ID: <xmqqtwxa72kk.fsf@gitster.dls.corp.google.com>
+References: <1425910445-27383-2-git-send-email-pclouds@gmail.com>
+	<1426514206-30949-1-git-send-email-pclouds@gmail.com>
+	<5506F3A9.1020704@drmicha.warpmail.net>
+	<xmqqa8zdrkpy.fsf@gitster.dls.corp.google.com>
+	<20150317140704.GA7248@lanh>
+	<xmqq1tknpkwd.fsf@gitster.dls.corp.google.com>
+	<CACsJy8Beoz=qcHrOG=akCR+gOQRjBcsQHaXdL_=PW70BOf4q3g@mail.gmail.com>
+	<xmqqtwxikpz6.fsf@gitster.dls.corp.google.com>
+	<xmqqlhitle5w.fsf@gitster.dls.corp.google.com>
+	<CACsJy8BczCNxm3WHK1gtkXiZCbDkFD-67oOMR+eK8uwOBfQXuw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain
 Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Phillip Sz <phillip.szelat@gmail.com>,
-	git <git@vger.kernel.org>, Thomas Rast <tr@thomasrast.ch>,
-	=?UTF-8?Q?Jan_Kr=C3=BCger?= <jk@jk.gs>,
-	Christian Stimming <stimming@tuhh.de>,
-	=?UTF-8?Q?Matthias_R=C3=BCster?= <matthias.ruester@gmail.com>,
-	=?UTF-8?Q?Magnus_G=C3=B6rlitz?= <magnus.goerlitz@googlemail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 24 18:51:20 2015
+	Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 24 18:51:45 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YaSz1-0007OU-BT
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Mar 2015 18:51:19 +0100
+	id 1YaSzJ-0007ZO-LL
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Mar 2015 18:51:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755084AbbCXRvL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Mar 2015 13:51:11 -0400
-Received: from mail-we0-f176.google.com ([74.125.82.176]:34194 "EHLO
-	mail-we0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756857AbbCXRvI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Mar 2015 13:51:08 -0400
-Received: by wegp1 with SMTP id p1so343200weg.1
-        for <git@vger.kernel.org>; Tue, 24 Mar 2015 10:51:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=5taNB9qiIy5C1nEq8jEKofS8nPQwrTl0rUKQJkanlL0=;
-        b=h33T4QqF/R2yGhQTVkHxlgyCVXMpnb+NCx0l/aDOXcV0KrKsOCQU8yEH1ZxLiFbPf4
-         orcaSGe83ngAkq74dib/6nIP0WXNXbxY6HCZirlgdpfDsiDYSR5q47Bw9COUz1CNZ1q6
-         0VPLJDMzBP1T0oS7XANFpp7LWX+gc2PAYEIBm1YNpk5P1XFnZt5u6+Q1Oe3HszIp5Wr9
-         9qr6la4osQIryYlAcmXNQc4/seyN3DlfS1vdZ0jMXQcdkFoCReDIDUG4Vy49mYGZcLzk
-         t0sQXoCMwUELc909p5yqh5Kd+uKlVr9S+B3fP5lG+7bFR6eCTi5XQu0wkqYWG5f7KjF8
-         R0+A==
-X-Received: by 10.181.11.202 with SMTP id ek10mr29461350wid.37.1427219467003;
- Tue, 24 Mar 2015 10:51:07 -0700 (PDT)
-Received: by 10.194.72.5 with HTTP; Tue, 24 Mar 2015 10:51:06 -0700 (PDT)
-In-Reply-To: <xmqqlhim713w.fsf@gitster.dls.corp.google.com>
+	id S1755574AbbCXRBD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Mar 2015 13:01:03 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:62241 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755564AbbCXRA6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Mar 2015 13:00:58 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7675F3FB98;
+	Tue, 24 Mar 2015 13:00:57 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ADJ+tMSOHGjLar+e6HWeV5Ympig=; b=dzsx7q
+	h8fimcvM8eWOeaVJaNN5GzeGnaHgSKN0l+PK9Ui0NkMbzW3uvZMlwixmIH8vVGO2
+	6yM1M+2m9+/r+zgUN6Q8PDO/ppso6HOJpMrua5deKg/pOhTCOkYgDcPjV5K+AP5T
+	UBPsx8Dcr7gdLTRysFxZQYKIkx/+33dvN/t/Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qnZaA5dWpM3VQHnhgyuHQ0WQABThaXsG
+	e4fVTy4gJn3qGiwSt2YB1QzcN0j9qfO3jk3dkaABCLRlhqo0S+LXE3/YsrQcXW8o
+	61eQ9fXlpUu8TuWNnQEgDqc3n+QGUZ3UubbSivVmXTEWFP3EmHGPPI8p/BbYflE0
+	2EueiCutQ1c=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6FCFB3FB95;
+	Tue, 24 Mar 2015 13:00:57 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0C2DB3FB75;
+	Tue, 24 Mar 2015 13:00:44 -0400 (EDT)
+In-Reply-To: <CACsJy8BczCNxm3WHK1gtkXiZCbDkFD-67oOMR+eK8uwOBfQXuw@mail.gmail.com>
+	(Duy Nguyen's message of "Tue, 24 Mar 2015 08:15:50 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 4FC2C0DC-D247-11E4-AB0F-11859F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266212>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266213>
 
-2015-03-24 18:32 GMT+01:00 Junio C Hamano <gitster@pobox.com>:
-> Ralf Thielow <ralf.thielow@gmail.com> writes:
->
->> diff --git a/po/de.po b/po/de.po
->> index 11fbd0f..9fa3f4c 100644
->> --- a/po/de.po
->> +++ b/po/de.po
->> @@ -616,7 +616,7 @@ msgstr ""
->>  #: help.c:373
->>  #, c-format
->>  msgid "in %0.1f seconds automatically..."
->> -msgstr "Automatische Ausf=C3=BChrung in %0.1f Sekunden..."
->> +msgstr "Automatische Ausf=C3=BChrung in %0.1f Sekunden ..."
->>
->>  #: help.c:380
->>  #, c-format
->> @@ -1271,12 +1271,12 @@ msgstr "Kann keine Commit-Beschreibung f=C3=BC=
-r %s bekommen"
->>  #: sequencer.c:611
->>  #, c-format
->>  msgid "could not revert %s... %s"
->> -msgstr "Konnte \"revert\" nicht auf %s ausf=C3=BChren... %s"
->> +msgstr "Konnte \"revert\" nicht auf %s ausf=C3=BChren ... %s"
->
-> I do not read German, but aren't these two completely in different
-> classes?  The first one is not abbreviating any part of a word, but
-> the second one's first "..." is showing that %s is not giving the
-> full word (it is fed the find-unique-abbrev result and adding ...
-> to say it is not a full 40-hex).
->
-> I do not read German, but I would not be surprised if the original
-> were a mistranslation.  Is it saying
->
->         Could not revert THAT ONE ... THE SUBJECT OF THE COMMIT
->
-> as if "..." is some punctuation in the sentence (i.e. it could have
-> been a ';' or ':' or '.' that ends the first part of the sentence,
-> but "..." is used to tell the reader to "wait a bit before
-> continuing with the rest of the sentence"), not as part of "THAT
-> ONE"?  The "..." in the original is a three-dot that means "we say
-> THAT ONE but it is not fully spelled out, there are more letters
-> here".
->
-> Please ignore the above if the convention in German is to have SP
-> before three-dots for both cases.  I do not read German.
->
-> Still the placement of a word "perform" (ausf=C3=BChren) between "%s"=
- and
-> "..." in the translation of the second one looks suspicious to me,
-> though.
->
->> @@ -9865,7 +9865,7 @@ msgstr "fehlerhaftes Objekt bei '%s'"
->>  #: builtin/tag.c:301
->>  #, c-format
->>  msgid "tag name too long: %.*s..."
->> -msgstr "Tagname zu lang: %.*s..."
->> +msgstr "Tagname zu lang: %.*s ..."
->
-> This is also "We are not spelling it fully and there are actually
-> some more letters in the original" three-dots.
+Duy Nguyen <pclouds@gmail.com> writes:
 
-You're right. I just misinterpreted the dots. It seems I'm chatting
-too much where "..." means nothing but space. ;-)
-I'll fix it in this patch and will check other messages later.
-Thanks
+> "read-tree -m" does not invoke diff, does it? If I went with my
+> previous approach (modifying unpack-trees to ignore i-t-a entries)
+> then this could be a problem, but because unpack-trees is untouched,
+> merge operations should not be impacted by this patch.
+
+Theoretically yes, but not quite.
+
+I wouldn't be surprised if an enterprising soul saw an optimization
+opportunity in the "read-tree -m A B" codepath.  When it finds that
+a tree in A and a valid cache-tree entry that corresponds to the
+tree matches, it could blow away all index entries covered by the
+cache-tree entry and replace them with B, either
+
+ (1) unconditionally when "-u" is not given; or
+
+ (2) as long as the working tree matches the index inside that
+     directory when running with "-u".
+
+And such an optimization used to be a valid thing to do in the old
+world; but (1) will break in the new world, if we drop that
+invalidation---the i-t-a entries will be discarded from the index.
+
+As i-t-a is not a norm but an abberration, I'd rather keep the
+pessimizing invalidation to keep the door open for such an
+optimization for a more common case, and there may be other cases
+in which our correctness around i-t-a depends on.
