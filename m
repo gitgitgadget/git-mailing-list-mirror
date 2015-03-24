@@ -1,89 +1,129 @@
-From: Trevor Saunders <tbsaunde@tbsaunde.org>
-Subject: Re: [PATCH, RFC] checkout: Attempt to checkout submodules
-Date: Tue, 24 Mar 2015 14:30:13 -0400
-Message-ID: <20150324183013.GA15658@tsaunders-iceball.corp.tor1.mozilla.com>
-References: <1426681643-7516-1-git-send-email-tbsaunde@tbsaunde.org>
- <xmqqy4msizu1.fsf@gitster.dls.corp.google.com>
- <20150319201509.GB21536@tsaunders-iceball.corp.tor1.mozilla.com>
- <xmqq3850it94.fsf@gitster.dls.corp.google.com>
- <20150320001345.GC21536@tsaunders-iceball.corp.tor1.mozilla.com>
- <5510712C.5090906@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/GSoC] Proposal: Make git-pull and git-am builtins
+Date: Tue, 24 Mar 2015 11:37:02 -0700
+Message-ID: <xmqqwq265jjl.fsf@gitster.dls.corp.google.com>
+References: <20150324163730.GA8366@yoshi.chippynet.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Tue Mar 24 19:31:01 2015
+Content-Type: text/plain
+Cc: Git List <git@vger.kernel.org>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 24 19:37:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YaTbG-0004jM-Pm
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Mar 2015 19:30:51 +0100
+	id 1YaThh-00008V-Af
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Mar 2015 19:37:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753527AbbCXSap (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Mar 2015 14:30:45 -0400
-Received: from tbsaunde.org ([66.228.47.254]:34316 "EHLO
-	paperclip.tbsaunde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752879AbbCXSao (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Mar 2015 14:30:44 -0400
-Received: from tsaunders-iceball.corp.tor1.mozilla.com (unknown [66.207.208.102])
-	by paperclip.tbsaunde.org (Postfix) with ESMTPSA id 6D84FC0A8;
-	Tue, 24 Mar 2015 18:30:43 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <5510712C.5090906@web.de>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1754701AbbCXShM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Mar 2015 14:37:12 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:61033 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753677AbbCXShK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Mar 2015 14:37:10 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 31F3341854;
+	Tue, 24 Mar 2015 14:37:04 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Bsvi57ePsu1rEvhkBUUtSgFa/S0=; b=UIykjd
+	HFLmxR6oq9BjvM935flp3CM7IE5loLfU4SXeCcBP6/hoJlDwWirBTXpI3G4Qsht5
+	fpm6YJ8g6KzgR92o2+cAlOMdoZGx4KeEbXTLEeDCp4CoVXHUCIBOZXdIDsCsHs4w
+	MTaxsiDCro4M5UJcjuxJQAwUdeEdhueN/7+Hc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ZN8S4j88BbxEJjiNb9qRNd6fuy3ZTrqW
+	TGZ+aRKmronXQRRHGHYcwF7eBLabOvSfmeq4JWJSyuU7rNO4PdXd3h50DZDLKhnb
+	eFmaj4NnJl+HLpaX6bjHkZvlNJ8dvWfVUZ8qRRwg5V+chi2Ej90+ftfgRDJEbU3k
+	4/ZahGy0kAc=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2B70A41853;
+	Tue, 24 Mar 2015 14:37:04 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 97BE341852;
+	Tue, 24 Mar 2015 14:37:03 -0400 (EDT)
+In-Reply-To: <20150324163730.GA8366@yoshi.chippynet.com> (Paul Tan's message
+	of "Wed, 25 Mar 2015 00:37:30 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: C40EB470-D254-11E4-84C2-11859F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266218>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266219>
 
-On Mon, Mar 23, 2015 at 09:01:48PM +0100, Jens Lehmann wrote:
-> Am 20.03.2015 um 01:13 schrieb Trevor Saunders:
-> >On Thu, Mar 19, 2015 at 02:15:19PM -0700, Junio C Hamano wrote:
-> >>Trevor Saunders <tbsaunde@tbsaunde.org> writes:
-> >>I have a feeling that an optional feature that allows "git submodule
-> >>update" to happen automatically from this codepath might be
-> >>acceptable by the submodule folks, and they might even say it does
-> >>not even have to be optional but should be enabled by default.
-> >
-> >ok, that seems fairly reasonable.  I do kind of wonder though if it
-> >shouldn't be 'git submodule update --checkout' but that would get us
-> >kind of back to where we started.  I guess since the default is checkout
-> >if you set the pref then you can be assumed to have some amount of idea
-> >what your doing.
-> 
-> Me thinks it should be "git checkout" for those submodules that have
-> their update setting set to 'checkout' (or not set at all). I'm not
-> sure yet if it makes sense to attempt a rebase or merge here, but that
-> can be added later if necessary.
+Paul Tan <pyokagan@gmail.com> writes:
 
-sgtm
+> ..., I propose the following requirements for the rewritten code:
+>
+> 1. No spawning of external git processes. This is to support systems with high
+>    ``fork()`` or process creation overhead, and to reduce redundant IO by
+>    taking advantage of the internal object, index and configuration cache.
 
-> >>But I do not think it would fly well to unconditionally run
-> >>"checkout -f" here.
-> >
-> >agreed
-> 
-> Using -f here is ok when you extend the appropriate verify functions
-> in unpack-trees.c to check that no modifications will be lost (unless
-> the original checkout is used with -f). See the commit 76dbdd62
-> ("submodule: teach unpack_trees() to update submodules") in my github
-> repo at https://github.com/jlehmann/git-submod-enhancements for
-> the basic concept (There is already a fixup! for that a bit further
-> down the branch which handles submodule to file conversion, maybe one
-> or two other changes will be needed when the test suite covers all
-> relevant cases).
+I suspect this may probably be too strict in practice.
 
-ah, I see your already working a more complete solution to this sort of
-issue.  I'll get out of your way then unless you want help.
+True, we should never say "run_command_capture()" just to to read
+from "git rev-parse"---we should just call get_sha1() instead.
 
-Trev
+But for a complex command whose execution itself far outweighs the
+cost of forking, I do not think it is fair to say your project
+failed if you chose to run_command() it.  For example, it may be
+perfectly OK to invoke "git merge" via run_command().
 
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 3. The resulting builtin should not have wildly different behavior or bugs
+>    compared to the shell script.
+
+This on the other hand is way too loose.
+
+The original and the port must behave identically, unless the
+difference is fixing bugs in the original.
+
+> Potential difficulties
+> =======================
+>
+> Rewriting code may introduce bugs
+> ...
+
+Yes, but that is a reasonable risk you need to manage to gain the
+benefit from this project.
+
+> Of course, the downside of following this too strictly is that if there were
+> any logical bugs in the original code, or if the original code is unclear, the
+> rewritten code would inherit these problems too.
+
+I'd repeat my comment on the 3. above.  Identifying and fixing bugs
+is great, but otherwise don't worry about this too much.
+
+Being bug-to-bug compatible with the original is way better than
+introducing new bugs of an unknown nature.
+
+> Rewritten code may become harder to understand
+> ...
+
+And also it may become harder to modify.
+
+That is the largest problem with any rewrite, and we should spend
+the most effort to avoid it.
+
+A new bugs introduced we can later fix as long as the result is
+understandable and maintainable.
+
+> For the purpose of reducing git's dependencies, the rewritten C code should not
+> depend on other libraries or executables other than what is already available
+> to git builtins.
+
+Perhaps misphrased; see below.
+
+> We can see that the C version requires much more lines compared to the shell
+> pipeline,...
+
+That is something you would solve by introducing reusable code in
+run_command API, isn't it?  That is how various rewrites in the past
+did, and this project should do so too.  You should aim to do this
+project by not just using "what is already available", but adding
+what you discover is a useful reusable pattern into a set of new
+functions in the "already available" API set.
