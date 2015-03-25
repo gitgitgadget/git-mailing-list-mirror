@@ -1,94 +1,69 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 00/14] numparse module: systematically tighten up integer
- parsing
-Date: Wed, 25 Mar 2015 22:14:18 +0100
-Message-ID: <5513252A.7050601@alum.mit.edu>
-References: <1426608016-2978-1-git-send-email-mhagger@alum.mit.edu>	<20150319052620.GA30645@peff.net> <xmqqk2ydjvcd.fsf@gitster.dls.corp.google.com> <55118B74.1030201@alum.mit.edu> <551195B6.9040402@web.de>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: per-repository and per-worktree config variables
+Date: Wed, 25 Mar 2015 22:33:48 +0100
+Message-ID: <551329BC.8050207@web.de>
+References: <1423401394-13675-1-git-send-email-pclouds@gmail.com> <54D79EAB.6060301@web.de> <20150318213342.GA25692@wheezy.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.org>, git@vger.kernel.org
-To: =?windows-1252?Q?Ren=E9_Scharfe?= <l.s.r@web.de>,
-	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 25 22:14:41 2015
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Max Kirillov <max@max630.net>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= =?UTF-8?B?IER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 25 22:34:10 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yasd9-0005Aw-I1
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Mar 2015 22:14:27 +0100
+	id 1Yasw2-0002ZF-2g
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Mar 2015 22:33:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752012AbbCYVOX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Mar 2015 17:14:23 -0400
-Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:47492 "EHLO
-	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750866AbbCYVOV (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 25 Mar 2015 17:14:21 -0400
-X-AuditID: 1207440f-f792a6d000001284-b1-5513252da00e
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 87.99.04740.D2523155; Wed, 25 Mar 2015 17:14:21 -0400 (EDT)
-Received: from [192.168.69.130] (p5DDB1AEE.dip0.t-ipconnect.de [93.219.26.238])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t2PLEI1k026311
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Wed, 25 Mar 2015 17:14:19 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.5.0
-In-Reply-To: <551195B6.9040402@web.de>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrKKsWRmVeSWpSXmKPExsUixO6iqKurKhxqMGc3t0XXlW4mi4beK8wW
-	Z7b2M1v8aOlhtnh8awKTA6vHs949jB5z71t6XLyk7PF5k5zH7WfbWAJYo7htkhJLyoIz0/P0
-	7RK4M7ZeustecIqrYt2RySwNjEc4uhg5OSQETCSmXN/GCGGLSVy4t56ti5GLQ0jgMqPEzRmb
-	oJzzTBIt514zgVTxCmhLTNj3gxnEZhFQlXg96z+YzSagK7GopxmsRlQgSOLlrb+MEPWCEidn
-	PmEBsUUEaiSmXnrGDmIzCxhJzLpxhhXEFhYIl1h6bzYTxLJzjBIPdrWxgSQ4BdQkpl77yAzR
-	oCex4/ovVghbXqJ562zmCYwCs5DsmIWkbBaSsgWMzKsY5RJzSnN1cxMzc4pTk3WLkxPz8lKL
-	dE30cjNL9FJTSjcxQoKcfwdj13qZQ4wCHIxKPLweIkKhQqyJZcWVuYcYJTmYlER5+YSFQ4X4
-	kvJTKjMSizPii0pzUosPMUpwMCuJ8PY8AirnTUmsrEotyodJSXOwKInzqi9R9xMSSE8sSc1O
-	TS1ILYLJynBwKEnwSqoADRUsSk1PrUjLzClBSDNxcIIM55ISKU7NS0ktSiwtyYgHRWt8MTBe
-	QVI8QHsNQNp5iwsSc4GiEK2nGBWlxHndQBICIImM0jy4sbDU9YpRHOhLYV4TkCoeYNqD634F
-	NJgJaPC5fD6QwSWJCCmpBkaNm/MDL1Yfqot1/fVTapvp94jUlU0rX/e4fM+8p7e4dKmp3PdH
-	wlszv8s1ZVqZzWuxflhwn7t9dUOYQOb1mFu3TK32XnWc1VM19xVTEs+PqqkHZVpj 
+	id S1751197AbbCYVdx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Mar 2015 17:33:53 -0400
+Received: from mout.web.de ([212.227.15.14]:64613 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751185AbbCYVdx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Mar 2015 17:33:53 -0400
+Received: from [192.168.178.41] ([79.211.117.156]) by smtp.web.de (mrweb001)
+ with ESMTPSA (Nemesis) id 0M6UmJ-1ZOs9G2Q6F-00yRcD; Wed, 25 Mar 2015 22:33:49
+ +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
+In-Reply-To: <20150318213342.GA25692@wheezy.local>
+X-Provags-ID: V03:K0:ZT4+ek7jERXr29xBHR4t4imYRQes/QG/nFFCkPnskDnhAw/wiB2
+ 0/XpzJ4MzZm3ZSMosqsXPuoiPkT6MOaf/4hPq8XLCU1erbb2Ks/4krhpwwge5rAtVCFbB8h
+ O6DBZNyLcD2cEAsBVEPy0tF1AAT18bjO+xMXLLNi3kexq7cP/qPISj1545OG4fEJFUCAfwz
+ PkDZnCWzFnfsJoX4/G4bw==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266304>
 
-On 03/24/2015 05:49 PM, Ren=E9 Scharfe wrote:
-> Am 24.03.2015 um 17:06 schrieb Michael Haggerty:
->> Parsing numbers is not rocket science, but there are a lot of pitfal=
-ls,
->> especially around overflow. It's even harder to write such code via
->> macros and the result is less readable.
->>
->> This patch series is mostly about finding a reasonable API and whipp=
-ing
->> the callers into shape. That seems ambitious enough for me. I'd rath=
-er
->> stick with boring wrappers for now and lean on strtol()/strtoul() to=
- do
->> the dirty work. It will be easy for a motivated person to change the
->> implementation later.
->=20
-> The OpenBSD developers invented strtonum for that.  Are you aware of =
-it?
->  Would it fit?  This discussion may be useful:
->=20
->     http://www.tedunangst.com/flak/post/the-design-of-strtonum
+Am 18.03.2015 um 22:33 schrieb Max Kirillov:
+> On Sun, Feb 08, 2015 at 09:36:43AM -0800, Jens Lehmann wrote:
+>> I wonder if it's worth all the hassle to invent new names. Wouldn't
+>> it be much better to just keep a list of per-worktree configuration
+>> value names and use that inside the config code to decide where to
+>> find them for multiple work trees. That would also work easily for
+>> stuff like EOL-config and would push the complexity in the config
+>> machinery and not onto the user.
+>
+> I actually thought about the same, and now tend to think
+> that most of config variables make sense to be per-worktree
+> in some cases. Only few variable must always be per
+> repository. I tried to summarize the variables which now
+> (in current pu) should be common, also listed all the rest
+> so somebody could scan through the list and spot anything I
+> could miss.
 
-I wasn't aware of strtonum; thanks for the reference. It has an
-untraditional interface. Their willingness to sacrifice half of the
-unsigned range and requirement that the user specify minval and maxval
-have the nice effect of permitting one function to be used for all
-integer types.
+Thanks for your effort! Looks like my suspicion that not only
+submodule specific configuration should be kept per worktree
+wasn't completely wrong ;-)
 
-I think git will need more flexibility, for example to support other
-radixes and to allow trailing characters. So personally I don't think w=
-e
-should use (or imitate) strtonum().
-
-Michael
-
---=20
-Michael Haggerty
-mhagger@alum.mit.edu
+Me thinks Duy's proposal to configure the per worktree settings
+in a config file might make lots of sense. We could then provide
+a default version of that file with settings that fit most use
+cases and the user could then adapt that to her special needs if
+needed.
