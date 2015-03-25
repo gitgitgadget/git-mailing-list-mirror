@@ -1,90 +1,105 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH RFC] init-db: introduce new -c/--config option
-Date: Wed, 25 Mar 2015 14:39:59 -0400
-Message-ID: <20150325183959.GA16989@peff.net>
-References: <1427307759-18679-1-git-send-email-kuleshovmail@gmail.com>
- <CANCZXo56RY18xKJbQoU=VRYApnKfy6e9ieu8munNsF6WB6YWYg@mail.gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v5 3/3] t0302: test credential-store support for XDG_CONFIG_HOME
+Date: Wed, 25 Mar 2015 20:03:47 +0100
+Message-ID: <55130693.20607@kdbg.org>
+References: <1427174429-5876-1-git-send-email-pyokagan@gmail.com>	<1427174429-5876-3-git-send-email-pyokagan@gmail.com> <CAPig+cTWnLYU8wU+WjEVpDBuWS7of=wxrWnq7b9W-r=wQh5S1A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Alexander Kuleshov <kuleshovmail@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 25 19:40:41 2015
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Eric Sunshine <sunshine@sunshineco.com>,
+	Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 25 20:04:11 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YaqDo-0003C4-A8
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Mar 2015 19:40:08 +0100
+	id 1Yaqaq-00047A-0p
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Mar 2015 20:03:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753671AbbCYSkD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Mar 2015 14:40:03 -0400
-Received: from cloud.peff.net ([50.56.180.127]:38426 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753116AbbCYSkC (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Mar 2015 14:40:02 -0400
-Received: (qmail 21342 invoked by uid 102); 25 Mar 2015 18:40:01 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Mar 2015 13:40:01 -0500
-Received: (qmail 16735 invoked by uid 107); 25 Mar 2015 18:40:16 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Mar 2015 14:40:16 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Mar 2015 14:39:59 -0400
-Content-Disposition: inline
-In-Reply-To: <CANCZXo56RY18xKJbQoU=VRYApnKfy6e9ieu8munNsF6WB6YWYg@mail.gmail.com>
+	id S1752841AbbCYTDw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Mar 2015 15:03:52 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:22188 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752033AbbCYTDv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Mar 2015 15:03:51 -0400
+Received: from dx.site (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTPSA id 3lBzPc0gQbz5tl9;
+	Wed, 25 Mar 2015 20:03:47 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.site (Postfix) with ESMTP id 2EF10520C;
+	Wed, 25 Mar 2015 20:03:47 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
+In-Reply-To: <CAPig+cTWnLYU8wU+WjEVpDBuWS7of=wxrWnq7b9W-r=wQh5S1A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266291>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266292>
 
-On Thu, Mar 26, 2015 at 12:30:13AM +0600, Alexander Kuleshov wrote:
+Am 25.03.2015 um 07:42 schrieb Eric Sunshine:
+> On Tue, Mar 24, 2015 at 1:20 AM, Paul Tan <pyokagan@gmail.com> wrote:
+>> t0302 now tests git-credential-store's support for the XDG user-specific
+>> configuration file $XDG_CONFIG_HOME/git/credentials. Specifically:
+>>
+>> * Ensure that the XDG file is strictly opt-in. It should not be created
+>>    by git at all times if it does not exist.
+>>
+>> * Conversely, if the XDG file exists, ~/.git-credentials should
+>>    not be created at all times.
+>>
+>> * If both the XDG file and ~/.git-credentials exists, then both files
+>>    should be used for credential lookups. However, credentials should
+>>    only be written to ~/.git-credentials.
+>>
+>> * Credentials must be erased from both files.
+>>
+>> * $XDG_CONFIG_HOME can be a custom directory set by the user as per the
+>>    XDG base directory specification. Test that git-credential-store
+>>    respects that, but defaults to "~/.config/git/credentials" if it does
+>>    not exist or is empty.
+>>
+>> Helped-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+>> Helped-by: Junio C Hamano <gitster@pobox.com>
+>> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+>> Signed-off-by: Paul Tan <pyokagan@gmail.com>
+>> ---
+>> diff --git a/t/t0302-credential-store.sh b/t/t0302-credential-store.sh
+>> index f61b40c..4e1f8ec 100755
+>> --- a/t/t0302-credential-store.sh
+>> +++ b/t/t0302-credential-store.sh
+>> @@ -6,4 +6,118 @@ test_description='credential-store tests'
+>>
+>>   helper_test store
+>>
+>> +test_expect_success 'get: use xdg file if home file is unreadable' '
+>
+> I meant to mention this earlier. Does this test need to be protected
+> by the POSIXPERM prerequisite since it's using chmod?
+>
+>      test_expect_success POSIXPERM 'get: ... unreadable' '
+>
+> Otherwise, the test will likely fail on Windows.
 
-> I'm not sure about two things:
-> 
-> 1. Is there any way to do this with the current git? At least i didn't
-> find how to do it, so decided to write this patch.
-> If there is already ability to do the same without this patch, please
-> let me know.
+Well spotted! The test indeed fails on Windows. POSIXPERM is required.
 
-The reason we originally added "-c" to clone and not init is that clone
-performs several other follow-on actions after the repository is
-initialized. For example, you might want to run:
+>> +       echo "https://home-user:home-pass@example.com" >"$HOME/.git-credentials" &&
+>> +       chmod -r "$HOME/.git-credentials" &&
+>> +       mkdir -p "$HOME/.config/git" &&
+>> +       echo "https://xdg-user:xdg-pass@example.com" >"$HOME/.config/git/credentials" &&
+>> +       check fill store <<-\EOF
+>> +       protocol=https
+>> +       host=example.com
+>> +       --
+>> +       protocol=https
+>> +       host=example.com
+>> +       username=xdg-user
+>> +       password=xdg-pass
+>> +       --
+>> +       EOF
+>> +'
 
-  git clone -c core.autocrlf=true ...
-
-to have that option in place before clone checks out files to the
-working tree. There is no direct way to have "git init" set the config
-for you, but there is no harm in doing:
-
-  git init
-  git config core.autocrlf=true
-
-because init returns control to you immediatel.
-
-> 2. Now current patch overwrite the value of the configuration option
-> from config,
-> if there is given option with the same key. For example, when we do git init,
-> .git/config contains core.filemode = true. If we will pass
-> core.filemode = false with this patch to git init,
-> there will be core.filemode = false in the .git/config. So, I'm not
-> sure about it.
-> I looked on git clone -c/--config, it just adds the same option to the
-> .git/config, but it looks strange to me....
-
-Most options, when there are multiple present, will use the last-seen
-value (core.filemode is one of these, so having it there twice means the
-second one takes precedence). Some options form a list (e.g., fetch
-refspecs). So if you run:
-
-  git clone -c remote.origin.fetch=refs/notes/*:refs/notes/* ...
-
-you add a new refspec, but do not replace the default one to fetch the
-actual branches. The knowledge of which config keys are which is known
-only to the config callbacks, so it is generally safer for generic
-config-munging code to add a potentially overriding key (the downside is
-that you cannot use "-c" to "clear" a list-like key, but the inability
-to do that is a failing of the config code in general).
-
--Peff
+-- Hannes
