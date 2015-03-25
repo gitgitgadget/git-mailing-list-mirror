@@ -1,78 +1,119 @@
-From: Thomas Schneider <thosch97@gmail.com>
-Subject: Re: [PATCH] Documentation: Add target to build PDF manpages
-Date: Wed, 25 Mar 2015 12:43:57 +0100
-Message-ID: <CAJUTLVXC7b4svJ0N4sQGm3+eRpjcQ_8eSv0vSYff=K_x_7mO3A@mail.gmail.com>
-References: <1426850584-9951-1-git-send-email-thosch97@gmail.com>
- <CAGZ79ka7tPA17Y-vPPp5W_4-0UMnHMfM9+eQ8jc4eu23FpM2ug@mail.gmail.com>
- <xmqq4mpfe7xm.fsf@gitster.dls.corp.google.com> <CAGZ79kaDnRiUQ6=3gVvsPrkSzkNbACRvgQBSo8gmpRZ8bka84g@mail.gmail.com>
- <xmqqmw37cn18.fsf@gitster.dls.corp.google.com> <55103565.9040000@drmicha.warpmail.net>
- <DA8ADE6265034B1186A4D63318C6EF3C@PhilipOakley>
+From: Kirill Marchuk <62mkv@mail.ru>
+Subject: very weird behaviour with "merge -s subtree"
+Date: Wed, 25 Mar 2015 18:55:23 +0600
+Message-ID: <5512B03B.9020707@mail.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Philip Oakley <philipoakley@iee.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Stefan Beller <sbeller@google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 25 12:44:57 2015
+X-From: git-owner@vger.kernel.org Wed Mar 25 14:01:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yajk0-0008Gg-Bc
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Mar 2015 12:44:56 +0100
+	id 1Yakvk-000090-Cz
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Mar 2015 14:01:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752068AbbCYLol convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Mar 2015 07:44:41 -0400
-Received: from mail-la0-f53.google.com ([209.85.215.53]:35914 "EHLO
-	mail-la0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751876AbbCYLok convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 25 Mar 2015 07:44:40 -0400
-Received: by labe2 with SMTP id e2so17308399lab.3
-        for <git@vger.kernel.org>; Wed, 25 Mar 2015 04:44:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=gN2MqCYeOlgoDxfx049G4qsa34qmiy8GZssyjjH0k60=;
-        b=MMezhA6bNRMAutsO0NWFMl27VOz19FPOeIo2tY1ymzsLfKcWIGpr2YfPEopFOAZI6Y
-         xO0myRmSm0fXtzJyOOgmbncZAdAq5Ws9Cesa+zkbvUPXpFcdtc3rQDeW9oWh3T6OH7M1
-         sos7vPSJ45HFGJe0k7dgHQC0HM6y9aKeGc94+KGS5u92DXRw2kh1ym+ONqGPWE8WSSyS
-         4IhsTaP+ohUGY4IPC4pe6QlgLiwzA6CDAALfvZGx5EFpTO3e8pYrCSwrYo3LZylG/SxX
-         zkRxnP30ro76HCj7RvbbuqHvD55f82pZ4oDuZ78lvnCQE0Kij4HRAGMfpau6FU3jWqd5
-         uf5A==
-X-Received: by 10.152.42.141 with SMTP id o13mr1199323lal.79.1427283878197;
- Wed, 25 Mar 2015 04:44:38 -0700 (PDT)
-Received: by 10.112.63.199 with HTTP; Wed, 25 Mar 2015 04:43:57 -0700 (PDT)
-In-Reply-To: <DA8ADE6265034B1186A4D63318C6EF3C@PhilipOakley>
+	id S1751725AbbCYNA6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Mar 2015 09:00:58 -0400
+Received: from fallback5.mail.ru ([94.100.181.253]:49023 "EHLO
+	fallback5.mail.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752739AbbCYNAy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Mar 2015 09:00:54 -0400
+Received: from smtp30.i.mail.ru (smtp30.i.mail.ru [94.100.177.90])
+	by fallback5.mail.ru (mPOP.Fallback_MX) with ESMTP id 53B6A7C142AF
+	for <git@vger.kernel.org>; Wed, 25 Mar 2015 15:55:26 +0300 (MSK)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru; s=mail2;
+	h=Content-Transfer-Encoding:Content-Type:Subject:To:MIME-Version:From:Date:Message-ID; bh=54zJttIkrT7EQsI/e52q5D5l8SDPhdgqI8Sr2uQilQ8=;
+	b=aegFbjfBInrewSfxHEXwsWyw+bVEqnRqFCqebAaLEPWW0F725l+OLR5l0cQVPsILOY84Dh9mGMHNi41lwUKxNAZ5xSYWlHicPtD/NrGuu+ZovEzwhyAhMG9pxPc9dJHjFpCE+RM2igmDdOgo9jJldjKg0vfSjV2YTUUY5enn8vY=;
+Received: from [94.230.125.199] (port=63377 helo=[192.168.0.111])
+	by smtp30.i.mail.ru with esmtpa (envelope-from <62mkv@mail.ru>)
+	id 1YakqB-0001mz-Td; Wed, 25 Mar 2015 15:55:24 +0300
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
+X-Spam: Not detected
+X-Mras: Ok
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266280>
 
-Philip Oakley <philipoakley@iee.org> wrote:
-> I'd expect 'git help --pdf git' to simply feed the path of git.pdf
-> (probably in the same directory as the .html versions) to the web
-> browser and let it determine the users prefered reader.
-Yes, this is what I would do as well.  Unfortunately I don=E2=80=99t re=
-ally
-know C, so I can=E2=80=99t implement this.  But for someone who is fami=
-liar
-with C, it should be easy---just call `xdg-open` (X11), `open` (OS X)
-or `start` (Windows) and thus the user=E2=80=99s preferred PDF reader, =
-and
-maybe some common programs (evince, okular, =E2=80=A6) as fallback.
+Hi everyone
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> I didn't see (and I still do not quite see) why people would want to
-> have separate pdf files for all the subcommands (instead of say an
-> .epub or .pdf that binds all the man pages and perhaps user-manual,
-> just like we do for .texi/.info).
-Because it=E2=80=99s a good start :-)
-I see your point, and I agree that a combined PDF/EPUB/etc would make
-more sense.  This should be not too difficult with the
-AsciiDoc-DocBook-Toolchain (or maybe even without DocBook), I just
-need to dig into it a bit further.
+  I'm totally stuck with a following problem:
+
+- we have a repo, which contains several projects as folders - like 
+"api", "adminUI", "android", "web" - etc. Some parts are backend, some 
+frontend. Lets name these parts "details", as they constitute details of 
+the project in general.
+- we would like to deploy via git, so as to minimize effort on 
+deployment (and automate it later).
+- but every project is deployed separately.
+
+ From all I've read so far, I came to conclusion that "merge -s subtree" 
+seems to be done with this thing in mind, although scenarios,
+described in articles like this one 
+(https://www.kernel.org/pub/software/scm/git/docs/howto/using-merge-subtree.html) 
+usually take only one part of it: merge from "detail" to "common", and 
+not vice versa.
+
+So, what am I trying to: to implement a stable workflow, that would 
+allow me to easily merge changes from "develop" in "common" repo to a 
+"subtree-branch" and push to a corresponding "detail" remote.
+
+What I am doing:
+
+1) say, we have a folder "adminUI" in the root of "common" repo, branch 
+"test" (it's a snapshot branch for test environment - all deploys should 
+start here)
+2) git remote add adminui-origin <path>
+3) git fetch adminui-origin
+4)  git checkout -B test-adminui adminui-origin/test
+(above steps are taken from 
+http://git-scm.com/book/en/v1/Git-Tools-Subtree-Merging)
+5) git checkout test
+6) git merge -s ours --no-commit test-adminui
+(this one is from 
+https://www.kernel.org/pub/software/scm/git/docs/howto/using-merge-subtree.html)
+7) git read-tree --prefix=adminUI/ -u test-adminui
+Here I always get error like:
+error: Entry 'adminUI/.gitignore' overlaps with 'adminUI/.gitignore'.  
+Cannot bind.
+
+8) so, I have to rename folder "adminUI" to, like, "adminUI2", then "git 
+commit -a", then step 7 again
+9) ok, so now I have a whole content of "adminui-origin" in folder 
+"/adminUI" in branch "test" of my "common" repo.
+10) then I merge changes from "develop", which I want to deploy: git 
+merge develop
+11) then I want to merge those changes "down the line" into "detail" repo:
+git checkout test-adminui
+git merge -s subtree test
+12) for the first time, everything seems fine - only relevant changes 
+(i.e., changes in adminUI folder) are merged, and they go straight into 
+their right places (i.e., with respect to folder structure difference 
+between "common" and "detail")
+13) git push adminui-origin test-adminui:test  - this works good
+14) let's say something else was updated in develop:
+git checkout test
+git merge develop
+git checkout test-adminui
+15) AND HERE BEGINS THE HELL:
+git merge -s subtree test => leads to ALL of my working directory being 
+copied to a 3rd level folder somewhere in the adminUI depths !!!
+
+This drives me TOTALLY insane, and I very much need help !!
+
+I use msysgit 1.9.4 on Windows 8.1
+
+I suspect that it might have to do with the repository structure, maybe 
+some errors, etc..
+
+But I believe that it might be due to my total misunderstanding of something
+
+Anyway, I totally appreciate your help !
+
+Thanks a lot
+
+Kirill, frustrated unexperienced git user...
