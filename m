@@ -1,88 +1,99 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: [PATCH v2] l10n: de.po: fix messages with abbreviated hashs
-Date: Wed, 25 Mar 2015 17:42:34 +0100
-Message-ID: <1427301754-29919-1-git-send-email-ralf.thielow@gmail.com>
-References: <1427222527-4086-1-git-send-email-ralf.thielow@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 6/8] t: simplify loop exit-code status variables
+Date: Wed, 25 Mar 2015 10:27:49 -0700
+Message-ID: <xmqqfv8t2dii.fsf@gitster.dls.corp.google.com>
+References: <20150325052456.GA19394@peff.net>
+	<20150325053017.GF31924@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@drmicha.warpmail.net, gitster@pobox.com,
-	phillip.szelat@gmail.com, tr@thomasrast.ch, jk@jk.gs,
-	stimming@tuhh.de, matthias.ruester@gmail.com,
-	Ralf Thielow <ralf.thielow@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 25 17:42:58 2015
+Content-Type: text/plain
+Cc: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Mar 25 18:28:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YaoOC-0000Cs-2a
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Mar 2015 17:42:44 +0100
+	id 1Yap5y-0000jh-0f
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Mar 2015 18:27:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752633AbbCYQmk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Mar 2015 12:42:40 -0400
-Received: from mail-wg0-f53.google.com ([74.125.82.53]:34241 "EHLO
-	mail-wg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932387AbbCYQmi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Mar 2015 12:42:38 -0400
-Received: by wgs2 with SMTP id 2so34520108wgs.1
-        for <git@vger.kernel.org>; Wed, 25 Mar 2015 09:42:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=jBzMAsmU5lc1Pvk6BsMexkhwgGABtKAwbfA9Pu6MfHc=;
-        b=QwpFMGrTgou2r/dmMZpwQV3v2saLdc99CCYyO6e/zzRFuKoAFXiJEz7YbiOqCMlEe+
-         I36w9RzG72kYVHwM1/i+cbDbmGZjpXtmcFwP93akUQC4vYBWFRvYtxce+vbYR/1BZtWf
-         a5YCvU+cLTVQ9QRtH+sWF8HqgYbW4pyQjgt+OO0hUFQkaiOAHKMLcOoraQZiYTxrOBB/
-         9oWVp4swY0I3S5YFcd37rfOaWQWXHYF9WLZ7QFvWpV8Vu9yNSqUwvkFFLs21tLl0EA0W
-         v3iHQr14tXNzmpGiRnMrtxwA/eXhQidhDcVeyX0cT2T+exWztFgnxIDQSpvLxRfmFI/1
-         wgEg==
-X-Received: by 10.194.95.4 with SMTP id dg4mr19133017wjb.81.1427301757348;
-        Wed, 25 Mar 2015 09:42:37 -0700 (PDT)
-Received: from localhost (dslb-178-000-084-015.178.000.pools.vodafone-ip.de. [178.0.84.15])
-        by mx.google.com with ESMTPSA id vq9sm4474978wjc.6.2015.03.25.09.42.36
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 25 Mar 2015 09:42:36 -0700 (PDT)
-X-Mailer: git-send-email 2.3.4.526.g7d26d9e
-In-Reply-To: <1427222527-4086-1-git-send-email-ralf.thielow@gmail.com>
+	id S1752493AbbCYR1x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Mar 2015 13:27:53 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:52046 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752013AbbCYR1w (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Mar 2015 13:27:52 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id AA928427C1;
+	Wed, 25 Mar 2015 13:27:51 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=qzHRt/TDTYKVsKlZTVL85nUoTLs=; b=qxkWmt
+	1fXUUu3YF1jN9/35n01Uk+umfnRGUou/lf8iHuzMfLc/I9joFJwkbk6AdVhp6STD
+	nTU2gGXEeNqrwQ4zjh9fUWQO3362ZQmXZVV9oACQD2vtBm/AV2crONM0xKKqGw6z
+	pu6R3tiorR6S1IpQ4cOQ3rLTmBCb8XAuMZmn8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=LaGbF8OBEIVUhgxCOo+ZTIEHPg9hpD6U
+	LIqafpTfNXs2ww0keLZWpDRSmdXQ/Sum3oWQFvkC3iCX8pUGX2vhyWqKGZ6aA+ae
+	p6CXmTzmpovRIFloUlUbeOpMvQTAKhzYuGiwgXeWmixuVMAKJ61gffJ+rdWsnE8i
+	eey9o9loLwU=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A3DAD427C0;
+	Wed, 25 Mar 2015 13:27:51 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 13D02427BE;
+	Wed, 25 Mar 2015 13:27:51 -0400 (EDT)
+In-Reply-To: <20150325053017.GF31924@peff.net> (Jeff King's message of "Wed,
+	25 Mar 2015 01:30:17 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 435D4A6A-D314-11E4-8621-11859F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266284>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266285>
 
-The three dots in messages where the hash is abbreviated
-were misinterpreted and are fixed with this commit.
+Jeff King <peff@peff.net> writes:
 
-Noticed-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
----
-In v2 there's a space added between dots and brackets.
+> Since shell loops may drop the exit code of failed commands
+> inside the loop, some tests try to keep track of the status
+> by setting a variable. This can end up cumbersome and hard
+> to read; it is much simpler to just exit directly from the
+> loop using "return 1" (since each case is either in a helper
+> function or inside a test snippet).
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  t/t3060-ls-files-with-tree.sh | 13 ++++---------
+>  t/t3901-i18n-patch.sh         |  8 ++------
+>  2 files changed, 6 insertions(+), 15 deletions(-)
+>
+> diff --git a/t/t3060-ls-files-with-tree.sh b/t/t3060-ls-files-with-tree.sh
+> index 61c1f53..36b10f7 100755
+> --- a/t/t3060-ls-files-with-tree.sh
+> +++ b/t/t3060-ls-files-with-tree.sh
+> @@ -25,15 +25,10 @@ test_expect_success setup '
+>  		do
+>  			num=00$n$m &&
+>  			>sub/file-$num &&
+> -			echo file-$num >>expected || {
+> -				bad=t
+> -				break
+> -			}
+> -		done && test -z "$bad" || {
+> -			bad=t
+> -			break
+> -		}
+> -	done && test -z "$bad" &&
+> +			echo file-$num >>expected ||
+> +			return 1
+> +		done
+> +	done &&
+>  	git add . &&
+>  	git commit -m "add a bunch of files" &&
 
- po/de.po | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/po/de.po b/po/de.po
-index 7b30f62..a9b9124 100644
---- a/po/de.po
-+++ b/po/de.po
-@@ -1271,12 +1271,12 @@ msgstr "Kann keine Commit-Beschreibung f=C3=BCr=
- %s bekommen"
- #: sequencer.c:611
- #, c-format
- msgid "could not revert %s... %s"
--msgstr "Konnte \"revert\" nicht auf %s ausf=C3=BChren... %s"
-+msgstr "Konnte \"revert\" nicht auf %s... (%s) ausf=C3=BChren"
-=20
- #: sequencer.c:612
- #, c-format
- msgid "could not apply %s... %s"
--msgstr "Konnte %s nicht anwenden... %s"
-+msgstr "Konnte %s... (%s) nicht anwenden"
-=20
- #: sequencer.c:648
- msgid "empty commit set passed"
---=20
-2.3.4.526.g7d26d9e
+The empty initialization for $bad can also go for this one, right?
