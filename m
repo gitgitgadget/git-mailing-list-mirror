@@ -1,76 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 3/3] t0302: test credential-store support for XDG_CONFIG_HOME
-Date: Wed, 25 Mar 2015 09:17:34 -0700
-Message-ID: <xmqqwq252grl.fsf@gitster.dls.corp.google.com>
-References: <1427174429-5876-1-git-send-email-pyokagan@gmail.com>
-	<1427174429-5876-3-git-send-email-pyokagan@gmail.com>
-	<vpqbnjivi2n.fsf@anie.imag.fr>
-	<CAPig+cQ-yLnjrsB1E-7=UXfGzuJHat6YtfS8EVRNP2dcjj_6TA@mail.gmail.com>
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: [PATCH v2] l10n: de.po: fix messages with abbreviated hashs
+Date: Wed, 25 Mar 2015 17:42:34 +0100
+Message-ID: <1427301754-29919-1-git-send-email-ralf.thielow@gmail.com>
+References: <1427222527-4086-1-git-send-email-ralf.thielow@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
-To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 25 17:17:44 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@drmicha.warpmail.net, gitster@pobox.com,
+	phillip.szelat@gmail.com, tr@thomasrast.ch, jk@jk.gs,
+	stimming@tuhh.de, matthias.ruester@gmail.com,
+	Ralf Thielow <ralf.thielow@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 25 17:42:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yanzz-0006d2-Ac
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Mar 2015 17:17:43 +0100
+	id 1YaoOC-0000Cs-2a
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Mar 2015 17:42:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752300AbbCYQRj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Mar 2015 12:17:39 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:56854 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751593AbbCYQRh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Mar 2015 12:17:37 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id EBFFE4126A;
-	Wed, 25 Mar 2015 12:17:36 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=nJqVXs9DC4Zlj6/I4S8RPzx01U8=; b=CT1LVM
-	a9npuvx0uYuZhYyojlCnJyROxOmFiQu+j28yFrgvsE7IxCDInAJ8Hg6sk/Ne3uc/
-	p7U3kXm+eFgM/nGizDcbvL1vFrYBCmqaTYBwU3jCfpFiRkeCK38KsYYiTSqLJHd7
-	PVNdCA+5QI4xvXp56sX+FJNMOZD6AhPQ1BRmY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=c5w/6Po1n4CCq/dE193o0fAfWTdTb3jV
-	XOH8OjIE4tthpoLwdZ/JmGvQxngzp+Cihqqq5GzsqB7WcEykGSPLpxZ7bSMUIO/d
-	VLuvsJStxJvbqc+by6snngcXRZyXGcfX2IIIb6YVGMhULgFTkd/eD0WcBLafuVFW
-	3RWWVP/JdPs=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E4D8741269;
-	Wed, 25 Mar 2015 12:17:36 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1EBC641267;
-	Wed, 25 Mar 2015 12:17:36 -0400 (EDT)
-In-Reply-To: <CAPig+cQ-yLnjrsB1E-7=UXfGzuJHat6YtfS8EVRNP2dcjj_6TA@mail.gmail.com>
-	(Eric Sunshine's message of "Wed, 25 Mar 2015 02:54:42 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 730E7568-D30A-11E4-A551-11859F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1752633AbbCYQmk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Mar 2015 12:42:40 -0400
+Received: from mail-wg0-f53.google.com ([74.125.82.53]:34241 "EHLO
+	mail-wg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932387AbbCYQmi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Mar 2015 12:42:38 -0400
+Received: by wgs2 with SMTP id 2so34520108wgs.1
+        for <git@vger.kernel.org>; Wed, 25 Mar 2015 09:42:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=jBzMAsmU5lc1Pvk6BsMexkhwgGABtKAwbfA9Pu6MfHc=;
+        b=QwpFMGrTgou2r/dmMZpwQV3v2saLdc99CCYyO6e/zzRFuKoAFXiJEz7YbiOqCMlEe+
+         I36w9RzG72kYVHwM1/i+cbDbmGZjpXtmcFwP93akUQC4vYBWFRvYtxce+vbYR/1BZtWf
+         a5YCvU+cLTVQ9QRtH+sWF8HqgYbW4pyQjgt+OO0hUFQkaiOAHKMLcOoraQZiYTxrOBB/
+         9oWVp4swY0I3S5YFcd37rfOaWQWXHYF9WLZ7QFvWpV8Vu9yNSqUwvkFFLs21tLl0EA0W
+         v3iHQr14tXNzmpGiRnMrtxwA/eXhQidhDcVeyX0cT2T+exWztFgnxIDQSpvLxRfmFI/1
+         wgEg==
+X-Received: by 10.194.95.4 with SMTP id dg4mr19133017wjb.81.1427301757348;
+        Wed, 25 Mar 2015 09:42:37 -0700 (PDT)
+Received: from localhost (dslb-178-000-084-015.178.000.pools.vodafone-ip.de. [178.0.84.15])
+        by mx.google.com with ESMTPSA id vq9sm4474978wjc.6.2015.03.25.09.42.36
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 25 Mar 2015 09:42:36 -0700 (PDT)
+X-Mailer: git-send-email 2.3.4.526.g7d26d9e
+In-Reply-To: <1427222527-4086-1-git-send-email-ralf.thielow@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266283>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266284>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+The three dots in messages where the hash is abbreviated
+were misinterpreted and are fixed with this commit.
 
-> On Tue, Mar 24, 2015 at 5:52 AM, Matthieu Moy
-> ...
->> Reviewed-by: Matthieu Moy <Matthieu.Moy@imag.fr>
->
-> With the POSIXPERM issue[1] addressed (if necessary), patch 3/3 is also:
->
-> Reviewed-by: Eric Sunshine <sunshine@sunshineco.com>
+Noticed-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+---
+In v2 there's a space added between dots and brackets.
 
-THanks for a review.  Paul, the 3-patch series is already in 'next',
-so please fix these up with a follow-up patch.
+ po/de.po | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Thanks.
+diff --git a/po/de.po b/po/de.po
+index 7b30f62..a9b9124 100644
+--- a/po/de.po
++++ b/po/de.po
+@@ -1271,12 +1271,12 @@ msgstr "Kann keine Commit-Beschreibung f=C3=BCr=
+ %s bekommen"
+ #: sequencer.c:611
+ #, c-format
+ msgid "could not revert %s... %s"
+-msgstr "Konnte \"revert\" nicht auf %s ausf=C3=BChren... %s"
++msgstr "Konnte \"revert\" nicht auf %s... (%s) ausf=C3=BChren"
+=20
+ #: sequencer.c:612
+ #, c-format
+ msgid "could not apply %s... %s"
+-msgstr "Konnte %s nicht anwenden... %s"
++msgstr "Konnte %s... (%s) nicht anwenden"
+=20
+ #: sequencer.c:648
+ msgid "empty commit set passed"
+--=20
+2.3.4.526.g7d26d9e
