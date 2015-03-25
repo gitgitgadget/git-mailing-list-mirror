@@ -1,107 +1,117 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 6/8] t: simplify loop exit-code status variables
-Date: Wed, 25 Mar 2015 01:30:17 -0400
-Message-ID: <20150325053017.GF31924@peff.net>
+Subject: [PATCH 7/8] t0020: use test_* helpers instead of hand-rolled messages
+Date: Wed, 25 Mar 2015 01:31:41 -0400
+Message-ID: <20150325053141.GG31924@peff.net>
 References: <20150325052456.GA19394@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
 To: SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Wed Mar 25 06:30:27 2015
+X-From: git-owner@vger.kernel.org Wed Mar 25 06:31:50 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YadtY-0001t1-F8
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Mar 2015 06:30:24 +0100
+	id 1Yaduv-00032X-1A
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Mar 2015 06:31:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752511AbbCYFaU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Mar 2015 01:30:20 -0400
-Received: from cloud.peff.net ([50.56.180.127]:38175 "HELO cloud.peff.net"
+	id S1751021AbbCYFbo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Mar 2015 01:31:44 -0400
+Received: from cloud.peff.net ([50.56.180.127]:38178 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751021AbbCYFaT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Mar 2015 01:30:19 -0400
-Received: (qmail 17510 invoked by uid 102); 25 Mar 2015 05:30:20 -0000
+	id S1750833AbbCYFbo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Mar 2015 01:31:44 -0400
+Received: (qmail 17554 invoked by uid 102); 25 Mar 2015 05:31:44 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Mar 2015 00:30:20 -0500
-Received: (qmail 11726 invoked by uid 107); 25 Mar 2015 05:30:34 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Mar 2015 00:31:44 -0500
+Received: (qmail 11745 invoked by uid 107); 25 Mar 2015 05:31:58 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Mar 2015 01:30:34 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Mar 2015 01:30:17 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Mar 2015 01:31:58 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Mar 2015 01:31:41 -0400
 Content-Disposition: inline
 In-Reply-To: <20150325052456.GA19394@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266259>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266260>
 
-Since shell loops may drop the exit code of failed commands
-inside the loop, some tests try to keep track of the status
-by setting a variable. This can end up cumbersome and hard
-to read; it is much simpler to just exit directly from the
-loop using "return 1" (since each case is either in a helper
-function or inside a test snippet).
+These tests are not wrong, but it is much shorter and more
+idiomatic to say "verbose" or "test_must_fail" rather than
+printing our own messages on failure. Likewise, there is no
+need to say "happy" at the end of a test; the test suite
+takes care of that.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- t/t3060-ls-files-with-tree.sh | 13 ++++---------
- t/t3901-i18n-patch.sh         |  8 ++------
- 2 files changed, 6 insertions(+), 15 deletions(-)
+I somehow missed these when doing 9157c5c in the earlier series.
 
-diff --git a/t/t3060-ls-files-with-tree.sh b/t/t3060-ls-files-with-tree.sh
-index 61c1f53..36b10f7 100755
---- a/t/t3060-ls-files-with-tree.sh
-+++ b/t/t3060-ls-files-with-tree.sh
-@@ -25,15 +25,10 @@ test_expect_success setup '
- 		do
- 			num=00$n$m &&
- 			>sub/file-$num &&
--			echo file-$num >>expected || {
--				bad=t
--				break
--			}
--		done && test -z "$bad" || {
--			bad=t
--			break
--		}
--	done && test -z "$bad" &&
-+			echo file-$num >>expected ||
-+			return 1
-+		done
-+	done &&
- 	git add . &&
- 	git commit -m "add a bunch of files" &&
+ t/t0020-crlf.sh | 38 +++++---------------------------------
+ 1 file changed, 5 insertions(+), 33 deletions(-)
+
+diff --git a/t/t0020-crlf.sh b/t/t0020-crlf.sh
+index 144fdcd..f94120a 100755
+--- a/t/t0020-crlf.sh
++++ b/t/t0020-crlf.sh
+@@ -35,9 +35,7 @@ test_expect_success setup '
+ 	for w in Some extra lines here; do echo $w; done >>one &&
+ 	git diff >patch.file &&
+ 	patched=$(git hash-object --stdin <one) &&
+-	git read-tree --reset -u HEAD &&
+-
+-	echo happy.
++	git read-tree --reset -u HEAD
+ '
  
-diff --git a/t/t3901-i18n-patch.sh b/t/t3901-i18n-patch.sh
-index a392f3d..75cf3ff 100755
---- a/t/t3901-i18n-patch.sh
-+++ b/t/t3901-i18n-patch.sh
-@@ -9,7 +9,7 @@ test_description='i18n settings and format-patch | am pipe'
+ test_expect_success 'safecrlf: autocrlf=input, all CRLF' '
+@@ -225,29 +223,9 @@ test_expect_success '.gitattributes says two is binary' '
+ 	git config core.autocrlf true &&
+ 	git read-tree --reset -u HEAD &&
  
- check_encoding () {
- 	# Make sure characters are not corrupted
--	cnt="$1" header="$2" i=1 j=0 bad=0
-+	cnt="$1" header="$2" i=1 j=0
- 	while test "$i" -le $cnt
- 	do
- 		git format-patch --encoding=UTF-8 --stdout HEAD~$i..HEAD~$j |
-@@ -20,14 +20,10 @@ check_encoding () {
- 			grep "^encoding ISO8859-1" ;;
- 		*)
- 			grep "^encoding ISO8859-1"; test "$?" != 0 ;;
--		esac || {
--			bad=1
--			break
--		}
-+		esac || return 1
- 		j=$i
- 		i=$(($i+1))
- 	done
--	(exit $bad)
- }
+-	if has_cr dir/two
+-	then
+-		echo "Huh?"
+-		false
+-	else
+-		: happy
+-	fi &&
+-
+-	if has_cr one
+-	then
+-		: happy
+-	else
+-		echo "Huh?"
+-		false
+-	fi &&
+-
+-	if has_cr three
+-	then
+-		echo "Huh?"
+-		false
+-	else
+-		: happy
+-	fi
++	test_must_fail has_cr dir/two &&
++	verbose has_cr one &&
++	test_must_fail has_cr three
+ '
  
- test_expect_success setup '
+ test_expect_success '.gitattributes says two is input' '
+@@ -256,13 +234,7 @@ test_expect_success '.gitattributes says two is input' '
+ 	echo "two crlf=input" >.gitattributes &&
+ 	git read-tree --reset -u HEAD &&
+ 
+-	if has_cr dir/two
+-	then
+-		echo "Huh?"
+-		false
+-	else
+-		: happy
+-	fi
++	test_must_fail has_cr dir/two
+ '
+ 
+ test_expect_success '.gitattributes says two and three are text' '
 -- 
 2.3.4.635.gd6ffcfe
