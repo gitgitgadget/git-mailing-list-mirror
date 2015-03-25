@@ -1,350 +1,69 @@
-From: SZEDER =?utf-8?b?R8OhYm9y?= <szeder@ira.uka.de>
-Subject: Re: [PATCH 17/25] t0020: use modern test_* helpers
-Date: Wed, 25 Mar 2015 01:23:23 +0100
-Message-ID: <20150325012323.Horde.zCWvV1mF8OBE1PxYPuuEFg8@webmail.informatik.kit.edu>
-References: <20150320100429.GA17354@peff.net>
- <20150320101308.GQ12543@peff.net>
+From: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+Subject: Re: What's cooking in git.git (Mar 2015, #08; Mon, 23)
+Date: Wed, 25 Mar 2015 01:37:57 +0100
+Message-ID: <CANQwDwfdUDZfgFar3tr8Er3Ha-1hS0Ypkbsbn0UaSJ7HadsR1Q@mail.gmail.com>
+References: <538F69DA.9010201@gmail.com> <xmqqmw338khu.fsf@gitster.dls.corp.google.com>
+ <xmqqpp7y3ucy.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed; DelSp=Yes
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 25 01:23:40 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael Wagner <mail@mwagner.org>, git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 25 01:38:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YaZ6h-0005zS-KA
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Mar 2015 01:23:40 +0100
+	id 1YaZLI-0001bC-0l
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Mar 2015 01:38:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752757AbbCYAXf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Mar 2015 20:23:35 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:44266 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751830AbbCYAXe (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Mar 2015 20:23:34 -0400
-Received: from irawebmail.ira.uni-karlsruhe.de ([141.3.10.230] helo=webmail.ira.uka.de)
-	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
-	iface 141.3.10.81 id 1YaZ6a-0004xA-KW; Wed, 25 Mar 2015 01:23:32 +0100
-Received: from apache by webmail.ira.uka.de with local (Exim 4.72)
-	(envelope-from <szeder@ira.uka.de>)
-	id 1YaZ6S-0001Ct-0e; Wed, 25 Mar 2015 01:23:24 +0100
-Received: from x590cf8a1.dyn.telefonica.de (x590cf8a1.dyn.telefonica.de
- [89.12.248.161]) by webmail.informatik.kit.edu (Horde Framework) with HTTP;
- Wed, 25 Mar 2015 01:23:23 +0100
-In-Reply-To: <20150320101308.GQ12543@peff.net>
-User-Agent: Internet Messaging Program (IMP) H5 (6.2.2)
-Content-Disposition: inline
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1427243012.
+	id S1752428AbbCYAij convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Mar 2015 20:38:39 -0400
+Received: from mail-lb0-f181.google.com ([209.85.217.181]:35909 "EHLO
+	mail-lb0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751928AbbCYAii convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Mar 2015 20:38:38 -0400
+Received: by lbbug6 with SMTP id ug6so6564784lbb.3
+        for <git@vger.kernel.org>; Tue, 24 Mar 2015 17:38:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=fsaZpbca6njHb7D5zKNVZZMunGaNt+s0MrW58B4lEOA=;
+        b=Z6vjaCFuYUSVJdyfT+AschxkTh1F9NRWevIqJyT+f/Ht7e2QWJeRTfdHHcNU81+KC7
+         gFZyf4r85ds0JlV1vKS24wvoDeJ28wlEy2IjZ3/RIx1bYerbdYQE5qhB/+y4AsQFPvr+
+         oVwoLNjwqLq3v9McSYnsQTqy7elT7Ie8mlkKQ2hf7xvOQDmEM6G8pwAGp+foD/5C3qlW
+         FpVI7O0fKRn3aNSgZGRHZvs5rL2fpnD0rfpc+QeSYQUqOSIPX9hG5teOFKgeWp8VzrDu
+         xOaAP4WydXhz5aezyJHE8ADFaMdvSxQv5+ByWlu52Arv8cWsQUNIMG6ptqJHxoYranr7
+         9RHg==
+X-Received: by 10.112.26.209 with SMTP id n17mr6016226lbg.84.1427243917610;
+ Tue, 24 Mar 2015 17:38:37 -0700 (PDT)
+Received: by 10.25.88.17 with HTTP; Tue, 24 Mar 2015 17:37:57 -0700 (PDT)
+In-Reply-To: <xmqqpp7y3ucy.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266242>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266243>
 
+On Tue, Mar 24, 2015 at 11:26 PM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+>
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+> > * jn/gitweb-utf8-in-links (2014-05-27) 1 commit
+> >  - gitweb: Harden UTF-8 handling in generated links
+>
+> This has been lingering in my 'pu' branch without seeing any updates
+> since $gmane/250758; is anybody still interested in resurrecting it
+> and moving it forward?
 
-Quoting Jeff King <peff@peff.net>:
+I can try to pick it up, but I am no longer sure that it is a good idea
+to solve the problem.
 
-> This test contains a lot of hand-rolled messages to show
-> when the test fails. We can omit most of these by using
-> "verbose" and "test_must_fail". A few of them are for
-> update-index, but we can assume it produces reasonable error
-> messages when it fails.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->   t/t0020-crlf.sh | 144  
-> +++++++++++---------------------------------------------
->   1 file changed, 28 insertions(+), 116 deletions(-)
->
-> diff --git a/t/t0020-crlf.sh b/t/t0020-crlf.sh
-> index d2e51a8..9fa26df 100755
-> --- a/t/t0020-crlf.sh
-> +++ b/t/t0020-crlf.sh
-> @@ -104,18 +104,12 @@ test_expect_success 'update with autocrlf=input' '
->   	for f in one dir/two
->   	do
->   		append_cr <$f >tmp && mv -f tmp $f &&
-> -		git update-index -- $f || {
-> -			echo Oops
-> -			false
-> -			break
-> -		}
-> +		git update-index -- $f ||
-> +		break
->   	done &&
-
-Ah, these tests are evil, I remember them from the time when I was  
-fiddling with Jonathan's patch.  They can fail silently without  
-testing what they were supposed to test.
-
-If something in the loop fails, the break will leave the loop but it  
-will do so with zero return value and, consequently, the test will  
-continue as if everything were OK.
-And unless it was 'git update-index' that failed in a way that left a  
-borked index behind, the 'git diff-index --cached' below will not  
-error out or produce some output that would cause the test to fail.   
-i.e. I tried e.g.
-
-   append_cr <$f >tmp && mv -f tmp $f && false &&
-
-in the loop and the test succeeded.
-
-I think the best fix would be to unroll the loop: after this patch the  
-loop body consists of only two significant lines and we iterate  
-through the loop only twice, so the test would be even shorter.
-
->   	differs=$(git diff-index --cached HEAD) &&
-> -	test -z "$differs" || {
-> -		echo Oops "$differs"
-> -		false
-> -	}
-> +	verbose test -z "$differs"
->
->   '
->
-> @@ -128,18 +122,12 @@ test_expect_success 'update with autocrlf=true' '
->   	for f in one dir/two
->   	do
->   		append_cr <$f >tmp && mv -f tmp $f &&
-> -		git update-index -- $f || {
-> -			echo "Oops $f"
-> -			false
-> -			break
-> -		}
-> +		git update-index -- $f ||
-> +		break
->   	done &&
->
->   	differs=$(git diff-index --cached HEAD) &&
-> -	test -z "$differs" || {
-> -		echo Oops "$differs"
-> -		false
-> -	}
-> +	verbose test -z "$differs"
->
->   '
->
-> @@ -152,19 +140,13 @@ test_expect_success 'checkout with autocrlf=true' '
->   	for f in one dir/two
->   	do
->   		remove_cr <"$f" >tmp && mv -f tmp $f &&
-> -		git update-index -- $f || {
-> -			echo "Eh? $f"
-> -			false
-> -			break
-> -		}
-> +		verbose git update-index -- $f ||
-> +		break
->   	done &&
->   	test "$one" = $(git hash-object --stdin <one) &&
->   	test "$two" = $(git hash-object --stdin <dir/two) &&
->   	differs=$(git diff-index --cached HEAD) &&
-> -	test -z "$differs" || {
-> -		echo Oops "$differs"
-> -		false
-> -	}
-> +	verbose test -z "$differs"
->   '
->
->   test_expect_success 'checkout with autocrlf=input' '
-> @@ -187,10 +169,7 @@ test_expect_success 'checkout with autocrlf=input' '
->   	test "$one" = $(git hash-object --stdin <one) &&
->   	test "$two" = $(git hash-object --stdin <dir/two) &&
->   	differs=$(git diff-index --cached HEAD) &&
-> -	test -z "$differs" || {
-> -		echo Oops "$differs"
-> -		false
-> -	}
-> +	verbose test -z "$differs"
->   '
->
->   test_expect_success 'apply patch (autocrlf=input)' '
-> @@ -200,10 +179,7 @@ test_expect_success 'apply patch (autocrlf=input)' '
->   	git read-tree --reset -u HEAD &&
->
->   	git apply patch.file &&
-> -	test "$patched" = "$(git hash-object --stdin <one)" || {
-> -		echo "Eh?  apply without index"
-> -		false
-> -	}
-> +	verbose test "$patched" = "$(git hash-object --stdin <one)"
->   '
->
->   test_expect_success 'apply patch --cached (autocrlf=input)' '
-> @@ -213,10 +189,7 @@ test_expect_success 'apply patch --cached
-> (autocrlf=input)' '
->   	git read-tree --reset -u HEAD &&
->
->   	git apply --cached patch.file &&
-> -	test "$patched" = $(git rev-parse :one) || {
-> -		echo "Eh?  apply with --cached"
-> -		false
-> -	}
-> +	verbose test "$patched" = $(git rev-parse :one)
->   '
->
->   test_expect_success 'apply patch --index (autocrlf=input)' '
-> @@ -226,11 +199,8 @@ test_expect_success 'apply patch --index
-> (autocrlf=input)' '
->   	git read-tree --reset -u HEAD &&
->
->   	git apply --index patch.file &&
-> -	test "$patched" = $(git rev-parse :one) &&
-> -	test "$patched" = $(git hash-object --stdin <one) || {
-> -		echo "Eh?  apply with --index"
-> -		false
-> -	}
-> +	verbose test "$patched" = $(git rev-parse :one) &&
-> +	verbose test "$patched" = $(git hash-object --stdin <one)
->   '
->
->   test_expect_success 'apply patch (autocrlf=true)' '
-> @@ -240,10 +210,7 @@ test_expect_success 'apply patch (autocrlf=true)' '
->   	git read-tree --reset -u HEAD &&
->
->   	git apply patch.file &&
-> -	test "$patched" = "$(remove_cr <one | git hash-object --stdin)" || {
-> -		echo "Eh?  apply without index"
-> -		false
-> -	}
-> +	verbose test "$patched" = "$(remove_cr <one | git hash-object --stdin)"
->   '
->
->   test_expect_success 'apply patch --cached (autocrlf=true)' '
-> @@ -253,10 +220,7 @@ test_expect_success 'apply patch --cached
-> (autocrlf=true)' '
->   	git read-tree --reset -u HEAD &&
->
->   	git apply --cached patch.file &&
-> -	test "$patched" = $(git rev-parse :one) || {
-> -		echo "Eh?  apply without index"
-> -		false
-> -	}
-> +	verbose test "$patched" = $(git rev-parse :one)
->   '
->
->   test_expect_success 'apply patch --index (autocrlf=true)' '
-> @@ -266,11 +230,8 @@ test_expect_success 'apply patch --index
-> (autocrlf=true)' '
->   	git read-tree --reset -u HEAD &&
->
->   	git apply --index patch.file &&
-> -	test "$patched" = $(git rev-parse :one) &&
-> -	test "$patched" = "$(remove_cr <one | git hash-object --stdin)" || {
-> -		echo "Eh?  apply with --index"
-> -		false
-> -	}
-> +	verbose test "$patched" = $(git rev-parse :one) &&
-> +	verbose test "$patched" = "$(remove_cr <one | git hash-object --stdin)"
->   '
->
->   test_expect_success '.gitattributes says two is binary' '
-> @@ -326,21 +287,8 @@ test_expect_success '.gitattributes says two and
-> three are text' '
->   	echo "t* crlf" >.gitattributes &&
->   	git read-tree --reset -u HEAD &&
->
-> -	if has_cr dir/two
-> -	then
-> -		: happy
-> -	else
-> -		echo "Huh?"
-> -		false
-> -	fi &&
-> -
-> -	if has_cr three
-> -	then
-> -		: happy
-> -	else
-> -		echo "Huh?"
-> -		false
-> -	fi
-> +	verbose has_cr dir/two &&
-> +	verbose has_cr three
->   '
->
->   test_expect_success 'in-tree .gitattributes (1)' '
-> @@ -352,17 +300,8 @@ test_expect_success 'in-tree .gitattributes (1)' '
->   	rm -rf tmp one dir .gitattributes patch.file three &&
->   	git read-tree --reset -u HEAD &&
->
-> -	if has_cr one
-> -	then
-> -		echo "Eh? one should not have CRLF"
-> -		false
-> -	else
-> -		: happy
-> -	fi &&
-> -	has_cr three || {
-> -		echo "Eh? three should still have CRLF"
-> -		false
-> -	}
-> +	test_must_fail has_cr one &&
-> +	verbose has_cr three
->   '
->
->   test_expect_success 'in-tree .gitattributes (2)' '
-> @@ -371,17 +310,8 @@ test_expect_success 'in-tree .gitattributes (2)' '
->   	git read-tree --reset HEAD &&
->   	git checkout-index -f -q -u -a &&
->
-> -	if has_cr one
-> -	then
-> -		echo "Eh? one should not have CRLF"
-> -		false
-> -	else
-> -		: happy
-> -	fi &&
-> -	has_cr three || {
-> -		echo "Eh? three should still have CRLF"
-> -		false
-> -	}
-> +	test_must_fail has_cr one &&
-> +	verbose has_cr three
->   '
->
->   test_expect_success 'in-tree .gitattributes (3)' '
-> @@ -391,17 +321,8 @@ test_expect_success 'in-tree .gitattributes (3)' '
->   	git checkout-index -u .gitattributes &&
->   	git checkout-index -u one dir/two three &&
->
-> -	if has_cr one
-> -	then
-> -		echo "Eh? one should not have CRLF"
-> -		false
-> -	else
-> -		: happy
-> -	fi &&
-> -	has_cr three || {
-> -		echo "Eh? three should still have CRLF"
-> -		false
-> -	}
-> +	test_must_fail has_cr one &&
-> +	verbose has_cr three
->   '
->
->   test_expect_success 'in-tree .gitattributes (4)' '
-> @@ -411,17 +332,8 @@ test_expect_success 'in-tree .gitattributes (4)' '
->   	git checkout-index -u one dir/two three &&
->   	git checkout-index -u .gitattributes &&
->
-> -	if has_cr one
-> -	then
-> -		echo "Eh? one should not have CRLF"
-> -		false
-> -	else
-> -		: happy
-> -	fi &&
-> -	has_cr three || {
-> -		echo "Eh? three should still have CRLF"
-> -		false
-> -	}
-> +	test_must_fail has_cr one &&
-> +	verbose has_cr three
->   '
->
->   test_expect_success 'checkout with existing .gitattributes' '
-> --
-> 2.3.3.520.g3cfbb5d
+In particular git does not require that paths (i.e. filesystem) use utf=
+-8
+encoding; it could use latin1 / iso-8859-1 and non-utf8 octet.
+--=20
+Jakub Nar=C4=99bski
