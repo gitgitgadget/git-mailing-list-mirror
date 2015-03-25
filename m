@@ -1,82 +1,78 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 00/14] numparse module: systematically tighten up integer parsing
-Date: Wed, 25 Mar 2015 14:59:11 -0700
-Message-ID: <xmqqegoc20y8.fsf@gitster.dls.corp.google.com>
-References: <1426608016-2978-1-git-send-email-mhagger@alum.mit.edu>
-	<20150319052620.GA30645@peff.net>
-	<xmqqk2ydjvcd.fsf@gitster.dls.corp.google.com>
-	<55118B74.1030201@alum.mit.edu> <551195B6.9040402@web.de>
-	<5513252A.7050601@alum.mit.edu>
+Subject: Re: [PATCH 2/2] Add revision range support on "-" and "@{-1}"
+Date: Wed, 25 Mar 2015 15:24:26 -0700
+Message-ID: <xmqqa8z01zs5.fsf@gitster.dls.corp.google.com>
+References: <1426518703-15785-1-git-send-email-kenny.lee28@gmail.com>
+	<1426518703-15785-3-git-send-email-kenny.lee28@gmail.com>
+	<xmqqlhiwredj.fsf@gitster.dls.corp.google.com>
+	<xmqq8uewp183.fsf@gitster.dls.corp.google.com>
+	<87egons4du.fsf@gmail.com>
+	<xmqqpp87mfqx.fsf@gitster.dls.corp.google.com>
+	<87r3sfz25t.fsf@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Mar 25 22:59:27 2015
+Cc: git@vger.kernel.org
+To: Kenny Lee Sin Cheong <kenny.lee28@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 25 23:24:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YatKb-00051F-0A
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Mar 2015 22:59:21 +0100
+	id 1Yatj1-0007xz-93
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Mar 2015 23:24:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752290AbbCYV7R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Mar 2015 17:59:17 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50301 "EHLO
+	id S1751916AbbCYWYb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Mar 2015 18:24:31 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:57093 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752193AbbCYV7O (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Mar 2015 17:59:14 -0400
+	with ESMTP id S1751633AbbCYWY3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Mar 2015 18:24:29 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9C0A244581;
-	Wed, 25 Mar 2015 17:59:13 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 242C544B20;
+	Wed, 25 Mar 2015 18:24:28 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=wYJXGdlvSrziqXQE2rNSoCHtzyg=; b=VgMoeI
-	UR1OQd4cdpeRH1EUFt8LsTFlQSFZKEYpyXdDEcqgj65TJ/p6Vi7kyoJkQVV4UFie
-	CwTOYZzklfj6vknNMWWMl6m4Gafm93EkeTom4MuxFNzNw52J4uj3CFaR3DwSZ8yL
-	QEiczWRdHwtkcbn2ZcQviIMKMRVadB2EH8quA=
+	:content-type; s=sasl; bh=qAZ6pBf/1YICkIq3QddwuqqbEX0=; b=AQ96mN
+	VOoyE2rgTu5vLfkrvjcO8qO4fduzKEGYrLC0/xrOMtxCJjMa7XLSydnQ5J6b/8Ej
+	VaJsqSijPXw61OxGTDuwbNs6i1QG1vMisKf3YK98FN+xTkZfQDN4jF0wjvUuoszB
+	IEbfZXRIxcCJQoAmiPgpZ3uSHcXqxIho4seeo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Pg+ogAD+uhVG00hlIIpwKcVPC7jMYelI
-	CUO++d3qx88iHfKipI9kKJsmD7S4UbVCxsjVl1fmdf/UH62CvVTe/gpz/NSlZA+z
-	G1T6xPPAAxLPRjQqucaI/iIcIxq8M9qtQp2fXGNluElBDeoZm4amU0wNXakX2sX8
-	ZzhaWY2AFe4=
+	:content-type; q=dns; s=sasl; b=QqYiipi6wyqv4gUCA0pUQupG8L+gGFGb
+	YZeaFHtOkiUEc+qVm3ZInSBfrwuN3UIfsrah0IdB4FqPJkUpzxETHKsWy1ryOqMa
+	JIca5dqz2qTMVa/4DmVDBln5dNt3uxdcfpB2onynSTh7Dm57u8LHIEEDoKbdTPt5
+	O/axFgf0Tps=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8FEB144580;
-	Wed, 25 Mar 2015 17:59:13 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1D78244B1F;
+	Wed, 25 Mar 2015 18:24:28 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 12FE04457F;
-	Wed, 25 Mar 2015 17:59:13 -0400 (EDT)
-In-Reply-To: <5513252A.7050601@alum.mit.edu> (Michael Haggerty's message of
-	"Wed, 25 Mar 2015 22:14:18 +0100")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 928A544B1E;
+	Wed, 25 Mar 2015 18:24:27 -0400 (EDT)
+In-Reply-To: <87r3sfz25t.fsf@gmail.com> (Kenny Lee Sin Cheong's message of
+	"Mon, 23 Mar 2015 20:09:50 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 2C30CEE0-D33A-11E4-B973-11859F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: B2EA6D6C-D33D-11E4-BD48-11859F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266307>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+Kenny Lee Sin Cheong <kenny.lee28@gmail.com> writes:
 
-[jc: dropped a non-working address from Cc list]
+> If I'm understanding correctly, the problem of checking revisions before
+> arg is that an option fed to handle_revision_arg() might die() before getting
+> checked as an option in cases where a file with the same name exists?
+>
+> But doesn't verify_non_filename() already return silently if arg begins
+> with "-"? It die() only after making that check.
+>
+> If an option with ".." in it such as -$opt..ion is really given to
+> handle_revision_arg() then verify_non_filename should not be a problem.
 
-> I wasn't aware of strtonum; thanks for the reference. It has an
-> untraditional interface. Their willingness to sacrifice half of the
-> unsigned range and requirement that the user specify minval and maxval
-> have the nice effect of permitting one function to be used for all
-> integer types.
-> ...
-> I think git will need more flexibility, for example to support other
-> radixes and to allow trailing characters. So personally I don't think we
-> should use (or imitate) strtonum().
-
-I had the same impression.  An earlier suggestion by Peff about
-uintmax_t may be something we might want to keep in mind; we might
-want to use strtoll/strtoull as the underlying implementation if we
-wanted to avoid rolling our own.
-
-Thanks.
+Yes, but should we be relying on that behaviour?  The special casing
+to assume that no sane person would name a file starting with a dash
+is what I find somewhat disturbing.
