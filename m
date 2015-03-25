@@ -1,70 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 1/2] sha1_file.c: support reading from a loose object of unknown type
-Date: Wed, 25 Mar 2015 13:32:08 -0700
-Message-ID: <xmqqmw3024zb.fsf@gitster.dls.corp.google.com>
-References: <5512618B.2060402@gmail.com>
-	<1427268105-16901-1-git-send-email-karthik.188@gmail.com>
-	<xmqqzj7028mn.fsf@gitster.dls.corp.google.com>
-	<55131885.5000706@gmail.com>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: [RFC/GSoC] Proposal: Make git-pull and git-am builtins
+Date: Wed, 25 Mar 2015 21:32:28 +0100
+Message-ID: <55131B5C.90109@gmail.com>
+References: <20150324163730.GA8366@yoshi.chippynet.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, sunshine@sunshineco.com
-To: karthik nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 25 21:32:26 2015
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Paul Tan <pyokagan@gmail.com>, Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Mar 25 21:32:50 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YaryK-0001Iv-2I
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Mar 2015 21:32:16 +0100
+	id 1Yaryj-0001YO-R0
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Mar 2015 21:32:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752178AbbCYUcM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Mar 2015 16:32:12 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:60894 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750873AbbCYUcK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Mar 2015 16:32:10 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B848142ADF;
-	Wed, 25 Mar 2015 16:32:09 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=pXuc30nmc9CfKQkbnisoQhytiB0=; b=w5RHaA
-	uCKKQtiE7oo0mCqm7VzbHTDr68CLqLrPtPMl1HiMzQXMxH0whRJvfTAr+9uPUc3o
-	cE+vs8U62p4xbJNVSPOv0SIz/9PShYhvfvGd2PCeT1ty/NYcufE5p6LDgKr7u6JF
-	cMiPuB34hSAX15x7sM3xhaGfYnlgYdjW1QS20=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=LVOk2A580pmxwVArkVzMwM2D40K6bCeq
-	SJuJn1jkLOR9KSNC3B3IP8YVrKqhMig/mk9TlVGbJopjpvr5PGFRapVRZc8CQ8dA
-	09XMkLAdVAQZIRq2ojL15QBHTJyiEx3UAcZh9R57zD09mzFbqLoAZCJNz04U3RRF
-	iihhY5SSEwU=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B02A442ADE;
-	Wed, 25 Mar 2015 16:32:09 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 349D342ADD;
-	Wed, 25 Mar 2015 16:32:09 -0400 (EDT)
-In-Reply-To: <55131885.5000706@gmail.com> (karthik nayak's message of "Thu, 26
-	Mar 2015 01:50:21 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 02868758-D32E-11E4-8017-11859F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1752512AbbCYUcg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Mar 2015 16:32:36 -0400
+Received: from mail-wi0-f175.google.com ([209.85.212.175]:35761 "EHLO
+	mail-wi0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751922AbbCYUcc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Mar 2015 16:32:32 -0400
+Received: by wibbg6 with SMTP id bg6so39528366wib.0
+        for <git@vger.kernel.org>; Wed, 25 Mar 2015 13:32:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=2TiP9kau69HPpiUvIvamYGS7ffq3Bs6yFe7fZuontxo=;
+        b=CttH9RisNn64GJGW0RVmJDk7xLIjd6lLU+NknlfTxlE4+BJICtuu7lPursMe+M6nwz
+         oUXw3WXpJGTMaa5FHieQ40BvKxKu3SDqYCg8BNFBKdl3b4+D24MQi69B52soZFLIRH4V
+         Z2rBpPyETUZVZEdtj6BE+UxYEJ3Uvl4sVSrYudTckrm/001uT0CsSvhW25lJUPqKq5Nu
+         BA6mipBo7y+cQiYGL/KzjMpF3QcHHDOtwo11O2Y1KesXtPqa+ZqClfL6B+t0DDmqHFRp
+         KETFV+PU6aJF28CecWxO+w2QTJm5jcEbPRUSzb/RDfdCOMru6+mqPGM0rNYmvB33yI8e
+         pZtg==
+X-Received: by 10.194.24.35 with SMTP id r3mr21041688wjf.125.1427315551139;
+        Wed, 25 Mar 2015 13:32:31 -0700 (PDT)
+Received: from [192.168.188.20] (p4FF456B9.dip0.t-ipconnect.de. [79.244.86.185])
+        by mx.google.com with ESMTPSA id dc9sm22206925wib.9.2015.03.25.13.32.29
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 25 Mar 2015 13:32:30 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <20150324163730.GA8366@yoshi.chippynet.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266301>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266302>
 
-karthik nayak <karthik.188@gmail.com> writes:
+On 24.03.2015 17:37, Paul Tan wrote:
 
-> I hope you meant the former.
+> I'm applying for git in the Google Summer of Code this year. For my
+> project, I propose to rewrite git-pull.sh and git-am.sh into fast
+> optimized C builtins. I've already hacked up a prototype of a builtin
+> git-pull in [1], and it showed a promising 8x improvement in execution
+> time on Windows.
 
-I did mean the latter, which spends more lines without much
-information (i.e. only closing braces), only to reduce the
-duplication of two simple lines.
+I cannot thank you enough for starting this effort. As one of the 
+project owners of Git for Windows I can confirm the (shell) script Git 
+commands to be a major source of pain.
 
-But you are right, I did miss the distinction between hdrbuf.buf and
-hdr, so they are not identically duplicated.
+I really hope your proposal gets accepted and you'll be able to 
+successfully complete this task.
+
+All the best!
+
+-- 
+Sebastian Schuberth
