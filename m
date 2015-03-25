@@ -1,80 +1,84 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH] gc: save log from daemonized gc --auto and print it next time
-Date: Wed, 25 Mar 2015 07:58:54 +0700
-Message-ID: <CACsJy8Acw8u8mbW6ivoUN10462xJDZxK984Vc2E3eypTc3qJ7A@mail.gmail.com>
-References: <1427199448-28278-1-git-send-email-pclouds@gmail.com> <xmqqy4mm3v8l.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Mar 2015, #08; Mon, 23)
+Date: Tue, 24 Mar 2015 18:05:13 -0700
+Message-ID: <xmqq8uel51km.fsf@gitster.dls.corp.google.com>
+References: <538F69DA.9010201@gmail.com>
+	<xmqqmw338khu.fsf@gitster.dls.corp.google.com>
+	<xmqqpp7y3ucy.fsf@gitster.dls.corp.google.com>
+	<CANQwDwfdUDZfgFar3tr8Er3Ha-1hS0Ypkbsbn0UaSJ7HadsR1Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 25 01:59:34 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael Wagner <mail@mwagner.org>, git <git@vger.kernel.org>
+To: Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 25 02:05:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YaZfQ-0001ee-8v
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Mar 2015 01:59:32 +0100
+	id 1YaZl4-0006In-0n
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Mar 2015 02:05:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752752AbbCYA71 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Mar 2015 20:59:27 -0400
-Received: from mail-ig0-f173.google.com ([209.85.213.173]:32982 "EHLO
-	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752744AbbCYA7Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Mar 2015 20:59:25 -0400
-Received: by ignm3 with SMTP id m3so62122523ign.0
-        for <git@vger.kernel.org>; Tue, 24 Mar 2015 17:59:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=g3/JXVhF4Q3AGgBlkp1lHLGs3Y8u219pViepdkOEtXw=;
-        b=0MsEG18UbH0xcHzVbGr9hTEVcEf2H7ky7PfTyMwe/GH/8gF9NSXSoIgbjjHUGY1670
-         UF0bBH5a77+j0VKNYuCP+FjbD29HMVgHCfdqkiBmmYllrpe193a7hZ40ASoU0v5NvWf7
-         Hvmwb9pAyFah7kYq7XVTFlhCMWsh7u5G86XDVj52a46/GpqBAMyeoLjpoG6JH7teqbYY
-         QvPCTlLMqRRchv2KlFn1pQCjlYpZ2/jaoKGrT3CBEioIAnFcdpWAstko5aeiH0SUQMeG
-         SHxSYrEo0YmPb4FGThFjpunivQW1K7raZctUgZhAFnU0UY0LbZOht4d5PLj3PbTUkLw4
-         zpzA==
-X-Received: by 10.107.47.216 with SMTP id v85mr10390576iov.86.1427245164677;
- Tue, 24 Mar 2015 17:59:24 -0700 (PDT)
-Received: by 10.107.131.33 with HTTP; Tue, 24 Mar 2015 17:58:54 -0700 (PDT)
-In-Reply-To: <xmqqy4mm3v8l.fsf@gitster.dls.corp.google.com>
+	id S1752630AbbCYBFS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Mar 2015 21:05:18 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:59184 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752277AbbCYBFQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Mar 2015 21:05:16 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 81DC143C0C;
+	Tue, 24 Mar 2015 21:05:15 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=XYW2RFU5Z3Z+
+	9ii3UtFQ+G7eoPo=; b=wru6vEpkm3CYT8+apJYCeBlAIANJrMWS3vzbbNpO3Z84
+	T0FiHamo9E3pH14v0gijlnXF7Ve0E5W7hEMuf5pBXyxy6m0gU/qakMumYyCjsAbO
+	2tvzpbCi+IGLkdpbFMOsuYMXhDz1niLGySqZwX/5XszZOsgvddtYm234dQCInkw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=cIVAAp
+	zgSninOkEpt7bfKe6/6rkFGgoYzIpI4mMJsYw0fHY2SaAVOX2zb3xuKyBiPHBrvn
+	qZsmV4CkMG6pUY5uRslSIMzuIOJyHOOCJhnvgs2VskwN9pcixxy/FWfMMzSqKOvP
+	fC4rnnDcOPF+awOOeOntdmaHXFwQpVbtyMe/I=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7A66943C0B;
+	Tue, 24 Mar 2015 21:05:15 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D56CA43C09;
+	Tue, 24 Mar 2015 21:05:14 -0400 (EDT)
+In-Reply-To: <CANQwDwfdUDZfgFar3tr8Er3Ha-1hS0Ypkbsbn0UaSJ7HadsR1Q@mail.gmail.com>
+	("Jakub =?utf-8?Q?Nar=C4=99bski=22's?= message of "Wed, 25 Mar 2015
+ 01:37:57 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: FEB9E1C2-D28A-11E4-9010-11859F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266246>
 
-On Wed, Mar 25, 2015 at 5:07 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> +             LANG=C git gc --auto &&
->> +             sleep 1 && # give it time to daemonize
->> +             while test -f .git/gc.pid; do sleep 1; done &&
+Jakub Nar=C4=99bski <jnareb@gmail.com> writes:
+
+> On Tue, Mar 24, 2015 at 11:26 PM, Junio C Hamano <gitster@pobox.com> =
+wrote:
+>>
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>
+>> > * jn/gitweb-utf8-in-links (2014-05-27) 1 commit
+>> >  - gitweb: Harden UTF-8 handling in generated links
+>>
+>> This has been lingering in my 'pu' branch without seeing any updates
+>> since $gmane/250758; is anybody still interested in resurrecting it
+>> and moving it forward?
 >
-> Yuck...
+> I can try to pick it up, but I am no longer sure that it is a good id=
+ea
+> to solve the problem.
 
-Yeah.. it's hard to test daemon things. I'm not even sure if we should
-add a test, but I tried anyway.
+After re-reading the discussion thread, I had the same impression.
+Let's drop the patch for now.  It can be re-raised as/if needed.
 
->> +             grep "too many unreachable loose objects" .git/gc.log &&
->> +             LANG=C git gc --auto 2>error &&
->> +             grep skipped error &&
->> +             grep "too many unreachable loose objects" error &&
->> +             ! test -f .git/gc.log
->> +     )
->> +'
->
-> For that "17/ has very many loose objects that are still young and
-> unreachable" issue, I wonder if the right solution is somehow to
-> flag the repository and prevent "gc --auto" from running until the
-> situation improves.  "I checked at this time and found too many in
-> 17/"; upon finding that flag file (with a timestamp), if there are
-> new files in 17/ or if there are other reasons to do a gc (perhaps
-> there are too many packfiles to be consolidated?), then do the gc
-> but otherwise quit silently before spending too many cycles on it,
-> or something along that line?
-
-That's a separate problem that's being discussed in another thread. I
-think Jeff's idea of storing the number of estimated loose objects may
-be more reliable than timestamps..
--- 
-Duy
+Thanks.
