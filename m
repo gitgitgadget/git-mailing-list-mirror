@@ -1,60 +1,92 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: A good time to pull from your gitk tree?
-Date: Thu, 26 Mar 2015 10:06:45 -0400
-Message-ID: <55141275.1000904@xiplink.com>
-References: <xmqqegofa646.fsf@gitster.dls.corp.google.com> <20150324230605.GB12410@iris.ozlabs.ibm.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Paul Mackerras <paulus@samba.org>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 26 15:06:36 2015
+From: Phil Hord <hordp@cisco.com>
+Subject: [PATCH] git-push.txt: clean up force-with-lease wording
+Date: Thu, 26 Mar 2015 11:15:09 -0400
+Message-ID: <1427382909-7414-1-git-send-email-hordp@cisco.com>
+Cc: gitster@pobox.com, phil.hord@gmail.com, Phil Hord <hordp@cisco.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 26 16:15:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yb8QQ-0006M2-OL
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Mar 2015 15:06:23 +0100
+	id 1Yb9VO-0000si-OP
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Mar 2015 16:15:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752465AbbCZOGS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Mar 2015 10:06:18 -0400
-Received: from smtp74.ord1c.emailsrvr.com ([108.166.43.74]:38706 "EHLO
-	smtp74.ord1c.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752310AbbCZOGR (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 Mar 2015 10:06:17 -0400
-Received: from smtp10.relay.ord1c.emailsrvr.com (localhost.localdomain [127.0.0.1])
-	by smtp10.relay.ord1c.emailsrvr.com (SMTP Server) with ESMTP id 52702380709;
-	Thu, 26 Mar 2015 10:06:17 -0400 (EDT)
-Received: by smtp10.relay.ord1c.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id A2E753806F6;
-	Thu, 26 Mar 2015 10:06:16 -0400 (EDT)
-X-Sender-Id: mbranchaud@xiplink.com
-Received: from [10.10.1.32] ([UNAVAILABLE]. [192.252.130.194])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA)
-	by 0.0.0.0:465 (trex/5.4.2);
-	Thu, 26 Mar 2015 14:06:17 GMT
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
-In-Reply-To: <20150324230605.GB12410@iris.ozlabs.ibm.com>
+	id S1753076AbbCZPP3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Mar 2015 11:15:29 -0400
+Received: from rcdn-iport-6.cisco.com ([173.37.86.77]:24268 "EHLO
+	rcdn-iport-6.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753175AbbCZPP0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Mar 2015 11:15:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=cisco.com; i=@cisco.com; l=2350; q=dns/txt; s=iport;
+  t=1427382926; x=1428592526;
+  h=from:to:cc:subject:date:message-id;
+  bh=glOTs5lX4yG3L8xnBF7Z+FUlBf/vXwYh/gxZ7l9DpQM=;
+  b=Ao6QxfoMwyZYlV3+8uHm8c8aPq8HeFfL3lqCIjiSWTxn/W/S0uUK3YQ3
+   JiroFNVC+3S8sF09KXfq22jWzGS/jANS2o/3s4kcSNSTo0YhnWjXzCfEM
+   TzfzUq6lqttX73mkNFP+6vqbhmWSIIffxni8MMZr3/t1DhH3DuIW6OfkF
+   k=;
+X-IronPort-AV: E=Sophos;i="5.11,472,1422921600"; 
+   d="scan'208";a="406893498"
+Received: from alln-core-5.cisco.com ([173.36.13.138])
+  by rcdn-iport-6.cisco.com with ESMTP; 26 Mar 2015 15:15:26 +0000
+Received: from hordp-lnx.cisco.com (dhcp-64-100-104-75.cisco.com [64.100.104.75])
+	by alln-core-5.cisco.com (8.14.5/8.14.5) with ESMTP id t2QFFP9s024643;
+	Thu, 26 Mar 2015 15:15:25 GMT
+X-Mailer: git-send-email 2.3.3.377.gdac1145
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266331>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266332>
 
-On 15-03-24 07:06 PM, Paul Mackerras wrote:
-> On Mon, Mar 23, 2015 at 12:03:37PM -0700, Junio C Hamano wrote:
->>
->> Is it a good time for me to pull from you, or do you recommend me to
->> wait for a bit, expecting more?  We'll go in the pre-release freeze
->> soon-ish, so I thought I should ping.
-> 
-> Now is a good time to pull from the usual place, thanks.
+The help text for the --force-with-lease option to git-push
+does not parse cleanly.  Clean up the wording and syntax to
+be more sensible.  Also remove redundant information in the
+"--force-with-lease alone" description.
 
-Paul, could you react to the gitk window-title patches I've posted:
+Signed-off-by: Phil Hord <hordp@cisco.com>
+---
+ Documentation/git-push.txt | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-http://news.gmane.org/find-root.php?group=gmane.comp.version-control.git&article=262080
-
-Thanks!
-
-		M.
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index 5171086..863c30c 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -157,9 +157,8 @@ already exists on the remote side.
+ 	Usually, "git push" refuses to update a remote ref that is
+ 	not an ancestor of the local ref used to overwrite it.
+ +
+-This option bypasses the check, but instead requires that the
+-current value of the ref to be the expected value.  "git push"
+-fails otherwise.
++This option overrides this restriction if the current value of the
++remote ref is the expected value.  "git push" fails otherwise.
+ +
+ Imagine that you have to rebase what you have already published.
+ You will have to bypass the "must fast-forward" rule in order to
+@@ -171,15 +170,14 @@ commit, and blindly pushing with `--force` will lose her work.
+ This option allows you to say that you expect the history you are
+ updating is what you rebased and want to replace. If the remote ref
+ still points at the commit you specified, you can be sure that no
+-other people did anything to the ref (it is like taking a "lease" on
+-the ref without explicitly locking it, and you update the ref while
+-making sure that your earlier "lease" is still valid).
++other people did anything to the ref. It is like taking a "lease" on
++the ref without explicitly locking it, and the remote ref is updated
++only if the "lease" is still valid.
+ +
+ `--force-with-lease` alone, without specifying the details, will protect
+ all remote refs that are going to be updated by requiring their
+ current value to be the same as the remote-tracking branch we have
+-for them, unless specified with a `--force-with-lease=<refname>:<expect>`
+-option that explicitly states what the expected value is.
++for them.
+ +
+ `--force-with-lease=<refname>`, without specifying the expected value, will
+ protect the named ref (alone), if it is going to be updated, by
+-- 
+2.3.3.377.gdac1145
