@@ -1,79 +1,139 @@
-From: Gaurav Chhabra <varuag.chhabra@gmail.com>
-Subject: =?UTF-8?Q?Re=3A_Identifying_user_who_ran_=E2=80=9Cgit_reset=E2=80=9D_command?=
-Date: Thu, 26 Mar 2015 12:00:42 +0530
-Message-ID: <CAGDgvc1E_-+cHoYEdVJHt=mZNab5WBdpRG785=iZy+OOSBQ+EA@mail.gmail.com>
+From: Petr Stodulka <pstodulk@redhat.com>
+Subject: Re: [BUG] [PATCH] infinite loop due to broken symlink
+Date: Thu, 26 Mar 2015 10:32:05 +0100
+Message-ID: <5513D215.4070806@redhat.com>
+References: <5510399D.4020007@redhat.com> <55133C63.2010805@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 26 07:30:51 2015
+Content-Type: text/plain; charset=iso-8859-2; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 26 10:32:24 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yb1JY-00051k-JH
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Mar 2015 07:30:48 +0100
+	id 1Yb49E-0000N0-EJ
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Mar 2015 10:32:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751964AbbCZGao (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Mar 2015 02:30:44 -0400
-Received: from mail-wi0-f181.google.com ([209.85.212.181]:35532 "EHLO
-	mail-wi0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750978AbbCZGan (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Mar 2015 02:30:43 -0400
-Received: by wibbg6 with SMTP id bg6so52068371wib.0
-        for <git@vger.kernel.org>; Wed, 25 Mar 2015 23:30:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=3rSa/+99g751H8CVO2GKm5+yB3nCGjTfbjUDhrNtgq8=;
-        b=J7lX8rhUPd4Is91lrZIWksyczDJluszUHjXus9OQkTssRNRrRZ6NzwHjy4OXRK1zBw
-         mE3D35CtL87Wmzg9pXogqbyZ7uDHNJZVSmKdRuNAkGDENJnr/xMDbAOXShkSc34KISii
-         bL0v57SVtKJJHJVGjrRCvvN7XeRCwlLidnOiI+66VuygORXOsNsPCDlQgjNa82LKCqqp
-         yWA2YB4m7FcBseu+lJi22/cKJoEEoCL4s7x9fMFOWxTPHYrw0oiJN1olrdletN++TZz6
-         y9Ik++Iawhn5oOpOpT7TmpNEi16N+k6R8mTj1BVM7RMTeTbPVjgW49AKmO8OsynHhWi4
-         jW2Q==
-X-Received: by 10.194.177.195 with SMTP id cs3mr24243777wjc.141.1427351442348;
- Wed, 25 Mar 2015 23:30:42 -0700 (PDT)
-Received: by 10.28.149.198 with HTTP; Wed, 25 Mar 2015 23:30:42 -0700 (PDT)
+	id S1752568AbbCZJcP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Mar 2015 05:32:15 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:54678 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751830AbbCZJcK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Mar 2015 05:32:10 -0400
+Received: from int-mx09.intmail.prod.int.phx2.redhat.com (int-mx09.intmail.prod.int.phx2.redhat.com [10.5.11.22])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id t2Q9W8K3028406
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
+	Thu, 26 Mar 2015 05:32:08 -0400
+Received: from [10.34.4.110] (unused-4-110.brq.redhat.com [10.34.4.110])
+	by int-mx09.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id t2Q9W5bN021323
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 26 Mar 2015 05:32:07 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
+In-Reply-To: <55133C63.2010805@alum.mit.edu>
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266318>
-
-First of all, my sincere apologies for the inordinate delay in reply.
-The user who created the mess went on leave. By the time he was back,
-I got stuck in some other issue. Later, I took the log of 'history'
-command from his machine because i wanted to first simulate the
-scenario before i could apply Alfred's check to see whether it works.
-
-I tried simulating the scenario but couldn't reproduce it. :( Here's
-the PASTEBIN link which details what the developer did and how i tried
-simulating the same: http://pastebin.com/0GkSc59y
-
-As you will notice from the above link, in the original case, the
-developer got "Your branch is ahead of 'origin/some_branch' by 2
-commit." message while in my simulation, i got "Your branch and
-'origin/some_branch' have diverged, and have 1 and 1 different commit
-each, respectively."
-
-Not only is the message different, in the simulation, i can actually
-see the user's (in this case, harry) detail in 'git log' command. In
-the original case, the log did not contain any info on the user who
-messed up history.
-
-Although i did suspect that Alfred's suggestion might not actually
-address this issue but i still wanted to confirm it. However, thanks
-Alfred because it did solve another issue (disabling "force push") for
-which i was planning to put a check. :)
-
-@Randall/Kevin: The type of setup you suggested will definitely be
-ideal but in the type of environment we operate, i'm highly skeptical
-whether it will be implemented. :) I surely will highlight the issue
-and its impact though. As Gergely earlier mentioned, i guess i will
-have to capture ref updates. I never really looked into 'refs' before
-but now i will have to. I'm sure it will help me customize many other
-things as well especially access-related stuff.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266319>
 
 
-Thanks again to Junio, Gergely, Alfred, Randall and Kevin for their inputs. :)
+On 25.3.2015  23:53 Michael Haggerty wrote:
+> On 03/23/2015 05:04 PM, Petr Stodulka wrote:
+>> git goes into an infinite loop due to broken symlink (minimal reproducer
+>> [0]).  Affected code is in function
+>> "resolve_ref_unsafe" in file refs.c - notice 'stat_ref'. There is comment
+>> about problem with race condition, hovewer in that case it's regular broken
+>> symlink which cause infinite loop.
+> Thanks for the bug report. I can confirm the problem. In fact, I noticed
+> the same problem when I was working on a refactoring in the area, but I
+> still haven't submitted those patches. Luckily, modern Git doesn't use
+> symlinks in the loose reference hierarchy, so most users will never
+> encounter this problem.
+>
+> In fact I think it is only the open() call that can lead to the infinite
+> loop. Meanwhile, there is another problem caused by falling through the
+> symlink-handling code, namely that st reflects the lstat() of the
+> symlink rather than the stat() of the file that it points to.
+>
+> My approach was to run stat() on the path if the symlink-handling code
+> falls through. You can see my work in progress in my GitHub repo [1].
+>
+Yes, I thought up about similar solution, but I wasn't sure about this way
+because of race condition (I don't know well code of git yet). In the case
+of approved lstat/stat patch, I am more familiar with this solution.
+>> Possible patch could be something
+>> like this:
+>>
+>> -------------------------------------------------------
+>> diff --git a/refs.c b/refs.c
+>> index e23542b..9efe8d2 100644
+>> --- a/refs.c
+>> +++ b/refs.c
+>> @@ -1356,6 +1356,7 @@ static struct ref_dir *get_loose_refs(struct
+>> ref_cache *refs)
+>>   /* We allow "recursive" symbolic refs. Only within reason, though */
+>>   #define MAXDEPTH 5
+>>   #define MAXREFLEN (1024)
+>> +#define MAXLOOP 1024
+>>
+>>   /*
+>>    * Called by resolve_gitlink_ref_recursive() after it failed to read
+>> @@ -1482,6 +1483,7 @@ const char *resolve_ref_unsafe(const char
+>> *refname, int resolve_flags, unsigned
+>>          char buffer[256];
+>>          static char refname_buffer[256];
+>>          int bad_name = 0;
+>> +    int loop_counter = 0;
+>>
+>>          if (flags)
+>>                  *flags = 0;
+>> @@ -1546,7 +1548,8 @@ const char *resolve_ref_unsafe(const char
+>> *refname, int resolve_flags, unsigned
+>>                  if (S_ISLNK(st.st_mode)) {
+>>                          len = readlink(path, buffer, sizeof(buffer)-1);
+>>                          if (len < 0) {
+>> -                               if (errno == ENOENT || errno == EINVAL)
+>> +                               if (loop_counter++ < MAXLOOP &&
+>> +                    (errno == ENOENT || errno == EINVAL))
+>>                                          /* inconsistent with lstat;
+>> retry */
+>>                                          goto stat_ref;
+>>                                  else
+>> @@ -1579,7 +1582,7 @@ const char *resolve_ref_unsafe(const char
+>> *refname, int resolve_flags, unsigned
+>>                   */
+>>                  fd = open(path, O_RDONLY);
+>>                  if (fd < 0) {
+>> -                       if (errno == ENOENT)
+>> +                       if (loop_counter++ < MAXLOOP && errno == ENOENT)
+>>                                  /* inconsistent with lstat; retry */
+>>                                  goto stat_ref;
+>>                          else
+>> -------------------------------------------------------
+>>
+>> If I understand well that simple check of broken symlink is not possible
+>> due to race conditions.
+> This change also prevents the infinite loop, in fact in a more failproof
+> way that doesn't depend on errno values being interpreted correctly. I
+> would suggest a few stylistic changes, like for example here [2]. On the
+> other hand, this change doesn't solve the lstat()/stat() problem.
+>
+> Nevertheless, I wouldn't object to a fix like this being accepted in
+> addition to the stat() fix when it's ready. It doesn't hurt to wear both
+> a belt *and* suspenders.
+>
+> Michael
+>
+> [1] https://github.com/mhagger/git, branch "wip/refactor-resolve-ref".
+>      See especially commit d2425d8ac8cf73494b318078b92f5b1c510a68fb.
+> [2] https://github.com/mhagger/git, branch "ref-broken-symlinks"
+>
+When stat/lstat  is ready, probably this will not be valuable anymore, 
+but it
+could be reliable 'stop' for some unexpected/unknown possibly ways in 
+future.
+
+Petr.
