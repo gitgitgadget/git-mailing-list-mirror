@@ -1,79 +1,82 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: [PATCH] docs: Clarify what git-rebase's "--preserve-merges" does
-Date: Thu, 26 Mar 2015 14:04:07 +0100
-Message-ID: <CAHGBnuO5Y=ejJLxktk0GsnXx8h2LwPW1i7TqDePhfZ_zLR_X9A@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] merge: deprecate 'git merge <message> HEAD <commit>'
+ syntax
+Date: Thu, 26 Mar 2015 09:20:15 -0400
+Message-ID: <20150326132014.GA16427@peff.net>
+References: <xmqqvbhoz75m.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Mar 26 14:04:24 2015
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 26 14:20:42 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yb7SJ-0008Bx-Jy
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Mar 2015 14:04:15 +0100
+	id 1Yb7hv-00024Z-QZ
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Mar 2015 14:20:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752431AbbCZNEK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Mar 2015 09:04:10 -0400
-Received: from mail-ig0-f173.google.com ([209.85.213.173]:33384 "EHLO
-	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752148AbbCZNEH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Mar 2015 09:04:07 -0400
-Received: by ignm3 with SMTP id m3so13080339ign.0
-        for <git@vger.kernel.org>; Thu, 26 Mar 2015 06:04:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=QSXJdeo/qYtUSys3BAdGaHoOcbTZ20mlqZFeKhJD1lQ=;
-        b=EnoKrEf6pnt5oisvbTusgu3b2RfPuJygkvBLcv3fN5I/eDSC5Jw/HF3fBfoEtLHKod
-         gRmvf7i7kdqIzvhey3o1vSxh/qlk6ji/ezzPkDOdytD/0qlr9l1D+uHqKP3C7wZszviI
-         S1QHnJJMDfaVf4a3HRj0RD6pncMkWj7osKOZxAtqmhzJQj+oqAwcCZOEVTs374Ptu6Kb
-         RsJ+p/Ph0uqluYGAMaW5mtsJNF+eO3opsx1ySpPTVDy4m2RkGgYkdK1SApcouMssscmu
-         gVoAlrpAujkH/f7CkWeTTRo4TSqM/i81scXIJOBhoYFVBHSgTVralFprSYgJwa9ymmQE
-         Ev1g==
-X-Received: by 10.50.126.6 with SMTP id mu6mr37209292igb.4.1427375047318; Thu,
- 26 Mar 2015 06:04:07 -0700 (PDT)
-Received: by 10.107.132.144 with HTTP; Thu, 26 Mar 2015 06:04:07 -0700 (PDT)
+	id S1752393AbbCZNUT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Mar 2015 09:20:19 -0400
+Received: from cloud.peff.net ([50.56.180.127]:38699 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751896AbbCZNUS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Mar 2015 09:20:18 -0400
+Received: (qmail 32427 invoked by uid 102); 26 Mar 2015 13:20:18 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 26 Mar 2015 08:20:17 -0500
+Received: (qmail 23818 invoked by uid 107); 26 Mar 2015 13:20:32 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 26 Mar 2015 09:20:32 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 Mar 2015 09:20:15 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqvbhoz75m.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266324>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266326>
 
-Ignoring a merge sounds like ignoring the changes a merge commit
-introduces altogether, as if the merge commit was skipped or dropped from
-history. But that is not what happens if this options is not specified.
-Instead, what happens is that the separate commits a merge commit
-introduces are replayed in order, and only any possible merge conflict
-resolutions are ignored. Get this straight in the docs.
+On Wed, Mar 25, 2015 at 09:58:45PM -0700, Junio C Hamano wrote:
 
-Also, do not say that merge commits are *tried* to be recreated. They are
-recreated, but possibly with conflicts, which in turn are likely to be
-different from any original conflicts. Still recreating a merge commit does
-not just silently fail in any case, which is how "try to recreate" might
-sound.
+> We had this in "git merge" manual for eternity:
+> 
+>     'git merge' <msg> HEAD <commit>...
+> 
+>     [This] syntax (<msg> `HEAD` <commit>...) is supported for
+>     historical reasons.  Do not use it from the command line or in
+>     new scripts.  It is the same as `git merge -m <msg> <commit>...`.
 
-Signed-off-by: Sebastian Schuberth <sschuberth@gmail.com>
----
- Documentation/git-rebase.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+It would be nice to see this ancient wart ago. I agree we need a
+deprecation period, though, as you've outlined here.
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index d728030..3a6d139 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -362,7 +362,7 @@ default is `--no-fork-point`, otherwise the
-default is `--fork-point`.
+>  builtin/merge.c               | 1 +
+>  git-cvsimport.perl            | 2 +-
+>  git-pull.sh                   | 2 +-
+>  t/t3402-rebase-merge.sh       | 2 +-
+>  t/t6021-merge-criss-cross.sh  | 6 +++---
+>  t/t9402-git-cvsserver-refs.sh | 2 +-
+>  6 files changed, 8 insertions(+), 7 deletions(-)
 
- -p::
- --preserve-merges::
--    Instead of ignoring merges, try to recreate them.
-+    Recreate merge commits instead of replaying commits a merge
-commit introduces.
- +
- This uses the `--interactive` machinery internally, but combining it
- with the `--interactive` option explicitly is generally not a good
--- 
-1.9.5.msysgit.1
+Maybe squash in:
+
+diff --git a/t/t6020-merge-df.sh b/t/t6020-merge-df.sh
+index 27c3d73..2af1bee 100755
+--- a/t/t6020-merge-df.sh
++++ b/t/t6020-merge-df.sh
+@@ -24,7 +24,7 @@ test_expect_success 'prepare repository' '
+ '
+ 
+ test_expect_success 'Merge with d/f conflicts' '
+-	test_expect_code 1 git merge "merge msg" B master
++	test_expect_code 1 git merge -m "merge msg" master
+ '
+ 
+ test_expect_success 'F/D conflict' '
+
+
+We do not call it HEAD here, but the setup test just before has put us
+on branch B, so I think it is equivalent.
+
+-Peff
