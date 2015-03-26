@@ -1,70 +1,98 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: [PATCH] docs: Clarify "preserve" option wording for git-pull
-Date: Thu, 26 Mar 2015 12:04:23 +0100
-Message-ID: <CAHGBnuMcKAhW+_Ho8X1kzZd3B57ogu2Anb1nuPmKwRQD=OYrZQ@mail.gmail.com>
+From: Kirill Marchuk <62mkv@mail.ru>
+Subject: Re: very weird behaviour with
+Date: Thu, 26 Mar 2015 11:08:20 +0000 (UTC)
+Message-ID: <loom.20150326T115519-901@post.gmane.org>
+References: <5512B03B.9020707@mail.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Mar 26 12:04:35 2015
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 26 12:10:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yb5aP-0002qB-FR
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Mar 2015 12:04:29 +0100
+	id 1Yb5g2-0006xw-SG
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Mar 2015 12:10:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751581AbbCZLE0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Mar 2015 07:04:26 -0400
-Received: from mail-ig0-f170.google.com ([209.85.213.170]:36174 "EHLO
-	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751492AbbCZLEY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Mar 2015 07:04:24 -0400
-Received: by igbud6 with SMTP id ud6so126549505igb.1
-        for <git@vger.kernel.org>; Thu, 26 Mar 2015 04:04:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=kmCXThMQ07as5CdlHhi/GNdJC1KqjeseONrtQLwC8lY=;
-        b=A3sCn1HT8sP0RvnUVXk9nQsj/UAPYn28/R4bQyvpyPX25DHeFlh1KTkGTz2pnv5Wjd
-         4Rrs21JbN3tdK04l7uU+ojN3HxYmVLNFPV4CFVJJEIPIdgKhDJ46y/0GVFyTeX8X2urC
-         bdnPCRYPsdni8X33rzp9GwyrhBZlqXKfVVr4OjzQ4IoV89nAzmV/cUQcJSo43FMV0Zv3
-         8DCltkJvOyidG+FJ4Skj0ioqOUiylgxxsT4PogpWUcBfCL9q5y7uVPNWz9n63tZ0GUQ+
-         kFiEx/JYbk9l5ljRW0IGe0J/1n1tIH+x16AfSZLgkbUbRZbfhQgDVk4wsMFX+nWc7fsB
-         fM/Q==
-X-Received: by 10.50.79.229 with SMTP id m5mr35749074igx.23.1427367863982;
- Thu, 26 Mar 2015 04:04:23 -0700 (PDT)
-Received: by 10.107.132.144 with HTTP; Thu, 26 Mar 2015 04:04:23 -0700 (PDT)
+	id S1752277AbbCZLKK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Mar 2015 07:10:10 -0400
+Received: from plane.gmane.org ([80.91.229.3]:42554 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751864AbbCZLKI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Mar 2015 07:10:08 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Yb5fp-0006uL-ER
+	for git@vger.kernel.org; Thu, 26 Mar 2015 12:10:05 +0100
+Received: from 1936.rt-barnaul-02.dianet.ru ([94.230.125.199])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 26 Mar 2015 12:10:05 +0100
+Received: from 62mkv by 1936.rt-barnaul-02.dianet.ru with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 26 Mar 2015 12:10:05 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 94.230.125.199 (Mozilla/5.0 (Windows NT 6.3; WOW64; rv:36.0) Gecko/20100101 Firefox/36.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266321>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266322>
 
-Before this path, the "also" sounded as if "preserve" was doing a rebase
-as additional work that "true" would not do. Clarify this by saying
-"still" instead of "also".
+Kirill Marchuk <62mkv <at> mail.ru> writes:
 
-Signed-off-by: Sebastian Schuberth <sschuberth@gmail.com>
----
- Documentation/git-pull.txt | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> Hi everyone
+> 
+>   I'm totally stuck with a following problem:
+(censor cut)
+...........
+> 
+> But I believe that it might be due to my total misunderstanding of something
+> 
+> Anyway, I totally appreciate your help !
+> 
+> Thanks a lot
+> 
+> Kirill, frustrated unexperienced git user...
+> 
+> 
 
-diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
-index d3d236c..96829be 100644
---- a/Documentation/git-pull.txt
-+++ b/Documentation/git-pull.txt
-@@ -111,8 +111,8 @@ include::merge-options.txt[]
-     was rebased since last fetched, the rebase uses that information
-     to avoid rebasing non-local changes.
- +
--When preserve, also rebase the current branch on top of the upstream
--branch, but pass `--preserve-merges` along to `git rebase` so that
-+When preserve, still rebase the current branch on top of the upstream
-+branch, but also pass `--preserve-merges` along to `git rebase` so that
- locally created merge commits will not be flattened.
- +
- When false, merge the current branch into the upstream branch.
--- 
-1.9.5.msysgit.1
+Hi Again
+
+With "git subtree" today I have had even worse experience: 
+
+1) git checkout test
+2) git branch test-tmp
+3) mv adminUI adminUI2 (because otherwise errors..)
+4) git commit -a -m "Renamed adminUI" 
+5) git subtree add --prefix=adminUI adminui-origin/test --squash
+6) mv adminUI adminUI2 (because I don't want here the "deploy" versions)
+7) git commit -a -m "Added adminui as subtree"
+8) git merge develop (!!!!!! it went smoothly, but... see below)
+9) git checkout adminui-test
+10) git subtree merge --prefix=adminUI test-tmp
+11) git push adminui-origin test-adminui:test
+(instead of 9-11 I've tried to use "git subtree push", it's basically the
+same, I believe, only takes FAR more time to complete)
+
+I was very glad and happy. Unless I've realized that, in fact, step 7 did
+not proceed as it was intended to (by me, at least)
+
+It has 2 parents, and 2 diffs, and one of them shows exactly what it has to
+show (i.e. diff between tips of "develop" and "test-tmp"), but the files on
+the commit snapshot were left unchanged (I cannot imagine how could that
+happen, but that did)
+
+If I modify files and commit them RIGHT INTO test-tmp branch, all the rest
+goes fine (so far), but that unability to merge from "develop" is something
+that's killing the whole point of it :(( 
+
+I believe I am not the only one on this mailing list, so pleeease... 
+
+Kirill
