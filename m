@@ -1,82 +1,73 @@
-From: Vitor Antunes <vitor.hda@gmail.com>
-Subject: [PATCH 2/2] git-p4: Fix copy detection test
-Date: Fri, 27 Mar 2015 01:04:29 +0000
-Message-ID: <1427418269-3263-3-git-send-email-vitor.hda@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/2] git-p4: Small updates to test cases
+Date: Thu, 26 Mar 2015 18:26:30 -0700
+Message-ID: <xmqqwq23w7qx.fsf@gitster.dls.corp.google.com>
 References: <1427418269-3263-1-git-send-email-vitor.hda@gmail.com>
-Cc: Vitor Antunes <vitor.hda@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 27 02:05:23 2015
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Vitor Antunes <vitor.hda@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 27 02:26:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YbIiA-0007YS-4b
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Mar 2015 02:05:22 +0100
+	id 1YbJ2q-0003cx-0T
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Mar 2015 02:26:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753178AbbC0BFT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Mar 2015 21:05:19 -0400
-Received: from mail-wi0-f181.google.com ([209.85.212.181]:38847 "EHLO
-	mail-wi0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752513AbbC0BFS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Mar 2015 21:05:18 -0400
-Received: by wibgn9 with SMTP id gn9so10989844wib.1
-        for <git@vger.kernel.org>; Thu, 26 Mar 2015 18:05:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=c5wfwhUzknjGqjfXsc/VsRh+wNx1HUDZZP4fdGAR6X4=;
-        b=Eslb3G1/BYbYPnDNpMCkqMABOGh+LbIyXaFfIkCXGNpckX7uKIXwM/vNWgYrcheTFL
-         IKajSEMkSYo/0TONewpK98S7OOg/7N60tTJrNs8FCatHiI6ge9oO9+BzU061jkNa4eUH
-         sa4PAzWZjmYj8y9uLT86wPm6SvecDwIk1QjbKvgQ+EUV26zmMQms28AsNVUzn6HNRKWw
-         0WJi6L4aV89ftRuUxt83GEG5i8SFep6yHFPSBE0rFyerUFAt8q0g3NoctKMLTbBMsbIg
-         fEM+LwvV18JWFIwhCIdRm9OSDePdzJxMpIxUa8mzxR4g5RvFZVJGkBcqsCp9MuIwrVOu
-         JYSA==
-X-Received: by 10.180.90.34 with SMTP id bt2mr9461817wib.43.1427418316969;
-        Thu, 26 Mar 2015 18:05:16 -0700 (PDT)
-Received: from localhost.localdomain (88.41.108.93.rev.vodafone.pt. [93.108.41.88])
-        by mx.google.com with ESMTPSA id u10sm1231219wib.1.2015.03.26.18.05.15
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 26 Mar 2015 18:05:16 -0700 (PDT)
-X-Mailer: git-send-email 1.7.10.4
-In-Reply-To: <1427418269-3263-1-git-send-email-vitor.hda@gmail.com>
+	id S1752632AbbC0B0e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Mar 2015 21:26:34 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:57525 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752513AbbC0B0d (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Mar 2015 21:26:33 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 245C8430B4;
+	Thu, 26 Mar 2015 21:26:32 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=YDC5zVKfitXHORcW+n5ikEMczSo=; b=HvW3Qu
+	vs3uZLaryRmud8XihyVyHN8ml0gFXpBvbpEQTjK5GzWn7RtsZ21Kua1oeAqQ84ZH
+	VacHga9VLpz/nD/qLNczHzCrB5VNRXIKwaOtuWxib3KU7RQzuL2ny5POTua4NLld
+	i/D+TzkObo6mjHu1MpEP/hLXskELs4ICY533U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Es8lNMz3ZXj3qLDbQQU6CarZByRwIHoU
+	nlTl/c0dJQ0qScRb+QVPrrjDTLD1I3hyrcRuq9kk9YCOVhU6Ob2BM7NhoE0Zz2DT
+	vxk/GP07CRCsboUTkZbVr+ArfGuPE0lXvtyiDs8hR9iLjZujYMKknvNPUiTVSof3
+	9vBmAAmrR80=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1BFCA430B3;
+	Thu, 26 Mar 2015 21:26:32 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8C872430B2;
+	Thu, 26 Mar 2015 21:26:31 -0400 (EDT)
+In-Reply-To: <1427418269-3263-1-git-send-email-vitor.hda@gmail.com> (Vitor
+	Antunes's message of "Fri, 27 Mar 2015 01:04:27 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 4C874764-D420-11E4-B9AA-11859F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266361>
 
-File file11 is copied from file2 and diff-tree correctly reports this file as
-its the source, but the test expression was checking for file10 instead (which
-was a file that also originated from file2). It is possible that the diff-tree
-algorithm was updated in recent versions, which resulted in this mismatch in
-behavior.
+Vitor Antunes <vitor.hda@gmail.com> writes:
 
-Signed-off-by: Vitor Antunes <vitor.hda@gmail.com>
----
- t/t9814-git-p4-rename.sh |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+> This patch set includes two small fixes to the rename test case. The fix to
+> support dash should be trivial, but in the fix to the copy detection test case
+> it isn't obvious to me what changed in diff-tree to result in a different file
+> being detected as the origin of a copy.
 
-diff --git a/t/t9814-git-p4-rename.sh b/t/t9814-git-p4-rename.sh
-index 24008ff..018f01d 100755
---- a/t/t9814-git-p4-rename.sh
-+++ b/t/t9814-git-p4-rename.sh
-@@ -156,14 +156,14 @@ test_expect_success 'detect copies' '
- 		git diff-tree -r -C HEAD &&
- 		git p4 submit &&
- 		p4 filelog //depot/file10 &&
--		p4 filelog //depot/file10 | grep -q "branch from //depot/file" &&
-+		p4 filelog //depot/file10 | grep -q "branch from //depot/file2" &&
- 
- 		cp file2 file11 &&
- 		git add file11 &&
- 		git commit -a -m "Copy file2 to file11" &&
- 		git diff-tree -r -C --find-copies-harder HEAD &&
- 		src=$(git diff-tree -r -C --find-copies-harder HEAD | sed 1d | cut -f2) &&
--		test "$src" = file10 &&
-+		test "$src" = file2 &&
- 		git config git-p4.detectCopiesHarder true &&
- 		git p4 submit &&
- 		p4 filelog //depot/file11 &&
--- 
-1.7.10.4
+Thanks.
+
+As to 1/2 the lack of esac is clearly a bug---any self respecting
+POSIX shell should have executed it without complaining.  But
+changing from ':' to true should not be necessary---after all, the
+colon is a more traditional way to spell true to Bourne shells, and
+we use it in many places already.  Can you try reverting all the
+"colon to true" bits, keeping only the "add missing esac" part, and
+run your tests again?
