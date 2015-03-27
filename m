@@ -1,95 +1,125 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: [PATCH] gitk: sv.po: Update Swedish translation (305t0f0u)
-Date: Fri, 27 Mar 2015 10:34:25 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <alpine.DEB.2.00.1503271033020.4001@ds9.cixit.se>
+From: Kirill Marchuk <62mkv@mail.ru>
+Subject: Re: very weird behaviour with
+Date: Fri, 27 Mar 2015 10:58:18 +0000 (UTC)
+Message-ID: <loom.20150327T115302-412@post.gmane.org>
+References: <5512B03B.9020707@mail.ru> <loom.20150326T115519-901@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-224736040-1427448836=:4001"
-Cc: Paul Mackerras <paulus@samba.org>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Mar 27 10:35:11 2015
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 27 11:58:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YbQfM-0004F2-Pb
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Mar 2015 10:35:01 +0100
+	id 1YbRyJ-00018d-ON
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Mar 2015 11:58:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753734AbbC0Jez (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Mar 2015 05:34:55 -0400
-Received: from upper-gw.cixit.se ([92.43.32.133]:52786 "EHLO mail.cixit.se"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753370AbbC0Jex (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Mar 2015 05:34:53 -0400
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by mail.cixit.se (8.14.3/8.14.3/Debian-9.4) with ESMTP id t2R9YPrx007849
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Fri, 27 Mar 2015 10:34:25 +0100
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id t2R9YPhh007844;
-	Fri, 27 Mar 2015 10:34:25 +0100
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-Content-ID: <alpine.DEB.2.00.1503271034210.4001@ds9.cixit.se>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.3.7 (mail.cixit.se [127.0.0.1]); Fri, 27 Mar 2015 10:34:26 +0100 (CET)
+	id S1751542AbbC0K6f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Mar 2015 06:58:35 -0400
+Received: from plane.gmane.org ([80.91.229.3]:47974 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750930AbbC0K6e (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Mar 2015 06:58:34 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1YbRyC-00014l-6z
+	for git@vger.kernel.org; Fri, 27 Mar 2015 11:58:32 +0100
+Received: from 1936.rt-barnaul-02.dianet.ru ([94.230.125.199])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 27 Mar 2015 11:58:32 +0100
+Received: from 62mkv by 1936.rt-barnaul-02.dianet.ru with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 27 Mar 2015 11:58:32 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 94.230.125.199 (Mozilla/5.0 (Windows NT 6.3; WOW64; rv:36.0) Gecko/20100101 Firefox/36.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266368>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266369>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Kirill Marchuk <62mkv <at> mail.ru> writes:
 
---8323329-224736040-1427448836=:4001
-Content-Type: TEXT/PLAIN; CHARSET=US-ASCII; format=flowed
-Content-ID: <alpine.DEB.2.00.1503271034211.4001@ds9.cixit.se>
+> 
+> Kirill Marchuk <62mkv <at> mail.ru> writes:
+> 
+> > 
+> > Hi everyone
+> > 
+> >   I'm totally stuck with a following problem:
+> (censor cut)
+> ...........
+> > 
+> > But I believe that it might be due to my total misunderstanding of something
+> > 
+> > Anyway, I totally appreciate your help !
+> > 
+> > Thanks a lot
+> > 
+> > Kirill, frustrated unexperienced git user...
+> > 
+> > 
+> 
+> Hi Again
+> 
+> With "git subtree" today I have had even worse experience: 
+> 
+> 1) git checkout test
+> 2) git branch test-tmp
+> 3) mv adminUI adminUI2 (because otherwise errors..)
+> 4) git commit -a -m "Renamed adminUI" 
+> 5) git subtree add --prefix=adminUI adminui-origin/test --squash
+> 6) mv adminUI adminUI2 (because I don't want here the "deploy" versions)
+> 7) git commit -a -m "Added adminui as subtree"
+> 8) git merge develop (!!!!!! it went smoothly, but... see below)
+> 9) git checkout adminui-test
+> 10) git subtree merge --prefix=adminUI test-tmp
+> 11) git push adminui-origin test-adminui:test
+> (instead of 9-11 I've tried to use "git subtree push", it's basically the
+> same, I believe, only takes FAR more time to complete)
+> 
+> I was very glad and happy. Unless I've realized that, in fact, step 7 did
+> not proceed as it was intended to (by me, at least)
+> 
+> It has 2 parents, and 2 diffs, and one of them shows exactly what it has to
+> show (i.e. diff between tips of "develop" and "test-tmp"), but the files on
+> the commit snapshot were left unchanged (I cannot imagine how could that
+> happen, but that did)
+> 
+> If I modify files and commit them RIGHT INTO test-tmp branch, all the rest
+> goes fine (so far), but that unability to merge from "develop" is something
+> that's killing the whole point of it :(( 
+> 
+> I believe I am not the only one on this mailing list, so pleeease... 
+> 
+> Kirill
+> 
+> 
 
-Please find attached (for text encoding reasons) an update to the 
-Swedish translation for gitk.
 
--- 
-\\// Peter - http://www.softwolves.pp.se/
---8323329-224736040-1427448836=:4001
-Content-Type: APPLICATION/OCTET-STREAM; NAME=0001-gitk-sv.po-Update-Swedish-translation-305t0f0u.patch.gz
-Content-Transfer-Encoding: BASE64
-Content-ID: <alpine.DEB.2.00.1503271033560.4001@ds9.cixit.se>
-Content-Description: 
-Content-Disposition: ATTACHMENT; FILENAME=0001-gitk-sv.po-Update-Swedish-translation-305t0f0u.patch.gz
+Even more mysterious thing happens today...
+when I do 
+git checkout test-adminui
+git subtree merge --prefix=adminUI test-tmp
 
-H4sICMEjFVUAAzAwMDEtZ2l0ay1zdi5wby1VcGRhdGUtU3dlZGlzaC10cmFu
-c2xhdGlvbi0zMDV0MGYwdS5wYXRjaACtVttu20YQfedXTB0UTSAtw5tIibED
-tW7sBIlaIZaLAk0fluSS2opaErtLJQ76OclDfyAfUP1YZ0lJph0jlyKCsdoV
-Z2fOzJwz5pms1hBmWRYmPksCN/RolIZBFjqun/jjJBoxL/STSeTmaQizSsAF
-q8GNwHHi9g88x3GtM3QTw5xpJuG5ZLnmooDj2pynqsr166rcMGXXta3YY+tn
-qlkMZ5IPwYtgRiU6cUfgOrHvxX4IA8d1HOuiSf5iqY7hj/mPi9Onf0LB9SoG
-tbHrKobLOkMvcPGaZVwtQUsqVEk1R4T3fWekndxpHljWBS8Ey0iV5yS5+nKE
-hBAL6uphGwz+Bt+Bwd0f0n0scCHnJYN0SUXBMszMBy4UkwaSuj94MIQIMlay
-7kwQW8bzHAjBtIA+PARLDluLi4y9AWcyCbJxZNuTLEmiaIJ1csIgMBh79yzE
-0r87nQLxhx7ixtWD6dSCe7BYctXBxG+sm5Y8aTTLoMFIEvSSgaJrBiVPGWIH
-qtrfTOGhpumKFsxGP8bVjK8oK7F5hWiUwqofr/GXdNlMizXlpZ1W68dDQ46x
-bZF7X1r47ka7TszqOu3qtatvW4Nv5KldR10ua1XwDI6O2h2WpN0ezWVl2Eee
-ZeQ3JhU2zVDvlTDPXrK6kprMzEXyU1MoskBGds/mvy7IqWQtE0lHdBOKOD4x
-FA9iPxq42EFjTdCavGQbrm4Y+8QZETcEZxy7XqsFYzy427j1jCoy4nEPxnD0
-gipNFjtVVPKLqb+/LYoGu00WjKKw9yo71jVRm2mJzKmk3R4+vnNdp9mz2ZPr
-6rn2DtppJTQTiO6qRmPN3uiHdUm5eGTEIxXTJ5eLMzK+ZWxSyZkkT0RaZZhB
-DOOE611lykbSkpxVcq1iEHV7VCfeI+i2J/cFfHcC7oNHnf3v5JwJJrvCnOtD
-lcCzJ64dtpGRG3E3ctzAObDktGrKTPygoWAaTB2gylE9ayZR9K20VHzUiW/k
-DSNU3ygYhii/vYOXjTBeoWg4JKURG2pHG12WXLAeCZ9vP8hblvX2PY4QAcvt
-OwmS4vYGTt9xXdTaEPLm7durPrGPulqeGx3j0AAU5xo9bzh7jZzIqzaQsWmB
-h0ELPBwNcYZ1yA+yuOEIoXCRLlm6EtgQhdSkkkG+A96Zdjw/reoryYulhn//
-mRhNjghy14U5bcwMSVdMSqq65vRtD6bBnabd+qPYbN+JDKp0iSlliMFAWLOs
-pAix5IXJtCxXlTSA4fyXS+jaX8K8SXDWwYtu3qEznDD9ag4ONdwH+3wN95Z3
-5jH6RB6XZuJiHpJdj+beZEa5rpWhmzl8Monrht1C/fmGfTX4PSW+YROgpWHg
-RoaGgW/Y2GPh8dPth4JJHPBvhlC+0ucoilzS9fa9Rr/LdjTxVSuN61aOfDwN
-QaclwU6tqT6o4/h7RcRjdFOBrkAQvcT/dIixFXbayHa76zUXO/9XrfSR2L1K
-H/DtHSIujRkDXemG4Xe/8iBi3RV++640DT4gZ8YzvS3sUXANeI4z9rLGCLNq
-g/yocYDgaMAfDb4d0g6eKWM48ocTGISRMxz3xtCMakSjgCKw0+7OM5FXkEqO
-POO0N4hmlVYbKvEtDY0prDoLw3nDm35WHD3cAB444eSOibQPLgzyu6OT/xt9
-8PFFfPi1sKPexG9f6JRhx9luvOOLl+XaY9u3Pcv6DxPRn6FCCwAA
+I receive 
+'adminUI' does not exist; use 'git subtree add'
 
---8323329-224736040-1427448836=:4001--
+all the difference I can possibly think of, is that it probably requires me
+to create "subtree" after every push ?? 
+or is it due to my checkout-s and pulls into other branches during the day ? 
+
+No ideas
+
+Any help is greatly appreciated.. Although I am starting to think that I
+probably chose wrong channel to seek for help on this case... 
+
+Thanks for any reaction.
+
+Kirill
