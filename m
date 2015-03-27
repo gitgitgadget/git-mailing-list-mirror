@@ -1,160 +1,120 @@
 From: Sundararajan R <dyoucme@gmail.com>
-Subject: [PATCH v4 2/2] reset: add tests for git reset -
-Date: Fri, 27 Mar 2015 14:34:55 +0530
-Message-ID: <1427447095-22851-2-git-send-email-dyoucme@gmail.com>
-References: <1427447095-22851-1-git-send-email-dyoucme@gmail.com>
+Subject: [PATCH v4 1/2] reset: add '-' shorthand for '@{-1}'
+Date: Fri, 27 Mar 2015 14:34:54 +0530
+Message-ID: <1427447095-22851-1-git-send-email-dyoucme@gmail.com>
 Cc: Sundararajan R <dyoucme@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 27 10:05:35 2015
+X-From: git-owner@vger.kernel.org Fri Mar 27 10:05:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YbQCs-0004j2-9f
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Mar 2015 10:05:34 +0100
+	id 1YbQCk-0004dL-2b
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Mar 2015 10:05:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932084AbbC0JFa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Mar 2015 05:05:30 -0400
-Received: from mail-pd0-f170.google.com ([209.85.192.170]:36742 "EHLO
-	mail-pd0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753172AbbC0JF1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Mar 2015 05:05:27 -0400
-Received: by pdbcz9 with SMTP id cz9so90489269pdb.3
-        for <git@vger.kernel.org>; Fri, 27 Mar 2015 02:05:26 -0700 (PDT)
+	id S1753816AbbC0JFV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Mar 2015 05:05:21 -0400
+Received: from mail-pa0-f50.google.com ([209.85.220.50]:32965 "EHLO
+	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753254AbbC0JFT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Mar 2015 05:05:19 -0400
+Received: by pabxg6 with SMTP id xg6so90109157pab.0
+        for <git@vger.kernel.org>; Fri, 27 Mar 2015 02:05:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=21Q35AgdYP8VHvqqtb88MAPRJ1M9c2dXTSBFapnxjyU=;
-        b=lCjOn+DpVhfFagU0Q2gnO3qLTc3uKGbTdO83/QhK03Nh2T7SanBwMe1FYP2eXktxqa
-         OHsaJ39YznKOAt4j4z+NN4WXYoUInS4XuLMS3fusG5jpEkhFit2xm1WGIzIEGVj7ZIEU
-         yUKyc+zlYMEzLG+Is00L0+MWsI+udqrsP8JUUnVkulbNWq88xiJKRiEiq2UvqalvQKjG
-         jvT6b5QOuJoI8CFuv2chG/Go2Bje+o5B7q+tOz++YhJ3xz5QLKxfSWNWIjBoY9zq5ziq
-         xaHhJnqZZS+TDOnpcE+3rVabtbnXn4ZDKrVKLSJEEHP+2uOoLma38CaR+w6Lgql9VMtW
-         aTlQ==
-X-Received: by 10.66.102.99 with SMTP id fn3mr33817481pab.118.1427447126261;
-        Fri, 27 Mar 2015 02:05:26 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id;
+        bh=mcZ04q2FZLVHvDTaRZ9EQOSi3cVctM7qccP3qEDB/ZM=;
+        b=Bw/hYmMvTE/OLMD5AdG8MDzeX2cR6tz+BCsIpfGRaQ1UjlVdTX41jGKPGG0T8h6ZoJ
+         SpZppJiarBCcPlnnZc1KvrSnFCTYJ5L53YtMKIoTMYNV1udv7bxGT5xm7KRG6FzEWE9f
+         KlhAwsh5yXsOOu5XJ74SMq1ZtPPXYG8+BTGMmOLh5VYNJ//e6z/0kb47bER/0OVFXnU3
+         W+maleJjzCjqxI/jsz5gggObDgMPxIFaK7fBAbRvWiKkC03CidlcO/z85PP1qd4ydyN8
+         WO1kZ+lrB6Sqk3MZ0QlQEszTrSXhcGOCF1UW02zj01c6+eYTIp1U7/qXVHTJR1VWnwQ4
+         IAhg==
+X-Received: by 10.70.0.176 with SMTP id 16mr34152883pdf.78.1427447118754;
+        Fri, 27 Mar 2015 02:05:18 -0700 (PDT)
 Received: from work.localdomain ([210.212.66.19])
-        by mx.google.com with ESMTPSA id fm3sm1463962pdb.73.2015.03.27.02.05.24
+        by mx.google.com with ESMTPSA id fm3sm1463962pdb.73.2015.03.27.02.05.16
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 27 Mar 2015 02:05:25 -0700 (PDT)
+        Fri, 27 Mar 2015 02:05:18 -0700 (PDT)
 X-Mailer: git-send-email 2.1.0
-In-Reply-To: <1427447095-22851-1-git-send-email-dyoucme@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266365>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266366>
 
-The failure case which occurs on teaching git the '-' shorthand
-is when there exists no branch pointed to by '@{-1}'. In this case, if there 
-is a file named - in the working tree, the user can be unambiguously 
-assumed to be referring to it while issuing this command.
+Teaching reset the - shorthand involves checking if any file named '-' exists.
+check_filename() is used to perform this check.
 
-The ambiguous case occurs when the @{-1} branch exists and file named '-' also
-exists in the working tree. This are also treated as a failure case but here 
-the user is given advice as to how he can proceed.
+When the @{-1} branch does not exist then it can be safely assumed that the
+user is referring to the file '-',if any. If this file exists then it is reset.
+Otherwise, a bad flag error is shown.
 
-Another potentially tricky case is when the file '@{-1}' exists. In this case,
-the command should succeed as the user hasn't mentioned the file '@{-1}' and can
-be safely assumed to be referring to the @{-1} branch.
+But if the @{-1} branch exists then it becomes ambiguous without the explicit 
+'--' disambiguation as to whether the user wants to reset the file '-' or if 
+he wants to reset the working tree to the previous branch. Hence the program dies
+with a message about the ambiguous argument.
 
-Add tests to check the handling of these cases.
-Also add a test to verify that reset - behaves like reset @{-1} when none
-of the above cases are true.
+When none of the above cases hold, - behaves like @{-1}.
 
 Helped-by: Junio C Hamano <gitster@pobox.com>
 Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-Helped-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 Signed-off-by: Sundararajan R <dyoucme@gmail.com>
 ---
-Have made the edits suggested by Matthew and Kevin.
+Corrected a minor style error.
 
- t/t7102-reset.sh | 74 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 74 insertions(+)
+ builtin/reset.c | 21 +++++++++++++++++++--
+ 1 file changed, 19 insertions(+), 2 deletions(-)
 
-diff --git a/t/t7102-reset.sh b/t/t7102-reset.sh
-index 98bcfe2..a605c32 100755
---- a/t/t7102-reset.sh
-+++ b/t/t7102-reset.sh
-@@ -568,4 +568,78 @@ test_expect_success 'reset --mixed sets up work tree' '
- 	test_cmp expect actual
- '
+diff --git a/builtin/reset.c b/builtin/reset.c
+index 4c08ddc..80dd5d5 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -192,6 +192,8 @@ static void parse_args(struct pathspec *pathspec,
+ {
+ 	const char *rev = "HEAD";
+ 	unsigned char unused[20];
++	int file_named_minus = 0;
++	int shorthand = 0;
+ 	/*
+ 	 * Possible arguments are:
+ 	 *
+@@ -205,6 +207,12 @@ static void parse_args(struct pathspec *pathspec,
+ 	 */
  
-+test_expect_success 'reset - with no @{-1} branch should fail' '
-+	test_when_finished rm -rf new &&
-+	git init new &&
-+	(
-+		cd new &&
-+		test_must_fail git reset - 2>../actual
-+	) && 
-+	test_i18ngrep "bad flag" actual 
-+'
-+
-+test_expect_success 'reset - with no @{-1} branch and file named - should succeed' '
-+	test_when_finished rm -rf new &&
-+	git init new &&
-+	(
-+		cd new &&
-+		echo "Hello" >- &&
-+		git add - &&
-+		git reset - >../actual 
-+	) &&
-+	test_must_be_empty actual
-+'
-+
-+test_expect_success 'reset - with @{-1} branch and file named - should fail' '
-+	test_when_finished rm -rf new &&
-+	git init new &&
-+	(
-+		cd new && 
-+		echo "Hello" >- &&
-+		git add - &&
-+		git commit -m "first_commit" &&
-+		git checkout -b new_branch &&
-+		>- &&
-+		git add - &&
-+		test_must_fail git reset - 2>../actual 
-+	) &&
-+	test_i18ngrep "ambiguous argument" actual 
-+'
-+
-+test_expect_success 'reset - with @{-1} branch and file named @{-1} should succeed' '
-+	test_when_finished rm -rf new &&
-+	git init new &&
-+	(
-+		cd new && 
-+		echo "Hello" >@{-1} &&
-+		git add @{-1} &&
-+		git commit -m "first_commit" &&
-+		git checkout -b new_branch &&
-+		>@{-1} &&
-+		git add @{-1} &&
-+		git reset - >../actual 
-+	) &&
-+	test_i18ngrep "Unstaged" actual 
-+'
-+
-+test_expect_success 'reset - with @{-1} branch and no file named - should succeed' '
-+	test_when_finished rm -rf new &&
-+	git init new &&
-+	(
-+		cd new &&
-+		echo "Hey" >new_file &&
-+		git add new_file &&
-+		git commit -m "first_commit" &&
-+		git checkout -b new_branch &&
-+		>new_file &&
-+		git add new_file &&
-+		git reset - &&
-+		git status -uno --porcelain >actual &&
-+		git add new_file &&
-+		git reset @{-1} &&
-+		git status -uno --porcelain >expected &&
-+		test_cmp actual expected 
-+	)
-+'
-+
- test_done
+ 	if (argv[0]) {
++		if (!strcmp(argv[0], "-") && !argv[1]) {
++			argv[0] = "@{-1}";
++			shorthand = 1;
++			if (check_filename(prefix, "-"))
++				file_named_minus = 1;
++		}
+ 		if (!strcmp(argv[0], "--")) {
+ 			argv++; /* reset to HEAD, possibly with paths */
+ 		} else if (argv[1] && !strcmp(argv[1], "--")) {
+@@ -222,11 +230,20 @@ static void parse_args(struct pathspec *pathspec,
+ 			 * Ok, argv[0] looks like a commit/tree; it should not
+ 			 * be a filename.
+ 			 */
+-			verify_non_filename(prefix, argv[0]);
++			if (file_named_minus) {
++				die(_("ambiguous argument '-': both revision and filename\n"
++				"Use '--' to separate paths from revisions, like this:\n"
++				"'git <command> [<revision>...] -- [<file>...]'"));
++			}
++			else if (!shorthand) 
++				verify_non_filename(prefix, argv[0]);
+ 			rev = *argv++;
+ 		} else {
+ 			/* Otherwise we treat this as a filename */
+-			verify_filename(prefix, argv[0], 1);
++			if (shorthand)
++				argv[0] = "-";
++			if (!file_named_minus)
++				verify_filename(prefix, argv[0], 1);
+ 		}
+ 	}
+ 	*rev_ret = rev;
 -- 
 2.1.0
