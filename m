@@ -1,81 +1,74 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH V2 6/6] WIP/RFC/entry.c: fix a memleak
-Date: Fri, 27 Mar 2015 19:32:11 -0400
-Message-ID: <CAPig+cSHntg6KwZr3h6nhO7AK0v+FcbVAA4b_kvHdEg_=9o_eg@mail.gmail.com>
-References: <1427495569-10863-1-git-send-email-sbeller@google.com>
-	<1427495569-10863-7-git-send-email-sbeller@google.com>
+From: Vitor Antunes <vitor.hda@gmail.com>
+Subject: Re: [PATCH 2/2] git-p4: Fix copy detection test
+Date: Fri, 27 Mar 2015 23:59:02 +0000
+Message-ID: <20150327235902.25ebf380@pt-vhugo>
+References: <1427418269-3263-1-git-send-email-vitor.hda@gmail.com>
+	<1427418269-3263-3-git-send-email-vitor.hda@gmail.com>
+	<xmqq619mw04r.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	John Keeping <john@keeping.me.uk>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Sat Mar 28 00:32:33 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Pete Wyckoff <pw@padd.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Mar 28 00:59:24 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ybdjd-0002Ws-TT
-	for gcvg-git-2@plane.gmane.org; Sat, 28 Mar 2015 00:32:18 +0100
+	id 1Ybe9r-0007pG-3T
+	for gcvg-git-2@plane.gmane.org; Sat, 28 Mar 2015 00:59:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752913AbbC0XcN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Mar 2015 19:32:13 -0400
-Received: from mail-la0-f54.google.com ([209.85.215.54]:33227 "EHLO
-	mail-la0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752369AbbC0XcM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Mar 2015 19:32:12 -0400
-Received: by labto5 with SMTP id to5so81919898lab.0
-        for <git@vger.kernel.org>; Fri, 27 Mar 2015 16:32:11 -0700 (PDT)
+	id S1752710AbbC0X7S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Mar 2015 19:59:18 -0400
+Received: from mail-wi0-f175.google.com ([209.85.212.175]:36542 "EHLO
+	mail-wi0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751634AbbC0X7R (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Mar 2015 19:59:17 -0400
+Received: by wibg7 with SMTP id g7so43181841wib.1
+        for <git@vger.kernel.org>; Fri, 27 Mar 2015 16:59:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=FI0w36VsNF3fXKUp57C4w7s1dR0DxbFChd7tb5DluSE=;
-        b=m5gnyRbpWGU/WLy7fMTmqtyfHsLn5IFAaHCL9QbKalQES8kV4Bg3SWXXcAeg2hB1WA
-         INSTbVZXfw/GHAM/9tpMsJPOcdUnrolFmHOb3KnmO5FuEGUjwxJzA4WrQExVCuHiqufn
-         SaSKDc4IBKARuUbZJ6O7DM7EtASDDFE+T7RjwRQdGgevr136QItJWnz32QMT+I+TZYNQ
-         tboPTFIukvovafTqUDR9h12FMEWVy+n45/5w1DObPyh/uMWxP0eh3hiP5wXEzVbldzei
-         UdBMfhOjQwTOe7eZGvzmZgORctdOpf4C+7G25Q6RTzy/UxIq0zVjjmwg0OLq3yt3T7L0
-         PTCg==
-X-Received: by 10.112.198.40 with SMTP id iz8mr5763617lbc.101.1427499131163;
- Fri, 27 Mar 2015 16:32:11 -0700 (PDT)
-Received: by 10.114.78.69 with HTTP; Fri, 27 Mar 2015 16:32:11 -0700 (PDT)
-In-Reply-To: <1427495569-10863-7-git-send-email-sbeller@google.com>
-X-Google-Sender-Auth: Zy7HKX0XNsejYaQm6ulsxWA-NvM
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=GtaicJj6pJrZ+DsEzEkuc68FFBSby96+fQLwMKz8sPc=;
+        b=xsW50nxWOqXe4hAuWaLGS8LrQTdxZ2SuEJuCUUy68vrxfqf8BVfkBbz6y9WgffrZSs
+         HKZWnBEw7LubtOxLFTQDP2fGH6/0q4XAmN3cYnNhdKkdt1PcU+BTDGGtIcgz25zhwRS2
+         KlCA3Y7LrHnwSTAYCVXpFajK5TO037EEef6EVC8BoYIpTH+Cavin6H/CMWO69wJq2xfn
+         aDJbhiIkdGbn60g8IUXx/4V29J5/LON+Iy1sk9MC4/EFBhDmARgN4sQxXl9DGMhbXBUB
+         12AWYqgGtBkWZez+0Hvioh+IRoxKUNxwuDuCWxdbdvew0JKtVaqO62RRzPlfTezmj8KY
+         vlRA==
+X-Received: by 10.194.6.228 with SMTP id e4mr41340991wja.63.1427500756819;
+        Fri, 27 Mar 2015 16:59:16 -0700 (PDT)
+Received: from pt-vhugo (88.41.108.93.rev.vodafone.pt. [93.108.41.88])
+        by mx.google.com with ESMTPSA id e2sm4856871wjy.46.2015.03.27.16.59.15
+        (version=SSLv3 cipher=RC4-SHA bits=128/128);
+        Fri, 27 Mar 2015 16:59:16 -0700 (PDT)
+In-Reply-To: <xmqq619mw04r.fsf@gitster.dls.corp.google.com>
+X-Mailer: Claws Mail 3.8.1 (GTK+ 2.24.10; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266405>
 
-On Fri, Mar 27, 2015 at 6:32 PM, Stefan Beller <sbeller@google.com> wrote:
-> I  observe that filter is going out of scope, but the
-> implementation proposed in this patch produces just a
-> crash instead of any helpful fix.
+Junio C Hamano <gitster@pobox.com> wrote:
+
+>Vitor Antunes <vitor.hda@gmail.com> writes:
 >
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
-> diff --git a/entry.c b/entry.c
-> index 1eda8e9..5383001 100644
-> --- a/entry.c
-> +++ b/entry.c
-> @@ -152,8 +152,10 @@ static int write_entry(struct cache_entry *ce,
->                 if (filter &&
->                     !streaming_write_entry(ce, path, filter,
->                                            state, to_tempfile,
-> -                                          &fstat_done, &st))
-> +                                          &fstat_done, &st)) {
-> +                       free_stream_filter(filter);
-
-Aside from the crash you are seeing, this is a bogus fix anyway.
-You're only freeing 'filter' if it was allocated _and_ if
-streaming_write_entry() returned 0. I would guess your intention was
-to free 'filter' regardless of the result of streaming_write_entry().
-
->                         goto finish;
-> +               }
->         }
+>> File file11 is copied from file2 and diff-tree correctly reports this file as
+>> its the source, but the test expression was checking for file10 instead (which
+>> was a file that also originated from file2). It is possible that the diff-tree
+>> algorithm was updated in recent versions, which resulted in this mismatch in
+>> behavior.
+>>
+>> Signed-off-by: Vitor Antunes <vitor.hda@gmail.com>
 >
->         switch (ce_mode_s_ifmt) {
-> --
-> 2.3.0.81.gc37f363
+>Pete, these tests blame to your 9b6513ac (git p4 test: split up big
+>t9800 test, 2012-06-27).  I presume that you tested the result of
+>this splitting, but do you happen to know if we did something to
+>cause the test to break recently?
+
+I also worked on these tests at that time and they were passing before and
+after the reorganization. I'll prepare a bisect script and will try to find the
+commit that started making this test fail.
