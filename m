@@ -1,71 +1,81 @@
-From: "Kyle J. McKay" <mackyle@gmail.com>
-Subject: Re: What's cooking in git.git (Mar 2015, #09; Thu, 26)
-Date: Fri, 27 Mar 2015 13:27:59 -0700
-Message-ID: <2A1683A1-9E52-4286-B7CC-FF33209BC953@gmail.com>
-References: <xmqqk2y3xy77.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 27 21:28:10 2015
+From: Stefan Beller <sbeller@google.com>
+Subject: [PATCH 0/6] Memory leaks once again
+Date: Fri, 27 Mar 2015 15:09:00 -0700
+Message-ID: <1427494150-8085-1-git-send-email-sbeller@google.com>
+Cc: Stefan Beller <sbeller@google.com>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Mar 27 23:10:17 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YbarQ-0002b0-VC
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Mar 2015 21:28:09 +0100
+	id 1YbcSE-00051z-AD
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Mar 2015 23:10:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752220AbbC0U2E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Mar 2015 16:28:04 -0400
-Received: from mail-pa0-f52.google.com ([209.85.220.52]:33858 "EHLO
-	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752013AbbC0U2D (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Mar 2015 16:28:03 -0400
-Received: by pacwe9 with SMTP id we9so105442694pac.1
-        for <git@vger.kernel.org>; Fri, 27 Mar 2015 13:28:02 -0700 (PDT)
+	id S1752677AbbC0WKJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Mar 2015 18:10:09 -0400
+Received: from mail-ie0-f175.google.com ([209.85.223.175]:36857 "EHLO
+	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752535AbbC0WKH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Mar 2015 18:10:07 -0400
+Received: by iedm5 with SMTP id m5so81241452ied.3
+        for <git@vger.kernel.org>; Fri, 27 Mar 2015 15:10:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:in-reply-to:subject:references:message-id:content-type
-         :content-transfer-encoding:mime-version:date:cc;
-        bh=+KnHZqJVicbRQTGGvDqmLsn2aVpsFhBwY/34N5Yk7o4=;
-        b=ACbaU3FxH863fU9sSwS8ar1xW+u0PUEvobPojd9H/XTycwjKEGg9SQFRilzsfSD7jh
-         JC+MFtQeSXXPGxo1y9F8hXx3Z8n8qCvUElpN5QdZMiVPWcgyQnp5K447jlGGRooa1nEQ
-         9/bZU1I5ihZyrd7eBLP64tLqHI86Lmp8conC9xmP1tSqN2Ezb9xJmhtxfLjmu2RUH/bj
-         lyPKJuNPfBeYBq0Tkdp2tbiPID0/eQe2sUyZlPut3YywJF3GQP+cYYtCsR7Dg7GNUAsI
-         qG5jVrvNFOIXZrLcPA1Kbr967OEhWZxj4p5Dwxyld5oavwWZGHwLHxvPkkonVC0crvo3
-         e+Cg==
-X-Received: by 10.66.65.195 with SMTP id z3mr35983753pas.81.1427488082500;
-        Fri, 27 Mar 2015 13:28:02 -0700 (PDT)
-Received: from ?IPv6:2002:48c0:ad8d::223:12ff:fe05:eebd? ([2002:48c0:ad8d:0:223:12ff:fe05:eebd])
-        by mx.google.com with ESMTPSA id yc2sm2998752pbb.87.2015.03.27.13.28.01
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Fri, 27 Mar 2015 13:28:01 -0700 (PDT)
-In-Reply-To: <xmqqk2y3xy77.fsf@gitster.dls.corp.google.com>
-X-Mauler: Craptastic (2.936)
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=5Ea3CutNYWfNwvxMd3ph4ZJWCaHj0EQyMomTL39aEqQ=;
+        b=EuV0okgqpAdb4uSUSPREWLYtr3/S2LQyl56VXkjNO0O3he/ZZ7w8yn4eAg1YpioDMi
+         xqT+671tN7/JqlLOliHEW0yqKy8KW5GyFdtJ3DzWhuUIu1FqOPvDDuUwcrgtImbzYB/J
+         HP8eX6LdJmGPpreHLpTo6dK4UaIsCs/g0g20U8cyBb73RuY6ngt5mAa8Zv8vDMeEdbN2
+         uK56NI66P8xG1xBZUe6xFLN9TVaE2U1wDBZQ15HPb48nPOfNPol/OeHRQfv7/6MaCgKq
+         7cPIjyCZdK0k7F5pM50Mdh/jzfpq/MMbbA4JTA6yOcMKVAnejBzpU8V4SLZldLP6/Bsq
+         nP2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=5Ea3CutNYWfNwvxMd3ph4ZJWCaHj0EQyMomTL39aEqQ=;
+        b=lwQVACxclXezXi3b18mN7JYahfix6tm9Yocfv/7fXA2w5j7Y4DSSje7x6ZcN8xKeWG
+         9CthiuEoUGMbtB8nqMw5pCjeY3No/eiHK08t5O4QQpJzTqCi5NcJuemkwIZZieq8NvqS
+         t3S0oY4R/W3+oRsdPZxCFvfCVw5Ffd2NgQgzCL1j59Igwnb7SeOhgnfGxhVZaW6/zrMv
+         lVEb/oUar8B+xmIKXLOXx15PFFxX41uMBjvqh7lTflk5gqTdzcnRo/Vcg37jq/g0BQqO
+         rlmH8hJq0FCAxCiEERrN1lSMtLE43AwhJ7v35mr4Egyiv/HpTHk1jgolmnGwcMGbhG+M
+         Gc1A==
+X-Gm-Message-State: ALoCoQnFfEW9SaQsopdQQvwTsWM1M1X1x8k9uzan+NVgRD/zJ6SiROyJeTdV84udrOBtrfsD4sOY
+X-Received: by 10.107.8.220 with SMTP id h89mr9517008ioi.34.1427494207030;
+        Fri, 27 Mar 2015 15:10:07 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b00:7174:4672:de72:7789])
+        by mx.google.com with ESMTPSA id b137sm2132267ioe.36.2015.03.27.15.10.06
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 27 Mar 2015 15:10:06 -0700 (PDT)
+X-Mailer: git-send-email 2.3.0.81.gc37f363
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266380>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266381>
 
-On Mar 26, 2015, at 14:09, Junio C Hamano wrote:
+Here comes another bunch of memory leaks fixed.
+patches 1-4 are safe bets, but 5 and 6 are not so.
 
-> * jc/show-branch (2014-03-24) 5 commits
-> - show-branch: use commit slab to represent bitflags of arbitrary  
-> width
-> - show-branch.c: remove "all_mask"
-> - show-branch.c: abstract out "flags" operation
-> - show-branch.c: lift all_mask/all_revs to a global static
-> - show-branch.c: update comment style
->
-> Waiting for the final step to lift the hard-limit before sending it  
-> out.
+In patch 5 I wonder if we need to fix more aggressively and
+in patch 6 I just know there is a leak but I have no idea how to
+actually fix it.
 
-May I ask, on the 1-year anniversary of this topic, please, what is  
-the final step?
+Stefan Beller (6):
+  shallow: fix a memleak
+  line-log.c: fix a memleak
+  line-log.c: fix a memleak
+  wt-status.c: fix a memleak
+  pack-bitmap: fix a memleak
+  WIP/RFC/entry.c: fix a memleak
 
-Perhaps someone might submit a patch...  ;)
+ entry.c       |  4 +++-
+ line-log.c    |  4 ++++
+ pack-bitmap.c | 27 ++++++++++++++++++---------
+ shallow.c     |  4 ++--
+ wt-status.c   |  2 ++
+ 5 files changed, 29 insertions(+), 12 deletions(-)
 
--Kyle
+-- 
+2.3.0.81.gc37f363
