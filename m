@@ -1,71 +1,98 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 0/6] Memory leaks once again
-Date: Fri, 27 Mar 2015 15:12:36 -0700
-Message-ID: <CAGZ79kZ8=HoF0US0988oZxTyubjJO4vGYCtrUPX_x6gE0M2_Vw@mail.gmail.com>
-References: <1427494150-8085-1-git-send-email-sbeller@google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] git-p4: Fix copy detection test
+Date: Fri, 27 Mar 2015 15:23:16 -0700
+Message-ID: <xmqq619mw04r.fsf@gitster.dls.corp.google.com>
+References: <1427418269-3263-1-git-send-email-vitor.hda@gmail.com>
+	<1427418269-3263-3-git-send-email-vitor.hda@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Stefan Beller <sbeller@google.com>
-To: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 27 23:12:58 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Vitor Antunes <vitor.hda@gmail.com>
+To: Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Fri Mar 27 23:23:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YbcUb-0006qJ-PN
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Mar 2015 23:12:42 +0100
+	id 1Ybcf4-00069B-4J
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Mar 2015 23:23:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752443AbbC0WMh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Mar 2015 18:12:37 -0400
-Received: from mail-ie0-f182.google.com ([209.85.223.182]:36138 "EHLO
-	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752310AbbC0WMh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Mar 2015 18:12:37 -0400
-Received: by iedm5 with SMTP id m5so81275086ied.3
-        for <git@vger.kernel.org>; Fri, 27 Mar 2015 15:12:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=A2Ok0tVzEJtqgkQvkmsgz0byXb+6wq0vH3KRZ+46P5M=;
-        b=dwWlIUQf6hGOBV2Bzwo9+g96/6w3V8fI6OYW8BEboZ7Rydy3NKJyGqhlFVzqlZxkBE
-         9zwOQ6qT00lm/F4OCUYfkNU1bg365Gmhz5bTOD4zXJEPnlvLR00qsNQUvSXWyEn3wVGb
-         XIYyXEnp9/GPwoMZHDaOfuq/TmwSVSGBFDk5byL+FhIvu7D5QgHpKJGizw7jj8yfrMzV
-         YGvla3+tWp31mAuug0eYziTx4SnF2VUXdRYd190rv++5GWtU6xusdAXqkQC2eB4QxGzX
-         JqShn23V3qK1vSdFmiJSrzpmzhSzQELhBiXjiTd7m++t6ms0uJNvmQBx9hQDR3j2pqAM
-         R21w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=A2Ok0tVzEJtqgkQvkmsgz0byXb+6wq0vH3KRZ+46P5M=;
-        b=YXqP+PnNHio4D3002T365SCJj4mUYYbQJEar67NvGHZnrI+ugpUwMSZ/8PTUnYWmpV
-         MnL3y6ns4IvfEOu1vQhgcdN+J0JNv6gi5UJwyL8qOMKbxu1ilokr/x6yTnIqNdtbnrz5
-         aX5qeTJGPTdljdjJ5aYTgCehFXRyzJeFB1PqSTLyUnrwwLkxXNVbUIh3t2x+wdabqQAm
-         O8AZExx7E9WNRGnKbPAI96/MjC9STSw1uDD5JOoIu8IaPOpQpjhSuxcjoVpWR0oELvdu
-         uJn3jmB+K4N2OzX5fv4y5TeW1GtBHzTe+kM85ZomZDp4uwDmevZeGkX+Zqn9V64Yi21I
-         fqAQ==
-X-Gm-Message-State: ALoCoQmJDlOG5u+bLbvDH3AJGBQzSD4OVOSai2vtWNJYVkTTum3S6Bfttldy4IlrJaOPy2eMYoRI
-X-Received: by 10.50.107.36 with SMTP id gz4mr1500591igb.25.1427494356366;
- Fri, 27 Mar 2015 15:12:36 -0700 (PDT)
-Received: by 10.107.46.31 with HTTP; Fri, 27 Mar 2015 15:12:36 -0700 (PDT)
-In-Reply-To: <1427494150-8085-1-git-send-email-sbeller@google.com>
+	id S1752115AbbC0WXZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Mar 2015 18:23:25 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:56097 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751046AbbC0WXY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Mar 2015 18:23:24 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A692E43E2E;
+	Fri, 27 Mar 2015 18:23:18 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=j4SX4Vd+U+zrio1K0NQ5K3IF6hE=; b=VhVJd/
+	1cjmb8lmVpTLxdxlUspPGsfqP29o1UXrKJ/DtkcOVT6LY7Yvaci+W6l1XNjm4whm
+	hsT/SKINAb1Ui36AAc7wvnBNE0f0Mx6DJlGfbyxM8nEAhbaaLq54EZI6Nt4PkAda
+	64Jf/K9PCzffzOaTN0JADKvvWrOI3aUNoiGJY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=gdCh1l7s+cd73i7a7sV1ar8tU5WpRXUC
+	K2eFoxEzE64Vv5oEZxBsXWoPbMEnd1abgnn2qPQ2YJz6eCHI+tjxy4n3ONOwC7+s
+	L2yLNxzwnljsiH/jHlmJgrkmKjPNZPgcTro118/P4B5PAVAAsQA4jx+rzSpdTL2W
+	zPjwV+WFZ68=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9E85A43E2D;
+	Fri, 27 Mar 2015 18:23:18 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1990C43E2C;
+	Fri, 27 Mar 2015 18:23:18 -0400 (EDT)
+In-Reply-To: <1427418269-3263-3-git-send-email-vitor.hda@gmail.com> (Vitor
+	Antunes's message of "Fri, 27 Mar 2015 01:04:29 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: DE51F284-D4CF-11E4-BA52-11859F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266393>
 
-On Fri, Mar 27, 2015 at 3:09 PM, Stefan Beller <sbeller@google.com> wrote:
-> Here comes another bunch of memory leaks fixed.
-> patches 1-4 are safe bets, but 5 and 6 are not so.
->
-> In patch 5 I wonder if we need to fix more aggressively and
-> in patch 6 I just know there is a leak but I have no idea how to
-> actually fix it.
->
+Vitor Antunes <vitor.hda@gmail.com> writes:
 
-And I sent 12 instead of 6 patches because I needed to fine tune the
-order of the patch set and I forgot to delete the un-tuned version.
+> File file11 is copied from file2 and diff-tree correctly reports this file as
+> its the source, but the test expression was checking for file10 instead (which
+> was a file that also originated from file2). It is possible that the diff-tree
+> algorithm was updated in recent versions, which resulted in this mismatch in
+> behavior.
+>
+> Signed-off-by: Vitor Antunes <vitor.hda@gmail.com>
+
+Pete, these tests blame to your 9b6513ac (git p4 test: split up big
+t9800 test, 2012-06-27).  I presume that you tested the result of
+this splitting, but do you happen to know if we did something to
+cause the test to break recently?
+
+> ---
+>  t/t9814-git-p4-rename.sh |    4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/t/t9814-git-p4-rename.sh b/t/t9814-git-p4-rename.sh
+> index 24008ff..018f01d 100755
+> --- a/t/t9814-git-p4-rename.sh
+> +++ b/t/t9814-git-p4-rename.sh
+> @@ -156,14 +156,14 @@ test_expect_success 'detect copies' '
+>  		git diff-tree -r -C HEAD &&
+>  		git p4 submit &&
+>  		p4 filelog //depot/file10 &&
+> -		p4 filelog //depot/file10 | grep -q "branch from //depot/file" &&
+> +		p4 filelog //depot/file10 | grep -q "branch from //depot/file2" &&
+>  
+>  		cp file2 file11 &&
+>  		git add file11 &&
+>  		git commit -a -m "Copy file2 to file11" &&
+>  		git diff-tree -r -C --find-copies-harder HEAD &&
+>  		src=$(git diff-tree -r -C --find-copies-harder HEAD | sed 1d | cut -f2) &&
+> -		test "$src" = file10 &&
+> +		test "$src" = file2 &&
+>  		git config git-p4.detectCopiesHarder true &&
+>  		git p4 submit &&
+>  		p4 filelog //depot/file11 &&
