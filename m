@@ -1,141 +1,75 @@
-From: Kevin D <me@ikke.info>
-Subject: Re: how to make "full" copy of a repo
-Date: Sat, 28 Mar 2015 15:31:52 +0100
-Message-ID: <20150328143152.GB9387@vps892.directvps.nl>
-References: <1427511397.19633.52.camel@scientia.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH V2 0/2] git-p4: Small updates to test cases
+Date: Sat, 28 Mar 2015 09:07:32 -0700
+Message-ID: <xmqqa8yxyukb.fsf@gitster.dls.corp.google.com>
+References: <1427500983-8802-1-git-send-email-vitor.hda@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Christoph Anton Mitterer <calestyo@scientia.net>
-X-From: git-owner@vger.kernel.org Sat Mar 28 15:32:18 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Pete Wyckoff <pw@padd.com>
+To: Vitor Antunes <vitor.hda@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 28 17:07:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YbrmI-0005uT-T1
-	for gcvg-git-2@plane.gmane.org; Sat, 28 Mar 2015 15:31:59 +0100
+	id 1YbtGu-0006ed-V6
+	for gcvg-git-2@plane.gmane.org; Sat, 28 Mar 2015 17:07:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752573AbbC1Oby (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Mar 2015 10:31:54 -0400
-Received: from ikke.info ([178.21.113.177]:60817 "EHLO vps892.directvps.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750855AbbC1Obx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Mar 2015 10:31:53 -0400
-Received: by vps892.directvps.nl (Postfix, from userid 1001)
-	id 803511DCF6D; Sat, 28 Mar 2015 15:31:52 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <1427511397.19633.52.camel@scientia.net>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1752207AbbC1QHg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Mar 2015 12:07:36 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:60278 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752172AbbC1QHf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Mar 2015 12:07:35 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 46AAF41BC2;
+	Sat, 28 Mar 2015 12:07:34 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=uHWRBZxUQY5Blwpc2G46zJM1Op0=; b=jU36Zr
+	Z+MqajkbSVwueXCiXNlGK+rEqe3QgMzVh344s9RdG0m/6+S5TZlOTe1VDef5bb0x
+	woeXpcEBethTSUNt0/4356pB4m1gWqOOeGCgARV3wM523cGS63wfKXNsJpHN8aXi
+	XPEhUudH4Lonq/mmb43tLLloVt2mq7i7gXZvE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=TBNuUEseh9P8M0apu7GR/1/X3f7/9maj
+	X57g1zMFuSz/xz7ZYEBwIwQpJu/KraZP9UvSNv1NcfDe2bowU56qiWLyQtOZGwH1
+	Who/Z85laSlKstq3Yigc0dFYVCDWlxvbLW1wG7qwwU/HCcpSffJtg0+dFJzROQmv
+	tlFIPV8eH5E=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3B6BF41BC1;
+	Sat, 28 Mar 2015 12:07:34 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9A29741BC0;
+	Sat, 28 Mar 2015 12:07:33 -0400 (EDT)
+In-Reply-To: <1427500983-8802-1-git-send-email-vitor.hda@gmail.com> (Vitor
+	Antunes's message of "Sat, 28 Mar 2015 00:03:01 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 8B2E254C-D564-11E4-BFA3-11859F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266418>
 
-On Sat, Mar 28, 2015 at 03:56:37AM +0100, Christoph Anton Mitterer wrote:
-> Hey.
-> 
-> I was looking for an ideally simple way to make a "full" copy of a git
-> repo. Many howtos are floating around on this on the web, with also lots
-> of voodoo.
-> 
-> 
-> First, it shouldn't be just a clone, i.o.w.
-> - I want to have all refs (local/remote branches/tags) and of course all
-> objects from the source repo copied as is.
-> So it's local branches should become my local branches and not remote
-> branches as well - and so on.
-> Basically I want to be able to delete the source afterwards (and all
-> backups ;) ) and not having anything lost.
-> 
-> - It shouldn't set the source repo as origin or it's branches as remote
-> tracking branches, as said it should be identical the source repo, just
-> "freshly copied" via the "Git aware transport mechanisms".
-> 
-> - Whether GC or repacking happens, I don't care, as long as nothing that
-> is still reachable in the source repo wouldn't get lost (or get lost
-> once I run a GC in the copied repo).
-> 
-> - Whether anything that other tools have added to .git (e.g. git-svn
-> stuff) get's lost, I don't care.
-> 
-> - It should work for both, bare and non-bare repos, but it's okay when
-> it doesn't copy anything that is not committed or stashed.
-> 
-> 
-> 
-> I'd have said that either:
-> $ git clone --mirror URl-to-source-repo copy
-> for the direction from "outside" the source to a copy,
-> or alternatively:
-> $ cd source-repo
-> $ git push --mirror URl-to-copy
-> for the direction from "within" the source to a copy with copy being an
-> empty bare or non-bare repo,
-> would do the job.
-> 
-> But:
-> 
-> a) but the git-clone(1) part for --mirror:
->    >and sets up a refspec configuration such that all these refs are
->    >overwritten by a git remote update in the target repository.
->    kinda confuses me since I wanted to get independent of the source
->    repo and this ssems to set up a remote to it?
-> 
-> b) do I need --all --tags for the push as well?
-> 
-> c) When following
->    https://help.github.com/articles/duplicating-a-repository/
->    it doesn't seem as if --mirror is what I want because they seem to
->    advertise it rather as having the copy tracking the source repo.
->    Of course I read about just using git-clone --bare, but that seems to
->    not copy everything that --mirror does (remote-tracking branches,
->    notes).
-> 
->    So I'm a bit confused...
-> 
-> 
-> 1) Is it working like I assumed above?
-> 2) Does that also copy things like git-config, hooks, etc.?
-> 3) Does it copy the configured remotes from the source?
-> 4) What else is not copied by that? I'd assume anything that is not
->    tracked by git and the stash of the source?
-> 
-> 
-> 
-> Thanks a lot,
-> Chris.
+Will apply both.
 
-Git clone is never going to get you a copy where nothing is lost.
+It seems that I am to blame for 1/2 for botching the shell syntax
+X-<.  Thanks for fixing.
 
-What you are losing on clone is:
+I was not entirely happy with the "we could find either file10 or
+file11 because they are the same, so let's declare both are success"
+in the original, f69b3a93 (git p4 test: copy source indeterminate,
+2012-06-27) in the first place, which survived the 9b6513ac (git p4
+test: split up big t9800 test, 2012-06-27) and e832f737 (t9814: fix
+misconversion from test $a -o $b to test $a || test $b, 2014-07-25).
+I think a better fix would have been not to have multiple identical
+copies in the tested tree to begin with.
 
-* config settings (this includes the configures remotes)
-* hooks
-* reflog (history of refs, though, by default disabled for bare
-  repositories)
-* Stashes, because the reference to them is stored in the reflog
-* unreferenced objects (though you said those are not a requirement, it
-  is still something that is lost)
+But 2/2 is an acceptable interim fix that uses the same approach as
+we have been using since f69b3a93, so it should do at least for now.
 
-git clone --mirror is used for repositories that regularly get updates
-from the repositories they were cloned from. Though this is not what you
-want, it's not difficult to reset the refspecs to the default refspecs.
-Because it fetches all refs, it's not necessary to add --all --tags
-(because tags are also refs).
-
-git clone --mirror is the closest you are going to get by only using
-git.
-
-I guess you are aware of this, but if you want to retain more
-information, you have to rely on other means, like scp to get the other
-things
-
-So to summarize, git clone is only used for cloning history, which means
-objects and refs, the rest is not part of cloning. To get more, you have
-to go outside git.
-
-Hope this helps to clear some confussion.
-
-Kevin
+Thanks.
