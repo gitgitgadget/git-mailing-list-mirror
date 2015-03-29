@@ -1,73 +1,169 @@
-From: Ivan Ukhov <ivan.ukhov@gmail.com>
-Subject: [PATCH v2] parse-options: fix the description of defval
-Date: Sun, 29 Mar 2015 20:33:21 +0200
-Message-ID: <1C828CFA-F4EA-44D6-98F7-3F5F32D74621@gmail.com>
-Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2093\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Mar 29 20:37:11 2015
+From: Vitor Antunes <vitor.hda@gmail.com>
+Subject: [PATCH] t9814: Guarantee only one source exists in git-p4 copy tests
+Date: Mon, 30 Mar 2015 00:31:54 +0100
+Message-ID: <1427671914-12131-1-git-send-email-vitor.hda@gmail.com>
+References: <1427545730-3563-1-git-send-email-vitor.hda@gmail.com>
+Cc: Vitor Antunes <vitor.hda@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 30 01:32:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YcI4x-0000rI-BN
-	for gcvg-git-2@plane.gmane.org; Sun, 29 Mar 2015 20:36:59 +0200
+	id 1YcMgq-0005GS-Hm
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Mar 2015 01:32:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752403AbbC2Sd0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Mar 2015 14:33:26 -0400
-Received: from mail-lb0-f169.google.com ([209.85.217.169]:34107 "EHLO
-	mail-lb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752334AbbC2Sd0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 29 Mar 2015 14:33:26 -0400
-Received: by lboc7 with SMTP id c7so36663343lbo.1
-        for <git@vger.kernel.org>; Sun, 29 Mar 2015 11:33:24 -0700 (PDT)
+	id S1752048AbbC2XcT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Mar 2015 19:32:19 -0400
+Received: from mail-wg0-f51.google.com ([74.125.82.51]:35093 "EHLO
+	mail-wg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751259AbbC2XcT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Mar 2015 19:32:19 -0400
+Received: by wgdm6 with SMTP id m6so152630518wgd.2
+        for <git@vger.kernel.org>; Sun, 29 Mar 2015 16:32:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:content-type:content-transfer-encoding:subject:message-id:date
-         :to:mime-version;
-        bh=XmygHIGbk4DnBrzLaPxnwyoVB+66+5IS5YHibty7nzA=;
-        b=k2bXx5V4/gN1W42tTT0uPZFXaFq+iqroBoMthKqX5ReOmB0opuKNLs9HPzb5Tra9IB
-         aWS89AdgBsQps0kXrgdKYE6rF67RP4tNeSbL/MO8BEkaucwRySDIm9ykCHQ9hi5WGUer
-         69CO8EvkCF1N70ohbTviN4pZtCmKRXoITyIZDAnKX6q6p5oVTLXhVAJDxIGbzaOQzN5a
-         VVXBd1S7L5AaBBFECuM09EHZ2EW/RndlFJfdYDZlbHiAdCk1l43zVbbjTONHNa9Y/dSo
-         laFPlAp63osKk+pz07X+iYG+E2Vv6o4SRqNWvTuSl+JbCUcREjpulIWgSigESsP/0n9s
-         8zmg==
-X-Received: by 10.152.36.133 with SMTP id q5mr19338515laj.35.1427654004165;
-        Sun, 29 Mar 2015 11:33:24 -0700 (PDT)
-Received: from c-15c6e455.011-537-6c6b701.cust.bredbandsbolaget.se (c-15c6e455.011-537-6c6b701.cust.bredbandsbolaget.se. [85.228.198.21])
-        by mx.google.com with ESMTPSA id le10sm1606682lac.7.2015.03.29.11.33.23
-        for <git@vger.kernel.org>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 29 Mar 2015 11:33:23 -0700 (PDT)
-X-Mailer: Apple Mail (2.2093)
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=0xwB/u8PfKBxD+GrThIBZA8jHug8chW4X8iKZLNtbrc=;
+        b=N0lWUs6yGti8c3V6mEHCeJhTaK3if5kL7NYVh4X5nDPLXcwkD/FgFB9uCFS3Vf2/cD
+         nf3Kf3VM7OZDhidnwOkx06kZKKTvqGNWsKYHFqj/JNxv2CLi3LvKlViSxzsdIBLKipLF
+         Su6eRUIrhOAoQK0cesrdBvi3AUDhzNKFsyphTsx+2VTE1QxIy6YBXDkKPNVYGrbW8eTs
+         DJp2urHJ/ir2ODFGQMBe0alXz/N+79lu4eEgwtQ01biQh2TLHIFVsww7FJ46fJkfl4HU
+         xPoeo4azRAaURJ8fc9DFIzotasnTNAyoLSiyZFBRbZH7kW6zmBwHXZA7ILVLhARiaHPF
+         gYMQ==
+X-Received: by 10.194.85.46 with SMTP id e14mr55710643wjz.110.1427671937917;
+        Sun, 29 Mar 2015 16:32:17 -0700 (PDT)
+Received: from localhost.localdomain (88.41.108.93.rev.vodafone.pt. [93.108.41.88])
+        by mx.google.com with ESMTPSA id fo8sm13119318wib.14.2015.03.29.16.32.16
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 29 Mar 2015 16:32:17 -0700 (PDT)
+X-Mailer: git-send-email 1.7.10.4
+In-Reply-To: <1427545730-3563-1-git-send-email-vitor.hda@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266446>
 
-OPTION_BIT and OPTION_SET_INT do not store pointers in defval.
+* Modify source file (file2) before copying the file.
+* Check that only file2 is the source in the output of "p4 filelog".
+* Remove all "case" statements and replace them simple tests to check that
+  source is "file2".
 
-Signed-off-by: Ivan Ukhov <ivan.ukhov@gmail.com>
+Signed-off-by: Vitor Antunes <vitor.hda@gmail.com>
 ---
- parse-options.h | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ t/t9814-git-p4-rename.sh |   46 +++++++++++++++++++++++++++++++---------------
+ 1 file changed, 31 insertions(+), 15 deletions(-)
 
-diff --git a/parse-options.h b/parse-options.h
-index 7940bc7..c71e9da 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -95,8 +95,7 @@ typedef int parse_opt_ll_cb(struct parse_opt_ctx_t *ctx,
-  *
-  * `defval`::
-  *   default value to fill (*->value) with for PARSE_OPT_OPTARG.
-- *   OPTION_{BIT,SET_INT} store the {mask,integer,pointer} to put in
-- *   the value when met.
-+ *   OPTION_{BIT,SET_INT} store the {mask,integer} to put in the value when met.
-  *   CALLBACKS can use it like they want.
-  */
- struct option {
---
-2.3.4
+diff --git a/t/t9814-git-p4-rename.sh b/t/t9814-git-p4-rename.sh
+index 8b9c295..d8fb22d 100755
+--- a/t/t9814-git-p4-rename.sh
++++ b/t/t9814-git-p4-rename.sh
+@@ -132,6 +132,9 @@ test_expect_success 'detect copies' '
+ 		cd "$git" &&
+ 		git config git-p4.skipSubmitEdit true &&
+ 
++		echo "file8" >> file2 &&
++		git commit -a -m "Differentiate file2" &&
++		git p4 submit &&
+ 		cp file2 file8 &&
+ 		git add file8 &&
+ 		git commit -a -m "Copy file2 to file8" &&
+@@ -140,6 +143,10 @@ test_expect_success 'detect copies' '
+ 		p4 filelog //depot/file8 &&
+ 		p4 filelog //depot/file8 | test_must_fail grep -q "branch from" &&
+ 
++		echo "file9" >> file2 &&
++		git commit -a -m "Differentiate file2" &&
++		git p4 submit &&
++
+ 		cp file2 file9 &&
+ 		git add file9 &&
+ 		git commit -a -m "Copy file2 to file9" &&
+@@ -149,28 +156,39 @@ test_expect_success 'detect copies' '
+ 		p4 filelog //depot/file9 &&
+ 		p4 filelog //depot/file9 | test_must_fail grep -q "branch from" &&
+ 
++		echo "file10" >> file2 &&
++		git commit -a -m "Differentiate file2" &&
++		git p4 submit &&
++
+ 		echo "file2" >>file2 &&
+ 		cp file2 file10 &&
+ 		git add file2 file10 &&
+ 		git commit -a -m "Modify and copy file2 to file10" &&
+ 		git diff-tree -r -C HEAD &&
++		src=$(git diff-tree -r -C HEAD | sed 1d | sed 2d | cut -f2) &&
++		test "$src" = file2 &&
+ 		git p4 submit &&
+ 		p4 filelog //depot/file10 &&
+-		p4 filelog //depot/file10 | grep -q "branch from //depot/file" &&
++		p4 filelog //depot/file10 | grep -q "branch from //depot/file2" &&
++
++		echo "file11" >> file2 &&
++		git commit -a -m "Differentiate file2" &&
++		git p4 submit &&
+ 
+ 		cp file2 file11 &&
+ 		git add file11 &&
+ 		git commit -a -m "Copy file2 to file11" &&
+ 		git diff-tree -r -C --find-copies-harder HEAD &&
+ 		src=$(git diff-tree -r -C --find-copies-harder HEAD | sed 1d | cut -f2) &&
+-		case "$src" in
+-		file2 | file10) : ;; # happy
+-		*) false ;; # not
+-		esac &&
++		test "$src" = file2 &&
+ 		git config git-p4.detectCopiesHarder true &&
+ 		git p4 submit &&
+ 		p4 filelog //depot/file11 &&
+-		p4 filelog //depot/file11 | grep -q "branch from //depot/file" &&
++		p4 filelog //depot/file11 | grep -q "branch from //depot/file2" &&
++
++		echo "file12" >> file2 &&
++		git commit -a -m "Differentiate file2" &&
++		git p4 submit &&
+ 
+ 		cp file2 file12 &&
+ 		echo "some text" >>file12 &&
+@@ -180,15 +198,16 @@ test_expect_success 'detect copies' '
+ 		level=$(git diff-tree -r -C --find-copies-harder HEAD | sed 1d | cut -f1 | cut -d" " -f5 | sed "s/C0*//") &&
+ 		test -n "$level" && test "$level" -gt 0 && test "$level" -lt 98 &&
+ 		src=$(git diff-tree -r -C --find-copies-harder HEAD | sed 1d | cut -f2) &&
+-		case "$src" in
+-		file10 | file11) : ;; # happy
+-		*) false ;; # not
+-		esac &&
++		test "$src" = file2 &&
+ 		git config git-p4.detectCopies $(($level + 2)) &&
+ 		git p4 submit &&
+ 		p4 filelog //depot/file12 &&
+ 		p4 filelog //depot/file12 | test_must_fail grep -q "branch from" &&
+ 
++		echo "file13" >> file2 &&
++		git commit -a -m "Differentiate file2" &&
++		git p4 submit &&
++
+ 		cp file2 file13 &&
+ 		echo "different text" >>file13 &&
+ 		git add file13 &&
+@@ -197,14 +216,11 @@ test_expect_success 'detect copies' '
+ 		level=$(git diff-tree -r -C --find-copies-harder HEAD | sed 1d | cut -f1 | cut -d" " -f5 | sed "s/C0*//") &&
+ 		test -n "$level" && test "$level" -gt 2 && test "$level" -lt 100 &&
+ 		src=$(git diff-tree -r -C --find-copies-harder HEAD | sed 1d | cut -f2) &&
+-		case "$src" in
+-		file10 | file11 | file12) : ;; # happy
+-		*) false ;; # not
+-		esac &&
++		test "$src" = file2 &&
+ 		git config git-p4.detectCopies $(($level - 2)) &&
+ 		git p4 submit &&
+ 		p4 filelog //depot/file13 &&
+-		p4 filelog //depot/file13 | grep -q "branch from //depot/file"
++		p4 filelog //depot/file13 | grep -q "branch from //depot/file2"
+ 	)
+ '
+ 
+-- 
+1.7.10.4
