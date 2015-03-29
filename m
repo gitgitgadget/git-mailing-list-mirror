@@ -1,98 +1,190 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2] config.c: split some variables to $GIT_DIR/config.worktree
-Date: Sun, 29 Mar 2015 08:25:33 +0700
-Message-ID: <CACsJy8DqgX91KYd5m3PvYSTXYdCO8YV-5R+v6LnzerS6TOr+5A@mail.gmail.com>
-References: <CACsJy8CYgMDY_zGi6o=UtD7QV+DQUcaDgwxo6tGrfktRXj+QSw@mail.gmail.com>
- <1427371464-22237-1-git-send-email-pclouds@gmail.com> <20150326221906.GA6745@wheezy.local>
+From: Christoph Anton Mitterer <calestyo@scientia.net>
+Subject: Re: how to make "full" copy of a repo
+Date: Sun, 29 Mar 2015 04:21:26 +0200
+Message-ID: <1427595686.4912.17.camel@scientia.net>
+References: <1427511397.19633.52.camel@scientia.net>
+	 <20150328143152.GB9387@vps892.directvps.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Max Kirillov <max@max630.net>
-X-From: git-owner@vger.kernel.org Sun Mar 29 03:26:20 2015
+Content-Type: multipart/signed; micalg="sha-512";
+	protocol="application/x-pkcs7-signature";
+	boundary="=-cAm3fgrubTwkH1OIZjRP"
+Cc: git@vger.kernel.org
+To: Kevin D <me@ikke.info>
+X-From: git-owner@vger.kernel.org Sun Mar 29 04:21:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yc1zV-00058J-PU
-	for gcvg-git-2@plane.gmane.org; Sun, 29 Mar 2015 03:26:18 +0200
+	id 1Yc2r5-0005U0-Tu
+	for gcvg-git-2@plane.gmane.org; Sun, 29 Mar 2015 04:21:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752353AbbC2B0H convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 28 Mar 2015 21:26:07 -0400
-Received: from mail-ie0-f176.google.com ([209.85.223.176]:36398 "EHLO
-	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752233AbbC2B0E convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 28 Mar 2015 21:26:04 -0400
-Received: by iedm5 with SMTP id m5so94855703ied.3
-        for <git@vger.kernel.org>; Sat, 28 Mar 2015 18:26:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=bAyo6AJ/6SjAAnTQ/bhiJqZ5/nnkV14s8Ihc1YoGhsE=;
-        b=kiBDOhHq8WkjHJyGt+3EYq2qmokcnvpobfjPiDmbeZQx1UG1UeST+K4PQvJEuK9xcX
-         GX1Jqe29M2LWsafB1JLhCrEiJjcpkFwdC6uE9TigCyTNfDeY/RZ2px2ZO1Wbm+QPUn4R
-         PG6XRiWsDvU/GmJX5BYOVUTr65SJUX5cw8MXTz4W0nBIPBUI9A3VaBO62WIBQ8H5ig2b
-         o8L4wYK9z7t7TeCMVTYHENn/2aGnCu3SyCXJddLaG+Ak8e/0cexYnWsDJap14GWdJTZD
-         5S7oUbWS+Onrf5N33CoSkIZOK7IbX4SFlQeCEXO3ltsVY2b5hC3zFVVVWYMEyvIlrweC
-         b8Ug==
-X-Received: by 10.107.167.145 with SMTP id q139mr39911470ioe.16.1427592364180;
- Sat, 28 Mar 2015 18:26:04 -0700 (PDT)
-Received: by 10.107.131.33 with HTTP; Sat, 28 Mar 2015 18:25:33 -0700 (PDT)
-In-Reply-To: <20150326221906.GA6745@wheezy.local>
+	id S1752398AbbC2CVc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Mar 2015 22:21:32 -0400
+Received: from mailgw-02.dd24.net ([193.46.215.43]:60309 "EHLO
+	mailgw02.dd24.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751638AbbC2CVc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Mar 2015 22:21:32 -0400
+Received: from mailpolicy-01.live.igb.homer.key-systems.net (mailpolicy-02.live.igb.homer.key-systems.net [192.168.1.27])
+	by mailgw02.dd24.net (Postfix) with ESMTP id 0B5465FBFB;
+	Sun, 29 Mar 2015 02:21:30 +0000 (UTC)
+X-Virus-Scanned: Debian amavisd-new at
+	mailpolicy-02.live.igb.homer.key-systems.net
+Received: from mailgw02.dd24.net ([192.168.1.36])
+	by mailpolicy-01.live.igb.homer.key-systems.net (mailpolicy-02.live.igb.homer.key-systems.net [192.168.1.25]) (amavisd-new, port 10236)
+	with ESMTP id IjCb0as9ZHSW; Sun, 29 Mar 2015 02:21:28 +0000 (UTC)
+Received: from heisenberg.fritz.box (ppp-188-174-180-118.dynamic.mnet-online.de [188.174.180.118])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by mailgw02.dd24.net (Postfix) with ESMTPSA;
+	Sun, 29 Mar 2015 02:21:27 +0000 (UTC)
+In-Reply-To: <20150328143152.GB9387@vps892.directvps.nl>
+X-Mailer: Evolution 3.12.9-1+b1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266427>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266428>
 
-On Fri, Mar 27, 2015 at 5:19 AM, Max Kirillov <max@max630.net> wrote:
-> On Thu, Mar 26, 2015 at 07:04:24PM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=
-=E1=BB=8Dc Duy wrote:
->> When you define $GIT_DIR/info/config.worktree, which contains of
->> gitignore-style patterns (*), config variables that match these
->> patterns will be saved in $GIT_DIR/config.worktree instead of
->> $GIT_DIR/config.
->
-> Should it rather be in GIT_COMMON_DIR? As far as I
-> understand, its meaning is "variables which we allow to use
-> per-worktree because we intend to have them different in
-> different worktrees, and sure no bad issues
-> can happen because this. It is not hardcored in git because
-> the list is going to extend, and we'd like to allow older
-> versions of git (and other git implementations) to be still
-> able to understand newer repositories". So there should be
-> no sense to make the list worktree-specific.
 
-I'm not sure if "it" means $GIT_DIR/config.worktree or
-$GIT_DIR/info/config.worktree. At this point $GIT_COMMON_DIR is not
-involved (i.e. you can still spit config even in a normal repo).
-=2E../info/config.worktree may be shared, I guess.
+--=-cAm3fgrubTwkH1OIZjRP
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The "older versions of git (and other git implementations)" raises an
-issue with this patch. Older impl just ignore config.worktree. I think
-I need to bump core.repositoryformatversion up to avoid that.
+On Sat, 2015-03-28 at 15:31 +0100, Kevin D wrote:=20
+> What you are losing on clone is:
+> * config settings (this includes the configures remotes)
+> * hooks
+that would be okay...
 
-> Also, probably the per-worktree variables should be searched
-> for in both common config and per-worktree config, and the
-> main repository should not have config.worktree, to be able
-> to work with implementations which are not aware of the
-> whole multiple worktrees feature. And in worktrees, if the
-> variable is not defined in config.wortree, the default
-> vaalue should come from common config. This though has
-> downside that worktree cannot use the more global vlue for
-> variable implicitly.
 
-The main worktree may or may not use per-worktree config (it's
-technically possible): if we enforce config.worktree on the main
-worktree, we don't have to worry about the same variable defined in
-both common and per-worktree config. Enforcing may require more work:
-imagine the worktree list is updated, some in the common config may
-become per-worktree and need to be moved to config.worktree.. If we
-allow per-worktree vars in the common config, other worktrees should
-ignore them in common config.
---=20
-Duy
+> * reflog (history of refs, though, by default disabled for bare
+>   repositories)
+is there a way to get this copied?
+
+
+> * Stashes, because the reference to them is stored in the reflog
+> * unreferenced objects (though you said those are not a requirement, it
+>   is still something that is lost)
+that would be okay for me either.
+
+
+> git clone --mirror is used for repositories that regularly get updates
+> from the repositories they were cloned from. Though this is not what you
+> want, it's not difficult to reset the refspecs to the default refspecs.
+What do you mean here? What would I need to reset exactly?
+
+
+> git clone --mirror is the closest you are going to get by only using
+> git.
+I see, thanks :)
+
+> So to summarize, git clone is only used for cloning history, which means
+> objects and refs, the rest is not part of cloning. To get more, you have
+> to go outside git.
+
+Thanks :)
+Chris.
+
+--=-cAm3fgrubTwkH1OIZjRP
+Content-Type: application/x-pkcs7-signature; name="smime.p7s"
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Transfer-Encoding: base64
+
+MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgMFADCABgkqhkiG9w0BBwEAAKCCEZIw
+ggW/MIIDp6ADAgECAgMCOakwDQYJKoZIhvcNAQENBQAwVDEUMBIGA1UEChMLQ0FjZXJ0IEluYy4x
+HjAcBgNVBAsTFWh0dHA6Ly93d3cuQ0FjZXJ0Lm9yZzEcMBoGA1UEAxMTQ0FjZXJ0IENsYXNzIDMg
+Um9vdDAeFw0xNDA2MTIxNjM2MThaFw0xNjA2MTExNjM2MThaMHwxITAfBgNVBAMTGENocmlzdG9w
+aCBBbnRvbiBNaXR0ZXJlcjEkMCIGCSqGSIb3DQEJARYVY2FsZXN0eW9Ac2NpZW50aWEubmV0MTEw
+LwYJKoZIhvcNAQkBFiJtYWlsQGNocmlzdG9waC5hbnRvbi5taXR0ZXJlci5uYW1lMIIBIjANBgkq
+hkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA4phP/j9vT9dZT+k3ffHxvRWMOuzBnu5O3Fl4y2+WL7pL
+rfLiEhWzGXhHvjSqpt4vCNSdqy43453nnu8+hMb+uEtqSIL1AHU5eLhuDNVN9S4bt9E7nA2WKYBU
+LCUi/xCD/GL7ToyJNwhrhzcCZ7pXSc3xVqFoC4f6weU9ExhoEZQNRpTM0BFCOi4fRxvKFNnUYgjK
+hqy0Ta5H0Xx86mAp0Q4dxoD7mhI5iTF6TRkUheELxF24JCuAf04M89Cwft6DRH1FpJ3yvgW2B5U5
+aFSL4ZnF4N/wyCB7Dkm1rQ7RCAvw5btkf0VdPnU7ccDCx8HEc2nxK/lbCjrznvh3sa1CCwIDAQAB
+o4IBcDCCAWwwDAYDVR0TAQH/BAIwADBWBglghkgBhvhCAQ0ESRZHVG8gZ2V0IHlvdXIgb3duIGNl
+cnRpZmljYXRlIGZvciBGUkVFIGhlYWQgb3ZlciB0byBodHRwOi8vd3d3LkNBY2VydC5vcmcwDgYD
+VR0PAQH/BAQDAgOoMEAGA1UdJQQ5MDcGCCsGAQUFBwMEBggrBgEFBQcDAgYKKwYBBAGCNwoDBAYK
+KwYBBAGCNwoDAwYJYIZIAYb4QgQBMDIGCCsGAQUFBwEBBCYwJDAiBggrBgEFBQcwAYYWaHR0cDov
+L29jc3AuY2FjZXJ0Lm9yZzA4BgNVHR8EMTAvMC2gK6AphidodHRwOi8vY3JsLmNhY2VydC5vcmcv
+Y2xhc3MzLXJldm9rZS5jcmwwRAYDVR0RBD0wO4EVY2FsZXN0eW9Ac2NpZW50aWEubmV0gSJtYWls
+QGNocmlzdG9waC5hbnRvbi5taXR0ZXJlci5uYW1lMA0GCSqGSIb3DQEBDQUAA4ICAQBefctiLgGl
+e5baspuozyA4k7Up7SVhGHbif6pQfoFc/9Thx9GXnYpX+U64PMyWBfWwHZIy52Vg0RVkvPi1t6mi
+GyBfoSpC6ooR0bKWtUIogw/ymqKWlTLVR8kbLqRmRk4juMtCXG2K3yMygX/rjkuUSuFj2Bjpkmzg
+CtMojbUMYbszePmhQ7DJ62YEdtKpcjN94QAsI5GWlIAbs3KJazAcaNCRJeXCLcUMchyKHJA+NXH5
+az/ekBxBMBzJP2An20PP88UI4JW18z31KiG9UVGa2uO4l4aWgVe2GnhNEdCD/o48msJEWKAt5vl2
+yMqr7ihmNPocU2+/FW0xPe/vftdOTD9pgXdSGf4prdD+23q2YvpalOCzr2p8yCJZNVBPMxAP4mL0
+3OEktXza4wohqAmceXKfGUNwRGBaPvtIGnPrpLhCQ+2YJDg8g1UEsk23bKyZlJWeKJyVqOBsDJmj
+aBsN/qKhQFnav+zQdqGhMeaSisF/53mD3gyVYg2JRl18apgGbg32kyLmomqa0JbhnY3Dc3FVtZfe
++P+s2Cyep3pVKvFer2llRoGm8TwraG5Yhyx8Oq/1qETpstjbURJOVBLDCV4AjOEUj0ZnE/tEo/DK
+yexgGaViNvjp+IZdFdJhYmsVjw4Q3vG7O0pfsLiYEyQjeDgjNEWDfa5/MufPywIfxzCCBb8wggOn
+oAMCAQICAwI5qTANBgkqhkiG9w0BAQ0FADBUMRQwEgYDVQQKEwtDQWNlcnQgSW5jLjEeMBwGA1UE
+CxMVaHR0cDovL3d3dy5DQWNlcnQub3JnMRwwGgYDVQQDExNDQWNlcnQgQ2xhc3MgMyBSb290MB4X
+DTE0MDYxMjE2MzYxOFoXDTE2MDYxMTE2MzYxOFowfDEhMB8GA1UEAxMYQ2hyaXN0b3BoIEFudG9u
+IE1pdHRlcmVyMSQwIgYJKoZIhvcNAQkBFhVjYWxlc3R5b0BzY2llbnRpYS5uZXQxMTAvBgkqhkiG
+9w0BCQEWIm1haWxAY2hyaXN0b3BoLmFudG9uLm1pdHRlcmVyLm5hbWUwggEiMA0GCSqGSIb3DQEB
+AQUAA4IBDwAwggEKAoIBAQDimE/+P29P11lP6Td98fG9FYw67MGe7k7cWXjLb5Yvukut8uISFbMZ
+eEe+NKqm3i8I1J2rLjfjneee7z6Exv64S2pIgvUAdTl4uG4M1U31Lhu30TucDZYpgFQsJSL/EIP8
+YvtOjIk3CGuHNwJnuldJzfFWoWgLh/rB5T0TGGgRlA1GlMzQEUI6Lh9HG8oU2dRiCMqGrLRNrkfR
+fHzqYCnRDh3GgPuaEjmJMXpNGRSF4QvEXbgkK4B/Tgzz0LB+3oNEfUWknfK+BbYHlTloVIvhmcXg
+3/DIIHsOSbWtDtEIC/Dlu2R/RV0+dTtxwMLHwcRzafEr+VsKOvOe+HexrUILAgMBAAGjggFwMIIB
+bDAMBgNVHRMBAf8EAjAAMFYGCWCGSAGG+EIBDQRJFkdUbyBnZXQgeW91ciBvd24gY2VydGlmaWNh
+dGUgZm9yIEZSRUUgaGVhZCBvdmVyIHRvIGh0dHA6Ly93d3cuQ0FjZXJ0Lm9yZzAOBgNVHQ8BAf8E
+BAMCA6gwQAYDVR0lBDkwNwYIKwYBBQUHAwQGCCsGAQUFBwMCBgorBgEEAYI3CgMEBgorBgEEAYI3
+CgMDBglghkgBhvhCBAEwMgYIKwYBBQUHAQEEJjAkMCIGCCsGAQUFBzABhhZodHRwOi8vb2NzcC5j
+YWNlcnQub3JnMDgGA1UdHwQxMC8wLaAroCmGJ2h0dHA6Ly9jcmwuY2FjZXJ0Lm9yZy9jbGFzczMt
+cmV2b2tlLmNybDBEBgNVHREEPTA7gRVjYWxlc3R5b0BzY2llbnRpYS5uZXSBIm1haWxAY2hyaXN0
+b3BoLmFudG9uLm1pdHRlcmVyLm5hbWUwDQYJKoZIhvcNAQENBQADggIBAF59y2IuAaV7ltqym6jP
+IDiTtSntJWEYduJ/qlB+gVz/1OHH0Zedilf5Trg8zJYF9bAdkjLnZWDRFWS8+LW3qaIbIF+hKkLq
+ihHRspa1QiiDD/KaopaVMtVHyRsupGZGTiO4y0JcbYrfIzKBf+uOS5RK4WPYGOmSbOAK0yiNtQxh
+uzN4+aFDsMnrZgR20qlyM33hACwjkZaUgBuzcolrMBxo0JEl5cItxQxyHIockD41cflrP96QHEEw
+HMk/YCfbQ8/zxQjglbXzPfUqIb1RUZra47iXhpaBV7YaeE0R0IP+jjyawkRYoC3m+XbIyqvuKGY0
++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
+AukCAQEwWzBUMRQwEgYDVQQKEwtDQWNlcnQgSW5jLjEeMBwGA1UECxMVaHR0cDovL3d3dy5DQWNl
+cnQub3JnMRwwGgYDVQQDExNDQWNlcnQgQ2xhc3MgMyBSb290AgMCOakwDQYJYIZIAWUDBAIDBQCg
+ggFjMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTE1MDMyOTAyMjEy
+NlowTwYJKoZIhvcNAQkEMUIEQBfgIvagA313erSXcHSP0wAs/eYGhdJIhOBvHEHeqbTBT2nA2x/J
+jft8aHbcbhr1pOXurBb7tdu++rGXcvJtaO4wagYJKwYBBAGCNxAEMV0wWzBUMRQwEgYDVQQKEwtD
+QWNlcnQgSW5jLjEeMBwGA1UECxMVaHR0cDovL3d3dy5DQWNlcnQub3JnMRwwGgYDVQQDExNDQWNl
+cnQgQ2xhc3MgMyBSb290AgMCOakwbAYLKoZIhvcNAQkQAgsxXaBbMFQxFDASBgNVBAoTC0NBY2Vy
+dCBJbmMuMR4wHAYDVQQLExVodHRwOi8vd3d3LkNBY2VydC5vcmcxHDAaBgNVBAMTE0NBY2VydCBD
+bGFzcyAzIFJvb3QCAwI5qTANBgkqhkiG9w0BAQEFAASCAQAwJhV8xiS9fF4Eyw6glLYsvLZXRpWD
+cBF99/6DQ4C3BLNd1GyZaZMpQP90WvH3d27hJY0Ck9KxWW0q8D9Hv1S+AZdYpLTaw8cI4vxqwmcn
+o9etlmTRWwEPZcWKzIZtwIKtDnxZyg9ZkKCXnQmicDZshcTxW0mtqz/vUEwo9fHg/zcMmQ9PQpKn
+UXUE5/Yni5US6B7g912qZgdEbRjVoQMO0aRO9nklRzaVkzK4+7OhhLkMUAzO5vkmQ0KdhsqlzgG+
+nxfFMh9gdE0mz5w5TuxAZxvmjWhWhnKn7z/BQ8utejIERfHI3nhmDJIhBOdsTJxDHbSc/w+m78T5
+VX3/HxMtAAAAAAAA
+
+
+--=-cAm3fgrubTwkH1OIZjRP--
