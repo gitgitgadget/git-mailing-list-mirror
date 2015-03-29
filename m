@@ -1,92 +1,78 @@
 From: Christoph Anton Mitterer <calestyo@scientia.net>
 Subject: Re: how to make "full" copy of a repo
-Date: Sun, 29 Mar 2015 04:21:26 +0200
-Message-ID: <1427595686.4912.17.camel@scientia.net>
+Date: Sun, 29 Mar 2015 04:22:47 +0200
+Message-ID: <1427595767.4912.19.camel@scientia.net>
 References: <1427511397.19633.52.camel@scientia.net>
-	 <20150328143152.GB9387@vps892.directvps.nl>
+	 <5516F856.9010100@web.de>
 Mime-Version: 1.0
 Content-Type: multipart/signed; micalg="sha-512";
 	protocol="application/x-pkcs7-signature";
-	boundary="=-cAm3fgrubTwkH1OIZjRP"
+	boundary="=-marNAbhHQY8NKNKTjN/P"
 Cc: git@vger.kernel.org
-To: Kevin D <me@ikke.info>
-X-From: git-owner@vger.kernel.org Sun Mar 29 04:21:41 2015
+To: Torsten =?ISO-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Sun Mar 29 04:23:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yc2r5-0005U0-Tu
-	for gcvg-git-2@plane.gmane.org; Sun, 29 Mar 2015 04:21:40 +0200
+	id 1Yc2sL-0006X1-Dc
+	for gcvg-git-2@plane.gmane.org; Sun, 29 Mar 2015 04:22:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752398AbbC2CVc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Mar 2015 22:21:32 -0400
-Received: from mailgw-02.dd24.net ([193.46.215.43]:60309 "EHLO
+	id S1752399AbbC2CWw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Mar 2015 22:22:52 -0400
+Received: from mailgw-02.dd24.net ([193.46.215.43]:60350 "EHLO
 	mailgw02.dd24.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751638AbbC2CVc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Mar 2015 22:21:32 -0400
+	with ESMTP id S1752397AbbC2CWv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Mar 2015 22:22:51 -0400
 Received: from mailpolicy-01.live.igb.homer.key-systems.net (mailpolicy-02.live.igb.homer.key-systems.net [192.168.1.27])
-	by mailgw02.dd24.net (Postfix) with ESMTP id 0B5465FBFB;
-	Sun, 29 Mar 2015 02:21:30 +0000 (UTC)
+	by mailgw02.dd24.net (Postfix) with ESMTP id 92EA45FBFB;
+	Sun, 29 Mar 2015 02:22:50 +0000 (UTC)
 X-Virus-Scanned: Debian amavisd-new at
 	mailpolicy-02.live.igb.homer.key-systems.net
 Received: from mailgw02.dd24.net ([192.168.1.36])
 	by mailpolicy-01.live.igb.homer.key-systems.net (mailpolicy-02.live.igb.homer.key-systems.net [192.168.1.25]) (amavisd-new, port 10236)
-	with ESMTP id IjCb0as9ZHSW; Sun, 29 Mar 2015 02:21:28 +0000 (UTC)
+	with ESMTP id rqdb_CeD4aqZ; Sun, 29 Mar 2015 02:22:48 +0000 (UTC)
 Received: from heisenberg.fritz.box (ppp-188-174-180-118.dynamic.mnet-online.de [188.174.180.118])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
 	by mailgw02.dd24.net (Postfix) with ESMTPSA;
-	Sun, 29 Mar 2015 02:21:27 +0000 (UTC)
-In-Reply-To: <20150328143152.GB9387@vps892.directvps.nl>
+	Sun, 29 Mar 2015 02:22:48 +0000 (UTC)
+In-Reply-To: <5516F856.9010100@web.de>
 X-Mailer: Evolution 3.12.9-1+b1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266428>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266429>
 
 
---=-cAm3fgrubTwkH1OIZjRP
+--=-marNAbhHQY8NKNKTjN/P
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, 2015-03-28 at 15:31 +0100, Kevin D wrote:=20
-> What you are losing on clone is:
-> * config settings (this includes the configures remotes)
-> * hooks
-that would be okay...
+On Sat, 2015-03-28 at 19:52 +0100, Torsten B=C3=B6gershausen wrote:=20
+> As you only push to "new", "new" should have no information about
+> "old" or "temp".
+Exactly, that would be the goal.
+
+=20
+> > 1) Is it working like I assumed above?
+> > 2) Does that also copy things like git-config, hooks, etc.?
+> > 3) Does it copy the configured remotes from the source?
+> > 4) What else is not copied by that? I'd assume anything that is not
+> >    tracked by git and the stash of the source?
+> You didn't write if this is a bare repository,
+> if it is on a local disc, if it is reachable by rsync ?
+> Linux or Windows ?
+Linux.
+And in principle I have both cases, but mostly non-bare repos.
 
 
-> * reflog (history of refs, though, by default disabled for bare
->   repositories)
-is there a way to get this copied?
-
-
-> * Stashes, because the reference to them is stored in the reflog
-> * unreferenced objects (though you said those are not a requirement, it
->   is still something that is lost)
-that would be okay for me either.
-
-
-> git clone --mirror is used for repositories that regularly get updates
-> from the repositories they were cloned from. Though this is not what you
-> want, it's not difficult to reset the refspecs to the default refspecs.
-What do you mean here? What would I need to reset exactly?
-
-
-> git clone --mirror is the closest you are going to get by only using
-> git.
-I see, thanks :)
-
-> So to summarize, git clone is only used for cloning history, which means
-> objects and refs, the rest is not part of cloning. To get more, you have
-> to go outside git.
-
-Thanks :)
+Cheers,
 Chris.
 
---=-cAm3fgrubTwkH1OIZjRP
+--=-marNAbhHQY8NKNKTjN/P
 Content-Type: application/x-pkcs7-signature; name="smime.p7s"
 Content-Disposition: attachment; filename="smime.p7s"
 Content-Transfer-Encoding: base64
@@ -173,18 +159,18 @@ oI53V93lYRE9IwCQTDz6o2CTBKOvNfYOao9PSmCnhQVsRqGP9Md246FZV/dxssRuFFxtbUFm3xuT
 sdQAw+7Lzzw9IYCpX2Nl/N3gX6T0K/CFcUHUZyX7GrGXrtaZghNB0m6lG5kngOcLqagAMYIC7TCC
 AukCAQEwWzBUMRQwEgYDVQQKEwtDQWNlcnQgSW5jLjEeMBwGA1UECxMVaHR0cDovL3d3dy5DQWNl
 cnQub3JnMRwwGgYDVQQDExNDQWNlcnQgQ2xhc3MgMyBSb290AgMCOakwDQYJYIZIAWUDBAIDBQCg
-ggFjMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTE1MDMyOTAyMjEy
-NlowTwYJKoZIhvcNAQkEMUIEQBfgIvagA313erSXcHSP0wAs/eYGhdJIhOBvHEHeqbTBT2nA2x/J
-jft8aHbcbhr1pOXurBb7tdu++rGXcvJtaO4wagYJKwYBBAGCNxAEMV0wWzBUMRQwEgYDVQQKEwtD
+ggFjMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTE1MDMyOTAyMjI0
+N1owTwYJKoZIhvcNAQkEMUIEQKwintMCsua5SfMFO7YOFiknINfZUAcsGKES2XQu5Gg/XO2sDerw
+uQT4gFLgNTGscad4SCEK4eWrC1580mNgkhgwagYJKwYBBAGCNxAEMV0wWzBUMRQwEgYDVQQKEwtD
 QWNlcnQgSW5jLjEeMBwGA1UECxMVaHR0cDovL3d3dy5DQWNlcnQub3JnMRwwGgYDVQQDExNDQWNl
 cnQgQ2xhc3MgMyBSb290AgMCOakwbAYLKoZIhvcNAQkQAgsxXaBbMFQxFDASBgNVBAoTC0NBY2Vy
 dCBJbmMuMR4wHAYDVQQLExVodHRwOi8vd3d3LkNBY2VydC5vcmcxHDAaBgNVBAMTE0NBY2VydCBD
-bGFzcyAzIFJvb3QCAwI5qTANBgkqhkiG9w0BAQEFAASCAQAwJhV8xiS9fF4Eyw6glLYsvLZXRpWD
-cBF99/6DQ4C3BLNd1GyZaZMpQP90WvH3d27hJY0Ck9KxWW0q8D9Hv1S+AZdYpLTaw8cI4vxqwmcn
-o9etlmTRWwEPZcWKzIZtwIKtDnxZyg9ZkKCXnQmicDZshcTxW0mtqz/vUEwo9fHg/zcMmQ9PQpKn
-UXUE5/Yni5US6B7g912qZgdEbRjVoQMO0aRO9nklRzaVkzK4+7OhhLkMUAzO5vkmQ0KdhsqlzgG+
-nxfFMh9gdE0mz5w5TuxAZxvmjWhWhnKn7z/BQ8utejIERfHI3nhmDJIhBOdsTJxDHbSc/w+m78T5
-VX3/HxMtAAAAAAAA
+bGFzcyAzIFJvb3QCAwI5qTANBgkqhkiG9w0BAQEFAASCAQAZlN2P/DZnFxwCB4QjnTSBtPbwYDOc
+Je50mcUambvEvgY9UIRf85fLiPQpZdTSHLZYULr70gBYCD3duANfg8+J7k4lEjv3fbO9a8crhBsy
+vrm+KYSpXxgOBVjTKVbbUoPpkJwKRnGEmql4KnspaOObPWp5CVhwMb0tCITCqvFaH/Aeb/fhSy2O
+RuPiJ5NHfbCJqd680TlqNMxovmpZ+kHMCNCl8UzrOa4OPJd60R7J3jTD6yeklmhHWOEKgMXaWsnY
+Ybe22QBgEC9tf71EYWS1WJxdJi+4LThgc7btHZlYjwDJV7jWCm4nQFXaF9+7Ik4aMdIm4y2+fOzC
+64khb81jAAAAAAAA
 
 
---=-cAm3fgrubTwkH1OIZjRP--
+--=-marNAbhHQY8NKNKTjN/P--
