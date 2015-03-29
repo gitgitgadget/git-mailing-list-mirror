@@ -1,73 +1,60 @@
-From: Ivan Ukhov <ivan.ukhov@gmail.com>
-Subject: [PATCH] parse-options: fix the description of defval
-Date: Sun, 29 Mar 2015 10:32:55 +0200
-Message-ID: <E8C3474A-5A3A-4A51-A798-84FB9AD46A9F@gmail.com>
-Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2093\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 29 10:33:13 2015
+From: Paul Tan <pyokagan@gmail.com>
+Subject: Re: [PATCH] parse-options: fix the description of defval
+Date: Sun, 29 Mar 2015 17:08:54 +0800
+Message-ID: <CACRoPnTjAu_pyPp2TXZGou=H8mkXBmQqgxGNusjW6u8peEfw6Q@mail.gmail.com>
+References: <E8C3474A-5A3A-4A51-A798-84FB9AD46A9F@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Ivan Ukhov <ivan.ukhov@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 29 11:09:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yc8ed-0008GL-8R
-	for gcvg-git-2@plane.gmane.org; Sun, 29 Mar 2015 10:33:11 +0200
+	id 1Yc9DR-0002Sc-VS
+	for gcvg-git-2@plane.gmane.org; Sun, 29 Mar 2015 11:09:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751095AbbC2IdB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Mar 2015 04:33:01 -0400
-Received: from mail-lb0-f182.google.com ([209.85.217.182]:33851 "EHLO
-	mail-lb0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751010AbbC2Ic6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 29 Mar 2015 04:32:58 -0400
-Received: by lboc7 with SMTP id c7so31818898lbo.1
-        for <git@vger.kernel.org>; Sun, 29 Mar 2015 01:32:57 -0700 (PDT)
+	id S1751112AbbC2JI5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Mar 2015 05:08:57 -0400
+Received: from mail-la0-f49.google.com ([209.85.215.49]:34519 "EHLO
+	mail-la0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750882AbbC2JI4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Mar 2015 05:08:56 -0400
+Received: by lagg8 with SMTP id g8so97890768lag.1
+        for <git@vger.kernel.org>; Sun, 29 Mar 2015 02:08:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:content-type:content-transfer-encoding:subject:message-id:date
-         :to:mime-version;
-        bh=LZT9gbDahAoJwX4lLUpZ5HjAzSxGtnZCXUzKW34x5gE=;
-        b=oHKJLQdfPF4SLAUvU3o98jdxn5bec/f5COiRTQms1v7t8VtuMH8ttwOOM5EC1ScZw6
-         cxCtZlXS2B7hXhnO05YXTu6wStogoeHEf27l0Eu7bvRj6EBGfTYIT44zAaGKFCdTbbIS
-         J2qFKYw1qPIUuGaY9TAFp4rLeJhRTgWByIKshhG7A7na9qo0mwXgdAfYWpSrxuvbJYmV
-         O0ffvvQPYS4b8H0E3Y8XFtPTXDUSmc6IXHma3U5b8hAZxa0O1Jw7BQ/tTCZo5OUv9o+b
-         AgSZGyj1fP27LezVl+3IK5YMvafWYGABaRHFjT8/K2RvegLsIGLnxXI63ZDugZdmHlvT
-         XHqA==
-X-Received: by 10.152.23.133 with SMTP id m5mr23945690laf.71.1427617976957;
-        Sun, 29 Mar 2015 01:32:56 -0700 (PDT)
-Received: from c-15c6e455.011-537-6c6b701.cust.bredbandsbolaget.se (c-15c6e455.011-537-6c6b701.cust.bredbandsbolaget.se. [85.228.198.21])
-        by mx.google.com with ESMTPSA id mm7sm1338086lbb.30.2015.03.29.01.32.56
-        for <git@vger.kernel.org>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 29 Mar 2015 01:32:56 -0700 (PDT)
-X-Mailer: Apple Mail (2.2093)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=8Bdl78sOpCtoCVQTPPUwDs4qUhU+3bYXEo3XlsrdP0g=;
+        b=YG7y410uF8566GIYsNq2dVCs1NCBgVFgqpmOSK1TXEvIew3WNOV3OhWuswZXqcYiGm
+         m1Ocj7qF0jtqHs9bigv9Rlx1p0l+ZdTB7G6NGylHtHSJ3rBwgvxWZH3DSPONtpaZ/HFu
+         IMA5+Fo3s8Si/Tcf6Eqqs1d1IHkdH3hQH/QzmHXBSzFQh7lNclY5R88TYLbaBDihVrhk
+         +53gYrTSfyrj/NVvoXQF+mA4fJmit4ea+O+ZaoCTY/6BoHbAcNT8rBlyHdLUF6xAATax
+         opFn0LzaKuRXlgoJtFxZbZyzoEJWxh7SemhvL4Mb/1E5P0NMXJwSSP93+zVfBQPMBul/
+         6tZw==
+X-Received: by 10.152.87.115 with SMTP id w19mr24571763laz.66.1427620134639;
+ Sun, 29 Mar 2015 02:08:54 -0700 (PDT)
+Received: by 10.112.130.228 with HTTP; Sun, 29 Mar 2015 02:08:54 -0700 (PDT)
+In-Reply-To: <E8C3474A-5A3A-4A51-A798-84FB9AD46A9F@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266431>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266432>
 
-Since the deletion of OPT_SET_PTR, defval can no longer contain a pointer.
+Hi,
 
-Signed-off-by: Ivan Ukhov <ivan.ukhov@gmail.com>
----
- parse-options.h | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+On Sun, Mar 29, 2015 at 4:32 PM, Ivan Ukhov <ivan.ukhov@gmail.com> wrote:
+> Since the deletion of OPT_SET_PTR, defval can no longer contain a pointer.
+>
 
-diff --git a/parse-options.h b/parse-options.h
-index 7940bc7..c71e9da 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -95,8 +95,7 @@ typedef int parse_opt_ll_cb(struct parse_opt_ctx_t *ctx,
-  *
-  * `defval`::
-  *   default value to fill (*->value) with for PARSE_OPT_OPTARG.
-- *   OPTION_{BIT,SET_INT} store the {mask,integer,pointer} to put in
-- *   the value when met.
-+ *   OPTION_{BIT,SET_INT} store the {mask,integer} to put in the value when met.
-  *   CALLBACKS can use it like they want.
-  */
- struct option {
---
-1.8.4
+Actually, it can contain a pointer for OPTION_CMDMODE, OPTION_STRING
+and OPTION_FILENAME. Since we are on the topic of updating the
+documentation, I think it would be great if the documentation
+mentioned these option types as well.
+
+Thanks,
+Paul
