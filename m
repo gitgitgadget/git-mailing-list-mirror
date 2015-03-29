@@ -1,65 +1,82 @@
-From: Ivan Ukhov <ivan.ukhov@gmail.com>
-Subject: Re: [PATCH] parse-options: fix the description of defval
-Date: Sun, 29 Mar 2015 11:28:04 +0200
-Message-ID: <0AC17F77-A324-40FA-9D5A-772C11E3BBDA@gmail.com>
-References: <E8C3474A-5A3A-4A51-A798-84FB9AD46A9F@gmail.com> <CACRoPnTjAu_pyPp2TXZGou=H8mkXBmQqgxGNusjW6u8peEfw6Q@mail.gmail.com>
-Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2093\))
+From: Kevin D <me@ikke.info>
+Subject: Re: how to make "full" copy of a repo
+Date: Sun, 29 Mar 2015 13:05:06 +0200
+Message-ID: <20150329110506.GC9387@vps892.directvps.nl>
+References: <1427511397.19633.52.camel@scientia.net>
+ <20150328143152.GB9387@vps892.directvps.nl>
+ <1427595686.4912.17.camel@scientia.net>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Git List <git@vger.kernel.org>
-To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 29 11:28:20 2015
+Cc: git@vger.kernel.org
+To: Christoph Anton Mitterer <calestyo@scientia.net>
+X-From: git-owner@vger.kernel.org Sun Mar 29 13:05:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yc9Vx-0000DX-WC
-	for gcvg-git-2@plane.gmane.org; Sun, 29 Mar 2015 11:28:18 +0200
+	id 1YcB1w-0005eU-LE
+	for gcvg-git-2@plane.gmane.org; Sun, 29 Mar 2015 13:05:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751271AbbC2J2J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Mar 2015 05:28:09 -0400
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:33767 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750952AbbC2J2I convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 29 Mar 2015 05:28:08 -0400
-Received: by lbcmq2 with SMTP id mq2so89078054lbc.0
-        for <git@vger.kernel.org>; Sun, 29 Mar 2015 02:28:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=content-type:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=fjlQDxR/cRzWw6KrnVfXTqGvSZfCzW682zkOZrmXabg=;
-        b=LQ5mC0DGOm/a+ue7+mKwrBl+DWicYpdnHeNQY8uHj+R1kaXa1lG5kIhEuaCUGEnTk6
-         ztxnI0+bN1iq6JvxTILRfjv9Hd8UboBAvYa7JuRBr/IqqEpaBu3Vg85KyKMsSir6yd6s
-         8lvTxqyJQTMu5JfzhSG53NwFpGv7spWXSlAlbiSVR2cnPfQVG5+XsIJyzAIksySP8WHQ
-         MtlcNqQIYxUinwOMLhC2WiP6ckusCTpbYGbg/tHd7wUXgYmupuq3QXv8WM1AmTrF24P1
-         2JEDtyCKJK84GbXMPrFLdnMrtXhCmzGPbrjBB4cEGYEz8tlCaO59fkEnluEbW6K9ZZ5K
-         Js+w==
-X-Received: by 10.152.42.193 with SMTP id q1mr23660584lal.92.1427621286395;
-        Sun, 29 Mar 2015 02:28:06 -0700 (PDT)
-Received: from c-15c6e455.011-537-6c6b701.cust.bredbandsbolaget.se (c-15c6e455.011-537-6c6b701.cust.bredbandsbolaget.se. [85.228.198.21])
-        by mx.google.com with ESMTPSA id t9sm1358120laz.21.2015.03.29.02.28.05
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 29 Mar 2015 02:28:05 -0700 (PDT)
-In-Reply-To: <CACRoPnTjAu_pyPp2TXZGou=H8mkXBmQqgxGNusjW6u8peEfw6Q@mail.gmail.com>
-X-Mailer: Apple Mail (2.2093)
+	id S1751137AbbC2LFJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Mar 2015 07:05:09 -0400
+Received: from ikke.info ([178.21.113.177]:33474 "EHLO vps892.directvps.nl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751057AbbC2LFI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Mar 2015 07:05:08 -0400
+Received: by vps892.directvps.nl (Postfix, from userid 1001)
+	id ABBD91DCF6D; Sun, 29 Mar 2015 13:05:06 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <1427595686.4912.17.camel@scientia.net>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266433>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266434>
 
-Hello Paul,
-
-
-> On Mar 29, 2015, at 11:08 AM, Paul Tan <pyokagan@gmail.com> wrote:
+On Sun, Mar 29, 2015 at 04:21:26AM +0200, Christoph Anton Mitterer wrote:
+> On Sat, 2015-03-28 at 15:31 +0100, Kevin D wrote: 
+> [..]
 > 
-> Actually, it can contain a pointer for OPTION_CMDMODE, OPTION_STRING
-> and OPTION_FILENAME.
+> > * reflog (history of refs, though, by default disabled for bare
+> >   repositories)
+> is there a way to get this copied?
+> 
+> 
 
-I have checked the definitions of the three macros you mentioned, and it seems that none of them uses defval to store pointers. OPTION_CMDMODE stores chars and integers. OPTION_STRING does not use defval at all (pointers go in a different field of the option struct), and the same applies to OPTION_FILENAME. I am probably missing something; can you please clarify what you mean? Thank you.
+No, the reflog is considered something private to the repository, so
+there is no way to git it through git clone.
 
+> [..] 
+> 
+> > git clone --mirror is used for repositories that regularly get updates
+> > from the repositories they were cloned from. Though this is not what you
+> > want, it's not difficult to reset the refspecs to the default refspecs.
+> What do you mean here? What would I need to reset exactly?
 
-Regards,
-Ivan
+git clone --mirror sets up the fetch refspec in such a way that local
+refs would get reset to whatever upstream has:
+
++refs/*:refs/*
+
+So every time you would fetch / pull, all your branches would reflect
+the way they are on the mirrored repo (which is why it's called mirror).
+
+The default refspec is:
+
++refs/heads/*:refs/remotes/origin/*
+
+Which would only fetch heads (branches), and maps them as remote
+tracking branches, so that your local branches are left alone.
+
+> > git clone --mirror is the closest you are going to get by only using
+> > git.
+> I see, thanks :)
+> 
+> > So to summarize, git clone is only used for cloning history, which means
+> > objects and refs, the rest is not part of cloning. To get more, you have
+> > to go outside git.
+> 
+> Thanks :)
+> Chris.
