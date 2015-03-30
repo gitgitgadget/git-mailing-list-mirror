@@ -1,70 +1,67 @@
-From: Duy Nguyen <pclouds@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: git ls-files wildcard behavior considered harmful
-Date: Tue, 31 Mar 2015 06:16:52 +0700
-Message-ID: <CACsJy8BDoXHS6nj7pEe0i8T=bMD8aG5FwuXABKgPOQBeMOr+Vw@mail.gmail.com>
+Date: Mon, 30 Mar 2015 16:24:24 -0700
+Message-ID: <20150330232424.GD22844@google.com>
 References: <20150330230459.GA13927@kitenet.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
 To: Joey Hess <id@joeyh.name>
-X-From: git-owner@vger.kernel.org Tue Mar 31 01:17:33 2015
+X-From: git-owner@vger.kernel.org Tue Mar 31 01:24:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yciw0-0002bn-4c
-	for gcvg-git-2@plane.gmane.org; Tue, 31 Mar 2015 01:17:32 +0200
+	id 1Ycj2n-00008U-3d
+	for gcvg-git-2@plane.gmane.org; Tue, 31 Mar 2015 01:24:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753865AbbC3XRZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Mar 2015 19:17:25 -0400
-Received: from mail-ie0-f177.google.com ([209.85.223.177]:36342 "EHLO
-	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753859AbbC3XRX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Mar 2015 19:17:23 -0400
-Received: by iedm5 with SMTP id m5so2734721ied.3
-        for <git@vger.kernel.org>; Mon, 30 Mar 2015 16:17:22 -0700 (PDT)
+	id S1753838AbbC3XY2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Mar 2015 19:24:28 -0400
+Received: from mail-ig0-f180.google.com ([209.85.213.180]:36924 "EHLO
+	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753822AbbC3XY1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Mar 2015 19:24:27 -0400
+Received: by igcxg11 with SMTP id xg11so3261906igc.0
+        for <git@vger.kernel.org>; Mon, 30 Mar 2015 16:24:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=sD+lOOSk7xiZmP9AbrwkkPz/GRDDjTCRVeESbTo9C9c=;
-        b=zNZUWXzlIydW1QagB30rdlMlfwIzKJ9HRH2jIuRe4/kClegZX47CfL/RBeICeqZFVV
-         dySyFfc0b8EyKpvG4GTwGznWhJg75vJhe/fLMCG0tHt7NriQ7KRER3zaC/iAFs+8cil5
-         H+XUbEVmq1CwhftstlE8bwH97URZN1stZeCLdfi8g9YUAfJNC3rDBc0DSNle6tIKzLef
-         HJeeS+dgvACAIeD2j/b0DMzbJ/MMxi+C0hxDUnPUhy742R5hfKFLceIfrfEmYZNGu914
-         Fpj4fwkoXelwR8dJW1+Ys90IMQOO/Y1Ky2n2YHtWTinKES/TXIKqmltvDagTzyJCFdFR
-         Bhig==
-X-Received: by 10.107.170.220 with SMTP id g89mr52333104ioj.85.1427757442771;
- Mon, 30 Mar 2015 16:17:22 -0700 (PDT)
-Received: by 10.107.131.33 with HTTP; Mon, 30 Mar 2015 16:16:52 -0700 (PDT)
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=jdX2yIQpxSkyrpnZmqrQylbCClquwymolWdjBPbJDJE=;
+        b=trHLo4zsTB5uO2ChKDBuBy7P/v4Y84FfkobhXajuLWsZKeonw8X0daj/3LIURWH+/s
+         C79kZs0pfeRsJXkxglpvNDzAwJHHESF3MbAEXZgfLEcgVDoLiYjtJWTWr9+JB+wqzTiO
+         nioi1kD3M+3wYh+u66QbeZTP8xG4iM1KvIpefhnSoeC4i9ax9A+hQpzuF21y4cFjCRpl
+         +3GI6GqI8NKkx8xFaFuhPHsYJ5GCss7kRpoW/XHOvCGQ6wJumm+XeUqxrUOxREYCXFJm
+         lrMdGeZezK5P8ED8feidSEa0bPg2Q4W0v5SzcvnW294XVZ2b0nYItv6qmCQeJhImmH4O
+         oQ2A==
+X-Received: by 10.50.56.20 with SMTP id w20mr206200igp.43.1427757867158;
+        Mon, 30 Mar 2015 16:24:27 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b8c3:e0dc:7bee:9947])
+        by mx.google.com with ESMTPSA id u19sm2467148iou.18.2015.03.30.16.24.26
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 30 Mar 2015 16:24:26 -0700 (PDT)
+Content-Disposition: inline
 In-Reply-To: <20150330230459.GA13927@kitenet.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266488>
 
-On Tue, Mar 31, 2015 at 6:04 AM, Joey Hess <id@joeyh.name> wrote:
-> I was very surprised to learn the other day that git ls-files 'foo*'
-> will expand wildcards (including character classes), in the absence of
-> expansion by the shell. (git version 2.1.4)
->
-> joey@darkstar:~/tmp/aaa>git ls-files 'foo*bar'
-> foo*bar
-> foobazbar
-> joey@darkstar:~/tmp/aaa>git ls-files '[abc]'
-> [abc]
-> a
-> b
->
-> As far as I can see this behavior is not documented on the man page,
-> except for a tiny mention in the --with-tree documentation, where
-> it says "<file> (i.e. path pattern)".
->
+Hi Joey,
+
+Joey Hess wrote:
+
 > Since I wanted to avoid this wildcard expension, I tried slash-escaping
-> the wildcard characters.
+> the wildcard characters. This works:
+>
+> joey@darkstar:~/tmp/aaa>git ls-files 'foo\*bar'
+> foo*bar
 
-You can do "git --literal-pathspecs ls-files ..." or set GIT_LITERAL_PATHSPECS.
--- 
-Duy
+Does 'git --noglob-pathspecs' help?
+
+Curious,
+Jonathan
