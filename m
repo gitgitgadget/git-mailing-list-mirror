@@ -1,134 +1,80 @@
-From: Yi EungJun <semtlenori@gmail.com>
-Subject: [PATCH] diff-highlight: Fix broken multibyte string
-Date: Tue, 31 Mar 2015 00:55:33 +0900
-Message-ID: <1427730933-26189-1-git-send-email-eungjun.yi@navercorp.com>
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: Re: [PATCH] l10n: de.po: translate 99 new messages
+Date: Mon, 30 Mar 2015 19:13:25 +0200
+Message-ID: <CAN0XMOJyU+03A1bTdgVc10PLgkg9HjH51zt19oC7A-cARxcmgg@mail.gmail.com>
+References: <1427571482-7508-1-git-send-email-ralf.thielow@gmail.com>
+	<55181ED4.7020805@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Yi EungJun <eungjun.yi@navercorp.com>, Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 30 17:56:16 2015
+Cc: git <git@vger.kernel.org>, Thomas Rast <tr@thomasrast.ch>,
+	=?UTF-8?Q?Jan_Kr=C3=BCger?= <jk@jk.gs>,
+	Christian Stimming <stimming@tuhh.de>,
+	=?UTF-8?Q?Matthias_R=C3=BCster?= <matthias.ruester@gmail.com>,
+	=?UTF-8?Q?Magnus_G=C3=B6rlitz?= <magnus.goerlitz@googlemail.com>
+To: Phillip Sz <phillip.szelat@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 30 19:13:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ycc2X-0004It-F8
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Mar 2015 17:55:49 +0200
+	id 1YcdFk-0007N5-4b
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Mar 2015 19:13:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752783AbbC3Pzp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Mar 2015 11:55:45 -0400
-Received: from mail-pd0-f176.google.com ([209.85.192.176]:33988 "EHLO
-	mail-pd0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752720AbbC3Pzo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Mar 2015 11:55:44 -0400
-Received: by pdbni2 with SMTP id ni2so179707737pdb.1
-        for <git@vger.kernel.org>; Mon, 30 Mar 2015 08:55:44 -0700 (PDT)
+	id S1752860AbbC3RN1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Mar 2015 13:13:27 -0400
+Received: from mail-wi0-f169.google.com ([209.85.212.169]:38182 "EHLO
+	mail-wi0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752826AbbC3RN0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Mar 2015 13:13:26 -0400
+Received: by wibgn9 with SMTP id gn9so139329330wib.1
+        for <git@vger.kernel.org>; Mon, 30 Mar 2015 10:13:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version:content-type
-         :content-transfer-encoding;
-        bh=2F65G/nnnrOdZomk74uyCrF3eotqc7L7NAaUh5pxUQQ=;
-        b=PeGOw0TkPY3tLrRvF7K+SbbVFvD1v2vnIJ89V2VHn0lVAJaI6M8Yh7YL3ckcNeZ2IQ
-         0F35TCyuR1Lgc7PFzyTcMsoSue6lFgMQ9VAXD9mKKbYScc3d03jiyYL8902z2i4c3lAO
-         VsSeGrvZuO42fe1DEiLWJXwtK8RzzeZdDSBSuqhIZ8LoVq0z+4WD+FbG8Qq6k44lQr6A
-         tsWjA6zvLAFK9YKIEu3gL+olanIBg0rbZrL4vCXnaz3gmPKsbilJxwd0OwguziHQ2YbO
-         Q9nltIZKFmFl6uqlnldf51JMudDcaiB4isfmjH8ts5rk9qSi3/9Aiz4YqJbpQjc66UwO
-         PKYg==
-X-Received: by 10.68.132.194 with SMTP id ow2mr59741641pbb.51.1427730943894;
-        Mon, 30 Mar 2015 08:55:43 -0700 (PDT)
-Received: from gmail.com ([211.176.168.210])
-        by mx.google.com with ESMTPSA id j5sm11096523pdo.60.2015.03.30.08.55.41
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 30 Mar 2015 08:55:43 -0700 (PDT)
-X-Google-Original-From: Yi EungJun <eungjun.yi@navercorp.com>
-X-Mailer: git-send-email 2.3.2.209.gd67f9d5.dirty
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=Wnhc3GnsH6IsDautHAj/x/oJsVXy9e317QWapc7nZD0=;
+        b=MPFwhXQsM0GyOR5Lh2/SnJAdw9z8Wnb5ZTxN6Zqeao1jhFkqQu+9hFOPHwKOm/mFb1
+         P1HCc57U8jqiuXrEUfyOk13e1QTJJ+195Tr1Q2AnRFXwbs/F8KRaDd7CKzkNTORlrEzF
+         slM7ow/top13iloiy9y78db1sGuqVep7O5lLcVCE8Kmu1WpFWfmcMuV3cPsTePucYbrg
+         rQurD3rW8KgEpX5gkt5OI90HHtoKk56n3kH59WximUHYbGLYdcJz7DxBHtQZ+ypeHaSo
+         F0qEuRQz82dzLUwFsRqsnzcK7O7JpP084rW+9e7NnONeIdosiAb7A1PnvD8hpHzyUIBD
+         3VEg==
+X-Received: by 10.180.104.7 with SMTP id ga7mr23638948wib.37.1427735605850;
+ Mon, 30 Mar 2015 10:13:25 -0700 (PDT)
+Received: by 10.194.72.5 with HTTP; Mon, 30 Mar 2015 10:13:25 -0700 (PDT)
+In-Reply-To: <55181ED4.7020805@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266456>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266457>
 
-=46rom: Yi EungJun <eungjun.yi@navercorp.com>
+Hi,
 
-Highlighted string might be broken if the common subsequence is a prope=
-r subset
-of a multibyte character. For example, if the old string is "=EC=A7=84"=
- and the new
-string is "=EC=A7=80", then we expect the diff is rendered as follows:
+2015-03-29 17:48 GMT+02:00 Phillip Sz <phillip.szelat@gmail.com>:
+> Hi,
+>
+>>  #: builtin/apply.c:3238
+>> -#, fuzzy, c-format
+>> +#, c-format
+>>  msgid "reading from '%s' beyond a symbolic link"
+>> -msgstr "Pfadspezifikation '%s' ist hinter einem symbolischen Verweis"
+>> +msgstr "Lese von '%s' hinter einem symbolischen Verweis"
+>
+> "Lese von '%s', welches sich hinter einem symbolischen Verweis verbirgt"
+>
+> Maybe that's better?
+> Also I'm not so sure what this string should actually mean.
+>
 
-	-=EC=A7=84
-	+=EC=A7=80
+If I read the code correctly, this is an error message that appears when
+someone tries to apply a patch that modifies a file with the leading directory
+being a symlink.
 
-but actually it was rendered as follows:
+What about skipping the "read" part (because it's an implementation detail)
+and translate it as
+"'%s' ist hinter einem symbolischen Verweis"
+to match other similar messages?
 
-    -<EC><A7><84>
-    +<EC><A7><80>
-
-This fixes the bug by splitting the string by multibyte characters.
----
- contrib/diff-highlight/diff-highlight | 25 +++++++++++++++++++++++--
- 1 file changed, 23 insertions(+), 2 deletions(-)
-
-diff --git a/contrib/diff-highlight/diff-highlight b/contrib/diff-highl=
-ight/diff-highlight
-index 08c88bb..2662c1a 100755
---- a/contrib/diff-highlight/diff-highlight
-+++ b/contrib/diff-highlight/diff-highlight
-@@ -2,6 +2,9 @@
-=20
- use warnings FATAL =3D> 'all';
- use strict;
-+use File::Basename;
-+use File::Spec::Functions qw( catdir );
-+use String::Multibyte;
-=20
- # Highlight by reversing foreground and background. You could do
- # other things like bold or underline if you prefer.
-@@ -24,6 +27,8 @@ my @removed;
- my @added;
- my $in_hunk;
-=20
-+my $mbcs =3D get_mbcs();
-+
- # Some scripts may not realize that SIGPIPE is being ignored when laun=
-ching the
- # pager--for instance scripts written in Python.
- $SIG{PIPE} =3D 'DEFAULT';
-@@ -164,8 +169,8 @@ sub highlight_pair {
-=20
- sub split_line {
- 	local $_ =3D shift;
--	return map { /$COLOR/ ? $_ : (split //) }
--	       split /($COLOR*)/;
-+	return map { /$COLOR/ ? $_ : ($mbcs ? $mbcs->strsplit('', $_) : split=
- //) }
-+	       split /($COLOR)/;
- }
-=20
- sub highlight_line {
-@@ -211,3 +216,19 @@ sub is_pair_interesting {
- 	       $suffix_a !~ /^$BORING*$/ ||
- 	       $suffix_b !~ /^$BORING*$/;
- }
-+
-+# Returns an instance of String::Multibyte based on the charset define=
-d by
-+# i18n.commitencoding or UTF-8, or undef if String::Multibyte doesn't =
-support
-+# the charset.
-+sub get_mbcs {
-+	my $dir =3D catdir(dirname($INC{'String/Multibyte.pm'}), 'Multibyte')=
-;
-+	opendir my $dh, $dir or return;
-+	my @mbcs_charsets =3D grep s/[.]pm\z//, readdir $dh;
-+	close $dh;
-+	my $expected_charset =3D `git config i18n.commitencoding` || "UTF-8";
-+	$expected_charset =3D~ s/-//g;
-+	my @matches =3D grep {/^$expected_charset$/i} @mbcs_charsets;
-+	my $charset =3D shift @matches;
-+
-+	return eval 'String::Multibyte->new($charset)';
-+}
---=20
-2.3.2.209.gd67f9d5.dirty
+Ralf
