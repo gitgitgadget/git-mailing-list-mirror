@@ -1,94 +1,177 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: how to make "full" copy of a repo
-Date: Mon, 30 Mar 2015 10:37:39 -0700
-Message-ID: <xmqqbnjaxu70.fsf@gitster.dls.corp.google.com>
-References: <1427511397.19633.52.camel@scientia.net>
-	<20150328143152.GB9387@vps892.directvps.nl>
-	<CACsJy8AN6X3oh2=yLn-szEApEMC+uQMmO6qBYbPrVNK1_d5tEQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Kevin D <me@ikke.info>,
-	Christoph Anton Mitterer <calestyo@scientia.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 30 19:42:59 2015
+From: Kenny Lee Sin Cheong <kenny.lee28@gmail.com>
+Subject: [PATCH/RFC 3/4] Handle arg as revision first, then option.
+Date: Mon, 30 Mar 2015 13:41:54 -0400
+Message-ID: <1427737315-7229-4-git-send-email-kenny.lee28@gmail.com>
+References: <1427737315-7229-1-git-send-email-kenny.lee28@gmail.com>
+Cc: gitster@pobox.com, Kenny Lee Sin Cheong <kenny.lee28@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 30 19:43:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ycdhp-0002mt-Hh
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Mar 2015 19:42:33 +0200
+	id 1Ycdi8-0002zy-OU
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Mar 2015 19:42:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753731AbbC3RmS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Mar 2015 13:42:18 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:56256 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753715AbbC3RmP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Mar 2015 13:42:15 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8E6C843E06;
-	Mon, 30 Mar 2015 13:42:09 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=cammzgQqDcnKrxaZnhiWW8lM/7c=; b=C6jZmv
-	FIls+c3E7jko6FRCurmvo5Z19KbZpKZ/EtwUZBhMgR7whFDXbRx4JPRE45/ndroA
-	qtnnvmQzC38LDVoT6tzH3ERAbUckuTSgT9HGE/jcQnu2Dyi1m59SWsVouu5kHFWs
-	SWAEFX2CZUfkzcDszEzVhzfPZWxm7MhizgtZc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xnoyMrL6yYVeh8aC4ik32xRUh/g0+j+8
-	5UEJyNwDxG448Es0bXLb65XKNu1CEhvx0XGt1A9V2f2MXqqE1xd6bQG5lu8sxTgB
-	cljNHY5vD739iuZm7/yiVIBXVkYE9w0s80iJVZjTB81Tjfq7PHJhIjCvRl0hU/pe
-	waRZsKwvCqI=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 85D0C43E05;
-	Mon, 30 Mar 2015 13:42:09 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 520A943C2C;
-	Mon, 30 Mar 2015 13:37:40 -0400 (EDT)
-In-Reply-To: <CACsJy8AN6X3oh2=yLn-szEApEMC+uQMmO6qBYbPrVNK1_d5tEQ@mail.gmail.com>
-	(Duy Nguyen's message of "Mon, 30 Mar 2015 22:22:07 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 76A82E38-D703-11E4-94C4-11859F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1753758AbbC3Rme (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Mar 2015 13:42:34 -0400
+Received: from mail-ie0-f175.google.com ([209.85.223.175]:33248 "EHLO
+	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753740AbbC3Rmc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Mar 2015 13:42:32 -0400
+Received: by iecvj10 with SMTP id vj10so124150943iec.0
+        for <git@vger.kernel.org>; Mon, 30 Mar 2015 10:42:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=MJvYH/M7pEtaeemZR5TVwIQi+VudursJZs1lEuWAjtI=;
+        b=b/hVehqQs4bPUEYnVmu9hDvNjfr0PWkNU7eJghkq+PQO1+uh6aWNnsZEvl74L54sIx
+         UH9J7DVeBorYrD0jtt/wSZ/I7WByDfLJcVyO0BKley6pz762x4EMziv4aLDAWkWkJUY8
+         xm19CPZbFuErYAChK6QOR88mm4i2EdRunu8oMbn8Hn2gqvheQrzpa9LP38p9tMC3y70i
+         tFlKkqhLIXbbYLeeEkzddc9wh/tKGHQZ4GjKXNTb2WMp/oYlc3LISJM0Ay1B7AY//n/o
+         mfzK6T9hYPVXG+6tD8XqijtmUErSvX0mvPZWvhfR3caF/YK4FcXgNxqXFc7RYkBjTJYv
+         RMMQ==
+X-Received: by 10.107.37.132 with SMTP id l126mr33568003iol.42.1427737351572;
+        Mon, 30 Mar 2015 10:42:31 -0700 (PDT)
+Received: from fujitsu.wireless.concordia.ca ([132.205.236.26])
+        by mx.google.com with ESMTPSA id x9sm8246356igl.2.2015.03.30.10.42.30
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 30 Mar 2015 10:42:31 -0700 (PDT)
+X-Mailer: git-send-email 2.3.3.203.g8ffb468.dirty
+In-Reply-To: <1427737315-7229-1-git-send-email-kenny.lee28@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266466>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Check the argument as a revision at first. If it fails, then tries to
+check it as an option, and finally as a pathspec.
 
-> This is true. But I wonder if we should (and can) support
-> --super-mirror option (disabled by default), where reflog and stashes
-> are kept, for backup purposes. We might keep unreferenced objects as
-> well if it's not hard to do.
+Returns -1 when we have an ambiguous revision range, such as
+"master..next", to allow the argument to get checked as an option before
+calling die() from verify_non_filename(). This is because we are
+allowing "-" to be given in a revision range, but making the revision
+check first. Otherwise, an ambiguous argument that starts with
+"-" (let's say an option) would die even though its normal behaviour is
+to silently return. Instead we check for ambiguity in a revision after
+making sure that the argument cannot be parsed as an option.
 
-I doubt that we want to be in the business of filesystem backup.  Is
-there a practical use case that is *not* "I am relocating out of
-this directory on this machine and will be using the other one I am
-making by copying"?
+This problem is discussed in:
+http://article.gmane.org/gmane.comp.version-control.git/265672
 
-For the "I am relocating" scenario, rsync is the most suitable
-option.  The caveat "activity at the original will leave the copied
-result incomplete" will apply to whatever transport method you use,
-but in the "I am relocating" scenario, you will have a period that
-the original is quiet (i.e. you stop using the original at some
-point before you start the copied one, and do not expect that the
-sequence to take zero down time).
+Signed-off-by: Kenny Lee Sin Cheong <kenny.lee28@gmail.com>
+---
+ revision.c  | 61 +++++++++++++++++++++++++++++++++----------------------------
+ sha1_name.c |  2 +-
+ 2 files changed, 34 insertions(+), 29 deletions(-)
 
-In a sense, "super-mirror" is even worse, if it is doing some "Git
-activity" on the source which we may want to log, which means the
-original will never be quiet during the copying.  Sure, send-pack
-may not currently not do any logging in the original repository, but
-depending on the reason why such a copy is being made, the original
-may even have a custom hook-based logging data left somewhere in the
-repository and for copying such a repository the repository owner
-would want to keep the logged data.
-
-And if what super-mirror does is not considered a "Git activity" and
-somehow bypasses all the Git rules in the original repository, then
-what is the advantage of having it in Git in the first place, over
-using something like rsync?
+diff --git a/revision.c b/revision.c
+index 570945a..1ea290f 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1516,7 +1516,10 @@ int handle_revision_arg(const char *arg_, struct rev_info *revs, int flags, unsi
+ 
+ 			if (!cant_be_filename) {
+ 				*dotdot = '.';
+-				verify_non_filename(revs->prefix, arg);
++				if (is_inside_work_tree() && !is_inside_git_dir() &&
++				    check_filename(revs->prefix, arg)) {
++					return -1;
++				}
+ 			}
+ 
+ 			a_obj = parse_object(from_sha1);
+@@ -2198,40 +2201,39 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+ 	read_from_stdin = 0;
+ 	for (left = i = 1; i < argc; i++) {
+ 		const char *arg = argv[i];
+-		if (arg[0] == '-' && arg[1] && !starts_with(arg + 1, "..")) {
+-			int opts;
+-
+-			opts = handle_revision_pseudo_opt(submodule,
+-						revs, argc - i, argv + i,
+-						&flags);
+-			if (opts > 0) {
+-				i += opts - 1;
+-				continue;
+-			}
++		if (handle_revision_arg(arg, revs, flags, revarg_opt)) {
++			if (arg[0] == '-' && arg[1] && !starts_with(arg + 1, "..")) {
++				int opts;
++
++				opts = handle_revision_pseudo_opt(submodule,
++								  revs, argc - i, argv + i,
++								  &flags);
++				if (opts > 0) {
++					i += opts - 1;
++					continue;
++				}
+ 
+-			if (!strcmp(arg, "--stdin")) {
+-				if (revs->disable_stdin) {
+-					argv[left++] = arg;
++				if (!strcmp(arg, "--stdin")) {
++					if (revs->disable_stdin) {
++						argv[left++] = arg;
++						continue;
++					}
++					if (read_from_stdin++)
++						die("--stdin given twice?");
++					read_revisions_from_stdin(revs, &prune_data);
+ 					continue;
+ 				}
+-				if (read_from_stdin++)
+-					die("--stdin given twice?");
+-				read_revisions_from_stdin(revs, &prune_data);
+-				continue;
+-			}
+ 
+-			opts = handle_revision_opt(revs, argc - i, argv + i, &left, argv);
+-			if (opts > 0) {
+-				i += opts - 1;
++				opts = handle_revision_opt(revs, argc - i, argv + i, &left, argv);
++				if (opts > 0) {
++					i += opts - 1;
++					continue;
++				}
++				if (opts < 0)
++					exit(128);
+ 				continue;
+ 			}
+-			if (opts < 0)
+-				exit(128);
+-			continue;
+-		}
+-
+ 
+-		if (handle_revision_arg(arg, revs, flags, revarg_opt)) {
+ 			int j;
+ 			if (seen_dashdash || *arg == '^')
+ 				die("bad revision '%s'", arg);
+@@ -2249,6 +2251,9 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+ 			break;
+ 		}
+ 		else
++			/* Make sure that a filename doesn't get interpreted as a revision */
++			if (!seen_dashdash)
++				verify_non_filename(revs->prefix, arg);
+ 			got_rev_arg = 1;
+ 	}
+ 
+diff --git a/sha1_name.c b/sha1_name.c
+index 7a621ba..b99b1dc 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -483,7 +483,7 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1,
+ 				break;
+ 			}
+ 		}
+-	} else if (len == 1 && str[0] == '-') {
++	} else if (len == 1 && str[0] == '-' && !str[1]) {
+ 		nth_prior = 1;
+ 	}
+ 
+-- 
+2.3.3.203.g8ffb468.dirty
