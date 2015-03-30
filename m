@@ -1,92 +1,70 @@
-From: Joey Hess <id@joeyh.name>
-Subject: git ls-files wildcard behavior considered harmful
-Date: Mon, 30 Mar 2015 19:04:59 -0400
-Message-ID: <20150330230459.GA13927@kitenet.net>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: git ls-files wildcard behavior considered harmful
+Date: Tue, 31 Mar 2015 06:16:52 +0700
+Message-ID: <CACsJy8BDoXHS6nj7pEe0i8T=bMD8aG5FwuXABKgPOQBeMOr+Vw@mail.gmail.com>
+References: <20150330230459.GA13927@kitenet.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 31 01:05:16 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Joey Hess <id@joeyh.name>
+X-From: git-owner@vger.kernel.org Tue Mar 31 01:17:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ycik7-0000il-7n
-	for gcvg-git-2@plane.gmane.org; Tue, 31 Mar 2015 01:05:15 +0200
+	id 1Yciw0-0002bn-4c
+	for gcvg-git-2@plane.gmane.org; Tue, 31 Mar 2015 01:17:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753067AbbC3XFK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Mar 2015 19:05:10 -0400
-Received: from kitenet.net ([66.228.36.95]:55054 "EHLO kitenet.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753321AbbC3XFJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 30 Mar 2015 19:05:09 -0400
-X-Question: 42
-Authentication-Results: kitenet.net; dkim=pass
-	reason="1024-bit key; unprotected key/testing"
-	header.d=joeyh.name header.i=@joeyh.name header.b=l9l8h+vL;
-	dkim-adsp=pass; dkim-atps=neutral
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=joeyh.name; s=mail;
-	t=1427756699; bh=3OGAp5Niddaya2kdiY+iShWKVRTU4Y4TfHueB7pIMfU=;
-	h=Date:From:To:Subject:From;
-	b=l9l8h+vLrejf6OgeJBTG2GsC/Wd4HTsW4sDPqsMWouo8SFHbCgLhhl7N5cDO8UCep
-	 2Sm2tzLjIG25u0knjD7xETIVjqwxnOesxfItF3VCUGxxe7bpifbnFAMaa0bbsqaNao
-	 FOjdC7teQF+DfE+GcNY0kYHY2pCOcb8ziMdp+s0M=
-Content-Disposition: inline
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Spam-Status: No, score=-93.0 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_PBL,RCVD_IN_RP_RNBL,
-	RCVD_IN_SORBS_DUL,RDNS_NONE,SPF_SOFTFAIL,USER_IN_WHITELIST autolearn=no
-	autolearn_force=no version=3.4.0
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on kite.kitenet.net
+	id S1753865AbbC3XRZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Mar 2015 19:17:25 -0400
+Received: from mail-ie0-f177.google.com ([209.85.223.177]:36342 "EHLO
+	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753859AbbC3XRX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Mar 2015 19:17:23 -0400
+Received: by iedm5 with SMTP id m5so2734721ied.3
+        for <git@vger.kernel.org>; Mon, 30 Mar 2015 16:17:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=sD+lOOSk7xiZmP9AbrwkkPz/GRDDjTCRVeESbTo9C9c=;
+        b=zNZUWXzlIydW1QagB30rdlMlfwIzKJ9HRH2jIuRe4/kClegZX47CfL/RBeICeqZFVV
+         dySyFfc0b8EyKpvG4GTwGznWhJg75vJhe/fLMCG0tHt7NriQ7KRER3zaC/iAFs+8cil5
+         H+XUbEVmq1CwhftstlE8bwH97URZN1stZeCLdfi8g9YUAfJNC3rDBc0DSNle6tIKzLef
+         HJeeS+dgvACAIeD2j/b0DMzbJ/MMxi+C0hxDUnPUhy742R5hfKFLceIfrfEmYZNGu914
+         Fpj4fwkoXelwR8dJW1+Ys90IMQOO/Y1Ky2n2YHtWTinKES/TXIKqmltvDagTzyJCFdFR
+         Bhig==
+X-Received: by 10.107.170.220 with SMTP id g89mr52333104ioj.85.1427757442771;
+ Mon, 30 Mar 2015 16:17:22 -0700 (PDT)
+Received: by 10.107.131.33 with HTTP; Mon, 30 Mar 2015 16:16:52 -0700 (PDT)
+In-Reply-To: <20150330230459.GA13927@kitenet.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266487>
 
-I was very surprised to learn the other day that git ls-files 'foo*'
-will expand wildcards (including character classes), in the absence of
-expansion by the shell. (git version 2.1.4)
+On Tue, Mar 31, 2015 at 6:04 AM, Joey Hess <id@joeyh.name> wrote:
+> I was very surprised to learn the other day that git ls-files 'foo*'
+> will expand wildcards (including character classes), in the absence of
+> expansion by the shell. (git version 2.1.4)
+>
+> joey@darkstar:~/tmp/aaa>git ls-files 'foo*bar'
+> foo*bar
+> foobazbar
+> joey@darkstar:~/tmp/aaa>git ls-files '[abc]'
+> [abc]
+> a
+> b
+>
+> As far as I can see this behavior is not documented on the man page,
+> except for a tiny mention in the --with-tree documentation, where
+> it says "<file> (i.e. path pattern)".
+>
+> Since I wanted to avoid this wildcard expension, I tried slash-escaping
+> the wildcard characters.
 
-joey@darkstar:~/tmp/aaa>git ls-files 'foo*bar'
-foo*bar
-foobazbar
-joey@darkstar:~/tmp/aaa>git ls-files '[abc]'
-[abc]
-a
-b
-
-As far as I can see this behavior is not documented on the man page,
-except for a tiny mention in the --with-tree documentation, where
-it says "<file> (i.e. path pattern)".
-
-Since I wanted to avoid this wildcard expension, I tried slash-escaping
-the wildcard characters. This works:
-
-joey@darkstar:~/tmp/aaa>git ls-files 'foo\*bar'
-foo*bar
-joey@darkstar:~/tmp/aaa>git ls-files '\[abc\]'
-[abc]
-
-But, there is a weird behavior here with subdirectories. While normally
-ls-files would recurse, slash-escaped wildcard characters in the directory
-name prevent recursion.
-
-joey@darkstar:~/tmp/aaa>git ls-files 'foo[d]'
-foo[d]/subfile
-food
-joey@darkstar:~/tmp/aaa>git ls-files 'foo\[d\]'
-joey@darkstar:~/tmp/aaa>
-
-The above example shows a case where it's impossible to get ls-files
-to only list files in a directory and not other files that match the
-wildcard. This seems like it must be a bug, and it means it's impossible
-to reliably work around the wildcard expansion behavior.
-
-I suspect that this wildcard expansion behavior is useful somewhere.
-But from the perspective of using ls-files as plumbing, where you want
-to get out some subset of what was put in, it's not nice.
-
+You can do "git --literal-pathspecs ls-files ..." or set GIT_LITERAL_PATHSPECS.
 -- 
-see shy jo
+Duy
