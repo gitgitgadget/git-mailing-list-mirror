@@ -1,76 +1,71 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] enter_repo(): fix suffix precedence documentation
-Date: Mon, 30 Mar 2015 07:44:08 -0400
-Message-ID: <20150330114407.GA2936@peff.net>
-References: <1427711433-3104-1-git-send-email-pyokagan@gmail.com>
+From: Raf =?utf-8?b?OC0p?= <rdugau@cisco.com>
+Subject: Re: git fetch --prune removes branches from origin/ with inconsistent case in path names
+Date: Mon, 30 Mar 2015 13:58:59 +0000 (UTC)
+Message-ID: <loom.20150330T155535-398@post.gmane.org>
+References: <CAJz8ETuFC=STDRbPOxsTDdYbuMh0phdR3AYCzW3AvOrSAmKpWw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 30 13:44:21 2015
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 30 16:05:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YcY76-0003UF-GY
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Mar 2015 13:44:16 +0200
+	id 1YcaJm-0003me-8h
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Mar 2015 16:05:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752438AbbC3LoM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Mar 2015 07:44:12 -0400
-Received: from cloud.peff.net ([50.56.180.127]:39814 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751659AbbC3LoK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Mar 2015 07:44:10 -0400
-Received: (qmail 23070 invoked by uid 102); 30 Mar 2015 11:44:10 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 30 Mar 2015 06:44:10 -0500
-Received: (qmail 14111 invoked by uid 107); 30 Mar 2015 11:44:27 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 30 Mar 2015 07:44:27 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 30 Mar 2015 07:44:08 -0400
-Content-Disposition: inline
-In-Reply-To: <1427711433-3104-1-git-send-email-pyokagan@gmail.com>
+	id S1753414AbbC3OFT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Mar 2015 10:05:19 -0400
+Received: from plane.gmane.org ([80.91.229.3]:43747 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753260AbbC3OFQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Mar 2015 10:05:16 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1YcaJM-0003Y3-BC
+	for git@vger.kernel.org; Mon, 30 Mar 2015 16:05:04 +0200
+Received: from aer01-mda2-dmz-wsa-8.cisco.com ([173.38.209.13])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 30 Mar 2015 16:05:04 +0200
+Received: from rdugau by aer01-mda2-dmz-wsa-8.cisco.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 30 Mar 2015 16:05:04 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 173.38.209.13 (Mozilla/5.0 (Windows NT 6.1; WOW64; rv:36.0) Gecko/20100101 Firefox/36.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266453>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266454>
 
-On Mon, Mar 30, 2015 at 06:30:33PM +0800, Paul Tan wrote:
+Lee Winder <lee.winder <at> gmail.com> writes:
 
-> The ordering of the list of suffixes tested in enter_repo() is
-> documented as "%s.git/.git", "%s/.git", "%s.git", "%s". This does not
-> match the ordering of the list of suffixes tested in the code which is
-> "%s/.git", "%s", "%s.git/.git", "%s.git". Fix this.
+> 
+> When using git fetch --prune, git will remove any branches from
+> remotes/origin/ that have inconsistent case in folder names.
+> ...
+> Thanks
+> Lee
+> 
 
-Yes, this was adjusted in b3256eb (standardize and improve lookup rules
-for external local repos, 2012-02-02), but I failed to update the
-comment.
 
-Your patch is certainly an improvement, but I think there are more
-inaccuracies in the comment caused by that commit. Maybe squash this on
-top:
+Hello,
 
-diff --git a/path.c b/path.c
-index 56f50bd..586f2c9 100644
---- a/path.c
-+++ b/path.c
-@@ -383,14 +383,9 @@ return_null:
-  * (3) "relative/path" to mean cwd relative directory; or
-  * (4) "/absolute/path" to mean absolute directory.
-  *
-- * Unless "strict" is given, we try access() for existence of "%s/.git",
-- * "%s", "%s.git/.git", "%s.git" in this order. The first one that exists is
-- * what we try.
-- *
-- * Second, we try chdir() to that.  Upon failure, we return NULL.
-- *
-- * Then, we try if the current directory is a valid git repository.
-- * Upon failure, we return NULL.
-+ * Unless "strict" is given, we check "%s/.git", "%s", "%s.git/.git", "%s.git"
-+ * in this order. We select the first one that is a valid git repository, and
-+ * chdir() to it. If none match, or we fail to chdir, we return NULL.
-  *
-  * If all goes well, we return the directory we used to chdir() (but
-  * before ~user is expanded), avoiding getcwd() resolving symbolic
+Same type of issue here using Jenkins.
+
+In a gitBash console:
+$ git branch --list
+* feature/testCI1
+  feature/testCI2
+
+In Jenkins Console output (git plugin is 2.3.5):
+Seen branch in repository origin/Feature/testCI1
+Seen branch in repository origin/Feature/testCI2
+
+Both are running on Windows
