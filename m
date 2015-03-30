@@ -1,71 +1,67 @@
-From: Raf =?utf-8?b?OC0p?= <rdugau@cisco.com>
-Subject: Re: git fetch --prune removes branches from origin/ with inconsistent case in path names
-Date: Mon, 30 Mar 2015 13:58:59 +0000 (UTC)
-Message-ID: <loom.20150330T155535-398@post.gmane.org>
-References: <CAJz8ETuFC=STDRbPOxsTDdYbuMh0phdR3AYCzW3AvOrSAmKpWw@mail.gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: how to make "full" copy of a repo
+Date: Mon, 30 Mar 2015 22:22:07 +0700
+Message-ID: <CACsJy8AN6X3oh2=yLn-szEApEMC+uQMmO6qBYbPrVNK1_d5tEQ@mail.gmail.com>
+References: <1427511397.19633.52.camel@scientia.net> <20150328143152.GB9387@vps892.directvps.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 30 16:05:31 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Christoph Anton Mitterer <calestyo@scientia.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Kevin D <me@ikke.info>
+X-From: git-owner@vger.kernel.org Mon Mar 30 17:23:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YcaJm-0003me-8h
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Mar 2015 16:05:30 +0200
+	id 1YcbWW-0006EM-07
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Mar 2015 17:22:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753414AbbC3OFT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Mar 2015 10:05:19 -0400
-Received: from plane.gmane.org ([80.91.229.3]:43747 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753260AbbC3OFQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Mar 2015 10:05:16 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1YcaJM-0003Y3-BC
-	for git@vger.kernel.org; Mon, 30 Mar 2015 16:05:04 +0200
-Received: from aer01-mda2-dmz-wsa-8.cisco.com ([173.38.209.13])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 30 Mar 2015 16:05:04 +0200
-Received: from rdugau by aer01-mda2-dmz-wsa-8.cisco.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 30 Mar 2015 16:05:04 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 173.38.209.13 (Mozilla/5.0 (Windows NT 6.1; WOW64; rv:36.0) Gecko/20100101 Firefox/36.0)
+	id S1752847AbbC3PWj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Mar 2015 11:22:39 -0400
+Received: from mail-ie0-f175.google.com ([209.85.223.175]:34793 "EHLO
+	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752263AbbC3PWi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Mar 2015 11:22:38 -0400
+Received: by iedfl3 with SMTP id fl3so135811732ied.1
+        for <git@vger.kernel.org>; Mon, 30 Mar 2015 08:22:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=vi0z8fYeSDAKmsJH57gdwgex2GWZJIjau7w2G/j3yQE=;
+        b=IX7ugq9Tmbb9PAnypMEOOcWGvE98PJTRHjmS5M5a2HREx7qKehp5Tvo340vgYzTQvx
+         /BhUTXUZA3rSYtO7SbHRKkr9FJUkiWhhyJa4ccRlE8Mt3aClGLs/odJUqfLyIEVLlK1l
+         lgQxh3ABGvu9hUIPCvQdJwC/5b9XU8SxFTe9PQ+fni2sAwsrkCKHntnze+egpCVkzLk+
+         hDy5FfX0XbC7FUPLgCJ094J8GYV1xhwHU/mtBWKFFCPab+CtR1HjjrR/Ie3zdmRUZmh0
+         NB95Bo3AaLTePww42PI6tVoN9W9maBkzR4AdwXsfufVR5o+QJOM33Z8rGMl59M8YHfNh
+         SHMw==
+X-Received: by 10.50.79.197 with SMTP id l5mr7654799igx.39.1427728957979; Mon,
+ 30 Mar 2015 08:22:37 -0700 (PDT)
+Received: by 10.107.131.33 with HTTP; Mon, 30 Mar 2015 08:22:07 -0700 (PDT)
+In-Reply-To: <20150328143152.GB9387@vps892.directvps.nl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266455>
 
-Lee Winder <lee.winder <at> gmail.com> writes:
+On Sat, Mar 28, 2015 at 9:31 PM, Kevin D <me@ikke.info> wrote:
+> Git clone is never going to get you a copy where nothing is lost.
+>
+> What you are losing on clone is:
+>
+> * config settings (this includes the configures remotes)
+> * hooks
+> * reflog (history of refs, though, by default disabled for bare
+>   repositories)
+> * Stashes, because the reference to them is stored in the reflog
+> * unreferenced objects (though you said those are not a requirement, it
+>   is still something that is lost)
 
-> 
-> When using git fetch --prune, git will remove any branches from
-> remotes/origin/ that have inconsistent case in folder names.
-> ...
-> Thanks
-> Lee
-> 
-
-
-Hello,
-
-Same type of issue here using Jenkins.
-
-In a gitBash console:
-$ git branch --list
-* feature/testCI1
-  feature/testCI2
-
-In Jenkins Console output (git plugin is 2.3.5):
-Seen branch in repository origin/Feature/testCI1
-Seen branch in repository origin/Feature/testCI2
-
-Both are running on Windows
+This is true. But I wonder if we should (and can) support
+--super-mirror option (disabled by default), where reflog and stashes
+are kept, for backup purposes. We might keep unreferenced objects as
+well if it's not hard to do.
+-- 
+Duy
