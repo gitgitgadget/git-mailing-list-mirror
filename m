@@ -1,161 +1,119 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: [PATCH] =?UTF-8?q?l10n:=20de.po:=20translate=20'symbolic=20link'?= =?UTF-8?q?=20as=20'symbolische=20Verkn=C3=BCpfung'?=
-Date: Mon, 30 Mar 2015 19:41:24 +0200
-Message-ID: <1427737284-5887-1-git-send-email-ralf.thielow@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: tr@thomasrast.ch, jk@jk.gs, stimming@tuhh.de,
-	phillip.szelat@gmail.com, matthias.ruester@gmail.com,
-	magnus.goerlitz@googlemail.com,
-	Ralf Thielow <ralf.thielow@gmail.com>
+From: Kenny Lee Sin Cheong <kenny.lee28@gmail.com>
+Subject: [PATCH/RFC 1/4] Add "-" as @{-1} support for the rev-parse command
+Date: Mon, 30 Mar 2015 13:41:52 -0400
+Message-ID: <1427737315-7229-2-git-send-email-kenny.lee28@gmail.com>
+References: <1427737315-7229-1-git-send-email-kenny.lee28@gmail.com>
+Cc: gitster@pobox.com, Kenny Lee Sin Cheong <kenny.lee28@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 30 19:41:56 2015
+X-From: git-owner@vger.kernel.org Mon Mar 30 19:42:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ycdgy-00029w-Up
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Mar 2015 19:41:41 +0200
+	id 1Ycdhq-0002mt-45
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Mar 2015 19:42:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753613AbbC3Rlc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Mar 2015 13:41:32 -0400
-Received: from mail-wi0-f178.google.com ([209.85.212.178]:34457 "EHLO
-	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753614AbbC3Rl2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Mar 2015 13:41:28 -0400
-Received: by wibg7 with SMTP id g7so97357408wib.1
-        for <git@vger.kernel.org>; Mon, 30 Mar 2015 10:41:27 -0700 (PDT)
+	id S1753744AbbC3Rm2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Mar 2015 13:42:28 -0400
+Received: from mail-ig0-f172.google.com ([209.85.213.172]:35357 "EHLO
+	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753191AbbC3Rm0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Mar 2015 13:42:26 -0400
+Received: by igcau2 with SMTP id au2so82163896igc.0
+        for <git@vger.kernel.org>; Mon, 30 Mar 2015 10:42:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version:content-type
-         :content-transfer-encoding;
-        bh=KNZ/PaqhWZPadDKb9ioB7AccTjJRQW2AQ24fGFFWiq0=;
-        b=V6g6MtKqKIGz03VkttWdUajOenM+cN7iUeJttEqy7ycPQJr7AaqJ4uKG/Fl8t8iD0B
-         TGg39zq/NhxUtvfMdX5NjnpivoTCxDRtjXCpj6GZBZOjV7T0EFkKLh6fQFt7MMF8EzUn
-         eLLK3LSPVgB5MPhUaAwiqed3/IxwUtTRQ2bD3wA5jUjiBzIzpDEFSbrLmz+9V+QT7I2a
-         hM/iSMLaRBZ8WOQFDc7ZczPuDyXsfYIk7WK/XUqiLbj4osqDA7TacmHQ5LLB3UnQ67J/
-         iFnqLQou4c8Wbb5LguQpRe/OI98hJUwMxx752Qd4f8RsnF8BLXOcY8i7482F5Q2bxT4N
-         bk8g==
-X-Received: by 10.180.12.84 with SMTP id w20mr25330588wib.9.1427737286965;
-        Mon, 30 Mar 2015 10:41:26 -0700 (PDT)
-Received: from localhost (dslb-178-000-084-015.178.000.pools.vodafone-ip.de. [178.0.84.15])
-        by mx.google.com with ESMTPSA id i3sm16644790wiy.23.2015.03.30.10.41.25
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 30 Mar 2015 10:41:26 -0700 (PDT)
-X-Mailer: git-send-email 2.3.4.554.gb58f7a9
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=/qyDvZMk16KSpr2uZoMubI44dSJSu/I4QWeVSUOzEQg=;
+        b=kW+laGqG18r+h/sCCTzdiQ03NJhnlN4aqvqOf+2yYxX/FfrRmNseHGCCUFetmZNYvD
+         E+TnS20AbzMjSOe7M162qrm/ZpLoXimjxWbvggMmiHnYDlaQiZxVP93G/Na7XlnUgnx+
+         Uu1Mu4AD+VegLpK8Ewq+H0M0RVUGGlnZybeC5ifQe5ULkXuXRqqhnFOTsKNTZsTH5s+G
+         boJ5FmINhrOCDNkxBe0JXI4TUhJUCRUMtoPnnoueVhmA35WaIQvhbl9dgB62N9KYZ+o6
+         vVYqlMp80EimuttaPvLZ7EUIEUTJu9WlagSBBBmaw24ka6sgniHLXJQS8ECreW/GGikJ
+         TWoA==
+X-Received: by 10.107.131.159 with SMTP id n31mr50542987ioi.66.1427737345902;
+        Mon, 30 Mar 2015 10:42:25 -0700 (PDT)
+Received: from fujitsu.wireless.concordia.ca ([132.205.236.26])
+        by mx.google.com with ESMTPSA id x9sm8246356igl.2.2015.03.30.10.42.24
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 30 Mar 2015 10:42:25 -0700 (PDT)
+X-Mailer: git-send-email 2.3.3.203.g8ffb468.dirty
+In-Reply-To: <1427737315-7229-1-git-send-email-kenny.lee28@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266462>
 
-=46rom: Matthias R=C3=BCster <matthias.ruester@gmail.com>
+Allows the use of the "-" shorthand notation, including
+use with revision ranges. If we plan to allow "-" as a stand in every
+where a revision is allowed, then "-" would also need to be usable in
+plumbing commands, for writing tests, for example.
 
-The use of 'symbolische Verkn=C3=BCpfung' for 'symbolic link' is more c=
-ommon
-than 'symbolischer Verweis'.
+Checks if the argument can be interpreted as a revision range first
+before checking for flags. This saves us from having to check that
+something that begins with "-" does not get checked as a possible flag.
 
-Signed-off-by: Matthias R=C3=BCster <matthias.ruester@gmail.com>
-Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+Signed-off-by: Kenny Lee Sin Cheong <kenny.lee28@gmail.com>
 ---
- po/de.po | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ builtin/rev-parse.c | 37 +++++++++++++++++++------------------
+ 1 file changed, 19 insertions(+), 18 deletions(-)
 
-diff --git a/po/de.po b/po/de.po
-index 58e0c8f..9f0137b 100644
---- a/po/de.po
-+++ b/po/de.po
-@@ -710,7 +710,7 @@ msgstr "Fehler beim =C3=96ffnen von '%s'"
- #: merge-recursive.c:797
- #, c-format
- msgid "failed to symlink '%s'"
--msgstr "Fehler beim Erstellen eines symbolischen Verweises f=C3=BCr '%=
-s'"
-+msgstr "Fehler beim Erstellen einer symbolischen Verkn=C3=BCpfung f=C3=
-=BCr '%s'"
-=20
- #: merge-recursive.c:800
- #, c-format
-@@ -1025,7 +1025,7 @@ msgstr ""
- #: pathspec.c:432
- #, c-format
- msgid "pathspec '%s' is beyond a symbolic link"
--msgstr "Pfadspezifikation '%s' ist hinter einem symbolischen Verweis"
-+msgstr "Pfadspezifikation '%s' ist hinter einer symbolischen Verkn=C3=BC=
-pfung"
-=20
- #: pathspec.c:441
- msgid ""
-@@ -2318,7 +2318,7 @@ msgstr "Patch mit nutzlosen Informationen bei Zei=
-le %d"
- #: builtin/apply.c:2141
- #, c-format
- msgid "unable to read symlink %s"
--msgstr "konnte symbolischen Verweis %s nicht lesen"
-+msgstr "konnte symbolische Verkn=C3=BCpfung %s nicht lesen"
-=20
- #: builtin/apply.c:2145
- #, c-format
-@@ -2386,7 +2386,7 @@ msgstr "Konnte %s nicht lesen"
- #: builtin/apply.c:3238
- #, c-format
- msgid "reading from '%s' beyond a symbolic link"
--msgstr "'%s' ist hinter einem symbolischen Verweis"
-+msgstr "'%s' ist hinter einer symbolischen Verkn=C3=BCpfung"
-=20
- #: builtin/apply.c:3266 builtin/apply.c:3488
- #, c-format
-@@ -2450,7 +2450,7 @@ msgstr "neuer Modus (%o) von %s entspricht nicht =
-dem alten Modus (%o) von %s"
- #: builtin/apply.c:3793
- #, c-format
- msgid "affected file '%s' is beyond a symbolic link"
--msgstr "betroffene Datei '%s' ist hinter einem symbolischen Verweis"
-+msgstr "betroffene Datei '%s' ist hinter einer symbolischen Verkn=C3=BC=
-pfung"
-=20
- #: builtin/apply.c:3797
- #, c-format
-@@ -5212,7 +5212,7 @@ msgstr "Die Option --dirty kann nicht mit Commits=
- verwendet werden."
- #: builtin/diff.c:86
- #, c-format
- msgid "'%s': not a regular file or symlink"
--msgstr "'%s': keine regul=C3=A4re Datei oder symbolischer Verweis"
-+msgstr "'%s': keine regul=C3=A4re Datei oder symbolische Verkn=C3=BCpf=
-ung"
-=20
- #: builtin/diff.c:237
- #, c-format
-@@ -6493,12 +6493,12 @@ msgstr "kann Verweis '%s' nicht lesen"
- #: builtin/init-db.c:99
- #, c-format
- msgid "insanely long symlink %s"
--msgstr "zu langer symbolischer Verweis %s"
-+msgstr "zu lange symbolische Verkn=C3=BCpfung %s"
-=20
- #: builtin/init-db.c:102
- #, c-format
- msgid "cannot symlink '%s' '%s'"
--msgstr "kann symbolischen Verweis '%s' auf '%s' nicht erstellen"
-+msgstr "kann symbolische Verkn=C3=BCpfung '%s' auf '%s' nicht erstelle=
-n"
-=20
- #: builtin/init-db.c:106
- #, c-format
-@@ -10370,7 +10370,7 @@ msgstr "zwei oder mehr Entwicklungszweige zusam=
-menf=C3=BChren"
- #: common-cmds.h:20
- msgid "Move or rename a file, a directory, or a symlink"
- msgstr ""
--"eine Datei, ein Verzeichnis, oder einen symbolischen Verweis verschie=
-ben "
-+"eine Datei, ein Verzeichnis, oder eine symbolische Verkn=C3=BCpfung v=
-erschieben "
- "oder umbenennen"
-=20
- #: common-cmds.h:21
---=20
-2.3.4.554.gb58f7a9
+diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
+index 3626c61..8da95b5 100644
+--- a/builtin/rev-parse.c
++++ b/builtin/rev-parse.c
+@@ -553,6 +553,25 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+ 			continue;
+ 		}
+ 
++		/* Not a flag argument */
++		if (try_difference(arg))
++			continue;
++		if (try_parent_shorthands(arg))
++			continue;
++		name = arg;
++		type = NORMAL;
++		if (*arg == '^') {
++			name++;
++			type = REVERSED;
++		}
++		if (!get_sha1_with_context(name, flags, sha1, &unused)) {
++			if (verify)
++				revs_count++;
++			else
++				show_rev(type, sha1, name);
++			continue;
++		}
++
+ 		if (*arg == '-') {
+ 			if (!strcmp(arg, "--")) {
+ 				as_is = 2;
+@@ -810,24 +829,6 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+ 			continue;
+ 		}
+ 
+-		/* Not a flag argument */
+-		if (try_difference(arg))
+-			continue;
+-		if (try_parent_shorthands(arg))
+-			continue;
+-		name = arg;
+-		type = NORMAL;
+-		if (*arg == '^') {
+-			name++;
+-			type = REVERSED;
+-		}
+-		if (!get_sha1_with_context(name, flags, sha1, &unused)) {
+-			if (verify)
+-				revs_count++;
+-			else
+-				show_rev(type, sha1, name);
+-			continue;
+-		}
+ 		if (verify)
+ 			die_no_single_rev(quiet);
+ 		if (has_dashdash)
+-- 
+2.3.3.203.g8ffb468.dirty
