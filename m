@@ -1,90 +1,87 @@
-From: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH/RFC 2/4] t1505: add tests for '-' notation in rev-parse
-Date: Tue, 31 Mar 2015 06:55:54 +0200
-Message-ID: <551A28DA.2050402@web.de>
-References: <1427737315-7229-1-git-send-email-kenny.lee28@gmail.com> <1427737315-7229-3-git-send-email-kenny.lee28@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv3 3/6] line-log.c: fix a memleak
+Date: Mon, 30 Mar 2015 22:06:16 -0700
+Message-ID: <xmqqsiclsqlz.fsf@gitster.dls.corp.google.com>
+References: <1427764931-27745-1-git-send-email-sbeller@google.com>
+	<1427764931-27745-4-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com
-To: Kenny Lee Sin Cheong <kenny.lee28@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 31 06:57:49 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, sunshine@sunshineco.com, tr@thomasrast.ch
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue Mar 31 07:06:26 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YcoFF-0000eq-4V
-	for gcvg-git-2@plane.gmane.org; Tue, 31 Mar 2015 06:57:45 +0200
+	id 1YcoNd-0007v1-28
+	for gcvg-git-2@plane.gmane.org; Tue, 31 Mar 2015 07:06:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751006AbbCaE4X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Mar 2015 00:56:23 -0400
-Received: from mout.web.de ([212.227.17.11]:53853 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750879AbbCaE4W (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Mar 2015 00:56:22 -0400
-Received: from [192.168.88.199] ([194.47.243.242]) by smtp.web.de (mrweb102)
- with ESMTPSA (Nemesis) id 0M6V1T-1ZMwrD2Ntz-00yNnE; Tue, 31 Mar 2015 06:56:16
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:31.0) Gecko/20100101 Icedove/31.5.0
-In-Reply-To: <1427737315-7229-3-git-send-email-kenny.lee28@gmail.com>
-X-Provags-ID: V03:K0:wDUam9sJE8O36bbR2PlByp2KIRObXpBhX4wmc8LQ0X745WhnDa8
- bcdkdYEF4DhvRACL5IZUdG9VjrtlMZc99XEz4kGSYrWSesR2ycxG8t5ZFyQatbq8tus68IE
- DfBy3nrZRJn+dGChVfw+DGuTCr/G5hKqnlxBqo/kR0DPsWutc4AZvE0FpUKwdDVJc2gG7ka
- APgSncrqbLqAh8KqztmiA==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1751457AbbCaFGU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Mar 2015 01:06:20 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64243 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750706AbbCaFGT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Mar 2015 01:06:19 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9A3FB38006;
+	Tue, 31 Mar 2015 01:06:17 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=GX1lolyJbqmHbdC3IMsFA4wUlss=; b=K2htr7
+	mKsrrHokBKn9O5thVjWAev4WISr65LK8NgnWPfNHq5OpofzcRwHKQjv3RYSv8Xt+
+	xCOv0uWwuqI70n0L2+A70apFu8a9ZW21HYebTzu5r3SOMWHmnYb35GwGV0v9kkYW
+	ACtNi4WyBJ8YsjzR2xYAs55OYa8ax8Y8oMWG4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=vIbN6se1q4f93FPqSEtWB9ci912zXntu
+	EfzpEtOY0KXqRzyE1l/ds1ONyBNXxYJS1haza8uD4AQD/05LJSKh16hOMrhbPt7X
+	J0oGx3oOt0DFQ+RiE4R2GFn+RUvxntrADNNX9LJCM7G3HeDhl/Pd7uOpNgBvNZiD
+	vliXvtrFVIY=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9415038005;
+	Tue, 31 Mar 2015 01:06:17 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1E00138003;
+	Tue, 31 Mar 2015 01:06:17 -0400 (EDT)
+In-Reply-To: <1427764931-27745-4-git-send-email-sbeller@google.com> (Stefan
+	Beller's message of "Mon, 30 Mar 2015 18:22:08 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: A9610C40-D763-11E4-8926-11859F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266512>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266513>
 
-On 03/30/2015 07:41 PM, Kenny Lee Sin Cheong wrote:
-> Signed-off-by: Kenny Lee Sin Cheong <kenny.lee28@gmail.com>
+Stefan Beller <sbeller@google.com> writes:
+
+> Signed-off-by: Stefan Beller <sbeller@google.com>
 > ---
->   t/t1505-rev-parse-last.sh | 12 ++++++++----
->   1 file changed, 8 insertions(+), 4 deletions(-)
+>  line-log.c | 3 +++
+>  1 file changed, 3 insertions(+)
 >
-> diff --git a/t/t1505-rev-parse-last.sh b/t/t1505-rev-parse-last.sh
-> index 4969edb..a1976ad 100755
-> --- a/t/t1505-rev-parse-last.sh
-> +++ b/t/t1505-rev-parse-last.sh
-> @@ -33,19 +33,23 @@ test_expect_success 'setup' '
->   # and 'side' should be the last branch
->   
->   test_expect_success '@{-1} works' '
-> -	test_cmp_rev side @{-1}
-> +	test_cmp_rev side @{-1} &&
-> +	test_cmp_rev side -
->   '
-(Beside that "-" is often used for "stdin" in many unix-like tools,
-and my favorite would be "-1" ):
+> diff --git a/line-log.c b/line-log.c
+> index b43ac58..db6e58d 100644
+> --- a/line-log.c
+> +++ b/line-log.c
+> @@ -1129,6 +1129,9 @@ static int process_ranges_ordinary_commit(struct rev_info *rev, struct commit *c
+>  	changed = process_all_files(&parent_range, rev, &queue, range);
+>  	if (parent)
+>  		add_line_range(rev, parent, parent_range);
+> +	else
+> +		free_line_log_data(parent_range);
+> +
 
-I think the test heading should be updated as well:
+Should this be in the else clause?  From a cursory scan
+add-line-range feeds it to either line-log-data-merge or
+line-log-data-copy to create "new" that is a separate thing from the
+parent_range we are feeding it, and that copy is used by
+add-decoration.  If add-line-range does not take ownership of
+parent_range from us, shouldn't we be freeing it whether we called
+it or not???
 
-test_expect_success '@{-1} or - works' '
-	test_cmp_rev side @{-1} &&
-	test_cmp_rev side -
-  '
-
-
->   
->   test_expect_success '@{-1}~2 works' '
-> -	test_cmp_rev side~2 @{-1}~2
-> +	test_cmp_rev side~2 @{-1}~2 &&
-> +	test_cmp_rev side~2 -~2
->   '
->   
->   test_expect_success '@{-1}^2 works' '
-> -	test_cmp_rev side^2 @{-1}^2
-> +	test_cmp_rev side^2 @{-1}^2 &&
-> +	test_cmp_rev side^2 -^2
->   '
->   
->   test_expect_success '@{-1}@{1} works' '
-> -	test_cmp_rev side@{1} @{-1}@{1}
-> +	test_cmp_rev side@{1} @{-1}@{1} &&
-> +	test_cmp_rev side@{1} -@{1}
->   '
->   
->   test_expect_success '@{-2} works' '
+>  	return changed;
+>  }
