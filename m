@@ -1,131 +1,83 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: RFC: git status --amend
-Date: Tue, 31 Mar 2015 11:35:17 -0700
-Message-ID: <xmqqvbhhqal6.fsf@gitster.dls.corp.google.com>
-References: <551AB64F.4030400@cs-ware.de> <20150331180414.GB19206@peff.net>
+Subject: Re: [PATCHv3 3/6] line-log.c: fix a memleak
+Date: Tue, 31 Mar 2015 12:03:12 -0700
+Message-ID: <xmqqr3s5q9an.fsf@gitster.dls.corp.google.com>
+References: <1427764931-27745-1-git-send-email-sbeller@google.com>
+	<1427764931-27745-4-git-send-email-sbeller@google.com>
+	<xmqqsiclsqlz.fsf@gitster.dls.corp.google.com>
+	<551A323F.9030305@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Sven Strickroth <sven@cs-ware.de>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Mar 31 20:35:27 2015
+Cc: Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
+	sunshine@sunshineco.com, tr@thomasrast.ch
+To: Stefan Beller <stefanbeller@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 31 21:03:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yd10Y-00010X-HV
-	for gcvg-git-2@plane.gmane.org; Tue, 31 Mar 2015 20:35:26 +0200
+	id 1Yd1Ra-0006ab-2r
+	for gcvg-git-2@plane.gmane.org; Tue, 31 Mar 2015 21:03:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752285AbbCaSfW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Mar 2015 14:35:22 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:55331 "EHLO
+	id S1752541AbbCaTDS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Mar 2015 15:03:18 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:63274 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751112AbbCaSfV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Mar 2015 14:35:21 -0400
+	with ESMTP id S1751898AbbCaTDP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Mar 2015 15:03:15 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7CC3C44F63;
-	Tue, 31 Mar 2015 14:35:20 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A7F1A439BD;
+	Tue, 31 Mar 2015 15:03:14 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=J3WaIPVemQXC8DrvSDMfvGIwsMk=; b=ULslxK
-	PVvdeQXSVgL5UvXXSCLPqCwhcPAt4wnfJoiDrjfIV02ZeT4uUIBkN1XWqa2Ss/0C
-	yB0oLv+pM2MadwUHNHlfosoEMTJ9f2co1aD+JJLsUTin+Adm0yoCuGE40a0xL7RR
-	B1BL8nSwuc2yp8qr5INvcdYMMshG5qcvMeHc4=
+	:content-type; s=sasl; bh=e7K4aoIgfaPdzUFmPmeEZ5mBBDo=; b=UMye55
+	wMfyXlKqYBeOVkA9ITO4pDr9wkL6Rxy+N+S3PrqsF45tFyTv7Kk0hbt8ogxkCwKH
+	p8wF2nLroiZVussKQdCUPgAKbCf5RenIzt7c8aX98kDgsCfzGJq3u3/COPmliFsk
+	y9bLrmkIzMUCGFkSvGFvXeqMptbi9195wLaTA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=W2Q1haU4yhu9Zs+CQuc5n6pW+rur/h4u
-	fw1N3p89/cwD1BDC+bCjPTkkoGklaca7pZc5h9cfKx5iIDil9kRerKYk+Vpu6cDR
-	s4qa7vuFtvewzZunCBs0N5a3aucif77UKrL4UVbV1HHsZibrbv85zdBUk3y+A3Tq
-	LNetPkFZaRI=
+	:content-type; q=dns; s=sasl; b=cyvhZTz45FRB0g3XpkhREBquN5oDfkjS
+	EKsjucG31mbt1TPC8rBnMUL7A9G4Hb/5AnVVr5LHg+rPycd517/dO8udi8J/OHa1
+	fYSkbKzOdHjQ1mU1xe6oHe9tL+WA4OvcdgMFcRSQ2icBlTPwM9XP8m5jQlnoIyQ6
+	/oR/iMJc2Ws=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7613F44F62;
-	Tue, 31 Mar 2015 14:35:20 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 97FA5439BC;
+	Tue, 31 Mar 2015 15:03:14 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EC2CF44F60;
-	Tue, 31 Mar 2015 14:35:18 -0400 (EDT)
-In-Reply-To: <20150331180414.GB19206@peff.net> (Jeff King's message of "Tue,
-	31 Mar 2015 14:04:14 -0400")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 15FC1439BA;
+	Tue, 31 Mar 2015 15:03:14 -0400 (EDT)
+In-Reply-To: <551A323F.9030305@gmail.com> (Stefan Beller's message of "Mon, 30
+	Mar 2015 22:35:59 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: AE91F960-D7D4-11E4-B41C-11859F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 950FF3F8-D7D8-11E4-A473-11859F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266546>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266547>
 
-Jeff King <peff@peff.net> writes:
+Stefan Beller <stefanbeller@gmail.com> writes:
 
-> On Tue, Mar 31, 2015 at 04:59:27PM +0200, Sven Strickroth wrote:
+> On 30.03.2015 22:06, Junio C Hamano wrote:
+>> If add-line-range does not take ownership of
+>> parent_range from us, shouldn't we be freeing it whether we called
+>> it or not???
 >
->> for frontends or scripts it would be helpful to be able to use "git
->> status" for getting the repository status compared to HEAD~1 instead of
->> only HEAD (as provided by "git commit --amend" in the pre-filled commit
->> message).
->> 
->> Thus, I'm suggesting to add a "--amend" parameter (or a parameter with a
->> better naming) to "git status".
->> 
->> What do you think of this idea?
->
-> Once upon a time "git status" really was just "git commit --dry-run".
-> These days it has diverged a bit. But I think you could get what you
-> want with:
->
->   git commit --dry-run --amend
->
-> It even supports alternate styles like --short.
+> In my understanding it does take ownership of it. (According to my code
+> review on friday)
 
-I think everything you said is correct, but your "diverged a bit"
-may hide one difference that could be crucial depending on the use
-case: pathspec.
+Hmmm.
 
-What "git commit --dry-run [--other-options] <pathspec>" does, and
-what "git status [--other-options] <pathspec>" does, are different.
+add_line_range() is given the "parent_range" as its third parameter,
+i.e. "range".
 
-With or without --dry-run, to "git commit", <pathspec> tells the
-command to update the index at the paths specified by it from the
-working tree contents before proceeding (the contents recorded for
-the other paths depend on the use of -o or -i option).  But ever
-since "git status" departed from being "git commit -n", a pathspec
-given to the command means completely different thing.
+If there is nothing for the commit yet, it calls line_log_data_copy()
+on it to make a deep copy and stores that in new, which is then used
+as the decoration for the commit---the copy is what is retained.
 
-After working on various parts of the tree, planning to conclude the
-current work with "commit", "git status directory/" is a good way to
-see what you did in that directory without seeing what you did
-outside (which will be included in the commit, too).
-
-But what you get from "git commit --no-edit --dry-run directory/"
-would be different; it would show all the changes in the working
-tree inside directory/, including the ones that you deliberately
-left out of the index, as paths to be committed.
-
-Having said all that, I am a bit torn on this topic.  Just like "git
-status" is a way to ask "I've worked so far, planning to conclude
-this with 'git commit'; tell me what I have achieved so far that are
-in the index and in the working tree, possibly limiting to these
-paths?", I think it is a reasonable thing to ask the same question
-with "s/git commit/git commit --amend/".
-
-One workaround might be to
-
-    git reset --soft HEAD^
-    git status [<pathspec>]
-    ...
-    git commit -c @{1}
-
-but that is simply too error prone and ugly.  I would say it would
-be better if "status" knows how to answer that "I am planning to
-conclude with 'git commit --amend'" question.
-
-The reason why I am torn is because I do not think "status --amend"
-is a sensible name for that option.  "status" is not about amending
-anything.
-
-If the normal "status" is "give me status for the next commit", this
-new mode would be "give me status for the 'commit --amend'".  Naming
-it "git status --for-amend" crossed my mind, but it does not sound
-great to me, either.
-
-So...
+I am not quite sure what the lifetime rule is for the original of
+this deep copy, i.e. "range", aka "parent_range" of the caller.
+Who holds pointers into it after this function is done?
