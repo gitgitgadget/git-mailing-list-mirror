@@ -1,60 +1,117 @@
-From: Stefan Beller <stefanbeller@gmail.com>
-Subject: Re: [PATCHv3 3/6] line-log.c: fix a memleak
-Date: Mon, 30 Mar 2015 22:35:59 -0700
-Message-ID: <551A323F.9030305@gmail.com>
-References: <1427764931-27745-1-git-send-email-sbeller@google.com>	<1427764931-27745-4-git-send-email-sbeller@google.com> <xmqqsiclsqlz.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv3 6/6] entry.c: fix a memleak
+Date: Mon, 30 Mar 2015 22:41:53 -0700
+Message-ID: <xmqqoan9soym.fsf@gitster.dls.corp.google.com>
+References: <1427764931-27745-1-git-send-email-sbeller@google.com>
+	<1427764931-27745-7-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, sunshine@sunshineco.com, tr@thomasrast.ch
-To: Junio C Hamano <gitster@pobox.com>,
-	Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Tue Mar 31 07:36:15 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, John Keeping <john@keeping.me.uk>,
+	sunshine@sunshineco.com
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue Mar 31 07:42:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YcoqN-0007OY-Ui
-	for gcvg-git-2@plane.gmane.org; Tue, 31 Mar 2015 07:36:08 +0200
+	id 1YcowH-0003tF-RB
+	for gcvg-git-2@plane.gmane.org; Tue, 31 Mar 2015 07:42:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752083AbbCaFgD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Mar 2015 01:36:03 -0400
-Received: from mail-pd0-f182.google.com ([209.85.192.182]:35747 "EHLO
-	mail-pd0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751095AbbCaFgC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Mar 2015 01:36:02 -0400
-Received: by pddn5 with SMTP id n5so9294925pdd.2
-        for <git@vger.kernel.org>; Mon, 30 Mar 2015 22:36:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=xI7tQR+ENdHdPoQpuRIQVz8r5LT7J+63qYJl5Vv1TOQ=;
-        b=SmfmbSrPY63ByE1NOz8DINVmoxCXr6Srle//mP4/zlWcxuhWLYMAXZp2tNovEl0UW7
-         owFAbLc3U1//O1fXyldKjRAp7BfI76ax8v8+5yehVIuW+y9s0K0lL+gHr6Crk9bJf3cb
-         +TvoA1hXBnNJvXQm7D9AOZUSyUD6oUcx4Tb3jel0TomCQ5An5ASazziYb4nYzMoodYMF
-         h9z9ibcObFQh7a5R6Piv0zLW2eSaC9CGpDinkLrPYBjGPaiO/dav8r+KvDYoyE0Z/UNJ
-         XwiYjUO5IZc3Q23+cQYPQjo1Ye/bYePVqw9784ZVCm+btYsbLk4hEdu8vT63eyLLTawL
-         0fYA==
-X-Received: by 10.70.9.131 with SMTP id z3mr39025621pda.156.1427780161970;
-        Mon, 30 Mar 2015 22:36:01 -0700 (PDT)
-Received: from [192.168.2.9] (c-76-102-52-132.hsd1.ca.comcast.net. [76.102.52.132])
-        by mx.google.com with ESMTPSA id j5sm12491169pdo.60.2015.03.30.22.36.00
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 30 Mar 2015 22:36:00 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
-In-Reply-To: <xmqqsiclsqlz.fsf@gitster.dls.corp.google.com>
+	id S1751233AbbCaFmA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Mar 2015 01:42:00 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:57278 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751095AbbCaFl7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Mar 2015 01:41:59 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1EC0E38AC4;
+	Tue, 31 Mar 2015 01:41:59 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=BGtknRXbVLKZCrMcZsmYfK9vkMA=; b=n/flXO
+	3KHUphm4OAlzIHjPySpBV3pRw3bnRDTXuN3I2wMhomhQu/mpFmqiB7dWik0dlm4z
+	fv3YNQt1Ff7JJ+oZgndxv10mDlZ51w3QwAUeVkwoilHS2rUfz8fUhwLIlESEdlsN
+	UhhLyJhnbYc45zxgDYK56JdcvBzAPHv5ucbR4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=rXJVgN3iQQz7KpW1QAYJNWdcquoJkxKD
+	eLWuQadXxKE6X7YGufGf0Ci+Lk3m2A9UFvWB6tmOs+dH/J6Ay3xi8SfYZkC7kITF
+	VS9sa9ZEGIFbW61niLHYoCe7UFfSZK7XGXnPe8fJ2BcVLxcdBdvcGz2S4lwD7zTx
+	20Z29mnQRfs=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1537A38AC3;
+	Tue, 31 Mar 2015 01:41:59 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0C24B38AC0;
+	Tue, 31 Mar 2015 01:41:54 -0400 (EDT)
+In-Reply-To: <1427764931-27745-7-git-send-email-sbeller@google.com> (Stefan
+	Beller's message of "Mon, 30 Mar 2015 18:22:11 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: A3AE4F1A-D768-11E4-9259-11859F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266514>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266515>
 
-On 30.03.2015 22:06, Junio C Hamano wrote:
-> If add-line-range does not take ownership of
-> parent_range from us, shouldn't we be freeing it whether we called
-> it or not???
+Stefan Beller <sbeller@google.com> writes:
 
-In my understanding it does take ownership of it. (According to my code
-review on friday)
+> From: John Keeping <john@keeping.me.uk>
+>
+> stream_blob_to_fd() always frees the filter now, so there is no memory
+> leak in entry.c:152 just before the `goto finish`.
+>
+> Signed-off-by: John Keeping <john@keeping.me.uk>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  
+>  I added Johns signoff here tentatively, John can you confirm the sign off?
+>  
+>  streaming.c | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+>
+> diff --git a/streaming.c b/streaming.c
+> index 2ff036a..811fcc2 100644
+> --- a/streaming.c
+> +++ b/streaming.c
+> @@ -507,8 +507,11 @@ int stream_blob_to_fd(int fd, unsigned const char *sha1, struct stream_filter *f
+>  	int result = -1;
+>  
+>  	st = open_istream(sha1, &type, &sz, filter);
+> -	if (!st)
+> +	if (!st) {
+> +		if (filter)
+> +			free_stream_filter(filter);
+>  		return result;
+> +	}
+
+I think this one is fine. I see you moved the callsite to free this
+thing from entry.c down to streaming (stream_blob_to_fd()), which
+means you would need to adjust the title of the change, too.
+
+It somewhat feels dirty that we free what the caller gave us, but
+given that closing a filtered stream frees the filter at the end,
+I think this is the right place to discard the filter.  In essence,
+the overall use of the API in this code is equivalent to
+
+	filter = ... prepare a filter ...
+        if (open_istream(... filter) == OK) {
+		... use filter ...
+                close_istream(); /* which frees the filter */
+	} else {
+           	/* we failed to free filter here without the patch */
+		free_stream_filter(filter);
+	}
+
+so the patch makes sense.
+
+We may want to teach free_stream_filter() that a request to free a
+NULL filter is OK, though. That would be a separate clean-up topic.
+
+
+>  	if (type != OBJ_BLOB)
+>  		goto close_and_exit;
+>  	for (;;) {
