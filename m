@@ -1,80 +1,82 @@
-From: "Reni Petrova                       ." <our.conferences@wopu.org>
-Subject: A kind reminder
-Date: Tue, 31 Mar 2015 20:09:51 +0300
-Message-ID: <20150331170950.BCED6329141A@genf174.server4you.net>
+From: =?UTF-8?B?w5h5dmluZCBBLiBIb2xt?= <sunny@sunbase.org>
+Subject: Re: VCS popularity
+Date: Wed, 1 Apr 2015 00:30:34 +0200
+Message-ID: <CAA787rnbZGv_5rmVK1MLmCMLx9vpubW87hM4XK8U65i7FDZAiA@mail.gmail.com>
+References: <CAA787rkKYQ=TJezeLy0f=aGs2GR8ypuxmr2qA2py+hGsC+juVA@mail.gmail.com>
+	<xmqq7ftwq06b.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Apr 01 00:30:30 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 01 00:30:45 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yd4g0-00031w-Of
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Apr 2015 00:30:29 +0200
+	id 1Yd4gD-0003Cu-I6
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Apr 2015 00:30:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753658AbbCaWaJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Mar 2015 18:30:09 -0400
-Received: from genf174.server4you.net ([217.172.184.70]:49350 "EHLO
-	genf174.server4you.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752379AbbCaWaC convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 31 Mar 2015 18:30:02 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by genf174.server4you.net (Postfix) with ESMTP id 9967D3281945
-	for <git@vger.kernel.org>; Tue, 31 Mar 2015 23:08:21 +0200 (CEST)
-Received: from genf174.server4you.net ([127.0.0.1])
-	by localhost (genf174.server4you.net [127.0.0.1]) (amavisd-new, port 10032)
-	with ESMTP id hWQyEejFJxBr for <git@vger.kernel.org>;
-	Tue, 31 Mar 2015 23:08:21 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by genf174.server4you.net (Postfix) with ESMTP id 85F22328AD1B
-	for <git@vger.kernel.org>; Tue, 31 Mar 2015 20:22:09 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at genf174.server4you.net
-Received: from genf174.server4you.net ([127.0.0.1])
-	by localhost (genf174.server4you.net [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id nyFvkJex0pnd for <git@vger.kernel.org>;
-	Tue, 31 Mar 2015 20:22:08 +0200 (CEST)
-Received: from 10.0.2.15 (genf174.server4you.net [217.172.184.70])
-	by genf174.server4you.net (Postfix) with SMTP id BCED6329141A
-	for <git@vger.kernel.org>; Tue, 31 Mar 2015 19:09:49 +0200 (CEST)
-X-Priority: 1 (Highest)
+	id S1751595AbbCaWah convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Mar 2015 18:30:37 -0400
+Received: from mail-lb0-f177.google.com ([209.85.217.177]:34516 "EHLO
+	mail-lb0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752725AbbCaWag convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 Mar 2015 18:30:36 -0400
+Received: by lboc7 with SMTP id c7so23251270lbo.1
+        for <git@vger.kernel.org>; Tue, 31 Mar 2015 15:30:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=TKtK9PjxyPjqnBifcphRG94mZAU8wxR53U5CJODwjuE=;
+        b=TLmBbGoZOyyl1U/dMGKutGxyG1OO3CzHlvhrrr18DTXUts5ZFdEbwRRHSuj98jd3rC
+         CGJE4i3sO1KSPm/Umy1DPSFiDwXMM0YaDIb6ruhtg0XGPJNifBTjY7ZDsDkgjJDrZaKr
+         FTjWAYJzBD9Tm2O1EZ+a822o/JVyzDNvSIWbEgHX7sl0/TEE4nIcMk9UOiIFuczTiA7D
+         YJFGJGVHkSNpG91bTSGYDjHU1YGDswpMccGB9gCetPHZk1X1AATjzxf+aDYnqU1WwOCd
+         9icXGdpSQPX10kFIuNB1wx18v7WqivU1gmN8oVXBvxqEaTgKQonisN92W1I1/tm1yKCX
+         N9Ow==
+X-Received: by 10.152.115.134 with SMTP id jo6mr19730774lab.10.1427841034741;
+ Tue, 31 Mar 2015 15:30:34 -0700 (PDT)
+Received: by 10.112.156.231 with HTTP; Tue, 31 Mar 2015 15:30:34 -0700 (PDT)
+In-Reply-To: <xmqq7ftwq06b.fsf@gitster.dls.corp.google.com>
+X-Google-Sender-Auth: 48QwIrWb2xd-7__E3h1f6EQ_Q50
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266570>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266571>
 
-Dear Invited Author,
+On 1 April 2015 at 00:20, Junio C Hamano <gitster@pobox.com> wrote:
+> =C3=98yvind A. Holm <sunny@sunbase.org> writes:
+> > The graphs are pretty interesting:
+> >
+> > https://github.com/sunny256/openhub-repositories/blob/master/graph/=
+relative.svg
+> >   Graphs of relative growth between the various version control sys=
+tems.
+>
+> This plots us at a bit over 8000.
+>
+> What does this number mean, exactly?  Since 2014-08-01, the number of=
+ Git
+> repositories Ohloh knows about has grown 8000-fold?  Or is it just 80=
+-fold
+> (8000%) growth?  Or 8000 more repositories were created?
 
-You could also upload your invited paper in our conferences in Zakynthos Island, Greece,
-July 16-20, 2015. Check them via www. inase. org   and www. cscc. co
-Invited Paper implies journal publication in ISI (Web of Knowledge) and SCOPUS and double
-time of presentation during the conference.
+Yes, relative.svg and relative-zoom.svg show the number of new reposito=
+ries
+found by Open Hub. To be specific, these are the numbers:
 
-These conferences are based in Special Sessions and Minisymposia that Invited Speakers
-organize. We anticipate more than 100 Special Sessions and Minisymposia for July 2015
+Bazaar: 75
+CVS: 59
+Git: 8230
+Mercurial: 215
+Subversion: 607
 
-The Proceedings are published in CD and in hard-copy and are included in Web of Knowledge
-ISI Thomson, SCOPUS, IET, Elsevier, ACM, AMS, DBLP etc... Especially for the Invited
-Authors we will have publication in more than 40 Journals of Web of Knowledge ISI Thomson.
+These numbers can of course be discussed, but as a source, I believe Op=
+en Hub
+should be one of the more objective ones.
 
-We have received 39 Invited Special Sessions until now. Please, check:  www. cscc. co
-
-Successful Session / Workshop Organizers will be benefited by
-a)* Free Participaaejlmpwtion  b) * Financial Support   c) * They will be included in the
-Committee of INASE 2016  d) They will be Editors in the Proceedings of INASE 2015
-
-Invited Authors are marked in the Program as Invited Authors; they have also double time
-for presentation than the normal papers.
-Thanks,
-
-Zoe Michel
-----
-Do you want to be removed from our future Invitations? Send an Empty (Blank) email to
-inase.editorial@gmail.com with Subject:
- - BLOCK git@vger.kernel.org -
-(Attention: The main part of your email, the so-called Body must be empty,
-otherwise the command of unsubscription will not be executed. The command
-- BLOCK git@vger.kernel.org - must be ONLY in the Subject Line of your message 
+- =C3=98yvind
