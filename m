@@ -1,76 +1,77 @@
-From: David Lang <david@lang.hm>
+From: =?UTF-8?B?w5h5dmluZCBBLiBIb2xt?= <sunny@sunbase.org>
 Subject: Re: VCS popularity
-Date: Tue, 31 Mar 2015 15:03:22 -0700 (PDT)
-Message-ID: <alpine.DEB.2.02.1503311502240.26359@nftneq.ynat.uz>
+Date: Wed, 1 Apr 2015 00:14:52 +0200
+Message-ID: <CAA787rm1qfaLb=ZAvZ19h+_EBv-a3S7xV=0B6kMfjYpKsAbNcg@mail.gmail.com>
 References: <CAA787rkKYQ=TJezeLy0f=aGs2GR8ypuxmr2qA2py+hGsC+juVA@mail.gmail.com>
+	<alpine.DEB.2.02.1503311502240.26359@nftneq.ynat.uz>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="680960-184397768-1427839402=:26359"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: =?ISO-8859-15?Q?=D8yvind_A=2E_Holm?= <sunny@sunbase.org>
-X-From: git-owner@vger.kernel.org Wed Apr 01 00:03:38 2015
+To: David Lang <david@lang.hm>
+X-From: git-owner@vger.kernel.org Wed Apr 01 00:15:03 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yd4Fy-0007yu-LA
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Apr 2015 00:03:35 +0200
+	id 1Yd4R1-00009x-KH
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Apr 2015 00:14:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752662AbbCaWDZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Mar 2015 18:03:25 -0400
-Received: from mail.lang.hm ([64.81.33.126]:50913 "EHLO bifrost.lang.hm"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752623AbbCaWDY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Mar 2015 18:03:24 -0400
-Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id t2VM3M1B023566;
-	Tue, 31 Mar 2015 14:03:22 -0800
-X-X-Sender: dlang@asgard.lang.hm
-In-Reply-To: <CAA787rkKYQ=TJezeLy0f=aGs2GR8ypuxmr2qA2py+hGsC+juVA@mail.gmail.com>
-User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
+	id S1751595AbbCaWOz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Mar 2015 18:14:55 -0400
+Received: from mail-la0-f42.google.com ([209.85.215.42]:34749 "EHLO
+	mail-la0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751474AbbCaWOy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 Mar 2015 18:14:54 -0400
+Received: by lagg8 with SMTP id g8so23463209lag.1
+        for <git@vger.kernel.org>; Tue, 31 Mar 2015 15:14:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=WupTGUlhWmpfi5tPmsP8mFCIjJpNxG9nMA23+xyETiI=;
+        b=vG0/lTXaQZuXv9aTXa3vq7Jrg2Ed3YmL80tJXKzZ1Dki+GvahMF1hkBp5ogkCESuR0
+         LQj4vgrpobW3sBCMrL+b7ht9a27S/LLaBPbCgs70n1fXSkZ9duBvmDyKL35taYsw9y7/
+         pLaiN74N4VQJC8VLU5A9YZgO5DnF707LL+mpn+Kub3HsOXeB90AJPJ6DaMfwWkiulUOh
+         GxIl1tW+yyPWHQOhyVDLIAhWN2EIk5kOEEOdlu9738Udxm/MZD82zyrnolOb7fLPxTKa
+         7HIclqS9pGbzi1Ja3gRVwDX0JRsnBcIWFLV/Yae8TN08go0gqcR6ngoEyzwchKUw2Y94
+         LuFA==
+X-Received: by 10.152.207.74 with SMTP id lu10mr13718311lac.108.1427840092861;
+ Tue, 31 Mar 2015 15:14:52 -0700 (PDT)
+Received: by 10.112.156.231 with HTTP; Tue, 31 Mar 2015 15:14:52 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.02.1503311502240.26359@nftneq.ynat.uz>
+X-Google-Sender-Auth: Xy_9Tmk0CI56tdGR3krpxAZVaDs
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266563>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266564>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On 1 April 2015 at 00:03, David Lang <david@lang.hm> wrote:
+> On Tue, 31 Mar 2015, =C3=98yvind A. Holm wrote:
+> > openhub.net (formerly ohloh.net) has an interesting comparison of
+> > the number of public repositories on the net, based on searches of
+> > popular hosting services. This comparison is available at
+> > <https://www.openhub.net/repositories/compare> and shows an
+> > estimated market share between Bazaar, CVS, Git, Mercurial and
+> > Subversion.
+> >
+> > I've been monitoring this since 2014-08-05 to see how things were
+> > developing, and it's a good indication of the popularity of the
+> > various version control systems.
+>
+> number of repositories is an interesting datapoint, but activity in
+> the repos would be far more interesting. There are a lot of repos of
+> various types out there that haven't been touched for years.
 
---680960-184397768-1427839402=:26359
-Content-Type: TEXT/PLAIN; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+I do agree on that. Many repositories won't be deleted if they are
+converted to other VC systems to avoid breaking links and so on. What I
+found pretty interesting is the relative growth between the various
+systems. That's why I created the graphs that show creation of new
+repositories since August 2014 instead, for example
 
-On Tue, 31 Mar 2015, Øyvind A. Holm wrote:
+https://github.com/sunny256/openhub-repositories/blob/master/graph/rela=
+tive-zoom.svg
 
-> openhub.net (formerly ohloh.net) has an interesting comparison of the
-> number of public repositories on the net, based on searches of popular
-> hosting services. This comparison is available at
-> <https://www.openhub.net/repositories/compare> and shows an estimated
-> market share between Bazaar, CVS, Git, Mercurial and Subversion.
->
-> I've been monitoring this since 2014-08-05 to see how things were
-> developing, and it's a good indication of the popularity of the various
-> version control systems.
->
-> I've created a repository at
-> <https://github.com/sunny256/openhub-repositories> where the project
-> scripts and data files are stored, along with graphs in SVG format.
->
-> The graphs are pretty interesting:
->
-> https://github.com/sunny256/openhub-repositories/blob/master/graph/relative.svg
->  Graphs of relative growth between the various version control systems.
->
-> https://github.com/sunny256/openhub-repositories/blob/master/graph/relative-zoom.svg
->  Zoomed-in version of relative.svg. Git goes through the ceiling.
->
-> https://github.com/sunny256/openhub-repositories/blob/master/graph/repos.svg
->  Total number of repositories.
-
-number of repositories is an interesting datapoint, but activity in the repos 
-would be far more interesting. There are a lot of repos of various types out 
-there that haven't been touched for years.
-
-David Lang
---680960-184397768-1427839402=:26359--
+- =C3=98yvind
