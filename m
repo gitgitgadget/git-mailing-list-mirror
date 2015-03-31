@@ -1,119 +1,131 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] init: don't set core.worktree when initializing /.git
-Date: Tue, 31 Mar 2015 14:34:23 -0400
-Message-ID: <20150331183423.GD19206@peff.net>
-References: <0FD999DB-3DBF-40D4-8128-715BDC49EAAB@free.fr>
- <20150331181552.GC19206@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: RFC: git status --amend
+Date: Tue, 31 Mar 2015 11:35:17 -0700
+Message-ID: <xmqqvbhhqal6.fsf@gitster.dls.corp.google.com>
+References: <551AB64F.4030400@cs-ware.de> <20150331180414.GB19206@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Cedric Gava <gava.c@free.fr>
-X-From: git-owner@vger.kernel.org Tue Mar 31 20:34:35 2015
+Content-Type: text/plain
+Cc: Sven Strickroth <sven@cs-ware.de>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Mar 31 20:35:27 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yd0zg-0000Ds-HW
-	for gcvg-git-2@plane.gmane.org; Tue, 31 Mar 2015 20:34:32 +0200
+	id 1Yd10Y-00010X-HV
+	for gcvg-git-2@plane.gmane.org; Tue, 31 Mar 2015 20:35:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752573AbbCaSe1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Mar 2015 14:34:27 -0400
-Received: from cloud.peff.net ([50.56.180.127]:40495 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751032AbbCaSe0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Mar 2015 14:34:26 -0400
-Received: (qmail 19345 invoked by uid 102); 31 Mar 2015 18:34:26 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 31 Mar 2015 13:34:25 -0500
-Received: (qmail 26411 invoked by uid 107); 31 Mar 2015 18:34:43 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 31 Mar 2015 14:34:43 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 31 Mar 2015 14:34:23 -0400
-Content-Disposition: inline
-In-Reply-To: <20150331181552.GC19206@peff.net>
+	id S1752285AbbCaSfW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Mar 2015 14:35:22 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:55331 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751112AbbCaSfV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Mar 2015 14:35:21 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7CC3C44F63;
+	Tue, 31 Mar 2015 14:35:20 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=J3WaIPVemQXC8DrvSDMfvGIwsMk=; b=ULslxK
+	PVvdeQXSVgL5UvXXSCLPqCwhcPAt4wnfJoiDrjfIV02ZeT4uUIBkN1XWqa2Ss/0C
+	yB0oLv+pM2MadwUHNHlfosoEMTJ9f2co1aD+JJLsUTin+Adm0yoCuGE40a0xL7RR
+	B1BL8nSwuc2yp8qr5INvcdYMMshG5qcvMeHc4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=W2Q1haU4yhu9Zs+CQuc5n6pW+rur/h4u
+	fw1N3p89/cwD1BDC+bCjPTkkoGklaca7pZc5h9cfKx5iIDil9kRerKYk+Vpu6cDR
+	s4qa7vuFtvewzZunCBs0N5a3aucif77UKrL4UVbV1HHsZibrbv85zdBUk3y+A3Tq
+	LNetPkFZaRI=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7613F44F62;
+	Tue, 31 Mar 2015 14:35:20 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EC2CF44F60;
+	Tue, 31 Mar 2015 14:35:18 -0400 (EDT)
+In-Reply-To: <20150331180414.GB19206@peff.net> (Jeff King's message of "Tue,
+	31 Mar 2015 14:04:14 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: AE91F960-D7D4-11E4-B41C-11859F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266545>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266546>
 
-If you create a git repository in the root directory with
-"git init /", we erroneously write a core.worktree entry.
-That can be surprising if you later move the .git directory
-to another path (which usually moves the relative working
-tree, but is foiled if there is an explicit worktree set).
+Jeff King <peff@peff.net> writes:
 
-The problem is that we check whether core.worktree is
-necessary by seeing if we can make the git_dir by
-concatenating "/.git" onto the working tree. That would lead
-to "//.git" in this instance, but we actually have "/.git"
-(without the doubled slash).
+> On Tue, Mar 31, 2015 at 04:59:27PM +0200, Sven Strickroth wrote:
+>
+>> for frontends or scripts it would be helpful to be able to use "git
+>> status" for getting the repository status compared to HEAD~1 instead of
+>> only HEAD (as provided by "git commit --amend" in the pre-filled commit
+>> message).
+>> 
+>> Thus, I'm suggesting to add a "--amend" parameter (or a parameter with a
+>> better naming) to "git status".
+>> 
+>> What do you think of this idea?
+>
+> Once upon a time "git status" really was just "git commit --dry-run".
+> These days it has diverged a bit. But I think you could get what you
+> want with:
+>
+>   git commit --dry-run --amend
+>
+> It even supports alternate styles like --short.
 
-We can fix this by special-casing the root directory. I also
-split the logic out into its own function to make the
-conditional a bit more readable (and used skip_prefix, which
-I think makes it a little more obvious what is going on).
+I think everything you said is correct, but your "diverged a bit"
+may hide one difference that could be crucial depending on the use
+case: pathspec.
 
-No tests, as we would need to be able to write to "/" to do
-so. I did manually confirm that:
+What "git commit --dry-run [--other-options] <pathspec>" does, and
+what "git status [--other-options] <pathspec>" does, are different.
 
-  sudo git init /
-  cd /
-  git rev-parse --show-toplevel
-  git config core.worktree
+With or without --dry-run, to "git commit", <pathspec> tells the
+command to update the index at the paths specified by it from the
+working tree contents before proceeding (the contents recorded for
+the other paths depend on the use of -o or -i option).  But ever
+since "git status" departed from being "git commit -n", a pathspec
+given to the command means completely different thing.
 
-Still finds the top-level correctly (as "/"), and does not
-set any core.worktree variable.
+After working on various parts of the tree, planning to conclude the
+current work with "commit", "git status directory/" is a good way to
+see what you did in that directory without seeing what you did
+outside (which will be included in the commit, too).
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-The current behavior isn't _wrong_, in the sense that it's OK to set
-core.worktree when we don't need to. But I think it is unnecessarily
-confusing to users who expect to be able to move .git directories
-around, because it usually just works. So I'd call this an extremely
-minor bug.
+But what you get from "git commit --no-edit --dry-run directory/"
+would be different; it would show all the changes in the working
+tree inside directory/, including the ones that you deliberately
+left out of the index, as paths to be committed.
 
- builtin/init-db.c | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+Having said all that, I am a bit torn on this topic.  Just like "git
+status" is a way to ask "I've worked so far, planning to conclude
+this with 'git commit'; tell me what I have achieved so far that are
+in the index and in the working tree, possibly limiting to these
+paths?", I think it is a reasonable thing to ask the same question
+with "s/git commit/git commit --amend/".
 
-diff --git a/builtin/init-db.c b/builtin/init-db.c
-index 6723d39..6efe2df 100644
---- a/builtin/init-db.c
-+++ b/builtin/init-db.c
-@@ -182,6 +182,21 @@ static int git_init_db_config(const char *k, const char *v, void *cb)
- 	return 0;
- }
- 
-+/*
-+ * If the git_dir is not directly inside the working tree, then git will not
-+ * find it by default, and we need to set the worktree explicitly.
-+ */
-+static int needs_work_tree_config(const char *git_dir, const char *work_tree)
-+{
-+	/* special case that is missed by the general rule below */
-+	if (!strcmp(work_tree, "/") && !strcmp(git_dir, "/.git"))
-+		return 0;
-+	if (skip_prefix(git_dir, work_tree, &git_dir) &&
-+	    !strcmp(git_dir, "/.git"))
-+		return 0;
-+	return 1;
-+}
-+
- static int create_default_files(const char *template_path)
- {
- 	const char *git_dir = get_git_dir();
-@@ -274,10 +289,8 @@ static int create_default_files(const char *template_path)
- 		/* allow template config file to override the default */
- 		if (log_all_ref_updates == -1)
- 		    git_config_set("core.logallrefupdates", "true");
--		if (!starts_with(git_dir, work_tree) ||
--		    strcmp(git_dir + strlen(work_tree), "/.git")) {
-+		if (needs_work_tree_config(git_dir, work_tree))
- 			git_config_set("core.worktree", work_tree);
--		}
- 	}
- 
- 	if (!reinit) {
--- 
-2.4.0.rc0.363.gf9f328b
+One workaround might be to
+
+    git reset --soft HEAD^
+    git status [<pathspec>]
+    ...
+    git commit -c @{1}
+
+but that is simply too error prone and ugly.  I would say it would
+be better if "status" knows how to answer that "I am planning to
+conclude with 'git commit --amend'" question.
+
+The reason why I am torn is because I do not think "status --amend"
+is a sensible name for that option.  "status" is not about amending
+anything.
+
+If the normal "status" is "give me status for the next commit", this
+new mode would be "give me status for the 'commit --amend'".  Naming
+it "git status --for-amend" crossed my mind, but it does not sound
+great to me, either.
+
+So...
