@@ -1,57 +1,117 @@
-From: "Nicole" <zfrdzqt@ya.ru>
-Subject: Re:Make 2015 the best one yourself!
-Date: Wed, 1 Apr 2015 00:16:15 +0300
-Message-ID: <20150331211818.DE710CCD4F9@balconyhosting.ru>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 6/6] sha1_name: implement @{push} shorthand
+Date: Tue, 31 Mar 2015 14:37:25 -0700
+Message-ID: <xmqqk2xwq25m.fsf@gitster.dls.corp.google.com>
+References: <20150331173339.GA17732@peff.net>
+	<20150331173834.GF18912@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8";
-Content-Transfer-Encoding: 8BIT
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Tue Mar 31 23:21:28 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Mar 31 23:37:42 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yd3b9-0008Jg-GU
-	for gcvg-git-2@plane.gmane.org; Tue, 31 Mar 2015 23:21:23 +0200
+	id 1Yd3qp-0004Y7-IZ
+	for gcvg-git-2@plane.gmane.org; Tue, 31 Mar 2015 23:37:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754476AbbCaVVT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Mar 2015 17:21:19 -0400
-Received: from 95-54-192-150.static.murmansk.dslavangard.ru ([95.54.192.150]:58041
-	"EHLO balconyhosting.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753192AbbCaVVS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 31 Mar 2015 17:21:18 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by balconyhosting.ru (Postfix) with ESMTP id DE710CCD4F9;
-	Wed,  1 Apr 2015 01:18:18 +0400 (MSK)
-X-Virus-Scanned: Debian amavisd-new at balconyhosting.ru
-Received: from balconyhosting.ru ([127.0.0.1])
-	by localhost (balconyhosting.ru [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id QFQsUF6cM007; Wed,  1 Apr 2015 01:18:17 +0400 (MSK)
-Received: from yrbocpzod.waw.wcvy.by (c-f33fe255.018-22-6862671.cust.bredbandsbolaget.se [85.226.63.243])
-	(Authenticated sender: voronova@cdt-khibiny.ru)
-	by balconyhosting.ru (Postfix) with ESMTPSA id E6B7ACCD56F;
-	Wed,  1 Apr 2015 01:18:13 +0400 (MSK)
-MessageID: <BBBFECBABCBCAFB@orpeun>
-X-Mailer: The Bat ! v 3.333
+	id S1753606AbbCaVha (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Mar 2015 17:37:30 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:62398 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753119AbbCaVh2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Mar 2015 17:37:28 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7828945AFA;
+	Tue, 31 Mar 2015 17:37:27 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=33kmKMHF0xgvZXJNqJFklb9LtgU=; b=tHJ7sQ
+	jUg0WeN99PLSiYhF/RFfJ7whktxq2zlSoSro+l9y72uxWwnQQOH8HlQLFCy1zHFn
+	DnZQygXc2Ekk4+bi+GZo0bmXdhq3JvG9cNSM2OkqK6mUnZXuXjuXCua2H0Yd6IkA
+	QdyQMmoppoldUw9ter9q3kqfGevJAPnpdPYC8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=CELKUuwPAUOCC8Hm2pDeiYmxkvy7BXOi
+	8mYCla4UOFrj729Uc1TJt8UILx4ssAg9Ihuu+7WM9VMkpYDMsOzuCdqxWvT+OGAz
+	qn8MrJMYWqEJmaknT/cdkQKWKdL/V77DBgLof5bQVo2dadkpYHIlpAkZDw6NxqLf
+	pmocTpINr2M=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 71C9845AF9;
+	Tue, 31 Mar 2015 17:37:27 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E47F545AF8;
+	Tue, 31 Mar 2015 17:37:26 -0400 (EDT)
+In-Reply-To: <20150331173834.GF18912@peff.net> (Jeff King's message of "Tue,
+	31 Mar 2015 13:38:35 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 2025EA8C-D7EE-11E4-976A-11859F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 6.4 points;
- *  0.5 FROM_LOCAL_NOVOWEL From: localpart has series of non-vowel letters
- *  1.0 HTTP_EXCESSIVE_ESCAPES URI: Completely unnecessary %-escapes inside
- *      a URL
- *  2.1 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
- *      [URIs: cc69.ru]
- *  2.9 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
- *      [URIs: cc69.ru]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266558>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266559>
 
+Jeff King <peff@peff.net> writes:
 
+> diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
+> index 0796118..5d9df25 100644
+> --- a/Documentation/revisions.txt
+> +++ b/Documentation/revisions.txt
+> @@ -98,6 +98,31 @@ some output processing may assume ref names in UTF-8.
+>    `branch.<name>.merge`).  A missing branchname defaults to the
+>    current one.
+>  
+> +'<branchname>@\{push\}', e.g. 'master@\{push\}', '@\{push\}'::
+> +  The suffix `@{push}` reports the branch "where we would push to" if
 
-                              only now, Make 2015 the best one yourself! 
+The corresponding description for upstream begins like this:
 
+  The suffix '@\{upstream\}' to a branchname (short form '<branchname>@\{u\}')
 
-                                         http://www.google.com/url?q=%68%74tp%3A%2F%2F%63%63%62%6ftcc%2ec%6369.r%75%2F%23852%39%6e%64%35%6d%31%6c6%67%74o%77&sa=D&sntz=1&usg=AFQjCNHmdUNh2YMyh5HH4xz0siXbLrN_CQ
+and makes me wonder if the existing backslashes are unnecessary, or
+if you forgot to use them in the new text.
+
+> @@ -1104,6 +1111,95 @@ static int interpret_upstream_mark(const char *name, int namelen,
+>  	return len + at;
+>  }
+>  
+> +static char *tracking_ref_for(struct remote *remote, const char *refname)
+> +{
+> +	char *ret;
+> +
+> +	ret = apply_refspecs(remote->fetch, remote->fetch_refspec_nr, refname);
+> +	if (!ret)
+> +		die(_("@{push} has no local tracking branch for remote '%s'"),
+> +		    refname);
+
+I would imagine that it would be very plausible that anybody with a
+specific remote and the name of the ref that appears on that remote
+would want to learn the local name of the remote-tracking ref we use
+to track it.
+
+But the error message limits the callers only to those who are
+involved in @{push} codepath.  Shouldn't the error check be done in
+the caller instead, anticipating the day this useful function ceases
+to be static?
+
+I would suspect that such a change would make it just a one-liner,
+but I think this helper that takes remote and their refname is much
+easier to read than four inlined calls to apply_refspecs() that have
+to spell out remote->fetch, remote->fetch_refspec_nr separately.
+
+Perhaps we would want 
+
+	struct refspecs {
+        	int nr, alloc;
+                const char **refspec;
+	} fetch_refspec;
+
+in "struct remote", instead of these two separate fields, and then
+make apply_refspecs() take "struct refspecs *"?  I haven't checked
+and thought enough to decide if we want "struct refspec *" also in
+that new struct, though.
