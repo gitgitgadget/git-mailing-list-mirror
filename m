@@ -1,126 +1,126 @@
-From: Joey Hess <joeyh@joeyh.name>
-Subject: [PATCH] improve documentation for some commands that use pathspecs
-Date: Tue, 31 Mar 2015 11:22:24 -0400
-Message-ID: <20150331152224.GA16617@kitenet.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] docs: Clarify what git-rebase's "--preserve-merges" does
+Date: Tue, 31 Mar 2015 09:28:36 -0700
+Message-ID: <xmqqh9t1rv0r.fsf@gitster.dls.corp.google.com>
+References: <CAHGBnuO5Y=ejJLxktk0GsnXx8h2LwPW1i7TqDePhfZ_zLR_X9A@mail.gmail.com>
+	<xmqqd23vzkon.fsf@gitster.dls.corp.google.com>
+	<871tkblapv.fsf@javad.com> <55147D27.1060204@kdbg.org>
+	<87lhidlebw.fsf@javad.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Mar 31 17:22:57 2015
+Content-Type: text/plain
+Cc: Johannes Sixt <j6t@kdbg.org>,
+	Sebastian Schuberth <sschuberth@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Sergey Organov <sorganov@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 31 18:28:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ycy0E-0008PC-1C
-	for gcvg-git-2@plane.gmane.org; Tue, 31 Mar 2015 17:22:54 +0200
+	id 1Ycz25-0000yR-H5
+	for gcvg-git-2@plane.gmane.org; Tue, 31 Mar 2015 18:28:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755033AbbCaPWm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Mar 2015 11:22:42 -0400
-Received: from kitenet.net ([66.228.36.95]:50123 "EHLO kitenet.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752848AbbCaPWh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Mar 2015 11:22:37 -0400
-X-Question: 42
-Authentication-Results: kitenet.net; dkim=pass
-	reason="1024-bit key; unprotected key/testing"
-	header.d=joeyh.name header.i=@joeyh.name header.b=PdRBK1fs;
-	dkim-adsp=pass; dkim-atps=neutral
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=joeyh.name; s=mail;
-	t=1427815344; bh=ys3S12Isrshnbnvb0nnvx+6R6AI3d8Z9R0U/Mj+ONu0=;
-	h=Date:From:To:Subject:From;
-	b=PdRBK1fskQiwo9O97CGPv1DINQk5CjVjLafhdOXT4JwQMmEOBzoFkwiIJaTn3BZmj
-	 HiIV9THKUwQ75AMtcOgyg2+FHaunw2R03/Aq6Z+POTcV7zMWrK3TC3NSfGYLDMXh7y
-	 FSSQN3S7c1HtQvkx1AzFIotgqanqSBP84tV/FpZQ=
-Content-Disposition: inline
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Spam-Status: No, score=-93.0 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_PBL,RCVD_IN_RP_RNBL,
-	RCVD_IN_SORBS_DUL,RDNS_NONE,SPF_SOFTFAIL,USER_IN_WHITELIST autolearn=no
-	autolearn_force=no version=3.4.0
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on kite.kitenet.net
+	id S1754470AbbCaQ2m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Mar 2015 12:28:42 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64014 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754447AbbCaQ2j (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Mar 2015 12:28:39 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 851DC43F80;
+	Tue, 31 Mar 2015 12:28:38 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=GQ31HH/iLnoBzuRdy2sonU6BbaI=; b=aaqvDV
+	Nty6V4qWlXtJaRkDWirEY3VodivssNywuV0lbcYo8mdFqNVNPB78nPPKL0eeLOLt
+	TmAXOXeszfHFEwAqtw7LI1lkUSZn6jt7Dw1mSbMckdIE9n7HHOjGHEqJ1Sr1DFh1
+	2zogUZUKv7IRjqhWV4twofWJxD5hKKce+yN6o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Tc6ueCj9BYMzZrZrihPtkEI1ynjVWWQs
+	m+ogIqc2qB4RtMrqi2taEWFmiU+DQM6ASCAlrR1mbOn13o/VYwJz7ZCgo84xHckJ
+	wcBiIeKvmR+qW2QPEtAZPXmO5/sM5DR6r9e1UiywufbyXNAxXPNw7GOutJANWQ9w
+	EyVKRGmM8aA=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7CC3A43F7F;
+	Tue, 31 Mar 2015 12:28:38 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EC4A743F7E;
+	Tue, 31 Mar 2015 12:28:37 -0400 (EDT)
+In-Reply-To: <87lhidlebw.fsf@javad.com> (Sergey Organov's message of "Tue, 31
+	Mar 2015 12:13:23 +0300")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: FC05DF98-D7C2-11E4-9D36-11859F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266528>
 
-After being surprised that git-ls-files expands pathspecs, here's a patch
-that would have saved me.
----
- Documentation/git-ls-files.txt | 9 +++++----
- Documentation/git-ls-tree.txt  | 8 ++++----
- 2 files changed, 9 insertions(+), 8 deletions(-)
+Sergey Organov <sorganov@gmail.com> writes:
 
-diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
-index e26f01f..f7a3039 100644
---- a/Documentation/git-ls-files.txt
-+++ b/Documentation/git-ls-files.txt
-@@ -17,7 +17,7 @@ SYNOPSIS
- 		[--exclude-per-directory=<file>]
- 		[--exclude-standard]
- 		[--error-unmatch] [--with-tree=<tree-ish>]
--		[--full-name] [--abbrev] [--] [<file>...]
-+		[--full-name] [--abbrev] [--] [<pathspec>...]
- 
- DESCRIPTION
- -----------
-@@ -101,7 +101,7 @@ OPTIONS
- 
- --with-tree=<tree-ish>::
- 	When using --error-unmatch to expand the user supplied
--	<file> (i.e. path pattern) arguments to paths, pretend
-+	<pathspec> arguments to paths, pretend
- 	that paths which were removed in the index since the
- 	named <tree-ish> are still present.  Using this option
- 	with `-s` or `-u` options does not make any sense.
-@@ -150,9 +150,10 @@ a space) at the start of each line:
- \--::
- 	Do not interpret any more arguments as options.
- 
--<file>::
-+<pathspec>::
- 	Files to show. If no files are given all files which match the other
--	specified criteria are shown.
-+	specified criteria are shown. (Note that this isn't really raw
-+	pathnames, but rather a list of patterns to match.)
- 
- Output
- ------
-diff --git a/Documentation/git-ls-tree.txt b/Documentation/git-ls-tree.txt
-index 16e87fd..58e7f64 100644
---- a/Documentation/git-ls-tree.txt
-+++ b/Documentation/git-ls-tree.txt
-@@ -11,7 +11,7 @@ SYNOPSIS
- [verse]
- 'git ls-tree' [-d] [-r] [-t] [-l] [-z]
- 	    [--name-only] [--name-status] [--full-name] [--full-tree] [--abbrev[=<n>]]
--	    <tree-ish> [<path>...]
-+	    <tree-ish> [<pathspec>...]
- 
- DESCRIPTION
- -----------
-@@ -19,11 +19,11 @@ Lists the contents of a given tree object, like what "/bin/ls -a" does
- in the current working directory.  Note that:
- 
-  - the behaviour is slightly different from that of "/bin/ls" in that the
--   '<path>' denotes just a list of patterns to match, e.g. so specifying
-+   '<pathspec>' denotes just a list of patterns to match, e.g. so specifying
-    directory name (without '-r') will behave differently, and order of the
-    arguments does not matter.
- 
-- - the behaviour is similar to that of "/bin/ls" in that the '<path>' is
-+ - the behaviour is similar to that of "/bin/ls" in that the '<pathspec>' is
-    taken as relative to the current working directory.  E.g. when you are
-    in a directory 'sub' that has a directory 'dir', you can run 'git
-    ls-tree -r HEAD dir' to list the contents of the tree (that is
-@@ -72,7 +72,7 @@ OPTIONS
- 	Do not limit the listing to the current working directory.
- 	Implies --full-name.
- 
--[<path>...]::
-+[<pathspec>...]::
- 	When paths are given, show them (note that this isn't really raw
- 	pathnames, but rather a list of patterns to match).  Otherwise
- 	implicitly uses the root level of the tree as the sole path argument.
--- 
-2.1.4
+> 1. How to calculate the set of commits to rebase.
+>
+> 2. How to rebase merge commits.
+>
+> Can we leave (1) for a while at its current state and focus on (2)?
+
+Perhaps.  You would have to be careful though, so let me think aloud
+a bit...
+
+Suppose you started from an upstream history whose tip was B, and
+you worked on merging some changes X an Y you made earlier on a side
+branch.
+
+         X---Y
+        /     \
+   O---A---B---Z---
+
+In the meantime, the upstream history has advance and now it looks
+like this:
+
+   O---A---B---C---D
+
+You want to forward-port the change done by X, Y on the side branch
+and its merge Z on top of D, right?
+
+In other words, you want to have this:
+
+         X-----------Y
+        /             \
+   O---A---B---C---D---Z'
+
+In this case, replaying the difference going from B to Z on top of D
+may be better than redoing a merge between Y and D, in that the
+former will carry evil merges and resolution of conflict forward.
+
+I wonder if it will be the right way to get a correct result to
+apply the difference to go from B to Z on top of an old commit when
+you are side-porting.
+
+Imagine you want to backport the same X-Y history by redoing the
+merge Z on top of another child of O (i.e. A's sibling).  That is,
+you start from this:
+
+
+         X---Y
+        /     \
+   O---A---B---Z---
+    \
+     M---N
+
+and would want to create this:
+    
+    
+   O           X'--Y'
+    \         /     \    
+     M---N---A'--B'--Z'--
+
+As long as everything down to the merge-base of the parents of the
+original merge (in this example, merge-base across Y and B that are
+Z's parents, which is A) is being transplanted, "apply the
+difference going from B to Z, on top of B', to obtain Z'" should
+work, I would think.
