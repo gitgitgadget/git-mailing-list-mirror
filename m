@@ -1,70 +1,75 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCHv3 5/6] pack-bitmap.c: fix a memleak
-Date: Mon, 30 Mar 2015 23:32:02 -0400
-Message-ID: <20150331033202.GB842@peff.net>
-References: <1427764931-27745-1-git-send-email-sbeller@google.com>
- <1427764931-27745-6-git-send-email-sbeller@google.com>
+Subject: Re: rename a remote does not update pushdefault (v1.9.5)
+Date: Mon, 30 Mar 2015 23:52:56 -0400
+Message-ID: <20150331035256.GA1408@peff.net>
+References: <B2C5B27F9C4A45469123297E3F6BCF0C55DA0AEA07@XMAIL08.UGent.be>
+ <xmqq384mxoka.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: gitster@pobox.com, git@vger.kernel.org, sunshine@sunshineco.com,
-	tanoku@gmail.com, blees@dcon.de
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Tue Mar 31 05:32:12 2015
+Cc: Alexander Duytschaever <Alexander.Duytschaever@UGent.be>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 31 05:53:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YcmuR-0005r7-Cb
-	for gcvg-git-2@plane.gmane.org; Tue, 31 Mar 2015 05:32:11 +0200
+	id 1YcnEg-0006nt-9M
+	for gcvg-git-2@plane.gmane.org; Tue, 31 Mar 2015 05:53:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751359AbbCaDcH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Mar 2015 23:32:07 -0400
-Received: from cloud.peff.net ([50.56.180.127]:40153 "HELO cloud.peff.net"
+	id S1751261AbbCaDw7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Mar 2015 23:52:59 -0400
+Received: from cloud.peff.net ([50.56.180.127]:40162 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750817AbbCaDcE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Mar 2015 23:32:04 -0400
-Received: (qmail 1763 invoked by uid 102); 31 Mar 2015 03:32:04 -0000
+	id S1750836AbbCaDw6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Mar 2015 23:52:58 -0400
+Received: (qmail 2750 invoked by uid 102); 31 Mar 2015 03:52:58 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 30 Mar 2015 22:32:04 -0500
-Received: (qmail 20174 invoked by uid 107); 31 Mar 2015 03:32:22 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 30 Mar 2015 22:52:58 -0500
+Received: (qmail 20302 invoked by uid 107); 31 Mar 2015 03:53:15 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 30 Mar 2015 23:32:22 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 30 Mar 2015 23:32:02 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 30 Mar 2015 23:53:15 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 30 Mar 2015 23:52:56 -0400
 Content-Disposition: inline
-In-Reply-To: <1427764931-27745-6-git-send-email-sbeller@google.com>
+In-Reply-To: <xmqq384mxoka.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266510>
 
-On Mon, Mar 30, 2015 at 06:22:10PM -0700, Stefan Beller wrote:
+On Mon, Mar 30, 2015 at 12:39:17PM -0700, Junio C Hamano wrote:
 
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
->  pack-bitmap.c | 2 ++
->  1 file changed, 2 insertions(+)
+> Whichever way you implement "remote rename", you will make half of
+> the users happy while making other half unhappy.  One use case will
+> be happier if remote.pushdefault is left intact; the other use case
+> will be happier if remote.pushdefault is updated.  There are two
+> sides to this coin.
 > 
-> diff --git a/pack-bitmap.c b/pack-bitmap.c
-> index 365f9d9..62a98cc 100644
-> --- a/pack-bitmap.c
-> +++ b/pack-bitmap.c
-> @@ -986,6 +986,8 @@ void test_bitmap_walk(struct rev_info *revs)
->  		fprintf(stderr, "OK!\n");
->  	else
->  		fprintf(stderr, "Mismatch!\n");
-> +
-> +	free(result);
+> I think the implementation took the most straight-forward path to
+> say "we rename everything inside remote.C.* section and adjust the
+> refspecs for remote-tracking branches because that is what appear in
+> that section"; which allows the first use case and the second use
+> case would be just a single "git config remote.pushDefault C" away.
 
-I think this one is fine. I see you dropped the other bits from
-load_bitmap_entries_v1. There are definitely some leaks there in the
-error case, and I left some notes in the other thread.
+I had a similar thought. But note that we do update "branch.*.remote"
+that points to the renamed remote. So it seems inconsistent that we do
+not similarly update "branch.*.pushremote". And if we update that, it
+seems inconsistent that we do not update "remote.pushdefault".
 
-I don't think those leaks are all that critical (we only load the
-bitmaps one per process, and the memory persists if we succeed, so the
-worst case is that we spend the memory but do not get to use the
-bitmaps). But if your goal is making us valgrind-clean, they would
-certainly count.
+In other words, we should probably choose to update all references or
+none, but we are currently somewhere in between. Of course, the fact
+that the code has been in this limbo for so long makes it doubly
+awkward, as we do not know what people expect (and what they simply
+consider a bug).
+
+So I don't know what the right answer is.
+
+I did take a peek at the code. I don't think updating these variables
+would be too hard, but there needs to be some refactoring around
+remote.c's pushremote_name.  After calling read_config(), we do not have
+a value that exactly corresponds to remote.pushdefault; we overwrite it
+with the branch-specific pushremote if there is one.
 
 -Peff
