@@ -1,130 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] docs: Clarify what git-rebase's "--preserve-merges" does
-Date: Tue, 31 Mar 2015 10:04:16 -0700
-Message-ID: <xmqq8uedrtdb.fsf@gitster.dls.corp.google.com>
-References: <CAHGBnuO5Y=ejJLxktk0GsnXx8h2LwPW1i7TqDePhfZ_zLR_X9A@mail.gmail.com>
-	<xmqqd23vzkon.fsf@gitster.dls.corp.google.com>
-	<871tkblapv.fsf@javad.com> <55147D27.1060204@kdbg.org>
-	<87lhidlebw.fsf@javad.com>
-	<xmqqh9t1rv0r.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 0/6] implement @{push} shorthand
+Date: Tue, 31 Mar 2015 13:33:40 -0400
+Message-ID: <20150331173339.GA17732@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Johannes Sixt <j6t@kdbg.org>,
-	Sebastian Schuberth <sschuberth@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Sergey Organov <sorganov@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 31 19:04:32 2015
+Content-Type: text/plain; charset=utf-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 31 19:34:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YczaX-00042H-J8
-	for gcvg-git-2@plane.gmane.org; Tue, 31 Mar 2015 19:04:29 +0200
+	id 1Yd02v-0002WC-TY
+	for gcvg-git-2@plane.gmane.org; Tue, 31 Mar 2015 19:33:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755661AbbCaREY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Mar 2015 13:04:24 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:63501 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751138AbbCaREV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Mar 2015 13:04:21 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2F5A744C6C;
-	Tue, 31 Mar 2015 13:04:19 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=wFABzjwFpobTHqtOSzabD8VkBuY=; b=S4mY9N
-	IJUL/WYobwl4O/NHzoVx/WFSyBhhBBgzbUk2YBBelbHnQFgYyLxiZlFi/Y1SGmmo
-	Cf2EAO52XUXyz+L/RSBJOnw7520HwY773Kdxh4XJ0TTDOt8/GQQF3jbVcEQ1JcNU
-	Duhwhh9def+et3DhFI+23joWQXTMGOrADtzbs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=kXBz/qJS1UGvyVzwiTl1oE7m2L6gquR5
-	vi/u2EfE7rTJMzrh+aob7U0DREq1FAF+C21+PgHZ/jr0UYkn1sATMmvG1901gjmM
-	IWEutF5hbaJAr4E7eZJrjH4pqbWwZn4hAdL7A834502HbZftuwApWdSmf3vBctjw
-	Fk9/AL+SQv4=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 26B0644C6B;
-	Tue, 31 Mar 2015 13:04:19 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8622C44C6A;
-	Tue, 31 Mar 2015 13:04:18 -0400 (EDT)
-In-Reply-To: <xmqqh9t1rv0r.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Tue, 31 Mar 2015 09:28:36 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: F7E92500-D7C7-11E4-B4E8-11859F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1754774AbbCaRdp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Mar 2015 13:33:45 -0400
+Received: from cloud.peff.net ([50.56.180.127]:40401 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752763AbbCaRdn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Mar 2015 13:33:43 -0400
+Received: (qmail 16648 invoked by uid 102); 31 Mar 2015 17:33:42 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 31 Mar 2015 12:33:42 -0500
+Received: (qmail 25417 invoked by uid 107); 31 Mar 2015 17:34:00 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 31 Mar 2015 13:34:00 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 31 Mar 2015 13:33:40 -0400
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266532>
 
-Junio C Hamano <gitster@pobox.com> writes:
+The basic idea is that in a triangular workflow, it's useful to be able
+to refer to both @{upstream} and "the place I would push to" with a
+shorthand. This idea was discussed over a year ago:
 
-> I wonder if it will be the right way to get a correct result to
-> apply the difference to go from B to Z on top of an old commit when
-> you are side-porting.
->
-> Imagine you want to backport the same X-Y history by redoing the
-> merge Z on top of another child of O (i.e. A's sibling).  That is,
-> you start from this:
->
->
->          X---Y
->         /     \
->    O---A---B---Z---
->     \
->      M---N
->
-> and would want to create this:
->     
->     
->    O           X'--Y'
->     \         /     \    
->      M---N---A'--B'--Z'--
->
-> As long as everything down to the merge-base of the parents of the
-> original merge (in this example, merge-base across Y and B that are
-> Z's parents, which is A) is being transplanted, "apply the
-> difference going from B to Z, on top of B', to obtain Z'" should
-> work, I would think.
+  http://thread.gmane.org/gmane.comp.version-control.git/240144/focus=240198
 
-And just after I send the message because I needed to catch a bus, I
-notice that there is a problem.
+I've found it useful since then, so I decided to clean it up and submit
+it.  This iteration renames it to "@{push}" (rather than "@{publish}"),
+which is more descriptive. It's rebased, as there were some changes in
+the area, and it also fixes some bugs in the original (of course, I may
+also have _introduced_ bugs, as this is largely a rewrite that has not
+had a year's worth of exercise).
 
-Actually, "replay diff going from B to Z instead of merging" must be
-done very carefully.  Imagine when Y in the original history were a
-cherry-pick of M.  What you would be creating would look more like
-this instead:
-     
-    O           X'--.
-     \         /     \    
-      M---N---A'--B'--Z'--
+I also took the opportunity to do some more aggressive refactoring of
+the remote.c code, as there were some bits there that confused me every
+time I looked at it. I think the result is easier to follow.
 
-because Y' becomes a no-op, as the transplanted history already has
-M applied.  But the original "diff going from B to Z" has the effect
-of M already in there.  You would end up adding the same hunk twice
-without noticing.  You somehow need to come up with a way to deal
-with this.
+  [1/6]: remote.c: drop default_remote_name variable
+  [2/6]: remote.c: drop "remote" pointer from "struct branch"
+  [3/6]: remote.c: hoist branch.*.remote lookup out of remote_get_1
+  [4/6]: remote.c: provide per-branch pushremote name
+  [5/6]: sha1_name: refactor upstream_mark
+  [6/6]: sha1_name: implement @{push} shorthand
 
-If you did a real merge between X' and B' to recreate Z', you would
-not have such a problem.
+The one thing I _didn't_ do here is refactor the logic in
+builtin/push.c so what we could reuse it. There's still a switch
+statement here on push_default. I don't like that, but I spent an hour
+or so trying to pull out the push.c logic, and it got rather nasty.
+There are a lot of global variables that get mutated by one-off
+functions, and it all needs to happen in the right order. It looked like
+any serious refactoring there is going to have a risk of regressions in
+push.
 
-One way to be careful when recreating Z' out of Z might be:
+So I punted on that. The simplified logic that is here in sha1_name is
+not too bad, and I feel like we can unify the two at a later date if we
+want to. And I'd much rather see bug reports like "@{push} doesn't act
+like git-push" and deal with that, as opposed to "your series breaks
+push".
 
-    - Retry a merge between the original B and Y, with conflict
-      markers intact;
-
-    - Compare the result with what is recorded in Z.  The
-      differences are textual conflict resolution and evil merge
-      changes;
-
-    - Now try a merge between B' and Y', with conflict markers
-      intact;
-
-    - Apply the difference you obtained in the second step to the
-      result of the third step.
-
-which is essentially the same as what rerere does.
+-Peff
