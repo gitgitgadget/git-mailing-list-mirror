@@ -1,130 +1,91 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH] prune --worktrees: fix expire vs worktree existence condition
-Date: Tue, 31 Mar 2015 19:25:01 +0700
-Message-ID: <CACsJy8DjmSvatifN3s4eyNz5uGuJ=BaTAJrC6aKVa+2Q=MZjeg@mail.gmail.com>
-References: <1427748467-27786-1-git-send-email-max@max630.net>
+From: =?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb.conf.txt: fix typo
+Date: Tue, 31 Mar 2015 15:06:49 +0200
+Message-ID: <551A9BE9.3070907@gmail.com>
+References: <1396558187-5674-1-git-send-email-git-patch@agt-the-walker.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Max Kirillov <max@max630.net>
-X-From: git-owner@vger.kernel.org Tue Mar 31 14:26:00 2015
+Content-Type: text/plain; charset=utf-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio Hamano <gitster@pobox.com>
+To: =?UTF-8?B?SsOpcsO0bWUgWmFnbw==?= <git-patch@agt-the-walker.net>
+X-From: git-owner@vger.kernel.org Tue Mar 31 15:07:26 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YcvEf-0004ZM-Vh
-	for gcvg-git-2@plane.gmane.org; Tue, 31 Mar 2015 14:25:38 +0200
+	id 1Ycvsi-0003Dy-8r
+	for gcvg-git-2@plane.gmane.org; Tue, 31 Mar 2015 15:07:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752479AbbCaMZd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Mar 2015 08:25:33 -0400
-Received: from mail-ig0-f174.google.com ([209.85.213.174]:38733 "EHLO
-	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751259AbbCaMZc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Mar 2015 08:25:32 -0400
-Received: by igbqf9 with SMTP id qf9so15229567igb.1
-        for <git@vger.kernel.org>; Tue, 31 Mar 2015 05:25:31 -0700 (PDT)
+	id S1752012AbbCaNG4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Mar 2015 09:06:56 -0400
+Received: from mail-wg0-f46.google.com ([74.125.82.46]:36231 "EHLO
+	mail-wg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753102AbbCaNGy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Mar 2015 09:06:54 -0400
+Received: by wgra20 with SMTP id a20so18446874wgr.3
+        for <git@vger.kernel.org>; Tue, 31 Mar 2015 06:06:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=Br7Bsk+VNgANlt3ffUBxyKai4kDA9X0WlUgC4HkZNVU=;
-        b=1G2GCZPhu2W5m1JpeCPc2LLx6KkY78y1akQDU/ganwgOnqK5G3HeVC920gaSQAeXzv
-         G2xsn6Ju/JFuUC1RZrc1Zk7j15/i/92xnr95NiCf73eukQ/3+DZ5u2Z2h4jwkDsbCkwu
-         TlEg9Uc7JXEgCqqoZ6lShFqJt1SB+0A82DZITeuqiz8VgkjodcsZD+Qz6aHoZQpcfinG
-         FkbI+S2QMSjWtkZcrpPB9W+G6mk6a6SVwO74vTJCYOM6Fg0yyRmaanHrPzo9L7DAgZVM
-         SZIALnXj67/iUESrx6p/Y+aHVQ0/a2ovviP3aE/3fv8CSmqrW3SqTXWrPjng+ToowQrR
-         A0yQ==
-X-Received: by 10.42.41.148 with SMTP id p20mr66320986ice.62.1427804731420;
- Tue, 31 Mar 2015 05:25:31 -0700 (PDT)
-Received: by 10.107.47.170 with HTTP; Tue, 31 Mar 2015 05:25:01 -0700 (PDT)
-In-Reply-To: <1427748467-27786-1-git-send-email-max@max630.net>
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=5gGf3tNxUzlQRc7LkRXTXfrfTN7vCVzWXQmW+aGBbas=;
+        b=jIcGokRDK/jOFwf4dwE7/hdLvBSDeOX8IBtYluUuSrofQf503nOB1RjB9eFCyMDt9W
+         BUV85mZJFeZhNyyrg9hRI1+L1CrLxuAuYaJXDFiOF3LVwKqGechIUF2gYw+2pG3JbINS
+         jzZXAzIHbdjO21c1rapbJKRRLQS2X31zt9w36iJecMgNncAABI6BgKEhLQTozSTY1qgV
+         GVM2A2IDUIk36h79d6QRhXm3qHd+BSHoOPXrEMVZiCDBqBRgY4FZpHfGkK+Pz3/fDxcR
+         pg2VMMRz09APQYqPUQfhHgmi5lhuSHD8IDhSorlicVtxAi+8mYdrvF6HmMFERsiyVgAP
+         XfgQ==
+X-Received: by 10.195.13.168 with SMTP id ez8mr72730649wjd.30.1427807213757;
+        Tue, 31 Mar 2015 06:06:53 -0700 (PDT)
+Received: from [192.168.130.220] ([158.75.2.130])
+        by mx.google.com with ESMTPSA id lg18sm20867300wic.23.2015.03.31.06.06.52
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 31 Mar 2015 06:06:52 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
+In-Reply-To: <1396558187-5674-1-git-send-email-git-patch@agt-the-walker.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266522>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266523>
 
-On Tue, Mar 31, 2015 at 3:47 AM, Max Kirillov <max@max630.net> wrote:
-> `git prune --worktrees` was pruning worktrees which were non-existent OR
-> expired, while it rather should prune those which are orphaned AND
-> expired, as git-checkout documentation describes. Fix it.
+On 2014-04-03 at 22:49, git-patch@agt-the-walker.net wrote:
+> From: J=C3=A9r=C3=B4me Zago <git-patch@agt-the-walker.net>
 >
-> Add test 'not prune proper checkouts', which uses valid but expired
-> worktree.
+> "build-time" is used everywhere else.
 >
-> Modify test 'not prune recent checkouts' to remove the worktree before
-> pruning - link in worktrees still must survive. In older form it is
-> useless because would pass always when the other test passes.
+> Signed-off-by: J=C3=A9r=C3=B4me Zago <git-patch@agt-the-walker.net>
 
-Urgh.. Ack.
+You are right, it is variable set during build process,
+not after project is built.
 
-> Signed-off-by: Max Kirillov <max@max630.net>
+ACK (for what it is worth).
+
+Acked-by: Jakub Narebski <jnareb@gmail.com>
+
 > ---
->  builtin/prune.c                   | 10 +++++++---
->  t/t2026-prune-linked-checkouts.sh | 12 ++++++++++++
->  2 files changed, 19 insertions(+), 3 deletions(-)
+>   Documentation/gitweb.conf.txt | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> diff --git a/builtin/prune.c b/builtin/prune.c
-> index 34a5ce1..fd31485 100644
-> --- a/builtin/prune.c
-> +++ b/builtin/prune.c
-> @@ -120,11 +120,15 @@ static int prune_worktree(const char *id, struct strbuf *reason)
->                 if (!stat(git_path("worktrees/%s/link", id), &st_link) &&
->                     st_link.st_nlink > 1)
->                         return 0;
-> -               strbuf_addf(reason, _("Removing worktrees/%s: gitdir file points to non-existent location"), id);
-> -               return 1;
-> +               if (st.st_mtime <= expire) {
-> +                   strbuf_addf(reason, _("Removing worktrees/%s: gitdir file points to non-existent location"), id);
-> +                   return 1;
-> +               } else {
-> +                   return 0;
-> +               }
->         }
->         free(path);
-> -       return st.st_mtime <= expire;
-> +       return 0;
->  }
+> diff --git a/Documentation/gitweb.conf.txt b/Documentation/gitweb.con=
+f.txt
+> index 952f503..8b25a2f 100644
+> --- a/Documentation/gitweb.conf.txt
+> +++ b/Documentation/gitweb.conf.txt
+> @@ -482,7 +482,7 @@ project config.  Per-repository configuration tak=
+es precedence over value
+>   composed from `@git_base_url_list` elements and project name.
+>   +
+>   You can setup one single value (single entry/item in this list) at =
+build
+> -time by setting the `GITWEB_BASE_URL` built-time configuration varia=
+ble.
+> +time by setting the `GITWEB_BASE_URL` build-time configuration varia=
+ble.
+>   By default it is set to (), i.e. an empty list.  This means that gi=
+tweb
+>   would not try to create project URL (to fetch) from project name.
 >
->  static void prune_worktrees(void)
-> diff --git a/t/t2026-prune-linked-checkouts.sh b/t/t2026-prune-linked-checkouts.sh
-> index e885baf..1821a48 100755
-> --- a/t/t2026-prune-linked-checkouts.sh
-> +++ b/t/t2026-prune-linked-checkouts.sh
-> @@ -4,6 +4,10 @@ test_description='prune $GIT_DIR/worktrees'
 >
->  . ./test-lib.sh
->
-> +test_expect_success initialize '
-> +       git commit --allow-empty -m init
-> +'
-> +
->  test_expect_success 'prune --worktrees on normal repo' '
->         git prune --worktrees &&
->         test_must_fail git prune --worktrees abc
-> @@ -77,8 +81,16 @@ test_expect_success 'not prune recent checkouts' '
->         mkdir zz &&
->         mkdir -p .git/worktrees/jlm &&
->         echo "$(pwd)"/zz >.git/worktrees/jlm/gitdir &&
-> +       rmdir zz &&
->         git prune --worktrees --verbose --expire=2.days.ago &&
->         test -d .git/worktrees/jlm
->  '
->
-> +test_expect_success 'not prune proper checkouts' '
-> +       test_when_finished rm -r .git/worktrees &&
-> +       git checkout "--to=$PWD/nop" --detach master &&
-> +       git prune --worktrees &&
-> +       test -d .git/worktrees/nop
-> +'
-> +
->  test_done
-> --
-> 2.3.4.2801.g3d0809b
->
-
-
-
--- 
-Duy
