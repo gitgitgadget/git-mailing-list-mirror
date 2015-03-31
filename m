@@ -1,104 +1,85 @@
-From: "Holloway, Blair" <Blair_Holloway@playstation.sony.com>
-Subject: [PATCH] git-p4: fix filetype detection on files opened exclusively
-Date: Tue, 31 Mar 2015 21:54:08 +0000
-Message-ID: <2D2A7688059E344DB86768405D63DEB42D3D75FC@USCULXMSG09.am.sony.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/6] remote.c: drop "remote" pointer from "struct branch"
+Date: Tue, 31 Mar 2015 15:29:48 -0700
+Message-ID: <xmqq384kpzqb.fsf@gitster.dls.corp.google.com>
+References: <20150331173339.GA17732@peff.net>
+	<20150331173555.GB18912@peff.net>
+	<xmqqvbhgq4ci.fsf@gitster.dls.corp.google.com>
+	<20150331222431.GB31948@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "luke@diamand.org" <luke@diamand.org>,
-	"gitster@pobox.com" <gitster@pobox.com>
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Apr 01 00:28:03 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Apr 01 00:30:08 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yd4dY-0000m4-A0
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Apr 2015 00:27:56 +0200
+	id 1Yd4fd-0002et-81
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Apr 2015 00:30:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753090AbbCaW1m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Mar 2015 18:27:42 -0400
-Received: from mail-bn1on0083.outbound.protection.outlook.com ([157.56.110.83]:55120
-	"EHLO na01-bn1-obe.outbound.protection.outlook.com"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752353AbbCaW1i convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 31 Mar 2015 18:27:38 -0400
-X-Greylist: delayed 1050 seconds by postgrey-1.27 at vger.kernel.org; Tue, 31 Mar 2015 18:27:37 EDT
-Received: from CY1PR08MB1199.namprd08.prod.outlook.com (25.163.22.156) by
- CY1PR08MB1213.namprd08.prod.outlook.com (25.163.22.158) with Microsoft SMTP
- Server (TLS) id 15.1.118.21; Tue, 31 Mar 2015 21:54:16 +0000
-Received: from BN1PR08CA0052.namprd08.prod.outlook.com (10.242.217.180) by
- CY1PR08MB1199.namprd08.prod.outlook.com (25.163.22.156) with Microsoft SMTP
- Server (TLS) id 15.1.118.21; Tue, 31 Mar 2015 21:54:13 +0000
-Received: from BN1BFFO11FD010.protection.gbl (2a01:111:f400:7c10::1:139) by
- BN1PR08CA0052.outlook.office365.com (2a01:111:e400:16::52) with Microsoft
- SMTP Server (TLS) id 15.1.125.19 via Frontend Transport; Tue, 31 Mar 2015
- 21:54:14 +0000
-Authentication-Results: spf=none (sender IP is 160.33.194.231)
- smtp.mailfrom=playstation.sony.com; vger.kernel.org; dkim=none (message not
- signed) header.d=none;
-Received-SPF: None (protection.outlook.com: playstation.sony.com does not
- designate permitted sender hosts)
-Received: from usculsndmail04v.am.sony.com (160.33.194.231) by
- BN1BFFO11FD010.mail.protection.outlook.com (10.58.144.73) with Microsoft SMTP
- Server (TLS) id 15.1.136.16 via Frontend Transport; Tue, 31 Mar 2015 21:54:13
- +0000
-Received: from usculsndmail14v.am.sony.com (usculsndmail14v.am.sony.com [146.215.230.105])
-	by usculsndmail04v.am.sony.com (Sentrion-MTA-4.3.2/Sentrion-MTA-4.3.2) with ESMTP id t2VLsCC6019013
-	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=NO);
-	Tue, 31 Mar 2015 21:54:12 GMT
-Thread-Topic: [PATCH] git-p4: fix filetype detection on files opened
- exclusively
-Thread-Index: AdBr+9EPXhqFR9lVR6yxg0vl5M1a4A==
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [146.215.231.6]
-X-EOPAttributedMessage: 0
-X-Forefront-Antispam-Report: CIP:160.33.194.231;CTRY:US;IPV:NLI;EFV:NLI;BMV:1;SFV:NSPM;SFS:(10009020)(6009001)(428002)(199003)(189002)(105586002)(229853001)(87936001)(92566002)(106466001)(2656002)(46406003)(2351001)(110136001)(104016003)(86362001)(55846006)(50466002)(97756001)(19580405001)(54356999)(2501003)(50986999)(33656002)(6806004)(19580395003)(66066001)(2920100001)(47776003)(77156002)(46102003)(101416001)(62966003)(102836002)(7059030)(80792004);DIR:OUT;SFP:1101;SCL:1;SRVR:CY1PR08MB1199;H:usculsndmail04v.am.sony.com;FPR:;SPF:None;MLV:sfv;A:0;MX:1;LANG:en;
-X-Microsoft-Antispam: UriScan:;BCL:0;PCL:0;RULEID:;SRVR:CY1PR08MB1199;UriScan:;BCL:0;PCL:0;RULEID:;SRVR:CY1PR08MB1213;
-X-Microsoft-Antispam-PRVS: <CY1PR08MB1199F937FA723860871AD9F9C2F40@CY1PR08MB1199.namprd08.prod.outlook.com>
-X-Exchange-Antispam-Report-Test: UriScan:;
-X-Exchange-Antispam-Report-CFA-Test: BCL:0;PCL:0;RULEID:(601004)(5002010)(5005006);SRVR:CY1PR08MB1199;BCL:0;PCL:0;RULEID:;SRVR:CY1PR08MB1199;
-X-Forefront-PRVS: 0532BF6DC2
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Mar 2015 21:54:13.6244
- (UTC)
-X-MS-Exchange-CrossTenant-Id: 86f99b1e-a08b-4313-8c0c-2258d53da610
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=86f99b1e-a08b-4313-8c0c-2258d53da610;Ip=[160.33.194.231];Helo=[usculsndmail04v.am.sony.com]
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY1PR08MB1199
-X-OriginatorOrg: playstation.sony.com
+	id S1753654AbbCaW35 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Mar 2015 18:29:57 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:52175 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753640AbbCaW3v (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Mar 2015 18:29:51 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A4C8445AC9;
+	Tue, 31 Mar 2015 18:29:50 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=yaLgT/o2Ak1P2jNTR9ffrLsl0Mg=; b=a8P+le
+	CQ3/O5wRdSA6gYYgCWCPzAOaPfkItfKO5bhgXnx4DPMuI7QZb3n6JviN6KBLn7Vy
+	WwqBSsnTqxLZrE0vldSsbPftySVpDi7IDfNymPsRC6Ut6B0F9KZ9UDg0u8eYEBJP
+	/ZGtoMnXcswLsLE5U1BxeuVElerkwAfX6xv8k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=S02j1IJJo4bVj2s+/9N8paK4RY+/wpyY
+	e2x/ATOoIWonyth1s/y/kGuRdFCbgaI67ShjwSV99/WHzkagDd3WQqdthdkmge90
+	egJd4qmnxGkplUchPJuxGX4tvW4ZKVShwAq8WLFweHe5HTImMHO0ZMclEtVfpMzi
+	IqgrXJ0k7V4=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9E64445AC7;
+	Tue, 31 Mar 2015 18:29:50 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 07E7245ABB;
+	Tue, 31 Mar 2015 18:29:49 -0400 (EDT)
+In-Reply-To: <20150331222431.GB31948@peff.net> (Jeff King's message of "Tue,
+	31 Mar 2015 18:24:31 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 719414F0-D7F5-11E4-ADEE-11859F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266568>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266569>
 
-If a Perforce server is configured to automatically set +l (exclusive lock) on
-add of certain file types, git p4 submit will fail during getP4OpenedType, as
-the regex doesn't expect the trailing '*exclusive*' from p4 opened:
+Jeff King <peff@peff.net> writes:
 
-//depot/file.png#1 - add default change (binary+l) *exclusive*
+> On Tue, Mar 31, 2015 at 01:50:05PM -0700, Junio C Hamano wrote:
+>
+>> it first looked somewhat unnatural that you kept the name with which
+>> you need to trigger a search for the structure, instead of keeping
+>> the structure, one of whose field is its name already.
+> ...
+> That is the reason I was trying to explain above. Though I suppose you
+> could argue that remote_name suffers the same question (i.e., would we
+> ever set it to "origin"?)
 
-Signed-off-by: Blair Holloway <blair_holloway@playstation.sony.com>
----
- git-p4.py | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Well, another would be that by keeping remote_name and making remote
+on-demand, we may still have to keep all the defined branches in
+core but we do not have to instanciate all the remotes, if each
+branch only knows the remote_name.  A single look-up may be cheap
+but that is not a good reason to do one-per-each-branch if we do not
+need to.
 
-diff --git a/git-p4.py b/git-p4.py
-index ff132b2..d43482a 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -368,7 +368,7 @@ def getP4OpenedType(file):
-     # Returns the perforce file type for the given file.
- 
-     result = p4_read_pipe(["opened", wildcard_encode(file)])
--    match = re.match(".*\((.+)\)\r?$", result)
-+    match = re.match(".*\((.+)\)( \*exclusive\*)?\r?$", result)
-     if match:
-         return match.group(1)
-     else:
--- 
-1.8.3.msysgit.0
+> It is much worse for pushremotes, which can come from
+> branch.*.pushremote, remote.pushdefault, branch.*.remote, or "origin".
+>
+> I'll try to re-word the commit message.
+
+Thanks.
