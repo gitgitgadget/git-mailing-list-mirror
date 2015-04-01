@@ -1,69 +1,87 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: [bug (maybe)] Applying patch with '---'
-Date: Wed, 1 Apr 2015 15:37:01 +1300
-Message-ID: <CAFOYHZC6Qd9wkoWPcTJDxAs9u=FGpHQTkjE-guhwkya0DRVA6g@mail.gmail.com>
+From: Phillip Susi <psusi@ubuntu.com>
+Subject: Re: Clone from shallow bundle bug
+Date: Tue, 31 Mar 2015 22:56:36 -0400
+Message-ID: <551B5E64.9070906@ubuntu.com>
+References: <551B0D37.5070407@ubuntu.com> <xmqqbnj8q0bm.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: GIT <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Apr 01 04:37:12 2015
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 01 05:00:06 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yd8Wi-0007yg-S4
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Apr 2015 04:37:09 +0200
+	id 1Yd8ss-0001EE-Pe
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Apr 2015 05:00:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752364AbbDAChD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Mar 2015 22:37:03 -0400
-Received: from mail-pa0-f44.google.com ([209.85.220.44]:35056 "EHLO
-	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751271AbbDAChC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Mar 2015 22:37:02 -0400
-Received: by patj18 with SMTP id j18so37825180pat.2
-        for <git@vger.kernel.org>; Tue, 31 Mar 2015 19:37:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=YFP9jwI+LU5onXs0ghsTmubIbpR3gdQ/I7d7Lry1DSY=;
-        b=c/eWWqweGDUm2DImgp6Fk0MQHz7dyobp5rMr800XIypBgLKawvffYYh43UOsIdke6T
-         45h3ReKYmTgj656U2gIltoNJMIVJP5HH1ZMOzkzEvwL21iBcbkmmBDAfj41nHavqvOl/
-         oh/G3LgstFZZeI57f2WylXE1Y24RYcMxS3zoL2sb7WZlmEm/MyvubrcPxZ+uhEEZ8q8z
-         CgQD7qX/ZCLXjiPC8JBNX7i6S0YVEt23oMbtESPNujAXgS0FUIxUR1g6PqYK7rNdJ25f
-         7Si0Ur07BKxjEKXA9iK1aFuwA9q4EWSSgV9GhokllZGIi/KMRG0glN1QP6agib7ykdY3
-         PVXQ==
-X-Received: by 10.70.47.102 with SMTP id c6mr15740290pdn.24.1427855821962;
- Tue, 31 Mar 2015 19:37:01 -0700 (PDT)
-Received: by 10.70.0.171 with HTTP; Tue, 31 Mar 2015 19:37:01 -0700 (PDT)
+	id S1753413AbbDAC74 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Mar 2015 22:59:56 -0400
+Received: from cdptpa-outbound-snat.email.rr.com ([107.14.166.226]:24303 "EHLO
+	cdptpa-oedge-vip.email.rr.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752125AbbDAC7w (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 Mar 2015 22:59:52 -0400
+Received: from [72.238.77.169] ([72.238.77.169:37851] helo=[192.168.1.142])
+	by cdptpa-oedge02 (envelope-from <psusi@ubuntu.com>)
+	(ecelerity 3.5.0.35861 r(Momo-dev:tip)) with ESMTP
+	id 31/35-24812-46E5B155; Wed, 01 Apr 2015 02:56:37 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
+In-Reply-To: <xmqqbnj8q0bm.fsf@gitster.dls.corp.google.com>
+X-RR-Connecting-IP: 107.14.168.130:25
+X-Cloudmark-Score: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266589>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266590>
 
-Hi List,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-So I was just sent a patch generated with 'git format-patch' that 'git
-am' fails to apply correctly. It applies but part of the commit
-message is lost.
+On 03/31/2015 06:17 PM, Junio C Hamano wrote:
+> Phillip Susi <psusi@ubuntu.com> writes:
+> 
+>> I made a shallow clone of my repo, then used git bundle create to
+>> pack it all into a bundle file, then cloned from that bundle.
+> 
+> I think the introdution of shallow clone feature broke git bundle
+> create by not teaching it that its shallow boundaries are
+> prerequisite commits to unbundle its contents.  IOW, the bundle
+> created from the shallow clone is broken, I would think.
 
-The problem is that the commit message has lines like
+It seems to me that it isn't exactly broken; it just needs to put
+something in the bundle noting that it was built from a shallow clone,
+and then when cloning from the shallow bundle, the new clone needs its
+.git/shallow file.
 
---- Foo happened
-    did some things to handle Foo
---- Bar happened
-    Still processing update from Foo which led to a crash
+In other words, the bundle contains all of the objects in the shallow
+clone, so a new shallow clone can be correctly constructed from the
+bundle, it's just that the new clone doesn't *know* it too is shallow
+and things like git log and gitk need to stop following the history
+chain when they reach the shallow point rather than complain that the
+rest of the history is missing ( which is intentional ).
 
-git mailinfo seems to discard everything after the first '--- Blah'. I
-know ^---$ is special but I thought ^---.+$ would be OK. I know git
-mailinfo shouldn't handle garbage input but I guess the problem I have
-is that the patch was generated by git format-patch so surely git
-mailinfo (and therefore git am) _should_ handle something generated by
-generated by git format-patch.
+For that matter, if you do create a depth limited bundle from a non
+shallow repository, then try to clone from it, the cloned repo should
+automatically become shallow rather than complain about missing history.
 
-Do people agree with my thinking? I'm not sure if it would be
-appropriate for git format-patch to produce a warning or for git
-mailinfo to tighten the matching of '---'.
+In other words, any time you clone from a bundle, the clone process
+should check if the full history is in the bundle, and if not,
+automatically make the new repo shallow so as to avoid the error
+messages about the missing history.
 
-Regards,
-Chris
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCgAGBQJVG15kAAoJENRVrw2cjl5RnvgH/iMyN/1U2zg+ju/teVEQIMRL
+prvC60S9/yLxSp6RmiXpN2xuGHMkn7i2y6XpM9RQdE6ETeGaIw7UaDan3r7BPTSD
++Q9DrAM0g17IGNxvmGPiJZP7j0t2e43oTA9KM8alf6icMU/mWJgQsbtc9QFVfVkd
+jsYevK1GR6ysrAHBAV6GxKfNw5yw3N+kTf9s2rKXWIFaArD0rcKJZVxiygMlhVSa
+hT4j3+n5f3n0WMDVxFzhwOaW+yrPiXF3gs1pKFX8GT5g1BtvOAEnyskSgA5nZsNB
+G53ncyyefinaaBqCvPSbcTLXmWLV8QuLBExc13BWXiVUD2rRNQr7u1ihbxWKyvU=
+=D90B
+-----END PGP SIGNATURE-----
