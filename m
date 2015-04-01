@@ -1,105 +1,86 @@
-From: Fredrik Gustafsson <iveqy@iveqy.com>
-Subject: Re: VCS popularity
-Date: Wed, 1 Apr 2015 15:07:49 +0200
-Message-ID: <20150401130749.GB12910@paksenarrion.iveqy.com>
-References: <CAA787rkKYQ=TJezeLy0f=aGs2GR8ypuxmr2qA2py+hGsC+juVA@mail.gmail.com>
- <alpine.DEB.2.02.1503311502240.26359@nftneq.ynat.uz>
- <CAA787rm1qfaLb=ZAvZ19h+_EBv-a3S7xV=0B6kMfjYpKsAbNcg@mail.gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: Clone from shallow bundle bug
+Date: Wed, 1 Apr 2015 20:09:55 +0700
+Message-ID: <CACsJy8C4G01LOhg13=rhkCTMGTq-NTHgG-k-kaoT9jALnd7CZw@mail.gmail.com>
+References: <551B0D37.5070407@ubuntu.com> <CACsJy8C0wMFiPw1thSWN-dPVW+9N=JXDsy_HFCj=Oyu2rf40eg@mail.gmail.com>
+ <551BEA4A.9050708@ubuntu.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: David Lang <david@lang.hm>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: =?iso-8859-1?B?2Hl2aW5kIEEu?= Holm <sunny@sunbase.org>
-X-From: git-owner@vger.kernel.org Wed Apr 01 15:08:00 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Phillip Susi <psusi@ubuntu.com>
+X-From: git-owner@vger.kernel.org Wed Apr 01 15:10:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YdINB-0008JR-ND
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Apr 2015 15:07:58 +0200
+	id 1YdIPf-0001XS-5z
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Apr 2015 15:10:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753222AbbDANHx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Apr 2015 09:07:53 -0400
-Received: from mail-la0-f44.google.com ([209.85.215.44]:33421 "EHLO
-	mail-la0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752986AbbDANHw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Apr 2015 09:07:52 -0400
-Received: by lajy8 with SMTP id y8so35998050laj.0
-        for <git@vger.kernel.org>; Wed, 01 Apr 2015 06:07:51 -0700 (PDT)
+	id S1753029AbbDANK1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Apr 2015 09:10:27 -0400
+Received: from mail-ie0-f175.google.com ([209.85.223.175]:35143 "EHLO
+	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752893AbbDANK0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Apr 2015 09:10:26 -0400
+Received: by ierf6 with SMTP id f6so42017985ier.2
+        for <git@vger.kernel.org>; Wed, 01 Apr 2015 06:10:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=Sj3N4+XTLxaRGoIS8mVxQwVWrl16VDVKVtimlq1Ag4E=;
-        b=q8hxnaR4yYoNvex/KPMNUScC3zewKd5SqXgsGQaoXlE71CQ8tYz3KJ+NhS4X+KgHSA
-         2ky2c0Nfg6WaynL1zc1fhm/vTjssMn18lePk+o0QdkOTQf6JadVma4IB6UsesXeWtLEZ
-         hrhCGCvMT8arhXp4DBe2mIfHqUTRukbBZlkVxiKrpGueGt1tNZMOwtvIh3BcMopYvJ6c
-         N6722ouBPlP8J1YFpURnsgCQ19W9ez5tG2vhpXHQ3YCEcfY5y8F64/gV9kG4haEWuglX
-         EpV3TKeS5OC12bKPho1k0c1RUGsRb3DhGX05jPU2UwTvbNterggnFRDD5Csp+ZdQU676
-         EOrQ==
-X-Received: by 10.152.6.136 with SMTP id b8mr35063692laa.93.1427893671210;
-        Wed, 01 Apr 2015 06:07:51 -0700 (PDT)
-Received: from paksenarrion.paks.iveqy.com (c83-249-10-52.bredband.comhem.se. [83.249.10.52])
-        by mx.google.com with ESMTPSA id pq1sm403780lbb.41.2015.04.01.06.07.50
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 01 Apr 2015 06:07:50 -0700 (PDT)
-Received: from iveqy by paksenarrion.paks.iveqy.com with local (Exim 4.84)
-	(envelope-from <iveqy@paksenarrion.iveqy.com>)
-	id 1YdIN3-00089M-FB; Wed, 01 Apr 2015 15:07:49 +0200
-Content-Disposition: inline
-In-Reply-To: <CAA787rm1qfaLb=ZAvZ19h+_EBv-a3S7xV=0B6kMfjYpKsAbNcg@mail.gmail.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=f0cY0lfVGRtYck8H3+GGHTA/2LLoEhAYRbdjIRZ55OM=;
+        b=Uywh7dwscsPvWH68o3j+qHuq9FRQb1JUev8DvdgdmAQrePGLFYVusytjU/f6kI82kh
+         v/1d+8X0tsLFSmhcESVNmQicYT4CktYyNhGcv8jZeQXiOVcdsED7fs3CgXw8FP5v09qU
+         SS70DLFqCgThUyUeNj8SaYpne53aMtMLBN5vKupaYwjEwUrA8P6GVmMmU9EpBoN6+dPU
+         2e0F/cHe9Wzfx5MmlnFsxPO+jG3eTL3aee4fTyHnSPawRtN7sOLUni1YnGRXx7DzeVet
+         CKqaroV46LKKlLZjuLbx6V1pguSPyutvRg2vGyw0Ehkhvyeljgb71YQNs41qbhfn5l5p
+         yizQ==
+X-Received: by 10.50.66.141 with SMTP id f13mr11824820igt.47.1427893825778;
+ Wed, 01 Apr 2015 06:10:25 -0700 (PDT)
+Received: by 10.107.47.170 with HTTP; Wed, 1 Apr 2015 06:09:55 -0700 (PDT)
+In-Reply-To: <551BEA4A.9050708@ubuntu.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266605>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266606>
 
-On Wed, Apr 01, 2015 at 12:14:52AM +0200, =D8yvind A. Holm wrote:
-> On 1 April 2015 at 00:03, David Lang <david@lang.hm> wrote:
-> > On Tue, 31 Mar 2015, =D8yvind A. Holm wrote:
-> > > openhub.net (formerly ohloh.net) has an interesting comparison of
-> > > the number of public repositories on the net, based on searches o=
-f
-> > > popular hosting services. This comparison is available at
-> > > <https://www.openhub.net/repositories/compare> and shows an
-> > > estimated market share between Bazaar, CVS, Git, Mercurial and
-> > > Subversion.
-> > >
-> > > I've been monitoring this since 2014-08-05 to see how things were
-> > > developing, and it's a good indication of the popularity of the
-> > > various version control systems.
-> >
-> > number of repositories is an interesting datapoint, but activity in
-> > the repos would be far more interesting. There are a lot of repos o=
-f
-> > various types out there that haven't been touched for years.
->=20
-> I do agree on that. Many repositories won't be deleted if they are
-> converted to other VC systems to avoid breaking links and so on. What=
- I
-> found pretty interesting is the relative growth between the various
-> systems. That's why I created the graphs that show creation of new
-> repositories since August 2014 instead, for example
->=20
-> https://github.com/sunny256/openhub-repositories/blob/master/graph/re=
-lative-zoom.svg
+On Wed, Apr 1, 2015 at 7:53 PM, Phillip Susi <psusi@ubuntu.com> wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> On 4/1/2015 5:55 AM, Duy Nguyen wrote:
+>> On Wed, Apr 1, 2015 at 4:10 AM, Phillip Susi <psusi@ubuntu.com>
+>> wrote:
+>>> -----BEGIN PGP SIGNED MESSAGE----- Hash: SHA1
+>>>
+>>> I made a shallow clone of my repo, then used git bundle create to
+>>> pack it all into a bundle file, then cloned from that bundle.
+>>> The initial shallow clone has a .git/shallow file that identifies
+>>> it as a shallow clone ( and I guess keeps things from complaining
+>>> about the missing history ), but the the repo cloned from the
+>>> bundle does not,
+>>
+>> You made me worry a bit. We have checks in clone and fetch to make
+>> sure the result is "good" (i.e. gitk should not complain,
+>> clone/fetch should report it instead). Unfortunately I tested and
+>> it seemed to work as expected (i.e. clone fails)
+>>
+>> $ LANG=C ./git clone ./shallow.bundle  shallow2 Cloning into
+>> 'shallow2'... Receiving objects: 100% (2813/2813), 5.33 MiB | 0
+>> bytes/s, done. Resolving deltas: 100% (250/250), done. Checking
+>> connectivity... error: Could not read
+>> 50a3ba22454e2989424d5de489de9c0f68fed5ec fatal: Failed to traverse
+>> parents of commit c73a8a63134734ddf7077d09355a10a0077ed2ca fatal:
+>> remote did not send all necessary objects
+>
+> Strange; it works fine for me using git 1.9.4.msysgit.1, and then I
+> just get the complaints from gitk.  I created the bundle with no
+> prereq argument, i.e. "git bundle create shallow.bundle".  Did you use
+> a prereq argument?
 
-Github is serving every git repo as a svn repo too (or at least did). I=
-n
-a talk they claimed to be the worlds biggest subversion host (if I
-recall correctly).
-
-However most people hosting on github doesn't do it to use svn but git.
-Anyway, this mean that for every github git repo there's one svn repo.
-Is github big enough to make the plots above invalid?
-
---=20
-=46redrik Gustafsson
-
-phone: +46 733-608274
-e-mail: iveqy@iveqy.com
-website: http://www.iveqy.com
+No, just your command plus a branch name. I tried v1.9.4.msysgit.1
+(but on linux, not windows), clone rejected too.
+-- 
+Duy
