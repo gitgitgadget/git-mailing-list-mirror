@@ -1,101 +1,186 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: [bug (maybe)] Applying patch with '---'
-Date: Wed, 1 Apr 2015 21:06:43 +1300
-Message-ID: <CAFOYHZDYcF0=kH=L2CZ5=4DBUaGoJihVE9J=s=uuoJQhGGd5yA@mail.gmail.com>
-References: <CAFOYHZC6Qd9wkoWPcTJDxAs9u=FGpHQTkjE-guhwkya0DRVA6g@mail.gmail.com>
-	<xmqqy4mcmkt2.fsf@gitster.dls.corp.google.com>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: RFC: git status --amend
+Date: Wed, 1 Apr 2015 01:43:24 -0700
+Message-ID: <20150401084230.GA12282@gmail.com>
+References: <551AB64F.4030400@cs-ware.de>
+ <20150331180414.GB19206@peff.net>
+ <xmqqvbhhqal6.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: GIT <git@vger.kernel.org>
+Content-Type: text/plain; charset=utf-8
+Cc: Jeff King <peff@peff.net>, Sven Strickroth <sven@cs-ware.de>,
+	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 01 10:07:22 2015
+X-From: git-owner@vger.kernel.org Wed Apr 01 10:43:44 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YdDgC-0001Ru-WE
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Apr 2015 10:07:17 +0200
+	id 1YdEFS-0004Or-Fv
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Apr 2015 10:43:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752413AbbDAIHG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Apr 2015 04:07:06 -0400
-Received: from mail-pa0-f50.google.com ([209.85.220.50]:36676 "EHLO
-	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752012AbbDAIGq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Apr 2015 04:06:46 -0400
-Received: by padcy3 with SMTP id cy3so45027442pad.3
-        for <git@vger.kernel.org>; Wed, 01 Apr 2015 01:06:43 -0700 (PDT)
+	id S1751353AbbDAIni (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Apr 2015 04:43:38 -0400
+Received: from mail-ob0-f176.google.com ([209.85.214.176]:35492 "EHLO
+	mail-ob0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751044AbbDAIne (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Apr 2015 04:43:34 -0400
+Received: by obcjt1 with SMTP id jt1so68913678obc.2
+        for <git@vger.kernel.org>; Wed, 01 Apr 2015 01:43:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=PEuVrWLp4WQezr0h2Do16CtydwUhK6j3GPn0fdK4HX4=;
-        b=Z3WskNz0Y2C+CSAwyX4vHx1dzw+0myVV0sv5NSHQUC5IHRDP30baL1kU7gpoyeuTdz
-         aJHOa0bivpKEi6XGd8S3SFsiokQesRz1E6OMz6tGWSlvOuQJzghckQmiowYbpnbZJ77e
-         NOsrKcdAAwsnrMsVkr1kF96bbIobFmfroA94tpOT5oyBkhp6oIzIIzzEVXax7M9r1kml
-         /CYJFqmMDpFLPATjmL1JHMhyfzswLZhw+/p7ur5omKhREurBdp76hSaLFGPt0CAo4Ve/
-         NXIxui0S3wx73yYqLTTEWAI/CZTf1E6F/OpAziDsWnNpE0wnNHioh56hv0dzERM1TMm+
-         wRaA==
-X-Received: by 10.70.47.102 with SMTP id c6mr17786234pdn.24.1427875603274;
- Wed, 01 Apr 2015 01:06:43 -0700 (PDT)
-Received: by 10.70.0.171 with HTTP; Wed, 1 Apr 2015 01:06:43 -0700 (PDT)
-In-Reply-To: <xmqqy4mcmkt2.fsf@gitster.dls.corp.google.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=5SxZ6hPj53LxmsNwRXhnFekYbfgJ/izw6FRYY2fycMk=;
+        b=JZzRCERF8EtqRLaKdrALu/ika2yTN7+qUU99oj8TnR4u/KRAxtWgzBie6S/94X1iex
+         TLQESUd0NhnpUigr+uVCR+plFjJ9xXvvv8LVMkltLD6t4mn5Uq+MfXXVY9FMcE7iSCRZ
+         D54IPMH/gaAikCpW2g2ktiSseqiF3EsHbB0T/oZcHAhlxVfx00VWN6jEflsgOO3TO9bk
+         /+FsRcJsXKraGs9D/IckDd/yZioS8y/Uoj3TxgCRjY1O6gZ2LxCXhxtal4rNbsiEUlBD
+         l6gkfD9tWMWzKE0qjXkM1Cwj6esKUjJ4EvTJi6C7qD0U6DNAPQZUql6HjXJ7JBuBR1MG
+         QOAw==
+X-Received: by 10.182.74.166 with SMTP id u6mr38640224obv.68.1427877813586;
+        Wed, 01 Apr 2015 01:43:33 -0700 (PDT)
+Received: from gmail.com ([32.147.206.137])
+        by mx.google.com with ESMTPSA id na2sm1215094obb.28.2015.04.01.01.43.29
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Wed, 01 Apr 2015 01:43:32 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <xmqqvbhhqal6.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266594>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266595>
 
-On Wed, Apr 1, 2015 at 7:20 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Chris Packham <judge.packham@gmail.com> writes:
->
->> So I was just sent a patch generated with 'git format-patch' that 'git
->> am' fails to apply correctly. It applies but part of the commit
->> message is lost.
->>
->> The problem is that the commit message has lines like
->>
->> --- Foo happened
->>     did some things to handle Foo
->> --- Bar happened
->>     Still processing update from Foo which led to a crash
->>
->> git mailinfo seems to discard everything after the first '--- Blah'.
->
-> Yes, this is well known.  So is a line that begins with "diff --git"
-> makes mailinfo to guess that it is the end of the log message.
->
+On Tue, Mar 31, 2015 at 11:35:17AM -0700, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+> 
+> > On Tue, Mar 31, 2015 at 04:59:27PM +0200, Sven Strickroth wrote:
+> >
+> >> for frontends or scripts it would be helpful to be able to use "git
+> >> status" for getting the repository status compared to HEAD~1 instead of
+> >> only HEAD (as provided by "git commit --amend" in the pre-filled commit
+> >> message).
+> >> 
+> >> Thus, I'm suggesting to add a "--amend" parameter (or a parameter with a
+> >> better naming) to "git status".
+> >> 
+> >> What do you think of this idea?
+> >
+> > Once upon a time "git status" really was just "git commit --dry-run".
+> > These days it has diverged a bit. But I think you could get what you
+> > want with:
+> >
+> >   git commit --dry-run --amend
+> >
+> > It even supports alternate styles like --short.
+> 
+> I think everything you said is correct, but your "diverged a bit"
+> may hide one difference that could be crucial depending on the use
+> case: pathspec.
+> 
+> What "git commit --dry-run [--other-options] <pathspec>" does, and
+> what "git status [--other-options] <pathspec>" does, are different.
+> 
+> With or without --dry-run, to "git commit", <pathspec> tells the
+> command to update the index at the paths specified by it from the
+> working tree contents before proceeding (the contents recorded for
+> the other paths depend on the use of -o or -i option).  But ever
+> since "git status" departed from being "git commit -n", a pathspec
+> given to the command means completely different thing.
+> 
+> After working on various parts of the tree, planning to conclude the
+> current work with "commit", "git status directory/" is a good way to
+> see what you did in that directory without seeing what you did
+> outside (which will be included in the commit, too).
+> 
+> But what you get from "git commit --no-edit --dry-run directory/"
+> would be different; it would show all the changes in the working
+> tree inside directory/, including the ones that you deliberately
+> left out of the index, as paths to be committed.
+> 
+> Having said all that, I am a bit torn on this topic.  Just like "git
+> status" is a way to ask "I've worked so far, planning to conclude
+> this with 'git commit'; tell me what I have achieved so far that are
+> in the index and in the working tree, possibly limiting to these
+> paths?", I think it is a reasonable thing to ask the same question
+> with "s/git commit/git commit --amend/".
+> 
+> One workaround might be to
+> 
+>     git reset --soft HEAD^
+>     git status [<pathspec>]
+>     ...
+>     git commit -c @{1}
+> 
+> but that is simply too error prone and ugly.  I would say it would
+> be better if "status" knows how to answer that "I am planning to
+> conclude with 'git commit --amend'" question.
+> 
+> The reason why I am torn is because I do not think "status --amend"
+> is a sensible name for that option.  "status" is not about amending
+> anything.
+> 
+> If the normal "status" is "give me status for the next commit", this
+> new mode would be "give me status for the 'commit --amend'".  Naming
+> it "git status --for-amend" crossed my mind, but it does not sound
+> great to me, either.
+> 
+> So...
 
-So it looks like code in mailinfo.c to handle
+I think I can understand some of the "feeling torn" aspects.
 
-  --- a/file
-  +++ b/file
+I know exactly the problem that "status --amend" is trying to
+solve, as it is non-trivial to get the status bits correct
+for "what it looks like when amending a commit".
 
-Also interprets
+git-gui and git-cola both do some clever things to make their
+amend modes work smoothly for the user, and having something
+like "status --amend" could have made the implementation
+simpler.
 
-  --- Blah
-  more text
+But "status --amend" still makes me torn too because it's too
+special-purpose.  Taking a step back, "status" gives you a lot
+of information, and all of it is relative to HEAD.
 
-as the start of the patch portion. Perhaps mailinfo could search for
-both the --- and +++ lines before deciding it's the patch portion has
-started. Or search for "diff -" first and work backwards towards to
-drop text up to the "---".
+"status --amend" is really asking to make it all relative to
+HEAD^ instead.
 
->> ... I know git
->> mailinfo shouldn't handle garbage input but I guess the problem I have
->> is that the patch was generated by git format-patch ...
->
-> Whatever message you write format-patch emits without escaping, so
-> "patch was generated by format-patch" does not guarantee anything,
-> unfortunately.  A related similar issue is that a line that begins
-> with "From " may be corrupted into a line that begins with ">From "
-> by the time the message hits your mailbox.  These are unfortunately
-> something you have to know and long-time users learned to avoid
-> doing so unconsciously ;-).
+So I wonder, would the syntax not be more gittish if it were,
 
-So perhaps the newer users need some training wheels built into
-format-patch :). It'd actually annoy me if it was too intrusive as I
-actually use --- as a light weight alternative to git-notes for
-commentary I want to include with a patch submission.  But a message
-saying "if you send this verbatim commit message text will be lost"
-would at least let the user know that something needs attention .
+	git status HEAD
+	git status HEAD^
+	git status <ref> -- <pathspec>
+
+and it'll compare your repo's status relative to any ref.
+
+I like the above because it's general and not hard-wired into
+the concept of amending a commit, but it enables that use case
+as well.
+
+The ultimate convenience for script writers would be if this
+command gracefully handled the edge cases.  I have a separate
+code path for this one, and eliminating it would be awesome.
+
+"git init" time, where no commit exists (and thus "git status
+HEAD|HEAD^" makes no sense) is an inconvenience to script
+around. The most convenient behavior for the user would be to
+treat that situation as being equivalent to comparing against an
+empty tree.
+
+That could extend to post-"git init" when a single commit exists
+and the user asks for "git status HEAD^" for amending purposes.
+It'd be great if the tool was dwim enough to also treat that as
+an empty tree comparison.
+
+I don't know if that's going too far, because normally git
+would just yell, "HEAD^ makes no sense!" and tell the user to
+bugger off, but I can definitely see the utility in a dwimmy
+soft-edges status tool that papers over some of these edge
+cases.
+
+Would generalizing "status" to have a more gittish syntax make
+you feel less torn?
+-- 
+David
