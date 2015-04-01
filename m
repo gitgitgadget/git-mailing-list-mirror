@@ -1,87 +1,69 @@
-From: Thomas Schneider <thosch97@gmail.com>
-Subject: [PATCH] =?UTF-8?q?checkout:=20Say=20=E2=80=9Cit=E2=80=9D=20instea?= =?UTF-8?q?d=20of=20=E2=80=9Cthem=E2=80=9D=20for=20one=20commit?=
-Date: Wed,  1 Apr 2015 19:38:00 +0200
-Message-ID: <1427909880-9846-1-git-send-email-thosch97@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Trying to push into empty repo, get fatal: bad revision 'HEAD'
+Date: Wed, 01 Apr 2015 11:00:33 -0700
+Message-ID: <xmqqd23nn2ym.fsf@gitster.dls.corp.google.com>
+References: <CAHkN8V8cpZUmCi6=MUcsCOCBe6H_G6btr6WaV2vVrO1Nm_r4tg@mail.gmail.com>
+	<xmqqego4ogxw.fsf@gitster.dls.corp.google.com>
+	<xmqq8uecocjg.fsf@gitster.dls.corp.google.com>
+	<cb4098391d46cc25b3d4d059e35dc806@www.dscho.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Thomas Schneider <thosch97@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 01 19:38:22 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org,
+	Samuel Williams <space.ship.traveller@gmail.com>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Apr 01 20:00:47 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YdMar-0006CW-Re
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Apr 2015 19:38:22 +0200
+	id 1YdMwY-0004gD-7R
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Apr 2015 20:00:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751158AbbDARiM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Apr 2015 13:38:12 -0400
-Received: from mail-wg0-f51.google.com ([74.125.82.51]:35618 "EHLO
-	mail-wg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751764AbbDARiL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Apr 2015 13:38:11 -0400
-Received: by wgdm6 with SMTP id m6so61203275wgd.2
-        for <git@vger.kernel.org>; Wed, 01 Apr 2015 10:38:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version:content-type
-         :content-transfer-encoding;
-        bh=kya3EAMqpwmFJdmdjv0hdCFZIBp3+FSrSiyi4XjcdfA=;
-        b=y1dxnEd8r3nUs36xM8ZmmKSLb0iICiiWbsdr5UTE37dP+SJeVNA1BdrUjPQHGELNHI
-         /aEASegYJteUPmBpxJNMYFcVqnmESZ8ckTx9dm+aqHSIBjiVreN1n0w1XJtB1L12jJeE
-         j4IL6HjEmpohpChsLais9tKszHE49SyMXJo1btV0SyAzVHs2hmj/X+n3IGreyLj0MtST
-         0qYWN6IJwy4uqFmg5iEpk9XEgYJofPe/vdL/978HGE7OLW4F5A/SuTEYmxs/IUSAmAhm
-         zEW3Obd98ht0qNAeOuL8s360MvZpEBPqsFMHjDZf19KEh2X0YckEfokKbJsFGsqDyoSg
-         Bzvw==
-X-Received: by 10.181.9.98 with SMTP id dr2mr16984982wid.62.1427909890564;
-        Wed, 01 Apr 2015 10:38:10 -0700 (PDT)
-Received: from tatooine.fritz.box (p4FEF96D6.dip0.t-ipconnect.de. [79.239.150.214])
-        by mx.google.com with ESMTPSA id lx10sm3630620wjb.17.2015.04.01.10.38.09
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 01 Apr 2015 10:38:09 -0700 (PDT)
-X-Mailer: git-send-email 2.1.0
+	id S1752984AbbDASAl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Apr 2015 14:00:41 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:59220 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752535AbbDASAl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Apr 2015 14:00:41 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3EF7642B3C;
+	Wed,  1 Apr 2015 14:00:35 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=luctKfSKq3QJNFHdW9+7DKGq/eQ=; b=oef/b/
+	hlHBjLxX4AbkSexqxk8bC1XbohX/ezmBkxJjgjllbe4Ib3haXt0pxsjTji8ysmcW
+	UFCktgTTpceZV3lYSB55cHujRpNMLNXelbS3DG9MVrsgzQMzfEP30oLwwx6rg3M+
+	hfbnCgokRT/GOBv1TSpwtEbhyRLC1DT45XQ4U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=U5cmdjsRs8dINfn+y3OeGD44L9hK2MMG
+	ujMd+M7HyQn9SFoFHE/eUv1c0dbPG1vUZQU/EF46pE/pA+PafXjyhq3tLpIWVPsn
+	X70s5QP2jbcXkRkzDzUkK1knWDakEVbFZjGeYtp6oeAX0xEihRTZuNEdH1tpvqAg
+	x4koAl3OH3w=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3650742B3B;
+	Wed,  1 Apr 2015 14:00:35 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8A84942B39;
+	Wed,  1 Apr 2015 14:00:34 -0400 (EDT)
+In-Reply-To: <cb4098391d46cc25b3d4d059e35dc806@www.dscho.org> (Johannes
+	Schindelin's message of "Wed, 01 Apr 2015 10:51:34 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: FE95BAA4-D898-11E4-8263-11859F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266614>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266615>
 
-When detached and checking out a branch again, git checkout warns about
-commit(s) that might get lost.  It used to say =E2=80=9CIf you want to =
-keep them
-[=E2=80=A6]=E2=80=9D even for only one commit.
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-Signed-off-by: Thomas Schneider <thosch97@gmail.com>
----
- builtin/checkout.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+> Yeah, and we could refactor that into a global function, too. But for
+> the moment, I think your proposed patch is good enough.
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 3e141fc..4aad49a 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -743,10 +743,17 @@ static void suggest_reattach(struct commit *commi=
-t, struct rev_info *revs)
-=20
- 	if (advice_detached_head)
- 		fprintf(stderr,
--			_(
-+			Q_(
-+			/* The singular version */
-+			"If you want to keep it by creating a new branch, "
-+			"this may be a good time\nto do so with:\n\n"
-+			" git branch <new-branch-name> %s\n\n",
-+			/* The plural version */
- 			"If you want to keep them by creating a new branch, "
- 			"this may be a good time\nto do so with:\n\n"
--			" git branch <new-branch-name> %s\n\n"),
-+			" git branch <new-branch-name> %s\n\n",
-+			/* Give ngettext() the count */
-+			lost),
- 			find_unique_abbrev(commit->object.sha1, DEFAULT_ABBREV));
- }
-=20
---=20
-2.1.0
+OK, so can I forge your Acked-by?
+
+Thanks for double checking.
