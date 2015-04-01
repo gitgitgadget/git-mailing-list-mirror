@@ -1,99 +1,296 @@
-From: Max Kirillov <max@max630.net>
-Subject: Re: [PATCH v3] config.c: split some variables to
- $GIT_DIR/config.worktree
-Date: Wed, 1 Apr 2015 23:56:44 +0300
-Message-ID: <20150401205644.GA3656@wheezy.local>
-References: <1427371464-22237-1-git-send-email-pclouds@gmail.com>
- <1427804079-13061-1-git-send-email-pclouds@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] howto: document more tools for recovery corruption
+Date: Wed, 1 Apr 2015 17:08:56 -0400
+Message-ID: <20150401210856.GA23050@peff.net>
+References: <20131016083400.GA31266@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jens.Lehmann@web.de
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 01 22:56:45 2015
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 01 23:09:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YdPgq-0004mw-MC
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Apr 2015 22:56:45 +0200
+	id 1YdPsu-0004bH-VI
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Apr 2015 23:09:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752107AbbDAU4k convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Apr 2015 16:56:40 -0400
-Received: from p3plsmtpa07-01.prod.phx3.secureserver.net ([173.201.192.230]:38533
-	"EHLO p3plsmtpa07-01.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751099AbbDAU4j (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Apr 2015 16:56:39 -0400
-Received: from wheezy.local ([82.181.81.240])
-	by p3plsmtpa07-01.prod.phx3.secureserver.net with 
-	id AkwX1q0085B68XE01kwd3A; Wed, 01 Apr 2015 13:56:38 -0700
+	id S1751688AbbDAVJA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Apr 2015 17:09:00 -0400
+Received: from cloud.peff.net ([50.56.180.127]:41081 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751210AbbDAVI7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Apr 2015 17:08:59 -0400
+Received: (qmail 27502 invoked by uid 102); 1 Apr 2015 21:08:58 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 01 Apr 2015 16:08:58 -0500
+Received: (qmail 4315 invoked by uid 107); 1 Apr 2015 21:09:16 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 01 Apr 2015 17:09:16 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 01 Apr 2015 17:08:56 -0400
 Content-Disposition: inline
-In-Reply-To: <1427804079-13061-1-git-send-email-pclouds@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20131016083400.GA31266@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266618>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266619>
 
-On Tue, Mar 31, 2015 at 07:14:39PM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
-=BB=8Dc Duy wrote:
->  The general principle is like in the last mail: .git/config is for
->  both shared and private keys of main worktree (i.e. nothing is
->  changed from today).  .git/worktrees/xx/config.worktree is for
->  private keys only (and private keys in .git/config are ignored)
-> =20
->  With this we don't have to bump core.repository_format_version for
->  main worktree because nothing is changed. There will be problems
->  with info/config.worktree:
->=20
->   - it's customizable, so expect the user to break it (*)
+Long ago, I documented a corruption recovery I did and gave
+some C code that I used to help find a flipped bit.  I had
+to fix a similar case recently, and I ended up writing a few
+more tools.  I hope nobody ever has to use these, but it
+does not hurt to share them, just in case.
 
-I would rather say it's manual tuning rather than a break.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ .../howto/recover-corrupted-object-harder.txt      | 237 +++++++++++++++++++++
+ 1 file changed, 237 insertions(+)
 
->   - if we add new stuff to the template, we'll need to help migrate
->     current info/core.worktree (which does not have new stuff).
->     Auto updating this file could be risky. I'm tend to just
->     warn the user that this and that keys should be included and let
->     them modify the file.
-
-I don't think there even should be warning. Just don't
-change the info/config.worktree in the existing repositories
-and let users extend it as they feel a need for it.
-
-Later there could be a tool (an option to git config for
-example) which adds a variable or pattern to the
-info/core.worktree and copied existing variable(s) from
-commong config to worktree-specific ones.
-
-=2E...
-
-> diff --git a/config.c b/config.c
-> index 15a2983..3857023 100644
-> --- a/config.c
-> +++ b/config.c
-=2E...
-> @@ -1932,6 +2002,23 @@ int git_config_set_multivar_in_file(const char=
- *config_filename,
-> =20
->  	store.multi_replace =3D multi_replace;
-> =20
-> +	if (git_common_dir_env && is_config_local(key)) {
-> +		if (!config_filename)
-> +			config_filename =3D filename_buf =3D git_pathdup("config.worktree=
-");
-> +		/* cheap trick, but should work 90% of time */
-> +		else if (!ends_with(config_filename, ".worktree"))
-> +			die("%s can only be stored in %s",
-> +			    key, git_path("config.worktree"));
-
-Is `config_filename` set only for cases when config file is
-explicitly set for "git config" command with "--file"
-option? Then probably here should not be any intelligence at
-all; if user resort to manual picking the file he must be
-allowed to do stupid things.
-
---=20
-Max
+diff --git a/Documentation/howto/recover-corrupted-object-harder.txt b/Documentation/howto/recover-corrupted-object-harder.txt
+index 23e685d..9c4cd09 100644
+--- a/Documentation/howto/recover-corrupted-object-harder.txt
++++ b/Documentation/howto/recover-corrupted-object-harder.txt
+@@ -240,3 +240,240 @@ But more importantly, git's hashing and checksumming noticed a problem
+ that easily could have gone undetected in another system. The result
+ still compiled, but would have caused an interesting bug (that would
+ have been blamed on some random commit).
++
++
++The adventure continues...
++--------------------------
++
++I ended up doing this again! Same entity, new hardware. The assumption
++at this point is that the old disk corrupted the packfile, and then the
++corruption was migrated to the new hardware (because it was done by
++rsync or similar, and no fsck was done at the time of migration).
++
++This time, the affected blob was over 20 megabytes, which was far too
++large to do a brute-force on. I followed the instructions above to
++create the `zlib` file. I then used the `inflate` program below to pull
++the corrupted data from that. Examining that output gave me a hint about
++where in the file the corruption was. But now I was working with the
++file itself, not the zlib contents. So knowing the sha1 of the object
++and the approximate area of the corruption, I used the `sha1-munge`
++program below to brute-force the correct byte.
++
++Here's the inflate program (it's essentially `gunzip` but without the
++`.gz` header processing):
++
++--------------------------
++#include <stdio.h>
++#include <string.h>
++#include <zlib.h>
++#include <stdlib.h>
++
++int main(int argc, char **argv)
++{
++	/*
++	 * oversized so we can read the whole buffer in;
++	 * this could actually be switched to streaming
++	 * to avoid any memory limitations
++	 */
++	static unsigned char buf[25 * 1024 * 1024];
++	static unsigned char out[25 * 1024 * 1024];
++	int len;
++	z_stream z;
++	int ret;
++
++	len = read(0, buf, sizeof(buf));
++	memset(&z, 0, sizeof(z));
++	inflateInit(&z);
++
++	z.next_in = buf;
++	z.avail_in = len;
++	z.next_out = out;
++	z.avail_out = sizeof(out);
++
++	ret = inflate(&z, 0);
++	if (ret != Z_OK && ret != Z_STREAM_END)
++		fprintf(stderr, "initial inflate failed (%d)\n", ret);
++
++	fprintf(stderr, "outputting %lu bytes", z.total_out);
++	fwrite(out, 1, z.total_out, stdout);
++	return 0;
++}
++--------------------------
++
++And here is the `sha1-munge` program:
++
++--------------------------
++#include <stdio.h>
++#include <unistd.h>
++#include <string.h>
++#include <signal.h>
++#include <openssl/sha.h>
++#include <stdlib.h>
++
++/* eye candy */
++static int counter = 0;
++static void progress(int sig)
++{
++	fprintf(stderr, "\r%d", counter);
++	alarm(1);
++}
++
++static const signed char hexval_table[256] = {
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 00-07 */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 08-0f */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 10-17 */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 18-1f */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 20-27 */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 28-2f */
++	  0,  1,  2,  3,  4,  5,  6,  7,		/* 30-37 */
++	  8,  9, -1, -1, -1, -1, -1, -1,		/* 38-3f */
++	 -1, 10, 11, 12, 13, 14, 15, -1,		/* 40-47 */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 48-4f */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 50-57 */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 58-5f */
++	 -1, 10, 11, 12, 13, 14, 15, -1,		/* 60-67 */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 68-67 */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 70-77 */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 78-7f */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 80-87 */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 88-8f */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 90-97 */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 98-9f */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* a0-a7 */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* a8-af */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* b0-b7 */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* b8-bf */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* c0-c7 */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* c8-cf */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* d0-d7 */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* d8-df */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* e0-e7 */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* e8-ef */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* f0-f7 */
++	 -1, -1, -1, -1, -1, -1, -1, -1,		/* f8-ff */
++};
++
++static inline unsigned int hexval(unsigned char c)
++{
++return hexval_table[c];
++}
++
++static int get_sha1_hex(const char *hex, unsigned char *sha1)
++{
++	int i;
++	for (i = 0; i < 20; i++) {
++		unsigned int val;
++		/*
++		 * hex[1]=='\0' is caught when val is checked below,
++		 * but if hex[0] is NUL we have to avoid reading
++		 * past the end of the string:
++		 */
++		if (!hex[0])
++			return -1;
++		val = (hexval(hex[0]) << 4) | hexval(hex[1]);
++		if (val & ~0xff)
++			return -1;
++		*sha1++ = val;
++		hex += 2;
++	}
++	return 0;
++}
++
++int main(int argc, char **argv)
++{
++	/* oversized so we can read the whole buffer in */
++	static unsigned char buf[25 * 1024 * 1024];
++	char header[32];
++	int header_len;
++	unsigned char have[20], want[20];
++	int start, len;
++	SHA_CTX orig;
++	unsigned i, j;
++
++	if (!argv[1] || get_sha1_hex(argv[1], want)) {
++		fprintf(stderr, "usage: sha1-munge <sha1> [start] <file.in\n");
++		return 1;
++	}
++
++	if (argv[2])
++		start = atoi(argv[2]);
++	else
++		start = 0;
++
++	len = read(0, buf, sizeof(buf));
++	header_len = sprintf(header, "blob %d", len) + 1;
++	fprintf(stderr, "using header: %s\n", header);
++
++	/*
++	 * We keep a running sha1 so that if you are munging
++	 * near the end of the file, we do not have to re-sha1
++	 * the unchanged earlier bytes
++	 */
++	SHA1_Init(&orig);
++	SHA1_Update(&orig, header, header_len);
++	if (start)
++		SHA1_Update(&orig, buf, start);
++
++	signal(SIGALRM, progress);
++	alarm(1);
++
++	for (i = start; i < len; i++) {
++		unsigned char c;
++		SHA_CTX x;
++
++#if 0
++		/*
++		 * deletion -- this would not actually work in practice,
++		 * I think, because we've already committed to a
++		 * particular size in the header. Ditto for addition
++		 * below. In those cases, you'd have to do the whole
++		 * sha1 from scratch, or possibly keep three running
++		 * "orig" sha1 computations going.
++		 */
++		memcpy(&x, &orig, sizeof(x));
++		SHA1_Update(&x, buf + i + 1, len - i - 1);
++		SHA1_Final(have, &x);
++		if (!memcmp(have, want, 20))
++			printf("i=%d, deletion\n", i);
++#endif
++
++		/*
++		 * replacement -- note that this tries each of the 256
++		 * possible bytes. If you suspect a single-bit flip,
++		 * it would be much shorter to just try the 8
++		 * bit-flipped variants.
++		 */
++		c = buf[i];
++		for (j = 0; j <= 0xff; j++) {
++			buf[i] = j;
++
++			memcpy(&x, &orig, sizeof(x));
++			SHA1_Update(&x, buf + i, len - i);
++			SHA1_Final(have, &x);
++			if (!memcmp(have, want, 20))
++				printf("i=%d, j=%02x\n", i, j);
++		}
++		buf[i] = c;
++
++#if 0
++		/* addition */
++		for (j = 0; j <= 0xff; j++) {
++			unsigned char extra = j;
++			memcpy(&x, &orig, sizeof(x));
++			SHA1_Update(&x, &extra, 1);
++			SHA1_Update(&x, buf + i, len - i);
++			SHA1_Final(have, &x);
++			if (!memcmp(have, want, 20))
++				printf("i=%d, addition=%02x", i, j);
++		}
++#endif
++
++		SHA1_Update(&orig, buf + i, 1);
++		counter++;
++	}
++
++	alarm(0);
++	fprintf(stderr, "\r%d\n", counter);
++	return 0;
++}
++--------------------------
+-- 
+2.4.0.rc0.363.gf9f328b
