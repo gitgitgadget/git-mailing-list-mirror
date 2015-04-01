@@ -1,104 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Clone from shallow bundle bug
-Date: Tue, 31 Mar 2015 23:31:43 -0700
-Message-ID: <xmqqtwx0mka8.fsf@gitster.dls.corp.google.com>
-References: <551B0D37.5070407@ubuntu.com>
-	<xmqqbnj8q0bm.fsf@gitster.dls.corp.google.com>
-	<551B5E64.9070906@ubuntu.com>
+From: Chris Packham <judge.packham@gmail.com>
+Subject: Re: [bug (maybe)] Applying patch with '---'
+Date: Wed, 1 Apr 2015 21:06:43 +1300
+Message-ID: <CAFOYHZDYcF0=kH=L2CZ5=4DBUaGoJihVE9J=s=uuoJQhGGd5yA@mail.gmail.com>
+References: <CAFOYHZC6Qd9wkoWPcTJDxAs9u=FGpHQTkjE-guhwkya0DRVA6g@mail.gmail.com>
+	<xmqqy4mcmkt2.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
-To: Phillip Susi <psusi@ubuntu.com>
-X-From: git-owner@vger.kernel.org Wed Apr 01 08:31:52 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: GIT <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 01 10:07:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YdCBq-0002Zt-L5
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Apr 2015 08:31:51 +0200
+	id 1YdDgC-0001Ru-WE
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Apr 2015 10:07:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751711AbbDAGbq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Apr 2015 02:31:46 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:62971 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751030AbbDAGbp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Apr 2015 02:31:45 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id C64CA3C5A7;
-	Wed,  1 Apr 2015 02:31:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=oEFpxaNShUx8vgWPNw4o9vBKk+k=; b=qEkV5a
-	UgBICqNOJGIHEg5rn2YN18xR7c05AFjTojY/359N0kNKgFBiC7j0nb8sZHmMKoFL
-	lMXpNZZ3vjWHtT154a5A8ryCxWESdHSSQOqFpOpEF4rA8XK4rYhZUKYieEjtgERP
-	I8Tl0kXbPvH7PH/wfYS+1uDXiQk1YQ5j0QvZI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=av0CjMnPvDdei8QIblRttnpJRBUPh0W0
-	ZY+ssdiEQ2Ie6bHba1ArdJ2EUxQqfk+7y3K/e91siWOX0n4f7J0tUyiQS5BNxtzs
-	zzwnlv7L/BKtZ2nx8oZV9TRuBcDmx771NbgOtdipjM3ZrMeYEmtp9P3ySJOsGaJo
-	YiaBJT3HIIE=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id BEEF03C5A6;
-	Wed,  1 Apr 2015 02:31:44 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 440FE3C5A2;
-	Wed,  1 Apr 2015 02:31:44 -0400 (EDT)
-In-Reply-To: <551B5E64.9070906@ubuntu.com> (Phillip Susi's message of "Tue, 31
-	Mar 2015 22:56:36 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: C3CFE468-D838-11E4-8010-11859F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1752413AbbDAIHG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Apr 2015 04:07:06 -0400
+Received: from mail-pa0-f50.google.com ([209.85.220.50]:36676 "EHLO
+	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752012AbbDAIGq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Apr 2015 04:06:46 -0400
+Received: by padcy3 with SMTP id cy3so45027442pad.3
+        for <git@vger.kernel.org>; Wed, 01 Apr 2015 01:06:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=PEuVrWLp4WQezr0h2Do16CtydwUhK6j3GPn0fdK4HX4=;
+        b=Z3WskNz0Y2C+CSAwyX4vHx1dzw+0myVV0sv5NSHQUC5IHRDP30baL1kU7gpoyeuTdz
+         aJHOa0bivpKEi6XGd8S3SFsiokQesRz1E6OMz6tGWSlvOuQJzghckQmiowYbpnbZJ77e
+         NOsrKcdAAwsnrMsVkr1kF96bbIobFmfroA94tpOT5oyBkhp6oIzIIzzEVXax7M9r1kml
+         /CYJFqmMDpFLPATjmL1JHMhyfzswLZhw+/p7ur5omKhREurBdp76hSaLFGPt0CAo4Ve/
+         NXIxui0S3wx73yYqLTTEWAI/CZTf1E6F/OpAziDsWnNpE0wnNHioh56hv0dzERM1TMm+
+         wRaA==
+X-Received: by 10.70.47.102 with SMTP id c6mr17786234pdn.24.1427875603274;
+ Wed, 01 Apr 2015 01:06:43 -0700 (PDT)
+Received: by 10.70.0.171 with HTTP; Wed, 1 Apr 2015 01:06:43 -0700 (PDT)
+In-Reply-To: <xmqqy4mcmkt2.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266594>
 
-Phillip Susi <psusi@ubuntu.com> writes:
-
-> On 03/31/2015 06:17 PM, Junio C Hamano wrote:
->> Phillip Susi <psusi@ubuntu.com> writes:
->> 
->>> I made a shallow clone of my repo, then used git bundle create to
->>> pack it all into a bundle file, then cloned from that bundle.
->> 
->> I think the introdution of shallow clone feature broke git bundle
->> create by not teaching it that its shallow boundaries are
->> prerequisite commits to unbundle its contents.  IOW, the bundle
->> created from the shallow clone is broken, I would think.
+On Wed, Apr 1, 2015 at 7:20 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Chris Packham <judge.packham@gmail.com> writes:
 >
-> It seems to me that it isn't exactly broken; it just needs to put
-> something in the bundle noting ...
+>> So I was just sent a patch generated with 'git format-patch' that 'git
+>> am' fails to apply correctly. It applies but part of the commit
+>> message is lost.
+>>
+>> The problem is that the commit message has lines like
+>>
+>> --- Foo happened
+>>     did some things to handle Foo
+>> --- Bar happened
+>>     Still processing update from Foo which led to a crash
+>>
+>> git mailinfo seems to discard everything after the first '--- Blah'.
+>
+> Yes, this is well known.  So is a line that begins with "diff --git"
+> makes mailinfo to guess that it is the end of the log message.
+>
 
-I think you are saying the same thing as I did without realizing ;-)
+So it looks like code in mailinfo.c to handle
 
-The only way a bundle can record "something" "noting" that it is an
-incomplete history, while allowing it to be read by existing
-implementations of "git bundle unbundle" is to list the commits,
-behind which there is no history available in the bundle, as
-bundle's pre-requisites.  I said that the addition of shallow repository
-support did not enhance "git bundle create" to do so, and you are
-saying "it just needs to put", implying that it currently does not.
+  --- a/file
+  +++ b/file
 
-Now, the only way the existing implementations of "git bundle
-unbundle" can extract from such a bundle with prerequisites is to
-unbundle into a repository that satisifies the prerequisites (these
-incomplete bundle files are designed as a medium for sneaker-net
-incremental updates).  I however suspect "git clone --shallow" from
-such a bundle _might_ work (I never tried it), but I wouldn't be
-surprised if the existing implementations of bundle unpacking code
-refused to unbundle into a repository that lacks prerequiste commits
-(i.e. making the repository a shallow-clone).
+Also interprets
 
-Allowing "git clone" (without "--shallow") from an incomplete bundle
-file create a shallow clone, instead of outright refusing to work or
-silently creating a corrupt repository, might be an interesting project,
-perhaps the right size for GSoC or something like that.
+  --- Blah
+  more text
 
-Patches welcome, but one thing whoever is doing such a patch needs
-to be careful about is that the pack data in the bundle is likely to
-be a thin one---truly requiring the repository the bundle is unpacked
-into to have the prerequisite objects.
+as the start of the patch portion. Perhaps mailinfo could search for
+both the --- and +++ lines before deciding it's the patch portion has
+started. Or search for "diff -" first and work backwards towards to
+drop text up to the "---".
+
+>> ... I know git
+>> mailinfo shouldn't handle garbage input but I guess the problem I have
+>> is that the patch was generated by git format-patch ...
+>
+> Whatever message you write format-patch emits without escaping, so
+> "patch was generated by format-patch" does not guarantee anything,
+> unfortunately.  A related similar issue is that a line that begins
+> with "From " may be corrupted into a line that begins with ">From "
+> by the time the message hits your mailbox.  These are unfortunately
+> something you have to know and long-time users learned to avoid
+> doing so unconsciously ;-).
+
+So perhaps the newer users need some training wheels built into
+format-patch :). It'd actually annoy me if it was too intrusive as I
+actually use --- as a light weight alternative to git-notes for
+commentary I want to include with a patch submission.  But a message
+saying "if you send this verbatim commit message text will be lost"
+would at least let the user know that something needs attention .
