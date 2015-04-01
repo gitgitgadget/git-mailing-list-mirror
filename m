@@ -1,81 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Clone from shallow bundle bug
-Date: Wed, 01 Apr 2015 10:20:40 -0700
-Message-ID: <xmqqh9szn4t3.fsf@gitster.dls.corp.google.com>
-References: <551B0D37.5070407@ubuntu.com>
-	<xmqqbnj8q0bm.fsf@gitster.dls.corp.google.com>
-	<551B5E64.9070906@ubuntu.com>
-	<xmqqtwx0mka8.fsf@gitster.dls.corp.google.com>
-	<CACsJy8AiOsSJ7QsOmpy5Ss_fKaDK1G4ONgi=jDqM_+Vrv++pkA@mail.gmail.com>
+From: Thomas Schneider <thosch97@gmail.com>
+Subject: [PATCH] =?UTF-8?q?checkout:=20Say=20=E2=80=9Cit=E2=80=9D=20instea?= =?UTF-8?q?d=20of=20=E2=80=9Cthem=E2=80=9D=20for=20one=20commit?=
+Date: Wed,  1 Apr 2015 19:38:00 +0200
+Message-ID: <1427909880-9846-1-git-send-email-thosch97@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Phillip Susi <psusi@ubuntu.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 01 19:20:50 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Thomas Schneider <thosch97@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 01 19:38:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YdMJt-0002gZ-Gm
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Apr 2015 19:20:49 +0200
+	id 1YdMar-0006CW-Re
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Apr 2015 19:38:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752819AbbDARUo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Apr 2015 13:20:44 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:51314 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752619AbbDARUo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Apr 2015 13:20:44 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6407D42114;
-	Wed,  1 Apr 2015 13:20:43 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=PPzop+0xt9kiwgsOwvbZe+CmgIc=; b=h1cNI8
-	K0V2kgbRhHqwPef4dQ9gvN2rBO1hG+UwqutNM4JNQmzU9wqOoYGWaNSORAm8RXVu
-	FLGArR2irUBmTKOOYtT+V9lPubDB+M/3yv5ah5TLH4c72hUd1rR1mdSIWyV1EbMA
-	4ufT1g2032OEhmSADSVAdm/A6mwieer2MZSSI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ErX3NEzoXeH8YCfSdJfXrY1Nnfp2K6aL
-	RLtOZivIKQ3Y3m4+EDs4n0+Wd9vWkulq1iGfNxV/JoamK5dXgLo1pi9As9lQll8K
-	d6D/B1lKXB/0gGf1oP4F+McGJbmwncn0wLVb81kxJ0JyGDQLCogtlOFloNfILvmY
-	/z2v9cmpAfM=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5A43842113;
-	Wed,  1 Apr 2015 13:20:43 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D93EC42112;
-	Wed,  1 Apr 2015 13:20:41 -0400 (EDT)
-In-Reply-To: <CACsJy8AiOsSJ7QsOmpy5Ss_fKaDK1G4ONgi=jDqM_+Vrv++pkA@mail.gmail.com>
-	(Duy Nguyen's message of "Wed, 1 Apr 2015 17:01:33 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 6C7052C4-D893-11E4-A486-11859F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751158AbbDARiM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Apr 2015 13:38:12 -0400
+Received: from mail-wg0-f51.google.com ([74.125.82.51]:35618 "EHLO
+	mail-wg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751764AbbDARiL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Apr 2015 13:38:11 -0400
+Received: by wgdm6 with SMTP id m6so61203275wgd.2
+        for <git@vger.kernel.org>; Wed, 01 Apr 2015 10:38:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:mime-version:content-type
+         :content-transfer-encoding;
+        bh=kya3EAMqpwmFJdmdjv0hdCFZIBp3+FSrSiyi4XjcdfA=;
+        b=y1dxnEd8r3nUs36xM8ZmmKSLb0iICiiWbsdr5UTE37dP+SJeVNA1BdrUjPQHGELNHI
+         /aEASegYJteUPmBpxJNMYFcVqnmESZ8ckTx9dm+aqHSIBjiVreN1n0w1XJtB1L12jJeE
+         j4IL6HjEmpohpChsLais9tKszHE49SyMXJo1btV0SyAzVHs2hmj/X+n3IGreyLj0MtST
+         0qYWN6IJwy4uqFmg5iEpk9XEgYJofPe/vdL/978HGE7OLW4F5A/SuTEYmxs/IUSAmAhm
+         zEW3Obd98ht0qNAeOuL8s360MvZpEBPqsFMHjDZf19KEh2X0YckEfokKbJsFGsqDyoSg
+         Bzvw==
+X-Received: by 10.181.9.98 with SMTP id dr2mr16984982wid.62.1427909890564;
+        Wed, 01 Apr 2015 10:38:10 -0700 (PDT)
+Received: from tatooine.fritz.box (p4FEF96D6.dip0.t-ipconnect.de. [79.239.150.214])
+        by mx.google.com with ESMTPSA id lx10sm3630620wjb.17.2015.04.01.10.38.09
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 01 Apr 2015 10:38:09 -0700 (PDT)
+X-Mailer: git-send-email 2.1.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266613>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266614>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+When detached and checking out a branch again, git checkout warns about
+commit(s) that might get lost.  It used to say =E2=80=9CIf you want to =
+keep them
+[=E2=80=A6]=E2=80=9D even for only one commit.
 
-> Alternatively, we can record SHA-1 in the shallow file as refs whose
-> name is always ".shallow". This way "unbundle" can recreate the
-> shallow file if it wants.
+Signed-off-by: Thomas Schneider <thosch97@gmail.com>
+---
+ builtin/checkout.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-Wouldn't the extracting end care about such a name ".shallow" being
-duplicates (if you have multiple boundaries) or not check-ref-format
-kosher?
-
-I was hoping we will have a solution for a new bundle command to
-create a bundle out of a shallow repository that is somehow usable
-by existing 'git bundle' implementations.  You may take a bundle out
-of a shallow repository to preserve your work on top since you made
-the shallow clone originally, and then send it to your friend with
-existing 'git bundle' implementation to extract it into his full
-clone to sneaker-net.
-
-And that is why I did not suggest such an alternative.
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 3e141fc..4aad49a 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -743,10 +743,17 @@ static void suggest_reattach(struct commit *commi=
+t, struct rev_info *revs)
+=20
+ 	if (advice_detached_head)
+ 		fprintf(stderr,
+-			_(
++			Q_(
++			/* The singular version */
++			"If you want to keep it by creating a new branch, "
++			"this may be a good time\nto do so with:\n\n"
++			" git branch <new-branch-name> %s\n\n",
++			/* The plural version */
+ 			"If you want to keep them by creating a new branch, "
+ 			"this may be a good time\nto do so with:\n\n"
+-			" git branch <new-branch-name> %s\n\n"),
++			" git branch <new-branch-name> %s\n\n",
++			/* Give ngettext() the count */
++			lost),
+ 			find_unique_abbrev(commit->object.sha1, DEFAULT_ABBREV));
+ }
+=20
+--=20
+2.1.0
