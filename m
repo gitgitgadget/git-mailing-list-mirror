@@ -1,93 +1,81 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: RFC: git status --amend
-Date: Wed, 01 Apr 2015 10:16:22 -0700
-Message-ID: <xmqqlhibn509.fsf@gitster.dls.corp.google.com>
-References: <551AB64F.4030400@cs-ware.de> <20150331180414.GB19206@peff.net>
-	<xmqqvbhhqal6.fsf@gitster.dls.corp.google.com>
-	<20150401084230.GA12282@gmail.com>
+Subject: Re: Clone from shallow bundle bug
+Date: Wed, 01 Apr 2015 10:20:40 -0700
+Message-ID: <xmqqh9szn4t3.fsf@gitster.dls.corp.google.com>
+References: <551B0D37.5070407@ubuntu.com>
+	<xmqqbnj8q0bm.fsf@gitster.dls.corp.google.com>
+	<551B5E64.9070906@ubuntu.com>
+	<xmqqtwx0mka8.fsf@gitster.dls.corp.google.com>
+	<CACsJy8AiOsSJ7QsOmpy5Ss_fKaDK1G4ONgi=jDqM_+Vrv++pkA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>, Sven Strickroth <sven@cs-ware.de>,
-	git@vger.kernel.org
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 01 19:16:31 2015
+Cc: Phillip Susi <psusi@ubuntu.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 01 19:20:50 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YdMFi-00088V-F8
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Apr 2015 19:16:30 +0200
+	id 1YdMJt-0002gZ-Gm
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Apr 2015 19:20:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752738AbbDARQ0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Apr 2015 13:16:26 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:60403 "EHLO
+	id S1752819AbbDARUo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Apr 2015 13:20:44 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:51314 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751158AbbDARQZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Apr 2015 13:16:25 -0400
+	with ESMTP id S1752619AbbDARUo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Apr 2015 13:20:44 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B40BA42018;
-	Wed,  1 Apr 2015 13:16:24 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6407D42114;
+	Wed,  1 Apr 2015 13:20:43 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=35ihLyf02VaIJXsDHtw7wUiBhSE=; b=JCJva4
-	FZ1Iw4m1/CQaqQ9ElffobbBzbM11NZkBWiDFAVPF7dVquIshcuQQfi3pysyUfOcj
-	pk+IfXTRBufy0IqnwacGIGjHKKEYTm4BqYN8EMPGscCmE3gUHadP7B0YJ7niG7Cv
-	qJMlz1y6lq6oFSi68IsgFjJBzAgrCrIY9VxYE=
+	:content-type; s=sasl; bh=PPzop+0xt9kiwgsOwvbZe+CmgIc=; b=h1cNI8
+	K0V2kgbRhHqwPef4dQ9gvN2rBO1hG+UwqutNM4JNQmzU9wqOoYGWaNSORAm8RXVu
+	FLGArR2irUBmTKOOYtT+V9lPubDB+M/3yv5ah5TLH4c72hUd1rR1mdSIWyV1EbMA
+	4ufT1g2032OEhmSADSVAdm/A6mwieer2MZSSI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=fLkKcbOANACPn+O4wA+jPYaFv9nt89Fo
-	BklwhdGXqbvS0eEG2K8pHOAZajXGuL+d8DrSsuKCWE6/Dg737vQSZoBgO3vqRyfs
-	Y4duOhD6HV6ZsTXFfLC6J+LesM3F9W140IaSvKiqmKXTQXBD5ZenHPZ83ZNEdBNV
-	r2L1DkwyKkA=
+	:content-type; q=dns; s=sasl; b=ErX3NEzoXeH8YCfSdJfXrY1Nnfp2K6aL
+	RLtOZivIKQ3Y3m4+EDs4n0+Wd9vWkulq1iGfNxV/JoamK5dXgLo1pi9As9lQll8K
+	d6D/B1lKXB/0gGf1oP4F+McGJbmwncn0wLVb81kxJ0JyGDQLCogtlOFloNfILvmY
+	/z2v9cmpAfM=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id AB11B42017;
-	Wed,  1 Apr 2015 13:16:24 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5A43842113;
+	Wed,  1 Apr 2015 13:20:43 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 336F342016;
-	Wed,  1 Apr 2015 13:16:24 -0400 (EDT)
-In-Reply-To: <20150401084230.GA12282@gmail.com> (David Aguilar's message of
-	"Wed, 1 Apr 2015 01:43:24 -0700")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D93EC42112;
+	Wed,  1 Apr 2015 13:20:41 -0400 (EDT)
+In-Reply-To: <CACsJy8AiOsSJ7QsOmpy5Ss_fKaDK1G4ONgi=jDqM_+Vrv++pkA@mail.gmail.com>
+	(Duy Nguyen's message of "Wed, 1 Apr 2015 17:01:33 +0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: D2D9B132-D892-11E4-B1C5-11859F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 6C7052C4-D893-11E4-A486-11859F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266612>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266613>
 
-David Aguilar <davvid@gmail.com> writes:
+Duy Nguyen <pclouds@gmail.com> writes:
 
-> Would generalizing "status" to have a more gittish syntax make
-> you feel less torn?
+> Alternatively, we can record SHA-1 in the shallow file as refs whose
+> name is always ".shallow". This way "unbundle" can recreate the
+> shallow file if it wants.
 
-One of my early draft responses included a one whose punch line was
-"Why limit the comparison to HEAD and HEAD^ but no other point of
-reference?"
+Wouldn't the extracting end care about such a name ".shallow" being
+duplicates (if you have multiple boundaries) or not check-ref-format
+kosher?
 
-But I discarded it as a useless suggestion before writing it down,
-primarily because I couldn't come up with an explanation _why_ being
-able to say "git status --relative-to=next Makefile" is useful when
-on the 'master' branch.
+I was hoping we will have a solution for a new bundle command to
+create a bundle out of a shallow repository that is somehow usable
+by existing 'git bundle' implementations.  You may take a bundle out
+of a shallow repository to preserve your work on top since you made
+the shallow clone originally, and then send it to your friend with
+existing 'git bundle' implementation to extract it into his full
+clone to sneaker-net.
 
-Surely, I may have changes in the Makefile relative to my index
-because I am preparing for the next rc release, and the Makefile in
-the index may be different from that of the 'next' branch because I
-am on my 'master' branch.  The potential output can be "explained"
-in such a mechanical sense (e.g. "we generated the output this
-way").
-
-But I do not see an easy-to-understand explanation of the _meaning_
-of the output, i.e. "What does it mean that the working tree file
-has been modified since the checkout and the index is different
-relative to that other branch?  How does that information help me
-after I learn it?  What would I do differently with that information
-at hand?"
-
-Compared to that, "Show me what damage I would inflict if I did
-'commit' now.  By the way, I may want to see that information
-limited to these paths" is a question whose utility is easily
-explained, and so is the same question with 'commit' replaced by
-'commit --amend'.
+And that is why I did not suggest such an alternative.
