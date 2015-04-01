@@ -1,75 +1,70 @@
-From: Phillip Susi <psusi@ubuntu.com>
-Subject: Re: Clone from shallow bundle bug
-Date: Wed, 01 Apr 2015 10:06:35 -0400
-Message-ID: <551BFB6B.3080101@ubuntu.com>
-References: <551B0D37.5070407@ubuntu.com> <CACsJy8C0wMFiPw1thSWN-dPVW+9N=JXDsy_HFCj=Oyu2rf40eg@mail.gmail.com> <551BEA4A.9050708@ubuntu.com> <CACsJy8C4G01LOhg13=rhkCTMGTq-NTHgG-k-kaoT9jALnd7CZw@mail.gmail.com> <551BF2E6.6050000@ubuntu.com> <CACsJy8BR=JjJ_WJ+wGLk_AhpjRh+avJnRb2KmRiVx_+2cintLA@mail.gmail.com>
+From: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+Subject: GSoC 2015: students proposals submitted, selection started
+Date: Wed, 1 Apr 2015 18:19:00 +0200 (CEST)
+Message-ID: <1644505076.18125173.1427905140837.JavaMail.zimbra@imag.fr>
+References: <1381398131.18124691.1427904503950.JavaMail.zimbra@imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 01 16:07:40 2015
+Cc: Jeff King <peff@peff.net>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Christian Couder <christian.couder@gmail.com>,
+	sbeller@google.com
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Apr 01 18:19:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YdJIx-0005vE-Dk
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Apr 2015 16:07:39 +0200
+	id 1YdLMM-0003Bz-H8
+	for gcvg-git-2@plane.gmane.org; Wed, 01 Apr 2015 18:19:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753220AbbDAOHa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Apr 2015 10:07:30 -0400
-Received: from mail-qg0-f41.google.com ([209.85.192.41]:33542 "EHLO
-	mail-qg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751738AbbDAOHa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Apr 2015 10:07:30 -0400
-Received: by qgfa8 with SMTP id a8so43163789qgf.0
-        for <git@vger.kernel.org>; Wed, 01 Apr 2015 07:07:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=b1Vrdj3csZiXwbtAB+eOOqu6xqMryxp9EKT3/aIpi1E=;
-        b=YXO2E0eB5jyQhoZMEPvIUjgBrwc/Lp2f1eTP9LBxJiUr5n0ykmSK1gyHqCFIbJd8TC
-         V4JZHcDasHdzecTC+9ZkE7neFDq9cAWHiMXXr0rL6AP6nIpkIyk3xjhC4ja8UrxVfDKk
-         PVm+v0d7J2sKOyswVG9vo3AwtLHkfzCD8tpu0PrmRMhs2UEwNw4nYZdRMJk4qsxzva0U
-         RTPsxcsGRC47tOGFbSpALwirPA0JfMLGyyXdL/Iw5C8Vv7h2Rd+mW1SeilTcoH8lzTu/
-         k5SuJmT2V5jltscacxfY7vDyZC9OISTPDHSm+xYVN/Fs0kySDpcB1PMbCLHdY/lhGmby
-         +KNA==
-X-Received: by 10.140.23.38 with SMTP id 35mr49863870qgo.106.1427897249415;
-        Wed, 01 Apr 2015 07:07:29 -0700 (PDT)
-Received: from [10.1.1.228] (fl-67-77-88-12.sta.embarqhsd.net. [67.77.88.12])
-        by mx.google.com with ESMTPSA id x15sm1312034qkx.28.2015.04.01.07.07.28
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 01 Apr 2015 07:07:28 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
-In-Reply-To: <CACsJy8BR=JjJ_WJ+wGLk_AhpjRh+avJnRb2KmRiVx_+2cintLA@mail.gmail.com>
+	id S1751764AbbDAQTN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Apr 2015 12:19:13 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:39836 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751315AbbDAQTM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Apr 2015 12:19:12 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t31GIxOH004442
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 1 Apr 2015 18:18:59 +0200
+Received: from z8-mb-verimag.imag.fr (z8-mb-verimag.imag.fr [129.88.4.38])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t31GJ1YB022652;
+	Wed, 1 Apr 2015 18:19:01 +0200
+In-Reply-To: <1381398131.18124691.1427904503950.JavaMail.zimbra@imag.fr>
+X-Originating-IP: [129.88.6.115]
+X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - FF36 (Linux)/8.0.6_GA_5922)
+Thread-Topic: GSoC 2015: students proposals submitted, selection started
+Thread-Index: I4p5vBtnLUal61XzhGK40Hvpcy7EMQ==
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 01 Apr 2015 18:18:59 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t31GIxOH004442
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@imag.fr
+MailScanner-NULL-Check: 1428509939.98827@0LmgmTqzFcv8QIYxd065iQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266609>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266610>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-On 4/1/2015 9:36 AM, Duy Nguyen wrote:
-> Thank you. I can reproduce it now. We need to plug this hole.
+Latest news from the google summer of code: students have completed their proposals. We have 2 proposals for "convert scripts to builtins", and 4 for "unify git branch, git tag and git for-each-ref" (plus some out-of-scope proposals). See http://git.github.io/SoC-2015-Ideas.html for more details about the projects.
 
-I'd much rather it not refuse to clone so that I can end up with a
-proper shallow clone.  At least the way it is now, when I clone the
-detached head, I can manually add the .git/shallow file and everything
-is fine.
+We have to request slots before April 13th.
 
+My guess is that we'll request 2 slots, and from previous discussions I don't think we will have difficulties to find enough co-mentors. Still, if you're interested in mentoring a project, now would be a good time to say so.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.17 (MingW32)
+Without committing to mentor a student, you can also join the Git organisation on https://www.google-melange.com/ if you want to see/review/rate/discuss students proposals.
 
-iQEcBAEBAgAGBQJVG/trAAoJENRVrw2cjl5RTTIIAJkdte4gWrrOGA49CI0xivX7
-1FXH3tPp/Nhd7gG3MXNfozm78DS3ZWqoU4l2SUhoE3La9UJ81T2rVo9GjcR/yXeS
-V0In+JyoQX3spZdtvH18qzKCFczyeUlu260EG7mQsBFgnAHsAJW3BPA6DWEPpfJS
-U3RPGt4S7KKy2+XJAGZJgvhvwM9vndgx161Kgwwpdocv2uWmv0AZEcMzOppZQy3y
-RqWSO5iY3qRwpMiRRh9YsQsuVNpXGxwPqV5oXXFLD7yaAMqCF5qdUYz8fWNQQ1+V
-49RpGzMNHA60FP9BrvlHMCaJgFEvBT4nrpN4MCQgkelp8LOELX1kfuq9MWl1irA=
-=BmpO
------END PGP SIGNATURE-----
+Stefan: you said you were interested in mentoring. If it's still the case, then please create an account on melange and request the "mentor" role for Git.
+
+Regards,
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
