@@ -1,66 +1,78 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git 2.3.4, ssh: Could not resolve hostname
-Date: Thu, 2 Apr 2015 15:35:24 -0400
-Message-ID: <20150402193524.GA21555@peff.net>
-References: <56B33978-76A0-4EE0-BCC0-EF030FD52E41@rawsound.com>
- <20150402180914.GA19081@peff.net>
- <201C57EF-FC96-4FFB-81D2-90F94428A6CA@rawsound.com>
- <20150402191452.GA20420@peff.net>
- <xmqq7ftujpu1.fsf@gitster.dls.corp.google.com>
- <62968860-FA58-4339-AF0B-264197EC8A04@rawsound.com>
+From: Luke Diamand <luke@diamand.org>
+Subject: Re: [PATCH] git-p4: fix filetype detection on files opened exclusively
+Date: Thu, 2 Apr 2015 20:54:32 +0100
+Message-ID: <CAE5ih7_QpkX-U+XJ8gKSKKt1+Vu+FM4XBADTkys-4MDa129jyw@mail.gmail.com>
+References: <2D2A7688059E344DB86768405D63DEB42D3D75FC@USCULXMSG09.am.sony.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	git@vger.kernel.org
-To: "Reid Woodbury Jr." <reidw@rawsound.com>
-X-From: git-owner@vger.kernel.org Thu Apr 02 21:35:55 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	"gitster@pobox.com" <gitster@pobox.com>, Pete Wyckoff <pw@padd.com>
+To: "Holloway, Blair" <Blair_Holloway@playstation.sony.com>
+X-From: git-owner@vger.kernel.org Thu Apr 02 21:54:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ydktq-0004nc-Kj
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Apr 2015 21:35:34 +0200
+	id 1YdlCJ-0001sI-9s
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Apr 2015 21:54:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753025AbbDBTfb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Apr 2015 15:35:31 -0400
-Received: from cloud.peff.net ([50.56.180.127]:41513 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752985AbbDBTf0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Apr 2015 15:35:26 -0400
-Received: (qmail 15716 invoked by uid 102); 2 Apr 2015 19:35:26 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 02 Apr 2015 14:35:26 -0500
-Received: (qmail 14760 invoked by uid 107); 2 Apr 2015 19:35:45 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 02 Apr 2015 15:35:45 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 02 Apr 2015 15:35:24 -0400
-Content-Disposition: inline
-In-Reply-To: <62968860-FA58-4339-AF0B-264197EC8A04@rawsound.com>
+	id S1751863AbbDBTye (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Apr 2015 15:54:34 -0400
+Received: from mail-ob0-f175.google.com ([209.85.214.175]:32980 "EHLO
+	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750771AbbDBTyd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Apr 2015 15:54:33 -0400
+Received: by obvd1 with SMTP id d1so145695410obv.0
+        for <git@vger.kernel.org>; Thu, 02 Apr 2015 12:54:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=diamand.org; s=google;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=11xS/WB+oqtwWs/0M6WGNApKrL1Vc6LOvrmhDtylFyE=;
+        b=PioCeD5FfLaLFscDJkNjHAyUkxb3POJPlpUksBct8NaOtCW0y+yVqF+XTSBSTonVMf
+         m02fvtkH08x8gPSWH9L9jhRGYhAq+ewDQLNlBf2p21lN0WsOk/MIaLWfnGO9aTiK0zG/
+         fSv195iUfxPMMCAKy7CDurovualg79+YwyGm8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=11xS/WB+oqtwWs/0M6WGNApKrL1Vc6LOvrmhDtylFyE=;
+        b=MeUWQ8kFEvuG+pbChntZ5J6tjuQCKLHEL5IVciICn8T8D+hBV5jMLEgyIeXOuYl/KU
+         WoO4fCU5aY52QI/aYjomBoGuEdjcsU9jp3GqYOfuCKgk/zeFZNfeWAPBJh3baYKc2nfS
+         AGrwsLlMBqgJ614pNpUdv5J6gGOTqsjXVBOY/SoAMRC9mL58xwgYa7o16cVkvy0yp03q
+         cQArsAQN1aN+5hVqBC6C7LN7nRQkz2i1PIsTmpN2Wzx76cE92e8AgBIZfB8IWBrbpQSN
+         XSr6JYJ2w1Hq76LzSRGpZaeS+ZVRP8oYh/tp1exGPJxYsTJa8Hhejv3hwoSawIrYlpIv
+         fISA==
+X-Gm-Message-State: ALoCoQmkjNnWwA1bqTDtUwZrN+eSEXP7hs8Ov9F1Z1LMJ/zR9oUIyUX0Xmko5UAdm7N1KlqRcHY4
+X-Received: by 10.182.87.8 with SMTP id t8mr48348854obz.35.1428004472345; Thu,
+ 02 Apr 2015 12:54:32 -0700 (PDT)
+Received: by 10.60.162.74 with HTTP; Thu, 2 Apr 2015 12:54:32 -0700 (PDT)
+In-Reply-To: <2D2A7688059E344DB86768405D63DEB42D3D75FC@USCULXMSG09.am.sony.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266663>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266664>
 
-On Thu, Apr 02, 2015 at 12:31:14PM -0700, Reid Woodbury Jr. wrote:
+(+Pete for interest).
 
-> Ah, understand. Here's my project URL for 'remote "origin"' with a
-> more meaningful representation of their internal FQDN:
-> 
-> 	url = ssh://rwoodbury@systemname.groupname.online:/opt/git/inventory.git
-> 
-> The "online" is their literal internal TLD.
+On 31 March 2015 at 22:54, Holloway, Blair
+<Blair_Holloway@playstation.sony.com> wrote:
+> If a Perforce server is configured to automatically set +l (exclusive lock) on
+> add of certain file types, git p4 submit will fail during getP4OpenedType, as
+> the regex doesn't expect the trailing '*exclusive*' from p4 opened:
 
-Thanks. The problem is the extra ":" after "online"; your URL is
-malformed. You can just drop that colon entirely.
+Thanks - that actually fixes a part of the long-standing problem of
+handling locked files which Pete identified about a year ago.
 
-I do not think we need to support this syntax going forward (the colon
-is meaningless here, and our documentation is clear that it should go
-with a port number), but on the other hand, it might be nice to be more
-liberal, as we were in v2.3.3 and prior. I'll leave it to Torsten to see
-whether supporting that would hurt some of the other cases, or whether
-it would make the code too awkward.
+There's a test case for handling of locked files,
+t9816-git-p4-locked.sh, which needs updating now as a bit more of it
+passes. Junio, I'll submit a followup patch to update those tests once
+I get back from vacation.
 
--Peff
+(Fixing t9816 is very slightly non-trivial because test #4 is subtly
+broken and so incorrectly passes).
+
+Ack,
+Luke
