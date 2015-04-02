@@ -1,111 +1,102 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [BUG] 'git merge --quiet' is not always quiet
-Date: Thu, 2 Apr 2015 17:39:52 -0400
-Message-ID: <20150402213952.GB22988@peff.net>
-References: <CADwUm8do1+2aAqSnwMmViTCwA9jpAZM21DtRP9YiniVtCenFKw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] standardize usage strings that were missed the first time
+Date: Thu, 02 Apr 2015 14:56:59 -0700
+Message-ID: <xmqqego2i47o.fsf@gitster.dls.corp.google.com>
+References: <1428010016-12968-1-git-send-email-alexhenrie24@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Carl =?utf-8?B?TcOkc2Fr?= <cmasak@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 02 23:40:04 2015
+Content-Type: text/plain
+Cc: pclouds@gmail.com, artagnon@gmail.com, git@vger.kernel.org
+To: Alex Henrie <alexhenrie24@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 02 23:57:10 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YdmqJ-0001Iz-SY
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Apr 2015 23:40:04 +0200
+	id 1Ydn6q-00054H-Hj
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Apr 2015 23:57:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752181AbbDBVj5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Apr 2015 17:39:57 -0400
-Received: from cloud.peff.net ([50.56.180.127]:41609 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751066AbbDBVjz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Apr 2015 17:39:55 -0400
-Received: (qmail 26811 invoked by uid 102); 2 Apr 2015 21:39:54 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 02 Apr 2015 16:39:54 -0500
-Received: (qmail 16083 invoked by uid 107); 2 Apr 2015 21:40:13 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 02 Apr 2015 17:40:13 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 02 Apr 2015 17:39:52 -0400
-Content-Disposition: inline
-In-Reply-To: <CADwUm8do1+2aAqSnwMmViTCwA9jpAZM21DtRP9YiniVtCenFKw@mail.gmail.com>
+	id S1752586AbbDBV5E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Apr 2015 17:57:04 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:65174 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752357AbbDBV5C (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Apr 2015 17:57:02 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 735CC43F04;
+	Thu,  2 Apr 2015 17:57:01 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=wW7EI8dHLqIzEMJqiGmgt4T6YPA=; b=AuVXwb
+	u5FT5xN4wKyLcNN8QH3WQJhrWhAf/ClESB7Np/kxPZMEkdvZfmkAxUCqND7DXf+V
+	9Gxzt7Ms1JRHfwQxsgzWsLut4QEUVhtFhPXyAGttgQM0swsoy+rAhMiRKvimdRma
+	OCDGa+minFSqByEoSWW1mkEK+g/7ZvHXlzg50=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Ats2C1tggSk5AQiJ4rVwoxfoRJZQh3Y7
+	Kk4bgFunV3OCHuOM6rQ2YOHX1HI6G/2RF863lF4xTEEKBlbY2oaZux7fp13/wyk2
+	VOo3VDtAgS8af6Djb8Hymv6iHW8XPoWINrgkpJN9BcEtNgcto+SmmrJUavG4cmfl
+	+2M/EU7yRZI=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6BFF143F03;
+	Thu,  2 Apr 2015 17:57:01 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CFF8143F00;
+	Thu,  2 Apr 2015 17:57:00 -0400 (EDT)
+In-Reply-To: <1428010016-12968-1-git-send-email-alexhenrie24@gmail.com> (Alex
+	Henrie's message of "Thu, 2 Apr 2015 15:26:56 -0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 30AF2B7A-D983-11E4-A330-11859F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266683>
 
-On Thu, Apr 02, 2015 at 02:42:30PM +0200, Carl M=C3=A4sak wrote:
+Alex Henrie <alexhenrie24@gmail.com> writes:
 
-> In the following session, a 'git merge' command shows some output eve=
-n
-> with the '--quiet' flag supplied.
->=20
->     ~/tmp $ git init example
->     Initialized empty Git repository in /tmp/example/.git/
->     ~/tmp $ cd example/
->     ~/tmp/example $ git commit --allow-empty -m'initial commit'
->     [master (root-commit) a7329b5] initial commit
->     ~/tmp/example $ git checkout -b b1
->     Switched to a new branch 'b1'
->     ~/tmp/example $ git commit --allow-empty -m'commit on branch'
->     [b1 d15e5ac] commit on branch
->     ~/tmp/example $ git checkout master
->     Switched to branch 'master'
->     ~/tmp/example $ git merge --quiet --no-ff --no-edit b1
->     Already up-to-date!
->     ~/tmp/example $
->=20
-> My expectation is that '--quiet' would suppress all output, even this=
- one.
+> This is a follow-up to commit 9c9b4f2f8b7f27f3984e80d053106d5d41cbb03b.
+>
+> Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
+> ---
 
-It looks like we end up calling into merge-recursive here, but the
-"--quiet" flag is not passed down. This patch seems to fix it for me.
+Thanks, but please no more _("string") changes for the rest of the
+cycle, as that would impact i18n folks who will be starting from
+tagged -rc releases.
 
--- >8 --
-Subject: merge: pass verbosity flag down to merge-recursive
+Please hold them off, and resend them after 2.4.0 final.
 
-This makes "git merge --quiet" really quiet when we call
-into merge-recursive.
+Thanks.
 
-Note that we can't just pass our flag down as-is; the two
-parts of the code use different scales. We center at "0" as
-normal for git-merge (with "--quiet" giving a negative
-value), but merge-recursive uses "2" as its center.  This
-patch passes a negative value to merge-recursive rather than
-"1", though, as otherwise the user would have to use "-qqq"
-to squelch all messages (but the downside is that the user
-cannot distinguish between levels 0-2 if without resorting
-to the GIT_MERGE_VERBOSITY variable).
-
-We may want to review and renormalize the message severities
-in merge-recursive, but that does not have to happen now.
-This is at least in improvement in the sense that we are
-respecting "--quiet" at all.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin/merge.c | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 3b0f8f9..068a83b 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -684,6 +684,10 @@ static int try_merge_strategy(const char *strategy=
-, struct commit_list *common,
- 			o.subtree_shift =3D "";
-=20
- 		o.renormalize =3D option_renormalize;
-+		if (verbosity < 0)
-+			o.verbosity =3D verbosity;
-+		else if (verbosity > 0)
-+			o.verbosity +=3D verbosity;
- 		o.show_rename_progress =3D
- 			show_progress =3D=3D -1 ? isatty(2) : show_progress;
-=20
---=20
-2.4.0.rc0.363.gf9f328b
+>  builtin/blame.c | 2 +-
+>  builtin/log.c   | 2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/builtin/blame.c b/builtin/blame.c
+> index 06484c2..0b2f4ed 100644
+> --- a/builtin/blame.c
+> +++ b/builtin/blame.c
+> @@ -27,7 +27,7 @@
+>  #include "line-range.h"
+>  #include "line-log.h"
+>  
+> -static char blame_usage[] = N_("git blame [<options>] [<rev-opts>] [<rev>] [--] file");
+> +static char blame_usage[] = N_("git blame [<options>] [<rev-opts>] [<rev>] [--] <file>");
+>  
+>  static const char *blame_opt_usage[] = {
+>  	blame_usage,
+> diff --git a/builtin/log.c b/builtin/log.c
+> index dd8f3fc..4c4e6be 100644
+> --- a/builtin/log.c
+> +++ b/builtin/log.c
+> @@ -38,7 +38,7 @@ static const char *fmt_patch_subject_prefix = "PATCH";
+>  static const char *fmt_pretty;
+>  
+>  static const char * const builtin_log_usage[] = {
+> -	N_("git log [<options>] [<revision range>] [[--] <path>...]"),
+> +	N_("git log [<options>] [<revision-range>] [[--] <path>...]"),
+>  	N_("git show [<options>] <object>..."),
+>  	NULL
+>  };
