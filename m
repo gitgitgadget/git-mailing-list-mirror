@@ -1,78 +1,63 @@
-From: Sergey Organov <sorganov@gmail.com>
-Subject: Re: [PATCH] docs: Clarify what git-rebase's "--preserve-merges" does
-Date: Thu, 02 Apr 2015 12:53:35 +0300
-Message-ID: <87619ezwio.fsf@javad.com>
-References: <CAHGBnuO5Y=ejJLxktk0GsnXx8h2LwPW1i7TqDePhfZ_zLR_X9A@mail.gmail.com>
-	<xmqqd23vzkon.fsf@gitster.dls.corp.google.com>
-	<871tkblapv.fsf@javad.com> <55147D27.1060204@kdbg.org>
-	<87lhidlebw.fsf@javad.com>
-	<xmqqh9t1rv0r.fsf@gitster.dls.corp.google.com>
-	<xmqq8uedrtdb.fsf@gitster.dls.corp.google.com>
-	<87vbhgks0v.fsf@javad.com>
-	<xmqqpp7nn5l3.fsf@gitster.dls.corp.google.com>
+From: karthik nayak <karthik.188@gmail.com>
+Subject: [PATCH v6 0/4] cat-file: add a '--literally' option
+Date: Thu, 02 Apr 2015 16:23:13 +0530
+Message-ID: <551D1F99.5040306@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j6t@kdbg.org>,
-	Sebastian Schuberth <sschuberth@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 02 11:53:46 2015
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Thu Apr 02 12:53:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ydbol-0002iU-9P
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Apr 2015 11:53:43 +0200
+	id 1YdckU-0005Sb-Vj
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Apr 2015 12:53:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751801AbbDBJxi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Apr 2015 05:53:38 -0400
-Received: from mail.javad.com ([54.86.164.124]:34867 "EHLO mail.javad.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751019AbbDBJxh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Apr 2015 05:53:37 -0400
-Received: from osv (unknown [89.175.180.246])
-	by mail.javad.com (Postfix) with ESMTPSA id BC6B36187A;
-	Thu,  2 Apr 2015 09:53:36 +0000 (UTC)
-Received: from osv by osv with local (Exim 4.84)
-	(envelope-from <sorganov@gmail.com>)
-	id 1Ydbod-0007qO-2h; Thu, 02 Apr 2015 12:53:35 +0300
-In-Reply-To: <xmqqpp7nn5l3.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Wed, 01 Apr 2015 10:03:52 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.4 (gnu/linux)
+	id S1753110AbbDBKxV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Apr 2015 06:53:21 -0400
+Received: from mail-pa0-f51.google.com ([209.85.220.51]:33991 "EHLO
+	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753095AbbDBKxR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Apr 2015 06:53:17 -0400
+Received: by pactp5 with SMTP id tp5so80890845pac.1
+        for <git@vger.kernel.org>; Thu, 02 Apr 2015 03:53:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        bh=Yg24SRFvLzTg4XwwfXr3KiWFIedHsC3d5z15SLJjSBs=;
+        b=LZTd3Pp7ObEsRhY9nsssGLvdepa4GcdjBGdtDg+lx1rTMVjq6Vr5YfVfqk1LqYczDn
+         mJ5ZHF0+84CfMg34Znyaa+ItK5PCm0+fypvI9kQRaKrh8lGes3yz0ySkkF4JZKycb1SO
+         s+NMY+0mNxXdYlj2rNplLAtbm2dXKGksDUmuOSuWGb8QqbG+4IzRezcTaSScmJsj1ejI
+         cYPWUrZy+IiQLCiV0zrZgSL39vJCfIiWcaKNDw/s55fyl9+bhJQoHH/poqB/cEP8CJj6
+         LOO3ViDuajrrToRN1ihOT0FcRKrry2MOkQaDYaS9cRXZS4pNQCwKkxlN1Hx7Hnvv/oTf
+         uP3w==
+X-Received: by 10.66.101.73 with SMTP id fe9mr87069904pab.156.1427971997486;
+        Thu, 02 Apr 2015 03:53:17 -0700 (PDT)
+Received: from [192.168.0.103] ([103.227.98.178])
+        by mx.google.com with ESMTPSA id w17sm4658644pdj.6.2015.04.02.03.53.15
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 02 Apr 2015 03:53:16 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266633>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266634>
 
-Junio C Hamano <gitster@pobox.com> writes:
+The changes made in this version are :
 
-> Sergey Organov <s.organov@javad.com> writes:
->
->> Nope. It seems like cherry-pick takes care of that:
->> ...
->> What do I miss?
->
-> The fact that cherry-pick did not flag it as a potential conflict
-> situation where a manual verification is required
-> (the cherry-pick process can be fooled by textual similarity and
-> either add the same thing twice or fail to add one thing that is
-> needed).
+*  unpack_sha1_header_to_strbuf() now checks for Z_STREAM_END and also
+the return is not changed to status (as per Junios suggestion) as this 
+breaks the check done in sha1_loose_object_info() as the return is 
+sometimes Z_BUF_ERROR (-5).
 
-Well, it was not required in the simple case I tested, and cherry-pick
-did the right thing. I suspect it will do the right thing (flag a
-conflict) where manual verification is required. A test-case
-demonstrating the problem you have in mind, maybe?
+* In sha1_loose_object_info() if the status is set, then change the type 
+to status. Also check for this in cat-file.c
 
-Anyway, how is it different to cherry-pick merge commit compared to any
-other commit? I mean, provided we cherry-pick other commits, we already
-accepted all the possible negative consequences of cherry-picking. How
-cherry-picking merge commits make this worse?
+* Add documentation and tests for the same.
 
-I.e., do you think we have a show-stopper, or just that there are ways
-to handle merge commits event better than simple "cherry-pick -m1"? The
-latter is probably true, but simple cherry-pick still looks much better
-than what we have now, no?
-
--- Sergey.
+Thanks for your suggestions.
