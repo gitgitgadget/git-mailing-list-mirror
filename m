@@ -1,77 +1,84 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: Kickoff for Git 2.4.0 l10n round 2
-Date: Fri, 3 Apr 2015 08:57:05 +0800
-Message-ID: <CANYiYbH4z=3Sd7HaC9RZMd86F2aDbvEJvUTC=TGzUBSBt-UtWA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] diff-highlight: Fix broken multibyte string
+Date: Thu, 2 Apr 2015 21:24:30 -0400
+Message-ID: <20150403012430.GA16173@peff.net>
+References: <1427730933-26189-1-git-send-email-eungjun.yi@navercorp.com>
+ <20150330221635.GB25212@peff.net>
+ <ffa56a1b1257732077c287a5cfdd138@74d39fa044aa309eaea14b9f57fe79c>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Alexander Shopov <ash@kambanaria.org>,
-	Alex Henrie <alexhenrie24@gmail.com>,
-	Ralf Thielow <ralf.thielow@googlemail.com>,
-	=?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
-	Marco Paolone <marcopaolone@gmail.com>,
-	Marco Sousa <marcomsousa@gmail.com>,
-	Dimitriy Ryazantcev <DJm00n@mail.ru>,
-	Peter Krefting <peter@softwolves.pp.se>,
-	=?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
-	Jiang Xin <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 03 02:57:13 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Yi EungJun <semtlenori@gmail.com>, git@vger.kernel.org
+To: "Kyle J. McKay" <mackyle@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 03 03:24:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ydpv6-0005jc-FS
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Apr 2015 02:57:12 +0200
+	id 1YdqLj-0008Fx-Gt
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Apr 2015 03:24:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752691AbbDCA5I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Apr 2015 20:57:08 -0400
-Received: from mail-wi0-f179.google.com ([209.85.212.179]:36557 "EHLO
-	mail-wi0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751437AbbDCA5G (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Apr 2015 20:57:06 -0400
-Received: by wizk4 with SMTP id k4so31345633wiz.1
-        for <git@vger.kernel.org>; Thu, 02 Apr 2015 17:57:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=SzrtG32p0WwReVCeOXeSgNpQtPIerccOAmWBZ6pTVGw=;
-        b=WFYdfGuPJbGS/IO0F0XAWDsRdXH28mRqdiA4aG19+kZbZSk+qqSk4ffYqGqRqb33gl
-         0xYz+hZYcyJGVXR52gOjFmDwXhRxg1LB/KJAwGjc+KpyJwSnPhO83YLOx34VZO9zSS8f
-         HoYtWtqEeuM1zX5+5eCjE+GpKwb3UYYEAaf9DNTRmc9L8D1jqXxfKSMezjhqAWKuu4el
-         iV7R100sjAg6xO1/mURvtkGRWJVD6SN4rXPAoJxzOVwk4K9B42jwP0//huTVDyBwdXPk
-         ABPyqUwrjVrA0ONufBKj8MQZeltgOG/tCRX4nV93K9EUU+sGsf0tiYB6UdxtSxYPgSH/
-         koWQ==
-X-Received: by 10.180.126.69 with SMTP id mw5mr29938812wib.12.1428022625666;
- Thu, 02 Apr 2015 17:57:05 -0700 (PDT)
-Received: by 10.194.234.33 with HTTP; Thu, 2 Apr 2015 17:57:05 -0700 (PDT)
+	id S1753434AbbDCBYf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Apr 2015 21:24:35 -0400
+Received: from cloud.peff.net ([50.56.180.127]:41731 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753431AbbDCBYd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Apr 2015 21:24:33 -0400
+Received: (qmail 14238 invoked by uid 102); 3 Apr 2015 01:24:33 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 02 Apr 2015 20:24:33 -0500
+Received: (qmail 18114 invoked by uid 107); 3 Apr 2015 01:24:51 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 02 Apr 2015 21:24:51 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 02 Apr 2015 21:24:30 -0400
+Content-Disposition: inline
+In-Reply-To: <ffa56a1b1257732077c287a5cfdd138@74d39fa044aa309eaea14b9f57fe79c>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266697>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266698>
 
-Hi,
+On Thu, Apr 02, 2015 at 05:49:24PM -0700, Kyle J. McKay wrote:
 
-Today after I merged pull request from Ralf, I found there is one new
-l10n update from Git 2.4.0-rc1.  I also checked the 4 potential feature
-branches ("Will merge to master") documented in whats-cooking.txt,
-and I guess this is the last round for 2.4.0 l10n.
+> Subject: [PATCH v2] diff-highlight: do not split multibyte characters
+> 
+> When the input is UTF-8 and Perl is operating on bytes instead
+> of characters, a diff that changes one multibyte character to
+> another that shares an initial byte sequence will result in a
+> broken diff display as the common byte sequence prefix will be
+> separated from the rest of the bytes in the multibyte character.
 
-The new "git.pot" is generated in the master branch of git-l10n/git-po.
+Thanks, I had a feeling we should be able to do something with perl's
+builtin utf8 support.  This doesn't help people with other encodings,
+but I'm not sure the original was all that helpful either (in that we
+don't actually _know_ the file encodings in the first place).
 
-    l10n: git.pot: v2.4.0 round 2 (1 update)
+I briefly confirmed that this seems to do the right thing on po/bg.po,
+which has a couple of sheared characters when viewed with the existing
+code.
 
-    Generate po/git.pot from v2.4.0-rc1 for git v2.4.0 l10n round 2.
+I timed this one versus the existing diff-highlight. It's about 7%
+slower. That's not great, but is acceptable to me. The String::Multibyte
+version was a lot faster, which was nice (but I'm still unclear on
+_why_).
 
-    Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+> Fix this by putting Perl into character mode when splitting the
+> line and then back into byte mode after the split is finished.
 
-You can get it from the usual place:
+I also wondered if we could simply put stdin into utf8 mode. But it
+looks like it will barf whenever it gets invalid utf8. Checking for
+valid utf8 and only doing the multi-byte split in that case (as you do
+here) is a lot more robust.
 
-    https://github.com/git-l10n/git-po/
+> While the utf8::xxx functions are built-in and do not require
+> any 'use' statement, the utf8::is_utf8 function did not appear
+> until Perl 5.8.1, but is identical to the Encode::is_utf8
+> function which is available in 5.8 so we use that instead of
+> utf8::is_utf8.
 
-As how to update your XX.po and help to translate Git, please see
-"Updating a XX.po file" and other sections in "po/README" file.
+Makes sense. I'm happy enough listing perl 5.8 as a dependency.
 
---
-Jiang Xin
+EungJun, does this version meet your needs?
+
+-Peff
