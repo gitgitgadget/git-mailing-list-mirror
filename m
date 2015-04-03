@@ -1,97 +1,77 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] git-p4: Fetch the proper revision of utf16 files
-Date: Fri, 3 Apr 2015 17:46:17 -0400
-Message-ID: <CAPig+cT59B-ccvbfyPvVt_1dTO7jFPn7YQdhu81WSz_1WFM2GA@mail.gmail.com>
-References: <1428095627-8772-1-git-send-email-git@dbingham.com>
-	<1428095627-8772-2-git-send-email-git@dbingham.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] diff-highlight: Fix broken multibyte string
+Date: Fri, 3 Apr 2015 17:47:29 -0400
+Message-ID: <20150403214729.GA11220@peff.net>
+References: <1427730933-26189-1-git-send-email-eungjun.yi@navercorp.com>
+ <20150330221635.GB25212@peff.net>
+ <ffa56a1b1257732077c287a5cfdd138@74d39fa044aa309eaea14b9f57fe79c>
+ <20150403012430.GA16173@peff.net>
+ <1D1557A9-737A-4BF6-A3DE-BF4C0465BD36@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, luke@diamond.org,
-	Pete Wyckoff <pw@padd.com>, Daniel Bingham <git@dbingham.com>
-To: Daniel Bingham <daniel@dbingham.com>
-X-From: git-owner@vger.kernel.org Fri Apr 03 23:46:25 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Yi EungJun <semtlenori@gmail.com>, git@vger.kernel.org
+To: "Kyle J. McKay" <mackyle@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 03 23:47:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ye9Q0-0005iC-64
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Apr 2015 23:46:24 +0200
+	id 1Ye9RA-0006bU-Tb
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Apr 2015 23:47:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752586AbbDCVqT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Apr 2015 17:46:19 -0400
-Received: from mail-lb0-f171.google.com ([209.85.217.171]:36044 "EHLO
-	mail-lb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752648AbbDCVqT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Apr 2015 17:46:19 -0400
-Received: by lbbug6 with SMTP id ug6so85643564lbb.3
-        for <git@vger.kernel.org>; Fri, 03 Apr 2015 14:46:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=FbXf/hKsVK4XjFPiURsjj0kCJvKWMHtanmQZaD7RFOk=;
-        b=Y4mATkCmSaKvc5/IA8n3bu75qmazAPIsoKwQupRSrfverFYMi9hErMUzrH2H5vKvWZ
-         jzakqBC2kSx8RERe4Rzud5zo3NYIONfR62xiGHm0oWFLfsn9deyhroj9Va1KUc8lINr1
-         m0o/srs6FmUoSxhwbDCG3ULsRTgaw7ckRyra9zeL/QyjSvRq8G9NlMMr4lovJVekpq1j
-         eGBD0ic0asTQv05z47J7GCJAbYwDv4NyFpyJlOO2cm8nhPd2oi1cuqnLjP7aqmegsJtJ
-         86C/O0owe78cJRvzTmcjwoGJTC+IrtxYM74f5jYQ2DlHxCLS8ewGXa7dSUncnNKrGp99
-         E+Sg==
-X-Received: by 10.112.173.41 with SMTP id bh9mr3664169lbc.107.1428097577777;
- Fri, 03 Apr 2015 14:46:17 -0700 (PDT)
-Received: by 10.114.78.69 with HTTP; Fri, 3 Apr 2015 14:46:17 -0700 (PDT)
-In-Reply-To: <1428095627-8772-2-git-send-email-git@dbingham.com>
-X-Google-Sender-Auth: 9W9lb8xY8IgAs_tchedTvWnNqTo
+	id S1752248AbbDCVrc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Apr 2015 17:47:32 -0400
+Received: from cloud.peff.net ([50.56.180.127]:42197 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751469AbbDCVrb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Apr 2015 17:47:31 -0400
+Received: (qmail 12141 invoked by uid 102); 3 Apr 2015 21:47:31 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 03 Apr 2015 16:47:31 -0500
+Received: (qmail 25957 invoked by uid 107); 3 Apr 2015 21:47:50 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 03 Apr 2015 17:47:50 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 03 Apr 2015 17:47:29 -0400
+Content-Disposition: inline
+In-Reply-To: <1D1557A9-737A-4BF6-A3DE-BF4C0465BD36@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266734>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266735>
 
-On Fri, Apr 3, 2015 at 5:13 PM, Daniel Bingham <daniel@dbingham.com> wrote:
-> git-p4 always fetches the latest revision of UTF16
-> files from P4 rather than the revision at the commit being sync'd.
->
-> The print command should, instead, specify the revision number from the
-> commit in question using the file#revision syntax.
->
-> The file#revision syntax is preferable over file@changelist for
-> consistency with how streamP4Files formats the fileArgs list.
+On Thu, Apr 02, 2015 at 06:59:50PM -0700, Kyle J. McKay wrote:
 
-As a non-Perforce reader trying to understand this patch, there are a
-couple issues which are unclear or inadequately explained. Perhaps you
-could provide a bit more detail or cite relevant sources.
+> It should work as well as the original did for any 1-byte encoding.  That
+> is, if it's not valid UTF-8 it should pass through unchanged and any single
+> byte encoding should just work.  But, as you point out, multibyte encodings
+> other than UTF-8 won't work, but they should behave the same as they did
+> before.
 
-First, does "UTF16 file" refer to the content or the filename?
+Yeah, sorry, I should have been more clear that I meant multibyte
+encodings. UTF-8 is the only common multibyte encoding I run across, but
+that's because Latin1 served most of my pre-UTF-8 needs.  I suspect
+things are very different for people in Asia. I don't know how
+badly they would want support for other encodings. I'm happy to go with
+a UTF-8 solution for now, and see if anybody wants to expand it further
+later.
 
-Second, I may be entirely missing it, but the commit message doesn't
-seem to explain why this impacts only "UTF16 files", and why this
-solution is the appropriate fix.
+> >I timed this one versus the existing diff-highlight. It's about 7%
+> >slower.
+> 
+> I'd expect that, we're doing extra work we weren't doing before.
 
-If the answer to the first question is that the filename is UTF-16,
-then would an alternate fix be to convert the value of
-file['depotFile'] to have the same encoding as the "print -q -o - ..."
-command-line? (Again, please excuse my Perforce-ignorance if I'm
-completely off the mark.)
+I was worried would be 200% or something. :)
 
-> Signed-off-by: Daniel Bingham <git@dbingham.com>
-> ---
->  git-p4.py | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/git-p4.py b/git-p4.py
-> index ff132b2..156f3a4 100755
-> --- a/git-p4.py
-> +++ b/git-p4.py
-> @@ -2101,7 +2101,8 @@ class P4Sync(Command, P4UserMap):
->              # them back too.  This is not needed to the cygwin windows version,
->              # just the native "NT" type.
->              #
-> -            text = p4_read_pipe(['print', '-q', '-o', '-', file['depotFile']])
-> +            ufile = "%s#%s" % (file['depotFile'], file['rev'])
-> +            text = p4_read_pipe(['print', '-q', '-o', '-', ufile])
->              if p4_version_string().find("/NT") >= 0:
->                  text = text.replace("\r\n", "\n")
->              contents = [ text ]
-> --
-> 2.3.5
+> >Makes sense. I'm happy enough listing perl 5.8 as a dependency.
+> 
+> Maybe that should be added.  The rest of Git's perl code seems to have a
+> 'use 5.008;' already, so I figured that was a reasonable dependency.  :)
+
+I shouldn't have said "listing". I just meant "have" as a dependency. I
+am also happy with adding "use 5.008", but I agree it's probably not
+necessary at this point. It was released in 2002 (wow, has it really
+been that long?).
+
+-Peff
