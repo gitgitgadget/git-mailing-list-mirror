@@ -1,102 +1,64 @@
-From: Jeff King <peff@peff.net>
+From: Duy Nguyen <pclouds@gmail.com>
 Subject: Re: [PATCH] t1509: update prepare script to be able to run t1509 in
  chroot again
-Date: Fri, 3 Apr 2015 08:01:10 -0400
-Message-ID: <20150403120109.GB22170@peff.net>
-References: <20150331191420.GE22844@google.com>
- <1428055737-8943-1-git-send-email-pclouds@gmail.com>
+Date: Fri, 3 Apr 2015 19:14:18 +0700
+Message-ID: <CACsJy8D3Rk51JVvwivj8BwTjprhYC7aEbfY4vF+4Mo-cn5taLw@mail.gmail.com>
+References: <20150331191420.GE22844@google.com> <1428055737-8943-1-git-send-email-pclouds@gmail.com>
+ <20150403120109.GB22170@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jonathan Niedier <jrnieder@gmail.com>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 03 14:01:20 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Jonathan Niedier <jrnieder@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Apr 03 14:14:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ye0Ho-0000Rl-0F
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Apr 2015 14:01:20 +0200
+	id 1Ye0Uv-0008Tw-TK
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Apr 2015 14:14:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751538AbbDCMBN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Apr 2015 08:01:13 -0400
-Received: from cloud.peff.net ([50.56.180.127]:41829 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751435AbbDCMBM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Apr 2015 08:01:12 -0400
-Received: (qmail 18910 invoked by uid 102); 3 Apr 2015 12:01:12 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 03 Apr 2015 07:01:12 -0500
-Received: (qmail 20552 invoked by uid 107); 3 Apr 2015 12:01:31 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 03 Apr 2015 08:01:31 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 03 Apr 2015 08:01:10 -0400
-Content-Disposition: inline
-In-Reply-To: <1428055737-8943-1-git-send-email-pclouds@gmail.com>
+	id S1752975AbbDCMOt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Apr 2015 08:14:49 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:33545 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752878AbbDCMOt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Apr 2015 08:14:49 -0400
+Received: by iebmp1 with SMTP id mp1so82729584ieb.0
+        for <git@vger.kernel.org>; Fri, 03 Apr 2015 05:14:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=3EIJkk3hJpIURx75ZYC2payfk0zP0VPySf3MSQTgXLo=;
+        b=wNYDcedT958PdmlOBwyyxigaz9IX/RvFwWJUnBrDxzMgVmmLssCCiG3IglOYaw4qyr
+         xvLe7O43ogKbzq50KmBJEf78t5CZwNQOH6SRmdpPz17jwH5nRoNR+54Z78uvE4HHPIy/
+         QXijbIX2Hy/mrSbJBuV/EOzW+3oI5XHsiGFiU+bk3SXRhGYHE38V65lbosFxo4h23/kG
+         oiXsAZesxqQ2tycwW9wd+2oXKvM4xLkEa1llX+vYGTr0Iqeb87YcniqkGjx4O11G021X
+         jHs5v0aG/SF3vMfKbl1/PCa/TtE2JfcTS50tdnI6oftWgOEAzEzLKxhdcm+kKrK4URJH
+         /oSg==
+X-Received: by 10.50.79.197 with SMTP id l5mr27850913igx.39.1428063288470;
+ Fri, 03 Apr 2015 05:14:48 -0700 (PDT)
+Received: by 10.107.47.170 with HTTP; Fri, 3 Apr 2015 05:14:18 -0700 (PDT)
+In-Reply-To: <20150403120109.GB22170@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266704>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266705>
 
-On Fri, Apr 03, 2015 at 05:08:57PM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
-=BB=8Dc Duy wrote:
+On Fri, Apr 3, 2015 at 7:01 PM, Jeff King <peff@peff.net> wrote:
+> Aside from the nits above, I did get it to run t1509 with this. I can't
+> say I'm incredibly excited about the whole thing, if only because it is
+> clear that nobody is going to run it regularly (so regressions will
+> likely go unnoticed, which is the whole point of the test script).  But
+> perhaps it is better than nothing, and it is not hurting anyone to sit
+> there and bitrot again. ;)
 
-> diff --git a/t/t1509/prepare-chroot.sh b/t/t1509/prepare-chroot.sh
-> index 6269117..c61afbf 100755
-> --- a/t/t1509/prepare-chroot.sh
-> +++ b/t/t1509/prepare-chroot.sh
-> @@ -14,25 +14,42 @@ xmkdir() {
-> =20
->  R=3D"$1"
-> =20
-> +[ "$UID" -eq 0 ] && die "This script should not be run as root, what=
- if it does rm -rf /?"
-
-This line complains for me. $UID is set in my bash login shell, but not
-in the dash shell for this script. Maybe "id -u" instead?
-
->  xmkdir "$R" "$R/bin" "$R/etc" "$R/lib" "$R/dev"
-> -[ -c "$R/dev/null" ] || die "/dev/null is missing. Do mknod $R/dev/n=
-ull c 1 3 && chmod 666 $R/dev/null"
-> +touch "$R/dev/null"
-
-It is nice not to mknod here, as it requires root. But making /dev/null
-a regular file seems a bit flaky. We will constantly overwrite it with
-the output of each test, and then pipe that output back into the next
-test. The current set of tests in t1509 does not seem to mind, though.
-
-> +# Fake perl to reduce dependency, t1509 does not use perl, but some
-> +# env might slip through, see test-lib.sh, unset.*PERL_PATH
-> +sed 's|^PERL_PATH=3D*|PERL_PATH=3D/bin/true|' GIT-BUILD-OPTIONS > "$=
-R$(pwd)/GIT-BUILD-OPTIONS"
-
-Re-preparing an already-made chroot makes this:
-
-  PERL_PATH=3D/bin/true'/usr/bin/perl'
-
-Did you want "PERL_PATH=3D.*" as your regex?
-
-> -echo "Execute this in root: 'chroot $R /bin/su - $(id -nu)'"
-> +cat <<EOF
-> +Execute this in root:
-> +chroot $R /bin/su - $(id -nu)
-> +IKNOWWHATIAMDOING=3DYES ./t1509-root-worktree.sh -v -i
-> +EOF
-
-I found the "in root" here (and in the original) confusing. Do you mean
-"as root"? I wonder if it would make sense to just show:
-
-  sudo chroot $R /bin/su - $(id -nu)
-
-as the sample command.
-
-Aside from the nits above, I did get it to run t1509 with this. I can't
-say I'm incredibly excited about the whole thing, if only because it is
-clear that nobody is going to run it regularly (so regressions will
-likely go unnoticed, which is the whole point of the test script).  But
-perhaps it is better than nothing, and it is not hurting anyone to sit
-there and bitrot again. ;)
-
--Peff
+To be honest, I didn't run it often in the last 5 years. The code it
+protects seems not broken during this time and probably so for a
+foreseeable future. So I don't mind if you just kill t1509 and related
+scripts.
+-- 
+Duy
