@@ -1,65 +1,92 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: GSoC 2015: students proposals submitted, selection started
-Date: Fri, 3 Apr 2015 16:58:48 -0400
-Message-ID: <20150403205847.GA10051@peff.net>
-References: <1381398131.18124691.1427904503950.JavaMail.zimbra@imag.fr>
- <1644505076.18125173.1427905140837.JavaMail.zimbra@imag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git 2.3.4, ssh: Could not resolve hostname
+Date: Fri, 03 Apr 2015 14:01:55 -0700
+Message-ID: <xmqqy4m9exj0.fsf@gitster.dls.corp.google.com>
+References: <56B33978-76A0-4EE0-BCC0-EF030FD52E41@rawsound.com>
+	<20150402180914.GA19081@peff.net>
+	<201C57EF-FC96-4FFB-81D2-90F94428A6CA@rawsound.com>
+	<20150402191452.GA20420@peff.net>
+	<xmqq7ftujpu1.fsf@gitster.dls.corp.google.com>
+	<62968860-FA58-4339-AF0B-264197EC8A04@rawsound.com>
+	<20150402193524.GA21555@peff.net> <551DD887.2010403@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Christian Couder <christian.couder@gmail.com>,
-	sbeller@google.com
-To: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri Apr 03 22:58:58 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>,
+	"Reid Woodbury Jr." <reidw@rawsound.com>, git@vger.kernel.org
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Fri Apr 03 23:02:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ye8g4-0005Q5-TU
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Apr 2015 22:58:57 +0200
+	id 1Ye8jE-0007k9-Sq
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Apr 2015 23:02:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752056AbbDCU6x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Apr 2015 16:58:53 -0400
-Received: from cloud.peff.net ([50.56.180.127]:42124 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752559AbbDCU6w (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Apr 2015 16:58:52 -0400
-Received: (qmail 9800 invoked by uid 102); 3 Apr 2015 20:58:51 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 03 Apr 2015 15:58:51 -0500
-Received: (qmail 25288 invoked by uid 107); 3 Apr 2015 20:59:10 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 03 Apr 2015 16:59:10 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 03 Apr 2015 16:58:48 -0400
-Content-Disposition: inline
-In-Reply-To: <1644505076.18125173.1427905140837.JavaMail.zimbra@imag.fr>
+	id S1752117AbbDCVCI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Apr 2015 17:02:08 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:57530 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751327AbbDCVCG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 3 Apr 2015 17:02:06 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1F42D44897;
+	Fri,  3 Apr 2015 17:02:00 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=go7rCkILHK8t
+	9A3XVbWNUSsJefQ=; b=vIk9sI/stfiFDkkQYbyPCKEKAS/qfIkyEsTIHZYvxFRL
+	zWRs5MUxe+ULhUmfVSehPP+N0iTJYyMa3wj/y/54zxniT3iUGKaxEUWIa2L6LL7s
+	XUWyqk417eE5MfImZJ5fjfA2qxusWjmgCASlIOHTpHswH6QnugshU24Hp6VjTE4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=XPAWpi
+	Jr0NJdWCpZ2kyjxX8CWbggkgHM8/JdS+H4PC532+2wWJ1D/b0Loekl1XysIDMoPr
+	V1bcjPY0ElItxDe/eyRdoBzJ/Cl/XQm7QcWQv61R7ofCmk6OGhiud8imVNrjoqUI
+	BrzQu95fsxQVVkg8+JT/CunYSu0Z06s8V/OTw=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1455A44896;
+	Fri,  3 Apr 2015 17:02:00 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 34A8C44891;
+	Fri,  3 Apr 2015 17:01:57 -0400 (EDT)
+In-Reply-To: <551DD887.2010403@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
+ =?utf-8?Q?en=22's?= message of
+	"Fri, 03 Apr 2015 02:02:15 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: A9F9AF20-DA44-11E4-AC11-11859F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266724>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266725>
 
-On Wed, Apr 01, 2015 at 06:19:00PM +0200, Matthieu Moy wrote:
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
-> Latest news from the google summer of code: students have completed
-> their proposals. We have 2 proposals for "convert scripts to
-> builtins", and 4 for "unify git branch, git tag and git for-each-ref"
-> (plus some out-of-scope proposals). See
-> http://git.github.io/SoC-2015-Ideas.html for more details about the
-> projects.
-> 
-> We have to request slots before April 13th.
+> This makes my think that it is
+> a) non-standard to have the extra colon
+> b) The error message could be better
 
-Thanks, Matthieu, for keeping our GSoC activities moving forward. And
-thank you to all of the folks who have been helping review microprojects
-and proposals.
+=46or that, perhaps
 
-If there are any other long-time community members who want to read and
-comment on the proposals, you can sign up through
-https://www.google-melange.com and request to be a mentor for git (you
-do not have to mentor, but that is the access level where you get to see
-the proposals).
+-ssh: Could not resolve hostname xxxx:: nodename nor servname provided,=
+ or not known
++ssh: Could not resolve hostname "xxxx:": nodename nor servname provide=
+d, or not known
 
--Peff
+would be something we would want to do, no matter what other fixes
+we would apply.
+
+> Spontaneously I would say that a trailing ':' at the end of a
+> hostname in the ssh:// scheme can be safely ignored, what do you
+> think?
+
+If it is not too much hassle to make the current code do so, I'd say
+that is a good way forward.  Giving a warning that lets the user
+know that the input has an extra and unwanted colon in it may be a
+plus, too.
+
+Thanks.
