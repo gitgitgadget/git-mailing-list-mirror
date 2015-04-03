@@ -1,112 +1,162 @@
-From: "Yi, EungJun" <semtlenori@gmail.com>
-Subject: Re: [PATCH] diff-highlight: Fix broken multibyte string
-Date: Fri, 3 Apr 2015 11:19:24 +0900
-Message-ID: <CAFT+Tg8-tUBAvgX1bTni7joye_ZuZ_NOT_mmamnnm5GdWzEhrg@mail.gmail.com>
-References: <1427730933-26189-1-git-send-email-eungjun.yi@navercorp.com>
-	<20150330221635.GB25212@peff.net>
-	<ffa56a1b1257732077c287a5cfdd138@74d39fa044aa309eaea14b9f57fe79c>
-	<20150403012430.GA16173@peff.net>
-Reply-To: semtlenori@gmail.com
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] t1509: update prepare script to be able to run t1509 in chroot again
+Date: Fri,  3 Apr 2015 17:08:57 +0700
+Message-ID: <1428055737-8943-1-git-send-email-pclouds@gmail.com>
+References: <20150331191420.GE22844@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: "Kyle J. McKay" <mackyle@gmail.com>, Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Apr 03 04:19:32 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, Jonathan Niedier <jrnieder@gmail.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 03 12:09:11 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YdrCl-0004id-Dh
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Apr 2015 04:19:31 +0200
+	id 1YdyXH-0006Wp-7t
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Apr 2015 12:09:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752256AbbDCCT0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Apr 2015 22:19:26 -0400
-Received: from mail-qg0-f50.google.com ([209.85.192.50]:33387 "EHLO
-	mail-qg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750771AbbDCCTZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Apr 2015 22:19:25 -0400
-Received: by qgdy78 with SMTP id y78so22875748qgd.0
-        for <git@vger.kernel.org>; Thu, 02 Apr 2015 19:19:25 -0700 (PDT)
+	id S1751953AbbDCKJD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Apr 2015 06:09:03 -0400
+Received: from mail-pa0-f47.google.com ([209.85.220.47]:33509 "EHLO
+	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751725AbbDCKJA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Apr 2015 06:09:00 -0400
+Received: by paboj16 with SMTP id oj16so31077850pab.0
+        for <git@vger.kernel.org>; Fri, 03 Apr 2015 03:09:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=L8Xrs8N8ddfdP3mtIUnO9HwaSjet0GrJoYYukDWVr7M=;
-        b=i84rLyPa2M+e6aNsNpS9KdXzbVNoNRP+ytI1c2ZeL15R0eq0mZdfCDgcSYKaYSLXkU
-         T7rgoxtPBiMp8abEG6re/V71S1CwP+D/nvC4SN4fF+byqx8w4V8dngG04HEwpINKJ99l
-         H+S3E4xQUAHuUClUBq693tBtvx2LJCUpL+eA4I55b0hIh0sPCkEbQlr6IjDyUZCuxbG2
-         qVIdj6EPZAU7N7692TmHdNz5zfNQEYCrEvu1jNjITJszSS2lFJzA7Ty/ovRi+xrhnZwK
-         XU86HTPoobSCTQIYpV0sfsRClMg8IDFxacgE8hgUfXiX63Rn7uIc1KDW/h+wrPH+Gnm6
-         O1kA==
-X-Received: by 10.140.233.3 with SMTP id e3mr313482qhc.94.1428027565244; Thu,
- 02 Apr 2015 19:19:25 -0700 (PDT)
-Received: by 10.140.105.161 with HTTP; Thu, 2 Apr 2015 19:19:24 -0700 (PDT)
-In-Reply-To: <20150403012430.GA16173@peff.net>
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=mWqAm9QIfzYqFmu+FmW1sjNWz1PqnO965feMxm4MIjk=;
+        b=SMmhK/dtZ6EkJIkCZLv634sQdeNj39lKpSmErymOICZKgIDtobewmpjbMGj3yU7HwW
+         I7e7ToNPtsAUrwEGhO6rrYS42r1ffsaX8tSsoA+VycSvkIoaXfeQpOhFlx6QOM8apVZH
+         4V6IRSe21ZiJCDJzJ7qmjp6RAUpnppEul9arkWaRaVR8zTKmkB8F0csHC0xiuIrWAScD
+         0+9iXeZn4KKjGuNDg6El5KS+FmFMi8dNXu/YtKR6mHg8Cnph/DilJBzeR5QUAVg2hkZX
+         ZR3nZ3a1VbMmWrZhdJGfQnAg4wj8AuLx6B2OZI+A23/2cXq59qwkUC6XH9on9NRs4ntq
+         S0Ww==
+X-Received: by 10.70.35.193 with SMTP id k1mr3125674pdj.46.1428055740454;
+        Fri, 03 Apr 2015 03:09:00 -0700 (PDT)
+Received: from lanh ([115.73.233.16])
+        by mx.google.com with ESMTPSA id fr13sm7649568pdb.55.2015.04.03.03.08.55
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 03 Apr 2015 03:08:59 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Fri, 03 Apr 2015 17:09:02 +0700
+X-Mailer: git-send-email 2.3.0.rc1.137.g477eb31
+In-Reply-To: <20150331191420.GE22844@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266701>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266702>
 
-> I timed this one versus the existing diff-highlight. It's about 7%
-> slower. That's not great, but is acceptable to me. The String::Multibyte
-> version was a lot faster, which was nice (but I'm still unclear on
-> _why_).
+Tested on Gentoo and OpenSUSE 13.1, both x86-64
 
-I think the reason is here:
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ On Wed, Apr 1, 2015 at 2:14 AM, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+ > Jeff King wrote:
+ >
+ >> No tests, as we would need to be able to write to "/" to do
+ >> so.
+ >
+ > t1509-root-worktree.sh is supposed to test the repository-at-/ case.
+ > But I wouldn't be surprised if it's bitrotted, since people don't se=
+t
+ > up a throwaway chroot or VM for tests too often.
 
-> sub split_line {
->    local $_ = shift;
->    return map { /$COLOR/ ? $_ : ($mbcs ? $mbcs->strsplit('', $_) : split //) }
->           split /($COLOR)/;
-> }
+ Can't leave it rotting. Either fix it or kill it. This is the first
+ option. Good news is the test passes, nothing else is broken. Bad
+ news is it does not detect the core.worktree breakage, but this on
+ top would verify that Jeff's patch works
 
-I removed "*" from "split /($COLOR*)/". Actually I don't know why "*"
-was required but I need to remove it to make my patch works correctly.
+  diff --git a/t/t1509-root-worktree.sh b/t/t1509-root-worktree.sh
+  index b6977d4..17ff4ce 100755
+  --- a/t/t1509-root-worktree.sh
+  +++ b/t/t1509-root-worktree.sh
+  @@ -224,6 +224,10 @@ test_expect_success 'setup' '
+   	test_cmp expected result
+   '
+  =20
+  +test_expect_success 'no core.worktree after git init' '
+  +	test "`git config core.worktree`" =3D ""
+  +'
+  +
+   test_vars 'auto gitdir, root' ".git" "/" ""
+   test_foobar_root
+=20
 
 
-On Fri, Apr 3, 2015 at 10:24 AM, Jeff King <peff@peff.net> wrote:
-> On Thu, Apr 02, 2015 at 05:49:24PM -0700, Kyle J. McKay wrote:
->
->> Subject: [PATCH v2] diff-highlight: do not split multibyte characters
->>
->> When the input is UTF-8 and Perl is operating on bytes instead
->> of characters, a diff that changes one multibyte character to
->> another that shares an initial byte sequence will result in a
->> broken diff display as the common byte sequence prefix will be
->> separated from the rest of the bytes in the multibyte character.
->
-> Thanks, I had a feeling we should be able to do something with perl's
-> builtin utf8 support.  This doesn't help people with other encodings,
-> but I'm not sure the original was all that helpful either (in that we
-> don't actually _know_ the file encodings in the first place).
->
-> I briefly confirmed that this seems to do the right thing on po/bg.po,
-> which has a couple of sheared characters when viewed with the existing
-> code.
->
-> I timed this one versus the existing diff-highlight. It's about 7%
-> slower. That's not great, but is acceptable to me. The String::Multibyte
-> version was a lot faster, which was nice (but I'm still unclear on
-> _why_).
->
->> Fix this by putting Perl into character mode when splitting the
->> line and then back into byte mode after the split is finished.
->
-> I also wondered if we could simply put stdin into utf8 mode. But it
-> looks like it will barf whenever it gets invalid utf8. Checking for
-> valid utf8 and only doing the multi-byte split in that case (as you do
-> here) is a lot more robust.
->
->> While the utf8::xxx functions are built-in and do not require
->> any 'use' statement, the utf8::is_utf8 function did not appear
->> until Perl 5.8.1, but is identical to the Encode::is_utf8
->> function which is available in 5.8 so we use that instead of
->> utf8::is_utf8.
->
-> Makes sense. I'm happy enough listing perl 5.8 as a dependency.
->
-> EungJun, does this version meet your needs?
->
-> -Peff
+ t/t1509/prepare-chroot.sh | 35 ++++++++++++++++++++++++++---------
+ 1 file changed, 26 insertions(+), 9 deletions(-)
+
+diff --git a/t/t1509/prepare-chroot.sh b/t/t1509/prepare-chroot.sh
+index 6269117..c61afbf 100755
+--- a/t/t1509/prepare-chroot.sh
++++ b/t/t1509/prepare-chroot.sh
+@@ -14,25 +14,42 @@ xmkdir() {
+=20
+ R=3D"$1"
+=20
++[ "$UID" -eq 0 ] && die "This script should not be run as root, what i=
+f it does rm -rf /?"
+ [ -n "$R" ] || die "usage: prepare-chroot.sh <root>"
+ [ -x git ] || die "This script needs to be executed at git source code=
+'s top directory"
+-[ -x /bin/busybox ] || die "You need busybox"
++if [ -x /bin/busybox ]; then
++	BB=3D/bin/busybox
++elif [ -x /usr/bin/busybox ]; then
++	BB=3D/usr/bin/busybox
++else
++	die "You need busybox"
++fi
+=20
+ xmkdir "$R" "$R/bin" "$R/etc" "$R/lib" "$R/dev"
+-[ -c "$R/dev/null" ] || die "/dev/null is missing. Do mknod $R/dev/nul=
+l c 1 3 && chmod 666 $R/dev/null"
++touch "$R/dev/null"
+ echo "root:x:0:0:root:/:/bin/sh" > "$R/etc/passwd"
+ echo "$(id -nu):x:$(id -u):$(id -g)::$(pwd)/t:/bin/sh" >> "$R/etc/pass=
+wd"
+ echo "root::0:root" > "$R/etc/group"
+ echo "$(id -ng)::$(id -g):$(id -nu)" >> "$R/etc/group"
+=20
+-[ -x "$R/bin/busybox" ] || cp /bin/busybox "$R/bin/busybox"
+-[ -x "$R/bin/sh" ] || ln -s /bin/busybox "$R/bin/sh"
+-[ -x "$R/bin/su" ] || ln -s /bin/busybox "$R/bin/su"
++[ -x "$R$BB" ] || cp $BB "$R/bin/busybox"
++for cmd in sh su ls expr tr basename rm mkdir mv id uname dirname cat =
+true sed diff; do
++	ln -f -s /bin/busybox "$R/bin/$cmd"
++done
+=20
+ mkdir -p "$R$(pwd)"
+ rsync --exclude-from t/t1509/excludes -Ha . "$R$(pwd)"
+-ldd git | grep '/' | sed 's,.*\s\(/[^ ]*\).*,\1,' | while read i; do
+-	mkdir -p "$R$(dirname $i)"
+-	cp "$i" "$R/$i"
++# Fake perl to reduce dependency, t1509 does not use perl, but some
++# env might slip through, see test-lib.sh, unset.*PERL_PATH
++sed 's|^PERL_PATH=3D*|PERL_PATH=3D/bin/true|' GIT-BUILD-OPTIONS > "$R$=
+(pwd)/GIT-BUILD-OPTIONS"
++for cmd in git $BB;do=20
++	ldd $cmd | grep '/' | sed 's,.*\s\(/[^ ]*\).*,\1,' | while read i; do
++		mkdir -p "$R$(dirname $i)"
++		cp "$i" "$R/$i"
++	done
+ done
+-echo "Execute this in root: 'chroot $R /bin/su - $(id -nu)'"
++cat <<EOF
++Execute this in root:
++chroot $R /bin/su - $(id -nu)
++IKNOWWHATIAMDOING=3DYES ./t1509-root-worktree.sh -v -i
++EOF
+--=20
+2.3.0.rc1.137.g477eb31
