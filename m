@@ -1,106 +1,108 @@
-From: "Yi, EungJun" <semtlenori@gmail.com>
-Subject: Re: [PATCH v3] diff-highlight: do not split multibyte characters
-Date: Sat, 4 Apr 2015 23:47:05 +0900
-Message-ID: <CAFT+Tg_dFvpxauPJgRi86qTFo4k6dXa6WST+UPTguisA9ma83Q@mail.gmail.com>
-References: <1427730933-26189-1-git-send-email-eungjun.yi@navercorp.com>
-	<20150330221635.GB25212@peff.net>
-	<ffa56a1b1257732077c287a5cfdd138@74d39fa044aa309eaea14b9f57fe79c>
-	<20150403012430.GA16173@peff.net>
-	<CAFT+Tg8-tUBAvgX1bTni7joye_ZuZ_NOT_mmamnnm5GdWzEhrg@mail.gmail.com>
-	<6a8dcc870e53040e1f54d7c36a1b33a@74d39fa044aa309eaea14b9f57fe79c>
-	<20150404140902.GA25455@peff.net>
-Reply-To: semtlenori@gmail.com
+From: =?UTF-8?Q?erik_elfstr=C3=B6m?= <erik.elfstrom@gmail.com>
+Subject: git clean performance issues
+Date: Sat, 4 Apr 2015 20:32:45 +0200
+Message-ID: <CAMpP7NY++BwV+UygRj1C6Zsf=jE-z1AQuN3On0HeEqQpKGQtqw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: "Kyle J. McKay" <mackyle@gmail.com>, Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Apr 04 16:47:12 2015
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 04 20:32:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YePLr-0007CL-Lf
-	for gcvg-git-2@plane.gmane.org; Sat, 04 Apr 2015 16:47:12 +0200
+	id 1YeSsI-00042L-Py
+	for gcvg-git-2@plane.gmane.org; Sat, 04 Apr 2015 20:32:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752656AbbDDOrI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Apr 2015 10:47:08 -0400
-Received: from mail-qc0-f170.google.com ([209.85.216.170]:35471 "EHLO
-	mail-qc0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752256AbbDDOrG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Apr 2015 10:47:06 -0400
-Received: by qcbii10 with SMTP id ii10so82509588qcb.2
-        for <git@vger.kernel.org>; Sat, 04 Apr 2015 07:47:05 -0700 (PDT)
+	id S1752457AbbDDScq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Apr 2015 14:32:46 -0400
+Received: from mail-ob0-f182.google.com ([209.85.214.182]:34867 "EHLO
+	mail-ob0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752430AbbDDScp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Apr 2015 14:32:45 -0400
+Received: by obbfy7 with SMTP id fy7so121008270obb.2
+        for <git@vger.kernel.org>; Sat, 04 Apr 2015 11:32:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=DCi95XQ3RtxuoNpnGcqzNnQC8slp91rvT1IuuImr3RM=;
-        b=fb3nWLcnJfftbGLab3gI+FjYB3pbL01O9vDSvSnWP/uQmqq4eccVVA9PqrfjjDw+6B
-         lma5nCGSpeRcv3oNvSQu5czCRZPd65OKqv53C6zl+spKNcQgI6Nk4v4Ni751ZoKWteyh
-         khHz3uyIH2UpLbyU3GTZnwj1d+xNs9dpdAGxClbAmgvIwSuWOcjlei+m6FV81hTtdlxz
-         uYw4CrL2wfMAb+qQsNpuxaJ3P+bHWvy4mQo4GsmmyZmKa2gVtwN+aATvLtWgk1hwWkbN
-         9NC4wFmRHyTqDI89hSVbHUIFwlkxtywaYVvSB0SkMp94f2h92BdR0yHK8zmwdUmVO4ce
-         OMzw==
-X-Received: by 10.140.33.164 with SMTP id j33mr8010768qgj.10.1428158825487;
- Sat, 04 Apr 2015 07:47:05 -0700 (PDT)
-Received: by 10.140.105.161 with HTTP; Sat, 4 Apr 2015 07:47:05 -0700 (PDT)
-In-Reply-To: <20150404140902.GA25455@peff.net>
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=tTSD0NQ0PwaKoLOLq/RmIJBCQKtnbBsAvg4J5iy4GWk=;
+        b=YX9LXbsOKWG5MqU9PwBZN+zht3JPXdyA9TFkdyZjqOsghaX877nKqd3neyFO/07nct
+         i7z4/OVv71oNHdlAXQXdV6TOPt/aet8fEozknwgK9k0ZfunVFcvm2ISG81BP48+PQQrQ
+         bcdvH/5FHq9fzRGjKTnuc3wvUh8sl0rTfR5PAb9UYj9MIhnN6IQi8wNZRtJBESWq/vdW
+         lpISMI/pywwEbHzL1DYXADoy9fTBKN9XM+AXWtITcXG8ngQC63fHqWVffBdNRyDCwFII
+         6wB41w+6P1I2ZXiott7lQb9OdqcsEd4qtT0aHx4RWwzVLLE3vDmTef+oIzOp44ETuXE6
+         p4xg==
+X-Received: by 10.182.105.66 with SMTP id gk2mr9556619obb.76.1428172365075;
+ Sat, 04 Apr 2015 11:32:45 -0700 (PDT)
+Received: by 10.182.154.72 with HTTP; Sat, 4 Apr 2015 11:32:45 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266777>
 
-On Fri, Apr 3, 2015 at 10:24 AM, Jeff King <peff@peff.net> wrote:
->
-> EungJun, does this version meet your needs?
->
-> -Peff
+Hi,
 
-Yes, this patch is enough to meet my needs because it works well on
-UTF-8, the only encoding I use. And this patch looks better than my
-one because it is smaller, doesn't depend on String::Multibyte and
-seems to have no side-effect.
+I'm having a performance issue with "git clean -qxfd" (note, not using
+"-ff").
 
-I hope someone who use another multibyte encoding will send a patch to
-support the encoding in future... :)
+The performance issue shows up when trying to clean untracked
+directories that themselves contain many sub directories. The
+performance is highly non linear with the number of sub
+directories. Some test numbers:
 
-On Sat, Apr 4, 2015 at 11:09 PM, Jeff King <peff@peff.net> wrote:
-> On Fri, Apr 03, 2015 at 03:15:14PM -0700, Kyle J. McKay wrote:
->
->> When the input is UTF-8 and Perl is operating on bytes instead of
->> characters, a diff that changes one multibyte character to another
->> that shares an initial byte sequence will result in a broken diff
->> display as the common byte sequence prefix will be separated from
->> the rest of the bytes in the multibyte character.
->>
->> For example, if a single line contains only the unicode character
->> U+C9C4 (encoded as UTF-8 0xEC, 0xA7, 0x84) and that line is then
->> changed to the unicode character U+C9C0 (encoded as UTF-8 0xEC,
->> 0xA7, 0x80), when operating on bytes diff-highlight will show only
->> the single byte change from 0x84 to 0x80 thus creating invalid UTF-8
->> and a broken diff display.
->>
->> Fix this by putting Perl into character mode when splitting the line
->> and then back into byte mode after the split is finished.
->>
->> The utf8::xxx functions require Perl 5.8 so we require that as well.
->>
->> Also, since we are mucking with code in the split_line function, we
->> change a '*' quantifier to a '+' quantifier when matching the $COLOR
->> expression which has the side effect of speeding everything up while
->> eliminating useless '' elements in the returned array.
->>
->> Reported-by: Yi EungJun <semtlenori@gmail.com>
->> Signed-off-by: Kyle J. McKay <mackyle@gmail.com>
->
-> This version looks good to me. I looked over the diff of running "git
-> log -p --color" on git.git through diff-highlight before and after this
-> patch, and everything looks like an improvement.
->
->   Acked-by: Jeff King <peff@peff.net>
->
-> Thanks both of you for working on this.
->
-> -Peff
+Dirs    Time
+10000   0m0.754s
+50000   0m16.606s
+100000  1m31.418s
+
+When running "git clean -qxffd" (note, using "-ff") the performance is
+fast and linear:
+
+Dirs    Time
+10000   0m0.158s
+50000   0m0.918s
+100000  0m1.639s
+
+After checking the source of git-clean my understanding of the problem
+is as follows:
+
+When clean.c:cmd_clean finds a directory and the "-d" flag is given it
+will call clean.c:remove_dirs to potentially remove the directory and
+all sub directories.
+
+Unless "-ff" is given remove_dirs tries to be nice and not remove
+directories containing other git repositories. To do this it does the
+following check:
+
+    ...
+    if ((force_flag & REMOVE_DIR_KEEP_NESTED_GIT) &&
+            !resolve_gitlink_ref(path->buf, "HEAD", submodule_head)) {
+    ...
+
+The problem is that refs.c:resolve_gitlink_ref will call
+refs.c:get_ref_cache that will linearly search a linked list of cache
+entries and create and insert a new ref_cache entry in the list for
+each path it is given if it fails to find an existing entry:
+
+    for (refs = submodule_ref_caches; refs; refs = refs->next)
+        if (!strcmp(submodule, refs->name))
+            return refs;
+
+    refs = create_ref_cache(submodule);
+    refs->next = submodule_ref_caches;
+    submodule_ref_caches = refs;
+    return refs;
+
+In my scenario get_ref_cache will be called 10000+ times, each time
+with a new path. The final few calls will need to search through and
+compare 10000+ entries before realizing that there is no existing
+entry. This quickly ads up to 100 million+ calls to strcmp().
+
+>From what I can understand, the calls to get_ref_cache in this
+scenario will never do any useful work. Is this correct? If so, would
+it be possible to bypass it, maybe by calling
+resolve_gitlink_ref_recursive directly or by using some other way of
+checking for the presence of a git repo in clean.c:remove_dirs?
+
+/Erik
