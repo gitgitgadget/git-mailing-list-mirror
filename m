@@ -1,63 +1,65 @@
 From: Shawn Landden <shawn@churchofgit.com>
-Subject: [RFCv4 PATCH] daemon: add systemd support
-Date: Fri,  3 Apr 2015 20:19:40 -0700
-Message-ID: <1428117580-32289-1-git-send-email-shawn@churchofgit.com>
+Subject: [RFCv5 PATCH] daemon: add systemd support
+Date: Fri,  3 Apr 2015 20:22:20 -0700
+Message-ID: <1428117740-32622-1-git-send-email-shawn@churchofgit.com>
 Cc: Shawn Landden <shawn@churchofgit.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 04 05:19:56 2015
+X-From: git-owner@vger.kernel.org Sat Apr 04 05:22:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YeEcl-0007FZ-3u
-	for gcvg-git-2@plane.gmane.org; Sat, 04 Apr 2015 05:19:55 +0200
+	id 1YeEfK-0000ZP-Tp
+	for gcvg-git-2@plane.gmane.org; Sat, 04 Apr 2015 05:22:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752189AbbDDDTu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Apr 2015 23:19:50 -0400
-Received: from mail-pa0-f41.google.com ([209.85.220.41]:34643 "EHLO
-	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751730AbbDDDTt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Apr 2015 23:19:49 -0400
-Received: by pactp5 with SMTP id tp5so134417532pac.1
-        for <git@vger.kernel.org>; Fri, 03 Apr 2015 20:19:49 -0700 (PDT)
+	id S1752223AbbDDDWa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Apr 2015 23:22:30 -0400
+Received: from mail-pd0-f176.google.com ([209.85.192.176]:36347 "EHLO
+	mail-pd0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751730AbbDDDW3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Apr 2015 23:22:29 -0400
+Received: by pdea3 with SMTP id a3so88794663pde.3
+        for <git@vger.kernel.org>; Fri, 03 Apr 2015 20:22:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:date:message-id;
-        bh=AKDp+Iisx4z36Qu+1kEcZ+kbQ+yG1Pq1XExp/R8fr38=;
-        b=qvalQ+PcWD04PiErvrFWfaijXs5kpek97Hnu0BfD/woPJfVf0FRnswf1ZhNialO3cf
-         NoZkSOpY1180s52AqjUzAimSpGkwjuGsZTy0MBtgntQgFznlle1/gst2JhUppcX0nvVA
-         D+TXmyq5hyd4tvTe5gxwmDwkLE0f4iS31vvdAvHAAeZKH8sIiWV39ivXnVVmEVZ8tCUq
-         6O/zA+pyfKHFLgT4snsUto64b3kQRb2oemlCKHSINAOzoMGKBTufIVdZNP5JoHjo9CS0
-         +yX8IDmJy/7u9p1tbWtscE76jQT+4vHQMHaZLe41hPCFz0fqwnYl9wAg3ylNzcCTYW9I
-         g7Qg==
-X-Received: by 10.68.93.194 with SMTP id cw2mr8785597pbb.129.1428117589000;
-        Fri, 03 Apr 2015 20:19:49 -0700 (PDT)
+        bh=S7Miv6nSzwQ/qPU/BF5BNusnpnorlo4yUzXg8rzr99c=;
+        b=MPfkq9p1KzQsm2NBfmwBhrSlWxgcP2ZHOK0RyaKRs2y6nZ1kRJcMZyBq5X8Ih0FraU
+         yK5aOPMKrM2yFm3q7qWVge7Pu/as3nSU01iuPeqJT98/LiPzODIhfNl9Z1Zlz1r0uRBa
+         1Wvf/EfwQbwHHQH6lcnzBP+kDuwNfPQ2nHMrO4FScPndDD8ZDKrxBh31Pb45F8M5FKwI
+         nSc92hLRxMcPE1FRuY5/yu3k3tXIsA04SyRfIUrW+tIc9+LwlkEDLkSm+0OTEIMliB3c
+         cIlMPOo8sxG22pP16X2CG5K7/eQzm6cbVuC4id0GcyqTd5VnM/SeYBXqDg/jFBMzzBNK
+         rIxQ==
+X-Received: by 10.70.41.81 with SMTP id d17mr9193465pdl.16.1428117749212;
+        Fri, 03 Apr 2015 20:22:29 -0700 (PDT)
 Received: from zephyr.churchofgit.com (c-73-42-216-173.hsd1.wa.comcast.net. [73.42.216.173])
-        by mx.google.com with ESMTPSA id xt9sm9421410pbc.14.2015.04.03.20.19.46
+        by mx.google.com with ESMTPSA id hz8sm9473587pac.5.2015.04.03.20.22.25
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 03 Apr 2015 20:19:47 -0700 (PDT)
+        Fri, 03 Apr 2015 20:22:28 -0700 (PDT)
 X-Mailer: git-send-email 2.2.1.209.g41e5f3a
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266758>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266759>
 
 systemd supports git-daemon's existing --inetd mode as well.
 
 Signed-off-by: Shawn Landden <shawn@churchofgit.com>
 ---
  Documentation/git-daemon.txt | 41 +++++++++++++++++++++++++++++++++++-----
- Makefile                     | 14 ++++++++++++--
+ Makefile                     | 10 ++++++++++
  daemon.c                     | 45 ++++++++++++++++++++++++++++++++++++++------
- 3 files changed, 87 insertions(+), 13 deletions(-)
+ 3 files changed, 85 insertions(+), 11 deletions(-)
 
 Respond to review in http://article.gmane.org/gmane.comp.version-control.git/266650
 I did not indent the example documents as that was for inetd, and that would break copy/paste.
 
 These are all documentation changes, no functional differences. (Well, the example
 gained StandardError=null to match --inetd)
+
+v5: do not change whitespace of Makefile
 
 diff --git a/Documentation/git-daemon.txt b/Documentation/git-daemon.txt
 index a69b361..a273565 100644
@@ -141,7 +143,7 @@ index a69b361..a273565 100644
  ENVIRONMENT
  -----------
 diff --git a/Makefile b/Makefile
-index 5f3987f..644db71 100644
+index 5f3987f..83f5d8e 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -42,6 +42,9 @@ all::
@@ -168,17 +170,6 @@ index 5f3987f..644db71 100644
  ifndef CC_LD_DYNPATH
  	ifdef NO_R_TO_GCC_LINKER
  		# Some gcc does not accept and pass -R to the linker to specify
-@@ -1403,8 +1413,8 @@ ifdef NATIVE_CRLF
- endif
- 
- ifdef USE_NED_ALLOCATOR
--       COMPAT_CFLAGS += -Icompat/nedmalloc
--       COMPAT_OBJS += compat/nedmalloc/nedmalloc.o
-+        COMPAT_CFLAGS += -Icompat/nedmalloc
-+        COMPAT_OBJS += compat/nedmalloc/nedmalloc.o
- endif
- 
- ifdef GIT_TEST_CMP_USE_COPIED_CONTEXT
 diff --git a/daemon.c b/daemon.c
 index 9ee2187..ad8a79a 100644
 --- a/daemon.c
