@@ -1,80 +1,99 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v7 3/4] cat-file: add documentation for '--literally' option.
-Date: Sat,  4 Apr 2015 11:14:24 +0530
-Message-ID: <1428126264-19179-1-git-send-email-karthik.188@gmail.com>
+Subject: [PATCH v7 4/4] t1006: add tests for git cat-file --literally
+Date: Sat,  4 Apr 2015 11:14:49 +0530
+Message-ID: <1428126289-19239-1-git-send-email-karthik.188@gmail.com>
 References: <551F7984.5070902@gmail.com>
 Cc: gitster@pobox.com, sunshine@sunshineco.com,
 	Karthik Nayak <karthik.188@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 04 07:44:42 2015
+X-From: git-owner@vger.kernel.org Sat Apr 04 07:45:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YeGsr-0007dI-FD
-	for gcvg-git-2@plane.gmane.org; Sat, 04 Apr 2015 07:44:41 +0200
+	id 1YeGtN-0007zJ-7k
+	for gcvg-git-2@plane.gmane.org; Sat, 04 Apr 2015 07:45:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752085AbbDDFoh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Apr 2015 01:44:37 -0400
-Received: from mail-pd0-f169.google.com ([209.85.192.169]:32999 "EHLO
-	mail-pd0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751515AbbDDFoh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Apr 2015 01:44:37 -0400
-Received: by pdbnk13 with SMTP id nk13so62970799pdb.0
-        for <git@vger.kernel.org>; Fri, 03 Apr 2015 22:44:36 -0700 (PDT)
+	id S1752133AbbDDFpI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Apr 2015 01:45:08 -0400
+Received: from mail-pd0-f180.google.com ([209.85.192.180]:35975 "EHLO
+	mail-pd0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751515AbbDDFpH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Apr 2015 01:45:07 -0400
+Received: by pdea3 with SMTP id a3so91662591pde.3
+        for <git@vger.kernel.org>; Fri, 03 Apr 2015 22:45:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ARqFh2yNRrLdKah3F35SC8QcOD7K9Uteqpmhi/RMMSI=;
-        b=zL/uK37o452wozx0DiSLwaidkignY3alT2CEiAELKN+jcuLzhzrMh3BoSEhQp06SuR
-         ijB+AwY2dTdX82geo2Rz2WMyxuiPcqAvhmhIqLfz8W2YKY6LnEWzQkgE6pDA7Cwhopkv
-         RiodfSdJXVJ9MARPcit7dJScFc6DuyNwXcgXxpU65kLXgF4O009O05B8ZvD/4S3+egaT
-         rY7vTmlL1keJ+kMUoRzSUl4AUVxM9+jxnc8XRDZyUalCak/yzgQW/IhyusWP2PsfxQTP
-         i/Mk+AXP2Hr3gQQuLa6gY4npI9r45pu9xW/zgMcu1p7ozr7lXS3Ljm3LGilZvt0nYxSG
-         FlDQ==
-X-Received: by 10.66.171.199 with SMTP id aw7mr9913736pac.6.1428126276633;
-        Fri, 03 Apr 2015 22:44:36 -0700 (PDT)
+        bh=7giQOJtCKaFcVFEzC8pLih2+xSq4CyRkULdNxNxGRxQ=;
+        b=VgPjARfE+jRyQPEKxOsj6rg1eV62yuW+7RkJ0yjBgjBiRC8LYv4sXZJkR/YLAItcIv
+         C5yNNxYweQ4GWtFvII3zJgNySTKf+RitoVRUEb8pRO11MVERwVYPQZyXQeY5ncDDRWaC
+         wyMsv3K4QEooatwnn6Cz/7S9FZUgjSUiq29FAXFA9DeLJW7xy167BzWGnEWoL4uXswPT
+         73onHx/T71AGuhY/crkYeEvaaDPiV+UlMnRGOOltwTSt8QwYD9/005AmF3Sx/QHLcu6a
+         nUzJ9FApugV9bfcmcXGTtdPb01VojX9EX7q7jqpqQpUF/Yc4zGdlj59FUch79W/ar9nt
+         tHMA==
+X-Received: by 10.70.131.76 with SMTP id ok12mr9571575pdb.155.1428126307533;
+        Fri, 03 Apr 2015 22:45:07 -0700 (PDT)
 Received: from ashley.localdomain ([103.227.98.178])
-        by mx.google.com with ESMTPSA id pa6sm9822631pac.45.2015.04.03.22.44.34
+        by mx.google.com with ESMTPSA id fg2sm9749633pbc.45.2015.04.03.22.45.05
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 03 Apr 2015 22:44:35 -0700 (PDT)
+        Fri, 03 Apr 2015 22:45:06 -0700 (PDT)
 X-Mailer: git-send-email 2.4.0.rc1.249.g9f2ee54
 In-Reply-To: <551F7984.5070902@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266764>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266765>
 
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- Documentation/git-cat-file.txt | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ t/t1006-cat-file.sh | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
-diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
-index f6a16f4..8bac7bd 100644
---- a/Documentation/git-cat-file.txt
-+++ b/Documentation/git-cat-file.txt
-@@ -9,7 +9,7 @@ git-cat-file - Provide content or type and size information for repository objec
- SYNOPSIS
- --------
- [verse]
--'git cat-file' (-t | -s | -e | -p | <type> | --textconv ) <object>
-+'git cat-file' (-t [--literally]| -s [--literally]| -e | -p | <type> | --textconv ) <object>
- 'git cat-file' (--batch | --batch-check) < <list-of-objects>
+diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
+index ab36b1e..5b74044 100755
+--- a/t/t1006-cat-file.sh
++++ b/t/t1006-cat-file.sh
+@@ -47,6 +47,18 @@ $content"
+ 	test_cmp expect actual
+     '
  
- DESCRIPTION
-@@ -69,6 +69,10 @@ OPTIONS
- 	not be combined with any other options or arguments.  See the
- 	section `BATCH OUTPUT` below for details.
- 
-+--literally::
-+	Print information of broken/corrupt objects of unknown type without
-+	throwing an error. To be used combined with '-s' or '-t' option.
++    test_expect_success "Type of $type is correct using --literally" '
++	echo $type >expect &&
++	git cat-file -t --literally $sha1 >actual &&
++	test_cmp expect actual
++    '
 +
- OUTPUT
- ------
- If '-t' is specified, one of the <type>.
++    test_expect_success "Size of $type is correct using --literally" '
++	echo $size >expect &&
++	git cat-file -s --literally $sha1 >actual &&
++	test_cmp expect actual
++    '
++
+     test -z "$content" ||
+     test_expect_success "Content of $type is correct" '
+ 	maybe_remove_timestamp "$content" $no_ts >expect &&
+@@ -296,4 +308,19 @@ test_expect_success '%(deltabase) reports packed delta bases' '
+ 	}
+ '
+ 
++bogus_type="bogus"
++bogus_sha1=$(git hash-object -t $bogus_type --literally -w --stdin </dev/null)
++
++test_expect_success "Type of broken object is correct" '
++	echo $bogus_type >expect &&
++	git cat-file -t --literally $bogus_sha1 >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success "Size of broken object is correct" '
++	echo "0" >expect &&
++	git cat-file -s --literally $bogus_sha1 >actual &&
++	test_cmp expect actual
++'
++
+ test_done
 -- 
 2.4.0.rc1.249.g9f2ee54
