@@ -1,93 +1,81 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: [PATCH v2 2/3] git-p4: small fix for locked-file-move-test
-Date: Sat,  4 Apr 2015 09:46:02 +0100
-Message-ID: <1428137163-13219-3-git-send-email-luke@diamand.org>
-References: <1428137163-13219-1-git-send-email-luke@diamand.org>
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Pete Wyckoff <pw@padd.com>, Junio C Hamano <gitster@pobox.com>,
-	Blair Holloway <Blair_Holloway@playstation.sony.com>,
-	Luke Diamand <luke@diamand.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 04 10:47:05 2015
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3] diff-highlight: do not split multibyte characters
+Date: Sat, 4 Apr 2015 10:09:02 -0400
+Message-ID: <20150404140902.GA25455@peff.net>
+References: <1427730933-26189-1-git-send-email-eungjun.yi@navercorp.com>
+ <20150330221635.GB25212@peff.net>
+ <ffa56a1b1257732077c287a5cfdd138@74d39fa044aa309eaea14b9f57fe79c>
+ <20150403012430.GA16173@peff.net>
+ <CAFT+Tg8-tUBAvgX1bTni7joye_ZuZ_NOT_mmamnnm5GdWzEhrg@mail.gmail.com>
+ <6a8dcc870e53040e1f54d7c36a1b33a@74d39fa044aa309eaea14b9f57fe79c>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Yi EungJun <semtlenori@gmail.com>, git@vger.kernel.org
+To: "Kyle J. McKay" <mackyle@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 04 16:09:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YeJjK-0008Lm-Ut
-	for gcvg-git-2@plane.gmane.org; Sat, 04 Apr 2015 10:47:03 +0200
+	id 1YeOl5-0007FN-IW
+	for gcvg-git-2@plane.gmane.org; Sat, 04 Apr 2015 16:09:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752284AbbDDIq5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Apr 2015 04:46:57 -0400
-Received: from mail-wg0-f48.google.com ([74.125.82.48]:34788 "EHLO
-	mail-wg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752348AbbDDIqo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Apr 2015 04:46:44 -0400
-Received: by wgbdm7 with SMTP id dm7so126688706wgb.1
-        for <git@vger.kernel.org>; Sat, 04 Apr 2015 01:46:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ek8fh7ukC63qdpz1+cW1WQ25jXftK76kIiUKfOGGIoY=;
-        b=PyGh51Cie5KKMeSBYCXidtnHTFDVnpD8xTkYSU99R7/0IFBeW3JnLrc2ezlJxqvV4/
-         mJKco28zkjDBJR93MKMPLMdCMXKWFM9zodOPv+EFHGtatnum06hx6EwVO47iK/8bx1gQ
-         wQpdDB+TRq7+mIzebKunriiV27ZC0sJCyumpw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=ek8fh7ukC63qdpz1+cW1WQ25jXftK76kIiUKfOGGIoY=;
-        b=Jr1BF5407zS/LxpzhgGqYRkIjzEhEQtJ0gIaQgCJ/1tt7RVAk0yJcWx3fFi/XQgD67
-         QnX8zSRWUc2cn9SvE7B0rXRq82iu+XPf+a2c2pStvFzt6nudJ9nqlxAMnX/tAbaaporW
-         mvYiXGqpHo6kh4rpqSV6nBbsm6xb5NZdftFCj5GO42HrJV767FGAe7kzQFwuocWTjAKD
-         syRKUNm0CeAs9/AUGbhmYiQOtXs91tvs7lNjVxvjcpgTHniRekcb27xV/k4PsVDMJflz
-         W3F2chK9+Tt34tMrIT/zFSOVgbioaBjK5cQmsQPKGcKY7PZOjOkPBC+aSUhChocw7Ae0
-         KwXQ==
-X-Gm-Message-State: ALoCoQkAl70dIfO0xZW2IZOH0ujZ5EMHarzm4u6WG0jcdImx5icIuV0sgIMAsquiOPBna9Jc/Oct
-X-Received: by 10.194.243.9 with SMTP id wu9mr12428599wjc.107.1428137203071;
-        Sat, 04 Apr 2015 01:46:43 -0700 (PDT)
-Received: from ethel.local.diamand.org (cpc7-cmbg17-2-0-cust139.5-4.cable.virginm.net. [86.1.43.140])
-        by mx.google.com with ESMTPSA id s7sm2455742wjy.2.2015.04.04.01.46.41
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 04 Apr 2015 01:46:42 -0700 (PDT)
-X-Mailer: git-send-email 2.3.4.48.g223ab37
-In-Reply-To: <1428137163-13219-1-git-send-email-luke@diamand.org>
+	id S1752756AbbDDOJG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Apr 2015 10:09:06 -0400
+Received: from cloud.peff.net ([50.56.180.127]:42410 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752575AbbDDOJF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Apr 2015 10:09:05 -0400
+Received: (qmail 22794 invoked by uid 102); 4 Apr 2015 14:09:04 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 04 Apr 2015 09:09:04 -0500
+Received: (qmail 30658 invoked by uid 107); 4 Apr 2015 14:09:23 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 04 Apr 2015 10:09:23 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 04 Apr 2015 10:09:02 -0400
+Content-Disposition: inline
+In-Reply-To: <6a8dcc870e53040e1f54d7c36a1b33a@74d39fa044aa309eaea14b9f57fe79c>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266774>
 
-The test for handling of failure when trying to move a file
-that is locked by another client was not quite correct - it
-failed early on because the target file in the move already
-existed.
+On Fri, Apr 03, 2015 at 03:15:14PM -0700, Kyle J. McKay wrote:
 
-The test now fails because git-p4 does not properly detect
-that p4 has rejected the move, and instead just crashes. At
-present, git-p4 has no support for detecting that a file
-has been locked and reporting it to the user, so this is
-the expected outcome.
+> When the input is UTF-8 and Perl is operating on bytes instead of
+> characters, a diff that changes one multibyte character to another
+> that shares an initial byte sequence will result in a broken diff
+> display as the common byte sequence prefix will be separated from
+> the rest of the bytes in the multibyte character.
+> 
+> For example, if a single line contains only the unicode character
+> U+C9C4 (encoded as UTF-8 0xEC, 0xA7, 0x84) and that line is then
+> changed to the unicode character U+C9C0 (encoded as UTF-8 0xEC,
+> 0xA7, 0x80), when operating on bytes diff-highlight will show only
+> the single byte change from 0x84 to 0x80 thus creating invalid UTF-8
+> and a broken diff display.
+> 
+> Fix this by putting Perl into character mode when splitting the line
+> and then back into byte mode after the split is finished.
+> 
+> The utf8::xxx functions require Perl 5.8 so we require that as well.
+> 
+> Also, since we are mucking with code in the split_line function, we
+> change a '*' quantifier to a '+' quantifier when matching the $COLOR
+> expression which has the side effect of speeding everything up while
+> eliminating useless '' elements in the returned array.
+> 
+> Reported-by: Yi EungJun <semtlenori@gmail.com>
+> Signed-off-by: Kyle J. McKay <mackyle@gmail.com>
 
-Signed-off-by: Luke Diamand <luke@diamand.org>
----
- t/t9816-git-p4-locked.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+This version looks good to me. I looked over the diff of running "git
+log -p --color" on git.git through diff-highlight before and after this
+patch, and everything looks like an improvement.
 
-diff --git a/t/t9816-git-p4-locked.sh b/t/t9816-git-p4-locked.sh
-index ce0eb22..464f10b 100755
---- a/t/t9816-git-p4-locked.sh
-+++ b/t/t9816-git-p4-locked.sh
-@@ -130,8 +130,8 @@ test_expect_failure 'move with lock taken' '
- 	git p4 clone --dest="$git" //depot &&
- 	(
- 		cd "$git" &&
--		git mv file1 file2 &&
--		git commit -m "mv file1 to file2" &&
-+		git mv file1 file3 &&
-+		git commit -m "mv file1 to file3" &&
- 		git config git-p4.skipSubmitEdit true &&
- 		git config git-p4.detectRenames true &&
- 		git p4 submit --verbose
--- 
-2.3.4.48.g223ab37
+  Acked-by: Jeff King <peff@peff.net>
+
+Thanks both of you for working on this.
+
+-Peff
