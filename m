@@ -1,217 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t9814: Guarantee only one source exists in git-p4 copy tests
-Date: Sat, 04 Apr 2015 12:41:05 -0700
-Message-ID: <xmqq384ffzqm.fsf@gitster.dls.corp.google.com>
-References: <1427545730-3563-1-git-send-email-vitor.hda@gmail.com>
-	<1427671914-12131-1-git-send-email-vitor.hda@gmail.com>
-	<xmqqk2xzxk3y.fsf@gitster.dls.corp.google.com>
-	<551FA15D.30304@diamand.org>
+From: karthik nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v7 1/4] sha1_file.c: support reading from a loose object
+ of unknown type
+Date: Sun, 05 Apr 2015 01:23:37 +0530
+Message-ID: <55204141.9070100@gmail.com>
+References: <551F7984.5070902@gmail.com> <1428126162-18987-1-git-send-email-karthik.188@gmail.com> <xmqq7ftrg02b.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Pete Wyckoff <pw@padd.com>, git@vger.kernel.org,
-	Luke Diamand <luke@diamand.org>
-To: Vitor Antunes <vitor.hda@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 04 21:41:29 2015
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, sunshine@sunshineco.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Apr 04 21:53:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YeTwe-0001gq-E8
-	for gcvg-git-2@plane.gmane.org; Sat, 04 Apr 2015 21:41:28 +0200
+	id 1YeU8Z-0001t6-Ce
+	for gcvg-git-2@plane.gmane.org; Sat, 04 Apr 2015 21:53:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752679AbbDDTlJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Apr 2015 15:41:09 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:52508 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752528AbbDDTlI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Apr 2015 15:41:08 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7C8A845860;
-	Sat,  4 Apr 2015 15:41:07 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=vt1V/sJUZGrfI/6ca+6muVYFTQ4=; b=HifRvG
-	uT7okymsZf33GAz0JzZgszHM9vjJRlIgDuJL9Hhj93UwV4W2K1dZ936nkxZU1KX7
-	vI1qUd4894s+ezybchwmlis799ZMcKRUfFGdf8DLkyWWeTFehk31XPYyVZbP5DaJ
-	7M9Q6krWq3W3zgkQ3Qxs5zKJUg8QPEgXh3MJI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=o2TNc9ygEJy6pPDIom3aexjvFT63gHrD
-	8itsi4YPC3Yvn/+J4ICLv61Pj4iUq3cS0BhHhRJVnhfIe9I9daJLVgDvsY7Rq1Uc
-	qpCbdRbF7SoBwqmOXBP+l7pkzhplLJswISqns1m3V2sulWPWp6osN8jsG/eOP53Z
-	lcAfauG8nvU=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 692D94585F;
-	Sat,  4 Apr 2015 15:41:07 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9C11E4585E;
-	Sat,  4 Apr 2015 15:41:06 -0400 (EDT)
-In-Reply-To: <551FA15D.30304@diamand.org> (Luke Diamand's message of "Sat, 04
-	Apr 2015 09:31:25 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 8937EE46-DB02-11E4-94B5-11859F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1753012AbbDDTxn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Apr 2015 15:53:43 -0400
+Received: from mail-pd0-f170.google.com ([209.85.192.170]:36708 "EHLO
+	mail-pd0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752718AbbDDTxm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Apr 2015 15:53:42 -0400
+Received: by pdea3 with SMTP id a3so1393182pde.3
+        for <git@vger.kernel.org>; Sat, 04 Apr 2015 12:53:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=/TN/ILNwLaMR9zXOlkuay04TR8lxGBhSWb/DeKXGTGg=;
+        b=D4ug+ACfFK9S6HBaCM4Ztvoq7TfwcPgpCH5Q20QraPtom0L9c0qXQsQOSSJ0PUJFyM
+         lB5WSFSlmJO681CZYEb/wSCmrNmhNXCby+6h/Q/9yay3bhOkXbYUXCr1dCAMeVv/c8Ie
+         FhxLTIKTGkgWlP2s9o4YPU6t/r0S9D33iZlO1aWEAq1f0svh8D9oWG0XiYcW1DbV6t3B
+         zAMCAZ1te7Gaj9/y3SrkhLF2s/SfibzvVE7hH3nPZJ8i7HOUwIMla/yJU5iCrkvL6ksa
+         AfxcnG2B0D8P0KYB+rm5m5FfWYbqugxZUUMwBKQwUX6HUxJ5JtE4WoRYYhXnn1QrQAb+
+         GQWA==
+X-Received: by 10.66.186.142 with SMTP id fk14mr14567070pac.74.1428177221944;
+        Sat, 04 Apr 2015 12:53:41 -0700 (PDT)
+Received: from [192.168.0.103] ([103.227.98.178])
+        by mx.google.com with ESMTPSA id pb2sm51431pdb.33.2015.04.04.12.53.39
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 04 Apr 2015 12:53:40 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
+In-Reply-To: <xmqq7ftrg02b.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266780>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266781>
 
-Luke Diamand <luke@diamand.org> writes:
 
-> On 30/03/15 04:03, Junio C Hamano wrote:
->> Vitor Antunes <vitor.hda@gmail.com> writes:
->>
->>> * Modify source file (file2) before copying the file.
->>> * Check that only file2 is the source in the output of "p4 filelog".
->>> * Remove all "case" statements and replace them simple tests to check that
->>>    source is "file2".
->>>
->>> Signed-off-by: Vitor Antunes <vitor.hda@gmail.com>
->>> ---
->>
->> I am not a Perfoce user, so I'd like to ask Pete's and Luke's
->> comments on these changes.
+On 04/05/2015 01:04 AM, Junio C Hamano wrote:
+> Karthik Nayak <karthik.188@gmail.com> writes:
 >
-> It's much clearer now that the guessing of file source has been
-> cleaned up, thanks. Ack.
+> > @@ -2586,13 +2649,15 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi,
+> >               *(oi->disk_sizep) = 0;
+> >           if (oi->delta_base_sha1)
+> >               hashclr(oi->delta_base_sha1);
+> > +        if (oi->typename)
+> > +            strbuf_addstr(oi->typename, typename(co->type));
+> >           oi->whence = OI_CACHED;
+> >           return 0;
+> >       }
+>
+> Just before the pre-context of this hunk, there is this bit:
+>
+>     if (oi->typep)
+>         *(oi->typep) = co->type;
+>
+> which tells me that the callers of this function is allowed to pass
+> a NULL in oi->typep when they are not interested in the type of the
+> object.
+>
+> >       if (!find_pack_entry(real, &e)) {
+> >           /* Most likely it's a loose object. */
+> > -        if (!sha1_loose_object_info(real, oi)) {
+> > +        if (!sha1_loose_object_info(real, oi, flags)) {
+> >               oi->whence = OI_LOOSE;
+> >               return 0;
+> >           }
+> > @@ -2616,6 +2681,8 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi,
+> >           oi->u.packed.is_delta = (rtype == OBJ_REF_DELTA ||
+> >                        rtype == OBJ_OFS_DELTA);
+> >       }
+> > +    if (oi->typename)
+> > +        strbuf_addstr(oi->typename, typename(*oi->typep));
+>
+> So, it makes me wonder what guarantee we have that this does not
+> dereference a NULL here.
+>
+As per my code, oi->typename is only pointing to something when oi->typep
+is ( As oi->typename is currently only used in cat-file.c).
+But what you're saying also is true, there is no other guarantee, as a user may
+set oi->typename to point to a struct strbuf and leave out oi->typep.
 
-Thanks.
+  if (oi->typename && oi->typep)
+          strbuf_addstr(oi->typename, typename(*oi->typep));
 
-Vitor, when resubmitting v2 to fix style nits, please add Luke's
-Acked-by just after your Sign-off, perhaps like this:
-
-    t9814: guarantee only one source exists in git-p4 copy tests
-    
-    By using a tree with multiple identical files and allowing copy
-    detection to choose any one of them, the check in the test is
-    unnecessarily complex.  We can simplify by:
-    
-     * Modify source file (file2) before copying the file.
-    
-     * Check that only file2 is the source in the output of "p4 filelog".
-    
-     * Remove all "case" statements and replace them simple tests to
-       check that source is "file2".
-    
-    Signed-off-by: Vitor Antunes <vitor.hda@gmail.com>
-    Acked-by: Luke Diamand <luke@diamand.org>
-
-
->>> diff --git a/t/t9814-git-p4-rename.sh b/t/t9814-git-p4-rename.sh
->>> index 8b9c295..d8fb22d 100755
->>> --- a/t/t9814-git-p4-rename.sh
->>> +++ b/t/t9814-git-p4-rename.sh
->>> @@ -132,6 +132,9 @@ test_expect_success 'detect copies' '
->>>   		cd "$git" &&
->>>   		git config git-p4.skipSubmitEdit true &&
->>>
->>> +		echo "file8" >> file2 &&
->>
->> Style: please lose SP between redirection and its target, i.e.
->>
->> 	echo file8 >>file2 &&
->>
->> The same comment applies to everywhere else.
->>
->>> +		git commit -a -m "Differentiate file2" &&
->>> +		git p4 submit &&
->>>   		cp file2 file8 &&
->>>   		git add file8 &&
->>>   		git commit -a -m "Copy file2 to file8" &&
->>> @@ -140,6 +143,10 @@ test_expect_success 'detect copies' '
->>>   		p4 filelog //depot/file8 &&
->>>   		p4 filelog //depot/file8 | test_must_fail grep -q "branch from" &&
->>>
->>> +		echo "file9" >> file2 &&
->>> +		git commit -a -m "Differentiate file2" &&
->>> +		git p4 submit &&
->>> +
->>>   		cp file2 file9 &&
->>>   		git add file9 &&
->>>   		git commit -a -m "Copy file2 to file9" &&
->>> @@ -149,28 +156,39 @@ test_expect_success 'detect copies' '
->>>   		p4 filelog //depot/file9 &&
->>>   		p4 filelog //depot/file9 | test_must_fail grep -q "branch from" &&
->>>
->>> +		echo "file10" >> file2 &&
->>> +		git commit -a -m "Differentiate file2" &&
->>> +		git p4 submit &&
->>> +
->>>   		echo "file2" >>file2 &&
->>>   		cp file2 file10 &&
->>>   		git add file2 file10 &&
->>>   		git commit -a -m "Modify and copy file2 to file10" &&
->>>   		git diff-tree -r -C HEAD &&
->>> +		src=$(git diff-tree -r -C HEAD | sed 1d | sed 2d | cut -f2) &&
->>> +		test "$src" = file2 &&
->>>   		git p4 submit &&
->>>   		p4 filelog //depot/file10 &&
->>> -		p4 filelog //depot/file10 | grep -q "branch from //depot/file" &&
->>> +		p4 filelog //depot/file10 | grep -q "branch from //depot/file2" &&
->>> +
->>> +		echo "file11" >> file2 &&
->>> +		git commit -a -m "Differentiate file2" &&
->>> +		git p4 submit &&
->>>
->>>   		cp file2 file11 &&
->>>   		git add file11 &&
->>>   		git commit -a -m "Copy file2 to file11" &&
->>>   		git diff-tree -r -C --find-copies-harder HEAD &&
->>>   		src=$(git diff-tree -r -C --find-copies-harder HEAD | sed 1d | cut -f2) &&
->>> -		case "$src" in
->>> -		file2 | file10) : ;; # happy
->>> -		*) false ;; # not
->>> -		esac &&
->>> +		test "$src" = file2 &&
->>>   		git config git-p4.detectCopiesHarder true &&
->>>   		git p4 submit &&
->>>   		p4 filelog //depot/file11 &&
->>> -		p4 filelog //depot/file11 | grep -q "branch from //depot/file" &&
->>> +		p4 filelog //depot/file11 | grep -q "branch from //depot/file2" &&
->>> +
->>> +		echo "file12" >> file2 &&
->>> +		git commit -a -m "Differentiate file2" &&
->>> +		git p4 submit &&
->>>
->>>   		cp file2 file12 &&
->>>   		echo "some text" >>file12 &&
->>> @@ -180,15 +198,16 @@ test_expect_success 'detect copies' '
->>>   		level=$(git diff-tree -r -C --find-copies-harder HEAD | sed 1d | cut -f1 | cut -d" " -f5 | sed "s/C0*//") &&
->>>   		test -n "$level" && test "$level" -gt 0 && test "$level" -lt 98 &&
->>>   		src=$(git diff-tree -r -C --find-copies-harder HEAD | sed 1d | cut -f2) &&
->>> -		case "$src" in
->>> -		file10 | file11) : ;; # happy
->>> -		*) false ;; # not
->>> -		esac &&
->>> +		test "$src" = file2 &&
->>>   		git config git-p4.detectCopies $(($level + 2)) &&
->>>   		git p4 submit &&
->>>   		p4 filelog //depot/file12 &&
->>>   		p4 filelog //depot/file12 | test_must_fail grep -q "branch from" &&
->>>
->>> +		echo "file13" >> file2 &&
->>> +		git commit -a -m "Differentiate file2" &&
->>> +		git p4 submit &&
->>> +
->>>   		cp file2 file13 &&
->>>   		echo "different text" >>file13 &&
->>>   		git add file13 &&
->>> @@ -197,14 +216,11 @@ test_expect_success 'detect copies' '
->>>   		level=$(git diff-tree -r -C --find-copies-harder HEAD | sed 1d | cut -f1 | cut -d" " -f5 | sed "s/C0*//") &&
->>>   		test -n "$level" && test "$level" -gt 2 && test "$level" -lt 100 &&
->>>   		src=$(git diff-tree -r -C --find-copies-harder HEAD | sed 1d | cut -f2) &&
->>> -		case "$src" in
->>> -		file10 | file11 | file12) : ;; # happy
->>> -		*) false ;; # not
->>> -		esac &&
->>> +		test "$src" = file2 &&
->>>   		git config git-p4.detectCopies $(($level - 2)) &&
->>>   		git p4 submit &&
->>>   		p4 filelog //depot/file13 &&
->>> -		p4 filelog //depot/file13 | grep -q "branch from //depot/file"
->>> +		p4 filelog //depot/file13 | grep -q "branch from //depot/file2"
->>>   	)
->>>   '
+This should suffice. Do you want me to re-roll this?
