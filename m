@@ -1,124 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 3/5] Documentation: add git-log --merges= option and log.merges config. var
-Date: Sun, 05 Apr 2015 14:41:07 -0700
-Message-ID: <xmqq8ue6cky4.fsf@gitster.dls.corp.google.com>
-References: <1428110521-31028-1-git-send-email-koosha@posteo.de>
-	<1428110521-31028-3-git-send-email-koosha@posteo.de>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
+Subject: Re: [PATCH 0/6] address packed-refs speed regressions
+Date: Mon, 06 Apr 2015 00:39:15 +0200
+Message-ID: <5521B993.1080202@web.de>
+References: <20150405010611.GA15901@peff.net> <55213B93.9050207@web.de> <20150405185259.GB13096@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, sunshine@sunshineco.com
-To: Koosha Khajehmoogahi <koosha@posteo.de>
-X-From: git-owner@vger.kernel.org Sun Apr 05 23:42:03 2015
+Content-Type: text/plain; charset=utf-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Apr 06 00:40:06 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YesIs-0000rV-Lx
-	for gcvg-git-2@plane.gmane.org; Sun, 05 Apr 2015 23:42:03 +0200
+	id 1YetD3-0004Ol-JJ
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Apr 2015 00:40:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752590AbbDEVlL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Apr 2015 17:41:11 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64659 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752582AbbDEVlK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Apr 2015 17:41:10 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7B342467A4;
-	Sun,  5 Apr 2015 17:41:09 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1ZSS6jo7boDjBQz9xrsXFaxYYJI=; b=BAhL7S
-	80BZd3hK9mKSvIziMc5nM192rCzxjhCxOGv0sfm+ffYDAg2ZCnsS8zP4S5Qj7VEW
-	kZ3ck9C6AUK1DXsbNfQWlD1K8JegpLHl7iT2vkW7qksrbC1QXfpmR5jZv2nYg7gO
-	qg4LGeE1zTaw1r+ZiUtM0qeqC3j8hWGxSX2Uo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xT4MGdufdDbpMqIln4F/Xy/mU3bchiiO
-	C4KvXPLJqX8o81GKWjt0TC0CUPLZiSZ59Q1zJoUBNv6dlBlUoV8MobVPGUTPqYtY
-	zYt6TOfCl9BlOaByyI7EtBhrBVkT80iXCxaSCIZuTUHMWYSErfM+QqPlXcdATZRt
-	WrrhBGDc95g=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 74741467A3;
-	Sun,  5 Apr 2015 17:41:09 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EAC3E467A2;
-	Sun,  5 Apr 2015 17:41:08 -0400 (EDT)
-In-Reply-To: <1428110521-31028-3-git-send-email-koosha@posteo.de> (Koosha
-	Khajehmoogahi's message of "Sat, 4 Apr 2015 03:21:59 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 788D619A-DBDC-11E4-968E-11859F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1752576AbbDEWj4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 5 Apr 2015 18:39:56 -0400
+Received: from mout.web.de ([212.227.17.12]:52961 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752561AbbDEWjz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Apr 2015 18:39:55 -0400
+Received: from [192.168.178.27] ([79.250.182.13]) by smtp.web.de (mrweb103)
+ with ESMTPSA (Nemesis) id 0Ls8xf-1ZQM353t0h-013t4u; Mon, 06 Apr 2015 00:39:53
+ +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
+In-Reply-To: <20150405185259.GB13096@peff.net>
+X-Provags-ID: V03:K0:Z3UvRYTiBoNmwLT2TKWgakYKK3AZ7GKBlw901xGRGaA3PeKhm2W
+ HGE/iE3e0Qjy9pIUJFR0W2NJ6B2vcitLfIfbObwS/4yp/yszkwKHtUzm0bu7qrB2rU+5bxG
+ Gb7shc8PwMTg5DphAdburHhz+gZrRbhURLsXpu8Mj41oZkM4a6+lIvNFvbSC8kPVzMC+Oss
+ IR7Ke06tIbdJ/8Mip9OMg==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266821>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266822>
 
-Koosha Khajehmoogahi <koosha@posteo.de> writes:
+Am 05.04.2015 um 20:52 schrieb Jeff King:
+> On Sun, Apr 05, 2015 at 03:41:39PM +0200, Ren=C3=A9 Scharfe wrote:
+>> I wonder if pluggable reference backends could help here.  Storing r=
+efs
+>> in a database table indexed by refname should simplify things.
+>
+> ...this. I think that effort might be better spent on a ref storage
+> format that's more efficient, simpler (with respect to subtle races a=
+nd
+> such), and could provide other features (e.g., transactional atomicit=
+y).
 
-> diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-> index f620ee4..0bb2390 100644
-> --- a/Documentation/rev-list-options.txt
-> +++ b/Documentation/rev-list-options.txt
-> @@ -96,12 +96,24 @@ if it is part of the log message.
->  --remove-empty::
->  	Stop when a given path disappears from the tree.
->  
-> +--merges={show|hide|only}::
-> ++
-> +--
-> +`show`: show both merge and non-merge commits
-> +
-> +`hide`: only show non-merge commits; same as `--max-parents=1`
-> +
-> +`only`: only show merge commits; same as `--min-parents=2`
-> +
-> +If `--merges=` is not specified, default value is `show`.
-> +--
-> ++
-> +
+Such as a DBMS? :-)  Leaving storage details to SQLite or whatever=20
+sounds attractive to me because I'm lazy.
 
-I am not sure if the "default value is `show`" is something we would
-even want to mention like this.  It does not tell the whole story
-and may even confuse the users, who did
+> The big plus side of packed-refs improvements is that they "just work=
+"
+> without worrying about compatibility issues. But ref storage is local=
+,
+> so I'm not sure how big a deal that is in practice.
 
-	git log --merge
-	git log --max-parent=...
+Adding a dependency is a big step, admittedly, so native improvements=20
+might be a better fit.  There's a chance that we'd run into issues=20
+already solved by specialized database engines long ago, though.
 
-but did not say any "--merges=<something>".
+>> Short-term, can we avoid the getc()/strbuf_grow() dance e.g. by mapp=
+ing
+>> the packed refs file?  What numbers do you get with the following pa=
+tch?
+>
+> It's about 9% faster than my series + the fgets optimization I posted
+> (or about 25% than using getc).  Which is certainly nice, but I was
+> really hoping to just make strbuf_getline faster for all callers, rat=
+her
+> than introducing special code for one call-site.  Certainly we could
+> generalize the technique (i.e., a struct with the mmap data), but the=
+n I
+> feel we are somewhat reinventing stdio. Which is maybe a good thing,
+> because stdio has a lot of rough edges (as seen here), but it does fe=
+el
+> a bit like NIH syndrome.
 
-I think the importat point we want to teach users is that this is an
-option to use when you want to limit what is output (and by default,
-we show all but nothing else in the manpage says we hide things,
-so...).  And it would be beneficial to highlight that 'show' is only
-there to defeat an unusual log.merges setting in users' config.
+=46orgot to say: I like your changes.  But if strbuf_getline can only b=
+e=20
+made fast enough beyond that by duplicating stdio buffering then I feel=
+=20
+it's better to take a different way.  E.g. dropping the requirement to=20
+handle NUL chars and basing it on fgets as Junio suggested in his reply=
+=20
+to patch 3 sounds good.
 
-Also the formatting of this part looks rather unusual.  I would have
-expected that these three items to be listed as a true AsciiDoc
-enumeration, not three hand-crafted enumration-looking separate
-paragraphs.
+In any case, the packed refs file seems special enough to receive=20
+special treatment.  Using mmap would make the most sense if we could=20
+also avoid copying lines to a strbuf for parsing, though.
 
-Taking both points together, we may want to do something more like
-this, perhaps?
-
---merges={show|hide|only}::
-
-	Limit the output by type of commits.
-
-	`hide`;;
-		Hide merge commits from the output.
-
-	`only`;;
-		Hide non-merge commits from the output (i.e showing
-		only merge commits).
-
-	`show`;;
-		Do not hide either merge or non-merge commits.  This
-		is primarily useful when the user has non-standard
-		setting of `log.merges` configuration variable that
-		needs to be overriden from the command line.
-
-
-Thanks.
+Ren=C3=A9
