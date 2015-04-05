@@ -1,86 +1,97 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/6] strbuf_getwholeline: use getc_unlocked
-Date: Sun, 5 Apr 2015 01:35:36 -0400
-Message-ID: <20150405053535.GB14771@peff.net>
-References: <20150405010611.GA15901@peff.net>
- <20150405011110.GC30127@peff.net>
- <20150405045614.GA12053@peff.net>
- <20150405052732.GA14771@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v7 1/4] sha1_file.c: support reading from a loose object of unknown type
+Date: Sun, 05 Apr 2015 00:46:48 -0700
+Message-ID: <xmqqiodbdnkn.fsf@gitster.dls.corp.google.com>
+References: <551F7984.5070902@gmail.com>
+	<1428126162-18987-1-git-send-email-karthik.188@gmail.com>
+	<xmqq7ftrg02b.fsf@gitster.dls.corp.google.com>
+	<55204141.9070100@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 05 07:35:44 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, sunshine@sunshineco.com
+To: karthik nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 05 09:46:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YedDi-0000kx-MF
-	for gcvg-git-2@plane.gmane.org; Sun, 05 Apr 2015 07:35:43 +0200
+	id 1YefGj-0006fB-C3
+	for gcvg-git-2@plane.gmane.org; Sun, 05 Apr 2015 09:46:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751788AbbDEFfi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Apr 2015 01:35:38 -0400
-Received: from cloud.peff.net ([50.56.180.127]:42579 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750808AbbDEFfi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Apr 2015 01:35:38 -0400
-Received: (qmail 6021 invoked by uid 102); 5 Apr 2015 05:35:38 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 05 Apr 2015 00:35:38 -0500
-Received: (qmail 3245 invoked by uid 107); 5 Apr 2015 05:35:57 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 05 Apr 2015 01:35:57 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 05 Apr 2015 01:35:36 -0400
-Content-Disposition: inline
-In-Reply-To: <20150405052732.GA14771@peff.net>
+	id S1751983AbbDEHqw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Apr 2015 03:46:52 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50224 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751760AbbDEHqv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Apr 2015 03:46:51 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4301B3E355;
+	Sun,  5 Apr 2015 03:46:50 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=eY4MvW1RxXDsdbTCpGU2MLURMJE=; b=nU0Sp7
+	ziqhWScOaU3deWyXFFZT65KgfCw/khLgdkvswaVHniCoqqlJq2694qEdC8xUG5sq
+	j+iAbAdmrKmMN2blAv495Dwkc6FxRhEP+t4qHJ08eEIbjkT+M7e728m+cGyk33vr
+	WXZE1pGWqZLHwJArm87b/FIRlh9xifGNXvnpc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=DaRdfRXpfXtqDxCW5ZmLvQvDC5stVCFD
+	7H/044wL18K/cel3umqTf/5gOjSF86X4Tei6HmyBQdPpkzuNXysCso0o9abzxHsm
+	3DYTB4BmAe7kgNb+JgR3bB5JopTHVQ9LnPBpNuvrjE6MsJlBDds9N6Ts/FpZqnBQ
+	3P/yvKr8XQA=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3AD8F3E353;
+	Sun,  5 Apr 2015 03:46:50 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A44113E352;
+	Sun,  5 Apr 2015 03:46:49 -0400 (EDT)
+In-Reply-To: <55204141.9070100@gmail.com> (karthik nayak's message of "Sun, 05
+	Apr 2015 01:23:37 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: EAE36A84-DB67-11E4-9F62-11859F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266798>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266799>
 
-On Sun, Apr 05, 2015 at 01:27:32AM -0400, Jeff King wrote:
+karthik nayak <karthik.188@gmail.com> writes:
 
-> On Sun, Apr 05, 2015 at 12:56:14AM -0400, Jeff King wrote:
-> 
-> > The big downside is that our input strings are no longer NUL-clean
-> > (reading "foo\0bar\n" would yield just "foo". I doubt that matters in
-> > the real world, but it does fail a few of the tests (e.g., t7008 tries
-> > to read a list of patterns which includes NUL, and we silently truncate
-> > the pattern rather than read in the NUL and barf).
-> 
-> So there is this trick:
-> 
-> diff --git a/strbuf.c b/strbuf.c
-> index f319d8d..5ceebb7 100644
-> --- a/strbuf.c
-> +++ b/strbuf.c
-> @@ -445,12 +445,13 @@ int strbuf_getwholeline(struct strbuf *sb, FILE *fp, int term)
->  	strbuf_reset(sb);
->  
->  	if (term == '\n') {
-> +		long pos = ftell(fp);
->  		strbuf_grow(sb, 256);
->  		if (!fgets(sb->buf, sb->alloc - 1, fp)) {
->  			strbuf_release(sb);
->  			return EOF;
->  		}
-> -		sb->len = strlen(sb->buf);
-> +		sb->len = ftell(fp) - pos;
->  		if (sb->buf[sb->len - 1] == '\n')
->  			return 0;
->  	}
-> 
-> but much to my surprise it actually runs slower than the strlen version!
-> It also has a 32-bit overflow issue. There's fgetpos() as an
-> alternative, but fpos_t is an opaque type, and we might not be able to
-> do arithmetic on it (for that matter, I am not sure if arithmetic is
-> strictly guaranteed on ftell() results). POSIX gives us ftello(), which
-> returns an off_t. That would probably be fine.
+>> So, it makes me wonder what guarantee we have that this does not
+>> dereference a NULL here.
+>>
+> As per my code, oi->typename is only pointing to something when oi->typep
+> is ( As oi->typename is currently only used in cat-file.c).
+> But what you're saying also is true, there is no other guarantee, as a user may
+> set oi->typename to point to a struct strbuf and leave out oi->typep.
+>
+>  if (oi->typename && oi->typep)
+>          strbuf_addstr(oi->typename, typename(*oi->typep));
+>
+> This should suffice. Do you want me to re-roll this?
 
-Actually, scratch that idea. ftell() always returns 0 on a non-seekable
-file, so we can't use it in the general case. And that probably explains
-the performance difference, too, if it is not keeping its own counter
-and relies on lseek(fileno(fp)) or similar.
+I'd rather avoid the thinking along the lines of "at this moment,
+there happens to be only one caller that asks for typename and the
+caller also sets typep, so we will be safe as long as we make sure
+the caller passed typep before giving him typename back".
 
--Peff
+Somebody else may write new code that wants to learn the typename,
+forgets to set typep, calls into this codepath, and ends up
+scratching his head wondering why the typename string is returned to
+him.  Surely the code may not crash at the new code you wrote, but
+you are not helping him.
+
+If it semantically does not make sense to ask for the typename
+without asking for the type code, then we can and should make that
+as a new calling convention _all_ callers must follow.
+
+In other words, I think it is better to have
+
+	if (oi->typename && !oi->typep)
+		die("BUG");
+
+somewhere near the beginning of the callchain that takes oi; that
+will ensure all callers understand the rule.
