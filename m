@@ -1,85 +1,124 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: rev-list pretty format behavior
-Date: Sun, 05 Apr 2015 14:12:18 -0700
-Message-ID: <xmqqlhi6cma5.fsf@gitster.dls.corp.google.com>
-References: <CAHaCNWJZQRVxp3ponvh3pPEk=sOHGYypyhi1Dc8HX5gkKEBGrQ@mail.gmail.com>
+Subject: Re: [PATCH v2 3/5] Documentation: add git-log --merges= option and log.merges config. var
+Date: Sun, 05 Apr 2015 14:41:07 -0700
+Message-ID: <xmqq8ue6cky4.fsf@gitster.dls.corp.google.com>
+References: <1428110521-31028-1-git-send-email-koosha@posteo.de>
+	<1428110521-31028-3-git-send-email-koosha@posteo.de>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Oliver Runge <oliver.runge@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 05 23:12:28 2015
+Cc: git@vger.kernel.org, sunshine@sunshineco.com
+To: Koosha Khajehmoogahi <koosha@posteo.de>
+X-From: git-owner@vger.kernel.org Sun Apr 05 23:42:03 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YerqE-0006oA-Kt
-	for gcvg-git-2@plane.gmane.org; Sun, 05 Apr 2015 23:12:26 +0200
+	id 1YesIs-0000rV-Lx
+	for gcvg-git-2@plane.gmane.org; Sun, 05 Apr 2015 23:42:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752686AbbDEVMW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Apr 2015 17:12:22 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:62311 "EHLO
+	id S1752590AbbDEVlL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Apr 2015 17:41:11 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64659 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752562AbbDEVMV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Apr 2015 17:12:21 -0400
+	with ESMTP id S1752582AbbDEVlK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Apr 2015 17:41:10 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B6A404631B;
-	Sun,  5 Apr 2015 17:12:20 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7B342467A4;
+	Sun,  5 Apr 2015 17:41:09 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=eXJjLaqBrOr6oZNlJgr04XD3gi0=; b=HTyj3N
-	IYjD2Ay1fqPhxirUobNaxgy4ZOCf1yqL0+iU6e79HS3/WPAR4sv0cGKjSIsUxn45
-	9rUexhNDEkTVoao0lK4yxA63kkoBYZQsSynarl0q7wTk8FW2vWSp6kt3AkE0blwS
-	ZRlaPxoAJYvtdZMh7y2NUQsaGa8eVqnsoWT2s=
+	:content-type; s=sasl; bh=1ZSS6jo7boDjBQz9xrsXFaxYYJI=; b=BAhL7S
+	80BZd3hK9mKSvIziMc5nM192rCzxjhCxOGv0sfm+ffYDAg2ZCnsS8zP4S5Qj7VEW
+	kZ3ck9C6AUK1DXsbNfQWlD1K8JegpLHl7iT2vkW7qksrbC1QXfpmR5jZv2nYg7gO
+	qg4LGeE1zTaw1r+ZiUtM0qeqC3j8hWGxSX2Uo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=iXqYu33u684IJnwpnN1J4uGTO9FqTN+c
-	vp+USdKYe6xXn4qafWjtZ40FmzCor+jqMs8ogHlLkzLhZGq39FihEINEPccQgf2S
-	gk6cWqXE42NcibeuSzsOi9CelHUT84MM1SPlmA+PUI2NfDGkEDoW9Z07UGopidzK
-	4DnsfDaQwzI=
+	:content-type; q=dns; s=sasl; b=xT4MGdufdDbpMqIln4F/Xy/mU3bchiiO
+	C4KvXPLJqX8o81GKWjt0TC0CUPLZiSZ59Q1zJoUBNv6dlBlUoV8MobVPGUTPqYtY
+	zYt6TOfCl9BlOaByyI7EtBhrBVkT80iXCxaSCIZuTUHMWYSErfM+QqPlXcdATZRt
+	WrrhBGDc95g=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B00454631A;
-	Sun,  5 Apr 2015 17:12:20 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 74741467A3;
+	Sun,  5 Apr 2015 17:41:09 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 38E1C46319;
-	Sun,  5 Apr 2015 17:12:20 -0400 (EDT)
-In-Reply-To: <CAHaCNWJZQRVxp3ponvh3pPEk=sOHGYypyhi1Dc8HX5gkKEBGrQ@mail.gmail.com>
-	(Oliver Runge's message of "Sun, 5 Apr 2015 01:27:31 +0200")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EAC3E467A2;
+	Sun,  5 Apr 2015 17:41:08 -0400 (EDT)
+In-Reply-To: <1428110521-31028-3-git-send-email-koosha@posteo.de> (Koosha
+	Khajehmoogahi's message of "Sat, 4 Apr 2015 03:21:59 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 7225A35C-DBD8-11E4-A243-11859F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 788D619A-DBDC-11E4-968E-11859F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266820>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266821>
 
-Oliver Runge <oliver.runge@gmail.com> writes:
+Koosha Khajehmoogahi <koosha@posteo.de> writes:
 
-> I'm using git version 2.4.0-rc1. The same behavior exists in 2.1.0.
->
-> Trying the same with rev-list results in:
->> git rev-list --pretty=format:"%h ..." HEAD~3...HEAD
-> commit 826aed50cbb072d8f159e4c8ba0f9bd3df21a234
-> 826aed5 ...
-> commit 915e44c6357f3bd9d5fa498a201872c4367302d3
-> 915e44c ...
-> commit 067178ed8a7822e6bc88ad606b707fc33658e6fc
-> 067178e ...
+> diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+> index f620ee4..0bb2390 100644
+> --- a/Documentation/rev-list-options.txt
+> +++ b/Documentation/rev-list-options.txt
+> @@ -96,12 +96,24 @@ if it is part of the log message.
+>  --remove-empty::
+>  	Stop when a given path disappears from the tree.
+>  
+> +--merges={show|hide|only}::
+> ++
+> +--
+> +`show`: show both merge and non-merge commits
+> +
+> +`hide`: only show non-merge commits; same as `--max-parents=1`
+> +
+> +`only`: only show merge commits; same as `--min-parents=2`
+> +
+> +If `--merges=` is not specified, default value is `show`.
+> +--
+> ++
+> +
 
-This is very much the designed behaviour, I would think.  IIRC, the
-user-format support of "rev-list" was designed so that the scripts
-can customize the output from "rev-list -v", which was how scripts
-were expected to read various pieces of information for each commit
-originally.  And the 40-hex commit object name and/or a line that
-begins with "commit ..." when a user format is used are meant to
-serve as stable record separator (in that sense, having %H or %h in
-the userformat given to rev-list is redundant) when these scripts
-are reading output from "rev-list".
+I am not sure if the "default value is `show`" is something we would
+even want to mention like this.  It does not tell the whole story
+and may even confuse the users, who did
 
-A new option to tell "rev-list" that "I am designing an output that
-is a-line-per-commit with the userformat and do not need the default
-record separator" or "I will arrange record separator myself" would
-be an acceptable thing to add, provided if many scripts yet to be
-written would benefit from such a feature, though.
+	git log --merge
+	git log --max-parent=...
+
+but did not say any "--merges=<something>".
+
+I think the importat point we want to teach users is that this is an
+option to use when you want to limit what is output (and by default,
+we show all but nothing else in the manpage says we hide things,
+so...).  And it would be beneficial to highlight that 'show' is only
+there to defeat an unusual log.merges setting in users' config.
+
+Also the formatting of this part looks rather unusual.  I would have
+expected that these three items to be listed as a true AsciiDoc
+enumeration, not three hand-crafted enumration-looking separate
+paragraphs.
+
+Taking both points together, we may want to do something more like
+this, perhaps?
+
+--merges={show|hide|only}::
+
+	Limit the output by type of commits.
+
+	`hide`;;
+		Hide merge commits from the output.
+
+	`only`;;
+		Hide non-merge commits from the output (i.e showing
+		only merge commits).
+
+	`show`;;
+		Do not hide either merge or non-merge commits.  This
+		is primarily useful when the user has non-standard
+		setting of `log.merges` configuration variable that
+		needs to be overriden from the command line.
+
+
+Thanks.
