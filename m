@@ -1,58 +1,63 @@
-From: "Yi, EungJun" <semtlenori@gmail.com>
-Subject: How to send a warning message from git hosting server?
-Date: Mon, 6 Apr 2015 00:04:43 +0900
-Message-ID: <CAFT+Tg-Gwr9EemFv88+=Ao21dGYe73D-CDiT4mXU4kuP-niOSw@mail.gmail.com>
-Reply-To: semtlenori@gmail.com
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/6] strbuf_getwholeline: use getc_unlocked
+Date: Sun, 5 Apr 2015 14:24:02 -0400
+Message-ID: <20150405182401.GA13096@peff.net>
+References: <20150405010611.GA15901@peff.net>
+ <20150405011110.GC30127@peff.net>
+ <20150405045614.GA12053@peff.net>
+ <CACsJy8Biv6D2foDxpn-CZhEsjn3WsPV=_A3UOnT4+1LVrpRnTw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Apr 05 17:04:50 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 05 20:24:17 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yem6T-0000ff-Lj
-	for gcvg-git-2@plane.gmane.org; Sun, 05 Apr 2015 17:04:50 +0200
+	id 1YepDT-0005N7-27
+	for gcvg-git-2@plane.gmane.org; Sun, 05 Apr 2015 20:24:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752181AbbDEPEo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Apr 2015 11:04:44 -0400
-Received: from mail-qk0-f170.google.com ([209.85.220.170]:33765 "EHLO
-	mail-qk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751975AbbDEPEn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Apr 2015 11:04:43 -0400
-Received: by qkx62 with SMTP id 62so7976961qkx.0
-        for <git@vger.kernel.org>; Sun, 05 Apr 2015 08:04:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:reply-to:date:message-id:subject:from:to:content-type;
-        bh=8VGQSvmCfH+NCeJA3rj1zrpE98jiZr5XDHljn6LL9oE=;
-        b=QCIW8LZ6m+n8oIgMS/G35mHA5q7RDO5kYZ1iU9SIsWmxXrYWpvbFv/pujgn8c4djEv
-         SvA7TSe5bpkovpUYsMnG1lVa64SJZMDtPQoOAzOTzINFRfNwAIJbNXD7WHmFG1/yJoHk
-         ySs2eXuBBBI8vMAfITRPH8Ljh2KS4nR2Rrv6h48+vw0OLDMWhNSNBPTOTg/+AayrtoXf
-         SmeCUQVyTs86klb3OXmHV+4BdZGDVl3dR8TyQMvee/99xu7Pp1undnNeK0zsBSYQ/SM/
-         ALjvV5f3n4anJauxWKPQvb91rHCd0DVLavdHseSjb91Cx2u95ZFgTYaCFKXh5P7/GGe8
-         l/iw==
-X-Received: by 10.55.33.94 with SMTP id h91mr8448519qkh.69.1428246283107; Sun,
- 05 Apr 2015 08:04:43 -0700 (PDT)
-Received: by 10.140.105.161 with HTTP; Sun, 5 Apr 2015 08:04:43 -0700 (PDT)
+	id S1752561AbbDESYH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Apr 2015 14:24:07 -0400
+Received: from cloud.peff.net ([50.56.180.127]:42661 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752528AbbDESYF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Apr 2015 14:24:05 -0400
+Received: (qmail 23252 invoked by uid 102); 5 Apr 2015 18:24:05 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 05 Apr 2015 13:24:05 -0500
+Received: (qmail 6278 invoked by uid 107); 5 Apr 2015 18:24:24 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 05 Apr 2015 14:24:24 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 05 Apr 2015 14:24:02 -0400
+Content-Disposition: inline
+In-Reply-To: <CACsJy8Biv6D2foDxpn-CZhEsjn3WsPV=_A3UOnT4+1LVrpRnTw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266809>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266811>
 
-Hello. I am serving a git hosting service for my company.
+On Sun, Apr 05, 2015 at 09:36:04PM +0700, Duy Nguyen wrote:
 
-Sometimes I want to send a warning message to users who use my
-service; e.g. the service will be shutdown tomorrow for a while
-temporary.
+> On Sun, Apr 5, 2015 at 11:56 AM, Jeff King <peff@peff.net> wrote:
+> > So we'd have to either:
+> >
+> >   1. Decide that doesn't matter.
+> >
+> >   2. Have callers specify a "damn the NULs, I want it fast" flag.
+> 
+> 2+. Avoid FILE* interface and go with syscalls for reading
+> packed-refs? If mmaping the entire file could be a problem for some
+> platform because it's too large, we have code for reading (with
+> bufferring) from fd somewhere, e.g. index-pack.
 
-I know it is possible to a remote message by hooks or HTTP body if an
-error occured. But it seems that there is no hooks for git-fetch and
-git does not print HTTP body if there is no error.
+There's strbuf_getwholeline_fd, but it's horrifically inefficient (one
+syscall per character). But the other option is to implement your own
+buffering, and we're generally better off letting stdio do that for us
+(the exception here is that stdio does not have a good NUL-safe "read
+until X" function).
 
-I want a way to response a remote message when a client send any kind
-of request. Is it possible?
-
--EungJun
+-Peff
