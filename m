@@ -1,138 +1,82 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v7 1/4] sha1_file.c: support reading from a loose object of unknown type
-Date: Sun, 05 Apr 2015 12:57:58 -0700
-Message-ID: <xmqqbnj2e4ah.fsf@gitster.dls.corp.google.com>
-References: <551F7984.5070902@gmail.com>
-	<1428126162-18987-1-git-send-email-karthik.188@gmail.com>
-	<xmqq7ftrg02b.fsf@gitster.dls.corp.google.com>
-	<55204141.9070100@gmail.com>
-	<xmqqiodbdnkn.fsf@gitster.dls.corp.google.com>
-	<5520E9D2.4010603@gmail.com>
+Subject: Re: [PATCH 3/6] strbuf_getwholeline: use getc_unlocked
+Date: Sun, 05 Apr 2015 13:09:24 -0700
+Message-ID: <xmqq4moue3rf.fsf@gitster.dls.corp.google.com>
+References: <20150405010611.GA15901@peff.net>
+	<20150405011110.GC30127@peff.net> <20150405045614.GA12053@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org, sunshine@sunshineco.com
-To: karthik nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 05 21:58:13 2015
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Apr 05 22:09:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YeqgO-0000yY-KQ
-	for gcvg-git-2@plane.gmane.org; Sun, 05 Apr 2015 21:58:12 +0200
+	id 1YeqrM-0008Ui-5z
+	for gcvg-git-2@plane.gmane.org; Sun, 05 Apr 2015 22:09:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752568AbbDET6D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Apr 2015 15:58:03 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:56038 "EHLO
+	id S1752591AbbDEUJ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Apr 2015 16:09:27 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:62024 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752010AbbDET6B (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Apr 2015 15:58:01 -0400
+	with ESMTP id S1752010AbbDEUJ0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Apr 2015 16:09:26 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D984C453B4;
-	Sun,  5 Apr 2015 15:57:59 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E08AD455FF;
+	Sun,  5 Apr 2015 16:09:25 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Ib6EQYk8qHOMae6HjV/5iIBlYsw=; b=eIPJvg
-	B+6sHBAxFKQEVqNDAnRxqdOxBvrk/TcZv0ODGj9n2byQpz5st15gSftt4DXHOb+L
-	ODV1tTdrW12BtMu6wHj32Je01GmPkdZvlIWtJNICQtrMb4WZQXjGUzroTatWsI5Q
-	RbQ6AYaPq0GBEQ2LuuHlW2gpBW4Od2kOnpMiE=
+	:content-type; s=sasl; bh=6ITD83zRphVhshIAvdZHshQwyUU=; b=b32PyB
+	tBi1wmlV30bAKtLLLUeIG+aHbjTFOe/yPVwhkglPvuN250PZAOTr5lByvmmfpers
+	B6Wm86Lj9UdIq1GMP2JOlwF7UMu6UgsXjS7weljw7BgibDd1WO7p9jV8YL7u4zKr
+	8DXbsTnT9zN8ke48ceYF0d6v1aPAMgzxUF/uo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=peQSG5p1cBzP7xFlww0eebqiPan8Xcng
-	KphCt1P3u9tTg6dxxq7s8dWr6OLJMBUI79bhjpNmZ/+00un/Bp+0Enue/SQfwMTC
-	W19TKvckPOkwuM9/tXaIftcVRh8Bl70gEhRSwkxvLYA+SLxtyO3H9xzGgwOusvjc
-	esRyPMCsWsc=
+	:content-type; q=dns; s=sasl; b=BiKG3JYEN/IvJmWWK3BTyyEax9PZMZxS
+	ZnDrF8p45FjsaNYd7XIosS2lePcDCHep2D48DytWLAsJ4mCUL5cbYYahEj/f8PCM
+	07+XKS30OLfgNEz6A5BdYDFh68bXtEr9LS91ILyEUTAff6CEiZqksfVm4i6nlqyG
+	z4woNSiao9k=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D1A69453B3;
-	Sun,  5 Apr 2015 15:57:59 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D7BA7455FE;
+	Sun,  5 Apr 2015 16:09:25 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 47F4E453B2;
-	Sun,  5 Apr 2015 15:57:59 -0400 (EDT)
-In-Reply-To: <5520E9D2.4010603@gmail.com> (karthik nayak's message of "Sun, 05
-	Apr 2015 13:22:50 +0530")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5003F455FB;
+	Sun,  5 Apr 2015 16:09:25 -0400 (EDT)
+In-Reply-To: <20150405045614.GA12053@peff.net> (Jeff King's message of "Sun, 5
+	Apr 2015 00:56:15 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 0F394438-DBCE-11E4-91A0-11859F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: A82151E4-DBCF-11E4-9D2A-11859F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266816>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266817>
 
-karthik nayak <karthik.188@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> On 04/05/2015 01:16 PM, Junio C Hamano wrote:
+> So we'd have to either:
 >
->> If it semantically does not make sense to ask for the typename
->> without asking for the type code, then we can and should make that
->> as a new calling convention _all_ callers must follow.
->>
->> In other words, I think it is better to have
->>
->> 	if (oi->typename && !oi->typep)
->> 		die("BUG");
->>
->> somewhere near the beginning of the callchain that takes oi; that
->> will ensure all callers understand the rule.
+>   1. Decide that doesn't matter.
 >
-> Yes! this is a better approach as it will enforce that typep must be
-> set when typename is set.
+>   2. Have callers specify a "damn the NULs, I want it fast" flag.
 
-Not so fast ;-)
+The callers that used to call fgets and then later rewritten to
+strbuf_getwholeline(), either of the above obviously should be OK,
+and because the whole reason why we added strbuf_getline() interface
+was to avoid having to repeatedly call fgets() and concatenate the
+result if the fixed-size buffer we would give it is too small, I'd
+say the callers that want to read lines terminated by LF and have NUL
+as part of payload would be a tiny minority.
 
-The key phrase in what I wrote above is "If it does not make sense",
-and I am not yet convinced if that is the case or not.  If we are to
-change the calling convention for the callers, the reason why it
-does not make sense to ask only for typename but not typep must be
-explained in the log message.
+It depends on what we would find out after auditing all callers of
+this function, but I would not be surprised if we decided #1 (i.e.
+"this is about a _line_; what are you doing by having a NUL on
+it?"), and the safest would be to do the inverse of #2, i.e. make it
+fast by default and make oddball callers that care about NULs to
+pass a flag.
 
-And if it turns out that the answer to that question is "it is valid
-to ask only for typename", then it would be wrong to force everybody
-who wants to learn the stringified typename to supply typep.  And in
-such a case it might be better to do something like this instead (on
-top of your patch I am responding to):
-
- sha1_file.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
-
-diff --git a/sha1_file.c b/sha1_file.c
-index f4055dd..26fbb7c 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -2639,6 +2639,7 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi,
- 	struct cached_object *co;
- 	struct pack_entry e;
- 	int rtype;
-+	enum object_type real_type;
- 	const unsigned char *real = lookup_replace_object_extended(sha1, flags);
- 
- 	co = find_cached_object(real);
-@@ -2670,9 +2671,18 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi,
- 			return -1;
- 	}
- 
-+	/*
-+	 * packed_object_info() does not follow the delta chain to
-+	 * find out the real type, unless it is given oi->typep.
-+	 */
-+	if (oi->typename && !oi->typep)
-+		oi->typep = &real_type;
-+
- 	rtype = packed_object_info(e.p, e.offset, oi);
- 	if (rtype < 0) {
- 		mark_bad_packed_object(e.p, real);
-+		if (oi->typep == &real_type)
-+			oi->typep = NULL;
- 		return sha1_object_info_extended(real, oi, 0);
- 	} else if (in_delta_base_cache(e.p, e.offset)) {
- 		oi->whence = OI_DBCACHED;
-@@ -2686,6 +2696,8 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi,
- 	if (oi->typename)
- 		strbuf_addstr(oi->typename, typename(*oi->typep));
- 
-+	if (oi->typep == &real_type)
-+		oi->typep = NULL;
- 	return 0;
- }
- 
+Thanks for working on this.
