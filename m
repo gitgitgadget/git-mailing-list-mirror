@@ -1,304 +1,100 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/6] address packed-refs speed regressions
-Date: Sun, 5 Apr 2015 14:59:12 -0400
-Message-ID: <20150405185911.GA19902@peff.net>
-References: <20150405010611.GA15901@peff.net>
- <55213B93.9050207@web.de>
- <20150405185259.GB13096@peff.net>
+From: Luke Diamand <luke@diamand.org>
+Subject: Re: [PATCH 0/2] git-p4: Improve client path detection
+Date: Sun, 05 Apr 2015 20:27:11 +0100
+Message-ID: <55218C8F.209@diamand.org>
+References: <1427545730-3563-1-git-send-email-vitor.hda@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-X-From: git-owner@vger.kernel.org Sun Apr 05 20:59:27 2015
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Vitor Antunes <vitor.hda@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 05 21:27:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YeplV-0004A0-TL
-	for gcvg-git-2@plane.gmane.org; Sun, 05 Apr 2015 20:59:26 +0200
+	id 1YeqD1-0006EU-NZ
+	for gcvg-git-2@plane.gmane.org; Sun, 05 Apr 2015 21:27:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752525AbbDES7P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Apr 2015 14:59:15 -0400
-Received: from cloud.peff.net ([50.56.180.127]:42673 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752377AbbDES7O (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Apr 2015 14:59:14 -0400
-Received: (qmail 25043 invoked by uid 102); 5 Apr 2015 18:59:14 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 05 Apr 2015 13:59:14 -0500
-Received: (qmail 6413 invoked by uid 107); 5 Apr 2015 18:59:34 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 05 Apr 2015 14:59:34 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 05 Apr 2015 14:59:12 -0400
-Content-Disposition: inline
-In-Reply-To: <20150405185259.GB13096@peff.net>
+	id S1752530AbbDET1i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Apr 2015 15:27:38 -0400
+Received: from mail-wg0-f52.google.com ([74.125.82.52]:35586 "EHLO
+	mail-wg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752384AbbDET1h (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Apr 2015 15:27:37 -0400
+Received: by wgyo15 with SMTP id o15so1856194wgy.2
+        for <git@vger.kernel.org>; Sun, 05 Apr 2015 12:27:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=diamand.org; s=google;
+        h=message-id:date:from:user-agent:mime-version:to:subject:references
+         :in-reply-to:content-type:content-transfer-encoding;
+        bh=xIzS7M8GMLUegkHBYRZdBRJzgYLi/NWGMdZ70WD7qbI=;
+        b=KYbr99qdgni5POCICtPHbE1ZT9W6uLo2PsIPgdjcG1DAB7VnzB5gvzJoN1NI/RBdHP
+         8HcKNu5ykgFTJmopS/s9wVyR07GWYOjH3CtAK+ZyeHccFm4ADQ8Nftx1n/l7a60exj43
+         iYato+jZjkLBcYPeLsI4Yc7MLdY44SwWSTAiQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=xIzS7M8GMLUegkHBYRZdBRJzgYLi/NWGMdZ70WD7qbI=;
+        b=WJP/OLGWOKWMWXpo5GGdNId/srVNAvz5t9B0HSMtWRhD9b79o1DBG+ypzZGc6ScIg2
+         /X7W0wg6Ik9MPkmWkVipM/fg8Ie2FL8vtaCVtYb0oTQDy9cp+tUEWHf0wU9RiLAXxSL4
+         HaQlpeDdvcccRP8eAAqsohhcSigqHn02y5ST3HB5FKCTsgO8TtzW5UKPvPi9R7K6if5U
+         9nrbujs3KB769RSkdU/F+UQLG4pZAzskrO6P0HalT4hGq+YYJDQIxE0SAvYHh1zMNTd5
+         iWAipqcViIw4YIdxRNJoWAMcVw94ib8tD7w2VwFc4b8mHdQqzuEyBtuFiNt6PoW7ekX+
+         A77A==
+X-Gm-Message-State: ALoCoQmhLgk8ZFDeyZCjYm3UdrI1RazkO1QIRM7dOIPhRNan+U0rQ273ONG8ousvTiXNhabIiBrD
+X-Received: by 10.194.86.135 with SMTP id p7mr25071029wjz.89.1428262055751;
+        Sun, 05 Apr 2015 12:27:35 -0700 (PDT)
+Received: from [192.168.245.128] (cpc7-cmbg17-2-0-cust139.5-4.cable.virginm.net. [86.1.43.140])
+        by mx.google.com with ESMTPSA id m1sm3539135wiw.7.2015.04.05.12.27.34
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 05 Apr 2015 12:27:34 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.3.0
+In-Reply-To: <1427545730-3563-1-git-send-email-vitor.hda@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266814>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266815>
 
-On Sun, Apr 05, 2015 at 02:52:59PM -0400, Jeff King wrote:
+On 28/03/15 12:28, Vitor Antunes wrote:
+> I'm adding a test case for a scenario I was confronted with when using branch
+> detection and a client view specification. It is possible that the implemented
+> fix may not cover all possible scenarios, but there is no regression in the
+> available tests.
 
-> Right now we parse all of the packed-refs file into an in-memory cache,
-> and then do single lookups from that cache. Doing an mmap() and a binary
-> search is way faster (and costs less memory) for doing individual
-> lookups. It relies on the list being sorted. This is generally true, but
-> not something we currently rely on (however, it would be easy to add a
-> "sorted" flag to top of the file and have the readers fall back when the
-> flag is missing). I've played with a patch to do this (it's not entirely
-> trivial, because you jump into the middle of a line, and then have to
-> walk backwards to find the start of the record).
-> 
-> For traversals, it's more complicated. Obviously if you are traversing
-> all refs, you have to read the whole thing anyway. If you are traversing
-> a subset of the refs, you can binary-search the start of the subset, and
-> then walk forward. But that's where it gets tricky with the current
-> code.
+Vitor, one thing I wondered about with this part of the change:
 
-In case you are curious, here is my proof-of-concept for the packed-refs
-binary search. You'll note that it's a separate program, and not
-integrated into refs.c. I wrote this last August, and after trying to
-integrate it into refs.c, I found the ref_cache problems I described,
-and I haven't touched it since.
+-            if entry["depotFile"] == depotPath:
++            if entry["depotFile"].find(depotPath) >= 0:
 
-I also seem to have saved the patch for stuffing it into refs.c, but I
-am not sure if it even compiles (I wrote only "horrible wip" in the
-commit message ;) ).
+Does this mean that if 'p4 where' produces multiple lines of output that 
+this will get confused, as it's just going to search for an instance of 
+depotPath.
 
--- >8 --
-Subject: [PATCH] add git-quick-list
+The example in the Perforce man page for 'p4 where' would trigger this 
+for example:
 
-This is a proof of concept for binary-searching the
-packed-refs file in order to traverse an ordered subset of
-it. Note that it _only_ reads the packed-refs file
-currently. To really compare to for-each-ref, it would need
-to also walk the loose ref area for its prefix. On a
-mostly-packed repository that shouldn't make a big speed
-difference, though.
+http://www.perforce.com/perforce/r14.2/manuals/cmdref/p4_where.html
 
-And of course we don't _really_ want a separate command here
-at all. This should be part of refs.c, and everyone who
-calls for_each_ref should benefit from it.
+-//a/b/file.txt //client/a/b/file.txt //home/user/root/a/b/file.txt
+//a/b/file.txt //client/b/file.txt /home/user/root/b/file.txt
 
-Still, the numbers are promising. Here's are comparisons
-against for-each-ref on torvalds/linux, which has a 218M
-packed-refs file:
+As an experiment, I hacked git-p4 to always use p4Where rather than 
+getClientRoot(), which I would have thought ought to work, but while 
+most of the tests passed, Pete's client-spec torture tests failed.
 
-  $ time git for-each-ref \
-      --format='%(objectname) %(refname)' \
-      refs/remotes/2325298/ |
-      wc -c
-  44139
+Luke
 
-  real    0m1.649s
-  user    0m1.332s
-  sys     0m0.304s
 
-  $ time ~peff/git-quick-list refs/remotes/2325298/ | wc -c
-  44139
-
-  real    0m0.012s
-  user    0m0.004s
-  sys     0m0.004s
----
- Makefile     |   1 +
- quick-list.c | 174 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 175 insertions(+)
- create mode 100644 quick-list.c
-
-diff --git a/Makefile b/Makefile
-index 2457065..aa32598 100644
---- a/Makefile
-+++ b/Makefile
-@@ -541,6 +541,7 @@ PROGRAM_OBJS += shell.o
- PROGRAM_OBJS += show-index.o
- PROGRAM_OBJS += upload-pack.o
- PROGRAM_OBJS += remote-testsvn.o
-+PROGRAM_OBJS += quick-list.o
- 
- # Binary suffix, set to .exe for Windows builds
- X =
-diff --git a/quick-list.c b/quick-list.c
-new file mode 100644
-index 0000000..e423f1f
---- /dev/null
-+++ b/quick-list.c
-@@ -0,0 +1,174 @@
-+#include "cache.h"
-+#include "refs.h"
-+
-+struct packed_refs_iterator {
-+	const char *start;
-+	const char *end;
-+
-+	const char *cur;
-+	const char *ref;
-+	const char *eol;
-+	const char *next;
-+};
-+
-+static void iterator_init(struct packed_refs_iterator *pos,
-+			  const char *buf, size_t len)
-+{
-+	pos->start = buf;
-+	pos->end = buf + len;
-+
-+	/* skip past header line */
-+	if (pos->start < pos->end && *pos->start == '#') {
-+		while (pos->start < pos->end && *pos->start != '\n')
-+			pos->start++;
-+		if (pos->start < pos->end)
-+			pos->start++;
-+	}
-+}
-+
-+static int iterator_cmp(const char *key, struct packed_refs_iterator *pos)
-+{
-+	const char *ref = pos->ref;
-+	for (; *key && ref < pos->eol; key++, ref++)
-+		if (*key != *ref)
-+			return (unsigned char)*key - (unsigned char)*ref;
-+	return ref == pos->eol ? *key ? 1 : 0 : -1;
-+}
-+
-+static const char *find_eol(const char *p, const char *end)
-+{
-+	p = memchr(p, '\n', end - p);
-+	return p ? p : end;
-+}
-+
-+static void parse_line(struct packed_refs_iterator *pos, const char *p)
-+{
-+	pos->cur = p;
-+	if (pos->end - p < 41)
-+		die("truncated packed-refs file");
-+	p += 41;
-+
-+	pos->ref = p;
-+	pos->eol = p = find_eol(p, pos->end);
-+
-+	/* skip newline, and then past any peel records */
-+	if (p < pos->end)
-+		p++;
-+	while (p < pos->end && *p == '^') {
-+		p = find_eol(p, pos->end);
-+		if (p < pos->end)
-+			p++;
-+	}
-+	pos->next = p;
-+}
-+
-+static void iterator_next(struct packed_refs_iterator *pos)
-+{
-+	if (pos->next < pos->end)
-+		parse_line(pos, pos->next);
-+	else
-+		pos->cur = NULL;
-+}
-+
-+static void iterator_start(struct packed_refs_iterator *pos, const char *prefix)
-+{
-+	const char *lo = pos->start, *hi = pos->end;
-+
-+	while (lo < hi) {
-+		const char *mi = lo + ((hi - lo) / 2);
-+		int cmp;
-+
-+		/*
-+		 * We landed somewhere on a line. Walk back to find
-+		 * the start of the line.
-+		 */
-+		while (mi > lo && *(mi-1) != '\n')
-+			mi--;
-+
-+		/*
-+		 * We may have hit a peel-line. In that case, try
-+		 * to walk back to the actual ref line (and skip as
-+		 * many peel lines as we find, for future-proofing).
-+		 */
-+		while (*mi == '^') {
-+			if (mi == lo)
-+				die("peel line without a record before it?");
-+			mi--;
-+			if (mi == lo)
-+				die("peel line with bare newline before it?");
-+			mi--;
-+			while (mi > lo && *(mi-1) != '\n')
-+				mi--;
-+		}
-+
-+		/* Now we should be at a real ref line. */
-+		parse_line(pos, mi);
-+		cmp = iterator_cmp(prefix, pos);
-+		if (!cmp)
-+			return;
-+		else if (cmp < 0)
-+			hi = pos->cur;
-+		else
-+			lo = pos->next;
-+	}
-+
-+	if (hi < pos->end)
-+		parse_line(pos, hi);
-+	else
-+		pos->cur = NULL;
-+}
-+
-+static void quick_list(const char *prefix, each_ref_fn fn, void *data)
-+{
-+	int fd = open(git_path("packed-refs"), O_RDONLY);
-+	struct stat st;
-+	const char *buf = NULL;
-+	size_t len;
-+	struct packed_refs_iterator pos;
-+
-+	if (fd < 0)
-+		goto out;
-+	if (fstat(fd, &st) < 0)
-+		goto out;
-+	len = xsize_t(st.st_size);
-+	buf = xmmap(NULL, len, PROT_READ, MAP_PRIVATE, fd, 0);
-+	if (!buf)
-+		goto out;
-+
-+	iterator_init(&pos, buf, len);
-+	for (iterator_start(&pos, prefix);
-+	     pos.cur && starts_with(pos.ref, prefix);
-+	     iterator_next(&pos)) {
-+		unsigned char sha1[20];
-+		char *refname;
-+
-+		if (get_sha1_hex(pos.cur, sha1) < 0)
-+			die("packed-refs contained invalid sha1");
-+		refname = xmemdupz(pos.ref, pos.eol - pos.ref);
-+		fn(refname, sha1, 0, data);
-+		free(refname);
-+	}
-+
-+out:
-+	close(fd);
-+	if (buf)
-+		munmap((void *)buf, len);
-+}
-+
-+static int show_ref(const char *refname, const unsigned char *sha1,
-+		    int flags, void *data)
-+{
-+	printf("%s %s\n", sha1_to_hex(sha1), refname);
-+	return 0;
-+}
-+
-+int main(int argc, char **argv)
-+{
-+	if (argc != 2)
-+		usage("git quick-list <prefix>");
-+
-+	setup_git_directory();
-+	quick_list(argv[1], show_ref, NULL);
-+
-+	return 0;
-+}
--- 
-2.4.0.rc0.363.gf9f328b
+>
+> Vitor Antunes (2):
+>    git-p4: Check branch detection and client view together
+>    git-p4: Improve client path detection when branches are used
+>
+>   git-p4.py                |   11 ++++--
+>   t/t9801-git-p4-branch.sh |   98 ++++++++++++++++++++++++++++++++++++++++++++++
+>   2 files changed, 105 insertions(+), 4 deletions(-)
+>
