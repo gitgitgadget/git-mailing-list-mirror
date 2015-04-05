@@ -1,66 +1,112 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 3/6] strbuf_getwholeline: use getc_unlocked
-Date: Sun, 5 Apr 2015 21:36:04 +0700
-Message-ID: <CACsJy8Biv6D2foDxpn-CZhEsjn3WsPV=_A3UOnT4+1LVrpRnTw@mail.gmail.com>
-References: <20150405010611.GA15901@peff.net> <20150405011110.GC30127@peff.net>
- <20150405045614.GA12053@peff.net>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: how do I ignore a directory for diff
+Date: Sun, 5 Apr 2015 15:58:25 +0100
+Message-ID: <20150405145825.GF21452@serenity.lan>
+References: <BLU168-W455AD13F694F68E77DFD0EB4FF0@phx.gbl>
+ <20150405121705.GE21452@serenity.lan>
+ <BLU436-SMTP49446C5C4D772905567D4B4FF0@phx.gbl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Apr 05 16:36:41 2015
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Lionel CHAZALLON <LongChair@hotmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 05 16:59:03 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YelfE-0006G5-Fe
-	for gcvg-git-2@plane.gmane.org; Sun, 05 Apr 2015 16:36:40 +0200
+	id 1Yem0r-00058N-Qb
+	for gcvg-git-2@plane.gmane.org; Sun, 05 Apr 2015 16:59:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752295AbbDEOgf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Apr 2015 10:36:35 -0400
-Received: from mail-ie0-f181.google.com ([209.85.223.181]:34025 "EHLO
-	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751863AbbDEOgf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Apr 2015 10:36:35 -0400
-Received: by iedfl3 with SMTP id fl3so8179440ied.1
-        for <git@vger.kernel.org>; Sun, 05 Apr 2015 07:36:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=xXYlDua+7ib8NXKYdWM7cgY/KFkscQwds1eKhYP068Y=;
-        b=Vhwo55OI87u1rZ4GtiX2QaTiF/0/UHmRzgWFzSReIIXZXP2EFwYWznWMn8Qaw4CL9K
-         9/7MX3w3g0sjcaiFx48ZxdM6qdmzj7w/DyolCCbM8tk9ZF8MwUhhDiLz1xPIZIxiSL19
-         KrzQ0MIM3+EzSl5aS2UDtAwOR41ouvpgjUv7w9YF+Nbkm084m4yIKb7WtD8oWlDjPk0o
-         OkLUVuErB46PTTfw0Kto2OOYbrYWElrnwkQ/Ykw4UXg3Asw6xiblT/2J9pzFGR5AQO42
-         3IyDNyNkOK9ZU4SkHtPCXuS9xaFf0m271OL5CFE9qxXkprDfzAJ7fQ8k6BIoOTWjuCkb
-         SMgA==
-X-Received: by 10.50.61.239 with SMTP id t15mr5776968igr.7.1428244594384; Sun,
- 05 Apr 2015 07:36:34 -0700 (PDT)
-Received: by 10.107.47.170 with HTTP; Sun, 5 Apr 2015 07:36:04 -0700 (PDT)
-In-Reply-To: <20150405045614.GA12053@peff.net>
+	id S1752041AbbDEO6d convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 5 Apr 2015 10:58:33 -0400
+Received: from hyena.aluminati.org ([64.22.123.221]:40847 "EHLO
+	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751992AbbDEO6c convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 5 Apr 2015 10:58:32 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by hyena.aluminati.org (Postfix) with ESMTP id A45AB2184B;
+	Sun,  5 Apr 2015 15:58:31 +0100 (BST)
+X-Quarantine-ID: <4fIwFILmIcka>
+X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -2.899
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.899 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9, URIBL_BLOCKED=0.001]
+	autolearn=no
+Received: from hyena.aluminati.org ([127.0.0.1])
+	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id 4fIwFILmIcka; Sun,  5 Apr 2015 15:58:30 +0100 (BST)
+Received: from serenity.lan (banza.aluminati.org [10.0.7.182])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by hyena.aluminati.org (Postfix) with ESMTPSA id D18682182B;
+	Sun,  5 Apr 2015 15:58:27 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <BLU436-SMTP49446C5C4D772905567D4B4FF0@phx.gbl>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266808>
 
-On Sun, Apr 5, 2015 at 11:56 AM, Jeff King <peff@peff.net> wrote:
-> So we'd have to either:
->
->   1. Decide that doesn't matter.
->
->   2. Have callers specify a "damn the NULs, I want it fast" flag.
+On Sun, Apr 05, 2015 at 04:19:50PM +0200, Lionel CHAZALLON wrote:
+> > Le 5 avr. 2015 =E0 14:17, John Keeping <john@keeping.me.uk> a =E9cr=
+it :
+> >=20
+> > On Sun, Apr 05, 2015 at 11:31:54AM +0000, LongChair . wrote:
+> >> I have been looking into ignoring a subdirectory of my tree for
+> >> diffing with upstream.  I'll explain the situation below :
+> >>=20
+> >> My tree is a fork of an upstream repo.  There is a specific direct=
+ory
+> >> in my tree lets call it foo/bar that i would like to ignore for di=
+ff.
+> >> This directory includes only files that i added to my repo and is
+> >> therefore irrelevant for diffing (i know all files in there have b=
+een
+> >> added and are not in upstream). Having there in the diff is just
+> >> making a lot of files to appear and that is confusing to see what =
+is
+> >> changed from upstream.
+> >>=20
+> >> I have read the docs and found a way mentioning that i should add =
+a
+> >> line to .gitattributes with : foo/bar/* -diff
+> >>=20
+> >> But this still lists the files in there when i'm diffing.
+> >>=20
+> >> Is there any way to achieve this ? i cant find any clear explanati=
+on
+> >> in the docs.
+> >=20
+> > Since git-diff takes a pathspec you can use the exclude magic to ex=
+clude
+> > certain directories like this:
+> >=20
+> > 	git diff upstream -- ':(top)' ':(exclude)foo/bar'
+> >=20
+> > or equivalently:
+> >=20
+> > 	git diff upstream -- :/ ':!foo/bar'
+> >=20
+> > The documentation for the pathspec syntax is in git-glossary(7).
+>=20
+> Thanks for the answer. I am also using some GUI client (smartgit). Is
+> there any way to make this part of the repo attributes / configuratio=
+n
+> so that my git GUI would use it ?=20
 
-2+. Avoid FILE* interface and go with syscalls for reading
-packed-refs? If mmaping the entire file could be a problem for some
-platform because it's too large, we have code for reading (with
-bufferring) from fd somewhere, e.g. index-pack.
+I think you'll have to file a feature request with SmartGit if you want
+support for this in their UI.
 
->   3. Find some alternative that is more robust than fgets, and faster
->      than getc. I don't think there is anything in stdio, but I am not
->      above dropping in a faster non-portable call if it is available,
->      and then falling back to the current code otherwise.
--- 
-Duy
+The standard way to set this up would be to create an alias that does
+what you want, such as:
+
+	git config alias.d 'diff -- :/ ":!foo/bar"'
+
+and use "git d" instead of "git diff", but there is no way for other
+programs to inherit that.
