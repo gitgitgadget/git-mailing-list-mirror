@@ -1,102 +1,103 @@
 From: =?UTF-8?q?Erik=20Elfstr=C3=B6m?= <erik.elfstrom@gmail.com>
-Subject: [PATCH 0/3] Improving performance of git clean
-Date: Mon,  6 Apr 2015 13:48:21 +0200
-Message-ID: <1428320904-12366-1-git-send-email-erik.elfstrom@gmail.com>
+Subject: [PATCH 2/3] p7300: added performance tests for clean
+Date: Mon,  6 Apr 2015 13:48:23 +0200
+Message-ID: <1428320904-12366-3-git-send-email-erik.elfstrom@gmail.com>
+References: <1428320904-12366-1-git-send-email-erik.elfstrom@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Erik=20Elfstr=C3=B6m?= <erik.elfstrom@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 06 13:51:22 2015
+X-From: git-owner@vger.kernel.org Mon Apr 06 13:58:05 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yf5WF-0003MF-VG
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Apr 2015 13:48:44 +0200
+	id 1Yf5WM-0003QB-QB
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Apr 2015 13:48:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752797AbbDFLsi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Apr 2015 07:48:38 -0400
-Received: from mail-lb0-f170.google.com ([209.85.217.170]:35789 "EHLO
-	mail-lb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752773AbbDFLsh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Apr 2015 07:48:37 -0400
-Received: by lbbuc2 with SMTP id uc2so14597125lbb.2
-        for <git@vger.kernel.org>; Mon, 06 Apr 2015 04:48:36 -0700 (PDT)
+	id S1752889AbbDFLsq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Apr 2015 07:48:46 -0400
+Received: from mail-lb0-f182.google.com ([209.85.217.182]:36210 "EHLO
+	mail-lb0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752852AbbDFLsn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Apr 2015 07:48:43 -0400
+Received: by lbbqq2 with SMTP id qq2so9438688lbb.3
+        for <git@vger.kernel.org>; Mon, 06 Apr 2015 04:48:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version:content-type
-         :content-transfer-encoding;
-        bh=kiVpaOnDxHHHSXr0fHrcLsfbGF073v0ldf140Wp7pZg=;
-        b=KAwGlxlZjmk1cnMMyIkcdszeCf7oir+Rtl/s/pGr3WRulMZqMri6sCP3s2+M6UYMZr
-         df2eLNqleg6y10QqBtsLv4NqJAOYYAX1BAjLldnmZUseKOn/yovZ4DRSDpuvkEfLfcX/
-         xv8slmTLq4prKnzoWsZu9Yd6dtzke1oXCg1ecIqDctBRSCYs+qf+qRdYCCVv0lyPR49y
-         VrRk893bw+Iy8GZuIFttLEsOlP/uGnePOfHS6tCaZIesOIAgmLIxC25yMJO/xQl/xcav
-         3EcPiIijWGaT9iaBtIGNt1oks6yYvVjjyPc5R5Kqfgi330lltJal2BDBLRgqU15ef+uY
-         2gNA==
-X-Received: by 10.152.37.202 with SMTP id a10mr13653288lak.0.1428320916416;
-        Mon, 06 Apr 2015 04:48:36 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=cd0Ic7budwrKdNQLHS8hhnEs2EOEHoYgArpv8hqiKOg=;
+        b=R5V6J2MlNmFH3oKaDihAafWJMv/gigeTi7RwvePNjy4vCNd8IXguOHbs4Gh82sZnDJ
+         DdEAPqS+w7F4Jyda1UjE24L5rdQhntazIpAAvBEYIBr4mVPnGXAzerF3Ki/R+DK9UT3v
+         LZhCqbh1HEfU0p+rm0VGlY2Gfq6w2wZseZ+JK2i4yZFenvo0Q4zw6/BlEhzkgvE9SgjK
+         S/T1YWnBtB8yUd0GLhECc2kXfKIT6T5rmqYYYrwyDlQSXug2nOyVDdqkT0/sss1ymM4m
+         KCtJw7Z6rkbpDoj6bhZx4bsVVXpJmJUcD/VVsE9fRvoQRN6A3iffOPOG5yyjnVmk3XaZ
+         HkSw==
+X-Received: by 10.112.26.106 with SMTP id k10mr13188511lbg.23.1428320921633;
+        Mon, 06 Apr 2015 04:48:41 -0700 (PDT)
 Received: from localhost.localdomain (h38n2-lk-d2.ias.bredband.telia.com. [78.72.191.38])
-        by mx.google.com with ESMTPSA id pd1sm933083lbc.9.2015.04.06.04.48.34
+        by mx.google.com with ESMTPSA id pd1sm933083lbc.9.2015.04.06.04.48.40
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 06 Apr 2015 04:48:35 -0700 (PDT)
+        Mon, 06 Apr 2015 04:48:40 -0700 (PDT)
 X-Mailer: git-send-email 2.4.0.rc0.37.ga3b75b3
+In-Reply-To: <1428320904-12366-1-git-send-email-erik.elfstrom@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266840>
 
-This series addresses a performance issue of git clean previously
-discussed here:
-http://thread.gmane.org/gmane.comp.version-control.git/265560/focus=3D2=
-65560
-and here:
-http://thread.gmane.org/gmane.comp.version-control.git/266777/focus=3D2=
-66777
-
-The issue manifests when trying to clean a large number of untracked
-directories. In my case this scenario triggered by a test suite
-running in the repository creating a directory for each test resulting
-in a build directory with ~100000 sub directories that needs to be
-cleaned. For some extreme cases, clean times of more than 1h have been
-observed.
-
-With this series, the time to clean an untracked directory containing
-100000 sub directories goes from 61s to 1.7s.
-
-The main change is to switch the repository check in
-clean.c:remove_dirs from using refs.c:resolve_gitlink_ref to
-setup.c:is_git_directory.
-
-One potential issue that is_git_directory contains the following check:
-
-	if (getenv(DB_ENVIRONMENT)) {
-		if (access(getenv(DB_ENVIRONMENT), X_OK))
-			return 0;
-	}
-
-I'm not sure how this will affect this usecase (checking for some
-other nested git repo). Please give some thought to this when
-reviewing.
-
-Jeff King also expressed concerns that we may have similar performance
-issues in other commands and that it could be good to unify these "is
-this a repo?"-checks. This series only attempts to solve the git-clean
-case.
-
-Erik Elfstr=C3=B6m (3):
-  t7300: add tests to document behavior of clean and nested git
-  p7300: added performance tests for clean
-  clean: improve performance when removing lots of directories
-
- builtin/clean.c       | 23 ++++++++++++---
- t/perf/p7300-clean.sh | 37 +++++++++++++++++++++++
- t/t7300-clean.sh      | 82 +++++++++++++++++++++++++++++++++++++++++++=
-++++++++
- 3 files changed, 138 insertions(+), 4 deletions(-)
+Signed-off-by: Erik Elfstr=C3=B6m <erik.elfstrom@gmail.com>
+---
+ t/perf/p7300-clean.sh | 37 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 37 insertions(+)
  create mode 100755 t/perf/p7300-clean.sh
 
+diff --git a/t/perf/p7300-clean.sh b/t/perf/p7300-clean.sh
+new file mode 100755
+index 0000000..3f56fb2
+--- /dev/null
++++ b/t/perf/p7300-clean.sh
+@@ -0,0 +1,37 @@
++#!/bin/sh
++
++test_description=3D"Test git-clean performance"
++
++. ./perf-lib.sh
++
++test_perf_large_repo
++test_checkout_worktree
++
++test_expect_success 'setup untracked directory with many sub dirs' '
++	rm -rf 500_sub_dirs 50000_sub_dirs clean_test_dir &&
++	mkdir 500_sub_dirs 50000_sub_dirs clean_test_dir &&
++	for i in $(seq 1 500)
++	do
++		mkdir 500_sub_dirs/dir$i
++	done &&
++	for i in $(seq 1 100)
++	do
++		cp -r 500_sub_dirs 50000_sub_dirs/dir$i
++	done
++'
++
++test_perf 'clean many untracked sub dirs, check for nested git' '
++	rm -rf clean_test_dir/50000_sub_dirs_cpy &&
++	cp -r 50000_sub_dirs clean_test_dir/50000_sub_dirs_cpy &&
++	git clean -q -f -d  clean_test_dir/ &&
++	test 0 =3D $(ls -A clean_test_dir/ | wc -l)
++'
++
++test_perf 'clean many untracked sub dirs, ignore nested git' '
++	rm -rf clean_test_dir/50000_sub_dirs_cpy &&
++	cp -r 50000_sub_dirs clean_test_dir/50000_sub_dirs_cpy &&
++	git clean -q -f -f -d  clean_test_dir/ &&
++	test 0 =3D $(ls -A clean_test_dir/ | wc -l)
++'
++
++test_done
 --=20
 2.4.0.rc0.37.ga3b75b3
