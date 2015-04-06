@@ -1,94 +1,174 @@
-From: Alex Henrie <alexhenrie24@gmail.com>
-Subject: [PATCH v2] gitk: Remove mc parameter from proc show_error
-Date: Sun,  5 Apr 2015 23:06:04 -0600
-Message-ID: <1428296764-29970-1-git-send-email-alexhenrie24@gmail.com>
-Cc: Alex Henrie <alexhenrie24@gmail.com>
-To: paulus@samba.org, bernt@norang.ca, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 06 07:06:29 2015
+From: Oliver Runge <oliver.runge@gmail.com>
+Subject: Re: rev-list pretty format behavior
+Date: Mon, 6 Apr 2015 13:05:20 +0200
+Message-ID: <CAHaCNWJ+S7Qa0=x2Xo2+HMQa0jz_tT8G+Wp1ugB4UHwBfOZRTg@mail.gmail.com>
+References: <CAHaCNWJZQRVxp3ponvh3pPEk=sOHGYypyhi1Dc8HX5gkKEBGrQ@mail.gmail.com>
+	<xmqqlhi6cma5.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 06 13:05:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YezEy-000464-L6
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Apr 2015 07:06:29 +0200
+	id 1Yf4qN-00085l-BF
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Apr 2015 13:05:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751017AbbDFFGQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Apr 2015 01:06:16 -0400
-Received: from mail-pd0-f181.google.com ([209.85.192.181]:34548 "EHLO
-	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750860AbbDFFGP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Apr 2015 01:06:15 -0400
-Received: by pdbni2 with SMTP id ni2so33585727pdb.1
-        for <git@vger.kernel.org>; Sun, 05 Apr 2015 22:06:15 -0700 (PDT)
+	id S1752924AbbDFLFW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Apr 2015 07:05:22 -0400
+Received: from mail-qk0-f175.google.com ([209.85.220.175]:36432 "EHLO
+	mail-qk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751141AbbDFLFV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Apr 2015 07:05:21 -0400
+Received: by qku63 with SMTP id 63so22195350qku.3
+        for <git@vger.kernel.org>; Mon, 06 Apr 2015 04:05:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=yFHwrYcN3SV/E7q0LPT2HNDGE0p6EOFl1sAzillXZpc=;
-        b=cYhr4vCiJs8tla+s7oIraXYkTOff0L7vO7YoBceS2pSGQ+cLvVGJjX1YRFfU+m0Go2
-         rExt1mFvf5tAmTyCE4RV4Z7Aay13BHTcaoH998xSz37h1pMU8cWh5LioYA/ALQjGCFdU
-         54kKx1gyiTVxnA7H/SadGjY4NP8I7eLXVu1UMHBtBXR/5oetK/DPRCCt6eXqANyUM7Sr
-         muVjb2LnY5ZBc9hrqn7Ex4x9mx6UZsSwDLHnQn/dhM+TJ6UTZkfMgmy2zcuBs0iMl+id
-         qsVPJVRQLYUjJSm1cyfx1TpDV03YTV5E7d6BnwlFqTwEvqoIbC3RiakeZFHbxF3Gskik
-         wqcQ==
-X-Received: by 10.70.89.174 with SMTP id bp14mr24454579pdb.14.1428296774998;
-        Sun, 05 Apr 2015 22:06:14 -0700 (PDT)
-Received: from localhost.localdomain (c-98-202-141-117.hsd1.ut.comcast.net. [98.202.141.117])
-        by mx.google.com with ESMTPSA id jd5sm3094788pbd.35.2015.04.05.22.06.13
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 05 Apr 2015 22:06:14 -0700 (PDT)
-X-Mailer: git-send-email 2.3.5
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=WHTnwbbGERkc2JjhtlPAnF2KyseILgLkNwa9lDhCTZQ=;
+        b=OVc2Q1cSBBMZCkyDWv1tva/8CWtvLPAks6EVQb+qyQLMpuB6BFpi3yJRxUfcR0Z5M7
+         e8y10Qm1FG9XnYJmD7TZRIQSKZ0AuLjJ4F1awEFA8dvZRQyDCrqyz2o3JMyYgAOTr0n5
+         yIbRT2S4+1IVRsH/QZeJgiCLgT0Uh5VGfODKTBt/gQTJo7eawHIjhtgI8s0QeYuJWQ0x
+         v5sc97iMYumZR5nphZAR91CWd80iRe2I+2Qrhkhui0rFalIAmyqNI9oUdgtlJ3bLn2XI
+         k2cPTRpXpWVQcnkXmqAZwy3zE1rTAKkA+xjhaDL8kEfq9Q2N5n3HjRb+nrkQldh6x/0f
+         cO8g==
+X-Received: by 10.55.52.67 with SMTP id b64mr26875397qka.47.1428318320639;
+ Mon, 06 Apr 2015 04:05:20 -0700 (PDT)
+Received: by 10.140.42.47 with HTTP; Mon, 6 Apr 2015 04:05:20 -0700 (PDT)
+In-Reply-To: <xmqqlhi6cma5.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266837>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266838>
 
-This is a better fix for 8d849957d81fc0480a52570d66cc3c2a688ecb1b.
+Hallo, Mr. Hamano.
 
-All that was required to fix the original issue was to remove the extra
-mc call, i.e. change [mc "Sorry, gitk cannot run..."] to simply
-"Sorry, gitk cannot run..." Changing the signature of proc show_error
-was unnecessary and introduced two new bugs: It made "OK" untranslatable
-and "mc" translatable when the opposite should be true.
+Thank you for your quick and detailed response.
 
-This new fix makes the string "OK" translatable and the string "mc" not
-translatable, while leaving the string "Sorry, gitk cannot run..." not
-translatable. It will take effect the next time `make update-po` is run.
+On 5 April 2015 at 23:12, Junio C Hamano <gitster@pobox.com> wrote:
+> This is very much the designed behaviour, I would think.  IIRC, the
+> user-format support of "rev-list" was designed so that the scripts
+> can customize the output from "rev-list -v", which was how scripts
+> were expected to read various pieces of information for each commit
+> originally.  And the 40-hex commit object name and/or a line that
+> begins with "commit ..." when a user format is used are meant to
+> serve as stable record separator (in that sense, having %H or %h in
+> the userformat given to rev-list is redundant) when these scripts
+> are reading output from "rev-list".
 
-Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
----
- gitk | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+I see, but then I find it even stranger, because "rev-list -v" without
+"pretty" parameter will only output the hash as separator and "commit
+<sha1>" is only introduced if a "pretty" parameter other than
+"oneline" is specified. The docu states the formating is intended to
+make "git rev-list" behave more like "git log", and apart from the
+pretty settings "email" and "format"/"tformat" (which don't have
+"commit <sha1>" in "git log") the formating works exactly like it does
+in "git log".
 
-diff --git a/gitk b/gitk
-index 30fcd30..096389f 100755
---- a/gitk
-+++ b/gitk
-@@ -1894,13 +1894,13 @@ proc make_transient {window origin} {
-     }
- }
- 
--proc show_error {w top msg {mc mc}} {
-+proc show_error {w top msg} {
-     global NS
-     if {![info exists NS]} {set NS ""}
-     if {[wm state $top] eq "withdrawn"} { wm deiconify $top }
-     message $w.m -text $msg -justify center -aspect 400
-     pack $w.m -side top -fill x -padx 20 -pady 20
--    ${NS}::button $w.ok -default active -text [$mc OK] -command "destroy $top"
-+    ${NS}::button $w.ok -default active -text [mc OK] -command "destroy $top"
-     pack $w.ok -side bottom -fill x
-     bind $top <Visibility> "grab $top; focus $top"
-     bind $top <Key-Return> "destroy $top"
-@@ -12011,7 +12011,7 @@ proc get_path_encoding {path} {
- # First check that Tcl/Tk is recent enough
- if {[catch {package require Tk 8.4} err]} {
-     show_error {} . "Sorry, gitk cannot run with this version of Tcl/Tk.\n\
--		     Gitk requires at least Tcl/Tk 8.4." list
-+		     Gitk requires at least Tcl/Tk 8.4."
-     exit 1
- }
- 
--- 
-2.3.5
+docu:
+------------------------------------------
+Commit Formatting
+       Using these options, git-rev-list(1) will act similar to the more
+       specialized family of commit log tools: git-log(1), git-show(1),
+       and git-whatchanged(1)
+------------------------------------------
+and
+------------------------------------------
+- format:<string>
+The format:<string> format allows you to specify which information you
+want to show. It works a little bit like printf format, with the
+notable exception that you get a newline with %n instead of \n.
+E.g, format:"The author of %h was %an, %ar%nThe title was >>%s<<%n"
+would show something like this:
+
+    The author of fe6e0ee was Junio C Hamano, 23 hours ago
+    The title was >>t4119: test autocomputing -p<n> for traditional
+diff input.<<
+------------------------------------------
+
+> A new option to tell "rev-list" that "I am designing an output that
+> is a-line-per-commit with the userformat and do not need the default
+> record separator" or "I will arrange record separator myself" would
+> be an acceptable thing to add, provided if many scripts yet to be
+> written would benefit from such a feature, though.
+
+I searched github for usages of "git rev-list --pretty=format" to see
+whether I'm alone. I realize this is merely anecdotal, but perhaps
+still useful.
+
+Scripts ignoring the separator:
+------------------------------------------
+# no idea why it always prints those commit lines
+git rev-list --pretty=format:" - %s" "$@" |grep -v ^commit
+------------------------------------------
+
+------------------------------------------
+git rev-list --pretty=format:"%H %h|%an:%s" "$@" | sed -n
+"s/^\([0-9a-f]\{40\}\) \(.*\)$/n\1 [$shape label=\"{\2}\"]/p"
+------------------------------------------
+
+(shortened with "..." by me)
+------------------------------------------
+git rev-list --pretty=format:"%H %h %d" "$@" | awk '
+...
+!/^commit/ {
+...
+}'
+------------------------------------------
+
+Most of the scripts I found hack around the "commit <sha1>" lines,
+mostly in a way that would still work if the lines suddenly weren't
+there anymore. But unfortunately there are also some examples that
+would break:
+------------------------------------------
+git rev-list --oneline --pretty=format:"%C(yellow)%h
+%C(red)%ad%C(green)%d %C(reset)%s%C(cyan) [%cn]" --date=short
+HEAD~2..HEAD | awk 'NR % 2 == 0'
+------------------------------------------
+
+And finally there are a few that really use the current behavior:
+------------------------------------------
+# tcl
+set revisions [$::versioned_interpreter git rev-list
+"--pretty=format:%at%n%an <%ae>%n%s" -n 10 $revision]
+set result {}
+foreach {commit date author summary} [split $revisions \n] {
+    lappend result [list [lindex $commit 1] $date $author $summary]
+}
+------------------------------------------
+
+(shortened with "..." by me)
+------------------------------------------
+save()
+{
+    awk '{print $2 " '$1'" }' | sort >$R/sha/$1
+}
+...
+make_sha()
+{
+    git rev-list --pretty=format: ^Research-V6 BSD-1 | save BSD-1
+    git rev-list --pretty=format: ^BSD-1 BSD-2 | save BSD-2
+    ...
+}
+------------------------------------------
+
+I really feel that it should be the default behavior for "format",
+since the separator intention isn't described in the docu and isn't
+really needed for scripts that want to provide their own formating.
+That being said, I understand that that's likely not going to happen,
+especially since it would break quite a few legacy scripts.
+
+But it would be prudent to update the docu to highlight the different
+behavior for the pretty settings "email" and "format"/"tformat", and
+even though I think another feature to turn off the separator lines
+makes the command more complex, the fact that so many scripts seem to
+write around the behavior might justify it.
+
+I'd like to help with both tasks, if you think they are reasonable.
+
+Oliver
