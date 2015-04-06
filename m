@@ -1,106 +1,110 @@
-From: Steven Huang <steven@accsc.im>
-Subject: [Feature REQ]Add CURLOPT_SSL_CIPHER_LIST to git for allowing custom
- cipher usages
-Date: Mon, 6 Apr 2015 09:27:53 -0300
-Message-ID: <20150406122753.GA29626@desktop.luxing.im>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH v2 00/25] list-files redesign
+Date: Mon,  6 Apr 2015 20:52:09 +0700
+Message-ID: <1428328354-14897-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="ReaqsoxgOBHFXBhH"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: 1425896314-10941-1-git-send-email-pclouds@gmail.com,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 06 14:29:58 2015
+X-From: git-owner@vger.kernel.org Mon Apr 06 15:52:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yf6A4-0000SU-5l
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Apr 2015 14:29:52 +0200
+	id 1Yf7SB-0004Y4-Lx
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Apr 2015 15:52:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752797AbbDFM15 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Apr 2015 08:27:57 -0400
-Received: from mail-ie0-f177.google.com ([209.85.223.177]:34886 "EHLO
-	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751192AbbDFM15 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Apr 2015 08:27:57 -0400
-Received: by ierf6 with SMTP id f6so19474670ier.2
-        for <git@vger.kernel.org>; Mon, 06 Apr 2015 05:27:56 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-type:content-disposition:user-agent;
-        bh=lWzd5mAwrvV2BSOGPVjvvdBUmFlvO1y9oZKFEbWM16c=;
-        b=AfbE20TmIW/FcFoniZ69y8CFbmAxLvh62xxiBSvBmvRn6h2qcO6wgOJSN8B7bRI6lQ
-         3bCXVQ1tgi6CaAs9Q/kpDBELExtG3qtfJ2em1mOyw5YgqAuvmGYfCbFe2CRyoVdSAxP2
-         SvoP82b5YGKG2JPE4TbIui0WIweD9nsyKY6Iv65S5Ytm8VH+AVSCTp/NG9TjWS5vh8tZ
-         Ky/U/P154CkhntNb+Jm9JN4s61KvYGFKYZni5HpepU4QzkEcQoEPPXPeQAYtwK+3JKrx
-         Zo6uNcaM8PovJWhUf5OJbijqwqc3ORZXBWgID9DvkpzLN1yJgk5fUGxzEVwDhm4wOb9Q
-         s74Q==
-X-Gm-Message-State: ALoCoQna0hC207OUmog/SF8LU8BL4CAY+povQ4To0QuWShyJpeuKwAMV1dE9QYSPwLLX75Os9sWO
-X-Received: by 10.107.128.149 with SMTP id k21mr21649947ioi.7.1428323276170;
-        Mon, 06 Apr 2015 05:27:56 -0700 (PDT)
-Received: from desktop.luxing.im (blk-212-99-142.eastlink.ca. [173.212.99.142])
-        by mx.google.com with ESMTPSA id g187sm2645015ioe.30.2015.04.06.05.27.55
-        for <git@vger.kernel.org>
+	id S1753335AbbDFNwe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Apr 2015 09:52:34 -0400
+Received: from mail-pa0-f51.google.com ([209.85.220.51]:36805 "EHLO
+	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753310AbbDFNwd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Apr 2015 09:52:33 -0400
+Received: by pabsx10 with SMTP id sx10so45077100pab.3
+        for <git@vger.kernel.org>; Mon, 06 Apr 2015 06:52:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:mime-version:content-type
+         :content-transfer-encoding;
+        bh=5JWzAjmIHJP5b1l+6B9eJXRYcbyOdfDOB/7fQDkBFqY=;
+        b=Vb9GYZROwDdHT3Ga+3o1tq+B12SLX/jbP4U4FQ8uNKuJPHGsjLElmo50pnVHUy3wJo
+         c2/OLDiIVmCo1Bnu5C7ZI+XmN39jbHxCIlWmnvS9lo+86E72coxg81h6zlzmiXbjeiSw
+         vQWL+/Q5VigtNvwL/Th5YGnPiyM+yrMEAOMgQ3T2dXbiA0NTW4d6gR3UsMc2rkuv4o2K
+         9DC5Vo7/mgv0GcmG6ka5gffst/WTtmU+ttSnEze6KmhNoRQTZYS6rAYoxziB8kM6NJ02
+         LVMb0KxZuFGQJcgFZcZnqi4yoKRsJDjfXBYkTES44E/89mSQNUbmhkqs2yMeD6GpvfBK
+         fP2Q==
+X-Received: by 10.68.94.37 with SMTP id cz5mr27418918pbb.70.1428328353470;
+        Mon, 06 Apr 2015 06:52:33 -0700 (PDT)
+Received: from lanh ([115.73.245.217])
+        by mx.google.com with ESMTPSA id nt15sm4013962pdb.14.2015.04.06.06.52.30
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 06 Apr 2015 05:27:55 -0700 (PDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.23 (2014-03-12)
+        Mon, 06 Apr 2015 06:52:32 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Mon, 06 Apr 2015 20:52:44 +0700
+X-Mailer: git-send-email 2.3.0.rc1.137.g477eb31
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266844>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266845>
 
+The UI part is the same (or nearly the same) with the last round. The
+internal data structure is reorignized to avoid abusing string_list.
+Tests and documentation are added back.
 
---ReaqsoxgOBHFXBhH
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (25):
+  ls_colors.c: add $LS_COLORS parsing code
+  ls_colors.c: parse color.ls.* from config file
+  ls_colors.c: add a function to color a file name
+  ls_colors.c: highlight submodules like directories
+  list-files: command skeleton
+  list-files: show paths relative to cwd
+  list-files: add tag to each entry, filter duplicate tags
+  list-files: add --[no-]column, -C and -1
+  list-files: add --max-depth, -R and default to --max-depth=3D0
+  list-files: show directories as well as files
+  list-files: add --color
+  list-files: add -F/--classify
+  list-files: new indicator '&' for submodules when -F is used
+  list-files: add --cached and --others
+  list-files: add --ignored
+  list-files: add --unmerged
+  list-files: add file modification options -[admADM]
+  list-files: delete redundant cached entries
+  list-files: make alias 'ls' default to 'list-files'
+  list-files: preload index
+  list-files: reduce match_pathspec calls in matched()
+  list-files: only do diff that is actually useful
+  pathspec: move getenv() code out of prefix_pathspec()
+  list-files: make :(glob) pathspec default
+  list-files: documentation
 
-Hi,
-
-    We know git uses cURL to grab https repositories from the Internet. Now=
-adays
-    the SSL-enabled git repos are getting more and more, especially self-ho=
-sted
-    ones.
-
-    Some of the websites including those enabled by CloudFlare, however, do=
-es
-    not support common encryption ciphers provided by cURL. For example,
-    TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256 will not be support by default =
-in
-    both cURL or git, and it is not a common cipher, Debian/RHEL does not e=
-ven
-    support it by default (but Fedora does, maybe others, didn't test).
-
-    Is it possible to add this feature (this opt is set by calling by curl
-    --cipher cipher_name) to git, allowing custom cipher usage?
-
-    Thank you very much.
+ .gitignore                             |   1 +
+ Documentation/config.txt               |  12 +
+ Documentation/git-list-files.txt (new) | 115 +++++++
+ Makefile                               |   2 +
+ builtin.h                              |   1 +
+ builtin/list-files.c (new)             | 581 +++++++++++++++++++++++++=
+++++++++
+ color.h                                |  10 +
+ config.c                               |   8 +
+ git.c                                  |   1 +
+ ls_colors.c (new)                      | 498 +++++++++++++++++++++++++=
++++
+ pathspec.c                             |  59 ++--
+ pathspec.h                             |   1 +
+ t/t7013-list-files.sh (new +x)         | 335 +++++++++++++++++++
+ wt-status.c                            |  16 +-
+ wt-status.h                            |   3 +
+ 15 files changed, 1612 insertions(+), 31 deletions(-)
+ create mode 100644 Documentation/git-list-files.txt
+ create mode 100644 builtin/list-files.c
+ create mode 100644 ls_colors.c
+ create mode 100755 t/t7013-list-files.sh
 
 --=20
-Luxing Huang
-
---ReaqsoxgOBHFXBhH
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAEBAgAGBQJVInvJAAoJEEcuGJaVOILnwPIP/04KJ5ISun9wgnTu50XmYmX1
-HYt4Ozu7Sm1Xnj3uSQ8sYPdbNYFEYJD4adiafKzmnabUUSTCzg0zH/x0qGW9OERO
-VYgsatUorlwSTk6nUWDI8X2ulNeN2ZBxX6iJBIPGps60NCZWuaHOO9p7g8QXO3Sd
-Ik4GuGBvlFg0Uc9deF2P4Y4big4jbnWsUZ3TYHeplr3jX3QTortC0qaALz0OKrtt
-bCqSMzgSCNNd+oAxFP7VS9L15NN3OJatcyX+kuErhLk0bSd8pB+yHv8CeGXs9e+F
-5aIWuTsTxUdZDuCf0ZRRwOhpVLx031eziJTvzW5hFI6WfJFCMQBlY2D/mUWfVpx3
-Tq+y6CCbsChGt9uz+VlteZwUip5KZzeTjcaZWq2fNdZfdheDJlWbYCuF7wU/sRSA
-lZ+UgmIKckcRLm5iBUlTU94ob6ZOPztf3SMdDlVlHNU4YrWHGXbBD3ve3o3npZFa
-Oqf1QOt3mTIAlfCq6OVqCJx8fFucVuElTmfyGFK8oYJOclrDznoqXcMzHfmftIfW
-CtbOsRaut2gJxwFVS4atuzHB+1SnesQdSHxxRYKoNZPNQY09I3Z1HAVWRhWsM0gb
-GNBIJ0B3zftUYoNdjQyFeksOl9SyD6hTmbW9BYtDGaDOp+AYckMsDMAl4ZFzGmHu
-UpZL0mEqMjGkdrWHaOBE
-=FjDJ
------END PGP SIGNATURE-----
-
---ReaqsoxgOBHFXBhH--
+2.3.0.rc1.137.g477eb31
