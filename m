@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 09/25] list-files: add --max-depth, -R and default to --max-depth=0
-Date: Mon,  6 Apr 2015 20:52:18 +0700
-Message-ID: <1428328354-14897-10-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 10/25] list-files: show directories as well as files
+Date: Mon,  6 Apr 2015 20:52:19 +0700
+Message-ID: <1428328354-14897-11-git-send-email-pclouds@gmail.com>
 References: <1428328354-14897-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,191 +11,238 @@ Cc: 1425896314-10941-1-git-send-email-pclouds@gmail.com,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 06 15:53:40 2015
+X-From: git-owner@vger.kernel.org Mon Apr 06 15:53:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yf7T9-0005G5-R5
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Apr 2015 15:53:40 +0200
+	id 1Yf7TG-0005Mi-Ee
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Apr 2015 15:53:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753401AbbDFNxf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Apr 2015 09:53:35 -0400
-Received: from mail-pd0-f171.google.com ([209.85.192.171]:33751 "EHLO
-	mail-pd0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753086AbbDFNxf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Apr 2015 09:53:35 -0400
-Received: by pdbnk13 with SMTP id nk13so45351151pdb.0
-        for <git@vger.kernel.org>; Mon, 06 Apr 2015 06:53:34 -0700 (PDT)
+	id S1753408AbbDFNxm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Apr 2015 09:53:42 -0400
+Received: from mail-pa0-f53.google.com ([209.85.220.53]:33855 "EHLO
+	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753086AbbDFNxl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Apr 2015 09:53:41 -0400
+Received: by pacyx8 with SMTP id yx8so44809402pac.1
+        for <git@vger.kernel.org>; Mon, 06 Apr 2015 06:53:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=60aB7EgCTSZjNNRzJAPBmnn+0XHPaMU4iI+ZFhtAy6I=;
-        b=NCq7GYrMO75TVyU/SClLVTox76Yhm3TBCcgwRLk1Ju3iOd48QxlLxD7gfneWL1opKP
-         oacPQSRPzI/xUD6NLiktf8YbTbKtsToFBxkqiSgOOiTZ9bXg+b0vZDsABzXeUJejcVq2
-         bn3dwsqov+DyK9zV385cLsqgtK7wC1oHwOTlzbb73Y5fakxvY2jfl9gxA/blMVW/rnxH
-         ZPPcHkf820cm06vw0oNw7uNEn+56NAxCVY0VDgWR5xwZEnww4W+7NHd9TGi8OiXMwXni
-         msb5NCfQd9ytkek+sWt/dot4k1rqVrt0hyYEIUrLL3e6w8sTWHgbL5vAdlbd+CDl8cp3
-         Z+7g==
-X-Received: by 10.66.227.169 with SMTP id sb9mr27961800pac.11.1428328414552;
-        Mon, 06 Apr 2015 06:53:34 -0700 (PDT)
+        bh=wRPrbavUUnLOfgXUx3WMjL4j0qEyG/+ZT5pxBRSowlU=;
+        b=MqF5wBbjGIKI0rslw8Gbfni/avWXIAueIQenIFGDa1eNAw/ZcuvDvY3tnelQay2pas
+         dTn5o1hAxe121q29MG3XZJ9axZCcMBlTyIoMNh/hqKvoE/4giJF4M+uRs/2mcGlqA7yR
+         IcP/uIjjAq5QzVPM4pPcBcyruMDQWI0NFcdz2+OBjP0790WNj5gVWxMiLMj6DB29e8AB
+         lrGBFlNnN5OFeSVTvdUnW4C3py3EP4/ndpe3kkXEBdBp2uND8DoHrtABFKLEll1Adpd3
+         6aT6exPAJNkYZN1na+Ow451iPPzJg+v+Al6AYMxDYBMjp1N62J5fuRvrdCvgUSyFwNZz
+         4IKQ==
+X-Received: by 10.68.175.66 with SMTP id by2mr27180127pbc.141.1428328421076;
+        Mon, 06 Apr 2015 06:53:41 -0700 (PDT)
 Received: from lanh ([115.73.245.217])
-        by mx.google.com with ESMTPSA id fm3sm4786755pdb.73.2015.04.06.06.53.31
+        by mx.google.com with ESMTPSA id eo1sm4775919pbd.36.2015.04.06.06.53.37
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 06 Apr 2015 06:53:33 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Mon, 06 Apr 2015 20:53:45 +0700
+        Mon, 06 Apr 2015 06:53:40 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Mon, 06 Apr 2015 20:53:52 +0700
 X-Mailer: git-send-email 2.3.0.rc1.137.g477eb31
 In-Reply-To: <1428328354-14897-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266854>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266855>
 
+The index does not store directories explicitly (except submodules) so
+we have to figure them out from file list when output lis depth-limited=
+=2E
+
+The function add_directory() can generate duplicate entries, which is
+cleaned up before displaying.
+
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/list-files.c  |  9 ++++++++-
- t/t7013-list-files.sh | 40 ++++++++++++++++++++++++++++++++--------
- 2 files changed, 40 insertions(+), 9 deletions(-)
+ builtin/list-files.c  | 94 +++++++++++++++++++++++++++++++++++++++++++=
+++++----
+ t/t7013-list-files.sh |  3 ++
+ 2 files changed, 91 insertions(+), 6 deletions(-)
 
 diff --git a/builtin/list-files.c b/builtin/list-files.c
-index 8913770..4599cf0 100644
+index 4599cf0..a60ab98 100644
 --- a/builtin/list-files.c
 +++ b/builtin/list-files.c
-@@ -28,6 +28,7 @@ static const char *prefix;
+@@ -7,7 +7,8 @@
+ #include "column.h"
+=20
+ enum item_type {
+-	FROM_INDEX
++	FROM_INDEX,
++	IS_DIR
+ };
+=20
+ struct item {
+@@ -24,11 +25,13 @@ struct item_list {
+ };
+=20
+ static struct pathspec pathspec;
++static struct pathspec recursive_pathspec;
+ static const char *prefix;
  static int prefix_length;
  static int show_tag =3D -1;
  static unsigned int colopts;
-+static int max_depth;
+ static int max_depth;
++static int show_dirs;
 =20
  static const char * const ls_usage[] =3D {
  	N_("git list-files [options] [<pathspec>...]"),
-@@ -39,6 +40,11 @@ struct option ls_options[] =3D {
- 	OPT_COLUMN('C', "column", &colopts, N_("show files in columns")),
- 	OPT_SET_INT('1', NULL, &colopts,
- 		    N_("shortcut for --no-column"), COL_PARSEOPT),
-+	{ OPTION_INTEGER, 0, "max-depth", &max_depth, N_("depth"),
-+	  N_("descend at most <depth> levels"), PARSE_OPT_NONEG,
-+	  NULL, 1 },
-+	OPT_SET_INT('R', "recursive", &max_depth,
-+		    N_("shortcut for --max-depth=3D-1"), -1),
+@@ -48,6 +51,81 @@ struct option ls_options[] =3D {
  	OPT_END()
  };
 =20
-@@ -178,9 +184,10 @@ int cmd_list_files(int argc, const char **argv, co=
-nst char *cmd_prefix)
++static int compare_item(const void *a_, const void *b_)
++{
++	const struct item *a =3D a_;
++	const struct item *b =3D b_;
++	return strcmp(a->path, b->path);
++}
++
++static void free_item(struct item *item)
++{
++	switch (item->type) {
++	case IS_DIR:
++		free((char*)item->path);
++		break;
++	default:
++		break;
++	}
++}
++
++static void remove_duplicates(struct item_list *list)
++{
++	int src, dst;
++
++	if (list->nr <=3D 1)
++		return;
++	qsort(list->items, list->nr, sizeof(*list->items), compare_item);
++	for (src =3D dst =3D 1; src < list->nr; src++) {
++		if (!compare_item(list->items + dst - 1, list->items + src))
++			free_item(list->items + src);
++		else
++			list->items[dst++] =3D list->items[src];
++	}
++	list->nr =3D dst;
++}
++
++static int add_directory(struct item_list *result,
++			 const char *name)
++{
++	struct strbuf sb =3D STRBUF_INIT;
++	struct item *item;
++	const char *p;
++
++	strbuf_addstr(&sb, name);
++	while (sb.len && (p =3D strrchr(sb.buf, '/')) !=3D NULL) {
++		strbuf_setlen(&sb, p - sb.buf);
++		if (!match_pathspec(&pathspec, sb.buf, sb.len, 0, NULL, 1))
++			continue;
++
++		ALLOC_GROW(result->items, result->nr + 1, result->alloc);
++		item =3D result->items + result->nr++;
++		item->type =3D IS_DIR;
++		item->path =3D strbuf_detach(&sb, NULL);
++		item->tag[0] =3D ' ';
++		item->tag[1] =3D ' ';
++		return 1;
++	}
++	strbuf_release(&sb);
++	return 0;
++}
++
++static int matched(struct item_list *result, const char *name, int mod=
+e)
++{
++	int len =3D strlen(name);
++
++	if (!match_pathspec(&recursive_pathspec, name, len, 0, NULL,
++			    S_ISDIR(mode) || S_ISGITLINK(mode)))
++		return 0;
++
++	if (show_dirs && strchr(name, '/') &&
++	    !match_pathspec(&pathspec, name, len, 0, NULL, 1) &&
++	    add_directory(result, name))
++		return 0;
++
++	return 1;
++}
++
+ static void populate_cached_entries(struct item_list *result,
+ 				    const struct index_state *istate)
+ {
+@@ -57,10 +135,7 @@ static void populate_cached_entries(struct item_lis=
+t *result,
+ 		const struct cache_entry *ce =3D istate->cache[i];
+ 		struct item *item;
 =20
- 	parse_pathspec(&pathspec, 0,
- 		       PATHSPEC_PREFER_CWD |
-+		       (max_depth !=3D -1 ? PATHSPEC_MAXDEPTH_VALID : 0) |
- 		       PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP,
+-		if (!match_pathspec(&pathspec, ce->name, ce_namelen(ce),
+-				    0, NULL,
+-				    S_ISDIR(ce->ce_mode) ||
+-				    S_ISGITLINK(ce->ce_mode)))
++		if (!matched(result, ce->name, ce->ce_mode))
+ 			continue;
+=20
+ 		ALLOC_GROW(result->items, result->nr + 1, result->alloc);
+@@ -71,6 +146,10 @@ static void populate_cached_entries(struct item_lis=
+t *result,
+ 		item->tag[1] =3D ' ';
+ 		item->ce =3D ce;
+ 	}
++
++	if (!show_dirs)
++		return;
++	remove_duplicates(result);
+ }
+=20
+ static void cleanup_tags(struct item_list *result)
+@@ -189,10 +268,13 @@ int cmd_list_files(int argc, const char **argv, c=
+onst char *cmd_prefix)
  		       cmd_prefix, argv);
--	pathspec.max_depth =3D 0;
-+	pathspec.max_depth =3D max_depth;
+ 	pathspec.max_depth =3D max_depth;
  	pathspec.recursive =3D 1;
++	show_dirs =3D max_depth >=3D 0;
++	copy_pathspec(&recursive_pathspec, &pathspec);
++	recursive_pathspec.max_depth =3D -1;
  	finalize_colopts(&colopts, -1);
 =20
+ 	refresh_index(&the_index, REFRESH_QUIET | REFRESH_UNMERGED,
+-		      &pathspec, NULL, NULL);
++		      &recursive_pathspec, NULL, NULL);
+=20
+ 	memset(&result, 0, sizeof(result));
+ 	populate_cached_entries(&result, &the_index);
 diff --git a/t/t7013-list-files.sh b/t/t7013-list-files.sh
-index b43245c..89930c7 100755
+index 89930c7..a4916d8 100755
 --- a/t/t7013-list-files.sh
 +++ b/t/t7013-list-files.sh
-@@ -10,8 +10,8 @@ test_expect_success 'setup' '
- 	git add .
- '
-=20
--test_expect_success 'list-files from index' '
--	git list-files >actual &&
-+test_expect_success 'list-files -R from index' '
-+	git list-files -R >actual &&
- 	cat >expect <<-\EOF &&
+@@ -29,6 +29,8 @@ test_expect_success 'list-files from index' '
  	a
  	b
-@@ -23,22 +23,34 @@ test_expect_success 'list-files from index' '
- 	test_cmp expect actual
- '
-=20
-+test_expect_success 'list-files from index' '
-+	git list-files --max-depth=3D0 >actual &&
-+	cat >expect <<-\EOF &&
-+	a
-+	b
-+	c
-+	EOF
-+	test_cmp expect actual &&
-+	git list-files >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'column output' '
--	COLUMNS=3D20 git list-files --column=3Dalways >actual &&
-+	COLUMNS=3D20 git list-files -R --column=3Dalways >actual &&
- 	cat >expected <<-\EOF &&
- 	a        sa/a
- 	b        sa/sb/b
- 	c        sc/c
+ 	c
++	sa
++	sc
  	EOF
- 	test_cmp expected actual &&
--	COLUMNS=3D20 git -c column.listfiles=3Dalways list-files >actual &&
-+	COLUMNS=3D20 git -c column.listfiles=3Dalways list-files -R >actual &=
-&
- 	cat >expected <<-\EOF &&
- 	a        sa/a
- 	b        sa/sb/b
- 	c        sc/c
- 	EOF
- 	test_cmp expected actual &&
--	COLUMNS=3D20 git -c column.listfiles=3Dalways list-files -1 >actual &=
-&
-+	COLUMNS=3D20 git -c column.listfiles=3Dalways list-files -1R >actual =
-&&
- 	cat >expected <<-\EOF &&
- 	a
+ 	test_cmp expect actual &&
+ 	git list-files >actual &&
+@@ -78,6 +80,7 @@ test_expect_success '--max-depth' '
  	b
-@@ -51,7 +63,7 @@ test_expect_success 'column output' '
- '
-=20
- test_expect_success 'list-files selectively from index' '
--	git list-files "*a" >actual &&
-+	git list-files -R "*a" >actual &&
- 	cat >expect <<-\EOF &&
- 	a
+ 	c
  	sa/a
-@@ -59,10 +71,22 @@ test_expect_success 'list-files selectively from in=
-dex' '
- 	test_cmp expect actual
- '
-=20
-+test_expect_success '--max-depth' '
-+	git list-files --max-depth=3D1 >actual &&
-+	cat >expected <<-\EOF &&
-+	a
-+	b
-+	c
-+	sa/a
-+	sc/c
-+	EOF
-+	test_cmp expected actual
-+'
-+
- test_expect_success 'list-files from subdir ' '
- 	(
- 	cd sa &&
--	git list-files >actual &&
-+	git list-files -R >actual &&
- 	cat >expect <<-\EOF &&
- 	a
- 	sb/b
-@@ -74,7 +98,7 @@ test_expect_success 'list-files from subdir ' '
- test_expect_success 'list-files from subdir (2)' '
- 	(
- 	cd sa &&
--	git list-files ../a sb >actual &&
-+	git list-files -R ../a sb >actual &&
- 	cat >expect <<-\EOF &&
- 	../a
- 	sb/b
++	sa/sb
+ 	sc/c
+ 	EOF
+ 	test_cmp expected actual
 --=20
 2.3.0.rc1.137.g477eb31
