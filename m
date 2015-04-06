@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 05/25] list-files: command skeleton
-Date: Mon,  6 Apr 2015 20:52:14 +0700
-Message-ID: <1428328354-14897-6-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 07/25] list-files: add tag to each entry, filter duplicate tags
+Date: Mon,  6 Apr 2015 20:52:16 +0700
+Message-ID: <1428328354-14897-8-git-send-email-pclouds@gmail.com>
 References: <1428328354-14897-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,276 +11,182 @@ Cc: 1425896314-10941-1-git-send-email-pclouds@gmail.com,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 06 15:53:16 2015
+X-From: git-owner@vger.kernel.org Mon Apr 06 15:53:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yf7Sk-0004xy-Cq
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Apr 2015 15:53:14 +0200
+	id 1Yf7Sw-000561-BP
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Apr 2015 15:53:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753390AbbDFNxK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Apr 2015 09:53:10 -0400
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:36476 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753328AbbDFNxI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Apr 2015 09:53:08 -0400
-Received: by pabsx10 with SMTP id sx10so45090028pab.3
-        for <git@vger.kernel.org>; Mon, 06 Apr 2015 06:53:08 -0700 (PDT)
+	id S1753395AbbDFNxW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Apr 2015 09:53:22 -0400
+Received: from mail-pd0-f172.google.com ([209.85.192.172]:34544 "EHLO
+	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753086AbbDFNxV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Apr 2015 09:53:21 -0400
+Received: by pdbni2 with SMTP id ni2so45288070pdb.1
+        for <git@vger.kernel.org>; Mon, 06 Apr 2015 06:53:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=nXy7l7bTsOCxKrVNazJy6MrA2RowT5kv+blKHZHFehI=;
-        b=06F3Z1Am06kTNSksmTubXINilYMk6Ejc+aB1mBD8Rc7h0XXucr60yErBVt4b3Hhc1z
-         ZSTCBgwvwn4hs5VjLNHxwDQeiNFk0+0YsFEyeQj+q58OHIz27fpMZAD/ileqALX9zmvG
-         95b3K6zeXUepUJRF7yE9OL5JuEzVuijljZ6amJRgkR3zRWHNaS3dHmY1fy6EbR2aiYND
-         8WB/+bW/oaRgKHpE+a9nTLJeEnlY3VccxsjobsJrY5NfoP4IGeRtdzXVIUxMh4FbXkFO
-         llOdIuWt2X9Ca5D9DfNLq9xL2qfubU97xF7TnGoG1eZNTEi0bWS+Zd4DjzpG5+NvU3vT
-         ZBYQ==
-X-Received: by 10.68.205.226 with SMTP id lj2mr27247372pbc.52.1428328388366;
-        Mon, 06 Apr 2015 06:53:08 -0700 (PDT)
+        bh=aWRciUKSCLuT7YNe8OaiNdUYzGycdlbw8FeEGZatzWE=;
+        b=Ux8L3aHO9N6362iA9UJSLULb5GcfJJDxRtrLbO2unKK3ozcHq7EQUM8EqmTLdoISUw
+         UXXfeZOgVmUCqJdglbf1t11M03M7e1bDgGv90+rZo4EA2Sh6DZeQVJHzQeVMRe21OHCf
+         0h62Y2hJMJG/xVCasNpBvRbG79hxuJxLYC06oyeUvqeoH2Sg7KHp3S19pNGlkAjO15Bh
+         dVJz7yvCGMQpRnAV20DTb3lUC/+h8FfLB7am5QR2fIn/hAirQN0RkIahwX48zV0fwn7F
+         zMVepHzG3lR/hN3NFnBtTfRb+A47VpP/2ykO1/OmGwGkZLL+YohmesOGpv5USt/9dJIG
+         mRJA==
+X-Received: by 10.66.145.2 with SMTP id sq2mr20063311pab.124.1428328401109;
+        Mon, 06 Apr 2015 06:53:21 -0700 (PDT)
 Received: from lanh ([115.73.245.217])
-        by mx.google.com with ESMTPSA id v5sm4794493pdc.41.2015.04.06.06.53.05
+        by mx.google.com with ESMTPSA id zs5sm4840009pac.11.2015.04.06.06.53.18
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 06 Apr 2015 06:53:07 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Mon, 06 Apr 2015 20:53:19 +0700
+        Mon, 06 Apr 2015 06:53:20 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Mon, 06 Apr 2015 20:53:32 +0700
 X-Mailer: git-send-email 2.3.0.rc1.137.g477eb31
 In-Reply-To: <1428328354-14897-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266850>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266851>
 
-list-files is supposed to be the user friendly version of ls-files, or
-an alternative to git-status. Nothing fancy in this patch yet.
+All entries have a two-letter tag. If all entries have the same tags,
+tags are not displayed.
+
+The outcome before and after this patch is the same. But it will be
+useful in future when there are more than one type of entry.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- .gitignore                     |   1 +
- Makefile                       |   1 +
- builtin.h                      |   1 +
- builtin/list-files.c (new)     | 107 +++++++++++++++++++++++++++++++++=
-++++++++
- git.c                          |   1 +
- t/t7013-list-files.sh (new +x) |  35 ++++++++++++++
- 6 files changed, 146 insertions(+)
- create mode 100644 builtin/list-files.c
- create mode 100755 t/t7013-list-files.sh
+ builtin/list-files.c | 64 ++++++++++++++++++++++++++++++++++++++++++++=
++++++++-
+ 1 file changed, 63 insertions(+), 1 deletion(-)
 
-diff --git a/.gitignore b/.gitignore
-index a052419..0534225 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -77,6 +77,7 @@
- /git-interpret-trailers
- /git-instaweb
- /git-log
-+/git-list-files
- /git-ls-files
- /git-ls-remote
- /git-ls-tree
-diff --git a/Makefile b/Makefile
-index 459121d..17f52b2 100644
---- a/Makefile
-+++ b/Makefile
-@@ -832,6 +832,7 @@ BUILTIN_OBJS +=3D builtin/index-pack.o
- BUILTIN_OBJS +=3D builtin/init-db.o
- BUILTIN_OBJS +=3D builtin/interpret-trailers.o
- BUILTIN_OBJS +=3D builtin/log.o
-+BUILTIN_OBJS +=3D builtin/list-files.o
- BUILTIN_OBJS +=3D builtin/ls-files.o
- BUILTIN_OBJS +=3D builtin/ls-remote.o
- BUILTIN_OBJS +=3D builtin/ls-tree.o
-diff --git a/builtin.h b/builtin.h
-index b87df70..afc29e7 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -76,6 +76,7 @@ extern int cmd_init_db(int argc, const char **argv, c=
-onst char *prefix);
- extern int cmd_interpret_trailers(int argc, const char **argv, const c=
-har *prefix);
- extern int cmd_log(int argc, const char **argv, const char *prefix);
- extern int cmd_log_reflog(int argc, const char **argv, const char *pre=
-fix);
-+extern int cmd_list_files(int argc, const char **argv, const char *pre=
-fix);
- extern int cmd_ls_files(int argc, const char **argv, const char *prefi=
-x);
- extern int cmd_ls_tree(int argc, const char **argv, const char *prefix=
-);
- extern int cmd_ls_remote(int argc, const char **argv, const char *pref=
-ix);
 diff --git a/builtin/list-files.c b/builtin/list-files.c
-new file mode 100644
-index 0000000..8b74d79
---- /dev/null
+index 51ff19d..ec9ca17 100644
+--- a/builtin/list-files.c
 +++ b/builtin/list-files.c
-@@ -0,0 +1,107 @@
-+#include "cache.h"
-+#include "builtin.h"
-+#include "parse-options.h"
-+#include "pathspec.h"
-+#include "dir.h"
-+
-+enum item_type {
-+	FROM_INDEX
-+};
-+
-+struct item {
-+	enum item_type type;
-+	const char *path;
-+	const struct cache_entry *ce;
-+};
-+
-+struct item_list {
-+	struct item *items;
-+	int nr, alloc;
-+};
-+
-+static struct pathspec pathspec;
-+static const char *prefix;
-+static int prefix_length;
-+
-+static const char * const ls_usage[] =3D {
-+	N_("git list-files [options] [<pathspec>...]"),
-+	NULL
-+};
-+
-+struct option ls_options[] =3D {
-+	OPT_END()
-+};
-+
-+static void populate_cached_entries(struct item_list *result,
-+				    const struct index_state *istate)
+@@ -12,17 +12,20 @@ enum item_type {
+ struct item {
+ 	enum item_type type;
+ 	const char *path;
++	char tag[2];
+ 	const struct cache_entry *ce;
+ };
+=20
+ struct item_list {
+ 	struct item *items;
+ 	int nr, alloc;
++	int tag_pos, tag_len;
+ };
+=20
+ static struct pathspec pathspec;
+ static const char *prefix;
+ static int prefix_length;
++static int show_tag =3D -1;
+=20
+ static const char * const ls_usage[] =3D {
+ 	N_("git list-files [options] [<pathspec>...]"),
+@@ -30,6 +33,7 @@ static const char * const ls_usage[] =3D {
+ };
+=20
+ struct option ls_options[] =3D {
++	OPT_BOOL(0, "tag", &show_tag, N_("show tags")),
+ 	OPT_END()
+ };
+=20
+@@ -52,10 +56,61 @@ static void populate_cached_entries(struct item_lis=
+t *result,
+ 		item =3D result->items + result->nr++;
+ 		item->type =3D FROM_INDEX;
+ 		item->path =3D ce->name;
++		item->tag[0] =3D ' ';
++		item->tag[1] =3D ' ';
+ 		item->ce =3D ce;
+ 	}
+ }
+=20
++static void cleanup_tags(struct item_list *result)
 +{
-+	int i;
++	int i, same_1 =3D 1, same_2 =3D 1;
 +
-+	for (i =3D 0; i < istate->cache_nr; i++) {
-+		const struct cache_entry *ce =3D istate->cache[i];
-+		struct item *item;
++	if (!show_tag) {
++		result->tag_pos =3D 0;
++		result->tag_len =3D 0;
++		return;
++	}
++	if (show_tag > 0) {
++		result->tag_pos =3D 0;
++		result->tag_len =3D 2;
++		return;
++	}
 +
-+		if (!match_pathspec(&pathspec, ce->name, ce_namelen(ce),
-+				    0, NULL,
-+				    S_ISDIR(ce->ce_mode) ||
-+				    S_ISGITLINK(ce->ce_mode)))
-+			continue;
++	for (i =3D 1; i < result->nr && (same_1 || same_2); i++) {
++		const char *s0 =3D result->items[i - 1].tag;
++		const char *s1 =3D result->items[i].tag;
 +
-+		ALLOC_GROW(result->items, result->nr + 1, result->alloc);
-+		item =3D result->items + result->nr++;
-+		item->type =3D FROM_INDEX;
-+		item->path =3D ce->name;
-+		item->ce =3D ce;
++		same_1 =3D same_1 && s0[0] =3D=3D s1[0];
++		same_2 =3D same_2 && s0[1] =3D=3D s1[1];
++	}
++
++	if (same_1 && same_2) {
++		result->tag_pos =3D 0;
++		result->tag_len =3D 0;
++	} else if (same_1) {
++		result->tag_pos =3D 1;
++		result->tag_len =3D 1;
++	} else if (same_2) {
++		result->tag_pos =3D 0;
++		result->tag_len =3D 1;
++	} else {
++		result->tag_pos =3D 0;
++		result->tag_len =3D 2;
 +	}
 +}
 +
-+static void display(const struct item_list *result)
++/* this is similar to quote_path_relative() except it does not clear s=
+b */
++static void quote_item(struct strbuf *out, const struct item *item)
 +{
-+	int i;
++	static struct strbuf sb =3D STRBUF_INIT;
++	const char *rel;
 +
-+	for (i =3D 0; i < result->nr; i++) {
-+		const struct item *item =3D result->items + i;
-+
-+		printf("%s\n", item->path);
-+	}
++	strbuf_reset(&sb);
++	rel =3D relative_path(item->path, prefix, &sb);
++	quote_c_style(rel, out, NULL, 0);
 +}
 +
-+static int ls_config(const char *var, const char *value, void *cb)
-+{
-+	return git_default_config(var, value, cb);
-+}
-+
-+int cmd_list_files(int argc, const char **argv, const char *cmd_prefix=
-)
-+{
-+	struct item_list result;
-+
-+	if (argc =3D=3D 2 && !strcmp(argv[1], "-h"))
-+		usage_with_options(ls_usage, ls_options);
-+
-+	prefix =3D cmd_prefix;
-+	if (prefix)
-+		prefix_length =3D strlen(prefix);
-+
-+	if (read_cache() < 0)
-+		die(_("index file corrupt"));
-+
-+	git_config(ls_config, NULL);
-+
-+	argc =3D parse_options(argc, argv, prefix, ls_options, ls_usage, 0);
-+
-+	parse_pathspec(&pathspec, 0,
-+		       PATHSPEC_PREFER_CWD |
-+		       PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP,
-+		       cmd_prefix, argv);
-+	pathspec.max_depth =3D 0;
-+	pathspec.recursive =3D 1;
-+
-+	refresh_index(&the_index, REFRESH_QUIET | REFRESH_UNMERGED,
-+		      &pathspec, NULL, NULL);
-+
-+	memset(&result, 0, sizeof(result));
-+	populate_cached_entries(&result, &the_index);
-+	display(&result);
-+	/* free-ing result seems unnecessary */
-+	return 0;
-+}
-diff --git a/git.c b/git.c
-index 18fbf79..ae7fe77 100644
---- a/git.c
-+++ b/git.c
-@@ -418,6 +418,7 @@ static struct cmd_struct commands[] =3D {
- 	{ "init", cmd_init_db, NO_SETUP },
- 	{ "init-db", cmd_init_db, NO_SETUP },
- 	{ "interpret-trailers", cmd_interpret_trailers, RUN_SETUP },
-+	{ "list-files", cmd_list_files, RUN_SETUP | USE_PAGER | NEED_WORK_TRE=
-E },
- 	{ "log", cmd_log, RUN_SETUP },
- 	{ "ls-files", cmd_ls_files, RUN_SETUP },
- 	{ "ls-remote", cmd_ls_remote, RUN_SETUP_GENTLY },
-diff --git a/t/t7013-list-files.sh b/t/t7013-list-files.sh
-new file mode 100755
-index 0000000..f43776e
---- /dev/null
-+++ b/t/t7013-list-files.sh
-@@ -0,0 +1,35 @@
-+#!/bin/sh
-+
-+test_description=3D'list-files'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	mkdir sa sa/sb sc &&
-+	touch a b c sa/a sa/sb/b sc/c &&
-+	git add .
-+'
-+
-+test_expect_success 'list-files from index' '
-+	git list-files >actual &&
-+	cat >expect <<-\EOF &&
-+	a
-+	b
-+	c
-+	sa/a
-+	sa/sb/b
-+	sc/c
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'list-files selectively from index' '
-+	git list-files "*a" >actual &&
-+	cat >expect <<-\EOF &&
-+	a
-+	sa/a
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_done
+ static void display(const struct item_list *result)
+ {
+ 	struct strbuf quoted =3D STRBUF_INIT;
+@@ -67,7 +122,13 @@ static void display(const struct item_list *result)
+ 	for (i =3D 0; i < result->nr; i++) {
+ 		const struct item *item =3D result->items + i;
+=20
+-		quote_path_relative(item->path, prefix, &quoted);
++		strbuf_reset(&quoted);
++		if (result->tag_len) {
++			strbuf_add(&quoted, item->tag + result->tag_pos,
++				   result->tag_len);
++			strbuf_addch(&quoted, ' ');
++		}
++		quote_item(&quoted, item);
+ 		printf("%s\n", quoted.buf);
+ 	}
+ 	strbuf_release(&quoted);
+@@ -108,6 +169,7 @@ int cmd_list_files(int argc, const char **argv, con=
+st char *cmd_prefix)
+=20
+ 	memset(&result, 0, sizeof(result));
+ 	populate_cached_entries(&result, &the_index);
++	cleanup_tags(&result);
+ 	display(&result);
+ 	/* free-ing result seems unnecessary */
+ 	return 0;
 --=20
 2.3.0.rc1.137.g477eb31
