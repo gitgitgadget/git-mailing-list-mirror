@@ -1,75 +1,106 @@
-From: KES <kes-kes@yandex.ua>
-Subject: Feature request: implement '--follow' option for `git blame`
-Date: Mon, 06 Apr 2015 15:12:42 +0300
-Message-ID: <4215491428322362@web26m.yandex.ru>
+From: Steven Huang <steven@accsc.im>
+Subject: [Feature REQ]Add CURLOPT_SSL_CIPHER_LIST to git for allowing custom
+ cipher usages
+Date: Mon, 6 Apr 2015 09:27:53 -0300
+Message-ID: <20150406122753.GA29626@desktop.luxing.im>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="ReaqsoxgOBHFXBhH"
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 06 14:29:52 2015
+X-From: git-owner@vger.kernel.org Mon Apr 06 14:29:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yf6A3-0000SU-Cd
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Apr 2015 14:29:51 +0200
+	id 1Yf6A4-0000SU-5l
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Apr 2015 14:29:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752896AbbDFMUp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Apr 2015 08:20:45 -0400
-Received: from forward18m.cmail.yandex.net ([5.255.216.149]:46067 "EHLO
-	forward18m.cmail.yandex.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752681AbbDFMUo (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 6 Apr 2015 08:20:44 -0400
-X-Greylist: delayed 466 seconds by postgrey-1.27 at vger.kernel.org; Mon, 06 Apr 2015 08:20:44 EDT
-Received: from web26m.yandex.ru (web26m.yandex.ru [37.140.138.117])
-	by forward18m.cmail.yandex.net (Yandex) with ESMTP id 4211D20E72
-	for <git@vger.kernel.org>; Mon,  6 Apr 2015 15:12:43 +0300 (MSK)
-Received: from 127.0.0.1 (localhost [127.0.0.1])
-	by web26m.yandex.ru (Yandex) with ESMTP id AEDF732E2A38;
-	Mon,  6 Apr 2015 15:12:42 +0300 (MSK)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail;
-	t=1428322362; bh=DaZP59RIlNm1ROT9uSnG4aqeg6PaaIWY5dtU61BYbbU=;
-	h=From:To:Subject:Date;
-	b=fVj/PPboD0LCgIVCrhaiYiAuxSPBjodEhkLL9YEsH/gJedUjwKwPW+twv7421ZXfA
-	 48GyJhfmwpZeX5EI0bg+e+okjyLKGCIbg3eB7FqfNUxTJuqWj42zdJDno+HhpujX+K
-	 TDgIi/RWK4vzrSuY6bmrrfLgqD8HEE4RiEmBSj9A=
-Received: by web26m.yandex.ru with HTTP;
-	Mon, 06 Apr 2015 15:12:42 +0300
-X-Mailer: Yamail [ http://yandex.ru ] 5.0
+	id S1752797AbbDFM15 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Apr 2015 08:27:57 -0400
+Received: from mail-ie0-f177.google.com ([209.85.223.177]:34886 "EHLO
+	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751192AbbDFM15 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Apr 2015 08:27:57 -0400
+Received: by ierf6 with SMTP id f6so19474670ier.2
+        for <git@vger.kernel.org>; Mon, 06 Apr 2015 05:27:56 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-type:content-disposition:user-agent;
+        bh=lWzd5mAwrvV2BSOGPVjvvdBUmFlvO1y9oZKFEbWM16c=;
+        b=AfbE20TmIW/FcFoniZ69y8CFbmAxLvh62xxiBSvBmvRn6h2qcO6wgOJSN8B7bRI6lQ
+         3bCXVQ1tgi6CaAs9Q/kpDBELExtG3qtfJ2em1mOyw5YgqAuvmGYfCbFe2CRyoVdSAxP2
+         SvoP82b5YGKG2JPE4TbIui0WIweD9nsyKY6Iv65S5Ytm8VH+AVSCTp/NG9TjWS5vh8tZ
+         Ky/U/P154CkhntNb+Jm9JN4s61KvYGFKYZni5HpepU4QzkEcQoEPPXPeQAYtwK+3JKrx
+         Zo6uNcaM8PovJWhUf5OJbijqwqc3ORZXBWgID9DvkpzLN1yJgk5fUGxzEVwDhm4wOb9Q
+         s74Q==
+X-Gm-Message-State: ALoCoQna0hC207OUmog/SF8LU8BL4CAY+povQ4To0QuWShyJpeuKwAMV1dE9QYSPwLLX75Os9sWO
+X-Received: by 10.107.128.149 with SMTP id k21mr21649947ioi.7.1428323276170;
+        Mon, 06 Apr 2015 05:27:56 -0700 (PDT)
+Received: from desktop.luxing.im (blk-212-99-142.eastlink.ca. [173.212.99.142])
+        by mx.google.com with ESMTPSA id g187sm2645015ioe.30.2015.04.06.05.27.55
+        for <git@vger.kernel.org>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 06 Apr 2015 05:27:55 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266844>
 
-    $ pwd
-    /data/mdi2/classes
 
-    $ git blame -L22,+1 -- utils.js
-    99b7a802 mdi2/utils.js (user 2015-03-26 21:54:57 +0200 22)  #comment
+--ReaqsoxgOBHFXBhH
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-    $ git blame -L22,+1 99b7a802^ -- utils.js
-    fatal: no such path mdi2/classes/utils.js in 99b7a802^
+Hi,
 
-As you have noticed, the file were in different directory in that commit
+    We know git uses cURL to grab https repositories from the Internet. Now=
+adays
+    the SSL-enabled git repos are getting more and more, especially self-ho=
+sted
+    ones.
 
-    $ git blame -L22,+1 99b7a802^ -- ../utils.js
-    c5105267 (user 2007-04-10 08:00:20 +0000 22)    #comment 2
+    Some of the websites including those enabled by CloudFlare, however, do=
+es
+    not support common encryption ciphers provided by cURL. For example,
+    TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256 will not be support by default =
+in
+    both cURL or git, and it is not a common cipher, Debian/RHEL does not e=
+ven
+    support it by default (but Fedora does, maybe others, didn't test).
 
-Despite on doc
+    Is it possible to add this feature (this opt is set by calling by curl
+    --cipher cipher_name) to git, allowing custom cipher usage?
 
-    The origin of lines is automatically followed across whole-file renames (currently there is no option to turn
-           the rename-following off)
+    Thank you very much.
 
-blame does not follow renames. Why?
+--=20
+Luxing Huang
 
-**UPDATE:** Short answer
+--ReaqsoxgOBHFXBhH
+Content-Type: application/pgp-signature
 
-`git blame` follow renames but not for `git blame COMMIT^ -- <filename>`
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
-But this is too hard to track file renames manually through bulk of renames and ton of history.
-I think, this behaviour must be fixed to silently follow renames for `git blame COMMIT^ -- <filename>`. Or, at least, `--follow` must be implemented, so I can: `git blame --follow COMMIT^ -- <filename>`
+iQIcBAEBAgAGBQJVInvJAAoJEEcuGJaVOILnwPIP/04KJ5ISun9wgnTu50XmYmX1
+HYt4Ozu7Sm1Xnj3uSQ8sYPdbNYFEYJD4adiafKzmnabUUSTCzg0zH/x0qGW9OERO
+VYgsatUorlwSTk6nUWDI8X2ulNeN2ZBxX6iJBIPGps60NCZWuaHOO9p7g8QXO3Sd
+Ik4GuGBvlFg0Uc9deF2P4Y4big4jbnWsUZ3TYHeplr3jX3QTortC0qaALz0OKrtt
+bCqSMzgSCNNd+oAxFP7VS9L15NN3OJatcyX+kuErhLk0bSd8pB+yHv8CeGXs9e+F
+5aIWuTsTxUdZDuCf0ZRRwOhpVLx031eziJTvzW5hFI6WfJFCMQBlY2D/mUWfVpx3
+Tq+y6CCbsChGt9uz+VlteZwUip5KZzeTjcaZWq2fNdZfdheDJlWbYCuF7wU/sRSA
+lZ+UgmIKckcRLm5iBUlTU94ob6ZOPztf3SMdDlVlHNU4YrWHGXbBD3ve3o3npZFa
+Oqf1QOt3mTIAlfCq6OVqCJx8fFucVuElTmfyGFK8oYJOclrDznoqXcMzHfmftIfW
+CtbOsRaut2gJxwFVS4atuzHB+1SnesQdSHxxRYKoNZPNQY09I3Z1HAVWRhWsM0gb
+GNBIJ0B3zftUYoNdjQyFeksOl9SyD6hTmbW9BYtDGaDOp+AYckMsDMAl4ZFzGmHu
+UpZL0mEqMjGkdrWHaOBE
+=FjDJ
+-----END PGP SIGNATURE-----
 
-The good answer is here:
-http://stackoverflow.com/questions/29468273/why-git-blame-does-not-follow-renames
+--ReaqsoxgOBHFXBhH--
