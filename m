@@ -1,97 +1,102 @@
-From: Koosha Khajehmoogahi <koosha@posteo.de>
-Subject: Re: [PATCH v2 2/5] log: honor log.merges= option
-Date: Wed, 08 Apr 2015 00:15:56 +0200
-Message-ID: <5524571C.90007@posteo.de>
-References: <1428110521-31028-1-git-send-email-koosha@posteo.de>	<1428110521-31028-2-git-send-email-koosha@posteo.de> <xmqqy4m7ek9q.fsf@gitster.dls.corp.google.com>
+From: Rasmus Villemoes <rv@rasmusvillemoes.dk>
+Subject: Re: [PATCH 3/6] strbuf_getwholeline: use getc_unlocked
+Date: Wed, 08 Apr 2015 00:43:09 +0200
+Organization: D03
+Message-ID: <87k2xn8sqq.fsf@rasmusvillemoes.dk>
+References: <20150405010611.GA15901@peff.net>
+	<20150405011110.GC30127@peff.net> <20150405045614.GA12053@peff.net>
+	<87zj6kjbgu.fsf@rasmusvillemoes.dk> <20150407190413.GB2553@peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="xXoFugWCkfkjoxRi5TMu4UiguXO8ED7CI"
+Content-Type: text/plain
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 08 00:16:58 2015
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Apr 08 00:43:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yfbnk-0004Su-H0
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Apr 2015 00:16:56 +0200
+	id 1YfcDH-0005v3-AX
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Apr 2015 00:43:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753710AbbDGWQw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Apr 2015 18:16:52 -0400
-Received: from mx02.posteo.de ([89.146.194.165]:36778 "EHLO mx02.posteo.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752911AbbDGWQv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Apr 2015 18:16:51 -0400
-Received: from dovecot03.posteo.de (unknown [185.67.36.28])
-	by mx02.posteo.de (Postfix) with ESMTPS id 4454225A2129;
-	Wed,  8 Apr 2015 00:16:50 +0200 (CEST)
-Received: from mail.posteo.de (localhost [127.0.0.1])
-	by dovecot03.posteo.de (Postfix) with ESMTPSA id 3lM34K5cPrz5vN5;
-	Wed,  8 Apr 2015 00:16:49 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.5.0
-In-Reply-To: <xmqqy4m7ek9q.fsf@gitster.dls.corp.google.com>
+	id S1753986AbbDGWnQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Apr 2015 18:43:16 -0400
+Received: from mail-lb0-f177.google.com ([209.85.217.177]:33375 "EHLO
+	mail-lb0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753681AbbDGWnN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Apr 2015 18:43:13 -0400
+Received: by lbbzk7 with SMTP id zk7so53938264lbb.0
+        for <git@vger.kernel.org>; Tue, 07 Apr 2015 15:43:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=rasmusvillemoes.dk; s=google;
+        h=from:to:cc:subject:organization:references:date:in-reply-to
+         :message-id:user-agent:mime-version:content-type;
+        bh=gFcJiSXEuDC7pi65QI/bRwOP7faqo1lX8r92RR1l3C8=;
+        b=KMpatJl9tH6C+5qIsYXhB2IdcmHNdaTCiWEIHKDZ2sCtX8nzkuh6HbqevDBxL9avA5
+         hXKv/C+DkITsqmaF/ZQLzD7snAxepopZrEPjS1kbNHmaFTHqFUPCHTCZ8TPTNi9dHTwh
+         McipZ1gstgabWZzARwW/DzBLh3OPyJycErc64=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:organization:references:date
+         :in-reply-to:message-id:user-agent:mime-version:content-type;
+        bh=gFcJiSXEuDC7pi65QI/bRwOP7faqo1lX8r92RR1l3C8=;
+        b=IHRhro4zZNhIOGQ0vFoKoXnrtUuC8ohmnlrcrVOvuGY+qEoP0qbBUO97+6/TRdP2Xu
+         dU+jjk7pveylG+ZRE2ruOWxzKyQuFHYM1IrCLppLPtwhC352/Im0o3Ul1fhgevgnyNzW
+         H4smCjrPJ9a3XEKL1dxiG9oQ+oyHObCUHFGzMMXOIEcdlyh4i8vaxTXXzUdaGZc0bace
+         jrkg3be7z1vluuIniWOHyOn3HNK7xwZ7YHOhUC2mWqxg6iO7v3lurE3ZRP90o05Cm9b6
+         7s8II2IuTNasld0mOkgA7oI1jm7OZKzusMiPVeSKSWz/MI057Rpfj09mF0kAwJYD4VXD
+         h6+Q==
+X-Gm-Message-State: ALoCoQna1xsoxDkkMgnIZ+J1wBTKt5DMDkn1O+9sjwMYtm78SgBnm0lNXG0YGX+phjGVwWuRk/e7
+X-Received: by 10.112.56.42 with SMTP id x10mr20566597lbp.123.1428446591879;
+        Tue, 07 Apr 2015 15:43:11 -0700 (PDT)
+Received: from morgan.rasmusvillemoes.dk (ip-21-165.bnaa.dk. [84.238.21.165])
+        by mx.google.com with ESMTPSA id e1sm2070209lbc.7.2015.04.07.15.43.10
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 07 Apr 2015 15:43:11 -0700 (PDT)
+X-Hashcash: 1:20:150407:git@vger.kernel.org::porrE3J1dOqORMZ6:0000000000000000000000000000000000000000001FhY
+X-Hashcash: 1:20:150407:peff@peff.net::KtsoDR0GzMODY9K8:00002fCp
+In-Reply-To: <20150407190413.GB2553@peff.net> (Jeff King's message of "Tue, 7
+	Apr 2015 15:04:14 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266944>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---xXoFugWCkfkjoxRi5TMu4UiguXO8ED7CI
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: quoted-printable
+On Tue, Apr 07 2015, Jeff King <peff@peff.net> wrote:
 
-
-
-On 04/04/2015 10:00 PM, Junio C Hamano wrote:
-> Koosha Khajehmoogahi <koosha@posteo.de> writes:
->=20
->> From: Junio C Hamano <gitster@pobox.com>
->>
->> [kk: wrote commit message]
->=20
-> Ehh, what exactly did you write ;-)?
->=20
-> I think the most important thing that needs to be explained by the
-> log message for this change is that the variable is honored only by
-> log and it needs to explain why other Porcelain commands in the same
-> "log" family, like "whatchanged", should ignore the variable.
+> On Tue, Apr 07, 2015 at 03:48:33PM +0200, Rasmus Villemoes wrote:
 >
-So, what would be the reason?=20
-=20
-> I think that we must not to allow format-patch and show to be
-> affected by this variable, because it is silly if log.merges=3Donly
-> broke format-patch output or made "git show" silent.  But I didn't
-> think about others.  Whoever is doing this change needs to explain
-> in the log message the reason why it was decided that only "git log"
-> should pay attention to it.
->=20
+>> Implementation-wise, I think strbuf_getwholeline could be implemented
+>> mostly as a simple wrapper for getdelim. If I'm reading the current code
+>> and the posix spec for getdelim correctly, something like this should do
+>> it (though obviously not meant to be included as-is):
+>
+> I think it's close to what we want. strbuf_grow calls xrealloc, which
+> will call try_to_free_routine() and possibly die() for us. So we would
+> probably want to check errno on failure and respond similarly if we get
+> ENOMEM.
 
+Hm, I'm afraid it's not that simple. It seems that data may be lost from
+the stream if getdelim encounters ENOMEM: Looking at the glibc
+implementation (libio/iogetdelim.c), if reallocating the user buffer
+fails, -1 is returned (presumably with errno==ENOMEM set by realloc), and
+there's no way of knowing how many bytes were already copied to the
+buffer (cur_len).
 
+For regular files, I suppose one could do a ftell/fseek dance. For
+other cases, I don't see a reliable way to retry upon ENOMEM.
 
---xXoFugWCkfkjoxRi5TMu4UiguXO8ED7CI
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+Related thread on the posix mailing list:
+http://thread.gmane.org/gmane.comp.standards.posix.austin.general/10091
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+> I wonder if it is even worth doing the getc_unlocked dance at all. It
+> would potentially speed up the fallback code, but my hope that would be
+> that most systems would simply use the getdelim() version.
 
-iQIcBAEBAgAGBQJVJFccAAoJEOD/TftIQWBVzZsP/2SajpmTJZK2HrioH3eE6I75
-CHUIfh2rkQNTWfYSxwhheJPoiKBOV+2z4S2IBN8N+cJNxcyOo1C7huN4QsiUI+/U
-DOFY3+kCo6pQI1i5rBuLdwB2Mc9eZ36WfYqk3YDzpU2CGBAX3J2txYaaB3U3qu6h
-ZsPFhf8Ht4T1LPlXPja/lC1W/mWFzEG6WoxfJsjnNeQdmfSzYAhxAjuIILz6i9LO
-xSViKVjIIc2iRjh8hiBW6Oqjv2vrtZevPDarzngZGAk1pQfLGqjDZKX5bc2Uc1Ve
-8CYzXfr7o/bifJ/Qmz3SCgrmoxPytBeh/d9JCddYPcnpo6KFbJ2U7dpWwz9lMs2T
-bdvtVQqHjaUW8UOGkWlgHo+zwWkiDLqeMkquaduPp4r9urzzYbsXXbB2qIqXRl9s
-JIjTHH3h+v+JqNTWjsfFQLN/kMfx4oUouZNCVk5I/nXlU0sJ9lAKTS4ow/5Pytw4
-PX/2PzHxTTlgN3VpQNcmGGU9JwHmiaNpRfo5AM6LhixniprDOGqJODrSjnotbdJg
-cxZLnCsarVsarx7VLmT3VCmYmQE0un7JTYJJd1btGpjTUKbBSM7y0LxuysW4NlT6
-nzJloQXBK1Wkhh1x/m0UfxNqB5pQ2BLdI8rfnQ/Di9Pu97+jPdeWR7wBYBlsWL7p
-Iwnro/1voRGnIUG5tx0L
-=gw/y
------END PGP SIGNATURE-----
+Well, it's not really an intrusive patch, and 42% speedup is rather
+significant. And, of course, the above ENOMEM issue may mean that
+getdelim isn't usable after all.
 
---xXoFugWCkfkjoxRi5TMu4UiguXO8ED7CI--
+Rasmus
