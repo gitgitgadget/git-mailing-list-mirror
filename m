@@ -1,96 +1,148 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 2/5] log: honor log.merges= option
-Date: Tue, 7 Apr 2015 01:18:24 -0400
-Message-ID: <CAPig+cStJ9WC1HaJXGEpPqZUi+S2aE2-1vV-D4B1ZBekKpLcLQ@mail.gmail.com>
-References: <1428110521-31028-1-git-send-email-koosha@posteo.de>
-	<1428110521-31028-2-git-send-email-koosha@posteo.de>
+From: Shane da Silva <shane@dasilva.io>
+Subject: Re: Why can't I stash submodule changes?
+Date: Mon, 6 Apr 2015 22:19:02 -0700
+Message-ID: <CAAKwDd8oNdCWew7AfTg9+7z7gox3n2PYf01DUcCNbdGAWPBjqw@mail.gmail.com>
+References: <CAAKwDd8SVA=ynzH_U1M3bb+mLZMnF79-imBLrU+x9qcbXfWO3g@mail.gmail.com>
+	<5522C92B.6090700@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Koosha Khajehmoogahi <koosha@posteo.de>
-X-From: git-owner@vger.kernel.org Tue Apr 07 07:18:31 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Tue Apr 07 07:19:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YfLuA-0004rH-Lw
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Apr 2015 07:18:31 +0200
+	id 1YfLum-0005H7-G2
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Apr 2015 07:19:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751129AbbDGFS0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Apr 2015 01:18:26 -0400
-Received: from mail-la0-f44.google.com ([209.85.215.44]:33103 "EHLO
-	mail-la0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750862AbbDGFS0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Apr 2015 01:18:26 -0400
-Received: by layy10 with SMTP id y10so33888677lay.0
-        for <git@vger.kernel.org>; Mon, 06 Apr 2015 22:18:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=ZsESQP+A5jpSuNbJpoBYfoVM43Or82c33lsbr6+LY7U=;
-        b=eBpRnOIUcF8yQUFPTAztB2lR3M+HsepuO20EFtBkFrxWpGXpB+p4ia5SHswC05w5vS
-         zoFq0CsjiuGZhDosfhIJ8GPDXiPenwr7w/RM2rAnhLaNMg/paWCQkRJkahLNGFSAwk2G
-         xImzggbmH0cQY2I83dgFdvShIYPH6GoalZxZKdrslqFhJabTw+1EQQhrH+qm8UyX5nKP
-         hcm/HUWym49pUJPYkJT5+0LWl1jZCShZKGPz20jqus4Bb2vdMZBVxKmVX6JR7h5h75kz
-         YKAOa+aDoxrUXE+2ChB0UTm+gmm//bcUn6RBCqC1tJkBaQFm90iKMhCJ6gdGeM2Io0u9
-         onLg==
-X-Received: by 10.112.151.211 with SMTP id us19mr16016740lbb.120.1428383904579;
- Mon, 06 Apr 2015 22:18:24 -0700 (PDT)
-Received: by 10.114.78.69 with HTTP; Mon, 6 Apr 2015 22:18:24 -0700 (PDT)
-In-Reply-To: <1428110521-31028-2-git-send-email-koosha@posteo.de>
-X-Google-Sender-Auth: lXwiV1uB_KQm1zn9Y3soMfF6vXI
+	id S1751410AbbDGFTE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 7 Apr 2015 01:19:04 -0400
+Received: from mail-qk0-f174.google.com ([209.85.220.174]:33408 "EHLO
+	mail-qk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751150AbbDGFTD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 7 Apr 2015 01:19:03 -0400
+Received: by qkx62 with SMTP id 62so41441589qkx.0
+        for <git@vger.kernel.org>; Mon, 06 Apr 2015 22:19:02 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=gTSw4msiUvmQyqILxleZCMlenTR0e0jVFvFxDFWHATs=;
+        b=ezwV7NVMLyd22FWfFyX3F5EYnTefMMfIz2XwHTpvroMmDUSQyZETnnwg1UxGzRK3vZ
+         a2vVFiFv8wUiRZOW3OLhB3L9hHu3uCCP7LvI45DHG4cKEvNT0fbeLt3DzXkcXWK/0/+Y
+         PreQxXPW9J//E48pJ7IfOJ8jWdKLsqYTpwR5NDoZd1aS3YDvyJUEa1JXBt7uvIGznjBc
+         GBxLfrTTesSUWpys0H3foghYGqLBc/OWyMq7oA9gG84SE39a5XHScib6n0TJTWxFG8Jd
+         gsqKm28EfjmsaiHaxjuUdNDgEybyvmAOznSzfnHjhibjgSSS9aMUrdhLzuZisOeRzFlQ
+         WgCQ==
+X-Gm-Message-State: ALoCoQnD1huI5hXrSsbde42bGS2mD9zJ5rx7RIoFqS2wR0r/0MbKeYo8CP/C1gtwb0BYUv5sUWGz
+X-Received: by 10.55.54.136 with SMTP id d130mr9251458qka.22.1428383942271;
+ Mon, 06 Apr 2015 22:19:02 -0700 (PDT)
+Received: by 10.229.138.1 with HTTP; Mon, 6 Apr 2015 22:19:02 -0700 (PDT)
+X-Originating-IP: [67.180.197.85]
+In-Reply-To: <5522C92B.6090700@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266899>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266900>
 
-On Fri, Apr 3, 2015 at 9:21 PM, Koosha Khajehmoogahi <koosha@posteo.de> wrote:
-> From: Junio C Hamano <gitster@pobox.com>
->
-> [kk: wrote commit message]
->
-> Helped-by: Eris Sunshine <sunshine@sunshineco.com>
+Thanks for your responses, all.
 
-s/Eris/Eric/
+Jens: yes, only the index is updated by the stash. The subdirectory
+remains and won't be removed (you will actually receive a warning
+about `git` not being able to remove it).
 
-> Signed-off-by: Koosha Khajehmoogahi <koosha@posteo.de>
-> ---
->  builtin/log.c | 6 ++++++
->  1 file changed, 6 insertions(+)
+I think the core of my misunderstanding is I was used to the idea that
+when `git status` showed modifications to tracked files, `git stash`
+would make those modifications disappear. Submodules are fundamentally
+different, and it makes sense to me now why it wouldn't necessarily be
+a good idea for `git stash` to be a mutating operation on submodules.
+
+I ran into this behavior while debugging an issue with a git-hook
+manager I maintain, called Overcommit
+(https://github.com/brigade/overcommit). It was discovered that if you
+only add submodule changes to the index and then run `git stash save
+--keep-index`, an exit status of zero is returned even though no stash
+was created. I had assumed that if the return code was zero, a stash
+commit was created, but it makes sense why this is not the case.
+
+Thanks again for your time in helping clarify this behavior.
+
+On Mon, Apr 6, 2015 at 10:58 AM, Jens Lehmann <Jens.Lehmann@web.de> wro=
+te:
+> Am 06.04.2015 um 04:15 schrieb Shane da Silva:
+>>
+>> I=E2=80=99m having trouble understanding why I cannot stash changes =
+to a
+>> submodule.
+>>
+>> When adding a submodule to a repository (`git submodule add
+>> ./sub-repo`), I can then run `git stash` and `git stash pop` with
+>> expected results=E2=80=94the submodule disappears and reappears in t=
+he working
+>> tree.
 >
-> diff --git a/builtin/log.c b/builtin/log.c
-> index dd8f3fc..c7a7aad 100644
-> --- a/builtin/log.c
-> +++ b/builtin/log.c
-> @@ -36,6 +36,7 @@ static int decoration_given;
->  static int use_mailmap_config;
->  static const char *fmt_patch_subject_prefix = "PATCH";
->  static const char *fmt_pretty;
-> +static const char *log_merges;
 >
->  static const char * const builtin_log_usage[] = {
->         N_("git log [<options>] [<revision range>] [[--] <path>...]"),
-> @@ -386,6 +387,9 @@ static int git_log_config(const char *var, const char *value, void *cb)
->                         decoration_style = 0; /* maybe warn? */
->                 return 0;
->         }
-> +       if (!strcmp(var, "log.merges")) {
-> +               return git_config_string(&log_merges, var, value);
-> +       }
->         if (!strcmp(var, "log.showroot")) {
->                 default_show_root = git_config_bool(var, value);
->                 return 0;
-> @@ -628,6 +632,8 @@ int cmd_log(int argc, const char **argv, const char *prefix)
+> Just to be sure: Only the index of the superproject and the .gitmodul=
+es
+> file are updated by stash to either contain the submodule or not. But
+> the subdirectory "sub-repo" stays unchanged and won't be removed or
+> reappear, right?
 >
->         init_revisions(&rev, prefix);
->         rev.always_show_header = 1;
-> +       if (log_merges && parse_merges_opt(&rev, log_merges))
-> +               die("unknown config value for log.merges: %s", log_merges);
->         memset(&opt, 0, sizeof(opt));
->         opt.def = "HEAD";
->         opt.revarg_opt = REVARG_COMMITTISH;
-> --
-> 2.3.3.263.g095251d.dirty
+>
+>> However, when I try stashing an update to a submodule, `git stash`
+>> reports =E2=80=9CNo local changes to save=E2=80=9D. The following sh=
+ell script
+>> illustrates this behavior:
+>>
+>>
+>> # Create repo
+>> mkdir test-repo
+>> cd test-repo
+>> git init
+>> git commit --allow-empty -m "Initial commit"
+>>
+>> # Create submodule
+>> mkdir sub-repo
+>> cd sub-repo
+>> git init
+>> git commit --allow-empty -m "Initial commit"
+>> cd -
+>>
+>> # Add submodule
+>> git submodule add ./sub-repo
+>> git commit -m "Add submodule"
+>>
+>> # Modify submodule
+>> cd sub-repo
+>> touch foo
+>> git add foo
+>> git commit -m "Submodule changed"
+>> cd -
+>>
+>> # Stash submodule change
+>> git stash # <---------------------------Displays "No local changes t=
+o
+>> save=E2=80=9D
+>
+>
+> Thanks for providing a recipe to reproduce this!
+>
+>> I=E2=80=99m trying to wrap my head around why this is the current be=
+havior, as
+>> I suspect this is intentional but it seems unexpected. If anyone can
+>> shed any light on this, I would really appreciate it!
+>
+>
+> The current behavior of git is that submodule contents aren't updated
+> when the superproject changes. Running "git submodule update" later
+> will then update their content to most submodule changes (but e.g. it
+> won't remove a deleted submodule from the work tree). So yes, this is
+> expected until recursive submodule update materializes (and even then
+> I'm not sure how to handle untracked but not ignored files inside a
+> submodule when stashing will result in the submodule directory to be
+> removed).
