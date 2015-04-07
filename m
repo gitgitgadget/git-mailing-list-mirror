@@ -1,70 +1,59 @@
-From: "Randall S. Becker" <rsbecker@nexbridge.com>
-Subject: Followup: Managing EXCEL with git - diff problem.
-Date: Tue, 7 Apr 2015 08:55:11 -0400
-Message-ID: <02d801d07132$159f76a0$40de63e0$@nexbridge.com>
+From: Justin Dearing <zippy1981@gmail.com>
+Subject: Setting the http proxy server in git for windows
+Date: Tue, 7 Apr 2015 09:10:02 -0400
+Message-ID: <CABsCM1M+bC4U243tdg-BY9h_WJ2hq+NpG-d8x878pox6pdzjLA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Apr 07 14:58:44 2015
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 07 15:10:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YfT5T-0007H2-As
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Apr 2015 14:58:39 +0200
+	id 1YfTGc-0005tF-A7
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Apr 2015 15:10:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753296AbbDGM6d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Apr 2015 08:58:33 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:27047 "EHLO
-	elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754488AbbDGMzR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Apr 2015 08:55:17 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from pangea (CPE0023eb577e25-CM602ad06c91a7.cpe.net.cable.rogers.com [99.237.128.150])
-	(authenticated bits=0)
-	by elephants.elehost.com (8.14.9/8.14.9) with ESMTP id t37CtCCs020655
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO)
-	for <git@vger.kernel.org>; Tue, 7 Apr 2015 08:55:12 -0400 (EDT)
-	(envelope-from rsbecker@nexbridge.com)
-X-Mailer: Microsoft Outlook 15.0
-Thread-Index: AdBxMSvjJhsVQmIwSKaIeXEHh8/9Cg==
-Content-Language: en-ca
+	id S1754672AbbDGNKF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Apr 2015 09:10:05 -0400
+Received: from mail-qc0-f179.google.com ([209.85.216.179]:33871 "EHLO
+	mail-qc0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754431AbbDGNKD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Apr 2015 09:10:03 -0400
+Received: by qcyk17 with SMTP id k17so19943867qcy.1
+        for <git@vger.kernel.org>; Tue, 07 Apr 2015 06:10:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=J6qrFR8wONJIAWIGu447Rt38/3EwTJSF45xHDOMvyJI=;
+        b=s3CD3XsBkJrs6Utg6vsTqY9pdUydqwZRA+1cA2PxTu5t8WhZRftZEzfDnA65gxB06b
+         VaKYIXiVIFhPxO++X6g+DTUFPqXNGWc8PGf4/zpHduxJh5kx/21nRR96mPY6UwsKnM6o
+         1hV1eLFhh4++Ea+mAjeCcQ4RffzNECmPvNXi4LOOG+Cq6EOEuoChlyaPrPIxJseD7cSJ
+         H02nEbKFdY4EL6aqNv7OtINjzgMSLtk7kDlG7LZmgSnY8nD+tF3rKS+33isdtkGWCe6y
+         iePgeO+IfmuvcdVtSk0ryT1Q4WAkm2HEMscC/7Wtpnn/4+0XO4q4SF9zkGpwhypn9fJA
+         XOaA==
+X-Received: by 10.229.96.194 with SMTP id i2mr23910078qcn.1.1428412202738;
+ Tue, 07 Apr 2015 06:10:02 -0700 (PDT)
+Received: by 10.96.205.193 with HTTP; Tue, 7 Apr 2015 06:10:02 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266909>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266910>
 
-Hi all,
+According to the git documentation on http proxy:
 
-There was a discussion a while back on how to manage EXCEL content in git.
-This involved a simple trick of modifying the file extension from .xlsx to
-.zip and unpacking the file - resulting in a whole bunch of XML files. Git
-is happy with that part and the content can be managed - slightly.
+http.proxy
 
-Unfortunately, EXCEL stores its XML content in single lines. Git has no
-problem with that either, as far as managing the content, but the lines can
-be really long. However, after about 20K in size, while the config:
+Override the HTTP proxy, normally configured using the http_proxy,
+https_proxy, and all_proxyenvironment variables (see curl(1)). This
+can be overridden on a per-remote basis; see remote.<name>.proxy
 
-	alias.wdiff=diff --color-words
+On windows, proxy settings are traditionally stored in the Registry
+and accessed via WinInet settings. Is there any way to make git
+respect these settings so that, for example, I could transparently
+intercept git traffic with fiddler.?
 
-The ability of git to report differences goes away - as in no output from
-git diff. This occurs on Windows and Linux under git 2.3.3 and git 2.3.0.
-I'm not sure whether this is a user error, a usage error, or an actual
-problem.
+Regards,
 
-I had originally raised this as a SourceTree problem figuring it might be
-there: https://jira.atlassian.com/browse/SRCTREEWIN-3145
-
-Any advice (preferably no teasing - :-) - I am considering smudging but
-would rather avoid that)?
-
-Cheers,
-Randall
-
--- Brief whoami: NonStop&UNIX developer since approximately
-UNIX(421664400)/NonStop(211288444200000000)
--- In my real life, I talk too much.
+Justin Dearing
