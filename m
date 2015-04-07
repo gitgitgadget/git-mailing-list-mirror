@@ -1,74 +1,94 @@
-From: Phillip Susi <psusi@ubuntu.com>
-Subject: Re: gitk won't show notes?
-Date: Tue, 07 Apr 2015 13:08:26 -0400
-Message-ID: <55240F0A.80902@ubuntu.com>
-References: <551D99B9.7040200@ubuntu.com> <5523DE66.8060904@drmicha.warpmail.net> <5523E479.2010701@ubuntu.com> <5523E5FF.8060101@drmicha.warpmail.net>
+From: KES <kes-kes@yandex.ua>
+Subject: Fwd: Feature request: implement '--follow' option for `git blame`
+Date: Tue, 07 Apr 2015 20:26:30 +0300
+Message-ID: <720501428427590@web5j.yandex.ru>
+References: <4215491428322362@web26m.yandex.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: Michael J Gruber <git@drmicha.warpmail.net>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Apr 07 19:09:59 2015
+Content-Type: text/plain; charset=koi8-r
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 07 19:34:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YfX0f-0002NL-74
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Apr 2015 19:09:57 +0200
+	id 1YfXO4-00051d-T2
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Apr 2015 19:34:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753222AbbDGRJw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Apr 2015 13:09:52 -0400
-Received: from mail-qk0-f172.google.com ([209.85.220.172]:36008 "EHLO
-	mail-qk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753119AbbDGRJv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Apr 2015 13:09:51 -0400
-Received: by qku63 with SMTP id 63so55700983qku.3
-        for <git@vger.kernel.org>; Tue, 07 Apr 2015 10:09:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:message-id:date:from:user-agent:mime-version:to:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=akc9ImqxIrRLUmhSrgwhxsZp+GRDTNiQyOC5OwTfM+k=;
-        b=ufYq6//vSMPwrSpBQ1esUgme2Z5BEfDaC/FDiQ+ZgbxxvCxdWlTvwWpjcIIq5kh34T
-         ThSbT4hYHF8EkXUCYKSocT/WIdmRGnMMP/J3FnNbF26UmjiJOBzHIpUoTkq4XLedio5h
-         8hatlqUbp7yQ+ZmGN3/SJnv68RDVLzSTP7SvLEIugacWjj+emUK352GzKDP64zCShE2u
-         g357CSM29PfZ2gLO0j9tT/wOh0bNNrHO3Kh3SjE3MHwkxYfdhr8+K60o+pqkvXTMCAu3
-         rvQEjUTipZFnDQxMGtWbLMJJ/iNQm789EM3/B1V/SqsOYY9pMKE4lOWYCdIO1oCVhCo4
-         v3Rw==
-X-Received: by 10.55.33.142 with SMTP id f14mr40792246qki.1.1428426591222;
-        Tue, 07 Apr 2015 10:09:51 -0700 (PDT)
-Received: from [10.1.1.228] (fl-67-77-88-12.sta.embarqhsd.net. [67.77.88.12])
-        by mx.google.com with ESMTPSA id q193sm5741541qha.14.2015.04.07.10.09.50
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 07 Apr 2015 10:09:50 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
-In-Reply-To: <5523E5FF.8060101@drmicha.warpmail.net>
+	id S1753317AbbDGReA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 7 Apr 2015 13:34:00 -0400
+Received: from forward18j.cmail.yandex.net ([5.255.227.237]:57420 "EHLO
+	forward18j.cmail.yandex.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752959AbbDGRd4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 7 Apr 2015 13:33:56 -0400
+X-Greylist: delayed 442 seconds by postgrey-1.27 at vger.kernel.org; Tue, 07 Apr 2015 13:33:55 EDT
+Received: from web5j.yandex.ru (web5j.yandex.ru [IPv6:2a02:6b8:0:1619::305])
+	by forward18j.cmail.yandex.net (Yandex) with ESMTP id 2F73621D9A
+	for <git@vger.kernel.org>; Tue,  7 Apr 2015 20:26:31 +0300 (MSK)
+Received: from 127.0.0.1 (localhost [127.0.0.1])
+	by web5j.yandex.ru (Yandex) with ESMTP id C90722680138;
+	Tue,  7 Apr 2015 20:26:30 +0300 (MSK)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail;
+	t=1428427590; bh=RCc2LiTT2GO8ZCbJFrjmkGs8VpQja/2Aan4v9ASpXl4=;
+	h=From:To:In-Reply-To:Subject:Date;
+	b=RltBk5PBuRsWNoKn30x4DD61NY7cShjiAlNSnTZGWUsR5OqfKUhFc6vAmGCsaRyPC
+	 pkNmS0VgNte0w2fbeEFWo1e6aKegTf2+TWNxfeoQrc9Dw6m96kyZVzkYD94ChZ1bgH
+	 B03q2Ak7tJs/QWHpfxBklV9scngRGhf7WnkGEtYQ=
+Received: by web5j.yandex.ru with HTTP;
+	Tue, 07 Apr 2015 20:26:30 +0300
+In-Reply-To: <4215491428322362@web26m.yandex.ru>
+X-Mailer: Yamail [ http://yandex.ru ] 5.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266927>
-
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 4/7/2015 10:13 AM, Michael J Gruber wrote:
-> Seriously: gitk knows F5 and Shift-F5 for refresh, and I think the 
-> latter is the thorougher refreshment.
-
-Neither one makes newly added notes show up.  The only way seems to be
-to close and restart gitk.  Looks like a bug.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266928>
 
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.17 (MingW32)
 
-iQEcBAEBAgAGBQJVJA8KAAoJENRVrw2cjl5RrIgH/2FTWanl7IUyusBMmwR5buLP
-R0yVGf0xF6xzG3SmayDh9EzmhoSJDBFjbqlb8mG1pbgMQfRNKaCjnlk97WRQ5qDr
-X9CHImC4HODZVT/jAgCX5HsCEN62nIZBUfliQOH3PFbbAp6LG/Y/milZk3Ek+srL
-guFFzFsCyv88uAjDJMMM4Ub9Sg3rtKckZ2JeprNv8VDFuqvZWxRPA3G+7TYSTBdE
-wj73xIjyg0KVP1yAR/833TF7srDaRUnB3Z/AfDXAhekYum5TZnEZNQUh1DpiAnus
-dC6T8LWu14PebzmiZy+7QV3cakhlt9ZjrHW9eRBVzY7RAm8JRY1GSgbCQJ0pIQo=
-=EWg/
------END PGP SIGNATURE-----
+-------- =F0=C5=D2=C5=D3=D9=CC=C1=C5=CD=CF=C5 =D3=CF=CF=C2=DD=C5=CE=C9=C5=
+  --------
+06.04.2015, 15:12, "KES" <kes-kes@yandex.ua>:
+
+=9A=9A=9A=9A$ pwd
+=9A=9A=9A=9A/data/mdi2/classes
+
+=9A=9A=9A=9A$ git blame -L22,+1 -- utils.js
+=9A=9A=9A=9A99b7a802 mdi2/utils.js (user 2015-03-26 21:54:57 +0200 22) =
+=9A#comment
+
+=9A=9A=9A=9A$ git blame -L22,+1 99b7a802^ -- utils.js
+=9A=9A=9A=9Afatal: no such path mdi2/classes/utils.js in 99b7a802^
+
+As you have noticed, the file were in different directory in that commi=
+t
+
+=9A=9A=9A=9A$ git blame -L22,+1 99b7a802^ -- ../utils.js
+=9A=9A=9A=9Ac5105267 (user 2007-04-10 08:00:20 +0000 22) =9A=9A=9A#comm=
+ent 2
+
+Despite on doc
+
+=9A=9A=9A=9AThe origin of lines is automatically followed across whole-=
+file renames (currently there is no option to turn
+=9A=9A=9A=9A=9A=9A=9A=9A=9A=9A=9Athe rename-following off)
+
+blame does not follow renames. Why?
+
+**UPDATE:** Short answer
+
+`git blame` follow renames but not for `git blame COMMIT^ -- <filename>=
+`
+
+But this is too hard to track file renames manually through bulk of ren=
+ames and ton of history.
+I think, this behaviour must be fixed to silently follow renames for `g=
+it blame COMMIT^ -- <filename>`. Or, at least, `--follow` must be imple=
+mented, so I can: `git blame --follow COMMIT^ -- <filename>`
+
+The good suggestion is here:
+http://stackoverflow.com/questions/29468273/why-git-blame-does-not-foll=
+ow-renames
+-------- =FA=C1=D7=C5=D2=DB=C5=CE=C9=C5 =D0=C5=D2=C5=D3=D9=CC=C1=C5=CD=CF=
+=C7=CF =D3=CF=CF=C2=DD=C5=CE=C9=D1 --------
