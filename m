@@ -1,155 +1,176 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v7 1/4] sha1_file.c: support reading from a loose object
- of unknown type
-Date: Tue, 7 Apr 2015 16:46:33 -0400
-Message-ID: <CAPig+cQfdvyscUoMxCk7JrvzqaKRGTg=6E+YUCLtciHr7Zq9SA@mail.gmail.com>
-References: <1428126162-18987-1-git-send-email-karthik.188@gmail.com>
-	<1428258505-25223-1-git-send-email-karthik.188@gmail.com>
+Subject: Re: [PATCH v7 2/4] cat-file: teach cat-file a '--literally' option
+Date: Tue, 7 Apr 2015 16:49:09 -0400
+Message-ID: <CAPig+cQ_EQYmP14+g=ozi1eiGUqkrVN3gX-J4zshLpqL20iRcA@mail.gmail.com>
+References: <551F7984.5070902@gmail.com>
+	<1428126244-19115-1-git-send-email-karthik.188@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
 To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 07 22:46:44 2015
+X-From: git-owner@vger.kernel.org Tue Apr 07 22:49:17 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YfaOO-0000yY-OL
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Apr 2015 22:46:41 +0200
+	id 1YfaQu-0002A0-GG
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Apr 2015 22:49:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753790AbbDGUqh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Apr 2015 16:46:37 -0400
-Received: from mail-la0-f52.google.com ([209.85.215.52]:36281 "EHLO
-	mail-la0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753328AbbDGUqf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Apr 2015 16:46:35 -0400
-Received: by lagv1 with SMTP id v1so51516181lag.3
-        for <git@vger.kernel.org>; Tue, 07 Apr 2015 13:46:33 -0700 (PDT)
+	id S1753625AbbDGUtM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Apr 2015 16:49:12 -0400
+Received: from mail-la0-f53.google.com ([209.85.215.53]:33496 "EHLO
+	mail-la0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752620AbbDGUtL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Apr 2015 16:49:11 -0400
+Received: by layy10 with SMTP id y10so51572359lay.0
+        for <git@vger.kernel.org>; Tue, 07 Apr 2015 13:49:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc:content-type;
-        bh=WIcN9xIMKffM8m1LhzPhDKqbgokqpt7JQPtMrwqiBMI=;
-        b=FLBkHcs0HECIw/sD/DrnceyByygmaK64D7MSxuEco6EeiBUsbcDtHIbgyx71nBkCZX
-         Pr/3Ngp+zIhDUD6+HpKv0m3UddYpBrbV/xoBeXnfFXyDpj5yTanfKQM9NNmXlExOc0Ol
-         kkBpm+XOiU7gySb8zsosaZVj2JGERKmBYxmsraPQAqB804zjvRb9UWi20QyO2342i+nY
-         4L0qlAgOUDT9pUSA0H5vUG9xMBzT4WwRJbQmC4YFlbqX0NOEKVuMh0M1c4gA41Hkk/sX
-         +gU1bvbDigmUDgnlRte/IunrWWVAXaSD/CeG6yghSWiyKIXbYiFRIEktU5oOBZcbOifx
-         SNjw==
-X-Received: by 10.112.151.211 with SMTP id us19mr19552447lbb.120.1428439593835;
- Tue, 07 Apr 2015 13:46:33 -0700 (PDT)
-Received: by 10.114.78.69 with HTTP; Tue, 7 Apr 2015 13:46:33 -0700 (PDT)
-In-Reply-To: <1428258505-25223-1-git-send-email-karthik.188@gmail.com>
-X-Google-Sender-Auth: u-vcMT2K5oRKNgFAmZddryJH9qo
+        bh=0occWxfgBHWewyWp9po252vL3oY1vSA3fBDLdixvdBw=;
+        b=icMmn6e9uK8Rx0MSAL2D4v08Nint/pmxJVWmQpczHUG2y49WFVtFZs0EnRQ4ye1exA
+         cm9hnljP9mfMnQUr8U/2zF1WTO7ln2sgWSw+dbBJlyUBLx3AEL98IM5+dCxqKatUWUYO
+         bgIW/XJgnxffD9w3E1dJy+g2U11UidhOAXyca5kaCCIlyHT886obsLjy7IH3m1ZQBtel
+         GAXaDhh+iA8lu5+gFpq1xgRYwTKOESPiLmxayMLttRwvm9qiNV6nyz8iJAPOT/8llUZ0
+         uYX9VfoI1ocaOxfFA+nQX/mIyMXjBBe2vfyMRLEzpSjkHJq6L21mTxKXY9PQyDp9BR33
+         BlQg==
+X-Received: by 10.152.170.136 with SMTP id am8mr15227933lac.102.1428439749173;
+ Tue, 07 Apr 2015 13:49:09 -0700 (PDT)
+Received: by 10.114.78.69 with HTTP; Tue, 7 Apr 2015 13:49:09 -0700 (PDT)
+In-Reply-To: <1428126244-19115-1-git-send-email-karthik.188@gmail.com>
+X-Google-Sender-Auth: wTgg_42kjI3fHobCjoct2Vt4Xwk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266939>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266940>
 
-On Sun, Apr 5, 2015 at 2:28 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
-> Update sha1_loose_object_info() to optionally allow it to read
-> from a loose object file of unknown/bogus type; as the function
-> usually returns the type of the object it read in the form of enum
-> for known types, add an optional "typename" field to receive the
-> name of the type in textual form and a flag to indicate the reading
-> of a loose object file of unknown/bogus type.
+On Sat, Apr 4, 2015 at 1:44 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
+> Currently 'git cat-file' throws an error while trying to
+> print the type or size of a broken/corrupt object which is
+> created using 'git hash-object --literally'. This is
+> because these objects are usually of unknown types.
+
+This focus of this explanation is off-the-mark. The fact that such
+objects can be created by 'hash-object --literally' is tangental to
+the real purpose of the new 'cat-file --literally' option, which is
+that it can help with diagnosing broken/corrupt objects encountered
+in-the-wild.
+
+Even mentioning 'hash-object --literally' here may be misleading and
+confusing since its purpose it to intentionally create broken objects
+for stress-testing git itself. I'd probably drop the reference
+altogether, but if you insist upon mentioning 'hash-object
+--literally', perhaps make it a very minor parenthetical comment at
+the end of the commit message saying that 'cat-file --literally' was
+inspired by its hash-object counterpart, or some such.
+
+More below.
+
+> Teach git cat-file a '--literally' option where it prints
+> the type or size of a broken/corrupt object without throwing
+> an error.
 >
-> Add parse_sha1_header_extended() which acts as a wrapper around
-> parse_sha1_header() allowing more information to be obtained.
->
-> Add unpack_sha1_header_to_strbuf() to unpack sha1 headers of
-> unknown/corrupt objects which have a unknown sha1 header size to
-> a strbuf structure. This was written by Junio C Hamano but tested
-> by me.
+> Modify '-t' and '-s' options to call sha1_object_info_extended()
+> directly to support the '--literally' option.
 >
 > Helped-by: Junio C Hamano <gitster@pobox.com>
 > Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 > Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 > ---
-> diff --git a/sha1_file.c b/sha1_file.c
-> index 980ce6b..ac8fffc 100644
-> --- a/sha1_file.c
-> +++ b/sha1_file.c
-> @@ -1614,27 +1642,24 @@ static void *unpack_sha1_rest(git_zstream *stream, void *buffer, unsigned long s
->   * too permissive for what we want to check. So do an anal
->   * object header parse by hand.
->   */
-> -int parse_sha1_header(const char *hdr, unsigned long *sizep)
-> +int parse_sha1_header_extended(const char *hdr, struct object_info *oi,
-> +                              unsigned int flags)
+> diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+> index df99df4..91ceae0 100644
+> --- a/builtin/cat-file.c
+> +++ b/builtin/cat-file.c
+> @@ -9,13 +9,20 @@
+>  #include "userdiff.h"
+>  #include "streaming.h"
+>
+> -static int cat_one_file(int opt, const char *exp_type, const char *obj_name)
+> +static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
+> +                       int literally)
 >  {
-> -       char type[10];
-> -       int i;
-> +       struct strbuf typename = STRBUF_INIT;
+>         unsigned char sha1[20];
+>         enum object_type type;
+>         char *buf;
 >         unsigned long size;
-> +       int type;
+>         struct object_context obj_context;
+> +       struct object_info oi = {NULL};
+> +       struct strbuf sb = STRBUF_INIT;
+> +       unsigned flags = LOOKUP_REPLACE_OBJECT;
+> +
+> +       if (literally)
+> +               flags |= LOOKUP_LITERALLY;
 >
->         /*
->          * The type can be at most ten bytes (including the
->          * terminating '\0' that we add), and is followed by
->          * a space.
->          */
-> -       i = 0;
->         for (;;) {
->                 char c = *hdr++;
->                 if (c == ' ')
->                         break;
-> -               type[i++] = c;
-> -               if (i >= sizeof(type))
-> -                       return -1;
-> +               strbuf_addch(&typename, c);
->         }
-> -       type[i] = 0;
->
->         /*
->          * The length must follow immediately, and be in canonical
-> @@ -1652,12 +1677,39 @@ int parse_sha1_header(const char *hdr, unsigned long *sizep)
->                         size = size * 10 + c;
+>         if (get_sha1_with_context(obj_name, 0, sha1, &obj_context))
+>                 die("Not a valid object name %s", obj_name);
+> @@ -23,16 +30,24 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name)
+>         buf = NULL;
+>         switch (opt) {
+>         case 't':
+> -               type = sha1_object_info(sha1, NULL);
+> -               if (type > 0) {
+> -                       printf("%s\n", typename(type));
+> +               oi.typep = &type;
+> +               oi.typename = &sb;
+
+These two lines are common to the -t and -s cases. Would it make sense
+to instead move them to just after 'oi' and 'sb' are declared? However
+(see below)...
+
+> +               if (sha1_object_info_extended(sha1, &oi, flags) < 0)
+> +                       die("git cat-file: could not get object info");
+> +               if (type >= 0 && sb.len) {
+> +                       printf("%s\n", sb.buf);
+> +                       strbuf_release(&sb);
+
+Here you release the strbuf...
+
+>                         return 0;
 >                 }
->         }
-> -       *sizep = size;
-> +
-> +       type = type_from_string_gently(typename.buf, typename.len, 1);
-> +       if (oi->sizep)
-> +               *oi->sizep = size;
-> +       if (oi->typename)
-> +               strbuf_addbuf(oi->typename, &typename);
-> +       strbuf_release(&typename);
+>                 break;
 >
->         /*
-> +        * Set type to 0 if its an unknown object and
-> +        * we're obtaining the type using '--literally'
-> +        * option.
-> +        */
-> +       if ((flags & LOOKUP_LITERALLY) && (type == -1))
-> +               type = 0;
-> +       else if (type == -1)
-> +               die("invalid object type");
-> +       if (oi->typep)
-> +               *oi->typep = type;
+>         case 's':
+> -               type = sha1_object_info(sha1, &size);
+> -               if (type > 0) {
+> +               oi.typep = &type;
+> +               oi.typename = &sb;
 
-This unnecessary intermixing of 'type'/'typename' and 'size'
-processing makes the code more confusing than it ought to be. Why not
-do all the processing related to 'type'/'typename' before the
-processing of 'size'?
+Why do you need to collect 'typename' for the -s case?
+sha1_object_info_extended() promises that 'type' will be zero in the
+--literally case for unknown types, so checking 'sb.len' in the
+conditional below doesn't buy you anything, does it?
 
-> +       /*
->          * The length must be followed by a zero byte
->          */
-> -       return *hdr ? -1 : type_from_string(type);
-> +       return *hdr ? -1 : type;
-> +}
-> +
-> +int parse_sha1_header(const char *hdr, unsigned long *sizep)
-> +{
-> +       struct object_info oi;
-> +
-> +       oi.sizep = sizep;
-> +       oi.typename = NULL;
-> +       oi.typep = NULL;
-> +       return parse_sha1_header_extended(hdr, &oi, LOOKUP_REPLACE_OBJECT);
->  }
->
->  static void *unpack_sha1_file(void *map, unsigned long mapsize, enum object_type *type, unsigned long *size, const unsigned char *sha1)
+In fact, it's not even clear why you need to collect 'type' in the -s
+case? The return value of sha1_object_info_extended() already tells
+you whether or not the 'size' was retrieved successfully (--literally
+or not).
+
+> +               oi.sizep = &size;
+> +               if (sha1_object_info_extended(sha1, &oi, flags) < 0)
+> +                       die("git cat-file: could not get object info");
+> +               if (type >= 0 && sb.len) {
+>                         printf("%lu\n", size);
+
+But here you do not release the strbuf.
+
+>                         return 0;
+>                 }
+> @@ -369,6 +385,8 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
+>                 OPT_SET_INT('p', NULL, &opt, N_("pretty-print object's content"), 'p'),
+>                 OPT_SET_INT(0, "textconv", &opt,
+>                             N_("for blob objects, run textconv on object's content"), 'c'),
+> +               OPT_BOOL( 0, "literally", &literally,
+> +                         N_("get information about corrupt objects for debugging Git")),
+
+This option neither "gets information" nor is it for debugging Git.
+Rather, it's useful for diagnosing broken/corrupt objects in
+combination with other options. Perhaps rephrase something like this:
+
+    "allow -s and -t to work with broken/corrupt objects"
+
+>                 { OPTION_CALLBACK, 0, "batch", &batch, "format",
+>                         N_("show info and content of objects fed from the standard input"),
+>                         PARSE_OPT_OPTARG, batch_option_callback },
