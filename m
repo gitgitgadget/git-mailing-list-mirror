@@ -1,104 +1,60 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH/RFC] connect.c: Ignore extra colon after hostname
-Date: Tue, 7 Apr 2015 13:57:50 -0400
-Message-ID: <CAPig+cQZDPRa=2Oaur71OufeP2ECjOFK3JEwdRQNUYs49SySNg@mail.gmail.com>
-References: <55238C42.7020402@web.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: [ANNOUNCE] Git Merge Contributors Summit, April 8th, Paris
+Date: Tue, 7 Apr 2015 14:51:52 -0400
+Message-ID: <20150407185151.GA2553@peff.net>
+References: <20150224220923.GA23344@peff.net>
+ <CAEcj5uV7XpXZTEyDrubXfWoN5uYn5BJbGaMbrWrmXbmgiCOHqg@mail.gmail.com>
+ <CAP8UFD2rtxL29TqkxFXyGwW4g96TgFFLDJhhyYuAi850p64OjQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, reidw@rawsound.com
-To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Tue Apr 07 19:57:59 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Thomas Ferris Nicolaisen <tfnico@gmail.com>,
+	Git <git@vger.kernel.org>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 07 20:52:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YfXl8-0007Rw-8V
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Apr 2015 19:57:58 +0200
+	id 1YfYbb-0003eD-Gi
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Apr 2015 20:52:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752774AbbDGR5x convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 7 Apr 2015 13:57:53 -0400
-Received: from mail-lb0-f169.google.com ([209.85.217.169]:35534 "EHLO
-	mail-lb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751075AbbDGR5w convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 7 Apr 2015 13:57:52 -0400
-Received: by lbbuc2 with SMTP id uc2so45325292lbb.2
-        for <git@vger.kernel.org>; Tue, 07 Apr 2015 10:57:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=SjKKlIGkau7L/Ceu9IE3HPWEaaf0HnQV4zPy6Gfe77A=;
-        b=YaRITeDCZcrPtaHRqljyNCHBB7uVkSKuEDkFLUaEW5p8KWZBvmNbW+7so/AqaBL1n9
-         CIclVCqEfXVl6gFWwTcg8MrgabhNZC4FxBNJxFgrcshLnUifj59VxeLkgg/w4NIAWLGP
-         k4KrDihr0RzQ8ykDEM7qS59aDTPMxh9vDVfkztvv92jnlwsHw+KQtnCDDxzfpdlIaFhS
-         90yXGHPc+Gr2dTd2nQq3n0+LfcqswT5nuvuDXTGIbcivI3houjsjD2R8CPVl5YNomCxt
-         ecoH7r4xOu79dd9C5lbflt0h6TYSo3bB3Q4w+Apwf2tcfK8KbIDQbdhMGSp8MC0eMx4L
-         a5wQ==
-X-Received: by 10.152.219.2 with SMTP id pk2mr19135211lac.107.1428429470709;
- Tue, 07 Apr 2015 10:57:50 -0700 (PDT)
-Received: by 10.114.78.69 with HTTP; Tue, 7 Apr 2015 10:57:50 -0700 (PDT)
-In-Reply-To: <55238C42.7020402@web.de>
-X-Google-Sender-Auth: 82Wu2TXBa9xXkD563q4TrdW07Uo
+	id S1753451AbbDGSv5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Apr 2015 14:51:57 -0400
+Received: from cloud.peff.net ([50.56.180.127]:43480 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753168AbbDGSv4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Apr 2015 14:51:56 -0400
+Received: (qmail 14761 invoked by uid 102); 7 Apr 2015 18:51:55 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 07 Apr 2015 13:51:55 -0500
+Received: (qmail 22654 invoked by uid 107); 7 Apr 2015 18:52:16 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.2)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 07 Apr 2015 14:52:16 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Apr 2015 14:51:52 -0400
+Content-Disposition: inline
+In-Reply-To: <CAP8UFD2rtxL29TqkxFXyGwW4g96TgFFLDJhhyYuAi850p64OjQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266931>
 
-On Tue, Apr 7, 2015 at 3:50 AM, Torsten B=C3=B6gershausen <tboegi@web.d=
-e> wrote:
-> Ignore an extra ':' at the end of the hostname in URL's like
-> "ssh://example.com:/path/to/repo"
->
-> The colon is ment to separate a port number from the hostname.
+On Mon, Apr 06, 2015 at 09:08:54PM +0200, Christian Couder wrote:
 
-s/ment/meant/
+> By the way as far as I know nothing has been planned for the
+> Contributors Summit on the 8th.
 
-More below.
+The agenda is open. I had figured we would collectively organize the
+schedule in the morning (unconference-style). I'd certainly encourage
+people to bring prepared talks or ideas for discussions if they would
+like.
 
-> If the port is empty, the colon should be ignored, see RFC 3986.
->
-> It had been working for URLs with ssh:// scheme, but was unintentiona=
-lly
-> broken in 86ceb3, "allow ssh://user@[2001:db8::1]/repo.git"
->
-> Reported-by: Reid Woodbury Jr. <reidw@rawsound.com>
-> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
-> ---
-> diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-> index 02b40b1..1f67bdd 100755
-> --- a/t/t5601-clone.sh
-> +++ b/t/t5601-clone.sh
-> @@ -387,14 +387,18 @@ do
->  done
->
->  #with ssh:// scheme
-> -test_expect_success 'clone ssh://host.xz/home/user/repo' '
-> -       test_clone_url "ssh://host.xz/home/user/repo" host.xz "/home/=
-user/repo"
-> -'
-> -
-> -# from home directory
-> -test_expect_success 'clone ssh://host.xz/~repo' '
-> -       test_clone_url "ssh://host.xz/~repo" host.xz "~repo"
-> +#ignore trailing colon
-> +for tcol in "" :
-> +do
-> +       test_expect_success "clone ssh://host.xz$tcol/home/user/repo"=
- '
-> +               test_clone_url "ssh://host.xz$tcol/home/user/repo" ho=
-st.xz /home/user/repo
-> +       '
-> +       # from home directory
-> +       test_expect_success "clone ssh://host.xz$tcol/~repo" '
-> +       test_clone_url "ssh://host.xz$tcol/~repo" host.xz "~repo"
->  '
-> +done
-> +test_done
+> Also I am not sure if something is planned for the evening of the 8th
+> or not. If nothing is planned maybe we could discuss having dinner
+> together or something.
 
-Unwanted test_done crept in?
+I don't know of anything planned. Let's discuss it at the event
+tomorrow.
 
->  # with port number
->  test_expect_success 'clone ssh://host.xz:22/home/user/repo' '
+-Peff
