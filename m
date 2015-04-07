@@ -1,179 +1,151 @@
-From: =?UTF-8?Q?erik_elfstr=C3=B6m?= <erik.elfstrom@gmail.com>
-Subject: Re: [PATCH 3/3] clean: improve performance when removing lots of directories
-Date: Tue, 7 Apr 2015 21:55:24 +0200
-Message-ID: <CAMpP7NYixn4491EdPTDX+RQFr3VZfuAoUWZ4JXuYg2rqp9XTeg@mail.gmail.com>
-References: <1428320904-12366-1-git-send-email-erik.elfstrom@gmail.com>
-	<1428320904-12366-4-git-send-email-erik.elfstrom@gmail.com>
-	<CAPig+cQOLJcy-QuACrvd+XrCpP74k0SXxj0rBkNneG5Ovnf47Q@mail.gmail.com>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: [PATCH v2] connect.c: Ignore extra colon after hostname
+Date: Tue, 07 Apr 2015 22:03:25 +0200
+Message-ID: <5524380D.4020306@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Tue Apr 07 21:55:32 2015
+Cc: tboegi@web.de, reidw@rawsound.com, mackyle@gmail.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 07 22:03:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YfZas-0000mh-U8
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Apr 2015 21:55:31 +0200
+	id 1YfZih-0004qS-Av
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Apr 2015 22:03:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753165AbbDGTz1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 7 Apr 2015 15:55:27 -0400
-Received: from mail-ob0-f175.google.com ([209.85.214.175]:36423 "EHLO
-	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753044AbbDGTzZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 7 Apr 2015 15:55:25 -0400
-Received: by obbeb7 with SMTP id eb7so32793266obb.3
-        for <git@vger.kernel.org>; Tue, 07 Apr 2015 12:55:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=LvIIeeTMGQNsYuyAQPr4r/HGkWZe4OPBbcWne9dyAAk=;
-        b=xyOtbvK6Su2WetV7b4t21FhF2+Z+eMQ+fTAbce5q7bu1mMBXzmhbzY4I630pbLV1pO
-         AYSKG41LJuwY6PmN5zHTd4cOZYk4h/kLE8BT1hEIMXw/ocwJdBARJ/k4o2sC9uxv98E4
-         mH5ehFceFrVxWEEg+XWG8/+wTgYydC1rRW48XBk0HSxywSjCgHbGuxLRy5WngzJBrprY
-         iYl95R0MtEekER7Xt92shBlZULAox+fhqtx+/uhrjA0q59SKbz/tEHofnfaFiZBs1f5u
-         CeqD0uZKYluwhg8HZHU5/ow4cXv4gXe9zD3Fv/uCXkFvehadUF2+vHQ27frK5rdX2nXy
-         vmYg==
-X-Received: by 10.60.45.165 with SMTP id o5mr27864385oem.44.1428436524742;
- Tue, 07 Apr 2015 12:55:24 -0700 (PDT)
-Received: by 10.182.154.72 with HTTP; Tue, 7 Apr 2015 12:55:24 -0700 (PDT)
-In-Reply-To: <CAPig+cQOLJcy-QuACrvd+XrCpP74k0SXxj0rBkNneG5Ovnf47Q@mail.gmail.com>
+	id S1752748AbbDGUDb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 7 Apr 2015 16:03:31 -0400
+Received: from mout.web.de ([212.227.17.12]:56309 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751033AbbDGUDa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Apr 2015 16:03:30 -0400
+Received: from [192.168.2.107] ([79.223.100.247]) by smtp.web.de (mrweb102)
+ with ESMTPSA (Nemesis) id 0MGABv-1YarAO0SeN-00F9cS; Tue, 07 Apr 2015 22:03:27
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
+X-Provags-ID: V03:K0:Tz0ANW/9CjlX9YD7TbRM3APAaUdmG4mGHOfEsvlRbm6WtWcYNJc
+ QCOoa7fNBZBFuN6StcKKBv6OyKvytDa+cSb9nFXha1LVLRLa1cuUUu/2zDOzOrM+hIDwj1V
+ 961tKE4BDq2pkqlEci/uuYd9z3ko59PB8AqJ5QaWoI9gZozQngLDbXI/CXoOh616k8y77Ph
+ wUptWq9B56NJC/0WrBljQ==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266937>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266938>
 
-On Tue, Apr 7, 2015 at 12:10 AM, Eric Sunshine <sunshine@sunshineco.com=
-> wrote:
-> On Mon, Apr 6, 2015 at 7:48 AM, Erik Elfstr=C3=B6m <erik.elfstrom@gma=
-il.com> wrote:
->> Before this change, clean used resolve_gitlink_ref to check for the
->> presence of nested git repositories. This had the drawback of creati=
-ng
->> a ref_cache entry for every directory that should potentially be
->> cleaned. The linear search through the ref_cache list caused a massi=
-ve
->> performance hit for large number of directories.
->>
->> Teach clean.c:remove_dirs to use setup.c:is_git_directory
->> instead. is_git_directory will actually open HEAD and parse the HEAD
->> ref but this implies a nested git repository and should be rare when
->> cleaning.
->>
->> Using is_git_directory should give a more standardized check for wha=
-t
->> is and what isn't a git repository but also gives a slight behaviora=
-l
->> change. We will now detect and respect bare and empty nested git
->> repositories (only init run). Update t7300 to reflect this.
->>
->> The time to clean an untracked directory containing 100000 sub
->> directories went from 61s to 1.7s after this change.
->
-> Impressive.
->
->> Signed-off-by: Erik Elfstr=C3=B6m <erik.elfstrom@gmail.com>
->> Helped-by: Jeff King <peff@peff.net>
->
-> It is customary for your sign-off to be last.
->
-> More below...
->
->> ---
->> diff --git a/builtin/clean.c b/builtin/clean.c
->> index 98c103f..e951bd9 100644
->> --- a/builtin/clean.c
->> +++ b/builtin/clean.c
->> @@ -148,6 +147,24 @@ static int exclude_cb(const struct option *opt,=
- const char *arg, int unset)
->>         return 0;
->>  }
->>
->> +static int is_git_repository(struct strbuf *path)
->> +{
->> +       int ret =3D 0;
->> +       if (is_git_directory(path->buf))
->> +               ret =3D 1;
->> +       else {
->> +               int orig_path_len =3D path->len;
->> +               if (path->buf[orig_path_len - 1] !=3D '/')
->
-> Minor: I don't know how others feel about it, but I always find it a
-> bit disturbing to see a potential negative array access without a
-> safety check that orig_path_len is not 0, either directly in the
-> conditional or as a documenting assert().
->
+Ignore an extra ':' at the end of the hostname in URL's like
+"ssh://example.com:/path/to/repo"
 
+The colon is meant to separate a port number from the hostname.
+If the port is empty, the colon should be ignored, see RFC 3986.
 
-I think I would prefer to accept empty input and return false rather
-than assert. What to you think about:
+It had been working for URLs with ssh:// scheme, but was unintentionall=
+y
+broken in 86ceb3, "allow ssh://user@[2001:db8::1]/repo.git"
 
-static int is_git_repository(struct strbuf *path)
-{
-    int ret =3D 0;
-    size_t orig_path_len =3D path->len;
-    if (orig_path_len =3D=3D 0)
-        ret =3D 0;
-    else if (is_git_directory(path->buf))
-        ret =3D 1;
-    else {
-        if (path->buf[orig_path_len - 1] !=3D '/')
-            strbuf_addch(path, '/');
-        strbuf_addstr(path, ".git");
-        if (is_git_directory(path->buf))
-            ret =3D 1;
-        strbuf_setlen(path, orig_path_len);
-    }
+Reported-by: Reid Woodbury Jr. <reidw@rawsound.com>
+Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+---
+Changes since v1 (Thanks to Eric Sunshine)
+- typo: s/ment/meant/
+- remove wrong test_done
 
-    return ret;
-}
+ connect.c             |  2 ++
+ t/t5500-fetch-pack.sh | 17 ++++++++++-------
+ t/t5601-clone.sh      | 21 ++++++++++++---------
+ 3 files changed, 24 insertions(+), 16 deletions(-)
 
-
-Also I borrowed this pattern from remove_dirs and it has the same
-problem. Should I add something like this as a separate commit?
-
-diff --git a/builtin/clean.c b/builtin/clean.c
-index ccffd8a..88850e3 100644
---- a/builtin/clean.c
-+++ b/builtin/clean.c
-@@ -173,7 +173,8 @@ static int remove_dirs(struct strbuf *path, const
-char *prefix, int force_flag,
-        DIR *dir;
-        struct strbuf quoted =3D STRBUF_INIT;
-        struct dirent *e;
--       int res =3D 0, ret =3D 0, gone =3D 1, original_len =3D path->le=
-n, len;
-+       int res =3D 0, ret =3D 0, gone =3D 1;
-+       size_t original_len =3D path->len, len;
-        struct string_list dels =3D STRING_LIST_INIT_DUP;
-
-        *dir_gone =3D 1;
-@@ -201,6 +202,7 @@ static int remove_dirs(struct strbuf *path, const
-char *prefix, int force_flag,
-                return res;
-        }
-
-+       assert(original_len > 0 && "expects non-empty path");
-        if (path->buf[original_len - 1] !=3D '/')
-                strbuf_addch(path, '/');
-
-
->> +                       strbuf_addch(path, '/');
->> +               strbuf_addstr(path, ".git");
->> +               if (is_git_directory(path->buf))
->> +                       ret =3D 1;
->> +               strbuf_setlen(path, orig_path_len);
->> +       }
->> +
->> +       return ret;
->> +}
->> +
->>  static int remove_dirs(struct strbuf *path, const char *prefix, int=
- force_flag,
->>                 int dry_run, int quiet, int *dir_gone)
->>  {
+diff --git a/connect.c b/connect.c
+index ce0e121..14c924b 100644
+--- a/connect.c
++++ b/connect.c
+@@ -310,6 +310,8 @@ static void get_host_and_port(char **host, const ch=
+ar **port)
+ 		if (end !=3D colon + 1 && *end =3D=3D '\0' && 0 <=3D portnr && portn=
+r < 65536) {
+ 			*colon =3D 0;
+ 			*port =3D colon + 1;
++		} else if (!colon[1]) {
++			*colon =3D 0;
+ 		}
+ 	}
+ }
+diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
+index 692d717..3a9b775 100755
+--- a/t/t5500-fetch-pack.sh
++++ b/t/t5500-fetch-pack.sh
+@@ -576,13 +576,16 @@ do
+ 	do
+ 		for h in host user@host user@[::1] user@::1
+ 		do
+-			test_expect_success "fetch-pack --diag-url $p://$h/$r" '
+-				check_prot_host_port_path $p://$h/$r $p "$h" NONE "/$r"
+-			'
+-			# "/~" -> "~" conversion
+-			test_expect_success "fetch-pack --diag-url $p://$h/~$r" '
+-				check_prot_host_port_path $p://$h/~$r $p "$h" NONE "~$r"
+-			'
++			for c in "" :
++			do
++				test_expect_success "fetch-pack --diag-url $p://$h$c/$r" '
++					check_prot_host_port_path $p://$h/$r $p "$h" NONE "/$r"
++				'
++				# "/~" -> "~" conversion
++				test_expect_success "fetch-pack --diag-url $p://$h$c/~$r" '
++					check_prot_host_port_path $p://$h/~$r $p "$h" NONE "~$r"
++				'
++			done
+ 		done
+ 		for h in host User@host User@[::1]
+ 		do
+diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+index 02b40b1..1befc45 100755
+--- a/t/t5601-clone.sh
++++ b/t/t5601-clone.sh
+@@ -387,14 +387,17 @@ do
+ done
+=20
+ #with ssh:// scheme
+-test_expect_success 'clone ssh://host.xz/home/user/repo' '
+-	test_clone_url "ssh://host.xz/home/user/repo" host.xz "/home/user/rep=
+o"
+-'
+-
+-# from home directory
+-test_expect_success 'clone ssh://host.xz/~repo' '
+-	test_clone_url "ssh://host.xz/~repo" host.xz "~repo"
++#ignore trailing colon
++for tcol in "" :
++do
++	test_expect_success "clone ssh://host.xz$tcol/home/user/repo" '
++		test_clone_url "ssh://host.xz$tcol/home/user/repo" host.xz /home/use=
+r/repo
++	'
++	# from home directory
++	test_expect_success "clone ssh://host.xz$tcol/~repo" '
++	test_clone_url "ssh://host.xz$tcol/~repo" host.xz "~repo"
+ '
++done
+=20
+ # with port number
+ test_expect_success 'clone ssh://host.xz:22/home/user/repo' '
+@@ -407,9 +410,9 @@ test_expect_success 'clone ssh://host.xz:22/~repo' =
+'
+ '
+=20
+ #IPv6
+-for tuah in ::1 [::1] user@::1 user@[::1] [user@::1]
++for tuah in ::1 [::1] [::1]: user@::1 user@[::1] user@[::1]: [user@::1=
+] [user@::1]:
+ do
+-	ehost=3D$(echo $tuah | tr -d "[]")
++	ehost=3D$(echo $tuah | sed -e "s/1]:/1]/ "| tr -d "[]")
+ 	test_expect_success "clone ssh://$tuah/home/user/repo" "
+ 	  test_clone_url ssh://$tuah/home/user/repo $ehost /home/user/repo
+ 	"
+--=20
+2.2.0.rc1.790.ge19fcd2
