@@ -1,202 +1,138 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: rev-list pretty format behavior
-Date: Tue, 07 Apr 2015 15:53:57 +0200
-Message-ID: <5523E175.2060607@drmicha.warpmail.net>
-References: <CAHaCNWJZQRVxp3ponvh3pPEk=sOHGYypyhi1Dc8HX5gkKEBGrQ@mail.gmail.com>	<xmqqlhi6cma5.fsf@gitster.dls.corp.google.com> <CAHaCNWJ+S7Qa0=x2Xo2+HMQa0jz_tT8G+Wp1ugB4UHwBfOZRTg@mail.gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [ANNOUNCE] Git Merge Contributors Summit, April 8th, Paris
+Date: Tue, 7 Apr 2015 15:55:55 +0200
+Message-ID: <CACBZZX5mZgHxicZGTGsgAxBCZuRymrariAeHK0vf5+Qs1EzA2A@mail.gmail.com>
+References: <20150224220923.GA23344@peff.net> <CAEcj5uV7XpXZTEyDrubXfWoN5uYn5BJbGaMbrWrmXbmgiCOHqg@mail.gmail.com>
+ <CAP8UFD2rtxL29TqkxFXyGwW4g96TgFFLDJhhyYuAi850p64OjQ@mail.gmail.com> <CAGZ79kat=W2mod_c8u2ojUG08faw8KU5N5BDeBLvJ4iOUv_=bQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Oliver Runge <oliver.runge@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 07 15:54:09 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Christian Couder <christian.couder@gmail.com>,
+	Thomas Ferris Nicolaisen <tfnico@gmail.com>,
+	Jeff King <peff@peff.net>, Git <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue Apr 07 15:56:26 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YfTxB-0004qM-0g
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Apr 2015 15:54:09 +0200
+	id 1YfTzM-00068H-6v
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Apr 2015 15:56:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753498AbbDGNyF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Apr 2015 09:54:05 -0400
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:58067 "EHLO
-	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752643AbbDGNyB (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 7 Apr 2015 09:54:01 -0400
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.nyi.internal (Postfix) with ESMTP id 9D2EE20AC0
-	for <git@vger.kernel.org>; Tue,  7 Apr 2015 09:53:55 -0400 (EDT)
-Received: from frontend1 ([10.202.2.160])
-  by compute1.internal (MEProxy); Tue, 07 Apr 2015 09:53:59 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-sasl-enc
-	:x-sasl-enc; s=mesmtp; bh=Y5y9JDkdCWguM9+3NNSpZrlCFTk=; b=brEcxF
-	j1bYMXPbw9LwzAqcgqH1AJ0HCyOKTwlqIBin12FM9I1+0njrtGt89x3tIP4lXerX
-	oARwBbw9RH+0Sz/MM2YYyzoavCdr1vaTFS1E0ln/A+8z04PGobvGRSKuIIX/TLI7
-	U9QzFfiGn/6dcq1uJahczCUAAprrLvPVnO++Q=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:date:from:in-reply-to:message-id:mime-version:references
-	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=Y5y9JDkdCWguM9+
-	3NNSpZrlCFTk=; b=AHeVj3dNQ7Xi687ZrMcvBh0KKKzPQOqjdWXJnzRCLnvua0Y
-	QRxz3CuXrSZ5cWLpeoQDFw+zPj1NYQg6M63eZ7Wez8Gy0/qo8lHQWXtB/6+1eFwf
-	Dg1xPuclKPyarsfbmdnteapCDJrUotkIx2nksVFV3KPBqmTbr7BUQ3yNGFh4=
-X-Sasl-enc: UTVJXKI8krtLky0mhvDnS9XVxCGRU5xoGZuc3QiUI8Ei 1428414839
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id D9999C0001C;
-	Tue,  7 Apr 2015 09:53:58 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
-In-Reply-To: <CAHaCNWJ+S7Qa0=x2Xo2+HMQa0jz_tT8G+Wp1ugB4UHwBfOZRTg@mail.gmail.com>
+	id S1754145AbbDGN4U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Apr 2015 09:56:20 -0400
+Received: from mail-ob0-f173.google.com ([209.85.214.173]:33009 "EHLO
+	mail-ob0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754109AbbDGN4S (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Apr 2015 09:56:18 -0400
+Received: by oblw8 with SMTP id w8so39429875obl.0
+        for <git@vger.kernel.org>; Tue, 07 Apr 2015 06:56:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=vKK68LEl3QFHqMnG4JxLAq71bNLZhrcZ4BTAtTfaYaI=;
+        b=I86QPTkZJ9dmpmo9baccv4zKex0gCWCf7mvUVo2aakUuXdiGdHGqFKLH+ukWaSZ4sq
+         miWDEvL+CkGtLPIDPKCboTSdfd1c/DDZuj3/B9I0htHzR8BF6MtbVB+HFo15F8VrUGgm
+         kpmyHlmk0oy/urcwEaz/jRbcKqXi4Lryk8GOBIENdZ0hYChh7Vpc74wxkvO0jqZyBh4P
+         5EljfU8xdILtmPvEDIxVhIrmZGOokREhNXOkxFOavRw6nws1awoNTChNcNqG1bdDGFl6
+         WlRVwtuzSaSW45+nfywY344lF0I5TqPtdQ2+d9C0cDckSHy3gqNpt/WlnbbYfdNW8lAe
+         iOeg==
+X-Received: by 10.182.250.134 with SMTP id zc6mr3723387obc.78.1428414975484;
+ Tue, 07 Apr 2015 06:56:15 -0700 (PDT)
+Received: by 10.76.82.1 with HTTP; Tue, 7 Apr 2015 06:55:55 -0700 (PDT)
+In-Reply-To: <CAGZ79kat=W2mod_c8u2ojUG08faw8KU5N5BDeBLvJ4iOUv_=bQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266914>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266915>
 
-Oliver Runge venit, vidit, dixit 06.04.2015 13:05:
-> Hallo, Mr. Hamano.
-> 
-> Thank you for your quick and detailed response.
-> 
-> On 5 April 2015 at 23:12, Junio C Hamano <gitster@pobox.com> wrote:
->> This is very much the designed behaviour, I would think.  IIRC, the
->> user-format support of "rev-list" was designed so that the scripts
->> can customize the output from "rev-list -v", which was how scripts
->> were expected to read various pieces of information for each commit
->> originally.  And the 40-hex commit object name and/or a line that
->> begins with "commit ..." when a user format is used are meant to
->> serve as stable record separator (in that sense, having %H or %h in
->> the userformat given to rev-list is redundant) when these scripts
->> are reading output from "rev-list".
-> 
-> I see, but then I find it even stranger, because "rev-list -v" without
-> "pretty" parameter will only output the hash as separator and "commit
-> <sha1>" is only introduced if a "pretty" parameter other than
-> "oneline" is specified. The docu states the formating is intended to
-> make "git rev-list" behave more like "git log", and apart from the
-> pretty settings "email" and "format"/"tformat" (which don't have
-> "commit <sha1>" in "git log") the formating works exactly like it does
-> in "git log".
-> 
-> docu:
-> ------------------------------------------
-> Commit Formatting
->        Using these options, git-rev-list(1) will act similar to the more
->        specialized family of commit log tools: git-log(1), git-show(1),
->        and git-whatchanged(1)
-> ------------------------------------------
-> and
-> ------------------------------------------
-> - format:<string>
-> The format:<string> format allows you to specify which information you
-> want to show. It works a little bit like printf format, with the
-> notable exception that you get a newline with %n instead of \n.
-> E.g, format:"The author of %h was %an, %ar%nThe title was >>%s<<%n"
-> would show something like this:
-> 
->     The author of fe6e0ee was Junio C Hamano, 23 hours ago
->     The title was >>t4119: test autocomputing -p<n> for traditional
-> diff input.<<
-> ------------------------------------------
-> 
->> A new option to tell "rev-list" that "I am designing an output that
->> is a-line-per-commit with the userformat and do not need the default
->> record separator" or "I will arrange record separator myself" would
->> be an acceptable thing to add, provided if many scripts yet to be
->> written would benefit from such a feature, though.
-> 
-> I searched github for usages of "git rev-list --pretty=format" to see
-> whether I'm alone. I realize this is merely anecdotal, but perhaps
-> still useful.
-> 
-> Scripts ignoring the separator:
-> ------------------------------------------
-> # no idea why it always prints those commit lines
-> git rev-list --pretty=format:" - %s" "$@" |grep -v ^commit
-> ------------------------------------------
-> 
-> ------------------------------------------
-> git rev-list --pretty=format:"%H %h|%an:%s" "$@" | sed -n
-> "s/^\([0-9a-f]\{40\}\) \(.*\)$/n\1 [$shape label=\"{\2}\"]/p"
-> ------------------------------------------
-> 
-> (shortened with "..." by me)
-> ------------------------------------------
-> git rev-list --pretty=format:"%H %h %d" "$@" | awk '
-> ...
-> !/^commit/ {
-> ...
-> }'
-> ------------------------------------------
-> 
-> Most of the scripts I found hack around the "commit <sha1>" lines,
-> mostly in a way that would still work if the lines suddenly weren't
-> there anymore. But unfortunately there are also some examples that
-> would break:
-> ------------------------------------------
-> git rev-list --oneline --pretty=format:"%C(yellow)%h
-> %C(red)%ad%C(green)%d %C(reset)%s%C(cyan) [%cn]" --date=short
-> HEAD~2..HEAD | awk 'NR % 2 == 0'
-> ------------------------------------------
-> 
-> And finally there are a few that really use the current behavior:
-> ------------------------------------------
-> # tcl
-> set revisions [$::versioned_interpreter git rev-list
-> "--pretty=format:%at%n%an <%ae>%n%s" -n 10 $revision]
-> set result {}
-> foreach {commit date author summary} [split $revisions \n] {
->     lappend result [list [lindex $commit 1] $date $author $summary]
-> }
-> ------------------------------------------
-> 
-> (shortened with "..." by me)
-> ------------------------------------------
-> save()
-> {
->     awk '{print $2 " '$1'" }' | sort >$R/sha/$1
-> }
-> ...
-> make_sha()
-> {
->     git rev-list --pretty=format: ^Research-V6 BSD-1 | save BSD-1
->     git rev-list --pretty=format: ^BSD-1 BSD-2 | save BSD-2
->     ...
-> }
-> ------------------------------------------
-> 
-> I really feel that it should be the default behavior for "format",
-> since the separator intention isn't described in the docu and isn't
-> really needed for scripts that want to provide their own formating.
-> That being said, I understand that that's likely not going to happen,
-> especially since it would break quite a few legacy scripts.
-> 
-> But it would be prudent to update the docu to highlight the different
-> behavior for the pretty settings "email" and "format"/"tformat", and
-> even though I think another feature to turn off the separator lines
-> makes the command more complex, the fact that so many scripts seem to
-> write around the behavior might justify it.
-> 
-> I'd like to help with both tasks, if you think they are reasonable.
-> 
-> Oliver
-> 
+On Mon, Apr 6, 2015 at 10:28 PM, Stefan Beller <sbeller@google.com> wrote:
+> I am interested in discussing the git pack protocol v2.
+> (I have been thinking about that for a while now,
+> though not sharing a lot on the mailing list, so feedback is
+> somewhat limited. :( )
 
-I'm wondering what the difference is - or should be - between "git log"
-and "git rev-list" with (completely) user specified output. That
-question goes both ways:
+I'm keen to talk about the new protocol and other scaling issues I
+raised in the recent "Git Scaling: What factors most affect Git
+performance for a large repo?" thread. Although from my testing the
+main problems in performance are the local pack-refs file &
+reachability checks, mostly not the protocol itself.
 
-- Why do we need "rev-list" to have completely flexible output when we
-have "log" with such flexibility?
+At the risk of using this list + the venue for soliciting I also want
+to mention that my employer is willing to pay someone on a contract
+basis to work on Git scalability issues, given the right person etc.
+etc. So if someone's at the conference is interested in that I'd be
+keen to talk to you.
 
-- Why do we even have pretty formats for "rev-list"?
-
-I'm thinking of rev-list as a raw (plumbing) revision lister much like
-cat-file is the inspection tool for the objects, and log as the human
-facing output with appropriate defaults (resp. show).
-
-Note that "rev-list -v" isn't even documented afaics.
-
-Michael
+> On Mon, Apr 6, 2015 at 12:08 PM, Christian Couder
+> <christian.couder@gmail.com> wrote:
+>> On Mon, Apr 6, 2015 at 12:48 AM, Thomas Ferris Nicolaisen
+>> <tfnico@gmail.com> wrote:
+>>> On Tue, Feb 24, 2015 at 11:09 PM, Jeff King <peff@peff.net> wrote:
+>>>> I wanted to make one more announcement about this, since a few more
+>>>> details have been posted at:
+>>>>
+>>>>   http://git-merge.com/
+>>>>
+>>>> since my last announcement. Specifically, I wanted to call attention to
+>>>> the contributor's summit on the 8th. Basically, there will be a space
+>>>> that can hold up to 50 people, it's open only to git (and JGit and
+>>>> libgit2) devs, and there isn't a planned agenda. So I want to:
+>>>>
+>>>>   1. Encourage developers to come. You might meet some folks in person
+>>>>      you've worked with online. And you can see how beautiful we all
+>>>>      are.
+>>>>
+>>>>   2. Get people thinking about what they would like to talk about.  In
+>>>>      past GitTogethers, it's been a mix of people with prepared things
+>>>>      to talk about, group discussions of areas, and general kibitzing.
+>>>>      We can be spontaneous on the day of the event, but if you have a
+>>>>      topic you want to bring up, you may want to give it some thought
+>>>>      beforehand.
+>>>>
+>>>> If you are a git dev and want to come, please RSVP to Chris Kelly
+>>>> <amateurhuman@github.com> who is organizing the event. If you would like
+>>>> to come, but finances make it hard (either for travel, or for the
+>>>> conference fee), please talk to me off-list, and we may be able to help.
+>>>>
+>>>> If you have questions, please feel free to ask me, and I'll try to get
+>>>> answers from the GitHub folks who are organizing the event.
+>>>>
+>>>
+>>> I'll be arriving around 11 am on the 8th, if anyone wants to record
+>>> something for the GitMinutes podcast [1]. Send me an email directly,
+>>> or just walk up to me at the conference and say hi! I'll hopefully be
+>>> hanging around the contributor's summit area with some microphones,
+>>> but I've been unable to get any feedback from GitHub about whether
+>>> this is OK, so.. I guess we'll just wing it when I get there.
+>>>
+>>> [1] http://www.gitminutes.com/
+>>
+>> By the way as far as I know nothing has been planned for the
+>> Contributors Summit on the 8th.
+>> Maybe we could list some topics that we could discuss.
+>>
+>> I will probably write very short articles about some of the
+>> discussions for the next Git Rev News edition, but I would be happy if
+>> other people would like to contribute some. Please tell me and Thomas
+>> if you are interested.
+>>
+>> Also I am not sure if something is planned for the evening of the 8th
+>> or not. If nothing is planned maybe we could discuss having dinner
+>> together or something.
+>>
+>> And if someone needs help or arrives in Paris early or leaves late and
+>> is interested in meeting up, feel free to contact me.
+>>
+>> Best,
+>> Christian.
+>> --
+>> To unsubscribe from this list: send the line "unsubscribe git" in
+>> the body of a message to majordomo@vger.kernel.org
+>> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
