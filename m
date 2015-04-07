@@ -1,89 +1,121 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Announcing git-cinnabar 0.2.0
-Date: Tue, 7 Apr 2015 11:27:44 +0900
-Message-ID: <20150407022744.GA21468@glandium.org>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [v6 PATCH] daemon: add systemd support
+Date: Tue, 7 Apr 2015 00:42:14 -0400
+Message-ID: <CAPig+cQn30sTAYeBGrH_WNxN5Hsme+uqqUtHsm7bTNvVZ7XBiA@mail.gmail.com>
+References: <1428372206-120089-1-git-send-email-shawn@churchofgit.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-2022-jp
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 07 04:28:05 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Shawn Landden <shawn@churchofgit.com>,
+	Shawn Landden <shawnlandden@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 07 06:42:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YfJFB-0002GD-IG
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Apr 2015 04:28:02 +0200
+	id 1YfLLM-0007oz-Kx
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Apr 2015 06:42:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753139AbbDGC1x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Apr 2015 22:27:53 -0400
-Received: from ks3293202.kimsufi.com ([5.135.186.141]:46354 "EHLO glandium.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752988AbbDGC1u (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Apr 2015 22:27:50 -0400
-Received: from glandium by zenigata with local (Exim 4.84)
-	(envelope-from <glandium@glandium.org>)
-	id 1YfJEu-0005f2-QO
-	for git@vger.kernel.org; Tue, 07 Apr 2015 11:27:44 +0900
-Content-Disposition: inline
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1750812AbbDGEmR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Apr 2015 00:42:17 -0400
+Received: from mail-lb0-f170.google.com ([209.85.217.170]:35914 "EHLO
+	mail-lb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750756AbbDGEmQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Apr 2015 00:42:16 -0400
+Received: by lbbqq2 with SMTP id qq2so25192947lbb.3
+        for <git@vger.kernel.org>; Mon, 06 Apr 2015 21:42:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=8YIcOOtaLlCKA0nGeP7E1u4ESbqmwnZ5EoeMZq84s2Q=;
+        b=Yyga2gwKsX6a6lPEkAV2xT+ISkiMDz4lqg7OXP+re3Nk8rzj9i5fJlGAfVFpdLcYM8
+         wVauk4jzT2REEcfrA9SVaQAXCpa6ChhqzBsPjkKJUsMXnmaDk+w1+GR3aXSZrL7ud6mc
+         L/plM5LXZjEJxfhGpYE+a2qXCBGJt5z9IkHlrhh2PLDgv5arRZecCZ9yjJg1zUmmwpGY
+         A6iOxDRJMce/JRK6UTDoN/g172Nl12tn0wZs5ErqT+Zec7N48cnZdCfZD7tUJXtml+Hf
+         5h22JW83ng2DW66kGsG98SJHBA9PTue2mLPD5fh9C5k698xDp+rl0bK3wbciPUb5ZHTW
+         4kyw==
+X-Received: by 10.152.170.199 with SMTP id ao7mr16023184lac.27.1428381734467;
+ Mon, 06 Apr 2015 21:42:14 -0700 (PDT)
+Received: by 10.114.78.69 with HTTP; Mon, 6 Apr 2015 21:42:14 -0700 (PDT)
+In-Reply-To: <1428372206-120089-1-git-send-email-shawn@churchofgit.com>
+X-Google-Sender-Auth: -hOS3Tr7mJOlHLv4m42pSLfyjP0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266896>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266897>
 
-Git-cinnabar is a git remote helper to interact with mercurial
-repositories. It allows to clone, pull and push from/to mercurial remote
-repositories, using git.
+On Mon, Apr 6, 2015 at 10:03 PM, Shawn Landden <shawn@churchofgit.com> wrote:
+> systemd supports git-daemon's existing --inetd mode as well.
+> --systemd allows git-daemon has the advantage of allowing one git-daemon
+> to listen to multiple interfaces as well as the system one(s),
+> and more allow git-daemon to not be spawned on every connection.
 
-Code on https://github.com/glandium/git-cinnabar
+The commit message is much better than previous versions, although, it
+fails to parse cleanly and does not seem to have been proof-read. The
+first sentence still feels as if its unrelated to the rest of the
+commit message, however, prefixing it with "although" helps. Perhaps
+something like this:
 
-[ Previous announcements:
-  http://marc.info/?l=git&m=142364715001983
-  http://marc.info/?l=git&m=141781485726430 ]
+    Although "git-daemon --inetd" works with systemd, a proper
+    "git-daemon --systemd" mode has the advantage of ... listening
+    on multiple interfaces, ..., does not require spawning a new
+    git-daemon instance for each connection, ...
 
-What's new since 0.1.1?
+Fill in the "..." with whatever other benefits a --systemd mode might
+provide (if any).
 
-- git cinnabar git2hg and git cinnabar hg2git commands that allow to
-  translate (possibly abbreviated) git sha1s to mercurial sha1s and
-  vice-versa.
-- A "native" helper that makes some operations faster. It is not
-  required for git-cinnabar to work, but it can improve performance
-  significantly. Check the Setup instructions in the README file.
-- Do not store mercurial metadata when pushing to non-publishing
-  repositories.
-- Made the discovery phase of pushes require less round trips (the phase
-  that finds what is common between the local and remote repositories),
-  hopefully making pushing faster.
-- Improved logging, which now doesn’t require fiddling with the code to
-  get extra logging.
-- Made fsck validate more things, and act on more errors.
-- Fixed a few edge cases.
-- Better handle files with weird names, and that git quotes in its
-  output.
-- Extensively tested on the following repositories:
-    https://hg.mozilla.org/mozilla-central/
-    https://hg.mozilla.org/releases/mozilla-beta/
-    https://selenic.com/hg/
-    https://bitbucket.org/durin42/hg-git/
-    https://hg.python.org/cpython/
+> Signed-off-by: Shawn Landden <shawn@churchofgit.com>
+> ---
+> diff --git a/Documentation/git-daemon.txt b/Documentation/git-daemon.txt
+> index a69b361..3a7a0b1 100644
+> --- a/Documentation/git-daemon.txt
+> +++ b/Documentation/git-daemon.txt
+> @@ -304,7 +313,35 @@ selectively enable/disable services per repository::
+>                 uploadpack = false
+>                 uploadarch = true
+>  ----------------------------------------------------------------
+> ++
 
-What to expect next?
+As mentioned in the last couple reviews, you should replace the above
+"+" line with a blank line since the "systemd configuration example"
+item is not a continuation of the preceding "selectively
+enable/disable services per repository" item.
 
-- Allow to push merge commits.
-- Improve memory footprint for pushes (currently, it’s fairly
-  catastrophic on big repositories ; don’t try to push multiple hundreds
-  of commits of a Mozilla-sized repository if you don’t have multiple
-  gigabytes of memory available).
-- As mentioned above, allow to remove some metadata.
-- And more...
+> +systemd configuration example::
+> +Example systemd configuration files, typically placed in `/etc/systemd/system`.
+> ++
+> +`git-daemon.socket`
+> ++
+> +----------------------------------------------------------------
+> +# /etc/systemd/system/git-daemon.socket
 
-If you want to follow the improvements more closely, I encourage you to
-switch to the `next` branch. I won’t push anything there that hasn’t
-been extensively tested on the above mentioned repositories.
+This comment line merely repeats the filename outside of the verbatim
+block, thus can be dropped.
 
-And as always, please report any issue you run into:
-https://github.com/glandium/git-cinnabar/issues/new
-
-Mike
+> +[Unit]
+> +Description=Git Daemon socket
+> +
+> +[Socket]
+> +ListenStream=9418
+> +
+> +[Install]
+> +WantedBy=sockets.target
+> +----------------------------------------------------------------
+> ++
+> +`git-daemon.service`
+> ++
+> +----------------------------------------------------------------
+> +[Unit]
+> +Description=Git Daemon
+>
+> +[Service]
+> +ExecStart=/usr/lib/git-core/git-daemon --systemd --reuseaddr --base-path=/var/lib /var/lib/git
+> +User=git-daemon
+> +StandardError=null
+> +----------------------------------------------------------------
+>
+>  ENVIRONMENT
+>  -----------
