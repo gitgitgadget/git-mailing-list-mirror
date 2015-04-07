@@ -1,151 +1,155 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: [PATCH v2] connect.c: Ignore extra colon after hostname
-Date: Tue, 07 Apr 2015 22:03:25 +0200
-Message-ID: <5524380D.4020306@web.de>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v7 1/4] sha1_file.c: support reading from a loose object
+ of unknown type
+Date: Tue, 7 Apr 2015 16:46:33 -0400
+Message-ID: <CAPig+cQfdvyscUoMxCk7JrvzqaKRGTg=6E+YUCLtciHr7Zq9SA@mail.gmail.com>
+References: <1428126162-18987-1-git-send-email-karthik.188@gmail.com>
+	<1428258505-25223-1-git-send-email-karthik.188@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: tboegi@web.de, reidw@rawsound.com, mackyle@gmail.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 07 22:03:36 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 07 22:46:44 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YfZih-0004qS-Av
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Apr 2015 22:03:35 +0200
+	id 1YfaOO-0000yY-OL
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Apr 2015 22:46:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752748AbbDGUDb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 7 Apr 2015 16:03:31 -0400
-Received: from mout.web.de ([212.227.17.12]:56309 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751033AbbDGUDa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Apr 2015 16:03:30 -0400
-Received: from [192.168.2.107] ([79.223.100.247]) by smtp.web.de (mrweb102)
- with ESMTPSA (Nemesis) id 0MGABv-1YarAO0SeN-00F9cS; Tue, 07 Apr 2015 22:03:27
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
-X-Provags-ID: V03:K0:Tz0ANW/9CjlX9YD7TbRM3APAaUdmG4mGHOfEsvlRbm6WtWcYNJc
- QCOoa7fNBZBFuN6StcKKBv6OyKvytDa+cSb9nFXha1LVLRLa1cuUUu/2zDOzOrM+hIDwj1V
- 961tKE4BDq2pkqlEci/uuYd9z3ko59PB8AqJ5QaWoI9gZozQngLDbXI/CXoOh616k8y77Ph
- wUptWq9B56NJC/0WrBljQ==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1753790AbbDGUqh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Apr 2015 16:46:37 -0400
+Received: from mail-la0-f52.google.com ([209.85.215.52]:36281 "EHLO
+	mail-la0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753328AbbDGUqf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Apr 2015 16:46:35 -0400
+Received: by lagv1 with SMTP id v1so51516181lag.3
+        for <git@vger.kernel.org>; Tue, 07 Apr 2015 13:46:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=WIcN9xIMKffM8m1LhzPhDKqbgokqpt7JQPtMrwqiBMI=;
+        b=FLBkHcs0HECIw/sD/DrnceyByygmaK64D7MSxuEco6EeiBUsbcDtHIbgyx71nBkCZX
+         Pr/3Ngp+zIhDUD6+HpKv0m3UddYpBrbV/xoBeXnfFXyDpj5yTanfKQM9NNmXlExOc0Ol
+         kkBpm+XOiU7gySb8zsosaZVj2JGERKmBYxmsraPQAqB804zjvRb9UWi20QyO2342i+nY
+         4L0qlAgOUDT9pUSA0H5vUG9xMBzT4WwRJbQmC4YFlbqX0NOEKVuMh0M1c4gA41Hkk/sX
+         +gU1bvbDigmUDgnlRte/IunrWWVAXaSD/CeG6yghSWiyKIXbYiFRIEktU5oOBZcbOifx
+         SNjw==
+X-Received: by 10.112.151.211 with SMTP id us19mr19552447lbb.120.1428439593835;
+ Tue, 07 Apr 2015 13:46:33 -0700 (PDT)
+Received: by 10.114.78.69 with HTTP; Tue, 7 Apr 2015 13:46:33 -0700 (PDT)
+In-Reply-To: <1428258505-25223-1-git-send-email-karthik.188@gmail.com>
+X-Google-Sender-Auth: u-vcMT2K5oRKNgFAmZddryJH9qo
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266938>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266939>
 
-Ignore an extra ':' at the end of the hostname in URL's like
-"ssh://example.com:/path/to/repo"
+On Sun, Apr 5, 2015 at 2:28 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
+> Update sha1_loose_object_info() to optionally allow it to read
+> from a loose object file of unknown/bogus type; as the function
+> usually returns the type of the object it read in the form of enum
+> for known types, add an optional "typename" field to receive the
+> name of the type in textual form and a flag to indicate the reading
+> of a loose object file of unknown/bogus type.
+>
+> Add parse_sha1_header_extended() which acts as a wrapper around
+> parse_sha1_header() allowing more information to be obtained.
+>
+> Add unpack_sha1_header_to_strbuf() to unpack sha1 headers of
+> unknown/corrupt objects which have a unknown sha1 header size to
+> a strbuf structure. This was written by Junio C Hamano but tested
+> by me.
+>
+> Helped-by: Junio C Hamano <gitster@pobox.com>
+> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+> ---
+> diff --git a/sha1_file.c b/sha1_file.c
+> index 980ce6b..ac8fffc 100644
+> --- a/sha1_file.c
+> +++ b/sha1_file.c
+> @@ -1614,27 +1642,24 @@ static void *unpack_sha1_rest(git_zstream *stream, void *buffer, unsigned long s
+>   * too permissive for what we want to check. So do an anal
+>   * object header parse by hand.
+>   */
+> -int parse_sha1_header(const char *hdr, unsigned long *sizep)
+> +int parse_sha1_header_extended(const char *hdr, struct object_info *oi,
+> +                              unsigned int flags)
+>  {
+> -       char type[10];
+> -       int i;
+> +       struct strbuf typename = STRBUF_INIT;
+>         unsigned long size;
+> +       int type;
+>
+>         /*
+>          * The type can be at most ten bytes (including the
+>          * terminating '\0' that we add), and is followed by
+>          * a space.
+>          */
+> -       i = 0;
+>         for (;;) {
+>                 char c = *hdr++;
+>                 if (c == ' ')
+>                         break;
+> -               type[i++] = c;
+> -               if (i >= sizeof(type))
+> -                       return -1;
+> +               strbuf_addch(&typename, c);
+>         }
+> -       type[i] = 0;
+>
+>         /*
+>          * The length must follow immediately, and be in canonical
+> @@ -1652,12 +1677,39 @@ int parse_sha1_header(const char *hdr, unsigned long *sizep)
+>                         size = size * 10 + c;
+>                 }
+>         }
+> -       *sizep = size;
+> +
+> +       type = type_from_string_gently(typename.buf, typename.len, 1);
+> +       if (oi->sizep)
+> +               *oi->sizep = size;
+> +       if (oi->typename)
+> +               strbuf_addbuf(oi->typename, &typename);
+> +       strbuf_release(&typename);
+>
+>         /*
+> +        * Set type to 0 if its an unknown object and
+> +        * we're obtaining the type using '--literally'
+> +        * option.
+> +        */
+> +       if ((flags & LOOKUP_LITERALLY) && (type == -1))
+> +               type = 0;
+> +       else if (type == -1)
+> +               die("invalid object type");
+> +       if (oi->typep)
+> +               *oi->typep = type;
 
-The colon is meant to separate a port number from the hostname.
-If the port is empty, the colon should be ignored, see RFC 3986.
+This unnecessary intermixing of 'type'/'typename' and 'size'
+processing makes the code more confusing than it ought to be. Why not
+do all the processing related to 'type'/'typename' before the
+processing of 'size'?
 
-It had been working for URLs with ssh:// scheme, but was unintentionall=
-y
-broken in 86ceb3, "allow ssh://user@[2001:db8::1]/repo.git"
-
-Reported-by: Reid Woodbury Jr. <reidw@rawsound.com>
-Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
----
-Changes since v1 (Thanks to Eric Sunshine)
-- typo: s/ment/meant/
-- remove wrong test_done
-
- connect.c             |  2 ++
- t/t5500-fetch-pack.sh | 17 ++++++++++-------
- t/t5601-clone.sh      | 21 ++++++++++++---------
- 3 files changed, 24 insertions(+), 16 deletions(-)
-
-diff --git a/connect.c b/connect.c
-index ce0e121..14c924b 100644
---- a/connect.c
-+++ b/connect.c
-@@ -310,6 +310,8 @@ static void get_host_and_port(char **host, const ch=
-ar **port)
- 		if (end !=3D colon + 1 && *end =3D=3D '\0' && 0 <=3D portnr && portn=
-r < 65536) {
- 			*colon =3D 0;
- 			*port =3D colon + 1;
-+		} else if (!colon[1]) {
-+			*colon =3D 0;
- 		}
- 	}
- }
-diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
-index 692d717..3a9b775 100755
---- a/t/t5500-fetch-pack.sh
-+++ b/t/t5500-fetch-pack.sh
-@@ -576,13 +576,16 @@ do
- 	do
- 		for h in host user@host user@[::1] user@::1
- 		do
--			test_expect_success "fetch-pack --diag-url $p://$h/$r" '
--				check_prot_host_port_path $p://$h/$r $p "$h" NONE "/$r"
--			'
--			# "/~" -> "~" conversion
--			test_expect_success "fetch-pack --diag-url $p://$h/~$r" '
--				check_prot_host_port_path $p://$h/~$r $p "$h" NONE "~$r"
--			'
-+			for c in "" :
-+			do
-+				test_expect_success "fetch-pack --diag-url $p://$h$c/$r" '
-+					check_prot_host_port_path $p://$h/$r $p "$h" NONE "/$r"
-+				'
-+				# "/~" -> "~" conversion
-+				test_expect_success "fetch-pack --diag-url $p://$h$c/~$r" '
-+					check_prot_host_port_path $p://$h/~$r $p "$h" NONE "~$r"
-+				'
-+			done
- 		done
- 		for h in host User@host User@[::1]
- 		do
-diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index 02b40b1..1befc45 100755
---- a/t/t5601-clone.sh
-+++ b/t/t5601-clone.sh
-@@ -387,14 +387,17 @@ do
- done
-=20
- #with ssh:// scheme
--test_expect_success 'clone ssh://host.xz/home/user/repo' '
--	test_clone_url "ssh://host.xz/home/user/repo" host.xz "/home/user/rep=
-o"
--'
--
--# from home directory
--test_expect_success 'clone ssh://host.xz/~repo' '
--	test_clone_url "ssh://host.xz/~repo" host.xz "~repo"
-+#ignore trailing colon
-+for tcol in "" :
-+do
-+	test_expect_success "clone ssh://host.xz$tcol/home/user/repo" '
-+		test_clone_url "ssh://host.xz$tcol/home/user/repo" host.xz /home/use=
-r/repo
-+	'
-+	# from home directory
-+	test_expect_success "clone ssh://host.xz$tcol/~repo" '
-+	test_clone_url "ssh://host.xz$tcol/~repo" host.xz "~repo"
- '
-+done
-=20
- # with port number
- test_expect_success 'clone ssh://host.xz:22/home/user/repo' '
-@@ -407,9 +410,9 @@ test_expect_success 'clone ssh://host.xz:22/~repo' =
-'
- '
-=20
- #IPv6
--for tuah in ::1 [::1] user@::1 user@[::1] [user@::1]
-+for tuah in ::1 [::1] [::1]: user@::1 user@[::1] user@[::1]: [user@::1=
-] [user@::1]:
- do
--	ehost=3D$(echo $tuah | tr -d "[]")
-+	ehost=3D$(echo $tuah | sed -e "s/1]:/1]/ "| tr -d "[]")
- 	test_expect_success "clone ssh://$tuah/home/user/repo" "
- 	  test_clone_url ssh://$tuah/home/user/repo $ehost /home/user/repo
- 	"
---=20
-2.2.0.rc1.790.ge19fcd2
+> +       /*
+>          * The length must be followed by a zero byte
+>          */
+> -       return *hdr ? -1 : type_from_string(type);
+> +       return *hdr ? -1 : type;
+> +}
+> +
+> +int parse_sha1_header(const char *hdr, unsigned long *sizep)
+> +{
+> +       struct object_info oi;
+> +
+> +       oi.sizep = sizep;
+> +       oi.typename = NULL;
+> +       oi.typep = NULL;
+> +       return parse_sha1_header_extended(hdr, &oi, LOOKUP_REPLACE_OBJECT);
+>  }
+>
+>  static void *unpack_sha1_file(void *map, unsigned long mapsize, enum object_type *type, unsigned long *size, const unsigned char *sha1)
