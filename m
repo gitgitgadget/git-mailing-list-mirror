@@ -1,70 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH 1/4] submodules: implement synchronizing of remotes.
-Date: Wed, 8 Apr 2015 08:46:28 -0700
-Message-ID: <CAPc5daWarayCBKyzrcNoh07RtPZhu4WjaT8QNsuHDtphxvz1DQ@mail.gmail.com>
-References: <1428490705-11586-1-git-send-email-ps@pks.im> <1428490705-11586-2-git-send-email-ps@pks.im>
+From: Oliver Runge <oliver.runge@gmail.com>
+Subject: Re: rev-list pretty format behavior
+Date: Wed, 8 Apr 2015 19:12:05 +0200
+Message-ID: <CAHaCNWKYY_5JvuAk76wnrTTBaBQM2Fv8hz37tEYC5Jzm1tY-RQ@mail.gmail.com>
+References: <CAHaCNWJZQRVxp3ponvh3pPEk=sOHGYypyhi1Dc8HX5gkKEBGrQ@mail.gmail.com>
+	<xmqqlhi6cma5.fsf@gitster.dls.corp.google.com>
+	<CAHaCNWJ+S7Qa0=x2Xo2+HMQa0jz_tT8G+Wp1ugB4UHwBfOZRTg@mail.gmail.com>
+	<5523E175.2060607@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Patrick Steinhardt <ps@pks.im>
-X-From: git-owner@vger.kernel.org Wed Apr 08 17:47:14 2015
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Apr 08 19:12:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YfsC9-0007gU-I4
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Apr 2015 17:47:13 +0200
+	id 1YftWO-0003iw-FF
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Apr 2015 19:12:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754282AbbDHPrJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Apr 2015 11:47:09 -0400
-Received: from mail-ob0-f179.google.com ([209.85.214.179]:34780 "EHLO
-	mail-ob0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754278AbbDHPrH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Apr 2015 11:47:07 -0400
-Received: by obbgh1 with SMTP id gh1so136549659obb.1
-        for <git@vger.kernel.org>; Wed, 08 Apr 2015 08:47:06 -0700 (PDT)
+	id S1754148AbbDHRMI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Apr 2015 13:12:08 -0400
+Received: from mail-qk0-f181.google.com ([209.85.220.181]:33956 "EHLO
+	mail-qk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752372AbbDHRMG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Apr 2015 13:12:06 -0400
+Received: by qkgx75 with SMTP id x75so90501612qkg.1
+        for <git@vger.kernel.org>; Wed, 08 Apr 2015 10:12:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=aZp2x3Ua60jZ4Gc6Rn9/nFIr9Nq6LGjR6JJwdT6xIv0=;
-        b=qHE4L/8ldMnFBubcqEfJgFdTpSIwSDIxpyo3SZ4bOIKsfDOY9tK1I1hv2YYr1NXHfh
-         kFzTPLrx5Jex5GHL6Cp69Bi97KWlJmB3y+UF3f2iwD3ouEOCcgpOwGUf80qQZzBRggSA
-         IFIZmedKYUyN7rxv01PXhd5JBNslkyrjqXmSie3lAaZNQoOxzG0801RP7jQXkBeFxPZj
-         J9RxJ5KTdAq25mYDj0bg6RjwhGqX8QVZ+k9iD/b5wGW45iueyq37tHVo3vTYfnji3Q6w
-         53CZeT2QYINDk6D34yfU/yQW7zmQ+H1bobsBmwGPzwTUMn+z+1ww+clwUx/+F76h8747
-         rNCg==
-X-Received: by 10.60.70.161 with SMTP id n1mr16126281oeu.28.1428508011204;
- Wed, 08 Apr 2015 08:46:51 -0700 (PDT)
-Received: by 10.202.87.85 with HTTP; Wed, 8 Apr 2015 08:46:28 -0700 (PDT)
-In-Reply-To: <1428490705-11586-2-git-send-email-ps@pks.im>
-X-Google-Sender-Auth: Xh3ToocHSY12eOUCyNm7WW8RD20
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=AJXliRQ7M9i8Bg00qmjpc2W3+3RG8ofw13qbkflAjiU=;
+        b=hjCxD4KM40RJrHy1eOG7Iuec2O+FzK9ECv6otDfMp4fSurL+Zm9IfYO+NK9qK4mnqP
+         YgPG7XrdRWewAkJPgqXd3rX+lSQ5/enGp1MsQHR1zGWqT9C07xcgbtdXhqJnZ7YEk4aA
+         GhapjgoMX6AEnQNBOkh7LW1BYUzO2e1yiBMbbgehknQ5MCNIKaQmP1eN5ihoCkZbay+X
+         Sp22MjHtuQR/JTgqcsG0jwwA9RjM4RVxwfZO3vYZews+0ELVgnSMKiZjXltDz/Yx8pww
+         CtKw95u30U0MkftSFTiF5QDVOiUDE+LPmwutcKh6KscC/HyUmIAH2tGDBHBaZvOGAjF7
+         ROCw==
+X-Received: by 10.55.31.218 with SMTP id n87mr48818781qkh.99.1428513125763;
+ Wed, 08 Apr 2015 10:12:05 -0700 (PDT)
+Received: by 10.140.42.47 with HTTP; Wed, 8 Apr 2015 10:12:05 -0700 (PDT)
+In-Reply-To: <5523E175.2060607@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266965>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266966>
 
-On Wed, Apr 8, 2015 at 3:58 AM, Patrick Steinhardt <ps@pks.im> wrote:
-> Previously it was not possible to specify custom remotes for
-> submodules. This feature has now been implemented and can be
+Heyup, Dr. Gruber.
 
-I am not going to say whether it makes sense to add this feature or not,
-but I'll just react to "Previously".
+On 7 April 2015 at 15:53, Michael J Gruber <git@drmicha.warpmail.net> wrote:
+> I'm wondering what the difference is - or should be - between "git log"
+> and "git rev-list" with (completely) user specified output. That
+> question goes both ways:
+>
+> - Why do we need "rev-list" to have completely flexible output when we
+> have "log" with such flexibility?
+>
+> - Why do we even have pretty formats for "rev-list"?
+>
+> I'm thinking of rev-list as a raw (plumbing) revision lister much like
+> cat-file is the inspection tool for the objects, and log as the human
+> facing output with appropriate defaults (resp. show).
+>
+> Note that "rev-list -v" isn't even documented afaics.
 
-Let's stop saying "Previously we couldn't do X, now we can".
+I can't answer your questions, because I don't have a very deep
+understanding of either command, but according to the "log" docu,
+formating really belongs to "rev-list" and "log" only adds the diff-*
+features:
+------------------------------------------
+The command takes options applicable to the git rev-list command
+to control what is shown and how, and options applicable to the
+git diff-* commands to control how the changes each commit
+introduces are shown.
+------------------------------------------
 
-Instead, let's consistently say "We don't do X. Being able to do X is a
-good thing for such and such reasons. Make us capable of doing X by
-doing this and that."
+I also feel that perhaps "pretty" is a bit of a misnomer and naturally
+is associated with "human readable", but the formating is vital for
+any raw output that scripts can process.
 
-Some people even say "Currently we cannot do X. Teach us to do so",
-which is equally bad but that is primarily because some people say
-"Previously" and they feel the need to clarify which reality they are
-talking about. Once we stop saying "Previously", they will stop saying
-"Currently", and the world would be a better place ;-).
-
-Thanks.
+Oliver
