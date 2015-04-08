@@ -1,129 +1,78 @@
-From: Thomas Braun <thomas.braun@virtuell-zuhause.de>
-Subject: Re:
-Date: Wed, 08 Apr 2015 23:58:58 +0200
-Message-ID: <5525A4A2.9080405@virtuell-zuhause.de>
-References: <CAM9_S8jip3q-vUWFHCWP6ia2wrKOxDpxz2zLSQZPQvAQ0xmKrw@mail.gmail.com>
+From: Rick Olson <rick@github.com>
+Subject: [ANNOUNCE] Git LFS v0.5.0 - Large File Storage
+Date: Thu, 9 Apr 2015 00:44:27 +0200
+Message-ID: <CAAz9cr4vxjWdXeDw0VsgyzB1krGTR9V9M3xYhKsmdD2DHKkhMQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Mamta Upadhyay <mamta.upadhyay@gmail.com>, 
- msysGit <msysgit@googlegroups.com>
 To: git@vger.kernel.org
-X-From: msysgit+bncBCL7JHHTPAIKJSMWVECRUBG7TBUVO@googlegroups.com Wed Apr 08 23:59:02 2015
-Return-path: <msysgit+bncBCL7JHHTPAIKJSMWVECRUBG7TBUVO@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wi0-f184.google.com ([209.85.212.184])
+X-From: git-owner@vger.kernel.org Thu Apr 09 00:44:35 2015
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCL7JHHTPAIKJSMWVECRUBG7TBUVO@googlegroups.com>)
-	id 1Yfxzx-0008KU-B5
-	for gcvm-msysgit@m.gmane.org; Wed, 08 Apr 2015 23:59:01 +0200
-Received: by wivr20 with SMTP id r20sf20934915wiv.1
-        for <gcvm-msysgit@m.gmane.org>; Wed, 08 Apr 2015 14:59:00 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Yfyi2-00078T-K7
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Apr 2015 00:44:35 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1754843AbbDHWoa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Apr 2015 18:44:30 -0400
+Received: from mail-wg0-f41.google.com ([74.125.82.41]:34265 "EHLO
+	mail-wg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753288AbbDHWo3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Apr 2015 18:44:29 -0400
+Received: by wgbdm7 with SMTP id dm7so103059497wgb.1
+        for <git@vger.kernel.org>; Wed, 08 Apr 2015 15:44:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe;
-        bh=g1S/nQ+664OcSA4+fybtMaNvWk2rS+K8qok6Y36M/rA=;
-        b=tn6wcE4F0B6IzqQghsckZJ1KnKQkFtZWjj3oK9vIVJ4/q/WqW9ezxe7oU6hBSbs+CQ
-         p0AdhnUhXfK7hBP7VXcMz46usYmowu0OVQMdso4Ib5T2xrmN0LWgGOlMsGpcFUzHF5Hl
-         CONgKnnHIeFcBs1cej7YPwIh9zYr6x235a2PxfWXyVz2tYpWlvmj2GU02M33cu6FaFEd
-         SodWE9MbAZovxxaDtWNprtn3DA0iWTbxDZ1HPv+AVCSEFMt9LDun/ECUctl4CUmsLVdc
-         RydrgeyPBnVBsZUmyb0MCvSqzu13+QkZYgd4JBmsKp4apviywLpAdMijXf+ALhJWS1jA
-         DKfA==
-X-Received: by 10.152.20.169 with SMTP id o9mr38279lae.6.1428530340902;
-        Wed, 08 Apr 2015 14:59:00 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.163.36 with SMTP id yf4ls242189lab.43.gmail; Wed, 08 Apr
- 2015 14:58:59 -0700 (PDT)
-X-Received: by 10.113.11.3 with SMTP id ee3mr3228205lbd.9.1428530339513;
-        Wed, 08 Apr 2015 14:58:59 -0700 (PDT)
-Received: from wp156.webpack.hosteurope.de (wp156.webpack.hosteurope.de. [80.237.132.163])
-        by gmr-mx.google.com with ESMTPS id ec7si689269wib.3.2015.04.08.14.58.59
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Wed, 08 Apr 2015 14:58:59 -0700 (PDT)
-Received-SPF: none (google.com: thomas.braun@virtuell-zuhause.de does not designate permitted sender hosts) client-ip=80.237.132.163;
-Received: from p5ddc2858.dip0.t-ipconnect.de ([93.220.40.88] helo=[192.168.100.43]); authenticated
-	by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	id 1Yfxzv-00022L-3B; Wed, 08 Apr 2015 23:58:59 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
-In-Reply-To: <CAM9_S8jip3q-vUWFHCWP6ia2wrKOxDpxz2zLSQZPQvAQ0xmKrw@mail.gmail.com>
-X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1428530339;65010aba;
-X-Original-Sender: thomas.braun@virtuell-zuhause.de
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=none
- (google.com: thomas.braun@virtuell-zuhause.de does not designate permitted
- sender hosts) smtp.mail=thomas.braun@virtuell-zuhause.de
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266975>
+        d=github.com; s=google;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=xCcJxhEm6u/Evbxu1akGQb3vVhCCG7EYb7DWdsSiKSc=;
+        b=SKnc9RB9TfLQ36EYOkyB9QrEGw7S61r9mXRtaU0PW85UJICP2OwgjRFfysYOZ0fgcp
+         l4yJkz/IPGiWd8PhnLMi6QkUeMX8h72UeAA1af8Qz3q1jY2Nl3S3B9tpYyI5ncJt86w+
+         DbsqiQa4m3oTNoBeO15Eq1ghNqA4ObpS46A2U=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=xCcJxhEm6u/Evbxu1akGQb3vVhCCG7EYb7DWdsSiKSc=;
+        b=nIY5JWLqQzkoOvI9+phFe9v2eY3A2+HaqKa1D3vnkbatRHAIT/CMgzgEnInWN/Gp+Z
+         DlVo2ROObfxmWM7MP2b9F3NcDF6LqojFSFn83JwYj2RQyYrIZAETW56pAGuorvvoPw+0
+         CzqKAc5lxj+QmZ6Ak2kjhsGK7Da55kDbk4ET3xlWXUnFkWVzoBIcq/9wPwBYQFVdaseM
+         0b7EE2rd+FkCZjY80i6/dfJPvIzHm4RbIOc7J6i0c+VyMI9FqjNlG4DSO2aZ4G+4yRuT
+         z+9ateI5OsiHazkXXdnxvUIeyKnoxn8J2W1R39Csp5fB1ENq75Dsyhd18p6dOSy0NI6A
+         pDFw==
+X-Gm-Message-State: ALoCoQlC6LKKvuvGeSmqly9Q4NV42nZNf/pEfTx8Kr/8C3I820peJgK8xJj2t89za9tYef8QHNn+
+X-Received: by 10.180.95.102 with SMTP id dj6mr836000wib.45.1428533067996;
+ Wed, 08 Apr 2015 15:44:27 -0700 (PDT)
+Received: by 10.194.70.38 with HTTP; Wed, 8 Apr 2015 15:44:27 -0700 (PDT)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266976>
 
-Am 08.04.2015 um 22:44 schrieb Mamta Upadhyay:
-> Hi git team,
+Hi,
 
-(CC'ing msysgit as this is the git for windows list)
+Today we're releasing Git Large File Storage (LFS), an open source extension
+that replaces large files with text pointers, while pushing the contents to
+a Git LFS server.
 
-Hi Mamta,
+    https://git-lfs.github.com
 
-> I tried to research everywhere on a issue I am facing and emailing you
-> as the last resource. This is critical for me and I needed your help.
-> 
-> I am trying to run the latest git 1.9.5 installer on windows. When I
-> run strings on libneon-25.dll it shows this:
-> 
-> ./libneon-25.dll:            OpenSSL 1.0.1h 5 Jun 2014
-> 
-> But when I load this dll in dependency walker, it picks up
-> msys-openssl 1.0.1m and has no trace of openssl-1.0.1h. My questions
-> to you:
-> 
-> 1. Is libneon-25.dll statically linked with openssl-1.0.1h?
-> 2. If not, where is the reference to 1.0.1h coming from?
+It's similar to Git Media, with a few notable exceptions:
 
-I would be suprised if we link openssl statically into libneon. I guess
-libneon just reports against which openssl version it was *built*.
+* It talks to a Git LFS API.  No need to configure different backends
+on the client.
+* HTTPS and SSH authentication is supported.
+* It's distributed as a static binary for Linux, Mac, and Windows, no
+compilation or runtime needed.  The full source is provided with an
+MIT license, so you can also build it yourself with Go.
 
-> I am asked to rebuild git with libneon-25.dll linked against
-> openssl-1.0.1m. But I am having a feeling that this is not needed,
-> since libneon is already picking the latest openssl version. Can you
-> please confirm?
-
-You can download the development enviroment for git for windows here
-[1]. After installation, checkout the msys branch and then you can try
-to recomplile libneon using /src/subversion/release.sh.
-
-[1]:
-https://github.com/msysgit/msysgit/releases/download/Git-1.9.5-preview20150319/msysGit-netinstall-1.9.5-preview20150319.exe
-
-Hope that helps
-Thomas
+ - Homepage: https://git-lfs.github.com
+ - Download: https://github.com/github/git-lfs/releases/tag/v0.5.0
+ - Git URL: https://github.com/github/git-lfs
+ - API Spec: https://github.com/github/git-lfs/blob/master/docs/api.md
+ - Reference Server: https://github.com/github/lfs-test-server
+ - Git Media: https://github.com/alebedev/git-media
 
 -- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "Git for Windows" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+Rick Olson
