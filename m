@@ -1,84 +1,111 @@
-From: Oliver Runge <oliver.runge@gmail.com>
-Subject: Re: rev-list pretty format behavior
-Date: Wed, 8 Apr 2015 19:12:05 +0200
-Message-ID: <CAHaCNWKYY_5JvuAk76wnrTTBaBQM2Fv8hz37tEYC5Jzm1tY-RQ@mail.gmail.com>
-References: <CAHaCNWJZQRVxp3ponvh3pPEk=sOHGYypyhi1Dc8HX5gkKEBGrQ@mail.gmail.com>
-	<xmqqlhi6cma5.fsf@gitster.dls.corp.google.com>
-	<CAHaCNWJ+S7Qa0=x2Xo2+HMQa0jz_tT8G+Wp1ugB4UHwBfOZRTg@mail.gmail.com>
-	<5523E175.2060607@drmicha.warpmail.net>
+From: karthik nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v7 4/4] t1006: add tests for git cat-file --literally
+Date: Wed, 08 Apr 2015 23:12:55 +0530
+Message-ID: <5525689F.5040306@gmail.com>
+References: <551F7984.5070902@gmail.com> <1428126289-19239-1-git-send-email-karthik.188@gmail.com> <CAPig+cQ8SqtjRHRp=po0uXHWp3TFDXBsu5W6EUTs=ZWtR-br1A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Apr 08 19:12:14 2015
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Wed Apr 08 19:43:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YftWO-0003iw-FF
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Apr 2015 19:12:12 +0200
+	id 1Yfu0p-0000Ur-81
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Apr 2015 19:43:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754148AbbDHRMI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Apr 2015 13:12:08 -0400
-Received: from mail-qk0-f181.google.com ([209.85.220.181]:33956 "EHLO
-	mail-qk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752372AbbDHRMG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Apr 2015 13:12:06 -0400
-Received: by qkgx75 with SMTP id x75so90501612qkg.1
-        for <git@vger.kernel.org>; Wed, 08 Apr 2015 10:12:05 -0700 (PDT)
+	id S932110AbbDHRnf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Apr 2015 13:43:35 -0400
+Received: from mail-pd0-f178.google.com ([209.85.192.178]:33711 "EHLO
+	mail-pd0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932088AbbDHRne (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Apr 2015 13:43:34 -0400
+Received: by pdbnk13 with SMTP id nk13so122765982pdb.0
+        for <git@vger.kernel.org>; Wed, 08 Apr 2015 10:43:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=AJXliRQ7M9i8Bg00qmjpc2W3+3RG8ofw13qbkflAjiU=;
-        b=hjCxD4KM40RJrHy1eOG7Iuec2O+FzK9ECv6otDfMp4fSurL+Zm9IfYO+NK9qK4mnqP
-         YgPG7XrdRWewAkJPgqXd3rX+lSQ5/enGp1MsQHR1zGWqT9C07xcgbtdXhqJnZ7YEk4aA
-         GhapjgoMX6AEnQNBOkh7LW1BYUzO2e1yiBMbbgehknQ5MCNIKaQmP1eN5ihoCkZbay+X
-         Sp22MjHtuQR/JTgqcsG0jwwA9RjM4RVxwfZO3vYZews+0ELVgnSMKiZjXltDz/Yx8pww
-         CtKw95u30U0MkftSFTiF5QDVOiUDE+LPmwutcKh6KscC/HyUmIAH2tGDBHBaZvOGAjF7
-         ROCw==
-X-Received: by 10.55.31.218 with SMTP id n87mr48818781qkh.99.1428513125763;
- Wed, 08 Apr 2015 10:12:05 -0700 (PDT)
-Received: by 10.140.42.47 with HTTP; Wed, 8 Apr 2015 10:12:05 -0700 (PDT)
-In-Reply-To: <5523E175.2060607@drmicha.warpmail.net>
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=/Lsp4n/yO2vyEv7QE56H7wEhaZcpFCQDAVKty7K7z8I=;
+        b=t5ANpd9et4x1yOC9LCb2CRrmWtVmDERUd8Js2ZpkiHq24YNt5IRZ4+Esss2TgRo4z3
+         LxJxdLnUnRFA4JeNPhaL5BK7YdRZnS2PIibNFSv4bgy0A40uBNorRlsp1Wg0zdfzlfSy
+         Prth6NBJ6fVU7khRHn6NlG2loB4IwxQKut7084/QuyTqCGeJXcFXa2Wo+os5jeCUIakl
+         4ujC/NUvg6/v7+J2q9ujMV3P+Wju72LT8kuA9BVPaUQLdV2fkjnfKNhqPMzZPsFQ6NSw
+         5QV+TOyybdFxSM0/mDh1HYJex3Brg96//SBsHhFvV5Ub6ZSDx25K8/B/EAMmscqfuTW6
+         Ud+g==
+X-Received: by 10.70.92.34 with SMTP id cj2mr24861936pdb.116.1428515013946;
+        Wed, 08 Apr 2015 10:43:33 -0700 (PDT)
+Received: from [192.168.42.172] ([49.15.136.60])
+        by mx.google.com with ESMTPSA id gy3sm11689279pbb.42.2015.04.08.10.43.29
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 08 Apr 2015 10:43:32 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
+In-Reply-To: <CAPig+cQ8SqtjRHRp=po0uXHWp3TFDXBsu5W6EUTs=ZWtR-br1A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266966>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266967>
 
-Heyup, Dr. Gruber.
 
-On 7 April 2015 at 15:53, Michael J Gruber <git@drmicha.warpmail.net> wrote:
-> I'm wondering what the difference is - or should be - between "git log"
-> and "git rev-list" with (completely) user specified output. That
-> question goes both ways:
+On 04/08/2015 02:19 AM, Eric Sunshine wrote:
+> On Sat, Apr 4, 2015 at 1:44 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
+> > Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+> > ---
+> > diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
+> > index ab36b1e..5b74044 100755
+> > --- a/t/t1006-cat-file.sh
+> > +++ b/t/t1006-cat-file.sh
+> > @@ -47,6 +47,18 @@ $content"
+> >          test_cmp expect actual
+> >       '
+> >
+> > +    test_expect_success "Type of $type is correct using --literally" '
+> > +       echo $type >expect &&
+> > +       git cat-file -t --literally $sha1 >actual &&
+> > +       test_cmp expect actual
+> > +    '
+> > +
+> > +    test_expect_success "Size of $type is correct using --literally" '
+> > +       echo $size >expect &&
+> > +       git cat-file -s --literally $sha1 >actual &&
+> > +       test_cmp expect actual
+> > +    '
+> > +
+> >       test -z "$content" ||
+> >       test_expect_success "Content of $type is correct" '
+> >          maybe_remove_timestamp "$content" $no_ts >expect &&
+> > @@ -296,4 +308,19 @@ test_expect_success '%(deltabase) reports packed delta bases' '
+> >          }
+> >   '
+> >
+> > +bogus_type="bogus"
+> > +bogus_sha1=$(git hash-object -t $bogus_type --literally -w --stdin </dev/null)
+> > +
+> > +test_expect_success "Type of broken object is correct" '
+> > +       echo $bogus_type >expect &&
+> > +       git cat-file -t --literally $bogus_sha1 >actual &&
+> > +       test_cmp expect actual
+> > +'
+> > +
+> > +test_expect_success "Size of broken object is correct" '
+> > +       echo "0" >expect &&
 >
-> - Why do we need "rev-list" to have completely flexible output when we
-> have "log" with such flexibility?
+> Zero is such a common fallback value when things go wrong that it may
+> not be the best choice for this test. Consequently, it might be better
+> to create the bogus object with non-zero length. Take a look at how
+> 'hello_length' and 'hello_sha1' are computed elsewhere in this script
+> for inspiration.
+The first part of this patch contains tests which make use of 'hello_length'
+adn 'hello_sha1', but I get what you're saying, will look into it. Thanks.
 >
-> - Why do we even have pretty formats for "rev-list"?
->
-> I'm thinking of rev-list as a raw (plumbing) revision lister much like
-> cat-file is the inspection tool for the objects, and log as the human
-> facing output with appropriate defaults (resp. show).
->
-> Note that "rev-list -v" isn't even documented afaics.
-
-I can't answer your questions, because I don't have a very deep
-understanding of either command, but according to the "log" docu,
-formating really belongs to "rev-list" and "log" only adds the diff-*
-features:
-------------------------------------------
-The command takes options applicable to the git rev-list command
-to control what is shown and how, and options applicable to the
-git diff-* commands to control how the changes each commit
-introduces are shown.
-------------------------------------------
-
-I also feel that perhaps "pretty" is a bit of a misnomer and naturally
-is associated with "human readable", but the formating is vital for
-any raw output that scripts can process.
-
-Oliver
+> > +       git cat-file -s --literally $bogus_sha1 >actual &&
+> > +       test_cmp expect actual
+> > +'
+> > +
+> >   test_done
+> > --
+> > 2.4.0.rc1.249.g9f2ee54
