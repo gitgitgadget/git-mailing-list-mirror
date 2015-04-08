@@ -1,302 +1,97 @@
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [RFC/PATCH 2/4] submodules: implement remote commands.
-Date: Wed,  8 Apr 2015 12:58:23 +0200
-Message-ID: <1428490705-11586-3-git-send-email-ps@pks.im>
+Subject: [RFC/PATCH 3/4] submodules: update docs to reflect remotes.
+Date: Wed,  8 Apr 2015 12:58:24 +0200
+Message-ID: <1428490705-11586-4-git-send-email-ps@pks.im>
 References: <1428490705-11586-1-git-send-email-ps@pks.im>
 Cc: Patrick Steinhardt <ps@pks.im>, Jens Lehmann <Jens.Lehmann@web.de>,
 	Heiko Voigt <hvoigt@hvoigt.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 08 13:17:24 2015
+X-From: git-owner@vger.kernel.org Wed Apr 08 13:17:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yfnyy-0007rY-Lz
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Apr 2015 13:17:21 +0200
+	id 1YfnzB-0007tk-Eb
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Apr 2015 13:17:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753395AbbDHLRR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Apr 2015 07:17:17 -0400
-Received: from sender1.zohomail.com ([74.201.84.157]:50227 "EHLO
+	id S1753401AbbDHLRV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Apr 2015 07:17:21 -0400
+Received: from sender1.zohomail.com ([74.201.84.157]:50228 "EHLO
 	sender1.zohomail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753179AbbDHLRO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Apr 2015 07:17:14 -0400
+	with ESMTP id S1753209AbbDHLRP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Apr 2015 07:17:15 -0400
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; 
   s=mail; d=pks.im; 
   h=from:to:cc:subject:date:message-id:in-reply-to:references; 
-  b=jlal4uEfVSnEg3e7wlnn16RpfPzoDzxYR7OfZ4wJudWJPr+zyK4VO900mGYRezSHNPaIW98de/H7
-    ogGzhzpBFlefnp4UGzPIFcu81hfGf4CReAiL+XHaLbscs2pDw1MAsj2tfMQTod1Zv/er2ETyqVkM
-    NMpphTaWUlw6WHbvaQI=  
+  b=GRNwTa6q2ZngJNmvvBqFnhz9P2S+zMGc7OVorW1/AW+ewYwsdp5EkpWltdG759vyo8Zh29JUt6Ox
+    ueLLxEh0Z6q83B0Ft7buKq3FIQUt/Wtd7OVrke77hM8sN3DdbavGEVuweCZ6TBc96P+K2MDm5qxf
+    AaJfKxLTS9S2vBJnbpM=  
 Received: from localhost (x5ce10f35.dyn.telefonica.de [92.225.15.53]) by mx.zohomail.com
-	with SMTPS id 1428490766393149.52693052983773; Wed, 8 Apr 2015 03:59:26 -0700 (PDT)
+	with SMTPS id 1428490769598614.6832758230394; Wed, 8 Apr 2015 03:59:29 -0700 (PDT)
 X-Mailer: git-send-email 2.3.5
 In-Reply-To: <1428490705-11586-1-git-send-email-ps@pks.im>
-X-ZohoMail: Ss  SS_10 UW1 iCHF_KNW_WHT_EXT UW1 UB2468 iCHF_INT_SMD_EXT UW1 iSFP_NO_WHTCNT_EXT UW1 UB2468 iZSF-HLOLL_2  SGR3_0_01045_19
-X-ZohoMail-Owner: <1428490705-11586-3-git-send-email-ps@pks.im>+zmo_0_<ps@pks.im>
+X-ZohoMail: Ss  SS_10 UW1 iCHF_KNW_WHT_EXT UW1 UB2468 iCHF_INT_SMD_EXT UW1 iSFP_NO_WHTCNT_EXT UW1 UB2468 iZSF-HLOLL_2  SGR3_0_01045_18
+X-ZohoMail-Owner: <1428490705-11586-4-git-send-email-ps@pks.im>+zmo_0_<ps@pks.im>
 X-ZohoMail-Sender: 92.225.15.53
 X-Zoho-Virus-Status: 2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266955>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266956>
 
-Add commands to modify a submodule's remote configuration. There
-are commands to add and remove submodule remotes as well as to
-modify the URL of a submodule remote.
 ---
- git-submodule.sh | 225 ++++++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 223 insertions(+), 2 deletions(-)
+ Documentation/git-submodule.txt | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 599a847..6904f29 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -12,7 +12,11 @@ USAGE="[--quiet] add [-b <branch>] [-f|--force] [--name <name>] [--reference <re
-    or: $dashless [--quiet] update [--init] [--remote] [-N|--no-fetch] [-f|--force] [--checkout|--merge|--rebase] [--reference <repository>] [--recursive] [--] [<path>...]
-    or: $dashless [--quiet] summary [--cached|--files] [--summary-limit <n>] [commit] [--] [<path>...]
-    or: $dashless [--quiet] foreach [--recursive] <command>
--   or: $dashless [--quiet] sync [--recursive] [--] [<path>...]"
-+   or: $dashless [--quiet] sync [--recursive] [--] [<path>...]
-+   or: $dashless [--quiet] remote add <path> <name> <url>
-+   or: $dashless [--quiet] remote rm <path> <name>
-+   or: $dashless [--quiet] remote show <path>
-+   or: $dashless [--quiet] remote set-url [--push] <path> <name> <url>"
- OPTIONS_SPEC=
- SUBDIRECTORY_OK=Yes
- . git-sh-setup
-@@ -1270,6 +1274,223 @@ cmd_status()
- }
+diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+index 2c25916..a49a2ad 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -21,6 +21,9 @@ SYNOPSIS
+ 	      [commit] [--] [<path>...]
+ 'git submodule' [--quiet] foreach [--recursive] <command>
+ 'git submodule' [--quiet] sync [--recursive] [--] [<path>...]
++'git submodule' [--quiet] remote add <path> <name> <url>
++'git submodule' [--quiet] remote rm <path> <name>
++'git submodule' [--quiet] remote set-url [--push] <path> <name> <url>"
  
- #
-+# Modify remote configuration in .gitmodules
-+#
-+cmd_remote()
-+{
-+	while test $# -ne 0
-+	do
-+		case "$1" in
-+			-q|--quiet)
-+				GIT_QUIET=1
-+				shift
-+				;;
-+			add|rm|show)
-+				subcommand=$1
-+				shift
-+				;;
-+			set-url)
-+				subcommand=set_url
-+				shift
-+				;;
-+			*)
-+				break;;
-+		esac
-+	done
+ 
+ DESCRIPTION
+@@ -233,6 +236,22 @@ As an example, +git submodule foreach \'echo $path {backtick}git
+ rev-parse HEAD{backtick}'+ will show the path and currently checked out
+ commit for each submodule.
+ 
++remote::
++	Modify a submodule's remote configuration. The command has subcommands that
++	mirror the commands of `git remote`. The change will be reflected inside
++	of the .gitmodules file the submodule is specified in. Changes will be
++	synchronized with the submodule by running `git submodule sync`.
+++
++	`git submodule remote add <sm_path> <remote> <url>`;;
++		add a new remote with the URL specified to the submodule
++	`git submodule remote rm <sm_path> <remote>`;;
++		remove a remote with the given name for the specified submodule
++	`git submodule remote show [-v|--verbose] <sm_path>`;;
++		show configured remotes for the submodule. If `--verbose` is specified,
++		also print URLs.
++	`git submodule remote set-url [--push] <sm_path> <remote> <url>`;;
++		set the (push) URL for the given remote name and submodule.
 +
-+	if test -z "$subcommand"
-+	then
-+		usage
-+	fi
+ sync::
+ 	Synchronizes submodules' remote URL configuration setting
+ 	to the value specified in .gitmodules. It will only affect those
+@@ -240,6 +259,10 @@ sync::
+ 	case when they are initialized or freshly added). This is useful when
+ 	submodule URLs change upstream and you need to update your local
+ 	repositories accordingly.
 +
-+	"cmd_remote_$subcommand" "$@"
-+}
-+
-+#
-+# Show remote configuration for a gitmodule
-+#
-+cmd_remote_show()
-+{
-+	while test $# -ne 0
-+	do
-+		case "$1" in
-+			-v|--verbose)
-+				verbose=1
-+				shift
-+				;;
-+			*)
-+				sm_path="$1"
-+				shift
-+				break;;
-+		esac
-+	done
-+
-+	if test $# -ne 0
-+	then
-+		usage
-+	fi
-+
-+	if test -z "$sm_path"
-+	then
-+		die "$(gettext "No submodule path specified")"
-+	fi
-+
-+	sm_name=$(module_name "$sm_path") || exit
-+
-+	cd_to_toplevel
-+
-+	git config -f .gitmodules --get-regexp "submodule-remote\.$sm_name\..*\.url" 2>/dev/null |
-+	while read key url
-+	do
-+		remote=$(echo "$key" | sed "s/submodule-remote\.$sm_name\.\(.*\)\.url/\1/")
-+		section="submodule-remote.$sm_name.$remote"
-+
-+		if test -z "$verbose"
-+		then
-+			echo "$remote"
-+		else
-+			url=$(git config -f .gitmodules "$section.url" 2>/dev/null)
-+			pushurl=$(git config -f .gitmodules "$section.pushurl" 2>/dev/null)
-+
-+			if test -z "$pushurl"
-+			then
-+				pushurl="$url"
-+			fi
-+
-+			echo -e "$remote\t$url (fetch)"
-+			echo -e "$remote\t$pushurl (push)"
-+		fi
-+	done
-+}
-+
-+#
-+# Add remote configuration to .gitmodules
-+# This adds a new remote with the key
-+# submodule-remote.$name.$remote.url set to the specified value
-+# to .gitmodules.
-+#
-+cmd_remote_add()
-+{
-+	if test $# -ne 3
-+	then
-+		usage
-+	fi
-+
-+	sm_path="$1"
-+	remote_name="$2"
-+	remote_url="$3"
-+
-+	sm_name=$(module_name "$sm_path") || exit
-+	displaypath=$(relative_path "$sm_path")
-+	key="submodule-remote.$sm_name.$remote_name.url"
-+
-+	if test -z "$remote_name"
-+	then
-+		die "$(eval_gettext "Empty remote name not allowed")"
-+	fi
-+
-+	cd_to_toplevel
-+
-+	if git config -f .gitmodules "$key" >/dev/null 2>/dev/null
-+	then
-+		die "$(eval_gettext "Remote '\$remote_name' for submodule '\$sm_name' already present")"
-+	fi
-+
-+	if git config -f .gitmodules "submodule-remote.$sm_name.$remote_name.url" "$remote_url"
-+	then
-+		say "$(eval_gettext "Remote '\$remote_name' added for path '\$displaypath'")"
-+	else
-+		die "$(eval_gettext "Remote '\$remote_name' could not be added for path '\$displaypath'")"
-+	fi
-+}
-+
-+#
-+# Remove remote configuration from .gitmodules
-+# This removes the remote for the specified submodule and remote
-+# name.
-+#
-+cmd_remote_rm()
-+{
-+	if test $# -ne 2
-+	then
-+		usage
-+	fi
-+
-+	sm_path="$1"
-+	remote_name="$2"
-+
-+	sm_name=$(module_name "$sm_path") || exit
-+	displaypath=$(relative_path "$sm_path")
-+	section="submodule-remote.$sm_name.$remote_name"
-+
-+	if test -z "$remote_name"
-+	then
-+		die "$(eval_gettext "Empty remote name not allowed")"
-+	fi
-+
-+	if ! git config -f .gitmodules "$section.url" >/dev/null 2>/dev/null
-+	then
-+		die "$(eval_gettext "No remote '\$remote_name' present for path '\$displaypath'")"
-+	fi
-+
-+	if git config -f .gitmodules --remove-section "$section" >/dev/null 2>/dev/null
-+	then
-+		say "$(eval_gettext "Remote '\$remote_name' removed for path '\$displaypath'")"
-+	else
-+		die "$(eval_gettext "Remote '\$remote_name' could not be removed for path '\$displaypath'")"
-+	fi
-+}
-+
-+#
-+# Change remote URL configuration in .gitmodules
-+# This sets the values submodule-remote.$name.$remote.url and
-+# submodule-remote.$name.$remote.pushurl in .gitmodules.
-+#
-+cmd_remote_set_url()
-+{
-+	if test $# -lt 3
-+	then
-+		usage
-+	fi
-+
-+	if test "$1" = "--push"
-+	then
-+		push=1
-+		shift
-+	fi
-+
-+	sm_path="$1"
-+	remote_name="$2"
-+	url="$3"
-+
-+	sm_name=$(module_name "$sm_path") || exit
-+	displaypath=$(relative_path "$sm_path")
-+
-+	if test -z "$remote_name"
-+	then
-+		die "$(eval_gettext "Empty remote name not allowed")"
-+	fi
-+
-+	section="submodule-remote.$sm_name.$remote_name"
-+	if test -z $push
-+	then
-+		key="$section.url"
-+	else
-+		key="$section.pushurl"
-+	fi
-+
-+	if ! git config -f .gitmodules "$section.url" >/dev/null 2>/dev/null
-+	then
-+		die "$(eval_gettext "No remote '\$remote_name' specified for path '\$displaypath'")"
-+	fi
-+
-+	if ! git config -f .gitmodules "$key" "$url"
-+	then
-+		die "$(eval_gettext "could not set URL for '\$displaypath'")"
-+	fi
-+}
-+
-+#
- # Sync remote urls for submodules
- # This makes the value for remote.$remote.url match the value
- # specified in .gitmodules.
-@@ -1386,7 +1607,7 @@ cmd_sync()
- while test $# != 0 && test -z "$command"
- do
- 	case "$1" in
--	add | foreach | init | deinit | update | status | summary | sync)
-+	add | foreach | init | deinit | update | status | summary | sync | remote)
- 		command=$1
- 		;;
- 	-q|--quiet)
++	Also synchronizes all remotes that have been configured in .gitmodules.
++	Missing remotes will be added to the submodule while existing ones will be
++	updated according to the configured fetch or push URLs.
+ +
+ "git submodule sync" synchronizes all submodules while
+ "git submodule sync \-- A" synchronizes submodule "A" only.
 -- 
 2.3.5
