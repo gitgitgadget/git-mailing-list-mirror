@@ -1,79 +1,85 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH] systemd socket activation support
-Date: Wed, 8 Apr 2015 16:26:42 +0200
-Message-ID: <CABPQNSa-45ZsUX54Ym3dQa+HU63abcQ9O3v8maRe9e_-38Ef+Q@mail.gmail.com>
-References: <1427954951-17649-1-git-send-email-shawn@churchofgit.com>
-Reply-To: kusmabite@gmail.com
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: GIT Mailing-list <git@vger.kernel.org>,
-	Shawn Landden <shawnlandden@gmail.com>
-To: Shawn Landden <shawn@churchofgit.com>
-X-From: git-owner@vger.kernel.org Wed Apr 08 16:27:34 2015
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCH 2/3] t/lib-git-svn: check same httpd module dirs as lib-httpd
+Date: Wed,  8 Apr 2015 17:05:25 +0200
+Message-ID: <42794bef0424d21c3ee1003e21a98fd65ed194cf.1428505184.git.git@drmicha.warpmail.net>
+References: <cover.1428505184.git.git@drmicha.warpmail.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 08 17:05:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yfqx3-0004d1-J6
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Apr 2015 16:27:33 +0200
+	id 1YfrXt-0005LC-GC
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Apr 2015 17:05:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932355AbbDHO12 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Apr 2015 10:27:28 -0400
-Received: from mail-ie0-f170.google.com ([209.85.223.170]:34624 "EHLO
-	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932352AbbDHO1Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Apr 2015 10:27:24 -0400
-Received: by iedfl3 with SMTP id fl3so84904553ied.1
-        for <git@vger.kernel.org>; Wed, 08 Apr 2015 07:27:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=mv9X2Wn0WHuFqty3x6B0wcmfOkW8Y47PESBWlNjJdAA=;
-        b=RiEuat92ys6bCj+ugoUXfAautYBVQr67MgrnaTBgPufjeMDXFkvYIgN/AB1QiXeyOt
-         znalraw8vDaNHgISjajdzuFumLKgf054JJcqiN+NtQCKkMgON958oYaAqcNDRmG7laTA
-         SSbtCJ5GUjPuimnUseK1WzS2rZOidnC6SRFnnO/qxkzuJLH0q4TfritLyk1EZ5OaFM0e
-         sZ3CKVlETCuswxE7XJsjzFGlLpUXRhV1c6z+M5+oPfZqJkGCqzFtlvcjmEiEJKz2n5im
-         J0jW2/rxuOtntqblQvDPvtLJc/z+l7cOYTw6HZcb2aVXNqC6zeIlcL2XRq3bQ5bGwXJa
-         LcpQ==
-X-Received: by 10.50.43.130 with SMTP id w2mr12256480igl.30.1428503242731;
- Wed, 08 Apr 2015 07:27:22 -0700 (PDT)
-Received: by 10.64.88.165 with HTTP; Wed, 8 Apr 2015 07:26:42 -0700 (PDT)
-In-Reply-To: <1427954951-17649-1-git-send-email-shawn@churchofgit.com>
+	id S932129AbbDHPFd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Apr 2015 11:05:33 -0400
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:44444 "EHLO
+	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754386AbbDHPFa (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 8 Apr 2015 11:05:30 -0400
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailout.nyi.internal (Postfix) with ESMTP id 85BBF20C10
+	for <git@vger.kernel.org>; Wed,  8 Apr 2015 11:05:26 -0400 (EDT)
+Received: from frontend1 ([10.202.2.160])
+  by compute5.internal (MEProxy); Wed, 08 Apr 2015 11:05:30 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=
+	date:from:in-reply-to:message-id:references:subject:to
+	:x-sasl-enc:x-sasl-enc; s=mesmtp; bh=MZOXmdjCZWq0w1qo/PN/6Cy7lVw
+	=; b=oF0ZmS7/lgJVTQuiIqiO4YVxVuYqE23H0F5VU/plx32PoGzIE9ehbtiebt8
+	w1o2OI32W2dWCGz26hhy588Sd3wRbt+Z6R14I9WvJlNoobc/vLcqq4po5wps29Y3
+	5SHY4PS0q8NPnXCoUzJn86qgcFNV1UA03y5hL57z0EuMkRXc=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=date:from:in-reply-to:message-id
+	:references:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=MZOX
+	mdjCZWq0w1qo/PN/6Cy7lVw=; b=Na+vW+Bteyr57AUMVfbexlD6qceIhWwyrTLR
+	hitu1Hk/1Nn1Ry6pvNQM5z+n5UB90u+sqR8KNt6tKuvYS7lDsDxi18mtPYljj6YA
+	LtrtrKxoob/NiceJlT08CkyAQLRk+ea38G9dPJ94WdopnDcZS3entecWNxTLOtkR
+	mu1nw0g=
+X-Sasl-enc: Y20uZyM+PzAyMePBC7nteH01FfvWQ+++JmE9Id9ohV72 1428505530
+Received: from localhost (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 1D03EC0001C;
+	Wed,  8 Apr 2015 11:05:30 -0400 (EDT)
+X-Mailer: git-send-email 2.4.0.rc1.221.gf7021fb
+In-Reply-To: <cover.1428505184.git.git@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266960>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266961>
 
-On Thu, Apr 2, 2015 at 8:09 AM, Shawn Landden <shawn@churchofgit.com> wrote:
-> From: Shawn Landden <shawnlandden@gmail.com>
->
-> v1.1: actually test...
->
-> Signed-off-by: Shawn Landden <shawn@churchofgit.com>
-> ---
->  daemon.c           |  35 +++++++++++---
->  git-daemon.service |   7 +++
->  git-daemon.socket  |   9 ++++
->  sd-daemon.c        | 132 +++++++++++++++++++++++++++++++++++++++++++++++++++++
->  sd-daemon.h        |  91 ++++++++++++++++++++++++++++++++++++
->  5 files changed, 268 insertions(+), 6 deletions(-)
->  create mode 100644 git-daemon.service
->  create mode 100644 git-daemon.socket
->  create mode 100644 sd-daemon.c
->  create mode 100644 sd-daemon.h
->
-> diff --git a/daemon.c b/daemon.c
-> index 9ee2187..4677058 100644
-> --- a/daemon.c
-> +++ b/daemon.c
-> @@ -5,6 +5,8 @@
->  #include "strbuf.h"
->  #include "string-list.h"
->
-> +#include "sd-daemon.c"
-> +
+Currently, lib-git-svn checks a proper subset of the paths that
+lib-httpd checks for apache modules.
 
-You meant "sd-daemon.h", no?
+Make it check the same set so that apache is run by one when it is run
+by the other (provide ports have been set).
+
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+
+Notes:
+    Again, I'm wondering how many are running these tests.
+    They would not run on a 64bit system with redhat type fs layout.
+
+ t/lib-git-svn.sh | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/t/lib-git-svn.sh b/t/lib-git-svn.sh
+index b0ec12f..2a0ef07 100644
+--- a/t/lib-git-svn.sh
++++ b/t/lib-git-svn.sh
+@@ -87,8 +87,10 @@ prepare_httpd () {
+ 	fi
+ 	for d in \
+ 		"$SVN_HTTPD_MODULE_PATH" \
+-		/usr/lib/apache2/modules \
+ 		/usr/libexec/apache2 \
++		/usr/lib/apache2/modules \
++		/usr/lib64/httpd/modules \
++		/usr/lib/httpd/modules \
+ 	; do
+ 		if test -d "$d"
+ 		then
+-- 
+2.4.0.rc1.221.gf7021fb
