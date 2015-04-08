@@ -1,62 +1,77 @@
-From: Patrick Steinhardt <ps@pks.im>
-Subject: [RFC/PATCH 4/4] submodules: add bash completion for remotes.
-Date: Wed,  8 Apr 2015 12:58:25 +0200
-Message-ID: <1428490705-11586-5-git-send-email-ps@pks.im>
-References: <1428490705-11586-1-git-send-email-ps@pks.im>
-Cc: Patrick Steinhardt <ps@pks.im>, Jens Lehmann <Jens.Lehmann@web.de>,
-	Heiko Voigt <hvoigt@hvoigt.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 08 13:17:35 2015
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: gitk won't show notes?
+Date: Wed, 08 Apr 2015 13:51:40 +0200
+Message-ID: <5525164C.6000309@drmicha.warpmail.net>
+References: <551D99B9.7040200@ubuntu.com> <5523DE66.8060904@drmicha.warpmail.net> <5523E479.2010701@ubuntu.com> <5523E5FF.8060101@drmicha.warpmail.net> <55240F0A.80902@ubuntu.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Paul Mackerras <paulus@samba.org>
+To: Phillip Susi <psusi@ubuntu.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Apr 08 13:51:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YfnzA-0007tk-Ro
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Apr 2015 13:17:33 +0200
+	id 1YfoWJ-0005MM-8q
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Apr 2015 13:51:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753179AbbDHLRT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Apr 2015 07:17:19 -0400
-Received: from sender1.zohomail.com ([74.201.84.157]:50230 "EHLO
-	sender1.zohomail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751510AbbDHLRQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Apr 2015 07:17:16 -0400
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; 
-  s=mail; d=pks.im; 
-  h=from:to:cc:subject:date:message-id:in-reply-to:references; 
-  b=24J6rQDvYVhhAUDB98IMOrS6Yk2SeXIYLUjjJbrBdC6BgCJYnvRKmSmCoEJ9N7dkpC3ndWt5nIVl
-    dQChy98am/RIse6OkefmyQ9h9YQuJh04dZTj3zXBs0FWGVZCIF7IxkKbhXumLLR+vMI1in67dyPz
-    Yu9StGrXQNecQTyxgxQ=  
-Received: from localhost (x5ce10f35.dyn.telefonica.de [92.225.15.53]) by mx.zohomail.com
-	with SMTPS id 1428490772689399.1062548916668; Wed, 8 Apr 2015 03:59:32 -0700 (PDT)
-X-Mailer: git-send-email 2.3.5
-In-Reply-To: <1428490705-11586-1-git-send-email-ps@pks.im>
-X-ZohoMail: Ss  SS_10 UW1 iCHF_KNW_WHT_EXT UW1 UB2468 iCHF_INT_SMD_EXT UW1 iSFP_NO_WHTCNT_EXT UW1 UB2468 iZSF-HLOLL_2  SGR3_0_01045_18
-X-ZohoMail-Owner: <1428490705-11586-5-git-send-email-ps@pks.im>+zmo_0_<ps@pks.im>
-X-ZohoMail-Sender: 92.225.15.53
-X-Zoho-Virus-Status: 2
+	id S1753387AbbDHLvn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Apr 2015 07:51:43 -0400
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:33632 "EHLO
+	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751598AbbDHLvm (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 8 Apr 2015 07:51:42 -0400
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailout.nyi.internal (Postfix) with ESMTP id 121DA20E6A
+	for <git@vger.kernel.org>; Wed,  8 Apr 2015 07:51:38 -0400 (EDT)
+Received: from frontend2 ([10.202.2.161])
+  by compute5.internal (MEProxy); Wed, 08 Apr 2015 07:51:42 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=fXnBT1DMrih/qxBYEF4wk5OLdeI=; b=OCdDg5
+	WqsfdLaqoboEYm8H+6rPXNmfDyFbOPYkBkyI7SMFH9qsFTx6WwkWzDzTrsHRuOyb
+	Nntue8hpyZUUNEzwCfj3+QowRqriXAIMYKfTa779wWffrGBg+DckUaTV2nb3fdCa
+	5RiCPiswcdV0JhGpNh+IxpdG+5IUMA5lQlTXI=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=fXnBT1DMrih/qxB
+	YEF4wk5OLdeI=; b=VO4scC5ABPPKsMruBpXJo6dISem9st5pRi4RXr+h2meVLoF
+	0b2+PXTtIDb65LpTovhUrFMmIksipFTyo4nzOyvB17wHERLoqpwWILBTlir5bs4J
+	Y9CEIyl0Qg4kgkBlF769Qews2MQluBxHspVfgyKlLV1toiA2AMdcC9PlMnl8=
+X-Sasl-enc: /ZcnJU4krpNAmRDgEvSWGzCWqBv1dXgUeUSZ451gJ4F4 1428493901
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 64F2E6801A0;
+	Wed,  8 Apr 2015 07:51:41 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
+In-Reply-To: <55240F0A.80902@ubuntu.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266958>
 
----
- contrib/completion/git-completion.bash | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Phillip Susi venit, vidit, dixit 07.04.2015 19:08:
+> On 4/7/2015 10:13 AM, Michael J Gruber wrote:
+>> Seriously: gitk knows F5 and Shift-F5 for refresh, and I think the 
+>> latter is the thorougher refreshment.
+> 
+> Neither one makes newly added notes show up.  The only way seems to be
+> to close and restart gitk.  Looks like a bug.
+> 
+> 
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index fbe5972..9d52bf0 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2411,7 +2411,7 @@ _git_submodule ()
- {
- 	__git_has_doubledash && return
- 
--	local subcommands="add status init deinit update summary foreach sync"
-+	local subcommands="add status init deinit update summary foreach sync remote"
- 	if [ -z "$(__git_find_on_cmdline "$subcommands")" ]; then
- 		case "$cur" in
- 		--*)
--- 
-2.3.5
+Apparently, gitk rereads the refs but not commits it has read already -
+and the commit reading includes the notes lookup.
+
+Unfortunately, my wish-fu is lacking. But I'll cc the master.
+
+Paulus: None of updatecommits, reloadcommits and rereadrefs seem to
+reread the notes of a commit that has been displayed already if the
+notes have changed (but the other refs have not).
+
+Michael
