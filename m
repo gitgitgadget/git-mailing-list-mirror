@@ -1,101 +1,80 @@
-From: Patrick Steinhardt <ps@pks.im>
-Subject: Re: [RFC/PATCH 1/4] submodules: implement synchronizing of remotes.
-Date: Thu, 9 Apr 2015 13:57:16 +0200
-Message-ID: <20150409115716.GA347@pks-pc>
-References: <1428490705-11586-1-git-send-email-ps@pks.im>
- <1428490705-11586-2-git-send-email-ps@pks.im>
- <CAPc5daWarayCBKyzrcNoh07RtPZhu4WjaT8QNsuHDtphxvz1DQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="0OAP2g/MAC+5xKAE"
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 09 13:57:30 2015
+From: "Kyle J. McKay" <mackyle@gmail.com>
+Subject: Re: [PATCH 0/3] Make httpd tests run
+Date: Thu, 9 Apr 2015 06:04:31 -0700
+Message-ID: <3997B1B0-98C0-4408-B82E-85BBD78732FD@gmail.com>
+References: <cover.1428505184.git.git@drmicha.warpmail.net>
+Mime-Version: 1.0 (Apple Message framework v936)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Apr 09 15:04:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YgB5N-0007Gh-QH
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Apr 2015 13:57:30 +0200
+	id 1YgC8T-0001AD-Pj
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Apr 2015 15:04:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933834AbbDIL5Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Apr 2015 07:57:25 -0400
-Received: from sender1.zohomail.com ([74.201.84.162]:53330 "EHLO
-	sender1.zohomail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933335AbbDIL5Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Apr 2015 07:57:24 -0400
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; 
-  s=mail; d=pks.im; 
-  h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; 
-  b=kt9Jzf9R0ADI3oeeUg5ocEty5ukjov5LeqSxUMdEos7GT2AFknIBsidtP3ymvlx8Ob9WQ84jbTtJ
-    ftEry9wFZ2XOjsurekkz/5ZCYNwl56es7mtD2Hufzav/JhaldZzUVIVWq7FXvYB7fe1F+SMDsvsn
-    cBbCUmWvA/8vYiU4QeI=  
-Received: from localhost (x5ce10066.dyn.telefonica.de [92.225.0.102]) by mx.zohomail.com
-	with SMTPS id 1428580642356803.6665153011844; Thu, 9 Apr 2015 04:57:22 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CAPc5daWarayCBKyzrcNoh07RtPZhu4WjaT8QNsuHDtphxvz1DQ@mail.gmail.com>
-X-Zoho-Virus-Status: 1
+	id S1755030AbbDINEg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Apr 2015 09:04:36 -0400
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:35041 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754947AbbDINEf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Apr 2015 09:04:35 -0400
+Received: by pabtp1 with SMTP id tp1so43747618pab.2
+        for <git@vger.kernel.org>; Thu, 09 Apr 2015 06:04:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:in-reply-to:subject:references:message-id:content-type
+         :content-transfer-encoding:mime-version:date:cc;
+        bh=RoM+bsjlshiT0NGUKKLHs/lIrK49Z59rxaF01Pu0v1I=;
+        b=XKbNCPE7Rd4ow/P3mj4MA7S1ehc/JortbPvS5qPkHjeVFfPNElBXsrgcLZ/RsGnJpe
+         PK8Im+BmlG/8yX3wrA5Z0GNnba9u+a7NnsCP473aoNqdc48gni29pPVQVf3cRh75vEuq
+         68a1DQEjB7rQhwpQyp6v/YpMIEuFi78OGnnxQOa1349/yUT1ezL7kqMAvY+eNolA5OKB
+         rR1EGBxqOwJkJl+Z8z125id+j8irG5nwdIU0qiruWhBTsiDPVR92emCeXcwOp5X0ALoI
+         7NztTLJBI+L6/uLNkylXS9j1UctIsdgcnEUW8cdYMoGYRVOKtLYmwdVCzZ9iol88lKcv
+         gBsg==
+X-Received: by 10.70.136.202 with SMTP id qc10mr55126429pdb.117.1428584675325;
+        Thu, 09 Apr 2015 06:04:35 -0700 (PDT)
+Received: from ?IPv6:2002:48c0:ad8d::223:12ff:fe05:eebd? ([2002:48c0:ad8d:0:223:12ff:fe05:eebd])
+        by mx.google.com with ESMTPSA id rb6sm14296294pbb.96.2015.04.09.06.04.33
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Thu, 09 Apr 2015 06:04:34 -0700 (PDT)
+In-Reply-To: <cover.1428505184.git.git@drmicha.warpmail.net>
+X-Mauler: Craptastic (2.936)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266992>
 
+On Apr 8, 2015, at 08:05, Michael J Gruber wrote:
 
---0OAP2g/MAC+5xKAE
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> This series grew from an attempt at enlarging my personal test run  
+> coverage
+> on a standard Fedora 21 64bit box. Aka chain-lint fall-out.
+>
+> With 1/3, I get all httpd tests to run (when port is set, of course).
+>
+> 2/3 and 3/3 are an attempt at getting git-svn over http tests to run.
+> 2/3 is certainly correct but not sufficient.
+> 3/3 gets httpd to run but svn does not connect. This is WIP and RFH,
+> and maybe requires rewriting lib-git-svn to use a config which depends
+> on the apache version (like lib-hhtpd does), or to leverage lib-httpd.
+>
+> Michael J Gruber (3):
+>  t/lib-httpd: load mod_unixd
+>  t/lib-git-svn: check same httpd module dirs as lib-httpd
+>  t/lib-git-svn: adjust config to apache 2.4
 
-On Wed, Apr 08, 2015 at 08:46:28AM -0700, Junio C Hamano wrote:
-> On Wed, Apr 8, 2015 at 3:58 AM, Patrick Steinhardt <ps@pks.im> wrote:
-> > Previously it was not possible to specify custom remotes for
-> > submodules. This feature has now been implemented and can be
->=20
-> I am not going to say whether it makes sense to add this feature or not,
-> but I'll just react to "Previously".
->=20
-> Let's stop saying "Previously we couldn't do X, now we can".
->=20
-> Instead, let's consistently say "We don't do X. Being able to do X is a
-> good thing for such and such reasons. Make us capable of doing X by
-> doing this and that."
->=20
-> Some people even say "Currently we cannot do X. Teach us to do so",
-> which is equally bad but that is primarily because some people say
-> "Previously" and they feel the need to clarify which reality they are
-> talking about. Once we stop saying "Previously", they will stop saying
-> "Currently", and the world would be a better place ;-).
->=20
-> Thanks.
+The changes in this series appear to break compatibility with Apache  
+2.2.
 
-Points taken, I'll reword the message if there is any interest in
-the proposed feature. ;)
+Does that mean that Apache 2.2 is no longer supported for running  
+these tests?
 
-Patrick
+Or am I missing something here...
 
---0OAP2g/MAC+5xKAE
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAABCAAGBQJVJmkcAAoJEBF8Z7aeq/EsPx0P/1VuGb7NH7De3mO/Ay7TEyEC
-s3eu0k3FeFWbzvL5Oe4VQerLcE9wGOcVyr6VK7kGfpREz94KRJOGsTkI/AEnLZfd
-YNLCXc1S/tgYOr0/pRMLHoT7fvQJqUfEMoRE2J7GaJ54tdTFNtEjbH9VrrcMJOWr
-gdhHiNFUruVcm2nH8IFznZAppdMp/3U41R1GISbBMXEZWU58lmuTaJtGRhnM2ckM
-NNy4iKVmQgazFpDgxs4bHEwRLX9cd1qG/mD0jHgFfFlaUxsmMc76NYu42+GNlZNk
-rHt8husJiabZb/yThnJc2hqyUZ1crsXleMGuAIFaQOSJ05v/s6JVNa/TqoO0Zo4g
-oH7MxFq8v3grbtF6fToxyOA3QRKu5ErACv97Nz/rbI5+RLIouzN21E+6h57yYLyZ
-ohMd7A8H+9sSHE8dZPG7VqNrX8ggdQYzJ0j6Dkren76S2cWaK6bOywrORd+2EP5z
-QLMjh0cF7b5aKPTk53cXMunWKIn3XxqnqYu5m2SHiRNt503NA4fD4dgwexG46lae
-I2g5efnKYbIDWHUASidAgm/VOnO6uiMVUcNXuILT/YqPDfjfsLeMDymMTP77w8Pq
-WX8PRFcPaOt112z7Kh1Y6IRL4AkeznHBwLAswZLzvSl1bHuLrGdMQXcz5FlSIOo5
-KAMhgVza0jwIAAli4J6h
-=83bl
------END PGP SIGNATURE-----
-
---0OAP2g/MAC+5xKAE--
+-Kyle
