@@ -1,71 +1,77 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] fix global bash variable leak on __gitcompappend
-Date: Thu, 9 Apr 2015 15:26:50 -0400
-Message-ID: <CAPig+cTE+UbNaY3rewqCFjZW7nAYOTP167W3Bhp4AEZoVBt0tA@mail.gmail.com>
-References: <1428471958-12339-1-git-send-email-marcio3w@gmail.com>
-	<1428471958-12339-2-git-send-email-marcio3w@gmail.com>
-	<xmqqiod6ar9v.fsf@gitster.dls.corp.google.com>
-	<CAOsHV+tCHrbmapXU+eei7v1jfiwdpK8jT+ue=kb_dm9nDXtq_Q@mail.gmail.com>
+Subject: Re: [PATCH] grep: correctly initialize help-all option
+Date: Thu, 9 Apr 2015 15:45:29 -0400
+Message-ID: <CAPig+cQQVO0RqZrAkLxS3v-iPf4LFsDOVz_fPDhofvLvs7tFyA@mail.gmail.com>
+References: <1428586916-22679-1-git-send-email-ps@pks.im>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
-To: Marcio Almada <marcio.web2@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 09 21:26:58 2015
+Cc: Git List <git@vger.kernel.org>
+To: Patrick Steinhardt <ps@pks.im>
+X-From: git-owner@vger.kernel.org Thu Apr 09 21:45:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YgI6L-0003SY-S3
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Apr 2015 21:26:58 +0200
+	id 1YgIOO-0004b8-8s
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Apr 2015 21:45:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933005AbbDIT0x convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Apr 2015 15:26:53 -0400
-Received: from mail-lb0-f175.google.com ([209.85.217.175]:36491 "EHLO
-	mail-lb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932828AbbDIT0w convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Apr 2015 15:26:52 -0400
-Received: by lbbqq2 with SMTP id qq2so90154775lbb.3
-        for <git@vger.kernel.org>; Thu, 09 Apr 2015 12:26:50 -0700 (PDT)
+	id S933333AbbDITpc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Apr 2015 15:45:32 -0400
+Received: from mail-lb0-f170.google.com ([209.85.217.170]:34759 "EHLO
+	mail-lb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933178AbbDITpb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Apr 2015 15:45:31 -0400
+Received: by lbcga7 with SMTP id ga7so49599976lbc.1
+        for <git@vger.kernel.org>; Thu, 09 Apr 2015 12:45:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=hpDHD6XLE+1rNV+q7HzPmLKPz9oFBssNQBmMAM2eiAU=;
-        b=I4l+6igysXleoOtFo9wR5+JVPitXRtZZL28W5sz7EMY+jFg5uCEWm2xnGstUAXuhR/
-         HRrfx7fw5/XOGkBcg5u0oQKDeyT+ChttbgjNOlDr9iWOToMnvTCjdrI7OKJGuSm/HEHT
-         J8b5pgVKgnztEnehhGtDZmmcWbi6+YB8j6VclhaC61R0Kc2YrQDuH7T3SpndrLdDyL6/
-         B9irwUhdiTDOQHSXz3/SAwcZMYSVeS7nLhFuu6Ld/QPKY3ZZobWBYSip2K4d17dyX2ID
-         BxrEaQ5GGAbIfaDiG1cOQ/Kt6FdmG4I+7ZnsoDuMz17uZ4dBmafO+HJRa4xSYiWpBE5g
-         f/zg==
-X-Received: by 10.112.173.41 with SMTP id bh9mr29105802lbc.107.1428607610691;
- Thu, 09 Apr 2015 12:26:50 -0700 (PDT)
-Received: by 10.114.78.69 with HTTP; Thu, 9 Apr 2015 12:26:50 -0700 (PDT)
-In-Reply-To: <CAOsHV+tCHrbmapXU+eei7v1jfiwdpK8jT+ue=kb_dm9nDXtq_Q@mail.gmail.com>
-X-Google-Sender-Auth: WHmyM_Px-WDlc-FBlhF4XKd--qU
+         :from:to:cc:content-type;
+        bh=/AnXQzUtBY9/LOjAJnap8dTW0hrciG43RA5smu/3lVU=;
+        b=OZ9T6dyfjGxFncf4BBqx1JCgB2Odnmd8uF8CXGkDDh5l4GMHolSkV59isr1cAIDKDC
+         +PI3F/zRrk6a29rZ4ecnIFeFcG/KewsGe29/5EeEuY4sSgkPsXeUeGV2WePwWkG8O0Ch
+         bIp9jxYisD03QA3G1KV1TExwdnp3Fd5cCHidIMj01xfEatgPLkXg3sraVmOMdigxzOF8
+         WeqkNeBV8JRTYuAy1BYtn72MKScZI6EgQzDy4HqN5ka+HUXKe1l9Yk6h8PP40ET7uHVn
+         wTr2Fh5A3D7MKYxJm2zYd8JVt8QyFChb9P2lT5Higg0m71i67DC+FNcSdynFN7x/GJ1T
+         HCpw==
+X-Received: by 10.112.168.102 with SMTP id zv6mr6667168lbb.45.1428608729716;
+ Thu, 09 Apr 2015 12:45:29 -0700 (PDT)
+Received: by 10.114.78.69 with HTTP; Thu, 9 Apr 2015 12:45:29 -0700 (PDT)
+In-Reply-To: <1428586916-22679-1-git-send-email-ps@pks.im>
+X-Google-Sender-Auth: sw9BEx85ey60KcSko5lNDlYCy1M
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266999>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267000>
 
-On Thu, Apr 9, 2015 at 9:52 AM, Marcio Almada <marcio.web2@gmail.com> w=
-rote:
-> 2015-04-09 0:56 GMT-03:00 Junio C Hamano <gitster@pobox.com>:
->> "M=C3=A1rcio Almada" <marcio.web2@gmail.com> writes:
->>>  contrib/completion/git-completion.bash | 2 +-
->>>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> Nicely found and corrected.  Please sign-off your patch and Cc area
->> experts if you can find them (I'll do that this time for you).
->
-> Ok, I'll remember this next time. Thanks for your incredible work her=
-e.
+On Thu, Apr 9, 2015 at 9:41 AM, Patrick Steinhardt <ps@pks.im> wrote:
+> The "help-all" option is being initialized with a wrong value.
+> While being semantically wrong this can also cause a gcc
+> segmentation fault on ARMv7 hardfloat platforms with a hardened
+> toolchain. Fix this by initializing with the correct value.
 
-Junio's implication was that you should reply to his message with:
+Missing sign-off.
 
-    Signed-off-by: Your Name <your@email>
+> ---
+> diff --git a/builtin/grep.c b/builtin/grep.c
+> index abc4400..c0bf005 100644
+> --- a/builtin/grep.c
+> +++ b/builtin/grep.c
+> @@ -738,7 +738,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+>                         PARSE_OPT_OPTARG, NULL, (intptr_t)default_pager },
+>                 OPT_BOOL(0, "ext-grep", &external_grep_allowed__ignored,
+>                          N_("allow calling of grep(1) (ignored by this build)")),
+> -               { OPTION_CALLBACK, 0, "help-all", &options, NULL, N_("show usage"),
+> +               { OPTION_CALLBACK, 0, "help-all", &opt, NULL, N_("show usage"),
 
-Or re-send the patch with your sign-off added.
+This dates back to 3e230fa1 (grep: use parseopt; 2009-05-07).
+
+builtin/show-ref.c just passes NULL for that argument in the same situation.
+
+>                   PARSE_OPT_HIDDEN | PARSE_OPT_NOARG, help_callback },
+>                 OPT_END()
+>         };
+> --
+> 2.3.5
