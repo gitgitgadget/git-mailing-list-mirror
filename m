@@ -1,80 +1,99 @@
-From: Marcio Almada <marcio.web2@gmail.com>
-Subject: Re: [PATCH] fix global bash variable leak on __gitcompappend
-Date: Thu, 9 Apr 2015 10:52:52 -0300
-Message-ID: <CAOsHV+tCHrbmapXU+eei7v1jfiwdpK8jT+ue=kb_dm9nDXtq_Q@mail.gmail.com>
-References: <1428471958-12339-1-git-send-email-marcio3w@gmail.com>
- <1428471958-12339-2-git-send-email-marcio3w@gmail.com> <xmqqiod6ar9v.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 09 15:53:23 2015
+From: Mamta <mamta.upadhyay@gmail.com>
+Subject: Re: [msysGit] Re:
+Date: Thu, 9 Apr 2015 09:35:28 -0500
+Message-ID: <88FC14EA-E627-40C7-BD22-A8DB687E55B6@gmail.com>
+References: <CAM9_S8jip3q-vUWFHCWP6ia2wrKOxDpxz2zLSQZPQvAQ0xmKrw@mail.gmail.com> <5525A4A2.9080405@virtuell-zuhause.de> <20150409142716.bd75cc6b9e13dc580cdda722@domain007.com>
+Mime-Version: 1.0 (1.0)
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Thomas Braun <thomas.braun@virtuell-zuhause.de>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	msysGit <msysgit@googlegroups.com>
+To: Konstantin Khomoutov <flatworm@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Thu Apr 09 16:35:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YgCtV-0008Hu-Vr
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Apr 2015 15:53:22 +0200
+	id 1YgDYO-0001Np-2L
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Apr 2015 16:35:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751809AbbDINxR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Apr 2015 09:53:17 -0400
-Received: from mail-ig0-f174.google.com ([209.85.213.174]:36070 "EHLO
-	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751164AbbDINxR convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Apr 2015 09:53:17 -0400
-Received: by igblo3 with SMTP id lo3so66873000igb.1
-        for <git@vger.kernel.org>; Thu, 09 Apr 2015 06:53:16 -0700 (PDT)
+	id S1755321AbbDIOfb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Apr 2015 10:35:31 -0400
+Received: from mail-ob0-f173.google.com ([209.85.214.173]:34002 "EHLO
+	mail-ob0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755286AbbDIOfa convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 9 Apr 2015 10:35:30 -0400
+Received: by obbry2 with SMTP id ry2so16583347obb.1
+        for <git@vger.kernel.org>; Thu, 09 Apr 2015 07:35:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=6UxYAk6yLzDssh7klrsp2UptqD2UouToO6cEV+5PPH0=;
-        b=UesrhVP32OFHYiEaOzP2bgo5jP5t3P1M1KX8BU44ys518Gn6dUKIqNV6tfbkQssilR
-         MUg6sLHOCVf2ayKjvvESroCxWSl0Z5+c6vRvFVgtAbvNqsW2uMy9hpN29q5ATqtlKH73
-         B2OhGR6OifYxLDV3OhyIUbBpVbVPEZ4GFHeQiFB3+QeTh8Npr4UTnJp/vSb1DBkgt5AM
-         CQytmLfB4F8gJ/R3P4jiju8BNWyLriUmuBW6hybMhz0ekhGYPzKFv9uGciygkvMWXuhy
-         a/k1CL3U7+Xu1W+3A60dZEjW5X2M1wNbDjYDvB96OAsAkfQyVKG7pKnjjualCNOQOyM7
-         aRmA==
-X-Received: by 10.107.40.2 with SMTP id o2mr47784422ioo.68.1428587596210; Thu,
- 09 Apr 2015 06:53:16 -0700 (PDT)
-Received: by 10.36.93.144 with HTTP; Thu, 9 Apr 2015 06:52:52 -0700 (PDT)
-In-Reply-To: <xmqqiod6ar9v.fsf@gitster.dls.corp.google.com>
+        h=content-type:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=98r/XeFA9CkwnoDkTo8bbfNnXpx3HX7rweKEqurtUz8=;
+        b=o2BXjfpEKDCc9RsO/bpVikngEhf475KIrrVLWiA7/bj5myN/40+s4H5cc/BKNA+v1p
+         JTkbIl10u6L04f9FoilNCEf3OrTK0RvMxlsBXEufIrMTpzI2tux3kxdGg3Wh4F/ruYwd
+         vrE6qT+eQZJgu6zMvlV3KtbKXaqd5/UM+wCBXgHArwzQ0IW90fpMgV1F3i7pz+5m64h1
+         4S4/iVyjyq4tzXQr28QPB7Y8JYb7/Xt6/dt4ZN1ph9EJxoH4yV82WJJvSMrlwh32tJou
+         5+CnwNyGRiIIRLzFR8F/mxuzvTlKoOSA1HKVELmO9T0HxMC5mXmHdePEdN8ak0NqmE/j
+         3vLA==
+X-Received: by 10.60.78.72 with SMTP id z8mr39009691oew.13.1428590130020;
+        Thu, 09 Apr 2015 07:35:30 -0700 (PDT)
+Received: from ?IPv6:2601:b:2a80:d66d:8947:3df9:ba1f:fa4b? ([2601:b:2a80:d66d:8947:3df9:ba1f:fa4b])
+        by mx.google.com with ESMTPSA id bt6sm11468277obd.0.2015.04.09.07.35.28
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 09 Apr 2015 07:35:29 -0700 (PDT)
+X-Mailer: iPhone Mail (11A501)
+In-Reply-To: <20150409142716.bd75cc6b9e13dc580cdda722@domain007.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266996>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266997>
 
-2015-04-09 0:56 GMT-03:00 Junio C Hamano <gitster@pobox.com>:
-> "M=C3=A1rcio Almada" <marcio.web2@gmail.com> writes:
->
->> ---
->>  contrib/completion/git-completion.bash | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> Nicely found and corrected.  Please sign-off your patch and Cc area
-> experts if you can find them (I'll do that this time for you).
->
-> Thanks.
->
+I was not cross posting. Posted on this thread after you mentioned in your post that writing on msysgit user group is futile. Thought I wouldn't get further replies on my questions there. Plus I got a feeling that I will get more in depth information here. Sorry if I sent a wrong message
 
-Ok, I'll remember this next time. Thanks for your incredible work here.
-
->>
->> diff --git a/contrib/completion/git-completion.bash b/contrib/comple=
-tion/git-completion.bash
->> index 661a829..1620546 100644
->> --- a/contrib/completion/git-completion.bash
->> +++ b/contrib/completion/git-completion.bash
->> @@ -186,7 +186,7 @@ fi
->>
->>  __gitcompappend ()
->>  {
->> -     local i=3D${#COMPREPLY[@]}
->> +     local x i=3D${#COMPREPLY[@]}
->>       for x in $1; do
->>               if [[ "$x" =3D=3D "$3"* ]]; then
->>                       COMPREPLY[i++]=3D"$2$x$4"
+> On Apr 9, 2015, at 6:27 AM, Konstantin Khomoutov <flatworm@users.sourceforge.net> wrote:
+> 
+> On Wed, 08 Apr 2015 23:58:58 +0200
+> Thomas Braun <thomas.braun@virtuell-zuhause.de> wrote:
+> 
+> [...]
+>>> I am trying to run the latest git 1.9.5 installer on windows. When I
+>>> run strings on libneon-25.dll it shows this:
+>>> 
+>>> ./libneon-25.dll:            OpenSSL 1.0.1h 5 Jun 2014
+>>> 
+>>> But when I load this dll in dependency walker, it picks up
+>>> msys-openssl 1.0.1m and has no trace of openssl-1.0.1h. My questions
+>>> to you:
+>>> 
+>>> 1. Is libneon-25.dll statically linked with openssl-1.0.1h?
+>>> 2. If not, where is the reference to 1.0.1h coming from?
+>> 
+>> I would be suprised if we link openssl statically into libneon. I
+>> guess libneon just reports against which openssl version it was
+>> *built*.
+>> 
+>>> I am asked to rebuild git with libneon-25.dll linked against
+>>> openssl-1.0.1m. But I am having a feeling that this is not needed,
+>>> since libneon is already picking the latest openssl version. Can you
+>>> please confirm?
+>> 
+>> You can download the development enviroment for git for windows here
+>> [1]. After installation, checkout the msys branch and then you can try
+>> to recomplile libneon using /src/subversion/release.sh.
+>> 
+>> [1]:
+>> https://github.com/msysgit/msysgit/releases/download/Git-1.9.5-preview20150319/msysGit-netinstall-1.9.5-preview20150319.exe
+> [...]
+> 
+> JFTR, the discussion about the same issue has been brought up on
+> git-users as well [2].
+> 
+> (People should really somehow use the basics of netiquette and mention
+> in their posts where they cross-post things.)
+> 
+> 2. https://groups.google.com/d/topic/git-users/WXyWE5_JfNc/discussion
