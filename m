@@ -1,145 +1,146 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: [GIT PULL] l10n updates for 2.4.0 round 2
-Date: Thu, 9 Apr 2015 08:33:32 +0800
-Message-ID: <CANYiYbGubDKHgRP7VXLCdsOZ9_zVHDWfZ-QbJbjtApGq=H5Rvw@mail.gmail.com>
+From: Jonas Fonseca <jonas.fonseca@gmail.com>
+Subject: [ANNOUNCE] tig-2.1.1
+Date: Wed, 8 Apr 2015 20:34:35 -0400
+Message-ID: <CAFuPQ1+5Cpb5VYPdF3E0i3Fp++MRs6DwPnkJZ171MHNzrq5hTQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>,
-	Alexander Shopov <ash@kambanaria.org>,
-	Alex Henrie <alexhenrie24@gmail.com>,
-	Ralf Thielow <ralf.thielow@googlemail.com>,
-	=?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
-	Marco Paolone <marcopaolone@gmail.com>,
-	Marco Sousa <marcomsousa@gmail.com>,
-	Dimitriy Ryazantcev <DJm00n@mail.ru>,
-	Peter Krefting <peter@softwolves.pp.se>,
-	=?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
-	Jiang Xin <worldhello.net@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 09 02:33:40 2015
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Apr 09 02:35:03 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yg0Pb-0008FA-7d
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Apr 2015 02:33:39 +0200
+	id 1Yg0Qw-0000EJ-Ab
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Apr 2015 02:35:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754193AbbDIAde convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 8 Apr 2015 20:33:34 -0400
-Received: from mail-wi0-f173.google.com ([209.85.212.173]:35849 "EHLO
-	mail-wi0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753681AbbDIAdd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 8 Apr 2015 20:33:33 -0400
-Received: by wizk4 with SMTP id k4so74000727wiz.1
-        for <git@vger.kernel.org>; Wed, 08 Apr 2015 17:33:32 -0700 (PDT)
+	id S1754608AbbDIAe6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Apr 2015 20:34:58 -0400
+Received: from mail-ie0-f178.google.com ([209.85.223.178]:34734 "EHLO
+	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753681AbbDIAe4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Apr 2015 20:34:56 -0400
+Received: by iedfl3 with SMTP id fl3so99986177ied.1
+        for <git@vger.kernel.org>; Wed, 08 Apr 2015 17:34:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=5vp2nWkVdTKKdFPJJYUv0fDgouOurZnU+ZLdsTAnPbc=;
-        b=AJmKyiKkk/oN4CPrvv0y2RTHle1azIc9QLQ6cLbbTHN9kWQ4TARqA7g0Iq7yaz5rYa
-         L9TeH+TYOvThn7Fi9yX94BxkhnnwLybm2CHlhahOWxd+AW7o/hGclqCi3/JZuCPJEc47
-         yNXwUii7ntZpnzMoW6fLvL+ttNaUZef1DbhVkBdHZPiyl2kSkDuGIh4gmwNan3t6ACl/
-         0HfHGYrR3c5sNb07C90IR5TZdVbk3dN09nlPZOe1TyQtwGFz+6aTss8jqehK+j1wM8p+
-         jGqur+eMaB+crUQ8PvY8FOu8Xh5V5ZeLEaGLoCFK0rPyRZdUb6GYCDQJfN/AqhgaGy3Q
-         yiJw==
-X-Received: by 10.180.80.199 with SMTP id t7mr1465286wix.52.1428539612393;
- Wed, 08 Apr 2015 17:33:32 -0700 (PDT)
-Received: by 10.194.234.33 with HTTP; Wed, 8 Apr 2015 17:33:32 -0700 (PDT)
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=K6aCJvJ8dovBhOD1KfMVde6HHvcr/JPCD99HZMrGVwY=;
+        b=PzaGq8XJbvJtIiUXAW3JgP5lQGT8N5+AZYdCoEX/hgxgNpyjMAUw+AMFFiaGHZlnzV
+         uLK9GL4W70c5RhEpBNqMm5UI+FMzReinrXq23NLFrcHqxL/s8aP4c+NCRHYfGHbp44HA
+         QmcVDbAgimqXWpOTUTCxRqxSDgqQQ5Xz3WkcFCF6SEeW//KQIMZYLnck5TaHZOWpz5LR
+         U4ALBfLkfmEYl2EDaNZwf7yYN8XpJvQIm7KNHLfY1+/9QioruxyHvlfm807u4NqoL69N
+         Wyo1lnI/6ku3OaY9WtbwtagOk6hyclXnBG80RCcSLeRI6O4iULTl9mzYftzAZgrjhIHD
+         3x4g==
+X-Received: by 10.50.131.196 with SMTP id oo4mr16270904igb.2.1428539696003;
+ Wed, 08 Apr 2015 17:34:56 -0700 (PDT)
+Received: by 10.64.250.6 with HTTP; Wed, 8 Apr 2015 17:34:35 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/266979>
 
-Hi, Junio
+Hi,
 
-The following changes since commit 6ae0d972664134b82a6dd164a01e8adbebea=
-ffe3:
+This release fixes a couple of regressions that broke rendering of references
+in the main view and usage of the stage view. It also adds support for key
+combos which was originally planed for 2.1 (see contrib/vim.tigrc for an
+example). Finally, files (or blobs) can now be searched using the new
+GitHub-inspired file finder (press 'f' to launch it).
 
-  Git 2.4.0-rc1 (2015-04-02 12:46:06 -0700)
+ - Homepage: http://jonas.nitro.dk/tig/
+ - Manual: http://jonas.nitro.dk/tig/manual.html
+ - Tarballs: http://jonas.nitro.dk/tig/releases/
+ - Git URL: git://github.com/jonas/tig.git
+ - Gitter: https://gitter.im/jonas/tig
+ - Q&A: http://stackoverflow.com/questions/tagged/tig
 
-are available in the git repository at:
+Release notes
+-------------
+Improvements:
 
-  git://github.com/git-l10n/git-po tags/l10n-2.4.0-rnd2
+ - Add support for key combos. (GH #67)
+ - See `contrib/vim.tigrc` for Vim-like keybindings. (GH #273, #351)
+ - Add GitHub inspired file finder to search for and open any file. (GH #342)
+ - Add `search` keymap for navigation file finder search results.
 
-for you to fetch changes up to 44cc742a8ca17b9c279be4cc195a93a6ef7a320e=
-:
+Bug fixes:
 
-  Merge branch 'master' of git://github.com/alexhenrie/git-po
-(2015-04-09 08:21:39 +0800)
+ - Fix display of multiple references per commit. (GH #390, #391)
+ - Sync the prompt's cursor position with readline's internal position. (#396)
+ - Keep unstaged changes view open after an staging command. (#399)
 
-----------------------------------------------------------------
-git l10n 2.4.0-rnd2
+Change summary
+--------------
+The diffstat and log summary for changes made in this release.
 
-----------------------------------------------------------------
-Alex Henrie (2):
-      l10n: ca.po: update translation
-      l10n: ca.po: update translation
+ .gitignore                       |   3 +
+ COPYING                          |  39 ++--
+ Makefile                         |  45 ++++-
+ NEWS.adoc                        |  16 ++
+ README.adoc                      |   2 +-
+ config.make.in                   |   5 +-
+ configure.ac                     |   5 +
+ contrib/vim.tigrc                |  73 ++++++++
+ doc/tigrc.5.adoc                 |   3 +-
+ include/tig/blob.h               |   7 +-
+ include/tig/display.h            |   2 +-
+ include/tig/keys.h               |  10 +-
+ include/tig/main.h               |   2 +
+ include/tig/prompt.h             |   1 +
+ include/tig/ui.h                 |  20 ++
+ src/blob.c                       |  29 ++-
+ src/display.c                    |  19 +-
+ src/keys.c                       |  56 ++++--
+ src/main.c                       |  20 ++
+ src/options.c                    |   2 +-
+ src/prompt.c                     |  25 +--
+ src/refdb.c                      |  21 ++-
+ src/stage.c                      |  22 +--
+ src/status.c                     |   2 +
+ src/tig.c                        |  58 ++++--
+ src/ui.c                         | 304 +++++++++++++++++++++++++++++++
+ test/help/all-keybindings-test   |  10 +-
+ test/help/default-test           |  14 +-
+ test/main/graph-argument-test    |  28 +--
+ test/main/show-changes-test      |  24 +++
+ test/main/start-on-line-test     |  42 ++---
+ test/main/view-split-test        |  18 +-
+ test/regressions/github-390-test |  41 +++++
+ test/status/file-name-test       |   8 +-
+ test/tigrc/compat-error-test     |   2 -
+ test/tigrc/parse-test            |   4 +-
+ tigrc                            |   7 +
+ tools/aspell.dict                |  12 +-
+ tools/gcov.m4                    |  94 ++++++++++
+ 39 files changed, 912 insertions(+), 183 deletions(-)
 
-Alexander Shopov (1):
-      l10n: Updated Bulgarian translation of git (2305t,0f,0u)
+Alexander Sulfrian (1):
+      Fix insertion/ordering of refs in refs_by_id map.
 
-Dimitriy Ryazantcev (3):
-      l10n: ru: added Russian translation
-      l10n: ru: updated Russian translation
-      l10n: ru: updated Russian translation
+Andreas Stieger (1):
+      Update FSF address in COPYING
 
-Jean-Noel Avila (2):
-      l10n: fr.po v2.4.0-rc0 round 1
-      l10n: fr.po v2.4.0 round 2
+Jonas Fonseca (12):
+      Remove Gitweb link in favour of Gitter
+      Integrate coverage reporting for the test suite
+      Experimental support for key combos
+      Fix user-action prompt display regression
+      Add key_to_value helper to extract the ncurses key value
+      Add GitHub inspired file finder to search for and open any file
+      Fix regression test to exec git-tag in background
+      Fix display saving to account for variable length UTF-8 characters
+      When redrawing the readline prompt also update the cursor position
+      Keep unstaged changes view open after an staging command
+      Add search keymap with keys for navigating search results
+      tig-2.1.1
 
-Jiang Xin (10):
-      Merge branch 'russian-l10n' of https://github.com/DJm00n/git-po-r=
-u
-      l10n: git.pot: v2.4.0 round 1 (99 new, 92 removed)
-      Merge branch 'maint'
-      Merge branch 'fr-v2.4.0-rc0' of git://github.com/jnavila/git
-      l10n: zh_CN: translations for git v2.4.0-rc0
-      Merge branch 'master' of git://github.com/git-l10n/git-po
-      l10n: git.pot: v2.4.0 round 2 (1 update)
-      l10n: zh_CN: for git v2.4.0 l10n round 2
-      l10n: TEAMS: Change repository URL of zh_CN
-      Merge branch 'master' of git://github.com/alexhenrie/git-po
+Ramsay Jones (1):
+      Fix segmentation Fault on 32-bit
 
-Matthias R=C3=BCster (1):
-      l10n: de.po: translate 'symbolic link' as 'symbolische Verkn=C3=BC=
-pfung'
+Vivien Didelot (1):
+      contrib: complete Vim-like bindings
 
-Michael J Gruber (1):
-      l10n: de.po: fix negation for commit -a with paths
-
-Peter Krefting (2):
-      l10n: sv.po: Update Swedish translation (2305t0f0u)
-      l10n: sv.po: Update Swedish translation (2305t0f0u)
-
-Phillip Sz (1):
-      l10n: de.po: add space before ellipsis
-
-Ralf Thielow (3):
-      l10n: de.po: fix messages with abbreviated hashs
-      l10n: de.po: translate 99 new messages
-      l10n: de.po: translate one message
-
-Tr=E1=BA=A7n Ng=E1=BB=8Dc Qu=C3=A2n (2):
-      l10n: vi.po: Updated Vietnamese translation
-      l10n: vi.po(2305t): Updated 1 new string
-
- po/TEAMS    |     7 +-
- po/bg.po    |  2892 ++++++++--------
- po/ca.po    |  1877 ++++++-----
- po/de.po    |  1895 ++++++-----
- po/fr.po    |  1880 ++++++-----
- po/git.pot  |  1659 ++++-----
- po/ru.po    | 10633 ++++++++++++++++++++++++++++++++++++++++++++++++++=
-++++++++
- po/sv.po    |  1850 +++++-----
- po/vi.po    |  1897 ++++++-----
- po/zh_CN.po |  2212 ++++++------
- 10 files changed, 18704 insertions(+), 8098 deletions(-)
- create mode 100644 po/ru.po
-
---
-Jiang Xin
+-- 
+Jonas Fonseca
