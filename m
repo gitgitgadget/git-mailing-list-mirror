@@ -1,70 +1,97 @@
-From: Robert Dailey <rcdailey.lists@gmail.com>
-Subject: Rebasing with submodule change causes red herring with --continue
-Date: Fri, 10 Apr 2015 11:30:20 -0500
-Message-ID: <CAHd499AqCJ5N1GP6mBJZB7-9vWPNjtia1G7PHoSY3d=Zovv7UA@mail.gmail.com>
+From: =?windows-1252?Q?Ren=E9_Scharfe?= <l.s.r@web.de>
+Subject: Re: [PATCH] grep: correctly initialize help-all option
+Date: Fri, 10 Apr 2015 18:34:29 +0200
+Message-ID: <5527FB95.5010806@web.de>
+References: <1428586916-22679-1-git-send-email-ps@pks.im> <5526F535.4020407@web.de> <20150410052250.GA372@pks-pc.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Apr 10 18:30:26 2015
+Content-Type: text/plain; charset=windows-1252;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Patrick Steinhardt <ps@pks.im>
+X-From: git-owner@vger.kernel.org Fri Apr 10 18:35:10 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ygbp4-0000I7-1i
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Apr 2015 18:30:26 +0200
+	id 1YgbtC-0002ii-6f
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Apr 2015 18:34:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754941AbbDJQaW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Apr 2015 12:30:22 -0400
-Received: from mail-ig0-f169.google.com ([209.85.213.169]:35857 "EHLO
-	mail-ig0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754889AbbDJQaV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Apr 2015 12:30:21 -0400
-Received: by igblo3 with SMTP id lo3so2196342igb.1
-        for <git@vger.kernel.org>; Fri, 10 Apr 2015 09:30:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:date:message-id:subject:from:to:content-type;
-        bh=mTjalbYCBOcankar1XMVO6Ejt/ukpSJ4lTe4kkJfINY=;
-        b=LVJLe8bfmlFbkkAB3RtJoUqOxC3T+6tJeMvamIf3jdEjiqaC7ICumK7aweKU5m20GU
-         dZ7YNKV8xTpA9eSm/cdkfgK174VSHDmiWqMPSRh1nps39iL24qWlOBi5MCfQ+ldqUH+B
-         3/FHmDFXrz5Fk7WaqYYCigr2wyaM6h+kwbimHmm/iP3jDqB+nd7IAD9feO/1kRv4jMxs
-         JF88RtwIiRxheaLJ3g3iIDzesEYBbJLXwpyaF7KPklsVbXKpbB8E9wunnR4tSdzjhHzX
-         jiBNdaDLIsDydv/8hCkJefWcjm+Ga/UagwmOUNNHzcNWs2FRDqS4Z2JcmMQ4Gvt0dHWP
-         0Ysw==
-X-Received: by 10.107.32.212 with SMTP id g203mr4012997iog.55.1428683420876;
- Fri, 10 Apr 2015 09:30:20 -0700 (PDT)
-X-Google-Sender-Delegation: rcdailey@gmail.com
-Received: by 10.36.49.138 with HTTP; Fri, 10 Apr 2015 09:30:20 -0700 (PDT)
-X-Google-Sender-Auth: YsjQ0YDV1y7UY1_d_C8pf01VlXM
+	id S1755530AbbDJQeh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Apr 2015 12:34:37 -0400
+Received: from mout.web.de ([212.227.15.3]:53316 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751554AbbDJQeg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Apr 2015 12:34:36 -0400
+Received: from [192.168.178.27] ([79.250.171.213]) by smtp.web.de (mrweb002)
+ with ESMTPSA (Nemesis) id 0LjJWR-1ZFwAf14lb-00dVTi; Fri, 10 Apr 2015 18:34:34
+ +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
+In-Reply-To: <20150410052250.GA372@pks-pc.localdomain>
+X-Provags-ID: V03:K0:G0u4EttxZvBsB2aoCM9opyJjJ41Q5POfTDoicI33RQa0W5WkUN3
+ pesTDeTa5FYBA2A70bgq6OtwZOdN3kjpjXywe5a6KspwWREQxont2oRDhgG5ODfI7Gai1r6
+ 9Vj5aMOSV/Jpbrrki//tlSI7cIvVythHdm+Cf4B/0HtqHZ1DAiGPetSMSHJn/su1lfh73Tb
+ /7WHfn4hBmn0L20wMVfqQ==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267014>
 
-I have a branch that contains a commit with a single change: A
-submodule pointing to a new SHA1.
+Am 10.04.2015 um 07:22 schrieb Patrick Steinhardt:
+> On Thu, Apr 09, 2015 at 11:55:01PM +0200, Ren=E9 Scharfe wrote:
+>> Am 09.04.2015 um 15:41 schrieb Patrick Steinhardt:
+>>> ---
+>>>    builtin/grep.c | 2 +-
+>>>    1 file changed, 1 insertion(+), 1 deletion(-)
+>>>
+>>> diff --git a/builtin/grep.c b/builtin/grep.c
+>>> index abc4400..c0bf005 100644
+>>> --- a/builtin/grep.c
+>>> +++ b/builtin/grep.c
+>>> @@ -738,7 +738,7 @@ int cmd_grep(int argc, const char **argv, const=
+ char *prefix)
+>>>    			PARSE_OPT_OPTARG, NULL, (intptr_t)default_pager },
+>>>    		OPT_BOOL(0, "ext-grep", &external_grep_allowed__ignored,
+>>>    			 N_("allow calling of grep(1) (ignored by this build)")),
+>>> -		{ OPTION_CALLBACK, 0, "help-all", &options, NULL, N_("show usage=
+"),
+>>> +		{ OPTION_CALLBACK, 0, "help-all", &opt, NULL, N_("show usage"),
+>>>    		  PARSE_OPT_HIDDEN | PARSE_OPT_NOARG, help_callback },
+>>>    		OPT_END()
+>>>    	};
+>>
+>> help_callback() returns -1 immediately, IOW the value pointer is nev=
+er
+>> used anyway.  So why does your change make a difference?  *puzzled*
+>>
+>> We could pass NULL instead, as in builtin/show-ref.c, which would ma=
+ke
+>> it clear that the pointer is just a dummy.
+>
+> Changed in v2, as well.
 
-When I rebase this branch onto the tip of its parent branch AND that
-parent branch had modified that same submodule, the rebase stops at
-the commit on my branch that modified the submodule and asks me if I
-want to keep REMOTE or LOCAL. I say LOCAL and notice immediately that
-the submodule is not staged (normally it would be).
+Thank you.  I should really re-fetch from Gmane before finishing an=20
+interrupted reply..
 
-I do:
+> In general the change won't make any difference when running the
+> command. But as said in the commit message it caused gcc (gcc
+> version 4.8.3 (Gentoo Hardened 4.8.3 p1.1, pie-0.5.9), ARMv7 HF)
+> to segfault when &options was passed in as value. Even though
+> this is probably an error in gcc we can easily work around it by
+> doing the Right Thing here.
 
-$ git add my-submodule
+OK, so does it crash on this one-liner as well?
 
-Then I do:
+	struct t {void *p;} s =3D {&s};
 
-$ git rebase --continue
+Or on this?
 
-At this point, it fails asking me if I forgot to stage changes and
-recommends doing --skip. This is normally what you would see if the
-staging area was completely empty, however it isn't, since I see the
-submodule is in there.
+	void *p =3D &p;
 
-Is this a bug or am I missing a fundamental here? I'm using Git 2.1.0
-on Windows through MSYS. I'll provide more concrete examples if my
-summary of the issue doesn't "ring any bells".
+If yes then the author of the hardening feature might be interested in=20
+this fact.
+
+Ren=E9
