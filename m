@@ -1,148 +1,102 @@
-From: Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH] grep: correctly initialize help-all option
-Date: Fri, 10 Apr 2015 07:22:50 +0200
-Message-ID: <20150410052250.GA372@pks-pc.localdomain>
-References: <1428586916-22679-1-git-send-email-ps@pks.im>
- <5526F535.4020407@web.de>
+From: Eugen Konkov <kes-kes@yandex.ru>
+Subject: Re[2]: Feature request: implement '--follow' option for `git blame`
+Date: Fri, 10 Apr 2015 09:40:38 +0300
+Organization: ISP FreeLine
+Message-ID: <209433431.20150410094038@yandex.ru>
+References: <4215491428322362@web26m.yandex.ru> <xmqqvbh7baij.fsf@gitster.dls.corp.google.com>
+Reply-To: Eugen Konkov <kes-kes@yandex.ru>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="zYM0uCDKw75PZbzx"
-Cc: git@vger.kernel.org
-To: =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
-X-From: git-owner@vger.kernel.org Fri Apr 10 07:23:08 2015
+Content-Type: text/plain; charset=windows-1251
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: KES <kes-kes@yandex.ua>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 10 08:47:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YgRPG-0006FB-OL
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Apr 2015 07:23:07 +0200
+	id 1YgSj5-0005B9-IJ
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Apr 2015 08:47:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752002AbbDJFXA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Apr 2015 01:23:00 -0400
-Received: from sender1.zohomail.com ([74.201.84.162]:53126 "EHLO
-	sender1.zohomail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751954AbbDJFW7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Apr 2015 01:22:59 -0400
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; 
-  s=mail; d=pks.im; 
-  h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; 
-  b=JriZbmudMSL4K1m17+a1pur85G4nwiCAz3+HQjMB4YPLfsFRR7NJ9+XWrLDbyIHEvCd6fiVT56eZ
-    gYHvTzhGQSeHvPKxVT3zGLt4wLIwpNFbAzPJQcV5VWhX1FH58uXd0wlnA0p8oARqR86yFbAPcY7C
-    7CjZNNhPDPjZvASKloE=  
-Received: from localhost (f052133176.adsl.alicedsl.de [78.52.133.176]) by mx.zohomail.com
-	with SMTPS id 1428643376945744.4327859351413; Thu, 9 Apr 2015 22:22:56 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <5526F535.4020407@web.de>
-X-Zoho-Virus-Status: 1
+	id S1754428AbbDJGrf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Apr 2015 02:47:35 -0400
+Received: from forward16.mail.yandex.net ([95.108.253.141]:37172 "EHLO
+	forward16.mail.yandex.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753914AbbDJGrd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Apr 2015 02:47:33 -0400
+X-Greylist: delayed 408 seconds by postgrey-1.27 at vger.kernel.org; Fri, 10 Apr 2015 02:47:32 EDT
+Received: from smtp16.mail.yandex.net (smtp16.mail.yandex.net [95.108.252.16])
+	by forward16.mail.yandex.net (Yandex) with ESMTP id 2BD1CD220DB;
+	Fri, 10 Apr 2015 09:40:42 +0300 (MSK)
+Received: from smtp16.mail.yandex.net (localhost [127.0.0.1])
+	by smtp16.mail.yandex.net (Yandex) with ESMTP id 9CFE06A005E;
+	Fri, 10 Apr 2015 09:40:41 +0300 (MSK)
+Received: from 46.219.241.240.freenet.com.ua (46.219.241.240.freenet.com.ua [46.219.241.240])
+	by smtp16.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id Xptjy8l2mB-eeMmrm3A;
+	Fri, 10 Apr 2015 09:40:40 +0300
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(Client certificate not present)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1428648041;
+	bh=Owt8VWHckFH2LDTE53kA34oIyQj+yWrjkI4Om7soIVg=;
+	h=Date:From:X-Mailer:Reply-To:Organization:X-Priority:Message-ID:To:
+	 CC:Subject:In-Reply-To:References:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding;
+	b=kvqgZpydbj2BTCKdBR726v289hC7VTNTpmSnQ2onYBAOHLtwVhDJxmTOZm0eoJZbF
+	 zDz6Pzjv/lXm/EHOLFg7PfKEqcjbE2zAMDnWfBYGLb3WQTqbgI3nO+PioL8KMSTmsl
+	 ca4oDkH39nSiQTIZZy/dHJaLZiqddDACTJlJN88M=
+Authentication-Results: smtp16.mail.yandex.net; dkim=pass header.i=@yandex.ru
+X-Mailer: The Bat! (v4.0.24) Professional
+X-Priority: 3 (Normal)
+In-Reply-To: <xmqqvbh7baij.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267006>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267007>
+
+=C7=E4=F0=E0=E2=F1=F2=E2=F3=E9=F2=E5, Junio.
+
+=C2=FB =EF=E8=F1=E0=EB=E8 8 =E0=EF=F0=E5=EB=FF 2015 =E3., 5:48:36:
+
+JCH> KES <kes-kes@yandex.ua> writes:
+
+>> **UPDATE:** Short answer
+
+>> `git blame` follow renames but not for `git blame COMMIT^ -- <filena=
+me>`
+
+JCH> Suppose you have file A and file B in your version v1.0.
+=2E...
+As it does not make any sense to tell C to Git and
+JCH> then magically make it guess you meant A in some cases and B in so=
+me
+JCH> other.  If v1.0 did not have C, the only sensible thing to do is t=
+o
+JCH> exit instead of making a guess (and without telling the user how i=
+t
+JCH> guessed).
+
+I agree with your complex example. But it will be great to guess in sim=
+ple case, when in version v1.0 only one file A which were renamed into =
+C half year later.
+
+`git blame COMMIT^ -- C`
+
+=46or complex example the clue will be if user supply line number he wa=
+nt to blame. So if user supply line 10 we follow A, if user supply 30 w=
+e follow B.
+Simple and great =3D) (I mean usefull for people)
+
+`git blame --line 10 COMMIT^ -- C`  =20
+`git blame --line 30 COMMIT^ -- C`
 
 
---zYM0uCDKw75PZbzx
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Thu, Apr 09, 2015 at 11:55:01PM +0200, Ren=E9 Scharfe wrote:
-> Am 09.04.2015 um 15:41 schrieb Patrick Steinhardt:
-> > The "help-all" option is being initialized with a wrong value.
-> > While being semantically wrong this can also cause a gcc
-> > segmentation fault on ARMv7 hardfloat platforms with a hardened
-> > toolchain. Fix this by initializing with the correct value.
->=20
-> Thanks for your report and patch.  A few comments:
->=20
-> Sign-off?  (See "Sign your work" in Documentation/SubmittingPatches)
 
-Fixed in v2 of the patch already.
 
->=20
-> > ---
-> >   builtin/grep.c | 2 +-
-> >   1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/builtin/grep.c b/builtin/grep.c
-> > index abc4400..c0bf005 100644
-> > --- a/builtin/grep.c
-> > +++ b/builtin/grep.c
-> > @@ -738,7 +738,7 @@ int cmd_grep(int argc, const char **argv, const cha=
-r *prefix)
-> >   			PARSE_OPT_OPTARG, NULL, (intptr_t)default_pager },
-> >   		OPT_BOOL(0, "ext-grep", &external_grep_allowed__ignored,
-> >   			 N_("allow calling of grep(1) (ignored by this build)")),
-> > -		{ OPTION_CALLBACK, 0, "help-all", &options, NULL, N_("show usage"),
-> > +		{ OPTION_CALLBACK, 0, "help-all", &opt, NULL, N_("show usage"),
-> >   		  PARSE_OPT_HIDDEN | PARSE_OPT_NOARG, help_callback },
-> >   		OPT_END()
-> >   	};
->=20
-> help_callback() returns -1 immediately, IOW the value pointer is never=20
-> used anyway.  So why does your change make a difference?  *puzzled*
->=20
-> We could pass NULL instead, as in builtin/show-ref.c, which would make=20
-> it clear that the pointer is just a dummy.
 
-Changed in v2, as well.
 
-In general the change won't make any difference when running the
-command. But as said in the commit message it caused gcc (gcc
-version 4.8.3 (Gentoo Hardened 4.8.3 p1.1, pie-0.5.9), ARMv7 HF)
-to segfault when &options was passed in as value. Even though
-this is probably an error in gcc we can easily work around it by
-doing the Right Thing here.
-
-> Q: Why does the callback exist in the first place?  A: parse_options()=20
-> handles -h and --help-all automatically by showing the list of available=
-=20
-> options.  This is good for most commands for consistency's sake, but bad=
-=20
-> for commands that want to use -h for something else.  That's why it can=
-=20
-> be turned off with the flag PARSE_OPT_NO_INTERNAL_HELP, but that flag=20
-> disables the long option as well.  It's added back by grep and show-ref=
-=20
-> explicitly, to at least provide --help-all consistently across all comman=
-ds.
->=20
-> We could solve this problem centrally by checking for -h and --help-all=
-=20
-> only after looking through the struct option list supplied to=20
-> parse_options_step() instead of before and getting rid of the then=20
-> unneeded callbacks for --help-all in grep and show-ref.  Are there any=20
-> downsides to that approach?
-
-I'll leave that question to the folks more experienced with the
-code base.
-
-> Ren=E9
-
-Thanks for your feedback.
-
-Patrick
-
---zYM0uCDKw75PZbzx
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAABCAAGBQJVJ14qAAoJEBF8Z7aeq/Esrx4QAKiWb2OVfDJG1qF6oim7Vl69
-fVgZNKI1jfxP+EBAaExiQqzD9IgtLjlDnNi+4oz/VoFrQV4FKJuRMiHv2szZVu7w
-/djgUpL91LbXqeXXmLHz7gfpGsdOvtx4WdMWOEiP2S3iEoz4dg8ioWYjJ7b01e0x
-/+2fnpZc0wrF37Sy69j8D8edAQCrulFVRX1YqmEs7m7jUlF4Gzr11dXLpV95s8g/
-vjt3oR5oL6NU00qJ4j8qh1XEMzMHplGZly5h5vlh717/2h5T8TCLQ1w+pQ0ysyRK
-TZ2lnC0Gd5tFQVeBlWADX0Yg7c23lFYYNj7/6yGvVemaDqI7tCeJANr3skeOKXgi
-VINFY4Bx4sFXFRgfyexS9mo4Zy05wL181H+szv1/y8iUAejBnT5EgfyigdO9QGeV
-Blqmn2cVgc+4S6aSZxYew5D3x2KOIswGlePOZVLa6FOBM/peX1qbufh7/z2Zqxri
-/JUGaDvc00pbxzKvJkfRzl0SNXuBvEJ77b+7PcDTVDKcSJ0draIbEvZSmh8lHi46
-S1/nYVFm9eA/eFU4NfAnHx8dprMvBgqPOn8uEeiz0C8XvTRcsDxuoama2m73Zqkk
-1Xq6hClu+lj7W5KWV38r1iMcmbje0HI/ftG8gvHiqSq+BSxU+tR9vOh6ABbn2IrG
-arzucaIryhN8yptA0Ake
-=nZs/
------END PGP SIGNATURE-----
-
---zYM0uCDKw75PZbzx--
+--=20
+=D1 =F3=E2=E0=E6=E5=ED=E8=E5=EC,
+ Eugen                          mailto:kes-kes@yandex.ru
