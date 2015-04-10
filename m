@@ -1,84 +1,123 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: Rebasing with submodule change causes red herring with --continue
-Date: Fri, 10 Apr 2015 17:44:13 +0100
-Message-ID: <20150410164413.GL21452@serenity.lan>
-References: <CAHd499AqCJ5N1GP6mBJZB7-9vWPNjtia1G7PHoSY3d=Zovv7UA@mail.gmail.com>
+From: Thomas Braun <thomas.braun@virtuell-zuhause.de>
+Subject: Re: Possible Bug in git-http-push
+Date: Fri, 10 Apr 2015 18:55:00 +0200
+Message-ID: <55280064.5070909@virtuell-zuhause.de>
+References: <5527B0D6.3010608@innuce.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git <git@vger.kernel.org>
-To: Robert Dailey <rcdailey.lists@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 10 18:44:29 2015
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=UTF-8
+Cc: msysGit <msysgit@googlegroups.com>, bugs@innuce.ch
+To: Stefan <bugs@innuce.ch>, git@vger.kernel.org
+X-From: msysgit+bncBCL7JHHTPAIOXAFAVECRUBDYNQVMK@googlegroups.com Fri Apr 10 18:55:08 2015
+Return-path: <msysgit+bncBCL7JHHTPAIOXAFAVECRUBDYNQVMK@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-wg0-f56.google.com ([74.125.82.56])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ygc2e-000882-DH
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Apr 2015 18:44:28 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755481AbbDJQoX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Apr 2015 12:44:23 -0400
-Received: from jackal.aluminati.org ([72.9.247.210]:33233 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754720AbbDJQoW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Apr 2015 12:44:22 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id 9610BCDA595;
-	Fri, 10 Apr 2015 17:44:21 +0100 (BST)
-X-Quarantine-ID: <Gyks2tB6kauR>
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -1.001
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.001 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_40=-0.001] autolearn=no
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id Gyks2tB6kauR; Fri, 10 Apr 2015 17:44:20 +0100 (BST)
-Received: from serenity.lan (banza.aluminati.org [10.0.7.182])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by jackal.aluminati.org (Postfix) with ESMTPSA id 75EBDCDA593;
-	Fri, 10 Apr 2015 17:44:14 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <CAHd499AqCJ5N1GP6mBJZB7-9vWPNjtia1G7PHoSY3d=Zovv7UA@mail.gmail.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267017>
+	(envelope-from <msysgit+bncBCL7JHHTPAIOXAFAVECRUBDYNQVMK@googlegroups.com>)
+	id 1YgcCy-0005bV-HQ
+	for gcvm-msysgit@m.gmane.org; Fri, 10 Apr 2015 18:55:08 +0200
+Received: by wggz12 with SMTP id z12sf7041564wgg.0
+        for <gcvm-msysgit@m.gmane.org>; Fri, 10 Apr 2015 09:55:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe;
+        bh=1EgQDEYiqc7E4ISx+sT09I3giPmqvxaEgOBnFWKlH5w=;
+        b=TmJZWuHOosD9fIga2aRtWvlGnjihnGUoYd43M3Tiq9rDkkD4I8dKjzpuAxEKNVqEft
+         vTm1BMp01jtIbW5tVAHmE6RXkeoVn4ArYfBYhyZsihK5JKGWU64cdtKQESmSL6CbVdyd
+         esLKNKFEepiULOrj+T4UbpYJhaP8DRnyYxcfI+z1X37Qoie9PA088aFfd6LFGYsg/fnM
+         deaAZwtPZI4V/pjbZyIrmuUGAGyOgJ+p8uFKfktCQRuLIoBQN1R0eO8ZGIrhfoBsHTwu
+         hQJcewQRiLk2FDccoeYdCIAluqYvixlkAbFp5bwYEGgPJ+sne5NV0Oa3iyhMh7C7zfQg
+         ZUww==
+X-Received: by 10.180.7.233 with SMTP id m9mr91988wia.2.1428684908100;
+        Fri, 10 Apr 2015 09:55:08 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.180.20.37 with SMTP id k5ls19989wie.23.canary; Fri, 10 Apr
+ 2015 09:55:07 -0700 (PDT)
+X-Received: by 10.180.106.136 with SMTP id gu8mr1670729wib.6.1428684907429;
+        Fri, 10 Apr 2015 09:55:07 -0700 (PDT)
+Received: from wp156.webpack.hosteurope.de (wp156.webpack.hosteurope.de. [80.237.132.163])
+        by gmr-mx.google.com with ESMTPS id ec7si14990wib.3.2015.04.10.09.55.07
+        for <msysgit@googlegroups.com>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Fri, 10 Apr 2015 09:55:07 -0700 (PDT)
+Received-SPF: none (google.com: thomas.braun@virtuell-zuhause.de does not designate permitted sender hosts) client-ip=80.237.132.163;
+Received: from pd9fadc8f.dip0.t-ipconnect.de ([217.250.220.143] helo=[192.168.100.43]); authenticated
+	by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	id 1YgcCu-0006Ex-Gq; Fri, 10 Apr 2015 18:55:04 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
+In-Reply-To: <5527B0D6.3010608@innuce.ch>
+X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1428684907;786bd3fd;
+X-Original-Sender: thomas.braun@virtuell-zuhause.de
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=none
+ (google.com: thomas.braun@virtuell-zuhause.de does not designate permitted
+ sender hosts) smtp.mail=thomas.braun@virtuell-zuhause.de
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267018>
 
-On Fri, Apr 10, 2015 at 11:30:20AM -0500, Robert Dailey wrote:
-> I have a branch that contains a commit with a single change: A
-> submodule pointing to a new SHA1.
+Am 10.04.2015 um 13:15 schrieb Stefan:
+> Hello List
 > 
-> When I rebase this branch onto the tip of its parent branch AND that
-> parent branch had modified that same submodule, the rebase stops at
-> the commit on my branch that modified the submodule and asks me if I
-> want to keep REMOTE or LOCAL. I say LOCAL and notice immediately that
-> the submodule is not staged (normally it would be).
+> I possibly found a bug in git-http-push:
 > 
-> I do:
+> When I push my local repo via http secured with basic authorization,
+> then i get:
 > 
-> $ git add my-submodule
+> error: Cannot access URL https://example.ch/example_repo/, return code 22
+> fatal: git-http-push failed
+> Pushing to https://example.ch/example_repo/
 > 
-> Then I do:
+> My server log gives PROPPFIND 401, so i seems that the PROPPFIND-sent
+> by git-http-push does not use supplied username/pw via prompt
 > 
-> $ git rebase --continue
+> Pulling works without problems.
 > 
-> At this point, it fails asking me if I forgot to stage changes and
-> recommends doing --skip. This is normally what you would see if the
-> staging area was completely empty, however it isn't, since I see the
-> submodule is in there.
+> When I change remote URL to
+> https://user:password@example.ch/example_repo, pushing works.
 > 
-> Is this a bug or am I missing a fundamental here? I'm using Git 2.1.0
-> on Windows through MSYS. I'll provide more concrete examples if my
-> summary of the issue doesn't "ring any bells".
+> I'm using git version 1.9.5.msysgit.1
 
-I hit something similar in the past, but it was fixed with commit
-a6754cd (rebase -i continue: don't skip commits that only change
-submodules, 2012-04-07) so I think you must be hitting a slightly
-different problem, although the tests added in that commit look like
-they do test the scenario you describe (specifically 'rebase -i continue
-with only submodule staged').
+Hi Stefan (CC'ing the msysgit list as this might be windows specific),
+
+can you determine the last version which worked?
+
+And can you create a minimal working example for us to reproduce the
+problem?
+
+We already have a couple of problems with the new curl version together
+with our ancient openssl.
+
+Thomas
+
+
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "Git for Windows" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
