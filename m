@@ -1,71 +1,148 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [WIP/RFH/PATCH 3/3] t/lib-git-svn: adjust config to apache 2.4
-Date: Fri, 10 Apr 2015 05:39:54 +0200
-Message-ID: <20150410033953.GC11280@peff.net>
-References: <cover.1428505184.git.git@drmicha.warpmail.net>
- <0631c09d394dedb803a100e81ce4052a57b4e73e.1428505184.git.git@drmicha.warpmail.net>
- <20150410032317.GB11280@peff.net>
+From: Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH] grep: correctly initialize help-all option
+Date: Fri, 10 Apr 2015 07:22:50 +0200
+Message-ID: <20150410052250.GA372@pks-pc.localdomain>
+References: <1428586916-22679-1-git-send-email-ps@pks.im>
+ <5526F535.4020407@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="zYM0uCDKw75PZbzx"
 Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Apr 10 05:40:04 2015
+To: =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
+X-From: git-owner@vger.kernel.org Fri Apr 10 07:23:08 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YgPnW-0003an-NX
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Apr 2015 05:40:03 +0200
+	id 1YgRPG-0006FB-OL
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Apr 2015 07:23:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753501AbbDJDj6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Apr 2015 23:39:58 -0400
-Received: from cloud.peff.net ([50.56.180.127]:44142 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753088AbbDJDj5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Apr 2015 23:39:57 -0400
-Received: (qmail 941 invoked by uid 102); 10 Apr 2015 03:39:57 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 09 Apr 2015 22:39:57 -0500
-Received: (qmail 6720 invoked by uid 107); 10 Apr 2015 03:40:18 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.2)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 09 Apr 2015 23:40:18 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 10 Apr 2015 05:39:54 +0200
+	id S1752002AbbDJFXA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Apr 2015 01:23:00 -0400
+Received: from sender1.zohomail.com ([74.201.84.162]:53126 "EHLO
+	sender1.zohomail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751954AbbDJFW7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Apr 2015 01:22:59 -0400
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; 
+  s=mail; d=pks.im; 
+  h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; 
+  b=JriZbmudMSL4K1m17+a1pur85G4nwiCAz3+HQjMB4YPLfsFRR7NJ9+XWrLDbyIHEvCd6fiVT56eZ
+    gYHvTzhGQSeHvPKxVT3zGLt4wLIwpNFbAzPJQcV5VWhX1FH58uXd0wlnA0p8oARqR86yFbAPcY7C
+    7CjZNNhPDPjZvASKloE=  
+Received: from localhost (f052133176.adsl.alicedsl.de [78.52.133.176]) by mx.zohomail.com
+	with SMTPS id 1428643376945744.4327859351413; Thu, 9 Apr 2015 22:22:56 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20150410032317.GB11280@peff.net>
+In-Reply-To: <5526F535.4020407@web.de>
+X-Zoho-Virus-Status: 1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267005>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267006>
 
-On Fri, Apr 10, 2015 at 05:23:17AM +0200, Jeff King wrote:
 
-> Curiously, though, the git-svn tests seem to run fine for me on Apache
-> 2.4 without your patch. I wonder if the fixes I mentioned above (which I
-> definitely needed to get the regular http tests running on Debian back
-> then) are not necessary on my system anymore (e.g., because the apache2
-> package now ships with better-compatible config).
+--zYM0uCDKw75PZbzx
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Ah, I see. I am not in fact running apache.
+On Thu, Apr 09, 2015 at 11:55:01PM +0200, Ren=E9 Scharfe wrote:
+> Am 09.04.2015 um 15:41 schrieb Patrick Steinhardt:
+> > The "help-all" option is being initialized with a wrong value.
+> > While being semantically wrong this can also cause a gcc
+> > segmentation fault on ARMv7 hardfloat platforms with a hardened
+> > toolchain. Fix this by initializing with the correct value.
+>=20
+> Thanks for your report and patch.  A few comments:
+>=20
+> Sign-off?  (See "Sign your work" in Documentation/SubmittingPatches)
 
-If you do not set SVN_HTTPD_PORT (which I don't), then lib-git-svn.sh's
-start_httpd silently returns success without bothering to setup the
-apache server at all. And yet the rest of the tests run to completion
-just fine.
+Fixed in v2 of the patch already.
 
-It looks like setting this variable is a way to say "run the same set of
-tests, but do it over svn-over-httpd instead of svn's direct filesystem
-access". Setting SVN_HTTPD_PORT does cause the tests to fail for me.
+>=20
+> > ---
+> >   builtin/grep.c | 2 +-
+> >   1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/builtin/grep.c b/builtin/grep.c
+> > index abc4400..c0bf005 100644
+> > --- a/builtin/grep.c
+> > +++ b/builtin/grep.c
+> > @@ -738,7 +738,7 @@ int cmd_grep(int argc, const char **argv, const cha=
+r *prefix)
+> >   			PARSE_OPT_OPTARG, NULL, (intptr_t)default_pager },
+> >   		OPT_BOOL(0, "ext-grep", &external_grep_allowed__ignored,
+> >   			 N_("allow calling of grep(1) (ignored by this build)")),
+> > -		{ OPTION_CALLBACK, 0, "help-all", &options, NULL, N_("show usage"),
+> > +		{ OPTION_CALLBACK, 0, "help-all", &opt, NULL, N_("show usage"),
+> >   		  PARSE_OPT_HIDDEN | PARSE_OPT_NOARG, help_callback },
+> >   		OPT_END()
+> >   	};
+>=20
+> help_callback() returns -1 immediately, IOW the value pointer is never=20
+> used anyway.  So why does your change make a difference?  *puzzled*
+>=20
+> We could pass NULL instead, as in builtin/show-ref.c, which would make=20
+> it clear that the pointer is just a dummy.
 
-I don't know how important it is to run these tests over httpd. If so,
-it would be nice to do something like lib-httpd does: try the apache
-setup by default, and if it fails, gracefully skip the tests (or
-fallback to the non-httpd version).
+Changed in v2, as well.
 
-I'm also not sure if there's value in running both the httpd and
-local-filesystem forms of the test. IOW, should we be factoring out the
-tests and having two separate scripts that set $svnrepo as appropriate,
-and then runs the tests?
+In general the change won't make any difference when running the
+command. But as said in the commit message it caused gcc (gcc
+version 4.8.3 (Gentoo Hardened 4.8.3 p1.1, pie-0.5.9), ARMv7 HF)
+to segfault when &options was passed in as value. Even though
+this is probably an error in gcc we can easily work around it by
+doing the Right Thing here.
 
--Peff
+> Q: Why does the callback exist in the first place?  A: parse_options()=20
+> handles -h and --help-all automatically by showing the list of available=
+=20
+> options.  This is good for most commands for consistency's sake, but bad=
+=20
+> for commands that want to use -h for something else.  That's why it can=
+=20
+> be turned off with the flag PARSE_OPT_NO_INTERNAL_HELP, but that flag=20
+> disables the long option as well.  It's added back by grep and show-ref=
+=20
+> explicitly, to at least provide --help-all consistently across all comman=
+ds.
+>=20
+> We could solve this problem centrally by checking for -h and --help-all=
+=20
+> only after looking through the struct option list supplied to=20
+> parse_options_step() instead of before and getting rid of the then=20
+> unneeded callbacks for --help-all in grep and show-ref.  Are there any=20
+> downsides to that approach?
+
+I'll leave that question to the folks more experienced with the
+code base.
+
+> Ren=E9
+
+Thanks for your feedback.
+
+Patrick
+
+--zYM0uCDKw75PZbzx
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAABCAAGBQJVJ14qAAoJEBF8Z7aeq/Esrx4QAKiWb2OVfDJG1qF6oim7Vl69
+fVgZNKI1jfxP+EBAaExiQqzD9IgtLjlDnNi+4oz/VoFrQV4FKJuRMiHv2szZVu7w
+/djgUpL91LbXqeXXmLHz7gfpGsdOvtx4WdMWOEiP2S3iEoz4dg8ioWYjJ7b01e0x
+/+2fnpZc0wrF37Sy69j8D8edAQCrulFVRX1YqmEs7m7jUlF4Gzr11dXLpV95s8g/
+vjt3oR5oL6NU00qJ4j8qh1XEMzMHplGZly5h5vlh717/2h5T8TCLQ1w+pQ0ysyRK
+TZ2lnC0Gd5tFQVeBlWADX0Yg7c23lFYYNj7/6yGvVemaDqI7tCeJANr3skeOKXgi
+VINFY4Bx4sFXFRgfyexS9mo4Zy05wL181H+szv1/y8iUAejBnT5EgfyigdO9QGeV
+Blqmn2cVgc+4S6aSZxYew5D3x2KOIswGlePOZVLa6FOBM/peX1qbufh7/z2Zqxri
+/JUGaDvc00pbxzKvJkfRzl0SNXuBvEJ77b+7PcDTVDKcSJ0draIbEvZSmh8lHi46
+S1/nYVFm9eA/eFU4NfAnHx8dprMvBgqPOn8uEeiz0C8XvTRcsDxuoama2m73Zqkk
+1Xq6hClu+lj7W5KWV38r1iMcmbje0HI/ftG8gvHiqSq+BSxU+tR9vOh6ABbn2IrG
+arzucaIryhN8yptA0Ake
+=nZs/
+-----END PGP SIGNATURE-----
+
+--zYM0uCDKw75PZbzx--
