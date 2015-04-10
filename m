@@ -1,78 +1,140 @@
-From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <l.s.r@web.de>
-Subject: Re: [PATCH v2] grep: correctly initialize help-all option
-Date: Fri, 10 Apr 2015 18:35:31 +0200
-Message-ID: <5527FBD3.4000103@web.de>
-References: <1428586916-22679-1-git-send-email-ps@pks.im> <1428609546-3535-1-git-send-email-ps@pks.im>
+From: Gianpaolo Macario <gianpaolo_macario@mentor.com>
+Subject: Installing git binaries on a non-default directory (Ubuntu)
+Date: Fri, 10 Apr 2015 16:34:26 +0000 (UTC)
+Message-ID: <loom.20150410T183218-536@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 10 18:35:48 2015
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 10 18:40:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ygbu9-0003N1-Gu
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Apr 2015 18:35:41 +0200
+	id 1YgbyY-0005t6-Af
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Apr 2015 18:40:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754914AbbDJQfh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Apr 2015 12:35:37 -0400
-Received: from mout.web.de ([212.227.15.3]:58790 "EHLO mout.web.de"
+	id S1754539AbbDJQkJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Apr 2015 12:40:09 -0400
+Received: from plane.gmane.org ([80.91.229.3]:47634 "EHLO plane.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754539AbbDJQfg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Apr 2015 12:35:36 -0400
-Received: from [192.168.178.27] ([79.250.171.213]) by smtp.web.de (mrweb001)
- with ESMTPSA (Nemesis) id 0LfiZ8-1ZCrG903NS-00pJDr; Fri, 10 Apr 2015 18:35:35
- +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
-In-Reply-To: <1428609546-3535-1-git-send-email-ps@pks.im>
-X-Provags-ID: V03:K0:kLXfUBG/3yBv6NKylb89j/LW6LsFNMZ9HuIEXsk41kZ8YacgYFf
- 81RYgIv5N8YVCoBrVyEl232VBoJqJytsomwjLxd+Ieyln8jxqJoDh8g8NS0dobnLJ9u+sHE
- xKcsCAulDistPpxPL6FWZflOwbAb+5eWWl1bpmKOqo/bHFQgHiSBW5uAouLajD9H2wGo4In
- 4qp3+K3bpasXzm8sZNGdQ==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1752648AbbDJQkG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Apr 2015 12:40:06 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1YgbyO-0005o8-2u
+	for git@vger.kernel.org; Fri, 10 Apr 2015 18:40:04 +0200
+Received: from maxlab.polito.it ([130.192.16.67])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 10 Apr 2015 18:40:04 +0200
+Received: from gianpaolo_macario by maxlab.polito.it with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 10 Apr 2015 18:40:04 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 130.192.16.67 (Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.118 Safari/537.36)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267015>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267016>
 
-Am 09.04.2015 um 21:59 schrieb Patrick Steinhardt:
-> The "help-all" option is being initialized with a wrong value.
-> While being semantically wrong this can also cause a segmentation
-> fault in gcc on ARMv7 hardfloat platforms with a hardened
-> toolchain. Fix this by initializing with a NULL value.
+Hello,
 
-Because the pointer is not used it can't exactly be "wrong".  The 
-callback function could call usage_with_options itself using that 
-pointer, for example.  I suspect that's what an earlier version did (I 
-don't remember).
+I need to distribute a set of programs - including a recent version of git - 
+to a large set of users.
 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->
-> Added missing sign-off and changed initialization with &opts to
-> initialization with NULL according to Eric's comment as the value
-> is not being used anyway.
+The users are running different versions of Linux (Ubuntu from 10.04 
+onwards) and are not supposed to know how to build the programs from 
+sources.
+Also they should be able to choose where to install the binaries.
 
-Thanks, it looks good.
+My idea was to build git on the oldest supported machine (Ubuntu 10.04.4 32-
+bit), then create a tarball incluing the installation directory which was 
+created by git "make install":
 
->
->   builtin/grep.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/builtin/grep.c b/builtin/grep.c
-> index abc4400..d04f440 100644
-> --- a/builtin/grep.c
-> +++ b/builtin/grep.c
-> @@ -738,7 +738,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
->   			PARSE_OPT_OPTARG, NULL, (intptr_t)default_pager },
->   		OPT_BOOL(0, "ext-grep", &external_grep_allowed__ignored,
->   			 N_("allow calling of grep(1) (ignored by this build)")),
-> -		{ OPTION_CALLBACK, 0, "help-all", &options, NULL, N_("show usage"),
-> +		{ OPTION_CALLBACK, 0, "help-all", NULL, NULL, N_("show usage"),
->   		  PARSE_OPT_HIDDEN | PARSE_OPT_NOARG, help_callback },
->   		OPT_END()
->   	};
->
+By some googling and after reading the git sources and the commit logs I 
+assumed that the `RUNTIME_PREFIX` option
+(see <https://github.com/git/git/blob/master/exec_cmd.c>) was designed for 
+that purpose, so I did the following:
+
+    $ mkdir -p ~/tmp
+    $ cd ~/tmp
+    $ wget http://kernel.org/pub/software/scm/git/git-2.3.5.tar.gz
+    $ tar -xvzf git-2.3.5.tar.gz
+    $ cd git-2.3.5
+    $ ./configure --prefix=$HOME/git-install \
+    --with-curl --with-openssl --without-tcltk \
+    CFLAGS="${CFLAGS} -DRUNTIME_PREFIX=1 `pkg-config --static --libs 
+libcurl`"
+    $ make
+    $ make install
+    $ cd $HOME/git-install
+    $ tar -cvzf ~/git-install-2.3.5.tar.gz .
+    $ cd
+    $ rm -rf ~/tmp/git-2.3.5
+    $ rm -rf $HOME/git-install
+
+Everything seems OK as long as the tarball is extracted under the same
+directory where the binaries where installed by `make install`
+(in my case, `/home/gmacario/git-install`):
+
+    gmacario@alm-gm-oipbuild05:~$ ~/git-install/bin/git --version
+    git version 2.3.5
+    gmacario@alm-gm-oipbuild05:~$ ~/git-install/bin/git --exec-path
+    /home/gmacario/git-install/libexec/git-core
+    gmacario@alm-gm-oipbuild05:~$
+
+However if the user chooses to install it somewhere else - for instance
+
+    $ sudo mkdir -p /opt/tools
+    $ sudo chown $USER /opt/tools
+    $ cd /opt/tools
+    $ tar -xvzf ~/git-install-2.3.5.tar.gz
+
+command `git --exec-path` still returns the directory where
+the binaries were installed by `make install`:
+
+    gmacario@alm-gm-oipbuild05:~$ /opt/tools/bin/git --exec-path
+    /home/gmacario/git-install/libexec/git-core
+    gmacario@alm-gm-oipbuild05:~$
+
+As a result non-builtin commands such as "git clone https://xxx" will not 
+work.
+Also the templates cannot be found as shown below:
+
+    gmacario@alm-gm-oipbuild05:~$ /opt/tools/bin/git clone 
+https://github.com/gmacario/hello.git
+    Cloning into 'hello'...
+    warning: templates not found /home/gmacario/git-install/share/git-
+core/templates
+    fatal: Unable to find remote helper for 'https'
+    gmacario@alm-gm-oipbuild05:~$
+
+Even though it is a nuisance I was able to work around the wrong "--exec-
+path"
+by setting the "GIT_EXEC_PATH" environment variable, but I still cannot
+understand how to have the templates found in the proper directory.
+
+According to 
+<https://github.com/git/git/commit/35fb0e8633217f602360a9987af51c4b960e7850>
+I am afraid that relocatable binaries is only half-baked in Unix:
+
+  Note that RUNTIME_PREFIX only works on Windows, though adding
+  support on Unix should not be too hard.  The implementation
+  requires argv0_path to be set to an absolute path.  argv0_path must
+  point to the directory of the executable.  We use assert() to
+  verify this in debug builds.  On Windows, the wrapper for main()
+  (see compat/mingw.h) guarantees that argv0_path is correctly
+  initialized.  On Unix, further work is required before
+  RUNTIME_PREFIX can be enabled.
+
+Has anybody tried to do the same? Do you have any advices to give me?
+
+Thanks,
+
+Gianpaolo Macario
