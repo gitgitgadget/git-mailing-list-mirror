@@ -1,58 +1,67 @@
-From: Stefan <bugs@innuce.ch>
-Subject: Possible Bug in git-http-push
-Date: Fri, 10 Apr 2015 13:15:34 +0200
-Message-ID: <5527B0D6.3010608@innuce.ch>
+From: =?UTF-8?B?S29ucsOhZCBMxZFyaW5jemk=?= <klorinczi@gmail.com>
+Subject: Suggestion: git submodule remove
+Date: Fri, 10 Apr 2015 13:33:12 +0200
+Message-ID: <CABEDGg8Gos8UTi2U_xgMpx2dJtbtSNCCd2gRr_KR1qESB6gYYA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 10 13:24:02 2015
+X-From: git-owner@vger.kernel.org Fri Apr 10 13:34:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YgX2L-00033K-RI
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Apr 2015 13:23:50 +0200
+	id 1YgXCF-0008T9-Ih
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Apr 2015 13:34:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753710AbbDJLXp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Apr 2015 07:23:45 -0400
-Received: from mail.innuce.ch ([80.254.167.118]:45262 "EHLO mail.innuce.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751609AbbDJLXo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Apr 2015 07:23:44 -0400
-X-Greylist: delayed 485 seconds by postgrey-1.27 at vger.kernel.org; Fri, 10 Apr 2015 07:23:44 EDT
-Received: from [10.13.0.8] ([10.13.0.8]:15215)
-	by mail.innuce.ch ([10.13.0.2]:465) with [XMail 1.27 SSLtag 0.2 ESMTP Server]
-	id <SA4E69> for <git@vger.kernel.org> from <bugs@innuce.ch>;
-	Fri, 10 Apr 2015 13:15:35 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
+	id S1753828AbbDJLdy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Apr 2015 07:33:54 -0400
+Received: from mail-wi0-f170.google.com ([209.85.212.170]:35282 "EHLO
+	mail-wi0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751609AbbDJLdx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Apr 2015 07:33:53 -0400
+Received: by widdi4 with SMTP id di4so124731160wid.0
+        for <git@vger.kernel.org>; Fri, 10 Apr 2015 04:33:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=eiM/qP2om8uOatmGqRpRnvv8NqZyD4Ews7pe/4HXtgQ=;
+        b=mcgHPLR33BkBUQ8Os7fxV8ltmTvho1Djwj8PjCcOZumMVxSXbLtJMnUDnMtzIyBWBC
+         8Clp7QaUhiPMXvANOhU+0JGk0lF4kDBVeoJXlPdsgNKi84JHj31WCKEkvcUZupJqBr0W
+         ERyZjFORgU476bEmRcTPouiLv8qn57C3o0VvY/uVJvIVEINzoMo6bh+r/pkPWbkVjElA
+         iNU/MoYViZYvbUwgEIlixl+L5DUXZihfDaZcq+d7VMMYSpMZozH+hu0rcfSr4Gytx6+a
+         yr7y6D7C6dPeimsukVZ/ME46/Vr2z1vRjGLxPAbty7AmPwhN0JhAyMm4du6zRsK+vk9/
+         5Fqg==
+X-Received: by 10.181.25.225 with SMTP id it1mr14415768wid.8.1428665632361;
+ Fri, 10 Apr 2015 04:33:52 -0700 (PDT)
+Received: by 10.28.0.3 with HTTP; Fri, 10 Apr 2015 04:33:12 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267009>
 
-Hello List
+Hi GIT devs,
 
-I possibly found a bug in git-http-push:
+I really miss the
+  git submodule remove
+command.
 
-When I push my local repo via http secured with basic authorization,
-then i get:
+This should be handle all the tasks what are needed to remove a submodule.
+    - Delete the relevant line from the .gitmodules file.
+    - Delete the relevant section from .git/config.
+    - Run git rm --cached path_to_submodule (no trailing slash).
+    - Delete the now untracked submodule files.
 
-error: Cannot access URL https://example.ch/example_repo/, return code 22
-fatal: git-http-push failed
-Pushing to https://example.ch/example_repo/
+These tasks should be handled automatically.
+Currently you can only remove a submodule manually, no way to do it
+automatically with one command.
+"Removing submodules" and "unsubmodule a submodule" are still a pain
+to do in GIT, even in v2.3.5.
 
-My server log gives PROPPFIND 401, so i seems that the PROPPFIND-sent
-by git-http-push does not use supplied username/pw via prompt
 
-Pulling works without problems.
+Please consider implementing the "git submodule remove" command.
 
-When I change remote URL to
-https://user:password@example.ch/example_repo, pushing works.
 
-I'm using git version 1.9.5.msysgit.1
-
-Thanks
-Stefan
+Thanks,
+Konrad Lorinczi
