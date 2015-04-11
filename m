@@ -1,69 +1,63 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: gitk won't show notes?
-Date: Sat, 11 Apr 2015 20:31:56 +1000
-Message-ID: <20150411103156.GA5781@iris.ozlabs.ibm.com>
-References: <551D99B9.7040200@ubuntu.com>
- <5523DE66.8060904@drmicha.warpmail.net>
- <5523E479.2010701@ubuntu.com>
- <5523E5FF.8060101@drmicha.warpmail.net>
- <55240F0A.80902@ubuntu.com>
- <5525164C.6000309@drmicha.warpmail.net>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: Suggestion: git submodule remove
+Date: Sat, 11 Apr 2015 14:15:41 +0200
+Message-ID: <5529106D.7050301@web.de>
+References: <CABEDGg8Gos8UTi2U_xgMpx2dJtbtSNCCd2gRr_KR1qESB6gYYA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Phillip Susi <psusi@ubuntu.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Sat Apr 11 12:36:19 2015
+Content-Type: text/plain; charset=utf-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: =?UTF-8?B?S29ucsOhZCBMxZFyaW5jemk=?= <klorinczi@gmail.com>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 11 14:16:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ygslu-00043L-K5
-	for gcvg-git-2@plane.gmane.org; Sat, 11 Apr 2015 12:36:18 +0200
+	id 1YguKO-00071v-J2
+	for gcvg-git-2@plane.gmane.org; Sat, 11 Apr 2015 14:16:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932590AbbDKKgN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 Apr 2015 06:36:13 -0400
-Received: from ozlabs.org ([103.22.144.67]:56474 "EHLO ozlabs.org"
+	id S1752367AbbDKMPt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 11 Apr 2015 08:15:49 -0400
+Received: from mout.web.de ([212.227.17.11]:50181 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751706AbbDKKgM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Apr 2015 06:36:12 -0400
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id E36F81402EC; Sat, 11 Apr 2015 20:36:10 +1000 (AEST)
-Content-Disposition: inline
-In-Reply-To: <5525164C.6000309@drmicha.warpmail.net>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1752035AbbDKMPs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Apr 2015 08:15:48 -0400
+Received: from [192.168.178.41] ([79.211.112.217]) by smtp.web.de (mrweb103)
+ with ESMTPSA (Nemesis) id 0LiUKG-1ZF9kT1vi8-00cgmA; Sat, 11 Apr 2015 14:15:45
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
+In-Reply-To: <CABEDGg8Gos8UTi2U_xgMpx2dJtbtSNCCd2gRr_KR1qESB6gYYA@mail.gmail.com>
+X-Provags-ID: V03:K0:duZpYaBRThX8d9a5akRmwV6i0et/S9pjXvOoi2B/UuhJoV/j5s9
+ zJ+rg4kSrlDybOQ5pbtIMSIaVKfYw1ibNujHPsIrGdhaNBCOWVORZS8ObeSvLs/RNbJA8ah
+ QFQyzBsRoRIihdGLMfR9iCdzDy0CvU0lqKbsieK/tZqaOdK3zSswkzFPkImVGk9b5jbGihs
+ Ql7ClGyfNS01ENLtmWBuQ==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267021>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267022>
 
-On Wed, Apr 08, 2015 at 01:51:40PM +0200, Michael J Gruber wrote:
-> Phillip Susi venit, vidit, dixit 07.04.2015 19:08:
-> > On 4/7/2015 10:13 AM, Michael J Gruber wrote:
-> >> Seriously: gitk knows F5 and Shift-F5 for refresh, and I think the 
-> >> latter is the thorougher refreshment.
-> > 
-> > Neither one makes newly added notes show up.  The only way seems to be
-> > to close and restart gitk.  Looks like a bug.
-> > 
-> > 
-> 
-> Apparently, gitk rereads the refs but not commits it has read already -
-> and the commit reading includes the notes lookup.
-> 
-> Unfortunately, my wish-fu is lacking. But I'll cc the master.
-> 
-> Paulus: None of updatecommits, reloadcommits and rereadrefs seem to
-> reread the notes of a commit that has been displayed already if the
-> notes have changed (but the other refs have not).
+Am 10.04.2015 um 13:33 schrieb Konr=C3=A1d L=C5=91rinczi:
+> I really miss the
+>    git submodule remove
+> command.
+>
+> This should be handle all the tasks what are needed to remove a submo=
+dule.
+>      - Delete the relevant line from the .gitmodules file.
+>      - Delete the relevant section from .git/config.
+>      - Run git rm --cached path_to_submodule (no trailing slash).
+>      - Delete the now untracked submodule files.
+>
+> These tasks should be handled automatically.
+> Currently you can only remove a submodule manually, no way to do it
+> automatically with one command.
+> "Removing submodules" and "unsubmodule a submodule" are still a pain
+> to do in GIT, even in v2.3.5.
 
-As far as shift-F5/reloadcommits is concerned, it looks like I should
-be unsetting commitinfo in reloadcommits.
-
-However, I agree gitk should refresh the notes in updatecommits as
-well, but that will take more work.  Is git notes list the best way to
-find out all the current notes?
-
-Paul.
+"git rm <submodule-path>" will remove a submodule from .gitmodules,
+the index and the work tree (but not from .git/config, that's what
+"git submodule deinit" is for).
