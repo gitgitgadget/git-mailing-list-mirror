@@ -1,135 +1,216 @@
-From: Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH] grep: correctly initialize help-all option
-Date: Sat, 11 Apr 2015 02:34:21 +0200
-Message-ID: <20150411003421.GA2111@pks-mb>
-References: <1428586916-22679-1-git-send-email-ps@pks.im>
- <5526F535.4020407@web.de>
- <20150410052250.GA372@pks-pc.localdomain>
- <5527FB95.5010806@web.de>
+From: rupert thurner <rupert.thurner@gmail.com>
+Subject: Re: Sneak peek of the upcoming Git for Windows 2.x
+Date: Sat, 11 Apr 2015 01:37:07 -0700 (PDT)
+Message-ID: <39e23864-b75b-4fef-ab90-3413e4e76900@googlegroups.com>
+References: <72d57a68ab32619769d5671d39505db8@www.dscho.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="GvXjxJ+pjyke8COw"
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_0_23591479.1428741427175"
 Cc: git@vger.kernel.org
-To: =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
-X-From: git-owner@vger.kernel.org Sat Apr 11 02:33:00 2015
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+To: msysgit@googlegroups.com
+X-From: msysgit+bncBCBO3N6S34BRBM52UOUQKGQE53Q5SWY@googlegroups.com Sat Apr 11 10:37:09 2015
+Return-path: <msysgit+bncBCBO3N6S34BRBM52UOUQKGQE53Q5SWY@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-qk0-f192.google.com ([209.85.220.192])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YgjM2-0004Fi-II
-	for gcvg-git-2@plane.gmane.org; Sat, 11 Apr 2015 02:32:58 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932650AbbDKAcx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Apr 2015 20:32:53 -0400
-Received: from sender1.zohomail.com ([74.201.84.162]:53488 "EHLO
-	sender1.zohomail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932164AbbDKAcx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Apr 2015 20:32:53 -0400
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; 
-  s=mail; d=pks.im; 
-  h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; 
-  b=tQyB0HS4Yt3WrbjsuXIPv9S2Gp/auTcz/HZneTD/oJOF7SkU3ZUlkEP5fIJlhn6HnKmJf+nu6DOu
-    3NYyrOqhn4kDyGjlN9gePdjj+MiolsjqiqGIwTtucfOLeXe1upAoFTW7JgKZ7Uo5HORqr1Y8nHjE
-    6S8FCl0La/1TkyX1j+E=  
-Received: from localhost (dslb-094-222-027-198.094.222.pools.vodafone-ip.de [94.222.27.198]) by mx.zohomail.com
-	with SMTPS id 1428712370476182.89876212434785; Fri, 10 Apr 2015 17:32:50 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <5527FB95.5010806@web.de>
-X-Zoho-Virus-Status: 1
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267019>
+	(envelope-from <msysgit+bncBCBO3N6S34BRBM52UOUQKGQE53Q5SWY@googlegroups.com>)
+	id 1Ygqua-0007Nc-Pp
+	for gcvm-msysgit@m.gmane.org; Sat, 11 Apr 2015 10:37:08 +0200
+Received: by qkbx191 with SMTP id x191sf62729909qkb.0
+        for <gcvm-msysgit@m.gmane.org>; Sat, 11 Apr 2015 01:37:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:x-original-sender:precedence:mailing-list
+         :list-id:list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe;
+        bh=9brCM62a26nQlpQ0R2dc21T409WRVyHDfiGmMFQRR4g=;
+        b=h2/AH8/EI1D9oKyzXkoHiquB58cH5u2dm8zuxoLtJ3Spd1bvZH7yBEL+tGDCMawDIY
+         IvoSJMLURmwXG+CE85CpilrcrO1bxyEXNfz9WGZxh8cbnGXLDkN0P9CV8rPNT5nl8hMd
+         KXjzrpFjI8TdTxYkkk4sIUIiAMMhFZByg4EpfMruOsrun20UmiI9HFLwQCSEbvDU0G5Z
+         jCoNzUt8/EyqSE/waHE0vH90oAVrgK+C0/uCyaC4xoXhVs4nC62tteVEALUkTu+O0biO
+         VVZjWDiDOjeY/NK5ghddau436PS36dzOHkTYpFrckL8l7Gfur4q/ATKg6jY8BAaU3a1m
+         MPZA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:x-original-sender:precedence:mailing-list
+         :list-id:list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe;
+        bh=9brCM62a26nQlpQ0R2dc21T409WRVyHDfiGmMFQRR4g=;
+        b=zNs9IdX69gpgjx0H0Hobyh9F0MONXRTrf/9ndP8IUt94rtGhEzRSELHkUMk8nLOsh4
+         HBlVdThWc9LZ6S7VkFMk4uVsfs38mC9dnqOeXuYFiTXpUFYiRjcjyr5zHGzOgILhuAOC
+         bgOdYyS1+yRoyqU7pVrsiJy2I/p5tofxFEMR+NDHG3iXDtsuIqLbEF8zBxofCoy/ULCh
+         SP/LzHyFMkvyiCqegBXArG7CJh8Ei1nQv+JEj0ml+YnVlgtY81MGbznncLKUJ//CWH4n
+         vJmOy9TjqeuQjIsb9w9KMOK7lymf0DOxAoJ/t8watAIPxGaAjRe81qmwTZs/TPiPfVD3
+         OGsA==
+X-Received: by 10.140.98.116 with SMTP id n107mr72030qge.11.1428741428061;
+        Sat, 11 Apr 2015 01:37:08 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.140.95.68 with SMTP id h62ls957128qge.55.gmail; Sat, 11 Apr
+ 2015 01:37:07 -0700 (PDT)
+X-Received: by 10.140.21.111 with SMTP id 102mr72134qgk.4.1428741427634;
+        Sat, 11 Apr 2015 01:37:07 -0700 (PDT)
+In-Reply-To: <72d57a68ab32619769d5671d39505db8@www.dscho.org>
+X-Original-Sender: rupert.thurner@gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267020>
+
+------=_Part_0_23591479.1428741427175
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_1_200354221.1428741427176"
+
+------=_Part_1_200354221.1428741427176
+Content-Type: text/plain; charset=UTF-8
+
+excellent, i like it so much!! besides the obvious:
+* the colors are fixed, so it is not any more dark red on black for added 
+files, but red on black and readable
+* installs with the necessary performance options
+* the readme contains things i fell over in the past. 
+
+three things i do not like it so much:
+* the old distinct icon is replaced by a new one which looks similar to 
+many other programs, like google chrome. would it be possible to set the 
+old icon? 
+* the prompt is still as slow as before, calculating the branch name on 
+pressing return without option to turn it off
+* it is talking german to me
+
+would it be sufficient to delete
+c:\Apps\gitwin\mingw64\share\locale\de\LC_MESSAGES\
+resp the whole locale directory to let it speak english?
+
+rupert.
 
 
---GvXjxJ+pjyke8COw
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+On Friday, April 10, 2015 at 1:43:30 PM UTC+2, Johannes Schindelin wrote:
+>
+> Dear all, 
+>
+> during the really exciting Git Merge conference, the Git for Windows 
+> developers had the opportunity to meet and we managed to whip out a 
+> *really* early beta of the upcoming Git for Windows 2.x series. 
+>
+> Please keep in mind that we not only changed our entire development 
+> environment, but that this change also affects end user installations quite 
+> a bit: as parts of Git are still written in shell and Perl, we have to ship 
+> a shell and Perl interpreter, too, which are naturally plucked from the 
+> development environment. 
+>
+> Of course that implies that there are probably still quite a couple of 
+> rough edges. Nevertheless, if you want to have a *really* early glimpse at 
+> the upcoming major release, feel free to give it a spin: 
+> https://git-for-windows.github.io/#download 
+>
+> Enjoy, 
+> Johannes 
+>
+
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "Git for Windows" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
+
+------=_Part_1_200354221.1428741427176
+Content-Type: text/html; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Apr 10, 2015 at 06:34:29PM +0200, Ren=E9 Scharfe wrote:
-> Am 10.04.2015 um 07:22 schrieb Patrick Steinhardt:
-> > On Thu, Apr 09, 2015 at 11:55:01PM +0200, Ren=E9 Scharfe wrote:
-> >> Am 09.04.2015 um 15:41 schrieb Patrick Steinhardt:
-> >>> ---
-> >>>    builtin/grep.c | 2 +-
-> >>>    1 file changed, 1 insertion(+), 1 deletion(-)
-> >>>
-> >>> diff --git a/builtin/grep.c b/builtin/grep.c
-> >>> index abc4400..c0bf005 100644
-> >>> --- a/builtin/grep.c
-> >>> +++ b/builtin/grep.c
-> >>> @@ -738,7 +738,7 @@ int cmd_grep(int argc, const char **argv, const c=
-har *prefix)
-> >>>    			PARSE_OPT_OPTARG, NULL, (intptr_t)default_pager },
-> >>>    		OPT_BOOL(0, "ext-grep", &external_grep_allowed__ignored,
-> >>>    			 N_("allow calling of grep(1) (ignored by this build)")),
-> >>> -		{ OPTION_CALLBACK, 0, "help-all", &options, NULL, N_("show usage"),
-> >>> +		{ OPTION_CALLBACK, 0, "help-all", &opt, NULL, N_("show usage"),
-> >>>    		  PARSE_OPT_HIDDEN | PARSE_OPT_NOARG, help_callback },
-> >>>    		OPT_END()
-> >>>    	};
-> >>
-> >> help_callback() returns -1 immediately, IOW the value pointer is never
-> >> used anyway.  So why does your change make a difference?  *puzzled*
-> >>
-> >> We could pass NULL instead, as in builtin/show-ref.c, which would make
-> >> it clear that the pointer is just a dummy.
-> >
-> > Changed in v2, as well.
->=20
-> Thank you.  I should really re-fetch from Gmane before finishing an=20
-> interrupted reply..
->=20
-> > In general the change won't make any difference when running the
-> > command. But as said in the commit message it caused gcc (gcc
-> > version 4.8.3 (Gentoo Hardened 4.8.3 p1.1, pie-0.5.9), ARMv7 HF)
-> > to segfault when &options was passed in as value. Even though
-> > this is probably an error in gcc we can easily work around it by
-> > doing the Right Thing here.
->=20
-> OK, so does it crash on this one-liner as well?
->=20
-> 	struct t {void *p;} s =3D {&s};
->=20
-> Or on this?
->=20
-> 	void *p =3D &p;
->=20
-> If yes then the author of the hardening feature might be interested in=20
-> this fact.
->=20
-> Ren=E9
+<div dir=3D"ltr">excellent, i like it so much!! besides the obvious:<div>* =
+the colors are fixed, so it is not any more dark red on black for added fil=
+es, but red on black and readable</div><div>* installs with the necessary p=
+erformance options</div><div>* the readme contains things i fell over in th=
+e past.&nbsp;</div><div><br></div><div>three things i do not like it so muc=
+h:</div><div>* the old distinct icon is replaced by a new one which looks s=
+imilar to many other programs, like google chrome. would it be possible to =
+set the old icon?&nbsp;</div><div>* the prompt is still as slow as before, =
+calculating the branch name on pressing return without option to turn it of=
+f</div><div>* it is talking german to me<div><br></div><div>would it be suf=
+ficient to delete<br></div><div><div>c:\Apps\gitwin\mingw64\share\locale\de=
+\LC_MESSAGES\<br></div><div>resp the whole locale directory to let it speak=
+ english?</div><div><br></div><div><div>rupert.</div><div><br><br>On Friday=
+, April 10, 2015 at 1:43:30 PM UTC+2, Johannes Schindelin wrote:<blockquote=
+ class=3D"gmail_quote" style=3D"margin: 0;margin-left: 0.8ex;border-left: 1=
+px #ccc solid;padding-left: 1ex;">Dear all,
+<br>
+<br>during the really exciting Git Merge conference, the Git for Windows de=
+velopers had the opportunity to meet and we managed to whip out a *really* =
+early beta of the upcoming Git for Windows 2.x series.
+<br>
+<br>Please keep in mind that we not only changed our entire development env=
+ironment, but that this change also affects end user installations quite a =
+bit: as parts of Git are still written in shell and Perl, we have to ship a=
+ shell and Perl interpreter, too, which are naturally plucked from the deve=
+lopment environment.
+<br>
+<br>Of course that implies that there are probably still quite a couple of =
+rough edges. Nevertheless, if you want to have a *really* early glimpse at =
+the upcoming major release, feel free to give it a spin: <a href=3D"https:/=
+/git-for-windows.github.io/#download" target=3D"_blank" rel=3D"nofollow" on=
+mousedown=3D"this.href=3D'https://www.google.com/url?q\75https%3A%2F%2Fgit-=
+for-windows.github.io%2F%23download\46sa\75D\46sntz\0751\46usg\75AFQjCNH7Xr=
+6ehKYvOq0YKmWM2A1d350WTQ';return true;" onclick=3D"this.href=3D'https://www=
+.google.com/url?q\75https%3A%2F%2Fgit-for-windows.github.io%2F%23download\4=
+6sa\75D\46sntz\0751\46usg\75AFQjCNH7Xr6ehKYvOq0YKmWM2A1d350WTQ';return true=
+;">https://git-for-windows.<wbr>github.io/#download</a>
+<br>
+<br>Enjoy,
+<br>Johannes
+<br></blockquote></div></div></div></div></div>
 
-No, the segfault is not triggered by this. I've also tried to use
-the exact arguments to gcc that are used when compiling grep.c,
-but to no avail. I'll maybe try to reproduce this with a minimal
-testcase next week.
+<p></p>
 
-Regards
-Patrick
+-- <br />
+-- <br />
+*** Please reply-to-all at all times ***<br />
+*** (do not pretend to know who is subscribed and who is not) ***<br />
+*** Please avoid top-posting. ***<br />
+The msysGit Wiki is here: <a href=3D"https://github.com/msysgit/msysgit/wik=
+i">https://github.com/msysgit/msysgit/wiki</a> - Github accounts are free.<=
+br />
+&nbsp;<br />
+You received this message because you are subscribed to the Google<br />
+Groups &quot;msysGit&quot; group.<br />
+To post to this group, send email to msysgit@googlegroups.com<br />
+To unsubscribe from this group, send email to<br />
+msysgit+unsubscribe@googlegroups.com<br />
+For more options, and view previous threads, visit this group at<br />
+<a href=3D"http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den">http:=
+//groups.google.com/group/msysgit?hl=3Den_US?hl=3Den</a><br />
+<br />
+--- <br />
+You received this message because you are subscribed to the Google Groups &=
+quot;Git for Windows&quot; group.<br />
+To unsubscribe from this group and stop receiving emails from it, send an e=
+mail to <a href=3D"mailto:msysgit+unsubscribe@googlegroups.com">msysgit+uns=
+ubscribe@googlegroups.com</a>.<br />
+For more options, visit <a href=3D"https://groups.google.com/d/optout">http=
+s://groups.google.com/d/optout</a>.<br />
 
---GvXjxJ+pjyke8COw
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAABCAAGBQJVKGwNAAoJEBF8Z7aeq/EsMj8P/R+72zo7Cq7r49elER3BHoHj
-9qhKTe6GweVqKHpshQevrphm+jHUIOQjUPDhuNI5PRShMc9XyPU1keYLBQynI5Ps
-CFMoiFSVPED4MUym8Yg9zZMkusgYaLoVS4E2MXUCOMeDlKbov+VY99EQzSebkHur
-tsy1Ole4v2sairr6F/rfWS1SU5iJdIOhUjiNDJsCaFt4d/Kq/ixc3JEjZN6XGatc
-xILAHpfWyLbP2v7CYvdkFGTYxBP8L7St41bW90lMPzBczCQTbNICaGGLnJzhYjPE
-ltahR/OccXDorVgSXX81JlJQKpchyjor+/xWFjLR9Z3GDb5HwO6JrJOCTnTnv6J0
-Lm1+RspbDtMBwURohVB+W5lcGZyI3KSoNrEd+HEnDQ3bMlpILsvIQSB66jNo4fKu
-cu9ehAGzXD0WnsBNN6ECnQ2ZgIaXc6HSc3/FLM3FH/H5qcR67fZUt+YZc3EK+gRk
-i/kZo2tjnQLKbOsBc3dYltssCZmOG51EhMP1gmjTra3F2pdvGygyvWhmXjGNAV14
-nU6hcEyedM0B55YL45NT3u5apSqhXLgyOWs/PdyO5TjwIbUlioBHuClviMrPmnnC
-t6T29Y3/71MSQv2trit34d9zRsWS4Fn2TigoHGxt1PH03Ys2bxe+EGnLZR0gayNG
-eMdv5sauOppBX5V6dsmi
-=prnw
------END PGP SIGNATURE-----
-
---GvXjxJ+pjyke8COw--
+------=_Part_1_200354221.1428741427176--
+------=_Part_0_23591479.1428741427175--
