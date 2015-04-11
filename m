@@ -1,123 +1,135 @@
-From: Thomas Braun <thomas.braun@virtuell-zuhause.de>
-Subject: Re: Possible Bug in git-http-push
-Date: Fri, 10 Apr 2015 18:55:00 +0200
-Message-ID: <55280064.5070909@virtuell-zuhause.de>
-References: <5527B0D6.3010608@innuce.ch>
+From: Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH] grep: correctly initialize help-all option
+Date: Sat, 11 Apr 2015 02:34:21 +0200
+Message-ID: <20150411003421.GA2111@pks-mb>
+References: <1428586916-22679-1-git-send-email-ps@pks.im>
+ <5526F535.4020407@web.de>
+ <20150410052250.GA372@pks-pc.localdomain>
+ <5527FB95.5010806@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: msysGit <msysgit@googlegroups.com>, bugs@innuce.ch
-To: Stefan <bugs@innuce.ch>, git@vger.kernel.org
-X-From: msysgit+bncBCL7JHHTPAIOXAFAVECRUBDYNQVMK@googlegroups.com Fri Apr 10 18:55:08 2015
-Return-path: <msysgit+bncBCL7JHHTPAIOXAFAVECRUBDYNQVMK@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wg0-f56.google.com ([74.125.82.56])
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="GvXjxJ+pjyke8COw"
+Cc: git@vger.kernel.org
+To: =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
+X-From: git-owner@vger.kernel.org Sat Apr 11 02:33:00 2015
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCL7JHHTPAIOXAFAVECRUBDYNQVMK@googlegroups.com>)
-	id 1YgcCy-0005bV-HQ
-	for gcvm-msysgit@m.gmane.org; Fri, 10 Apr 2015 18:55:08 +0200
-Received: by wggz12 with SMTP id z12sf7041564wgg.0
-        for <gcvm-msysgit@m.gmane.org>; Fri, 10 Apr 2015 09:55:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe;
-        bh=1EgQDEYiqc7E4ISx+sT09I3giPmqvxaEgOBnFWKlH5w=;
-        b=TmJZWuHOosD9fIga2aRtWvlGnjihnGUoYd43M3Tiq9rDkkD4I8dKjzpuAxEKNVqEft
-         vTm1BMp01jtIbW5tVAHmE6RXkeoVn4ArYfBYhyZsihK5JKGWU64cdtKQESmSL6CbVdyd
-         esLKNKFEepiULOrj+T4UbpYJhaP8DRnyYxcfI+z1X37Qoie9PA088aFfd6LFGYsg/fnM
-         deaAZwtPZI4V/pjbZyIrmuUGAGyOgJ+p8uFKfktCQRuLIoBQN1R0eO8ZGIrhfoBsHTwu
-         hQJcewQRiLk2FDccoeYdCIAluqYvixlkAbFp5bwYEGgPJ+sne5NV0Oa3iyhMh7C7zfQg
-         ZUww==
-X-Received: by 10.180.7.233 with SMTP id m9mr91988wia.2.1428684908100;
-        Fri, 10 Apr 2015 09:55:08 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.20.37 with SMTP id k5ls19989wie.23.canary; Fri, 10 Apr
- 2015 09:55:07 -0700 (PDT)
-X-Received: by 10.180.106.136 with SMTP id gu8mr1670729wib.6.1428684907429;
-        Fri, 10 Apr 2015 09:55:07 -0700 (PDT)
-Received: from wp156.webpack.hosteurope.de (wp156.webpack.hosteurope.de. [80.237.132.163])
-        by gmr-mx.google.com with ESMTPS id ec7si14990wib.3.2015.04.10.09.55.07
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Fri, 10 Apr 2015 09:55:07 -0700 (PDT)
-Received-SPF: none (google.com: thomas.braun@virtuell-zuhause.de does not designate permitted sender hosts) client-ip=80.237.132.163;
-Received: from pd9fadc8f.dip0.t-ipconnect.de ([217.250.220.143] helo=[192.168.100.43]); authenticated
-	by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	id 1YgcCu-0006Ex-Gq; Fri, 10 Apr 2015 18:55:04 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
-In-Reply-To: <5527B0D6.3010608@innuce.ch>
-X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1428684907;786bd3fd;
-X-Original-Sender: thomas.braun@virtuell-zuhause.de
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=none
- (google.com: thomas.braun@virtuell-zuhause.de does not designate permitted
- sender hosts) smtp.mail=thomas.braun@virtuell-zuhause.de
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267018>
-
-Am 10.04.2015 um 13:15 schrieb Stefan:
-> Hello List
-> 
-> I possibly found a bug in git-http-push:
-> 
-> When I push my local repo via http secured with basic authorization,
-> then i get:
-> 
-> error: Cannot access URL https://example.ch/example_repo/, return code 22
-> fatal: git-http-push failed
-> Pushing to https://example.ch/example_repo/
-> 
-> My server log gives PROPPFIND 401, so i seems that the PROPPFIND-sent
-> by git-http-push does not use supplied username/pw via prompt
-> 
-> Pulling works without problems.
-> 
-> When I change remote URL to
-> https://user:password@example.ch/example_repo, pushing works.
-> 
-> I'm using git version 1.9.5.msysgit.1
-
-Hi Stefan (CC'ing the msysgit list as this might be windows specific),
-
-can you determine the last version which worked?
-
-And can you create a minimal working example for us to reproduce the
-problem?
-
-We already have a couple of problems with the new curl version together
-with our ancient openssl.
-
-Thomas
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1YgjM2-0004Fi-II
+	for gcvg-git-2@plane.gmane.org; Sat, 11 Apr 2015 02:32:58 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S932650AbbDKAcx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Apr 2015 20:32:53 -0400
+Received: from sender1.zohomail.com ([74.201.84.162]:53488 "EHLO
+	sender1.zohomail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932164AbbDKAcx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Apr 2015 20:32:53 -0400
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; 
+  s=mail; d=pks.im; 
+  h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; 
+  b=tQyB0HS4Yt3WrbjsuXIPv9S2Gp/auTcz/HZneTD/oJOF7SkU3ZUlkEP5fIJlhn6HnKmJf+nu6DOu
+    3NYyrOqhn4kDyGjlN9gePdjj+MiolsjqiqGIwTtucfOLeXe1upAoFTW7JgKZ7Uo5HORqr1Y8nHjE
+    6S8FCl0La/1TkyX1j+E=  
+Received: from localhost (dslb-094-222-027-198.094.222.pools.vodafone-ip.de [94.222.27.198]) by mx.zohomail.com
+	with SMTPS id 1428712370476182.89876212434785; Fri, 10 Apr 2015 17:32:50 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <5527FB95.5010806@web.de>
+X-Zoho-Virus-Status: 1
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267019>
 
 
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+--GvXjxJ+pjyke8COw
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
+On Fri, Apr 10, 2015 at 06:34:29PM +0200, Ren=E9 Scharfe wrote:
+> Am 10.04.2015 um 07:22 schrieb Patrick Steinhardt:
+> > On Thu, Apr 09, 2015 at 11:55:01PM +0200, Ren=E9 Scharfe wrote:
+> >> Am 09.04.2015 um 15:41 schrieb Patrick Steinhardt:
+> >>> ---
+> >>>    builtin/grep.c | 2 +-
+> >>>    1 file changed, 1 insertion(+), 1 deletion(-)
+> >>>
+> >>> diff --git a/builtin/grep.c b/builtin/grep.c
+> >>> index abc4400..c0bf005 100644
+> >>> --- a/builtin/grep.c
+> >>> +++ b/builtin/grep.c
+> >>> @@ -738,7 +738,7 @@ int cmd_grep(int argc, const char **argv, const c=
+har *prefix)
+> >>>    			PARSE_OPT_OPTARG, NULL, (intptr_t)default_pager },
+> >>>    		OPT_BOOL(0, "ext-grep", &external_grep_allowed__ignored,
+> >>>    			 N_("allow calling of grep(1) (ignored by this build)")),
+> >>> -		{ OPTION_CALLBACK, 0, "help-all", &options, NULL, N_("show usage"),
+> >>> +		{ OPTION_CALLBACK, 0, "help-all", &opt, NULL, N_("show usage"),
+> >>>    		  PARSE_OPT_HIDDEN | PARSE_OPT_NOARG, help_callback },
+> >>>    		OPT_END()
+> >>>    	};
+> >>
+> >> help_callback() returns -1 immediately, IOW the value pointer is never
+> >> used anyway.  So why does your change make a difference?  *puzzled*
+> >>
+> >> We could pass NULL instead, as in builtin/show-ref.c, which would make
+> >> it clear that the pointer is just a dummy.
+> >
+> > Changed in v2, as well.
+>=20
+> Thank you.  I should really re-fetch from Gmane before finishing an=20
+> interrupted reply..
+>=20
+> > In general the change won't make any difference when running the
+> > command. But as said in the commit message it caused gcc (gcc
+> > version 4.8.3 (Gentoo Hardened 4.8.3 p1.1, pie-0.5.9), ARMv7 HF)
+> > to segfault when &options was passed in as value. Even though
+> > this is probably an error in gcc we can easily work around it by
+> > doing the Right Thing here.
+>=20
+> OK, so does it crash on this one-liner as well?
+>=20
+> 	struct t {void *p;} s =3D {&s};
+>=20
+> Or on this?
+>=20
+> 	void *p =3D &p;
+>=20
+> If yes then the author of the hardening feature might be interested in=20
+> this fact.
+>=20
+> Ren=E9
 
---- 
-You received this message because you are subscribed to the Google Groups "Git for Windows" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+No, the segfault is not triggered by this. I've also tried to use
+the exact arguments to gcc that are used when compiling grep.c,
+but to no avail. I'll maybe try to reproduce this with a minimal
+testcase next week.
+
+Regards
+Patrick
+
+--GvXjxJ+pjyke8COw
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAABCAAGBQJVKGwNAAoJEBF8Z7aeq/EsMj8P/R+72zo7Cq7r49elER3BHoHj
+9qhKTe6GweVqKHpshQevrphm+jHUIOQjUPDhuNI5PRShMc9XyPU1keYLBQynI5Ps
+CFMoiFSVPED4MUym8Yg9zZMkusgYaLoVS4E2MXUCOMeDlKbov+VY99EQzSebkHur
+tsy1Ole4v2sairr6F/rfWS1SU5iJdIOhUjiNDJsCaFt4d/Kq/ixc3JEjZN6XGatc
+xILAHpfWyLbP2v7CYvdkFGTYxBP8L7St41bW90lMPzBczCQTbNICaGGLnJzhYjPE
+ltahR/OccXDorVgSXX81JlJQKpchyjor+/xWFjLR9Z3GDb5HwO6JrJOCTnTnv6J0
+Lm1+RspbDtMBwURohVB+W5lcGZyI3KSoNrEd+HEnDQ3bMlpILsvIQSB66jNo4fKu
+cu9ehAGzXD0WnsBNN6ECnQ2ZgIaXc6HSc3/FLM3FH/H5qcR67fZUt+YZc3EK+gRk
+i/kZo2tjnQLKbOsBc3dYltssCZmOG51EhMP1gmjTra3F2pdvGygyvWhmXjGNAV14
+nU6hcEyedM0B55YL45NT3u5apSqhXLgyOWs/PdyO5TjwIbUlioBHuClviMrPmnnC
+t6T29Y3/71MSQv2trit34d9zRsWS4Fn2TigoHGxt1PH03Ys2bxe+EGnLZR0gayNG
+eMdv5sauOppBX5V6dsmi
+=prnw
+-----END PGP SIGNATURE-----
+
+--GvXjxJ+pjyke8COw--
