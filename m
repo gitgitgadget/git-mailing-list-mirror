@@ -1,59 +1,54 @@
-From: "Yi, EungJun" <semtlenori@gmail.com>
-Subject: Re: How to send a warning message from git hosting server?
-Date: Sun, 12 Apr 2015 20:25:47 +0900
-Message-ID: <CAFT+Tg9La03dkteQT0YOPPKdR78w89385VfOGN2B9kLGPo7Kcg@mail.gmail.com>
-References: <CAFT+Tg-Gwr9EemFv88+=Ao21dGYe73D-CDiT4mXU4kuP-niOSw@mail.gmail.com>
-	<alpine.LSU.2.00.1504081206420.10193@hermes-1.csi.cam.ac.uk>
-Reply-To: semtlenori@gmail.com
+From: "Antonio Vinal" <ferderodcal@aol.jp>
+Subject: Please Acknowledge
+Date: Sat, 11 Apr 2015 20:24:26 +0200
+Message-ID: <201504111824.t3BIOFfF006507@www3.click-on.fr>
+Reply-To: <vinalantoniobarr@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Tony Finch <dot@dotat.at>
-X-From: git-owner@vger.kernel.org Sun Apr 12 13:25:55 2015
+Content-Type: text/plain;
+	charset="Windows-1251"
+Content-Transfer-Encoding: 7bit
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Sun Apr 12 16:13:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YhG1S-0003Va-0z
-	for gcvg-git-2@plane.gmane.org; Sun, 12 Apr 2015 13:25:54 +0200
+	id 1YhIdN-00035t-Cm
+	for gcvg-git-2@plane.gmane.org; Sun, 12 Apr 2015 16:13:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751479AbbDLLZs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Apr 2015 07:25:48 -0400
-Received: from mail-qk0-f177.google.com ([209.85.220.177]:34917 "EHLO
-	mail-qk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751337AbbDLLZs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Apr 2015 07:25:48 -0400
-Received: by qkhg7 with SMTP id g7so122128620qkh.2
-        for <git@vger.kernel.org>; Sun, 12 Apr 2015 04:25:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=dv/nPckkyPZ9xCNcJVj4XiZ3DK7u8fUb3xwV+hPQk4U=;
-        b=C4sKN/vmAozvZziXsEhcDGzm9gXK8sbKjnpTVN9K84oi4hexL1/eCj0Q71FngTpgeW
-         yLF5VgteaDx7TxzlzQ7X/GaIvEgRqqb93UhUWPKHGXwMZCFfKbmWhShziyUil905m9U5
-         qpXqoLtZJ6VG075Z7xTPYXoKfuTTpdkMeCrO8hjIlhdrkwdL6vPwEn7rAVUD16C2tU41
-         l9fqbdY/5u7XRQwA1oVCBBHQo1vfbyMDqKIl2tKzA/nWAacng3k99e638eP2nCkI3ggg
-         wKt4pdsP/DC3InsJK1Cvcl4MOPu+sVww0oSovin05byIQoAZvwaf6jDzyHvOl67RtaQo
-         z1Vw==
-X-Received: by 10.55.33.94 with SMTP id h91mr19197804qkh.69.1428837947214;
- Sun, 12 Apr 2015 04:25:47 -0700 (PDT)
-Received: by 10.140.105.161 with HTTP; Sun, 12 Apr 2015 04:25:47 -0700 (PDT)
-In-Reply-To: <alpine.LSU.2.00.1504081206420.10193@hermes-1.csi.cam.ac.uk>
+	id S1751275AbbDLONK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Apr 2015 10:13:10 -0400
+Received: from www3.click-on.fr ([194.98.228.71]:58500 "EHLO www3.click-on.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751670AbbDLOND (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Apr 2015 10:13:03 -0400
+X-Greylist: delayed 71143 seconds by postgrey-1.27 at vger.kernel.org; Sun, 12 Apr 2015 10:13:03 EDT
+Received: from User (static-22-253-224-77.ipcom.comunitel.net [77.224.253.22] (may be forged))
+	(authenticated bits=0)
+	by www3.click-on.fr (8.13.1/8.13.1) with ESMTP id t3BIOFfF006507;
+	Sat, 11 Apr 2015 20:24:18 +0200
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2600.0000
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267049>
+X-Spam-Report: 7.1 points;
+ *  2.2 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
+ *      [Blocked - see <http://www.spamcop.net/bl.shtml?77.224.253.22>]
+ *  0.7 MSOE_MID_WRONG_CASE MSOE_MID_WRONG_CASE
+ *  4.2 FORGED_MUA_OUTLOOK Forged mail pretending to be from MS Outlook
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267050>
 
-On Wed, Apr 8, 2015 at 8:08 PM, Tony Finch <dot@dotat.at> wrote:
-> Yi, EungJun <semtlenori@gmail.com> wrote:
->>
->> I want a way to response a remote message when a client send any kind
->> of request. Is it possible?
->
-> Yes, though you need a wrapper around git. Recent versions of gitolite
-> have a "motd" message of the day feature.
+Hello friend!
 
-It sounds nice. Is the wrapper for git client or git server?
+I would like to contact you personally for an important proposal that could of 
+interest to you.  I send this email only to know if this email address is functional.
+I have something very important to discuss with you. Contact me for details by:  
+Email: fernrodyup12@aol.jp with your direct contacts.
+
+Kind regards.
+Antonio Vinal
