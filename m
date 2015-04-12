@@ -1,184 +1,139 @@
-From: Max Kirillov <max@max630.net>
-Subject: Re: [PATCH v2 1/4] t4059: test 'diff --cc' with a change from only
- few parents
-Date: Sun, 12 Apr 2015 08:43:32 +0300
-Message-ID: <20150412054332.GA28555@wheezy.local>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 4/4] t4059: rewrite to be adaptive to hunk filtering
+Date: Sat, 11 Apr 2015 22:48:22 -0700
+Message-ID: <xmqq61916gnt.fsf@gitster.dls.corp.google.com>
 References: <1428006853-21212-1-git-send-email-max@max630.net>
- <1428076716-4449-1-git-send-email-max@max630.net>
- <1428076716-4449-2-git-send-email-max@max630.net>
- <xmqqa8ye5q7m.fsf@gitster.dls.corp.google.com>
+	<1428076716-4449-1-git-send-email-max@max630.net>
+	<1428076716-4449-5-git-send-email-max@max630.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain
 Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Apr 12 07:43:35 2015
+To: Max Kirillov <max@max630.net>
+X-From: git-owner@vger.kernel.org Sun Apr 12 07:48:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YhAgA-0003PD-Gd
-	for gcvg-git-2@plane.gmane.org; Sun, 12 Apr 2015 07:43:35 +0200
+	id 1YhAkv-0005NI-P4
+	for gcvg-git-2@plane.gmane.org; Sun, 12 Apr 2015 07:48:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750789AbbDLFn0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Apr 2015 01:43:26 -0400
-Received: from p3plsmtpa11-06.prod.phx3.secureserver.net ([68.178.252.107]:51909
-	"EHLO p3plsmtpa11-06.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750724AbbDLFnZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 12 Apr 2015 01:43:25 -0400
-Received: from wheezy.local ([82.181.81.240])
-	by p3plsmtpa11-06.prod.phx3.secureserver.net with 
-	id EtjH1q0085B68XE01tjPjh; Sat, 11 Apr 2015 22:43:24 -0700
-Content-Disposition: inline
-In-Reply-To: <xmqqa8ye5q7m.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751364AbbDLFsZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Apr 2015 01:48:25 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:60770 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750802AbbDLFsY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Apr 2015 01:48:24 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id BC31048EB0;
+	Sun, 12 Apr 2015 01:48:23 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=6lg/azSPAGmmdqph2twnvfr1Wu0=; b=gmNHg0
+	L20EEC8RqtVc+RV3Pky8Eq90I5qh1cdXtdYixjIV2/KP/MSOO1aTGgE3dkCrXgV2
+	sPVWc1yLJLTJIn+HqW7k/TH6dsz7fzxe7r+xi2F5xp1Qqe51bhv80qfw37YBOGtt
+	0T1Z5iuBUkO5I3r38pCZKarf6udcZBGAv1hOY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=lQ4EbYoTEppHFIgu8CJgbKo10d3hgDy1
+	dm8okC0akc4lcNDWlPwrXROhe/sMLmAUZf8yzu49Gj/ofbKQ/DIMd7uqI2JQ58Q7
+	t5O598H9yAWiCaPnvk7zf9ovflYf3q44lZYKGmk7nCRWVB5/TXtLChFQqkhUo6GG
+	JhEFvTxYKEA=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B4FF548EAF;
+	Sun, 12 Apr 2015 01:48:23 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 37C6848EAD;
+	Sun, 12 Apr 2015 01:48:23 -0400 (EDT)
+In-Reply-To: <1428076716-4449-5-git-send-email-max@max630.net> (Max Kirillov's
+	message of "Fri, 3 Apr 2015 18:58:36 +0300")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 8803026A-E0D7-11E4-8067-11859F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267038>
 
-On Sat, Apr 11, 2015 at 02:07:25PM -0700, Junio C Hamano wrote:
-> Max Kirillov <max@max630.net> writes:
-> 
->> If `git diff --cc` is used with 2 or more parents, then it shows
->> all hunks which have changed compared to at least 2 parents.
->> Which is reasonable, because those places are likely places for
->> conflicts, and it should be displayed how they were resolved.
-> 
-> OK.
-> 
->> But, preliminary path filtering passes a path only it was changed
->> compared to each parent.
-> 
-> That is true, but I am a bit confused by the above, especially the
-> word "But" that begins the sentence.  Are you talking about this
-> comment that describes what the caller wants to do?
-> 
->     /* find set of paths that every parent touches */
->     static struct combine_diff_path *find_paths_generic(const unsigned char *sha1,
->             const struct sha1_array *parents, struct diff_options *opt)
-> 
-> When the result of a merge exactly matches one (or more) of the
-> parent of the merge, we do not want to show it in the combined
-> format, so intersect_paths() does want to find paths that are
-> different from all parents.  Isn't that a good thing?
+Max Kirillov <max@max630.net> writes:
 
-If it is a good thing, then probably for file which has not
-been filtered out it is also a good thing, then diff --cc
-should have been hiding hunks which fully preserve one of
-the parent.
+> Looks like there is no exact specification what `diff -c` and
+> `diff --cc` should output. Considering this it is not reasonable to
+> hardcode any specific output in test.
 
->> So, if a hunk which has not changed compared to some of parents is
->> shown if there are more changed hunks in the file, but not shown
->> if it is the only change.
->>
->> This looks inconsistent and for some scenarios it is desirable to show
->> such changes.
-> 
-> Hmm, that may be true.  So help me see if I understand your goal by
-> checking if I rephrased you correctly below:
-> 
->  - We want to show a combined hunk when the number of parent
->    variants for the hunk is more than 2 (i.e. interesting octopus)
->    or the result does not match any of the parents (i.e. conflict
->    resolution of a pairwise merge).  We want to drop a hunk whose
->    result came from only one set of parent and the other parents had
->    the same original that is different from the result.
-> 
->  - The current code filters out a path that matches one of the
->    parents very early.  This is OK for a two-way merge.  If the
->    result matches one of the parent's, then any hunk we might
->    produce by not pre-filtering would have the result that came from
->    one parent (i.e. the one identical to the result) and there is
->    only one other parent, which cannot make it an interesting
->    octopus by definition.
-> 
->    But an octopus may merge three variants and pick the result from
->    one of the parents as a whole.  With the pre-filtering, no hunk
->    from such a path is shown, even when the other two variants in
->    "discarded" parents are not identical.
+OK.
 
-Yes, I meant that.
+> Rather, it should verify that file
+> selection behaves the same as hunk selection.
 
-> 
-> The original to refer to are two commits bf1c32bd (combine-diff:
-> update --cc "uninteresting hunks" logic., 2006-02-02) and fd4b1d21
-> (combine-diff: add safety check to --cc., 2006-02-02).
-> 
-> Especially, we need to pay close attention to the discussion that
-> germinated the current behaviour:
-> 
->   http://thread.gmane.org/gmane.comp.version-control.git/15486/focus=15519
-> 
-> I recall that the "diff --cc" before that change was not discarding
-> uninteresting merges sufficiently and the two commits were a
-> deliberate attempt to reject what your series wants to show as
-> uninteresting hunks.  
-> 
-> Two suggestions.
-> 
->  - This is primarily for 2/4, but can we make it more clear in the
->    code that we do this "include more" change only on Octopus
->    merges?  This change should not make any difference for two-way
->    merges and I'd prefer to avoid extra processing of finding
->    matching hunks and combining, only to discard the result.
-> 
->  - Can you run "diff --cc" with and without your patches to the
->    "merge from hell" commit mentioned in the original thread and see
->    if we show more hunks with your patches, and make sure what are
->    shown additionally looked really "interesting"?
+Hrm, really?  "git diff --raw" and "git diff -p -w" on two trees
+would not show identical set of paths, when the blob object are
+different byte-wise but are equivalent at the content level per
+given definition of equivalence (e.g. "-w").  Given that --cc is
+to look at the differences at hunk/content level to combine and omit
+uninteresting ones from the output, relative to -c output, I would
+imagine that the file selection and the hunk selection are expected
+to behave differently.
 
+So, having said that I am a bit skeptical about the description of
+the goals, there are a few nits on the implementation, too.
 
-The diffs:
-older version (without my patch):
-https://gist.githubusercontent.com/max630/70080d38e8e9951b58a4/raw/diffcc_old.txt
-newer version:
-https://gist.githubusercontent.com/max630/70080d38e8e9951b58a4/raw/diffcc_new.txt
+> +# the difference in short file must be returned if and only if it is shown in long file
+> +for fn in win1 win2 merge delete base only1 only2 only1discard only2discard; do
+> +	if git diff --cc merge branch1 branch2 mergebase -- long/$fn | grep -q '^[ +-]\{3\}2\(change[12]|merge\)\?$'
+> +	then
 
-The outcome is quite different, yes.
+Just like the earlier parts of this patch, write a newline when you
+do not have to write a semicolon, and split lines after pipe when
+your pipeline gets long, i.e.
 
-First, I can see that file removal/deletion are passed
-without filtering, even if file was only added/deleted
-compared to some parents and not changed compared to any, so
-it's in some way "2 versions" diff which should not be
-shown. This I think is something should be fixed in addition
-to this series.
+	for fn in win2 win2 ...
+        do
+		if git diff --cc ... |
+			grep 'pattern'
+		then
 
-Other than that, all other changes look "interesting",
-meaning they contain more than 2 versions. Sometimes it's not
-easy to spot because a long hunk is almost inherited from
-one parent with all others being the same, and only in
-couple of lines there when they differ. But I always find
-some difference.
+Do I smell some GNUism in your "grep" patterns?
 
-It was also quite slow, 11 seconds compared to some 0.4.
-But for 2-way merges speed did not change.
+You have
 
+    '^[ +-]\{3\}2\(change[12]|merge\)\?$'
 
+but matching zero-or-one repetition with ? is not in BRE, and \? to
+use it in BRE is a GNU extension.
 
-My exact case was that there was a change in one branch
-which was overwritten during merge conflict resolution by
-fully acepting the other branch - in a 2-parent merge. I
-started looking for a way to visualize such cases. They
-are not visible in usual diff, because they look same as
-accepting change compared to the unchange branch. To
-recognize them you should consider the mergebase. I googled
-to your suggestion in [1], and prepared a trivial testcase
-for such a merge - in contained a base commit, change in
-both branches and children which fully repeat one of the
-branches. But then I discovered that such merge is not shown
-in "diff --cc" because of the path filtering. So here am I.
+Also in BRE , '|' is not an alternation (and making it into such
+with '\|' in BRE is a GNU extension IIRC.
 
-Actually I think this is the very true rule which I would
-like to be used: if there is a parent which is changed
-compared to the merge base and child commit differs from
-that parent. Because this is where there had been a valuable
-change, and it disappeared. Linus in [2] wrote that those
-change was fixing the same problem and it's good that they
-are not shown, by it my case there were fixing different
-problems, they just happened to be in the same place, and
-after merge the bug reappeared.
+Worse, you are not using backslash here to invoke GNU extension, so
+I suspect the grep invocations in the patch may not be working as
+you expect.
 
-[1] http://thread.gmane.org/gmane.comp.version-control.git/191553/focus=191557
-[2] http://thread.gmane.org/gmane.comp.version-control.git/15486/focus=15519
+Doubly worse, what is shown by "diff -c" for line 2 seems to be
+three [- +] columns, followed by one of
+
+    2
+    2change1
+    2change2
+    2merged
+
+followed by the end of line, so your "|merge" part may never match.
+
+We encourage people to avoid \{m,n\}, because, it is not supported
+by some implementations even though it is specified in POSIX for
+BRE.
+
+Perhaps spelling out what you are expecting a bit more explicitly,
+e.g.
+
+	grep -e "^[-+ ][-+ ][-+ ]2$" \
+             -e "^[-+ ][-+ ][-+ ]2change[12]$" \
+             -e "^[-+ ][-+ ][-+ ]2merged$"
+
+might be a reasonable way to write this in a more portable and
+readable way.  And turn that into a helper shell function to make it
+more readable and maintainable for a bonus point.
+
+Thanks.
