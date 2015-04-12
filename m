@@ -1,84 +1,136 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/4] t4059: test 'diff --cc' with a change from only
- few parents
-Date: Sat, 11 Apr 2015 14:20:03 -0700
-Message-ID: <CAPc5daVkhEGQRhCjVpV4wh+cNyfz5yFrAaBrc9re0YM=rtSw+g@mail.gmail.com>
-References: <1428006853-21212-1-git-send-email-max@max630.net>
- <1428076716-4449-1-git-send-email-max@max630.net> <1428076716-4449-2-git-send-email-max@max630.net>
- <xmqqa8ye5q7m.fsf@gitster.dls.corp.google.com>
+From: "Jason Pyeron" <jpyeron@pdinc.us>
+Subject: Finding leaf nodes.
+Date: Sun, 12 Apr 2015 00:04:59 -0400
+Organization: PD Inc
+Message-ID: <038FFBDD688D4EC6B0B42A339DF246B0@black>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
-To: Max Kirillov <max@max630.net>
-X-From: git-owner@vger.kernel.org Sat Apr 11 23:20:33 2015
+Content-Type: text/plain;
+	charset="US-ASCII"
+Content-Transfer-Encoding: 8BIT
+To: "'GIT'" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Apr 12 06:13:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yh2pJ-0003U8-Eb
-	for gcvg-git-2@plane.gmane.org; Sat, 11 Apr 2015 23:20:29 +0200
+	id 1Yh9HO-0000El-P7
+	for gcvg-git-2@plane.gmane.org; Sun, 12 Apr 2015 06:13:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933015AbbDKVUZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 Apr 2015 17:20:25 -0400
-Received: from mail-qk0-f172.google.com ([209.85.220.172]:35806 "EHLO
-	mail-qk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933007AbbDKVUY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Apr 2015 17:20:24 -0400
-Received: by qkhg7 with SMTP id g7so95995422qkh.2
-        for <git@vger.kernel.org>; Sat, 11 Apr 2015 14:20:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=l7B9Hn5vJ1ZQSsqQ0mGbiarLi5ncebzDk2x6m+tN7h0=;
-        b=uMDsxqBY2R2MgZAm+HChoDbIRgPZhrIqQLpRjnIGYkecEYoaFk8WwPJLlIT7xnk6AU
-         gj5vVIQ9yX1qwshBdUpzrqwqKdr9djBsUklCHSf9yGo4VWfigPxQcgJlihUUZDr+u1kU
-         P2BHAZ9OEbNxYPRwnwwE9X2b9piNVxdbQFYpAFF82zCQNTk4/drEo3mxLP/vcezesL9e
-         Y1FQ6/mm3DLGnh6GmCrwqLOXIjnVFpSdrUKJkpmEed4rICU2iZ3J2fsyPG1IoO4yVhEz
-         FSd2vgpMANXABqMIfq7g6NJTNGdmGXbHpNmdYNmb+QWi+TSGZRjv6LrYH/xavhtaUj3l
-         Uikg==
-X-Received: by 10.182.39.195 with SMTP id r3mr7321048obk.44.1428787223639;
- Sat, 11 Apr 2015 14:20:23 -0700 (PDT)
-Received: by 10.202.197.18 with HTTP; Sat, 11 Apr 2015 14:20:03 -0700 (PDT)
-In-Reply-To: <xmqqa8ye5q7m.fsf@gitster.dls.corp.google.com>
-X-Google-Sender-Auth: af0bndi0bCHMQHxieRRSFfi2iNY
+	id S1750900AbbDLENu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Apr 2015 00:13:50 -0400
+Received: from mail.pdinc.us ([67.90.184.27]:44999 "EHLO mail.pdinc.us"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750705AbbDLENt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 12 Apr 2015 00:13:49 -0400
+X-Greylist: delayed 527 seconds by postgrey-1.27 at vger.kernel.org; Sun, 12 Apr 2015 00:13:48 EDT
+Received: from black (nsa1.pdinc.us [67.90.184.2])
+	(authenticated bits=0)
+	by mail.pdinc.us (8.14.4/8.12.11) with ESMTP id t3C450nV018731
+	for <git@vger.kernel.org>; Sun, 12 Apr 2015 00:05:00 -0400
+X-Mailer: Microsoft Office Outlook 11
+Thread-Index: AdB01dhCi/jiBDdVSgqt6n9/C/+xNg==
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.3790.4913
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267036>
 
-On Sat, Apr 11, 2015 at 2:07 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Especially, we need to pay close attention to the discussion that
-> germinated the current behaviour:
->
->   http://thread.gmane.org/gmane.comp.version-control.git/15486/focus=15519
->
-> I recall that the "diff --cc" before that change was not discarding
-> uninteresting merges sufficiently and the two commits were a
-> deliberate attempt to reject what your series wants to show as
-> uninteresting hunks.
->
-> Two suggestions.
->
->  - This is primarily for 2/4, but can we make it more clear in the
+I am trying to find all the unmerged commits [5].
 
-Eh, sorry, I obviously meant 3/4. And let me half-retract this suggestion
-and put it on hold; the code-flow has become sufficiently different that
-special-casing two-way merge may not be worth it after all.
+I can find, as a human, all the commits by git log --oneline --graph --all [1] but I am looking for a scripted way.
 
->    code that we do this "include more" change only on Octopus
->    merges?  This change should not make any difference for two-way
->    merges and I'd prefer to avoid extra processing of finding
->    matching hunks and combining, only to discard the result.
->
->  - Can you run "diff --cc" with and without your patches to the
->    "merge from hell" commit mentioned in the original thread and see
->    if we show more hunks with your patches, and make sure what are
->    shown additionally looked really "interesting"?
+But git show-branch  -a --independent misses some [2]
 
-This one still stands. We'd be interested to see what difference this
-makes in the real world project history.
+find .git/refs/ -type f -exec cat '{}' ';' | sort -u; finds too much [3].
 
-Thanks.
+The closest I get is with refs=`git show-ref -s`; git log --format=%H $refs --not $(echo "$refs" | sed 's/$/^/') but it too [4] gives me extra, but I am really not sure why. 
+
+* | a54a4fb 
+* | a0d2e63 
+* | dd4400d 
+| | *   68ea2c8
+| | |\
+| |/ /
+|/| |
+| | * c74d3c5 ??? Why is this the only extra commit listed ???
+| |/
+|/|
+* | 9c87570 
+* | 717e33d 
+* | 159799f 
+
+
+What should I do to automate this?
+
+
+
+1:
+0748f668b7fe0cba7a0edf1684ae84ddf87104ee
+13916782bebe690149bfd1c3fb31d6d08942585b
+383f3ae77393c2e303b3c32ef7dee122f0b623be
+473093c214ba578cd7aecb6e2e5caaad70d173e4
+4d0579c438e9d750f158124284bd740a5a0e0e26
+68ea2c83978a7c023d76ebe438dd7d98fb1fd074
+6900b076d790593a909bc84a1d062217e4a32941
+9802bc44da0a35e4c7a917cd23468c387897cccd
+982243cfde0dc6dfb1733d8e95748b7e687f57b8
+c197b7f71cd6d601b99adbe0a5cf5bf6bc749b6e
+c4bc3c4eb0015c73b50ea280a4a380e3cffc5160
+c5234422373d0425fa9cd610cb0848b7c33fe436
+d6af1c103b0cdeb7e7d45ffce2a838fa7a287aea
+eb50b82c6f3f55b66693482a913a5c1cfc19a03d
+f9c41c1a17df4358558a23a7c45bc2c60bf97e27
+Fb962761aa2ce6fbf77e4769c9e418bbe6f9f47f
+
+2:
+4d0579c438e9d750f158124284bd740a5a0e0e26
+68ea2c83978a7c023d76ebe438dd7d98fb1fd074
+982243cfde0dc6dfb1733d8e95748b7e687f57b8
+C4bc3c4eb0015c73b50ea280a4a380e3cffc5160
+
+3:
+00ea00e8e6a23a4243316f860aa07ed59203ab97
+144eb9f673f14010c600766762b99cba1a64cc6e
+2250af4ad29b92b07365320c5ccb7a22c17f588e
+26bdfdfe71f7ceb4e0954bc5ab6c198481a280ae
+283be0f77477fcd8c8bc878c602538f8a3451403
+2f47330df8fb0357ef4e4d605d5c402150892a18
+3ec60ab0dbdc63760429187605ede4549d7b2bad
+43813b0fc44f7c41d2cdd4573145dbeb1aae1aee
+4d5b52d440d3a64953a6d7ef3cbb81c8d289e392
+556a5c2d759b51080e3bfe07a89b67e927749328
+6fe0b6db2718625e5eeb3cbadeb58aa858ab4f1b
+717e33d67ad3297a15cb432d3f70f7c12d353fa3
+7587a45658aa689cc774d7253007be3feb2eec23
+ad9b5fa90c8f52b3ca31dd433c2c4b408e5f2a8f
+b3d7623b74dd75cc4f965d6b37dc461d2786f912
+c19fc45c87de85122952d63d28a0c7d3a18b79d5
+e8529e95d89d3f519a31ef7de5bd7f0d0d318e8c
+f2e86371e7fe3391023adccd61856d088db773dd
+fceca0050ceee8c4996a5740f7122e96c4948dd8
+
+4:
+c74d3c5cda60d8be7f38f1ec89c554a1346d57f8
+
+5: My remotes:
+https://github.com/CipherShed/CipherShed.git
+https://github.com/pdinc-oss/CipherShed.git
+https://github.com/discnl/CipherShed.git
+https://github.com/eaglgenes101/CipherShed.git
+https://github.com/erkinalp/CipherShed.git
+https://github.com/GigabyteProductions/CipherShed.git
+https://github.com/jeffallen/CipherShed.git
+https://github.com/kaydiechii/CipherShed.git
+https://github.com/srguglielmo/CipherShed.git
+
+--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-                                                               -
+- Jason Pyeron                      PD Inc. http://www.pdinc.us -
+- Principal Consultant              10 West 24th Street #100    -
+- +1 (443) 269-1555 x333            Baltimore, Maryland 21218   -
+-                                                               -
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+This message is copyright PD Inc, subject to license 20080407P00.
