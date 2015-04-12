@@ -1,204 +1,140 @@
-From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: Re: [PATCH v2 2/3] p7300: add performance tests for clean
-Date: Sun, 12 Apr 2015 18:52:57 +0200
-Message-ID: <20150412165257.GA5793@hank>
-References: <1428770587-9674-1-git-send-email-erik.elfstrom@gmail.com>
- <1428770587-9674-4-git-send-email-erik.elfstrom@gmail.com>
- <20150411175941.GA32735@hank>
- <CAMpP7NZyHBMZ5omT+fPGfkRR56HQPNP3n6cXD7S8voVvqrG6eg@mail.gmail.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: Re: Sneak peek of the upcoming Git for Windows 2.x
+Date: Sun, 12 Apr 2015 19:51:29 +0200
+Organization: gmx
+Message-ID: <b1cc6ba927238fdaa68f685be42002c7@www.dscho.org>
+References: <72d57a68ab32619769d5671d39505db8@www.dscho.org>
+ <39e23864-b75b-4fef-ab90-3413e4e76900@googlegroups.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>
-To: erik@vger.kernel.org,
-	=?iso-8859-1?Q?elfstr=F6m_=3Cerik=2Eelfstrom=40gmail=2Ecom=3E?=@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 12 18:53:17 2015
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Cc: msysgit@googlegroups.com, git@vger.kernel.org
+To: rupert thurner <rupert.thurner@gmail.com>
+X-From: msysgit+bncBCZPH74Q5YNRBKHBVKUQKGQEOG7WBTI@googlegroups.com Sun Apr 12 19:51:39 2015
+Return-path: <msysgit+bncBCZPH74Q5YNRBKHBVKUQKGQEOG7WBTI@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-lb0-f184.google.com ([209.85.217.184])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YhL8E-00053w-Sb
-	for gcvg-git-2@plane.gmane.org; Sun, 12 Apr 2015 18:53:15 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751803AbbDLQxE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 12 Apr 2015 12:53:04 -0400
-Received: from mail-wi0-f170.google.com ([209.85.212.170]:35852 "EHLO
-	mail-wi0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751784AbbDLQxB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Apr 2015 12:53:01 -0400
-Received: by wizk4 with SMTP id k4so46788913wiz.1
-        for <git@vger.kernel.org>; Sun, 12 Apr 2015 09:52:59 -0700 (PDT)
+	(envelope-from <msysgit+bncBCZPH74Q5YNRBKHBVKUQKGQEOG7WBTI@googlegroups.com>)
+	id 1YhM2k-0006aj-4T
+	for gcvm-msysgit@m.gmane.org; Sun, 12 Apr 2015 19:51:38 +0200
+Received: by lbio15 with SMTP id o15sf17280416lbi.0
+        for <gcvm-msysgit@m.gmane.org>; Sun, 12 Apr 2015 10:51:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=0sY/aamhZNnJ7iU9W2Km3Ae/wBOnr+dqIqYSRCPZTaU=;
-        b=JxN1w/r4TlzF20seuM+ufwxWlZjMzt/Fw7+RO/o+EGcBCtVGVg/ne8IQiOCS10plor
-         9UovC7uqDtHzM5WK19QS7r6GtSlqkUMP8PJk3KAsO/i2nyxquf31Nr1lLiFoh7mvlB1H
-         mXs+rfb/zUeAN1dNnyxW8HEWEMDXcf23F1WRwBwGK6axZVvdaBFVh5ItC9HHIAg4+Lz4
-         bzYtakmvgjKpgRAoigjUlyOqy2SJxGBP/Ch2c4LBi7akljK89ARJA40K8fiB879OtB9U
-         h5/br5kkXMMdffL9jopZfXj2+lxIUr/SN2dQE5NQSrMtEi6LLW8jIkLqKWvoUY7TrdOO
-         Bv8w==
-X-Received: by 10.194.23.39 with SMTP id j7mr20701098wjf.9.1428857579627;
-        Sun, 12 Apr 2015 09:52:59 -0700 (PDT)
-Received: from localhost (213-66-41-37-no99.tbcn.telia.com. [213.66.41.37])
-        by mx.google.com with ESMTPSA id dg8sm7694905wjc.9.2015.04.12.09.52.58
+        d=googlegroups.com; s=20120806;
+        h=mime-version:content-type:content-transfer-encoding:date:from:to:cc
+         :subject:organization:in-reply-to:references:message-id:user-agent
+         :x-original-sender:x-original-authentication-results:precedence
+         :mailing-list:list-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe;
+        bh=AawxikQeinJl382pfMYrTncLgUmwtH3JQP+iKSdVcaU=;
+        b=b/4M5FkWBHa4ZOBhYJP0w4wDbVOnkCWpw2GzTfBPb5ak40S5hz1VqY3W0hDm3S491U
+         CGwBiRlLWmBY5QLWISt22yxHdHjTV9pRH0T6OqtLTO5Hpdl7w9nhCsGchKFGc4NkabgK
+         MmdqcOdJDEd2/PNI9dKGv/zINM72Fy9oqPic5grxqs9DeUhRqmDMkQLiF63NXLFZgu31
+         GGXxdgYJRWTkmag1IhjAKsvSr/p4xvLq9E5G4SvLC4uTPqtjCCApsyA6sOhh8dwmSyxe
+         KHFOk760mvsy6dHquFrKqs20gBt8kM5ysjtdiT6RC64dpHX3wVZ64Kw8Y8m16u/SuBQB
+         j48A==
+X-Received: by 10.152.22.130 with SMTP id d2mr116079laf.7.1428861097273;
+        Sun, 12 Apr 2015 10:51:37 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.152.29.36 with SMTP id g4ls632348lah.33.gmail; Sun, 12 Apr
+ 2015 10:51:36 -0700 (PDT)
+X-Received: by 10.152.3.70 with SMTP id a6mr1610953laa.0.1428861096153;
+        Sun, 12 Apr 2015 10:51:36 -0700 (PDT)
+Received: from mout.gmx.net (mout.gmx.net. [212.227.15.15])
+        by gmr-mx.google.com with ESMTPS id t6si429308wiz.0.2015.04.12.10.51.36
+        for <msysgit@googlegroups.com>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 12 Apr 2015 09:52:58 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CAMpP7NZyHBMZ5omT+fPGfkRR56HQPNP3n6cXD7S8voVvqrG6eg@mail.gmail.com>
-User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267052>
+        Sun, 12 Apr 2015 10:51:36 -0700 (PDT)
+Received-SPF: pass (google.com: domain of johannes.schindelin@gmx.de designates 212.227.15.15 as permitted sender) client-ip=212.227.15.15;
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0M0xbD-1ZWiuS0lP5-00v6xD; Sun, 12 Apr 2015 19:51:31
+ +0200
+In-Reply-To: <39e23864-b75b-4fef-ab90-3413e4e76900@googlegroups.com>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.0
+X-Provags-ID: V03:K0:o4PXz2Wje17fNhIQ9aLpEBUpcocw5o/hodvpLa28wqrfV3Wa6+0
+ gyLEPLC7Z27b2rbDxaI9gDutG0N0yLaj77jg5ZR6EqS0vGNMnJqhNUviAK9qNqkLvn4p67J
+ 8m6Yoj2YCYS1fQEOnde0g1VwuaZCM9GYm+T5EOQq6D3JNvqWjYIHrd6d7z3II9n/XHWrOsx
+ dkCXWT55HviEkfBJPcUDg==
+X-UI-Out-Filterresults: notjunk:1;
+X-Original-Sender: johannes.schindelin@gmx.de
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of johannes.schindelin@gmx.de designates 212.227.15.15 as
+ permitted sender) smtp.mail=johannes.schindelin@gmx.de
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267053>
 
-On 04/12, erik elfstr=F6m wrote:
-> On Sat, Apr 11, 2015 at 7:59 PM, Thomas Gummerer <t.gummerer@gmail.co=
-m> wrote:
-> > On 04/11, Erik Elfstr=F6m wrote:
-> >> Signed-off-by: Erik Elfstr=F6m <erik.elfstrom@gmail.com>
-> >> ---
-> >>  t/perf/p7300-clean.sh | 37 +++++++++++++++++++++++++++++++++++++
-> >>  1 file changed, 37 insertions(+)
-> >>  create mode 100755 t/perf/p7300-clean.sh
-> >>
-> >> diff --git a/t/perf/p7300-clean.sh b/t/perf/p7300-clean.sh
-> >> new file mode 100755
-> >> index 0000000..af50d5d
-> >> --- /dev/null
-> >> +++ b/t/perf/p7300-clean.sh
-> >> @@ -0,0 +1,37 @@
-> >> +#!/bin/sh
-> >> +
-> >> +test_description=3D"Test git-clean performance"
-> >> +
-> >> +. ./perf-lib.sh
-> >> +
-> >> +test_perf_large_repo
-> >> +test_checkout_worktree
-> >> +
-> >> +test_expect_success 'setup untracked directory with many sub dirs=
-' '
-> >> +     rm -rf 500_sub_dirs 50000_sub_dirs clean_test_dir &&
-> >> +     mkdir 500_sub_dirs 50000_sub_dirs clean_test_dir &&
-> >> +     for i in $(test_seq 1 500)
-> >> +     do
-> >> +             mkdir 500_sub_dirs/dir$i || return $?
-> >> +     done &&
-> >> +     for i in $(test_seq 1 100)
-> >> +     do
-> >> +             cp -r 500_sub_dirs 50000_sub_dirs/dir$i || return $?
-> >> +     done
-> >> +'
-> >> +
-> >> +test_perf 'clean many untracked sub dirs, check for nested git' '
-> >> +     rm -rf clean_test_dir/50000_sub_dirs_cpy &&
-> >> +     cp -r 50000_sub_dirs clean_test_dir/50000_sub_dirs_cpy &&
-> >
-> > Maybe this would be a good place to use test_perf_cleanup, which I
-> > introduced a while ago and you can find in the
-> > tg/perf-lib-test-perf-cleanup branch?  It probably won't influence =
-the
-> > performance a lot, but still better separate the code that actually
-> > needs to be tested from the cleanup/preparation code.  Ditto in the
-> > other test.
-> >
->
-> Yes, that would be a clear improvement. I was looking for something l=
-ike
-> this, the copy takes more time than the clean currently.
->
-> The cleanup hook is maybe not exactly the right fit here though. I wo=
-uld
-> need to do one initial copy in the setup test and then a copy in the
-> cleanup, something like this:
->
-> test_expect_success 'setup untracked directory with many sub dirs' '
->     ...
->     cp -r 50000_sub_dirs clean_test_dir/50000_sub_dirs_cpy
-> '
->
-> test_perf_cleanup 'clean many untracked sub dirs, check for nested gi=
-t' '
->     git clean -q -f -d  clean_test_dir/
-> ' '
->     test_dir_is_empty clean_test_dir &&
->     rm -rf clean_test_dir/50000_sub_dirs_cpy &&
->     cp -r 50000_sub_dirs clean_test_dir/50000_sub_dirs_cpy
-> '
->
-> This works better than my original code but maybe we can do even bett=
-er
-> with something like:
->
-> test_setup_perf_cleanup 'clean many untracked sub dirs, check for nes=
-ted git' '
->     rm -rf clean_test_dir/50000_sub_dirs_cpy &&
->     cp -r 50000_sub_dirs clean_test_dir/50000_sub_dirs_cpy
-> ' '
->     git clean -q -f -d  clean_test_dir/
-> ' '
->     test_dir_is_empty clean_test_dir
-> '
->
-> Having a setup phase avoids the initial copy in the setup test making
-> things a little easier to follow. I'm not sure its worth the extra co=
-mplexity
-> in perf-lib though (and I'm not sure I would be able to implement it =
-either).
+Hi Rupert,
 
-Yeah, you're right, that would look even better.  In order to avoid
-the extra complexity we might actually go the other route that was
-proposed by Junio in the discussion back then
-(http://thread.gmane.org/gmane.comp.version-control.git/234874/focus=3D=
-235241).
+On 2015-04-11 10:37, rupert thurner wrote:
+>=20
+> three things i do not like it so much:
+> * the old distinct icon is replaced by a new one which looks similar to=
+=20
+> many other programs, like google chrome. would it be possible to set the=
+=20
+> old icon?
 
-Using that and adding a setup option we could have something like:
+Git 1.9.5 came with the Git icon already (the diamond with the branch in it=
+) and now we simply have this "Windowsified". There was so much positive an=
+d uplifting feedback about it at the Git Merge (and besides, I really like =
+the new icon myself), it is unlikely to change.
 
-test_perf --setup '
-	rm -rf clean_test_dir/50000_sub_dirs_cpy &&
-	cp -r 50000_sub_dirs clean_test_dir/50000_sub_dirs_cpy
-' --cleanup '
-	test_dir_is_empty clean_test_dir
-' 'clean many untracked sub dirs, check for nested git' '
-	git clean -q -f -d clean_test_dir
-'
+> * the prompt is still as slow as before, calculating the branch name on=
+=20
+> pressing return without option to turn it off
 
-> Also, what would the implications be if I were to use your new cleanu=
-p
-> function that is not yet on master? Should I rebase on top of your to=
-pic
-> or make a follow up patch to switch over?
+There is no explicit option in the installer to turn it off, but you can ea=
+sily edit `/etc/profile.d/git-prompt.sh` to adjust it to your liking.
 
-If the consensus is to go that route, I think you could just rebase
-the topic onto my topic.  If we introduce the "modern" test style as
-described before it might be worth merging this series first and then
-switch over to the new style.  You should probably wait for other
-opinions before changing it though.
+If you think that more people would want to have an option in the installer=
+ to switch it off, you should read https://github.com/git-for-windows/git/w=
+iki/Making-an-installer, edit /usr/src/build-extra/installer/install.iss.in=
+ after having a look at https://github.com/git-for-windows/build-extra/comm=
+it/cbcf69b9 and open a Pull Request.
+=20
+> * it is talking german to me
+>=20
+> would it be sufficient to delete
+> c:\Apps\gitwin\mingw64\share\locale\de\LC_MESSAGES\
+> resp the whole locale directory to let it speak english?
 
-> >> +     git clean -q -f -d  clean_test_dir/ &&
-> >> +     test_dir_is_empty clean_test_dir
-> >> +'
-> >> +
-> >> +test_perf 'clean many untracked sub dirs, ignore nested git' '
-> >> +     rm -rf clean_test_dir/50000_sub_dirs_cpy &&
-> >> +     cp -r 50000_sub_dirs clean_test_dir/50000_sub_dirs_cpy &&
-> >> +     git clean -q -f -f -d  clean_test_dir/ &&
-> >> +     test_dir_is_empty clean_test_dir
-> >> +'
-> >> +
-> >> +test_done
-> >> --
-> >> 2.4.0.rc0.37.ga3b75b3
-> >>
-> >> --
-> >> To unsubscribe from this list: send the line "unsubscribe git" in
-> >> the body of a message to majordomo@vger.kernel.org
-> >> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Probably. But the canonical solution is to set the `LC_ALL` or `LANG` envir=
+onment variables accordingly.
 
---
-Thomas Gummerer
+Ciao,
+Johannes
+
+--=20
+--=20
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github =
+accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den
+
+---=20
+You received this message because you are subscribed to the Google Groups "=
+Git for Windows" group.
+To unsubscribe from this group and stop receiving emails from it, send an e=
+mail to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
