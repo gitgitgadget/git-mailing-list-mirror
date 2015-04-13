@@ -1,66 +1,83 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Git + SFC Status Update
-Date: Mon, 13 Apr 2015 17:24:18 +0200
-Message-ID: <552BDFA2.5000901@drmicha.warpmail.net>
-References: <20150413115613.GA4589@peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: Jeff King <peff@peff.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 13 17:24:44 2015
+From: Koosha Khajehmoogahi <koosha@posteo.de>
+Subject: [PATCH v3 4/5] t4202-log: add tests for --merges=
+Date: Mon, 13 Apr 2015 17:29:27 +0200
+Message-ID: <1428938968-19013-4-git-send-email-koosha@posteo.de>
+References: <1428938968-19013-1-git-send-email-koosha@posteo.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 13 17:30:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YhgDp-0006Um-Rq
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Apr 2015 17:24:26 +0200
+	id 1YhgJp-0002Fc-Pa
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Apr 2015 17:30:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932224AbbDMPYV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Apr 2015 11:24:21 -0400
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:34935 "EHLO
-	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753652AbbDMPYU (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 13 Apr 2015 11:24:20 -0400
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
-	by mailout.nyi.internal (Postfix) with ESMTP id 153D5208FF
-	for <git@vger.kernel.org>; Mon, 13 Apr 2015 11:24:20 -0400 (EDT)
-Received: from frontend1 ([10.202.2.160])
-  by compute6.internal (MEProxy); Mon, 13 Apr 2015 11:24:20 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=
-	content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-sasl-enc
-	:x-sasl-enc; s=mesmtp; bh=R4Mm5WGj/L171dZlzUGpHeAPufw=; b=doQFBG
-	2YwwvNxzbw0AGrdYh88nRs5BuHF5hyQANldwcerSrEuGVJ2coNYkwyVolShTsCF5
-	Sv83tCxM+hyXTbbrcIreU9duAwuVad/t7CQnDdkjjGM+Ilkj63s/kIR6Grw5g93G
-	iJ2Bmj7tgCjXLLaCo7UDQLoZ6FG8pW+6Zxt50=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=content-transfer-encoding:content-type
-	:date:from:in-reply-to:message-id:mime-version:references
-	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=R4Mm5WGj/L171dZ
-	lzUGpHeAPufw=; b=SntViCVExfrcOsQvheQNQw9c1wqO0cv3FK6ucvGDogfbJMl
-	/8Z8UBhpeUJ6SJvGHpASEkUUSqbNPvU07Gkc8E+nzwRFl5klg/HVRDQoID1/mCos
-	BNXgMyrpqdWe3RJkzP9YH6VvUzM2INCowR/c6lgXTnhxkd8sgCFuFDugtlg0=
-X-Sasl-enc: AgdEC9/DDqrluvaQRBrk0GPw7+R49yB7ti/X91Exdjdq 1428938659
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 94100C00022;
-	Mon, 13 Apr 2015 11:24:19 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
-In-Reply-To: <20150413115613.GA4589@peff.net>
+	id S932421AbbDMPac (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Apr 2015 11:30:32 -0400
+Received: from mx02.posteo.de ([89.146.194.165]:49918 "EHLO mx02.posteo.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932399AbbDMPa3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Apr 2015 11:30:29 -0400
+Received: from dovecot03.posteo.de (unknown [185.67.36.28])
+	by mx02.posteo.de (Postfix) with ESMTPS id 910C025AF504
+	for <git@vger.kernel.org>; Mon, 13 Apr 2015 17:30:28 +0200 (CEST)
+Received: from mail.posteo.de (localhost [127.0.0.1])
+	by dovecot03.posteo.de (Postfix) with ESMTPSA id 3lQYmh2yLfz5vN2
+	for <git@vger.kernel.org>; Mon, 13 Apr 2015 17:30:28 +0200 (CEST)
+X-Mailer: git-send-email 2.3.3.263.g095251d.dirty
+In-Reply-To: <1428938968-19013-1-git-send-email-koosha@posteo.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267086>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267087>
 
-Thanks for the report, and thanks to everyone on the committee (and the
-conservancy).
+From: Eric Sunshine <sunshine@sunshineco.com>
+Signed-off-by: Koosha Khajehmoogahi <koosha@posteo.de>
+---
+ t/t4202-log.sh | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
-I'm somewhat disappointed to see that violent revolutions are excluded,
-though ;)
-
-Seriously, keeping the scope of "The Git Project" (the SCF member) as
-limited as it is seems to be the best approach to keeping it as
-hasslefree and fucntional as it is.
-
-Michael
+diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+index 1b2e981..3edcd81 100755
+--- a/t/t4202-log.sh
++++ b/t/t4202-log.sh
+@@ -270,6 +270,35 @@ cat > expect <<\EOF
+ * initial
+ EOF
+ 
++test_expect_success 'setup merges=' '
++	git log --min-parents=2 --pretty=tformat:%s >expect_only &&
++	git log --max-parents=1 --pretty=tformat:%s >expect_hide &&
++	git log --min-parents=-1 --pretty=tformat:%s >expect_show
++'
++
++test_log_merges() {
++	expect=expect_$1
++	config=${2:+-c log.merges=$2}
++	option=${3:+--merges=$3}
++	option=${4:-$option}
++	test_expect_success "merges${config:+ $config}${option:+ $option}" "
++		git $config log $option --pretty=tformat:%s >actual &&
++		test_cmp $expect actual
++	"
++}
++
++states="show only hide"
++for c in '' $states
++do
++	for o in '' $states
++	do
++		test_log_merges ${o:-${c:-show}} "$c" "$o"
++	done
++done
++
++test_log_merges hide show '' --no-merges
++test_log_merges only hide '' '--merges --max-parents=2'
++
+ test_expect_success 'log --graph with merge' '
+ 	git log --graph --date-order --pretty=tformat:%s |
+ 		sed "s/ *\$//" >actual &&
+-- 
+2.3.3.263.g095251d.dirty
