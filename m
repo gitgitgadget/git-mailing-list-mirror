@@ -1,90 +1,139 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: [PATCH] reduce progress updates in background
-Date: Mon, 13 Apr 2015 11:01:04 -0400 (EDT)
-Message-ID: <alpine.LFD.2.11.1504131052090.5619@knanqh.ubzr>
-References: <20150413134850.GC23475@mewburn.net>
- <alpine.LFD.2.11.1504130954420.5619@knanqh.ubzr>
- <20150413144039.GD23475@mewburn.net>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: inexact rename detection warning on "git log -p"
+Date: Mon, 13 Apr 2015 17:11:33 +0200
+Message-ID: <552BDCA5.3020505@drmicha.warpmail.net>
+References: <loom.20150413T121644-743@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; CHARSET=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Luke Mewburn <luke@mewburn.net>
-X-From: git-owner@vger.kernel.org Mon Apr 13 17:01:29 2015
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+To: Matthew Walster <matthew@walster.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 13 17:11:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yhfra-00084s-IT
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Apr 2015 17:01:26 +0200
+	id 1Yhg1b-0006V7-DU
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Apr 2015 17:11:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932124AbbDMPBH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Apr 2015 11:01:07 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:57155 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754156AbbDMPBG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Apr 2015 11:01:06 -0400
-Received: from yoda.home ([66.131.180.142]) by VL-VM-MR001.ip.videotron.ca
- (Oracle Communications Messaging Exchange Server 7u4-22.01 64bit (built Apr 21
- 2011)) with ESMTP id <0NMR0053Z31TF210@VL-VM-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 13 Apr 2015 11:01:05 -0400 (EDT)
-Received: from xanadu.home (xanadu.home [192.168.2.2])	by yoda.home (Postfix)
- with ESMTPSA id 273822DA023B; Mon, 13 Apr 2015 11:01:05 -0400 (EDT)
-In-reply-to: <20150413144039.GD23475@mewburn.net>
-User-Agent: Alpine 2.11 (LFD 23 2013-08-11)
+	id S932669AbbDMPLj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Apr 2015 11:11:39 -0400
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:41086 "EHLO
+	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932582AbbDMPLf (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 13 Apr 2015 11:11:35 -0400
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+	by mailout.nyi.internal (Postfix) with ESMTP id 4387420B4C
+	for <git@vger.kernel.org>; Mon, 13 Apr 2015 11:11:35 -0400 (EDT)
+Received: from frontend2 ([10.202.2.161])
+  by compute2.internal (MEProxy); Mon, 13 Apr 2015 11:11:35 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=
+	content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=EpY5RscTHx8H3+l5s1icKu+rlO4=; b=N4vy11
+	N/xT8PWcTfW/hYOeEKyryJrNgE1gGwfXNOHy/jsWwFWZl/tyn7KJJmnHSxDettzj
+	6O0C8rUy/82VyTyBs7CRgtSA/gPTb5a/8Cv+VcNCVYVSc5C1IQYY/fh7DRNmpwrk
+	yuq8NvC0HbAWmRMh3m/YH8HD4rYz6s6ywiiig=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=EpY5RscTHx8H3+l
+	5s1icKu+rlO4=; b=pB8YvjUiHDD1p+76HvIZ5kn626RAfEQHPDtI448R+LY/sq3
+	RkV93nQd9tI0qLhvH/HnbbFPPVjwV4Tx/tknkh/8CrGAzuB4zFR7WY2fHhwOwvNH
+	oDnKe9PRiFLGJ1ZMqiD+r6kXcr/54KTjVNC9PSuzofP21YyjRQbckNJmbpsc=
+X-Sasl-enc: 5YIMTRRB5103vKokxpegTLlKE/H/yaWoih2o4z1ebPBj 1428937894
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id BECBD6801DC;
+	Mon, 13 Apr 2015 11:11:34 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
+In-Reply-To: <loom.20150413T121644-743@post.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267085>
 
-On Tue, 14 Apr 2015, Luke Mewburn wrote:
-
-> On Mon, Apr 13, 2015 at 10:11:09AM -0400, Nicolas Pitre wrote:
->   | What if you suspend the task and push it into the background? Would be 
->   | nice to inhibit progress display in that case, and resume it if the task 
->   | returns to the foreground.
+Matthew Walster venit, vidit, dixit 13.04.2015 12:47:
+> Out of idle curiosity, I cloned 
+> git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git and chose 
+> to generate some statistics:
 > 
-> That's what happens; the suppression only occurs if the process is
-> currently background.  If I start a long-running operation (such as "git
-> fsck"), the progress is displayed. I then suspend & background, and the
-> progress is suppressed.  If I resume the process in the foreground, the
-> progress starts to display again at the appropriate point.
+> $ find -not -iname '.git' | wc
+>   52154   52154 1820305
 
-I agree. I was just comenting on your suggestion about caching the 
-in_progress_fd() result which would prevent that.
+git ls-files | wc -l
 
-> In the proposed patch, the stop_progress display for a given progress
-> (i.e. the one that ends in ", done.") is displayed even if in the
-> background so that there's some indication of progress. E.g.
->   Checking object directories: 100% (256/256), done.
->   Checking objects: 100% (184664/184664), done.
->   Checking connectivity: 184667, done.
-> This is the test 'if (is_foreground || done)'.
-
-Yes.  And I think this is nice.
-
->   | Also the display() function may be called quite a lot without 
->   | necessarily resulting in a display output. Therefore I'd suggest adding 
->   | in_progress_fd() to the if condition right before the printf() instead.
+> That's a few files...
 > 
-> That's an easy enough change to make (although I speculate that the
-> testing of the foreground status is not that big a performance issue,
-> especially compared the the existing performance "overhead" of printing
-> the progress to stderr then forcing a flush :)
+> $ git log | wc
+> 8359290 37279781 334525133
 
-Sure.  But what I'm saying is that progress() may be called a thousand 
-times and only one or two of those calls will result in an actual 
-print-out. So it is best to test the foreground status only at that 
-point.
+??
 
-> Should I submit a revised patch with
-> (1) call in_progress_fd() just before the fprintf() as requested, and
-> (2) suppress all display output including the "done" call.
-> ?
+> Hmmm, well that's not too useful, let's see how many commits there are:
+> 
+> $ git log | grep ^commit | wc
+>  507296 1014592 24350208
 
-I'd suggest (1) but not (2).
+git rev-list --count HEAD
 
+> and merges:
+> 
+> $ git log | grep ^Merge: | wc
+>   36019  111146  854397
 
-Nicolas
+git rev-list --count --merges HEAD
+
+I wonder why people are so found of wc.
+
+> I wonder what the total size of all changes are:
+> 
+> $ git log --patch | wc
+
+That counts quite a bit more than just patch lines: Boiler plate, log
+messages, diff headers.
+
+> warning: inexact rename detection was skipped due to too many files.
+> warning: you may want to set your diff.renameLimit variable to at least 779 
+> and retry the command.
+> 93295818 366207219 3072072294
+> 
+> My bug report is in reference to the warning: It's not clear whether this 
+> warning just "warns" the user (hence the warning rather than an error) or 
+> whether it actually had an fault and didn't complete the operation 
+> successfully. It's also not clear whether the detection was aborted halfway 
+> through, or whether the work it has so far done has been discarded and is 
+> therefore idempotent if I *lowered* the renameLimit value (as opposed to 
+> raising it to fix the warning).
+> 
+> Could the wording be changed to indicate that the operation continued 
+> without the rename detection? My preferred wording would be:
+> 
+> warning: inexact rename detection was skipped due to too many files.
+> warning: you may want to set your diff.renameLimit variable to at least 779 
+> and retry the command.
+> warning: continuing processing without inexact rename detection
+> 
+> I'm a native English speaker and even I found the wording a little confusing 
+> -- although people used to gcc will know warning is informational and error 
+> is abortive, not all git users are aware of the distinction.
+
+"was skipped" and "without foo" sound pretty similar to me. But what's
+worse: "continue processing without foo" creates the impression that all
+further processing is done without "foo", which is a bit misleading: in
+fact, foo was skipped for at least one diff. So I think the original is
+closer to the truth.
+
+> Additionally, is the renameLimit something that could potentially be 
+> something dynamic (i.e. it inspects how much free RAM is available and 
+> increases the buffer if appropriate) or is that a conscious decision not to 
+> give the process "free reign"?
+
+I think it's more about time than memory. Note that this is quadratic in
+the number of files.
+
+If you want to take a shot at an automatic setting: grepping for
+"rename_limit" (especially "needed_rename_limit" and
+"diff_rename_limit_default") will give you some pointers.
+
+Michael
