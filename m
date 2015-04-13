@@ -1,99 +1,104 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [WIP/RFH/PATCH 3/3] t/lib-git-svn: adjust config to apache 2.4
-Date: Mon, 13 Apr 2015 12:14:13 +0200
-Message-ID: <552B96F5.8060607@drmicha.warpmail.net>
-References: <cover.1428505184.git.git@drmicha.warpmail.net> <0631c09d394dedb803a100e81ce4052a57b4e73e.1428505184.git.git@drmicha.warpmail.net> <20150410032317.GB11280@peff.net> <20150410033953.GC11280@peff.net>
+From: Matthew Walster <matthew@walster.org>
+Subject: inexact rename detection warning on "git log -p"
+Date: Mon, 13 Apr 2015 10:47:15 +0000 (UTC)
+Message-ID: <loom.20150413T121644-743@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Apr 13 12:14:34 2015
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 13 12:50:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YhbNq-0002Xm-31
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Apr 2015 12:14:26 +0200
+	id 1YhbwV-00031q-48
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Apr 2015 12:50:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753365AbbDMKOR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Apr 2015 06:14:17 -0400
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:41569 "EHLO
-	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752094AbbDMKOP (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 13 Apr 2015 06:14:15 -0400
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailout.nyi.internal (Postfix) with ESMTP id 9A4B82081E
-	for <git@vger.kernel.org>; Mon, 13 Apr 2015 06:14:14 -0400 (EDT)
-Received: from frontend1 ([10.202.2.160])
-  by compute5.internal (MEProxy); Mon, 13 Apr 2015 06:14:14 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-sasl-enc
-	:x-sasl-enc; s=mesmtp; bh=j+XQXAiX68DIiBfLRfvB4dItI4o=; b=NosItP
-	IP+dbLgHblyspf6+YeEUXBnFW98z+4YfKGq/wIuwYNdBBESQqJNjUxePjjY0HrTD
-	pwtWdc2LcD6RQ2Gglp3hBAHLiBxE5Mm3ReR9mEokLZqrNEXEfc5czvxbf9v0SI7t
-	Xb5rvpA7NJn5mw/qU+cwwVWom3RtnWTND1Ys4=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:date:from:in-reply-to:message-id:mime-version:references
-	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=j+XQXAiX68DIiBf
-	LRfvB4dItI4o=; b=Xq6FuCxUkb9AvZbWLN+3fikXxrKdY9KHolaeDZZXBNh/e+m
-	R78WsE46RIcoBG9FrbFCctsB/1KvGpR9ZtNjt8hvZvTdOIV7NhjV5fel1jmORJQ/
-	bzEtM8gjV7fVZXpaC9SzMO5lCqxvzgzNbzh0wrUPcI05oAzulbybD7txMI80=
-X-Sasl-enc: 7rmx59GE1o3EnaJ2IHrWLilGtetmvTQe/klpkHIPh3ST 1428920054
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 10EBDC00015;
-	Mon, 13 Apr 2015 06:14:13 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
-In-Reply-To: <20150410033953.GC11280@peff.net>
+	id S1753575AbbDMKuK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Apr 2015 06:50:10 -0400
+Received: from plane.gmane.org ([80.91.229.3]:33186 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753456AbbDMKuJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Apr 2015 06:50:09 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1YhbwK-0002sT-AK
+	for git@vger.kernel.org; Mon, 13 Apr 2015 12:50:04 +0200
+Received: from 91-215-166-4.net.lmax.com ([91-215-166-4.net.lmax.com])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 13 Apr 2015 12:50:04 +0200
+Received: from matthew by 91-215-166-4.net.lmax.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 13 Apr 2015 12:50:04 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 91.215.166.4 (Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.118 Safari/537.36)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267073>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267075>
 
-Jeff King venit, vidit, dixit 10.04.2015 05:39:
-> On Fri, Apr 10, 2015 at 05:23:17AM +0200, Jeff King wrote:
-> 
->> Curiously, though, the git-svn tests seem to run fine for me on Apache
->> 2.4 without your patch. I wonder if the fixes I mentioned above (which I
->> definitely needed to get the regular http tests running on Debian back
->> then) are not necessary on my system anymore (e.g., because the apache2
->> package now ships with better-compatible config).
-> 
-> Ah, I see. I am not in fact running apache.
-> 
-> If you do not set SVN_HTTPD_PORT (which I don't), then lib-git-svn.sh's
-> start_httpd silently returns success without bothering to setup the
-> apache server at all. And yet the rest of the tests run to completion
-> just fine.
+Out of idle curiosity, I cloned 
+git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git and chose 
+to generate some statistics:
 
-Yep.
+$ find -not -iname '.git' | wc
+  52154   52154 1820305
 
-> It looks like setting this variable is a way to say "run the same set of
-> tests, but do it over svn-over-httpd instead of svn's direct filesystem
-> access". Setting SVN_HTTPD_PORT does cause the tests to fail for me.
+That's a few files...
 
-Oh, I didn't even notice that. That's a bit weird.
+$ git log | wc
+8359290 37279781 334525133
 
-> I don't know how important it is to run these tests over httpd. If so,
-> it would be nice to do something like lib-httpd does: try the apache
-> setup by default, and if it fails, gracefully skip the tests (or
-> fallback to the non-httpd version).
-> 
-> I'm also not sure if there's value in running both the httpd and
-> local-filesystem forms of the test. IOW, should we be factoring out the
-> tests and having two separate scripts that set $svnrepo as appropriate,
-> and then runs the tests?
-> 
-> -Peff
+Hmmm, well that's not too useful, let's see how many commits there are:
 
-Hmm, if those tests are run (with file://) I'm inclined to leave things
-as they are (scratch 3/3)... Though the fact that on my system,
-lib-git-svn starts the server but fails to connect isn't overly
-comforting. But git-svn is being used less and less. World domination is
-almost complete.
+$ git log | grep ^commit | wc
+ 507296 1014592 24350208
 
-Michael
+and merges:
+
+$ git log | grep ^Merge: | wc
+  36019  111146  854397
+
+I wonder what the total size of all changes are:
+
+$ git log --patch | wc
+warning: inexact rename detection was skipped due to too many files.
+warning: you may want to set your diff.renameLimit variable to at least 779 
+and retry the command.
+93295818 366207219 3072072294
+
+My bug report is in reference to the warning: It's not clear whether this 
+warning just "warns" the user (hence the warning rather than an error) or 
+whether it actually had an fault and didn't complete the operation 
+successfully. It's also not clear whether the detection was aborted halfway 
+through, or whether the work it has so far done has been discarded and is 
+therefore idempotent if I *lowered* the renameLimit value (as opposed to 
+raising it to fix the warning).
+
+Could the wording be changed to indicate that the operation continued 
+without the rename detection? My preferred wording would be:
+
+warning: inexact rename detection was skipped due to too many files.
+warning: you may want to set your diff.renameLimit variable to at least 779 
+and retry the command.
+warning: continuing processing without inexact rename detection
+
+I'm a native English speaker and even I found the wording a little confusing 
+-- although people used to gcc will know warning is informational and error 
+is abortive, not all git users are aware of the distinction.
+
+Additionally, is the renameLimit something that could potentially be 
+something dynamic (i.e. it inspects how much free RAM is available and 
+increases the buffer if appropriate) or is that a conscious decision not to 
+give the process "free reign"?
+
+Cheers,
+
+
+Matthew Walster
