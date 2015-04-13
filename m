@@ -1,67 +1,107 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v3] CodingGuidelines: update 'rough' rule count
-Date: Mon, 13 Apr 2015 10:30:02 -0700
-Message-ID: <20150413173002.GC5467@google.com>
-References: <20150412234720.GA37658@Serenity.local>
- <CAPig+cS=xBoe-hr5Kwm0N9hBUy4bzN1NoXTcDEwz_4ZwrrXPXA@mail.gmail.com>
- <20150413042644.GA39596@Serenity.local>
- <CAPig+cTgNzO5NGabOsaSZOq7Y47OBXJz9mnS-MfpoQ2MANzrng@mail.gmail.com>
- <CAPig+cQ3z_UuUMZE_jUGbv1_3Fu_32GSw2ysSixw4VE0opz27w@mail.gmail.com>
- <20150413125414.GA1038@Serenity.local>
+From: Eugen Konkov <kes-kes@yandex.ru>
+Subject: Re[2]: Feature request: implement '--follow' option for `git blame`
+Date: Mon, 13 Apr 2015 22:07:35 +0300
+Organization: ISP FreeLine
+Message-ID: <1962526577.20150413220735@yandex.ru>
+References: <4215491428322362@web26m.yandex.ru> <xmqqvbh7baij.fsf@gitster.dls.corp.google.com> <209433431.20150410094038@yandex.ru> <xmqqiod04mq6.fsf@gitster.dls.corp.google.com>
+Reply-To: Eugen Konkov <kes-kes@yandex.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
-To: Julian Gindi <juliangindi@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 13 19:30:12 2015
+Content-Type: text/plain; charset=windows-1251
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: KES <kes-kes@yandex.ua>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 13 21:08:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YhiBX-0005OW-LO
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Apr 2015 19:30:12 +0200
+	id 1Yhjid-0007wP-Hs
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Apr 2015 21:08:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932358AbbDMRaG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Apr 2015 13:30:06 -0400
-Received: from mail-ig0-f178.google.com ([209.85.213.178]:34860 "EHLO
-	mail-ig0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932343AbbDMRaF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Apr 2015 13:30:05 -0400
-Received: by igbyr2 with SMTP id yr2so16410098igb.0
-        for <git@vger.kernel.org>; Mon, 13 Apr 2015 10:30:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=oDESnFLBCib3KM7l/EM6Tai5qjKLxI6g6Z+jlthVzm4=;
-        b=R1gPDguItNPqQT1yKvAwuPzZtODy9qgL7ggAPx1uPAOzmHLBYSvSpdjicmEc3yhNvY
-         9JQxRa4ZvTKvhMLkZuDGteqe/krdvNYaAtEsdnKLK+ZG92nTwfBX1Ygx+2wB8EbQrELt
-         h9Wx/w0cXZClD/NYYeT/dxNybgtMlqa5sAXMRKgPNoV78vCw9J8zb0e5Y308eSuarkNj
-         8qEQm3DN52TpEXg3izimVuTTWpnOc/fGv08m6Zlj/0XNj+AGEpCLohhGS1movR+gGOkV
-         0KouFLzJeGx4I3X0t+WRB7u4o9xTetjRr+/t9Xp1TAsiqfj25nwMxwkVQjr0CXPbiKTm
-         c94A==
-X-Received: by 10.50.35.195 with SMTP id k3mr18354426igj.11.1428946205067;
-        Mon, 13 Apr 2015 10:30:05 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:ed10:7b5c:963e:5b26])
-        by mx.google.com with ESMTPSA id 7sm5271702iol.43.2015.04.13.10.30.04
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 13 Apr 2015 10:30:04 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20150413125414.GA1038@Serenity.local>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S932278AbbDMTIX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Apr 2015 15:08:23 -0400
+Received: from forward18.mail.yandex.net ([95.108.253.143]:60502 "EHLO
+	forward18.mail.yandex.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751328AbbDMTIW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Apr 2015 15:08:22 -0400
+Received: from smtp19.mail.yandex.net (smtp19.mail.yandex.net [95.108.252.19])
+	by forward18.mail.yandex.net (Yandex) with ESMTP id EA58F1780C6F;
+	Mon, 13 Apr 2015 22:08:19 +0300 (MSK)
+Received: from smtp19.mail.yandex.net (localhost [127.0.0.1])
+	by smtp19.mail.yandex.net (Yandex) with ESMTP id 83BE6BE04BD;
+	Mon, 13 Apr 2015 22:08:19 +0300 (MSK)
+Received: from 46.219.241.28.freenet.com.ua (46.219.241.28.freenet.com.ua [46.219.241.28])
+	by smtp19.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id PVLcAs4FCJ-8IvWxPx5;
+	Mon, 13 Apr 2015 22:08:18 +0300
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(Client certificate not present)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1428952098;
+	bh=khb/Btlrv1598U9+QpA6ozH0gf5CqCAMtIuln5+5+8s=;
+	h=Date:From:X-Mailer:Reply-To:Organization:X-Priority:Message-ID:To:
+	 CC:Subject:In-Reply-To:References:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding;
+	b=Nw4MCaJePV+RVrFzqRKahzXIS2+GtwtRSidKw4tUJT5TPmZ0IwaTmTjEMq/m7ZrDn
+	 63cJAAqIQZPCPM6Ja4QjUiBl7yhpPy6/U2LwOKpbI4qVw4am0DqJQpL4XPx1p2kjv/
+	 c0vXEjbIKTiW/gr71efwy1BC37QNvPh1IDszaKhE=
+Authentication-Results: smtp19.mail.yandex.net; dkim=pass header.i=@yandex.ru
+X-Mailer: The Bat! (v4.0.24) Professional
+X-Priority: 3 (Normal)
+In-Reply-To: <xmqqiod04mq6.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267097>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267098>
 
-Julian Gindi wrote:
+=C7=E4=F0=E0=E2=F1=F2=E2=F3=E9=F2=E5, Junio.
 
-> Changed inaccurate count of "rough rules" from three to the more
-> generic 'a few'.
->
-> Signed-off-by: Julian Gindi <juliangindi@gmail.com>
+=C2=FB =EF=E8=F1=E0=EB=E8 13 =E0=EF=F0=E5=EB=FF 2015 =E3., 8:32:33:
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+JCH> Eugen Konkov <kes-kes@yandex.ru> writes:
 
-Thanks.
+>> I agree with your complex example.
+
+JCH> Note that it is a norm, not anything complex, that we do not renam=
+e
+JCH> a file wholesale.
+
+>> But it will be great to guess in simple case, when in version v1.0
+>> only one file A which were renamed into C half year later.
+
+JCH> So you used to have A and somebody renamed that into C in the past=
+=2E
+JCH> The content of C in the current version is what you used to have i=
+n
+JCH> A.
+
+JCH> What should happen if you also have A, whose contents do not have
+JCH> any relation to that old A, in today's code?
+
+JCH> What should happen if you also used to have C, whose contents do n=
+ot
+JCH> have any relation to that old A or current C?
+
+JCH> What happens if you added such random guessing and you were not so
+JCH> familiar with the project history to know these unrelated A's and
+JCH> C's that used to exist in the past?
+
+JCH> Current Git _consistently_ behaves, even in the presense of anythi=
+ng
+JCH> that can lead to confusing behaviour.  When you ask
+
+JCH>     git blame OLD -- A
+
+JCH> it does not matter if you have an unrelated A in the revision that
+JCH> you happen to have checked out in your working tree (i.e. HEAD).
+JCH> The above command line talks about the old revision OLD and A talk=
+s
+JCH> about the path A in that old revision.
+
+
+Yes. you are right. I do not think about these examples.
+
+
+--=20
+=D1 =F3=E2=E0=E6=E5=ED=E8=E5=EC,
+ Eugen                          mailto:kes-kes@yandex.ru
