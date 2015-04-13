@@ -1,167 +1,64 @@
-From: Luke Mewburn <luke@mewburn.net>
-Subject: [PATCH] reduce progress updates in background
-Date: Mon, 13 Apr 2015 23:48:50 +1000
-Message-ID: <20150413134850.GC23475@mewburn.net>
+From: Bingo UK <winning7@bingouklot.onmicrosoft.com>
+Subject: CONGRATULATIONS!
+Date: Mon, 13 Apr 2015 13:30:59 +0100
+Message-ID: <d30d90bd-f4ad-4e35-9a90-e556935ec036@AM3PR06MB371.eurprd06.prod.outlook.com>
+Reply-To: <bingolotouk@aim.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="d8Lz2Tf5e5STOWUP"
-Cc: Nicolas Pitre <nico@fluxnic.net>, Luke Mewburn <luke@mewburn.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 13 15:54:12 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: Recipients <winning7@bingouklot.onmicrosoft.com>
+X-From: git-owner@vger.kernel.org Mon Apr 13 16:01:45 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YheoS-0003Vz-3P
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Apr 2015 15:54:08 +0200
+	id 1Yhevn-00006c-BT
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Apr 2015 16:01:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932231AbbDMNyD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Apr 2015 09:54:03 -0400
-Received: from home.mewburn.net ([121.127.199.9]:36115 "EHLO home.mewburn.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754108AbbDMNyB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Apr 2015 09:54:01 -0400
-X-Greylist: delayed 308 seconds by postgrey-1.27 at vger.kernel.org; Mon, 13 Apr 2015 09:54:00 EDT
-Received: by home.mewburn.net (Postfix, from userid 1001)
-	id 53AEE61592; Mon, 13 Apr 2015 23:48:50 +1000 (AEST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-12-10)
+	id S932259AbbDMOBX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Apr 2015 10:01:23 -0400
+Received: from mail-am1hn0252.outbound.protection.outlook.com ([157.56.112.252]:64679
+	"EHLO emea01-am1-obe.outbound.protection.outlook.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S932169AbbDMOBK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 13 Apr 2015 10:01:10 -0400
+Authentication-Results: gmail.com; dkim=none (message not signed)
+ header.d=none;
+Received: from PC-03.lan (89.243.175.245) by
+ AM3PR06MB371.eurprd06.prod.outlook.com (10.242.109.146) with Microsoft SMTP
+ Server (TLS) id 15.1.136.25; Mon, 13 Apr 2015 13:30:54 +0000
+Content-Description: Mail message body
+X-Originating-IP: [89.243.175.245]
+X-ClientProxiedBy: AM3PR01CA031.eurprd01.prod.exchangelabs.com (10.141.191.21)
+ To AM3PR06MB371.eurprd06.prod.outlook.com (10.242.109.146)
+X-Microsoft-Antispam: UriScan:;BCL:0;PCL:0;RULEID:;SRVR:AM3PR06MB371;
+X-Microsoft-Antispam-PRVS: <AM3PR06MB371E1FE13F103D860253855A3E70@AM3PR06MB371.eurprd06.prod.outlook.com>
+X-Forefront-Antispam-Report: BMV:1;SFV:SPM;SFS:(10009020)(6009001)(64872006)(89136004)(31696002)(86902001)(1496007)(107886001)(66066001)(77096005)(110136001)(47776003)(42186005)(50986999)(19580395003)(19580405001)(558084003)(81156005)(53256004)(53806999)(226693001)(54356999)(229853001)(325944007)(86442001)(62966003)(77156002)(87976001)(6200100001)(40100003)(43066003)(5890100001)(5880100001)(76576001)(46102003)(122386002)(86362001)(23756003)(86632001)(33646002)(50466002)(74316001)(250100001)(58004003);DIR:OUT;SFP:1501;SCL:9;SRVR:AM3PR06MB371;H:PC-03.lan;FPR:;SPF:None;MLV:spm;PTR:InfoNoRecords;LANG:en;
+X-Exchange-Antispam-Report-Test: UriScan:;
+X-Exchange-Antispam-Report-CFA-Test: BCL:0;PCL:0;RULEID:(601004)(5005006)(5002010);SRVR:AM3PR06MB371;BCL:0;PCL:0;RULEID:;SRVR:AM3PR06MB371;
+X-Forefront-PRVS: 0545EFAC9A
+X-OriginatorOrg: bingouklot.onmicrosoft.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Apr 2015 13:30:54.3731
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM3PR06MB371
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267079>
+X-Spam-Report: 9.7 points;
+ *  3.2 DEAR_WINNER BODY: DEAR_WINNER
+ *  1.6 KAM_LOTTO2 Highly Likely to be a e-Lotto Scam Email
+ *  2.9 KAM_LOTTO1 Likely to be a e-Lotto Scam Email
+ *  2.0 ADVANCE_FEE_2 Appears to be advance fee fraud (Nigerian 419)
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267080>
 
+Dear Winner,
 
---d8Lz2Tf5e5STOWUP
-Content-Type: multipart/mixed; boundary="OROCMA9jn6tkzFBc"
-Content-Disposition: inline
+Your email address attached to ticket number 7-27-31-37-43 WON One Million  British Pound in the BINGO LOTTO INTERNATIONAL. Email to (bingolotouk@aim.com) for claim. 
 
+Congratulations once again.
 
---OROCMA9jn6tkzFBc
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
-Hi,
-
-I've noticed that when a long-running git operation that generates
-progress output is suspended and converted to a background process,
-the terminal still gets spammed with progress updates (to stderr).
-
-Many years ago I fixed a similar issue in the NetBSD ftp progress
-bar code (which I wrote).
-
-I've experimented around with a couple of different solutions, including:
-1. suppress all progress output whilst in the background
-2. suppress "in progress" updates whilst in the background,
-   but display the "done" message even if in the background.
-
-In both cases, warnings were still output to the terminal.
-
-I've attached a patch that implements (2) above.
-
-If the consensus is that all progress messages should be suppressed,
-I can provide the (simpler) patch for that.
-
-I've explicitly separated the in_progress_fd() function
-so that it's easier to (a) reuse elsewhere where appropriate,
-and (b) make any portability changes to the test if necessary.
-I also used getpgid(0) versus getpgrp() to avoid portability
-issues with the signature in the latter with pre-POSIX.
-
-A minor optimisation could be to pass in struct progress *
-and to cache getpgid(0) in a member of struct progress
-in start_progress_delay(), since this value shouldn't change
-during the life of the process.
-
-regards,
-Luke.
-
---OROCMA9jn6tkzFBc
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: attachment; filename="0001-progress-no-progress-in-background.patch"
-Content-Transfer-Encoding: quoted-printable
-
-=46rom 843a367bac87674666dafbaf7fdb7d6b0e1660f7 Mon Sep 17 00:00:00 2001
-=46rom: Luke Mewburn <luke@mewburn.net>
-Date: Mon, 13 Apr 2015 23:30:51 +1000
-Subject: [PATCH] progress: no progress in background
-
-Disable the display of the progress if stderr is not the
-current foreground process.
-Still display the final result when done.
-
-Signed-off-by: Luke Mewburn <luke@mewburn.net>
----
- progress.c | 23 +++++++++++++++++------
- 1 file changed, 17 insertions(+), 6 deletions(-)
-
-diff --git a/progress.c b/progress.c
-index 412e6b1..8094404 100644
---- a/progress.c
-+++ b/progress.c
-@@ -72,9 +72,15 @@ static void clear_progress_signal(void)
- 	progress_update =3D 0;
- }
-=20
-+static int is_foreground_fd(int fd)
-+{
-+	return getpgid(0) =3D=3D tcgetpgrp(fd);
-+}
-+
- static int display(struct progress *progress, unsigned n, const char *done)
- {
- 	const char *eol, *tp;
-+	const int is_foreground =3D is_foreground_fd(fileno(stderr));
-=20
- 	if (progress->delay) {
- 		if (!progress_update || --progress->delay)
-@@ -98,16 +104,21 @@ static int display(struct progress *progress, unsigned=
- n, const char *done)
- 		unsigned percent =3D n * 100 / progress->total;
- 		if (percent !=3D progress->last_percent || progress_update) {
- 			progress->last_percent =3D percent;
--			fprintf(stderr, "%s: %3u%% (%u/%u)%s%s",
--				progress->title, percent, n,
--				progress->total, tp, eol);
--			fflush(stderr);
-+			if (is_foreground || done) {
-+				fprintf(stderr, "%s: %3u%% (%u/%u)%s%s",
-+					progress->title, percent, n,
-+					progress->total, tp, eol);
-+				fflush(stderr);
-+			}
- 			progress_update =3D 0;
- 			return 1;
- 		}
- 	} else if (progress_update) {
--		fprintf(stderr, "%s: %u%s%s", progress->title, n, tp, eol);
--		fflush(stderr);
-+		if (is_foreground || done) {
-+			fprintf(stderr, "%s: %u%s%s",
-+				progress->title, n, tp, eol);
-+			fflush(stderr);
-+		}
- 		progress_update =3D 0;
- 		return 1;
- 	}
---=20
-2.3.5.dirty
-
-
---OROCMA9jn6tkzFBc--
-
---d8Lz2Tf5e5STOWUP
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.14 (GNU/Linux)
-
-iEYEARECAAYFAlUryUIACgkQpBhtmn8zJHL8rQCaAwzuxOGjNyKS8tgICp0JSEI7
-PAEAoK28xPS43mg2mwZt2Uuj4w+kAL18
-=xHfA
------END PGP SIGNATURE-----
-
---d8Lz2Tf5e5STOWUP--
+Yours Faithfully,
+Mr. David
