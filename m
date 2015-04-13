@@ -1,57 +1,72 @@
-From: Thomas Ferris Nicolaisen <tfnico@gmail.com>
-Subject: Re: When and how to to contact the Git developers (gist)
-Date: Mon, 13 Apr 2015 11:34:20 +0200
-Message-ID: <CAEcj5uWX+t4=br5RFEtN-9jfdzFShwx3iWiMfrZ40MwNFYsuUg@mail.gmail.com>
-References: <CAEcj5uW2Shh4QvtmenW2h6KXYUCoEe5bHYNv_HVFQgUit=cJ0w@mail.gmail.com>
-	<xmqqbnis4ldv.fsf@gitster.dls.corp.google.com>
+From: Tony Finch <dot@dotat.at>
+Subject: Re: [PATCH] gitweb: Update logo and favicon
+Date: Mon, 13 Apr 2015 10:52:48 +0100
+Message-ID: <alpine.LSU.2.00.1504131033420.23307@hermes-1.csi.cam.ac.uk>
+References: <1428882040-13938-1-git-send-email-thosch97@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git <git@vger.kernel.org>,
-	Konstantin Khomoutov <flatworm@users.sourceforge.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 13 11:34:33 2015
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Jason Long <jason@jasonlong.me>,
+	Junio C Hamano <gitster@pobox.com>
+To: Thomas Schneider <thosch97@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 13 11:52:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YhalE-000709-5s
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Apr 2015 11:34:32 +0200
+	id 1Yhb31-0003ZS-W4
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Apr 2015 11:52:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753716AbbDMJeW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Apr 2015 05:34:22 -0400
-Received: from mail-lb0-f172.google.com ([209.85.217.172]:34647 "EHLO
-	mail-lb0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753682AbbDMJeV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Apr 2015 05:34:21 -0400
-Received: by lbcga7 with SMTP id ga7so54107794lbc.1
-        for <git@vger.kernel.org>; Mon, 13 Apr 2015 02:34:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=Os2IO4Yqn2BrXGk+YyoAEaAbKGGwrxBvDTEzHY/HhYY=;
-        b=GZH0u1uvusGhH/AW/VDNvu05GMkiSSqhFbXvt+F51RpFnZ6XslN8R1A45zzvjFxIpm
-         G5TaEWOLhOpyfyx0Mm70DWit2hknNOkw+7gATzRJTA2UoddDTmYtohzXoT5gyt5msM78
-         0TZ/uk/NnkyuDt2NebCF7Hp73wyzcqh9cnytIW+fu6nFKTDMXYCsChl+BPUJ+B4FgVET
-         xq6c0qRyoF95+16P+tIFxU0nEFv58yqZfFiA5H9CUGZlJE+rAZmjZLorzEY4col0xK/V
-         LwCIIBLNFBfTr3AtTPEbIglyRgERJT3TgA7xptKeJOq0dvz1CPFX26wl7WStAn4rEkur
-         XXew==
-X-Received: by 10.112.204.135 with SMTP id ky7mr12540200lbc.65.1428917660352;
- Mon, 13 Apr 2015 02:34:20 -0700 (PDT)
-Received: by 10.25.159.10 with HTTP; Mon, 13 Apr 2015 02:34:20 -0700 (PDT)
-In-Reply-To: <xmqqbnis4ldv.fsf@gitster.dls.corp.google.com>
+	id S1753492AbbDMJwv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Apr 2015 05:52:51 -0400
+Received: from ppsw-32.csi.cam.ac.uk ([131.111.8.132]:39642 "EHLO
+	ppsw-32.csi.cam.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753076AbbDMJwu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Apr 2015 05:52:50 -0400
+X-Cam-AntiVirus: no malware found
+X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
+Received: from hermes-1.csi.cam.ac.uk ([131.111.8.51]:42631)
+	by ppsw-32.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.156]:25)
+	with esmtpa (EXTERNAL:fanf2) id 1Yhb2u-0003vZ-2y (Exim 4.82_3-c0e5623)
+	(return-path <fanf2@hermes.cam.ac.uk>); Mon, 13 Apr 2015 10:52:48 +0100
+Received: from fanf2 by hermes-1.csi.cam.ac.uk (hermes.cam.ac.uk)
+	with local id 1Yhb2u-0005iR-Sh (Exim 4.72)
+	(return-path <fanf2@hermes.cam.ac.uk>); Mon, 13 Apr 2015 10:52:48 +0100
+X-X-Sender: fanf2@hermes-1.csi.cam.ac.uk
+In-Reply-To: <1428882040-13938-1-git-send-email-thosch97@gmail.com>
+User-Agent: Alpine 2.00 (LSU 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267071>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267072>
 
-On Mon, Apr 13, 2015 at 8:01 AM, Junio C Hamano <gitster@pobox.com> wrote:
->
-> As to "better bug reports", I often find people pointing others to
->
->     http://www.chiark.greenend.org.uk/~sgtatham/bugs.html
+Thomas Schneider <thosch97@gmail.com> wrote:
 
-Thanks, I've added it to the gist. It is already linked on
-http://git-scm.com/community .
+> The new images were downloaded from https://git-scm.herokuapp.com/downloads/logos
+> and converted with ImageMagick:
+>   convert -resize 72x30 Git-Logo-2Color.eps git-logo.png
+>   convert -resize 16x16 Git-Icon-1788C.eps git-favicon.png
+> The old logo was only 27 pixels in height, the 3 additional pixels are necessary
+> for the slightly different aspect ratio of the new one.
+
+This is a good improvement :-) I did something similar for the logos on my
+installation of gitweb, including exactly the same command to create the
+favicon.
+
+https://git.csx.cam.ac.uk/x/ucs/git/gitcam.git/blob/HEAD:/bin/make-icons.sh
+
+I think it is a bad idea to change the height of the logo: gitweb
+generates an <img src> element with a fixed 72x27 size, and the
+gitweb.conf documentation suggests that site admins can replace the logo
+with a custom one of the same size. My version of the new logo includes a
+bit of horizontal padding so that it matches this specification.
+
+(The higher-resolution icons are used by my server's documentation pages
+but not by gitweb.)
+
+Tony.
+-- 
+f.anthony.n.finch  <dot@dotat.at>  http://dotat.at/
+Humber, Thames: Northwest backing south or southwest later, 4 or 5,
+occasionally 6 later. Slight or moderate. Fair. Moderate or good.
