@@ -1,73 +1,57 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: Draft of Git Rev News edition 2
-Date: Mon, 13 Apr 2015 10:43:23 +0200
-Organization: gmx
-Message-ID: <896da08edd10de559dc0c4a1bd149814@www.dscho.org>
-References: <CAP8UFD00=Qc_WdUHWPt9OD2EjY_ufsOiA5CL3rWEpBCkjZYADw@mail.gmail.com>
- <CAEcj5uUjCqfGgVxNncuHEeqLNfse9d0gM9gbwWOX_oD5LNOKcQ@mail.gmail.com>
+From: Thomas Ferris Nicolaisen <tfnico@gmail.com>
+Subject: Re: When and how to to contact the Git developers (gist)
+Date: Mon, 13 Apr 2015 11:34:20 +0200
+Message-ID: <CAEcj5uWX+t4=br5RFEtN-9jfdzFShwx3iWiMfrZ40MwNFYsuUg@mail.gmail.com>
+References: <CAEcj5uW2Shh4QvtmenW2h6KXYUCoEe5bHYNv_HVFQgUit=cJ0w@mail.gmail.com>
+	<xmqqbnis4ldv.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Christian Couder <christian.couder@gmail.com>,
-	git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Rick Olson <technoweenie@gmail.com>,
-	Scott Chacon <schacon@gmail.com>,
-	Rasmus Villemoes <rv@rasmusvillemoes.dk>,
-	John Garcia <jgarcia@atlassian.com>,
-	Nicola Paolucci <npaolucci@atlassian.com>,
-	Tim Pettersen <tim@atlassian.com>, git-owner@vger.kernel.org
-To: Thomas Ferris Nicolaisen <tfnico@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 13 10:43:59 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git <git@vger.kernel.org>,
+	Konstantin Khomoutov <flatworm@users.sourceforge.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 13 11:34:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YhZyI-00072Y-1W
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Apr 2015 10:43:58 +0200
+	id 1YhalE-000709-5s
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Apr 2015 11:34:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753422AbbDMInr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Apr 2015 04:43:47 -0400
-Received: from mout.gmx.net ([212.227.15.18]:51786 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753345AbbDMInp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Apr 2015 04:43:45 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0M6ilI-1ZdpO60Eq4-00wXO1; Mon, 13 Apr 2015 10:43:26
- +0200
-In-Reply-To: <CAEcj5uUjCqfGgVxNncuHEeqLNfse9d0gM9gbwWOX_oD5LNOKcQ@mail.gmail.com>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:pHH8A35rOIDlt06rhkt7JoQyHpeW/rLppZ7q2HJy1f+u9U5gduN
- 5j2H+/pFUPj93U8sEhoVAmXvzohvLxcG4a1z7/Ax6IKUekxTbaKipGREGbWRFNut2zjVil0
- RFHUwpzBy7NXPnVwqnPkdRzLbtWG+RYvAXBC1s69gmr/wfZZnpsXyriDrohrNvs4hPnvppb
- HrqOHlETC2Or4zg2FYWvw==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1753716AbbDMJeW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Apr 2015 05:34:22 -0400
+Received: from mail-lb0-f172.google.com ([209.85.217.172]:34647 "EHLO
+	mail-lb0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753682AbbDMJeV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Apr 2015 05:34:21 -0400
+Received: by lbcga7 with SMTP id ga7so54107794lbc.1
+        for <git@vger.kernel.org>; Mon, 13 Apr 2015 02:34:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=Os2IO4Yqn2BrXGk+YyoAEaAbKGGwrxBvDTEzHY/HhYY=;
+        b=GZH0u1uvusGhH/AW/VDNvu05GMkiSSqhFbXvt+F51RpFnZ6XslN8R1A45zzvjFxIpm
+         G5TaEWOLhOpyfyx0Mm70DWit2hknNOkw+7gATzRJTA2UoddDTmYtohzXoT5gyt5msM78
+         0TZ/uk/NnkyuDt2NebCF7Hp73wyzcqh9cnytIW+fu6nFKTDMXYCsChl+BPUJ+B4FgVET
+         xq6c0qRyoF95+16P+tIFxU0nEFv58yqZfFiA5H9CUGZlJE+rAZmjZLorzEY4col0xK/V
+         LwCIIBLNFBfTr3AtTPEbIglyRgERJT3TgA7xptKeJOq0dvz1CPFX26wl7WStAn4rEkur
+         XXew==
+X-Received: by 10.112.204.135 with SMTP id ky7mr12540200lbc.65.1428917660352;
+ Mon, 13 Apr 2015 02:34:20 -0700 (PDT)
+Received: by 10.25.159.10 with HTTP; Mon, 13 Apr 2015 02:34:20 -0700 (PDT)
+In-Reply-To: <xmqqbnis4ldv.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267071>
 
-Hi Thomas,
+On Mon, Apr 13, 2015 at 8:01 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> As to "better bug reports", I often find people pointing others to
+>
+>     http://www.chiark.greenend.org.uk/~sgtatham/bugs.html
 
-On 2015-04-12 22:51, Thomas Ferris Nicolaisen wrote:
-> On Sun, Apr 12, 2015 at 9:03 PM, Christian Couder
-> <christian.couder@gmail.com> wrote:
->> A draft of Git Rev News edition 2 is available here:
->>
->> https://github.com/git/git.github.io/blob/master/rev_news/draft/edition-2.md
-> 
-> There's also a "secret" live preview here now:
-> 
-> http://git.github.io/rev_news/draft/edition-2
-> 
-> Btw, I've just added a bunch of Git-related releases, including the
-> Git for Windows RC and the Git 2.4 RC.
-
-Thanks! I also like the new look (no offense, Peff)!
-
-Ciao,
-Dscho
+Thanks, I've added it to the gist. It is already linked on
+http://git-scm.com/community .
