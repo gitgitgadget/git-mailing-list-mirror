@@ -1,94 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/5] log: honor log.merges= option
-Date: Sun, 12 Apr 2015 21:56:26 -0700
-Message-ID: <xmqqoams4oed.fsf@gitster.dls.corp.google.com>
-References: <1428110521-31028-1-git-send-email-koosha@posteo.de>
-	<1428110521-31028-2-git-send-email-koosha@posteo.de>
-	<xmqqy4m7ek9q.fsf@gitster.dls.corp.google.com>
-	<5524571C.90007@posteo.de>
-	<xmqq4morcq0l.fsf@gitster.dls.corp.google.com>
-	<5525062A.2010905@posteo.de>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2] CodingGuidelines: updating 'rough' rule count
+Date: Mon, 13 Apr 2015 01:00:11 -0400
+Message-ID: <CAPig+cTgNzO5NGabOsaSZOq7Y47OBXJz9mnS-MfpoQ2MANzrng@mail.gmail.com>
+References: <20150412234720.GA37658@Serenity.local>
+	<CAPig+cS=xBoe-hr5Kwm0N9hBUy4bzN1NoXTcDEwz_4ZwrrXPXA@mail.gmail.com>
+	<20150413042644.GA39596@Serenity.local>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Koosha Khajehmoogahi <koosha@posteo.de>
-X-From: git-owner@vger.kernel.org Mon Apr 13 06:56:53 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Julian Gindi <juliangindi@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 13 07:00:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YhWQV-0003UZ-Hx
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Apr 2015 06:56:51 +0200
+	id 1YhWTq-0005s6-4w
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Apr 2015 07:00:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751220AbbDME4a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Apr 2015 00:56:30 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64639 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750845AbbDME42 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Apr 2015 00:56:28 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D86BA49E15;
-	Mon, 13 Apr 2015 00:56:27 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=iv5M91qxv22i6i3ioPZy9XYmDGs=; b=TTBM1u
-	nm2ghN8QMfKM5I4+gTxWfd2kLjT8ZPsZifDRSaAUqXfcQO1vJibr/+T5VkRggj+C
-	b7O879BpVkCg97jWJRAI8Q4UyUf4y2rNF8XQNpGHBmxw/HILC/H3Idc4eVCRO5nK
-	zHIGz/8VAX/Bo/JPvzZ+kpSccZ4qj8UlguQZE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=H1simd8MbGMtUzaglPXehRGFjeGHcbwR
-	3wKZz3UPPLuoSUIGlBR+80eRd3EPszlhj6JVrLkoytLo6EiErS1m9tw94oiX/8zk
-	WDz9lgpoxiV5Fus1VcLIYEhTnNlNW39u3EiIlgyXxiq8D/JK4Pmak9sGwsAUMQxZ
-	F2A9AOv8aU4=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D24CF49E14;
-	Mon, 13 Apr 2015 00:56:27 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5CD5E49E13;
-	Mon, 13 Apr 2015 00:56:27 -0400 (EDT)
-In-Reply-To: <5525062A.2010905@posteo.de> (Koosha Khajehmoogahi's message of
-	"Wed, 08 Apr 2015 12:42:50 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 713BE0F2-E199-11E4-8CC0-11859F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1752238AbbDMFAO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Apr 2015 01:00:14 -0400
+Received: from mail-la0-f54.google.com ([209.85.215.54]:35153 "EHLO
+	mail-la0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751701AbbDMFAM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Apr 2015 01:00:12 -0400
+Received: by labbd9 with SMTP id bd9so48745931lab.2
+        for <git@vger.kernel.org>; Sun, 12 Apr 2015 22:00:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=POi0p+rvBis568jR0RBv+NrGdHtZ3QRe1LHv2wibjf0=;
+        b=fzuQ+yEIbv9EUTi8FprK8R7Z8Vm3+akfEbGSYgO+HOzbE0pFcLRUZ8a4CfhSExfz+J
+         scTt/br14KjFLB7CaBXIkQHj/P0XGfdsK92zj6/DNyAhP4T5kVrOVu2Lj3T6rw1NNkb7
+         jLYbCQ9XBlMdee5wc0f7YJABKREf7x+ZBrtYk3yBKt9hx+Y6FSyHTZZ2VXvwCIiLLZen
+         3deETv6cjv3vXo5Ebi9tty5M4XBST4MOrnQN1OjbewshUq7APtPEeXA2V3PhyftVADbi
+         AG5WF5ESaJamCxV0+TO+NRMEQ2jCzPwKx+mMkzz/R/Qr/7wMMB55d7f3GQlLX/X32+e7
+         EZqw==
+X-Received: by 10.112.57.197 with SMTP id k5mr11910549lbq.102.1428901211413;
+ Sun, 12 Apr 2015 22:00:11 -0700 (PDT)
+Received: by 10.114.78.69 with HTTP; Sun, 12 Apr 2015 22:00:11 -0700 (PDT)
+In-Reply-To: <20150413042644.GA39596@Serenity.local>
+X-Google-Sender-Auth: eTkmm9NeiBKbOh3gBfrg88MBGKM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267063>
 
-Koosha Khajehmoogahi <koosha@posteo.de> writes:
+On Mon, Apr 13, 2015 at 12:26 AM, Julian Gindi <juliangindi@gmail.com> wrote:
+> CodingGuidelines: updating 'rough' rule count
 
-> On 04/08/2015 04:28 AM, Junio C Hamano wrote:
->
->> It is strange that you have to ask me to give you the reason why you
->> chose it that way, isn't it?
->
-> AFAIK, the only other command that supports --merges and --no-merges options is
-> rev-list. This new feature aims to make a default behavior for the commands
-> that have these options. The command-line option is supported by the two commands.
-> However, the config var is only used by git-log and rev-list ignores it. I didn't
-> exclude rev-list for any particular reason. If we need, I could also handle it in
-> rev-list.
+Imperative mood is preferred, so "update" rather than "updating":
 
-As rev-list is plumbing, it shouldn't be affected by the UI level
-customization knobs like this one; otherwise you will break people's
-scripts when end users choose to use the new knobs.
+    CodingGuidelines: update 'rough' rule count
 
-Historically, "whatchanged" has been the way to ask for "log", with
-different default output format (but not different commit selection
-logic).  I would think people who are used to "whatchanged" would
-expect that the command would pay attention to what "log" would.
+>     Changed inaccurate count of "rough rules" from three to the more
+>     generic 'a few'.
 
-As I already mentioned with the reason why, I do not think "show"
-and "format-patch" should pay attention to it.
+Imperative: s/Changed/Change/
 
-There may be other commands from the "log" family (i.e. what is
-defined in builtin/log.c and/or uses get_revision() API to walk the
-commit graph), for which similar reasoning should be done to decide
-if each of them should or should not pay attention to it.
+> ---
 
-Thanks.
+Missing sign-off.
+
+> diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+> index 0f8cccf..2dd35bd 100644
+> --- a/Documentation/CodingGuidelines
+> +++ b/Documentation/CodingGuidelines
+> @@ -1,5 +1,5 @@
+>  Like other projects, we also have some guidelines to keep to the
+> -code.  For Git in general, three rough rules are:
+> +code.  For Git in general, a few rough rules are:
+
+Looks better, thanks.
+
+>   - Most importantly, we never say "It's in POSIX; we'll happily
+>     ignore your needs should your system not conform to it."
+> --
+> 2.3.5
