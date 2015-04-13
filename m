@@ -1,190 +1,130 @@
-From: "Jason Pyeron" <jpyeron@pdinc.us>
-Subject: RE: Finding leaf nodes.
-Date: Mon, 13 Apr 2015 12:32:05 -0400
-Organization: PD Inc
-Message-ID: <4657569730954D20A9498BDCA66E1C30@black>
-References: <038FFBDD688D4EC6B0B42A339DF246B0@black> <552BD154.6040609@drmicha.warpmail.net>
-Reply-To: "Michael J Gruber" <git@drmicha.warpmail.net>,
-	  <git@vger.kernel.org>
+From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Subject: assert failed in submodule edge case
+Date: Mon, 13 Apr 2015 18:55:57 +0200
+Message-ID: <1428944157.13660.8.camel@kaarsemaker.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="US-ASCII"
-Content-Transfer-Encoding: 8BIT
-Cc: "'Michael J Gruber'" <git@drmicha.warpmail.net>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Apr 13 18:32:19 2015
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Apr 13 18:56:09 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YhhHW-0001uE-8D
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Apr 2015 18:32:18 +0200
+	id 1Yhhea-0000Wk-6T
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Apr 2015 18:56:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932490AbbDMQcN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Apr 2015 12:32:13 -0400
-Received: from mail.pdinc.us ([67.90.184.27]:45888 "EHLO mail.pdinc.us"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932455AbbDMQcL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 13 Apr 2015 12:32:11 -0400
-Received: from black (112.sub-174-236-193.myvzw.com [174.236.193.112])
-	(authenticated bits=0)
-	by mail.pdinc.us (8.14.4/8.12.11) with ESMTP id t3DGW624019092;
-	Mon, 13 Apr 2015 12:32:06 -0400
-X-Mailer: Microsoft Office Outlook 11
-Thread-Index: AdB19Wg8eYuohi00T26eSQ34gx7K9AADfa7Q
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.3790.4913
-In-Reply-To: <552BD154.6040609@drmicha.warpmail.net>
+	id S1754005AbbDMQ4D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Apr 2015 12:56:03 -0400
+Received: from mail-wg0-f41.google.com ([74.125.82.41]:33780 "EHLO
+	mail-wg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751996AbbDMQ4A (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Apr 2015 12:56:00 -0400
+Received: by wgin8 with SMTP id n8so87901628wgi.0
+        for <git@vger.kernel.org>; Mon, 13 Apr 2015 09:55:59 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:date:content-type
+         :mime-version:content-transfer-encoding;
+        bh=eRgnER3u0c02XOxpJXnO0wcC0MsFop4gxg/609sAPCM=;
+        b=BCFf2vQEpwNsp9pntd2wEfUMrdeBXwVHxhg6cmfV2qtPIPNTx2oMHtkSct1ugZDC0v
+         sOZRZvQPEM+TvFvvV5TQiOrWtvWxUab70tExWswIts/8nTsFLrXI1f+9BozoUs9Ruduv
+         UjW/wnKZJSFjCr0p/gnLv9mN1TA4w/mgoOQ8b3EdxcK2641Y0LXayLcgLKPV4e5XBGnc
+         s18mcZwt2LMeei71tCBx82n1XatOh//faJTu9xPl4SFIFwR+Ir63HDoh/wVwIdiw1lxV
+         Upc6EiDOXkix4aN0SSkoX56SXlz1PIBWK/KwzF7j0E0kQF/+svem++SJw9HInKHLFC+0
+         65Nw==
+X-Gm-Message-State: ALoCoQkEELYI5Og6TRPgRWvmBTRLMY07/SZ4LvB8ty0jSr5ZSMEbH6+azGEN05VdoUFm1gKWsJ1g
+X-Received: by 10.180.83.193 with SMTP id s1mr22844829wiy.22.1428944159590;
+        Mon, 13 Apr 2015 09:55:59 -0700 (PDT)
+Received: from spirit.home.kaarsemaker.net (82-171-80-33.ip.telfort.nl. [82.171.80.33])
+        by mx.google.com with ESMTPSA id ng5sm12252604wic.24.2015.04.13.09.55.58
+        for <git@vger.kernel.org>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 13 Apr 2015 09:55:58 -0700 (PDT)
+X-Mailer: Evolution 3.12.10-0ubuntu1~14.10.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267095>
 
-> -----Original Message-----
-> From: Michael J Gruber 
-> Sent: Monday, April 13, 2015 10:23
-> 
-> Jason Pyeron venit, vidit, dixit 12.04.2015 06:04:
-> > I am trying to find all the unmerged commits [5].
-> 
-> "Unmerged" to which branch?
+Reported by djanos_ in #git: git add segfaults when you manage to
+confuse it with a submodule in the index that is no longer a submodule.
 
-All. I was atempting to describe a leaf node.
+Here's his script to reproduce the segfault:
 
-> 
-> It's not clear to me which commits you are looking for. By 
-> "leaf node" I
-> would describe a commit without child commits. "unmerged" can only be
+mkdir segfault
+cd segfault
 
-That is exactly what I meant.
+mkdir subrepo
+cd subrepo
 
-> understood relative to a specific branch.
-> 
-> Maybe you are looking for commits from remote refs which are 
-> not on any
-> local branch?
+git init .
+echo a > a
+git add a
+git commit -m "a"
 
-Anywhere, that I know about. If the commit does not have a child, then that commit needs to be in the list, I do not care about the branches.
+cd ..
 
-> 
-> > I can find, as a human, all the commits by git log 
-> --oneline --graph --all [1] but I am looking for a scripted way.
-> > 
-> > But git show-branch  -a --independent misses some [2]
-> 
-> This finds refs which are not "contained in" (can be reached from) any
-> of the other refs. If a remote ref is contained in another 
-> remore ref it
-> is not listed.
+git init .
+git add .
 
-Your description is logical, but how can a commit be included in "another remote ref"?
+cd subrepo
+rm -rf .git
+git add .
 
-> 
-> > find .git/refs/ -type f -exec cat '{}' ';' | sort -u; finds 
-> too much [3].
-> 
-> This finds all refs.
+This last git add will now barf:
+git: pathspec.c:317: prefix_pathspec: Assertion `item->nowildcard_len <= item->len && item->prefix <= item->len' failed.
 
-I know, the issue is I do not know how to filter it.
+These all work as I think they are intended to:
+$ git -C segfault add subrepo/a
+fatal: Pathspec 'subrepo/a' is in submodule 'subrepo'
+$ git -C segfault/subrepo add a
+fatal: Pathspec 'a' is in submodule 'subrepo'
 
-> 
-> > The closest I get is with refs=`git show-ref -s`; git log 
-> --format=%H $refs --not $(echo "$refs" | sed 's/$/^/') but it 
-> too [4] gives me extra, but I am really not sure why. 
-> 
-> This finds all commits which are on some ref (branch/tag/..), 
-> excluding
-> those which are next to the tip or higher up from those refs.
-> 
-> > 
-> > * | a54a4fb 
-> > * | a0d2e63 
-> > * | dd4400d 
-> > | | *   68ea2c8
-> > | | |\
-> > | |/ /
-> > |/| |
-> > | | * c74d3c5 ??? Why is this the only extra commit listed ???
-> 
-> Because it is not "next to the tip", more specifically: not a first
-> parent (foo^) of a referenced commit, and neither a 
-> predecessor of one.
+And this does nothing, it also doesn't crash:
 
-I need to think on what you just said for this one.
+$ git -C segfault add subrepo
 
-> 
-> > | |/
-> > |/|
-> > * | 9c87570 
-> > * | 717e33d 
-> > * | 159799f 
-> > 
-> > 
-> > What should I do to automate this?
-> > 
-> 
-> Please try and restate what you mean by "unmerged commits". 
-> Maybe remote
-> commits not on any local branch, or remote commits not on master?
+GDB backtrace below, this is with next as of e6f3401.
 
-Regardless of branch references, I need to list all commits which do not have any child commits.
+Starting program: /home/dennis/code/git/git -C segfault/subrepo add .
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+git: pathspec.c:317: prefix_pathspec: Assertion `item->nowildcard_len <= item->len && item->prefix <= item->len' failed.
 
-> 
-> > 
-> > 
-> > 1:
+Program received signal SIGABRT, Aborted.
+0x00007ffff702ae37 in __GI_raise (sig=sig@entry=6) at ../nptl/sysdeps/unix/sysv/linux/raise.c:56
+56	../nptl/sysdeps/unix/sysv/linux/raise.c: No such file or directory.
+(gdb) bt
+#0  0x00007ffff702ae37 in __GI_raise (sig=sig@entry=6) at ../nptl/sysdeps/unix/sysv/linux/raise.c:56
+#1  0x00007ffff702c528 in __GI_abort () at abort.c:89
+#2  0x00007ffff7023ce6 in __assert_fail_base (fmt=0x7ffff7173c08 "%s%s%s:%u: %s%sAssertion `%s' failed.\n%n", 
+    assertion=assertion@entry=0x560660 "item->nowildcard_len <= item->len && item->prefix <= item->len", file=file@entry=0x560826 "pathspec.c", line=line@entry=317, 
+    function=function@entry=0x560850 <__PRETTY_FUNCTION__.22237> "prefix_pathspec") at assert.c:92
+#3  0x00007ffff7023d92 in __GI___assert_fail (assertion=assertion@entry=0x560660 "item->nowildcard_len <= item->len && item->prefix <= item->len", 
+    file=file@entry=0x560826 "pathspec.c", line=line@entry=317, function=function@entry=0x560850 <__PRETTY_FUNCTION__.22237> "prefix_pathspec") at assert.c:101
+#4  0x00000000004d6a37 in prefix_pathspec (elt=0x7fffffffdaf1 ".", prefixlen=8, prefix=0x7dd09f "subrepo/", flags=50, raw=0x7fffffffd648, 
+    p_short_magic=<synthetic pointer>, item=<optimized out>) at pathspec.c:316
+#5  parse_pathspec (pathspec=pathspec@entry=0x7fffffffd240, magic_mask=magic_mask@entry=0, flags=flags@entry=50, prefix=prefix@entry=0x7dd09f "subrepo/", 
+    argv=argv@entry=0x7fffffffd648) at pathspec.c:417
+#6  0x000000000040698c in cmd_add (argc=<optimized out>, argv=0x7fffffffd648, prefix=0x7dd09f "subrepo/") at builtin/add.c:370
+#7  0x0000000000406001 in run_builtin (argv=0x7fffffffd640, argc=2, p=0x79d740 <commands>) at git.c:350
+#8  handle_builtin (argc=2, argv=0x7fffffffd640) at git.c:532
+#9  0x0000000000405151 in run_argv (argv=0x7fffffffd458, argcp=0x7fffffffd43c) at git.c:578
+#10 main (argc=2, av=<optimized out>) at git.c:686
 
-See: yellow lines at http://client.pdinc.us/git-leaf-nodes-334e98c075877ce78b1ef959cb1155f7.html
+I dig a bit into pathspec.c and it looks like the
+PATHSPEC_STRIP_SUBMODULE_SLASH_EXPENSIVE code in prefix_pathspec is only
+stripping out paths inside the submodule, not the submodule itself.
 
-> > 
-> > 2:
-> > 4d0579c438e9d750f158124284bd740a5a0e0e26
-> > 68ea2c83978a7c023d76ebe438dd7d98fb1fd074
-> > 982243cfde0dc6dfb1733d8e95748b7e687f57b8
-> > C4bc3c4eb0015c73b50ea280a4a380e3cffc5160
-> > 
-> > 3:
-> > 00ea00e8e6a23a4243316f860aa07ed59203ab97
-> > 144eb9f673f14010c600766762b99cba1a64cc6e
-> > 2250af4ad29b92b07365320c5ccb7a22c17f588e
-> > 26bdfdfe71f7ceb4e0954bc5ab6c198481a280ae
-> > 283be0f77477fcd8c8bc878c602538f8a3451403
-> > 2f47330df8fb0357ef4e4d605d5c402150892a18
-> > 3ec60ab0dbdc63760429187605ede4549d7b2bad
-> > 43813b0fc44f7c41d2cdd4573145dbeb1aae1aee
-> > 4d5b52d440d3a64953a6d7ef3cbb81c8d289e392
-> > 556a5c2d759b51080e3bfe07a89b67e927749328
-> > 6fe0b6db2718625e5eeb3cbadeb58aa858ab4f1b
-> > 717e33d67ad3297a15cb432d3f70f7c12d353fa3
-> > 7587a45658aa689cc774d7253007be3feb2eec23
-> > ad9b5fa90c8f52b3ca31dd433c2c4b408e5f2a8f
-> > b3d7623b74dd75cc4f965d6b37dc461d2786f912
-> > c19fc45c87de85122952d63d28a0c7d3a18b79d5
-> > e8529e95d89d3f519a31ef7de5bd7f0d0d318e8c
-> > f2e86371e7fe3391023adccd61856d088db773dd
-> > fceca0050ceee8c4996a5740f7122e96c4948dd8
-> > 
-> > 4:
-> > c74d3c5cda60d8be7f38f1ec89c554a1346d57f8
-> > 
-> > 5: My remotes:
-> > https://github.com/CipherShed/CipherShed.git
-> > https://github.com/pdinc-oss/CipherShed.git
-> > https://github.com/discnl/CipherShed.git
-> > https://github.com/eaglgenes101/CipherShed.git
-> > https://github.com/erkinalp/CipherShed.git
-> > https://github.com/GigabyteProductions/CipherShed.git
-> > https://github.com/jeffallen/CipherShed.git
-> > https://github.com/kaydiechii/CipherShed.git
-> > https://github.com/srguglielmo/CipherShed.git
+I also guess that it shouldn't as otherwise you can't ever 'git add' a
+submodule. So I have no idea how to proceed, or even what the correct
+behaviour of 'git add' should be in this case. I do think that failing
+an assert() to tell a user he's doing something unexpected/silly/wrong
+isn't the right thing to do though :)
 
---
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
--                                                               -
-- Jason Pyeron                      PD Inc. http://www.pdinc.us -
-- Principal Consultant              10 West 24th Street #100    -
-- +1 (443) 269-1555 x333            Baltimore, Maryland 21218   -
--                                                               -
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-This message is copyright PD Inc, subject to license 20080407P00. 
+-- 
+Dennis Kaarsemaker
+www.kaarsemaker.net
