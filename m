@@ -1,107 +1,72 @@
-From: Eugen Konkov <kes-kes@yandex.ru>
-Subject: Re[2]: Feature request: implement '--follow' option for `git blame`
-Date: Mon, 13 Apr 2015 22:07:35 +0300
-Organization: ISP FreeLine
-Message-ID: <1962526577.20150413220735@yandex.ru>
-References: <4215491428322362@web26m.yandex.ru> <xmqqvbh7baij.fsf@gitster.dls.corp.google.com> <209433431.20150410094038@yandex.ru> <xmqqiod04mq6.fsf@gitster.dls.corp.google.com>
-Reply-To: Eugen Konkov <kes-kes@yandex.ru>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: About the "git merge" tee-shirt
+Date: Mon, 13 Apr 2015 22:50:55 +0200
+Message-ID: <vpqr3rnoiq8.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1251
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: KES <kes-kes@yandex.ua>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 13 21:08:33 2015
+Content-Type: text/plain
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Apr 13 22:51:09 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yhjid-0007wP-Hs
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Apr 2015 21:08:27 +0200
+	id 1YhlK0-0007JV-MT
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Apr 2015 22:51:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932278AbbDMTIX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Apr 2015 15:08:23 -0400
-Received: from forward18.mail.yandex.net ([95.108.253.143]:60502 "EHLO
-	forward18.mail.yandex.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751328AbbDMTIW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Apr 2015 15:08:22 -0400
-Received: from smtp19.mail.yandex.net (smtp19.mail.yandex.net [95.108.252.19])
-	by forward18.mail.yandex.net (Yandex) with ESMTP id EA58F1780C6F;
-	Mon, 13 Apr 2015 22:08:19 +0300 (MSK)
-Received: from smtp19.mail.yandex.net (localhost [127.0.0.1])
-	by smtp19.mail.yandex.net (Yandex) with ESMTP id 83BE6BE04BD;
-	Mon, 13 Apr 2015 22:08:19 +0300 (MSK)
-Received: from 46.219.241.28.freenet.com.ua (46.219.241.28.freenet.com.ua [46.219.241.28])
-	by smtp19.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id PVLcAs4FCJ-8IvWxPx5;
-	Mon, 13 Apr 2015 22:08:18 +0300
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(Client certificate not present)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1428952098;
-	bh=khb/Btlrv1598U9+QpA6ozH0gf5CqCAMtIuln5+5+8s=;
-	h=Date:From:X-Mailer:Reply-To:Organization:X-Priority:Message-ID:To:
-	 CC:Subject:In-Reply-To:References:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	b=Nw4MCaJePV+RVrFzqRKahzXIS2+GtwtRSidKw4tUJT5TPmZ0IwaTmTjEMq/m7ZrDn
-	 63cJAAqIQZPCPM6Ja4QjUiBl7yhpPy6/U2LwOKpbI4qVw4am0DqJQpL4XPx1p2kjv/
-	 c0vXEjbIKTiW/gr71efwy1BC37QNvPh1IDszaKhE=
-Authentication-Results: smtp19.mail.yandex.net; dkim=pass header.i=@yandex.ru
-X-Mailer: The Bat! (v4.0.24) Professional
-X-Priority: 3 (Normal)
-In-Reply-To: <xmqqiod04mq6.fsf@gitster.dls.corp.google.com>
+	id S932481AbbDMUvE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Apr 2015 16:51:04 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:50600 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751451AbbDMUvB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Apr 2015 16:51:01 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t3DKoql8032275
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 13 Apr 2015 22:50:52 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t3DKotQ1028019;
+	Mon, 13 Apr 2015 22:50:55 +0200
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 13 Apr 2015 22:50:52 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t3DKoql8032275
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1429563054.53552@evvmIHCL8RQt9qac1YCIhg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267098>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267099>
 
-=C7=E4=F0=E0=E2=F1=F2=E2=F3=E9=F2=E5, Junio.
+Hi,
 
-=C2=FB =EF=E8=F1=E0=EB=E8 13 =E0=EF=F0=E5=EB=FF 2015 =E3., 8:32:33:
+For those of you who weren't at the Git Merge conference last week, we
+goot a tee-shirt with this drawing:
 
-JCH> Eugen Konkov <kes-kes@yandex.ru> writes:
+https://drive.google.com/file/d/1v9bfY0mI8Hi94m4SgqLccFnZ5L_OUlaJSA/view?usp=sharing
 
->> I agree with your complex example.
+I have to say I love that tee-shirt. I already had tee-shirts that only
+computer scientists could understand, now I have a tee-shirt that not
+even every computer scientist can understand.
 
-JCH> Note that it is a norm, not anything complex, that we do not renam=
-e
-JCH> a file wholesale.
+Now, I have a problem: I'm not sure I understand what the drawing
+represents.
 
->> But it will be great to guess in simple case, when in version v1.0
->> only one file A which were renamed into C half year later.
+Initially, I thought the circles represented Git contributors, and links
+represented people contributing to the same parts of the codebase. But
+looking at the output of "shortlog -s", I can't find a correspondance
+with the tee-shirt. My second guess is that they represent directories.
+But even then, I can't find which of the tee-shirt's circles represents
+which directory, and the count doesn't match.
 
-JCH> So you used to have A and somebody renamed that into C in the past=
-=2E
-JCH> The content of C in the current version is what you used to have i=
-n
-JCH> A.
+Does anybody have a better explanation? Or is it just a random drawing
+to say "Git is bigger than it used to be"?
 
-JCH> What should happen if you also have A, whose contents do not have
-JCH> any relation to that old A, in today's code?
+Thanks,
 
-JCH> What should happen if you also used to have C, whose contents do n=
-ot
-JCH> have any relation to that old A or current C?
-
-JCH> What happens if you added such random guessing and you were not so
-JCH> familiar with the project history to know these unrelated A's and
-JCH> C's that used to exist in the past?
-
-JCH> Current Git _consistently_ behaves, even in the presense of anythi=
-ng
-JCH> that can lead to confusing behaviour.  When you ask
-
-JCH>     git blame OLD -- A
-
-JCH> it does not matter if you have an unrelated A in the revision that
-JCH> you happen to have checked out in your working tree (i.e. HEAD).
-JCH> The above command line talks about the old revision OLD and A talk=
-s
-JCH> about the path A in that old revision.
-
-
-Yes. you are right. I do not think about these examples.
-
-
---=20
-=D1 =F3=E2=E0=E6=E5=ED=E8=E5=EC,
- Eugen                          mailto:kes-kes@yandex.ru
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
