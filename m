@@ -1,72 +1,99 @@
-From: Tony Finch <dot@dotat.at>
-Subject: Re: [PATCH] gitweb: Update logo and favicon
-Date: Mon, 13 Apr 2015 10:52:48 +0100
-Message-ID: <alpine.LSU.2.00.1504131033420.23307@hermes-1.csi.cam.ac.uk>
-References: <1428882040-13938-1-git-send-email-thosch97@gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [WIP/RFH/PATCH 3/3] t/lib-git-svn: adjust config to apache 2.4
+Date: Mon, 13 Apr 2015 12:14:13 +0200
+Message-ID: <552B96F5.8060607@drmicha.warpmail.net>
+References: <cover.1428505184.git.git@drmicha.warpmail.net> <0631c09d394dedb803a100e81ce4052a57b4e73e.1428505184.git.git@drmicha.warpmail.net> <20150410032317.GB11280@peff.net> <20150410033953.GC11280@peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Jason Long <jason@jasonlong.me>,
-	Junio C Hamano <gitster@pobox.com>
-To: Thomas Schneider <thosch97@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 13 11:52:57 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Apr 13 12:14:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yhb31-0003ZS-W4
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Apr 2015 11:52:56 +0200
+	id 1YhbNq-0002Xm-31
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Apr 2015 12:14:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753492AbbDMJwv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Apr 2015 05:52:51 -0400
-Received: from ppsw-32.csi.cam.ac.uk ([131.111.8.132]:39642 "EHLO
-	ppsw-32.csi.cam.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753076AbbDMJwu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Apr 2015 05:52:50 -0400
-X-Cam-AntiVirus: no malware found
-X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
-Received: from hermes-1.csi.cam.ac.uk ([131.111.8.51]:42631)
-	by ppsw-32.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.156]:25)
-	with esmtpa (EXTERNAL:fanf2) id 1Yhb2u-0003vZ-2y (Exim 4.82_3-c0e5623)
-	(return-path <fanf2@hermes.cam.ac.uk>); Mon, 13 Apr 2015 10:52:48 +0100
-Received: from fanf2 by hermes-1.csi.cam.ac.uk (hermes.cam.ac.uk)
-	with local id 1Yhb2u-0005iR-Sh (Exim 4.72)
-	(return-path <fanf2@hermes.cam.ac.uk>); Mon, 13 Apr 2015 10:52:48 +0100
-X-X-Sender: fanf2@hermes-1.csi.cam.ac.uk
-In-Reply-To: <1428882040-13938-1-git-send-email-thosch97@gmail.com>
-User-Agent: Alpine 2.00 (LSU 1167 2008-08-23)
+	id S1753365AbbDMKOR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Apr 2015 06:14:17 -0400
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:41569 "EHLO
+	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752094AbbDMKOP (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 13 Apr 2015 06:14:15 -0400
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailout.nyi.internal (Postfix) with ESMTP id 9A4B82081E
+	for <git@vger.kernel.org>; Mon, 13 Apr 2015 06:14:14 -0400 (EDT)
+Received: from frontend1 ([10.202.2.160])
+  by compute5.internal (MEProxy); Mon, 13 Apr 2015 06:14:14 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=j+XQXAiX68DIiBfLRfvB4dItI4o=; b=NosItP
+	IP+dbLgHblyspf6+YeEUXBnFW98z+4YfKGq/wIuwYNdBBESQqJNjUxePjjY0HrTD
+	pwtWdc2LcD6RQ2Gglp3hBAHLiBxE5Mm3ReR9mEokLZqrNEXEfc5czvxbf9v0SI7t
+	Xb5rvpA7NJn5mw/qU+cwwVWom3RtnWTND1Ys4=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=j+XQXAiX68DIiBf
+	LRfvB4dItI4o=; b=Xq6FuCxUkb9AvZbWLN+3fikXxrKdY9KHolaeDZZXBNh/e+m
+	R78WsE46RIcoBG9FrbFCctsB/1KvGpR9ZtNjt8hvZvTdOIV7NhjV5fel1jmORJQ/
+	bzEtM8gjV7fVZXpaC9SzMO5lCqxvzgzNbzh0wrUPcI05oAzulbybD7txMI80=
+X-Sasl-enc: 7rmx59GE1o3EnaJ2IHrWLilGtetmvTQe/klpkHIPh3ST 1428920054
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 10EBDC00015;
+	Mon, 13 Apr 2015 06:14:13 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
+In-Reply-To: <20150410033953.GC11280@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267072>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267073>
 
-Thomas Schneider <thosch97@gmail.com> wrote:
+Jeff King venit, vidit, dixit 10.04.2015 05:39:
+> On Fri, Apr 10, 2015 at 05:23:17AM +0200, Jeff King wrote:
+> 
+>> Curiously, though, the git-svn tests seem to run fine for me on Apache
+>> 2.4 without your patch. I wonder if the fixes I mentioned above (which I
+>> definitely needed to get the regular http tests running on Debian back
+>> then) are not necessary on my system anymore (e.g., because the apache2
+>> package now ships with better-compatible config).
+> 
+> Ah, I see. I am not in fact running apache.
+> 
+> If you do not set SVN_HTTPD_PORT (which I don't), then lib-git-svn.sh's
+> start_httpd silently returns success without bothering to setup the
+> apache server at all. And yet the rest of the tests run to completion
+> just fine.
 
-> The new images were downloaded from https://git-scm.herokuapp.com/downloads/logos
-> and converted with ImageMagick:
->   convert -resize 72x30 Git-Logo-2Color.eps git-logo.png
->   convert -resize 16x16 Git-Icon-1788C.eps git-favicon.png
-> The old logo was only 27 pixels in height, the 3 additional pixels are necessary
-> for the slightly different aspect ratio of the new one.
+Yep.
 
-This is a good improvement :-) I did something similar for the logos on my
-installation of gitweb, including exactly the same command to create the
-favicon.
+> It looks like setting this variable is a way to say "run the same set of
+> tests, but do it over svn-over-httpd instead of svn's direct filesystem
+> access". Setting SVN_HTTPD_PORT does cause the tests to fail for me.
 
-https://git.csx.cam.ac.uk/x/ucs/git/gitcam.git/blob/HEAD:/bin/make-icons.sh
+Oh, I didn't even notice that. That's a bit weird.
 
-I think it is a bad idea to change the height of the logo: gitweb
-generates an <img src> element with a fixed 72x27 size, and the
-gitweb.conf documentation suggests that site admins can replace the logo
-with a custom one of the same size. My version of the new logo includes a
-bit of horizontal padding so that it matches this specification.
+> I don't know how important it is to run these tests over httpd. If so,
+> it would be nice to do something like lib-httpd does: try the apache
+> setup by default, and if it fails, gracefully skip the tests (or
+> fallback to the non-httpd version).
+> 
+> I'm also not sure if there's value in running both the httpd and
+> local-filesystem forms of the test. IOW, should we be factoring out the
+> tests and having two separate scripts that set $svnrepo as appropriate,
+> and then runs the tests?
+> 
+> -Peff
 
-(The higher-resolution icons are used by my server's documentation pages
-but not by gitweb.)
+Hmm, if those tests are run (with file://) I'm inclined to leave things
+as they are (scratch 3/3)... Though the fact that on my system,
+lib-git-svn starts the server but fails to connect isn't overly
+comforting. But git-svn is being used less and less. World domination is
+almost complete.
 
-Tony.
--- 
-f.anthony.n.finch  <dot@dotat.at>  http://dotat.at/
-Humber, Thames: Northwest backing south or southwest later, 4 or 5,
-occasionally 6 later. Slight or moderate. Fair. Moderate or good.
+Michael
