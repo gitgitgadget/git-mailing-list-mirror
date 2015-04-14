@@ -1,64 +1,74 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: How to combine git repos with similar code and keep all branches and tags?
-Date: Tue, 14 Apr 2015 19:09:17 +0200
-Message-ID: <vpqr3rm8wn6.fsf@anie.imag.fr>
-References: <BBAA9EAE77388248BCAB045DA762C5A83EFE242F@EXBE01-ENSIM.ms.ensim.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git commit --date format
+Date: Tue, 14 Apr 2015 10:10:59 -0700
+Message-ID: <xmqqoamq3aak.fsf@gitster.dls.corp.google.com>
+References: <CAHtLG6SPqoZJ+bc6eaHEAkEN9VAwuq+hh4OUG8opOETRQKfUyg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
-To: Jose de Leon <jdeleon@ensim.com>
-X-From: git-owner@vger.kernel.org Tue Apr 14 19:09:46 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git <git@vger.kernel.org>
+To: =?utf-8?B?5LmZ6YW46Yuw?= <ch3cooli@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 14 19:11:26 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yi4L4-0007rW-PX
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Apr 2015 19:09:31 +0200
+	id 1Yi4Mg-0000Ns-0a
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Apr 2015 19:11:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932212AbbDNRJ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Apr 2015 13:09:27 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:43727 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754722AbbDNRJZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Apr 2015 13:09:25 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t3EH9FP0029885
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 14 Apr 2015 19:09:15 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t3EH9HRW020800;
-	Tue, 14 Apr 2015 19:09:17 +0200
-In-Reply-To: <BBAA9EAE77388248BCAB045DA762C5A83EFE242F@EXBE01-ENSIM.ms.ensim.com>
-	(Jose de Leon's message of "Tue, 14 Apr 2015 16:44:13 +0000")
+	id S933042AbbDNRLG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Apr 2015 13:11:06 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:59776 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S933038AbbDNRLE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 14 Apr 2015 13:11:04 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B3F95472F4;
+	Tue, 14 Apr 2015 13:11:02 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=41z8SnvKfoPY
+	OPlxIFuQ5rflzUk=; b=vkWrG4ujlX3XvFyVCsfiD6jF8uQdGFPdk5p08YL7ONr9
+	cxzQbGeVT47SpPgm25DgCm+3yTFw4LW45SWZOGFpgwEZZ/8+dlpgyzSHkYftD/dz
+	BPZNz/t7hA04FrnBpQssG55dfqCkivIa3in5e7cnMExx0L9zDAn5GNrIp4Sf/s4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Axm9gA
+	kYnRScoHRUNKf2K6oCZafkN+xTm5dHMBAAvw3MoFtRk7hkpFO36txFiennvGMLWi
+	FimSI46LkYR6v9Pb6pDIplaGh+AoIjtG7emomfsBZC0TFGfSq55ucDhxKlPfQxas
+	QHKkURXX8hI3otmzgnApLYcRKVM7ReaSh+rf4=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id AC16D472F3;
+	Tue, 14 Apr 2015 13:11:02 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 38F03472F0;
+	Tue, 14 Apr 2015 13:11:01 -0400 (EDT)
+In-Reply-To: <CAHtLG6SPqoZJ+bc6eaHEAkEN9VAwuq+hh4OUG8opOETRQKfUyg@mail.gmail.com>
+	(=?utf-8?B?IuS5memFuOmLsCIncw==?= message of "Mon, 13 Apr 2015 23:42:18
+ +0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 14 Apr 2015 19:09:15 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t3EH9FP0029885
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1429636156.93774@JwbZnTXfAcvV0Aq1yfieUA
+X-Pobox-Relay-ID: 39B9AE26-E2C9-11E4-938D-11859F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267148>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267149>
 
-Jose de Leon <jdeleon@ensim.com> writes:
+=E4=B9=99=E9=85=B8=E9=8B=B0 <ch3cooli@gmail.com> writes:
 
-> For some unknown reason to me, our developers started a git project,
-> called Ver1, this was the first version. Then sometime later, they
-> created a new git repository called Ver2, the initial commit for Ver2
-> was essentially a copy of the code in Ver1 from the master. They
-> didn't clone it, they just copied the code at the latest point.
+> Hi,
+>
+> In git < 2.0, git commit --amend --date=3D"" can amend commit with
+> current time as author time.
+> But since git 2.0, this does not work, dying with "invalid date forma=
+t".
+> I have to instead type git commit --amend --date=3D"now".
+> Is empty string date format no longer supported? Or will be fixed?
 
-This is why "graft points" were created, and then superseeded by "git
-replace".
-
-See http://git-scm.com/blog/2010/03/17/replace.html and
-http://git-scm.com/docs/git-replace
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+I think this was a fix to the overly loose parser which took any
+typo (including an empty string, e.g. --date=3D"$prevuois" that
+misspels the name of a shell variable that has the timestamp) as
+"now".
