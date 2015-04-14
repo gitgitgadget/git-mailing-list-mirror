@@ -1,68 +1,65 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Git add -p =?utf-8?Q?=E2=80=9CYour?= edited hunk does not
- apply. Edit =?utf-8?Q?again=E2=80=9D?=
-Date: Tue, 14 Apr 2015 16:00:49 +0200
-Message-ID: <vpqegnmizce.fsf@anie.imag.fr>
-References: <loom.20150414T035141-286@post.gmane.org>
-	<vpq7ftfkpue.fsf@anie.imag.fr>
-	<CALv9gbMshdNhB58Otx5h8rmtCAU4qo9eNTqKSMzD_Phy7Sataw@mail.gmail.com>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: git fsck: unreachable vs. dangling
+Date: Tue, 14 Apr 2015 16:20:07 +0200
+Message-ID: <CAHGBnuODrwq-MSp53zacgfcevX7tdtfPEC+fyTrWrnTKaFKO1g@mail.gmail.com>
+References: <CAHGBnuOYLpkeUop9vNH3+WSKqrM3NCSqvu-NZnPnk3gEkAr6eg@mail.gmail.com>
+	<CAPc5daXRpfSrvcae0W+YU-51prCoFGxz_hkhtp7FZ-K9_eeeBQ@mail.gmail.com>
+	<CAHGBnuOuMnAsP12dukPSP31ABRoUc=s7iZFnca9-K2hOcog9cQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Tanky Woo <wtq1990@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 14 16:01:06 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>, git@drmicha.warpmail.net
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 14 16:20:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yi1Ok-0007vh-80
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Apr 2015 16:01:06 +0200
+	id 1Yi1hG-0000kQ-2V
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Apr 2015 16:20:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755392AbbDNOBA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Apr 2015 10:01:00 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:44542 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753464AbbDNOA6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Apr 2015 10:00:58 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t3EE0lw0011039
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 14 Apr 2015 16:00:47 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t3EE0ndw016892;
-	Tue, 14 Apr 2015 16:00:49 +0200
-In-Reply-To: <CALv9gbMshdNhB58Otx5h8rmtCAU4qo9eNTqKSMzD_Phy7Sataw@mail.gmail.com>
-	(Tanky Woo's message of "Tue, 14 Apr 2015 21:52:08 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 14 Apr 2015 16:00:47 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t3EE0lw0011039
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1429624851.9221@6NU11w0oDfvpZiTyYQL4Kg
+	id S1753930AbbDNOUJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Apr 2015 10:20:09 -0400
+Received: from mail-ig0-f173.google.com ([209.85.213.173]:35510 "EHLO
+	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752877AbbDNOUI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Apr 2015 10:20:08 -0400
+Received: by igbyr2 with SMTP id yr2so39369302igb.0
+        for <git@vger.kernel.org>; Tue, 14 Apr 2015 07:20:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=FEl5uObtidnhHoNCGHyGpN5d1wbZhlrKIXr4l4mqjKo=;
+        b=qqLIb/9jeMrkMvcnaPSTo7vwn3nSTKBKDWtfPosbRzZI0HQsKhZsHyLXnL0ZoZajbO
+         2ARA0QNpFnXOOceJCy9ojCeDXt88XoemyrqnTXOoSjguQZg7EgDs0XVKar6LV7ZgHuaL
+         oSIo9xpVgWiuGKNcXTscm3Fx7VHt7M6vdFRS2TXiMICmhZ+uNd9NHJ5XPD7GnNy+fp0Z
+         M57Q52/5FIEA2og/8KYq3lmQ7e4bBa1yJJxROikY6RP6egN15TMJeTLHaEUDV9oEhO0v
+         rYfSx82xVhEqZ4f/o+yxyZLCs2/hWEOdNReFWpshzEdBNqcSiY2rnyE5IjVS6x3+NDAT
+         zDKg==
+X-Received: by 10.50.79.202 with SMTP id l10mr24612967igx.7.1429021207363;
+ Tue, 14 Apr 2015 07:20:07 -0700 (PDT)
+Received: by 10.107.159.82 with HTTP; Tue, 14 Apr 2015 07:20:07 -0700 (PDT)
+In-Reply-To: <CAHGBnuOuMnAsP12dukPSP31ABRoUc=s7iZFnca9-K2hOcog9cQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267139>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267140>
 
-Tanky Woo <wtq1990@gmail.com> writes:
+On Tue, Apr 14, 2015 at 10:52 AM, Sebastian Schuberth
+<sschuberth@gmail.com> wrote:
 
-> Stash this hunk [y,n,q,a,d,/,j,J,g,e,?]? y
-> @@ -2,3 +3,4 @@
-> =A0bbb
-> +added line 2
-> =A0ccc
-> =A0ddd
-> Stash this hunk [y,n,q,a,d,/,K,g,e,?]? y
+>> A dangling object is an unreachable object that cannot be
+>> made reachable by any way other than pointing at it
+>> directly with a ref.
+>
+> Thanks a lot for the prompt explanation!
 
-My version does n, y, not y, y. The problem is the mix of stashed/not
-stashed hunks. See my other message for a reproducible test, it does
-fail on Git master.
+Note to myself: I just realized that both "dangling" and "unreachable"
+are also nicely defined in the Git glossary [1].
 
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+[1] http://git-scm.com/docs/gitglossary/
+
+-- 
+Sebastian Schuberth
