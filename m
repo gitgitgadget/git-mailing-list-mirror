@@ -1,106 +1,56 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 4/5] t4202-log: add tests for --merges=
-Date: Tue, 14 Apr 2015 02:52:49 -0400
-Message-ID: <CAPig+cSfC0sUdsbYHBHk-GcT3zYDptq+7CpteCPQpz6JfHCRkw@mail.gmail.com>
-References: <1428938968-19013-1-git-send-email-koosha@posteo.de>
-	<1428938968-19013-4-git-send-email-koosha@posteo.de>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: git fsck: unreachable vs. dangling
+Date: Tue, 14 Apr 2015 09:16:59 +0200
+Message-ID: <CAHGBnuOYLpkeUop9vNH3+WSKqrM3NCSqvu-NZnPnk3gEkAr6eg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Koosha Khajehmoogahi <koosha@posteo.de>
-X-From: git-owner@vger.kernel.org Tue Apr 14 08:52:59 2015
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Apr 14 09:17:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YhuiP-0005C6-85
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Apr 2015 08:52:57 +0200
+	id 1Yhv5r-00072b-CW
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Apr 2015 09:17:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751825AbbDNGww (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Apr 2015 02:52:52 -0400
-Received: from mail-la0-f54.google.com ([209.85.215.54]:34752 "EHLO
-	mail-la0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751664AbbDNGwv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Apr 2015 02:52:51 -0400
-Received: by laat2 with SMTP id t2so563465laa.1
-        for <git@vger.kernel.org>; Mon, 13 Apr 2015 23:52:50 -0700 (PDT)
+	id S1751893AbbDNHRB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Apr 2015 03:17:01 -0400
+Received: from mail-ig0-f173.google.com ([209.85.213.173]:38353 "EHLO
+	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751025AbbDNHRA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Apr 2015 03:17:00 -0400
+Received: by igbqf9 with SMTP id qf9so7817134igb.1
+        for <git@vger.kernel.org>; Tue, 14 Apr 2015 00:16:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=FgG9aLXcQ4N03QKmhz/70IouQkaSB3m0KEiMFnmYxSg=;
-        b=ks4IwdncSKknAJzHxxZjW7ZUqC+hEashnesmxWPS3DgjYZjlnReWWhY7ehPwKLbNMK
-         xsBCMttJTVIC4CMDCgAD9VJaiBZisbmV9sr5DptonSJlGvXu9DSVMMuoUJ+lSqeDi7Mm
-         pfpVcScM1aUjGgA6Aek2gpn+0IaGvhsUkliYzli61m/CsY9yIvTqwMv7TwRSmFjrpXrI
-         jgEnFHFjEHUyFdLLscPfBf7ZOPWqFpu440+0QQ0ZoBjzFFGfnId6e0G8xbCkV0qzpw1D
-         2K8QbC0MiwrYdMsZIhPMD7CPxMzktxWqRKP7r85jQQCerovH2xkb+DFH6tC8yYeJA0ZG
-         5rGA==
-X-Received: by 10.112.205.225 with SMTP id lj1mr7389609lbc.27.1428994369914;
- Mon, 13 Apr 2015 23:52:49 -0700 (PDT)
-Received: by 10.114.78.69 with HTTP; Mon, 13 Apr 2015 23:52:49 -0700 (PDT)
-In-Reply-To: <1428938968-19013-4-git-send-email-koosha@posteo.de>
-X-Google-Sender-Auth: LMhqaitdCA-bbT2im2uETrSRICo
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=rtUWvh1k0jT+R2HH/zhn8M7DTVekIC3CyKDXnSm54Ug=;
+        b=ozH5PZ6W7dnu4ZXgdKerNABlctOh/F/9J9C+uniOz1FKcfOJ3zRpsxiyACf3GfKlco
+         c3IBvUybeAwp05TXrgdtUatt8SKplK1vrrojDS0qDTZGoKUTwfYtF/SrQFxR7o1sayZf
+         t8ACixOjYVxYKevuE3dVa7vBS7q1oc6FrSyAZpX6F2E2RMCQmS421ki5Z+MjzwLNEbIY
+         QHlEKdPSIGZzCzy4DnGxJ3hpk2VU2x5A1WkFbl18N2iSd3VOELtiRUV6aKarTssfbmYI
+         rfWC2gOh55+p1Y2EcLrepeF6gxjP5xokamI8Z4P3IFqoqyr4YJAXbZ4nhV6vQIravkzn
+         v/vg==
+X-Received: by 10.50.79.202 with SMTP id l10mr22235628igx.7.1428995819374;
+ Tue, 14 Apr 2015 00:16:59 -0700 (PDT)
+Received: by 10.107.159.82 with HTTP; Tue, 14 Apr 2015 00:16:59 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267118>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267119>
 
-On Mon, Apr 13, 2015 at 11:29 AM, Koosha Khajehmoogahi <koosha@posteo.de> wrote:
-> From: Eric Sunshine <sunshine@sunshineco.com>
-> Signed-off-by: Koosha Khajehmoogahi <koosha@posteo.de>
+Hi,
 
-Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+reading through the fsck docs [1] I'm having a hard time understanding
+what the difference between "unreachable" and "dangling" objects are.
 
-> ---
-> diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-> index 1b2e981..3edcd81 100755
-> --- a/t/t4202-log.sh
-> +++ b/t/t4202-log.sh
-> @@ -270,6 +270,35 @@ cat > expect <<\EOF
->  * initial
->  EOF
->
-> +test_expect_success 'setup merges=' '
+By example, suppose I have a commit A that is the tip of exactly one
+branch (and no tag or other ref points to A). If I delete that branch,
+is A now dangling, or unreachable, or both?
 
-This differs slightly from the version I posted[1], in which I had
-intentionally dropped the '=' from "merges=" in the description to
-normalize the output. (I think it looks slightly nicer without the
-'='.)
+[1] http://git-scm.com/docs/git-fsck.html
 
-[1]: http://article.gmane.org/gmane.comp.version-control.git/266902/
-
-> +       git log --min-parents=2 --pretty=tformat:%s >expect_only &&
-> +       git log --max-parents=1 --pretty=tformat:%s >expect_hide &&
-> +       git log --min-parents=-1 --pretty=tformat:%s >expect_show
-> +'
-> +
-> +test_log_merges() {
-> +       expect=expect_$1
-> +       config=${2:+-c log.merges=$2}
-> +       option=${3:+--merges=$3}
-> +       option=${4:-$option}
-> +       test_expect_success "merges${config:+ $config}${option:+ $option}" "
-> +               git $config log $option --pretty=tformat:%s >actual &&
-> +               test_cmp $expect actual
-> +       "
-> +}
-> +
-> +states="show only hide"
-> +for c in '' $states
-> +do
-> +       for o in '' $states
-> +       do
-> +               test_log_merges ${o:-${c:-show}} "$c" "$o"
-> +       done
-> +done
-> +
-> +test_log_merges hide show '' --no-merges
-> +test_log_merges only hide '' '--merges --max-parents=2'
-> +
->  test_expect_success 'log --graph with merge' '
->         git log --graph --date-order --pretty=tformat:%s |
->                 sed "s/ *\$//" >actual &&
-> --
-> 2.3.3.263.g095251d.dirty
+-- 
+Sebastian Schuberth
