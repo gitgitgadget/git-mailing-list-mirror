@@ -1,60 +1,51 @@
-From: Max Kirillov <max@max630.net>
-Subject: Re: [PATCH v2 1/4] t4059: test 'diff --cc' with a change from only
- few parents
-Date: Tue, 14 Apr 2015 07:22:52 +0300
-Message-ID: <20150414042252.GC786@wheezy.local>
-References: <1428006853-21212-1-git-send-email-max@max630.net>
- <1428076716-4449-1-git-send-email-max@max630.net>
- <1428076716-4449-2-git-send-email-max@max630.net>
- <xmqqa8ye5q7m.fsf@gitster.dls.corp.google.com>
- <20150412054332.GA28555@wheezy.local>
- <xmqq1tjp6gj5.fsf@gitster.dls.corp.google.com>
+From: Jinghao Printing - CHINA <williamlmartinez623@gmail.com>
+Subject: Please let me know if you need to print color box, display box and labels
+Date: Tue, 14 Apr 2015 14:23:06 +0800
+Message-ID: <CAPjb-RsG2k84sfPYcRtHQCpv5JckqYqW+O2q20xrDfbQ3vwFvA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Max Kirillov <max@max630.net>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 14 06:22:48 2015
+Content-Type: text/plain; charset=UTF-8
+To: undisclosed-recipients:;
+X-From: git-owner@vger.kernel.org Tue Apr 14 08:23:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YhsN5-0000M2-3E
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Apr 2015 06:22:47 +0200
+	id 1YhuFd-00010u-MQ
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Apr 2015 08:23:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751171AbbDNEWn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Apr 2015 00:22:43 -0400
-Received: from p3plsmtpa09-04.prod.phx3.secureserver.net ([173.201.193.233]:50769
-	"EHLO p3plsmtpa09-04.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750968AbbDNEWl (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Apr 2015 00:22:41 -0400
-Received: from wheezy.local ([82.181.81.240])
-	by p3plsmtpa09-04.prod.phx3.secureserver.net with 
-	id FgNb1q00F5B68XE01gNfDK; Mon, 13 Apr 2015 21:22:41 -0700
-Content-Disposition: inline
-In-Reply-To: <xmqq1tjp6gj5.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751020AbbDNGXI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Apr 2015 02:23:08 -0400
+Received: from mail-ie0-f179.google.com ([209.85.223.179]:33711 "EHLO
+	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750992AbbDNGXI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Apr 2015 02:23:08 -0400
+Received: by iebmp1 with SMTP id mp1so7368161ieb.0
+        for <git@vger.kernel.org>; Mon, 13 Apr 2015 23:23:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=vksLPKZNqr/TQn9Y+SC8BSRAZ29UqyQttoQiQ0ryQFU=;
+        b=Z0P8t56kXC1HChZcxb033AUi6OQ8x3ywuKI1DVPvuy8eju51QFTP8V5KzG3JY3LzC6
+         tvkascIolOclbloXWxi8yS+usFHHpKJ1FxjDxYacYNJfHhXATxpSsSNjuLNGNpUXQX8z
+         xjnAYK2QPmtI6eTfIPWJZHPKH0a/kYZtm9k7cEiGNKqxd1Wp/i1N4cPF1XlT8Q09OwCg
+         HBLLb789wFOn/Rm2sVbIWlyRGmCWCZ+dE2CIwQO4AZ/FtGmPvRmTC8HyA/KcEgGS9uC0
+         YAPxM5JUBpEH7FKSOW5eWg7RxU1xavnvw0rlWdw4o1m6459AM7ZejlTMIX+dJqyKnWj/
+         i+jg==
+X-Received: by 10.107.15.129 with SMTP id 1mr26611005iop.20.1428992587132;
+ Mon, 13 Apr 2015 23:23:07 -0700 (PDT)
+Received: by 10.107.50.137 with HTTP; Mon, 13 Apr 2015 23:23:06 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267115>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267116>
 
-On Sat, Apr 11, 2015 at 10:51:10PM -0700, Junio C Hamano wrote:
-> Max Kirillov <max@max630.net> writes:
-> 
->> My exact case was that there was a change in one branch
->> which was overwritten during merge conflict resolution by
->> fully acepting the other branch - in a 2-parent merge. I
->> started looking for a way to visualize such cases. They
->> are not visible in usual diff, because they look same as
->> accepting change compared to the unchange branch.
-> 
-> Hmph, isn't that exactly why "diff -c" exists, not "diff --cc"
-> that omits (usually) uninteresting hunks?
+Hi, this is David Wu from Shanghai, China.
+Please let me know if you need color box, display box, corrugated box,
+label, hang tag etc.
 
-No, this shows too many. If a change is done in one branch
-but the other branch did not introduce any changes since
-mergebase and they merged cleanly the merge should not be
-shown, and `diff -c` seems to show them.
+I will send you the website.
+
+Best regards,
+David Wu
