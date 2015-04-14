@@ -1,64 +1,63 @@
 From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Ensimag students project on Git, 2015 edition
-Date: Tue, 14 Apr 2015 19:04:26 +0200
-Message-ID: <vpqzj6a8wv9.fsf@anie.imag.fr>
+Subject: Re: How to combine git repos with similar code and keep all branches and tags?
+Date: Tue, 14 Apr 2015 19:09:17 +0200
+Message-ID: <vpqr3rm8wn6.fsf@anie.imag.fr>
+References: <BBAA9EAE77388248BCAB045DA762C5A83EFE242F@EXBE01-ENSIM.ms.ensim.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Apr 14 19:04:41 2015
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
+To: Jose de Leon <jdeleon@ensim.com>
+X-From: git-owner@vger.kernel.org Tue Apr 14 19:09:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yi4GM-0005Eb-Fd
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Apr 2015 19:04:38 +0200
+	id 1Yi4L4-0007rW-PX
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Apr 2015 19:09:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755357AbbDNREe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Apr 2015 13:04:34 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:48878 "EHLO rominette.imag.fr"
+	id S932212AbbDNRJ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Apr 2015 13:09:27 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:43727 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754057AbbDNREd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Apr 2015 13:04:33 -0400
+	id S1754722AbbDNRJZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Apr 2015 13:09:25 -0400
 Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t3EH4Oiu008343
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t3EH9FP0029885
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 14 Apr 2015 19:04:24 +0200
+	Tue, 14 Apr 2015 19:09:15 +0200
 Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t3EH4QnG020659;
-	Tue, 14 Apr 2015 19:04:26 +0200
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t3EH9HRW020800;
+	Tue, 14 Apr 2015 19:09:17 +0200
+In-Reply-To: <BBAA9EAE77388248BCAB045DA762C5A83EFE242F@EXBE01-ENSIM.ms.ensim.com>
+	(Jose de Leon's message of "Tue, 14 Apr 2015 16:44:13 +0000")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 14 Apr 2015 19:04:24 +0200 (CEST)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 14 Apr 2015 19:09:15 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t3EH4Oiu008343
+X-MailScanner-ID: t3EH9FP0029885
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1429635868.24672@QLFlt9LWRHzATF+Im9t/eg
+MailScanner-NULL-Check: 1429636156.93774@JwbZnTXfAcvV0Aq1yfieUA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267147>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267148>
 
-Hi,
+Jose de Leon <jdeleon@ensim.com> writes:
 
-Like the years before, I'm going to offer my students a 1 month project
-(mid May -> mid June) where they can contribute to a free software, in
-particular Git. Last year we got no student, but in the past we got
-interesting features merged in (e.g. "git blame" with textconv, hints in
-"git status", git-remote-mediawiki, better error messages).
+> For some unknown reason to me, our developers started a git project,
+> called Ver1, this was the first version. Then sometime later, they
+> created a new git repository called Ver2, the initial commit for Ver2
+> was essentially a copy of the code in Ver1 from the master. They
+> didn't clone it, they just copied the code at the latest point.
 
-Students are free to pick the feature they want, but I maintain a list
-of small project ideas on the wiki to help them:
+This is why "graft points" were created, and then superseeded by "git
+replace".
 
-  https://git.wiki.kernel.org/index.php/SmallProjectsIdeas
-
-feel free to edit and comment, add new ideas, .... Students will anyway
-have to discuss on the mailing-list before starting to code anything
-non-trivial.
-
-Thanks,
+See http://git-scm.com/blog/2010/03/17/replace.html and
+http://git-scm.com/docs/git-replace
 
 -- 
 Matthieu Moy
