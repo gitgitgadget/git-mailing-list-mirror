@@ -1,81 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/7] path.c: implement xdg_config_home()
-Date: Tue, 14 Apr 2015 13:39:03 -0700
-Message-ID: <xmqqzj6a1m3c.fsf@gitster.dls.corp.google.com>
-References: <1428824772-8736-1-git-send-email-pyokagan@gmail.com>
-	<e1bc6f19af608db796a2212dbf00ba45@www.dscho.org>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 1/4] add -p: demonstrate failure when running 'edit' after
+ a split
+Date: Tue, 14 Apr 2015 16:46:09 -0400
+Message-ID: <CAPig+cQQrWUESdOdVCS_sU+muttt=P+sRJBjzrWTEUn10+aSDw@mail.gmail.com>
+References: <vpq7ftfkpue.fsf@anie.imag.fr>
+	<1429011168-23216-1-git-send-email-Matthieu.Moy@imag.fr>
+	<1429011168-23216-2-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Paul Tan <pyokagan@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Apr 14 22:39:16 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Tue Apr 14 22:46:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yi7c1-0003Q6-NC
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Apr 2015 22:39:14 +0200
+	id 1Yi7iq-0007UV-8I
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Apr 2015 22:46:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754000AbbDNUjJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Apr 2015 16:39:09 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:63724 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753983AbbDNUjG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Apr 2015 16:39:06 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id A63C54AFAD;
-	Tue, 14 Apr 2015 16:39:05 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=sHtQ+Z/WeKHgcMLmjKo3Nsn8vaw=; b=EbsnLRyfvh3COjmCRg66
-	o6dZ8izut+M/lWGCsclfsisUIlRLJRx8RH44KTDBl4w0EqsqS+JIoQyLd7Zec82V
-	Wv1jx3H4fB4bgKfiLb1jGdwFZSeAT973ltLm2xKNIbqtxveG53uT9YvBqf/auYWw
-	tLcRCFQNiKCmTuBAGhRqw80=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=FBC1oIxChurdwjzn/831alBrCkxjIU5fA5lJDMF2rDRlwU
-	4wSoqIBewqqC/O5ejCVHKTtuHrvwhZXwwZquVPkreLTDjClBPyRSwKcC7hMMJSp/
-	6BIVRHACkz8yGw90g19k6qKUyeB1CtCgMokWwAnslHcq9YW76c1UQb286y9Hk=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9D30C4AFAC;
-	Tue, 14 Apr 2015 16:39:05 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 899C24AFA9;
-	Tue, 14 Apr 2015 16:39:04 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 4A5A7784-E2E6-11E4-8732-11859F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1754046AbbDNUqL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Apr 2015 16:46:11 -0400
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:33910 "EHLO
+	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754035AbbDNUqK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Apr 2015 16:46:10 -0400
+Received: by lbcga7 with SMTP id ga7so18622396lbc.1
+        for <git@vger.kernel.org>; Tue, 14 Apr 2015 13:46:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=kk1sPMcJ/4OBQRYJG/DskvqmIlYxCFptk1XXTv7HTwo=;
+        b=A8dg7E0qbrTVJr+M/M1GXoUJ5EH+S0YpMVV3qFQY50aYzOV8gho6mo04S+18qA4Vkr
+         h0CFOl1KQ4LMFD3xwAlgf6AEqyvAK+66nydxUyKYBhZ1VQ3dml0rAgKZdUzPwSBRiHRf
+         VvIx0F/DMkTJcT4zzk1OE5lyK5Tz699zY1Bovz3uWycUCSk5JDtgIetQ9Zbrvc9bvEe9
+         g47B+YXlHvqO2RCsJbZxlzULLHVqceDBr2I6QYy+nnWNC23B0dYcRR/3ANALFS/eTy8R
+         t4RwDRDGjO//B/2RicFxHOgJa8RivhXRUSW37URI6gHQBARJqQ1Dy5A6K3cHVrfNc9fX
+         YtlQ==
+X-Received: by 10.152.2.130 with SMTP id 2mr20175604lau.120.1429044369335;
+ Tue, 14 Apr 2015 13:46:09 -0700 (PDT)
+Received: by 10.114.25.193 with HTTP; Tue, 14 Apr 2015 13:46:09 -0700 (PDT)
+In-Reply-To: <1429011168-23216-2-git-send-email-Matthieu.Moy@imag.fr>
+X-Google-Sender-Auth: WqZXIOS3I_QpTX1apJKxKamCzfc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267161>
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-
->> diff --git a/cache.h b/cache.h
->> index 3d3244b..7f9bab0 100644
->> --- a/cache.h
->> +++ b/cache.h
->> @@ -836,6 +836,13 @@ char *strip_path_suffix(const char *path, const
->> char *suffix);
->>  int daemon_avoid_alias(const char *path);
->>  extern int is_ntfs_dotgit(const char *name);
->>  
->> +/**
->> + * Returns the newly allocated string "$XDG_CONFIG_HOME/git/%s".  If
->> + * $XDG_CONFIG_HOME is unset or empty, returns the newly allocated string
->> + * "$HOME/.config/git/%s". Returns NULL if an error occurred.
->> + */
->> +extern char *xdg_config_home(const char *fn);
+On Tue, Apr 14, 2015 at 7:32 AM, Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
+> The test passes if one replaces the 'e' command with a 'y' command in
+> the 'add -p' session.
 >
-> Should this not be inserted close to home_config_paths()? Also, the
-> name "fn" sounds more like "function" than like "filename" to me,
-> especially keeping the name `config_fn_t` in mind. Maybe call the
-> parameter "filename" to avoid confusion?
+> Reported-by: Tanky Woo <wtq1990@gmail.com>
+> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+> ---
+> diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+> index 24ddd8a..b48a75c 100755
+> --- a/t/t3701-add-interactive.sh
+> +++ b/t/t3701-add-interactive.sh
+> @@ -335,6 +335,31 @@ test_expect_success 'split hunk "add -p (edit)"' '
+>         ! grep "^+15" actual
+>  '
+>
+> +test_expect_failure 'split hunk "add -p (no, yes, edit)"' '
+> +       cat >test <<-\EOF &&
+> +       5
+> +       10
+> +       20
+> +       21
+> +       30
+> +       31
+> +       40
+> +       50
+> +       60
+> +       EOF
+> +       git reset &&
+> +       # test sequence is s(plit), n(o), y(es), e(dit)
+> +       # q n q q is there to make sure we exit at the end.
+> +       for a in s n y e   q n q q
+> +       do
+> +               echo $a
+> +       done |
 
-It is OK to omit the name in the extern declaration here.  We have
-to have a sensible variable name in the definition in path.c, of
-course ;-), and "filename" sounds like a very sensible suggestion.
+Simplified:
+
+    printf '%s\n' s n y e q n q q |
+
+> +       EDITOR=: git add -p 2>error &&
+> +       test_must_be_empty error &&
+> +       git diff >actual &&
+> +       ! grep "^+31" actual
+> +'
+> +
+>  test_expect_success 'patch mode ignores unmerged entries' '
+>         git reset --hard &&
+>         test_commit conflict &&
+> --
+> 2.4.0.rc1.42.g9642cc6
