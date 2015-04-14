@@ -1,83 +1,153 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 1/7] path.c: implement xdg_config_home()
-Date: Tue, 14 Apr 2015 15:34:12 -0700
-Message-ID: <CAGZ79kZvTdmGpoQozNjNefB4CWm31C05S1JoEBASFofxpYUXYg@mail.gmail.com>
-References: <1428824772-8736-1-git-send-email-pyokagan@gmail.com>
-	<e1bc6f19af608db796a2212dbf00ba45@www.dscho.org>
-	<xmqqzj6a1m3c.fsf@gitster.dls.corp.google.com>
-	<CAGZ79kaO_1QMMTY0ni9k3hrkrt_PhqRDRzXkhZEiYuJ0EsE9Tw@mail.gmail.com>
-	<xmqqd2361gx8.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/3] refs.c: remove lock_fd from struct ref_lock
+Date: Tue, 14 Apr 2015 16:12:03 -0700
+Message-ID: <xmqq8udu1f0c.fsf@gitster.dls.corp.google.com>
+References: <1429050308-9617-1-git-send-email-sbeller@google.com>
+	<1429050308-9617-4-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Paul Tan <pyokagan@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 15 00:34:20 2015
+Content-Type: text/plain
+Cc: mhagger@alum.mit.edu, git@vger.kernel.org
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Wed Apr 15 01:12:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yi9PP-000060-Gx
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Apr 2015 00:34:19 +0200
+	id 1YiA0A-0005JG-AN
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Apr 2015 01:12:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932397AbbDNWeQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Apr 2015 18:34:16 -0400
-Received: from mail-lb0-f180.google.com ([209.85.217.180]:35207 "EHLO
-	mail-lb0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932228AbbDNWeO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Apr 2015 18:34:14 -0400
-Received: by lbbuc2 with SMTP id uc2so20387844lbb.2
-        for <git@vger.kernel.org>; Tue, 14 Apr 2015 15:34:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=YkvX7SFyxVM8FdlDTqFSey42oCpLnU7mUWmBmegMOQ4=;
-        b=MDdX4Ia4J+ygK9JSH59M6TYIHuGkBcFQIAudAGEkSmrK8rSwKAfzD/evzDtEITKLnZ
-         dvUYfdvbBSREGxv6LyrOV7P8N8swSrKr68JZxwM98J1LyCKQOA1d7CAT8GOE1FrTCjos
-         9gyz5O1ziR92eoMC0d/AUgM44aV5KEvKZbgEgCNvfYNiuk6r5xCN/hZjKc/WuHaivwZp
-         w+jKop0vgoc0WTXWKvuoZKW5G/nM5UXbJGy1O/vJtgcDU/2CtKxVKQ457oNSy26JYILs
-         dCinQEdVMv21FNkDlTGu3SBJ8ernq0BlFxlN5KMPoC3qY35VaSfevZJBjjJnp+HOGyUO
-         7Z5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=YkvX7SFyxVM8FdlDTqFSey42oCpLnU7mUWmBmegMOQ4=;
-        b=cq6DDTao2iqnLhTTG4q23G66yrfktkXScjCfGu5SoJ0efKPyl2+fXw4N7mzhfmIji1
-         E0VyedNU+P8E0rgmpSGbu0PnHajohwQ9fA/6rvZIlhy6iZ0uzGgZGgrm2enMUJAvBj8w
-         LqIIWbXSSjzlC7xeeKBPgMF7Ma05R4gvrIllyhrzAcUNbpFm6s1RXRJZigAtJlnzKfkX
-         iutqcFHj33J8wGB9VNxG0td5kyYh8LsZu7GnGQJFq5aU0LHAWdaiZkl+zGtqbptRcMl0
-         t/2W69KaB6ZyfXZ3zl8kOByLUkoEF5ho7yOSJ4fUipUX/n0R46mRS9JXFBmFejWeaayu
-         h7kg==
-X-Gm-Message-State: ALoCoQl4N/DzE76A+EUrEfZOwzk073PXHTgnZFTyaB0w6KCDaeSuNRVuKMF+btwnRqzODftjzsWj
-X-Received: by 10.152.25.167 with SMTP id d7mr21128650lag.108.1429050853015;
- Tue, 14 Apr 2015 15:34:13 -0700 (PDT)
-Received: by 10.25.43.210 with HTTP; Tue, 14 Apr 2015 15:34:12 -0700 (PDT)
-In-Reply-To: <xmqqd2361gx8.fsf@gitster.dls.corp.google.com>
+	id S932331AbbDNXMI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Apr 2015 19:12:08 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:56014 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932103AbbDNXMG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Apr 2015 19:12:06 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 42FB34A082;
+	Tue, 14 Apr 2015 19:12:05 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=CBIGFBZP9cISCg0qt5LKaE1MYqw=; b=REO2rM
+	4gQLslwXlvVVeZa0dTRAKEbXAcs+LqxBmNZbkS06XMd2UmNyHmuFSCYbkZyxjrf4
+	FZROgNUdY4dJtHsrss/ba+yyQUi9/dmxWReSMMCnSG7vsNo6AN1IYIqBlAGc2Oi9
+	04ZplTLh2lJHelycSX9ScevcNBlqYmYaYjzj4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=llUTSxRMxMwnPRzbxZfOZZGw/TwYxFCV
+	yrgNexMamjQGaoATEfak5Na/glbacYehlgpVm9ZDu5Lp9f5v15152shXox9W0fca
+	GPHP3WOoqFIJow/pa5Y7if2JskrjzRwJAr5IMOfTv//xdAtHTvXQI9b4CyYRcIMt
+	cPwn5n7Vupg=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3AD2C4A081;
+	Tue, 14 Apr 2015 19:12:05 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B4AF74A080;
+	Tue, 14 Apr 2015 19:12:04 -0400 (EDT)
+In-Reply-To: <1429050308-9617-4-git-send-email-sbeller@google.com> (Stefan
+	Beller's message of "Tue, 14 Apr 2015 15:25:08 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: AA2AAB56-E2FB-11E4-952C-11859F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267173>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267174>
 
-I need to learn to read the whole sentence. :(
-Apologies.
+Stefan Beller <sbeller@google.com> writes:
 
-On Tue, Apr 14, 2015 at 3:30 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
+> The 'lock_fd' is the same as 'lk->fd'. No need to store it twice so remove
+> it. You may argue this introduces more coupling as we need to know more
+> about the internals of the lock file mechanism, but this will be solved in
+> a later patch.
 >
->> On Tue, Apr 14, 2015 at 1:39 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>
->>> It is OK to omit the name in the extern declaration here.
->>
->> It is OK, but I think this is bad practice.
+> No functional changes intended.
+
+It is somewhat strange to hear "in a later patch" in [PATCH 3/3] of
+a 3-patch series ;-), but I think this makes sense.  Whenever
+we take a ref-lock, and we are going to actually write something
+into the filesystem, we would go thru the lock_file API, so we can
+depend on lk to have its own file descriptor field.
+
+
+
+
 >
-> Take a special note on the word "here", meaning "in this particular
-> case."  It is perfectly fine when the meaning of the parameter is
-> clear from its type.
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  refs.c | 16 ++++++----------
+>  1 file changed, 6 insertions(+), 10 deletions(-)
 >
-> I was assuming that our developers have common sense to disambiguate
-> ambiguous cases, of course ;-)
+> diff --git a/refs.c b/refs.c
+> index 14e52ca..4066752 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -11,7 +11,6 @@ struct ref_lock {
+>  	char *orig_ref_name;
+>  	struct lock_file *lk;
+>  	unsigned char old_sha1[20];
+> -	int lock_fd;
+>  	int force_write;
+>  };
+>  
+> @@ -2259,7 +2258,6 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
+>  	int attempts_remaining = 3;
+>  
+>  	lock = xcalloc(1, sizeof(struct ref_lock));
+> -	lock->lock_fd = -1;
+>  
+>  	if (mustexist)
+>  		resolve_flags |= RESOLVE_REF_READING;
+> @@ -2335,8 +2333,8 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
+>  		goto error_return;
+>  	}
+>  
+> -	lock->lock_fd = hold_lock_file_for_update(lock->lk, ref_file, lflags);
+> -	if (lock->lock_fd < 0) {
+> +	if (hold_lock_file_for_update(lock->lk, ref_file, lflags) < 0) {
+> +		last_errno = errno;
+>  		if (errno == ENOENT && --attempts_remaining > 0)
+>  			/*
+>  			 * Maybe somebody just deleted one of the
+> @@ -2904,7 +2902,6 @@ static int close_ref(struct ref_lock *lock)
+>  {
+>  	if (close_lock_file(lock->lk))
+>  		return -1;
+> -	lock->lock_fd = -1;
+>  	return 0;
+>  }
+>  
+> @@ -2912,7 +2909,6 @@ static int commit_ref(struct ref_lock *lock)
+>  {
+>  	if (commit_lock_file(lock->lk))
+>  		return -1;
+> -	lock->lock_fd = -1;
+>  	return 0;
+>  }
+>  
+> @@ -3090,8 +3086,8 @@ static int write_ref_sha1(struct ref_lock *lock,
+>  		errno = EINVAL;
+>  		return -1;
+>  	}
+> -	if (write_in_full(lock->lock_fd, sha1_to_hex(sha1), 40) != 40 ||
+> -	    write_in_full(lock->lock_fd, &term, 1) != 1 ||
+> +	if (write_in_full(lock->lk->fd, sha1_to_hex(sha1), 40) != 40 ||
+> +	    write_in_full(lock->lk->fd, &term, 1) != 1 ||
+>  	    close_ref(lock) < 0) {
+>  		int save_errno = errno;
+>  		error("Couldn't write %s", lock->lk->filename.buf);
+> @@ -4047,9 +4043,9 @@ int reflog_expire(const char *refname, const unsigned char *sha1,
+>  			status |= error("couldn't write %s: %s", log_file,
+>  					strerror(errno));
+>  		} else if ((flags & EXPIRE_REFLOGS_UPDATE_REF) &&
+> -			(write_in_full(lock->lock_fd,
+> +			(write_in_full(lock->lk->fd,
+>  				sha1_to_hex(cb.last_kept_sha1), 40) != 40 ||
+> -			 write_str_in_full(lock->lock_fd, "\n") != 1 ||
+> +			 write_str_in_full(lock->lk->fd, "\n") != 1 ||
+>  			 close_ref(lock) < 0)) {
+>  			status |= error("couldn't write %s",
+>  					lock->lk->filename.buf);
