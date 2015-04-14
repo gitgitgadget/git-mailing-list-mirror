@@ -1,187 +1,100 @@
-From: Paul Tan <pyokagan@gmail.com>
-Subject: [PATCH v2 1/7] path.c: implement xdg_config_home()
-Date: Wed, 15 Apr 2015 01:28:54 +0800
-Message-ID: <20150414172854.GA27623@yoshi.chippynet.com>
-References: <1428824772-8736-1-git-send-email-pyokagan@gmail.com>
- <e1bc6f19af608db796a2212dbf00ba45@www.dscho.org>
-Mime-Version: 1.0
+From: Max Horn <max@quendi.de>
+Subject: Re: How to combine git repos with similar code and keep all branches and tags?
+Date: Tue, 14 Apr 2015 19:14:36 +0200
+Message-ID: <13B30361-1BCD-4481-A33B-E5C65C8169F9@quendi.de>
+References: <BBAA9EAE77388248BCAB045DA762C5A83EFE242F@EXBE01-ENSIM.ms.ensim.com>
+Mime-Version: 1.0 (Mac OS X Mail 6.6 \(1510\))
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Stefan Beller <sbeller@google.com>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Apr 14 19:29:20 2015
+Content-Transfer-Encoding: 8BIT
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Jose de Leon <jdeleon@ensim.com>
+X-From: git-owner@vger.kernel.org Tue Apr 14 19:31:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yi4eD-0001nY-TB
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Apr 2015 19:29:18 +0200
+	id 1Yi4gT-0002z0-4C
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Apr 2015 19:31:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933116AbbDNR3N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Apr 2015 13:29:13 -0400
-Received: from mail-pd0-f170.google.com ([209.85.192.170]:33283 "EHLO
-	mail-pd0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932426AbbDNR3M (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Apr 2015 13:29:12 -0400
-Received: by pdbnk13 with SMTP id nk13so19560353pdb.0
-        for <git@vger.kernel.org>; Tue, 14 Apr 2015 10:29:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=+0myjndLO/NmmH3JmGV4Z68g1C86vKGt1/BwEu037uQ=;
-        b=ZX0Tf9rbEhHrdHZOjS8YoVDfypPwtTPCkOd/U5mrVFmTMQ/OpXUd9qWQWWMqAOCmsr
-         ohPFYp3mVcyRr4xVwODrBsUPlSKP/9WT8VSOT5CIwypEhDQOriqT1q99fWKtP3OE/Fkl
-         qG7Zg4fkig7NaPWLRwxPv1S+WlERJiweJGdX0NSLln7Q1XPOEXLcyHZV3ZTeYuxy0HJK
-         uHPJ1s+cFN8zN5asy+tkhzcP7hYtoub2t8+eBq0SX8r8QeMkd7qlTquI+9a38h2joD8W
-         CUUByfRQpmfmX8cINZGziJsD6r/4jGI9nOCsIbcHZMsambGkGvjbFFtrrZ8cOJRVrVol
-         A2CQ==
-X-Received: by 10.68.180.195 with SMTP id dq3mr38775152pbc.39.1429032552109;
-        Tue, 14 Apr 2015 10:29:12 -0700 (PDT)
-Received: from yoshi.chippynet.com ([116.86.172.217])
-        by mx.google.com with ESMTPSA id fl4sm1695293pab.8.2015.04.14.10.28.56
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 14 Apr 2015 10:29:11 -0700 (PDT)
-Received: from pyokagan by yoshi.chippynet.com with local (Exim 4.84)
-	(envelope-from <pyokagan@yoshi.chippynet.com>)
-	id 1Yi4dq-0008Ox-64; Wed, 15 Apr 2015 01:28:54 +0800
-Content-Disposition: inline
-In-Reply-To: <e1bc6f19af608db796a2212dbf00ba45@www.dscho.org>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S933143AbbDNRbc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Apr 2015 13:31:32 -0400
+Received: from merkurneu.hrz.uni-giessen.de ([134.176.2.3]:47248 "EHLO
+	merkurneu.hrz.uni-giessen.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S964779AbbDNR34 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Apr 2015 13:29:56 -0400
+X-Greylist: delayed 902 seconds by postgrey-1.27 at vger.kernel.org; Tue, 14 Apr 2015 13:29:56 EDT
+Received: from [134.176.4.18] by merkurneu.hrz.uni-giessen.de with ESMTP; Tue, 14 Apr 2015 19:14:41 +0200
+Received: from hermes.hrz.uni-giessen.de (hermes.hrz.uni-giessen.de [134.176.2.15])
+	by mailgw32.hrz.uni-giessen.de (Postfix) with ESMTP id A033DEDACA37;
+	Tue, 14 Apr 2015 19:14:35 +0200 (CEST)
+Received: from [134.176.2.15] by hermes.hrz.uni-giessen.de with ESMTP; Tue, 14 Apr 2015 19:14:35 +0200
+In-Reply-To: <BBAA9EAE77388248BCAB045DA762C5A83EFE242F@EXBE01-ENSIM.ms.ensim.com>
+X-Mailer: Apple Mail (2.1510)
+X-HRZ-JLUG-MailScanner-Information: Passed JLUG virus check
+X-HRZ-JLUG-MailScanner: No virus found
+X-Envelope-From: max@quendi.de
+X-Spam-Status: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267153>
 
-Hi,
+Hi Jose,
 
-On Mon, Apr 13, 2015 at 05:50:49PM +0200, Johannes Schindelin wrote:
-> maybe it would be a good idea to add a `0/7` mail that describes the
-> overall goal of this patch series, much like a Pull Request? I found
-> it very useful -- even for myself -- to set a description via `git
-> branch --edit-description` and to let `git format-patch` use that via
-> the `--cover-letter` option.
+On 14.04.2015, at 18:44, Jose de Leon <jdeleon@ensim.com> wrote:
 
-In this case I felt that the first patch's commit message was
-descriptive enough and a cover message would simply repeat it.
-
-> below just two minor nits because the rest of the patches looks fine to me:
+> Hi All,
 > 
-> On 2015-04-12 09:46, Paul Tan wrote:
-> > diff --git a/cache.h b/cache.h
-> > index 3d3244b..7f9bab0 100644
-> > --- a/cache.h
-> > +++ b/cache.h
-> > @@ -836,6 +836,13 @@ char *strip_path_suffix(const char *path, const
-> > char *suffix);
-> >  int daemon_avoid_alias(const char *path);
-> >  extern int is_ntfs_dotgit(const char *name);
-> >  
-> > +/**
-> > + * Returns the newly allocated string "$XDG_CONFIG_HOME/git/%s".  If
-> > + * $XDG_CONFIG_HOME is unset or empty, returns the newly allocated string
-> > + * "$HOME/.config/git/%s". Returns NULL if an error occurred.
-> > + */
-> > +extern char *xdg_config_home(const char *fn);
 > 
-> Should this not be inserted close to home_config_paths()?
+> I've got an interesting problem and the possible solutions I've found from searching google don't seem to work for us.  In a nutshell, I need to combine multiple git repositories into single repository and preserve all history, branches and tags from each repository.    
+> 
+> Does anybody have a solution for this, how do this kind of thing, is it even possible?
+> 
+> For some unknown reason to me, our developers started a git project, called Ver1, this was the first version.  Then sometime later, they created a new git repository called Ver2, the initial commit for Ver2 was essentially a copy of the code in Ver1 from the master.  They didn't clone it, they just copied the code at the latest point.  This wasn't done by forking.  Then they repeated this for Ver3 and Ver4, etc.  On top of all that, they have been adding new code to Ver1, Ver2, etc. that has caused each to divert from the other and each have their own branch and tag sets.  They have similar directory structure and similar file names, but there are some slight differences in structure.
+> 
+> Well, this has become unmanageable and now we want to combine them into one single git repository.   
+> 
+> Logically, these are the same project but at different versions, basically, Ver1 and Ver2, etc, should be simply branches at different times if these were combined into a single repository.
 
-A personal style thing, but I wanted to add the function's docstring to
-cache.h (where I personally think it belongs), but I didn't want to
-break up the huge block of path function declarations. Hence, it was
-added at the end.
+Here is one possible way to go about this using grafts (I used something
+similar in the past);
 
-> Also, the name "fn" sounds more like "function" than like "filename"
-> to me, especially keeping the name `config_fn_t` in mind. Maybe call
-> the parameter "filename" to avoid confusion?
+1) Get all the data into a single git repository.
 
-That's true, especially since there is still lots of horizontal space
-for this name.
+  Since everything is already in a git repositories, you could e.g. create a
+  clone of Ver1; then add remotes for Ver2 ... VerN, and fetch them all,
+  along with tags. If there are conflicts between branch or tag names, deal
+  with them at this point.
 
-Below is the fixed patch. I also decided to return NULL if `filename` is
-NULL because such an input usually indicated an uncaught error. The
-docstring has also been modified to be a little clearer.
+2) Create graft points to tie the history together.
 
-Thanks all for the reviews.
+   Identify the commit in Ver1 at which Ver2 branched off. Then, graft that
+   as parent for the initial commits of Ver2. See here for some basic
+   instructions <https://git.wiki.kernel.org/index.php/GraftPoint> or feel
+   free to ask for details (or Google, or... :)
 
----- >8 ----
-The XDG base dir spec[1] specifies that configuration files be stored in
-a subdirectory in $XDG_CONFIG_HOME. To construct such a configuration
-file path, home_config_paths() can be used. However, home_config_paths()
-combines distinct functionality:
+   Repeat vor Ver2+Ver3, Ver3+Ver4, etc.
 
-1. Retrieve the home git config file path ~/.gitconfig
+3) Finally, you can get rid of the graft points, and turn everything into a
+"proper" history, by running "git filter-branch". Something like
 
-2. Construct the XDG config path of the file specified by `file`.
+  git filter-branch -- --all
 
-This function was introduced in commit 21cf3227 ("read (but not write)
-from $XDG_CONFIG_HOME/git/config file").  While the intention of the
-function was to allow the home directory configuration file path and the
-xdg directory configuration file path to be retrieved with one function
-call, the hard-coding of the path ~/.gitconfig prevents it from being
-used for other configuration files. Furthermore, retrieving a file path
-relative to the user's home directory can be done with
-expand_user_path(). Hence, it can be seen that home_config_paths()
-introduces unnecessary complexity, especially if a user just wants to
-retrieve the xdg config file path.
+ought to do it, but I might be forgetting something (I am sure somebody will
+correct me soon in that case, though ;-). Best to have a look at
+<http://git-scm.com/docs/git-filter-branch> for yourself, though.
 
-As such, implement a simpler function xdg_config_home() for constructing
-the XDG base dir spec configuration file path. This function, together
-with expand_user_path(), can replace all uses of home_config_paths().
 
-[1] http://standards.freedesktop.org/basedir-spec/basedir-spec-0.7.html
+This all is under the assumption that you want to stay as close to how
+things really were (usually a good idea). But sometimes it may be desirable
+to make further adjustments. E.g. you may wish to adjust committer names,
+rearrange some stuff (though usually git is quite good at doing the right
+thing automatically, etc. How to do that of course depends on what exactly
+you want to do, but in many cases, filter-branch is your friend.
 
-Signed-off-by: Paul Tan <pyokagan@gmail.com>
----
- cache.h |  8 ++++++++
- path.c  | 16 ++++++++++++++++
- 2 files changed, 24 insertions(+)
+Hope that helps!
 
-diff --git a/cache.h b/cache.h
-index 3d3244b..2db10b8 100644
---- a/cache.h
-+++ b/cache.h
-@@ -836,6 +836,14 @@ char *strip_path_suffix(const char *path, const char *suffix);
- int daemon_avoid_alias(const char *path);
- extern int is_ntfs_dotgit(const char *name);
- 
-+/**
-+ * Returns the newly allocated string "$XDG_CONFIG_HOME/git/{filename}".  If
-+ * $XDG_CONFIG_HOME is unset or empty, returns the newly allocated string
-+ * "$HOME/.config/git/{filename}". Returns NULL if filename is NULL or an error
-+ * occurred.
-+ */
-+extern char *xdg_config_home(const char *filename);
-+
- /* object replacement */
- #define LOOKUP_REPLACE_OBJECT 1
- extern void *read_sha1_file_extended(const unsigned char *sha1, enum object_type *type, unsigned long *size, unsigned flag);
-diff --git a/path.c b/path.c
-index e608993..8ee7191 100644
---- a/path.c
-+++ b/path.c
-@@ -856,3 +856,19 @@ int is_ntfs_dotgit(const char *name)
- 			len = -1;
- 		}
- }
-+
-+char *xdg_config_home(const char *filename)
-+{
-+	const char *config_home = getenv("XDG_CONFIG_HOME");
-+
-+	if (!filename)
-+		return NULL;
-+	if (!config_home || !config_home[0]) {
-+		const char *home = getenv("HOME");
-+
-+		if (!home)
-+			return NULL;
-+		return mkpathdup("%s/.config/git/%s", home, filename);
-+	} else
-+		return mkpathdup("%s/git/%s", config_home, filename);
-+}
--- 
-2.1.4
+Max
