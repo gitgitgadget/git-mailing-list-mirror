@@ -1,102 +1,90 @@
-From: Jose de Leon <jdeleon@ensim.com>
-Subject: RE: How to combine git repos with similar code and keep all
- branches and tags?
-Date: Tue, 14 Apr 2015 17:31:38 +0000
-Message-ID: <BBAA9EAE77388248BCAB045DA762C5A83EFE251A@EXBE01-ENSIM.ms.ensim.com>
-References: <BBAA9EAE77388248BCAB045DA762C5A83EFE242F@EXBE01-ENSIM.ms.ensim.com>
- <13B30361-1BCD-4481-A33B-E5C65C8169F9@quendi.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/4] demonstrate add -p and stash -p failures.
+Date: Tue, 14 Apr 2015 11:00:28 -0700
+Message-ID: <xmqqbniq3803.fsf@gitster.dls.corp.google.com>
+References: <vpq7ftfkpue.fsf@anie.imag.fr>
+	<1429011168-23216-1-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Max Horn <max@quendi.de>
-X-From: git-owner@vger.kernel.org Tue Apr 14 19:31:50 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Thomas Rast <tr@thomasrast.ch>
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Tue Apr 14 20:00:45 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yi4gf-00035Y-By
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Apr 2015 19:31:49 +0200
+	id 1Yi58e-0001CS-N8
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Apr 2015 20:00:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933136AbbDNRbq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Apr 2015 13:31:46 -0400
-Received: from shoul9.shouldermarketclay.com ([72.20.112.5]:58914 "EHLO
-	EXBE01-ENSIM.ms.ensim.com" rhost-flags-OK-FAIL-OK-FAIL)
-	by vger.kernel.org with ESMTP id S964847AbbDNRbk convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Apr 2015 13:31:40 -0400
-Received: from EXBE01-ENSIM.ms.ensim.com ([fe80::ddf0:e9:a641:4631]) by
- EXBE01-ENSIM.ms.ensim.com ([fe80::ddf0:e9:a641:4631%13]) with mapi id
- 14.02.0247.003; Tue, 14 Apr 2015 10:31:39 -0700
-Thread-Topic: How to combine git repos with similar code and keep all
- branches and tags?
-Thread-Index: AdB2ztI6QJ0o6s2KSh2JuBsCGX2q2QAQlWYAAA4aGJA=
-In-Reply-To: <13B30361-1BCD-4481-A33B-E5C65C8169F9@quendi.de>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.58.106.21]
+	id S1753530AbbDNSAg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Apr 2015 14:00:36 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:53599 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752480AbbDNSAc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Apr 2015 14:00:32 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 51ADE49478;
+	Tue, 14 Apr 2015 14:00:31 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=A5NDzbAAM5GUeGZvHyl4E1EXohM=; b=jyHZ2q
+	ThDB74hLE0SCaU0FcunI8PBnFfarulwTmIuqo+b9cuhi5fWGIQ/RctcDolfgdBLk
+	CQFzNdzGzCUurzpZOfuBDxj9iWMXjhh1iM3OVJRcG+8Wgi4Yvvo8xX/ZdOqvVvf2
+	OY46FAtK+mS+aeTTy17+p/3GY7tjm2ULpRKBU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=bPwW5e+jYzMlrBidn/yHO1FA6NtgahAH
+	OX3SuDoy9y/ebwI0sDKCERkFUeoy9A1QqW0C+cT5vdNTwpjnkeVPYWXfh8sD7A7y
+	r8ifofShGd5x4ucGBNgZEGnjcTBVHmpY5Q0k8RBy5NjDaUWmgqyfNXH0ItH4NzgS
+	NUe+eGzxiYU=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4978E49477;
+	Tue, 14 Apr 2015 14:00:31 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CE03F49473;
+	Tue, 14 Apr 2015 14:00:29 -0400 (EDT)
+In-Reply-To: <1429011168-23216-1-git-send-email-Matthieu.Moy@imag.fr>
+	(Matthieu Moy's message of "Tue, 14 Apr 2015 13:32:44 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 2323E67A-E2D0-11E4-8A22-11859F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267154>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267155>
 
-Thank you!
+Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 
------Original Message-----
-From: Max Horn [mailto:max@quendi.de] 
-Sent: Tuesday, April 14, 2015 10:15 AM
-To: Jose de Leon
-Cc: git@vger.kernel.org
-Subject: Re: How to combine git repos with similar code and keep all branches and tags?
+> Playing a bit with add -p and stash -p, I can confirm the bug reported
+> by Tanky. This series just adds failing tests, but I couldn't debug it.
+>
+> I've exhausted my Git time budget for now, so if someone wants to take
+> over and fix the bugs, feel free to do it!
 
-Hi Jose,
-
-On 14.04.2015, at 18:44, Jose de Leon <jdeleon@ensim.com> wrote:
-
-> Hi All,
-> 
-> 
-> I've got an interesting problem and the possible solutions I've found from searching google don't seem to work for us.  In a nutshell, I need to combine multiple git repositories into single repository and preserve all history, branches and tags from each repository.    
-> 
-> Does anybody have a solution for this, how do this kind of thing, is it even possible?
-> 
-> For some unknown reason to me, our developers started a git project, called Ver1, this was the first version.  Then sometime later, they created a new git repository called Ver2, the initial commit for Ver2 was essentially a copy of the code in Ver1 from the master.  They didn't clone it, they just copied the code at the latest point.  This wasn't done by forking.  Then they repeated this for Ver3 and Ver4, etc.  On top of all that, they have been adding new code to Ver1, Ver2, etc. that has caused each to divert from the other and each have their own branch and tag sets.  They have similar directory structure and similar file names, but there are some slight differences in structure.
-> 
-> Well, this has become unmanageable and now we want to combine them into one single git repository.   
-> 
-> Logically, these are the same project but at different versions, basically, Ver1 and Ver2, etc, should be simply branches at different times if these were combined into a single repository.
-
-Here is one possible way to go about this using grafts (I used something similar in the past);
-
-1) Get all the data into a single git repository.
-
-  Since everything is already in a git repositories, you could e.g. create a
-  clone of Ver1; then add remotes for Ver2 ... VerN, and fetch them all,
-  along with tags. If there are conflicts between branch or tag names, deal
-  with them at this point.
-
-2) Create graft points to tie the history together.
-
-   Identify the commit in Ver1 at which Ver2 branched off. Then, graft that
-   as parent for the initial commits of Ver2. See here for some basic
-   instructions <http://cp.mcafee.com/d/1jWVIq6hEi6jqb2pEVKOyUqenztPqqdNPaabzz1Jd6UVB54sepdFET7cEEKefCQQrzCkknxPVIhgY_WM1nMF9nBPvMF9nBPqa91x1dZ_HYCCMOeWZOWr8W_c3AnXYJteOaqJT6ul3PWApmU6CQjqpK_nd7bwUsMyqemnPtPpesRG9px6k-ciaOUHYouvM070bU8U4EWXcblB2pJngY52PvMgBO7CS1Ob1I5-Aq80LkMq89Rd42V2kfd416kPh17RGQd41ykOpEwF9mh-Nd45GEuq8dwwq82L-Iq8dffd412eMIj-xEwS21EwDF6x8SeudOB_GPPAJ5zzZ> or feel
-   free to ask for details (or Google, or... :)
-
-   Repeat vor Ver2+Ver3, Ver3+Ver4, etc.
-
-3) Finally, you can get rid of the graft points, and turn everything into a "proper" history, by running "git filter-branch". Something like
-
-  git filter-branch -- --all
-
-ought to do it, but I might be forgetting something (I am sure somebody will correct me soon in that case, though ;-). Best to have a look at <http://cp.mcafee.com/d/2DRPowcCQm4PhPtB5MQsL6XCQQrzCkkn763qqdNPaa8UsOrjhKephhssvdFET7cEEL3DPoyxV_Rw2LxiiLbC_xiiLbCQki322rX_nVddxAtRXBQShR-o78LTVqWtAkRrKcYG7DR8OJMddFCQPt-Kqen1MVx4QsILCXCM0p6kOZbaYLy5rkMzaptShY_yn8hS5ypJngY52PvMgBO7CS1Ob1I5-Aq80LkMq89Rd42V2kfd416kPh17RGQd41ykOpEwF9mh-Nd45GEuq8dwwq82L-Iq8dffd412eMIj-xEwS21EwDF6x8SeudXyyH> for yourself, though.
+I do not have time to dig this either for now, but I suspect this
+"split a hunk into two overlapping hunks" issue may be related to
+the caveat in the very original:
 
 
-This all is under the assumption that you want to stay as close to how things really were (usually a good idea). But sometimes it may be desirable to make further adjustments. E.g. you may wish to adjust committer names, rearrange some stuff (though usually git is quite good at doing the right thing automatically, etc. How to do that of course depends on what exactly you want to do, but in many cases, filter-branch is your friend.
+http://thread.gmane.org/gmane.comp.version-control.git/76650/focus=87197
 
-Hope that helps!
 
-Max
+where I seem to have said that the proposed change would make "add
+-p" less robust than the original code (even without 'e'dit):
+
+    Junio C Hamano wrote:
+    > 
+    > I recall that the original "add--interactive" carefully counted
+    > numbers in hunks it reassembles (as it can let you split and then
+    > you can choose to use both parts, which requires it to merge
+    > overlapping hunks back), but if you are going to use --recount
+    > anyway, perhaps we can discard that logic?  It may make the patch
+    > application less robust, though.  I dunno.
+
+
+It seems that we accepted that series saying "let's see what
+happens" at the end, and I suspect we are seeing its consequences
+;-).
