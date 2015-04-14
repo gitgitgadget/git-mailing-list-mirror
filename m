@@ -1,101 +1,55 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: About the "git merge" tee-shirt
-Date: Tue, 14 Apr 2015 18:27:19 +0200
-Message-ID: <vpqd236d6ag.fsf@anie.imag.fr>
-References: <vpqr3rnoiq8.fsf@anie.imag.fr> <20150414010505.GE3684@peff.net>
+From: Jose de Leon <jdeleon@ensim.com>
+Subject: How to combine git repos with similar code and keep all branches
+ and tags?
+Date: Tue, 14 Apr 2015 16:44:13 +0000
+Message-ID: <BBAA9EAE77388248BCAB045DA762C5A83EFE242F@EXBE01-ENSIM.ms.ensim.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Apr 14 18:27:55 2015
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Apr 14 18:49:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yi3go-0002vH-V9
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Apr 2015 18:27:55 +0200
+	id 1Yi423-0005dY-Pd
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Apr 2015 18:49:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755974AbbDNQ1t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Apr 2015 12:27:49 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:42890 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755594AbbDNQ13 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Apr 2015 12:27:29 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t3EGRHb5020967
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 14 Apr 2015 18:27:18 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t3EGRJpN020172;
-	Tue, 14 Apr 2015 18:27:19 +0200
-In-Reply-To: <20150414010505.GE3684@peff.net> (Jeff King's message of "Mon, 13
-	Apr 2015 21:05:05 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 14 Apr 2015 18:27:18 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t3EGRHb5020967
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1429633641.39416@60Mzx6azr0O15vvTRbjfeQ
+	id S932976AbbDNQtq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Apr 2015 12:49:46 -0400
+Received: from shoul9.shouldermarketclay.com ([72.20.112.5]:10394 "EHLO
+	EXBE01-ENSIM.ms.ensim.com" rhost-flags-OK-FAIL-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1753945AbbDNQto convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Apr 2015 12:49:44 -0400
+X-Greylist: delayed 329 seconds by postgrey-1.27 at vger.kernel.org; Tue, 14 Apr 2015 12:49:43 EDT
+Received: from EXBE01-ENSIM.ms.ensim.com ([fe80::ddf0:e9:a641:4631]) by
+ EXBE01-ENSIM.ms.ensim.com ([fe80::ddf0:e9:a641:4631%13]) with mapi id
+ 14.02.0247.003; Tue, 14 Apr 2015 09:44:13 -0700
+Thread-Topic: How to combine git repos with similar code and keep all
+ branches and tags?
+Thread-Index: AdB2ztI6QJ0o6s2KSh2JuBsCGX2q2Q==
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.58.106.21]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267146>
 
-Jeff King <peff@peff.net> writes:
+Hi All,
 
-> On Mon, Apr 13, 2015 at 10:50:55PM +0200, Matthieu Moy wrote:
->
->> My second guess is that they represent directories.
->> But even then, I can't find which of the tee-shirt's circles represents
->> which directory, and the count doesn't match.
->> 
->> Does anybody have a better explanation? Or is it just a random drawing
->> to say "Git is bigger than it used to be"?
->
-> I believe it is "gource"[1] output from 2005 and 2015, tweaked by a
-> graphic designer to make it look nicer.
 
-That would match my second guess. I guess the tweaks are what make it
-hard to do the actual correspondance (there are 53 circles on the
-drawing if I counted correctly, and 156 directory in today's Git for
-example). The biggest dirs in number of files today are:
+I've got an interesting problem and the possible solutions I've found from searching google don't seem to work for us.  In a nutshell, I need to combine multiple git repositories into single repository and preserve all history, branches and tags from each repository.    
 
-./builtin 99
-./t/t5515 128
-./t/t4013 144
-./Documentation 221
-./Documentation/RelNotes 242
-. 378
-./t 774
+Does anybody have a solution for this, how do this kind of thing, is it even possible?
 
-The directories at 4e7a2eccc21c902918 (Thu Dec 29 01:31:26 2005 -0800)
-were:
+For some unknown reason to me, our developers started a git project, called Ver1, this was the first version.  Then sometime later, they created a new git repository called Ver2, the initial commit for Ver2 was essentially a copy of the code in Ver1 from the master.  They didn't clone it, they just copied the code at the latest point.  This wasn't done by forking.  Then they repeated this for Ver3 and Ver4, etc.  On top of all that, they have been adding new code to Ver1, Ver2, etc. that has caused each to divert from the other and each have their own branch and tag sets.  They have similar directory structure and similar file names, but there are some slight differences in structure.
 
-./Documentation/technical 2
-./mozilla-sha1 2
-./arm 3
-./ppc 3
-./compat 4
-./Documentation/howto 8
-./templates 12
-./debian 14
-./t/t4100 14
-./t 62
-./Documentation 126
-. 191
+Well, this has become unmanageable and now we want to combine them into one single git repository.   
 
-So, t/ would be a nice candidate for the big circle on the left hand
-side (small in 2005, but biggest as of now), and ./ would be the one on
-its right (used to be biggest, but no longer). Documentation/ is the one
-at the top (with subdirs howto/ and technical/ in 2005, and the new
-RelNotes/ today). I'm not sure where builtin/ is, it was probably
-tweaked too much (it's supposed to be rather big in 2015 and inexistant
-in 2005, without subdirs).
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Logically, these are the same project but at different versions, basically, Ver1 and Ver2, etc, should be simply branches at different times if these were combined into a single repository.
