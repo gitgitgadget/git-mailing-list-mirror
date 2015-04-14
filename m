@@ -1,85 +1,158 @@
-From: Trevor Saunders <tbsaunde@tbsaunde.org>
-Subject: Re: Requesting `git stash --cached` or something similar
-Date: Mon, 13 Apr 2015 21:44:35 -0400
-Message-ID: <20150414014435.GC8601@tsaunders-iceball.corp.tor1.mozilla.com>
-References: <37E34942-ACEB-48BC-ABFF-C7248DA6607E@mac.com>
+From: Tanky Woo <wtq1990@gmail.com>
+Subject: Git add -p =?utf-8?b?4oCcWW91cg==?= edited hunk does not apply. Edit =?utf-8?b?YWdhaW7igJ0=?=
+Date: Tue, 14 Apr 2015 01:56:12 +0000 (UTC)
+Message-ID: <loom.20150414T035141-286@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Quinn Taylor <quinntaylor@mac.com>
-X-From: git-owner@vger.kernel.org Tue Apr 14 03:44:46 2015
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 14 04:00:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yhpu9-0002CR-1V
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Apr 2015 03:44:45 +0200
+	id 1Yhq95-00086m-4o
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Apr 2015 04:00:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752567AbbDNBol convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Apr 2015 21:44:41 -0400
-Received: from tbsaunde.org ([66.228.47.254]:58670 "EHLO
-	paperclip.tbsaunde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751937AbbDNBoj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Apr 2015 21:44:39 -0400
-Received: from tsaunders-iceball.corp.tor1.mozilla.com (unknown [66.207.208.102])
-	by paperclip.tbsaunde.org (Postfix) with ESMTPSA id E0FE2C07C;
-	Tue, 14 Apr 2015 01:44:38 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <37E34942-ACEB-48BC-ABFF-C7248DA6607E@mac.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1752798AbbDNCAH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Apr 2015 22:00:07 -0400
+Received: from plane.gmane.org ([80.91.229.3]:42215 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751951AbbDNCAF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Apr 2015 22:00:05 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Yhq8x-000853-70
+	for git@vger.kernel.org; Tue, 14 Apr 2015 04:00:03 +0200
+Received: from li226-230.members.linode.com ([173.255.216.230])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 14 Apr 2015 04:00:03 +0200
+Received: from wtq1990 by li226-230.members.linode.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 14 Apr 2015 04:00:03 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 173.255.216.230 (Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.118 Safari/537.36)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267108>
 
-On Mon, Apr 13, 2015 at 02:24:04PM -0700, Quinn Taylor wrote:
-> I'm still fairly new to git (coming from svn) and have found `git sta=
-sh` to be really useful for storing in-progress work to resume later, a=
-s one might otherwise do with diff/patch files. (With the git tools I u=
-se, I find `git stash pop` to be more convenient and reliable than crea=
-ting and applying diffs, partially because the changes remained tied to=
- my repository and easily accessible.)
->=20
-> Since `git stash` defaults to stashing ALL local modifications, I'd l=
-ike to request there be an easy way to stash *only* the changes I've al=
-ready staged in the index. (The reason I suggested --cached is due to t=
-he similarity with `git diff --cached`, but I don't doubt there would b=
-e a better name for this option.)
+I asked this question in stackoverflow a few days ago, but get no answer.
 
-Ok, so this git stash --cached will save the state of the index in the
-stash, and reset the index to the state in HEAD.  What happens to the
-working tree?
+link: http://stackoverflow.com/questions/29518944/git-add-p-your-edited-hunk-does-not-apply-
+edit-again
 
-> I tried staging everything *except* what I want to stash and using `g=
-it stash save --keep-index <message>`, but it isn't intended to support=
- this case, and doesn't work when I have new untracked files. Instead, =
-it stashes *all* local (tracked) changes =E2=80=94 both staged and unst=
-aged =E2=80=94 but leaves the staged changes intact in the index.
+---
 
-What do you want this new command to do with untracked files?
+An example, the original file:
 
-I would expect the answers to be it sets the working directories state
-to the state in HEAD, and leaves untracked files alone.  If that's what
-you want you can do git commit -m <message>; git reset --hard; git rese=
-t
---soft; git stash save to get the effect you want I believe.  That said
-it seems like a kind of odd thing to want to do, what are you actually
-trying to do?
+test:
+       make clean
+       nosetests
 
-Trev
+clean:
+       rm -rf htmlcov
+       rm -rf build dist
+       coverage erase
+The file after changed:
 
->=20
-> I understand that git's branching model is powerful and flexible, and=
- that an experienced git user would generally create a private branch a=
-nd commit to that, then merge the changes to mainline sometime later. H=
-owever, for those like me for whom having many branches is generally mo=
-re confusing than helpful, it would be fantastic to have more flexibili=
-ty with `git stash`.
->=20
-> Thanks in advance for considering my request.
->=20
-> Regards,
->  - Quinn
+HTMLCOV="htmlcov/"
+
+test:
+       make clean
+       nosetests
+
+clean:
+       coverage erase
+       rm -rf htmlcov
+       rm -rf build dist
+
+covhtml:
+       make clean
+       nosetests
+       coverage html
+       cd ${HTMLCOV} && python -m SimpleHTTPServer
+This is the diff:
+
+diff --git a/mf b/mf
+index b9ca06e..6316e17 100644
+--- a/mf
++++ b/mf
+@@ -1,8 +1,16 @@
++HTMLCOV="htmlcov/"            # Hunk 1
++
+ test:
+        make clean
+        nosetests
+
+ clean:
++       coverage erase         # Hunk 2
+        rm -rf htmlcov
+        rm -rf build dist
+-       coverage erase         # Hunk 3
++
++covhtml:
++       make clean
++       nosetests
++       coverage html
++       cd ${HTMLCOV} && python -m SimpleHTTPServer
+I use git add -p, want only to add:
+
++       coverage erase
+        rm -rf htmlcov
+        rm -rf build dist
+-       coverage erase
+So I first use s to split hunks, and n to ignore first add,
+then use y to add second hunk, the third hunk 
+is:
+
+-       coverage erase
++
++covhtml:
++       make clean
++       nosetests
++       coverage html
++       cd ${HTMLCOV} && python -m SimpleHTTPServer
+So I use e to manually edit the hunk, I delete all the + lines, it seems:
+
+# Manual hunk edit mode -- see bottom for a quick guide
+@@ -6,3 +9,8 @@
+        rm -rf htmlcov
+        rm -rf build dist
+-       coverage erase
+# ---
+# To remove '-' lines, make them ' ' lines (context).
+# To remove '+' lines, delete them.
+# Lines starting with # will be removed.
+#
+# ....
+But when I saved, it says:
+
+@@ -6,3 +9,8 @@
+        rm -rf htmlcov
+        rm -rf build dist
+-       coverage erase
++
++covhtml:
++       make clean
++       nosetests
++       coverage html
++       cd ${HTMLCOV} && python -m SimpleHTTPServer
+Stage this hunk [y,n,q,a,d,/,K,g,e,?]? e
+error: patch failed: mf:1
+error: mf: patch does not apply
+Your edited hunk does not apply. Edit again (saying "no" discards!) [y/n]?
+And then I change to @@ from-file-range to-file-range @@ part to:
+
+@@ -6,3 +9,2 @@
+There is still the same problem.
+
+If I first add only the second Hunk, 
+and then I run git add -p xxx again, and edit the hunk, 
+there is no problem. Why?
