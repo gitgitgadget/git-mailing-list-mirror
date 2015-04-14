@@ -1,158 +1,92 @@
-From: Tanky Woo <wtq1990@gmail.com>
-Subject: Git add -p =?utf-8?b?4oCcWW91cg==?= edited hunk does not apply. Edit =?utf-8?b?YWdhaW7igJ0=?=
-Date: Tue, 14 Apr 2015 01:56:12 +0000 (UTC)
-Message-ID: <loom.20150414T035141-286@post.gmane.org>
+From: Brandon McCaig <bamccaig@gmail.com>
+Subject: Re: Requesting `git stash --cached` or something similar
+Date: Mon, 13 Apr 2015 22:05:02 -0400
+Message-ID: <CANUGeEbRyG4A2UdTYOBgtjDtqi_A1WnbkOBjH_h2AcEZT741jQ@mail.gmail.com>
+References: <37E34942-ACEB-48BC-ABFF-C7248DA6607E@mac.com> <20150414014435.GC8601@tsaunders-iceball.corp.tor1.mozilla.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 14 04:00:12 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Quinn Taylor <quinntaylor@mac.com>, git@vger.kernel.org
+To: Trevor Saunders <tbsaunde@tbsaunde.org>
+X-From: git-owner@vger.kernel.org Tue Apr 14 04:05:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yhq95-00086m-4o
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Apr 2015 04:00:11 +0200
+	id 1YhqEC-0001bK-Ni
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Apr 2015 04:05:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752798AbbDNCAH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Apr 2015 22:00:07 -0400
-Received: from plane.gmane.org ([80.91.229.3]:42215 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751951AbbDNCAF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Apr 2015 22:00:05 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1Yhq8x-000853-70
-	for git@vger.kernel.org; Tue, 14 Apr 2015 04:00:03 +0200
-Received: from li226-230.members.linode.com ([173.255.216.230])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 14 Apr 2015 04:00:03 +0200
-Received: from wtq1990 by li226-230.members.linode.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 14 Apr 2015 04:00:03 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 173.255.216.230 (Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.118 Safari/537.36)
+	id S1752812AbbDNCFY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Apr 2015 22:05:24 -0400
+Received: from mail-vn0-f53.google.com ([209.85.216.53]:39021 "EHLO
+	mail-vn0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750935AbbDNCFY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Apr 2015 22:05:24 -0400
+Received: by vnbg62 with SMTP id g62so26197565vnb.6
+        for <git@vger.kernel.org>; Mon, 13 Apr 2015 19:05:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=r/5HRwCQl4dh4ziOr9aWjzPOdvCYq3ygpB5eR5zkghk=;
+        b=Azp29dI48O3qdNmhbmXcVB+QpCiGZt/t6famuu80EjsiqBmY7esFiDoqDN0GrLwfMh
+         l55a1B2fIvOd1r1fbIXSKQyj5p7OWLSshBgDB90NjCBJQwzbx68ODvAgtoGmd1U21j3f
+         whQJe4L+JTrbmoXKD22On66VqLOdrPwW+ON1AZ3IfQ0Cqc23372QxnTLwA9NYGH3BYrU
+         49HZKrJGKep8Q8RCq86gnvO0nNQrK+xLaX3PmBaBRh2VG6hsfdySwMa7SU/ro/E+oa6d
+         SRHK8yo55hmBjGxOt+cMTsOrW5LxgNHt7EvfrJQmfREJUyM6Gfytz5EzeIpdDCVBbqlf
+         VfPg==
+X-Received: by 10.202.175.213 with SMTP id y204mr9640711oie.22.1428977123291;
+ Mon, 13 Apr 2015 19:05:23 -0700 (PDT)
+Received: by 10.202.220.4 with HTTP; Mon, 13 Apr 2015 19:05:02 -0700 (PDT)
+In-Reply-To: <20150414014435.GC8601@tsaunders-iceball.corp.tor1.mozilla.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267108>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267109>
 
-I asked this question in stackoverflow a few days ago, but get no answer.
+Trevor:
 
-link: http://stackoverflow.com/questions/29518944/git-add-p-your-edited-hunk-does-not-apply-
-edit-again
+On Mon, Apr 13, 2015 at 9:44 PM, Trevor Saunders <tbsaunde@tbsaunde.org> wrote:
+> I would expect the answers to be it sets the working directories state
+> to the state in HEAD, and leaves untracked files alone.  If that's what
+> you want you can do git commit -m <message>; git reset --hard; git reset
+> --soft; git stash save to get the effect you want I believe. That said
+> it seems like a kind of odd thing to want to do, what are you actually
+> trying to do?
 
----
+That looks like a bad solution. git reset --hard is going to throw
+away any remaining changes to the working tree. The previous commit
+would have committed the staged changes, albeit, you should connect
+the commands with && instead of ; to account for errors. After a `git
+reset --hard' there's no point in doing a `git reset --soft' because
+hard does *everything*. --soft would try to reset the HEAD without
+touching the index or working tree, but both have already been reset
+with --hard.
 
-An example, the original file:
+The motivation is most likely stashing a few changes away so that you
+can commit others that are ready to be committed while keeping others
+around to continue working on them. This too is a good observation. It
+could mean that the OP is inexperienced with a commit-often workflow.
+You can use git -add -i or -p to commit the good stuff and keep the
+bad stuff out to work on it more. The great thing about Git is that
+the history is very malleable. You can also commit the bad and fix it
+after, rebase the history to clean it up, and end up with perfect
+history while still keeping your changes safely in history.
 
-test:
-       make clean
-       nosetests
+The OP should experiment with workflows because Git is already very
+good at this. Stash isn't really needed. That said, I had forgotten
+that --patch was added to stash some time ago so if that is what you
+want then it already exists. It's not quite as easy as --cached, but
+it still gives you some control. It's still not nearly as good as
+using the full power of Git with a regular commit on a branch though.
 
-clean:
-       rm -rf htmlcov
-       rm -rf build dist
-       coverage erase
-The file after changed:
+Regards,
 
-HTMLCOV="htmlcov/"
-
-test:
-       make clean
-       nosetests
-
-clean:
-       coverage erase
-       rm -rf htmlcov
-       rm -rf build dist
-
-covhtml:
-       make clean
-       nosetests
-       coverage html
-       cd ${HTMLCOV} && python -m SimpleHTTPServer
-This is the diff:
-
-diff --git a/mf b/mf
-index b9ca06e..6316e17 100644
---- a/mf
-+++ b/mf
-@@ -1,8 +1,16 @@
-+HTMLCOV="htmlcov/"            # Hunk 1
-+
- test:
-        make clean
-        nosetests
-
- clean:
-+       coverage erase         # Hunk 2
-        rm -rf htmlcov
-        rm -rf build dist
--       coverage erase         # Hunk 3
-+
-+covhtml:
-+       make clean
-+       nosetests
-+       coverage html
-+       cd ${HTMLCOV} && python -m SimpleHTTPServer
-I use git add -p, want only to add:
-
-+       coverage erase
-        rm -rf htmlcov
-        rm -rf build dist
--       coverage erase
-So I first use s to split hunks, and n to ignore first add,
-then use y to add second hunk, the third hunk 
-is:
-
--       coverage erase
-+
-+covhtml:
-+       make clean
-+       nosetests
-+       coverage html
-+       cd ${HTMLCOV} && python -m SimpleHTTPServer
-So I use e to manually edit the hunk, I delete all the + lines, it seems:
-
-# Manual hunk edit mode -- see bottom for a quick guide
-@@ -6,3 +9,8 @@
-        rm -rf htmlcov
-        rm -rf build dist
--       coverage erase
-# ---
-# To remove '-' lines, make them ' ' lines (context).
-# To remove '+' lines, delete them.
-# Lines starting with # will be removed.
-#
-# ....
-But when I saved, it says:
-
-@@ -6,3 +9,8 @@
-        rm -rf htmlcov
-        rm -rf build dist
--       coverage erase
-+
-+covhtml:
-+       make clean
-+       nosetests
-+       coverage html
-+       cd ${HTMLCOV} && python -m SimpleHTTPServer
-Stage this hunk [y,n,q,a,d,/,K,g,e,?]? e
-error: patch failed: mf:1
-error: mf: patch does not apply
-Your edited hunk does not apply. Edit again (saying "no" discards!) [y/n]?
-And then I change to @@ from-file-range to-file-range @@ part to:
-
-@@ -6,3 +9,2 @@
-There is still the same problem.
-
-If I first add only the second Hunk, 
-and then I run git add -p xxx again, and edit the hunk, 
-there is no problem. Why?
+-- 
+Brandon McCaig <bamccaig@gmail.com> <bamccaig@castopulence.org>
+Castopulence Software <https://www.castopulence.org/>
+Blog <http://www.bambams.ca/>
+perl -E '$_=q{V zrna gur orfg jvgu jung V fnl. }.
+q{Vg qbrfa'\''g nyjnlf fbhaq gung jnl.};
+tr/A-Ma-mN-Zn-z/N-Zn-zA-Ma-m/;say'
