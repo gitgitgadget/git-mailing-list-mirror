@@ -1,116 +1,99 @@
-From: Trevor Saunders <tbsaunde@tbsaunde.org>
-Subject: Re: Requesting `git stash --cached` or something similar
-Date: Mon, 13 Apr 2015 23:39:42 -0400
-Message-ID: <20150414033942.GD8601@tsaunders-iceball.corp.tor1.mozilla.com>
-References: <37E34942-ACEB-48BC-ABFF-C7248DA6607E@mac.com>
- <20150414014435.GC8601@tsaunders-iceball.corp.tor1.mozilla.com>
- <CANUGeEbRyG4A2UdTYOBgtjDtqi_A1WnbkOBjH_h2AcEZT741jQ@mail.gmail.com>
+From: "Chris O'Kelly" <chris@mapcreative.com.au>
+Subject: Feature Request: provide cmdline args to git hooks
+Date: Tue, 14 Apr 2015 13:42:45 +1000
+Message-ID: <CAM-hpQcgOgrAJBAZrH4icDtJMiHUYOz1tynYkoj7qzyVMZ0eVQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Quinn Taylor <quinntaylor@mac.com>, git@vger.kernel.org
-To: Brandon McCaig <bamccaig@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 14 05:42:43 2015
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 14 05:42:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YhrkI-0002r7-FG
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Apr 2015 05:42:42 +0200
+	id 1YhrkY-0002r7-Le
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Apr 2015 05:42:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751694AbbDNDjs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Apr 2015 23:39:48 -0400
-Received: from tbsaunde.org ([66.228.47.254]:58685 "EHLO
-	paperclip.tbsaunde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751185AbbDNDjq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Apr 2015 23:39:46 -0400
-Received: from tsaunders-iceball.corp.tor1.mozilla.com (unknown [66.207.208.102])
-	by paperclip.tbsaunde.org (Postfix) with ESMTPSA id 202E4C07C;
-	Tue, 14 Apr 2015 03:39:46 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <CANUGeEbRyG4A2UdTYOBgtjDtqi_A1WnbkOBjH_h2AcEZT741jQ@mail.gmail.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1752146AbbDNDm4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Apr 2015 23:42:56 -0400
+Received: from mail-ig0-f180.google.com ([209.85.213.180]:34231 "EHLO
+	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752094AbbDNDmr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Apr 2015 23:42:47 -0400
+Received: by iget9 with SMTP id t9so68178253ige.1
+        for <git@vger.kernel.org>; Mon, 13 Apr 2015 20:42:46 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=JdU51fBMdu9h2IdO+FsWO054FvnaKDFEVIHOqwbvM2M=;
+        b=JGtz8oD7yC4N3mMSUDJ5iNzNSSQiMPjmrARN/S15TDb3i/GMy+zK/zBUX8BnUPe52p
+         xPuYzq7Nx024VesZcSIt7pYYo9E3hHsD9ncIk6wkn8wHKepSqZAXnUaboQhi7zDgIbGe
+         cgrZdx8Y5fakUn3lEkSUc5JjHmgTO0RoQsHnEfNlkF3MQmHEmuJy1+FAPkZfUkA6jAlD
+         xWErE4m610KhH5a3S6bjLW1a3egiB7Dm8QQ8JkojBHwTOcS8kpJPnzF9jFakdXry96nA
+         lGX8Bo4qX1xRzBjtn1nHb/Y60Nu8TnSqFQ3reT+X2mOXWmCvt0CxFt7aX/ytqfKmj/wG
+         lEZw==
+X-Gm-Message-State: ALoCoQkL6IutcnbSY0Y84u3cSgjx1ymqXycPE167WGj63tEi4VwBekvmZL0gEEO+0ZixBnsgqTx4
+X-Received: by 10.42.226.4 with SMTP id iu4mr22503412icb.51.1428982966017;
+ Mon, 13 Apr 2015 20:42:46 -0700 (PDT)
+Received: by 10.64.76.84 with HTTP; Mon, 13 Apr 2015 20:42:45 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267111>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267112>
 
-On Mon, Apr 13, 2015 at 10:05:02PM -0400, Brandon McCaig wrote:
-> Trevor:
-> 
-> On Mon, Apr 13, 2015 at 9:44 PM, Trevor Saunders <tbsaunde@tbsaunde.org> wrote:
-> > I would expect the answers to be it sets the working directories state
-> > to the state in HEAD, and leaves untracked files alone.  If that's what
-> > you want you can do git commit -m <message>; git reset --hard; git reset
-> > --soft; git stash save to get the effect you want I believe. That said
-> > it seems like a kind of odd thing to want to do, what are you actually
-> > trying to do?
-> 
-> That looks like a bad solution. git reset --hard is going to throw
-> away any remaining changes to the working tree. The previous commit
+Hello,
+Just a brief note about a feature I would find incredibly useful, were
+it available.
 
- git reset --hard is there to do *exactly* that, which I'm assuming is
- the desired thing for a hypothetical git stash save --cached to do
- because its consistant with what git stash save does.
+A brief background of my use case:
+I am wanting to write a pre-push hook to prevent tags being pushed to
+our production servers. The production servers in our case are --bare
+endpoints, and when we push a tag at them, they always checkout the
+commit that tag is attached to via some post-receive magic (WPEngine,
+FWIW). This behavior is even present when the tag was already pushed
+to the repo previously, if for instance a normal push is made with the
+--tags argument. In the past we have had problems when a developer is
+using a GUI like SourceTree and accidentally leaves the 'push all
+tags' option checked, pushing 100s of tags to the server, which then
+dutifully begins checking out each in turn.
 
-> would have committed the staged changes, albeit, you should connect
-> the commands with && instead of ; to account for errors. After a `git
+Currently I check for tag refs being pushed with:
+#...SNIP...
+while read local_ref local_sha remote_ref remote_sha
+do
+local_type=$(echo "$local_ref" | awk -F/ '{print $2}')
+remote_type=$(echo "$remote_ref" | awk -F/ '{print $2}')
+if [[ "$no_tags" -eq 1 && ($local_type = "tags" || $remote_type = "tags")]]
+then
+echo "Detected attempt to push tags to a no_tags repo! Exiting without push..."
+exit 1
+fi
+#...SNIP...
 
-it should be clear this is not actual code to run exactly as written.
+which works fine the first time tags are pushed, but when they are
+already up to date as of the last fetch, they are not passed to the
+stdin for pre-push, so I cannot detect them.
 
-> reset --hard' there's no point in doing a `git reset --soft' because
-> hard does *everything*. --soft would try to reset the HEAD without
-> touching the index or working tree, but both have already been reset
-> with --hard.
+in a linux environment we can inspect /proc/$PPID/cmdline or ps
+-ocommand= -p $PPID to find the --tags argument (or any manually
+specified tag refs, etc), however commonly developers are using
+Windows with SourceTree, and the pseudo-nix environment it provides
+lacks a /proc directory and uses the cut down cygwin version of ps. I
+have considered going down the parsing route with general ps output,
+reading line by line to find the appropriate ppid, then echoing the
+output, but varying output and column order of ps between SourceTree
+and various linux versions looks to make that infeasible as a portable
+solution.
 
-yes, that was supposed to be git reset --soft HEAD~ in which case it
-does do something, and it is there exactly to just reset HEAD so that
-git stash can then pick up the changes from the temporary commit.
+If we could access the original git push commandline inside the hook,
+either through a parameter passed directly to the script or possibly a
+GIT_* environment variable, it would make this possible. My specific
+use case may not be incredibly common, but this could also be used to
+check if, for example, a push is being forced in a portable fashion -
+something I can see being useful for a pre-push hook in a variety of
+circumstances.
 
-> The motivation is most likely stashing a few changes away so that you
-> can commit others that are ready to be committed while keeping others
-> around to continue working on them. This too is a good observation. It
-
-yes, it could be they are looking for something like git stash --patch,
-but maybe not we don't know.
-
-> could mean that the OP is inexperienced with a commit-often workflow.
-> You can use git -add -i or -p to commit the good stuff and keep the
-> bad stuff out to work on it more. The great thing about Git is that
-> the history is very malleable. You can also commit the bad and fix it
-> after, rebase the history to clean it up, and end up with perfect
-> history while still keeping your changes safely in history.
-
-git stash also stores changes in the git database.  However if you
-really like the stack / queue type workflow you might want to consider
-stgit or stacked git or something (I personally really dislike that work
-flow so I'm not really familiar with those tools).
-
-> The OP should experiment with workflows because Git is already very
-> good at this. Stash isn't really needed. That said, I had forgotten
-> that --patch was added to stash some time ago so if that is what you
-> want then it already exists. It's not quite as easy as --cached, but
-> it still gives you some control. It's still not nearly as good as
-> using the full power of Git with a regular commit on a branch though.
-
-good is subjective and depends on what you need to do.  There are
-certainly times where the stash is a good way to solve problems, and if
-people have ideas for things they think it can do better that's great.
-
-Trev
-
-> 
-> Regards,
-> 
-> -- 
-> Brandon McCaig <bamccaig@gmail.com> <bamccaig@castopulence.org>
-> Castopulence Software <https://www.castopulence.org/>
-> Blog <http://www.bambams.ca/>
-> perl -E '$_=q{V zrna gur orfg jvgu jung V fnl. }.
-> q{Vg qbrfa'\''g nyjnlf fbhaq gung jnl.};
-> tr/A-Ma-mN-Zn-z/N-Zn-zA-Ma-m/;say'
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Alternatively - am I missing the super easy (and probably super
+obvious) way to do this with the existing tools?
