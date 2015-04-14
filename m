@@ -1,55 +1,65 @@
-From: Jose de Leon <jdeleon@ensim.com>
-Subject: How to combine git repos with similar code and keep all branches
- and tags?
-Date: Tue, 14 Apr 2015 16:44:13 +0000
-Message-ID: <BBAA9EAE77388248BCAB045DA762C5A83EFE242F@EXBE01-ENSIM.ms.ensim.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Ensimag students project on Git, 2015 edition
+Date: Tue, 14 Apr 2015 19:04:26 +0200
+Message-ID: <vpqzj6a8wv9.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Apr 14 18:49:52 2015
+Content-Type: text/plain
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Apr 14 19:04:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yi423-0005dY-Pd
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Apr 2015 18:49:52 +0200
+	id 1Yi4GM-0005Eb-Fd
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Apr 2015 19:04:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932976AbbDNQtq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Apr 2015 12:49:46 -0400
-Received: from shoul9.shouldermarketclay.com ([72.20.112.5]:10394 "EHLO
-	EXBE01-ENSIM.ms.ensim.com" rhost-flags-OK-FAIL-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1753945AbbDNQto convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Apr 2015 12:49:44 -0400
-X-Greylist: delayed 329 seconds by postgrey-1.27 at vger.kernel.org; Tue, 14 Apr 2015 12:49:43 EDT
-Received: from EXBE01-ENSIM.ms.ensim.com ([fe80::ddf0:e9:a641:4631]) by
- EXBE01-ENSIM.ms.ensim.com ([fe80::ddf0:e9:a641:4631%13]) with mapi id
- 14.02.0247.003; Tue, 14 Apr 2015 09:44:13 -0700
-Thread-Topic: How to combine git repos with similar code and keep all
- branches and tags?
-Thread-Index: AdB2ztI6QJ0o6s2KSh2JuBsCGX2q2Q==
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.58.106.21]
+	id S1755357AbbDNREe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Apr 2015 13:04:34 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:48878 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754057AbbDNREd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Apr 2015 13:04:33 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t3EH4Oiu008343
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 14 Apr 2015 19:04:24 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t3EH4QnG020659;
+	Tue, 14 Apr 2015 19:04:26 +0200
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 14 Apr 2015 19:04:24 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t3EH4Oiu008343
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1429635868.24672@QLFlt9LWRHzATF+Im9t/eg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267146>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267147>
 
-Hi All,
+Hi,
 
+Like the years before, I'm going to offer my students a 1 month project
+(mid May -> mid June) where they can contribute to a free software, in
+particular Git. Last year we got no student, but in the past we got
+interesting features merged in (e.g. "git blame" with textconv, hints in
+"git status", git-remote-mediawiki, better error messages).
 
-I've got an interesting problem and the possible solutions I've found from searching google don't seem to work for us.  In a nutshell, I need to combine multiple git repositories into single repository and preserve all history, branches and tags from each repository.    
+Students are free to pick the feature they want, but I maintain a list
+of small project ideas on the wiki to help them:
 
-Does anybody have a solution for this, how do this kind of thing, is it even possible?
+  https://git.wiki.kernel.org/index.php/SmallProjectsIdeas
 
-For some unknown reason to me, our developers started a git project, called Ver1, this was the first version.  Then sometime later, they created a new git repository called Ver2, the initial commit for Ver2 was essentially a copy of the code in Ver1 from the master.  They didn't clone it, they just copied the code at the latest point.  This wasn't done by forking.  Then they repeated this for Ver3 and Ver4, etc.  On top of all that, they have been adding new code to Ver1, Ver2, etc. that has caused each to divert from the other and each have their own branch and tag sets.  They have similar directory structure and similar file names, but there are some slight differences in structure.
+feel free to edit and comment, add new ideas, .... Students will anyway
+have to discuss on the mailing-list before starting to code anything
+non-trivial.
 
-Well, this has become unmanageable and now we want to combine them into one single git repository.   
+Thanks,
 
-Logically, these are the same project but at different versions, basically, Ver1 and Ver2, etc, should be simply branches at different times if these were combined into a single repository.
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
