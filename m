@@ -1,69 +1,99 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: Re: git fsck: unreachable vs. dangling
-Date: Tue, 14 Apr 2015 11:28:41 +0200
-Message-ID: <CAHGBnuNA7fVKJRA-oMbnL5J+zoe7F6sy0rU_0PvAX52x0ofXdQ@mail.gmail.com>
-References: <CAHGBnuOYLpkeUop9vNH3+WSKqrM3NCSqvu-NZnPnk3gEkAr6eg@mail.gmail.com>
-	<CAPc5daXRpfSrvcae0W+YU-51prCoFGxz_hkhtp7FZ-K9_eeeBQ@mail.gmail.com>
-	<552CD4C8.2020700@drmicha.warpmail.net>
-	<CAHGBnuPepR11r9qpxb2G7pGhq0iiaqCCLnbt5NB_xohHi=cVxA@mail.gmail.com>
-	<xmqq1tjn3vzs.fsf@gitster.dls.corp.google.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Git add -p =?utf-8?Q?=E2=80=9CYour?= edited hunk does not
+ apply. Edit =?utf-8?Q?again=E2=80=9D?=
+Date: Tue, 14 Apr 2015 11:43:05 +0200
+Message-ID: <vpq7ftfkpue.fsf@anie.imag.fr>
+References: <loom.20150414T035141-286@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 14 11:28:47 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Tanky Woo <wtq1990@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 14 11:43:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yhx9D-0005Tw-64
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Apr 2015 11:28:47 +0200
+	id 1YhxNG-0004Fm-1E
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Apr 2015 11:43:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752466AbbDNJ2n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Apr 2015 05:28:43 -0400
-Received: from mail-ig0-f179.google.com ([209.85.213.179]:36372 "EHLO
-	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752081AbbDNJ2l (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Apr 2015 05:28:41 -0400
-Received: by igblo3 with SMTP id lo3so68844595igb.1
-        for <git@vger.kernel.org>; Tue, 14 Apr 2015 02:28:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=mOuh7cGnJK3UwXXzgJLBVBdllL8Aq9xOtEpNfDVwKK8=;
-        b=RKIXMw3FSkMo/2F8e1TjaosQmfRL6z1QcdVXTBrVzrGaOqr9nr3y3S6YE7NZUCpzLw
-         PuDGz92qHHdPTqdcVm1aaB/bN6yP2z0TD28AZRX5SWesm1PopEfzvR74uQAo8zi60MWU
-         qxcH+NQE/7dfinvG3otVlWAmAvS1OipBg4M7WnMgHec3so6b/5aGB5InIaT/cBlZwoJP
-         30JNw/HngP/kqThikOOKIocZVPdNL9HQgfFDfFLENhytLJvlQ08h06msgz7+1AWy487A
-         p2GBH1jSmyB/zzjZw3TpqJBQpefqulYLe2eDn63IQ+fWa2PlFDwEnDdcsvMXTnpCINms
-         2mag==
-X-Received: by 10.42.86.12 with SMTP id s12mr24287852icl.47.1429003721147;
- Tue, 14 Apr 2015 02:28:41 -0700 (PDT)
-Received: by 10.107.159.82 with HTTP; Tue, 14 Apr 2015 02:28:41 -0700 (PDT)
-In-Reply-To: <xmqq1tjn3vzs.fsf@gitster.dls.corp.google.com>
+	id S1753417AbbDNJnO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Apr 2015 05:43:14 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:35060 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752329AbbDNJnM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Apr 2015 05:43:12 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t3E9h41K020563
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 14 Apr 2015 11:43:05 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t3E9h62Z006745;
+	Tue, 14 Apr 2015 11:43:06 +0200
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 14 Apr 2015 11:43:05 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t3E9h41K020563
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1429609388.85266@6P3BzNWN8gKh49ds5x1ZYQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267126>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267127>
 
-On Tue, Apr 14, 2015 at 11:22 AM, Junio C Hamano <gitster@pobox.com> wrote:
+Tanky Woo <wtq1990@gmail.com> writes:
 
-> I just visualize commits to be ping-pong balls with strings between
-> them, and then grab the root of the graph and lift the whole thing
-> up, while tips of the branches and tags are anchored.  Commit A will
-> be dangling in the wind if you shake the whole thing.
+> -       coverage erase
+> +
+> +covhtml:
+> +       make clean
+> +       nosetests
+> +       coverage html
+> +       cd ${HTMLCOV} && python -m SimpleHTTPServer
+> So I use e to manually edit the hunk, I delete all the + lines, it seems:
 
-I used to have exactly the same visualization in mind, but got
-confused in between, unsure whether my understanding was correct. As
-it turns out it is, and when sticking to that visualization everything
-seems to be consistent in the fsck docs. They could still benefit some
-more clarification I guess. I'll see if I can come up with something.
+I can reproduce on git.git's master. Actually, you don't even have to
+edit the patch, just save and exit, and you get the same error message.
+So it's clearly a bug.
 
-Thanks again.
+I can get the same kind of bug with "stash -p", without even using the
+'e' command, by doing "split" and then answer n, y. On a simpler example
+with two hunks:
+
+$ git stash -p
+diff --git a/bar.txt b/bar.txt
+index 35fbd83..1d3fda3 100644
+--- a/bar.txt
++++ b/bar.txt
+@@ -1,4 +1,6 @@
+ aaa
++added line 1
+ bbb
++added line 2
+ ccc
+ ddd
+Stash this hunk [y,n,q,a,d,/,s,e,?]? s
+Split into 2 hunks.
+@@ -1,2 +1,3 @@
+ aaa
++added line 1
+ bbb
+Stash this hunk [y,n,q,a,d,/,j,J,g,e,?]? n
+@@ -2,3 +3,4 @@
+ bbb
++added line 2
+ ccc
+ ddd
+Stash this hunk [y,n,q,a,d,/,K,g,e,?]? y
+
+Saved working directory and index state WIP on master: 1cad001 abcd
+error: patch failed: bar.txt:1
+error: bar.txt: patch does not apply
+Cannot remove worktree changes
 
 -- 
-Sebastian Schuberth
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
