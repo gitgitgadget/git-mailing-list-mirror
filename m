@@ -1,92 +1,100 @@
-From: Brandon McCaig <bamccaig@gmail.com>
-Subject: Re: Requesting `git stash --cached` or something similar
-Date: Mon, 13 Apr 2015 22:05:02 -0400
-Message-ID: <CANUGeEbRyG4A2UdTYOBgtjDtqi_A1WnbkOBjH_h2AcEZT741jQ@mail.gmail.com>
-References: <37E34942-ACEB-48BC-ABFF-C7248DA6607E@mac.com> <20150414014435.GC8601@tsaunders-iceball.corp.tor1.mozilla.com>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH] reduce progress updates in background
+Date: Tue, 14 Apr 2015 03:12:28 +0000
+Message-ID: <20150414031227.GB591600@vauxhall.crustytoothpaste.net>
+References: <20150413134850.GC23475@mewburn.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Quinn Taylor <quinntaylor@mac.com>, git@vger.kernel.org
-To: Trevor Saunders <tbsaunde@tbsaunde.org>
-X-From: git-owner@vger.kernel.org Tue Apr 14 04:05:29 2015
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="Pk6IbRAofICFmK5e"
+Cc: git@vger.kernel.org, Nicolas Pitre <nico@fluxnic.net>
+To: Luke Mewburn <luke@mewburn.net>
+X-From: git-owner@vger.kernel.org Tue Apr 14 05:12:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YhqEC-0001bK-Ni
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Apr 2015 04:05:29 +0200
+	id 1YhrHL-0001FF-VQ
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Apr 2015 05:12:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752812AbbDNCFY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Apr 2015 22:05:24 -0400
-Received: from mail-vn0-f53.google.com ([209.85.216.53]:39021 "EHLO
-	mail-vn0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750935AbbDNCFY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Apr 2015 22:05:24 -0400
-Received: by vnbg62 with SMTP id g62so26197565vnb.6
-        for <git@vger.kernel.org>; Mon, 13 Apr 2015 19:05:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=r/5HRwCQl4dh4ziOr9aWjzPOdvCYq3ygpB5eR5zkghk=;
-        b=Azp29dI48O3qdNmhbmXcVB+QpCiGZt/t6famuu80EjsiqBmY7esFiDoqDN0GrLwfMh
-         l55a1B2fIvOd1r1fbIXSKQyj5p7OWLSshBgDB90NjCBJQwzbx68ODvAgtoGmd1U21j3f
-         whQJe4L+JTrbmoXKD22On66VqLOdrPwW+ON1AZ3IfQ0Cqc23372QxnTLwA9NYGH3BYrU
-         49HZKrJGKep8Q8RCq86gnvO0nNQrK+xLaX3PmBaBRh2VG6hsfdySwMa7SU/ro/E+oa6d
-         SRHK8yo55hmBjGxOt+cMTsOrW5LxgNHt7EvfrJQmfREJUyM6Gfytz5EzeIpdDCVBbqlf
-         VfPg==
-X-Received: by 10.202.175.213 with SMTP id y204mr9640711oie.22.1428977123291;
- Mon, 13 Apr 2015 19:05:23 -0700 (PDT)
-Received: by 10.202.220.4 with HTTP; Mon, 13 Apr 2015 19:05:02 -0700 (PDT)
-In-Reply-To: <20150414014435.GC8601@tsaunders-iceball.corp.tor1.mozilla.com>
+	id S1751328AbbDNDMg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Apr 2015 23:12:36 -0400
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:35520 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750894AbbDNDMf (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 13 Apr 2015 23:12:35 -0400
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:e1c6:301d:8c3f:979b])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 3F9AC2808D;
+	Tue, 14 Apr 2015 03:12:33 +0000 (UTC)
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Luke Mewburn <luke@mewburn.net>, git@vger.kernel.org,
+	Nicolas Pitre <nico@fluxnic.net>
+Content-Disposition: inline
+In-Reply-To: <20150413134850.GC23475@mewburn.net>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 3.16.0-4-amd64)
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267110>
 
-Trevor:
 
-On Mon, Apr 13, 2015 at 9:44 PM, Trevor Saunders <tbsaunde@tbsaunde.org> wrote:
-> I would expect the answers to be it sets the working directories state
-> to the state in HEAD, and leaves untracked files alone.  If that's what
-> you want you can do git commit -m <message>; git reset --hard; git reset
-> --soft; git stash save to get the effect you want I believe. That said
-> it seems like a kind of odd thing to want to do, what are you actually
-> trying to do?
+--Pk6IbRAofICFmK5e
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-That looks like a bad solution. git reset --hard is going to throw
-away any remaining changes to the working tree. The previous commit
-would have committed the staged changes, albeit, you should connect
-the commands with && instead of ; to account for errors. After a `git
-reset --hard' there's no point in doing a `git reset --soft' because
-hard does *everything*. --soft would try to reset the HEAD without
-touching the index or working tree, but both have already been reset
-with --hard.
+On Mon, Apr 13, 2015 at 11:48:50PM +1000, Luke Mewburn wrote:
+> Hi,
+>=20
+> I've noticed that when a long-running git operation that generates
+> progress output is suspended and converted to a background process,
+> the terminal still gets spammed with progress updates (to stderr).
+>=20
+> I've explicitly separated the in_progress_fd() function
+> so that it's easier to (a) reuse elsewhere where appropriate,
+> and (b) make any portability changes to the test if necessary.
+> I also used getpgid(0) versus getpgrp() to avoid portability
+> issues with the signature in the latter with pre-POSIX.
 
-The motivation is most likely stashing a few changes away so that you
-can commit others that are ready to be committed while keeping others
-around to continue working on them. This too is a good observation. It
-could mean that the OP is inexperienced with a commit-often workflow.
-You can use git -add -i or -p to commit the good stuff and keep the
-bad stuff out to work on it more. The great thing about Git is that
-the history is very malleable. You can also commit the bad and fix it
-after, rebase the history to clean it up, and end up with perfect
-history while still keeping your changes safely in history.
+I like this patch.  It's simple and seems like a sensible change, and I
+appreciated the opportunity to learn about tcgetpgrp(3).  The Windows
+folks will probably need to stub that function out, but they're no worse
+off than they were before.
 
-The OP should experiment with workflows because Git is already very
-good at this. Stash isn't really needed. That said, I had forgotten
-that --patch was added to stash some time ago so if that is what you
-want then it already exists. It's not quite as easy as --cached, but
-it still gives you some control. It's still not nearly as good as
-using the full power of Git with a regular commit on a branch though.
+I do agree with Nicolas that optimizing the code to avoid calling
+in_progress_fd as much as possible is a good idea, since system calls
+can be expensive on some systems.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
 
-Regards,
+--Pk6IbRAofICFmK5e
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
--- 
-Brandon McCaig <bamccaig@gmail.com> <bamccaig@castopulence.org>
-Castopulence Software <https://www.castopulence.org/>
-Blog <http://www.bambams.ca/>
-perl -E '$_=q{V zrna gur orfg jvgu jung V fnl. }.
-q{Vg qbrfa'\''g nyjnlf fbhaq gung jnl.};
-tr/A-Ma-mN-Zn-z/N-Zn-zA-Ma-m/;say'
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCgAGBQJVLIWbAAoJEL9TXYEfUvaLIhQP/08Kph91EFFnflWyN3G8mouy
+Yx8fT3yDJlh/8r4y6EUPy1jFTOg+48qP9gUNfNLZadC+uF55PdHF32sJnqa6djc/
++TyFRSmMsce0OIr+a9oiYy4it402SrOHSoQGrPF1pRfYG/10j2SXv8q6fLHyPP5b
+RsQzU669gveA8jP/2LzfrUDsMl5gvaI+7k6B/B/YNv2WTrReP2RpVqwflSmbxJqA
+3CC0j2xaNNBzzM2W7v8FJaz4Zwtv+v1Y7sJrrefPTtMAvBUnGNdZMHlRyOURS70P
+X4krVBpL99oGDy+c2zcbbqlZydFt7WCO72/g7GYQN9i/rFyjIJPH3E2Tw+FlHtkB
+Agk+pZuzcOwYv5zaVLz7NaYS97N7C9mSXnt8dPAyim9WUcJL485l2rY1oY2Dk1lb
+V7RIgrX0NtlYIxsl4kJp72pd/CFEWsWd2DsYOI74wXcQxBPyn7YSC9hUJL+mkB26
+oddvRoMOQ5fzv1GKDkOS8GKZUt6kNcOy/kGRClZzMZBtyBI2meb5Mq5WcPJjM4/u
+sNHzoSje4v/LrOdQqVfHUgfQ7P1ycyZ04jd08QLV/r9ciqngu+zaXrV+rp2L0AJu
+Nf8KLKiMpCiZwu388ZUeM/9b9JysWP/WgL6+hOLnBZ7bV7ZIikP5Dwbpxp4pWx62
+xuzgr7CstQmjZ7azE7Hr
+=Unrh
+-----END PGP SIGNATURE-----
+
+--Pk6IbRAofICFmK5e--
