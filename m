@@ -1,88 +1,99 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 0/3] Large transactions in git
-Date: Tue, 14 Apr 2015 15:25:05 -0700
-Message-ID: <1429050308-9617-1-git-send-email-sbeller@google.com>
-Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-To: gitster@pobox.com, mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Wed Apr 15 00:25:31 2015
+Subject: Re: [PATCH 1/7] path.c: implement xdg_config_home()
+Date: Tue, 14 Apr 2015 15:28:14 -0700
+Message-ID: <CAGZ79kaO_1QMMTY0ni9k3hrkrt_PhqRDRzXkhZEiYuJ0EsE9Tw@mail.gmail.com>
+References: <1428824772-8736-1-git-send-email-pyokagan@gmail.com>
+	<e1bc6f19af608db796a2212dbf00ba45@www.dscho.org>
+	<xmqqzj6a1m3c.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Paul Tan <pyokagan@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 15 00:28:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yi9Gr-0003zF-TD
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Apr 2015 00:25:30 +0200
+	id 1Yi9Jc-0005OU-Mw
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Apr 2015 00:28:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754165AbbDNWZT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Apr 2015 18:25:19 -0400
-Received: from mail-ig0-f180.google.com ([209.85.213.180]:34020 "EHLO
-	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753787AbbDNWZR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Apr 2015 18:25:17 -0400
-Received: by iget9 with SMTP id t9so84628154ige.1
-        for <git@vger.kernel.org>; Tue, 14 Apr 2015 15:25:16 -0700 (PDT)
+	id S1754233AbbDNW2R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Apr 2015 18:28:17 -0400
+Received: from mail-la0-f43.google.com ([209.85.215.43]:35589 "EHLO
+	mail-la0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932144AbbDNW2P (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Apr 2015 18:28:15 -0400
+Received: by labbd9 with SMTP id bd9so19540226lab.2
+        for <git@vger.kernel.org>; Tue, 14 Apr 2015 15:28:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=7JaiTMSpEdn7CDQR+e0Uei1Tw+lEVusMLTeHaZ518G8=;
-        b=Yg7Zb3qeVt86yvuZTe2p90LNIO7x9N6xFcUyilqLoeyAXzRTfKdbSgnhVpTXxp/M0Z
-         RLsdisUT91Src2tiPNZPAq7yyW+Zye90qCogqF3dycrip7ngorJ9MfLf2aj54/avEzIX
-         c7dRyLry8vNngfDZ/zuSynaVYcNbOPuzY1oe3MQ4MpFEy9iij6+I/icfGrlTo17rCk7m
-         1Y7QNox6KAbx6oSmde1dH0tdkXxzZJf7NFfghyAY109tB0aNVGmyBcQ2/nWVPzc4B9Cb
-         RIs0j+S9h/DGU2EHOzAQPRO0KyhcZoW/mRmfPmUk0/H/jtyt6DmYxohl+0TBDN7yacUl
-         5peQ==
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=rvo2EnbYZrSMFa4jx6EWs+htq6fmSf2FeAX42zd2/q8=;
+        b=TOMirWGsNxj/X1K0O1NJLTchyZK0Gt6XHp12tnU14ZOI5uoKUl++jv27V2N4wXcas4
+         KMe0R1a8iQUxOtkRzU4vqq6BPhXOlPTtmwbvrwZhXMjw7nBYlhQCt0fcEV6kv155MfdX
+         LTrSS7Ktt7HUmAJfyixSb6XwGuzuHC0rIXZ+sY3tjdcsbuPIFdb349QunEP3bWm9rxBn
+         Y3pvGtU6a9LXRIme4NmcODZb/lieQ/ZX3+d6IzZpAbXC4d//N2XEhHVEI45NKoDJvS47
+         RdZbg3yg+b3aiMa7KmFcq6Wqqg80AUnDYgTwklBqNJEjNcOPsjz5sp+FtJnuk0u+u/34
+         Tkvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=7JaiTMSpEdn7CDQR+e0Uei1Tw+lEVusMLTeHaZ518G8=;
-        b=jLPI4og/foBZIB6tOZYIw6x6SvG19hJ5Syy86kvttbOUtZLWwaMJtRZNxSp0DwPHzC
-         Cm0pZB28Qtx83rrNhbCPSEuANZYr1nV8S9B+984W+WU6oGjG5m3WWHQs6rwG9SG0CZ6v
-         3mlfyFnlr+em1R5z9IwNAfaETfw3WqjxkeFvAzsFcnr71y7ma1Y+1/dQ7wvDNxCxvxxi
-         NRG3IgQpr+dZTFHxg5Yiydv+Kt88E2/e95lY3w1bdYCfo6TKVskpNT/wf61Lxkm6I0wE
-         CbcDyzhB9q3D3FQfvYHkpp5U6a/GDxxBUfexU3BW1Nnw4tsl3TqjrdY8C57A22Hghl59
-         goNw==
-X-Gm-Message-State: ALoCoQl9YupJdWcdD6GlZisXOR9qHnl11VUJVP+dAl1PmdiiBxx8IBUxn1v/9zkexx4zvpugBHon
-X-Received: by 10.107.136.25 with SMTP id k25mr31320826iod.88.1429050316683;
-        Tue, 14 Apr 2015 15:25:16 -0700 (PDT)
-Received: from localhost ([2620:0:1000:5b00:f14f:277:5d87:2236])
-        by mx.google.com with ESMTPSA id 192sm1234635ioo.38.2015.04.14.15.25.15
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 14 Apr 2015 15:25:15 -0700 (PDT)
-X-Mailer: git-send-email 2.3.0.81.gc37f363
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=rvo2EnbYZrSMFa4jx6EWs+htq6fmSf2FeAX42zd2/q8=;
+        b=DfxW7Y0IjKIvBKVf9faOjZKPJQwpIp6y/QleXGMy7Sl8xBarubdEUAZKpZul9TtYIp
+         xUl1eQlEZOuIqLO4UKq/NPNQL/rIyUrJ+XX9EU9n/ncn16Ar0PdVZl79uphfPUJdxKd+
+         2qmx1ftQxUzdPRNoryhourWF0TZGlbAAIvbYDti4Nv3KCNSUWn44MGLmU/7yJ8x0BZu7
+         fkfErJVORLX7fCslBpg1WW9qad+XHCzbRHS0Z1g4bYw0Jn2B9JJObTnjif/cHtu8U0y+
+         glnAIwgatAMuPMcbs1CBpH20sCx+G5TE2d/mL2fge0GLdhkGir/C/GMycAVDSSxso/si
+         68vg==
+X-Gm-Message-State: ALoCoQnqSB6MZf5A6+zt3PsliQz2Ap3vIeykBUJ3qLD3ToxSpXPWNTQWxyXl0NCVB6cHgnsIa+KM
+X-Received: by 10.112.157.100 with SMTP id wl4mr21112881lbb.108.1429050494331;
+ Tue, 14 Apr 2015 15:28:14 -0700 (PDT)
+Received: by 10.25.43.210 with HTTP; Tue, 14 Apr 2015 15:28:14 -0700 (PDT)
+In-Reply-To: <xmqqzj6a1m3c.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267169>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267170>
 
-On Git Merge Wilhelm Bierbaum from Twitter made clear that we'd have problems
-with large transactions in git. As I have been working on that series a few
-months ago and it still bugs me, I thought about reviving the series.
+On Tue, Apr 14, 2015 at 1:39 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+>
+>>> diff --git a/cache.h b/cache.h
+>>> index 3d3244b..7f9bab0 100644
+>>> --- a/cache.h
+>>> +++ b/cache.h
+>>> @@ -836,6 +836,13 @@ char *strip_path_suffix(const char *path, const
+>>> char *suffix);
+>>>  int daemon_avoid_alias(const char *path);
+>>>  extern int is_ntfs_dotgit(const char *name);
+>>>
+>>> +/**
+>>> + * Returns the newly allocated string "$XDG_CONFIG_HOME/git/%s".  If
+>>> + * $XDG_CONFIG_HOME is unset or empty, returns the newly allocated string
+>>> + * "$HOME/.config/git/%s". Returns NULL if an error occurred.
+>>> + */
+>>> +extern char *xdg_config_home(const char *fn);
+>>
+>> Should this not be inserted close to home_config_paths()? Also, the
+>> name "fn" sounds more like "function" than like "filename" to me,
+>> especially keeping the name `config_fn_t` in mind. Maybe call the
+>> parameter "filename" to avoid confusion?
+>
+> It is OK to omit the name in the extern declaration here.  We have
+> to have a sensible variable name in the definition in path.c, of
+> course ;-), and "filename" sounds like a very sensible suggestion.
+>
 
-However the series got stale a few months ago because we were not sure how
-to do it right. The first few patches were deemed uncontroversial though,
-which I am resending now. 
+It is OK, but I think this is bad practice.
+Have a look at strbuf.h, there you'll find:
 
-The first patch contains tests telling us what needs fixing.
-The second patch renames the precondition for other tests, as ULIMIT is
-a bit generic. The third patch removes the `lock_fd` field from struct
-ref_lock which was duplicate information.
+    extern int strbuf_getwholeline_fd(struct strbuf *, int, int);
 
-That said, this series is not fixing the actual issue, but I'd guess
-having these patches is step forward actually.
-
-Thanks,
-Stefan
-
-Stefan Beller (3):
-  update-ref: test handling large transactions properly
-  t7004: rename ULIMIT test prerequisite to ULIMIT_STACK_SIZE
-  refs.c: remove lock_fd from struct ref_lock
-
- refs.c                | 16 ++++++----------
- t/t1400-update-ref.sh | 28 ++++++++++++++++++++++++++++
- t/t7004-tag.sh        |  4 ++--
- 3 files changed, 36 insertions(+), 12 deletions(-)
-
--- 
-2.3.0.81.gc37f363
+It's not clear what the 2 ints are, probably a fd and a max size?
+Even if guessed correctly, you'd still need another guess for the order.
