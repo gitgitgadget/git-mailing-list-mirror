@@ -1,124 +1,103 @@
-From: Matthew Rothenberg <mroth@khanacademy.org>
-Subject: Re: PATH modifications for git-hook processes
-Date: Wed, 15 Apr 2015 11:00:20 -0400
-Message-ID: <CAKuTQSGapeUeZptdX1=Uv441Moo6X19RNR0oySU--F+Kj6Xz=w@mail.gmail.com>
-References: <CAKuTQSGEmHHr-c+Tc2jM-JPkx6+_f3gp8Zjj8EuQy_e4=PvMzg@mail.gmail.com>
-	<xmqqk2xe39zt.fsf@gitster.dls.corp.google.com>
+From: Pirate Praveen <praveen@debian.org>
+Subject: Re: support git+mosh for unreliable connections
+Date: Wed, 15 Apr 2015 20:13:51 +0530
+Message-ID: <552E7927.5030803@debian.org>
+References: <552E628C.7040809@debian.org> <20bd52de595018f49eeeea64128e3a77@www.dscho.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 15 17:00:54 2015
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="jnBtgEj2kMkK0JOtw8NIhgXvFmwUHp9LQ"
+Cc: git@vger.kernel.org, git-owner@vger.kernel.org
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Apr 15 17:16:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YiOo9-0000JO-Bf
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Apr 2015 17:00:53 +0200
+	id 1YiP3h-00014h-I8
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Apr 2015 17:16:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754478AbbDOPAt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Apr 2015 11:00:49 -0400
-Received: from mail-oi0-f54.google.com ([209.85.218.54]:35526 "EHLO
-	mail-oi0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753586AbbDOPAr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Apr 2015 11:00:47 -0400
-Received: by oign205 with SMTP id n205so25765166oig.2
-        for <git@vger.kernel.org>; Wed, 15 Apr 2015 08:00:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=khanacademy.org; s=google;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=l/kclUF480MP2qjgERUofGwSj4cQqBF92rmJ7s7q3mY=;
-        b=Kb9+/VU2tRNlZuPM9ArD/q+D8miV0IWhbaYR0RIv19oIfg3d0Gm/xIvefs4tO66jca
-         GSOeRnRTIGpMixvW1lA1yXhOLpN3XD/+u6cdfnB66oOkXer8XfpsSOg4gC0CYQCh7B6C
-         w8imx8SwUM8RyXq2QHdMhsuylI9I8U9TItay8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=l/kclUF480MP2qjgERUofGwSj4cQqBF92rmJ7s7q3mY=;
-        b=aCmOCs7+IZ7YEAzo/LRKnJyV28aho+nEL1qtUwQAU5zbPjkzcWVWThendmBqDL16Kg
-         sqRKwCWeiXA6ddM4LYxVBNeADpEVKZvBROpmi//JByBSlQdjP5d5G8UxkjFT0ITyNgfP
-         0ZQao6UAOiXR7Qxg5xToTIETNBp6NSw9uo4Fn2JPC8+HqtlcLDKIS4P+EwYQ9D9T2Dbg
-         tZYHTJttpMvcon79QIEGHhNZ1Wp+vff6GiElwAExW16dJql8fdB5vLpLGT7M0IAXRPCo
-         xthVtgxE3aC4x+76/I+TutHzebM3h0+YEjHUDxx6C8AR/y2Y9EW8Q146iCv4ru2OeuOK
-         IUnw==
-X-Gm-Message-State: ALoCoQkf6Y8C1NN5qTUDjyoyFRhR853tpSDL0FyDy4j+UnzC2ZjR48rE1g8NTKmROmuCurVzOY3j
-X-Received: by 10.182.153.4 with SMTP id vc4mr3486768obb.16.1429110020450;
- Wed, 15 Apr 2015 08:00:20 -0700 (PDT)
-Received: by 10.76.112.37 with HTTP; Wed, 15 Apr 2015 08:00:20 -0700 (PDT)
-In-Reply-To: <xmqqk2xe39zt.fsf@gitster.dls.corp.google.com>
+	id S1751729AbbDOPQx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Apr 2015 11:16:53 -0400
+Received: from perdizione.investici.org ([94.23.50.208]:39444 "EHLO
+	perdizione.investici.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752054AbbDOPQv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Apr 2015 11:16:51 -0400
+X-Greylist: delayed 1959 seconds by postgrey-1.27 at vger.kernel.org; Wed, 15 Apr 2015 11:16:51 EDT
+Received: from [94.23.50.208] (perdizione [94.23.50.208]) (Authenticated sender: praveen@autistici.org) by localhost (Postfix) with ESMTPSA id 3E799121BD5;
+	Wed, 15 Apr 2015 14:44:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=debian.org;
+	s=stigmate; t=1429109050;
+	bh=3CbOZS4pHo/nAkD4SwZlBW5HCCUxLO92OriIbQyZnvk=;
+	h=Date:From:To:CC:Subject:References:In-Reply-To;
+	b=dF7PjLo77LzdPJgFx1fma7lBKK7RX2ok4q+A/Yx2iFQ8DuvyGHoKdkjb+b2Gk0n0G
+	 DE+MOG+SnKr36TAj5PEGq9nUCLbVtYGvRzLtodTkZQ8zGmpMAZ2kJBJLm5QNS1GANX
+	 ctY6ysAu0ZY44K+r7k8ZOIDZjUCnp+VbvgMx6b1s=
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.0
+In-Reply-To: <20bd52de595018f49eeeea64128e3a77@www.dscho.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267204>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267205>
 
-Hmm, this all makes sense as to why it's happening, thank you.  In my
-case the ` /usr/local/Cellar/git/2.3.5/libexec/git-core` (git
---exec-path) does give all the proper binaries and sub-binaries. It
-shows up twice because the GIT_EXEC_PATH environment variable is used
-too (which is the same in my case since it hasn't been overriden).
-The /usr/local/bin therefore comes from **the path to the running
-"git" itself**.
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--jnBtgEj2kMkK0JOtw8NIhgXvFmwUHp9LQ
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: quoted-printable
 
-There still seems to be a potential issue I can't figure out how to
-work around with this.  If **the path to the running "git" itself** is
-in /usr/local/bin or some other common area, then that would still
-always get prepended prior to external PATH -- which means **other**
-external programs will inherit precedence overriding the system PATH
-preferences.
+On Wednesday 15 April 2015 07:52 PM, Johannes Schindelin wrote:
+> From https://github.com/keithw/mosh:
+>=20
+>> Mosh does not support X forwarding or the non-interactive uses of SSH,=
+ including port forwarding.
+>=20
+> In particular it "does not support [...] the non-interactive uses of SS=
+H", which the git+mosh transport would require, though.
+>=20
+> That means that you would have to invest quite a bit of effort into enh=
+ancing mosh to *support* the non-interactive uses of SSH before you could=
+ start implementing `git-remote-mosh`...
+>=20
+> Ciao,
+> Johannes
+>=20
 
-For example, in our case, many scripts run in our specific Python
-environment, which ala virtualenv is located in a user-specific path
-(e.g. ~/.virtualenv/foo/bin/python), which appears earlier in the user
-PATH so it affects all shell processes using `#!/usr/bin/env python`.
-When a git-exec prepends /usr/local/bin, the system installed Python
-is used instead.
+Q: Are the mosh principles relevant to other network applications?
 
-There are other use cases I can think of that would cause this issue
-as well -- user provides more recent version of "bazfoo" program in
-~/bin which they prepend of their system PATH, git-exec then prepends
-shared path of a system binary directory which also contains older
-version of bazfoo, older version then gets used instead.
+    We think so. The design principles that Mosh stands for are
+conservative: warning the user if the state being displayed is out of
+date, serializing and checkpointing all transactions so that if there
+are no warnings, the user knows every prior transaction has succeeded,
+and handling expected events (like roaming from one WiFi network to
+another) gracefully.
 
-So, I guess what I'm looking for is:
-  - A way to prevent the **path to the running "git" itself** portion
-of setup_path from firing, (OR)
-  - A way to specify (via env var?) paths that must remain in high
-precedence even during a git-exec, e.g.:
-      NEWPATH = [git --exec-path] : [GIT_EXEC_PATH] :
-[$PROPOSED_HIGH_PRECENDENCE_PATH] : ['git itself' path] : [$PATH] (OR)
-  - A way to refine git-exec default behavior to avoid this edge case
-(my C is a little rusty but I'm happy to try to help out if we can
-think of a good logic), (OR)
-  - Something else clever I am not aware of.
+Can the ideas be used to resume a pull, push or clone operation?
+Especially serializing and checkpointing.
 
-Thanks so much for your assistance.
 
-On Tue, Apr 14, 2015 at 1:17 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Matthew Rothenberg <mroth@khanacademy.org> writes:
->
->>  - what is the expected PATH modification behavior for subprocesses of
->> git-hooks? Is this documented anywhere?
->>  - what would be causing /usr/local/bin to be prepended here, and can
->> it be adjusted via preference?
->
-> This is not limited to hooks and very much deliberate, I think.  In
-> order to make sure anything that is called from "git" wrapper gets
-> picked up from GIT_EXEC_PATH so that the matching version of the git
-> subprogram is used, "git <cmd>" does this before running "git-<cmd>"
-> (in git.c):
->
->         /*
->          * We use PATH to find git commands, but we prepend some higher
->          * precedence paths: the "--exec-path" option, the GIT_EXEC_PATH
->          * environment, and the $(gitexecdir) from the Makefile at build
->          * time.
->          */
->         setup_path();
->
-> And setup_path() is defined in exec_cmd.c to start the new PATH with
-> git-exec-path, and then the path to the running "git" itself, and
-> then finally the external PATH.
+--jnBtgEj2kMkK0JOtw8NIhgXvFmwUHp9LQ
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJVLnknAAoJEM4fnGdFEsIqyh4QAKWglk3A5xNRoQKknoEIcKxd
+wB6asGv/B84s13/1wbOsqAH8YJIf4KmsIwYPQLbo835a2CxWax4XEYtdtt7j9UqK
+Eo9WPg+HwY6SO52cfSYDXIPcHtmaIGZXlPQYJspAOBedbY2y7YEc3525EjPZZRV2
+Z9MU1PSVTnZ6588wrsVGLnCUOWvxXUlrdYY8p1x24fw4QX1Xtxw565GMrZXLMICK
+b9U90gI+Otvg/VZmqU+cphmbaBnJzE3Lr448Rt+h3ZxyyHXCqjMWvsbg18PVu+Hb
+TzDNdoex40tHCZ59B9oINWFO4WlKWQ5cODCKz9gyU/DRlyF4vmreYI1+zL7fK1ln
+HPAsQ7D92IokpM90A07GX6yCqGfUe1c/zD517SlinfgVzAFU2MTBh0g1NHtj/kRM
+fJ6K3dfOzJJtWtvZG3KhYX3JBSxT4JL/NLng35XU20T8X3iLBHQAm214SEqfhwhv
+i05FrxktjToKS7zAZyQHkq7whDi6EMqgLAHQDY/wilafdTgzaZY2zeSXo+LH6icM
+5giYhSqWgH+s/dK9TWePBJyxkDay62Uqk30wxRYFmR50nHMfwpLjcqXQUiM3fqe8
++HLFyHN7wP5a4V21ixnkqy+n/aqvHLApJb5eLpsPfLY93x7eEEAoipfSaEfogpf+
+iguSfbEtkhQvdFgVnJ6c
+=AxLE
+-----END PGP SIGNATURE-----
+
+--jnBtgEj2kMkK0JOtw8NIhgXvFmwUHp9LQ--
