@@ -1,100 +1,156 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] refs.c: remove lock_fd from struct ref_lock
-Date: Wed, 15 Apr 2015 11:35:06 -0700
-Message-ID: <xmqqbnipkzol.fsf@gitster.dls.corp.google.com>
-References: <1429050308-9617-1-git-send-email-sbeller@google.com>
-	<1429050308-9617-4-git-send-email-sbeller@google.com>
-	<552E2608.7020104@alum.mit.edu>
+Subject: Re: [PATCH] compat/mingw: stubs for getpgid() and tcgetpgrp()
+Date: Wed, 15 Apr 2015 11:48:01 -0700
+Message-ID: <xmqq3841kz32.fsf@gitster.dls.corp.google.com>
+References: <20150413134850.GC23475@mewburn.net>
+	<alpine.LFD.2.11.1504130954420.5619@knanqh.ubzr>
+	<20150413144039.GD23475@mewburn.net>
+	<alpine.LFD.2.11.1504131052090.5619@knanqh.ubzr>
+	<20150414110312.GE23475@mewburn.net> <552EAE0A.3040208@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Stefan Beller <sbeller@google.com>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Apr 15 20:35:42 2015
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=UTF-8
+Cc: Nicolas Pitre <nico@fluxnic.net>,  git@vger.kernel.org,  msysGit <msysgit@googlegroups.com>
+To: Johannes Sixt <j6t@kdbg.org>, Luke Mewburn <luke@mewburn.net>
+X-From: msysgit+bncBCG77UMM3EJRBZPEXKUQKGQEV3KNBVI@googlegroups.com Wed Apr 15 20:48:08 2015
+Return-path: <msysgit+bncBCG77UMM3EJRBZPEXKUQKGQEV3KNBVI@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-pd0-f184.google.com ([209.85.192.184])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YiS9f-0000o8-2t
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Apr 2015 20:35:19 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753586AbbDOSfO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Apr 2015 14:35:14 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:52338 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751422AbbDOSfM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Apr 2015 14:35:12 -0400
+	(envelope-from <msysgit+bncBCG77UMM3EJRBZPEXKUQKGQEV3KNBVI@googlegroups.com>)
+	id 1YiSM3-0007tm-HY
+	for gcvm-msysgit@m.gmane.org; Wed, 15 Apr 2015 20:48:07 +0200
+Received: by pdjg10 with SMTP id g10sf7370568pdj.0
+        for <gcvm-msysgit@m.gmane.org>; Wed, 15 Apr 2015 11:48:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe;
+        bh=3Tqsia/WLyGWNsYrMo1f8eJRTvLVxZ8arsIT5a1SkLw=;
+        b=RYNUqX8MrWAavKv8zYUV6vE689FWQ1HAkx7sh/wFt4ZVZeCTo4k/mLUmbvN9Jb4BOs
+         gYec5QF3Squ7T2W8XEW6hHbPNZ80PuTAFjEWO0LeIQbK8V6am3Aqo4TeMnDK6Q6Zt5j1
+         FSFiI2BEKFZgDOQHzgM96KCuTUbwcEZ/bSA7ik/z4o/DzN8/Ikwu6GAvlX8X6ZJ9iUBH
+         MBoSZy/AOyRnEVdG01YyHLEtJXaMJOPJtlS4/2WwIpTzQpobfK08cu5iQYcvbMddyZY8
+         ZriE9bp8FdHewgtt1JlfBacSEewyJcRXTiE+iIBUzXjb7BNfqBgaJ+3WDnpGFEaoBg4A
+         PLMg==
+X-Received: by 10.50.25.199 with SMTP id e7mr10061igg.16.1429123686166;
+        Wed, 15 Apr 2015 11:48:06 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.50.114.4 with SMTP id jc4ls1519761igb.23.canary; Wed, 15 Apr
+ 2015 11:48:05 -0700 (PDT)
+X-Received: by 10.66.147.132 with SMTP id tk4mr36108819pab.23.1429123685637;
+        Wed, 15 Apr 2015 11:48:05 -0700 (PDT)
+Received: from sasl.smtp.pobox.com (pb-smtp1.int.icgroup.com. [208.72.237.35])
+        by gmr-mx.google.com with ESMTP id ei3si661157pdb.1.2015.04.15.11.48.05
+        for <msysgit@googlegroups.com>;
+        Wed, 15 Apr 2015 11:48:05 -0700 (PDT)
+Received-SPF: pass (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted sender) client-ip=208.72.237.35;
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id C496C486DB;
-	Wed, 15 Apr 2015 14:35:07 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=97phePMdUcZButP7sAf9QY+z5cI=; b=aAXv04
-	JS//9exThzCLxYoUcjA3o+3mexhxJqtwA3ihlUcb4tzPCiHzPD/zS0o/nFx25z/j
-	WQUeNTRmVTzvZLQa8c0mGUMBzJ3rbWpiDpQVM6sT/07xnzFhL9XK1GqEDa2YxGMY
-	/CnP6D97YyJb7QlGAEzue7T2dXsXdYn4yHOQU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=VWJaPcqtr5nsZoqpT4HMX7HUZhuVUexa
-	SzEj7B7D1AQQkzTEFSZ9n2xO43nbDTkksuafHrNc9rfv2+AqJMzQgGkE8vsSHJA4
-	esp9WsR/P6I/fk06Wvcbo+jLAnyNGZeQ759NnpH1u7hWRk2kPzq3LffsBwR+1+yf
-	B6dQxnSztbo=
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9C45F48AFE;
+	Wed, 15 Apr 2015 14:48:03 -0400 (EDT)
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id BE00A486DA;
-	Wed, 15 Apr 2015 14:35:07 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 95DA048AFD;
+	Wed, 15 Apr 2015 14:48:03 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 45A1F486D9;
-	Wed, 15 Apr 2015 14:35:07 -0400 (EDT)
-In-Reply-To: <552E2608.7020104@alum.mit.edu> (Michael Haggerty's message of
-	"Wed, 15 Apr 2015 10:49:12 +0200")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EB12F48AFB;
+	Wed, 15 Apr 2015 14:48:02 -0400 (EDT)
+In-Reply-To: <552EAE0A.3040208@kdbg.org> (Johannes Sixt's message of "Wed, 15
+	Apr 2015 20:29:30 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 23CDA204-E39E-11E4-B927-11859F42C9D4-77302942!pb-smtp1.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267229>
+X-Pobox-Relay-ID: F22F3B2A-E39F-11E4-B8FE-11859F42C9D4-77302942!pb-smtp1.pobox.com
+X-Original-Sender: gitster@pobox.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted
+ sender) smtp.mail=junio@pobox.com;       dkim=pass header.i=@pobox.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267230>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+Johannes Sixt <j6t@kdbg.org> writes:
 
-> This whole series LGTM; however, I suggest that this patch be split up.
-> See below.
+> Windows does not have process groups. It is, therefore, the simplest
+> to pretend that each process is in its own process group.
 >
->> Signed-off-by: Stefan Beller <sbeller@google.com>
->> Signed-off-by: Junio C Hamano <gitster@pobox.com>
->> ---
->>  refs.c | 16 ++++++----------
->>  1 file changed, 6 insertions(+), 10 deletions(-)
->> 
->> diff --git a/refs.c b/refs.c
->> index 14e52ca..4066752 100644
->> --- a/refs.c
->> +++ b/refs.c
->> [...]
->> @@ -2335,8 +2333,8 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
->>  		goto error_return;
->>  	}
->>  
->> -	lock->lock_fd = hold_lock_file_for_update(lock->lk, ref_file, lflags);
->> -	if (lock->lock_fd < 0) {
->> +	if (hold_lock_file_for_update(lock->lk, ref_file, lflags) < 0) {
->> +		last_errno = errno;
->>  		if (errno == ENOENT && --attempts_remaining > 0)
->>  			/*
->>  			 * Maybe somebody just deleted one of the
->> [...]
+> While here, move the getppid() stub from its old location (between
+> two sync related functions) next to the two new functions.
 >
-> Here you add the line "last_errno = errno". It is a good change, but it
-> is not part of removing ref_lock::lock_fd.
+> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+> ---
 
-I think this patch came from an ancient codebase before 06839515
-(lock_ref_sha1_basic: do not die on locking errors, 2014-11-19),
-which added the "last_errno = errno", and was not rebased to match
-more recent codebase.
+Thanks for a quick update.
 
-I am planning to apply these on top of v2.4.0-rc, so there will be
-no new "save to last_errno" in the end.
+The patch should do for now, but I suspect that it may give us a
+better abstraction to make the "is_foreground_fd(int fd)" or even
+"is_foreground(void)" the public API that would be implemented as
 
-Thanks.
+	int we_are_in_the_foreground(void)
+        {
+		return getpgid(0) == tcgetpgrp(fileno(stderr));
+	}
+
+in POSIX and Windows can implement entirely differently.
+
+Thoughts?
+
+>  compat/mingw.h | 8 ++++++--
+>  1 file changed, 6 insertions(+), 2 deletions(-)
+>
+> diff --git a/compat/mingw.h b/compat/mingw.h
+> index 7b523cf..a552026 100644
+> --- a/compat/mingw.h
+> +++ b/compat/mingw.h
+> @@ -95,8 +95,6 @@ static inline unsigned int alarm(unsigned int seconds)
+>  { return 0; }
+>  static inline int fsync(int fd)
+>  { return _commit(fd); }
+> -static inline pid_t getppid(void)
+> -{ return 1; }
+>  static inline void sync(void)
+>  {}
+>  static inline uid_t getuid(void)
+> @@ -118,6 +116,12 @@ static inline int sigaddset(sigset_t *set, int signum)
+>  #define SIG_UNBLOCK 0
+>  static inline int sigprocmask(int how, const sigset_t *set, sigset_t *oldset)
+>  { return 0; }
+> +static inline pid_t getppid(void)
+> +{ return 1; }
+> +static inline pid_t getpgid(pid_t pid)
+> +{ return pid == 0 ? getpid() : pid; }
+> +static inline pid_t tcgetpgrp(int fd)
+> +{ return getpid(); }
+>  
+>  /*
+>   * simple adaptors
+
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "Git for Windows" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
