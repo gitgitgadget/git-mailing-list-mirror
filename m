@@ -1,87 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git + SFC Status Update
-Date: Wed, 15 Apr 2015 09:07:56 -0700
-Message-ID: <xmqqfv81ml2b.fsf@gitster.dls.corp.google.com>
-References: <20150413115613.GA4589@peff.net>
-	<CAD0k6qT9Sj4VQ+4PKvXmwwfuZHFoGXNmAMGxTiorx81E0U11xg@mail.gmail.com>
-	<xmqq7fte33u8.fsf@gitster.dls.corp.google.com>
-	<20150414235425.GA2179@peff.net>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Odd broken "--date=now" behavior in current git
+Date: Wed, 15 Apr 2015 09:20:36 -0700
+Message-ID: <CA+55aFwbEnneEvUDhxGaWw=fSwY2WbtGy6Uc3aQzpiUY6GH1uQ@mail.gmail.com>
+References: <CA+55aFxvcN8Dz-t6fi6etycg+AiyR0crXv5AcfCdv8ji-iNBpw@mail.gmail.com>
+	<xmqqzj6ayp3p.fsf@gitster.dls.corp.google.com>
+	<20150415072223.GA1389@flurp.local>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Dave Borowitz <dborowitz@google.com>, Jeff King <peff@peff.net>
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Apr 15 18:08:07 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Wed Apr 15 18:21:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YiPrB-0005j0-St
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Apr 2015 18:08:06 +0200
+	id 1YiQ3r-0003wL-JN
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Apr 2015 18:21:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932345AbbDOQIA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Apr 2015 12:08:00 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:59643 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932203AbbDOQH6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Apr 2015 12:07:58 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1322646CDE;
-	Wed, 15 Apr 2015 12:07:58 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=IzPXuen1JR2TfmK6WUnW9q4nVvQ=; b=AD7pix
-	e3auGm6ssSENrXBZHQ3qy319iHj0yvhEj2htp4AK9pg3nTb77Xkw9QZITsSgncmQ
-	ioqQMZ1hW6MqqDn6DGcIazJiH2aVnw2NA+aLdlaQqVPhN4wMdO0HoS/IZCJCTdev
-	5jZfM75d4cfXEqN58ECFRFqSyX1B2coTf3OqQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wf1lyfuL1sz2gtm/dIuAW+p9MAgBKY/J
-	AAjt0NvWMn5GxYQK8LEUzftVOnI+dlMCISH12jXFVrEabhJPGOTt0dvJPZ7v5CRY
-	xyNDqSC7kVkB9ptBwqecTHdlaSmjTMTt8Bx+jofLA6fZixpqVLiORYv/lB1Buoyy
-	MP4Z3a72AsM=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 09D5846CDD;
-	Wed, 15 Apr 2015 12:07:58 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7F0C346CDA;
-	Wed, 15 Apr 2015 12:07:57 -0400 (EDT)
-In-Reply-To: <20150414235425.GA2179@peff.net> (Jeff King's message of "Wed, 15
-	Apr 2015 01:54:26 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 94DA727A-E389-11E4-803F-11859F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1756300AbbDOQVG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Apr 2015 12:21:06 -0400
+Received: from mail-ob0-f170.google.com ([209.85.214.170]:36799 "EHLO
+	mail-ob0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756276AbbDOQVD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Apr 2015 12:21:03 -0400
+Received: by obbeb7 with SMTP id eb7so26795880obb.3
+        for <git@vger.kernel.org>; Wed, 15 Apr 2015 09:21:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=/4MRjqvsoQlLy1ayV76AerTrjCW1f90MkpN+prhdHpY=;
+        b=ILUxxQ3+VVuMOtbiQWEk7VdanimKv+S52doZDcu3VY15I47O4ZmY+6pBill7R6LHcU
+         BUGiprHHvRJDacnOc8gy1XJLeuZXZAoQ0ZsDjhAP7gdi8exutGwpA73otWHOmqRVa/ep
+         knsmsl1aTJXB5FFAKLLND32pSYc4PhD1YiEeWgAvNItyqRcyvsUuKC6ugP3YRpnpZrQq
+         bgFHUT5dHClZe8wceetBBipK9Rdkr0iOUJyenO+YAdib8FwVS9lUuebUYvq7yOhqdv52
+         YZ+jHrcigSL2lFVl5MMWZHKBEpi+q24Ce76yf41o9rYPGBDEQC5VcEwgt/jSvmYf/X/v
+         sBAA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=/4MRjqvsoQlLy1ayV76AerTrjCW1f90MkpN+prhdHpY=;
+        b=afVwkyV4bJ/7KzWl2xPmq/XC595Kfs087upbkt33whCphOmJw52m8ScvcCDx06zhcH
+         B0XgpELbXPQNGn96Ujkin7v5kn94gGYFIA12k5duMyteOTomWpxm97vTeNn4s5JRmErF
+         j+4vVgadJ9XaGTVNW5DepQ7vqPx9mygKnV44w=
+X-Received: by 10.50.79.195 with SMTP id l3mr13854484igx.30.1429114836433;
+ Wed, 15 Apr 2015 09:20:36 -0700 (PDT)
+Received: by 10.36.53.141 with HTTP; Wed, 15 Apr 2015 09:20:36 -0700 (PDT)
+In-Reply-To: <20150415072223.GA1389@flurp.local>
+X-Google-Sender-Auth: vWed_KS2l6AOLV46Z89yFRXCVPc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267209>
 
-Jeff King <peff@peff.net> writes:
-
-> On Tue, Apr 14, 2015 at 12:30:23PM -0700, Junio C Hamano wrote:
+On Wed, Apr 15, 2015 at 12:22 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
 >
->> > If I recall correctly, Scott said onstage that some/all of the
->> > conference proceeds would be going directly into this fund. So this
->> > might need to be revised upward by 50-100% sometime soon :)
->> 
->> I think you misheard it.  The above is money earmarked for Git at
->> SFC; the admission for GitMerge were going to SFC general fund
->> without earmarked for us, IIUC.
->
-> Yeah, that's my understanding as well.
+> The fix seems to be simply:
 
-To elaborate on this a bit more, there are two ways for people to
-support software freedom conservancy (SFC) by donation:
+Yup, that seems to do it for me. I'm not sure how we get to
+"match_digit()" with the time string "now", though.
 
- - People can give money to the Git project, a member of the
-   conservancy.  90% of that money will be earmarked for the Git
-   project's use, and the rest goes to general fund to run SFC.  The
-   "Donate" button on http://git-scm.com/sfc goes to this pot.  The
-   "Check" option on http://git-scm.com/sfc can be directed to this
-   way by earmarking the money for the Git project.
+So your patch fixes things for me, but I think:
 
- - People can give money direct to the conservancy.  The "Check"
-   option on http://git-scm.com/sfc can be directed to this way by
-   not earmarking the money for the Git project.
+ - we should move the "tm.tm_isdst = -1;" up a bit and add a comment
+
+ - I'd like to know why it affected the author date but not the
+committer date, and how it got to match_digit() with that date string
+that didn't contain any digits.
+
+I'd spend the time on this myself, but I'm in the middle of the kernel
+merge window, so..
+
+Thanks,
+                     Linus
