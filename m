@@ -1,79 +1,101 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Odd broken "--date=now" behavior in current git
-Date: Wed, 15 Apr 2015 09:20:36 -0700
-Message-ID: <CA+55aFwbEnneEvUDhxGaWw=fSwY2WbtGy6Uc3aQzpiUY6GH1uQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 1/2] parse_date_basic(): return early when given a bogus timestamp
+Date: Wed, 15 Apr 2015 09:21:45 -0700
+Message-ID: <xmqqa8y9mkfa.fsf_-_@gitster.dls.corp.google.com>
 References: <CA+55aFxvcN8Dz-t6fi6etycg+AiyR0crXv5AcfCdv8ji-iNBpw@mail.gmail.com>
 	<xmqqzj6ayp3p.fsf@gitster.dls.corp.google.com>
 	<20150415072223.GA1389@flurp.local>
+	<xmqqk2xdmp0e.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
+Content-Type: text/plain
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
 	Git Mailing List <git@vger.kernel.org>
 To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Wed Apr 15 18:21:37 2015
+X-From: git-owner@vger.kernel.org Wed Apr 15 18:22:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YiQ3r-0003wL-JN
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Apr 2015 18:21:11 +0200
+	id 1YiQ4c-0004Xj-Tv
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Apr 2015 18:21:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756300AbbDOQVG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Apr 2015 12:21:06 -0400
-Received: from mail-ob0-f170.google.com ([209.85.214.170]:36799 "EHLO
-	mail-ob0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756276AbbDOQVD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Apr 2015 12:21:03 -0400
-Received: by obbeb7 with SMTP id eb7so26795880obb.3
-        for <git@vger.kernel.org>; Wed, 15 Apr 2015 09:21:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=/4MRjqvsoQlLy1ayV76AerTrjCW1f90MkpN+prhdHpY=;
-        b=ILUxxQ3+VVuMOtbiQWEk7VdanimKv+S52doZDcu3VY15I47O4ZmY+6pBill7R6LHcU
-         BUGiprHHvRJDacnOc8gy1XJLeuZXZAoQ0ZsDjhAP7gdi8exutGwpA73otWHOmqRVa/ep
-         knsmsl1aTJXB5FFAKLLND32pSYc4PhD1YiEeWgAvNItyqRcyvsUuKC6ugP3YRpnpZrQq
-         bgFHUT5dHClZe8wceetBBipK9Rdkr0iOUJyenO+YAdib8FwVS9lUuebUYvq7yOhqdv52
-         YZ+jHrcigSL2lFVl5MMWZHKBEpi+q24Ce76yf41o9rYPGBDEQC5VcEwgt/jSvmYf/X/v
-         sBAA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=/4MRjqvsoQlLy1ayV76AerTrjCW1f90MkpN+prhdHpY=;
-        b=afVwkyV4bJ/7KzWl2xPmq/XC595Kfs087upbkt33whCphOmJw52m8ScvcCDx06zhcH
-         B0XgpELbXPQNGn96Ujkin7v5kn94gGYFIA12k5duMyteOTomWpxm97vTeNn4s5JRmErF
-         j+4vVgadJ9XaGTVNW5DepQ7vqPx9mygKnV44w=
-X-Received: by 10.50.79.195 with SMTP id l3mr13854484igx.30.1429114836433;
- Wed, 15 Apr 2015 09:20:36 -0700 (PDT)
-Received: by 10.36.53.141 with HTTP; Wed, 15 Apr 2015 09:20:36 -0700 (PDT)
-In-Reply-To: <20150415072223.GA1389@flurp.local>
-X-Google-Sender-Auth: vWed_KS2l6AOLV46Z89yFRXCVPc
+	id S1756346AbbDOQVu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Apr 2015 12:21:50 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:54582 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1756336AbbDOQVs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Apr 2015 12:21:48 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id EB46E47260;
+	Wed, 15 Apr 2015 12:21:47 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=DL2Y0Dt2G2iqb3WIyfzGG6L04tw=; b=Eo4zAl
+	PBWDHyjHnBE00zWqj5Jj2PVlOcUwVwlUPK2BHEIjRo1Gr/U2RtjxvnrwYx26m8mC
+	yl4+l5L+B3uDHL3ANfesFTbAiwc2uVFP+K/rJmSoKCCR4xKNPNCtuapEoc/96OBG
+	c0TxmYL3iAiZbLNTcMoCQwq8ONMFCsR95Y9Nk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=S4UKwGk+SjcJXST9b3/wbJuKchb3ALAJ
+	S49fvzILmTGwP1BOSAKnVHDpdF0NGf9r2xQEu2CjjQLC1zXQQnm53fYzEAUebEAY
+	Yyz+vit/X4vJklO/f0p6YGtJeHQLnQuMLrCHJG1Dy4vJaKPaBmuiXeTTMgUk0WYz
+	Thf16l5PfLk=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E492E4725F;
+	Wed, 15 Apr 2015 12:21:47 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0B9974725A;
+	Wed, 15 Apr 2015 12:21:46 -0400 (EDT)
+In-Reply-To: <xmqqk2xdmp0e.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Wed, 15 Apr 2015 07:42:41 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 834A5A32-E38B-11E4-848C-11859F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267209>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267210>
 
-On Wed, Apr 15, 2015 at 12:22 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->
-> The fix seems to be simply:
+When the input does not have GMT timezone offset, the code computes
+it by computing the local and GMT time for the given timestamp. But
+there is no point doing so if the given timestamp is known to be a
+bogus one.
 
-Yup, that seems to do it for me. I'm not sure how we get to
-"match_digit()" with the time string "now", though.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-So your patch fixes things for me, but I think:
+ * A simple preliminary clean-up while we are in the vicinity.  We
+   may want to use time_t throughout the codepath and turn it into
+   ulong at the very last, but that would be a separate topic.
 
- - we should move the "tm.tm_isdst = -1;" up a bit and add a comment
+ date.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
- - I'd like to know why it affected the author date but not the
-committer date, and how it got to match_digit() with that date string
-that didn't contain any digits.
-
-I'd spend the time on this myself, but I'm in the middle of the kernel
-merge window, so..
-
-Thanks,
-                     Linus
+diff --git a/date.c b/date.c
+index 782de95..01fd73f 100644
+--- a/date.c
++++ b/date.c
+@@ -696,6 +696,9 @@ int parse_date_basic(const char *date, unsigned long *timestamp, int *offset)
+ 
+ 	/* mktime uses local timezone */
+ 	*timestamp = tm_to_time_t(&tm);
++	if (*timestamp == -1)
++		return -1;
++
+ 	if (*offset == -1) {
+ 		time_t temp_time = mktime(&tm);
+ 		if ((time_t)*timestamp > temp_time) {
+@@ -705,8 +708,6 @@ int parse_date_basic(const char *date, unsigned long *timestamp, int *offset)
+ 		}
+ 	}
+ 
+-	if (*timestamp == -1)
+-		return -1;
+ 
+ 	if (!tm_gmt)
+ 		*timestamp -= *offset * 60;
+-- 
+2.4.0-rc2-165-g862640d
