@@ -1,69 +1,98 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: support git+mosh for unreliable connections
-Date: Wed, 15 Apr 2015 16:41:42 +0200
-Organization: gmx
-Message-ID: <0cf0485caae569a71a8bd1aa8d1033cb@www.dscho.org>
-References: <552E628C.7040809@debian.org>
- <552E6D07.5030903@drmicha.warpmail.net> <552E732E.20107@debian.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Odd broken "--date=now" behavior in current git
+Date: Wed, 15 Apr 2015 07:42:41 -0700
+Message-ID: <xmqqk2xdmp0e.fsf@gitster.dls.corp.google.com>
+References: <CA+55aFxvcN8Dz-t6fi6etycg+AiyR0crXv5AcfCdv8ji-iNBpw@mail.gmail.com>
+	<xmqqzj6ayp3p.fsf@gitster.dls.corp.google.com>
+	<20150415072223.GA1389@flurp.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org,
-	git-owner@vger.kernel.org
-To: Pirate Praveen <praveen@debian.org>
-X-From: git-owner@vger.kernel.org Wed Apr 15 16:42:45 2015
+Content-Type: text/plain
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Wed Apr 15 16:43:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YiOVm-0005zb-5Z
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Apr 2015 16:41:54 +0200
+	id 1YiOXB-00077k-K4
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Apr 2015 16:43:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753659AbbDOOlt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Apr 2015 10:41:49 -0400
-Received: from mout.gmx.net ([212.227.17.22]:57718 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752289AbbDOOls (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Apr 2015 10:41:48 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0MOkQc-1Yl8Kn1mYY-006Agj; Wed, 15 Apr 2015 16:41:43
- +0200
-In-Reply-To: <552E732E.20107@debian.org>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:ub6D8NMi7gXvyrD/9/A8L5xPuaDPW7GpuMnPpLh2s/ueEOFf9B/
- Ah2ufkIVUcijKc7wYOX4F4PrO55bmHpM+oz3nsETflU/89kkFkSgMUlO5YEIP54EFD3A0O8
- V+KqnMJeXjM+AwdUE3ANm/2BVNb6HR3fXO9h0FOxkIb9eUuRU4087Jf5ny1xyQ1pTaQJeHf
- cXm5JwBeqZbbMOp8AAzKA==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1754119AbbDOOnH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Apr 2015 10:43:07 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64168 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752289AbbDOOnF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Apr 2015 10:43:05 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A77EF46DCA;
+	Wed, 15 Apr 2015 10:42:58 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=5g9Dh2kUG6R7cnNdcEe566ypjBQ=; b=DqvXZZ
+	0zKzKZNgRqMK5hNoe3EVbe+VOUZ7yhw6Wke2eJSdd3SQWgbJjbca8KWEH5+8Cryf
+	Ed7oSUlVHypwcIEtkJzy27LEXnWQGYhoOsDc245HVS9INIUCF7MwWjAVaUsEj538
+	tcLr6vep+sIHMSgO7YoYez1yK8KxyCfq0AL7I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=LOim3xUlWkBv38yWjz5RsXix2aEjf7ex
+	rndYr9z7QExMeozXAC2cJYkr8eBAfvEBGNdJM1heCk1p57N0NF7SoaK8zYnKxKsn
+	ynBEqdd4f4BWDKffOW9RXshU5mgYY7cHdA99S/LpcPlP9fdwL6A9oqMOWCOcWXWh
+	3Qd5DBlsn/Y=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A05B746DC9;
+	Wed, 15 Apr 2015 10:42:58 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A32A846DAD;
+	Wed, 15 Apr 2015 10:42:42 -0400 (EDT)
+In-Reply-To: <20150415072223.GA1389@flurp.local> (Eric Sunshine's message of
+	"Wed, 15 Apr 2015 03:22:23 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: AC2A0AD2-E37D-11E4-99DF-11859F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267202>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267203>
 
-Hi Praveen,
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-On 2015-04-15 16:18, Pirate Praveen wrote:
-> On Wednesday 15 April 2015 07:22 PM, Michael J Gruber wrote:
->> What would that require git to do, beyond taking whatever you tell it
->> (using GIT_SSH or _GIT_SSH_COMMAND) to use as a drop in replacement for ssh?
-> 
-> May be support git+mosh as a protocol, since it is not a drop in
-> replacement. It is redesigned remote shell. The ideas it uses for
-> session resumption needs to be reimplemented. This will need support
-> from git, because it needs server side to be modified. Use SSP to return
-> the the current progress for a particular session (it uses AES session ids).
+> Later parse_date_basic() computes the offset from GMT by comparing
+> the values returned by tm_to_time_t() and mktime(). The existing 'tm'
+> is passed to mktime() with the tm_isdst field already set to 0 by
+> gmtime_r(), and mktime() respects that as a statement that DST is not
+> in effect, rather than determining it dynamically.
+>
+> The fix seems to be simply:
+>
+> ---- >8 ----
+> diff --git a/date.c b/date.c
+> index 3eba2df..99ad2a0 100644
+> --- a/date.c
+> +++ b/date.c
+> @@ -707,6 +707,7 @@ int parse_date_basic(const char *date, unsigned long *timestamp, int *offset)
+>  	/* mktime uses local timezone */
+>  	*timestamp = tm_to_time_t(&tm);
+>  	if (*offset == -1) {
+> +		tm.tm_isdst = -1;
+>  		time_t temp_time = mktime(&tm);
+>  		if ((time_t)*timestamp > temp_time) {
+>  			*offset = ((time_t)*timestamp - temp_time) / 60;
+> ---- >8 ----
 
-It will need support from Git alright, but not as much as from mosh, see my other reply: Mosh was not designed for non-interactive use. That support would have to be added before we can go any further.
+I briefly wondered if the caller of gmtime_r() in match_digit()
+should be preserving the tm_isdst, though, as that codepath knows
+that it is handling a bare number without GMT offset.
 
-> So when a client connect with a session id, git server side can respond
-> with the current state, how many objects received in that session, and
-> client can continue from where it stopped. Client also will need to
-> store session information.
+But resetting it to -1 here makes it even less error prone (we may
+gain other code that stomp on tm.tm_isdst before we get here, and
+having -1 in *offset is a sign that nobody saw GMT offset in the
+input).
 
-No, the protocol can stay exactly the same, once you have a way to communicate non-interactively via mosh.
+I think I see a decl-after-statment, but other than that, this looks
+like a good fix.
 
-Ciao,
-Johannes
+Thanks.
