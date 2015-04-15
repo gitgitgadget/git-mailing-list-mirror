@@ -1,57 +1,59 @@
-From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+From: Michael J Gruber <git@drmicha.warpmail.net>
 Subject: Re: support git+mosh for unreliable connections
-Date: Wed, 15 Apr 2015 15:45:21 +0200
-Message-ID: <1429105521.14175.0.camel@kaarsemaker.net>
+Date: Wed, 15 Apr 2015 15:52:07 +0200
+Message-ID: <552E6D07.5030903@drmicha.warpmail.net>
 References: <552E628C.7040809@debian.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Pirate Praveen <praveen@debian.org>
-X-From: git-owner@vger.kernel.org Wed Apr 15 15:45:31 2015
+To: Pirate Praveen <praveen@debian.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 15 15:52:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YiNdD-0000O5-7s
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Apr 2015 15:45:31 +0200
+	id 1YiNjm-0003vS-HJ
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Apr 2015 15:52:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753470AbbDONp1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Apr 2015 09:45:27 -0400
-Received: from mail-wi0-f176.google.com ([209.85.212.176]:34131 "EHLO
-	mail-wi0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752013AbbDONpZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Apr 2015 09:45:25 -0400
-Received: by widjs5 with SMTP id js5so112275945wid.1
-        for <git@vger.kernel.org>; Wed, 15 Apr 2015 06:45:24 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:content-type:mime-version:content-transfer-encoding;
-        bh=9/78OTsd3zdRLgY1NkDto8SxHywOYGgq6LLt/P8ku/g=;
-        b=mWMu3vyWB4aJw4rZVqF+16qvydw+yQ7ATxAA9TitIEe1ZRKd//hao55M7uHfmaiDsa
-         KHLCIe3qwHWhdVK0yKeJIdXCfCRuU4jWhh7YHA25ZOWQ9DnV9Rp2OGbbrlsl1v5eH3Rf
-         ry4iQd8ulYZAZilYRjJLJbUFUQSriyg9EzramB8imnO1c3blrWW5pZvXjHloTGuOMjpZ
-         IdCq5jyMkZbpyp5s6OsJ3k459mfMQVgs0eQiCquvCSwvHUNLx2GOKlRB9dzcu/jZLL17
-         aN8zRP9EeISmnqnbPkLzGabiB0P2qCK/g0pf0sw2OOT5sCM+kvL7+9uuzQJqXyfpMq99
-         bxTA==
-X-Gm-Message-State: ALoCoQmbx1xBLGCD+1roqQmIHcPdPViq2HZe0psOY7+OlOTgLhK4zwTX7Db38HtMvghwux/hEPDN
-X-Received: by 10.181.13.144 with SMTP id ey16mr17341419wid.38.1429105524526;
-        Wed, 15 Apr 2015 06:45:24 -0700 (PDT)
-Received: from spirit.local (proxy-gw-l.booking.com. [5.57.20.8])
-        by mx.google.com with ESMTPSA id az2sm6092789wjb.4.2015.04.15.06.45.22
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 15 Apr 2015 06:45:23 -0700 (PDT)
+	id S1753650AbbDONwO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Apr 2015 09:52:14 -0400
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:41279 "EHLO
+	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753248AbbDONwN (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 15 Apr 2015 09:52:13 -0400
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailout.nyi.internal (Postfix) with ESMTP id D6CC320F02
+	for <git@vger.kernel.org>; Wed, 15 Apr 2015 09:52:08 -0400 (EDT)
+Received: from frontend2 ([10.202.2.161])
+  by compute4.internal (MEProxy); Wed, 15 Apr 2015 09:52:08 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=
+	content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=nmzFiApb6Rcnms0735he0pQdBP4=; b=Rdaf2C
+	BzL33CwvaDkn91fQTB6UkukWvBxAYwKTXob0/xtcRvfPTVpmfiAbm7vV6H0jrHkL
+	ULAzcCRXXm3U1NWqdyWZyw5PGlRN7ERXtlEDBCcs61osr8hCkppsF6d+H9hg3G15
+	hpxKc7zXmaD4KdMGMMUrA33SvkG7LEeR+3Hpc=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=nmzFiApb6Rcnms0
+	735he0pQdBP4=; b=Ni+URK8wFCp4zRoKqGYz4I8cXttGqcU94T+xuaA5Jvv2gko
+	Kl21tsW8FqEqDqRh+LWlmMPeD86/BD5yh4Qh2PPxChQjbdbHpS53Z6/UT6m48xcg
+	2DixoKDriGq4qLD5E6GKbFQu/AA15xHuduylHJKaUPz90x2XU0qKyKlPqh44=
+X-Sasl-enc: /flT5Ecqq5HFuhAKyN3hFVtUnn37L5hGWhj98AqcuxKE 1429105928
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 611B768023E;
+	Wed, 15 Apr 2015 09:52:08 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
 In-Reply-To: <552E628C.7040809@debian.org>
-X-Mailer: Evolution 3.12.10-0ubuntu1~14.10.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267199>
 
-On wo, 2015-04-15 at 18:37 +0530, Pirate Praveen wrote:
+Pirate Praveen venit, vidit, dixit 15.04.2015 15:07:
 > Hi,
 > 
 >  When working with big projects over a slow, unreliable connection,
@@ -64,10 +66,7 @@ On wo, 2015-04-15 at 18:37 +0530, Pirate Praveen wrote:
 > recently discovered mosh and it works like a charm. More about mosh
 > https://mosh.mit.edu/
 
-mosh isn't a generic transport though, it's a udp-based session state
-synchronization protocol. I don't think it can be used as a git
-transport.
+What would that require git to do, beyond taking whatever you tell it
+(using GIT_SSH or _GIT_SSH_COMMAND) to use as a drop in replacement for ssh?
 
--- 
-Dennis Kaarsemaker
-www.kaarsemaker.net
+Michael
