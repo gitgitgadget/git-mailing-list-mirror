@@ -1,67 +1,101 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 3/3] t0027: Add repoMIX and =?UTF-8?Q?LF=5Fnul?=
-Date: Wed, 15 Apr 2015 19:36:28 +0200
+Subject: Re: support git+mosh for unreliable connections
+Date: Wed, 15 Apr 2015 19:46:15 +0200
 Organization: gmx
-Message-ID: <c87875cc4da70fc671b40ba637421c94@www.dscho.org>
-References: <552E9950.9050008@web.de>
+Message-ID: <31749ad9ba57ada7f9c553191ffaddb3@www.dscho.org>
+References: <552E628C.7040809@debian.org>
+ <552E6D07.5030903@drmicha.warpmail.net> <552E732E.20107@debian.org>
+ <0cf0485caae569a71a8bd1aa8d1033cb@www.dscho.org>
+ <20150415153317.GA21768@tsaunders-iceball.corp.tor1.mozilla.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, git-owner@vger.kernel.org
-To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Wed Apr 15 19:36:40 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Pirate Praveen <praveen@debian.org>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	git@vger.kernel.org, git-owner@vger.kernel.org
+To: Trevor Saunders <tbsaunde@tbsaunde.org>
+X-From: git-owner@vger.kernel.org Wed Apr 15 19:46:27 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YiREs-0001Gi-Ly
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Apr 2015 19:36:39 +0200
+	id 1YiRON-0006E6-5g
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Apr 2015 19:46:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756309AbbDORge convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Apr 2015 13:36:34 -0400
-Received: from mout.gmx.net ([212.227.17.21]:63236 "EHLO mout.gmx.net"
+	id S1755947AbbDORqX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Apr 2015 13:46:23 -0400
+Received: from mout.gmx.net ([212.227.15.15]:63174 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754306AbbDORgd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Apr 2015 13:36:33 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0MO7Ca-1Yll9N23jo-005bCE; Wed, 15 Apr 2015 19:36:29
+	id S1753586AbbDORqV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Apr 2015 13:46:21 -0400
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0MOOpx-1Ym2IO0E3Z-005qz0; Wed, 15 Apr 2015 19:46:17
  +0200
-In-Reply-To: <552E9950.9050008@web.de>
+In-Reply-To: <20150415153317.GA21768@tsaunders-iceball.corp.tor1.mozilla.com>
 X-Sender: johannes.schindelin@gmx.de
 User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:3qKmqBDq1mRQ84Hap/Y2GNZNI1tsKQEKAm/v8gcWAB+gKsiuvQy
- QVuizykhcD9HYU2toMXFRYYBvwbVhZuIXQiDZOwmuBaH6YVP9Sh1noJabYa79QkEqbdjGpV
- oZjbd+1zgJSSN+v+GIckz6ppilY1MIWvbUNpPSP32iBb7f6MflzA60fxETVRVi2L6ZKUsd5
- PDQ6tLFOrH/NgwsTWCcqA==
+X-Provags-ID: V03:K0:DvCdy1mo8tLyZFe761p6nY9QE+a+AS2/pnbulPlqr2QAn16LUqK
+ 7S8MP/oubzzStsQhZzVNuPts9q/pgE477JzlH3IuobXMoBDDguGx6OpIdCDs5OUDd7owNP0
+ V7X//Pw8qml6XSwMPsy4fTubLy0HTOT1hXJ26Ymra/l99gPKpm2pvQjI2PLvF7DLSjHtm36
+ QoK5TOlPrAEnmz+ggvScw==
 X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267223>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267224>
 
-Hi Torsten,
+Hi Trevor,
 
-On 2015-04-15 19:01, Torsten B=C3=B6gershausen wrote:
+On 2015-04-15 17:33, Trevor Saunders wrote:
+> On Wed, Apr 15, 2015 at 04:41:42PM +0200, Johannes Schindelin wrote:
+>>
+>> On 2015-04-15 16:18, Pirate Praveen wrote:
+>> > On Wednesday 15 April 2015 07:22 PM, Michael J Gruber wrote:
+>> >> What would that require git to do, beyond taking whatever you tell it
+>> >> (using GIT_SSH or _GIT_SSH_COMMAND) to use as a drop in replacement for ssh?
+>> >
+>> > May be support git+mosh as a protocol, since it is not a drop in
+>> > replacement. It is redesigned remote shell. The ideas it uses for
+>> > session resumption needs to be reimplemented. This will need support
+>> > from git, because it needs server side to be modified. Use SSP to return
+>> > the the current progress for a particular session (it uses AES session ids).
+>>
+>> It will need support from Git alright, but not as much as from mosh, see my other reply: Mosh was not designed for non-interactive use. That support would have to be added before we can go any further.
+> 
+> is that really relevent? mosh doesn't support things like X forwarding
+> or port forwarding, but it certainly does support ssh <host> <command>
+> and then doing IO.
 
->  t/t0027-auto-crlf.sh | 155 ++++++++++++++++++++++++++++-------------=
-----------
+Ah, so mosh's README lied to me!
 
-I fear that we duplicated work here, due to me working on Git for Windo=
-ws 2.x and you sending mails to the non-Windows mailing list.
-
-=46or what it is worth, my patches can be viewed here:
-
-https://github.com/git-for-windows/git/commits/master/t/t0027-auto-crlf=
-=2Esh
-
-And in particular this one is important:
-
-https://github.com/git-for-windows/git/commit/c07cae2576cd3ed193bb76695=
-9f226a8fac5aa17
-
-It would maybe be a good idea to work together?
+If `mosh <user>@<host> <command>` works, then a simple `GIT_SSH=mosh` should work out of the box, too. Have you tried it?
 
 Ciao,
 Johannes
+  It might not support not doing terminal emulation
+> stuff, but that seems like a simple thing to change in principal at which
+> point I think it would support enough of ssh's functionality its a drop
+> in replacement as far as git is concerned.  Seems to me mosh is close
+> enough on its own its worth experimentation by someone who cares.
+> 
+> Trev
+> 
+>> > So when a client connect with a session id, git server side can respond
+>> > with the current state, how many objects received in that session, and
+>> > client can continue from where it stopped. Client also will need to
+>> > store session information.
+>>
+>> No, the protocol can stay exactly the same, once you have a way to communicate non-interactively via mosh.
+>>
+>> Ciao,
+>> Johannes
+>> --
+>> To unsubscribe from this list: send the line "unsubscribe git" in
+>> the body of a message to majordomo@vger.kernel.org
+>> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
