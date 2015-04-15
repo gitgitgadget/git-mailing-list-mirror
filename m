@@ -1,199 +1,144 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 3/3] clean: improve performance when removing lots of directories
-Date: Wed, 15 Apr 2015 10:56:50 -0700
-Message-ID: <xmqqpp75l1gd.fsf@gitster.dls.corp.google.com>
-References: <1428770587-9674-1-git-send-email-erik.elfstrom@gmail.com>
-	<1428770587-9674-5-git-send-email-erik.elfstrom@gmail.com>
+Subject: Re: Feature Request: provide cmdline args to git hooks
+Date: Wed, 15 Apr 2015 11:18:56 -0700
+Message-ID: <xmqqk2xdl0fj.fsf@gitster.dls.corp.google.com>
+References: <CAM-hpQcgOgrAJBAZrH4icDtJMiHUYOz1tynYkoj7qzyVMZ0eVQ@mail.gmail.com>
+	<xmqqwq1e3fy4.fsf@gitster.dls.corp.google.com>
+	<CAM-hpQcowcRaRMnYcZD8oUDep-nSw1e4Sy3CHjCojpQd=238Ug@mail.gmail.com>
+	<xmqq4moi1dej.fsf@gitster.dls.corp.google.com>
+	<CAM-hpQf2hzjufYxmc2uGUhoqn3JVnwwcoOPOnya4MJbCnjkg3A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>,
-	Jeff King <peff@peff.net>
-To: Erik =?utf-8?Q?Elfstr=C3=B6m?= <erik.elfstrom@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 15 19:57:19 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: "Chris O'Kelly" <chris@mapcreative.com.au>
+X-From: git-owner@vger.kernel.org Wed Apr 15 20:19:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YiRYr-0003XX-Px
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Apr 2015 19:57:18 +0200
+	id 1YiRu1-0007eK-AZ
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Apr 2015 20:19:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932085AbbDOR5I convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Apr 2015 13:57:08 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:59694 "EHLO
+	id S1756524AbbDOSTD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Apr 2015 14:19:03 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:65519 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754295AbbDOR5G convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 15 Apr 2015 13:57:06 -0400
+	with ESMTP id S1756442AbbDOSS7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Apr 2015 14:18:59 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0E99F47981;
-	Wed, 15 Apr 2015 13:57:04 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4CA7548181;
+	Wed, 15 Apr 2015 14:18:58 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=cqozAA8PqAlz
-	R12g19i0Q4yl06w=; b=sdENcaLIsBu8AY6VRcBS5JcQGhqniYW9nHdJDjp5xXCU
-	8IPzO7oom/tmkPthHSDM2MFxC0xXLrkKcQFpNA0+wmsFqoa0BFu7ebgUXNqcgjlj
-	Xy4kPoqye3vIkXCgoHfzoqqLRWr8MxSUTQ8xdTAUVNHNenFoA4pGaEVoXt47vGA=
+	:content-type; s=sasl; bh=rXuLo4ECrJfFc2aC74iEXZA2I1A=; b=ZjRfor
+	dLsPsGfwMr4vQcCShzPIk9QbuFoY29Uzxlq7mhFbUd/l2SRe+r/19+GOHA5xYQuR
+	h0KkoFOaxEmSsze9C66L7oBKD0AR1zU+mcA1HavaI+9c2wscbiFw46CAMWe+ZxYz
+	4IJDaIwKSkVrstg6+nzAiDe4pZBVik+HqfBE8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=XOpOWW
-	10wfCCL9TBcGhzdS1Kq4PVqiCSPe3Z8F5NSd2XcZ3cQmM8NEuCf48/fQGwtZtgzc
-	oRz9mecvtpLYV9Fc30vfkuBIkXoQFI975jCFsP9EDOHl3XHehsyKflnu566b74u3
-	ZHW+lJf2neqGhaL+3wMpts+Jip+8IOENoUc0k=
+	:content-type; q=dns; s=sasl; b=ODCUWvFSwa06SmigCbSYtQhhDRg9Cx9e
+	mDgelaGoJQeAQagt7y7AG8D31FMznIdyA73eUewsRXlKZXZeo670V7o5EyyAHW1m
+	nOCor/LCX3hW5mAtMQwSfIbB8MKrftng9KcTG2zKsQj16VSMPL3m5zSktMhML14S
+	yDgD97mw+90=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 07EC747980;
-	Wed, 15 Apr 2015 13:57:04 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4390C48180;
+	Wed, 15 Apr 2015 14:18:58 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BC2214796A;
-	Wed, 15 Apr 2015 13:56:51 -0400 (EDT)
-In-Reply-To: <1428770587-9674-5-git-send-email-erik.elfstrom@gmail.com>
- ("Erik
-	=?utf-8?Q?Elfstr=C3=B6m=22's?= message of "Sat, 11 Apr 2015 18:43:07
- +0200")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AB57C4817F;
+	Wed, 15 Apr 2015 14:18:57 -0400 (EDT)
+In-Reply-To: <CAM-hpQf2hzjufYxmc2uGUhoqn3JVnwwcoOPOnya4MJbCnjkg3A@mail.gmail.com>
+	(Chris O'Kelly's message of "Wed, 15 Apr 2015 10:21:39 +1000")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: CB921FD4-E398-11E4-95B8-11859F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: E1E310BA-E39B-11E4-AD1B-11859F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267225>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267226>
 
-Erik Elfstr=C3=B6m <erik.elfstrom@gmail.com> writes:
+"Chris O'Kelly" <chris@mapcreative.com.au> writes:
 
-> Before this change, clean used resolve_gitlink_ref to check for the
-> presence of nested git repositories. This had the drawback of creatin=
-g
-> a ref_cache entry for every directory that should potentially be
-> cleaned. The linear search through the ref_cache list caused a massiv=
-e
-> performance hit for large number of directories.
+> To reiterate and clarify I'm not saying the undesirable behavior
+> is a built in part of git, just a feature of our hosting
+> platform's Git deployment mechanisms, although if what you mean is
+> that the post-receive hook on the receiving end shouldn't be
+> getting passed pushed tag refs that the local git believed to be
+> already up to date on the remote (as of most recent fetch), then
+> yeah... that is weird because it seems to be the behavior in this
+> case.
 
-I'd prefer to see the "current state" described in the current
-tense, e.g.
+I just checked.
 
-    "git clean" uses resolve_gitlink_ref() to check for the presence of
-    nested git repositories, but it has the drawback of creating a
-    ref_cache entry for every directory that should potentially be
-    cleaned. The linear search through the ref_cache list causes a
-    massive performance hit for large number of directories.
+    $ rm -fr new && mkdir new && cd new
+    $ git init src && git init --bare dst
+    $ cd src
+    $ echo "(date;cat) >pushlog" >.git/hooks/pre-push
+    $ chmod +x .git/hooks/pre-push
+    $ git commit -m 'initial' --allow-empty
+    $ git tag -m 'initial' initial
 
-> Teach clean.c:remove_dirs to use setup.c:is_git_directory
-> instead. is_git_directory will actually open HEAD and parse the HEAD
-> ref but this implies a nested git repository and should be rare when
-> cleaning.
+Push only the branch:
 
-I am not sure what you wanted to say in this paragraph.  What does
-it being rare have to do with it?  Even if it is not rare (i.e. the
-top-level project you are working with has many submodules checked
-out without using the more recent "a file .git pointing into
-=2Egit/modules/ via 'gitdir: $overThere'" mechanism), if we found a
-nested git repository, we treat it as special and exclude it from
-cleaning it out, which is a good thing, no?
+    $ GIT_TRACE_PACKET=1 git push ../dst master 2>&1 | grep 'push>'
+    11:07:26.... packet: push> 0000... 66ba... refs/heads/master\0report-st...
+    11:07:26.... packet: push> 0000
+    $ cat pushlog
+    Wed Apr 15 11:07:26 PDT 2015
+    refs/heads/master 66ba... refs/heads/master 0000...
 
-Doesn't this implementation get confused by modern submodule
-checkouts and descend into and clean their working tree, though?
-Module M with path P would have a directory P in the working tree of
-the top-level project, and P/.git is a regular file that will fail
-"is_git_directory()" test but records the location of the real
-submodule repository i.e. ".git/modules/M" via the "gitdir:"
-mechanism.
+In the packet trace, we can see that we told the remote to update 'master',
+and the pre-push logger also records the same.
 
-> Using is_git_directory should give a more standardized check for what
-> is and what isn't a git repository but also gives a slight behavioral
-> change. We will now detect and respect bare and empty nested git
-> repositories (only init run). Update t7300 to reflect this.
->
-> The time to clean an untracked directory containing 100000 sub
-> directories went from 61s to 1.7s after this change.
->
-> Helped-by: Jeff King <peff@peff.net>
-> Signed-off-by: Erik Elfstr=C3=B6m <erik.elfstrom@gmail.com>
-> ---
->  builtin/clean.c  | 24 ++++++++++++++++++++----
->  t/t7300-clean.sh |  4 ++--
->  2 files changed, 22 insertions(+), 6 deletions(-)
->
-> diff --git a/builtin/clean.c b/builtin/clean.c
-> index 98c103f..b679913 100644
-> --- a/builtin/clean.c
-> +++ b/builtin/clean.c
-> @@ -10,7 +10,6 @@
->  #include "cache.h"
->  #include "dir.h"
->  #include "parse-options.h"
-> -#include "refs.h"
->  #include "string-list.h"
->  #include "quote.h"
->  #include "column.h"
-> @@ -148,6 +147,25 @@ static int exclude_cb(const struct option *opt, =
-const char *arg, int unset)
->  	return 0;
->  }
-> =20
-> +static int is_git_repository(struct strbuf *path)
-> +{
-> +	int ret =3D 0;
-> +	if (is_git_directory(path->buf))
-> +		ret =3D 1;
-> +	else {
-> +		size_t orig_path_len =3D path->len;
-> +		assert(orig_path_len !=3D 0);
-> +		if (path->buf[orig_path_len - 1] !=3D '/')
-> +			strbuf_addch(path, '/');
-> +		strbuf_addstr(path, ".git");
-> +		if (is_git_directory(path->buf))
-> +			ret =3D 1;
-> +		strbuf_setlen(path, orig_path_len);
-> +	}
-> +
-> +	return ret;
-> +}
-> +
->  static int remove_dirs(struct strbuf *path, const char *prefix, int =
-force_flag,
->  		int dry_run, int quiet, int *dir_gone)
->  {
-> @@ -155,13 +173,11 @@ static int remove_dirs(struct strbuf *path, con=
-st char *prefix, int force_flag,
->  	struct strbuf quoted =3D STRBUF_INIT;
->  	struct dirent *e;
->  	int res =3D 0, ret =3D 0, gone =3D 1, original_len =3D path->len, l=
-en;
-> -	unsigned char submodule_head[20];
->  	struct string_list dels =3D STRING_LIST_INIT_DUP;
-> =20
->  	*dir_gone =3D 1;
-> =20
-> -	if ((force_flag & REMOVE_DIR_KEEP_NESTED_GIT) &&
-> -			!resolve_gitlink_ref(path->buf, "HEAD", submodule_head)) {
-> +	if ((force_flag & REMOVE_DIR_KEEP_NESTED_GIT) && is_git_repository(=
-path)) {
->  		if (!quiet) {
->  			quote_path_relative(path->buf, prefix, &quoted);
->  			printf(dry_run ?  _(msg_would_skip_git_dir) : _(msg_skip_git_dir)=
-,
-> diff --git a/t/t7300-clean.sh b/t/t7300-clean.sh
-> index 58e6b4a..da294fe 100755
-> --- a/t/t7300-clean.sh
-> +++ b/t/t7300-clean.sh
-> @@ -455,7 +455,7 @@ test_expect_success 'nested git work tree' '
->  	! test -d bar
->  '
-> =20
-> -test_expect_failure 'nested git (only init) should be kept' '
-> +test_expect_success 'nested git (only init) should be kept' '
->  	rm -fr foo bar &&
->  	git init foo &&
->  	mkdir bar &&
-> @@ -465,7 +465,7 @@ test_expect_failure 'nested git (only init) shoul=
-d be kept' '
->  	test_path_is_missing bar
->  '
-> =20
-> -test_expect_failure 'nested git (bare) should be kept' '
-> +test_expect_success 'nested git (bare) should be kept' '
->  	rm -fr foo bar &&
->  	git init --bare foo &&
->  	mkdir bar &&
+Then push with --follow-tags:
+
+    $ GIT_TRACE_PACKET=1 git push --follow-tags ../dst master 2>&1 | grep 'push>'
+    11:09:53.... packet: push> 0000... 30fa... refs/tags/initial\0report-st...
+    11:09:53.... packet: push> 0000
+    $ cat pushlog
+    Wed Apr 15 11:09:53 PDT 2015
+    refs/tags/initial 30fa... refs/tags/initial 0000...
+
+We can see that we told the remote to store the tag, which matches
+what the pre-push saw.
+
+And then an empty push:
+
+    $ GIT_TRACE_PACKET=1 git push --follow-tags ../dst master 2>&1 | grep 'push>'
+    11:11:23.... packet: push> 0000
+    $ cat pushlog
+    Wed Apr 15 11:11:23 PDT 2015
+
+We tell them to do nothing, and pre-push saw nothing.
+
+For a good measure, let's advance the branch and push it out:
+
+    $ git commit --allow-empty -m second
+    $ GIT_TRACE_PACKET=1 git push --follow-tags ../dst master 2>&1 | grep 'push>'
+    11:13:43.... packet: push> 66ba... e711... refs/heads/master\0report-st...
+    11:13:43.... packet: push> 0000
+    $ cat pushlog
+    Wed Apr 15 11:13:43 PDT 2015
+    refs/heads/master e711... refs/heads/master 66ba...
+
+We notice that the tag is up to date and do not tell them to do
+anything to it, and pre-push did not see the tag either.
+
+As far as I can see so far, the behaviour of the underlying push
+(i.e. what we decide to tell the remote to update) is sensible,
+and what pre-push is told we are doing by the command is consistent
+with what is really pushed.
+
+So....
+
+> Anyway it sounds like the answer here is that it really isn't a
+> feasible task in a client side hook, and we should stick with the
+> current solution of "Don't use the GUI to push to Live" for now, which
+> is fine; I should probably stop trying to script around every single
+> problem anyway (https://xkcd.com/1319/).
+
+It appears that your "GUI" is a broken implementation of Git, that
+tells the other side to update what it did not even send, and that
+is what is causing the trouble, perhaps?
