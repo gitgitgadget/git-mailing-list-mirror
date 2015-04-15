@@ -1,60 +1,84 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: [ANNOUNCE] Git Rev News edition 2 published
-Date: Wed, 15 Apr 2015 08:05:19 +0200
-Message-ID: <CAP8UFD3Vgp5QeJpwz7jq0_hkMtKv-zJXUWy63w+TCN93mg41jQ@mail.gmail.com>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Re: Odd broken "--date=now" behavior in current git
+Date: Wed, 15 Apr 2015 08:07:35 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.1504150803370.8606@ds9.cixit.se>
+References: <CA+55aFxvcN8Dz-t6fi6etycg+AiyR0crXv5AcfCdv8ji-iNBpw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Thomas Ferris Nicolaisen <tfnico@gmail.com>,
-	Tim Pettersen <tim@atlassian.com>
-To: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Rick Olson <technoweenie@gmail.com>, Jeff King <peff@peff.net>,
-	John Garcia <jgarcia@atlassian.com>,
-	Emma Jane <emma@emmajane.net>,
-	Andrew Ardill <andrew.ardill@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 15 08:05:26 2015
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Apr 15 09:07:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YiGRx-0006uy-UO
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Apr 2015 08:05:26 +0200
+	id 1YiHQO-00047I-Nd
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Apr 2015 09:07:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933239AbbDOGFW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Apr 2015 02:05:22 -0400
-Received: from mail-ie0-f179.google.com ([209.85.223.179]:35474 "EHLO
-	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932772AbbDOGFU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Apr 2015 02:05:20 -0400
-Received: by iejt8 with SMTP id t8so33123767iej.2
-        for <git@vger.kernel.org>; Tue, 14 Apr 2015 23:05:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=/ush4U37k3ezaPBS/lMwazO2P4RAJSl/gqq7MQFV3CM=;
-        b=Q0SrdXycsUGznjJbH3CwuiBNv1e4z87adfZmRNt/fUiNKJsMKhbjTVj4fr97k1hEhu
-         ye2UcDlJnqIygOF94CkJVbzcRgwadp7cJGILMQKSIecivK2BCqHVQGBvUoGQ1kLYhnhL
-         LajlkwTnYTImd706Jsr5Dk8QQAuL2nAQPOrciMpMMJryLjIuiuaPB/QoEQPQT4Is/FQc
-         XJDl1zFsfO1DArBQvmcTH5ERxZI0/sSc9i1b5093vfKoWz9niihkdib9gMrJGTBrGlZC
-         Qm4Kdco4vLsjs1eJCiy68szSi7Ew+MYUgrp+8Cg/6O3f6sP/HgAQdBwLTayAUcTRsSdS
-         R82g==
-X-Received: by 10.50.138.70 with SMTP id qo6mr29789875igb.40.1429077919595;
- Tue, 14 Apr 2015 23:05:19 -0700 (PDT)
-Received: by 10.50.245.168 with HTTP; Tue, 14 Apr 2015 23:05:19 -0700 (PDT)
+	id S1754258AbbDOHHs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Apr 2015 03:07:48 -0400
+Received: from upper-gw.cixit.se ([92.43.32.133]:51391 "EHLO mail.cixit.se"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752492AbbDOHHr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Apr 2015 03:07:47 -0400
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by mail.cixit.se (8.14.3/8.14.3/Debian-9.4) with ESMTP id t3F77bbv018439
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 15 Apr 2015 09:07:37 +0200
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id t3F77ZrZ018432;
+	Wed, 15 Apr 2015 09:07:36 +0200
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <CA+55aFxvcN8Dz-t6fi6etycg+AiyR0crXv5AcfCdv8ji-iNBpw@mail.gmail.com>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.3.7 (mail.cixit.se [127.0.0.1]); Wed, 15 Apr 2015 09:07:37 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267185>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267186>
 
-Hi,
+Linus Torvalds:
 
-Git Rev News edition 2 is now available:
+> I can't be the only one seeing this? My guess is that there's a 
+> missing initialization of tm.tm_isdst somewhere or whatever.
 
-https://git.github.io/rev_news/2015/04/05/edition-2/
+I can confirm it if I enable DST on my machine (I usually run my 
+machines on CET all-year, to avoid these kind of issues):
 
-Thanks a lot to all the helpers!
+   $ echo $TZ
+   Europe/Oslo
+   $ git commit -m b
+   [master dee7ec1] b
+    1 file changed, 1 insertion(+)
+    create mode 100644 b.txt
+   $ git show --pretty=fuller
+   commit dee7ec1cda74a8abd7f26c60ee1e83f73bb31194 (HEAD -> master)
+   Author:     Peter Krefting <peter.krefting@bridgetech.tv>
+   AuthorDate: 2015-04-15 09:04:34 +0200
+   Commit:     Peter Krefting <peter.krefting@bridgetech.tv>
+   CommitDate: 2015-04-15 09:04:34 +0200
+   [...]
+   $ git commit --amend --date=now
+   [...]
+   $ git show --pretty=fuller
+   commit b4561e5a077de7bbcaf9fc06350ea24407adcec0 (HEAD -> master)
+   Author:     Peter Krefting <peter.krefting@bridgetech.tv>
+   AuthorDate: 2015-04-15 08:05:04 +0100
+   Commit:     Peter Krefting <peter.krefting@bridgetech.tv>
+   CommitDate: 2015-04-15 09:05:04 +0200
 
-Enjoy,
-Christian, Thomas and Nicola.
+So the datetime is correct, it's just the timezone that is wrong 
+(08:05+0100 = 09:05+0200).
+
+   $ git --version
+   git version 2.4.0.rc1
+
+-- 
+\\// Peter - http://www.softwolves.pp.se/
