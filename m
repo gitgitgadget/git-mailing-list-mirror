@@ -1,67 +1,153 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: How to send a warning message from git hosting server?
-Date: Wed, 15 Apr 2015 15:58:52 +0530
-Message-ID: <552E3D64.8090501@gmail.com>
-References: <CAFT+Tg-Gwr9EemFv88+=Ao21dGYe73D-CDiT4mXU4kuP-niOSw@mail.gmail.com>	<alpine.LSU.2.00.1504081206420.10193@hermes-1.csi.cam.ac.uk> <CAFT+Tg9La03dkteQT0YOPPKdR78w89385VfOGN2B9kLGPo7Kcg@mail.gmail.com>
+From: Vitaly <vitalyster@gmail.com>
+Subject: Re: Re: Sneak peek of the upcoming Git for Windows 2.x
+Date: Wed, 15 Apr 2015 05:22:10 -0700 (PDT)
+Message-ID: <3fc0da8d-a00b-4a92-a1af-aa825063f712@googlegroups.com>
+References: <72d57a68ab32619769d5671d39505db8@www.dscho.org>
+ <00ecdadf-8bcb-4ade-a2fd-46d866a66be8@googlegroups.com>
+ <0a22af8a5207eb8f888b65c6bad3e888@www.dscho.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>
-To: semtlenori@gmail.com, Tony Finch <dot@dotat.at>
-X-From: git-owner@vger.kernel.org Wed Apr 15 12:29:10 2015
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_321_70484878.1429100530929"
+Cc: vitalyster@gmail.com, git@vger.kernel.org
+To: msysgit@googlegroups.com
+X-From: msysgit+bncBC34VAHX6MORB45PXGUQKGQEPPGJKMQ@googlegroups.com Wed Apr 15 14:22:15 2015
+Return-path: <msysgit+bncBC34VAHX6MORB45PXGUQKGQEPPGJKMQ@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-qk0-f190.google.com ([209.85.220.190])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YiKZB-00072b-5r
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Apr 2015 12:29:09 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756132AbbDOK27 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Apr 2015 06:28:59 -0400
-Received: from mail-pa0-f45.google.com ([209.85.220.45]:36585 "EHLO
-	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754870AbbDOK24 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Apr 2015 06:28:56 -0400
-Received: by pabsx10 with SMTP id sx10so46214313pab.3
-        for <git@vger.kernel.org>; Wed, 15 Apr 2015 03:28:55 -0700 (PDT)
+	(envelope-from <msysgit+bncBC34VAHX6MORB45PXGUQKGQEPPGJKMQ@googlegroups.com>)
+	id 1YiMKa-00065Q-Ve
+	for gcvm-msysgit@m.gmane.org; Wed, 15 Apr 2015 14:22:13 +0200
+Received: by qkbw1 with SMTP id w1sf61051342qkb.1
+        for <gcvm-msysgit@m.gmane.org>; Wed, 15 Apr 2015 05:22:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:x-original-sender:precedence:mailing-list
+         :list-id:list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe;
+        bh=Tz/2MVYgq7939lWfxVhJNGF2mt7OPuw57C15uV8TRp0=;
+        b=gSFIr579O8IcMhGICGFPnW9kdGixWRL8GiqC5glsSLg400QKCWi8YVn07HlCDdTfW3
+         0EBjCQATlAnchAG89i2mcNK1BKzwytYNffp+f1KQr6O588jDbi7ldkOyC6kjsOcxtEf1
+         k6SqZwezqD7U1xMlRNhY5pHNiec5R3lLXuIIfFIuNwPrEsIm2kKmt5MWpUteAV/VIvPj
+         zEM7W2DKWFGAYUi8S/2qWDQp+lF/7x2gi5K4b+mGBR/2BdeYhFgihvct4Xl4VzJNqJTu
+         wh1+k9DmrpGVdA2T5+3idmLSF7ca/JNrP9z+XxpfDkTxgrsk/1Esyk0Ppvav/tbonSWE
+         jJcA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=EykfEBwy7DytggGwwQFRU1ph8RNxbmeoCOMIKlp2KiM=;
-        b=QKK1gezEy/53pobibZrTfkPWzeVGElA6lu7FKwzykX3zDgEjmB6EZDto4rkMfEjC0N
-         n9oh4bGoRMpHg1zCBbG6KOUr9jtG427IXIWNps8k7QfAb9UItnRfhG/0DycF33UqWdgI
-         MqmetUCyWL0yOqziKeb04sFKFaFoA3nd8PzP1gKqpyrjigR2XrfPXfj4X8MEC6do3VYP
-         hZBG1+95KERhoTcaEoY+5PQe+dvmz4BudjSY8AZDNV0YRaGlnNuN8QD7g4AaDECSv3ua
-         +gFzrP+/AZ+P1zptsPPZgRztrCW2xxiW+GayIKJPIXfWKfnBHRT914UzL3nn2kDTCh1D
-         jzaA==
-X-Received: by 10.70.32.164 with SMTP id k4mr45388118pdi.138.1429093735619;
-        Wed, 15 Apr 2015 03:28:55 -0700 (PDT)
-Received: from sita-lt.atc.tcs.com (atcmail.atc.tcs.com. [203.200.212.145])
-        by mx.google.com with ESMTPSA id bs4sm3720147pdb.21.2015.04.15.03.28.53
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 15 Apr 2015 03:28:55 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
-In-Reply-To: <CAFT+Tg9La03dkteQT0YOPPKdR78w89385VfOGN2B9kLGPo7Kcg@mail.gmail.com>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267195>
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:x-original-sender:precedence:mailing-list
+         :list-id:list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe;
+        bh=Tz/2MVYgq7939lWfxVhJNGF2mt7OPuw57C15uV8TRp0=;
+        b=oEHyV1cMQsZHtCSDsod+I7M4ncvZc5vwkEVP7hUExWgk6kMVO21W3matMFerGd4uJw
+         /3ESdBcTagRC8jyhnO7O9wUk9SGICRpvagovZiNpBHZWmdrg0cstuhKZtFrdU2nekzkP
+         22mY/Z45bnUJsktj0cCzjc/oUj+1rOYvSW+HLTHPEJEX72VGRcigKf3UdSxXbJAJVQsN
+         64D2rA7QWorDQH9aQdOqee8QNkJEXI61+Q0zWCv4LsA3JQazrTDSI8cIQqskBdNs0Zbm
+         SYPKZGof8pTdnXn0LlfurVWWBmjmaGLWdBeoy9IbBmxEfU2GzSj3ISbjkGF/sYdaRkIt
+         aaYg==
+X-Received: by 10.140.89.168 with SMTP id v37mr315600qgd.7.1429100531811;
+        Wed, 15 Apr 2015 05:22:11 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.140.27.138 with SMTP id 10ls601243qgx.47.gmail; Wed, 15 Apr
+ 2015 05:22:11 -0700 (PDT)
+X-Received: by 10.140.36.232 with SMTP id p95mr221675qgp.17.1429100531372;
+        Wed, 15 Apr 2015 05:22:11 -0700 (PDT)
+In-Reply-To: <0a22af8a5207eb8f888b65c6bad3e888@www.dscho.org>
+X-Original-Sender: vitalyster@gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267196>
 
-On 04/12/2015 04:55 PM, Yi, EungJun wrote:
-> On Wed, Apr 8, 2015 at 8:08 PM, Tony Finch <dot@dotat.at> wrote:
->> Yi, EungJun <semtlenori@gmail.com> wrote:
->>>
->>> I want a way to response a remote message when a client send any kind
->>> of request. Is it possible?
->>
->> Yes, though you need a wrapper around git. Recent versions of gitolite
->> have a "motd" message of the day feature.
-> 
-> It sounds nice. Is the wrapper for git client or git server?
+------=_Part_321_70484878.1429100530929
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_322_1375855049.1429100530929"
 
-Gitolite is -- in this context -- a wrapper on the git server.
+------=_Part_322_1375855049.1429100530929
+Content-Type: text/plain; charset=UTF-8
 
-It's main purpose is access control; the motd feature is just an extra that just happened to be easy once there was a wrapper anyway.
+
+>
+> > C:\>git 
+> > error launching git:      .
+>
+
+I have found the root of problem in broken git-wrapper: old git-wrapper in 
+msysgit repository uses case-insensitive path comparison after calling 
+GetModuleFileName (in my case there is "git.EXE"). This is my dummy fix: 
+https://github.com/vitalyster/git/commit/c1904dbee2aab59b5dc213960dfb2481c8d7a1bf 
+
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "Git for Windows" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
+
+------=_Part_322_1375855049.1429100530929
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><blockquote class=3D"gmail_quote" style=3D"margin: 0;margi=
+n-left: 0.8ex;border-left: 1px #ccc solid;padding-left: 1ex;">&gt; C:\&gt;g=
+it
+<br>&gt; error launching git: &nbsp; &nbsp; &nbsp;.<br></blockquote><div><b=
+r></div><div>I have found the root of problem in broken git-wrapper: old gi=
+t-wrapper in msysgit repository uses case-insensitive path comparison after=
+ calling GetModuleFileName (in my case there is "git.EXE"). This is my dumm=
+y fix: https://github.com/vitalyster/git/commit/c1904dbee2aab59b5dc213960df=
+b2481c8d7a1bf&nbsp;</div></div>
+
+<p></p>
+
+-- <br />
+-- <br />
+*** Please reply-to-all at all times ***<br />
+*** (do not pretend to know who is subscribed and who is not) ***<br />
+*** Please avoid top-posting. ***<br />
+The msysGit Wiki is here: <a href=3D"https://github.com/msysgit/msysgit/wik=
+i">https://github.com/msysgit/msysgit/wiki</a> - Github accounts are free.<=
+br />
+&nbsp;<br />
+You received this message because you are subscribed to the Google<br />
+Groups &quot;msysGit&quot; group.<br />
+To post to this group, send email to msysgit@googlegroups.com<br />
+To unsubscribe from this group, send email to<br />
+msysgit+unsubscribe@googlegroups.com<br />
+For more options, and view previous threads, visit this group at<br />
+<a href=3D"http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den">http:=
+//groups.google.com/group/msysgit?hl=3Den_US?hl=3Den</a><br />
+<br />
+--- <br />
+You received this message because you are subscribed to the Google Groups &=
+quot;Git for Windows&quot; group.<br />
+To unsubscribe from this group and stop receiving emails from it, send an e=
+mail to <a href=3D"mailto:msysgit+unsubscribe@googlegroups.com">msysgit+uns=
+ubscribe@googlegroups.com</a>.<br />
+For more options, visit <a href=3D"https://groups.google.com/d/optout">http=
+s://groups.google.com/d/optout</a>.<br />
+
+------=_Part_322_1375855049.1429100530929--
+------=_Part_321_70484878.1429100530929--
