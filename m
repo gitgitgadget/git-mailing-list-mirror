@@ -1,166 +1,125 @@
-From: Vitaly <vitalyster@gmail.com>
-Subject: Re: Sneak peek of the upcoming Git for Windows 2.x
-Date: Wed, 15 Apr 2015 00:17:42 -0700 (PDT)
-Message-ID: <00ecdadf-8bcb-4ade-a2fd-46d866a66be8@googlegroups.com>
-References: <72d57a68ab32619769d5671d39505db8@www.dscho.org>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: Odd broken "--date=now" behavior in current git
+Date: Wed, 15 Apr 2015 03:22:23 -0400
+Message-ID: <20150415072223.GA1389@flurp.local>
+References: <CA+55aFxvcN8Dz-t6fi6etycg+AiyR0crXv5AcfCdv8ji-iNBpw@mail.gmail.com>
+ <xmqqzj6ayp3p.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; 
-	boundary="----=_Part_75_1437648194.1429082263020"
-Cc: git@vger.kernel.org
-To: msysgit@googlegroups.com
-X-From: msysgit+bncBC34VAHX6MORBF5BXCUQKGQE4DSDTBQ@googlegroups.com Wed Apr 15 09:17:47 2015
-Return-path: <msysgit+bncBC34VAHX6MORBF5BXCUQKGQE4DSDTBQ@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-qk0-f189.google.com ([209.85.220.189])
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 15 09:22:39 2015
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBC34VAHX6MORBF5BXCUQKGQE4DSDTBQ@googlegroups.com>)
-	id 1YiHZx-0000IF-1V
-	for gcvm-msysgit@m.gmane.org; Wed, 15 Apr 2015 09:17:45 +0200
-Received: by qkbw1 with SMTP id w1sf51205256qkb.1
-        for <gcvm-msysgit@m.gmane.org>; Wed, 15 Apr 2015 00:17:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:x-original-sender:precedence:mailing-list
-         :list-id:list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe;
-        bh=CyKDM9J5oRo5nPIJqKGobqNx4x9a54P+5G04J2k0JrM=;
-        b=OhjVygox21JYq5C92t8zFj9wC6qB1k9V+B5XT0EJpoeCCzgcR5t+EYurcCFmD97sv3
-         UGwr5IMEiM2hjHDqUfcYf9wG/niXArVIESpCicrJAf7pAIl1fL1LPIXtaOhlUS4sp6YN
-         J1aS9d0vHPgLkug13k50htJYt7uVkUhqz0g7eiRL/TiVEbStnoTEkvcaKVsRJjhTbnam
-         TOS5x8R3ZhYm4dE1qvF+RPOd+qB/Mxx5YcdPnOKr1Q3K1rl+istYM/cTLUx3zgJHhf32
-         jzpnOG7hgwldCFXFs+3Y5uWoQy2qEafEg37knQxsA50fiFWOS0VpfWqNiIwpBk6rnHA8
-         YWkA==
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1YiHeg-0002ah-GF
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Apr 2015 09:22:38 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1753098AbbDOHWd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Apr 2015 03:22:33 -0400
+Received: from mail-ob0-f175.google.com ([209.85.214.175]:35408 "EHLO
+	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752106AbbDOHWc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Apr 2015 03:22:32 -0400
+Received: by obbfy7 with SMTP id fy7so11470668obb.2
+        for <git@vger.kernel.org>; Wed, 15 Apr 2015 00:22:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:x-original-sender:precedence:mailing-list
-         :list-id:list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe;
-        bh=CyKDM9J5oRo5nPIJqKGobqNx4x9a54P+5G04J2k0JrM=;
-        b=y12wczD16+tttdegeNHjaJ6sbfWC3vQ4Qsp0DvgyX79yovz9dtq7HAihIDUwPe6+II
-         Szu2722vkdEjkhYEijAL7rlqc/1ZFoDT+UJlYn40k/CoegMS8BqMMz907GmGg0kAygvm
-         VNVaDLH7fm0NlhoAPx5g9KGwA6hhvNM5VgQ6DIwb1p5ZyjR2qJWuTVQwhoZhqU4Uzzme
-         xkWTEWxL9LUto032hm+Pp7gmYSaL2mLifCYZPp82x1hb6ygtT48TH+MARc9F76W3LZYU
-         p9tnL2ZbY+lHd+jFXoLnO/TkRrfMQchATaYk4CtoMmxrmdTCSbg4+Y4tM8r+vfDV/Ziw
-         IT5Q==
-X-Received: by 10.140.96.79 with SMTP id j73mr311552qge.9.1429082263906;
-        Wed, 15 Apr 2015 00:17:43 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.140.90.239 with SMTP id x102ls542156qgd.86.gmail; Wed, 15 Apr
- 2015 00:17:43 -0700 (PDT)
-X-Received: by 10.140.84.213 with SMTP id l79mr298955qgd.41.1429082263424;
-        Wed, 15 Apr 2015 00:17:43 -0700 (PDT)
-In-Reply-To: <72d57a68ab32619769d5671d39505db8@www.dscho.org>
-X-Original-Sender: vitalyster@gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267187>
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=k0QMbvCzIhDVCuXTbRZHkTA7435K9I4jX8W0p506+Jw=;
+        b=CoqWYCVEP7gP3YoBYM2nex4u8IOM3wvrghjM39eJ5NA05EeJAWzRuvSklHH7fHX0Of
+         oxWNxXHrPHA6EhlMUE/ro2xeavVk32W4mA3aI+yOURjde9QZzXKpJ0avzFaoOWGyCJlh
+         t9XGDTSA+cB3pjCRuoq3DbYxJTeLjSUhNv7wTy7XsB74B/1hN+KTJTRolhxen99Dsumo
+         zo7bj1RR2MsZO/t46c774KKsWBJm0zhGEq9+7JrfZpsmpj6SqbLsj9siljcyPrMopOC6
+         ZOSbcDmwXAPt12mJiMyaZ7QO6soHgYgf0wLj6izZgsH+tIYtE9TfYuf7anS4JXDgkXZv
+         ngew==
+X-Received: by 10.107.17.29 with SMTP id z29mr34601467ioi.69.1429082552276;
+        Wed, 15 Apr 2015 00:22:32 -0700 (PDT)
+Received: from flurp.local (user-12l3cpl.cable.mindspring.com. [69.81.179.53])
+        by mx.google.com with ESMTPSA id s85sm1896227ioe.28.2015.04.15.00.22.30
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Wed, 15 Apr 2015 00:22:31 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <xmqqzj6ayp3p.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267188>
 
-------=_Part_75_1437648194.1429082263020
-Content-Type: multipart/alternative; 
-	boundary="----=_Part_76_1214684161.1429082263020"
+On Tue, Apr 14, 2015 at 09:47:38PM -0700, Junio C Hamano wrote:
+> Linus Torvalds <torvalds@linux-foundation.org> writes:
+> > Lookie here, I can reproduce it trivially with current git (in the git
+> > repo itself):
+> >
+> >     [torvalds@i7 git]$ date; git commit -m Test --allow-empty --date=now
+> >     Tue Apr 14 21:11:03 PDT 2015
+> >     [master ec7733db5360] Test
+> >      Date: Tue Apr 14 20:11:03 2015 -0800
+> >
+> > notice how the commit date message shows something funny. It shows an
+> > hour earlier, but in -0800.
+> >
+> > And the resulting commit is broken:
+> >
+> >     [torvalds@i7 git]$ git show --pretty=fuller
+> >     commit ec7733db5360966434e03eab1a849e6d4227231c (HEAD -> master)
+> >     Author:     Linus Torvalds <torvalds@linux-foundation.org>
+> >     AuthorDate: Tue Apr 14 20:11:03 2015 -0800
+> >     Commit:     Linus Torvalds <torvalds@linux-foundation.org>
+> >     CommitDate: Tue Apr 14 21:11:03 2015 -0700
+> >
+> >         Test
+> >
+> > notice how the AuthorDate has that "-0800", but the CommitDate has "-0700".
+> 
+> With a quick check, the symptom exists at least at v2.1.4.  v2.0.x
+> series does not seem to have --date=now support but since there is
+> no change to date.c between v2.0.0 to v2.1.4, older approxidate may
+> be equally broken.
+> 
+> Will dig tomorrow, if nobody beats me to it, that is.
 
-------=_Part_76_1214684161.1429082263020
-Content-Type: text/plain; charset=UTF-8
+I'm not familiar with this code, but have been studying it since
+reading this email, and I think I know what's going on. The problem
+isn't with "approxidate", but rather with the date form "@nseconds"
+returned by approxidate. builtin/commit.c calls fmt_ident() with the
+"@nseconds" date, which calls parse_date(), which finally calls
+parse_date_basic(), and therein lies the problem.
 
+parse_date_basic() does correctly set tm_isdst=-1, however, when it
+encounters a date of form "@nseconds", it invokes match_digit() which
+calls gmtime_r() to fill in the 'tm' structure, and gmtime_r() sets
+tm_isdst=0 (since DST is definitely false at GMT).
 
->
->  feel free to give it a spin: https://git-for-windows.github.io/#download 
->
+Later parse_date_basic() computes the offset from GMT by comparing
+the values returned by tm_to_time_t() and mktime(). The existing 'tm'
+is passed to mktime() with the tm_isdst field already set to 0 by
+gmtime_r(), and mktime() respects that as a statement that DST is not
+in effect, rather than determining it dynamically.
 
-I have installed msysgit 1.9.4, installing git for windows 2.3.5.8 (into 
-default localtion and with "use from Windows command prompt") and call "git 
---version" still give me  msysgit1.9.4
-I have delete gfw 2.3.5.8 and msysgit 1.9.4, install gfw 2.3.5.8 once again 
-(and check "use from Windows command prompt") and now I have:
-C:\>git
-error launching git:      .
+The fix seems to be simply:
 
-I see C:\Program Files (x86)\Git\bin in my PATH (from old installs?), but 
-did not see this directory (bin) under Git installation
+---- >8 ----
+diff --git a/date.c b/date.c
+index 3eba2df..99ad2a0 100644
+--- a/date.c
++++ b/date.c
+@@ -707,6 +707,7 @@ int parse_date_basic(const char *date, unsigned long *timestamp, int *offset)
+ 	/* mktime uses local timezone */
+ 	*timestamp = tm_to_time_t(&tm);
+ 	if (*offset == -1) {
++		tm.tm_isdst = -1;
+ 		time_t temp_time = mktime(&tm);
+ 		if ((time_t)*timestamp > temp_time) {
+ 			*offset = ((time_t)*timestamp - temp_time) / 60;
+---- >8 ----
 
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "Git for Windows" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
-
-------=_Part_76_1214684161.1429082263020
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><blockquote class=3D"gmail_quote" style=3D"margin: 0;margi=
-n-left: 0.8ex;border-left: 1px #ccc solid;padding-left: 1ex;">&nbsp;feel fr=
-ee to give it a spin: <a href=3D"https://git-for-windows.github.io/#downloa=
-d" target=3D"_blank" rel=3D"nofollow" onmousedown=3D"this.href=3D'https://w=
-ww.google.com/url?q\75https%3A%2F%2Fgit-for-windows.github.io%2F%23download=
-\46sa\75D\46sntz\0751\46usg\75AFQjCNH7Xr6ehKYvOq0YKmWM2A1d350WTQ';return tr=
-ue;" onclick=3D"this.href=3D'https://www.google.com/url?q\75https%3A%2F%2Fg=
-it-for-windows.github.io%2F%23download\46sa\75D\46sntz\0751\46usg\75AFQjCNH=
-7Xr6ehKYvOq0YKmWM2A1d350WTQ';return true;">https://git-for-windows.<wbr>git=
-hub.io/#download</a>
-<br></blockquote><div><br></div><div>I have installed msysgit 1.9.4, instal=
-ling git for windows 2.3.5.8 (into default localtion and with "use from Win=
-dows command prompt") and call "git --version" still give me &nbsp;msysgit1=
-.9.4<br>I have delete gfw 2.3.5.8 and msysgit 1.9.4, install gfw 2.3.5.8 on=
-ce again (and check "use from Windows command prompt") and now I have:<br><=
-div>C:\&gt;git</div><div>error launching git: &nbsp; &nbsp; &nbsp;.</div></=
-div><div><br></div><div>I see C:\Program Files (x86)\Git\bin in my PATH (fr=
-om old installs?), but did not see this directory (bin) under Git installat=
-ion</div></div>
-
-<p></p>
-
--- <br />
--- <br />
-*** Please reply-to-all at all times ***<br />
-*** (do not pretend to know who is subscribed and who is not) ***<br />
-*** Please avoid top-posting. ***<br />
-The msysGit Wiki is here: <a href=3D"https://github.com/msysgit/msysgit/wik=
-i">https://github.com/msysgit/msysgit/wiki</a> - Github accounts are free.<=
-br />
-&nbsp;<br />
-You received this message because you are subscribed to the Google<br />
-Groups &quot;msysGit&quot; group.<br />
-To post to this group, send email to msysgit@googlegroups.com<br />
-To unsubscribe from this group, send email to<br />
-msysgit+unsubscribe@googlegroups.com<br />
-For more options, and view previous threads, visit this group at<br />
-<a href=3D"http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den">http:=
-//groups.google.com/group/msysgit?hl=3Den_US?hl=3Den</a><br />
-<br />
---- <br />
-You received this message because you are subscribed to the Google Groups &=
-quot;Git for Windows&quot; group.<br />
-To unsubscribe from this group and stop receiving emails from it, send an e=
-mail to <a href=3D"mailto:msysgit+unsubscribe@googlegroups.com">msysgit+uns=
-ubscribe@googlegroups.com</a>.<br />
-For more options, visit <a href=3D"https://groups.google.com/d/optout">http=
-s://groups.google.com/d/optout</a>.<br />
-
-------=_Part_76_1214684161.1429082263020--
-------=_Part_75_1437648194.1429082263020--
+However, I'm still digesting the code, so I haven't fully convinced
+myself that that's all that's needed. (It doesn't break any tests,
+and it does fix this issue.)
