@@ -1,156 +1,116 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] compat/mingw: stubs for getpgid() and tcgetpgrp()
-Date: Wed, 15 Apr 2015 11:48:01 -0700
-Message-ID: <xmqq3841kz32.fsf@gitster.dls.corp.google.com>
-References: <20150413134850.GC23475@mewburn.net>
-	<alpine.LFD.2.11.1504130954420.5619@knanqh.ubzr>
-	<20150413144039.GD23475@mewburn.net>
-	<alpine.LFD.2.11.1504131052090.5619@knanqh.ubzr>
-	<20150414110312.GE23475@mewburn.net> <552EAE0A.3040208@kdbg.org>
+From: Trevor Saunders <tbsaunde+mozilla@tbsaunde.org>
+Subject: Re: support git+mosh for unreliable connections
+Date: Wed, 15 Apr 2015 14:59:07 -0400
+Message-ID: <20150415185907.GC21768@tsaunders-iceball.corp.tor1.mozilla.com>
+References: <552E628C.7040809@debian.org>
+ <552E6D07.5030903@drmicha.warpmail.net>
+ <552E732E.20107@debian.org>
+ <0cf0485caae569a71a8bd1aa8d1033cb@www.dscho.org>
+ <20150415153317.GA21768@tsaunders-iceball.corp.tor1.mozilla.com>
+ <31749ad9ba57ada7f9c553191ffaddb3@www.dscho.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Nicolas Pitre <nico@fluxnic.net>,  git@vger.kernel.org,  msysGit <msysgit@googlegroups.com>
-To: Johannes Sixt <j6t@kdbg.org>, Luke Mewburn <luke@mewburn.net>
-X-From: msysgit+bncBCG77UMM3EJRBZPEXKUQKGQEV3KNBVI@googlegroups.com Wed Apr 15 20:48:08 2015
-Return-path: <msysgit+bncBCG77UMM3EJRBZPEXKUQKGQEV3KNBVI@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-pd0-f184.google.com ([209.85.192.184])
+Content-Type: text/plain; charset=us-ascii
+Cc: Trevor Saunders <tbsaunde@tbsaunde.org>,
+	Pirate Praveen <praveen@debian.org>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	git@vger.kernel.org, git-owner@vger.kernel.org
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Apr 15 20:59:25 2015
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCG77UMM3EJRBZPEXKUQKGQEV3KNBVI@googlegroups.com>)
-	id 1YiSM3-0007tm-HY
-	for gcvm-msysgit@m.gmane.org; Wed, 15 Apr 2015 20:48:07 +0200
-Received: by pdjg10 with SMTP id g10sf7370568pdj.0
-        for <gcvm-msysgit@m.gmane.org>; Wed, 15 Apr 2015 11:48:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe;
-        bh=3Tqsia/WLyGWNsYrMo1f8eJRTvLVxZ8arsIT5a1SkLw=;
-        b=RYNUqX8MrWAavKv8zYUV6vE689FWQ1HAkx7sh/wFt4ZVZeCTo4k/mLUmbvN9Jb4BOs
-         gYec5QF3Squ7T2W8XEW6hHbPNZ80PuTAFjEWO0LeIQbK8V6am3Aqo4TeMnDK6Q6Zt5j1
-         FSFiI2BEKFZgDOQHzgM96KCuTUbwcEZ/bSA7ik/z4o/DzN8/Ikwu6GAvlX8X6ZJ9iUBH
-         MBoSZy/AOyRnEVdG01YyHLEtJXaMJOPJtlS4/2WwIpTzQpobfK08cu5iQYcvbMddyZY8
-         ZriE9bp8FdHewgtt1JlfBacSEewyJcRXTiE+iIBUzXjb7BNfqBgaJ+3WDnpGFEaoBg4A
-         PLMg==
-X-Received: by 10.50.25.199 with SMTP id e7mr10061igg.16.1429123686166;
-        Wed, 15 Apr 2015 11:48:06 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.50.114.4 with SMTP id jc4ls1519761igb.23.canary; Wed, 15 Apr
- 2015 11:48:05 -0700 (PDT)
-X-Received: by 10.66.147.132 with SMTP id tk4mr36108819pab.23.1429123685637;
-        Wed, 15 Apr 2015 11:48:05 -0700 (PDT)
-Received: from sasl.smtp.pobox.com (pb-smtp1.int.icgroup.com. [208.72.237.35])
-        by gmr-mx.google.com with ESMTP id ei3si661157pdb.1.2015.04.15.11.48.05
-        for <msysgit@googlegroups.com>;
-        Wed, 15 Apr 2015 11:48:05 -0700 (PDT)
-Received-SPF: pass (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted sender) client-ip=208.72.237.35;
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9C45F48AFE;
-	Wed, 15 Apr 2015 14:48:03 -0400 (EDT)
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 95DA048AFD;
-	Wed, 15 Apr 2015 14:48:03 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EB12F48AFB;
-	Wed, 15 Apr 2015 14:48:02 -0400 (EDT)
-In-Reply-To: <552EAE0A.3040208@kdbg.org> (Johannes Sixt's message of "Wed, 15
-	Apr 2015 20:29:30 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: F22F3B2A-E39F-11E4-B8FE-11859F42C9D4-77302942!pb-smtp1.pobox.com
-X-Original-Sender: gitster@pobox.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted
- sender) smtp.mail=junio@pobox.com;       dkim=pass header.i=@pobox.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267230>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1YiSWy-0005L0-O5
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Apr 2015 20:59:25 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1756442AbbDOS7U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Apr 2015 14:59:20 -0400
+Received: from tbsaunde.org ([66.228.47.254]:59016 "EHLO
+	paperclip.tbsaunde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756277AbbDOS7P (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Apr 2015 14:59:15 -0400
+Received: from tsaunders-iceball.corp.tor1.mozilla.com (unknown [66.207.208.102])
+	by paperclip.tbsaunde.org (Postfix) with ESMTPSA id D6B93C072;
+	Wed, 15 Apr 2015 18:59:12 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <31749ad9ba57ada7f9c553191ffaddb3@www.dscho.org>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267231>
 
-Johannes Sixt <j6t@kdbg.org> writes:
+On Wed, Apr 15, 2015 at 07:46:15PM +0200, Johannes Schindelin wrote:
+> Hi Trevor,
+> 
+> On 2015-04-15 17:33, Trevor Saunders wrote:
+> > On Wed, Apr 15, 2015 at 04:41:42PM +0200, Johannes Schindelin wrote:
+> >>
+> >> On 2015-04-15 16:18, Pirate Praveen wrote:
+> >> > On Wednesday 15 April 2015 07:22 PM, Michael J Gruber wrote:
+> >> >> What would that require git to do, beyond taking whatever you tell it
+> >> >> (using GIT_SSH or _GIT_SSH_COMMAND) to use as a drop in replacement for ssh?
+> >> >
+> >> > May be support git+mosh as a protocol, since it is not a drop in
+> >> > replacement. It is redesigned remote shell. The ideas it uses for
+> >> > session resumption needs to be reimplemented. This will need support
+> >> > from git, because it needs server side to be modified. Use SSP to return
+> >> > the the current progress for a particular session (it uses AES session ids).
+> >>
+> >> It will need support from Git alright, but not as much as from mosh, see my other reply: Mosh was not designed for non-interactive use. That support would have to be added before we can go any further.
+> > 
+> > is that really relevent? mosh doesn't support things like X forwarding
+> > or port forwarding, but it certainly does support ssh <host> <command>
+> > and then doing IO.
+> 
+> Ah, so mosh's README lied to me!
 
-> Windows does not have process groups. It is, therefore, the simplest
-> to pretend that each process is in its own process group.
->
-> While here, move the getppid() stub from its old location (between
-> two sync related functions) next to the two new functions.
->
-> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
-> ---
+I wouldn't say it lied, its just not really clear what is "interactive"
+I'd say git's use of ssh is kind of interactive compared to things like
+port forwarding.
 
-Thanks for a quick update.
+> If `mosh <user>@<host> <command>` works, then a simple `GIT_SSH=mosh` should work out of the box, too. Have you tried it?
 
-The patch should do for now, but I suspect that it may give us a
-better abstraction to make the "is_foreground_fd(int fd)" or even
-"is_foreground(void)" the public API that would be implemented as
+it does work, I just tried mosh $host cat and then typing stuff and
+having it printed back at me.  However it clears the terminal before
+hand and prints a message on exit.  I tried GIT_SSH=mosh git clone and
+it failed, but I haven't really dug into why.  SO I suspect this can be
+made to work with some work on the mosh side, but I'm not sure exactly
+how ssh and mosh are behaving differently here.
 
-	int we_are_in_the_foreground(void)
-        {
-		return getpgid(0) == tcgetpgrp(fileno(stderr));
-	}
+Trev
 
-in POSIX and Windows can implement entirely differently.
-
-Thoughts?
-
->  compat/mingw.h | 8 ++++++--
->  1 file changed, 6 insertions(+), 2 deletions(-)
->
-> diff --git a/compat/mingw.h b/compat/mingw.h
-> index 7b523cf..a552026 100644
-> --- a/compat/mingw.h
-> +++ b/compat/mingw.h
-> @@ -95,8 +95,6 @@ static inline unsigned int alarm(unsigned int seconds)
->  { return 0; }
->  static inline int fsync(int fd)
->  { return _commit(fd); }
-> -static inline pid_t getppid(void)
-> -{ return 1; }
->  static inline void sync(void)
->  {}
->  static inline uid_t getuid(void)
-> @@ -118,6 +116,12 @@ static inline int sigaddset(sigset_t *set, int signum)
->  #define SIG_UNBLOCK 0
->  static inline int sigprocmask(int how, const sigset_t *set, sigset_t *oldset)
->  { return 0; }
-> +static inline pid_t getppid(void)
-> +{ return 1; }
-> +static inline pid_t getpgid(pid_t pid)
-> +{ return pid == 0 ? getpid() : pid; }
-> +static inline pid_t tcgetpgrp(int fd)
-> +{ return getpid(); }
->  
->  /*
->   * simple adaptors
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "Git for Windows" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+> 
+> Ciao,
+> Johannes
+>   It might not support not doing terminal emulation
+> > stuff, but that seems like a simple thing to change in principal at which
+> > point I think it would support enough of ssh's functionality its a drop
+> > in replacement as far as git is concerned.  Seems to me mosh is close
+> > enough on its own its worth experimentation by someone who cares.
+> > 
+> > Trev
+> > 
+> >> > So when a client connect with a session id, git server side can respond
+> >> > with the current state, how many objects received in that session, and
+> >> > client can continue from where it stopped. Client also will need to
+> >> > store session information.
+> >>
+> >> No, the protocol can stay exactly the same, once you have a way to communicate non-interactively via mosh.
+> >>
+> >> Ciao,
+> >> Johannes
+> >> --
+> >> To unsubscribe from this list: send the line "unsubscribe git" in
+> >> the body of a message to majordomo@vger.kernel.org
+> >> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> > --
+> > To unsubscribe from this list: send the line "unsubscribe git" in
+> > the body of a message to majordomo@vger.kernel.org
+> > More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
