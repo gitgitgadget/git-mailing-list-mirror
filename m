@@ -1,83 +1,86 @@
-From: Olaf Hering <olaf@aepfle.de>
-Subject: Re: [PATCH] git-gui: sort entries in tclIndex
-Date: Wed, 15 Apr 2015 09:22:51 +0200
-Message-ID: <20150415072251.GA18595@aepfle.de>
-References: <1422292043-12711-1-git-send-email-olaf@aepfle.de>
- <20150210151803.GB8965@aepfle.de>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: What's cooking in git.git (Apr 2015, #02; Tue, 14)
+Date: Wed, 15 Apr 2015 10:21:22 +0200
+Organization: gmx
+Message-ID: <dc65eeeac0e973b35c62bcea8100a408@www.dscho.org>
+References: <xmqqh9si1itr.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 15 09:23:02 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, git-owner@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 15 10:21:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YiHf3-0002kt-Ep
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Apr 2015 09:23:01 +0200
+	id 1YiIZt-0005xF-Lj
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Apr 2015 10:21:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753391AbbDOHW6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Apr 2015 03:22:58 -0400
-Received: from mo4-p00-ob.smtp.rzone.de ([81.169.146.217]:19913 "EHLO
-	mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752517AbbDOHW4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Apr 2015 03:22:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1429082572; l=1011;
-	s=domk; d=aepfle.de;
-	h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Subject:To:From:Date;
-	bh=iqMefStkvrIexVrwiu5UvBXjifAKYbF1/unHD+KiMgw=;
-	b=UQNy1bN5r6GGKI2Eg0/3M8VpDemIDJU3Zffy7noWihrwa5n5TvK8X9Xa7JFipc9Zkk6
-	bNRQxdfNFJxKlqTWIU45sArOew1vynKr++R28ucSXrEMeioFJ5u+z1TbE7mvfbVmTKDFK
-	mahsZVDIS0mu/5SgNDoVCvxXeSOdFUc/M0E=
-X-RZG-AUTH: :P2EQZWCpfu+qG7CngxMFH1J+yackYocTD1iAi8x+OWi/zfN1cLnBYfssUYhSFcWlBcVQjS6aD/3SLp2pQhrvaJJzk3kODg==
-X-RZG-CLASS-ID: mo00
-Received: from probook.fritz.box ([2001:a60:10e6:c701:1ec1:deff:feb9:bb48])
-	by smtp.strato.de (RZmta 37.5 AUTH)
-	with ESMTPSA id i077e1r3F7Mq9ju
-	(using TLSv1 with cipher ECDHE-RSA-AES256-SHA (curve sect571r1 with 571 ECDH bits, eq. 15360 bits RSA))
-	(Client did not present a certificate)
-	for <git@vger.kernel.org>;
-	Wed, 15 Apr 2015 09:22:52 +0200 (CEST)
-Received: by probook.fritz.box (Postfix, from userid 1000)
-	id 183E2502AE; Wed, 15 Apr 2015 09:22:51 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20150210151803.GB8965@aepfle.de>
-User-Agent: Mutt/1.5.22.rev6346 (2013-10-29)
+	id S1751698AbbDOIVl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Apr 2015 04:21:41 -0400
+Received: from mout.gmx.net ([212.227.17.21]:54104 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751241AbbDOIVi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Apr 2015 04:21:38 -0400
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0LzYY2-1ZUMnR43vu-014hk9; Wed, 15 Apr 2015 10:21:24
+ +0200
+In-Reply-To: <xmqqh9si1itr.fsf@gitster.dls.corp.google.com>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.0
+X-Provags-ID: V03:K0:xv1CFDeDNCao2T2pXiniUIWkosFmJyD/EqWpTsLSN8vkxCyWr7l
+ VpxIH6ae61wsDrPuzw3hD58wN8dekxn3yP9X06WsVNnqhZGqBs5Z3llrZEs8l3PGZoIv+If
+ qzWTeBtfIfW6hnzA4JZc7B9/9+etcYYxgSet9bFZXBL2BqrdIt8wyEAEntSYbNnVXnI/Anl
+ STFDBMPBmz5OULHXbECnQ==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267189>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267190>
 
-Ping?
+Hi Junio,
 
-On Tue, Feb 10, Olaf Hering wrote:
-
-> Ping?
+On 2015-04-14 23:49, Junio C Hamano wrote:
 > 
-> On Mon, Jan 26, Olaf Hering wrote:
+> * jc/update-instead-into-void (2015-04-01) 1 commit
+>   (merged to 'next' on 2015-04-08 at 8ef4e15)
+>  + push-to-deploy: allow pushing into an unborn branch and updating it
 > 
-> > ALL_LIBFILES uses wildcard, which provides the result in directory
-> > order. This order depends on the underlying filesystem on the
-> > buildhost. To get reproducible builds it is required to sort such list
-> > before using them.
-> > 
-> > Signed-off-by: Olaf Hering <olaf@aepfle.de>
-> > ---
-> >  git-gui/Makefile | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> > 
-> > diff --git a/git-gui/Makefile b/git-gui/Makefile
-> > index cde8b2e..7564a18 100644
-> > --- a/git-gui/Makefile
-> > +++ b/git-gui/Makefile
-> > @@ -258,7 +258,7 @@ lib/tclIndex: $(ALL_LIBFILES) GIT-GUI-VARS
-> >  	 rm -f $@ ; \
-> >  	 echo '# Autogenerated by git-gui Makefile' >$@ && \
-> >  	 echo >>$@ && \
-> > -	 $(foreach p,$(PRELOAD_FILES) $(ALL_LIBFILES),echo '$(subst lib/,,$p)' >>$@ &&) \
-> > +	 $(foreach p,$(PRELOAD_FILES) $(sort $(ALL_LIBFILES)),echo '$(subst lib/,,$p)' >>$@ &&) \
-> >  	 echo >>$@ ; \
-> >  	fi
-> >  
+>  A push into an unborn branch, with "receive.denyCurrentBranch" set
+>  to "updateInstead", did not check out the working tree as expected.
+
+Thank you for cleaning up after me.
+
+> * js/fsck-opt (2015-01-21) 19 commits
+>  - fsck: support ignoring objects in `git fsck` via fsck.skiplist
+>  - fsck: git receive-pack: support excluding objects from fsck'ing
+>  - fsck: introduce `git fsck --quick`
+>  - fsck: support demoting errors to warnings
+>  - fsck: document the new receive.fsck.* options
+>  - fsck: allow upgrading fsck warnings to errors
+>  - fsck: optionally ignore specific fsck issues completely
+>  - fsck: disallow demoting grave fsck errors to warnings
+>  - fsck: add a simple test for receive.fsck.*
+>  - fsck: make fsck_tag() warn-friendly
+>  - fsck: handle multiple authors in commits specially
+>  - fsck: make fsck_commit() warn-friendly
+>  - fsck: make fsck_ident() warn-friendly
+>  - fsck: report the ID of the error/warning
+>  - fsck: allow demoting errors to warnings via receive.fsck.warn = <key>
+>  - fsck: offer a function to demote fsck errors to warnings
+>  - fsck: provide a function to parse fsck message IDs
+>  - fsck: introduce identifiers for fsck messages
+>  - fsck: introduce fsck options
+> 
+>  "fsck.warnings = <list of error tokens>" I suggested turned out to
+>  be an unpopular choice (sorry Dscho).
+> 
+>  Expecting a reroll.
+
+Yeah, I'll get to this either today or tomorrow.
+
+Sorry for the long wait,
+Dscho
