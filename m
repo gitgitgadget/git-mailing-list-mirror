@@ -1,141 +1,88 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: Issue: repack semi-frequently fails on Windows
- (msysgit) - suspecting file descriptor issues
-Date: Thu, 16 Apr 2015 15:07:46 +0200
-Organization: gmx
-Message-ID: <f046adea6791865f97f6d76b0dae01bc@www.dscho.org>
-References: <20150416100359.GA19951@rhlx01.hs-esslingen.de>
- <552F98AC.5030603@virtuell-zuhause.de>
- <27f1120c2c5231d8c7add8bdac7e3b21@www.dscho.org>
- <20150416114235.GB30818@rhlx01.hs-esslingen.de>
- <20150416114846.GC30818@rhlx01.hs-esslingen.de>
- <20150416123552.GA825@rhlx01.hs-esslingen.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v8 2/4] cat-file: teach cat-file a '--literally' option
+Date: Thu, 16 Apr 2015 06:35:04 -0700
+Message-ID: <xmqq618wjiwn.fsf@gitster.dls.corp.google.com>
+References: <552E9816.6040502@gmail.com>
+	<1429117174-4968-1-git-send-email-karthik.188@gmail.com>
+	<xmqqtwwhjg8b.fsf@gitster.dls.corp.google.com>
+	<xmqqiocxjeqn.fsf@gitster.dls.corp.google.com>
+	<552F6429.9050304@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Thomas Braun <thomas.braun@virtuell-zuhause.de>, git@vger.kernel.org,
- msysGit <msysgit@googlegroups.com>, git-owner@vger.kernel.org
-To: Andreas Mohr <andi@lisas.de>
-X-From: msysgit+bncBCZPH74Q5YNRBJHIX2UQKGQEVDICR6A@googlegroups.com Thu Apr 16 15:07:52 2015
-Return-path: <msysgit+bncBCZPH74Q5YNRBJHIX2UQKGQEVDICR6A@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-la0-f55.google.com ([209.85.215.55])
+Content-Type: text/plain
+Cc: git@vger.kernel.org, sunshine@sunshineco.com
+To: karthik nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 16 15:35:18 2015
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCZPH74Q5YNRBJHIX2UQKGQEVDICR6A@googlegroups.com>)
-	id 1YijWH-0005xr-Jn
-	for gcvm-msysgit@m.gmane.org; Thu, 16 Apr 2015 15:07:49 +0200
-Received: by labgd6 with SMTP id gd6sf24058681lab.0
-        for <gcvm-msysgit@m.gmane.org>; Thu, 16 Apr 2015 06:07:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=mime-version:content-type:date:from:to:cc:subject:organization
-         :in-reply-to:references:message-id:user-agent:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe;
-        bh=HdoSIF2ONLFLxDbZLXSjihNr0+sEywJ/xhdsAxcLBFc=;
-        b=LJfsaiFzN8WcgrbVwNU1ZqXLTRJFvXaFSQMWDzcwURh8jjcBhQ1947FvSANsixxmCR
-         XASOxXF8nwKo6GmlhZWbLnFNfhY25QwU8yiqwt6XNFd/l2r5ajwA8Ar/040+E2DFJoWu
-         nMFmTyb6idItOIorOPRrShSSkDVCZM5Of2cbVhUJ1hsSd44eYOTcGbS0jN886aBkTMVY
-         WCmUaXH6u9BeOmyENDfCBrlkd+YzCvz74mP/jhLiCwA185+9MSrKKDSC1gmcCxJpUyzh
-         bb0RxaxK5qxnv9/MDLQ1vfnjcX2Y6KmD4rbo0kpf3n8o8o8kLyNSMkVrPvhCt46CuhPs
-         Ohxw==
-X-Received: by 10.152.206.12 with SMTP id lk12mr382793lac.21.1429189669297;
-        Thu, 16 Apr 2015 06:07:49 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.9.38 with SMTP id w6ls329325laa.13.gmail; Thu, 16 Apr 2015
- 06:07:48 -0700 (PDT)
-X-Received: by 10.112.181.166 with SMTP id dx6mr7226205lbc.17.1429189668241;
-        Thu, 16 Apr 2015 06:07:48 -0700 (PDT)
-Received: from mout.gmx.net (mout.gmx.net. [212.227.15.19])
-        by gmr-mx.google.com with ESMTPS id eg1si518637wic.1.2015.04.16.06.07.48
-        for <msysgit@googlegroups.com>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 16 Apr 2015 06:07:48 -0700 (PDT)
-Received-SPF: pass (google.com: domain of johannes.schindelin@gmx.de designates 212.227.15.19 as permitted sender) client-ip=212.227.15.19;
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0LiDrv-1ZCWMC0IxX-00nPcp; Thu, 16 Apr 2015 15:07:47
- +0200
-In-Reply-To: <20150416123552.GA825@rhlx01.hs-esslingen.de>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:HAqy1kIlGfyf7lfxsq01GMTFGRgDVCJ+uoyibDeNNm1icl5zREj
- A7a0urYey8yFeVih79mnCEAEeBc/Ej7a93XQZoJmFh08zifV5rLXiKMp5c3WpYwpljnPMVa
- KAZIIZqVb7sJwemnUoYi6gO+rqBI9PnQssq8CK3Qx6p17WEybTl3xeNK3N4QFOuJ0iIpPZd
- QBJe+aTGJkDwfraiihg+Q==
-X-UI-Out-Filterresults: notjunk:1;
-X-Original-Sender: johannes.schindelin@gmx.de
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of johannes.schindelin@gmx.de designates 212.227.15.19 as
- permitted sender) smtp.mail=johannes.schindelin@gmx.de
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267286>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Yijwp-0004Zv-KP
+	for gcvg-git-2@plane.gmane.org; Thu, 16 Apr 2015 15:35:15 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1757434AbbDPNfN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Apr 2015 09:35:13 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:59669 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755242AbbDPNfK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Apr 2015 09:35:10 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E5FA74817A;
+	Thu, 16 Apr 2015 09:35:09 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+5gfvM6Kjyc3ji9GleaU2JiYGuQ=; b=KFeZ3b
+	OW/hBw48TY2AoVAVD0IVK3Upb3A+rI7DhjVpdUfpu5OoBnqdCtXItI0oUQE19Q2w
+	X77sSkRIGos6RI4YKZ/tibaQadM8fSLkk4Hur3iQd07dm2PgY0y4/j7lhtUonlJq
+	zsP23qEcahbiad6rKEpWVjrAgbDfI8OQ9MpnA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=UnBCyb77pcbiy9b1qUmC+hIsZQCo84PV
+	GeoplXQThMqpHELkwFXox1FzjPK2fSOPZPacW72MkcfaIXwSQYVFjvL5dSV1XjtU
+	Uv9XnTsl9egXZCOgeAJ0O7yneu9sY47apF/qpaquF9L8GduKedT4ImwujSsxGTOj
+	aWwO1BjY9Gs=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id DF0C148179;
+	Thu, 16 Apr 2015 09:35:09 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 694E048170;
+	Thu, 16 Apr 2015 09:35:05 -0400 (EDT)
+In-Reply-To: <552F6429.9050304@gmail.com> (karthik nayak's message of "Thu, 16
+	Apr 2015 12:56:33 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 64477644-E43D-11E4-8B5F-11859F42C9D4-77302942!pb-smtp1.pobox.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267287>
 
-Hi Andreas,
+karthik nayak <karthik.188@gmail.com> writes:
 
-On 2015-04-16 14:35, Andreas Mohr wrote:
-> On Thu, Apr 16, 2015 at 01:48:46PM +0200, Andreas Mohr wrote:
->> OK, at this point in time it's my turn to actually verify
->> that indeed it's NOT the virus scanner:
->> - generate rebase-heavy activity
->> - update
->> - hit issue
->> - unload virus (~ scanner?? I'm unsure on exact terminology to be used ;-)
->> - update
->> - profit!?
-> 
-> Despite trying hard (generating a lot of activity, with different repo
-> projects even)
-> I cannot reproduce it in a timely manner,
-> thus I'll have to wait until repo state has degraded in a sufficient manner
-> for such a larger repack with that issue to occur again
-> (probably a matter of weeks).
-> Once it happens, I will:
-> - ensure keeping a copy of the entire (problematic-state) repo, and
-> verify reproducibility of its (copied/preserved) breakage
-> - unload virus and do other tests
-> - report back
+> On 04/16/2015 02:22 AM, Junio C Hamano wrote:
+>
+>> This is a tangent, but while we are in the vicinity, we may want to
+>> rethink the help message we attach to the '-e' option.  Technically
+>> the current message is _not_ wrong per-se, but it misses the point.
+>> The primary thing the option does is to check the (e)xistence of the
+>> named object, and the fact that it does so silently is merely a
+>> detail of the operation.  The current help text omits the more
+>> important part of what the option is.
+>
+> Would you rather check '-e' and go on to check '-p' or do you merely
+> just want a different message.
 
-I guess the best way to trigger it is by ensuring that a lot of loose objects are accumulated, e.g. by running
+I meant just a different message.  The point of -e is to see if the
+thing exists.  It is good to mention _how_ the result is reported
+back to the user (i.e. via the exit code, not via an output to the
+standard output "exists" vs "missing", for example), but that is
+secondary.  Telling how it reports is meaningless without telling
+what it reports in the first place.
 
-```sh
-i=$(date +%s)
-j=0
-while test $j -lt 9999
-do
-    echo "test $(($i+$j))" git hash-object -w --stdin
-    j=$(($j+1))
-done
-```
+> ... when a user is giving the '-e' option he just expects a silent
+> output if the object exists, hence we rather have the option '-e'
+> behave as a mutually exclusive option...
 
-Ciao,
-Johannes
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "Git for Windows" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+Yes, and that is in line with the switch to OPT_CMDMODE.
