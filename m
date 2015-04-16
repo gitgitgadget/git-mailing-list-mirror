@@ -1,185 +1,84 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 2/3] Move get_max_fd_limit(void) to git_compat_util.h
-Date: Thu, 16 Apr 2015 16:17:38 -0700
-Message-ID: <1429226259-21622-3-git-send-email-sbeller@google.com>
-References: <1429226259-21622-1-git-send-email-sbeller@google.com>
+Subject: [PATCH 0/3] Another approach to large transactions
+Date: Thu, 16 Apr 2015 16:17:36 -0700
+Message-ID: <1429226259-21622-1-git-send-email-sbeller@google.com>
 Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>
 To: gitster@pobox.com, mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Fri Apr 17 01:18:09 2015
+X-From: git-owner@vger.kernel.org Fri Apr 17 01:18:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yit2u-00013M-Jp
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Apr 2015 01:18:08 +0200
+	id 1Yit2n-00010f-MB
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Apr 2015 01:18:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753403AbbDPXSD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Apr 2015 19:18:03 -0400
-Received: from mail-ig0-f182.google.com ([209.85.213.182]:36763 "EHLO
-	mail-ig0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752017AbbDPXR6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Apr 2015 19:17:58 -0400
-Received: by igblo3 with SMTP id lo3so1614230igb.1
-        for <git@vger.kernel.org>; Thu, 16 Apr 2015 16:17:57 -0700 (PDT)
+	id S1752989AbbDPXR5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Apr 2015 19:17:57 -0400
+Received: from mail-ie0-f175.google.com ([209.85.223.175]:35849 "EHLO
+	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752017AbbDPXR4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Apr 2015 19:17:56 -0400
+Received: by iebrs15 with SMTP id rs15so63503478ieb.3
+        for <git@vger.kernel.org>; Thu, 16 Apr 2015 16:17:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=KPmAe9eZg87smEi+JVutkuEXuO5JG0wQaIdfVWrV+fw=;
-        b=bPvrFzt9CA1v5w/CiPHkIsl48efKnkBFDYBX3A+SllHTMn8/MElwSyKbgsTgN+BGZi
-         RH97ElRdzv/b5SDBIkZCmjutql4xKzKwcsOT2dAu5vqQMBFvuzmJB3yTTVxXQZNxiVja
-         j//dQA+4fMo2IA6EuUg9pSTvqStxypHnRfPEwnmj2EMc4iflSYGJtJolawbxWf3mFN7a
-         y2269UfKjheDbbx7tqKf4MTN31eoGFu4Rmq4rs/80VIJqNwLr+4htfg8pmlR9r8oQS/q
-         qRI0EGurvYBL70l6Vwl1AmX1UAbTCUDmPwryX85INSG57dM9oXa+wCVOQQ70oALHgOI6
-         iv1Q==
+        h=from:to:cc:subject:date:message-id;
+        bh=BifWRRoWI7eHKCUKe/lb+7TdhNIG0LbvapoJAtnAj1g=;
+        b=Eaay2Ir+J3xcG5mplWtkCecVNRkO1FOoPxdm+0oyPbH32L9Mn3+1JUTWNbXc87+99v
+         KtZJSVYBDZ850kmLLk5geUVa5rNVVwU7lVRJXQWaFWvpp7DyFX1IbzU1RCesrx6AtHaJ
+         IuFZmkzQm/xq0V4Y4xYrdQDKybmYrGgM8uBMc3gnx5edbz5tOsKwT5hGl7Ipfzx0Tidv
+         GTXKGF6yntJb4wYatfLGfPKFfA/xIo4Y41xT3eW2hxNog5qRwprfRDTiSa5TSLj3BVfr
+         IuuX1rVpDftTXql5lMwOFhAI/JonpXCUBsCKqoWuAd116stsrSHst/HKCfRKEPvRsX11
+         FDAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=KPmAe9eZg87smEi+JVutkuEXuO5JG0wQaIdfVWrV+fw=;
-        b=g6KsdL5riwiaoRYRlmjOroXbWfiHlryrrSpFWVdRtFn7atqTt/d2eK0wE/CoOWLNhq
-         pdDzutdyXFs/sNL7jQz3jWD/F3ELO0DA6c5nSKlsajA9wtyhor8K2aUAEasGs+fOr24y
-         Q6Lf3qqmpA5XzHwaVA5Zl56Px50YIkL3KJa6qtzj4NNwq3X1CFyoJ5OGDgkayZZtqdA0
-         s/lHP5dV3eDkE8sYLEjwAX2x1qigyy4ru2LRmrFgcmNKnzPO9NHGFg9TX3AlHcwZxuCl
-         M4QM9/WyJf041sgGfaOJmYwRo5IOvGWhGWOOa4oO007KMXMvS4rYk/QHpAWOjXJb9taU
-         YvTQ==
-X-Gm-Message-State: ALoCoQl1DjEq4OpFDnEiuO5Vuxeftn+QORorx+oTmm7daIneV6MnxSsxgDgiOZ3c9uM4JjkfVbI6
-X-Received: by 10.107.137.28 with SMTP id l28mr241941iod.23.1429226277881;
-        Thu, 16 Apr 2015 16:17:57 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=BifWRRoWI7eHKCUKe/lb+7TdhNIG0LbvapoJAtnAj1g=;
+        b=SUNewLoKCak4Yfh/3Z/PrKk5Klqb2AJnsi5qPMD7QhVDU/kWVEX2lJbq8gfz9F5S6M
+         2vCx7MUJ9H9RXdX0jQ5J9+/NpSEQbe3bHgOFrcCwgLd2wH4yIExsQNg1i9p/3HC+s9Dw
+         IcO/fdonc+enHLKgTOW33d0sh34xMkP+NdCQYftBx981RUnIARWxTmKOPvU//3CFZvfo
+         FFIcoBdz8p0jl5yaObLPGRfIPrN9OhOUFlpxcILxuGYfAs29Ydz0YS6nINOKum+1E1S+
+         yjelNxWaxgmQsGGanp/Eorn+qysmrPSwHsroBi17BHehxuY4nkIzpIIaOwPqVH0QopT2
+         fTjA==
+X-Gm-Message-State: ALoCoQleA2VjkaJ97SWUNPWt0SvJxFT613QAGkMNUUMoCp0onvtYMy7O1F1g9/nVRaNEVL7m0iwd
+X-Received: by 10.50.6.4 with SMTP id w4mr779169igw.36.1429226275368;
+        Thu, 16 Apr 2015 16:17:55 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b00:fdc7:e96c:1b25:2317])
-        by mx.google.com with ESMTPSA id s85sm5276492ioe.28.2015.04.16.16.17.57
+        by mx.google.com with ESMTPSA id kc1sm150960igb.0.2015.04.16.16.17.54
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 16 Apr 2015 16:17:57 -0700 (PDT)
+        Thu, 16 Apr 2015 16:17:54 -0700 (PDT)
 X-Mailer: git-send-email 2.3.0.81.gc37f363
-In-Reply-To: <1429226259-21622-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267341>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267342>
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- git-compat-util.h |  1 +
- sha1_file.c       | 41 -----------------------------------------
- wrapper.c         | 41 +++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 42 insertions(+), 41 deletions(-)
+* We keep the speed on small transactions 
+  (no close and reopen of fds in small transactions)
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index bc8fc8c..2c55ca7 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -675,6 +675,7 @@ extern int xmkstemp_mode(char *template, int mode);
- extern int odb_mkstemp(char *template, size_t limit, const char *pattern);
- extern int odb_pack_keep(char *name, size_t namesz, const unsigned char *sha1);
- extern char *xgetcwd(void);
-+extern unsigned int get_max_fd_limit(void);
- 
- #define REALLOC_ARRAY(x, alloc) (x) = xrealloc((x), (alloc) * sizeof(*(x)))
- 
-diff --git a/sha1_file.c b/sha1_file.c
-index 88f06ba..1f2519c 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -870,47 +870,6 @@ void free_pack_by_name(const char *pack_name)
- 	}
- }
- 
--static unsigned int get_max_fd_limit(void)
--{
--#ifdef RLIMIT_NOFILE
--	{
--		struct rlimit lim;
--
--		if (!getrlimit(RLIMIT_NOFILE, &lim))
--			return lim.rlim_cur;
--	}
--#endif
--
--#ifdef _SC_OPEN_MAX
--	{
--		long open_max = sysconf(_SC_OPEN_MAX);
--		if (0 < open_max)
--			return open_max;
--		/*
--		 * Otherwise, we got -1 for one of the two
--		 * reasons:
--		 *
--		 * (1) sysconf() did not understand _SC_OPEN_MAX
--		 *     and signaled an error with -1; or
--		 * (2) sysconf() said there is no limit.
--		 *
--		 * We _could_ clear errno before calling sysconf() to
--		 * tell these two cases apart and return a huge number
--		 * in the latter case to let the caller cap it to a
--		 * value that is not so selfish, but letting the
--		 * fallback OPEN_MAX codepath take care of these cases
--		 * is a lot simpler.
--		 */
--	}
--#endif
--
--#ifdef OPEN_MAX
--	return OPEN_MAX;
--#else
--	return 1; /* see the caller ;-) */
--#endif
--}
--
- /*
-  * Do not call this directly as this leaks p->pack_fd on error return;
-  * call open_packed_git() instead.
-diff --git a/wrapper.c b/wrapper.c
-index d5a6cef..493bf6f 100644
---- a/wrapper.c
-+++ b/wrapper.c
-@@ -303,6 +303,47 @@ ssize_t pread_in_full(int fd, void *buf, size_t count, off_t offset)
- 	return total;
- }
- 
-+unsigned int get_max_fd_limit(void)
-+{
-+#ifdef RLIMIT_NOFILE
-+	{
-+		struct rlimit lim;
-+
-+		if (!getrlimit(RLIMIT_NOFILE, &lim))
-+			return lim.rlim_cur;
-+	}
-+#endif
-+
-+#ifdef _SC_OPEN_MAX
-+	{
-+		long open_max = sysconf(_SC_OPEN_MAX);
-+		if (0 < open_max)
-+			return open_max;
-+		/*
-+		 * Otherwise, we got -1 for one of the two
-+		 * reasons:
-+		 *
-+		 * (1) sysconf() did not understand _SC_OPEN_MAX
-+		 *     and signaled an error with -1; or
-+		 * (2) sysconf() said there is no limit.
-+		 *
-+		 * We _could_ clear errno before calling sysconf() to
-+		 * tell these two cases apart and return a huge number
-+		 * in the latter case to let the caller cap it to a
-+		 * value that is not so selfish, but letting the
-+		 * fallback OPEN_MAX codepath take care of these cases
-+		 * is a lot simpler.
-+		 */
-+	}
-+#endif
-+
-+#ifdef OPEN_MAX
-+	return OPEN_MAX;
-+#else
-+	return 1; /* see the caller ;-) */
-+#endif
-+}
-+
- int xdup(int fd)
- {
- 	int ret = dup(fd);
+* No refactoring for refs included, only minimally invasive to the refs.c code
+
+* applies on top of origin/sb/remove-fd-from-ref-lock replacing the last
+  commit there (I reworded the commit message of the last patch of that tip,
+  being the first patch in this series)
+  
+* another approach would be to move the fd counting into the lock file api,
+  I think that's not worth it for now.
+
+
+Stefan Beller (3):
+  refs.c: remove lock_fd from struct ref_lock
+  Move unsigned int get_max_fd_limit(void) to git_compat_util.h
+  refs.c: enable large transactions
+
+ git-compat-util.h     |  1 +
+ refs.c                | 28 ++++++++++++++++++----------
+ sha1_file.c           | 41 -----------------------------------------
+ t/t1400-update-ref.sh |  4 ++--
+ wrapper.c             | 41 +++++++++++++++++++++++++++++++++++++++++
+ 5 files changed, 62 insertions(+), 53 deletions(-)
+
 -- 
 2.3.0.81.gc37f363
