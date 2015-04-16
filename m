@@ -1,180 +1,87 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 1/7] path.c: implement xdg_config_home()
-Date: Thu, 16 Apr 2015 17:41:19 -0400
-Message-ID: <CAPig+cTrErOBwPteeA1d_gdve5SiyLnbyFPpQ1sTN7aajGJfeA@mail.gmail.com>
-References: <1428824772-8736-1-git-send-email-pyokagan@gmail.com>
-	<e1bc6f19af608db796a2212dbf00ba45@www.dscho.org>
-	<20150414172854.GA27623@yoshi.chippynet.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] log -L: improve error message on malformed argument
+Date: Thu, 16 Apr 2015 14:45:01 -0700
+Message-ID: <xmqqpp73hhnm.fsf@gitster.dls.corp.google.com>
+References: <1429195387-20573-1-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Stefan Beller <sbeller@google.com>
-To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 16 23:41:28 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Thu Apr 16 23:45:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YirXJ-0003oO-Mf
-	for gcvg-git-2@plane.gmane.org; Thu, 16 Apr 2015 23:41:26 +0200
+	id 1Yirax-0005yu-PM
+	for gcvg-git-2@plane.gmane.org; Thu, 16 Apr 2015 23:45:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751988AbbDPVlV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Apr 2015 17:41:21 -0400
-Received: from mail-ie0-f176.google.com ([209.85.223.176]:35601 "EHLO
-	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751717AbbDPVlU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Apr 2015 17:41:20 -0400
-Received: by iejt8 with SMTP id t8so62083634iej.2
-        for <git@vger.kernel.org>; Thu, 16 Apr 2015 14:41:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=4RwQ1nwbjDqQiL3Ha368nURT5yKGXRIU4U3jj9+tHmw=;
-        b=mxRAdBILECCXAJ7KF79/QCHbAN5FA48Ouuh+xV18LhRfcuzvDp/umU/VduLchnWuBc
-         2Ea5RChrgCwRkWY8ZXbFiIAciM90KD+a7UBHnL/h0KBQlAmC8wUd88zlRjEHriQuWl7p
-         /lw5k7G8r2+xNXOem1YjoAUQ8QeUIGHxeryaBnoYcFO38UEEfqtehuULQFatS4YoJDDg
-         tATs+iSacalupSULQIXqSaDcYtGZHr0oYD9jHRz3a7QbY60cYWQ1dkzVPlkK+ze37ia+
-         zRKG91Ysz+LOZuZpiuz4OtHmpiZ/EAiU26jfRk1i4WkSxrAv8q1wkrTw+XyqLwrkWicO
-         5afA==
-X-Received: by 10.107.31.206 with SMTP id f197mr46100433iof.19.1429220479857;
- Thu, 16 Apr 2015 14:41:19 -0700 (PDT)
-Received: by 10.107.28.132 with HTTP; Thu, 16 Apr 2015 14:41:19 -0700 (PDT)
-In-Reply-To: <20150414172854.GA27623@yoshi.chippynet.com>
-X-Google-Sender-Auth: ztyN7SEuOrAcNlhXegd-I-tdlu4
+	id S1751392AbbDPVpH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Apr 2015 17:45:07 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:65071 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751046AbbDPVpF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Apr 2015 17:45:05 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4E5924A72B;
+	Thu, 16 Apr 2015 17:45:04 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=nDX7MvX5MbbQFx1GQw9AuZoGugk=; b=DpTwXq
+	w97V+JAIfDWOxCe4c3l0Fg9u8XwD2HM+4+5BJqhF2vMeRWYkSrvkAn+NWlAS7yfp
+	pnyItKWPX4Kw3TXPLTl4E5J44gWu+vVOftG+/wa7iaXWC22/i1ghsPK2/yAB4XiU
+	UEbQbMFP043g5EYe0XVNuxSGTlzoGGoeLdCr4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Loh/I7S4HXlKhyBO/YEFvu15XCH/wOnV
+	2P4sxH6CijKXOaHK93iUe9OsEfrdlO/5U0/Ktn4DvJMzJn/GYBuwiUS8/Mbfmyhj
+	W3D1q3r646Xw/s5ToUGeyHq/FUerTlq7wY5VyyQ4ILqO2cBAcU5/QeHBvssgWujj
+	CXt2uyUdAzc=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4728C4A72A;
+	Thu, 16 Apr 2015 17:45:04 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id ABD0C4A727;
+	Thu, 16 Apr 2015 17:45:02 -0400 (EDT)
+In-Reply-To: <1429195387-20573-1-git-send-email-Matthieu.Moy@imag.fr>
+	(Matthieu Moy's message of "Thu, 16 Apr 2015 16:43:07 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: D66A7C46-E481-11E4-B5F2-11859F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267335>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267336>
 
-On Tue, Apr 14, 2015 at 1:28 PM, Paul Tan <pyokagan@gmail.com> wrote:
-> Below is the fixed patch. I also decided to return NULL if `filename` is
-> NULL because such an input usually indicated an uncaught error.
+Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 
-Unfortunately, this blurs the line between programmer error (passing
-NULL for filename) and a user/configuration error (XDG_CONFIG_HOME and
-HOME being undefined). If there is indeed no valid interpretation for
-filename==NULL, then it may be better to die() or assert() here to
-flag the programmer error as early as possible, rather than returning
-NULL.
-
-More below.
-
-> ---- >8 ----
-> The XDG base dir spec[1] specifies that configuration files be stored in
-> a subdirectory in $XDG_CONFIG_HOME. To construct such a configuration
-> file path, home_config_paths() can be used. However, home_config_paths()
-> combines distinct functionality:
+> The old message did not mention the :regex:file form.
 >
-> 1. Retrieve the home git config file path ~/.gitconfig
+> To avoid overly long lines, split the message into two lines (in case
+> item->string is long, it will be the only part truncated in a narrow
+> terminal).
 >
-> 2. Construct the XDG config path of the file specified by `file`.
->
-> This function was introduced in commit 21cf3227 ("read (but not write)
-> from $XDG_CONFIG_HOME/git/config file").  While the intention of the
-> function was to allow the home directory configuration file path and the
-> xdg directory configuration file path to be retrieved with one function
-> call, the hard-coding of the path ~/.gitconfig prevents it from being
-> used for other configuration files. Furthermore, retrieving a file path
-> relative to the user's home directory can be done with
-> expand_user_path(). Hence, it can be seen that home_config_paths()
-> introduces unnecessary complexity, especially if a user just wants to
-> retrieve the xdg config file path.
->
-> As such, implement a simpler function xdg_config_home() for constructing
-> the XDG base dir spec configuration file path. This function, together
-> with expand_user_path(), can replace all uses of home_config_paths().
->
-> [1] http://standards.freedesktop.org/basedir-spec/basedir-spec-0.7.html
->
-> Signed-off-by: Paul Tan <pyokagan@gmail.com>
+> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 > ---
-> diff --git a/cache.h b/cache.h
-> index 3d3244b..2db10b8 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -836,6 +836,14 @@ char *strip_path_suffix(const char *path, const char *suffix);
->  int daemon_avoid_alias(const char *path);
->  extern int is_ntfs_dotgit(const char *name);
+>  line-log.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 >
-> +/**
-> + * Returns the newly allocated string "$XDG_CONFIG_HOME/git/{filename}".  If
-> + * $XDG_CONFIG_HOME is unset or empty, returns the newly allocated string
-> + * "$HOME/.config/git/{filename}". Returns NULL if filename is NULL or an error
-> + * occurred.
-> + */
+> diff --git a/line-log.c b/line-log.c
+> index a490efe..e725248 100644
+> --- a/line-log.c
+> +++ b/line-log.c
+> @@ -575,7 +575,8 @@ parse_lines(struct commit *commit, const char *prefix, struct string_list *args)
+>  
+>  		name_part = skip_range_arg(item->string);
+>  		if (!name_part || *name_part != ':' || !name_part[1])
+> -			die("-L argument '%s' not of the form start,end:file",
+> +			die("invalid -L argument '%s'.\n"
+> +			    "It should be of the form start,end:file or :regex:file.",
+>  			    item->string);
+>  		range_part = xstrndup(item->string, name_part - item->string);
+>  		name_part++;
 
-This is better than the original which said "$XDG_CONFIG_HOME/git/%s",
-but is still potentially confusing. When I read the earlier iteration,
-I was left with the impression that it was returning that literal
-string, with '$' and '%s' embedded, and that the caller would have to
-process it further to have '$' and '%s' expanded. Perhaps rephrasing
-it something like this will help?
-
-    Return a newly allocated string with value xdg+"/git/"+filename
-    where xdg is the interpolated value of $XDG_CONFIG_HOME if
-    defined and non-empty, otherwise "$HOME/.config". Return NULL
-    upon error.
-
-Also, for consistency with other API documentation, say "Return"
-rather than "Returns".
-
-More below.
-
-> +extern char *xdg_config_home(const char *filename);
-> +
->  /* object replacement */
->  #define LOOKUP_REPLACE_OBJECT 1
->  extern void *read_sha1_file_extended(const unsigned char *sha1, enum object_type *type, unsigned long *size, unsigned flag);
-> diff --git a/path.c b/path.c
-> index e608993..8ee7191 100644
-> --- a/path.c
-> +++ b/path.c
-> @@ -856,3 +856,19 @@ int is_ntfs_dotgit(const char *name)
->                         len = -1;
->                 }
->  }
-> +
-> +char *xdg_config_home(const char *filename)
-> +{
-> +       const char *config_home = getenv("XDG_CONFIG_HOME");
-> +
-> +       if (!filename)
-> +               return NULL;
-
-See above regarding conflation of programmer error and user/configuration error.
-
-> +       if (!config_home || !config_home[0]) {
-
-On this project, *config_home is usually favored over config_home[0].
-
-> +               const char *home = getenv("HOME");
-> +
-> +               if (!home)
-> +                       return NULL;
-> +               return mkpathdup("%s/.config/git/%s", home, filename);
-> +       } else
-> +               return mkpathdup("%s/git/%s", config_home, filename);
-
-This logic is more difficult to follow than it ought to be due to the
-use of 'config_home' so distant from the 'if' which checked it, and
-due to the nested 'if'. It could be expressed more straight-forwardly
-as:
-
-    if (config_home && *config_home)
-        return mkpathdup("%s/git/%s", config_home, filename);
-
-    home = getenv("HOME");
-    if (home)
-        return mkpathdup("%s/.config/git/%s", home, filename);
-
-    return NULL;
-
-> +}
-> --
-> 2.1.4
+You forgot to update tests to match their expectations?  4211.20
+wants to see 'argument.*not of the form', it seems.
