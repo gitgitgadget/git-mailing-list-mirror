@@ -1,91 +1,87 @@
-From: Pedro Rodrigues <prodrigues1990@gmail.com>
-Subject: Re: git-archive ignores submodules
-Date: Thu, 16 Apr 2015 19:09:47 +0100
-Message-ID: <CAL1ZDKbcmrer481fRY2NEHUQ1J5tjRbHz2yLEcszh3Q-NjcvcQ@mail.gmail.com>
-References: <CAL1ZDKZs++NkLoHZ_w_YebQuZYG3rgAiH5SsaQfTmb9MPHjR3w@mail.gmail.com>
-	<20150416175623.GJ21868@paksenarrion.iveqy.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/3] utf8-bom: introduce skip_utf8_bom() helper
+Date: Thu, 16 Apr 2015 14:14:07 -0400
+Message-ID: <20150416181407.GA12517@peff.net>
+References: <xmqqoamohu2m.fsf@gitster.dls.corp.google.com>
+ <1429206774-10087-1-git-send-email-gitster@pobox.com>
+ <1429206774-10087-2-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Fredrik Gustafsson <iveqy@iveqy.com>
-X-From: git-owner@vger.kernel.org Thu Apr 16 20:09:55 2015
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org,
+	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 16 20:14:17 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YioEc-0007Pc-UU
-	for gcvg-git-2@plane.gmane.org; Thu, 16 Apr 2015 20:09:55 +0200
+	id 1YioIq-0001Rz-Re
+	for gcvg-git-2@plane.gmane.org; Thu, 16 Apr 2015 20:14:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754012AbbDPSJu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Apr 2015 14:09:50 -0400
-Received: from mail-qc0-f174.google.com ([209.85.216.174]:34718 "EHLO
-	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751888AbbDPSJs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Apr 2015 14:09:48 -0400
-Received: by qcyk17 with SMTP id k17so10978823qcy.1
-        for <git@vger.kernel.org>; Thu, 16 Apr 2015 11:09:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=nKjz8DTg0lR9Y8PgMwxIcG70tw9cV/5UPy0En4+RiVI=;
-        b=Ntg3XcFAUwFwLwaaFo6ZKj0Mt21aTn/s6iOm5WlXKYZozVXhn3YVgZ22c9tuJ93Krl
-         dKftgjOs6Yj3HIwU4No6ZIBqMmQi4qfuYCfNL/nVVObDOrOOZteLhWWG0moIFhWFlEar
-         enWJ3LKQR9WqbzIfe5ecHj0RwzxRknZVIR+TBjB/e0DkZc9S9spFXNu/qrdf9kzAEd3K
-         AhVFNeqK2AaP1l5X1Mqg4K51I+U/yj5EbrxjBp8fsMG+fZcwBbOftLLtQxy1VTQQt8cs
-         ue6yoPzC/nAtDBCYLdoTId3AShk0/jcRuguFKkLjdnjB9iEp3dP9qmFYK7GMdq5ZD+lG
-         wwsg==
-X-Received: by 10.140.101.214 with SMTP id u80mr38872883qge.48.1429207787634;
- Thu, 16 Apr 2015 11:09:47 -0700 (PDT)
-Received: by 10.140.97.100 with HTTP; Thu, 16 Apr 2015 11:09:47 -0700 (PDT)
-In-Reply-To: <20150416175623.GJ21868@paksenarrion.iveqy.com>
+	id S1754840AbbDPSOL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Apr 2015 14:14:11 -0400
+Received: from cloud.peff.net ([50.56.180.127]:46370 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754498AbbDPSOJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Apr 2015 14:14:09 -0400
+Received: (qmail 13191 invoked by uid 102); 16 Apr 2015 18:14:09 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 16 Apr 2015 13:14:09 -0500
+Received: (qmail 27387 invoked by uid 107); 16 Apr 2015 18:14:33 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 16 Apr 2015 14:14:33 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 16 Apr 2015 14:14:07 -0400
+Content-Disposition: inline
+In-Reply-To: <1429206774-10087-2-git-send-email-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267319>
 
-Good to know about git submodule foreach.
+On Thu, Apr 16, 2015 at 10:52:52AM -0700, Junio C Hamano wrote:
 
-Simpler yet, I'm using:
+> @@ -576,10 +576,8 @@ int add_excludes_from_file_to_list(const char *fname,
+>  
+>  	el->filebuf = buf;
+>  
+> -	if (size >= 3 && !memcmp(buf, utf8_bom, 3))
+> -		entry = buf + 3;
+> -	else
+> -		entry = buf;
+> +	entry = buf;
+> +	skip_utf8_bom(&entry, size);
+>  
+>  	for (i = 0; i < size; i++) {
+>  		if (buf[i] == '\n') {
 
-zip -r ../project.zip . -x *.git*
+I'm surprised that in both yours and the original that we do not need to
+subtract 3 from "size".
 
-Which essentially does the same thing I would need from git-archive
---recurse-submodule, zip everything excluding .git folders. Still
-would be better to use git itself.
+It looks like we advance "entry" here, not "buf", and then iterate over
+"buf". But I think that makes the later logic weird:
 
-2015-04-16 18:56 GMT+01:00 Fredrik Gustafsson <iveqy@iveqy.com>:
-> On Thu, Apr 16, 2015 at 06:35:38PM +0100, Pedro Rodrigues wrote:
->> I've been using git-archive as my main way of deploying to production
->> servers, but today I've come across a git repo with submodules and
->> found out that git archive has no option to include submodules on the
->> output archive.
->
-> As far as I know this is an known limitation that's just waiting for
-> someone to solve. Thanks for bringing attention to it.
->
->> This simply makes git-archive unusable on this scenario.
->
-> Not completely. There's a simple workaround. Combine git submodule
-> foreach with git archive and make an archive for each submodule.
->
-> Not as simple as if git archive --recurse-submodule would have been
-> implementet, but hopefully it can make things work for you at the
-> moment.
->
-> --
-> Fredrik Gustafsson
->
-> phone: +46 733-608274
-> e-mail: iveqy@iveqy.com
-> website: http://www.iveqy.com
+   if (entry != buf + i && entry[0] != '#')
 
+because if there is a BOM, we end up with "entry > buf + i", which I
+think this code isn't expecting. I'm not sure it does anything bad, but
+I think it might be simpler as just:
 
+  /* save away the "real" copy for later, as we do now */
+  el->filebuf = buf;
 
--- 
-Pedro Rodrigues
-+244 917 774 823
-+351 969 042 335
-Mail: prodrigues1990@gmail.com
+  /*
+   * now pretend as if the BOM was not there at all by advancing
+   * the pointer and shrinking the size
+   */
+  skip_utf8_bom(&buf, &size);
+
+  /*
+   * and now we do our usual magic with "entry"
+   */
+  entry = buf;
+  for (i = 0; i < size; i++)
+     ...
+
+-Peff
