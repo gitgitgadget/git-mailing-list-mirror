@@ -1,76 +1,94 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [ANNOUNCE] Git v2.4.0-rc2
-Date: Wed, 15 Apr 2015 22:22:16 -0400
-Message-ID: <20150416022216.GA30991@peff.net>
-References: <xmqqlhhu1iv7.fsf@gitster.dls.corp.google.com>
- <CAGyf7-H_Njn8poGKnvgjq+0bKhHfs7S7qaFkDHsqa4NVUjt4EA@mail.gmail.com>
+From: "Randall S. Becker" <rsbecker@nexbridge.com>
+Subject: RE: [ANNOUNCE] Git v2.4.0-rc2
+Date: Thu, 16 Apr 2015 00:34:12 -0400
+Message-ID: <001601d077fe$97288cc0$c579a640$@nexbridge.com>
+References: <xmqqlhhu1iv7.fsf@gitster.dls.corp.google.com> <CAGyf7-H_Njn8poGKnvgjq+0bKhHfs7S7qaFkDHsqa4NVUjt4EA@mail.gmail.com> <20150416022216.GA30991@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git Users <git@vger.kernel.org>
-To: Bryan Turner <bturner@atlassian.com>
-X-From: git-owner@vger.kernel.org Thu Apr 16 04:22:25 2015
+Content-Type: text/plain;
+	charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+Cc: "'Junio C Hamano'" <gitster@pobox.com>,
+	"'Git Users'" <git@vger.kernel.org>
+To: "'Jeff King'" <peff@peff.net>,
+	"'Bryan Turner'" <bturner@atlassian.com>
+X-From: git-owner@vger.kernel.org Thu Apr 16 06:34:32 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YiZRg-0005li-JS
-	for gcvg-git-2@plane.gmane.org; Thu, 16 Apr 2015 04:22:24 +0200
+	id 1YibVX-0000Q3-Ox
+	for gcvg-git-2@plane.gmane.org; Thu, 16 Apr 2015 06:34:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752919AbbDPCWT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Apr 2015 22:22:19 -0400
-Received: from cloud.peff.net ([50.56.180.127]:45999 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752508AbbDPCWT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Apr 2015 22:22:19 -0400
-Received: (qmail 5494 invoked by uid 102); 16 Apr 2015 02:22:19 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 15 Apr 2015 21:22:19 -0500
-Received: (qmail 20571 invoked by uid 107); 16 Apr 2015 02:22:42 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 15 Apr 2015 22:22:42 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 15 Apr 2015 22:22:16 -0400
-Content-Disposition: inline
-In-Reply-To: <CAGyf7-H_Njn8poGKnvgjq+0bKhHfs7S7qaFkDHsqa4NVUjt4EA@mail.gmail.com>
+	id S932093AbbDPEe2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Apr 2015 00:34:28 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:27143 "EHLO
+	elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752387AbbDPEe0 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 16 Apr 2015 00:34:26 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from pangea (CPE0023eb577e25-CM602ad06c91a7.cpe.net.cable.rogers.com [99.237.128.150])
+	(authenticated bits=0)
+	by elephants.elehost.com (8.14.9/8.14.9) with ESMTP id t3G4YDKL016878
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+	Thu, 16 Apr 2015 00:34:14 -0400 (EDT)
+	(envelope-from rsbecker@nexbridge.com)
+In-Reply-To: <20150416022216.GA30991@peff.net>
+X-Mailer: Microsoft Outlook 15.0
+Thread-Index: AQFX+RYt7aPgENcGQLPIWVMZTwVOEAHxi4vNAdVfcUGeIdDykA==
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267246>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267247>
 
-[side note: please trim your quoted material when doing inline quoting]
-
-On Thu, Apr 16, 2015 at 12:05:57PM +1000, Bryan Turner wrote:
-
-> >       merge: pass verbosity flag down to merge-recursive
+On April 15, 2015 10:22 PM Jeff King wrote:
+> Sent: April 15, 2015 10:22 PM
+> To: Bryan Turner
+> Cc: Junio C Hamano; Git Users
+> Subject: Re: [ANNOUNCE] Git v2.4.0-rc2
 > 
-> I'm pretty confident this change is working as intended, but the
-> intended change is causing a regression in behavior for me. I'll
-> readily admit that my workflow is probably wrong, but I thought
-> perhaps it would be worth surfacing.
->
-> [...]
-> If the goal of passing the verbosity flag down was to fix git merge
-> --quiet, should the "Automatic merge failed" line also be omitted? But
-> if that line should _stay_, wouldn't it be better for the "CONFLICT"
-> lines to also stay?
+> [side note: please trim your quoted material when doing inline quoting]
+> 
+> On Thu, Apr 16, 2015 at 12:05:57PM +1000, Bryan Turner wrote:
+> 
+> > >       merge: pass verbosity flag down to merge-recursive
+> >
+> > I'm pretty confident this change is working as intended, but the
+> > intended change is causing a regression in behavior for me. I'll
+> > readily admit that my workflow is probably wrong, but I thought
+> > perhaps it would be worth surfacing.
+> >
+> > [...]
+> > If the goal of passing the verbosity flag down was to fix git merge
+> > --quiet, should the "Automatic merge failed" line also be omitted? But
+> > if that line should _stay_, wouldn't it be better for the "CONFLICT"
+> > lines to also stay?
+> 
+> Yeah, I feared there might be fallouts like this. We are somewhat blindly
+> passing down the "--quiet" flag without doing a careful audit of the severity
+> levels in merge-recursive. Potentially we would want a few levels of verbosity:
+> 
+>   -2: totally silent (-q -q)
+>   -1: silence chat, mention important errors like CONFLICT markers (-q)
+>    0: current defaults
+>    1: more verbosity (-v, what is currently level "3", I guess?)
+>   >1: and so on with more "-v"; I don't even know what levels are used
+> 
+> That's off the top of my head. I think it really needs somebody to look through
+> and categorize all of the messages generated by merge-recursive.
+> In the meantime, unless somebody is planning to jump on this topic
+> immediately (I am not), I think we can revert 2bf15a3330a from master.
+> It's definitely fixing _a_ problem, but it's one we've lived with for many years
+> already.
+> 
+> -Peff
 
-Yeah, I feared there might be fallouts like this. We are somewhat
-blindly passing down the "--quiet" flag without doing a careful audit of
-the severity levels in merge-recursive. Potentially we would want a few
-levels of verbosity:
+As a more (slightly nano) enhanced suggestion, please consider adding something along the lines of multiple occurrences of -v:{module=level} to specifically show messages from things like git-upload-pak, specifically passing verbosity down to selective components. I do not know whether there is value in the git subject domain for this, but I'm bringing it up since I have had specific issues with that part of the code while porting on my platform and I would have liked to be able to ignore verbosity from everything other than that module while diagnosing issues. Having this available to test suites would be a bit more useful as well.
 
-  -2: totally silent (-q -q)
-  -1: silence chat, mention important errors like CONFLICT markers (-q)
-   0: current defaults
-   1: more verbosity (-v, what is currently level "3", I guess?)
-  >1: and so on with more "-v"; I don't even know what levels are used
+Cheers,
+Randall
 
-That's off the top of my head. I think it really needs somebody to look
-through and categorize all of the messages generated by merge-recursive.
-In the meantime, unless somebody is planning to jump on this topic
-immediately (I am not), I think we can revert 2bf15a3330a from master.
-It's definitely fixing _a_ problem, but it's one we've lived with for
-many years already.
-
--Peff
+-- Brief whoami: NonStop&UNIX developer since approximately UNIX(421664400)/NonStop(211288444200000000)
+-- In my real life, I talk too much.
