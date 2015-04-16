@@ -1,49 +1,40 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
 Subject: Re: [PATCH] dir: allow a BOM at the beginning of exclude files
-Date: Thu, 16 Apr 2015 17:03:05 +0200
-Organization: gmx
-Message-ID: <13f82e720ac12a6bc12e8b9f566dd48e@www.dscho.org>
+Date: Thu, 16 Apr 2015 17:10:02 +0200
+Message-ID: <1429197002.3097.16.camel@elego.de>
 References: <1429193112-41184-1-git-send-email-cmn@elego.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, git-owner@vger.kernel.org
-To: =?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@elego.de>
-X-From: git-owner@vger.kernel.org Thu Apr 16 17:03:15 2015
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 16 17:17:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YilJx-00067U-Ij
-	for gcvg-git-2@plane.gmane.org; Thu, 16 Apr 2015 17:03:13 +0200
+	id 1YilXv-0006N7-CP
+	for gcvg-git-2@plane.gmane.org; Thu, 16 Apr 2015 17:17:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757084AbbDPPDJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Apr 2015 11:03:09 -0400
-Received: from mout.gmx.net ([212.227.15.15]:50930 "EHLO mout.gmx.net"
+	id S1751184AbbDPPRe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Apr 2015 11:17:34 -0400
+Received: from mx0.elegosoft.com ([78.47.87.163]:40490 "EHLO mx0.elegosoft.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754543AbbDPPDI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Apr 2015 11:03:08 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0LbMmA-1Z6IUN2pj8-00kuiR; Thu, 16 Apr 2015 17:03:05
- +0200
+	id S1750753AbbDPPRd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Apr 2015 11:17:33 -0400
+X-Greylist: delayed 491 seconds by postgrey-1.27 at vger.kernel.org; Thu, 16 Apr 2015 11:17:33 EDT
+Received: from centaur.local (p57A97B07.dip0.t-ipconnect.de [87.169.123.7])
+	by mx0.elegosoft.com (Postfix) with ESMTPSA id F37F4DE730
+	for <git@vger.kernel.org>; Thu, 16 Apr 2015 17:10:02 +0200 (CEST)
 In-Reply-To: <1429193112-41184-1-git-send-email-cmn@elego.de>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:ZU3+1Dhd8lSw0hlefFmEIjmGTaAyAqNZ8xTNbYVyATlr141F3ut
- qdcB1R1/iB573k8f0M6ao//pYvTOb/pgTxh59aB8M1p6zLvKHSKV9dPuchhmAJgBUqT2DKM
- DZaBEY9DaDDPRaz1rEUhyALVeBowllXcV/aUgbHCqc5CQPzoJqrvSLnIe5b9oviIQixd8/l
- zGlT950VlD9rzeNy1EbXw==
-X-UI-Out-Filterresults: notjunk:1;
+X-Mailer: Evolution 3.12.9-1+b1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267293>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267294>
 
-Hi Carlos,
-
-On 2015-04-16 16:05, Carlos Mart=C3=ADn Nieto wrote:
+On Thu, 2015-04-16 at 16:05 +0200, Carlos Mart=C3=ADn Nieto wrote:
 > Some text editors like Notepad or LibreOffice write an UTF-8 BOM in
 > order to indicate that the file is Unicode text rather than whatever =
 the
@@ -55,6 +46,11 @@ p
 > them, we will attempt to match a filename with the BOM as prefix, whi=
 ch
 > won't match the files the user is expecting.
+
+Signed-off-by: Carlos Mart=C3=ADn Nieto <cmn@elego.de>
+
+which I keep forgetting.
+
 >=20
 > ---
 >=20
@@ -68,16 +64,50 @@ e
 > we do not have a partial BOM which would mean there's some invalid
 > content, but we don't really have invalid content any other way, as
 > we're just dealing with a list of paths in the file.
-
-Yeah, users are entertaining!
-
-I agree that this is a good patch. *Maybe* we would need the same handl=
-ing in more places, in which case it might make sense to refactor the t=
-est into its own function.
-
-In any case, though, the Git project requires a [Developer's Certificat=
-e of Origin](https://github.com/git/git/blob/v2.3.5/Documentation/Submi=
-ttingPatches#L234-L277); Would you mind adding that?
-
-Thanks,
-Dscho
+>=20
+>  dir.c                      | 8 +++++++-
+>  t/t7061-wtstatus-ignore.sh | 2 ++
+>  2 files changed, 9 insertions(+), 1 deletion(-)
+>=20
+> diff --git a/dir.c b/dir.c
+> index 0943a81..6368247 100644
+> --- a/dir.c
+> +++ b/dir.c
+> @@ -581,6 +581,7 @@ int add_excludes_from_file_to_list(const char *fn=
+ame,
+>  	struct stat st;
+>  	int fd, i, lineno =3D 1;
+>  	size_t size =3D 0;
+> +	static const unsigned char *utf8_bom =3D (unsigned char *) "\xef\xb=
+b\xbf";
+>  	char *buf, *entry;
+> =20
+>  	fd =3D open(fname, O_RDONLY);
+> @@ -617,7 +618,12 @@ int add_excludes_from_file_to_list(const char *f=
+name,
+>  	}
+> =20
+>  	el->filebuf =3D buf;
+> -	entry =3D buf;
+> +
+> +	if (size >=3D 3 && !memcmp(buf, utf8_bom, 3))
+> +		entry =3D buf + 3;
+> +	else
+> +		entry =3D buf;
+> +
+>  	for (i =3D 0; i < size; i++) {
+>  		if (buf[i] =3D=3D '\n') {
+>  			if (entry !=3D buf + i && entry[0] !=3D '#') {
+> diff --git a/t/t7061-wtstatus-ignore.sh b/t/t7061-wtstatus-ignore.sh
+> index 460789b..0a06fbf 100755
+> --- a/t/t7061-wtstatus-ignore.sh
+> +++ b/t/t7061-wtstatus-ignore.sh
+> @@ -13,6 +13,8 @@ EOF
+> =20
+>  test_expect_success 'status untracked directory with --ignored' '
+>  	echo "ignored" >.gitignore &&
+> +	sed -e "s/^/\xef\xbb\xbf/" .gitignore >.gitignore.new &&
+> +	mv .gitignore.new .gitignore &&
+>  	mkdir untracked &&
+>  	: >untracked/ignored &&
+>  	: >untracked/uncommitted &&
