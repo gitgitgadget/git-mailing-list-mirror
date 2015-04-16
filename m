@@ -1,62 +1,87 @@
-From: Pedro Rodrigues <prodrigues1990@gmail.com>
-Subject: Re: git-archive ignores submodules
-Date: Thu, 16 Apr 2015 20:59:46 +0100
-Message-ID: <CAL1ZDKbvNvTA3CFg5iWMYpOVDbxFwtpFCu+PO2onssO=+pw5XQ@mail.gmail.com>
-References: <CAL1ZDKZs++NkLoHZ_w_YebQuZYG3rgAiH5SsaQfTmb9MPHjR3w@mail.gmail.com>
-	<20150416175623.GJ21868@paksenarrion.iveqy.com>
-	<CAL1ZDKbcmrer481fRY2NEHUQ1J5tjRbHz2yLEcszh3Q-NjcvcQ@mail.gmail.com>
-	<5530076E.50605@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] test-lib-functions.sh: fix the second argument to some helper functions
+Date: Thu, 16 Apr 2015 13:31:31 -0700
+Message-ID: <xmqq8udrizmk.fsf@gitster.dls.corp.google.com>
+References: <1429193527-1528-1-git-send-email-gitter.spiros@gmail.com>
+	<vpqoamop28y.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Fredrik Gustafsson <iveqy@iveqy.com>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Thu Apr 16 21:59:56 2015
+Content-Type: text/plain
+Cc: Elia Pinto <gitter.spiros@gmail.com>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu Apr 16 22:32:08 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yipx5-0003oI-Rx
-	for gcvg-git-2@plane.gmane.org; Thu, 16 Apr 2015 21:59:56 +0200
+	id 1YiqSE-0005we-QM
+	for gcvg-git-2@plane.gmane.org; Thu, 16 Apr 2015 22:32:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751544AbbDPT7s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Apr 2015 15:59:48 -0400
-Received: from mail-qk0-f175.google.com ([209.85.220.175]:36706 "EHLO
-	mail-qk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751424AbbDPT7r (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Apr 2015 15:59:47 -0400
-Received: by qku63 with SMTP id 63so140344296qku.3
-        for <git@vger.kernel.org>; Thu, 16 Apr 2015 12:59:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=udFjupj9xxxMlo7RfnqOymrtLyVSk8kc0j9e/nDjFwk=;
-        b=aNmV0UodIfA9FL/dhpldeINqyI9vl/HRiShV/5BaHaFzBUJfRSJBtdICUBCoOmJMls
-         ge8yvtw+0zX6mkSs5wV16G5HxsZ1uo/mfSbMJp0vQryjPuaWC4zPKpCCaLCz+uaS/dDF
-         LcaB6sWelnwg4nsAo3J9uvaPMtBMsG89blnHD+vq40ahgNK6sn/LSFYNgTf4rR8HIAVA
-         ggtcbsUO+w84EDOkts15KXgvoTIIo0Qk8yta8YuJq2M/tscvtNDwAOI6UJ5JY6xi6FOr
-         /EDe3i8+45VxlAL2PztiP4kxap3OYkF2mWZLJwnMKDl+57+CxNGmh0bLNtAQRaXfNHpv
-         JoFw==
-X-Received: by 10.55.20.30 with SMTP id e30mr56765705qkh.45.1429214386914;
- Thu, 16 Apr 2015 12:59:46 -0700 (PDT)
-Received: by 10.140.97.100 with HTTP; Thu, 16 Apr 2015 12:59:46 -0700 (PDT)
-In-Reply-To: <5530076E.50605@web.de>
+	id S1753624AbbDPUbw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Apr 2015 16:31:52 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:51650 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753503AbbDPUbf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Apr 2015 16:31:35 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 855414AF9B;
+	Thu, 16 Apr 2015 16:31:33 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=bLj7Hj77Q5biIlSBx5DVPmUDSYQ=; b=nL9QwT
+	OHjyCSddZy0Y4jLtbudsnTxH3jhFn1LAQUEscYtJMPu4Qn+XZ6zPU88jPRN/TcdM
+	ZQVb0qHXDIt/GDih3j46OFtjp1E8oWDQcQtPnhmThZl7w9y6cFch2XIPf4uD+0TW
+	HDJM3v68ee2iEmdHZcEelbvf3KLg7fhVWkH/4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=gLv3bTRI6MfA8thD5X/s6uK4OroD+n3N
+	ReDRFk7+md4d7SlWi2RmFD6cmrJT/871O8nAwGgYjtNb5AtE8QC4AL+x2mUGS7xS
+	B7WMe7YZFO/33vpsupRuNNVuKqQ9fOKeaAZXbCJGC6L7tFeJli7XTe5cTqU/UgU+
+	h9SqbOVVwgQ=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7D9B94AF9A;
+	Thu, 16 Apr 2015 16:31:33 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 083CC4AF99;
+	Thu, 16 Apr 2015 16:31:32 -0400 (EDT)
+In-Reply-To: <vpqoamop28y.fsf@anie.imag.fr> (Matthieu Moy's message of "Thu,
+	16 Apr 2015 16:38:21 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 920C4D86-E477-11E4-A533-11859F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267331>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267332>
 
-I sure can. Just send me an ID I can pull and test in here (not really
-into C, so this the least I can contribute).
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-Although, my expectations are very simple, I just expect(ed) the exact
-same git-archive command to be run on submodule(s), and have an output
-on a single zip|tar|whatever file.
+> Elia Pinto <gitter.spiros@gmail.com> writes:
+>
+>> --- a/t/test-lib-functions.sh
+>> +++ b/t/test-lib-functions.sh
+>> @@ -478,7 +478,7 @@ test_external_without_stderr () {
+>>  test_path_is_file () {
+>>  	if ! test -f "$1"
+>>  	then
+>> -		echo "File $1 doesn't exist. $*"
+>> +		echo "File $1 doesn't exist. $2"
+>>  		false
+>>  	fi
+>>  }
+>> @@ -486,7 +486,7 @@ test_path_is_file () {
+>>  test_path_is_dir () {
+>>  	if ! test -d "$1"
+>>  	then
+>> -		echo "Directory $1 doesn't exist. $*"
+>> +		echo "Directory $1 doesn't exist. $2"
+>>  		false
+>>  	fi
+>>  }
+>
+> Sounds straightforwardly correct to me.
 
-Not completely off topic, but for consistency consider that:
-git-clone supports --recursive and --recurse-submodules, which do the
-same thing.
-git-pull and git-push only support --recurse-submodules.
+Thanks.  This however makes me wonder why you were nominated for
+reviewing this patch, though...
