@@ -1,164 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-p4: Use -m when running p4 changes
-Date: Thu, 16 Apr 2015 11:56:31 -0700
-Message-ID: <xmqqfv7zj40w.fsf@gitster.dls.corp.google.com>
-References: <CALM2SnY62u3OXJOMSqSfghH_NYwZhzSedm3-wcde-dQCX6eB9Q@mail.gmail.com>
-	<CAE5ih79UcJfuhzgTdTPy2K51sa6--4bvaVaKL3nsUcC2kq4Ffg@mail.gmail.com>
-	<CALM2SnafBHz8YeWtUtQDUgLBP_s9AiJy=9UC6XveqP0zrYMEqA@mail.gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: git-archive ignores submodules
+Date: Thu, 16 Apr 2015 21:03:10 +0200
+Message-ID: <5530076E.50605@web.de>
+References: <CAL1ZDKZs++NkLoHZ_w_YebQuZYG3rgAiH5SsaQfTmb9MPHjR3w@mail.gmail.com>	<20150416175623.GJ21868@paksenarrion.iveqy.com> <CAL1ZDKbcmrer481fRY2NEHUQ1J5tjRbHz2yLEcszh3Q-NjcvcQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Luke Diamand <luke@diamand.org>, Git Users <git@vger.kernel.org>,
-	Pete Wyckoff <pw@padd.com>
-To: Lex Spoon <lex@lexspoon.org>
-X-From: git-owner@vger.kernel.org Thu Apr 16 20:56:40 2015
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Pedro Rodrigues <prodrigues1990@gmail.com>,
+	Fredrik Gustafsson <iveqy@iveqy.com>
+X-From: git-owner@vger.kernel.org Thu Apr 16 21:03:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yioxs-0007sS-1S
-	for gcvg-git-2@plane.gmane.org; Thu, 16 Apr 2015 20:56:40 +0200
+	id 1Yip4N-0003S2-C3
+	for gcvg-git-2@plane.gmane.org; Thu, 16 Apr 2015 21:03:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755141AbbDPS4f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Apr 2015 14:56:35 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:62049 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755140AbbDPS4d (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Apr 2015 14:56:33 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2B8D74AACA;
-	Thu, 16 Apr 2015 14:56:33 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5Z1tL33SXik11MbrXMRgVX/1qvQ=; b=yhauKr
-	2hXaD3E4oGkoTjKaPQeWg/uVa8D8HGd2AyFjpuvlXKDxkqtPMrHhYR+YNMPgSo/f
-	JLB78XQVc7gMuInFGsicqFI252BhEj/dei87bWQwHxk9BV6Wx9hQ0nTt7Jg7RoSL
-	M18sgFebt5I5eE7D3OuvFclTIOWq383nOzsTQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=jC1AKNbMcqgqUPl/4g68l3I+4ka4PVQn
-	GsCWcTnRmg1QXN2d5bXtkflHrPrQQJRqY/dr1l7F89a9hSzrlPEUrr2c4CO6EKH7
-	ASx1TxdUzd/L0pkJz5Hiw+SEHr3w1LafR3C+swPIn9z+Z6hnYC6z85ChSHseF+2A
-	v6u5eub6tqo=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 224B34AAC9;
-	Thu, 16 Apr 2015 14:56:33 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 75E374AAC7;
-	Thu, 16 Apr 2015 14:56:32 -0400 (EDT)
-In-Reply-To: <CALM2SnafBHz8YeWtUtQDUgLBP_s9AiJy=9UC6XveqP0zrYMEqA@mail.gmail.com>
-	(Lex Spoon's message of "Tue, 14 Apr 2015 23:47:40 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 4C413116-E46A-11E4-8063-11859F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1752038AbbDPTDU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Apr 2015 15:03:20 -0400
+Received: from mout.web.de ([212.227.17.11]:58608 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751506AbbDPTDS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Apr 2015 15:03:18 -0400
+Received: from [192.168.178.41] ([79.211.97.138]) by smtp.web.de (mrweb102)
+ with ESMTPSA (Nemesis) id 0MQNiS-1Yv1rC1rNE-00ThIm; Thu, 16 Apr 2015 21:03:14
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
+In-Reply-To: <CAL1ZDKbcmrer481fRY2NEHUQ1J5tjRbHz2yLEcszh3Q-NjcvcQ@mail.gmail.com>
+X-Provags-ID: V03:K0:MBH3ScBEBLhoEDKAIU2Hp/pp1kp7MV7pxRHwPfo1VCrlZ7TUs32
+ SkN1On4jOyLxJRmhA2F1dABPpv3IGF4KqCUlYH9ufO2T3Gv8f/ItE1Y4k8jthV4IlPfyxX5
+ 3PO3PjThU6rNdKutxuDqe+6klhiP/bmZR4xk5xwypF32lsJSTb1NGZS5iA1CpTXDDPfHbJ9
+ POrXbxkjtjBVWERj4LC4Q==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267327>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267328>
 
-Lex Spoon <lex@lexspoon.org> writes:
-
-> From 9cc607667a20317c837afd90d50c078da659b72f Mon Sep 17 00:00:00 2001
-> From: Lex Spoon <lex@lexspoon.org>
-> Date: Sat, 11 Apr 2015 10:01:15 -0400
-> Subject: [PATCH] git-p4: Use -m when running p4 changes
-
-All of the above is duplicate and shouldn't be added to the message;
-the recipient can pick them up from the e-mail headers.
-
-Please explain what this change intends to do (e.g. Is it a fix?  If
-so, what is broken without this change?  Is it an enhancement?  If
-so, what cannot be done without this change, and how and why is the
-new thing the change enables a good thing?), and why it is a good
-idea to use "-m" to realize that objective.
-
-> Signed-off-by: Lex Spoon <lex@lexspoon.org>
-> ---
-> Updated to include a test case
+Am 16.04.2015 um 20:09 schrieb Pedro Rodrigues:
+> Good to know about git submodule foreach.
 >
->  git-p4.py               | 51 ++++++++++++++++++++++++++++++---------
->  t/t9818-git-p4-block.sh | 64 +++++++++++++++++++++++++++++++++++++++++++++++++
->  2 files changed, 104 insertions(+), 11 deletions(-)
->  create mode 100755 t/t9818-git-p4-block.sh
+> Simpler yet, I'm using:
 >
-> diff --git a/git-p4.py b/git-p4.py
-> index 549022e..2fc8d9c 100755
-> --- a/git-p4.py
-> +++ b/git-p4.py
-> @@ -740,17 +740,43 @@ def
-> createOrUpdateBranchesFromOrigin(localRefPrefix = "refs/remotes/p4/",
-> silent
->  def originP4BranchesExist():
->          return gitBranchExists("origin") or
-> gitBranchExists("origin/p4") or gitBranchExists("origin/p4/master")
+> zip -r ../project.zip . -x *.git*
+>
+> Which essentially does the same thing I would need from git-archive
+> --recurse-submodule, zip everything excluding .git folders. Still
+> would be better to use git itself.
 
-It appears that the patch is severely linewrapped.
+Yes.
 
-> diff --git a/t/t9818-git-p4-block.sh b/t/t9818-git-p4-block.sh
-> new file mode 100755
-> index 0000000..73e545d
-> --- /dev/null
-> +++ b/t/t9818-git-p4-block.sh
-> @@ -0,0 +1,64 @@
-> +#!/bin/sh
-> +
-> +test_description='git p4 fetching changes in multiple blocks'
-> +
-> +. ./lib-git-p4.sh
-> +
-> +test_expect_success 'start p4d' '
-> + start_p4d
-> +'
+> 2015-04-16 18:56 GMT+01:00 Fredrik Gustafsson <iveqy@iveqy.com>:
+>> On Thu, Apr 16, 2015 at 06:35:38PM +0100, Pedro Rodrigues wrote:
+>>> I've been using git-archive as my main way of deploying to production
+>>> servers, but today I've come across a git repo with submodules and
+>>> found out that git archive has no option to include submodules on the
+>>> output archive.
+>>
+>> As far as I know this is an known limitation that's just waiting for
+>> someone to solve. Thanks for bringing attention to it.
 
-We do not do one-SP indent.  Indent with tab instead.
+I just rebased a patch Lars Hjemli posted in 2009 (which I kept in my
+GitHub repo to resurrect it when I find the time) to current master:
 
-> +
-> +test_expect_success 'Create a repo with 100 changes' '
-> + (
-> + cd "$cli" &&
-> + touch file.txt &&
+https://github.com/jlehmann/git-submod-enhancements/commits/archive--submodules
 
-Do not use "touch" when the only thing you are interested in is that
-the file exists and you do not care about its timestamp.  I.e. say
+See gmane/$107030 for its original posting. Apart from renaming the
+'--submodule' option to '--recurse-submodules' and solving a merge
+conflict I didn't change anything. Not sure why it wasn't accepted
+back then, I'll have to read that thread more closely ...
 
-    >file.txt &&
-
-instead.
-
-> + p4 add file.txt &&
-> + p4 submit -d "Add file.txt" &&
-> + for i in 0 1 2 3 4 5 6 7 8 9
-> + do
-> + touch outer$i.txt &&
-> + p4 add outer$i.txt &&
-> + p4 submit -d "Adding outer$i.txt" &&
-> + for j in 0 1 2 3 4 5 6 7 8 9
-> + do
-> + p4 edit file.txt &&
-> + echo $i$j > file.txt &&
-> + p4 submit -d "Commit $i$j"
-> + done
-> + done
-> + )
-
-What happens when any of these commands in the &&-chain fails?
-
-	(
-        	cd "$cli" &&
-                >file.txt &&
-		p4 ... &&
-                for i in $(test_seq ...)
-                do
-                	>"outer$i.txt" &&
-                        p4 ... &&
-			for j in $(test_seq ...)
-			do
-				p4 ... &&
-				p4 ... || exit
-			done
-		done
-	)
-
-or something like that, perhaps?
+If people are interested I could try to polish it and resubmit it.
+It would be great if Pedro could test that it does what he expects.
