@@ -1,63 +1,123 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: git-owner, was Re: [bug] first line truncated with `git log
- --oneline --decorate --graph`
-Date: Thu, 16 Apr 2015 19:06:25 +0200
-Organization: gmx
-Message-ID: <ef9e69f60275dc7edb2dff8e65952630@www.dscho.org>
-References: <20150416.115628.1228076242478955092.davem@davemloft.net>
- <6ebf8090f8246f9880f2bd94d494c872@www.dscho.org>
- <20150416162620.GA10573@peff.net>
- <20150416.123109.141223786207291496.davem@davemloft.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] dir: allow a BOM at the beginning of exclude files
+Date: Thu, 16 Apr 2015 10:16:49 -0700
+Message-ID: <xmqqoamohu2m.fsf@gitster.dls.corp.google.com>
+References: <1429193112-41184-1-git-send-email-cmn@elego.de>
+	<xmqqsic0hyk4.fsf@gitster.dls.corp.google.com>
+	<20150416155558.GA10390@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: peff@peff.net, git@vger.kernel.org
-To: David Miller <davem@davemloft.net>
-X-From: git-owner@vger.kernel.org Thu Apr 16 19:06:40 2015
+Content-Type: text/plain
+Cc: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Apr 16 19:16:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YinFQ-0004vR-9h
-	for gcvg-git-2@plane.gmane.org; Thu, 16 Apr 2015 19:06:40 +0200
+	id 1YinPO-0002lO-S8
+	for gcvg-git-2@plane.gmane.org; Thu, 16 Apr 2015 19:16:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754289AbbDPRGg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Apr 2015 13:06:36 -0400
-Received: from mout.gmx.net ([212.227.15.18]:51918 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752341AbbDPRGf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Apr 2015 13:06:35 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0MGSDw-1YeNOs39Cy-00DJik; Thu, 16 Apr 2015 19:06:26
- +0200
-In-Reply-To: <20150416.123109.141223786207291496.davem@davemloft.net>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:BunRdbTsDIfh1waA4kLcjL1Y3dw0driixf5sK82SEZ5I4grbHdl
- s7KHJydmCQoZZurvPGlnwnQOFFMzyVTZJWjI4H+aFcwZ+mhxKseUBabwqh2sbjbqFTgNnif
- VKFbOxc7UyMg44FgkNeb31+mxs4qQUAgA7DyN3Cnc7k6Fjz+SzlJd83nm5xHGmIM1yMNm7d
- jEBXJpBT8CnKsqHsf69ug==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1753780AbbDPRQz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Apr 2015 13:16:55 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:51306 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752231AbbDPRQx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Apr 2015 13:16:53 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 42903490DC;
+	Thu, 16 Apr 2015 13:16:52 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=E3jN1I1gf8kSdGky0K8CZ3pgjac=; b=xcxMMg
+	GDyK8++O4oeLJrUsglnk9OtuAwJH8S+9P1OSKr/NnmhvvMMTDyD5uJKzKtKjlPzM
+	VbL0VJqDIB/IjHKA1uBf6LpF/GWaOIDusIPHW3veRDZ2uAee+6Mi3EZdCQsNixDN
+	wQM7IsFX+XXIfvjwBiuvNJPc0bub7EpAYjhC0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=tryrvdAi5sW2yk9hhDGtEPpF41nMrgOq
+	lCmX+Vd8yIA36D45/kxLnvB76/N9nWI8AYG0nU9kUDv2hdLDerPcMipSC9ZA5tPO
+	knBKCkTC845CxeKonrUuApT3CYYwEs9Xwor8n1SIn49u3lnwD00STmQSjICH42BM
+	lCzQeVZMOaw=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3BC86490DA;
+	Thu, 16 Apr 2015 13:16:52 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A269D490D7;
+	Thu, 16 Apr 2015 13:16:50 -0400 (EDT)
+In-Reply-To: <20150416155558.GA10390@peff.net> (Jeff King's message of "Thu,
+	16 Apr 2015 11:55:58 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 5ED01CCE-E45C-11E4-919F-11859F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267310>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267311>
 
-On 2015-04-16 18:31, David Miller wrote:
-> From: Jeff King <peff@peff.net>
-> Date: Thu, 16 Apr 2015 12:26:21 -0400
-> 
->> Weird. In a nearby thread with the same problem, the first email that
->> mentions git-owner in a cc header is yours[1]. It's in reply to a
->> message that does not mention git-owner at all[2], except in the
->> "Sender" field. Your agent header looks like:
->>
->>   User-Agent: Roundcube Webmail/1.1.0
->>
->> Maybe their "reply to all" function is a little over-zealous?
-> 
-> This is always caused by broken reply list handling in email clients.
+Jeff King <peff@peff.net> writes:
 
-That must be it. Dave, my apologies! Will investigate *right now*.
+> On Thu, Apr 16, 2015 at 08:39:55AM -0700, Junio C Hamano wrote:
+>
+>> >  test_expect_success 'status untracked directory with --ignored' '
+>> >  	echo "ignored" >.gitignore &&
+>> > +	sed -e "s/^/\xef\xbb\xbf/" .gitignore >.gitignore.new &&
+>> > +	mv .gitignore.new .gitignore &&
+>> 
+>> Is this "write literal in \xHEX on the replacement side of sed
+>> substitution" potable?  In any case, replacing the above three with
+>> something like:
+>> 
+>> 	printf "<bom>ignored\n" >.gitignore
+>> 
+>> may be more sensible, no?
+>
+> I'm not sure about sed, but I agree it is suspect. And note that printf
+> with hex codes is not portable, either You have to use octal:
+>
+>   printf '\357\273\277ignored\n' >.gitignore
+>
+> Also, as a nit, I'd much rather see this in its own test rather than
+> crammed into another test_expect_success. It's much easier to diagnose
+> failures if the test description mentions the goal, and it is not tied
+> up with testing other parts that might fail.
+
+Yeah, I totally agree.
+
+Carlos, something like this squashed in, perhaps?
+
+ t/t7061-wtstatus-ignore.sh | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
+
+diff --git a/t/t7061-wtstatus-ignore.sh b/t/t7061-wtstatus-ignore.sh
+index 0a06fbf..cdc0747 100755
+--- a/t/t7061-wtstatus-ignore.sh
++++ b/t/t7061-wtstatus-ignore.sh
+@@ -13,8 +13,6 @@ EOF
+ 
+ test_expect_success 'status untracked directory with --ignored' '
+ 	echo "ignored" >.gitignore &&
+-	sed -e "s/^/\xef\xbb\xbf/" .gitignore >.gitignore.new &&
+-	mv .gitignore.new .gitignore &&
+ 	mkdir untracked &&
+ 	: >untracked/ignored &&
+ 	: >untracked/uncommitted &&
+@@ -22,6 +20,15 @@ test_expect_success 'status untracked directory with --ignored' '
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success 'same with gitignore starting with BOM' '
++	printf "\357\273\277ignored\n" >.gitignore &&
++	mkdir -p untracked &&
++	: >untracked/ignored &&
++	: >untracked/uncommitted &&
++	git status --porcelain --ignored >actual &&
++	test_cmp expected actual
++'
++
+ cat >expected <<\EOF
+ ?? .gitignore
+ ?? actual
