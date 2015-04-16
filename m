@@ -1,199 +1,107 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Issue: repack semi-frequently fails on Windows
- (msysgit) - suspecting file descriptor issues
-Date: Thu, 16 Apr 2015 11:28:50 -0400
-Message-ID: <20150416152849.GA30137@peff.net>
-References: <20150416100359.GA19951@rhlx01.hs-esslingen.de>
- <552F98AC.5030603@virtuell-zuhause.de>
- <20150416113505.GA30818@rhlx01.hs-esslingen.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [bug] first line truncated with `git log --oneline --decorate --graph`
+Date: Thu, 16 Apr 2015 08:28:43 -0700
+Message-ID: <xmqqwq1chz2s.fsf@gitster.dls.corp.google.com>
+References: <552F8B85.2000908@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Thomas Braun <thomas.braun@virtuell-zuhause.de>, git@vger.kernel.org,
-	msysGit <msysgit@googlegroups.com>
-To: Andreas Mohr <andi@lisas.de>
-X-From: msysgit+bncBDO2DJFKTEFBBNNKX6UQKGQEYP2RYNA@googlegroups.com Thu Apr 16 17:28:56 2015
-Return-path: <msysgit+bncBDO2DJFKTEFBBNNKX6UQKGQEYP2RYNA@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-ie0-f189.google.com ([209.85.223.189])
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Robin Moussu <robin.moussu@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 16 17:29:07 2015
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDO2DJFKTEFBBNNKX6UQKGQEYP2RYNA@googlegroups.com>)
-	id 1Yilio-0004M5-9L
-	for gcvm-msysgit@m.gmane.org; Thu, 16 Apr 2015 17:28:54 +0200
-Received: by ierx19 with SMTP id x19sf10662645ier.0
-        for <gcvm-msysgit@m.gmane.org>; Thu, 16 Apr 2015 08:28:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe;
-        bh=4CJq34ufXxeOEYcXmSD77P8lnHtQOD40XGsGQhBGz3E=;
-        b=M+RvWmN23f+UNiVUR4RiUr0PsB0/x6gRkLapDU7S3gf01aa08QQnx4EXJ3Zi2bYYF+
-         7+Rm6/FnX4w9u/ecfKXKaLRk/wxW16DjWlCm2Na4azJrs5M1ZKgz6YK/LbctT0cO62eP
-         2BWGFXb6npRdbgGY5+I2ljwQXeFY7NvWP8z5+rdN5brXjx4DBrcrvSqlKpfXRxI1eqEW
-         LWTzJrfYlTC5xk5Ayns/Fs/bo26EjwvAGV7jTI/XOe9wCcW1ODSGx7Wf8VGYenSkR21a
-         jqIJXDQO5/Ca6uP2I5nYTa6Qte8PngSjKy02MStuQ+E8zxhO++0m1D1FR1EWtZ/cRcKa
-         uIRA==
-X-Received: by 10.50.30.197 with SMTP id u5mr114644igh.5.1429198133495;
-        Thu, 16 Apr 2015 08:28:53 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.50.43.197 with SMTP id y5ls1828695igl.26.canary; Thu, 16 Apr
- 2015 08:28:52 -0700 (PDT)
-X-Received: by 10.66.230.228 with SMTP id tb4mr42021258pac.3.1429198132933;
-        Thu, 16 Apr 2015 08:28:52 -0700 (PDT)
-Received: from cloud.peff.net (cloud.peff.net. [50.56.180.127])
-        by gmr-mx.google.com with SMTP id u2si811687igh.0.2015.04.16.08.28.52
-        for <msysgit@googlegroups.com>;
-        Thu, 16 Apr 2015 08:28:52 -0700 (PDT)
-Received-SPF: pass (google.com: domain of peff@peff.net designates 50.56.180.127 as permitted sender) client-ip=50.56.180.127;
-Received: (qmail 5950 invoked by uid 102); 16 Apr 2015 15:28:52 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 16 Apr 2015 10:28:52 -0500
-Received: (qmail 25728 invoked by uid 107); 16 Apr 2015 15:29:16 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 16 Apr 2015 11:29:16 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 16 Apr 2015 11:28:50 -0400
-Content-Disposition: inline
-In-Reply-To: <20150416113505.GA30818@rhlx01.hs-esslingen.de>
-X-Original-Sender: peff@peff.net
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of peff@peff.net designates 50.56.180.127 as permitted
- sender) smtp.mail=peff@peff.net
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267296>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Yilj0-0004S6-EG
+	for gcvg-git-2@plane.gmane.org; Thu, 16 Apr 2015 17:29:06 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751024AbbDPP3A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Apr 2015 11:29:00 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64242 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751888AbbDPP2r (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Apr 2015 11:28:47 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6214448038;
+	Thu, 16 Apr 2015 11:28:46 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=c8BjmEbrIpRAYu1NbUkzzZkqx6M=; b=bqlGAL
+	gJDh952ZcsTibWaJAE6tfn2Qw5BYDQJOz4FD8HBRxxIk0JAH8aDtBrvpkZrqD8bI
+	/6XYA+yrsnKicpODhsHOa9G2MEnjzDzFTzbnnrwM1+H5LDCWuP5pn5z9lQNwMID6
+	ZIMfsryjZjqkdWunhZS5k9GoQnfuiO7urgPW0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qJKtTL9cIj/dQU1m8YT3qIHfAh9y1pYH
+	03qAdQkNG5HDEWJ1RTnnug3/wFvqINciGh4OjPy6A1u6rFU/T+jgRDd7E8gnOkcX
+	sfpJWFIzsxpEqkcDj6snIpZPtdnk6Jaq4SWA5GgnQZ83tBAeo1LqFTqvMhAZMr7y
+	91FoVH5jqkI=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 59ACA48036;
+	Thu, 16 Apr 2015 11:28:46 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D7ACB48034;
+	Thu, 16 Apr 2015 11:28:44 -0400 (EDT)
+In-Reply-To: <552F8B85.2000908@gmail.com> (Robin Moussu's message of "Thu, 16
+	Apr 2015 12:14:29 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 44FC6168-E44D-11E4-9B7F-11859F42C9D4-77302942!pb-smtp1.pobox.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267297>
 
-On Thu, Apr 16, 2015 at 01:35:05PM +0200, Andreas Mohr wrote:
+Robin Moussu <robin.moussu@gmail.com> writes:
 
-> I strongly suspect that git's repacking implementation
-> (probably unrelated to msysgit-specific deviations,
-> IOW, git *core* handling)
-> simply is buggy
-> in that it may keep certain file descriptors open
-> at least a certain time (depending on scope of implementation/objects!?)
-> beyond having finished its operation (rename?).
+> I have a bug using the following command:
+>
+>     git log --oneline --decorate --graph
+>
+> In short, the first line of the log is often truncated.
+> ...
+> # How to reproduce
+>
+> Open a small terminal windows (4*100)
+>
+>     mkdir tmp
+>     cd tmp
+>     git init
+>     git commit --allow-empty -m 'Lorem ipsum dolor sit amet, consectetur
+> adipiscing elit. Donec a diam lectus.'
+>     git checkout -b long_branch_name_and_long_commit_name
+>     git commit --allow-empty -m 'Maecenas congue ligula ac quam viverra
+> nec consectetur ante hendrerit.'
+>     git commit --allow-empty -m 'Praesent et diam eget libero egestas
+> mattis sit amet vitae augue.'
+>     git checkout master
+>     git merge --no-ff long_branch_name_and_long_commit_name -m 'merge
+> with a long commit message'
+>     git checkout long_branch_name_and_long_commit_name
+>     git merge master
+>     git log --oneline  --decorate --graph
+>
+> I hope it is clear. The English is not my mother tongue.
 
-Hrm. I do not see anything in builtin/fetch.c that closes the packfile
-descriptors before running "gc --auto". So basically the sequence:
+It is clear and it does not reproduce for me.  I see
 
-  1. Fetch performs actual fetch. It needs to open packfiles to do
-     commit negotiation with other side (the hard work is done
-     by an index-pack subprocess, but it is likely we have to access
-     _some_ objects).
+--------
+*   5eff3a3 (HEAD -> long_branch_name_and_long_commit_name, master) merge with a long commit message
+|\  
+| * 61e21f3 Praesent et diam eget libero egestas mattis sit amet vitae augue.
+:
+--------
 
-  2. The packfiles remain open and mmap'd (at least on Linux) in the
-     sha1_file.c:packed_git list.
+which looks perfectly sensible (my terminal is a "screen" running
+on a Ubuntu machine, displaying to a SecureShell terminal on a
+Chromebook).
 
-  3. We spawn "gc --auto" and wait for it to finish. While we are
-     waiting, the descriptors are still open, but "gc --auto" will not be
-     able to delete any packs.
-
-But this seems too simple to be the problem, as it would mean that just
-about any "gc --auto" that triggers a full repack would be a problem (so
-anytime you have about 50 packs). But maybe the gc "autodetach" behavior
-means it works racily.
-
-I was able to set up the situation deterministically by running the
-script below:
-
--- >8 --
-#!/bin/sh
-
-# XXX tweak this setting as appropriate
-PATH_TO_GIT_BUILD=$HOME/compile/git
-PATH=$PATH_TO_GIT_BUILD/bin-wrappers:$PATH
-rm -rf parent child
-
-# make a parent/child where the child will have to access
-# a packfile to fulfill another fetch
-git init parent &&
-git -C parent commit --allow-empty -m base &&
-git clone parent child &&
-git -C parent commit --allow-empty -m extra &&
-
-# we want to make our base pack really big, because otherwise
-# git will open/mmap/close it. So we must exceed core.packedgitlimit
-cd child &&
-$PATH_TO_GIT_BUILD/test-genrandom foo 5000000 >file &&
-git add file &&
-git commit -m large file &&
-git repack -ad &&
-git config core.packedGitLimit 1M &&
-
-# now make some spare packs to bust the gc.autopacklimit
-for i in 1 2 3 4 5; do
-	git commit --allow-empty -m $i &&
-	git repack -d
-done &&
-git config gc.autoPackLimit 3 &&
-git config gc.autoDetach false &&
-GIT_TRACE=1 git fetch
-```
-
-I also instrumented my (v1.9.5) git build like this:
-
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 025bc3e..fc99e5e 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1174,6 +1174,12 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 	list.strdup_strings = 1;
- 	string_list_clear(&list, 0);
- 
-+	{
-+		struct packed_git *p;
-+		for (p = packed_git; p; p = p->next)
-+			trace_printf("pack %s has descriptor %d\n",
-+				     p->pack_name, p->pack_fd);
-+	}
- 	run_command_v_opt(argv_gc_auto, RUN_GIT_CMD);
- 
- 	return result;
-diff --git a/builtin/repack.c b/builtin/repack.c
-index bb2314c..e8b29cf 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -105,6 +105,7 @@ static void remove_redundant_pack(const char *dir_name, const char *base_name)
- 	for (i = 0; i < ARRAY_SIZE(exts); i++) {
- 		strbuf_setlen(&buf, plen);
- 		strbuf_addstr(&buf, exts[i]);
-+		trace_printf("unlinking %s\n", buf.buf);
- 		unlink(buf.buf);
- 	}
- 	strbuf_release(&buf);
-
-to confirm what was happening (because of course on Linux it is
-perfectly fine to delete the open file). If this does trigger the bug
-for you, though, it should be obvious even without the trace calls. :)
-
--Peff
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "Git for Windows" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+Can you try running that problematic "git log" with its standard
+output redirected to a file (i.e. "git log ... >output") and then
+run your pager in that wide-but-short terminal (i.e. "less output"),
+to see if the same problem is observed?  And then run "cat output"
+in a taller terminal with the same width to see if it is the output
+from "git log" that is causing you the problem?
