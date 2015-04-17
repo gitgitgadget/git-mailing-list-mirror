@@ -1,55 +1,63 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Why does "git log -G<regex>" works with "regexp-ignore-case" but
- not with other regexp-related options?
-Date: Fri, 17 Apr 2015 10:45:42 -0700
-Message-ID: <CAPc5daUULhhV0+kL_htLnA8Z_woFLjxg_pO_cB0KLAMuxJnsMQ@mail.gmail.com>
-References: <1090496912.6338.1429264855691.JavaMail.open-xchange@ox1app> <55311831.6010004@drmicha.warpmail.net>
+Subject: Re: Why does "git log -G<regex>" works with "regexp-ignore-case" but not with other regexp-related options?
+Date: Fri, 17 Apr 2015 10:09:54 -0700
+Message-ID: <xmqq7ftaheal.fsf@gitster.dls.corp.google.com>
+References: <1090496912.6338.1429264855691.JavaMail.open-xchange@ox1app>
+	<55311831.6010004@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
 Cc: Tim Friske <me@tifr.de>, git <git@vger.kernel.org>
 To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Apr 17 19:46:12 2015
+X-From: git-owner@vger.kernel.org Fri Apr 17 19:59:26 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YjALA-0006YC-Vz
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Apr 2015 19:46:09 +0200
+	id 1YjAY1-0006ch-G7
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Apr 2015 19:59:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934069AbbDQRqF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Apr 2015 13:46:05 -0400
-Received: from mail-oi0-f47.google.com ([209.85.218.47]:36309 "EHLO
-	mail-oi0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932784AbbDQRqD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Apr 2015 13:46:03 -0400
-Received: by oift201 with SMTP id t201so82832982oif.3
-        for <git@vger.kernel.org>; Fri, 17 Apr 2015 10:46:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=Mk72DnAhU5kUy3TCJtMyzw3bGT/pggeTY+aFk0ker2I=;
-        b=oL4jk/rAM7mzaMCW5Ph3wfVqgh3XZO3UaXhLVsdwWLMRBwPPwuyYztI+h8/5kH2dQT
-         +Okog+8/iRIq2YEozxR/+l0pVVeYyhk6RIkMCgR7trySx+jGOGKg6Ibpd1hc4dZsyPqI
-         eW55feq7CZIPXFb6N+q0W5FLs35Ie3nqC+zjL/JO64t1UCSd1mgCdtGr+d3+JlrnaJ49
-         0M8ouPKn70IciWsSCWWHN7k1GDaw09hwNmgSbKgEiJlw++5tYJ4Bb557HppptkQUIUkO
-         GiTg702YnfolaTQ316TioL7ODQSEuOyQ+CDWf6hm+YbeAoCAI32+UB+DXYESM3zaLd+z
-         /yNQ==
-X-Received: by 10.60.35.102 with SMTP id g6mr4074386oej.7.1429292762620; Fri,
- 17 Apr 2015 10:46:02 -0700 (PDT)
-Received: by 10.202.197.18 with HTTP; Fri, 17 Apr 2015 10:45:42 -0700 (PDT)
-In-Reply-To: <55311831.6010004@drmicha.warpmail.net>
-X-Google-Sender-Auth: cCgXpQRT-eosqlQsRr1zwqEFsfQ
+	id S932598AbbDQR7V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Apr 2015 13:59:21 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:52941 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932462AbbDQR7U (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Apr 2015 13:59:20 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4D40549EC5;
+	Fri, 17 Apr 2015 13:59:19 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=40R49uAepm16rwcyfkY6Bgn5oTE=; b=Obvxeq
+	aomMgv/VqMpa4DBM3mas+4LwaPxn+Nsy9RRzd8k8zyTD2fDsvwLXkdHdHIGujIy+
+	2AwPm2Li2zaBmCj4b9gGJKr1ftzEt55aTnSMSDOR0JaHLINYE0kNygeW8K3x6b7L
+	fFqSWyTYkd4nZHa6Ua4DHpWJpoDkGP4wmChTA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=w5ZdBrUbrPRqwIX9q/hXKptdvvVWMF0Q
+	sao2jKQXZHZy2RImJZ5ihgjUeET5fihCh7l6WWDq0+yBeHaqnh7qMmNAJq5S/Dtw
+	HyWPqoV5p5fsstw+iVFW3PUw5NkfTGxXCfsAtlbkGmwHwwLT6NLMx096K+iQb6lY
+	dF/7ZgIuBaU=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 43A8249EC4;
+	Fri, 17 Apr 2015 13:59:19 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DEECD485E1;
+	Fri, 17 Apr 2015 13:09:55 -0400 (EDT)
+In-Reply-To: <55311831.6010004@drmicha.warpmail.net> (Michael J. Gruber's
+	message of "Fri, 17 Apr 2015 16:26:57 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 92045272-E524-11E4-8829-11859F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267371>
 
-On Fri, Apr 17, 2015 at 7:26 AM, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
->>
+Michael J Gruber <git@drmicha.warpmail.net> writes:
+
 >> Similarly I think it is not very consistent that one cannot combine any of
 >> the above options with the "S<string>" but instead have yet another option
 >> called "pickaxe-regex" to toggle between "fixed-string" and
@@ -75,10 +83,10 @@ But -G<regexp> shows commits whose "git show $that_commit" output
 would have lines matching <regexp> as added or deleted.  So you get
 different results from this history:
 
-    (before)    (after)
-    a           b
-    b           a
-    c           c
+    (before)    (after)    
+    a           b          
+    b           a          
+    c           c         
 
 As "git show" for such a commit looks like this:
 
@@ -112,9 +120,3 @@ option to -G just like it pays attention to ignore-case, but "-G
     digging, as a part of much more grand vision in $gmane/217,
     which I would still consider one of the most important messages
     on the mailing list, posted 10 years ago ;-)
-
-
-
-[jc: My mail provider seem to be queuing but not sending out SMTP
-outgoing traffic, so I am trying to (re)send this in an alternate route.
-If you got a duplicate of this message, my apologies.]
