@@ -1,84 +1,85 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v8 1/4] sha1_file.c: support reading from a loose object of unknown type
-Date: Fri, 17 Apr 2015 14:10:50 -0700
-Message-ID: <xmqq4moepijp.fsf@gitster.dls.corp.google.com>
-References: <552E9816.6040502@gmail.com>
-	<1429117143-4882-1-git-send-email-karthik.188@gmail.com>
-	<xmqqmw29jg78.fsf@gitster.dls.corp.google.com>
-	<20150415221824.GB27566@peff.net> <20150417142310.GA12479@peff.net>
-	<xmqqd232hgj8.fsf@gitster.dls.corp.google.com>
-	<20150417205125.GA7067@peff.net>
+Subject: Re: [PATCH] type_from_string_gently: make sure length matches
+Date: Fri, 17 Apr 2015 14:11:33 -0700
+Message-ID: <xmqqzj66o3y2.fsf@gitster.dls.corp.google.com>
+References: <20150417145247.GA2421@peff.net>
+	<xmqqd232pjb0.fsf@gitster.dls.corp.google.com>
+	<20150417210713.GA7403@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org,
-	sunshine@sunshineco.com
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Karthik Nayak <karthik.188@gmail.com>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Apr 17 23:10:59 2015
+X-From: git-owner@vger.kernel.org Fri Apr 17 23:11:42 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YjDXO-0004sP-TW
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Apr 2015 23:10:59 +0200
+	id 1YjDY4-0005R6-DE
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Apr 2015 23:11:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753409AbbDQVKz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Apr 2015 17:10:55 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:55990 "EHLO
+	id S1752103AbbDQVLg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Apr 2015 17:11:36 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:59140 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751927AbbDQVKy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Apr 2015 17:10:54 -0400
+	with ESMTP id S1751927AbbDQVLf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Apr 2015 17:11:35 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9861E497CB;
-	Fri, 17 Apr 2015 17:10:53 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0F8E7497FA;
+	Fri, 17 Apr 2015 17:11:35 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=0NR69R1/0lYlShYyQ9mPr1609f8=; b=eb6+t0
-	Kw/DWQ4Qp6CifJ4sT9Lmfz0FLekKXbIELwlLJv+Wk+TZ07vBOvyemu14qsWql8W9
-	FxS72PmwMcW+chdFXjdU1csybwwkk7vjt7bW8hgUO88wWyIR1SF5BfijByGe4M02
-	cXCVLyF1wLRupQATV3R6ZjZqj1S/abRP3Xk3o=
+	:content-type; s=sasl; bh=jXodll40gD7wsQJx0xdV9491LZU=; b=UbEIsZ
+	/C/D1NghbsT3syyHxvePHQvOxVBj83fv6TJBSQdV3rilz+AFwIba7j//aupyC+J5
+	xylj9+cj1ahD5aWvMm8o1ek+Ud0qmqzyfOBwtWpIv9OQYEKP5ZPKf+Iy9NCwGDw8
+	fSYyniQVkoEbToOzgPQjonsgNKc5jJyqcnsCE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xAK98OwgUsSUnTeJck73OlJ/iUjMSjdm
-	VeQbwobnrZmveCYtRq4Ap8OUjK8VUQkMzuJuyBy12F4H4sesxa5x+4qlx6bJhx2S
-	TiQldIkKHmnyt6YSIjiXZZe5pCyuJZbovcURt0g8xWISMRPaISzTNzTGur1Yw42/
-	bshCPEWWTv0=
+	:content-type; q=dns; s=sasl; b=PTqOCiww1pVD79GvDG2cAt3yB5tvKmvV
+	c64EAx4eLqqI4eTviRuaRxjAWyQwQoSDdPSaTfTZ87hS8NXHQnyqyw0WfUm8DOZ2
+	nC9Ezj4iB8HLCmo8NoU7KU6V/eDZn4Zt8oq489tIfnV9ZmoV0rOLd+0sRkrjaZWY
+	C+bpixvg8kw=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 91CEA497CA;
-	Fri, 17 Apr 2015 17:10:53 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 06ADA497F9;
+	Fri, 17 Apr 2015 17:11:35 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0683D497C8;
-	Fri, 17 Apr 2015 17:10:53 -0400 (EDT)
-In-Reply-To: <20150417205125.GA7067@peff.net> (Jeff King's message of "Fri, 17
-	Apr 2015 16:51:26 -0400")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 740B2497F8;
+	Fri, 17 Apr 2015 17:11:34 -0400 (EDT)
+In-Reply-To: <20150417210713.GA7403@peff.net> (Jeff King's message of "Fri, 17
+	Apr 2015 17:07:13 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 3B2B16DA-E546-11E4-A581-83E09F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 53D5656E-E546-11E4-B145-83E09F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267394>
 
 Jeff King <peff@peff.net> writes:
 
-> On Fri, Apr 17, 2015 at 09:21:31AM -0700, Junio C Hamano wrote:
+> I'd be surprised if it appreciably speeds things up, but I guess it is
+> not too complicated to do.
 >
->> Jeff King <peff@peff.net> writes:
->> 
->> > If there _is_ a performance implication to worry about here, I think it
->> > would be that we are doing an extra malloc/free.
->> 
->> Thanks for reminding me; yes, that also worried me.
+>> +static struct {
+>> +	const char *str;
+>> +	int len;
+>> +} object_type_name[] = {
+>> +	{ NULL, 0 },      /* OBJ_NONE = 0 */
+>> +	{ "commit", 6 },  /* OBJ_COMMIT = 1 */
+>> +	{ "tree", 4 },	  /* OBJ_TREE = 2 */
+>> +	{ "blob", 4 },    /* OBJ_BLOB = 3 */
+>> +	{ "tag", 3 },     /* OBJ_TAG = 4 */
+>>  };
 >
-> As an aside, I worried about the extra allocation for reading the header
-> in the first place. But it looks like we only do this on the --literally
-> code path (and otherwise use the normal unpack_sha1_header).  Still, I
-> wonder if we could make this work automagically.  That is, speculatively
-> unpack the first N bytes, assuming we hit the end-of-header. If not,
-> then go to a strbuf as the slow path. Then it would be fine to cover all
-> cases; the normal ones would be fast, and only ridiculous things would
-> incur the extra allocation.
+> I had envisioned a macro like:
+>
+>   #define SIZED_STRING(x) { (x), (sizeof(x) - 1) }
+>
+> though perhaps that is overkill for such a short list (that we don't
+> even expect to change).
 
-Yes, that was what I was hoping to see eventually ;-)
+Sounds good (either way ;-)
