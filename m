@@ -1,65 +1,53 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: [PATCH v2 2/2]  t0027: Support NATIVE_CRLF
-Date: Fri, 17 Apr 2015 19:00:44 +0200
-Message-ID: <55313C3C.1090504@web.de>
-References: <55312A45.8060008@web.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: johannes.schindelin@gmx.de
-To: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 17 19:00:54 2015
+From: Ossi Herrala <oherrala@gmail.com>
+Subject: [PATCH] Fix settings in default_user_config template
+Date: Fri, 17 Apr 2015 20:08:54 +0300
+Message-ID: <1429290535-38647-1-git-send-email-oherrala@gmail.com>
+References: <20150417145516.GB2421@peff.net>
+Cc: git@vger.kernel.org, Ossi Herrala <oherrala@gmail.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Apr 17 19:10:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yj9dN-0004xH-7I
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Apr 2015 19:00:53 +0200
+	id 1Yj9mN-00026K-Ey
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Apr 2015 19:10:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754142AbbDQRAs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 17 Apr 2015 13:00:48 -0400
-Received: from mout.web.de ([212.227.15.3]:59970 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751354AbbDQRAr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Apr 2015 13:00:47 -0400
-Received: from macce.local ([217.211.68.12]) by smtp.web.de (mrweb001) with
- ESMTPSA (Nemesis) id 0M2unu-1Zbo1D1xiw-00sgsK; Fri, 17 Apr 2015 19:00:45
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
-In-Reply-To: <55312A45.8060008@web.de>
-X-Provags-ID: V03:K0:EwYcqRFogsCLRf9jpr/znuFb1KnJ/5s5cZvGN0TtIikV987Pbph
- VLPDt4ZlWDswLovH+xG5Uol3VXvAAppXnzsxHodzt/BXCpE/ZUhNDPvrJFEdgkmIcs9Li7T
- XChJ0qPyb7B0HC6bLQTrJXKB0HDwpkfY+dHGzc/g1t9AG1edgZlAu3VVEuxkZUS/E4e3jSd
- xNDfFqkBiUoZOIhYreb1w==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1752876AbbDQRKH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Apr 2015 13:10:07 -0400
+Received: from mail-la0-f52.google.com ([209.85.215.52]:33435 "EHLO
+	mail-la0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751966AbbDQRKG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Apr 2015 13:10:06 -0400
+Received: by layy10 with SMTP id y10so85292625lay.0
+        for <git@vger.kernel.org>; Fri, 17 Apr 2015 10:10:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=8hXcp1RsCK8m9lyOCUH1ArHCgsBMryBkII1fvOo+4Iw=;
+        b=AUkn3Q3/Z0p7WqBgt4N3pRcN53ZEX2t0A7d8Wy3kZg0GG8u0zBm6Xax+OLw7OUgKrg
+         MTcYDunsbBf/CtSXNWUUK28GW36b8k1w6xzEvl8COwI5K9dhZPd5mbXw3p7utIBPXjUH
+         GkdlkdavaGPV8KKRwGCVL1Y4dj6/HTiCV4pZnEO6NVERyFRUZTQW+geydj3qgBaOrsC7
+         jOPsqmpk3jz/kxG+4t5veXHchaiFgMihw0IoR1AWC3samP3fz/SBXGLs4cb+CMBH/BmL
+         Dd0K9Xwun0QD+i9CK77lAhJ5bMx8Jz8Xq0PpDVEK3QxcxfyU+jtDvrNGutEZLHt24hhe
+         Vl5w==
+X-Received: by 10.112.17.68 with SMTP id m4mr5279258lbd.10.1429290604471;
+        Fri, 17 Apr 2015 10:10:04 -0700 (PDT)
+Received: from localhost.localdomain (nat4.panoulu.net. [212.50.147.101])
+        by mx.google.com with ESMTPSA id oe1sm2529058lbb.23.2015.04.17.10.10.02
+        (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 17 Apr 2015 10:10:03 -0700 (PDT)
+X-Mailer: git-send-email 2.3.5
+In-Reply-To: <20150417145516.GB2421@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267366>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267367>
 
-On 2015-04-17 17.44, Torsten B=C3=B6gershausen wrote:
-> Without this patch, t0027 expects the native end-of-lines to be a sin=
-gle
-> line feed character. On Windows, however, we set it to a carriage ret=
-urn
-> character followed by a line feed character. Thus, we have to modify
-> t0027 to expect different warnings depending on the end-of-line marke=
-rs.
->
-> Adjust the check of the warnings and use these macros:
->   WILC:  Warn if LF becomes CRLF
->   WICL:  Warn if CRLF becomes LF
->   WAMIX: Mixed line endings: either CRLF->LF or LF->CRLF
->
-> Improve the information given by check_warning():
-> Use test_cmp to show which warning is missing (or should'n t be there=
-)
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
-Originally I wanted to have Dscho as "Author", is that OK with you ?
-(But the "From:" line didn't made it through my email program)
-=20
+The name (not user) and email setting should be in config section
+"user" and not in "core" as documented in Documentation/config.txt.
+
+Signed-Off-By: Ossi Herrala <oherrala@gmail.com>
+Reviewed-by: Jeff King <peff@peff.net>
