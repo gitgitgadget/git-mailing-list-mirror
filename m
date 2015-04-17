@@ -1,89 +1,120 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 3/3] clean: improve performance when removing lots of directories
-Date: Fri, 17 Apr 2015 12:13:20 -0700
-Message-ID: <xmqqpp72pnzj.fsf@gitster.dls.corp.google.com>
-References: <1428770587-9674-1-git-send-email-erik.elfstrom@gmail.com>
-	<1428770587-9674-5-git-send-email-erik.elfstrom@gmail.com>
-	<xmqqpp75l1gd.fsf@gitster.dls.corp.google.com>
-	<CAMpP7NbQ7pmcjT4pDn5dA5yvfgMgirbkoMD6ijjiFp7zmARPbA@mail.gmail.com>
-	<20150417190002.GB32578@peff.net>
+Subject: Re: [PATCH] fast-import: add options to enable/disable case folding
+Date: Fri, 17 Apr 2015 11:44:00 -0700
+Message-ID: <xmqqwq1appcf.fsf@gitster.dls.corp.google.com>
+References: <xmqqoarclgnr.fsf@gitster.dls.corp.google.com>
+	<1429271526-31234-1-git-send-email-mh@glandium.org>
+	<55313B4B.3030106@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: erik =?utf-8?Q?elfstr=C3=B6m?= <erik.elfstrom@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Apr 17 21:26:46 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Mike Hommey <mh@glandium.org>, git@vger.kernel.org,
+	Joshua Jensen <jjensen@workspacewhiz.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Fri Apr 17 21:31:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YjBuW-0002Yn-MK
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Apr 2015 21:26:45 +0200
+	id 1YjByz-0005Q4-9a
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Apr 2015 21:31:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754253AbbDQT0k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Apr 2015 15:26:40 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:55243 "EHLO
+	id S1752740AbbDQTbR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 17 Apr 2015 15:31:17 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:51777 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754204AbbDQT0j (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Apr 2015 15:26:39 -0400
+	with ESMTP id S1752124AbbDQTbQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 17 Apr 2015 15:31:16 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9A6B547B55;
-	Fri, 17 Apr 2015 15:26:38 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0E10647D05;
+	Fri, 17 Apr 2015 15:31:15 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=9yiYvmZZc1ZYP2KmPeLsTlS+pkI=; b=fgrYTs
-	hYEmXirQsp/XN4ZNQ1vaWDvhORtzvLDxWw4C88rjNmrkpCEavcvLa9iNZi1Hj8dH
-	6Q3Xw+JY3548+GtA+EFly3/hxg1Xf3vsNomlb2IGXj6rLCDFdKFrl3Q7HMpukS00
-	ONBvuBVNwrII2ODZ9ApkmP0rMC+ffSQoPnafM=
+	:content-type:content-transfer-encoding; s=sasl; bh=gaj7+/mouizw
+	KV7lGiGvamoBYLU=; b=MLHolFDUfVkI45gVXMgmbn4/wpFzX8Q5xwVdRwmLeoQy
+	A0A9NA0a3i1+XpIPOZ6kW/90YTjh5RWoW/mqjUbWHUq62Bfn5Bdd2iHomTSNzIq4
+	gKu2pE+UTWaDnO028V6uVNP33GKKFka4JFCuk2vdHLbHiMdH+KUWMdjuTz0ZAu8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=FrFiqAaJBoYaB9Y4aLS9750C+/yNgd7o
-	Rwe23wrGbQcHDYnSGhdmglLYcQetoaIipXZw5jaLQ7qqN6z6j7GJvkbvScwJniYo
-	pZegly+2y6iYWsjnCi2+romvlXyXWKIIhIesZxd1gA4LFviaqzk5OyRkgL9Imw/t
-	F9rSKuyNm40=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=KXvpGE
+	66tvoJVTTK3YtwooVifwvCTvgF7ngyt2Q+3a0iyisIhA1v6nvt0U1IAAMwOXz4t7
+	l9hJJZMF7PdC+64A9izxB44OUd3HCx3V/HnofgSlt6ODjDtecj4ljSdkN7tjPf+H
+	dYIn0mvIFObS4LB0ugm0E9kEooEblnIBbx2kg=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 920D447B53;
-	Fri, 17 Apr 2015 15:26:38 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0663447D04;
+	Fri, 17 Apr 2015 15:31:15 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E636147405;
-	Fri, 17 Apr 2015 15:13:21 -0400 (EDT)
-In-Reply-To: <20150417190002.GB32578@peff.net> (Jeff King's message of "Fri,
-	17 Apr 2015 15:00:02 -0400")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8164F4AA5B;
+	Fri, 17 Apr 2015 14:44:02 -0400 (EDT)
+In-Reply-To: <55313B4B.3030106@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
+ =?utf-8?Q?en=22's?= message of
+	"Fri, 17 Apr 2015 18:56:43 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: D05AC5B8-E535-11E4-BFBF-11859F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: B7B3BF96-E531-11E4-A7D4-11859F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267380>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267381>
 
-Jeff King <peff@peff.net> writes:
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
->> Option 1:
->>  Plug the hole in my new is_git_repository function. A quick and dirty
->>  fix that passes the above test would be:
->
-> I think that makes sense. It would be nice if you could just call
-> read_gitfile, but that function is very anxious to die on error. So the
-> prerequisite step would probably be to refactor that into a
-> read_gitfile_gently that returns an error code.
+>> +--[no-]fold-case::
+>> +	When files/directories with the same name but a different case
+>> +	are detected, they are treated as the same (--fold-case) or as
+>> +	being different (--no-fold-case). The default is --fold-case
+>> +	when `core.ignorecase` is set to `true`, and --no-fold-case when
+>> +	it is `false`.
+>> +
+> Most often the we use the term "ignore-case", could that be a better =
+name ?
+> Other opinions, pros/cons  ?
 
-I agree.
+Yeah, --[no-]ignore-case sounds more in line with how other
+commands' options are spelled.
 
-I was looking at the repository discovery loop to see if it makes
-sense to update is-git-directory() to take a gitfile, but I do not
-think it is a good idea (typically after is-git-directory() says
-"yes", we would append paths e.g. "refs/heads/master" after it to
-pass the result to system calls like open()).  I agree that adding
-read-gitfile-gently and call it before running is-git-directory
-would be a good solution for this change.
+But I somehow thought this "case-folding" was deliberately done as
+an improvement against the original that did not have a way to do
+the "ignore-case"?
 
-> PS Thank you for working on this.
+http://thread.gmane.org/gmane.comp.version-control.git/200597/focus=3D2=
+00625
 
-That too.
+I am not sure why not until now I did not find the original
+justification dubious, but I think fast-export should never do case
+folding---Joshua talks about working trees on a file system that is
+incapable of expressing different cases, but "export" is about
+reading in-repository histories, whose trees are fully capable of
+expressing paths in different cases just fine, and spitting out a
+file that can be processed by fast-import.  I do not see why it
+should collapse two different paths that differ in case at export
+time.
 
-Thanks.
+If the original history is broken by Perforce or whatever and
+recording the history of the same path in different case
+combinations in different commits, perhaps the right thing to do is
+to fix the original history in Git repository before exporting in
+the first place.
+
+I do not see how such a corruption is related to the characteristics
+of the filesystem where "export" is run.  Perhaps a case-insensitive
+filesystem may helped Perforce to corrupt the history when initial
+import of the history into Git was done, but core.ignorecase of the
+current repository does not help us decide if that was actually the
+case---the import may have been done on a completely different
+machine.
+
+So perhaps we should rip the case folding out altogether instead?
+The entry for the change in the Release Notes may say:
+
+ * "git fast-import" incorrectly case-folded the paths recorded in
+   the history when core.ignorease is set (i.e. the repository's
+   working tree is incapable of expressing paths that differ only in
+   their cases); this old bug was reported in 2012 and was finally
+   corrected.
+
+or something like that?
