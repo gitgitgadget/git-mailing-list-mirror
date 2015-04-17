@@ -1,246 +1,64 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: [PATCH] fast-import: add options to enable/disable case folding
-Date: Fri, 17 Apr 2015 20:52:06 +0900
-Message-ID: <1429271526-31234-1-git-send-email-mh@glandium.org>
-References: <xmqqoarclgnr.fsf@gitster.dls.corp.google.com>
-Cc: Joshua Jensen <jjensen@workspacewhiz.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
+From: Lex Spoon <lex@lexspoon.org>
+Subject: Re: [PATCH] git-p4: Use -m when running p4 changes
+Date: Fri, 17 Apr 2015 09:20:21 -0400
+Message-ID: <CALM2SnZmCJ2nVqPyLiepF1zJH=S0BzCTM=-L6hnn8Vnrb+prCw@mail.gmail.com>
+References: <CALM2SnY62u3OXJOMSqSfghH_NYwZhzSedm3-wcde-dQCX6eB9Q@mail.gmail.com>
+	<CAE5ih79UcJfuhzgTdTPy2K51sa6--4bvaVaKL3nsUcC2kq4Ffg@mail.gmail.com>
+	<CALM2SnafBHz8YeWtUtQDUgLBP_s9AiJy=9UC6XveqP0zrYMEqA@mail.gmail.com>
+	<55304290.9070907@diamand.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Users <git@vger.kernel.org>, Pete Wyckoff <pw@padd.com>,
 	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 17 13:52:33 2015
+To: Luke Diamand <luke@diamand.org>
+X-From: git-owner@vger.kernel.org Fri Apr 17 15:20:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yj4ow-0001Kt-G2
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Apr 2015 13:52:31 +0200
+	id 1Yj6C3-0000EV-Hl
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Apr 2015 15:20:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751560AbbDQLwW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Apr 2015 07:52:22 -0400
-Received: from ks3293202.kimsufi.com ([5.135.186.141]:35288 "EHLO glandium.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750744AbbDQLwV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Apr 2015 07:52:21 -0400
-Received: from glandium by zenigata with local (Exim 4.84)
-	(envelope-from <glandium@glandium.org>)
-	id 1Yj4oY-00088R-4m; Fri, 17 Apr 2015 20:52:06 +0900
-X-Mailer: git-send-email 2.3.5.1.g2355df5
-In-Reply-To: <xmqqoarclgnr.fsf@gitster.dls.corp.google.com>
+	id S1753339AbbDQNUX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Apr 2015 09:20:23 -0400
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:36382 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753183AbbDQNUV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Apr 2015 09:20:21 -0400
+Received: by pabsx10 with SMTP id sx10so125199275pab.3
+        for <git@vger.kernel.org>; Fri, 17 Apr 2015 06:20:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=gWx6HvzxCG7ua9GdYlhQum0NcoIkMujFWhkhDHdBkpA=;
+        b=VFIY0vXFVt1fOjZTEugouMdMnoVUTTXNBbxZ4W5eqa/0Gf0fr5Na+Rl2APOPjTmzYs
+         8wEiN8C4LbEZkbK0OxKIETwfDyUjiNNtwAWynw/sqsoL1FcHimhrclpJdliHg91ESKtf
+         ObjosK4dRLTgycIizhHif3KCAEJVg3uxZiqvZIV5jNclJTTs0SMsXUoq5t9DKi3KLdA3
+         mr/hedkx9lgMOHWTUgZIDNGNUFGAKV3KJY9d928hvcMWCxLmRshHEgAYgQnoWtTD84kO
+         zCWrEoRA4vhOiVDApYwbhFYAYOuO3iVC5z5wex6AZEZ8z9XPv8pRVShCVpqBb+Qgfhn0
+         3LJw==
+X-Received: by 10.70.125.129 with SMTP id mq1mr5507493pdb.19.1429276821266;
+ Fri, 17 Apr 2015 06:20:21 -0700 (PDT)
+Received: by 10.70.25.132 with HTTP; Fri, 17 Apr 2015 06:20:21 -0700 (PDT)
+In-Reply-To: <55304290.9070907@diamand.org>
+X-Google-Sender-Auth: sCVEvXeHZT-sLyhBsxuUSmYPG6o
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267353>
 
-Currently, fast-import does case folding depending on `core.ignorecase`.
-`core.ignorecase` depends on the file system where the working tree is.
-However, different kind of imports require different kinds of semantics,
-and they usually aren't tied with the file system, but with the data being
-imported.
+Thanks, all. I will update the patch as requested and resend a [PATCH
+v3]. This time without the redundant headers. I will also make an
+extra effort to make sure that the raw tabs do not get converted to
+spaces this time. Oof, I am really out of practice at programming with
+raw tabs, much less getting them to make it through email software.
+Thank you for your patience.
 
-Add command line options to enable or disable case folding. Also expose
-them as features in the fast-import stream. Features instead of options,
-because a stream that needs case folding enabled or disabled won't work
-as expected if fast-import doesn't support the case folding options.
----
- Documentation/git-fast-import.txt | 11 ++++++
- fast-import.c                     | 19 ++++++++--
- t/t9300-fast-import.sh            | 79 +++++++++++++++++++++++++++++++++++++++
- 3 files changed, 106 insertions(+), 3 deletions(-)
+test_seq is a neat utility. Also, I don't know why I didn't think to
+update the document page. Certainly it needs to be updated.
 
-diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
-index 690fed3..22eba87 100644
---- a/Documentation/git-fast-import.txt
-+++ b/Documentation/git-fast-import.txt
-@@ -50,6 +50,13 @@ OPTIONS
- 	memory used by fast-import during this run.  Showing this output
- 	is currently the default, but can be disabled with \--quiet.
- 
-+--[no-]fold-case::
-+	When files/directories with the same name but a different case
-+	are detected, they are treated as the same (--fold-case) or as
-+	being different (--no-fold-case). The default is --fold-case
-+	when `core.ignorecase` is set to `true`, and --no-fold-case when
-+	it is `false`.
-+
- Options for Frontends
- ~~~~~~~~~~~~~~~~~~~~~
- 
-@@ -1027,6 +1034,8 @@ date-format::
- export-marks::
- relative-marks::
- no-relative-marks::
-+fold-case::
-+no-fold-case::
- force::
- 	Act as though the corresponding command-line option with
- 	a leading '--' was passed on the command line
-@@ -1091,6 +1100,8 @@ not be passed as option:
- * import-marks
- * export-marks
- * cat-blob-fd
-+* fold-case
-+* no-fold-case
- * force
- 
- `done`
-diff --git a/fast-import.c b/fast-import.c
-index 6378726..958f3da 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -371,10 +371,18 @@ static volatile sig_atomic_t checkpoint_requested;
- /* Where to write output of cat-blob commands */
- static int cat_blob_fd = STDOUT_FILENO;
- 
-+/* Whether to enable case folding */
-+static int fold_case;
-+
- static void parse_argv(void);
- static void parse_cat_blob(const char *p);
- static void parse_ls(const char *p, struct branch *b);
- 
-+static int strncmp_foldcase(const char *a, const char *b, size_t count)
-+{
-+	return fold_case ? strncasecmp(a, b, count) : strncmp(a, b, count);
-+}
-+
- static void write_branch_report(FILE *rpt, struct branch *b)
- {
- 	fprintf(rpt, "%s:\n", b->name);
-@@ -1507,7 +1515,7 @@ static int tree_content_set(
- 	t = root->tree;
- 	for (i = 0; i < t->entry_count; i++) {
- 		e = t->entries[i];
--		if (e->name->str_len == n && !strncmp_icase(p, e->name->str_dat, n)) {
-+		if (e->name->str_len == n && !strncmp_foldcase(p, e->name->str_dat, n)) {
- 			if (!*slash1) {
- 				if (!S_ISDIR(mode)
- 						&& e->versions[1].mode == mode
-@@ -1597,7 +1605,7 @@ static int tree_content_remove(
- 	t = root->tree;
- 	for (i = 0; i < t->entry_count; i++) {
- 		e = t->entries[i];
--		if (e->name->str_len == n && !strncmp_icase(p, e->name->str_dat, n)) {
-+		if (e->name->str_len == n && !strncmp_foldcase(p, e->name->str_dat, n)) {
- 			if (*slash1 && !S_ISDIR(e->versions[1].mode))
- 				/*
- 				 * If p names a file in some subdirectory, and a
-@@ -1664,7 +1672,7 @@ static int tree_content_get(
- 	t = root->tree;
- 	for (i = 0; i < t->entry_count; i++) {
- 		e = t->entries[i];
--		if (e->name->str_len == n && !strncmp_icase(p, e->name->str_dat, n)) {
-+		if (e->name->str_len == n && !strncmp_foldcase(p, e->name->str_dat, n)) {
- 			if (!*slash1)
- 				goto found_entry;
- 			if (!S_ISDIR(e->versions[1].mode))
-@@ -3246,6 +3254,10 @@ static int parse_one_feature(const char *feature, int from_stream)
- 		relative_marks_paths = 1;
- 	} else if (!strcmp(feature, "no-relative-marks")) {
- 		relative_marks_paths = 0;
-+	} else if (!strcmp(feature, "fold-case")) {
-+		fold_case = 1;
-+	} else if (!strcmp(feature, "no-fold-case")) {
-+		fold_case = 0;
- 	} else if (!strcmp(feature, "done")) {
- 		require_explicit_termination = 1;
- 	} else if (!strcmp(feature, "force")) {
-@@ -3372,6 +3384,7 @@ int main(int argc, char **argv)
- 	avail_tree_table = xcalloc(avail_tree_table_sz, sizeof(struct avail_tree_content*));
- 	marks = pool_calloc(1, sizeof(struct mark_set));
- 
-+	fold_case = ignore_case;
- 	global_argc = argc;
- 	global_argv = argv;
- 
-diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-index aac126f..7057c26 100755
---- a/t/t9300-fast-import.sh
-+++ b/t/t9300-fast-import.sh
-@@ -3088,4 +3088,83 @@ test_expect_success 'U: validate root delete result' '
- 	compare_diff_raw expect actual
- '
- 
-+cat >input <<INPUT_END
-+blob
-+mark :1
-+data 2
-+a
-+
-+commit refs/heads/V
-+committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+data 0
-+
-+M 644 :1 a
-+
-+commit refs/heads/V
-+committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+data 0
-+
-+R a A
-+INPUT_END
-+
-+test_expect_success 'V: default case folding with ignorecase=true' '
-+	git config core.ignorecase true &&
-+	git fast-import <input &&
-+	git ls-tree refs/heads/V >actual &&
-+	git update-ref -d refs/heads/V &&
-+	cat >expected <<\EOF &&
-+100644 blob 78981922613b2afb6025042ff6bd878ac1994e85	a
-+EOF
-+	test_cmp expected actual'
-+
-+test_expect_success 'V: default case folding with ignorecase=false' '
-+	git config core.ignorecase false &&
-+	git fast-import <input &&
-+	git ls-tree refs/heads/V >actual &&
-+	git update-ref -d refs/heads/V &&
-+	cat >expected <<\EOF &&
-+100644 blob 78981922613b2afb6025042ff6bd878ac1994e85	A
-+EOF
-+	test_cmp expected actual'
-+
-+test_expect_success 'V: forced case folding with ignorecase=true' '
-+	git config core.ignorecase true &&
-+	git fast-import --fold-case <input &&
-+	git ls-tree refs/heads/V >actual &&
-+	git update-ref -d refs/heads/V &&
-+	cat >expected <<\EOF &&
-+100644 blob 78981922613b2afb6025042ff6bd878ac1994e85	a
-+EOF
-+	test_cmp expected actual'
-+
-+test_expect_success 'V: forced case folding with ignorecase=false' '
-+	git config core.ignorecase false &&
-+	git fast-import --fold-case <input &&
-+	git ls-tree refs/heads/V >actual &&
-+	git update-ref -d refs/heads/V &&
-+	cat >expected <<\EOF &&
-+100644 blob 78981922613b2afb6025042ff6bd878ac1994e85	a
-+EOF
-+	test_cmp expected actual'
-+
-+test_expect_success 'V: forced no case folding with ignorecase=true' '
-+	git config core.ignorecase true &&
-+	git fast-import --no-fold-case <input &&
-+	git ls-tree refs/heads/V >actual &&
-+	git update-ref -d refs/heads/V &&
-+	cat >expected <<\EOF &&
-+100644 blob 78981922613b2afb6025042ff6bd878ac1994e85	A
-+EOF
-+	test_cmp expected actual'
-+
-+test_expect_success 'V: forced no case folding with ignorecase=false' '
-+	git config core.ignorecase false &&
-+	git fast-import --no-fold-case <input &&
-+	git ls-tree refs/heads/V >actual &&
-+	git update-ref -d refs/heads/V &&
-+	cat >expected <<\EOF &&
-+100644 blob 78981922613b2afb6025042ff6bd878ac1994e85	A
-+EOF
-+	test_cmp expected actual'
-+
- test_done
--- 
-2.3.5.1.g2355df5
+
+Lex Spoon
