@@ -1,68 +1,142 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 2/2]  t0027: Support =?UTF-8?Q?NATIVE=5FCRLF?=
-Date: Fri, 17 Apr 2015 21:55:24 +0200
-Organization: gmx
-Message-ID: <1db9b0b7322c3b8b8e7a76b29b020ad8@www.dscho.org>
-References: <55312A45.8060008@web.de>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] fast-import: add options to enable/disable case folding
+Date: Fri, 17 Apr 2015 15:57:05 -0400
+Message-ID: <20150417195705.GA36902@flurp.local>
+References: <xmqqoarclgnr.fsf@gitster.dls.corp.google.com>
+ <1429271526-31234-1-git-send-email-mh@glandium.org>
+ <55313B4B.3030106@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Fri Apr 17 21:55:35 2015
+Cc: Mike Hommey <mh@glandium.org>, git@vger.kernel.org,
+	Joshua Jensen <jjensen@workspacewhiz.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Fri Apr 17 21:57:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YjCMO-0005ZO-7h
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Apr 2015 21:55:32 +0200
+	id 1YjCO6-0006pR-2n
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Apr 2015 21:57:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751610AbbDQTz1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 17 Apr 2015 15:55:27 -0400
-Received: from mout.gmx.net ([212.227.17.22]:54948 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751130AbbDQTz0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Apr 2015 15:55:26 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0MNuwp-1YhIgR2tcR-007QVP; Fri, 17 Apr 2015 21:55:24
- +0200
-In-Reply-To: <55312A45.8060008@web.de>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:iZxyNEw91+EgyJNXYOCdbfyT7fjnCYWIegotq54B3cMvslXpU2h
- at+nEWJ5f1xeyqBGzXecctdfNEifqiqxPaQQe2XtXxDaW1TPmu5NulhCAk5vR3itldVvs2g
- nveu2bVQud7iAmORPFVOcJGMsktvJJYptkhSpkaCta80DwoD2d5KalVLZDlRtGmAf1jqeTV
- H5M0afyVzvZj893b/oSwg==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1753663AbbDQT5O convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 17 Apr 2015 15:57:14 -0400
+Received: from mail-ig0-f175.google.com ([209.85.213.175]:34823 "EHLO
+	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751275AbbDQT5L (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Apr 2015 15:57:11 -0400
+Received: by igbyr2 with SMTP id yr2so20716710igb.0
+        for <git@vger.kernel.org>; Fri, 17 Apr 2015 12:57:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=jSLxNU6B9qcXALhJv8F+XQvc0/YimCAZ2vOlX4bNg20=;
+        b=Cw2GkGLOTv75PZgyXvaqGxxz9QWc7utekrjUrGzSupq/I3tkA8toG5HWWNRKgP8Skv
+         XBb46qLWWODe0poBUV5ew/TOW/Hj9/xtLv/OFiAU4Rm5siXnOdbthAqQAydvvZ7P8In8
+         7U9qWsxvULL0TcUnJKR2oyrebYA2BvYxOitpu5xfaZukrgF4AYxVKa6hiJPur44sOEu0
+         wOayaBIW8EhtNnnt5Wb0YYONqV/SDnbRB4SFn9XfBZa9jAVfrCtv63mrhNRCKAc2/LAo
+         KPTM2ahlL1G9ZXvwcAxx/J9NApr8VG1pKKdNtaU8ubKIfVlIFvgmYuN5I//jKT9rwrX1
+         Fmzw==
+X-Received: by 10.50.20.233 with SMTP id q9mr5259707ige.9.1429300630976;
+        Fri, 17 Apr 2015 12:57:10 -0700 (PDT)
+Received: from flurp.local (user-12l3cpl.cable.mindspring.com. [69.81.179.53])
+        by mx.google.com with ESMTPSA id d10sm1806313igo.0.2015.04.17.12.57.10
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Fri, 17 Apr 2015 12:57:10 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <55313B4B.3030106@web.de>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267383>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267384>
 
-Hi Torsten,
+On Fri, Apr 17, 2015 at 06:56:43PM +0200, Torsten B=F6gershausen wrote:
+> On 04/17/2015 01:52 PM, Mike Hommey wrote:
+> > +test_expect_success 'V: default case folding with ignorecase=3Dtru=
+e' '
+> > +	git config core.ignorecase true &&
+> > +	git fast-import <input &&
+> > +	git ls-tree refs/heads/V >actual &&
+> > +	git update-ref -d refs/heads/V &&
+> > +	cat >expected <<\EOF &&
+> > +100644 blob 78981922613b2afb6025042ff6bd878ac1994e85	a
+> > +EOF
+> > +	test_cmp expected actual'
+> > +
+> > +test_expect_success 'V: default case folding with ignorecase=3Dfal=
+se' '
+> > +	git config core.ignorecase false &&
+> > +	git fast-import <input &&
+> > +	git ls-tree refs/heads/V >actual &&
+> > +	git update-ref -d refs/heads/V &&
+> > +	cat >expected <<\EOF &&
+> > +100644 blob 78981922613b2afb6025042ff6bd878ac1994e85	A
+> > +EOF
+> > +	test_cmp expected actual'
+> > +
+> > +test_expect_success 'V: forced case folding with ignorecase=3Dtrue=
+' '
+> > +	git config core.ignorecase true &&
+> > +	git fast-import --fold-case <input &&
+> > +	git ls-tree refs/heads/V >actual &&
+> > +	git update-ref -d refs/heads/V &&
+> > +	cat >expected <<\EOF &&
+> > +100644 blob 78981922613b2afb6025042ff6bd878ac1994e85	a
+> > +EOF
+> > +	test_cmp expected actual'
+>
+> If you want to make it shorter (and try to avoid repetition):
+> The forced true cases could be collected in a loop.
+> (and the same for forced=3Dfalse)
 
-On 2015-04-17 17:44, Torsten B=C3=B6gershausen wrote:
-> Without this patch, t0027 expects the native end-of-lines to be a sin=
-gle
-> line feed character. On Windows, however, we set it to a carriage ret=
-urn
-> character followed by a line feed character. Thus, we have to modify
-> t0027 to expect different warnings depending on the end-of-line marke=
-rs.
->=20
-> Adjust the check of the warnings and use these macros:
->   WILC:  Warn if LF becomes CRLF
->   WICL:  Warn if CRLF becomes LF
->   WAMIX: Mixed line endings: either CRLF->LF or LF->CRLF
->=20
-> Improve the information given by check_warning():
-> Use test_cmp to show which warning is missing (or should'n t be there=
-)
->=20
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+I was also going to suggest squashing the repetition. Here's what I
+had in mind:
 
-Thank you so much!
-Dscho
+--- >8 ---
+test_foldcase() {
+	ignore=3D$1 &&
+	case "$2" in
+	true) fold=3D--fold-case folded=3Dtrue ;;
+	false) fold=3D--no-fold-case folded=3Dfalse ;;
+	*) fold=3D folded=3D$ignore ;;
+	esac &&
+	case $folded in true) folded=3Da ;; false) folded=3DA ;; esac &&
+
+	test_expect_success "V: case folding: ignorecase=3D$ignore${fold:+ $fo=
+ld}" "
+		git -c core.ignorecase=3D$ignore fast-import $fold <input &&
+		git ls-tree refs/heads/V >actual &&
+		git update-ref -d refs/heads/V &&
+		cat >expect <<-EOF &&
+		100644 blob 78981922613b2afb6025042ff6bd878ac1994e85	$folded
+		EOF
+		test_cmp expect actual
+	"
+}
+
+for o in '' true false
+do
+	for c in true false
+	do
+		test_foldcase $c "$o"
+	done
+done
+--- >8 ---
+
+which outputs:
+
+--- >8 ---
+ok 176 - V: case folding: ignorecase=3Dtrue
+ok 177 - V: case folding: ignorecase=3Dfalse
+ok 178 - V: case folding: ignorecase=3Dtrue --fold-case
+ok 179 - V: case folding: ignorecase=3Dfalse --fold-case
+ok 180 - V: case folding: ignorecase=3Dtrue --no-fold-case
+ok 181 - V: case folding: ignorecase=3Dfalse --no-fold-case
+--- >8 ---
