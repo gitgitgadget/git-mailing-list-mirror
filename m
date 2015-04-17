@@ -1,70 +1,70 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH] rev-list-options.txt: complete sentence about notes matching
-Date: Fri, 17 Apr 2015 16:28:56 +0200
-Message-ID: <2ff739260d94310b616eb4a0dd2bd8aac53fd762.1429280914.git.git@drmicha.warpmail.net>
+From: Ossi Herrala <oherrala@gmail.com>
+Subject: [PATCH] Fix settings in default_user_config template
+Date: Fri, 17 Apr 2015 17:50:10 +0300
+Message-ID: <1429282210-38538-1-git-send-email-oherrala@gmail.com>
+Cc: Ossi Herrala <oherrala@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 17 16:29:10 2015
+X-From: git-owner@vger.kernel.org Fri Apr 17 16:50:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yj7GV-000191-L6
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Apr 2015 16:29:08 +0200
+	id 1Yj7bG-0007il-1Y
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Apr 2015 16:50:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965266AbbDQO3C (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Apr 2015 10:29:02 -0400
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:54759 "EHLO
-	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932743AbbDQO26 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 17 Apr 2015 10:28:58 -0400
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailout.nyi.internal (Postfix) with ESMTP id 3F3C32079D
-	for <git@vger.kernel.org>; Fri, 17 Apr 2015 10:28:58 -0400 (EDT)
-Received: from frontend1 ([10.202.2.160])
-  by compute5.internal (MEProxy); Fri, 17 Apr 2015 10:28:58 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=
-	date:from:message-id:subject:to:x-sasl-enc:x-sasl-enc; s=mesmtp;
-	 bh=7OI4vh3BkkgjdLFvqelWwvwmiyM=; b=jPOSsN93ZOYNmbhGG6gT/c//slLk
-	baoTJwCnuKUb3in8OF8KnNS3LI7Sn/ArmJC0uMGlUom5cmqrYVx6bprBzTm/f6TB
-	1fuGp63fMj3UrIQ6K8c89sUtTzPUsycgyYBcNuzOhi9xTA0eutolyWnF9Jeb6M17
-	kjHQDMYD9G2YOsM=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=date:from:message-id:subject:to
-	:x-sasl-enc:x-sasl-enc; s=smtpout; bh=7OI4vh3BkkgjdLFvqelWwvwmiy
-	M=; b=NW3W4HW+NdcmH3cD/VCTfFr0iV/btWHJY2mpSoN46QTLdWS2+xDaxT7sYp
-	xgu2pTCZlryFvsavrX8r1COu0Lf6J5RE+mB9wnfKD2PHA0hmmx9cj6+rnkh2EIRn
-	0fXoepeOpU3C5UBt+/7lkNP9q4Tvk6Ku+OuU09NPdhHgqFCwU=
-X-Sasl-enc: yV9gJU5yh9yKHWpV6QXRdzImBgjnrlTD8D0eHy0j4A1/ 1429280937
-Received: from localhost (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id D038DC00011;
-	Fri, 17 Apr 2015 10:28:57 -0400 (EDT)
-X-Mailer: git-send-email 2.4.0.rc2.251.gab67463
+	id S934867AbbDQOu3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Apr 2015 10:50:29 -0400
+Received: from mail-la0-f48.google.com ([209.85.215.48]:32779 "EHLO
+	mail-la0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932603AbbDQOuY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Apr 2015 10:50:24 -0400
+Received: by layy10 with SMTP id y10so82204177lay.0
+        for <git@vger.kernel.org>; Fri, 17 Apr 2015 07:50:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=0aRkBrkupRAXvojnWQB6HDLaessXpBTDT5qO9akZVIo=;
+        b=sNPKOnkQhvTeISLD5eBHnpSlYBpL2NRMTV/NyvuDbDLNj02RcsFiGYwkrs4fM2BTcm
+         K+yMfztDek+bYSOFZSs66Qz7z7ZcNc0GtBEK8Z11wJa8aanOMTfNJIW+LMUATSIQA9lP
+         n2eQIE0XVBHsj2CnbtjhB+rsd88g807BAAm5NswsMcuVbtSsRYRs6v+9BiUKNsRUnzdA
+         wWcySPp9UXzeM2Pc9KfC2FIq9qY5qoxXHnGYQhkKsUCMySbBYAljCZVpw8csv9y2C4Je
+         /+8bCPnWLEgyQDz80G9Ukxh3aVDJyip0jdOn1pfmTu0bJsMeDodLe/IKfvlxiNsfvLl8
+         uVIQ==
+X-Received: by 10.152.7.239 with SMTP id m15mr4171347laa.95.1429282222959;
+        Fri, 17 Apr 2015 07:50:22 -0700 (PDT)
+Received: from localhost.localdomain (nat4.panoulu.net. [212.50.147.101])
+        by mx.google.com with ESMTPSA id wh9sm2461433lbb.45.2015.04.17.07.50.21
+        (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 17 Apr 2015 07:50:22 -0700 (PDT)
+X-Mailer: git-send-email 2.3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267358>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267359>
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+The name (not user) and email setting should be in config section
+"user" and not in "core" as documented in Documentation/config.txt.
 ---
- Documentation/rev-list-options.txt | 4 ++--
+ builtin/config.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index f620ee4..77ac439 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -59,8 +59,8 @@ endif::git-rev-list[]
- 	matches any of the given patterns are chosen (but see
- 	`--all-match`).
- +
--When `--show-notes` is in effect, the message from the notes as
--if it is part of the log message.
-+When `--show-notes` is in effect, the message from the notes is
-+matched as if it were part of the log message.
- 
- --all-match::
- 	Limit the commits output to ones that match all given `--grep`,
+diff --git a/builtin/config.c b/builtin/config.c
+index d32c532..bfd3016 100644
+--- a/builtin/config.c
++++ b/builtin/config.c
+@@ -455,9 +455,9 @@ static char *default_user_config(void)
+ 	struct strbuf buf = STRBUF_INIT;
+ 	strbuf_addf(&buf,
+ 		    _("# This is Git's per-user configuration file.\n"
+-		      "[core]\n"
++		      "[user]\n"
+ 		      "# Please adapt and uncomment the following lines:\n"
+-		      "#	user = %s\n"
++		      "#	name = %s\n"
+ 		      "#	email = %s\n"),
+ 		    ident_default_name(),
+ 		    ident_default_email());
 -- 
-2.4.0.rc2.251.gab67463
+2.3.5
