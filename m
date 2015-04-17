@@ -1,135 +1,74 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: [PATCH v2 2/2]  t0027: Support NATIVE_CRLF
-Date: Fri, 17 Apr 2015 17:44:05 +0200
-Message-ID: <55312A45.8060008@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [BUG] Performance regression due to #33d4221: write_sha1_file: freshen existing objects
+Date: Fri, 17 Apr 2015 08:50:59 -0700
+Message-ID: <xmqqlhhqhhy4.fsf@gitster.dls.corp.google.com>
+References: <CADoxLGPYOkgzb4bkdHq5tK0aJS2M=nWGzO=YYXPDcy-gh45q-g@mail.gmail.com>
+	<20150417140315.GA13506@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: tboegi@web.de, johannes.schindelin@gmx.de
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 17 17:44:16 2015
+Content-Type: text/plain
+Cc: Stefan Saasen <ssaasen@atlassian.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Apr 17 18:09:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yj8RD-0008Lo-FR
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Apr 2015 17:44:15 +0200
+	id 1Yj8pT-0006Eb-Gf
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Apr 2015 18:09:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933752AbbDQPoK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 17 Apr 2015 11:44:10 -0400
-Received: from mout.web.de ([212.227.15.4]:64595 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933375AbbDQPoH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Apr 2015 11:44:07 -0400
-Received: from macce.local ([217.211.68.12]) by smtp.web.de (mrweb002) with
- ESMTPSA (Nemesis) id 0LbroC-1ZAk1i06y4-00jF1m; Fri, 17 Apr 2015 17:44:06
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
-X-Provags-ID: V03:K0:gm7Obf3B1w/5sPixo4bC3a6PIn5qbpFdMom3I0c36wh2lWmcaZY
- s8s4ab447570Co4KoFXYmS+RvtVJPHDWFa/3nbIfIeKUrBUdVwZV4GLBJLKt5DEWjNBxoAq
- r1/jGMvImNNpFYUj369WdVbi5GdX2hpHiRidWCiRtzmWi830GHEgcmX3E4MTGJShP8fO+Wd
- vkogtwEpIWdNt8ZydeHNw==
-X-UI-Out-Filterresults: notjunk:1;
+	id S933100AbbDQQJP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Apr 2015 12:09:15 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:63132 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932402AbbDQQJN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Apr 2015 12:09:13 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5116949B33;
+	Fri, 17 Apr 2015 12:09:07 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=k++PEZL//1WDXTRpyg7rPfONi1c=; b=MQVS/C
+	J0MQuSii8MiHX29g3Mpt8CeN/Zmu+c2t6FR8wc7I3EMwN1Q7chyRDPYABi92UetD
+	8YV1EFAlXssx9OUai6Ynr85AOmv9O2k3vd0agSEzCxSUqnrdkNNWLNONXH9C+7hL
+	DwwDUmFQ/uWsdpI8vasX8kSGqonapuHduhsL4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=rdRIXtTGcKVBIBMUakKoGp5/P3wPoMmk
+	RBFKjlrEf5GDn99/OLDgOVW/W9IJWFy+gKbhw0X1xkWVXfeWXUIib3YiImIs0CZp
+	WXdC/ZPYgMXEtwFbSiaifzI+6pXsE7N5TH1DmWZhK0GrjEPSWxthsk3qDcJTR1Zw
+	Q7gUSp5Vzqw=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3AAF049B32;
+	Fri, 17 Apr 2015 12:09:07 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id ED0EC49406;
+	Fri, 17 Apr 2015 11:51:00 -0400 (EDT)
+In-Reply-To: <20150417140315.GA13506@peff.net> (Jeff King's message of "Fri,
+	17 Apr 2015 10:03:15 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 8BC78F42-E519-11E4-B042-11859F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267363>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267364>
 
-Without this patch, t0027 expects the native end-of-lines to be a singl=
-e
-line feed character. On Windows, however, we set it to a carriage retur=
-n
-character followed by a line feed character. Thus, we have to modify
-t0027 to expect different warnings depending on the end-of-line markers=
-=2E
+Jeff King <peff@peff.net> writes:
 
-Adjust the check of the warnings and use these macros:
-  WILC:  Warn if LF becomes CRLF
-  WICL:  Warn if CRLF becomes LF
-  WAMIX: Mixed line endings: either CRLF->LF or LF->CRLF
+> If it's not a problem, I'd love to see timings for your case with just
+> the first patch, and then with both.
 
-Improve the information given by check_warning():
-Use test_cmp to show which warning is missing (or should'n t be there)
+Thanks for two quick progress patches.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
----
- t/t0027-auto-crlf.sh | 30 ++++++++++++++++++++----------
- 1 file changed, 20 insertions(+), 10 deletions(-)
+> You may also be interested in:
+>
+>   http://thread.gmane.org/gmane.comp.version-control.git/266370
+>
+> which addresses another performance problem related to the
+> freshen/recent code in v2.2.
 
-diff --git a/t/t0027-auto-crlf.sh b/t/t0027-auto-crlf.sh
-index 5858397..8975b97 100755
---- a/t/t0027-auto-crlf.sh
-+++ b/t/t0027-auto-crlf.sh
-@@ -57,15 +57,13 @@ create_gitattributes () {
-=20
- check_warning () {
- 	case "$1" in
--	LF_CRLF) grep "LF will be replaced by CRLF" $2;;
--	CRLF_LF) grep "CRLF will be replaced by LF" $2;;
--	'')
--		>expect
--		grep "will be replaced by" $2 >actual
--		test_cmp expect actual
--		;;
--	*) false ;;
-+	LF_CRLF) echo "warning: LF will be replaced by CRLF" >"$2".expect ;;
-+	CRLF_LF) echo "warning: CRLF will be replaced by LF" >"$2".expect ;;
-+	'')	                                                 >"$2".expect ;;
-+	*) echo >&2 "Illegal 1": "$1" ; return false ;;
- 	esac
-+	grep "will be replaced by" "$2" | sed -e "s/\(.*\) in [^ ]*$/\1/" >"$=
-2".actual
-+	test_cmp "$2".expect "$2".actual
- }
-=20
- commit_check_warn () {
-@@ -169,6 +167,18 @@ test_expect_success 'setup master' '
- warn_LF_CRLF=3D"LF will be replaced by CRLF"
- warn_CRLF_LF=3D"CRLF will be replaced by LF"
-=20
-+#WILC means "Warn if (this OS) converts LF into CRLF"
-+if test_have_prereq NATIVE_CRLF
-+then
-+WILC=3DLF_CRLF
-+WICL=3D
-+WAMIX=3DLF_CRLF
-+else
-+WILC=3D
-+WICL=3DCRLF_LF
-+WAMIX=3DCRLF_LF
-+fi
-+
- test_expect_success 'commit files empty attr' '
- 	commit_check_warn false ""     ""        ""        ""        ""      =
-  "" &&
- 	commit_check_warn true  ""     "LF_CRLF" ""        "LF_CRLF" ""      =
-  "" &&
-@@ -176,13 +186,13 @@ test_expect_success 'commit files empty attr' '
- '
-=20
- test_expect_success 'commit files attr=3Dauto' '
--	commit_check_warn false "auto" ""        "CRLF_LF" "CRLF_LF" ""      =
-  "" &&
-+	commit_check_warn false "auto" "$WILC"  "$WICL"    "$WAMIX"  ""      =
-  "" &&
- 	commit_check_warn true  "auto" "LF_CRLF" ""        "LF_CRLF" ""      =
-  "" &&
- 	commit_check_warn input "auto" ""        "CRLF_LF" "CRLF_LF" ""      =
-  ""
- '
-=20
- test_expect_success 'commit files attr=3Dtext' '
--	commit_check_warn false "text" ""        "CRLF_LF" "CRLF_LF" ""      =
-  "CRLF_LF" &&
-+	commit_check_warn false "text" "$WILC"  "$WICL"    "$WAMIX"  "$WILC" =
- "$WICL" &&
- 	commit_check_warn true  "text" "LF_CRLF" ""        "LF_CRLF" "LF_CRLF=
-" ""        &&
- 	commit_check_warn input "text" ""        "CRLF_LF" "CRLF_LF" ""      =
-  "CRLF_LF"
- '
---=20
-2.2.0.rc1.790.ge19fcd2
+That, too.
