@@ -1,171 +1,148 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] pathspec: adjust prefixlen after striping trailing slash
-Date: Sat, 18 Apr 2015 08:19:06 +0700
-Message-ID: <1429319946-19890-1-git-send-email-pclouds@gmail.com>
-References: <55300D2C.9030903@web.de>
+From: Stefan Saasen <ssaasen@atlassian.com>
+Subject: Re: [BUG] Performance regression due to #33d4221: write_sha1_file:
+ freshen existing objects
+Date: Sat, 18 Apr 2015 13:35:51 +1000
+Message-ID: <CADoxLGOPXDgb0LBcSBm+xRDhbnGV_y-TXENyPV7oK_+KZzPKRQ@mail.gmail.com>
+References: <CADoxLGPYOkgzb4bkdHq5tK0aJS2M=nWGzO=YYXPDcy-gh45q-g@mail.gmail.com>
+ <20150417140315.GA13506@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jens.Lehmann@web.de, dennis@kaarsemaker.net,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 18 03:19:23 2015
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Apr 18 05:36:44 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YjHPk-0006JZ-Qg
-	for gcvg-git-2@plane.gmane.org; Sat, 18 Apr 2015 03:19:21 +0200
+	id 1YjJYg-0005pa-5K
+	for gcvg-git-2@plane.gmane.org; Sat, 18 Apr 2015 05:36:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751876AbbDRBTN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 17 Apr 2015 21:19:13 -0400
-Received: from mail-pa0-f45.google.com ([209.85.220.45]:35730 "EHLO
-	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751396AbbDRBTN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Apr 2015 21:19:13 -0400
-Received: by pabtp1 with SMTP id tp1so142099671pab.2
-        for <git@vger.kernel.org>; Fri, 17 Apr 2015 18:19:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=42FvJlgLFiRGfgcKvbaGmr8mBx9anr+2L5DigtOMw5A=;
-        b=KmE5WQod+zxJWy1RxIUL/3HutLvtJ6RFrF2HChtpL40wNbP1r60GPdbuqFFLLVTYvc
-         cKTJjkhtGOBfeJaQugg/VVVDLn4fb2KUftE1UYa/kbHUaHWCYiWsv56D3cbDx/9eROQ1
-         2jSM2tZfNHG0y15qycF32OC3IHRphcOXeSj9EPkJerGybWFSPmQlXbo1My/r4SdT3goa
-         oTDNwzASB+FiRRySfFmUUcCsJbZ+z3spKy5JlRXHovbNFDTZFsVmOABbmNjxDFHGk4oy
-         NwAKmc9WXnndjhnN8m2ORvlMFj5ahYO3T8psXm5ZzCAZ6HSogKsK5RWm7vwmhERoFp83
-         rL7g==
-X-Received: by 10.70.125.129 with SMTP id mq1mr964197pdb.19.1429319952598;
-        Fri, 17 Apr 2015 18:19:12 -0700 (PDT)
-Received: from lanh ([115.73.194.67])
-        by mx.google.com with ESMTPSA id al13sm11338325pac.23.2015.04.17.18.19.09
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 17 Apr 2015 18:19:11 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Sat, 18 Apr 2015 08:19:10 +0700
-X-Mailer: git-send-email 2.3.0.rc1.137.g477eb31
-In-Reply-To: <55300D2C.9030903@web.de>
+	id S1752282AbbDRDge (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Apr 2015 23:36:34 -0400
+Received: from na3sys009aog127.obsmtp.com ([74.125.149.107]:54590 "EHLO
+	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751705AbbDRDgd (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 17 Apr 2015 23:36:33 -0400
+Received: from mail-ig0-f172.google.com ([209.85.213.172]) (using TLSv1) by na3sys009aob127.postini.com ([74.125.148.12]) with SMTP
+	ID DSNKVTHRQKVnRXGfmy58kR+hKHVklwd0yd6J@postini.com; Fri, 17 Apr 2015 20:36:32 PDT
+Received: by iget9 with SMTP id t9so36181347ige.1
+        for <git@vger.kernel.org>; Fri, 17 Apr 2015 20:36:32 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=aeUyfND1zkjxkEfdpo+rZFZ5ZIBa0YIkDYHFgAis03Y=;
+        b=P+Yd/i+1GsPP01d5NNnJhxoCiCroY1gSh+cOlLnKtxMAYF37mIMzdATYlv/aDptvtJ
+         aZ/k3LhuxL1dCbE/70F6UCSzEBplVA8ipqLSK+FYEnH7ZWqWMm2t+yPypMbY/H1LfWGE
+         obY/0zywOL0oYHeo+iObSdzbbPA/aGMRXPZ4/9q9O5gc4hIyJwXad+bKXEKzwgImr/0f
+         R6efszBiyuMT6x7Rn1HKIhh16y25PSt3xXhVWi8UOShLAFn3Rj0AlmnDgNSQZpAwH46+
+         Z1B/2zCpnV3I9dXRhzQ8BCPDHnfDcGQ76FKy52O2R1Gbfe5htTjtufSUBmnLDRKBj+U7
+         +rWQ==
+X-Gm-Message-State: ALoCoQk6AW/2wOlLE1JqwJwwEM0vYoLaZNdF4X680HQaxV9VPczjdLZfHi6vTqD4y4LVrE/xDKkvWQUdCw/qM/45k8jTqThcjkulx2uTveTop9SQ3yfB6ESrKfeMKY+I1AsZ5ZMyaGMZyQuMAn/234vWQUqKaJi3MQ==
+X-Received: by 10.50.29.40 with SMTP id g8mr6952929igh.41.1429328192178;
+        Fri, 17 Apr 2015 20:36:32 -0700 (PDT)
+X-Received: by 10.50.29.40 with SMTP id g8mr6952920igh.41.1429328192058; Fri,
+ 17 Apr 2015 20:36:32 -0700 (PDT)
+Received: by 10.36.118.133 with HTTP; Fri, 17 Apr 2015 20:35:51 -0700 (PDT)
+In-Reply-To: <20150417140315.GA13506@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267405>
 
-A path(spec) from git perspective consists of two parts, the prefix,
-and the rest. The prefix covers the part of `pwd` after expanding ".."
-components. The split is to support case-insensitive match in a sane
-way (see 93d9353, especially the big comment block added in dir.c).
+> If it's not a problem, I'd love to see timings for your case with just
+> the first patch, and then with both.
 
-Normally the prefix is found after prefix_path_gently() and that will
-be it. Unfortunately the *STRIP_SUBMODULE* flags can strip the
-trailing slash (see 2ce53f9 for the reason) and cut into this prefix
-part. In the test, the prefix is "submodule/", but the final path is
-just "submodule". We need to readjust prefix info when this happens.
+Thanks for the swift response, much appreciated Jeff!
 
-The assert() that catches this is turned to die() to make sure it's
-always active. prefix_pathspec() is not in any critical path to be a
-performance concern because of this change.
+Here are the timings for the two patches:
 
-93d9353 (parse_pathspec: accept :(icase)path syntax - 2013-07-14)
-2ce53f9 (git add: do not add files from a submodule - 2009-01-02)
+Patch 1 on top of 33d4221c79
 
-Noticed-by: djanos_ (via irc)
-Helped-by: Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- On Fri, Apr 17, 2015 at 2:27 AM, Jens Lehmann <Jens.Lehmann@web.de> wr=
-ote:
- > The problem seems to be that "subrepo" is still registered as a
- > submodule in the index. But we should see a proper error message
- > instead of an assert in that case ... CCed Duy who knows much
- > more about pathspec.c than me.
+       Elapsed           System              User
+ Min.   :6.110   Min.   :0.6700   Min.   :0.3600
+ 1st Qu.:6.580   1st Qu.:0.6900   1st Qu.:0.3900
+ Median :7.260   Median :0.7100   Median :0.4100
+ Mean   :7.347   Mean   :0.7248   Mean   :0.4214
+ 3rd Qu.:8.000   3rd Qu.:0.7400   3rd Qu.:0.4600
+ Max.   :8.860   Max.   :0.8700   Max.   :0.5100
 
- This deals with the bug in pathspec code. I leave it to you to decide
- how git-add should do when a submodule is registered in index, but
- it's no longer a submodule in worktree. Yeah maybe it should error
- out.
+I've had to slightly tweak your second patch (`freshened` was never
+set) but applying the modified patch yielded even better results
+compared to patch 1:
 
- pathspec.c                    | 18 +++++++++++++++---
- t/t3703-add-magic-pathspec.sh |  8 ++++++++
- 2 files changed, 23 insertions(+), 3 deletions(-)
+       Elapsed           System              User
+ Min.   :0.38   Min.   :0.03000   Min.   :0.2900
+ 1st Qu.:0.38   1st Qu.:0.04000   1st Qu.:0.3100
+ Median :0.39   Median :0.06000   Median :0.3200
+ Mean   :0.43   Mean   :0.05667   Mean   :0.3519
+ 3rd Qu.:0.42   3rd Qu.:0.07000   3rd Qu.:0.3600
+ Max.   :0.68   Max.   :0.08000   Max.   :0.5700
 
-diff --git a/pathspec.c b/pathspec.c
-index 9304ee3..aa5e2c7 100644
---- a/pathspec.c
-+++ b/pathspec.c
-@@ -262,7 +262,6 @@ static unsigned prefix_pathspec(struct pathspec_ite=
-m *item,
- 	} else
- 		item->original =3D elt;
- 	item->len =3D strlen(item->match);
--	item->prefix =3D prefixlen;
-=20
- 	if ((flags & PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP) &&
- 	    (item->len >=3D 1 && item->match[item->len - 1] =3D=3D '/') &&
-@@ -292,6 +291,15 @@ static unsigned prefix_pathspec(struct pathspec_it=
-em *item,
- 				     elt, ce_len, ce->name);
- 		}
-=20
-+	/*
-+	 * Adjust prefixlen if the above trailing slash stripping cuts
-+	 * into the prefix part
-+	 */
-+	if ((flags & (PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP |
-+		      PATHSPEC_STRIP_SUBMODULE_SLASH_EXPENSIVE)) &&
-+	    prefixlen > item->len)
-+		prefixlen =3D item->len;
-+
- 	if (magic & PATHSPEC_LITERAL)
- 		item->nowildcard_len =3D item->len;
- 	else {
-@@ -299,6 +307,7 @@ static unsigned prefix_pathspec(struct pathspec_ite=
-m *item,
- 		if (item->nowildcard_len < prefixlen)
- 			item->nowildcard_len =3D prefixlen;
- 	}
-+	item->prefix =3D prefixlen;
- 	item->flags =3D 0;
- 	if (magic & PATHSPEC_GLOB) {
- 		/*
-@@ -313,8 +322,11 @@ static unsigned prefix_pathspec(struct pathspec_it=
-em *item,
- 	}
-=20
- 	/* sanity checks, pathspec matchers assume these are sane */
--	assert(item->nowildcard_len <=3D item->len &&
--	       item->prefix         <=3D item->len);
-+	if (!(item->nowildcard_len <=3D item->len &&
-+	      item->prefix         <=3D item->len))
-+		die("BUG: item->nowildcard_len (%d) or item->prefix (%d)"
-+		    " is longer than item->len (%d)",
-+		    item->nowildcard_len, item->prefix, item->len);
- 	return magic;
+This is pretty much back to the "before" state.
+The graph really tells the whole story:
+https://bytebucket.org/snippets/ssaasen/GeRE/raw/7367353a58c50ccd7c493af40ffb6ba1533e1490/git-merge-timing-patched.png
+(After is the change in #33d4221, Before the parent of #33d4221 and so on)
+The graph and the NFS stats can be found here:
+https://bitbucket.org/snippets/ssaasen/GeRE
+
+My tweaked version of your second patch is:
+
+diff --git a/cache.h b/cache.h
+index 51ee856..8982055 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1168,6 +1168,7 @@ extern struct packed_git {
+        int pack_fd;
+        unsigned pack_local:1,
+                 pack_keep:1,
++               freshened:1,
+                 do_not_close:1;
+        unsigned char sha1[20];
+        /* something like ".git/objects/pack/xxxxx.pack" */
+diff --git a/sha1_file.c b/sha1_file.c
+index bc6322e..c0ccd4b 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -2999,7 +2999,11 @@ static int freshen_loose_object(const unsigned
+char *sha1)
+ static int freshen_packed_object(const unsigned char *sha1)
+ {
+        struct pack_entry e;
+-       return find_pack_entry(sha1, &e) && freshen_file(e.p->pack_name);
++       if (!find_pack_entry(sha1, &e))
++              return 0;
++       if (e.p->freshened)
++              return 1;
++       return e.p->freshened = freshen_file(e.p->pack_name);
  }
-=20
-diff --git a/t/t3703-add-magic-pathspec.sh b/t/t3703-add-magic-pathspec=
-=2Esh
-index 5115de7..cced8c4 100755
---- a/t/t3703-add-magic-pathspec.sh
-+++ b/t/t3703-add-magic-pathspec.sh
-@@ -55,4 +55,12 @@ test_expect_success COLON_DIR 'a file with the same =
-(short) magic name exists' '
- 	git add -n "./:/bar"
- '
-=20
-+test_expect_success 'prefix is updated after trailing slash is strippe=
-d' '
-+	git init submodule &&
-+	( cd submodule && test_commit test ) &&
-+	git add submodule &&
-+	mv submodule/.git submodule/dotgit &&
-+	( cd submodule && git add . )
-+'
-+
- test_done
---=20
-2.3.0.rc1.137.g477eb31
+
+ int write_sha1_file(const void *buf, unsigned long len, const char
+*type, unsigned char *returnsha1)
+
+
+
+The only change is that I assign the result of `freshen_file` to the
+`freshened` flag.
+
+I've only ran this with the test case I was using before but it looks
+like this is pretty much fixing the merge time changes we observed.
+
+Thanks again for the swift response. I've got my test setup sitting
+here, happy to rerun the tests if that'd be useful.
+
+Is there a chance to backport those changes to the 2.2+ branches?
+
+> You may also be interested in:
+>
+>   http://thread.gmane.org/gmane.comp.version-control.git/266370
+>
+> which addresses another performance problem related to the
+> freshen/recent code in v2.2.
+
+Thanks for the pointer, I'll have a look at that as well.
+
+Cheers,
+Stefan
