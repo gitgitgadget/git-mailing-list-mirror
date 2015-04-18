@@ -1,226 +1,191 @@
 From: =?UTF-8?q?Erik=20Elfstr=C3=B6m?= <erik.elfstrom@gmail.com>
-Subject: [PATCH/RFC v3 1/4] setup: add gentle version of read_gitfile
-Date: Sat, 18 Apr 2015 22:41:09 +0200
-Message-ID: <1429389672-30209-2-git-send-email-erik.elfstrom@gmail.com>
+Subject: [PATCH/RFC v3 4/4] clean: improve performance when removing lots of directories
+Date: Sat, 18 Apr 2015 22:41:12 +0200
+Message-ID: <1429389672-30209-5-git-send-email-erik.elfstrom@gmail.com>
 References: <1429389672-30209-1-git-send-email-erik.elfstrom@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Erik=20Elfstr=C3=B6m?= <erik.elfstrom@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 18 22:41:53 2015
+X-From: git-owner@vger.kernel.org Sat Apr 18 22:42:02 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YjZYl-0005hc-VC
-	for gcvg-git-2@plane.gmane.org; Sat, 18 Apr 2015 22:41:52 +0200
+	id 1YjZYt-0005nC-IO
+	for gcvg-git-2@plane.gmane.org; Sat, 18 Apr 2015 22:41:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753160AbbDRUlp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 18 Apr 2015 16:41:45 -0400
-Received: from mail-lb0-f170.google.com ([209.85.217.170]:36749 "EHLO
-	mail-lb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752033AbbDRUlo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Apr 2015 16:41:44 -0400
-Received: by lbbqq2 with SMTP id qq2so105356739lbb.3
-        for <git@vger.kernel.org>; Sat, 18 Apr 2015 13:41:42 -0700 (PDT)
+	id S1753803AbbDRUlz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 18 Apr 2015 16:41:55 -0400
+Received: from mail-la0-f48.google.com ([209.85.215.48]:36818 "EHLO
+	mail-la0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754274AbbDRUlx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Apr 2015 16:41:53 -0400
+Received: by lagv1 with SMTP id v1so102291736lag.3
+        for <git@vger.kernel.org>; Sat, 18 Apr 2015 13:41:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=RiCVkXKopIy0kJ0wlUQvIoAqghS4WbLHaPM+k0kuufk=;
-        b=sfLI+7la082827gqiX71a8iGEF+aAIXcN8V9Qd86BrboZsey3hG7NlPxtKlwnPO/Vn
-         nhRr3Ibyk1ZrBu5f95KqiGZIygr3/oAfKIMSdEYhIdjQqz+E64DByR59U7fZYMQiT91V
-         d/oqRMhnBBhLhkJI1RKjbu9KhPViRFeovvX9QH0SSaqh+Gw3N0Bs5BjOcz3gyziiNx1r
-         i+TmWSwWZPglNh5tYlDQ66BEtgc0F6nRkma1A2kt1uDVZX5J+fgA/sXFQrkMdtdbLyCO
-         3OSINLHY1rEOKIEEwowlvSVAt54ZR0gyaNpZ0tnsPjK+FPY/k5nbzaSFznGefr49lRhO
-         +klw==
-X-Received: by 10.112.199.195 with SMTP id jm3mr9576914lbc.38.1429389702464;
-        Sat, 18 Apr 2015 13:41:42 -0700 (PDT)
+        bh=ApUdpdTfT+1tEFMl6CJIBqzAUL9/8pOt8RPdLK+W+Fs=;
+        b=R+iGF1sDkilzObfDpWWhJIzBm7+p0/yfeEfn5rfso1pjrHsDvObKVfYAZs7Benomy+
+         R4amQ/betgteKENHa/8zCINBb3vakHT8cTPZH1vzGDKms8R5ZvA6Q2CDZxg38dFXSIVd
+         YbZJHpH8hngRAf5BnZ7oYsrfEU0ImnVX6pmWUpntv1/90pXx6K/7LgN5zaLpenPgrFUc
+         jmps5VbNR/IWGSRG+5EBvChY9xce6wEaowaPgzVpciVjBQqs0qozCsl+stNPBT9FGRcj
+         cTvNOo0j6sjaCm/SRCfL4qL0eTYXMLV+JqqlDXkV13qVbEo1Lx1H6xPjqtPkg1k0drmC
+         yLnQ==
+X-Received: by 10.152.182.167 with SMTP id ef7mr9594282lac.109.1429389711477;
+        Sat, 18 Apr 2015 13:41:51 -0700 (PDT)
 Received: from localhost.localdomain (h38n2-lk-d2.ias.bredband.telia.com. [78.72.191.38])
-        by mx.google.com with ESMTPSA id sh6sm3249256lbb.31.2015.04.18.13.41.41
+        by mx.google.com with ESMTPSA id sh6sm3249256lbb.31.2015.04.18.13.41.50
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 18 Apr 2015 13:41:41 -0700 (PDT)
+        Sat, 18 Apr 2015 13:41:50 -0700 (PDT)
 X-Mailer: git-send-email 2.4.0.rc2.5.g2871d5e
 In-Reply-To: <1429389672-30209-1-git-send-email-erik.elfstrom@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267423>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267424>
 
-read_gitfile will die on most error cases. This makes it unsuitable
-for speculative calls. Extract the core logic and provide a gentle
-version that returns NULL on failure.
+"git clean" uses resolve_gitlink_ref() to check for the presence of
+nested git repositories, but it has the drawback of creating a
+ref_cache entry for every directory that should potentially be
+cleaned. The linear search through the ref_cache list causes a massive
+performance hit for large number of directories.
 
-The first usecase of the new gentle version will be to probe for
-submodules during git clean.
+Modify clean.c:remove_dirs to use setup.c:is_git_directory and
+setup.c:read_gitfile_gently instead.
 
-Helped-by: Junio C Hamano <gitster@pobox.com>
+Both these functions will open files and parse contents when they find
+something that looks like a git repository. This is ok from a
+performance standpoint since finding repository candidates should be
+comparatively rare.
+
+Using is_git_directory and read_gitfile_gently should give a more
+standardized check for what is and what isn't a git repository but
+also gives a slight behavioral change. We will now detect and respect
+empty nested git repositories (only init run) and empty bare
+repositories that have been placed in a ".git" directory. We will also
+no longer die when cleaning a file named ".git" with garbage content
+(it will be cleaned instead). Update t7300 to reflect this.
+
+The time to clean an untracked directory containing 100000 sub
+directories went from 61s to 1.7s after this change.
+
 Helped-by: Jeff King <peff@peff.net>
 Signed-off-by: Erik Elfstr=C3=B6m <erik.elfstrom@gmail.com>
 ---
-If this is going to be used for speculative probing should there
-be a sanity check before:
-	buf =3D xmalloc(st.st_size + 1);
-	len =3D read_in_full(fd, buf, st.st_size);
-Something like:
-	if (st.st_size > PATH_MAX*2) {
-		error =3D N;
-		goto cleanup_return;
-	{
-What do you think?
+ builtin/clean.c  | 25 +++++++++++++++++++++----
+ t/t7300-clean.sh |  8 +++-----
+ 2 files changed, 24 insertions(+), 9 deletions(-)
 
- cache.h |  1 +
- setup.c | 94 ++++++++++++++++++++++++++++++++++++++++++++++++++-------=
---------
- 2 files changed, 74 insertions(+), 21 deletions(-)
-
-diff --git a/cache.h b/cache.h
-index 3d3244b..9d9199d 100644
---- a/cache.h
-+++ b/cache.h
-@@ -432,6 +432,7 @@ extern const char *get_git_namespace(void);
- extern const char *strip_namespace(const char *namespaced_ref);
- extern const char *get_git_work_tree(void);
- extern const char *read_gitfile(const char *path);
-+extern const char *read_gitfile_gently(const char *path);
- extern const char *resolve_gitdir(const char *suspect);
- extern void set_git_work_tree(const char *tree);
-=20
-diff --git a/setup.c b/setup.c
-index 979b13f..a33b293 100644
---- a/setup.c
-+++ b/setup.c
-@@ -332,38 +332,46 @@ static int check_repository_format_gently(const c=
-har *gitdir, int *nongit_ok)
+diff --git a/builtin/clean.c b/builtin/clean.c
+index 98c103f..5cda3c5 100644
+--- a/builtin/clean.c
++++ b/builtin/clean.c
+@@ -10,7 +10,6 @@
+ #include "cache.h"
+ #include "dir.h"
+ #include "parse-options.h"
+-#include "refs.h"
+ #include "string-list.h"
+ #include "quote.h"
+ #include "column.h"
+@@ -148,6 +147,26 @@ static int exclude_cb(const struct option *opt, co=
+nst char *arg, int unset)
  	return 0;
  }
 =20
--/*
-- * Try to read the location of the git directory from the .git file,
-- * return path to git directory if found.
-- */
--const char *read_gitfile(const char *path)
-+static const char *read_gitfile_gently_or_non_gently(const char *path,=
- int gently)
++/*
++ * Return 1 if the given path is the root of a git repository or
++ * submodule else 0. Will not return 1 for bare repositories with the
++ * exception of creating a bare repository in "foo/.git" and calling
++ * is_git_repository("foo").
++ */
++static int is_git_repository(struct strbuf *path)
++{
++	int ret =3D 0;
++	size_t orig_path_len =3D path->len;
++	assert(orig_path_len !=3D 0);
++	if (path->buf[orig_path_len - 1] !=3D '/')
++		strbuf_addch(path, '/');
++	strbuf_addstr(path, ".git");
++	if (read_gitfile_gently(path->buf) || is_git_directory(path->buf))
++		ret =3D 1;
++	strbuf_setlen(path, orig_path_len);
++	return ret;
++}
++
+ static int remove_dirs(struct strbuf *path, const char *prefix, int fo=
+rce_flag,
+ 		int dry_run, int quiet, int *dir_gone)
  {
--	char *buf;
-+	int error =3D 0;
-+	char *buf =3D NULL;
- 	char *dir;
- 	const char *slash;
- 	struct stat st;
- 	int fd;
- 	ssize_t len;
--
--	if (stat(path, &st))
--		return NULL;
--	if (!S_ISREG(st.st_mode))
--		return NULL;
-+	if (stat(path, &st)) {
-+		error =3D 1;
-+		goto cleanup_return;
-+	}
-+	if (!S_ISREG(st.st_mode)) {
-+		error =3D 2;
-+		goto cleanup_return;
-+	}
- 	fd =3D open(path, O_RDONLY);
--	if (fd < 0)
--		die_errno("Error opening '%s'", path);
-+	if (fd < 0) {
-+		error =3D 3;
-+		goto cleanup_return;
-+	}
- 	buf =3D xmalloc(st.st_size + 1);
- 	len =3D read_in_full(fd, buf, st.st_size);
- 	close(fd);
--	if (len !=3D st.st_size)
--		die("Error reading %s", path);
-+	if (len !=3D st.st_size) {
-+		error =3D 4;
-+		goto cleanup_return;
-+	}
- 	buf[len] =3D '\0';
--	if (!starts_with(buf, "gitdir: "))
--		die("Invalid gitfile format: %s", path);
-+	if (!starts_with(buf, "gitdir: ")) {
-+		error =3D 5;
-+		goto cleanup_return;
-+	}
- 	while (buf[len - 1] =3D=3D '\n' || buf[len - 1] =3D=3D '\r')
- 		len--;
--	if (len < 9)
--		die("No path in gitfile: %s", path);
-+	if (len < 9) {
-+		error =3D 6;
-+		goto cleanup_return;
-+	}
- 	buf[len] =3D '\0';
- 	dir =3D buf + 8;
+@@ -155,13 +174,11 @@ static int remove_dirs(struct strbuf *path, const=
+ char *prefix, int force_flag,
+ 	struct strbuf quoted =3D STRBUF_INIT;
+ 	struct dirent *e;
+ 	int res =3D 0, ret =3D 0, gone =3D 1, original_len =3D path->len, len=
+;
+-	unsigned char submodule_head[20];
+ 	struct string_list dels =3D STRING_LIST_INIT_DUP;
 =20
-@@ -378,14 +386,58 @@ const char *read_gitfile(const char *path)
- 		buf =3D dir;
- 	}
+ 	*dir_gone =3D 1;
 =20
--	if (!is_git_directory(dir))
--		die("Not a git repository: %s", dir);
-+	if (!is_git_directory(dir)) {
-+		error =3D 7;
-+		goto cleanup_return;
-+	}
- 	path =3D real_path(dir);
+-	if ((force_flag & REMOVE_DIR_KEEP_NESTED_GIT) &&
+-			!resolve_gitlink_ref(path->buf, "HEAD", submodule_head)) {
++	if ((force_flag & REMOVE_DIR_KEEP_NESTED_GIT) && is_git_repository(pa=
+th)) {
+ 		if (!quiet) {
+ 			quote_path_relative(path->buf, prefix, &quoted);
+ 			printf(dry_run ?  _(msg_would_skip_git_dir) : _(msg_skip_git_dir),
+diff --git a/t/t7300-clean.sh b/t/t7300-clean.sh
+index 4b9a72a..1bbb8ef 100755
+--- a/t/t7300-clean.sh
++++ b/t/t7300-clean.sh
+@@ -455,7 +455,7 @@ test_expect_success 'nested git work tree' '
+ 	! test -d bar
+ '
 =20
-+cleanup_return:
- 	free(buf);
-+
-+	if (error) {
-+		if (gently)
-+			return NULL;
-+
-+		switch (error) {
-+		case 1: // failed to stat
-+		case 2: // not regular file
-+			return NULL;
-+		case 3:
-+			die_errno("Error opening '%s'", path);
-+		case 4:
-+			die("Error reading %s", path);
-+		case 5:
-+			die("Invalid gitfile format: %s", path);
-+		case 6:
-+			die("No path in gitfile: %s", path);
-+		case 7:
-+			die("Not a git repository: %s", dir);
-+		default:
-+			assert(0);
-+		}
-+	}
-+
- 	return path;
- }
+-test_expect_failure 'should clean things that almost look like git but=
+ are not' '
++test_expect_success 'should clean things that almost look like git but=
+ are not' '
+ 	rm -fr almost_git almost_bare_git almost_submodule &&
+ 	mkdir -p almost_git/.git/objects &&
+ 	mkdir -p almost_git/.git/refs &&
+@@ -468,8 +468,6 @@ test_expect_failure 'should clean things that almos=
+t look like git but are not'
+ 	garbage
+ 	EOF
+ 	test_when_finished "rm -rf almost_*" &&
+-	## This will fail due to die("Invalid gitfile format: %s", path); in
+-	## setup.c:read_gitfile.
+ 	git clean -f -d &&
+ 	test_path_is_missing almost_git &&
+ 	test_path_is_missing almost_bare_git &&
+@@ -501,7 +499,7 @@ test_expect_success 'should not clean submodules' '
+ 	test_path_is_missing to_clean
+ '
 =20
-+/*
-+ * Try to read the location of the git directory from the .git file,
-+ * return path to git directory if found, die on (most) failures.
-+ */
-+const char *read_gitfile(const char *path)
-+{
-+	return read_gitfile_gently_or_non_gently(path, 0);
-+}
-+
-+/*
-+ * Same as read_gitfile but return NULL on failure.
-+ */
-+const char *read_gitfile_gently(const char *path)
-+{
-+	return read_gitfile_gently_or_non_gently(path, 1);
-+}
-+
- static const char *setup_explicit_git_dir(const char *gitdirenv,
- 					  struct strbuf *cwd,
- 					  int *nongit_ok)
+-test_expect_failure 'nested (empty) git should be kept' '
++test_expect_success 'nested (empty) git should be kept' '
+ 	rm -fr foo bar &&
+ 	git init foo &&
+ 	mkdir bar &&
+@@ -523,7 +521,7 @@ test_expect_success 'nested bare repositories shoul=
+d be cleaned' '
+ 	test_path_is_missing subdir
+ '
+=20
+-test_expect_success 'nested (empty) bare repositories should be cleane=
+d even when in .git' '
++test_expect_failure 'nested (empty) bare repositories should be cleane=
+d even when in .git' '
+ 	rm -fr strange_bare &&
+ 	mkdir strange_bare &&
+ 	git init --bare strange_bare/.git &&
 --=20
 2.4.0.rc2.5.g2871d5e
