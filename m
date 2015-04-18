@@ -1,82 +1,127 @@
-From: Thore Husfeldt <thore.husfeldt@cs.lth.se>
-Subject: [FUN] Conflicting git merge runs for several minutes. (3,5)
-Date: Sat, 18 Apr 2015 11:41:50 +0000
-Message-ID: <98D6B393-2331-4FC7-BF2F-66CC73826D86@cs.lth.se>
+From: Pat Thoyts <patthoyts@users.sourceforge.net>
+Subject: REQUEST-PULL: Please pull from git-gui.
+Date: Sat, 18 Apr 2015 14:47:58 +0100
+Message-ID: <87sibxsg35.fsf@red.patthoyts.tk>
+Reply-To: patthoyts@users.sourceforge.net
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: Thore Husfeldt <thore.husfeldt@cs.lth.se>
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Apr 18 13:47:32 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Apr 18 15:56:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YjRDf-00065T-JF
-	for gcvg-git-2@plane.gmane.org; Sat, 18 Apr 2015 13:47:31 +0200
+	id 1YjTEZ-0002oS-SR
+	for gcvg-git-2@plane.gmane.org; Sat, 18 Apr 2015 15:56:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752854AbbDRLr1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Apr 2015 07:47:27 -0400
-Received: from edge05.net.lu.se ([130.235.240.245]:52759 "EHLO
-	edge05.net.lu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752554AbbDRLr0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Apr 2015 07:47:26 -0400
-X-Greylist: delayed 326 seconds by postgrey-1.27 at vger.kernel.org; Sat, 18 Apr 2015 07:47:25 EDT
-Received: from UWCAS01.uw.lu.se (130.235.72.27) by mail.lu.se
- (130.235.240.245) with Microsoft SMTP Server (TLS) id 14.3.235.1; Sat, 18 Apr
- 2015 13:41:50 +0200
-Received: from UWMBX05.uw.lu.se ([169.254.5.8]) by UWCAS01.uw.lu.se
- ([130.235.59.231]) with mapi id 14.03.0235.001; Sat, 18 Apr 2015 13:41:50
- +0200
-Thread-Topic: [FUN] Conflicting git merge runs for several minutes. (3,5)
-Thread-Index: AQHQecyoyRXn4EjicU6PM5TKAUep3w==
-Accept-Language: sv-SE, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [130.235.59.251]
-Content-ID: <9CAB234DFB6EA74AA5F7BBD78112F434@uw.lu.se>
-Received-SPF: Pass (edge05.net.lu.se: domain of thore.husfeldt@cs.lth.se
- designates 130.235.72.27 as permitted sender) receiver=edge05.net.lu.se;
- client-ip=130.235.72.27; helo=UWCAS01.uw.lu.se;
+	id S1752501AbbDRN4X convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 18 Apr 2015 09:56:23 -0400
+Received: from know-smtprelay-omc-10.server.virginmedia.net ([80.0.253.74]:41835
+	"EHLO know-smtprelay-omc-10.server.virginmedia.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752187AbbDRN4W convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 18 Apr 2015 09:56:22 -0400
+X-Greylist: delayed 499 seconds by postgrey-1.27 at vger.kernel.org; Sat, 18 Apr 2015 09:56:21 EDT
+Received: from red.patthoyts.tk ([82.45.42.101])
+	by know-smtprelay-10-imp with bizsmtp
+	id HRo01q0122AxhvW01Ro0hE; Sat, 18 Apr 2015 14:48:00 +0100
+X-Originating-IP: [82.45.42.101]
+X-Spam: 0
+X-Authority: v=2.1 cv=dY0O3Bne c=1 sm=1 tr=0 a=FEdcR8KTC/yDun0iFnNZnw==:117
+ a=FEdcR8KTC/yDun0iFnNZnw==:17 a=Rf460ibiAAAA:8 a=6gpmbu8EOFEA:10
+ a=IkcTkHD0fZMA:10 a=xqWC_Br6kY4A:10 a=FP58Ms26AAAA:8 a=1oJP67jkp3AA:10
+ a=ZZnuYtJkoWoA:10 a=e9J7MTPGsLIA:10 a=-AnQz9JOAAAA:8 a=2TLsYSGkLdJdT1FQHQcA:9
+ a=QEXdDO2ut3YA:10
+Received: from red.patthoyts.tk (red.patthoyts.tk [IPv6:2a01:348:2be::2])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by red.patthoyts.tk (Postfix) with ESMTPS id 607661962DB8;
+	Sat, 18 Apr 2015 14:47:59 +0100 (BST)
+X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
+ qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
+ '?a?.s#@hl7CiTo'F"O!fvbL0
+X-Url: http://www.patthoyts.tk/
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267418>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267419>
 
-Rm9yIHRoZSBjcnVjaXZlcmJhbGlzdHMgaW4gdGhpcyBjb21tdW5pdHksIEkgY29uc3RydWN0ZWQg
-YSBjcnlwdGljIGNyb3Nzd29yZCB0aGVtZWQgZm9yIGdpdC4NCg0KaHR0cDovL3Rob3JlaHVzZmVs
-ZHQubmV0LzIwMTUvMDQvMDMvY29uZmxpY3RpbmctZ2l0LW1lcmdlLXJ1bnMtZm9yLXNldmVyYWwt
-bWludXRlcy0zNS8NCg0KSGVyZSBhcmUgYWxsIHRoZSBjbHVlczoNCg0KMSBnaXQgcmViYXNlIGEg
-cmVmLCBrZWVwaW5nIHRoZSBjdXJyZW50IGJyYW5jaC4gKDExKQ0KOCBJdCBob3Jpem9udGFsbHkg
-Y29ubmVjdHMgYSBncm91cCBvZiBkZXZlbG9wZXJzIHRoYXQgaXMgc2Vjb25kIHJhdGUgYXQgaGVh
-cnQuICgzLDQpDQo5IFBvcnQgb25lIGdvb2QgdXBzdHJlYW0gY2xhc3MuICg1KQ0KMTAgU3Rhc2gg
-L2hvbWUgd2l0aCBFY2xpcHNlLCBzYXkuICg0KQ0KMTEgUGx1bWJpbmcgaW4gZ2l0IGZpbmFsbHkg
-b2ZmZXJzIGludGVyZmFjZSBsZXR0aW5nIGV2ZXJ5Ym9keSB0ZXN0IFNIQTEgYWJicmV2aWF0aW9u
-cy4gKDcpDQoxMyBCZXR0ZXIgYnJpbmcgY2hhbmdlcyBmcm9tIHRoZSByZXBvc2l0b3J5IGludG8g
-dGhlIHdvcmtpbmcgY29weSBpZiB5b3UgdXNlIFN1YnZlcnNpb24uICg2KQ0KMTQgQW5ub3VuY2Ug
-bWVyZ2Ugb2YgSEVBRCBpbiByZWFsIGxpZmUuICg2KQ0KMTcgUmVwZW50IG1pc2d1aWRlZCBpbnRy
-b2R1Y3Rpb24gb2YgRFZDUyBzaGFtLiAoNykNCjE5IEdpdCBpbiBkZXRhY2hlZCBIRUFEIHN0YXRl
-IGF0IHRoZSBiZWdpbm5pbmcgb2YgY2hlY2tvdXQgaXMgYSBwcm92ZXJiaWFsIGlycml0YXRpb24u
-ICg0KQ0KMjIgUmVidWtlIGZyb20gZ2l0LWZldGNoIEnigJlkIGVuam95LiAoNSkNCjIzIEFuZ3J5
-IHJhbnQgYWJvdXQgY2VudHJhbCBwYXJ0IG9mIEdVSSBlZGl0b3IgcmV2ZWFscyBoYXZpbmcgYSB0
-ZW1wZXJhbWVudCBvZiBhIHBhcnRpY3VsYXIga2luZC4gKDcpDQoyNCBTb2NpYWwgZ2F0aGVyaW5n
-IGF0dGVuZGVkIG9ubHkgYnkgbWVuIGluIEZyZW5jaCB0cmFpbiBzdGF0aW9uOiBBIGZ1bmRhbWVu
-dGFsIGdpdCBjb25jZXB0LiAoNyw0KQ0KDQpEb3duDQoxIEZvcmNlIHByaW50IGRvd25sb2FkIG9i
-amVjdHMgYW5kIHJlZnMgZnJvbSBhbm90aGVyIHJlcG9zaXRvcnkuICg1KQ0KMiBUcnVseSBkZXBh
-cnRlZCwgSSBsZWZ0IGFuZCByZXdyb3RlIGhpc3RvcnkuICg3KQ0KMyBQYXkgYXR0ZW50aW9uIHRv
-IHRoZSBlZGl0b3IgZmVhdHVyZXMuICg0KQ0KNCBSb21lbyB0byBvdmVycGxheSBvcmlnaW4sIG1h
-eWJlLiAoNikNCjUgQ29uZmxpY3RpbmcgZ2l0IG1lcmdlIHJ1bnMgZm9yIHNldmVyYWwgbWludXRl
-cy4gKDMsNSkNCjYgU291bmRzIGxpa2UgdGhlIHJlc3VsdHMgb2YgYSBjb2xsaXNpb24sIHN0dXBp
-ZC4gKDUpDQo3IE1hZGUgc2Vuc2Ugb2YgdGhlIHN5bnRheCwgcXVpZXRseSBib3RoZXJlZCwg4oCm
-ICg2KQ0KMTIg4oCmIGFuZCByZXBsYWNlZCBjYXJldCB3aXRoIHJldnNwZWPigJlzIHNlY29uZCBz
-eW1ib2wsIGFtb25nIG90aGVycy4gKDgpDQoxMyBDYXJlZnVsbHkgYW5hbHlzZSBnaXQgcmVzZXQg
-LS1tZXJnZSBhZnRlciB0cnlpbmcgdG8gYWRkIGNoYW5nZXMgZnJvbSBhIHNwZWNpZmljIGNvbW1p
-dD8gKDYpDQoxNSBIZSBtYWtlcyBjaGFuZ2VzIGxhdGVyIHJlIGNvbXBpbGF0aW9uLiAoNykNCjE2
-IENyZWF0b3IgYWNjZXB0cyBmaXJzdCBwdWxsIG9uIGNvbXB1dGVyLCBiZWhhdmluZyB3aXRoIHNv
-bWUgZGVncmVlIG9mIGF1dG9ub215LiAoNikNCjE4IEZpbmFsbHkgY29tbWl0dGVkIGl0cyBjaGFu
-Z2VzLiAoNSkNCjIwIEhhcmR5IGVjY2VudHJpYyB1c2VkIGxvdHMgb2YgYnJhbmNoIGhlYWRzLiAo
-NSkNCjIxIFNjYW5kaW5hdmlhbiBtYW7igJlzIHJldm9sdXRpb25hcnkgdmVyc2lvbiBjb250cm9s
-IHN5c3RlbS4gKDQp
+The following changes since commit 1b2c79e63e5afa3cecb3ab4a40cb414dbe65=
+11ce:
+
+  git-gui 0.19 (2014-01-18 17:29:34 +0000)
+
+are available in the git repository at:
+
+  http://repo.or.cz/r/git-gui.git tags/gitgui-0.20.0
+
+for you to fetch changes up to 4498b3a50a0e839788682f672df267cbc1ba9292=
+:
+
+  git-gui: set version 0.20 (2015-04-18 12:15:32 +0100)
+
+----------------------------------------------------------------
+git-gui 0.20.0
+
+----------------------------------------------------------------
+Alexander Shopov (2):
+      git-gui i18n: Updated Bulgarian translation (520t,0f,0u)
+      git-gui i18n: Updated Bulgarian translation (547t,0f,0u)
+
+Csaba Kiraly (1):
+      git-gui: fix problem with gui.maxfilesdisplayed
+
+David Turner (1):
+      git-gui: Make git-gui lib dir configurable at runime
+
+Henri GEIST (1):
+      git-gui: Add a 'recursive' checkbox in the clone menu.
+
+Jens Lehmann (2):
+      git-gui: show staged submodules regardless of ignore config
+      git-gui: tolerate major version changes when comparing the git ve=
+rsion
+
+Kyle J. McKay (1):
+      git-gui: reinstate support for Tcl 8.4
+
+Michael Lutz (1):
+      git-gui: add configurable tab size to the diff view
+
+Pat Thoyts (4):
+      git-gui: align the new recursive checkbox with the radiobuttons.
+      Merge remote-tracking branch 'vnwildman/master'
+      git-gui: fix verbose loading when git path contains spaces.
+      git-gui: set version 0.20
+
+Peter Krefting (1):
+      git-gui: sv.po: Update Swedish translation (547t0f0u)
+
+Remi Rampin (2):
+      git-gui: Fixes chooser not accepting gitfiles
+      git-gui: Makes chooser set 'gitdir' to the resolved path
+
+Sebastian Schuberth (1):
+      git-gui/gitk: Do not depend on Cygwin's "kill" command on Windows
+
+Tr=E1=BA=A7n Ng=E1=BB=8Dc Qu=C3=A2n (1):
+      L10n: vi.po (543t): Init translation for Vietnamese
+
+ GIT-VERSION-GEN           |    2 +-
+ Makefile                  |    3 +-
+ git-gui.sh                |   48 +-
+ lib/choose_repository.tcl |   55 +-
+ lib/diff.tcl              |   23 +-
+ lib/option.tcl            |    1 +
+ macosx/AppMain.tcl        |    7 +-
+ po/bg.po                  |  650 ++++-----
+ po/sv.po                  | 3389 +++++++++++++++++++++++--------------=
+--------
+ po/vi.po                  | 2690 +++++++++++++++++++++++++++++++++++
+ 10 files changed, 4896 insertions(+), 1972 deletions(-)
+ create mode 100644 po/vi.po
