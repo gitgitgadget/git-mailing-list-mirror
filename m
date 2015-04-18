@@ -1,70 +1,79 @@
-From: karthik nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v8 1/4] sha1_file.c: support reading from a loose object
- of unknown type
-Date: Sat, 18 Apr 2015 14:02:31 +0530
-Message-ID: <5532169F.4070709@gmail.com>
-References: <552E9816.6040502@gmail.com>	<1429117143-4882-1-git-send-email-karthik.188@gmail.com>	<xmqqmw29jg78.fsf@gitster.dls.corp.google.com>	<20150415221824.GB27566@peff.net> <20150417142310.GA12479@peff.net>	<553154C8.5090001@gmail.com> <xmqqlhhqpnj5.fsf@gitster.dls.corp.google.com>
+From: Paul Tan <pyokagan@gmail.com>
+Subject: Re: [PATCH v2 1/7] path.c: implement xdg_config_home()
+Date: Sat, 18 Apr 2015 16:48:35 +0800
+Message-ID: <CACRoPnRMHDO3VC1-S2rpx7jgcv=c_ym6wRSx2xxNRk=k_vtXvA@mail.gmail.com>
+References: <1428824772-8736-1-git-send-email-pyokagan@gmail.com>
+	<e1bc6f19af608db796a2212dbf00ba45@www.dscho.org>
+	<20150414172854.GA27623@yoshi.chippynet.com>
+	<CAPig+cTrErOBwPteeA1d_gdve5SiyLnbyFPpQ1sTN7aajGJfeA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	sunshine@sunshineco.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Apr 18 10:32:42 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Stefan Beller <sbeller@google.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Sat Apr 18 10:49:06 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YjOB7-0001FI-78
-	for gcvg-git-2@plane.gmane.org; Sat, 18 Apr 2015 10:32:41 +0200
+	id 1YjOQz-0004nr-NV
+	for gcvg-git-2@plane.gmane.org; Sat, 18 Apr 2015 10:49:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752034AbbDRIcg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Apr 2015 04:32:36 -0400
-Received: from mail-pd0-f169.google.com ([209.85.192.169]:35100 "EHLO
-	mail-pd0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751171AbbDRIcf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Apr 2015 04:32:35 -0400
-Received: by pdbqd1 with SMTP id qd1so152106023pdb.2
-        for <git@vger.kernel.org>; Sat, 18 Apr 2015 01:32:34 -0700 (PDT)
+	id S1751587AbbDRIsl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Apr 2015 04:48:41 -0400
+Received: from mail-lb0-f178.google.com ([209.85.217.178]:35964 "EHLO
+	mail-lb0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751022AbbDRIsh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Apr 2015 04:48:37 -0400
+Received: by lbbqq2 with SMTP id qq2so98722665lbb.3
+        for <git@vger.kernel.org>; Sat, 18 Apr 2015 01:48:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=qXfvvSdd/tTDjws9vwPK3rIPuFKh/iIIBRaZKauMq/4=;
-        b=TZmtaFhqbdqPi+a6wDbGNzlkR92x3CNlGX6tx2ct42iG+y0cG6K79hPB/bvxk/zqOR
-         WUqooiQfA9JjYEU92UooP9QMWAtdpuklcbE079SNe2VmJgshawW6f4BS2T2rR28jqSok
-         6zD0Bunb5UA+Ppb0TmZ9JlphK0YGyyVHd4bdzwxTreBGk9PMQD/KQmVEYRljois5GmnO
-         70otd4d2IKVl5yl6kCjNHIdW1fJ3OVdEvA/WsuC/C+//8wlWnF0T9ydhSpxIhkblWFrC
-         BU15gZwL7YTRmzTqAqHNN7yQ+W7lI3/MKBWcuxzr4pq6kV55Ue6izRW9Bn5u8GOUlVYJ
-         cWsw==
-X-Received: by 10.66.161.161 with SMTP id xt1mr12026530pab.35.1429345954872;
-        Sat, 18 Apr 2015 01:32:34 -0700 (PDT)
-Received: from [192.168.0.100] ([103.227.98.178])
-        by mx.google.com with ESMTPSA id qv9sm12317229pab.27.2015.04.18.01.32.32
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 18 Apr 2015 01:32:34 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
-In-Reply-To: <xmqqlhhqpnj5.fsf@gitster.dls.corp.google.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=aAKx15pXN1aIYmNWEFoR0aeaDk6BcTcrJuShYDUrRxI=;
+        b=kl7vUPF1JjF4c/bzGyqkplf9LJ1QZ8tfrorihdkHHOq3XKZmFhMl5snFltN7xayend
+         L/1cnt1CHD2P/cuAfNmi1tCpwcrEkBkRgdU8HZje8y0fRVdkXeIidW7PHXGwXudD1hy1
+         jSCz1q7Kb/CymeBQ6xLPFlObU8RBbevJpCTrJvlqSiuH7okDOh3wytdBiLq2TCH1VApV
+         rRvU6nzdn5IKWSSM2GU2yXl2QoqrAtHNrlrVTEKHDIFw9zs4+Q5Y2gqdR2ZuyqtFPI4/
+         nHcq9pR2T/v6TThYbOBSxJkp7MH/MQBkN8d20EFB9nRowyxL9N02evP9FTTS7Nw2MxV+
+         FkEw==
+X-Received: by 10.152.120.70 with SMTP id la6mr7667230lab.65.1429346915766;
+ Sat, 18 Apr 2015 01:48:35 -0700 (PDT)
+Received: by 10.112.74.133 with HTTP; Sat, 18 Apr 2015 01:48:35 -0700 (PDT)
+In-Reply-To: <CAPig+cTrErOBwPteeA1d_gdve5SiyLnbyFPpQ1sTN7aajGJfeA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267410>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267411>
 
+Hi,
 
-
-On 04/18/2015 12:53 AM, Junio C Hamano wrote:
-> karthik nayak <karthik.188@gmail.com> writes:
+On Fri, Apr 17, 2015 at 5:41 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Tue, Apr 14, 2015 at 1:28 PM, Paul Tan <pyokagan@gmail.com> wrote:
+>> Below is the fixed patch. I also decided to return NULL if `filename` is
+>> NULL because such an input usually indicated an uncaught error.
 >
->> +       type = type_from_string_gently(buf, len, 1);
->> +       if (oi->typename) {
->> +               strbuf_add(oi->typename, buf, len);
->> +               strbuf_addch(oi->typename, '\0');
->
-> add() has setlen() at the end so you do not have to NUL terminate it
-> yourself.  Doing addch() is actively wrong, as oi->typename->len now
-> counts the terminating NUL as part of the string, no?
->
+> Unfortunately, this blurs the line between programmer error (passing
+> NULL for filename) and a user/configuration error (XDG_CONFIG_HOME and
+> HOME being undefined). If there is indeed no valid interpretation for
+> filename==NULL, then it may be better to die() or assert() here to
+> flag the programmer error as early as possible, rather than returning
+> NULL.
 
-Yes. was speculative of that. thanks for clearing it up.
+I'm inclined to agree, but off the top of my head an API user may wish to do:
+
+    xdg_config_home(function_which_returns_NULL_on_error())
+
+And wish for the error to propagate, but that may be considered sloppy
+programming and so it's better to treat a NULL input as a bug.
+
+Will fix this by calling assert(). Thanks.
+
+Regards,
+Paul
