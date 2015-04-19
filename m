@@ -1,132 +1,69 @@
-From: Vitor Antunes <vitor.hda@gmail.com>
-Subject: [PATCH] git-p4: Improve client path detection when branches are used
-Date: Sun, 19 Apr 2015 00:24:05 +0100
-Message-ID: <1429399445-11024-1-git-send-email-vitor.hda@gmail.com>
-References: <xmqqsic44rw5.fsf@gitster.dls.corp.google.com>
-Cc: Luke Diamand <luke@diamand.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Vitor Antunes <vitor.hda@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 19 01:24:40 2015
+From: Charles Bailey <charles@hashpling.org>
+Subject: Re: [PATCH v8 2/4] cat-file: teach cat-file a '--literally' option
+Date: Sun, 19 Apr 2015 01:28:07 +0100
+Message-ID: <20150419002807.GA11634@hashpling.org>
+References: <552E9816.6040502@gmail.com>
+ <1429117174-4968-1-git-send-email-karthik.188@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com, sunshine@sunshineco.com
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 19 02:35:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yjc6H-0003TF-PT
-	for gcvg-git-2@plane.gmane.org; Sun, 19 Apr 2015 01:24:38 +0200
+	id 1YjdDF-0006Bh-8x
+	for gcvg-git-2@plane.gmane.org; Sun, 19 Apr 2015 02:35:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752173AbbDRXYc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Apr 2015 19:24:32 -0400
-Received: from mail-wi0-f169.google.com ([209.85.212.169]:35469 "EHLO
-	mail-wi0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751039AbbDRXYc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Apr 2015 19:24:32 -0400
-Received: by widdi4 with SMTP id di4so59411968wid.0
-        for <git@vger.kernel.org>; Sat, 18 Apr 2015 16:24:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=F8XeKfEoeyogsn2Iw7RpEmk7tyZZ1d0prg5+5kgnZvc=;
-        b=WSei7i1eg8m9s74PliYu/q1zej0uXphgpT9qrMfczqhD2CW4tDdzD92HkYtN8vE4Zx
-         2mupofjNmJ8nU7u33dJsKF/lNl/0KXo/sgCIhWwC2WY8WfptTjYOSYzt9uAITEmK0teM
-         fRymijQf5Sat8RpBARG79zz6kqQC4otzXFgGdU6yTrPNk4H9YrEzNV2cfAQXiFWfYTWt
-         q6tfwYdvKr55+9Q5WYa/ZFe/tyLzweC9gfVRaYgfTVLkltNnHXeaeUVsgRO4mB3mX2c+
-         N8LJCfvJOFETBIOWgFu3xnBeeANo4wvn6zqvPZQvlvDIsuqnkHLEHy+K/hr2Rir5A2af
-         wbMQ==
-X-Received: by 10.180.72.230 with SMTP id g6mr13189255wiv.39.1429399470831;
-        Sat, 18 Apr 2015 16:24:30 -0700 (PDT)
-Received: from localhost.localdomain (88.41.108.93.rev.vodafone.pt. [93.108.41.88])
-        by mx.google.com with ESMTPSA id gu7sm8747107wib.21.2015.04.18.16.24.29
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 18 Apr 2015 16:24:29 -0700 (PDT)
-X-Mailer: git-send-email 1.7.10.4
-In-Reply-To: <xmqqsic44rw5.fsf@gitster.dls.corp.google.com>
+	id S1751924AbbDSAfr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Apr 2015 20:35:47 -0400
+Received: from avasout05.plus.net ([84.93.230.250]:37300 "EHLO
+	avasout05.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750879AbbDSAfr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Apr 2015 20:35:47 -0400
+X-Greylist: delayed 454 seconds by postgrey-1.27 at vger.kernel.org; Sat, 18 Apr 2015 20:35:46 EDT
+Received: from hashpling.plus.com ([212.159.69.125])
+	by avasout05 with smtp
+	id HcU81q0012iA9hg01cU9Ck; Sun, 19 Apr 2015 01:28:11 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.1 cv=O8+3vXNW c=1 sm=1 tr=0
+ a=wpJ/2au8Z6V/NgdivHIBow==:117 a=wpJ/2au8Z6V/NgdivHIBow==:17 a=EBOSESyhAAAA:8
+ a=0Bzu9jTXAAAA:8 a=J0QyKEt1u0cA:10 a=BHUvooL90DcA:10 a=kj9zAlcOel0A:10
+ a=Ew9TdX-QAAAA:8 a=e9J7MTPGsLIA:10 a=RUrfK-ucrQtcUBz_DwYA:9 a=CjuIK1q_8ugA:10
+Received: from charles by hashpling.plus.com with local (Exim 4.84)
+	(envelope-from <charles@hashpling.plus.com>)
+	id 1Yjd5j-000335-W8; Sun, 19 Apr 2015 01:28:07 +0100
+Content-Disposition: inline
+In-Reply-To: <1429117174-4968-1-git-send-email-karthik.188@gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267428>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267429>
 
-This patch makes the client path detection more robust by limiting the valid
-results from p4 where. The test case is also made more complex, to guarantee
-that such client views are supported.
+On Wed, Apr 15, 2015 at 10:29:34PM +0530, Karthik Nayak wrote:
+> Currently 'git cat-file' throws an error while trying to
+> print the type or size of a broken/corrupt object. This is
+> because these objects are usually of unknown types.
+> 
+> Teach git cat-file a '--literally' option where it prints
+> the type or size of a broken/corrupt object without throwing
+> an error.
 
-Signed-off-by: Vitor Antunes <vitor.hda@gmail.com>
----
- git-p4.py                |    4 +++-
- t/t9801-git-p4-branch.sh |   12 ++++++++++--
- 2 files changed, 13 insertions(+), 3 deletions(-)
+I'm sorry to come in with such a fundamental question at such a late
+revision of this patch series, but am I the only person to wonder about
+the choice of option name?
 
-diff --git a/git-p4.py b/git-p4.py
-index 262a95b..28d0d90 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -507,7 +507,9 @@ def p4Where(depotPath):
-     output = None
-     for entry in outputList:
-         if "depotFile" in entry:
--            if entry["depotFile"].find(depotPath) >= 0:
-+            # Search for the base client side depot path, as long as it starts with the branch's P4 path.
-+            # The base path always ends with "/...".
-+            if entry["depotFile"].find(depotPath) == 0 and entry["depotFile"][-4:] == "/...":
-                 output = entry
-                 break
-         elif "data" in entry:
-diff --git a/t/t9801-git-p4-branch.sh b/t/t9801-git-p4-branch.sh
-index 4fe4e18..0aafd03 100755
---- a/t/t9801-git-p4-branch.sh
-+++ b/t/t9801-git-p4-branch.sh
-@@ -512,23 +512,28 @@ test_expect_success 'restart p4d' '
- #
- # 1: //depot/branch1/base/file1
- #    //depot/branch1/base/file2
-+#    //depot/branch1/base/dir/sub_file1
- # 2: integrate //depot/branch1/base/... -> //depot/branch2/base/...
- # 3: //depot/branch1/base/file3
- # 4: //depot/branch1/base/file2 (edit)
- # 5: integrate //depot/branch1/base/... -> //depot/branch3/base/...
- #
--# Note: the client view remove the "base" folder from the workspace
-+# Note: the client view removes the "base" folder from the workspace
-+#       and moves sub_file1 one level up.
- test_expect_success 'add simple p4 branches with common base folder on each branch' '
- 	(
- 		cd "$cli" &&
- 		client_view "//depot/branch1/base/... //client/branch1/..." \
-+			    "//depot/branch1/base/dir/sub_file1 //client/branch1/sub_file1" \
- 			    "//depot/branch2/base/... //client/branch2/..." \
- 			    "//depot/branch3/base/... //client/branch3/..." &&
- 		mkdir -p branch1 &&
- 		cd branch1 &&
- 		echo file1 >file1 &&
- 		echo file2 >file2 &&
--		p4 add file1 file2 &&
-+		mkdir dir &&
-+		echo sub_file1 >sub_file1 &&
-+		p4 add file1 file2 sub_file1 &&
- 		p4 submit -d "Create branch1" &&
- 		p4 integrate //depot/branch1/base/... //depot/branch2/base/... &&
- 		p4 submit -d "Integrate branch2 from branch1" &&
-@@ -561,16 +566,19 @@ test_expect_success 'git p4 clone simple branches with base folder on server sid
- 		test -f file1 &&
- 		test -f file2 &&
- 		test -f file3 &&
-+		test -f sub_file1 &&
- 		grep update file2 &&
- 		git reset --hard p4/depot/branch2 &&
- 		test -f file1 &&
- 		test -f file2 &&
- 		test ! -f file3 &&
-+		test -f sub_file1 &&
- 		! grep update file2 &&
- 		git reset --hard p4/depot/branch3 &&
- 		test -f file1 &&
- 		test -f file2 &&
- 		test -f file3 &&
-+		test -f sub_file1 &&
- 		grep update file2 &&
- 		cd "$cli" &&
- 		cd branch1 &&
--- 
-1.7.10.4
+To me, cat-file already output objects "literally" (without -p) as
+opposed to show. From the description, it feels more like it should be
+"--unchecked" or perhaps something better that I haven't thought of?
+
+The option isn't a true opposite of hash-object's --literally because
+that also allows the creation of known types with invalid contents (e.g.
+corrupt trees) whereas cat-file is quite happy to show the _contents_ of
+such corrupt objects even without --literally.
+
+Charles.
