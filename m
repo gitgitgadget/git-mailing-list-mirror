@@ -1,152 +1,116 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH] Documentation: change -L:<regex> to -L:<funcname>
-Date: Sun, 19 Apr 2015 19:29:55 +0200
-Message-ID: <1429464595-11563-1-git-send-email-Matthieu.Moy@imag.fr>
-References: <xmqqh9sepk20.fsf@gitster.dls.corp.google.com>
-Cc: git@vger.kernel.org, sunshine@sunshineco.com,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sun Apr 19 19:30:52 2015
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [BUG] "git pull" will regress between 'master' and 'pu'
+Date: Sun, 19 Apr 2015 17:38:26 +0000
+Message-ID: <20150419173825.GD652025@vauxhall.crustytoothpaste.net>
+References: <xmqqbnikoq0n.fsf@gitster.dls.corp.google.com>
+ <20150419130745.GA20476@peff.net>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="fXStkuK2IQBfcDe+"
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Apr 19 19:39:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yjt3T-0002Hl-Ig
-	for gcvg-git-2@plane.gmane.org; Sun, 19 Apr 2015 19:30:51 +0200
+	id 1YjtBj-0007DE-D8
+	for gcvg-git-2@plane.gmane.org; Sun, 19 Apr 2015 19:39:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751764AbbDSRap (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Apr 2015 13:30:45 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:36811 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751302AbbDSRao (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Apr 2015 13:30:44 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t3JHU36c029107
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 19 Apr 2015 19:30:03 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t3JHU00I020713;
-	Sun, 19 Apr 2015 19:30:00 +0200
-Received: from moy by anie.imag.fr with local (Exim 4.80)
-	(envelope-from <moy@imag.fr>)
-	id 1Yjt2e-0003EX-IN; Sun, 19 Apr 2015 19:30:00 +0200
-X-Mailer: git-send-email 2.4.0.rc1.42.g9642cc6
-In-Reply-To: <xmqqh9sepk20.fsf@gitster.dls.corp.google.com>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sun, 19 Apr 2015 19:30:14 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t3JHU36c029107
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1430069415.06432@TWdjVfq53MiNPIaqi+W4LA
+	id S1751899AbbDSRib (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Apr 2015 13:38:31 -0400
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:41289 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751309AbbDSRia (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 19 Apr 2015 13:38:30 -0400
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:acb5:49fa:9dfc:e224])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 896842808D;
+	Sun, 19 Apr 2015 17:38:29 +0000 (UTC)
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20150419130745.GA20476@peff.net>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 3.16.0-4-amd64)
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267442>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267443>
 
-The old wording was somehow implying that <start> and <end> were not
-regular expressions. Also, the common case is to use a plain function
-name here so <funcname> makes sense (the fact that it is a regular
-expression is documented in line-range-format.txt).
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
-Junio C Hamano <gitster@pobox.com> writes:
+--fXStkuK2IQBfcDe+
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> By adding :regex:file as a possibility, you are hinting that 'start'
-> and 'end' are *not* regular expressions but numbers, but
->
->     $ git log -L'/^int main/,/^}/:git.c'
->
-> is a perfectly fine way to specify start (i.e. the first line that
-> matches '^int main') and end (i.e. the first line that matches '^}'
-> after that).
+On Sun, Apr 19, 2015 at 09:07:46AM -0400, Jeff King wrote:
+> Which I guess is just:
+>=20
+> diff --git a/git-pull.sh b/git-pull.sh
+> index 252969e..15d9431 100755
+> --- a/git-pull.sh
+> +++ b/git-pull.sh
+> @@ -323,7 +323,6 @@ then
+>  	fi
+>  fi
+> =20
+> -merge_name=3D$(git fmt-merge-msg $log_arg <"$GIT_DIR/FETCH_HEAD") || exit
+>  case "$rebase" in
+>  true)
+>  	eval=3D"git-rebase $diffstat $strategy_args $merge_args $rebase_args $v=
+erbosity"
+> @@ -334,7 +333,7 @@ true)
+>  	eval=3D"git-merge $diffstat $no_commit $verify_signatures $edit $squash=
+ $no_ff $ff_only"
+>  	eval=3D"$eval $log_arg $strategy_args $merge_args $verbosity $progress"
+>  	eval=3D"$eval $gpg_sign_args"
+> -	eval=3D"$eval -m \"\$merge_name\" $merge_head"
+> +	eval=3D"$eval FETCH_HEAD"
+>  	;;
+>  esac
+>  eval "exec $eval"
+>=20
+> as we seem to special-case the name FETCH_HEAD. It assumes that
+> git-merge's parsing of FETCH_HEAD is the same as what we do in git-pull,
+> but that seems safe. Unfortunately we still have to compute $merge_head
+> ourselves here for the "git pull --rebase" case.
 
-OK, but the same argument applies to the documentation (where I
-cut-and-pasted from actually). So I suggest this patch in addition
-(I'd apply it right before the patch on the code).
+I agree that this is a better choice.  My concern with your other
+suggestion is that it looks like it wouldn't honor the --no-edit flag or
+GIT_MERGE_AUTOEDIT=3Dno.  That might break some use cases, such as
+non-interactive applications.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
 
-> false impression to the other one, and use Eric's suggestion on top?
->
->     die("-L argument not 'start,end:file' or ':funcname:file': %s",
-> 	item->string);
->
-> With the matching update to tests, here is what I'll queue on top of
-> this patch for now, but please send in objections and improvements.
+--fXStkuK2IQBfcDe+
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
-Very good.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Let me know if you want me to resend the 2-patch series.
+iQIcBAEBCgAGBQJVM+gRAAoJEL9TXYEfUvaLgqsP/3xOJSsuqvWa/VNsMvewGQyz
+5iEsmWSlJTVfaGSG4bvvteLgP0x5ayOebMkTYmUUr2oES7q6fEt3kUf/LJ46g+8D
+uhzpvELqL/DcTXW4I29F/QqDoD/E5iu1oF/MnQJQDpDJLUBXwGGx59rK8p6oZGxX
++qjrOj7cG5FKoLq5bp1B+iFHcWc7/eUP0K0avTvx9RtP9xW+KiWuln9ZD4BLwlav
+ZFJS/dYFiTY8L6HKFZB8r8LRs3mVBbamxQjljcGNeSi4OpxKIYBD6PKgNlxVio3T
+q7uxTGGLH7YP7Y6TNWv+qEI69vxzZgotlo15i+W7ubxxt1qhJtVHx1GPgq3ai2Lo
+dvgmF8j+2QfJ2yUwpWmCHRpuS8KVWDFGkegCuXK2fzwiwqeaxvfwJG9V0ipmuE49
+MEU+5ziqe6pgRwkXDCvzKUv/Yf9J9QJlax+8pK4AJYVoSzss2+v50Nxot8a4U+cI
+UH1/6IVM1TL4u0d+dfWqwf9UMZQfX9cL/5thxTlrEA/kUetffOl/JmWsQppYsQe6
+9ejQk+ntHX6tqv6LZcu/E8M1pfrELf8pqtc6Uxo89gXES3+Myxn+jigrRf+5kNms
+AiwHHAgV5RNHjuGc529LDZ4mk4ZJl2681sbMpNwaaZx8evfIBPYGTy6s82WyhyMy
+7VVHzAbq7bpiRR8oPea1
+=toYr
+-----END PGP SIGNATURE-----
 
- Documentation/blame-options.txt     |  2 +-
- Documentation/git-log.txt           |  2 +-
- Documentation/gitk.txt              |  4 ++--
- Documentation/line-range-format.txt | 11 ++++++-----
- 4 files changed, 10 insertions(+), 9 deletions(-)
-
-diff --git a/Documentation/blame-options.txt b/Documentation/blame-options.txt
-index b299b59..a09969b 100644
---- a/Documentation/blame-options.txt
-+++ b/Documentation/blame-options.txt
-@@ -10,7 +10,7 @@
- 	Include additional statistics at the end of blame output.
- 
- -L <start>,<end>::
---L :<regex>::
-+-L :<funcname>::
- 	Annotate only the given line range. May be specified multiple times.
- 	Overlapping ranges are allowed.
- +
-diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
-index 18bc716..f0ec283 100644
---- a/Documentation/git-log.txt
-+++ b/Documentation/git-log.txt
-@@ -62,7 +62,7 @@ produced by `--stat`, etc.
- 	output by allowing them to allocate space in advance.
- 
- -L <start>,<end>:<file>::
---L :<regex>:<file>::
-+-L :<funcname>:<file>::
- 	Trace the evolution of the line range given by "<start>,<end>"
- 	(or the funcname regex <regex>) within the <file>.  You may
- 	not give any pathspec limiters.  This is currently limited to
-diff --git a/Documentation/gitk.txt b/Documentation/gitk.txt
-index 7ae50aa..d3b91ca 100644
---- a/Documentation/gitk.txt
-+++ b/Documentation/gitk.txt
-@@ -99,10 +99,10 @@ linkgit:git-rev-list[1] for a complete list.
- 	detailed explanation.)
- 
- -L<start>,<end>:<file>::
---L:<regex>:<file>::
-+-L:<funcname>:<file>::
- 
- 	Trace the evolution of the line range given by "<start>,<end>"
--	(or the funcname regex <regex>) within the <file>.  You may
-+	(or the funcname regex <funcname>) within the <file>.  You may
- 	not give any pathspec limiters.  This is currently limited to
- 	a walk starting from a single revision, i.e., you may only
- 	give zero or one positive revision arguments.
-diff --git a/Documentation/line-range-format.txt b/Documentation/line-range-format.txt
-index d7f2603..829676f 100644
---- a/Documentation/line-range-format.txt
-+++ b/Documentation/line-range-format.txt
-@@ -22,8 +22,9 @@ This is only valid for <end> and will specify a number
- of lines before or after the line given by <start>.
- 
- +
--If ``:<regex>'' is given in place of <start> and <end>, it denotes the range
--from the first funcname line that matches <regex>, up to the next
--funcname line. ``:<regex>'' searches from the end of the previous `-L` range,
--if any, otherwise from the start of file.
--``^:<regex>'' searches from the start of file.
-+If ``:<funcname>'' is given in place of <start> and <end>, it is a
-+regular expression that denotes the range from the first funcname line
-+that matches <funcname>, up to the next funcname line. ``:<funcname>''
-+searches from the end of the previous `-L` range, if any, otherwise
-+from the start of file. ``^:<funcname>'' searches from the start of
-+file.
--- 
-2.4.0.rc1.42.g9642cc6
+--fXStkuK2IQBfcDe+--
