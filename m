@@ -1,112 +1,74 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: Re: git-p4 Question
-Date: Mon, 20 Apr 2015 20:26:53 +0100
-Message-ID: <553552FD.80703@diamand.org>
-References: <CAFcBi89YqRGqigR1VCJJQtu1D206rP2T8Y-10KvFnvDjXYaN_g@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [BUG] "git pull" will regress between 'master' and 'pu'
+Date: Mon, 20 Apr 2015 12:28:55 -0700
+Message-ID: <xmqq8udmlhu0.fsf@gitster.dls.corp.google.com>
+References: <xmqqbnikoq0n.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: FusionX86 <fusionx86@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 20 21:27:42 2015
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>, Paul Tan <pyokagan@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 20 21:29:08 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YkHLz-00043q-F2
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Apr 2015 21:27:35 +0200
+	id 1YkHNS-00051H-Km
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Apr 2015 21:29:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752333AbbDTT1V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Apr 2015 15:27:21 -0400
-Received: from mail-wi0-f173.google.com ([209.85.212.173]:35834 "EHLO
-	mail-wi0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752146AbbDTT1T (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Apr 2015 15:27:19 -0400
-Received: by widdi4 with SMTP id di4so112276283wid.0
-        for <git@vger.kernel.org>; Mon, 20 Apr 2015 12:27:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=mb7mnV5dUr5Qh32MJ4pBnRa/4NhN/O6EXnO351W23IU=;
-        b=PE2SRbxjuJQ6SyFqqQFBlsrxFaULlYbcmmzNgXr5k/QqEnPSbUg6yjk1AzGOzfYgwk
-         rRR7jOP9F6Vs0dWigAzUBt4fQaY1IfP+FAcXqGvbrHcKLR86uvTZL7XvRE2A3RUJWQBX
-         fq9OG67810JloaGQU6lVV8Cd9YDhcZU78ajHg=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=mb7mnV5dUr5Qh32MJ4pBnRa/4NhN/O6EXnO351W23IU=;
-        b=Pn9OYfqSdbpFgi2D3DwoEg8FxckA4KxMLjXN9lTEG4dWoyzIsq3miRQV926XSL5E5P
-         yAd1WU8qjVN13UZSmMke+yTAjx6UQfHQVuuynG+lR5nXdU/gQFFkbjiwXTLBQPy2AtFo
-         7PRdLbJRpP8EmutLdRIia7PzAybcn0GbIITEPKPaKMeqX7VUGcX2tx89PcV7MjnhYy9f
-         nSgcMVtMfYVPm1n4O+6YRh3d8e3H58MQ4sqIq3BgNKO5XYjw2UtNus1CjZ2h1y85yV70
-         pNaPB361+0ymBUZQbJrSmcbuLfm2hPOO5RdjI6v66zZ74aQblwhFC18gohbwNJBuGuW3
-         RqyQ==
-X-Gm-Message-State: ALoCoQlNnNh9rdQNGmpcB0Ng0FFtmnl8bJbwlbff79gXggSl7Ya1cHpzRIrIebABQiHNVHBQ3wn0
-X-Received: by 10.194.88.131 with SMTP id bg3mr34749233wjb.119.1429558037832;
-        Mon, 20 Apr 2015 12:27:17 -0700 (PDT)
-Received: from [192.168.245.128] (cpc7-cmbg17-2-0-cust139.5-4.cable.virginm.net. [86.1.43.140])
-        by mx.google.com with ESMTPSA id l1sm16523321wiy.20.2015.04.20.12.27.16
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 20 Apr 2015 12:27:16 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.3.0
-In-Reply-To: <CAFcBi89YqRGqigR1VCJJQtu1D206rP2T8Y-10KvFnvDjXYaN_g@mail.gmail.com>
+	id S1753215AbbDTT3A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Apr 2015 15:29:00 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50581 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753177AbbDTT26 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Apr 2015 15:28:58 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6CD1248D58;
+	Mon, 20 Apr 2015 15:28:57 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=jD25yf8lOQ6JnQHRsSLVIpeXlMI=; b=imy6mM
+	k7p8FGfhoWO+WShfHZWSmqt2nrlPnXFvyB0AR7POoeSGbeyWoDqfl6P9/VK8OlQK
+	qkg+e5G6DCTZETqEBVawO/8hG8ZsntMn1rREJ8dyE17RtJR2E/Bs11oWo4IMoLUl
+	Cd3KsC6ppatWh1e2FwYkFn30cuSCEM2G1/DHk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Qy9VIMsUnKylHhTHU+eRXExGIRYosguH
+	Y8yL8hpeXXpOpz0snxUG5Dejp1ikM+XFmuE6PRDEnqfsv831FrpFX9yqReL+Z96T
+	9Y2eRNnTYuVX10KjCC0j9TMWXsyr6pFu6CrUoeQkCT0mHO6+kKnXzidPXILQ7/Il
+	qLN1osMEVs4=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 652C448D57;
+	Mon, 20 Apr 2015 15:28:57 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C820848D52;
+	Mon, 20 Apr 2015 15:28:56 -0400 (EDT)
+In-Reply-To: <xmqqbnikoq0n.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Sat, 18 Apr 2015 18:39:20 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 7CD2C1C4-E793-11E4-BDA9-83E09F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267491>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267492>
 
-On 20/04/15 17:41, FusionX86 wrote:
-> Hello,
+Junio C Hamano <gitster@pobox.com> writes:
+
+> This is primarily note-to-self; even though I haven't got around
+> bisecting yet, I think I know I did some bad change myself.
 >
-> Hopefully this is an appropriate place to ask questions about git-p4.
+> "git pull $URL $tag" seems to:
 >
-> I started at a company that wants to migrate from Perforce to Git. I'm
-> new to Perforce and have been trying to learn just enough about it to
-> get through this migration. Anyway, I've been playing with git-p4 and
-> have one question/problem to discuss.
->
-> After setting up the p4 cli client I can 'p4 sync' some
-> //depot/main/app1 which pulls down the files I would expect from the
-> Perforce server. If I use 'git p4 clone //depot/main/app1', I get:
->
-> "Doing initial import of //depot/main/app1/ from revision #head into
-> refs/remotes/p4/master"
->
-> But I don't get any files from that depot/folder pulled down. I can
-> git p4 clone other depot/folders though and get some files. I suspect
-> that I'm just not understanding how the git-p4 module works.
+>  * fail to invoke the editor without "--edit".
+>  * show the summary merge log message twice.
 
-You could try doing the clone with '-v' to get a bit more information.
+We seem to be making a good progress on the discussion on this
+specific issue, but a larger tangent of this is that we do not seem
+to have test coverage to catch this regression.  As we are planning
+to rewrite "git pull", we need to make sure we have enough test
+coverage to ensure that nothing will regress before doing so.
 
->
-> Basically, I'm hoping to setup a live sync of Perforce to Git of
-> certain depots in preparation for the migration. Also, if anyone has
-> pointers or guides for this type of migration, any help is
-> appreciated.
-
-I've done something similar in the past. You'll want to enable the 
---preserve-user option, for which you will need admin rights.
-
-If it's a one-way mirror (p4-to-git) then just run git-p4 periodically 
-(if you use cron, then try to avoid having two or more instances running 
-at the same time).
-
-If you want it to be two-way then it gets a bit more complicated.
-
-You might also want to consider using git fusion, which is Perforce's 
-take on this problem. I've not used it myself.
-
- From past experience though I would say the biggest problem is getting 
-developers to switch from the P4 mindset (centralized; code review hard 
-to do or ignored) to the git mindset (decentralized; code review 
-actively supported by the version control system).
-
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+Thanks.
