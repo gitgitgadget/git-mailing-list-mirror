@@ -1,84 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Why does "git log -G<regex>" works with "regexp-ignore-case" but not with other regexp-related options?
-Date: Mon, 20 Apr 2015 11:44:20 -0700
-Message-ID: <xmqqtwwaljwb.fsf@gitster.dls.corp.google.com>
-References: <1090496912.6338.1429264855691.JavaMail.open-xchange@ox1app>
-	<55311831.6010004@drmicha.warpmail.net>
-	<CAPc5daUULhhV0+kL_htLnA8Z_woFLjxg_pO_cB0KLAMuxJnsMQ@mail.gmail.com>
-	<5534BD87.8020709@drmicha.warpmail.net>
-	<xmqqbniin1cw.fsf@gitster.dls.corp.google.com>
-	<CA+55aFzdSgvYo11PHamkOVASz61RUq26+s0na0Zh2RRwsEkrMg@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v8 1/4] sha1_file.c: support reading from a loose object
+ of unknown type
+Date: Mon, 20 Apr 2015 14:51:22 -0400
+Message-ID: <20150420185122.GA13718@peff.net>
+References: <552E9816.6040502@gmail.com>
+ <1429117143-4882-1-git-send-email-karthik.188@gmail.com>
+ <xmqqmw29jg78.fsf@gitster.dls.corp.google.com>
+ <20150415221824.GB27566@peff.net>
+ <20150417142310.GA12479@peff.net>
+ <xmqqd232hgj8.fsf@gitster.dls.corp.google.com>
+ <20150417205125.GA7067@peff.net>
+ <xmqq4moepijp.fsf@gitster.dls.corp.google.com>
+ <553548D2.7010904@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Tim Friske <me@tifr.de>, git <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Mon Apr 20 20:44:28 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	sunshine@sunshineco.com
+To: karthik nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 20 20:51:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YkGgG-0003d5-8a
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Apr 2015 20:44:28 +0200
+	id 1YkGn4-0007nX-Pa
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Apr 2015 20:51:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752521AbbDTSoY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Apr 2015 14:44:24 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:60116 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750998AbbDTSoX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Apr 2015 14:44:23 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9FCF146D8E;
-	Mon, 20 Apr 2015 14:44:22 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=IyVYzxY0vVJyd0nZwCVn1XNDTSg=; b=NpxBUp
-	A7bnebd7nGFTd8sxolce6Y6B64qdmbuCUY54z23Vu0MuoCmbhhF+ib0528NrKAa2
-	1+qYgYNqrVVbdk3QboeJGMDV8V85aJ3Ztz5ZUxN1rPizfHiftruIzUw1kYLA4xMm
-	LBwcrN1ep9GtzdATt7+IGfCW94U44XxhOxsWg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vK0VWZOIaVDM+zfjnw/fxqqjwsdkshpq
-	ftLsCWlmylg7qgJUUzhuHUszj01hFZWe4Qg87877i3a8uBzgL0UxHf/95+fJqYp8
-	vOAMZIovaUxHx8YvkG42cWYS3tHmwDWhUjzbf6zxvBRo02vf+1P+cBl6+OxyzlYp
-	/AM5YIvOjMs=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 97FF546D8D;
-	Mon, 20 Apr 2015 14:44:22 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1BA2646D8A;
-	Mon, 20 Apr 2015 14:44:22 -0400 (EDT)
-In-Reply-To: <CA+55aFzdSgvYo11PHamkOVASz61RUq26+s0na0Zh2RRwsEkrMg@mail.gmail.com>
-	(Linus Torvalds's message of "Mon, 20 Apr 2015 11:33:31 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 4292C05A-E78D-11E4-8DE4-83E09F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751663AbbDTSv0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Apr 2015 14:51:26 -0400
+Received: from cloud.peff.net ([50.56.180.127]:47747 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751255AbbDTSvZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Apr 2015 14:51:25 -0400
+Received: (qmail 4204 invoked by uid 102); 20 Apr 2015 18:51:25 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 20 Apr 2015 13:51:25 -0500
+Received: (qmail 27531 invoked by uid 107); 20 Apr 2015 18:51:50 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 20 Apr 2015 14:51:50 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Apr 2015 14:51:22 -0400
+Content-Disposition: inline
+In-Reply-To: <553548D2.7010904@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267486>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+On Tue, Apr 21, 2015 at 12:13:30AM +0530, karthik nayak wrote:
 
-> And to clarify: I don't suggest always building with libpcre. I
-> literally suggest having something like
->
->      /* hacky mac-hack hack */
->     if (strncmp("(?i)", p->pattern, 4)) {
->         p->pattern += 4;
->         p->ignore_case = true;
->     }
->
-> just in front of the "regcomp() call, and nothing more fancy than that.
+> +static int unpack_sha1_header_to_strbuf(git_zstream *stream, unsigned char
+> *map,
+> +                                       unsigned long mapsize, void *buffer,
+> +                                       unsigned long bufsiz, struct strbuf
+> *header)
+> +{
+> +       unsigned char *cp;
+> +       int status;
+> +       int i = 0;
+> +
+> +       status = unpack_sha1_header(stream, map, mapsize, buffer, bufsiz);
 
-Yeah, looking at the way grep.c:compile_regexp() is structured, we
-are already prepared to allow
+I wonder if we would feel comfortable just running this NUL-check as
+part of unpack_sha1_header (i.e., in all code paths). It _shouldn't_
+trigger in normal use, but I wonder if there would be any downsides
+(e.g., maliciously crafted objects getting us to allocate memory or
+something; I think it is fairly easy to convince git to allocate memory,
+though).
 
-    $ git log --grep='(?i)torvalds' --grep='Linus'
+> +       for (cp = buffer; cp < stream->next_out; cp++)
+> +               if (!*cp) {
+> +                       /* Found the NUL at the end of the header */
+> +                       return 0;
+> +               }
 
-that wants to find one piece of text case insensitively while
-another case sensitively in the same text (i.e. the log message
-part), so per-pattern customization may be a good way to do this.
+I think we can spell this as:
+
+  if (memchr(buffer, '\0', stream->next_out - buffer))
+	return 0;
+
+which is shorter and possibly more efficient.
+
+In theory we could also just start trying to parse the type/size header,
+and notice there when we don't find the NUL. That's probably not worth
+doing, though. The parsing is separated from the unpacking here, so it
+would require combining those two operations in a single function. And
+the extra NUL search here is likely not very expensive.
+
+-Peff
