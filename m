@@ -1,94 +1,80 @@
-From: Karthik Nayak <karthik.188@gmail.com>
+From: Charles Bailey <charles@hashpling.org>
 Subject: Re: [PATCH v8 2/4] cat-file: teach cat-file a '--literally' option
-Date: Mon, 20 Apr 2015 14:27:44 +0530
-Message-ID: <8CBC4DEB-EC50-4DD7-A687-443AA93A96A8@gmail.com>
-References: <552E9816.6040502@gmail.com> <1429117174-4968-1-git-send-email-karthik.188@gmail.com> <20150419002807.GA11634@hashpling.org> <xmqq7ft7nz8l.fsf@gitster.dls.corp.google.com> <20150420074433.GA30422@hashpling.org>
+Date: Mon, 20 Apr 2015 10:19:21 +0100
+Message-ID: <20150420091920.GA31279@hashpling.org>
+References: <552E9816.6040502@gmail.com>
+ <1429117174-4968-1-git-send-email-karthik.188@gmail.com>
+ <20150419002807.GA11634@hashpling.org>
+ <xmqq7ft7nz8l.fsf@gitster.dls.corp.google.com>
+ <20150420074433.GA30422@hashpling.org>
+ <8CBC4DEB-EC50-4DD7-A687-443AA93A96A8@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
 	"sunshine@sunshineco.com" <sunshine@sunshineco.com>
-To: Charles Bailey <charles@hashpling.org>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 20 10:58:05 2015
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 20 11:19:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yk7Wm-0006ci-Ln
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Apr 2015 10:58:05 +0200
+	id 1Yk7rY-0001bz-0A
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Apr 2015 11:19:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754338AbbDTI5z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Apr 2015 04:57:55 -0400
-Received: from mail-pd0-f176.google.com ([209.85.192.176]:33680 "EHLO
-	mail-pd0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753487AbbDTI5y (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Apr 2015 04:57:54 -0400
-Received: by pdbnk13 with SMTP id nk13so201474233pdb.0
-        for <git@vger.kernel.org>; Mon, 20 Apr 2015 01:57:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=user-agent:in-reply-to:references:mime-version
-         :content-transfer-encoding:content-type:subject:from:date:to:cc
-         :message-id;
-        bh=GO55EmMk6nD0Tbo1gDTqEqo8nBc69h7KpubJuAn2Oc0=;
-        b=ATvbMnNO6O3ZWGkqYWJZT8gP5nT+1yZsqJEXIf0QY4q3J7yZRyRYwuH604SdJNn8SQ
-         3BZF9tW1t2MFJreW4RcX5gJIGRQmTpgc9BLIMYDJn4Fo7gqOjFpuZUjYwjyhmT6CXpqM
-         AvP4PrL3blztaDVf19/vpNSUkqhFcnBRgSWOhO44bodjuVWmIxyz/KecvYYazHlwpJA0
-         mRuyACVhMKxHxdHyf2BnpiSbNnAbpaGiLTTRaM37oNL4RIikSe5bTr2iDLrzyccBm4RY
-         VgJUM1k6LH2gT5ccj6vdqGWPSS8DsUyeCD2T3zf3crRD1Aiyd7qZj6HORcBvxLktcEI8
-         MgOg==
-X-Received: by 10.66.120.69 with SMTP id la5mr26761036pab.66.1429520273841;
-        Mon, 20 Apr 2015 01:57:53 -0700 (PDT)
-Received: from [100.105.143.252] ([49.15.214.0])
-        by mx.google.com with ESMTPSA id sw4sm17391953pbc.64.2015.04.20.01.57.50
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 20 Apr 2015 01:57:52 -0700 (PDT)
-User-Agent: K-9 Mail for Android
-In-Reply-To: <20150420074433.GA30422@hashpling.org>
+	id S1753487AbbDTJTZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Apr 2015 05:19:25 -0400
+Received: from avasout06.plus.net ([212.159.14.18]:52285 "EHLO
+	avasout06.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752640AbbDTJTX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Apr 2015 05:19:23 -0400
+Received: from hashpling.plus.com ([212.159.69.125])
+	by avasout06 with smtp
+	id J9KM1q0012iA9hg019KN98; Mon, 20 Apr 2015 10:19:22 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.1 cv=QqHQ3DCd c=1 sm=1 tr=0
+ a=wpJ/2au8Z6V/NgdivHIBow==:117 a=wpJ/2au8Z6V/NgdivHIBow==:17 a=EBOSESyhAAAA:8
+ a=0Bzu9jTXAAAA:8 a=J0QyKEt1u0cA:10 a=BHUvooL90DcA:10 a=kj9zAlcOel0A:10
+ a=Ew9TdX-QAAAA:8 a=e9J7MTPGsLIA:10 a=rd59RTowd6kKLsWNT5kA:9 a=CjuIK1q_8ugA:10
+Received: from charles by hashpling.plus.com with local (Exim 4.84)
+	(envelope-from <charles@hashpling.plus.com>)
+	id 1Yk7rN-00089h-4n; Mon, 20 Apr 2015 10:19:21 +0100
+Content-Disposition: inline
+In-Reply-To: <8CBC4DEB-EC50-4DD7-A687-443AA93A96A8@gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267461>
 
+On Mon, Apr 20, 2015 at 02:27:44PM +0530, Karthik Nayak wrote:
+> Sorry, but I didn't get you, broken objects created using hash-object --literally do not work with cat-file without the --literally option.
 
+Perhaps an example would help:
 
-On April 20, 2015 1:14:34 PM GMT+05:30, Charles Bailey <charles@hashpling.org> wrote:
->> On 20 Apr 2015, at 06:30, Junio C Hamano <gitster@pobox.com> wrote:
->> Charles Bailey <charles@hashpling.org> writes:
->> 
->>> The option isn't a true opposite of hash-object's --literally
->because
->>> that also allows the creation of known types with invalid contents
->(e.g.
->>> corrupt trees) whereas cat-file is quite happy to show the
->_contents_ of
->>> such corrupt objects even without --literally.
->> 
->> Not really.  If you create an object with corrupt type string (e.g.
->"BLOB"
->> instead of "blob"), cat-file would not be happy.
->
->Sorry, the emphasis should have been on "complete" of "complete
->opposite".  There are some types of bad objects that can be created
->only
->with hash-object --literally (malformed tag or tree), for which
->cat-file
->works with fine and there are other types (pun unintended - BLOB,
-Sorry, but I didn't get you, broken objects created using hash-object --literally do not work with cat-file without the --literally option.
->wobble, etc.) for which --literally/--unchecked is required with
->cat-file.
->
->So I meant that cat-file's --literally is only a partial "opposite" or
->analogue of hash-object's.
->
->--allow-invalid-types? --force (in the sense of "suppress some possible
->errors")? It's not a big thing but I'm aware that if we can find a
->better
->name then now would be the best moment. If not, then --literally it is.
+I cannot create a bad tree without --literally:
 
--- 
-Sent from my Android device with K-9 Mail. Please excuse my brevity.
+$ echo total garbage | ./git hash-object -t tree --stdin -w
+fatal: corrupt tree file
+$ echo total garbage | ./git hash-object -t tree --stdin -w --literally
+fa2905d47028d00baec739f6d73540bb2a75c6f7
+
+but I can use cat-file without --literally to query the contents and
+information about the object as it stands.
+
+$ ./git cat-file tree fa2905d47028d00baec739f6d73540bb2a75c6f7
+total garbage
+$ ./git cat-file -t fa2905d47028d00baec739f6d73540bb2a75c6f7
+tree
+$ ./git cat-file -s fa2905d47028d00baec739f6d73540bb2a75c6f7
+14
+
+As far as I could tell - and please correct me if I've misunderstood,
+cat-file's literally is about dealing with unrecognized types whereas
+hash-object's --literally is about both creating objects with bad types
+and invalid objects of "recognized" types. This latter scenario is where
+the option name "literally" makes the most sense.
+
+Charles.
