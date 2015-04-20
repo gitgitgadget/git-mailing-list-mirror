@@ -1,76 +1,91 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH] pathspec: adjust prefixlen after striping trailing slash
-Date: Mon, 20 Apr 2015 12:52:02 +0700
-Message-ID: <CACsJy8B1QWzehAEtjnQeRJ8uehcFFDbdHSViwk_JtrtYehV8ZQ@mail.gmail.com>
-References: <55300D2C.9030903@web.de> <1429319946-19890-1-git-send-email-pclouds@gmail.com>
- <5533A567.7070301@web.de> <CACsJy8A7+rQhn5ry6Z86SbeYHoDw=w7tB73Ls2V05E8F-JMnhA@mail.gmail.com>
- <xmqqy4lnmkbv.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Why does "git log --author=<pattern>" not work with "regexp-ignore-case" and other regexp-related options?
+Date: Sun, 19 Apr 2015 22:59:19 -0700
+Message-ID: <xmqqoamjmjbc.fsf@gitster.dls.corp.google.com>
+References: <55336775.2020000@tifr.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	Dennis Kaarsemaker <dennis@kaarsemaker.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 20 07:52:44 2015
+Content-Type: text/plain
+Cc: git <git@vger.kernel.org>
+To: Tim Friske <me@tifr.de>
+X-From: git-owner@vger.kernel.org Mon Apr 20 07:59:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yk4dP-0003Im-L7
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Apr 2015 07:52:44 +0200
+	id 1Yk4kH-0007T6-7N
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Apr 2015 07:59:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751520AbbDTFwd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Apr 2015 01:52:33 -0400
-Received: from mail-ie0-f179.google.com ([209.85.223.179]:32880 "EHLO
-	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750714AbbDTFwd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Apr 2015 01:52:33 -0400
-Received: by iecrt8 with SMTP id rt8so96264204iec.0
-        for <git@vger.kernel.org>; Sun, 19 Apr 2015 22:52:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=EBedzUHezP2iFQpXzWGY9gitWiloAwgrfKe9tNhczDg=;
-        b=CpDKfNbLUOlu40ipDGu/8YE3MNM+CJunsN75alHB1jGOsRRJC6FHwduqijxt7/2SQq
-         0TI0r1JIaFZS2tiFyDZq1Y4OIRq7NkXRSv6wFdaIEWJ206E7FnBLM0N0ZOguLSjMfJi8
-         zcocmXbxPH9BNYeZv0Hub8/AjJZT7Qa00iznXG1x7+gXV/Hff760vjvrrH3OpR0NpBCE
-         fCGEjxIyE0IdIRZq+4kfmGsi0l5BuIDFxhO84Ecsg+jfqiIT7rZDBNceb40eRnxm29Vx
-         4Pd3ynbjTPqjt+ifHVQ2BpNL0oLlXdrZ1fMQF9m+jsGT3tAruABGCiY43aY9vuEPdrGU
-         DSWg==
-X-Received: by 10.50.77.13 with SMTP id o13mr18865892igw.39.1429509152343;
- Sun, 19 Apr 2015 22:52:32 -0700 (PDT)
-Received: by 10.107.47.170 with HTTP; Sun, 19 Apr 2015 22:52:02 -0700 (PDT)
-In-Reply-To: <xmqqy4lnmkbv.fsf@gitster.dls.corp.google.com>
+	id S1754632AbbDTF7Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Apr 2015 01:59:25 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:52755 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754594AbbDTF7V (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Apr 2015 01:59:21 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 235023F428;
+	Mon, 20 Apr 2015 01:59:21 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=oh6zsVh28iSsjYQ23Hx5Lr2v+qo=; b=kcZTlk
+	Ara+RXglKBaJC4SnCDu7niI79x6n4J1LrNWIRt4aG3vm5dVV0XNIpMaYHkheoIe+
+	KtWHojDrukCz9FuKrAPtvs2grgf9LLp5XeGX1uxQ1uvL6tUvZoV/gEfaurKnmJIT
+	D60yHzWTI33VZJIfUbN5SR/Nqc/36Zc3c7a1M=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=s93CRgbukFLzqFffeMBxNP2v+DP9sDFz
+	otWqBRgUlGBDPNG6mWFhAWmxiGTbiBr/YGLUUaH5gs42nlG+LUntx4uH4VfZxkew
+	UshL1xU3HlS1NYD54uewuarzQvhaXJQMy1mdut4+pqt4lsGXNPy4VeRqOe2Mbiyi
+	B6pkUqg9yH8=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1BBAE3F427;
+	Mon, 20 Apr 2015 01:59:21 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 973BA3F426;
+	Mon, 20 Apr 2015 01:59:20 -0400 (EDT)
+In-Reply-To: <55336775.2020000@tifr.de> (Tim Friske's message of "Sun, 19 Apr
+	2015 10:29:41 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 63265F7C-E722-11E4-836C-83E09F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267453>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267454>
 
-On Mon, Apr 20, 2015 at 12:37 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Duy Nguyen <pclouds@gmail.com> writes:
->
->> But if you look at it another way, "cd subrepo; git add ." should be
->> the same as "git add subrepo" ...
->
-> Once you cd into "subrepo", you are in a different world, a world
-> different from the toplevel project.  "git add ." over there should
-> mean "add everything in subproject's working tree to subproject's
-> index", shouldn't it?  On the other hand, "git add subrepo" without
-> leavingin the working tree of the superproject is about binding the
-> submodule to the superproject's index.
->
-> I do not think these two should be the same.  Where am I mistaken?
+Tim Friske <me@tifr.de> writes:
 
-I think I wrote this sentence and deleted it: I didn't say which way
-was right. I simply looked at this from the implementation perspective
-and it looked the same, at least with current impl. But we can
-differentiate them if we want (prefixlen is the key). A corner case if
-we go with erroring out in "cd subrepo; git add ." case, do we error
-out with "cd subrepo; git add ../subrepo"? If we want this case to
-error out too, I don't think I can use prefixlen to set it apart from
-"git add subrepo" any more..
--- 
-Duy
+> I wonder why "git log --author=<pattern>" does not work with the
+> "regexp-ignore-case" option and the other regexp-related options
+> Wouldn't it be useful to make ...
+
+I think the reason is because nobody bothered to make it so.  That
+does not necessarily say what you suggest is not useful, but if it
+were so very much useful in the real world, perhaps somebody may
+have already been motivated enough to make it so, and the fact that
+it has not happened might be an indirect indication of its predicted
+usefulness.  I dunno.
+
+In any case, I do not offhand see how it would _hurt_ if we added
+such a feature.  The only reason it may hurt existing users would be
+that people may depend on the current behaviour, trusting that
+exactly spelling --author=Tim option, when using case-ignoring
+matching of --grep=<pattern> to find the <pattern> in the log string
+filters out the other tim whose name is spelled with lowercase.
+Your proposed new world order _will_ break such users.  But I do not
+think it is very likely to become a real-world issue.
+
+Of course, if the implementation is done poorly, it _will_ hurt the
+overall performance or maintainability and that would make such an
+implementation unacceptable, but that is a separate matter---it does
+not reject the feature, just a specific poor implementation.
+
+So a patch to do so cleanly with proper tests is very much welcomed.
+
+The same comment applies to your other "wouldn't it be wonderful if
+-G<pattern> became case-insensitive with an option?" topic (but as I
+already said, -S<string> is *not* -G<string> with --fixed-strings).
+
+Thanks.
