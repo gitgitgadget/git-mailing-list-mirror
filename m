@@ -1,154 +1,84 @@
-From: karthik nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v8 1/4] sha1_file.c: support reading from a loose object
- of unknown type
-Date: Tue, 21 Apr 2015 00:13:30 +0530
-Message-ID: <553548D2.7010904@gmail.com>
-References: <552E9816.6040502@gmail.com>	<1429117143-4882-1-git-send-email-karthik.188@gmail.com>	<xmqqmw29jg78.fsf@gitster.dls.corp.google.com>	<20150415221824.GB27566@peff.net> <20150417142310.GA12479@peff.net>	<xmqqd232hgj8.fsf@gitster.dls.corp.google.com>	<20150417205125.GA7067@peff.net> <xmqq4moepijp.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Why does "git log -G<regex>" works with "regexp-ignore-case" but not with other regexp-related options?
+Date: Mon, 20 Apr 2015 11:44:20 -0700
+Message-ID: <xmqqtwwaljwb.fsf@gitster.dls.corp.google.com>
+References: <1090496912.6338.1429264855691.JavaMail.open-xchange@ox1app>
+	<55311831.6010004@drmicha.warpmail.net>
+	<CAPc5daUULhhV0+kL_htLnA8Z_woFLjxg_pO_cB0KLAMuxJnsMQ@mail.gmail.com>
+	<5534BD87.8020709@drmicha.warpmail.net>
+	<xmqqbniin1cw.fsf@gitster.dls.corp.google.com>
+	<CA+55aFzdSgvYo11PHamkOVASz61RUq26+s0na0Zh2RRwsEkrMg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, sunshine@sunshineco.com
-To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Apr 20 20:43:41 2015
+Content-Type: text/plain
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Tim Friske <me@tifr.de>, git <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Mon Apr 20 20:44:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YkGfU-00039B-HT
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Apr 2015 20:43:41 +0200
+	id 1YkGgG-0003d5-8a
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Apr 2015 20:44:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752146AbbDTSng (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Apr 2015 14:43:36 -0400
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:35693 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751997AbbDTSnf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Apr 2015 14:43:35 -0400
-Received: by pabtp1 with SMTP id tp1so214877668pab.2
-        for <git@vger.kernel.org>; Mon, 20 Apr 2015 11:43:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=rVkLQUAoJjwTtP4BtZUYpkibMaIVnKQK/5Y4dbTVeSU=;
-        b=vPrQJrt9V68HeCiEq2ldg7YFYKCy1Zp2cTyBZ9MmlZQacxcCa356Uk90S+sCjzMygG
-         FxrrUQoKwETA154LXtPs3wtPJHi8oJNbZnpFoifCHO6qc8kwHY7IKusAdfbWIEE4Yn3d
-         x4yq7jy7VdxOuvflRmdhk4pkFzV2Mo/UhAxBQ9AYVBrtrIbg6MGT1EbMVxnQOMvbwsEj
-         T9Ur31Qy6PmJ6SyA/LRrURTgK3hubdfB7CJNuDbMPbVOefwVUYAZ0aANOPCNlDkhf2K/
-         d5UK3MxyRUzWGB0GSD7O8KY0iQ5+TBYW3EAgGiJduWPjCEPOR08JH4Q+3DwHnBmgpAz7
-         Jrrw==
-X-Received: by 10.70.18.68 with SMTP id u4mr30765529pdd.38.1429555414592;
-        Mon, 20 Apr 2015 11:43:34 -0700 (PDT)
-Received: from [192.168.0.103] ([103.227.98.178])
-        by mx.google.com with ESMTPSA id he9sm18872179pbc.7.2015.04.20.11.43.31
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 20 Apr 2015 11:43:33 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
-In-Reply-To: <xmqq4moepijp.fsf@gitster.dls.corp.google.com>
+	id S1752521AbbDTSoY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Apr 2015 14:44:24 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:60116 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750998AbbDTSoX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Apr 2015 14:44:23 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9FCF146D8E;
+	Mon, 20 Apr 2015 14:44:22 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=IyVYzxY0vVJyd0nZwCVn1XNDTSg=; b=NpxBUp
+	A7bnebd7nGFTd8sxolce6Y6B64qdmbuCUY54z23Vu0MuoCmbhhF+ib0528NrKAa2
+	1+qYgYNqrVVbdk3QboeJGMDV8V85aJ3Ztz5ZUxN1rPizfHiftruIzUw1kYLA4xMm
+	LBwcrN1ep9GtzdATt7+IGfCW94U44XxhOxsWg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=vK0VWZOIaVDM+zfjnw/fxqqjwsdkshpq
+	ftLsCWlmylg7qgJUUzhuHUszj01hFZWe4Qg87877i3a8uBzgL0UxHf/95+fJqYp8
+	vOAMZIovaUxHx8YvkG42cWYS3tHmwDWhUjzbf6zxvBRo02vf+1P+cBl6+OxyzlYp
+	/AM5YIvOjMs=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 97FF546D8D;
+	Mon, 20 Apr 2015 14:44:22 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1BA2646D8A;
+	Mon, 20 Apr 2015 14:44:22 -0400 (EDT)
+In-Reply-To: <CA+55aFzdSgvYo11PHamkOVASz61RUq26+s0na0Zh2RRwsEkrMg@mail.gmail.com>
+	(Linus Torvalds's message of "Mon, 20 Apr 2015 11:33:31 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 4292C05A-E78D-11E4-8DE4-83E09F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267484>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267485>
 
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-
-On 04/18/2015 02:40 AM, Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
+> And to clarify: I don't suggest always building with libpcre. I
+> literally suggest having something like
 >
->> On Fri, Apr 17, 2015 at 09:21:31AM -0700, Junio C Hamano wrote:
->>
->>> Jeff King <peff@peff.net> writes:
->>>
->>>> If there _is_ a performance implication to worry about here, I think it
->>>> would be that we are doing an extra malloc/free.
->>>
->>> Thanks for reminding me; yes, that also worried me.
->>
->> As an aside, I worried about the extra allocation for reading the header
->> in the first place. But it looks like we only do this on the --literally
->> code path (and otherwise use the normal unpack_sha1_header).  Still, I
->> wonder if we could make this work automagically.  That is, speculatively
->> unpack the first N bytes, assuming we hit the end-of-header. If not,
->> then go to a strbuf as the slow path. Then it would be fine to cover all
->> cases; the normal ones would be fast, and only ridiculous things would
->> incur the extra allocation.
+>      /* hacky mac-hack hack */
+>     if (strncmp("(?i)", p->pattern, 4)) {
+>         p->pattern += 4;
+>         p->ignore_case = true;
+>     }
 >
-> Yes, that was what I was hoping to see eventually ;-)
->
+> just in front of the "regcomp() call, and nothing more fancy than that.
 
-Sorry for the delay, So after reading what Jeff said I tried to 
-implement it, this might not be a final version of the change, more of a 
-RFC version. What do you'll think?
+Yeah, looking at the way grep.c:compile_regexp() is structured, we
+are already prepared to allow
 
-@@ -1564,6 +1564,36 @@ int unpack_sha1_header(git_zstream *stream, 
-unsigned char *map, unsigned long ma
-         return git_inflate(stream, 0);
-  }
+    $ git log --grep='(?i)torvalds' --grep='Linus'
 
-+static int unpack_sha1_header_to_strbuf(git_zstream *stream, unsigned 
-char *map,
-+                                       unsigned long mapsize, void *buffer,
-+                                       unsigned long bufsiz, struct 
-strbuf *header)
-+{
-+       unsigned char *cp;
-+       int status;
-+       int i = 0;
-+
-+       status = unpack_sha1_header(stream, map, mapsize, buffer, bufsiz);
-+
-+       for (cp = buffer; cp < stream->next_out; cp++)
-+               if (!*cp) {
-+                       /* Found the NUL at the end of the header */
-+                       return 0;
-+               }
-+
-+       strbuf_add(header, buffer, stream->next_out - (unsigned char 
-*)buffer);
-+       do {
-+               status = git_inflate(stream, 0);
-+               strbuf_add(header, buffer, stream->next_out - (unsigned 
-char *)buffer);
-+               for (cp = buffer; cp < stream->next_out; cp++)
-+                       if (!*cp)
-+                               /* Found the NUL at the end of the header */
-+                               return 0;
-+               stream->next_out = buffer;
-+               stream->avail_out = bufsiz;
-+       } while (status != Z_STREAM_END);
-+       return -1;
-+}
-+
-
-
-@@ -2555,17 +2610,24 @@ static int sha1_loose_object_info(const unsigned 
-char *sha1,
-                 return -1;
-         if (oi->disk_sizep)
-                 *oi->disk_sizep = mapsize;
--       if (unpack_sha1_header(&stream, map, mapsize, hdr, sizeof(hdr)) < 0)
-+       if ((flags & LOOKUP_LITERALLY)) {
-+               if (unpack_sha1_header_to_strbuf(&stream, map, mapsize, 
-hdr, sizeof(hdr), &hdrbuf) < 0)
-+                       status = error("unable to unpack %s header with 
---literally",
-+                                      sha1_to_hex(sha1));
-+       } else if (unpack_sha1_header(&stream, map, mapsize, hdr, 
-sizeof(hdr)) < 0)
-                 status = error("unable to unpack %s header",
-                                sha1_to_hex(sha1));
--       else if ((status = parse_sha1_header(hdr, &size)) < 0)
-+       if (hdrbuf.len) {
-+               if ((status = parse_sha1_header_extended(hdrbuf.buf, oi, 
-flags)) < 0)
-+                       status = error("unable to parse %s header with 
---literally",
-+                                      sha1_to_hex(sha1));
-+       } else if ((status = parse_sha1_header_extended(hdr, oi, flags)) 
-< 0)
-                 status = error("unable to parse %s header", 
-sha1_to_hex(sha1));
-
-
-and
+that wants to find one piece of text case insensitively while
+another case sensitively in the same text (i.e. the log message
+part), so per-pattern customization may be a good way to do this.
