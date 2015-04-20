@@ -1,68 +1,61 @@
-From: Fusion Xavier <fusionx86@gmail.com>
-Subject: git-p4 Question
-Date: Mon, 20 Apr 2015 16:29:59 +0000 (UTC)
-Message-ID: <loom.20150420T182646-173@post.gmane.org>
+From: Pawel Por <porparek@gmail.com>
+Subject: git stash merge
+Date: Mon, 20 Apr 2015 18:36:02 +0200
+Message-ID: <CAJmOuEwEgA-9NCtBXjij-rLhsCWMyw+DcRVGo4=0b1V2nC==cA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 20 18:35:15 2015
+X-From: git-owner@vger.kernel.org Mon Apr 20 18:36:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YkEfB-0002na-Mv
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Apr 2015 18:35:14 +0200
+	id 1YkEgm-0003or-Qv
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Apr 2015 18:36:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751295AbbDTQfH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Apr 2015 12:35:07 -0400
-Received: from plane.gmane.org ([80.91.229.3]:33130 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751223AbbDTQfF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Apr 2015 12:35:05 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1YkEf1-0002hJ-Fu
-	for git@vger.kernel.org; Mon, 20 Apr 2015 18:35:03 +0200
-Received: from 50-202-92-238-static.hfc.comcastbusiness.net ([50.202.92.238])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 20 Apr 2015 18:35:03 +0200
-Received: from fusionx86 by 50-202-92-238-static.hfc.comcastbusiness.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 20 Apr 2015 18:35:03 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 50.202.92.238 (Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:37.0) Gecko/20100101 Firefox/37.0)
+	id S1752166AbbDTQgG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Apr 2015 12:36:06 -0400
+Received: from mail-wi0-f174.google.com ([209.85.212.174]:37463 "EHLO
+	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752042AbbDTQgE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Apr 2015 12:36:04 -0400
+Received: by widdi4 with SMTP id di4so98684871wid.0
+        for <git@vger.kernel.org>; Mon, 20 Apr 2015 09:36:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=W4zJMZ1X6fG7OIeewWT04pEbdlSm9ZXYJJhnUVhw+Kc=;
+        b=iqsR1b1KiasviiKanp04qd5PyEPDUEsYQeNhELnxJ/GAoxxWwol8Cep4LBG1H9I+H3
+         iB2dL5ii3HETZ65ZKc0yFewkzYCnABMf5+IRvD6BZwmCAL03yAVWiLC6hVidqaPB0gTy
+         vc+H2Prp8tWbiRJ5Wuj9WS+KxIbRXwpJxrcP7pBpN+7CAbAhrFzETxvWCy0vAV2SU1fD
+         Lqo2TAwba5obevhWH7p4e3LEjsbGuMRrDoyViib/g6ezfrfx7l89xXcGeF98HeB5wLrz
+         AxpO9wi9lLB8Vdepw6cKdCnI43md0dcOVJTuWrqTEH2MU4cr6mbDP6Ztib+TWg/A8nql
+         gbZg==
+X-Received: by 10.180.231.4 with SMTP id tc4mr12260088wic.27.1429547763014;
+ Mon, 20 Apr 2015 09:36:03 -0700 (PDT)
+Received: by 10.27.143.23 with HTTP; Mon, 20 Apr 2015 09:36:02 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267474>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267475>
 
-Hello,
+Hi,
 
-Hopefully this is an appropriate place to ask questions about git-p4.
+I've just upgraded the linux kernel git source tree and I want to
+"pop" my stashed work. I do the following:
+git stash pop
 
-I started at a company that wants to migrate from Perforce to Git. I'm new
-to Perforce and have been trying to learn just enough about it to get
-through this migration. Anyway, I've been playing with git-p4 and have run
-into something with it I don't understand.
+and I got the following message:
+mm/Makefile: needs merge
+unable to refresh index
 
-After setting up the p4 cli client I can 'p4 sync' some //depot/main/app1
-depot/folder which pulls down the files I would expect from the Perforce
-server. If I use 'git p4 clone //depot/main/app1', I get:
+I also tried:
+git stash pop --index
 
-"Doing initial import of //depot/main/app1/ from revision #head into
-refs/remotes/p4/master"
+How can I overcome this obstacle.
+I did "git stash" before "git pull".
 
-But I don't get any files from that depot/folder pulled down. I can git p4
-clone other depot/folders though and get some files. I suspect that I'm just
-not understanding how the git-p4 module works.
 
-Basically, I'm hoping to setup a live sync of Perforce to Git of certain
-depots in preparation for the migration. Also, if anyone has pointers or
-guides for this type of migration, any help is appreciated.
+Thanks for help.
