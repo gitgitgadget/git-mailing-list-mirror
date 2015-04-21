@@ -1,139 +1,148 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 0/3] Another approach to large transactions
-Date: Mon, 20 Apr 2015 17:31:11 -0700
-Message-ID: <CAGZ79kY842JXB37++nwYjkX1WK9ja5m-G1aDj=QgLN-qKLo9Lg@mail.gmail.com>
-References: <1429226259-21622-1-git-send-email-sbeller@google.com>
-	<xmqq8udqheb5.fsf@gitster.dls.corp.google.com>
-	<xmqqsibyo141.fsf@gitster.dls.corp.google.com>
-	<CAGZ79kZvE+YJeKCYXN-RD3MFmP17VkqW8WUUssk6UgK_38iWrg@mail.gmail.com>
-	<CAGZ79kYEbnZvgdhjPvc2rR7QKp-CjUB3Ytqsp8JK2QBqzuUowA@mail.gmail.com>
-	<CAGZ79kZWm=Mi6o4jMNthiDRcR9irs_5MyRuEmHdDSrn-JFpQ=g@mail.gmail.com>
-	<xmqqzj62ifc9.fsf@gitster.dls.corp.google.com>
-	<CAGZ79kYk_3E1RMdNvA_OrCj6EdaJ2Xdps9pUxEkWwvDNazb6Gg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 21 02:31:21 2015
+Subject: [PATCH] refs.c: enable large transactions
+Date: Mon, 20 Apr 2015 17:35:06 -0700
+Message-ID: <1429576506-10790-1-git-send-email-sbeller@google.com>
+References: <CAGZ79kY842JXB37++nwYjkX1WK9ja5m-G1aDj=QgLN-qKLo9Lg@mail.gmail.com>
+Cc: Stefan Beller <sbeller@google.com>
+To: gitster@pobox.com, mhagger@alum.mit.edu, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 21 02:35:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YkM5u-0006h2-Hh
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Apr 2015 02:31:18 +0200
+	id 1YkM9j-0000L9-FS
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Apr 2015 02:35:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751819AbbDUAbO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Apr 2015 20:31:14 -0400
-Received: from mail-ig0-f171.google.com ([209.85.213.171]:33108 "EHLO
-	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751180AbbDUAbM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Apr 2015 20:31:12 -0400
-Received: by igbpi8 with SMTP id pi8so76332286igb.0
-        for <git@vger.kernel.org>; Mon, 20 Apr 2015 17:31:12 -0700 (PDT)
+	id S1751758AbbDUAfK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Apr 2015 20:35:10 -0400
+Received: from mail-ig0-f180.google.com ([209.85.213.180]:37573 "EHLO
+	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751544AbbDUAfK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Apr 2015 20:35:10 -0400
+Received: by igblo3 with SMTP id lo3so3144649igb.0
+        for <git@vger.kernel.org>; Mon, 20 Apr 2015 17:35:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=CoOzggWVmX9ucy9mQNY5CotH4clRvnJufyB8Q3HBEWA=;
-        b=C9yRFOyZSHRdCVZtsdq0ZOfQ1VXfnZfNEnDN/m5IyzF1ChMZTmUi9cLdOux2e7cgL9
-         FFIj1oKVkj0veaehwRaQwTPzyeGn/igEvsfxLv8+UKoQ/Da7Q4laJTssAQM+ZTvslLpT
-         IRwK77A+EWXp9bVtfV+CcRzXLvhi/HsZx1HoOYOMblO43mo4PwreiBZbrOE/CeanVXc6
-         0BWs6CTKbQHWnjY8n1hmCj+ODG8TWbRFomwqEcEq3iR/w3tUT9rW8w3Tpnxs6drqqvTo
-         1m74K1dMUWs5JJ25Skx2W8Uw38xXeqvMk7FGckEGaj+QWFfCMQ65g0cNNPoDXo0aCmRe
-         nxNg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=HlqngmYhuV3/0yawGVt+uM1CoLjdU8elF0QNjP47Oi4=;
+        b=ocofAN0YBjLJBcxpp6X+jCdescFnbMZdS/a7Q6AbZpavUIpSk5y0nvO9chC3vnsCyE
+         H12jvngwK6ov7v1qj2kmtySQQ7Lccl7PCNGfP40PpQTOUTopyukOCLYPlgNk3V+sY3Ld
+         ufHQ1c7RdSIKlYPW+19uHdQvv2mjca+CJMskshBg2n1TjG6M3JBvlHaPG/Y9kzyDSckf
+         3Yp6hhCnNPvzNX14DYuDyMcpQ81cnkiWu+Ha6KigBsNb57OrPGTdlYFSjoisgm920n3a
+         nM1ctujQ2Q4FXClN9eZP8kaUjEf0mKgJyOAjopiRR/HxdHTs+9eF1qwLwGc9abFkmfea
+         b+hQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=CoOzggWVmX9ucy9mQNY5CotH4clRvnJufyB8Q3HBEWA=;
-        b=kHDr1ebgRANHwgOYzWESGTdCofCz/bBMnB+uor/bFU22AxqXvjm863j82LYnZ20LmS
-         A3Cy0+UPd57sKRUYTmF4A6vXNnfFrVxgRZSMNKkSrXKxVLUNzLev6tYmuh3fGNt21vDy
-         rR/TyVFGLmtWhSCVfntjZUp//RfgCY+Bj8clBlM4w+ZhLQjTViOZsknp4WY54hg6/qp3
-         HGLXRNkGMwlNRKAtZbBQN7/6OckFQo3SBAMxFltwzJGBqEDQa+ZTDrPkXgw3zd7OA825
-         82Rt0QkZf//QZMzMsdGWVXHzcISY4tmf/23IUZdVnLHcItxlt9oUF5eX5JllTQoI8fW4
-         vqeg==
-X-Gm-Message-State: ALoCoQl/2MwAuo6hrW9kKYbsnp7zXbqu72JmRLzOjvvNScOYD2kb4HDBA1Lk5QZiLXfMjtqTvYBv
-X-Received: by 10.42.30.141 with SMTP id v13mr510706icc.76.1429576271825; Mon,
- 20 Apr 2015 17:31:11 -0700 (PDT)
-Received: by 10.107.46.22 with HTTP; Mon, 20 Apr 2015 17:31:11 -0700 (PDT)
-In-Reply-To: <CAGZ79kYk_3E1RMdNvA_OrCj6EdaJ2Xdps9pUxEkWwvDNazb6Gg@mail.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=HlqngmYhuV3/0yawGVt+uM1CoLjdU8elF0QNjP47Oi4=;
+        b=Puez7yuW5YxPa0oTvuTzAojb1FTUZvVoVbqTpfeoumsplFgBNp0kqTKW3YEfP/koTr
+         6EBpiqhRiCZ/klMC/hIFDzGe9yFGujW2sqr4LVhfonVcHK0hvZikHl6IskL4px5CCSlw
+         z7/rigSBnCxcTB4yGTAMQI7jn+LGTBGzYOK/OvVFE7ntrbOZrOzPdKhtOAq4h3bLI22b
+         dSkiPnUnRZ2U+eo3hoRy7lz5bH0PeXBJ57UJcza4s+hVySbYqmBY76gsoSpTU2qIBamy
+         VpfTkAauUyGGBpKYxKKcz7g1mz9pLxtqfMGD6BJ5hmgb4eV39MHwLdgepj/+/YKse5QV
+         VSeg==
+X-Gm-Message-State: ALoCoQnJPy9cg3OagM6NKJOxSxhD8Kx6hwe5SMVV86akH4ElQvpOU+hcwBHw0H2y56aDTqIvyxEv
+X-Received: by 10.43.60.14 with SMTP id wq14mr523118icb.60.1429576509222;
+        Mon, 20 Apr 2015 17:35:09 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b00:f4b8:f7b6:d035:2ad4])
+        by mx.google.com with ESMTPSA id n5sm372775igp.10.2015.04.20.17.35.08
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 20 Apr 2015 17:35:08 -0700 (PDT)
+X-Mailer: git-send-email 2.4.0.rc2.5.g4c2045b.dirty
+In-Reply-To: <CAGZ79kY842JXB37++nwYjkX1WK9ja5m-G1aDj=QgLN-qKLo9Lg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267513>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267514>
 
-On Mon, Apr 20, 2015 at 4:07 PM, Stefan Beller <sbeller@google.com> wrote:
-> On Mon, Apr 20, 2015 at 3:51 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Stefan Beller <sbeller@google.com> writes:
->>
->>> The problem comes from guessing the number of fds we're allowed to use.
->>> At first I thought it was a fundamental issue with the code being broken, but
->>> it turns out we just need a larger offset as we apparently have 9 files open
->>> already, before the transaction even starts.
->>> I did not expect the number to be that high, which is why I came up with the
->>> arbitrary number of 8 (3 for stdin/out/err, maybe packed refs and reflog so I
->>> guessed, 8 would do fine).
->>>
->>> I am not sure if the 9 is a constant or if it scales to some unknown
->>> property yet.
->>> So to make the series work, all we need is:
->>>
->>> - int remaining_fds = get_max_fd_limit() - 8;
->>> + int remaining_fds = get_max_fd_limit() - 9;
->>>
->>> I am going to try to understand where the 9 comes from and resend the patches.
->>
->> I have a suspicion that the above is an indication that the approach
->> is fundamentally not sound.  9 may be OK in your test repository,
->> but that may fail in a repository with different resource usage
->> patterns.
->
-> You put my concerns in a better wording.
->
->>
->> On the core management side, xmalloc() and friends retry upon
->> failure, after attempting to free the resource.  I wonder if your
->> codepath can do something similar to that, perhaps?
->
-> But then we'd need to think about which fds can be 'garbage collected'.
-> The lock files certainly can be closed and reopened. The first 3 fd not so.
-> So we'd need to maintain a data structure of file descriptors good/bad
-> for this reclaiming.
->
->>
->> On the other hand, it may be that this "let's keep it open as long
->> as possible, as creat-close-open-write-close is more expensive" may
->> not be worth the complexity.  I wonder if it might not be a bad idea
->> to start with a simpler rule, e.g. "use creat-write-close for ref
->> updates outside transactions, and creat-close-open-write-close for
->> inside transactions, as that is likely to be multi-ref updates" or
->> something stupid and simple like that?
->
-> I thought about any ref about goes through transaction nowadays.
-> Having the current patches the first n locks are creat-write-close,
-> while the remaining locks have the  creat-close-open-write-close
-> pattern, so it slows only the large transactions.
->
-> My plan is to strace all open calls and check if the aforementioned
-> 9 open files are just a constant.
+This is another attempt on enabling large transactions
+(large in terms of open file descriptors). We keep track of how many
+lock files are opened by the ref_transaction_commit function.
+When more than a reasonable amount of files is open, we close
+the file descriptors to make sure the transaction can continue.
 
-When running the test locally, i.e. not in the test suite, but typing
-the commands
-myself into the shell, Git is fine with having just 5 file descriptors left.
-The additional 4 required fds come from beign run inside the test suite.
+Another idea I had during implementing this was to move this file
+closing into the lock file API, such that only a certain amount of
+lock files can be open at any given point in time and we'd be 'garbage
+collecting' open fds when necessary in any relevant call to the lock
+file API. This would have brought the advantage of having such
+functionality available in other users of the lock file API as well.
+The downside however is the over complication, you really need to always
+check for (lock->fd != -1) all the time, which may slow down other parts
+of the code, which did not ask for such a feature.
 
-When strace-ing git, I cannot see any possible other fds which would require
-having some left over space required. So I'd propose we'd just take a reasonable
-number not too small for various test setups like 32 and then go with the
-proposed patches.
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
 
-I'll just resend the patches to have a new basis for discussion.
+This replaces the latest patch on origin/sb/remove-fd-from-ref-lock
+The test suite passes now
 
->
->>
->> Michael?
->>
->>
+ refs.c                | 13 +++++++++++++
+ t/t1400-update-ref.sh |  4 ++--
+ 2 files changed, 15 insertions(+), 2 deletions(-)
+
+diff --git a/refs.c b/refs.c
+index 4f495bd..1e8cb16 100644
+--- a/refs.c
++++ b/refs.c
+@@ -3041,6 +3041,8 @@ static int write_ref_sha1(struct ref_lock *lock,
+ 		errno = EINVAL;
+ 		return -1;
+ 	}
++	if (lock->lk->fd == -1)
++		reopen_lock_file(lock->lk);
+ 	if (write_in_full(lock->lk->fd, sha1_to_hex(sha1), 40) != 40 ||
+ 	    write_in_full(lock->lk->fd, &term, 1) != 1 ||
+ 	    close_ref(lock) < 0) {
+@@ -3719,6 +3721,12 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+ {
+ 	int ret = 0, i;
+ 	int n = transaction->nr;
++	/*
++	 * We may want to open many files in a large transaction, so come up with
++	 * a reasonable maximum, keep some spares for stdin/out and other open
++	 * files.
++	 */
++	int remaining_fds = get_max_fd_limit() - 32;
+ 	struct ref_update **updates = transaction->updates;
+ 	struct string_list refs_to_delete = STRING_LIST_INIT_NODUP;
+ 	struct string_list_item *ref_to_delete;
+@@ -3762,6 +3770,11 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+ 				    update->refname);
+ 			goto cleanup;
+ 		}
++		if (remaining_fds > 0) {
++			remaining_fds--;
++		} else {
++			close_lock_file(update->lock->lk);
++		}
+ 	}
+ 
+ 	/* Perform updates first so live commits remain referenced */
+diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
+index 7a69f1a..636d3a1 100755
+--- a/t/t1400-update-ref.sh
++++ b/t/t1400-update-ref.sh
+@@ -1071,7 +1071,7 @@ run_with_limited_open_files () {
+ 
+ test_lazy_prereq ULIMIT_FILE_DESCRIPTORS 'run_with_limited_open_files true'
+ 
+-test_expect_failure ULIMIT_FILE_DESCRIPTORS 'large transaction creating branches does not burst open file limit' '
++test_expect_success ULIMIT_FILE_DESCRIPTORS 'large transaction creating branches does not burst open file limit' '
+ (
+ 	for i in $(test_seq 33)
+ 	do
+@@ -1082,7 +1082,7 @@ test_expect_failure ULIMIT_FILE_DESCRIPTORS 'large transaction creating branches
+ )
+ '
+ 
+-test_expect_failure ULIMIT_FILE_DESCRIPTORS 'large transaction deleting branches does not burst open file limit' '
++test_expect_success ULIMIT_FILE_DESCRIPTORS 'large transaction deleting branches does not burst open file limit' '
+ (
+ 	for i in $(test_seq 33)
+ 	do
+-- 
+2.4.0.rc2.5.g4c2045b.dirty
