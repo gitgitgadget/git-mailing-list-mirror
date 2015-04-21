@@ -1,73 +1,81 @@
-From: =?UTF-8?Q?erik_elfstr=C3=B6m?= <erik.elfstrom@gmail.com>
-Subject: Re: [PATCH/RFC v3 0/4] Improving performance of git clean
-Date: Tue, 21 Apr 2015 20:21:37 +0200
-Message-ID: <CAMpP7NaUv10Ox0gNsE8cg4hUnNNiFi8NZSLw6F6SW+SLrt0VwQ@mail.gmail.com>
-References: <1429389672-30209-1-git-send-email-erik.elfstrom@gmail.com>
-	<20150420221414.GA13813@hank>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: Regular Rebase Failure
+Date: Tue, 21 Apr 2015 11:34:37 -0700
+Message-ID: <CAGZ79kY0pbC6qH+Refm8Py0PyF2xNMLfSarhA+3-7eaU==RK7w@mail.gmail.com>
+References: <553685E0.8010304@gmail.com>
+	<CAGZ79kadXgsdCLH-YFQ5RhyKbRv9-qmUOQo-9QkKM2=8p17j+g@mail.gmail.com>
+	<55369509.2080200@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>
-To: Thomas Gummerer <t.gummerer@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 21 20:21:44 2015
+To: Adam <adamgsteel@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Apr 21 20:34:44 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ykcnn-0005z1-Jc
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Apr 2015 20:21:43 +0200
+	id 1Ykd0N-0006bO-FL
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Apr 2015 20:34:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753726AbbDUSVi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Apr 2015 14:21:38 -0400
-Received: from mail-ob0-f178.google.com ([209.85.214.178]:36624 "EHLO
-	mail-ob0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753015AbbDUSVi convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 21 Apr 2015 14:21:38 -0400
-Received: by obbeb7 with SMTP id eb7so151683542obb.3
-        for <git@vger.kernel.org>; Tue, 21 Apr 2015 11:21:37 -0700 (PDT)
+	id S1755246AbbDUSei (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Apr 2015 14:34:38 -0400
+Received: from mail-ig0-f180.google.com ([209.85.213.180]:34299 "EHLO
+	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753015AbbDUSei (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Apr 2015 14:34:38 -0400
+Received: by iget9 with SMTP id t9so90666311ige.1
+        for <git@vger.kernel.org>; Tue, 21 Apr 2015 11:34:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
+        d=google.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=wLX9go95f/FhiZDDY9H48Z5mlb90CS/kbvWbPJq6vlw=;
-        b=nTm1s4tqTIESBXUWKFZVxdjxCHSPrO6q4D7IWMo4uKCL84TUL23EbeMgkJxlCUu8yZ
-         jbLMRi61NgYOruj9BAJ4limCHRlgvVV4buRGcZYvu5gzCqKL0N0LmFOQYjm7FGWC/NxE
-         stT2LyN1F4R08rCkzbuDhvVY5tO3W3+oi20ikSJUWL+EOhX10lBjxaVq+uSnNz8K1m5j
-         x2MsIJhWNjggq348wfCNC00YmwpxDmroCEupPcLkoKm9lNq3bq+Hnmbrbw2x5s61s1lZ
-         l5M459pvIVuU6qj3kDtl0LtRmXaBcOYAUnWP70ZLyTbZYCz6Of/jaih3t9XHlfX9mxJD
-         FflQ==
-X-Received: by 10.202.185.87 with SMTP id j84mr19198241oif.47.1429640497747;
- Tue, 21 Apr 2015 11:21:37 -0700 (PDT)
-Received: by 10.182.154.72 with HTTP; Tue, 21 Apr 2015 11:21:37 -0700 (PDT)
-In-Reply-To: <20150420221414.GA13813@hank>
+         :content-type;
+        bh=AH2VwQ27sHjQF3pTT+/oNw6cYQdmvax61z9w6+HbI1Y=;
+        b=B8bhR6N11ekK0Q6DQjmUMdqv4RCAKpEc27dJT9czHy1R7reltSlxI85LK0Pmh92/Cy
+         n/z4xlh3EAxcRvOLcuOVieuduCfr9ENVmInkzhHkEDLT7VDuSbsJwYJ79wQDLMO9UhsP
+         pKH4Bt1kxJgUObb8tDW7ag17a8cfFD9HuDN65hhH9tWl9vevix71991ZgmchqU5l80aL
+         KGEbekDuDX8qdB+vHUnZ3mA5gyYRQFER4wI7xXYswX2AJeLi06WA1kqwVYhFZLostHz0
+         AnEHhf4k/zHIr0Y0eQ4CaBekkKtOphQa4LAjbZQ7eHxPmKwADFyyZYgBKyr5ouVayqbc
+         zJow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:content-type;
+        bh=AH2VwQ27sHjQF3pTT+/oNw6cYQdmvax61z9w6+HbI1Y=;
+        b=mvDDARIcET3qUD/di5/vhtqy+Ivk/iCelzlzEiQdt8QPHaYc/r8DWHAiD6jfCrCCk9
+         yBVRvG6wClufrx7YD9u57+L14mdgYQ1QfSpycQUpEcITW/ewxwU3KlUYkVJ7sdzPOe5M
+         DnWrX9dMZWIseQEUD5iCBhSQaXcNE99vdZInwnNbNXPBRaLoAII3ax43+L8ZXurCR8Jc
+         lG4edFJAqpbefqFU6ez6zuchCH68I7Zqp1MrGQaPdoV31KPze7BcmnKC7tFSrPG+6Tk9
+         RncmtAPX3iqd1/Hk/0nxAT9PR5D1PeVqdiWEhHpKQtgimmqgUX6Dbkr5LI1UeR4abX6J
+         BoOQ==
+X-Gm-Message-State: ALoCoQlgjvDGaSDUmxnsYRRKSimSVZNEupgV/YpNeBXuWi9WLe0LZqigJiNIEBdqUWZ4OXu8gMWN
+X-Received: by 10.50.117.4 with SMTP id ka4mr29598662igb.10.1429641277306;
+ Tue, 21 Apr 2015 11:34:37 -0700 (PDT)
+Received: by 10.107.46.22 with HTTP; Tue, 21 Apr 2015 11:34:37 -0700 (PDT)
+In-Reply-To: <55369509.2080200@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267545>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267546>
 
-Ok, thanks for looking into this.
+[+mailing list]
 
-I have no well founded opinions on the implementation but I do
-think the performance tests would be more meaningful if the
-setup/cleanup code could be removed from the timed section.
-If the community agrees on an implementation I would be happy
-to convert the new tests, either directly in this series or as a follow
-up if that is preferred.
+On Tue, Apr 21, 2015 at 11:20 AM, Adam <adamgsteel@gmail.com> wrote:
+> I'm using git version 2.3.2 (Apple Git-55).
 
-/Erik
+We should loop in the maintainers of the Apple Git version, they'd know
+what changed in git about two weeks ago.
+I have no idea who that is though.
 
-On Tue, Apr 21, 2015 at 12:14 AM, Thomas Gummerer <t.gummerer@gmail.com=
-> wrote:
-> On 04/18, Erik Elfstr=C3=B6m wrote:
->> * Still have issues in the performance tests, see comments
->>   from Thomas Gummerer on v2
 >
-> I've looked at the "modern" style tests again, and I don't the code
-> churn is worth it just for using them for the performance tests.  If
-> anyone wants to take a look at the code, it's at
-> github.com/tgummerer/git tg/perf-lib.
+> That explains why I can't find the index.lock file, since the error that was
+> thrown deleted it. I'm still not sure what to do about this, though.
+
+Complain at the right people so it gets fixed. ;)
+
 >
-> I think adding the test_perf_setup_cleanup command would make more
-> sense in this case.  If you want I can send a patch for that.
+> Thanks for responding.
+>
+> Adam
+>
