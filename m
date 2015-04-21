@@ -1,113 +1,88 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 0/3] Another approach to large transactions
-Date: Tue, 21 Apr 2015 10:31:51 -0700
-Message-ID: <CAGZ79kbev7OS_-xZAizSr0SSwdAZfn4U-3QRy7GprexJt=CzZw@mail.gmail.com>
-References: <1429226259-21622-1-git-send-email-sbeller@google.com>
-	<xmqq8udqheb5.fsf@gitster.dls.corp.google.com>
-	<xmqqsibyo141.fsf@gitster.dls.corp.google.com>
-	<CAGZ79kZvE+YJeKCYXN-RD3MFmP17VkqW8WUUssk6UgK_38iWrg@mail.gmail.com>
-	<CAGZ79kYEbnZvgdhjPvc2rR7QKp-CjUB3Ytqsp8JK2QBqzuUowA@mail.gmail.com>
-	<CAGZ79kZWm=Mi6o4jMNthiDRcR9irs_5MyRuEmHdDSrn-JFpQ=g@mail.gmail.com>
-	<xmqqzj62ifc9.fsf@gitster.dls.corp.google.com>
-	<CAGZ79kYk_3E1RMdNvA_OrCj6EdaJ2Xdps9pUxEkWwvDNazb6Gg@mail.gmail.com>
-	<xmqqa8y1iekw.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [BUG] Git does not convert CRLF=>LF on files with \r not before \n
+Date: Tue, 21 Apr 2015 10:41:01 -0700
+Message-ID: <xmqq1tjdidle.fsf@gitster.dls.corp.google.com>
+References: <CAFFOgCUTxnbL7vJpf1Hw39CJL_p2raDZ2a3DehhYhdbkVyi2fw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 21 19:31:58 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Steffen Prohaska <prohaska@zib.de>,
+	Alex Riesen <raa.lkml@gmail.com>,
+	Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>,
+	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@dwim.me>
+To: Alexandre Garnier <zigarn@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 21 19:41:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ykc1d-0004MK-Ms
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Apr 2015 19:31:58 +0200
+	id 1YkcAZ-0002Uh-T8
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Apr 2015 19:41:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752621AbbDURbx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Apr 2015 13:31:53 -0400
-Received: from mail-ig0-f173.google.com ([209.85.213.173]:36553 "EHLO
-	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752587AbbDURbw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Apr 2015 13:31:52 -0400
-Received: by igblo3 with SMTP id lo3so92666880igb.1
-        for <git@vger.kernel.org>; Tue, 21 Apr 2015 10:31:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=ehJr2C5KYgpFUwLc9Z1qQ/wxKiWSFwEStd5VkqgmzU8=;
-        b=HgJ4Ba1Evy+AeWMtm3GXFZtdchVVnO6hJRvNbaoJ/b6srMENL3sdZEGTXu7pySGg2y
-         CQ0dj/koADkEG8ySboAJ2ORUD8bJCyNmCxy5+DhWguypehTuJPLkQAKbynQgFLAUQ3TD
-         W824n/lxAjyzNuEWwEc7rGIyRezr0jz0y7xCp0/Fj/AjkpD4zV7pRged2f/9D6eUBes0
-         FDyXCet5iCKLzppf2+n4rojvFcXbJxEMVjdRty8qaqa89km60vprBPAXGk5zNpnn6wn4
-         UxKrlYZWT2552xiTz2HCdDfcmq1Wcv2zwkQ2BOhXwXXKZVNPwI8kRwcWdxHcmJCfReKZ
-         dYfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=ehJr2C5KYgpFUwLc9Z1qQ/wxKiWSFwEStd5VkqgmzU8=;
-        b=NE5za+JOOTkyRli3tA4Zp8okCjT3cptQ+zAg+tocl3wWKQDNsV4fTiCnnYI5FwJJ3s
-         Q0Nv9f2XBXS/9FxMCGzSYV9Un4NjUXH2LTspXYIGjAMwoaniaLVYYaVVyZLetOaiDYaP
-         YbdPivDbquZa7upspG8zxU9Xw/RvbkUPwg1Sh6+WuMPLCMnsax5RdSN4KJhc98VnWIME
-         ++iDLCoCskWL/kKdaz7rEY8YzPN8S0gzGqg5rS4aD8kfNjtUtNqqAkbpbcvnHpqT3K9m
-         KtRt/3ZGTVh/IR7E2hxMFey1z4DjPGs6uuRQCCqUq8VQgFeuGaRlQHpICXqRO36D6W6P
-         Y9Zg==
-X-Gm-Message-State: ALoCoQmtomeEt7DqIRGjzAVqrGJ4v0K+4NbAA+aUr8Bp1x0igjEyjSbs2YdL9KMiLPSnx7jo7miy
-X-Received: by 10.107.170.135 with SMTP id g7mr31088046ioj.2.1429637511760;
- Tue, 21 Apr 2015 10:31:51 -0700 (PDT)
-Received: by 10.107.46.22 with HTTP; Tue, 21 Apr 2015 10:31:51 -0700 (PDT)
-In-Reply-To: <xmqqa8y1iekw.fsf@gitster.dls.corp.google.com>
+	id S932550AbbDURlH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Apr 2015 13:41:07 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:54163 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932426AbbDURlF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Apr 2015 13:41:05 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8247C4ABD8;
+	Tue, 21 Apr 2015 13:41:03 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ZQGHvGgiHddpfa6hYHByNr6rBLQ=; b=vI6K1q
+	eoSGeoWVT57i6nQh62QTKkcHdu9sn7HPiFVZn7VPx0EAOx49koV893c0Vb79eyUv
+	zsfHE6ujwSDtvSbf4FF/H3xEP1+XtrvY3cJGqrj05W05buy0E1AshvVzzhH7nCwm
+	GoQtr6BZAOqaw8Lmf0pueOPSUQsKscPwVX3UY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=bdm7ff4NKxbOP3gUNweCExdUbRBgo//F
+	z14gESEUxYPXQ93Z5REgeNqtDmkNvfHZGY13OCmwiHH3TZPw4MsBMDE9b0u+12lD
+	G/1faiFAI0eOjhEETcxSKk5wioD73G8vXeh5v9tJdsjWpNnqWHY6aaozkOed0hNs
+	4L7YUYOTFUU=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 797C54ABD7;
+	Tue, 21 Apr 2015 13:41:03 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DECF54ABD5;
+	Tue, 21 Apr 2015 13:41:02 -0400 (EDT)
+In-Reply-To: <CAFFOgCUTxnbL7vJpf1Hw39CJL_p2raDZ2a3DehhYhdbkVyi2fw@mail.gmail.com>
+	(Alexandre Garnier's message of "Tue, 21 Apr 2015 15:51:34 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 94871C9C-E84D-11E4-B3F2-83E09F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267540>
 
-On Tue, Apr 21, 2015 at 10:19 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> On Mon, Apr 20, 2015 at 3:51 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>
->>> On the core management side, xmalloc() and friends retry upon
->>> failure, after attempting to free the resource.  I wonder if your
->>> codepath can do something similar to that, perhaps?
->>
->> But then we'd need to think about which fds can be 'garbage collected'.
->> The lock files certainly can be closed and reopened.
->
-> ... and that is the natural thing to garbage collect, no?  After
-> all, this approach allows lock-file subsystem to keep fds open even
-> when they do not absolutely have to, so they are the best candidates
-> to be shot down first when things gets tight.
->
-> A good thing is that you have a list of all them already for use by
-> the atexit handler ;-)
+Alexandre Garnier <zigarn@gmail.com> writes:
 
-Yes, but when such a garbage collection is in place, it is part of the API,
-which means you need to check all places, where lock files are used,
-so that you have the pattern
+> echo '*       text=auto' > .gitattributes
+> git add .gitattributes
+> git commit -q -m "Normalize EOL"
+> echo -ne 'some content\r\nother \rcontent with CR\r\ncontent\r\nagain
 
-   open lock file
-   ...
-   if lock_file->lk == -1
-       lock_file_reopen(...)
-   use(lock_file->lk)
+With text=auto, the user instructs us to guess, and we expect either
+LF or CRLF line-terminated files that is *TEXT*.  A lone CR in the
+middle of the line would mean we cannot reliably guess---it may be
+LF terminated file with CRs sprinkled inside text, some of which
+happen to be at the end of the line, or it may be CRLF terminated
+file with CRs sprinkled in.  We try to preserve the user input by
+not munging when we are not sure.
 
-I think that could be easily integrated into the lock_file API when the API
-users don't directly read the values of the lock file struct, but rather call
-a method
-    int lock_file_get_fd(lock);
+You are seeing the designed and intended behaviour.
 
-which guarantees to return a valid fd, but that is not long term stable. You
-can use the fd for the next action, but it may become garbage collected again.
+But it would be a bug if the same thing happens when the user
+explicitly tells us that the file has CRLF line endings, and I
+suspect we have that bug, which may want to be corrected.
 
-So then you don't know how long the fd is valid as the garbage collection
-may be either triggered from the lock file code or by yourself?
+I've Cc'ed various people who worked on convert.c around line
+endings.  I recall we saw a few other discussion threads on
+text=auto and eol settings.  Stakeholders may want to have a unified
+discussion to first list the issues in the current implementation
+and come up with fixes for them.
 
-There is some uncertainty on when which data is valid, which is why I dislike
-this approach and rather prefer to make it explicit. If we run into such
-a problem in another place, we can still think about a general solution in the
-lock file API.
+Thanks.
