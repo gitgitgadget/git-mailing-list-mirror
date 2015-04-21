@@ -1,104 +1,119 @@
-From: karthik nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v8 1/4] sha1_file.c: support reading from a loose object
- of unknown type
-Date: Tue, 21 Apr 2015 16:56:08 +0530
-Message-ID: <553633D0.9020804@gmail.com>
-References: <552E9816.6040502@gmail.com> <1429117143-4882-1-git-send-email-karthik.188@gmail.com> <xmqqmw29jg78.fsf@gitster.dls.corp.google.com> <20150415221824.GB27566@peff.net> <20150417142310.GA12479@peff.net> <xmqqd232hgj8.fsf@gitster.dls.corp.google.com> <20150417205125.GA7067@peff.net> <xmqq4moepijp.fsf@gitster.dls.corp.google.com> <553548D2.7010904@gmail.com> <20150420185122.GA13718@peff.net>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 0/3] Another approach to large transactions
+Date: Tue, 21 Apr 2015 14:37:21 +0200
+Message-ID: <55364481.3020700@alum.mit.edu>
+References: <1429226259-21622-1-git-send-email-sbeller@google.com>	<xmqq8udqheb5.fsf@gitster.dls.corp.google.com>	<xmqqsibyo141.fsf@gitster.dls.corp.google.com>	<CAGZ79kZvE+YJeKCYXN-RD3MFmP17VkqW8WUUssk6UgK_38iWrg@mail.gmail.com>	<CAGZ79kYEbnZvgdhjPvc2rR7QKp-CjUB3Ytqsp8JK2QBqzuUowA@mail.gmail.com>	<CAGZ79kZWm=Mi6o4jMNthiDRcR9irs_5MyRuEmHdDSrn-JFpQ=g@mail.gmail.com> <xmqqzj62ifc9.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	sunshine@sunshineco.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Apr 21 13:26:22 2015
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 8bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>,
+	Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue Apr 21 14:37:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YkWJm-0007dS-Ng
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Apr 2015 13:26:19 +0200
+	id 1YkXQm-0001nM-US
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Apr 2015 14:37:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751501AbbDUL0N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Apr 2015 07:26:13 -0400
-Received: from mail-pa0-f41.google.com ([209.85.220.41]:35481 "EHLO
-	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751322AbbDUL0M (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Apr 2015 07:26:12 -0400
-Received: by pabtp1 with SMTP id tp1so238294209pab.2
-        for <git@vger.kernel.org>; Tue, 21 Apr 2015 04:26:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=Qz94yEpGa0R0MqRrGoCKs7T4Q51aBxogGfVQOp0ENKI=;
-        b=bJT4Td/cpprBpZyi+wMWfJBendMO7ttELp38FmSs6F2oybfQ+LT3s2HBknCXgnd7Ub
-         1IJmmWrYL0sc9QAnCSoQgejB1PYp5hBWhUbnsj6oC+P+XF1wp+Va/VtqRNEBJgkX7LbC
-         8ggJj2PnYkP7WGIInalLnN652uzE8NupBCKh4Uo+V7acR5+wXQ8LbgP+Q65ToPajI3RE
-         GoMb4+pqQV8WjX7Ef1Hmlgs0ZYcN41Qc+D2GHXAghqBxlSkSFWNRrexcomdIT2Rz/d0q
-         /3B008EUQI50s55yZA95D48pZf9TVXGkU72XPtK+wZkAsnI1YBokia8G9vzpC0N8/eAD
-         4xXQ==
-X-Received: by 10.66.119.161 with SMTP id kv1mr4265362pab.78.1429615572246;
-        Tue, 21 Apr 2015 04:26:12 -0700 (PDT)
-Received: from [192.168.0.103] ([103.227.98.178])
-        by mx.google.com with ESMTPSA id l14sm1770269pdn.96.2015.04.21.04.26.09
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 21 Apr 2015 04:26:10 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
-In-Reply-To: <20150420185122.GA13718@peff.net>
+	id S1752667AbbDUMhd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Apr 2015 08:37:33 -0400
+Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:43580 "EHLO
+	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751621AbbDUMhc (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 21 Apr 2015 08:37:32 -0400
+X-AuditID: 1207440d-f79976d000005643-d5-55364483f9a2
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 40.47.22083.38446355; Tue, 21 Apr 2015 08:37:23 -0400 (EDT)
+Received: from [192.168.69.130] (p4FC975C4.dip0.t-ipconnect.de [79.201.117.196])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t3LCbL2Z011863
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Tue, 21 Apr 2015 08:37:22 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.6.0
+In-Reply-To: <xmqqzj62ifc9.fsf@gitster.dls.corp.google.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprAKsWRmVeSWpSXmKPExsUixO6iqNvsYhZqsHWnhkXXlW4mi4beK8wW
+	mze3szgweyzYVOpx8ZKyx+dNcgHMUdw2SYklZcGZ6Xn6dgncGctf/2IuuCZa0bxiB3sDY69g
+	FyMnh4SAicTLfxMZIWwxiQv31rN1MXJxCAlcZpRYfeUGE4RzgUni5+Sr7CBVvALaEuvmvGYG
+	sVkEVCXudy5kAbHZBHQlFvU0M4HYogJBEq3XpjJC1AtKnJz5BKiGg0NEwEuibWYxSJhZQF/i
+	058DYOXCAvYSv77uZ4TYNY9ZYn/DJFaQBKeAtcTeviPsEA16Ejuu/2KFsOUlmrfOZp7AKDAL
+	yYpZSMpmISlbwMi8ilEuMac0Vzc3MTOnODVZtzg5MS8vtUjXSC83s0QvNaV0EyMkdHl3MP5f
+	J3OIUYCDUYmHl2GyaagQa2JZcWXuIUZJDiYlUd4mC7NQIb6k/JTKjMTijPii0pzU4kOMEhzM
+	SiK8gkJAOd6UxMqq1KJ8mJQ0B4uSOK/aEnU/IYH0xJLU7NTUgtQimKwMB4eSBK+zM1CjYFFq
+	empFWmZOCUKaiYMTZDiXlEhxal5KalFiaUlGPChW44uB0QqS4gHauxGknbe4IDEXKArReopR
+	UUqc9yBIQgAkkVGaBzcWlpBeMYoDfSnMywVSxQNMZnDdr4AGMwENjttmAjK4JBEhJdXAyK4i
+	Z/1wcjRXheS+56c0tjQV5iQtEjiWVT7PtVWiK5v/Rf78R0++GjipfjIsljbabm39jj8n5Vdi
+	746b8ydutLY3N1KZkbLaS+lo16L1xUbfnrzIf+HxrumB5OfYlZZ3pdj8uX4vkubs 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267524>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267525>
 
+On 04/21/2015 12:51 AM, Junio C Hamano wrote:
+> Stefan Beller <sbeller@google.com> writes:
+> 
+>> The problem comes from guessing the number of fds we're allowed to use.
+>> At first I thought it was a fundamental issue with the code being broken, but
+>> it turns out we just need a larger offset as we apparently have 9 files open
+>> already, before the transaction even starts.
+>> I did not expect the number to be that high, which is why I came up with the
+>> arbitrary number of 8 (3 for stdin/out/err, maybe packed refs and reflog so I
+>> guessed, 8 would do fine).
+>>
+>> I am not sure if the 9 is a constant or if it scales to some unknown
+>> property yet.
+>> So to make the series work, all we need is:
+>>
+>> - int remaining_fds = get_max_fd_limit() - 8;
+>> + int remaining_fds = get_max_fd_limit() - 9;
+>>
+>> I am going to try to understand where the 9 comes from and resend the patches.
+> 
+> I have a suspicion that the above is an indication that the approach
+> is fundamentally not sound.  9 may be OK in your test repository,
+> but that may fail in a repository with different resource usage
+> patterns.
+> 
+> On the core management side, xmalloc() and friends retry upon
+> failure, after attempting to free the resource.  I wonder if your
+> codepath can do something similar to that, perhaps?
+> 
+> On the other hand, it may be that this "let's keep it open as long
+> as possible, as creat-close-open-write-close is more expensive" may
+> not be worth the complexity.  I wonder if it might not be a bad idea
+> to start with a simpler rule, e.g. "use creat-write-close for ref
+> updates outside transactions, and creat-close-open-write-close for
+> inside transactions, as that is likely to be multi-ref updates" or
+> something stupid and simple like that?
+> 
+> Michael?
 
+Given that the release is so close, I think we should use the simplest
+thing that could work, which I think is Stefan's original
+N*(creat-close),N*(open-write-close),N*rename patch. I don't think there
+are many code paths that might build up a big transaction anyway (I
+guess only "git update-ref --stdin" and "git push --atomic"?) Neither of
+these has been around very long, so I don't think the small performance
+hit will bother anybody.
 
-On 04/21/2015 12:21 AM, Jeff King wrote:
-> On Tue, Apr 21, 2015 at 12:13:30AM +0530, karthik nayak wrote:
->
->> +static int unpack_sha1_header_to_strbuf(git_zstream *stream, unsigned char
->> *map,
->> +                                       unsigned long mapsize, void *buffer,
->> +                                       unsigned long bufsiz, struct strbuf
->> *header)
->> +{
->> +       unsigned char *cp;
->> +       int status;
->> +       int i = 0;
->> +
->> +       status = unpack_sha1_header(stream, map, mapsize, buffer, bufsiz);
->
-> I wonder if we would feel comfortable just running this NUL-check as
-> part of unpack_sha1_header (i.e., in all code paths). It _shouldn't_
-> trigger in normal use, but I wonder if there would be any downsides
-> (e.g., maliciously crafted objects getting us to allocate memory or
-> something; I think it is fairly easy to convince git to allocate memory,
-> though).
->
-But why would we want it to be a part of unpack_sha1_header?
+The correct solution is clearly N*(creat-write-close),N*rename, but that
+is too complicated for this release. So let's get the bug fixed for the
+release and try to get the better fix in the next release.
 
->> +       for (cp = buffer; cp < stream->next_out; cp++)
->> +               if (!*cp) {
->> +                       /* Found the NUL at the end of the header */
->> +                       return 0;
->> +               }
->
-> I think we can spell this as:
->
->    if (memchr(buffer, '\0', stream->next_out - buffer))
-> 	return 0;
->
-> which is shorter and possibly more efficient.
-Noted. Thanks :)
->
-> In theory we could also just start trying to parse the type/size header,
-> and notice there when we don't find the NUL. That's probably not worth
-> doing, though. The parsing is separated from the unpacking here, so it
-> would require combining those two operations in a single function. And
-> the extra NUL search here is likely not very expensive.
->
-Yes, even I though about doing that, but wasn't keen on combining those 
-two functions, they're meant to do two different things.
-> -Peff
->
+It would be possible to optimize the N=1 case (I guess it's by far the
+most common case) really stupidly using something like
+
+        if (n > 1)
+                close_lock_file(update->lock->lk);
+
+but I doubt even that's worth it.
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
