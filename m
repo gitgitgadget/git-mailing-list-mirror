@@ -1,95 +1,169 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC v3 0/4] Improving performance of git clean
-Date: Tue, 21 Apr 2015 12:02:37 -0700
-Message-ID: <xmqqlhhlgv8y.fsf@gitster.dls.corp.google.com>
-References: <1429389672-30209-1-git-send-email-erik.elfstrom@gmail.com>
-	<20150420221414.GA13813@hank>
-	<CAMpP7NaUv10Ox0gNsE8cg4hUnNNiFi8NZSLw6F6SW+SLrt0VwQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Thomas Gummerer <t.gummerer@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: erik =?utf-8?Q?elfstr=C3=B6m?= <erik.elfstrom@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 21 21:02:46 2015
+From: Stefan Beller <sbeller@google.com>
+Subject: [PATCHv2] refs.c: enable large transactions
+Date: Tue, 21 Apr 2015 12:06:11 -0700
+Message-ID: <1429643171-27530-1-git-send-email-sbeller@google.com>
+References: <xmqqpp6xgy50.fsf@gitster.dls.corp.google.com>
+Cc: Stefan Beller <sbeller@google.com>
+To: gitster@pobox.com, mhagger@alum.mit.edu, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 21 21:06:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YkdRV-0001pu-Cc
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Apr 2015 21:02:45 +0200
+	id 1YkdUy-0004OU-18
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Apr 2015 21:06:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755545AbbDUTCl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Apr 2015 15:02:41 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:53172 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755286AbbDUTCk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 21 Apr 2015 15:02:40 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2C5804AB6A;
-	Tue, 21 Apr 2015 15:02:39 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=AkIt71Nh8pvP
-	7B0pUDr11TsSyxE=; b=ZqHNAhwAIxkHK6py3mZ7QS+HmpV2Vf0I4b3WpA50KO78
-	vFB3hMX3QXATA80g3uki7mwy/pU9zw/fcVCvs7uQPdox1Ej+fLonuaBM0G6n+Jq+
-	JbVc/54Y+0MmxU4GKA2HAHm3pXPF1NvQIzZAfFcppojWP1MNlz7a5u94YyBjKJ4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=nJX78w
-	GgSqU+4RjvyvbdNC1T6y01gtUdUpkcyPHW2u8dVjuI/tHEMN6XIoHPuuJrweGK9q
-	0u9dfrDhYl6HWKWCpi+OWwckGOg0SUwSLLZ1ZH5ccK9+uVHWO8r7G+M6UKEeanlr
-	WPnGAHcFCzsLvAe7+rC/0cfN2fXuNuzX+A2Ac=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 210A74AB69;
-	Tue, 21 Apr 2015 15:02:39 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8F3734AB67;
-	Tue, 21 Apr 2015 15:02:38 -0400 (EDT)
-In-Reply-To: <CAMpP7NaUv10Ox0gNsE8cg4hUnNNiFi8NZSLw6F6SW+SLrt0VwQ@mail.gmail.com>
-	("erik =?utf-8?Q?elfstr=C3=B6m=22's?= message of "Tue, 21 Apr 2015 20:21:37
- +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: FA88EF9C-E858-11E4-8343-83E09F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1755887AbbDUTGP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Apr 2015 15:06:15 -0400
+Received: from mail-ie0-f178.google.com ([209.85.223.178]:34970 "EHLO
+	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755628AbbDUTGO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Apr 2015 15:06:14 -0400
+Received: by iejt8 with SMTP id t8so21231465iej.2
+        for <git@vger.kernel.org>; Tue, 21 Apr 2015 12:06:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=axbJuGq5tnLezNJFCrMiILA8OGXRjtcd5KZ+25Ly6sM=;
+        b=VfeSh7JUw6cg9Bz4kT8yRC1F12w2n1NwglXgGt0Er2M8zf6RM++k52sGSnVd7l1X9M
+         TgK1UZSV6mFjRZTpS59MN5qbgDghKt7IHIjvwLtxIqI1chgUciW85QPAbXbcaMbN37cx
+         H892t4W45HpMWx24vXeebXFVad9zrjlsdS2nv9xrS3XKlwDO4FzsFT+0CFZ8rZpzEM/I
+         vEaY+AYixZhxMetyXmudOIVPgPVYQ2JUkH4pJ4he2Mtsd1RR302L+DSjRZepXY548lZh
+         UUwKLUcb25YjdX90W5RiQ25f3orzaONxZVsTc88co+Z7Xy3sCnAaMdDPwERT0BjjutZ+
+         l13g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=axbJuGq5tnLezNJFCrMiILA8OGXRjtcd5KZ+25Ly6sM=;
+        b=XBw8hSSO5sQN1aaFuSQNr/PeUCW6OKz1tOPSybmT61JKmAF6sDNpiM0WXjFd8ouCfk
+         z1ndG0JpTEgz+k2rsvW3D1hWdnNlZ7GPEy2D3CaYRIf/5oTiAhUJJIVrspt0abOUemyq
+         Ikr6Z92T5L+6nVGvCBshKZYUESpSRRYbedhvsZdmCAkTr1NqdTwzxe8+BHrns6hb/Hb1
+         vnpPxsuWCDJnkHRzxkhigVCdyC7QWASml0tvMDTpswk6uwUNvT/XRPx6QJl4kcwypVtz
+         Ak7tX7dsz6mbWwqIhe2fq4cY2frGXih5F71NUZxMwoG2KQcm6JPtuVms8jngddYP4fHp
+         Ic5Q==
+X-Gm-Message-State: ALoCoQm+oKYbyOS138mVcHEU0kRiC9849TnKzSLezOivUcfX+EUtwGdlKcJLAnwpFJSDZnvfDIcL
+X-Received: by 10.107.169.74 with SMTP id s71mr30863639ioe.46.1429643174126;
+        Tue, 21 Apr 2015 12:06:14 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b00:4566:60b8:9788:169f])
+        by mx.google.com with ESMTPSA id y9sm8589047igl.6.2015.04.21.12.06.13
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 21 Apr 2015 12:06:13 -0700 (PDT)
+X-Mailer: git-send-email 2.4.0.rc2.5.g4c2045b.dirty
+In-Reply-To: <xmqqpp6xgy50.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267547>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267548>
 
-erik elfstr=C3=B6m <erik.elfstrom@gmail.com> writes:
+This is another attempt on enabling large transactions
+(large in terms of open file descriptors). We keep track of how many
+lock files are opened by the ref_transaction_commit function.
+When more than a reasonable amount of files is open, we close
+the file descriptors to make sure the transaction can continue.
 
-> Ok, thanks for looking into this.
->
-> I have no well founded opinions on the implementation but I do
-> think the performance tests would be more meaningful if the
-> setup/cleanup code could be removed from the timed section.
-> If the community agrees on an implementation I would be happy
-> to convert the new tests, either directly in this series or as a foll=
-ow
-> up if that is preferred.
+Another idea I had during implementing this was to move this file
+closing into the lock file API, such that only a certain amount of
+lock files can be open at any given point in time and we'd be 'garbage
+collecting' open fds when necessary in any relevant call to the lock
+file API. This would have brought the advantage of having such
+functionality available in other users of the lock file API as well.
+The downside however is the over complication, you really need to always
+check for (lock->fd != -1) all the time, which may slow down other parts
+of the code, which did not ask for such a feature.
 
-Let's not delay the fix and do the perf thing as a follow-up series,
-possibly an even independent one.
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
 
-In other words, let's keep the topics small.
+* Removed unneeded braces in the condition to check if we want to close
+  the lock file.
+* made the counter for the remaining fds an unsigned int. That is what   
+  get_max_fd_limit() returns, so there are no concerns for an overflow.
+  Also it cannot go below 0 any more.
+* moved the initialisation of the remaining_fds a bit down and added a comment  
+  
+ refs.c                | 21 +++++++++++++++++++++
+ t/t1400-update-ref.sh |  4 ++--
+ 2 files changed, 23 insertions(+), 2 deletions(-)
+ 
+ 
 
->
-> /Erik
->
-> On Tue, Apr 21, 2015 at 12:14 AM, Thomas Gummerer <t.gummerer@gmail.c=
-om> wrote:
->> On 04/18, Erik Elfstr=C3=B6m wrote:
->>> * Still have issues in the performance tests, see comments
->>>   from Thomas Gummerer on v2
->>
->> I've looked at the "modern" style tests again, and I don't the code
->> churn is worth it just for using them for the performance tests.  If
->> anyone wants to take a look at the code, it's at
->> github.com/tgummerer/git tg/perf-lib.
->>
->> I think adding the test_perf_setup_cleanup command would make more
->> sense in this case.  If you want I can send a patch for that.
+diff --git a/refs.c b/refs.c
+index 4f495bd..34cfcdf 100644
+--- a/refs.c
++++ b/refs.c
+@@ -3041,6 +3041,8 @@ static int write_ref_sha1(struct ref_lock *lock,
+ 		errno = EINVAL;
+ 		return -1;
+ 	}
++	if (lock->lk->fd == -1)
++		reopen_lock_file(lock->lk);
+ 	if (write_in_full(lock->lk->fd, sha1_to_hex(sha1), 40) != 40 ||
+ 	    write_in_full(lock->lk->fd, &term, 1) != 1 ||
+ 	    close_ref(lock) < 0) {
+@@ -3718,6 +3720,7 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+ 			   struct strbuf *err)
+ {
+ 	int ret = 0, i;
++	unsigned int remaining_fds;
+ 	int n = transaction->nr;
+ 	struct ref_update **updates = transaction->updates;
+ 	struct string_list refs_to_delete = STRING_LIST_INIT_NODUP;
+@@ -3733,6 +3736,20 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+ 		return 0;
+ 	}
+ 
++	/*
++	 * We need to open many files in a large transaction, so come up with
++	 * a reasonable maximum. We still keep some spares for stdin/out and
++	 * other open files. Experiments determined we need more fds when
++	 * running inside our test suite than directly in the shell. It's
++	 * unclear where these fds come from. 32 should be a reasonable large
++	 * number though.
++	 */
++	remaining_fds = get_max_fd_limit();
++	if (remaining_fds > 32)
++		remaining_fds -= 32;
++	else
++		remaining_fds = 0;
++
+ 	/* Copy, sort, and reject duplicate refs */
+ 	qsort(updates, n, sizeof(*updates), ref_update_compare);
+ 	if (ref_update_reject_duplicates(updates, n, err)) {
+@@ -3762,6 +3779,10 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+ 				    update->refname);
+ 			goto cleanup;
+ 		}
++		if (remaining_fds > 0)
++			remaining_fds--;
++		else
++			close_lock_file(update->lock->lk);
+ 	}
+ 
+ 	/* Perform updates first so live commits remain referenced */
+diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
+index 7a69f1a..636d3a1 100755
+--- a/t/t1400-update-ref.sh
++++ b/t/t1400-update-ref.sh
+@@ -1071,7 +1071,7 @@ run_with_limited_open_files () {
+ 
+ test_lazy_prereq ULIMIT_FILE_DESCRIPTORS 'run_with_limited_open_files true'
+ 
+-test_expect_failure ULIMIT_FILE_DESCRIPTORS 'large transaction creating branches does not burst open file limit' '
++test_expect_success ULIMIT_FILE_DESCRIPTORS 'large transaction creating branches does not burst open file limit' '
+ (
+ 	for i in $(test_seq 33)
+ 	do
+@@ -1082,7 +1082,7 @@ test_expect_failure ULIMIT_FILE_DESCRIPTORS 'large transaction creating branches
+ )
+ '
+ 
+-test_expect_failure ULIMIT_FILE_DESCRIPTORS 'large transaction deleting branches does not burst open file limit' '
++test_expect_success ULIMIT_FILE_DESCRIPTORS 'large transaction deleting branches does not burst open file limit' '
+ (
+ 	for i in $(test_seq 33)
+ 	do
+-- 
+2.4.0.rc2.5.g4c2045b.dirty
