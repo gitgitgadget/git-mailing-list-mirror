@@ -1,158 +1,110 @@
-From: Paul Tan <pyokagan@gmail.com>
-Subject: [PATCH v3 1/7] path.c: implement xdg_config_home()
-Date: Tue, 21 Apr 2015 12:06:27 +0800
-Message-ID: <20150421040627.GA5415@yoshi.chippynet.com>
-References: <1428824772-8736-1-git-send-email-pyokagan@gmail.com>
- <e1bc6f19af608db796a2212dbf00ba45@www.dscho.org>
- <20150414172854.GA27623@yoshi.chippynet.com>
- <CAPig+cTrErOBwPteeA1d_gdve5SiyLnbyFPpQ1sTN7aajGJfeA@mail.gmail.com>
- <CACRoPnR7MQsP_dAE0RV_80JDbU9h6tfu30yL2OOK+JGYLzVLNQ@mail.gmail.com>
- <CAPig+cQD9BH8kib98fCsiUHnsSAAMkwxAnFVxD8Gq5JMwXVjog@mail.gmail.com>
+From: Vitor Antunes <vitor.hda@gmail.com>
+Subject: Re: [PATCH V2 1/2] t9801: check git-p4's branch detection and client view together
+Date: Tue, 21 Apr 2015 08:10:05 +0100
+Message-ID: <B0C2FE2B-74B5-40CE-A818-B28E83AB4D2A@gmail.com>
+References: <1429441009-17775-1-git-send-email-vitor.hda@gmail.com> <1429441009-17775-2-git-send-email-vitor.hda@gmail.com> <xmqqtwwbmk16.fsf@gitster.dls.corp.google.com> <48EB5BF2-166D-45F5-9573-0C9E16CAC2B9@gmail.com> <xmqq4moaju6c.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Stefan Beller <sbeller@google.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Tue Apr 21 06:06:45 2015
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: git@vger.kernel.org, Luke Diamand <luke@diamand.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 21 09:10:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YkPSO-00008O-OF
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Apr 2015 06:06:45 +0200
+	id 1YkSJz-0004Zd-Nb
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Apr 2015 09:10:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752421AbbDUEGh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Apr 2015 00:06:37 -0400
-Received: from mail-pd0-f170.google.com ([209.85.192.170]:36614 "EHLO
-	mail-pd0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752364AbbDUEGf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Apr 2015 00:06:35 -0400
-Received: by pdea3 with SMTP id a3so229040305pde.3
-        for <git@vger.kernel.org>; Mon, 20 Apr 2015 21:06:34 -0700 (PDT)
+	id S1751538AbbDUHKL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Apr 2015 03:10:11 -0400
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:36314 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751482AbbDUHKK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Apr 2015 03:10:10 -0400
+Received: by wizk4 with SMTP id k4so127410621wiz.1
+        for <git@vger.kernel.org>; Tue, 21 Apr 2015 00:10:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=IvZEG7lryGw+E3QVBEOgSZhuLW9r10TPoT0Cr4WIsHE=;
-        b=f7iwh3qp4yOXLmjid+VDGiChOYdbCB7gkqrz8GdM0b28/xZ16hSlbSGIH9juIibMps
-         DQWiONhcAm0atoaZNYPQiut6NrvBz7m5sh2dZwcDg8AHpWtXOHfUD+lnIRm2YM6/f1kl
-         nRo7pqCuaWdbQWFI0lSv5nHgiMNP4yqT9i5Wop0+86VsC/nrt/Mk2Wm3+noKw/XCQPwO
-         Ykz35i7I/Ay46MR5M3Cn6fmZIdzYFfcLsLNLw46wLiOSGen4lJtr4JDH4xnuwJ8ph30p
-         iwbn6bZRsuSvMCuWfH01vBuQVI+D+DgWW9EpEoGNsq/GxgB3UsamqUrnGEBiHS9ax4ST
-         ePHw==
-X-Received: by 10.68.65.106 with SMTP id w10mr33337044pbs.75.1429589194513;
-        Mon, 20 Apr 2015 21:06:34 -0700 (PDT)
-Received: from yoshi.chippynet.com ([116.86.172.217])
-        by mx.google.com with ESMTPSA id z5sm459906pbt.54.2015.04.20.21.06.31
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 20 Apr 2015 21:06:32 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CAPig+cQD9BH8kib98fCsiUHnsSAAMkwxAnFVxD8Gq5JMwXVjog@mail.gmail.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+        h=user-agent:in-reply-to:references:mime-version
+         :content-transfer-encoding:content-type:subject:from:date:to:cc
+         :message-id;
+        bh=zFinmyxUBt7dN0cwOj+h2VwFoy/V7KExZmljN+aKQOI=;
+        b=H3I+iwVI3ARXw4Prcjzy+0oDOG9B6L4nIx4hZ9wO7CYe9dAdWgsg0HZh78MCzh3L5f
+         6OWJFZGdRE6UfueWGyK6MKg56HGbyAWj3ftQek6eLj6eHxWrLw5MOE+60GcHpTqLFAtv
+         Vcd+kkXbrvD0f+6gDUxCaVeeLZYfKrWBFGZeQfAqx2JfDBBq8JZED877xAldtUfaihHH
+         ownGWlAUD62ngqcoaIx9K1AK4LMqIY97maMeaCKZsiV05vWwNDOa+wd3Y6PkAkOLKDSS
+         gvplqI7kZRh5lCXBnsbVIs7h0GFyfXTLdGsLEVxE2xV5KpaQLTDgrB6/qrFjYtHJZwBg
+         B81g==
+X-Received: by 10.194.19.197 with SMTP id h5mr37475452wje.109.1429600209169;
+        Tue, 21 Apr 2015 00:10:09 -0700 (PDT)
+Received: from android-339016f4e6b2c83f.lan (88.41.108.93.rev.vodafone.pt. [93.108.41.88])
+        by mx.google.com with ESMTPSA id ex5sm1723509wib.2.2015.04.21.00.10.07
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 21 Apr 2015 00:10:08 -0700 (PDT)
+User-Agent: K-9 Mail for Android
+In-Reply-To: <xmqq4moaju6c.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267518>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267519>
 
-Hi,
+On April 20, 2015 11:45:15 PM GMT+01:00, Junio C Hamano <gitster@pobox.com> wrote:
+>Vitor Antunes <vitor.hda@gmail.com> writes:
+>
+>> On April 20, 2015 6:43:49 AM GMT+01:00, Junio C Hamano
+><gitster@pobox.com> wrote:
+>>>Vitor Antunes <vitor.hda@gmail.com> writes:
+>>>
+>>>> Add failing scenario where branch detection is enabled together
+>with
+>>>> use client view. In this specific scenario git-p4 will break when
+>the
+>>>> perforce client view removes part of the depot path.
+>>>
+>>>I somehow cannot parse "together with use client view", especially
+>>>the word "use".  Is it "user client view" or something (I am not
+>>>familiar with p4 lingo), or perhaps "use of client view"?
+>>
+>> I meant "spec" instead of "view". As in - -use-client-spec.
+>>
+>> In perforce you need to configure your workspace using a client
+>specification.
+>> One of the configured values is the client view, which maps
+>files/folders in the
+>> server to locations in your local workspace. What I'm trying to fix
+>with these
+>> patches is the ability of git-p4 to process the client view
+>definition through
+>> the use of "p4 where" to determine the correct location of the local
+>files, such
+>> that it is able to apply the necessary patches for submission to the
+>perforce
+>> server.
+>>
+>> While thinking about client views I completely forgot that the git-p4
+>argument
+>> that enables thos feature uses "spec" and not "view".
+>
+>So,... what's the conclusion?  Should the log message be written
+>like this perhaps?
+>
+>    t9801: check git-p4's branch detection and client spec together
+>    
+>    Add failing scenario where branch detection is enabled together
+>    with use of client spec.  In this specific scenario git-p4 will
+>    break when the perforce client spec removes part of the depot
+>    path.
+>    
+>    The test case also includes an extra sub-file mapping to enforce
+>    robustness check on git-p4 implementation.
+>    
+>    Signed-off-by: Vitor Antunes <vitor.hda@gmail.com>
+>    Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
-On Sun, Apr 19, 2015 at 08:39:44PM -0400, Eric Sunshine wrote:
-> Other than being enuinely confused by the original, and having to
-> check the actual implementation for clarification, I don't feel
-> strongly about it either. Perhaps mentioning "evaluation" like this
-> might help?
-> 
->     Return a newly allocated string with the evaluation of
->     "$XDG_CONFIG_HOME/git/$filename" if $XDG_CONFIG_HOME is
->     non-empty, otherwise "$HOME/.config/git/$filename". Return
->     NULL upon error.
-> 
-
-This is perfect, thanks.
-
-Re-rolled patch below now uses assert() to check if filename is
-non-NULL, and re-arranges the control flow.
-
---- >8 ---
-
-The XDG base dir spec[1] specifies that configuration files be stored in
-a subdirectory in $XDG_CONFIG_HOME. To construct such a configuration
-file path, home_config_paths() can be used. However, home_config_paths()
-combines distinct functionality:
-
-1. Retrieve the home git config file path ~/.gitconfig
-
-2. Construct the XDG config path of the file specified by `file`.
-
-This function was introduced in commit 21cf3227 ("read (but not write)
-from $XDG_CONFIG_HOME/git/config file").  While the intention of the
-function was to allow the home directory configuration file path and the
-xdg directory configuration file path to be retrieved with one function
-call, the hard-coding of the path ~/.gitconfig prevents it from being
-used for other configuration files. Furthermore, retrieving a file path
-relative to the user's home directory can be done with
-expand_user_path(). Hence, it can be seen that home_config_paths()
-introduces unnecessary complexity, especially if a user just wants to
-retrieve the xdg config file path.
-
-As such, implement a simpler function xdg_config_home() for constructing
-the XDG base dir spec configuration file path. This function, together
-with expand_user_path(), can replace all uses of home_config_paths().
-
-[1] http://standards.freedesktop.org/basedir-spec/basedir-spec-0.7.html
-
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-Signed-off-by: Paul Tan <pyokagan@gmail.com>
----
- cache.h |  7 +++++++
- path.c  | 15 +++++++++++++++
- 2 files changed, 22 insertions(+)
-
-diff --git a/cache.h b/cache.h
-index 3d3244b..3512d32 100644
---- a/cache.h
-+++ b/cache.h
-@@ -836,6 +836,13 @@ char *strip_path_suffix(const char *path, const char *suffix);
- int daemon_avoid_alias(const char *path);
- extern int is_ntfs_dotgit(const char *name);
- 
-+/**
-+ * Return a newly allocated string with the evaluation of
-+ * "$XDG_CONFIG_HOME/git/$filename" if $XDG_CONFIG_HOME is non-empty, otherwise
-+ * "$HOME/.config/git/$filename". Return NULL upon error.
-+ */
-+extern char *xdg_config_home(const char *filename);
-+
- /* object replacement */
- #define LOOKUP_REPLACE_OBJECT 1
- extern void *read_sha1_file_extended(const unsigned char *sha1, enum object_type *type, unsigned long *size, unsigned flag);
-diff --git a/path.c b/path.c
-index 595da81..c28b8f5 100644
---- a/path.c
-+++ b/path.c
-@@ -851,3 +851,18 @@ int is_ntfs_dotgit(const char *name)
- 			len = -1;
- 		}
- }
-+
-+char *xdg_config_home(const char *filename)
-+{
-+	const char *home, *config_home;
-+
-+	assert(filename);
-+	config_home = getenv("XDG_CONFIG_HOME");
-+	if (config_home && *config_home)
-+		return mkpathdup("%s/git/%s", config_home, filename);
-+
-+	home = getenv("HOME");
-+	if (home)
-+		return mkpathdup("%s/.config/git/%s", home, filename);
-+	return NULL;
-+}
--- 
-2.1.4
+Unfortunately at the moment I have limited computer access at
+home. I will, obviously, update the descriptions as soon as
+possible.
