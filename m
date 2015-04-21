@@ -1,82 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] refs.c: enable large transactions
-Date: Tue, 21 Apr 2015 11:00:11 -0700
-Message-ID: <xmqqpp6xgy50.fsf@gitster.dls.corp.google.com>
-References: <CAGZ79kY842JXB37++nwYjkX1WK9ja5m-G1aDj=QgLN-qKLo9Lg@mail.gmail.com>
-	<1429576506-10790-1-git-send-email-sbeller@google.com>
-	<xmqqegndieqd.fsf@gitster.dls.corp.google.com>
-	<CAGZ79kay11Pd4ni1j6jSYbenSXVfUP-6irPBc_r1=gUZFe-Hjw@mail.gmail.com>
+From: =?UTF-8?Q?erik_elfstr=C3=B6m?= <erik.elfstrom@gmail.com>
+Subject: Re: [PATCH/RFC v3 0/4] Improving performance of git clean
+Date: Tue, 21 Apr 2015 20:17:04 +0200
+Message-ID: <CAMpP7NaFYmpjbVVJSXX9OTiOm=ycL+nABgLTHBDV3h75ZqbVTw@mail.gmail.com>
+References: <1429389672-30209-1-git-send-email-erik.elfstrom@gmail.com>
+	<xmqqfv7wor6e.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Tue Apr 21 20:00:30 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 21 20:17:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YkcTF-0008DZ-LU
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Apr 2015 20:00:30 +0200
+	id 1YkcjP-0002oT-Sn
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Apr 2015 20:17:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755817AbbDUSAS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Apr 2015 14:00:18 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64859 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752150AbbDUSAN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Apr 2015 14:00:13 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E512D49280;
-	Tue, 21 Apr 2015 14:00:12 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=OPEkZG8eHLZKZEwmy8DVmkPgJtw=; b=cXnFXq
-	o4Kdc1JkcwSqi1aoAsM8hcHDKl1CbihdrFINrmOXTqSpzORJtSnPk3+a3KfRaoU/
-	Ne+tTQymhV925ILwkBtSt8xKg6bYT5gxF25uaq93Ea4eaaIacElJbzYjELhCTiXR
-	haCqlj2FHKHqy/zr7qoPEWp1iCm0hr+U4x0yk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=u+o+hyNmL+7WWZc6sB2x3r8XZdi8Pnlr
-	qJpkhtR3gUhC19P6Zyln68Igaf88Xk/HBgDAOofWC4/HGCrrCEFTqhZk7fAZGzR6
-	fiZBPB7ivFmyF91Ogbqj2D8SZC4Wx23VYS8uUSLESX3bJs0x0ORWK0lK8dAMssvg
-	iHFzWQzIDuU=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id DE9BB4927F;
-	Tue, 21 Apr 2015 14:00:12 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 65D874927D;
-	Tue, 21 Apr 2015 14:00:12 -0400 (EDT)
-In-Reply-To: <CAGZ79kay11Pd4ni1j6jSYbenSXVfUP-6irPBc_r1=gUZFe-Hjw@mail.gmail.com>
-	(Stefan Beller's message of "Tue, 21 Apr 2015 10:24:42 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 41A4EF6A-E850-11E4-917D-83E09F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1753499AbbDUSRH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Apr 2015 14:17:07 -0400
+Received: from mail-ob0-f171.google.com ([209.85.214.171]:34267 "EHLO
+	mail-ob0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751322AbbDUSRF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 21 Apr 2015 14:17:05 -0400
+Received: by obfe9 with SMTP id e9so150956537obf.1
+        for <git@vger.kernel.org>; Tue, 21 Apr 2015 11:17:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=dBgkcRQazw4gw686ilf/QJME09dDzZ6OlIoIWFONGZ8=;
+        b=YP/XVat7/i6117Un0IvBKNd3UjuJ+9ZattDnXT4pWc+4L366yrZoJwOBfwhWuwfOOn
+         ynuvhln5uxgdXta3yw1bc3vyNQDgp55BhbERKORgpK+PXMzb4qPZAnwMurePb1Kg0+TT
+         DbOKf9dOAcn4wj0Ex37F4rnMQyq8MhLOA7OOFSxqQU8mFZV0O6WzBq5rGBUJC56+HP55
+         Cnwb/DXhdkXPrWpoO7kvUu9etH2Tr72URhugaUWWjxPtQ7kckMyTJ8qsK0QVXr2C39MC
+         Ri5DN6n2i06jz8bUIylR6KL7LJCGPBPU6iksvlLa4JxF+dxgkIHvxxaEh081ov1PVTDY
+         G2xg==
+X-Received: by 10.60.37.73 with SMTP id w9mr3701666oej.49.1429640224824; Tue,
+ 21 Apr 2015 11:17:04 -0700 (PDT)
+Received: by 10.182.154.72 with HTTP; Tue, 21 Apr 2015 11:17:04 -0700 (PDT)
+In-Reply-To: <xmqqfv7wor6e.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267543>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267544>
 
-Stefan Beller <sbeller@google.com> writes:
+On Sun, Apr 19, 2015 at 3:14 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Erik Elfstr=C3=B6m <erik.elfstrom@gmail.com> writes:
+>
+>> Known Problems:
+>> * Unsure about the setup.c:read_gitfile refactor, feels a bit
+>>   messy?
+>
+> The interface indeed feels somewhat messy.  I suspect that a better
+> interface might be more like setup_git_directory_gently() that is a
+> gentler version of setup_git_directory().  The function takes an
+> optional pointer to an int, and it behaves not-gently-at-all when
+> the optional argument is NULL.  The location the optional pointer
+> points at, when it is not NULL, can be used to return the error
+> state to the caller.  That function pair only uses the optional
+> argument to convey one bit of information (i.e. "are we in any git
+> repository or not?") back to the caller, but the interface could be
+> used to tell the caller a lot more if we wanted to.
+>
+> If you model read_gitfile_gently() after that pattern, I would
+> expect that
+>
+>  - The extra pattern would be "int *error";
+>  - The implementation of read_gitfile() would be
+>
+>        #define read_gitfile(path) read_gitfile_gently((path), NULL)
+>
+>    and the _gently() version will die when "error" parameter is set
+>    to NULL and finds any error.
+>
+>  - The caller of the gentle variant can use the error code to
+>    determine what went wrong, not just the fact that it failed.  I
+>    do not think your caller does not have an immediate need to tell
+>    between "invalid gitfile format" and "No path in gitfile", but
+>    such an interface leaves that possibility open.
+>
+> Thanks.
+>
 
-> I thought about putting a cap on it to not let it go negative in the first
-> place, but I did not find an easily accessible max() function, as I'd like
-> to write it as
->
->     int remaining_fds = max(get_max_fd_limit() - 32, 0);
->
-> to have it in one line. The alternative of
->
->     int remaining_fds = get_max_fd_limit() - 32;
->     ...
->     if (remaining_fds < 0)
->         remaining_fds = 0
->
-> seemed to cuttered to me.
+Ok, I'll try that approach, thanks. (and apologies for the late reply)
 
-Just to set the standard yardstick straight, either is fine, but I
-would say the latter is slightly preferrable from readability's
-point of view.  Rows of dense single lines get tiring to read pretty
-quickly.
+/Erik
