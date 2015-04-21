@@ -1,61 +1,68 @@
-From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: [PATCH] squash! bash-completion: add support for git-log --merges= and log.merges
-Date: Tue, 21 Apr 2015 14:51:24 +0200
-Message-ID: <1429620684-7760-1-git-send-email-szeder@ira.uka.de>
-References: <1428938968-19013-5-git-send-email-koosha@posteo.de>
-Cc: git@vger.kernel.org,
-	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-To: Koosha Khajehmoogahi <koosha@posteo.de>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 21 14:51:50 2015
+From: FusionX86 <fusionx86@gmail.com>
+Subject: Re: git-p4 Question
+Date: Tue, 21 Apr 2015 07:23:51 -0600
+Message-ID: <CAFcBi88CwmJ=bxf92BWKLB2m25jnJFD6jpFPYog9Hdneen38DQ@mail.gmail.com>
+References: <CAFcBi89YqRGqigR1VCJJQtu1D206rP2T8Y-10KvFnvDjXYaN_g@mail.gmail.com>
+	<5535443C.1060600@vilain.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Tue Apr 21 15:23:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YkXeW-0002t4-Bo
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Apr 2015 14:51:48 +0200
+	id 1YkY9d-0006y2-GD
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Apr 2015 15:23:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753484AbbDUMvo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Apr 2015 08:51:44 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:59295 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752744AbbDUMvn (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 21 Apr 2015 08:51:43 -0400
-Received: from x590cdc95.dyn.telefonica.de ([89.12.220.149] helo=localhost)
-	by iramx2.ira.uni-karlsruhe.de with esmtpsa port 587 
-	iface 141.3.10.81 id 1YkXeN-0005uA-Nj; Tue, 21 Apr 2015 14:51:41 +0200
-X-Mailer: git-send-email 1.9.5.msysgit.0
-In-Reply-To: <1428938968-19013-5-git-send-email-koosha@posteo.de>
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1429620701.
+	id S1753194AbbDUNXw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Apr 2015 09:23:52 -0400
+Received: from mail-ig0-f169.google.com ([209.85.213.169]:34474 "EHLO
+	mail-ig0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751973AbbDUNXv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Apr 2015 09:23:51 -0400
+Received: by iget9 with SMTP id t9so85487654ige.1
+        for <git@vger.kernel.org>; Tue, 21 Apr 2015 06:23:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=Ub8qtMTFZgd/c8MiuE48vQUxrHxHkJ0SSHKiybg/BOg=;
+        b=eOF4inAunmqbSuIpPAwzwOuQjuT7XeClhYJXNEXK0ipWkKnNDv/cQN4D+QEq7K2Jks
+         70cQMRngOr1OlL0ifeBZgTwkLsNwBqV+8HU6DvTSUsC+9jCmpfvIUlH6SxSPSgiJZBY6
+         GuUxMP+OIiUwq9ldAt+KbwTsl0oJ6Uf2LH/kMSiBKMRcZhls7esDdGAbNgEIv6/IQWSu
+         9FEyYTP6IiXezIJ1H7KwPNsHyhLtkgnEHWQDdtbfb5ynqoSbDwXaaVoDph9q2srbECg8
+         rkzvQ7upF/J9uaoGsuofZjLYLBdkd+F0x6zCwM3icqa+otRDTVw9MR7skDtAAbh93vcq
+         KKLQ==
+X-Received: by 10.107.47.26 with SMTP id j26mr28085536ioo.36.1429622631274;
+ Tue, 21 Apr 2015 06:23:51 -0700 (PDT)
+Received: by 10.107.4.2 with HTTP; Tue, 21 Apr 2015 06:23:51 -0700 (PDT)
+In-Reply-To: <5535443C.1060600@vilain.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267526>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267527>
 
----
-The patch at the tip of kk/log-merges-config misindented one of the case
-arms, this one amends it.
+Thanks Sam, I'll check it out.
 
- contrib/completion/git-completion.bash | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index a75d7f5..83b2359 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1454,9 +1454,9 @@ _git_log ()
- 	--merges=*)
- 		__gitcomp "show hide only" "" "${cur##--merges=}"
- 		return
- 		;;
--		--*)
-+	--*)
- 		__gitcomp "
- 			$__git_log_common_options
- 			$__git_log_shortlog_options
- 			$__git_log_gitk_options
--- 
-1.9.5.msysgit.0
+On Mon, Apr 20, 2015 at 12:23 PM, Sam Vilain <sam@vilain.net> wrote:
+> On 04/20/2015 09:41 AM, FusionX86 wrote:
+>>
+>> Hopefully this is an appropriate place to ask questions about git-p4.
+>>
+>> I started at a company that wants to migrate from Perforce to Git. I'm
+>> new to Perforce and have been trying to learn just enough about it to
+>> get through this migration.
+>
+>
+> You might also like to check out my git-p4raw project which imports directly
+> from the raw repository files into a git repo using git fast-import
+>
+>     http://github.com/samv/git-p4raw
+>
+> Apparently it's my most popular github project :-).  YMMV.
+>
+> Sam.
