@@ -1,142 +1,76 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: Re: git-p4 Question
-Date: Tue, 21 Apr 2015 17:53:37 +0100
-Message-ID: <CAE5ih79L+RU934OYsBrXjP7PAoDYbeBS01hCgsOm+pnFD+dWwQ@mail.gmail.com>
-References: <CAFcBi89YqRGqigR1VCJJQtu1D206rP2T8Y-10KvFnvDjXYaN_g@mail.gmail.com>
-	<553552FD.80703@diamand.org>
-	<CAFcBi89pXTKzeVkB5EN3ZYkLwa1oPfDOqdHHhHeVogswhnpOAg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Why does "git log -G<regex>" works with "regexp-ignore-case" but not with other regexp-related options?
+Date: Tue, 21 Apr 2015 09:59:39 -0700
+Message-ID: <xmqqr3rdific.fsf@gitster.dls.corp.google.com>
+References: <1090496912.6338.1429264855691.JavaMail.open-xchange@ox1app>
+	<55311831.6010004@drmicha.warpmail.net>
+	<CAPc5daUULhhV0+kL_htLnA8Z_woFLjxg_pO_cB0KLAMuxJnsMQ@mail.gmail.com>
+	<5534BD87.8020709@drmicha.warpmail.net>
+	<xmqqbniin1cw.fsf@gitster.dls.corp.google.com>
+	<CA+55aFzdSgvYo11PHamkOVASz61RUq26+s0na0Zh2RRwsEkrMg@mail.gmail.com>
+	<xmqqtwwaljwb.fsf@gitster.dls.corp.google.com>
+	<55360D3D.3010201@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Users <git@vger.kernel.org>
-To: FusionX86 <fusionx86@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 21 18:53:45 2015
+Content-Type: text/plain
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Tim Friske <me@tifr.de>, git <git@vger.kernel.org>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue Apr 21 19:00:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YkbQd-0001mo-I0
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Apr 2015 18:53:43 +0200
+	id 1YkbXN-0004Di-Tr
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Apr 2015 19:00:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932235AbbDUQxi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Apr 2015 12:53:38 -0400
-Received: from mail-oi0-f43.google.com ([209.85.218.43]:36095 "EHLO
-	mail-oi0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755352AbbDUQxh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Apr 2015 12:53:37 -0400
-Received: by oift201 with SMTP id t201so159257943oif.3
-        for <git@vger.kernel.org>; Tue, 21 Apr 2015 09:53:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=NZb8Akb7LKESqlS8nqnXp65yKJMv4hVtyMT0CPS8yTo=;
-        b=UG87dwF4GgScSfxGIYnLmlClMjMfNClxf/Lwvsilff/ZjRExrnhE8C9cwvixyJefkJ
-         HBWv0RqE/LCqKWfr/2U1Fdwe56UVFd9YY8brUI4Mn8v25j422XdpJoohXNl6oaIFJ2s8
-         /euMHvZSX304EybKYZvXw27Uh00QePp4K9ghc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=NZb8Akb7LKESqlS8nqnXp65yKJMv4hVtyMT0CPS8yTo=;
-        b=eyDqcTsItVpSd8eJtylFqrGsx03MmORh4+N9GKcUxc7iYqwg1nqQOhIckS2OQskTRg
-         2omolYP942CedQ1pz4ejTLu2h4m3/z07anelYaMwZqMhCk5CyfsRQd3i/ZGsKUc9z+XJ
-         8jtIAaG6FXIyN8dTZgSF1l40tkDy9tfVDrqhoWklyFPXuZh8DNkWnc52LKOcDqmbT0u+
-         WTg8iyaKAQt3kckk3lUHQR2JoCrpLlMo08a3vs/m+JLfKqXKEQISLXoo1RL+ZcMhBBJ8
-         JGZFNfWyVU2dx2Kd4MkynG5w/nfzT/myfOgwEcAmv7baSRZ6YbD0UdFlj/cDkd/uyuuf
-         wVxw==
-X-Gm-Message-State: ALoCoQmiArbxALTZ42rtYsxjDbEfMEyc3IM+tdDcMVME8KPUbU3ApGvVFDFks1FwBoWeKB9C4p5M
-X-Received: by 10.202.198.149 with SMTP id w143mr18834891oif.72.1429635217264;
- Tue, 21 Apr 2015 09:53:37 -0700 (PDT)
-Received: by 10.60.59.167 with HTTP; Tue, 21 Apr 2015 09:53:37 -0700 (PDT)
-In-Reply-To: <CAFcBi89pXTKzeVkB5EN3ZYkLwa1oPfDOqdHHhHeVogswhnpOAg@mail.gmail.com>
+	id S933975AbbDUQ7y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Apr 2015 12:59:54 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:57394 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S933725AbbDUQ7r (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Apr 2015 12:59:47 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4D54D49D88;
+	Tue, 21 Apr 2015 12:59:41 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=/IMMFktOTIVv+DFyyANA0InO0o0=; b=CjOxEF
+	AvizIoPSAkbJFByX9d1uL31pa8qmTABZCkcXCS6mZMi4xgZfdzqIeWkm6aAntIEJ
+	AQ9G0Fnsz2AZaBeHToJ3Gwok3Jz3WoKlB/wF6MxcPbPf6kF0rdkwWgD3xJ8Mbt/n
+	OqVwsJkoU/S+vkNztX6C9eic/Y4Oa9bxKvSs8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=YKJrbmRvKVVMPSxIsLCdxmblFB9RmP11
+	yl+CZ9D52cz7Ko4iWqJ4v9mN37AM8sPLP/jJ69548fTcflZ1HzYITobUCkEYD7rl
+	mKO+cqxsuaJ9pz328F4DEGiqMtnaXevNUZfW1WowVT3bCmVN6Gwp/CAdXOGn3lCl
+	FJzBJC9B8w0=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 44EF149D87;
+	Tue, 21 Apr 2015 12:59:41 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BFEAE49D86;
+	Tue, 21 Apr 2015 12:59:40 -0400 (EDT)
+In-Reply-To: <55360D3D.3010201@drmicha.warpmail.net> (Michael J. Gruber's
+	message of "Tue, 21 Apr 2015 10:41:33 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: CD05FDB4-E847-11E4-8A12-83E09F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267532>
 
-Can you post up the output from 'git p4 clone', and also see what the
-output from doing this is:
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-$ p4 print //depot/some/branch/missingfile.c
+> We have engine-switching options and engine-modification options. The
+> latter are certainly good in the expression itself. Maybe even the
+> former, though I don't know how to switch away from fixed-strings in
+> that way...
 
-
-
-On 21 April 2015 at 14:33, FusionX86 <fusionx86@gmail.com> wrote:
-> Hi Luke,
->
-> Using -v was a good suggestion. Unfortunately I still don't see what
-> the problem is. I'm starting to think that maybe I should just create
-> the client views I need and setup a cron job that p4 syncs and then
-> git commits/pushes.
->
-> The --preserve-user option is for submitting back to Perforce correct?
-> I'm hoping to get away with a one-way sync from Perforce to Git...and
-> then eventually just cut over to Git.
->
-> I also looked at git fusion, but unfortunately the version of Perforce
-> we're running (2012.1) doesn't meet the requirements for fusion. I
-> wish it did.
->
-> Good point on developer mindset. I think we definitely have some
-> training and habit changing in the future.
->
-> Thanks for the suggestions and pointers, it's much appreciated.
->
-> On Mon, Apr 20, 2015 at 1:26 PM, Luke Diamand <luke@diamand.org> wrote:
->> On 20/04/15 17:41, FusionX86 wrote:
->>>
->>> Hello,
->>>
->>> Hopefully this is an appropriate place to ask questions about git-p4.
->>>
->>> I started at a company that wants to migrate from Perforce to Git. I'm
->>> new to Perforce and have been trying to learn just enough about it to
->>> get through this migration. Anyway, I've been playing with git-p4 and
->>> have one question/problem to discuss.
->>>
->>> After setting up the p4 cli client I can 'p4 sync' some
->>> //depot/main/app1 which pulls down the files I would expect from the
->>> Perforce server. If I use 'git p4 clone //depot/main/app1', I get:
->>>
->>> "Doing initial import of //depot/main/app1/ from revision #head into
->>> refs/remotes/p4/master"
->>>
->>> But I don't get any files from that depot/folder pulled down. I can
->>> git p4 clone other depot/folders though and get some files. I suspect
->>> that I'm just not understanding how the git-p4 module works.
->>
->>
->> You could try doing the clone with '-v' to get a bit more information.
->>
->>>
->>> Basically, I'm hoping to setup a live sync of Perforce to Git of
->>> certain depots in preparation for the migration. Also, if anyone has
->>> pointers or guides for this type of migration, any help is
->>> appreciated.
->>
->>
->> I've done something similar in the past. You'll want to enable the
->> --preserve-user option, for which you will need admin rights.
->>
->> If it's a one-way mirror (p4-to-git) then just run git-p4 periodically (if
->> you use cron, then try to avoid having two or more instances running at the
->> same time).
->>
->> If you want it to be two-way then it gets a bit more complicated.
->>
->> You might also want to consider using git fusion, which is Perforce's take
->> on this problem. I've not used it myself.
->>
->> From past experience though I would say the biggest problem is getting
->> developers to switch from the P4 mindset (centralized; code review hard to
->> do or ignored) to the git mindset (decentralized; code review actively
->> supported by the version control system).
->>
->>> --
->>> To unsubscribe from this list: send the line "unsubscribe git" in
->>> the body of a message to majordomo@vger.kernel.org
->>> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->>>
->>
+I do not think mixing matching engines in a single request makes
+much sense. As the internal machinery is not even prepared to do
+that, even though it is prepared to apply engine-modifications ones
+to each grep term AFAIK, let's not go there.
