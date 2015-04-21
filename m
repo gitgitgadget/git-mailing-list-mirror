@@ -1,104 +1,68 @@
-From: Alexandre Garnier <zigarn@gmail.com>
-Subject: [BUG] Git does not convert CRLF=>LF on files with \r not before \n
-Date: Tue, 21 Apr 2015 15:51:34 +0200
-Message-ID: <CAFFOgCUTxnbL7vJpf1Hw39CJL_p2raDZ2a3DehhYhdbkVyi2fw@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v8 1/4] sha1_file.c: support reading from a loose object
+ of unknown type
+Date: Tue, 21 Apr 2015 10:24:56 -0400
+Message-ID: <20150421142455.GA14521@peff.net>
+References: <1429117143-4882-1-git-send-email-karthik.188@gmail.com>
+ <xmqqmw29jg78.fsf@gitster.dls.corp.google.com>
+ <20150415221824.GB27566@peff.net>
+ <20150417142310.GA12479@peff.net>
+ <xmqqd232hgj8.fsf@gitster.dls.corp.google.com>
+ <20150417205125.GA7067@peff.net>
+ <xmqq4moepijp.fsf@gitster.dls.corp.google.com>
+ <553548D2.7010904@gmail.com>
+ <20150420185122.GA13718@peff.net>
+ <553633D0.9020804@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 21 15:51:46 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	sunshine@sunshineco.com
+To: karthik nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 21 16:25:10 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YkYaW-0008Ef-7L
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Apr 2015 15:51:44 +0200
+	id 1YkZ6n-0005U1-2y
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Apr 2015 16:25:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754279AbbDUNvj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Apr 2015 09:51:39 -0400
-Received: from mail-la0-f48.google.com ([209.85.215.48]:36217 "EHLO
-	mail-la0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754050AbbDUNvg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Apr 2015 09:51:36 -0400
-Received: by lagv1 with SMTP id v1so151669400lag.3
-        for <git@vger.kernel.org>; Tue, 21 Apr 2015 06:51:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=GsvSBtc+eUq8sq/b7sarJZVJ6zr6PTPvl01gO3RBEf8=;
-        b=pOLYlrKI+eur4yDc+DEgcHv9WVJ8Evp/Kfpmwuoeud4TrBN69ixEgQLw7XBH9RqmjK
-         1dPbJqB2RNsiMDycKjU6J/oNIJJRz8eGw5nrA7IM4EmMtBQeosCIYQNxx/AlxOlaP635
-         0dXLKfkd2fNkA4efLHc3mOdVmiX/NYM15s2hADgDvHGEKPiuoJjsTHvw5O7Npno9AKik
-         xWYZcR8TV3BJwEzk5k4vyQRbM/kMH4Ry1nsmuFwmH1GbuUkLWaqq6yojyNDMArLWQkAk
-         U5Y/JrPrq3tJDgy2SGHvDsIAZ6+ZPq58/LeEl5ZVKSDNu8eR4/UDw3yHoBXiEFyLsGuY
-         YNxg==
-X-Received: by 10.112.16.227 with SMTP id j3mr20151339lbd.43.1429624294932;
- Tue, 21 Apr 2015 06:51:34 -0700 (PDT)
-Received: by 10.25.156.67 with HTTP; Tue, 21 Apr 2015 06:51:34 -0700 (PDT)
+	id S1755075AbbDUOY7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Apr 2015 10:24:59 -0400
+Received: from cloud.peff.net ([50.56.180.127]:48077 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755054AbbDUOY6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Apr 2015 10:24:58 -0400
+Received: (qmail 12358 invoked by uid 102); 21 Apr 2015 14:24:58 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 21 Apr 2015 09:24:58 -0500
+Received: (qmail 1482 invoked by uid 107); 21 Apr 2015 14:25:24 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 21 Apr 2015 10:25:24 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 21 Apr 2015 10:24:56 -0400
+Content-Disposition: inline
+In-Reply-To: <553633D0.9020804@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267530>
 
-Here is a test:
+On Tue, Apr 21, 2015 at 04:56:08PM +0530, karthik nayak wrote:
 
-git init -q crlf-test
-cd crlf-test
-echo '*       text=auto' > .gitattributes
-git add .gitattributes
-git commit -q -m "Normalize EOL"
-echo -ne 'some content\r\nother \rcontent with CR\r\ncontent\r\nagain
-content with\r\r\n' > inline-cr.txt
-echo "Working directory content:"
-cat -A inline-cr.txt
-echo
-git add inline-cr.txt
-echo "Indexed content:"
-git show :inline-cr.txt | cat -A
+> >>+       status = unpack_sha1_header(stream, map, mapsize, buffer, bufsiz);
+> >
+> >I wonder if we would feel comfortable just running this NUL-check as
+> >part of unpack_sha1_header (i.e., in all code paths). It _shouldn't_
+> >trigger in normal use, but I wonder if there would be any downsides
+> >(e.g., maliciously crafted objects getting us to allocate memory or
+> >something; I think it is fairly easy to convince git to allocate memory,
+> >though).
+> >
+> But why would we want it to be a part of unpack_sha1_header?
 
-Result
-------
-File content:
-some content^M$
-other ^Mcontent with CR^M$
-content^M$
-again content with^M^M$
+Just to reduce the number of functions and the complexity of the caller.
+But I guess it doesn't help that much if the caller would then need to
+speculatively pass in a strbuf. So it's probably not a good idea.
 
-Indexed content:
-some content^M$
-other ^Mcontent with CR^M$
-content^M$
-again content with^M^M$
-
-Expected result
----------------
-File content:
-some content^M$
-other ^Mcontent with CR^M$
-content^M$
-again content with^M^M$
-
-Indexed content:
-some content$
-other ^Mcontent with CR$
-content$
-again content with^M$
-# or even 'again content with$' for this last line
-
-If you remove the \r that are not at the end of the lines, EOL are
-converted as expected:
-File content:
-some content^M$
-other content with CR^M$
-content^M$
-again content with^M$
-
-Indexed content:
-some content$
-other content with CR$
-content$
-again content with$
-
--- 
-Alex
+-Peff
