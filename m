@@ -1,81 +1,95 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: Regular Rebase Failure
-Date: Tue, 21 Apr 2015 11:34:37 -0700
-Message-ID: <CAGZ79kY0pbC6qH+Refm8Py0PyF2xNMLfSarhA+3-7eaU==RK7w@mail.gmail.com>
-References: <553685E0.8010304@gmail.com>
-	<CAGZ79kadXgsdCLH-YFQ5RhyKbRv9-qmUOQo-9QkKM2=8p17j+g@mail.gmail.com>
-	<55369509.2080200@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC v3 0/4] Improving performance of git clean
+Date: Tue, 21 Apr 2015 12:02:37 -0700
+Message-ID: <xmqqlhhlgv8y.fsf@gitster.dls.corp.google.com>
+References: <1429389672-30209-1-git-send-email-erik.elfstrom@gmail.com>
+	<20150420221414.GA13813@hank>
+	<CAMpP7NaUv10Ox0gNsE8cg4hUnNNiFi8NZSLw6F6SW+SLrt0VwQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Adam <adamgsteel@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Apr 21 20:34:44 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Thomas Gummerer <t.gummerer@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: erik =?utf-8?Q?elfstr=C3=B6m?= <erik.elfstrom@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 21 21:02:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ykd0N-0006bO-FL
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Apr 2015 20:34:43 +0200
+	id 1YkdRV-0001pu-Cc
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Apr 2015 21:02:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755246AbbDUSei (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Apr 2015 14:34:38 -0400
-Received: from mail-ig0-f180.google.com ([209.85.213.180]:34299 "EHLO
-	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753015AbbDUSei (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Apr 2015 14:34:38 -0400
-Received: by iget9 with SMTP id t9so90666311ige.1
-        for <git@vger.kernel.org>; Tue, 21 Apr 2015 11:34:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        bh=AH2VwQ27sHjQF3pTT+/oNw6cYQdmvax61z9w6+HbI1Y=;
-        b=B8bhR6N11ekK0Q6DQjmUMdqv4RCAKpEc27dJT9czHy1R7reltSlxI85LK0Pmh92/Cy
-         n/z4xlh3EAxcRvOLcuOVieuduCfr9ENVmInkzhHkEDLT7VDuSbsJwYJ79wQDLMO9UhsP
-         pKH4Bt1kxJgUObb8tDW7ag17a8cfFD9HuDN65hhH9tWl9vevix71991ZgmchqU5l80aL
-         KGEbekDuDX8qdB+vHUnZ3mA5gyYRQFER4wI7xXYswX2AJeLi06WA1kqwVYhFZLostHz0
-         AnEHhf4k/zHIr0Y0eQ4CaBekkKtOphQa4LAjbZQ7eHxPmKwADFyyZYgBKyr5ouVayqbc
-         zJow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:content-type;
-        bh=AH2VwQ27sHjQF3pTT+/oNw6cYQdmvax61z9w6+HbI1Y=;
-        b=mvDDARIcET3qUD/di5/vhtqy+Ivk/iCelzlzEiQdt8QPHaYc/r8DWHAiD6jfCrCCk9
-         yBVRvG6wClufrx7YD9u57+L14mdgYQ1QfSpycQUpEcITW/ewxwU3KlUYkVJ7sdzPOe5M
-         DnWrX9dMZWIseQEUD5iCBhSQaXcNE99vdZInwnNbNXPBRaLoAII3ax43+L8ZXurCR8Jc
-         lG4edFJAqpbefqFU6ez6zuchCH68I7Zqp1MrGQaPdoV31KPze7BcmnKC7tFSrPG+6Tk9
-         RncmtAPX3iqd1/Hk/0nxAT9PR5D1PeVqdiWEhHpKQtgimmqgUX6Dbkr5LI1UeR4abX6J
-         BoOQ==
-X-Gm-Message-State: ALoCoQlgjvDGaSDUmxnsYRRKSimSVZNEupgV/YpNeBXuWi9WLe0LZqigJiNIEBdqUWZ4OXu8gMWN
-X-Received: by 10.50.117.4 with SMTP id ka4mr29598662igb.10.1429641277306;
- Tue, 21 Apr 2015 11:34:37 -0700 (PDT)
-Received: by 10.107.46.22 with HTTP; Tue, 21 Apr 2015 11:34:37 -0700 (PDT)
-In-Reply-To: <55369509.2080200@gmail.com>
+	id S1755545AbbDUTCl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Apr 2015 15:02:41 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:53172 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755286AbbDUTCk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 21 Apr 2015 15:02:40 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2C5804AB6A;
+	Tue, 21 Apr 2015 15:02:39 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=AkIt71Nh8pvP
+	7B0pUDr11TsSyxE=; b=ZqHNAhwAIxkHK6py3mZ7QS+HmpV2Vf0I4b3WpA50KO78
+	vFB3hMX3QXATA80g3uki7mwy/pU9zw/fcVCvs7uQPdox1Ej+fLonuaBM0G6n+Jq+
+	JbVc/54Y+0MmxU4GKA2HAHm3pXPF1NvQIzZAfFcppojWP1MNlz7a5u94YyBjKJ4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=nJX78w
+	GgSqU+4RjvyvbdNC1T6y01gtUdUpkcyPHW2u8dVjuI/tHEMN6XIoHPuuJrweGK9q
+	0u9dfrDhYl6HWKWCpi+OWwckGOg0SUwSLLZ1ZH5ccK9+uVHWO8r7G+M6UKEeanlr
+	WPnGAHcFCzsLvAe7+rC/0cfN2fXuNuzX+A2Ac=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 210A74AB69;
+	Tue, 21 Apr 2015 15:02:39 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8F3734AB67;
+	Tue, 21 Apr 2015 15:02:38 -0400 (EDT)
+In-Reply-To: <CAMpP7NaUv10Ox0gNsE8cg4hUnNNiFi8NZSLw6F6SW+SLrt0VwQ@mail.gmail.com>
+	("erik =?utf-8?Q?elfstr=C3=B6m=22's?= message of "Tue, 21 Apr 2015 20:21:37
+ +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: FA88EF9C-E858-11E4-8343-83E09F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267546>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267547>
 
-[+mailing list]
+erik elfstr=C3=B6m <erik.elfstrom@gmail.com> writes:
 
-On Tue, Apr 21, 2015 at 11:20 AM, Adam <adamgsteel@gmail.com> wrote:
-> I'm using git version 2.3.2 (Apple Git-55).
+> Ok, thanks for looking into this.
+>
+> I have no well founded opinions on the implementation but I do
+> think the performance tests would be more meaningful if the
+> setup/cleanup code could be removed from the timed section.
+> If the community agrees on an implementation I would be happy
+> to convert the new tests, either directly in this series or as a foll=
+ow
+> up if that is preferred.
 
-We should loop in the maintainers of the Apple Git version, they'd know
-what changed in git about two weeks ago.
-I have no idea who that is though.
+Let's not delay the fix and do the perf thing as a follow-up series,
+possibly an even independent one.
+
+In other words, let's keep the topics small.
 
 >
-> That explains why I can't find the index.lock file, since the error that was
-> thrown deleted it. I'm still not sure what to do about this, though.
-
-Complain at the right people so it gets fixed. ;)
-
+> /Erik
 >
-> Thanks for responding.
->
-> Adam
->
+> On Tue, Apr 21, 2015 at 12:14 AM, Thomas Gummerer <t.gummerer@gmail.c=
+om> wrote:
+>> On 04/18, Erik Elfstr=C3=B6m wrote:
+>>> * Still have issues in the performance tests, see comments
+>>>   from Thomas Gummerer on v2
+>>
+>> I've looked at the "modern" style tests again, and I don't the code
+>> churn is worth it just for using them for the performance tests.  If
+>> anyone wants to take a look at the code, it's at
+>> github.com/tgummerer/git tg/perf-lib.
+>>
+>> I think adding the test_perf_setup_cleanup command would make more
+>> sense in this case.  If you want I can send a patch for that.
