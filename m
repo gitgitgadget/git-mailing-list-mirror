@@ -1,105 +1,72 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v8 2/4] cat-file: teach cat-file a '--literally' option
-Date: Tue, 21 Apr 2015 15:40:35 -0400
-Message-ID: <CAPig+cRmPv5u_OCtUPNoYOUcOoa9xn++Xw-rkD6EP6_eq0YvEQ@mail.gmail.com>
-References: <552E9816.6040502@gmail.com>
-	<1429117174-4968-1-git-send-email-karthik.188@gmail.com>
-	<20150419002807.GA11634@hashpling.org>
-	<xmqq7ft7nz8l.fsf@gitster.dls.corp.google.com>
-	<20150420074433.GA30422@hashpling.org>
-	<8CBC4DEB-EC50-4DD7-A687-443AA93A96A8@gmail.com>
-	<20150420091920.GA31279@hashpling.org>
-	<553520CF.6070304@gmail.com>
-	<20150421101641.GA13202@hashpling.org>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCHv2] refs.c: enable large transactions
+Date: Tue, 21 Apr 2015 12:56:34 -0700
+Message-ID: <CAGZ79kYyvRb=T5JFp7-DL1HiAm2rUTDuGi-0UZG-F5iGHBOorA@mail.gmail.com>
+References: <xmqqpp6xgy50.fsf@gitster.dls.corp.google.com>
+	<1429643171-27530-1-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: karthik nayak <karthik.188@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
+Cc: Stefan Beller <sbeller@google.com>
+To: Junio C Hamano <gitster@pobox.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
 	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Charles Bailey <charles@hashpling.org>
-X-From: git-owner@vger.kernel.org Tue Apr 21 21:40:42 2015
+X-From: git-owner@vger.kernel.org Tue Apr 21 21:57:05 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yke2D-0002K3-Oh
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Apr 2015 21:40:42 +0200
+	id 1YkeHw-00040R-UD
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Apr 2015 21:56:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755971AbbDUTkh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Apr 2015 15:40:37 -0400
-Received: from mail-ig0-f180.google.com ([209.85.213.180]:34941 "EHLO
-	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755584AbbDUTkg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Apr 2015 15:40:36 -0400
-Received: by igbyr2 with SMTP id yr2so96116367igb.0
-        for <git@vger.kernel.org>; Tue, 21 Apr 2015 12:40:35 -0700 (PDT)
+	id S933250AbbDUT4o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Apr 2015 15:56:44 -0400
+Received: from mail-ie0-f175.google.com ([209.85.223.175]:34822 "EHLO
+	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933239AbbDUT4f (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Apr 2015 15:56:35 -0400
+Received: by iejt8 with SMTP id t8so22255462iej.2
+        for <git@vger.kernel.org>; Tue, 21 Apr 2015 12:56:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=HSIs66p1G7atuyuDBhw4Z1fjFqmnPks234JOrxNDP1Q=;
-        b=A2950V/qGBCoB7mXsZtjvGCxAyAn7ckbA1WgIs3+cCUJFuBbQN7UZ9KJD5GHljoaar
-         L1NUUKXR4poLz5VRT9POFEsLLAeKGubSBOFVlKeLuewlGKTpbCnC/nzZ+xIMgfCfTAGK
-         5orNmt1WkoFX/l3cebQXCiXlJwD+nJoJG9Kfd6ZYSFASyMHzc32iz6jYf2AT64PyLVa6
-         050v7FJzKzokZo6+AIGAIfYz89J9Fxq7ivE+7Tk+C388vaDskYNz2n4cTXvW/6/Chgun
-         n4r8fPVe+j5nneYV0RNb1QArCDqoX8jSEzlzLz8N2NKACAS15druWf6T/DhfFG0Jt4xj
-         /c9A==
-X-Received: by 10.50.66.230 with SMTP id i6mr6581969igt.22.1429645235785; Tue,
- 21 Apr 2015 12:40:35 -0700 (PDT)
-Received: by 10.107.28.132 with HTTP; Tue, 21 Apr 2015 12:40:35 -0700 (PDT)
-In-Reply-To: <20150421101641.GA13202@hashpling.org>
-X-Google-Sender-Auth: bo3hz7ldtWTWKpX7S9IzMl9vWhs
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=VSiNyx3YEFdh52RsPRqaQPN0fORpzyLFwj4/ofFSd9c=;
+        b=g13FfXRqVBfr5riLfipilx4dUaQK2IvH0oE4FUczn8TEJBC7pgtK+4Yd4UB+UK16hQ
+         +IThmur/hqP7brCDrYJo8dnrCK7B7eJkt/19u6yt76iGYYp3GrP49RuO3IT6vc1XImgD
+         AhjVQwN1RO12BazhYp93WSuByn+PMFgriNpMC8kIG3vg61FSda1t50jsvDyFafpB9OW3
+         TMg8PdCnaRnWTYoe+TRgrDG8syDxL8NY01EvodAB9EvwW6tN1eFNG7DsLBLr/HCFlPO0
+         NMZY+vuYaWCL1j3Jk5P8KQvWQd4NoeX/hX83jiL9ilNgoTWuUF02TlN1e3Y5Q4/e/SZP
+         4WeQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=VSiNyx3YEFdh52RsPRqaQPN0fORpzyLFwj4/ofFSd9c=;
+        b=al/FHgSXd8IqD3mOf7E5dF6zZjptQaxq/eNkQ8ROgphVvLIFWGPI71LmYnl56THjKe
+         b8RHAv4fYxjz7QVgbd0zfFbeJzZEht1xW+R7/cK6xrKEu6J6tMZKLW51Tf1GUVRBZxTa
+         5BoIFRCOJv9WtW6t8OlgMdMsAZpHMmpvrrRK0t/xB4XPMpx9k6T2ywrm15Z98+E56TCh
+         llrxlvUUNyzcYXCjxNicC9MTKhfx/t+CFJjtParnEf57qjiPezHTnWtBcICkcl4Kl5Va
+         beh74nnSWH0D/kvUvEq2RAYl5+/C3gbvqx7ixJhdap+UyJEl6bVirSWmmcoTwnlTmA47
+         RUhg==
+X-Gm-Message-State: ALoCoQmfMkYLi/RQKipjhM29qiMuG+LInPpIe5p8KWnfZz6n+wvZhjaQmTgbS6tAMqUBcT196xaa
+X-Received: by 10.107.170.135 with SMTP id g7mr31941388ioj.2.1429646195023;
+ Tue, 21 Apr 2015 12:56:35 -0700 (PDT)
+Received: by 10.107.46.22 with HTTP; Tue, 21 Apr 2015 12:56:34 -0700 (PDT)
+In-Reply-To: <1429643171-27530-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267551>
 
-On Tue, Apr 21, 2015 at 6:16 AM, Charles Bailey <charles@hashpling.org> wrote:
-> On Mon, Apr 20, 2015 at 09:22:47PM +0530, karthik nayak wrote:
->> On 04/20/2015 02:49 PM, Charles Bailey wrote:
->> >As far as I could tell - and please correct me if I've misunderstood,
->> >cat-file's literally is about dealing with unrecognized types whereas
->> >hash-object's --literally is about both creating objects with bad types
->> >and invalid objects of "recognized" types. This latter scenario is where
->> >the option name "literally" makes the most sense.
->> Yes. What you're saying is correct, but it also makes sense as we're asking
->> "cat-file" to give us information about the object irrespective of the type of the
->> object, hence asking it to literally print the information. Also it stays as a compliment
->> to "hash-object --literally", which is already existing.
 >
-> OK, I think you've hit the main point which I was trying to make.
->
-> To me, "literally" means "without transformation" or "exactly as
-> written/recorded/transmitted" (which -t/-s do anyway) and doesn't really
-> encompass the "irrespective of type" meaning that it has been given here.
->
-> In any case, I've made my point so I won't labour it any further. I
-> think that --no-validation or --allow-any-type might be more accurate
-> but if everyone else is happy enough with --literally then I'm happy to
-> live with that too.
+> * Removed unneeded braces in the condition to check if we want to close
+>   the lock file.
+> * made the counter for the remaining fds an unsigned int. That is what
+>   get_max_fd_limit() returns, so there are no concerns for an overflow.
+>   Also it cannot go below 0 any more.
+> * moved the initialisation of the remaining_fds a bit down and added a comment
 
-It's easy to be blinded into thinking that cat-file's new option
-should be named --literally since it was inspired by the --literally
-option of hash-object, but indeed it may not be the best choice.
-
-In addition to your above suggestions (and --unchecked which you
-proposed earlier), if we take inspiration from existing Git options,
-perhaps one of the following (or something derived from them) would be
-better?
-
-    --force
-    --ignore-errors
-    --no-check
-    --unsafe
-    --no-strict
-    --aggressive
-
-Or, some pure made-up bike-shedding?
-
-    --try-harder
-    --allow-bogus-type
-    --ignore-bogus-type
-    --loose
-    --gently
+* Once again this replaces the last patch on top of
+origin/sb/remove-fd-from-ref-lock
