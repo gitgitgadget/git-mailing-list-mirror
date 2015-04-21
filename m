@@ -1,122 +1,105 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: [BUG] Git does not convert CRLF=>LF on files with \r not before
- \n
-Date: Tue, 21 Apr 2015 21:28:11 +0200
-Message-ID: <5536A4CB.9050000@web.de>
-References: <CAFFOgCUTxnbL7vJpf1Hw39CJL_p2raDZ2a3DehhYhdbkVyi2fw@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v8 2/4] cat-file: teach cat-file a '--literally' option
+Date: Tue, 21 Apr 2015 15:40:35 -0400
+Message-ID: <CAPig+cRmPv5u_OCtUPNoYOUcOoa9xn++Xw-rkD6EP6_eq0YvEQ@mail.gmail.com>
+References: <552E9816.6040502@gmail.com>
+	<1429117174-4968-1-git-send-email-karthik.188@gmail.com>
+	<20150419002807.GA11634@hashpling.org>
+	<xmqq7ft7nz8l.fsf@gitster.dls.corp.google.com>
+	<20150420074433.GA30422@hashpling.org>
+	<8CBC4DEB-EC50-4DD7-A687-443AA93A96A8@gmail.com>
+	<20150420091920.GA31279@hashpling.org>
+	<553520CF.6070304@gmail.com>
+	<20150421101641.GA13202@hashpling.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: Alexandre Garnier <zigarn@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 21 21:28:25 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: karthik nayak <karthik.188@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Charles Bailey <charles@hashpling.org>
+X-From: git-owner@vger.kernel.org Tue Apr 21 21:40:42 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YkdqJ-0003O2-RH
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Apr 2015 21:28:24 +0200
+	id 1Yke2D-0002K3-Oh
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Apr 2015 21:40:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756010AbbDUT2R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Apr 2015 15:28:17 -0400
-Received: from mout.web.de ([212.227.17.11]:59508 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756000AbbDUT2Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Apr 2015 15:28:16 -0400
-Received: from macce.local ([217.211.68.12]) by smtp.web.de (mrweb103) with
- ESMTPSA (Nemesis) id 0Maaur-1Z4nFl0FGj-00K5K4; Tue, 21 Apr 2015 21:28:12
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
-In-Reply-To: <CAFFOgCUTxnbL7vJpf1Hw39CJL_p2raDZ2a3DehhYhdbkVyi2fw@mail.gmail.com>
-X-Provags-ID: V03:K0:VihWmWCkPMSGALT2O5XdBFRokrgC//Fbv8KKslYUyDN6qIyqi/T
- mlLUHHSzdUP9N9gUVSmjvu3OgwzwTS6GWusBSLbu18j0oVxXWILFP9HWIUzNjvcKIxFEXAr
- yOHjJ+WWEHVR+ovcOLR7ZOxKCGkGEEId5EEf0UkgXYigbS5l8r3/hYOhuvc00yRZK+mnfxE
- GHtncQ6IxqoVScuQdUfvw==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1755971AbbDUTkh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Apr 2015 15:40:37 -0400
+Received: from mail-ig0-f180.google.com ([209.85.213.180]:34941 "EHLO
+	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755584AbbDUTkg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Apr 2015 15:40:36 -0400
+Received: by igbyr2 with SMTP id yr2so96116367igb.0
+        for <git@vger.kernel.org>; Tue, 21 Apr 2015 12:40:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=HSIs66p1G7atuyuDBhw4Z1fjFqmnPks234JOrxNDP1Q=;
+        b=A2950V/qGBCoB7mXsZtjvGCxAyAn7ckbA1WgIs3+cCUJFuBbQN7UZ9KJD5GHljoaar
+         L1NUUKXR4poLz5VRT9POFEsLLAeKGubSBOFVlKeLuewlGKTpbCnC/nzZ+xIMgfCfTAGK
+         5orNmt1WkoFX/l3cebQXCiXlJwD+nJoJG9Kfd6ZYSFASyMHzc32iz6jYf2AT64PyLVa6
+         050v7FJzKzokZo6+AIGAIfYz89J9Fxq7ivE+7Tk+C388vaDskYNz2n4cTXvW/6/Chgun
+         n4r8fPVe+j5nneYV0RNb1QArCDqoX8jSEzlzLz8N2NKACAS15druWf6T/DhfFG0Jt4xj
+         /c9A==
+X-Received: by 10.50.66.230 with SMTP id i6mr6581969igt.22.1429645235785; Tue,
+ 21 Apr 2015 12:40:35 -0700 (PDT)
+Received: by 10.107.28.132 with HTTP; Tue, 21 Apr 2015 12:40:35 -0700 (PDT)
+In-Reply-To: <20150421101641.GA13202@hashpling.org>
+X-Google-Sender-Auth: bo3hz7ldtWTWKpX7S9IzMl9vWhs
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267549>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267550>
 
-On 2015-04-21 15.51, Alexandre Garnier wrote:
-> Here is a test:
-> 
-> git init -q crlf-test
-> cd crlf-test
-> echo '*       text=auto' > .gitattributes
-> git add .gitattributes
-> git commit -q -m "Normalize EOL"
-> echo -ne 'some content\r\nother \rcontent with CR\r\ncontent\r\nagain
-> content with\r\r\n' > inline-cr.txt
-> echo "Working directory content:"
-> cat -A inline-cr.txt
-> echo
-> git add inline-cr.txt
-> echo "Indexed content:"
-> git show :inline-cr.txt | cat -A
-> 
-> Result
-> ------
-> File content:
-> some content^M$
-> other ^Mcontent with CR^M$
-> content^M$
-> again content with^M^M$
-> 
-> Indexed content:
-> some content^M$
-> other ^Mcontent with CR^M$
-> content^M$
-> again content with^M^M$
-> 
-> Expected result
-> ---------------
-> File content:
-> some content^M$
-> other ^Mcontent with CR^M$
-> content^M$
-> again content with^M^M$
-> 
-> Indexed content:
-> some content$
-> other ^Mcontent with CR$
-> content$
-> again content with^M$
-> # or even 'again content with$' for this last line
-> 
-> If you remove the \r that are not at the end of the lines, EOL are
-> converted as expected:
-> File content:
-> some content^M$
-> other content with CR^M$
-> content^M$
-> again content with^M$
-> 
-> Indexed content:
-> some content$
-> other content with CR$
-> content$
-> again content with$
-> 
+On Tue, Apr 21, 2015 at 6:16 AM, Charles Bailey <charles@hashpling.org> wrote:
+> On Mon, Apr 20, 2015 at 09:22:47PM +0530, karthik nayak wrote:
+>> On 04/20/2015 02:49 PM, Charles Bailey wrote:
+>> >As far as I could tell - and please correct me if I've misunderstood,
+>> >cat-file's literally is about dealing with unrecognized types whereas
+>> >hash-object's --literally is about both creating objects with bad types
+>> >and invalid objects of "recognized" types. This latter scenario is where
+>> >the option name "literally" makes the most sense.
+>> Yes. What you're saying is correct, but it also makes sense as we're asking
+>> "cat-file" to give us information about the object irrespective of the type of the
+>> object, hence asking it to literally print the information. Also it stays as a compliment
+>> to "hash-object --literally", which is already existing.
+>
+> OK, I think you've hit the main point which I was trying to make.
+>
+> To me, "literally" means "without transformation" or "exactly as
+> written/recorded/transmitted" (which -t/-s do anyway) and doesn't really
+> encompass the "irrespective of type" meaning that it has been given here.
+>
+> In any case, I've made my point so I won't labour it any further. I
+> think that --no-validation or --allow-any-type might be more accurate
+> but if everyone else is happy enough with --literally then I'm happy to
+> live with that too.
 
-First of all, thanks for the info.
+It's easy to be blinded into thinking that cat-file's new option
+should be named --literally since it was inspired by the --literally
+option of hash-object, but indeed it may not be the best choice.
 
-The current implementation of Git does an auto-detection
-if a file is text or binary.
+In addition to your above suggestions (and --unchecked which you
+proposed earlier), if we take inspiration from existing Git options,
+perhaps one of the following (or something derived from them) would be
+better?
 
-For a file which is "suspected to be text", it is expected to have either LF or CRLF as
-line endings, but a "bare CR" make Git wonder:
-Should this still be treated as a text file ?
-If yes, should the CR be kept as is, or should it be converted into LF (or CRLF) ?
+    --force
+    --ignore-errors
+    --no-check
+    --unsafe
+    --no-strict
+    --aggressive
 
-The current implementation may simply be explained by the fact that nobody has so far asked 
-to treat this file as "text", so the implementation assumes it to be binary.
+Or, some pure made-up bike-shedding?
 
-(Which makes the code a little bit easier, at the time it was written)
-
-So the status of today is that you can force Git to let the CR as is,
-when you specify that the file is "text".
-
-Is there a real life problem behind it ?
-And what should happen to the CRs ?
+    --try-harder
+    --allow-bogus-type
+    --ignore-bogus-type
+    --loose
+    --gently
