@@ -1,61 +1,64 @@
-From: Vitor Antunes <vitor.hda@gmail.com>
-Subject: [PATCH V3 0/2] git-p4: improve client path detection when branches are used
-Date: Tue, 21 Apr 2015 23:49:28 +0100
-Message-ID: <1429656570-21825-1-git-send-email-vitor.hda@gmail.com>
-Cc: Luke Diamand <luke@diamand.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Vitor Antunes <vitor.hda@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 22 00:50:41 2015
+From: Jeff King <peff@peff.net>
+Subject: Re: How do I resolve conflict after popping stash without adding the
+ file to index?
+Date: Tue, 21 Apr 2015 18:52:29 -0400
+Message-ID: <20150421225228.GB26322@peff.net>
+References: <5535697E.2030204@yandex.ru>
+ <xmqqsibujyit.fsf@gitster.dls.corp.google.com>
+ <553583C0.6090404@yandex.ru>
+ <20150421212922.GC13230@peff.net>
+ <5536D099.1000103@yandex.ru>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Dmitry Gutov <dgutov@yandex.ru>
+X-From: git-owner@vger.kernel.org Wed Apr 22 00:52:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ykh04-0006l0-Qv
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Apr 2015 00:50:41 +0200
+	id 1Ykh1y-0007xI-So
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Apr 2015 00:52:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965154AbbDUWug (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Apr 2015 18:50:36 -0400
-Received: from mail-wg0-f46.google.com ([74.125.82.46]:34817 "EHLO
-	mail-wg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965069AbbDUWuI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Apr 2015 18:50:08 -0400
-Received: by wgyo15 with SMTP id o15so228940765wgy.2
-        for <git@vger.kernel.org>; Tue, 21 Apr 2015 15:50:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=5C6rCmkKAwAXUk5j9gJgwPyl1z1niH9LWVqpePWnceE=;
-        b=IZxWkmJ1E0PyMQltyOxNNVAsIWTfoKKEgNIc71ttYsMWwmHTCPSsLenPVWT3uD17f3
-         jZbpyufG+Mnt9V4C5XV39+d48ymElE0yqAcvFRAEy84lDzgPV85KHq8te6pTIZZmpkV5
-         B+sjtOvVqUh1NeCFdCq5TSbKMOM4lWLAV/VojhJBCmyobn0I1tINT+yLgtRq+OPDXTJr
-         a7imsv4Ou8OSdctO02YW6yLLKJRzV6RKWB/vJmRySa9iB6z/HRaxSdcX54n3JN8cSBpd
-         urTR+56KsgpLZsdgCLA8IrjVlgm3Ugquia6+F9FHd6vsGu/Yspk/sRXJ4i/P2fdQM6g0
-         ujMg==
-X-Received: by 10.180.188.193 with SMTP id gc1mr486446wic.7.1429656607696;
-        Tue, 21 Apr 2015 15:50:07 -0700 (PDT)
-Received: from localhost.localdomain (88.41.108.93.rev.vodafone.pt. [93.108.41.88])
-        by mx.google.com with ESMTPSA id dg8sm4573201wjc.9.2015.04.21.15.50.06
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 21 Apr 2015 15:50:07 -0700 (PDT)
-X-Mailer: git-send-email 1.7.10.4
+	id S965266AbbDUWwd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Apr 2015 18:52:33 -0400
+Received: from cloud.peff.net ([50.56.180.127]:48347 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S965256AbbDUWwb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Apr 2015 18:52:31 -0400
+Received: (qmail 10069 invoked by uid 102); 21 Apr 2015 22:52:31 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 21 Apr 2015 17:52:31 -0500
+Received: (qmail 5647 invoked by uid 107); 21 Apr 2015 22:52:57 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 21 Apr 2015 18:52:57 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 21 Apr 2015 18:52:29 -0400
+Content-Disposition: inline
+In-Reply-To: <5536D099.1000103@yandex.ru>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267565>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267566>
 
-The updates introduced in the third revision of these two patches consist only
-on updates to the commit messages to better clarify what they implement.
+On Wed, Apr 22, 2015 at 01:35:05AM +0300, Dmitry Gutov wrote:
 
-Vitor Antunes (2):
-  t9801: check git-p4's branch detection with client spec enabled
-  git-p4: improve client path detection when branches are used
+> >But we seem to skip that safety valve when the content has been staged,
+> >which seems questionable to me (technically we are slightly better off
+> >than the protected case because "bbbbb" was written to a git blob
+> >object, so you can recover it.  But it may be difficult to find the
+> >correct blob in the object database).
+> 
+> Any suggestions how to restore that content in the index programmatically?
+> If it's non-trivial to do, maybe that is indeed a bug, and 'git stash pop'
+> should abort before creating the conflict.
 
- git-p4.py                |   13 ++++--
- t/t9801-git-p4-branch.sh |  106 ++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 115 insertions(+), 4 deletions(-)
+Right, I am suggesting that latter: that stash should abort if the index
+has modified entries. The abort for modified working tree files is done
+by git-merge, which can be selective about which entries will be changed
+(since it knows which ones need written).  I haven't thought hard enough
+to say whether it should be doing the same for the index (i.e., whether
+this is a "merge" problem or a "stash" problem).
 
--- 
-1.7.10.4
+-Peff
