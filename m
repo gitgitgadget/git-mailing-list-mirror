@@ -1,108 +1,101 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCHv2] refs.c: enable large transactions
-Date: Wed, 22 Apr 2015 22:12:17 +0200
-Message-ID: <553800A1.3010903@alum.mit.edu>
-References: <xmqqpp6xgy50.fsf@gitster.dls.corp.google.com>	<1429643171-27530-1-git-send-email-sbeller@google.com>	<5537AC00.5060208@alum.mit.edu> <CAGZ79kbb=UUVq8np-ndiMS_id5GaBHpDafDe9ZB3TvsK3xYe_g@mail.gmail.com>
+From: Dan Langille <dlangille@sourcefire.com>
+Subject: forcing a user@ into the URL if not present
+Date: Wed, 22 Apr 2015 17:06:41 -0300
+Message-ID: <CABU7BddjAZOk0LyybQ8phO0S4705MrZtLSYEsjzUBKUD=H++RQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Wed Apr 22 22:12:30 2015
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 22 22:14:43 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yl10X-0003pF-Gp
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Apr 2015 22:12:29 +0200
+	id 1Yl12f-0005q5-VI
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Apr 2015 22:14:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754702AbbDVUMZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Apr 2015 16:12:25 -0400
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:52398 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754379AbbDVUMY (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Apr 2015 16:12:24 -0400
-X-AuditID: 1207440d-f79976d000005643-52-553800a43e84
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 57.58.22083.4A008355; Wed, 22 Apr 2015 16:12:20 -0400 (EDT)
-Received: from [192.168.69.130] (p4FC971D5.dip0.t-ipconnect.de [79.201.113.213])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t3MKCHHv002613
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Wed, 22 Apr 2015 16:12:19 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.6.0
-In-Reply-To: <CAGZ79kbb=UUVq8np-ndiMS_id5GaBHpDafDe9ZB3TvsK3xYe_g@mail.gmail.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprIKsWRmVeSWpSXmKPExsUixO6iqLuEwSLUYMVEfouuK91MFg29V5gt
-	Nm9uZ3Fg9liwqdTj4iVlj8+b5AKYo7htkhJLyoIz0/P07RK4M+6/OMlY8JK/ovPmTbYGxkvc
-	XYycHBICJhK3nl5lh7DFJC7cW8/WxcjFISRwmVHi4ctvrBDOBSaJSZ9/s4JU8QpoSxxobQfr
-	YBFQlVjX0cQGYrMJ6Eos6mlmArFFBYIkWq9NZYSoF5Q4OfMJC4gtIqAmMXPVbLB6ZoEYiUdH
-	usFmCgtYSJw/fxJq2TVGiW1TW8EaOAUCJfadeMgM0aAu8WfeJShbXqJ562zmCYwCs5DsmIWk
-	bBaSsgWMzKsY5RJzSnN1cxMzc4pTk3WLkxPz8lKLdI30cjNL9FJTSjcxQoKXdwfj/3UyhxgF
-	OBiVeHgDWM1DhVgTy4orcw8xSnIwKYnyev0HCvEl5adUZiQWZ8QXleakFh9ilOBgVhLhTfkA
-	lONNSaysSi3Kh0lJc7AoifOqLVH3ExJITyxJzU5NLUgtgsnKcHAoSfBWgAwVLEpNT61Iy8wp
-	QUgzcXCCDOeSEilOzUtJLUosLcmIB0VrfDEwXkFSPEB7HUHaeYsLEnOBohCtpxgVpcR5F4Ik
-	BEASGaV5cGNhKekVozjQl8K8yiBVPMB0Btf9CmgwE9DguG0mIINLEhFSUg2MxVqhPveO270q
-	//DX9/jEHJMay3OtobZnQ0w7RCxOcNlxxSd6xW/nUhGfU7tZf2Z/08701bf2ZIgtLlylvy32
-	gPz9NCtpRvaZL6UfLrHgrd5TzfM0+yl/ZqD0L98ojVV8yuXv7dKuGtvsUXF9ofxR 
+	id S1752360AbbDVUOh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Apr 2015 16:14:37 -0400
+Received: from na3sys009aog138.obsmtp.com ([74.125.149.19]:36935 "EHLO
+	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751459AbbDVUOg (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Apr 2015 16:14:36 -0400
+X-Greylist: delayed 474 seconds by postgrey-1.27 at vger.kernel.org; Wed, 22 Apr 2015 16:14:36 EDT
+Received: from mail-ie0-f176.google.com ([209.85.223.176]) (using TLSv1) by na3sys009aob138.postini.com ([74.125.148.12]) with SMTP
+	ID DSNKVTgBLOhbEb0fEYSNmlyQhRvLtTg+Er0T@postini.com; Wed, 22 Apr 2015 13:14:36 PDT
+Received: by iecrt8 with SMTP id rt8so46372676iec.0
+        for <git@vger.kernel.org>; Wed, 22 Apr 2015 13:14:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=sourcefire.com; s=google;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=hpmXycgpfoMshX++wsnb+9Be4Tl7ryF/WYFomaHCRxE=;
+        b=LUid0DbzFVUnXkN4GCf0x9oqa6YIKTxSyGl7x5sAAq7hhcUMQQtcy8ELW7K8b8Pwl/
+         ib4tL8iXXHEQClnxB90cVdKe91Ihq8LCH9kUd7T61ZuIP8C7DgdxUi7hysR8gJZ9I+kl
+         qt69yDRCs3yzJeRyKwUNQmllN7nE2gVUnPbpw=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=hpmXycgpfoMshX++wsnb+9Be4Tl7ryF/WYFomaHCRxE=;
+        b=Uthmk6nHuwharDouw9+vfsteHQh/OxSIzFzRUOfRspnJdgGHgafQ8Ad83CoSUaK8eH
+         LbNr1ryhtfMpMkHec+1tRox/9ySm1O/pNFoued9+l6rrsaKG5ybkim/Ubg7XMjwp9Z1W
+         kC6dEp6YXBRCDse0ZeEXvzOEjJ++ON2+pbo5JOXKctA6T30NhUYeFzTAO8Mz5/g3CKVb
+         8PdDML0ZoqmAJXJg9O0Mv2Hdq6x8wrCw017505XZtJaWh51G3byBVOv+BaU7CS1GMuGn
+         7xuL3CYQ7g1r+wXxgY5MjYPiZgYc6Uk4X4WVP/xUAT7ouSBzFWsfK65mrlTCfgDx9J8C
+         2xqA==
+X-Received: by 10.107.37.132 with SMTP id l126mr38578404iol.42.1429733202138;
+        Wed, 22 Apr 2015 13:06:42 -0700 (PDT)
+X-Gm-Message-State: ALoCoQmb+kaU3o37qqm1/HiOyuGu6MGAMSkfoLac06M5jo9lB6cGQyPdtvEw/TVEwZuqVxVaJiWLESSFH1RTDHSGYRRxFWzcwLJ24mZqyUSSZTYFcRTsVD/2lHldfBSKlnV9/2JEWwnMDQM0SRw6ku4LFNBZrVj0Zg==
+X-Received: by 10.107.37.132 with SMTP id l126mr38578380iol.42.1429733201938;
+ Wed, 22 Apr 2015 13:06:41 -0700 (PDT)
+Received: by 10.107.137.95 with HTTP; Wed, 22 Apr 2015 13:06:41 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267636>
 
-On 04/22/2015 09:09 PM, Stefan Beller wrote:
-> On Wed, Apr 22, 2015 at 7:11 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
->>> +     if (lock->lk->fd == -1)
->>> +             reopen_lock_file(lock->lk);
->>
->> You should check that reopen_lock_file() was successful.
-> 
-> ok
-> 
-> 
->>> @@ -3762,6 +3779,10 @@ int ref_transaction_commit(struct ref_transaction *transaction,
->>>                                   update->refname);
->>>                       goto cleanup;
->>>               }
->>> +             if (remaining_fds > 0)
->>> +                     remaining_fds--;
->>> +             else
->>> +                     close_lock_file(update->lock->lk);
->>
->> I consider this code a stopgap, and simplicity is more important than
->> optimization.
-> 
-> Can you explain a bit why you think this is a stopgap?
+Hello,
 
-At the point the lockfile is created, we have all the information we
-need to write the new SHA-1 to it and close it immediately. It seems
-more straightforward to do it that way than the way it is done in the
-current code, where the locking and writing are separated in time and
-space and now there is the small extra complication of
-maybe-closing-maybe-not. But getting to the final destination requires
-more refactoring than would be prudent for the upcoming release.
+I'm using git 2.3.2 with Kerberos for authentication and gito-lite for
+authorization.
 
-In other words, I think your fix is OK but that the whole area of code
-has still not reached its final form. I am working on a patch series
-that does what I have in mind, but it's not ready yet. As I remember I
-got stuck when I realized that the reflog for HEAD is updated somewhere
-out of the blue without proper locking and I haven't gotten around to
-sorting it out yet.
+This works:
 
-> [...]
->> But just for the sake of discussion, if we planned to keep
->> this code around, it could be improved by not wasting open file
->> descriptors for references that are only being verified or deleted, like so:
-> 
-> I'll pick that up for the resend.
+$ git clone https://dvl@ repo.example.org/git/testing
+Cloning into 'testing'...
+warning: You appear to have cloned an empty repository.
+Checking connectivity... done.
 
-OK.
+My goal: have it work without supplying dvl@ as shown here:
 
-Michael
+$ git clone https://repo.example.org/git/testing
+Cloning into 'testing'...
+Username for 'https://repo.example.org':
+
+I don't want to be prompted for a password.  I want Kerberos to kick in.
+
+Following http://git-scm.com/docs/gitcredentials, the following seems to
+have nil effect.  Anyone used this feature already?
+
+  git config --global credential.https://repo.example.org.username dvl
+
+$ cat ~/.gitconfig
+[credential "https://repo.example.org"]
+username = dvl
+[http]
+sslCAInfo = /usr/local/etc/trusted-certificates.pem
+
+With the above, I still get prompted for a password
+
+Given my use of Kerberos for authorization, is this option feasible?
+
+Should I be taking a different approach?
+
+Thank you.
 
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
+Dan Langille
+Infrastructure & Operations
+Talos Group
+Sourcefire, Inc.
