@@ -1,104 +1,115 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCHv2] refs.c: enable large transactions
-Date: Wed, 22 Apr 2015 12:09:43 -0700
-Message-ID: <CAGZ79kbb=UUVq8np-ndiMS_id5GaBHpDafDe9ZB3TvsK3xYe_g@mail.gmail.com>
-References: <xmqqpp6xgy50.fsf@gitster.dls.corp.google.com>
-	<1429643171-27530-1-git-send-email-sbeller@google.com>
-	<5537AC00.5060208@alum.mit.edu>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Apr 22 21:09:54 2015
+From: Patrick Sharp <jakanapes@gmail.com>
+Subject: Re: [BUG] having 'plink' anywhere in the GIT_SSH environment variables sets putty = true
+Date: Wed, 22 Apr 2015 14:12:53 -0500
+Message-ID: <F1AB6016-DA88-446C-84E9-1BD42436843D@gmail.com>
+References: <2A6FFC1D-5479-4DCA-A5E5-FF92DE0AA552@gmail.com> <6c2a6b53e8e6e019b145dddc67a9d2ca@www.dscho.org>
+Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2098\))
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Apr 22 21:13:24 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yl01x-0004Ym-9G
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Apr 2015 21:09:53 +0200
+	id 1Yl05K-0007Jf-Pw
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Apr 2015 21:13:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966047AbbDVTJr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Apr 2015 15:09:47 -0400
-Received: from mail-ie0-f171.google.com ([209.85.223.171]:36278 "EHLO
-	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S966025AbbDVTJo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Apr 2015 15:09:44 -0400
-Received: by iebrs15 with SMTP id rs15so45047614ieb.3
-        for <git@vger.kernel.org>; Wed, 22 Apr 2015 12:09:43 -0700 (PDT)
+	id S1757836AbbDVTNB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Apr 2015 15:13:01 -0400
+Received: from mail-ob0-f177.google.com ([209.85.214.177]:33777 "EHLO
+	mail-ob0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753710AbbDVTM5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Apr 2015 15:12:57 -0400
+Received: by oblw8 with SMTP id w8so178789961obl.0
+        for <git@vger.kernel.org>; Wed, 22 Apr 2015 12:12:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=JNdWoFYlqWbFa3iSUC3yeCs8JEeBktrGkJg5lyVVjz4=;
-        b=Aq3DqGZ7nbZuzvoNIBz0nvTwO/gNjLBnVuI2rv/2aiS5qTqD73qeuuH1kdmgs17Crm
-         bR10OZ5aok9PeO2PHDFVNEPhA8cfKduUmSibrOLaB40Gyys+rJDQkVyfLH2Kg3vVRxe/
-         nirnmwOS33cjt6xlL7LnE8iEHOwtEuLwoCm6DOmtfsUN9QQMSH82upAO7TgyzHabnRah
-         WHApVZqRDsi0lzlV7MyFXXdFA9wHQPUoX2Tl8g9i7Bjo/4NE4GROhNNs8RYKm3ViSdt/
-         l63yEF0LqU/zart5HTQO5ZnUuJoVRq2QLniwihg7tiRk0rGZ5uVLVkl/PW9HwCLcsyPF
-         rcnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=JNdWoFYlqWbFa3iSUC3yeCs8JEeBktrGkJg5lyVVjz4=;
-        b=CcLV6ibR7+KXjitF1RMUsfbAw6tdLDsxU0Zc4g8CXoKfLwmyQsHO28U1Z12j4QrRTK
-         2x5CYz6VpIwDa4Sxy76pA9ZOU05XYEZAjncDp4ln61f+DJHD1TgQFAjkBQM7dUKYeo+z
-         lJ7RcNG8+XcBDJb7q9tLsWCZ/6P2m0snFdGlPbJEOIZAjoFHFm0gLdaSTJjTXroarF+5
-         OzMan79F3mzjKFYWGDYCgQfccSrIIkwvx2JY3Ea8Lj3jSplSAFyIxRjWzQaULtKifqsz
-         Fz7PQB1rjJFw9jrYxnsZUfvbdv0Pz5vI240mOIuGXr3+QrUsGrBBeP8yUZ0dSqkppLEh
-         DJQA==
-X-Gm-Message-State: ALoCoQmq8eJ/I7VGvGfjfuPAygZKJagqBMvnGPrHhGN+ePrUZkQIiwhDCDMLyELDaSRRVeXXKDRg
-X-Received: by 10.42.30.141 with SMTP id v13mr11814605icc.76.1429729783694;
- Wed, 22 Apr 2015 12:09:43 -0700 (PDT)
-Received: by 10.107.46.22 with HTTP; Wed, 22 Apr 2015 12:09:43 -0700 (PDT)
-In-Reply-To: <5537AC00.5060208@alum.mit.edu>
+        d=gmail.com; s=20120113;
+        h=content-type:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=mv9VxzJJ1yd2YExyOWPjO8AhWToc73D2G6YJ9E4U1p0=;
+        b=Jf2CH8TxLa/ymD0LRore4G/TBU5vLU1O31tY6Jqc4xTBoIk1a5WXFa4xPCKrCG+nmO
+         BqK5xRYmrXXkAy0NK9FbbRpSDgRAzNqdlsIsEzrKilbiStzGNGmc2TiqyrXInZ82WIZi
+         VRxDEG09N6Gf7etayk+jzdlvhudwmHnycmLAv+ziuZo/OlE/3pDD6UmzgtzjdGOjF64l
+         eD5WMWaPC05e4TWrmXBvvbkAcozxL5BU/XFksfk/wUNMF1eLb+DylUFRUG9znPXJw8kH
+         X8Lxq8XYn240/2pWE79HOydseniMYupzu80+wfYdtIMeTM/dTNoM5GsSRl36PnuQovMs
+         ayYQ==
+X-Received: by 10.202.217.196 with SMTP id q187mr23919943oig.64.1429729976417;
+        Wed, 22 Apr 2015 12:12:56 -0700 (PDT)
+Received: from [172.31.57.107] ([199.227.134.115])
+        by mx.google.com with ESMTPSA id n1sm3628758obz.21.2015.04.22.12.12.55
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 22 Apr 2015 12:12:55 -0700 (PDT)
+In-Reply-To: <6c2a6b53e8e6e019b145dddc67a9d2ca@www.dscho.org>
+X-Mailer: Apple Mail (2.2098)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267611>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267612>
 
-On Wed, Apr 22, 2015 at 7:11 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
->> +     if (lock->lk->fd == -1)
->> +             reopen_lock_file(lock->lk);
->
-> You should check that reopen_lock_file() was successful.
+Johannes,
 
-ok
+You=E2=80=99re correct, looking back over it, I was pretty vague.
 
+In truth, we are not using Windows OR putty at all.  Running git on an =
+Ubuntu system, but we are setting the GIT_SSH environment variable to p=
+oint to a shell script to use.
 
->> @@ -3762,6 +3779,10 @@ int ref_transaction_commit(struct ref_transaction *transaction,
->>                                   update->refname);
->>                       goto cleanup;
->>               }
->> +             if (remaining_fds > 0)
->> +                     remaining_fds--;
->> +             else
->> +                     close_lock_file(update->lock->lk);
->
-> I consider this code a stopgap, and simplicity is more important than
-> optimization.
+Upon attempting to run git ls-remote, the system was spitting out getad=
+drinfo errors for =E2=80=98atch=E2=80=99 .
 
-Can you explain a bit why you think this is a stopgap?
+Setting GIT_TRACE=3D2 showed that -batch was being added to the git com=
+mand.
 
-Looking at the patch this looks simple to me, as there are no
-huge pain points involved. (Compared to [1] as we'd change a lot in
-that series)
+This was seen on several different servers with git versions 1.8.5.2, 1=
+=2E9.1 and 2.3.5
 
-Also this is pretty good on performance.
-The small cases do not have an additional unneeded close and reopen,
-but only the
-larger cases do.
+After a bit we realized that it was the string =E2=80=98uplink=E2=80=99=
+ in the GIT_SSH variable that was linked to the extra -batch flag.
 
-[1] http://git.661346.n2.nabble.com/PATCHv1-0-6-Fix-bug-in-large-transactions-tt7624363.html#a7624368
+=46inally, after searching the git source, we narrowed it down to the =E2=
+=80=98plink=E2=80=99 portion of the string.
+
+https://github.com/git/git/blob/7c597ef345aed345576de616c51f27e6f4b342b=
+3/connect.c#L747-L756
 
 
-
-
-> But just for the sake of discussion, if we planned to keep
-> this code around, it could be improved by not wasting open file
-> descriptors for references that are only being verified or deleted, like so:
-
-I'll pick that up for the resend.
+> On Apr 22, 2015, at 12:46 PM, Johannes Schindelin <johannes.schindeli=
+n@gmx.de> wrote:
+>=20
+> Hi Patrick,
+>=20
+> On 2015-04-22 16:36, Patrick Sharp wrote:
+>> The plink string detection in GIT_SSH for setting putty to true is v=
+ery broad.
+>=20
+> Wow. You probably wanted to state that you are using Windows, downloa=
+ded Git from [link here], that you are using [version] and that you use=
+ PLink [version] (from the Putty package downloaded [link here]) to do =
+your ssh business.
+>=20
+> Without that information, you leave readers who have no idea about Pu=
+tty *quite* puzzled.
+>=20
+>> If plink is anywhere in the path to the shell file then putty gets s=
+et
+>> to true and ssh will fail trying to parse -batch as the hostname.
+>=20
+> This is cryptic even for me.
+>=20
+>> Wouldn=E2=80=99t searching for plink.exe be better?--
+>=20
+> I invite you to try your hand at improving anything you find flawed. =
+=46or example, if you want to improve the PLink detection in Git for Wi=
+ndows 1.x, this would be the correct place to start: https://github.com=
+/msysgit/msysgit/blob/70f24b4b0f5f86a5e85f7264a4ee2c0fec2d4391/share/Wi=
+nGit/install.iss#L232-L253 (yes, you would have to download the develop=
+ment environment from https://msysgit.github.com/#download-msysgit and =
+rebuild your own installer using `/share/msysGit/WinGit/release.sh 1.9.=
+5-patrick` after editing the installer script).
+>=20
+> Ciao,
+> Johannes
