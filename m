@@ -1,95 +1,92 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 3/3] stash: require a clean index to apply
-Date: Wed, 22 Apr 2015 15:31:02 -0400
-Message-ID: <20150422193101.GC27945@peff.net>
-References: <20150422192948.GA27656@peff.net>
+From: Thiago Farina <tfransosi@gmail.com>
+Subject: Re: About my git workflow; maybe it's useful for others
+Date: Wed, 22 Apr 2015 16:38:01 -0300
+Message-ID: <CACnwZYf6-Fh0JZeJZ4j3QOyqRF_2-NKJB06Wh20ipsRmrRN+qw@mail.gmail.com>
+References: <CAGZ79kaK-uRAE9-rH=-5t8djAw5e9rwkPjZuw=+XWEq+V6R5Yg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Dmitry Gutov <dgutov@yandex.ru>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 22 21:31:15 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Wed Apr 22 21:38:11 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yl0Mb-0004W1-4T
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Apr 2015 21:31:13 +0200
+	id 1Yl0TK-0001NU-KS
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Apr 2015 21:38:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755423AbbDVTbI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Apr 2015 15:31:08 -0400
-Received: from cloud.peff.net ([50.56.180.127]:48770 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753820AbbDVTbE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Apr 2015 15:31:04 -0400
-Received: (qmail 11065 invoked by uid 102); 22 Apr 2015 19:31:04 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 22 Apr 2015 14:31:04 -0500
-Received: (qmail 13188 invoked by uid 107); 22 Apr 2015 19:31:30 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 22 Apr 2015 15:31:30 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 22 Apr 2015 15:31:02 -0400
-Content-Disposition: inline
-In-Reply-To: <20150422192948.GA27656@peff.net>
+	id S1755531AbbDVTiG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Apr 2015 15:38:06 -0400
+Received: from mail-oi0-f42.google.com ([209.85.218.42]:34713 "EHLO
+	mail-oi0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754484AbbDVTiD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Apr 2015 15:38:03 -0400
+Received: by oiko83 with SMTP id o83so188185869oik.1
+        for <git@vger.kernel.org>; Wed, 22 Apr 2015 12:38:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=byUqzKojIJ4zjCYlbNHXGM9/JzeJukAwmb8EKxC3PcQ=;
+        b=ywtYv5oYS+a+x/b/t8YbMaapNFGnLKJWU6g9cU8P64VtLWJr72HqKjQGhfDutdDWaQ
+         FHmqxAW0YSZQ4mIoos2bHHUyd/hxW6b3dJ60q9cwMGriuiIA2ZJVClOrNuuOk/tss+ER
+         WS7OqErleo2+vEpPeyiEaDL/ChLL+6Y1JBYvfbKmhESRMSJAoabsR6tahWC/hshG4k5j
+         MfusVzJgyH+UeuMi9BArHFoamCpnYs9GrAZfygUvF7/HVCm0HLB25DTfZo8vaLWtQMqP
+         OiUBWFW6ptCiZdWz50FmNdqHGLQUqW1WoWHDp2f/VUVoV+tjDB6ZztSHQPDrLpIYpOUn
+         l0mg==
+X-Received: by 10.60.155.42 with SMTP id vt10mr6279822oeb.21.1429731482214;
+ Wed, 22 Apr 2015 12:38:02 -0700 (PDT)
+Received: by 10.202.80.136 with HTTP; Wed, 22 Apr 2015 12:38:01 -0700 (PDT)
+In-Reply-To: <CAGZ79kaK-uRAE9-rH=-5t8djAw5e9rwkPjZuw=+XWEq+V6R5Yg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267622>
 
-If you have staged contents in your index and run "stash
-apply", we may hit a conflict and put new entries into the
-index. Recovering to your original state is difficult at
-that point, because tools like "git reset --keep" will blow
-away anything staged.  We can make this safer by refusing to
-apply when there are staged changes.
+On Mon, Dec 29, 2014 at 10:22 PM, Stefan Beller <sbeller@google.com> wrote:
+> Hi,
+>
+> so I have been sending commits to the git mailing list occasionally
+> for quite some time. In the last couple of weeks I send more and more
+> patches to the mailing list as it's part of my job now. Here is a
+> collection of practices I am following (or want to follow) and they
+> seem to be effective.
+>
+> Most of this is already documented in various documents in Documentation/*
+> and this email is no news for the regular contributors. It may help new comers
+> though.
+>
+> * Split patches up into logical pieces as you go.
+>
+> It's easy to go wild and after hours of hacking you have implemented a cool new
+> feature. This the natural flow of hacking as it's the most fun. But
+> this approach
+> is not easy to be reviewed. So let me explain how reviewing works in
+> the git project.
+>
+>         Reviewing works in the git project is quite liberal, anybody
+> is encouraged to
+>         comment on patches flying by. Junio, the maintainer then
+> decides which patches
+>         he picks up and merges them into the various stages of git
+> (pu, next, master, maint).
+>         The decision which patches are worth for inclusion is based on
+> the amount of discussion
+>         by the community and generally a patch only makes it if a
+> concensus is met.
+>
+> * git send-email is the only email client I trust for sending patches
+>
+IMO, sending email is the easiest part.
 
-It's possible we could provide better tooling here, as "git
-stash apply" should be writing only conflicts to the index
-(so we know that any stage-0 entries are potentially
-precious). But it is the odd duck; most "mergy" commands
-will update the index for cleanly merged entries, and it is
-not worth updating our tooling to support this use case
-which is unlikely to be of interest (besides which, we would
-still need to block a dirty index for "stash apply --index",
-since that case _would_ be ambiguous).
+The hard begins when you have to edit your patch and resend with the
+reviewers' feedback incorporated. For me that is the most tricky and
+hard part to get right, specially when using GMail as an email client.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- git-stash.sh     | 2 ++
- t/t3903-stash.sh | 7 +++++++
- 2 files changed, 9 insertions(+)
+How do you handle that part of the process?
 
-diff --git a/git-stash.sh b/git-stash.sh
-index d4cf818..cc28368 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -442,6 +442,8 @@ apply_stash () {
- 	assert_stash_like "$@"
- 
- 	git update-index -q --refresh || die "$(gettext "unable to refresh index")"
-+	git diff-index --cached --quiet --ignore-submodules HEAD -- ||
-+		die "$(gettext "Cannot apply stash: Your index contains uncommitted changes.")"
- 
- 	# current index state
- 	c_tree=$(git write-tree) ||
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index f179c93..0746eee 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -45,6 +45,13 @@ test_expect_success 'applying bogus stash does nothing' '
- 	test_cmp expect file
- '
- 
-+test_expect_success 'apply requires a clean index' '
-+	test_when_finished "git reset --hard" &&
-+	echo changed >other-file &&
-+	git add other-file &&
-+	test_must_fail git stash apply
-+'
-+
- test_expect_success 'apply does not need clean working directory' '
- 	echo 4 >other-file &&
- 	git stash apply &&
 -- 
-2.4.0.rc2.498.g02440db
+Thiago Farina
