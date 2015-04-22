@@ -1,137 +1,150 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH] pathspec: adjust prefixlen after striping trailing slash
-Date: Wed, 22 Apr 2015 21:14:37 +0200
-Message-ID: <5537F31D.4090704@web.de>
-References: <55300D2C.9030903@web.de>	<1429319946-19890-1-git-send-email-pclouds@gmail.com>	<5533A567.7070301@web.de>	<CACsJy8A7+rQhn5ry6Z86SbeYHoDw=w7tB73Ls2V05E8F-JMnhA@mail.gmail.com>	<xmqqy4lnmkbv.fsf@gitster.dls.corp.google.com>	<CACsJy8B1QWzehAEtjnQeRJ8uehcFFDbdHSViwk_JtrtYehV8ZQ@mail.gmail.com> <xmqq8udlgpey.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] RFC/Add documentation for version protocol 2
+Date: Wed, 22 Apr 2015 12:19:35 -0700
+Message-ID: <xmqqd22wdl88.fsf@gitster.dls.corp.google.com>
+References: <1429658342-5295-1-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Dennis Kaarsemaker <dennis@kaarsemaker.net>
-To: Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 22 21:14:55 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, mfick@codeaurora.org, pclouds@gmail.com
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Wed Apr 22 21:20:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yl06p-0008Vs-0h
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Apr 2015 21:14:55 +0200
+	id 1Yl0Be-0003uL-3I
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Apr 2015 21:19:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966403AbbDVTOt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Apr 2015 15:14:49 -0400
-Received: from mout.web.de ([212.227.17.11]:50182 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S966356AbbDVTOr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Apr 2015 15:14:47 -0400
-Received: from [192.168.178.41] ([79.211.112.236]) by smtp.web.de (mrweb101)
- with ESMTPSA (Nemesis) id 0MCqsR-1YbL3S2Kix-009glv; Wed, 22 Apr 2015 21:14:42
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
-In-Reply-To: <xmqq8udlgpey.fsf@gitster.dls.corp.google.com>
-X-Provags-ID: V03:K0:y/wh6S/YCRta6AyEpPAp7jjX5xhua8Edy/5etCX3by7CWuBjKkZ
- 3xQJ3fMIqzt1YgYzmuo5O3tri5f6JayyUoBOAZLG8bFQb4Efqjr2xl8olaeA4qj0Yb7R1EI
- j/ElJbuBYJEW8hY1tS19CBMA3zTolGaJe/QeJmmfNZrteEdNocCR6g7OOk9XicGhqUIR9DW
- R0I+j69HvYdRPQ2T6U3Eg==
-X-UI-Out-Filterresults: notjunk:1;
+	id S965557AbbDVTTq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Apr 2015 15:19:46 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:60611 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932382AbbDVTTh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Apr 2015 15:19:37 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6D2104B020;
+	Wed, 22 Apr 2015 15:19:37 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=m3E8/omjzyJHVtdnv9TJeTWEwpg=; b=Uz1LAo
+	6RoG0bgvGOWIn87BrRWci0L3n10fWdTUB43bU6bBhq//oTPV4VJ66eBNWzLFtkdL
+	iLTif22XJB8t4AJY0I1e5OfFno4vl96ifSpX6XRaQTOjzPThJQAVxj5Oq1Wc3JQf
+	EgpO/uD6rR2ksfBSVYO86qKMcSXoW/wTDD8i4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=WPGO4GE3X9PkfmHvgKxH5/e7ZQIJoYoo
+	1akTk5GXFH0xHKbi3f0ZZvELRd2Pemor0J2+60T2Jm2FrkY1NK6h3iOVt2GHzczW
+	JF2G1LC/jGRF/WCicr1HfxD5fRuZQaO8ycoxaegL/kAZd52mG7i4w63TfULjH9TK
+	GHVTFws1vg8=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 653A84B01F;
+	Wed, 22 Apr 2015 15:19:37 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DD14D4B01E;
+	Wed, 22 Apr 2015 15:19:36 -0400 (EDT)
+In-Reply-To: <1429658342-5295-1-git-send-email-sbeller@google.com> (Stefan
+	Beller's message of "Tue, 21 Apr 2015 16:19:02 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 83EA2B54-E924-11E4-9517-83E09F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267614>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267615>
 
-Am 21.04.2015 um 23:08 schrieb Junio C Hamano:
-> Duy Nguyen <pclouds@gmail.com> writes:
->
->> On Mon, Apr 20, 2015 at 12:37 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>> Duy Nguyen <pclouds@gmail.com> writes:
->>>
->>>> But if you look at it another way, "cd subrepo; git add ." should be
->>>> the same as "git add subrepo" ...
->>>
->>> Once you cd into "subrepo", you are in a different world, a world
->>> different from the toplevel project.  "git add ." over there should
->>> mean "add everything in subproject's working tree to subproject's
->>> index", shouldn't it?  On the other hand, "git add subrepo" without
->>> leavingin the working tree of the superproject is about binding the
->>> submodule to the superproject's index.
->>>
->>> I do not think these two should be the same.  Where am I mistaken?
->
->> I think I wrote this sentence and deleted it: I didn't say which way
->> was right.
->
-> OK.
->
-> I looked at the test script update.  The new test does (I am
-> rephrasing to make it clearer):
->
->      mkdir -p dir/ectory
->      git init dir/ectory ;# a new directory inside top-level project
->      (
->          cd dir/ectory &&
->          >test && git add test && git commit -m test
->      )
->      git add dir/ectory
->
-> to set it up.  At this point, the top-level index knows dir/ectory
-> is a submodule.
->
-> Then the test goes on to turn it a non submodule by
->
->      mv dir/ectory/.git dir/ectory/dotgit
->
-> At this point, I think there are two valid things that can happen.
->
->   (1) "git add test" inside dir/ectory removes the submodule entry
->       "dir/ectory" and then adds dir/ectory/test as an individual
->       entry.  After all that is what happens when you replace a file
->       with a directory, e.g.
->
->         >folder && git add folder
->         rm folder
->         mkdir folder && >folder/file &&
->         git -C folder add file
->
->       will first register a regular file "folder" and then replace
->       that with paths underneath.
->
->       It would be the same if you did any of the following:
->
->         git -C . add dir/ectory/test
->         git -C dir add ectory/test
->         git -C dir/ectory add test
->
->   (2) "git add test" inside "dir/ectory" would barf, saying
->       "dir/ectory is supposed to be a submodule and you have to first
->       remove it".  Again, it would be the same if you did so from any
->       directory with relative paths.
->
-> I think (2) is less optimal than (1), but it could be the best we
-> could do if the submodule infrastracture around .gitmodules and
-> links to $GIT_DIR/modules/$name may have to get involved in an
-> operation like this (I didn't check).
+Stefan Beller <sbeller@google.com> writes:
 
-We already do (2) in the cases you describe:
+> This adds the design document for protocol version 2.
+> It's better to rewrite the design document instead of trying to
+> squash it into the existing pack-protocol.txt and then differentiating
+> between version 1 and 2 all the time.
 
-    $ git add subrepo/a
-    fatal: Pathspec 'subrepo/a' is in submodule 'subrepo'
-    $ git -C subrepo add a
-    fatal: Pathspec 'a' is in submodule 'subrepo'
+Just a handful of random thoughts, without expressing agreement or
+objection at this point.
 
-And I believe that is better than (1), because when removing a
-submodule its entry in .gitmodules should also be removed. And
-I suspect that adding a file in a submodule to the superproject
-will happen more by accident than on purpose (which cannot
-happen for files because when you add a new file in a directory
-for which git still records a file the latter can be safely
-removed as that entry cannot be a file in the worktree anymore).
+> diff --git a/Documentation/technical/pack-protocol-2.txt
 
-So I'd vote to have (2) also for "git -C subrepo add .", which
-is what started this thread.
+I wonder, if we are really revamping, if we want this to be limited
+to "pack" protocol (see more below).
 
-> In my quick test, it appeared that the behaviour with this patch
-> applied was neither of the two and instead to silently do nothing,
-> and if that is the case I think it is quite wrong.
+> +General structure
+> +=================
+> +
+> +There are four phases involved in the protocol, which are described below:
+> +
+> +1) capability negotiation
+> +2) goal annoncement
+> +3) reference advertisement
+> +4) pack transfer
+> +
+> +
+> +1) Capability negotiation
+> +-------------------------
+> +
+> +In this phase both client and server send their capabilities to the other side
+> +using the following protocol:
+> +
+> +---
+> +list-of-capabilities = *capability flush-pkt
+> +capability           =  PKT-LINE(1*(LC_ALPHA / DIGIT / "-" / "_"))
+> +----
+> +
+> +The capabilities itself are described in protocol-capabilities.txt
+> +Sending the capabilities to the other side MAY happen concurrently or
+> +one after another. There is no order who sends first.
 
-Yep.
+Doesn't that set us up for an easy deadlock (i.e. both sides fill
+their outgoing pipe because they are not listening)?
+
+> +2) Goal annoncement
+> +-------------------
+> +
+> +The goal of this phase is for the client to tell the server what
+> +outcome it expects from this communication, such as pushing or
+> +pulling data from the server.
+> +
+> +---
+> +list-of-goals    = *goal
+> +goal             = PKT-LINE(action-line)
+> +action-line      = action *(SP action-parameter)
+> +action           = "noop" / "ls-remote" / "fetch" / "push" / "fetch-shallow"
+
+This is interesting, in that it implies that you can connect to a
+service and after learning what is running on the other hand then
+decide you would be fetching or pushing.  Which is *never* be
+possible with v1 where you first connect to a specific service that
+knows how to handle "fetch".
+
+If we are going in this "in-protocol message switches the service"
+route, we should also support "archive" as one of the actions, no?
+Yes, I know you named the document "pack-protocol" and "archive"
+does not give you packs, but "ls-remote" does not transfer pack data,
+either.
+
+And when we add "archive" (and later "refer to bundle on CDN" to
+help initial clone), it would become clear that steps #3 and #4 are
+optional components that are shared by majority of the protocol
+users (i.e. fetch, push, ls-remote uses #3, fetch, push uses #4.),
+and other services that also use the protocol need their own
+equivalents for steps #3 and #4.
+
+Of course, we do not have to do it this way and stick to "one 'goal'
+per service is pre-arranged before the protocol exchange happens,
+either via git-daemon or ssh shell command line interactiosn" way of
+doing things we have always done in v1 protocol.
+
+I have to wonder what role, if any, should "git daemon" (and its
+equivalent, "the shell command line", if the transport is over ssh)
+play in this new world order.
+
+Note again that I am not objecting. I am trying to fathom the
+ramifications of what you wrote here.
+
+> +3) Ref advertisement
+> +--------------------
+> +3) and 4) are highly dependant on the mode for fetch and push. As currently
+> +only mode "version1" is supported, the these phases follow the ref advertisement
+> +in pack protocol version 1 without capabilities on the first line of the refs.
