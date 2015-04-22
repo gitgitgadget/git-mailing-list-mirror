@@ -1,68 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/3] Another approach to large transactions
-Date: Tue, 21 Apr 2015 19:21:13 -0400
-Message-ID: <20150421232112.GA28316@peff.net>
-References: <1429226259-21622-1-git-send-email-sbeller@google.com>
- <xmqq8udqheb5.fsf@gitster.dls.corp.google.com>
- <xmqqsibyo141.fsf@gitster.dls.corp.google.com>
- <CAGZ79kZvE+YJeKCYXN-RD3MFmP17VkqW8WUUssk6UgK_38iWrg@mail.gmail.com>
- <CAGZ79kYEbnZvgdhjPvc2rR7QKp-CjUB3Ytqsp8JK2QBqzuUowA@mail.gmail.com>
- <CAGZ79kZWm=Mi6o4jMNthiDRcR9irs_5MyRuEmHdDSrn-JFpQ=g@mail.gmail.com>
- <xmqqzj62ifc9.fsf@gitster.dls.corp.google.com>
- <CAGZ79kYk_3E1RMdNvA_OrCj6EdaJ2Xdps9pUxEkWwvDNazb6Gg@mail.gmail.com>
- <CAGZ79kY842JXB37++nwYjkX1WK9ja5m-G1aDj=QgLN-qKLo9Lg@mail.gmail.com>
+From: Stefan Saasen <ssaasen@atlassian.com>
+Subject: Re: [BUG] Performance regression due to #33d4221: write_sha1_file:
+ freshen existing objects
+Date: Wed, 22 Apr 2015 10:04:12 +1000
+Message-ID: <CADoxLGNgWy7o4Kz2Zw-H=k9Dcrmff3_hd1pu1yrotZjKNqFENQ@mail.gmail.com>
+References: <CADoxLGPYOkgzb4bkdHq5tK0aJS2M=nWGzO=YYXPDcy-gh45q-g@mail.gmail.com>
+ <20150417140315.GA13506@peff.net> <CADoxLGOPXDgb0LBcSBm+xRDhbnGV_y-TXENyPV7oK_+KZzPKRQ@mail.gmail.com>
+ <20150420195337.GA15447@peff.net> <xmqq1tjelg78.fsf@gitster.dls.corp.google.com>
+ <20150420200956.GA16249@peff.net> <CADoxLGOdvJVgjRFrC81nM6A4=PRABSiL_EGOUtN7d-MAKXrzzg@mail.gmail.com>
+ <xmqqiocpif8p.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Wed Apr 22 01:21:20 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 22 02:05:03 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YkhTk-0000nK-4r
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Apr 2015 01:21:20 +0200
+	id 1YkiA3-0000HS-5b
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Apr 2015 02:05:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965193AbbDUXVQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Apr 2015 19:21:16 -0400
-Received: from cloud.peff.net ([50.56.180.127]:48373 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S964880AbbDUXVP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Apr 2015 19:21:15 -0400
-Received: (qmail 11691 invoked by uid 102); 21 Apr 2015 23:21:15 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 21 Apr 2015 18:21:15 -0500
-Received: (qmail 5982 invoked by uid 107); 21 Apr 2015 23:21:41 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 21 Apr 2015 19:21:41 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 21 Apr 2015 19:21:13 -0400
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kY842JXB37++nwYjkX1WK9ja5m-G1aDj=QgLN-qKLo9Lg@mail.gmail.com>
+	id S965055AbbDVAEy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Apr 2015 20:04:54 -0400
+Received: from na3sys009aog105.obsmtp.com ([74.125.149.75]:35038 "EHLO
+	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S964887AbbDVAEx (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 21 Apr 2015 20:04:53 -0400
+Received: from mail-ie0-f181.google.com ([209.85.223.181]) (using TLSv1) by na3sys009aob105.postini.com ([74.125.148.12]) with SMTP
+	ID DSNKVTblpZSjDQIfkpLAPXoHyR6l4AgbIGse@postini.com; Tue, 21 Apr 2015 17:04:53 PDT
+Received: by iebrs15 with SMTP id rs15so26148002ieb.3
+        for <git@vger.kernel.org>; Tue, 21 Apr 2015 17:04:53 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=6Zlm6+dkjaRpUloePxFB5ZGQzsa5WFgK5+VudyzqTPM=;
+        b=Egqs+eLzVzj1npjGP6gORGh/bnlg712JGvZ/oJdyHF47E+EPSlXZQ/BFyW3b6IT7Da
+         2ml82bjut+0jVUT8Wk4wysKiNRrrKAZnx+SNqJFd6IW+aA3iBm2qwtLUJj6wuA5Xgtth
+         EZKPq88zGdJ9aVfBlve4m3fco8kdjPnD7tQovueDiAW148Y40cAt1aQiQHJUThaqZ13V
+         NTczdcVg8oXEKqIPiawPpujowQSF96j8TPisv79Ws97K7qvyVA1bdhFKge3tN4kkk/PK
+         0YWV7SKyLsBzqZBd4Q6BVQAUUatvnNFlUch3QU6Y7pta45Bl6uhvNGgZAQae0RWiGl1w
+         67fg==
+X-Gm-Message-State: ALoCoQkWR92WhnBzVcFoQ3HoVjWDZlm9ZfGZvZPcPnRYEAVOUCBXHOMj8H/xk1kMckYT0KPCQilXVYDhYdFy4kAMV5fqHYkhmitiFJ5Fk/ZedLHuAf9XTy6nNNkLRcbL52NFInMSEuHagUmqREida9rjqFmZG0oCpA==
+X-Received: by 10.43.39.1 with SMTP id tk1mr6478890icb.26.1429661093102;
+        Tue, 21 Apr 2015 17:04:53 -0700 (PDT)
+X-Received: by 10.43.39.1 with SMTP id tk1mr6478885icb.26.1429661093028; Tue,
+ 21 Apr 2015 17:04:53 -0700 (PDT)
+Received: by 10.36.118.133 with HTTP; Tue, 21 Apr 2015 17:04:12 -0700 (PDT)
+In-Reply-To: <xmqqiocpif8p.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267573>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267574>
 
-On Mon, Apr 20, 2015 at 05:31:11PM -0700, Stefan Beller wrote:
+>> I've noticed Peff's patches on pu which suggest they will be available
+>> in git 2.5?
+>
+> Being on 'pu' (or 'next' for that matter) is not a suggestion for a
+> change to appear in any future version at all, even though it often
+> means that it would soon be merged to 'master' and will be in the
+> upcoming release to be on 'next' in early part of a development
+> cycle.  Some larger topics would stay on 'next' for a few cycles.
+>
+>> Do you Junio, have plans to merge them to maint (2.3.x) and/or next (2.4)?
+>
+> The topic will hopefully be merged to 'master' after 2.4 final is
+> released end of this month, down to 'maint' early May and will ship
+> with 2.4.1, unless there is unforeseen issues discovered in the
+> change while people try it out while it is in 'next' (which will
+> happen today, hopefully).
 
-> When running the test locally, i.e. not in the test suite, but typing
-> the commands
-> myself into the shell, Git is fine with having just 5 file descriptors left.
-> The additional 4 required fds come from beign run inside the test suite.
-> 
-> When strace-ing git, I cannot see any possible other fds which would require
-> having some left over space required. So I'd propose we'd just take a reasonable
-> number not too small for various test setups like 32 and then go with the
-> proposed patches.
-
-FWIW, we already use a magic value of "25 extra" in open_packed_git_1. I
-don't know if that means the number has been proven in practice, or if
-it is simply that nobody actually exercises the pack_max_fds code. I
-suspect it is the latter, especially since d131b7a (sha1_file.c: Don't
-retain open fds on small packs, 2011-03-02).
-
--Peff
+Thanks for the clarification Junio.
