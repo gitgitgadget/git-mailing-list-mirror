@@ -1,101 +1,101 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [BUG] having 'plink' anywhere in the GIT_SSH environment
- variables sets putty = true
-Date: Wed, 22 Apr 2015 16:29:10 -0400
-Message-ID: <20150422202910.GB26917@peff.net>
-References: <2A6FFC1D-5479-4DCA-A5E5-FF92DE0AA552@gmail.com>
- <6c2a6b53e8e6e019b145dddc67a9d2ca@www.dscho.org>
- <F1AB6016-DA88-446C-84E9-1BD42436843D@gmail.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: About my git workflow; maybe it's useful for others
+Date: Wed, 22 Apr 2015 13:38:31 -0700
+Message-ID: <CAGZ79kb2z+CbHhqrB9xW85n_33V8=iYV3jGf9pCNDX181tm3JA@mail.gmail.com>
+References: <CAGZ79kaK-uRAE9-rH=-5t8djAw5e9rwkPjZuw=+XWEq+V6R5Yg@mail.gmail.com>
+	<CACnwZYf6-Fh0JZeJZ4j3QOyqRF_2-NKJB06Wh20ipsRmrRN+qw@mail.gmail.com>
+	<CAGZ79ka1U8SP-7b_Jbm--1j1sz0iHKd+v-WNCASAXH+kystefA@mail.gmail.com>
+	<CACnwZYcD7ryJqM+85wxka+ViqOfy51bOgyetUEdgY1pcQPJv=A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Patrick Sharp <jakanapes@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 22 22:29:20 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Thiago Farina <tfransosi@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 22 22:38:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yl1Gn-00029k-VY
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Apr 2015 22:29:18 +0200
+	id 1Yl1Pq-0001z2-15
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Apr 2015 22:38:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752231AbbDVU3N convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Apr 2015 16:29:13 -0400
-Received: from cloud.peff.net ([50.56.180.127]:48846 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751485AbbDVU3N (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Apr 2015 16:29:13 -0400
-Received: (qmail 16196 invoked by uid 102); 22 Apr 2015 20:29:13 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 22 Apr 2015 15:29:13 -0500
-Received: (qmail 13815 invoked by uid 107); 22 Apr 2015 20:29:39 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 22 Apr 2015 16:29:39 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 22 Apr 2015 16:29:10 -0400
-Content-Disposition: inline
-In-Reply-To: <F1AB6016-DA88-446C-84E9-1BD42436843D@gmail.com>
+	id S1753830AbbDVUid (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Apr 2015 16:38:33 -0400
+Received: from mail-ie0-f172.google.com ([209.85.223.172]:33229 "EHLO
+	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753505AbbDVUic (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Apr 2015 16:38:32 -0400
+Received: by iecrt8 with SMTP id rt8so46842092iec.0
+        for <git@vger.kernel.org>; Wed, 22 Apr 2015 13:38:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=MmZGVB44Hv4JbIpB1CB84UUfueXHuMhWz5/P6+YEe+Q=;
+        b=gd9kC+4zocX/x+p7pi8TH6KEi6f0IzxsqIHkDFk37gv4tcbfnDXR72Cum+/RDDgUsw
+         wahRBxjyTsgMSPaTtyK0HK8ObkAmuMvNQYNGj+ekG9zMhQ3p586Z6KsS700KK7lnYtxz
+         7cDdKLm+yrapgPzVaKfPysQgmYiTO8VJWzwWjndBw8iRt2ellBGidQv2TWKtnpIl2pdI
+         idYHFWzuD6WY7pWL+mVCN9ylVrrgNYXtmjVQVPqFM5tTlgZIRYYJoISDabM0Z2NANP0y
+         RtP2iTEwF4ROlVZiyOGGJ+c0lsG75yBEY8d+pd+g/zgJ7qUEtUYFimh15rRQgrEQoJzS
+         gabw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=MmZGVB44Hv4JbIpB1CB84UUfueXHuMhWz5/P6+YEe+Q=;
+        b=ErTN7wI5L0K2xEyXm90tuHAPnsYMomfpLl1RshGJ0HcuHKqVw+11nc8AzJWhKOKGKD
+         ebuDJrFoS5AqQqzxUGS/Zk+e4OQujeyxq/29W5vx0YdDrHfcNLHx1chwcTvJ9jEi03HG
+         eXsYtHgQIBZQy9uC65+3iumkad0LIsXPxryRfqvrZmVf4Jb68bvWmLiYxs6BDK6sdwbN
+         d9ZC4hehw/xGA+EFSjxmr70ksG/LBYNOYBP1WeDIxc9Zw4l+me3P0LkSU0e1TuBUqi/7
+         SJ5WGYIyp28oIJN+L6pJC2WrOw4/UjxCx3ZNVjzcKeJ5fsa3YB9SMra5/kOTignWr1hU
+         VndA==
+X-Gm-Message-State: ALoCoQmG0IepoMwqQ92D4JFCYOCauyFM/nluGDPft0SfL0otLw9FwUbaM3o5UehDCLatU5p/wdAq
+X-Received: by 10.50.117.4 with SMTP id ka4mr7199607igb.10.1429735111729; Wed,
+ 22 Apr 2015 13:38:31 -0700 (PDT)
+Received: by 10.107.46.22 with HTTP; Wed, 22 Apr 2015 13:38:31 -0700 (PDT)
+In-Reply-To: <CACnwZYcD7ryJqM+85wxka+ViqOfy51bOgyetUEdgY1pcQPJv=A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267639>
 
-On Wed, Apr 22, 2015 at 02:12:53PM -0500, Patrick Sharp wrote:
+On Wed, Apr 22, 2015 at 12:57 PM, Thiago Farina <tfransosi@gmail.com> wrote:
+> On Wed, Apr 22, 2015 at 4:50 PM, Stefan Beller <sbeller@google.com> wrote:
+>> On Wed, Apr 22, 2015 at 12:38 PM, Thiago Farina <tfransosi@gmail.com> wrote:
+>>>>
+>>> IMO, sending email is the easiest part.
+>>>
+>>> The hard begins when you have to edit your patch and resend with the
+>>> reviewers' feedback incorporated. For me that is the most tricky and
+>>> hard part to get right, specially when using GMail as an email client.
+>>>
+>>> How do you handle that part of the process?
+>>
+>> I try to have as much in git as possible.
+>>
+>> So when the reviews trickle in, I change my commits (in git) accordingly
+>> via rebase and edit and lots of fixup commits. I use git notes
+>> to keep track of changes from one version to another.
+>>
+>> Having the "changes of the changes" in the git notes, I am (in theory)
+>> always able to kick out a new version of the patch series with
+>>
+>>    rm 00* # delete old patches
+>>    git format-patch --notes --coverletter somebranch...HEAD
+>>    edit 0000-cover-letter.patch
+>>    git send-email 00* --to=mailing list --to=John@doe.org --cc=Max@Mustermann.de
+>>
+> Is that capable of keeping the next patch set in the same thread that
+> started when you sent the initial patch? Otherwise things get
+> disconnected.
 
-> Johannes,
->=20
-> You=E2=80=99re correct, looking back over it, I was pretty vague.
->=20
-> In truth, we are not using Windows OR putty at all.  Running git on a=
-n Ubuntu system, but we are setting the GIT_SSH environment variable to=
- point to a shell script to use.
->=20
-> Upon attempting to run git ls-remote, the system was spitting out get=
-addrinfo errors for =E2=80=98atch=E2=80=99 .
->=20
-> Setting GIT_TRACE=3D2 showed that -batch was being added to the git c=
-ommand.
->=20
-> This was seen on several different servers with git versions 1.8.5.2,=
- 1.9.1 and 2.3.5
->=20
-> After a bit we realized that it was the string =E2=80=98uplink=E2=80=99=
- in the GIT_SSH variable that was linked to the extra -batch flag.
->=20
-> Finally, after searching the git source, we narrowed it down to the =E2=
-=80=98plink=E2=80=99 portion of the string.
->=20
-> https://github.com/git/git/blob/7c597ef345aed345576de616c51f27e6f4b34=
-2b3/connect.c#L747-L756
+When typing it out quickly I forgot the --in-reply-to=<identifier>
+option for the git send-email
+command. The identifier needs to be looked u0p manually, which is
+still a pain point in my workflow.
 
-I think you want something like:
-
-diff --git a/connect.c b/connect.c
-index 9ae991a..58aad56 100644
---- a/connect.c
-+++ b/connect.c
-@@ -568,7 +568,8 @@ struct child_process *git_connect(int fd[2], const =
-char *url_orig,
- 	conn->argv =3D arg =3D xcalloc(7, sizeof(*arg));
- 	if (protocol =3D=3D PROTO_SSH) {
- 		const char *ssh =3D getenv("GIT_SSH");
--		int putty =3D ssh && strcasestr(ssh, "plink");
-+		int putty =3D ssh && (ends_with(ssh, "plink") ||
-+				    ends_with("plink.exe"));
- 		if (!ssh) ssh =3D "ssh";
-=20
- 		*arg++ =3D ssh;
-
-though that is not quite enough (we do not have a case-insensitive
-version of "ends_with"). I'm also not sure if matching just "plink" and
-"plink.exe" at the end of the string is enough (I'm just guessing that
-was the original reason for using strstr in the first place).
-
-Note that I don't think just switching the strcasestr to look for
-"plink.exe" is right. For one thing, it just punts on the problem (it
-can still happen, it's just less likely to trigger). But for another,
-you can have plink (without ".exe") on Linux systems.
-
--Peff
+>
+> --
+> Thiago Farina
