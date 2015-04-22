@@ -1,101 +1,75 @@
-From: Dan Langille <dlangille@sourcefire.com>
-Subject: forcing a user@ into the URL if not present
-Date: Wed, 22 Apr 2015 17:06:41 -0300
-Message-ID: <CABU7BddjAZOk0LyybQ8phO0S4705MrZtLSYEsjzUBKUD=H++RQ@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: utf-8 filename woes
+Date: Wed, 22 Apr 2015 16:19:37 -0400
+Message-ID: <20150422201937.GA26917@peff.net>
+References: <5537FB82.4000302@wizmail.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 22 22:14:43 2015
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Jeremy Harris <jgh@wizmail.org>
+X-From: git-owner@vger.kernel.org Wed Apr 22 22:19:50 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yl12f-0005q5-VI
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Apr 2015 22:14:42 +0200
+	id 1Yl17b-00027R-V8
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Apr 2015 22:19:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752360AbbDVUOh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Apr 2015 16:14:37 -0400
-Received: from na3sys009aog138.obsmtp.com ([74.125.149.19]:36935 "EHLO
-	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751459AbbDVUOg (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Apr 2015 16:14:36 -0400
-X-Greylist: delayed 474 seconds by postgrey-1.27 at vger.kernel.org; Wed, 22 Apr 2015 16:14:36 EDT
-Received: from mail-ie0-f176.google.com ([209.85.223.176]) (using TLSv1) by na3sys009aob138.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKVTgBLOhbEb0fEYSNmlyQhRvLtTg+Er0T@postini.com; Wed, 22 Apr 2015 13:14:36 PDT
-Received: by iecrt8 with SMTP id rt8so46372676iec.0
-        for <git@vger.kernel.org>; Wed, 22 Apr 2015 13:14:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sourcefire.com; s=google;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=hpmXycgpfoMshX++wsnb+9Be4Tl7ryF/WYFomaHCRxE=;
-        b=LUid0DbzFVUnXkN4GCf0x9oqa6YIKTxSyGl7x5sAAq7hhcUMQQtcy8ELW7K8b8Pwl/
-         ib4tL8iXXHEQClnxB90cVdKe91Ihq8LCH9kUd7T61ZuIP8C7DgdxUi7hysR8gJZ9I+kl
-         qt69yDRCs3yzJeRyKwUNQmllN7nE2gVUnPbpw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=hpmXycgpfoMshX++wsnb+9Be4Tl7ryF/WYFomaHCRxE=;
-        b=Uthmk6nHuwharDouw9+vfsteHQh/OxSIzFzRUOfRspnJdgGHgafQ8Ad83CoSUaK8eH
-         LbNr1ryhtfMpMkHec+1tRox/9ySm1O/pNFoued9+l6rrsaKG5ybkim/Ubg7XMjwp9Z1W
-         kC6dEp6YXBRCDse0ZeEXvzOEjJ++ON2+pbo5JOXKctA6T30NhUYeFzTAO8Mz5/g3CKVb
-         8PdDML0ZoqmAJXJg9O0Mv2Hdq6x8wrCw017505XZtJaWh51G3byBVOv+BaU7CS1GMuGn
-         7xuL3CYQ7g1r+wXxgY5MjYPiZgYc6Uk4X4WVP/xUAT7ouSBzFWsfK65mrlTCfgDx9J8C
-         2xqA==
-X-Received: by 10.107.37.132 with SMTP id l126mr38578404iol.42.1429733202138;
-        Wed, 22 Apr 2015 13:06:42 -0700 (PDT)
-X-Gm-Message-State: ALoCoQmb+kaU3o37qqm1/HiOyuGu6MGAMSkfoLac06M5jo9lB6cGQyPdtvEw/TVEwZuqVxVaJiWLESSFH1RTDHSGYRRxFWzcwLJ24mZqyUSSZTYFcRTsVD/2lHldfBSKlnV9/2JEWwnMDQM0SRw6ku4LFNBZrVj0Zg==
-X-Received: by 10.107.37.132 with SMTP id l126mr38578380iol.42.1429733201938;
- Wed, 22 Apr 2015 13:06:41 -0700 (PDT)
-Received: by 10.107.137.95 with HTTP; Wed, 22 Apr 2015 13:06:41 -0700 (PDT)
+	id S1752897AbbDVUTm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Apr 2015 16:19:42 -0400
+Received: from cloud.peff.net ([50.56.180.127]:48842 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752314AbbDVUTk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Apr 2015 16:19:40 -0400
+Received: (qmail 15450 invoked by uid 102); 22 Apr 2015 20:19:40 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 22 Apr 2015 15:19:40 -0500
+Received: (qmail 13785 invoked by uid 107); 22 Apr 2015 20:20:06 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 22 Apr 2015 16:20:06 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 22 Apr 2015 16:19:37 -0400
+Content-Disposition: inline
+In-Reply-To: <5537FB82.4000302@wizmail.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267636>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267637>
 
-Hello,
+On Wed, Apr 22, 2015 at 08:50:26PM +0100, Jeremy Harris wrote:
 
-I'm using git 2.3.2 with Kerberos for authentication and gito-lite for
-authorization.
+> Installing the git-debuginfo package gave no additional
+> information.   The symptom does not show on a Fedora 21
+> system with git 2.1.0 (and I note that gitk properly
+> shows those filenames on f21, and does not on sl6).
+> 
+> Is this a known and fixed issue, or something my sl6
+> system needs installing?
 
-This works:
+I'm not sure. v1.7.1 is 5 years old, and there have been a lot of fixes
+since then.  I couldn't replicate your problem on v1.7.1 with a trivial
+test. If you can reproduce it at will and you really want to know
+where the fix is, you can try "reverse-bisecting":
 
-$ git clone https://dvl@ repo.example.org/git/testing
-Cloning into 'testing'...
-warning: You appear to have cloned an empty repository.
-Checking connectivity... done.
+  git clone git://git.kernel.org/pub/scm/git/git.git
+  cd git
+  git bisect start
 
-My goal: have it work without supplying dvl@ as shown here:
+  git checkout v1.7.1
+  make
+  [confirm that it shows the breakage]
+  git bisect good
 
-$ git clone https://repo.example.org/git/testing
-Cloning into 'testing'...
-Username for 'https://repo.example.org':
+  git checkout v2.1.0
+  make
+  [confirm that it does not show the problem]
+  git bisect bad
 
-I don't want to be prompted for a password.  I want Kerberos to kick in.
+  ... follow the instructions, testing teach ...
 
-Following http://git-scm.com/docs/gitcredentials, the following seems to
-have nil effect.  Anyone used this feature already?
+Note that "good" and "bad" here are reversed of what you might expect.
+"bisect" was designed for finding regressions, not fixes, and you have
+to manually flip the two.
 
-  git config --global credential.https://repo.example.org.username dvl
-
-$ cat ~/.gitconfig
-[credential "https://repo.example.org"]
-username = dvl
-[http]
-sslCAInfo = /usr/local/etc/trusted-certificates.pem
-
-With the above, I still get prompted for a password
-
-Given my use of Kerberos for authorization, is this option feasible?
-
-Should I be taking a different approach?
-
-Thank you.
-
--- 
-Dan Langille
-Infrastructure & Operations
-Talos Group
-Sourcefire, Inc.
+-Peff
