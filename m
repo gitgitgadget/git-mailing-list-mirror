@@ -1,101 +1,57 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] builtin/merge.c: add the merge.verifysignatures config option
-Date: Wed, 22 Apr 2015 10:55:20 -0700
-Message-ID: <xmqqsibsdp4n.fsf@gitster.dls.corp.google.com>
-References: <1429661634-45033-1-git-send-email-mail@bmpvieira.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 7/9] strbuf_getwholeline: use getdelim if it is
+ available
+Date: Wed, 22 Apr 2015 20:00:55 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.1504222000040.28561@s15462909.onlinehome-server.info>
+References: <20150416084733.GA17811@peff.net> <20150416090138.GG17938@peff.net> <CAPig+cSKtMPQGxp1Y2GinVRh2y--QyJh_nxhDez2CGFPP6B=xg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Bruno Vieira <mail@bmpvieira.com>
-X-From: git-owner@vger.kernel.org Wed Apr 22 19:55:28 2015
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
+	=?ISO-8859-15?Q?Ren=E9_Scharfe?= <l.s.r@web.de>,
+	Rasmus Villemoes <rv@rasmusvillemoes.dk>
+To: Eric Sunshine <ericsunshine@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 22 20:01:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ykyrv-0005mE-VQ
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Apr 2015 19:55:28 +0200
+	id 1YkyxX-0001zE-FZ
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Apr 2015 20:01:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751072AbbDVRzX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Apr 2015 13:55:23 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:54377 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750980AbbDVRzW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Apr 2015 13:55:22 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id BCD724B4EE;
-	Wed, 22 Apr 2015 13:55:21 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=DugB/ZZAChJ59FgozbLZVjgYvsI=; b=IpKsPy
-	TTQ69JBbVyzM7e8poHAbzlm6tPXruJunySGt0iNGYglew84fO6w+yZbiJnJ6SamG
-	Xx/KxTO5jRKhZ1CG9NX1h9AxgbzwXTwZlLJAK6tsn+0OerI37zyXTYs/aj51Lk9V
-	+8DNlGZSwGCkfodRiEkliFQxaAIxgHlceyVzg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Es1VOuXrO6tFeuV9c4zx5PKamlMtydrU
-	WAcdMiGP750Ii6hrKKTF2miO3Pno3kvDvw6viVhHldiZlLIoBU7xhQmQaAn8xaul
-	GaiYY6i8eZk7M9+oBfsiio19ad6tOjqYE/U0AOmLfr2N35uUdzs3SGHyo3yx/g1+
-	FgZPjFrHhpU=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B62AE4B4EC;
-	Wed, 22 Apr 2015 13:55:21 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2DA754B4EA;
-	Wed, 22 Apr 2015 13:55:21 -0400 (EDT)
-In-Reply-To: <1429661634-45033-1-git-send-email-mail@bmpvieira.com> (Bruno
-	Vieira's message of "Wed, 22 Apr 2015 01:13:54 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: BE78307E-E918-11E4-849C-83E09F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1752957AbbDVSBI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Apr 2015 14:01:08 -0400
+Received: from mout.gmx.net ([212.227.17.20]:60169 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932099AbbDVSBG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Apr 2015 14:01:06 -0400
+Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
+ mail.gmx.com (mrgmx102) with ESMTPSA (Nemesis) id 0LyB6P-1ZMz3K1pkD-015YAc;
+ Wed, 22 Apr 2015 20:00:55 +0200
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <CAPig+cSKtMPQGxp1Y2GinVRh2y--QyJh_nxhDez2CGFPP6B=xg@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Provags-ID: V03:K0:p2cWJouK1u0+jRtI7encdTl4FNu2387yruEqpZ8rcHIaealWb2h
+ G9CTZ8rVvjxn85soAfIM7WcWl4hcCz/bwfxurl0uLDDAuPvA+k2R23QQvhGeJB1YL/+A5+/
+ 378guED25KtP1fOlnfJteB3JrfjVFTaA5+V2KUqVN+eEGLyET0ALLeLuPsaO088XXblkQDT
+ vLmQghFSks4ZGQrKFL1FA==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267603>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267604>
 
-Bruno Vieira <mail@bmpvieira.com> writes:
+Hi,
 
-This space before your Signed-off-by: line is a place to justify why
-this is a good idea.
+On 2015-04-17 12:16, Eric Sunshine wrote:
+> On Thu, Apr 16, 2015 at 5:01 AM, Jeff King <peff@peff.net> wrote:
+>> We spend a lot of time in strbuf_getwholeline in a tight
+>> loop reading characters from a stdio handle into a buffer.
+>> The libc getdelim() function can do this for us with less
+>> overhead.
 
-> Signed-off-by: Bruno Vieira <mail@bmpvieira.com>
-> ---
-> This seemed to be missing. Sorry if otherwise or if I'm doing something wrong (first time contributing).
->
->  builtin/merge.c | 3 +++
->  1 file changed, 3 insertions(+)
+Just for the record: Git for Windows cannot lean on `getdelim()`, as it is not available on Windows. Do not let that stop you; if it turns out to impact performance, we will just have to come up with our own implementation of that function.
 
-Missing are documentation updates and tests.  Tests musth at least
-cover these cases, I think:
-
- - having configuration set to true without --verify-signatures on
-   the command line triggers the check.
-
- - having configuration set to false without the command line option
-   does not trigger the check.
-
- - having configuration set to true with --no-verify-signatures on
-   the command line does not trigger the check.
-
- - having configuration set to false with --verify-signatures on the
-   command line triggers the check.
-
-Thanks.
-
-
-> diff --git a/builtin/merge.c b/builtin/merge.c
-> index 3b0f8f9..5dbc10f 100644
-> --- a/builtin/merge.c
-> +++ b/builtin/merge.c
-> @@ -598,6 +598,9 @@ static int git_merge_config(const char *k, const char *v, void *cb)
->  	} else if (!strcmp(k, "merge.defaulttoupstream")) {
->  		default_to_upstream = git_config_bool(k, v);
->  		return 0;
-> +	} else if (!strcmp(k, "merge.verifysignatures")) {
-> +		verify_signatures = git_config_bool(k, v);
-> +		return 0;
->  	} else if (!strcmp(k, "commit.gpgsign")) {
->  		sign_commit = git_config_bool(k, v) ? "" : NULL;
->  		return 0;
+Ciao,
+Dscho
