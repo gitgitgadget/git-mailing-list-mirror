@@ -1,57 +1,87 @@
-From: Patrick Sharp <jakanapes@gmail.com>
-Subject: [BUG] having 'plink' anywhere in the GIT_SSH environment variables sets putty = true
-Date: Wed, 22 Apr 2015 09:36:45 -0500
-Message-ID: <2A6FFC1D-5479-4DCA-A5E5-FF92DE0AA552@gmail.com>
-Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2098\))
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [ANNOUNCE] git-multimail organizational changes
+Date: Wed, 22 Apr 2015 16:45:56 +0200
+Message-ID: <5537B424.60200@alum.mit.edu>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 22 16:37:03 2015
+Content-Transfer-Encoding: 8bit
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: git discussion list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Apr 22 16:46:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ykvll-0003bI-US
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Apr 2015 16:36:54 +0200
+	id 1Ykvuo-0008RP-Bq
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Apr 2015 16:46:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933365AbbDVOgt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Apr 2015 10:36:49 -0400
-Received: from mail-oi0-f47.google.com ([209.85.218.47]:32780 "EHLO
-	mail-oi0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933164AbbDVOgs convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Apr 2015 10:36:48 -0400
-Received: by oica37 with SMTP id a37so178323826oic.0
-        for <git@vger.kernel.org>; Wed, 22 Apr 2015 07:36:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:content-type:content-transfer-encoding:subject:message-id:date
-         :to:mime-version;
-        bh=2YkdXF3596Ndfi0ifzmbm7HxVCzPQpp7liV8dysqe6g=;
-        b=eAw35+So1X771EZVErmBrbuZA1wb/2VZnqAEOAakyzUxNqG4QnPhLwRpWCzdDfHOHo
-         9wEJrcl6Xs11ZNcz4CCVDYEURdxXXyKNjagw61zifELW5t6zF+qoMlejmEFper4yGwjc
-         UH4MD8/7R+7G0TVspW6nl5tWKXpiHPZ5AA2R4bJ31tr2c1VuIfr5NPDlwefk9TpX0JjV
-         c3mZ22Jl6Dq9lcdSFJvENjGZVoLCc8PJ5jR8wPbxY1WqfykObHqLxpzhhsIsnu6f3F+e
-         SewNtm7eHXheZg6Kv3X9puXsyHz9Acmmznpc54E7c1iy1ixsLVuFiIMlc/mR/djxTxGV
-         XcOg==
-X-Received: by 10.60.96.137 with SMTP id ds9mr24323952oeb.56.1429713408081;
-        Wed, 22 Apr 2015 07:36:48 -0700 (PDT)
-Received: from [172.31.57.107] ([199.227.134.115])
-        by mx.google.com with ESMTPSA id h128sm3200103oic.0.2015.04.22.07.36.46
-        for <git@vger.kernel.org>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 22 Apr 2015 07:36:46 -0700 (PDT)
-X-Mailer: Apple Mail (2.2098)
+	id S933807AbbDVOqK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Apr 2015 10:46:10 -0400
+Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:50718 "EHLO
+	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S933659AbbDVOqI (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Apr 2015 10:46:08 -0400
+X-AuditID: 1207440d-f79976d000005643-e2-5537b4260bd3
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 17.C9.22083.624B7355; Wed, 22 Apr 2015 10:45:58 -0400 (EDT)
+Received: from [192.168.69.130] (p4FC971D5.dip0.t-ipconnect.de [79.201.113.213])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t3MEjuTF017931
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Wed, 22 Apr 2015 10:45:57 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.6.0
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrHIsWRmVeSWpSXmKPExsUixO6iqKu2xTzU4M8ufouuK91MFpc+r2d1
+	YPKY+OU4q8fnTXIBTFHcNkmJJWXBmel5+nYJ3BmPvs1lL/jIWdG3fjdjA+M99i5GTg4JAROJ
+	lX+es0HYYhIX7q0Hsrk4hAQuM0ps3LSPHcK5wCQxcfNHli5GDg5eAU2JxgMyIA0sAqoS/ydc
+	A2tmE9CVWNTTzARiiwoESbRem8oIYvMKCEqcnPmEBcQWAarZ9ewqWD2zgL7E7AnnmEFGCgtY
+	SLQvVYAIq0v8mXeJGcKWl2jeOpt5AiPfLCSTZiEpm4WkbAEj8ypGucSc0lzd3MTMnOLUZN3i
+	5MS8vNQiXSO93MwSvdSU0k2MkLDj3cH4f53MIUYBDkYlHt4AVvNQIdbEsuLK3EOMkhxMSqK8
+	H9cBhfiS8lMqMxKLM+KLSnNSiw8xSnAwK4nwii4FyvGmJFZWpRblw6SkOViUxHnVlqj7CQmk
+	J5akZqemFqQWwWRlODiUJHijNwE1ChalpqdWpGXmlCCkmTg4QYZzSYkUp+alpBYllpZkxIPi
+	Lr4YGHkgKR6gvR9B2nmLCxJzgaIQracYFaXEeQ+BJARAEhmleXBjYcnkFaM40JfCvAybgap4
+	gIkIrvsV0GAmoMFx20xABpckIqSkGhh1W9xWba5Zd+sw+6/NZnlK7mIuijeZypj9J9Z632mI
+	OWNewG3+xWmFT1DYznTug8fmaajmGjyb/zg3IW/He8YvM6TniD8Wdd6+eade5zb2t29vPKt0
+	29amxmm646b6fY+5vzZvW+Z/qe45pyjHFQkLzrhJqlqRd6dFpDxmtex123rvUTZ3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267592>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267593>
 
-The plink string detection in GIT_SSH for setting putty to true is very=
- broad.
+git-multimail is a server hook that sends email notifications for git
+pushes.
 
-If plink is anywhere in the path to the shell file then putty gets set =
-to true and ssh will fail trying to parse -batch as the hostname.
+I'd like to announce a few changes in the git-multimail project that
+will hopefully lessen its dependence on me [1]:
 
-Wouldn=E2=80=99t searching for plink.exe be better?
+* I've created a GitHub organization to house the main repository
+  (previously it was under my own GitHub account).
+
+  Its new main page is
+
+      https://github.com/git-multimail/git-multimail
+
+  The old GitHub pages should redirect here, but anybody who fetches
+  from this repo will have to update his/her git remote configuration.
+
+* Matthieu Moy has agreed to become a co-maintainer. He uses
+  git-multimail and has submitted patches in the past, so his
+  participation is very welcome.
+
+* If anybody else would like to get involved in maintaining and/or
+  improving git-multimail, please let me and Matthieu know. There are
+  a bunch of pending pull requests that need attention, so feel free
+  to jump in with code review, testing, or whatever.
+
+Michael
+
+[1] I feel terrible about my neglect of the project. I've been
+    too busy with my day job and this project has suffered. I also
+    don't use git-multimail anymore myself, so I don't experience
+    the itches of its users.
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
