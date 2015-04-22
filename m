@@ -1,125 +1,119 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: Re: [PATCH V3 0/2] git-p4: improve client path detection when branches
- are used
-Date: Wed, 22 Apr 2015 21:47:42 +0100
-Message-ID: <553808EE.8020404@diamand.org>
-References: <1429656570-21825-1-git-send-email-vitor.hda@gmail.com> <xmqqegncf5ps.fsf@gitster.dls.corp.google.com>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [BUG] having 'plink' anywhere in the GIT_SSH environment
+ variables sets putty = true
+Date: Wed, 22 Apr 2015 21:19:15 +0000
+Message-ID: <20150422211915.GB827497@vauxhall.crustytoothpaste.net>
+References: <2A6FFC1D-5479-4DCA-A5E5-FF92DE0AA552@gmail.com>
+ <6c2a6b53e8e6e019b145dddc67a9d2ca@www.dscho.org>
+ <F1AB6016-DA88-446C-84E9-1BD42436843D@gmail.com>
+ <20150422202910.GB26917@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	Vitor Antunes <vitor.hda@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 22 22:48:24 2015
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="nVMJ2NtxeReIH9PS"
+Cc: Patrick Sharp <jakanapes@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Apr 22 23:19:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yl1ZE-0001RB-B2
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Apr 2015 22:48:20 +0200
+	id 1Yl23M-0001gu-FW
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Apr 2015 23:19:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754702AbbDVUsQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Apr 2015 16:48:16 -0400
-Received: from mail-wi0-f177.google.com ([209.85.212.177]:36481 "EHLO
-	mail-wi0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753132AbbDVUsO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Apr 2015 16:48:14 -0400
-Received: by wizk4 with SMTP id k4so192728809wiz.1
-        for <git@vger.kernel.org>; Wed, 22 Apr 2015 13:48:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=WAa9LOhc98HbK/+xaw0VevQSr7Pqz0vN3BR+yaoeMHU=;
-        b=LOeX0nVVBSx8KoxegZ54mr0ob7N+O+Tahxp7ggWbnz7un/vYq4K6NNfpqA/PurhwDM
-         bwVkOx+AodvdqMMNVAFw52UJnuVo8tl0/L61mCNM3BW2lX3+qYJmHlmOgRENLPJevLHn
-         bYd9hRKHPfBxjFjOs2WuTv3s1VkDSFxnCerhU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
-         :cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=WAa9LOhc98HbK/+xaw0VevQSr7Pqz0vN3BR+yaoeMHU=;
-        b=Ra3Qdk5Wdspshi34um5cb6DMjnDplaNJ2bis+QRIoLPnKgKwx7d/afHifNspiGMbck
-         8k81PxJ7eImuy3AI/WNpSaryAy5orIm7PDd2UV3zfTRM7lpS/UqhD1FI2oitNF2nqOD3
-         iWFvHg4tyNR9shdkE2xESbmUo1GmslOBLIk6YZo7c1HtaJUz6Kp29EGJvtNKHI5ktIh3
-         KUImmQGX2FML76pOqrhruWP5jEklNjfZ4esrfL2BPK3QZ/xmi4EFxqKkjECyAdJh+SeD
-         QvBPrQwHEJU/lJT1/zPhXsQH3yWHHR0DQdWFwmafcv1SBdN19RykBFHb6LY8hEfWOCSA
-         iawg==
-X-Gm-Message-State: ALoCoQmjXS8xiSlO+UcDWwQEvSs/TxVrAnicFNb6HuJb0sPgPMvffZWd/ZO4rTmrUDr41LdQzq5J
-X-Received: by 10.180.78.199 with SMTP id d7mr9230311wix.94.1429735693815;
-        Wed, 22 Apr 2015 13:48:13 -0700 (PDT)
-Received: from [192.168.245.128] (cpc7-cmbg17-2-0-cust139.5-4.cable.virginm.net. [86.1.43.140])
-        by mx.google.com with ESMTPSA id u6sm8886148wjy.13.2015.04.22.13.48.12
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 22 Apr 2015 13:48:12 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.3.0
-In-Reply-To: <xmqqegncf5ps.fsf@gitster.dls.corp.google.com>
+	id S1757492AbbDVVTY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Apr 2015 17:19:24 -0400
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:44629 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757486AbbDVVTW (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Apr 2015 17:19:22 -0400
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:3544:5b75:6b3:b192])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id E09A32808D;
+	Wed, 22 Apr 2015 21:19:20 +0000 (UTC)
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Jeff King <peff@peff.net>, Patrick Sharp <jakanapes@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20150422202910.GB26917@peff.net>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 3.16.0-4-amd64)
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267641>
 
-On 22/04/15 18:11, Junio C Hamano wrote:
-> Vitor Antunes <vitor.hda@gmail.com> writes:
->
->> The updates introduced in the third revision of these two patches consist only
->> on updates to the commit messages to better clarify what they implement.
->>
->> Vitor Antunes (2):
->>    t9801: check git-p4's branch detection with client spec enabled
->>    git-p4: improve client path detection when branches are used
->>
->>   git-p4.py                |   13 ++++--
->>   t/t9801-git-p4-branch.sh |  106 ++++++++++++++++++++++++++++++++++++++++++++++
->>   2 files changed, 115 insertions(+), 4 deletions(-)
->
-> Thanks; will re-queue.  Luke, could you comment?
 
-First off: kudos to Vitor for daring to enter this particular dragon's 
-den. The combination of branch-detection and use-client-spec isn't so 
-bad, but throwing in the handling of excluding bits of the tree via the 
-P4 client spec (like, who would even do that?) makes it into a real mind 
-twister!
+--nVMJ2NtxeReIH9PS
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I've held off commenting as I don't feel I know the branch detection 
-code as well as I would like. The change though seems a lot more robust 
-now that the search is anchored. Having a test case is always good!
+On Wed, Apr 22, 2015 at 04:29:10PM -0400, Jeff King wrote:
+> I think you want something like:
+>=20
+> diff --git a/connect.c b/connect.c
+> index 9ae991a..58aad56 100644
+> --- a/connect.c
+> +++ b/connect.c
+> @@ -568,7 +568,8 @@ struct child_process *git_connect(int fd[2], const ch=
+ar *url_orig,
+>  	conn->argv =3D arg =3D xcalloc(7, sizeof(*arg));
+>  	if (protocol =3D=3D PROTO_SSH) {
+>  		const char *ssh =3D getenv("GIT_SSH");
+> -		int putty =3D ssh && strcasestr(ssh, "plink");
+> +		int putty =3D ssh && (ends_with(ssh, "plink") ||
+> +				    ends_with("plink.exe"));
+>  		if (!ssh) ssh =3D "ssh";
+> =20
+>  		*arg++ =3D ssh;
+>=20
+> though that is not quite enough (we do not have a case-insensitive
+> version of "ends_with"). I'm also not sure if matching just "plink" and
+> "plink.exe" at the end of the string is enough (I'm just guessing that
+> was the original reason for using strstr in the first place).
+>=20
+> Note that I don't think just switching the strcasestr to look for
+> "plink.exe" is right. For one thing, it just punts on the problem (it
+> can still happen, it's just less likely to trigger). But for another,
+> you can have plink (without ".exe") on Linux systems.
 
-However, playing around with this (incredibly complex and obscure) 
-scenario, I'm not yet sure about it.
+Perhaps it would be worthwhile to check instead if the text "plink" is
+the beginning of string or is preceded by a path separator.  That would
+give us a bit more confidence that the user is looking for plink, but
+would still allow people to use "plink-0.63" if they like.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
 
-I created a depot that had //depot/main and //depot/branch, and a branch 
-mapping between the two. I cloned that in git using --use-client-spec 
-and --branch-detect, and all was well.
+--nVMJ2NtxeReIH9PS
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
-I then modified my client spec to exclude //depot/main/excluded, and 
-then started adding files in git to the 'excluded' directory. When I 
-submit them, I get:
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-$ echo hello >excluded/f1.c
-$ echo hello >f2.c
-$ git add excluded/f1.c f2.c
-$ git commit -m 'Partially excluded'
-$ git-p4.py submit
-DEBUG: self.useClientSpec = True
-Perforce checkout for depot path //depot/main/ located at 
-/home/lgd/p4-hacking/cli/main/
-Synchronizing p4 checkout...
-... - file(s) up-to-date.
-Applying 51f187b Excluded added from git
-excluded/c - file(s) not in client view.
-excluded/c - file(s) not opened on this client.
-Could not determine file type for excluded/c (result: '')
+iQIcBAEBCgAGBQJVOBBTAAoJEL9TXYEfUvaLvVUP/jvHNpeuZcAmnACpS/lXakxZ
+IIfJLD4y4fgxCWCey4n09/PIXjsJECxLvhWFLWiZRulAl7k3KkUwlKVXaqPylTpP
+nFwcPB9+Odir0e5GA312VXTAkGH32+X01vI1eOIfEcU3orlNpvycsLxhvIQvJwOw
+fCjmQP0o1K6vXfXeJx8suI4TXu2BHfkW3R+WB9/cxhegG/fFiTowAoKZ1rQw7wyd
+EJ2B6WNoRXoSSz1x2MTLY0x6Qss62Y+FkXU9Dj25ulq2OjaRVGIz640OTgPFxNYn
+6+9LQKF8Zl4EQsDCmIEYt4jPcy9CZ9vYVC57f+UDxOaWyKSManuwV0ijo2sMYICe
+qPDWsnpFgWCKrljAFP8A/kpSLp4eyJlCmehcYTVGq8+GanG1y4SRKapKKbp4CZJr
+VNjEsTwGzjJ6IvdDtkfT3HHcQp1FHV5NsDaWucd8pzc/MQ7cc0AjnP0y2N8k1N++
+LhvAvg+2mYXx5mdjZ5vnMZsmCGtrqQhNQWE8kAnp7jujN2VTfj7g2nbm+iOHQods
+Y5cM9HTQbNhUKGCyezsppXDdAHER5qyp/47Y13zDAMLIWeu2c/gpIteSa906tOHa
+nR022GDpek529ycqRIriLvyPySN6fhFio4fm+xvYt+QnoWrRqQLt2EL0QlJfAsRh
+1ednMtnPEPv835YK9NM0
+=BNo+
+-----END PGP SIGNATURE-----
 
-When I reverted this change, it failed differently, and appeared to be 
-extremely confused in the way that I think Vitor originally describes, 
-getting hopelessly baffled by the client spec layout.
-
-It's entirely possibly I've messed up my manual testing though. I need 
-to go and have a very strong cup of tea before I can look at this again.
-
-Thanks!
-Luke
+--nVMJ2NtxeReIH9PS--
