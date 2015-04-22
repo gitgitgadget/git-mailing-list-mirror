@@ -1,77 +1,82 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [BUG] having 'plink' anywhere in the =?UTF-8?Q?GIT=5FSSH=20en?=
- =?UTF-8?Q?vironment=20variables=20sets=20putty=20=3D=20true?=
-Date: Wed, 22 Apr 2015 19:46:09 +0200
-Organization: gmx
-Message-ID: <6c2a6b53e8e6e019b145dddc67a9d2ca@www.dscho.org>
-References: <2A6FFC1D-5479-4DCA-A5E5-FF92DE0AA552@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: PATH modifications for git-hook processes
+Date: Wed, 22 Apr 2015 10:46:57 -0700
+Message-ID: <xmqq1tjcf432.fsf@gitster.dls.corp.google.com>
+References: <CAKuTQSGEmHHr-c+Tc2jM-JPkx6+_f3gp8Zjj8EuQy_e4=PvMzg@mail.gmail.com>
+	<xmqqk2xe39zt.fsf@gitster.dls.corp.google.com>
+	<CAKuTQSGapeUeZptdX1=Uv441Moo6X19RNR0oySU--F+Kj6Xz=w@mail.gmail.com>
+	<20150416061732.GA5612@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Patrick Sharp <jakanapes@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 22 19:46:23 2015
+Content-Type: text/plain
+Cc: Matthew Rothenberg <mroth@khanacademy.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Apr 22 19:47:07 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ykyj7-0007By-WA
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Apr 2015 19:46:22 +0200
+	id 1Ykyjq-0007js-0j
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Apr 2015 19:47:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754105AbbDVRqP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Apr 2015 13:46:15 -0400
-Received: from mout.gmx.net ([212.227.15.18]:53595 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753937AbbDVRqM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Apr 2015 13:46:12 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0LdpcB-1ZARpx1I1b-00iyqG; Wed, 22 Apr 2015 19:46:10
- +0200
-In-Reply-To: <2A6FFC1D-5479-4DCA-A5E5-FF92DE0AA552@gmail.com>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:XYL0FkmSwH+N8KpuO42cn51ImxTahJ3lKSrvZ9FROjSg+D7HeDv
- MmP9Su7VVOysLqrWR9+OMHfSNVbmcaP3IGIQn+AWH3DvFXReh/bXYBgDuiUhcdkrrWMNbqs
- nJUPQA/3/hC1PrgdBZZ2CsWasPvsBfybdEyOSV/b7y7vykwMyO860Bd4vwbi9v3B2pSlusx
- Yvzy/rR3FdHdL4uu+SsCA==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1754162AbbDVRrA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Apr 2015 13:47:00 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:51724 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752749AbbDVRq7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Apr 2015 13:46:59 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 40AC24B23D;
+	Wed, 22 Apr 2015 13:46:59 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=xoy7YhjiRcqJ/RgywyL4seqY1Gw=; b=URVwzv
+	aUfT3kk5h06FJnCURutQ3eSkR0diGBCdMS6sTwi9GAOdQNczgg1gmgudYkcZ5y7u
+	Z21e7L7w+eMhyPG9Qzc+2d3caZ1QOFb3Y7ainq8i7i5Q2Nl4dXiyiZdVlwOXeoPI
+	8pNvXTMc/wdykxV++rbIMASQN9egkbDDUT1rc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=mpTdGDmCFElkWogGAeyRC5yw2m9Cr6tA
+	I/AGsYU7C7AfH8HitE4nQmzDc2SsPVu6CIC7rNwcbS1MaFNE0O7pGDUbRAmvTo70
+	OOCGyLxf0B4of9DFKMlWXaXEpMHm6g3pTM1LhwvTEKCYPy7WqnwB7FMELF5IKET3
+	z6oMDOKGlbA=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3949A4B23C;
+	Wed, 22 Apr 2015 13:46:59 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A86634B23B;
+	Wed, 22 Apr 2015 13:46:58 -0400 (EDT)
+In-Reply-To: <20150416061732.GA5612@peff.net> (Jeff King's message of "Thu, 16
+	Apr 2015 02:17:33 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 92F56602-E917-11E4-BDCF-83E09F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267600>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267601>
 
-Hi Patrick,
+Jeff King <peff@peff.net> writes:
 
-On 2015-04-22 16:36, Patrick Sharp wrote:
-> The plink string detection in GIT_SSH for setting putty to true is ve=
-ry broad.
+>   IOW, you can do things like
+>
+>         alias git=/opt/my-git/git
+>
+>   and all the "git" commands will automatically work fine, even if you
+>   didn't know at compile time where you would install them, and you didn't
+>   set GIT_EXEC_DIR at run-time. It will still first look in GIT_EXEC_DIR,
+>   but if that fails, it will take the git commands from /opt/my-git/ instead
+>   of from /usr/bin or whatever.
+>
+> If we can get away with just dropping this element from the PATH, I'd
+> much rather do that than try to implement a complicated path-precedence
+> scheme.
 
-Wow. You probably wanted to state that you are using Windows, downloade=
-d Git from [link here], that you are using [version] and that you use P=
-Link [version] (from the Putty package downloaded [link here]) to do yo=
-ur ssh business.
-
-Without that information, you leave readers who have no idea about Putt=
-y *quite* puzzled.
-
-> If plink is anywhere in the path to the shell file then putty gets se=
-t
-> to true and ssh will fail trying to parse -batch as the hostname.
-
-This is cryptic even for me.
-
-> Wouldn=E2=80=99t searching for plink.exe be better?--
-
-I invite you to try your hand at improving anything you find flawed. Fo=
-r example, if you want to improve the PLink detection in Git for Window=
-s 1.x, this would be the correct place to start: https://github.com/msy=
-sgit/msysgit/blob/70f24b4b0f5f86a5e85f7264a4ee2c0fec2d4391/share/WinGit=
-/install.iss#L232-L253 (yes, you would have to download the development=
- environment from https://msysgit.github.com/#download-msysgit and rebu=
-ild your own installer using `/share/msysGit/WinGit/release.sh 1.9.5-pa=
-trick` after editing the installer script).
-
-Ciao,
-Johannes
+I am OK with dropping it at a major version boundary with
+deprecation notice in the release note.  Unlike older days, by now,
+Git has become so essential to users' everyday life, and there is
+not much reason for people to keep the installation of Git they
+built outside their $PATH, and "alias git=/opt/git/bin/git" has lost
+much of its value, I would think.
