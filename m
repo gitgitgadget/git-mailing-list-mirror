@@ -1,101 +1,77 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH] pathspec: adjust prefixlen after striping trailing slash
-Date: Thu, 23 Apr 2015 00:32:43 +0200
-Message-ID: <5538218B.4010400@web.de>
-References: <55300D2C.9030903@web.de>	<1429319946-19890-1-git-send-email-pclouds@gmail.com>	<5533A567.7070301@web.de>	<CACsJy8A7+rQhn5ry6Z86SbeYHoDw=w7tB73Ls2V05E8F-JMnhA@mail.gmail.com>	<xmqqy4lnmkbv.fsf@gitster.dls.corp.google.com>	<CACsJy8B1QWzehAEtjnQeRJ8uehcFFDbdHSViwk_JtrtYehV8ZQ@mail.gmail.com>	<xmqq8udlgpey.fsf@gitster.dls.corp.google.com>	<5537F31D.4090704@web.de> <xmqq1tjcdjfa.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [BUG] having 'plink' anywhere in the GIT_SSH environment
+ variables sets putty = true
+Date: Wed, 22 Apr 2015 19:23:06 -0400
+Message-ID: <20150422232306.GA32705@peff.net>
+References: <2A6FFC1D-5479-4DCA-A5E5-FF92DE0AA552@gmail.com>
+ <6c2a6b53e8e6e019b145dddc67a9d2ca@www.dscho.org>
+ <F1AB6016-DA88-446C-84E9-1BD42436843D@gmail.com>
+ <20150422202910.GB26917@peff.net>
+ <20150422211915.GB827497@vauxhall.crustytoothpaste.net>
+ <20150422212904.GA32043@peff.net>
+ <20150422214445.GC827497@vauxhall.crustytoothpaste.net>
+ <20150422220053.GA32268@peff.net>
+ <20150422222455.GA274681@vauxhall.crustytoothpaste.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Dennis Kaarsemaker <dennis@kaarsemaker.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 23 00:33:02 2015
+Content-Type: text/plain; charset=utf-8
+To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Patrick Sharp <jakanapes@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 23 01:23:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yl3CX-0002Zm-Ks
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Apr 2015 00:33:01 +0200
+	id 1Yl3z8-0002NV-R1
+	for gcvg-git-2@plane.gmane.org; Thu, 23 Apr 2015 01:23:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934369AbbDVWc6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Apr 2015 18:32:58 -0400
-Received: from mout.web.de ([212.227.15.14]:65222 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753766AbbDVWc4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Apr 2015 18:32:56 -0400
-Received: from [192.168.178.41] ([79.211.126.117]) by smtp.web.de (mrweb002)
- with ESMTPSA (Nemesis) id 0M40na-1ZcbaX2oOw-00raoh; Thu, 23 Apr 2015 00:32:47
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
-In-Reply-To: <xmqq1tjcdjfa.fsf@gitster.dls.corp.google.com>
-X-Provags-ID: V03:K0:V04BR31XMDcST0JQbSHFQvvX/JfDu8OqwzRcila+3zWS4wRCsHO
- 91ludrGKMOc3RA2lkiQJoWYXa6XqGwkvLPYzBqgwmjROmqHpXB7Ki00HXc4Fsbubmxuf7o6
- yIc+O23lvOzWpIRbRspq2ZnuM1bBPFmmLKzDnEv0+Ct+rWPw6B0mwCQHFD/+31S4uU2o0qf
- bFnuOiH7eWK0YDGdfE/Xg==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1758512AbbDVXXK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Apr 2015 19:23:10 -0400
+Received: from cloud.peff.net ([50.56.180.127]:48952 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756573AbbDVXXJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Apr 2015 19:23:09 -0400
+Received: (qmail 31174 invoked by uid 102); 22 Apr 2015 23:23:09 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 22 Apr 2015 18:23:09 -0500
+Received: (qmail 15427 invoked by uid 107); 22 Apr 2015 23:23:35 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 22 Apr 2015 19:23:35 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 22 Apr 2015 19:23:06 -0400
+Content-Disposition: inline
+In-Reply-To: <20150422222455.GA274681@vauxhall.crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267650>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267651>
 
-Am 22.04.2015 um 21:58 schrieb Junio C Hamano:
-> Jens Lehmann <Jens.Lehmann@web.de> writes:
->
->> Am 21.04.2015 um 23:08 schrieb Junio C Hamano:
->>
->>> I looked at the test script update.  The new test does (I am
->>> rephrasing to make it clearer):
->>>
->>>       mkdir -p dir/ectory
->>>       git init dir/ectory ;# a new directory inside top-level project
->>>       (
->>>           cd dir/ectory &&
->>>           >test && git add test && git commit -m test
->>>       )
->>>       git add dir/ectory
->>>
->>> to set it up.  At this point, the top-level index knows dir/ectory
->>> is a submodule.
->>>
->>> Then the test goes on to turn it a non submodule by
->>>
->>>       mv dir/ectory/.git dir/ectory/dotgit
->>> ...
->>
->> We already do (2) in the cases you describe:
->>
->>     $ git add subrepo/a
->>     fatal: Pathspec 'subrepo/a' is in submodule 'subrepo'
->>     $ git -C subrepo add a
->>     fatal: Pathspec 'a' is in submodule 'subrepo'
->> ...
->> So I'd vote to have (2) also for "git -C subrepo add .", which
->> is what started this thread.
->
-> Does having "mv subrepo/.git subrepo/dotgit" before that "git add"
-> change your conclusion?
->
-> It is very clear to me that without that "mv" step, (2) is
-> absolutely the right thing to do, and I agree with you.
+On Wed, Apr 22, 2015 at 10:24:55PM +0000, brian m. carlson wrote:
 
-Huh? Without that mv all files would simply be added to the
-submodule repo and this would be a non-issue ... what am I
-missing? I'm just advocating to let "git add ." in a submodule
-without a .git behave like "git add <file>" already does.
+> On Wed, Apr 22, 2015 at 06:00:54PM -0400, Jeff King wrote:
+> > Yeah, that looks right to me. You might want to represent the "are we
+> > tortoise" check as a separate flag, though, and reuse it a few lines
+> > later.
+> 
+> Sounds like a good idea.  I'll send a more formal patch a bit later
+> today.
 
-> But it is unclear if we should still do (2) when "subrepo/.git" is
-> no longer there.  That has to be done manually and it may be an
-> indication that is clear enough that the end user wants the
-> directory to be a normal directory without any submodule involved,
-> in which case it may match the expectation of the user better to
-> just nuke the corresponding 160000 entry in the index and replace it
-> with files in there.  I dunno.
+Thanks.
 
-The user having removed subrepo/.git is just one reason for that.
-Another is a user adding a file in an unpopulated work tree of a
-not initialized submodule. I doubt that simply nuking the 160000
-entry would be the right thing to do in this case, I expect this
-to be a pilot error we should barf about ;-)
+> > Also, not related to your patch, but I notice the "putty" declaration is
+> > in a different scope than I would have expected, which made me wonder if
+> > it gets initialized in all code paths. I think is from the recent
+> > addition of CONNECT_DIAG_URL, which pushes the bulk of the code into its
+> > own else clause, even though the first part of the "if" always returns
+> > early.  I wonder if it would be simpler to read like:
+> [...]
+> 
+> I can drop this in as a preparatory patch if I can have your sign-off.
+
+Definitely, thanks.
+
+Signed-off-by: Jeff King <peff@peff.net>
+
+-Peff
