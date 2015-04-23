@@ -1,71 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] pathspec: adjust prefixlen after striping trailing slash
-Date: Wed, 22 Apr 2015 20:47:16 -0700
-Message-ID: <CAPc5daUA30ZbbJVK9S_FM9Z8qyyEXUez9hGD2JNhTm78QYb5YQ@mail.gmail.com>
-References: <55300D2C.9030903@web.de> <1429319946-19890-1-git-send-email-pclouds@gmail.com>
- <5533A567.7070301@web.de> <CACsJy8A7+rQhn5ry6Z86SbeYHoDw=w7tB73Ls2V05E8F-JMnhA@mail.gmail.com>
- <xmqqy4lnmkbv.fsf@gitster.dls.corp.google.com> <CACsJy8B1QWzehAEtjnQeRJ8uehcFFDbdHSViwk_JtrtYehV8ZQ@mail.gmail.com>
- <xmqq8udlgpey.fsf@gitster.dls.corp.google.com> <5537F31D.4090704@web.de>
- <xmqq1tjcdjfa.fsf@gitster.dls.corp.google.com> <5538218B.4010400@web.de>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: [BUG] having 'plink' anywhere in the GIT_SSH environment variables
+ sets putty = true
+Date: Thu, 23 Apr 2015 07:08:01 +0200
+Message-ID: <55387E31.5010100@web.de>
+References: <2A6FFC1D-5479-4DCA-A5E5-FF92DE0AA552@gmail.com> <6c2a6b53e8e6e019b145dddc67a9d2ca@www.dscho.org> <F1AB6016-DA88-446C-84E9-1BD42436843D@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Dennis Kaarsemaker <dennis@kaarsemaker.net>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Thu Apr 23 05:47:46 2015
+Content-Type: text/plain; charset=utf-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	sandals@crustytoothpaste.net, peff@peff.net,
+	Duy Nguyen <pclouds@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	msysGit <msysgit@googlegroups.com>
+To: Patrick Sharp <jakanapes@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Apr 23 07:09:32 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yl876-0004X5-9L
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Apr 2015 05:47:44 +0200
+	id 1Yl9OF-0006tX-3R
+	for gcvg-git-2@plane.gmane.org; Thu, 23 Apr 2015 07:09:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757433AbbDWDri (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Apr 2015 23:47:38 -0400
-Received: from mail-ob0-f177.google.com ([209.85.214.177]:33868 "EHLO
-	mail-ob0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753698AbbDWDrh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Apr 2015 23:47:37 -0400
-Received: by obfe9 with SMTP id e9so4592447obf.1
-        for <git@vger.kernel.org>; Wed, 22 Apr 2015 20:47:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=9rwOjGxAR49dMK+tzxhvbazwhkAjXqS9FkhH9FbH52Y=;
-        b=t7kjFrGRqO0TWyChYi/35CBMjzMY9it5sLV60Mp/nyR5ea54HLZSzQZEALJ9yj1Prj
-         iydPLSdaDsTqcC88PuGjAUl/W3Qm8GDnyNjsAVit5mi/6NoSPvCBNQUwO4bRH/w8+TEZ
-         77tA1D5FQ4eQsqyDQ+IgsTyE74sALi+mdx09imdQ3hGS6yK4gYBVDaT8wruQY+s4c8xo
-         +9p7sIk+c5WONYZlews1rTyq/KFDig5iWfh7vC5pvAyY88DBrk9Ks8zr3mc4NN4oeD6o
-         9Qp736Y5wwtQ63NPV9Tc3hLUD3o8uUditCWIWSSiefEePzbvOez0BZgVr5rlyUaJg1nx
-         4uMA==
-X-Received: by 10.182.241.197 with SMTP id wk5mr699907obc.0.1429760856935;
- Wed, 22 Apr 2015 20:47:36 -0700 (PDT)
-Received: by 10.202.197.18 with HTTP; Wed, 22 Apr 2015 20:47:16 -0700 (PDT)
-In-Reply-To: <5538218B.4010400@web.de>
-X-Google-Sender-Auth: g4Vxw9FP3kNgfBy_0Zz1XoeH-vM
+	id S1751930AbbDWFJU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 23 Apr 2015 01:09:20 -0400
+Received: from mout.web.de ([212.227.17.12]:58697 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750960AbbDWFJT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Apr 2015 01:09:19 -0400
+Received: from [192.168.88.199] ([194.47.243.242]) by smtp.web.de (mrweb101)
+ with ESMTPSA (Nemesis) id 0Leca2-1Z6fcM15iA-00qQ1Q; Thu, 23 Apr 2015 07:09:04
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:31.0) Gecko/20100101 Icedove/31.5.0
+In-Reply-To: <F1AB6016-DA88-446C-84E9-1BD42436843D@gmail.com>
+X-Provags-ID: V03:K0:o4eXXKBf1X3Li8ykZUNCLaiwnB/HH3sNadAzOXm8RV3G/wpwWoz
+ sTFU9TGX7QP6AjW058OHaICvPY9NmnJWlf8yevgtYdHTgorvN1yNSbZCfCYsxcjW0n9dFSR
+ CbhQ3m8aVHWsxviTDOu3XojaD8q+QmiaEEV6f0EIiUCTPtWudlIkyyNTlgKTJJLkSuSW349
+ 1IlEL1FH5uIVoJS+S8uRA==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267674>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267675>
 
-On Wed, Apr 22, 2015 at 3:32 PM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
-> ...
->> But it is unclear if we should still do (2) when "subrepo/.git" is
->> no longer there.  That has to be done manually and it may be an
->> indication that is clear enough that the end user wants the
->> directory to be a normal directory without any submodule involved,
->> in which case it may match the expectation of the user better to
->> just nuke the corresponding 160000 entry in the index and replace it
->> with files in there.  I dunno.
+On 04/22/2015 09:12 PM, Patrick Sharp wrote:
+> Johannes,
 >
-> The user having removed subrepo/.git is just one reason for that.
-> Another is a user adding a file in an unpopulated work tree of a
-> not initialized submodule. I doubt that simply nuking the 160000
-> entry would be the right thing to do in this case, I expect this
-> to be a pilot error we should barf about ;-)
+> You=E2=80=99re correct, looking back over it, I was pretty vague.
+>
+> In truth, we are not using Windows OR putty at all.  Running git on a=
+n Ubuntu system, but we are setting the GIT_SSH environment variable to=
+ point to a shell script to use.
+>
+> Upon attempting to run git ls-remote, the system was spitting out get=
+addrinfo errors for =E2=80=98atch=E2=80=99 .
+>
+> Setting GIT_TRACE=3D2 showed that -batch was being added to the git c=
+ommand.
+>
+> This was seen on several different servers with git versions 1.8.5.2,=
+ 1.9.1 and 2.3.5
+>
+> After a bit we realized that it was the string =E2=80=98uplink=E2=80=99=
+ in the GIT_SSH variable that was linked to the extra -batch flag.
+>
+> Finally, after searching the git source, we narrowed it down to the =E2=
+=80=98plink=E2=80=99 portion of the string.
+>
+> https://github.com/git/git/blob/7c597ef345aed345576de616c51f27e6f4b34=
+2b3/connect.c#L747-L7
+Brian, I got your patch,
+but can't see it in the list yet
+  1/2 looks good, thanks.
+(And add msygit)
 
-OK, that sounds sensible.
+My feeling is that  patch 2/2 may break things for an unknown
+amount of users which e.g. use "myplink".
+
+Patrick,
+did you ever tell us, what you put into $GIT_SSH ?
+
+Can your use case be covered by using $GIT_SSH_COMMAND ?
