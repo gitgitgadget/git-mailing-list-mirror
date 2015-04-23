@@ -1,68 +1,80 @@
-From: Yohei Endo <yoheie@gmail.com>
-Subject: Re: Wrong gitignore precedence?
-Date: Thu, 23 Apr 2015 21:11:52 +0900
-Message-ID: <20150423211152.0fdcbd2cdb48c98d15fe446c@gmail.com>
-References: <20150422150558.6326cb6152a306f028fb6ad3@gmail.com>
-	<xmqqh9s8dm6f.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH 1/5] status: document the -v/--verbose option
+Date: Thu, 23 Apr 2015 14:27:46 +0200
+Message-ID: <1429792070-22991-2-git-send-email-mhagger@alum.mit.edu>
+References: <1429792070-22991-1-git-send-email-mhagger@alum.mit.edu>
+Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 23 14:12:17 2015
+X-From: git-owner@vger.kernel.org Thu Apr 23 14:28:08 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YlFzM-0008HH-Kg
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Apr 2015 14:12:17 +0200
+	id 1YlGEf-0005l3-9w
+	for gcvg-git-2@plane.gmane.org; Thu, 23 Apr 2015 14:28:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965538AbbDWMMB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 23 Apr 2015 08:12:01 -0400
-Received: from mail-pd0-f180.google.com ([209.85.192.180]:33470 "EHLO
-	mail-pd0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965241AbbDWML5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 23 Apr 2015 08:11:57 -0400
-Received: by pdbnk13 with SMTP id nk13so16958674pdb.0
-        for <git@vger.kernel.org>; Thu, 23 Apr 2015 05:11:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=e9H9WAaivmtG5GTzeZ0HKykX7fwZd8nQhw5jCH6izxI=;
-        b=D7SsnvrRO7Zm56POCm3U5B/cY66ZGfr1m3kWy2E2nxqeuomsR8fqq+0hdRD8ICQW8/
-         Bj3/ymJvBoYoo1lqm8ChPV/JwhheD83UYsCQfC8v2gUppNpByRNGJLmy9+5hp/oMiAVP
-         2sFQqZTfLK+NLushZpL5z3nSXXoc3QWoe4/FvC52HuUcivcq3LR8ckc5aCUxWW1bf02o
-         vaCamnOlCkyk+WiEbWXNt+FNrjw2T6Fz80t6Yc9KMaxoYIk8cmKag2ui8qsVvEIVN1SA
-         qi52npGDlNjAGIFLNtldbkZMKFU15qg8EhOkcUWLISQLDoa8kodhRdQMA3kcXlVvOZrk
-         rQQA==
-X-Received: by 10.68.176.3 with SMTP id ce3mr4715004pbc.122.1429791116819;
-        Thu, 23 Apr 2015 05:11:56 -0700 (PDT)
-Received: from UPLT060 (europa.ul-net.co.jp. [114.179.20.132])
-        by mx.google.com with ESMTPSA id pa1sm7987528pdb.73.2015.04.23.05.11.54
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Thu, 23 Apr 2015 05:11:56 -0700 (PDT)
-In-Reply-To: <xmqqh9s8dm6f.fsf@gitster.dls.corp.google.com>
-X-Mailer: Sylpheed 3.4.2 (GTK+ 2.10.14; i686-pc-mingw32)
+	id S934416AbbDWM2A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Apr 2015 08:28:00 -0400
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:49334 "EHLO
+	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S934298AbbDWM17 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 23 Apr 2015 08:27:59 -0400
+X-AuditID: 12074413-f79f26d0000030e7-b1-5538e54e3de3
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 61.2D.12519.E45E8355; Thu, 23 Apr 2015 08:27:58 -0400 (EDT)
+Received: from michael.fritz.box (p4FC97208.dip0.t-ipconnect.de [79.201.114.8])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t3NCRsfK011822
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Thu, 23 Apr 2015 08:27:57 -0400
+X-Mailer: git-send-email 2.1.4
+In-Reply-To: <1429792070-22991-1-git-send-email-mhagger@alum.mit.edu>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrMIsWRmVeSWpSXmKPExsUixO6iqOv31CLUYEUfv0XXlW4mi4beK8wW
+	t1fMZ3Zg9vj7/gOTx8VLyh6fN8kFMEdx2yQllpQFZ6bn6dslcGfcaDzJUjCfvWL39MwGxm+s
+	XYycHBICJhLfOh8yQthiEhfurWfrYuTiEBK4zChxe+cTJgjnOJPExDUzmUCq2AR0JRb1NIPZ
+	IgJqEhPbDrGA2MwCDhKbPzeCTRIWsJWY0b0YaBIHB4uAqkTPzwCQMK+Ai8Sbrx/ZIJbJSZw/
+	/pMZxOYUcJXYPr0NzBYCqvl85w77BEbeBYwMqxjlEnNKc3VzEzNzilOTdYuTE/PyUot0zfVy
+	M0v0UlNKNzFCAkV4B+Ouk3KHGAU4GJV4eF9kW4QKsSaWFVfmHmKU5GBSEuU9exMoxJeUn1KZ
+	kVicEV9UmpNafIhRgoNZSYR3z22gHG9KYmVValE+TEqag0VJnFdtibqfkEB6YklqdmpqQWoR
+	TFaGg0NJglfxCVCjYFFqempFWmZOCUKaiYMTZDiXlEhxal5KalFiaUlGPCgu4ouBkQGS4gHa
+	WwnSzltckJgLFIVoPcWoy3Fnyv9FTEIsefl5qVLivBIgRQIgRRmleXArYGnhFaM40MfCvNog
+	VTzAlAI36RXQEiagJTOXgi0pSURISTUwzj3Mb733/3wbD+4PbaeNTuzxs3B+IBEnzTl5x7GD
+	d77315iL/7+5mO+7Xiaj2oKJ/HeOmj7qYts25bGqpNuG6TNVppl93nNkrU8Dp72ttsntXt/g
+	b8lcu/XDCl6eT+lgkJjmbZLDtqHB795zOz0zzt0KTX0f/T7qd6zZyy11080zYxEb 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267683>
 
-On Wed, 22 Apr 2015 11:59:04 -0700
-Junio C Hamano <gitster@pobox.com> wrote:
+Document `git status -v`, including its new doubled `-vv` form.
 
-> Swapping the order in the code this late in the game after 8 years
-> may affect people who have come to rely on the current behaviour and
-> never read the doc, which is somewhat worrying, though.
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+---
+ Documentation/git-status.txt | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-I agree. I think the change should be well announced before
-the fix is applied, like when the implicit value of
-push.default was changed.
-
-Thanks.
---=20
-  =E9=81=A0=E8=97=A4 =E9=99=BD=E5=B9=B3 (Yohei Endo)
-    yoheie@gmail.com
+diff --git a/Documentation/git-status.txt b/Documentation/git-status.txt
+index b3319f7..9ec5897 100644
+--- a/Documentation/git-status.txt
++++ b/Documentation/git-status.txt
+@@ -41,6 +41,15 @@ OPTIONS
+ --long::
+ 	Give the output in the long-format. This is the default.
+ 
++-v::
++--verbose::
++	In addition to the names of files that have been changed, also
++	show the textual changes that are staged to be committed
++	(i.e., like the output of `git diff`). If `-v` is specified
++	twice, then also show the changes in the working tree that
++	have not yet been staged (i.e., like the output of `git diff
++	--cached`).
++
+ -u[<mode>]::
+ --untracked-files[=<mode>]::
+ 	Show untracked files.
+-- 
+2.1.4
