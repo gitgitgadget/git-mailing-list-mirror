@@ -1,208 +1,226 @@
-From: Robert Dailey <rcdailey.lists@gmail.com>
-Subject: Re: Rebasing with submodule change causes red herring with --continue
-Date: Thu, 23 Apr 2015 14:07:16 -0500
-Message-ID: <CAHd499A9k+DZHg-Am_STyRJFwMMT_vi9DtBZqDmNRvsJJ7gxNA@mail.gmail.com>
-References: <CAHd499AqCJ5N1GP6mBJZB7-9vWPNjtia1G7PHoSY3d=Zovv7UA@mail.gmail.com>
-	<20150410164413.GL21452@serenity.lan>
-	<CAHd499D-UX-0_HhoVWuitN960BdKtB_JonbxgLRqwU3ktFW4Sg@mail.gmail.com>
+From: rupert thurner <rupert.thurner@gmail.com>
+Subject: Re: [PATCH] compat/mingw: stubs for getpgid() and tcgetpgrp()
+Date: Thu, 23 Apr 2015 12:25:49 -0700 (PDT)
+Message-ID: <cc79154d-4e18-41a4-938f-ca6e30b2e6d9@googlegroups.com>
+References: <20150413134850.GC23475@mewburn.net>
+ <alpine.LFD.2.11.1504130954420.5619@knanqh.ubzr>
+ <20150413144039.GD23475@mewburn.net>
+ <alpine.LFD.2.11.1504131052090.5619@knanqh.ubzr>
+ <20150414110312.GE23475@mewburn.net> <552EAE0A.3040208@kdbg.org>
+ <CABPQNSZ-7FAgun8mxqXYWgy+Xc9xQMXKZonwujXb5WzLCKmNMw@mail.gmail.com>
+ <fac9a525a2fb2b09d176243659cbf3a7@www.dscho.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git <git@vger.kernel.org>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Thu Apr 23 21:07:29 2015
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_240_610169509.1429817149053"
+Cc: nico@fluxnic.net, git-owner@vger.kernel.org, rupert.thurner@gmail.com, 
+	git@vger.kernel.org, j6t@kdbg.org, luke@mewburn.net, 
+	kusmabite@gmail.com
+To: msysgit@googlegroups.com
+X-From: msysgit+bncBCBO3N6S34BRBPMO4WUQKGQEH2AQV3I@googlegroups.com Thu Apr 23 21:25:51 2015
+Return-path: <msysgit+bncBCBO3N6S34BRBPMO4WUQKGQEH2AQV3I@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-yh0-f62.google.com ([209.85.213.62])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YlMT5-0006m3-SS
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Apr 2015 21:07:24 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030644AbbDWTHS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Apr 2015 15:07:18 -0400
-Received: from mail-ig0-f179.google.com ([209.85.213.179]:34992 "EHLO
-	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030449AbbDWTHR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Apr 2015 15:07:17 -0400
-Received: by igbyr2 with SMTP id yr2so32614802igb.0
-        for <git@vger.kernel.org>; Thu, 23 Apr 2015 12:07:16 -0700 (PDT)
+	(envelope-from <msysgit+bncBCBO3N6S34BRBPMO4WUQKGQEH2AQV3I@googlegroups.com>)
+	id 1YlMkw-0004Np-Nr
+	for gcvm-msysgit@m.gmane.org; Thu, 23 Apr 2015 21:25:50 +0200
+Received: by yhzz6 with SMTP id z6sf7096063yhz.0
+        for <gcvm-msysgit@m.gmane.org>; Thu, 23 Apr 2015 12:25:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:x-original-sender:precedence:mailing-list
+         :list-id:list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe;
+        bh=CD09MvNie7AJqLxS4l5fL6g5vTRoUVxbz24aktlc1V0=;
+        b=OfpoYfn3XUODm8emxCcImb8ZNVybhIUlCeiZE5RQiVhStHNstMXBls4Icz2YMCOwVB
+         FWQm8Fqeqy3rbyvFngMFEL6PsiLASi7gl+PbC5B71UXtIdlQA96pXkhWqmS0sI7UYLTJ
+         x7TNBO8OZ97nE1VdH/Oes9n6niDYCqAzs5RpLj5eA29fe8AFwoU9kqTDX92BwmIwk+WP
+         KWYUa/X3bLcWyaPIyLP9J3Ej0Uy5DLSkIT6y73QPbTjiZHfGao39YpXozDKOaBM34a1v
+         f+j0iFpDnKXA+j+xegcfzeW36BCyyW6aS8DnE2bCSmDv1YasSDg1SUW+wqvDAsZpm/92
+         xC7g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=crjHOAscRSavLc9TKpS78UcFjocT6gsCZu/pLkXx0Vg=;
-        b=m3aMYnpr6FkqlwJFMWtfhJcDsgEFI5CR4y97IKQR7Vw2fu6seo0LdTkFEmHY1xf46o
-         09JmPygi07ekkR3y/tczUlfwyesRG6b5Buw8+6+7J60XsOO2uGi42+cr90hkBeKnRr/G
-         fw30bSHCXYRA6hXWjs/FpqhMNKSaWKww6mzJbwwGBVY11GKIG2wKybvjuCm43B/OOF8f
-         XaqSUXeTGboQAgB4kfBQniZ+lSFyEDxd95Cps0oIQEoqP/TNYHDU0WvBdjhHqXPf1bos
-         mYVNK/vXoswr6MfvVtTNjA/43qKjOIUMFbBpnV8FygFdpDdHpoXkqSBkh5dxXK0lRBYM
-         p9Hg==
-X-Received: by 10.107.32.212 with SMTP id g203mr6036676iog.55.1429816036388;
- Thu, 23 Apr 2015 12:07:16 -0700 (PDT)
-X-Google-Sender-Delegation: rcdailey@gmail.com
-Received: by 10.36.86.148 with HTTP; Thu, 23 Apr 2015 12:07:16 -0700 (PDT)
-In-Reply-To: <CAHd499D-UX-0_HhoVWuitN960BdKtB_JonbxgLRqwU3ktFW4Sg@mail.gmail.com>
-X-Google-Sender-Auth: qETMDi4dKDI8FgzN__M36GQ515U
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267701>
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:x-original-sender:precedence:mailing-list
+         :list-id:list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe;
+        bh=CD09MvNie7AJqLxS4l5fL6g5vTRoUVxbz24aktlc1V0=;
+        b=nU4+QgLTnl1lsfreHGniDhS0FqbvoH+q+OIwM82aGBOoAn74uwtCH8sc7sRbd1l+ZO
+         +mKULjkvCj6nbfaIAxlnEUamczJoM4PVhmSHhbRn33AoZlH0glwJ0Ci+K24Xe5ERoRA9
+         dMC/rL/9klOJ+d8rs0Oze9zvTYXmF0LHMuG/wWMgwNh7Jz8nxGvJVNdtSfxssRRsEpZO
+         Wis0+cqF9rJQQnyXtmfhawkqN3SsuCJRb9cYOzw1Vrbzh9jxpYvYuL7VIXsyVNZ2jVFH
+         dKHv+Rgc0qrXosRRlqleOnl47kAucAUu308VHti3aW1zusX7uWy2f/GdGYdQ7hBK3CLc
+         PLGA==
+X-Received: by 10.140.98.116 with SMTP id n107mr71565qge.11.1429817149965;
+        Thu, 23 Apr 2015 12:25:49 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.140.41.83 with SMTP id y77ls1328867qgy.88.gmail; Thu, 23 Apr
+ 2015 12:25:49 -0700 (PDT)
+X-Received: by 10.140.41.164 with SMTP id z33mr77858qgz.21.1429817149498;
+        Thu, 23 Apr 2015 12:25:49 -0700 (PDT)
+In-Reply-To: <fac9a525a2fb2b09d176243659cbf3a7@www.dscho.org>
+X-Original-Sender: rupert.thurner@gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267702>
 
-On Thu, Apr 23, 2015 at 1:17 PM, Robert Dailey <rcdailey.lists@gmail.com> wrote:
-> On Fri, Apr 10, 2015 at 11:44 AM, John Keeping <john@keeping.me.uk> wrote:
->> On Fri, Apr 10, 2015 at 11:30:20AM -0500, Robert Dailey wrote:
->>> I have a branch that contains a commit with a single change: A
->>> submodule pointing to a new SHA1.
->>>
->>> When I rebase this branch onto the tip of its parent branch AND that
->>> parent branch had modified that same submodule, the rebase stops at
->>> the commit on my branch that modified the submodule and asks me if I
->>> want to keep REMOTE or LOCAL. I say LOCAL and notice immediately that
->>> the submodule is not staged (normally it would be).
->>>
->>> I do:
->>>
->>> $ git add my-submodule
->>>
->>> Then I do:
->>>
->>> $ git rebase --continue
->>>
->>> At this point, it fails asking me if I forgot to stage changes and
->>> recommends doing --skip. This is normally what you would see if the
->>> staging area was completely empty, however it isn't, since I see the
->>> submodule is in there.
->>>
->>> Is this a bug or am I missing a fundamental here? I'm using Git 2.1.0
->>> on Windows through MSYS. I'll provide more concrete examples if my
->>> summary of the issue doesn't "ring any bells".
->>
->> I hit something similar in the past, but it was fixed with commit
->> a6754cd (rebase -i continue: don't skip commits that only change
->> submodules, 2012-04-07) so I think you must be hitting a slightly
->> different problem, although the tests added in that commit look like
->> they do test the scenario you describe (specifically 'rebase -i continue
->> with only submodule staged').
->
-> I am still running into this issue on git 2.3.5 on Windows. Logs
-> below. One interesting thing to note in the git trace output is that
-> it is specifying --ignore-submodules option to `git diff-files` during
-> the rebase continue. Is this due to a configuration option? It seems
-> like git should not be ignoring submodules when continuing a rebase
-> (this should only affect direct calls to diff)
->
->
-> |-- Robert@M5536:/e/code/frontend (timeline-ids-develop|REBASE 3/3) --|
-> $ git status
-> rebase in progress; onto bb05e7c
-> You are currently rebasing branch 'timeline-ids-develop' on 'bb05e7c'.
->   (all conflicts fixed: run "git rebase --continue")
->
-> Changes to be committed:
->   (use "git reset HEAD <file>..." to unstage)
->
->         modified:   Core
->
-> Changes not staged for commit:
->   (use "git add <file>..." to update what will be committed)
->   (use "git checkout -- <file>..." to discard changes in working directory)
->
->         modified:   Core (new commits)
->
-> Untracked files:
->   (use "git add <file>..." to include in what will be committed)
->
->         Tools/FontTool/
->
->
-> |-- Robert@M5536:/e/code/frontend (timeline-ids-develop|REBASE 3/3) --|
-> $ GIT_TRACE=1 git rebase --continue
-> 19:15:33.569945 git.c:557               trace: exec: 'git-rebase' '--continue'
-> 19:15:33.569945 run-command.c:351       trace: run_command:
-> 'git-rebase' '--continue'
-> 19:15:33.775097 git.c:348               trace: built-in: git
-> 'rev-parse' '--parseopt' '--stuck-long' '--' '--continue'
-> 19:15:33.931190 git.c:348               trace: built-in: git
-> 'rev-parse' '--git-dir'
-> 19:15:34.007242 git.c:348               trace: built-in: git
-> 'rev-parse' '--is-bare-repository'
-> 19:15:34.059280 git.c:348               trace: built-in: git
-> 'rev-parse' '--show-toplevel'
-> 19:15:34.148343 git.c:348               trace: built-in: git 'config'
-> '--bool' 'rebase.stat'
-> 19:15:34.227399 git.c:348               trace: built-in: git 'config'
-> '--bool' 'rebase.autostash'
-> 19:15:34.280437 git.c:348               trace: built-in: git 'config'
-> '--bool' 'rebase.autosquash'
-> 19:15:34.335476 git.c:348               trace: built-in: git
-> 'rev-parse' '--verify' 'HEAD'
-> 19:15:34.389515 git.c:348               trace: built-in: git
-> 'update-index' '--ignore-submodules' '--refresh'
-> 19:15:34.554631 git.c:348               trace: built-in: git
-> 'diff-files' '--quiet' '--ignore-submodules'
-> 19:15:34.902879 git.c:557               trace: exec: 'git-am'
-> '--resolved' '--resolvemsg=
-> When you have resolved this problem, run "git rebase --continue".
-> If you prefer to skip this patch, run "git rebase --skip" instead.
-> To check out the original branch and stop rebasing, run "git rebase --abort".
-> '
-> 19:15:34.902879 run-command.c:351       trace: run_command: 'git-am'
-> '--resolved' '--resolvemsg=
-> When you have resolved this problem, run "git rebase --continue".
-> If you prefer to skip this patch, run "git rebase --skip" instead.
-> To check out the original branch and stop rebasing, run "git rebase --abort".
-> '
-> 19:15:35.113028 git.c:348               trace: built-in: git
-> 'rev-parse' '--parseopt' '--stuck-long' '--' '--resolved'
-> '--resolvemsg=
-> When you have resolved this problem, run "git rebase --continue".
-> If you prefer to skip this patch, run "git rebase --skip" instead.
-> To check out the original branch and stop rebasing, run "git rebase --abort".
-> '
-> 19:15:35.290155 git.c:348               trace: built-in: git
-> 'rev-parse' '--git-dir'
-> 19:15:35.387224 git.c:348               trace: built-in: git
-> 'rev-parse' '--show-prefix'
-> 19:15:35.541332 git.c:348               trace: built-in: git
-> 'rev-parse' '--show-toplevel'
-> 19:15:35.598374 git.c:348               trace: built-in: git 'var'
-> 'GIT_COMMITTER_IDENT'
-> 19:15:35.659417 git.c:348               trace: built-in: git
-> 'rev-parse' '--verify' '-q' 'HEAD'
-> 19:15:35.724462 git.c:348               trace: built-in: git 'config'
-> '--bool' '--get' 'am.messageid'
-> 19:15:35.811524 git.c:348               trace: built-in: git 'config'
-> '--bool' '--get' 'am.keepcr'
-> 19:15:36.037685 git.c:348               trace: built-in: git
-> 'update-index' '-q' '--refresh'
-> 19:15:37.057409 git.c:557               trace: exec:
-> 'git-sh-i18n--envsubst' '--variables' 'Applying: $FIRSTLINE'
-> 19:15:37.057409 run-command.c:351       trace: run_command:
-> 'git-sh-i18n--envsubst' '--variables' 'Applying: $FIRSTLINE'
-> 19:15:37.178495 git.c:557               trace: exec:
-> 'git-sh-i18n--envsubst' 'Applying: $FIRSTLINE'
-> 19:15:37.178495 run-command.c:351       trace: run_command:
-> 'git-sh-i18n--envsubst' 'Applying: $FIRSTLINE'
-> Applying: TEMP: Update Core submodule
-> 19:15:37.360624 git.c:348               trace: built-in: git
-> 'diff-index' '--ignore-submodules' '--quiet' '--cached' 'HEAD' '--'
-> No changes - did you forget to use 'git add'?
-> If there is nothing left to stage, chances are that something else
-> already introduced the same changes; you might want to skip this patch.
->
-> When you have resolved this problem, run "git rebase --continue".
-> If you prefer to skip this patch, run "git rebase --skip" instead.
-> To check out the original branch and stop rebasing, run "git rebase --abort".
->
-> 19:15:37.456694 git.c:348               trace: built-in: git
-> 'rev-parse' '--verify' '-q' 'HEAD'
+------=_Part_240_610169509.1429817149053
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_241_884523338.1429817149053"
 
+------=_Part_241_884523338.1429817149053
+Content-Type: text/plain; charset=UTF-8
 
-For reference, I found an existing mailing list discussion on this
-from a few years ago:
-http://git.661346.n2.nabble.com/Interactive-rebase-with-submodules-td7197519.html
+On Thursday, April 16, 2015 at 2:45:11 PM UTC+2, Johannes Schindelin wrote:
+>
+> Hi kusma, 
+>
+> On 2015-04-15 21:43, Erik Faye-Lund wrote: 
+> > On Wed, Apr 15, 2015 at 8:29 PM, Johannes Sixt <j...@kdbg.org 
+> <javascript:>> wrote: 
+> >> Windows does not have process groups. It is, therefore, the simplest 
+> >> to pretend that each process is in its own process group. 
+> > 
+> > Windows does have some concept of process groups, but probably not 
+> > quite what you want: 
+> > 
+> > 
+> https://msdn.microsoft.com/en-us/library/windows/desktop/ms682083%28v=vs.85%29.aspx 
+>
+> Yes, and we actually need that in Git for Windows anyway because shooting 
+> down a process does not kill its child processes: 
+>
+>
+> https://github.com/git-for-windows/msys2-runtime/commit/15f209511985092588b171703e5046eba937b47b#diff-8753cda163376cee6c80aab11eb8701fR402 
+>
+> However, using this code for `getppid()` would be serious overkill (not to 
+> mention an unbearable performance hit because you have to enumerate *all* 
+> processes to get that information). 
+>
+>
+is the windows "JobObject" similar to processgroup? at least killing the 
+parent process in a jobobject will kill all childs as well:
+https://msdn.microsoft.com/en-us/library/windows/desktop/ms681949%28v=vs.85%29.aspx 
 
-Apparently a patch was proposed, i do not know if it made it in a
-release of Git. But based on what I'm seeing right now, it seems that
-it did not.
+best,
+rupert
+ 
+
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "Git for Windows" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
+
+------=_Part_241_884523338.1429817149053
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">On Thursday, April 16, 2015 at 2:45:11 PM UTC+2, Johannes =
+Schindelin wrote:<blockquote class=3D"gmail_quote" style=3D"margin: 0;margi=
+n-left: 0.8ex;border-left: 1px #ccc solid;padding-left: 1ex;">Hi kusma,
+<br>
+<br>On 2015-04-15 21:43, Erik Faye-Lund wrote:
+<br>&gt; On Wed, Apr 15, 2015 at 8:29 PM, Johannes Sixt &lt;<a href=3D"java=
+script:" target=3D"_blank" gdf-obfuscated-mailto=3D"8AoMxPPqC7sJ" rel=3D"no=
+follow" onmousedown=3D"this.href=3D'javascript:';return true;" onclick=3D"t=
+his.href=3D'javascript:';return true;">j...@kdbg.org</a>&gt; wrote:
+<br>&gt;&gt; Windows does not have process groups. It is, therefore, the si=
+mplest
+<br>&gt;&gt; to pretend that each process is in its own process group.
+<br>&gt;=20
+<br>&gt; Windows does have some concept of process groups, but probably not
+<br>&gt; quite what you want:
+<br>&gt;=20
+<br>&gt; <a href=3D"https://msdn.microsoft.com/en-us/library/windows/deskto=
+p/ms682083%28v=3Dvs.85%29.aspx" target=3D"_blank" rel=3D"nofollow" onmoused=
+own=3D"this.href=3D'https://www.google.com/url?q\75https%3A%2F%2Fmsdn.micro=
+soft.com%2Fen-us%2Flibrary%2Fwindows%2Fdesktop%2Fms682083%2528v%3Dvs.85%252=
+9.aspx\46sa\75D\46sntz\0751\46usg\75AFQjCNGEPk0vMRMUxQyGr9KCQrfPhQcBAA';ret=
+urn true;" onclick=3D"this.href=3D'https://www.google.com/url?q\75https%3A%=
+2F%2Fmsdn.microsoft.com%2Fen-us%2Flibrary%2Fwindows%2Fdesktop%2Fms682083%25=
+28v%3Dvs.85%2529.aspx\46sa\75D\46sntz\0751\46usg\75AFQjCNGEPk0vMRMUxQyGr9KC=
+QrfPhQcBAA';return true;">https://msdn.microsoft.com/en-<wbr>us/library/win=
+dows/desktop/<wbr>ms682083%28v=3Dvs.85%29.aspx</a>
+<br>
+<br>Yes, and we actually need that in Git for Windows anyway because shooti=
+ng down a process does not kill its child processes:
+<br>
+<br><a href=3D"https://github.com/git-for-windows/msys2-runtime/commit/15f2=
+09511985092588b171703e5046eba937b47b#diff-8753cda163376cee6c80aab11eb8701fR=
+402" target=3D"_blank" rel=3D"nofollow" onmousedown=3D"this.href=3D'https:/=
+/www.google.com/url?q\75https%3A%2F%2Fgithub.com%2Fgit-for-windows%2Fmsys2-=
+runtime%2Fcommit%2F15f209511985092588b171703e5046eba937b47b%23diff-8753cda1=
+63376cee6c80aab11eb8701fR402\46sa\75D\46sntz\0751\46usg\75AFQjCNFLJ21sKQUCU=
+zGh0M1gFTOnVAmt9g';return true;" onclick=3D"this.href=3D'https://www.google=
+.com/url?q\75https%3A%2F%2Fgithub.com%2Fgit-for-windows%2Fmsys2-runtime%2Fc=
+ommit%2F15f209511985092588b171703e5046eba937b47b%23diff-8753cda163376cee6c8=
+0aab11eb8701fR402\46sa\75D\46sntz\0751\46usg\75AFQjCNFLJ21sKQUCUzGh0M1gFTOn=
+VAmt9g';return true;">https://github.com/git-for-<wbr>windows/msys2-runtime=
+/commit/<wbr>15f209511985092588b171703e5046<wbr>eba937b47b#diff-<wbr>8753cd=
+a163376cee6c80aab11eb870<wbr>1fR402</a>
+<br>
+<br>However, using this code for `getppid()` would be serious overkill (not=
+ to mention an unbearable performance hit because you have to enumerate *al=
+l* processes to get that information).
+<br><br></blockquote><div><br></div><div>is the windows "JobObject" similar=
+ to processgroup? at least killing the parent process in a jobobject will k=
+ill all childs as well:</div><div>https://msdn.microsoft.com/en-us/library/=
+windows/desktop/ms681949%28v=3Dvs.85%29.aspx&nbsp;</div><div><br></div><div=
+>best,</div><div>rupert</div><div>&nbsp;</div></div>
+
+<p></p>
+
+-- <br />
+-- <br />
+*** Please reply-to-all at all times ***<br />
+*** (do not pretend to know who is subscribed and who is not) ***<br />
+*** Please avoid top-posting. ***<br />
+The msysGit Wiki is here: <a href=3D"https://github.com/msysgit/msysgit/wik=
+i">https://github.com/msysgit/msysgit/wiki</a> - Github accounts are free.<=
+br />
+&nbsp;<br />
+You received this message because you are subscribed to the Google<br />
+Groups &quot;msysGit&quot; group.<br />
+To post to this group, send email to msysgit@googlegroups.com<br />
+To unsubscribe from this group, send email to<br />
+msysgit+unsubscribe@googlegroups.com<br />
+For more options, and view previous threads, visit this group at<br />
+<a href=3D"http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den">http:=
+//groups.google.com/group/msysgit?hl=3Den_US?hl=3Den</a><br />
+<br />
+--- <br />
+You received this message because you are subscribed to the Google Groups &=
+quot;Git for Windows&quot; group.<br />
+To unsubscribe from this group and stop receiving emails from it, send an e=
+mail to <a href=3D"mailto:msysgit+unsubscribe@googlegroups.com">msysgit+uns=
+ubscribe@googlegroups.com</a>.<br />
+For more options, visit <a href=3D"https://groups.google.com/d/optout">http=
+s://groups.google.com/d/optout</a>.<br />
+
+------=_Part_241_884523338.1429817149053--
+------=_Part_240_610169509.1429817149053--
