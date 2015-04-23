@@ -1,92 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 5/5] RelNotes: wordsmithing
-Date: Thu, 23 Apr 2015 08:38:18 -0700
-Message-ID: <xmqq618mdfdh.fsf@gitster.dls.corp.google.com>
-References: <1429792070-22991-1-git-send-email-mhagger@alum.mit.edu>
-	<1429792070-22991-6-git-send-email-mhagger@alum.mit.edu>
-	<5538E9F3.7040702@alum.mit.edu>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] connect: improve check for plink to reduce false
+ positives
+Date: Thu, 23 Apr 2015 11:53:04 -0400
+Message-ID: <20150423155304.GA26018@peff.net>
+References: <20150422232306.GA32705@peff.net>
+ <1429747595-298095-1-git-send-email-sandals@crustytoothpaste.net>
+ <1429747595-298095-2-git-send-email-sandals@crustytoothpaste.net>
+ <b6b4da1f7735b834043375e3d8eaa331@www.dscho.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Thu Apr 23 17:38:40 2015
+Content-Type: text/plain; charset=utf-8
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Apr 23 17:53:25 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YlJCs-0002p1-Np
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Apr 2015 17:38:27 +0200
+	id 1YlJRL-00010W-5I
+	for gcvg-git-2@plane.gmane.org; Thu, 23 Apr 2015 17:53:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966153AbbDWPiW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Apr 2015 11:38:22 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:63609 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S965690AbbDWPiV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Apr 2015 11:38:21 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 65F214B644;
-	Thu, 23 Apr 2015 11:38:20 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=9d1Fks7DWxOV2Oy51E/7WctJ42c=; b=qv0Acd
-	034w9pNW5MqhS+NKpM9TyJqLrF44i52KMLjbZiSn4BfSq4+QOAHXyVkO8VAUB6A6
-	bvDlOO5ZcG4L0hmAK/5qsEcvDfj9JHaiqgAYCnc3W8YRCyDcCPHvxLe/EkPqfSRQ
-	eBLzqAwXVjsQ+hfr2UpTPgj2eeFzqFAJZG6W8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=w9jDxqDDvYVR0ZOMBUawNRWU54bLeXti
-	oqdyvMJKnIIt4Sebv1+M4KAW+J8bq7iUaYiGhwzO5XjvU+kSnS15uJ1rs0LLl/QU
-	b+Y7Bd+R9HQR2/pYu2wZPXPJBSLzYhlavZsFvzqMozi2gMcmP64DGZIuW13cY+kn
-	rjscZbiJDfc=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5F3404B643;
-	Thu, 23 Apr 2015 11:38:20 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DD9944B642;
-	Thu, 23 Apr 2015 11:38:19 -0400 (EDT)
-In-Reply-To: <5538E9F3.7040702@alum.mit.edu> (Michael Haggerty's message of
-	"Thu, 23 Apr 2015 14:47:47 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: C49E6426-E9CE-11E4-A26D-83E09F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1030213AbbDWPxL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Apr 2015 11:53:11 -0400
+Received: from cloud.peff.net ([50.56.180.127]:49241 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S965475AbbDWPxH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Apr 2015 11:53:07 -0400
+Received: (qmail 24569 invoked by uid 102); 23 Apr 2015 15:53:06 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 23 Apr 2015 10:53:06 -0500
+Received: (qmail 6446 invoked by uid 107); 23 Apr 2015 15:53:33 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 23 Apr 2015 11:53:33 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 23 Apr 2015 11:53:04 -0400
+Content-Disposition: inline
+In-Reply-To: <b6b4da1f7735b834043375e3d8eaa331@www.dscho.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267693>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267694>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+On Thu, Apr 23, 2015 at 08:50:17AM +0200, Johannes Schindelin wrote:
 
-> On 04/23/2015 02:27 PM, Michael Haggerty wrote:
->> Make many textual tweaks to the 2.4.0 release notes.
->> 
->> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
->> ---
->>  Documentation/RelNotes/2.4.0.txt | 336 ++++++++++++++++++++-------------------
->>  1 file changed, 172 insertions(+), 164 deletions(-)
->> 
->> diff --git a/Documentation/RelNotes/2.4.0.txt b/Documentation/RelNotes/2.4.0.txt
->> index 7b23ca3..cde64be 100644
->> --- a/Documentation/RelNotes/2.4.0.txt
->> +++ b/Documentation/RelNotes/2.4.0.txt
->> [...]
->
-> Oh, I just noticed that many of the same blurbs appear in the release
-> notes for the maintenance versions. Once there is agreement on how many
-> of the changes to accept, the analogous changes should probably be made
-> in those other files.
+> > +				tortoiseplink = tplink == ssh ||
+> > +					(tplink && is_dir_sep(tplink[-1]));
+> 
+> Maybe have a helper function here? Something like
+> `basename_matches(const char *path, const char *basename, int
+> ignore_case)`? That would be easier to read (I have to admit that I
+> had to wrap my head around the logic to ensure that tplink[-1] is
+> valid; It is, but it requires more brain cycles to verify than I would
+> like).
 
-Thanks.
+Yeah, I had a similar thought when reading the patch.
 
-FYI, these days the same text appears in
+> Also, I am really hesitant to just test the start of the basename; I
+> would rather have an entire basename match so that something  like
+> "PLinKoeln" would not match. (And of course, for Windows I would want
+> that hypothetical `basename_matches()` function to allow basenames to
+> end in `.exe` automatically).
 
- (1) the topic description in "What's cooking";
- (2) the merge commit for the topic when it is merged to 'next';
- (3) the merge commit for the topic when it is merged to 'master';
- (4) Release notes for the 'master' and 'maint', when it is merged.
+What about "plink-0.83" that was mentioned earlier in the thread? I
+think that is the reason brian's patch stuck to matching the start and
+not the end. But I have no idea if that is actually a real thing, or
+just a hypothetical.
 
-So the best time to catch mistakes and to rephrase it is when you
-see something questionable in "What's cooking", ideally before it
-hits 'next', before it hits 'master'.
+If I were writing from scratch, I would probably keep things as tight as
+possible, like:
+
+  const char *base = basename(ssh);
+  plink = !strcasecmp(base, "plink") ||
+          !strcasecmp(base, "plink.exe");
+  tplink = !strcasecmp(base, "tortoiseplink") ||
+           !strcasecmp(base, "tortoiseplink.exe"));
+
+but maybe that is too tight at this point in time; we don't really know
+what's out there and working (or maybe _we_ do, but _I_ do not :) ).
+
+At any rate, brian's patch only looks for a dir-separator anywhere, not
+the actual basename. So:
+
+  /path/to/plink/ssh
+
+would match, and I'm not sure if that's a good thing or not. So yet
+another variant is to use basename(), and then just check that the
+basename starts with "plink" (to catch "plink.exe", "plink-0.83", etc).
+That avoids cruft in the intermediate path, and unless your actual
+binary is named PlinKoeln, it will not false positive on the example you
+gave.
+
+-Peff
