@@ -1,86 +1,94 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: [BUG] having 'plink' anywhere in the GIT_SSH environment variables
- sets putty = true
-Date: Thu, 23 Apr 2015 07:08:01 +0200
-Message-ID: <55387E31.5010100@web.de>
-References: <2A6FFC1D-5479-4DCA-A5E5-FF92DE0AA552@gmail.com> <6c2a6b53e8e6e019b145dddc67a9d2ca@www.dscho.org> <F1AB6016-DA88-446C-84E9-1BD42436843D@gmail.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH] RFC/Add documentation for version protocol 2
+Date: Wed, 22 Apr 2015 23:16:52 -0700
+Message-ID: <CAGZ79kZyTTX2d+ULohS+J0tA7AYHRZ8DKqfgmuQGFzZsbwkQzA@mail.gmail.com>
+References: <1429658342-5295-1-git-send-email-sbeller@google.com>
+	<xmqqd22wdl88.fsf@gitster.dls.corp.google.com>
+	<CAGZ79kZN9nBrJ_7skrSQ4kor+p=DM8RnSC2bFZ6TX=SxdMdqcA@mail.gmail.com>
+	<xmqqd22vd9me.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	sandals@crustytoothpaste.net, peff@peff.net,
-	Duy Nguyen <pclouds@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	msysGit <msysgit@googlegroups.com>
-To: Patrick Sharp <jakanapes@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Apr 23 07:09:32 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Martin Fick <mfick@codeaurora.org>,
+	Duy Nguyen <pclouds@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 23 08:17:02 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yl9OF-0006tX-3R
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Apr 2015 07:09:31 +0200
+	id 1YlARZ-0005gl-IT
+	for gcvg-git-2@plane.gmane.org; Thu, 23 Apr 2015 08:17:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751930AbbDWFJU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 23 Apr 2015 01:09:20 -0400
-Received: from mout.web.de ([212.227.17.12]:58697 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750960AbbDWFJT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Apr 2015 01:09:19 -0400
-Received: from [192.168.88.199] ([194.47.243.242]) by smtp.web.de (mrweb101)
- with ESMTPSA (Nemesis) id 0Leca2-1Z6fcM15iA-00qQ1Q; Thu, 23 Apr 2015 07:09:04
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:31.0) Gecko/20100101 Icedove/31.5.0
-In-Reply-To: <F1AB6016-DA88-446C-84E9-1BD42436843D@gmail.com>
-X-Provags-ID: V03:K0:o4eXXKBf1X3Li8ykZUNCLaiwnB/HH3sNadAzOXm8RV3G/wpwWoz
- sTFU9TGX7QP6AjW058OHaICvPY9NmnJWlf8yevgtYdHTgorvN1yNSbZCfCYsxcjW0n9dFSR
- CbhQ3m8aVHWsxviTDOu3XojaD8q+QmiaEEV6f0EIiUCTPtWudlIkyyNTlgKTJJLkSuSW349
- 1IlEL1FH5uIVoJS+S8uRA==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1756067AbbDWGQ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Apr 2015 02:16:57 -0400
+Received: from mail-ig0-f170.google.com ([209.85.213.170]:34536 "EHLO
+	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753680AbbDWGQz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Apr 2015 02:16:55 -0400
+Received: by iget9 with SMTP id t9so4654943ige.1
+        for <git@vger.kernel.org>; Wed, 22 Apr 2015 23:16:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=irSchhFHc+KEIqUmwLfzxDDhIWNCktH5gSEoTJ4dngc=;
+        b=oUGWQtJY5hHOxzHUmzZLHlgeO51AQsPP/n0E6wftwQPK3uiVXBqF1b8HZg85E8zRL8
+         fk2uVqBhPM0pgK+Vh/RyblKiAIDz4KAka2p0o1QKxhwQ2sF63tgNvLPbBKpJw8YVCtkE
+         APycNRctmPM2wG7zMUp+n1NrxeUiduUdXiajnSkt61yXp55aCxfj2qgymTzu1Xr9JFFw
+         lFUfy7dKF+b4+Y9Izkfj4nk0SMDk7/fn68PFSTdbO+Oez5ClC0sgmn/yowghR+4YWe+V
+         3wZb2jIpcOW7DA+vsH/2c25mFLM4tdKngfl8fUJ8qWByb3SHxUkfx+Cfb2i9nuv1sIGb
+         SNvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=irSchhFHc+KEIqUmwLfzxDDhIWNCktH5gSEoTJ4dngc=;
+        b=IdIIsH2j2U48QW8Z85ZDMMpWunaUUiB27z2Z2M37hMyU4O3JYs/ec65QDXoTWv9Ugv
+         2rwFeRH37fPSph4VovM91f7Obo1itK4OzKvuA798ynUxgVrJ/tyKbEAN8FoS4KzeSYKn
+         WrCcOP7TebeWkHpZsT1sHGXXZjloASNjPp+3uCcLRHdaydFBXlOpfNdJGcJEspy1K4Iu
+         EHWb0ntb4P+NBJXSAZyne6+XDTZFtUuLdA3lvSvxEIJbyMHchF4OFwEvbxhOIHO+HSt5
+         Sd4TMmLS+0P7ZTUbCijpt1MQO9hZwMwZF4gXo8I65OPGNUGR7V9x9bLFHaqKYOiQpM19
+         OuCw==
+X-Gm-Message-State: ALoCoQkx5iyCUfaTEYnOUyW7uffIeGdVCkTvA/4tSsgTop03ymy0srdlwSxORWs5bgHFdz2Cx4Vl
+X-Received: by 10.50.117.4 with SMTP id ka4mr9560878igb.10.1429769812820; Wed,
+ 22 Apr 2015 23:16:52 -0700 (PDT)
+Received: by 10.107.46.22 with HTTP; Wed, 22 Apr 2015 23:16:52 -0700 (PDT)
+In-Reply-To: <xmqqd22vd9me.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267676>
 
-On 04/22/2015 09:12 PM, Patrick Sharp wrote:
-> Johannes,
+On Wed, Apr 22, 2015 at 4:30 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
 >
-> You=E2=80=99re correct, looking back over it, I was pretty vague.
+>>>> +action           = "noop" / "ls-remote" / "fetch" / "push" / "fetch-shallow"
+>> ...
+>>> If we are going in this "in-protocol message switches the service"
+>>> route, we should also support "archive" as one of the actions, no?
+>>> Yes, I know you named the document "pack-protocol" and "archive"
+>>> does not give you packs, but "ls-remote" does not transfer pack data,
+>>> either.
+>>
+>> I'll add that. Also I need to incorporate shallow in one way or another.
 >
-> In truth, we are not using Windows OR putty at all.  Running git on a=
-n Ubuntu system, but we are setting the GIT_SSH environment variable to=
- point to a shell script to use.
->
-> Upon attempting to run git ls-remote, the system was spitting out get=
-addrinfo errors for =E2=80=98atch=E2=80=99 .
->
-> Setting GIT_TRACE=3D2 showed that -batch was being added to the git c=
-ommand.
->
-> This was seen on several different servers with git versions 1.8.5.2,=
- 1.9.1 and 2.3.5
->
-> After a bit we realized that it was the string =E2=80=98uplink=E2=80=99=
- in the GIT_SSH variable that was linked to the extra -batch flag.
->
-> Finally, after searching the git source, we narrowed it down to the =E2=
-=80=98plink=E2=80=99 portion of the string.
->
-> https://github.com/git/git/blob/7c597ef345aed345576de616c51f27e6f4b34=
-2b3/connect.c#L747-L7
-Brian, I got your patch,
-but can't see it in the list yet
-  1/2 looks good, thanks.
-(And add msygit)
+> This level of detail may not matter at this point yet, but it is
+> unclear to me why you have "fetch-shallow" as a separate thing
+> (while not having "push-shallow").
 
-My feeling is that  patch 2/2 may break things for an unknown
-amount of users which e.g. use "myplink".
+Right, this should have been done via plain fetch action but the mode parameter
+may be set to shallow,narrow or what we want. Sorry for my shortcut in thinking
+there.
 
-Patrick,
-did you ever tell us, what you put into $GIT_SSH ?
+> The current infrastructure does
+> already allow fetching into shallow repositories without needing a
+> separate action that is different from "fetch" (aka "upload-pack").
+> I would not be surprised if it were "I can deepn you if you want"
+> capability, but I do not understand why you are singling out
+> "shallow" as something that needs such a special treatment.
+>
 
-Can your use case be covered by using $GIT_SSH_COMMAND ?
+I should not have done that. I just got confused.
