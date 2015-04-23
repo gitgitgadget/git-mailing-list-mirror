@@ -1,80 +1,73 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 2/5] git tag: mention versionsort.prereleaseSuffix in manpage
-Date: Thu, 23 Apr 2015 14:27:47 +0200
-Message-ID: <1429792070-22991-3-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH 3/5] RelNotes: correct name of versionsort.prereleaseSuffix
+Date: Thu, 23 Apr 2015 14:27:48 +0200
+Message-ID: <1429792070-22991-4-git-send-email-mhagger@alum.mit.edu>
 References: <1429792070-22991-1-git-send-email-mhagger@alum.mit.edu>
 Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 23 14:28:20 2015
+X-From: git-owner@vger.kernel.org Thu Apr 23 14:28:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YlGEs-0005wU-OS
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Apr 2015 14:28:19 +0200
+	id 1YlGEn-0005tW-Iv
+	for gcvg-git-2@plane.gmane.org; Thu, 23 Apr 2015 14:28:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934435AbbDWM2M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Apr 2015 08:28:12 -0400
-Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:45561 "EHLO
-	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S934428AbbDWM2F (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 23 Apr 2015 08:28:05 -0400
-X-AuditID: 1207440c-f79376d00000680a-c6-5538e54f13df
+	id S934427AbbDWM2F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Apr 2015 08:28:05 -0400
+Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:42377 "EHLO
+	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S934419AbbDWM2B (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 23 Apr 2015 08:28:01 -0400
+X-AuditID: 12074414-f797f6d000004084-5d-5538e55033e1
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 87.BC.26634.F45E8355; Thu, 23 Apr 2015 08:27:59 -0400 (EDT)
+	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id B1.6D.16516.055E8355; Thu, 23 Apr 2015 08:28:00 -0400 (EDT)
 Received: from michael.fritz.box (p4FC97208.dip0.t-ipconnect.de [79.201.114.8])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t3NCRsfL011822
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t3NCRsfM011822
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Thu, 23 Apr 2015 08:27:58 -0400
+	Thu, 23 Apr 2015 08:27:59 -0400
 X-Mailer: git-send-email 2.1.4
 In-Reply-To: <1429792070-22991-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrBIsWRmVeSWpSXmKPExsUixO6iqOv/1CLUYE0/h0XXlW4mi4beK8wW
-	t1fMZ3Zg9vj7/gOTx8VLyh6fN8kFMEdx2yQllpQFZ6bn6dslcGfMOPKCsWANZ0X3hA/sDYwv
-	2LsYOTgkBEwket8UdTFyApliEhfurWfrYuTiEBK4zCjR27iPFcI5ziTxfVIvE0gVm4CuxKKe
-	ZjBbREBNYmLbIRYQm1nAQWLz50ZGEFtYwFfieccndhCbRUBVYvbaw2D1vAIuEjNPHGCH2CYn
-	cf74T2YQm1PAVWL79DYwWwio5vOdO+wTGHkXMDKsYpRLzCnN1c1NzMwpTk3WLU5OzMtLLdI1
-	1MvNLNFLTSndxAgJFZ4djN/WyRxiFOBgVOLhdcizCBViTSwrrsw9xCjJwaQkynv2JlCILyk/
-	pTIjsTgjvqg0J7X4EKMEB7OSCO+e20A53pTEyqrUonyYlDQHi5I4r+oSdT8hgfTEktTs1NSC
-	1CKYrAwHh5IE76wnQI2CRanpqRVpmTklCGkmDk6Q4VxSIsWpeSmpRYmlJRnxoMiILwbGBkiK
-	B2hvJUg7b3FBYi5QFKL1FKOilDhvHUhCACSRUZoHNxaWAF4xigN9Kcz79jFQFQ8wecB1vwIa
-	zAQ0eOZSsMEliQgpqQZGkdlTi4R5f4gwniu6cvPZxfnvl36ui3U/Vz6dg+vV1k1MBkdX/Ne/
-	kHG1Pn1bMtfxN51hKmtdMkJnLVr18sLcBW0v46O2sE87Y3t8//v91lM17PVf3b+t7uKztGJ5
-	077nYicOXFDULAspFVScqT5Ddt/3Hu4lDOsrZ9Yf3TmtR2PqprqmcNuiy0osxRmJ 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrMIsWRmVeSWpSXmKPExsUixO6iqBvw1CLU4NpEDouuK91MFg29V5gt
+	bq+Yz+zA7PH3/Qcmj4uXlD0+b5ILYI7itklKLCkLzkzP07dL4M6Ydsyn4DNbxZJ1W5gbGG+z
+	djFyckgImEhMebiTDcIWk7hwbz2YLSRwmVGiY71GFyMXkH2cSWLlljfMIAk2AV2JRT3NTCC2
+	iICaxMS2QywgNrOAg8Tmz42MILawgLdE86MWMJtFQFViwr65YMt4BVwkTq5bzQixTE7i/PGf
+	YDM5BVwltk9vY4ZY7CLx+c4d9gmMvAsYGVYxyiXmlObq5iZm5hSnJusWJyfm5aUW6Vro5WaW
+	6KWmlG5ihASKyA7GIyflDjEKcDAq8fC+yLYIFWJNLCuuzD3EKMnBpCTKe/YmUIgvKT+lMiOx
+	OCO+qDQntfgQowQHs5II757bQDnelMTKqtSifJiUNAeLkjjvt8XqfkIC6YklqdmpqQWpRTBZ
+	GQ4OJQlexSdAjYJFqempFWmZOSUIaSYOTpDhXFIixal5KalFiaUlGfGguIgvBkYGSIoHaG8l
+	SDtvcUFiLlAUovUUoy7HnSn/FzEJseTl56VKifPWgRQJgBRllObBrYClhVeM4kAfC/Nqg1Tx
+	AFMK3KRXQEuYgJbMXAq2pCQRISXVwKhUsuHNzbBbUQt1Ej8UOe6+FmZsp9DtOCEli5fpYciR
+	ujTJ2f8Xz1yufOdvs79Kx/YFE7YsXbtpTkRtiYhLgkXUvYz4NO/qmL4T/Ps5T81K+HdmPZeH
+	jXzyO48DYvc/fP7oxRmj28ZufOjV7bN3O7Ydulp4yOGcc57ylzMmL/4E8qkVr7Oc 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267686>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267687>
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- Documentation/git-tag.txt | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ Documentation/RelNotes/2.4.0.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-index bfba4ef..f5b267e 100644
---- a/Documentation/git-tag.txt
-+++ b/Documentation/git-tag.txt
-@@ -98,10 +98,13 @@ OPTIONS
- --sort=<type>::
- 	Sort in a specific order. Supported type is "refname"
- 	(lexicographic order), "version:refname" or "v:refname" (tag
--	names are treated as versions). Prepend "-" to reverse sort
--	order. When this option is not given, the sort order defaults to the
--	value configured for the 'tag.sort' variable if it exists, or
--	lexicographic order otherwise. See linkgit:git-config[1].
-+	names are treated as versions). The "version:refname" sort
-+	order can also be affected by the
-+	"versionsort.prereleaseSuffix" configuration variable. Prepend
-+	"-" to reverse sort order. When this option is not given, the
-+	sort order defaults to the value configured for the 'tag.sort'
-+	variable if it exists, or lexicographic order otherwise. See
-+	linkgit:git-config[1].
+diff --git a/Documentation/RelNotes/2.4.0.txt b/Documentation/RelNotes/2.4.0.txt
+index a0ee37d..c02de8d 100644
+--- a/Documentation/RelNotes/2.4.0.txt
++++ b/Documentation/RelNotes/2.4.0.txt
+@@ -109,8 +109,8 @@ UI, Workflows & Features
+    "cd ''" which silently behaves as a no-op.
+    (merge 6a536e2 kn/git-cd-to-empty later to maint).
  
- --column[=<options>]::
- --no-column::
+- * The versionsort.prerelease configuration variable can be used to
+-   specify that v1.0-pre1 comes before v1.0.
++ * The versionsort.prereleaseSuffix configuration variable can be used
++   to specify that v1.0-pre1 comes before v1.0.
+ 
+  * A new "push.followTags" configuration turns the "--follow-tags"
+    option on by default for the "git push" command.
 -- 
 2.1.4
