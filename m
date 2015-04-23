@@ -1,96 +1,161 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] connect: improve check for plink to reduce false
- positives
-Date: Thu, 23 Apr 2015 11:53:04 -0400
-Message-ID: <20150423155304.GA26018@peff.net>
-References: <20150422232306.GA32705@peff.net>
- <1429747595-298095-1-git-send-email-sandals@crustytoothpaste.net>
- <1429747595-298095-2-git-send-email-sandals@crustytoothpaste.net>
- <b6b4da1f7735b834043375e3d8eaa331@www.dscho.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv3] refs.c: enable large transactions
+Date: Thu, 23 Apr 2015 10:56:21 -0700
+Message-ID: <xmqqzj5y3f0a.fsf@gitster.dls.corp.google.com>
+References: <1429738227-2985-1-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Apr 23 17:53:25 2015
+Content-Type: text/plain
+Cc: mhagger@alum.mit.edu, git@vger.kernel.org, peff@peff.net
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Thu Apr 23 19:56:42 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YlJRL-00010W-5I
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Apr 2015 17:53:23 +0200
+	id 1YlLMY-0003Ct-Ru
+	for gcvg-git-2@plane.gmane.org; Thu, 23 Apr 2015 19:56:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030213AbbDWPxL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Apr 2015 11:53:11 -0400
-Received: from cloud.peff.net ([50.56.180.127]:49241 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S965475AbbDWPxH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Apr 2015 11:53:07 -0400
-Received: (qmail 24569 invoked by uid 102); 23 Apr 2015 15:53:06 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 23 Apr 2015 10:53:06 -0500
-Received: (qmail 6446 invoked by uid 107); 23 Apr 2015 15:53:33 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 23 Apr 2015 11:53:33 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 23 Apr 2015 11:53:04 -0400
-Content-Disposition: inline
-In-Reply-To: <b6b4da1f7735b834043375e3d8eaa331@www.dscho.org>
+	id S1030344AbbDWR4b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Apr 2015 13:56:31 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50569 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S966537AbbDWR43 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Apr 2015 13:56:29 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9C3EB4A9D7;
+	Thu, 23 Apr 2015 13:56:23 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=LxmIOFR9UfT1Dui0MW0FKKVrQ18=; b=ohagYu
+	VjwzB5mfHAcLlA8KpJvUkR4qoYI+w7TWnnFHGNhzPnGSksdJ7CXr81pqiii1KSjC
+	U9I3jyerfbWZ2z8ztkTF39PG47Fvxj5QPh5JbPzr0Wxe3xWJQI+21xnx54JyXea0
+	C54bPfursVXlA+cKT8Wt4DC9zN1xWMfjfOsUw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=mUUJaJVM1tvTqhquTqpwgs3BxObzxlkx
+	tJV3DIR9CIcrSL/Z7C7oBwiPcvaXEdS//ClDBSnfvpl0blHr58HzkzapSx83o4kL
+	SmGT/8xpFrlDIJlprioaLudpFFMQsSpHJBHK3qpUpIPD+snyeLpZqyHJOlbmJL39
+	LtIy/w+zaTc=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 951854A9D6;
+	Thu, 23 Apr 2015 13:56:23 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1A3BB4A9D5;
+	Thu, 23 Apr 2015 13:56:23 -0400 (EDT)
+In-Reply-To: <1429738227-2985-1-git-send-email-sbeller@google.com> (Stefan
+	Beller's message of "Wed, 22 Apr 2015 14:30:27 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 0DCAF2B4-E9E2-11E4-ACF2-83E09F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267695>
 
-On Thu, Apr 23, 2015 at 08:50:17AM +0200, Johannes Schindelin wrote:
+Stefan Beller <sbeller@google.com> writes:
 
-> > +				tortoiseplink = tplink == ssh ||
-> > +					(tplink && is_dir_sep(tplink[-1]));
-> 
-> Maybe have a helper function here? Something like
-> `basename_matches(const char *path, const char *basename, int
-> ignore_case)`? That would be easier to read (I have to admit that I
-> had to wrap my head around the logic to ensure that tplink[-1] is
-> valid; It is, but it requires more brain cycles to verify than I would
-> like).
+> diff --git a/refs.c b/refs.c
+> index 4f495bd..7ce7b97 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -3041,6 +3041,13 @@ static int write_ref_sha1(struct ref_lock *lock,
+>  		errno = EINVAL;
+>  		return -1;
+>  	}
+> +	if (lock->lk->fd == -1 && reopen_lock_file(lock->lk) == -1) {
 
-Yeah, I had a similar thought when reading the patch.
+Granted, we explicitly assign -1 to lk->fd when we know it is
+closed, and the return value from reopen_lock_file() can come only
+from the return value from open(2), which is defined to return -1
+(i.e. not just any negative value) upon failure, but still, isn't it
+customary to check with "< 0" rather than "== -1" for errors?
 
-> Also, I am really hesitant to just test the start of the basename; I
-> would rather have an entire basename match so that something  like
-> "PLinKoeln" would not match. (And of course, for Windows I would want
-> that hypothetical `basename_matches()` function to allow basenames to
-> end in `.exe` automatically).
+> +		int save_errno = errno;
+> +		error("Couldn't reopen %s", lock->lk->filename.buf);
 
-What about "plink-0.83" that was mentioned earlier in the thread? I
-think that is the reason brian's patch stuck to matching the start and
-not the end. But I have no idea if that is actually a real thing, or
-just a hypothetical.
+No need to change this line, but I noticed that we might want to do
+something about the first one of the following two:
 
-If I were writing from scratch, I would probably keep things as tight as
-possible, like:
+    $ git grep -e '[ 	]error(_*"[A-Z]' | wc -l
+    146
+    $ git grep -e '[ 	]error(_*"[a-z]' | wc -l
+    390
 
-  const char *base = basename(ssh);
-  plink = !strcasecmp(base, "plink") ||
-          !strcasecmp(base, "plink.exe");
-  tplink = !strcasecmp(base, "tortoiseplink") ||
-           !strcasecmp(base, "tortoiseplink.exe"));
+> +		unlock_ref(lock);
+> +		errno = save_errno;
+> +		return -1;
+> +	}
 
-but maybe that is too tight at this point in time; we don't really know
-what's out there and working (or maybe _we_ do, but _I_ do not :) ).
+Is this the only place in the entire codebase where a lockfile,
+which may have been closed to save number of open file descriptors,
+needs to be reopened?  If I understand correctly, lockfile API is
+not for sole use of refs (don't the index and the pack codepaths use
+it, too?), so it may give us a better abstraction to have a helper
+function in lockfile.[ch] that takes a lock object, i.e.
 
-At any rate, brian's patch only looks for a dir-separator anywhere, not
-the actual basename. So:
+	int make_lock_fd_valid(struct lock_file *lk)
+        {
+		if (lk->fd < 0 && reopen_lock_file(lk) < 0) {
+			... error ...
+                        return -1;
+		}
+                return 0;
+	}
 
-  /path/to/plink/ssh
+and to call it at this point, i.e.
 
-would match, and I'm not sure if that's a good thing or not. So yet
-another variant is to use basename(), and then just check that the
-basename starts with "plink" (to catch "plink.exe", "plink-0.83", etc).
-That avoids cruft in the intermediate path, and unless your actual
-binary is named PlinKoeln, it will not false positive on the example you
-gave.
+	if (make_lock_fd_valid(lock->lk) < 0)
+        	return -1;
 
--Peff
+perhaps?
+
+> @@ -3733,6 +3741,20 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+>  		return 0;
+>  	}
+>  
+> +	/*
+> +	 * We need to open many files in a large transaction, so come up with
+> +	 * a reasonable maximum. We still keep some spares for stdin/out and
+> +	 * other open files. Experiments determined we need more fds when
+> +	 * running inside our test suite than directly in the shell. It's
+> +	 * unclear where these fds come from. 25 should be a reasonable large
+> +	 * number though.
+> +	 */
+
+> +	remaining_fds = get_max_fd_limit();
+> +	if (remaining_fds > 25)
+> +		remaining_fds -= 25;
+> +	else
+> +		remaining_fds = 0;
+
+Is the value of pack_open_fds visible from here? I am wondering if
+we might want "scratch fds Git can use for its own use" accounting
+so that the two subsystems can collectively say "it is still safe
+to use one more fd and leave 25 for other people". With the code
+structure proposed here, the pack reader can grab all but 25 fds,
+which would leave the rest of Git including this code only 25,
+and the value in remaining_fds would become totally meaningless.
+
+It certainly can wait to worry about that and we do not have to do
+anything about it in this patch, but it may still be a good idea to
+leave "NEEDSWORK:" comment here (and point at open_packed_git_1() in
+sha1_file.c in the comment).
+
+I do not think the other side needs to know about the fd consumption
+in this function, as what is opened in here will be closed before
+this function returns.
+
+> @@ -3762,6 +3784,12 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+>  				    update->refname);
+>  			goto cleanup;
+>  		}
+> +		if (!(flags & REF_HAVE_NEW) ||
+> +		    is_null_sha1(update->new_sha1) ||
+> +		    remaining_fds == 0)
+> +			close_lock_file(update->lock->lk);
+> +		else
+> +			remaining_fds--;
+>  	}
