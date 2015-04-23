@@ -1,95 +1,92 @@
-From: Michal Pomorski <misieck@gmail.com>
-Subject: git clone --depth: shallow clone problems
-Date: Thu, 23 Apr 2015 16:53:04 +0200
-Message-ID: <CALxdAKiyRMR-jF2KcBQGYgXUb+D8=YaESU3E9KN+zBLx=0UCNw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 5/5] RelNotes: wordsmithing
+Date: Thu, 23 Apr 2015 08:38:18 -0700
+Message-ID: <xmqq618mdfdh.fsf@gitster.dls.corp.google.com>
+References: <1429792070-22991-1-git-send-email-mhagger@alum.mit.edu>
+	<1429792070-22991-6-git-send-email-mhagger@alum.mit.edu>
+	<5538E9F3.7040702@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 23 16:53:37 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Thu Apr 23 17:38:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YlIVP-000296-Q0
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Apr 2015 16:53:32 +0200
+	id 1YlJCs-0002p1-Np
+	for gcvg-git-2@plane.gmane.org; Thu, 23 Apr 2015 17:38:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965511AbbDWOx1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Apr 2015 10:53:27 -0400
-Received: from mail-lb0-f170.google.com ([209.85.217.170]:34723 "EHLO
-	mail-lb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752345AbbDWOx0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Apr 2015 10:53:26 -0400
-Received: by lbcga7 with SMTP id ga7so15174123lbc.1
-        for <git@vger.kernel.org>; Thu, 23 Apr 2015 07:53:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=IqlT9G+DJBqBegkTjRdCAyfQi/QfAof5dZ4emWzsj6M=;
-        b=IKnPtdjhVkqjKn31yRHps7tzTVj2fvvyxaINMNDj48eVl53vp1yZjTY2ogJbrlsLZE
-         JdVrTbsz0L9AXw1P7nGwzg6XcifMfoIGOaQ/+0YhbHJzMOacE1Mf4cXDSPVvtnTMhNzu
-         3H4+8ERHN2u1Fy9/fmckKTPfWiTz+tb0gZtnHuMAHJYfQj4q8Dv8HexLKpBIGQz0eCfi
-         tMg6wkf8wYtL5vDebkSvaIyWr04rBxAMyCCE18KHOSJK5XZp1zcg20DziKNH4pj86NjW
-         KJ7k5DvcrxTROyP685oCZ1yMxcmPS6vQHEufeeu+cSYhHolH7C/P1Ah9bQMJrVOC/YUr
-         T6+g==
-X-Received: by 10.113.10.134 with SMTP id ea6mr2745119lbd.29.1429800804754;
- Thu, 23 Apr 2015 07:53:24 -0700 (PDT)
-Received: by 10.25.24.89 with HTTP; Thu, 23 Apr 2015 07:53:04 -0700 (PDT)
+	id S966153AbbDWPiW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Apr 2015 11:38:22 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:63609 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S965690AbbDWPiV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Apr 2015 11:38:21 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 65F214B644;
+	Thu, 23 Apr 2015 11:38:20 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=9d1Fks7DWxOV2Oy51E/7WctJ42c=; b=qv0Acd
+	034w9pNW5MqhS+NKpM9TyJqLrF44i52KMLjbZiSn4BfSq4+QOAHXyVkO8VAUB6A6
+	bvDlOO5ZcG4L0hmAK/5qsEcvDfj9JHaiqgAYCnc3W8YRCyDcCPHvxLe/EkPqfSRQ
+	eBLzqAwXVjsQ+hfr2UpTPgj2eeFzqFAJZG6W8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=w9jDxqDDvYVR0ZOMBUawNRWU54bLeXti
+	oqdyvMJKnIIt4Sebv1+M4KAW+J8bq7iUaYiGhwzO5XjvU+kSnS15uJ1rs0LLl/QU
+	b+Y7Bd+R9HQR2/pYu2wZPXPJBSLzYhlavZsFvzqMozi2gMcmP64DGZIuW13cY+kn
+	rjscZbiJDfc=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5F3404B643;
+	Thu, 23 Apr 2015 11:38:20 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DD9944B642;
+	Thu, 23 Apr 2015 11:38:19 -0400 (EDT)
+In-Reply-To: <5538E9F3.7040702@alum.mit.edu> (Michael Haggerty's message of
+	"Thu, 23 Apr 2015 14:47:47 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: C49E6426-E9CE-11E4-A26D-83E09F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267692>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267693>
 
-tl: skip to the second paragraph
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-So here is what I just experienced:
-We had an emergency error in an application at work and as the
-responsible developer was unavailable, I was asked to check it out and
-look into it.
-We are a small branch of a bigger company and our connection to the
-company's source servers is really slow, so just to quickly start it
-up, I decided to take a shallow clone (that's what it is for, right?).
-After a while we realized, the clone I have made was not sufficient
-and was missing some newest work done on the project.
-I did "git fetch --unshallow" which finished surprisingly quickly, and
-it did not bring any newer commits.
-Unaware of the fine print hiding in the documentation of git clone, I
-blamed the repo (and in extension the person who provided me the
-address to it). After coming to a realization, a process which cost me
-time and embarrassment, I understood what is supposed to be the
-"correct" behaviour:
-"--single-branch
-Clone only the history leading to the tip of a single branch, either
-specified by the --branch option or the primary branch remote's HEAD
-points at. When creating a shallow clone with the --depth option, this
-is the default, unless --no-single-branch is given to fetch the
-histories near the tips of all branches."
-Of course, the new commits were put on a custom branch, and I knew
-that all the time, but I expected the branch to show up eventually, at
-least after git fetch --unshallow.
+> On 04/23/2015 02:27 PM, Michael Haggerty wrote:
+>> Make many textual tweaks to the 2.4.0 release notes.
+>> 
+>> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+>> ---
+>>  Documentation/RelNotes/2.4.0.txt | 336 ++++++++++++++++++++-------------------
+>>  1 file changed, 172 insertions(+), 164 deletions(-)
+>> 
+>> diff --git a/Documentation/RelNotes/2.4.0.txt b/Documentation/RelNotes/2.4.0.txt
+>> index 7b23ca3..cde64be 100644
+>> --- a/Documentation/RelNotes/2.4.0.txt
+>> +++ b/Documentation/RelNotes/2.4.0.txt
+>> [...]
+>
+> Oh, I just noticed that many of the same blurbs appear in the release
+> notes for the maintenance versions. Once there is agreement on how many
+> of the changes to accept, the analogous changes should probably be made
+> in those other files.
 
+Thanks.
 
-I hope you can see the faults in the usability of the commands I was exposed to:
-1) git clone --depth  should:
-   -warn about only fetching the current HEAD (name it by a real name
-if applicable)
-and/or
-   -require the --branch option so that it is not left to chance
-(current HEAD could be anything; is it really meaningful to talk about
-the current HEAD on a server?)
-and/or
-   -make the --no-single-branch the default...
-and maybe
-   -have the option to clone the most recent commits.
+FYI, these days the same text appears in
 
-2) git fetch --unshallow should convert the clone into an actual
-equivalent of a normal, not shallow clone.
+ (1) the topic description in "What's cooking";
+ (2) the merge commit for the topic when it is merged to 'next';
+ (3) the merge commit for the topic when it is merged to 'master';
+ (4) Release notes for the 'master' and 'maint', when it is merged.
 
-3) The documentation should be improved. The behaviour of --shallow is
-described partly in the description of --no-single-branch. This is the
-documentation equivalent of the infamous "come from" control flow
-structure.
-
-Regards,
-Michal Pomorski
+So the best time to catch mistakes and to rephrase it is when you
+see something questionable in "What's cooking", ideally before it
+hits 'next', before it hits 'master'.
