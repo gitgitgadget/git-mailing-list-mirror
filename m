@@ -1,252 +1,176 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: Rebasing with submodule change causes red herring with --continue
-Date: Thu, 23 Apr 2015 21:35:38 +0100
-Message-ID: <20150423203538.GC16113@serenity.lan>
-References: <CAHd499AqCJ5N1GP6mBJZB7-9vWPNjtia1G7PHoSY3d=Zovv7UA@mail.gmail.com>
- <20150410164413.GL21452@serenity.lan>
- <CAHd499D-UX-0_HhoVWuitN960BdKtB_JonbxgLRqwU3ktFW4Sg@mail.gmail.com>
- <CAHd499A9k+DZHg-Am_STyRJFwMMT_vi9DtBZqDmNRvsJJ7gxNA@mail.gmail.com>
- <55394B70.4020403@web.de>
+From: Marc Khouzam <marc.khouzam@gmail.com>
+Subject: Re: git-completion.tcsh
+Date: Thu, 23 Apr 2015 17:08:53 -0400
+Message-ID: <CAFj1UpHBk1JFmSv4T=wQUNiade9ZW8yiaco9z2-wGJh7yXATuA@mail.gmail.com>
+References: <20150401115519.Horde.JM0TEyhacRn5LYAEffMggQ1@webmail.informatik.kit.edu>
+	<481BCBD7-457B-4AFB-B878-1417C8C5940C@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Robert Dailey <rcdailey.lists@gmail.com>, Git <git@vger.kernel.org>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Thu Apr 23 22:35:59 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
+	git@vger.kernel.org
+To: Perry Rajnovic <perry.rajnovic@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 23 23:09:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YlNqm-00028F-Lx
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Apr 2015 22:35:57 +0200
+	id 1YlOMz-0002sE-Sr
+	for gcvg-git-2@plane.gmane.org; Thu, 23 Apr 2015 23:09:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030796AbbDWUfw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Apr 2015 16:35:52 -0400
-Received: from jackal.aluminati.org ([72.9.247.210]:53100 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030669AbbDWUfv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Apr 2015 16:35:51 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id 5770DCDA5A8;
-	Thu, 23 Apr 2015 21:35:50 +0100 (BST)
-X-Quarantine-ID: <e9C9CNKlaIIc>
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -1.778
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.778 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9, URI_HEX=1.122] autolearn=no
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id e9C9CNKlaIIc; Thu, 23 Apr 2015 21:35:49 +0100 (BST)
-Received: from serenity.lan (griffin.aluminati.org [10.0.7.182])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by jackal.aluminati.org (Postfix) with ESMTPSA id 2F98E86600A;
-	Thu, 23 Apr 2015 21:35:40 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <55394B70.4020403@web.de>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1031201AbbDWVI6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 23 Apr 2015 17:08:58 -0400
+Received: from mail-wg0-f52.google.com ([74.125.82.52]:34232 "EHLO
+	mail-wg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1031198AbbDWVIz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 23 Apr 2015 17:08:55 -0400
+Received: by wgso17 with SMTP id o17so31559091wgs.1
+        for <git@vger.kernel.org>; Thu, 23 Apr 2015 14:08:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=HZcunSSWZ1EQhAS6mbN5Hi1Gx0GhxYKIgYpN6i9cb5g=;
+        b=K5noCegFQ9mlqFnJNGqFdLhYaudclB92533IQa+5m3TcYHFozkxyLylJ+8qHgwWpsh
+         z/C4QkfG8fAXbcEq0e67EXcFi+bwKbTEF6A/T02ejB0n6ey/NYl5z8tXcohVBa9QnthO
+         u6WZ0dDuANiputF+SDxgGOLYg79t0XYfpk58nt3YQ4shdFpm/pV+VFWW9bPWSnUn6oO/
+         XIxuRBODL1dhPf4bddvLLvYp9ipMPn74bLuvj7elW40DJUqz/m1tnEEPDKr17vee1cCz
+         Lh2dIRmBoFT+kk9skXhqTaD4TRRVx0Ioi/fWm62M6j7BtxpITOiGwEYyV58BVKG+wKzN
+         l9tQ==
+X-Received: by 10.180.83.130 with SMTP id q2mr303300wiy.89.1429823333142; Thu,
+ 23 Apr 2015 14:08:53 -0700 (PDT)
+Received: by 10.28.176.5 with HTTP; Thu, 23 Apr 2015 14:08:53 -0700 (PDT)
+In-Reply-To: <481BCBD7-457B-4AFB-B878-1417C8C5940C@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267709>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267710>
 
-On Thu, Apr 23, 2015 at 09:43:44PM +0200, Jens Lehmann wrote:
-> Am 23.04.2015 um 21:07 schrieb Robert Dailey:
-> > On Thu, Apr 23, 2015 at 1:17 PM, Robert Dailey <rcdailey.lists@gmail.com> wrote:
-> >> On Fri, Apr 10, 2015 at 11:44 AM, John Keeping <john@keeping.me.uk> wrote:
-> >>> On Fri, Apr 10, 2015 at 11:30:20AM -0500, Robert Dailey wrote:
-> >>>> I have a branch that contains a commit with a single change: A
-> >>>> submodule pointing to a new SHA1.
-> >>>>
-> >>>> When I rebase this branch onto the tip of its parent branch AND that
-> >>>> parent branch had modified that same submodule, the rebase stops at
-> >>>> the commit on my branch that modified the submodule and asks me if I
-> >>>> want to keep REMOTE or LOCAL. I say LOCAL and notice immediately that
-> >>>> the submodule is not staged (normally it would be).
-> >>>>
-> >>>> I do:
-> >>>>
-> >>>> $ git add my-submodule
-> >>>>
-> >>>> Then I do:
-> >>>>
-> >>>> $ git rebase --continue
-> >>>>
-> >>>> At this point, it fails asking me if I forgot to stage changes and
-> >>>> recommends doing --skip. This is normally what you would see if the
-> >>>> staging area was completely empty, however it isn't, since I see the
-> >>>> submodule is in there.
-> >>>>
-> >>>> Is this a bug or am I missing a fundamental here? I'm using Git 2.1.0
-> >>>> on Windows through MSYS. I'll provide more concrete examples if my
-> >>>> summary of the issue doesn't "ring any bells".
-> >>>
-> >>> I hit something similar in the past, but it was fixed with commit
-> >>> a6754cd (rebase -i continue: don't skip commits that only change
-> >>> submodules, 2012-04-07) so I think you must be hitting a slightly
-> >>> different problem, although the tests added in that commit look like
-> >>> they do test the scenario you describe (specifically 'rebase -i continue
-> >>> with only submodule staged').
-> >>
-> >> I am still running into this issue on git 2.3.5 on Windows. Logs
-> >> below. One interesting thing to note in the git trace output is that
-> >> it is specifying --ignore-submodules option to `git diff-files` during
-> >> the rebase continue. Is this due to a configuration option? It seems
-> >> like git should not be ignoring submodules when continuing a rebase
-> >> (this should only affect direct calls to diff)
-> >>
-> >>
-> >> |-- Robert@M5536:/e/code/frontend (timeline-ids-develop|REBASE 3/3) --|
-> >> $ git status
-> >> rebase in progress; onto bb05e7c
-> >> You are currently rebasing branch 'timeline-ids-develop' on 'bb05e7c'.
-> >>    (all conflicts fixed: run "git rebase --continue")
-> >>
-> >> Changes to be committed:
-> >>    (use "git reset HEAD <file>..." to unstage)
-> >>
-> >>          modified:   Core
-> >>
-> >> Changes not staged for commit:
-> >>    (use "git add <file>..." to update what will be committed)
-> >>    (use "git checkout -- <file>..." to discard changes in working directory)
-> >>
-> >>          modified:   Core (new commits)
-> >>
-> >> Untracked files:
-> >>    (use "git add <file>..." to include in what will be committed)
-> >>
-> >>          Tools/FontTool/
-> >>
-> >>
-> >> |-- Robert@M5536:/e/code/frontend (timeline-ids-develop|REBASE 3/3) --|
-> >> $ GIT_TRACE=1 git rebase --continue
-> >> 19:15:33.569945 git.c:557               trace: exec: 'git-rebase' '--continue'
-> >> 19:15:33.569945 run-command.c:351       trace: run_command:
-> >> 'git-rebase' '--continue'
-> >> 19:15:33.775097 git.c:348               trace: built-in: git
-> >> 'rev-parse' '--parseopt' '--stuck-long' '--' '--continue'
-> >> 19:15:33.931190 git.c:348               trace: built-in: git
-> >> 'rev-parse' '--git-dir'
-> >> 19:15:34.007242 git.c:348               trace: built-in: git
-> >> 'rev-parse' '--is-bare-repository'
-> >> 19:15:34.059280 git.c:348               trace: built-in: git
-> >> 'rev-parse' '--show-toplevel'
-> >> 19:15:34.148343 git.c:348               trace: built-in: git 'config'
-> >> '--bool' 'rebase.stat'
-> >> 19:15:34.227399 git.c:348               trace: built-in: git 'config'
-> >> '--bool' 'rebase.autostash'
-> >> 19:15:34.280437 git.c:348               trace: built-in: git 'config'
-> >> '--bool' 'rebase.autosquash'
-> >> 19:15:34.335476 git.c:348               trace: built-in: git
-> >> 'rev-parse' '--verify' 'HEAD'
-> >> 19:15:34.389515 git.c:348               trace: built-in: git
-> >> 'update-index' '--ignore-submodules' '--refresh'
-> >> 19:15:34.554631 git.c:348               trace: built-in: git
-> >> 'diff-files' '--quiet' '--ignore-submodules'
-> >> 19:15:34.902879 git.c:557               trace: exec: 'git-am'
-> >> '--resolved' '--resolvemsg=
-> >> When you have resolved this problem, run "git rebase --continue".
-> >> If you prefer to skip this patch, run "git rebase --skip" instead.
-> >> To check out the original branch and stop rebasing, run "git rebase --abort".
-> >> '
-> >> 19:15:34.902879 run-command.c:351       trace: run_command: 'git-am'
-> >> '--resolved' '--resolvemsg=
-> >> When you have resolved this problem, run "git rebase --continue".
-> >> If you prefer to skip this patch, run "git rebase --skip" instead.
-> >> To check out the original branch and stop rebasing, run "git rebase --abort".
-> >> '
-> >> 19:15:35.113028 git.c:348               trace: built-in: git
-> >> 'rev-parse' '--parseopt' '--stuck-long' '--' '--resolved'
-> >> '--resolvemsg=
-> >> When you have resolved this problem, run "git rebase --continue".
-> >> If you prefer to skip this patch, run "git rebase --skip" instead.
-> >> To check out the original branch and stop rebasing, run "git rebase --abort".
-> >> '
-> >> 19:15:35.290155 git.c:348               trace: built-in: git
-> >> 'rev-parse' '--git-dir'
-> >> 19:15:35.387224 git.c:348               trace: built-in: git
-> >> 'rev-parse' '--show-prefix'
-> >> 19:15:35.541332 git.c:348               trace: built-in: git
-> >> 'rev-parse' '--show-toplevel'
-> >> 19:15:35.598374 git.c:348               trace: built-in: git 'var'
-> >> 'GIT_COMMITTER_IDENT'
-> >> 19:15:35.659417 git.c:348               trace: built-in: git
-> >> 'rev-parse' '--verify' '-q' 'HEAD'
-> >> 19:15:35.724462 git.c:348               trace: built-in: git 'config'
-> >> '--bool' '--get' 'am.messageid'
-> >> 19:15:35.811524 git.c:348               trace: built-in: git 'config'
-> >> '--bool' '--get' 'am.keepcr'
-> >> 19:15:36.037685 git.c:348               trace: built-in: git
-> >> 'update-index' '-q' '--refresh'
-> >> 19:15:37.057409 git.c:557               trace: exec:
-> >> 'git-sh-i18n--envsubst' '--variables' 'Applying: $FIRSTLINE'
-> >> 19:15:37.057409 run-command.c:351       trace: run_command:
-> >> 'git-sh-i18n--envsubst' '--variables' 'Applying: $FIRSTLINE'
-> >> 19:15:37.178495 git.c:557               trace: exec:
-> >> 'git-sh-i18n--envsubst' 'Applying: $FIRSTLINE'
-> >> 19:15:37.178495 run-command.c:351       trace: run_command:
-> >> 'git-sh-i18n--envsubst' 'Applying: $FIRSTLINE'
-> >> Applying: TEMP: Update Core submodule
-> >> 19:15:37.360624 git.c:348               trace: built-in: git
-> >> 'diff-index' '--ignore-submodules' '--quiet' '--cached' 'HEAD' '--'
-> >> No changes - did you forget to use 'git add'?
-> >> If there is nothing left to stage, chances are that something else
-> >> already introduced the same changes; you might want to skip this patch.
-> >>
-> >> When you have resolved this problem, run "git rebase --continue".
-> >> If you prefer to skip this patch, run "git rebase --skip" instead.
-> >> To check out the original branch and stop rebasing, run "git rebase --abort".
-> >>
-> >> 19:15:37.456694 git.c:348               trace: built-in: git
-> >> 'rev-parse' '--verify' '-q' 'HEAD'
-> >
-> >
-> > For reference, I found an existing mailing list discussion on this
-> > from a few years ago:
-> > http://git.661346.n2.nabble.com/Interactive-rebase-with-submodules-td7197519.html
-> >
-> > Apparently a patch was proposed, i do not know if it made it in a
-> > release of Git. But based on what I'm seeing right now, it seems that
-> > it did not.
-> 
-> Nope, this patch made it in at the a6754cda change John mentioned.
-> But while working on recursive submodule update I got the impression
-> that possibly some of the '--ignore-submodule' options used in the
-> git scripts should be changed to '--ignore-submodule=dirty', but I
-> didn't find the time yet to confirm that hypothesis (I'm currently
-> concentrating on those builtins that use unpack_trees() directly).
+Hi,
 
-I think the difference is that Robert isn't going through the
-interactive codepath.  a6754cda affects git-rebase--interactive.sh which
-no longer contains --ignore-submodules at all, but git-rebase.sh does
-use it at the beginning of the "rebase --continue" case.
+I did notice the problem a while ago and had traced it back to the
+fact that the bash completion scripts no longer adds the trailing '/'
+at the end of directories.
+Tcsh needs that '/' to know not to add that annoying extra space.
 
-So if you're continuing an interactive rebase you go:
+Bash 3 needed to put it that trailing '/' but bash 4 did not.  Two
+years ago (!) changes were made in commit
+3ffa4df4b2a26768938fc6bf1ed0640885b2bdf1 to allow bash 3 to work
+without the trailing '/'.  That caused
+the problem in the tcsh script.
 
-	git update-index --ignore-submodules --refresh &&
-	git diff-files --quiet --ignore-submodules || {
-		echo "$(gettext "You must edit all merge conflicts and then
-mark them as resolved using git add")"
-		exit 1
-	}
-	
-and then jump into git-rebase--interactive.sh which checks for any
-cached changes (including submodules) before deciding what to do.
+The thing is that with master of today, I don't see the problem any
+more.  I can't tell you when it started working again.
+What is interesting is that the reason it now works is that the
+git-completion.bash script no longer returns anything
+for the case you mention:
+  git add f<tab>
+Instead, it seems to rely on file completion only.  File completion is
+simulated by the tcsh script, so things work.
 
-But if the rebase isn't interactive it goes to git-am which results in
-the message above.
+I tried with both git add and git rm and didn't see the problem as you
+described it.
 
-So it seems a change similar to a6754cda is needed in git-am in order to
-fix this for non-interactive rebases (and presumably plain "git am
---continue" if only submodule changes are staged).
+You can troubleshoot the git-completion.tcsh script by running the
+generated final script directly.  For example, to see the completions
+for a command line like:
+    git rm f<tab>
+you can run:
+  bash ~/.git-completion.tcsh.bash git 'git rm f'
 
-However, I can't figure out how the code results in the trace above.  On
-master (v2.4.0-rc2-43-gfb89636) the "Applying: $FIRSTLINE" comes from
-line 843 of git-am.sh so the diff-index invocation should be the one on
-line 863, which matches the message printed.  But that invocation
-doesn't pass --ignore-submodules and AFAICT never has (at least in
-vanilla Git).
+I plan on posting a patch to add debug printouts to make this process s=
+impler.
+
+Marc
+
+On Thu, Apr 9, 2015 at 12:41 AM, Perry Rajnovic
+<perry.rajnovic@gmail.com> wrote:
+> G=C3=A1bor,
+>
+> I updated git to include the macports install with bash completion.  =
+under bash it does not exhibit the problem as I described it. To be sur=
+e that the completion scripts installed via macports weren=E2=80=99t ne=
+wer/different (the .bash completion file had a few minor diffs from wha=
+t I had been using), i reinstalled the tcsh completion using those file=
+s, but the same behavior happened.
+>
+> So i=E2=80=99m seeing what you=E2=80=99re seeing, bash completion wor=
+ks fine, it=E2=80=99s likely to be something in the wrapper handling.
+>
+> (updated) environment
+> Darwin 14.3.0 Darwin Kernel Version 14.3.0: Mon Mar 23 11:59:05 PDT 2=
+015; root:xnu-2782.20.48~5/RELEASE_X86_64 x86_64 (OS X 10.10.3)
+> Apple Terminal Version 2.5.3 (343.7)
+> git 2.3.4 (+bash_completion, via MacPorts)
+> tcsh 6.17.00 (Astron) 2009-07-10 (x86_64-apple-darwin) options wide,n=
+ls,dl,al,kan,sm,rh,color,filec
+> GNU bash, version 4.3.33(1)-release (x86_64-apple-darwin14.0.0)
+>
+> Thanks!
+>
+> Perry
+>
+>> On Apr 1, 2015, at 20:55, SZEDER G=C3=A1bor <szeder@ira.uka.de> wrot=
+e:
+>>
+>>
+>> Quoting Perry Rajnovic <perry.rajnovic@gmail.com>:
+>>
+>>> When using the auto-completion included with git for tcsh, several
+>>> commands do directly completion with an additional space appended t=
+o
+>>> the end, which defeats the ability to complete to a deeper
+>>> sub-directory.
+>>>
+>>> For example, if I have a git repository including the following:
+>>> basedir/foo/bar/somefile.c
+>>>
+>>> (works as expected, git add)
+>>> $ cd basedir
+>>> $ git add f<tab>
+>>> $ git add foo/
+>>> $ git add foo/b<tab>
+>>> $ git add foo/bar/
+>>> $ git add foo/bar/s<tab>
+>>> $ git add foo/bar/somefile.c
+>>>
+>>> (works not as expected, git rm)
+>>> $ cd basedir
+>>> $ git rm f<tab>
+>>> $ git rm foo
+>>> $ git rm foo<backspace>/b<tab>
+>>> $ git rm foo/bar
+>>> there=E2=80=99s a trailing space after foo and bar in the above lin=
+es, which
+>>> means it=E2=80=99s not possible to initiate completion or immediate=
+ly start
+>>> typing, i must back-space before continuing.
+>>>
+>>> I=E2=80=99m fairly certain i=E2=80=99ve seen this for other command=
+s as  well, but
+>>> i=E2=80=99m not sure to what extent this occurs throughout the comm=
+ands.
+>>>
+>>> Environment info:
+>>> OS: Darwin 14.1.0 Darwin Kernel Version 14.1.0: Thu Feb 26 19:26:47
+>>> PST  2015; root:xnu-2782.10.73~1/RELEASE_X86_64 x86_64 (OSX 10.10.2=
+)
+>>> Apple Terminal Version 2.5.1 (343.6)
+>>> git version 2.3.2 (via MacPorts)
+>>> tcsh 6.17.00 (Astron) 2009-07-10 (x86_64-apple-darwin) options
+>>> wide,nls,dl,al,kan,sm,rh,color,filec
+>>
+>> The tcsh completion script is just a wrapper, it relies on the bash
+>> completion script to do the heavy lifting and tunnels its output int
+>> tcsh's completion infrastructure.
+>> Could you try bash completion in your environment first to see,
+>> whether it's a bash completion issue that I can't reproduce or an
+>> issue with the tcsh wrapper?
+>>
+>> Cc'ing Marc, author of the tcsh wrapper.
+>>
+>>
+>> G=C3=A1bor
+>
