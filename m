@@ -1,61 +1,56 @@
-From: Scott Meyer <dutchlab@gmail.com>
-Subject: URL not displaying change made with git.
-Date: Fri, 24 Apr 2015 08:22:18 -0400
-Message-ID: <CAKXTx=1g6eBR1hR9vsQohjp2nCjd=gGU=embAzfQhp6JKZNyWQ@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: URL not displaying change made with git.
+Date: Fri, 24 Apr 2015 14:50:55 +0200
+Message-ID: <vpqoamdellc.fsf@anie.imag.fr>
+References: <CAKXTx=1g6eBR1hR9vsQohjp2nCjd=gGU=embAzfQhp6JKZNyWQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 24 14:22:29 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Scott Meyer <dutchlab@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 24 14:51:17 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ylcci-0001G2-C0
-	for gcvg-git-2@plane.gmane.org; Fri, 24 Apr 2015 14:22:24 +0200
+	id 1Yld4b-0005nm-Pe
+	for gcvg-git-2@plane.gmane.org; Fri, 24 Apr 2015 14:51:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753366AbbDXMWT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Apr 2015 08:22:19 -0400
-Received: from mail-pd0-f176.google.com ([209.85.192.176]:34133 "EHLO
-	mail-pd0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753218AbbDXMWT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Apr 2015 08:22:19 -0400
-Received: by pdbqa5 with SMTP id qa5so47536239pdb.1
-        for <git@vger.kernel.org>; Fri, 24 Apr 2015 05:22:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=AKuGs2qmu+i9U1A4vmDDvG9l1jB9oA5SJbIGt9Rmlfs=;
-        b=Gzwhwql9qEGRDpolL5PDxaACWqCzy3TXjmlS+YfoHA5PQf7d9t3agYRY/s3CCZ1Ar7
-         mbhi3ra4iX8DPqFq/9iJoXk+ssLvthjssboM1afB8ZsOXSl0uZm1IdxBqTIHlPkPqc+o
-         jJGRuXGO0+ItkWCDQF9BmP/JE9FYeVgKWCkrPrDkryI9w3DF9tkXzfuCO04un47LgepJ
-         31yWulF2acoG/2ZGn0sZfBfuReB7X1K2r51fffCmQ7SMcP21I4FKwtRMXLs1KvrW4Tke
-         xxRXjq81njtG5/bqlX/FbwVGuyNrtGVkINIRzoAa4qy4FHNkA4YWcKOY4hu7CYLb/h/b
-         3FZg==
-X-Received: by 10.68.191.229 with SMTP id hb5mr14449857pbc.126.1429878138818;
- Fri, 24 Apr 2015 05:22:18 -0700 (PDT)
-Received: by 10.70.75.9 with HTTP; Fri, 24 Apr 2015 05:22:18 -0700 (PDT)
+	id S1755042AbbDXMvF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Apr 2015 08:51:05 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:57769 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755038AbbDXMvA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Apr 2015 08:51:00 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t3OCos65024410
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 24 Apr 2015 14:50:54 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t3OCot7n007072;
+	Fri, 24 Apr 2015 14:50:55 +0200
+In-Reply-To: <CAKXTx=1g6eBR1hR9vsQohjp2nCjd=gGU=embAzfQhp6JKZNyWQ@mail.gmail.com>
+	(Scott Meyer's message of "Fri, 24 Apr 2015 08:22:18 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 24 Apr 2015 14:50:54 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t3OCos65024410
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1430484654.52588@pITiTJrG6NEER0pW6h0xzw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267736>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267737>
 
-I used git in the following steps.
+Scott Meyer <dutchlab@gmail.com> writes:
 
-This is a local directory on a Mac, with Yosemite, using the latest
-git version.  The directory name is "development".
+> When I use my browser to bring up the site the change is not visible.
 
-using eclipse I created a branch WO_1
-I made a change to the file
-eclipse indicates the change
-I use the plus to add it to the Index
-I commit the change
-I go to the development directory using the terminal and checkout branch WO_1
-using git status shows I am in branch WO_1
-I used nano on the file to verify the change is there.
+Which site are you talking about?
 
-When I use my browser to bring up the site the change is not visible.
-I have cleared the cache in the browser and have tried other browsers.
-
-What I am I missing?
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
