@@ -1,103 +1,128 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v2 2/2] connect: improve check for plink to reduce false
- positives
-Date: Fri, 24 Apr 2015 22:48:33 +0000
-Message-ID: <20150424224833.GC322887@vauxhall.crustytoothpaste.net>
-References: <20150423231403.GC274681@vauxhall.crustytoothpaste.net>
- <1429914505-325708-1-git-send-email-sandals@crustytoothpaste.net>
- <1429914505-325708-2-git-send-email-sandals@crustytoothpaste.net>
- <CAM=ud8zKE-Huq_ZGVq9ycFFw+R7TBkQ5R4tcwfha9OBm_geASg@mail.gmail.com>
+From: Eloy Espinaco <eloyesp@gmail.com>
+Subject: Re: Verbose as default for commit (optional)
+Date: Fri, 24 Apr 2015 20:51:03 -0300
+Message-ID: <20150424235103.GA1798@localhost>
+References: <20150424191809.GA18897@alvaca.santafe.altoros.com.ar>
+ <vpqbnidmgzh.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="JWEK1jqKZ6MHAcjA"
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-To: Pete Harlan <pchpublic88@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 25 00:48:44 2015
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Eloy Espinaco <eloyesp@gmail.com>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Sat Apr 25 02:00:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YlmOp-0005VC-N8
-	for gcvg-git-2@plane.gmane.org; Sat, 25 Apr 2015 00:48:44 +0200
+	id 1YlnWH-0003se-EV
+	for gcvg-git-2@plane.gmane.org; Sat, 25 Apr 2015 02:00:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755900AbbDXWsi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Apr 2015 18:48:38 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:46907 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755801AbbDXWsi (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 Apr 2015 18:48:38 -0400
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:6680:99ff:fe4f:73a0])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 540EF2808D;
-	Fri, 24 Apr 2015 22:48:37 +0000 (UTC)
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Pete Harlan <pchpublic88@gmail.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+	id S934231AbbDXXus convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 24 Apr 2015 19:50:48 -0400
+Received: from mail-qg0-f46.google.com ([209.85.192.46]:36645 "EHLO
+	mail-qg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932766AbbDXXus (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Apr 2015 19:50:48 -0400
+Received: by qgeb100 with SMTP id b100so29861024qge.3
+        for <git@vger.kernel.org>; Fri, 24 Apr 2015 16:50:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:date:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=K1jQMAZ4MPMxGcGeQtIBggHYQkekRnmcGVny5aXbmfQ=;
+        b=ID3I3I9q/hoQuFLKn2EJy6Appzgf2d6qdtUasgjCB8Lferk56PxAbSU+K/17AH1t9X
+         14uavfoYA321wHBcqvEdKwcdvlGDvkB8A/kRyFRfoW76f/ITeSrKS51u0KlVrNrW7lkm
+         jZWqa0zDQtdfB/Wu4bTEK+S9fWvPEXqcOnLRxdsV4PUj/xQUr2Kp400wvOmEEpvtl/Zb
+         U5s0+5cF9cJXx2XjtLUb5IUltJqdTosEFVb8zFSJqXUj6Sr0OrR3BSJM5iMC6XnyyJOl
+         JfY9N4uPg0B0wodTgcaMty912UihVui/vFDhUOmQJwEKsk29xEi6l+6tktvY/2ICNXtI
+         0ctQ==
+X-Received: by 10.140.237.147 with SMTP id i141mr845790qhc.25.1429919447150;
+        Fri, 24 Apr 2015 16:50:47 -0700 (PDT)
+Received: from poderosa.eloyesp.com.ar (host7.186-125-111.telecom.net.ar. [186.125.111.7])
+        by mx.google.com with ESMTPSA id 197sm9187863qhq.23.2015.04.24.16.50.45
+        for <git@vger.kernel.org>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 24 Apr 2015 16:50:45 -0700 (PDT)
+X-Google-Original-From: Eloy Espinaco <eloyesp@poderosa.nsupdate.info>
+Received: from eloyesp by poderosa.eloyesp.com.ar with local (Exim 4.84)
+	(envelope-from <eloyesp@localhost>)
+	id 1YlnN9-0002W4-Oq; Fri, 24 Apr 2015 20:51:03 -0300
 Content-Disposition: inline
-In-Reply-To: <CAM=ud8zKE-Huq_ZGVq9ycFFw+R7TBkQ5R4tcwfha9OBm_geASg@mail.gmail.com>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.16.0-4-amd64)
+In-Reply-To: <vpqbnidmgzh.fsf@anie.imag.fr>
 User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267765>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267766>
 
+Ok, now I found [this
+thread](http://thread.gmane.org/gmane.comp.version-control.git/251376)
+that seems abandoned, but implements this config, a --no-verbose that
+disable it for one-time and the tests, but was not merged (don't know
+why)
 
---JWEK1jqKZ6MHAcjA
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This was the patch I've intended to attach:
+----------------->8--------------------
 
-On Fri, Apr 24, 2015 at 03:46:30PM -0700, Pete Harlan wrote:
-> On Fri, Apr 24, 2015 at 3:28 PM, brian m. carlson
-> <sandals@crustytoothpaste.net> wrote:
-> > The git_connect function has code to handle plink and tortoiseplink
-> > specially, as they require different command line arguments from
-> > OpenSSH.  However, the match was done by checking for "plink"
-> > case-insensitively in the string, which led to false positives when
->=20
-> Perhaps s/case-insensitively/anywhere/?
->
-> It's not important that it ignored case (your change ignores it too),
-> it's that it was too lenient about its context.
+Subject: [PATCH] Add commit.verbose config to set default.
 
-Yes, I don't know what I was thinking.  I'll wait a bit to see if there
-are any more comments and then reroll.
+---
+ builtin/commit.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/builtin/commit.c b/builtin/commit.c
+index da79ac4..ad588ff 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1506,6 +1506,10 @@ static int git_commit_config(const char *k, cons=
+t char *v, void *cb)
+ 		sign_commit =3D git_config_bool(k, v) ? "" : NULL;
+ 		return 0;
+ 	}
++	if (!strcmp(k, "commit.verbose")) {
++		verbose =3D git_config_bool(k, v);
++		return 0;
++	}
+=20
+ 	status =3D git_gpg_config(k, v, NULL);
+ 	if (status)
 --=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+2.1.4
 
---JWEK1jqKZ6MHAcjA
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCgAGBQJVOshBAAoJEL9TXYEfUvaLSH4P/2gYZHW85UAQDZg4+D6bnBYN
-4iZGv+cOhdo4wbRFyzVjmUNnyvseF9KKPZxODL29+wXzofBJh3XW2zQUMowqpVhN
-zdnitWG59O+8IT4Y43jH/7N8tCpfuD/CWdMQLub6waz3qCTkd8Dupj0oHAJ/wxZp
-uevaLdPYSV/8U7OXATc+cRRl6K9bZCchhuKfuIzCa//wG9taWHNU+81BYs6tWI1n
-kbpGvoopBABPhqqFaWPK5lfUY0TO/2awbdrKuD8TFwqnJ1xVj/7qU18WvqVrOLIy
-VHpnmc4f5+0phKQJUynAFkUGXfyvLxcMk7QS3gZV6vv8Ru/rUc9hpNbfnwl409PX
-D9huiHEE8qwjo+Btw+o0nZS0o1LeQ4qdD1pT+eEsIFU99B3D/jfXo3Y2f8gTgzf2
-wkQyT2fbJoEC1D/PMERZxkvXTHmTk2la97r8GN83PTbUmLDs3MKY5G5R7eJ0exgn
-7KSW+6JcoCFcC5Hhyyc9TiUHnXnnatTpsZSh8c1RzwoTp+bJn5tmSuYL7HZ9Z9Qe
-8+IKwmnRD6L5TJy+ZHuUpU3JvokvK60Rt1E/pMiEva6A5/ZT7vi4I/4D0zCo2KUm
-30/TiNwH4aMwLkZTRdDJ2V8v66ouhLRu084g+NS0LsuO4Cz/0dSwcBXL4eqqOGSv
-MIYm1y/mCEnUCKeuqrZE
-=7Vpj
------END PGP SIGNATURE-----
-
---JWEK1jqKZ6MHAcjA--
+En Fri, Apr 24, 2015 at 10:03:14PM +0200, Matthieu Moy escribi=F3:
+> Eloy Espinaco <eloyesp@gmail.com> writes:
+>=20
+> > Hi,
+> >
+> > It is my first mail to the list, so "hello world".
+>=20
+> Hi, and welcome to the list.
+>=20
+> > I wanted to make a feature-request about a config setting to make t=
+he
+> > commit always verbose. I'm not the only one asking for that, there =
+is an
+> > old question in [Stack Overflow][1].
+>=20
+> This seems a reasonable addition. In general, we commonly have config
+> options for commonly used CLI options.
+>=20
+> > So I was thinking if it was possible to make a pull request for tha=
+t, so
+> > I attach the patch. (I'm proud of it :) ).
+>=20
+> Nice try, but the attached file is empty ;-). Actually, as much as
+> possible, avoid sending attachments but prefer inline patches.
+>=20
+> You'll need a bit of reading to send a proper patch:
+>=20
+> https://github.com/git/git/blob/master/Documentation/SubmittingPatche=
+s
+>=20
+> --=20
+> Matthieu Moy
+> http://www-verimag.imag.fr/~moy/
+--- Eloy Espinaco
