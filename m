@@ -1,160 +1,83 @@
-From: Marc Khouzam <marc.khouzam@gmail.com>
-Subject: [PATCH] Completion: Cleanup tcsh script and add debug flag
-Date: Thu, 23 Apr 2015 21:07:28 -0400
-Message-ID: <CAFj1UpGpGS-C2EWif4sk_ijq8PjpM1UY09+vLwbjX17idZdkfA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv3] refs.c: enable large transactions
+Date: Thu, 23 Apr 2015 18:37:47 -0700
+Message-ID: <xmqq8udi2tn8.fsf@gitster.dls.corp.google.com>
+References: <1429738227-2985-1-git-send-email-sbeller@google.com>
+	<xmqqzj5y3f0a.fsf@gitster.dls.corp.google.com>
+	<CAGZ79kYO9NifvWQ7nWHP6==ZFmrMj47-94rEHOhWooR5Nh7EUw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 24 03:07:43 2015
+Content-Type: text/plain
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Fri Apr 24 03:37:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YlS5k-0007gj-RA
-	for gcvg-git-2@plane.gmane.org; Fri, 24 Apr 2015 03:07:41 +0200
+	id 1YlSZ2-0008F2-4o
+	for gcvg-git-2@plane.gmane.org; Fri, 24 Apr 2015 03:37:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752791AbbDXBHa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Apr 2015 21:07:30 -0400
-Received: from mail-wi0-f175.google.com ([209.85.212.175]:35102 "EHLO
-	mail-wi0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752328AbbDXBHa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Apr 2015 21:07:30 -0400
-Received: by widdi4 with SMTP id di4so4075150wid.0
-        for <git@vger.kernel.org>; Thu, 23 Apr 2015 18:07:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=htZXacIzCPyQfAsmYG7UhrFjuFbBBhP8QOMstd2s/PU=;
-        b=fqJDfeyrT9bkK5e88jdJxnwa5iABIk1h1i7ValyTB8O+zmGIGW8wF/OVox0oKK9M2u
-         KAvgjxicy9jz6zh04ylybH8AnRRn75Ekm78Tm/AAOc67IlSXP47VaWs6A2JyvlmaV6Xg
-         LHIjKAlfj2VfXk3gpB+kGPrZqfvKBKvPEB4loVeq0M0SqJy+13Q+PYgZjzl3YtcNgkjZ
-         B3OX9WLWQ4zPeOdpgj/juexRlsPNSa4ICL7OSus2onRQRVDZR73uczBX7X4yTijLF7Yy
-         lI3WscJEbQjHWU8GnCV+eFeqLAoNfhZE4x/sSqXlpTJwGamMWkinEplR5PRIcGZYJfJI
-         QuEg==
-X-Received: by 10.180.83.130 with SMTP id q2mr1627415wiy.89.1429837648910;
- Thu, 23 Apr 2015 18:07:28 -0700 (PDT)
-Received: by 10.28.176.5 with HTTP; Thu, 23 Apr 2015 18:07:28 -0700 (PDT)
+	id S1752918AbbDXBhu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Apr 2015 21:37:50 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:54339 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752457AbbDXBhu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Apr 2015 21:37:50 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0E5084C459;
+	Thu, 23 Apr 2015 21:37:49 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=IQrzKzPzCKDtSGo5VIPwqMkZFxk=; b=Vt4yoH
+	VdQb2tHjFD/o8Qia3xIAVhbKKSulF8fPmv2628+C1SuK4HI0tAYt5mScrxzDTHIS
+	ebccmJb31kXypaN7scCcWi9yxFhyT86sVUsI6bM1GuUXLqgZMTFqEIVx5f+2iGlZ
+	DiAxphYkgbQbM9MzgLvSbm7n9FvNASWtASsDQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ndrbOyDzogIccJ1m+Sb5LlcUIKGFjVtV
+	wXOED/2NZXOg9AnGUEyNv5eV2pRs+gN0wpTNf9nU/1NtY/x/gbLEYaLfsQmfSwol
+	MSCDmrNud1Ji77YuBfjEp2NFfVHiSCmev+zbqvSp3VBalUTzCcdTqvGffEU6cUWe
+	6WRgekMO9x0=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 06C7B4C458;
+	Thu, 23 Apr 2015 21:37:49 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 842EE4C455;
+	Thu, 23 Apr 2015 21:37:48 -0400 (EDT)
+In-Reply-To: <CAGZ79kYO9NifvWQ7nWHP6==ZFmrMj47-94rEHOhWooR5Nh7EUw@mail.gmail.com>
+	(Stefan Beller's message of "Thu, 23 Apr 2015 17:21:49 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 839862A2-EA22-11E4-932C-83E09F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267716>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267717>
 
-Remove overriding of __git_index_file_list_filter
-since that method is no longer used in git-completion.bash.
-Overriding that method was needed before to get
-git-completion.bash to append a '/' to the end
-of directories; this does not seem to be needed anymore since
-that script no longer provides completions of directories/files.
+Stefan Beller <sbeller@google.com> writes:
 
-Also add -d/--debug flag support to help troubleshoot
-the script.
+> On Thu, Apr 23, 2015 at 10:56 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+>>> +             int save_errno = errno;
+>>> +             error("Couldn't reopen %s", lock->lk->filename.buf);
+>>
+>> No need to change this line, but I noticed that we might want to do
+>> something about the first one of the following two:
+>
+> I personally like to have each error(...) to have a unique string, such
+> that when you run into trouble (most likely reported by a user),
+> you can easily pinpoint where the exact error is.
 
-Signed-off-by: Marc Khouzam <marc.khouzam@gmail.com>
----
+I was hoping that the "grep" patterns were strong enough hint, but
+let me be explicit.  I was commenting on "Could" not being spelled
+as "could".
 
-I thought this would help when for people that experience issues with
-the script.
-
-Thanks!
-
-Marc
-
- contrib/completion/git-completion.tcsh |   50 +++++++++++++++++++++++++-------
- 1 file changed, 40 insertions(+), 10 deletions(-)
-
-diff --git a/contrib/completion/git-completion.tcsh
-b/contrib/completion/git-completion.tcsh
-index 6104a42..fd0b906 100644
---- a/contrib/completion/git-completion.tcsh
-+++ b/contrib/completion/git-completion.tcsh
-@@ -1,6 +1,6 @@
- # tcsh completion support for core Git.
- #
--# Copyright (C) 2012 Marc Khouzam <marc.khouzam@gmail.com>
-+# Copyright (C) 2012, 2015 Marc Khouzam <marc.khouzam@gmail.com>
- # Distributed under the GNU General Public License, version 2.0.
- #
- # When sourced, this script will generate a new script that uses
-@@ -22,6 +22,25 @@
- #       add the following line to your .tcshrc/.cshrc:
- #        set autolist=ambiguous
- #       It will tell tcsh to list the possible completion choices.
-+#
-+# To debug this script one can use the -d flag by running the
-+# generated final script directly.  For example, to see the completions
-+# generated when pressing <tab> for the command line:
-+#     git co
-+# one should run:
-+#     bash ~/.git-completion.tcsh.bash -d git 'git co'
-+# and will obtain:
-+#     =====================================
-+#     git-completion.bash returned:
-+#     commit  config
-+#     =====================================
-+#     Completions including tcsh additions:
-+#     commit  config
-+#     =====================================
-+#     Final completions returned:
-+#     commit
-+#     config
-+#
-
- set __git_tcsh_completion_version = `\echo ${tcsh} | \sed 's/\./ /g'`
- if ( ${__git_tcsh_completion_version[1]} < 6 || \
-@@ -48,20 +67,17 @@ cat << EOF > ${__git_tcsh_completion_script}
- # Do not modify it directly.  Instead, modify git-completion.tcsh
- # and source it again.
-
-+# Allow for debug printouts when running the script by hand
-+if [ "\$1" == "-d" ] || [ "\$1" == "--debug" ]; then
-+       __git_tcsh_debug=true
-+       shift
-+fi
-+
- source ${__git_tcsh_completion_original_script}
-
- # Remove the colon as a completion separator because tcsh cannot handle it
- COMP_WORDBREAKS=\${COMP_WORDBREAKS//:}
-
--# For file completion, tcsh needs the '/' to be appended to directories.
--# By default, the bash script does not do that.
--# We can achieve this by using the below compatibility
--# method of the git-completion.bash script.
--__git_index_file_list_filter ()
--{
--       __git_index_file_list_filter_compat
--}
--
- # Set COMP_WORDS in a way that can be handled by the bash script.
- COMP_WORDS=(\$2)
-
-@@ -83,6 +99,12 @@ fi
- # Call _git() or _gitk() of the bash script, based on the first argument
- _\${1}
-
-+if [ "\$__git_tcsh_debug" == "true" ]; then
-+       echo =====================================
-+       echo git-completion.bash returned:
-+       echo "\${COMPREPLY[@]}"
-+fi
-+
- IFS=\$'\n'
- if [ \${#COMPREPLY[*]} -eq 0 ]; then
-        # No completions suggested.  In this case, we want tcsh to perform
-@@ -108,6 +130,14 @@ if [ \${#COMPREPLY[*]} -eq 0 ]; then
-        fi
- fi
-
-+if [ "\$__git_tcsh_debug" == "true" ]; then
-+       echo =====================================
-+       echo Completions including tcsh additions:
-+       echo "\${COMPREPLY[@]}"
-+       echo =====================================
-+       echo Final completions returned:
-+fi
-+
- # tcsh does not automatically remove duplicates, so we do it ourselves
- echo "\${COMPREPLY[*]}" | sort | uniq
+>>     $ git grep -e '[    ]error(_*"[A-Z]' | wc -l
+>>     146
+>>     $ git grep -e '[    ]error(_*"[a-z]' | wc -l
+>>     390
