@@ -1,118 +1,142 @@
-From: SZEDER =?utf-8?b?R8OhYm9y?= <szeder@ira.uka.de>
-Subject: Re: git-completion.tcsh
-Date: Fri, 24 Apr 2015 13:30:28 +0200
-Message-ID: <20150424133028.Horde.fL7zuT7X5Dj99hzpmme9Hw1@webmail.informatik.kit.edu>
-References: <20150401115519.Horde.JM0TEyhacRn5LYAEffMggQ1@webmail.informatik.kit.edu>
- <481BCBD7-457B-4AFB-B878-1417C8C5940C@gmail.com>
- <CAFj1UpHBk1JFmSv4T=wQUNiade9ZW8yiaco9z2-wGJh7yXATuA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed	DelSp=Yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Perry Rajnovic <perry.rajnovic@gmail.com>, git@vger.kernel.org
-To: Marc Khouzam <marc.khouzam@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 24 13:30:46 2015
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH 3/5] write_ref_sha1(): inline function at callers
+Date: Fri, 24 Apr 2015 13:35:47 +0200
+Message-ID: <1429875349-29736-4-git-send-email-mhagger@alum.mit.edu>
+References: <1429875349-29736-1-git-send-email-mhagger@alum.mit.edu>
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>,
+	Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Fri Apr 24 13:36:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ylbob-0007YH-6T
-	for gcvg-git-2@plane.gmane.org; Fri, 24 Apr 2015 13:30:37 +0200
+	id 1Ylbu1-0004FB-HG
+	for gcvg-git-2@plane.gmane.org; Fri, 24 Apr 2015 13:36:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964815AbbDXLac convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 24 Apr 2015 07:30:32 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:52170 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755038AbbDXLab convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Apr 2015 07:30:31 -0400
-Received: from irawebmail.ira.uni-karlsruhe.de ([141.3.10.230] helo=webmail.ira.uka.de)
-	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
-	iface 141.3.10.81 id 1YlboS-0004sZ-TB; Fri, 24 Apr 2015 13:30:28 +0200
-Received: from apache by webmail.ira.uka.de with local (Exim 4.72)
-	(envelope-from <szeder@ira.uka.de>)
-	id 1YlboS-0003nJ-1Z; Fri, 24 Apr 2015 13:30:28 +0200
-Received: from x590e20ae.dyn.telefonica.de (x590e20ae.dyn.telefonica.de
- [89.14.32.174]) by webmail.informatik.kit.edu (Horde Framework) with HTTP;
- Fri, 24 Apr 2015 13:30:28 +0200
-In-Reply-To: <CAFj1UpHBk1JFmSv4T=wQUNiade9ZW8yiaco9z2-wGJh7yXATuA@mail.gmail.com>
-User-Agent: Internet Messaging Program (IMP) H5 (6.2.2)
-Content-Disposition: inline
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1429875028.
+	id S966151AbbDXLgK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Apr 2015 07:36:10 -0400
+Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:51372 "EHLO
+	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932685AbbDXLgE (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 24 Apr 2015 07:36:04 -0400
+X-AuditID: 1207440f-f792a6d000001284-2b-553a2aa1c64c
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 34.97.04740.1AA2A355; Fri, 24 Apr 2015 07:36:02 -0400 (EDT)
+Received: from michael.fritz.box (p4FC973EF.dip0.t-ipconnect.de [79.201.115.239])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t3OBZt8Z008846
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Fri, 24 Apr 2015 07:36:01 -0400
+X-Mailer: git-send-email 2.1.4
+In-Reply-To: <1429875349-29736-1-git-send-email-mhagger@alum.mit.edu>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrJIsWRmVeSWpSXmKPExsUixO6iqLtIyyrU4HaQRdeVbiaLht4rzBa3
+	V8xntvjR0sNssXlzO4sDq8ff9x+YPBZsKvV41ruH0ePiJWWPz5vkAlijuG2SEkvKgjPT8/Tt
+	ErgzuvosCs6LV8z53sfUwHhSqIuRk0NCwESiY143M4QtJnHh3nq2LkYuDiGBy4wSXS93sUM4
+	J5kkGs+sYwepYhPQlVjU08zUxcjBISLgJdE2sxgkzCyQItHxvJsRxBYWcJQ42/UWbCiLgKrE
+	jl1vwFp5BVwkJkzexwaxTE7i/PGfYDWcAq4S/cs/soDYQkA1azZ9YJ/AyLuAkWEVo1xiTmmu
+	bm5iZk5xarJucXJiXl5qka6JXm5miV5qSukmRkgw8e9g7Fovc4hRgINRiYd3xhzLUCHWxLLi
+	ytxDjJIcTEqivJ1SVqFCfEn5KZUZicUZ8UWlOanFhxglOJiVRHgThYByvCmJlVWpRfkwKWkO
+	FiVxXvUl6n5CAumJJanZqakFqUUwWRkODiUJXm5NoEbBotT01Iq0zJwShDQTByfIcC4pkeLU
+	vJTUosTSkox4UFzEFwMjAyTFA7SXAaSdt7ggMRcoCtF6ilFRSpz3twZQQgAkkVGaBzcWliJe
+	MYoDfSnMmwbSzgNML3Ddr4AGMwENnrnUAmRwSSJCSqqBUbiTkSN52vx8wfZ7R5zCpF8b1B35
+	X+vG/y74251Y20+ye1+xaIjY7no4d+r2eSVv5J7vWxPJvndxau7uWaqsjplTuT04gjMOeP0S
+	TpqbXuk059DK/guzXxYLb52YuWqBRvtcT6HkCn3WCbnihyx3KnuJ+jJdXH444OiS 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267729>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267730>
 
-Hi,
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+---
+ refs.c | 38 +++++++++++++++-----------------------
+ 1 file changed, 15 insertions(+), 23 deletions(-)
 
-Quoting Marc Khouzam <marc.khouzam@gmail.com>:
-> Hi,
->
-> I did notice the problem a while ago and had traced it back to the
-> fact that the bash completion scripts no longer adds the trailing '/'
-> at the end of directories.
-> Tcsh needs that '/' to know not to add that annoying extra space.
->
-> Bash 3 needed to put it that trailing '/' but bash 4 did not.  Two
-> years ago (!) changes were made in commit
-> 3ffa4df4b2a26768938fc6bf1ed0640885b2bdf1 to allow bash 3 to work
-> without the trailing '/'.  That caused
-> the problem in the tcsh script.
->
-> The thing is that with master of today, I don't see the problem any
-> more.  I can't tell you when it started working again.
-> What is interesting is that the reason it now works is that the
-> git-completion.bash script no longer returns anything
-> for the case you mention:
->   git add f<tab>
-> Instead, it seems to rely on file completion only.
-
-I can't reproduce it with git-completion.bash from current master on =20
-its own on with bash 3.1.20(4) from MSysGit, it seems to work as =20
-intended here wrt tracked-file-aware file completion.
-
-Set up test repo with these commands:
-
-   git init
-   >tracked
-   git add tracked
-   >non-tracked
-   mkdir -p foo/bar
-   >foo/bar/somefile.c
-
-Now let's see what happens with 'git add':
-
-   $ git add <TAB>
-   foo/         non-tracked
-
-Note, that the file 'tracked' is not offered, so this is clearly not =20
-standard bash file completion, but our completion script.  Also note =20
-the trailing '/' in 'foo/'.
-
-   $ git add f<TAB>
-
-Just completes to 'git add foo/', no space after '/'.
-Add the file:
-
-   $ git add foo/bar/somefile.c
-
-Now let's see 'git rm':
-
-   $ git rm <TAB>
-   foo/     tracked
-
-Note, that the file 'non-tracked' is not offered, so again this comes =20
-from our bash completion script.
-
-Did you test the bash completion script on its own, or only through =20
-the tcsh wrapper?
-I'm on MSysGit now, so no tcsh or bash v4 at hand, and no time either, =
-=20
-so can't dig further at the moment.
-
-
-G=C3=A1bor
+diff --git a/refs.c b/refs.c
+index 9b68aec..a55d541 100644
+--- a/refs.c
++++ b/refs.c
+@@ -2770,8 +2770,10 @@ static int rename_ref_available(const char *oldname, const char *newname)
+ 	return ret;
+ }
+ 
+-static int write_ref_sha1(struct ref_lock *lock, const unsigned char *sha1,
+-			  const char *logmsg);
++static int write_ref_to_lockfile(struct ref_lock *lock,
++				 const unsigned char *sha1);
++static int commit_ref_update(struct ref_lock *lock,
++			     const unsigned char *sha1, const char *logmsg);
+ 
+ int rename_ref(const char *oldrefname, const char *newrefname, const char *logmsg)
+ {
+@@ -2829,7 +2831,8 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
+ 		goto rollback;
+ 	}
+ 	hashcpy(lock->old_sha1, orig_sha1);
+-	if (write_ref_sha1(lock, orig_sha1, logmsg)) {
++	if (write_ref_to_lockfile(lock, orig_sha1) ||
++	    commit_ref_update(lock, orig_sha1, logmsg)) {
+ 		error("unable to write current sha1 into %s", newrefname);
+ 		goto rollback;
+ 	}
+@@ -2845,7 +2848,8 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
+ 
+ 	flag = log_all_ref_updates;
+ 	log_all_ref_updates = 0;
+-	if (write_ref_sha1(lock, orig_sha1, NULL))
++	if (write_ref_to_lockfile(lock, orig_sha1) ||
++	    commit_ref_update(lock, orig_sha1, NULL))
+ 		error("unable to write current sha1 into %s", oldrefname);
+ 	log_all_ref_updates = flag;
+ 
+@@ -3093,21 +3097,6 @@ static int commit_ref_update(struct ref_lock *lock,
+ 	return 0;
+ }
+ 
+-/*
+- * Write sha1 as the new value of the reference specified by the
+- * (open) lock. On error, roll back the lockfile and set errno
+- * appropriately.
+- */
+-static int write_ref_sha1(struct ref_lock *lock,
+-	const unsigned char *sha1, const char *logmsg)
+-{
+-	if (write_ref_to_lockfile(lock, sha1) ||
+-	    commit_ref_update(lock, sha1, logmsg))
+-		return -1;
+-
+-	return 0;
+-}
+-
+ int create_symref(const char *ref_target, const char *refs_heads_master,
+ 		  const char *logmsg)
+ {
+@@ -3801,15 +3790,18 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+ 				 */
+ 				unlock_ref(update->lock);
+ 				update->lock = NULL;
+-			} else if (write_ref_sha1(update->lock, update->new_sha1,
+-						  update->msg)) {
+-				update->lock = NULL; /* freed by write_ref_sha1 */
++			} else if (write_ref_to_lockfile(update->lock,
++							 update->new_sha1) ||
++				   commit_ref_update(update->lock,
++						     update->new_sha1,
++						     update->msg)) {
++				update->lock = NULL; /* freed by the above calls */
+ 				strbuf_addf(err, "Cannot update the ref '%s'.",
+ 					    update->refname);
+ 				ret = TRANSACTION_GENERIC_ERROR;
+ 				goto cleanup;
+ 			} else {
+-				/* freed by write_ref_sha1(): */
++				/* freed by the above calls: */
+ 				update->lock = NULL;
+ 			}
+ 		}
+-- 
+2.1.4
