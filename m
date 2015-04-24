@@ -1,115 +1,117 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v2 02/16] refs: convert for_each_tag_ref to struct
- object_id
-Date: Fri, 24 Apr 2015 22:37:47 +0000
-Message-ID: <20150424223747.GB322887@vauxhall.crustytoothpaste.net>
-References: <1429745061-295908-1-git-send-email-sandals@crustytoothpaste.net>
- <1429745061-295908-3-git-send-email-sandals@crustytoothpaste.net>
- <CAGZ79kas9QgJy1ooCjHPR+ZGGuTdMhTxO9zSMxnGpPk8rG5_xQ@mail.gmail.com>
- <20150423192723.GA29220@peff.net>
+From: Pete Harlan <pchpublic88@gmail.com>
+Subject: Re: [PATCH v2 2/2] connect: improve check for plink to reduce false positives
+Date: Fri, 24 Apr 2015 15:46:30 -0700
+Message-ID: <CAM=ud8zKE-Huq_ZGVq9ycFFw+R7TBkQ5R4tcwfha9OBm_geASg@mail.gmail.com>
+References: <20150423231403.GC274681@vauxhall.crustytoothpaste.net>
+	<1429914505-325708-1-git-send-email-sandals@crustytoothpaste.net>
+	<1429914505-325708-2-git-send-email-sandals@crustytoothpaste.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="R3G7APHDIzY6R/pk"
-Cc: Stefan Beller <sbeller@google.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Junio C Hamano <gitster@pobox.com>,
-	"Kyle J. McKay" <mackyle@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Apr 25 00:38:05 2015
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+X-From: git-owner@vger.kernel.org Sat Apr 25 00:46:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YlmEW-0000w3-ER
-	for gcvg-git-2@plane.gmane.org; Sat, 25 Apr 2015 00:38:04 +0200
+	id 1YlmMm-000316-Do
+	for gcvg-git-2@plane.gmane.org; Sat, 25 Apr 2015 00:46:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946098AbbDXWhz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Apr 2015 18:37:55 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:46901 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1946086AbbDXWhv (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 Apr 2015 18:37:51 -0400
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:6680:99ff:fe4f:73a0])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 0F2B62808D;
-	Fri, 24 Apr 2015 22:37:51 +0000 (UTC)
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Junio C Hamano <gitster@pobox.com>,
-	"Kyle J. McKay" <mackyle@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <20150423192723.GA29220@peff.net>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.16.0-4-amd64)
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
+	id S1758548AbbDXWqc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Apr 2015 18:46:32 -0400
+Received: from mail-qc0-f171.google.com ([209.85.216.171]:36688 "EHLO
+	mail-qc0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758539AbbDXWqb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Apr 2015 18:46:31 -0400
+Received: by qcpm10 with SMTP id m10so33464753qcp.3
+        for <git@vger.kernel.org>; Fri, 24 Apr 2015 15:46:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=cY/5kXqS3lqOQeaNljIvXeMo+0GRMCav5yj69lnSInc=;
+        b=ePYVeRnwIifuhQvwtYK1hYZ8mWGRvXDOguvfKG7lkF3MbC84TjiX/2BqQyXA7f6RJ0
+         8OOkpBq8c+6uR4xwX7/ZcIAjmTYYqj6K2t7CH4b5XHk3FnoLM1K6M/XGobv8LpyxXIjz
+         dTtlFRKLPGQEAheR9gQFaarmynjNOguglMoW/JyKazoNG7mYTfFPGdsBzHwjLxbHvjuX
+         3ZXL/nEICuCdI+UheQscna5CBsFD0tHVdzjpIYV6WZ1hY5TTmofBfct9LH9JFBoOqwmp
+         7BpdxFSrjdVZsykQkSQFCfap77CwIt41+7WysGgLny7gYI30ZbrFsKZNf6ZRuOb8HSIs
+         CyKQ==
+X-Received: by 10.55.52.129 with SMTP id b123mr1206400qka.34.1429915590860;
+ Fri, 24 Apr 2015 15:46:30 -0700 (PDT)
+Received: by 10.140.40.80 with HTTP; Fri, 24 Apr 2015 15:46:30 -0700 (PDT)
+In-Reply-To: <1429914505-325708-2-git-send-email-sandals@crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267763>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267764>
 
+On Fri, Apr 24, 2015 at 3:28 PM, brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+> The git_connect function has code to handle plink and tortoiseplink
+> specially, as they require different command line arguments from
+> OpenSSH.  However, the match was done by checking for "plink"
+> case-insensitively in the string, which led to false positives when
 
---R3G7APHDIzY6R/pk
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Perhaps s/case-insensitively/anywhere/?
 
-On Thu, Apr 23, 2015 at 03:27:23PM -0400, Jeff King wrote:
-> +static int do_for_each_ref(struct ref_cache *refs, const char *base,
-> +			   each_ref_fn fn, int trim, int flags, void *cb_data)
-> +{
-> +	return do_for_each_ref_generic(refs, base, fn, NULL, trim, flags, cb_da=
-ta);
-> +}
+It's not important that it ignored case (your change ignores it too),
+it's that it was too lenient about its context.
+
+--Pete
+
+> GIT_SSH contained "uplink".  Improve the check by looking for "plink" or
+> "tortoiseplink" (or those names suffixed with ".exe") in the final
+> component of the path.
+>
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
+>  connect.c | 18 +++++++++++++++---
+>  1 file changed, 15 insertions(+), 3 deletions(-)
+>
+> diff --git a/connect.c b/connect.c
+> index 749a07b..c0144d8 100644
+> --- a/connect.c
+> +++ b/connect.c
+> @@ -724,7 +724,7 @@ struct child_process *git_connect(int fd[2], const char *url,
+>                 conn->in = conn->out = -1;
+>                 if (protocol == PROTO_SSH) {
+>                         const char *ssh;
+> -                       int putty;
+> +                       int putty, tortoiseplink = 0;
+>                         char *ssh_host = hostandport;
+>                         const char *port = NULL;
+>                         get_host_and_port(&ssh_host, &port);
+> @@ -750,14 +750,26 @@ struct child_process *git_connect(int fd[2], const char *url,
+>                                 conn->use_shell = 1;
+>                                 putty = 0;
+>                         } else {
+> +                               const char *base;
+> +                               char *ssh_dup;
 > +
-> +static int do_for_each_ref_oid(struct ref_cache *refs, const char *base,
-> +			       each_ref_fn_oid fn, int trim, int flags, void *cb_data)
-> +{
-> +	return do_for_each_ref_generic(refs, base, NULL, fn, trim, flags, cb_da=
-ta);
-> +}
+>                                 ssh = getenv("GIT_SSH");
+>                                 if (!ssh)
+>                                         ssh = "ssh";
+> -                               putty = !!strcasestr(ssh, "plink");
 > +
->  static int do_head_ref(const char *submodule, each_ref_fn fn, void *cb_d=
-ata)
->  {
->  	unsigned char sha1[20];
->=20
-> You can even dispense with the _oid variant wrapper, and just call into
-> the generic version directly from the new callsites.
-
-Sounds like a good idea.  I'll reroll with that change probably sometime
-this weekend.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
-
---R3G7APHDIzY6R/pk
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCgAGBQJVOsW7AAoJEL9TXYEfUvaLAP4QAKCorUU99z/kcWr6NpTVXq0n
-LkAW1DzGThoC1BcLw9lTUPid1BbxNrQMrfDLHwugZgDl/kU+5FRoPKPq4YmRla+k
-b6E0uDMJdn6sKseoaXjShvn2kBp/5j7FixMsEsfiVRCVEbTFt6eVjFeO3LGr4NOe
-X+uD/tmd8hnzF21/RsTU7maZl75zaKBHN+fDvPdDzNRW9jxk1FQeEuAR0T6Pn31B
-ckxKVVd65s4qJypTRK/9fGJNKN8CEoqCmUt3GI8CE98Rti5BBsarmKmIEZquHOV/
-yDz3HT7UqHL1DFI5gKSvUl8gSQiRYo7yx9aa5P94ivRjcCw+ucxawbMtlmL8Fix6
-EAf79cc8gFK7nD2lsRVMPyODy7x/KMo58yDq5bTBcCsbOySnuaeqyKNvxivKxOdF
-OyTlRLxrpNsSVeyzHZGevJzvMLLC1IDGDbGedGgqaPxrdvYNu0Kh5SF7OhSjKrJ5
-LbN6x4qUgSS3Akjyp7k257wACdKtRCdSP57GDUKv9BCkNobI7z4zQh8dkBbx5BYh
-WR2PWlbvXERPfIf+lhBnM+gJ6SY7XtBhAIreRLb36K8Oo2wjKGcJveFXQTHFGBzI
-1jBuyp5R78/LlBBi/rocjw6BvbomS7w5UvJoeVN9/iHfvEogsh/bbymBVQqVMr4d
-fTG2wUYIDA8m7mNauYWG
-=7Uuc
------END PGP SIGNATURE-----
-
---R3G7APHDIzY6R/pk--
+> +                               ssh_dup = xstrdup(ssh);
+> +                               base = basename(ssh_dup);
+> +
+> +                               tortoiseplink = !strcasecmp(base, "tortoiseplink") ||
+> +                                       !strcasecmp(base, "tortoiseplink.exe");
+> +                               putty = !strcasecmp(base, "plink") ||
+> +                                       !strcasecmp(base, "plink.exe") || tortoiseplink;
+> +
+> +                               free(ssh_dup);
+>                         }
+>
+>                         argv_array_push(&conn->args, ssh);
+> -                       if (putty && !strcasestr(ssh, "tortoiseplink"))
+> +                       if (tortoiseplink)
+>                                 argv_array_push(&conn->args, "-batch");
+>                         if (port) {
+>                                 /* P is for PuTTY, p is for OpenSSH */
