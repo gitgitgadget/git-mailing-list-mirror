@@ -1,76 +1,71 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCHv3] refs.c: enable large transactions
-Date: Fri, 24 Apr 2015 13:19:54 -0400
-Message-ID: <20150424171953.GA30592@peff.net>
-References: <1429738227-2985-1-git-send-email-sbeller@google.com>
- <xmqqzj5y3f0a.fsf@gitster.dls.corp.google.com>
- <CAGZ79kYO9NifvWQ7nWHP6==ZFmrMj47-94rEHOhWooR5Nh7EUw@mail.gmail.com>
- <xmqq8udi2tn8.fsf@gitster.dls.corp.google.com>
- <CAGZ79kYGDOUgzKmQOLAXkYYb-HZJCw3Y=iSLXWHVXcQ0pAiDBw@mail.gmail.com>
+Subject: Re: [PATCH 0/5] Avoid file descriptor exhaustion in
+ ref_transaction_commit()
+Date: Fri, 24 Apr 2015 13:26:48 -0400
+Message-ID: <20150424172648.GB30592@peff.net>
+References: <1429875349-29736-1-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Fri Apr 24 19:20:06 2015
+	Stefan Beller <sbeller@google.com>, git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Fri Apr 24 19:27:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YlhGk-0000fa-8g
-	for gcvg-git-2@plane.gmane.org; Fri, 24 Apr 2015 19:20:02 +0200
+	id 1YlhNe-0000cW-VS
+	for gcvg-git-2@plane.gmane.org; Fri, 24 Apr 2015 19:27:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755931AbbDXRT5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Apr 2015 13:19:57 -0400
-Received: from cloud.peff.net ([50.56.180.127]:49708 "HELO cloud.peff.net"
+	id S1945973AbbDXR0w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Apr 2015 13:26:52 -0400
+Received: from cloud.peff.net ([50.56.180.127]:49715 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754202AbbDXRT5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Apr 2015 13:19:57 -0400
-Received: (qmail 24621 invoked by uid 102); 24 Apr 2015 17:19:56 -0000
+	id S1031528AbbDXR0v (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Apr 2015 13:26:51 -0400
+Received: (qmail 24935 invoked by uid 102); 24 Apr 2015 17:26:50 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 24 Apr 2015 12:19:56 -0500
-Received: (qmail 17272 invoked by uid 107); 24 Apr 2015 17:20:23 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 24 Apr 2015 12:26:50 -0500
+Received: (qmail 17298 invoked by uid 107); 24 Apr 2015 17:27:18 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 24 Apr 2015 13:20:23 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 24 Apr 2015 13:19:54 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 24 Apr 2015 13:27:18 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 24 Apr 2015 13:26:48 -0400
 Content-Disposition: inline
-In-Reply-To: <CAGZ79kYGDOUgzKmQOLAXkYYb-HZJCw3Y=iSLXWHVXcQ0pAiDBw@mail.gmail.com>
+In-Reply-To: <1429875349-29736-1-git-send-email-mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267744>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267745>
 
-On Fri, Apr 24, 2015 at 09:16:28AM -0700, Stefan Beller wrote:
+On Fri, Apr 24, 2015 at 01:35:44PM +0200, Michael Haggerty wrote:
 
-> I think it's a mistake to s/Could/could/g for all errors in the code base
-> as it reduces the information provided in the error messages.
-> Just 3 days ago ("Regular Rebase Failure"). I used different
-> capitalization to get a better understanding where the error may be.
+> In ref_transaction_commit(), close the reference lockfiles immediately
+> to avoid keeping too many file descriptors open at a time. This is
+> pretty easy, because in the first loop (where we create the locks) we
+> already know what, if anything, has to be written into the lockfile.
+> So write it and close the lockfile immediately. In the second loop,
+> rename the lockfiles for reference updates into place, and in the
+> cleanup loop, unlock any references that are still locked (i.e., those
+> that were only being verified or deleted).
 > 
-> So if we throw away that information, we should add new information
-> to make the spot of the error easily findable in the source.
-> That's why I proposed the idea of the version,filename,linenumber
-> as that is one of the strongest signals (most information in a short
-> amount of text) I can imagine.
+> I think this is a cleaner solution than Stefan's approach [1] of
+> closing and reopening fds based on an estimate of how many fds we can
+> afford to waste--we only need a single file descriptor at a time, and
+> we never have to close then reopen a lockfile. But it is a bit more
+> intrusive, so it might still be preferable to use Stefan's approach
+> for release 2.4.0, if indeed any fix for this problem is still being
+> considered for that release.
 
-I do like that idea, and I think you could base it on the trace_printf
-implementation. Note that it requires variadic macros, but I think
-that's OK. Just like trace_printf, we can do the macro implementation
-when we support that feature, and people on older systems just won't get
-the extra file/line data.
+I like this approach much better. It seems like the best of all worlds
+(same performance, and we don't have to worry about whether and when to
+close lockfiles).
 
-I also assume we would not show this information by default, but only
-with GIT_TRACE_ERRORS or something like that.
-
-I would love it if we could also get a stack trace for warnings and
-errors. Very often the line number of the error() call is not nearly as
-interesting as the line number of the _caller_. But doing that portably
-is rather hard. Maybe a better option would be to make it easier to
-convince git to dump core at the right moments (e.g., dump core when we
-hit die() rather than calling exit). And then you can run gdb on the
-core file, which gives you a backtrace and much more.
+Stefan's patch is just in pu at this point, right? I do not think there
+is any rushing/release concern. It is too late for either to be in
+v2.4.0, so the only decision is whether to aim for "master" or "maint".
+To me, they both seem to be in the same ballpark as far as risking a
+regression.
 
 -Peff
