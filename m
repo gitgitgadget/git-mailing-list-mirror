@@ -1,80 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Clarify documentation on commit message strip
-Date: Fri, 24 Apr 2015 21:36:32 -0700
-Message-ID: <xmqqmw1w259r.fsf@gitster.dls.corp.google.com>
-References: <1429905998-9089-1-git-send-email-iveqy@iveqy.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCHv3] refs.c: enable large transactions
+Date: Sat, 25 Apr 2015 01:00:58 -0400
+Message-ID: <20150425050058.GA20256@peff.net>
+References: <1429738227-2985-1-git-send-email-sbeller@google.com>
+ <xmqqzj5y3f0a.fsf@gitster.dls.corp.google.com>
+ <CAGZ79kYO9NifvWQ7nWHP6==ZFmrMj47-94rEHOhWooR5Nh7EUw@mail.gmail.com>
+ <xmqq8udi2tn8.fsf@gitster.dls.corp.google.com>
+ <CAGZ79kYGDOUgzKmQOLAXkYYb-HZJCw3Y=iSLXWHVXcQ0pAiDBw@mail.gmail.com>
+ <20150424181236.GK5467@google.com>
+ <20150424201734.GA4747@peff.net>
+ <xmqqzj5w25vv.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Fredrik Gustafsson <iveqy@iveqy.com>
-X-From: git-owner@vger.kernel.org Sat Apr 25 06:36:40 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Stefan Beller <sbeller@google.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Apr 25 07:01:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YlrpX-0005e1-9W
-	for gcvg-git-2@plane.gmane.org; Sat, 25 Apr 2015 06:36:39 +0200
+	id 1YlsDF-0004KL-KQ
+	for gcvg-git-2@plane.gmane.org; Sat, 25 Apr 2015 07:01:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752119AbbDYEgf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Apr 2015 00:36:35 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:62642 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751144AbbDYEge (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Apr 2015 00:36:34 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id EA12A4CEAB;
-	Sat, 25 Apr 2015 00:36:33 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=2MPBOFoZmsdct+/fSLSrre6sufQ=; b=FxQdzs
-	fZBVeCUIl1SfMuOZkoHNOZXnQw4kAAKNFyffaWHtYTgVVwctNquAGJmUDSWtIPST
-	doIJu5f5NujyNaRQLj5oHlJPYzPZm3vffNLyHKSKU0ixeYeVaKYLHgqj5jb07FX7
-	jloRph69qCF0OyLl79dLpKZQIiy+6qi1UwKw8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=EPqagANX4DHRECWX6Yzz3qge59ZYwLYE
-	ECoaGnqxte4yam1z2jTjd5pN2/DNeg7R3fVqA8rhMp600M7C7de3oP8H67pQfa1H
-	aVJAZ55eM8Tvc2aWeZ0AE++S0a65RLF1oewoXa5aJvfqd3QkrZAw8bWj+zIYCyRN
-	vLtpHaasdZ8=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E2A7C4CEAA;
-	Sat, 25 Apr 2015 00:36:33 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 601BD4CEA9;
-	Sat, 25 Apr 2015 00:36:33 -0400 (EDT)
-In-Reply-To: <1429905998-9089-1-git-send-email-iveqy@iveqy.com> (Fredrik
-	Gustafsson's message of "Fri, 24 Apr 2015 22:06:38 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: A68474A8-EB04-11E4-93D7-83E09F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1753090AbbDYFBE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Apr 2015 01:01:04 -0400
+Received: from cloud.peff.net ([50.56.180.127]:49973 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752786AbbDYFBC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Apr 2015 01:01:02 -0400
+Received: (qmail 21660 invoked by uid 102); 25 Apr 2015 05:01:01 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 25 Apr 2015 00:01:01 -0500
+Received: (qmail 22667 invoked by uid 107); 25 Apr 2015 05:01:28 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 25 Apr 2015 01:01:28 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 25 Apr 2015 01:00:58 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqzj5w25vv.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267771>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267772>
 
-Fredrik Gustafsson <iveqy@iveqy.com> writes:
+On Fri, Apr 24, 2015 at 09:23:16PM -0700, Junio C Hamano wrote:
 
-> diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-> index 617e29b..e31d828 100644
-> --- a/Documentation/git-commit.txt
-> +++ b/Documentation/git-commit.txt
-> @@ -180,8 +180,9 @@ OPTIONS
->  +
->  --
->  strip::
-> -	Strip leading and trailing empty lines, trailing whitespace, and
-> -	#commentary and collapse consecutive empty lines.
-> +	Strip leading and trailing empty lines, trailing whitespace,
-> +	#commentary, unified diff added with `-v` and collapse
-> +	consecutive empty lines.
+> The proposals so far, including this one, assume that the bug
+> reporter will first fail the operation with "normal" invocation
+> of Git (e.g. without GIT_DIE_ABORT exported) and then retry the
+> same operation in a different way (e.g. with GIT_DIE_ABORT) to
+> give us something that would help diagnosis.  Such a user could
+> just rerun Git under gdb with breakpoint set to die_builtin, no?
 
-I'd prefer the description not to be _too_ explicit e.g. by
-mentioning "unified diff", etc.
+Good point. I was trying to automate the gathering of the backtrace so
+that even bug-reporters who have not used gdb could easily get us more
+information. But of course if a coredump only gets us halfway there and
+we have to script gdb to convert the core into a backtrace anyway, it is
+not buying us much over just scripting gdb in the first place.
 
-Personally I think it is sufficient to do s/#comment/comment/ to the
-existing text, without doing anything else.  What is "commentary" to
-be removed is fairly clear in the contents given to the user in the
-editor.
+A better solution to what I proposed earlier is perhaps:
+
+  git config alias.debug '!gdb --quiet \
+	    -ex "break exit" \
+	    -ex "run" \
+	    -ex "bt full" \
+	    -ex "continue" \
+	    -ex "quit" \
+	    --args git \
+  '
+  git debug rev-parse foobar
+
+It has the minor irritation that gdb will control the process stdio
+(slurping from stdin and polluting stdout, whereas we would prefer no
+input and output to stderr). There might be a way to convince gdb to do
+otherwise, or you could probably go pretty far with some shell fd
+redirects and using "set args" inside gdb. Or maybe something with
+gdbserver.
+
+But the point is that yeah, we shouldn't try to build really good
+introspection inside git. Debuggers already do a way better job of this.
+If they're hard for people to use to obtain simple information like a
+backtrace, we should work on wrapping that difficulty up in a script.
+
+It might still be useful to provide a much lesser form of introspection,
+if it would be available in a lot more places than gdb would. E.g.,
+__FILE__ and __LINE__ markers on error messages might be useful. A
+mediocre backtrace() that is only available on glibc systems is probably
+not.
+
+-Peff
