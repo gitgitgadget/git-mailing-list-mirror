@@ -1,72 +1,100 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: Verbose as default for commit (optional)
-Date: Fri, 24 Apr 2015 21:08:56 -0400
-Message-ID: <CAPig+cRegJ9b0NyvkrZvJMw3CAU0TdgyzH1DMDjB_hV2X4ysHg@mail.gmail.com>
-References: <20150424191809.GA18897@alvaca.santafe.altoros.com.ar>
-	<vpqbnidmgzh.fsf@anie.imag.fr>
-	<20150424235103.GA1798@localhost>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv3] refs.c: enable large transactions
+Date: Fri, 24 Apr 2015 21:23:16 -0700
+Message-ID: <xmqqzj5w25vv.fsf@gitster.dls.corp.google.com>
+References: <1429738227-2985-1-git-send-email-sbeller@google.com>
+	<xmqqzj5y3f0a.fsf@gitster.dls.corp.google.com>
+	<CAGZ79kYO9NifvWQ7nWHP6==ZFmrMj47-94rEHOhWooR5Nh7EUw@mail.gmail.com>
+	<xmqq8udi2tn8.fsf@gitster.dls.corp.google.com>
+	<CAGZ79kYGDOUgzKmQOLAXkYYb-HZJCw3Y=iSLXWHVXcQ0pAiDBw@mail.gmail.com>
+	<20150424181236.GK5467@google.com> <20150424201734.GA4747@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Git List <git@vger.kernel.org>
-To: Eloy Espinaco <eloyesp@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 25 03:09:04 2015
+Content-Type: text/plain
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Stefan Beller <sbeller@google.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Apr 25 06:24:06 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yloac-0002U3-UK
-	for gcvg-git-2@plane.gmane.org; Sat, 25 Apr 2015 03:09:03 +0200
+	id 1YlrdL-0006Sc-D7
+	for gcvg-git-2@plane.gmane.org; Sat, 25 Apr 2015 06:24:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031669AbbDYBI6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Apr 2015 21:08:58 -0400
-Received: from mail-ig0-f171.google.com ([209.85.213.171]:33514 "EHLO
-	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030990AbbDYBI5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Apr 2015 21:08:57 -0400
-Received: by igbpi8 with SMTP id pi8so38146013igb.0
-        for <git@vger.kernel.org>; Fri, 24 Apr 2015 18:08:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=i/Gz8PUGJnEU/TBY1XqWpycU4o2Lre7dfyAYpoxnKFQ=;
-        b=F57Qect4kC8ADELkJ2Kx7hbSb9xhxdWAGs5gA71DorV7dkjA4eZyz73pqnGVDgUSaI
-         4A6flaeDzAUeouUudILRBxa9YgeWfbfaDbLq27RHVEnh5jp4V/KF9U0Bq7HEjgTmmDaH
-         rITtt4aH+Q0l3e2706ipdjAmTO4IOaC9F+ODLGVyaTKGCpab3G/Xwxed9gOc1K/oLZ6/
-         +t3FEf1PC4I9HuPKEohOeVhrG9+QcZy5iO021+8Qc0dzi9W1MUdZFTGpiTjjYceJMFUx
-         cfJe+VklVj0XazfJLT3atk7NbIR1r1uj4sMtgURD6u0OQrQjhvlzWzuuzjFZSZCjffge
-         Dxig==
-X-Received: by 10.107.31.134 with SMTP id f128mr1364872iof.19.1429924136729;
- Fri, 24 Apr 2015 18:08:56 -0700 (PDT)
-Received: by 10.107.28.132 with HTTP; Fri, 24 Apr 2015 18:08:56 -0700 (PDT)
-In-Reply-To: <20150424235103.GA1798@localhost>
-X-Google-Sender-Auth: 2AhvOaFW9RqcPGb9mM5M1j-teNs
+	id S1750827AbbDYEXZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Apr 2015 00:23:25 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:59059 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750731AbbDYEXY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Apr 2015 00:23:24 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 943604CBFF;
+	Sat, 25 Apr 2015 00:23:18 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=4X8iafYWqiTm+XALP088qdP7mo4=; b=hBRsU8
+	hyPbxkAZyB14rXYtD2S9qz928r+Gmw064Ex3EGSn9KVyHekuLEhsdcONSS6H/01x
+	GsizGyxad/JSP4Hynb82IXcSuU0+8yPRBGcDdI7uTBS/eu2tu8EVlJNyED7mIChH
+	gDy7TZjt+YmCLT6XWP466bbv2jfaKNe2Ld/80=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=wbxu2WBvWs1J7ipr8MKPeFHBukmkjulA
+	GtWtL48DftvfNn+QkxYs3J2nHTyFDtZ+bBrWUZFOqE1nqRjdhBPkLcBGPIitAWx3
+	n0I8c86zkzF9W2QJVcVkKsDUqHTh2Fo7GHSdctg7XPUkKI0KbRRTfqM9yRlmD47X
+	ilPVXPc67VE=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8CD7A4CBFE;
+	Sat, 25 Apr 2015 00:23:18 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0AF684CBFD;
+	Sat, 25 Apr 2015 00:23:17 -0400 (EDT)
+In-Reply-To: <20150424201734.GA4747@peff.net> (Jeff King's message of "Fri, 24
+	Apr 2015 16:17:34 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: CC74E12C-EB02-11E4-9066-83E09F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267767>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267768>
 
-On Fri, Apr 24, 2015 at 7:51 PM, Eloy Espinaco <eloyesp@gmail.com> wrote:
-> Ok, now I found [this
-> thread](http://thread.gmane.org/gmane.comp.version-control.git/251376)
-> that seems abandoned, but implements this config, a --no-verbose that
-> disable it for one-time and the tests, but was not merged (don't know
-> why)
+Jeff King <peff@peff.net> writes:
 
-I recall reviewing Caleb's patch series and making a number of
-suggestions for improvement. v6 was the last version he posted[1], and
-it seems that he intended to post v7 but never got around to it.
-Apparently, Torstein Hegge asked in February 2015 about picking up
-where Caleb left off, but nothing has materialized.
+> So if anything, I think my inclination would be to make it easier to
+> help people (and ourselves) get a backtrace from gdb.
+>
+> One can get a core for a running process with gcore, or trigger a
+> coredump by killing with SIGABRT. But catching it at the exact moment of
+> a die() is a bit hard without support from the program. What about
+> something like this:
+>
+> diff --git a/usage.c b/usage.c
+> index ed14645..fa92190 100644
+> --- a/usage.c
+> +++ b/usage.c
+> @@ -34,6 +34,8 @@ static NORETURN void usage_builtin(const char *err, va_list params)
+>  static NORETURN void die_builtin(const char *err, va_list params)
+>  {
+>  	vreportf("fatal: ", err, params);
+> +	if (git_env_bool("GIT_DIE_ABORT", 0))
+> +		abort();
+>  	exit(128);
+>  }
 
-You are welcome to revive the series by taking reviewer comments into
-account and submitting v7 (and beyond if necessary). Be sure to keep
-Caleb's authorship and sign-off intact, and add your own sign-off
-following his. If you make changes to his patches, briefly describe
-your changes in a bracketed comment in the commit message, starting
-with your initials, like this: [ee: changed blah to bleh].
+Two comments.
 
-[1]: http://thread.gmane.org/gmane.comp.version-control.git/251943/focus=264608
+There probably are more than a few places that calls exit(128)
+without using die(), upon seeing that some helper function returned
+an error code, because the helper already gave an error message.
+
+The proposals so far, including this one, assume that the bug
+reporter will first fail the operation with "normal" invocation
+of Git (e.g. without GIT_DIE_ABORT exported) and then retry the
+same operation in a different way (e.g. with GIT_DIE_ABORT) to
+give us something that would help diagnosis.  Such a user could
+just rerun Git under gdb with breakpoint set to die_builtin, no?
