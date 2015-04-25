@@ -1,105 +1,105 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCHv3] refs.c: enable large transactions
-Date: Sat, 25 Apr 2015 01:24:27 -0400
-Message-ID: <20150425052427.GA20653@peff.net>
-References: <1429738227-2985-1-git-send-email-sbeller@google.com>
- <xmqqzj5y3f0a.fsf@gitster.dls.corp.google.com>
- <CAGZ79kYO9NifvWQ7nWHP6==ZFmrMj47-94rEHOhWooR5Nh7EUw@mail.gmail.com>
- <xmqq8udi2tn8.fsf@gitster.dls.corp.google.com>
- <CAGZ79kYGDOUgzKmQOLAXkYYb-HZJCw3Y=iSLXWHVXcQ0pAiDBw@mail.gmail.com>
- <20150424181236.GK5467@google.com>
- <20150424201734.GA4747@peff.net>
- <xmqqzj5w25vv.fsf@gitster.dls.corp.google.com>
- <20150425050058.GA20256@peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Stefan Beller <sbeller@google.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Apr 25 07:24:38 2015
+From: Fredrik Gustafsson <iveqy@iveqy.com>
+Subject: [PATCH] Clarify documentation on commit message strip
+Date: Sat, 25 Apr 2015 07:42:45 +0200
+Message-ID: <1429940565-14947-1-git-send-email-iveqy@iveqy.com>
+References: <xmqqmw1w259r.fsf@gitster.dls.corp.google.com>
+Cc: gitster@pobox.com, iveqy@iveqy.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 25 07:52:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YlsZv-0001Uh-7g
-	for gcvg-git-2@plane.gmane.org; Sat, 25 Apr 2015 07:24:35 +0200
+	id 1Ylt0V-0003vD-Fy
+	for gcvg-git-2@plane.gmane.org; Sat, 25 Apr 2015 07:52:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753467AbbDYFYa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Apr 2015 01:24:30 -0400
-Received: from cloud.peff.net ([50.56.180.127]:49983 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752786AbbDYFYa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Apr 2015 01:24:30 -0400
-Received: (qmail 22714 invoked by uid 102); 25 Apr 2015 05:24:30 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 25 Apr 2015 00:24:30 -0500
-Received: (qmail 22730 invoked by uid 107); 25 Apr 2015 05:24:57 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 25 Apr 2015 01:24:57 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 25 Apr 2015 01:24:27 -0400
-Content-Disposition: inline
-In-Reply-To: <20150425050058.GA20256@peff.net>
+	id S1753990AbbDYFnS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Apr 2015 01:43:18 -0400
+Received: from mail-la0-f50.google.com ([209.85.215.50]:36557 "EHLO
+	mail-la0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751262AbbDYFnR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Apr 2015 01:43:17 -0400
+Received: by lagv1 with SMTP id v1so48544982lag.3
+        for <git@vger.kernel.org>; Fri, 24 Apr 2015 22:43:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=16irK+r4jQj4caS6mnM5Cn2ppOiETbXAIakFQHGVdTo=;
+        b=l/zro3oKs755LD4PEUPSWfynvVK/LI4bNg7SVjlNFpqfG1Yq2LfvZ280tVqICYnMgZ
+         vbdPrqmveKj7B0whIirhiHj6kFYHBQdIGCCJPcl2C5LJUGvAwhCjF1LCM/J17ODE63tE
+         yYud0JY4c1bwu8DTYm7PeWussf0GJmw7XPU/UVjuY7uFu8A6DpR+AGM0pxkkVVPRg9Ey
+         PA3aGo6QFtiV7DWr0SnRrujeBKqswahjIL5fClZQhS+ldy1gVKXGE9umNnmctU9rpWPw
+         d0lmkzPnxYSsmYDQ3yCkk3LkLiS4B/YsB5yqT+Fuwt9ofuSF5LqTB6DyaampQ+2Vht9F
+         dw9A==
+X-Received: by 10.152.7.209 with SMTP id l17mr1587950laa.100.1429940596392;
+        Fri, 24 Apr 2015 22:43:16 -0700 (PDT)
+Received: from paksenarrion.paks.iveqy.com (c83-249-10-52.bredband.comhem.se. [83.249.10.52])
+        by mx.google.com with ESMTPSA id n10sm3129954laa.40.2015.04.24.22.43.15
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 24 Apr 2015 22:43:15 -0700 (PDT)
+Received: from iveqy by paksenarrion.paks.iveqy.com with local (Exim 4.84)
+	(envelope-from <iveqy@paksenarrion.iveqy.com>)
+	id 1Ylsrz-0003ts-1R; Sat, 25 Apr 2015 07:43:15 +0200
+X-Mailer: git-send-email 2.4.0.rc3.4.g20acbad
+In-Reply-To: <xmqqmw1w259r.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267774>
 
-On Sat, Apr 25, 2015 at 01:00:58AM -0400, Jeff King wrote:
+When using `-v` to add a unified diff to the commit message, this is
+stripped and not a part of the commit message. This is not mentioned.
 
-> A better solution to what I proposed earlier is perhaps:
-> 
->   git config alias.debug '!gdb --quiet \
-> 	    -ex "break exit" \
-> 	    -ex "run" \
-> 	    -ex "bt full" \
-> 	    -ex "continue" \
-> 	    -ex "quit" \
-> 	    --args git \
->   '
->   git debug rev-parse foobar
-> 
-> It has the minor irritation that gdb will control the process stdio
-> (slurping from stdin and polluting stdout, whereas we would prefer no
-> input and output to stderr). There might be a way to convince gdb to do
-> otherwise, or you could probably go pretty far with some shell fd
-> redirects and using "set args" inside gdb. Or maybe something with
-> gdbserver.
+Add a note about this with the `-v` description and slightly modify
+the description for the default `--cleanup` mode.
 
-Just to extend the thought exercise, here is something marginally less
-horrible. Save as "git-debug" in your PATH and chmod +x.
+Signed-off-by: Fredrik Gustafsson <iveqy@iveqy.com>
+---
 
--- >8 --
-#!/bin/sh
+>I'd prefer the description not to be _too_ explicit e.g. by
+>mentioning "unified diff", etc.
+>
+>Personally I think it is sufficient to do s/#comment/comment/ to the
+>existing text, without doing anything else.  What is "commentary" to
+>be removed is fairly clear in the contents given to the user in the
+>editor.
 
-if ! type gdb >/dev/null 2>&1; then
-	echo >&2 "Sorry, you don't seem to have gdb installed."
-	exit 1
-fi
+I agree that it is very clear once you do edit the commit message. My main
+point with this patch was to clarify -v, since it's not obvious from the
+documentation that it will be removed.
 
-args=
-for i in "$@"; do
-	args="$args '$(printf '%s' "$i" | sed "s/'/'\\\\''/")'"
-done
+I've no objections about your suggestions about the `strip` part. I hope I've
+understood you correctly and that this patch is correct.
 
-gdb --quiet \
-	-ex "set args $args <&7 >&8 2>&9" 7<&0 8>&1 9>&2 </dev/null >&2 \
-	-ex 'break exit' \
-	-ex 'run' \
-	-ex 'bt full' \
-	-ex 'continue' \
-	-ex 'quit' \
-	git
--- 8< --
+ Documentation/git-commit.txt | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-It's still rather hard to use with sub-programs started by git (e.g.,
-the upload-pack spawned by a fetch), but I think it would work for many
-simple cases. I'm not sure if I would use it myself. As somebody
-confident in using gdb, my next step after seeing the backtrace would be
-to start poking around interactively. Besides the stdio magic, this is
-not really buying me much beyond running gdb myself.
-
--Peff
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index 617e29b..1db4c7f 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -180,8 +180,8 @@ OPTIONS
+ +
+ --
+ strip::
+-	Strip leading and trailing empty lines, trailing whitespace, and
+-	#commentary and collapse consecutive empty lines.
++	Strip leading and trailing empty lines, trailing whitespace,
++	commentary and collapse consecutive empty lines.
+ whitespace::
+ 	Same as `strip` except #commentary is not removed.
+ verbatim::
+@@ -283,7 +283,8 @@ configuration variable documented in linkgit:git-config[1].
+ 	Show unified diff between the HEAD commit and what
+ 	would be committed at the bottom of the commit message
+ 	template.  Note that this diff output doesn't have its
+-	lines prefixed with '#'.
++	lines prefixed with '#'. This diff will not be a part
++	of the commit message.
+ +
+ If specified twice, show in addition the unified diff between
+ what would be committed and the worktree files, i.e. the unstaged
+-- 
+2.1.4
