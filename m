@@ -1,72 +1,88 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: [PATCH v2] t0027: Add repoMIX and LF_nul
-Date: Sat, 25 Apr 2015 23:43:55 +0200
-Message-ID: <553C0A9B.7060407@web.de>
-References: <553B3871.6050904@web.de> <xmqqegn817pr.fsf@gitster.dls.corp.google.com>
+From: Simon Richter <Simon.Richter@hogyros.de>
+Subject: Cleaning projects with submodules
+Date: Sat, 25 Apr 2015 23:36:25 +0200
+Message-ID: <553C08D9.9000907@hogyros.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1?= =?UTF-8?B?c2Vu?= 
-	<tboegi@web.de>
-X-From: git-owner@vger.kernel.org Sat Apr 25 23:44:16 2015
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="EhJfX3UqPbV7N2b5WEmSqiSUL5BxoROxo"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 25 23:45:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ym7ry-0006Qy-PK
-	for gcvg-git-2@plane.gmane.org; Sat, 25 Apr 2015 23:44:15 +0200
+	id 1Ym7tA-0007v9-8t
+	for gcvg-git-2@plane.gmane.org; Sat, 25 Apr 2015 23:45:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750905AbbDYVoK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 25 Apr 2015 17:44:10 -0400
-Received: from mout.web.de ([212.227.15.3]:57289 "EHLO mout.web.de"
+	id S1750861AbbDYVpX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Apr 2015 17:45:23 -0400
+Received: from psionic.psi5.com ([212.83.56.200]:33217 "EHLO psionic.psi5.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750829AbbDYVoJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Apr 2015 17:44:09 -0400
-Received: from macce.local ([217.211.68.12]) by smtp.web.de (mrweb001) with
- ESMTPSA (Nemesis) id 0Le4fk-1Z50c52XLo-00prfn; Sat, 25 Apr 2015 23:43:57
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
-In-Reply-To: <xmqqegn817pr.fsf@gitster.dls.corp.google.com>
-X-Provags-ID: V03:K0:OAmlT+zJJ5Q+qJ8JpUxP8WoWS6tjbyRTobUaHTNqGk/HgmvpMy6
- eBD7bgygTaSrQwgpBZajCsJ1fVA8vhT8/WL5e7vPz5zeHqo0Zjvd9sz3sSM1LGlrbfMOx8+
- k+YA8d5jspOE6tKkel6bLeUJ0+MKHf6KPXhzKuMlO5Ql3K4cgUiKuFuCMX/jFnvNaKs6xJI
- XwmpN1hxSd+ZcZ7gB7lhA==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1750727AbbDYVpW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Apr 2015 17:45:22 -0400
+X-Greylist: delayed 525 seconds by postgrey-1.27 at vger.kernel.org; Sat, 25 Apr 2015 17:45:22 EDT
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by psionic.psi5.com (Postfix) with ESMTP id 876A7AC0F73
+	for <git@vger.kernel.org>; Sat, 25 Apr 2015 23:36:36 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at psi5.com
+Received: from psionic.psi5.com ([127.0.0.1])
+	by localhost (psionic.psi5.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id HSyW5idDx49w for <git@vger.kernel.org>;
+	Sat, 25 Apr 2015 23:36:34 +0200 (CEST)
+Received: from [192.168.0.132] (mango.hogyros.de [83.236.216.243])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(Client CN "Simon Richter", Issuer "CA Cert Signing Authority" (not verified))
+	by psionic.psi5.com (Postfix) with ESMTPS id 759E9AC011E
+	for <git@vger.kernel.org>; Sat, 25 Apr 2015 23:36:34 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.6.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267802>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267803>
 
-On 2015-04-25 18.41, Junio C Hamano wrote:
-> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
->=20
->> "new safer autocrlf handling":
->>   Check if eols in a file are converted at commit, when the file has
->>   CR (or CLLF) in the repo (technically speaking in the index).
->=20
-> s/CLLF/CRLF/?  (no need to resend for this; I'll locally amend)
->=20
->>   Add a test-file repoMIX with mixed line-endings.
->>   When converting LF->CRLF or CRLF->LF: check the warnings
->>
->> checkout_files():
->>   Checking out CRLF_nul and checking for eol coversion does not
->>   make much sense (CRLF will stay CRLF).
->=20
-> Hmph, would it still make sense to make sure that CRLF will stay CRLF
-> so that future changes to break this expectation can be caught?  Not
-> that such a breakage is likely...
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--EhJfX3UqPbV7N2b5WEmSqiSUL5BxoROxo
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Thanks for amending.
+Hi,
 
-We have the file CRLF (and CRLFmixLF), where we check that CRLF stays C=
-RLF and is not
-converted into CRLFLF.
+I'm trying to set up a continuous integration build for Boost, which
+uses massive amounts of submodules, and keep running into problems when
+running "git clean" in the toplevel project.
 
-The LF_nul is to test the "auto text detection":
-It should not be converted into CRLF_nul in "auto mode",
-but should be converted when declared as "text" in .gitattributes.
+When I switch to a version where a submodule has been removed (e.g. an
+earlier version), "git clean -dx" will not remove the submodule's
+directory, because it has its own .git directory. Using a single -f
+flag, the process fails (because directories containing .git directories
+are no longer skipped), and using -ff removes all submodules (which is
+overkill).
+
+Is there a good way to clean a project, leaving valid submodules in
+place (these are then switched to the new tip and cleaned in separate
+commands) while removing submodules that are no longer referenced?
+
+   Simon
+
+
+--EhJfX3UqPbV7N2b5WEmSqiSUL5BxoROxo
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBAgAGBQJVPAjaAAoJEH69OHuwmQgRuKUH/1b6cvvXQdXnqNYyuHAyNZwy
+MhBqvBDnlIoTCYkSpLB2NgO9V5P4zHYwgH0xYynJoX6IwLW2hJNQUlbAbD+RH1sl
+R8gl74Q4oWr/1E+Sq4w7pxqotCZ8rL8EjGMf3c0dPlZzX/7j9R1askYqPG0lbEVs
+mOy+kKdYDw4uSVnBOo/pHWqxNMVB+3shakxbZmQk0eKl21nsPR8R4Eivp6olQkPx
+hs++XUKEBYZj4NeUMC6tCht/XSYBO7vmLZ6VE0gC2otvYq6pupoRmTYU0qobJxiu
+zH58bPoQodgp1AZuoJwxfA7iwZJXuMrvoz4v0Yn7/a0OZObc3ffb8Siqx1ZAkMM=
+=eaZf
+-----END PGP SIGNATURE-----
+
+--EhJfX3UqPbV7N2b5WEmSqiSUL5BxoROxo--
