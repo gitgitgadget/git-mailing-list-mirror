@@ -1,74 +1,136 @@
-From: Olivier ROLAND <cyrus-dev@edla.org>
-Subject: Bug report : bad filter-branch (OSX only)
-Date: Sun, 26 Apr 2015 11:25:52 +0200
-Message-ID: <CAM=W1NkZr6o-DCxXskeWC8xjRMiT2P9qXeeUe91qLBqOxzqNtg@mail.gmail.com>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: [PATCH/RFC] blame: CRLF in the working tree and LF in the repo
+Date: Sun, 26 Apr 2015 14:02:34 +0200
+Message-ID: <553CD3DA.9090700@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: tboegi@web.de,
+	"johannes.schindelin@gmx.de >> Johannes Schindelin" 
+	<johannes.schindelin@gmx.de>, kasal@ucw.cz,
+	sandals@crustytoothpaste.net
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 26 11:26:03 2015
+X-From: git-owner@vger.kernel.org Sun Apr 26 14:02:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YmIp5-0005g2-Fg
-	for gcvg-git-2@plane.gmane.org; Sun, 26 Apr 2015 11:25:59 +0200
+	id 1YmLH0-0005YM-Br
+	for gcvg-git-2@plane.gmane.org; Sun, 26 Apr 2015 14:02:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751555AbbDZJZy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Apr 2015 05:25:54 -0400
-Received: from mail-ie0-f171.google.com ([209.85.223.171]:35781 "EHLO
-	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751411AbbDZJZx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Apr 2015 05:25:53 -0400
-Received: by iejt8 with SMTP id t8so108977575iej.2
-        for <git@vger.kernel.org>; Sun, 26 Apr 2015 02:25:52 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=Eja48VVTLnUHYnQ1x6s1iCYam+jf8YzDP8/Ysz99K+o=;
-        b=BfQy3dW7yvpWPJV+e4uH25vu17acvEkeAWx/a9e0WIZEcH/834ggKsiT7ZwuFJ9dnJ
-         qP8UOh/3Uim7/epAMytZ2Qo5v0vgpT0Rv7DEG4uLiRw1DG7dBj2eli58wOFOw256LAdI
-         PcXSREMfYLbVcK8npzo7CRXH3QZQdx/sftl+J6Fx+B1vtFaYduYqsyQRz3mhQFhSLIPN
-         sBvKJ/0CsCjmE5+3O9GucAIq3j2SDh7AMP5JLtrdqV8a6ADBeBZYrHYYxwNghz7WrBgm
-         blPXuYE+8En6dOsj+9WAPvp4aUHoWyrc7gcR4QlxLscGgxxWV3PUC/NEpbQZng4ltPb5
-         gtJQ==
-X-Gm-Message-State: ALoCoQngV3vHhdvQsl1brTmjAj6RqPXt1b/UR3rotdSvjQPxbq7HYfhpNVexLkJ0pdxfJvu6d54Y
-X-Received: by 10.42.128.84 with SMTP id l20mr7303712ics.21.1430040352338;
- Sun, 26 Apr 2015 02:25:52 -0700 (PDT)
-Received: by 10.36.6.8 with HTTP; Sun, 26 Apr 2015 02:25:52 -0700 (PDT)
-X-Originating-IP: [90.58.122.223]
+	id S1751261AbbDZMCr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 26 Apr 2015 08:02:47 -0400
+Received: from mout.web.de ([212.227.17.12]:65038 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751215AbbDZMCq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Apr 2015 08:02:46 -0400
+Received: from macce.local ([217.211.68.12]) by smtp.web.de (mrweb103) with
+ ESMTPSA (Nemesis) id 0MRlED-1YtBob0jZx-00Sxuh; Sun, 26 Apr 2015 14:02:36
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
+X-Provags-ID: V03:K0:sPNLDmrg1F2h1EGx+AD2NRZNhV7Rszb4datdQSFDCtEy+D0R+dE
+ eIHqd8XmpakonwSacLIbHEoZ9ZDNefwDpmd8S4YMXK/A0NTL9vcZLiMIp1Fui+XqP2LjbKg
+ wdRWZqByP1rldXAvi5eH7A24rtu7cdvdRTNSVeiHYyF938RrQM9jHGBYodMBkMfBkqlw9ip
+ fLEFvAnqEew7ye1fqIQKQ==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267829>
 
-Hello,
+A typicall setup under Windows:
+core.eol is CRLF and a file is marked as "text" in .gitattributes.
 
-Seem to be a bug.
+After 4d4813a5 "git blame" no longer works as expected,
+every line is annotated as "Not Committed Yet",
+even though the working directory is clean.
 
-OSX 10.10.3 git 2.3.6 HFS+ case-sensitive
+commit 4d4813a5 removed the conversion in blame.c for all files,
+with or without CRLF in the repo.
 
-How to reproduce :
-Step 1 : git clone https://github.com/begeric/FastParsers.git
-Step 2 : cd FastParsers/
-Step 3 : git filter-branch --env-filter 'if [ 0 = 1 ]; then echo 0; fi' -- --all
+Having files with CRLF in the repo and core.autocrlf=3Dinput is a tempo=
+rary
+situation, the files should be normalized in the repo.
+Blaming them with "Not Committed Yet" is OK.
 
-Result on OSX :
-Rewrite 65df7c5ac1ed956252b07b8c911ad7eba0a15c2b (206/206)
-Ref 'refs/heads/experiment' was rewritten
-Ref 'refs/remotes/origin/experiment' was rewritten
-WARNING: Ref 'refs/remotes/origin/experiment' is unchanged
-Ref 'refs/remotes/origin/master' was rewritten
+The solution is to revert commit 4d4813a5.
 
-Result on Debian :
-Rewrite 65df7c5ac1ed956252b07b8c911ad7eba0a15c2b (206/206)
-WARNING: Ref 'refs/heads/experiment' is unchanged
-WARNING: Ref 'refs/remotes/origin/experiment' is unchanged
-WARNING: Ref 'refs/remotes/origin/experiment' is unchanged
-WARNING: Ref 'refs/remotes/origin/master' is unchanged
+Reported-By: Stepan Kasal <kasal@ucw.cz>
+Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+---
+Reference:
+https://github.com/git-for-windows/git/issues/105
+Although the intention of 4d4813a5 is good, it breaks
+the usual EOL-handling for Windows.
+Until we have a better solution, we suggest to revert it.
 
-Do you have any thoughts on this ?
+ builtin/blame.c               |  1 +
+ t/t8003-blame-corner-cases.sh | 26 +++++++++++++++++++++++++-
+ 2 files changed, 26 insertions(+), 1 deletion(-)
 
-Thanks.
+diff --git a/builtin/blame.c b/builtin/blame.c
+index 06484c2..8d70623 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -2348,6 +2348,7 @@ static struct commit *fake_working_tree_commit(st=
+ruct diff_options *opt,
+ 		if (strbuf_read(&buf, 0, 0) < 0)
+ 			die_errno("failed to read from stdin");
+ 	}
++	convert_to_git(path, buf.buf, buf.len, &buf, 0);
+ 	origin->file.ptr =3D buf.buf;
+ 	origin->file.size =3D buf.len;
+ 	pretend_sha1_file(buf.buf, buf.len, OBJ_BLOB, origin->blob_sha1);
+diff --git a/t/t8003-blame-corner-cases.sh b/t/t8003-blame-corner-cases=
+=2Esh
+index 32895e5..dcc9827 100755
+--- a/t/t8003-blame-corner-cases.sh
++++ b/t/t8003-blame-corner-cases.sh
+@@ -191,7 +191,7 @@ test_expect_success 'indent of line numbers, ten li=
+nes' '
+ 	test $(grep -c "  " actual) =3D 9
+ '
+=20
+-test_expect_success 'blaming files with CRLF newlines' '
++test_expect_failure 'blaming files with CRLF newlines in repo, core.au=
+toclrf=3Dinput' '
+ 	git config core.autocrlf false &&
+ 	printf "testcase\r\n" >crlffile &&
+ 	git add crlffile &&
+@@ -199,5 +199,29 @@ test_expect_success 'blaming files with CRLF newli=
+nes' '
+ 	git -c core.autocrlf=3Dinput blame crlffile >actual &&
+ 	grep "A U Thor" actual
+ '
++test_expect_success 'blaming files with CRLF newlines core.autocrlf=3D=
+true' '
++	test_create_repo blamerepo &&
++	(
++		cd blamerepo &&
++		git config core.autocrlf true &&
++		printf "testcase\r\n" >crlffile &&
++		git add crlffile &&
++		git commit -m TRUE &&
++		git blame crlffile >actual &&
++		grep "A U Thor" actual
++	)
++'
++
++test_expect_success 'blaming files with CRLF newlines core.autocrlf=3D=
+false' '
++	(
++		cd blamerepo &&
++		git config core.autocrlf false &&
++		printf ".gitattributes text\r\n" >.gitattributes &&
++		git add .gitattributes &&
++		git commit -m FALSE &&
++		git blame .gitattributes >actual &&
++		grep "A U Thor" actual
++	)
++'
+=20
+ test_done
+--=20
+2.2.0.rc1.790.ge19fcd2
