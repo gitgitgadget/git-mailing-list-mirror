@@ -1,132 +1,147 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 08/14] merge: split reduce_parents() out of collect_parents()
-Date: Sat, 25 Apr 2015 22:26:01 -0700
-Message-ID: <1430025967-24479-9-git-send-email-gitster@pobox.com>
+Subject: [PATCH 00/14] Teach "git merge FETCH_HEAD" octopus merges
+Date: Sat, 25 Apr 2015 22:25:53 -0700
+Message-ID: <1430025967-24479-1-git-send-email-gitster@pobox.com>
 References: <xmqqiocqli1c.fsf@gitster.dls.corp.google.com>
- <1430025967-24479-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 26 07:26:33 2015
+X-From: git-owner@vger.kernel.org Sun Apr 26 07:26:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YmF5M-0002kU-7k
-	for gcvg-git-2@plane.gmane.org; Sun, 26 Apr 2015 07:26:32 +0200
+	id 1YmF5H-0002kU-Cl
+	for gcvg-git-2@plane.gmane.org; Sun, 26 Apr 2015 07:26:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751252AbbDZF02 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Apr 2015 01:26:28 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:60894 "EHLO
+	id S1751093AbbDZF0L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Apr 2015 01:26:11 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:51317 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751076AbbDZF0U (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Apr 2015 01:26:20 -0400
+	with ESMTP id S1751004AbbDZF0J (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Apr 2015 01:26:09 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2E895466F8;
-	Sun, 26 Apr 2015 01:26:20 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id CB5C3466DC;
+	Sun, 26 Apr 2015 01:26:08 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=Tc9F
-	pODdRhPcXUUUSKP7V7c9hXU=; b=MNIS9L8t5uY4ozMUedBgcZ8MZrVkvsDpuCgF
-	w/2kdkBYq/eM3odC9a+u4EOb/CsbKWjaxMy7U9sgHA+t5bm5Nv2Po/2k1EP7cstQ
-	VcTEeHS9kxtqSx1/virIoza0inKMqAPOHMSJ9C1Db95BYLdHFG4vVk13mgKudDHP
-	SgzrkuU=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=p0KD
+	rMGiNqAYxwHwZBOznReBwJM=; b=rf7TWc7+bT2SJnsVWiIAJ/tvVXPV6BZaK3DJ
+	jva+sWgpKGmofhFmgjjbox0r895RppomCxGCFLW93CQJ2CEV+Grj7PGibHssaZfQ
+	W1bimEkDVuc7Zzt99UX1FuyLx6PsF64i/ix0ccpqqi+X3fQudgD+L048jBBkTkWO
+	sLD6F8Q=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=YU+OI5
-	OtwqnhzR9IDa8c4i+PluAY65l0/ciHcHTGVECPN0L0K5/fG/z+3911OjGFboUYUt
-	KfwT9/xDNIg5SF5lEJXxDJfoM4CmnMRH8E8kqJh9/nSItOQ2ZcrkY9VHWDUhosVV
-	IfQUA53qmC5NbhQEauzH8Ad7EJjXvJdP5F/vw=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=IjVKZ2
+	t0WphstAwm0bk05IuYq/E25hbhcvrRm03hZcvMjtFiw4WcM9j8KrBoSNJ+ge+bin
+	uNMs/GngWxdfYMa980J/d2wTuBqrmSz2nY3GF0/PUCh1azijWe2hcW1FQ8666Nvh
+	aA8knItu+e+vzbb987k4pZsXyXC9lW53zM1Po=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2641C466F7;
-	Sun, 26 Apr 2015 01:26:20 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C4102466DB;
+	Sun, 26 Apr 2015 01:26:08 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9F051466F6;
-	Sun, 26 Apr 2015 01:26:19 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 48CA0466DA;
+	Sun, 26 Apr 2015 01:26:08 -0400 (EDT)
 X-Mailer: git-send-email 2.4.0-rc3-238-g36f5934
-In-Reply-To: <1430025967-24479-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: C4E113F4-EBD4-11E4-8F27-83E09F42C9D4-77302942!pb-smtp1.pobox.com
+In-Reply-To: <xmqqiocqli1c.fsf@gitster.dls.corp.google.com>
+X-Pobox-Relay-ID: BE1C9D0E-EBD4-11E4-AC4A-83E09F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267809>
 
-The latter does two separate things:
+Junio C Hamano <gitster@pobox.com> writes:
 
- - Parse the list of commits on the command line, and formulate the
-   list of commits to be merged (including the current HEAD);
+> Jeff King <peff@peff.net> writes:
+>> On Mon, Apr 20, 2015 at 11:59:04AM -0700, Junio C Hamano wrote:
+>>
+>>> Unfortunately, "git merge"'s parsing of FETCH_HEAD forgets that we
+>>> may be creating an Octopus.  Otherwise the above should work well.
+>>
+>> That sounds like a bug we should fix regardless.
+>
+> But I am not sure how it should behave. "git fetch $there A B C"
+> followed by "git merge FETCH_HEAD" merges only A, and I do not know
+> if people have come to depend on this behaviour.
+>
+> I suspect there may be larger fallout from such a change, namely,
+> what should "git log FETCH_HEAD" do?  Should it traverse the history
+> starting from all things that are not marked as not-for-merge, or
+> should it just say "git rev-parse FETCH_HEAD" and use only the first
+> one as the starting point?
 
- - Compute the list of parents to be recorded in the resulting merge
-   commit.
+So, I thought we may want to try this and see how it goes.
 
-Split the latter into a separate helper function, so that we can
-later supply the list commits to be merged from a different source
-(namely, FETCH_HEAD).
+Tentatively, I am saying that "FETCH_HEAD" is a magic token
+understood by "git merge", like "git merge <msg> HEAD commits..."
+syntax was a magic that made "git merge" work differently from "git
+merge -m <msg> <commits>..."; no changes to get_sha1() or anything
+heavy like that is intended.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/merge.c | 41 +++++++++++++++++++++++++----------------
- 1 file changed, 25 insertions(+), 16 deletions(-)
 
-diff --git a/builtin/merge.c b/builtin/merge.c
-index d2e36e2..054f052 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -1044,23 +1044,11 @@ static int default_edit_option(void)
- 		st_stdin.st_mode == st_stdout.st_mode);
- }
- 
--static struct commit_list *collect_parents(struct commit *head_commit,
--					   int *head_subsumed,
--					   int argc, const char **argv)
-+static struct commit_list *reduce_parents(struct commit *head_commit,
-+					  int *head_subsumed,
-+					  struct commit_list *remoteheads)
- {
--	int i;
--	struct commit_list *remoteheads = NULL, *parents, *next;
--	struct commit_list **remotes = &remoteheads;
--
--	if (head_commit)
--		remotes = &commit_list_insert(head_commit, remotes)->next;
--	for (i = 0; i < argc; i++) {
--		struct commit *commit = get_merge_parent(argv[i]);
--		if (!commit)
--			help_unknown_ref(argv[i], "merge",
--					 "not something we can merge");
--		remotes = &commit_list_insert(commit, remotes)->next;
--	}
-+	struct commit_list *parents, *next, **remotes = &remoteheads;
- 
- 	/*
- 	 * Is the current HEAD reachable from another commit being
-@@ -1088,6 +1076,27 @@ static struct commit_list *collect_parents(struct commit *head_commit,
- 	return remoteheads;
- }
- 
-+static struct commit_list *collect_parents(struct commit *head_commit,
-+					   int *head_subsumed,
-+					   int argc, const char **argv)
-+{
-+	int i;
-+	struct commit_list *remoteheads = NULL;
-+	struct commit_list **remotes = &remoteheads;
-+
-+	if (head_commit)
-+		remotes = &commit_list_insert(head_commit, remotes)->next;
-+	for (i = 0; i < argc; i++) {
-+		struct commit *commit = get_merge_parent(argv[i]);
-+		if (!commit)
-+			help_unknown_ref(argv[i], "merge",
-+					 "not something we can merge");
-+		remotes = &commit_list_insert(commit, remotes)->next;
-+	}
-+
-+	return reduce_parents(head_commit, head_subsumed, remoteheads);
-+}
-+
- int cmd_merge(int argc, const char **argv, const char *prefix)
- {
- 	unsigned char result_tree[20];
+Earlier, we thought that it would just be the matter of turning
+existing invocation of "git merge <msg> HEAD $commits..." in "git
+pull" into "git merge -m <msg> $commits..." to deprecate the ugly
+original "merge" command line syntax.
+
+This unfortunately failed for two reasons.
+
+ * "-m <msg>" stops the editor from running; recent "git pull"
+   encourage the users to justify the merge in the log message,
+   and the auto-generated <msg> that comes from format-merge-msg
+   should still be shown to the user in the editor to be edited.
+
+ * "-m <msg>" also adds auto-generated summary when merge.log
+   configuration is enabled, but "git pull" calls "git merge" with
+   the message _with_ that log already in there.
+
+Invoking "git merge FETCH_HEAD" (no messages fed by the caller) from
+"git pull" almost works.  "git merge" knows how to extract the name
+of the repository and the branch from FETCH_HEAD to use in the merge
+log message it auto-generates.  However, this is done only for a
+single branch; if you did "git pull $there topic-A topic-B", and
+then invoked "git merge FETCH_HEAD" from there, we would end up
+recording a merge with only one branch, which is not what we want.
+
+This teaches "git merge FETCH_HEAD" that FETCH_HEAD may describe
+multiple branches that were fetched for merging.  With that, the
+last step eradicates the "merge <msg> HEAD <commit>..." syntax from
+our codebase, finally.
+
+This may be rough in a few places and some patches that are done as
+preparatory clean-up steps may want to be squashed into the patch
+that follows them that implements the real change.
+
+These patches are designed to apply on top of v2.2.2; I'll push them
+out on 'pu' later, on 'jc/merge' topic.
+
+Junio C Hamano (14):
+  merge: simplify code flow
+  t5520: style fixes
+  t5520: test pulling an octopus into an unborn branch
+  merge: clarify "pulling into void" special case
+  merge: do not check argc to determine number of remote heads
+  merge: small leakfix and code simplification
+  merge: clarify collect_parents() logic
+  merge: split reduce_parents() out of collect_parents()
+  merge: narrow scope of merge_names
+  merge: extract prepare_merge_message() logic out
+  merge: make collect_parents() auto-generate the merge message
+  merge: decide if we auto-generate the message early in
+    collect_parents()
+  merge: handle FETCH_HEAD internally
+  merge: deprecate 'git merge <message> HEAD <commit>' syntax
+
+ Documentation/git-merge.txt   |   4 +
+ builtin/merge.c               | 248 +++++++++++++++++++++++++++---------------
+ git-cvsimport.perl            |   2 +-
+ git-pull.sh                   |   3 +-
+ t/t3402-rebase-merge.sh       |   2 +-
+ t/t5520-pull.sh               |  31 +++---
+ t/t6020-merge-df.sh           |   2 +-
+ t/t6021-merge-criss-cross.sh  |   6 +-
+ t/t9402-git-cvsserver-refs.sh |   2 +-
+ 9 files changed, 188 insertions(+), 112 deletions(-)
+
 -- 
 2.4.0-rc3-238-g36f5934
