@@ -1,76 +1,87 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH/RFC] blame: CRLF in the working tree and LF in the repo
-Date: Sun, 26 Apr 2015 14:36:00 -0400
-Message-ID: <CAPig+cT3rpEFVerjxA9vCXh0wFdmwBhDEnvgk1hBumsSAtDcVw@mail.gmail.com>
-References: <553CD3DA.9090700@web.de>
+Subject: Re: [PATCH RFC] add: Do not open editor if patch is empty
+Date: Sun, 26 Apr 2015 14:39:06 -0400
+Message-ID: <CAPig+cTMWe4gnuMrx-aP1Zu+qr6UqmHFmJj2JoahtuxcDGLTQg@mail.gmail.com>
+References: <1430067820-3349-1-git-send-email-kuleshovmail@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>,
-	"johannes.schindelin@gmx.de >> Johannes Schindelin" 
-	<johannes.schindelin@gmx.de>, kasal@ucw.cz,
-	"brian m. carlson" <sandals@crustytoothpaste.net>
-To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Sun Apr 26 20:36:18 2015
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Alexander Kuleshov <kuleshovmail@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 26 20:39:24 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YmRPZ-00080g-9a
-	for gcvg-git-2@plane.gmane.org; Sun, 26 Apr 2015 20:36:13 +0200
+	id 1YmRSS-00020V-3R
+	for gcvg-git-2@plane.gmane.org; Sun, 26 Apr 2015 20:39:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752039AbbDZSgC convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 26 Apr 2015 14:36:02 -0400
-Received: from mail-ig0-f177.google.com ([209.85.213.177]:33729 "EHLO
-	mail-ig0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751080AbbDZSgB convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 26 Apr 2015 14:36:01 -0400
-Received: by igbpi8 with SMTP id pi8so56695166igb.0
-        for <git@vger.kernel.org>; Sun, 26 Apr 2015 11:36:00 -0700 (PDT)
+	id S1751184AbbDZSjI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Apr 2015 14:39:08 -0400
+Received: from mail-ie0-f176.google.com ([209.85.223.176]:33890 "EHLO
+	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751115AbbDZSjH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Apr 2015 14:39:07 -0400
+Received: by iedfl3 with SMTP id fl3so128196195ied.1
+        for <git@vger.kernel.org>; Sun, 26 Apr 2015 11:39:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=4X47WwA7+Yv8bWVWLOuTopN6anO0dh8W+r5DQRfwJnw=;
-        b=iYyVFYtAG0qWpRyGc4Q261ro5utTwoixq2qVgn+BxakT/lPQm2dtKw/DV1i1DcC7s+
-         bmbZ5+GYADDiJFoYIx+GMwut5fM9h8gpMBOy20ArGTdbvIMM8RIkywRo0H2p86+OMYmB
-         tqRhzdvvmK8IMlMZV15Kox0eaa7sffYgYO3uvL+MGn5qRCbJl3wXpT7I0ijmeAKadeK6
-         v9BZQN/DdsJX0Pat9tQVaYD9y1xQ8RSMw0dIASZSGWa6OrXpuJJtgNJDM5lbZQIMuZUT
-         ESIe8/mUShvSULuV3jdCpTc81L7JMwUBvseOgEOITe8ZWVfGFXUf0Bcm/ull/TmbCHFx
-         urvw==
-X-Received: by 10.50.27.67 with SMTP id r3mr9043750igg.15.1430073360741; Sun,
- 26 Apr 2015 11:36:00 -0700 (PDT)
-Received: by 10.107.28.132 with HTTP; Sun, 26 Apr 2015 11:36:00 -0700 (PDT)
-In-Reply-To: <553CD3DA.9090700@web.de>
-X-Google-Sender-Auth: MBiYfp1j-tcXPu9fzFYsi8pL-yw
+         :from:to:cc:content-type;
+        bh=es6GtpUCqluYYSggYM61CiPcUMNTe9obWiogp2lB92U=;
+        b=H9eFm/jVrRLCzMtKaBaS6zampBKikN5Y78K/vrhFumrvOS2sRC/FLAXRToAQk2IK24
+         GTKAXSIGLOTBB7cd9p7Ni4U86myN2vNyPtQ1DDyqGPVoJadGpvo876eIPBdjGGsvLiu+
+         wPRyuMgcvWpaxz0IE0Qw+jRRNeL+4F1HqY3lOpW2lTo3JNq0zR6TnQ+gDn9RjXVZmGkf
+         Nr4IGhZiwRnzfooUgq2aV7qeQ7NfoA6T+72bWH4eNYxOsnQEBNED2XWhmDWLhxccBm5I
+         eacw16IJmGMUcWez/Eu2Ku+w2SpugAt1+sKqMGPw4cHXCDFZDzadkpjsa4cUt8SQxByD
+         60Tg==
+X-Received: by 10.50.27.67 with SMTP id r3mr9053186igg.15.1430073546345; Sun,
+ 26 Apr 2015 11:39:06 -0700 (PDT)
+Received: by 10.107.28.132 with HTTP; Sun, 26 Apr 2015 11:39:06 -0700 (PDT)
+In-Reply-To: <1430067820-3349-1-git-send-email-kuleshovmail@gmail.com>
+X-Google-Sender-Auth: KPcIpoG3iZggZTThJ588IPLqQQ8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267831>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267832>
 
-On Sun, Apr 26, 2015 at 8:02 AM, Torsten B=C3=B6gershausen <tboegi@web.=
-de> wrote:
-> A typicall setup under Windows:
+On Sun, Apr 26, 2015 at 1:03 PM, Alexander Kuleshov
+<kuleshovmail@gmail.com> wrote:
+> If we'll run 'git add -e <path>' on a path which has no
+> difference with the current index, empty editor will open. This
+> patch prevents this behaviour and checks that patch is not empty
+> before an editor with patch will be opened.
+>
+> Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
+> ---
+> diff --git a/builtin/add.c b/builtin/add.c
+> index ee370b0..4fc6b13 100644
+> --- a/builtin/add.c
+> +++ b/builtin/add.c
+> @@ -209,13 +209,13 @@ static int edit_patch(int argc, const char **argv, const char *prefix)
+>         if (run_diff_files(&rev, 0))
+>                 die(_("Could not write patch"));
+>
+> -       launch_editor(file, NULL, NULL);
+> -
+>         if (stat(file, &st))
+>                 die_errno(_("Could not stat '%s'"), file);
+>         if (!st.st_size)
+>                 die(_("Empty patch. Aborted."));
+>
+> +       launch_editor(file, NULL, NULL);
 
-s/typicall/typical/
+But this breaks intended behavior[1] in which "git add -e" aborts with
+message "Empty patch" if the user deletes everything from the patch
+file in the editor.
 
-> core.eol is CRLF and a file is marked as "text" in .gitattributes.
->
-> After 4d4813a5 "git blame" no longer works as expected,
-> every line is annotated as "Not Committed Yet",
-> even though the working directory is clean.
->
-> commit 4d4813a5 removed the conversion in blame.c for all files,
-> with or without CRLF in the repo.
->
-> Having files with CRLF in the repo and core.autocrlf=3Dinput is a tem=
-porary
-> situation, the files should be normalized in the repo.
-> Blaming them with "Not Committed Yet" is OK.
->
-> The solution is to revert commit 4d4813a5.
->
-> Reported-By: Stepan Kasal <kasal@ucw.cz>
-> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+[1]: c59cb03 (git-add: introduce --edit (to edit the diff vs. the
+index), 2009-04-08)
+
+>         child.git_cmd = 1;
+>         child.argv = apply_argv;
+>         if (run_command(&child))
+> --
+> 2.3.3.611.g09038fc.dirty
