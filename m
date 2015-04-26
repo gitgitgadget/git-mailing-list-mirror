@@ -1,121 +1,121 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 07/14] merge: clarify collect_parents() logic
-Date: Sat, 25 Apr 2015 22:26:00 -0700
-Message-ID: <1430025967-24479-8-git-send-email-gitster@pobox.com>
+Subject: [PATCH 02/14] t5520: style fixes
+Date: Sat, 25 Apr 2015 22:25:55 -0700
+Message-ID: <1430025967-24479-3-git-send-email-gitster@pobox.com>
 References: <xmqqiocqli1c.fsf@gitster.dls.corp.google.com>
  <1430025967-24479-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 26 07:26:37 2015
+X-From: git-owner@vger.kernel.org Sun Apr 26 07:26:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YmF5L-0002kU-En
-	for gcvg-git-2@plane.gmane.org; Sun, 26 Apr 2015 07:26:31 +0200
+	id 1YmF5I-0002kU-Fd
+	for gcvg-git-2@plane.gmane.org; Sun, 26 Apr 2015 07:26:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751247AbbDZF01 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Apr 2015 01:26:27 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:53946 "EHLO
+	id S1751122AbbDZF0O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Apr 2015 01:26:14 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:52458 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751191AbbDZF0T (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Apr 2015 01:26:19 -0400
+	with ESMTP id S1751004AbbDZF0M (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Apr 2015 01:26:12 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id BE6AB466F5;
-	Sun, 26 Apr 2015 01:26:18 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 918F0466E5;
+	Sun, 26 Apr 2015 01:26:11 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=k1Ja
-	Mvva/cWoN+8RhYgOSE1xijw=; b=h5QviUrrrqevX8heWs3ryYZU9J0SeatwuNRi
-	MB85ptiBQwKoCfk4IVWPvF3aukaX/410fdAKnS49E5Uu51tg5S105MDWiUc5ElGs
-	6Pj+/hMhdXOyXXwXWD+kPHNdkiRv75VoG3bCf/O0v6hSshabW6EW2t1Xy96reSko
-	OH6f2lc=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=L2Ku
+	5GSZg3B5yuFZWk6wyJbGlHc=; b=ZGiE0Ng4kx1bJYaDYn7ldlbPS5fGbH0JyZiD
+	G+IswBYMnLHn4ax8OBGxhEkvBTZTaguFejJp5Bu7SzEodaahr96iuz7agPYtIbeB
+	rGyn6lm0dZIw4Rxs5mI5veJNCUgboFBMyqxGDRjvT13vaM+cEYgetUwV89fRaAMD
+	lz1+PZc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=DrzWw8
-	0wssStqQbxxHOKau95NkEuc/B96QR7u3+BHhnNcfsDPHgV/ZldNN6knFT59Gu4wB
-	M5nWDGSHDLOlqfptDLz4FkEyEG221Sm4ETHFxKEvOMA+vcqwDCMT6Ifw+YmtYYcT
-	0kdg3C9BEhF5TGD/D2ipwvy6AE//UDmbaFSts=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=quSXf2
+	n8d68fwIzxVTrAnsB5JOO1pGUsiL+KC4Rsqc4Kpwd8kDIdwtEw1CAkFq/cmcnxxw
+	89O6Sgh4+jO8scb5aYFGwGwT7P1l47So1zvmXAEJIHnb7OcAOCwSRSJ8fyTzvYYx
+	prUiT9cU+q5y5l3FF8MS9RyX2pTXq0Sz46Ahs=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B7BE3466F4;
-	Sun, 26 Apr 2015 01:26:18 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8A82E466E3;
+	Sun, 26 Apr 2015 01:26:11 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 354A0466F3;
-	Sun, 26 Apr 2015 01:26:18 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0B98B466E2;
+	Sun, 26 Apr 2015 01:26:10 -0400 (EDT)
 X-Mailer: git-send-email 2.4.0-rc3-238-g36f5934
 In-Reply-To: <1430025967-24479-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: C406BF1A-EBD4-11E4-910B-83E09F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: BFC023E2-EBD4-11E4-B17D-83E09F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267812>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267813>
 
-Clarify this small function in three ways.
-
- - The function initially collects all commits to be merged into a
-   commit_list "remoteheads"; the "remotes" pointer always points at
-   the tail of this list (either the remoteheads variable itself, or
-   the ->next slot of the element at the end of the list) to help
-   elongate the list by repeated calls to commit_list_insert().
-   Because the new element appended by commit_list_insert() will
-   always have its ->next slot NULLed out, there is no need for us
-   to assign NULL to *remotes to terminate the list at the end.
-
- - The variable "head_subsumed" always confused me every time I read
-   this code.  What is happening here is that we inspect what the
-   caller told us to merge (including the current HEAD) and come up
-   with the list of parents to be recorded for the resulting merge
-   commit, omitting commits that are ancestor of other commits.
-   This filtering may remove the current HEAD from the resulting
-   parent list---and we signal that fact with this variable, so that
-   we can later record it as the first parent when "--no-ff" is in
-   effect.
-
- - The "parents" list is created for this function by reduce_heads()
-   and was not deallocated after its use, even though the loop
-   control was written in such a way to allow us to do so by taking
-   the "next" element in a separate variable so that it can be used
-   in the next-step part of the loop control.
+Fix style funnies in early part of this test script that checks "git
+pull" into an unborn branch.  The primary change is that 'chdir' to
+a newly created empty test repository is now protected by being done
+in a subshell to make it more robust without having to chdir back to
+the original place.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/merge.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ t/t5520-pull.sh | 22 ++++++----------------
+ 1 file changed, 6 insertions(+), 16 deletions(-)
 
-diff --git a/builtin/merge.c b/builtin/merge.c
-index b2d0332..d2e36e2 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -1061,11 +1061,19 @@ static struct commit_list *collect_parents(struct commit *head_commit,
- 					 "not something we can merge");
- 		remotes = &commit_list_insert(commit, remotes)->next;
- 	}
--	*remotes = NULL;
- 
-+	/*
-+	 * Is the current HEAD reachable from another commit being
-+	 * merged?  If so we do not want to record it as a parent of
-+	 * the resulting merge, unless --no-ff is given.  We will flip
-+	 * this variable to 0 when we find HEAD among the independent
-+	 * tips being merged.
-+	 */
-+	*head_subsumed = 1;
-+
-+	/* Find what parents to record by checking independent ones. */
- 	parents = reduce_heads(remoteheads);
- 
--	*head_subsumed = 1; /* we will flip this to 0 when we find it */
- 	for (remoteheads = NULL, remotes = &remoteheads;
- 	     parents;
- 	     parents = next) {
-@@ -1075,6 +1083,7 @@ static struct commit_list *collect_parents(struct commit *head_commit,
- 			*head_subsumed = 0;
- 		else
- 			remotes = &commit_list_insert(commit, remotes)->next;
-+		free(parents);
- 	}
- 	return remoteheads;
+diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
+index 227d293..5195a21 100755
+--- a/t/t5520-pull.sh
++++ b/t/t5520-pull.sh
+@@ -9,36 +9,27 @@ modify () {
+ 	mv "$2.x" "$2"
  }
+ 
+-D=`pwd`
+-
+ test_expect_success setup '
+-
+ 	echo file >file &&
+ 	git add file &&
+ 	git commit -a -m original
+-
+ '
+ 
+ test_expect_success 'pulling into void' '
+-	mkdir cloned &&
+-	cd cloned &&
+-	git init &&
+-	git pull ..
+-'
+-
+-cd "$D"
+-
+-test_expect_success 'checking the results' '
++	git init cloned &&
++	(
++		cd cloned &&
++		git pull ..
++	) &&
+ 	test -f file &&
+ 	test -f cloned/file &&
+ 	test_cmp file cloned/file
+ '
+ 
+ test_expect_success 'pulling into void using master:master' '
+-	mkdir cloned-uho &&
++	git init cloned-uho &&
+ 	(
+ 		cd cloned-uho &&
+-		git init &&
+ 		git pull .. master:master
+ 	) &&
+ 	test -f file &&
+@@ -71,7 +62,6 @@ test_expect_success 'pulling into void does not overwrite staged files' '
+ 	)
+ '
+ 
+-
+ test_expect_success 'pulling into void does not remove new staged files' '
+ 	git init cloned-staged-new &&
+ 	(
 -- 
 2.4.0-rc3-238-g36f5934
