@@ -1,159 +1,153 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v2 2/2] connect: improve check for plink to reduce false
- positives
-Date: Sun, 26 Apr 2015 18:52:16 +0000
-Message-ID: <20150426185216.GE322887@vauxhall.crustytoothpaste.net>
-References: <20150423231403.GC274681@vauxhall.crustytoothpaste.net>
- <1429914505-325708-1-git-send-email-sandals@crustytoothpaste.net>
- <1429914505-325708-2-git-send-email-sandals@crustytoothpaste.net>
- <553BBACA.70704@web.de>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v2 00/16] Convert parts of refs.c to struct object_id
+Date: Sun, 26 Apr 2015 22:26:22 +0200
+Message-ID: <553D49EE.4000801@alum.mit.edu>
+References: <1429745061-295908-1-git-send-email-sandals@crustytoothpaste.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="YkJPYEFdoxh/AXLE"
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	jakanapes@gmail.com
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Sun Apr 26 20:52:28 2015
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 8bit
+Cc: Jeff King <peff@peff.net>, "Kyle J. McKay" <mackyle@gmail.com>,
+	Ronnie Sahlberg <sahlberg@google.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 26 22:26:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YmRfH-0007VU-MR
-	for gcvg-git-2@plane.gmane.org; Sun, 26 Apr 2015 20:52:28 +0200
+	id 1YmT8N-0002la-OQ
+	for gcvg-git-2@plane.gmane.org; Sun, 26 Apr 2015 22:26:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751194AbbDZSwX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Apr 2015 14:52:23 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:48809 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751080AbbDZSwW (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 26 Apr 2015 14:52:22 -0400
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:9ca7:a34c:b2b:c286])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 5E3442808D;
-	Sun, 26 Apr 2015 18:52:20 +0000 (UTC)
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	jakanapes@gmail.com
-Content-Disposition: inline
-In-Reply-To: <553BBACA.70704@web.de>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.16.0-4-amd64)
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
+	id S1750853AbbDZU0a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Apr 2015 16:26:30 -0400
+Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:43491 "EHLO
+	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750713AbbDZU03 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 26 Apr 2015 16:26:29 -0400
+X-AuditID: 1207440f-f792a6d000001284-22-553d49f2db2f
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 06.B4.04740.2F94D355; Sun, 26 Apr 2015 16:26:26 -0400 (EDT)
+Received: from [192.168.69.130] (p5DDB0E4D.dip0.t-ipconnect.de [93.219.14.77])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t3QKQNnc023843
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Sun, 26 Apr 2015 16:26:24 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.6.0
+In-Reply-To: <1429745061-295908-1-git-send-email-sandals@crustytoothpaste.net>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrIKsWRmVeSWpSXmKPExsUixO6iqPvJ0zbU4O8LaYuuK91MFpf3Lmex
+	+NHSw2zxb0KNRdvMH0wOrB7Lb/5l8tg56y67x4JNpR7PevcwenzeJBfAGsVtk5RYUhacmZ6n
+	b5fAnXF5XXZBt2LFuiWf2BsYN0l1MXJySAiYSCxqO8EIYYtJXLi3nq2LkYtDSOAyo0TT5WYW
+	COcck8SHK4+AMhwcvALaEod2mYM0sAioSrw51cEEYrMJ6Eos6mkGs0UFgiRar00FG8orIChx
+	cuYTFhBbRMBLYv6jGawgNrNAkcTstitg9cICnhKt65aDxYUEfCUOT37CBLKKU8BP4uaMQIhy
+	PYkd139BtcpLNG+dzTyBUWAWkg2zkJTNQlK2gJF5FaNcYk5prm5uYmZOcWqybnFyYl5eapGu
+	iV5uZoleakrpJkZIcPPvYOxaL3OIUYCDUYmHVyLVJlSINbGsuDL3EKMkB5OSKO81A9tQIb6k
+	/JTKjMTijPii0pzU4kOMEhzMSiK89a5AOd6UxMqq1KJ8mJQ0B4uSOK/6EnU/IYH0xJLU7NTU
+	gtQimKwMB4eSBO8XD6BGwaLU9NSKtMycEoQ0EwcnyHAuKZHi1LyU1KLE0pKMeFCUxhcD4xQk
+	xQO0188TZG9xQWIuUBSi9RSjopQ4706QuQIgiYzSPLixsJT1ilEc6Eth3rUgVTzAdAfX/Qpo
+	MBPQ4MqZNiCDSxIRUlINjCnb1p9/vyZsyZt/k9Zq3+xUmWKgPnexb9XKfpMf4dVmfO5+fTbe
+	Pr/43B3TdWPWxi75vKlzOXeRkaJaKf9Xxsu+B+aVzj2u11xw4vXUMLW/Z2yKN8ef 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267833>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267834>
+
+On 04/23/2015 01:24 AM, brian m. carlson wrote:
+> This is a conversion of parts of refs.c to use struct object_id.
+> 
+> refs.c, and the for_each_ref series of functions explicitly, is the
+> source for many instances of object IDs in the codebase.  Therefore, it
+> makes sense to convert this series of functions to provide a basis for
+> further conversions.
+> 
+> This series is essentially just for_each_ref and friends, the callbacks,
+> and callers.  Other parts of refs.c will be converted in a later series,
+> so as to keep the number of patches to a reasonable size.
+> 
+> There should be no functional change from this patch series.
+
+I wanted to review your patches, but wasn't really sure how to go about
+it in a way that would make me confident in the result. In a way these
+refactoring patch series are easier to implement than to review.
+
+...so that's what I did. I reimplemented your changes "from scratch" [1]
+and then checked how my result differed from yours. My conclusion is
+that the final result of your patches looks good, though there are some
+other changes in the neighborhood that could sensibly be added.
 
 
---YkJPYEFdoxh/AXLE
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+However, I reached the destination via a different route and I thought
+I'd describe it in case you are interested, and as the technique might
+be useful for future "object_id" refactorings. My patch series is
+available on my GitHub account at
 
-On Sat, Apr 25, 2015 at 06:03:22PM +0200, Torsten B=C3=B6gershausen wrote:
-> (I'm not sute if the commit message describes the problem deep enough
-> for readers which are not familar with all the details of the original
-> report):
-> A feature implemented for Windows may break things for e.g. Linux users)
-> The following may read exaggerated, so please read it as a suggestion.
->=20
-> The git_connect function has code to handle plink and tortoiseplink
-> specially, as they require different command line arguments compared to
-> OpenSSH (-P instead of -p, tortoiseplink uses -batch), commit 36ad53ffee6=
-ed.
-> The special handling is only needed for Windows, and a sloppy
-> case-insensitve search for "plink" will trigger that an the extra
-> parameter "-batch" is added to the command line.
->=20
-> This was observed on a Linux system where a command line including
-> "/uplink_deploy/" was used.
->=20
-> There are different ways to improve the situation:
-> (The following mentions only plink, but assumes that tortoiseplink is han=
-dled
->  similar)
-> a) Disable the plink/tortoiseplink special handling on non-Windows systems
-> b) Tighten the search for plink:
->    Allow basename() =3D=3D plink || !!strcasestr(ssh, "plink.exe")
-> c) Tighten the search for plink:
->    Allow basename() =3D=3D plink || !!strcasestr(ssh, "plink.exe")
-> d) Tighten the check for tortoiseplink.
->    Today we set "int putty" to true when plink is found, and -batch
->    is set when tortoiseplink is not found.
->    This fixes the reported bug, but still has the -P problem.
-> e) Unix users typically use shell scripts and could use GIT_SSH_COMMAND.
->    Declare the GIT_SSH as not-well-documented (and to obsolete ?) for non=
--Windows systems,
->=20
-> This patch implements c):
-> Extract the basename and compare it to plink, plink.exe respective
-> tortoiseplink/tortoiseplink.exe
->=20
-> Note that there is a slight risk of breakage for Windows users:
-> Strings like "myplink" or "plink-0.83" are no longer accepted.
+    https://github.com/mhagger/git branch oid-refs-adapter
 
-I can certainly expand the commit message when I reroll.
+My starting point was to change each_ref_fn to take a "const object_id
+*" parameter instead of "const unsigned char *". This change requires
+all call sites of all of the for_each_ref functions to be modified,
+because they currently pass callback functions that match the old signature.
 
-> -------------
-> I would probably vote for a), as Unix/Linux/Mac OS users don't use plink/=
-tortoiseplink
-> at all.
+So I kept the old typedef (the one that takes "const unsigned char *")
+but renamed it to each_ref_sha1_fn. And I added an adapter that allows
+such functions to be wrapped then passed to the new for_each_ref
+functions. It looks like this:
 
-I have putty on my system:
+    typedef int each_ref_sha1_fn(const char *refname,
+    			         const unsigned char *sha1, int flags, void *cb_data);
 
-vauxhall ok % uname -a && which plink
-Linux vauxhall 3.16.0-4-amd64 #1 SMP Debian 3.16.7-ckt7-1 (2015-03-01) x86_=
-64 GNU/Linux
-/usr/bin/plink
+    struct each_ref_fn_sha1_adapter {
+	    each_ref_sha1_fn *original_fn;
+	    void *original_cb_data;
+    };
 
-While it's clearly not very common to use putty on Unix systems, it
-certainly is possible and it would need to work the same way.
+    extern int each_ref_fn_adapter(const char *refname,
+			           const struct object_id *oid, int flags, void *cb_data);
 
-> -------------
-> What about adding test-cases in t5601,
-> this will ease the documentation later.
-> f:/util/plink
-> /c/util/plink.exe
-> f:/util/tortoiseplink
-> /c/util/tortoiseplink.exe
-> /usr/local/uplink/sshwrapper.sh
+Each callsite has to be changed, but the changes are quite
+straightforward. At a callsite that would have called
 
-It looks like there's already a framework for that, so sure, I can add
-some tests.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+    for_each_ref(my_function, &my_data)
 
---YkJPYEFdoxh/AXLE
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+you wrap my_function and my_data in an each_ref_fn_sha1_adapter and call
+for_each_ref using each_ref_fn_adapter as the callback:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+    struct each_ref_fn_sha1_adapter wrapped_my_function =
+            {my_function, &my_data};
 
-iQIcBAEBCgAGBQJVPTPgAAoJEL9TXYEfUvaL2I4P/j+99HnHWhN61DPCW/vjcT7O
-xG6Rp3UwJRPj5Q7ZXJwUcEELHuf1K0tHiT3csGdp3Qd6fMBE/CRgp6cmcudcOELM
-KwwLQaObJyaFMtXvhMVljP2H8OavU6I3HLfNOx3Bmk3suO9U3M7ZlXVdg81cA3KF
-P0sFfk/GpaG3sXJBXWtJgjUlkuy+NVPSEcOjj4Ly1au5XE3w5VeD9LsYA7P9XgpY
-+7uNkSU8Xnqqv2eslXUO6KzIRTD9BFKdr2PPPXYzkmhzCpTRvmRQymSjt8SyR/c2
-uNptbp9AYst+qchbe7t46wK3xNIOTTq8HSpPy4gC1zlQlQ1C3ijBmXh078Ixm2Ms
-u+69vfeutD8vVYdGu1B/dm4f55GiockQ8IY8MwogOaMO1JmC/uDagl5lN/GGJAGi
-1aKA5ZEadsUu3QPClrMWeOBpEjTHAr8eeD5mmLtVN0doDMQtw/vLLx8HPtmBgIgh
-N/ASSjI7hAe1+7nRY6VHKJb1eiMkG5nUbfFH4Z0r/azdA4Ay7dhZLe1sRsM8Q7Kh
-n4bgnvNOkNv3zPvqeutRYDAU1kp7Sd9NrSzQnraRXqVD/nDkstBcnLqzwpeOhklb
-Wh4Dl+4h/ktcEpxIQ8EXYkJ5+may+agteK2MOQOdpXPQiq6sttGCZWNi3M3QNZB7
-xTh4E0XS28muus2PDhLj
-=BucJ
------END PGP SIGNATURE-----
+    for_each_ref(each_ref_fn_adapter, &wrapped_my_function);
 
---YkJPYEFdoxh/AXLE--
+The function each_ref_fn_adapter extracts the SHA-1 out of the oid and
+calls my_function, passing it &my_data as extra data.
+
+This patch is thus giant but very straightforward.
+
+After that, there is one patch for each callsite, rewriting it to use
+for_each_ref natively (which usually entails modifying my_function to
+take an object_id parameter then undoing the wrapper). These patches
+involve a little bit of thought, but not too much. And the results are
+very bisectable because each patch makes a single small change. I also
+suspect it might be easier to rebase and/or merge my patch series, for
+the same reason.
+
+The end result was very similar to yours, so I am confident that the net
+result of your patch series is correct. But the remaining differences in
+the end results are also interesting. I made a few more changes in the
+neighborhood of the patches, not to mention a few formatting
+improvements in code that I touched. If you compare the tip of my
+branch, above, to the tip of yours (I uploaded that to my repo too, as
+branch "bc-oid-refs"), it may give you some ideas for other code that
+can be changed to object_id.
+
+Yours,
+Michael
+
+[1] Obviously I glanced at your patches while I was working to make sure
+that I was headed in the same direction as you, and to minimize
+gratuitous differences between our versions.
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
