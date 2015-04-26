@@ -1,136 +1,79 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: [PATCH/RFC] blame: CRLF in the working tree and LF in the repo
-Date: Sun, 26 Apr 2015 14:02:34 +0200
-Message-ID: <553CD3DA.9090700@web.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: tboegi@web.de,
-	"johannes.schindelin@gmx.de >> Johannes Schindelin" 
-	<johannes.schindelin@gmx.de>, kasal@ucw.cz,
-	sandals@crustytoothpaste.net
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 26 14:02:59 2015
+From: Alexander Kuleshov <kuleshovmail@gmail.com>
+Subject: [PATCH RFC] add: Do not open editor if patch is empty
+Date: Sun, 26 Apr 2015 23:03:40 +0600
+Message-ID: <1430067820-3349-1-git-send-email-kuleshovmail@gmail.com>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Alexander Kuleshov <kuleshovmail@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Apr 26 19:03:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YmLH0-0005YM-Br
-	for gcvg-git-2@plane.gmane.org; Sun, 26 Apr 2015 14:02:58 +0200
+	id 1YmPyF-00030v-7o
+	for gcvg-git-2@plane.gmane.org; Sun, 26 Apr 2015 19:03:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751261AbbDZMCr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 26 Apr 2015 08:02:47 -0400
-Received: from mout.web.de ([212.227.17.12]:65038 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751215AbbDZMCq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Apr 2015 08:02:46 -0400
-Received: from macce.local ([217.211.68.12]) by smtp.web.de (mrweb103) with
- ESMTPSA (Nemesis) id 0MRlED-1YtBob0jZx-00Sxuh; Sun, 26 Apr 2015 14:02:36
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
-X-Provags-ID: V03:K0:sPNLDmrg1F2h1EGx+AD2NRZNhV7Rszb4datdQSFDCtEy+D0R+dE
- eIHqd8XmpakonwSacLIbHEoZ9ZDNefwDpmd8S4YMXK/A0NTL9vcZLiMIp1Fui+XqP2LjbKg
- wdRWZqByP1rldXAvi5eH7A24rtu7cdvdRTNSVeiHYyF938RrQM9jHGBYodMBkMfBkqlw9ip
- fLEFvAnqEew7ye1fqIQKQ==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1751968AbbDZRDu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Apr 2015 13:03:50 -0400
+Received: from mail-la0-f48.google.com ([209.85.215.48]:36443 "EHLO
+	mail-la0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751102AbbDZRDu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Apr 2015 13:03:50 -0400
+Received: by lagv1 with SMTP id v1so64990853lag.3
+        for <git@vger.kernel.org>; Sun, 26 Apr 2015 10:03:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=Fs3aqOMxaam8y7Shle73dyy24M2a/KMv86aemdNE2IY=;
+        b=B4FayFqjtuRq5mKJ9a8cHlHpaKfF1GdV9+XJZBKFCu1m1saNW/5qJVhULUAila0w5I
+         Y/Q7JUevTiowzbIvkiDhPVnnvLz/1DvTZfsH6Aw4Ma61RhkyTcSY+E1iBX4gkwF9q9yU
+         m4WbxgaMf67iXzEZDzcXmJz3d9fbSJscQmfZddbRVhsaCXuyUxujdDvM1mPRWUh5XuFO
+         BBGhBEPgv14zUaXe3jdHBSt6TKcbGrjQ5Hlks3pI8fLW9NXu2UfdTaejXAgtQlULG7la
+         Q2A0nQYFn8ZZVPb0IY01jateZJCVOJt4gE3lURWwO/tEFVW+LOnv/gDBumopc5FFYkbA
+         Zkaw==
+X-Received: by 10.112.162.167 with SMTP id yb7mr6792119lbb.121.1430067828849;
+        Sun, 26 Apr 2015 10:03:48 -0700 (PDT)
+Received: from localhost.localdomain ([37.151.34.107])
+        by mx.google.com with ESMTPSA id oe1sm4183352lbb.23.2015.04.26.10.03.47
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 26 Apr 2015 10:03:47 -0700 (PDT)
+X-Mailer: git-send-email 2.3.3.611.g09038fc.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267829>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267830>
 
-A typicall setup under Windows:
-core.eol is CRLF and a file is marked as "text" in .gitattributes.
+If we'll run 'git add -e <path>' on a path which has no
+difference with the current index, empty editor will open. This
+patch prevents this behaviour and checks that patch is not empty
+before an editor with patch will be opened.
 
-After 4d4813a5 "git blame" no longer works as expected,
-every line is annotated as "Not Committed Yet",
-even though the working directory is clean.
-
-commit 4d4813a5 removed the conversion in blame.c for all files,
-with or without CRLF in the repo.
-
-Having files with CRLF in the repo and core.autocrlf=3Dinput is a tempo=
-rary
-situation, the files should be normalized in the repo.
-Blaming them with "Not Committed Yet" is OK.
-
-The solution is to revert commit 4d4813a5.
-
-Reported-By: Stepan Kasal <kasal@ucw.cz>
-Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
 ---
-Reference:
-https://github.com/git-for-windows/git/issues/105
-Although the intention of 4d4813a5 is good, it breaks
-the usual EOL-handling for Windows.
-Until we have a better solution, we suggest to revert it.
+ builtin/add.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
- builtin/blame.c               |  1 +
- t/t8003-blame-corner-cases.sh | 26 +++++++++++++++++++++++++-
- 2 files changed, 26 insertions(+), 1 deletion(-)
-
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 06484c2..8d70623 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -2348,6 +2348,7 @@ static struct commit *fake_working_tree_commit(st=
-ruct diff_options *opt,
- 		if (strbuf_read(&buf, 0, 0) < 0)
- 			die_errno("failed to read from stdin");
- 	}
-+	convert_to_git(path, buf.buf, buf.len, &buf, 0);
- 	origin->file.ptr =3D buf.buf;
- 	origin->file.size =3D buf.len;
- 	pretend_sha1_file(buf.buf, buf.len, OBJ_BLOB, origin->blob_sha1);
-diff --git a/t/t8003-blame-corner-cases.sh b/t/t8003-blame-corner-cases=
-=2Esh
-index 32895e5..dcc9827 100755
---- a/t/t8003-blame-corner-cases.sh
-+++ b/t/t8003-blame-corner-cases.sh
-@@ -191,7 +191,7 @@ test_expect_success 'indent of line numbers, ten li=
-nes' '
- 	test $(grep -c "  " actual) =3D 9
- '
-=20
--test_expect_success 'blaming files with CRLF newlines' '
-+test_expect_failure 'blaming files with CRLF newlines in repo, core.au=
-toclrf=3Dinput' '
- 	git config core.autocrlf false &&
- 	printf "testcase\r\n" >crlffile &&
- 	git add crlffile &&
-@@ -199,5 +199,29 @@ test_expect_success 'blaming files with CRLF newli=
-nes' '
- 	git -c core.autocrlf=3Dinput blame crlffile >actual &&
- 	grep "A U Thor" actual
- '
-+test_expect_success 'blaming files with CRLF newlines core.autocrlf=3D=
-true' '
-+	test_create_repo blamerepo &&
-+	(
-+		cd blamerepo &&
-+		git config core.autocrlf true &&
-+		printf "testcase\r\n" >crlffile &&
-+		git add crlffile &&
-+		git commit -m TRUE &&
-+		git blame crlffile >actual &&
-+		grep "A U Thor" actual
-+	)
-+'
+diff --git a/builtin/add.c b/builtin/add.c
+index ee370b0..4fc6b13 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -209,13 +209,13 @@ static int edit_patch(int argc, const char **argv, const char *prefix)
+ 	if (run_diff_files(&rev, 0))
+ 		die(_("Could not write patch"));
+ 
+-	launch_editor(file, NULL, NULL);
+-
+ 	if (stat(file, &st))
+ 		die_errno(_("Could not stat '%s'"), file);
+ 	if (!st.st_size)
+ 		die(_("Empty patch. Aborted."));
+ 
++	launch_editor(file, NULL, NULL);
 +
-+test_expect_success 'blaming files with CRLF newlines core.autocrlf=3D=
-false' '
-+	(
-+		cd blamerepo &&
-+		git config core.autocrlf false &&
-+		printf ".gitattributes text\r\n" >.gitattributes &&
-+		git add .gitattributes &&
-+		git commit -m FALSE &&
-+		git blame .gitattributes >actual &&
-+		grep "A U Thor" actual
-+	)
-+'
-=20
- test_done
---=20
-2.2.0.rc1.790.ge19fcd2
+ 	child.git_cmd = 1;
+ 	child.argv = apply_argv;
+ 	if (run_command(&child))
+-- 
+2.3.3.611.g09038fc.dirty
