@@ -1,107 +1,87 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 10/14] merge: extract prepare_merge_message() logic out
-Date: Sat, 25 Apr 2015 22:26:03 -0700
-Message-ID: <1430025967-24479-11-git-send-email-gitster@pobox.com>
+Subject: [PATCH 06/14] merge: small leakfix and code simplification
+Date: Sat, 25 Apr 2015 22:25:59 -0700
+Message-ID: <1430025967-24479-7-git-send-email-gitster@pobox.com>
 References: <xmqqiocqli1c.fsf@gitster.dls.corp.google.com>
  <1430025967-24479-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 26 07:26:43 2015
+X-From: git-owner@vger.kernel.org Sun Apr 26 07:26:42 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YmF5T-0002kU-JP
+	id 1YmF5S-0002kU-VG
 	for gcvg-git-2@plane.gmane.org; Sun, 26 Apr 2015 07:26:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751296AbbDZF0c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Apr 2015 01:26:32 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:62607 "EHLO
+	id S1751231AbbDZF01 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Apr 2015 01:26:27 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:55849 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751194AbbDZF0X (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Apr 2015 01:26:23 -0400
+	with ESMTP id S1751159AbbDZF0R (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Apr 2015 01:26:17 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0E05C46700;
-	Sun, 26 Apr 2015 01:26:23 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 488D9466F2;
+	Sun, 26 Apr 2015 01:26:17 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=RMO2
-	e8Eh0Zrnx8/YtCTolPOKXDo=; b=DMohT44kNPKNG/VyJPeUQciCE+NAl9DL2g2d
-	CuBSqQoEXD9eAkhc2K8RFeto0/+3o6Tu0IwVZIOlOD0v9mB7WCdrebFAOBZbYhDK
-	69dfDKM15EACcNqOoZeMqk5HW69lPyL3PHBkJTJjdXwXwlev8FyasK6LzkqO68eo
-	D1Fzuvc=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=YMqF
+	g5bgI/Unft2m/16MvoEo08Y=; b=c1WCuKQ80oUcEthJqYRDSTfz1ertSAKjBOPm
+	NpehJjNUkzZ5JQKepTAmXGErhN2lkT6vrEQIQtxlO9nYNN5CXikJUWmwS5KJONHV
+	J8KV0JEc1NfiD6z4PsUgmktoXod+LvDQqSxoQCa02RsoP5slbapaf2yufPUSdWSa
+	hxEvgfk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=iKXEuz
-	SCiT6vJaIljK6Hr21KOyeDKdXSlvPpt39rKgrRm1E2vpYN7VM+XwkgtDzgWBN4Y8
-	NEKoXHLT4TGV2jyph8cOzlQOShgF1VM3rLyaC0KJl5kT+YIzysjtGz8WtADTWAQU
-	aaFJfKzYI/7bCsncYEJzR1iNwVjub+9RgBi7k=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=BwyycW
+	jamaMeG7fqUjqYu8nhffaIHR8WWIKCeDZNm1pLlDxBXb1IkHtwUUzoLpbuNwYitN
+	koVMRUtEC1XNyXNVKKBh3GVBIOOMkyN939jVHfjrZ/IkIj7tDLAqU7k+kx1qunIf
+	fvtr3E0gWJFu4orNavnx2s2Y1L4hZuzonl8jg=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0728B466FF;
-	Sun, 26 Apr 2015 01:26:23 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3FDA7466F1;
+	Sun, 26 Apr 2015 01:26:17 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7B15B466FC;
-	Sun, 26 Apr 2015 01:26:22 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A8101466EF;
+	Sun, 26 Apr 2015 01:26:16 -0400 (EDT)
 X-Mailer: git-send-email 2.4.0-rc3-238-g36f5934
 In-Reply-To: <1430025967-24479-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: C694D442-EBD4-11E4-99E1-83E09F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: C31CC13A-EBD4-11E4-8564-83E09F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267814>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267815>
+
+When parsing a merged object name like "foo~20" to formulate a merge
+summary "Merge branch foo (early part)", a temporary strbuf is used,
+but we forgot to deallocate it when we failed to find the named
+branch.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/merge.c | 26 +++++++++++++++-----------
- 1 file changed, 15 insertions(+), 11 deletions(-)
+ builtin/merge.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/builtin/merge.c b/builtin/merge.c
-index d853c9d..a972ed6 100644
+index 1d4fbd3..b2d0332 100644
 --- a/builtin/merge.c
 +++ b/builtin/merge.c
-@@ -1076,6 +1076,20 @@ static struct commit_list *reduce_parents(struct commit *head_commit,
- 	return remoteheads;
- }
- 
-+static void prepare_merge_message(struct strbuf *merge_names, struct strbuf *merge_msg)
-+{
-+	struct fmt_merge_msg_opts opts;
-+
-+	memset(&opts, 0, sizeof(opts));
-+	opts.add_title = !have_message;
-+	opts.shortlog_len = shortlog_len;
-+	opts.credit_people = (0 < option_edit);
-+
-+	fmt_merge_msg(merge_names, merge_msg, &opts);
-+	if (merge_msg->len)
-+		strbuf_setlen(merge_msg, merge_msg->len - 1);
-+}
-+
- static struct commit_list *collect_parents(struct commit *head_commit,
- 					   int *head_subsumed,
- 					   int argc, const char **argv)
-@@ -1248,20 +1262,10 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 
- 		if (!have_message || shortlog_len) {
- 			struct strbuf merge_names = STRBUF_INIT;
--			struct fmt_merge_msg_opts opts;
- 
- 			for (p = remoteheads; p; p = p->next)
- 				merge_name(merge_remote_util(p->item)->name, &merge_names);
--
--			memset(&opts, 0, sizeof(opts));
--			opts.add_title = !have_message;
--			opts.shortlog_len = shortlog_len;
--			opts.credit_people = (0 < option_edit);
--
--			fmt_merge_msg(&merge_names, &merge_msg, &opts);
--			if (merge_msg.len)
--				strbuf_setlen(&merge_msg, merge_msg.len - 1);
--
-+			prepare_merge_message(&merge_names, &merge_msg);
- 			strbuf_release(&merge_names);
- 		}
+@@ -491,8 +491,7 @@ static void merge_name(const char *remote, struct strbuf *msg)
  	}
+ 	if (len) {
+ 		struct strbuf truname = STRBUF_INIT;
+-		strbuf_addstr(&truname, "refs/heads/");
+-		strbuf_addstr(&truname, remote);
++		strbuf_addf(&truname, "refs/heads/%s", remote);
+ 		strbuf_setlen(&truname, truname.len - len);
+ 		if (ref_exists(truname.buf)) {
+ 			strbuf_addf(msg,
+@@ -503,6 +502,7 @@ static void merge_name(const char *remote, struct strbuf *msg)
+ 			strbuf_release(&truname);
+ 			goto cleanup;
+ 		}
++		strbuf_release(&truname);
+ 	}
+ 
+ 	if (!strcmp(remote, "FETCH_HEAD") &&
 -- 
 2.4.0-rc3-238-g36f5934
