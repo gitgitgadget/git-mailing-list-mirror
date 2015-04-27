@@ -1,83 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] git-compat-util.h: implement a different ARRAY_SIZE macro for for safely deriving the size of array
-Date: Mon, 27 Apr 2015 11:11:55 -0700
-Message-ID: <xmqqsiblwidw.fsf@gitster.dls.corp.google.com>
-References: <1430140269-11784-1-git-send-email-gitter.spiros@gmail.com>
-	<xmqq1tj5xxo1.fsf@gitster.dls.corp.google.com>
+From: Fredrik Gustafsson <iveqy@iveqy.com>
+Subject: Re: [PATCH] Clarify documentation on commit message strip
+Date: Mon, 27 Apr 2015 20:13:50 +0200
+Message-ID: <20150427181350.GB15518@paksenarrion.iveqy.com>
+References: <xmqqmw1w259r.fsf@gitster.dls.corp.google.com>
+ <1429940565-14947-1-git-send-email-iveqy@iveqy.com>
+ <xmqqh9s1xytr.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Elia Pinto <gitter.spiros@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 27 20:12:07 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: Fredrik Gustafsson <iveqy@iveqy.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 27 20:14:03 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YmnVm-000325-1V
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Apr 2015 20:12:06 +0200
+	id 1YmnXb-0004tX-Ip
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Apr 2015 20:13:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964842AbbD0SL7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Apr 2015 14:11:59 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50176 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932995AbbD0SL7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Apr 2015 14:11:59 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7A38F4C6A1;
-	Mon, 27 Apr 2015 14:11:58 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=m6jVOw9P+KrOFNy+NRTTRCdL32w=; b=PgBLvE
-	dG15Uyxn38J6a08fdqYPmMFoE4wgEapt6m5cfPv/GSM8GWKggX84FaxVg4/Qmi1A
-	gKSoWdYfkFsaZ2p4k8r1FAQAnDlYCj23j/zpCVGVi0Z9zG62BW6py+9dbifrOeqq
-	2qIjFjMJ7BgPAAaHAssja5tKTYTH+YmNFA9lU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=GCMZsEvuCHTTQundjVB+gF2RKPwlnFe6
-	A11eXp6P10CSaGZUfsKJ3WQgekKQFxTs8wL+N2RGbMzDSONx9dJOimQs7b67k8+6
-	quCYDhID4QYGSi+YPgfVdbKpx90HyMeWebAgKMAvAUZ5Ib3pnFRa3zzj0v1XmyDR
-	IjAOBjw2kbY=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 720004C6A0;
-	Mon, 27 Apr 2015 14:11:58 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DD3DF4C698;
-	Mon, 27 Apr 2015 14:11:56 -0400 (EDT)
-In-Reply-To: <xmqq1tj5xxo1.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Mon, 27 Apr 2015 10:56:30 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: E4079D9A-ED08-11E4-8B73-83E09F42C9D4-77302942!pb-smtp1.pobox.com
+	id S964966AbbD0SNz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Apr 2015 14:13:55 -0400
+Received: from mail-la0-f43.google.com ([209.85.215.43]:36731 "EHLO
+	mail-la0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964864AbbD0SNy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Apr 2015 14:13:54 -0400
+Received: by lagv1 with SMTP id v1so86388496lag.3
+        for <git@vger.kernel.org>; Mon, 27 Apr 2015 11:13:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=62L2X7KICqnqM//vc+av8pdVmHqw14VDfz55BBkMbBk=;
+        b=NN2DLlNN6YETdwzNNo/U8Norzt2SP1udntkzYk8b5xXXceq15b89OWN79vGmPd9zbg
+         YnOTifHM8OGfeskCh6YgKJXdTYK5i0k5JhOJ7q8y3bnJopQKyJ94Y+dYw5HZ8BeCxMg0
+         g7MSJLcFvM+riqRdpHDDeUuUOMuRWTZAAi0KvWceozRQFKZwFXxWm0MD17j9Ii1PIoqp
+         iqTBrB0COAHejHG8zyvGdPKj4kjGJ5y83hg3kYF9ywFN/wVOwAyt+X7kkkWoUwqfkUNq
+         01YpTp0QKj6iiXqF1UXro5AurI0cmjP7GkZaBGM9O1pGF/JNtPm0PZayHt63d7cFm1m9
+         IyNQ==
+X-Received: by 10.152.19.162 with SMTP id g2mr11069197lae.46.1430158433108;
+        Mon, 27 Apr 2015 11:13:53 -0700 (PDT)
+Received: from paksenarrion.paks.iveqy.com (c83-249-10-52.bredband.comhem.se. [83.249.10.52])
+        by mx.google.com with ESMTPSA id t1sm4945165lbb.25.2015.04.27.11.13.51
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 27 Apr 2015 11:13:51 -0700 (PDT)
+Received: from iveqy by paksenarrion.paks.iveqy.com with local (Exim 4.84)
+	(envelope-from <iveqy@paksenarrion.iveqy.com>)
+	id 1YmnXS-0005Cm-Kq; Mon, 27 Apr 2015 20:13:50 +0200
+Content-Disposition: inline
+In-Reply-To: <xmqqh9s1xytr.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267863>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267864>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Mon, Apr 27, 2015 at 10:31:28AM -0700, Junio C Hamano wrote:
+> Fredrik Gustafsson <iveqy@iveqy.com> writes:
+> 
+> > I agree that it is very clear once you do edit the commit message. My main
+> > point with this patch was to clarify -v, since it's not obvious from the
+> > documentation that it will be removed.
+> 
+> While I agree with you that the documentation should make it clear
+> that the patch will not be part of the commit, I think the root
+> cause of the current "unclear-ness" is because the documentation
+> does not make it clear *WHY* the "-v" option gives the patch text
+> there.
 
->> +#if SUPPORT__BUILTIN_TYPES_COMPATIBLE_P
->> +/* &arr[0] degrades to a pointer: a different type from an array */
->> +#define _array_size_chk(arr)						\
->> +	BUILD_ASSERT_OR_ZERO(!__builtin_types_compatible_p(typeof(arr), \
->> +							typeof(&(arr)[0])))
->> +#else
->> +#define _array_size_chk(arr) 0
->> +#endif
->
-> Wouldn't there be a more sensible name?  _chk does not tell us
-> anything about what is being checked, and the only thing this name
-> gives us is "what uses it" (i.e. it is some magic used by array-size
-> and does not say what it checks and what for).
->
-> I think you are checking arr is an array and not a pointer.  Perhaps
-> "#define is_an_array(arr)" or something along that line may be a
-> more descriptive name for it.
->
-> I doubt the leading underscore is particularly a good idea, though.
+I agree.
 
-And "is_an_array(arr)" is probably not quite a good name, as that
-sounds as if it would give 1 and adding it to sizeof(x)/sizeof(x[0])
-does not make sense.  barf_if_not_an_array() is what the macro does.
+> 
+> Doing something like this on top of your patch may clarify the
+> reason what "-v" is used for, and I suspect that it may even make it
+> unnecessary to explicitly say that the patch text will not be part
+> of the log message (but I didn't remove that with this "how about
+> this" follow-up).
+
+Even better. I would be glad if this could make it into a release.
+Thanks for the feedback, to make this a good patch.
+
+-- 
+Fredrik Gustafsson
+
+phone: +46 733-608274
+e-mail: iveqy@iveqy.com
+website: http://www.iveqy.com
