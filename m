@@ -1,97 +1,89 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v8 2/4] cat-file: teach cat-file a '--literally' option
-Date: Mon, 27 Apr 2015 14:38:15 -0400
-Message-ID: <CAPig+cTcAq_p3QXqcG+o1saWZyvDHCW=_JWYn6s7B1L4X5X1cQ@mail.gmail.com>
-References: <552E9816.6040502@gmail.com>
-	<1429117174-4968-1-git-send-email-karthik.188@gmail.com>
-	<20150419002807.GA11634@hashpling.org>
-	<xmqq7ft7nz8l.fsf@gitster.dls.corp.google.com>
-	<20150420074433.GA30422@hashpling.org>
-	<8CBC4DEB-EC50-4DD7-A687-443AA93A96A8@gmail.com>
-	<20150420091920.GA31279@hashpling.org>
-	<553520CF.6070304@gmail.com>
-	<20150421101641.GA13202@hashpling.org>
-	<CAPig+cRmPv5u_OCtUPNoYOUcOoa9xn++Xw-rkD6EP6_eq0YvEQ@mail.gmail.com>
-	<xmqqh9s9gqw9.fsf@gitster.dls.corp.google.com>
-	<553B78E2.5070608@gmail.com>
-	<xmqqsiboyw90.fsf@gitster.dls.corp.google.com>
-	<553E2427.4090700@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] Update git-multimail to version 1.0.2
+Date: Mon, 27 Apr 2015 20:41:05 +0200
+Message-ID: <vpqh9s1s9by.fsf@anie.imag.fr>
+References: <1430133445-21488-1-git-send-email-mhagger@alum.mit.edu>
+	<xmqq618hxxya.fsf@gitster.dls.corp.google.com>
+	<vpq383ltoxi.fsf@anie.imag.fr>
+	<xmqqoam9whs0.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Charles Bailey <charles@hashpling.org>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: karthik nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 27 20:38:28 2015
+Content-Type: text/plain
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 27 20:41:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YmnvC-0002B6-2K
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Apr 2015 20:38:22 +0200
+	id 1Ymny3-0004yg-8T
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Apr 2015 20:41:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932911AbbD0SiR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Apr 2015 14:38:17 -0400
-Received: from mail-ig0-f172.google.com ([209.85.213.172]:34615 "EHLO
-	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932817AbbD0SiQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Apr 2015 14:38:16 -0400
-Received: by iget9 with SMTP id t9so74087047ige.1
-        for <git@vger.kernel.org>; Mon, 27 Apr 2015 11:38:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=aYOHeBSjCS7oKMV0Y5edkByUDibLE8m3ixrvFdHMWLY=;
-        b=r7S2dSO4zE7Sl/NJVbMRirEZ/uLYTN6BT8uLVvDuolcRPgkMXQCe+Ayk3l6Pb+tck5
-         ONyfFTTEDD0W4Yz84G83ZZfMW4860Gi23moD2s6fuCfz1vrWlcY3/LE9qli+cNxJXQGv
-         X2fNO/rC7BpIDX59HoZo/2+SAUPGCgb8W4Ata7Qn4sZXKBFoeqJLpppJIVvHFESs1LDK
-         MJ60jsHyOfW/8o9dri5dXi5fCWMMZwggt6qEc6cyT2kU6QoaL1CZxsiLm+MADk9wKU50
-         DMwB/PSggqRPJi5bmZphuTreaZBMBzkWZfB5STtC4wT5s6WFdnVDIqm7JAuA05HVAYmR
-         KESQ==
-X-Received: by 10.107.3.199 with SMTP id e68mr15173877ioi.92.1430159895948;
- Mon, 27 Apr 2015 11:38:15 -0700 (PDT)
-Received: by 10.107.28.132 with HTTP; Mon, 27 Apr 2015 11:38:15 -0700 (PDT)
-In-Reply-To: <553E2427.4090700@gmail.com>
-X-Google-Sender-Auth: Yx5Zse8BVIt8O96gpCo1PjT2EQo
+	id S932973AbbD0SlP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Apr 2015 14:41:15 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:49938 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932949AbbD0SlO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Apr 2015 14:41:14 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t3RIf3hN003615
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 27 Apr 2015 20:41:03 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t3RIf5p6007660;
+	Mon, 27 Apr 2015 20:41:05 +0200
+In-Reply-To: <xmqqoam9whs0.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Mon, 27 Apr 2015 11:25:03 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 27 Apr 2015 20:41:03 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t3RIf3hN003615
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1430764864.32986@Z9cWunzvFyYzNn/YtMyGzg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267868>
 
-On Mon, Apr 27, 2015 at 7:57 AM, karthik nayak <karthik.188@gmail.com> wrote:
-> On 04/25/2015 10:34 PM, Junio C Hamano wrote:
->> karthik nayak <karthik.188@gmail.com> writes:
->> > Yes this gives the best description, but its large, while we could use
->> > something like --no-strict instead.
->>
->> We could, if you answered my first question with "no".
->>
->> By naming this "--no-strict", the first bug report you will receive
->> may be that "cat-file --no-strict" should parse a zlib deflate that
->> begins with "blob 1234\n\0" (notice that there are two SPs instead
->> of the usual one, and length is followed by LF that should not be
->> there before the NUL) but it does not.
->>
->> As your option name "--no-strict" signals that you will make the
->> best effort to parse such nonsense, that would be a valid bug
->> report, against which you would need to update the code to make it
->> work.  But is it worth the effort to make such a thing work?  I
->> dunno.
->>
-> Nice point, I don't see the need to parse such objects at the moment.
-> That rules out "--no-strict" and everything similar.
->
-> I still find "--allow-unkown-type" a bit too big, what about something like
->
-> * --any-type
-> * --arbitrary-type
+Junio C Hamano <gitster@pobox.com> writes:
 
-As a diagnostic aid when encountering a (hopefully rare) broken or
-corrupt object, this option is not likely to be used often. The
-"allow" in --allow-unknown-type conveys the intended purpose more
-accurately than either of the shorter names suggested above; and
-considering how infrequently it is likely to be used, the extra six
-characters should not be a significant burden.
+> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+>
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>
+>>>> --- a/contrib/hooks/multimail/README.Git
+>>>> +++ b/contrib/hooks/multimail/README.Git
+>>>> @@ -3,13 +3,13 @@ section of the Git project as a convenience to Git users.
+>>>>  git-multimail is developed as an independent project at the following
+>>>>  website:
+>>>>  
+>>>> -    https://github.com/mhagger/git-multimail
+>>>> +    https://github.com/git-multimail/git-multimail
+>>>>  
+>>>>  The version in this directory was obtained from the upstream project
+>>>> -on 2014-04-07 and consists of the "git-multimail" subdirectory from
+>>>> +on 2015-04-27 and consists of the "git-multimail" subdirectory from
+>>>>  revision
+>>>>  
+>>>> -    1b32653bafc4f902535b9fc1cd9cae911325b870
+>>>> +    8c3aaafa873bf10de8dddf1d202c449b3eff3b42 refs/tags/1.0.2
+>>>
+>>> Huh, really?
+>>
+>> What's the problem with this hunk? I just checked, and the tag is there,
+>> with the right sha1.
+>
+> The patch is to apply to a file in my tree, so "The version in this
+> directory" is "contrib/hooks/multimail/git_multimail.py" in my tree.
+>
+> Was that obtained from the upstream project (i.e. you) and match
+> your 1.0.2 tag?
+
+Yes. Isn't that what the text above says?
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
