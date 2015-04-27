@@ -1,80 +1,94 @@
-From: Vladislav Kostenko <vkostenko@netlabsystems.com>
-Subject: Fwd: Can't override username of default credential context to have
- different username in custom context.
-Date: Mon, 27 Apr 2015 21:19:31 +0500
-Message-ID: <CAK9djV0CqO4sXPMqKCnH3VZFQ4G=XFbNPRF-ZMXjNRLjqfcngw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Clarify documentation on commit message strip
+Date: Mon, 27 Apr 2015 10:31:28 -0700
+Message-ID: <xmqqh9s1xytr.fsf@gitster.dls.corp.google.com>
+References: <xmqqmw1w259r.fsf@gitster.dls.corp.google.com>
+	<1429940565-14947-1-git-send-email-iveqy@iveqy.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 27 18:19:39 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Fredrik Gustafsson <iveqy@iveqy.com>
+X-From: git-owner@vger.kernel.org Mon Apr 27 19:31:42 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ymlkw-00062B-1t
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Apr 2015 18:19:38 +0200
+	id 1Ymmsb-0006OG-8x
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Apr 2015 19:31:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753078AbbD0QTd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Apr 2015 12:19:33 -0400
-Received: from mail-wi0-f179.google.com ([209.85.212.179]:38243 "EHLO
-	mail-wi0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753003AbbD0QTc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Apr 2015 12:19:32 -0400
-Received: by wiun10 with SMTP id n10so96149488wiu.1
-        for <git@vger.kernel.org>; Mon, 27 Apr 2015 09:19:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=netlabsystems.com; s=google;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=LD3dSXTPkGk3ml+E8kW+AE0V/GXkO9/p/Kjme5C/8us=;
-        b=GQRFdyclA8lxg9sZ7seQuJ3h6nP560iZpd5kPSWpNDUOb5J2Ee1IZ5nj+WIwKPgjmd
-         ZLJeb/6uo0AHRwVG35yk9WXhynwClFBLyWxD5Oe76YgLmERSCtSUZP9okIETyDXBNCRO
-         wTbbTrA6EQGvc50omM7pxp8D6nWwaXP+vRNeI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=LD3dSXTPkGk3ml+E8kW+AE0V/GXkO9/p/Kjme5C/8us=;
-        b=m/VChBi1AOL9EIcbA5mnAUPFfjxwB3fXvCbttalFZI1DJ0z5d40Yt/WikFti09FQrO
-         kUMhoex3Ypdne/sZMhgZgISk/pxbS+2uBX/F3OcTyjIGDnKM+9YvTXKfAQemJa5GOGpP
-         64hWfq9v6IbGdPIwOtmAtD5FDHaWSD8uVt2istaio6BMfTW9uIrj93AGwljpm7seB6SH
-         ntBw8O+owOD06wudtK24uo922I+JttoaQxYMF9EHxJaLKtF50NgkTb6MqmgIs8xBTn/g
-         Oracu5nGVKp/KosGTSnBpoKp8K3eHiUOToJnAZ44YgL8TnN+hDK4xlu1JHTK5RwJBUPs
-         c9AQ==
-X-Gm-Message-State: ALoCoQnNGRC6TsMX55VN8sRy/6oINEX34t8VGQLwmBSze3VK/5q6+79nY0Cn0hUNPVQHZ1f4XOP5
-X-Received: by 10.194.2.16 with SMTP id 16mr23658038wjq.46.1430151571061; Mon,
- 27 Apr 2015 09:19:31 -0700 (PDT)
-Received: by 10.180.76.198 with HTTP; Mon, 27 Apr 2015 09:19:31 -0700 (PDT)
+	id S932506AbbD0Rbc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Apr 2015 13:31:32 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:54900 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932416AbbD0Rbb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Apr 2015 13:31:31 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 087394B8CF;
+	Mon, 27 Apr 2015 13:31:30 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=g2G+akkq2iKvaRtggQ/SH4PDvbs=; b=xJX+vT
+	zU+sqDY9Lk9T14WR3iMur5APirfPJvlIGJhXxuDO8hgKFfPDpne6/FmW9zlENPfW
+	sCm+l1GWgxloLH+IKAdXBbrdJ4Hw3vNsOa+6P/kHqFBykVz+93tyxy+/ikjEn79L
+	bc61pTiSLCD2ItOpxzjZNwvPDnRB4MyF9VQZQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=P5z2rDydb6YCzUCRQ1ZUI+rddo8gaHV8
+	0I7EJ1EnBCu3tAHYxSLo0ZDmXC6s5/DARfQU2D/N1XkcR0+Pr1ZFI43mf5EOHu/z
+	SRk1AXk7/GIjNwRDmufPWfIGDFj9N6pc6H0DH+abkvwYXFdyQvcSdyIVfmwyiVGI
+	R4+CGn7v3l8=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 00C574B8CE;
+	Mon, 27 Apr 2015 13:31:30 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 690ED4B8CC;
+	Mon, 27 Apr 2015 13:31:29 -0400 (EDT)
+In-Reply-To: <1429940565-14947-1-git-send-email-iveqy@iveqy.com> (Fredrik
+	Gustafsson's message of "Sat, 25 Apr 2015 07:42:45 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 3D2431BE-ED03-11E4-BA72-83E09F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267857>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267858>
 
-Hi,
+Fredrik Gustafsson <iveqy@iveqy.com> writes:
 
-Here is my scenario:
+> I agree that it is very clear once you do edit the commit message. My main
+> point with this patch was to clarify -v, since it's not obvious from the
+> documentation that it will be removed.
 
-1. First I set default username
-git config --global credential.username myUsername
+While I agree with you that the documentation should make it clear
+that the patch will not be part of the commit, I think the root
+cause of the current "unclear-ness" is because the documentation
+does not make it clear *WHY* the "-v" option gives the patch text
+there.
 
-2. Then I want to have different username for my other repository
-git config --global
-credential.https://myOtherRepository.visualstudio.com.username
-myOtherUsername
+Doing something like this on top of your patch may clarify the
+reason what "-v" is used for, and I suspect that it may even make it
+unnecessary to explicitly say that the patch text will not be part
+of the log message (but I didn't remove that with this "how about
+this" follow-up).
 
-3. When I try to pull new changes, git asks for password of myUsername
-Password for 'https://myUsername@myOtherRepository.visualstudio.com':
+ Documentation/git-commit.txt | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-But I want to have:
-Password for 'https://myOtherUsername@myOtherRepository.visualstudio.com':
-
-Is there any way to accomplish overriding?
-
-PS: I've found that if I change steps 1 and 2 I will get what I want.
-But this is not a solution as it require to unset and set
-credential.username after I add a new credential context. So the
-ordering does matter and it looks for me like it shouldn't.
-
--- 
-Best regards, Vlad.
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index 1db4c7f..617dea0 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -282,7 +282,9 @@ configuration variable documented in linkgit:git-config[1].
+ --verbose::
+ 	Show unified diff between the HEAD commit and what
+ 	would be committed at the bottom of the commit message
+-	template.  Note that this diff output doesn't have its
++	template to help the user describe the commit by reminding
++	what changes the commit has.
++	Note that this diff output doesn't have its
+ 	lines prefixed with '#'. This diff will not be a part
+ 	of the commit message.
+ +
