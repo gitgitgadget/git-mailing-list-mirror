@@ -1,116 +1,112 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] blame: add blame.showemail config option
-Date: Mon, 27 Apr 2015 15:57:14 -0400
-Message-ID: <CAPig+cRYUng43rxCJExMEs1ti6wp0oangTzwJbbesmsqM3c+tA@mail.gmail.com>
-References: <1429841612-5131-1-git-send-email-qneill@quicinc.com>
-	<CAPig+cQrUPHOaKjNhsmLho+bFdAOQxb0NK2YK2QsFmdDBF6h4g@mail.gmail.com>
-	<CACfD1vvaAGkx2P3yMfZPOZrRvG3-H96zQVOCevnd-O0rBJ7wjw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [ANNOUNCE] Git v2.3.7
+Date: Mon, 27 Apr 2015 13:01:35 -0700
+Message-ID: <xmqqy4lduyqo.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Quentin Neill <quentin.neill@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 27 21:57:22 2015
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Linux Kernel <linux-kernel@vger.kernel.org>
+To: git@vger.kernel.org
+X-From: linux-kernel-owner@vger.kernel.org Mon Apr 27 22:02:00 2015
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ymp9c-0001oh-J0
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Apr 2015 21:57:20 +0200
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1YmpDv-0005xz-PT
+	for glk-linux-kernel-3@plane.gmane.org; Mon, 27 Apr 2015 22:01:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964976AbbD0T5Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Apr 2015 15:57:16 -0400
-Received: from mail-ie0-f180.google.com ([209.85.223.180]:33266 "EHLO
-	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751359AbbD0T5P (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Apr 2015 15:57:15 -0400
-Received: by iecrt8 with SMTP id rt8so2788436iec.0
-        for <git@vger.kernel.org>; Mon, 27 Apr 2015 12:57:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=Uz1EEsGQTgO0jvPjGYICwEYRBklT8+Vr7Ys7ItnRjCU=;
-        b=frtljojHfFgoB+xc1UyPZD8J+TNEmRdZqlwm2wCXjaZ+sMTdqeBb1wgKFL2auoEz/V
-         9FyBXjJZVNzUMWG7cLkGi5B14caOQWndZIpRYKH/PqiMPFxzj5w6qhy7P4ae4+zAzfza
-         hx7ssUft16eUeHvf4zGfEEQt+cBHYV89TK1bJSREx4gj5YS4I2qBQpTLbyj6gJKqJh27
-         8l5Ftdme6cBy9vvHOGVGb09XPyy3mgk3O/ngC7i7wi99Er1wfyArsnj655QfVs5o/czx
-         Dm566BnNndeAOBAGVTA3DhUGcVL1uYCcDJOMgDjDew1nodOBf5wSoc0+NQybOC+mkP1C
-         AU3Q==
-X-Received: by 10.50.61.200 with SMTP id s8mr15637410igr.7.1430164634662; Mon,
- 27 Apr 2015 12:57:14 -0700 (PDT)
-Received: by 10.107.28.132 with HTTP; Mon, 27 Apr 2015 12:57:14 -0700 (PDT)
-In-Reply-To: <CACfD1vvaAGkx2P3yMfZPOZrRvG3-H96zQVOCevnd-O0rBJ7wjw@mail.gmail.com>
-X-Google-Sender-Auth: pXfTLkBR8RuXtJcUsjnCMype6io
-Sender: git-owner@vger.kernel.org
+	id S965090AbbD0UBm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Mon, 27 Apr 2015 16:01:42 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:63147 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S965045AbbD0UBi convert rfc822-to-8bit (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Mon, 27 Apr 2015 16:01:38 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 400404CF76;
+	Mon, 27 Apr 2015 16:01:37 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=Npdz9qCrmQ1oUwGjuyQBixufP
+	RQ=; b=sP9XkLyrjMC8ZvBHjvednw/94WDjuDMfLBvFmHgR+NwC2FwQCWGUwyg9V
+	JkejnwkN9SRhGGIEdecZA2DOviY8yrYhDI9q/nYphekVLqSrN4PKsYeXvLZyk3uf
+	BaoOGp7jkKFGNvSqdu/gHDrBKK3QX9I/La+ZNDISWLrJLcPLdw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=X1t2KUicRi2RaEOqyw7
+	CFiDK6iiZUTU0+WRJCGB3FjblFCPL6qqTI88oPtdXvxGToNncu5XNIsliEzS/S0m
+	ywj1IUifW8X8lYXARRuRZmhSnlHj/3My2J+iEN/VGfLPFug6F0JrkOp2hq2TwrrZ
+	Wa2NPqJ/+qymVUaohEG18Ql4=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 391D64CF72;
+	Mon, 27 Apr 2015 16:01:37 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9B7294CF6F;
+	Mon, 27 Apr 2015 16:01:36 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 35DB6034-ED18-11E4-BAF9-83E09F42C9D4-77302942!pb-smtp1.pobox.com
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267879>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267880>
 
-On Mon, Apr 27, 2015 at 9:46 AM, Quentin Neill <quentin.neill@gmail.com> wrote:
-> On Fri, Apr 24, 2015 at 12:22 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> It's not clear why you relocated documentation of --show-email from
->> git-blame.txt to blame-options.txt, and the commit message does not
->> explain the move. If there's a good reason for the relocation, the
->> justification should be spelled out so that people reviewing the patch
->> or looking through history later on will not have to guess about it.
->
-> I moved it to be with the other variables that had configuration
-> options, but I will move it back.
->
->> It might also make sense to do the relocation as a separate
->> preparatory patch of a 2-patch series, in which the patch adding
->> blame.showemail is the second of the two.
->
-> If you think it should be relocated, I will address in a separate patch.
+The latest maintenance release Git v2.3.7 is now available at
+the usual places.  Hopefully this will be the last v2.3.x update
+until the master front is tagged as v2.4 final.
 
-Junio's response[1] addresses both points nicely. To be clear, I
-wasn't suggesting that you should do the relocation, but instead that
-the relocation seemed unrelated to the overall intent of the patch and
-that its purpose wasn't clear. So, as a general statement, when the
-motive for a change is unclear, it deserves explanation in the commit
-message; and when a change is not directly related to the patch
-itself, it often deserves to be placed in its own patch. In this case,
-neither applies since the relocation is unwarranted.
+The tarballs are found at:
 
->>> -                       if (opt & OUTPUT_SHOW_EMAIL)
->>> +                       if ((opt & OUTPUT_SHOW_EMAIL) || show_email)
->>
->> The desired behavior is for a configuration setting to provide a
->> fallback, and for a command-line option to override the fallback. So,
->> for instance, if blame.showemail is "true", then --no-show-email
->> should countermand that. Unfortunately, the way this patch is
->> implemented, it's impossible to override the setting from the
->> command-line since show_email==true will always win (when
->> blame.showemail is "true").
->>
->> More below.
->
-> I followed the code for blame.showRoot and blame.blankboundary.
->
-> I think the desired behavior for the other switches would go in a
-> separate patch, the question is should it precede this one adding
-> 'blame.showemail'?
+    https://www.kernel.org/pub/software/scm/git/
 
-As per Junio's response[1], logic for the other configuration options
-seems to be fine, so I'm not quite sure what changes you propose.
+The following public repositories all have a copy of the 'v2.3.7'
+tag and the 'maint' branch that the tag points at:
 
->> You'll also want to add tests for the new blame.showemail
->> configuration. There's already one test in t8002-blame.sh which checks
->> that --show-email works, but you will want tests to ensure that you
->> get the expected results for all combinations of blame.showemail and
->> --show-email (including when --show-email is not specified).
->
-> Agreed, but again I don't see tests for the other switches with options.
+  url =3D https://kernel.googlesource.com/pub/scm/git/git
+  url =3D git://repo.or.cz/alt-git.git
+  url =3D https://code.google.com/p/git-core/
+  url =3D git://git.sourceforge.jp/gitroot/git-core/git.git
+  url =3D git://git-core.git.sourceforge.net/gitroot/git-core/git-core
+  url =3D https://github.com/gitster/git
 
-Unfortunately, test coverage is sometimes sparse, however, patches
-with accompanying tests are looked upon with favor and instill greater
-confidence, so they are encouraged. If you need assistance with the
-tests, feel free to ask.
+----------------------------------------------------------------
 
-It's not your responsibility to fill the gaps of missing tests for
-other options which you're not touching, but you're welcome to add
-tests for them if you want to.
+Git v2.3.7 Release Notes
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-[1]: http://thread.gmane.org/gmane.comp.version-control.git/267720/focus=267862
+=46ixes since v2.3.6
+------------------
+
+ * An earlier update to the parser that disects a URL broke an
+   address, followed by a colon, followed by an empty string (instead
+   of the port number), e.g. ssh://example.com:/path/to/repo.
+
+ * The completion script (in contrib/) contaminated global namespace
+   and clobbered on a shell variable $x.
+
+ * The "git push --signed" protocol extension did not limit what the
+   "nonce" that is a server-chosen string can contain or how long it
+   can be, which was unnecessarily lax.  Limit both the length and the
+   alphabet to a reasonably small space that can still have enough
+   entropy.
+
+Also contains typofixes, documentation updates and trivial code
+clean-ups.
+
+----------------------------------------------------------------
+
+Changes since v2.3.6 are as follows:
+
+Junio C Hamano (2):
+      push --signed: tighten what the receiving end can ask to sign
+      Git 2.3.7
+
+M=C3=A1rcio Almada (1):
+      completion: fix global bash variable leak on __gitcompappend
+
+Torsten B=C3=B6gershausen (1):
+      connect.c: ignore extra colon after hostname
