@@ -1,95 +1,113 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC] blame: CRLF in the working tree and LF in the repo
-Date: Mon, 27 Apr 2015 10:47:29 -0700
-Message-ID: <xmqqa8xtxy32.fsf@gitster.dls.corp.google.com>
-References: <553CD3DA.9090700@web.de>
-	<xmqqzj5uxhls.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH] Update git-multimail to version 1.0.2
+Date: Mon, 27 Apr 2015 10:50:21 -0700
+Message-ID: <xmqq618hxxya.fsf@gitster.dls.corp.google.com>
+References: <1430133445-21488-1-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>, kasal@ucw.cz,
-	sandals@crustytoothpaste.net
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Mon Apr 27 19:47:43 2015
+Cc: Matthieu Moy <matthieu.moy@grenoble-inp.fr>, git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Mon Apr 27 19:50:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ymn8A-0004i6-9U
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Apr 2015 19:47:42 +0200
+	id 1YmnAr-0007WQ-2o
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Apr 2015 19:50:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964816AbbD0Rrc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Apr 2015 13:47:32 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:54688 "EHLO
+	id S964943AbbD0RuY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Apr 2015 13:50:24 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:55208 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932656AbbD0Rrb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Apr 2015 13:47:31 -0400
+	with ESMTP id S932817AbbD0RuX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Apr 2015 13:50:23 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 375054BE08;
-	Mon, 27 Apr 2015 13:47:31 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 251CF4BF05;
+	Mon, 27 Apr 2015 13:50:23 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+vo2sOySuMSCM3U3R4vTMEqd1R4=; b=NmuxnA
-	wxZhcXgG+97aeD9VON8K9heJmSAHIGF5MvFX5/i1ACfWuz5XEeGT7rSc2h1qggja
-	Qle6g/D0nm/X0qtqoadsdBXmaux+GdKUoCixNcnSzt46UWtp24HD4dOgFpM9Yogm
-	FWpLqsjGsjt6uuqm2eMccqFOtsJtPdkx5XS5E=
+	:content-type; s=sasl; bh=DJqqehufKKurMp1y5ikEym+QccI=; b=XGz3S2
+	+gdUlxjnkj98q9v5fpoGR92Huc5Pz5aYZv0EhEj4Vfns7/Xg8RIyIqJFxgaKgaP/
+	XV8QEx9KL89w/wCo0pVqQOL1Sp6XhV9peY0b6R0d4qMdBbEJ2FkJAe+NIwEln2f3
+	gd+T4KeCi9Clqmf1vwQ0xfzRUmrFr4B+k0Fxs=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZXc7uj53yrw2hDneuRODq2dwiQ+9DK5f
-	cLZP5eO/Xre3lMv0Ks9rcMrXeyl+80nwZ9Jtb9KPU+N9ZsUIsgal1rvov/HukyPg
-	hGbZICYKvLoI0RwfEtGg0tQqBU7LlUXqoE0qMwrSLUwh81tOws12HVoLFUEtRpmD
-	VfFTMqJ87c0=
+	:content-type; q=dns; s=sasl; b=qLsXEi+vbxziREhxd/90l6IMvxhjerXd
+	BbMZcrD4NyGc1VUSSwgkXGvjGACXHfW++0X6+2IMws2AHAgAj4aMIXBpJv23nZVD
+	FxHOkGUXxYrwKmx0SOrGhLwNs70NSFc6j1RCaYkxKYxJzQU2QtE0jfluC1KMrsHV
+	f1vxaidTqRw=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2EA884BE06;
-	Mon, 27 Apr 2015 13:47:31 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1D99A4BF04;
+	Mon, 27 Apr 2015 13:50:23 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 819204BE05;
-	Mon, 27 Apr 2015 13:47:30 -0400 (EDT)
-In-Reply-To: <xmqqzj5uxhls.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Sun, 26 Apr 2015 22:31:11 -0700")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 889CE4BF03;
+	Mon, 27 Apr 2015 13:50:22 -0400 (EDT)
+In-Reply-To: <1430133445-21488-1-git-send-email-mhagger@alum.mit.edu> (Michael
+	Haggerty's message of "Mon, 27 Apr 2015 13:17:25 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 7A00AB24-ED05-11E4-B979-83E09F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: E08A5E6C-ED05-11E4-9F35-83E09F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267859>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267860>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-> I suspect (I haven't looked very carefully for this round yet to be
-> sure, though) that it may turn out that the commit you are proposing
-> to revert was a misguided attempt to "fix" a non issue, or to break
-> the behaviour to match a mistaken expectation.  If that is the case
-> then definitely the reversion is a good idea, and you should argue
-> along that line of justification.
+> The only changes are to the README files, most notably the list of
+> maintainers and the project URL.
 >
-> We'd just be fixing an old misguided and bad change in such a case.
+> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+> ---
+>  contrib/hooks/multimail/README     | 43 +++++++++++++++++++-------------------
+>  contrib/hooks/multimail/README.Git |  6 +++---
+>  2 files changed, 25 insertions(+), 24 deletions(-)
+> ...
 
-The original says this:
+(mental note) OK, only the doc updates; that should be safe even to
+apply during -rc freeze period if I wanted to...
 
-    blame: correctly handle files regardless of autocrlf
-    
-    If a file contained CRLF line endings in a repository with
-    core.autocrlf=input, then blame always marked lines as "Not
-    Committed Yet", even if they were unmodified.  Don't attempt to
-    convert the line endings when creating the fake commit so that blame
-    works correctly regardless of the autocrlf setting.
-    
-    Reported-by: Ephrim Khong <dr.khong@gmail.com>
-    Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> diff --git a/contrib/hooks/multimail/README b/contrib/hooks/multimail/README
+> index 477d65f..6efa4ff 100644
+> --- a/contrib/hooks/multimail/README
+> +++ b/contrib/hooks/multimail/README
+> @@ -456,34 +456,35 @@ consider sharing them with the community!
+>  Getting involved
+>  ----------------
+>  
+> -git-multimail is an open-source project, built by volunteers.  We
+> -would welcome your help!
+> +git-multimail is an open-source project, built by volunteers. We would
+> +welcome your help!
 
-But if autocrlf=input, then the end-user expectation is to keep the
-in-repository data with LF line endings.  If your tip-of-the-tree
-commit incorrectly has CRLF line endings, and if you were going to
-commit what is in the working tree on top, you would be correcting
-that mistake by turning the in-repository data into a text file with
-LF line endings, so "Not Committed Yet" _is_ the correct behaviour.
+Yuck.
 
-So I think that the reverting that change is the right thing to do.
-It really was a change to break the behaviour to match a mistaken
-expectation, I would have to say.
+> +Whenever enough changes to git-multimail have accumulated, a new
+> +code-drop of git-multimail will be submitted for inclusion in the Git
+> +project.
+
+OK.
+
+> diff --git a/contrib/hooks/multimail/README.Git b/contrib/hooks/multimail/README.Git
+> index 129b771..ab3ece5 100644
+> --- a/contrib/hooks/multimail/README.Git
+> +++ b/contrib/hooks/multimail/README.Git
+> @@ -3,13 +3,13 @@ section of the Git project as a convenience to Git users.
+>  git-multimail is developed as an independent project at the following
+>  website:
+>  
+> -    https://github.com/mhagger/git-multimail
+> +    https://github.com/git-multimail/git-multimail
+>  
+>  The version in this directory was obtained from the upstream project
+> -on 2014-04-07 and consists of the "git-multimail" subdirectory from
+> +on 2015-04-27 and consists of the "git-multimail" subdirectory from
+>  revision
+>  
+> -    1b32653bafc4f902535b9fc1cd9cae911325b870
+> +    8c3aaafa873bf10de8dddf1d202c449b3eff3b42 refs/tags/1.0.2
+
+Huh, really?
