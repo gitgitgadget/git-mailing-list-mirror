@@ -1,100 +1,69 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: [PATCH] git-p4: prevent --chain-lint failure
-Date: Mon, 27 Apr 2015 23:20:28 +0100
-Message-ID: <1430173228-22004-2-git-send-email-luke@diamand.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] git-p4: prevent --chain-lint failure
+Date: Mon, 27 Apr 2015 19:02:23 -0400
+Message-ID: <20150427230223.GA22403@peff.net>
 References: <1430173228-22004-1-git-send-email-luke@diamand.org>
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Luke Diamand <luke@diamand.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 28 00:21:28 2015
+ <1430173228-22004-2-git-send-email-luke@diamand.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Luke Diamand <luke@diamand.org>
+X-From: git-owner@vger.kernel.org Tue Apr 28 01:02:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YmrOq-0002aJ-P9
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Apr 2015 00:21:13 +0200
+	id 1Yms2p-0000eP-A9
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Apr 2015 01:02:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965360AbbD0WVI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Apr 2015 18:21:08 -0400
-Received: from mail-wg0-f43.google.com ([74.125.82.43]:33299 "EHLO
-	mail-wg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965312AbbD0WVG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Apr 2015 18:21:06 -0400
-Received: by wgin8 with SMTP id n8so131282774wgi.0
-        for <git@vger.kernel.org>; Mon, 27 Apr 2015 15:21:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=hhBI1Ob4gLhlGzQTt9ctmy1LgPR/pOut06TYTRrXVKw=;
-        b=HnHM6evdnJr5kVKWPcGWLMaDaJI40tCTHRwqtZWc4PeHKU1yHSs7RHlFf/+ClMDHU9
-         ziUg1Vytz4HKUXDXG0vlFeRO9iLm5PSGkZO+QAXWENMbAuXJyVYoyVR6g9WgXsjAs3yt
-         CgtkvD8rAvAE1RKL0WvFdhliDONpdVQrIgaGI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=hhBI1Ob4gLhlGzQTt9ctmy1LgPR/pOut06TYTRrXVKw=;
-        b=FHm9z0wCN5+mJ6ccjhP9i2v6aLytBR/3nv9HMxtQTxw4HxVyldUhvxg3f+NL4UsAvS
-         UPDOMu5wqpG5vntHAeApGrFF7/SivjFe+G5DAT76pXSDoU4dGAe4KNeP1H3jx6rzvYAp
-         w0pQaCIMZDDb31QTDbM+cEXHihaevJFwAmjsyjd6tFqN4WMfqPu9VoiqL4PRQgc7AjmV
-         7irlcIQiscxXbFb06x/J2AzOxpb8wwC8babhZPlXHiDKnEqXU6+i4bC+2rd+cSmEncvi
-         0KIlY8r+1UcHj/q11kj9q7NHUULNYa7wEeQf+TXqc2XG8Kpi7FTKFXEuiii6V2uv/otq
-         +eWA==
-X-Gm-Message-State: ALoCoQnyT6N5F6g95F88C04M2ivBIHUBkeKkX6xanxzb4zfcXRbOCe9+nFM3CGuDQvLkMSfO+Q0J
-X-Received: by 10.181.13.144 with SMTP id ey16mr24612091wid.38.1430173265471;
-        Mon, 27 Apr 2015 15:21:05 -0700 (PDT)
-Received: from ethel.cable.virginmedia.net (cpc7-cmbg17-2-0-cust139.5-4.cable.virginm.net. [86.1.43.140])
-        by mx.google.com with ESMTPSA id k2sm13477177wix.4.2015.04.27.15.21.04
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 27 Apr 2015 15:21:04 -0700 (PDT)
-X-Mailer: git-send-email 2.3.4.48.g223ab37
-In-Reply-To: <1430173228-22004-1-git-send-email-luke@diamand.org>
+	id S965261AbbD0XC1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Apr 2015 19:02:27 -0400
+Received: from cloud.peff.net ([50.56.180.127]:50849 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S964884AbbD0XC0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Apr 2015 19:02:26 -0400
+Received: (qmail 1906 invoked by uid 102); 27 Apr 2015 23:02:26 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 27 Apr 2015 18:02:26 -0500
+Received: (qmail 9726 invoked by uid 107); 27 Apr 2015 23:02:54 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 27 Apr 2015 19:02:54 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 27 Apr 2015 19:02:23 -0400
+Content-Disposition: inline
+In-Reply-To: <1430173228-22004-2-git-send-email-luke@diamand.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267886>
 
-t9814 has a test that simply sets up a pre-requisite for
-another test, and as such, always succeeds. The way it was
-written doesn't quite work with the test lint checks introduced
-with the --chain-lint option.
+On Mon, Apr 27, 2015 at 11:20:28PM +0100, Luke Diamand wrote:
 
-Add an additional layer of {} to prevent the --chain-lint
-code getting confused.
+> t9814 has a test that simply sets up a pre-requisite for
+> another test, and as such, always succeeds. The way it was
+> written doesn't quite work with the test lint checks introduced
+> with the --chain-lint option.
+> 
+> Add an additional layer of {} to prevent the --chain-lint
+> code getting confused.
 
-Signed-off-by: Luke Diamand <luke@diamand.org>
----
- t/t9814-git-p4-rename.sh | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+Thanks for looking into this. I tried to fix any existing tests I could,
+but I missed ones whose prerequisites aren't met on my system.
 
-diff --git a/t/t9814-git-p4-rename.sh b/t/t9814-git-p4-rename.sh
-index 99bb71b..14f9dc3 100755
---- a/t/t9814-git-p4-rename.sh
-+++ b/t/t9814-git-p4-rename.sh
-@@ -227,13 +227,15 @@ test_expect_success 'detect copies' '
- # See if configurables can be set, and in particular if the run.move.allow
- # variable exists, which allows admins to disable the "p4 move" command.
- test_expect_success 'p4 configure command and run.move.allow are available' '
--	p4 configure show run.move.allow >out ; retval=$? &&
--	test $retval = 0 &&
--	{
--		egrep ^run.move.allow: out &&
--		test_set_prereq P4D_HAVE_CONFIGURABLE_RUN_MOVE_ALLOW ||
--		true
--	} || true
-+    {
-+	    p4 configure show run.move.allow >out ; retval=$? &&
-+	    test $retval = 0 &&
-+	    {
-+		    egrep ^run.move.allow: out &&
-+		    test_set_prereq P4D_HAVE_CONFIGURABLE_RUN_MOVE_ALLOW ||
-+		    true
-+	    } || true
-+    }
- '
- 
- # If move can be disabled, turn it off and test p4 move handling
--- 
-2.3.4.48.g223ab37
+Using {} is reasonable in general; that's how the fixes in 9ddc5ac (t:
+wrap complicated expect_code users in a block, 2015-03-20) worked.
+However, I think your case is somewhat simpler, in that you really just
+want a big conditional to set a prereq based on whether or not a command
+succeeds.
+
+Would it make sense to convert this whole thing to just:
+
+  test_lazy_prereq P4D_HAVE_CONFIGURABLE_RUN_MOVE_ALLOW '
+	p4 configure show run.move.allow >out &&
+	egrep ^run.move.allow: out
+  '
+
+?
+
+-Peff
