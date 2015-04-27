@@ -1,62 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Question about how git determines the minimum packfile for a push.
-Date: Sun, 26 Apr 2015 21:39:32 -0700
-Message-ID: <CAPc5daV2GmtaknNhrBc7ofMZPsKPUn81SHBVPNdHHTXJs8ubdQ@mail.gmail.com>
-References: <E51394554A503C4E852F9BEE46B03E8D01E4E784@TI-ODIN.tasernet.com>
+From: Stepan Kasal <kasal@ucw.cz>
+Subject: Re: [PATCH/RFC] blame: CRLF in the working tree and LF in the repo
+Date: Mon, 27 Apr 2015 06:39:00 +0200
+Organization: <)><
+Message-ID: <20150427043900.GC1578@camelia.ucw.cz>
+References: <553CD3DA.9090700@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Brad Litterell <brad@evidence.com>
-X-From: git-owner@vger.kernel.org Mon Apr 27 06:40:00 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	"johannes.schindelin@gmx.de >> Johannes Schindelin" 
+	<johannes.schindelin@gmx.de>, sandals@crustytoothpaste.net
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Mon Apr 27 06:47:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ymapr-0002Jb-2Q
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Apr 2015 06:39:59 +0200
+	id 1Ymawv-0000dx-Lk
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Apr 2015 06:47:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751258AbbD0Ejy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Apr 2015 00:39:54 -0400
-Received: from mail-oi0-f48.google.com ([209.85.218.48]:36394 "EHLO
-	mail-oi0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750988AbbD0Ejx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Apr 2015 00:39:53 -0400
-Received: by oift201 with SMTP id t201so80047658oif.3
-        for <git@vger.kernel.org>; Sun, 26 Apr 2015 21:39:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=AxvhR2K3IOt7n5m1qJKwzluB9Fcx8zpwhVdljR2Mxdk=;
-        b=Vja/nv/U5kxFcCZlxfUWWt2zjgh3X3yoCkMzWT/mWoVHaDOFLS3TBrbSlvs3KKIFBi
-         w4LM7fLIDSMZhIzj4BxrIIprHuKDbvu8aGWj/8IVwwSqCjTSHVlREdAWw+t9R8Zs2lLC
-         3SW/AVq/Wu52Cy2KTW9PHOl1sx9gXrY7tvk2r0yRvbFOCmHjMY3bj/a4Da1AcdApSydE
-         cHZHY1zzJqvuqPgxOtNAkNQcHwwD2Tvxna20Fx5VNvOn03cnsVO2wK/BMGg3uL9TWch5
-         kJWua4VE8I1mTHbDf7DE0oULIfanTNdgrH65VHxlUWgc3YVYBPh4OZbH37Q9XR45AH+t
-         jnUA==
-X-Received: by 10.182.165.69 with SMTP id yw5mr8142347obb.5.1430109592798;
- Sun, 26 Apr 2015 21:39:52 -0700 (PDT)
-Received: by 10.202.197.18 with HTTP; Sun, 26 Apr 2015 21:39:32 -0700 (PDT)
-In-Reply-To: <E51394554A503C4E852F9BEE46B03E8D01E4E784@TI-ODIN.tasernet.com>
-X-Google-Sender-Auth: PufEi2Unts1aiEgJL7AJC9erRB4
+	id S1751345AbbD0ErN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Apr 2015 00:47:13 -0400
+Received: from jabberwock.ucw.cz ([46.255.230.98]:59844 "EHLO
+	jabberwock.ucw.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751257AbbD0ErM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Apr 2015 00:47:12 -0400
+X-Greylist: delayed 489 seconds by postgrey-1.27 at vger.kernel.org; Mon, 27 Apr 2015 00:47:12 EDT
+Received: from 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (82-73-239-109.cust.centrio.cz [109.239.73.82])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	(Authenticated sender: kasal)
+	by jabberwock.ucw.cz (Postfix) with ESMTPSA id E3F091C0100;
+	Mon, 27 Apr 2015 06:39:01 +0200 (CEST)
+Received: from camelia.ucw.cz (camelia.ucw.cz [127.0.0.1])
+	by 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (8.14.3/8.14.3) with ESMTP id t3R4d1ox001628;
+	Mon, 27 Apr 2015 06:39:01 +0200
+Received: (from kasal@localhost)
+	by camelia.ucw.cz (8.14.3/8.14.3/Submit) id t3R4d0rf001627;
+	Mon, 27 Apr 2015 06:39:00 +0200
+Content-Disposition: inline
+In-Reply-To: <553CD3DA.9090700@web.de>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267844>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267845>
 
-On Sun, Apr 26, 2015 at 5:41 PM, Brad Litterell <brad@evidence.com> wrote:
->
-> Is it possible git is not computing the delta correctly?
-> Or does git only look at the top-level commit objects to figure out what to
-> include in the push packfile?
+Hello,
 
-We walk the commit graph backwards to discover the common ancestries to
-minimize the network cost when fetching, but I do not think the
-reverse direction
-has such smart in the protocol.
+thank you Torsten for the patch [I'm the reporter, but could not do
+it myself]
 
-If you fetch (not "pull") first to remote tracking branches and then push, that
-probably will reduce the transfer, as the side that pushes is the only one that
-decides what objects are sent in "git push -> git receive-pack" direction.
+> -test_expect_success 'blaming files with CRLF newlines' '
+> +test_expect_failure 'blaming files with CRLF newlines in repo, core.autoclrf=input' '
+
+Shouldn't the old test be rather removed?
+It deals with an invalid situation.
+
+I thought that having crlf in the repo is incorrect, so no wonder
+that it fails if the files in the working tree are changed to LF.
+
+And changing the autocrlf transformation is effectively the same,
+no matter that the files _physically_ are the same as the files in
+the repo.
+
+Have a nice day,
+    Stepan Kasal
