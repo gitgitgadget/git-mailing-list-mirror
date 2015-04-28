@@ -1,80 +1,104 @@
-From: Ed Avis <eda@waniasset.com>
-Subject: 'git show' with multiple revisions
-Date: Tue, 28 Apr 2015 10:10:52 +0000 (UTC)
-Message-ID: <loom.20150428T120412-982@post.gmane.org>
+From: Olivier ROLAND <cyrus-dev@edla.org>
+Subject: Re: Bug report : bad filter-branch (OSX only)
+Date: Tue, 28 Apr 2015 13:02:17 +0200
+Message-ID: <CAM=W1NnR2-T7vpMSM-3-VypnR-T235tMudyjJowtj5utNmoKNQ@mail.gmail.com>
+References: <CAM=W1NkZr6o-DCxXskeWC8xjRMiT2P9qXeeUe91qLBqOxzqNtg@mail.gmail.com>
+	<20150428055506.GJ24580@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 28 12:11:19 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Tue Apr 28 13:02:26 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yn2U1-0006MN-66
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Apr 2015 12:11:17 +0200
+	id 1Yn3HT-0003dC-Eq
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Apr 2015 13:02:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933203AbbD1KLM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Apr 2015 06:11:12 -0400
-Received: from plane.gmane.org ([80.91.229.3]:46991 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933017AbbD1KLM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Apr 2015 06:11:12 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1Yn2Tn-0006Ex-5W
-	for git@vger.kernel.org; Tue, 28 Apr 2015 12:11:03 +0200
-Received: from 80.169.169.174 ([80.169.169.174])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 28 Apr 2015 12:11:03 +0200
-Received: from eda by 80.169.169.174 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 28 Apr 2015 12:11:03 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 80.169.169.174 (Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:36.0) Gecko/20100101 Firefox/36.0 Cyberfox/36.0.1)
+	id S933329AbbD1LCT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Apr 2015 07:02:19 -0400
+Received: from mail-ig0-f175.google.com ([209.85.213.175]:38081 "EHLO
+	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933179AbbD1LCS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Apr 2015 07:02:18 -0400
+Received: by igbhj9 with SMTP id hj9so17334980igb.1
+        for <git@vger.kernel.org>; Tue, 28 Apr 2015 04:02:17 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:cc:content-type;
+        bh=raoUFKLMlL637miyTKj9Ae4xqfMIt3ppb2OgDppACTM=;
+        b=ORub8TwBI3+xrClQn+Z5QNM6ggymS/1wEX+E0OrreJTz0OtTP7NoUpLiJIS67tyQz2
+         o61CJivpZaLvioU38Y9LCD2tsODfeF2zOLhS20ymMS9dQBEp3mvbqMndViRC9KIAqDV6
+         cj9/s0SMmzcIdgNbdh2Y6aLgKTY3ZkEb8FBTAqpcePlUhMv90kSqQ8PundIWESivRmvu
+         eXZl4Z+kOE2sD9I744HolBSpJsML0+zimpe6sFOFIJM8rPsnTuztJnFhhQl/S3Ffy7U6
+         JTNqcGwqJsfn5csEX//ucPSlQZiJ8BljzSxoRA7tyfQAPiB6Cw9PKSAtCvUqYLQCU27t
+         Ar3g==
+X-Gm-Message-State: ALoCoQmnoTmyGFg668f5JYK56xc9Ihf9FFOnCKh7MP6w0pnTe74z9t76FRRwJ6aKKCthnMwWZF+j
+X-Received: by 10.107.6.84 with SMTP id 81mr20308019iog.52.1430218937471; Tue,
+ 28 Apr 2015 04:02:17 -0700 (PDT)
+Received: by 10.36.6.8 with HTTP; Tue, 28 Apr 2015 04:02:17 -0700 (PDT)
+X-Originating-IP: [90.58.122.223]
+In-Reply-To: <20150428055506.GJ24580@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267919>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267920>
 
-I would like to see the content of a file in multiple revisions.
-I can get them with 'git show' as follows:
+2015-04-28 7:55 GMT+02:00 Jeff King <peff@peff.net>:
+> On Sun, Apr 26, 2015 at 11:25:52AM +0200, Olivier ROLAND wrote:
+>
+>> OSX 10.10.3 git 2.3.6 HFS+ case-sensitive
+>>
+>> How to reproduce :
+>> Step 1 : git clone https://github.com/begeric/FastParsers.git
+>> Step 2 : cd FastParsers/
+>> Step 3 : git filter-branch --env-filter 'if [ 0 = 1 ]; then echo 0; fi' -- --all
+>>
+>> Result on OSX :
+>> Rewrite 65df7c5ac1ed956252b07b8c911ad7eba0a15c2b (206/206)
+>> Ref 'refs/heads/experiment' was rewritten
+>> Ref 'refs/remotes/origin/experiment' was rewritten
+>> WARNING: Ref 'refs/remotes/origin/experiment' is unchanged
+>> Ref 'refs/remotes/origin/master' was rewritten
+>>
+>> Result on Debian :
+>> Rewrite 65df7c5ac1ed956252b07b8c911ad7eba0a15c2b (206/206)
+>> WARNING: Ref 'refs/heads/experiment' is unchanged
+>> WARNING: Ref 'refs/remotes/origin/experiment' is unchanged
+>> WARNING: Ref 'refs/remotes/origin/experiment' is unchanged
+>> WARNING: Ref 'refs/remotes/origin/master' is unchanged
+>>
+>> Do you have any thoughts on this ?
+>
+> Weird. Did you build both versions of git from source (that is, there's
+> no question that the OS X one is a hacked-up Apple git or something)?
+>
+> Presumably it's some incompatibility in the shells used. What does:
+>
+>   head -1 "$(git --exec-path)/git-filter-branch"
+>
+> say about the shell in use on each system? Does running that shell with
+> "--version" report anything useful?
+>
+> -Peff
 
-    % git show REV1:FILE
-    % git show REV2:FILE
+Hi,
 
-and so on.  But that launches a new process for each revision.  Now, there is
-the option to pass multiple arguments to 'git show':
+Both versions are builded from source.
+head -1 "$(git --exec-path)/git-filter-branch"
+#!/bin/sh
 
-    % git show REV1:FILE REV2:FILE
+sh --version
+GNU bash, version 3.2.57(1)-release (x86_64-apple-darwin14)
+Copyright (C) 2007 Free Software Foundation, Inc.
 
-This gets both revisions in a single process and so is faster.  But it
-concatenates the content so there isn't a way to separate them out again.
+/bin/bash --version
+GNU bash, version 4.1.5(1)-release (x86_64-pc-linux-gnu)
 
-Could 'git show' sprout an option to get multiple things programmatically
-so that they can be separated out again?  One way would be to quote or escape
-the contents somehow so that the result can be parsed:
+The bug seem really git related.
 
-    % git show --porcelain REV1:FILE REV2:FILE
-
-The question is what format should be used to output many strings to stdout.
-
-An alternative would be to specify an output file:
-
-    % git show --output foo REV1:FILE                        # writes foo
-    % git show --output foo REV1:FILE --output bar REV2:FILE # writes foo, bar
-
-Note that here I am only getting the file content, not log messages or any of
-the other things which 'git show' can produce.  So perhaps what I really want
-is some kind of 'git cat'.  Or is there another more appropriate tool?
-
-Thanks,
-
--- 
-Ed Avis <eda@waniasset.com>
+Thanks.
