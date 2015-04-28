@@ -1,56 +1,68 @@
-From: Tummala Dhanvi <dhanvicse@gmail.com>
-Subject: Help with Getting started to Contribute
-Date: Tue, 28 Apr 2015 19:15:55 +0530
-Message-ID: <CAMOUyJ8_Xyw=a54VFdsJFrrxr86zA_W5--w5bpED70D4g3YY4w@mail.gmail.com>
+From: Robert Dailey <rcdailey.lists@gmail.com>
+Subject: How are submodule conflicts resolved during rebase?
+Date: Tue, 28 Apr 2015 09:34:06 -0500
+Message-ID: <CAHd499CSshO-929PF7fiR4hpxd9J=S+XFuE3sdQHFjPvXT_C0w@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 28 15:46:41 2015
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Apr 28 16:34:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yn5qS-0001up-7Q
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Apr 2015 15:46:40 +0200
+	id 1Yn6aT-0002We-Ub
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Apr 2015 16:34:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031216AbbD1Nqf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Apr 2015 09:46:35 -0400
-Received: from mail-ie0-f177.google.com ([209.85.223.177]:35005 "EHLO
-	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965841AbbD1NqQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Apr 2015 09:46:16 -0400
-Received: by iejt8 with SMTP id t8so18204989iej.2
-        for <git@vger.kernel.org>; Tue, 28 Apr 2015 06:46:16 -0700 (PDT)
+	id S1030799AbbD1OeJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Apr 2015 10:34:09 -0400
+Received: from mail-ie0-f176.google.com ([209.85.223.176]:36622 "EHLO
+	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030713AbbD1OeH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Apr 2015 10:34:07 -0400
+Received: by iebrs15 with SMTP id rs15so19437578ieb.3
+        for <git@vger.kernel.org>; Tue, 28 Apr 2015 07:34:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=zYc5H0EGCEWPezIOCzn1x64Gv0B7VNH+4aNCzYWDY+M=;
-        b=twOoURc4wAye2AWKRFP+VmGrvr8MVAuRahgmw/5Hv5j4mTl4BXRnGGZwWPKsOjlsiy
-         ejrhluoflf/hU+wgbtGEWrBDhoSItf4O2QlFkZSLBt0Va91UGOf0FB+6I24t5XGqtxE/
-         2JnxcR2T4QeTpsV21e1H+ww5HnWJBGaBExld/Lsb2qhEOWFpFPrnxhzX4A5PxEbQ3KOZ
-         Zhec2rfjH/Fmx+cnp7lEJudiGc0VodKN3RPPbcq5BnSV+CEUqb/hwZY0IXGjSQmgqatF
-         6UvQtKAO2YfbxnAY36wN+o41ui2WCC0DX4nZXfbQg1YTt4lp++eDoIqMhVXyqq5uVh1i
-         6+ug==
-X-Received: by 10.50.30.202 with SMTP id u10mr20400725igh.28.1430228776037;
- Tue, 28 Apr 2015 06:46:16 -0700 (PDT)
-Received: by 10.50.132.97 with HTTP; Tue, 28 Apr 2015 06:45:55 -0700 (PDT)
+        h=mime-version:sender:date:message-id:subject:from:to:content-type;
+        bh=xNyL6T6MSX3lK4N9ptktHt8Q9dCAqcN6uRLvkMyv6Lc=;
+        b=RB8l5AdoVLSmW+wMaohVSSnHerC/XiNzP3ukc+G99gWuBsVbQR1v/EhPWtzIJG4CX8
+         GJRs0FYPBlj2ULR3vNhqLW3JiukorHYnbC/TyI+o0Q6z1CNJO7RYyh7jHpRhFHialWH+
+         z6PeMQu5qKZClaotitmxmrCKyxgFDCadHMS9RZhYB65KEhvBirsNxw8Xt/irnGJFlqLx
+         UoK4QW6i4Nb/LtHKrDkfzSeFBAX1/KIAkB9yABI/oRidfQ3zkmmDGjPkWe7y/FYcj52e
+         zdOtKoZK0p8N1wAaW2l/a0NIVc50hHn2qKUCWBTYd47vMpUXl7RCQhumKi2s/RVd6MDx
+         YSDQ==
+X-Received: by 10.50.79.195 with SMTP id l3mr439345igx.40.1430231646178; Tue,
+ 28 Apr 2015 07:34:06 -0700 (PDT)
+X-Google-Sender-Delegation: rcdailey@gmail.com
+Received: by 10.36.86.148 with HTTP; Tue, 28 Apr 2015 07:34:06 -0700 (PDT)
+X-Google-Sender-Auth: y6PDrkj6GvanGFGqhJuvJ7rr-4k
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267924>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267925>
 
-Hi ,
+Hey guys,
 
-I would like to contribute to git.
+I'm using Git for Windows 2.3.6. There is a bit of confusion I have
+with regards to how submodule conflicts are resolved/handled during a
+rebase.
 
-Can you guys point me to some useful resources to get me started to
-contribute to git.
+Suppose I have a branch with 10 commits on it, 3 of those commits
+contain a change to the same (and only) submodule in the repository.
+When I rebase this branch onto the tip of its parent branch, I get a
+conflict in each of the 3 commits because the submodule also changed
+on the parent branch since my last rebase.
 
-Also does git have something like junior jobs so that It can be done
-by new to contribution.
+I've seen some cases where I am asked to resolve the submodule
+conflict with local or remote. I expect this behavior and it isn't
+confusing to me. However, I have also seen cases where rebase auto
+resolves the conflicted submodule.
 
-Also searching about the git in google points to some other
-organisation which uses git  :(    (well this is because of the
-popularity of the git)
+How does Git know to auto resolve some submodule conflicts but not the
+others? I find this behavior unpredictable and I haven't found any
+documentation on it (I'm giving the git docs the benefit of the doubt
+and assuming it's there, since the git docs are very very good).
+
+Help is appreciated. Thank you.
