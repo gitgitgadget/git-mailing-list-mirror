@@ -1,87 +1,81 @@
-From: =?UTF-8?Q?erik_elfstr=C3=B6m?= <erik.elfstrom@gmail.com>
-Subject: Re: [PATCH v5 5/5] clean: improve performance when removing lots of directories
-Date: Tue, 28 Apr 2015 22:31:47 +0200
-Message-ID: <CAMpP7Nbm9Gy6AgULBCCwgeEUBWU4M5r8+SC22iuu8VmaUtst_w@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v5 1/5] setup: add gentle version of read_gitfile
+Date: Tue, 28 Apr 2015 13:34:00 -0700
+Message-ID: <20150428203400.GN5467@google.com>
 References: <xmqqfv7nzf56.fsf@gitster.dls.corp.google.com>
-	<1430030985-14499-1-git-send-email-erik.elfstrom@gmail.com>
-	<1430030985-14499-6-git-send-email-erik.elfstrom@gmail.com>
-	<20150428062422.GM24580@peff.net>
+ <1430030985-14499-1-git-send-email-erik.elfstrom@gmail.com>
+ <1430030985-14499-2-git-send-email-erik.elfstrom@gmail.com>
+ <20150428061741.GL24580@peff.net>
+ <CAMpP7Nb3aiMoTjtPJNJPv38G54ZawS8B+NDX0x2iNe6FA-L+Lw@mail.gmail.com>
+ <20150428201918.GA10902@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: erik =?iso-8859-1?Q?elfstr=F6m?= <erik.elfstrom@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Apr 28 22:31:54 2015
+X-From: git-owner@vger.kernel.org Tue Apr 28 22:34:11 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YnCAb-0006hB-Uj
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Apr 2015 22:31:54 +0200
+	id 1YnCCo-0008S5-5L
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Apr 2015 22:34:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965904AbbD1Ubt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Apr 2015 16:31:49 -0400
-Received: from mail-wi0-f176.google.com ([209.85.212.176]:36340 "EHLO
-	mail-wi0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965352AbbD1Ubs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Apr 2015 16:31:48 -0400
-Received: by wizk4 with SMTP id k4so155390095wiz.1
-        for <git@vger.kernel.org>; Tue, 28 Apr 2015 13:31:47 -0700 (PDT)
+	id S966126AbbD1UeG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 Apr 2015 16:34:06 -0400
+Received: from mail-ie0-f178.google.com ([209.85.223.178]:36454 "EHLO
+	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S966059AbbD1UeE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Apr 2015 16:34:04 -0400
+Received: by iebrs15 with SMTP id rs15so27986202ieb.3
+        for <git@vger.kernel.org>; Tue, 28 Apr 2015 13:34:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=mIHll2nMT4fAobM4E9xWS0a95gc04wX5rc+pTqWKjNU=;
-        b=BNvL0pi+psM1vR6jVBqm6jyvRydyuU508KjuVXT9fIyGf4NvYJMMXzcvSy+B1e4b0R
-         gkv2SMkfE6Uz5eL5TRSymZZXEc9G5elgVXNSeeJEVQ12n1RoCbTfVHLrmwpJfryCRDO1
-         ZrGcQrytg/idGoiVx1Fo73W6zhM741bGPfa4y6/SvO8Z6KOZLkheazOpOKQtgxhuMG0G
-         VeTVCElxaxpifSLweygJ4phz/7SX9SSgWDvtk0lBT9Fu0mT5mRHnBBnwW4GkdVgJBM4f
-         UXHsyWA8OJql5FRllb/YV3Oj/9EUaMfGG5G1X1jvr8ZXelDwDFHtz1/GUtnyjNuDemf+
-         MIrA==
-X-Received: by 10.180.87.199 with SMTP id ba7mr33841649wib.81.1430253107816;
- Tue, 28 Apr 2015 13:31:47 -0700 (PDT)
-Received: by 10.28.49.66 with HTTP; Tue, 28 Apr 2015 13:31:47 -0700 (PDT)
-In-Reply-To: <20150428062422.GM24580@peff.net>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=htnktCcOX7B0kkv9JQr9Lc8JJYnRnQbLhWFhhfV6oLM=;
+        b=Uzgc8y8bD/FVtDulMTU4h7FqUCOdXpGCnJoThLKyFcy4MqnhCFYssq+HzUuqG5AwSo
+         Kp6HTQlMglR7n5vR+Ch6+Tq/g5Cql57DFI94mJFSDihg4tfRllstBCcGy5bkXjaSO6MI
+         DXKQ5am0N+UupeUUGia+sMHFeA3FedXmSy/SUGmfT4DZgq2h+i09uGzp9S8AC0tPXB+Y
+         Ombh3KDslvDeU/XZ4viNH2USUnUsjQb0qUqViLDkG4TlYWLk8jYfwIuz4RXSrR8gB2HJ
+         5gCZoDOXKKO+VvQIhi0u4zjWn8mDuiXHJrK1Pj//Vch0vgD3oEAJ3cN8lGZj01zeHwN9
+         vOwQ==
+X-Received: by 10.42.44.71 with SMTP id a7mr20466241icf.14.1430253242713;
+        Tue, 28 Apr 2015 13:34:02 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:c979:ad68:d2ca:9e9e])
+        by mx.google.com with ESMTPSA id h128sm14705233ioh.38.2015.04.28.13.34.01
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 28 Apr 2015 13:34:02 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20150428201918.GA10902@peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267940>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267941>
 
-On Tue, Apr 28, 2015 at 8:24 AM, Jeff King <peff@peff.net> wrote:
+Jeff King wrote:
+> On Tue, Apr 28, 2015 at 10:07:43PM +0200, erik elfstr=F6m wrote:
+
+>> Also if it turns out that we actually need to treat the "file too
+>> large" error differently in clean (as discussed in thread on the fil=
+e
+>> size check) then we can no longer communicate that back using the
+>> strbuf interface.
 >
-> This iteration looks reasonable overall to me.
->
-> Should this is_git_repository() helper be available to other files? I
-> think there are other calls to resolve_gitlink_ref() that would want the
-> same treatment (e.g., I think "git status" may have a similar issue).
->
-> -Peff
+> Yeah, agreed. This system breaks down as soon as you need to
+> programatically know which error happened.
 
-Yes that is probably the direction to go in but I think the current
-version is too tailored to the clean case to be generally useful
-(although I haven't check the status case). Right now this is more of
-a is_this_a_repo_clean_should_care_about_ignoring_some_cornercase_quirks
-than a true is_git_repository check.
+On the contrary: it separates the information that is used
+programatically and the information intended for the user.
 
-I would think a general version would look more like this:
+The return value (or an int * parameter) distinguishes errors that
+affect control flow.  A string can provide information for the user.
 
-static int is_git_repository(struct strbuf *path)
-{
-    if (is_bare_repository(path))
-        return BARE_REPO;
-    if (is_submodule(path))
-        return SUBMODULE;
-    if (is_git_director(path))
-        return REPO;
-    return 0;
-}
-
-probably also communicating any errors back to the caller.
-
-To sum it up I think you are correct in the direction but I suspect
-that the current version is not sufficient for the general case and
-that it would be best to leave the generalization and making it public
-for future work.
-
-/Erik
+This way it is easy to tweak the information that the user sees in
+one place, without changing control flow.
