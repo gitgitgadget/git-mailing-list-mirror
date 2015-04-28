@@ -1,95 +1,129 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: [PATCHv3] git-p4: t9814: prevent --chain-lint failure
-Date: Tue, 28 Apr 2015 08:21:22 +0100
-Message-ID: <1430205682-4309-2-git-send-email-luke@diamand.org>
-References: <1430205682-4309-1-git-send-email-luke@diamand.org>
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Luke Diamand <luke@diamand.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 28 09:22:12 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC] blame: CRLF in the working tree and LF in the repo
+Date: Tue, 28 Apr 2015 00:28:04 -0700
+Message-ID: <xmqqbni8vhiz.fsf@gitster.dls.corp.google.com>
+References: <553CD3DA.9090700@web.de>
+	<xmqqzj5uxhls.fsf@gitster.dls.corp.google.com>
+	<xmqqa8xtxy32.fsf@gitster.dls.corp.google.com>
+	<553E90C0.4070103@web.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>, kasal@ucw.cz,
+	sandals@crustytoothpaste.net
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Tue Apr 28 09:28:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YmzqJ-0004jR-0C
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Apr 2015 09:22:07 +0200
+	id 1YmzwC-0000xM-1w
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Apr 2015 09:28:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932170AbbD1HWB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Apr 2015 03:22:01 -0400
-Received: from mail-wi0-f169.google.com ([209.85.212.169]:38906 "EHLO
-	mail-wi0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932271AbbD1HV6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Apr 2015 03:21:58 -0400
-Received: by wiun10 with SMTP id n10so17600410wiu.1
-        for <git@vger.kernel.org>; Tue, 28 Apr 2015 00:21:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :in-reply-to:references;
-        bh=yb7dHsBDzFpuFWgL+p9CllqFJ0Web0N17jPacgSOPCs=;
-        b=KWZ7Ss58TrpRVYFW/3UfmrUqlWsONtT2FTWQwzHqaVvdQgQQ+Ppd1KzhD1396aAteY
-         8JCBai55uPv9iFJrgs99CxYegQdbPktCXwxPkXuwEveHRDvgyxtHLJLm7JTxza8PGM9M
-         gYP+Q1/3xs4I5vi1T+3lUGSMY/WmYnhG68jMk=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:in-reply-to:references;
-        bh=yb7dHsBDzFpuFWgL+p9CllqFJ0Web0N17jPacgSOPCs=;
-        b=KSMpM86B9vond2eR3961InaDtpjkOtPUS5j4bRw2eziqsXqqSvCTxJq/11m2ipHI3+
-         uYI34oFO5gVemcqAppDG3PVQU2VDyPsnF3lh9xRGvNkXE10e3ltZ1dvmhaK7u7BljPyY
-         51kj9kOcBLXGHS1i2fXW5qgSF22qHAz4poaUvY/uvny+o4jM/o3MaxUj81MgZViEsf/a
-         TH6oRBhN5ngpI9DGqYgUC5O2Cx83tJ2x+oiPpZahbjepuvLA+GdrFPuFgqPnJ8EegRe6
-         T+ynuxfbZbPGJzyg0WnX7+oLn+2ebwYv8eyVZwtC5HjTckHJklmieGHSwNokRgJI+SDb
-         qL0A==
-X-Gm-Message-State: ALoCoQnSHYUD/aWDjwZbgctYvHG4zN+XnZFQgbpn0HDqx+bVLFPOGXf+wk+Mqt76RCs5JeL+PPBt
-X-Received: by 10.180.94.39 with SMTP id cz7mr26626782wib.66.1430205717467;
-        Tue, 28 Apr 2015 00:21:57 -0700 (PDT)
-Received: from ethel.cable.virginmedia.net (cpc7-cmbg17-2-0-cust139.5-4.cable.virginm.net. [86.1.43.140])
-        by mx.google.com with ESMTPSA id gj7sm14954864wib.4.2015.04.28.00.21.56
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 28 Apr 2015 00:21:56 -0700 (PDT)
-X-Mailer: git-send-email 2.3.4.48.g223ab37
-In-Reply-To: <1430205682-4309-1-git-send-email-luke@diamand.org>
-In-Reply-To: <1430202609-31841-1-git-send-email-luke@diamand.org>
-References: <1430202609-31841-1-git-send-email-luke@diamand.org>
+	id S932170AbbD1H2I convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 Apr 2015 03:28:08 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:59576 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932140AbbD1H2G convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Apr 2015 03:28:06 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 16A6C44670;
+	Tue, 28 Apr 2015 03:28:06 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=wA1L7dhYZBMp
+	YtrAqjwlkkq4zJg=; b=sydtReoNx/yER1qRU4eVg7AHSx6hWOHi+bVvFhq8GwEb
+	Vi5D6eeHTLzD2jpW9V2ITJ8XUshYqKkh8dS7UY2zPvzRbQ9+03VcyjE4KP8jCyPz
+	8Cc1TLSHGaQCPrc1yzjIJlIZ7PyJbDK1xbNic8fb0IzS9SmY/FVSeTNrb2QzRNc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=tQfc/V
+	LCxWWoBN6d32EQ1Jd4H5XBrK+n+Re8iWyP7nIDxQonQszY0WF2MJSDgRPJUmAOyL
+	pqFGSVT/blDxXcl4a3pdzb2oslo0vBmm54aI5TFIqbexB3vd27JjfXNVxwL4v723
+	cJOBjhJ15keOroIZ+WUMuPRe1j+Se9MBTSGgw=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0F3CC4466F;
+	Tue, 28 Apr 2015 03:28:06 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 64F234466D;
+	Tue, 28 Apr 2015 03:28:05 -0400 (EDT)
+In-Reply-To: <553E90C0.4070103@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
+ =?utf-8?Q?en=22's?= message of
+	"Mon, 27 Apr 2015 21:40:48 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 1C483C18-ED78-11E4-AA0A-83E09F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267910>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267911>
 
-Use test_lazy_prereq to setup prerequisites for the p4 move
-test. This both makes the test simpler and clearer, and also
-means it no longer fails the new --chain-lint tests.
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
-Suggested-by: Jeff King <peff@peff.net>
-Signed-off-by: Luke Diamand <luke@diamand.org>
----
- t/t9814-git-p4-rename.sh | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+> What do you think about the following test cases for a V2 patch ?
+>
+> test_expect_success 'create blamerepo' '
+>     test_create_repo blamerepo &&
+>     (
+>         cd blamerepo &&
+>         printf "testcase\r\n" >crlffile &&
+>         git -c core.autocrlf=3Dfalse add crlffile &&
+>         git commit -m "add files" &&
+>         git -c core.autocrlf=3Dfalse blame crlffile >crlfclean.txt
+>     )
+> '
+>
+> test_expect_success 'blaming files with CRLF newlines in repo, core.a=
+utoclrf=3Dinput' '
+>     (
+>         cd blamerepo &&
+>         git -c core.autocrlf=3Dinput blame crlffile >actual &&
+>         grep "Not Committed Yet" actual
 
-diff --git a/t/t9814-git-p4-rename.sh b/t/t9814-git-p4-rename.sh
-index 99bb71b..c89992c 100755
---- a/t/t9814-git-p4-rename.sh
-+++ b/t/t9814-git-p4-rename.sh
-@@ -226,14 +226,9 @@ test_expect_success 'detect copies' '
- 
- # See if configurables can be set, and in particular if the run.move.allow
- # variable exists, which allows admins to disable the "p4 move" command.
--test_expect_success 'p4 configure command and run.move.allow are available' '
--	p4 configure show run.move.allow >out ; retval=$? &&
--	test $retval = 0 &&
--	{
--		egrep ^run.move.allow: out &&
--		test_set_prereq P4D_HAVE_CONFIGURABLE_RUN_MOVE_ALLOW ||
--		true
--	} || true
-+test_lazy_prereq P4D_HAVE_CONFIGURABLE_RUN_MOVE_ALLOW '
-+	p4 configure show run.move.allow >out &&
-+	egrep ^run.move.allow: out
- '
- 
- # If move can be disabled, turn it off and test p4 move handling
--- 
-2.3.4.48.g223ab37
+Are you interested in seeing just some of the lines to show up as
+"Not commited yet", or all of them?  I think it would be the latter,
+so perhaps=20
+
+    ! grep -v "Not Committed Yet" actual
+
+or something?
+
+>     )
+> '
+>
+>
+
+Two blank lines only here?
+
+> test_expect_success 'blaming files with CRLF newlines core.autocrlf=3D=
+true' '
+>     (
+>         cd blamerepo &&
+>         git -c core.autocrlf=3Dtrue blame crlffile >actual &&
+>         test_cmp crlfclean.txt actual
+>     )
+> '
+
+OK
+
+> test_expect_success 'blaming files with CRLF newlines core.autocrlf=3D=
+false' '
+>     (
+>         cd blamerepo &&
+>         git -c core.autocrlf=3Dfalse blame crlffile >actual &&
+>         test_cmp crlfclean.txt actual
+>     )
+> '
+
+Hmm, how's this blame invocation any different from the one done in
+the set-up step at the very beginning?  In other words, I am not sure
+what kind of breakage could cause this step to fail.
+
+I see there is no "git blame HEAD crlffile" that bypasses the fake
+latest commit altogether.  Wouldn't that be the most appropriate
+thing to compare against (i.e. how to create crlfclean.txt in the
+set-up step)?
