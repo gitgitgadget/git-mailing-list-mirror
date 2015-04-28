@@ -1,78 +1,90 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Question about how git determines the minimum packfile for a
- push.
-Date: Tue, 28 Apr 2015 01:33:32 -0400
-Message-ID: <20150428053332.GH24580@peff.net>
-References: <E51394554A503C4E852F9BEE46B03E8D01E4E784@TI-ODIN.tasernet.com>
+Subject: Re: [PATCH v2] git-compat-util.h: implement a different ARRAY_SIZE
+ macro for for safely deriving the size of array
+Date: Tue, 28 Apr 2015 01:42:37 -0400
+Message-ID: <20150428054237.GI24580@peff.net>
+References: <1430140269-11784-1-git-send-email-gitter.spiros@gmail.com>
+ <xmqq1tj5xxo1.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Brad Litterell <brad@evidence.com>
-X-From: git-owner@vger.kernel.org Tue Apr 28 07:33:45 2015
+Cc: Elia Pinto <gitter.spiros@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 28 07:42:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ymy9N-0005Tt-66
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Apr 2015 07:33:41 +0200
+	id 1YmyI9-00050Y-PK
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Apr 2015 07:42:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752839AbbD1Fdf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Apr 2015 01:33:35 -0400
-Received: from cloud.peff.net ([50.56.180.127]:50972 "HELO cloud.peff.net"
+	id S1752907AbbD1Fml (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Apr 2015 01:42:41 -0400
+Received: from cloud.peff.net ([50.56.180.127]:50975 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752648AbbD1Fde (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Apr 2015 01:33:34 -0400
-Received: (qmail 18386 invoked by uid 102); 28 Apr 2015 05:33:34 -0000
+	id S1751348AbbD1Fmk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Apr 2015 01:42:40 -0400
+Received: (qmail 18823 invoked by uid 102); 28 Apr 2015 05:42:40 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Apr 2015 00:33:34 -0500
-Received: (qmail 11764 invoked by uid 107); 28 Apr 2015 05:34:03 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Apr 2015 00:42:40 -0500
+Received: (qmail 11802 invoked by uid 107); 28 Apr 2015 05:43:09 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Apr 2015 01:34:03 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Apr 2015 01:33:32 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Apr 2015 01:43:08 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Apr 2015 01:42:37 -0400
 Content-Disposition: inline
-In-Reply-To: <E51394554A503C4E852F9BEE46B03E8D01E4E784@TI-ODIN.tasernet.com>
+In-Reply-To: <xmqq1tj5xxo1.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267897>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267898>
 
-On Mon, Apr 27, 2015 at 12:41:28AM +0000, Brad Litterell wrote:
+On Mon, Apr 27, 2015 at 10:56:30AM -0700, Junio C Hamano wrote:
 
-> Is it possible git is not computing the delta correctly?  Or does git
-> only look at the top-level commit objects to figure out what to
-> include in the push packfile?
+> Elia Pinto <gitter.spiros@gmail.com> writes:
+> 
+> > This is the second version of this patch.  It had not been
+> > discussed before. In the second version, I just tried to clarify
+> > the comment in the commit. I resend it just in case you missed
+> 
+> I do not recall seeing it before.  No discussion usually means no
+> interest, so I'll see what happens this time on the list for a few
+> days before picking it up.
 
-It's the latter. Junio mentioned that "push" is not as thorough about
-finding common ancestors as "fetch", but I think even "fetch" would have
-the same problem.
+I'm in favor of any method for improving compile-time bug-checking,
+provided that:
 
-If we know that the other side has commit X, we know that it also has
-X~3, and we also know that it has every tree and blob mentioned by X~3.
-But it's much too expensive to open up every tree to generate the full
-set of reachable objects; for the Linux kernel, that is something like 45
-seconds of CPU time, just to find out "oh, we only need to send 5
-objects".
+  1. It does not carry a maintenance cost that spreads throughout the
+     code base (e.g., here the cost is localized to making ARRAY_SIZE a
+     bit more complex, but callers do not have to care about the extra
+     checking).
 
-This works pretty well in practice, because trees and blobs from older
-history don't tend to resurface verbatim. But as you noticed, there are
-certain cases where it does happen, and the number of objects affected
-can be quite large (to the point that sending the extra objects is much
-more expensive than the cost of doing the extra tree traversal).
-Unfortunately there is no "look harder" option you can give to
-"git push" when you, as the user, realize this is happening.
+  2. It gracefully degrades when using older compilers (i.e., we can
+     fall back to the existing ARRAY_SIZE definition when the magic
+     builtin is not available).
 
-If you have pack reachability bitmaps, they do produce a more thorough
-answer. So probably:
+I think this is OK for both points. It would be nice if we could
+auto-detect the presence of the builtin without using autoconf. I think
+most git developers do not use autoconf at all, and the feature does not
+help much if nobody turns it on. Is there a __GNUC__ or similar
+feature-test macro we could use for this?
 
-  git repack -adb
-  git push
+> > +#define _array_size_chk(arr) 0
+> > +#endif
+> 
+> Wouldn't there be a more sensible name?  _chk does not tell us
+> anything about what is being checked, and the only thing this name
+> gives us is "what uses it" (i.e. it is some magic used by array-size
+> and does not say what it checks and what for).
+> 
+> I think you are checking arr is an array and not a pointer.  Perhaps
+> "#define is_an_array(arr)" or something along that line may be a
+> more descriptive name for it.
+> 
+> I doubt the leading underscore is particularly a good idea, though.
 
-on the client would make this work as you expect.
-
-> Will it upload the larger pack only to have the server correctly handle the duplicates?
-
-Yes, the receiving side should correctly handle the duplicates.
+Agreed on the naming (modulo the "not" from your follow-on email). Also,
+should it be in ALL_CAPS like the other added macros? We are slightly
+inconsistent about that in our code-base.
 
 -Peff
