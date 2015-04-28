@@ -1,115 +1,121 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: Regular Rebase Failure
-Date: Mon, 27 Apr 2015 16:55:12 -0700
-Message-ID: <CAGZ79kY7kLF=uNm13xuqETMB1S+uwnB09_NzgU32bpODJHg8tg@mail.gmail.com>
-References: <553685E0.8010304@gmail.com>
-	<CAGZ79kadXgsdCLH-YFQ5RhyKbRv9-qmUOQo-9QkKM2=8p17j+g@mail.gmail.com>
-	<55369509.2080200@gmail.com>
-	<CAGZ79kY0pbC6qH+Refm8Py0PyF2xNMLfSarhA+3-7eaU==RK7w@mail.gmail.com>
-	<CAF72XQfVfjMLe2VqNWHkGXq75DLMPU6VVqLeGzgh9rZNC0qp3Q@mail.gmail.com>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH/RFC] blame: CRLF in the working tree and LF in the repo
+Date: Tue, 28 Apr 2015 01:17:03 +0000
+Message-ID: <20150428011702.GA5015@vauxhall.crustytoothpaste.net>
+References: <553CD3DA.9090700@web.de>
+ <xmqqzj5uxhls.fsf@gitster.dls.corp.google.com>
+ <xmqqa8xtxy32.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Adam Steel <adamgsteel@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Apr 28 01:55:28 2015
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="+HP7ph2BbKc20aGI"
+Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>, kasal@ucw.cz
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 28 03:17:25 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ymsry-00033G-HA
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Apr 2015 01:55:23 +0200
+	id 1Ymu9E-0000v8-Gn
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Apr 2015 03:17:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753218AbbD0XzO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Apr 2015 19:55:14 -0400
-Received: from mail-ig0-f176.google.com ([209.85.213.176]:36889 "EHLO
-	mail-ig0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752457AbbD0XzN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Apr 2015 19:55:13 -0400
-Received: by igblo3 with SMTP id lo3so7483089igb.0
-        for <git@vger.kernel.org>; Mon, 27 Apr 2015 16:55:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        bh=28A14OYIUzE8aIJ9SK4MVqSpVC32V6uGXx+fmh+FAmo=;
-        b=Un/P8CK86s96+mcnvRK6qBTqlSAoo+2RPnc7cHn2/c1/r1Tk8rPIJ7JqzeLoo96GLa
-         EdqFBJ1eBcl7lsJqwL4o2JU/0VdJdvAXbxv9GtfelkZkgZfBP3ksdDuu8yXSxEE6kB7V
-         Lrwkn67L5uUENzyTyEms1RhEXaOgm+p+JpXu1L5uUvB1z+DdXWMt3SCDhxiBFdSs3XEd
-         9GEN0pbU25k/84HK0fYWvMRaUnzLfql5pAj6N7iqyKSdPWWIGsxR/QdcHUmwEX5HBaRD
-         l+jynndv3tBwGEiPRVDduEDQDiG6k9Vg+BXTt/OX8y6EvSenyTk8IPw0f4n2JLTjB6Ua
-         dQjA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:content-type;
-        bh=28A14OYIUzE8aIJ9SK4MVqSpVC32V6uGXx+fmh+FAmo=;
-        b=UyHXaaZrNIOVUHr1i+1l3Mj33C7hI5iAZmZrJ8M4jddz13bmdEj1B6ZbNHdgjhKyc0
-         pUuEOkjDGG33wXEfTB6mCLxJIRx7hg9Fscw55Bb9bdBat5P23hS+UuejQPgK/wqgLSFY
-         Tb6nw/NnLI5HHciXyeNMJyWGoJVBoipL9GP3T2w9YzZQrkCxt5VpG90mrhzlTpW3eIlI
-         7B9d6eHHWM+yQbjhMk2k7fZr/xz29Nwm8wQOkJSfcKERd7+zOlwuv9jSjQOfSyAtXr2w
-         kdxxM1CYazE9AkTV5stMYdy4Vf1flc6oQwdPnltBoJ6GpZ46KM2xe3JO5nZDSOKp0Ljt
-         gLVg==
-X-Gm-Message-State: ALoCoQmxhLMHvlepL7DNIopg1f2Fc4Ru57Mv+zhwToSDQa1BweAplg5Y2Igf9qvHgDoQHbKtGTXO
-X-Received: by 10.42.213.136 with SMTP id gw8mr15067194icb.95.1430178912219;
- Mon, 27 Apr 2015 16:55:12 -0700 (PDT)
-Received: by 10.107.46.22 with HTTP; Mon, 27 Apr 2015 16:55:12 -0700 (PDT)
-In-Reply-To: <CAF72XQfVfjMLe2VqNWHkGXq75DLMPU6VVqLeGzgh9rZNC0qp3Q@mail.gmail.com>
+	id S1752773AbbD1BRK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Apr 2015 21:17:10 -0400
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:50113 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751840AbbD1BRJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 27 Apr 2015 21:17:09 -0400
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:d8d7:1ec4:dcc9:52a0])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id D98732808D;
+	Tue, 28 Apr 2015 01:17:06 +0000 (UTC)
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>, kasal@ucw.cz
+Content-Disposition: inline
+In-Reply-To: <xmqqa8xtxy32.fsf@gitster.dls.corp.google.com>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 4.0.0-trunk-amd64)
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267888>
 
-[+mailing list, so others can also chime in and have an answer/opinion]
 
-On Mon, Apr 27, 2015 at 10:07 AM, Adam Steel <adamgsteel@gmail.com> wrote:
-> Stefan,
->
-> So I switched git versions.
->
-> $ git --version
-> git version 2.3.1
->
-> I'm still getting the same regular rebase failures.
->
-> ---
->
-> fatal: Unable to create
-> '/Users/asteel/Repositories/rails-teespring/.git/index.lock': File
-> exists.
->
->
-> If no other git process is currently running, this probably means a
->
-> git process crashed in this repository earlier. Make sure no other git
->
-> process is running and remove the file manually to continue.
->
-> ---
->
-> Any ideas?
->
-> Adam
->
-> On Tue, Apr 21, 2015 at 12:34 PM, Stefan Beller <sbeller@google.com> wrote:
->> [+mailing list]
->>
->> On Tue, Apr 21, 2015 at 11:20 AM, Adam <adamgsteel@gmail.com> wrote:
->>> I'm using git version 2.3.2 (Apple Git-55).
->>
->> We should loop in the maintainers of the Apple Git version, they'd know
->> what changed in git about two weeks ago.
->> I have no idea who that is though.
->>
->>>
->>> That explains why I can't find the index.lock file, since the error that was
->>> thrown deleted it. I'm still not sure what to do about this, though.
->>
->> Complain at the right people so it gets fixed. ;)
->>
->>>
->>> Thanks for responding.
->>>
->>> Adam
->>>
+--+HP7ph2BbKc20aGI
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Mon, Apr 27, 2015 at 10:47:29AM -0700, Junio C Hamano wrote:
+> The original says this:
+>=20
+>     blame: correctly handle files regardless of autocrlf
+>    =20
+>     If a file contained CRLF line endings in a repository with
+>     core.autocrlf=3Dinput, then blame always marked lines as "Not
+>     Committed Yet", even if they were unmodified.  Don't attempt to
+>     convert the line endings when creating the fake commit so that blame
+>     works correctly regardless of the autocrlf setting.
+>    =20
+>     Reported-by: Ephrim Khong <dr.khong@gmail.com>
+>     Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+>     Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>=20
+> But if autocrlf=3Dinput, then the end-user expectation is to keep the
+> in-repository data with LF line endings.  If your tip-of-the-tree
+> commit incorrectly has CRLF line endings, and if you were going to
+> commit what is in the working tree on top, you would be correcting
+> that mistake by turning the in-repository data into a text file with
+> LF line endings, so "Not Committed Yet" _is_ the correct behaviour.
+>=20
+> So I think that the reverting that change is the right thing to do.
+> It really was a change to break the behaviour to match a mistaken
+> expectation, I would have to say.
+
+I don't have a strong opinion on whether or not this should be reverted,
+since I don't use Windows and therefore don't use CRLF or the respective
+options anywhere, nor am I very familiar with how they are supposed to
+function.  Junio has articulated a good rationale for why it's broken,
+and I'm willing to go along with that.
+
+I will say that perhaps it's worthwhile to write some documentation to
+explain how the CRLF translation works, as it seems that there's a lot
+of misunderstanding about it.  I am, for the aforementioned reasons, not
+a good choice to write it.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+
+--+HP7ph2BbKc20aGI
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCgAGBQJVPt+OAAoJEL9TXYEfUvaLrq4P/2ecXpAf66VlIBhqqjtG1S/f
+pBQu4kaF6coprhgnIUskHeIJa3Kj8XXrdxAysm1d+no9kOqAqij1qys7o5ZBZKxd
+XH0JUcsRQySD7szUFwgw7srFbJaXm1PZTsth3Fxy9zarmewu7aSS1Nd8amdUxdLv
+hMyca1znRJwK2P6rfzSrGuixNU6ACt/XWjosdn8TWytn0z9MwnKVEj/AtfWMuzmy
+/1fkGtjKQu30eB405ihOOpSwTCK0vk2IAmOzJapBZ1x2lkzVV0Tu3gLP3Lzv+G0X
+3TorVc5LxbEce9gKxHyvn4D+K5xO7v6MtDe9k+DOYBpSlaFx1UNTT816RwXJGZ7L
+i7DkxX16DfTKl5HoWYua6GqFwjwDU4Lk/81KCy5bvpx5I78rPiEKSW4FFtmEHKAo
+VeXDzcXzxYcEgMDQ170PVAt/tWFKvz8fJPah+Wr1to5WXZpiaSdy6USTn5sNa1hh
+92bC3rqpRs6mSnej50u/qdg0gdl6AeK7An3vq5rFgmWOcMi7mdj+jOqzBolPKkLs
+cngz/Pp2GntaGD5eVZ7QElLSlIsfO3NTmdLHBG2cfHk8+O4qldqFNs45/dmvtDum
+8LNPkMDvt3PrmfA4SDWld6In7ecwXK7zpfiCAYjk6sF9JcksGoKWUe92px5H7yFJ
+9+LTFoBs4JxvxAFH2I7i
+=/sk5
+-----END PGP SIGNATURE-----
+
+--+HP7ph2BbKc20aGI--
