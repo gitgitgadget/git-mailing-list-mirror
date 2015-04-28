@@ -1,82 +1,78 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Fwd: Can't override username of default credential context to
- have different username in custom context.
-Date: Tue, 28 Apr 2015 01:25:39 -0400
-Message-ID: <20150428052539.GG24580@peff.net>
-References: <CAK9djV0CqO4sXPMqKCnH3VZFQ4G=XFbNPRF-ZMXjNRLjqfcngw@mail.gmail.com>
- <20150428052502.GF24580@peff.net>
+Subject: Re: Question about how git determines the minimum packfile for a
+ push.
+Date: Tue, 28 Apr 2015 01:33:32 -0400
+Message-ID: <20150428053332.GH24580@peff.net>
+References: <E51394554A503C4E852F9BEE46B03E8D01E4E784@TI-ODIN.tasernet.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: "Kyle J. McKay" <mackyle@gmail.com>, git@vger.kernel.org
-To: Vladislav Kostenko <vkostenko@netlabsystems.com>
-X-From: git-owner@vger.kernel.org Tue Apr 28 07:25:48 2015
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Brad Litterell <brad@evidence.com>
+X-From: git-owner@vger.kernel.org Tue Apr 28 07:33:45 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ymy1i-0006x7-BY
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Apr 2015 07:25:46 +0200
+	id 1Ymy9N-0005Tt-66
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Apr 2015 07:33:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751656AbbD1FZm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Apr 2015 01:25:42 -0400
-Received: from cloud.peff.net ([50.56.180.127]:50964 "HELO cloud.peff.net"
+	id S1752839AbbD1Fdf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Apr 2015 01:33:35 -0400
+Received: from cloud.peff.net ([50.56.180.127]:50972 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751343AbbD1FZl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Apr 2015 01:25:41 -0400
-Received: (qmail 18082 invoked by uid 102); 28 Apr 2015 05:25:42 -0000
+	id S1752648AbbD1Fde (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Apr 2015 01:33:34 -0400
+Received: (qmail 18386 invoked by uid 102); 28 Apr 2015 05:33:34 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Apr 2015 00:25:41 -0500
-Received: (qmail 11554 invoked by uid 107); 28 Apr 2015 05:26:10 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Apr 2015 00:33:34 -0500
+Received: (qmail 11764 invoked by uid 107); 28 Apr 2015 05:34:03 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Apr 2015 01:26:10 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Apr 2015 01:25:39 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Apr 2015 01:34:03 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Apr 2015 01:33:32 -0400
 Content-Disposition: inline
-In-Reply-To: <20150428052502.GF24580@peff.net>
+In-Reply-To: <E51394554A503C4E852F9BEE46B03E8D01E4E784@TI-ODIN.tasernet.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267896>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267897>
 
-[+cc Kyle, who I forgot on the initial send. Oops!]
+On Mon, Apr 27, 2015 at 12:41:28AM +0000, Brad Litterell wrote:
 
-On Tue, Apr 28, 2015 at 01:25:02AM -0400, Jeff King wrote:
+> Is it possible git is not computing the delta correctly?  Or does git
+> only look at the top-level commit objects to figure out what to
+> include in the push packfile?
 
-> On Mon, Apr 27, 2015 at 09:19:31PM +0500, Vladislav Kostenko wrote:
-> 
-> > Here is my scenario:
-> > 
-> > 1. First I set default username
-> > git config --global credential.username myUsername
-> > 
-> > 2. Then I want to have different username for my other repository
-> > git config --global
-> > credential.https://myOtherRepository.visualstudio.com.username
-> > myOtherUsername
-> > 
-> > 3. When I try to pull new changes, git asks for password of myUsername
-> > Password for 'https://myUsername@myOtherRepository.visualstudio.com':
-> > 
-> > But I want to have:
-> > Password for 'https://myOtherUsername@myOtherRepository.visualstudio.com':
-> > 
-> > Is there any way to accomplish overriding?
-> 
-> Only by changing the ordering in the config file, as you noticed.
-> 
-> The other http.* options will choose the most-specific match, but the
-> credential code predates that, and blindly goes in config order. Kyle
-> (cc'd) added the urlmatch support for http.*, and might be able to say
-> whether it could be adapted for the credential code. If so, then I think
-> it would need somebody to volunteer to work on it.
-> 
-> That would technically be a backwards-incompatible change to switch the
-> lookup order at this point in time, but I'm somewhat of the opinion that
-> in any case it matters, the new behavior would be a strict improvement.
-> 
-> -Peff
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+It's the latter. Junio mentioned that "push" is not as thorough about
+finding common ancestors as "fetch", but I think even "fetch" would have
+the same problem.
+
+If we know that the other side has commit X, we know that it also has
+X~3, and we also know that it has every tree and blob mentioned by X~3.
+But it's much too expensive to open up every tree to generate the full
+set of reachable objects; for the Linux kernel, that is something like 45
+seconds of CPU time, just to find out "oh, we only need to send 5
+objects".
+
+This works pretty well in practice, because trees and blobs from older
+history don't tend to resurface verbatim. But as you noticed, there are
+certain cases where it does happen, and the number of objects affected
+can be quite large (to the point that sending the extra objects is much
+more expensive than the cost of doing the extra tree traversal).
+Unfortunately there is no "look harder" option you can give to
+"git push" when you, as the user, realize this is happening.
+
+If you have pack reachability bitmaps, they do produce a more thorough
+answer. So probably:
+
+  git repack -adb
+  git push
+
+on the client would make this work as you expect.
+
+> Will it upload the larger pack only to have the server correctly handle the duplicates?
+
+Yes, the receiving side should correctly handle the duplicates.
+
+-Peff
