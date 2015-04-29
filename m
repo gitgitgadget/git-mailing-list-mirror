@@ -1,103 +1,117 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 00/15] Teach "git merge FETCH_HEAD" octopus merges
-Date: Wed, 29 Apr 2015 14:29:18 -0700
-Message-ID: <1430342973-30344-1-git-send-email-gitster@pobox.com>
+Subject: [PATCH v2 05/15] merge: clarify "pulling into void" special case
+Date: Wed, 29 Apr 2015 14:29:23 -0700
+Message-ID: <1430342973-30344-6-git-send-email-gitster@pobox.com>
 References: <1430025967-24479-1-git-send-email-gitster@pobox.com>
+ <1430342973-30344-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 29 23:29:43 2015
+X-From: git-owner@vger.kernel.org Wed Apr 29 23:29:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YnZY5-0006In-1X
-	for gcvg-git-2@plane.gmane.org; Wed, 29 Apr 2015 23:29:41 +0200
+	id 1YnZYD-0006PM-C6
+	for gcvg-git-2@plane.gmane.org; Wed, 29 Apr 2015 23:29:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750883AbbD2V3g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Apr 2015 17:29:36 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:57303 "EHLO
+	id S1751145AbbD2V3q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Apr 2015 17:29:46 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:56357 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750710AbbD2V3f (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Apr 2015 17:29:35 -0400
+	with ESMTP id S1751059AbbD2V3n (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Apr 2015 17:29:43 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B1F2C4DA8C;
-	Wed, 29 Apr 2015 17:29:34 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 088E34DAAA;
+	Wed, 29 Apr 2015 17:29:43 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=6ftH
-	rwPiee/uIkeQm8QkByHJASE=; b=R6+dN2j4CdVsqOlkFoacDrLsKhD03bP9FPXb
-	UtoCfXzdb+J7DG0rC3+JWVbOTxwZIYUOorbZ83/ckHGHbtCrTaQgmxu39/vOkWrS
-	uy4i11CmWaWk5bgKnfk1i4/RaIdlnwlaPHuddPp4Xv+bWGeMYYHYClTKxG+JLybO
-	MbviNZ4=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=NAx1
+	BKxyZy/eg8UTl9DMaHskmMg=; b=EI/fsoWhKsQO1fTEoz0sCdUs7y4zopv8EalE
+	RpHcV+8fuKtwNMUL7QADefKR/wejppV8Nyc3KLQ6JTjfpRa34q+iGgPq3ftXtlKJ
+	eA2eMiSUoA6pFosB4vgr2gx0M2zaQVbbIfU2ubTv96rqAFi7oAnLDvMQYUX/ul6S
+	krdPnCY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=TbcMDU
-	L9eebbl2ERhtIZjNWNuh65tPVBEUkbJ0xJ4rYvFYfQskdDiriTfTh9cd9Tdy5iM3
-	tZg0WKq8wkq7jwCdkbXAjJ3/mowHm6W9ovu/byw/Vu79W7CCNjN5U1U2XnLItkko
-	szkQQ5bgL3s3Qx4MoI7HW2gg87X6+DemIPLFA=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=GZy0o2
+	DEhAlqEgAdTXKGwjmSZ4ExyeOiKZv6dEjL1kEdSG+t8Rg4o66cO3AoQGCW1m8yFQ
+	bTQRqfl26ZxAtd4Ih2GLkAx+eA5uQkH7eohAMwu4OvwMJHorIiGwBdUbisA74Hz4
+	BNiwRyTLUiIXb9sp8ZX50me2fS/orwdot5JlA=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id ABC8B4DA8B;
-	Wed, 29 Apr 2015 17:29:34 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 004534DAA8;
+	Wed, 29 Apr 2015 17:29:43 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2C7AC4DA89;
-	Wed, 29 Apr 2015 17:29:34 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 797634DAA5;
+	Wed, 29 Apr 2015 17:29:42 -0400 (EDT)
 X-Mailer: git-send-email 2.4.0-rc3-300-g052d062
-In-Reply-To: <1430025967-24479-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: D457C33E-EEB6-11E4-AD67-83E09F42C9D4-77302942!pb-smtp1.pobox.com
+In-Reply-To: <1430342973-30344-1-git-send-email-gitster@pobox.com>
+X-Pobox-Relay-ID: D94C8F5A-EEB6-11E4-9DF3-83E09F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268011>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268012>
 
-This series is an attempt to make these two operations truly equivalent:
+Instead of having it as one of the three if/elseif/.. case arms,
+test the condition and handle this special case upfront.  This makes
+it easier to follow the flow of logic.
 
-    $ git pull . topic-a topic-b...
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin/merge.c | 35 ++++++++++++++++++-----------------
+ 1 file changed, 18 insertions(+), 17 deletions(-)
 
-    $ git fetch . topic-a topic-b...
-    $ git merge FETCH_HEAD
-
-Compared to the previous one ($gmane/267809), there are only a few
-minor changes:
-
- - The first patch is new; it adds tests to illustrate what the
-   current code does.  Accordingly, the penultimate patch is the
-   same as the previous, but updates the tests that expect failure
-   in this step to expect success.
-
- - One step failed to compile (the offending code was removed in a
-   later patch and the endgame did not break the build), which has
-   been corrected.
-
-Junio C Hamano (15):
-  merge: test the top-level merge driver
-  merge: simplify code flow
-  t5520: style fixes
-  t5520: test pulling an octopus into an unborn branch
-  merge: clarify "pulling into void" special case
-  merge: do not check argc to determine number of remote heads
-  merge: small leakfix and code simplification
-  merge: clarify collect_parents() logic
-  merge: split reduce_parents() out of collect_parents()
-  merge: narrow scope of merge_names
-  merge: extract prepare_merge_message() logic out
-  merge: make collect_parents() auto-generate the merge message
-  merge: decide if we auto-generate the message early in collect_parents()
-  merge: handle FETCH_HEAD internally
-  merge: deprecate 'git merge <message> HEAD <commit>' syntax
-
- Documentation/git-merge.txt   |   4 +
- builtin/merge.c               | 248 +++++++++++++++++++++++++++---------------
- git-cvsimport.perl            |   2 +-
- git-pull.sh                   |   3 +-
- t/t3033-merge-toplevel.sh     | 136 +++++++++++++++++++++++
- t/t3402-rebase-merge.sh       |   2 +-
- t/t5520-pull.sh               |  31 +++---
- t/t6020-merge-df.sh           |   2 +-
- t/t6021-merge-criss-cross.sh  |   6 +-
- t/t9402-git-cvsserver-refs.sh |   2 +-
- 10 files changed, 324 insertions(+), 112 deletions(-)
- create mode 100755 t/t3033-merge-toplevel.sh
-
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 8477878..878f82a 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -1178,23 +1178,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 		usage_with_options(builtin_merge_usage,
+ 			builtin_merge_options);
+ 
+-	/*
+-	 * This could be traditional "merge <msg> HEAD <commit>..."  and
+-	 * the way we can tell it is to see if the second token is HEAD,
+-	 * but some people might have misused the interface and used a
+-	 * commit-ish that is the same as HEAD there instead.
+-	 * Traditional format never would have "-m" so it is an
+-	 * additional safety measure to check for it.
+-	 */
+-
+-	if (!have_message && head_commit &&
+-	    is_old_style_invocation(argc, argv, head_commit->object.sha1)) {
+-		strbuf_addstr(&merge_msg, argv[0]);
+-		head_arg = argv[1];
+-		argv += 2;
+-		argc -= 2;
+-		remoteheads = collect_parents(head_commit, &head_subsumed, argc, argv);
+-	} else if (!head_commit) {
++	if (!head_commit) {
+ 		struct commit *remote_head;
+ 		/*
+ 		 * If the merged head is a valid one there is no reason
+@@ -1217,6 +1201,23 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 		update_ref("initial pull", "HEAD", remote_head->object.sha1,
+ 			   NULL, 0, UPDATE_REFS_DIE_ON_ERR);
+ 		goto done;
++	}
++
++	/*
++	 * This could be traditional "merge <msg> HEAD <commit>..."  and
++	 * the way we can tell it is to see if the second token is HEAD,
++	 * but some people might have misused the interface and used a
++	 * commit-ish that is the same as HEAD there instead.
++	 * Traditional format never would have "-m" so it is an
++	 * additional safety measure to check for it.
++	 */
++	if (!have_message &&
++	    is_old_style_invocation(argc, argv, head_commit->object.sha1)) {
++		strbuf_addstr(&merge_msg, argv[0]);
++		head_arg = argv[1];
++		argv += 2;
++		argc -= 2;
++		remoteheads = collect_parents(head_commit, &head_subsumed, argc, argv);
+ 	} else {
+ 		struct strbuf merge_names = STRBUF_INIT;
+ 
 -- 
 2.4.0-rc3-300-g052d062
