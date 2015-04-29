@@ -1,79 +1,89 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v9 4/5] cat-file: add documentation for '--allow-unkown-type' option.
-Date: Wed, 29 Apr 2015 18:26:26 +0530
-Message-ID: <1430312186-23542-1-git-send-email-karthik.188@gmail.com>
-References: <5540D397.8020104@gmail.com>
-Cc: gitster@pobox.com, sunshine@sunshineco.com,
-	Karthik Nayak <karthik.188@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 29 14:56:47 2015
+From: Roberto Tyley <roberto.tyley@gmail.com>
+Subject: Re: Bug report : bad filter-branch (OSX only)
+Date: Wed, 29 Apr 2015 15:42:07 +0100
+Message-ID: <CAFY1edZ=NjiRsBB6TyiR_as3vtiFHSQthKbnhbNPdKKtYNH2mg@mail.gmail.com>
+References: <CAM=W1NkZr6o-DCxXskeWC8xjRMiT2P9qXeeUe91qLBqOxzqNtg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Olivier ROLAND <cyrus-dev@edla.org>
+X-From: git-owner@vger.kernel.org Wed Apr 29 16:42:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YnRXh-0006sV-W7
-	for gcvg-git-2@plane.gmane.org; Wed, 29 Apr 2015 14:56:46 +0200
+	id 1YnTBm-0006aU-4J
+	for gcvg-git-2@plane.gmane.org; Wed, 29 Apr 2015 16:42:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423017AbbD2M4m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Apr 2015 08:56:42 -0400
-Received: from mail-pd0-f170.google.com ([209.85.192.170]:36817 "EHLO
-	mail-pd0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1422821AbbD2M4l (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Apr 2015 08:56:41 -0400
-Received: by pdea3 with SMTP id a3so27567980pde.3
-        for <git@vger.kernel.org>; Wed, 29 Apr 2015 05:56:41 -0700 (PDT)
+	id S1031716AbbD2OmK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Apr 2015 10:42:10 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:36016 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1031651AbbD2OmI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Apr 2015 10:42:08 -0400
+Received: by iebrs15 with SMTP id rs15so43794445ieb.3
+        for <git@vger.kernel.org>; Wed, 29 Apr 2015 07:42:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=mahK/xay3JglbiiNO1QGJHtvaWuSxgEkU05AfEKLW/A=;
-        b=yq6uVhdbPSDYymOb+zV1Qaekubr/OSQFvR8fwqywbNiJ994OWyU5cZVgiXP1kWjMz1
-         koVHH06V1fQYlmzSx9iot+1B4IW9xogx6NxXtz09bSOyubQy4ErvswOVPH6o+iQGJX+c
-         TB4WIBaB7s2fCw8c6prb9nrtYx9gIFemN5XM1OILCtbOHh/r/ypIDOSJs0PI7X6JjWru
-         hLPaU70ASrA7ReF4jNnrR39yFM9OwkcLBHA+Zxi0qZTm7tva6QFSJpt7nknB1ZzIdYU/
-         JGESIzCvvzswY9XJKAFLHFDiZJC9E3WHZmnTKG1S/VR+DjGLqfuBLYfnLm7ikHYSztPA
-         bLyQ==
-X-Received: by 10.70.134.133 with SMTP id pk5mr41692681pdb.133.1430312201099;
-        Wed, 29 Apr 2015 05:56:41 -0700 (PDT)
-Received: from ashley.localdomain ([182.48.234.2])
-        by mx.google.com with ESMTPSA id dv3sm13709814pbb.91.2015.04.29.05.56.36
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 29 Apr 2015 05:56:40 -0700 (PDT)
-X-Mailer: git-send-email 2.4.0.rc1.250.g565e85b
-In-Reply-To: <5540D397.8020104@gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=f95fLuR+FW6FYI4FXzc7u0w1eHiXaayJLlNMg7Yu3Xo=;
+        b=hh2hPCoK97BC0QqUt1JXqo5e84miY6g7wi82eMPFtkZSPhTIAnm+7WRGpcz2xDCs+p
+         y6mi1xinX7Uw7aDzGaegsfEHs+KLp/JnObGa+O7wxm/yX4QQAKwlnBc4nTwfmf/M4b81
+         UMROwBymiFi5Z/1owsQRTOmCNXre2fOmPkfQZyi46t184W+qZh7iUcS8wKBtS7twaiwb
+         gR1wIV1jmTZMFqz9UF3gnmccJVze0KhYax+025ujRDUnEEtpUUOgk9C+LFyNzCA8iP9P
+         Pxix9Jzghvp7HM81aLmtJ6lXQMpoAcyoi3rttLvGtrlZRz3Mal8qMbFyvrJKsMTCVnCm
+         hlbg==
+X-Received: by 10.107.10.201 with SMTP id 70mr29083707iok.0.1430318527205;
+ Wed, 29 Apr 2015 07:42:07 -0700 (PDT)
+Received: by 10.64.121.6 with HTTP; Wed, 29 Apr 2015 07:42:07 -0700 (PDT)
+In-Reply-To: <CAM=W1NkZr6o-DCxXskeWC8xjRMiT2P9qXeeUe91qLBqOxzqNtg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267965>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267966>
 
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
----
- Documentation/git-cat-file.txt | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+As an aside, if you're a Scala dev
+(https://github.com/begeric/FastParsers is a scala library), you might
+find it fun to play with https://rtyley.github.io/bfg-repo-cleaner/ -
+you could probably write some scala (eg a custom BFG
+CommitNodeCleaner) that would do whatever it is you want filter-branch
+to do.
 
-diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
-index f6a16f4..f6f6064 100644
---- a/Documentation/git-cat-file.txt
-+++ b/Documentation/git-cat-file.txt
-@@ -9,7 +9,7 @@ git-cat-file - Provide content or type and size information for repository objec
- SYNOPSIS
- --------
- [verse]
--'git cat-file' (-t | -s | -e | -p | <type> | --textconv ) <object>
-+'git cat-file' (-t [--allow-unkown-type]| -s [--allow-unkown-type]| -e | -p | <type> | --textconv ) <object>
- 'git cat-file' (--batch | --batch-check) < <list-of-objects>
- 
- DESCRIPTION
-@@ -69,6 +69,9 @@ OPTIONS
- 	not be combined with any other options or arguments.  See the
- 	section `BATCH OUTPUT` below for details.
- 
-+--allow-unkown-type::
-+	Allow -s or -t to query broken/corrupt objects of unknown type.
-+
- OUTPUT
- ------
- If '-t' is specified, one of the <type>.
--- 
-2.4.0.rc1.250.g565e85b
+Roberto
+
+On 26 April 2015 at 10:25, Olivier ROLAND <cyrus-dev@edla.org> wrote:
+> Hello,
+>
+> Seem to be a bug.
+>
+> OSX 10.10.3 git 2.3.6 HFS+ case-sensitive
+>
+> How to reproduce :
+> Step 1 : git clone https://github.com/begeric/FastParsers.git
+> Step 2 : cd FastParsers/
+> Step 3 : git filter-branch --env-filter 'if [ 0 = 1 ]; then echo 0; fi' -- --all
+>
+> Result on OSX :
+> Rewrite 65df7c5ac1ed956252b07b8c911ad7eba0a15c2b (206/206)
+> Ref 'refs/heads/experiment' was rewritten
+> Ref 'refs/remotes/origin/experiment' was rewritten
+> WARNING: Ref 'refs/remotes/origin/experiment' is unchanged
+> Ref 'refs/remotes/origin/master' was rewritten
+>
+> Result on Debian :
+> Rewrite 65df7c5ac1ed956252b07b8c911ad7eba0a15c2b (206/206)
+> WARNING: Ref 'refs/heads/experiment' is unchanged
+> WARNING: Ref 'refs/remotes/origin/experiment' is unchanged
+> WARNING: Ref 'refs/remotes/origin/experiment' is unchanged
+> WARNING: Ref 'refs/remotes/origin/master' is unchanged
+>
+> Do you have any thoughts on this ?
+>
+> Thanks.
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
