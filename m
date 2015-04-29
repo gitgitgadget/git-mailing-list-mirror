@@ -1,100 +1,175 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] rebase -i: redo tasks that die during cherry-pick
-Date: Wed, 29 Apr 2015 10:15:55 -0700
-Message-ID: <xmqq7fsu6ek4.fsf@gitster.dls.corp.google.com>
-References: <1430261720-9051-1-git-send-email-hordp@cisco.com>
-	<42512fad738e0ec47a8cdb6e6e92e994@www.dscho.org>
+From: karthik nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v9 3/5] cat-file: teach cat-file a '--allow-unknown-type'
+ option
+Date: Wed, 29 Apr 2015 23:13:19 +0530
+Message-ID: <55411837.40203@gmail.com>
+References: <5540D397.8020104@gmail.com>	<1430312006-23323-1-git-send-email-karthik.188@gmail.com> <xmqqpp6nt2a7.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Phil Hord <hordp@cisco.com>, git@vger.kernel.org,
-	phil.hord@gmail.com, Fabian Ruch <bafain@gmail.com>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Apr 29 19:16:03 2015
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, sunshine@sunshineco.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 29 19:43:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YnVac-0004Bb-PU
-	for gcvg-git-2@plane.gmane.org; Wed, 29 Apr 2015 19:16:03 +0200
+	id 1YnW1A-0001Ce-RP
+	for gcvg-git-2@plane.gmane.org; Wed, 29 Apr 2015 19:43:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966366AbbD2RP6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Apr 2015 13:15:58 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:51835 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S966266AbbD2RP5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Apr 2015 13:15:57 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E0E8C4CB1E;
-	Wed, 29 Apr 2015 13:15:56 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=edpX0kKopu1OVJQfz1xth5clcqg=; b=aISljT
-	3c0gEwpI6ldX46kJxMmhWccQBZlQCrEd0AR/W5AGoh0MGy1yj/EkcS2AIIVziwdx
-	DBGq7gWk9Kok/Dfl62JF+ajRQDTj6wY/ZdrPE/wHphV2DBTnmRVUJK7B0rx824Ks
-	3DyyOzbRLkuoscJHqnhwc/k3ewR6WbMra3kwM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QvcJN4ZgvGz52E6mkeCTHT7mSECcaF7L
-	OcXdRVUe0bByzqAR92FgzkodjoXPNuCH2QiN2TTIyKYqZr4OVsr7M+l5deuBIDBF
-	0y4prsSSUICahaCax6fngUyB5eR5exKiGm2QErBBevkke59/Z2n0/BYWu4XojDLP
-	ni2JSFQSuU0=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D99954CB1D;
-	Wed, 29 Apr 2015 13:15:56 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4BAD14CB1C;
-	Wed, 29 Apr 2015 13:15:56 -0400 (EDT)
-In-Reply-To: <42512fad738e0ec47a8cdb6e6e92e994@www.dscho.org> (Johannes
-	Schindelin's message of "Wed, 29 Apr 2015 01:17:39 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 65C97B10-EE93-11E4-8700-83E09F42C9D4-77302942!pb-smtp1.pobox.com
+	id S966369AbbD2RnY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Apr 2015 13:43:24 -0400
+Received: from mail-pa0-f53.google.com ([209.85.220.53]:33395 "EHLO
+	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965149AbbD2RnX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Apr 2015 13:43:23 -0400
+Received: by pacwv17 with SMTP id wv17so34124416pac.0
+        for <git@vger.kernel.org>; Wed, 29 Apr 2015 10:43:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=Lv7kDoshERR+9WpUAD+nelgmdyAHxrSlkUED5VEaHEQ=;
+        b=TxaHGIs1ng8plUjl3PIUuST/VKBDLWaE4eslWcaukMhrDqQxpNxNnqRdgA9D10OWaN
+         CZ58vv4YQft3QiJasPOi3OOnvLvjGZ4TzYrerjpxUnsFQw6a+JvcJHb7eVXW5DqchoK2
+         ctz/ZIc5EcPHJUjjU3+Hkh7Na6YA/3KVJjlNZtydvflJrHXFn5zxzH86Neae1QwLZB3n
+         Wi/B7cOSVcvXkJVS9qwNj08gdqnv/HzfKFrXMI47SfAUulGTF0wZUAYtOqnbKeJkdBNd
+         3BNybogU/ZGs/oWoRn7HuBHuPvUKzH6/a61+LaKMfCg/2MuxcNZ+38Czcuq7PnxIFwH4
+         8uiA==
+X-Received: by 10.68.136.42 with SMTP id px10mr352753pbb.19.1430329403339;
+        Wed, 29 Apr 2015 10:43:23 -0700 (PDT)
+Received: from [192.168.0.104] ([103.227.98.178])
+        by mx.google.com with ESMTPSA id lb1sm24100719pab.39.2015.04.29.10.43.20
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 29 Apr 2015 10:43:22 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
+In-Reply-To: <xmqqpp6nt2a7.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267986>
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-> Hi,
+
+On 04/29/2015 08:22 PM, Junio C Hamano wrote:
+> Karthik Nayak <karthik.188@gmail.com> writes:
 >
-> On 2015-04-29 00:55, Phil Hord wrote:
->> When rebase--interactive processes a task, it removes the item from
->> the todo list and appends it to another list of executed tasks. If a
->> pick (this includes squash and fixup) fails before the index has
->> recorded the changes, take the corresponding item and put it on the todo
->> list again. Otherwise, the changes introduced by the scheduled commit
->> would be lost.
->> 
->> That kind of decision is possible since the cherry-pick command
->> signals why it failed to apply the changes of the given commit. Either
->> the changes are recorded in the index using a conflict (return value 1)
->> and rebase does not continue until they are resolved or the changes
->> are not recorded in the index (return value neither 0 nor 1) and
->> rebase has to try again with the same task.
->> 
->> Add a test cases for regression testing to the "rebase-interactive"
->> test suite.
->> 
->> Signed-off-by: Fabian Ruch <bafain@gmail.com>
->> Signed-off-by: Phil Hord <hordp@cisco.com>
+>> Currently 'git cat-file' throws an error while trying to
+>> print the type or size of a broken/corrupt object. This is
+>> because these objects are usually of unknown types.
+>>
+>> Teach git cat-file a '--allow-unkown-type' option where it prints
+>> the type or size of a broken/corrupt object without throwing
+>> an error.
+>
+> Drop "Currently" from the description of the problem you are
+> solving.  We know that the problem you have to solve in the code is
+> current without being told.  This comment applies to all patches.
+
+Noted. Thanks!
+>
+>> Modify '-t' and '-s' options to call sha1_object_info_extended()
+>> directly to support the '--allow-unkown-type' option.
+>>
+>> Helped-by: Junio C Hamano <gitster@pobox.com>
+>> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+>> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 >> ---
->
-> ACK.
->
-> It would be even nicer to avoid removing the task from the `todo` list
-> until it has been performed correctly, of course, but I believe that
-> would require a much more invasive patch. So this here patch is fine
-> with me.
-
-Thanks, will queue.
-
-Aside from the "much more invasive" possibility, the patch makes me
-wonder if it would have been a better design to have a static "todo"
-with a "current" pointer as two state files.  Then reschedule would
-have been just the matter of decrementing the number in "current",
-instead of "grab the last line of one file and prepend to the other
-file, and then lose the last line".
+>>   builtin/cat-file.c | 38 ++++++++++++++++++++++++++------------
+>>   1 file changed, 26 insertions(+), 12 deletions(-)
+>>
+>> diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+>> index 53b5376..299e2e5 100644
+>> --- a/builtin/cat-file.c
+>> +++ b/builtin/cat-file.c
+>> @@ -9,13 +9,20 @@
+>>   #include "userdiff.h"
+>>   #include "streaming.h"
+>>
+>> -static int cat_one_file(int opt, const char *exp_type, const char *obj_name)
+>> +static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
+>> +			int unkown_type)
+>>   {
+>>   	unsigned char sha1[20];
+>>   	enum object_type type;
+>>   	char *buf;
+>>   	unsigned long size;
+>>   	struct object_context obj_context;
+>> +	struct object_info oi = {NULL};
+>> +	struct strbuf sb = STRBUF_INIT;
+>> +	unsigned flags = LOOKUP_REPLACE_OBJECT;
+>> +
+>> +	if (unkown_type)
+>> +		flags |= LOOKUP_UNKNOWN_OBJECT;
+>>
+>>   	if (get_sha1_with_context(obj_name, 0, sha1, &obj_context))
+>>   		die("Not a valid object name %s", obj_name);
+>> @@ -23,20 +30,22 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name)
+>>   	buf = NULL;
+>>   	switch (opt) {
+>>   	case 't':
+>> -		type = sha1_object_info(sha1, NULL);
+>> -		if (type > 0) {
+>> -			printf("%s\n", typename(type));
+>> +		oi.typename = &sb;
+>> +		if (sha1_object_info_extended(sha1, &oi, flags) < 0)
+>> +			die("git cat-file: could not get object info");
+>> +		if (sb.len) {
+>> +			printf("%s\n", sb.buf);
+>> +			strbuf_release(&sb);
+>>   			return 0;
+>>   		}
+>>   		break;
+>>
+>>   	case 's':
+>> -		type = sha1_object_info(sha1, &size);
+>> -		if (type > 0) {
+>> -			printf("%lu\n", size);
+>> -			return 0;
+>> -		}
+>> -		break;
+>> +		oi.sizep = &size;
+>> +		if (sha1_object_info_extended(sha1, &oi, flags) < 0)
+>> +			die("git cat-file: could not get object info");
+>> +		printf("%lu\n", size);
+>> +		return 0;
+>>
+>>   	case 'e':
+>>   		return !has_sha1_file(sha1);
+>> @@ -323,7 +332,7 @@ static int batch_objects(struct batch_options *opt)
+>>   }
+>>
+>>   static const char * const cat_file_usage[] = {
+>> -	N_("git cat-file (-t | -s | -e | -p | <type> | --textconv) <object>"),
+>> +	N_("git cat-file (-t [--allow-unkown-type]|-s [--allow-unkown-type]|-e|-p|<type>|--textconv) <object>"),
+>>   	N_("git cat-file (--batch | --batch-check) < <list-of-objects>"),
+>>   	NULL
+>>   };
+>> @@ -359,6 +368,7 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
+>>   	int opt = 0;
+>>   	const char *exp_type = NULL, *obj_name = NULL;
+>>   	struct batch_options batch = {0};
+>> +	int unkown_type = 0;
+>>
+>>   	const struct option options[] = {
+>>   		OPT_GROUP(N_("<type> can be one of: blob, tree, commit, tag")),
+>> @@ -369,6 +379,8 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
+>>   		OPT_CMDMODE('p', NULL, &opt, N_("pretty-print object's content"), 'p'),
+>>   		OPT_CMDMODE(0, "textconv", &opt,
+>>   			    N_("for blob objects, run textconv on object's content"), 'c'),
+>> +		OPT_BOOL( 0, "allow-unkown-type", &unkown_type,
+>> +			  N_("allow -s and -t to work with broken/corrupt objects")),
+>>   		{ OPTION_CALLBACK, 0, "batch", &batch, "format",
+>>   			N_("show info and content of objects fed from the standard input"),
+>>   			PARSE_OPT_OPTARG, batch_option_callback },
+>> @@ -402,5 +414,7 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
+>>   	if (batch.enabled)
+>>   		return batch_objects(&batch);
+>>
+>> -	return cat_one_file(opt, exp_type, obj_name);
+>> +	if (unkown_type && opt != 't' && opt != 's')
+>> +		die("git cat-file --allow-unkown-type: use with -s or -t");
+>> +	return cat_one_file(opt, exp_type, obj_name, unkown_type);
+>>   }
