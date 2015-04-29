@@ -1,207 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 15/15] merge: deprecate 'git merge <message> HEAD <commit>' syntax
-Date: Wed, 29 Apr 2015 14:29:33 -0700
-Message-ID: <1430342973-30344-16-git-send-email-gitster@pobox.com>
-References: <1430025967-24479-1-git-send-email-gitster@pobox.com>
- <1430342973-30344-1-git-send-email-gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 29 23:30:26 2015
+From: David Turner <dturner@twopensource.com>
+Subject: Re: RFC: git cat-file --follow-symlinks?
+Date: Wed, 29 Apr 2015 14:30:59 -0700
+Organization: Twitter
+Message-ID: <1430343059.14907.18.camel@ubuntu>
+References: <1430341032.14907.9.camel@ubuntu>
+	 <xmqqlhha4otr.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: git mailing list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 29 23:31:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YnZYj-0006lY-6c
-	for gcvg-git-2@plane.gmane.org; Wed, 29 Apr 2015 23:30:21 +0200
+	id 1YnZZf-0007OY-Ds
+	for gcvg-git-2@plane.gmane.org; Wed, 29 Apr 2015 23:31:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751276AbbD2VaQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Apr 2015 17:30:16 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:61336 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751246AbbD2V37 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Apr 2015 17:29:59 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E676B4DAE6;
-	Wed, 29 Apr 2015 17:29:58 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=0mJ6
-	GNbfLVfpAcXk+sdA0iNqxFc=; b=F/AbpzToSF+BijACuPs+aU9d2CNymyzr/Gje
-	m6/wfgERS3a36ZniTCXJQjdb3vbrVcGy700RNHQyrHpHr6Px4OhH6AHdSxmJIUYl
-	9YzoPEyI/ZMiUmdJ6IgAfSkzLFhxxfrOtxixJbV/tca+cxDbfQsHCoSq7pOqn8yf
-	TNCeTP0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=Hj8B9C
-	q63J/h3W2pVdTnRSBYHlieTxZDqqzTeRS/09GgkohEu6SiCv2id39qjvHh0xk0Z7
-	l6I5tG2+0CaZkQvmJgdFkKPJULkNcJE06cgAqO38STAaHXJKP9IFKVwqXKY17W2U
-	u0sZZYoKFU9zBt3n9kqdlgbP78udS/2VJ/IRE=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id DF0304DAE5;
-	Wed, 29 Apr 2015 17:29:58 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4F72F4DAE2;
-	Wed, 29 Apr 2015 17:29:58 -0400 (EDT)
-X-Mailer: git-send-email 2.4.0-rc3-300-g052d062
-In-Reply-To: <1430342973-30344-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: E2BC72BC-EEB6-11E4-921D-83E09F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751340AbbD2VbH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Apr 2015 17:31:07 -0400
+Received: from mail-pd0-f181.google.com ([209.85.192.181]:34029 "EHLO
+	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750895AbbD2VbD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Apr 2015 17:31:03 -0400
+Received: by pdbqa5 with SMTP id qa5so39678987pdb.1
+        for <git@vger.kernel.org>; Wed, 29 Apr 2015 14:31:02 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:content-type:mime-version
+         :content-transfer-encoding;
+        bh=76bmv05o/8jkno2lNERW4Esd4/0y5IGXDbvTWMvKgE0=;
+        b=TQqOTFUPwzjl/dDjVLpy0bMCW+5uYMRy23mKNkVcQsKdgjTGdjgoueVmcN0ZBZ99Hz
+         AjABJFGfRod+74iw3b3jutU/T19HJCge+6j0an03XTL1vueaJZ7n5jmq2e8tp8SoiQmy
+         HXQJ7uWjdKxHsNSr5tQb+p5S849IRDob1Jjrs5QulNIbsk4eCdw4bB6E+tGRDpYj2e+R
+         SCOxTuGNUdpBAXrhc+KNcyDLTUVsR+hw/E/STr7o5g0dRvyzOKe96IJOlbSWPJBYP229
+         8LmmHWOoGWlq3Rx893yXfHSqcyANm3LB4oM4OvdyeVIwTMdv2bYXJpnFzKKUrgDO+pci
+         VWKw==
+X-Gm-Message-State: ALoCoQmGvI0jHcOPXxG4Zt1q7U6BxwXSy12roLyK4ii2Ddq6i2g7Nr6z+SncXw/pA+pYvTmAqsxw
+X-Received: by 10.70.38.33 with SMTP id d1mr1886528pdk.99.1430343062166;
+        Wed, 29 Apr 2015 14:31:02 -0700 (PDT)
+Received: from [172.25.135.195] ([8.25.197.26])
+        by mx.google.com with ESMTPSA id mp3sm151557pbc.8.2015.04.29.14.31.00
+        (version=TLSv1.2 cipher=AES128-GCM-SHA256 bits=128/128);
+        Wed, 29 Apr 2015 14:31:00 -0700 (PDT)
+In-Reply-To: <xmqqlhha4otr.fsf@gitster.dls.corp.google.com>
+X-Mailer: Evolution 3.10.4-0ubuntu2 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268026>
 
-We had this in "git merge" manual for eternity:
+On Wed, 2015-04-29 at 14:17 -0700, Junio C Hamano wrote:
+> David Turner <dturner@twopensource.com> writes:
+> 
+> > Do people think this is reasonable?
+> 
+> I personally don't, exactly because we track the contents of the
+> symlink itself, not the referent.  Your "major wrinkle" that they
+> can point outside the repository is a mere manifestation of that.
 
-    'git merge' <msg> HEAD <commit>...
+I'm not sure I understand why tracking the contents of the symlink is a
+problem for this approach.  It seems reasonable to ask what would have
+happened had I checked out the repo at a certain SHA and said "cat
+foo/bar/baz".
 
-    [This] syntax (<msg> `HEAD` <commit>...) is supported for
-    historical reasons.  Do not use it from the command line or in
-    new scripts.  It is the same as `git merge -m <msg> <commit>...`.
+> The format specifiers the --batch option takes do not exactly give
+> you what the in-tree type of the thing is, to allow the receiving
+> end that parses the tagline (which it needs to do anyway in order to
+> find out where the current record ends) act on it.  %(objecttype)
+> would just say "blob" and you cannot tell if it is a plain file,
+> executable or a symbolic link.
+> 
+> Perhaps an ideal interface might be something like this:
+> 
+>     $ echo HEAD:RelNotes |
+>       git cat-file --batch='%(objecttype) %(intreemode) %(objectsize)'
+>     blob 160000 32
+>     Documentation/RelNotes/2.4.0.txt
+> 
+> I suspect it would be just the matter of teaching "cat-file --batch"
+> to read from get_sha1_with_context() in batch_one_object(), instead
+> of reading from get_sha1() which it currently does.
+> 
+> And that inteferface I think I can live with.
 
-With the update to "git merge" to make it understand what is
-recorded in FETCH_HEAD directly, including Octopus merge cases, we
-now can rewrite the use of this syntax in "git pull" with a simple
-"git merge FETCH_HEAD".
-
-Also there are quite a few fallouts in the test scripts, and it
-turns out that "git cvsimport" also uses this old syntax to record
-a merge.
-
-Judging from this result, I would not be surprised if dropping the
-support of the old syntax broke scripts people have written and been
-relying on for the past ten years.  But at least we can start the
-deprecation process by throwing a warning message when the syntax is
-used.
-
-With luck, we might be able to drop the support in a few years.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/merge.c               | 1 +
- git-cvsimport.perl            | 2 +-
- git-pull.sh                   | 3 +--
- t/t3402-rebase-merge.sh       | 2 +-
- t/t6020-merge-df.sh           | 2 +-
- t/t6021-merge-criss-cross.sh  | 6 +++---
- t/t9402-git-cvsserver-refs.sh | 2 +-
- 7 files changed, 9 insertions(+), 9 deletions(-)
-
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 42f9fcc..67fbfaf 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -1299,6 +1299,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 	 */
- 	if (!have_message &&
- 	    is_old_style_invocation(argc, argv, head_commit->object.sha1)) {
-+		warning("old-style 'git merge <msg> HEAD <commit>' is deprecated.");
- 		strbuf_addstr(&merge_msg, argv[0]);
- 		head_arg = argv[1];
- 		argv += 2;
-diff --git a/git-cvsimport.perl b/git-cvsimport.perl
-index 73d367c..82ecb03 100755
---- a/git-cvsimport.perl
-+++ b/git-cvsimport.perl
-@@ -1162,7 +1162,7 @@ sub commit {
- 		die "Fast-forward update failed: $?\n" if $?;
- 	}
- 	else {
--		system(qw(git merge cvsimport HEAD), "$remote/$opt_o");
-+		system(qw(git merge -m cvsimport), "$remote/$opt_o");
- 		die "Could not merge $opt_o into the current branch.\n" if $?;
- 	}
- } else {
-diff --git a/git-pull.sh b/git-pull.sh
-index 4d4fc77..15d9431 100755
---- a/git-pull.sh
-+++ b/git-pull.sh
-@@ -323,7 +323,6 @@ then
- 	fi
- fi
- 
--merge_name=$(git fmt-merge-msg $log_arg <"$GIT_DIR/FETCH_HEAD") || exit
- case "$rebase" in
- true)
- 	eval="git-rebase $diffstat $strategy_args $merge_args $rebase_args $verbosity"
-@@ -334,7 +333,7 @@ true)
- 	eval="git-merge $diffstat $no_commit $verify_signatures $edit $squash $no_ff $ff_only"
- 	eval="$eval $log_arg $strategy_args $merge_args $verbosity $progress"
- 	eval="$eval $gpg_sign_args"
--	eval="$eval \"\$merge_name\" HEAD $merge_head"
-+	eval="$eval FETCH_HEAD"
- 	;;
- esac
- eval "exec $eval"
-diff --git a/t/t3402-rebase-merge.sh b/t/t3402-rebase-merge.sh
-index 5a27ec9..8f64505 100755
---- a/t/t3402-rebase-merge.sh
-+++ b/t/t3402-rebase-merge.sh
-@@ -47,7 +47,7 @@ test_expect_success setup '
- '
- 
- test_expect_success 'reference merge' '
--	git merge -s recursive "reference merge" HEAD master
-+	git merge -s recursive -m "reference merge" master
- '
- 
- PRE_REBASE=$(git rev-parse test-rebase)
-diff --git a/t/t6020-merge-df.sh b/t/t6020-merge-df.sh
-index 27c3d73..2af1bee 100755
---- a/t/t6020-merge-df.sh
-+++ b/t/t6020-merge-df.sh
-@@ -24,7 +24,7 @@ test_expect_success 'prepare repository' '
- '
- 
- test_expect_success 'Merge with d/f conflicts' '
--	test_expect_code 1 git merge "merge msg" B master
-+	test_expect_code 1 git merge -m "merge msg" master
- '
- 
- test_expect_success 'F/D conflict' '
-diff --git a/t/t6021-merge-criss-cross.sh b/t/t6021-merge-criss-cross.sh
-index d15b313..213deec 100755
---- a/t/t6021-merge-criss-cross.sh
-+++ b/t/t6021-merge-criss-cross.sh
-@@ -48,7 +48,7 @@ echo "1
- " > file &&
- git commit -m "C3" file &&
- git branch C3 &&
--git merge "pre E3 merge" B A &&
-+git merge -m "pre E3 merge" A &&
- echo "1
- 2
- 3 changed in E3, branch B. New file size
-@@ -61,7 +61,7 @@ echo "1
- " > file &&
- git commit -m "E3" file &&
- git checkout A &&
--git merge "pre D8 merge" A C3 &&
-+git merge -m "pre D8 merge" C3 &&
- echo "1
- 2
- 3 changed in C3, branch B
-@@ -73,7 +73,7 @@ echo "1
- 9" > file &&
- git commit -m D8 file'
- 
--test_expect_success 'Criss-cross merge' 'git merge "final merge" A B'
-+test_expect_success 'Criss-cross merge' 'git merge -m "final merge" B'
- 
- cat > file-expect <<EOF
- 1
-diff --git a/t/t9402-git-cvsserver-refs.sh b/t/t9402-git-cvsserver-refs.sh
-index 1e266ef..d00df08 100755
---- a/t/t9402-git-cvsserver-refs.sh
-+++ b/t/t9402-git-cvsserver-refs.sh
-@@ -496,7 +496,7 @@ test_expect_success 'check [cvswork3] diff' '
- '
- 
- test_expect_success 'merge early [cvswork3] b3 with b1' '
--	( cd gitwork3 && git merge "message" HEAD b1 ) &&
-+	( cd gitwork3 && git merge -m "message" b1 ) &&
- 	git fetch gitwork3 b3:b3 &&
- 	git tag v3merged b3 &&
- 	git push --tags gitcvs.git b3:b3
--- 
-2.4.0-rc3-300-g052d062
+Even if I had %(intreemode), I would still have to do a recursive search
+to figure out whether Documentation or RelNotes was a symlink.  This is
+why I want a follow-symlinks mode.  And since I am already reading
+RelNotes, I can (and presently do) parse the mode out of that data.
+$(intreedmode) would save me some parsing, but it would not save me any
+reading, nor would it make my code any less complex.  But
+--follow-symlinks would simplify my code.
