@@ -1,104 +1,68 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Inexplicable merge conflict produced when when lines next to
- each other are changed
-Date: Tue, 28 Apr 2015 22:35:10 -0400
-Message-ID: <20150429023509.GB438@peff.net>
-References: <loom.20150428T093059-405@post.gmane.org>
+Subject: Re: Bug report : bad filter-branch (OSX only)
+Date: Wed, 29 Apr 2015 00:39:47 -0400
+Message-ID: <20150429043947.GA10702@peff.net>
+References: <CAM=W1NkZr6o-DCxXskeWC8xjRMiT2P9qXeeUe91qLBqOxzqNtg@mail.gmail.com>
+ <20150428055506.GJ24580@peff.net>
+ <CAM=W1NnR2-T7vpMSM-3-VypnR-T235tMudyjJowtj5utNmoKNQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Anuradha Dissanayake <falconne@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 29 04:35:19 2015
+To: Olivier ROLAND <cyrus-dev@edla.org>
+X-From: git-owner@vger.kernel.org Wed Apr 29 06:39:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YnHqI-0003o8-IY
-	for gcvg-git-2@plane.gmane.org; Wed, 29 Apr 2015 04:35:18 +0200
+	id 1YnJmt-0007mL-ND
+	for gcvg-git-2@plane.gmane.org; Wed, 29 Apr 2015 06:39:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031457AbbD2CfO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Apr 2015 22:35:14 -0400
-Received: from cloud.peff.net ([50.56.180.127]:51493 "HELO cloud.peff.net"
+	id S1751827AbbD2Ejv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Apr 2015 00:39:51 -0400
+Received: from cloud.peff.net ([50.56.180.127]:51510 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1031333AbbD2CfN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Apr 2015 22:35:13 -0400
-Received: (qmail 4124 invoked by uid 102); 29 Apr 2015 02:35:13 -0000
+	id S1751546AbbD2Eju (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Apr 2015 00:39:50 -0400
+Received: (qmail 9426 invoked by uid 102); 29 Apr 2015 04:39:50 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Apr 2015 21:35:13 -0500
-Received: (qmail 23343 invoked by uid 107); 29 Apr 2015 02:35:41 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Apr 2015 23:39:50 -0500
+Received: (qmail 24301 invoked by uid 107); 29 Apr 2015 04:40:19 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Apr 2015 22:35:41 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Apr 2015 22:35:10 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 29 Apr 2015 00:40:19 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 29 Apr 2015 00:39:47 -0400
 Content-Disposition: inline
-In-Reply-To: <loom.20150428T093059-405@post.gmane.org>
+In-Reply-To: <CAM=W1NnR2-T7vpMSM-3-VypnR-T235tMudyjJowtj5utNmoKNQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267954>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267956>
 
-On Tue, Apr 28, 2015 at 07:34:30AM +0000, Anuradha Dissanayake wrote:
+On Tue, Apr 28, 2015 at 01:02:17PM +0200, Olivier ROLAND wrote:
 
-> Let's say I have a file with this content in master:
+> Both versions are builded from source.
+> head -1 "$(git --exec-path)/git-filter-branch"
+> #!/bin/sh
 > 
-> _____
-> Line 1
-> Line 2
-> Line 3
-> Line 4 
-> _____
+> sh --version
+> GNU bash, version 3.2.57(1)-release (x86_64-apple-darwin14)
+> Copyright (C) 2007 Free Software Foundation, Inc.
 > 
-> Now say I create and checkout a new branch called Test. In this branch I 
-> change the file to this:
+> /bin/bash --version
+> GNU bash, version 4.1.5(1)-release (x86_64-pc-linux-gnu)
 > 
-> _____
-> Line 1
-> Line 2
-> Line 3 Modified
-> Line 4 
-> _____
-> 
-> and I commit this and switch back to master. In master I change the file 
-> to:
-> 
-> _____
-> Line 1
-> Line 2
-> Line 3
-> Line 4 Modified 
-> _____
-> 
-> and I commit. Now if I merge branch Test into master, I get a conflict.
-> 
-> Why can't git auto resolve this, as those are two entirely independent 
-> lines?
+> The bug seem really git related.
 
-The content-level merge in git looks for overlapping diff hunks. It does
-have a "level" setting which will try with varying degrees of effort to
-shrink the conflict section, but I do not think there is a setting that
-will resolve this cleanly. Short of teaching a new level to the libxdiff
-merge code, I think the best you can do is to specify your own
-content-level merge driver for these files, and feed the data to another
-program which does the merge differently (whether it is simply more
-aggressive at finding conflicts, or it might even know something about
-the semantics of the file). See the "three-way merge" section in "git
-help attributes".
+Yes, but I guessed it might be part of the filter-branch shell script
+that behaves differently under two different shells (i.e., that we used
+some unportable construct). However, I built bash 3.2.57 on my Linux box
+and could not replicate the problem.
 
-> If I tell git to edit conflicts using BeyondCompare as the 
-> difftool, BeyondCompare autoresolves this without even telling the user, 
-> since this isn't a real conflict (other merge tools we use at our 
-> company do so also). Is there a way to get git to autoresolve these? 
-> I've tried the recursive and resolve merge strategies but neither do it.
+The other "usual" thing that causes bugs to show up on OS X but not
+Linux is case-folding. But you said you are using a case-sensitive
+filesystem, so it's probably not that.
 
-I don't think a change of merge strategy will help; they all end up
-doing the content-level merge with the same libxdiff code.
+So I can't figure out how to replicate the problem here.
 
 -Peff
-
-PS I'm answering your "how to" questions directly without considering
-   whether what you are asking for is a good idea. But you may want
-   to think about whether there is a case that matches the above pattern
-   that you would _not_ want to auto-resolve (i.e., even though there is
-   not strictly a textual conflict, there is a good chance there is a
-   semantic conflict because the lines are so close together).
