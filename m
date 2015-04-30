@@ -1,88 +1,263 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: RFC: git cat-file --follow-symlinks?
-Date: Thu, 30 Apr 2015 15:51:35 -0400
-Message-ID: <20150430195135.GA6742@peff.net>
-References: <20150429214817.GA2725@peff.net>
- <1430346576.14907.40.camel@ubuntu>
- <20150429231150.GB3887@peff.net>
- <20150430003750.GA4258@peff.net>
- <1430355983.14907.55.camel@ubuntu>
- <20150430011612.GA7530@peff.net>
- <1430358345.14907.62.camel@ubuntu>
- <20150430033725.GB12361@peff.net>
- <1430421924.22711.57.camel@ubuntu>
- <xmqqegn1z9fp.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: A note from the maintainer
+Date: Thu, 30 Apr 2015 12:51:16 -0700
+Message-ID: <xmqqzj5pxumj.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: David Turner <dturner@twopensource.com>,
-	git mailing list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 30 21:51:49 2015
+Content-Type: text/plain
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 30 21:51:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YnuUu-0005uN-NN
-	for gcvg-git-2@plane.gmane.org; Thu, 30 Apr 2015 21:51:49 +0200
+	id 1YnuUt-0005uN-1o
+	for gcvg-git-2@plane.gmane.org; Thu, 30 Apr 2015 21:51:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752992AbbD3Tvo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Apr 2015 15:51:44 -0400
-Received: from cloud.peff.net ([50.56.180.127]:52489 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752989AbbD3Tvi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Apr 2015 15:51:38 -0400
-Received: (qmail 15327 invoked by uid 102); 30 Apr 2015 19:51:38 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 30 Apr 2015 14:51:38 -0500
-Received: (qmail 8955 invoked by uid 107); 30 Apr 2015 19:52:07 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 30 Apr 2015 15:52:07 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 30 Apr 2015 15:51:35 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqqegn1z9fp.fsf@gitster.dls.corp.google.com>
+	id S1752973AbbD3Tv0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Apr 2015 15:51:26 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:55824 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752918AbbD3TvT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Apr 2015 15:51:19 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1F6A14DF7C;
+	Thu, 30 Apr 2015 15:51:18 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=d
+	/Uswa+7n7fo15Vi+U8APwsBdyM=; b=X7i3twxvpWBricE4ISC9s09hqxtleRQ05
+	J8A2LiekaQcJW+s0oO3B/DuniRBd+9E3GOqGOPJ4K+CSXwTk7vpv1FXn11eg/eeN
+	zop6jWpVEmkiRCaefJpFk9LTx1efmyfmxEWyrIe8IM3UV1IkzGK5s1lIq9TAcwQb
+	g8kBRmU3wM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=KZu
+	1MWy6MKxEo+bkvt0cyEWv4m9AxLQjc57BDuo3fSNuwN8GXuxGMrCBitV3Y+qBVBa
+	bKJnMr+beUqwXDzVFFXVSAzBWyk68BBIcd2Vsx5CkEfv23DzWISZErbOHqugFGsi
+	YbInSeyIODzh0m8i/3vJOSmhiEto2rSSsvvXrzZU=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 187374DF7B;
+	Thu, 30 Apr 2015 15:51:18 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 74C984DF7A;
+	Thu, 30 Apr 2015 15:51:17 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 440BD2E0-EF72-11E4-8EC4-83E09F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268099>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268100>
 
-On Thu, Apr 30, 2015 at 12:46:02PM -0700, Junio C Hamano wrote:
+Welcome to the Git development community.
 
-> David Turner <dturner@twopensource.com> writes:
-> 
-> > The weirdest case is log.  If I say git log HEAD^{resolve} --
-> > foo/bar/baz,...
-> 
-> That invocation does not make any sense to me, at least within the
-> context of what has been discussed for ^{resolve}, which is an
-> instruction to the "name to object name" mapping layer to notice
-> symbolic links while it traverses the tree containment relationships
-> starting from the root of the tree to arrive at a single object
-> name.
-> 
->     git rev-parse HEAD^{resolve}:path/that/might/involve/symlink/some/where
->     git cat-file HEAD^{resolve}:path/that/might/involve/symlink/some/where
->     git grep -e pattern HEAD^{resolve}:path/that/might/involve/symlink/some/where
-> 
-> would, though.  In other words, ^{resolve} that is not followed by a
-> colon and path is something entirely different from what we have
-> been discussing.
+This message is written by the maintainer and talks about how Git
+project is managed, and how you can work with it.
 
-Yeah, I agree that HEAD^{resolve} without a colon does not make any
-sense. In fact, I wanted to originally suggest a syntax that replaced
-the colon with something else, to make it clear that it the modifier is
-really about the colon. But I could not think of a character that was
-readable and would not have backward-compatibility issues.
+* Mailing list and the community
 
-I guess you could spell it:
+The development is primarily done on the Git mailing list. Help
+requests, feature proposals, bug reports and patches should be sent to
+the list address <git@vger.kernel.org>.  You don't have to be
+subscribed to send messages.  The convention on the list is to keep
+everybody involved on Cc:, so it is unnecessary to say "Please Cc: me,
+I am not subscribed".
 
-  HEAD^{resolve:foo/bar/baz}
+Before sending patches, please read Documentation/SubmittingPatches
+and Documentation/CodingGuidelines to familiarize yourself with the
+project convention.
 
-but that opens up parsing questions for the filename. Would we allow "}"
-in the filename? Or require that the "}" balance, which means
-speculative parsing if there is more content after the trailing "}"
-(e.g., you could in theory resolve to a tree and then stick a ":" with
-more path after that. Yech).
+If you sent a patch and you did not hear any response from anybody for
+several days, it could be that your patch was totally uninteresting,
+but it also is possible that it was simply lost in the noise.  Please
+do not hesitate to send a reminder message in such a case.  Messages
+getting lost in the noise may be a sign that those who can evaluate
+your patch don't have enough mental/time bandwidth to process them
+right at the moment, and it often helps to wait until the list traffic
+becomes calmer before sending such a reminder.
 
--Peff
+The list archive is available at a few public sites:
+
+        http://news.gmane.org/gmane.comp.version-control.git/
+        http://marc.theaimsgroup.com/?l=git
+        http://www.spinics.net/lists/git/
+
+For those who prefer to read it over NNTP:
+
+        nntp://news.gmane.org/gmane.comp.version-control.git
+
+When you point at a message in a mailing list archive, using
+gmane is often the easiest to follow by readers, like this:
+
+        http://thread.gmane.org/gmane.comp.version-control.git/27/focus=217
+
+as it also allows people who subscribe to the mailing list as gmane
+newsgroup to "jump to" the article.
+
+Some members of the development community can sometimes be found on
+the #git and #git-devel IRC channels on Freenode.  Their logs are
+available at:
+
+        http://colabti.org/irclogger/irclogger_log/git
+        http://colabti.org/irclogger/irclogger_log/git-devel
+
+There is a volunteer-run newsletter to serve our community (visit
+http://git.github.io/ to find "Git Rev News").  If you want to help
+its publication, please contact Christian and/or Thomas.
+
+Git is a member project of software freedom conservancy, a non-profit
+organization (https://sfconservancy.org/).  To reach a committee of
+liaisons to the conservancy, contact them at <git@sfconservancy.org>.
+
+
+* Reporting bugs
+
+When you think git does not behave as you expect, please do not stop
+your bug report with just "git does not work".  "I used git in this
+way, but it did not work" is not much better, neither is "I used git
+in this way, and X happend, which is broken".  It often is that git is
+correct to cause X happen in such a case, and it is your expectation
+that is broken. People would not know what other result Y you expected
+to see instead of X, if you left it unsaid.
+
+Please remember to always state
+
+ - what you wanted to achieve;
+
+ - what you did (the version of git and the command sequence to reproduce
+   the behavior);
+
+ - what you saw happen (X above);
+
+ - what you expected to see (Y above); and
+
+ - how the last two are different.
+
+See http://www.chiark.greenend.org.uk/~sgtatham/bugs.html for further
+hints.
+
+If you think you found a security-sensitive issue and want to disclose
+it to us without announcing it to wider public, please contact us at
+our security mailing list <git-security@googlegroups.com>.
+
+
+* Repositories, branches and documentation.
+
+My public git.git repositories are at:
+
+        git://git.kernel.org/pub/scm/git/git.git/
+	https://kernel.googlesource.com/pub/scm/git/git
+	git://repo.or.cz/alt-git.git/
+	https://github.com/git/git/
+	https://code.google.com/p/git-core/
+	git://git.sourceforge.jp/gitroot/git-core/git.git/
+	git://git-core.git.sourceforge.net/gitroot/git-core/git-core/
+
+A few web interfaces are found at:
+
+        http://git.kernel.org/?p=git/git.git
+	https://kernel.googlesource.com/pub/scm/git/git
+        http://repo.or.cz/w/alt-git.git
+
+Preformatted documentation from the tip of the "master" branch can be
+found in:
+
+        git://git.kernel.org/pub/scm/git/git-{htmldocs,manpages}.git/
+        git://repo.or.cz/git-{htmldocs,manpages}.git/
+        https://code.google.com/p/git-{htmldocs,manpages}.git/
+        https://github.com/gitster/git-{htmldocs,manpages}.git/
+
+Also GitHub shows the manual pages formatted in HTML (with a
+formatting backend different from the one that is used to create the
+above) at:
+
+	http://git-scm.com/docs/git
+
+There are four branches in git.git repository that track the source tree
+of git: "master", "maint", "next", and "pu".
+
+The "master" branch is meant to contain what are very well tested and
+ready to be used in a production setting.  Every now and then, a
+"feature release" is cut from the tip of this branch.  They used to be
+named with three dotted decimal digits (e.g. "1.8.5"), but recently we
+switched the versioning scheme and "feature releases" are named with
+three-dotted decimal digits that ends with ".0" (e.g. "1.9.0").
+
+The last such release was 2.4.0 done on Apr 30th, 2015. You can expect
+that the tip of the "master" branch is always more stable than any of
+the released versions.
+
+Whenever a feature release is made, "maint" branch is forked off from
+"master" at that point.  Obvious, safe and urgent fixes after a
+feature release are applied to this branch and maintenance releases
+are cut from it.  The maintenance releases used to be named with four
+dotted decimal, named after the feature release they are updates to
+(e.g. "1.8.5.1" was the first maintenance release for "1.8.5" feature
+release).  These days, maintenance releases are named by incrementing
+the last digit of three-dotted decimal name (e.g. "2.3.4" is the
+fourth maintenance release for the "2.3" series).
+
+New features never go to the 'maint' branch.  This branch is also
+merged into "master" to propagate the fixes forward as needed.
+
+A new development does not usually happen on "master". When you send a
+series of patches, after review on the mailing list, a separate topic
+branch is forked from the tip of "master" and your patches are queued
+there, and kept out of "master" while people test it out. The quality of
+topic branches are judged primarily by the mailing list discussions.
+
+Topic branches that are in good shape are merged to the "next" branch. In
+general, the "next" branch always contains the tip of "master".  It might
+not be quite rock-solid, but is expected to work more or less without major
+breakage. The "next" branch is where new and exciting things take place. A
+topic that is in "next" is expected to be polished to perfection before it
+is merged to "master".
+
+The "pu" (proposed updates) branch bundles all the remaining topic
+branches the maintainer happens to have.  There is no guarantee that
+the maintainer has enough bandwidth to pick up any and all topics that
+are remotely promising from the list traffic, so please do not read
+too much into a topic being on (or not on) the "pu" branch.  This
+branch is mainly to remind the maintainer that the topics in them may
+turn out to be interesting when they are polished, nothing more.  The
+topics on this branch aren't usually complete, well tested, or well
+documented and they often need further work.  When a topic that was
+in "pu" proves to be in a testable shape, it is merged to "next".
+
+You can run "git log --first-parent master..pu" to see what topics are
+currently in flight.  Sometimes, an idea that looked promising turns out
+to be not so good and the topic can be dropped from "pu" in such a case.
+
+The two branches "master" and "maint" are never rewound, and "next"
+usually will not be either.  After a feature release is made from
+"master", however, "next" will be rebuilt from the tip of "master"
+using the topics that didn't make the cut in the feature release.
+
+Note that being in "next" is not a guarantee to appear in the next
+release, nor even in any future release.  There were cases that topics
+needed reverting a few commits in them before graduating to "master",
+or a topic that already was in "next" was reverted from "next" because
+fatal flaws were found in it after it was merged to "next".
+
+
+* Other people's trees, trusted lieutenants and credits.
+
+Documentation/SubmittingPatches outlines to whom your proposed changes
+should be sent.  As described in contrib/README, I would delegate fixes
+and enhancements in contrib/ area to the primary contributors of them.
+
+Although the following are included in git.git repository, they have their
+own authoritative repository and maintainers:
+
+ - git-gui/ comes from git-gui project, maintained by Pat Thoyts:
+
+        git://repo.or.cz/git-gui.git
+
+ - gitk-git/ comes from Paul Mackerras's gitk project:
+
+        git://ozlabs.org/~paulus/gitk
+
+ - po/ comes from the localization coordinator, Jiang Xin:
+
+	https://github.com/git-l10n/git-po/
