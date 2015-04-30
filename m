@@ -1,101 +1,77 @@
-From: Jeff King <peff@peff.net>
+From: David Turner <dturner@twopensource.com>
 Subject: Re: RFC: git cat-file --follow-symlinks?
-Date: Thu, 30 Apr 2015 14:27:00 -0400
-Message-ID: <20150430182659.GB23431@peff.net>
-References: <1430343059.14907.18.camel@ubuntu>
- <20150429214817.GA2725@peff.net>
- <1430346576.14907.40.camel@ubuntu>
- <20150429231150.GB3887@peff.net>
- <20150430003750.GA4258@peff.net>
- <1430355983.14907.55.camel@ubuntu>
- <20150430011612.GA7530@peff.net>
- <1430358345.14907.62.camel@ubuntu>
- <20150430033725.GB12361@peff.net>
- <87383ihqzp.fsf@igel.home>
+Date: Thu, 30 Apr 2015 11:28:42 -0700
+Organization: Twitter
+Message-ID: <1430418522.22711.22.camel@ubuntu>
+References: <1430341032.14907.9.camel@ubuntu>
+	 <xmqqlhha4otr.fsf@gitster.dls.corp.google.com>
+	 <1430343059.14907.18.camel@ubuntu> <20150429214817.GA2725@peff.net>
+	 <1430346576.14907.40.camel@ubuntu> <20150429231150.GB3887@peff.net>
+	 <20150430003750.GA4258@peff.net> <1430355983.14907.55.camel@ubuntu>
+	 <20150430011612.GA7530@peff.net> <1430358345.14907.62.camel@ubuntu>
+	 <20150430033725.GB12361@peff.net>
+	 <xmqqfv7i2n81.fsf@gitster.dls.corp.google.com>
+	 <5541E3D4.7040207@alum.mit.edu> <1430417023.22711.8.camel@ubuntu>
+	 <xmqqzj5pzdfo.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: David Turner <dturner@twopensource.com>,
-	Junio C Hamano <gitster@pobox.com>,
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, Jeff King <peff@peff.net>,
 	git mailing list <git@vger.kernel.org>
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Thu Apr 30 20:27:10 2015
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 30 20:28:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YntAy-0007qa-C7
-	for gcvg-git-2@plane.gmane.org; Thu, 30 Apr 2015 20:27:08 +0200
+	id 1YntCc-0000v3-4z
+	for gcvg-git-2@plane.gmane.org; Thu, 30 Apr 2015 20:28:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752327AbbD3S1E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Apr 2015 14:27:04 -0400
-Received: from cloud.peff.net ([50.56.180.127]:52377 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751362AbbD3S1C (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Apr 2015 14:27:02 -0400
-Received: (qmail 11248 invoked by uid 102); 30 Apr 2015 18:27:02 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 30 Apr 2015 13:27:02 -0500
-Received: (qmail 7572 invoked by uid 107); 30 Apr 2015 18:27:32 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 30 Apr 2015 14:27:32 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 30 Apr 2015 14:27:00 -0400
-Content-Disposition: inline
-In-Reply-To: <87383ihqzp.fsf@igel.home>
+	id S1751745AbbD3S2q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Apr 2015 14:28:46 -0400
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:36069 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751145AbbD3S2p (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Apr 2015 14:28:45 -0400
+Received: by pabsx10 with SMTP id sx10so67290787pab.3
+        for <git@vger.kernel.org>; Thu, 30 Apr 2015 11:28:45 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:content-type:mime-version
+         :content-transfer-encoding;
+        bh=X9dv0XhmskC1C8km2aWjoZ9a2A+KKvtHB+jQTbXEXAg=;
+        b=eBXgkaxumcYC6MLUx29oSa2Xy0s4tvL1vJWEIiZJGFSASIEkSKrbI8l/OQ2PVqqNWY
+         50f0FG3wko5paMR48DsncVKNVj33o6UrkuB0+oXjycq3tFaF1Pe6C3tgKGb+esL5x0KK
+         SViFcxcpNyS7JhA9B2JKPOfyY0EbzmpUmavwgJfFi9Ba4ybMRQhCYclF6BU7ApzCHPGC
+         cbDR+8IZ5CHWqpcHud8XTbCPcjyOm47dLoYBdOgzIYX6k1OL1B3LmAmrCMSkG7xVBl1g
+         xuQzmtyMMFKeVjNq+DqD7LrWSePlU/yzv7md52XWt/VgXjUh2P9t7vosR+c6yrBLQa2F
+         naJw==
+X-Gm-Message-State: ALoCoQkgzGcX0Lf9xnpOoQc7nJcHho3w6mtzCMnS1/vqOsOBwjOUGPL2XRBBFwAP9P8jA17Gb7+V
+X-Received: by 10.66.148.225 with SMTP id tv1mr10714778pab.51.1430418524959;
+        Thu, 30 Apr 2015 11:28:44 -0700 (PDT)
+Received: from [172.25.135.195] ([8.25.197.26])
+        by mx.google.com with ESMTPSA id u8sm2813706pdi.90.2015.04.30.11.28.43
+        (version=TLSv1.2 cipher=AES128-GCM-SHA256 bits=128/128);
+        Thu, 30 Apr 2015 11:28:44 -0700 (PDT)
+In-Reply-To: <xmqqzj5pzdfo.fsf@gitster.dls.corp.google.com>
+X-Mailer: Evolution 3.10.4-0ubuntu2 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268088>
 
-On Thu, Apr 30, 2015 at 12:04:10PM +0200, Andreas Schwab wrote:
-
-> Jeff King <peff@peff.net> writes:
+On Thu, 2015-04-30 at 11:19 -0700, Junio C Hamano wrote:
+> David Turner <dturner@twopensource.com> writes:
 > 
-> >   4. Return the last object we could resolve, as I described. So
-> >      foo/bar/baz (with "../../../external" as its content) in this case.
-> >      When you resolve a name, you can ask for the context we discovered
-> >      along the way by traversing the tree. The mode is one example we've
-> >      already discussed, but the path name is another. So something like:
-> >
-> >        echo "HEAD^{resolve}:fleem" |
-> >        git cat-file --batch="%(objectname) %(size) %(intreepath)"
-> >
-> >      would show:
-> >
-> >        1234abcd 17 foo/bar/baz
-> >        ../../../external
-> >
-> >      And then the caller knows that the path is not relative to the
-> >      original "fleem", but rather to "foo/bar/baz".
+> > In no case did we do a ls-files command,...
 > 
-> Note that ".." will always follow the *physical* structure, so if
-> foo/bar/baz is walking over symbolic links, "../../.." may lead you to
-> somewhere else entirely.
+> "ls-tree -r" is what I would have imagined you would be using, as
+> somebody needs to have the full repository in order to resolve the
+> symbolic links _anyway_, and that somebody does not need to have a
+> checkout in order to do so.
 
-True. I had not considered that, as git does not walk over such symlinks
-at all currently. But presumably one would want it to to implement this
-kind of "follow symlink" logic. IOW, we cannot just look up
-"foo/bar/baz" in the first place, as that may not even exist in the
-tree; we may need to realize that "foo" is a symlink and resolve that
-first, then find "bar/baz" in the destination.
-
-Which means that I think this has to be implemented as part of the name
-resolution (i.e., the "^{resolve}") proposal. cat-file could not say:
-
-  get_sha1_with_context("HEAD:foo/bar/baz", sha1, &ctx);
-  if (S_ISLNK(ctx.mode))
-     ... resolve ...
-
-The initial get_sha1 would fail if "foo" is a symlink. Likewise, one
-cannot implement this by querying cat-file repeatedly without asking for
-each leading prefix (so ask for "HEAD:foo", see if it's a link, then
-"HEAD:foo/bar", etc).
-
-Of course it does not _have_ to be part of the normal get_sha1 name
-resolution. But if not, it would have to reimplement the tree-walking
-part of that name resolution.
-
-Thanks for giving another interesting case to consider.
-
--Peff
+Yes, they have the full repo, but we are only exploring a small fraction
+of it. ls-tree -r would require parsing the entire thing.
