@@ -1,158 +1,94 @@
-From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v3] git-compat-util.h: implement a different ARRAY_SIZE macro for for safely deriving the size of array
-Date: Thu, 30 Apr 2015 14:44:14 +0200
-Message-ID: <1430397854-28908-1-git-send-email-gitter.spiros@gmail.com>
-Cc: gitster@pobox.com, peff@peff.net,
-	Elia Pinto <gitter.spiros@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 30 14:44:33 2015
+From: Quentin Neill <quentin.neill@gmail.com>
+Subject: Re: [PATCH] blame: add blame.showemail config option
+Date: Thu, 30 Apr 2015 09:03:03 -0500
+Message-ID: <CACfD1vtfO_rqr4wv4oHm7W7DSn-Gk-du6nCuJzYvpPXK_d=y=g@mail.gmail.com>
+References: <1429841612-5131-1-git-send-email-qneill@quicinc.com>
+	<CAPig+cQrUPHOaKjNhsmLho+bFdAOQxb0NK2YK2QsFmdDBF6h4g@mail.gmail.com>
+	<CACfD1vvaAGkx2P3yMfZPOZrRvG3-H96zQVOCevnd-O0rBJ7wjw@mail.gmail.com>
+	<xmqqwq0xwige.fsf@gitster.dls.corp.google.com>
+	<CAPig+cRTfB9aiinhSJp=jY7-__6dRvfAqhWZYVN3+Ut=Y79LcQ@mail.gmail.com>
+	<xmqqmw1svigd.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Apr 30 16:03:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YnnpQ-0008A2-3U
-	for gcvg-git-2@plane.gmane.org; Thu, 30 Apr 2015 14:44:32 +0200
+	id 1Ynp3Y-00005o-GU
+	for gcvg-git-2@plane.gmane.org; Thu, 30 Apr 2015 16:03:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750973AbbD3Mo1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Apr 2015 08:44:27 -0400
-Received: from mail-pa0-f44.google.com ([209.85.220.44]:34728 "EHLO
-	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750862AbbD3Mo0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Apr 2015 08:44:26 -0400
-Received: by pacyx8 with SMTP id yx8so58891928pac.1
-        for <git@vger.kernel.org>; Thu, 30 Apr 2015 05:44:25 -0700 (PDT)
+	id S1750967AbbD3ODI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Apr 2015 10:03:08 -0400
+Received: from mail-qk0-f179.google.com ([209.85.220.179]:33583 "EHLO
+	mail-qk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751077AbbD3ODF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Apr 2015 10:03:05 -0400
+Received: by qkx62 with SMTP id 62so33503182qkx.0
+        for <git@vger.kernel.org>; Thu, 30 Apr 2015 07:03:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=P8na9GoxfvTCy7z6vwp+7CKVzHwrZ0UezSBOMV5gN7o=;
-        b=U+Jitb+ZzWIhqs2wrHjWu4tZGoZgJzPKEIqshH3TA9lI5gHq0wcCjfpzbpT4p7XMSx
-         wOS+o3R8Ltn3QaBJZSk9FZIIwTA9un+OGymdzVFHJfjn3/fRjdwlkOhgVbbtyEJoQoid
-         mDUuI2HnYPVwGwH6NYNIGfx1GGtp8UEdOCl26baxUl0WhSKce/L3oehq0VvMuPDhsTcV
-         lGaY2zdDzBeUytAK2eDVZKWQf8U+Mt1niNBvAa6Xg31p67ZeEd1D1gYWyUWtvMAWLztV
-         StbwblhnyLp0Q592aWxzGhpN25xLKroIxK5QFU7ef8OvrnjoBRuc7NbwBLHFfuRmeW2I
-         I4Ow==
-X-Received: by 10.70.56.98 with SMTP id z2mr7873213pdp.120.1430397865892;
-        Thu, 30 Apr 2015 05:44:25 -0700 (PDT)
-Received: from ubuntu14.nephoscale.com (141.195.207.67.nephoscale.net. [67.207.195.141])
-        by mx.google.com with ESMTPSA id in4sm2146115pbd.40.2015.04.30.05.44.24
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 30 Apr 2015 05:44:25 -0700 (PDT)
-X-Mailer: git-send-email 2.1.0
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        bh=9xPcymFyPMJI3CBccrjnwz3Bq7KgGm7VGAIQO4d2V98=;
+        b=HRfA4RE33Ph4AtljghuTybA5hHFmBdpfTXH6ojQIFqzPei+Rwdt3rHMJX7lFdh4Reo
+         bvWU2ozpLmczaXR/2Krn2rHYbQThJawPyHPAEfFqtHyNRMh7x+HtQLTofyCNaCicLEcx
+         jGPUA2YtNVpivUjvAGXi9Wnj7hMkCGRvMAuhqPSP5Njnfyo/7LknzID+jE1haSX/7Rsj
+         gSIY9vUIdQB+I2LbZ0sWtd/afa+kCWEBqIlhDz3sON0NZ+AXWcRGEq42AOzP8WdzSIZ1
+         WAghvHPdnzXY/lCZ0TeEp37LjdpKtFSuw11J/KmrLIn++BSQ6xHnGmpMhetYuZexdc9Q
+         gnBg==
+X-Received: by 10.55.27.42 with SMTP id b42mr7514842qkb.53.1430402583854; Thu,
+ 30 Apr 2015 07:03:03 -0700 (PDT)
+Received: by 10.140.89.229 with HTTP; Thu, 30 Apr 2015 07:03:03 -0700 (PDT)
+In-Reply-To: <xmqqmw1svigd.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268071>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268072>
 
-To get number of elements in an array git use the ARRAY_SIZE macro
-defined as:
+On Mon, Apr 27, 2015 at 1:10 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> It's not clear why you relocated documentation of --show-email from
+>>>
+>> I moved it to be with the other variables that had configuration
+>>
+>> options, but I will move it back.
+>
+> Please do not do anything before you understand why there are two
+> places, and if you don't understand, ask.
+>
+>> I followed the code for blame.showRoot and blame.blankboundary.
+>
+> I do not think that is quite true.
 
-       #define ARRAY_SIZE(x) (sizeof(x)/sizeof((x)[0]))
+Points well taken.  I'll admit I posted the patch as a way to find out these
+sorts of things, but I see I could have done a bit more digging and asking
+before posting.  Apologies for the noise.
 
-The problem with it is a possibility of mistakenly passing to it a
-pointer instead an array. The ARRAY_SIZE macro as conventionally
-defined does not provide good type-safety and the open-coded
-approach is more fragile, more verbose and provides no improvement in
-type-safety.
+On Tue, Apr 28, 2015 at 2:08 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+>> .. instead set the OUTPUT_SHOW_EMAIL bit in git_blame_config().
+>
+> Don't forget to clear the bit when the bool is set to false, too.
 
-Use instead a different but compatible ARRAY_SIZE() macro,
-which will also break compile if you try to
-use it on a pointer. This implemention revert to the original code
-if the compiler doesn't know the typeof and __builtin_types_compatible_p
-GCC extensions.
+I think I have this now, and some tests that check it, but have a pair
+of questions.
 
-This can ensure our code is robust to changes, without
-needing a gratuitous macro or constant. A similar
-ARRAY_SIZE implementation also exists in the linux kernel.
+On Fri, Apr 24, 2015 at 12:22 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> Despite being case-insensitive and despite existing inconsistencies,
+> in documentation, it is customary to use camelCase for configuration
+> options, so "blame.showEmail".
 
-Credits to Rusty Russell and his ccan library.
+I noticed while testing that git_config()/git_value() lowercase
+everything, so to
+be clear this camelCase custom for configuration names is for documentation
+only, right?
 
-Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
----
- git-compat-util.h | 54 +++++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 53 insertions(+), 1 deletion(-)
+I'm thinking of a test file that will test all the git blame options,
+but for this
+patch it will only test the new showEmail config.  I read t/README and
+tentatively named the new test file "t/8009-blame-config.sh".
 
-This is the third version of the patch.
-
-Compared to the second version:
-
-- Eliminated the autoconf use. I use instead the GCC (and compatible compilers) macros
-  for checking if the not portable builtin is supported or not ("Jeff suggestion")
-- Changed the name of the macro from _array_size_chk to BARF_IF_IS_NOT_AN_ARRAY i
- ("Junio suggestion. In ALL_CAPS for the Jeff comment )"
-
-diff --git a/git-compat-util.h b/git-compat-util.h
-index bc8fc8c..b29c9f3 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -3,6 +3,23 @@
- 
- #define _FILE_OFFSET_BITS 64
- 
-+
-+/* Derived from Linux "Features Test Macro" header
-+ * Convenience macros to test the versions of gcc (or 
-+ * a compatible compiler).
-+ * Use them like this:
-+ *  #if GIT_GNUC_PREREQ (2,8)
-+ *   ... code requiring gcc 2.8 or later ...
-+ *  #endif
-+*/
-+#if defined(__GNUC__) && defined(__GNUC_MINOR__)
-+# define GIT_GNUC_PREREQ(maj, min) \
-+	((__GNUC__ << 16) + __GNUC_MINOR__ >= ((maj) << 16) + (min))
-+#else
-+ #define GIT_GNUC_PREREQ(maj, min) 0
-+#endif
-+
-+
- #ifndef FLEX_ARRAY
- /*
-  * See if our compiler is known to support flexible array members.
-@@ -25,7 +42,42 @@
- #endif
- #endif
- 
--#define ARRAY_SIZE(x) (sizeof(x)/sizeof(x[0]))
-+
-+/*
-+ * BUILD_ASSERT_OR_ZERO - assert a build-time dependency, as an expression.
-+ * @cond: the compile-time condition which must be true.
-+ *
-+ * Your compile will fail if the condition isn't true, or can't be evaluated
-+ * by the compiler.  This can be used in an expression: its value is "0".
-+ *
-+ * Example:
-+ *	#define foo_to_char(foo)					\
-+ *		 ((char *)(foo)						\
-+ *		  + BUILD_ASSERT_OR_ZERO(offsetof(struct foo, string) == 0))
-+ */
-+#define BUILD_ASSERT_OR_ZERO(cond) \
-+	(sizeof(char [1 - 2*!(cond)]) - 1)
-+
-+#if defined(__GNUC__) && (__GNUC__ >= 3)
-+# if GIT_GNUC_PREREQ(3, 1)
-+ /* &arr[0] degrades to a pointer: a different type from an array */
-+# define BARF_IF_IS_NOT_AN_ARRAY(arr)						\
-+	BUILD_ASSERT_OR_ZERO(!__builtin_types_compatible_p(typeof(arr), \
-+							typeof(&(arr)[0])))
-+# else
-+#  define BARF_IF_IS_NOT_AN_ARRAY(arr) 0 
-+# endif
-+#endif 
-+/*
-+ * ARRAY_SIZE - get the number of elements in a visible array
-+ *  <at> x: the array whose size you want.
-+ *
-+ * This does not work on pointers, or arrays declared as [], or
-+ * function parameters.  With correct compiler support, such usage
-+ * will cause a build error (see the build_assert_or_zero macro).
-+ */
-+#define ARRAY_SIZE(x) (sizeof(x) / sizeof((x)[0]) + BARF_IF_IS_NOT_AN_ARRAY(x))
-+
- #define bitsizeof(x)  (CHAR_BIT * sizeof(x))
- 
- #define maximum_signed_value_of_type(a) \
--- 
-2.1.0
+Please guide.
