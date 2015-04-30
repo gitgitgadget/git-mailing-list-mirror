@@ -1,91 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] git-compat-util.h: implement a different ARRAY_SIZE macro for for safely deriving the size of array
-Date: Thu, 30 Apr 2015 10:59:06 -0700
-Message-ID: <xmqq4mnx1or9.fsf@gitster.dls.corp.google.com>
-References: <1430397854-28908-1-git-send-email-gitter.spiros@gmail.com>
-	<xmqqd22l1pkl.fsf@gitster.dls.corp.google.com>
-	<20150430174440.GC21800@peff.net>
-	<xmqq8ud91ozm.fsf@gitster.dls.corp.google.com>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: RFC: git cat-file --follow-symlinks?
+Date: Thu, 30 Apr 2015 11:03:43 -0700
+Organization: Twitter
+Message-ID: <1430417023.22711.8.camel@ubuntu>
+References: <1430341032.14907.9.camel@ubuntu>
+		<xmqqlhha4otr.fsf@gitster.dls.corp.google.com>
+		<1430343059.14907.18.camel@ubuntu> <20150429214817.GA2725@peff.net>
+		<1430346576.14907.40.camel@ubuntu> <20150429231150.GB3887@peff.net>
+		<20150430003750.GA4258@peff.net> <1430355983.14907.55.camel@ubuntu>
+		<20150430011612.GA7530@peff.net> <1430358345.14907.62.camel@ubuntu>
+		<20150430033725.GB12361@peff.net>
+	 <xmqqfv7i2n81.fsf@gitster.dls.corp.google.com>
+	 <5541E3D4.7040207@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Elia Pinto <gitter.spiros@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Apr 30 19:59:27 2015
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	git mailing list <git@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Thu Apr 30 20:04:05 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YnskB-0008JZ-9N
-	for gcvg-git-2@plane.gmane.org; Thu, 30 Apr 2015 19:59:27 +0200
+	id 1Ynsoe-00041a-9q
+	for gcvg-git-2@plane.gmane.org; Thu, 30 Apr 2015 20:04:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752474AbbD3R7S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Apr 2015 13:59:18 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:58126 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750866AbbD3R7O (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Apr 2015 13:59:14 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 599854D6A9;
-	Thu, 30 Apr 2015 13:59:13 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=nURIuAN2HLXZxHKBEcKlENCnXmk=; b=LpkFhh
-	WE2rIiWajQMXohjzK16tEeCPZfBR8hvC3e27erdKWUxOUlE5W39MLKrvkPcqw6ba
-	ntHP3elvQpmCG4x+DKF6Y/rs1XQUP/7sUf6CYx1ZZtIGr1YJPaJiqKMHXPY+TKh3
-	EauCvF8XkK4v9NJ8RR0GpUE+AHZufDPAz0kCw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Bgdvxuqr2KgsBzx9f5APOQ3mMPRW6if2
-	aNX27uAi+8Wee+7Pxn/btVYx8RMSSKtXiqpHuhDIf8a6/JkIGaZoXp8OKVXSGFFm
-	qUDiYXPK3u7stNQYeSvo07BQwIopeYKn6yU4DMqtl9ma+5EV4+4tLRS5SZS+fKE/
-	JDHzYLELcq8=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 532E44D6A8;
-	Thu, 30 Apr 2015 13:59:13 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C42C14D6A3;
-	Thu, 30 Apr 2015 13:59:07 -0400 (EDT)
-In-Reply-To: <xmqq8ud91ozm.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Thu, 30 Apr 2015 10:54:05 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 98DA19B8-EF62-11E4-9449-83E09F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1752095AbbD3SD6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Apr 2015 14:03:58 -0400
+Received: from mail-pd0-f182.google.com ([209.85.192.182]:36267 "EHLO
+	mail-pd0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752013AbbD3SDz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Apr 2015 14:03:55 -0400
+Received: by pdea3 with SMTP id a3so67817517pde.3
+        for <git@vger.kernel.org>; Thu, 30 Apr 2015 11:03:55 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:content-type:mime-version
+         :content-transfer-encoding;
+        bh=rUZ+yJcIEI+LMbGHKSAuIqnX/NVWcFAGdkzRjckNm4w=;
+        b=Td6ZSw6BdzuJ+G+PtqyUjkA2lnhdKRx9Mb+KFa4cRYSZLLJh9soohsqbymNgRJuJxf
+         /1tlgKZ1zes9A198GgGycfgtAID23u0/cGOzxvydpQDx1vt1CthPNZPl+DKJO7srPKRt
+         y+ZiNzsnEDtmY7jI7kpJV8HaUy/TuDL/ueqjYNiVQte1ybq1k3QIxXZyNI0A8xw6cqfB
+         YcNFBTEiPUjmTOgx+rbJxTJUUCBAy5Bujn9JUr4TH5IvUX/oXI0rId12A5dFX9SJar/Y
+         B0Z5dzh8AsKxdLomh9I4vuOBF0FpZ7hFSa6ASLiguGAjA3htz6orVt2ucZasPMtr+2k6
+         kMiQ==
+X-Gm-Message-State: ALoCoQmdiDQbE1lQ/r1cbrsA3OgUo+0vlC1uu0SqazpLyz65tLyEkQKBApH/JqpVCW+8PXJG7Meb
+X-Received: by 10.70.103.200 with SMTP id fy8mr10467254pdb.136.1430417035105;
+        Thu, 30 Apr 2015 11:03:55 -0700 (PDT)
+Received: from [172.25.135.195] ([8.25.197.26])
+        by mx.google.com with ESMTPSA id uf7sm2790837pab.37.2015.04.30.11.03.44
+        (version=TLSv1.2 cipher=AES128-GCM-SHA256 bits=128/128);
+        Thu, 30 Apr 2015 11:03:53 -0700 (PDT)
+In-Reply-To: <5541E3D4.7040207@alum.mit.edu>
+X-Mailer: Evolution 3.10.4-0ubuntu2 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268083>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268084>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Thu, 2015-04-30 at 10:12 +0200, Michael Haggerty wrote:
+> On 04/30/2015 07:34 AM, Junio C Hamano wrote:
+> > [...]
+> > But stepping back a bit.
+> > 
+> > We have been talking about HEAD^{resolve}:fleem but how did we learn
+> > that there is a path "fleem" in the tree of HEAD in the first place?
+> > I would presume that the answer eventually boils down to "somebody
+> > fed HEAD to 'ls-tree -r'", and then that somebody is an idiot if it
+> > did not grab the mode bits to learn what kind of blob fleem is, or
+> > if it did not tell the guy that wants to drive "cat-file --batch".
+> 
+> I think a plausible use case for this feature is to read
+> `$tag^{resolve}:RelNotes`, in which case the reason we know it's there
+> is "because the maintainer told us it is there".
 
-> Jeff King <peff@peff.net> writes:
->
->> ISTR that you compile with "-std=c89". typeof was added in c99, I think
->> (and was a GNU extension before that). I wonder if that is fooling the
->> gcc version-check.
->
-> Yeah, I think that is very likely.
+Yes, that is approximately my use case.  Read on for details:
+With a colleague, I'm building a mode for the free and open source Pants
+build system that will support build-aware sparse checkouts.  Pants is a
+build tool for monorepos (inspired by Google's Blaze and similar to
+Facebook's Buck).  Most individual users will only be using a tiny
+subset of the full repository, so it would be convenient if they only
+had to check out what the plan to use.  Assume that they want to check
+out only a certain target (a path, approximately) plus its transitive
+dependencies, on a certain revision.  So pants first checks that
+directory (at that rev) for a BUILD file.  That BUILD file might point
+to other BUILD files as dependencies, so again, we must examine those,
+recursively.  
 
-Yes.  One workaround is to explicitly say that we accept the GNU
-extension in the source, perhaps.
+In no case did we do a ls-files command, since we want to examine as
+little of the repo as possible.  And even if we had done an ls-files, we
+would still need to resolve all of the symlinks ourselves.
 
- git-compat-util.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/git-compat-util.h b/git-compat-util.h
-index f1f8f23..7fad5aa 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -62,8 +62,8 @@
- # if GIT_GNUC_PREREQ(3, 1)
-  /* &arr[0] degrades to a pointer: a different type from an array */
- # define BARF_UNLESS_AN_ARRAY(arr)						\
--	BUILD_ASSERT_OR_ZERO(!__builtin_types_compatible_p(typeof(arr), \
--							typeof(&(arr)[0])))
-+	BUILD_ASSERT_OR_ZERO(!__builtin_types_compatible_p(__typeof__(arr), \
-+							   __typeof__(&(arr)[0])))
- # else
- #  define BARF_UNLESS_AN_ARRAY(arr) 0
- # endif
+So that's the motivation here.
