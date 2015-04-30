@@ -1,101 +1,109 @@
-From: karthik nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v9 1/5] sha1_file: support reading from a loose object
- of unknown type
-Date: Thu, 30 Apr 2015 10:10:11 +0530
-Message-ID: <5541B22B.6040403@gmail.com>
-References: <5540D397.8020104@gmail.com> <1430311933-23180-1-git-send-email-karthik.188@gmail.com> <xmqqtwvzt2fv.fsf@gitster.dls.corp.google.com> <554119F6.5010900@gmail.com> <xmqq383i6849.fsf@gitster.dls.corp.google.com>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: [PATCH v2] blame: CRLF in the working tree and LF in the repo
+Date: Thu, 30 Apr 2015 06:42:12 +0200
+Message-ID: <5541B2A4.8050108@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, sunshine@sunshineco.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 30 06:40:24 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: tboegi@web.de, johannes.schindelin@gmx.de, kasal@ucw.cz
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 30 06:42:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YngGr-0004X1-Ol
-	for gcvg-git-2@plane.gmane.org; Thu, 30 Apr 2015 06:40:22 +0200
+	id 1YngIu-0006F2-6D
+	for gcvg-git-2@plane.gmane.org; Thu, 30 Apr 2015 06:42:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751907AbbD3EkR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Apr 2015 00:40:17 -0400
-Received: from mail-pd0-f170.google.com ([209.85.192.170]:35257 "EHLO
-	mail-pd0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751967AbbD3EkP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Apr 2015 00:40:15 -0400
-Received: by pdbqd1 with SMTP id qd1so48721400pdb.2
-        for <git@vger.kernel.org>; Wed, 29 Apr 2015 21:40:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=6hoyS+++LzL6OYXHNnHm8GUX5z1Sb0VSbf9Vv0uGlqg=;
-        b=kORF1qYd/I0PUZPRT8+ytWyFbUxpapB+OXjzIxAfbxAvwK1HnwIZ2htGuFyDD/HCO5
-         NDMjE3r1ihQcNwBPHxXCg3zselfqtuo62bx4Z5E86TzyV18WLIVXD63qpTDcm4obi34a
-         jOXK5zsKqOELdSSJmoXlHEgIwyNN7iwwiMv4pWnCRHJ1CskrXQN/CjjlJLXNxH/uKmFC
-         1dyQUtb+7YlMZwKegsxMZckrwEMehSP9ujse8C3LTMxg/327phiqPQ2A46PMdQ4zW1sd
-         xdatvoIs3XumVSr3YS8athX/tN2CBRSECD9Zy3NtEXiEWRhh0sPeNkPqmTF419kZrNxe
-         60AA==
-X-Received: by 10.67.8.71 with SMTP id di7mr4694651pad.46.1430368814901;
-        Wed, 29 Apr 2015 21:40:14 -0700 (PDT)
-Received: from [192.168.0.104] ([103.227.98.178])
-        by mx.google.com with ESMTPSA id bz11sm743712pdb.34.2015.04.29.21.40.12
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 29 Apr 2015 21:40:14 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
-In-Reply-To: <xmqq383i6849.fsf@gitster.dls.corp.google.com>
+	id S1750807AbbD3EmY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 Apr 2015 00:42:24 -0400
+Received: from mout.web.de ([212.227.15.4]:62085 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750720AbbD3EmX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Apr 2015 00:42:23 -0400
+Received: from macce.local ([217.211.68.12]) by smtp.web.de (mrweb002) with
+ ESMTPSA (Nemesis) id 0MFtOY-1Z2TsK17Cw-00ErvG; Thu, 30 Apr 2015 06:42:18
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
+X-Provags-ID: V03:K0:5ZIuZ/IzskCORI4feGI7pLWoUhKYJTtccVSpbaHBQX93bV3qbRP
+ +TjlcOC982eb2MS3VBd4pxB03qhn4y39A84Wz/Rnh/VBYNQvZD6ho8dPGckE1LDzMfdPCQr
+ ZTD6wuxblp5x2sMjBhln1jGg1keN2HfWMxRckhzxg5DcQVdolcB3LemVz6vK1MkKNba/1uh
+ nfa5F8+rUdCD0uZr7iFkQ==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268055>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268056>
 
+A typicall setup under Windows:
+core.eol is CRLF and a file is marked as "text" in .gitattributes,
+or core.autocrlf is true
 
-On 04/30/2015 01:05 AM, Junio C Hamano wrote:
-> karthik nayak <karthik.188@gmail.com> writes:
->
-> > On 04/29/2015 08:19 PM, Junio C Hamano wrote:
-> >> Karthik Nayak <karthik.188@gmail.com> writes:
-> >>
-> >>> Update sha1_loose_object_info() to optionally allow it to read
-> >>> from a loose object file of unknown/bogus type; as the function
-> >>> usually returns the type of the object it read in the form of enum
-> >>> for known types, add an optional "typename" field to receive the
-> >>> name of the type in textual form and a flag to indicate the reading
-> >>> of a loose object file of unknown/bogus type.
-> >>>
-> >>> Add parse_sha1_header_extended() which acts as a wrapper around
-> >>> parse_sha1_header() allowing more information to be obtained.
-> >>
-> >> Thanks.  This mostly looks good modulo a nit.
-> >
-> > Sorry didn't get what you meant by "modulo a nit.".
->
-> "nit" as in "Nit-pick"; a small imperfection that may need to be
-> corrected (such as the "what if we saw failure earlier and 'status'
-> already had a value?" issue).
-Thanks for clearing that out.
->
-> >> It is a good trade-off between complexity and efficiency.  The
-> >> complexity is isolated as the function is file-scope-static and it
-> >> is perfectly fine to force the callers to be extra careful.
-> >>
-> >> But this suggests that the patch to add tests should try at least
-> >> two, preferably three, kinds of test input.  A bogus type that needs
-> >> a header longer than the caller's fixed buffer, a bogus type whose
-> >> header would fit within the fixed buffer, and optionally a correct
-> >> type whose header should always fit within the fixed buffer.
-> >
-> > Yes it is a tradeoff, and it is complex as in the user has to check
-> > the strbuf provided to see if its been used. But this like you said I
-> > guess its a good tradeoff.
-> > About the three tests, My patch checks "a bogus type whose header
-> > would fit within the fixed buffer" and "correct type whose header
-> > should always fit within the fixed buffer" but will write a test to
-> > check "A bogus type that needs a header longer than the caller's fixed
-> > buffer"
->
-> Yup. Please do so; that would make the test coverage more complete.
->
-Yup will do :)
+After 4d4813a5 "git blame" no longer works as expected,
+every line is annotated as "Not Committed Yet",
+even though the working directory is clean.
+
+commit 4d4813a5 removed the conversion in blame.c for all files,
+with or without CRLF in the repo.
+
+Having files with CRLF in the repo and core.autocrlf=3Dinput is a tempo=
+rary
+situation, the files should be normalized in the repo.
+Blaming them with "Not Committed Yet" is OK.
+
+The solution is to revert commit 4d4813a5.
+
+Reported-By: Stepan Kasal <kasal@ucw.cz>
+Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+---
+
+What happened to the test cases ?
+They where improved, but it turned out that they failed
+from time to time, both Windows and Mac OS.
+"Spicing them" with test_tick or other things didn't help,
+if they are run in a tight loop.
+running with "debug=3Dt verbose=3Dt ./t8003*.sh" make the test
+pass.
+My suggestion is to revert 4d4813a5 and drop TC's for the moment.
+=20
+ builtin/blame.c               | 1 +
+ t/t8003-blame-corner-cases.sh | 9 ---------
+ 2 files changed, 1 insertion(+), 9 deletions(-)
+
+diff --git a/builtin/blame.c b/builtin/blame.c
+index 06484c2..8d70623 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -2348,6 +2348,7 @@ static struct commit *fake_working_tree_commit(st=
+ruct diff_options *opt,
+ 		if (strbuf_read(&buf, 0, 0) < 0)
+ 			die_errno("failed to read from stdin");
+ 	}
++	convert_to_git(path, buf.buf, buf.len, &buf, 0);
+ 	origin->file.ptr =3D buf.buf;
+ 	origin->file.size =3D buf.len;
+ 	pretend_sha1_file(buf.buf, buf.len, OBJ_BLOB, origin->blob_sha1);
+diff --git a/t/t8003-blame-corner-cases.sh b/t/t8003-blame-corner-cases=
+=2Esh
+index 32895e5..a073d36 100755
+--- a/t/t8003-blame-corner-cases.sh
++++ b/t/t8003-blame-corner-cases.sh
+@@ -191,13 +191,4 @@ test_expect_success 'indent of line numbers, ten l=
+ines' '
+ 	test $(grep -c "  " actual) =3D 9
+ '
+=20
+-test_expect_success 'blaming files with CRLF newlines' '
+-	git config core.autocrlf false &&
+-	printf "testcase\r\n" >crlffile &&
+-	git add crlffile &&
+-	git commit -m testcase &&
+-	git -c core.autocrlf=3Dinput blame crlffile >actual &&
+-	grep "A U Thor" actual
+-'
+-
+ test_done
+--=20
+2.2.0.rc1.790.ge19fcd2
