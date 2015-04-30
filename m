@@ -1,137 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: RFC: git cat-file --follow-symlinks?
-Date: Wed, 29 Apr 2015 22:34:38 -0700
-Message-ID: <xmqqfv7i2n81.fsf@gitster.dls.corp.google.com>
-References: <1430341032.14907.9.camel@ubuntu>
-	<xmqqlhha4otr.fsf@gitster.dls.corp.google.com>
-	<1430343059.14907.18.camel@ubuntu> <20150429214817.GA2725@peff.net>
-	<1430346576.14907.40.camel@ubuntu> <20150429231150.GB3887@peff.net>
-	<20150430003750.GA4258@peff.net> <1430355983.14907.55.camel@ubuntu>
-	<20150430011612.GA7530@peff.net> <1430358345.14907.62.camel@ubuntu>
-	<20150430033725.GB12361@peff.net>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: What's cooking in git.git (Apr 2015, #04; Mon, 27)
+Date: Thu, 30 Apr 2015 08:55:12 +0200
+Message-ID: <5541D1D0.8070407@alum.mit.edu>
+References: <xmqqr3r5uyqg.fsf@gitster.dls.corp.google.com> <xmqqbni64kum.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: David Turner <dturner@twopensource.com>,
-	git mailing list <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Apr 30 07:34:48 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Koosha Khajehmoogahi <koosha@posteo.de>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Jeff King <peff@peff.net>, Paul Tan <pyokagan@gmail.com>,
+	=?UTF-8?B?Tmd1?= =?UTF-8?B?eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	=?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 30 08:55:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ynh7X-0005Cl-B3
-	for gcvg-git-2@plane.gmane.org; Thu, 30 Apr 2015 07:34:47 +0200
+	id 1YniNi-00075m-6T
+	for gcvg-git-2@plane.gmane.org; Thu, 30 Apr 2015 08:55:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750871AbbD3Fen (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Apr 2015 01:34:43 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:62584 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750815AbbD3Fem (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Apr 2015 01:34:42 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5767849F9F;
-	Thu, 30 Apr 2015 01:34:41 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=N1RTDuqq9/wA8JyQdwxZw7nD1qE=; b=AV04wa
-	34G9DscFJPmItNNoRmbwulM6Hrr8EdYz+FTUmPSx5Q0xniSMPOX21tC5/8yV3cWG
-	ygC0hhN9vcFlUw+I20J4rzPm5NhXW2QI382upC5zJfcZPBQWanXzesVhENKWHHly
-	1diedDk81npfe1h6MpSGEst++Yy+RBSS3cRBA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=T5sVGZFkFccLGnw+nGLxluTRIyVlr4qS
-	yiAh0zxtSjUhulpPXytpm4Q5UaSDj+QpPHGNHN9fa5tGZ5+Xy3xgCQUftMiKY4oq
-	2J6CzXnyKS2RPRV6Jj4/9t86jmop0ER9LDXqiFIBA4M3GPjHL4yuFFNGVLjnfgbL
-	0cG2fpTW8Eo=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5006349F9E;
-	Thu, 30 Apr 2015 01:34:41 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E607249F9D;
-	Thu, 30 Apr 2015 01:34:39 -0400 (EDT)
-In-Reply-To: <20150430033725.GB12361@peff.net> (Jeff King's message of "Wed,
-	29 Apr 2015 23:37:25 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 98BA86D8-EEFA-11E4-B6A0-83E09F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1750758AbbD3GzX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Apr 2015 02:55:23 -0400
+Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:50605 "EHLO
+	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750710AbbD3GzW (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 30 Apr 2015 02:55:22 -0400
+X-AuditID: 1207440d-f79976d000005643-ac-5541d1d370d0
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 59.9E.22083.3D1D1455; Thu, 30 Apr 2015 02:55:15 -0400 (EDT)
+Received: from [192.168.69.130] (p4FC97A01.dip0.t-ipconnect.de [79.201.122.1])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t3U6tC0P023554
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Thu, 30 Apr 2015 02:55:13 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.6.0
+In-Reply-To: <xmqqbni64kum.fsf@gitster.dls.corp.google.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrNKsWRmVeSWpSXmKPExsUixO6iqHv5omOowbb51hZrXpxmtui60s1k
+	0dB7hdlixdU5zBb9y7vYLLbNWcVq0T3lLaPFj5YeZovWD3eYHDg9WidPYvbYOesuu8eHj3Ee
+	z3r3MHpcvKTs8euwqMfnTXIB7FHcNkmJJWXBmel5+nYJ3Bk33qQUfOCvOLbuE2MD4weeLkZO
+	DgkBE4ltmycxQdhiEhfurWfrYuTiEBK4zCix+fsHKOcck8S6E6fAqngFtCX6di5iBbFZBFQl
+	lk0/xAxiswnoSizqaQarERUIkmi9NpURol5Q4uTMJywgtoiAtcTvn9+ZQIYyC/xmkvh7dBs7
+	SEJYwF7i7/ffYEOFBDIlHh+ZBNbMCdTQtbcfqJkDqEFdYv08IZAws4C8RPPW2cwTGAVmIVkx
+	C6FqFpKqBYzMqxjlEnNKc3VzEzNzilOTdYuTE/PyUot0jfRyM0v0UlNKNzFCIoN3B+P/dTKH
+	GAU4GJV4eGe0OoYKsSaWFVfmHmKU5GBSEuW9tQooxJeUn1KZkVicEV9UmpNafIhRgoNZSYRX
+	Yj1QjjclsbIqtSgfJiXNwaIkzqu2RN1PSCA9sSQ1OzW1ILUIJivDwaEkwbvwAlCjYFFqempF
+	WmZOCUKaiYMTZDiXlEhxal5KalFiaUlGPChO44uBkQqS4gHa6wXSzltckJgLFIVoPcWoyzHn
+	5u9FTEIsefl5qVLivM0gRQIgRRmleXArYGnwFaM40MfCvPNAqniAKRRu0iugJUxAS87fcgBZ
+	UpKIkJJqYKy9Y/R+6audss/XpHk9bdm2LlTHsUdyiX3Cuye3nfjXcjQv2qr/SjSh 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268058>
 
-Jeff King <peff@peff.net> writes:
+On 04/30/2015 12:42 AM, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+>> Here are the topics that have been cooking.  Commits prefixed with
+>> '-' are only in 'pu' (proposed updates) while commits prefixed with
+>> '+' are in 'next'.
+>> ...
+> 
+> There are a handful of topics that are almost there but not
+> finished.  Could the topic owners and area submaintainers who are
+> involved in them report their current status soonish, please, to
+> help me decide to keep or discard them?
+> [...]
+>> * mh/numparse (2015-03-19) 14 commits
+>>  - diff_opt_parse(): use convert_i() when handling --abbrev=<num>
+>>  - diff_opt_parse(): use convert_i() when handling "-l<num>"
+>>  - opt_arg(): simplify pointer handling
+>>  - opt_arg(): report errors parsing option values
+>>  - opt_arg(): use convert_i() in implementation
+>>  - opt_arg(): val is always non-NULL
+>>  - builtin_diff(): detect errors when parsing --unified argument
+>>  - handle_revision_opt(): use convert_ui() when handling "--abbrev="
+>>  - strtoul_ui(), strtol_i(): remove functions
+>>  - handle_revision_opt(): use convert_i() when handling "-<digit>"
+>>  - handle_revision_opt(): use skip_prefix() in many places
+>>  - write_subdirectory(): use convert_ui() for parsing mode
+>>  - cacheinfo_callback(): use convert_ui() when handling "--cacheinfo"
+>>  - numparse: new module for parsing integral numbers
+>>
+>>  Many codepaths use unchecked use of strtol() and friends (or even
+>>  worse, atoi()).  Introduce a set of wrappers that try to be more
+>>  careful.
+>>
+>>  Waiting for a reroll ($gmane/266209).
 
-> Here are some possible alternatives:
->
->   1. If we can't resolve fully, don't resolve anything. I.e., return the
->      "fleem" object here, and the caller can recurse if they want. This is
->      simple and correct, but not as helpful to somebody who wants to follow
->      the out-of-tree link (they have to re-traverse the fleem->foo/bar/baz
->      link themselves).
->
->   2. Consider it can error if resolution fails. If you ask for
->      "HEAD^{tree}^{commit}", that does not resolve to anything (because
->      we can't peel the tree to a commit). Like (1), this is simple and
->      correct, but probably not all that helpful. The caller has to
->      start from scratch and resolve themselves, rather than getting an
->      intermediate result.
->
->   3. Return an object with the symlink relative to the original
->      filename (so "../external" in this case). This is kind of weird,
->      though, because we're not just returning a string from the name
->      resolution. It's an actual object.  So we'd be generating a fake
->      object that doesn't actually exist in the object db and
->      returning that. Feeding that sha1 to another program would fail.
->
->   4. Return the last object we could resolve, as I described. So
->      foo/bar/baz (with "../../../external" as its content) in this case.
->      When you resolve a name, you can ask for the context we discovered
->      along the way by traversing the tree. The mode is one example we've
->      already discussed, but the path name is another. So something like:
->
->        echo "HEAD^{resolve}:fleem" |
->        git cat-file --batch="%(objectname) %(size) %(intreepath)"
->
->      would show:
->
->        1234abcd 17 foo/bar/baz
->        ../../../external
->
->      And then the caller knows that the path is not relative to the
->      original "fleem", but rather to "foo/bar/baz".
->
->      The problem is that although this context lookup is already part of
->      get_sha1_with_context, that is not exposed through every interface.
->      E.g., "git rev-parse HEAD^{resolve}:fleem" will give you an object,
->      but you have no way of knowing the context.
->
-> I can't say that I'm excited about any of them. Perhaps you or somebody
-> else can think of a more clever solution.
+Yes, I've started rerolling this series a bit less ambitiously; i.e.,
+introduce the numparse API but in the first iteration avoid changing the
+behavior of the code that is doing the parsing. No ETA, I'm afraid.
 
-Me neither, but if I really had to pick one, it would be the last
-one, except that %(intreepath) would have to be somehow quoted,
-perhaps like how the output from "git diff" quotes funny pathnames.
+Feel free to drop v1 from your repository unless you think it might be
+useful as a reminder or object for discussion or something.
 
-When we want to use this as an extended SHA-1 syntax (i.e. outside
-of "cat-file --batch"), it most likely should just error out if the
-link does not resolve to a path that would eventually result in an
-in-tree object, with the same error message you would get when you
-ask for the object name for "HEAD:no-such-path".
+Michael
 
-But stepping back a bit.
-
-We have been talking about HEAD^{resolve}:fleem but how did we learn
-that there is a path "fleem" in the tree of HEAD in the first place?
-I would presume that the answer eventually boils down to "somebody
-fed HEAD to 'ls-tree -r'", and then that somebody is an idiot if it
-did not grab the mode bits to learn what kind of blob fleem is, or
-if it did not tell the guy that wants to drive "cat-file --batch".
-
-So this whole thing somehow starts to smell like a solution that is
-looking for a problem that has arisen only because the use case
-story behind it is screwy.  Again, why is it such a huge problem to
-make it relative and ask a newly formlated question for the guy who
-is driving "cat-file --batch" in the first place?
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
