@@ -1,110 +1,83 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: RFC: git cat-file --follow-symlinks?
-Date: Wed, 29 Apr 2015 18:06:23 -0700
-Organization: Twitter
-Message-ID: <1430355983.14907.55.camel@ubuntu>
-References: <1430341032.14907.9.camel@ubuntu>
-	 <xmqqlhha4otr.fsf@gitster.dls.corp.google.com>
-	 <1430343059.14907.18.camel@ubuntu> <20150429214817.GA2725@peff.net>
-	 <1430346576.14907.40.camel@ubuntu> <20150429231150.GB3887@peff.net>
-	 <20150430003750.GA4258@peff.net>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: What's cooking in git.git (Apr 2015, #04; Mon, 27)
+Date: Thu, 30 Apr 2015 08:07:00 +0700
+Message-ID: <CACsJy8BYhwcewEdix1WaAY+ukeTfwkLyrcimJ2K7Rgwh0E6EDQ@mail.gmail.com>
+References: <xmqqr3r5uyqg.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	git mailing list <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Apr 30 03:06:32 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 30 03:07:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yncvv-0002wq-PP
-	for gcvg-git-2@plane.gmane.org; Thu, 30 Apr 2015 03:06:32 +0200
+	id 1Yncwy-0003nJ-A3
+	for gcvg-git-2@plane.gmane.org; Thu, 30 Apr 2015 03:07:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751202AbbD3BG1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Apr 2015 21:06:27 -0400
-Received: from mail-pa0-f44.google.com ([209.85.220.44]:33310 "EHLO
-	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751059AbbD3BG0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Apr 2015 21:06:26 -0400
-Received: by pacwv17 with SMTP id wv17so43565957pac.0
-        for <git@vger.kernel.org>; Wed, 29 Apr 2015 18:06:26 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:mime-version
-         :content-transfer-encoding;
-        bh=jbtYtjo9FdV2bK3xF+nTcpXZq0acthbGIM6qbbd4490=;
-        b=KJd9NuKRKVlHO25OWa1hfyU3FJQdgAAxlgWQmKECwhZHWjKIagRCdQmJ8h0ufkVGt1
-         fqA2pOr/YL9zZZLxztf63IdQVJg7kF+UU87lDWOirtnfJ/Mww3jdPtwZ6/6RfJyFsh5c
-         XTY8iZxqYZENYok6CVUjvIaHZuArFTPO7BdrLFkJMlJkbnmh95ntrB2TMIo+T3wj/zLz
-         WDcvonenL++V6wjZq2kQRTgwY1b9tqLM8HYxdsEVFM/sopvE24AmrwzrXdyh1suE3DZe
-         PQxwrLa9TqHmn/DAbwbXObUGI4zFWfYMqczhPLD6JDrr1cDe5gesWqItxb1TjDcevPJ8
-         lbEg==
-X-Gm-Message-State: ALoCoQmx5DxX/Pkgipx3dRSy1ui1ZAxouNzruOlOKEe0AZqBRuQNeMrJcxPXgpcr49Vg1me4p6qf
-X-Received: by 10.66.172.4 with SMTP id ay4mr3178606pac.157.1430355986450;
-        Wed, 29 Apr 2015 18:06:26 -0700 (PDT)
-Received: from [172.25.135.195] ([8.25.197.26])
-        by mx.google.com with ESMTPSA id w6sm377701pbt.60.2015.04.29.18.06.24
-        (version=TLSv1.2 cipher=AES128-GCM-SHA256 bits=128/128);
-        Wed, 29 Apr 2015 18:06:25 -0700 (PDT)
-In-Reply-To: <20150430003750.GA4258@peff.net>
-X-Mailer: Evolution 3.10.4-0ubuntu2 
+	id S1751257AbbD3BHc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Apr 2015 21:07:32 -0400
+Received: from mail-ie0-f179.google.com ([209.85.223.179]:33369 "EHLO
+	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751248AbbD3BHb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Apr 2015 21:07:31 -0400
+Received: by iecrt8 with SMTP id rt8so56254114iec.0
+        for <git@vger.kernel.org>; Wed, 29 Apr 2015 18:07:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=q6szWMyYHjPWn2SaV1Vl2seEdcdL68NJ372Sh1ZNtGk=;
+        b=Sx8TFE6d0xIRgC43NUsn35p4NEvwJ04kgRaq8F+zcbPcbKoHA+M3ZIUQLOD4yMHxdY
+         wrQZYbeux9KWH07O7JodVnwaQ+llzAg6ZZphgPVIzN9temA68a3xokcVmogTIu9m+3so
+         N9QK1L8U0/qzx+TT8o1z1gPe49IsOevZobK795aAhVRQyzlfwJyj+eq6/1oXS5YVuYO8
+         nQqrwLOVh6UFK0hPmmVHQTpbwM5vBlH+3SwL1u0q94HTRA379uQLHjHPVqH9eZUjvm0c
+         MjzM0IDiXpZkeYBlI5TsdRpAGskai+1eCL7D3rRTkjmnt+JkSZrHhpDizOaYIWsVJ1N6
+         D0zg==
+X-Received: by 10.107.135.216 with SMTP id r85mr2321263ioi.84.1430356050628;
+ Wed, 29 Apr 2015 18:07:30 -0700 (PDT)
+Received: by 10.107.136.169 with HTTP; Wed, 29 Apr 2015 18:07:00 -0700 (PDT)
+In-Reply-To: <xmqqr3r5uyqg.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268042>
 
-On Wed, 2015-04-29 at 20:37 -0400, Jeff King wrote:
-> On Wed, Apr 29, 2015 at 07:11:50PM -0400, Jeff King wrote:
-> 
-> > Yeah, I agree if you let git punt on leaving the filesystem, most of the
-> > complicated problems go away. It still feels a bit more magical than I
-> > expect out of cat-file, and there are still corner cases (e.g., do we do
-> > cycle detection? Or just have a limit to the recursion depth?)
-> 
-> I was pondering the "magical" above. I think what bugs me is that it
-> seems like a feature that is implemented as part of one random bit of
-> plumbing, but not available elsewhere.
-> 
-> Conceptually, this is like peeling object names. You may give a tag
-> name, but if you ask for a tree commit we will peel the tag to a commit,
-> and the commit to a tree. This is sort of the same thing; you give a
-> path within a tree, and we will peel until we hit a "real" non-symlink
-> object.
-> 
-> I don't know what the syntax would look like. To match "foo^{tree}" it
-> would be something like:
-> 
->   HEAD:foo/bar^{resolve}
-> 
-> or something like that. Except that it is a bad idea to allow "^{}"
-> syntax on the right-hand side of a colon, as it is ambiguous with
-> filenames that contain "^{resolve}". So it would have to look something
-> like:
-> 
->   HEAD^{resolve}:foo/bar
-> 
-> which is a _little_ weird, but actually kind of makes sense. The
-> "resolve" operation inherently is not just about the filename, but about
-> uses HEAD^{tree} as the root context.
-> 
-> So I dunno. This pushes the resolving logic even _lower_ in the stack
-> than it would be in cat-file. So why do I like it more? Cognitive
-> dissonance? I guess I the appeal to me is that it:
-> 
->   1. Makes the concept available more generally (you can "rev-parse" it,
->      you can "git show" it, etc). It also lets you _name_ the object in
->      question, so you can ask for other things besides it contents (like
->      its name, its type, etc).
-> 
->   2. Positions it alongside other peeling name-resolution functions.
+On Tue, Apr 28, 2015 at 3:01 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> * nd/list-files (2015-02-09) 21 commits
+>  - t3080: tests for git-list-files
+>  - list-files: -M aka diff-cached
+>  - list-files -F: show submodules with the new indicator '&'
+>  - list-files: add -F/--classify
+>  - list-files: show directories as well as files
+>  - list-files: do not show duplicate cached entries
+>  - list-files: sort output and remove duplicates
+>  - list-files: add -t back
+>  - list-files: add -1 short for --no-column
+>  - list-files: add -R/--recursive short for --max-depth=-1
+>  - list-files: -u does not imply showing stages
+>  - list-files: make alias 'ls' default to 'list-files'
+>  - list-files: a user friendly version of ls-files and more
+>  - ls-files: support --max-depth
+>  - ls-files: add --column
+>  - ls-files: add --color to highlight file names
+>  - ls-files: buffer full item in strbuf before printing
+>  - ls_colors.c: highlight submodules like directories
+>  - ls_colors.c: add a function to color a file name
+>  - ls_colors.c: parse color.ls.* from config file
+>  - ls_colors.c: add $LS_COLORS parsing code
+>
+>  A new "git list-files" Porcelain command, "ls-files" with bells and
+>  whistles.
+>
+>  Reroll to base on wt-status work ($gmane/265142) has seen some
+>  positive discussions.
+>
+>  Waiting for a further polished reroll ($gmane/265534).
 
-Just to clarify: if you do git rev-parse, and the result is an
-out-of-tree symlink, you see /foo or ../foo instead of a sha?  And if
-you "git show" it it says "symlink HEAD:../foo"?
-
-This seems totally reasonable to me, and solves my problem.
+I'm a little bit busy with other things, so please drop this for now.
+I'll resubmit when I address all the comments from the last round.
+-- 
+Duy
