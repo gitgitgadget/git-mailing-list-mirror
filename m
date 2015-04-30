@@ -1,103 +1,89 @@
-From: David Turner <dturner@twopensource.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: RFC: git cat-file --follow-symlinks?
-Date: Thu, 30 Apr 2015 12:17:59 -0700
-Organization: Twitter
-Message-ID: <1430421479.22711.50.camel@ubuntu>
-References: <20150430033725.GB12361@peff.net>
-	 <xmqqfv7i2n81.fsf@gitster.dls.corp.google.com>
-	 <5541E3D4.7040207@alum.mit.edu> <1430417023.22711.8.camel@ubuntu>
-	 <xmqqzj5pzdfo.fsf@gitster.dls.corp.google.com>
-	 <1430418522.22711.22.camel@ubuntu> <20150430183226.GA2855@peff.net>
-	 <1430419490.22711.30.camel@ubuntu> <20150430184944.GA3661@peff.net>
-	 <1430420422.22711.37.camel@ubuntu> <20150430191043.GA4461@peff.net>
+Date: Thu, 30 Apr 2015 12:18:03 -0700
+Message-ID: <xmqqvbgdzaqc.fsf@gitster.dls.corp.google.com>
+References: <1430343059.14907.18.camel@ubuntu>
+	<20150429214817.GA2725@peff.net> <1430346576.14907.40.camel@ubuntu>
+	<20150429231150.GB3887@peff.net> <20150430003750.GA4258@peff.net>
+	<1430355983.14907.55.camel@ubuntu> <20150430011612.GA7530@peff.net>
+	<1430358345.14907.62.camel@ubuntu> <20150430033725.GB12361@peff.net>
+	<87383ihqzp.fsf@igel.home> <20150430182659.GB23431@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
+Content-Type: text/plain
+Cc: Andreas Schwab <schwab@linux-m68k.org>,
+	David Turner <dturner@twopensource.com>,
 	git mailing list <git@vger.kernel.org>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Apr 30 21:18:17 2015
+X-From: git-owner@vger.kernel.org Thu Apr 30 21:18:26 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YntyS-0002a8-Il
-	for gcvg-git-2@plane.gmane.org; Thu, 30 Apr 2015 21:18:16 +0200
+	id 1YntyY-0002a8-Bg
+	for gcvg-git-2@plane.gmane.org; Thu, 30 Apr 2015 21:18:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752800AbbD3TSI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1752819AbbD3TSL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Apr 2015 15:18:11 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:55569 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752780AbbD3TSI (ORCPT <rfc822;git@vger.kernel.org>);
 	Thu, 30 Apr 2015 15:18:08 -0400
-Received: from mail-pd0-f181.google.com ([209.85.192.181]:36298 "EHLO
-	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752780AbbD3TSD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Apr 2015 15:18:03 -0400
-Received: by pdea3 with SMTP id a3so69645441pde.3
-        for <git@vger.kernel.org>; Thu, 30 Apr 2015 12:18:01 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:mime-version
-         :content-transfer-encoding;
-        bh=h7HgztWJF88/OLRPxPMVYDmTkRgOz9WsGb+xw1SkXG8=;
-        b=LnsxPpCi4jG3LU15wj/pzxaWEgyaiiHaYVc07fTkT1+Ylwnc1HYh2ylYVoJnzXVd7Q
-         LcHIuxz3psdcPTp0detKnngfmekWcVZygHb1x4iQ9gT61D7XhXQqeA/pDx+OKi0fnYO5
-         aLSL4ofSl1GdtTWNCvMW2wIps4zwtvooQSIE7iEplKRgW1Me3YVAkn714XX4K0PWRzxj
-         SyztbSqF1739kInBmvCrK8KzvgXukVZ03dWBNQcStryONJI6fe7c14ml6FkM/qGhHT6y
-         CQRHomqxlLiVkQ00TVBijQOhzF9KF7YaHB520juOavfnXXTPybT7gOn5G/VtJxjuOXan
-         OWWA==
-X-Gm-Message-State: ALoCoQmkuX9K76wPk69pLkmGvxM5zFVCFEy+9iuz4NGBfAFjJU7/vF3azwZutJHtehwuFYEWY7iE
-X-Received: by 10.66.55.104 with SMTP id r8mr10837144pap.75.1430421481875;
-        Thu, 30 Apr 2015 12:18:01 -0700 (PDT)
-Received: from [172.25.135.195] ([8.25.197.26])
-        by mx.google.com with ESMTPSA id l5sm2903668pbq.15.2015.04.30.12.18.00
-        (version=TLSv1.2 cipher=AES128-GCM-SHA256 bits=128/128);
-        Thu, 30 Apr 2015 12:18:01 -0700 (PDT)
-In-Reply-To: <20150430191043.GA4461@peff.net>
-X-Mailer: Evolution 3.10.4-0ubuntu2 
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C560F4D3DB;
+	Thu, 30 Apr 2015 15:18:06 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=0rxtQGsQ2/p/MXp4M/v8ZLoVZ0A=; b=AkFjEO
+	C7zJrhqP9lJ0fUpTO83cDlmcAbePt6fP+QuImIheffV6i2gzX3EnVYbY/Fw6njoK
+	G/hbSNQTOYFiA7ZYm9eZYizI4Edr3NMCrv2WrgLhf75ETMGTXkUUzOIQXkqlst9u
+	G5sl7t3DmU83JOK3MolAESRa+/ItGKg8yWmwM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=w/at7HkQRb2UEOUGHXlrc6DB+pe/DiU/
+	DoNnWhrdu+owxioXe/RrQsdIB9HwOkpUed0m2HlPUmUk9dUci9pR95s/aa6jTNjf
+	DRsSIIr5RkMQe5n/N5cY54kiiXzqaS/B/qnXY7nhFeZcYTP1x65ueVZ5LlW67HTt
+	xbSxKL72ANQ=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A838E4D3D9;
+	Thu, 30 Apr 2015 15:18:06 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 206D94D3D8;
+	Thu, 30 Apr 2015 15:18:06 -0400 (EDT)
+In-Reply-To: <20150430182659.GB23431@peff.net> (Jeff King's message of "Thu,
+	30 Apr 2015 14:27:00 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: A11D98B0-EF6D-11E4-8751-83E09F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268095>
 
-On Thu, 2015-04-30 at 15:10 -0400, Jeff King wrote:
-> On Thu, Apr 30, 2015 at 12:00:22PM -0700, David Turner wrote:
-> 
-> > > > Also, BUILD files are scattered throughout the tree, so the entire tree
-> > > > would still need to be traversed.  At present, our monorepo is not quite
-> > > > large enough for this to matter (a full ls-tree only takes me 0.6s), but
-> > > > it is growing.
-> > > 
-> > > But aren't you asking git to do that internally? I.e., it can limit the
-> > > traversal for a prefix-match, but it cannot do so for an arbitrary
-> > > filename. It has to open every tree. So the extra expense is really just
-> > > the I/O over the pipe. That's not optimal, but it is a constant factor
-> > > slowdown from what git would do internally.
-> > 
-> > No, I'm not trying to find all BUILD files -- only ones that are in the
-> > transitive dependency tree of the target I'm trying to sparsely check
-> > out. So if the target foo/bar/baz depends on morx/fleem, and morx/fleem
-> > depends on plugh/xyzzy, then I have to examine those three places only.
-> > I don't have to examine anything in the gibbberish/ subtree, for
-> > instance.  
-> 
-> OK, let me see if I understand your use case by parroting it back.
-> 
-> You _don't_ want to feed git a "find all BUILD" pattern, which is good
-> (because it doesn't work ;) ). You do want to feed it a set of raw
-> paths to find, because you're going to discover the paths yourself at
-> each step as you recurse through the dependency-chain of build files. 
-> You don't actually care about feeding those paths to "ls-tree" at all.
-> You care only about the _content_ at each path (and will parse that
-> content to see if you need to take a further recursive step).
-> 
-> So I think git out-of-the-box supports that pretty well (via cat-file).
-> And your sticking point is that some of the paths may involve symlinks
-> in the tree, so you want cat-file to answer "if I had checked this out
-> and typed cat /some/path/to/BUILD, what content would I get". Which
-> brings us back to the original symlink question.
-> 
-> Is that all accurate?
+Jeff King <peff@peff.net> writes:
 
-Yes.  That is a very good summary.
+> Which means that I think this has to be implemented as part of the name
+> resolution (i.e., the "^{resolve}") proposal. cat-file could not say:
+>
+>   get_sha1_with_context("HEAD:foo/bar/baz", sha1, &ctx);
+>   if (S_ISLNK(ctx.mode))
+>      ... resolve ...
+>
+> The initial get_sha1 would fail if "foo" is a symlink. Likewise, one
+> cannot implement this by querying cat-file repeatedly without asking for
+> each leading prefix (so ask for "HEAD:foo", see if it's a link, then
+> "HEAD:foo/bar", etc).
+>
+> Of course it does not _have_ to be part of the normal get_sha1 name
+> resolution. But if not, it would have to reimplement the tree-walking
+> part of that name resolution.
+>
+> Thanks for giving another interesting case to consider.
+
+Yup, everything above makes sense, and I think it is an argument for
+making this new feature as part of the sha1-name infrastructure, if
+only that it has to do some sort of tree-walking already anyway.
+
+Thanks.
