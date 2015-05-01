@@ -1,70 +1,97 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH 2/2] lock_packed_refs(): allow retries when acquiring
- the packed-refs lock
-Date: Fri, 01 May 2015 18:13:21 +0200
-Message-ID: <5543A621.7010208@kdbg.org>
-References: <1430491977-25817-1-git-send-email-mhagger@alum.mit.edu> <1430491977-25817-3-git-send-email-mhagger@alum.mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Patch that modifies git usage message
+Date: Fri, 01 May 2015 09:29:50 -0700
+Message-ID: <xmqqfv7gxnup.fsf@gitster.dls.corp.google.com>
+References: <CAKB+oNtYbJXNb2wGzJCdQ5Ru5fq3HzcapSqiTVC_34=xDnTb7Q@mail.gmail.com>
+	<CAGZ79kY1ZoYrVwVVqfyB+uMGsJo59qDxbDLgyo5qygSm=CUVhA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri May 01 18:13:34 2015
+Content-Type: text/plain
+Cc: Alangi Derick <alangiderick@gmail.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Fri May 01 18:30:05 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YoDZD-0004J0-Ci
-	for gcvg-git-2@plane.gmane.org; Fri, 01 May 2015 18:13:31 +0200
+	id 1YoDpE-0008Oa-AN
+	for gcvg-git-2@plane.gmane.org; Fri, 01 May 2015 18:30:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751114AbbEAQN0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 May 2015 12:13:26 -0400
-Received: from bsmtp7.bon.at ([213.33.87.19]:27511 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751064AbbEAQN0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 May 2015 12:13:26 -0400
-Received: from dx.site (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTPSA id 3lddst5d6pz5tlF;
-	Fri,  1 May 2015 18:13:22 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.site (Postfix) with ESMTP id DA7C151E0;
-	Fri,  1 May 2015 18:13:21 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
-In-Reply-To: <1430491977-25817-3-git-send-email-mhagger@alum.mit.edu>
+	id S1752174AbbEAQ37 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 May 2015 12:29:59 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:51217 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752125AbbEAQ36 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 May 2015 12:29:58 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3C7344DD14;
+	Fri,  1 May 2015 12:29:52 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=XodS9E7sPWFA5D8bZrh4aPVcuEo=; b=e4mXum
+	PjuLlqJa4gMYa5ELwuQdNriiebSuv2jcluwO45fhYigb9D7LL0H7drswgONRWAd1
+	DlEts95xLnMEf+e03GO//6A1k1SK8hPIeZTnB/HJSZHy8o5PbRE5dFmlsIhkq5iR
+	nmIFWpcrMksP/pUM2leQ99d0UcjURyx1mfcMg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=cOp2iMpsKTEx+U3NvLgNuswKiGbvCzJg
+	5yxSIOGu8mI3ezNJi3JmQX++jHq1MxsaDY5zyHpsaNPuvrnJ3Z2g5JqcIjJk9Qjr
+	brnppPvdASKQQFSs/eJWn8ZPJX8WSpDVMVEL8hxLLLkVoODdBQX5Ry/1MdX1jmdD
+	CLiFSbGvZs4=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3619B4DD13;
+	Fri,  1 May 2015 12:29:52 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AB91B4DD11;
+	Fri,  1 May 2015 12:29:51 -0400 (EDT)
+In-Reply-To: <CAGZ79kY1ZoYrVwVVqfyB+uMGsJo59qDxbDLgyo5qygSm=CUVhA@mail.gmail.com>
+	(Stefan Beller's message of "Fri, 1 May 2015 08:51:07 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 4AC6C6BE-F01F-11E4-B7E8-83E09F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268153>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268154>
 
-Am 01.05.2015 um 16:52 schrieb Michael Haggerty:
-> +test_expect_success 'retry acquiring packed-refs.lock' '
-> +	LOCK=.git/packed-refs.lock &&
-> +	>$LOCK &&
-> +	test_when_finished "rm -f $LOCK" &&
-> +	{
-> +		( sleep 1 ; rm -f $LOCK ) &
-> +	} &&
+Stefan Beller <sbeller@google.com> writes:
 
-I haven't tested yet, but I think that this will be problematic on 
-Windows: a directory cannot be removed if it is the current directory of 
-a process. Here, the sub-shell process is alive for a second. If the 
-remainder of the test script completes before the process dies, the test 
-directory cannot be removed.
-
-How about this:
-
-	test_when_finished "wait; rm -f $LOCK" &&
-	{ sleep 1 & } &&
-	...
-
-> +	git -c core.packedrefstimeout=3000 pack-refs --all --prune
-> +'
-> +
->   test_done
+> For the patch itself:
 >
+> $ grep -r usage *.c builtin/*.c |wc -l
+> 551
+> $ grep -r Usage *.c builtin/*.c |wc -l
+> 3
+>
+> The community agreed (maybe subconciously) to prefer lower case
+> for the 'usage' string, so I don't think this is an improvement.
 
--- Hannes
+I tend to agree with the conclusion, but you need to be a bit
+careful here.  These catch all the variable names that contain
+"[uU]sage" as substring, but we do not spell in-code variables
+with camelCase, so the former probably is over-counting.  Things
+like "static const char usage[] = ..." are counted; so are calls
+to usage_with_options().
+
+If you look for the beginning of a string constant, you would get
+this:
+
+    $ git grep '"usage' -- \*.c builtin/\*.c
+    12
+    $ git grep '"Usage' -- \*.c builtin/\*.c
+    0
+
+The former undercounts the messages because many usage messages are
+produced by calling usage_with_options() these days.
+
+The latter being zero made me scratch my head and do this:
+
+    $ git grep Usage -- \*.c builtin/\*.c
+    commit.c: * Usage example:
+    test-hashmap.c: * Usage: time echo "perfhas...
+
+I cannot find the third one you found for "Usage" in your example,
+though.
