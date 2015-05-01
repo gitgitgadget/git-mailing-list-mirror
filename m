@@ -1,79 +1,89 @@
-From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: [PATCH] completion: remove redundant __git_compute_all_commands() call
-Date: Fri,  1 May 2015 17:48:56 +0200
-Message-ID: <1430495336-8456-1-git-send-email-szeder@ira.uka.de>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: Patch that modifies git usage message
+Date: Fri, 1 May 2015 08:51:07 -0700
+Message-ID: <CAGZ79kY1ZoYrVwVVqfyB+uMGsJo59qDxbDLgyo5qygSm=CUVhA@mail.gmail.com>
+References: <CAKB+oNtYbJXNb2wGzJCdQ5Ru5fq3HzcapSqiTVC_34=xDnTb7Q@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 01 17:49:06 2015
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Alangi Derick <alangiderick@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 01 17:51:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YoDBX-0002Zq-Sr
-	for gcvg-git-2@plane.gmane.org; Fri, 01 May 2015 17:49:04 +0200
+	id 1YoDDe-0004Br-AJ
+	for gcvg-git-2@plane.gmane.org; Fri, 01 May 2015 17:51:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754186AbbEAPs7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 May 2015 11:48:59 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:39001 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754101AbbEAPs6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 1 May 2015 11:48:58 -0400
-Received: from x590c27d8.dyn.telefonica.de ([89.12.39.216] helo=localhost)
-	by iramx2.ira.uni-karlsruhe.de with esmtpsa port 587 
-	iface 141.3.10.81 id 1YoDBO-0007qE-Ov; Fri, 01 May 2015 17:48:56 +0200
-X-Mailer: git-send-email 1.9.5.msysgit.0
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1430495336.
+	id S1753956AbbEAPvJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 May 2015 11:51:09 -0400
+Received: from mail-ig0-f182.google.com ([209.85.213.182]:36357 "EHLO
+	mail-ig0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753543AbbEAPvI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 May 2015 11:51:08 -0400
+Received: by igblo3 with SMTP id lo3so41444910igb.1
+        for <git@vger.kernel.org>; Fri, 01 May 2015 08:51:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=jduHRXUJfucWxIZONRa6eIO/hNCgfc7R4/4aypr/fas=;
+        b=VGtiOasPF68QZasV2ZHFVslyyhRSCIyPxdbED8U3lV+Gpmgj5UeRbysVYOFg3AB6s0
+         fLvynickJ8oCRQj97J6iPzJhg57oUAQmb/xDAtcen/j3DGgGCXT1O9P85dRxWpZRu0TN
+         8BoZBNGtwVZZkzuWvyaXiRUnsXTgoRBObeZvXnikvYTRzkFw54FMFiL6GPZMd1mPZ9iP
+         YKeBvGdX6Wg9V3Wkmk1GWxFc0RaOUStCUAVTJONd78X9oI8mQOlQ6a28jEPyt1zC61qP
+         rIk3oEG1cwtHS0eE9u1VMPR10rarKyQawdb8R0DB6knh6fyW2PmCTWAi4UMLIr0/bCkq
+         DL1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=jduHRXUJfucWxIZONRa6eIO/hNCgfc7R4/4aypr/fas=;
+        b=gY5orqy8XSuFUMStMAl/woDeYhdn/VeUnPk57cg1Q2tZV7qVvi6COzFxplu9eVv5WI
+         pmmst4mLFrJ3l52lld/AL8s+HexHdov8L+ujYh0dxs9Q9DbnqfGrDH2kgOqfdLbUDpy+
+         MgQSe6URKehSk4YPoO5Pe6KMmvLim4kh8bLhuCc/CSOMyYUgLKGVG6JtaJ5YWEasU9gr
+         32O3AIap6yfmmFQ0HZTvwmKLLYxpcOVkvdHXpdZAuNlpZbj3frB3Fmyd13N5qqPVtOkb
+         pQJku/lMb1NHqH/3no2PYqgnhdISbPMeZHEWZnFby1Gh4WPCb9wHU31WtPZAc2Z/jNut
+         yacA==
+X-Gm-Message-State: ALoCoQlBF3H9vDWD0ynH/gdazxaWFcIEOWlzJ5QffP6yXGGh5SA+cr2klv1+Se5+ZXUZLbu8cSfw
+X-Received: by 10.50.138.71 with SMTP id qo7mr11063827igb.10.1430495467421;
+ Fri, 01 May 2015 08:51:07 -0700 (PDT)
+Received: by 10.107.46.22 with HTTP; Fri, 1 May 2015 08:51:07 -0700 (PDT)
+In-Reply-To: <CAKB+oNtYbJXNb2wGzJCdQ5Ru5fq3HzcapSqiTVC_34=xDnTb7Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268149>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268150>
 
-During lazy-initialization of the lists of all commands and porcelain
-commands the function __git_compute_all_commands() is called twice.  Th=
-e
-relevant part of the call sequence looks like this:
+On Fri, May 1, 2015 at 4:01 AM, Alangi Derick <alangiderick@gmail.com> wrote:
+> This patch just modifies the "usage" word to "Usage" which enhances
+> readability. Below is the patch
+>
+> Regards
+> Alangi Derick Ndimnain
 
-  __git_compute_porcelain_commands()
-     __git_compute_all_commands()
-        <finds list of all commands uninitialized>
-        __git_list_all_commands()
-        <initializes list of all commands>
-     __git_list_porcelain_commands()
-        __git_compute_all_commands()
-           <finds list of all commands already initialized, does nothin=
-g>
-        <filters porcelains from list of all commands>
+It's easier to have the patch in the email itself, this looks it's
+some form of attachment.
 
-Either one of the two calls could be removed and the initialization of
-both command lists would still work as a whole, but let's remove the ca=
-ll
-from __git_compute_porcelain_commands(), because this way
-__git_list_porcelain_commands() will keep working in itself.
+Checkout Documentation/SubmittingPatches (protip: get "git send-email"
+working, it will
+send in the preferred way by default for nearly any open source
+project using email based
+workflows.)
 
-Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
----
- contrib/completion/git-completion.bash | 1 -
- 1 file changed, 1 deletion(-)
+There are also some resources on the web, how to send patches,
+although it should be
+all covered in our Documentation,
+http://alblue.bandlem.com/2011/12/git-tip-of-week-patches-by-email.html
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
-n/git-completion.bash
-index 5944c82..8b0d2b4 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -735,7 +735,6 @@ __git_list_porcelain_commands ()
- __git_porcelain_commands=3D
- __git_compute_porcelain_commands ()
- {
--	__git_compute_all_commands
- 	test -n "$__git_porcelain_commands" ||
- 	__git_porcelain_commands=3D$(__git_list_porcelain_commands)
- }
---=20
-1.9.5.msysgit.0
+For the patch itself:
+
+$ grep -r usage *.c builtin/*.c |wc -l
+551
+$ grep -r Usage *.c builtin/*.c |wc -l
+3
+
+The community agreed (maybe subconciously) to prefer lower case
+for the 'usage' string, so I don't think this is an improvement.
