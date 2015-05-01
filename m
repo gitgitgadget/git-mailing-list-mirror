@@ -1,89 +1,59 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: Patch that modifies git usage message
-Date: Fri, 1 May 2015 08:51:07 -0700
-Message-ID: <CAGZ79kY1ZoYrVwVVqfyB+uMGsJo59qDxbDLgyo5qygSm=CUVhA@mail.gmail.com>
-References: <CAKB+oNtYbJXNb2wGzJCdQ5Ru5fq3HzcapSqiTVC_34=xDnTb7Q@mail.gmail.com>
+From: Yuvi <myuvarani@gmail.com>
+Subject: Looking for a solution
+Date: Fri, 1 May 2015 12:07:40 -0400
+Message-ID: <CAFX4i8EyQ=0EV=XMCQ42GfYzjbAXc5ELSCFqEejS5ObYioqBEg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Alangi Derick <alangiderick@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 01 17:51:23 2015
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 01 18:07:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YoDDe-0004Br-AJ
-	for gcvg-git-2@plane.gmane.org; Fri, 01 May 2015 17:51:14 +0200
+	id 1YoDTh-0008P4-9c
+	for gcvg-git-2@plane.gmane.org; Fri, 01 May 2015 18:07:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753956AbbEAPvJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 May 2015 11:51:09 -0400
-Received: from mail-ig0-f182.google.com ([209.85.213.182]:36357 "EHLO
-	mail-ig0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753543AbbEAPvI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 May 2015 11:51:08 -0400
-Received: by igblo3 with SMTP id lo3so41444910igb.1
-        for <git@vger.kernel.org>; Fri, 01 May 2015 08:51:07 -0700 (PDT)
+	id S1422673AbbEAQHo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 May 2015 12:07:44 -0400
+Received: from mail-yk0-f177.google.com ([209.85.160.177]:34651 "EHLO
+	mail-yk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964770AbbEAQHl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 May 2015 12:07:41 -0400
+Received: by ykft189 with SMTP id t189so19414661ykf.1
+        for <git@vger.kernel.org>; Fri, 01 May 2015 09:07:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=jduHRXUJfucWxIZONRa6eIO/hNCgfc7R4/4aypr/fas=;
-        b=VGtiOasPF68QZasV2ZHFVslyyhRSCIyPxdbED8U3lV+Gpmgj5UeRbysVYOFg3AB6s0
-         fLvynickJ8oCRQj97J6iPzJhg57oUAQmb/xDAtcen/j3DGgGCXT1O9P85dRxWpZRu0TN
-         8BoZBNGtwVZZkzuWvyaXiRUnsXTgoRBObeZvXnikvYTRzkFw54FMFiL6GPZMd1mPZ9iP
-         YKeBvGdX6Wg9V3Wkmk1GWxFc0RaOUStCUAVTJONd78X9oI8mQOlQ6a28jEPyt1zC61qP
-         rIk3oEG1cwtHS0eE9u1VMPR10rarKyQawdb8R0DB6knh6fyW2PmCTWAi4UMLIr0/bCkq
-         DL1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=jduHRXUJfucWxIZONRa6eIO/hNCgfc7R4/4aypr/fas=;
-        b=gY5orqy8XSuFUMStMAl/woDeYhdn/VeUnPk57cg1Q2tZV7qVvi6COzFxplu9eVv5WI
-         pmmst4mLFrJ3l52lld/AL8s+HexHdov8L+ujYh0dxs9Q9DbnqfGrDH2kgOqfdLbUDpy+
-         MgQSe6URKehSk4YPoO5Pe6KMmvLim4kh8bLhuCc/CSOMyYUgLKGVG6JtaJ5YWEasU9gr
-         32O3AIap6yfmmFQ0HZTvwmKLLYxpcOVkvdHXpdZAuNlpZbj3frB3Fmyd13N5qqPVtOkb
-         pQJku/lMb1NHqH/3no2PYqgnhdISbPMeZHEWZnFby1Gh4WPCb9wHU31WtPZAc2Z/jNut
-         yacA==
-X-Gm-Message-State: ALoCoQlBF3H9vDWD0ynH/gdazxaWFcIEOWlzJ5QffP6yXGGh5SA+cr2klv1+Se5+ZXUZLbu8cSfw
-X-Received: by 10.50.138.71 with SMTP id qo7mr11063827igb.10.1430495467421;
- Fri, 01 May 2015 08:51:07 -0700 (PDT)
-Received: by 10.107.46.22 with HTTP; Fri, 1 May 2015 08:51:07 -0700 (PDT)
-In-Reply-To: <CAKB+oNtYbJXNb2wGzJCdQ5Ru5fq3HzcapSqiTVC_34=xDnTb7Q@mail.gmail.com>
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=avVTZsHi8Nfw3tEHtL0T4ubDCdQrCpTg1Ypai8yMv3g=;
+        b=J9cgiW/yG/18bWLnIpowEWF4T0gqxx2fn8tUJv7ahtLmvxdrx18UjqbEfDpeQk0oJO
+         qPl2uhSpPu8GtMHXFVCQfS9BToKMWRNA4sBbW2MjzHR6Ef15KinfklnU2MMpPQ4D+ddd
+         c0bXhBalNSsTFPAYBqp1nxbpSagU2Eab1tfcEDNdlEKq+8/JJTK9zlKpDjcRWxKUz9v5
+         UER0gBxzRgBqB/b8/2PI6Nz5fux0n9H9+ZETIxnOz49/7dPLCA8B51j+LAJFGmANynBZ
+         LTOXznyVp3pW1JSGaxFe0D3loMxNNBU21oeFS9pCxSIMnweb6kNPXV/q5S5BLcbveBNT
+         PWLQ==
+X-Received: by 10.170.58.88 with SMTP id a85mr8765742yka.111.1430496460612;
+ Fri, 01 May 2015 09:07:40 -0700 (PDT)
+Received: by 10.13.247.3 with HTTP; Fri, 1 May 2015 09:07:40 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268150>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268151>
 
-On Fri, May 1, 2015 at 4:01 AM, Alangi Derick <alangiderick@gmail.com> wrote:
-> This patch just modifies the "usage" word to "Usage" which enhances
-> readability. Below is the patch
->
-> Regards
-> Alangi Derick Ndimnain
+Hello There,
 
-It's easier to have the patch in the email itself, this looks it's
-some form of attachment.
+Here is the problem I am running into.
 
-Checkout Documentation/SubmittingPatches (protip: get "git send-email"
-working, it will
-send in the preferred way by default for nearly any open source
-project using email based
-workflows.)
+I pushed the committed changes into GIT repository sometime during end
+of Jan. I realized that the changes are not existing. I suspect
+someone has reverted them.
 
-There are also some resources on the web, how to send patches,
-although it should be
-all covered in our Documentation,
-http://alblue.bandlem.com/2011/12/git-tip-of-week-patches-by-email.html
+Wondering is there anyway around to get the changes back or can I see
+who reverted the changes on a specific file ?
 
-For the patch itself:
+Would really appreciate your help.
 
-$ grep -r usage *.c builtin/*.c |wc -l
-551
-$ grep -r Usage *.c builtin/*.c |wc -l
-3
-
-The community agreed (maybe subconciously) to prefer lower case
-for the 'usage' string, so I don't think this is an improvement.
+-- 
+Regards
+Yuvi
