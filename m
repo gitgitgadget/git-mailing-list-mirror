@@ -1,193 +1,169 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 04/12] remote.c: provide per-branch pushremote name
-Date: Fri, 1 May 2015 18:46:44 -0400
-Message-ID: <20150501224644.GD1534@peff.net>
+Subject: [PATCH 05/12] remote.c: introduce branch_get_upstream helper
+Date: Fri, 1 May 2015 18:47:09 -0400
+Message-ID: <20150501224708.GE1534@peff.net>
 References: <20150501224414.GA25551@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 02 00:46:52 2015
+X-From: git-owner@vger.kernel.org Sat May 02 00:47:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YoJhr-0006YC-Lx
-	for gcvg-git-2@plane.gmane.org; Sat, 02 May 2015 00:46:52 +0200
+	id 1YoJiG-0006rZ-7c
+	for gcvg-git-2@plane.gmane.org; Sat, 02 May 2015 00:47:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750866AbbEAWqr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 May 2015 18:46:47 -0400
-Received: from cloud.peff.net ([50.56.180.127]:53103 "HELO cloud.peff.net"
+	id S1750930AbbEAWrM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 May 2015 18:47:12 -0400
+Received: from cloud.peff.net ([50.56.180.127]:53106 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750807AbbEAWqq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 May 2015 18:46:46 -0400
-Received: (qmail 23312 invoked by uid 102); 1 May 2015 22:46:46 -0000
+	id S1750870AbbEAWrL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 May 2015 18:47:11 -0400
+Received: (qmail 23385 invoked by uid 102); 1 May 2015 22:47:11 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 01 May 2015 17:46:46 -0500
-Received: (qmail 20998 invoked by uid 107); 1 May 2015 22:47:17 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 01 May 2015 17:47:11 -0500
+Received: (qmail 21014 invoked by uid 107); 1 May 2015 22:47:41 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 01 May 2015 18:47:17 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 01 May 2015 18:46:44 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 01 May 2015 18:47:41 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 01 May 2015 18:47:09 -0400
 Content-Disposition: inline
 In-Reply-To: <20150501224414.GA25551@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268189>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268190>
 
-When remote.c loads its config, it records the
-branch.*.pushremote for the current branch along with the
-global remote.pushDefault value, and then binds them into a
-single value: the default push for the current branch. We
-then pass this value (which may be NULL) to remote_get_1
-when looking up a remote for push.
-
-This has a few downsides:
-
-  1. It's confusing. The early-binding of the "current
-     value" led to bugs like the one fixed by 98b406f
-     (remote: handle pushremote config in any order,
-     2014-02-24). And the fact that pushremotes fall back to
-     ordinary remotes is not explicit at all; it happens
-     because remote_get_1 cannot tell the difference between
-     "we are not asking for the push remote" and "there is
-     no push remote configured".
-
-  2. It throws away intermediate data. After read_config()
-     finishes, we have no idea what the value of
-     remote.pushDefault was, because the string has been
-     overwritten by the current branch's
-     branch.*.pushremote.
-
-  3. It doesn't record other data. We don't note the
-     branch.*.pushremote value for anything but the current
-     branch.
-
-Let's make this more like the fetch-remote config. We'll
-record the pushremote for each branch, and then explicitly
-compute the correct remote for the current branch at the
-time of reading.
+All of the information needed to find the @{upstream} of a
+branch is included in the branch struct, but callers have to
+navigate a series of possible-NULL values to get there.
+Let's wrap that logic up in an easy-to-read helper.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-Versus v1, I did something a little clever by passing a function pointer
-around (versus a flag and letting the caller do a conditional based on
-the flag). Too clever?
+New in v2.
 
- remote.c | 40 ++++++++++++++++++++++------------------
- remote.h |  2 ++
- 2 files changed, 24 insertions(+), 18 deletions(-)
+ builtin/branch.c       |  8 +++-----
+ builtin/for-each-ref.c |  5 ++---
+ builtin/log.c          |  7 ++-----
+ remote.c               | 12 +++++++++---
+ remote.h               |  7 +++++++
+ 5 files changed, 23 insertions(+), 16 deletions(-)
 
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 1d15037..bd1fa0b 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -123,14 +123,12 @@ static int branch_merged(int kind, const char *name,
+ 
+ 	if (kind == REF_LOCAL_BRANCH) {
+ 		struct branch *branch = branch_get(name);
++		const char *upstream = branch_get_upstream(branch);
+ 		unsigned char sha1[20];
+ 
+-		if (branch &&
+-		    branch->merge &&
+-		    branch->merge[0] &&
+-		    branch->merge[0]->dst &&
++		if (upstream &&
+ 		    (reference_name = reference_name_to_free =
+-		     resolve_refdup(branch->merge[0]->dst, RESOLVE_REF_READING,
++		     resolve_refdup(upstream, RESOLVE_REF_READING,
+ 				    sha1, NULL)) != NULL)
+ 			reference_rev = lookup_commit_reference(sha1);
+ 	}
+diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
+index 83f9cf9..dc2a201 100644
+--- a/builtin/for-each-ref.c
++++ b/builtin/for-each-ref.c
+@@ -664,10 +664,9 @@ static void populate_value(struct refinfo *ref)
+ 				continue;
+ 			branch = branch_get(ref->refname + 11);
+ 
+-			if (!branch || !branch->merge || !branch->merge[0] ||
+-			    !branch->merge[0]->dst)
++			refname = branch_get_upstream(branch);
++			if (!refname)
+ 				continue;
+-			refname = branch->merge[0]->dst;
+ 		} else if (starts_with(name, "color:")) {
+ 			char color[COLOR_MAXLEN] = "";
+ 
+diff --git a/builtin/log.c b/builtin/log.c
+index dd8f3fc..fb61c08 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -1632,16 +1632,13 @@ int cmd_cherry(int argc, const char **argv, const char *prefix)
+ 		break;
+ 	default:
+ 		current_branch = branch_get(NULL);
+-		if (!current_branch || !current_branch->merge
+-					|| !current_branch->merge[0]
+-					|| !current_branch->merge[0]->dst) {
++		upstream = branch_get_upstream(current_branch);
++		if (!upstream) {
+ 			fprintf(stderr, _("Could not find a tracked"
+ 					" remote branch, please"
+ 					" specify <upstream> manually.\n"));
+ 			usage_with_options(cherry_usage, options);
+ 		}
+-
+-		upstream = current_branch->merge[0]->dst;
+ 	}
+ 
+ 	init_revisions(&revs, prefix);
 diff --git a/remote.c b/remote.c
-index a27f795..9f84ea3 100644
+index 9f84ea3..c826fad 100644
 --- a/remote.c
 +++ b/remote.c
-@@ -49,7 +49,6 @@ static int branches_alloc;
- static int branches_nr;
- 
- static struct branch *current_branch;
--static const char *branch_pushremote_name;
- static const char *pushremote_name;
- 
- static struct rewrites rewrites;
-@@ -367,9 +366,7 @@ static int handle_config(const char *key, const char *value, void *cb)
- 		if (!strcmp(subkey, ".remote")) {
- 			return git_config_string(&branch->remote_name, key, value);
- 		} else if (!strcmp(subkey, ".pushremote")) {
--			if (branch == current_branch)
--				if (git_config_string(&branch_pushremote_name, key, value))
--					return -1;
-+			return git_config_string(&branch->pushremote_name, key, value);
- 		} else if (!strcmp(subkey, ".merge")) {
- 			if (!value)
- 				return config_error_nonbool(key);
-@@ -510,10 +507,6 @@ static void read_config(void)
- 		current_branch = make_branch(head_ref, 0);
- 	}
- 	git_config(handle_config, NULL);
--	if (branch_pushremote_name) {
--		free((char *)pushremote_name);
--		pushremote_name = branch_pushremote_name;
--	}
- 	alias_all_urls();
+@@ -1695,6 +1695,13 @@ int branch_merge_matches(struct branch *branch,
+ 	return refname_match(branch->merge[i]->src, refname);
  }
  
-@@ -704,20 +697,31 @@ const char *remote_for_branch(struct branch *branch, int *explicit)
- 	return "origin";
- }
- 
--static struct remote *remote_get_1(const char *name, const char *pushremote_name)
-+const char *pushremote_for_branch(struct branch *branch, int *explicit)
++const char *branch_get_upstream(struct branch *branch)
 +{
-+	if (branch && branch->pushremote_name) {
-+		if (explicit)
-+			*explicit = 1;
-+		return branch->pushremote_name;
-+	}
-+	if (pushremote_name) {
-+		if (explicit)
-+			*explicit = 1;
-+		return pushremote_name;
-+	}
-+	return remote_for_branch(branch, explicit);
++	if (!branch || !branch->merge || !branch->merge[0])
++		return NULL;
++	return branch->merge[0]->dst;
 +}
 +
-+static struct remote *remote_get_1(const char *name,
-+				   const char *(*get_default)(struct branch *, int *))
+ static int ignore_symref_update(const char *refname)
  {
- 	struct remote *ret;
- 	int name_given = 0;
+ 	unsigned char sha1[20];
+@@ -1904,12 +1911,11 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs)
+ 	int rev_argc;
  
- 	if (name)
- 		name_given = 1;
--	else {
--		if (pushremote_name) {
--			name = pushremote_name;
--			name_given = 1;
--		} else
--			name = remote_for_branch(current_branch, &name_given);
--	}
-+	else
-+		name = get_default(current_branch, &name_given);
+ 	/* Cannot stat unless we are marked to build on top of somebody else. */
+-	if (!branch ||
+-	    !branch->merge || !branch->merge[0] || !branch->merge[0]->dst)
++	base = branch_get_upstream(branch);
++	if (!base)
+ 		return 0;
  
- 	ret = make_remote(name, 0);
- 	if (valid_remote_nick(name)) {
-@@ -738,13 +742,13 @@ static struct remote *remote_get_1(const char *name, const char *pushremote_name
- struct remote *remote_get(const char *name)
- {
- 	read_config();
--	return remote_get_1(name, NULL);
-+	return remote_get_1(name, remote_for_branch);
- }
- 
- struct remote *pushremote_get(const char *name)
- {
- 	read_config();
--	return remote_get_1(name, pushremote_name);
-+	return remote_get_1(name, pushremote_for_branch);
- }
- 
- int remote_is_configured(const char *name)
+ 	/* Cannot stat if what we used to build on no longer exists */
+-	base = branch->merge[0]->dst;
+ 	if (read_ref(base, sha1))
+ 		return -1;
+ 	theirs = lookup_commit_reference(sha1);
 diff --git a/remote.h b/remote.h
-index 2a7e7a6..30a11da 100644
+index 30a11da..d968952 100644
 --- a/remote.h
 +++ b/remote.h
-@@ -203,6 +203,7 @@ struct branch {
- 	const char *refname;
- 
- 	const char *remote_name;
-+	const char *pushremote_name;
- 
- 	const char **merge_name;
- 	struct refspec **merge;
-@@ -212,6 +213,7 @@ struct branch {
- 
- struct branch *branch_get(const char *name);
- const char *remote_for_branch(struct branch *branch, int *explicit);
-+const char *pushremote_for_branch(struct branch *branch, int *explicit);
- 
+@@ -218,6 +218,13 @@ const char *pushremote_for_branch(struct branch *branch, int *explicit);
  int branch_has_merge_config(struct branch *branch);
  int branch_merge_matches(struct branch *, int n, const char *);
+ 
++/**
++ * Return the fully-qualified refname of the tracking branch for `branch`.
++ * I.e., what "branch@{upstream}" would give you. Returns NULL if no
++ * upstream is defined.
++ */
++const char *branch_get_upstream(struct branch *branch);
++
+ /* Flags to match_refs. */
+ enum match_refs_flags {
+ 	MATCH_REFS_NONE		= 0,
 -- 
 2.4.0.rc3.477.gc25258d
