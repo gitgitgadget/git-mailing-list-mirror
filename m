@@ -1,53 +1,48 @@
 From: Alangi Derick <alangiderick@gmail.com>
-Subject: Improving code base readability
-Date: Fri, 1 May 2015 16:26:17 +0100
-Message-ID: <CAKB+oNvB322hyX3UbGBPETDc0zEdC39PdeM=GG=rVf_WYGq_OA@mail.gmail.com>
+Subject: [PATCH v1] Improving code base readability
+Date: Fri, 1 May 2015 16:28:44 +0100
+Message-ID: <CAKB+oNvMhvT4KWwV5ohi9hfAs1Jzt7-zYhbSZ6RLzO6Zex5gtA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 01 17:26:27 2015
+X-From: git-owner@vger.kernel.org Fri May 01 17:29:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YoCpb-0002Py-St
-	for gcvg-git-2@plane.gmane.org; Fri, 01 May 2015 17:26:24 +0200
+	id 1YoCs7-0004Lc-2K
+	for gcvg-git-2@plane.gmane.org; Fri, 01 May 2015 17:28:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753947AbbEAP0T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 May 2015 11:26:19 -0400
-Received: from mail-qc0-f181.google.com ([209.85.216.181]:35709 "EHLO
-	mail-qc0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753625AbbEAP0S (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 May 2015 11:26:18 -0400
-Received: by qcbgu10 with SMTP id gu10so4687131qcb.2
-        for <git@vger.kernel.org>; Fri, 01 May 2015 08:26:17 -0700 (PDT)
+	id S1754064AbbEAP2t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 May 2015 11:28:49 -0400
+Received: from mail-qk0-f170.google.com ([209.85.220.170]:36195 "EHLO
+	mail-qk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753743AbbEAP2p (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 May 2015 11:28:45 -0400
+Received: by qku63 with SMTP id 63so52428479qku.3
+        for <git@vger.kernel.org>; Fri, 01 May 2015 08:28:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=xFovCoBmvAFVOihvr6DUHwvqDicHXJjmfmavgd/kWjY=;
-        b=rJtQCtiaCapAyilpqq0owlzSxn/qBgouhrv0sltPtv54lpCL/JGxx0/BqCdR2FKL9S
-         Ay5Oa7nDZfw6VsUw0IjrBm35fTkiMR7SBdb8OaFpMyQRvfs6C4Iaek96KqlF+/FxeJTH
-         kn08qQook5Q6tHHj1B7xR42LMwXTNv0JJu1QPcGo9DB/I80RnAM3g/wKB5f4QVizK/Zj
-         Yp0cfsF3bKNL8GtyXqa2geOmHaR/mjJmTj95jD+Ae7roS5BhUR1Wq85qr9Pre1iTYqXf
-         SoYyRhkmATZZqIk//rSoYA0tbbA1vlVFcV/xvzqsSsHVW1l4ciSw85zbngG/ULvf+XMr
-         CQbA==
-X-Received: by 10.229.96.199 with SMTP id i7mr5650546qcn.6.1430493977191; Fri,
- 01 May 2015 08:26:17 -0700 (PDT)
-Received: by 10.229.45.71 with HTTP; Fri, 1 May 2015 08:26:17 -0700 (PDT)
+        bh=yVa24O/YpSZT4cC297JgO8uZI0qPcbzD2GWVbO+PlUM=;
+        b=pMnTpc5ZcOZ5mU7LgVebZdTBBTueC4Ibwu+j0ZLpbbPEknjazN3iJbSx6rJWIHIBAc
+         3hLOuMA9XSUPW9hjB4GkxMg87Cb0QV/b2M3Qoh5jh+azvNInjITCDP75evnnfsQOgi0s
+         ZDLHjSB/C2EM3ku5d4QvuCKWf99qfinB9Jth/fyeTmvyhhajOFui7jXz+BIL2LWH5kwJ
+         WKyJAGoOcX+qbs3mrr5xiAvmLTZce8CSDU7+6vgd8sQiwmsSW3oLXjA4h6eF87lo33dt
+         EcUwxBT1ii5hBg2AEnOXlKhAFlwZZifPpUKwA1m9CWmhj7t8L8XlCYHt7Y6Ng32WddYf
+         o7ig==
+X-Received: by 10.140.32.34 with SMTP id g31mr11229224qgg.74.1430494124221;
+ Fri, 01 May 2015 08:28:44 -0700 (PDT)
+Received: by 10.229.45.71 with HTTP; Fri, 1 May 2015 08:28:44 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268146>
 
 This is an example of what i am talking about or what i am trying to
 demonstrate. This is the patch:
-
->From d3515334b435d2626345114ac044416252a5397f Mon Sep 17 00:00:00 2001
-From: Alangi Derick <alangiderick@gmail.com>
-Date: Fri, 1 May 2015 16:21:33 +0100
-Subject: [PATCH v1] Improving code base readability
 
 ---
  archive-tar.c   | 10 +++++-----
