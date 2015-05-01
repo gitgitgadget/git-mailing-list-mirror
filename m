@@ -1,83 +1,131 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 08/12] sha1_name: refactor upstream_mark
-Date: Fri, 1 May 2015 18:53:41 -0400
-Message-ID: <20150501225341.GH1534@peff.net>
+Subject: [PATCH 09/12] sha1_name: refactor interpret_upstream_mark
+Date: Fri, 1 May 2015 18:55:01 -0400
+Message-ID: <20150501225501.GI1534@peff.net>
 References: <20150501224414.GA25551@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 02 00:53:49 2015
+X-From: git-owner@vger.kernel.org Sat May 02 00:55:11 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YoJoa-0003LL-L7
-	for gcvg-git-2@plane.gmane.org; Sat, 02 May 2015 00:53:49 +0200
+	id 1YoJps-0004Nd-JQ
+	for gcvg-git-2@plane.gmane.org; Sat, 02 May 2015 00:55:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750868AbbEAWxo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 May 2015 18:53:44 -0400
-Received: from cloud.peff.net ([50.56.180.127]:53117 "HELO cloud.peff.net"
+	id S1750839AbbEAWzE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 May 2015 18:55:04 -0400
+Received: from cloud.peff.net ([50.56.180.127]:53120 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750710AbbEAWxn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 May 2015 18:53:43 -0400
-Received: (qmail 24000 invoked by uid 102); 1 May 2015 22:53:43 -0000
+	id S1750823AbbEAWzD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 May 2015 18:55:03 -0400
+Received: (qmail 24097 invoked by uid 102); 1 May 2015 22:55:03 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 01 May 2015 17:53:43 -0500
-Received: (qmail 21088 invoked by uid 107); 1 May 2015 22:54:13 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 01 May 2015 17:55:03 -0500
+Received: (qmail 21111 invoked by uid 107); 1 May 2015 22:55:34 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 01 May 2015 18:54:13 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 01 May 2015 18:53:41 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 01 May 2015 18:55:34 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 01 May 2015 18:55:01 -0400
 Content-Disposition: inline
 In-Reply-To: <20150501224414.GA25551@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268193>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268194>
 
-We will be adding new mark types in the future, so separate
-the suffix data from the logic.
+Now that most of the logic for our local get_upstream_branch
+has been pushed into the generic branch_get_upstream, we can
+fold the remainder into interpret_upstream_mark.
+
+Furthermore, what remains is generic to any branch-related
+"@{foo}" we might add in the future, and there's enough
+boilerplate that we'd like to reuse it. Let's parameterize
+the two operations (parsing the mark and computing its
+value) so that we can reuse this for "@{push}" in the near
+future.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-Same as v1.
+More function pointer cleverness. Here it seems more justified to me,
+because we may eventually grow the list of interpret_branch_mark()
+users (e.g., for the concept discussed previously as @{publish}).
 
- sha1_name.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ sha1_name.c | 44 +++++++++++++++++++++++---------------------
+ 1 file changed, 23 insertions(+), 21 deletions(-)
 
 diff --git a/sha1_name.c b/sha1_name.c
-index 461157a..1005f45 100644
+index 1005f45..506e0c9 100644
 --- a/sha1_name.c
 +++ b/sha1_name.c
-@@ -415,12 +415,12 @@ static int ambiguous_path(const char *path, int len)
- 	return slash;
+@@ -1061,35 +1061,36 @@ static void set_shortened_ref(struct strbuf *buf, const char *ref)
+ 	free(s);
  }
  
--static inline int upstream_mark(const char *string, int len)
-+static inline int at_mark(const char *string, int len,
-+			  const char **suffix, int nr)
+-static const char *get_upstream_branch(const char *branch_buf, int len)
+-{
+-	char *branch = xstrndup(branch_buf, len);
+-	struct branch *upstream = branch_get(*branch ? branch : NULL);
+-	struct strbuf err = STRBUF_INIT;
+-	const char *ret;
+-
+-	free(branch);
+-
+-	ret = branch_get_upstream(upstream, &err);
+-	if (!ret)
+-		die("%s", err.buf);
+-
+-	return ret;
+-}
+-
+-static int interpret_upstream_mark(const char *name, int namelen,
+-				   int at, struct strbuf *buf)
++static int interpret_branch_mark(const char *name, int namelen,
++				 int at, struct strbuf *buf,
++				 int (*get_mark)(const char *, int),
++				 const char *(*get_data)(struct branch *,
++							 struct strbuf *))
  {
--	const char *suffix[] = { "@{upstream}", "@{u}" };
- 	int i;
+ 	int len;
++	struct branch *branch;
++	struct strbuf err = STRBUF_INIT;
++	const char *value;
  
--	for (i = 0; i < ARRAY_SIZE(suffix); i++) {
-+	for (i = 0; i < nr; i++) {
- 		int suffix_len = strlen(suffix[i]);
- 		if (suffix_len <= len
- 		    && !memcmp(string, suffix[i], suffix_len))
-@@ -429,6 +429,12 @@ static inline int upstream_mark(const char *string, int len)
- 	return 0;
+-	len = upstream_mark(name + at, namelen - at);
++	len = get_mark(name + at, namelen - at);
+ 	if (!len)
+ 		return -1;
+ 
+ 	if (memchr(name, ':', at))
+ 		return -1;
+ 
+-	set_shortened_ref(buf, get_upstream_branch(name, at));
++	if (at) {
++		char *name_str = xmemdupz(name, at);
++		branch = branch_get(name_str);
++		free(name_str);
++	} else
++		branch = branch_get(NULL);
++
++	value = get_data(branch, &err);
++	if (!value)
++		die("%s", err.buf);
++
++	set_shortened_ref(buf, value);
+ 	return len + at;
  }
  
-+static inline int upstream_mark(const char *string, int len)
-+{
-+	const char *suffix[] = { "@{upstream}", "@{u}" };
-+	return at_mark(string, len, suffix, ARRAY_SIZE(suffix));
-+}
-+
- static int get_sha1_1(const char *name, int len, unsigned char *sha1, unsigned lookup_flags);
- static int interpret_nth_prior_checkout(const char *name, int namelen, struct strbuf *buf);
+@@ -1140,7 +1141,8 @@ int interpret_branch_name(const char *name, int namelen, struct strbuf *buf)
+ 		if (len > 0)
+ 			return reinterpret(name, namelen, len, buf);
  
+-		len = interpret_upstream_mark(name, namelen, at - name, buf);
++		len = interpret_branch_mark(name, namelen, at - name, buf,
++					    upstream_mark, branch_get_upstream);
+ 		if (len > 0)
+ 			return len;
+ 	}
 -- 
 2.4.0.rc3.477.gc25258d
