@@ -1,488 +1,84 @@
-From: Alangi Derick <alangiderick@gmail.com>
-Subject: [PATCH v1] Improving code base readability
-Date: Fri, 1 May 2015 16:28:44 +0100
-Message-ID: <CAKB+oNvMhvT4KWwV5ohi9hfAs1Jzt7-zYhbSZ6RLzO6Zex5gtA@mail.gmail.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: Improving Readability of the entire Codebase
+Date: Fri, 1 May 2015 08:35:51 -0700
+Message-ID: <CAGZ79kbORH6S5Cq03tRU0eHdu75QF1phZFiDsyiFQ+sg_2V83g@mail.gmail.com>
+References: <CAKB+oNv1q=62a0-T7CCcOAOU+sfXPiyZPMB1qWxf-8zX=4PPpg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 01 17:29:00 2015
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Alangi Derick <alangiderick@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 01 17:36:06 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YoCs7-0004Lc-2K
-	for gcvg-git-2@plane.gmane.org; Fri, 01 May 2015 17:28:59 +0200
+	id 1YoCyr-00017s-Nm
+	for gcvg-git-2@plane.gmane.org; Fri, 01 May 2015 17:35:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754064AbbEAP2t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 May 2015 11:28:49 -0400
-Received: from mail-qk0-f170.google.com ([209.85.220.170]:36195 "EHLO
-	mail-qk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753743AbbEAP2p (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 May 2015 11:28:45 -0400
-Received: by qku63 with SMTP id 63so52428479qku.3
-        for <git@vger.kernel.org>; Fri, 01 May 2015 08:28:44 -0700 (PDT)
+	id S1753823AbbEAPfw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 May 2015 11:35:52 -0400
+Received: from mail-ig0-f173.google.com ([209.85.213.173]:37493 "EHLO
+	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753699AbbEAPfw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 May 2015 11:35:52 -0400
+Received: by igblo3 with SMTP id lo3so40157972igb.0
+        for <git@vger.kernel.org>; Fri, 01 May 2015 08:35:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=yVa24O/YpSZT4cC297JgO8uZI0qPcbzD2GWVbO+PlUM=;
-        b=pMnTpc5ZcOZ5mU7LgVebZdTBBTueC4Ibwu+j0ZLpbbPEknjazN3iJbSx6rJWIHIBAc
-         3hLOuMA9XSUPW9hjB4GkxMg87Cb0QV/b2M3Qoh5jh+azvNInjITCDP75evnnfsQOgi0s
-         ZDLHjSB/C2EM3ku5d4QvuCKWf99qfinB9Jth/fyeTmvyhhajOFui7jXz+BIL2LWH5kwJ
-         WKyJAGoOcX+qbs3mrr5xiAvmLTZce8CSDU7+6vgd8sQiwmsSW3oLXjA4h6eF87lo33dt
-         EcUwxBT1ii5hBg2AEnOXlKhAFlwZZifPpUKwA1m9CWmhj7t8L8XlCYHt7Y6Ng32WddYf
-         o7ig==
-X-Received: by 10.140.32.34 with SMTP id g31mr11229224qgg.74.1430494124221;
- Fri, 01 May 2015 08:28:44 -0700 (PDT)
-Received: by 10.229.45.71 with HTTP; Fri, 1 May 2015 08:28:44 -0700 (PDT)
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=EMe14cXqM2g/5I+xP+rtEimUk1bX4DtMWQp7XXjdHy0=;
+        b=AjMiW/KYFVctlcCEv0WR57cJp+ew/fdY7bYpcL0/pAPq5qGh+lHhPXHgHyOI+e8Nvk
+         ysWnUzS0PTUjmN9S2y5bHe9ZgjwksOawkKxzuDaRLoI5m2mtL/YtcoPF8oeAXtDYvNhA
+         b0nPvShXk4DDJNTw+RUm79tKjR2awVD7eV5kc9C69JqMVzvUoAp3Wh9hbghpnKA2D69u
+         8jIiHXaJBfKTLHBtCPly7/hct/l4HURddKKlGwTOB3EvNzk2Fp+0AZRqbAOmHI7ccdrC
+         DztMVf7tMabobgBtFEppWR6IH+bTKKJBg0pbhhpC7dvYpNoeYAFT4j4mFyU8FCZ54WzQ
+         LH6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=EMe14cXqM2g/5I+xP+rtEimUk1bX4DtMWQp7XXjdHy0=;
+        b=B57Y8pTVMx+byl+OcJV1Yf+Q8PbHDU1gvSolEZqK/cuV/DudJMTw8jMIaD5eEi9TrY
+         Iphk/0rdNnvvHM/GkHvef95TeaCcSrfXp5G5zrO3pNZRLin9D2P6tYYsKzT5ZagYoSJJ
+         XkzBF2YOqpMamsG8lEjQuNTcvijJAtHdygm9VTxTjCiwlsrTgxMmKfknIVSbK2t0XYGS
+         I81bI7mp26+RQaiEMOzX4oVNaNjh5EkHrXeJSjA798OOo2i6uUw2/wVJEmQtKGDzwfwj
+         74MKUSMo2f4g/ghyaNTTwc7FbKgaV59tlXDdTP+G3A7fbhvTSsqSKsHTOMMJfW/1OXlX
+         jocg==
+X-Gm-Message-State: ALoCoQkItFUJGzlyf5iN06m2X5QFbFeTnYHfEv+/i6kzl/JwJQwrqSeXrxrR0H4QC5p8Zd9XiLYE
+X-Received: by 10.42.188.19 with SMTP id cy19mr15662997icb.92.1430494551333;
+ Fri, 01 May 2015 08:35:51 -0700 (PDT)
+Received: by 10.107.46.22 with HTTP; Fri, 1 May 2015 08:35:51 -0700 (PDT)
+In-Reply-To: <CAKB+oNv1q=62a0-T7CCcOAOU+sfXPiyZPMB1qWxf-8zX=4PPpg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268146>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268147>
 
-This is an example of what i am talking about or what i am trying to
-demonstrate. This is the patch:
+On Fri, May 1, 2015 at 8:08 AM, Alangi Derick <alangiderick@gmail.com> wrote:
+> Hello,
+>     While reading the source codes of Git, i found something. Some
+> sentences and words are not in their correct cases. For example like
+> starting a sentence with a lower case whereas it should be in upper
+> case. I want to go through the entire code base and correct the cases
+> of these letters to improve on readability. I will also use this
+> opportunity to learn the source codes and familiarize myself with the
+> code base.
 
----
- archive-tar.c   | 10 +++++-----
- archive-zip.c   | 12 ++++++------
- base85.c        | 14 +++++++-------
- builtin/mv.c    |  4 ++--
- builtin/notes.c | 36 ++++++++++++++++++------------------
- builtin/prune.c |  6 +++---
- builtin/push.c  |  6 +++---
- git.c           |  2 +-
- 8 files changed, 45 insertions(+), 45 deletions(-)
+> If its a nice idea, someone should please give me the go
+> ahead. I will be waiting.
 
-diff --git a/archive-tar.c b/archive-tar.c
-index 0d1e6bd..c5d64aa 100644
---- a/archive-tar.c
-+++ b/archive-tar.c
-@@ -102,7 +102,7 @@ static int stream_blocked(const unsigned char *sha1)
+That's usually the wrong approach within the Git community as
+there are no people who give the go ahead.
+Just do it and once you have some results these
+can be discussed on the mailing list.
 
-  st = open_istream(sha1, &type, &sz, NULL);
-  if (!st)
-- return error("cannot stream blob %s", sha1_to_hex(sha1));
-+ return error("Cannot stream blob %s", sha1_to_hex(sha1));
-  for (;;) {
-  readlen = read_istream(st, buf, sizeof(buf));
-  if (readlen <= 0)
-@@ -224,7 +224,7 @@ static int write_tar_entry(struct archiver_args *args,
-  *header.typeflag = TYPEFLAG_REG;
-  mode = (mode | ((mode & 0100) ? 0777 : 0666)) & ~tar_umask;
-  } else {
-- return error("unsupported file mode: 0%o (SHA1: %s)",
-+ return error("Unsupported file mode: 0%o (SHA1: %s)",
-      mode, sha1_to_hex(sha1));
-  }
-  if (pathlen > sizeof(header.name)) {
-@@ -251,7 +251,7 @@ static int write_tar_entry(struct archiver_args *args,
-  enum object_type type;
-  buffer = sha1_file_to_archive(args, path, sha1, old_mode, &type, &size);
-  if (!buffer)
-- return error("cannot read %s", sha1_to_hex(sha1));
-+ return error("Cannot read %s", sha1_to_hex(sha1));
-  } else {
-  buffer = NULL;
-  size = 0;
-@@ -413,10 +413,10 @@ static int write_tar_filter_archive(const struct
-archiver *ar,
-  filter.in = -1;
-
-  if (start_command(&filter) < 0)
-- die_errno("unable to start '%s' filter", argv[0]);
-+ die_errno("Unable to start '%s' filter", argv[0]);
-  close(1);
-  if (dup2(filter.in, 1) < 0)
-- die_errno("unable to redirect descriptor");
-+ die_errno("Unable to redirect descriptor");
-  close(filter.in);
-
-  r = write_tar_archive(ar, args);
-diff --git a/archive-zip.c b/archive-zip.c
-index ffb3535..18eef04 100644
---- a/archive-zip.c
-+++ b/archive-zip.c
-@@ -234,7 +234,7 @@ static int write_zip_entry(struct archiver_args *args,
-  }
-
-  if (pathlen > 0xffff) {
-- return error("path too long (%d chars, SHA1: %s): %s",
-+ return error("Path too long (%d chars, SHA1: %s): %s",
-  (int)pathlen, sha1_to_hex(sha1), path);
-  }
-
-@@ -258,7 +258,7 @@ static int write_zip_entry(struct archiver_args *args,
-     size > big_file_threshold) {
-  stream = open_istream(sha1, &type, &size, NULL);
-  if (!stream)
-- return error("cannot stream blob %s",
-+ return error("Cannot stream blob %s",
-      sha1_to_hex(sha1));
-  flags |= ZIP_STREAM;
-  out = buffer = NULL;
-@@ -266,7 +266,7 @@ static int write_zip_entry(struct archiver_args *args,
-  buffer = sha1_file_to_archive(args, path, sha1, mode,
-       &type, &size);
-  if (!buffer)
-- return error("cannot read %s",
-+ return error("Cannot read %s",
-      sha1_to_hex(sha1));
-  crc = crc32(crc, buffer, size);
-  is_binary = entry_is_binary(path_without_prefix,
-@@ -275,7 +275,7 @@ static int write_zip_entry(struct archiver_args *args,
-  }
-  compressed_size = (method == 0) ? size : 0;
-  } else {
-- return error("unsupported file mode: 0%o (SHA1: %s)", mode,
-+ return error("Unsupported file mode: 0%o (SHA1: %s)", mode,
-  sha1_to_hex(sha1));
-  }
-
-@@ -385,7 +385,7 @@ static int write_zip_entry(struct archiver_args *args,
-  zstream.avail_in = readlen;
-  result = git_deflate(&zstream, 0);
-  if (result != Z_OK)
-- die("deflate error (%d)", result);
-+ die("Deflate error (%d)", result);
-  out_len = zstream.next_out - compressed;
-
-  if (out_len > 0) {
-@@ -404,7 +404,7 @@ static int write_zip_entry(struct archiver_args *args,
-  zstream.avail_in = 0;
-  result = git_deflate(&zstream, Z_FINISH);
-  if (result != Z_STREAM_END)
-- die("deflate error (%d)", result);
-+ die("Deflate error (%d)", result);
-
-  git_deflate_end(&zstream);
-  out_len = zstream.next_out - compressed;
-diff --git a/base85.c b/base85.c
-index 5ca601e..9142940 100644
---- a/base85.c
-+++ b/base85.c
-@@ -50,17 +50,17 @@ int decode_85(char *dst, const char *buffer, int len)
-  ch = *buffer++;
-  de = de85[ch];
-  if (--de < 0)
-- return error("invalid base85 alphabet %c", ch);
-+ return error("Invalid base85 alphabet %c", ch);
-  acc = acc * 85 + de;
-  } while (--cnt);
-  ch = *buffer++;
-  de = de85[ch];
-  if (--de < 0)
-- return error("invalid base85 alphabet %c", ch);
-+ return error("Invalid base85 alphabet %c", ch);
-  /* Detect overflow. */
-  if (0xffffffff / 85 < acc ||
-     0xffffffff - de < (acc *= 85))
-- return error("invalid base85 sequence %.5s", buffer-5);
-+ return error("Invalid base85 sequence %.5s", buffer-5);
-  acc += de;
-  say1(" %08x", acc);
-
-@@ -78,7 +78,7 @@ int decode_85(char *dst, const char *buffer, int len)
-
- void encode_85(char *buf, const unsigned char *data, int bytes)
- {
-- say("encode 85");
-+ say("Encode 85");
-  while (bytes) {
-  unsigned acc = 0;
-  int cnt;
-@@ -111,7 +111,7 @@ int main(int ac, char **av)
-  encode_85(buf, av[2], len);
-  if (len <= 26) len = len + 'A' - 1;
-  else len = len + 'a' - 26 - 1;
-- printf("encoded: %c%s\n", len, buf);
-+ printf("Encoded: %c%s\n", len, buf);
-  return 0;
-  }
-  if (!strcmp(av[1], "-d")) {
-@@ -119,13 +119,13 @@ int main(int ac, char **av)
-  if ('A' <= len && len <= 'Z') len = len - 'A' + 1;
-  else len = len - 'a' + 26 + 1;
-  decode_85(buf, av[2]+1, len);
-- printf("decoded: %.*s\n", len, buf);
-+ printf("Decoded: %.*s\n", len, buf);
-  return 0;
-  }
-  if (!strcmp(av[1], "-t")) {
-  char t[4] = { -1,-1,-1,-1 };
-  encode_85(buf, t, 4);
-- printf("encoded: D%s\n", buf);
-+ printf("Encoded: D%s\n", buf);
-  return 0;
-  }
- }
-diff --git a/builtin/mv.c b/builtin/mv.c
-index d1d4316..c4b8a43 100644
---- a/builtin/mv.c
-+++ b/builtin/mv.c
-@@ -148,7 +148,7 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
-  destination = internal_copy_pathspec(dest_path[0], argv, argc, DUP_BASENAME);
-  } else {
-  if (argc != 1)
-- die(_("destination '%s' is not a directory"), dest_path[0]);
-+ die(_("Destination '%s' is not a directory"), dest_path[0]);
-  destination = dest_path;
-  }
-
-@@ -253,7 +253,7 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
-  printf(_("Renaming %s to %s\n"), src, dst);
-  if (!show_only && mode != INDEX) {
-  if (rename(src, dst) < 0 && !ignore_errors)
-- die_errno(_("renaming '%s' failed"), src);
-+ die_errno(_("Renaming '%s' failed"), src);
-  if (submodule_gitfile[i]) {
-  if (submodule_gitfile[i] != SUBMODULE_WITH_GITDIR)
-  connect_work_tree_and_git_dir(dst, submodule_gitfile[i]);
-diff --git a/builtin/notes.c b/builtin/notes.c
-index 63f95fc..aa69b7f 100644
---- a/builtin/notes.c
-+++ b/builtin/notes.c
-@@ -143,11 +143,11 @@ static void write_commented_object(int fd, const
-unsigned char *object)
-  show.err = 0;
-  show.git_cmd = 1;
-  if (start_command(&show))
-- die(_("unable to start 'show' for object '%s'"),
-+ die(_("Unable to start 'show' for object '%s'"),
-     sha1_to_hex(object));
-
-  if (strbuf_read(&buf, show.out, 0) < 0)
-- die_errno(_("could not read 'show' output"));
-+ die_errno(_("Could not read 'show' output"));
-  strbuf_add_commented_lines(&cbuf, buf.buf, buf.len);
-  write_or_die(fd, cbuf.buf, cbuf.len);
-
-@@ -155,7 +155,7 @@ static void write_commented_object(int fd, const
-unsigned char *object)
-  strbuf_release(&buf);
-
-  if (finish_command(&show))
-- die(_("failed to finish 'show' for object '%s'"),
-+ die(_("Failed to finish 'show' for object '%s'"),
-     sha1_to_hex(object));
- }
-
-@@ -170,7 +170,7 @@ static void prepare_note_data(const unsigned char
-*object, struct note_data *d,
-  d->edit_path = git_pathdup("NOTES_EDITMSG");
-  fd = open(d->edit_path, O_CREAT | O_TRUNC | O_WRONLY, 0600);
-  if (fd < 0)
-- die_errno(_("could not create file '%s'"), d->edit_path);
-+ die_errno(_("Could not create file '%s'"), d->edit_path);
-
-  if (d->given)
-  write_or_die(fd, d->buf.buf, d->buf.len);
-@@ -198,7 +198,7 @@ static void prepare_note_data(const unsigned char
-*object, struct note_data *d,
- static void write_note_data(struct note_data *d, unsigned char *sha1)
- {
-  if (write_sha1_file(d->buf.buf, d->buf.len, blob_type, sha1)) {
-- error(_("unable to write note object"));
-+ error(_("Unable to write note object"));
-  if (d->edit_path)
-  error(_("The note contents have been left in %s"),
-  d->edit_path);
-@@ -228,9 +228,9 @@ static int parse_file_arg(const struct option
-*opt, const char *arg, int unset)
-  strbuf_addch(&d->buf, '\n');
-  if (!strcmp(arg, "-")) {
-  if (strbuf_read(&d->buf, 0, 1024) < 0)
-- die_errno(_("cannot read '%s'"), arg);
-+ die_errno(_("Cannot read '%s'"), arg);
-  } else if (strbuf_read_file(&d->buf, arg, 1024) < 0)
-- die_errno(_("could not open or read '%s'"), arg);
-+ die_errno(_("Could not open or read '%s'"), arg);
-  stripspace(&d->buf, 0);
-
-  d->given = 1;
-@@ -355,7 +355,7 @@ static int list(int argc, const char **argv, const
-char *prefix)
-      git_notes_list_usage, 0);
-
-  if (1 < argc) {
-- error(_("too many parameters"));
-+ error(_("Too many parameters"));
-  usage_with_options(git_notes_list_usage, options);
-  }
-
-@@ -410,7 +410,7 @@ static int add(int argc, const char **argv, const
-char *prefix)
-      PARSE_OPT_KEEP_ARGV0);
-
-  if (2 < argc) {
-- error(_("too many parameters"));
-+ error(_("Too many parameters"));
-  usage_with_options(git_notes_add_usage, options);
-  }
-
-@@ -486,7 +486,7 @@ static int copy(int argc, const char **argv, const
-char *prefix)
-
-  if (from_stdin || rewrite_cmd) {
-  if (argc) {
-- error(_("too many parameters"));
-+ error(_("Too many parameters"));
-  usage_with_options(git_notes_copy_usage, options);
-  } else {
-  return notes_copy_from_stdin(force, rewrite_cmd);
-@@ -494,11 +494,11 @@ static int copy(int argc, const char **argv,
-const char *prefix)
-  }
-
-  if (argc < 2) {
-- error(_("too few parameters"));
-+ error(_("Too few parameters"));
-  usage_with_options(git_notes_copy_usage, options);
-  }
-  if (2 < argc) {
-- error(_("too many parameters"));
-+ error(_("Too many parameters"));
-  usage_with_options(git_notes_copy_usage, options);
-  }
-
-@@ -574,7 +574,7 @@ static int append_edit(int argc, const char
-**argv, const char *prefix)
-      PARSE_OPT_KEEP_ARGV0);
-
-  if (2 < argc) {
-- error(_("too many parameters"));
-+ error(_("Too many parameters"));
-  usage_with_options(usage, options);
-  }
-
-@@ -642,7 +642,7 @@ static int show(int argc, const char **argv, const
-char *prefix)
-      0);
-
-  if (1 < argc) {
-- error(_("too many parameters"));
-+ error(_("Too many parameters"));
-  usage_with_options(git_notes_show_usage, options);
-  }
-
-@@ -770,7 +770,7 @@ static int merge(int argc, const char **argv,
-const char *prefix)
-  if (strategy || do_commit + do_abort == 0)
-  do_merge = 1;
-  if (do_merge + do_commit + do_abort != 1) {
-- error("cannot mix --commit, --abort or -s/--strategy");
-+ error("Cannot mix --commit, --abort or -s/--strategy");
-  usage_with_options(git_notes_merge_usage, options);
-  }
-
-@@ -778,7 +778,7 @@ static int merge(int argc, const char **argv,
-const char *prefix)
-  error("Must specify a notes ref to merge");
-  usage_with_options(git_notes_merge_usage, options);
-  } else if (!do_merge && argc) {
-- error("too many parameters");
-+ error("Too many parameters");
-  usage_with_options(git_notes_merge_usage, options);
-  }
-
-@@ -916,7 +916,7 @@ static int prune(int argc, const char **argv,
-const char *prefix)
-      0);
-
-  if (argc) {
-- error(_("too many parameters"));
-+ error(_("Too many parameters"));
-  usage_with_options(git_notes_prune_usage, options);
-  }
-
-@@ -937,7 +937,7 @@ static int get_ref(int argc, const char **argv,
-const char *prefix)
-      git_notes_get_ref_usage, 0);
-
-  if (argc) {
-- error("too many parameters");
-+ error("Too many parameters");
-  usage_with_options(git_notes_get_ref_usage, options);
-  }
-
-diff --git a/builtin/prune.c b/builtin/prune.c
-index 17094ad..aa7ffb2 100644
---- a/builtin/prune.c
-+++ b/builtin/prune.c
-@@ -53,7 +53,7 @@ static int prune_object(const unsigned char *sha1,
-const char *fullpath,
-  if (show_only || verbose) {
-  enum object_type type = sha1_object_info(sha1, NULL);
-  printf("%s %s\n", sha1_to_hex(sha1),
--       (type > 0) ? typename(type) : "unknown");
-+       (type > 0) ? typename(type) : "Unknown");
-  }
-  if (!show_only)
-  unlink_or_warn(fullpath);
-@@ -65,7 +65,7 @@ static int prune_cruft(const char *basename, const
-char *path, void *data)
-  if (starts_with(basename, "tmp_obj_"))
-  prune_tmp_file(path);
-  else
-- fprintf(stderr, "bad sha1 file: %s\n", path);
-+ fprintf(stderr, "Bad sha1 file: %s\n", path);
-  return 0;
- }
-
-@@ -128,7 +128,7 @@ int cmd_prune(int argc, const char **argv, const
-char *prefix)
-  add_pending_object(&revs, object, "");
-  }
-  else
-- die("unrecognized argument: %s", name);
-+ die("Unrecognized argument: %s", name);
-  }
-
-  if (show_progress == -1)
-diff --git a/builtin/push.c b/builtin/push.c
-index 57c138b..6af9d34 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -391,7 +391,7 @@ static int do_push(const char *repo, int flags)
-
-  if (!remote) {
-  if (repo)
-- die(_("bad repository '%s'"), repo);
-+ die(_("Bad repository '%s'"), repo);
-  die(_("No configured push destination.\n"
-     "Either specify the URL from the command-line or configure a
-remote repository using\n"
-     "\n"
-@@ -463,9 +463,9 @@ static int option_parse_recurse_submodules(const
-struct option *opt,
-  else if (!strcmp(arg, "on-demand"))
-  *flags |= TRANSPORT_RECURSE_SUBMODULES_ON_DEMAND;
-  else
-- die("bad %s argument: %s", opt->long_name, arg);
-+ die("Bad %s argument: %s", opt->long_name, arg);
-  } else
-- die("option %s needs an argument (check|on-demand)",
-+ die("Option %s needs an argument (check|on-demand)",
-  opt->long_name);
-
-  return 0;
-diff --git a/git.c b/git.c
-index 481aa74..f9343d0 100644
---- a/git.c
-+++ b/git.c
-@@ -654,7 +654,7 @@ int main(int argc, char **av)
-  if (skip_prefix(cmd, "git-", &cmd)) {
-  argv[0] = cmd;
-  handle_builtin(argc, argv);
-- die("cannot handle %s as a builtin", cmd);
-+ die("Cannot handle %s as a builtin", cmd);
-  }
-
-  /* Look for flags.. */
--- 
-2.4.0.2.g54b2a32.dirty
-
-
-Regards
-Alangi Derick Ndimnain
+>
+> Regards
+> Alangi Derick Ndimnain
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
