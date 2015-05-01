@@ -1,164 +1,296 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 12/12] for-each-ref: accept "%(push)" format
-Date: Fri, 1 May 2015 18:56:45 -0400
-Message-ID: <20150501225645.GL1534@peff.net>
-References: <20150501224414.GA25551@peff.net>
+From: =?UTF-8?B?U8OpYmFzdGllbiBHdWltbWFyYQ==?= 
+	<sebastien.guimmara@gmail.com>
+Subject: [PATCH v2 1/3] git help: group common commands by theme
+Date: Sat, 02 May 2015 01:01:41 +0200
+Message-ID: <554405D5.9080702@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=utf-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 02 00:56:53 2015
+X-From: git-owner@vger.kernel.org Sat May 02 01:02:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YoJrY-0005hb-4H
-	for gcvg-git-2@plane.gmane.org; Sat, 02 May 2015 00:56:52 +0200
+	id 1YoJwi-0001GY-1w
+	for gcvg-git-2@plane.gmane.org; Sat, 02 May 2015 01:02:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750959AbbEAW4s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 May 2015 18:56:48 -0400
-Received: from cloud.peff.net ([50.56.180.127]:53129 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750920AbbEAW4r (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 May 2015 18:56:47 -0400
-Received: (qmail 24271 invoked by uid 102); 1 May 2015 22:56:47 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 01 May 2015 17:56:47 -0500
-Received: (qmail 21159 invoked by uid 107); 1 May 2015 22:57:18 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 01 May 2015 18:57:18 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 01 May 2015 18:56:45 -0400
-Content-Disposition: inline
-In-Reply-To: <20150501224414.GA25551@peff.net>
+	id S1751311AbbEAXCI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 May 2015 19:02:08 -0400
+Received: from mail-wi0-f179.google.com ([209.85.212.179]:38286 "EHLO
+	mail-wi0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750778AbbEAXCG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 May 2015 19:02:06 -0400
+Received: by wiun10 with SMTP id n10so60121866wiu.1
+        for <git@vger.kernel.org>; Fri, 01 May 2015 16:02:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        bh=ZgQ3nS2iZGOBHY6hJdZEUhMNfs9mOaupceb8IRw5HU0=;
+        b=j5v0pSr5NuTf8oatS0aVgy5H0dzgZGlJM3EFFLnud5irUpv8hEUgTqIjP/B0Uk+fht
+         HSAgLcfamksA17RlU5DfRytfr69D2os10wJPWLUnD+ktErpY/66pTSKfYn6ngrheUMUE
+         c6YUb2xMd59v0j6HtU2ua7qwT2qUU9LIILZvo6JO7UOkw/9sSClE74KopwSMjUSWJ4e8
+         S1yC9ntTmhQ5POZK7U74+jClwMElK3x4L1YlIflbdDYT0cGjD6bVCblPvAgUa/PBVhLt
+         IlHy4PAbYLrdY3ws+xCHijTQEQvnbtuG7+6dV83yZg3HkAEI/b9Jtc6E1ihWs4kTHle0
+         W7hw==
+X-Received: by 10.180.100.194 with SMTP id fa2mr621033wib.8.1430521325209;
+        Fri, 01 May 2015 16:02:05 -0700 (PDT)
+Received: from [192.168.0.10] (bd231-1-88-176-208-17.fbx.proxad.net. [88.176.208.17])
+        by mx.google.com with ESMTPSA id hu1sm8512953wib.6.2015.05.01.16.02.03
+        for <git@vger.kernel.org>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 01 May 2015 16:02:04 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268198>
 
-Just as we have "%(upstream)" to report the "@{upstream}"
-for each ref, this patch adds "%(push)" to match "@{push}".
-It supports the same tracking format modifiers as upstream
-(because you may want to know, for example, which branches
-have commits to push).
+This v2 contains exactly the same patches but this time they are=20
+properly formatted using format-patch.
 
-Signed-off-by: Jeff King <peff@peff.net>
+Group the common commands printed by 'git help' (or 'git' without any=20
+options) a beginner's friendly themes. To achieve this, the file=20
+command-list.txt receives an additional information for all 'common'=20
+commands, in the form of an indexed group suffix.
+
+Group suffixes are in the form: 'x_group', where x is a number used to=20
+order (ascending) commands in the displayed help:
+
+[...]
+
+git-add                                 mainporcelain common-3_worktree
+git-bisect                              mainporcelain common-7_search
+git-branch                              mainporcelain common-6_branchin=
+g
+git-checkout                            mainporcelain common-6_branchin=
+g
+
+[...]
+
+Note: the proposed layout comprises:
+
+1_init
+2_info
+3_worktree
+4_remote
+5_history
+6_branching
+7_search
+
+But they can be easily modified by just changing command-list.txt
+
+command-list.txt is then parsed by generate-cmdlist.sh to generate=20
+common-cmds.h with the additional group name being a 'group' field in=20
+the cmdname_help struct:
+
+[...]
+
+   {"add", N_("Add file contents to the index"), "3_worktree"},
+   {"bisect", N_("Find by binary search the change that introduced a=20
+bug"), "7_search"},
+   {"branch", N_("List, create, or delete branches"), "6_branching"},
+   {"checkout", N_("Checkout a branch or paths to the working tree"),=20
+"6_branching"},
+
+[...]
+
+=46inally, list_common_cmds_help() prints those common commands by grou=
+ps,=20
+skipping a line between each group:
+
+[...]
+
+The most commonly used git commands are:
+    clone      Clone a repository into a new directory
+    init       Create an empty Git repository or reinitialize an=20
+existing one
+
+    log        Show commit logs
+    show       Show various types of objects
+    status     Show the working tree status
+
+    add        Add file contents to the index
+    mv         Move or rename a file, a directory, or a symlink
+    reset      Reset current HEAD to the specified state
+    rm         Remove files from the working tree and from the index
+
+    fetch      Download objects and refs from another repository
+    pull       Fetch from and integrate with another repository or a=20
+local branch
+    push       Update remote refs along with associated objects
+
+    commit     Record changes to the repository
+    diff       Show changes between commits, commit and working tree, e=
+tc
+    rebase     Forward-port local commits to the updated upstream head
+    tag        Create, list, delete or verify a tag object signed with =
+GPG
+
+[...]
+
+
+Signed-off-by: S=C3=A9bastien Guimmara <sebastien.guimmara@gmail.com>
+
 ---
- Documentation/git-for-each-ref.txt |  6 ++++++
- builtin/for-each-ref.c             | 17 +++++++++++++++--
- t/t6300-for-each-ref.sh            | 13 ++++++++++++-
- 3 files changed, 33 insertions(+), 3 deletions(-)
+  command-list.txt | 42 +++++++++++++++++++++---------------------
+  1 file changed, 21 insertions(+), 21 deletions(-)
 
-diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index 4240875..7f8d9a5 100644
---- a/Documentation/git-for-each-ref.txt
-+++ b/Documentation/git-for-each-ref.txt
-@@ -97,6 +97,12 @@ upstream::
- 	or "=" (in sync).  Has no effect if the ref does not have
- 	tracking information associated with it.
- 
-+push::
-+	The name of a local ref which represents the `@{push}` location
-+	for the displayed ref. Respects `:short`, `:track`, and
-+	`:trackshort` options as `upstream` does. Produces an empty
-+	string if no `@{push}` ref is configured.
-+
- HEAD::
- 	'*' if HEAD matches current ref (the checked out branch), ' '
- 	otherwise.
-diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-index 345d8dd..6847400 100644
---- a/builtin/for-each-ref.c
-+++ b/builtin/for-each-ref.c
-@@ -74,6 +74,7 @@ static struct {
- 	{ "contents:body" },
- 	{ "contents:signature" },
- 	{ "upstream" },
-+	{ "push" },
- 	{ "symref" },
- 	{ "flag" },
- 	{ "HEAD" },
-@@ -669,6 +670,16 @@ static void populate_value(struct refinfo *ref)
- 			refname = branch_get_upstream(branch, NULL);
- 			if (!refname)
- 				continue;
-+		} else if (starts_with(name, "push")) {
-+			const char *branch_name;
-+			if (!skip_prefix(ref->refname, "refs/heads/",
-+					 &branch_name))
-+				continue;
-+			branch = branch_get(branch_name);
-+
-+			refname = branch_get_push(branch, NULL);
-+			if (!refname)
-+				continue;
- 		} else if (starts_with(name, "color:")) {
- 			char color[COLOR_MAXLEN] = "";
- 
-@@ -714,7 +725,8 @@ static void populate_value(struct refinfo *ref)
- 				refname = shorten_unambiguous_ref(refname,
- 						      warn_ambiguous_refs);
- 			else if (!strcmp(formatp, "track") &&
--				 starts_with(name, "upstream")) {
-+				 (starts_with(name, "upstream") ||
-+				  starts_with(name, "push"))) {
- 				char buf[40];
- 
- 				if (stat_tracking_info(branch, &num_ours,
-@@ -736,7 +748,8 @@ static void populate_value(struct refinfo *ref)
- 				}
- 				continue;
- 			} else if (!strcmp(formatp, "trackshort") &&
--				   starts_with(name, "upstream")) {
-+				   (starts_with(name, "upstream") ||
-+				    starts_with(name, "push"))) {
- 				assert(branch);
- 
- 				if (stat_tracking_info(branch, &num_ours,
-diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index c66bf79..24fc2ba 100755
---- a/t/t6300-for-each-ref.sh
-+++ b/t/t6300-for-each-ref.sh
-@@ -28,7 +28,10 @@ test_expect_success setup '
- 	git update-ref refs/remotes/origin/master master &&
- 	git remote add origin nowhere &&
- 	git config branch.master.remote origin &&
--	git config branch.master.merge refs/heads/master
-+	git config branch.master.merge refs/heads/master &&
-+	git remote add myfork elsewhere &&
-+	git config remote.pushdefault myfork &&
-+	git config push.default current
- '
- 
- test_atom() {
-@@ -47,6 +50,7 @@ test_atom() {
- 
- test_atom head refname refs/heads/master
- test_atom head upstream refs/remotes/origin/master
-+test_atom head push refs/remotes/myfork/master
- test_atom head objecttype commit
- test_atom head objectsize 171
- test_atom head objectname $(git rev-parse refs/heads/master)
-@@ -83,6 +87,7 @@ test_atom head HEAD '*'
- 
- test_atom tag refname refs/tags/testtag
- test_atom tag upstream ''
-+test_atom tag push ''
- test_atom tag objecttype tag
- test_atom tag objectsize 154
- test_atom tag objectname $(git rev-parse refs/tags/testtag)
-@@ -347,6 +352,12 @@ test_expect_success 'Check that :track[short] works when upstream is invalid' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success '%(push) supports tracking specifiers, too' '
-+	echo "[ahead 1]" >expected &&
-+	git for-each-ref --format="%(push:track)" refs/heads >actual &&
-+	test_cmp expected actual
-+'
-+
- cat >expected <<EOF
- $(git rev-parse --short HEAD)
- EOF
--- 
-2.4.0.rc3.477.gc25258d
+diff --git a/command-list.txt b/command-list.txt
+index f1eae08..b0730a2 100644
+--- a/command-list.txt
++++ b/command-list.txt
+@@ -1,29 +1,29 @@
+  # List of known git commands.
+  # command name                category [deprecated] [common]
+-git-add                                 mainporcelain common
++git-add                                 mainporcelain common-3_worktre=
+e
+  git-am                                  mainporcelain
+  git-annotate                            ancillaryinterrogators
+  git-apply                               plumbingmanipulators
+  git-archimport                          foreignscminterface
+  git-archive                             mainporcelain
+-git-bisect                              mainporcelain common
++git-bisect                              mainporcelain common-7_search
+  git-blame                               ancillaryinterrogators
+-git-branch                              mainporcelain common
++git-branch                              mainporcelain common-6_branchi=
+ng
+  git-bundle                              mainporcelain
+  git-cat-file                            plumbinginterrogators
+  git-check-attr                          purehelpers
+  git-check-ignore                        purehelpers
+  git-check-mailmap                       purehelpers
+-git-checkout                            mainporcelain common
++git-checkout                            mainporcelain common-6_branchi=
+ng
+  git-checkout-index                      plumbingmanipulators
+  git-check-ref-format                    purehelpers
+  git-cherry                              ancillaryinterrogators
+  git-cherry-pick                         mainporcelain
+  git-citool                              mainporcelain
+  git-clean                               mainporcelain
+-git-clone                               mainporcelain common
++git-clone                               mainporcelain common-1_init
+  git-column                              purehelpers
+-git-commit                              mainporcelain common
++git-commit                              mainporcelain common-5_history
+  git-commit-tree                         plumbingmanipulators
+  git-config                              ancillarymanipulators
+  git-count-objects                       ancillaryinterrogators
+@@ -35,14 +35,14 @@ git-cvsimport foreignscminterface
+  git-cvsserver                           foreignscminterface
+  git-daemon                              synchingrepositories
+  git-describe                            mainporcelain
+-git-diff                                mainporcelain common
++git-diff                                mainporcelain common-5_history
+  git-diff-files                          plumbinginterrogators
+  git-diff-index                          plumbinginterrogators
+  git-diff-tree                           plumbinginterrogators
+  git-difftool                            ancillaryinterrogators
+  git-fast-export                ancillarymanipulators
+  git-fast-import                ancillarymanipulators
+-git-fetch                               mainporcelain common
++git-fetch                               mainporcelain common-4_remote
+  git-fetch-pack                          synchingrepositories
+  git-filter-branch                       ancillarymanipulators
+  git-fmt-merge-msg                       purehelpers
+@@ -51,7 +51,7 @@ git-format-patch mainporcelain
+  git-fsck                            ancillaryinterrogators
+  git-gc                                  mainporcelain
+  git-get-tar-commit-id                   ancillaryinterrogators
+-git-grep                                mainporcelain common
++git-grep                                mainporcelain common-7_search
+  git-gui                                 mainporcelain
+  git-hash-object                         plumbingmanipulators
+  git-help                ancillaryinterrogators
+@@ -60,17 +60,17 @@ git-http-fetch synchelpers
+  git-http-push                           synchelpers
+  git-imap-send                           foreignscminterface
+  git-index-pack                          plumbingmanipulators
+-git-init                                mainporcelain common
++git-init                                mainporcelain common-1_init
+  git-instaweb                            ancillaryinterrogators
+  git-interpret-trailers                  purehelpers
+  gitk                                    mainporcelain
+-git-log                                 mainporcelain common
++git-log                                 mainporcelain common-2_info
+  git-ls-files                            plumbinginterrogators
+  git-ls-remote                           plumbinginterrogators
+  git-ls-tree                             plumbinginterrogators
+  git-mailinfo                            purehelpers
+  git-mailsplit                           purehelpers
+-git-merge                               mainporcelain common
++git-merge                               mainporcelain common-6_branchi=
+ng
+  git-merge-base                          plumbinginterrogators
+  git-merge-file                          plumbingmanipulators
+  git-merge-index                         plumbingmanipulators
+@@ -79,7 +79,7 @@ git-mergetool ancillarymanipulators
+  git-merge-tree                          ancillaryinterrogators
+  git-mktag                               plumbingmanipulators
+  git-mktree                              plumbingmanipulators
+-git-mv                                  mainporcelain common
++git-mv                                  mainporcelain common-3_worktre=
+e
+  git-name-rev                            plumbinginterrogators
+  git-notes                               mainporcelain
+  git-p4                                  foreignscminterface
+@@ -90,11 +90,11 @@ git-parse-remote synchelpers
+  git-patch-id                            purehelpers
+  git-prune                               ancillarymanipulators
+  git-prune-packed                        plumbingmanipulators
+-git-pull                                mainporcelain common
+-git-push                                mainporcelain common
++git-pull                                mainporcelain common-4_remote
++git-push                                mainporcelain common-4_remote
+  git-quiltimport                         foreignscminterface
+  git-read-tree                           plumbingmanipulators
+-git-rebase                              mainporcelain common
++git-rebase                              mainporcelain common-5_history
+  git-receive-pack                        synchelpers
+  git-reflog                              ancillarymanipulators
+  git-relink                              ancillarymanipulators
+@@ -103,28 +103,28 @@ git-repack ancillarymanipulators
+  git-replace                             ancillarymanipulators
+  git-request-pull                        foreignscminterface
+  git-rerere                              ancillaryinterrogators
+-git-reset                               mainporcelain common
++git-reset                               mainporcelain common-3_worktre=
+e
+  git-revert                              mainporcelain
+  git-rev-list                            plumbinginterrogators
+  git-rev-parse                           ancillaryinterrogators
+-git-rm                                  mainporcelain common
++git-rm                                  mainporcelain common-3_worktre=
+e
+  git-send-email                          foreignscminterface
+  git-send-pack                           synchingrepositories
+  git-shell                               synchelpers
+  git-shortlog                            mainporcelain
+-git-show                                mainporcelain common
++git-show                                mainporcelain common-2_info
+  git-show-branch                         ancillaryinterrogators
+  git-show-index                          plumbinginterrogators
+  git-show-ref                            plumbinginterrogators
+  git-sh-i18n                             purehelpers
+  git-sh-setup                            purehelpers
+  git-stash                               mainporcelain
+-git-status                              mainporcelain common
++git-status                              mainporcelain common-2_info
+  git-stripspace                          purehelpers
+  git-submodule                           mainporcelain
+  git-svn                                 foreignscminterface
+  git-symbolic-ref                        plumbingmanipulators
+-git-tag                                 mainporcelain common
++git-tag                                 mainporcelain common-5_history
+  git-unpack-file                         plumbinginterrogators
+  git-unpack-objects                      plumbingmanipulators
+  git-update-index                        plumbingmanipulators
+--=20
+2.4.0
