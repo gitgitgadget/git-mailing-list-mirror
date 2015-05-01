@@ -1,105 +1,286 @@
-From: Pat Thoyts <patthoyts@users.sourceforge.net>
-Subject: Re: [PATCH] git-gui: sort entries in tclIndex
-Date: Fri, 01 May 2015 15:57:38 +0100
-Message-ID: <87sibgpcpp.fsf@red.patthoyts.tk>
-References: <1422292043-12711-1-git-send-email-olaf@aepfle.de>
-	<20150210151803.GB8965@aepfle.de> <20150415072251.GA18595@aepfle.de>
-	<553BC05F.1070702@web.de>
-Reply-To: patthoyts@users.sourceforge.net
+From: =?UTF-8?B?U8OpYmFzdGllbiBHdWltbWFyYQ==?= 
+	<sebastien.guimmara@gmail.com>
+Subject: Re: [PATCH 1/2] git help: group common commands by theme
+Date: Fri, 01 May 2015 17:04:34 +0200
+Message-ID: <55439602.6000906@gmail.com>
+References: <554392E2.8000206@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Olaf Hering <olaf@aepfle.de>, git@vger.kernel.org
-To: =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
-X-From: git-owner@vger.kernel.org Fri May 01 16:57:49 2015
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 01 17:04:47 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YoCNv-000671-Mj
-	for gcvg-git-2@plane.gmane.org; Fri, 01 May 2015 16:57:48 +0200
+	id 1YoCUd-0002rd-8n
+	for gcvg-git-2@plane.gmane.org; Fri, 01 May 2015 17:04:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753830AbbEAO5n convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 May 2015 10:57:43 -0400
-Received: from know-smtprelay-omc-4.server.virginmedia.net ([80.0.253.68]:50769
-	"EHLO know-smtprelay-omc-4.server.virginmedia.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753764AbbEAO5m convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 1 May 2015 10:57:42 -0400
-Received: from red.patthoyts.tk ([82.45.42.101])
-	by know-smtprelay-4-imp with bizsmtp
-	id Nexg1q0062AxhvW01exgjS; Fri, 01 May 2015 15:57:40 +0100
-X-Originating-IP: [82.45.42.101]
-X-Spam: 0
-X-Authority: v=2.1 cv=S8BXwecP c=1 sm=1 tr=0 a=FEdcR8KTC/yDun0iFnNZnw==:117
- a=FEdcR8KTC/yDun0iFnNZnw==:17 a=Rf460ibiAAAA:8 a=6gpmbu8EOFEA:10
- a=8nJEP1OIZ-IA:10 a=xqWC_Br6kY4A:10 a=FP58Ms26AAAA:8 a=1oJP67jkp3AA:10
- a=ZZnuYtJkoWoA:10 a=h1PgugrvaO0A:10 a=QOUmHT2YOf-4WCxZ8ZwA:9
- a=UEZnLJIWFb4C8Wdic9J8r10ra3M=:19 a=wPNLvfGTeEIA:10 a=-FEs8UIgK8oA:10
- a=NWVoK91CQyQA:10
-Received: from red.patthoyts.tk (red.patthoyts.tk [IPv6:2a01:348:2be::2])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by red.patthoyts.tk (Postfix) with ESMTPS id 8BB781963238;
-	Fri,  1 May 2015 15:57:39 +0100 (BST)
-X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
- qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
- '?a?.s#@hl7CiTo'F"O!fvbL0
-X-Url: http://www.patthoyts.tk/
-In-Reply-To: <553BC05F.1070702@web.de> (=?iso-8859-1?Q?=22Ren=E9?=
- Scharfe"'s message of "Sat, 25
-	Apr 2015 18:27:11 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1753543AbbEAPEi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 May 2015 11:04:38 -0400
+Received: from mail-wi0-f181.google.com ([209.85.212.181]:35444 "EHLO
+	mail-wi0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751311AbbEAPEh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 May 2015 11:04:37 -0400
+Received: by widdi4 with SMTP id di4so55141538wid.0
+        for <git@vger.kernel.org>; Fri, 01 May 2015 08:04:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:subject:references
+         :in-reply-to:content-type:content-transfer-encoding;
+        bh=tEp12N/wR6CNuvwbhPEt3M4Rmb39QxTDVV6sF3Kt1sA=;
+        b=VzHn+Mudb1ZbLyfPAu3SyCLZi12KctN5czAP46ZZkq8DqmRtUApJFjBCTkU1zk6NYK
+         9LZgtDTohO4KneZmxPNYqMrM6tgj9vcfzBIECLVxpP7mAZwRrETQj1xIMH+TuWE/xOPb
+         2JovvT7Jpm5sts0vCO6co0gbjQRD20XE3/zkAqYwl/i7IcozXbfF4NOJ0VPQRwoFFMcV
+         2KHTrXlzLD0ATnY4zD8AS26Q0+Wc1bovCzTbSnXtjiPYQYuOjkAg413W/FfN93igDrT5
+         RmgXkEJY9pvYiu9EA+qhkEEjcFDza4z+1gNQB0XU98HwlBlyKTfzlxkKvzO7zT16WWqb
+         GhBg==
+X-Received: by 10.180.187.170 with SMTP id ft10mr4906643wic.75.1430492676401;
+        Fri, 01 May 2015 08:04:36 -0700 (PDT)
+Received: from [192.168.0.10] (bd231-1-88-176-208-17.fbx.proxad.net. [88.176.208.17])
+        by mx.google.com with ESMTPSA id c5sm7903838wjf.40.2015.05.01.08.04.35
+        for <git@vger.kernel.org>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 01 May 2015 08:04:35 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
+In-Reply-To: <554392E2.8000206@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268141>
 
-Ren=E9 Scharfe <l.s.r@web.de> writes:
+(My mistake, the patch was in 3 parts, not 4)
 
->Looping in Pat (git-gui maintainer).
+Author: S=C3=A9bastien Guimmara <sebastien.guimmara@gmail.com>
+Date:   Fri May 1 16:25:53 2015 +0200
+
+     generate-cmdlist.sh - Add command group information for common com=
+mands
+
+     extract the $grp shell variable from command-list.txt (eg:=20
+'common-3_worktree') and add
+     this value to the output:
+
+     before/after:
+     {"add", N_("Add file contents to the index")}
+     {"add", N_("Add file contents to the index"), "3_worktree"}
+
+     So that when 'git' is called, we can display common commands group=
+ed by
+     theme instead of a less useful alphabetical order.
+
+diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
+index 9a4c9b9..818b2f3 100755
+--- a/generate-cmdlist.sh
++++ b/generate-cmdlist.sh
+@@ -4,19 +4,22 @@ echo "/* Automatically generated by $0 */
+  struct cmdname_help {
+      char name[16];
+      char help[80];
++    char group[20];
+  };
+
+  static struct cmdname_help common_cmds[] =3D {"
+
+-sed -n -e 's/^git-\([^     ]*\)[     ].* common.*/\1/p' command-list.t=
+xt |
++sed -n -e 's/^git-\([^     ]*\)[     ].* common-\(.*\)/\1:\2/p'=20
+command-list.txt |
+  sort |
+-while read cmd
++while read line
+  do
++     cmd=3D`echo $line | cut -d ':' -f 1`
++     grp=3D`echo $line | cut -d ':' -f 2`
+       sed -n '
+       /^NAME/,/git-'"$cmd"'/H
+       ${
+          x
+-        s/.*git-'"$cmd"' - \(.*\)/  {"'"$cmd"'", N_("\1")},/
++        s/.*git-'"$cmd"' - \(.*\)/  {"'"$cmd"'", N_("\1"), "'"$grp"'"}=
+,/
+          p
+       }' "Documentation/git-$cmd.txt"
+  done
+
+On 05/01/2015 04:51 PM, S=C3=A9bastien Guimmara wrote:
+
+> Hello everyone,
+> This is my first contribution to an open source project.
+> I tackled the issue found here:
+> https://git.wiki.kernel.org/index.php/SmallProjectsIdeas#improve_.22g=
+it_help.22
+> Namely, format the output of 'git help' so that
+> the commands are grouped by theme.
+> Author: S=C3=A9bastien Guimmara <sebastien.guimmara@gmail.com>
+> Date:   Fri May 1 15:48:57 2015 +0200
+>      command-list.txt - added command groups to common commands
+>      groups are in the form: 'x_group',
+>      where x is a number used to order (ascending)
+>      commands in the displayed help.
+>      example:  git-add        mainporcelain common-2_worktree
+> diff --git a/command-list.txt b/command-list.txt
+> index f1eae08..b0730a2 100644
+> --- a/command-list.txt
+> +++ b/command-list.txt
+> @@ -1,29 +1,29 @@
+>   # List of known git commands.
+>   # command name                category [deprecated] [common]
+> -git-add                                 mainporcelain common
+> +git-add                                 mainporcelain common-3_workt=
+ree
+>   git-am                                  mainporcelain
+>   git-annotate                            ancillaryinterrogators
+>   git-apply                               plumbingmanipulators
+>   git-archimport                          foreignscminterface
+>   git-archive                             mainporcelain
+> -git-bisect                              mainporcelain common
+> +git-bisect                              mainporcelain common-7_searc=
+h
+>   git-blame                               ancillaryinterrogators
+> -git-branch                              mainporcelain common
+> +git-branch                              mainporcelain common-6_branc=
+hing
+>   git-bundle                              mainporcelain
+>   git-cat-file                            plumbinginterrogators
+>   git-check-attr                          purehelpers
+>   git-check-ignore                        purehelpers
+>   git-check-mailmap                       purehelpers
+> -git-checkout                            mainporcelain common
+> +git-checkout                            mainporcelain common-6_branc=
+hing
+>   git-checkout-index                      plumbingmanipulators
+>   git-check-ref-format                    purehelpers
+>   git-cherry                              ancillaryinterrogators
+>   git-cherry-pick                         mainporcelain
+>   git-citool                              mainporcelain
+>   git-clean                               mainporcelain
+> -git-clone                               mainporcelain common
+> +git-clone                               mainporcelain common-1_init
+>   git-column                              purehelpers
+> -git-commit                              mainporcelain common
+> +git-commit                              mainporcelain common-5_histo=
+ry
+>   git-commit-tree                         plumbingmanipulators
+>   git-config                              ancillarymanipulators
+>   git-count-objects                       ancillaryinterrogators
+> @@ -35,14 +35,14 @@ git-cvsimport foreignscminterface
+>   git-cvsserver                           foreignscminterface
+>   git-daemon                              synchingrepositories
+>   git-describe                            mainporcelain
+> -git-diff                                mainporcelain common
+> +git-diff                                mainporcelain common-5_histo=
+ry
+>   git-diff-files                          plumbinginterrogators
+>   git-diff-index                          plumbinginterrogators
+>   git-diff-tree                           plumbinginterrogators
+>   git-difftool                            ancillaryinterrogators
+>   git-fast-export                ancillarymanipulators
+>   git-fast-import                ancillarymanipulators
+> -git-fetch                               mainporcelain common
+> +git-fetch                               mainporcelain common-4_remot=
+e
+>   git-fetch-pack                          synchingrepositories
+>   git-filter-branch                       ancillarymanipulators
+>   git-fmt-merge-msg                       purehelpers
+> @@ -51,7 +51,7 @@ git-format-patch mainporcelain
+>   git-fsck                            ancillaryinterrogators
+>   git-gc                                  mainporcelain
+>   git-get-tar-commit-id                   ancillaryinterrogators
+> -git-grep                                mainporcelain common
+> +git-grep                                mainporcelain common-7_searc=
+h
+>   git-gui                                 mainporcelain
+>   git-hash-object                         plumbingmanipulators
+>   git-help                ancillaryinterrogators
+> @@ -60,17 +60,17 @@ git-http-fetch synchelpers
+>   git-http-push                           synchelpers
+>   git-imap-send                           foreignscminterface
+>   git-index-pack                          plumbingmanipulators
+> -git-init                                mainporcelain common
+> +git-init                                mainporcelain common-1_init
+>   git-instaweb                            ancillaryinterrogators
+>   git-interpret-trailers                  purehelpers
+>   gitk                                    mainporcelain
+> -git-log                                 mainporcelain common
+> +git-log                                 mainporcelain common-2_info
+>   git-ls-files                            plumbinginterrogators
+>   git-ls-remote                           plumbinginterrogators
+>   git-ls-tree                             plumbinginterrogators
+>   git-mailinfo                            purehelpers
+>   git-mailsplit                           purehelpers
+> -git-merge                               mainporcelain common
+> +git-merge                               mainporcelain common-6_branc=
+hing
+>   git-merge-base                          plumbinginterrogators
+>   git-merge-file                          plumbingmanipulators
+>   git-merge-index                         plumbingmanipulators
+> @@ -79,7 +79,7 @@ git-mergetool ancillarymanipulators
+>   git-merge-tree                          ancillaryinterrogators
+>   git-mktag                               plumbingmanipulators
+>   git-mktree                              plumbingmanipulators
+> -git-mv                                  mainporcelain common
+> +git-mv                                  mainporcelain common-3_workt=
+ree
+>   git-name-rev                            plumbinginterrogators
+>   git-notes                               mainporcelain
+>   git-p4                                  foreignscminterface
+> @@ -90,11 +90,11 @@ git-parse-remote synchelpers
+>   git-patch-id                            purehelpers
+>   git-prune                               ancillarymanipulators
+>   git-prune-packed                        plumbingmanipulators
+> -git-pull                                mainporcelain common
+> -git-push                                mainporcelain common
+> +git-pull                                mainporcelain common-4_remot=
+e
+> +git-push                                mainporcelain common-4_remot=
+e
+>   git-quiltimport                         foreignscminterface
+>   git-read-tree                           plumbingmanipulators
+> -git-rebase                              mainporcelain common
+> +git-rebase                              mainporcelain common-5_histo=
+ry
+>   git-receive-pack                        synchelpers
+>   git-reflog                              ancillarymanipulators
+>   git-relink                              ancillarymanipulators
+> @@ -103,28 +103,28 @@ git-repack ancillarymanipulators
+>   git-replace                             ancillarymanipulators
+>   git-request-pull                        foreignscminterface
+>   git-rerere                              ancillaryinterrogators
+> -git-reset                               mainporcelain common
+> +git-reset                               mainporcelain common-3_workt=
+ree
+>   git-revert                              mainporcelain
+>   git-rev-list                            plumbinginterrogators
+>   git-rev-parse                           ancillaryinterrogators
+> -git-rm                                  mainporcelain common
+> +git-rm                                  mainporcelain common-3_workt=
+ree
+>   git-send-email                          foreignscminterface
+>   git-send-pack                           synchingrepositories
+>   git-shell                               synchelpers
+>   git-shortlog                            mainporcelain
+> -git-show                                mainporcelain common
+> +git-show                                mainporcelain common-2_info
+>   git-show-branch                         ancillaryinterrogators
+>   git-show-index                          plumbinginterrogators
+>   git-show-ref                            plumbinginterrogators
+>   git-sh-i18n                             purehelpers
+>   git-sh-setup                            purehelpers
+>   git-stash                               mainporcelain
+> -git-status                              mainporcelain common
+> +git-status                              mainporcelain common-2_info
+>   git-stripspace                          purehelpers
+>   git-submodule                           mainporcelain
+>   git-svn                                 foreignscminterface
+>   git-symbolic-ref                        plumbingmanipulators
+> -git-tag                                 mainporcelain common
+> +git-tag                                 mainporcelain common-5_histo=
+ry
+>   git-unpack-file                         plumbinginterrogators
+>   git-unpack-objects                      plumbingmanipulators
+>   git-update-index                        plumbingmanipulators
 >
->Am 15.04.2015 um 09:22 schrieb Olaf Hering:
->> Ping?
->>
->> On Tue, Feb 10, Olaf Hering wrote:
->>
->>> Ping?
->>>
->>> On Mon, Jan 26, Olaf Hering wrote:
->>>
->>>> ALL_LIBFILES uses wildcard, which provides the result in directory
->>>> order. This order depends on the underlying filesystem on the
->>>> buildhost. To get reproducible builds it is required to sort such =
-list
->>>> before using them.
->>>>
->>>> Signed-off-by: Olaf Hering <olaf@aepfle.de>
->>>> ---
->>>>   git-gui/Makefile | 2 +-
->>>>   1 file changed, 1 insertion(+), 1 deletion(-)
->>>>
->>>> diff --git a/git-gui/Makefile b/git-gui/Makefile
->>>> index cde8b2e..7564a18 100644
->>>> --- a/git-gui/Makefile
->>>> +++ b/git-gui/Makefile
->>>> @@ -258,7 +258,7 @@ lib/tclIndex: $(ALL_LIBFILES) GIT-GUI-VARS
->>>>   	 rm -f $@ ; \
->>>>   	 echo '# Autogenerated by git-gui Makefile' >$@ && \
->>>>   	 echo >>$@ && \
->>>> -	 $(foreach p,$(PRELOAD_FILES) $(ALL_LIBFILES),echo '$(subst lib/=
-,,$p)' >>$@ &&) \
->>>> +	 $(foreach p,$(PRELOAD_FILES) $(sort $(ALL_LIBFILES)),echo '$(su=
-bst lib/,,$p)' >>$@ &&) \
->>>>   	 echo >>$@ ; \
->>>>   	fi
->>>>
->
-
-Applied. Thank you.
-
---=20
-Pat Thoyts                            http://www.patthoyts.tk/
-PGP fingerprint 2C 6E 98 07 2C 59 C8 97  10 CE 11 E6 04 E0 B9 DD
