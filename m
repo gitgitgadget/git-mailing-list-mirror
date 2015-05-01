@@ -1,90 +1,86 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH] checkout-index.c: Unconditionally free memory
-Date: Fri,  1 May 2015 12:28:27 -0700
-Message-ID: <1430508507-14016-1-git-send-email-sbeller@google.com>
-Cc: Stefan Beller <sbeller@google.com>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri May 01 21:28:39 2015
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] checkout-index.c: Unconditionally free memory
+Date: Fri, 1 May 2015 15:33:58 -0400
+Message-ID: <CAPig+cQr5wQ6nfy90+SWyFFv0Neq4oJiEtur4cBJNGHNKXhZrQ@mail.gmail.com>
+References: <1430508507-14016-1-git-send-email-sbeller@google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Fri May 01 21:34:06 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YoGbz-0000Uc-Mz
-	for gcvg-git-2@plane.gmane.org; Fri, 01 May 2015 21:28:36 +0200
+	id 1YoGhI-0004ju-Sl
+	for gcvg-git-2@plane.gmane.org; Fri, 01 May 2015 21:34:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751482AbbEAT2b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 May 2015 15:28:31 -0400
-Received: from mail-ie0-f180.google.com ([209.85.223.180]:36204 "EHLO
-	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751007AbbEAT2a (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 May 2015 15:28:30 -0400
-Received: by iebrs15 with SMTP id rs15so95636527ieb.3
-        for <git@vger.kernel.org>; Fri, 01 May 2015 12:28:30 -0700 (PDT)
+	id S1751287AbbEATd7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 May 2015 15:33:59 -0400
+Received: from mail-ig0-f170.google.com ([209.85.213.170]:34955 "EHLO
+	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750737AbbEATd7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 May 2015 15:33:59 -0400
+Received: by igbyr2 with SMTP id yr2so46563873igb.0
+        for <git@vger.kernel.org>; Fri, 01 May 2015 12:33:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=8O6vbI21PyI5a1ox3YDvC3hG8sb7vMEgqHPySy2V6yw=;
-        b=TIKyvkjq9rCLjkTt0vQ/zG7SVNgdPmXXJi9tm91fvujgGUqtMItaKhVlYELz0rsJMS
-         V0ZSmI9duH/BBFBryjVs9itKOeo5An5plZBHNXpSks/6iY7SeEyqXgRD1ZS9IBAaJxCV
-         9ofNwyx1L8zROTXJm21qreAP0jf/FeyyzOiStJmeGNnFYj3tfo77YdL5ygIQgjMe4LNc
-         VTbHzrEck4BnjRcIfu0KduR1sIvqgrGFMdsbBCqNKNSQXbHoSw/oaNr8ZedUW4H9nhnx
-         Dxf7kSoDqtrA+tGBqnxhJIhrNkpI2Sx57RHO1IG/sw6rK4Pk1w19acHfiPup8tIvRbpT
-         lhzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=8O6vbI21PyI5a1ox3YDvC3hG8sb7vMEgqHPySy2V6yw=;
-        b=F5XM3W18s4n+oSuxxHhn0hpsTY/ekoSHgNmhf/Y5Bb5/a/e7UUvgHwHJixwaHKkYXB
-         4rHAiTh7sh6XF5De4a1xPJFWO1dpZRWefIK7a9BlNnwtgoFX9jd8DqB6I+SyVsRmajkY
-         BIzMxc8sxQi1J7toS7aKatxsDBnSZR8aD569lTTu2y95it4t5nlpoTnMhfIJN7rc3CFN
-         oVgK6kK2H8EVcxnxfLpcvbRbLPHTyRth5a9CyTFo1jjgaoDF4bJjSP+A7899fkrDiGwN
-         6Uz1H9xtnLuwljcbrqkgpgtJfBaI7CzQPzfOvSjvYnRq/QsvZ1fiAEM8h789lGQ26j+4
-         mNCg==
-X-Gm-Message-State: ALoCoQmjFYDOVtnTGiVV+1ntc4HmIfpkTWrvaDLwIWEZLLnr7uDnlgOvBiGzr+DWX3oaojG0VR2v
-X-Received: by 10.107.27.210 with SMTP id b201mr14283356iob.42.1430508509925;
-        Fri, 01 May 2015 12:28:29 -0700 (PDT)
-Received: from localhost ([2620:0:1000:5b00:b91d:b254:2e9c:5ed9])
-        by mx.google.com with ESMTPSA id p74sm4079446ioe.27.2015.05.01.12.28.29
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 01 May 2015 12:28:29 -0700 (PDT)
-X-Mailer: git-send-email 2.4.0.rc3.16.g0ab00b9
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=v/PxFral9ba7RO9pj+ivDliEMPFID7O9LHlR8FqACEg=;
+        b=H/iJxQIL9WNblT7VveBOxGoTe4QKoHW0V1tUbnuZwA3K75eCTZPIW7+clIGDIhXnAd
+         tgNpcUhcBw6r7i14X4bG6r7B/xcD8WpLNX9JPlO+rolCXmr3zAjUZ2uZJ83LkO6ELF6L
+         b2562ZPgmRREQqRi/2wsXR65jsuMEQ1px2LfcsMGD2dMyL6acfuC27PcL+uuiSbxP5r/
+         Q7Hc87Eta5O2LJCNOD2TL4JwmjMO9viFYbmod4/gActRl9gfhNydARTTiG4XFGYWpgaL
+         2pI98btO7KZ8RICg/I4DZr2txTpfav9yZyNXHfyc6SbRhHB2tCJM+qRHdGsnotjziBhj
+         EXfA==
+X-Received: by 10.107.31.134 with SMTP id f128mr14299740iof.19.1430508838425;
+ Fri, 01 May 2015 12:33:58 -0700 (PDT)
+Received: by 10.107.28.132 with HTTP; Fri, 1 May 2015 12:33:58 -0700 (PDT)
+In-Reply-To: <1430508507-14016-1-git-send-email-sbeller@google.com>
+X-Google-Sender-Auth: 2b4hmx0abYCdolKLkTQn3I6AYsI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268176>
 
-It's safe to free the char pointer `p` unconditionally.
+On Fri, May 1, 2015 at 3:28 PM, Stefan Beller <sbeller@google.com> wrote:
+> It's safe to free the char pointer `p` unconditionally.
+>
+> The pointer is assigned just 2 lines earlier as a return from
+> prefix_path, which allocates new memory for its return value.
+>
+> Then it is used in checkout_file, which passes the pointer on to
+> cache_name_pos and write_tempfile_record, both of which do not store
+> the pointer in any permanent record.
+>
+> So the condition on when to free the pointer is just "always".
 
-The pointer is assigned just 2 lines earlier as a return from
-prefix_path, which allocates new memory for its return value.
+Why doesn't the 'p' in the 'while' loop just below deserve the same treatment?
 
-Then it is used in checkout_file, which passes the pointer on to
-cache_name_pos and write_tempfile_record, both of which do not store
-the pointer in any permanent record.
-
-So the condition on when to free the pointer is just "always".
-
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- builtin/checkout-index.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/checkout-index.c b/builtin/checkout-index.c
-index 9ca2da1..e28dc35 100644
---- a/builtin/checkout-index.c
-+++ b/builtin/checkout-index.c
-@@ -249,8 +249,8 @@ int cmd_checkout_index(int argc, const char **argv, const char *prefix)
- 			die("git checkout-index: don't mix '--stdin' and explicit filenames");
- 		p = prefix_path(prefix, prefix_length, arg);
- 		checkout_file(p, prefix);
--		if (p < arg || p > arg + strlen(arg))
--			free((char *)p);
-+
-+		free((char *)p);
- 	}
- 
- 	if (read_from_stdin) {
--- 
-2.4.0.rc3.16.g0ab00b9
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+> diff --git a/builtin/checkout-index.c b/builtin/checkout-index.c
+> index 9ca2da1..e28dc35 100644
+> --- a/builtin/checkout-index.c
+> +++ b/builtin/checkout-index.c
+> @@ -249,8 +249,8 @@ int cmd_checkout_index(int argc, const char **argv, const char *prefix)
+>                         die("git checkout-index: don't mix '--stdin' and explicit filenames");
+>                 p = prefix_path(prefix, prefix_length, arg);
+>                 checkout_file(p, prefix);
+> -               if (p < arg || p > arg + strlen(arg))
+> -                       free((char *)p);
+> +
+> +               free((char *)p);
+>         }
+>
+>         if (read_from_stdin) {
+> --
+> 2.4.0.rc3.16.g0ab00b9
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
