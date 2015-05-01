@@ -1,83 +1,72 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: Diffing submodule does not yield complete logs for merge commits
-Date: Fri, 1 May 2015 19:57:57 +0200
-Message-ID: <20150501175757.GA10569@book.hvoigt.net>
-References: <CAHd499BqB_ZFKMNxSVCDTFx2Ge=TfCE6gexFn+rfRbS+ybLybA@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: Patch that modifies git usage message
+Date: Fri, 1 May 2015 14:01:31 -0400
+Message-ID: <CAPig+cS1t9jz8Dr+p89Ly5OG1dhiFqvyBxjgbvMhtSpk1VFqmA@mail.gmail.com>
+References: <CAKB+oNtYbJXNb2wGzJCdQ5Ru5fq3HzcapSqiTVC_34=xDnTb7Q@mail.gmail.com>
+	<CAGZ79kY1ZoYrVwVVqfyB+uMGsJo59qDxbDLgyo5qygSm=CUVhA@mail.gmail.com>
+	<xmqqfv7gxnup.fsf@gitster.dls.corp.google.com>
+	<CAKB+oNtKi6e7H9U75WEJDKH2KK349JT+vGE8+acHvM6SasCWfQ@mail.gmail.com>
+	<CAPig+cROY5ZaXtAWpaMpe8JsuG1eSp2jhAsSh1dAsCSACgoFxw@mail.gmail.com>
+	<CAKB+oNvSR4ifdCZAxTyhwoh-yeVxikB0+Z9+19MGyVv4yLB=Xw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git <git@vger.kernel.org>
-To: Robert Dailey <rcdailey.lists@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 01 19:58:30 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Stefan Beller <sbeller@google.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Alangi Derick <alangiderick@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 01 20:01:45 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YoFCo-0007pK-0D
-	for gcvg-git-2@plane.gmane.org; Fri, 01 May 2015 19:58:30 +0200
+	id 1YoFFx-0001xM-3K
+	for gcvg-git-2@plane.gmane.org; Fri, 01 May 2015 20:01:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750807AbbEAR6V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 May 2015 13:58:21 -0400
-Received: from smtprelay04.ispgateway.de ([80.67.31.38]:49795 "EHLO
-	smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750728AbbEAR6U (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 May 2015 13:58:20 -0400
-Received: from [92.76.95.20] (helo=book.hvoigt.net)
-	by smtprelay04.ispgateway.de with esmtpsa (TLSv1.2:DHE-RSA-AES256-GCM-SHA384:256)
-	(Exim 4.84)
-	(envelope-from <hvoigt@hvoigt.net>)
-	id 1YoFCL-00066O-CO; Fri, 01 May 2015 19:58:01 +0200
-Content-Disposition: inline
-In-Reply-To: <CAHd499BqB_ZFKMNxSVCDTFx2Ge=TfCE6gexFn+rfRbS+ybLybA@mail.gmail.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+	id S1751361AbbEASBf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 May 2015 14:01:35 -0400
+Received: from mail-ie0-f169.google.com ([209.85.223.169]:33228 "EHLO
+	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751327AbbEASBc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 May 2015 14:01:32 -0400
+Received: by iecrt8 with SMTP id rt8so94027424iec.0
+        for <git@vger.kernel.org>; Fri, 01 May 2015 11:01:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=n4+ZTP8rV61GCRHgk2G2IWM898pY7FdON95aUjLy9eA=;
+        b=qQYx94BuaKxGPyxWZ8mm1UURGDkICUHvlNtU29vKAJDUth8PHCgNpMDZ/861VJ4SpX
+         cb+YABlGRqbFO1Ry+3GPBkdUCgUZlnk09SMJAd3CuxO+FQvnDj+H0jqDpwBQvZf4KDZz
+         A3rDNTPo31KXM/inYRui9qXj1MVpon8p9IWzu2qWMe77WOwjRvSTizm6mSNEibwlyMi2
+         QDEWw+cOD6mKyq3G4SAnktUHtZA06ZYA1MIuIzB7yv4Qw8JUB0e+DTDVt5xgPxc8fzQP
+         yp/gkarKQOoJSAiqjFb5iMLGjvU3xU+tquqb3v/DyUzbC8m9oBENXNC6Ylnh64TYyr+q
+         Ykeg==
+X-Received: by 10.50.61.200 with SMTP id s8mr11880700igr.7.1430503291432; Fri,
+ 01 May 2015 11:01:31 -0700 (PDT)
+Received: by 10.107.28.132 with HTTP; Fri, 1 May 2015 11:01:31 -0700 (PDT)
+In-Reply-To: <CAKB+oNvSR4ifdCZAxTyhwoh-yeVxikB0+Z9+19MGyVv4yLB=Xw@mail.gmail.com>
+X-Google-Sender-Auth: TAU7lQT-_gUUCEuIyf4G-0Lv7h8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268168>
 
-Hi,
+On Fri, May 1, 2015 at 1:49 PM, Alangi Derick <alangiderick@gmail.com> wrote:
+> So in essence what you are saying is that i should instead change
+> error messages to lower case.
 
-On Wed, Apr 29, 2015 at 03:53:11PM -0500, Robert Dailey wrote:
-> I am attempting to diff a submodule modified in my working copy and
-> the only difference is a merge commit. However, I do not get the
-> "full" range of commits introduced by the merge commit when I diff it:
-> 
-> $ git diff --submodule=log Core
-> Submodule Core 8b4ec60..def2f3b:
->   > Merge remote-tracking branch 'origin/master-ah3k'
-> 
-> However if I go inside my submodule and run `git log` by hand, I get
-> more information about the TRUE commits introduced:
-> 
-> $ git log --oneline 8b4ec60..def2f3b
-> def2f3b Merge remote-tracking branch 'origin/master-ah3k'
-> 015c961 Remove log spam in FontManager
-> 7713ba1 Update third party submodule to latest
-> 10aac78 Merge pull request #9 in FE/core from
-> feature/FE-1348-selecting-continue-on-zero-balance to master-ah3k
-> 287882f FE-1376 Nedd to remain in check detail screen when selecting
-> donation after SBI
-> a5a6bed Do not overwrite the current check# within loop
-> dfb8547 Adding list of checks to CRspChecks before saving
-> 1be280a FE-1354: Guest logged out in specific multiple check scenario
-> de06d5a [FE-1348] Fix PATT exit while checks still open
-> 
-> It's almost as if the `git diff --submodule=log` approach is passing
-> in --first-parent to git log, which would exclude commits in the range
-> that I'm seeing when I run git log manually.
+No, I'm not saying that you _should_ do anything. I am saying merely
+that if you were to submit such a patch for the sake of improving
+consistency, you might have an easier time convincing people that your
+patch is worthwhile if you follow the current trend (which is to make
+error messages lowercase).
 
-That is exactly the case. In prepare_submodule_summary() that option is
-set before doing the revision walk.
+However, I'm also saying that such a patch may encounter resistance if
+it is perceived as mere "noise", as explained by the CodingGuidelines
+blurb which I cited.
 
-> Is this by design? Is there a way to enable the full log history with
-> `git diff` on a submodule?
-
-This stems from the first implementation for showing submodule diffs in
-commit 752c0c24. I guess this was done deliberately to limit the amount
-of output you get for a submodule. At the moment this is hardcoded but I
-think there is nothing wrong with adding another option to include the
-full log.
-
-Cheers Heiko
+> And also i have seen an idea i want to work on from
+> https://git.wiki.kernel.org/index.php/SmallProjectsIdeas
+> I want to work on this and will submit a patch as soon as i am done.
