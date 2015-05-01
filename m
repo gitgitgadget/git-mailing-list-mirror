@@ -1,75 +1,59 @@
-From: Alangi Derick <alangiderick@gmail.com>
-Subject: [Patch] Nice help Output - SmallProjectIdea[1]
-Date: Fri, 1 May 2015 19:33:51 +0100
-Message-ID: <CAKB+oNvZxueR9PqysPn3khQZL+8tt3NNrgFzNjHnVuBVtyeZ4w@mail.gmail.com>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: [PATCH v4] blame: CRLF in the working tree and LF in the repo
+Date: Fri, 01 May 2015 20:57:27 +0200
+Message-ID: <5543CC97.4080702@web.de>
+References: <55436852.3030002@web.de> <xmqqbni4xlt7.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 01 20:34:47 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, johannes.schindelin@gmx.de, kasal@ucw.cz
+To: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1?= =?UTF-8?B?c2Vu?= 
+	<tboegi@web.de>
+X-From: git-owner@vger.kernel.org Fri May 01 20:57:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YoFlt-0001Un-Ga
-	for gcvg-git-2@plane.gmane.org; Fri, 01 May 2015 20:34:45 +0200
+	id 1YoG82-0002DI-QM
+	for gcvg-git-2@plane.gmane.org; Fri, 01 May 2015 20:57:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752118AbbEASea (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 May 2015 14:34:30 -0400
-Received: from mail-qk0-f172.google.com ([209.85.220.172]:33453 "EHLO
-	mail-qk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751817AbbEASdw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 May 2015 14:33:52 -0400
-Received: by qkx62 with SMTP id 62so55382745qkx.0
-        for <git@vger.kernel.org>; Fri, 01 May 2015 11:33:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=y86Zb2oCV5MFydZERxN5RkY6rRobLDsdqqUnbMkJEQ4=;
-        b=h0smMwSPzfYzthwCFSftA+F6+Cuz1nfNUOM8FY/nNHcfZqDybhNtiHpFX5VcAXp+7R
-         WfSvhQAOdbDjxUsi4/UcaUe70tg3A52j+gKFfggfXytGFSynW7D6SINMBLxKbUxfRqRg
-         BYWgBHAEUnNND9ftg53Zo8puQKv1KZ0Hb9n+FDjW1/Tq/F6b4Blh5l9tytuTPS17N0ZA
-         sH7BZs3Q6hYUlEBioOuHwDKfrqrQfQCLE0uWSxL6laclYTxV3YgvJ6YHLRaQw4vczDcp
-         tIiAbP7dg6zzQ3j+tryt5k0YZrRaKvcFK5XSifKIpUuhuLdeUlkpbYlUWLGW0z3Y0gRz
-         ykbA==
-X-Received: by 10.55.40.132 with SMTP id o4mr21626879qko.61.1430505231572;
- Fri, 01 May 2015 11:33:51 -0700 (PDT)
-Received: by 10.229.45.71 with HTTP; Fri, 1 May 2015 11:33:51 -0700 (PDT)
+	id S1752627AbbEAS5g convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 May 2015 14:57:36 -0400
+Received: from mout.web.de ([212.227.17.11]:55452 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752623AbbEAS5d (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 May 2015 14:57:33 -0400
+Received: from macce.local ([217.211.68.12]) by smtp.web.de (mrweb102) with
+ ESMTPSA (Nemesis) id 0MdLsF-1YVlnu2NjH-00ITPc; Fri, 01 May 2015 20:57:29
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
+In-Reply-To: <xmqqbni4xlt7.fsf@gitster.dls.corp.google.com>
+X-Provags-ID: V03:K0:t4aOkUWI+fd+llhXOhtyuUbNO2WPJVwzgkGbhq+DeFL4IkSeXuU
+ LOpVxbCu3eByxhGd8l3G/5JpvcazJfYMP8o460Hw60UrjHPJXVTJ93WX9CtBIj10oMPQvqJ
+ Q61mzFqTrK7bR5dDoZFF849GOTS0ONB6Uyvk4K8qpGCbvgl0NwGCehE59SbXxC6IpQ/eyaN
+ txJD8bXPMHPuPfqFaiGqw==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268171>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268172>
 
-This is a patch to fix the problem as given in the site:
-https://git.wiki.kernel.org/index.php/SmallProjectsIdeas
+On 2015-05-01 19.13, Junio C Hamano wrote:
+> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+>=20
+>> A typical setup under Windows:
+>> core.eol is CRLF and a file is marked as "text" in .gitattributes,
+>> or core.autocrlf is true
+>=20
+> A full sentence (a proper prose) is easier to read.  The above is
+> unclear if that is what you are unilaterally declaring, a statement
+> of fact, or something else (see what I queued based on the previous
+> round on 'pu').
 
-diff --git a/help.c b/help.c
-index 2072a87..e347bbc 100644
---- a/help.c
-+++ b/help.c
-@@ -229,9 +229,18 @@ void list_common_cmds_help(void)
+OK, let's go for that, thanks for amending.
+And is there a chance to correct my mis-spelling ?
 
-  puts(_("The most commonly used git commands are:"));
-  for (i = 0; i < ARRAY_SIZE(common_cmds); i++) {
-- printf("   %s   ", common_cmds[i].name);
-- mput_char(' ', longest - strlen(common_cmds[i].name));
-- puts(_(common_cmds[i].help));
-+ if(i%3 == 1){
-+ printf("   %s   ", common_cmds[i].name);
-+ mput_char(' ', longest - strlen(common_cmds[i].name));
-+ puts(_(common_cmds[i].help));
-+ printf("\n");
-+ }
-+ else {
-+ printf("   %s   ", common_cmds[i].name);
-+ mput_char(' ', longest - strlen(common_cmds[i].name));
-+ puts(_(common_cmds[i].help));
-+ }
-+
-  }
- }
-
-
-Regards
-Alangi Derick Ndimnain
+s/A typicall/A typical/=20
