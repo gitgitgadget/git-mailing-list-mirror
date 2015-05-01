@@ -1,175 +1,208 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 2/2] lock_packed_refs(): allow retries when acquiring the packed-refs lock
-Date: Fri,  1 May 2015 16:52:57 +0200
-Message-ID: <1430491977-25817-3-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH 1/2] lockfile: allow file locking to be retried with a timeout
+Date: Fri,  1 May 2015 16:52:56 +0200
+Message-ID: <1430491977-25817-2-git-send-email-mhagger@alum.mit.edu>
 References: <1430491977-25817-1-git-send-email-mhagger@alum.mit.edu>
 Cc: Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
 	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 01 16:53:21 2015
+X-From: git-owner@vger.kernel.org Fri May 01 16:53:24 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YoCJa-0002qI-ID
-	for gcvg-git-2@plane.gmane.org; Fri, 01 May 2015 16:53:18 +0200
+	id 1YoCJe-0002uO-GR
+	for gcvg-git-2@plane.gmane.org; Fri, 01 May 2015 16:53:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753902AbbEAOxO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 May 2015 10:53:14 -0400
-Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:53319 "EHLO
-	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753817AbbEAOxJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 1 May 2015 10:53:09 -0400
-X-AuditID: 1207440f-f792a6d000001284-4f-554393549ad1
+	id S1754026AbbEAOxS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 May 2015 10:53:18 -0400
+Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:43801 "EHLO
+	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753817AbbEAOxR (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 1 May 2015 10:53:17 -0400
+X-AuditID: 1207440e-f79bc6d000000c43-82-554393539513
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id A3.E4.04740.45393455; Fri,  1 May 2015 10:53:08 -0400 (EDT)
+	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id EF.A6.03139.35393455; Fri,  1 May 2015 10:53:07 -0400 (EDT)
 Received: from michael.fritz.box (p4FC97D7E.dip0.t-ipconnect.de [79.201.125.126])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t41Er33c011249
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t41Er33b011249
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Fri, 1 May 2015 10:53:07 -0400
+	Fri, 1 May 2015 10:53:06 -0400
 X-Mailer: git-send-email 2.1.4
 In-Reply-To: <1430491977-25817-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrBIsWRmVeSWpSXmKPExsUixO6iqBsy2TnU4NBsU4uuK91MFg29V5gt
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrDIsWRmVeSWpSXmKPExsUixO6iqBs82TnU4P9uNYuuK91MFg29V5gt
 	bq+Yz2zxo6WH2WLz5nYWB1aPv+8/MHks2FTq8ax3D6PHxUvKHp83yQWwRnHbJCWWlAVnpufp
-	2yVwZ7xqWMlSsF254s/9pewNjPNluhg5OSQETCR+zfjNDGGLSVy4t56ti5GLQ0jgMqPE9E2f
-	mSGcE0wSKzp72UGq2AR0JRb1NDOB2CICahIT2w6xgBQxC3QwSlxYvg2sSFggSuL+9etACQ4O
-	FgFViR+bFUHCvAIuEl3rZzBCbJOTOH/8J9hmTgFXiYMdn1lBbCGgmpdHN7JMYORdwMiwilEu
-	Mac0Vzc3MTOnODVZtzg5MS8vtUjXRC83s0QvNaV0EyMkpPh3MHatlznEKMDBqMTDy3HSKVSI
-	NbGsuDL3EKMkB5OSKG9bnXOoEF9SfkplRmJxRnxRaU5q8SFGCQ5mJRHepxOAcrwpiZVVqUX5
-	MClpDhYlcV71Jep+QgLpiSWp2ampBalFMFkZDg4lCd59E4EaBYtS01Mr0jJzShDSTBycIMO5
-	pESKU/NSUosSS0sy4kGxEV8MjA6QFA/Q3l0g7bzFBYm5QFGI1lOMuhw/LjUuZhJiycvPS5US
-	530AUiQAUpRRmge3ApZAXjGKA30szPsCpIoHmHzgJr0CWsIEtOT8LQeQJSWJCCmpBsYgmUnF
-	nL+8f3hcez+HSdtjRcEn7zj9b7sObju9/kT2+UVHV8j6vr8kUKfRy9Z47hBbX8DeS/vE0iW2
-	nvKNmXdHm3vJ+jVztk/PPyDOun5mkOEX02XBLcKs2+xSwgsYD5TpX7F3sDc4Mm/G 
+	2yVwZ9x8PZe9YKdGxevXfSwNjAcUuhg5OSQETCQ2rDvLBmGLSVy4tx7I5uIQErjMKPHy8n92
+	kISQwAkmifs9kSA2m4CuxKKeZiYQW0RATWJi2yEWkAZmgQ5GiQvLt4E1CAv4SVy5vpMZxGYR
+	UJW4d2g9C4jNK+AisbX3JSvENjmJ88d/gtVwCrhKHOz4zAqxzEXi5dGNLBMYeRcwMqxilEvM
+	Kc3VzU3MzClOTdYtTk7My0st0jXWy80s0UtNKd3ECAkpvh2M7etlDjEKcDAq8fBynHQKFWJN
+	LCuuzD3EKMnBpCTK21bnHCrEl5SfUpmRWJwRX1Sak1p8iFGCg1lJhPfpBKAcb0piZVVqUT5M
+	SpqDRUmcV22Jup+QQHpiSWp2ampBahFMVoaDQ0mCd99EoEbBotT01Iq0zJwShDQTByfIcC4p
+	keLUvJTUosTSkox4UGzEFwOjAyTFA7TXdBLI3uKCxFygKETrKUZFKXFeeZCEAEgiozQPbiws
+	UbxiFAf6UphXDaSKB5hk4LpfAQ1mAhp8/pYDyOCSRISUVANj8vlZS94XXeG5/st7dkYt/79J
+	kctnT/kewht1bpFKQHn3UpfXZw8Knn1bviSYfVVgG9tKff8K1ieq+pVL99ysfSTJYdTJduDm
+	F8an3hkaWXd/HPg29eydw5mdV21PBXzeril/d7O8+UGDtnzL59a7HR3WvDy/5+5C 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268138>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268139>
 
-Currently, there is only one attempt to acquire any lockfile, and if
-the lock is held by another process, the locking attempt fails
-immediately.
+Currently, there is only one attempt to lock a file. If it fails, the
+whole operation fails.
 
-This is not such a limitation for loose reference files. First, they
-don't take long to rewrite. Second, most reference updates have a
-known "old" value, so if another process is updating a reference at
-the same moment that we are trying to lock it, then probably the
-expected "old" value will not longer be valid, and the update will
-fail anyway.
+But it might sometimes be advantageous to try acquiring a file lock a
+few times before giving up. So add a new function,
+hold_lock_file_for_update_timeout(), that allows a timeout to be
+specified. Make hold_lock_file_for_update() a thin wrapper around the
+new function.
 
-But these arguments do not hold for packed-refs:
+If timeout_ms is positive, then retry for at least that many
+milliseconds to acquire the lock. On each failed attempt, use select()
+to wait for a backoff time that increases quadratically (capped at 1
+second) and has a random component to prevent two processes from
+getting synchronized. If timeout_ms is negative, retry indefinitely.
 
-* The packed-refs file can be large and take significant time to
-  rewrite.
-
-* Many references are stored in a single packed-refs file, so it could
-  be that the other process was changing a different reference than
-  the one that we are interested in.
-
-Therefore, it is much more likely for there to be spurious lock
-conflicts in connection to the packed-refs file, resulting in
-unnecessary command failures.
-
-So, if the first attempt to lock the packed-refs file fails, continue
-retrying for a configurable length of time before giving up. The
-default timeout is 1 second.
+In a moment we will switch to using the new function when locking
+packed-refs.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
 
 Notes (discussion):
-    At first I wasn't going to make this setting configurable. After all,
-    who could object to one second?
-    
-    But then I realized that making the length of the timeout configurable
-    would make it easier to test. Since sleep(1) is only guaranteed to
-    have a 1-second resolution, it is helpful to set the timeout longer
-    than 1 second in the test. So I made it configurable, and documented
-    the setting.
-    
-    I don't have a strong opinion either way.
-    
-    By the way, if anybody has a better idea for how to test this, please
-    chime up. As written, the two new tests each take about one second to
-    run (though they are mostly idle during that time, so they parallelize
-    well with other tests).
+    It would be easy to also add a hold_lock_file_for_append_timeout(),
+    but I can't yet think of an application for it.
 
- Documentation/config.txt |  6 ++++++
- refs.c                   | 12 +++++++++++-
- t/t3210-pack-refs.sh     | 17 +++++++++++++++++
- 3 files changed, 34 insertions(+), 1 deletion(-)
+ lockfile.c | 79 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++--
+ lockfile.h | 16 +++++++++++--
+ 2 files changed, 91 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 2e5ceaf..3c24e10 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -622,6 +622,12 @@ core.commentChar::
- If set to "auto", `git-commit` would select a character that is not
- the beginning character of any line in existing commit messages.
+diff --git a/lockfile.c b/lockfile.c
+index 9889277..30e65e9 100644
+--- a/lockfile.c
++++ b/lockfile.c
+@@ -157,6 +157,80 @@ static int lock_file(struct lock_file *lk, const char *path, int flags)
+ 	return lk->fd;
+ }
  
-+core.packedRefsTimeout::
-+	The length of time, in milliseconds, to retry when trying to
-+	lock the `packed-refs` file. Value 0 means not to retry at
-+	all; -1 means to try indefinitely. Default is 1000 (i.e.,
-+	retry for 1 second).
++static int sleep_microseconds(long us)
++{
++	struct timeval tv;
++	tv.tv_sec = 0;
++	tv.tv_usec = us;
++	return select(0, NULL, NULL, NULL, &tv);
++}
 +
- sequence.editor::
- 	Text editor used by `git rebase -i` for editing the rebase instruction file.
- 	The value is meant to be interpreted by the shell when it is used.
-diff --git a/refs.c b/refs.c
-index 47e4e53..3f8ac63 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2413,9 +2413,19 @@ static int write_packed_entry_fn(struct ref_entry *entry, void *cb_data)
- /* This should return a meaningful errno on failure */
- int lock_packed_refs(int flags)
- {
-+	static int timeout_configured = 0;
-+	static int timeout_value = 1000;
++/*
++ * Constants defining the gaps between attempts to lock a file. The
++ * first backoff period is approximately INITIAL_BACKOFF_MS
++ * milliseconds. The longest backoff period is approximately
++ * (BACKOFF_MAX_MULTIPLIER * INITIAL_BACKOFF_MS) milliseconds.
++ */
++#define INITIAL_BACKOFF_MS 1L
++#define BACKOFF_MAX_MULTIPLIER 1000
 +
- 	struct packed_ref_cache *packed_ref_cache;
- 
--	if (hold_lock_file_for_update(&packlock, git_path("packed-refs"), flags) < 0)
-+	if (!timeout_configured) {
-+		git_config_get_int("core.packedrefstimeout", &timeout_value);
-+		timeout_configured = 1;
++/*
++ * Try locking path, retrying with quadratic backoff for at least
++ * timeout_ms milliseconds. If timeout_ms is 0, try locking the file
++ * exactly once. If timeout_ms is -1, try indefinitely.
++ */
++static int lock_file_timeout(struct lock_file *lk, const char *path,
++			     int flags, long timeout_ms)
++{
++	int n = 1;
++	int multiplier = 1;
++	long remaining_us = 0;
++	static int random_initialized = 0;
++
++	if (timeout_ms == 0)
++		return lock_file(lk, path, flags);
++
++	if (!random_initialized) {
++		srandom((unsigned int)getpid());
++		random_initialized = 1;
 +	}
 +
-+	if (hold_lock_file_for_update_timeout(
-+			    &packlock, git_path("packed-refs"),
-+			    flags, timeout_value) < 0)
- 		return -1;
- 	/*
- 	 * Get the current packed-refs while holding the lock.  If the
-diff --git a/t/t3210-pack-refs.sh b/t/t3210-pack-refs.sh
-index aa9eb3a..d18b726 100755
---- a/t/t3210-pack-refs.sh
-+++ b/t/t3210-pack-refs.sh
-@@ -187,4 +187,21 @@ test_expect_success 'notice d/f conflict with existing ref' '
- 	test_must_fail git branch foo/bar/baz/lots/of/extra/components
- '
++	if (timeout_ms > 0) {
++		/* avoid overflow */
++		if (timeout_ms <= LONG_MAX / 1000)
++			remaining_us = timeout_ms * 1000;
++		else
++			remaining_us = LONG_MAX;
++	}
++
++	while (1) {
++		long backoff_ms, wait_us;
++		int fd;
++
++		fd = lock_file(lk, path, flags);
++
++		if (fd >= 0)
++			return fd; /* success */
++		else if (errno != EEXIST)
++			return -1; /* failure other than lock held */
++		else if (timeout_ms > 0 && remaining_us <= 0)
++			return -1; /* failure due to timeout */
++
++		backoff_ms = multiplier * INITIAL_BACKOFF_MS;
++		/* back off for between 0.75*backoff_ms and 1.25*backoff_ms */
++		wait_us = (750 + random() % 500) * backoff_ms;
++		sleep_microseconds(wait_us);
++		remaining_us -= wait_us;
++
++		/* Recursion: (n+1)^2 = n^2 + 2n + 1 */
++		multiplier += 2*n + 1;
++		if (multiplier > BACKOFF_MAX_MULTIPLIER)
++			multiplier = BACKOFF_MAX_MULTIPLIER;
++		else
++			n++;
++	}
++}
++
+ void unable_to_lock_message(const char *path, int err, struct strbuf *buf)
+ {
+ 	if (err == EEXIST) {
+@@ -179,9 +253,10 @@ NORETURN void unable_to_lock_die(const char *path, int err)
+ }
  
-+test_expect_success 'timeout if packed-refs.lock exists' '
-+	LOCK=.git/packed-refs.lock &&
-+	>$LOCK &&
-+	test_when_finished "rm -f $LOCK" &&
-+	test_must_fail git pack-refs --all --prune
-+'
+ /* This should return a meaningful errno on failure */
+-int hold_lock_file_for_update(struct lock_file *lk, const char *path, int flags)
++int hold_lock_file_for_update_timeout(struct lock_file *lk, const char *path,
++				      int flags, long timeout_ms)
+ {
+-	int fd = lock_file(lk, path, flags);
++	int fd = lock_file_timeout(lk, path, flags, timeout_ms);
+ 	if (fd < 0 && (flags & LOCK_DIE_ON_ERROR))
+ 		unable_to_lock_die(path, errno);
+ 	return fd;
+diff --git a/lockfile.h b/lockfile.h
+index cd2ec95..b4abc61 100644
+--- a/lockfile.h
++++ b/lockfile.h
+@@ -74,8 +74,20 @@ struct lock_file {
+ extern void unable_to_lock_message(const char *path, int err,
+ 				   struct strbuf *buf);
+ extern NORETURN void unable_to_lock_die(const char *path, int err);
+-extern int hold_lock_file_for_update(struct lock_file *, const char *path, int);
+-extern int hold_lock_file_for_append(struct lock_file *, const char *path, int);
++extern int hold_lock_file_for_update_timeout(
++		struct lock_file *lk, const char *path,
++		int flags, long timeout_ms);
 +
-+test_expect_success 'retry acquiring packed-refs.lock' '
-+	LOCK=.git/packed-refs.lock &&
-+	>$LOCK &&
-+	test_when_finished "rm -f $LOCK" &&
-+	{
-+		( sleep 1 ; rm -f $LOCK ) &
-+	} &&
-+	git -c core.packedrefstimeout=3000 pack-refs --all --prune
-+'
++static inline int hold_lock_file_for_update(
++		struct lock_file *lk, const char *path,
++		int flags)
++{
++	return hold_lock_file_for_update_timeout(lk, path, flags, 0);
++}
 +
- test_done
++extern int hold_lock_file_for_append(struct lock_file *lk, const char *path,
++				     int flags);
++
+ extern FILE *fdopen_lock_file(struct lock_file *, const char *mode);
+ extern char *get_locked_file_path(struct lock_file *);
+ extern int commit_lock_file_to(struct lock_file *, const char *path);
 -- 
 2.1.4
