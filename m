@@ -1,110 +1,62 @@
-From: "Randall S. Becker" <rsbecker@nexbridge.com>
-Subject: RE: [Test Failure] t5570 - not cloned
-Date: Sat, 2 May 2015 14:24:21 -0400
-Message-ID: <002601d08505$3645d020$a2d17060$@nexbridge.com>
-References: <003901d08420$2b9fd7a0$82df86e0$@nexbridge.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 2/2] lock_packed_refs(): allow retries when acquiring
+ the packed-refs lock
+Date: Sat, 02 May 2015 23:43:33 +0200
+Message-ID: <55454505.9060305@kdbg.org>
+References: <1430491977-25817-1-git-send-email-mhagger@alum.mit.edu> <1430491977-25817-3-git-send-email-mhagger@alum.mit.edu> <5543A621.7010208@kdbg.org> <554448B6.6080605@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "'Joachim Schmitz'" <jojo@schmitz-digital.de>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat May 02 20:24:38 2015
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Sat May 02 23:43:44 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yoc5b-0007dG-HI
-	for gcvg-git-2@plane.gmane.org; Sat, 02 May 2015 20:24:35 +0200
+	id 1YofCJ-00063I-IC
+	for gcvg-git-2@plane.gmane.org; Sat, 02 May 2015 23:43:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751368AbbEBSY3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 May 2015 14:24:29 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:26849 "EHLO
-	elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751273AbbEBSY2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 May 2015 14:24:28 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from pangea (CPE0023eb577e25-CM602ad06c91a7.cpe.net.cable.rogers.com [99.237.128.150])
-	(authenticated bits=0)
-	by elephants.elehost.com (8.14.9/8.14.9) with ESMTP id t42IONop052167
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-	Sat, 2 May 2015 14:24:24 -0400 (EDT)
-	(envelope-from rsbecker@nexbridge.com)
-In-Reply-To: <003901d08420$2b9fd7a0$82df86e0$@nexbridge.com>
-X-Mailer: Microsoft Outlook 15.0
-Thread-Index: AQI3h5g3i++36WcSvG3vcK/aTQh7FJya+Fkw
-Content-Language: en-ca
+	id S1945959AbbEBVni (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 May 2015 17:43:38 -0400
+Received: from bsmtp7.bon.at ([213.33.87.19]:37762 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752121AbbEBVni (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 May 2015 17:43:38 -0400
+Received: from dx.site (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTPSA id 3lfP8Q6bXKz5tlB;
+	Sat,  2 May 2015 23:43:33 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.site (Postfix) with ESMTP id 58F1A5240;
+	Sat,  2 May 2015 23:43:33 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
+In-Reply-To: <554448B6.6080605@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268238>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268239>
 
-On May 1, 2015 11:05 AM, I wrote, in my haste:
-> 
-> Greetings - and asking for a bit of help resolving test failures.
-> 
-> I'm having an issue with t5570 at 2.3.7 which seems to be a regression
-from
-> 2.3.3 (currently installed), but I cannot be sure. This test failed prior
-to
-> 2.3.0 in the box, worked from 2.3.0 to 2.3.3 - suggesting that it may be
-> environmental, not actually in git. Making some assumptions, it looks like
-> the URL for the test repository is not correct and may depend on localhost
-> resolving properly - which DNS does not do well on this box (outside my
-> control, we are multi-home, and localhost does not resolve to 127.0.0.1 or
-> [::1]). Only t5570 #'s 3-5 fail and I found a strange message in the
-output
-> of the test seemingly referring to a bad repo name. I would really
-> appreciate some pointers on where to look next and how to go about
-resolving
-> this. I am happy to try to work through this on 2.4.0 if that would be
-more
-> efficient for the team. Anything relating to git-daemon makes me nervous
-in
-> terms of installing the code.
-> 
-> Platform is HP NonStop (Posix-esque environment):
-> 
-> In the test output:
-> *** t5570-git-daemon.sh ***
-> <snip>
-> not ok 3 - clone git repository
-> #
-> #               git clone "$GIT_DAEMON_URL/repo.git" clone &&
-> #               test_cmp file clone/file
-> #
-> not ok 4 - fetch changes via git protocol
-> #
-> #               echo content >>file &&
-> #               git commit -a -m two &&
-> #               git push public &&
-> #               (cd clone && git pull) &&
-> #               test_cmp file clone/file
-> #
-> not ok 5 - remote detects correct HEAD
-> #
-> #               git push public master:other &&
-> #               (cd clone &&
-> #                git remote set-head -d origin &&
-> #                git remote set-head -a origin &&
-> 
-> And
-> 
-> ../git/t/trash directory.t5570-git-daemon: cat output
-> fatal: remote error: repository not exported: /repo.git
-> 
-> Additional context: t0025, t0301, t3900, t9001, t9020 are not 100% but the
-> issues are acceptable - we can discuss separately.
+Am 02.05.2015 um 05:47 schrieb Michael Haggerty:
+> On 05/01/2015 06:13 PM, Johannes Sixt wrote:
+>> How about this:
+>>
+>>      test_when_finished "wait; rm -f $LOCK" &&
+>>      { sleep 1 & } &&
+>>      ...
+>
+> Thanks for pointing out this problem. Your suggestion seems good. I
+> assume that you didn't intend to omit the "rm -f $LOCK" from the
+> subprocess, because the whole point is for that to happen while "git
+> pack-refs" is running.
 
-We definitely have an issue with localhost. When forcing the resolver to
-return 127.0.0.1, we pass 1-16 then 17 fails as I expected to happen based
-on my DNS futzing. Heads up that this test is not-surprisingly sensitive to
-DNS problems. My environment is still in a messy state where I can reproduce
-the original problem so it might be a useful moment for me to find a way to
-modify the test to harden it. Any suggestion on that score (as in where and
-roughly how you'd like it hardened)?
+I see. So, if git pack-refs works correctly, it waits for the 
+sub-process, and the 'wait' in test_when_finished does not buy a lot. If 
+there is breakage, the trash directory is not attempted to be removed, 
+and it does not matter that a process potentially occupies it. I think 
+your version is good then.
 
-Cheers,
-Randall
+-- Hannes
