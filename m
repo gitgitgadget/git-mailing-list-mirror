@@ -1,88 +1,110 @@
-From: Paul Tan <pyokagan@gmail.com>
-Subject: [PATCH 7/7] t5521: test --dry-run does not make any changes
-Date: Sat,  2 May 2015 23:37:15 +0800
-Message-ID: <1430581035-29464-8-git-send-email-pyokagan@gmail.com>
-References: <1430581035-29464-1-git-send-email-pyokagan@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Stefan Beller <sbeller@google.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Paul Tan <pyokagan@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 02 17:37:57 2015
+From: "Randall S. Becker" <rsbecker@nexbridge.com>
+Subject: RE: [Test Failure] t5570 - not cloned
+Date: Sat, 2 May 2015 14:24:21 -0400
+Message-ID: <002601d08505$3645d020$a2d17060$@nexbridge.com>
+References: <003901d08420$2b9fd7a0$82df86e0$@nexbridge.com>
+Mime-Version: 1.0
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: "'Joachim Schmitz'" <jojo@schmitz-digital.de>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat May 02 20:24:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YoZUJ-0003EP-7s
-	for gcvg-git-2@plane.gmane.org; Sat, 02 May 2015 17:37:55 +0200
+	id 1Yoc5b-0007dG-HI
+	for gcvg-git-2@plane.gmane.org; Sat, 02 May 2015 20:24:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752499AbbEBPhr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 May 2015 11:37:47 -0400
-Received: from mail-pa0-f51.google.com ([209.85.220.51]:34933 "EHLO
-	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752057AbbEBPhp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 May 2015 11:37:45 -0400
-Received: by pabtp1 with SMTP id tp1so119406386pab.2
-        for <git@vger.kernel.org>; Sat, 02 May 2015 08:37:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=oWph2Y+Zeg6DT1IQxiN+Ck9QLqAQTJzARbQLglKJyp0=;
-        b=CcsZGWxJjUYfZ0a0/+VJPTsKQQ+hNH0TJiZnxtEDhXrCYhD8gvYLlH8Exke4v9J38P
-         ADw6+LoYbuDoEK5npD0Vp2xk+j/4xs3mOknuAHV9uDQZyaXTxJ+adhoZly2nOAFeoayO
-         ul8yIqyn/Is55YkXisoihpEZ8MZNCnxug6U1ilhoIRZT4PtL5O4k3aKvB4HzLB5W90z2
-         pGhxdQEm3/Kxgzou4oj9DaB4/y2dqkSroelILwnKFiut93/xTio2buvwkNwTWOg1FBLh
-         wfVKT6FPW2zmW7r9H3/YgBwQ0Rx6Aingg5PF2rlkd1CbxSwDxJXHQAH5yCYltOTssJea
-         +llw==
-X-Received: by 10.66.160.71 with SMTP id xi7mr27256274pab.19.1430581064542;
-        Sat, 02 May 2015 08:37:44 -0700 (PDT)
-Received: from yoshi.pyokagan.tan ([116.86.172.217])
-        by mx.google.com with ESMTPSA id tk9sm7925072pbc.35.2015.05.02.08.37.41
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 02 May 2015 08:37:43 -0700 (PDT)
-X-Mailer: git-send-email 2.1.4
-In-Reply-To: <1430581035-29464-1-git-send-email-pyokagan@gmail.com>
+	id S1751368AbbEBSY3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 May 2015 14:24:29 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:26849 "EHLO
+	elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751273AbbEBSY2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 May 2015 14:24:28 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from pangea (CPE0023eb577e25-CM602ad06c91a7.cpe.net.cable.rogers.com [99.237.128.150])
+	(authenticated bits=0)
+	by elephants.elehost.com (8.14.9/8.14.9) with ESMTP id t42IONop052167
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+	Sat, 2 May 2015 14:24:24 -0400 (EDT)
+	(envelope-from rsbecker@nexbridge.com)
+In-Reply-To: <003901d08420$2b9fd7a0$82df86e0$@nexbridge.com>
+X-Mailer: Microsoft Outlook 15.0
+Thread-Index: AQI3h5g3i++36WcSvG3vcK/aTQh7FJya+Fkw
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268237>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268238>
 
-Test that when --dry-run is provided to git-pull, it does not make any
-changes, namely:
+On May 1, 2015 11:05 AM, I wrote, in my haste:
+> 
+> Greetings - and asking for a bit of help resolving test failures.
+> 
+> I'm having an issue with t5570 at 2.3.7 which seems to be a regression
+from
+> 2.3.3 (currently installed), but I cannot be sure. This test failed prior
+to
+> 2.3.0 in the box, worked from 2.3.0 to 2.3.3 - suggesting that it may be
+> environmental, not actually in git. Making some assumptions, it looks like
+> the URL for the test repository is not correct and may depend on localhost
+> resolving properly - which DNS does not do well on this box (outside my
+> control, we are multi-home, and localhost does not resolve to 127.0.0.1 or
+> [::1]). Only t5570 #'s 3-5 fail and I found a strange message in the
+output
+> of the test seemingly referring to a bad repo name. I would really
+> appreciate some pointers on where to look next and how to go about
+resolving
+> this. I am happy to try to work through this on 2.4.0 if that would be
+more
+> efficient for the team. Anything relating to git-daemon makes me nervous
+in
+> terms of installing the code.
+> 
+> Platform is HP NonStop (Posix-esque environment):
+> 
+> In the test output:
+> *** t5570-git-daemon.sh ***
+> <snip>
+> not ok 3 - clone git repository
+> #
+> #               git clone "$GIT_DAEMON_URL/repo.git" clone &&
+> #               test_cmp file clone/file
+> #
+> not ok 4 - fetch changes via git protocol
+> #
+> #               echo content >>file &&
+> #               git commit -a -m two &&
+> #               git push public &&
+> #               (cd clone && git pull) &&
+> #               test_cmp file clone/file
+> #
+> not ok 5 - remote detects correct HEAD
+> #
+> #               git push public master:other &&
+> #               (cd clone &&
+> #                git remote set-head -d origin &&
+> #                git remote set-head -a origin &&
+> 
+> And
+> 
+> ../git/t/trash directory.t5570-git-daemon: cat output
+> fatal: remote error: repository not exported: /repo.git
+> 
+> Additional context: t0025, t0301, t3900, t9001, t9020 are not 100% but the
+> issues are acceptable - we can discuss separately.
 
-* --dry-run gets passed to git-fetch, so no FETCH_HEAD will be created
-  and no refs will be fetched.
+We definitely have an issue with localhost. When forcing the resolver to
+return 127.0.0.1, we pass 1-16 then 17 fails as I expected to happen based
+on my DNS futzing. Heads up that this test is not-surprisingly sensitive to
+DNS problems. My environment is still in a messy state where I can reproduce
+the original problem so it might be a useful moment for me to find a way to
+modify the test to harden it. Any suggestion on that score (as in where and
+roughly how you'd like it hardened)?
 
-* The index and work tree will not be modified.
-
-Signed-off-by: Paul Tan <pyokagan@gmail.com>
----
- t/t5521-pull-options.sh | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
-
-diff --git a/t/t5521-pull-options.sh b/t/t5521-pull-options.sh
-index 453aba5..7c4d624 100755
---- a/t/t5521-pull-options.sh
-+++ b/t/t5521-pull-options.sh
-@@ -117,4 +117,17 @@ test_expect_success 'git pull --all' '
- 	)
- '
- 
-+test_expect_success 'git pull --dry-run' '
-+	git init clonedry &&
-+	test_when_finished "rm -rf clonedry" &&
-+	(
-+		cd clonedry &&
-+		git pull --dry-run "../parent" &&
-+		test_path_is_missing .git/FETCH_HEAD &&
-+		test_path_is_missing .git/refs/heads/master &&
-+		test_path_is_missing .git/index &&
-+		test_path_is_missing "file"
-+	)
-+'
-+
- test_done
--- 
-2.1.4
+Cheers,
+Randall
