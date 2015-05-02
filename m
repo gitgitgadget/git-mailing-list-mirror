@@ -1,95 +1,67 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
+From: =?windows-1252?Q?S=E9bastien_Guimmara?= 
+	<sebastien.guimmara@gmail.com>
 Subject: Re: [PATCH v2 2/3] git help: group common commands by theme
-Date: Sat, 02 May 2015 13:43:19 +0200
-Message-ID: <87wq0rb3xk.fsf@igel.home>
-References: <554405D5.9080702@gmail.com> <554406FC.8010309@gmail.com>
-	<CAE5ih78xxHj-YZVnNB=kNw5ZOkT1t2dcc5yjiUWemEQpwFQfDw@mail.gmail.com>
+Date: Sat, 02 May 2015 13:52:35 +0200
+Message-ID: <5544BA83.6000506@gmail.com>
+References: <554405D5.9080702@gmail.com> <554406FC.8010309@gmail.com>	<CAE5ih78xxHj-YZVnNB=kNw5ZOkT1t2dcc5yjiUWemEQpwFQfDw@mail.gmail.com> <87wq0rb3xk.fsf@igel.home>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: =?utf-8?Q?S=C3=A9bastien?= Guimmara 
-	<sebastien.guimmara@gmail.com>, Git Users <git@vger.kernel.org>
-To: Luke Diamand <luke@diamand.org>
-X-From: git-owner@vger.kernel.org Sat May 02 13:43:32 2015
+Content-Type: text/plain; charset=windows-1252;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Users <git@vger.kernel.org>
+To: Andreas Schwab <schwab@linux-m68k.org>,
+	Luke Diamand <luke@diamand.org>
+X-From: git-owner@vger.kernel.org Sat May 02 13:52:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YoVpT-0004wT-NF
-	for gcvg-git-2@plane.gmane.org; Sat, 02 May 2015 13:43:32 +0200
+	id 1YoVyU-0003dw-Qt
+	for gcvg-git-2@plane.gmane.org; Sat, 02 May 2015 13:52:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751244AbbEBLnX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 May 2015 07:43:23 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:48181 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750866AbbEBLnW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 May 2015 07:43:22 -0400
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3lf7qr67Vbz3hk39;
-	Sat,  2 May 2015 13:43:20 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 3lf7qr4RQDzvh1m;
-	Sat,  2 May 2015 13:43:20 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
-	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
-	with ESMTP id B6xQMMUz03ks; Sat,  2 May 2015 13:43:19 +0200 (CEST)
-X-Auth-Info: qxVP20jNavuhdnc3yEFhxN/zpmxVGz9XAjFlveV49hua6UNMDfhgawQL6xG6aSsV
-Received: from igel.home (ppp-93-104-92-93.dynamic.mnet-online.de [93.104.92.93])
-	by mail.mnet-online.de (Postfix) with ESMTPA;
-	Sat,  2 May 2015 13:43:19 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 1000)
-	id 81F3A2C4050; Sat,  2 May 2015 13:43:19 +0200 (CEST)
-X-Yow: LOU GRANT froze my ASSETS!!
-In-Reply-To: <CAE5ih78xxHj-YZVnNB=kNw5ZOkT1t2dcc5yjiUWemEQpwFQfDw@mail.gmail.com>
-	(Luke Diamand's message of "Sat, 2 May 2015 07:32:51 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
+	id S1751305AbbEBLwj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 2 May 2015 07:52:39 -0400
+Received: from mail-wi0-f171.google.com ([209.85.212.171]:35441 "EHLO
+	mail-wi0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750866AbbEBLwi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 May 2015 07:52:38 -0400
+Received: by widdi4 with SMTP id di4so75931917wid.0
+        for <git@vger.kernel.org>; Sat, 02 May 2015 04:52:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=rhbzEUvXGFhXjs6qdmrYhjDZEQLPIJsqaBxlSAbKcf8=;
+        b=E1mXwIBhzq84amhb1WAxDOZZCD0r70LRxZDVkYIwIFoZSiB/NnYRUjY31UAe27ue5p
+         nNyW4nKPaJTEkV3tpthrTvGZbY8WYvWLTMSWWnWbYCr5qrP/zzKjWZgM7fNeZ0tD1SLV
+         Y3X+3TfcKIU4NAs1YuZ0r7nnB9FRmYnoaWeiYopwcKSPV8KisLsI2ettnIGQayfOAKmn
+         OIKTPUTF2GNBVzqp6bwM6VpDxAmt8+/QdoHT7AH8oBNEU7fDCfvyryHuLqyHxX91kb7h
+         Aj6uoOpMHdHryK27YMvr2uq45en7Xw4dSPgkaSOsykz3ANxJzZ1Iw1sd2CXAPZQyQ1X4
+         YjVA==
+X-Received: by 10.180.106.131 with SMTP id gu3mr4471267wib.16.1430567557193;
+        Sat, 02 May 2015 04:52:37 -0700 (PDT)
+Received: from [192.168.0.10] (bd231-1-88-176-208-17.fbx.proxad.net. [88.176.208.17])
+        by mx.google.com with ESMTPSA id fo7sm2103757wic.1.2015.05.02.04.52.35
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 02 May 2015 04:52:36 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
+In-Reply-To: <87wq0rb3xk.fsf@igel.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268228>
 
-Luke Diamand <luke@diamand.org> writes:
-
->>  };
->>
->>  static struct cmdname_help common_cmds[] = {"
->>
->> -sed -n -e 's/^git-\([^     ]*\)[     ].* common.*/\1/p' command-list.txt |
->> +sed -n -e 's/^git-\([^     ]*\)[     ].* common-\(.*\)/\1:\2/p'
->> command-list.txt |
->>  sort |
->> -while read cmd
->> +while read line
->>  do
->> +     cmd=`echo $line | cut -d ':' -f 1`
->> +     grp=`echo $line | cut -d ':' -f 2`
+On 05/02/2015 01:43 PM, Andreas Schwab wrote:
+>  or:
 >
-> Should this use $(...) rather than `...` ?
-> i.e.
-> cmd=$(echo $(line | cut -d : -f 1)
+>    sort |
+>    while IFS=3D: read cmd grp
+>    do
+>
+>  Andreas.
 
-There are various ways to do that without a command substitution, eg:
+I believe this is the most legible form, the intention is much clearer.
 
-   cmd=${line%%:*}
-   grp=${line#:*}
-
-or:
-
-   IFS=:
-   set $line
-   cmd=$1 grp=$2
-
-or:
-
-  sort |
-  while IFS=: read cmd grp
-  do
-
-Andreas.
-
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+S=E9bastien
