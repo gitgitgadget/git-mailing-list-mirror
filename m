@@ -1,83 +1,66 @@
 From: Alex Henrie <alexhenrie24@gmail.com>
-Subject: [PATCH] standardize usage strings that were missed the first time
-Date: Fri,  1 May 2015 21:12:21 -0600
-Message-ID: <1430536341-21847-1-git-send-email-alexhenrie24@gmail.com>
+Subject: [PATCH] branch: fix funny-sounding error message
+Date: Fri,  1 May 2015 21:12:40 -0600
+Message-ID: <1430536360-21901-1-git-send-email-alexhenrie24@gmail.com>
 Cc: Alex Henrie <alexhenrie24@gmail.com>
-To: gitster@pobox.com, pclouds@gmail.com, artagnon@gmail.com,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 02 05:12:44 2015
+To: gitster@pobox.com, pclouds@gmail.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 02 05:13:06 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YoNr9-0001ra-O1
-	for gcvg-git-2@plane.gmane.org; Sat, 02 May 2015 05:12:44 +0200
+	id 1YoNrU-0002DU-Sf
+	for gcvg-git-2@plane.gmane.org; Sat, 02 May 2015 05:13:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750845AbbEBDM2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 May 2015 23:12:28 -0400
-Received: from mail-ig0-f171.google.com ([209.85.213.171]:35594 "EHLO
-	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750778AbbEBDM2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 May 2015 23:12:28 -0400
-Received: by igbyr2 with SMTP id yr2so52012561igb.0
-        for <git@vger.kernel.org>; Fri, 01 May 2015 20:12:27 -0700 (PDT)
+	id S1751305AbbEBDMs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 May 2015 23:12:48 -0400
+Received: from mail-ie0-f169.google.com ([209.85.223.169]:35835 "EHLO
+	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750868AbbEBDMr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 May 2015 23:12:47 -0400
+Received: by iejt8 with SMTP id t8so100446071iej.2
+        for <git@vger.kernel.org>; Fri, 01 May 2015 20:12:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id;
-        bh=wD+17LsAu8MSEWKag7l8bFg3ZeEDAbfEtxzZz7NPfFM=;
-        b=yqpnq7n2tUyAstXjCQnTn4QFGey07X2qYhiOZsZVj+ds1PhcOVjZWJ0gNWX3cx7VBY
-         Rsyq16VXXwhAGPPFmTM2s9uWj7yLmK0YuZ2EloNs5lX+EPIt9yL5qCQfLZA78reQXwT0
-         LRAJdI21BreaAE8ENHV30Lt0ZRDfK8Tm2Dd7sElhzflUfyGbyqMHd6pLzrvRIylTaAfz
-         4M+SIAFliwsnv3OfCxv8rgUncEBnlzdl6yMstOIZXmjbXpEnT84M7VTv/8UYaKc5UZKS
-         SgW9X7F8tomzG7QNiNxk4NrXM5ALEeYa8h2N/Pr1Rx6AJ/XXeAVeohhzspdjqhihHRNS
-         gYxQ==
-X-Received: by 10.43.18.194 with SMTP id qh2mr17937654icb.36.1430536347638;
-        Fri, 01 May 2015 20:12:27 -0700 (PDT)
+        bh=11nAjlP9wL4M4K/fT/+pCQnD6MnTaFNC2bUXdkPmA60=;
+        b=TMV7lZOvWKs4rY9B7zLZwWzQ/+wHt5Lsti6TRu5Qw423v53TKYalAxPG5xb2o3YPon
+         +1UO2+pYDkbkUa6Mp5jEZdKD+R6SXzz8PInM4KaFTYruNPHL4NElwLYfzASXEtI598WY
+         JNtEqsY1WMBLbUd/D8j6aypIAnLj7xkPOJLAtrYjzhZXNf9HhaAE7rpP47Y4+tr7YpOU
+         P7ShcPhbWjoS166yP0FtPvk4jVRTup+NC3hZNlHP8stkzZHqEcXVcHf6KNEU5nTxwnC3
+         IUSCMVQA8mm4/kCaaSDtObU8j4tpVS79adbDYBFCqQhOg3fZK3/A4sD9WRxp7dEHWktH
+         veRw==
+X-Received: by 10.107.9.67 with SMTP id j64mr8199605ioi.39.1430536365965;
+        Fri, 01 May 2015 20:12:45 -0700 (PDT)
 Received: from localhost.localdomain (c-98-202-141-117.hsd1.ut.comcast.net. [98.202.141.117])
-        by mx.google.com with ESMTPSA id d15sm352353igo.8.2015.05.01.20.12.25
+        by mx.google.com with ESMTPSA id 37sm4814107ioj.0.2015.05.01.20.12.44
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 01 May 2015 20:12:26 -0700 (PDT)
+        Fri, 01 May 2015 20:12:44 -0700 (PDT)
 X-Mailer: git-send-email 2.3.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268213>
-
-This is a follow-up to commit 9c9b4f2f8b7f27f3984e80d053106d5d41cbb03b.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268214>
 
 Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
 ---
- builtin/blame.c | 2 +-
- builtin/log.c   | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ builtin/branch.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 06484c2..0b2f4ed 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -27,7 +27,7 @@
- #include "line-range.h"
- #include "line-log.h"
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 1d15037..c0b4bae 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -972,7 +972,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
  
--static char blame_usage[] = N_("git blame [<options>] [<rev-opts>] [<rev>] [--] file");
-+static char blame_usage[] = N_("git blame [<options>] [<rev-opts>] [<rev>] [--] <file>");
- 
- static const char *blame_opt_usage[] = {
- 	blame_usage,
-diff --git a/builtin/log.c b/builtin/log.c
-index dd8f3fc..4c4e6be 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -38,7 +38,7 @@ static const char *fmt_patch_subject_prefix = "PATCH";
- static const char *fmt_pretty;
- 
- static const char * const builtin_log_usage[] = {
--	N_("git log [<options>] [<revision range>] [[--] <path>...]"),
-+	N_("git log [<options>] [<revision-range>] [[--] <path>...]"),
- 	N_("git show [<options>] <object>..."),
- 	NULL
- };
+ 		if (!branch) {
+ 			if (!argc || !strcmp(argv[0], "HEAD"))
+-				die(_("could not set upstream of HEAD to %s when "
++				die(_("could not set upstream of HEAD to %s because "
+ 				      "it does not point to any branch."),
+ 				    new_upstream);
+ 			die(_("no such branch '%s'"), argv[0]);
 -- 
 2.3.7
