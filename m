@@ -1,73 +1,108 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: [PATCH] gitk: Remove mc parameter from proc show_error
-Date: Sat, 2 May 2015 20:05:13 +1000
-Message-ID: <20150502100513.GA19038@iris.ozlabs.ibm.com>
-References: <1430536400-22008-1-git-send-email-alexhenrie24@gmail.com>
+From: =?UTF-8?B?U8OpYmFzdGllbiBHdWltbWFyYQ==?= 
+	<sebastien.guimmara@gmail.com>
+Subject: Re: [PATCH v2 2/3] git help: group common commands by theme
+Date: Sat, 02 May 2015 13:09:13 +0200
+Message-ID: <5544B059.20901@gmail.com>
+References: <554405D5.9080702@gmail.com>	<554406FC.8010309@gmail.com> <CAE5ih78xxHj-YZVnNB=kNw5ZOkT1t2dcc5yjiUWemEQpwFQfDw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: bernt@norang.ca, git@vger.kernel.org
-To: Alex Henrie <alexhenrie24@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 02 12:36:01 2015
+Content-Type: text/plain; charset=utf-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 02 13:09:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YoUm6-0003vl-7M
-	for gcvg-git-2@plane.gmane.org; Sat, 02 May 2015 12:35:58 +0200
+	id 1YoVIP-0004Ed-MI
+	for gcvg-git-2@plane.gmane.org; Sat, 02 May 2015 13:09:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751189AbbEBKfx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 May 2015 06:35:53 -0400
-Received: from ozlabs.org ([103.22.144.67]:50968 "EHLO ozlabs.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751150AbbEBKfw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 May 2015 06:35:52 -0400
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id A7FE2140310; Sat,  2 May 2015 20:35:51 +1000 (AEST)
-Content-Disposition: inline
-In-Reply-To: <1430536400-22008-1-git-send-email-alexhenrie24@gmail.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1751502AbbEBLJR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 2 May 2015 07:09:17 -0400
+Received: from mail-wi0-f170.google.com ([209.85.212.170]:35106 "EHLO
+	mail-wi0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751159AbbEBLJQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 May 2015 07:09:16 -0400
+Received: by widdi4 with SMTP id di4so75273169wid.0
+        for <git@vger.kernel.org>; Sat, 02 May 2015 04:09:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:subject:references
+         :in-reply-to:content-type:content-transfer-encoding;
+        bh=Kl/zmcYkULkWiluKBfc9AMXedSfqpqLpKPwoJp6CkhQ=;
+        b=jl9rCr89Xtmrhia9nmlIrLTf6An752LTfItF2Uqy2MGhsPDluR/9Hw9Zf10HaxVAz6
+         fQeJGlRsP+XAxk4LqZuVXK6XsekMhjZ7NOusQsn7+QqvShizEnF5ZXkjcnF1fbEnj1mu
+         RBfPwhPZYR7fBmWycP0pBMmoTWQXKrhc0gYb3i/41NcljUm1XKb0spgT5v/bN2CWul3O
+         45dvIEeDRkMwWZauA+vESamb+pSSxwvQWpt3jvtGgMAhYOnHm3fUT6zY0yG7juryKWpA
+         4yfqNZIMcRx1G+ivGtC/lVC1y2GWAVMXRpoV3KveEQ0oS/CTtrLiEMcKr9/3Ee9kTgpp
+         mPCw==
+X-Received: by 10.180.74.238 with SMTP id x14mr4260848wiv.81.1430564954980;
+        Sat, 02 May 2015 04:09:14 -0700 (PDT)
+Received: from [192.168.0.15] (bd231-1-88-176-208-17.fbx.proxad.net. [88.176.208.17])
+        by mx.google.com with ESMTPSA id hu1sm1951326wib.6.2015.05.02.04.09.13
+        for <git@vger.kernel.org>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 02 May 2015 04:09:14 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
+In-Reply-To: <CAE5ih78xxHj-YZVnNB=kNw5ZOkT1t2dcc5yjiUWemEQpwFQfDw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268225>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268226>
 
-On Fri, May 01, 2015 at 09:13:20PM -0600, Alex Henrie wrote:
-> This is a better fix for 8d849957d81fc0480a52570d66cc3c2a688ecb1b.
-> 
-> All that was required to fix the original issue was to remove the extra
-> mc call, i.e. change [mc "Sorry, gitk cannot run..."] to simply
-> "Sorry, gitk cannot run..." Changing the signature of proc show_error
-> was unnecessary and introduced two new bugs: It made "OK" untranslatable
-> and "mc" translatable when the opposite should be true.
-> 
-> This new fix makes the string "OK" translatable and the string "mc" not
-> translatable, while leaving the string "Sorry, gitk cannot run..." not
-> translatable. It will take effect the next time `make update-po` is run.
+Hello,
 
-To test this, I changed {package require Tk 8.4} to {package require
-Tk 8.7}, in order to deliberately trigger the error.  When I run gitk
-with that change (and your patch applied), I get this in the xterm
-where I run gitk:
+On 05/02/2015 08:32 AM, Luke Diamand wrote:
+>> Signed-off by S=C3=A9bastien Guimmara <sebastien.guimmara@gmail.com>
+>> ---
+>>   generate-cmdlist.sh | 9 ++++++---
+>>   1 file changed, 6 insertions(+), 3 deletions(-)
+>>
+>>
+>> diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
+>> index 9a4c9b9..818b2f3 100755
+>> --- a/generate-cmdlist.sh
+>> +++ b/generate-cmdlist.sh
+>> @@ -4,19 +4,22 @@ echo "/* Automatically generated by $0 */
+>>   struct cmdname_help {
+>>       char name[16];
+>>       char help[80];
+>> +    char group[20];
+> Is 20 chars long enough? git-p4 shows up as "foreignscminterface"
+> which is pretty close to that limit.
 
-$ ./gitk
-Error in startup script: invalid command name "mc"
-    while executing
-"mc OK"
-    (procedure "show_error" line 7)
-    invoked from within
-"show_error {} . "Sorry, gitk cannot run with this version of Tcl/Tk.\n Gitk requires at least Tcl/Tk 8.4.""
-    invoked from within
-"if {[catch {package require Tk 8.7} err]} {
-    show_error {} . "Sorry, gitk cannot run with this version of Tcl/Tk.\n\
-                     Gitk requires at least ..."
-    (file "./gitk" line 12012)
+This 'foreignscminterface' is actually a category in the 2nd column
+of the file (like 'porcelain'). It is unrelated to common command
+groups (3rd column). Since those group names are not meant to be printe=
+d,
+I guess it is sufficient to keep them short.
+>>   };
+>>
+>>   static struct cmdname_help common_cmds[] =3D {"
+>>
+>> -sed -n -e 's/^git-\([^     ]*\)[     ].* common.*/\1/p' command-lis=
+t.txt |
+>> +sed -n -e 's/^git-\([^     ]*\)[     ].* common-\(.*\)/\1:\2/p'
+>> command-list.txt |
+>>   sort |
+>> -while read cmd
+>> +while read line
+>>   do
+>> +     cmd=3D`echo $line | cut -d ':' -f 1`
+>> +     grp=3D`echo $line | cut -d ':' -f 2`
+> Should this use $(...) rather than `...` ?
+> i.e.
+> cmd=3D$(echo $(line | cut -d : -f 1)
+>
+> (And I don't think you need the quotes around the ':'.
+>
+> Luke
+Indeed, the quotes are unnecessary and $(...) seems to be more
+appropriate too.
+I'll update the patch.
 
-and no pop-up window.  So this patch still isn't quite right.
+Thank you,
 
-Given that old versions of tcl/tk probably don't have [mc], I think
-it's inevitable that "OK" will have to be untranslated for that
-particular error path.
-
-Paul.
+S=C3=A9bastien
