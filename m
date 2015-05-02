@@ -1,105 +1,88 @@
-From: =?windows-1252?Q?S=E9bastien_Guimmara?= 
-	<sebastien.guimmara@gmail.com>
-Subject: Re: [PATCH v2 2/3] git help: group common commands by theme
-Date: Sat, 02 May 2015 16:18:11 +0200
-Message-ID: <5544DCA3.6000704@gmail.com>
-References: <554405D5.9080702@gmail.com> <554406FC.8010309@gmail.com>	<CAE5ih78xxHj-YZVnNB=kNw5ZOkT1t2dcc5yjiUWemEQpwFQfDw@mail.gmail.com> <87wq0rb3xk.fsf@igel.home>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Users <git@vger.kernel.org>, sebastien.guimmara@gmail.com
-To: Andreas Schwab <schwab@linux-m68k.org>,
-	Luke Diamand <luke@diamand.org>
-X-From: git-owner@vger.kernel.org Sat May 02 16:18:23 2015
+From: Paul Tan <pyokagan@gmail.com>
+Subject: [PATCH 1/7] t5520: test pulling multiple branches into an empty repository
+Date: Sat,  2 May 2015 23:37:09 +0800
+Message-ID: <1430581035-29464-2-git-send-email-pyokagan@gmail.com>
+References: <1430581035-29464-1-git-send-email-pyokagan@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Stefan Beller <sbeller@google.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Paul Tan <pyokagan@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 02 17:37:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YoYFJ-0003Gb-PD
-	for gcvg-git-2@plane.gmane.org; Sat, 02 May 2015 16:18:22 +0200
+	id 1YoZTy-0002wB-Qy
+	for gcvg-git-2@plane.gmane.org; Sat, 02 May 2015 17:37:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751683AbbEBOSQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 2 May 2015 10:18:16 -0400
-Received: from mail-wi0-f180.google.com ([209.85.212.180]:37721 "EHLO
-	mail-wi0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751159AbbEBOSP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 May 2015 10:18:15 -0400
-Received: by widdi4 with SMTP id di4so71288992wid.0
-        for <git@vger.kernel.org>; Sat, 02 May 2015 07:18:14 -0700 (PDT)
+	id S1752325AbbEBPh1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 May 2015 11:37:27 -0400
+Received: from mail-pa0-f47.google.com ([209.85.220.47]:34265 "EHLO
+	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752268AbbEBPh1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 May 2015 11:37:27 -0400
+Received: by pacyx8 with SMTP id yx8so119395331pac.1
+        for <git@vger.kernel.org>; Sat, 02 May 2015 08:37:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=VRhdBrQb+bcfMUse4Ui161VnB9INlNjFHCtG+89xCGI=;
-        b=ti4zr3OIqUunvZ4XL3CYA5VcZZvXzIbVR1TvWYwv63ojnbRzNMlhET9BhclfIp9ohO
-         IbuO9keRco+EGxT7UJWCik0lVgpqFtcPxwRz4vfx7FUgzWvIz+EttcITpgwHh3lhn7Ia
-         OQ66Jz/RpN11eiAX/R4gMQCmF1KxywbEjjSbHKqFE3xEerf6cfoTgAcMq4AYjB6cpXNd
-         QSb+9ZxyBk8rejWF0k3M8yjPx+1c3eQV8c+u5svDLsaejXIXlAiH/LMIWaCrpv41KP37
-         3hzTGgsClbGHugozXxTMhOcT/mKzRsRbZtzsBmHMsDgsWf1tW23yFSg3Srjj3d/kPRq4
-         /BjA==
-X-Received: by 10.194.118.135 with SMTP id km7mr26123789wjb.125.1430576294016;
-        Sat, 02 May 2015 07:18:14 -0700 (PDT)
-Received: from [192.168.0.10] (bd231-1-88-176-208-17.fbx.proxad.net. [88.176.208.17])
-        by mx.google.com with ESMTPSA id i13sm2545861wic.13.2015.05.02.07.18.12
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 02 May 2015 07:18:13 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
-In-Reply-To: <87wq0rb3xk.fsf@igel.home>
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=2NVQ4UUBJEkuJIUQGFXySNtSRVQscSqV5Ttt0x2rB00=;
+        b=onL7/81UCsMqB9JsmTf1ygsAfQvWolhwIrxNmqHESOaUaWpQzO1pQ3JLi3kHBIG8S9
+         UWAZ21sEMG/W0MBjRanC8heOasD95U2qe8N2OPggJ01om64wE/EJEz0iTnFSqLtF7/tP
+         uz5muulyb1xDufwctwwM6GPbOhN/X6+KsoBb/veeep2xMv4jMMBNWNYR9uu3VnIbE3qj
+         RhIRIeGWNazSoACCt7NpKki6RRYH/3oufLkzUose4rRRgUIZ9iYtYf1BWR6Ab1L7MJgx
+         oyqhEMDzJwgzSFIzCqfch7DqHYt7sSy8EA0mD1KzDWL0yNc5+AlZUMBCIInao4rVxbt/
+         AhCg==
+X-Received: by 10.66.62.227 with SMTP id b3mr27480809pas.65.1430581046572;
+        Sat, 02 May 2015 08:37:26 -0700 (PDT)
+Received: from yoshi.pyokagan.tan ([116.86.172.217])
+        by mx.google.com with ESMTPSA id tk9sm7925072pbc.35.2015.05.02.08.37.23
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sat, 02 May 2015 08:37:25 -0700 (PDT)
+X-Mailer: git-send-email 2.1.4
+In-Reply-To: <1430581035-29464-1-git-send-email-pyokagan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268230>
 
-extract the $grp shell variable from command-list.txt (eg:=20
-'common-3_worktree') and add
-this value to the output:
+Commit d09e79cb ("allow pulling into an empty repository") introduced
+the ability to pull into an empty head. As pulling in multiple branches
+does not make sense in this context, git-pull explicitly fails when
+there is an empty head and multiple branches are specified.
 
-before/after:
-{"add", N_("Add file contents to the index")}
-{"add", N_("Add file contents to the index"), "3_worktree"}
+Add a test to ensure that this safeguard works.
 
-When 'git help' is called, the displayed commands can be grouped by the=
-me
-instead of a less useful alphabetical order.
-
-Signed-off by: S=E9bastien Guimmara <sebastien.guimmara@gmail.com>
+Signed-off-by: Paul Tan <pyokagan@gmail.com>
 ---
-  generate-cmdlist.sh | 7 ++++---
-  1 file changed, 4 insertions(+), 3 deletions(-)
+ t/t5520-pull.sh | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
-index 9a4c9b9..98f937b 100755
---- a/generate-cmdlist.sh
-+++ b/generate-cmdlist.sh
-@@ -4,19 +4,20 @@ echo "/* Automatically generated by $0 */
-  struct cmdname_help {
-      char name[16];
-      char help[80];
-+    char group[20];
-  };
-
-  static struct cmdname_help common_cmds[] =3D {"
-
--sed -n -e 's/^git-\([^     ]*\)[     ].* common.*/\1/p' command-list.t=
-xt |
-+sed -n -e 's/^git-\([^     ]*\)[     ].* common-\(.*\)/\1:\2/p'=20
-command-list.txt |
-  sort |
--while read cmd
-+while IFS=3D: read cmd grp
-  do
-       sed -n '
-       /^NAME/,/git-'"$cmd"'/H
-       ${
-          x
--        s/.*git-'"$cmd"' - \(.*\)/  {"'"$cmd"'", N_("\1")},/
-+        s/.*git-'"$cmd"' - \(.*\)/  {"'"$cmd"'", N_("\1"), "'"$grp"'"}=
-,/
-          p
-       }' "Documentation/git-$cmd.txt"
-  done
---=20
-2.4.0
+diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
+index 227d293..01ae1bf 100755
+--- a/t/t5520-pull.sh
++++ b/t/t5520-pull.sh
+@@ -86,6 +86,18 @@ test_expect_success 'pulling into void does not remove new staged files' '
+ 	)
+ '
+ 
++test_expect_success 'refuse to pull multiple branches into void' '
++	git branch test master &&
++	test_when_finished "git branch -D test" &&
++	git init cloned-multiple-branches &&
++	test_when_finished "rm -rf cloned-multiple-branches" &&
++	(
++		cd cloned-multiple-branches &&
++		test_must_fail git pull .. master test 2>out &&
++		test_i18ngrep "Cannot merge multiple branches into empty head" out
++	)
++'
++
+ test_expect_success 'test . as a remote' '
+ 
+ 	git branch copy master &&
+-- 
+2.1.4
