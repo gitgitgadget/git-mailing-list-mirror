@@ -1,66 +1,66 @@
 From: Alex Henrie <alexhenrie24@gmail.com>
-Subject: [PATCH] branch: fix funny-sounding error message
-Date: Fri,  1 May 2015 21:12:40 -0600
-Message-ID: <1430536360-21901-1-git-send-email-alexhenrie24@gmail.com>
+Subject: [PATCH] gitk: Fix bad English grammar "Matches none Commit Info"
+Date: Fri,  1 May 2015 21:13:06 -0600
+Message-ID: <1430536386-21959-1-git-send-email-alexhenrie24@gmail.com>
 Cc: Alex Henrie <alexhenrie24@gmail.com>
-To: gitster@pobox.com, pclouds@gmail.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 02 05:13:06 2015
+To: paulus@samba.org, ottxor@gentoo.org, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 02 05:13:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YoNrU-0002DU-Sf
-	for gcvg-git-2@plane.gmane.org; Sat, 02 May 2015 05:13:05 +0200
+	id 1YoNri-0002Qk-Bz
+	for gcvg-git-2@plane.gmane.org; Sat, 02 May 2015 05:13:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751305AbbEBDMs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 May 2015 23:12:48 -0400
-Received: from mail-ie0-f169.google.com ([209.85.223.169]:35835 "EHLO
-	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750868AbbEBDMr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 May 2015 23:12:47 -0400
-Received: by iejt8 with SMTP id t8so100446071iej.2
-        for <git@vger.kernel.org>; Fri, 01 May 2015 20:12:46 -0700 (PDT)
+	id S1751319AbbEBDNO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 May 2015 23:13:14 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:36334 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750868AbbEBDNN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 May 2015 23:13:13 -0400
+Received: by iebrs15 with SMTP id rs15so100426360ieb.3
+        for <git@vger.kernel.org>; Fri, 01 May 2015 20:13:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id;
-        bh=11nAjlP9wL4M4K/fT/+pCQnD6MnTaFNC2bUXdkPmA60=;
-        b=TMV7lZOvWKs4rY9B7zLZwWzQ/+wHt5Lsti6TRu5Qw423v53TKYalAxPG5xb2o3YPon
-         +1UO2+pYDkbkUa6Mp5jEZdKD+R6SXzz8PInM4KaFTYruNPHL4NElwLYfzASXEtI598WY
-         JNtEqsY1WMBLbUd/D8j6aypIAnLj7xkPOJLAtrYjzhZXNf9HhaAE7rpP47Y4+tr7YpOU
-         P7ShcPhbWjoS166yP0FtPvk4jVRTup+NC3hZNlHP8stkzZHqEcXVcHf6KNEU5nTxwnC3
-         IUSCMVQA8mm4/kCaaSDtObU8j4tpVS79adbDYBFCqQhOg3fZK3/A4sD9WRxp7dEHWktH
-         veRw==
-X-Received: by 10.107.9.67 with SMTP id j64mr8199605ioi.39.1430536365965;
-        Fri, 01 May 2015 20:12:45 -0700 (PDT)
+        bh=Tdp8olLdzCnoVJHtmJK8kUZ6GOyNFb3N1j4I2vYHY9U=;
+        b=xxRZqM1TKUjB/DiTVgWsTPWizdbnc2reA4PE+v9CuHxoBosQ1QpW6t8k0k3xXJ83tB
+         4UgiYzpQCkQ2oge0QB9PBBqiKDf0yErcv5MIKnGLoCOmjXn+Gim/5Ivhkf3SUNSdnDNU
+         WbLzrtZ7zgIFWNhFynDd+BylD4ELXmBsgfP6P4L1nlU8uDZdzXwg11ZI1dl00uoyId3g
+         ZpwFDIsI3yutlx1gQC7gsMvfZQyAu7+xSxBKQSAyHkWh99TaL20zD+894pjsHF0H8Grj
+         DC/R7+n90ToJiAJvgaiHi67NwkHoGF2W8LU7BvmO6dtMHHCCfsa9Z+FmNV4O6hRBKXJa
+         3O2g==
+X-Received: by 10.50.6.37 with SMTP id x5mr1214172igx.45.1430536392325;
+        Fri, 01 May 2015 20:13:12 -0700 (PDT)
 Received: from localhost.localdomain (c-98-202-141-117.hsd1.ut.comcast.net. [98.202.141.117])
-        by mx.google.com with ESMTPSA id 37sm4814107ioj.0.2015.05.01.20.12.44
+        by mx.google.com with ESMTPSA id n6sm348826igx.10.2015.05.01.20.13.10
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 01 May 2015 20:12:44 -0700 (PDT)
+        Fri, 01 May 2015 20:13:11 -0700 (PDT)
 X-Mailer: git-send-email 2.3.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268214>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268215>
 
 Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
 ---
- builtin/branch.c | 2 +-
+ gitk | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 1d15037..c0b4bae 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -972,7 +972,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 
- 		if (!branch) {
- 			if (!argc || !strcmp(argv[0], "HEAD"))
--				die(_("could not set upstream of HEAD to %s when "
-+				die(_("could not set upstream of HEAD to %s because "
- 				      "it does not point to any branch."),
- 				    new_upstream);
- 			die(_("no such branch '%s'"), argv[0]);
+diff --git a/gitk b/gitk
+index 9a2daf3..30fcd30 100755
+--- a/gitk
++++ b/gitk
+@@ -4066,7 +4066,7 @@ set known_view_options {
+     {committer t15  .  "--committer=*"  {mc "Committer:"}}
+     {loginfo   t15  .. "--grep=*"       {mc "Commit Message:"}}
+     {allmatch  b    .. "--all-match"    {mc "Matches all Commit Info criteria"}}
+-    {igrep     b    .. "--invert-grep"  {mc "Matches none Commit Info criteria"}}
++    {igrep     b    .. "--invert-grep"  {mc "Matches no Commit Info criteria"}}
+     {changes_l l    +  {}               {mc "Changes to Files:"}}
+     {pickaxe_s r0   .  {}               {mc "Fixed String"}}
+     {pickaxe_t r1   .  "--pickaxe-regex"  {mc "Regular Expression"}}
 -- 
 2.3.7
