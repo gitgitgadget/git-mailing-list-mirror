@@ -1,67 +1,105 @@
 From: =?windows-1252?Q?S=E9bastien_Guimmara?= 
 	<sebastien.guimmara@gmail.com>
 Subject: Re: [PATCH v2 2/3] git help: group common commands by theme
-Date: Sat, 02 May 2015 13:52:35 +0200
-Message-ID: <5544BA83.6000506@gmail.com>
+Date: Sat, 02 May 2015 16:18:11 +0200
+Message-ID: <5544DCA3.6000704@gmail.com>
 References: <554405D5.9080702@gmail.com> <554406FC.8010309@gmail.com>	<CAE5ih78xxHj-YZVnNB=kNw5ZOkT1t2dcc5yjiUWemEQpwFQfDw@mail.gmail.com> <87wq0rb3xk.fsf@igel.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=windows-1252;
 	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Users <git@vger.kernel.org>
+Cc: Git Users <git@vger.kernel.org>, sebastien.guimmara@gmail.com
 To: Andreas Schwab <schwab@linux-m68k.org>,
 	Luke Diamand <luke@diamand.org>
-X-From: git-owner@vger.kernel.org Sat May 02 13:52:52 2015
+X-From: git-owner@vger.kernel.org Sat May 02 16:18:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YoVyU-0003dw-Qt
-	for gcvg-git-2@plane.gmane.org; Sat, 02 May 2015 13:52:51 +0200
+	id 1YoYFJ-0003Gb-PD
+	for gcvg-git-2@plane.gmane.org; Sat, 02 May 2015 16:18:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751305AbbEBLwj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 2 May 2015 07:52:39 -0400
-Received: from mail-wi0-f171.google.com ([209.85.212.171]:35441 "EHLO
-	mail-wi0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750866AbbEBLwi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 May 2015 07:52:38 -0400
-Received: by widdi4 with SMTP id di4so75931917wid.0
-        for <git@vger.kernel.org>; Sat, 02 May 2015 04:52:37 -0700 (PDT)
+	id S1751683AbbEBOSQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 2 May 2015 10:18:16 -0400
+Received: from mail-wi0-f180.google.com ([209.85.212.180]:37721 "EHLO
+	mail-wi0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751159AbbEBOSP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 May 2015 10:18:15 -0400
+Received: by widdi4 with SMTP id di4so71288992wid.0
+        for <git@vger.kernel.org>; Sat, 02 May 2015 07:18:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=message-id:date:from:user-agent:mime-version:to:cc:subject
          :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=rhbzEUvXGFhXjs6qdmrYhjDZEQLPIJsqaBxlSAbKcf8=;
-        b=E1mXwIBhzq84amhb1WAxDOZZCD0r70LRxZDVkYIwIFoZSiB/NnYRUjY31UAe27ue5p
-         nNyW4nKPaJTEkV3tpthrTvGZbY8WYvWLTMSWWnWbYCr5qrP/zzKjWZgM7fNeZ0tD1SLV
-         Y3X+3TfcKIU4NAs1YuZ0r7nnB9FRmYnoaWeiYopwcKSPV8KisLsI2ettnIGQayfOAKmn
-         OIKTPUTF2GNBVzqp6bwM6VpDxAmt8+/QdoHT7AH8oBNEU7fDCfvyryHuLqyHxX91kb7h
-         Aj6uoOpMHdHryK27YMvr2uq45en7Xw4dSPgkaSOsykz3ANxJzZ1Iw1sd2CXAPZQyQ1X4
-         YjVA==
-X-Received: by 10.180.106.131 with SMTP id gu3mr4471267wib.16.1430567557193;
-        Sat, 02 May 2015 04:52:37 -0700 (PDT)
+        bh=VRhdBrQb+bcfMUse4Ui161VnB9INlNjFHCtG+89xCGI=;
+        b=ti4zr3OIqUunvZ4XL3CYA5VcZZvXzIbVR1TvWYwv63ojnbRzNMlhET9BhclfIp9ohO
+         IbuO9keRco+EGxT7UJWCik0lVgpqFtcPxwRz4vfx7FUgzWvIz+EttcITpgwHh3lhn7Ia
+         OQ66Jz/RpN11eiAX/R4gMQCmF1KxywbEjjSbHKqFE3xEerf6cfoTgAcMq4AYjB6cpXNd
+         QSb+9ZxyBk8rejWF0k3M8yjPx+1c3eQV8c+u5svDLsaejXIXlAiH/LMIWaCrpv41KP37
+         3hzTGgsClbGHugozXxTMhOcT/mKzRsRbZtzsBmHMsDgsWf1tW23yFSg3Srjj3d/kPRq4
+         /BjA==
+X-Received: by 10.194.118.135 with SMTP id km7mr26123789wjb.125.1430576294016;
+        Sat, 02 May 2015 07:18:14 -0700 (PDT)
 Received: from [192.168.0.10] (bd231-1-88-176-208-17.fbx.proxad.net. [88.176.208.17])
-        by mx.google.com with ESMTPSA id fo7sm2103757wic.1.2015.05.02.04.52.35
+        by mx.google.com with ESMTPSA id i13sm2545861wic.13.2015.05.02.07.18.12
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 02 May 2015 04:52:36 -0700 (PDT)
+        Sat, 02 May 2015 07:18:13 -0700 (PDT)
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
 In-Reply-To: <87wq0rb3xk.fsf@igel.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268228>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268229>
 
-On 05/02/2015 01:43 PM, Andreas Schwab wrote:
->  or:
->
->    sort |
->    while IFS=3D: read cmd grp
->    do
->
->  Andreas.
+extract the $grp shell variable from command-list.txt (eg:=20
+'common-3_worktree') and add
+this value to the output:
 
-I believe this is the most legible form, the intention is much clearer.
+before/after:
+{"add", N_("Add file contents to the index")}
+{"add", N_("Add file contents to the index"), "3_worktree"}
 
-S=E9bastien
+When 'git help' is called, the displayed commands can be grouped by the=
+me
+instead of a less useful alphabetical order.
+
+Signed-off by: S=E9bastien Guimmara <sebastien.guimmara@gmail.com>
+---
+  generate-cmdlist.sh | 7 ++++---
+  1 file changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
+index 9a4c9b9..98f937b 100755
+--- a/generate-cmdlist.sh
++++ b/generate-cmdlist.sh
+@@ -4,19 +4,20 @@ echo "/* Automatically generated by $0 */
+  struct cmdname_help {
+      char name[16];
+      char help[80];
++    char group[20];
+  };
+
+  static struct cmdname_help common_cmds[] =3D {"
+
+-sed -n -e 's/^git-\([^     ]*\)[     ].* common.*/\1/p' command-list.t=
+xt |
++sed -n -e 's/^git-\([^     ]*\)[     ].* common-\(.*\)/\1:\2/p'=20
+command-list.txt |
+  sort |
+-while read cmd
++while IFS=3D: read cmd grp
+  do
+       sed -n '
+       /^NAME/,/git-'"$cmd"'/H
+       ${
+          x
+-        s/.*git-'"$cmd"' - \(.*\)/  {"'"$cmd"'", N_("\1")},/
++        s/.*git-'"$cmd"' - \(.*\)/  {"'"$cmd"'", N_("\1"), "'"$grp"'"}=
+,/
+          p
+       }' "Documentation/git-$cmd.txt"
+  done
+--=20
+2.4.0
