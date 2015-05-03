@@ -1,120 +1,67 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 2/4] generate-cmdlist.sh: parse common command groups
-Date: Sun, 03 May 2015 10:55:10 -0700
-Message-ID: <xmqqpp6hv94x.fsf@gitster.dls.corp.google.com>
-References: <554405D5.9080702@gmail.com> <55456990.6000509@gmail.com>
-	<55456A40.80806@gmail.com>
+Subject: Re: [Patch] Added http-protocol for git in the Documentation folder
+Date: Sun, 03 May 2015 10:56:52 -0700
+Message-ID: <xmqqlhh5v923.fsf@gitster.dls.corp.google.com>
+References: <CAKB+oNsPzoBRUn6rD3Bb8soHEub3quT76MB25KyWfcEC1smdJg@mail.gmail.com>
+	<CAPig+cSJWdrS-bBXcHE5ZmpZ3Aj8tKehXgFan6=4qxzrNKG8zA@mail.gmail.com>
+	<CAPig+cTVMhSwQ_z15GLCn6AmAsm6Pv0RJuGxpVg2CnX8whp8Yw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Luke Diamand <luke@diamand.org>,
-	Andreas Schwab <schwab@linux-m68k.org>
-To: =?utf-8?Q?S=C3=A9bastien?= Guimmara <sebastien.guimmara@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 03 19:55:19 2015
+Content-Type: text/plain
+Cc: Alangi Derick <alangiderick@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Sun May 03 19:57:09 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yoy6p-000526-0A
-	for gcvg-git-2@plane.gmane.org; Sun, 03 May 2015 19:55:19 +0200
+	id 1Yoy8Z-0006Mv-5O
+	for gcvg-git-2@plane.gmane.org; Sun, 03 May 2015 19:57:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751399AbbECRzP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 May 2015 13:55:15 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:56987 "EHLO
+	id S1751454AbbECR45 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 May 2015 13:56:57 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:53865 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750989AbbECRzM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 3 May 2015 13:55:12 -0400
+	with ESMTP id S1751409AbbECR4y (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 May 2015 13:56:54 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 15BD14C19A;
-	Sun,  3 May 2015 13:55:12 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 248A74C243;
+	Sun,  3 May 2015 13:56:54 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=qMU5X+AuR3FN
-	bqWV+fyy1P1+XZg=; b=xeebaSxZ6TJgTJ7aNYSmeVFH1pBB81Rk9qA2i1s9ol89
-	2WvGt4GKcanDpcvodSPkJYYjIq6aUVJ1k6U+GjSxiP3U3OveATQsy9SXjPlbKHhg
-	u3bxCW0VWFRAIYvFdY6LbW506XEOn4Rd4yZ8YEgCu/M38pJyPlO2Y8Oh+FO9puE=
+	:content-type; s=sasl; bh=5zfyxkiLecb9ZudZ8K75USXDQDc=; b=Gj977T
+	A4xkD+qdv0QMx1Fldls94KYfjo3w0SsChoHcFUh4UlMhMASXO+jLKUPadBlVOX1T
+	KjGXkcq96efS9yKv+1syBL3nGb7639nypmxeW71ZCiHN/Dx+Ol3Kyxhzoj23KTo/
+	NmDL0ugYUdbJX/k0p+VI8u+WPBRNiYunhdmsQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Tlyvvd
-	be+/tO2O++2WEeMgZ3Ny7XhZ9bgnzcWihBOT/4Aq/XRg5g7Ol+titbtUls39tB3G
-	qkE2TCruNFoCvgGYm50GEqS5nq31f1sfRNYMlTG6fGsmI761gZ8RQFXb82PWUJ/L
-	vUfwlsbUVdL8RVPDMjD5f9XdOjpUfZFwfLoAI=
+	:content-type; q=dns; s=sasl; b=x5AxOtIET6VbuICEuhx6NFvN4Pooc5nz
+	770kzLP/2LH2fLUpAnQ/iPygZDBKH3esdPUJoGfhTuvmhySPIQxAyueegB6uo7He
+	8CrEQ7rAYlgmHhHcCzRucF1L+V1Gy3kM5RZevJeSjo9an/cU/TUzdG5RC+ioOuTE
+	LJNp9YJAeSA=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0EA034C199;
-	Sun,  3 May 2015 13:55:12 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 19B444C241;
+	Sun,  3 May 2015 13:56:54 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 86B504C197;
-	Sun,  3 May 2015 13:55:11 -0400 (EDT)
-In-Reply-To: <55456A40.80806@gmail.com> (=?utf-8?Q?=22S=C3=A9bastien?=
- Guimmara"'s message of
-	"Sun, 03 May 2015 02:22:24 +0200")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 915314C23E;
+	Sun,  3 May 2015 13:56:53 -0400 (EDT)
+In-Reply-To: <CAPig+cTVMhSwQ_z15GLCn6AmAsm6Pv0RJuGxpVg2CnX8whp8Yw@mail.gmail.com>
+	(Eric Sunshine's message of "Sun, 3 May 2015 13:15:31 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 8B454A22-F1BD-11E4-AF67-83E09F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: C817D316-F1BD-11E4-A074-83E09F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268280>
 
-S=C3=A9bastien Guimmara  <sebastien.guimmara@gmail.com> writes:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> Teach generate-cmdlist.sh to parse common command groups
-> found in command-list.txt in the form
->
-> common-3_worktree ('3_worktree' being the group identifier)
->
-> Extract the $grp variable, in addition to the previous $cmd,
-> and inject it as a third field in the cmdname_help struct:
->
-> {"add", N_("Add file contents to the index"), "3_worktree"},
->
-> So that when 'git' is called, we can display common commands
-> grouped by theme instead of a less useful alphabetical order.
->
-> Reviewed by: Luke Diamand <luke@diamand.org>
-> Reviewed by: Andreas Schwab <schwab@linux-m68k.org>
+> By the way, the entry in Junio's "Leftover Bits" isn't about importing
+> http-protocol.txt, but rather about fleshing out all the TODO items
+> which are still present in the document.
 
-These people may have helped you to polish your earlier round to
-come up with this version, but I do not think they should be listed
-as reviewed-by (in the sense that they would say "Yes, I read this
-version and consider it very good--I endorse the change!") yet.
-
-> Signed-off-by: S=C3=A9bastien Guimmara <sebastien.guimmara@gmail.com>
-> ---
-
->  generate-cmdlist.sh | 7 ++++---
->  1 file changed, 4 insertions(+), 3 deletions(-)
->
-> diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
-> index 9a4c9b9..98f937b 100755
-> --- a/generate-cmdlist.sh
-> +++ b/generate-cmdlist.sh
-> @@ -4,19 +4,20 @@ echo "/* Automatically generated by $0 */
->  struct cmdname_help {
->      char name[16];
->      char help[80];
-> +    char group[20];
-
-Storing group name in duplicated text for all commands and then
-using string comparison at runtime is grossly wasteful, don't you
-think, especially when the list is not manually maintained?
-
-command-list.txt is something manually maintained, i.e. the source,
-and it makes sense to use easy-to-see strings like "3_worktree"
-label there instead of cryptic number, but the whole point of this
-script is to pre-process that text into .c file to a form that is
-more suited for machine consumption.  I think this script should:
-
- - read command list once to make the list of groups in a new
-   separate array;
-
- - add the group as an "unsigned char group_number" (as we won't
-   have more than 200 groups) field to this struct;
-
- - read command list again and for each command give the group
-   number here.
-
-or something like that.
+Thanks for saving my time ;-)
