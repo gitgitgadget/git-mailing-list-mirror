@@ -1,105 +1,113 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] upload-pack: Optionally allow fetching reachable sha1
-Date: Sun, 3 May 2015 17:35:45 -0400
-Message-ID: <CAPig+cShtk7Be_miSfgzXTPdWxfYmFjJ+kEg5xr+2yLyEhfLvQ@mail.gmail.com>
-References: <1430604075-5951-1-git-send-email-fredrik.medley@gmail.com>
-	<xmqqy4l5v9tm.fsf@gitster.dls.corp.google.com>
-	<CABA5-znFVPunBxET-42jDTC00gH8VMkG280Ptyr8FUU6vfuiCA@mail.gmail.com>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v2 00/16] Convert parts of refs.c to struct object_id
+Date: Sun, 3 May 2015 21:45:00 +0000
+Message-ID: <20150503214500.GA214319@vauxhall.crustytoothpaste.net>
+References: <1429745061-295908-1-git-send-email-sandals@crustytoothpaste.net>
+ <553D49EE.4000801@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	Christian Halstrick <christian.halstrick@gmail.com>,
-	Dan Johnson <computerdruid@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>
-To: Fredrik Medley <fredrik.medley@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 03 23:35:52 2015
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="ZGiS0Q5IWpPtfppv"
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	"Kyle J. McKay" <mackyle@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Sun May 03 23:45:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yp1YF-0006dH-9H
-	for gcvg-git-2@plane.gmane.org; Sun, 03 May 2015 23:35:51 +0200
+	id 1Yp1hJ-0005nN-0R
+	for gcvg-git-2@plane.gmane.org; Sun, 03 May 2015 23:45:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751555AbbECVfq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 May 2015 17:35:46 -0400
-Received: from mail-ig0-f175.google.com ([209.85.213.175]:34054 "EHLO
-	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751278AbbECVfp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 May 2015 17:35:45 -0400
-Received: by iget9 with SMTP id t9so56134069ige.1
-        for <git@vger.kernel.org>; Sun, 03 May 2015 14:35:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=IJ8rUL59VodausmKm3K3mTCuNn0oYDzViC/YcmJSe0w=;
-        b=BZ2cDh5OPiWu+zb0wudNuoJ4iqXm5/oTMqJ1+MudpBLgRkDTauTYlQ93Q5PMWBsM0i
-         yAj09mfCsZqx80tF66tAXqvsfAG590jM/0S/s3UHFS5tbOiK2zdjy10sw7Jd+1GFQqeV
-         cQeRqtTZooWXzY+mQfjkY8dskdw1VpB7NRf5VmxBI4ty2pyb3exGY/FSXm6OnrjSf3wE
-         pAkrduV6zp0xXJPr6iGq18QXtMsPocAa5Ep9e1yDLzaRMgjlj6s/8RWPcaxn2GR0Jors
-         gGQGFhLF6eLCGGe5HFHI6v+nwAhiMwV+HoppcCk15rNJdgjLLR/uj2uCuE8s7nVYI6EX
-         6NeA==
-X-Received: by 10.50.43.227 with SMTP id z3mr9782532igl.22.1430688945242; Sun,
- 03 May 2015 14:35:45 -0700 (PDT)
-Received: by 10.107.28.132 with HTTP; Sun, 3 May 2015 14:35:45 -0700 (PDT)
-In-Reply-To: <CABA5-znFVPunBxET-42jDTC00gH8VMkG280Ptyr8FUU6vfuiCA@mail.gmail.com>
-X-Google-Sender-Auth: BKsTX6QwAk66082eb6kVOtLhJyY
+	id S1751846AbbECVpJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 May 2015 17:45:09 -0400
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:56302 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751505AbbECVpH (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 3 May 2015 17:45:07 -0400
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:9420:74e2:364c:62c7])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id B87FE2808D;
+	Sun,  3 May 2015 21:45:05 +0000 (UTC)
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>, "Kyle J. McKay" <mackyle@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Content-Disposition: inline
+In-Reply-To: <553D49EE.4000801@alum.mit.edu>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 4.0.0-trunk-amd64)
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268296>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268297>
 
-On Sun, May 3, 2015 at 4:13 PM, Fredrik Medley <fredrik.medley@gmail.com> wrote:
-> 2015-05-03 19:40 GMT+02:00 Junio C Hamano <gitster@pobox.com>:
->> Fredrik Medley <fredrik.medley@gmail.com> writes:
->>> For you who don't remember the email discussion, look through the references.
->>
->> Please don't do this.  Always describe the background yourself in
->> the log message so that "git log" can be read offline.  "describe
->> yourself" can be done by summarizing earlier discussion, borrowing
->> others' words, of course.  And it is a very good idea to give
->> references like you did after your summary to optionally allow
->> people to verify your summary is correct.
->
-> Okay, I understand. My intention was to recapture the old thread, but
-> to keep the part under the references for the commit message. When
-> I get this answer, I do see that this is impossible to understand and I
-> should probably have added a cover-letter instead. (This is my first
-> time every I've supplied patches to such an open-source project.)
 
-Welcome to open-source and to git.
+--ZGiS0Q5IWpPtfppv
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Is the text under the reference enough describing or should there
-> be added some more background text?
-> Unless someone asks for more answers about my attempt to recap
-> the old mail thread, I skip commenting on this part.
+On Sun, Apr 26, 2015 at 10:26:22PM +0200, Michael Haggerty wrote:
+> After that, there is one patch for each callsite, rewriting it to use
+> for_each_ref natively (which usually entails modifying my_function to
+> take an object_id parameter then undoing the wrapper). These patches
+> involve a little bit of thought, but not too much. And the results are
+> very bisectable because each patch makes a single small change. I also
+> suspect it might be easier to rebase and/or merge my patch series, for
+> the same reason.
+>=20
+> The end result was very similar to yours, so I am confident that the net
+> result of your patch series is correct. But the remaining differences in
+> the end results are also interesting. I made a few more changes in the
+> neighborhood of the patches, not to mention a few formatting
+> improvements in code that I touched. If you compare the tip of my
+> branch, above, to the tip of yours (I uploaded that to my repo too, as
+> branch "bc-oid-refs"), it may give you some ideas for other code that
+> can be changed to object_id.
 
-What Junio meant was that the commit message should be sufficiently
-self-contained such that someone reading it should be able to
-understand the problem you're solving without being familiar with past
-discussions (and without having to chase down links), and why the
-solution you've chosen is desirable.
+This is a very interesting approach.  I've only just had time to look at
+it, but I like it.
 
-In this case, the paragraph following the references in your patch,
-which you had intended as the full commit message, may not be
-sufficient. You might come closer to a good commit message by fleshing
-out the paragraph preceding the references, and following that by the
-paragraph after the references. By "fleshing out", I mean providing
-salient information from the cited discussions at the points where you
-referenced them via [n] notation.
+I agree that it's much more bisectable, although your series has a much
+larger quantity of patches.  I feel like sending an 83-patch series to
+the list may frighten reviewers away.  That's really the only thing
+preventing me from replacing my series with yours.
 
-Your commit message should explain the problem in the current
-implementation (possibly justifying why you consider it a problem),
-and an explanation of the solution. You will want to keep the
-references (but move them to the bottom of the commit message), and
-cite them when appropriate in your explanation.
+Junio, what would you think about such a series?  Would you prefer
+slightly larger patches, one per file, if it meant that we had many
+fewer patches, or would you prefer a large number of patches touching a
+single function each?
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
 
-For a single patch like this, you don't really need a cover letter.
-Just make sure the commit message provides sufficient explanation and
-is self-contained. If you want to provide extra commentary not
-intended for the commit message, place it below the "---" line after
-your sign-off and before the diffstat.
+--ZGiS0Q5IWpPtfppv
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCgAGBQJVRpbcAAoJEL9TXYEfUvaLDvYP/RrEb/hVVxCiK5vaN9N99Gvx
+m/CxrdoDAdhZmZTz2Rd2POcPR8EjA+FkeAf7z4fMKlvmM9ryMC/QCvQXhOU5vdfP
+d8xTewBaCV0fOuBdevJIIK1QUbQkjJ98akZgr8sJYwqpgo/+iGKlIrgGJkMzQwJU
+lSXdfPLUcnuBVpv3QkshPX4jOHEtFHJEcnv2DCNFTo8trKwYivKvfkSCaK7OYYQD
+yZwbQBvwVrGZ0CB9ko9Nrn5DCH/nVkJDnncw2weDovqoRxWAp5YpYL7eAEP0CB1X
+U1rXfETuKptsJjnTP/nYkEjKm/95QpW7N6P5/H+RRjgZx2DxeyxLh3Gh6VIyevG7
+JhoBZxG+J4RBRQdxnTHpoB2vfoB+d/0aAD9BR1eCUpTgGN8fsnwmwap9mkIRa5xh
+47+w76v5PiA06Rk5g7OqbF+q1Xi/HbCQRJTILqAn6a3qD4xR8LyQePo6Qr1U/9zi
+zpPuRU+oWEnjTcpRQytL0CuOkWLGSbMBXMgAJCUJ6IFENBBcE4IxV8XrhWDvHW00
+ClZzpkG9cAMB913BiEJDvho4HiqN59/ZFEUHrhhRO2xB/zj8Mhwx8ZoUe8ZZ/TCn
+KuQQUmrxEjT3KfgiAYPa5sKtf+Gz6aPikQ5XMcNc7fnt6djFGMyhKG86WqM3zR2a
+VmMqQnt+tOl0xcndmfow
+=Rd2M
+-----END PGP SIGNATURE-----
+
+--ZGiS0Q5IWpPtfppv--
