@@ -1,77 +1,120 @@
-From: Alangi Derick <alangiderick@gmail.com>
-Subject: Re: Improving Readability of the entire Codebase
-Date: Sun, 3 May 2015 20:12:20 +0100
-Message-ID: <CAKB+oNt3dsT-Ckw3=0xGWzATvYp4uh9JbwHpPX7uh88ow7rW2Q@mail.gmail.com>
-References: <CAKB+oNv1q=62a0-T7CCcOAOU+sfXPiyZPMB1qWxf-8zX=4PPpg@mail.gmail.com>
-	<CAGZ79kbORH6S5Cq03tRU0eHdu75QF1phZFiDsyiFQ+sg_2V83g@mail.gmail.com>
-	<CAKB+oNs2iaXSSoiu4-OMT7VgSYdigU0k+gT0NMqSBw1pRZhe0A@mail.gmail.com>
-	<vpqpp6hv608.fsf@anie.imag.fr>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 2/4] generate-cmdlist.sh: parse common command groups
+Date: Sun, 3 May 2015 15:18:22 -0400
+Message-ID: <CAPig+cQNOEgZAn=2MXNjkUxnMA+OimTLfSmEMskZsvRv-Zh42w@mail.gmail.com>
+References: <554405D5.9080702@gmail.com>
+	<55456990.6000509@gmail.com>
+	<55456A40.80806@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Stefan Beller <sbeller@google.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Sun May 03 21:12:26 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Luke Diamand <luke@diamand.org>,
+	Andreas Schwab <schwab@linux-m68k.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?Q?S=C3=A9bastien_Guimmara?= <sebastien.guimmara@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 03 21:18:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YozJS-0003jF-Cu
-	for gcvg-git-2@plane.gmane.org; Sun, 03 May 2015 21:12:26 +0200
+	id 1YozPI-0000Bi-7W
+	for gcvg-git-2@plane.gmane.org; Sun, 03 May 2015 21:18:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751631AbbECTMX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 May 2015 15:12:23 -0400
-Received: from mail-qk0-f173.google.com ([209.85.220.173]:32945 "EHLO
-	mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751508AbbECTMV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 May 2015 15:12:21 -0400
-Received: by qkx62 with SMTP id 62so74917732qkx.0
-        for <git@vger.kernel.org>; Sun, 03 May 2015 12:12:21 -0700 (PDT)
+	id S1751839AbbECTSY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 May 2015 15:18:24 -0400
+Received: from mail-ig0-f169.google.com ([209.85.213.169]:38418 "EHLO
+	mail-ig0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751562AbbECTSX convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 3 May 2015 15:18:23 -0400
+Received: by igbhj9 with SMTP id hj9so69693090igb.1
+        for <git@vger.kernel.org>; Sun, 03 May 2015 12:18:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=LKvnhCzo+v7uQ0FcO6UhudpYor1DHnNOHI9W8PSu6Mc=;
-        b=xNxVSiugHqy4dMiOzFVtVKZqwASSpDO5qMMChJsjLxC+NpjEYXht38PpP0jtSTjzok
-         WHEItKFWRIcZ+YbPBe6zd7feye5L24J0Zp17wlMbhte3xPQa7jfS2Fz7NjQvrEIGB+pq
-         1TREYjAFeEkkd/g1Jkkr//qCRzVl8bH2N51D78SaSBHxq119TY+Ary9qadlU720ITOes
-         Rk2ELDtVm1dx3Rjq1fVB/NVldqDt/h3eIq2KRwJqGf35/jrItcTGyEgnd+zIcMUI0/Lj
-         GgQV7JDz3j1nMrxLZRdfSpFCnuvehnWrzRrXsYv7MpC2WAypAqL7wjZUlZYwX+MFw4n2
-         rmjQ==
-X-Received: by 10.229.96.199 with SMTP id i7mr17365474qcn.6.1430680340955;
- Sun, 03 May 2015 12:12:20 -0700 (PDT)
-Received: by 10.229.45.71 with HTTP; Sun, 3 May 2015 12:12:20 -0700 (PDT)
-In-Reply-To: <vpqpp6hv608.fsf@anie.imag.fr>
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=Rd6lK16uH+DgHoK66SuNRU0/wTuzaeqxCyc/LTbOH1c=;
+        b=DoeOSDIidHdGv6tolQKw1hpibBW5lBumsQxNurt0ArBk9GpoK+FCeDzuwOM/Dl7OE0
+         zyDgK7y+2hCspe3P69ufOU9RuXPMs3uBoZBvZFlIa8CSd7co0Sx2BkaINkRLHttDSGiu
+         jEm5WM3PM8PzuYZ+2u156xTnO/MsiBB3jqb3yhXllfprTIaCEtuGpVa61SSVsMVzQyAp
+         v+zkH+CTxln766gc2Hk8dtStMFJkfO2WduIqoJG+9OaKeV0JUQm7nmY3EqvlTVOI0ISo
+         cn1qWG9gStc29368B/8aVe/MkaN7pq+zVdBn7AzRxD+Qem1NrITCZFYBctyhADZYSwBi
+         3wgA==
+X-Received: by 10.50.43.169 with SMTP id x9mr9255218igl.7.1430680702589; Sun,
+ 03 May 2015 12:18:22 -0700 (PDT)
+Received: by 10.107.28.132 with HTTP; Sun, 3 May 2015 12:18:22 -0700 (PDT)
+In-Reply-To: <55456A40.80806@gmail.com>
+X-Google-Sender-Auth: ciAkJ3g2jR7hH2e8foVY979JE88
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268284>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268285>
 
-Regards
-Alangi Derick Ndimnain
+On Sat, May 2, 2015 at 8:22 PM, S=C3=A9bastien Guimmara
+<sebastien.guimmara@gmail.com> wrote:
+> Teach generate-cmdlist.sh to parse common command groups
+> found in command-list.txt in the form
+>
+> common-3_worktree ('3_worktree' being the group identifier)
+>
+> Extract the $grp variable, in addition to the previous $cmd,
+> and inject it as a third field in the cmdname_help struct:
+>
+> {"add", N_("Add file contents to the index"), "3_worktree"},
+>
+> So that when 'git' is called, we can display common commands
+> grouped by theme instead of a less useful alphabetical order.
+>
+> Signed-off-by: S=C3=A9bastien Guimmara <sebastien.guimmara@gmail.com>
+> ---
+> diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
+> index 9a4c9b9..98f937b 100755
+> --- a/generate-cmdlist.sh
+> +++ b/generate-cmdlist.sh
+> @@ -4,19 +4,20 @@ echo "/* Automatically generated by $0 */
+>  struct cmdname_help {
+>      char name[16];
+>      char help[80];
+> +    char group[20];
+>  };
+>   static struct cmdname_help common_cmds[] =3D {"
+>  -sed -n -e 's/^git-\([^ ]*\)[ ].* common.*/\1/p' [...]
+> +sed -n -e 's/^git-\([^ ]*\)[ ].* common-\(.*\)/\1:\2/p' [...]
 
+Isn't \(.*\) a bit too loose for grabbing $grp? What if someone some
+day adds another column to express some other sort of attribute? (Or,
+if someone perhaps uses the "deprecated" attribute but places it in
+column 3 rather than 2 as documented.) It probably would be better to
+tighten this up by grabbing only non-whitespace characters, as is
+already done for $cmd.
 
-On Sun, May 3, 2015 at 8:02 PM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> Alangi Derick <alangiderick@gmail.com> writes:
->
->> Thanks so much, i am learning the community, so that is why i am
->> making a lot of mistakes. Thanks for the correction. I have started it
->> already and submitted a patch. Can you have a look and tell me
->> something?
->> Regards
->> Alangi Derick Ndimnain
->>
->>
->> On Fri, May 1, 2015 at 4:35 PM, Stefan Beller <sbeller@google.com> wrote:
->
-> Please, don't top-post on this list. Quote the part of the message
-> you're replying to, and reply below. See how old-timers are doing ;-).
-Thanks so much. I never knew it but now that you have told me, i will
-respect the rules.
->
+(In fact, this sed invocation is already broken for "deprecated",
+isn't it? According to the command-list.txt header comments,
+"deprecated" should be placed before "common", yet the sed invocation
+expects "common" to follow the command immediately. Perhaps a
+preparatory patch could fix this issue; or just do away with
+"deprecated" entirely since it's not used.)
+
+>  sort |
+> -while read cmd
+> +while IFS=3D: read cmd grp
+
+Since both $cmd and $grp are simple tokens, neither of which contain
+whitespace, this could be handled more simply by just having sed emit
+them separated by a space rather than by ':'; in which case your
+'while read' loop wouldn't need to muck with IFS at all.
+
+>  do
+>       sed -n '
+>       /^NAME/,/git-'"$cmd"'/H
+>       ${
+>             x
+> -           s/.*git-'"$cmd"' - \(.*\)/  {"'"$cmd"'", N_("\1")},/
+> +           s/.*git-'"$cmd"' - \(.*\)/  {"'"$cmd"'", N_("\1"), "'"$gr=
+p"'"},/
+>             p
+>       }' "Documentation/git-$cmd.txt"
+>  done
 > --
-> Matthieu Moy
-> http://www-verimag.imag.fr/~moy/
+> 2.4.0
