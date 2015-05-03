@@ -1,137 +1,154 @@
-From: Fredrik Medley <fredrik.medley@gmail.com>
-Subject: Re: [PATCH] upload-pack: Optionally allow fetching reachable sha1
-Date: Sun, 3 May 2015 22:13:31 +0200
-Message-ID: <CABA5-znFVPunBxET-42jDTC00gH8VMkG280Ptyr8FUU6vfuiCA@mail.gmail.com>
-References: <1430604075-5951-1-git-send-email-fredrik.medley@gmail.com> <xmqqy4l5v9tm.fsf@gitster.dls.corp.google.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 2/4] generate-cmdlist.sh: parse common command groups
+Date: Sun, 3 May 2015 16:40:53 -0400
+Message-ID: <CAPig+cSRiw7QeAzuxAJF8mikeK1YiNoNATKzMz71L8E29LLp4Q@mail.gmail.com>
+References: <554405D5.9080702@gmail.com>
+	<55456990.6000509@gmail.com>
+	<55456A40.80806@gmail.com>
+	<xmqqpp6hv94x.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org,
-	Christian Halstrick <christian.halstrick@gmail.com>,
-	Dan Johnson <computerdruid@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?Q?S=C3=A9bastien_Guimmara?= <sebastien.guimmara@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Luke Diamand <luke@diamand.org>,
+	Andreas Schwab <schwab@linux-m68k.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun May 03 22:14:00 2015
+X-From: git-owner@vger.kernel.org Sun May 03 22:41:03 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yp0H1-0001xp-1L
-	for gcvg-git-2@plane.gmane.org; Sun, 03 May 2015 22:13:59 +0200
+	id 1Yp0hA-0006Px-9g
+	for gcvg-git-2@plane.gmane.org; Sun, 03 May 2015 22:41:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751830AbbECUNz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 May 2015 16:13:55 -0400
-Received: from mail-lb0-f169.google.com ([209.85.217.169]:35854 "EHLO
-	mail-lb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751647AbbECUNx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 May 2015 16:13:53 -0400
-Received: by lbbqq2 with SMTP id qq2so93014491lbb.3
-        for <git@vger.kernel.org>; Sun, 03 May 2015 13:13:51 -0700 (PDT)
+	id S1751634AbbECUk4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 May 2015 16:40:56 -0400
+Received: from mail-ig0-f172.google.com ([209.85.213.172]:36116 "EHLO
+	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751007AbbECUky convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 3 May 2015 16:40:54 -0400
+Received: by igblo3 with SMTP id lo3so70730324igb.1
+        for <git@vger.kernel.org>; Sun, 03 May 2015 13:40:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=dx+wvtmfk4iNz/VSQ1doZS5iuPOWEvMZI2sleVqbI54=;
-        b=OPHTgm7k2zb30TU0SokQG4FYblV0zCPVB5DaEk3VvnHPGn0PABGDlwG8n3UpcWz94D
-         9oELiywBDTqVepCY0fSqjYp/ghxTTzWf52N4vV+Y+RkzvsGOyfA6E2mcaE1H9lq7a2QN
-         SLOftZ9oDMmtVnVseaD4BSsAqunbl+513MWLUoRYQauKJGBJ09hgKHgbGMlcsqr40MTd
-         m7pXS0BypXPPifnNj82iY+bqDDQRXn8orW/Uba/axQZlRHEVI+1TsukMYvXyQubRy27L
-         jl4X4WqmSBQtIo5zOocZ1ow1zkKR4VL0YSEX6IxgNP8173w6jh6TSzK3CDweTbo34CMS
-         aVkw==
-X-Received: by 10.112.65.37 with SMTP id u5mr16835903lbs.44.1430684031757;
- Sun, 03 May 2015 13:13:51 -0700 (PDT)
-Received: by 10.114.10.130 with HTTP; Sun, 3 May 2015 13:13:31 -0700 (PDT)
-In-Reply-To: <xmqqy4l5v9tm.fsf@gitster.dls.corp.google.com>
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=42hYzG1mFrcAli+gsOY6hQHQ56mrMvK3vBVZB6tkmv4=;
+        b=CgI/EMX5P8Bc/DvHB0RHBgGfbrsFKL1hqS2PdvCqzXYN3QuBVZocJRvNmRBWeNPnQG
+         z2A+JaDKO2vkPdNUhDwSMzKtTmBie/nyiFmNzR3e6VY+vUeGdEhRcVqfYSWvfJeB/gl/
+         6AZL4dQ2AvAZezwXF5W/aAQ3ANIkk/mQX86VUH3k3JV/4Evtu8gsgUvtJaEVpizZiFla
+         L4wWl25ddBjyL7n7JmhynwdCCyvVWVhYFZ107VasJp49LLbCalNv20lMAQPNn4LhelH0
+         sd94kLVH4QgnX4/RPsdwDRWrbmY/DWUqiGCHjNNp+tTmqCaOnVNUP/WOLA646nYeWnl5
+         WyzQ==
+X-Received: by 10.42.207.206 with SMTP id fz14mr25061236icb.34.1430685653936;
+ Sun, 03 May 2015 13:40:53 -0700 (PDT)
+Received: by 10.107.28.132 with HTTP; Sun, 3 May 2015 13:40:53 -0700 (PDT)
+In-Reply-To: <xmqqpp6hv94x.fsf@gitster.dls.corp.google.com>
+X-Google-Sender-Auth: 0icR-6OwZ1cYQkqJCdigN7GmOo0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268291>
 
-2015-05-03 19:40 GMT+02:00 Junio C Hamano <gitster@pobox.com>:
-> Fredrik Medley <fredrik.medley@gmail.com> writes:
+On Sun, May 3, 2015 at 1:55 PM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> S=C3=A9bastien Guimmara  <sebastien.guimmara@gmail.com> writes:
 >
->> For you who don't remember the email discussion, look through the references.
->
-> Please don't do this.  Always describe the background yourself in
-> the log message so that "git log" can be read offline.  "describe
-> yourself" can be done by summarizing earlier discussion, borrowing
-> others' words, of course.  And it is a very good idea to give
-> references like you did after your summary to optionally allow
-> people to verify your summary is correct.
-
-Okay, I understand. My intention was to recapture the old thread, but
-to keep the part under the references for the commit message. When
-I get this answer, I do see that this is impossible to understand and I
-should probably have added a cover-letter instead. (This is my first
-time every I've supplied patches to such an open-source project.)
-
-Is the text under the reference enough describing or should there
-be added some more background text?
-
-Unless someone asks for more answers about my attempt to recap
-the old mail thread, I skip commenting on this part.
-
->
-> ...
->
->> With uploadpack.allowreachablesha1inwant configuration option set,
->
-> "option set" on the server side, I presume?
-Yes, can fix that.
-"...configuration option set on the server side, "git fetch" can..."
-
->
->> "git fetch" can make a request with a "want" line that names an object
->> that has not been advertised (likely to have been obtained out of band or
->> from a submodule pointer). Only objects reachable from the branch tips,
->> hidden by transfer.hiderefs or not, will be processed.
->
-> I am not sure if I am reading the last sentence correctly.  If there
-> are two branches, 'master' (exposed) and 'occult' (hidden),
->
->     ---o---o---2---1---x master
->         \
->          o---2---1---y occult
->
-> you can ask for the 40-hex object name of occult~2, but you cannot
-> ask for the 40-hex object name of master~2?  Why such a restriction?
->
->  ... wait for an answer that justfies the restriction ...
->
-> Does that justification applies for allowing occult~4 but not master~4?
-I thought I wrote that both visible and hidden branches will be counted as
-branch tips. Obviously need to reformulate. Maybe:
-"Only objects reachable from the branch tips, i.e. the union of advertised
-branches and branches hidden by transfer.hiderefs, will be processed."
-
->
->> @@ -456,8 +457,11 @@ static void check_non_tip(void)
->>       char namebuf[42]; /* ^ + SHA-1 + LF */
->>       int i;
+>> Teach generate-cmdlist.sh to parse common command groups
+>> found in command-list.txt in the form
 >>
->> -     /* In the normal in-process case non-tip request can never happen */
->> -     if (!stateless_rpc)
->> +     /*
->> +      * In the normal in-process case without
->> +      * uploadpack.allowreachablesha1inwant, non-tip requests can never happen.
->> +      */
+>> common-3_worktree ('3_worktree' being the group identifier)
+>>
+>> Extract the $grp variable, in addition to the previous $cmd,
+>> and inject it as a third field in the cmdname_help struct:
+>>
+>> {"add", N_("Add file contents to the index"), "3_worktree"},
+>>
+>> So that when 'git' is called, we can display common commands
+>> grouped by theme instead of a less useful alphabetical order.
+>>
+>> Reviewed by: Luke Diamand <luke@diamand.org>
+>> Reviewed by: Andreas Schwab <schwab@linux-m68k.org>
 >
-> That's quite an overlong line; if you switched it to multi-line,
-> then fold the line once more, perhaps before "non-tip"?
+> These people may have helped you to polish your earlier round to
+> come up with this version, but I do not think they should be listed
+> as reviewed-by (in the sense that they would say "Yes, I read this
+> version and consider it very good--I endorse the change!") yet.
 
-Yes, can change that. This was to avoid more than 80 characters per line.
-Should I split to three lines then?
+Minor addendum: If you'd like to acknowledge Luke for $(...) and
+Andreas for IFS munging, then Helped-by: would be appropriate (and
+doesn't require their consent).
 
+More below.
+
+>> Signed-off-by: S=C3=A9bastien Guimmara <sebastien.guimmara@gmail.com=
 >
->> @@ -728,6 +732,7 @@ static int send_ref(const char *refname, const unsigned char *sha1, int flag, vo
->>                            sha1_to_hex(sha1), refname_nons,
->>                            0, capabilities,
->>                            allow_tip_sha1_in_want ? " allow-tip-sha1-in-want" : "",
->> +                          allow_reachable_sha1_in_want ? " allow-reachable-sha1-in-want" : "",
+>> ---
+>> diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
+>> index 9a4c9b9..98f937b 100755
+>> --- a/generate-cmdlist.sh
+>> +++ b/generate-cmdlist.sh
+>> @@ -4,19 +4,20 @@ echo "/* Automatically generated by $0 */
+>>  struct cmdname_help {
+>>      char name[16];
+>>      char help[80];
+>> +    char group[20];
 >
-> Which printf format specifier does this new element correspond to?
+> Storing group name in duplicated text for all commands and then
+> using string comparison at runtime is grossly wasteful, don't you
+> think, especially when the list is not manually maintained?
+>
+> command-list.txt is something manually maintained, i.e. the source,
+> and it makes sense to use easy-to-see strings like "3_worktree"
+> label there instead of cryptic number, but the whole point of this
+> script is to pre-process that text into .c file to a form that is
+> more suited for machine consumption.  I think this script should:
+>
+>  - read command list once to make the list of groups in a new
+>    separate array;
+>
+>  - add the group as an "unsigned char group_number" (as we won't
+>    have more than 200 groups) field to this struct;
+>
+>  - read command list again and for each command give the group
+>    number here.
+>
+> or something like that.
 
-Ouch! How could I miss that?! Fixing.
+Some additional observations:
+
+The "common-N_group" form seems both redundant and unsightly.
+Redundant because you could just as easily pluck out 'common' lines by
+searching for "N_group", thus making the "common-" prefix unnecessary.
+Unsightly because the mix of "-" and "_" is hard to read. (In general,
+"-" is easier to read, thus probably a better choice.)
+
+Thinking out loud, without regard to implementation complexity...
+
+I might expect to see the table of groups to be declared first, in the
+order that they should be displayed by "git help". Having the groups
+in their own table also allows you to give them human-readable
+descriptions. For actual use, you'd tag each command with the bare
+group name.
+
+So, something like this, perhaps:
+
+    [groups]
+    init    starting a working area
+    info    examining history and state
+    ...
+    branching    branching and merging histories
+
+    [commands]
+    git-branch    mainporcelain branching
+    ...
+    git-clone    mainporcelain init
+    ...
+
+This way, the 'N' in "N_group" is unnecessary since presentation order
+is implied by the [groups] table, and you don't need the "common-"
+prefix anymore since any command having an attribute from the [groups]
+table is automatically considered common.
