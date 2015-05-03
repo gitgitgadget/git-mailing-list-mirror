@@ -1,64 +1,103 @@
-From: =?UTF-8?B?U8OpYmFzdGllbiBHdWltbWFyYQ==?= 
-	<sebastien.guimmara@gmail.com>
-Subject: Re: [PATCH v3 4/4] api-builtin.txt: explain common command groups
-Date: Mon, 04 May 2015 00:32:35 +0200
-Message-ID: <5546A203.6090305@gmail.com>
-References: <554405D5.9080702@gmail.com>	<55456990.6000509@gmail.com>	<55456AD3.7090908@gmail.com>	<CAPig+cT0aurG9gS2CrwMPG2B4xrAbhvwNJtAjYz7UYc4x1TiEA@mail.gmail.com>	<55468C23.70306@gmail.com> <CAHYJk3S3s4RjFMUaomP2wUVBbcTLRGYrAOa-uDjrfsKqUuWPog@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] branch: fix funny-sounding error message
+Date: Sun, 03 May 2015 16:54:25 -0700
+Message-ID: <xmqq8ud5usi6.fsf@gitster.dls.corp.google.com>
+References: <1430536360-21901-1-git-send-email-alexhenrie24@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: Mikael Magnusson <mikachu@gmail.com>,
-	Git Users <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon May 04 00:33:33 2015
+Content-Type: text/plain
+Cc: pclouds@gmail.com, git@vger.kernel.org
+To: Alex Henrie <alexhenrie24@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 04 01:54:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yp2S4-0002Wr-Bw
-	for gcvg-git-2@plane.gmane.org; Mon, 04 May 2015 00:33:32 +0200
+	id 1Yp3iV-0003D1-Mp
+	for gcvg-git-2@plane.gmane.org; Mon, 04 May 2015 01:54:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751407AbbECWcj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 May 2015 18:32:39 -0400
-Received: from mail-wg0-f50.google.com ([74.125.82.50]:33332 "EHLO
-	mail-wg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750933AbbECWci (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 May 2015 18:32:38 -0400
-Received: by wgin8 with SMTP id n8so134247149wgi.0
-        for <git@vger.kernel.org>; Sun, 03 May 2015 15:32:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=HewyoYwvswBbt2qeueCAZKsK1pGmIANnJPi7iHWOVj0=;
-        b=e+TyYraJ/fg43sVlgnhgAXWdkuE0B2+X7NHI2D4XPSV9JdCx8pO20h+BRyQBrExXw/
-         vttKQS2SOhgLYARTyXCNWcMliu2KT9ZG0GlpW9MECdcsZBbiGVefwBGzMOV6taQbuklj
-         py8y7QqgM5n/hEwlEwhTKMgXV8C5yNKLKcAYKdnHBvajEIdpkUz1cTQoCPZkf4cyDL6C
-         Sd2LKdakbtHEsWQurqc+Lubd+QIpF+ijac3HfioIfA+prpKuF+xhlIKSwVee7EE9wjrk
-         dCVsSPT/6e/mPJkEx3q3luJuQ5tbshZ0TnfMiBE5XrLlfI3f6vUkGAD6eaT147hoprdM
-         ejZw==
-X-Received: by 10.194.236.66 with SMTP id us2mr37241449wjc.54.1430692357543;
-        Sun, 03 May 2015 15:32:37 -0700 (PDT)
-Received: from [192.168.0.15] (bd231-1-88-176-208-17.fbx.proxad.net. [88.176.208.17])
-        by mx.google.com with ESMTPSA id it5sm8400441wid.3.2015.05.03.15.32.36
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 03 May 2015 15:32:36 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
-In-Reply-To: <CAHYJk3S3s4RjFMUaomP2wUVBbcTLRGYrAOa-uDjrfsKqUuWPog@mail.gmail.com>
+	id S1751398AbbECXya (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 May 2015 19:54:30 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:55056 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750969AbbECXy2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 May 2015 19:54:28 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 978644EDBC;
+	Sun,  3 May 2015 19:54:27 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=FIUOUUG11KQszuGmpi2iKcYOr3M=; b=WElgov
+	UnNCOirrF73+ziFYANjQeIrUl59FD+cXYVwwrW7Naytt05CPee+v3rum6k1Q1Ky1
+	btDNjbA1g9q453jmGE/5pvwRqf2JIR9xcDGjT7FtBD/8uQSFOuNybPfN7UhBW35F
+	406LUJHbW84E8rMNoEnryr+ZiHZjnqD/RMwxg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=pIwff8MQYFbSLo99sNJp7lytIMCoMUXn
+	d9NlsxzTTqRzuJjy0Z/1LUmoAPrCLWt4xdwUz8truOa8m3w+yDYnQR3LruU6Ce6z
+	iE7ieahvJKPmkV31UeIu0mucRX/ap/cOo2/QvhNcdKa/3szqSflnM1QkDhMDSADn
+	0nRX7Alf/8A=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 911A94EDBB;
+	Sun,  3 May 2015 19:54:27 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 059904EDBA;
+	Sun,  3 May 2015 19:54:26 -0400 (EDT)
+In-Reply-To: <1430536360-21901-1-git-send-email-alexhenrie24@gmail.com> (Alex
+	Henrie's message of "Fri, 1 May 2015 21:12:40 -0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: BB55A982-F1EF-11E4-9DA5-83E09F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268298>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268299>
 
-On 05/03/2015 11:07 PM, Mikael Magnusson wrote:
-> [sendemail]
->      smtpencryption = tls
->      smtpserver = smtp.gmail.com
->      smtpuser = sebastien.guimmara@gmail.com
->      smtpserverport = 587
->      assume8bitEncoding = UTF-8
+Alex Henrie <alexhenrie24@gmail.com> writes:
+
+> Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
+> ---
+>  builtin/branch.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> Should be all that's needed. (in ~/.gitconfig)
+> diff --git a/builtin/branch.c b/builtin/branch.c
+> index 1d15037..c0b4bae 100644
+> --- a/builtin/branch.c
+> +++ b/builtin/branch.c
+> @@ -972,7 +972,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+>  
+>  		if (!branch) {
+>  			if (!argc || !strcmp(argv[0], "HEAD"))
+> -				die(_("could not set upstream of HEAD to %s when "
+> +				die(_("could not set upstream of HEAD to %s because "
+>  				      "it does not point to any branch."),
+>  				    new_upstream);
+>  			die(_("no such branch '%s'"), argv[0]);
 
-Thanks a lot, I was also missing packages. Now it works fine.
+Thanks.
+
+To me neither sounds so funny, but both sound somewhat awkward,
+primarily because it is unclear in the first reading what "it" in
+"it does not point at any branch" refers to.
+
+Perhaps if you explain in the log message to illustrate why you
+found it funny (and the update text is not), it might help, e.g.
+
+    "git branch", ran with <this and that options>, when the current
+    branch is <in what state>, dies with
+
+    	fatal: could not set upstream of HEAD to frotz when it does not
+    	point to any branch.
+
+    which is funny <because of such and such reasons>.  Saying "because"
+    makes it <better beause of such and such reasons>.
+
+I suspect that this message is about a nonsense attempt to set an
+upstream for a detached HEAD perhaps?  Then
+
+    fatal: cannot set upstream for a detached HEAD
+
+may be shorter and more directly points at the root cause of the
+error?
