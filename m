@@ -1,88 +1,81 @@
-From: =?UTF-8?B?U8OpYmFzdGllbiBHdWltbWFyYQ==?= 
-	<sebastien.guimmara@gmail.com>
-Subject: [PATCH v3 4/4] api-builtin.txt: explain common command groups
-Date: Sun, 03 May 2015 02:24:51 +0200
-Message-ID: <55456AD3.7090908@gmail.com>
-References: <554405D5.9080702@gmail.com> <55456990.6000509@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 03/15] t5520: style fixes
+Date: Sat, 02 May 2015 18:57:30 -0700
+Message-ID: <xmqq7fsqxw1h.fsf@gitster.dls.corp.google.com>
+References: <1430025967-24479-1-git-send-email-gitster@pobox.com>
+	<1430342973-30344-1-git-send-email-gitster@pobox.com>
+	<1430342973-30344-4-git-send-email-gitster@pobox.com>
+	<CACRoPnR+OHp1ho-az=C8tE=bczX5h1yEvSozGXVTShB09q1-dg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Luke Diamand <luke@diamand.org>,
-	Andreas Schwab <schwab@linux-m68k.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?U8OpYmFzdGllbiBHdWltbWFyYQ==?= 
-	<sebastien.guimmara@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 03 02:25:01 2015
+Content-Type: text/plain
+Cc: Git List <git@vger.kernel.org>
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 03 03:57:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YohiO-0001cu-7I
-	for gcvg-git-2@plane.gmane.org; Sun, 03 May 2015 02:25:00 +0200
+	id 1YojA2-0001ur-8E
+	for gcvg-git-2@plane.gmane.org; Sun, 03 May 2015 03:57:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751545AbbECAY5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 2 May 2015 20:24:57 -0400
-Received: from mail-wi0-f178.google.com ([209.85.212.178]:34246 "EHLO
-	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750966AbbECAYz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 May 2015 20:24:55 -0400
-Received: by wicmx19 with SMTP id mx19so53394402wic.1
-        for <git@vger.kernel.org>; Sat, 02 May 2015 17:24:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=06UkvYeSU9ZiTlPp00uqNQO0eOdI6KhroFLV9NCSuCg=;
-        b=RimTt5hPDu9dgrOc4/Z2w77rJdD/kMJyVs3a5hBUqHWNNFcD5lBw1EoDV0P3VqhtzY
-         1xVCuRyn4Uo9zysRQyQzqlA/bB3yN383LyyPJ+THF2T1HNi4SjnJ5IFFAfD+/YqmIioX
-         5uk87aeVfqp9eil/Ae2z16MvIj8TSboA8TCvFtXCK6Mp9cG0B+PGIsGNiqGFgPkULRw0
-         levIdD6XyNvnkwCdimndT3D+RPrPx1Zpr8VkgKKwsFFRtygNV4wePudLN1o/0QvbJZ86
-         gjfxm2aSXQXmv+xrxyQFowWA1x/CaRWEvHFzaVIdGRdHfbUHVHEmtX5wxxCpPfdY7nsa
-         vwKQ==
-X-Received: by 10.180.81.3 with SMTP id v3mr7926853wix.36.1430612694317;
-        Sat, 02 May 2015 17:24:54 -0700 (PDT)
-Received: from [192.168.0.10] (bd231-1-88-176-208-17.fbx.proxad.net. [88.176.208.17])
-        by mx.google.com with ESMTPSA id gs7sm4399260wib.10.2015.05.02.17.24.53
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 02 May 2015 17:24:53 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
-In-Reply-To: <55456990.6000509@gmail.com>
+	id S1751255AbbECB5e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 May 2015 21:57:34 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:53974 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750807AbbECB5d (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 May 2015 21:57:33 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0A78A4E430;
+	Sat,  2 May 2015 21:57:32 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=HVPCXAe5DDQoikEK9hBpaHwxNUE=; b=YH+aVb
+	QIAsYiVv7kMpEfMvwYAZ6f5TjiUCQLQ2y3Dvnix7r4Wvx8tKBzBKiREmKw88FKC4
+	FTh6BSYZgHY7P0dQV2xsjfGPeDl4Hc99XrqEkScv5WfKFZZmfiqNpw02Eg9RMbM1
+	UIeAdI5Q3FbfGTHDvnTa92TeL6uMt8mUBn2dA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=xVtTR8jtJMdu0uk3NBeN/DjlOXnU32Nd
+	XuR74sjJytF7ze0SiR1TPQKxnObkHY1px2IPbC/t8/DUnLTftKYNs5XiyRcfHxGN
+	v3ZdzktutL/ngDsIqf/4bla3oPeEriQtlwptM+3lsCouROnK/GsLuDfDYERvX6QE
+	GO68gzukU7Y=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 019AB4E42F;
+	Sat,  2 May 2015 21:57:32 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 711EF4E42E;
+	Sat,  2 May 2015 21:57:31 -0400 (EDT)
+In-Reply-To: <CACRoPnR+OHp1ho-az=C8tE=bczX5h1yEvSozGXVTShB09q1-dg@mail.gmail.com>
+	(Paul Tan's message of "Fri, 1 May 2015 16:35:54 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: C2639FEE-F137-11E4-9256-83E09F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268246>
 
-Update api-builtin.txt to explain how to add the group information
-for common commands.
+Paul Tan <pyokagan@gmail.com> writes:
 
-Signed-off-by: S=C3=A9bastien Guimmara <sebastien.guimmara@gmail.com>
----
-  Documentation/technical/api-builtin.txt | 6 +++++-
-  1 file changed, 5 insertions(+), 1 deletion(-)
+> Just wondering, would it be good to clean up the created repos in the
+> above tests to make it clear that they won't be used anymore?
+> Something like:
+>
+>     git init cloned &&
+>     test_when_finished "rm -rf cloned" &&
+>     ...
 
-diff --git a/Documentation/technical/api-builtin.txt b/Documentation/te=
-chnical/api-builtin.txt
-index 22a39b9..76baba8 100644
---- a/Documentation/technical/api-builtin.txt
-+++ b/Documentation/technical/api-builtin.txt
-@@ -50,7 +50,11 @@ Additionally, if `foo` is a new command, there are 3=
- more things to do:
- =20
-  . Write documentation in `Documentation/git-foo.txt`.
- =20
--. Add an entry for `git-foo` to `command-list.txt`.
-+. Add an entry for `git-foo` to `command-list.txt`. If foo is consider=
-ed
-+  a 'common' command, add 'common-x_group' as the third value,
-+  where x_group is one of the existing themes:
-+
-+	git-foo        mainporcelain common-3_worktree
- =20
-  . Add an entry for `/git-foo` to `.gitignore`.
- =20
---=20
-2.4.0
+It might be a good idea when you are doing the wholesale style fix
+of the entire script. That was not a part of the scope of my series,
+so I kept my changes to the minimum and made my additions in line
+with the existing tests (i.e. new one-time-use repository that is
+just left behind without being used by others).
+
+Having said that, when it is very clear that each of the new
+directories are for one-time-use (like the use of them in 5520), I
+tend to prefer leaving them around, if only to make it easier to
+insert "exit", go there and manually inspect the situation, which
+will become necessary when the tests start failing.
