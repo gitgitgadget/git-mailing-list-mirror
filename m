@@ -1,103 +1,76 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] write_sha1_file_prepare: fix buffer overrun with extra-long object type
-Date: Mon, 04 May 2015 10:59:25 -0700
-Message-ID: <xmqqzj5krzpe.fsf@gitster.dls.corp.google.com>
-References: <1430724315-524-1-git-send-email-sunshine@sunshineco.com>
-	<1430724315-524-4-git-send-email-sunshine@sunshineco.com>
-	<xmqq4mnsteb8.fsf@gitster.dls.corp.google.com>
+Subject: Re: Unexpected behavior when git-adding files in a pre-commit hook then using "git commit -o"
+Date: Mon, 04 May 2015 11:03:32 -0700
+Message-ID: <xmqqvbg8rzij.fsf@gitster.dls.corp.google.com>
+References: <463FC822-916F-4160-A1F2-B4AAEFF3A5B2@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon May 04 19:59:33 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?Q?Micha=C3=ABl?= Fortin <fortinmike@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 04 20:03:43 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YpKeS-0007ML-Qs
-	for gcvg-git-2@plane.gmane.org; Mon, 04 May 2015 19:59:33 +0200
+	id 1YpKiS-0001LF-8k
+	for gcvg-git-2@plane.gmane.org; Mon, 04 May 2015 20:03:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751756AbbEDR73 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 May 2015 13:59:29 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:63824 "EHLO
+	id S1751478AbbEDSDg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 May 2015 14:03:36 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64523 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750990AbbEDR71 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 May 2015 13:59:27 -0400
+	with ESMTP id S1751409AbbEDSDf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 4 May 2015 14:03:35 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 531B74CFD1;
-	Mon,  4 May 2015 13:59:27 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 865804B244;
+	Mon,  4 May 2015 14:03:34 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=O5rj6lYG4HfJXcLwHZDQBJ8n7mM=; b=voI/lA
-	likTfA4pBs6w4lZ2k6kTvntwgxOEyv26HR+crDZDwxVEYG0LmSq0nOBPjSrtY6Fh
-	BLcvdk5LHLgSWGaD8qoFP9IWHed32c4YSCnt/b8yY6MrgtaZY1FZUgcqzOwzRnNE
-	NRD2NNW41leay5jSIthwL/byJkFj/7LerNbeg=
+	:content-type:content-transfer-encoding; s=sasl; bh=JA0TcXFD70mp
+	LdVE7+2H2Yx0qDM=; b=oGAdWCwRy70D3iXjVzmq+gOZYT7YHM88OkMAepvHtbkn
+	F0QK7AIujeQU7UiA+g9s/7GqlkgmASunxQWLjAHMgNLG0aJFsLhXfLQSMGkmd++z
+	0fFV24+2fYIn7tOSKIJeDUGSOTSJrIIy2JoqkeHybf5Bnpaz/Oc/Ue5xopmNAFY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=EVC+habT+Wtpf+Hz6HmHqL9cyVoJd/ea
-	tvjasxLjvFHUSPVD+zj+aTqbaYbOpEFYhagQYfIIm3ASkD0Frqunn45JU7H33Q8M
-	55d5YKqJzVvikMLkmlen5fqH/kxKsqBh9Q588dCFQyJSWOK/HBg7+tdtDu6jEfIS
-	q0eL3ELkruY=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=AIiktP
+	Fp/Q80YJriQ9paeJT46OawKzwGZsr8iYBabCkmykyGr1w2mFvE9ZVvyOMLrpAc0d
+	wEL/8pEVzeeCgd7ao15Ho0+J/9ShQvbbJl1TezQDuzfx+XdychvkNO9boHAYk2xc
+	PuX9oSUzR/eCGIZ9dunLE0R56pkObNCiknZFM=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 49DBE4CFCE;
-	Mon,  4 May 2015 13:59:27 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7EB0A4B243;
+	Mon,  4 May 2015 14:03:34 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B1FE34CFCD;
-	Mon,  4 May 2015 13:59:26 -0400 (EDT)
-In-Reply-To: <xmqq4mnsteb8.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Mon, 04 May 2015 10:58:35 -0700")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DB2D44B242;
+	Mon,  4 May 2015 14:03:33 -0400 (EDT)
+In-Reply-To: <463FC822-916F-4160-A1F2-B4AAEFF3A5B2@gmail.com>
+ (=?utf-8?Q?=22Micha=C3=ABl?=
+	Fortin"'s message of "Mon, 4 May 2015 08:33:39 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 4DC7EF0E-F287-11E4-8471-83E09F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: E11B1A06-F287-11E4-8F8D-83E09F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268339>
 
-By the way, you would notice that "if we have returnsha1, then copy
-that in" bit is not in the new literally codepath but still is in
-write_sha1_file().
+Micha=C3=ABl Fortin <fortinmike@gmail.com> writes:
 
-I do not think any caller passes a NULL as return_sha1 in today's
-code, which made me curious.
+> I=E2=80=99ve encountered unexpected behavior performing a git add fro=
+m a
+> pre-commit hook, followed by performing a commit using the =E2=80=9C-=
+o=E2=80=9D
+> flag,...
 
-It turns out to be a remnant of d6d3f9d0 (This implements the new
-"recursive tree" write-tree., 2005-04-09); before that change,
-write_sha1_file() did not have an ability to tell the caller what
-object it wrote, and Linus made it optional for the callers when he
-added the return_sha1[] out parameter, but all of its callers did
-want the resulting object name.
+As pre-commit is a verification (and rejection) mechanism, not a
+mechanism to tweak what is to be commited, it is totally expected
+that its behaviour is unspecified when you modify anything in it.
 
-So I think it is safe and sensible to do the following change
-regardless of "hash-object --literally" fix.
+I think I saw a similar confusion posted to the list once in the
+past few years.  Perhaps we would need a documentation patch to
+clarify this.
 
- sha1_file.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
-
-diff --git a/sha1_file.c b/sha1_file.c
-index c8ab069..96e813f 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -3002,9 +3002,8 @@ static int freshen_packed_object(const unsigned char *sha1)
- 	return find_pack_entry(sha1, &e) && freshen_file(e.p->pack_name);
- }
- 
--int write_sha1_file(const void *buf, unsigned long len, const char *type, unsigned char *returnsha1)
-+int write_sha1_file(const void *buf, unsigned long len, const char *type, unsigned char *sha1)
- {
--	unsigned char sha1[20];
- 	char hdr[32];
- 	int hdrlen;
- 
-@@ -3012,8 +3011,6 @@ int write_sha1_file(const void *buf, unsigned long len, const char *type, unsign
- 	 * it out into .git/objects/??/?{38} file.
- 	 */
- 	write_sha1_file_prepare(buf, len, type, sha1, hdr, &hdrlen);
--	if (returnsha1)
--		hashcpy(returnsha1, sha1);
- 	if (freshen_loose_object(sha1) || freshen_packed_object(sha1))
- 		return 0;
- 	return write_loose_object(sha1, hdr, hdrlen, buf, len, 0);
+Thanks.
