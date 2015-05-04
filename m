@@ -1,142 +1,133 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v10 1/4] sha1_file: support reading from a loose object of
- unknown type
-Date: Mon, 4 May 2015 19:34:02 -0400
-Message-ID: <CAPig+cTitnC7zvWJEwdo2cMWNE+3ODjd++81bYdg-qTc0bzgog@mail.gmail.com>
-References: <55463094.9040204@gmail.com>
-	<1430663402-26717-1-git-send-email-karthik.188@gmail.com>
+Subject: Re: [PATCH] fixed translation errors
+Date: Mon, 4 May 2015 19:38:53 -0400
+Message-ID: <CAPig+cTHqwsmk4xiHG3v6d9uwTmz08NFP0mihRdnTiXQe5E68Q@mail.gmail.com>
+References: <5547675a.274ec20a.69fb.ffffce22@mx.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 05 01:34:09 2015
+To: Alangi Derick <alangiderick@gmail.com>,
+	Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue May 05 01:39:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YpPsG-0006gj-E1
-	for gcvg-git-2@plane.gmane.org; Tue, 05 May 2015 01:34:08 +0200
+	id 1YpPwx-0001A6-ES
+	for gcvg-git-2@plane.gmane.org; Tue, 05 May 2015 01:39:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751985AbbEDXeG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 May 2015 19:34:06 -0400
-Received: from mail-ig0-f175.google.com ([209.85.213.175]:36701 "EHLO
-	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750887AbbEDXeD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 May 2015 19:34:03 -0400
-Received: by igblo3 with SMTP id lo3so97865589igb.1
-        for <git@vger.kernel.org>; Mon, 04 May 2015 16:34:02 -0700 (PDT)
+	id S1751200AbbEDXiz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 May 2015 19:38:55 -0400
+Received: from mail-ie0-f171.google.com ([209.85.223.171]:34315 "EHLO
+	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750990AbbEDXiy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 May 2015 19:38:54 -0400
+Received: by iedfl3 with SMTP id fl3so161100404ied.1
+        for <git@vger.kernel.org>; Mon, 04 May 2015 16:38:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=lfi0d3OEV7qLfiiq+BFW5nycpZ7XMvf7wWJlC8CaLdE=;
-        b=GPQvbZPtnFP+kl/iVbZ8y2V+oDu9Prl+zFjYlLClCSy2zEUrpYO5gj5LYbYULylLcV
-         jkB3uNJY/S+CX4T2pXs70yv8kxbWc8iUaxUQKNXukIU8akCI3FbAvRDRoCZ/7z/NwkVj
-         MMJTj3TR6iwiXwPOUoTWQ3NbrTAEpd4bdrBcCV+nUI6B13A9gwsz5r/Ypa7PSqT0HULZ
-         GzdKLTxieiBqlESRWunniaSV0mrxfYauy1JZwzuwy3vffX7r5PeAFOWInYWiGaSQS344
-         vnZ5qOBI4WTXujw/gYBZGvqoT75z2kTgrWSJWwisWdBcBtdtgxjsBDCCyJeeCdqfcQVk
-         K8iA==
-X-Received: by 10.50.61.200 with SMTP id s8mr169482igr.7.1430782442418; Mon,
- 04 May 2015 16:34:02 -0700 (PDT)
-Received: by 10.107.28.132 with HTTP; Mon, 4 May 2015 16:34:02 -0700 (PDT)
-In-Reply-To: <1430663402-26717-1-git-send-email-karthik.188@gmail.com>
-X-Google-Sender-Auth: xv4IkOtjB8gJ_zNMXMRidlyP1mw
+         :from:to:content-type;
+        bh=9+hVz9QrpgpkE7I7rmwyjB2rqAAsP8ll7G17BCXZbWk=;
+        b=AtRhMWpXPDigWf+opJlk9JMvs5ld6l6qEptq5EL5kIdgQD+i6mHfJMiwfxEyQ8yLUY
+         +1qfQT9t7dnVkNQVu3zIBWsvnGKgcUFzfwYA4F0UqDF5chSDkUcS1ARfgqoeQD3TUeOJ
+         uzavBmyYz08MxooA4zE7Ky4YaCtLbWvddEqDJ4KT+0G0uAJMJ/4+LhQkJAeNfAsityRA
+         TW3j6Ppm2RqQ7m77WZzc1AvV03F2f28rnH9TUBgg6/JSpShuft5wDfnBL6tGgiCOAuLT
+         rEHo/iK0J52uFqD0ccOkVKtA2e5W5XS2/EUJ5TDDOM87zfhmkMdO0hcGN7KNggzoL6b+
+         1L4w==
+X-Received: by 10.107.31.134 with SMTP id f128mr31154240iof.19.1430782734008;
+ Mon, 04 May 2015 16:38:54 -0700 (PDT)
+Received: by 10.107.28.132 with HTTP; Mon, 4 May 2015 16:38:53 -0700 (PDT)
+In-Reply-To: <5547675a.274ec20a.69fb.ffffce22@mx.google.com>
+X-Google-Sender-Auth: tOJ6c0v-urQWfnvPrTxvtQEXxC8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268372>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268373>
 
-On Sun, May 3, 2015 at 10:29 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
-> Update sha1_loose_object_info() to optionally allow it to read
-> from a loose object file of unknown/bogus type; as the function
-> usually returns the type of the object it read in the form of enum
-> for known types, add an optional "typename" field to receive the
-> name of the type in textual form and a flag to indicate the reading
-> of a loose object file of unknown/bogus type.
->
-> Add parse_sha1_header_extended() which acts as a wrapper around
-> parse_sha1_header() allowing more information to be obtained.
->
-> Add unpack_sha1_header_to_strbuf() to unpack sha1 headers of
-> unknown/corrupt objects which have a unknown sha1 header size to
-> a strbuf structure. This was written by Junio C Hamano but tested
-> by me.
+On Sun, May 3, 2015 at 6:19 PM, Alangi Derick <alangiderick@gmail.com> wrote:
+> Signed-off-by: Alangi Derick <alangiderick@gmail.com>
 > ---
-> diff --git a/cache.h b/cache.h
-> index 3d3244b..38419c3 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -1564,6 +1564,33 @@ int unpack_sha1_header(git_zstream *stream, unsigned char *map, unsigned long ma
-> +static int unpack_sha1_header_to_strbuf(git_zstream *stream, unsigned char *map,
-> +                                       unsigned long mapsize, void *buffer,
-> +                                       unsigned long bufsiz, struct strbuf *header)
-> +{
-> +       unsigned char *cp;
-> +       int status;
-> +
-> +       status = unpack_sha1_header(stream, map, mapsize, buffer, bufsiz);
-> +
-> +       /*
-> +        * Check if entire header is unpacked in the first iteration.
-> +        */
+> diff --git a/builtin/apply.c b/builtin/apply.c
+> index 0769b09..66d2aba 100644
+> --- a/builtin/apply.c
+> +++ b/builtin/apply.c
+> @@ -2237,7 +2237,7 @@ static void update_pre_post_images(struct image *preimage,
+>         if (postlen
+>             ? postlen < new - postimage->buf
+>             : postimage->len < new - postimage->buf)
+> -               die("BUG: caller miscounted postlen: asked %d, orig = %d, used = %d",
+> +               die(_("BUG: caller miscounted postlen: asked %d, orig = %d, used = %d"),
+>                     (int)postlen, (int) postimage->len, (int)(new - postimage->buf));
 
-Nit: You could save some precious vertical screen real-estate by using
-one-line /* comment style */.
+This condition represents a bug in Git itself, which should never
+trigger. As such, there's probably very little value in having it
+translated, and doing so would make extra work for those translating
+the messages.
 
-> +       if (memchr(buffer, '\0', stream->next_out - (unsigned char *)buffer))
-> +               return 0;
-> +
-> @@ -1614,27 +1641,38 @@ static void *unpack_sha1_rest(git_zstream *stream, void *buffer, unsigned long s
->   * too permissive for what we want to check. So do an anal
->   * object header parse by hand.
->   */
-> -int parse_sha1_header(const char *hdr, unsigned long *sizep)
-> +static int parse_sha1_header_extended(const char *hdr, struct object_info *oi,
-> +                              unsigned int flags)
->  {
-> [...]
-> +
-> +       type = type_from_string_gently(type_buf, type_len, 1);
-> +       if (oi->typename)
-> +               strbuf_add(oi->typename, type_buf, type_len);
-> +       /*
-> +        * Set type to 0 if its an unknown object and
-> +        * we're obtaining the type using '--allow-unkown-type'
-> +        * option.
-> +        */
-> +       if ((flags & LOOKUP_UNKNOWN_OBJECT) && (type < 0))
-> +               type = 0;
-
-The comment says exactly what the code already says, thus it adds no
-value. A better comment would explain _why_ type is set to 0 under
-these conditions.
-
-> +       else if (type < 0)
-> +               die("invalid object type");
-> +       if (oi->typep)
-> +               *oi->typep = type;
+>         /* Fix the length of the whole thing */
+> @@ -3342,7 +3342,7 @@ static int load_current(struct image *image, struct patch *patch)
+>         unsigned mode = patch->new_mode;
 >
->         /*
->          * The length must follow immediately, and be in canonical
-> @@ -1652,12 +1690,24 @@ int parse_sha1_header(const char *hdr, unsigned long *sizep)
->                         size = size * 10 + c;
->                 }
+>         if (!patch->is_new)
+> -               die("BUG: patch to %s is not a creation", patch->old_name);
+> +               die(_("BUG: patch to %s is not a creation"), patch->old_name);
+
+Ditto: Internal Git error.
+
+>         pos = cache_name_pos(name, strlen(name));
+>         if (pos < 0)
+> @@ -3572,7 +3572,7 @@ static int check_to_create(const char *new_name, int ok_if_exists)
+>
+>                 return EXISTS_IN_WORKTREE;
+>         } else if ((errno != ENOENT) && (errno != ENOTDIR)) {
+> -               return error("%s: %s", new_name, strerror(errno));
+> +               return error(_("%s: %s"), new_name, strerror(errno));
+
+There isn't a whole lot here for translators to work with; no context
+or indication of what this message is about. (Perhaps the only thing a
+translator can do is adjust whitespace around the colon.) This might
+be the sort of case where you want to submit a separate patch which
+both fleshes out this error message with enough context for
+translators to sink their teeth into, and make the string
+translatable.
+
 >         }
-> -       *sizep = size;
-> +
-> +       if (oi->sizep)
-> +               *oi->sizep = size;
+>         return 0;
+>  }
+> @@ -4599,9 +4599,9 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
+>                         apply_usage, 0);
 >
->         /*
->          * The length must be followed by a zero byte
->          */
+>         if (apply_with_reject && threeway)
+> -               die("--reject and --3way cannot be used together.");
+> +               die(("--reject and --3way cannot be used together."));
+>         if (cached && threeway)
+> -               die("--cached and --3way cannot be used together.");
+> +               die(("--cached and --3way cannot be used together."));
 
-Nit: Save precious vertical screen real-estate with one-line /*
-comment style */.
+You forgot the '_' in '_(...)' on both of these.
 
-> -       return *hdr ? -1 : type_from_string(type);
-> +       return *hdr ? -1 : type;
-> +}
-> +
+>         if (threeway) {
+>                 if (is_not_gitdir)
+>                         die(_("--3way outside a repository"));
+> @@ -4659,8 +4659,8 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
+>                                whitespace_error),
+>                             whitespace_error);
+>                 if (applied_after_fixing_ws && apply)
+> -                       warning("%d line%s applied after"
+> -                               " fixing whitespace errors.",
+> +                       warning(_("%d line%s applied after"
+> +                               " fixing whitespace errors."),
+>                                 applied_after_fixing_ws,
+>                                 applied_after_fixing_ws == 1 ? "" : "s");
+
+This sort of pluralization (adding "s") only works in some languages.
+To translate this properly use Q_(...). See [1] for details, as well
+as existing uses of Q_(...) in Git.
+
+[1]: http://www.gnu.org/savannah-checkouts/gnu/gettext/manual/html_node/Plural-forms.html
+
+>                 else if (whitespace_error)
+> --
+> 2.4.0.2.g3386abe.dirty
