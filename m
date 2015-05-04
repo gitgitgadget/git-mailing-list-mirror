@@ -1,137 +1,147 @@
-From: Dan Langille <dlangille@sourcefire.com>
-Subject: Re: forcing a user@ into the URL if not present
-Date: Mon, 4 May 2015 15:35:00 -0400
-Message-ID: <CABU7BdcuJp3f6_cN8TpJX-brDUWL6-0Q5M0Yvpg2ND-k--yEbw@mail.gmail.com>
-References: <CABU7BddjAZOk0LyybQ8phO0S4705MrZtLSYEsjzUBKUD=H++RQ@mail.gmail.com>
-	<CABU7BddHuiYK4s+_+Z9v15D+Nj8icMQSWNY13TZ77wq8Vo6r+A@mail.gmail.com>
-	<20150430202342.GC5015@vauxhall.crustytoothpaste.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] prefix_path(): Unconditionally free result of prefix_path
+Date: Mon, 4 May 2015 16:19:26 -0400
+Message-ID: <CAPig+cSuCouNCuKa99mct4UMPykuMVy3+7sqB6y+v+UtP2oeTw@mail.gmail.com>
+References: <1430766714-22368-1-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Dan Langille <dlangille@sourcefire.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 04 21:35:10 2015
+Cc: Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Mon May 04 22:19:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YpM8z-00047x-6q
-	for gcvg-git-2@plane.gmane.org; Mon, 04 May 2015 21:35:09 +0200
+	id 1YpMpx-0004qZ-LA
+	for gcvg-git-2@plane.gmane.org; Mon, 04 May 2015 22:19:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752060AbbEDTfF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 May 2015 15:35:05 -0400
-Received: from na3sys009aog127.obsmtp.com ([74.125.149.107]:58191 "EHLO
-	mail-ig0-f182.google.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751733AbbEDTfC (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 4 May 2015 15:35:02 -0400
-Received: from mail-ig0-f182.google.com ([209.85.213.182]) (using TLSv1) by na3sys009aob127.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKVUfJ5WxgCmMMMrjrY573uMx4LaJCLvTp@postini.com; Mon, 04 May 2015 12:35:01 PDT
-Received: by igblo3 with SMTP id lo3so91042329igb.0
-        for <git@vger.kernel.org>; Mon, 04 May 2015 12:35:00 -0700 (PDT)
+	id S1751161AbbEDUT3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 May 2015 16:19:29 -0400
+Received: from mail-ig0-f174.google.com ([209.85.213.174]:37646 "EHLO
+	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750808AbbEDUT1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 May 2015 16:19:27 -0400
+Received: by igblo3 with SMTP id lo3so92116722igb.0
+        for <git@vger.kernel.org>; Mon, 04 May 2015 13:19:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sourcefire.com; s=google;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        bh=s3nM4XuawAIRXnCZ8ScsAyaBaf604DXRwusOrRv7rNw=;
-        b=dygAWMTT3ppRLJ/FQgbR9FPJNYa5Ldpmb+Ls7tBI6eTi48NhlGzgILU1vJxrkzSSdk
-         xYNN6fpmLHn9qN18MVB2EOvaOppTotPFR26Qwzq3JMXTTcCm+W6DHRvsN+SoX/xi68EN
-         tzXrtFdAQUovQGdZbab8ZOhsA8mvjvTiI0cP8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:content-type;
-        bh=s3nM4XuawAIRXnCZ8ScsAyaBaf604DXRwusOrRv7rNw=;
-        b=ORTvxKY0v/+nSanEPJZbhMf7XuS0sjwmxcIljlEPyDUrW2N16ztIWyH4qC7qKCgFES
-         8f0lZa8x8g0gSbLo7KEYX4w1XlpqOZv0Krs78fka0ijFbk+kEzCv6qeKToCyiCvDRUnu
-         2LeElBhPWkR3w24dC7h9QvJHVto3Vct9OkOjntsUulfBQE6/iN1ueDq7cWiEnA0mzaxX
-         +h6qO16qoM3JrJROHJUed/rza4/HGzlmxEcQxR3gPGxPIqrSmoKT+u9bi1okhAD2WvCA
-         p9L7pi/JaLhkOn2n0h6QJrD0OjDlVNBeuo8F9JkF8DnubsfpZc+p+f6BxOpka0JAypT+
-         ySYg==
-X-Gm-Message-State: ALoCoQnQbDRUSiesK85QKG+cQbpdXC2mNNWBCKGnZ3rI+apIWUuBPzMFVfITAf2TyMLv1ZqAQZnzpd5F/UJUakvtQD0aU+McGF7dN9MqSr66IKnSRVrtC/M2SA2QSVbtj60qQKqZK90rSDh/M7aFzwAGFrPBbIL/OQ==
-X-Received: by 10.107.8.7 with SMTP id 7mr24529222ioi.87.1430768100636;
-        Mon, 04 May 2015 12:35:00 -0700 (PDT)
-X-Received: by 10.107.8.7 with SMTP id 7mr24529212ioi.87.1430768100526; Mon,
- 04 May 2015 12:35:00 -0700 (PDT)
-Received: by 10.107.137.95 with HTTP; Mon, 4 May 2015 12:35:00 -0700 (PDT)
-In-Reply-To: <20150430202342.GC5015@vauxhall.crustytoothpaste.net>
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=Cq81GeCTAJjRcgIgpMlFyyuqJKMEHwWfvZGkjMuj8aU=;
+        b=sE8/SP2EXvAzzaZLXhLd5JNQgpwaYD+F3hm7JrfE9B5JA/Qq6ipslEoKusP4n+vsMi
+         ipsFBrUjHoXg79qkRQ6qaFLSW/V17/G16J4i3P1w3j2u/OhdS5RdQZf7SSOUo7G8W7Eo
+         dFy0VsmU3ZrcU74hbMa/msfzoO62ElBNIY6RCHq7qSTPwOm18tfOsF9I+1xIDcwcMs1h
+         Od5zzxI6klauPFQf4l+86pI65yPHy18//N9kuFtVflkZV4h5byqPTuZ9lHNxJahZbz0j
+         su/DDqyv1JKLgFr++Op8fawMo/wMka18ydhZ4BcT3O9TJNZgns5ETZxpsgKjhUTJ3y06
+         057A==
+X-Received: by 10.50.85.43 with SMTP id e11mr416172igz.15.1430770766968; Mon,
+ 04 May 2015 13:19:26 -0700 (PDT)
+Received: by 10.107.28.132 with HTTP; Mon, 4 May 2015 13:19:26 -0700 (PDT)
+In-Reply-To: <1430766714-22368-1-git-send-email-sbeller@google.com>
+X-Google-Sender-Auth: 2XeT2O4NUFByb1hgJ2LKn_iETr8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268344>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268345>
 
-On Thu, Apr 30, 2015 at 4:23 PM, brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
-> On Thu, Apr 30, 2015 at 04:14:12PM -0400, Dan Langille wrote:
->> Would this question be better suited for another list?
->
-> Nope, this is the place to go.
->
->> On Wed, Apr 22, 2015 at 4:06 PM, Dan Langille <dlangille@sourcefire.com> wrote:
->> > Hello,
->> >
->> > I'm using git 2.3.2 with Kerberos for authentication and gito-lite for
->> > authorization.
->> >
->> > This works:
->> >
->> > $ git clone https://dvl@ repo.example.org/git/testing
->> > Cloning into 'testing'...
->> > warning: You appear to have cloned an empty repository.
->> > Checking connectivity... done.
->> >
->> > My goal: have it work without supplying dvl@ as shown here:
->> >
->> > $ git clone https://repo.example.org/git/testing
->> > Cloning into 'testing'...
->> > Username for 'https://repo.example.org':
->> >
->> > I don't want to be prompted for a password.  I want Kerberos to kick in.
->> >
->> > Following http://git-scm.com/docs/gitcredentials, the following seems to
->> > have nil effect.  Anyone used this feature already?
->> >
->> >   git config --global credential.https://repo.example.org.username dvl
->> >
->> > $ cat ~/.gitconfig
->> > [credential "https://repo.example.org"]
->> > username = dvl
->> > [http]
->> > sslCAInfo = /usr/local/etc/trusted-certificates.pem
->> >
->> > With the above, I still get prompted for a password
->> >
->> > Given my use of Kerberos for authorization, is this option feasible?
->
-> Not at the present time.  The only time that the credential API is
-> invoked is if it prompts for a password, and by that point you've fallen
-> back to Basic authentication.
->
->> > Should I be taking a different approach?
->
-> If you want it to work only with Kerberos, then any username in the URL
-> is fine, as libcurl doesn't care.
+On Mon, May 4, 2015 at 3:11 PM, Stefan Beller <sbeller@google.com> wrote:
+> prefix_path(): Unconditionally free result of prefix_path
 
-That is what I found during testing.  So long as I put a username in
-the URL, Kerberos worked
-and all authentication occurred as expected.
+Slightly redundant mention of "prefix_path". Also, prevailing custom
+is to drop capitalization.
 
->> One thing you could try is to make your URL https://git@repo.example.org
-> and then use
+> prefix_path() always returns a newly allocated string since
+> d089eba (setup: sanitize absolute and funny paths in get_pathspec(),
+> 2008-01-28)
+
+I'd probably turn this sentence fragment into a proper sentence:
+
+    As of d089eba (...), prefix_path() always returns a newly
+    allocated string, so free its result unconditionally.
+
+> Additionally the const is dropped from the pointers, so the call to
+> free doesn't need a cast.
+
+Imperative mood:
+
+    Additionally, drop the const from variables to which the
+    prefix_path() result is assigned so they can be free()'d
+    without having to cast-away constness.
+
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
 >
->   git config --global credential.https://git@repo.example.org.username dvl
+> Notes:
+>     Thanks for all the suggestions!
+>     They are incorporated into this version of the patch.
+
+Thanks, this version looks much better.
+
+FWIW, with or without addressing the very minor nits above:
+
+Reviewed-by: Eric Sunshine <sunshine@sunshineco.com>
+
+> diff --git a/builtin/checkout-index.c b/builtin/checkout-index.c
+> index 9ca2da1..8028c37 100644
+> --- a/builtin/checkout-index.c
+> +++ b/builtin/checkout-index.c
+> @@ -241,7 +241,7 @@ int cmd_checkout_index(int argc, const char **argv, const char *prefix)
+>         /* Check out named files first */
+>         for (i = 0; i < argc; i++) {
+>                 const char *arg = argv[i];
+> -               const char *p;
+> +               char *p;
 >
-> and see if it does the right thing for both Kerberos and Basic auth.  It
-> would be sort of a hack, but it might work.
-
-It asks for a password, and for the correct user:
-
-Password for 'https://dvl@repo.example.org':
-
-Thanks Brian, for this, and your other help.  I appreciate it.
-
--- 
-Dan Langille
-Infrastructure & Operations
-Talos Group
-Sourcefire, Inc.
+>                 if (all)
+>                         die("git checkout-index: don't mix '--all' and explicit filenames");
+> @@ -249,8 +249,7 @@ int cmd_checkout_index(int argc, const char **argv, const char *prefix)
+>                         die("git checkout-index: don't mix '--stdin' and explicit filenames");
+>                 p = prefix_path(prefix, prefix_length, arg);
+>                 checkout_file(p, prefix);
+> -               if (p < arg || p > arg + strlen(arg))
+> -                       free((char *)p);
+> +               free(p);
+>         }
+>
+>         if (read_from_stdin) {
+> @@ -260,7 +259,7 @@ int cmd_checkout_index(int argc, const char **argv, const char *prefix)
+>                         die("git checkout-index: don't mix '--all' and '--stdin'");
+>
+>                 while (strbuf_getline(&buf, stdin, line_termination) != EOF) {
+> -                       const char *p;
+> +                       char *p;
+>                         if (line_termination && buf.buf[0] == '"') {
+>                                 strbuf_reset(&nbuf);
+>                                 if (unquote_c_style(&nbuf, buf.buf, NULL))
+> @@ -269,8 +268,7 @@ int cmd_checkout_index(int argc, const char **argv, const char *prefix)
+>                         }
+>                         p = prefix_path(prefix, prefix_length, buf.buf);
+>                         checkout_file(p, prefix);
+> -                       if (p < buf.buf || p > buf.buf + buf.len)
+> -                               free((char *)p);
+> +                       free(p);
+>                 }
+>                 strbuf_release(&nbuf);
+>                 strbuf_release(&buf);
+> diff --git a/builtin/update-index.c b/builtin/update-index.c
+> index 6271b54..a92eed2 100644
+> --- a/builtin/update-index.c
+> +++ b/builtin/update-index.c
+> @@ -532,10 +532,9 @@ static int do_unresolve(int ac, const char **av,
+>
+>         for (i = 1; i < ac; i++) {
+>                 const char *arg = av[i];
+> -               const char *p = prefix_path(prefix, prefix_length, arg);
+> +               char *p = prefix_path(prefix, prefix_length, arg);
+>                 err |= unresolve_one(p);
+> -               if (p < arg || p > arg + strlen(arg))
+> -                       free((char *)p);
+> +               free(p);
+>         }
+>         return err;
+>  }
+> --
+> 2.4.0.rc3.16.g0ab00b9
