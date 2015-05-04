@@ -1,8 +1,8 @@
 From: =?UTF-8?q?S=C3=A9bastien=20Guimmara?= 
 	<sebastien.guimmara@gmail.com>
-Subject: [PATCH 3/3] git help: group common commands by theme
-Date: Mon,  4 May 2015 22:28:10 +0200
-Message-ID: <13c3dcbd2c5c9dfc0453381b5da53b5d68af7afe.1430770308.git.sebastien.guimmara@gmail.com>
+Subject: [PATCH 2/3] generate-cmdlist.sh: parse common group commands
+Date: Mon,  4 May 2015 22:28:09 +0200
+Message-ID: <a787babf25481c99edea6dca5e5f7814601395fe.1430770308.git.sebastien.guimmara@gmail.com>
 References: <cover.1430770308.git.sebastien.guimmara@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,41 +11,41 @@ Cc: =?UTF-8?q?S=C3=A9bastien=20Guimmara?=
 	<sebastien.guimmara@gmail.com>, gitster@pobox.com,
 	sunshine@sunshineco.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 04 22:28:43 2015
+X-From: git-owner@vger.kernel.org Mon May 04 22:28:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YpMyo-0001tE-7V
-	for gcvg-git-2@plane.gmane.org; Mon, 04 May 2015 22:28:42 +0200
+	id 1YpMyi-0001qX-CJ
+	for gcvg-git-2@plane.gmane.org; Mon, 04 May 2015 22:28:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752026AbbEDU2g convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 May 2015 16:28:36 -0400
-Received: from mail-wi0-f170.google.com ([209.85.212.170]:33552 "EHLO
-	mail-wi0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751583AbbEDU2c (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 May 2015 16:28:32 -0400
-Received: by wief7 with SMTP id f7so85799952wie.0
-        for <git@vger.kernel.org>; Mon, 04 May 2015 13:28:31 -0700 (PDT)
+	id S1752000AbbEDU2d convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 May 2015 16:28:33 -0400
+Received: from mail-wi0-f175.google.com ([209.85.212.175]:33538 "EHLO
+	mail-wi0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751933AbbEDU2a (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 May 2015 16:28:30 -0400
+Received: by wief7 with SMTP id f7so85799617wie.0
+        for <git@vger.kernel.org>; Mon, 04 May 2015 13:28:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references:mime-version:content-type
          :content-transfer-encoding;
-        bh=xS1PvsKy+sSCVHu8OHTrdS4bz4UYRJ/IJSfMlLJLkJg=;
-        b=WAhGuivsJvpx40iJEXDRNXCYlE/PyIhe0YtiMZTSoXRf8qO7SXJHR0QRjIsxPvcm4R
-         Iz+takY1iZGXYZ4v6ZxJcpgndlQaJxeSadCpPUEldDoxQH5mQniH4zYRM+lbXPlh53iU
-         4MSjMozsdUHgY/r2160cQTn1kblKAEQlcVLQxUb4tY/UmCyvhrK++zYdVh+V2zdrkYea
-         LXZEpr501AmGCPP0p7V/WRybY+vCj5hVcBMheaBzh5MkzATsKihq5LD7Pth2gi9lrKn1
-         6zdmZ+8YPjl44dVrbrN+RFdQ4KyprIjZrxtUiWBzo474kifx9uHwEkc3fGj2u3loSc6U
-         9ydw==
-X-Received: by 10.194.60.43 with SMTP id e11mr46021449wjr.36.1430771311057;
-        Mon, 04 May 2015 13:28:31 -0700 (PDT)
+        bh=cvGAt3cYCoaOFdehJRuG9xw1nKDn4XAWBjyJH6Ppd5U=;
+        b=DfuKOGZonCslfZB5YxsTEmLLNwS2Ga7W7jYd38YkZUpM2BO/ts+aYT0DY0yNEyWt2S
+         ZVGhpvtaGuZ2ty49hq/+Nd035DE1swmNfDBExY3x6BqCTOZeBiXUcDxB+nEywXIkaZhP
+         rPuRf392DppoBwqcgl2Se6cG8j15BhkOggKLOhPrWzErjvr8UNe2+Nk2g9pbnGMd0hLs
+         c2HqSEMolFsj96GOIexKU4NxBvq6/wV+FTCrDHMiytuYxbvZsfjwsIhtFhyyDNjAUSZ+
+         too8tWqod+aykGkWsDKKUrfrWyk3v6i1s0Sm5Pscy4dwVsO2QQeYjCLIcafTacJQ6ji7
+         jQyQ==
+X-Received: by 10.180.97.7 with SMTP id dw7mr578385wib.74.1430771309729;
+        Mon, 04 May 2015 13:28:29 -0700 (PDT)
 Received: from localhost.localdomain (bd231-1-88-176-208-17.fbx.proxad.net. [88.176.208.17])
-        by mx.google.com with ESMTPSA id xb3sm22164354wjc.38.2015.05.04.13.28.29
+        by mx.google.com with ESMTPSA id xb3sm22164354wjc.38.2015.05.04.13.28.28
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 04 May 2015 13:28:30 -0700 (PDT)
+        Mon, 04 May 2015 13:28:29 -0700 (PDT)
 X-Mailer: git-send-email 2.4.0
 In-Reply-To: <cover.1430770308.git.sebastien.guimmara@gmail.com>
 In-Reply-To: <cover.1430770308.git.sebastien.guimmara@gmail.com>
@@ -54,91 +54,102 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268349>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268350>
 
-'git help' shows common commands in alphabetical order:
+parse the [groups] block to create the array of group descriptions
 
-The most commonly used git commands are:
-   add        Add file contents to the index
-   bisect     Find by binary search the change that introduced a bug
-   branch     List, create, or delete branches
-   checkout   Checkout a branch or paths to the working tree
-   clone      Clone a repository into a new directory
-   commit     Record changes to the repository
-   [...]
+   static char *common_cmd_groups[] =3D {
+      N_("starting a working area"),
+      N_("working on the current change"),
+      N_("working with others"),
+      N_("examining the history and state"),
+      N_("growing, marking and tweaking your history"),
+   };
 
-without any indication of how commands relate to high-level
-concepts or each other. Revise the output to group commands by
-concept, like this:
+then map each element of common_cmds[] to a group via its index:
 
-The most commonly used git commands are:
+   static struct cmdname_help common_cmds[] =3D {
+     {"add", N_("Add file contents to the index"), 1},
+     {"branch", N_("List, create, or delete branches"), 4},
+     {"checkout", N_("Checkout a branch or paths to the working tree"),=
+ 4},
+     {"clone", N_("Clone a repository into a new directory"), 0},
+     {"commit", N_("Record changes to the repository"), 4},
+     [...]
 
-   * starting a working area:
-      clone      Clone a repository into a new directory
-      init       Create an empty Git repository or reinitialize an exis=
-ting one
-
-   * working on the current change:
-      add        Add file contents to the index
-      reset      Reset current HEAD to the specified state
-      [...]
+So that 'git help' can print those command grouped by theme.
 
 Helped-by: Junio C Hamano <gitster@pobox.com>
 Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 Signed-off-by: S=C3=A9bastien Guimmara <sebastien.guimmara@gmail.com>
 ---
- help.c | 28 +++++++++++++++++++++++++++-
- 1 file changed, 27 insertions(+), 1 deletion(-)
+ generate-cmdlist.sh | 43 +++++++++++++++++++++++++++++++------------
+ 1 file changed, 31 insertions(+), 12 deletions(-)
 
-diff --git a/help.c b/help.c
-index 2072a87..c8b0bb6 100644
---- a/help.c
-+++ b/help.c
-@@ -218,18 +218,44 @@ void list_commands(unsigned int colopts,
- 	}
- }
+diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
+index 9a4c9b9..724bb8d 100755
+--- a/generate-cmdlist.sh
++++ b/generate-cmdlist.sh
+@@ -1,23 +1,42 @@
+ #!/bin/sh
++content=3D$(cat command-list.txt)
++
++group_line_no=3D$(expr $(echo "$content" | grep -n '^\[groups\]' | cut=
+ -f1 -d:) + 1)
++command_line_no=3D$(expr $(echo "$content" | grep -n '^\[commands\]' |=
+ cut -f1 -d:) + 1)
++groups=3D$(echo "$content" | sed -n ''$group_line_no', '$(expr $comman=
+d_line_no)'p')
 =20
-+int cmd_group_cmp(const void *elem1, const void *elem2)
-+{
-+	int group1, group2;
+ echo "/* Automatically generated by $0 */
 +
-+	group1 =3D ((struct cmdname_help *) elem1)->group;
-+	group2 =3D ((struct cmdname_help *) elem2)->group;
-+
-+	if (group1 =3D=3D group2)
-+		return 0;
-+	if (group1 > group2)
-+		return 1;
-+	else
-+		return -1;
-+}
-+
- void list_common_cmds_help(void)
- {
- 	int i, longest =3D 0;
-+	unsigned char current_grp =3D -1;
+ struct cmdname_help {
+     char name[16];
+     char help[80];
++    unsigned char group;
+ };
 =20
- 	for (i =3D 0; i < ARRAY_SIZE(common_cmds); i++) {
- 		if (longest < strlen(common_cmds[i].name))
- 			longest =3D strlen(common_cmds[i].name);
- 	}
++static char *common_cmd_groups[] =3D {"
++echo "$groups" |
++while read group description; do
++    if [ -z $group ]; then
++        break
++    fi
++    echo '   N_("'$description'"),'
++done
++echo "};
++
+ static struct cmdname_help common_cmds[] =3D {"
 =20
-+	qsort(common_cmds, ARRAY_SIZE(common_cmds),
-+		sizeof(common_cmds[0]), cmd_group_cmp);
-+
- 	puts(_("The most commonly used git commands are:"));
-+
- 	for (i =3D 0; i < ARRAY_SIZE(common_cmds); i++) {
--		printf("   %s   ", common_cmds[i].name);
-+		if (common_cmds[i].group !=3D current_grp) {
-+			printf("\n   * %s:\n", _(common_cmd_groups[common_cmds[i].group]));
-+		}
-+
-+		current_grp =3D common_cmds[i].group;
-+
-+		printf("      %s   ", common_cmds[i].name);
- 		mput_char(' ', longest - strlen(common_cmds[i].name));
- 		puts(_(common_cmds[i].help));
- 	}
+-sed -n -e 's/^git-\([^ 	]*\)[ 	].* common.*/\1/p' command-list.txt |
+-sort |
+-while read cmd
+-do
+-     sed -n '
+-     /^NAME/,/git-'"$cmd"'/H
+-     ${
+-	    x
+-	    s/.*git-'"$cmd"' - \(.*\)/  {"'"$cmd"'", N_("\1")},/
+-	    p
+-     }' "Documentation/git-$cmd.txt"
++echo "$content" | grep 'common-' |
++awk '{ print $1, "\t", $3 }' |
++while read cmd grp; do
++    cmd_name=3D$(echo $cmd | cut -d - -f 2)
++    group_name=3D$(echo $grp | cut -d - -f 2)
++    group_idx=3D$(expr $(echo "$groups" | grep -n "^$group_name" | cut=
+ -c 1) - 1)
++    sed -n '
++    /^NAME/,/git-'"$cmd_name"'/H
++    ${
++       x
++       s/.*git-'"$cmd_name"' - \(.*\)/  {"'"$cmd_name"'", N_("\1"), '"=
+$group_idx"'},/
++       p
++    }' "Documentation/$cmd.txt"
+ done
+-echo "};"
++echo "};"
+\ No newline at end of file
 --=20
 2.4.0
