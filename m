@@ -1,102 +1,92 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] prefix_path(): Unconditionally free result of prefix_path
-Date: Mon, 04 May 2015 15:29:32 -0700
-Message-ID: <xmqq8ud4ou2b.fsf@gitster.dls.corp.google.com>
-References: <1430766714-22368-1-git-send-email-sbeller@google.com>
-	<CAPig+cSuCouNCuKa99mct4UMPykuMVy3+7sqB6y+v+UtP2oeTw@mail.gmail.com>
+Subject: Re: Bug: git-p4 edit_template() and P4EDITOR w/options
+Date: Mon, 04 May 2015 15:34:48 -0700
+Message-ID: <xmqq4mnsottj.fsf@gitster.dls.corp.google.com>
+References: <5D2E2EAF-FFE7-437F-A716-E152E865E634@pixar.com>
+	<xmqqh9rsovd4.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
-	Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Tue May 05 00:29:40 2015
+Cc: git@vger.kernel.org
+To: Chris Lasell <chrisl@pixar.com>
+X-From: git-owner@vger.kernel.org Tue May 05 00:34:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YpOrs-0005JJ-7q
-	for gcvg-git-2@plane.gmane.org; Tue, 05 May 2015 00:29:40 +0200
+	id 1YpOwy-00086m-JS
+	for gcvg-git-2@plane.gmane.org; Tue, 05 May 2015 00:34:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751429AbbEDW3g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 May 2015 18:29:36 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:58154 "EHLO
+	id S1750952AbbEDWex (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 May 2015 18:34:53 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:58443 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751374AbbEDW3f (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 May 2015 18:29:35 -0400
+	with ESMTP id S1750699AbbEDWev (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 May 2015 18:34:51 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B796D4EFBA;
-	Mon,  4 May 2015 18:29:34 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 64C464F14E;
+	Mon,  4 May 2015 18:34:50 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=hEb/3rHZ22M+SiuwN5MYo/1Udvk=; b=Re2grR
-	CBjRNujB80sNqsAeN3Z6gRF0fqXtmCsprXGW3o/Fn4EXPRVLx9WLnV3FsVz0GU7Q
-	YpyaqWTc/vv5/m0DMAP2Tet/dsnD7wmCt/iAtd4vxa46un3lM6usegyTH5yJx4VK
-	M8hBk11YW11NjFxarehFJLasY1ZhFtq/TIrs8=
+	:content-type; s=sasl; bh=sOFnDP/a61pUy03igh+SWu86mpI=; b=wJX9Yn
+	csjYsAwzxLaDvAdXhxA6ONu6E3rgGVmEj3fJkNntUVgH8JxMkRx9Nvyg/TE5z4NC
+	1VUllkm0PnNtxheI00frMirk13zm/hUQa+G2O27Lrm/bdSl5Xm+M7WlJf4Dg0JRq
+	TFH8en/H4agIADuIrj5raHhsM4PTgcULlZNRk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vn+MMnbr3l7z+/ZVlgLjwCCnw32GM8p5
-	I4Yx7/dbV3PcPM7ATdz6lrIl4/P1wbrnPGwgArrzapkN0xzXUFvWWQJgZ8KnTNyN
-	CABddVAHng3ZZVOHrDQM7OEmXAJBNcztGDrhga1R9ijA9o251cv0bko8WEIKxseo
-	aG167+Y6Nx4=
+	:content-type; q=dns; s=sasl; b=r4CeOAf8wM/RU6folvDJHsklDPa7xeF/
+	4sgY4wXdS6Gw9aNu55ae+iCxCWqTeNZGM/o69o1K66VGqrN50xRNNrbw+cQRX/i0
+	TvqnSoSPLZifUmj9U6WQ7Nmf+lAMywnzkEP+udd9TEEybugSz2evJQwTz1nBM78X
+	r1a2f4v4WOk=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id AF71B4EFA9;
-	Mon,  4 May 2015 18:29:33 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5E52D4F14D;
+	Mon,  4 May 2015 18:34:50 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2E7BF4EFA6;
-	Mon,  4 May 2015 18:29:33 -0400 (EDT)
-In-Reply-To: <CAPig+cSuCouNCuKa99mct4UMPykuMVy3+7sqB6y+v+UtP2oeTw@mail.gmail.com>
-	(Eric Sunshine's message of "Mon, 4 May 2015 16:19:26 -0400")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D2E884F149;
+	Mon,  4 May 2015 18:34:49 -0400 (EDT)
+In-Reply-To: <xmqqh9rsovd4.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Mon, 04 May 2015 15:01:27 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 09961C86-F2AD-11E4-8389-83E09F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: C656512E-F2AD-11E4-A78D-83E09F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268366>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268367>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On Mon, May 4, 2015 at 3:11 PM, Stefan Beller <sbeller@google.com> wrote:
->> prefix_path(): Unconditionally free result of prefix_path
+> The relevant part of git-p4 is this:
 >
-> Slightly redundant mention of "prefix_path". Also, prevailing custom
-> is to drop capitalization.
+>         # invoke the editor
+>         if os.environ.has_key("P4EDITOR") and (os.environ.get("P4EDITOR") != ""):
+>             editor = os.environ.get("P4EDITOR")
+>         else:
+>             editor = read_pipe("git var GIT_EDITOR").strip()
+>         system([editor, template_file])
 >
->> prefix_path() always returns a newly allocated string since
->> d089eba (setup: sanitize absolute and funny paths in get_pathspec(),
->> 2008-01-28)
+> It grabs $EDITOR (or $GIT_EDITOR) and treats it as the path to the
+> editor executable, without letting shell to split that into words at
+> whitespace boundaries, so that you can say things like
 >
-> I'd probably turn this sentence fragment into a proper sentence:
+> 	EDITOR="/User/me/My Programs/nano"
 >
->     As of d089eba (...), prefix_path() always returns a newly
->     allocated string, so free its result unconditionally.
+> The way we spawn EDITOR in our core codepaths matches what git-p4
+> does, too:
 >
->> Additionally the const is dropped from the pointers, so the call to
->> free doesn't need a cast.
+> 	const char *args[] = { editor, real_path(path), NULL };
+> 	struct child_process p = CHILD_PROCESS_INIT;
+> 	int ret, sig;
 >
-> Imperative mood:
+> 	p.argv = args;
+> 	p.env = env;
+> 	p.use_shell = 1;
+> 	if (start_command(&p) < 0)
+> 		return error("unable to start editor '%s'", editor);
+> 	...
 >
->     Additionally, drop the const from variables to which the
->     prefix_path() result is assigned so they can be free()'d
->     without having to cast-away constness.
->
->> Signed-off-by: Stefan Beller <sbeller@google.com>
->> ---
->>
->> Notes:
->>     Thanks for all the suggestions!
->>     They are incorporated into this version of the patch.
->
-> Thanks, this version looks much better.
->
-> FWIW, with or without addressing the very minor nits above:
->
-> Reviewed-by: Eric Sunshine <sunshine@sunshineco.com>
+> So...
 
-Thanks, both.
-
-To save a round-trip, I'll munge the log message myself stealing
-Eric's suggestions.
+Well, I'll take that back.  I misread p.use_shell line.
