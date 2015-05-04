@@ -1,68 +1,146 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: Diffing submodule does not yield complete logs for merge commits
-Date: Mon, 4 May 2015 22:51:04 +0200
-Message-ID: <20150504205104.GA28246@sandbox-ub1410>
-References: <CAHd499BqB_ZFKMNxSVCDTFx2Ge=TfCE6gexFn+rfRbS+ybLybA@mail.gmail.com>
- <20150501175757.GA10569@book.hvoigt.net>
- <CAHd499B=EcgYiTMFt9VYhj45bRkP8h9TBk1B0cr8fYFuXNe_mQ@mail.gmail.com>
- <5547C961.7070909@web.de>
- <CAHd499CRge9Y6VzdC_ngXS4WxuQ9HizXQJzLpX3iQStY5Cg=6g@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v10 0/4] cat-file: add support for "-allow-unknown-type"
+Date: Mon, 04 May 2015 13:57:51 -0700
+Message-ID: <xmqqioc8rrg0.fsf@gitster.dls.corp.google.com>
+References: <55463094.9040204@gmail.com>
+	<xmqqzj5ltd6c.fsf@gitster.dls.corp.google.com>
+	<xmqqvbg9td0x.fsf@gitster.dls.corp.google.com>
+	<55477478.9010406@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jens Lehmann <Jens.Lehmann@web.de>, Git <git@vger.kernel.org>
-To: Robert Dailey <rcdailey.lists@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 04 22:51:18 2015
+Content-Type: text/plain
+Cc: Git List <git@vger.kernel.org>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: karthik nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 04 22:59:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YpNKe-0006E0-UY
-	for gcvg-git-2@plane.gmane.org; Mon, 04 May 2015 22:51:17 +0200
+	id 1YpNS5-0002Ky-UN
+	for gcvg-git-2@plane.gmane.org; Mon, 04 May 2015 22:58:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751841AbbEDUvN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 May 2015 16:51:13 -0400
-Received: from smtprelay04.ispgateway.de ([80.67.31.42]:60644 "EHLO
-	smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751384AbbEDUvL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 May 2015 16:51:11 -0400
-Received: from [80.135.96.43] (helo=sandbox-ub1410)
-	by smtprelay04.ispgateway.de with esmtpsa (TLSv1.2:AES128-GCM-SHA256:128)
-	(Exim 4.84)
-	(envelope-from <hvoigt@hvoigt.net>)
-	id 1YpNKW-0007z7-J1; Mon, 04 May 2015 22:51:08 +0200
-Content-Disposition: inline
-In-Reply-To: <CAHd499CRge9Y6VzdC_ngXS4WxuQ9HizXQJzLpX3iQStY5Cg=6g@mail.gmail.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+	id S1752447AbbEDU6x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 May 2015 16:58:53 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:53834 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752860AbbEDU5z (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 May 2015 16:57:55 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7D6974E8C9;
+	Mon,  4 May 2015 16:57:54 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=D2Dsdxvjsgf9t8/StUwISp1TN6E=; b=ID4Nip
+	/H8xaF+LXX2pgMnxxthXpTumsv78ilvPhZYiHCkFHHdRtDii8ez0Rd514ScPo/R9
+	QuD8CgWEdJLfdtoKwlU9Rsa3PwHikilvs75Da9pIePhequ8kMh8yB9KKPM49DSoy
+	Eu2LikL+pkYMeyNFPDcXy4sb43mjXL1OI2DBA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=JSiAI1JP1yMuCTRKGO1zxrUWNd/SqEFS
+	uZk3aFJoMSfzcO4EVllEfWSkU+FqxTBuUwHAdkTOQt0Gtz9taVGQsoOf6ofTbqQu
+	Pkm+GAKPKhwNdHZAPw03bNPecOl3GF6eDez5l0V/e/qJ12asfsIGlBQeWIuMIolX
+	acjAxGWVAcg=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 751A64E8C8;
+	Mon,  4 May 2015 16:57:54 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D4D434E8C7;
+	Mon,  4 May 2015 16:57:53 -0400 (EDT)
+In-Reply-To: <55477478.9010406@gmail.com> (karthik nayak's message of "Mon, 04
+	May 2015 19:00:32 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 3BBCB678-F2A0-11E4-A215-83E09F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268351>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268352>
 
-Hi,
+karthik nayak <karthik.188@gmail.com> writes:
 
-On Mon, May 04, 2015 at 03:21:31PM -0500, Robert Dailey wrote:
-> Since I am not a linux user, I have implemented this feature against
-> the Git for Windows fork of git. I am not able to verify changes if I
-> make them directly against the Git repository. Is it OK if you guys
-> end up getting this as an upstream patch later from that project? Also
-> I am not familiar with the bash unit tests, I will need help with
-> that.
+>> @@ -1579,7 +1578,6 @@ static int unpack_sha1_heade
+>>   	if (memchr(buffer, '\0', stream->next_out - (unsigned char *)buffer))
+>>   		return 0;
+>>
+>> -	strbuf_add(header, buffer, stream->next_out - (unsigned char *)buffer);
+> Ok this works, weird, I test before sending patches, anyways getting
+> to the point of discussion, shouldn't we have add the buf, since we
+> did inflate once, before doing inflate again?
 
-I think there is nothing wrong with implementing it in the Windows
-development environment and then sending the patch directly here. As
-long as it is not Windows specific (which it should not be) that should
-be fine and you save the Windows guys the work to get the patch
-upstream (because here is upstream not there ;-)).
++static int unpack_sha1_header_to_strbuf(git_zstream *stream, unsigned char *map,
++					unsigned long mapsize, void *buffer,
++					unsigned long bufsiz, struct strbuf *header)
++{
++	unsigned char *cp;
++	int status;
++
++	status = unpack_sha1_header(stream, map, mapsize, buffer, bufsiz);
 
-Have a look at some tests, they are quite simple. Basically they run git
-commands in a && chain and the resulting return code tells the testsuite
-whether that test succeeded or not. Maybe have a look at the test for
-the existing --submodule option (t4041-diff-submodule-option.sh) as an
-example. You can probably reuse the complete setup there and just add a
-new test for the new option with the expected output. There is also a
-README in the t/ folder. HTH.
+Here, buffer..stream->next_out contains the inflated result
 
-Cheers Heiko
++	/*
++	 * Check if entire header is unpacked in the first iteration.
++	 */
++	if (memchr(buffer, '\0', stream->next_out - (unsigned char *)buffer))
++		return 0;
++
++	strbuf_add(header, buffer, stream->next_out - (unsigned char *)buffer);
+
+... and that is copied to header.buf ...
+
++	do {
++		status = git_inflate(stream, 0);
+
+... and then we inflate further into where?
+
+It inflates to stream->next_out and then advances the pointer
+
++		strbuf_add(header, buffer, stream->next_out - (unsigned char *)buffer);
+
+... and then the same buffer..stream->next_out (whose early part
+already holds the result from the initial inflation) is appended
+to header.
+
++		if (memchr(buffer, '\0', stream->next_out - (unsigned char *)buffer))
++			return 0;
++		stream->next_out = buffer;
++		stream->avail_out = bufsiz;
+
+I think my squash is wrong.  The initial inflate must have filled
+buffer[0..bufsiz] without any NULs, leaving stream->next_out at the
+end of the buffer, and subsequent git_inflate() it will clobber
+beyond the tail of the buffer.
+
+It should have been more like this, I think.
+
+diff --git a/sha1_file.c b/sha1_file.c
+index f65bf90..37e6f2c 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1568,7 +1568,6 @@ static int unpack_sha1_header_to_strbuf(git_zstream *stream, unsigned char *map,
+ 					unsigned long mapsize, void *buffer,
+ 					unsigned long bufsiz, struct strbuf *header)
+ {
+-	unsigned char *cp;
+ 	int status;
+ 
+ 	status = unpack_sha1_header(stream, map, mapsize, buffer, bufsiz);
+@@ -1579,7 +1578,15 @@ static int unpack_sha1_header_to_strbuf(git_zstream *stream, unsigned char *map,
+ 	if (memchr(buffer, '\0', stream->next_out - (unsigned char *)buffer))
+ 		return 0;
+ 
++	/*
++	 * buffer[0..bufsiz] was not large enough.  Copy the partial
++	 * result out to header, and then append the result of further
++	 * reading the stream.
++	 */
+ 	strbuf_add(header, buffer, stream->next_out - (unsigned char *)buffer);
++	stream->next_out = buffer;
++	stream->avail_out = bufsiz;
++
+ 	do {
+ 		status = git_inflate(stream, 0);
+ 		strbuf_add(header, buffer, stream->next_out - (unsigned char *)buffer);
