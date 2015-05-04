@@ -1,73 +1,117 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Chris Lasell <chrisl@pixar.com>
 Subject: Re: Bug: git-p4 edit_template() and P4EDITOR w/options
-Date: Mon, 04 May 2015 15:44:01 -0700
-Message-ID: <xmqqvbg8netq.fsf@gitster.dls.corp.google.com>
-References: <5D2E2EAF-FFE7-437F-A716-E152E865E634@pixar.com>
-	<xmqqh9rsovd4.fsf@gitster.dls.corp.google.com>
-	<xmqq4mnsottj.fsf@gitster.dls.corp.google.com>
-	<xmqqzj5knf2t.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain
+Date: Mon, 4 May 2015 15:46:35 -0700
+Message-ID: <8AC0C799-2402-4AAB-8C9D-271FBF14910D@pixar.com>
+References: <5D2E2EAF-FFE7-437F-A716-E152E865E634@pixar.com> <xmqqh9rsovd4.fsf@gitster.dls.corp.google.com> <xmqq4mnsottj.fsf@gitster.dls.corp.google.com> <xmqqzj5knf2t.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0 (Mac OS X Mail 8.1 \(1993\))
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Chris Lasell <chrisl@pixar.com>
-X-From: git-owner@vger.kernel.org Tue May 05 00:44:10 2015
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 05 00:46:50 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YpP5u-0004df-75
-	for gcvg-git-2@plane.gmane.org; Tue, 05 May 2015 00:44:10 +0200
+	id 1YpP8S-00061T-Cj
+	for gcvg-git-2@plane.gmane.org; Tue, 05 May 2015 00:46:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751012AbbEDWoG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 May 2015 18:44:06 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:60834 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750887AbbEDWoE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 May 2015 18:44:04 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 554B64F443;
-	Mon,  4 May 2015 18:44:03 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=sxnKek64SOZxGDiqYmQV6EDztTo=; b=SXOxQ0
-	utt4aOXZzjtpTEOo8Uqv7OOXEeDm+BCYlgj5Ry6KloiXxaLzSxBOZkBH+uQVOJpM
-	dGElQN2J1BTnz2Qg38uU8UmNa9jWUJsE4SID1OmwVBwc04E9BzpUmYLUtKO4lMKx
-	C8VEFzrVmaHAJWeLqyC0YZ8o6xvGpZwpgitMg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CaDFafczYsXw9q6Mt43dqXdkHDJhoam6
-	qaFAlDHp5SqtsoSM81HcoXJ8W2CP/yjwOiK2cWTdNuhArXe45W+3PZ4fjs0xZtVQ
-	T79EWVJ5dvR5vIL1XmJoQRX8NzF186cJ/SflwxTCgJ5cW9AZn4av4/zqWkG2GBam
-	k7FHIdvMWJQ=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4D76F4F442;
-	Mon,  4 May 2015 18:44:03 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B95544F440;
-	Mon,  4 May 2015 18:44:02 -0400 (EDT)
-In-Reply-To: <xmqqzj5knf2t.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Mon, 04 May 2015 15:38:34 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 0FE35B7E-F2AF-11E4-98CF-83E09F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751428AbbEDWqo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 May 2015 18:46:44 -0400
+Received: from smtp-lb.pixar.com ([138.72.247.109]:47621 "EHLO
+	smtp-lb.pixar.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750942AbbEDWqn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 4 May 2015 18:46:43 -0400
+DomainKey-Signature: s=emeryville; d=pixar.com; c=nofws; q=dns;
+  h=Authentication-Results:X-PixarMID:X-PixarRecvListener:
+   X-PixarRemoteIP:X-PixarMailFlowPolicy:X-IronPort-AV:
+   Received:Content-Type:Mime-Version:Subject:From:
+   In-Reply-To:Date:Cc:Content-Transfer-Encoding:Message-Id:
+   References:To:X-Mailer;
+  b=1ncUvNamlryxn9WyCI9y9tglgOZ8KYGSmQxGm/8UP9hPaqo7wSmIQ3tE
+   t5uuTKcHMOB+YA8T/Hfh6VIMXFJTHDZhwnIP4HHYX4w9kdsL4oKmoXV2P
+   zvuWK9fMaW+p4hYHfqcZ3nDx8NBEwf3MfR6B8DNKz/hT/MU9h4lG1J0Qi
+   TEsOadQo+gbT6horwjnfwxQFUTr/2dOLr8yiUYZj2P7ZWM6gXn+aocZAp
+   +STYXwqBCVrtzMGtPRzHBFTE6DNBF4WJafbloTGw4NBpmJy+MgzJCHG0A
+   JxlAcMwpA21ge/jaB+l2YuCquvdDuO69s2NLOnXsLdvjlhtmYhAlGSmm/
+   Q==;
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+  d=pixar.com; i=@pixar.com; q=dns/txt; s=dkimdefault;
+  t=1430779603; x=1462315603;
+  h=mime-version:subject:from:in-reply-to:date:cc:
+   content-transfer-encoding:message-id:references:to;
+  bh=7qorWPojoqjvN6SLisFRt3evcTPIonu2NtMK8YFU8qg=;
+  b=W+a9jj4P7xX8JuVifhMnaoit+7RNetg6Ie/1VHNNJvUjbJjYvW7LlgOK
+   GGiZoC4PBmjS0BfbMJxriRNFcyUdswUG/PZn5cQYNK8IxoVG5+9Z0+Wu3
+   mArwvTCKkyts01ymkra2vqq1XY66WLBoQR2Xv66JcZ+JG5yEsvvs/kTdO
+   ewVz+2cBvQilDXq6woGgHOk5y4LfBNYMIg90b8Lhmb+mKyjLXLlNVuKr8
+   smgsSyOP9Uyt0X87s1pENKVIxYj4FmKOrlGTFXn2CyRFrRzjbuacKeuml
+   70cNds7zk4M9Uovx3HyecdCFim0U0+mTtdaxVKbXIFZNeK68rDg+I/k3u
+   w==;
+Authentication-Results: smtp-lb.pixar.com; dkim=neutral (message not signed) header.i=none
+X-PixarMID: 32495034
+X-PixarRecvListener: OutBoundAuth
+X-PixarRemoteIP: 138.72.244.133
+X-PixarMailFlowPolicy: $RELAYED
+X-IronPort-AV: E=Sophos;i="5.13,368,1427785200"; 
+   d="scan'208";a="32495034"
+Received: from unknown (HELO [138.72.244.133]) ([138.72.244.133])
+  by smtp-lb.pixar.com with ESMTP/TLS/DHE-RSA-AES256-SHA; 04 May 2015 15:46:36 -0700
+In-Reply-To: <xmqqzj5knf2t.fsf@gitster.dls.corp.google.com>
+X-Mailer: Apple Mail (2.1993)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268370>
 
-Junio C Hamano <gitster@pobox.com> writes:
 
+> On May 4, 2015, at 3:38 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>=20
+> Junio C Hamano <gitster@pobox.com> writes:
+>=20
+> So, use_shell=3D=3Dtrue codepath grabs that array with "editor", "pat=
+h"
+> and turns it into an equivalent to
+>=20
+> 	sh -c "$EDITOR" "$path"
+>=20
+> when $EDITOR has a "magic" character (including whitespace) in it.
+> So what git-p4 does is *not* in line with how we use the environment
+> variable.
+>=20
 > Perhaps a single-liner patch like this would work?
->
+>=20
 > -	system([editor, template_file])
 > +	system(["sh", "-c", editor, template_file])
+>=20
 
-Nah, scratch that.  The list should be more like
+Thanks for the input Junio!
 
-	["sh", "-c", "%s %s" % (editor, shlex.quote(template_file))]
+I=E2=80=99ll try it out, but leave the decision about patching  for the=
+ maintainers :-)
 
-if your Python has shlex.quote, that is; it may be pipes.quote
-instead.
+Though I do notice that their "system()" function does do shell expansi=
+on if it=E2=80=99s arg is a string, but not if it=E2=80=99s a list:
+
+def system(cmd):
+    expand =3D isinstance(cmd,basestring)
+    if verbose:
+        sys.stderr.write("executing %s\n" % str(cmd))
+    retcode =3D subprocess.call(cmd, shell=3Dexpand)
+    if retcode:
+        raise CalledProcessError(retcode, cmd)
+
+and the edit_template() function is passing a list
+
+I had thought about writing a tiny wrapper script as mentioned in that =
+first link you sent, but that felt even more out of line, especially si=
+nce there are many references on the net to using parameters in EDITOR =
+vars, particularly with mate.
+
+=46WIW, my user is all set now, but I=E2=80=99m happy to participate in=
+ this conversation if appropriate :-)
+
+Cheers,
+-Chris
