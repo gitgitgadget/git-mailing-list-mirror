@@ -1,74 +1,74 @@
 From: Alangi Derick <alangiderick@gmail.com>
-Subject: [PATCH] Fixed translation error (say(_())) functions
-Date: Sun, 3 May 2015 23:05:53 +0100
-Message-ID: <554769df.43c8c20a.4b7f.ffffc3cb@mx.google.com>
+Subject: [PATCH] fixed translation error in fetch
+Date: Mon, 4 May 2015 12:47:49 +0100
+Message-ID: <55476a2c.0530c20a.7f3d.ffffcb98@mx.google.com>
 To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Mon May 04 14:45:36 2015
+X-From: git-owner@vger.kernel.org Mon May 04 14:47:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YpFkc-0000Tg-3a
-	for gcvg-git-2@plane.gmane.org; Mon, 04 May 2015 14:45:34 +0200
+	id 1YpFmG-0001Wi-Gr
+	for gcvg-git-2@plane.gmane.org; Mon, 04 May 2015 14:47:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753000AbbEDMp3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 May 2015 08:45:29 -0400
-Received: from mail-wi0-f180.google.com ([209.85.212.180]:34884 "EHLO
-	mail-wi0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752915AbbEDMpV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 May 2015 08:45:21 -0400
-Received: by widdi4 with SMTP id di4so120003227wid.0
-        for <git@vger.kernel.org>; Mon, 04 May 2015 05:45:20 -0700 (PDT)
+	id S1753180AbbEDMrM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 May 2015 08:47:12 -0400
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:35516 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753463AbbEDMqi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 May 2015 08:46:38 -0400
+Received: by widdi4 with SMTP id di4so120044788wid.0
+        for <git@vger.kernel.org>; Mon, 04 May 2015 05:46:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=message-id:from:date:subject;
-        bh=7Rwep3wXFhuerHKkPZluxbvmt6H1uGZJMSwnQA4cIz8=;
-        b=fwA2aQA+n7BnxXzYnVutMn4KktOfRWZfj/zlzRfOT3kNfIvSmAXLPc/TKoCI7oPJOy
-         uTl6aoARqqIYq2csFT/KHFQYOLV/JyRRa6NfY6bJg/BiRXsfJyIryLI2WP0G0MePwfgK
-         f6+KYaH6/1Oca+lPiWXVTeeFXFJtf2hXKCr/t1epHaNLJApXOC/zo/4Eg1NJYZGr/Rs+
-         iRYvs0GALGd5qZXVL+Q40Bkf12GF+36ONbjdDX6lCvauNN6Mq2JM+e6Hko+u9iVhRK2n
-         02h6n3lJWc6if3qOnJf4x90c3mXYs2O7M8J86v7FxZbjh01kTs3FsfDeWpfTmrA2T9cp
-         qB8g==
-X-Received: by 10.180.101.138 with SMTP id fg10mr1245269wib.46.1430743520106;
-        Mon, 04 May 2015 05:45:20 -0700 (PDT)
+        bh=/WhI6/Un9TSntA1RYulLv3oI/HCwlxuLTk6XUIEK1Us=;
+        b=dhVk1Ew76VAhc5J6XiZuR+koo0EAoBvoJP7SzsifmmElW7QWuZ9SBfnT8s4QaPyWsd
+         1CIU1BqU5H9f/U8dKlRkvIWLmh0j4n3hd+kZxhfU1Mx8Tfabzik3CxPAOHkw6BVniFgk
+         5nOFKBFbAEi0WVBNXuihYPqhb7XYgxvlg9GuZ4mw4V8bcUs0EUoFRYVmDBQDEvpOxZGp
+         PzZWRJClFCETP/HZmoyxcG/ryiBVuOY945LFxaGGljbOk0xC3cZDGdMApd+IOFNF+Fyv
+         uaG+wt+ZUqXDDtj5dYxrf8MnYMuffXbYlOtICpOnKqaq/hb1QOcgTfsA5TUnow6IJjwT
+         9whQ==
+X-Received: by 10.180.90.72 with SMTP id bu8mr18986459wib.62.1430743597218;
+        Mon, 04 May 2015 05:46:37 -0700 (PDT)
 Received: from localhost ([195.24.220.134])
-        by mx.google.com with ESMTPSA id jq3sm20489039wjc.22.2015.05.04.05.45.18
+        by mx.google.com with ESMTPSA id h5sm20496166wjn.20.2015.05.04.05.46.35
         for <git@vger.kernel.org>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 04 May 2015 05:45:19 -0700 (PDT)
+        Mon, 04 May 2015 05:46:36 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268322>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268323>
 
 Signed-off-by: Alangi Derick <alangiderick@gmail.com>
 ---
- base85.c | 4 ++--
+ builtin/fetch.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/base85.c b/base85.c
-index 5ca601e..4160f44 100644
---- a/base85.c
-+++ b/base85.c
-@@ -78,7 +78,7 @@ int decode_85(char *dst, const char *buffer, int len)
- 
- void encode_85(char *buf, const unsigned char *data, int bytes)
- {
--	say("encode 85");
-+	say(_("encode 85"));
- 	while (bytes) {
- 		unsigned acc = 0;
- 		int cnt;
-@@ -96,7 +96,7 @@ void encode_85(char *buf, const unsigned char *data, int bytes)
- 		}
- 		buf += 5;
- 	}
--	say("\n");
-+	say(_("\n"));
- 
- 	*buf = 0;
- }
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index f951265..ab110b2 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -340,7 +340,7 @@ static struct ref *get_ref_map(struct transport *transport,
+ 		if (tags == TAGS_SET)
+ 			get_fetch_map(remote_refs, tag_refspec, &tail, 0);
+ 	} else if (refmap_array) {
+-		die("--refmap option is only meaningful with command-line refspec(s).");
++		die(_("--refmap option is only meaningful with command-line refspec(s)."));
+ 	} else {
+ 		/* Use the defaults */
+ 		struct remote *remote = transport->remote;
+@@ -432,7 +432,7 @@ static int s_update_ref(const char *action,
+ 	return 0;
+ fail:
+ 	ref_transaction_free(transaction);
+-	error("%s", err.buf);
++	error(_("%s"), err.buf);
+ 	strbuf_release(&err);
+ 	return df_conflict ? STORE_REF_ERROR_DF_CONFLICT
+ 			   : STORE_REF_ERROR_OTHER;
 -- 
-2.4.0.1.gd092831.dirty
+2.4.0.8.geba5036.dirty
