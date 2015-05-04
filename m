@@ -1,93 +1,119 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 2/3] t1007: add hash-object --literally tests
-Date: Mon,  4 May 2015 03:25:14 -0400
-Message-ID: <1430724315-524-3-git-send-email-sunshine@sunshineco.com>
-References: <1430724315-524-1-git-send-email-sunshine@sunshineco.com>
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Karthik Nayak <karthik.188@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 04 09:26:03 2015
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 2/7] t5520: implement tests for no merge candidates cases
+Date: Mon, 04 May 2015 10:04:53 +0200
+Message-ID: <vpqvbg8u5sq.fsf@anie.imag.fr>
+References: <1430581035-29464-1-git-send-email-pyokagan@gmail.com>
+	<1430581035-29464-3-git-send-email-pyokagan@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Stefan Beller <sbeller@google.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 04 10:05:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YpAlM-0005IC-DX
-	for gcvg-git-2@plane.gmane.org; Mon, 04 May 2015 09:26:00 +0200
+	id 1YpBNG-000550-VE
+	for gcvg-git-2@plane.gmane.org; Mon, 04 May 2015 10:05:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752165AbbEDHZl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 May 2015 03:25:41 -0400
-Received: from mail-ig0-f170.google.com ([209.85.213.170]:35971 "EHLO
-	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752170AbbEDHZh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 May 2015 03:25:37 -0400
-Received: by igblo3 with SMTP id lo3so76951291igb.1
-        for <git@vger.kernel.org>; Mon, 04 May 2015 00:25:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=IPMF9KqJmS6JxPPFeIcdmYka6Mr1DInm9Hz+gTHD0bw=;
-        b=WcGhNSvhnKpR8NtE9IfFkfCU3kidnHJToylmIZcczKfmK9UwJy2R6u1P4Q66eK5nuW
-         j6DNcxMbIh/oemtp91xQEBQSKHSq0lRsgwMPaPZ3F6K4LtdgnP0TiCnhdx6zLnW1KQ2P
-         9EwzqHTMWZNy3Js4MPZdsU73kGwtNsktXROvwndxXef1HT/FBRfl1AE/TG4qfmG1zaPB
-         Ad7Ysyg1ub3navkRl3RW3+cRViJiZYg7Pf+btn8txmqpOTI+Hwt8JdLe8DGqx5Shszh1
-         TjGWmubS8zY+/WYuIiXO6B09IaZdGfpXRcmJTWk3AszQfily81H/AncFeibRhcX7JO0J
-         IptQ==
-X-Received: by 10.43.129.130 with SMTP id hi2mr18335591icc.18.1430724336428;
-        Mon, 04 May 2015 00:25:36 -0700 (PDT)
-Received: from localhost.localdomain (user-12l3cpl.cable.mindspring.com. [69.81.179.53])
-        by mx.google.com with ESMTPSA id r4sm4707630igw.12.2015.05.04.00.25.35
-        (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 04 May 2015 00:25:36 -0700 (PDT)
-X-Mailer: git-send-email 2.4.0.319.g7a04823
-In-Reply-To: <1430724315-524-1-git-send-email-sunshine@sunshineco.com>
+	id S1751947AbbEDIFI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 May 2015 04:05:08 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:36911 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751001AbbEDIFG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 May 2015 04:05:06 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t4484rjk005126
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 4 May 2015 10:04:53 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t4484rbs012080;
+	Mon, 4 May 2015 10:04:53 +0200
+In-Reply-To: <1430581035-29464-3-git-send-email-pyokagan@gmail.com> (Paul
+	Tan's message of "Sat, 2 May 2015 23:37:10 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 04 May 2015 10:04:53 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t4484rjk005126
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1431331493.6881@TaTebwMQwX/N/BtVmS0lpw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268310>
 
-git-hash-object learned a --literally option in 5ba9a93 (hash-object:
-add --literally option, 2014-09-11). Check that --literally allows
-object creation with a bogus type.
+Thanks for the patch. On overall, it looks good to me. Some minor
+comments below.
 
-Also add a failing test demonstrating a crash (buffer overflow leading
-to stack corruption) when the bogus type is lengthy.
+Paul Tan <pyokagan@gmail.com> writes:
 
-Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
----
+> Commit a8c9bef4 fully established the current advices given by git-pull
+> for the different cases where git-fetch will not have anything marked
+> for merge:
+>
+> 1. We're not on a branch, so there is no branch
+>    configuration.
 
-Although the crash seems to have manifested[1] only on Mac OS X when
-testing Karthik's "cat-file --allow-unknown-type" series, I made the
-bogus object type extremely long in the failing test included here in
-order to ensure that it manifests (hopefully) everywhere. At this
-length, the crash manifest on Linux as well.
+Nit: you seem to be wrapping your lines with a rather short length. I
+would prefer reading this as a single line:
 
-[1]: http://thread.gmane.org/gmane.comp.version-control.git/268262/focus=268304
+1. We're not on a branch, so there is no branch configuration.
 
- t/t1007-hash-object.sh | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+(62 columns)
 
-diff --git a/t/t1007-hash-object.sh b/t/t1007-hash-object.sh
-index f83df8e..0e65577 100755
---- a/t/t1007-hash-object.sh
-+++ b/t/t1007-hash-object.sh
-@@ -201,4 +201,15 @@ test_expect_success 'corrupt tag' '
- 	test_must_fail git hash-object -t tag --stdin </dev/null
- '
- 
-+test_expect_success '--literally' '
-+	t=1234567890 &&
-+	echo example | git hash-object -t $t --literally --stdin
-+'
-+
-+test_expect_failure '--literally with extra-long type' '
-+	t=12345678901234567890123456789012345678901234567890 &&
-+	t="$t$t$t$t$t$t$t$t$t$t$t$t$t$t$t$t$t$t$t$t$t$t$t$t$t$t$t$t$t$t" &&
-+	echo example | git hash-object -t $t --literally --stdin
-+'
-+
- test_done
+> ---
+>
+> I'm having trouble hitting the 1st case without resorting to the hack below. A
+> detached HEAD will always have no remote configured, and the code flow would
+> make it such that case (4) is hit in the detached HEAD case instead of case
+> (1).
+
+This should appear in comments in the test 'fail if not on a branch'.
+People reading your [branch ""] in the future won't look for
+below-triple-dash comments in the mailing-list archives ...
+
+And actually, it would be more user-friendly to trigger this error
+message in the normal senario, i.e. check for 1. before 4. in the code.
+This was most likely the intension of the programmer who wrote this
+error message. You may want to fix this now, or add a
+test_expect_failure which will become a test_expect_success when you
+replace git-pull.sh with builtin/pull.c.
+
+>  t/t5520-pull.sh | 52 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 52 insertions(+)
+>
+> diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
+> index 01ae1bf..635ec02 100755
+> --- a/t/t5520-pull.sh
+> +++ b/t/t5520-pull.sh
+> @@ -122,6 +122,58 @@ test_expect_success 'the default remote . should not break explicit pull' '
+>  	test `cat file` = modified
+>  '
+>  
+> +test_expect_success 'fail if not on a branch' '
+> +	cp .git/config .git/config.bak &&
+> +	test_when_finished "cp .git/config.bak .git/config" &&
+> +	git remote add test_remote . &&
+> +	git checkout HEAD^{} &&
+> +	test_when_finished "git checkout -f copy" &&
+> +	cat >>.git/config <<-\EOF &&
+> +	[branch ""]
+> +	remote = test_remote
+> +	EOF
+> +	test_must_fail git pull test_remote 2>out &&
+> +	test_i18ngrep "You are not currently on a branch" out
+
+It may make sense to grep only a subset of the string, to be less
+sensitive to rewords of error message. For example, just:
+
+test_i18ngrep "not currently on a branch"
+
 -- 
-2.4.0.319.g7a04823
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
