@@ -1,179 +1,105 @@
-From: Alangi Derick <alangiderick@gmail.com>
-Subject: [PATCH] Fixed a translation error
-Date: Mon, 4 May 2015 12:16:04 +0100
-Message-ID: <554766e9.b30db50a.72e3.ffff8bbe@mx.google.com>
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Mon May 04 14:32:48 2015
+From: =?utf-8?Q?Micha=C3=ABl_Fortin?= <fortinmike@gmail.com>
+Subject: Unexpected behavior when git-adding files in a pre-commit hook then using "git commit -o"
+Date: Mon, 4 May 2015 08:33:39 -0400
+Message-ID: <463FC822-916F-4160-A1F2-B4AAEFF3A5B2@gmail.com>
+Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2098\))
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 04 14:33:50 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YpFYG-0000ut-1R
-	for gcvg-git-2@plane.gmane.org; Mon, 04 May 2015 14:32:48 +0200
+	id 1YpFZE-0001XA-Uv
+	for gcvg-git-2@plane.gmane.org; Mon, 04 May 2015 14:33:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752392AbbEDMco (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 May 2015 08:32:44 -0400
-Received: from mail-wg0-f52.google.com ([74.125.82.52]:35607 "EHLO
-	mail-wg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752029AbbEDMcn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 May 2015 08:32:43 -0400
-Received: by wgyo15 with SMTP id o15so148490102wgy.2
-        for <git@vger.kernel.org>; Mon, 04 May 2015 05:32:41 -0700 (PDT)
+	id S1752386AbbEDMdn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 May 2015 08:33:43 -0400
+Received: from mail-qc0-f180.google.com ([209.85.216.180]:36294 "EHLO
+	mail-qc0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752051AbbEDMdl convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 4 May 2015 08:33:41 -0400
+Received: by qcbgy10 with SMTP id gy10so17760280qcb.3
+        for <git@vger.kernel.org>; Mon, 04 May 2015 05:33:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:from:date:subject;
-        bh=x0++o3Bomy+IubJdeu5JgQyJeMnpNYTuc8M0rVF2UUU=;
-        b=drZjuUe6Pt/lpHImwMy6zpUK+LgEt8C/9sTksWyZf2VyQDvHxppYyi7oeAAvFuhxUe
-         s4nYZZzgFrUQgeBAc8v/o7tG2pBR9sMMr5F5/DdazIqKZU4kGE4Is00T7vxPexKRFZm4
-         n/srjYSVIaDvrjkrXRBEudQxJFGZYyWZ9WAhsfmdL+ZZBRhzCvXq6X/ZxF0OJBlwRVQD
-         i8tsw7E2lQS/3/DnXuz4J+1HK0wL/2KKgiSLynKeKub6dOy/EUdeDgfHRqp2MtY4eSRp
-         Xphuyhk8MJzjRgIMi//p7ap5pF7We1HaPwTRqwYqE+QzUOrV7yLRovts50Y6ZtwbrZ2w
-         uiGA==
-X-Received: by 10.194.57.11 with SMTP id e11mr39393983wjq.19.1430742761639;
-        Mon, 04 May 2015 05:32:41 -0700 (PDT)
-Received: from localhost ([195.24.220.134])
-        by mx.google.com with ESMTPSA id ez19sm11005104wid.19.2015.05.04.05.32.40
+        h=from:content-type:content-transfer-encoding:subject:message-id:date
+         :to:mime-version;
+        bh=heGoQ8snODXIQCCh2d8t6w/rSehj4nm1S/QQHusoM3c=;
+        b=dYMcSyW+s1Z52yxrL7DQ4dvB+nDLCPYR1wec3D1BWEu9+xfOVymQF5iTc4KpP4INBf
+         xBTQEbfP+9TBKrnnLABnprkzzZytT7i/dqMjxgeD3ow2q+PQxT6vls8NcZnOnQTUb1/x
+         mpInoaRhn58PnuwDnPNbqFfeBnmKAjU934BEIXCIlc+luhCWGRowcNOcN57G6xLn/SbB
+         INCJXhS/YvnlnuTQuP9iUEn0iHulprW7WIWptYtfSeaozEvWTmsfAqCqZR3zNZ33PaRe
+         IwBJ2Sn7RFW55kcLq1dr8i4XmF1sFqE9F8hS9BYDT0kZe7WAoDAs9hv1pyDMYNKox6Zz
+         pMsQ==
+X-Received: by 10.55.22.10 with SMTP id g10mr44499889qkh.26.1430742821143;
+        Mon, 04 May 2015 05:33:41 -0700 (PDT)
+Received: from [172.20.10.2] ([142.169.78.60])
+        by mx.google.com with ESMTPSA id 106sm9757155qge.22.2015.05.04.05.33.40
         for <git@vger.kernel.org>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 04 May 2015 05:32:41 -0700 (PDT)
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 04 May 2015 05:33:40 -0700 (PDT)
+X-Mailer: Apple Mail (2.2098)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268315>
 
-Signed-off-by: Alangi Derick <alangiderick@gmail.com>
----
- builtin/config.c | 34 +++++++++++++++++-----------------
- 1 file changed, 17 insertions(+), 17 deletions(-)
+Hi,
 
-diff --git a/builtin/config.c b/builtin/config.c
-index d32c532..2b6bf0a 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -85,7 +85,7 @@ static struct option builtin_config_options[] = {
- static void check_argc(int argc, int min, int max) {
- 	if (argc >= min && argc <= max)
- 		return;
--	error("wrong number of arguments");
-+	error(_("wrong number of arguments"));
- 	usage_with_options(builtin_config_usage, builtin_config_options);
- }
- 
-@@ -366,10 +366,10 @@ static int get_colorbool(const char *var, int print)
- static void check_write(void)
- {
- 	if (given_config_source.use_stdin)
--		die("writing to stdin is not supported");
-+		die(_("writing to stdin is not supported"));
- 
- 	if (given_config_source.blob)
--		die("writing config blobs is not supported");
-+		die(_("writing config blobs is not supported"));
- }
- 
- struct urlmatch_current_candidate_value {
-@@ -412,7 +412,7 @@ static int get_urlmatch(const char *var, const char *url)
- 	config.cb = &values;
- 
- 	if (!url_normalize(url, &config.url))
--		die("%s", config.url.err);
-+		die(_("%s"), config.url.err);
- 
- 	config.section = xstrdup_tolower(var);
- 	section_tail = strchr(config.section, '.');
-@@ -477,7 +477,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 
- 	if (use_global_config + use_system_config + use_local_config +
- 	    !!given_config_source.file + !!given_config_source.blob > 1) {
--		error("only one config file at a time.");
-+		error(_("only one config file at a time."));
- 		usage_with_options(builtin_config_usage, builtin_config_options);
- 	}
- 
-@@ -500,7 +500,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 			 * location; error out even if XDG_CONFIG_HOME
- 			 * is set and points at a sane location.
- 			 */
--			die("$HOME not set");
-+			die(_("$HOME not set"));
- 
- 		if (access_or_warn(user_config, R_OK, 0) &&
- 		    xdg_config && !access_or_warn(xdg_config, R_OK, 0))
-@@ -530,17 +530,17 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	if (HAS_MULTI_BITS(types)) {
--		error("only one type at a time.");
-+		error(_("only one type at a time."));
- 		usage_with_options(builtin_config_usage, builtin_config_options);
- 	}
- 
- 	if ((actions & (ACTION_GET_COLOR|ACTION_GET_COLORBOOL)) && types) {
--		error("--get-color and variable type are incoherent");
-+		error(_("--get-color and variable type are incoherent"));
- 		usage_with_options(builtin_config_usage, builtin_config_options);
- 	}
- 
- 	if (HAS_MULTI_BITS(actions)) {
--		error("only one action at a time.");
-+		error(_("only one action at a time."));
- 		usage_with_options(builtin_config_usage, builtin_config_options);
- 	}
- 	if (actions == 0)
-@@ -561,7 +561,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 				die_errno("unable to read config file '%s'",
- 					  given_config_source.file);
- 			else
--				die("error processing config file(s)");
-+				die(_("error processing config file(s)"));
- 		}
- 	}
- 	else if (actions == ACTION_EDIT) {
-@@ -569,11 +569,11 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 
- 		check_argc(argc, 0, 0);
- 		if (!given_config_source.file && nongit)
--			die("not in a git directory");
-+			die(_("not in a git directory"));
- 		if (given_config_source.use_stdin)
--			die("editing stdin is not supported");
-+			die(_("editing stdin is not supported"));
- 		if (given_config_source.blob)
--			die("editing blobs is not supported");
-+			die(_("editing blobs is not supported"));
- 		git_config(git_default_config, NULL);
- 		config_file = xstrdup(given_config_source.file ?
- 				      given_config_source.file : git_path("config"));
-@@ -598,8 +598,8 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 		value = normalize_value(argv[0], argv[1]);
- 		ret = git_config_set_in_file(given_config_source.file, argv[0], value);
- 		if (ret == CONFIG_NOTHING_SET)
--			error("cannot overwrite multiple values with a single value\n"
--			"       Use a regexp, --add or --replace-all to change %s.", argv[0]);
-+			error(_("cannot overwrite multiple values with a single value\n"
-+			"       Use a regexp, --add or --replace-all to change %s."), argv[0]);
- 		return ret;
- 	}
- 	else if (actions == ACTION_SET_ALL) {
-@@ -669,7 +669,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 		if (ret < 0)
- 			return ret;
- 		if (ret == 0)
--			die("No such section!");
-+			die(_("No such section!"));
- 	}
- 	else if (actions == ACTION_REMOVE_SECTION) {
- 		int ret;
-@@ -680,7 +680,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 		if (ret < 0)
- 			return ret;
- 		if (ret == 0)
--			die("No such section!");
-+			die(_("No such section!"));
- 	}
- 	else if (actions == ACTION_GET_COLOR) {
- 		check_argc(argc, 1, 2);
--- 
-2.4.0.5.g7a7787e.dirty
+I=E2=80=99ve encountered unexpected behavior performing a git add from =
+a pre-commit hook, followed by performing a commit using the =E2=80=9C-=
+o=E2=80=9D flag, providing a pathspec. Here is a small bash script that=
+ explains the issue and serves as a repro:
+
+###############
+echo "----> Setup a new test repo"
+dir_name=3D"PreCommitHookAddTest"
+rm -rf $dir_name; mkdir $dir_name; cd $dir_name
+git init; git commit --allow-empty -m "Initial commit"
+
+echo "----> Add a pre-commit hook that stages a file that doesn't curre=
+ntly exist in the repo"
+echo "touch auto-added; git add auto-added" > .git/hooks/pre-commit
+chmod +x .git/hooks/pre-commit
+
+echo "----> Try committing a new file using the '-o' flag"
+touch manually-added; git add manually-added
+git commit -o -m "Commit that ran the pre-commit hook and should contai=
+n file 'auto-added'" -- manually-added
+
+echo "----> Results (expected: working copy clean; actual: auto-added i=
+s reported as both DELETED and UNTRACKED. HEAD and working copy are the=
+ same, staging area contains =E2=80=98incorrect' state)"
+git status
+
+echo "----> Stage the file after the fact"
+git add auto-added
+
+echo "----> Notice that the working copy is now clean"
+git status
+###############
+
+I would like to avoid the above-described =E2=80=9Cinvalid=E2=80=9D sta=
+te by performing operations correctly in my pre-commit hook, rather tha=
+n having to add a post-commit hook only to perform a =E2=80=9Cgit add=E2=
+=80=9D after the fact (which the repro script emulates); it seems like =
+an ugly workaround to me.
+
+I have had similar issues before, which Jeff King kindly resolved here:
+http://thread.gmane.org/gmane.comp.version-control.git/263319/focus=3D2=
+63323
+
+The provided solution does not seem to help in this new context, or at =
+least I cannot make sense of it in relation to this issue, with my limi=
+ted knowledge of Git internals.
+
+Any insight would be appreciated!
+
+Thanks in advance,
+
+Micha=C3=ABl Fortin
+www.irradiated.net
