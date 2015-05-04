@@ -1,155 +1,68 @@
-From: =?UTF-8?q?S=C3=A9bastien=20Guimmara?= 
-	<sebastien.guimmara@gmail.com>
-Subject: [PATCH 2/3] generate-cmdlist.sh: parse common group commands
-Date: Mon,  4 May 2015 22:28:09 +0200
-Message-ID: <a787babf25481c99edea6dca5e5f7814601395fe.1430770308.git.sebastien.guimmara@gmail.com>
-References: <cover.1430770308.git.sebastien.guimmara@gmail.com>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: Diffing submodule does not yield complete logs for merge commits
+Date: Mon, 4 May 2015 22:51:04 +0200
+Message-ID: <20150504205104.GA28246@sandbox-ub1410>
+References: <CAHd499BqB_ZFKMNxSVCDTFx2Ge=TfCE6gexFn+rfRbS+ybLybA@mail.gmail.com>
+ <20150501175757.GA10569@book.hvoigt.net>
+ <CAHd499B=EcgYiTMFt9VYhj45bRkP8h9TBk1B0cr8fYFuXNe_mQ@mail.gmail.com>
+ <5547C961.7070909@web.de>
+ <CAHd499CRge9Y6VzdC_ngXS4WxuQ9HizXQJzLpX3iQStY5Cg=6g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?S=C3=A9bastien=20Guimmara?= 
-	<sebastien.guimmara@gmail.com>, gitster@pobox.com,
-	sunshine@sunshineco.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 04 22:28:40 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: Jens Lehmann <Jens.Lehmann@web.de>, Git <git@vger.kernel.org>
+To: Robert Dailey <rcdailey.lists@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 04 22:51:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YpMyi-0001qX-CJ
-	for gcvg-git-2@plane.gmane.org; Mon, 04 May 2015 22:28:36 +0200
+	id 1YpNKe-0006E0-UY
+	for gcvg-git-2@plane.gmane.org; Mon, 04 May 2015 22:51:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752000AbbEDU2d convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 May 2015 16:28:33 -0400
-Received: from mail-wi0-f175.google.com ([209.85.212.175]:33538 "EHLO
-	mail-wi0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751933AbbEDU2a (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 May 2015 16:28:30 -0400
-Received: by wief7 with SMTP id f7so85799617wie.0
-        for <git@vger.kernel.org>; Mon, 04 May 2015 13:28:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :in-reply-to:references:mime-version:content-type
-         :content-transfer-encoding;
-        bh=cvGAt3cYCoaOFdehJRuG9xw1nKDn4XAWBjyJH6Ppd5U=;
-        b=DfuKOGZonCslfZB5YxsTEmLLNwS2Ga7W7jYd38YkZUpM2BO/ts+aYT0DY0yNEyWt2S
-         ZVGhpvtaGuZ2ty49hq/+Nd035DE1swmNfDBExY3x6BqCTOZeBiXUcDxB+nEywXIkaZhP
-         rPuRf392DppoBwqcgl2Se6cG8j15BhkOggKLOhPrWzErjvr8UNe2+Nk2g9pbnGMd0hLs
-         c2HqSEMolFsj96GOIexKU4NxBvq6/wV+FTCrDHMiytuYxbvZsfjwsIhtFhyyDNjAUSZ+
-         too8tWqod+aykGkWsDKKUrfrWyk3v6i1s0Sm5Pscy4dwVsO2QQeYjCLIcafTacJQ6ji7
-         jQyQ==
-X-Received: by 10.180.97.7 with SMTP id dw7mr578385wib.74.1430771309729;
-        Mon, 04 May 2015 13:28:29 -0700 (PDT)
-Received: from localhost.localdomain (bd231-1-88-176-208-17.fbx.proxad.net. [88.176.208.17])
-        by mx.google.com with ESMTPSA id xb3sm22164354wjc.38.2015.05.04.13.28.28
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 04 May 2015 13:28:29 -0700 (PDT)
-X-Mailer: git-send-email 2.4.0
-In-Reply-To: <cover.1430770308.git.sebastien.guimmara@gmail.com>
-In-Reply-To: <cover.1430770308.git.sebastien.guimmara@gmail.com>
-References: <cover.1430770308.git.sebastien.guimmara@gmail.com>
+	id S1751841AbbEDUvN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 May 2015 16:51:13 -0400
+Received: from smtprelay04.ispgateway.de ([80.67.31.42]:60644 "EHLO
+	smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751384AbbEDUvL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 May 2015 16:51:11 -0400
+Received: from [80.135.96.43] (helo=sandbox-ub1410)
+	by smtprelay04.ispgateway.de with esmtpsa (TLSv1.2:AES128-GCM-SHA256:128)
+	(Exim 4.84)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1YpNKW-0007z7-J1; Mon, 04 May 2015 22:51:08 +0200
+Content-Disposition: inline
+In-Reply-To: <CAHd499CRge9Y6VzdC_ngXS4WxuQ9HizXQJzLpX3iQStY5Cg=6g@mail.gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268350>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268351>
 
-parse the [groups] block to create the array of group descriptions
+Hi,
 
-   static char *common_cmd_groups[] =3D {
-      N_("starting a working area"),
-      N_("working on the current change"),
-      N_("working with others"),
-      N_("examining the history and state"),
-      N_("growing, marking and tweaking your history"),
-   };
+On Mon, May 04, 2015 at 03:21:31PM -0500, Robert Dailey wrote:
+> Since I am not a linux user, I have implemented this feature against
+> the Git for Windows fork of git. I am not able to verify changes if I
+> make them directly against the Git repository. Is it OK if you guys
+> end up getting this as an upstream patch later from that project? Also
+> I am not familiar with the bash unit tests, I will need help with
+> that.
 
-then map each element of common_cmds[] to a group via its index:
+I think there is nothing wrong with implementing it in the Windows
+development environment and then sending the patch directly here. As
+long as it is not Windows specific (which it should not be) that should
+be fine and you save the Windows guys the work to get the patch
+upstream (because here is upstream not there ;-)).
 
-   static struct cmdname_help common_cmds[] =3D {
-     {"add", N_("Add file contents to the index"), 1},
-     {"branch", N_("List, create, or delete branches"), 4},
-     {"checkout", N_("Checkout a branch or paths to the working tree"),=
- 4},
-     {"clone", N_("Clone a repository into a new directory"), 0},
-     {"commit", N_("Record changes to the repository"), 4},
-     [...]
+Have a look at some tests, they are quite simple. Basically they run git
+commands in a && chain and the resulting return code tells the testsuite
+whether that test succeeded or not. Maybe have a look at the test for
+the existing --submodule option (t4041-diff-submodule-option.sh) as an
+example. You can probably reuse the complete setup there and just add a
+new test for the new option with the expected output. There is also a
+README in the t/ folder. HTH.
 
-So that 'git help' can print those command grouped by theme.
-
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-Signed-off-by: S=C3=A9bastien Guimmara <sebastien.guimmara@gmail.com>
----
- generate-cmdlist.sh | 43 +++++++++++++++++++++++++++++++------------
- 1 file changed, 31 insertions(+), 12 deletions(-)
-
-diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
-index 9a4c9b9..724bb8d 100755
---- a/generate-cmdlist.sh
-+++ b/generate-cmdlist.sh
-@@ -1,23 +1,42 @@
- #!/bin/sh
-+content=3D$(cat command-list.txt)
-+
-+group_line_no=3D$(expr $(echo "$content" | grep -n '^\[groups\]' | cut=
- -f1 -d:) + 1)
-+command_line_no=3D$(expr $(echo "$content" | grep -n '^\[commands\]' |=
- cut -f1 -d:) + 1)
-+groups=3D$(echo "$content" | sed -n ''$group_line_no', '$(expr $comman=
-d_line_no)'p')
-=20
- echo "/* Automatically generated by $0 */
-+
- struct cmdname_help {
-     char name[16];
-     char help[80];
-+    unsigned char group;
- };
-=20
-+static char *common_cmd_groups[] =3D {"
-+echo "$groups" |
-+while read group description; do
-+    if [ -z $group ]; then
-+        break
-+    fi
-+    echo '   N_("'$description'"),'
-+done
-+echo "};
-+
- static struct cmdname_help common_cmds[] =3D {"
-=20
--sed -n -e 's/^git-\([^ 	]*\)[ 	].* common.*/\1/p' command-list.txt |
--sort |
--while read cmd
--do
--     sed -n '
--     /^NAME/,/git-'"$cmd"'/H
--     ${
--	    x
--	    s/.*git-'"$cmd"' - \(.*\)/  {"'"$cmd"'", N_("\1")},/
--	    p
--     }' "Documentation/git-$cmd.txt"
-+echo "$content" | grep 'common-' |
-+awk '{ print $1, "\t", $3 }' |
-+while read cmd grp; do
-+    cmd_name=3D$(echo $cmd | cut -d - -f 2)
-+    group_name=3D$(echo $grp | cut -d - -f 2)
-+    group_idx=3D$(expr $(echo "$groups" | grep -n "^$group_name" | cut=
- -c 1) - 1)
-+    sed -n '
-+    /^NAME/,/git-'"$cmd_name"'/H
-+    ${
-+       x
-+       s/.*git-'"$cmd_name"' - \(.*\)/  {"'"$cmd_name"'", N_("\1"), '"=
-$group_idx"'},/
-+       p
-+    }' "Documentation/$cmd.txt"
- done
--echo "};"
-+echo "};"
-\ No newline at end of file
---=20
-2.4.0
+Cheers Heiko
