@@ -1,154 +1,278 @@
-From: Robert Dailey <rcdailey.lists@gmail.com>
-Subject: Re: Diffing submodule does not yield complete logs for merge commits
-Date: Mon, 4 May 2015 15:21:31 -0500
-Message-ID: <CAHd499CRge9Y6VzdC_ngXS4WxuQ9HizXQJzLpX3iQStY5Cg=6g@mail.gmail.com>
-References: <CAHd499BqB_ZFKMNxSVCDTFx2Ge=TfCE6gexFn+rfRbS+ybLybA@mail.gmail.com>
-	<20150501175757.GA10569@book.hvoigt.net>
-	<CAHd499B=EcgYiTMFt9VYhj45bRkP8h9TBk1B0cr8fYFuXNe_mQ@mail.gmail.com>
-	<5547C961.7070909@web.de>
+From: =?UTF-8?q?S=C3=A9bastien=20Guimmara?= 
+	<sebastien.guimmara@gmail.com>
+Subject: [PATCH 1/3] command-list.txt: group common commands by theme
+Date: Mon,  4 May 2015 22:28:08 +0200
+Message-ID: <b89d3fec640cb6fb01aa32ad50bae4e064528220.1430770308.git.sebastien.guimmara@gmail.com>
+References: <cover.1430770308.git.sebastien.guimmara@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Heiko Voigt <hvoigt@hvoigt.net>, Git <git@vger.kernel.org>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Mon May 04 22:21:39 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?S=C3=A9bastien=20Guimmara?= 
+	<sebastien.guimmara@gmail.com>, gitster@pobox.com,
+	sunshine@sunshineco.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 04 22:28:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YpMry-00064A-5D
-	for gcvg-git-2@plane.gmane.org; Mon, 04 May 2015 22:21:38 +0200
+	id 1YpMyh-0001qX-AV
+	for gcvg-git-2@plane.gmane.org; Mon, 04 May 2015 22:28:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752026AbbEDUVe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 May 2015 16:21:34 -0400
-Received: from mail-ig0-f179.google.com ([209.85.213.179]:38316 "EHLO
-	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751036AbbEDUVc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 May 2015 16:21:32 -0400
-Received: by igbhj9 with SMTP id hj9so93677554igb.1
-        for <git@vger.kernel.org>; Mon, 04 May 2015 13:21:31 -0700 (PDT)
+	id S1751963AbbEDU2b convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 May 2015 16:28:31 -0400
+Received: from mail-wi0-f180.google.com ([209.85.212.180]:34441 "EHLO
+	mail-wi0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751583AbbEDU23 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 May 2015 16:28:29 -0400
+Received: by wicmx19 with SMTP id mx19so85644072wic.1
+        for <git@vger.kernel.org>; Mon, 04 May 2015 13:28:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=URPy75bCbz5LD8r5RiEkR75/MqaCRuDAFcMpT7SCPgA=;
-        b=iL97wRR47FAZTBYP7jU45Zphpg7GmIHJipJRQgUpf6lFc0QASOXO9O9WwpB+7XVsVn
-         rpSuNF6vy53KQuJUaPQyMY/70yDQccETsthzOU4G0mWvUeYVsBwRMceuym89xpVm8MW6
-         rDy/CXW257Oo9F5ij/5V26NRcN6sNLD00nwSH3fgjevAVoMeRGES9y9rKt+4Ye2dmgJV
-         6vsq81irP8QmWoVsTjmG8i71Jv4W3VKvUWD9CkwSz3t7NsUKElYoeUyG1LBiqFGSbRaw
-         XMunR2Al402rajZGleBPwssLi89mJzcw0K780TmOuW12hyeXw/Q8zb+8JRg7SztQeQ6+
-         RxVA==
-X-Received: by 10.50.138.232 with SMTP id qt8mr460146igb.28.1430770891885;
- Mon, 04 May 2015 13:21:31 -0700 (PDT)
-X-Google-Sender-Delegation: rcdailey@gmail.com
-Received: by 10.36.86.148 with HTTP; Mon, 4 May 2015 13:21:31 -0700 (PDT)
-In-Reply-To: <5547C961.7070909@web.de>
-X-Google-Sender-Auth: RpP_B5s0I0jzLeoUH7Y_-FRb9ZU
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :in-reply-to:references:mime-version:content-type
+         :content-transfer-encoding;
+        bh=if0TamAQlLHB43MElS3aj/W70b1N5PMh30pnuWnOz7A=;
+        b=e55lYh4ByhoUWTDh90XFwcHbyato7k258/CtU22nkdIjft/y6VBhinRdHAb6gdy3DY
+         AyhrrEkQ8ny7MX2/0eitZQO21tLiQnfUeBdX5HN3XU+10HLNNboVRu2mYdMcGIzFBKoV
+         Qsn0JOY9DVzM/oNSQy4VDza59mipBFuKA+qIdQxkwiEKAU7zq4+hBdUTUPMB0TSaKeok
+         JcnQi6cSEjBSlRzVEPIi4tlY8QpsCGvPDvtofE29erLa9PrXma+NbJZSj72a5ijLEVNX
+         0VWQsyUd85KMUiS/0yW33RTZ6k6cmB0UMtbI8r9N7cmFcJJ43dLvTqe8ba2IRtmkUGxZ
+         63Vg==
+X-Received: by 10.180.80.197 with SMTP id t5mr510486wix.63.1430771308395;
+        Mon, 04 May 2015 13:28:28 -0700 (PDT)
+Received: from localhost.localdomain (bd231-1-88-176-208-17.fbx.proxad.net. [88.176.208.17])
+        by mx.google.com with ESMTPSA id xb3sm22164354wjc.38.2015.05.04.13.28.26
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 04 May 2015 13:28:27 -0700 (PDT)
+X-Mailer: git-send-email 2.4.0
+In-Reply-To: <cover.1430770308.git.sebastien.guimmara@gmail.com>
+In-Reply-To: <cover.1430770308.git.sebastien.guimmara@gmail.com>
+References: <cover.1430770308.git.sebastien.guimmara@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268346>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268347>
 
-On Mon, May 4, 2015 at 2:32 PM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
-> Am 04.05.2015 um 17:05 schrieb Robert Dailey:
->>
->> On Fri, May 1, 2015 at 12:57 PM, Heiko Voigt <hvoigt@hvoigt.net> wrote:
->>>
->>> Hi,
->>>
->>> On Wed, Apr 29, 2015 at 03:53:11PM -0500, Robert Dailey wrote:
->>>>
->>>> I am attempting to diff a submodule modified in my working copy and
->>>> the only difference is a merge commit. However, I do not get the
->>>> "full" range of commits introduced by the merge commit when I diff it:
->>>>
->>>> $ git diff --submodule=log Core
->>>> Submodule Core 8b4ec60..def2f3b:
->>>>    > Merge remote-tracking branch 'origin/master-ah3k'
->>>>
->>>> However if I go inside my submodule and run `git log` by hand, I get
->>>> more information about the TRUE commits introduced:
->>>>
->>>> $ git log --oneline 8b4ec60..def2f3b
->>>> def2f3b Merge remote-tracking branch 'origin/master-ah3k'
->>>> 015c961 Remove log spam in FontManager
->>>> 7713ba1 Update third party submodule to latest
->>>> 10aac78 Merge pull request #9 in FE/core from
->>>> feature/FE-1348-selecting-continue-on-zero-balance to master-ah3k
->>>> 287882f FE-1376 Nedd to remain in check detail screen when selecting
->>>> donation after SBI
->>>> a5a6bed Do not overwrite the current check# within loop
->>>> dfb8547 Adding list of checks to CRspChecks before saving
->>>> 1be280a FE-1354: Guest logged out in specific multiple check scenario
->>>> de06d5a [FE-1348] Fix PATT exit while checks still open
->>>>
->>>> It's almost as if the `git diff --submodule=log` approach is passing
->>>> in --first-parent to git log, which would exclude commits in the range
->>>> that I'm seeing when I run git log manually.
->>>
->>>
->>> That is exactly the case. In prepare_submodule_summary() that option is
->>> set before doing the revision walk.
->>>
->>>> Is this by design? Is there a way to enable the full log history with
->>>> `git diff` on a submodule?
->>>
->>>
->>> This stems from the first implementation for showing submodule diffs in
->>> commit 752c0c24. I guess this was done deliberately to limit the amount
->>> of output you get for a submodule. At the moment this is hardcoded but I
->>> think there is nothing wrong with adding another option to include the
->>> full log.
->>>
->>> Cheers Heiko
->>
->>
->> I will go ahead and work on this feature. Here is what I'd like to see:
->>
->> 1. `git diff --submodule` should have the ability to display full logs
->> vs current logs (i.e. without --first-parent)
->
->
-> I agree. Just recently I started missing that feature too at $DAYJOB.
->
->> 2. `git submodule summary` should have an option to display full logs
->> or "first-parent" logs.
->
->
-> No objection against that. Maybe now is a good time to make `git
-> submodule summary` use `git diff --submodule` internally to make
-> them behave the same?
->
->> For #1, do you recommend adding a 3rd setting for `diff.submodule`
->> config? Something like "full-log" or something? Or an entirely new
->> config?
->
->
-> I'd go with a 3rd setting for diff.submodule (and "full-log" would
-> have been my first choice too ;-).
->
->> I noticed that in diff.h, the DIFF_OPT flags already consume
->>
->> 31 bits. If this is a 32-bit flag, there is only 1 bit left. If we go
->> with a 3rd setting for `diff.submodule` I think this might consume the
->> last bit.
->
->
-> Yup. But I'm not sure we can do anything about it.
->
->> We could also make `git diff --submodule` default to the "full log"
->> type, and if users want only first parent logs in submodule summary,
->> they'd have to execute `git submodule summary` instead.
->
->
-> Please do not change defaults that people lived fine with for years
-> lightly. But I won't object changing that on a major version if a
-> majority of users request that.
+Declare groups for common commands in the [groups] block,
+followed by group names and descriptions:
 
-Since I am not a linux user, I have implemented this feature against
-the Git for Windows fork of git. I am not able to verify changes if I
-make them directly against the Git repository. Is it OK if you guys
-end up getting this as an upstream patch later from that project? Also
-I am not familiar with the bash unit tests, I will need help with
-that.
+   [groups]
+   init                   starting a working area
+   worktree               working on the current change
+   remote                 working with others
+   info                   examining the history and state
+   history                growing, marking and tweaking your history
+
+Then, in the [commands] block, map all common commands with a group:
+
+   [commands]
+   git-add        mainporcelain     common-worktree
+   git-branch     mainporcelain     common-history
+   git-checkout   mainporcelain     common-history
+   [...]
+
+command names and groups are then parsed with generate-cmdlist.sh to
+generate common-commands.h.
+
+Those commands are displayed in groups in the output of 'git help'.
+
+Signed-off-by: S=C3=A9bastien Guimmara <sebastien.guimmara@gmail.com>
+---
+ command-list.txt | 64 ++++++++++++++++++++++++++++++++----------------=
+--------
+ 1 file changed, 37 insertions(+), 27 deletions(-)
+
+diff --git a/command-list.txt b/command-list.txt
+index f1eae08..64394ca 100644
+--- a/command-list.txt
++++ b/command-list.txt
+@@ -1,29 +1,39 @@
+ # List of known git commands.
+-# command name				category [deprecated] [common]
+-git-add                                 mainporcelain common
++# only add group information for common commands
++
++[groups]
++init                   starting a working area
++worktree               working on the current change
++remote                 working with others
++info                   examining the history and state
++history                growing, marking and tweaking your history
++
++# command name         [deprecated]     category                     [=
+group]
++[commands]
++git-add                                 mainporcelain                c=
+ommon-worktree
+ git-am                                  mainporcelain
+ git-annotate                            ancillaryinterrogators
+ git-apply                               plumbingmanipulators
+ git-archimport                          foreignscminterface
+ git-archive                             mainporcelain
+-git-bisect                              mainporcelain common
++git-bisect                              mainporcelain
+ git-blame                               ancillaryinterrogators
+-git-branch                              mainporcelain common
++git-branch                              mainporcelain                c=
+ommon-history
+ git-bundle                              mainporcelain
+ git-cat-file                            plumbinginterrogators
+ git-check-attr                          purehelpers
+ git-check-ignore                        purehelpers
+ git-check-mailmap                       purehelpers
+-git-checkout                            mainporcelain common
++git-checkout                            mainporcelain                c=
+ommon-history
+ git-checkout-index                      plumbingmanipulators
+ git-check-ref-format                    purehelpers
+ git-cherry                              ancillaryinterrogators
+ git-cherry-pick                         mainporcelain
+ git-citool                              mainporcelain
+ git-clean                               mainporcelain
+-git-clone                               mainporcelain common
++git-clone                               mainporcelain                c=
+ommon-init
+ git-column                              purehelpers
+-git-commit                              mainporcelain common
++git-commit                              mainporcelain                c=
+ommon-history
+ git-commit-tree                         plumbingmanipulators
+ git-config                              ancillarymanipulators
+ git-count-objects                       ancillaryinterrogators
+@@ -35,42 +45,42 @@ git-cvsimport                           foreignscmi=
+nterface
+ git-cvsserver                           foreignscminterface
+ git-daemon                              synchingrepositories
+ git-describe                            mainporcelain
+-git-diff                                mainporcelain common
++git-diff                                mainporcelain                c=
+ommon-history
+ git-diff-files                          plumbinginterrogators
+ git-diff-index                          plumbinginterrogators
+ git-diff-tree                           plumbinginterrogators
+ git-difftool                            ancillaryinterrogators
+-git-fast-export				ancillarymanipulators
+-git-fast-import				ancillarymanipulators
+-git-fetch                               mainporcelain common
++git-fast-export                         ancillarymanipulators
++git-fast-import                         ancillarymanipulators
++git-fetch                               mainporcelain                c=
+ommon-remote
+ git-fetch-pack                          synchingrepositories
+ git-filter-branch                       ancillarymanipulators
+ git-fmt-merge-msg                       purehelpers
+ git-for-each-ref                        plumbinginterrogators
+ git-format-patch                        mainporcelain
+-git-fsck	                        ancillaryinterrogators
++git-fsck                                ancillaryinterrogators
+ git-gc                                  mainporcelain
+ git-get-tar-commit-id                   ancillaryinterrogators
+-git-grep                                mainporcelain common
++git-grep                                mainporcelain
+ git-gui                                 mainporcelain
+ git-hash-object                         plumbingmanipulators
+-git-help				ancillaryinterrogators
++git-help                                ancillaryinterrogators
+ git-http-backend                        synchingrepositories
+ git-http-fetch                          synchelpers
+ git-http-push                           synchelpers
+ git-imap-send                           foreignscminterface
+ git-index-pack                          plumbingmanipulators
+-git-init                                mainporcelain common
++git-init                                mainporcelain                c=
+ommon-init
+ git-instaweb                            ancillaryinterrogators
+ git-interpret-trailers                  purehelpers
+ gitk                                    mainporcelain
+-git-log                                 mainporcelain common
++git-log                                 mainporcelain                c=
+ommon-info
+ git-ls-files                            plumbinginterrogators
+ git-ls-remote                           plumbinginterrogators
+ git-ls-tree                             plumbinginterrogators
+ git-mailinfo                            purehelpers
+ git-mailsplit                           purehelpers
+-git-merge                               mainporcelain common
++git-merge                               mainporcelain                c=
+ommon-history
+ git-merge-base                          plumbinginterrogators
+ git-merge-file                          plumbingmanipulators
+ git-merge-index                         plumbingmanipulators
+@@ -79,7 +89,7 @@ git-mergetool                           ancillarymani=
+pulators
+ git-merge-tree                          ancillaryinterrogators
+ git-mktag                               plumbingmanipulators
+ git-mktree                              plumbingmanipulators
+-git-mv                                  mainporcelain common
++git-mv                                  mainporcelain
+ git-name-rev                            plumbinginterrogators
+ git-notes                               mainporcelain
+ git-p4                                  foreignscminterface
+@@ -90,11 +100,11 @@ git-parse-remote                        synchelper=
+s
+ git-patch-id                            purehelpers
+ git-prune                               ancillarymanipulators
+ git-prune-packed                        plumbingmanipulators
+-git-pull                                mainporcelain common
+-git-push                                mainporcelain common
++git-pull                                mainporcelain                c=
+ommon-remote
++git-push                                mainporcelain                c=
+ommon-remote
+ git-quiltimport                         foreignscminterface
+ git-read-tree                           plumbingmanipulators
+-git-rebase                              mainporcelain common
++git-rebase                              mainporcelain
+ git-receive-pack                        synchelpers
+ git-reflog                              ancillarymanipulators
+ git-relink                              ancillarymanipulators
+@@ -103,28 +113,28 @@ git-repack                              ancillary=
+manipulators
+ git-replace                             ancillarymanipulators
+ git-request-pull                        foreignscminterface
+ git-rerere                              ancillaryinterrogators
+-git-reset                               mainporcelain common
++git-reset                               mainporcelain                c=
+ommon-worktree
+ git-revert                              mainporcelain
+ git-rev-list                            plumbinginterrogators
+ git-rev-parse                           ancillaryinterrogators
+-git-rm                                  mainporcelain common
++git-rm                                  mainporcelain
+ git-send-email                          foreignscminterface
+ git-send-pack                           synchingrepositories
+ git-shell                               synchelpers
+ git-shortlog                            mainporcelain
+-git-show                                mainporcelain common
++git-show                                mainporcelain
+ git-show-branch                         ancillaryinterrogators
+ git-show-index                          plumbinginterrogators
+ git-show-ref                            plumbinginterrogators
+ git-sh-i18n                             purehelpers
+ git-sh-setup                            purehelpers
+ git-stash                               mainporcelain
+-git-status                              mainporcelain common
++git-status                              mainporcelain                c=
+ommon-info
+ git-stripspace                          purehelpers
+ git-submodule                           mainporcelain
+ git-svn                                 foreignscminterface
+ git-symbolic-ref                        plumbingmanipulators
+-git-tag                                 mainporcelain common
++git-tag                                 mainporcelain
+ git-unpack-file                         plumbinginterrogators
+ git-unpack-objects                      plumbingmanipulators
+ git-update-index                        plumbingmanipulators
+@@ -138,4 +148,4 @@ git-verify-pack                         plumbingint=
+errogators
+ git-verify-tag                          ancillaryinterrogators
+ gitweb                                  ancillaryinterrogators
+ git-whatchanged                         ancillaryinterrogators
+-git-write-tree                          plumbingmanipulators
++git-write-tree                          plumbingmanipulators
+\ No newline at end of file
+--=20
+2.4.0
