@@ -1,49 +1,115 @@
-From: Danny Lin <danny0838@gmail.com>
-Subject: --squash has no effect in git subtree push?
-Date: Mon, 4 May 2015 21:58:00 +0800
-Message-ID: <CAMbsUu5g=r867_WOhLCySG3caKj1jhmQgfzBxK4TYV27+nUpsg@mail.gmail.com>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: [PATCHv2] gitk: Show the current view's name in the window title.
+Date: Mon, 04 May 2015 10:26:29 -0400
+Message-ID: <55478195.4070301@xiplink.com>
+References: <20150406043711.GC31463@iris.ozlabs.ibm.com> <1428421911-20393-1-git-send-email-marcnarc@xiplink.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: Paul Mackerras <paulus@samba.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 04 15:58:10 2015
+X-From: git-owner@vger.kernel.org Mon May 04 16:26:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YpGsq-0003OS-Mh
-	for gcvg-git-2@plane.gmane.org; Mon, 04 May 2015 15:58:09 +0200
+	id 1YpHKN-00045F-O8
+	for gcvg-git-2@plane.gmane.org; Mon, 04 May 2015 16:26:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752772AbbEDN6E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 May 2015 09:58:04 -0400
-Received: from mail-qk0-f180.google.com ([209.85.220.180]:35681 "EHLO
-	mail-qk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751613AbbEDN6B (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 May 2015 09:58:01 -0400
-Received: by qkhg7 with SMTP id g7so84933277qkh.2
-        for <git@vger.kernel.org>; Mon, 04 May 2015 06:58:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=NIKFVfAlNuteuFCDvwfStW3edxDAhy27PkBwXmIMsJI=;
-        b=T+Jqfaq6ac8DANMuROj7ZyN8iH0JpYnhHomM509eV8dUV+rQAbVkSOZ7liPvauGPXA
-         WRxJa5dXTYa2DTAjtKkdQRi151Fd77xyGPUvo3gq23be1QdPR7HVBBF2ggTongTlWxit
-         GoMalNXhqq807GfoCUhYzIeVDsQk3A5DJ+c92xCrEA8LPxl1c9TnFJAe2ZVOkBTBHb+O
-         sVnZsCm0WgoA2gmL26VIE+IvkHrwwbnqHNn5sxPNilRlwYJMqGE9hYB6FHxxi4SLmakw
-         13qKsctLdeacbSVwf1WXW9sBWGEeGD4Hp5hJ/0D0NGEX1eNrgKMkjRetEMYwPml66Q3A
-         ZB+w==
-X-Received: by 10.229.19.67 with SMTP id z3mr28793698qca.2.1430747880647; Mon,
- 04 May 2015 06:58:00 -0700 (PDT)
-Received: by 10.140.98.145 with HTTP; Mon, 4 May 2015 06:58:00 -0700 (PDT)
+	id S1751030AbbEDO0b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 May 2015 10:26:31 -0400
+Received: from smtp90.ord1c.emailsrvr.com ([108.166.43.90]:43278 "EHLO
+	smtp90.ord1c.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750707AbbEDO0a (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 4 May 2015 10:26:30 -0400
+Received: from smtp12.relay.ord1c.emailsrvr.com (localhost.localdomain [127.0.0.1])
+	by smtp12.relay.ord1c.emailsrvr.com (SMTP Server) with ESMTP id C1DE8380237;
+	Mon,  4 May 2015 10:26:29 -0400 (EDT)
+Received: by smtp12.relay.ord1c.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 716B3380722;
+	Mon,  4 May 2015 10:26:29 -0400 (EDT)
+X-Sender-Id: mbranchaud@xiplink.com
+Received: from [10.10.1.32] ([UNAVAILABLE]. [192.252.130.194])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA)
+	by 0.0.0.0:465 (trex/5.4.2);
+	Mon, 04 May 2015 14:26:29 GMT
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
+In-Reply-To: <1428421911-20393-1-git-send-email-marcnarc@xiplink.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268327>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268328>
 
-The document says that --squash is for 'add', 'merge', 'pull' and 'push'.
+On 15-04-07 11:51 AM, Marc Branchaud wrote:
+> If the current view is the "Command line" view, show the command line
+> arguments instead of the view name.
+> 
+> Signed-off-by: Marc Branchaud <marcnarc@xiplink.com>
+> ---
+> 
+> This is v2 of my previous "Show the command-line revs in the window title" RFC
+> patch.  (I'm having trouble accessing gmane, or I'd include a link here.)
+> 
+> This version incorporates Paul's feedback (thanks!) and handles view properly.
 
-However, it seems that --squash has no effect for push. Am I doing
-something wrong or is the document outdated?
+Ping?
 
-git version 2.3.7.windows.1
+		M.
+
+
+> 		M.
+> 
+>  gitk | 17 ++++++++++++++++-
+>  1 file changed, 16 insertions(+), 1 deletion(-)
+> 
+> diff --git a/gitk b/gitk
+> index b859879..90419e3 100755
+> --- a/gitk
+> +++ b/gitk
+> @@ -4034,6 +4034,19 @@ proc shellsplit {str} {
+>      return $l
+>  }
+>  
+> +proc set_window_title {} {
+> +    global appname curview viewname vrevs
+> +    set rev [mc "All files"]
+> +    if {$curview ne 0} {
+> +	if {$viewname($curview) eq [mc "Command line"]} {
+> +	    set rev [string map {"--gitk-symmetric-diff-marker" "--merge"} $vrevs($curview)]
+> +	} else {
+> +	    set rev $viewname($curview)
+> +	}
+> +    }
+> +    wm title . "[reponame]: $rev - $appname"
+> +}
+> +
+>  # Code to implement multiple views
+>  
+>  proc newview {ishighlight} {
+> @@ -4510,6 +4523,7 @@ proc showview {n} {
+>      } elseif {$numcommits == 0} {
+>  	show_status [mc "No commits selected"]
+>      }
+> +    set_window_title
+>  }
+>  
+>  # Stuff relating to the highlighting facility
+> @@ -6650,6 +6664,7 @@ proc show_status {msg} {
+>      global canv fgcolor
+>  
+>      clear_display
+> +    set_window_title
+>      $canv create text 3 3 -anchor nw -text $msg -font mainfont \
+>  	-tags text -fill $fgcolor
+>  }
+> @@ -12393,7 +12408,7 @@ catch {
+>  }
+>  # wait for the window to become visible
+>  tkwait visibility .
+> -wm title . "[reponame] - $appname"
+> +set_window_title
+>  update
+>  readrefs
+>  
+> 
