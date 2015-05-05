@@ -1,163 +1,201 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/4] write_sha1_file_prepare: fix buffer overrun with extra-long object type
-Date: Tue, 05 May 2015 10:30:09 -0700
-Message-ID: <xmqqvbg7dja6.fsf@gitster.dls.corp.google.com>
-References: <1430724315-524-1-git-send-email-sunshine@sunshineco.com>
-	<1430775451-31130-1-git-send-email-gitster@pobox.com>
-	<1430775451-31130-3-git-send-email-gitster@pobox.com>
-	<CAPig+cS3f2XggxqbvX6Z2Da24QKLOg915Bf-bTVa+4oVzfhA1A@mail.gmail.com>
+Subject: Re: [PATCH] prefix_path(): Unconditionally free result of prefix_path
+Date: Tue, 05 May 2015 10:36:38 -0700
+Message-ID: <xmqqr3qvdizd.fsf@gitster.dls.corp.google.com>
+References: <1430766714-22368-1-git-send-email-sbeller@google.com>
+	<20150505032158.GA23587@peff.net>
+	<CAGZ79kZjeG8UG5ALE-KSO52fD5gJk4xks=VtSV9bHQVA=ST+5Q@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Tue May 05 19:30:29 2015
+Cc: Stefan Beller <sbeller@google.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue May 05 19:36:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ypgfp-0007y9-Dw
-	for gcvg-git-2@plane.gmane.org; Tue, 05 May 2015 19:30:25 +0200
+	id 1Ypgm5-000471-S6
+	for gcvg-git-2@plane.gmane.org; Tue, 05 May 2015 19:36:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762010AbbEERaQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 May 2015 13:30:16 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64078 "EHLO
+	id S1762180AbbEERgs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 May 2015 13:36:48 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:57819 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1762007AbbEERaM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 May 2015 13:30:12 -0400
+	with ESMTP id S1762162AbbEERgr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 May 2015 13:36:47 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9A4F74EA77;
-	Tue,  5 May 2015 13:30:11 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 07B9A4ED7E;
+	Tue,  5 May 2015 13:36:41 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=dzNy31G2rAX6CXfbX1H556uP+2A=; b=kYBjmd
-	WEyoN5a+wLMnsf8nncOQMz/pEsF/3vCp8c4JgbKfbLdxGr71lWfhjbk1ad9s8Lkd
-	SHkI4/2Cmo4pA4udxvO78ZExo8C4cCUMY90lZfbT8Z4To0jOXXHhCtobjJxHffDl
-	QLlxUIPbq8kYbdpfJZSO6frklkb3BO/RBqTDQ=
+	:content-type; s=sasl; bh=0BT/uNBvQcn3I3fK4GXzMGhdkBY=; b=yhW3Jc
+	WDIfNZbgZQZk+MAtIS2HmxwNcZgArsAoAELX6doho9jAV5nq+/o3imR2R2fR5PFY
+	Yh6tf92rM17O78p1F06JA4KbDoL49KbLXdG7i6FJ9UtK4RmnsqC8UeJqE5garSl2
+	LKQm40bS/HzH0WrH/49pQitcKnevaJ574J0ig=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=RkUFHwFq1CyrOnNm/MmADI+4RP5XJc6G
-	4gN2/gOMo3SekkVivec1ubj/39juf8OUTmFIh7O1tFF3Jq7N9Gd5tkroZ+zoZGvk
-	o1Qzz0mG1ZtjRHm+EE7cU4cum4oIv8KC5fanKw59lypgYab58tAfqkpxtIidLUOb
-	h7xjWZiiRvI=
+	:content-type; q=dns; s=sasl; b=mvY/kSkyaqyGFAR+MUuN33Ppg5bjOx4k
+	L0/717805/Xzu91Fotk4jyeXT9dsNqtjHLte7+/3LaO4sQjVv6MV2a2TIui+UHUE
+	uCLpfKQELOtyyqNZd47ka/ZssdhfViX5M960tZX6mKwvv1w50P1bYbMZtliwXtbK
+	7R7h0UxIcOg=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 927BE4EA76;
-	Tue,  5 May 2015 13:30:11 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E13E44ED7D;
+	Tue,  5 May 2015 13:36:40 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0F3514EA72;
-	Tue,  5 May 2015 13:30:10 -0400 (EDT)
-In-Reply-To: <CAPig+cS3f2XggxqbvX6Z2Da24QKLOg915Bf-bTVa+4oVzfhA1A@mail.gmail.com>
-	(Eric Sunshine's message of "Mon, 4 May 2015 20:13:18 -0400")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 123C44ED7A;
+	Tue,  5 May 2015 13:36:40 -0400 (EDT)
+In-Reply-To: <CAGZ79kZjeG8UG5ALE-KSO52fD5gJk4xks=VtSV9bHQVA=ST+5Q@mail.gmail.com>
+	(Stefan Beller's message of "Tue, 5 May 2015 09:28:40 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 61BCDF18-F34C-11E4-8F7A-83E09F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 499B1A48-F34D-11E4-B511-83E09F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268401>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Stefan Beller <sbeller@google.com> writes:
 
-> On Mon, May 4, 2015 at 5:37 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> From: Eric Sunshine <sunshine@sunshineco.com>
+>> Should we also squash in these sites? I think they are adequately
+>> covered under the proposed log message.
 >
-> Thanks for re-rerolling this series. Considering that the only bits
-> left from me are the diagnosis and the (mostly intact) commit message,
-> perhaps the authorship should be changed, or at the very least a big
-> "Helped-by: Junio" added? Anyhow, a few minor comments below...
+> That sounds good to me.
+>>
+>> Found by grepping for prefix_path calls. The only remainders are:
+>>
+>>   1. in blame, we assign the result to a const char that may also point
+>>      straight into to argv, but we never actually free either way
 
-I am a bit too lazy to take the ownership, so I decided only to take
-the blame ;-)
+The return value from add_prefix() that is what prefix_path()
+returned eventually becomes scoreboard.path that needs to be kept
+during the lifetime of the process, and I think there isn't much
+point doing the "free() immediately before exiting".
 
-Here is a replacement; all the other patches stay the same.
+>>   2. test-path-utils does not free at all, but we probably don't care
+>>      either way
+
+Anyway, here is what I'd queue for now.
 
 -- >8 --
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Mon, 4 May 2015 03:25:15 -0400
-Subject: [PATCH] hash-object --literally: fix buffer overrun with extra-long object type
+From: Stefan Beller <sbeller@google.com>
+Date: Mon, 4 May 2015 12:11:54 -0700
+Subject: [PATCH] prefix_path(): unconditionally free results in the callers
 
-"hash-object" learned in 5ba9a93 (hash-object: add --literally
-option, 2014-09-11) to allow crafting a corrupt/broken object of
-unknown type.
+As of d089ebaa (setup: sanitize absolute and funny paths in
+get_pathspec(), 2008-01-28), prefix_path() always returns a
+newly allocated string, so callers should free its result.
 
-When the user-provided type is particularly long, however, it can
-overflow the relatively small stack-based character array handed to
-write_sha1_file_prepare() by hash_sha1_file() and write_sha1_file(),
-leading to stack corruption (and crash).  Introduce a custom helper
-to allow arbitrarily long typenames just for "hash-object --literally".
+Additionally, drop the const from variables to which the result of
+the prefix_path() is assigned, so they can be free()'d without
+having to cast-away the constness.
 
-[jc: Eric's original used a strbuf in the more common codepaths, and
-I rewrote it to avoid penalizing the non-literally code. Bugs are mine]
-
-Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+Signed-off-by: Stefan Beller <sbeller@google.com>
+Reviewed-by: Eric Sunshine <sunshine@sunshineco.com>
+Helped-by: Jeff King <peff@peff.net>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/hash-object.c |  4 +---
- cache.h               |  1 +
- sha1_file.c           | 21 +++++++++++++++++++++
- 3 files changed, 23 insertions(+), 3 deletions(-)
+ builtin/checkout-index.c | 10 ++++------
+ builtin/update-index.c   | 13 ++++++-------
+ 2 files changed, 10 insertions(+), 13 deletions(-)
 
-diff --git a/builtin/hash-object.c b/builtin/hash-object.c
-index 6158363..17e8bfdc 100644
---- a/builtin/hash-object.c
-+++ b/builtin/hash-object.c
-@@ -22,10 +22,8 @@ static int hash_literally(unsigned char *sha1, int fd, const char *type, unsigne
+diff --git a/builtin/checkout-index.c b/builtin/checkout-index.c
+index 9ca2da1..8028c37 100644
+--- a/builtin/checkout-index.c
++++ b/builtin/checkout-index.c
+@@ -241,7 +241,7 @@ int cmd_checkout_index(int argc, const char **argv, const char *prefix)
+ 	/* Check out named files first */
+ 	for (i = 0; i < argc; i++) {
+ 		const char *arg = argv[i];
+-		const char *p;
++		char *p;
  
- 	if (strbuf_read(&buf, fd, 4096) < 0)
- 		ret = -1;
--	else if (flags & HASH_WRITE_OBJECT)
--		ret = write_sha1_file(buf.buf, buf.len, type, sha1);
- 	else
--		ret = hash_sha1_file(buf.buf, buf.len, type, sha1);
-+		ret = hash_sha1_file_literally(buf.buf, buf.len, type, sha1, flags);
- 	strbuf_release(&buf);
- 	return ret;
- }
-diff --git a/cache.h b/cache.h
-index dfa1a56..e037cad 100644
---- a/cache.h
-+++ b/cache.h
-@@ -888,6 +888,7 @@ static inline const unsigned char *lookup_replace_object_extended(const unsigned
- extern int sha1_object_info(const unsigned char *, unsigned long *);
- extern int hash_sha1_file(const void *buf, unsigned long len, const char *type, unsigned char *sha1);
- extern int write_sha1_file(const void *buf, unsigned long len, const char *type, unsigned char *return_sha1);
-+extern int hash_sha1_file_literally(const void *buf, unsigned long len, const char *type, unsigned char *sha1, unsigned flags);
- extern int pretend_sha1_file(void *, unsigned long, enum object_type, unsigned char *);
- extern int force_object_loose(const unsigned char *sha1, time_t mtime);
- extern int git_open_noatime(const char *name);
-diff --git a/sha1_file.c b/sha1_file.c
-index c08c0cb..dc940e6 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -2962,6 +2962,27 @@ int write_sha1_file(const void *buf, unsigned long len, const char *type, unsign
- 	return write_loose_object(sha1, hdr, hdrlen, buf, len, 0);
- }
+ 		if (all)
+ 			die("git checkout-index: don't mix '--all' and explicit filenames");
+@@ -249,8 +249,7 @@ int cmd_checkout_index(int argc, const char **argv, const char *prefix)
+ 			die("git checkout-index: don't mix '--stdin' and explicit filenames");
+ 		p = prefix_path(prefix, prefix_length, arg);
+ 		checkout_file(p, prefix);
+-		if (p < arg || p > arg + strlen(arg))
+-			free((char *)p);
++		free(p);
+ 	}
  
-+int hash_sha1_file_literally(const void *buf, unsigned long len, const char *type,
-+			     unsigned char *sha1, unsigned flags)
-+{
-+	char *header;
-+	int hdrlen, status = 0;
-+
-+	/* type string, SP, %lu of the length plus NUL must fit this */
-+	header = xmalloc(strlen(type) + 32);
-+	write_sha1_file_prepare(buf, len, type, sha1, header, &hdrlen);
-+
-+	if (!(flags & HASH_WRITE_OBJECT))
-+		goto cleanup;
-+	if (has_sha1_file(sha1))
-+		goto cleanup;
-+	status = write_loose_object(sha1, header, hdrlen, buf, len, 0);
-+
-+cleanup:
-+	free(header);
-+	return status;
-+}
-+
- int force_object_loose(const unsigned char *sha1, time_t mtime)
- {
- 	void *buf;
+ 	if (read_from_stdin) {
+@@ -260,7 +259,7 @@ int cmd_checkout_index(int argc, const char **argv, const char *prefix)
+ 			die("git checkout-index: don't mix '--all' and '--stdin'");
+ 
+ 		while (strbuf_getline(&buf, stdin, line_termination) != EOF) {
+-			const char *p;
++			char *p;
+ 			if (line_termination && buf.buf[0] == '"') {
+ 				strbuf_reset(&nbuf);
+ 				if (unquote_c_style(&nbuf, buf.buf, NULL))
+@@ -269,8 +268,7 @@ int cmd_checkout_index(int argc, const char **argv, const char *prefix)
+ 			}
+ 			p = prefix_path(prefix, prefix_length, buf.buf);
+ 			checkout_file(p, prefix);
+-			if (p < buf.buf || p > buf.buf + buf.len)
+-				free((char *)p);
++			free(p);
+ 		}
+ 		strbuf_release(&nbuf);
+ 		strbuf_release(&buf);
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index 6271b54..0665b31 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -532,10 +532,9 @@ static int do_unresolve(int ac, const char **av,
+ 
+ 	for (i = 1; i < ac; i++) {
+ 		const char *arg = av[i];
+-		const char *p = prefix_path(prefix, prefix_length, arg);
++		char *p = prefix_path(prefix, prefix_length, arg);
+ 		err |= unresolve_one(p);
+-		if (p < arg || p > arg + strlen(arg))
+-			free((char *)p);
++		free(p);
+ 	}
+ 	return err;
+ }
+@@ -871,14 +870,14 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+ 		case PARSE_OPT_DONE:
+ 		{
+ 			const char *path = ctx.argv[0];
+-			const char *p;
++			char *p;
+ 
+ 			setup_work_tree();
+ 			p = prefix_path(prefix, prefix_length, path);
+ 			update_one(p);
+ 			if (set_executable_bit)
+ 				chmod_path(set_executable_bit, p);
+-			free((char *)p);
++			free(p);
+ 			ctx.argc--;
+ 			ctx.argv++;
+ 			break;
+@@ -909,7 +908,7 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+ 
+ 		setup_work_tree();
+ 		while (strbuf_getline(&buf, stdin, line_termination) != EOF) {
+-			const char *p;
++			char *p;
+ 			if (line_termination && buf.buf[0] == '"') {
+ 				strbuf_reset(&nbuf);
+ 				if (unquote_c_style(&nbuf, buf.buf, NULL))
+@@ -920,7 +919,7 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+ 			update_one(p);
+ 			if (set_executable_bit)
+ 				chmod_path(set_executable_bit, p);
+-			free((char *)p);
++			free(p);
+ 		}
+ 		strbuf_release(&nbuf);
+ 		strbuf_release(&buf);
 -- 
 2.4.0-311-gf1d9b8d
