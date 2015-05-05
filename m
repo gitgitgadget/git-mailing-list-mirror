@@ -1,84 +1,63 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 02/12] remote.c: drop "remote" pointer from "struct
- branch"
-Date: Tue, 5 May 2015 15:31:05 -0400
-Message-ID: <20150505193105.GE10463@peff.net>
+Subject: Re: [PATCH 04/12] remote.c: provide per-branch pushremote name
+Date: Tue, 5 May 2015 15:33:39 -0400
+Message-ID: <20150505193339.GF10463@peff.net>
 References: <20150501224414.GA25551@peff.net>
- <20150501224515.GB1534@peff.net>
- <CAPig+cQny16Jei9AtDWVY3ADbPGshFw7CYofD_TnyA+GL58AOg@mail.gmail.com>
+ <20150501224644.GD1534@peff.net>
+ <CAPig+cT7pSxZahd1hmcwCW8ifZfvQ4YW6L7xXUrD7dTJt76srQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Git List <git@vger.kernel.org>
 To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Tue May 05 21:31:16 2015
+X-From: git-owner@vger.kernel.org Tue May 05 21:33:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YpiYk-0003MX-4L
-	for gcvg-git-2@plane.gmane.org; Tue, 05 May 2015 21:31:14 +0200
+	id 1YpibJ-00058r-Da
+	for gcvg-git-2@plane.gmane.org; Tue, 05 May 2015 21:33:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757378AbbEETbL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 May 2015 15:31:11 -0400
-Received: from cloud.peff.net ([50.56.180.127]:54424 "HELO cloud.peff.net"
+	id S1751057AbbEETdp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 May 2015 15:33:45 -0400
+Received: from cloud.peff.net ([50.56.180.127]:54429 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757375AbbEETbI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 May 2015 15:31:08 -0400
-Received: (qmail 23836 invoked by uid 102); 5 May 2015 19:31:07 -0000
+	id S1757466AbbEETdm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 May 2015 15:33:42 -0400
+Received: (qmail 23973 invoked by uid 102); 5 May 2015 19:33:41 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 05 May 2015 14:31:07 -0500
-Received: (qmail 9771 invoked by uid 107); 5 May 2015 19:31:39 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 05 May 2015 14:33:41 -0500
+Received: (qmail 9816 invoked by uid 107); 5 May 2015 19:34:14 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 05 May 2015 15:31:39 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 05 May 2015 15:31:05 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 05 May 2015 15:34:14 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 05 May 2015 15:33:39 -0400
 Content-Disposition: inline
-In-Reply-To: <CAPig+cQny16Jei9AtDWVY3ADbPGshFw7CYofD_TnyA+GL58AOg@mail.gmail.com>
+In-Reply-To: <CAPig+cT7pSxZahd1hmcwCW8ifZfvQ4YW6L7xXUrD7dTJt76srQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268418>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268419>
 
-On Sat, May 02, 2015 at 11:34:25PM -0400, Eric Sunshine wrote:
+On Sun, May 03, 2015 at 12:51:13AM -0400, Eric Sunshine wrote:
 
-> > -       if (ret && ret->remote_name) {
-> > -               ret->remote = remote_get(ret->remote_name);
-> > -               if (ret->merge_nr)
-> > -                       set_merge(ret);
-> > -       }
-> > +       if (ret)
-> > +              set_merge(ret);
+> > Versus v1, I did something a little clever by passing a function pointer
+> > around (versus a flag and letting the caller do a conditional based on
+> > the flag). Too clever?
 > 
-> When reading the actual patch, I was surprised to see unmentioned
-> changes to the reg->merge_nr check. Although the merge_nr
-> simplification seems sensible, it appears to be unrelated to the
-> stated purpose of the patch, and made the review more difficult since
-> it required keeping track of two distinct (yet textually intertwined)
-> changes. I wonder if it would make more sense to apply the merge_nr
-> simplification as a separate preparatory patch?
+> FWIW: I found this "clever" version easy enough to follow.
+> 
+> However, if you push a tiny bit of the work into the callers of
+> remote_get_1(), then you can do away with the "cleverness" altogether,
+> can't you? Something like this:
 
-I didn't actually mean to change any behavior with respect to
-ret->merge_nr here (and I don't think I did). What I did was blindly
-move everything in the conditional after the remote_get into set_merge,
-so that it happened in the same order (and the remote_get moves into
-set_merge, because we no longer have the struct element that it was
-formerly passed down in).
+Yeah, it's just that it goes in the opposite direction I was trying for,
+which is to have as little code as possible in the wrapper functions (in
+fact, I think after my changes you could even bump the read_config()
+call into remote_get_1; before my changes, it depended on the pushremote
+config being set before the call).
 
-But actually, ret->merge_nr comes from make_branch, and we could
-continue to respect it regardless of the remote values (i.e., they are
-both preconditions to setting up the merge data, but it doesn't matter
-in which order we check them).
-
-One thing I did notice while looking at this is that it seems like we
-may leak if you call branch_get multiple times. The make_branch()
-function may sometimes return a brand-new branch and sometimes return a
-cached version from the "branches" array. In the latter case, we
-continue to update the "remote" pointer (which is wasteful but at least
-does not leak because the remotes themselves are part of a cached list).
-But then we will repeatedly re-allocate the ret->merge array. We
-probably should make sure it is NULL before trying to fill it in.
-
-I'll see if I can insert a cleanup patch in this part of the series.
+I agree it is not so much code, though, and maybe it makes the flow a
+little clearer. I'll play with it for the re-roll.
 
 -Peff
