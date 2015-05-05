@@ -1,109 +1,78 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] prefix_path(): Unconditionally free result of prefix_path
-Date: Mon, 4 May 2015 23:21:59 -0400
-Message-ID: <20150505032158.GA23587@peff.net>
-References: <1430766714-22368-1-git-send-email-sbeller@google.com>
+Subject: Re: multiple source file extensions
+Date: Mon, 4 May 2015 23:43:36 -0400
+Message-ID: <20150505034336.GA25194@peff.net>
+References: <CACnwZYed_aHzLsbkJVm=OnydXw-CPi-Zm9V7928rzvpaFMNENw@mail.gmail.com>
+ <CANuW5x3OBWNDnHeVbH7ZQaj5AUAingea6crJ0cF9AHFjcJE_bQ@mail.gmail.com>
+ <20150502011100.GB5634@peff.net>
+ <CACnwZYdGKcdzgu1=Ysd_pxqeuSBpZu41i1EJBvBi4FqHzvV-Hw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, gitster@pobox.com, sunshine@sunshineco.com
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Tue May 05 05:22:11 2015
+Cc: Josh Hagins <hagins.josh@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Duy =?utf-8?B?Tmd1eeG7hW4=?= <pclouds@gmail.com>
+To: Thiago Farina <tfransosi@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 05 05:43:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YpTQw-0006rJ-Ff
-	for gcvg-git-2@plane.gmane.org; Tue, 05 May 2015 05:22:10 +0200
+	id 1YpTlw-0002BT-51
+	for gcvg-git-2@plane.gmane.org; Tue, 05 May 2015 05:43:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754487AbbEEDWE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 May 2015 23:22:04 -0400
-Received: from cloud.peff.net ([50.56.180.127]:54153 "HELO cloud.peff.net"
+	id S1755261AbbEEDnl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 May 2015 23:43:41 -0400
+Received: from cloud.peff.net ([50.56.180.127]:54163 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752235AbbEEDWC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 May 2015 23:22:02 -0400
-Received: (qmail 7601 invoked by uid 102); 5 May 2015 03:22:01 -0000
+	id S1752431AbbEEDnj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 May 2015 23:43:39 -0400
+Received: (qmail 8729 invoked by uid 102); 5 May 2015 03:43:39 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 04 May 2015 22:22:01 -0500
-Received: (qmail 4050 invoked by uid 107); 5 May 2015 03:22:33 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 04 May 2015 22:43:39 -0500
+Received: (qmail 4147 invoked by uid 107); 5 May 2015 03:44:10 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 04 May 2015 23:22:33 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 04 May 2015 23:21:59 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 04 May 2015 23:44:10 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 04 May 2015 23:43:36 -0400
 Content-Disposition: inline
-In-Reply-To: <1430766714-22368-1-git-send-email-sbeller@google.com>
+In-Reply-To: <CACnwZYdGKcdzgu1=Ysd_pxqeuSBpZu41i1EJBvBi4FqHzvV-Hw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268383>
 
-On Mon, May 04, 2015 at 12:11:54PM -0700, Stefan Beller wrote:
+On Mon, May 04, 2015 at 07:12:45PM -0300, Thiago Farina wrote:
 
-> prefix_path() always returns a newly allocated string since
-> d089eba (setup: sanitize absolute and funny paths in get_pathspec(),
-> 2008-01-28)
+> On Fri, May 1, 2015 at 10:11 PM, Jeff King <peff@peff.net> wrote:
+> > On Fri, May 01, 2015 at 08:49:14PM -0400, Josh Hagins wrote:
+> >
+> >> If you're using a recent version of bash, you could enable the
+> >> 'globstar' option:
+> >>
+> >>     $ shopt -s globstar
+> >>     $ git grep 'pattern' **/*.{cc,cpp,h}
+> >>
+> >> Does that work?
+> >
+> > That will only pick up files that are in the working tree. Which is fine
+> > for a stock "git grep" with no options, but would not be right for
+> > grepping in the index or an older tree. For that, you can ask git to
+> > glob for you:
+> >
+> >   git grep pattern -- '*.cc' '*.cpp' '*.h'
+> >
+> Is it possible to do a regex like the following?
 > 
-> Additionally the const is dropped from the pointers, so the call to
-> free doesn't need a cast.
-> 
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
-> 
-> Notes:
->     Thanks for all the suggestions!
->     They are incorporated into this version of the patch.
-> 
->  builtin/checkout-index.c | 10 ++++------
->  builtin/update-index.c   |  5 ++---
->  2 files changed, 6 insertions(+), 9 deletions(-)
+> ".*\.[cChH]\(pp\)?"
 
-Should we also squash in these sites? I think they are adequately
-covered under the proposed log message.
+No, pathspecs are globs, not regexps. I think the idea has been floated
+for supporting regexps, which you would activate something like:
 
-Found by grepping for prefix_path calls. The only remainders are:
+  git grep pattern -- :(regexp)$your_regex_here
 
-  1. in blame, we assign the result to a const char that may also point
-     straight into to argv, but we never actually free either way
+but nobody has implemented it. I'm not sure it actually saves you any
+typing (besides which, your regexp does not match ".cc", which was in
+the original).
 
-  2. test-path-utils does not free at all, but we probably don't care
-     either way
-
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index a92eed2..0665b31 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -870,14 +870,14 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
- 		case PARSE_OPT_DONE:
- 		{
- 			const char *path = ctx.argv[0];
--			const char *p;
-+			char *p;
- 
- 			setup_work_tree();
- 			p = prefix_path(prefix, prefix_length, path);
- 			update_one(p);
- 			if (set_executable_bit)
- 				chmod_path(set_executable_bit, p);
--			free((char *)p);
-+			free(p);
- 			ctx.argc--;
- 			ctx.argv++;
- 			break;
-@@ -908,7 +908,7 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
- 
- 		setup_work_tree();
- 		while (strbuf_getline(&buf, stdin, line_termination) != EOF) {
--			const char *p;
-+			char *p;
- 			if (line_termination && buf.buf[0] == '"') {
- 				strbuf_reset(&nbuf);
- 				if (unquote_c_style(&nbuf, buf.buf, NULL))
-@@ -919,7 +919,7 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
- 			update_one(p);
- 			if (set_executable_bit)
- 				chmod_path(set_executable_bit, p);
--			free((char *)p);
-+			free(p);
- 		}
- 		strbuf_release(&nbuf);
- 		strbuf_release(&buf);
+-Peff
