@@ -1,137 +1,86 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2] upload-pack: Optionally allow fetching reachable sha1
-Date: Tue, 5 May 2015 18:29:00 -0400
-Message-ID: <CAPig+cRqDdj0fHdt10x_YhZcEdJ9WN_bAjUH5MjQxKhdVaEKGg@mail.gmail.com>
-References: <1430604075-5951-1-git-send-email-fredrik.medley@gmail.com>
-	<1430860888-6146-1-git-send-email-fredrik.medley@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: t5570 - not cloned error
+Date: Tue, 5 May 2015 18:55:21 -0400
+Message-ID: <20150505225521.GB18817@peff.net>
+References: <013701d08769$a5bbab80$f1330280$@nexbridge.com>
+ <xmqqr3qud6qm.fsf@gitster.dls.corp.google.com>
+ <017401d08782$24d6f5b0$6e84e110$@nexbridge.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Christian Halstrick <christian.halstrick@gmail.com>,
-	Dan Johnson <computerdruid@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Fredrik Medley <fredrik.medley@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 06 00:29:08 2015
+Content-Type: text/plain; charset=utf-8
+Cc: 'Junio C Hamano' <gitster@pobox.com>, git@vger.kernel.org,
+	'Joachim Schmitz' <jojo@schmitz-digital.de>
+To: "Randall S. Becker" <rsbecker@nexbridge.com>
+X-From: git-owner@vger.kernel.org Wed May 06 00:55:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YplKt-0006JU-93
-	for gcvg-git-2@plane.gmane.org; Wed, 06 May 2015 00:29:07 +0200
+	id 1YplkP-0006d8-KX
+	for gcvg-git-2@plane.gmane.org; Wed, 06 May 2015 00:55:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932498AbbEEW3B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 May 2015 18:29:01 -0400
-Received: from mail-ie0-f173.google.com ([209.85.223.173]:35933 "EHLO
-	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751434AbbEEW3B (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 May 2015 18:29:01 -0400
-Received: by iecnq11 with SMTP id nq11so1105386iec.3
-        for <git@vger.kernel.org>; Tue, 05 May 2015 15:29:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=IvVl82M3vuiMQQEGdjRA/Raebk+FNszMxWMzlvNxdbo=;
-        b=ME6cuumMl7sYsbFOF3aUb4E0CbKeVa7C0ITI//Y8jXh+54y00OVPOj5Xyei7oNROy4
-         u/tlJJTxAzOa7PtFZW1KbDPoa7h1JNqZ7H3FXfx7M9HDF1aNvRoqZ1GZEbM54upM68C9
-         Yl5UNg788RWen7Wk4JHpR5q2MnkMTehZHq08xBeATfpuANRvHc6GkZy7vpnhtvoZCo5j
-         hqao2md3Jq/8AVfPg8oHvNn3ZcOD/ka8LCZpiaQTwcf797abOXyy6lbfNrGT52IW2fuH
-         BMuwEu79PR/G0NZDi8zxa/bY4C6F69/1R4JLhvT82Cd1dxR5j3VdWmhM28FTcOF+Wb9x
-         bx4Q==
-X-Received: by 10.107.31.134 with SMTP id f128mr2443679iof.19.1430864940288;
- Tue, 05 May 2015 15:29:00 -0700 (PDT)
-Received: by 10.107.28.132 with HTTP; Tue, 5 May 2015 15:29:00 -0700 (PDT)
-In-Reply-To: <1430860888-6146-1-git-send-email-fredrik.medley@gmail.com>
-X-Google-Sender-Auth: v6G43lsvtkU9VFQLWRN0n3AcwJc
+	id S932150AbbEEWzZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 May 2015 18:55:25 -0400
+Received: from cloud.peff.net ([50.56.180.127]:54542 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932124AbbEEWzY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 May 2015 18:55:24 -0400
+Received: (qmail 2230 invoked by uid 102); 5 May 2015 22:55:24 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 05 May 2015 17:55:24 -0500
+Received: (qmail 12181 invoked by uid 107); 5 May 2015 22:55:56 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 05 May 2015 18:55:56 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 05 May 2015 18:55:21 -0400
+Content-Disposition: inline
+In-Reply-To: <017401d08782$24d6f5b0$6e84e110$@nexbridge.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268430>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268431>
 
-On Tue, May 5, 2015 at 5:21 PM, Fredrik Medley <fredrik.medley@gmail.com> wrote:
-> With uploadpack.allowreachablesha1inwant configuration option set on the
-> server side, "git fetch" can make a request with a "want" line that names
-> an object that has not been advertised (likely to have been obtained out
-> of band or from a submodule pointer). Only objects reachable from the
-> branch tips, i.e. the union of advertised branches and branches hidden by
-> transfer.hiderefs, will be processed. Note that there is an associated
-> cost of having to walk back the hstory to check the reachability.
-> [...]
-> Signed-off-by: Fredrik Medley <fredrik.medley@gmail.com>
-> ---
-> diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-> index 8a5f236..01fabfb 100755
-> --- a/t/t5516-fetch-push.sh
-> +++ b/t/t5516-fetch-push.sh
-> @@ -1120,6 +1120,61 @@ test_expect_success 'fetch exact SHA1' '
->         )
->  '
->
-> +for configallowtipsha1inwant in true false
-> +do
-> +       test_expect_success "shallow fetch reachable SHA1 (but not a ref), allowtipsha1inwant=$configallowtipsha1inwant" '
-> +               mk_empty testrepo &&
-> +               (
-> +                       cd testrepo &&
-> +                       git config uploadpack.allowtipsha1inwant $configallowtipsha1inwant &&
-> +                       git commit --allow-empty -m foo &&
-> +                       git commit --allow-empty -m bar
-> +               ) &&
-> +               SHA1=`git --git-dir=testrepo/.git rev-parse HEAD^` &&
+On Tue, May 05, 2015 at 06:23:41PM -0400, Randall S. Becker wrote:
 
-Use $(..) here and elsewhere rather than `...`.
+> 
+> On May 5, 2015 6:01 PM Junio C Hamano wrote:
+> > "Randall S. Becker" <rsbecker@nexbridge.com> writes:
+> > > We definitely have an issue with localhost. When forcing the DNS
+> resolver to
+> > > return 127.0.0.1, we pass 1-16 then 17 fails as I expected to happen
+> based
+> > > on my DNS futzing. Heads up that this test is not-surprisingly sensitive
+> to
+> > > DNS problems. My environment is still in a messy state where I can
+> reproduce
+> > > the original problem so it might be a useful moment for me to find a way
+> to
+> > > modify the test script to harden it. Any suggestion on that score
+> > > (as in where and roughly how it might be made more reliable)?
+> > 
+> > I do not think this counts as a useful "suggestion", but is this
+> > "resolver does not work for local as expected" case even worth
+> > protecting our tests against?
+> 
+> I see your point, but after having spent "way too much time" away from the
+> $DAYJOB tracking this down, I was hoping to catch the root cause earlier
+> next time. Perhaps adding a test step validating that localhost comes back
+> with a reasonable value - whatever that may be in context. I'm just not sure
+> what the test really needs at its heart to run properly - obviously the IP
+> address of the system as  visible in our DMZ is not working for the test.
 
-    SHA1=$(git --git-dir=testrepo/.git rev-parse HEAD^) &&
+I'm having trouble even understanding who is looking up "localhost"
+here.  All of the git-daemon tests should be directly using 127.0.0.1 in
+the URLs (i.e., what is in $GIT_DAEMON_URL). If that is a problem, I
+think you might be able to parameterize the way we set up
+$GIT_DAEMON_URL (and how we invoked git-daemon; see lib-git-daemon.sh).
 
-> +               mk_empty shallow &&
-> +               (
-> +                       cd shallow &&
-> +                       test_must_fail git fetch --depth=1 ../testrepo/.git $SHA1 &&
-> +                       git --git-dir=../testrepo/.git config uploadpack.allowreachablesha1inwant true &&
-> +                       git fetch --depth=1 ../testrepo/.git $SHA1 &&
-> +                       git cat-file commit $SHA1 >/dev/null
-> +               )
-> +       '
-> +
-> +       test_expect_success "deny fetch unreachable SHA1, allowtipsha1inwant=$configallowtipsha1inwant" '
-> +               mk_empty testrepo &&
-> +               (
-> +                       cd testrepo &&
-> +                       git config uploadpack.allowtipsha1inwant $configallowtipsha1inwant &&
-> +                       git commit --allow-empty -m foo &&
-> +                       git commit --allow-empty -m bar &&
-> +                       git commit --allow-empty -m xyz
-> +               )
-> +               SHA1_1=`git --git-dir=testrepo/.git rev-parse HEAD^^` &&
-> +               SHA1_2=`git --git-dir=testrepo/.git rev-parse HEAD^` &&
-> +               SHA1_3=`git --git-dir=testrepo/.git rev-parse HEAD` &&
-> +               (
-> +                       cd testrepo &&
-> +                       git reset --hard $SHA1_2 &&
-> +                       git cat-file commit $SHA1_3 >/dev/null &&
-> +                       git cat-file commit $SHA1_3 >/dev/null
-> +               ) &&
-> +               mk_empty shallow &&
-> +               (
-> +                       cd shallow &&
-> +                       test_must_fail git fetch ../testrepo/.git $SHA1_3 &&
-> +                       test_must_fail git fetch ../testrepo/.git $SHA1_1 &&
-> +                       git --git-dir=../testrepo/.git config uploadpack.allowreachablesha1inwant true &&
-> +                       git fetch ../testrepo/.git $SHA1_1 &&
-> +                       git cat-file commit $SHA1_1 >/dev/null &&
-> +                       test_must_fail git cat-file commit $SHA1_2 >/dev/null &&
-> +                       git fetch ../testrepo/.git $SHA1_2 &&
-> +                       git cat-file commit $SHA1_2 >/dev/null &&
-> +                       test_must_fail git fetch ../testrepo/.git $SHA1_3
-> +               )
-> +       '
-> +done
-> +
->  test_expect_success 'fetch follows tags by default' '
->         mk_test testrepo heads/master &&
->         rm -fr src dst &&
+In the interpolation tests, we do use the string "localhost" but we
+should never do a lookup on it. We set an environment variable that
+tells the git client to _tell_ the server we looked up localhost, but we
+should still be accessing it as 127.0.0.1.
+
+So I'm confused about what the actual problem is, or why the test cares
+about resolving "localhost" in the first place.
+
+-Peff
