@@ -1,133 +1,109 @@
-From: karthik nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v10 4/4] t1006: add tests for git cat-file --allow-unknown-type
-Date: Tue, 05 May 2015 07:53:00 +0530
-Message-ID: <55482984.1000600@gmail.com>
-References: <55463094.9040204@gmail.com>	<1430663402-26717-1-git-send-email-karthik.188@gmail.com>	<1430663402-26717-4-git-send-email-karthik.188@gmail.com> <CAPig+cTOVFem74yr4HPqDRU3-4s_B58jQsx14ntp5FsB0WR6SA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] prefix_path(): Unconditionally free result of prefix_path
+Date: Mon, 4 May 2015 23:21:59 -0400
+Message-ID: <20150505032158.GA23587@peff.net>
+References: <1430766714-22368-1-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Tue May 05 04:23:34 2015
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, gitster@pobox.com, sunshine@sunshineco.com
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue May 05 05:22:11 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YpSWD-0007Zi-P1
-	for gcvg-git-2@plane.gmane.org; Tue, 05 May 2015 04:23:34 +0200
+	id 1YpTQw-0006rJ-Ff
+	for gcvg-git-2@plane.gmane.org; Tue, 05 May 2015 05:22:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965242AbbEECXR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 May 2015 22:23:17 -0400
-Received: from mail-pd0-f169.google.com ([209.85.192.169]:35126 "EHLO
-	mail-pd0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965223AbbEECXG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 May 2015 22:23:06 -0400
-Received: by pdbqd1 with SMTP id qd1so180096666pdb.2
-        for <git@vger.kernel.org>; Mon, 04 May 2015 19:23:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=PVUlq+DIUVNIoXOUKwSNTSO0wD46AhUFZ2YL/Uv7UlU=;
-        b=pZ5UOTyq2aVUunPulsV2Cm6/2wkWHhhxV9sQqfSISJtE4gVQgoVr3n07B8KfOuC63y
-         y5dpBhGterqtq/sLrFdl1JTBvosdT76TOeEhTjkI/G1z69VU4iBeONDvDfNRHB3aSTpu
-         M2XyOiCK7q8mvfMWCa3xUNnkbT7E0PAk8PKw8qTSEXNfQDxsZtYLdTmte6WQHVnUUIXf
-         a48YuRDDhyLOsxDMYunjGrInYJtZD/HNrQR5HIld4W2mbOQaDTCfbYrlxkMkndiSqrzj
-         pBUJsAqgjcQs95EBTymXE+LudAZWpo9FEhLPA+ocA3V+94laOgnLqQUuuyzT0OOx3jOa
-         LsDg==
-X-Received: by 10.70.55.165 with SMTP id t5mr46937536pdp.102.1430792584150;
-        Mon, 04 May 2015 19:23:04 -0700 (PDT)
-Received: from [172.16.0.91] ([182.48.234.2])
-        by mx.google.com with ESMTPSA id v6sm14129600pdj.26.2015.05.04.19.23.02
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 04 May 2015 19:23:03 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
-In-Reply-To: <CAPig+cTOVFem74yr4HPqDRU3-4s_B58jQsx14ntp5FsB0WR6SA@mail.gmail.com>
+	id S1754487AbbEEDWE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 May 2015 23:22:04 -0400
+Received: from cloud.peff.net ([50.56.180.127]:54153 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752235AbbEEDWC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 May 2015 23:22:02 -0400
+Received: (qmail 7601 invoked by uid 102); 5 May 2015 03:22:01 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 04 May 2015 22:22:01 -0500
+Received: (qmail 4050 invoked by uid 107); 5 May 2015 03:22:33 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 04 May 2015 23:22:33 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 04 May 2015 23:21:59 -0400
+Content-Disposition: inline
+In-Reply-To: <1430766714-22368-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268380>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268382>
 
+On Mon, May 04, 2015 at 12:11:54PM -0700, Stefan Beller wrote:
 
+> prefix_path() always returns a newly allocated string since
+> d089eba (setup: sanitize absolute and funny paths in get_pathspec(),
+> 2008-01-28)
+> 
+> Additionally the const is dropped from the pointers, so the call to
+> free doesn't need a cast.
+> 
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+> 
+> Notes:
+>     Thanks for all the suggestions!
+>     They are incorporated into this version of the patch.
+> 
+>  builtin/checkout-index.c | 10 ++++------
+>  builtin/update-index.c   |  5 ++---
+>  2 files changed, 6 insertions(+), 9 deletions(-)
 
-On 05/05/2015 07:03 AM, Eric Sunshine wrote:
-> On Sun, May 3, 2015 at 10:30 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
->> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
->> ---
->>   t/t1006-cat-file.sh | 45 +++++++++++++++++++++++++++++++++++++++++++++
->>   1 file changed, 45 insertions(+)
->>
->> diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
->> index ab36b1e..de8eaf1 100755
->> --- a/t/t1006-cat-file.sh
->> +++ b/t/t1006-cat-file.sh
->> @@ -47,6 +47,18 @@ $content"
->>          test_cmp expect actual
->>       '
->>
->> +    test_expect_success "Type of $type is correct using --allow-unknown-type" '
->> +       echo $type >expect &&
->> +    git cat-file -t --allow-unknown-type $sha1 >actual &&
->
-> Indentation is still botched in this test and the next one (as
-> mentioned previously [1]).
->
-> [1]: http://article.gmane.org/gmane.comp.version-control.git/268005
-It only seems to have affected the test file, I made sure the 
-indentation was correct after your previous suggestion, I have to see 
-why this is happening. Thanks
->
->> +       test_cmp expect actual
->> +    '
->> +
->> +    test_expect_success "Size of $type is correct using --allow-unknown-type" '
->> +       echo $size >expect &&
->> +    git cat-file -s --allow-unknown-type $sha1 >actual &&
->> +       test_cmp expect actual
->> +    '
->> +
->>       test -z "$content" ||
->>       test_expect_success "Content of $type is correct" '
->>          maybe_remove_timestamp "$content" $no_ts >expect &&
->> @@ -296,4 +308,37 @@ test_expect_success '%(deltabase) reports packed delta bases' '
->>          }
->>   '
->>
->> +bogus_type="bogus"
->> +bogus_content="bogus"
->> +bogus_size=$(strlen "$bogus_content")
->> +bogus_sha1=$(echo_without_newline "$bogus_content" | git hash-object -t $bogus_type --literally -w --stdin)
->> +
->> +test_expect_success "Type of broken object is correct" '
->> +       echo $bogus_type >expect &&
->> +       git cat-file -t --allow-unknown-type $bogus_sha1 >actual &&
->> +       test_cmp expect actual
->> +'
->> +
->> +test_expect_success "Size of broken object is correct" '
->> +       echo $bogus_size >expect &&
->> +       git cat-file -s --allow-unknown-type $bogus_sha1 >actual &&
->> +       test_cmp expect actual
->> +'
->> +bogus_type="abcdefghijklmnopqrstuvwxyz1234679"
->> +bogus_content="bogus"
->> +bogus_size=$(strlen "$bogus_content")
->> +bogus_sha1=$(echo_without_newline "$bogus_content" | git hash-object -t $bogus_type --literally -w --stdin)
->> +
->> +test_expect_success "Type of broken object is correct when type is large" '
->> +       echo $bogus_type >expect &&
->> +       git cat-file -t --allow-unknown-type $bogus_sha1 >actual &&
->> +       test_cmp expect actual
->> +'
->> +
->> +test_expect_success "Size of large broken object is correct when type is large" '
->> +       echo $bogus_size >expect &&
->> +       git cat-file -s --allow-unknown-type $bogus_sha1 >actual &&
->> +       test_cmp expect actual
->> +'
->> +
->>   test_done
->> --
->> 2.4.0.rc1.250.gfbd73bd
+Should we also squash in these sites? I think they are adequately
+covered under the proposed log message.
+
+Found by grepping for prefix_path calls. The only remainders are:
+
+  1. in blame, we assign the result to a const char that may also point
+     straight into to argv, but we never actually free either way
+
+  2. test-path-utils does not free at all, but we probably don't care
+     either way
+
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index a92eed2..0665b31 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -870,14 +870,14 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+ 		case PARSE_OPT_DONE:
+ 		{
+ 			const char *path = ctx.argv[0];
+-			const char *p;
++			char *p;
+ 
+ 			setup_work_tree();
+ 			p = prefix_path(prefix, prefix_length, path);
+ 			update_one(p);
+ 			if (set_executable_bit)
+ 				chmod_path(set_executable_bit, p);
+-			free((char *)p);
++			free(p);
+ 			ctx.argc--;
+ 			ctx.argv++;
+ 			break;
+@@ -908,7 +908,7 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+ 
+ 		setup_work_tree();
+ 		while (strbuf_getline(&buf, stdin, line_termination) != EOF) {
+-			const char *p;
++			char *p;
+ 			if (line_termination && buf.buf[0] == '"') {
+ 				strbuf_reset(&nbuf);
+ 				if (unquote_c_style(&nbuf, buf.buf, NULL))
+@@ -919,7 +919,7 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+ 			update_one(p);
+ 			if (set_executable_bit)
+ 				chmod_path(set_executable_bit, p);
+-			free((char *)p);
++			free(p);
+ 		}
+ 		strbuf_release(&nbuf);
+ 		strbuf_release(&buf);
