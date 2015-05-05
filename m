@@ -1,75 +1,85 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 04/12] remote.c: provide per-branch pushremote name
-Date: Tue, 5 May 2015 15:48:29 -0400
-Message-ID: <CAPig+cQ+AbgTXAWKaN4obdGLWFDxjfr4yAaJZgvnLLzzoqdPRQ@mail.gmail.com>
-References: <20150501224414.GA25551@peff.net>
-	<20150501224644.GD1534@peff.net>
-	<CAPig+cT7pSxZahd1hmcwCW8ifZfvQ4YW6L7xXUrD7dTJt76srQ@mail.gmail.com>
-	<20150505193339.GF10463@peff.net>
+From: Luke Diamand <luke@diamand.org>
+Subject: Re: Looking for a solution
+Date: Tue, 05 May 2015 20:58:57 +0100
+Message-ID: <55492101.80807@diamand.org>
+References: <CAFX4i8EyQ=0EV=XMCQ42GfYzjbAXc5ELSCFqEejS5ObYioqBEg@mail.gmail.com> <CAGZ79ka=jabDgE2LO5YLAZFyWwKneomwoA59aPiG7SF1y_gNtw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue May 05 21:48:44 2015
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>, Yuvi <myuvarani@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 05 21:59:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YpipZ-0006w2-S8
-	for gcvg-git-2@plane.gmane.org; Tue, 05 May 2015 21:48:38 +0200
+	id 1Ypj0E-0005zy-MP
+	for gcvg-git-2@plane.gmane.org; Tue, 05 May 2015 21:59:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751196AbbEETsd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 May 2015 15:48:33 -0400
-Received: from mail-ig0-f177.google.com ([209.85.213.177]:37435 "EHLO
-	mail-ig0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750868AbbEETsc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 May 2015 15:48:32 -0400
-Received: by igblo3 with SMTP id lo3so108500988igb.0
-        for <git@vger.kernel.org>; Tue, 05 May 2015 12:48:30 -0700 (PDT)
+	id S1753462AbbEET7e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 May 2015 15:59:34 -0400
+Received: from mail-wi0-f173.google.com ([209.85.212.173]:34150 "EHLO
+	mail-wi0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753112AbbEET7d (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 May 2015 15:59:33 -0400
+Received: by wicmx19 with SMTP id mx19so109491620wic.1
+        for <git@vger.kernel.org>; Tue, 05 May 2015 12:59:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=QGVrIwc3/avcuKCznEFCDgEGDknjsxUxJtxdV85GZJM=;
-        b=I56nVNAQzPKz8dFnz4zMeB4C3F8gfro0KOut5jHpZAh5DtiMQuftYIEcALX52h/H5A
-         DUy+l8yJW9c1J8qtEprryIOAXBxeRU7HqAYeX6ERAUTVdepMphNHH7hF1UavB9vbmxc9
-         6/+9LLZb+TF4vi+758DAfnA8qQnLP4iX/91TLtXw2JvegKas2outUwhRTsDYcW9oqtqI
-         krD+Pvr9gPCllTW+xxwbqwPkLdUgaa7y/gojR18xqBgB+vp2c2h4tZu0jfInUCPwiHWB
-         3PD78IeLanV/Uu45WPagjxBkefqrR0Ye38H7G9Ts7eF0EMM1/9oY0Oibv212AZExPv/F
-         FbCw==
-X-Received: by 10.50.66.230 with SMTP id i6mr4000420igt.22.1430855310060; Tue,
- 05 May 2015 12:48:30 -0700 (PDT)
-Received: by 10.107.28.132 with HTTP; Tue, 5 May 2015 12:48:29 -0700 (PDT)
-In-Reply-To: <20150505193339.GF10463@peff.net>
-X-Google-Sender-Auth: BMdc9sMHXObk1Ryk9JsZ1In_T4U
+        d=diamand.org; s=google;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=e53wjwcSBHMHHzCe9+RFoyzKWx4vrieDzOgSkclacp0=;
+        b=b15LQ+8ooQpKfJ92Q0vizcvyPEBSQdxQlQSaXaV5pknBkmYIF5ipY5vVK1XJcXe4S3
+         ooPXAdqp6okwU7WjjtswP2fVJxjbXfcTaCj7rG7Td/guBexxneZW7hCwBHbTxtiww9KH
+         KOtsPgoUD6Ei+vmfeLmUMya7Y/Qk0Fb4uEtoI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
+         :cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=e53wjwcSBHMHHzCe9+RFoyzKWx4vrieDzOgSkclacp0=;
+        b=gTJQH/KK3KdKMVEvcSuuuh0+pR46wco7r+IKsOtyhrJwz4jRMtQmj5KgPuMvHBlYrj
+         8zmJl1aJwpvbl+IgpISKY3MoPtWzRW6KCRTrt0cz4h91rG6vLIRIzOm1GEeGhk6hdNsc
+         SZDfXQl6MPyETag68I3XZAM0YuXgQxJgqItm+CwIoCzKX3VBL+P9OOa7ZgCeTmHtS8aw
+         Ib2SLn26n2LHXGIQE5X5ag3W5fcI1U09yMmI5yV60McZd6YTqRaK1bWZd9+cu1i5Jc15
+         1FgAszDI4bnDOddJWNQq/x3RZBZLeDF1vAJ6pM37zVoImnFOIOk217AaoUrU4IWYPmuw
+         64yg==
+X-Gm-Message-State: ALoCoQkfn8X6qH7qBXBSmGwB/cYTf8VmD2VCGswNLcGIea2kezB65FdpPh7+r6MDT/W20NEfSCsy
+X-Received: by 10.181.13.113 with SMTP id ex17mr1408162wid.12.1430855971988;
+        Tue, 05 May 2015 12:59:31 -0700 (PDT)
+Received: from [192.168.245.128] (cpc7-cmbg17-2-0-cust139.5-4.cable.virginm.net. [86.1.43.140])
+        by mx.google.com with ESMTPSA id go4sm487944wib.1.2015.05.05.12.59.28
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 05 May 2015 12:59:31 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.6.0
+In-Reply-To: <CAGZ79ka=jabDgE2LO5YLAZFyWwKneomwoA59aPiG7SF1y_gNtw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268421>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268422>
 
-On Tue, May 5, 2015 at 3:33 PM, Jeff King <peff@peff.net> wrote:
-> On Sun, May 03, 2015 at 12:51:13AM -0400, Eric Sunshine wrote:
->
->> > Versus v1, I did something a little clever by passing a function pointer
->> > around (versus a flag and letting the caller do a conditional based on
->> > the flag). Too clever?
+On 01/05/15 19:03, Stefan Beller wrote:
+> On Fri, May 1, 2015 at 9:07 AM, Yuvi <myuvarani@gmail.com> wrote:
+>> Hello There,
 >>
->> FWIW: I found this "clever" version easy enough to follow.
+>> Here is the problem I am running into.
 >>
->> However, if you push a tiny bit of the work into the callers of
->> remote_get_1(), then you can do away with the "cleverness" altogether,
->> can't you? Something like this:
+>> I pushed the committed changes into GIT repository sometime during end
+>> of Jan. I realized that the changes are not existing. I suspect
+>> someone has reverted them.
+>>
+>> Wondering is there anyway around to get the changes back or can I see
+>> who reverted the changes on a specific file ?
+>>
 >
-> Yeah, it's just that it goes in the opposite direction I was trying for,
-> which is to have as little code as possible in the wrapper functions (in
-> fact, I think after my changes you could even bump the read_config()
-> call into remote_get_1; before my changes, it depended on the pushremote
-> config being set before the call).
+> Look at http://git-scm.com/docs/git-log
 
-I also noticed that read_config() could be moved into remote_get_1().
-In fact, with that change, then the wrappers really do collapse nicely
-to 1-liners, so the "clever" function pointer approach probably is
-cleaner; and it's nicely generalized over the previous round with the
-boolean argument to remote_get_1().
+git reflog might also be helpful.
+
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
