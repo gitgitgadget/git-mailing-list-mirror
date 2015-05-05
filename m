@@ -1,114 +1,84 @@
-From: "Randall S. Becker" <rsbecker@nexbridge.com>
-Subject: RE: t5570 - not cloned error
-Date: Tue, 5 May 2015 15:28:20 -0400
-Message-ID: <013701d08769$a5bbab80$f1330280$@nexbridge.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 02/12] remote.c: drop "remote" pointer from "struct
+ branch"
+Date: Tue, 5 May 2015 15:31:05 -0400
+Message-ID: <20150505193105.GE10463@peff.net>
+References: <20150501224414.GA25551@peff.net>
+ <20150501224515.GB1534@peff.net>
+ <CAPig+cQny16Jei9AtDWVY3ADbPGshFw7CYofD_TnyA+GL58AOg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: "'Joachim Schmitz'" <jojo@schmitz-digital.de>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 05 21:28:33 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Tue May 05 21:31:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YpiW8-0001eV-W7
-	for gcvg-git-2@plane.gmane.org; Tue, 05 May 2015 21:28:33 +0200
+	id 1YpiYk-0003MX-4L
+	for gcvg-git-2@plane.gmane.org; Tue, 05 May 2015 21:31:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756830AbbEET22 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 May 2015 15:28:28 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:61302 "EHLO
-	elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753306AbbEET22 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 May 2015 15:28:28 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from pangea (CPE0023eb577e25-CM602ad06c91a7.cpe.net.cable.rogers.com [99.237.128.150])
-	(authenticated bits=0)
-	by elephants.elehost.com (8.14.9/8.14.9) with ESMTP id t45JSMcC024991
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-	Tue, 5 May 2015 15:28:22 -0400 (EDT)
-	(envelope-from rsbecker@nexbridge.com)
-X-Mailer: Microsoft Outlook 15.0
-Content-language: en-ca
-Thread-index: AdCHaXoJt6eT4/LXQH+n+D0enyNSYw==
+	id S1757378AbbEETbL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 May 2015 15:31:11 -0400
+Received: from cloud.peff.net ([50.56.180.127]:54424 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757375AbbEETbI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 May 2015 15:31:08 -0400
+Received: (qmail 23836 invoked by uid 102); 5 May 2015 19:31:07 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 05 May 2015 14:31:07 -0500
+Received: (qmail 9771 invoked by uid 107); 5 May 2015 19:31:39 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 05 May 2015 15:31:39 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 05 May 2015 15:31:05 -0400
+Content-Disposition: inline
+In-Reply-To: <CAPig+cQny16Jei9AtDWVY3ADbPGshFw7CYofD_TnyA+GL58AOg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268418>
 
-Sorry to repost - ended up in my own spam trap.
+On Sat, May 02, 2015 at 11:34:25PM -0400, Eric Sunshine wrote:
 
-On May 1, 2015 11:05 AM, I wrote, in my haste:
+> > -       if (ret && ret->remote_name) {
+> > -               ret->remote = remote_get(ret->remote_name);
+> > -               if (ret->merge_nr)
+> > -                       set_merge(ret);
+> > -       }
+> > +       if (ret)
+> > +              set_merge(ret);
 > 
-> Greetings - and asking for a bit of help resolving test failures.
-> 
-> I'm having an issue with t5570 at 2.3.7 which seems to be a regression
-from
-> 2.3.3 (currently installed), but I cannot be sure. This test failed prior
-to
-> 2.3.0 in the box, worked from 2.3.0 to 2.3.3 - suggesting that it may be
-> environmental, not actually in git. Making some assumptions, it looks like
-> the URL for the test repository is not correct and may depend on localhost
-> resolving properly - which DNS does not do well on this box (outside my
-> control, we are multi-home, and localhost does not resolve to 127.0.0.1 or
-> [::1]). Only t5570 #'s 3-5 fail and I found a strange message in the
-output
-> of the test seemingly referring to a bad repo name. I would really
-> appreciate some pointers on where to look next and how to go about
-resolving
-> this. I am happy to try to work through this on 2.4.0 if that would be
-more
-> efficient for the team. Anything relating to git-daemon makes me nervous
-in
-> terms of installing the code.
-> 
-> Platform is HP NonStop (Posix-esque environment):
-> 
-> In the test output:
-> *** t5570-git-daemon.sh ***
-> <snip>
-> not ok 3 - clone git repository
-> #
-> #               git clone "$GIT_DAEMON_URL/repo.git" clone &&
-> #               test_cmp file clone/file
-> #
-> not ok 4 - fetch changes via git protocol
-> #
-> #               echo content >>file &&
-> #               git commit -a -m two &&
-> #               git push public &&
-> #               (cd clone && git pull) &&
-> #               test_cmp file clone/file
-> #
-> not ok 5 - remote detects correct HEAD
-> #
-> #               git push public master:other &&
-> #               (cd clone &&
-> #                git remote set-head -d origin &&
-> #                git remote set-head -a origin &&
-> 
-> And
-> 
-> ../git/t/trash directory.t5570-git-daemon: cat output
-> fatal: remote error: repository not exported: /repo.git
-> 
-> Additional context: t0025, t0301, t3900, t9001, t9020 are not 100% but the
-> issues are acceptable - we can discuss separately.
+> When reading the actual patch, I was surprised to see unmentioned
+> changes to the reg->merge_nr check. Although the merge_nr
+> simplification seems sensible, it appears to be unrelated to the
+> stated purpose of the patch, and made the review more difficult since
+> it required keeping track of two distinct (yet textually intertwined)
+> changes. I wonder if it would make more sense to apply the merge_nr
+> simplification as a separate preparatory patch?
 
-We definitely have an issue with localhost. When forcing the DNS resolver to
-return 127.0.0.1, we pass 1-16 then 17 fails as I expected to happen based
-on my DNS futzing. Heads up that this test is not-surprisingly sensitive to
-DNS problems. My environment is still in a messy state where I can reproduce
-the original problem so it might be a useful moment for me to find a way to
-modify the test script to harden it. Any suggestion on that score (as in
-where and
-roughly how it might be made more reliable)?
+I didn't actually mean to change any behavior with respect to
+ret->merge_nr here (and I don't think I did). What I did was blindly
+move everything in the conditional after the remote_get into set_merge,
+so that it happened in the same order (and the remote_get moves into
+set_merge, because we no longer have the struct element that it was
+formerly passed down in).
 
-Note: Since the original post, I moved the fork to 2.4.0.
+But actually, ret->merge_nr comes from make_branch, and we could
+continue to respect it regardless of the remote values (i.e., they are
+both preconditions to setting up the merge data, but it doesn't matter
+in which order we check them).
 
-Cheers,
-Randall
+One thing I did notice while looking at this is that it seems like we
+may leak if you call branch_get multiple times. The make_branch()
+function may sometimes return a brand-new branch and sometimes return a
+cached version from the "branches" array. In the latter case, we
+continue to update the "remote" pointer (which is wasteful but at least
+does not leak because the remotes themselves are part of a cached list).
+But then we will repeatedly re-allocate the ret->merge array. We
+probably should make sure it is NULL before trying to fill it in.
 
+I'll see if I can insert a cleanup patch in this part of the series.
+
+-Peff
