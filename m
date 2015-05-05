@@ -1,75 +1,74 @@
-From: Steffen Nurpmeso <sdaoden@gmail.com>
-Subject: Re: Compiling 2.4.0 doesn't seem to honour
- C_INCLUDE_PATH
-Date: Tue, 05 May 2015 12:00:23 +0200
-Message-ID: <20150505100023.smwAp4ppkZA=%sdaoden@yandex.com>
-References: <20150505094909.rzitmjWhT6g=%sdaoden@yandex.com>
+From: Paul Tan <pyokagan@gmail.com>
+Subject: Re: [PATCH 0/7] Improve git-pull test coverage
+Date: Tue, 5 May 2015 18:39:55 +0800
+Message-ID: <CACRoPnSJdMmJNQ4xrKr5Og6rZOjCm4Ad8rv5dVfTZod6d5pKWg@mail.gmail.com>
+References: <1430581035-29464-1-git-send-email-pyokagan@gmail.com>
+	<vpqoam0sqp5.fsf@anie.imag.fr>
+	<xmqqlhh4tfd0.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 05 12:13:03 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Git List <git@vger.kernel.org>,
+	Stefan Beller <sbeller@google.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 05 12:40:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YpZqX-0002X9-Pq
-	for gcvg-git-2@plane.gmane.org; Tue, 05 May 2015 12:13:02 +0200
+	id 1YpaGq-00024w-FJ
+	for gcvg-git-2@plane.gmane.org; Tue, 05 May 2015 12:40:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757595AbbEEKM4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 May 2015 06:12:56 -0400
-Received: from mail-wi0-f171.google.com ([209.85.212.171]:34455 "EHLO
-	mail-wi0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757585AbbEEKMu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 May 2015 06:12:50 -0400
-Received: by wicmx19 with SMTP id mx19so97022955wic.1
-        for <git@vger.kernel.org>; Tue, 05 May 2015 03:12:49 -0700 (PDT)
+	id S1757306AbbEEKkH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 May 2015 06:40:07 -0400
+Received: from mail-la0-f42.google.com ([209.85.215.42]:32858 "EHLO
+	mail-la0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756972AbbEEKj5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 May 2015 06:39:57 -0400
+Received: by layy10 with SMTP id y10so123982791lay.0
+        for <git@vger.kernel.org>; Tue, 05 May 2015 03:39:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:date:to:subject:message-id:references:in-reply-to:user-agent
-         :mime-version:content-type;
-        bh=l8ylDIXyli14OF8/MqZm7ihuVt0RWsDgzdkh7ttlgqM=;
-        b=o0DU1tbVwsAeROWPOkVdFJQ10V0xYUOvxTmbfOxr2oacUUouvG769drUHe4ttLRsjg
-         SqiLtFJwjH1c0OxBlluwn8TGNXuJtqztQEQ30OuiRU9Y29KFj0ZI72chWBH5bh/7q1vs
-         mLyHe3EEFwNsjC3HCu3kU11YhB4b2mRd20Zxj4XQUeY4ZFUYtmoNs98IbbhEhaEfUL4i
-         RsKRrkFVG38h/Ytb/YbPHL7bNv+Q9mbx/+qXo0pVU8fXc8+GZAbq6v8iHvEziuk5yS00
-         zEx9EPoGm7lysYtoSnuumByCrsX23/uEj3uEV/fx1RDDxW+5eeEk9C4fFONs24kPfH1G
-         BmHg==
-X-Received: by 10.181.13.44 with SMTP id ev12mr2526643wid.17.1430820769181;
-        Tue, 05 May 2015 03:12:49 -0700 (PDT)
-Received: from gmail.com ([89.15.239.237])
-        by mx.google.com with ESMTPSA id o6sm15358884wiz.24.2015.05.05.03.12.47
-        for <git@vger.kernel.org>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 05 May 2015 03:12:48 -0700 (PDT)
-X-Google-Original-From: Steffen Nurpmeso <sdaoden@yandex.com>
-In-Reply-To: <20150505094909.rzitmjWhT6g=%sdaoden@yandex.com>
-User-Agent: s-nail v14.8.0-10-g6fd1f69
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=4FchKzoFEA3wviIFXU6pVAdYn4HN2KEiGhXwKlW1BOI=;
+        b=Nt6Bbq04CxV/4+5bxM1U9OeoWdVd1nT7X2OVQCcDYPAZXl7a2UspNTj9jvrRvjgY49
+         q4p9BTd+tkPtWCD296PFUz8U1aD1GIEdJWroJ2OW24IC7x5LyMcIZAoquJAUYsuPKrdC
+         2ACIMCHU5iwTKwK071WXF1GpNl8Dyr/KJu9MXCcsoB1MbbwCUaceQAwa/hKceutXQBTe
+         14ALuhuQOsB62yQE1v8Eyy2UggGmop++2v/0toRInYsRMyMO/HD4obbmV2laMyHEzo4D
+         sndHTf00iuBN+qm8JsZJKgUt8gprEbnEFMmb32wIqGoX0BSdp4+lsp1bGlE5CVE3GpL7
+         dBQw==
+X-Received: by 10.152.4.72 with SMTP id i8mr24035612lai.32.1430822395082; Tue,
+ 05 May 2015 03:39:55 -0700 (PDT)
+Received: by 10.112.74.133 with HTTP; Tue, 5 May 2015 03:39:55 -0700 (PDT)
+In-Reply-To: <xmqqlhh4tfd0.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268391>
 
-i wrote:
- |I'm right that CURLDIR shouldn't be needed here?
- |Compilation succeeded after explicitly setting that, but shouldn't
- |C_INCLUDE_PATH be honoured just as PATH is?
+Hi Junio,
 
-err, no, send too fast.  What made it succeed was actually
+On Tue, May 5, 2015 at 1:35 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> I didn't like the grepping of error messages alone as a way to
+> diagnose the failure, though.  When we expect the pull to fail
+> without touching anything in the working tree, I'd prefer to see
+> that tested explicitly (e.g. "if pull mistakenly tried to go ahead
+> and touch this file that would be involved in the merge, its
+> contents would change---let's make sure that does not happen by
+> making sure the contents before and after are the same" kind of
+> thing).
 
-  ?0[steffen@sherwood git.git-no_reduce]$ git diff
-  diff --git a/imap-send.c b/imap-send.c
-  index 37ac4aa..e907108 100644
-  --- a/imap-send.c
-  +++ b/imap-send.c
-  @@ -31,6 +31,7 @@
-   typedef void *SSL;
-   #endif
-   #ifdef USE_CURL_FOR_IMAP_SEND
-  +#include </Users/steffen/usr/include/curl/curl.h>
-   #include "http.h"
-   #endif
-   
+Yes, you're right. Some tests do need these additional checks. Will
+add them in the re-roll.
 
---steffen
+Just to be sure, aside from checking that git-pull does not touch
+files it should not touch in the event of an error, I do believe we
+also need to check its error message, as printing out the correct
+user-friendly error messages is one of the features of git-pull.
+
+Regards,
+Paul
