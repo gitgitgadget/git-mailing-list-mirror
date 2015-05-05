@@ -1,85 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG] deamon.c does not compile when NO_IPV6 is used
-Date: Tue, 05 May 2015 10:55:47 -0700
-Message-ID: <xmqqioc6ewnw.fsf@gitster.dls.corp.google.com>
-References: <CAK4aQQJ9yT8+Q9jPQ78cauhyPj3j5WmpgrQJ5=cA-ECjaWn8BQ@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] prefix_path(): Unconditionally free result of prefix_path
+Date: Tue, 5 May 2015 13:56:12 -0400
+Message-ID: <20150505175612.GA9709@peff.net>
+References: <1430766714-22368-1-git-send-email-sbeller@google.com>
+ <20150505032158.GA23587@peff.net>
+ <CAGZ79kZjeG8UG5ALE-KSO52fD5gJk4xks=VtSV9bHQVA=ST+5Q@mail.gmail.com>
+ <xmqqr3qvdizd.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Eduardo Espejo <eduardo.espejo@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 05 19:56:12 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Stefan Beller <sbeller@google.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 05 19:56:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yph4m-0000LQ-5m
-	for gcvg-git-2@plane.gmane.org; Tue, 05 May 2015 19:56:12 +0200
+	id 1Yph59-0000ba-RN
+	for gcvg-git-2@plane.gmane.org; Tue, 05 May 2015 19:56:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762301AbbEER4F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 May 2015 13:56:05 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:57273 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1762283AbbEERzt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 May 2015 13:55:49 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 39CE44D7B0;
-	Tue,  5 May 2015 13:55:49 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=LIF23Xdl2nod5rM9/gfYa5Z9kLI=; b=vt2S1N
-	g2lQjF4ZYblUFNx2RntxRr4JCcLHtBb556SgiI/T0jnLg1IBIU37bGqN553SxMEW
-	4VWRZw0bdiZGSqSo4T6fcy9NfbdjYXLhceERDSz52flWfwfChsUhbDYb6h7rR14r
-	Fu5dlcGmtsFLs4y+SvMJto8hESK2zHtI0r8tY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ScLZW+u7V9Z7+qiXdNGhvXU4nWFf0THf
-	tQoFkvPjcZFeZaFXBCw/9Nhlada6apTrZ7OI/xT6kXLPNe1luKCjsMowskM2adyy
-	2xu1ZvjMRquadZJhc7xQBOjqqXmZ5P62rtoKq7tmnbk8KcUketG9MmoPKjwhYKlJ
-	oogWg4IjPAA=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 30DA34D7AF;
-	Tue,  5 May 2015 13:55:49 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8E4794D7AE;
-	Tue,  5 May 2015 13:55:48 -0400 (EDT)
-In-Reply-To: <CAK4aQQJ9yT8+Q9jPQ78cauhyPj3j5WmpgrQJ5=cA-ECjaWn8BQ@mail.gmail.com>
-	(Eduardo Espejo's message of "Tue, 5 May 2015 09:20:15 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: F62BD67E-F34F-11E4-B9DE-83E09F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1762304AbbEER43 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 May 2015 13:56:29 -0400
+Received: from cloud.peff.net ([50.56.180.127]:54339 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1762305AbbEER4Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 May 2015 13:56:16 -0400
+Received: (qmail 18504 invoked by uid 102); 5 May 2015 17:56:15 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 05 May 2015 12:56:15 -0500
+Received: (qmail 8790 invoked by uid 107); 5 May 2015 17:56:47 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 05 May 2015 13:56:47 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 05 May 2015 13:56:12 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqr3qvdizd.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268408>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268409>
 
-Eduardo Espejo <eduardo.espejo@gmail.com> writes:
+On Tue, May 05, 2015 at 10:36:38AM -0700, Junio C Hamano wrote:
 
-> Tested in 2.4 commit 3d4a3ffe64:
->
-> daemon.c:636:24: error: use of undeclared identifier 'hostname'
->                 hent = gethostbyname(hostname.buf);
+> Stefan Beller <sbeller@google.com> writes:
+> 
+> >> Should we also squash in these sites? I think they are adequately
+> >> covered under the proposed log message.
+> >
+> > That sounds good to me.
+> >>
+> >> Found by grepping for prefix_path calls. The only remainders are:
+> >>
+> >>   1. in blame, we assign the result to a const char that may also point
+> >>      straight into to argv, but we never actually free either way
+> 
+> The return value from add_prefix() that is what prefix_path()
+> returned eventually becomes scoreboard.path that needs to be kept
+> during the lifetime of the process, and I think there isn't much
+> point doing the "free() immediately before exiting".
 
-Thanks.  It seems nobody actively interested in developing Git
-builds with NO_IPV6 these days?
+Yeah, sorry, I meant to say that more explicitly, but clearly didn't. I
+think it is fine as-is.
 
-Does this help?
+> Anyway, here is what I'd queue for now.
 
- daemon.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Looks good, thanks.
 
-diff --git a/daemon.c b/daemon.c
-index ac2bc85..d3d3e43 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -633,7 +633,7 @@ static void lookup_hostname(struct hostinfo *hi)
- 		char **ap;
- 		static char addrbuf[HOST_NAME_MAX + 1];
- 
--		hent = gethostbyname(hostname.buf);
-+		hent = gethostbyname(hi->hostname.buf);
- 		if (hent) {
- 			ap = hent->h_addr_list;
- 			memset(&sa, 0, sizeof sa);
+-Peff
