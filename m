@@ -1,86 +1,92 @@
-From: Paul Tan <pyokagan@gmail.com>
-Subject: Re: [PATCH 5/7] t5520: test --rebase with multiple branches
-Date: Wed, 6 May 2015 00:00:27 +0800
-Message-ID: <CACRoPnSeJT8MK5esRManC7a7v4D2jA4d8YOSvW90+rnoDxuhTQ@mail.gmail.com>
-References: <1430581035-29464-1-git-send-email-pyokagan@gmail.com>
-	<1430581035-29464-6-git-send-email-pyokagan@gmail.com>
-	<CAGZ79kbSMbhW2FLK05CaQjJjSTqEurB8iyeEBgyA1wbWJ4g2vw@mail.gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 01/18] t1404: new tests of D/F conflicts within ref transactions
+Date: Tue, 05 May 2015 17:27:16 +0200
+Message-ID: <5548E154.7020506@alum.mit.edu>
+References: <1430483158-14349-1-git-send-email-mhagger@alum.mit.edu>	<1430483158-14349-2-git-send-email-mhagger@alum.mit.edu> <CAPig+cQabRiiMhNyYJM4_bZsQ4OTfrSbJ51XAido3V49baLhHA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Tue May 05 19:39:39 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
+	Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Tue May 05 19:39:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ypgok-0005vi-8j
-	for gcvg-git-2@plane.gmane.org; Tue, 05 May 2015 19:39:38 +0200
+	id 1Ypgp0-00067u-2v
+	for gcvg-git-2@plane.gmane.org; Tue, 05 May 2015 19:39:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2993857AbbEEQGh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 May 2015 12:06:37 -0400
-Received: from mail-lb0-f179.google.com ([209.85.217.179]:34330 "EHLO
-	mail-lb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S2993491AbbEEQA3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 May 2015 12:00:29 -0400
-Received: by lbcga7 with SMTP id ga7so132303130lbc.1
-        for <git@vger.kernel.org>; Tue, 05 May 2015 09:00:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=YjHuK+GZLIR5I/n+JSrECJBCbiMo0+jcFzYzsZQ0b98=;
-        b=Op/4mqipAlwHaYbs63Q7Wy+LLQlgg761ZrGvU4x07Y3ZGqnlIuSXQ67JMqRR9kRweM
-         uWYU+EO7IPXtoaPHuaRtLN9C2HsnbbHCsP8Sg1XwBoY92GUJs35ayE+sURS5Xg52AXRC
-         ++6NcUbAxJQLqfDxteSkTUzvnfVW17R4ukpQByXOtkOmR5JBeWugvlJZr+Q4Xiaw48pW
-         hBAExqk0KikOt41KQ/6wM5cy2ecA/ulxfUS/e3LiGXWGT4uUyq0Qt3hnht47Fog6+r81
-         s7+HBLV4kZrBRzyGUPMVIJ0ibfvunWGFW8XCI8k/8QCooNpBiIYjzm86z+ji9K9U4AaS
-         +tHA==
-X-Received: by 10.152.4.72 with SMTP id i8mr25349814lai.32.1430841627746; Tue,
- 05 May 2015 09:00:27 -0700 (PDT)
-Received: by 10.112.74.133 with HTTP; Tue, 5 May 2015 09:00:27 -0700 (PDT)
-In-Reply-To: <CAGZ79kbSMbhW2FLK05CaQjJjSTqEurB8iyeEBgyA1wbWJ4g2vw@mail.gmail.com>
+	id S2993860AbbEEQGg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 May 2015 12:06:36 -0400
+Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:47020 "EHLO
+	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S2993386AbbEEP1V (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 5 May 2015 11:27:21 -0400
+X-AuditID: 1207440e-f79bc6d000000c43-ec-5548e1573f07
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id B0.36.03139.751E8455; Tue,  5 May 2015 11:27:19 -0400 (EDT)
+Received: from [192.168.69.130] (p4FC97BF5.dip0.t-ipconnect.de [79.201.123.245])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t45FRGix022792
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Tue, 5 May 2015 11:27:17 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.6.0
+In-Reply-To: <CAPig+cQabRiiMhNyYJM4_bZsQ4OTfrSbJ51XAido3V49baLhHA@mail.gmail.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrKKsWRmVeSWpSXmKPExsUixO6iqBv+0CPU4FULu0XXlW4mi4beK8wW
+	P1p6mC02b25nsTjzppHRgdVjwaZSj2e9exg9Ll5S9lj8wMvj8ya5ANYobpukxJKy4Mz0PH27
+	BO6M39efMBW85ai4vqebuYFxOXsXIyeHhICJxKljO5ghbDGJC/fWs3UxcnEICVxmlLj7cCMr
+	hHOeSeJR31ZGkCpeAW2JhUt+gXWwCKhK7DgwD2wSm4CuxKKeZiYQW1QgSKL12lSoekGJkzOf
+	sIDYIkC9HzZsYgQZyizQxyhxuekuWIOwQIjEzLm3mCC2HWKUWHTuEFgHp0CgxJ7GdWwgNrOA
+	usSfeZeYIWx5ie1v5zBPYBSYhWTJLCRls5CULWBkXsUol5hTmqubm5iZU5yarFucnJiXl1qk
+	a6yXm1mil5pSuokREuR8Oxjb18scYhTgYFTi4Y3g8ggVYk0sK67MPcQoycGkJMrLeAsoxJeU
+	n1KZkVicEV9UmpNaDHQyB7OSCO+eC0A53pTEyqrUonyYlDQHi5I4r9oSdT8hgfTEktTs1NSC
+	1CKYrAwHh5IEr+ADoEbBotT01Iq0zJwShDQTByfIcC4pkeLUvJTUosTSkox4ULzGFwMjFiTF
+	A7SXHaSdt7ggMRcoCtF6ilFRSpz3832ghABIIqM0D24sLHW9YhQH+lKY9wtIFQ8w7cF1vwIa
+	zAQ0eFUh2OCSRISUVAMjZ1PahE1z2s/FdFcHVFoutDhzPthrnlz7/y29bhNOXNX6rKnss880
+	PNtw/Z2Q9y38OdemHlwqmOJk67be/IiEg7XS1BviSp+ufwySMAvvjQk/sGfD/OyY 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268402>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268403>
 
-Hi,
-
-On Tue, May 5, 2015 at 1:09 AM, Stefan Beller <sbeller@google.com> wrote:
-> On Sat, May 2, 2015 at 8:37 AM, Paul Tan <pyokagan@gmail.com> wrote:
->> diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
->> index 25d519d..17c63ff 100755
->> --- a/t/t5520-pull.sh
->> +++ b/t/t5520-pull.sh
->> @@ -223,6 +223,14 @@ test_expect_success '--rebase' '
->>         test $(git rev-parse HEAD^) = $(git rev-parse copy) &&
->>         test new = $(git show HEAD:file2)
->>  '
+On 05/05/2015 07:12 AM, Eric Sunshine wrote:
+> On Fri, May 1, 2015 at 8:25 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+>> Add some tests of D/F conflicts (as in, the type of directory vs. file
+>> conflict that exists between references "refs/foo" and "refs/foo/bar")
+>> in the context of reference transactions.
+>> [...]
+>> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+>> ---
+>>  t/t1404-update-ref-df-conflicts.sh | 107 +++++++++++++++++++++++++++++++++++++
+>>  1 file changed, 107 insertions(+)
+>>  create mode 100755 t/t1404-update-ref-df-conflicts.sh
+>>
+>> diff --git a/t/t1404-update-ref-df-conflicts.sh b/t/t1404-update-ref-df-conflicts.sh
+>> new file mode 100755
+>> index 0000000..2fc2ac6
+>> --- /dev/null
+>> +++ b/t/t1404-update-ref-df-conflicts.sh
+>> @@ -0,0 +1,107 @@
+>> +#!/bin/sh
 >> +
->> +test_expect_success '--rebase fails with multiple branches' '
->> +       git reset --hard before-rebase &&
->> +       test_must_fail git pull --rebase . copy master 2>out &&
->> +       test_when_finished "rm -f out" &&
->
-> I think it would make sense to switch the previous 2 lines, because the
-> test_when_finished should also be run if the test actually fails.
-> The actual tested part may segfault, which would interrupt the && chain
-> from reaching the test_when_finished line. And here, the line to test
-> is meant to be the "git pull --rebase" line, so we'd assume it may be
-> stopping there due to failures in the tested program.
->
-> If you grep through the code base, you'll find lots of test_when_finished
-> commands as the very first command (or the earliest spot where it makes
-> sense).
+>> +test_description='Test git update-ref with D/F conflicts'
+>> +. ./test-lib.sh
+>> +
+>> +test_expect_success 'setup' '
+>> +
+>> +       git commit --allow-empty -m Initial
+> 
+> Broken &&-chain.
 
-Hmm, thinking about it again, I actually don't really think there's
-that much of a need to "rm -f out" in this case ;-)
+Thanks, Eric. I'll fix it in v2.
 
-But yes, I should go review the placements of the test_when_finished calls :-).
+Michael
 
-Thanks.
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
