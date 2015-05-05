@@ -1,156 +1,71 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 2/4] write_sha1_file_prepare: fix buffer overrun with
- extra-long object type
-Date: Mon, 4 May 2015 20:13:18 -0400
-Message-ID: <CAPig+cS3f2XggxqbvX6Z2Da24QKLOg915Bf-bTVa+4oVzfhA1A@mail.gmail.com>
-References: <1430724315-524-1-git-send-email-sunshine@sunshineco.com>
-	<1430775451-31130-1-git-send-email-gitster@pobox.com>
-	<1430775451-31130-3-git-send-email-gitster@pobox.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Bug: git-p4 edit_template() and P4EDITOR w/options
+Date: Mon, 04 May 2015 17:22:46 -0700
+Message-ID: <xmqq8ud3g9ex.fsf@gitster.dls.corp.google.com>
+References: <5D2E2EAF-FFE7-437F-A716-E152E865E634@pixar.com>
+	<xmqqh9rsovd4.fsf@gitster.dls.corp.google.com>
+	<xmqq4mnsottj.fsf@gitster.dls.corp.google.com>
+	<xmqqzj5knf2t.fsf@gitster.dls.corp.google.com>
+	<xmqqvbg8netq.fsf@gitster.dls.corp.google.com>
+	<20150504231136.GY5467@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 05 02:13:38 2015
+Content-Type: text/plain
+Cc: Chris Lasell <chrisl@pixar.com>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 05 02:22:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YpQUR-0003DU-KC
-	for gcvg-git-2@plane.gmane.org; Tue, 05 May 2015 02:13:35 +0200
+	id 1YpQdS-0008R8-Qo
+	for gcvg-git-2@plane.gmane.org; Tue, 05 May 2015 02:22:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751913AbbEEANY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 May 2015 20:13:24 -0400
-Received: from mail-ig0-f182.google.com ([209.85.213.182]:37040 "EHLO
-	mail-ig0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751894AbbEEANT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 May 2015 20:13:19 -0400
-Received: by igblo3 with SMTP id lo3so96266123igb.0
-        for <git@vger.kernel.org>; Mon, 04 May 2015 17:13:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=se213ANKU+/mAyXbEZyhLSonosUj7mV9AtcD1ybL7tM=;
-        b=Yc0wHRTyI+xt2KkTkgnHwM/sDDYfpDSipll8rnDMXWY9LqDMAjR8m/bOOdD4V+nvuj
-         bbBj8V66wTobuiEGpVYpxrBXitd99wxSP/sdEyjrhan+bWZkoLFYnQ3XiIen786oagkj
-         z8TvwCbWrsc2GXhAWxrjWJvQ6veTr/sPvAJ1PuNOdfJpZVKC5Dnpous3fSZylccwe9pF
-         x9jl6gmLjxduyL6q+RKQdvs6kflDmiCpWMLsb4CaXi+Do7C/bf+IaT+t2XbtL9B1I/hC
-         ATWeu47OrwJhDNgFvmIr3hMF/KHBQJ6q5zOgWyA/Z5DHI1bjG4Y1g5FsnWhFWs5Mn8bF
-         03Zw==
-X-Received: by 10.107.31.134 with SMTP id f128mr31280789iof.19.1430784799029;
- Mon, 04 May 2015 17:13:19 -0700 (PDT)
-Received: by 10.107.28.132 with HTTP; Mon, 4 May 2015 17:13:18 -0700 (PDT)
-In-Reply-To: <1430775451-31130-3-git-send-email-gitster@pobox.com>
-X-Google-Sender-Auth: KpxYiDFoKyyb-nHUry90L9qlygc
+	id S1751282AbbEEAWv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 May 2015 20:22:51 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:52683 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751158AbbEEAWt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 May 2015 20:22:49 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B2D354F43F;
+	Mon,  4 May 2015 20:22:48 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=qBxx9ECPd7bZt5O4z3UB2baKu8I=; b=ENk+Hv
+	+8+4F4X/7zww2gDtEF90Fpu0w/kHKxGxAVFHzxG7ilf6R8Z8bofV5EZTlFy/TXai
+	UeqPnoyflm82uWGRvFexcNoPaLfgL8pZp5VJZdwx0PBO7gLsWa6AuopFIlH6F4lq
+	zOM4oO5GIfvUiodU4jh4VcUd7kDsvCqYzZqqo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=GZKsrGr6YMWzdW7SCV2iX8hr2NX70uMs
+	3LU5fA5EK3rl52w8R+2KGkcZLjIcK7+YwcLrStTNOSufQcdd7Bs8oSt87n6kuCoZ
+	KND5+W8iyi/9tc8GzxOjabKaOnSWb2VFkaxXcU7oev7tp/5ln5DgHNAqsu6qEaOU
+	8CcqxSzTPWQ=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id AC2834F43E;
+	Mon,  4 May 2015 20:22:48 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2FFD84F43D;
+	Mon,  4 May 2015 20:22:48 -0400 (EDT)
+In-Reply-To: <20150504231136.GY5467@google.com> (Jonathan Nieder's message of
+	"Mon, 4 May 2015 16:11:36 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: DBB95B2E-F2BC-11E4-825C-83E09F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268374>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268375>
 
-On Mon, May 4, 2015 at 5:37 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> From: Eric Sunshine <sunshine@sunshineco.com>
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Thanks for re-rerolling this series. Considering that the only bits
-left from me are the diagnosis and the (mostly intact) commit message,
-perhaps the authorship should be changed, or at the very least a big
-"Helped-by: Junio" added? Anyhow, a few minor comments below...
-
-> write_sha1_file_prepare: fix buffer overrun with extra-long object type
-
-Although the overrun happened in write_sha1_file_prepare(), that
-function is no longer the focus of the patch. Would make sense to
-rephrase the subject more generally as:
-
-    sha1_file: fix buffer overrun with extra-long object type
-
-or something.
-
-More below.
-
-> git-hash-object learned --literally in 5ba9a93 (hash-object: add
-> --literally option, 2014-09-11) which can be used to craft a
-> corrupt/broken object of unknown type.
+> run-command.c does
 >
-> When the user-provided type is particularly long, however, it can
-> overflow the relatively small stack-based character array handed to
-> write_sha1_file_prepare() by hash_sha1_file() and write_sha1_file(),
-> leading to stack corruption (and crash).
+> 	system(["sh", "-c", ('%s "$@"' % editor), editor, template_file])
 >
-> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
-> diff --git a/cache.h b/cache.h
-> index dfa1a56..2da7740 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -888,6 +888,7 @@ static inline const unsigned char *lookup_replace_object_extended(const unsigned
->  extern int sha1_object_info(const unsigned char *, unsigned long *);
->  extern int hash_sha1_file(const void *buf, unsigned long len, const char *type, unsigned char *sha1);
->  extern int write_sha1_file(const void *buf, unsigned long len, const char *type, unsigned char *return_sha1);
-> +extern int hash_sha1_file_literally(struct strbuf *buf, const char *type, unsigned char *return_sha1, unsigned flags);
+> to avoid having to figure out how to shell-quote template_file.
 
-A few questions:
-
-What's the value of making the first argument of
-hash_sha1_file_literally() a strbuf rather than the two-argument buf &
-len accepted by hash_sha1_file() and write_sha1_file()? Is the
-inconsistency warranted?
-
-Would it make sense to name the third argument "sha1" instead of
-"return_sha1" to match the argument name of hash_sha1_file()?
-
-And, as an aside, should your new patch 4/4 rename "return_sha1" to
-"sha1" in the write_sha1_file() prototype also?
-
->  extern int pretend_sha1_file(void *, unsigned long, enum object_type, unsigned char *);
->  extern int force_object_loose(const unsigned char *sha1, time_t mtime);
->  extern int git_open_noatime(const char *name);
-> diff --git a/sha1_file.c b/sha1_file.c
-> index c08c0cb..0fe3f29 100644
-> --- a/sha1_file.c
-> +++ b/sha1_file.c
-> @@ -2962,6 +2962,31 @@ int write_sha1_file(const void *buf, unsigned long len, const char *type, unsign
->         return write_loose_object(sha1, hdr, hdrlen, buf, len, 0);
->  }
->
-> +int hash_sha1_file_literally(struct strbuf *buf, const char *type,
-> +                            unsigned char *sha1, unsigned flags)
-> +{
-> +       struct strbuf header = STRBUF_INIT;
-> +       int hdrlen, status = 0;
-> +
-> +       /* type string, SP, %lu of the length plus NUL must fit this */
-> +       strbuf_grow(&header, strlen(type) + 20);
-
-A couple comments:
-
-First, given that the largest 64-bit unsigned long value
-(18,446,744,073,709,551,615) is 20 characters, do we want to be really
-pedantic and add 22 instead of 20?
-
-Second, is strbuf overkill in this situation when a simple
-xmalloc()/free() would do?
-
-> +       write_sha1_file_prepare(buf->buf, buf->len, type, sha1,
-> +                               header.buf, &hdrlen);
-> +
-> +       if (!(flags & HASH_WRITE_OBJECT))
-> +               goto cleanup;
-> +
-> +       if (has_sha1_file(sha1))
-> +               goto cleanup;
-> +       status = write_loose_object(sha1, header.buf, hdrlen,
-> +                                   buf->buf, buf->len, 0);
-> +
-> +cleanup:
-> +       strbuf_release(&header);
-> +       return status;
-> +}
-> +
->  int force_object_loose(const unsigned char *sha1, time_t mtime)
->  {
->         void *buf;
-> --
-> 2.4.0-302-g6743426
+Yup, thanks.
