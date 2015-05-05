@@ -1,133 +1,156 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] fixed translation errors
-Date: Mon, 4 May 2015 19:38:53 -0400
-Message-ID: <CAPig+cTHqwsmk4xiHG3v6d9uwTmz08NFP0mihRdnTiXQe5E68Q@mail.gmail.com>
-References: <5547675a.274ec20a.69fb.ffffce22@mx.google.com>
+Subject: Re: [PATCH 2/4] write_sha1_file_prepare: fix buffer overrun with
+ extra-long object type
+Date: Mon, 4 May 2015 20:13:18 -0400
+Message-ID: <CAPig+cS3f2XggxqbvX6Z2Da24QKLOg915Bf-bTVa+4oVzfhA1A@mail.gmail.com>
+References: <1430724315-524-1-git-send-email-sunshine@sunshineco.com>
+	<1430775451-31130-1-git-send-email-gitster@pobox.com>
+	<1430775451-31130-3-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: Alangi Derick <alangiderick@gmail.com>,
-	Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 05 01:39:01 2015
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 05 02:13:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YpPwx-0001A6-ES
-	for gcvg-git-2@plane.gmane.org; Tue, 05 May 2015 01:39:00 +0200
+	id 1YpQUR-0003DU-KC
+	for gcvg-git-2@plane.gmane.org; Tue, 05 May 2015 02:13:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751200AbbEDXiz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 May 2015 19:38:55 -0400
-Received: from mail-ie0-f171.google.com ([209.85.223.171]:34315 "EHLO
-	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750990AbbEDXiy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 May 2015 19:38:54 -0400
-Received: by iedfl3 with SMTP id fl3so161100404ied.1
-        for <git@vger.kernel.org>; Mon, 04 May 2015 16:38:54 -0700 (PDT)
+	id S1751913AbbEEANY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 May 2015 20:13:24 -0400
+Received: from mail-ig0-f182.google.com ([209.85.213.182]:37040 "EHLO
+	mail-ig0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751894AbbEEANT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 May 2015 20:13:19 -0400
+Received: by igblo3 with SMTP id lo3so96266123igb.0
+        for <git@vger.kernel.org>; Mon, 04 May 2015 17:13:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:content-type;
-        bh=9+hVz9QrpgpkE7I7rmwyjB2rqAAsP8ll7G17BCXZbWk=;
-        b=AtRhMWpXPDigWf+opJlk9JMvs5ld6l6qEptq5EL5kIdgQD+i6mHfJMiwfxEyQ8yLUY
-         +1qfQT9t7dnVkNQVu3zIBWsvnGKgcUFzfwYA4F0UqDF5chSDkUcS1ARfgqoeQD3TUeOJ
-         uzavBmyYz08MxooA4zE7Ky4YaCtLbWvddEqDJ4KT+0G0uAJMJ/4+LhQkJAeNfAsityRA
-         TW3j6Ppm2RqQ7m77WZzc1AvV03F2f28rnH9TUBgg6/JSpShuft5wDfnBL6tGgiCOAuLT
-         rEHo/iK0J52uFqD0ccOkVKtA2e5W5XS2/EUJ5TDDOM87zfhmkMdO0hcGN7KNggzoL6b+
-         1L4w==
-X-Received: by 10.107.31.134 with SMTP id f128mr31154240iof.19.1430782734008;
- Mon, 04 May 2015 16:38:54 -0700 (PDT)
-Received: by 10.107.28.132 with HTTP; Mon, 4 May 2015 16:38:53 -0700 (PDT)
-In-Reply-To: <5547675a.274ec20a.69fb.ffffce22@mx.google.com>
-X-Google-Sender-Auth: tOJ6c0v-urQWfnvPrTxvtQEXxC8
+         :from:to:cc:content-type;
+        bh=se213ANKU+/mAyXbEZyhLSonosUj7mV9AtcD1ybL7tM=;
+        b=Yc0wHRTyI+xt2KkTkgnHwM/sDDYfpDSipll8rnDMXWY9LqDMAjR8m/bOOdD4V+nvuj
+         bbBj8V66wTobuiEGpVYpxrBXitd99wxSP/sdEyjrhan+bWZkoLFYnQ3XiIen786oagkj
+         z8TvwCbWrsc2GXhAWxrjWJvQ6veTr/sPvAJ1PuNOdfJpZVKC5Dnpous3fSZylccwe9pF
+         x9jl6gmLjxduyL6q+RKQdvs6kflDmiCpWMLsb4CaXi+Do7C/bf+IaT+t2XbtL9B1I/hC
+         ATWeu47OrwJhDNgFvmIr3hMF/KHBQJ6q5zOgWyA/Z5DHI1bjG4Y1g5FsnWhFWs5Mn8bF
+         03Zw==
+X-Received: by 10.107.31.134 with SMTP id f128mr31280789iof.19.1430784799029;
+ Mon, 04 May 2015 17:13:19 -0700 (PDT)
+Received: by 10.107.28.132 with HTTP; Mon, 4 May 2015 17:13:18 -0700 (PDT)
+In-Reply-To: <1430775451-31130-3-git-send-email-gitster@pobox.com>
+X-Google-Sender-Auth: KpxYiDFoKyyb-nHUry90L9qlygc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268373>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268374>
 
-On Sun, May 3, 2015 at 6:19 PM, Alangi Derick <alangiderick@gmail.com> wrote:
-> Signed-off-by: Alangi Derick <alangiderick@gmail.com>
+On Mon, May 4, 2015 at 5:37 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> From: Eric Sunshine <sunshine@sunshineco.com>
+
+Thanks for re-rerolling this series. Considering that the only bits
+left from me are the diagnosis and the (mostly intact) commit message,
+perhaps the authorship should be changed, or at the very least a big
+"Helped-by: Junio" added? Anyhow, a few minor comments below...
+
+> write_sha1_file_prepare: fix buffer overrun with extra-long object type
+
+Although the overrun happened in write_sha1_file_prepare(), that
+function is no longer the focus of the patch. Would make sense to
+rephrase the subject more generally as:
+
+    sha1_file: fix buffer overrun with extra-long object type
+
+or something.
+
+More below.
+
+> git-hash-object learned --literally in 5ba9a93 (hash-object: add
+> --literally option, 2014-09-11) which can be used to craft a
+> corrupt/broken object of unknown type.
+>
+> When the user-provided type is particularly long, however, it can
+> overflow the relatively small stack-based character array handed to
+> write_sha1_file_prepare() by hash_sha1_file() and write_sha1_file(),
+> leading to stack corruption (and crash).
+>
+> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
 > ---
-> diff --git a/builtin/apply.c b/builtin/apply.c
-> index 0769b09..66d2aba 100644
-> --- a/builtin/apply.c
-> +++ b/builtin/apply.c
-> @@ -2237,7 +2237,7 @@ static void update_pre_post_images(struct image *preimage,
->         if (postlen
->             ? postlen < new - postimage->buf
->             : postimage->len < new - postimage->buf)
-> -               die("BUG: caller miscounted postlen: asked %d, orig = %d, used = %d",
-> +               die(_("BUG: caller miscounted postlen: asked %d, orig = %d, used = %d"),
->                     (int)postlen, (int) postimage->len, (int)(new - postimage->buf));
+> diff --git a/cache.h b/cache.h
+> index dfa1a56..2da7740 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -888,6 +888,7 @@ static inline const unsigned char *lookup_replace_object_extended(const unsigned
+>  extern int sha1_object_info(const unsigned char *, unsigned long *);
+>  extern int hash_sha1_file(const void *buf, unsigned long len, const char *type, unsigned char *sha1);
+>  extern int write_sha1_file(const void *buf, unsigned long len, const char *type, unsigned char *return_sha1);
+> +extern int hash_sha1_file_literally(struct strbuf *buf, const char *type, unsigned char *return_sha1, unsigned flags);
 
-This condition represents a bug in Git itself, which should never
-trigger. As such, there's probably very little value in having it
-translated, and doing so would make extra work for those translating
-the messages.
+A few questions:
 
->         /* Fix the length of the whole thing */
-> @@ -3342,7 +3342,7 @@ static int load_current(struct image *image, struct patch *patch)
->         unsigned mode = patch->new_mode;
->
->         if (!patch->is_new)
-> -               die("BUG: patch to %s is not a creation", patch->old_name);
-> +               die(_("BUG: patch to %s is not a creation"), patch->old_name);
+What's the value of making the first argument of
+hash_sha1_file_literally() a strbuf rather than the two-argument buf &
+len accepted by hash_sha1_file() and write_sha1_file()? Is the
+inconsistency warranted?
 
-Ditto: Internal Git error.
+Would it make sense to name the third argument "sha1" instead of
+"return_sha1" to match the argument name of hash_sha1_file()?
 
->         pos = cache_name_pos(name, strlen(name));
->         if (pos < 0)
-> @@ -3572,7 +3572,7 @@ static int check_to_create(const char *new_name, int ok_if_exists)
->
->                 return EXISTS_IN_WORKTREE;
->         } else if ((errno != ENOENT) && (errno != ENOTDIR)) {
-> -               return error("%s: %s", new_name, strerror(errno));
-> +               return error(_("%s: %s"), new_name, strerror(errno));
+And, as an aside, should your new patch 4/4 rename "return_sha1" to
+"sha1" in the write_sha1_file() prototype also?
 
-There isn't a whole lot here for translators to work with; no context
-or indication of what this message is about. (Perhaps the only thing a
-translator can do is adjust whitespace around the colon.) This might
-be the sort of case where you want to submit a separate patch which
-both fleshes out this error message with enough context for
-translators to sink their teeth into, and make the string
-translatable.
-
->         }
->         return 0;
+>  extern int pretend_sha1_file(void *, unsigned long, enum object_type, unsigned char *);
+>  extern int force_object_loose(const unsigned char *sha1, time_t mtime);
+>  extern int git_open_noatime(const char *name);
+> diff --git a/sha1_file.c b/sha1_file.c
+> index c08c0cb..0fe3f29 100644
+> --- a/sha1_file.c
+> +++ b/sha1_file.c
+> @@ -2962,6 +2962,31 @@ int write_sha1_file(const void *buf, unsigned long len, const char *type, unsign
+>         return write_loose_object(sha1, hdr, hdrlen, buf, len, 0);
 >  }
-> @@ -4599,9 +4599,9 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
->                         apply_usage, 0);
 >
->         if (apply_with_reject && threeway)
-> -               die("--reject and --3way cannot be used together.");
-> +               die(("--reject and --3way cannot be used together."));
->         if (cached && threeway)
-> -               die("--cached and --3way cannot be used together.");
-> +               die(("--cached and --3way cannot be used together."));
+> +int hash_sha1_file_literally(struct strbuf *buf, const char *type,
+> +                            unsigned char *sha1, unsigned flags)
+> +{
+> +       struct strbuf header = STRBUF_INIT;
+> +       int hdrlen, status = 0;
+> +
+> +       /* type string, SP, %lu of the length plus NUL must fit this */
+> +       strbuf_grow(&header, strlen(type) + 20);
 
-You forgot the '_' in '_(...)' on both of these.
+A couple comments:
 
->         if (threeway) {
->                 if (is_not_gitdir)
->                         die(_("--3way outside a repository"));
-> @@ -4659,8 +4659,8 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
->                                whitespace_error),
->                             whitespace_error);
->                 if (applied_after_fixing_ws && apply)
-> -                       warning("%d line%s applied after"
-> -                               " fixing whitespace errors.",
-> +                       warning(_("%d line%s applied after"
-> +                               " fixing whitespace errors."),
->                                 applied_after_fixing_ws,
->                                 applied_after_fixing_ws == 1 ? "" : "s");
+First, given that the largest 64-bit unsigned long value
+(18,446,744,073,709,551,615) is 20 characters, do we want to be really
+pedantic and add 22 instead of 20?
 
-This sort of pluralization (adding "s") only works in some languages.
-To translate this properly use Q_(...). See [1] for details, as well
-as existing uses of Q_(...) in Git.
+Second, is strbuf overkill in this situation when a simple
+xmalloc()/free() would do?
 
-[1]: http://www.gnu.org/savannah-checkouts/gnu/gettext/manual/html_node/Plural-forms.html
-
->                 else if (whitespace_error)
+> +       write_sha1_file_prepare(buf->buf, buf->len, type, sha1,
+> +                               header.buf, &hdrlen);
+> +
+> +       if (!(flags & HASH_WRITE_OBJECT))
+> +               goto cleanup;
+> +
+> +       if (has_sha1_file(sha1))
+> +               goto cleanup;
+> +       status = write_loose_object(sha1, header.buf, hdrlen,
+> +                                   buf->buf, buf->len, 0);
+> +
+> +cleanup:
+> +       strbuf_release(&header);
+> +       return status;
+> +}
+> +
+>  int force_object_loose(const unsigned char *sha1, time_t mtime)
+>  {
+>         void *buf;
 > --
-> 2.4.0.2.g3386abe.dirty
+> 2.4.0-302-g6743426
