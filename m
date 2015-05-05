@@ -1,81 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] prefix_path(): Unconditionally free result of prefix_path
-Date: Tue, 05 May 2015 11:09:11 -0700
-Message-ID: <xmqq8ud2ew1k.fsf@gitster.dls.corp.google.com>
-References: <1430766714-22368-1-git-send-email-sbeller@google.com>
-	<20150505032158.GA23587@peff.net>
-	<CAGZ79kZjeG8UG5ALE-KSO52fD5gJk4xks=VtSV9bHQVA=ST+5Q@mail.gmail.com>
-	<xmqqr3qvdizd.fsf@gitster.dls.corp.google.com>
-	<20150505175612.GA9709@peff.net>
+From: Alangi Derick <alangiderick@gmail.com>
+Subject: Re-consideration
+Date: Tue, 5 May 2015 19:22:15 +0100
+Message-ID: <CAKB+oNuBBsSKvxC-a2RYj-8w7fg6HeCWJGo5CFP0KO_XbhGPiw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Stefan Beller <sbeller@google.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue May 05 20:09:30 2015
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 05 20:22:26 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YphHc-0000tn-Vg
-	for gcvg-git-2@plane.gmane.org; Tue, 05 May 2015 20:09:29 +0200
+	id 1YphU9-00019W-LO
+	for gcvg-git-2@plane.gmane.org; Tue, 05 May 2015 20:22:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965999AbbEESJS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 May 2015 14:09:18 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:55538 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S965997AbbEESJP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 May 2015 14:09:15 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id A41C14DF9E;
-	Tue,  5 May 2015 14:09:14 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=G2Xf1+xD44PU0vsWTMRChgE/+Po=; b=rkInY4
-	Wl46UdxIHrQIZn2ayI+ghaWh9BUPIY+jReomsjLbRLiAGNlXMBSQxaEKasy5Dbpc
-	Q5zJhV9z088PiSLmbElZWXG6XIgp0N30f8jGT8JlpNP9INKFIgLLcUHkAYRzBZt0
-	0R6ZoxKhVfz0PzQKGi9VJhJ/CfB870cC39chc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=bQFnpUlbzJFuEt/NYoWTlvw/mjaQOVnn
-	kQQwFMCsIbkrclxi5q2GJkzgCb/c9ZxczhN+sEkwmsCvs7H3bPZUnKwXHxheuf/n
-	FNU4+kyMcPlsupudNkHs6qP1vkrDoOYoXWsuKaBL8INy7GLOLKVnLDvPS14iGsWW
-	cIV8HSRAbdM=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8FEB24DF9D;
-	Tue,  5 May 2015 14:09:14 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C3A054DF9C;
-	Tue,  5 May 2015 14:09:12 -0400 (EDT)
-In-Reply-To: <20150505175612.GA9709@peff.net> (Jeff King's message of "Tue, 5
-	May 2015 13:56:12 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: D5B03D5C-F351-11E4-BAC1-83E09F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1762836AbbEESWT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 May 2015 14:22:19 -0400
+Received: from mail-qg0-f47.google.com ([209.85.192.47]:35193 "EHLO
+	mail-qg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750973AbbEESWQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 May 2015 14:22:16 -0400
+Received: by qgej70 with SMTP id j70so85822205qge.2
+        for <git@vger.kernel.org>; Tue, 05 May 2015 11:22:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=MOq1Oc+EG5Bxnj+UXMy0FnKa565+RCycRVqORHUleWc=;
+        b=bRK1VHAYMiDc2t+B79FcG4cLL26R2o8Krf2JaLMMiNakLbLe9h1X7mUbAaWeF5y2QF
+         gB0f5bqqbwfYxch7pVsFv/psLqPuJjxrCBIqOlBCUNSVJNjqpDVM1IW5rNU86KR84y40
+         CfemCbvVCazWPUgLJL5Z+DeWsAnYCyHpuqqSeP5lcdxnoAvtaJGOqnNvsTJ4X9KzkLA5
+         pkmrg0KQcbXmdy94lw7v15M0q2dQcBrfMJp+ZdlYDXZo6aUenjwwmU7yZhrOM/7hSMmL
+         yygZPirv3lFHOtmZOYz/FXg219MkSgS2u/e6E2zVjwR1BFm0EQWD7tmP9dDtuwLR1PEh
+         qMkA==
+X-Received: by 10.140.100.200 with SMTP id s66mr35051891qge.1.1430850136018;
+ Tue, 05 May 2015 11:22:16 -0700 (PDT)
+Received: by 10.229.45.71 with HTTP; Tue, 5 May 2015 11:22:15 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268412>
 
-Jeff King <peff@peff.net> writes:
+Hello,
+     Considering the patches i submitted, i was making a research on
+plumbing and porcelain commands. But till now, i am still reading
+about it meaning i want the members of the mailing list to reconsider
+and i will submit a patch concerning the translation so that we debate
+and discuss on. If the patch stands and is accepted, then i will
+continue submission of patches in that same line.
+      For the mean time, i will like someone on the mailing list to
+give me and example of what i will be translating, but i bare in mind
+that i will be working with porcelain commands since they are what
+users want as compared to the plumbing commands(scripts) which is low
+level and should not be translated.
 
->> >>   1. in blame, we assign the result to a const char that may also point
->> >>      straight into to argv, but we never actually free either way
->> 
->> The return value from add_prefix() that is what prefix_path()
->> returned eventually becomes scoreboard.path that needs to be kept
->> during the lifetime of the process, and I think there isn't much
->> point doing the "free() immediately before exiting".
->
-> Yeah, sorry, I meant to say that more explicitly, but clearly didn't. I
-> think it is fine as-is.
+What i thought i was to do was that, if i see a statement like this;
+    die("something");
+i will translate it to
+    die(_("something"));
+but it seems i am not quiet doing the right thing. So will like
+someone who is familiar with the translation format to give me and
+example so i can spear head from there.
 
-Yeah, sorry, I didn't mean "You are wrong and here is why".  I was
-merely agreeing with you.
-
-Thanks for running grep over the codebase to check possible
-remaining problems.
+Regards
+Alangi Derick Ndimnain
