@@ -1,62 +1,59 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: Diffing submodule does not yield complete logs for merge commits
-Date: Tue, 05 May 2015 07:49:54 +0200
-Organization: gmx
-Message-ID: <37f399418bbebb3b53a50bf8daffcdc0@www.dscho.org>
-References: <CAHd499BqB_ZFKMNxSVCDTFx2Ge=TfCE6gexFn+rfRbS+ybLybA@mail.gmail.com>
- <20150501175757.GA10569@book.hvoigt.net>
- <CAHd499B=EcgYiTMFt9VYhj45bRkP8h9TBk1B0cr8fYFuXNe_mQ@mail.gmail.com>
- <5547C961.7070909@web.de>
- <CAHd499CRge9Y6VzdC_ngXS4WxuQ9HizXQJzLpX3iQStY5Cg=6g@mail.gmail.com>
+From: Orgad Shaneh <orgads@gmail.com>
+Subject: Case rename not detected
+Date: Tue, 5 May 2015 08:52:08 +0300
+Message-ID: <CAGHpTBJuRCrg5jL7Anm9kxGJEf5cUmPzDToZG0UXeT_xNMWfsg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	Heiko Voigt <hvoigt@hvoigt.net>, Git <git@vger.kernel.org>
-To: Robert Dailey <rcdailey.lists@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 05 07:50:05 2015
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 05 07:52:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YpVk4-0006OT-LE
-	for gcvg-git-2@plane.gmane.org; Tue, 05 May 2015 07:50:05 +0200
+	id 1YpVmB-0007eC-2F
+	for gcvg-git-2@plane.gmane.org; Tue, 05 May 2015 07:52:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755574AbbEEFuA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 May 2015 01:50:00 -0400
-Received: from mout.gmx.net ([212.227.17.21]:56235 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751272AbbEEFt7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 May 2015 01:49:59 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0Ltqmn-1ZHOSs3MyT-0118zM; Tue, 05 May 2015 07:49:55
- +0200
-In-Reply-To: <CAHd499CRge9Y6VzdC_ngXS4WxuQ9HizXQJzLpX3iQStY5Cg=6g@mail.gmail.com>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:RT5Jq9E2l9uG4XX5knLwIdq2w0h6K+/ukw0yW8Oyr7T+eRGZt2p
- bCZMYQl5KX/bMi/mqBQ+ryDf6riWUpxc2J7xDTMn+lCpxSCkKczHapbCFGQkowkRfacRxhM
- 1/gj2Y1abLMWtSLN8mjksH6b49JoWGqD65qZSO7feWKJP3wvdYqaT/UiRmtFIvoBvHfEJBr
- 1sXc4lMummm//fknTJ0XA==
-X-UI-Out-Filterresults: notjunk:1;
+	id S964915AbbEEFwL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 May 2015 01:52:11 -0400
+Received: from mail-la0-f46.google.com ([209.85.215.46]:36276 "EHLO
+	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752256AbbEEFwJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 May 2015 01:52:09 -0400
+Received: by lagv1 with SMTP id v1so119191881lag.3
+        for <git@vger.kernel.org>; Mon, 04 May 2015 22:52:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=hufLhGb82IgQkcAjV25W9p8CMO+1eobuXiFE6roPtLo=;
+        b=E76XKzg0PvBW71G0v2XJtSPkb+LmoubTxE2sVUBYidLq+lF5Ji+QXcqRsdW3cO+L0O
+         2VTOpDCkQxlcncPZlydo95wYXEDSt3cqZaiFzp+Y0FvNHHmtZjNPVFKTYOvRO2whgaCr
+         i1PTG8ZvF87Z7d9Cpl8BlXe3+T8/Df3rdozY59od14IAuDUJT2nuRF0pIF4u4PwkhS19
+         0gyseUFWIOj1rWtPH/vIKzLuw5AqecqLeqURD6jCFjCUlUTCPMcE3ddpQXyG+aEOugRo
+         olWNKYxs1YEFzbDsJHVJvONNzky1US8IK7fvIM1PBlvUFZQPZzcHYyNSRNmTGH+OI3QF
+         Ds7g==
+X-Received: by 10.112.170.70 with SMTP id ak6mr22540931lbc.42.1430805128163;
+ Mon, 04 May 2015 22:52:08 -0700 (PDT)
+Received: by 10.25.78.77 with HTTP; Mon, 4 May 2015 22:52:08 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268385>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268386>
 
-Hi Robert,
+Hi,
 
-On 2015-05-04 22:21, Robert Dailey wrote:
+File case rename is not detected correctly on case-insensitive
+filesystems. git mv does support it though.
 
-> Since I am not a linux user, I have implemented this feature against
-> the Git for Windows fork of git. I am not able to verify changes if I
-> make them directly against the Git repository.
+Example:
 
-That is why I worked so hard on support of Vagrant: https://github.com/msysgit/msysgit/wiki/Vagrant -- in short, it makes it dead easy for you to set up a *minimal* Linux VM inside your Git SDK and interact with it via ssh.
+git init
+echo hello > foo
+git add foo
+git commit -m initial
+mv foo Foo
+git status # No changes
+git add . -A # Doesn't add anything
 
-With the Vagrant solution, you can easily test Linux Git even on Windows.
-
-Ciao,
-Johannes
+- Orgad
