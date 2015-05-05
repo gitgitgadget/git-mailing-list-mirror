@@ -1,112 +1,97 @@
-From: Danny Lin <danny0838@gmail.com>
-Subject: Re: [PATCH] contrib/subtree: fix linefeeds trimming for cmd_split()
-Date: Wed, 6 May 2015 01:20:08 +0800
-Message-ID: <CAMbsUu6xZrMu_jrV=jR4XNLf1UXLApBiAWJiWJuKRb4xN90QJQ@mail.gmail.com>
+From: Mikael Magnusson <mikachu@gmail.com>
+Subject: Re: multiple source file extensions
+Date: Tue, 5 May 2015 19:30:00 +0200
+Message-ID: <CAHYJk3TzZd8N6E+=nNi1jR36Zc5A7be8ZPL9jLU7c8uAdQJYBw@mail.gmail.com>
+References: <CACnwZYed_aHzLsbkJVm=OnydXw-CPi-Zm9V7928rzvpaFMNENw@mail.gmail.com>
+	<CANuW5x3OBWNDnHeVbH7ZQaj5AUAingea6crJ0cF9AHFjcJE_bQ@mail.gmail.com>
+	<20150502011100.GB5634@peff.net>
+	<CACnwZYdGKcdzgu1=Ysd_pxqeuSBpZu41i1EJBvBi4FqHzvV-Hw@mail.gmail.com>
+	<20150505034336.GA25194@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 05 19:20:20 2015
+Cc: Thiago Farina <tfransosi@gmail.com>,
+	Josh Hagins <hagins.josh@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	=?UTF-8?B?RHV5IE5ndXnhu4Vu?= <pclouds@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue May 05 19:30:25 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YpgW3-0001AC-Gj
-	for gcvg-git-2@plane.gmane.org; Tue, 05 May 2015 19:20:19 +0200
+	id 1Ypgfo-0007y9-Qt
+	for gcvg-git-2@plane.gmane.org; Tue, 05 May 2015 19:30:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965017AbbEERUL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 May 2015 13:20:11 -0400
-Received: from mail-qg0-f53.google.com ([209.85.192.53]:36179 "EHLO
-	mail-qg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761784AbbEERUJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 May 2015 13:20:09 -0400
-Received: by qgeb100 with SMTP id b100so84761250qge.3
-        for <git@vger.kernel.org>; Tue, 05 May 2015 10:20:08 -0700 (PDT)
+	id S1761048AbbEERaF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 May 2015 13:30:05 -0400
+Received: from mail-ie0-f172.google.com ([209.85.223.172]:36578 "EHLO
+	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762005AbbEERaD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 May 2015 13:30:03 -0400
+Received: by iebrs15 with SMTP id rs15so151121207ieb.3
+        for <git@vger.kernel.org>; Tue, 05 May 2015 10:30:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=Wt6vnqGUCdsdiMBStWUGNDnsv0SO26J3dPMp0m+1Iec=;
-        b=TVVhMe6Z7ZfNtI+XeCSTzSjyhWzT1uzzPagOab/zfqxg+Hu3vmlkV2HKpfL8aMN6gX
-         lkkduJyVIsmpAEDbujvkgHwMb0OKnSTAQKCTIZiZEzrgiBnERbIQ0gr0qfnwPNRvKmix
-         a5zLwbISHJdmIbDJr2iI455jbWALS8Emo0TjZTBjNNvxNMDmzimfcg75cYHFRJs6kwUw
-         Tbs8kZi/SWwIRr9iGoraD/VfQ9nGVVy+YxBrvNfdCoxcGTP8DSj4jDNsWQ/0qCpw2pU0
-         JtbgfkPnvQ1QoZudFYA6RwIa7EcYjIPpA/t4MZJse/H+ufLblJdT9995d/T0QVpEWqQE
-         1/dQ==
-X-Received: by 10.55.21.31 with SMTP id f31mr58262611qkh.95.1430846408551;
- Tue, 05 May 2015 10:20:08 -0700 (PDT)
-Received: by 10.140.98.145 with HTTP; Tue, 5 May 2015 10:20:08 -0700 (PDT)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=MM0RxIxjt3qoobyR/HG+EouRXXcFYdf8ZJ3elbYCA5I=;
+        b=RomCW8UvOFGMm2pNCGsFuKN0IZZNVxBfSzXAf2P2SfzHOBBq3IntjDRw2Zyzl4A4qN
+         0u5yVQ+Miw0lsHjJ7jZumRLycCwVLlUuAPyltxmyJr8DF4sfFzQPwRPt7x2pdvvgleG8
+         ALQxsczz35P2hrahoeW3l9yZI5Eu6cyVf8EYVXKeNgxpWzEbofEMVsnLfaj366D+sj76
+         8vKzp8XuxsXRMz5+W//6LlThheH33EsPBAR55mK1tdfCL5PSeelWzuy3a57H+rjTSQfu
+         48wrfDofnm6NwxtFiLweAuYfs9Nsc01U25XZ4SdpLT1cIRIs+CH4hNqbW9p5jhRbx5FJ
+         Zzlg==
+X-Received: by 10.50.114.70 with SMTP id je6mr3188655igb.43.1430847001092;
+ Tue, 05 May 2015 10:30:01 -0700 (PDT)
+Received: by 10.36.143.136 with HTTP; Tue, 5 May 2015 10:30:00 -0700 (PDT)
+In-Reply-To: <20150505034336.GA25194@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268398>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268399>
 
-2015-05-05 5:14 GMT+08:00 Junio C Hamano <gitster@pobox.com>:
-> Danny Lin <danny0838@gmail.com> writes:
+On Tue, May 5, 2015 at 5:43 AM, Jeff King <peff@peff.net> wrote:
+> On Mon, May 04, 2015 at 07:12:45PM -0300, Thiago Farina wrote:
 >
->> From dc549b6b4ec36f8faf9c6f7bb1e343ef7babd14f Mon Sep 17 00:00:00 2001
->> From: Danny Lin <danny0838@gmail.com>
->> Date: Mon, 4 May 2015 14:09:38 +0800
->> Subject: [PATCH] contrib/subtree: fix linefeeds trimming for cmd_split()
->
-> Please do not use multipart/mixed attachments, but instead inline
-> your patch.  When doing so, please drop all these four lines above.
->
-Oops. How to drop the lines? I'm using Gmail and don't know the way to go.
-
+>> On Fri, May 1, 2015 at 10:11 PM, Jeff King <peff@peff.net> wrote:
+>> > On Fri, May 01, 2015 at 08:49:14PM -0400, Josh Hagins wrote:
+>> >
+>> >> If you're using a recent version of bash, you could enable the
+>> >> 'globstar' option:
+>> >>
+>> >>     $ shopt -s globstar
+>> >>     $ git grep 'pattern' **/*.{cc,cpp,h}
+>> >>
+>> >> Does that work?
+>> >
+>> > That will only pick up files that are in the working tree. Which is fine
+>> > for a stock "git grep" with no options, but would not be right for
+>> > grepping in the index or an older tree. For that, you can ask git to
+>> > glob for you:
+>> >
+>> >   git grep pattern -- '*.cc' '*.cpp' '*.h'
+>> >
+>> Is it possible to do a regex like the following?
 >>
->> cmd_split() prints the info message using "say -n", which
->> makes no sense and could cause the linefeed be trimmed in
->> some cases. This patch fixes the issue.
+>> ".*\.[cChH]\(pp\)?"
 >
-> I think this was written knowing that "say" is merely a thin wrapper
-> of "echo" (which is a bad manner but happens to be correct) and
-> assuming that everybody's "echo" understands "-n" (which is not a
-> good assumption) to implement "progress display" that shows the "N
-> out of M done" output over and over on the same physical line.
+> No, pathspecs are globs, not regexps. I think the idea has been floated
+> for supporting regexps, which you would activate something like:
 >
-> So,... contrary to your "makes no sense" claim, what it tries to do
-> makes perfect sense to me, even though its execution seems somewhat
-> poor.
+>   git grep pattern -- :(regexp)$your_regex_here
 >
-The original version has a CR (yes, it's CR, not LF) at the end of the
-"say -n" string, which is weird. If it's meant to print a linefeed, we should
-remove the CR and use "say". If it's meant not to print a linefeed, we still
-should remove the CR.
+> but nobody has implemented it. I'm not sure it actually saves you any
+> typing (besides which, your regexp does not match ".cc", which was in
+> the original).
 
-CR makes the shell behave weird, sometimes a linefeed is shown and
-sometimes not.
+Remember that the more bells and whistles you add to pathspecs, the
+less actual filenames can be conveniently tracked by git; *.c will be
+expanded by the shell and passed literally to git, and if git then
+interprets a bunch of stuff again, you could end up with a false
+negative or positive match. Obviously files with * and ? in them are
+already unsupported, try not to add more.
 
-For example, in my shell (git version 2.3.7.windows.1), I frequently get
-a crowded message like this:
-
-$ git subtree split -P subdir/
-1/3 (0)2/3 (1)3/3 (2)c9ad5da42e2bc00c76616207fe73978887656235
-
-While sometimes like this:
-$ git subtree split -P subdir/
-1/3 (0)2/3 (1)
-3/3 (2)
-c9ad5da42e2bc00c76616207fe73978887656235
-
-The two behaviors happen almost randomly, at least I cannot predict.
-
-
->> ---
->>  contrib/subtree/git-subtree.sh | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
->> index fa1a583..28a1377 100755
->> --- a/contrib/subtree/git-subtree.sh
->> +++ b/contrib/subtree/git-subtree.sh
->> @@ -599,7 +599,7 @@ cmd_split()
->>       eval "$grl" |
->>       while read rev parents; do
->>               revcount=$(($revcount + 1))
->> -             say -n "$revcount/$revmax ($createcount)"
->> +             say "$revcount/$revmax ($createcount)"
->>               debug "Processing commit: $rev"
->>               exists=$(cache_get $rev)
->>               if [ -n "$exists" ]; then
+-- 
+Mikael Magnusson
