@@ -1,78 +1,82 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: multiple source file extensions
-Date: Mon, 4 May 2015 23:43:36 -0400
-Message-ID: <20150505034336.GA25194@peff.net>
-References: <CACnwZYed_aHzLsbkJVm=OnydXw-CPi-Zm9V7928rzvpaFMNENw@mail.gmail.com>
- <CANuW5x3OBWNDnHeVbH7ZQaj5AUAingea6crJ0cF9AHFjcJE_bQ@mail.gmail.com>
- <20150502011100.GB5634@peff.net>
- <CACnwZYdGKcdzgu1=Ysd_pxqeuSBpZu41i1EJBvBi4FqHzvV-Hw@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 01/18] t1404: new tests of D/F conflicts within ref transactions
+Date: Tue, 5 May 2015 01:12:39 -0400
+Message-ID: <CAPig+cQabRiiMhNyYJM4_bZsQ4OTfrSbJ51XAido3V49baLhHA@mail.gmail.com>
+References: <1430483158-14349-1-git-send-email-mhagger@alum.mit.edu>
+	<1430483158-14349-2-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Josh Hagins <hagins.josh@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Duy =?utf-8?B?Tmd1eeG7hW4=?= <pclouds@gmail.com>
-To: Thiago Farina <tfransosi@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 05 05:43:52 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
+	Git List <git@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue May 05 07:13:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YpTlw-0002BT-51
-	for gcvg-git-2@plane.gmane.org; Tue, 05 May 2015 05:43:52 +0200
+	id 1YpVAB-0008WS-Pt
+	for gcvg-git-2@plane.gmane.org; Tue, 05 May 2015 07:13:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755261AbbEEDnl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 May 2015 23:43:41 -0400
-Received: from cloud.peff.net ([50.56.180.127]:54163 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752431AbbEEDnj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 May 2015 23:43:39 -0400
-Received: (qmail 8729 invoked by uid 102); 5 May 2015 03:43:39 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 04 May 2015 22:43:39 -0500
-Received: (qmail 4147 invoked by uid 107); 5 May 2015 03:44:10 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 04 May 2015 23:44:10 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 04 May 2015 23:43:36 -0400
-Content-Disposition: inline
-In-Reply-To: <CACnwZYdGKcdzgu1=Ysd_pxqeuSBpZu41i1EJBvBi4FqHzvV-Hw@mail.gmail.com>
+	id S1752256AbbEEFMl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 May 2015 01:12:41 -0400
+Received: from mail-ob0-f182.google.com ([209.85.214.182]:36644 "EHLO
+	mail-ob0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751878AbbEEFMk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 May 2015 01:12:40 -0400
+Received: by obbkp3 with SMTP id kp3so68035289obb.3
+        for <git@vger.kernel.org>; Mon, 04 May 2015 22:12:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=yYOOQ2LzoUYSkaPY7yk6wUDPcFRJ2jOOGde4tdwMDAg=;
+        b=KwZzQmy67m3MrPqSGXC7O8NvG2KVIdDcuuZBVGk2QgFvvLxNbVoud8phZfKvruXGOj
+         H159eW2wYR31PNnuyr32cS+EAArTJGEgy3DmdKB1ED23MNvJQNC/tJygsBGcC1evHxvH
+         hhNTYXG+0+o/8IHEpvVgdzV5Y4GkGE3KYT0VomxgwGgvUOGNuSvHvmPjtrma0xSRgCgk
+         +GjgnkB26ZX+MOsOWpJNjMY7zwRpF5yaSM1DSO33CY0JAER17wEHNj//UEZ+K0iZpp9c
+         nLtjJG4NlBGGG97hWA+Cdgo1o5tVGAHwIONdeYbGz1tsrobNeGo2bMsayKAUPdBia3Dg
+         eL8g==
+X-Received: by 10.107.31.134 with SMTP id f128mr32157043iof.19.1430802759333;
+ Mon, 04 May 2015 22:12:39 -0700 (PDT)
+Received: by 10.107.28.132 with HTTP; Mon, 4 May 2015 22:12:39 -0700 (PDT)
+In-Reply-To: <1430483158-14349-2-git-send-email-mhagger@alum.mit.edu>
+X-Google-Sender-Auth: MuKCdJlVFY8aEfBCbcb3KdAr4pI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268383>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268384>
 
-On Mon, May 04, 2015 at 07:12:45PM -0300, Thiago Farina wrote:
+On Fri, May 1, 2015 at 8:25 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> Add some tests of D/F conflicts (as in, the type of directory vs. file
+> conflict that exists between references "refs/foo" and "refs/foo/bar")
+> in the context of reference transactions.
+> [...]
+> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+> ---
+>  t/t1404-update-ref-df-conflicts.sh | 107 +++++++++++++++++++++++++++++++++++++
+>  1 file changed, 107 insertions(+)
+>  create mode 100755 t/t1404-update-ref-df-conflicts.sh
+>
+> diff --git a/t/t1404-update-ref-df-conflicts.sh b/t/t1404-update-ref-df-conflicts.sh
+> new file mode 100755
+> index 0000000..2fc2ac6
+> --- /dev/null
+> +++ b/t/t1404-update-ref-df-conflicts.sh
+> @@ -0,0 +1,107 @@
+> +#!/bin/sh
+> +
+> +test_description='Test git update-ref with D/F conflicts'
+> +. ./test-lib.sh
+> +
+> +test_expect_success 'setup' '
+> +
+> +       git commit --allow-empty -m Initial
 
-> On Fri, May 1, 2015 at 10:11 PM, Jeff King <peff@peff.net> wrote:
-> > On Fri, May 01, 2015 at 08:49:14PM -0400, Josh Hagins wrote:
-> >
-> >> If you're using a recent version of bash, you could enable the
-> >> 'globstar' option:
-> >>
-> >>     $ shopt -s globstar
-> >>     $ git grep 'pattern' **/*.{cc,cpp,h}
-> >>
-> >> Does that work?
-> >
-> > That will only pick up files that are in the working tree. Which is fine
-> > for a stock "git grep" with no options, but would not be right for
-> > grepping in the index or an older tree. For that, you can ask git to
-> > glob for you:
-> >
-> >   git grep pattern -- '*.cc' '*.cpp' '*.h'
-> >
-> Is it possible to do a regex like the following?
-> 
-> ".*\.[cChH]\(pp\)?"
+Broken &&-chain.
 
-No, pathspecs are globs, not regexps. I think the idea has been floated
-for supporting regexps, which you would activate something like:
-
-  git grep pattern -- :(regexp)$your_regex_here
-
-but nobody has implemented it. I'm not sure it actually saves you any
-typing (besides which, your regexp does not match ".cc", which was in
-the original).
-
--Peff
+> +       C=$(git rev-parse HEAD)
+> +
+> +'
