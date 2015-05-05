@@ -1,79 +1,114 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] lock_packed_refs(): allow retries when acquiring the
- packed-refs lock
-Date: Tue, 5 May 2015 15:21:10 -0400
-Message-ID: <20150505192110.GD10463@peff.net>
-References: <1430491977-25817-1-git-send-email-mhagger@alum.mit.edu>
- <1430491977-25817-3-git-send-email-mhagger@alum.mit.edu>
- <CAGZ79kZnhv+aW_GW8mBDyhfv_k54ScAFsHQz=8zfHBUJ8WrVUw@mail.gmail.com>
- <20150501182257.GA27728@peff.net>
- <55445E60.6010205@alum.mit.edu>
+From: "Randall S. Becker" <rsbecker@nexbridge.com>
+Subject: RE: t5570 - not cloned error
+Date: Tue, 5 May 2015 15:28:20 -0400
+Message-ID: <013701d08769$a5bbab80$f1330280$@nexbridge.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Stefan Beller <sbeller@google.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue May 05 21:21:19 2015
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: "'Joachim Schmitz'" <jojo@schmitz-digital.de>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue May 05 21:28:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YpiP8-0005H9-MA
-	for gcvg-git-2@plane.gmane.org; Tue, 05 May 2015 21:21:19 +0200
+	id 1YpiW8-0001eV-W7
+	for gcvg-git-2@plane.gmane.org; Tue, 05 May 2015 21:28:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752955AbbEETVO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 May 2015 15:21:14 -0400
-Received: from cloud.peff.net ([50.56.180.127]:54412 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751332AbbEETVN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 May 2015 15:21:13 -0400
-Received: (qmail 23406 invoked by uid 102); 5 May 2015 19:21:13 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 05 May 2015 14:21:13 -0500
-Received: (qmail 9656 invoked by uid 107); 5 May 2015 19:21:45 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 05 May 2015 15:21:45 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 05 May 2015 15:21:10 -0400
-Content-Disposition: inline
-In-Reply-To: <55445E60.6010205@alum.mit.edu>
+	id S1756830AbbEET22 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 May 2015 15:28:28 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:61302 "EHLO
+	elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753306AbbEET22 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 May 2015 15:28:28 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from pangea (CPE0023eb577e25-CM602ad06c91a7.cpe.net.cable.rogers.com [99.237.128.150])
+	(authenticated bits=0)
+	by elephants.elehost.com (8.14.9/8.14.9) with ESMTP id t45JSMcC024991
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+	Tue, 5 May 2015 15:28:22 -0400 (EDT)
+	(envelope-from rsbecker@nexbridge.com)
+X-Mailer: Microsoft Outlook 15.0
+Content-language: en-ca
+Thread-index: AdCHaXoJt6eT4/LXQH+n+D0enyNSYw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268417>
 
-On Sat, May 02, 2015 at 07:19:28AM +0200, Michael Haggerty wrote:
+Sorry to repost - ended up in my own spam trap.
 
-> 100 ms seems to be considered an acceptable delay between the time that
-> a user, say, clicks a button and the time that the button reacts. What
-> we are talking about is the time between the release of a lock by one
-> process and the resumption of another process that was blocked waiting
-> for the lock. The former is probably not under the control of the user
-> anyway, and perhaps not even observable by the user. Thus I don't think
-> that a perceivable delay between that event and the resumption of the
-> blocked process would be annoying. The more salient delay is between the
-> time that the user started the blocked command and when that command
-> completed. Let's look in more detail.
+On May 1, 2015 11:05 AM, I wrote, in my haste:
+> 
+> Greetings - and asking for a bit of help resolving test failures.
+> 
+> I'm having an issue with t5570 at 2.3.7 which seems to be a regression
+from
+> 2.3.3 (currently installed), but I cannot be sure. This test failed prior
+to
+> 2.3.0 in the box, worked from 2.3.0 to 2.3.3 - suggesting that it may be
+> environmental, not actually in git. Making some assumptions, it looks like
+> the URL for the test repository is not correct and may depend on localhost
+> resolving properly - which DNS does not do well on this box (outside my
+> control, we are multi-home, and localhost does not resolve to 127.0.0.1 or
+> [::1]). Only t5570 #'s 3-5 fail and I found a strange message in the
+output
+> of the test seemingly referring to a bad repo name. I would really
+> appreciate some pointers on where to look next and how to go about
+resolving
+> this. I am happy to try to work through this on 2.4.0 if that would be
+more
+> efficient for the team. Anything relating to git-daemon makes me nervous
+in
+> terms of installing the code.
+> 
+> Platform is HP NonStop (Posix-esque environment):
+> 
+> In the test output:
+> *** t5570-git-daemon.sh ***
+> <snip>
+> not ok 3 - clone git repository
+> #
+> #               git clone "$GIT_DAEMON_URL/repo.git" clone &&
+> #               test_cmp file clone/file
+> #
+> not ok 4 - fetch changes via git protocol
+> #
+> #               echo content >>file &&
+> #               git commit -a -m two &&
+> #               git push public &&
+> #               (cd clone && git pull) &&
+> #               test_cmp file clone/file
+> #
+> not ok 5 - remote detects correct HEAD
+> #
+> #               git push public master:other &&
+> #               (cd clone &&
+> #                git remote set-head -d origin &&
+> #                git remote set-head -a origin &&
+> 
+> And
+> 
+> ../git/t/trash directory.t5570-git-daemon: cat output
+> fatal: remote error: repository not exported: /repo.git
+> 
+> Additional context: t0025, t0301, t3900, t9001, t9020 are not 100% but the
+> issues are acceptable - we can discuss separately.
 
-Yeah, you can't impact when the other process will drop the lock, but if
-we assume that it takes on the order of 100ms for the other process to
-do its whole operation, then on average we experience half that. And
-then tack on to that whatever time we waste in sleep() after the other
-guy drops the lock. And that's on average half of our backoff time.
+We definitely have an issue with localhost. When forcing the DNS resolver to
+return 127.0.0.1, we pass 1-16 then 17 fails as I expected to happen based
+on my DNS futzing. Heads up that this test is not-surprisingly sensitive to
+DNS problems. My environment is still in a messy state where I can reproduce
+the original problem so it might be a useful moment for me to find a way to
+modify the test script to harden it. Any suggestion on that score (as in
+where and
+roughly how it might be made more reliable)?
 
-So something like 100ms max backoff makes sense to me, in that it keeps
-us in the same order of magnitude as the expected time that the lock is
-held.
+Note: Since the original post, I moved the fork to 2.4.0.
 
-Of course these numbers are all grossly hand-wavy, and as you point out,
-the current formula never even hits 100ms with the current 1s timeout,
-anyway. So for the record, I'm fine leaving your patch as-is.
+Cheers,
+Randall
 
-I think for our disgusting 1GB packed-refs files at GitHub, we will end
-up bumping the maximum timeout, but by my own argument above, it will be
-fine for the backoff to increase at the same time (i.e., they will
-remain in the same rough order of magnitude).
-
--Peff
