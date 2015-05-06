@@ -1,72 +1,108 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] branch: fix funny-sounding error message
-Date: Tue, 5 May 2015 19:06:30 -0400
-Message-ID: <20150505230630.GC18817@peff.net>
-References: <1430536360-21901-1-git-send-email-alexhenrie24@gmail.com>
- <xmqq8ud5usi6.fsf@gitster.dls.corp.google.com>
- <CAMMLpeTYhLwGmy11uGzZAVugQPO6qN6F6pxZ6BiUZKeKnir+zw@mail.gmail.com>
- <xmqqvbg6d6v3.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Alex Henrie <alexhenrie24@gmail.com>, pclouds@gmail.com,
-	Git mailing list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 06 01:06:39 2015
+From: Stephen Robin <stephen.robin@gmail.com>
+Subject: [PATCH 0/6] Make pull a builtin
+Date: Wed,  6 May 2015 01:00:47 +0100
+Message-ID: <1430870453-5408-1-git-send-email-stephen.robin@gmail.com>
+References: <CACRoPnQ5_r-26J4gBHc27KZt3X9KAU7eFkA3vz_GE6_dP-Uyug@mail.gmail.com>
+Cc: git@vger.kernel.org
+To: pyokagan@gmail.com
+X-From: git-owner@vger.kernel.org Wed May 06 02:00:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YplvC-000540-Fe
-	for gcvg-git-2@plane.gmane.org; Wed, 06 May 2015 01:06:38 +0200
+	id 1Ypmlm-0004RZ-3E
+	for gcvg-git-2@plane.gmane.org; Wed, 06 May 2015 02:00:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751294AbbEEXGd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 May 2015 19:06:33 -0400
-Received: from cloud.peff.net ([50.56.180.127]:54559 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750744AbbEEXGd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 May 2015 19:06:33 -0400
-Received: (qmail 2860 invoked by uid 102); 5 May 2015 23:06:33 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 05 May 2015 18:06:33 -0500
-Received: (qmail 12406 invoked by uid 107); 5 May 2015 23:07:05 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 05 May 2015 19:07:05 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 05 May 2015 19:06:30 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqqvbg6d6v3.fsf@gitster.dls.corp.google.com>
+	id S1753526AbbEFAAx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 May 2015 20:00:53 -0400
+Received: from mail-wi0-f175.google.com ([209.85.212.175]:35006 "EHLO
+	mail-wi0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751506AbbEFAAw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 May 2015 20:00:52 -0400
+Received: by widdi4 with SMTP id di4so181557076wid.0
+        for <git@vger.kernel.org>; Tue, 05 May 2015 17:00:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=G8M9uk1iO2Icxwq0ZLOvcjrtN+NXlaWej/b1JYaCvyQ=;
+        b=OAW3npgpQZJ6Diu4KhiPexAA1ebDDEFIZAmzPfo3g65vnmWt4vFaz3DTt5U1R2O+2n
+         g4jbLB1mnMNkP7tZ/cITEo+xTDoP7urSqax9FAfhXLQkC1LCPKXt/Y2pw8CgN2kqTOEU
+         fL12LhsJGyYHCADp8UATe68VQoehmvXecgBQl34W/EZjoFvFrl/qRi5Pi/169bd79946
+         3ePFYTRjC9TmaZ7v/71fSK84avjkVr8pUo7q46UgOgxG29kCxnJ5AJMTa7kMqmwPyYnE
+         q7PcG9SwpQEdelU/ICUNncC5t4pbXLv/cHu+CbohGxvmgB1M+rfd7hfLkkVMS+khg7OS
+         Eg4w==
+X-Received: by 10.194.176.225 with SMTP id cl1mr13507767wjc.45.1430870450863;
+        Tue, 05 May 2015 17:00:50 -0700 (PDT)
+Received: from localhost ([141.0.152.225])
+        by mx.google.com with ESMTPSA id go4sm439854wib.1.2015.05.05.17.00.50
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Tue, 05 May 2015 17:00:50 -0700 (PDT)
+X-Mailer: git-send-email 2.4.0.7.gf20f26f
+In-Reply-To: <CACRoPnQ5_r-26J4gBHc27KZt3X9KAU7eFkA3vz_GE6_dP-Uyug@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268432>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268433>
 
-On Tue, May 05, 2015 at 02:58:24PM -0700, Junio C Hamano wrote:
+Hi Paul,
 
-> I think this "branch is NULL" condition is when an earlier call to
-> branch_get() returned a NULL, and _one_ way to make that happen is
-> to detach the HEAD.  There may be others, but I didn't check.
+Congratulations on getting your project accepted for GSOC. Here's my
+attempt at implementing pull as a builtin, maybe it will be of some use
+as you look to progress your version.
 
-FWIW, since I have just been looking through the branch code,
-branch_get() should only return NULL when:
+It's fairly complete in the sense that all the features of git-pull.sh
+should be implemented, the test suite passes, and I've been using it
+myself without issue. At the same time it's some way from finished as
+I've never had time to test it fully and there are parts of the code I'm
+not happy with.
 
-  1. We passed NULL or "HEAD" to it (i.e., we asked for the current branch). If
-     you ask for a branch by name, you will always get a non-NULL return,
-     even if that branch does not exist.
+Apologies for not sharing this with you earlier.  I have been too busy
+with paid work to look at any open source projects for some months.
 
-  2. There is no current branch (i.e., a detached HEAD).
+Good luck with your project!
 
-I think the "no such branch" error message here:
+Regards
+Stephen
 
-               if (!branch) {
-                        if (!argc || !strcmp(argv[0], "HEAD"))
-                                die(_("could not unset upstream of HEAD when "
-                                      "it does not point to any branch."));
-			die(_("no such branch '%s'"), argv[0]);
-	       }
 
-cannot actually be triggered (and I double-checked that the test suite
-does not trigger it by replacing it with "exit(141)", which should cause
-even test_must_fail to complain).
+Stephen Robin (6):
+  merge: tidy up options
+  merge: move error message given when a merge needs committing to
+    advice.c
+  merge-base: split handle_fork_point to make reuse easier
+  pull: reimplement as a builtin in C
+  pull: allow interactive rebase
+  parse-remote: dismantle git-parse-remote.sh
 
--Peff
+ .gitignore                           |    2 -
+ Documentation/config.txt             |    1 +
+ Documentation/git-parse-remote.txt   |   23 -
+ Documentation/git-pull.txt           |    4 +-
+ Makefile                             |    3 +-
+ advice.c                             |    9 +
+ advice.h                             |    1 +
+ builtin.h                            |    3 +
+ builtin/merge-base.c                 |   64 ++-
+ builtin/merge.c                      |   16 +-
+ builtin/pull.c                       | 1006 ++++++++++++++++++++++++++++++++++
+ builtin/remote.c                     |    8 +-
+ command-list.txt                     |    1 -
+ contrib/examples/git-parse-remote.sh |   89 +++
+ contrib/examples/git-pull.sh         |  340 ++++++++++++
+ git-parse-remote.sh                  |   89 ---
+ git-pull.sh                          |  340 ------------
+ git-rebase.sh                        |   36 +-
+ git-submodule.sh                     |    8 +-
+ git.c                                |    1 +
+ 20 files changed, 1547 insertions(+), 497 deletions(-)
+ delete mode 100644 Documentation/git-parse-remote.txt
+ create mode 100644 builtin/pull.c
+ create mode 100644 contrib/examples/git-parse-remote.sh
+ create mode 100755 contrib/examples/git-pull.sh
+ delete mode 100644 git-parse-remote.sh
+ delete mode 100755 git-pull.sh
+
+-- 
+2.4.0.7.gf20f26f
