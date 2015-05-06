@@ -1,103 +1,57 @@
-From: SZEDER =?utf-8?b?R8OhYm9y?= <szeder@ira.uka.de>
-Subject: Re: [PATCH] completion: remove credential helpers from porcelain
- commands
-Date: Wed, 06 May 2015 12:26:42 +0200
-Message-ID: <20150506122642.Horde.JpisdKtEAos7MJrZqzdelw4@webmail.informatik.kit.edu>
-References: <1430831972-6788-1-git-send-email-szeder@ira.uka.de>
- <20150505200607.GB12067@peff.net>
- <xmqqzj5id7v7.fsf@gitster.dls.corp.google.com>
+From: karthik nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v10 0/4] cat-file: add support for "-allow-unknown-type"
+Date: Wed, 06 May 2015 19:07:49 +0530
+Message-ID: <554A192D.7000102@gmail.com>
+References: <55463094.9040204@gmail.com> <xmqqzj5ltd6c.fsf@gitster.dls.corp.google.com> <xmqqvbg9td0x.fsf@gitster.dls.corp.google.com> <CAPig+cQKqkoqN+o_QfVBRvxGdNuJn_oxD5YMsvnBOHguimJhGQ@mail.gmail.com> <CAPig+cStUNPZqEyE1rJVj5AsTeZFU54mc97rgQqiPbr5V1B0Sw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed	DelSp=Yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 06 12:27:01 2015
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Wed May 06 15:38:07 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YpwXb-0006Pf-8b
-	for gcvg-git-2@plane.gmane.org; Wed, 06 May 2015 12:26:59 +0200
+	id 1YpzWW-0003GE-9I
+	for gcvg-git-2@plane.gmane.org; Wed, 06 May 2015 15:38:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751192AbbEFK0z convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 May 2015 06:26:55 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:55439 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750903AbbEFK0v convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 May 2015 06:26:51 -0400
-Received: from irawebmail.ira.uni-karlsruhe.de ([141.3.10.230] helo=webmail.ira.uka.de)
-	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
-	iface 141.3.10.81 id 1YpwXN-0002fm-SF; Wed, 06 May 2015 12:26:45 +0200
-Received: from apache by webmail.ira.uka.de with local (Exim 4.72)
-	(envelope-from <szeder@ira.uka.de>)
-	id 1YpwXK-0005MF-Gf; Wed, 06 May 2015 12:26:42 +0200
-Received: from x590c4d6e.dyn.telefonica.de (x590c4d6e.dyn.telefonica.de
- [89.12.77.110]) by webmail.informatik.kit.edu (Horde Framework) with HTTP;
- Wed, 06 May 2015 12:26:42 +0200
-In-Reply-To: <xmqqzj5id7v7.fsf@gitster.dls.corp.google.com>
-User-Agent: Internet Messaging Program (IMP) H5 (6.2.2)
-Content-Disposition: inline
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1430908005.
+	id S1751521AbbEFNhz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 May 2015 09:37:55 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:33164 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751266AbbEFNhy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 May 2015 09:37:54 -0400
+Received: by pacwv17 with SMTP id wv17so9833707pac.0
+        for <git@vger.kernel.org>; Wed, 06 May 2015 06:37:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=Ktw6LUGDLp3gTbGJFXXBNPC3IgPsIY7CVw7rbQnFJuA=;
+        b=CFQssyRA1xqkzWSUZ3jPdWok2KGDgYMn0QZAFcW2Y7VGgL4d623svldOB+5jh3LXoS
+         5E2A2SGVypKgH4OFyUacDaD66iX/RLLdR4Wh1mxrm5GfAhpoQ2UboxEoQlIZQTOd/r8B
+         FGNRIhHI3peFNORq8Nv6XJgFnz2JkPCyx061RNnFaQq6otYoiRBayyu7wkxFPb77OHp6
+         oSHY4YNvCa6oVUJi3aUI93mk4Nh8FCWeWlFIQbCGHk0Zv9BqSwebPlUbHWNOZJzhIswb
+         nN/7rVHwLrEcWW10l6ZTqWHLJIS7Sa+PrMTjSk6Rk6JtgjYfuUj7G1f3hYIlpsgAPS6a
+         5jLg==
+X-Received: by 10.68.88.33 with SMTP id bd1mr61865235pbb.124.1430919474021;
+        Wed, 06 May 2015 06:37:54 -0700 (PDT)
+Received: from [172.16.0.91] ([182.48.234.2])
+        by mx.google.com with ESMTPSA id b10sm1977447pdo.84.2015.05.06.06.37.51
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 06 May 2015 06:37:53 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
+In-Reply-To: <CAPig+cStUNPZqEyE1rJVj5AsTeZFU54mc97rgQqiPbr5V1B0Sw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268466>
 
+No other changes for now, apart from the changes suggested by
+you and Eric. You can merge it into 'next'.
 
-Quoting Junio C Hamano <gitster@pobox.com>:
-
-> Jeff King <peff@peff.net> writes:
->
->>> However, if you think filtering out 'credential-*' is the way to go=
-, I'm
->>> happy to reroll.
->>
->> I'd actually be fine with just marking all credential-* as "credenti=
-als
->> helper". I think we have staked out the "git-credential-foo" namespa=
-ce,
->> so anybody putting something unrelated in there deserves what they g=
-et.
->> And it makes one fewer list to keep up to date.
->>
->> I _do_ have other git-credential-foo's that should be ignored (and a=
-re
->> not in your list), but I am probably the only person in the world (t=
-hey
->> are due to me experimenting with the credential helper code :) ).
->
-> Let's do this on top of the "typofix helper" one, as there was
-> another show-stopper typo.  I could also amend the log message
-> and declare that we now squat on git-credential-<anything>, but
-> I do not think it is necessary.
->
-> diff --git a/contrib/completion/git-completion.bash =20
-> b/contrib/completion/git-completion.bash
-> index fdf0ddc..af78212 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -665,13 +665,8 @@ __git_list_porcelain_commands ()
->  		checkout-index)   : plumbing;;
->  		commit-tree)      : plumbing;;
->  		count-objects)    : infrequent;;
-> -		credential        : credentials;;
-> -		credential-cache) : credentials helper;;
-> -		credential-gnome-keyring) : credentials helper;;
-> -		credential-netrc) : credentials helper;;
-> -		credential-osxkeychain) : credentials helper;;
-> -		credential-store) : credentials helper;;
-> -		credential-wincred) : credentials helper;;
-> +		credential)       : credentials;;
-> +		credential-*)     : credentials helper;;
->  		cvsexportcommit)  : export;;
->  		cvsimport)        : import;;
->  		cvsserver)        : daemon;;
-
-Yeah, that's it.
-
-Best,
-G=C3=A1bor
+Regards,
+-Karthik
