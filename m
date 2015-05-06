@@ -1,47 +1,64 @@
-From: Hans Ginzel <hans@matfyz.cz>
-Subject: git tag -u feature request
-Date: Wed, 06 May 2015 08:09:52 +0200
-Message-ID: <9fa7de80732928631304708be9504271@artax.karlin.mff.cuni.cz>
+From: Paul Tan <pyokagan@gmail.com>
+Subject: Re: [PATCH 0/7] Improve git-pull test coverage
+Date: Wed, 6 May 2015 14:30:44 +0800
+Message-ID: <CACRoPnRKcDcvRgMqQefXHhaoFs6s3UMb3CNvNOxo-Rt8hyYnFg@mail.gmail.com>
+References: <1430581035-29464-1-git-send-email-pyokagan@gmail.com>
+	<vpqoam0sqp5.fsf@anie.imag.fr>
+	<xmqqlhh4tfd0.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 7bit
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed May 06 08:17:05 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Git List <git@vger.kernel.org>,
+	Stefan Beller <sbeller@google.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 06 08:30:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ypsdk-0003Yp-Gn
-	for gcvg-git-2@plane.gmane.org; Wed, 06 May 2015 08:17:04 +0200
+	id 1Ypsr6-0003Y9-0Q
+	for gcvg-git-2@plane.gmane.org; Wed, 06 May 2015 08:30:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752546AbbEFGQ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 May 2015 02:16:59 -0400
-Received: from artax.karlin.mff.cuni.cz ([195.113.26.195]:51503 "EHLO
-	artax.karlin.mff.cuni.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751040AbbEFGQ7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 May 2015 02:16:59 -0400
-X-Greylist: delayed 406 seconds by postgrey-1.27 at vger.kernel.org; Wed, 06 May 2015 02:16:58 EDT
-Received: from artax.karlin.mff.cuni.cz (localhost [127.0.0.1])
-	by artax.karlin.mff.cuni.cz (Postfix) with ESMTP id 295C1468005
-	for <git@vger.kernel.org>; Wed,  6 May 2015 08:09:52 +0200 (CEST)
-X-Sender: hans@matfyz.cz
-User-Agent: RoundCube Webmail/0.7.2
+	id S1752379AbbEFGar (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 May 2015 02:30:47 -0400
+Received: from mail-lb0-f179.google.com ([209.85.217.179]:33571 "EHLO
+	mail-lb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751303AbbEFGaq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 May 2015 02:30:46 -0400
+Received: by lbbzk7 with SMTP id zk7so311874lbb.0
+        for <git@vger.kernel.org>; Tue, 05 May 2015 23:30:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=BrG8HoGC6N1yw2uQ7HgwMjJ7JqZDGwZ2eYqknlze89Y=;
+        b=jQiHzHTMz/+lT2wbpOZfZ+aS5b5U2SbeUF4Dy008ya0xX0oooWytFdyXVFLGb+Dpdu
+         3d3TLyG9nFLDe7MbHg7iEqVQbvrZrz3fohXFOAngJjcAA4eosD6K5vIusp7/3WbCXfYF
+         uw9NHB886y8eXoK2q+ZL7gXK87JWBHm+Emd/xrXj3mXTrgs9AdxYZK8c4Ce7jvfoJoW0
+         IVXGvSN+pvcDNE2xpz8vMvnR27xen3ETDaovSphmalpB/ct/NicYeL7fQdbYNi5Ufit+
+         PoNn3TdAWGUkAiCypqPC1LE/pLsXFPYNos6zrnWBwF4p63xoEHGLtIPgP9G7apVkykxk
+         lnCw==
+X-Received: by 10.112.142.232 with SMTP id rz8mr26326943lbb.74.1430893845035;
+ Tue, 05 May 2015 23:30:45 -0700 (PDT)
+Received: by 10.112.74.133 with HTTP; Tue, 5 May 2015 23:30:44 -0700 (PDT)
+In-Reply-To: <xmqqlhh4tfd0.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268451>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268452>
 
-Hello,
+Hi Junio,
 
-please, would it be possible to add -u option to git tag for updating 
-tag
-(with message) to a new commit, e.g. after rebase.
+On Tue, May 5, 2015 at 1:35 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> One test was duplicated with jc/merge series and caused a textual
+> conflict, but that was nothing major.
 
-See 
-http://stackoverflow.com/questions/8044583/how-can-i-move-a-tag-on-a-git-branch-to-a-different-commit
+I will be rebasing the git-pull tests on top of your jc/merge patch
+series (as it makes the git-pull rewrite easier), so I will remove
+that offending patch.
 
-Thank you,
-Hans
+Thanks,
+Paul
