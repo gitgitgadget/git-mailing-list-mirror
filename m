@@ -1,157 +1,107 @@
-From: =?UTF-8?B?U8OpYmFzdGllbiBHdWltbWFyYQ==?= 
-	<sebastien.guimmara@gmail.com>
-Subject: Re: [PATCH 3/3] git help: group common commands by theme
-Date: Wed, 06 May 2015 22:31:45 +0200
-Message-ID: <554A7A31.1080604@gmail.com>
-References: <cover.1430770308.git.sebastien.guimmara@gmail.com>	<13c3dcbd2c5c9dfc0453381b5da53b5d68af7afe.1430770308.git.sebastien.guimmara@gmail.com> <CAPig+cS=u-HK1qNicWiLOQC6RPkR7QueX+kOu8fQwpHekgs1yg@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 0/3] git help: group common commands by theme
+Date: Wed, 6 May 2015 16:49:59 -0400
+Message-ID: <CAPig+cTztwF-pYGjEpjDzxTJSXQBJFcp_F924htx5fHT01mcKQ@mail.gmail.com>
+References: <cover.1430770308.git.sebastien.guimmara@gmail.com>
+	<CAPig+cT9X-nXhQyjDtzLzm-A2LWLaCDThR9_xh=G049SqKHccw@mail.gmail.com>
+	<554A78EE.1040002@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?U8OpYmFzdGllbiBHdWltbWFyYQ==?= 
-	<sebastien.guimmara@gmail.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Wed May 06 22:31:57 2015
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?Q?S=C3=A9bastien_Guimmara?= <sebastien.guimmara@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 06 22:50:07 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yq5yz-0000wf-TK
-	for gcvg-git-2@plane.gmane.org; Wed, 06 May 2015 22:31:54 +0200
+	id 1Yq6Gc-00046J-LD
+	for gcvg-git-2@plane.gmane.org; Wed, 06 May 2015 22:50:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751439AbbEFUbt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 May 2015 16:31:49 -0400
-Received: from mail-wi0-f171.google.com ([209.85.212.171]:38866 "EHLO
-	mail-wi0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750845AbbEFUbs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 May 2015 16:31:48 -0400
-Received: by wiun10 with SMTP id n10so36117091wiu.1
-        for <git@vger.kernel.org>; Wed, 06 May 2015 13:31:47 -0700 (PDT)
+	id S1752051AbbEFUuB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 May 2015 16:50:01 -0400
+Received: from mail-ie0-f180.google.com ([209.85.223.180]:35062 "EHLO
+	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751673AbbEFUuA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 6 May 2015 16:50:00 -0400
+Received: by ieczm2 with SMTP id zm2so24323520iec.2
+        for <git@vger.kernel.org>; Wed, 06 May 2015 13:49:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=PI8wrDMlmrkcxHPvF+eBMvPuzN5IaHAthnlf0nu7/FI=;
-        b=J28MsNVtK6hQbD9L1b3A6ns+Wh3ifp3u7Ra72xfdCG6k54fKt5ct5Jci8bSic1yVMr
-         U+GWv1e4BwJYEwEKXDqMqYaiyoJKCHNgFPc96uB+BFmnjpRwJL8a0ZiHZQqSFwu1NQv0
-         KJLCajht93PedPQlMlQIIOLAJHWdgUf/UfTCpu94FnbJeKbrROFUBrx/3tG8kxQmib3V
-         aUy6abCeq39ZNA7b26djXVKR4ww9KrYGQ2fVhU1KyUmvSTTzqILdmNnSACdCPOxsKc9p
-         LHa9POKcLxB6HFE3nLltRZPZ8tShXvSMZm0wwFDJsiBEHwWYaitSCNF4V1twcRbAGs0O
-         a4hQ==
-X-Received: by 10.194.79.199 with SMTP id l7mr916741wjx.158.1430944307535;
-        Wed, 06 May 2015 13:31:47 -0700 (PDT)
-Received: from [192.168.0.15] (bd231-1-88-176-208-17.fbx.proxad.net. [88.176.208.17])
-        by mx.google.com with ESMTPSA id l20sm4372628wjw.42.2015.05.06.13.31.46
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 06 May 2015 13:31:46 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
-In-Reply-To: <CAPig+cS=u-HK1qNicWiLOQC6RPkR7QueX+kOu8fQwpHekgs1yg@mail.gmail.com>
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=RvSxs5kWpuKijfRzPEQH9G0cDMf0g5zJrOxLr0aZvSw=;
+        b=XN5aMBR9olf9iCyprgUV4IOYPe3JhPX/wuLP+cKo1Wsu86xJUk1Q2iKnREd+RqWrxV
+         2hxv5F9dpaIZBDfCzHl7pP26zpmq6TjsEwW57It+swRLuJBmlvPKDhl/RLLWqS9Kl0aE
+         YFPZoehXkShY+l8lEIrkcF6e6GtKFULEGh0hlyHugG/RIBPDPLzeGMSJhsWL6fq+Svt3
+         1B1ovHgR9NGsLbs/MWDH1uJunuJ/gtl+rUKd9X8BvHS6nyB/O6TWVfCXCfPdXnypf7Go
+         hFRR/C9VnoubJuAzviffZLZfFAF2jEgzBGIVc5GwUyIqRlpwvMSgoQUTdJDbV3LTh1gO
+         enKw==
+X-Received: by 10.50.43.227 with SMTP id z3mr10643655igl.22.1430945399503;
+ Wed, 06 May 2015 13:49:59 -0700 (PDT)
+Received: by 10.107.28.132 with HTTP; Wed, 6 May 2015 13:49:59 -0700 (PDT)
+In-Reply-To: <554A78EE.1040002@gmail.com>
+X-Google-Sender-Auth: anl2BiLbt8Dbs3EbY6aGWcMjqYY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268496>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268497>
 
-On 05/06/2015 05:16 AM, Eric Sunshine wrote:
-> On Mon, May 4, 2015 at 4:28 PM, S=C3=A9bastien Guimmara
-> <sebastien.guimmara@gmail.com> wrote:
->> 'git help' shows common commands in alphabetical order:
+On Wed, May 6, 2015 at 4:26 PM, S=C3=A9bastien Guimmara
+<sebastien.guimmara@gmail.com> wrote:
+> On 05/06/2015 05:08 AM, Eric Sunshine wrote:
+>> On Mon, May 4, 2015 at 4:28 PM, S=C3=A9bastien Guimmara
+>> <sebastien.guimmara@gmail.com> wrote:
+>>> - Add a [groups] block containing names and description for groups:
+>>>
+>>>     [groups]
+>>>     init                   starting a working area
+>>>
+>>> - Add a [commands] header on top of the known command list, and
+>>>    group names as a third column.
+>>>
+>>>     [commands]
+>>>     git-add            mainporcelain                common-worktree
 >>
->> The most commonly used git commands are:
->>     add        Add file contents to the index
->>     bisect     Find by binary search the change that introduced a bu=
-g
->>     branch     List, create, or delete branches
->>     checkout   Checkout a branch or paths to the working tree
->>     clone      Clone a repository into a new directory
->>     commit     Record changes to the repository
->>     [...]
->>
->> without any indication of how commands relate to high-level
->> concepts or each other. Revise the output to group commands by
->> concept, like this:
->>
->> The most commonly used git commands are:
->>
->>     * starting a working area:
->>        clone      Clone a repository into a new directory
->>        init       Create an empty Git repository or reinitialize an =
-existing one
->>
->>     * working on the current change:
->>        add        Add file contents to the index
->>        reset      Reset current HEAD to the specified state
->>        [...]
+>> Thanks, this version is looking better. I, personally, still find th=
+e
+>> redundant "command-" prefix ugly and would just as soon see it go
+>> away. I'll make some suggestions about that when reviewing patch 2/3=
+=2E
 >
-> This looks better. A couple minor style nits and a question below...
+> Indeed, I'm a bit annoyed by this prefix. We could do two things:
+> - either drop the [deprecated] options, since it's never used.
+> - or keep it, but make it exclusive with [common]. It makes sense aft=
+er
+>   all that if a command is deprecated, we don't want to consider it
+>   common anymore.
 >
->> ---
->> diff --git a/help.c b/help.c
->> index 2072a87..c8b0bb6 100644
->> --- a/help.c
->> +++ b/help.c
->> @@ -218,18 +218,44 @@ void list_commands(unsigned int colopts,
->>          }
->>   }
->>
->> +int cmd_group_cmp(const void *elem1, const void *elem2)
->> +{
->> +       int group1, group2;
->> +
->> +       group1 =3D ((struct cmdname_help *) elem1)->group;
->> +       group2 =3D ((struct cmdname_help *) elem2)->group;
+> In both cases, we end up with only three columns, the third being
+> optional.
 >
-> Style: Drop space after the cast: (type *)var
->
->> +
->> +       if (group1 =3D=3D group2)
->> +               return 0;
->> +       if (group1 > group2)
->> +               return 1;
->> +       else
->> +               return -1;
->
-> Do you also want to sort the commands alphabetically within group?
-> That is, something like this?
->
->      struct cmdname_help *e1 =3D elem1;
->      struct cmdname_help *e2 =3D elem2;
->
->      if (e1->group < e2->group)
->          return -1;
->      if (e1->group > e2->group)
->          return 1;
->      return strcmp(e1->name, e2->name);
->
+> The common- prefix can then be removed in favor of the group ID alone=
+=2E
 
-Hmmm yes. Good idea.
+Sorry for not yet reviewing patch 2/3. I'm trying to find time to
+review it and make the promised suggestions, however, Real Life keeps
+getting in the way. If 'deprecated' has never been used and if it is
+not likely to be used in the future, then dropping that column may
+indeed be an easy way forward toward the goal of eliminating the
+"common-" prefix. A possible shortcoming of this columnar approach,
+however, is that if someone someday comes up with some new type of
+attribute to assign in a new column, then you still end up in the same
+boat where not all entries use all columns, and you have difficulty
+figuring out to which column an attribute belongs.
 
->> +}
->> +
->>   void list_common_cmds_help(void)
->>   {
->>          int i, longest =3D 0;
->> +       unsigned char current_grp =3D -1;
->>
->>          for (i =3D 0; i < ARRAY_SIZE(common_cmds); i++) {
->>                  if (longest < strlen(common_cmds[i].name))
->>                          longest =3D strlen(common_cmds[i].name);
->>          }
->>
->> +       qsort(common_cmds, ARRAY_SIZE(common_cmds),
->> +               sizeof(common_cmds[0]), cmd_group_cmp);
->> +
->>          puts(_("The most commonly used git commands are:"));
->> +
->>          for (i =3D 0; i < ARRAY_SIZE(common_cmds); i++) {
->> -               printf("   %s   ", common_cmds[i].name);
->> +               if (common_cmds[i].group !=3D current_grp) {
->> +                       printf("\n   * %s:\n", _(common_cmd_groups[c=
-ommon_cmds[i].group]));
->> +               }
->
-> Style: Drop unnecessary braces.
+Instead, as mentioned originally, I had envisioned a solution in which
+any command tagged with an attribute mentioned in [groups] would be
+considered common, without having to resort to a prefix or fixed
+columns. This should be more flexible in the long run, but may be
+overkill for present day. I think that awk should be able to handle
+this easily, but haven't had the time to actually sit down and flesh
+it out (which I wanted to do while reviewing 2/3).
 
-Understood.
+And, any solution is likely going to have to take into account the two
+Makefiles Junio mentioned.
