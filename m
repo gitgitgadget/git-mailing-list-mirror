@@ -1,107 +1,168 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 0/3] git help: group common commands by theme
-Date: Wed, 6 May 2015 16:49:59 -0400
-Message-ID: <CAPig+cTztwF-pYGjEpjDzxTJSXQBJFcp_F924htx5fHT01mcKQ@mail.gmail.com>
-References: <cover.1430770308.git.sebastien.guimmara@gmail.com>
-	<CAPig+cT9X-nXhQyjDtzLzm-A2LWLaCDThR9_xh=G049SqKHccw@mail.gmail.com>
-	<554A78EE.1040002@gmail.com>
+From: =?UTF-8?B?U8OpYmFzdGllbiBHdWltbWFyYQ==?= 
+	<sebastien.guimmara@gmail.com>
+Subject: Re: [PATCH 1/3] command-list.txt: group common commands by theme
+Date: Wed, 06 May 2015 22:58:44 +0200
+Message-ID: <554A8084.10506@gmail.com>
+References: <cover.1430770308.git.sebastien.guimmara@gmail.com>	<b89d3fec640cb6fb01aa32ad50bae4e064528220.1430770308.git.sebastien.guimmara@gmail.com> <CAPig+cTHQikgOvPrjxikUNjQoWCv2hdubJ55OG0SqpGUs_3Pow@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: =?UTF-8?Q?S=C3=A9bastien_Guimmara?= <sebastien.guimmara@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 06 22:50:07 2015
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?B?U8OpYmFzdGllbiBHdWltbWFyYQ==?= 
+	<sebastien.guimmara@gmail.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Wed May 06 22:58:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yq6Gc-00046J-LD
-	for gcvg-git-2@plane.gmane.org; Wed, 06 May 2015 22:50:07 +0200
+	id 1Yq6P7-0001Bj-Np
+	for gcvg-git-2@plane.gmane.org; Wed, 06 May 2015 22:58:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752051AbbEFUuB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 May 2015 16:50:01 -0400
-Received: from mail-ie0-f180.google.com ([209.85.223.180]:35062 "EHLO
-	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751673AbbEFUuA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 6 May 2015 16:50:00 -0400
-Received: by ieczm2 with SMTP id zm2so24323520iec.2
-        for <git@vger.kernel.org>; Wed, 06 May 2015 13:49:59 -0700 (PDT)
+	id S1751235AbbEFU6t convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 May 2015 16:58:49 -0400
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:36520 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751141AbbEFU6s (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 May 2015 16:58:48 -0400
+Received: by wizk4 with SMTP id k4so217732884wiz.1
+        for <git@vger.kernel.org>; Wed, 06 May 2015 13:58:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=RvSxs5kWpuKijfRzPEQH9G0cDMf0g5zJrOxLr0aZvSw=;
-        b=XN5aMBR9olf9iCyprgUV4IOYPe3JhPX/wuLP+cKo1Wsu86xJUk1Q2iKnREd+RqWrxV
-         2hxv5F9dpaIZBDfCzHl7pP26zpmq6TjsEwW57It+swRLuJBmlvPKDhl/RLLWqS9Kl0aE
-         YFPZoehXkShY+l8lEIrkcF6e6GtKFULEGh0hlyHugG/RIBPDPLzeGMSJhsWL6fq+Svt3
-         1B1ovHgR9NGsLbs/MWDH1uJunuJ/gtl+rUKd9X8BvHS6nyB/O6TWVfCXCfPdXnypf7Go
-         hFRR/C9VnoubJuAzviffZLZfFAF2jEgzBGIVc5GwUyIqRlpwvMSgoQUTdJDbV3LTh1gO
-         enKw==
-X-Received: by 10.50.43.227 with SMTP id z3mr10643655igl.22.1430945399503;
- Wed, 06 May 2015 13:49:59 -0700 (PDT)
-Received: by 10.107.28.132 with HTTP; Wed, 6 May 2015 13:49:59 -0700 (PDT)
-In-Reply-To: <554A78EE.1040002@gmail.com>
-X-Google-Sender-Auth: anl2BiLbt8Dbs3EbY6aGWcMjqYY
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=g9rrmbCB+j8v/8lrKy5M3kl/6vHB6DaxVHDIs1LIObM=;
+        b=Ljzhp6PwAvCISGNBnNb8YNlCswPL1HGKX7FE0aXoqjXCwCbMD3mXJamLa1Loh38SFi
+         Gm67GA94Kuaikpgqqoe9PuQLYyCRtbKbH3od30BNcSKBIokxIxkhG7lmgjiAXvceGlY/
+         Uuj6ScODfzIOr5AOkg6FcUki52vWF94UHJs25i81NMy8q/rY0OMOQ3qf6gC3+CwE8AvG
+         6k4fBfpL6oJMi5S4RsE/+MowJ0XeFO9snqfj/tvl+wB1q1CA6sxvjrm4P0VupmshE/HI
+         okPrGIy1lDk0+p1ZELE8/mAeaP2wCPSk0zobI/U1nbq/AjbLxhyGY0KymT2ihqxH6vJ3
+         A8TA==
+X-Received: by 10.180.80.10 with SMTP id n10mr636636wix.82.1430945926914;
+        Wed, 06 May 2015 13:58:46 -0700 (PDT)
+Received: from [192.168.0.15] (bd231-1-88-176-208-17.fbx.proxad.net. [88.176.208.17])
+        by mx.google.com with ESMTPSA id ex2sm4474456wjd.28.2015.05.06.13.58.45
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 06 May 2015 13:58:46 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
+In-Reply-To: <CAPig+cTHQikgOvPrjxikUNjQoWCv2hdubJ55OG0SqpGUs_3Pow@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268498>
 
-On Wed, May 6, 2015 at 4:26 PM, S=C3=A9bastien Guimmara
-<sebastien.guimmara@gmail.com> wrote:
-> On 05/06/2015 05:08 AM, Eric Sunshine wrote:
->> On Mon, May 4, 2015 at 4:28 PM, S=C3=A9bastien Guimmara
->> <sebastien.guimmara@gmail.com> wrote:
->>> - Add a [groups] block containing names and description for groups:
->>>
->>>     [groups]
->>>     init                   starting a working area
->>>
->>> - Add a [commands] header on top of the known command list, and
->>>    group names as a third column.
->>>
->>>     [commands]
->>>     git-add            mainporcelain                common-worktree
+On 05/06/2015 08:57 AM, Eric Sunshine wrote:
+> On Mon, May 4, 2015 at 4:28 PM, S=C3=A9bastien Guimmara
+> <sebastien.guimmara@gmail.com> wrote:
+>> Declare groups for common commands in the [groups] block,
+>> followed by group names and descriptions:
 >>
->> Thanks, this version is looking better. I, personally, still find th=
-e
->> redundant "command-" prefix ugly and would just as soon see it go
->> away. I'll make some suggestions about that when reviewing patch 2/3=
-=2E
+>>     [groups]
+>>     init                   starting a working area
+>>     worktree               working on the current change
+>>     remote                 working with others
+>>     info                   examining the history and state
+>>     history                growing, marking and tweaking your histor=
+y
+>>
+>> Then, in the [commands] block, map all common commands with a group:
+>>
+>>     [commands]
+>>     git-add        mainporcelain     common-worktree
+>>     git-branch     mainporcelain     common-history
+>>     git-checkout   mainporcelain     common-history
+>>     [...]
+>>
+>> command names and groups are then parsed with generate-cmdlist.sh to
+>> generate common-commands.h.
+>>
+>> Those commands are displayed in groups in the output of 'git help'.
 >
-> Indeed, I'm a bit annoyed by this prefix. We could do two things:
-> - either drop the [deprecated] options, since it's never used.
-> - or keep it, but make it exclusive with [common]. It makes sense aft=
-er
->   all that if a command is deprecated, we don't want to consider it
->   common anymore.
+> It probably also is important to mention that the order of the items
+> in [groups] is the order in which groups are output by 'git help'
+
+Yes. I'll add a comment in the file as well as in the commit.
+
 >
-> In both cases, we end up with only three columns, the third being
-> optional.
+> More below.
 >
-> The common- prefix can then be removed in favor of the group ID alone=
-=2E
+>> Signed-off-by: S=C3=A9bastien Guimmara <sebastien.guimmara@gmail.com=
+>
+>> ---
+>> diff --git a/command-list.txt b/command-list.txt
+>> index f1eae08..64394ca 100644
+>> --- a/command-list.txt
+>> +++ b/command-list.txt
+>> @@ -1,29 +1,39 @@
+>>   # List of known git commands.
+>> -# command name                         category [deprecated] [commo=
+n]
+>> -git-add                                 mainporcelain common
+>> +# only add group information for common commands
+>
+> Perhaps mention also that the order of groups here is the order in
+> which they are output by 'git help'?
 
-Sorry for not yet reviewing patch 2/3. I'm trying to find time to
-review it and make the promised suggestions, however, Real Life keeps
-getting in the way. If 'deprecated' has never been used and if it is
-not likely to be used in the future, then dropping that column may
-indeed be an easy way forward toward the goal of eliminating the
-"common-" prefix. A possible shortcoming of this columnar approach,
-however, is that if someone someday comes up with some new type of
-attribute to assign in a new column, then you still end up in the same
-boat where not all entries use all columns, and you have difficulty
-figuring out to which column an attribute belongs.
+It wouldn't be necessary if we reorder alphabetically the content of
+each group, no ?
 
-Instead, as mentioned originally, I had envisioned a solution in which
-any command tagged with an attribute mentioned in [groups] would be
-considered common, without having to resort to a prefix or fixed
-columns. This should be more flexible in the long run, but may be
-overkill for present day. I think that awk should be able to handle
-this easily, but haven't had the time to actually sit down and flesh
-it out (which I wanted to do while reviewing 2/3).
+>
+>> +[groups]
+>
+> Thinking on this a bit more, perhaps [groups] is too generic. Maybe
+> [common] or [commongroups] would be more descriptive?
+>
+>> +init                   starting a working area
+>> +worktree               working on the current change
+>> +remote                 working with others
+>
+> "collaborating with others" perhaps?
 
-And, any solution is likely going to have to take into account the two
-Makefiles Junio mentioned.
+Yes, "groups" has been itching a bit. I thought about "theme", but
+common just does the job too. "collaborating with others" sounds
+redundant to me (but I'm being a grammar nazi here).
+
+>> -git-fast-export                                ancillarymanipulator=
+s
+>> -git-fast-import                                ancillarymanipulator=
+s
+>> -git-fetch                               mainporcelain common
+>> +git-fast-export                         ancillarymanipulators
+>> +git-fast-import                         ancillarymanipulators
+>
+> Unintended whitespace changes for fast-export and fast-import lines? =
+I
+> wouldn't have expected to see these lines change in this patch.
+>
+
+All whitespace changes were intended to align the commands on the same
+column. I realize this should be the object of a separate patch.
+
+>> -git-grep                                mainporcelain common
+>> +git-grep                                mainporcelain
+>
+> This change isn't mentioned anywhere, not even in the cover letter.
+> Did you intend to drop 'grep' from the common command list?
+
+It's a mistake in the cover letter. I indeed intended to propose to
+remove grep and tag from the common commands.
+
+>>   [...]
+>> -git-write-tree                          plumbingmanipulators
+>> +git-write-tree                          plumbingmanipulators
+>> \ No newline at end of file
+>
+> Your editor is perhaps dropping the final newline in the file? This i=
+s
+> an undesirable change. Patch 2/3 exhibits the same problem.
+
+As for the final newline, it was deliberately removed. I was not aware =
+it
+was necessary in text files. I'll correct this.
+
+Thank you for the help,
+
+S=C3=A9bastien
