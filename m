@@ -1,7 +1,7 @@
 From: Stephen Robin <stephen.robin@gmail.com>
-Subject: [PATCH 5/6] pull: allow interactive rebase
-Date: Wed,  6 May 2015 01:00:52 +0100
-Message-ID: <1430870453-5408-6-git-send-email-stephen.robin@gmail.com>
+Subject: [PATCH 6/6] parse-remote: dismantle git-parse-remote.sh
+Date: Wed,  6 May 2015 01:00:53 +0100
+Message-ID: <1430870453-5408-7-git-send-email-stephen.robin@gmail.com>
 References: <CACRoPnQ5_r-26J4gBHc27KZt3X9KAU7eFkA3vz_GE6_dP-Uyug@mail.gmail.com>
  <1430870453-5408-1-git-send-email-stephen.robin@gmail.com>
 Cc: git@vger.kernel.org
@@ -12,31 +12,31 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ypmm4-0004e4-AW
+	id 1Ypmm3-0004e4-Cr
 	for gcvg-git-2@plane.gmane.org; Wed, 06 May 2015 02:01:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753479AbbEFABJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 May 2015 20:01:09 -0400
-Received: from mail-wg0-f50.google.com ([74.125.82.50]:33001 "EHLO
+	id S964795AbbEFABI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 May 2015 20:01:08 -0400
+Received: from mail-wg0-f50.google.com ([74.125.82.50]:35483 "EHLO
 	mail-wg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753089AbbEFAAz (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S932101AbbEFAAz (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 5 May 2015 20:00:55 -0400
-Received: by wgin8 with SMTP id n8so199837288wgi.0
-        for <git@vger.kernel.org>; Tue, 05 May 2015 17:00:53 -0700 (PDT)
+Received: by wgyo15 with SMTP id o15so200479272wgy.2
+        for <git@vger.kernel.org>; Tue, 05 May 2015 17:00:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=HMIPwyTni6C/i7HkB0mvI214q+M8dldBffrVY7qT+VY=;
-        b=YZ5CTWLNvbYK/8cWfbA/yWJFyHVSo/8whdUDctMlWQ1MeZPnvebqINeo1Q6Xcom38b
-         AcYvXy88X4EZQ10mfixqWaHaWxiAamgzyEM9TM0fVwjRx+fnbF7+TWIycOAUM7vcMdFg
-         I1FJUDKFlGhC5BBuR4PXbxdr5RVTzMzJYITtcU363WK03xmIubU9EKKp0/r7VMzFEK/A
-         cc9Ob3JHl2cT2hSYUQGEAURU0W1wIVtYwnV/0YuhJVx6RE1lcb5BJ0IJf+KWFaxb3t9w
-         cwGR+Xwh0i3GWbxJ+L6t8MjXJewawLec1suiRH6U7fRkbbBDylvHW14JK0L5FSzZ7Sjd
-         G8qA==
-X-Received: by 10.180.20.200 with SMTP id p8mr8519661wie.78.1430870453685;
-        Tue, 05 May 2015 17:00:53 -0700 (PDT)
+        bh=mwXWqFgnP7zh5Qub0OeS95raNKS8JHmFQvnLlwpf8mg=;
+        b=OwCZGDIQdFQ+PiGHM/fI32FT7f3UhqPAPBvbqG0YnbUY9QYSf7sg5rsDvC4KE/E6ea
+         rUzSi3omHP5lcoI/A0WrNCMnHbOMl9CVilI92N5oMkHwMuEqKLb0++bLzMUbPacfUbWI
+         bQxMVAhGZIusXJ+QHTVgPUlj7dc7gfQVPhlkCeZhk10M8tVJcgYfeP5/dPvM9QqmqIxE
+         9IrXY2ETHYVupFiaJqORbzPa8oKph3662iVrTGfWlDD+fYd6woNuTfkEsiJ5XqtG+oe0
+         rgxoWbKl6YRC8ASPd5ApMZ+eX0WfeGLt0kz2FpdRsNczaGvhHqV5aWeF5GQSOlstf89F
+         OQAw==
+X-Received: by 10.180.82.133 with SMTP id i5mr2738452wiy.23.1430870454245;
+        Tue, 05 May 2015 17:00:54 -0700 (PDT)
 Received: from localhost ([141.0.152.225])
-        by mx.google.com with ESMTPSA id v3sm37712wix.8.2015.05.05.17.00.53
+        by mx.google.com with ESMTPSA id cs4sm19539wjb.31.2015.05.05.17.00.53
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
         Tue, 05 May 2015 17:00:53 -0700 (PDT)
 X-Mailer: git-send-email 2.4.0.7.gf20f26f
@@ -45,152 +45,369 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268437>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268438>
 
 THIS PATCH SERIES IS NOT CODE-COMPLETE OR FULLY TESTED.
 See code comments beginning TODO for work remaining.
 
-Teach 'git pull' the option --rebase=interactive
-Teach 'git remote' that the value for config variable branch.<name>.rebase
-can be 'interactive'
+Following the conversion of git-pull.sh to a builtin, git-parse-remote.sh
+is only used from two places:
+function error_on_missing_default_upstream is used within git-rebase.sh
+only.
+function get_default_remote is used within git-submodule.sh only.
 
-Based-on-patch-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Move these two functions into the scripts within which they're used, and
+delete git-parse-remote.sh itself.
+
 Signed-off-by: Stephen Robin <stephen.robin@gmail.com>
 ---
+ .gitignore                           |  1 -
+ Documentation/git-parse-remote.txt   | 23 ----------
+ Makefile                             |  1 -
+ command-list.txt                     |  1 -
+ contrib/examples/git-parse-remote.sh | 89 ++++++++++++++++++++++++++++++++++++
+ git-parse-remote.sh                  | 89 ------------------------------------
+ git-rebase.sh                        | 36 ++++++++++++++-
+ git-submodule.sh                     |  8 +++-
+ 8 files changed, 131 insertions(+), 117 deletions(-)
+ delete mode 100644 Documentation/git-parse-remote.txt
+ create mode 100644 contrib/examples/git-parse-remote.sh
+ delete mode 100644 git-parse-remote.sh
 
-Notes:
-    This feature is already present in msysgit.  This patch can be used
-    either to bring the feature into standard git, or to resolve the
-    conflict that will occur in the next rebase of msysgit.
-
- Documentation/config.txt   |  1 +
- Documentation/git-pull.txt |  4 +++-
- builtin/pull.c             | 19 ++++++++++++++++---
- builtin/remote.c           |  8 ++++++--
- 4 files changed, 26 insertions(+), 6 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 2e5ceaf..91314ef 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -849,6 +849,7 @@ branch.<name>.rebase::
- 	instead of merging the default branch from the default remote when
- 	"git pull" is run. See "pull.rebase" for doing this in a non
- 	branch-specific manner.
-+	When the value is `interactive`, the rebase is run in interactive mode.
- +
- 	When preserve, also pass `--preserve-merges` along to 'git rebase'
- 	so that locally committed merge commits will not be flattened
-diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
-index 712ab4b..8014908 100644
---- a/Documentation/git-pull.txt
-+++ b/Documentation/git-pull.txt
-@@ -104,7 +104,7 @@ Options related to merging
- include::merge-options.txt[]
+diff --git a/.gitignore b/.gitignore
+index 6287647..dd25b33 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -104,7 +104,6 @@
+ /git-pack-redundant
+ /git-pack-objects
+ /git-pack-refs
+-/git-parse-remote
+ /git-patch-id
+ /git-prune
+ /git-prune-packed
+diff --git a/Documentation/git-parse-remote.txt b/Documentation/git-parse-remote.txt
+deleted file mode 100644
+index a45ea1e..0000000
+--- a/Documentation/git-parse-remote.txt
++++ /dev/null
+@@ -1,23 +0,0 @@
+-git-parse-remote(1)
+-===================
+-
+-NAME
+-----
+-git-parse-remote - Routines to help parsing remote repository access parameters
+-
+-
+-SYNOPSIS
+---------
+-[verse]
+-'. "$(git --exec-path)/git-parse-remote"'
+-
+-DESCRIPTION
+------------
+-This script is included in various scripts to supply
+-routines to parse files under $GIT_DIR/remotes/ and
+-$GIT_DIR/branches/ and configuration variables that are related
+-to fetching, pulling and pushing.
+-
+-GIT
+----
+-Part of the linkgit:git[1] suite
+diff --git a/Makefile b/Makefile
+index 8d8fb3a..d41224c 100644
+--- a/Makefile
++++ b/Makefile
+@@ -481,7 +481,6 @@ SCRIPT_SH += git-submodule.sh
+ SCRIPT_SH += git-web--browse.sh
  
- -r::
----rebase[=false|true|preserve]::
-+--rebase[=false|true|preserve|interactive]::
- 	When true, rebase the current branch on top of the upstream
- 	branch after fetching. If there is a remote-tracking branch
- 	corresponding to the upstream branch and the upstream branch
-@@ -116,6 +116,8 @@ to `git rebase` so that locally created merge commits will not be flattened.
- +
- When false, merge the current branch into the upstream branch.
- +
-+When `interactive`, enable the interactive mode of rebase.
-++
- See `pull.rebase`, `branch.<name>.rebase` and `branch.autoSetupRebase` in
- linkgit:git-config[1] if you want to make `git pull` always use
- `--rebase` instead of merging.
-diff --git a/builtin/pull.c b/builtin/pull.c
-index f420b4a..76c2f72 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -26,7 +26,8 @@ enum pull_mode {
- 	PULL_NOT_SET = -1,
- 	PULL_MERGE,
- 	PULL_REBASE,
--	PULL_PRESERVE_MERGES_REBASE
-+	PULL_PRESERVE_MERGES_REBASE,
-+	PULL_INTERACTIVE_REBASE
- };
- 
- static const char * const builtin_pull_usage[] = {
-@@ -85,12 +86,22 @@ static int parse_pull_mode(const char *name, const char* arg,
- 		return 0;
- 	}
- 
-+	if (!strcmp(arg, "interactive")) {
-+		*option_rebase = PULL_INTERACTIVE_REBASE;
-+		return 0;
-+	}
+ SCRIPT_LIB += git-mergetool--lib
+-SCRIPT_LIB += git-parse-remote
+ SCRIPT_LIB += git-rebase--am
+ SCRIPT_LIB += git-rebase--interactive
+ SCRIPT_LIB += git-rebase--merge
+diff --git a/command-list.txt b/command-list.txt
+index f1eae08..273f69e 100644
+--- a/command-list.txt
++++ b/command-list.txt
+@@ -86,7 +86,6 @@ git-p4                                  foreignscminterface
+ git-pack-objects                        plumbingmanipulators
+ git-pack-redundant                      plumbinginterrogators
+ git-pack-refs                           ancillarymanipulators
+-git-parse-remote                        synchelpers
+ git-patch-id                            purehelpers
+ git-prune                               ancillarymanipulators
+ git-prune-packed                        plumbingmanipulators
+diff --git a/contrib/examples/git-parse-remote.sh b/contrib/examples/git-parse-remote.sh
+new file mode 100644
+index 0000000..55fe8d5
+--- /dev/null
++++ b/contrib/examples/git-parse-remote.sh
+@@ -0,0 +1,89 @@
++# This is a shell library to calculate the remote repository and
++# upstream branch that should be pulled by "git pull" from the current
++# branch.
 +
-+	if (!strcmp(arg, "i")) {
-+		*option_rebase = PULL_INTERACTIVE_REBASE;
-+		return 0;
-+	}
++# git-ls-remote could be called from outside a git managed repository;
++# this would fail in that case and would issue an error message.
++GIT_DIR=$(git rev-parse -q --git-dir) || :;
 +
- 	if (!strcmp(arg, "preserve")) {
- 		*option_rebase = PULL_PRESERVE_MERGES_REBASE;
- 		return 0;
- 	}
- 
--	error(_("Invalid value for %s, should be 'true', 'false' or 'preserve'."), name);
-+	error(_("Invalid value for %s, should be 'true', 'false', 'interactive' or 'preserve'."), name);
- 	return -1;
++get_default_remote () {
++	curr_branch=$(git symbolic-ref -q HEAD)
++	curr_branch="${curr_branch#refs/heads/}"
++	origin=$(git config --get "branch.$curr_branch.remote")
++	echo ${origin:-origin}
++}
++
++get_remote_merge_branch () {
++	case "$#" in
++	0|1)
++	    origin="$1"
++	    default=$(get_default_remote)
++	    test -z "$origin" && origin=$default
++	    curr_branch=$(git symbolic-ref -q HEAD) &&
++	    [ "$origin" = "$default" ] &&
++	    echo $(git for-each-ref --format='%(upstream)' $curr_branch)
++	    ;;
++	*)
++	    repo=$1
++	    shift
++	    ref=$1
++	    # FIXME: It should return the tracking branch
++	    #        Currently only works with the default mapping
++	    case "$ref" in
++	    +*)
++		ref=$(expr "z$ref" : 'z+\(.*\)')
++		;;
++	    esac
++	    expr "z$ref" : 'z.*:' >/dev/null || ref="${ref}:"
++	    remote=$(expr "z$ref" : 'z\([^:]*\):')
++	    case "$remote" in
++	    '' | HEAD ) remote=HEAD ;;
++	    heads/*) remote=${remote#heads/} ;;
++	    refs/heads/*) remote=${remote#refs/heads/} ;;
++	    refs/* | tags/* | remotes/* ) remote=
++	    esac
++	    [ -n "$remote" ] && case "$repo" in
++		.)
++		    echo "refs/heads/$remote"
++		    ;;
++		*)
++		    echo "refs/remotes/$repo/$remote"
++		    ;;
++	    esac
++	esac
++}
++
++error_on_missing_default_upstream () {
++	cmd="$1"
++	op_type="$2"
++	op_prep="$3"
++	example="$4"
++	branch_name=$(git symbolic-ref -q HEAD)
++	# If there's only one remote, use that in the suggestion
++	remote="<remote>"
++	if test $(git remote | wc -l) = 1
++	then
++		remote=$(git remote)
++	fi
++
++	if test -z "$branch_name"
++	then
++		echo "You are not currently on a branch. Please specify which
++branch you want to $op_type $op_prep. See git-${cmd}(1) for details.
++
++    $example
++"
++	else
++		echo "There is no tracking information for the current branch.
++Please specify which branch you want to $op_type $op_prep.
++See git-${cmd}(1) for details
++
++    $example
++
++If you wish to set tracking information for this branch you can do so with:
++
++    git branch --set-upstream-to=$remote/<branch> ${branch_name#refs/heads/}
++"
++	fi
++	exit 1
++}
+diff --git a/git-parse-remote.sh b/git-parse-remote.sh
+deleted file mode 100644
+index 55fe8d5..0000000
+--- a/git-parse-remote.sh
++++ /dev/null
+@@ -1,89 +0,0 @@
+-# This is a shell library to calculate the remote repository and
+-# upstream branch that should be pulled by "git pull" from the current
+-# branch.
+-
+-# git-ls-remote could be called from outside a git managed repository;
+-# this would fail in that case and would issue an error message.
+-GIT_DIR=$(git rev-parse -q --git-dir) || :;
+-
+-get_default_remote () {
+-	curr_branch=$(git symbolic-ref -q HEAD)
+-	curr_branch="${curr_branch#refs/heads/}"
+-	origin=$(git config --get "branch.$curr_branch.remote")
+-	echo ${origin:-origin}
+-}
+-
+-get_remote_merge_branch () {
+-	case "$#" in
+-	0|1)
+-	    origin="$1"
+-	    default=$(get_default_remote)
+-	    test -z "$origin" && origin=$default
+-	    curr_branch=$(git symbolic-ref -q HEAD) &&
+-	    [ "$origin" = "$default" ] &&
+-	    echo $(git for-each-ref --format='%(upstream)' $curr_branch)
+-	    ;;
+-	*)
+-	    repo=$1
+-	    shift
+-	    ref=$1
+-	    # FIXME: It should return the tracking branch
+-	    #        Currently only works with the default mapping
+-	    case "$ref" in
+-	    +*)
+-		ref=$(expr "z$ref" : 'z+\(.*\)')
+-		;;
+-	    esac
+-	    expr "z$ref" : 'z.*:' >/dev/null || ref="${ref}:"
+-	    remote=$(expr "z$ref" : 'z\([^:]*\):')
+-	    case "$remote" in
+-	    '' | HEAD ) remote=HEAD ;;
+-	    heads/*) remote=${remote#heads/} ;;
+-	    refs/heads/*) remote=${remote#refs/heads/} ;;
+-	    refs/* | tags/* | remotes/* ) remote=
+-	    esac
+-	    [ -n "$remote" ] && case "$repo" in
+-		.)
+-		    echo "refs/heads/$remote"
+-		    ;;
+-		*)
+-		    echo "refs/remotes/$repo/$remote"
+-		    ;;
+-	    esac
+-	esac
+-}
+-
+-error_on_missing_default_upstream () {
+-	cmd="$1"
+-	op_type="$2"
+-	op_prep="$3"
+-	example="$4"
+-	branch_name=$(git symbolic-ref -q HEAD)
+-	# If there's only one remote, use that in the suggestion
+-	remote="<remote>"
+-	if test $(git remote | wc -l) = 1
+-	then
+-		remote=$(git remote)
+-	fi
+-
+-	if test -z "$branch_name"
+-	then
+-		echo "You are not currently on a branch. Please specify which
+-branch you want to $op_type $op_prep. See git-${cmd}(1) for details.
+-
+-    $example
+-"
+-	else
+-		echo "There is no tracking information for the current branch.
+-Please specify which branch you want to $op_type $op_prep.
+-See git-${cmd}(1) for details
+-
+-    $example
+-
+-If you wish to set tracking information for this branch you can do so with:
+-
+-    git branch --set-upstream-to=$remote/<branch> ${branch_name#refs/heads/}
+-"
+-	fi
+-	exit 1
+-}
+diff --git a/git-rebase.sh b/git-rebase.sh
+index 55da9db..7b157ec 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -209,6 +209,41 @@ run_pre_rebase_hook () {
+ 	fi
  }
  
-@@ -197,7 +208,7 @@ static int option_parse_x(const struct option *opt,
- }
++error_on_missing_default_upstream () {
++	cmd="$1"
++	op_type="$2"
++	op_prep="$3"
++	example="$4"
++	branch_name=$(git symbolic-ref -q HEAD)
++	# If there's only one remote, use that in the suggestion
++	remote="<remote>"
++	if test $(git remote | wc -l) = 1
++	then
++		remote=$(git remote)
++	fi
++
++	if test -z "$branch_name"
++	then
++		echo "You are not currently on a branch. Please specify which
++branch you want to $op_type $op_prep. See git-${cmd}(1) for details.
++
++    $example
++"
++	else
++		echo "There is no tracking information for the current branch.
++Please specify which branch you want to $op_type $op_prep.
++See git-${cmd}(1) for details
++
++    $example
++
++If you wish to set tracking information for this branch you can do so with:
++
++    git branch --set-upstream-to=$remote/<branch> ${branch_name#refs/heads/}
++"
++	fi
++	exit 1
++}
++
+ test -f "$apply_dir"/applying &&
+ 	die "$(gettext "It looks like git-am is in progress. Cannot rebase.")"
  
- static struct option builtin_pull_options[] = {
--	{ OPTION_CALLBACK, 0, "rebase", NULL, N_("true|false|preserve"),
-+	{ OPTION_CALLBACK, 0, "rebase", NULL, N_("true|false|interactive|preserve"),
- 		N_("incorporate changes by rebasing rather than merging"),
- 		PARSE_OPT_OPTARG, option_parse_rebase },
- 	OPT_BOOL(0, "progress", &progress,
-@@ -527,6 +538,8 @@ static int run_rebase(const struct string_list merge_head, const char *fork_poin
+@@ -446,7 +481,6 @@ then
+ 		if ! upstream_name=$(git rev-parse --symbolic-full-name \
+ 			--verify -q @{upstream} 2>/dev/null)
+ 		then
+-			. git-parse-remote
+ 			error_on_missing_default_upstream "rebase" "rebase" \
+ 				"against" "git rebase <branch>"
+ 		fi
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 36797c3..08c31eb 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -17,7 +17,6 @@ OPTIONS_SPEC=
+ SUBDIRECTORY_OK=Yes
+ . git-sh-setup
+ . git-sh-i18n
+-. git-parse-remote
+ require_work_tree
+ wt_prefix=$(git rev-parse --show-prefix)
+ cd_to_toplevel
+@@ -37,6 +36,13 @@ prefix=
+ custom_name=
+ depth=
  
- 	if (pull_mode == PULL_PRESERVE_MERGES_REBASE)
- 		argv_array_push(&argv, "--preserve-merges");
-+	else if (pull_mode == PULL_INTERACTIVE_REBASE)
-+		argv_array_push(&argv, "-i");
- 
- 	for (v = verbosity; v > 0; v--)
- 		argv_array_push(&argv, "-v");
-diff --git a/builtin/remote.c b/builtin/remote.c
-index 5d3ab90..af6b21d 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -245,7 +245,7 @@ static int add(int argc, const char **argv)
- struct branch_info {
- 	char *remote_name;
- 	struct string_list merge;
--	int rebase;
-+	enum { NO_REBASE, NORMAL_REBASE, INTERACTIVE_REBASE } rebase;
- };
- 
- static struct string_list branch_list;
-@@ -306,6 +306,8 @@ static int config_read_branches(const char *key, const char *value, void *cb)
- 				info->rebase = v;
- 			else if (!strcmp(value, "preserve"))
- 				info->rebase = 1;
-+			else if (!strcmp(value, "interactive"))
-+				info->rebase = INTERACTIVE_REBASE;
- 		}
- 	}
- 	return 0;
-@@ -1000,7 +1002,9 @@ static int show_local_info_item(struct string_list_item *item, void *cb_data)
- 
- 	printf("    %-*s ", show_info->width, item->string);
- 	if (branch_info->rebase) {
--		printf_ln(_("rebases onto remote %s"), merge->items[0].string);
-+		printf_ln(_(branch_info->rebase == INTERACTIVE_REBASE ?
-+			"rebases interactively onto remote %s" :
-+			"rebases onto remote %s"), merge->items[0].string);
- 		return 0;
- 	} else if (show_info->any_rebase) {
- 		printf_ln(_(" merges with remote %s"), merge->items[0].string);
++get_default_remote () {
++	curr_branch=$(git symbolic-ref -q HEAD)
++	curr_branch="${curr_branch#refs/heads/}"
++	origin=$(git config --get "branch.$curr_branch.remote")
++	echo ${origin:-origin}
++}
++
+ # The function takes at most 2 arguments. The first argument is the
+ # URL that navigates to the submodule origin repo. When relative, this URL
+ # is relative to the superproject origin URL repo. The second up_path
 -- 
 2.4.0.7.gf20f26f
