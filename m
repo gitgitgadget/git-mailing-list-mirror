@@ -1,74 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/3] git help: group common commands by theme
-Date: Tue, 05 May 2015 20:41:58 -0700
-Message-ID: <xmqqegmucqyh.fsf@gitster.dls.corp.google.com>
-References: <cover.1430770308.git.sebastien.guimmara@gmail.com>
+From: Paul Tan <pyokagan@gmail.com>
+Subject: Re: [PATCH 0/6] Make pull a builtin
+Date: Wed, 6 May 2015 12:27:15 +0800
+Message-ID: <CACRoPnR0+Ovnnz=HzRA7ZsHHUQ54JrPfih5E8wsRaKY-ajf-gA@mail.gmail.com>
+References: <CACRoPnQ5_r-26J4gBHc27KZt3X9KAU7eFkA3vz_GE6_dP-Uyug@mail.gmail.com>
+	<1430870453-5408-1-git-send-email-stephen.robin@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, sunshine@sunshineco.com
-To: =?utf-8?Q?S=C3=A9bastien?= Guimmara <sebastien.guimmara@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 06 05:42:08 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Stephen Robin <stephen.robin@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 06 06:27:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YpqDo-0003oC-52
-	for gcvg-git-2@plane.gmane.org; Wed, 06 May 2015 05:42:08 +0200
+	id 1Ypqvf-00051U-AJ
+	for gcvg-git-2@plane.gmane.org; Wed, 06 May 2015 06:27:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758823AbbEFDmE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 May 2015 23:42:04 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64587 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1758804AbbEFDmC convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 5 May 2015 23:42:02 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4EAB34F598;
-	Tue,  5 May 2015 23:42:01 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=82p+sayO/fJP
-	+gGHn9Scu4yPzjI=; b=VLTYDfpY7TnSTgQLaL4Y8Kdy6DeND4pM5qU+XWrsAx91
-	j07z3tfV52hxX/KtC0JHh2M7bDgO4gpSXCs1w6fHpCO7xrmfB1rIinaojDwq3vZn
-	Lki7wRgxtTMn2run9d4bcdtmy4FMlsS4EZY4pXYnOeZSUJ6X5kKZ1QTPjsixIqQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=V2f+5B
-	8RouN/utz3sNC+uJfYHzLoLXQyDgK0NkYoyeC4WfBAA+06dmb60F9OiPUny7PH4m
-	e1vhSezjzHcFnLxZ0k/qPwlV3+7EolcZqV0BwDCHqeN0AgqzlxiE63pGkE2Sd43s
-	k6GkK6cPE1jO3ijy9FKl/s70gk3Zy/uGdmVTo=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 136D74F596;
-	Tue,  5 May 2015 23:42:01 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 003F84F592;
-	Tue,  5 May 2015 23:41:59 -0400 (EDT)
-In-Reply-To: <cover.1430770308.git.sebastien.guimmara@gmail.com>
- (=?utf-8?Q?=22S=C3=A9bastien?=
-	Guimmara"'s message of "Mon, 4 May 2015 22:28:07 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: D9F81394-F3A1-11E4-BDC4-83E09F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1759202AbbEFE1T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 May 2015 00:27:19 -0400
+Received: from mail-la0-f52.google.com ([209.85.215.52]:35157 "EHLO
+	mail-la0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759193AbbEFE1Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 May 2015 00:27:16 -0400
+Received: by labbd9 with SMTP id bd9so142802400lab.2
+        for <git@vger.kernel.org>; Tue, 05 May 2015 21:27:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=SsXadfUu1w3r12vYCCNPptYzmmJajBwIfukBNwgf1w0=;
+        b=MkARvEOc5NUMWLabYwZ+F1FF9KGg7qlmrdFEoTuAM6TvvFTRAJik5q+c8RxPOlBwsQ
+         WbrbYJlHdb1hIVpB/KwHA5eVU0L11gUXiy5GFoNcfKI8SIsHcPkh0auVJ6Jp8aB2dq34
+         rXbrvH29kpzXVXmNXOYQiAd4FTpwdPm41oVRMdrEiDkkqjeezos7GWWQ4qP7XvM4iNoF
+         a6tUAXubdI6vmLuolmIZXzdYZSlFmoXLJXmR/5MZmP/wt2UVNTyW+UKLj4LWML8OV/7l
+         EMdg+oQJh4Vatb1VyXXduqcpcMyVEL8CSlIqOabO7oYqOjGcJCAiGDiRm6eAme62I3xy
+         +Fmw==
+X-Received: by 10.152.4.72 with SMTP id i8mr27637507lai.32.1430886435277; Tue,
+ 05 May 2015 21:27:15 -0700 (PDT)
+Received: by 10.112.74.133 with HTTP; Tue, 5 May 2015 21:27:15 -0700 (PDT)
+In-Reply-To: <1430870453-5408-1-git-send-email-stephen.robin@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268444>
 
-S=C3=A9bastien Guimmara  <sebastien.guimmara@gmail.com> writes:
+Hi Stephen,
 
->  command-list.txt    | 64 +++++++++++++++++++++++++++++++------------=
-----------
->  generate-cmdlist.sh | 43 +++++++++++++++++++++++++----------
->  help.c              | 28 ++++++++++++++++++++++-
+On Wed, May 6, 2015 at 8:00 AM, Stephen Robin <stephen.robin@gmail.com> wrote:
+> Hi Paul,
+>
+> Congratulations on getting your project accepted for GSOC. Here's my
+> attempt at implementing pull as a builtin, maybe it will be of some use
+> as you look to progress your version.
+>
+> It's fairly complete in the sense that all the features of git-pull.sh
+> should be implemented, the test suite passes, and I've been using it
+> myself without issue. At the same time it's some way from finished as
+> I've never had time to test it fully and there are parts of the code I'm
+> not happy with.
+>
+> Apologies for not sharing this with you earlier.  I have been too busy
+> with paid work to look at any open source projects for some months.
+>
+> Good luck with your project!
+>
+> Regards
+> Stephen
 
-I did not apply any of these patches to my tree, but
+Thank you so much for sharing your work. I'll be referencing this.
 
-    $ git grep command-list.txt
-
-shows that Documentation/Makefile and Makefile reads from
-command-list.txt to do their own useful tasks.  A patch series that
-does not touch either of them makes me suspect that it may be
-breaking a lot of things.
+Regards,
+Paul
