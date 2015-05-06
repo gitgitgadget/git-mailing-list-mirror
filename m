@@ -1,102 +1,112 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] upload-pack: Optionally allow fetching reachable sha1
-Date: Wed, 06 May 2015 13:19:13 -0700
-Message-ID: <xmqqy4l1sblq.fsf@gitster.dls.corp.google.com>
-References: <1430604075-5951-1-git-send-email-fredrik.medley@gmail.com>
-	<1430860888-6146-1-git-send-email-fredrik.medley@gmail.com>
-	<xmqqmw1id610.fsf@gitster.dls.corp.google.com>
-	<CABA5-zm-PxX-WWtoDnLhtJVZFhO2G1pOTApoz4DtmmUQ61iC6w@mail.gmail.com>
+From: =?UTF-8?B?U8OpYmFzdGllbiBHdWltbWFyYQ==?= 
+	<sebastien.guimmara@gmail.com>
+Subject: Re: [PATCH 0/3] git help: group common commands by theme
+Date: Wed, 06 May 2015 22:26:22 +0200
+Message-ID: <554A78EE.1040002@gmail.com>
+References: <cover.1430770308.git.sebastien.guimmara@gmail.com> <CAPig+cT9X-nXhQyjDtzLzm-A2LWLaCDThR9_xh=G049SqKHccw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org,
-	Christian Halstrick <christian.halstrick@gmail.com>,
-	Dan Johnson <computerdruid@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>
-To: Fredrik Medley <fredrik.medley@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 06 22:19:21 2015
+Content-Type: text/plain; charset=utf-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Wed May 06 22:26:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yq5mq-0001Os-U6
-	for gcvg-git-2@plane.gmane.org; Wed, 06 May 2015 22:19:21 +0200
+	id 1Yq5tm-0005xN-Hd
+	for gcvg-git-2@plane.gmane.org; Wed, 06 May 2015 22:26:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751964AbbEFUTR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 May 2015 16:19:17 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:60608 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751947AbbEFUTP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 May 2015 16:19:15 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B4FE14F811;
-	Wed,  6 May 2015 16:19:14 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=o3LO89qaowMkZSNJIHvbecBnkpU=; b=oPeclj
-	W9g/Wk9/viNm/SG8HhYEdkacjPuRJXxGPydu6CB5/qtfuv6BohIrHL1Q5IwDvH1V
-	B3yFI8GC/N9bruFITJa/DKxp08UTvtED+F2K1iljIR5UxZQ1vtagA/fZFaQgi9CO
-	d5c5YuofnZnUIc/MYoriPnIeKa/41R0SlFnwE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qF1VSldqA40Q9dvJVUSkxOtjgVdKcKOX
-	xoqKjZ5dd/w1+4pzv80/mm8RbZG93Q46xr2AQxcpapbOjA3hliQeXEGNBoDVRYJk
-	kumcOzquvDoOC9WqtQ9B0ADqa19Z6+j4AA6I81bmdJl3lMSS8c/z4MpH0RCIxxIA
-	bEVKYkzwfrI=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id AC5794F810;
-	Wed,  6 May 2015 16:19:14 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2ABDA4F80D;
-	Wed,  6 May 2015 16:19:14 -0400 (EDT)
-In-Reply-To: <CABA5-zm-PxX-WWtoDnLhtJVZFhO2G1pOTApoz4DtmmUQ61iC6w@mail.gmail.com>
-	(Fredrik Medley's message of "Wed, 6 May 2015 22:10:11 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 29F508B2-F42D-11E4-951C-83E09F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751618AbbEFU00 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 May 2015 16:26:26 -0400
+Received: from mail-wi0-f174.google.com ([209.85.212.174]:35155 "EHLO
+	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751197AbbEFU0Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 May 2015 16:26:25 -0400
+Received: by widdi4 with SMTP id di4so216489398wid.0
+        for <git@vger.kernel.org>; Wed, 06 May 2015 13:26:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=fWpI8gBouqFK/L13vxVVWuNdFhvb5RfkUwKxwFWGpiI=;
+        b=E2UPI5RKoM8vF3Fy44k0XoDE9pcPve3GivBthQVIWHpgFxGkSjn5kIofPmXVH9jze+
+         I7z6PYtnQfRxaKnzlev9dBzS6GFnrX5sdJ9aAAxtsu6XX+oD6cbl5FtVzhUu2AgLRyZS
+         9BKuLhmqAzee5q/sAX+bT5xyQj+rKHFljuYVMY/zgr243GKN8Tq7JP39Q/hU/4BN6IHl
+         UOmI+aCIu7UHv+H2cQtJ2JtAJv1HxIZjH2VbxJkp+6tI8MUreMgfgIXViT2AgUO/dIto
+         6fPUsX1KQ5gu2UEsW8Uc1HfckeMvmIgDwfS7iTi0Gi2R+bUtvDSdYsC+hjANHSccyVf5
+         lDcQ==
+X-Received: by 10.180.105.227 with SMTP id gp3mr454465wib.56.1430943984289;
+        Wed, 06 May 2015 13:26:24 -0700 (PDT)
+Received: from [192.168.0.15] (bd231-1-88-176-208-17.fbx.proxad.net. [88.176.208.17])
+        by mx.google.com with ESMTPSA id z12sm4356018wjw.39.2015.05.06.13.26.22
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 06 May 2015 13:26:23 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
+In-Reply-To: <CAPig+cT9X-nXhQyjDtzLzm-A2LWLaCDThR9_xh=G049SqKHccw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268493>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268494>
 
-Fredrik Medley <fredrik.medley@gmail.com> writes:
-
-> 2015-05-06 0:16 GMT+02:00 Junio C Hamano <gitster@pobox.com>:
->> Fredrik Medley <fredrik.medley@gmail.com> writes:
->>>
->>> diff --git a/Documentation/config.txt b/Documentation/config.txt
->>> index 2e5ceaf..76cd713 100644
->>> --- a/Documentation/config.txt
->>> +++ b/Documentation/config.txt
->>> @@ -2538,6 +2538,12 @@ uploadpack.allowtipsha1inwant::
->>>       of a hidden ref (by default, such a request is rejected).
->>>       see also `uploadpack.hideRefs`.
->>>
->>> +uploadpack.allowreachablesha1inwant::
+On 05/06/2015 05:08 AM, Eric Sunshine wrote:
+> On Mon, May 4, 2015 at 4:28 PM, S=C3=A9bastien Guimmara
+> <sebastien.guimmara@gmail.com> wrote:
+>> This v4 includes the following suggestions:
 >>
->> I know that the existing allowtipsha1inwant is spelled that way, and
->> it may be better done as a separate clean-up patch (either before or
->> after this step), but the documentation and the first line of the
->> log message would be easier to read with
+>> In command-list.txt:
+>> - Add a [groups] block containing names and description for groups:
 >>
->>         uploadpack.allowReachableSHA1InWant
+>>     [groups]
+>>     init                   starting a working area
+>>     worktree               working on the current change
+>>     remote                 working with others
+>>     info                   examining the history and state
+>>     history                growing, marking and tweaking your histor=
+y
 >>
->> I'd think.
+>> - Add a [commands] header on top of the known command list, and
+>>    group names as a third column.
 >>
+>>     [commands]
+>>     git-add            mainporcelain                common-worktree
+>>     git-am             mainporcelain
+>>     git-annotate       ancillaryinterrogators
+>>     git-apply          plumbingmanipulators
+>>     git-archimport     foreignscminterface
+>>     git-archive        mainporcelain
+>>     git-bisect         mainporcelain
+>>     git-blame          ancillaryinterrogators
+>>     git-branch         mainporcelain                common-history
 >
-> I would prefer using allowReachableSha1InWant. Please tell
-> me if I should use SHA1InWant instead of Sha1InWant.
-> (I cannot find anything similar in the repository.)
+> Thanks, this version is looking better. I, personally, still find the
+> redundant "command-" prefix ugly and would just as soon see it go
+> away. I'll make some suggestions about that when reviewing patch 2/3.
 
-Keep in mind what was discussed recently:
+Indeed, I'm a bit annoyed by this prefix. We could do two things:
+- either drop the [deprecated] options, since it's never used.
+- or keep it, but make it exclusive with [common]. It makes sense after
+   all that if a command is deprecated, we don't want to consider it
+   common anymore.
 
-  http://thread.gmane.org/gmane.comp.version-control.git/265225/focus=265322
+In both cases, we end up with only three columns, the third being
+optional.
 
-I would think SHA1 should be upcased (so should SSL, SMTP, etc.)
-even in the existing ones when we do the "clean-up" pass.  Even
-though this patch is not about cleaning up existing mess, there
-is no point adding more cruft that we need to clean up later ;-)
+The common- prefix can then be removed in favor of the group ID alone.
+
+>> I removed from the list of common commands: rebase, rm, mv, bisect
+>> because [1] they are not really common to an unfamiliar user, [2] to
+>> save vertical space occupied by group headers.
+>
+> Please perform the removals in a separate (preparatory) patch. Not
+> only is it difficult to spot the removals mixed in with the primary
+> changes of 1/3, but they are not even mentioned in the commit message
+> of that patch. More generally, the removals are a logically distinct
+> change from assigning groupings to the common commands, thus deserve
+> their own patch.
+>
+
+Thanks. I will separate both patches.
