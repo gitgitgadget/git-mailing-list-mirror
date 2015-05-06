@@ -1,125 +1,94 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] branch: -r -d(D) should say "remote-tracking branch"
-Date: Wed, 06 May 2015 10:53:54 -0700
-Message-ID: <xmqq4mnpvbgt.fsf@gitster.dls.corp.google.com>
-References: <CAMbsUu5pKiQ76WrCXvziQ8zER-Mc5oVt7tGnC7Q3RMVX2r8ZXQ@mail.gmail.com>
-	<CAN0XMOJ8QJ14B15BoFrr7d7L-jE06yUbquo8pW3OCj4wmUk2Rw@mail.gmail.com>
+Subject: Re: [PATCH] config --global --edit: generate correct .gitconfig template
+Date: Wed, 06 May 2015 10:56:31 -0700
+Message-ID: <xmqqzj5htws0.fsf@gitster.dls.corp.google.com>
+References: <1430934077-20724-1-git-send-email-pchpublic88@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Danny Lin <danny0838@gmail.com>, git <git@vger.kernel.org>
-To: Ralf Thielow <ralf.thielow@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 06 19:54:04 2015
+Cc: git@vger.kernel.org, Matthieu.Moy@imag.fr
+To: Pete Harlan <pchpublic88@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 06 19:56:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yq3WG-0001LR-AV
-	for gcvg-git-2@plane.gmane.org; Wed, 06 May 2015 19:54:04 +0200
+	id 1Yq3Yl-00036N-FX
+	for gcvg-git-2@plane.gmane.org; Wed, 06 May 2015 19:56:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751987AbbEFRyA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 May 2015 13:54:00 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:61574 "EHLO
+	id S1752814AbbEFR4f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 May 2015 13:56:35 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:65147 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751069AbbEFRx4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 May 2015 13:53:56 -0400
+	with ESMTP id S1751511AbbEFR4e (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 May 2015 13:56:34 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id F25624F80F;
-	Wed,  6 May 2015 13:53:55 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A68834F924;
+	Wed,  6 May 2015 13:56:33 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xyk5gy6G7YforQWEsI8uktTSYs0=; b=xvP++N
-	QltYX9jcRazWJXDvA4CCLd6dXRbxzc4D1norNwfRIPolzA+eQVH8TUIbxCKpVJAM
-	RFIY2NN9MIM1WVTKfHN+lWamO37psQ6DUc16ZYM2EYl8F69t3CrV3JVoDJ3ILlUp
-	D76s8tcYGPFppsJ7ZfbW8KX63w17pRQMvcg0c=
+	:content-type; s=sasl; bh=tafw7qHWycAJQQu5N/ak+OYo+d4=; b=RHU6Yn
+	4I6N4fD3s2AyhB+tWRLk++YdF9kJpX2FvxLMfy8v2OGboLH0twbsr068+PahG95M
+	2T1gQPmhSvksJXgGo6I6/YMTXH8iaX8aWawLScXAr40mr7DtI5IzqOI6VGYiIIHO
+	de5EaqXbi1fR2J+aD+b30SNX/tIjFBQPmbX9w=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=DiJ2ruGDzZtMSYQzFjb7JmeNQ8SUnHYJ
-	vryig0VckaXrCm9IdezLESHMtINlhJNwGEvYVlobvqaTv+GgkseGzHgbDv/GL+ou
-	W+GoTdggq2RcUIl8Jvid16TDF6PPfP341H06unSblaKb++q5x005dbEE/KMU7I12
-	PaK1EkjIV6Q=
+	:content-type; q=dns; s=sasl; b=k83OgVyWvfINF0A0qS8LAX+m2zu4fKAB
+	cphlrGGTLQCsLF47iRGkgUixSbCmabte/YDR1SbmGB4qH6fg7vicpxIV2Ie+BMLS
+	SfD4zwERLRaf5c/QNChF2q+zKrmz4mVEsJy1ALCXTO8XZOjIz/+M8QO84WGTjwFL
+	SMc9PGAlqrM=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id EC3604F80E;
-	Wed,  6 May 2015 13:53:55 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9FA814F923;
+	Wed,  6 May 2015 13:56:33 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5A3144F80B;
-	Wed,  6 May 2015 13:53:55 -0400 (EDT)
-In-Reply-To: <CAN0XMOJ8QJ14B15BoFrr7d7L-jE06yUbquo8pW3OCj4wmUk2Rw@mail.gmail.com>
-	(Ralf Thielow's message of "Wed, 6 May 2015 19:49:19 +0200")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1A8284F920;
+	Wed,  6 May 2015 13:56:33 -0400 (EDT)
+In-Reply-To: <1430934077-20724-1-git-send-email-pchpublic88@gmail.com> (Pete
+	Harlan's message of "Wed, 6 May 2015 10:41:17 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: DD1A4520-F418-11E4-A5F4-83E09F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 3B1F4094-F419-11E4-8601-83E09F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268477>
 
-Ralf Thielow <ralf.thielow@gmail.com> writes:
+Pete Harlan <pchpublic88@gmail.com> writes:
 
-> Danny Lin <danny0838@gmail.com> wrote:
->> git branch -r -d(D) currently says "delete remote branch",
->> which should be "remote-tracking branch".
->> ---
+> When the user asks to edit an empty .gitconfig file, we learned to
+> generate a default version in 9830534e (config --global --edit: create
+> a template file if needed, 2014-07-25), but the generated config
+> mistakenly set core.user and core.email instead of user.name and
+> user.email.  Fix this.
 >
-> No "Signed-off-by" line. (see Documentation/SubmittingPatches)
->
->>  builtin/branch.c | 6 +++---
->>  po/bg.po         | 6 +++---
->>  po/ca.po         | 6 +++---
->>  po/de.po         | 6 +++---
->>  po/fr.po         | 6 +++---
->>  po/git.pot       | 6 +++---
->>  po/it.po         | 6 +++---
->>  po/pt_PT.po      | 6 +++---
->>  po/sv.po         | 6 +++---
->>  po/vi.po         | 6 +++---
->>  po/zh_CN.po      | 6 +++---
->>  11 files changed, 33 insertions(+), 33 deletions(-)
->>
->
-> You don't need to update messages within "po/*" as they're
-> updated by the l10n coordinator and translators.
+> Signed-off-by: Pete Harlan <pchpublic88@gmail.com>
+> ---
 
-Thanks for pointing it out, but the language should be stronger; not
-"don't need to", but "you must not".
+Thanks, I think this was already done in 7e110524 (config: fix
+settings in default_user_config template, 2015-04-17).
 
-Thanks.
-
->> diff --git a/builtin/branch.c b/builtin/branch.c
->> index dc6f0b2..3560c51 100644
->> --- a/builtin/branch.c
->> +++ b/builtin/branch.c
->> @@ -242,7 +242,7 @@ static int delete_branches(int argc, const char
->> **argv, int force, int kinds,
->>                          sha1, &flags);
->>          if (!target) {
->>              error(remote_branch
->> -                  ? _("remote branch '%s' not found.")
->> +                  ? _("remote-tracking branch '%s' not found.")
->>                    : _("branch '%s' not found."), bname.buf);
->>              ret = 1;
->>              continue;
->> @@ -257,7 +257,7 @@ static int delete_branches(int argc, const char
->> **argv, int force, int kinds,
->>
->>          if (delete_ref(name, sha1, REF_NODEREF)) {
->>              error(remote_branch
->> -                  ? _("Error deleting remote branch '%s'")
->> +                  ? _("Error deleting remote-tracking branch '%s'")
->>                    : _("Error deleting branch '%s'"),
->>                    bname.buf);
->>              ret = 1;
->> @@ -265,7 +265,7 @@ static int delete_branches(int argc, const char
->> **argv, int force, int kinds,
->>          }
->>          if (!quiet) {
->>              printf(remote_branch
->> -                   ? _("Deleted remote branch %s (was %s).\n")
->> +                   ? _("Deleted remote-tracking branch %s (was %s).\n")
->>                     : _("Deleted branch %s (was %s).\n"),
->>                     bname.buf,
->>                     (flags & REF_ISBROKEN) ? "broken"
 >
-> Looks good to me.
+> I ran up against this yesterday and it is easy enough to fix, but I
+> don't have time right now to write tests for it.
+>
+>  builtin/config.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/builtin/config.c b/builtin/config.c
+> index d32c532..bfd3016 100644
+> --- a/builtin/config.c
+> +++ b/builtin/config.c
+> @@ -455,9 +455,9 @@ static char *default_user_config(void)
+>  	struct strbuf buf = STRBUF_INIT;
+>  	strbuf_addf(&buf,
+>  		    _("# This is Git's per-user configuration file.\n"
+> -		      "[core]\n"
+> +		      "[user]\n"
+>  		      "# Please adapt and uncomment the following lines:\n"
+> -		      "#	user = %s\n"
+> +		      "#	name = %s\n"
+>  		      "#	email = %s\n"),
+>  		    ident_default_name(),
+>  		    ident_default_email());
