@@ -1,112 +1,116 @@
-From: =?UTF-8?B?U8OpYmFzdGllbiBHdWltbWFyYQ==?= 
-	<sebastien.guimmara@gmail.com>
-Subject: Re: [PATCH 0/3] git help: group common commands by theme
-Date: Wed, 06 May 2015 22:26:22 +0200
-Message-ID: <554A78EE.1040002@gmail.com>
-References: <cover.1430770308.git.sebastien.guimmara@gmail.com> <CAPig+cT9X-nXhQyjDtzLzm-A2LWLaCDThR9_xh=G049SqKHccw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] branch: -r -d(D) should say "remote-tracking branch"
+Date: Wed, 06 May 2015 13:29:01 -0700
+Message-ID: <xmqqtwvpsb5e.fsf@gitster.dls.corp.google.com>
+References: <CAMbsUu5pKiQ76WrCXvziQ8zER-Mc5oVt7tGnC7Q3RMVX2r8ZXQ@mail.gmail.com>
+	<CAN0XMOJ8QJ14B15BoFrr7d7L-jE06yUbquo8pW3OCj4wmUk2Rw@mail.gmail.com>
+	<xmqq4mnpvbgt.fsf@gitster.dls.corp.google.com>
+	<CAMbsUu4iAD0kGh_ZzbLBS4P69Hz-T4Mv0krLst+M7SVc=v=Dog@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Wed May 06 22:26:31 2015
+Content-Type: text/plain
+Cc: Ralf Thielow <ralf.thielow@gmail.com>, git <git@vger.kernel.org>
+To: Danny Lin <danny0838@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 06 22:29:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yq5tm-0005xN-Hd
-	for gcvg-git-2@plane.gmane.org; Wed, 06 May 2015 22:26:30 +0200
+	id 1Yq5wN-0007fx-Ia
+	for gcvg-git-2@plane.gmane.org; Wed, 06 May 2015 22:29:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751618AbbEFU00 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 May 2015 16:26:26 -0400
-Received: from mail-wi0-f174.google.com ([209.85.212.174]:35155 "EHLO
-	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751197AbbEFU0Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 May 2015 16:26:25 -0400
-Received: by widdi4 with SMTP id di4so216489398wid.0
-        for <git@vger.kernel.org>; Wed, 06 May 2015 13:26:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=fWpI8gBouqFK/L13vxVVWuNdFhvb5RfkUwKxwFWGpiI=;
-        b=E2UPI5RKoM8vF3Fy44k0XoDE9pcPve3GivBthQVIWHpgFxGkSjn5kIofPmXVH9jze+
-         I7z6PYtnQfRxaKnzlev9dBzS6GFnrX5sdJ9aAAxtsu6XX+oD6cbl5FtVzhUu2AgLRyZS
-         9BKuLhmqAzee5q/sAX+bT5xyQj+rKHFljuYVMY/zgr243GKN8Tq7JP39Q/hU/4BN6IHl
-         UOmI+aCIu7UHv+H2cQtJ2JtAJv1HxIZjH2VbxJkp+6tI8MUreMgfgIXViT2AgUO/dIto
-         6fPUsX1KQ5gu2UEsW8Uc1HfckeMvmIgDwfS7iTi0Gi2R+bUtvDSdYsC+hjANHSccyVf5
-         lDcQ==
-X-Received: by 10.180.105.227 with SMTP id gp3mr454465wib.56.1430943984289;
-        Wed, 06 May 2015 13:26:24 -0700 (PDT)
-Received: from [192.168.0.15] (bd231-1-88-176-208-17.fbx.proxad.net. [88.176.208.17])
-        by mx.google.com with ESMTPSA id z12sm4356018wjw.39.2015.05.06.13.26.22
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 06 May 2015 13:26:23 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
-In-Reply-To: <CAPig+cT9X-nXhQyjDtzLzm-A2LWLaCDThR9_xh=G049SqKHccw@mail.gmail.com>
+	id S1751428AbbEFU3H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 May 2015 16:29:07 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:58795 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751219AbbEFU3E (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 May 2015 16:29:04 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6D9A54FBE9;
+	Wed,  6 May 2015 16:29:03 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=PItccWZ/M40e+w3S4Y3l9Gusd1U=; b=PPwwkX
+	ncJsI8WMSel7RE2Hkb/SscMrueeAKgihzLsf4bkUJRzJ+QvrjTEUZoSUsQe6lCad
+	cbFIiNdlyvf7O+d7uqaKyHL5tninm3MZ8yJ/niVMwlHlTyWg/5AB/oMC9PS/BF7B
+	XuoEBpv1bJ3EM7w/S1JPxDDkwmAtKRuhzXZWE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=teAA3A284Qu/p/UG+yu3w6YKF1GFDGM/
+	0oMFlbs/Cs+75Tp1WMGe4RtdHoh4yLePBOX1aIQB73eHXEyrIAfPTx2cILsVhsuh
+	yEe+CAG9pt52DAqVeqP3K0rKALZ5QakJnKVffA+B+kT5EfxM7kDzFeQoNNknfEVx
+	y23OFxEWEgM=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 64AD84FBE8;
+	Wed,  6 May 2015 16:29:03 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D43B44FBE6;
+	Wed,  6 May 2015 16:29:02 -0400 (EDT)
+In-Reply-To: <CAMbsUu4iAD0kGh_ZzbLBS4P69Hz-T4Mv0krLst+M7SVc=v=Dog@mail.gmail.com>
+	(Danny Lin's message of "Thu, 7 May 2015 03:01:55 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 88CDEE20-F42E-11E4-9EDF-83E09F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268495>
 
-On 05/06/2015 05:08 AM, Eric Sunshine wrote:
-> On Mon, May 4, 2015 at 4:28 PM, S=C3=A9bastien Guimmara
-> <sebastien.guimmara@gmail.com> wrote:
->> This v4 includes the following suggestions:
->>
->> In command-list.txt:
->> - Add a [groups] block containing names and description for groups:
->>
->>     [groups]
->>     init                   starting a working area
->>     worktree               working on the current change
->>     remote                 working with others
->>     info                   examining the history and state
->>     history                growing, marking and tweaking your histor=
-y
->>
->> - Add a [commands] header on top of the known command list, and
->>    group names as a third column.
->>
->>     [commands]
->>     git-add            mainporcelain                common-worktree
->>     git-am             mainporcelain
->>     git-annotate       ancillaryinterrogators
->>     git-apply          plumbingmanipulators
->>     git-archimport     foreignscminterface
->>     git-archive        mainporcelain
->>     git-bisect         mainporcelain
->>     git-blame          ancillaryinterrogators
->>     git-branch         mainporcelain                common-history
+Danny Lin <danny0838@gmail.com> writes:
+
+> git branch -r -d(D) currently says "delete remote branch",
+> which should be "remote-tracking branch".
 >
-> Thanks, this version is looking better. I, personally, still find the
-> redundant "command-" prefix ugly and would just as soon see it go
-> away. I'll make some suggestions about that when reviewing patch 2/3.
+> Signed-off-by: Danny Lin <danny0838@gmail.com>
+> ---
 
-Indeed, I'm a bit annoyed by this prefix. We could do two things:
-- either drop the [deprecated] options, since it's never used.
-- or keep it, but make it exclusive with [common]. It makes sense after
-   all that if a command is deprecated, we don't want to consider it
-   common anymore.
+Thanks.
 
-In both cases, we end up with only three columns, the third being
-optional.
+The patch is whitespace damaged and does not apply, though.  I
+manually typed the same change and commited with a tweaked log
+message, so no need to resend this one, but for future reference,
+please try sending a patch to yourself and make sure it applies
+cleanly (and if it doesn't, figure out where tabs are eaten and
+lines are wrapped and fix that problem before sending the patch to
+the list).
 
-The common- prefix can then be removed in favor of the group ID alone.
 
->> I removed from the list of common commands: rebase, rm, mv, bisect
->> because [1] they are not really common to an unfamiliar user, [2] to
->> save vertical space occupied by group headers.
+>  builtin/branch.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
 >
-> Please perform the removals in a separate (preparatory) patch. Not
-> only is it difficult to spot the removals mixed in with the primary
-> changes of 1/3, but they are not even mentioned in the commit message
-> of that patch. More generally, the removals are a logically distinct
-> change from assigning groupings to the common commands, thus deserve
-> their own patch.
+> diff --git a/builtin/branch.c b/builtin/branch.c
+> index dc6f0b2..3560c51 100644
+> --- a/builtin/branch.c
+> +++ b/builtin/branch.c
+> @@ -242,7 +242,7 @@ static int delete_branches(int argc, const char
+> **argv, int force, int kinds,
+>                          sha1, &flags);
+>          if (!target) {
+>              error(remote_branch
+> -                  ? _("remote branch '%s' not found.")
+> +                  ? _("remote-tracking branch '%s' not found.")
+>                    : _("branch '%s' not found."), bname.buf);
+>              ret = 1;
+>              continue;
+> @@ -257,7 +257,7 @@ static int delete_branches(int argc, const char
+> **argv, int force, int kinds,
 >
-
-Thanks. I will separate both patches.
+>          if (delete_ref(name, sha1, REF_NODEREF)) {
+>              error(remote_branch
+> -                  ? _("Error deleting remote branch '%s'")
+> +                  ? _("Error deleting remote-tracking branch '%s'")
+>                    : _("Error deleting branch '%s'"),
+>                    bname.buf);
+>              ret = 1;
+> @@ -265,7 +265,7 @@ static int delete_branches(int argc, const char
+> **argv, int force, int kinds,
+>          }
+>          if (!quiet) {
+>              printf(remote_branch
+> -                   ? _("Deleted remote branch %s (was %s).\n")
+> +                   ? _("Deleted remote-tracking branch %s (was %s).\n")
+>                     : _("Deleted branch %s (was %s).\n"),
+>                     bname.buf,
+>                     (flags & REF_ISBROKEN) ? "broken"
