@@ -1,100 +1,104 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
 Subject: Re: [PATCH] contrib/subtree: fix linefeeds trimming for cmd_split()
-Date: Wed, 06 May 2015 12:49:11 -0700
-Message-ID: <xmqqfv79trk8.fsf@gitster.dls.corp.google.com>
+Date: Wed, 6 May 2015 15:58:33 -0400
+Message-ID: <CAPig+cT1JY2N6gkzj1kbQKR+nXBMu19-Mkw7V7BNewsOj4mm0Q@mail.gmail.com>
 References: <CAMbsUu6xZrMu_jrV=jR4XNLf1UXLApBiAWJiWJuKRb4xN90QJQ@mail.gmail.com>
 	<xmqq4mnqet5d.fsf@gitster.dls.corp.google.com>
 	<CAMbsUu6=U92TRo-UeOL1qtaTipMQFzD+m+wM7sn1o-AjD6LJBw@mail.gmail.com>
 	<xmqqwq0lbp87.fsf@gitster.dls.corp.google.com>
 	<CAMbsUu4bix6pJA4OOoMSwYu0M6nO1+aZ7RLXU5sSOdOevN_Wzw@mail.gmail.com>
+	<xmqqfv79trk8.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git develop <git@vger.kernel.org>
-To: Danny Lin <danny0838@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 06 21:49:21 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Danny Lin <danny0838@gmail.com>, git develop <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 06 21:58:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yq5Jn-0007ay-Go
-	for gcvg-git-2@plane.gmane.org; Wed, 06 May 2015 21:49:19 +0200
+	id 1Yq5Sp-0005Ci-HQ
+	for gcvg-git-2@plane.gmane.org; Wed, 06 May 2015 21:58:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751330AbbEFTtP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 May 2015 15:49:15 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:59163 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750930AbbEFTtO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 May 2015 15:49:14 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id A104B4FA77;
-	Wed,  6 May 2015 15:49:13 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=aGQZUSqzSUVQdXCU4Z3/nJBVV0k=; b=PV401a
-	Zfgt/XqKeZM+hohEl9cr7t98Vel9jT8WJFaeyXdDM5zijFp+7uFVfEJoVaJpxZEP
-	L+HdvREt2kfg4hwMOJtAw4ZscLsxwQJ4wotBhAZtXm4lGqgNcMKVvo/hgVJconDx
-	vuq8+yCq94LS7OevMi906MyiEsLKxbebpSToY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xRZk1hga5Z11ZlbIUm/hBq3RxS88HVSt
-	Lsxw65S7UOMEPjkY7NvT+M7eDQTPvy1y5R/v3wg0QTI3Mnw9GOJrUpwAfFycWY5p
-	+ryIXVoyhU5WdGqN8r+XsmbnmuxLQZirmGuWjAguz5KDClW2wxqchqzXE5tK0eVe
-	Zf7c2y/hDKk=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9A3E64FA76;
-	Wed,  6 May 2015 15:49:13 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 05FFD4FA73;
-	Wed,  6 May 2015 15:49:12 -0400 (EDT)
-In-Reply-To: <CAMbsUu4bix6pJA4OOoMSwYu0M6nO1+aZ7RLXU5sSOdOevN_Wzw@mail.gmail.com>
-	(Danny Lin's message of "Thu, 7 May 2015 02:58:21 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: F8589656-F428-11E4-A6FE-83E09F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751342AbbEFT6f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 May 2015 15:58:35 -0400
+Received: from mail-ie0-f180.google.com ([209.85.223.180]:35494 "EHLO
+	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750853AbbEFT6e (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 May 2015 15:58:34 -0400
+Received: by ieczm2 with SMTP id zm2so23229247iec.2
+        for <git@vger.kernel.org>; Wed, 06 May 2015 12:58:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=MrGFKyeiCnU9mYDxplh9s17dLOtTSvEmUe9lx5ModkE=;
+        b=PX85i30vlcL3QWHoFta+DXpvQ2XFerdB7OBt8JYk5BCsmxO05O66xF9MckU9aJNUoT
+         Ipgfa1JvFQ+/Mz4/4iUbJtd05D4m6SyVwnCyHbHRfkY5z9jfbsI1xMvVLg2rN9Er1YtF
+         g8h4E6luE8h7B8C9ys8dFkTHNKd5CAcQrI8L2TwcKiPTjCFNVbcfP95BvXembGe/rjWv
+         Z6ciB0URPa5sa/gnID6Jctq09dm+nFfYD1WiYqE62ESD6tcUY6HaOhWIk4UZR0TlbcOL
+         KSGFYm5BlaremGCMsjnc1ZW7fW3rb6ro8yg5g3XqomoI+MZqMxJwnSQ5D0wGiraFYckd
+         L5Sg==
+X-Received: by 10.107.169.74 with SMTP id s71mr560956ioe.46.1430942313930;
+ Wed, 06 May 2015 12:58:33 -0700 (PDT)
+Received: by 10.107.28.132 with HTTP; Wed, 6 May 2015 12:58:33 -0700 (PDT)
+In-Reply-To: <xmqqfv79trk8.fsf@gitster.dls.corp.google.com>
+X-Google-Sender-Auth: fhYgbv-vByovBw8-uz5Eel-H9x4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268488>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268489>
 
-Danny Lin <danny0838@gmail.com> writes:
-
-> cmd_split() prints a CR char by assigning a variable
-> with a literal CR in the source code, which could be
-> trimmed or mis-processed in some terminals. Replace
-> with $(printf '\r') to fix it.
+On Wed, May 6, 2015 at 3:49 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Danny Lin <danny0838@gmail.com> writes:
 >
-> Signed-off-by: Danny Lin <danny0838@gmail.com>
-> ---
->  contrib/subtree/git-subtree.sh | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
+>> cmd_split() prints a CR char by assigning a variable
+>> with a literal CR in the source code, which could be
+>> trimmed or mis-processed in some terminals. Replace
+>> with $(printf '\r') to fix it.
+
+For future readers of the patch who haven't followed the email
+discussion, it might be a good idea to explain the problem in more
+detail. Saying merely "could be trimmed or mis-processed in some
+terminals" doesn't give much for people to latch onto if they want to
+understand the specific problem. Concrete information would help.
+
+>> Signed-off-by: Danny Lin <danny0838@gmail.com>
+>> ---
+>> diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
+>> index fa1a583..3a581fc 100755
+>> --- a/contrib/subtree/git-subtree.sh
+>> +++ b/contrib/subtree/git-subtree.sh
+>> @@ -596,10 +596,11 @@ cmd_split()
+>>      revmax=$(eval "$grl" | wc -l)
+>>      revcount=0
+>>      createcount=0
+>> +    CR=$(printf '\r')
+>>      eval "$grl" |
+>>      while read rev parents; do
+>>          revcount=$(($revcount + 1))
+>> -        say -n "$revcount/$revmax ($createcount)
+>> "
+>> +        say -n "$revcount/$revmax ($createcount)$CR"
 >
-> diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-> index fa1a583..3a581fc 100755
-> --- a/contrib/subtree/git-subtree.sh
-> +++ b/contrib/subtree/git-subtree.sh
-> @@ -596,10 +596,11 @@ cmd_split()
->      revmax=$(eval "$grl" | wc -l)
->      revcount=0
->      createcount=0
-> +    CR=$(printf '\r')
->      eval "$grl" |
->      while read rev parents; do
->          revcount=$(($revcount + 1))
-> -        say -n "$revcount/$revmax ($createcount)
-> "
-> +        say -n "$revcount/$revmax ($createcount)$CR"
+> Interesting.  I would have expected, especially this is a portability-fix
+> change, that the change would be a single liner
+>
+> -       say -n ...
+> +       printf "%s\r" "$revcount/$revmax ($createcount)"
+>
+> that does not touch any other line.
 
-Interesting.  I would have expected, especially this is a portability-fix
-change, that the change would be a single liner
+Unfortunately, that solution does not respect the $quiet flag like
+say() does. I had envisioned the patch as reimplementing say() using
+printf rather than echo, and having say() itself either recognizing
+the -n flag or just update callers to specify \n when they want it
+(which is probably the cleaner of the two approaches).
 
--	say -n ...
-+	printf "%s\r" "$revcount/$revmax ($createcount)"
-
-that does not touch any other line.
-
->          debug "Processing commit: $rev"
->          exists=$(cache_get $rev)
->          if [ -n "$exists" ]; then
+>
+>>          debug "Processing commit: $rev"
+>>          exists=$(cache_get $rev)
+>>          if [ -n "$exists" ]; then
+> --
