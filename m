@@ -1,75 +1,97 @@
-From: Paul Tan <pyokagan@gmail.com>
-Subject: Re: [PATCH v2 07/12] t4013: call git-merge instead of git-pull
-Date: Fri, 8 May 2015 00:55:51 +0800
-Message-ID: <CACRoPnTMgZBfeneMCZSJVowmSCGf2Ufpt-J461+w9Lh1aN-rhA@mail.gmail.com>
-References: <1430988248-18285-1-git-send-email-pyokagan@gmail.com>
-	<1430988248-18285-8-git-send-email-pyokagan@gmail.com>
-	<a2c6df723ca5237c094ab4002e45a834@www.dscho.org>
+From: Lars Kellogg-Stedman <lars@redhat.com>
+Subject: Re: [PATCH] add support for specifying an SSL cipher list
+Date: Thu, 7 May 2015 12:57:21 -0400
+Message-ID: <20150507165721.GC16334@redhat.com>
+References: <1431008210-673-1-git-send-email-lars@redhat.com>
+ <CALUzUxoC66QZ5gJdV_nE=zFOLUNfpz64Ena2rDmesaEqkEGDAQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-Cc: Git List <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu May 07 18:55:59 2015
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="+nBD6E3TurpgldQp"
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 07 18:57:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YqP5a-0007Lu-N3
-	for gcvg-git-2@plane.gmane.org; Thu, 07 May 2015 18:55:59 +0200
+	id 1YqP7C-0008Kj-CM
+	for gcvg-git-2@plane.gmane.org; Thu, 07 May 2015 18:57:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751740AbbEGQzy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 May 2015 12:55:54 -0400
-Received: from mail-lb0-f170.google.com ([209.85.217.170]:34463 "EHLO
-	mail-lb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751259AbbEGQzx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 May 2015 12:55:53 -0400
-Received: by lbcga7 with SMTP id ga7so35645067lbc.1
-        for <git@vger.kernel.org>; Thu, 07 May 2015 09:55:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=pPBASSgeJW0NMs3T8XfHxWjx0GDhZfA9ItjEyBOEOQQ=;
-        b=oR4G0/3LYGLyD66fyvHPgeF8xtw61PakraqqMY0Rldij0WfLMQRjkm+eTyXhP9yCmg
-         z2dP8oSp3fYDwVyUwke6MxdetyqFqs/OJkqLzErrcRry5KEK8PNhBQiL4YqZ6v2UxVSw
-         dDS7W4L9RVR1KE6bM6VH6vIdfJj2yTDwQsqV4AWjox0HqnJWndEW0iE5YvhJ7MJSvhl/
-         x3xSlAf9XvRzX3TUhWy5IrlXYvFMlTdEQmlsEBODKCcq1Cujlsn2l4yHdv/MbdvTQOxL
-         d5Sjj5K+XE8e+qe9m66FSTm30N0Rd3mclBma9QU4l2ExHQ/sO0l3OQLRtj4PzRglIbfT
-         S0BQ==
-X-Received: by 10.152.120.70 with SMTP id la6mr3833496lab.65.1431017752092;
- Thu, 07 May 2015 09:55:52 -0700 (PDT)
-Received: by 10.112.74.133 with HTTP; Thu, 7 May 2015 09:55:51 -0700 (PDT)
-In-Reply-To: <a2c6df723ca5237c094ab4002e45a834@www.dscho.org>
+	id S1751768AbbEGQ5a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 May 2015 12:57:30 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:37264 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751686AbbEGQ5Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 May 2015 12:57:25 -0400
+Received: from int-mx13.intmail.prod.int.phx2.redhat.com (int-mx13.intmail.prod.int.phx2.redhat.com [10.5.11.26])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id t47GvMbj026883
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
+	Thu, 7 May 2015 12:57:23 -0400
+Received: from lkellogg-pk115wp.redhat.com (ovpn-112-66.phx2.redhat.com [10.3.112.66])
+	by int-mx13.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id t47GvM7T012047;
+	Thu, 7 May 2015 12:57:22 -0400
+Received: by lkellogg-pk115wp.redhat.com (Postfix, from userid 1000)
+	id 1AA4CA0E2B; Thu,  7 May 2015 12:57:21 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <CALUzUxoC66QZ5gJdV_nE=zFOLUNfpz64Ena2rDmesaEqkEGDAQ@mail.gmail.com>
+User-Agent: Mutt/1.5.23.1 (2014-03-12)
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268551>
 
-Hi Dscho,
 
-On Fri, May 8, 2015 at 12:26 AM, Johannes Schindelin
-<johannes.schindelin@gmx.de> wrote:
-> Both this patch and 9/12 change `git pull` invocations to equivalent non-pull ones, but I wonder whether it would not be a better idea to leave them as-are, so that we can make sure that scripts out there that might use similar `git pull` invocations would be unaffected by the rewrite?
+--+nBD6E3TurpgldQp
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-In the current state[1], I'm aiming for the git-pull rewrite patch
-series to break all git-pull tests in the first patch, and then
-subsequently make them pass again in later smaller patches by
-implementing back the old features. This will make reviewing the code
-much easier, as opposed to dumping a huge patch every single re-roll
-;-).
+On Fri, May 08, 2015 at 12:42:02AM +0800, Tay Ray Chuan wrote:
+> You might want to mention the libcurl option that this conf
+> corresponds to, so that a reader could go look it up in the libcurl
+> documentation to get an idea of the ciphers available...
 
-For both patches and test suites, if the "setup" tests fail, the whole
-test suite fails. Given that the test suites are about testing the
-diff formatting options and submodules update implementation, which is
-mostly irrelevant to git-pull, I think it would be better if the test
-suite was not affected by the rewrite, especially since it only
-requires changing one line.
+I actually removed references to the specific option before submitting
+the patch, because none of the other settings that affect curl options
+explicitly document the corresponding curl option name.  But I am
+happy to add it back.
 
-[1] https://github.com/pyokagan/git/commit/bfdf5039d1627c9599051faf2ce34b007d4bfbea
+> to be used that would be accepted by us (but really by libcurl). But
+> we also don't have to go as far as reproducing it here (eg. ciphers
+> separated by colons) since this it tied to the libcurl version the
+> user is linking against.
 
-Thanks,
-Paul
+Right, I think that documenting the curl option is sufficient, and
+then people can consult the libcurl documentation if they need
+details.
+
+--=20
+Lars Kellogg-Stedman <lars@redhat.com> | larsks @ {freenode,twitter,github}
+Cloud Engineering / OpenStack          | http://blog.oddbit.com/
+
+
+--+nBD6E3TurpgldQp
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJVS5lwAAoJEOTYsrE/X54pIpYP/RyyistBOnff0/nQFWrfpzP/
+4MvOL4K/ZPc6c6MyMfJs8OvtaMGr0dF/7l3+FzJUzvF59aehXPLu8XECiIROf6+s
++scaX511xIHI5LrsCmpBmNwQPy7xyLEJv4mA1HbfvY7t9b9d9WWFE5/KAG6nMpeQ
+KnUYCMzwffnHzkCiKuz70K018GtVUhD1uEBdTOoONCCXofDhY+EgwbQto82iA2UM
+b+go7LYYz+Pmcmy6wIa2/ghQZBEl2Z0jWXjsAtZ92CTlwPR15siiewml4cnV7QWX
+qnXm1kpPBf8vCH+qahh2PrrUfdADYi00DqDRqrpY8z3Za/1XYbiJo6GX+mtD3CQ5
+7e9JmW7mxre/BPeoiycPStvRsSMVyczziGFjEAviuOS8NZtyLVjQ49lX7r0UckA5
+Z1HH5W17rt86Bae3684/agCBzj7zQcvDSrAKcE2rMdky0SprTn5Xqviuxo7jAAsF
+njMSW78lYggnqztN6UDQ6q0D0hk6owoiDLehDDzkzTHLt3yBLX7qd8u9exWg0fmb
+qDSpn9XaYWdGwTS42IzP0rgC4pMaVSrqMp4XWi12OZcfJ/hSIeK0pjvMRfyrH+O9
+PJYCr/gmGoCvcx5P81T31S+WFPM88h3akDMtSTyzLi5vS+pU4nsqGgpPitqrPuDJ
+/2S8AcZQX2HnOE4FQgDs
+=llxV
+-----END PGP SIGNATURE-----
+
+--+nBD6E3TurpgldQp--
