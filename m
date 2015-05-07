@@ -1,127 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 11/12] t5524: test --log=1 limits shortlog length
-Date: Thu, 07 May 2015 10:28:25 -0700
-Message-ID: <xmqqbnhwqoue.fsf@gitster.dls.corp.google.com>
+From: Paul Tan <pyokagan@gmail.com>
+Subject: Re: [PATCH v2 03/12] t5520: test work tree fast-forward when fetch
+ updates head
+Date: Fri, 8 May 2015 01:32:47 +0800
+Message-ID: <CACRoPnR_T95p+FeLLiQViBiE5z9H3XAEUA5pokuG4B5nns0H0A@mail.gmail.com>
 References: <1430988248-18285-1-git-send-email-pyokagan@gmail.com>
-	<1430988248-18285-12-git-send-email-pyokagan@gmail.com>
+	<1430988248-18285-4-git-send-email-pyokagan@gmail.com>
+	<xmqqoalwqpk4.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org,
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
 	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Stefan Beller <sbeller@google.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 07 19:28:33 2015
+	Stefan Beller <sbeller@google.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 07 19:32:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YqPb6-0000rc-T9
-	for gcvg-git-2@plane.gmane.org; Thu, 07 May 2015 19:28:33 +0200
+	id 1YqPfK-0003Rt-1p
+	for gcvg-git-2@plane.gmane.org; Thu, 07 May 2015 19:32:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751197AbbEGR22 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 May 2015 13:28:28 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64266 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750780AbbEGR21 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 May 2015 13:28:27 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 000944D076;
-	Thu,  7 May 2015 13:28:26 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=sc3j9nr2NgaO4jFNJvYrTZXMRF4=; b=NUPMBj
-	rtFhK4QbG2ZscOSs+J6THpNvWg9ZGhuYI0wZLFW18n+H3b7kRfiLMqeth7Gx8JkT
-	FuRznuV8YCn15QMn5wQSvtshrpyANFmgarlnYa+ENR460sKBX6zg1dbzMiqDYoCU
-	g/XNc9t6u88wFxkgS9q0JCxwjZJY/67QKCbVk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QT6JC09qyKljKLRYiXQ5d0jmrFOCcYIw
-	9J6QjX31+oDORzzPb+TQrxrFsRnleS8Q0gbgKPKzGnX/eqE9caXjXMoa2I8oEgJm
-	l19GTKAfSkO78BzHRtCkP7SOvmOmLg8ilX5uRUXXvfi/Icd4XgFitN5mVAViFyiv
-	x254knn484Q=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id EA1D34D075;
-	Thu,  7 May 2015 13:28:26 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 649BA4D06E;
-	Thu,  7 May 2015 13:28:26 -0400 (EDT)
-In-Reply-To: <1430988248-18285-12-git-send-email-pyokagan@gmail.com> (Paul
-	Tan's message of "Thu, 7 May 2015 16:44:07 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 78301614-F4DE-11E4-977F-83E09F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751977AbbEGRct (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 May 2015 13:32:49 -0400
+Received: from mail-lb0-f175.google.com ([209.85.217.175]:35220 "EHLO
+	mail-lb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751945AbbEGRcs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 May 2015 13:32:48 -0400
+Received: by lbbuc2 with SMTP id uc2so36260973lbb.2
+        for <git@vger.kernel.org>; Thu, 07 May 2015 10:32:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=StqBdykc31EFYIERuRvpidblcBd4Raw0GopHFBTU5C0=;
+        b=Kd3buTjVP7INaDuI9/Le/kNNXzivt6mYdMgUKJdIu26E9GcArDPauKyCqITxmhDsiJ
+         b810kqRBwQyM+9OVqe/3MhdSKCStAyM07JfFmOFnvfQqPhK8JYYvpTd8b8ovmiAgP0ew
+         yy/yRw62rWI4OWxr43gDj/VK9GmCKSLfQOy4CMHV71WK2tom8bGTz66iq9VjJPTChthG
+         KGjqlvMlegFNsd4AG6/J554MRYoh/vrt6USvnrKOKoK+wCDTPEqlpV1DcRazzOa4/nGQ
+         iVhN7oRXqN1PdnR8tgWdSUSqazdFXsch9E/fmDu/2MB/mg5xjVpcbCQlOClHdcNZB13n
+         nZGg==
+X-Received: by 10.152.2.38 with SMTP id 6mr4007824lar.80.1431019967303; Thu,
+ 07 May 2015 10:32:47 -0700 (PDT)
+Received: by 10.112.74.133 with HTTP; Thu, 7 May 2015 10:32:47 -0700 (PDT)
+In-Reply-To: <xmqqoalwqpk4.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268561>
 
-Paul Tan <pyokagan@gmail.com> writes:
+Hi Junio,
 
-> While git-pull supports --log and passes the switch to git-merge, it
-> does not support --log=<n>, ignoring the value <n>.
+On Fri, May 8, 2015 at 1:12 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Paul Tan <pyokagan@gmail.com> writes:
 >
-> This is not only at odds with the documentation of git-pull, it's also a
-> undesirable limitation as <n> could simply be passed to git-merge as
-> well.
-
-A cleaner alternative may be to fix that while git-pull is still a
-script, as you seem to already know what is broken and what in the
-current code needs to be fixed in what way exactly.  Perhaps do that
-at the earlier part of (or even as an independent patch outside)
-this series and add this test to protect the fix from getting broken
-later (with expect-failure flipped to expect-success)?
-
-Thanks.
-
+>> +test_expect_success 'fast-forward fails with conflicting work tree' '
+>> +     git checkout -b third master^ &&
+>> +     test_when_finished "git checkout -f copy && git branch -D third" &&
+>> +     echo file >expected &&
+>> +     test_cmp expected file &&
+>> +     echo conflict >file &&
+>> +     test_must_fail git pull . second:third 2>out &&
+>> +     test_i18ngrep "Cannot fast-forward your working tree" out &&
+>> +     test `cat file` = conflict
 >
-> Implement a failing test that demonstrates this.
+> At this point, HEAD would match either master^ (as initially checked
+> out) or second (as fetch fast-forwarded), but I cannot read what this
+> test is expecting to happen.
+>
+> Should the HEAD move or stay?
 
+Ugh, it was probably me getting confused by all the test dependencies :-(.
 
+Anyway, second^ == master^ == the initial commit at this point, so it
+would be clearer to write "git checkout -b third second^", I think.
 
->
-> Signed-off-by: Paul Tan <pyokagan@gmail.com>
-> ---
->
-> Notes:
->     * Added this test to the patch series
->
->  t/t5524-pull-msg.sh | 17 +++++++++++++++++
->  1 file changed, 17 insertions(+)
->
-> diff --git a/t/t5524-pull-msg.sh b/t/t5524-pull-msg.sh
-> index 8cccecc..5b7af07 100755
-> --- a/t/t5524-pull-msg.sh
-> +++ b/t/t5524-pull-msg.sh
-> @@ -17,6 +17,9 @@ test_expect_success setup '
->  		git commit -m "add bfile"
->  	) &&
->  	test_tick && test_tick &&
-> +	echo "second" >afile &&
-> +	git add afile &&
-> +	git commit -m "second commit" &&
->  	echo "original $dollar" >afile &&
->  	git add afile &&
->  	git commit -m "do not clobber $dollar signs"
-> @@ -32,4 +35,18 @@ test_expect_success pull '
->  )
->  '
->  
-> +test_expect_failure '--log=1 limits shortlog length' '
-> +(
-> +	cd cloned &&
-> +	git reset --hard HEAD^ &&
-> +	test `cat afile` = original &&
-> +	test `cat bfile` = added &&
-> +	git pull --log &&
-> +	git log -3 &&
-> +	git cat-file commit HEAD >result &&
-> +	grep Dollar result &&
-> +	! grep "second commit" result
-> +)
-> +'
-> +
->  test_done
+The HEAD has already moved because git-fetch updated it. I should
+definitely add a check to make that clear.
+
+Whether it should or not is something I have an answer to yet though.
+
+Thanks,
+Paul
