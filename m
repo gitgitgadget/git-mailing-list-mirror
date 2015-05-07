@@ -1,84 +1,83 @@
-From: Paul Tan <pyokagan@gmail.com>
-Subject: Re: [PATCH v2 11/12] t5524: test --log=1 limits shortlog length
-Date: Fri, 8 May 2015 01:06:18 +0800
-Message-ID: <CACRoPnRfqQMRJ5N=oL84SMw=FC=Eg-Co-De_9E9cpWCaaSZAxw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 03/12] t5520: test work tree fast-forward when fetch updates head
+Date: Thu, 07 May 2015 10:12:59 -0700
+Message-ID: <xmqqoalwqpk4.fsf@gitster.dls.corp.google.com>
 References: <1430988248-18285-1-git-send-email-pyokagan@gmail.com>
-	<1430988248-18285-12-git-send-email-pyokagan@gmail.com>
-	<05adfac12cb9a7ad183281974d991e00@www.dscho.org>
+	<1430988248-18285-4-git-send-email-pyokagan@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-Cc: Git List <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu May 07 19:06:29 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 07 19:13:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YqPFh-0004zc-TX
-	for gcvg-git-2@plane.gmane.org; Thu, 07 May 2015 19:06:26 +0200
+	id 1YqPMF-0000QF-9G
+	for gcvg-git-2@plane.gmane.org; Thu, 07 May 2015 19:13:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751896AbbEGRGU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 May 2015 13:06:20 -0400
-Received: from mail-lb0-f177.google.com ([209.85.217.177]:33141 "EHLO
-	mail-lb0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751652AbbEGRGT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 May 2015 13:06:19 -0400
-Received: by lbbzk7 with SMTP id zk7so35855623lbb.0
-        for <git@vger.kernel.org>; Thu, 07 May 2015 10:06:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=ETWJv6Sq1XY5h01sWM00jnxRuUPUkmDDFjlsXYKljTg=;
-        b=YA0SIbblKsRqBOqKU0UCCyvYwMq2235thg74fj/nmhqaMwRRRWjaUm71H+eX1XCjhQ
-         ltPShljgb99J4FsUoTmMFP6ZsFGqX3OIzaIVY6swdq6WMzl73yZFsAJKsk10EW6rVAE9
-         ZdxdcYvv41jqzWSGlX8osgzL7DVOHXlsLlRQVHo9Cp6aiKeiPN0xua07i8dYJBITlmjk
-         EdVaw39uKobw6P+Kguz30+8IXvRTpBSDbRM3ujRH0k2KxcmMNhJn/34wFfdCTrKcw0de
-         OJLnjoH4rOaxV3WyKG90ECTHM4mMbB2iTpKuJgpvqndUtjJKla18IyKCkpfBcKQySbTT
-         Xr8w==
-X-Received: by 10.112.205.69 with SMTP id le5mr356868lbc.65.1431018378614;
- Thu, 07 May 2015 10:06:18 -0700 (PDT)
-Received: by 10.112.74.133 with HTTP; Thu, 7 May 2015 10:06:18 -0700 (PDT)
-In-Reply-To: <05adfac12cb9a7ad183281974d991e00@www.dscho.org>
+	id S1751558AbbEGRNH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 May 2015 13:13:07 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:60493 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751593AbbEGRNE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 May 2015 13:13:04 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id F05034E9B4;
+	Thu,  7 May 2015 13:13:01 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=m3smOni1+MmJaOtrVejQmS/j+cg=; b=N7dOyf
+	kIo4sqxl/lYt+pl3l9JqGcg4/TiUU0mf0ECk7VaT89y3DoiLK8VN7pRMuwf1sakq
+	7H9Z4bGbfT7gT9pKPff3z6AZzTlQAL4o6MOnPs48uGfCam6E+wluP9HnSEPzW7+o
+	R+FospXyhtgDbxzjNNDBmKglhGfqaoyX18CM0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=M6q4PJ9BJ5rIsjrka5KK8GkuSaZuRrqh
+	gW6X4PgniAnLG+beDbJbYaGrHJeDWuYoFGST0dDL3fapiF1485Fm0GDMhS4cgndO
+	fgPv6XzQP8ALOu/VmbDE5h2ezPxbX1ZbLrXqrnH703+CisnOYLSE+3iL5vPyFsUZ
+	SqzIAEtPDF4=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E87174E9B2;
+	Thu,  7 May 2015 13:13:01 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 441034E9B0;
+	Thu,  7 May 2015 13:13:01 -0400 (EDT)
+In-Reply-To: <1430988248-18285-4-git-send-email-pyokagan@gmail.com> (Paul
+	Tan's message of "Thu, 7 May 2015 16:43:59 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 50C66062-F4DC-11E4-B663-83E09F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268553>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268554>
 
-Hi Dscho,
+Paul Tan <pyokagan@gmail.com> writes:
 
-On Fri, May 8, 2015 at 12:28 AM, Johannes Schindelin
-<johannes.schindelin@gmx.de> wrote:
-> Hi Paul,
->
-> On 2015-05-07 10:44, Paul Tan wrote:
->> @@ -32,4 +35,18 @@ test_expect_success pull '
->>  )
->>  '
->>
->> +test_expect_failure '--log=1 limits shortlog length' '
->> +(
->> +     cd cloned &&
->> +     git reset --hard HEAD^ &&
->> +     test `cat afile` = original &&
->> +     test `cat bfile` = added &&
->> +     git pull --log &&
->> +     git log -3 &&
->> +     git cat-file commit HEAD >result &&
->> +     grep Dollar result &&
->> +     ! grep "second commit" result
->> +)
->
-> I think it might be better to use `test_must_fail` here, just for consistency (the `!` operator would also pass if `grep` itself could not be executed correctly, quite academic, I know, given that `grep` is exercised plenty of times by the test suite, but still...)
->
-> What do you think?
+> +test_expect_success 'fast-forward fails with conflicting work tree' '
+> +	git checkout -b third master^ &&
+> +	test_when_finished "git checkout -f copy && git branch -D third" &&
+> +	echo file >expected &&
+> +	test_cmp expected file &&
+> +	echo conflict >file &&
+> +	test_must_fail git pull . second:third 2>out &&
+> +	test_i18ngrep "Cannot fast-forward your working tree" out &&
+> +	test `cat file` = conflict
 
-Yep, it's definitely better. Sometimes I forget about the existence of
-some test utility functions :-/.
+At this point, HEAD would match either master^ (as initially checked
+out) or second (as fetch fast-forwarded), but I cannot read what this
+test is expecting to happen.  
 
-Thanks,
-Paul
+Should the HEAD move or stay?
+
+> +'
+> +
+>  test_expect_success '--rebase' '
+>  	git branch to-rebase &&
+>  	echo modified again > file &&
