@@ -1,91 +1,98 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 05/12] t5520: test --rebase failure on unborn branch
- with index
-Date: Thu, 7 May 2015 14:20:36 -0400
-Message-ID: <CAPig+cT6dom8vMoy4eObwQOuERYh4nfLgFHfmofn+C7pD-PnCw@mail.gmail.com>
-References: <1430988248-18285-1-git-send-email-pyokagan@gmail.com>
-	<1430988248-18285-6-git-send-email-pyokagan@gmail.com>
-	<CAGZ79kY7gstS1xPcNu4HqmmXA+qg9BKpXZwaHeQ91n7vL2Sa-g@mail.gmail.com>
-	<CACRoPnQzAjY0bPmHrw2o4Mdzn1Q4Dd587hLXkEPA-qYcYrVGEg@mail.gmail.com>
+From: "Randall S. Becker" <rsbecker@nexbridge.com>
+Subject: RE: t5570 - not cloned error
+Date: Thu, 7 May 2015 14:24:46 -0400
+Message-ID: <009401d088f3$18d53200$4a7f9600$@nexbridge.com>
+References: <013701d08769$a5bbab80$f1330280$@nexbridge.com> <xmqqr3qud6qm.fsf@gitster.dls.corp.google.com> <017401d08782$24d6f5b0$6e84e110$@nexbridge.com> <20150505225521.GB18817@peff.net> <019401d08796$0bf9f880$23ede980$@nexbridge.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Stefan Beller <sbeller@google.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Jeff King <peff@peff.net>
-To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 07 20:20:43 2015
+Content-Type: text/plain;
+	charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+Cc: "'Junio C Hamano'" <gitster@pobox.com>, <git@vger.kernel.org>,
+	"'Joachim Schmitz'" <jojo@schmitz-digital.de>
+To: "'Jeff King'" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu May 07 20:25:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YqQPa-0002HD-3A
-	for gcvg-git-2@plane.gmane.org; Thu, 07 May 2015 20:20:42 +0200
+	id 1YqQTm-0004Oz-Rj
+	for gcvg-git-2@plane.gmane.org; Thu, 07 May 2015 20:25:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752119AbbEGSUh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 May 2015 14:20:37 -0400
-Received: from mail-ig0-f182.google.com ([209.85.213.182]:35246 "EHLO
-	mail-ig0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751959AbbEGSUh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 May 2015 14:20:37 -0400
-Received: by igbyr2 with SMTP id yr2so1305064igb.0
-        for <git@vger.kernel.org>; Thu, 07 May 2015 11:20:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=tUQDfwgXta7Iix+TlZpnBebFYfT4+WLYDlUfPPHQYFc=;
-        b=sTPAfLxy+LlvpEawv3eeEcGumvIUdndiOSL6umwhOnTSVYrusH7WqjzSXY1ICQcow4
-         tBWyk08vFTraf+h1RUyx7kKwtwDATmh+3xY8yrzBnkSzJrASIo6RYOt2PtpZo1TQL7dH
-         f9tA0Ueq5X2t+JcqxDEzZxIijQtt3sVfGQM/EqkLj6TM6GJuoIjjVW/37GQnf39aBOpf
-         rpNh7lNSZ9atn6inlZUdS2z01lVAqB5TJ7X7OtceeUFwQGON0nVXc6xiV179wODswvQ4
-         ulSdqxG/t/PWueTDihzrd7aHM5ktD9/hLBevmJmQx8Q68RtOcrMY2TccOwW7YlpXd8y5
-         oI9g==
-X-Received: by 10.50.43.227 with SMTP id z3mr16400677igl.22.1431022836486;
- Thu, 07 May 2015 11:20:36 -0700 (PDT)
-Received: by 10.107.28.132 with HTTP; Thu, 7 May 2015 11:20:36 -0700 (PDT)
-In-Reply-To: <CACRoPnQzAjY0bPmHrw2o4Mdzn1Q4Dd587hLXkEPA-qYcYrVGEg@mail.gmail.com>
-X-Google-Sender-Auth: 66XLCyfYHOHPoPSw2HWQOvrbDFY
+	id S1751593AbbEGSY6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 May 2015 14:24:58 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:51387 "EHLO
+	elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751061AbbEGSY5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 7 May 2015 14:24:57 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from pangea (CPE0023eb577e25-CM602ad06c91a7.cpe.net.cable.rogers.com [99.237.128.150])
+	(authenticated bits=0)
+	by elephants.elehost.com (8.14.9/8.14.9) with ESMTP id t47IOnP1023224
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+	Thu, 7 May 2015 14:24:49 -0400 (EDT)
+	(envelope-from rsbecker@nexbridge.com)
+In-Reply-To: <019401d08796$0bf9f880$23ede980$@nexbridge.com>
+X-Mailer: Microsoft Outlook 15.0
+Thread-Index: AQGTGMzZfqjkVUQ9RxorcLBPHDSlfQLCdjq/AzQCqbwCby4QeAHeXSswnZeez5A=
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268569>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268570>
 
-On Thu, May 7, 2015 at 1:44 PM, Paul Tan <pyokagan@gmail.com> wrote:
-> On Fri, May 8, 2015 at 12:32 AM, Stefan Beller <sbeller@google.com> wrote:
->> On Thu, May 7, 2015 at 1:44 AM, Paul Tan <pyokagan@gmail.com> wrote:
->>> +test_expect_success 'pull --rebase fails on unborn branch with staged changes' '
->>> +       test_when_finished "rm -rf empty_repo2" &&
->>> +       git init empty_repo2 &&
->>> +       (
->>> +               cd empty_repo2 &&
->>> +               echo staged-file >staged-file &&
->>> +               git add staged-file &&
->>> +               test "$(git ls-files)" = staged-file &&
->>
->> I think usually people use
->>
->>     git ls-files >actual
->>     echo staged-file >expected && # you have this already in your 2nd
->>     # line in the paragraph
->>     test_cmp staged-file actual
->>
->> to make debugging easier as you can inspect the files (actual, expected)
->> after the test has failed.
->>
->> Personally I don't mind the difference as when it comes to debugging
->> using the test suite I haven't found the silver bullet yet.
->
-> Ehh, but using test_cmp will litter the test with lots of "echo X
->>expected" lines which I find quite distracting.
->
-> Just thinking aloud, but it would be great if there was a function to
-> compare a string and a file, or a string and a string.
->
-> But yeah, I guess if the patches are verified to be correct, then I
-> should change these comparisons to use test_cmp.
+On May 5, 2015 8:46 PM, I wrote in my haste:
+> On May 5, 2015 6:55 PM Jeff King wrote:
+> > On Tue, May 05, 2015 at 06:23:41PM -0400, Randall S. Becker wrote:
+> > > On May 5, 2015 6:01 PM Junio C Hamano wrote:
+> > > > "Randall S. Becker" <rsbecker@nexbridge.com> writes:
+> > > > > We definitely have an issue with localhost. When forcing the DNS
+> > > resolver to
+> > > > > return 127.0.0.1, we pass 1-16 then 17 fails as I expected to happen
+> > > based
+> > > > > on my DNS futzing. Heads up that this test is not-surprisingly sensitive
+> > > to
+> > > > > DNS problems. My environment is still in a messy state where I can
+> > > reproduce
+> > > > > the original problem so it might be a useful moment for me to find a way
+> > > to
+> > > > > modify the test script to harden it. Any suggestion on that score
+> > > > > (as in where and roughly how it might be made more reliable)?
+> > > >
+> > > > I do not think this counts as a useful "suggestion", but is this
+> > > > "resolver does not work for local as expected" case even worth
+> > > > protecting our tests against?
+> > >
+> > > I see your point, but after having spent "way too much time" away from the
+> > > $DAYJOB tracking this down, I was hoping to catch the root cause earlier
+> > > next time. Perhaps adding a test step validating that localhost comes back
+> > > with a reasonable value - whatever that may be in context. I'm just not sure
+> > > what the test really needs at its heart to run properly - obviously the IP
+> > > address of the system as  visible in our DMZ is not working for the test.
+> >
+> > I'm having trouble even understanding who is looking up "localhost"
+> > here.  All of the git-daemon tests should be directly using 127.0.0.1 in
+> > the URLs (i.e., what is in $GIT_DAEMON_URL). If that is a problem, I
+> > think you might be able to parameterize the way we set up
+> > $GIT_DAEMON_URL (and how we invoked git-daemon; see lib-git-
+> daemon.sh).
+> >
+> > In the interpolation tests, we do use the string "localhost" but we
+> > should never do a lookup on it. We set an environment variable that
+> > tells the git client to _tell_ the server we looked up localhost, but we
+> > should still be accessing it as 127.0.0.1.
+> >
+> > So I'm confused about what the actual problem is, or why the test cares
+> > about resolving "localhost" in the first place.
+> 
+> That gives me a pretty good idea of where to start looking. I will first hunt
+> down the resolution and go from there. Stay tuned - it may be a day or two
+> before I have a chance to do more than a cursory debug.
 
-Check out verbose() in test-lib-functions.sh:643. It might be just
-what you want. t0020-crlf.sh has a bunch of examples of its use.
+I found the root cause, being that the multi-IP stack configuration on this platform is not being passed correctly through bash to the shell that make starts when running tests. When running the test under ksh, which has a deeper port, the test behaves correctly. As it turns out, this is a platform-specific issue with our bash port.
+
+This is not git's issue at all, nor the DNS resolver configuration (although I did find an independent problem there). Sorry to be a bother.
+
+Cheers,
+Randall
