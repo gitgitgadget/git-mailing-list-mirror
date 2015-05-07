@@ -1,106 +1,71 @@
-From: Lars Kellogg-Stedman <lars@redhat.com>
-Subject: [PATCH v2] http: add support for specifying an SSL cipher list
-Date: Thu,  7 May 2015 12:08:52 -0400
-Message-ID: <1431014932-19236-1-git-send-email-lars@redhat.com>
-References: <xmqq8ud0s7sv.fsf@gitster.dls.corp.google.com>
-Cc: Lars Kellogg-Stedman <lars@redhat.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 07 18:09:04 2015
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] tests: skip dav http-push tests under NO_EXPAT=NoThanks
+Date: Thu, 7 May 2015 12:13:11 -0400
+Message-ID: <20150507161311.GA26219@peff.net>
+References: <xmqq6185d4o1.fsf@gitster.dls.corp.google.com>
+ <20150506173200.GA7985@peff.net>
+ <xmqqvbg5tubj.fsf@gitster.dls.corp.google.com>
+ <xmqqzj5gqsnd.fsf_-_@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 07 18:13:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YqOM9-0004Yy-IJ
-	for gcvg-git-2@plane.gmane.org; Thu, 07 May 2015 18:09:01 +0200
+	id 1YqOQP-0007Af-F4
+	for gcvg-git-2@plane.gmane.org; Thu, 07 May 2015 18:13:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751733AbbEGQI5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 May 2015 12:08:57 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:46323 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751169AbbEGQI4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 May 2015 12:08:56 -0400
-Received: from int-mx10.intmail.prod.int.phx2.redhat.com (int-mx10.intmail.prod.int.phx2.redhat.com [10.5.11.23])
-	by mx1.redhat.com (Postfix) with ESMTPS id A35E58E78A
-	for <git@vger.kernel.org>; Thu,  7 May 2015 16:08:56 +0000 (UTC)
-Received: from lkellogg-pk115wp.redhat.com (ovpn-112-66.phx2.redhat.com [10.3.112.66])
-	by int-mx10.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id t47G8tqk024825;
-	Thu, 7 May 2015 12:08:56 -0400
-Received: by lkellogg-pk115wp.redhat.com (Postfix, from userid 1000)
-	id AE000A0E2B; Thu,  7 May 2015 12:08:54 -0400 (EDT)
-In-Reply-To: <xmqq8ud0s7sv.fsf@gitster.dls.corp.google.com>
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
+	id S1750986AbbEGQNP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 May 2015 12:13:15 -0400
+Received: from cloud.peff.net ([50.56.180.127]:55250 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750933AbbEGQNP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 May 2015 12:13:15 -0400
+Received: (qmail 32564 invoked by uid 102); 7 May 2015 16:13:14 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 07 May 2015 11:13:14 -0500
+Received: (qmail 10679 invoked by uid 107); 7 May 2015 16:13:46 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 07 May 2015 12:13:46 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 07 May 2015 12:13:11 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqzj5gqsnd.fsf_-_@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268540>
 
-Teach git about a new option, "http.sslCipherList", which permits one to
-specify a list of ciphers to use when negotiating SSL connections.  The
-setting can be overwridden by the GIT_SSL_CIPHER_LIST environment
-variable.
+On Thu, May 07, 2015 at 09:06:14AM -0700, Junio C Hamano wrote:
 
-Signed-off-by: Lars Kellogg-Stedman <lars@redhat.com>
----
- Documentation/config.txt |  8 ++++++++
- http.c                   | 11 +++++++++++
- 2 files changed, 19 insertions(+)
+> When built with NO_EXPAT=NoThanks, we will not have a working http-push
+> over webdav.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 2e5ceaf..b0af723 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1560,6 +1560,14 @@ http.saveCookies::
- 	If set, store cookies received during requests to the file specified by
- 	http.cookieFile. Has no effect if http.cookieFile is unset.
- 
-+http.sslCipherList::
-+  A list of SSL ciphers to use when negotiating an SSL connection.
-+  The available ciphers depend on whether libcurl was built against
-+  NSS or OpenSSL and the particular configuration of the crypto
-+  library in use.  Can be overwridden by the 'GIT_SSL_CIPHER_LIST'
-+  environment variable.  To force git to use libcurl's default cipher
-+  list, set GIT_SSL_CIPHER_LIST to the empty string.
-+
- http.sslVerify::
- 	Whether to verify the SSL certificate when fetching or pushing
- 	over HTTPS. Can be overridden by the 'GIT_SSL_NO_VERIFY' environment
-diff --git a/http.c b/http.c
-index 4b179f6..55adff1 100644
---- a/http.c
-+++ b/http.c
-@@ -36,6 +36,7 @@ char curl_errorstr[CURL_ERROR_SIZE];
- static int curl_ssl_verify = -1;
- static int curl_ssl_try;
- static const char *ssl_cert;
-+static const char *ssl_cipherlist;
- #if LIBCURL_VERSION_NUM >= 0x070903
- static const char *ssl_key;
- #endif
-@@ -187,6 +188,9 @@ static int http_options(const char *var, const char *value, void *cb)
- 		curl_ssl_verify = git_config_bool(var, value);
- 		return 0;
- 	}
-+	if (!strcmp("http.sslcipherlist", var)) {
-+		return git_config_string(&ssl_cipherlist, var, value);
-+	}
- 	if (!strcmp("http.sslcert", var))
- 		return git_config_string(&ssl_cert, var, value);
- #if LIBCURL_VERSION_NUM >= 0x070903
-@@ -361,6 +365,13 @@ static CURL *get_curl_handle(void)
- 	if (http_proactive_auth)
- 		init_curl_http_auth(result);
- 
-+	if (getenv("GIT_SSL_CIPHER_LIST"))
-+		ssl_cipherlist = getenv("GIT_SSL_CIPHER_LIST");
-+
-+	if (ssl_cipherlist != NULL && ssl_cipherlist[0] != '\0')
-+		curl_easy_setopt(result, CURLOPT_SSL_CIPHER_LIST,
-+				ssl_cipherlist);
-+
- 	if (ssl_cert != NULL)
- 		curl_easy_setopt(result, CURLOPT_SSLCERT, ssl_cert);
- 	if (has_cert_password())
--- 
-2.4.0
+Hmph, I used to build with NO_EXPAT long ago and don't remember running
+into this, but it is clearly broken now. I wonder what bizarre
+combination of leftover build products made it work. ;)
+
+> diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
+> index 872a252..d823664 100644
+> --- a/t/lib-httpd.sh
+> +++ b/t/lib-httpd.sh
+> @@ -36,6 +36,12 @@ then
+>  	test_done
+>  fi
+>  
+> +if test -n "$NO_EXPAT" && test -n "$LIB_HTTPD_DAV"
+> +then
+> +	skip_all='skipping test, git built without expat support'
+> +	test_done
+> +fi
+
+I was confused at first why this is in lib-httpd.sh and not 5540, but I
+see LIB_HTTPD_DAV is provided by t5540 as a feature flag to
+lib-httpd.sh. I learn something new every day about our test
+infrastructure.
+
+-Peff
