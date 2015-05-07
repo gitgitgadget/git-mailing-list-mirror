@@ -1,126 +1,78 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH v2 12/12] t5520: check reflog action in fast-forward merge
-Date: Thu, 7 May 2015 09:39:23 -0700
-Message-ID: <CAGZ79kaUCp=8JKSspqetzEGFMF7FVvCvFwO9v+A_XtiEd_V=fw@mail.gmail.com>
-References: <1430988248-18285-1-git-send-email-pyokagan@gmail.com>
-	<1430988248-18285-13-git-send-email-pyokagan@gmail.com>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: [PATCH] add support for specifying an SSL cipher list
+Date: Fri, 8 May 2015 00:42:02 +0800
+Message-ID: <CALUzUxoC66QZ5gJdV_nE=zFOLUNfpz64Ena2rDmesaEqkEGDAQ@mail.gmail.com>
+References: <1431008210-673-1-git-send-email-lars@redhat.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 07 18:39:45 2015
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Lars Kellogg-Stedman <lars@redhat.com>
+X-From: git-owner@vger.kernel.org Thu May 07 18:42:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YqOpr-0005wc-UI
-	for gcvg-git-2@plane.gmane.org; Thu, 07 May 2015 18:39:44 +0200
+	id 1YqOsW-0007Z8-7I
+	for gcvg-git-2@plane.gmane.org; Thu, 07 May 2015 18:42:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751072AbbEGQj0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 May 2015 12:39:26 -0400
-Received: from mail-ig0-f180.google.com ([209.85.213.180]:34547 "EHLO
-	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750780AbbEGQjY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 May 2015 12:39:24 -0400
-Received: by iget9 with SMTP id t9so14900520ige.1
-        for <git@vger.kernel.org>; Thu, 07 May 2015 09:39:24 -0700 (PDT)
+	id S1751846AbbEGQmY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 May 2015 12:42:24 -0400
+Received: from mail-ig0-f174.google.com ([209.85.213.174]:35219 "EHLO
+	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750959AbbEGQmX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 May 2015 12:42:23 -0400
+Received: by igbyr2 with SMTP id yr2so164705755igb.0
+        for <git@vger.kernel.org>; Thu, 07 May 2015 09:42:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=197/Ku8MBx5vBIGoj9EA5s0coyMFP0kwWgQy2I++bTc=;
-        b=iRsEDe72zy0A1F1OY/yN8+WVY6CNDHOvMJfCcI5wQhkCr/4bcMsHSd2Q0b/hjto870
-         CPNFqofmPdymA3bx5YuHSgVTe/Br7Gu3dav6nt4ejyqycmZaZpNga11N9TngqOndGxk9
-         LVPSZjVBe4OEr3O3gNdfCwcTIR8CxhkQr92rjwMeqbmiFm/dgalIN+8CqpMA7OdaiLiB
-         qua8RplCcYWLSJesYK9frnDge7cIvLk8zVsBw0HEuRuRHo5WliqlWCeIIryA1q7P0C66
-         nsrJOMr8vTRsstS4dGbxICpsKUJPJpX6QORKxP0BIpswriiyyGz6u4YzwUGej6V3kIpd
-         q+6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=197/Ku8MBx5vBIGoj9EA5s0coyMFP0kwWgQy2I++bTc=;
-        b=Rf/fdtbaJKQnnw5xhv1e+h+JJSThLL9vi4+tEGB9sJaiyMbQz4uaJ5ow6yhU/+IDLp
-         3nfsir6zhHLuGlgDvcb1cwayQb+xA0GOrOm76LmUgghIcq8KJghcSfAuydn08xjAcpa9
-         bbiBH444k1SAyERVJn3wYUSyRaIoIXK+wpy/d2JfwPIygcA+AgXWAPSv9x1FjtxGB8kC
-         imowXNIL2g4eByZusJF+bOEXZjfbioR9ZDVHUHTUsPkOFlogkCdy2IytWGmH6cEUf3Db
-         8aV5qj3qQwtGEpfFoyKM4yzAG2sX3iL/faCNzmVRM/y7f1FrJu6R/sfLP8/LBjQzzY+u
-         Vw3g==
-X-Gm-Message-State: ALoCoQkMpyQnV00cPlKUkvmCCrinBbm0qYC+V4of17IUabUZMXZxI+Z7bkPJE7BFqAFSuhsCZmtd
-X-Received: by 10.42.188.19 with SMTP id cy19mr4717266icb.92.1431016764059;
- Thu, 07 May 2015 09:39:24 -0700 (PDT)
-Received: by 10.107.46.22 with HTTP; Thu, 7 May 2015 09:39:23 -0700 (PDT)
-In-Reply-To: <1430988248-18285-13-git-send-email-pyokagan@gmail.com>
+        bh=RqCFI0hAq3QiqHpQAno3aYV8zu8dm4HM6zetNE9C3NQ=;
+        b=mABP6nk943O2z9ZayDEi1R0Kz9Jp5qn2xLenVW7z4Xl6B+r/gxMTy0+CSZwlX2OBdw
+         OPzKRj78amd15xGGukaF8+xRqGis7Eu0H3TwsWjBWp70ftkoxUkxt4vWJFsY5Y7Pl4mD
+         v6ohbKjolWw7PPIjDrUSXWNZ3dxcuynOy9ZRkC6KsxPi59HnDY9IIwQ1GfzdkxPieVwO
+         sWO+DcppaLLInQSlBXhWTZrENTC0agsNm5HbWs/E70V92e+FDScjClvs4pIKIjhj2aqb
+         y9kfcegt81KGdchzeDz5ZjKA5aoz1mlaBMLijNPkQGunMyF0Mp92TYEt1qOsPMRe2GXb
+         9IoA==
+X-Received: by 10.50.117.35 with SMTP id kb3mr1355375igb.13.1431016942764;
+ Thu, 07 May 2015 09:42:22 -0700 (PDT)
+Received: by 10.64.58.43 with HTTP; Thu, 7 May 2015 09:42:02 -0700 (PDT)
+In-Reply-To: <1431008210-673-1-git-send-email-lars@redhat.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268547>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268548>
 
-On Thu, May 7, 2015 at 1:44 AM, Paul Tan <pyokagan@gmail.com> wrote:
-> When testing a fast-forward merge with git-pull, check to see if the
-> reflog action is "pull" with the arguments passed to git-pull.
+On Thu, May 7, 2015 at 10:16 PM, Lars Kellogg-Stedman <lars@redhat.com> wrote:
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 2e5ceaf..b17985c 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -1560,6 +1560,13 @@ http.saveCookies::
+>         If set, store cookies received during requests to the file specified by
+>         http.cookieFile. Has no effect if http.cookieFile is unset.
 >
-> While we are in the vicinity, remove the empty line as well.
->
-> Signed-off-by: Paul Tan <pyokagan@gmail.com>
-> ---
->
-> Notes:
->     * Added this test to the patch series.
->
->  t/t5520-pull.sh | 13 ++++++++++---
->  1 file changed, 10 insertions(+), 3 deletions(-)
->
-> diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-> index b93b735..6045491 100755
-> --- a/t/t5520-pull.sh
-> +++ b/t/t5520-pull.sh
-> @@ -86,7 +86,6 @@ test_expect_success 'pulling into void must not create an octopus' '
->  '
->
->  test_expect_success 'test . as a remote' '
-> -
->         git branch copy master &&
->         git config branch.copy.remote . &&
->         git config branch.copy.merge refs/heads/master &&
-> @@ -95,7 +94,11 @@ test_expect_success 'test . as a remote' '
->         git checkout copy &&
->         test `cat file` = file &&
->         git pull &&
-> -       test `cat file` = updated
-> +       test `cat file` = updated &&
+> +http.sslCipherList::
+> +  A list of SSL ciphers to use when negotiating an SSL connection.
+> +  The available ciphers depend on whether libcurl was built against
+> +  NSS or OpenSSL and the particular configuration of the crypto
+> +  library in use.  Can be overwridden by the 'GIT_SSL_CIPHER_LIST'
+> +  environment variable.
+> +
+>  http.sslVerify::
+>         Whether to verify the SSL certificate when fetching or pushing
+>         over HTTPS. Can be overridden by the 'GIT_SSL_NO_VERIFY' environment
 
-same as in patch 1
+You might want to mention the libcurl option that this conf
+corresponds to, so that a reader could go look it up in the libcurl
+documentation to get an idea of the ciphers available, and list syntax
+to be used that would be accepted by us (but really by libcurl). But
+we also don't have to go as far as reproducing it here (eg. ciphers
+separated by colons) since this it tied to the libcurl version the
+user is linking against.
 
-> +       git reflog -1 >reflog.actual &&
-> +       sed "s/$_x05[0-9a-f]*/OBJID/g" reflog.actual >reflog.fuzzy &&
-> +       echo "OBJID HEAD@{0}: pull: Fast-forward" >reflog.expected &&
-> +       test_cmp reflog.expected reflog.fuzzy
->  '
->
->  test_expect_success 'the default remote . should not break explicit pull' '
-> @@ -106,7 +109,11 @@ test_expect_success 'the default remote . should not break explicit pull' '
->         git reset --hard HEAD^ &&
->         test `cat file` = file &&
->         git pull . second &&
-> -       test `cat file` = modified
-> +       test `cat file` = modified &&
-> +       git reflog -1 >reflog.actual &&
-> +       sed "s/$_x05[0-9a-f]*/OBJID/g" reflog.actual >reflog.fuzzy &&
-> +       echo "OBJID HEAD@{0}: pull . second: Fast-forward" >reflog.expected &&
-> +       test_cmp reflog.expected reflog.fuzzy
->  '
->
->  test_expect_success 'fail if wildcard spec does not match any refs' '
-> --
-> 2.1.4
->
-
-
-The series looks good to me apart from the minor nits.
-
-Thanks,
-Stefan
+-- 
+Cheers,
+Ray Chuan
