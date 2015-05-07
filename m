@@ -1,82 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: --squash has no effect in git subtree push?
-Date: Thu, 07 May 2015 11:05:20 -0700
-Message-ID: <xmqqy4l0p8kf.fsf@gitster.dls.corp.google.com>
-References: <CAMbsUu5g=r867_WOhLCySG3caKj1jhmQgfzBxK4TYV27+nUpsg@mail.gmail.com>
-	<CAMbsUu4v9w6+wiAUm2hpiNrDaoL3U9Z_suXR3NPVGo-JhH3E+Q@mail.gmail.com>
+From: Paul Tan <pyokagan@gmail.com>
+Subject: Re: [PATCH v2 10/12] t5520: failing test for pull --all with no
+ configured upstream
+Date: Fri, 8 May 2015 02:05:35 +0800
+Message-ID: <CACRoPnRXJOxUkT5sKQf2bLnWVQ-+xFPu8D2PbX2b_9XVEGwQnA@mail.gmail.com>
+References: <1430988248-18285-1-git-send-email-pyokagan@gmail.com>
+	<1430988248-18285-11-git-send-email-pyokagan@gmail.com>
+	<xmqq3838qoeb.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git develop <git@vger.kernel.org>
-To: Danny Lin <danny0838@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 07 20:05:49 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 07 20:05:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YqQBA-0003Po-Is
-	for gcvg-git-2@plane.gmane.org; Thu, 07 May 2015 20:05:48 +0200
+	id 1YqQBB-0003Po-6E
+	for gcvg-git-2@plane.gmane.org; Thu, 07 May 2015 20:05:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751809AbbEGSF3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 May 2015 14:05:29 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64148 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751686AbbEGSF2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 May 2015 14:05:28 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2A3AA4E35D;
-	Thu,  7 May 2015 14:05:22 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=n/kNE+Y7Sn3Yz04Fyy8G+BzHczo=; b=PDxq6G
-	PbvP5GGhM9SkpwkrgdU0tCQHe3cWdKaKpCvAplVFf/G57lkjVt6CAoNAsHMTppzj
-	v9+MQHmZZD2Xy3c5zkUfx3ENBZWWx/CxctapiMUgG/fCPNjjVCyYPk0NMnChzjOU
-	p5jWQ5h1ZcWXQDWRmbfVbLjicGfTO24a7GzwY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=XZo3jYbH/HMv159ct1ZBPPBor9OBrlTS
-	t4h9IbkRMBLaSXP83JfoZ9PK0tXdgNI9e5O0zedt700TZ7d7oB5SHQWBKPlxMtNg
-	bj63zfepgnMX4rRS+ymCyqgnldPHcP5O/77P7o2D/wuSgGlnLemDj6CiDLVwexy/
-	ItvGiHpPZOs=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1FA5B4E35C;
-	Thu,  7 May 2015 14:05:22 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7E1684E349;
-	Thu,  7 May 2015 14:05:21 -0400 (EDT)
-In-Reply-To: <CAMbsUu4v9w6+wiAUm2hpiNrDaoL3U9Z_suXR3NPVGo-JhH3E+Q@mail.gmail.com>
-	(Danny Lin's message of "Thu, 7 May 2015 15:52:33 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: A07DCCB0-F4E3-11E4-B873-83E09F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751514AbbEGSFi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 May 2015 14:05:38 -0400
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:34985 "EHLO
+	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751061AbbEGSFh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 May 2015 14:05:37 -0400
+Received: by lbbuc2 with SMTP id uc2so36880968lbb.2
+        for <git@vger.kernel.org>; Thu, 07 May 2015 11:05:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=PmtL8+vsjmff3pl5rQhl9NINrBdT3VY9EHew98vRc+o=;
+        b=zmHwRsEWaYTlvaldYPGH/0kU/7ZR6OVBl+reyxUg7UiZDfWBzouL2s6pW+er5tk/vn
+         BoIIgJNnVQy5W9PMhLernPwTaF+Hr73c0vABjPZERl5WdfvyhZHM/naeB9glqR/23Qe+
+         lLqdiISle+5XEpt8JcONcUkBy0N/6bflB3nmqCvH0n4cyoGbm9pUZQxnddKjR3oCLOWZ
+         XeL7sO0U8fM3U2IvjrvOFQroyh+N7pmMSKQF1NseejiO7G4mD3rf70uqIJfKAmQHdzNh
+         xVDeqWXgOlX9VxZOEER94O3C7Xlxe8vb5bL9zOi7cbu6JAQ4jWDep7RI0X4xzxEab9f9
+         1g6Q==
+X-Received: by 10.112.42.16 with SMTP id j16mr3947666lbl.98.1431021935715;
+ Thu, 07 May 2015 11:05:35 -0700 (PDT)
+Received: by 10.112.74.133 with HTTP; Thu, 7 May 2015 11:05:35 -0700 (PDT)
+In-Reply-To: <xmqq3838qoeb.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268564>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268565>
 
-Danny Lin <danny0838@gmail.com> writes:
+Hi,
 
-> diff --git a/contrib/subtree/git-subtree.txt b/contrib/subtree/git-subtree.txt
-> index 54e4b4a..60d76cd 100644
-> --- a/contrib/subtree/git-subtree.txt
-> +++ b/contrib/subtree/git-subtree.txt
-> @@ -146,7 +146,7 @@ OPTIONS
->  OPTIONS FOR add, merge, push, pull
->  ----------------------------------
->  --squash::
-> -    This option is only valid for add, merge, push and pull
-> +    This option is only valid for add, merge, and pull
+On Fri, May 8, 2015 at 1:38 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Paul Tan <pyokagan@gmail.com> writes:
+>
+>> error_on_no_merge_candidates() does not consider the case where "$#"
+>> includes command-line flags that are passed to git-fetch.
+>>
+>> As such, when the current branch has no configured upstream, and there
+>> are no merge candidates because of that, git-pull --all erroneously reports
+>> that we are pulling from "--all", as it believes that the first argument
+>> is the remote name.
+>
+> Interesting.
+>
+> I do not think "pull [origin] --all" makes much sense for the same
+> reason why we error out when you say "pull [origin] --tag", so I am
+> not sure "There is no tracking information" is the right diag we
+> would want to give the user, but I agree that "--all" is not a
+> remote name.
+>
+> Does the same comment as 11/12 applies to this as well?
 
-You seem to have lost leading TABs in the patch somehow.
+This is actually only just one symptom of the problem of git-pull
+assuming in many places that "$1" is the remote. There are other
+possible ones, such as git pull --rebase failing silently at finding
+the upstream branch to pass to git-rebase when git-fetch flags are
+passed as well (see git-pull.sh:253), though crafting a test case for
+that would be a bit more involved. Maybe if I have extra time to look
+into it.
 
-I manually typed the same change and commited, so no need to resend
-this one, but for future reference, please try sending a patch to
-yourself (and nobody else) and make sure what you reeived applies
-cleanly with "git am" on the commit you based your patch on.
+Then there is the problem where command line flag parsing stops when
+an unidentified flag is encountered, assuming that it is for
+git-fetch. E.g. git-pull --all --dry-run will pass --dry-run to
+git-fetch, but will still run git-merge. Now, I haven't written this
+up as a test case yet because I haven't the time yet, and it could be
+argued that this is expected behavior, as the git-pull docs say that
+options meant for git-fetch must come after git-pull.
 
-And if it doesn't, figure out where tabs are eaten and lines are
-wrapped and fix that problem before sending the patch to the list.
+However, this is ultimately really confusing for end-users, so I
+propose that we just drop the distinction between git-pull's flags and
+git-fetch's flags, and just parse them all at git-pull. This can be
+done with the current git-pull.sh, but would be easier with the
+superior C parse-options API.
 
-Thanks.
+Thanks,
+Paul
