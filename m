@@ -1,118 +1,91 @@
-From: Lars Kellogg-Stedman <lars@redhat.com>
-Subject: [PATCH v3] http: add support for specifying an SSL cipher list
-Date: Thu,  7 May 2015 14:17:10 -0400
-Message-ID: <1431022630-7005-1-git-send-email-lars@redhat.com>
-References: <1431008210-673-1-git-send-email-lars@redhat.com>
-Cc: gitster@pobox.com, Lars Kellogg-Stedman <lars@redhat.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 07 20:19:28 2015
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 05/12] t5520: test --rebase failure on unborn branch
+ with index
+Date: Thu, 7 May 2015 14:20:36 -0400
+Message-ID: <CAPig+cT6dom8vMoy4eObwQOuERYh4nfLgFHfmofn+C7pD-PnCw@mail.gmail.com>
+References: <1430988248-18285-1-git-send-email-pyokagan@gmail.com>
+	<1430988248-18285-6-git-send-email-pyokagan@gmail.com>
+	<CAGZ79kY7gstS1xPcNu4HqmmXA+qg9BKpXZwaHeQ91n7vL2Sa-g@mail.gmail.com>
+	<CACRoPnQzAjY0bPmHrw2o4Mdzn1Q4Dd587hLXkEPA-qYcYrVGEg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Stefan Beller <sbeller@google.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Jeff King <peff@peff.net>
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 07 20:20:43 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YqQON-0001by-2Q
-	for gcvg-git-2@plane.gmane.org; Thu, 07 May 2015 20:19:27 +0200
+	id 1YqQPa-0002HD-3A
+	for gcvg-git-2@plane.gmane.org; Thu, 07 May 2015 20:20:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752210AbbEGSTX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 May 2015 14:19:23 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:56532 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752076AbbEGSTV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 May 2015 14:19:21 -0400
-Received: from int-mx11.intmail.prod.int.phx2.redhat.com (int-mx11.intmail.prod.int.phx2.redhat.com [10.5.11.24])
-	by mx1.redhat.com (Postfix) with ESMTPS id 3210A8F310;
-	Thu,  7 May 2015 18:19:21 +0000 (UTC)
-Received: from lkellogg-pk115wp.redhat.com (ovpn-112-66.phx2.redhat.com [10.3.112.66])
-	by int-mx11.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id t47IJKEI011621;
-	Thu, 7 May 2015 14:19:20 -0400
-Received: by lkellogg-pk115wp.redhat.com (Postfix, from userid 1000)
-	id 28CEFA0E2B; Thu,  7 May 2015 14:19:19 -0400 (EDT)
-In-Reply-To: <1431008210-673-1-git-send-email-lars@redhat.com>
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
+	id S1752119AbbEGSUh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 May 2015 14:20:37 -0400
+Received: from mail-ig0-f182.google.com ([209.85.213.182]:35246 "EHLO
+	mail-ig0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751959AbbEGSUh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 May 2015 14:20:37 -0400
+Received: by igbyr2 with SMTP id yr2so1305064igb.0
+        for <git@vger.kernel.org>; Thu, 07 May 2015 11:20:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=tUQDfwgXta7Iix+TlZpnBebFYfT4+WLYDlUfPPHQYFc=;
+        b=sTPAfLxy+LlvpEawv3eeEcGumvIUdndiOSL6umwhOnTSVYrusH7WqjzSXY1ICQcow4
+         tBWyk08vFTraf+h1RUyx7kKwtwDATmh+3xY8yrzBnkSzJrASIo6RYOt2PtpZo1TQL7dH
+         f9tA0Ueq5X2t+JcqxDEzZxIijQtt3sVfGQM/EqkLj6TM6GJuoIjjVW/37GQnf39aBOpf
+         rpNh7lNSZ9atn6inlZUdS2z01lVAqB5TJ7X7OtceeUFwQGON0nVXc6xiV179wODswvQ4
+         ulSdqxG/t/PWueTDihzrd7aHM5ktD9/hLBevmJmQx8Q68RtOcrMY2TccOwW7YlpXd8y5
+         oI9g==
+X-Received: by 10.50.43.227 with SMTP id z3mr16400677igl.22.1431022836486;
+ Thu, 07 May 2015 11:20:36 -0700 (PDT)
+Received: by 10.107.28.132 with HTTP; Thu, 7 May 2015 11:20:36 -0700 (PDT)
+In-Reply-To: <CACRoPnQzAjY0bPmHrw2o4Mdzn1Q4Dd587hLXkEPA-qYcYrVGEg@mail.gmail.com>
+X-Google-Sender-Auth: 66XLCyfYHOHPoPSw2HWQOvrbDFY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268568>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268569>
 
-Teach git about a new option, "http.sslCipherList", which permits one to
-specify a list of ciphers to use when negotiating SSL connections.  The
-setting can be overwridden by the GIT_SSL_CIPHER_LIST environment
-variable.
+On Thu, May 7, 2015 at 1:44 PM, Paul Tan <pyokagan@gmail.com> wrote:
+> On Fri, May 8, 2015 at 12:32 AM, Stefan Beller <sbeller@google.com> wrote:
+>> On Thu, May 7, 2015 at 1:44 AM, Paul Tan <pyokagan@gmail.com> wrote:
+>>> +test_expect_success 'pull --rebase fails on unborn branch with staged changes' '
+>>> +       test_when_finished "rm -rf empty_repo2" &&
+>>> +       git init empty_repo2 &&
+>>> +       (
+>>> +               cd empty_repo2 &&
+>>> +               echo staged-file >staged-file &&
+>>> +               git add staged-file &&
+>>> +               test "$(git ls-files)" = staged-file &&
+>>
+>> I think usually people use
+>>
+>>     git ls-files >actual
+>>     echo staged-file >expected && # you have this already in your 2nd
+>>     # line in the paragraph
+>>     test_cmp staged-file actual
+>>
+>> to make debugging easier as you can inspect the files (actual, expected)
+>> after the test has failed.
+>>
+>> Personally I don't mind the difference as when it comes to debugging
+>> using the test suite I haven't found the silver bullet yet.
+>
+> Ehh, but using test_cmp will litter the test with lots of "echo X
+>>expected" lines which I find quite distracting.
+>
+> Just thinking aloud, but it would be great if there was a function to
+> compare a string and a file, or a string and a string.
+>
+> But yeah, I guess if the patches are verified to be correct, then I
+> should change these comparisons to use test_cmp.
 
-Signed-off-by: Lars Kellogg-Stedman <lars@redhat.com>
----
-
-This addresses (I hope!) comments from Junio and Ray, and also resolves some
-whitespace issues present in the earlier version of the patch.
-
- Documentation/config.txt | 13 +++++++++++++
- http.c                   | 14 ++++++++++++++
- 2 files changed, 27 insertions(+)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 2e5ceaf..b982d66 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1560,6 +1560,19 @@ http.saveCookies::
- 	If set, store cookies received during requests to the file specified by
- 	http.cookieFile. Has no effect if http.cookieFile is unset.
- 
-+http.sslCipherList::
-+	A list of SSL ciphers to use when negotiating an SSL connection.
-+	The available ciphers depend on whether libcurl was built against
-+	NSS or OpenSSL and the particular configuration of the crypto
-+	library in use.  Internally this sets the CURLOPT_SSL_CIPHER_LIST
-+	option; see the libcurl documentation for that option for more
-+	details on the format of this list.
-+
-+	Can be overridden by the 'GIT_SSL_CIPHER_LIST' environment variable.
-+	To force git to use libcurl's default cipher list and ignore any
-+	explicit http.sslCipherList option, set GIT_SSL_CIPHER_LIST to the
-+	empty string.
-+
- http.sslVerify::
- 	Whether to verify the SSL certificate when fetching or pushing
- 	over HTTPS. Can be overridden by the 'GIT_SSL_NO_VERIFY' environment
-diff --git a/http.c b/http.c
-index 4b179f6..b617546 100644
---- a/http.c
-+++ b/http.c
-@@ -36,6 +36,7 @@ char curl_errorstr[CURL_ERROR_SIZE];
- static int curl_ssl_verify = -1;
- static int curl_ssl_try;
- static const char *ssl_cert;
-+static const char *ssl_cipherlist;
- #if LIBCURL_VERSION_NUM >= 0x070903
- static const char *ssl_key;
- #endif
-@@ -187,6 +188,9 @@ static int http_options(const char *var, const char *value, void *cb)
- 		curl_ssl_verify = git_config_bool(var, value);
- 		return 0;
- 	}
-+	if (!strcmp("http.sslcipherlist", var)) {
-+		return git_config_string(&ssl_cipherlist, var, value);
-+	}
- 	if (!strcmp("http.sslcert", var))
- 		return git_config_string(&ssl_cert, var, value);
- #if LIBCURL_VERSION_NUM >= 0x070903
-@@ -361,6 +365,16 @@ static CURL *get_curl_handle(void)
- 	if (http_proactive_auth)
- 		init_curl_http_auth(result);
- 
-+	if (getenv("GIT_SSL_CIPHER_LIST"))
-+		ssl_cipherlist = getenv("GIT_SSL_CIPHER_LIST");
-+
-+	/* See http://curl.haxx.se/libcurl/c/CURLOPT_SSL_CIPHER_LIST.html
-+	 * for details on the format of and available values for
-+	 * CURLOPT_SSL_CIPHER_LIST. */
-+	if (ssl_cipherlist != NULL && ssl_cipherlist[0] != '\0')
-+		curl_easy_setopt(result, CURLOPT_SSL_CIPHER_LIST,
-+				ssl_cipherlist);
-+
- 	if (ssl_cert != NULL)
- 		curl_easy_setopt(result, CURLOPT_SSLCERT, ssl_cert);
- 	if (has_cert_password())
--- 
-2.4.0
+Check out verbose() in test-lib-functions.sh:643. It might be just
+what you want. t0020-crlf.sh has a bunch of examples of its use.
