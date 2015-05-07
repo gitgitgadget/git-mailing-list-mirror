@@ -1,61 +1,81 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 07/12] t4013: call git-merge instead of git-pull
-Date: Thu, 07 May 2015 18:26:34 +0200
-Organization: gmx
-Message-ID: <a2c6df723ca5237c094ab4002e45a834@www.dscho.org>
-References: <1430988248-18285-1-git-send-email-pyokagan@gmail.com>
- <1430988248-18285-8-git-send-email-pyokagan@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] Fixed translation error in config.c file
+Date: Thu, 7 May 2015 12:28:52 -0400
+Message-ID: <CAPig+cSNj2_JVH=nU=pSkHmdW_Yvd0aLC8Hk5we9r=mduKDj=g@mail.gmail.com>
+References: <554a8472.8c3bc20a.458e.ffffdae7@mx.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 07 18:26:50 2015
+Content-Type: text/plain; charset=UTF-8
+To: Alangi Derick <alangiderick@gmail.com>,
+	Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu May 07 18:28:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YqOdM-0006lr-VB
-	for gcvg-git-2@plane.gmane.org; Thu, 07 May 2015 18:26:49 +0200
+	id 1YqOfS-00086G-8d
+	for gcvg-git-2@plane.gmane.org; Thu, 07 May 2015 18:28:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752036AbbEGQ0n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 May 2015 12:26:43 -0400
-Received: from mout.gmx.net ([212.227.17.20]:50883 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752031AbbEGQ0m (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 May 2015 12:26:42 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0MBrCt-1YzVZE038h-00Ao3a; Thu, 07 May 2015 18:26:35
- +0200
-In-Reply-To: <1430988248-18285-8-git-send-email-pyokagan@gmail.com>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:iJmzp8ofqgz9RoA2bnkdC8DZinMvh4ju1l5kqmMRPQ1LsY5QgIV
- vlrNBl8ZlzOZpX76OqzzLlJ45S4vad5Ff/7oemAM3rPneh7lGI2sY4nXsM182/8jmWogVIf
- pTuLGYfwMFEMPogkfv6J/c1AEJTSe9whLneIUc5O5oP0eZdSDoiOGmmh412LU+GeHUfibig
- MewDGQ84MjBnlG9Ex/37g==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1751358AbbEGQ2y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 May 2015 12:28:54 -0400
+Received: from mail-ig0-f173.google.com ([209.85.213.173]:34434 "EHLO
+	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751189AbbEGQ2w (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 May 2015 12:28:52 -0400
+Received: by iget9 with SMTP id t9so14717691ige.1
+        for <git@vger.kernel.org>; Thu, 07 May 2015 09:28:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:content-type;
+        bh=0z6NkGVh583i4J0g50B1Mg93vSkC8SteG4Uhlpi6b/M=;
+        b=OMng//dvEk6ZKFAXQm/jgSxlyIqLqr5gGRp7OwnNcaZ0Y9jGgPhS4+HHkod6TLkc3A
+         e1q9cPyLvcVCbaduERXlrQAmMQyFGX8xPYvU4EXKq3jvafvkhu9rhPGYpDkSVaV5h+vv
+         XsXbz81/qa9wl04+qDfdX7S/8GVswjB9eVjKbNf7uvvzG6uRmTIEwJVdUp4ag7H4kFAq
+         ZJj/c1/ghynd3y63Ik9lb26E59Hu+/R3pAbnz0Xqliy5OkHmt3Or+yyjAaAJu49FVk9g
+         ohkWLQihnmOz/qQjDB14g27/im4U8WwoNYTHz5o1Z/Ah9/d0w0rNaWx4QXw4KsVkgKSP
+         dcRA==
+X-Received: by 10.107.3.163 with SMTP id e35mr5626883ioi.92.1431016132261;
+ Thu, 07 May 2015 09:28:52 -0700 (PDT)
+Received: by 10.107.28.132 with HTTP; Thu, 7 May 2015 09:28:52 -0700 (PDT)
+In-Reply-To: <554a8472.8c3bc20a.458e.ffffdae7@mx.google.com>
+X-Google-Sender-Auth: ontN7LRnEFgJbS2GWR7Hwdxen6M
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268543>
 
-Hi Paul,
+On Wed, May 6, 2015 at 4:51 PM, Alangi Derick <alangiderick@gmail.com> wrote:
+> There was an existing translation in 'git config' output, that was
+> incorrect in some unspecified way, and this change corrects that
+> breakage
+>
+> Signed-off-by: Alangi Derick <alangiderick@gmail.com>
+> ---
+> diff --git a/builtin/config.c b/builtin/config.c
+> index bfd3016..47c1a42 100644
+> --- a/builtin/config.c
+> +++ b/builtin/config.c
+> @@ -193,7 +193,7 @@ static int get_value(const char *key_, const char *regex_)
+>
+>                 key_regexp = (regex_t*)xmalloc(sizeof(regex_t));
+>                 if (regcomp(key_regexp, key, REG_EXTENDED)) {
+> -                       fprintf(stderr, "Invalid key pattern: %s\n", key_);
+> +                       error(_("Invalid key pattern: %s\n"), key_);
 
-sorry for being so slow on reviewing your patches, but I saw that plenty of excellent feedback has made the second round of patches even better than the first one.
+A couple comments:
 
-I am particularly impressed by the thoroughness of the commit messages, they make reviewing much more pleasant.
+As a convenience, error() automatically outputs a newline (\n) after
+the message, therefore, when you convert this from fprintf() to
+error(), you will need to remove the '\n' from the string.
 
-On 2015-05-07 10:44, Paul Tan wrote:
+Changing fprintf() calls to error() is a very distinct change from
+marking strings for translation by wrapping them with _(...),
+therefore the fprintf()-to-error() change should be done separately in
+its own patch. (And, that patch should only change fprintf() to
+error(); it should not do the _(...) wrapping.)
 
-> As such, replace the call to git-pull with a call to git-merge to reduce
-> the dependence on git-pull's functionality to reduce irrelevant test
-> breakage when git-pull is rewritten to C.
-
-Both this patch and 9/12 change `git pull` invocations to equivalent non-pull ones, but I wonder whether it would not be a better idea to leave them as-are, so that we can make sure that scripts out there that might use similar `git pull` invocations would be unaffected by the rewrite?
-
-Ciao,
-Dscho
+>                         free(key_regexp);
+>                         key_regexp = NULL;
+>                         ret = CONFIG_INVALID_PATTERN;
