@@ -1,79 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Luke Diamand <luke@diamand.org>
 Subject: Re: [PATCH 2/2] git-p4: fix handling of multi-word P4EDITOR
-Date: Thu, 07 May 2015 13:16:06 -0700
-Message-ID: <xmqqlhh0nny1.fsf@gitster.dls.corp.google.com>
-References: <1431019501-30807-1-git-send-email-luke@diamand.org>
-	<1431019501-30807-3-git-send-email-luke@diamand.org>
-	<xmqqr3qsp8a0.fsf@gitster.dls.corp.google.com>
-	<554BBCBE.1020408@diamand.org>
+Date: Thu, 07 May 2015 21:42:13 +0100
+Message-ID: <554BCE25.5070308@diamand.org>
+References: <1431019501-30807-1-git-send-email-luke@diamand.org>	<1431019501-30807-3-git-send-email-luke@diamand.org>	<xmqqr3qsp8a0.fsf@gitster.dls.corp.google.com>	<554BBCBE.1020408@diamand.org> <xmqqlhh0nny1.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
 	Chris Lasell <chrisl@pixar.com>
-To: Luke Diamand <luke@diamand.org>
-X-From: git-owner@vger.kernel.org Thu May 07 22:16:14 2015
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 07 22:42:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YqSDO-0000M2-65
-	for gcvg-git-2@plane.gmane.org; Thu, 07 May 2015 22:16:14 +0200
+	id 1YqSdB-000520-CW
+	for gcvg-git-2@plane.gmane.org; Thu, 07 May 2015 22:42:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751743AbbEGUQK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 May 2015 16:16:10 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:61341 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751096AbbEGUQI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 May 2015 16:16:08 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 335064FBBA;
-	Thu,  7 May 2015 16:16:08 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=G0AtC6AoHkjLY+eV1UiFrUank1s=; b=sb87uf
-	moTLldIfa00jMk1PhHmG4No5igirI3uKizq2gTYbk+CovAaWijEGwwvLPrnd8KrE
-	35duUzmUxhriWm0a3+0203dbm9mWdsoWuWrS89hYlOkPYiQS4+UwzeP44AFldIAm
-	DKUH00dkVr7Kl/IT9f7l8ILJO4lQC1ki4l2Ws=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=jqS3JPycBKPy6KvM1NBLzVsM2cU3EIYY
-	ev6GtFhgIQojCKvw+G8mJ3FV7PuwUHDZkDRv1fGpMQS5ZiMmer+bTY7V1q17fM3w
-	FPQPljTdPPp7gnM3dkmipgwVYKkUfkXEIdx7o2v9dydVOZUeKmRSw3TPhjdQlGSx
-	4zKpdIBF8fs=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2B2CA4FBB9;
-	Thu,  7 May 2015 16:16:08 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9DC0A4FBB6;
-	Thu,  7 May 2015 16:16:07 -0400 (EDT)
-In-Reply-To: <554BBCBE.1020408@diamand.org> (Luke Diamand's message of "Thu,
-	07 May 2015 20:27:58 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: E526065E-F4F5-11E4-86DB-83E09F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751859AbbEGUmr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 May 2015 16:42:47 -0400
+Received: from mail-wg0-f48.google.com ([74.125.82.48]:35612 "EHLO
+	mail-wg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751846AbbEGUmr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 May 2015 16:42:47 -0400
+Received: by wgyo15 with SMTP id o15so55032349wgy.2
+        for <git@vger.kernel.org>; Thu, 07 May 2015 13:42:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=diamand.org; s=google;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=uIu11VuWjKmdmpShmnj75Vn3wv9x/ucF+/bCGaEEF7w=;
+        b=iwErtyI5TPYGuUoNGMS5eS1VXsNra+294Ih3DaD7rKyo438mDEfiY8EP2qnEdjY8BO
+         Gx3IbIFJ9hXwJOZMohqL45ipNbZbjnXIYVgfBb9ys+jeCk8KBoQDhs74o6r0GmxGJtng
+         qW8a3ZSgsecaY6iMN9KLXrKR/IA7GxAqKtAwc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
+         :cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=uIu11VuWjKmdmpShmnj75Vn3wv9x/ucF+/bCGaEEF7w=;
+        b=kAjgtEMQffbnQEL1kNwvTOahYgm2wquNtm+nUE5i9Ru0z3dRJ+h7WQJpL1B8E0tMAS
+         UVDNzHtL6zQ39dew8slo6yrEhzVhL+X1KqdAz91CBpfm0kCg+rrlEA1iyWHx05OjrD5T
+         9RMttoSVG1KYJmRqYSIqYKxJ2Yrmmgyo2LfnrQHgzgqwwjJJnEHhV81XpNdXggArU8s3
+         XGqA7IAWjPhcDHaVIZnUYEjGVbTc/fWykuPEjT0Pa9DaX5MSXOlKXombdYTGeh94RNH8
+         K2X3OQuzOiXmE4nZowBxWs+QDtdbmwa8d2NI5dYlvDaJY5xDO8nBCGC6056uydnZV4S+
+         Zgmw==
+X-Gm-Message-State: ALoCoQnUjwMLXKoNoh6GkLLDf4xAy+t67i6GMX4NfUAwVzCs3vEJVkGWzJ6faxFjt1tEDhnAlOUD
+X-Received: by 10.180.79.66 with SMTP id h2mr126831wix.46.1431031365926;
+        Thu, 07 May 2015 13:42:45 -0700 (PDT)
+Received: from [192.168.245.128] (cpc7-cmbg17-2-0-cust139.5-4.cable.virginm.net. [86.1.43.140])
+        by mx.google.com with ESMTPSA id r9sm5155945wjo.26.2015.05.07.13.42.44
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 07 May 2015 13:42:45 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.6.0
+In-Reply-To: <xmqqlhh0nny1.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268586>
 
-Luke Diamand <luke@diamand.org> writes:
-
-> On Linux:
+On 07/05/15 21:16, Junio C Hamano wrote:
+> Luke Diamand <luke@diamand.org> writes:
 >
-> $ export P4EDITOR="gvim -f"
-> $ p4 submit
-> -- works as you would hope --
+>> On Linux:
+>>
+>> $ export P4EDITOR="gvim -f"
+>> $ p4 submit
+>> -- works as you would hope --
+>>
+>> $ export P4EDITOR="/home/lgd/My Programs/editor.sh"
+>> $ p4 submit
+>> sh: 1: /home/lgd/My: not found
+>>
+>> $ export P4EDITOR="/home/lgd/My\ Programs/editor.sh"
+>> -- works fine --
 >
-> $ export P4EDITOR="/home/lgd/My Programs/editor.sh"
-> $ p4 submit
-> sh: 1: /home/lgd/My: not found
->
-> $ export P4EDITOR="/home/lgd/My\ Programs/editor.sh"
-> -- works fine --
+> Good.  That is exactly I wanted to see.
 
-Good.  That is exactly I wanted to see.
-
-Thanks.
+Test case t9805-git-p4-skip-submit-edit.sh fails with that change. It 
+sets P4EDITOR to "$TRASH_DIRECTORY/ed.sh".
