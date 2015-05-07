@@ -1,153 +1,90 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] add support for specifying an SSL cipher list
-Date: Thu, 07 May 2015 08:53:36 -0700
-Message-ID: <xmqq8ud0s7sv.fsf@gitster.dls.corp.google.com>
-References: <1431008210-673-1-git-send-email-lars@redhat.com>
+Subject: Re: [PATCH v2 01/12] t5520: implement tests for no merge candidates cases
+Date: Thu, 07 May 2015 08:56:39 -0700
+Message-ID: <xmqq4mnos7ns.fsf@gitster.dls.corp.google.com>
+References: <1430988248-18285-1-git-send-email-pyokagan@gmail.com>
+	<1430988248-18285-2-git-send-email-pyokagan@gmail.com>
+	<554B2AEB.3020608@web.de>
+	<xmqqh9roscty.fsf@gitster.dls.corp.google.com>
+	<CACRoPnSCvitGfVKyqV7PJd_TzLJEs8U_mjYhaRy3KOFrWjBEwA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Lars Kellogg-Stedman <lars@redhat.com>
-X-From: git-owner@vger.kernel.org Thu May 07 17:53:45 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	Git List <git@vger.kernel.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 07 17:56:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YqO7N-0003eK-1m
-	for gcvg-git-2@plane.gmane.org; Thu, 07 May 2015 17:53:45 +0200
+	id 1YqOAN-0005Zq-Tx
+	for gcvg-git-2@plane.gmane.org; Thu, 07 May 2015 17:56:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752175AbbEGPxk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 May 2015 11:53:40 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:51852 "EHLO
+	id S1751686AbbEGP4o convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 May 2015 11:56:44 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50966 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751050AbbEGPxk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 May 2015 11:53:40 -0400
+	with ESMTP id S1751638AbbEGP4l convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 7 May 2015 11:56:41 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 29E074DC9F;
-	Thu,  7 May 2015 11:53:39 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0AAE14DE80;
+	Thu,  7 May 2015 11:56:41 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=21lACsnP4BiLan+ON1W2u8ozAOI=; b=OnHrps
-	Isewq9TPRIwCCFN/7H1fDhD3J7oGnMKw81yxEATlcL7VDzlseOkJ8G5WowVN5ufa
-	RLEqSF2pZr59RohT8IRuBonwWHZ0dt9t0iKWX+6RKPk+EO+btXV6smaPVm+5962u
-	BqrOcnl1vpNadlmxlyYcJH0OF3919AqBXaMZU=
+	:content-type:content-transfer-encoding; s=sasl; bh=0tUPc9amn/oV
+	6GWlxB9VdiSGyso=; b=Y4uNI9QJ93V2i1JhdKlNHsMee4BdTId+ilKp9+dU+ES9
+	FW+iBYXv0aOVzq8W+RWOFZju1Qmo2fHLojAL4lUQUHeXFBiYZ3oIQuP46IEE7XfB
+	Lg2C3I8ms1Ppb2D3SYeHf98exUzpGVpxsV+qhRaMeLK1ylTQEWm4PJlStkH8aFs=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=RLGMbt25xRBunrJq2t1bz0SWlT/gdBc+
-	Bzvy6ifdjYRb95rxzTi0VprMbTldQxz/ys5T4lLII0bwXerh2qgyvFfYelPzjEKx
-	jizvjxYY41azrW2qBodOEPA/a10lATSt1tEvv1UgCJFe5qmzwNd3kmy9SORl9Qj5
-	JEC3xRxyn04=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=rSG19L
+	O4BPCQ0hX3I4yRAT3gxvY5hNFnWQwoMpCW7L035/R8sxamj23EYNRxcVE0YL3pL6
+	Durc7P19jhc0QjrguWmHFmgdnBY6znHPFgMvJ0irAGAd32mTNSd2AhY2HLkl48qv
+	d/9piGKTeSEJznS/g8Nsjj276+hLOlIwz/mcM=
 Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2232A4DC9C;
-	Thu,  7 May 2015 11:53:39 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 01D7B4DE7F;
+	Thu,  7 May 2015 11:56:41 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 99E184DC9B;
-	Thu,  7 May 2015 11:53:38 -0400 (EDT)
-In-Reply-To: <1431008210-673-1-git-send-email-lars@redhat.com> (Lars
-	Kellogg-Stedman's message of "Thu, 7 May 2015 10:16:50 -0400")
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 72D8F4DE7E;
+	Thu,  7 May 2015 11:56:40 -0400 (EDT)
+In-Reply-To: <CACRoPnSCvitGfVKyqV7PJd_TzLJEs8U_mjYhaRy3KOFrWjBEwA@mail.gmail.com>
+	(Paul Tan's message of "Thu, 7 May 2015 22:47:02 +0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 3A00BBD0-F4D1-11E4-8B6F-83E09F42C9D4-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: A66CDE5C-F4D1-11E4-B1B0-83E09F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268536>
 
-Lars Kellogg-Stedman <lars@redhat.com> writes:
+Paul Tan <pyokagan@gmail.com> writes:
 
-> Teach git about a new option, "http.sslCipherList", which permits one to
-> specify a list of ciphers to use when negotiating SSL connections.  The
-> setting can be overwridden by the GIT_SSL_CIPHER_LIST environment
-> variable.
+> Hi Junio,
 >
-> Signed-off-by: Lars Kellogg-Stedman <lars@redhat.com>
-> ---
+> On Thu, May 7, 2015 at 10:04 PM, Junio C Hamano <gitster@pobox.com> w=
+rote:
+>> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+>>
+>>> In other words:
+>>> test $(cat file) =3D file &&
+>>
+>> Is there a guarantee that file has a single word?  Can it be empty?
+>> Can it contain "foo bar\n"?
 >
-> I was recently helping someone diagnose the following error when
-> trying to clone a remote repository:
->
->   fatal: unable to access 'https://example.org/': Cannot communicate
->   securely with peer: no common encryption algorithm(s).
->
-> This happens when the remote server and the default libcurl
-> configuration do not share any ciphers in common.  In this particular
-> case the solution was to add 'ecdhe_ecdsa_aes_128_gcm_sha_256' to the
-> list of ciphers via CURLOPT_SSL_CIPHER_LIST.  This patch permits one
-> to make such a configuration change in git.
->
->  Documentation/config.txt |  7 +++++++
->  http.c                   | 11 +++++++++++
->  2 files changed, 18 insertions(+)
->
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 2e5ceaf..b17985c 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -1560,6 +1560,13 @@ http.saveCookies::
->  	If set, store cookies received during requests to the file specified by
->  	http.cookieFile. Has no effect if http.cookieFile is unset.
->  
-> +http.sslCipherList::
-> +  A list of SSL ciphers to use when negotiating an SSL connection.
-> +  The available ciphers depend on whether libcurl was built against
-> +  NSS or OpenSSL and the particular configuration of the crypto
-> +  library in use.  Can be overwridden by the 'GIT_SSL_CIPHER_LIST'
-> +  environment variable.
+> It can, but it should not ;-). But yes, this will need to be quoted a=
+s
+> well to be safe. Whoops.
 
-It is not clear to me what definition of "override" this sentence
-uses.  If you set something to this configuration variable, and if
-you want to revert the list back to whatever cURL uses by default,
-what exact value should I set GIT_SSL_CIPHER_LIST to?  Do I have to
-find out the list of cipher suites cURL uses by default from the doc
-and list them all in the correct order, or can I merely set it to an
-empty string, i.e.
+Yup.  I see that existing test (this script is ancient, isn't it?)
+has the same issue of using backticks and not quoting sufficiently.
 
-	$ GIT_SSL_CIPHER_LIST= git fetch ...
-
-or what?
-
-I also wonder if this feature is something we would want a test or
-two to protect against future changes accidentally breaking it, but
-I do not offhand know how hard it would be to come up with a
-reasonable test.
+Perhaps we would want a clean-up-and-modernise step before this
+patch to reduce patch noise.
 
 Thanks.
-
-> diff --git a/http.c b/http.c
-> index 4b179f6..8077f8d 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -36,6 +36,7 @@ char curl_errorstr[CURL_ERROR_SIZE];
->  static int curl_ssl_verify = -1;
->  static int curl_ssl_try;
->  static const char *ssl_cert;
-> +static const char *ssl_cipherlist;
->  #if LIBCURL_VERSION_NUM >= 0x070903
->  static const char *ssl_key;
->  #endif
-> @@ -187,6 +188,9 @@ static int http_options(const char *var, const char *value, void *cb)
->  		curl_ssl_verify = git_config_bool(var, value);
->  		return 0;
->  	}
-> +	if (!strcmp("http.sslcipherlist", var)) {
-> +		return git_config_string(&ssl_cipherlist, var, value);
-> +	}
->  	if (!strcmp("http.sslcert", var))
->  		return git_config_string(&ssl_cert, var, value);
->  #if LIBCURL_VERSION_NUM >= 0x070903
-> @@ -361,6 +365,13 @@ static CURL *get_curl_handle(void)
->  	if (http_proactive_auth)
->  		init_curl_http_auth(result);
->  
-> +	if (getenv("GIT_SSL_CIPHER_LIST"))
-> +		ssl_cipherlist = getenv("GIT_SSL_CIPHER_LIST");
-> +
-> +	if (ssl_cipherlist != NULL)
-> +		curl_easy_setopt(result, CURLOPT_SSL_CIPHER_LIST,
-> +				ssl_cipherlist);
-> +
->  	if (ssl_cert != NULL)
->  		curl_easy_setopt(result, CURLOPT_SSLCERT, ssl_cert);
->  	if (has_cert_password())
