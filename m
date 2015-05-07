@@ -1,103 +1,127 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: [PATCH 2/2] git-p4: fix handling of multi-word P4EDITOR
-Date: Thu,  7 May 2015 18:25:01 +0100
-Message-ID: <1431019501-30807-3-git-send-email-luke@diamand.org>
-References: <1431019501-30807-1-git-send-email-luke@diamand.org>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Chris Lasell <chrisl@pixar.com>,
-	Luke Diamand <luke@diamand.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 07 19:25:57 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 11/12] t5524: test --log=1 limits shortlog length
+Date: Thu, 07 May 2015 10:28:25 -0700
+Message-ID: <xmqqbnhwqoue.fsf@gitster.dls.corp.google.com>
+References: <1430988248-18285-1-git-send-email-pyokagan@gmail.com>
+	<1430988248-18285-12-git-send-email-pyokagan@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 07 19:28:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YqPYX-0007mf-5f
-	for gcvg-git-2@plane.gmane.org; Thu, 07 May 2015 19:25:53 +0200
+	id 1YqPb6-0000rc-T9
+	for gcvg-git-2@plane.gmane.org; Thu, 07 May 2015 19:28:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751404AbbEGRZq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 May 2015 13:25:46 -0400
-Received: from mail-wi0-f173.google.com ([209.85.212.173]:36031 "EHLO
-	mail-wi0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750780AbbEGRZn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 May 2015 13:25:43 -0400
-Received: by wizk4 with SMTP id k4so251545266wiz.1
-        for <git@vger.kernel.org>; Thu, 07 May 2015 10:25:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=fyeZqUMn35L4qkmUrxhVwcnlQb1QCdLHSZ8PhuJB5PQ=;
-        b=MeX3FP747hTSbmhesl8DSBEFJyQv/OPql86Jvlj3w7zF5GJrUCO1xBHEboqtK4+4SU
-         V6oByKiiVjhSodjc2FRfr8hhqXd4UJRFSscDDYpk6I90sOKIFVzPniOg54Hyyn8/ypS/
-         sJz9zrXOGfjPfuBShMd+Ilm067EQ4UBf85bDY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=fyeZqUMn35L4qkmUrxhVwcnlQb1QCdLHSZ8PhuJB5PQ=;
-        b=ZYjBL15Sue5EtTi5GBxdzbyaMGup9XzgQsKaX8GfwGy+EODIfVBGTwar+2cR66nY3B
-         87yRAjFdrMbmbgLYu9+cUyf5z8viJnCjtpU//9CtmNhDeiPmWC8HgfqK1DsZwPCL2ggS
-         zLG2XXwvppFiXW1gq1rq5rkoKy8gR/XnIeIA6lxvsyaUgREC5c8tD2Y1zOpdDjaaPTeY
-         a6yutRRhZQcnCJdXuOOu+vkEsejrigl2tuTZryY7iSCtPhWZ9g8Dot4bxsCZWyzXwGcA
-         qbJjKVSW/lpm5yNhLzMJZToYmocIDHkZJ+v9nyD5AgV68LegNZ0SQylaVrMKWx3OSdJG
-         GrSA==
-X-Gm-Message-State: ALoCoQkSBuK9IjQG8vyaC04ux2QsAD2uKQ83CLei5+LaDVBQiobzz+mBG1uTq3KTbGHw0h7fZXLy
-X-Received: by 10.180.208.7 with SMTP id ma7mr8931608wic.0.1431019542381;
-        Thu, 07 May 2015 10:25:42 -0700 (PDT)
-Received: from ethel.cable.virginmedia.net (cpc7-cmbg17-2-0-cust139.5-4.cable.virginm.net. [86.1.43.140])
-        by mx.google.com with ESMTPSA id b5sm8416807wiw.8.2015.05.07.10.25.40
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 07 May 2015 10:25:41 -0700 (PDT)
-X-Mailer: git-send-email 2.4.0.rc3.380.g8e2ddc7
-In-Reply-To: <1431019501-30807-1-git-send-email-luke@diamand.org>
+	id S1751197AbbEGR22 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 May 2015 13:28:28 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64266 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750780AbbEGR21 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 May 2015 13:28:27 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 000944D076;
+	Thu,  7 May 2015 13:28:26 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=sc3j9nr2NgaO4jFNJvYrTZXMRF4=; b=NUPMBj
+	rtFhK4QbG2ZscOSs+J6THpNvWg9ZGhuYI0wZLFW18n+H3b7kRfiLMqeth7Gx8JkT
+	FuRznuV8YCn15QMn5wQSvtshrpyANFmgarlnYa+ENR460sKBX6zg1dbzMiqDYoCU
+	g/XNc9t6u88wFxkgS9q0JCxwjZJY/67QKCbVk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=QT6JC09qyKljKLRYiXQ5d0jmrFOCcYIw
+	9J6QjX31+oDORzzPb+TQrxrFsRnleS8Q0gbgKPKzGnX/eqE9caXjXMoa2I8oEgJm
+	l19GTKAfSkO78BzHRtCkP7SOvmOmLg8ilX5uRUXXvfi/Icd4XgFitN5mVAViFyiv
+	x254knn484Q=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id EA1D34D075;
+	Thu,  7 May 2015 13:28:26 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 649BA4D06E;
+	Thu,  7 May 2015 13:28:26 -0400 (EDT)
+In-Reply-To: <1430988248-18285-12-git-send-email-pyokagan@gmail.com> (Paul
+	Tan's message of "Thu, 7 May 2015 16:44:07 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 78301614-F4DE-11E4-977F-83E09F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268559>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268560>
 
-This teaches git-p4 to pass the P4EDITOR variable to the
-shell for expansion, so that any command-line arguments are
-correctly handled. Without this, git-p4 can only launch the
-editor if P4EDITOR is solely the path to the binary, without
-any arguments.
+Paul Tan <pyokagan@gmail.com> writes:
 
-Suggested-by: Jonathan Nieder <jrnieder@gmail.com>
-Signed-off-by: Luke Diamand <luke@diamand.org>
----
- git-p4.py                         | 2 +-
- t/t9820-git-p4-editor-handling.sh | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+> While git-pull supports --log and passes the switch to git-merge, it
+> does not support --log=<n>, ignoring the value <n>.
+>
+> This is not only at odds with the documentation of git-pull, it's also a
+> undesirable limitation as <n> could simply be passed to git-merge as
+> well.
 
-diff --git a/git-p4.py b/git-p4.py
-index 41a77e6..ca6bb95 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -1248,7 +1248,7 @@ class P4Submit(Command, P4UserMap):
-             editor = os.environ.get("P4EDITOR")
-         else:
-             editor = read_pipe("git var GIT_EDITOR").strip()
--        system([editor, template_file])
-+        system(["sh", "-c", ('%s "$@"' % editor), editor, template_file])
- 
-         # If the file was not saved, prompt to see if this patch should
-         # be skipped.  But skip this verification step if configured so.
-diff --git a/t/t9820-git-p4-editor-handling.sh b/t/t9820-git-p4-editor-handling.sh
-index e0a3c52..c178bd7 100755
---- a/t/t9820-git-p4-editor-handling.sh
-+++ b/t/t9820-git-p4-editor-handling.sh
-@@ -17,9 +17,9 @@ test_expect_success 'init depot' '
- 	)
- '
- 
--test_expect_failure 'EDITOR has options' '
- # Check that the P4EDITOR argument can be given command-line
- # options, which git-p4 will then pass through to the shell.
-+test_expect_success 'EDITOR has options' '
- 	git p4 clone --dest="$git" //depot &&
- 	test_when_finished cleanup_git &&
- 	(
--- 
-2.4.0.rc3.380.g8e2ddc7
+A cleaner alternative may be to fix that while git-pull is still a
+script, as you seem to already know what is broken and what in the
+current code needs to be fixed in what way exactly.  Perhaps do that
+at the earlier part of (or even as an independent patch outside)
+this series and add this test to protect the fix from getting broken
+later (with expect-failure flipped to expect-success)?
+
+Thanks.
+
+>
+> Implement a failing test that demonstrates this.
+
+
+
+>
+> Signed-off-by: Paul Tan <pyokagan@gmail.com>
+> ---
+>
+> Notes:
+>     * Added this test to the patch series
+>
+>  t/t5524-pull-msg.sh | 17 +++++++++++++++++
+>  1 file changed, 17 insertions(+)
+>
+> diff --git a/t/t5524-pull-msg.sh b/t/t5524-pull-msg.sh
+> index 8cccecc..5b7af07 100755
+> --- a/t/t5524-pull-msg.sh
+> +++ b/t/t5524-pull-msg.sh
+> @@ -17,6 +17,9 @@ test_expect_success setup '
+>  		git commit -m "add bfile"
+>  	) &&
+>  	test_tick && test_tick &&
+> +	echo "second" >afile &&
+> +	git add afile &&
+> +	git commit -m "second commit" &&
+>  	echo "original $dollar" >afile &&
+>  	git add afile &&
+>  	git commit -m "do not clobber $dollar signs"
+> @@ -32,4 +35,18 @@ test_expect_success pull '
+>  )
+>  '
+>  
+> +test_expect_failure '--log=1 limits shortlog length' '
+> +(
+> +	cd cloned &&
+> +	git reset --hard HEAD^ &&
+> +	test `cat afile` = original &&
+> +	test `cat bfile` = added &&
+> +	git pull --log &&
+> +	git log -3 &&
+> +	git cat-file commit HEAD >result &&
+> +	grep Dollar result &&
+> +	! grep "second commit" result
+> +)
+> +'
+> +
+>  test_done
