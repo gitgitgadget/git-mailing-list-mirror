@@ -1,67 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 00/12] Improve git-pull test coverage
-Date: Thu, 07 May 2015 12:01:48 -0700
-Message-ID: <xmqqy4l0nrdv.fsf@gitster.dls.corp.google.com>
-References: <1430988248-18285-1-git-send-email-pyokagan@gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v2 11/12] t5524: test --log=1 limits shortlog length
+Date: Thu, 07 May 2015 21:12:58 +0200
+Message-ID: <554BB93A.3090000@kdbg.org>
+References: <1430988248-18285-1-git-send-email-pyokagan@gmail.com>	<1430988248-18285-12-git-send-email-pyokagan@gmail.com>	<05adfac12cb9a7ad183281974d991e00@www.dscho.org> <CACRoPnRfqQMRJ5N=oL84SMw=FC=Eg-Co-De_9E9cpWCaaSZAxw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Stefan Beller <sbeller@google.com>
-To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 07 21:01:55 2015
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git List <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Paul Tan <pyokagan@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu May 07 21:13:09 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YqR3T-0005xM-Gb
-	for gcvg-git-2@plane.gmane.org; Thu, 07 May 2015 21:01:55 +0200
+	id 1YqREK-0002ul-SV
+	for gcvg-git-2@plane.gmane.org; Thu, 07 May 2015 21:13:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751337AbbEGTBv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 May 2015 15:01:51 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50446 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750806AbbEGTBu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 May 2015 15:01:50 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id C19A94F0F1;
-	Thu,  7 May 2015 15:01:49 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=SBlyOFffr4ahcJBGiDad9SG8y68=; b=EPfdHV
-	w/ulV7Sdr4ukQZAQNz52sQQklADRX9c9K6jTvfoJzCTKDrbDaE9N901wsnMMs3un
-	T8w2MwSfHwCRxBpu9G2vJdU1mlLEjSeXMxgvG3TXMqYozkJP5e7kEjhVn5Opw+CC
-	dr3G3HKEbPO1QFb8eg4ME7p+IYb4mBw4v/nls=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=YZPWmhN6RWwbDmo4t+dPIhJaIdTBg08b
-	JKDvlwB5BNhaAL6kjWWuMMnVyhgGl5VTTmsemWPWn1hOReqFZyxVLLJHcOapnKOh
-	E2lN1ErlQYqKua5hKqhVPXh4fuuUO1fhiAYdjB2KFROyAYuxSlSTvIFRnmBuKh7K
-	BBpDxwrUoY8=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B9D4E4F0F0;
-	Thu,  7 May 2015 15:01:49 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3AF784F0EF;
-	Thu,  7 May 2015 15:01:49 -0400 (EDT)
-In-Reply-To: <1430988248-18285-1-git-send-email-pyokagan@gmail.com> (Paul
-	Tan's message of "Thu, 7 May 2015 16:43:56 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 83BBDCAE-F4EB-11E4-B01C-83E09F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751511AbbEGTNE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 May 2015 15:13:04 -0400
+Received: from bsmtp7.bon.at ([213.33.87.19]:15106 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751021AbbEGTNC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 May 2015 15:13:02 -0400
+Received: from dx.site (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTPSA id 3ljPZL4nRkz5tlQ;
+	Thu,  7 May 2015 21:12:58 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.site (Postfix) with ESMTP id 45378524C;
+	Thu,  7 May 2015 21:12:58 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
+In-Reply-To: <CACRoPnRfqQMRJ5N=oL84SMw=FC=Eg-Co-De_9E9cpWCaaSZAxw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268580>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268581>
 
-Paul Tan <pyokagan@gmail.com> writes:
-
-> This patch series improves test coverage of git-pull.sh.
+Am 07.05.2015 um 19:06 schrieb Paul Tan:
+> Hi Dscho,
 >
-> This is part of my GSoC project to rewrite git-pull into a builtin. Improving
-> test coverage helps to prevent regressions that could occur due to the rewrite.
+> On Fri, May 8, 2015 at 12:28 AM, Johannes Schindelin
+> <johannes.schindelin@gmx.de> wrote:
+>> Hi Paul,
+>>
+>> On 2015-05-07 10:44, Paul Tan wrote:
+>>> @@ -32,4 +35,18 @@ test_expect_success pull '
+>>>   )
+>>>   '
+>>>
+>>> +test_expect_failure '--log=1 limits shortlog length' '
+>>> +(
+>>> +     cd cloned &&
+>>> +     git reset --hard HEAD^ &&
+>>> +     test `cat afile` = original &&
+>>> +     test `cat bfile` = added &&
+>>> +     git pull --log &&
+>>> +     git log -3 &&
+>>> +     git cat-file commit HEAD >result &&
+>>> +     grep Dollar result &&
+>>> +     ! grep "second commit" result
+>>> +)
+>>
+>> I think it might be better to use `test_must_fail` here, just for
+>> consistency (the `!` operator would also pass if `grep` itself could not
+>> be executed correctly, quite academic, I know, given that `grep` is
+>> exercised plenty of times by the test suite, but still...)
+>>
+>> What do you think?
+>
+> Yep, it's definitely better. Sometimes I forget about the existence of
+> some test utility functions :-/.
 
-Overall, I like what I saw in this series.  Good first progress ;-)
+Nope, it's not better. test_must_fail is explicitly only for git 
+invocations. We do not expect 'grep' to segfault or something.
+
+Cf. eg. 
+http://thread.gmane.org/gmane.comp.version-control.git/258725/focus=258752
+
+-- Hannes
