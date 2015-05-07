@@ -1,63 +1,70 @@
-From: Mikael Magnusson <mikachu@gmail.com>
-Subject: Re: Fw: sort of a bug report - git rebase dropping empty commits
-Date: Thu, 7 May 2015 02:47:11 +0200
-Message-ID: <CAHYJk3QOuo=p26OAnkKmrPS0SzpdJGvB=Fm=jiMMDDJo13zi9A@mail.gmail.com>
-References: <1430956735.75040.YahooMailBasic@web172301.mail.ir2.yahoo.com>
-	<CAJMB+NhVapp+upsk2AQQmZndaNFjaOieom7=n6mY31v0QemaYA@mail.gmail.com>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v10 0/4] cat-file: add support for "-allow-unknown-type"
+Date: Thu, 07 May 2015 09:04:30 +0530
+Message-ID: <CD7EEBF2-FE5A-4309-86D8-CBF9F205A159@gmail.com>
+References: <55463094.9040204@gmail.com> <xmqqzj5ltd6c.fsf@gitster.dls.corp.google.com> <xmqqvbg9td0x.fsf@gitster.dls.corp.google.com> <CAPig+cQKqkoqN+o_QfVBRvxGdNuJn_oxD5YMsvnBOHguimJhGQ@mail.gmail.com> <CAPig+cStUNPZqEyE1rJVj5AsTeZFU54mc97rgQqiPbr5V1B0Sw@mail.gmail.com> <554A192D.7000102@gmail.com> <xmqq1titd3t6.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>
-To: Hin-Tak Leung <hintak.leung@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 07 02:47:19 2015
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 07 05:34:42 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yq9yA-0004OM-MU
-	for gcvg-git-2@plane.gmane.org; Thu, 07 May 2015 02:47:19 +0200
+	id 1YqCaA-0008Eq-7U
+	for gcvg-git-2@plane.gmane.org; Thu, 07 May 2015 05:34:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751565AbbEGArN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 May 2015 20:47:13 -0400
-Received: from mail-ie0-f172.google.com ([209.85.223.172]:35724 "EHLO
-	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751119AbbEGArM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 May 2015 20:47:12 -0400
-Received: by ieczm2 with SMTP id zm2so27870543iec.2
-        for <git@vger.kernel.org>; Wed, 06 May 2015 17:47:11 -0700 (PDT)
+	id S1751109AbbEGDeh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 May 2015 23:34:37 -0400
+Received: from mail-pd0-f173.google.com ([209.85.192.173]:35095 "EHLO
+	mail-pd0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750900AbbEGDeg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 May 2015 23:34:36 -0400
+Received: by pdbqd1 with SMTP id qd1so28604804pdb.2
+        for <git@vger.kernel.org>; Wed, 06 May 2015 20:34:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=40V6xOk1+xIzcvxud9NN82Zq0Z+mv2EhYhyHWOQMkl0=;
-        b=WjpTYmQlu7pNn6Tcf5R63FJRMagFawB5UxOCLOgnwJBgHrV5am/XI66WAjMqlgDOpa
-         jU07iuUllTYMK6GZDZX771jXh+yzuEaSGjmlK7CFDQOGSiMApP0bxPJ8nPeUX7W3gxB5
-         vgfw/Uowdsv3/C8FP//OlAguVk47ZQg2t78PL0ULr5Cvjat8/jSgDebr4eTIyiWAMc4e
-         x82tRfV9ibiyXI8LKS7rmKZn/8ksQVE15mA5Ev4G/wKKGBgTJgWhbeJxW1DbGTWbBJEl
-         8NM+Jy7amvaqDjj0xMBqSNq2AMWg3Rt+LyefPv1D6aOJuesQrX0aGNu/yiAmn6lAhqZc
-         DP1Q==
-X-Received: by 10.43.18.194 with SMTP id qh2mr1213721icb.36.1430959631678;
- Wed, 06 May 2015 17:47:11 -0700 (PDT)
-Received: by 10.36.143.136 with HTTP; Wed, 6 May 2015 17:47:11 -0700 (PDT)
-In-Reply-To: <CAJMB+NhVapp+upsk2AQQmZndaNFjaOieom7=n6mY31v0QemaYA@mail.gmail.com>
+        h=user-agent:in-reply-to:references:mime-version
+         :content-transfer-encoding:content-type:subject:from:date:to:cc
+         :message-id;
+        bh=Ntl5U3fckep6mjgIJKjHrAvhRrDBRR2Olb5MmoAzb7Q=;
+        b=XKLIsgDaGMN0/eYqCz1VzOBoVZAITPvz40tkSJhik6tJTo7q4QmEMJ8AaD7oC7WVwB
+         ckJYilKQmZY3Phw/H+nEJfB3JLv6OqPaYsLskTEeP9eX3MtTLtG3nkNJs0rGhoxmGOpl
+         MMEGx+cgK0OtMe4xGTtKyP6J9ueR/m4M2UxH5vZrgQ46NJRzEGDT9NdODR4YWvSUO+Rv
+         vQdZ2jXSVMo1tnzyj7N/26/kaygVwPc3Hoi2rUAR+umiIP7lQ/BgoqOvgJ19D3gJnvSh
+         n5KGiPWkg0k/YTqWqnXB+gzyQs+iruUIfgFR6x/lZP9XfnWu95dDe6gS9yQ1qydmKcHZ
+         JDZA==
+X-Received: by 10.68.112.195 with SMTP id is3mr3307442pbb.92.1430969676112;
+        Wed, 06 May 2015 20:34:36 -0700 (PDT)
+Received: from [192.168.0.102] ([103.227.98.178])
+        by mx.google.com with ESMTPSA id h12sm457422pdk.77.2015.05.06.20.34.33
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 06 May 2015 20:34:35 -0700 (PDT)
+User-Agent: K-9 Mail for Android
+In-Reply-To: <xmqq1titd3t6.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268504>
 
-On Thu, May 7, 2015 at 2:19 AM, Hin-Tak Leung <hintak.leung@gmail.com> wrote:
-> Repost from another account. vger.kernel.org seems not
-> to like postings from my other alias (which goes through
-> yahoo).
+
+
+On May 6, 2015 10:46:37 PM GMT+05:30, Junio C Hamano <gitster@pobox.com> wrote:
+>karthik nayak <karthik.188@gmail.com> writes:
 >
->> (please cc - I am not a subscriber)
->>
->> Recently I have started to keep some notes in git repo's
->> with --allow-empty - i.e. the meaningful content is
->> the commit message and the date itself, not the diff.
-
-Use the git rebase --keep-empty option?
-
--- 
-Mikael Magnusson
+>> No other changes for now, apart from the changes suggested by
+>> you and Eric. You can merge it into 'next'.
+>
+>Do you mean by "the changes suggested" the SQUASH queued on the
+>topic?  If it is more than that, then I'd prefer you to send an
+By saying "the changes suggested" I meant the SQUASH queued on topic
+>updated series, as I do not want to guess how you'd plan to respond
+>to these suggestions.
+>
+>Thanks.
