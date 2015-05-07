@@ -1,73 +1,142 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH 1/3] command-list.txt: group common commands by theme
-Date: Thu, 07 May 2015 21:23:27 +0200
-Message-ID: <554BBBAF.30705@kdbg.org>
-References: <cover.1430770308.git.sebastien.guimmara@gmail.com>	<b89d3fec640cb6fb01aa32ad50bae4e064528220.1430770308.git.sebastien.guimmara@gmail.com>	<CAPig+cTHQikgOvPrjxikUNjQoWCv2hdubJ55OG0SqpGUs_3Pow@mail.gmail.com>	<554A8084.10506@gmail.com> <CAPig+cQ2e4c5hYsRbZhgyvLcMPsqshqRUZGNLwhJd57YP9JEFA@mail.gmail.com>
+From: Luke Diamand <luke@diamand.org>
+Subject: Re: [PATCH 2/2] git-p4: fix handling of multi-word P4EDITOR
+Date: Thu, 07 May 2015 20:27:58 +0100
+Message-ID: <554BBCBE.1020408@diamand.org>
+References: <1431019501-30807-1-git-send-email-luke@diamand.org>	<1431019501-30807-3-git-send-email-luke@diamand.org> <xmqqr3qsp8a0.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>,
-	=?UTF-8?B?U8OpYmFzdGllbiBHdWk=?= =?UTF-8?B?bW1hcmE=?= 
-	<sebastien.guimmara@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 07 21:23:35 2015
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+	Chris Lasell <chrisl@pixar.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 07 21:28:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YqROR-00082i-32
-	for gcvg-git-2@plane.gmane.org; Thu, 07 May 2015 21:23:35 +0200
+	id 1YqRTN-00028Z-3o
+	for gcvg-git-2@plane.gmane.org; Thu, 07 May 2015 21:28:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752115AbbEGTXa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 May 2015 15:23:30 -0400
-Received: from bsmtp7.bon.at ([213.33.87.19]:19588 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1750907AbbEGTXa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 May 2015 15:23:30 -0400
-Received: from dx.site (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTPSA id 3ljPpS0X3Gz5tlL;
-	Thu,  7 May 2015 21:23:27 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.site (Postfix) with ESMTP id 1265A524C;
-	Thu,  7 May 2015 21:23:27 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
-In-Reply-To: <CAPig+cQ2e4c5hYsRbZhgyvLcMPsqshqRUZGNLwhJd57YP9JEFA@mail.gmail.com>
+	id S1751438AbbEGT2g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 May 2015 15:28:36 -0400
+Received: from mail-wi0-f171.google.com ([209.85.212.171]:35263 "EHLO
+	mail-wi0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751174AbbEGT2g (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 May 2015 15:28:36 -0400
+Received: by widdi4 with SMTP id di4so3676177wid.0
+        for <git@vger.kernel.org>; Thu, 07 May 2015 12:28:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=diamand.org; s=google;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=ueKM9oAGw/5TlHo2pbWt8sCPyxLdRfnXIkDVJKPQ3y8=;
+        b=gziYjFa7G1JJC/B/k2/q5BQbHPmGokBOUCw47K83+Lkq43bhQqM03m9Zi0+52G0E+b
+         o6ChxV2yL3JXqJakdiO2edH3opOTLH2zlq1opV7Z+U/XLuad3tiAOS+FoU6s4dwY1d6C
+         xxLPytuF3DFEm3eWt8f1vEt475eAFGtG9023U=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
+         :cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=ueKM9oAGw/5TlHo2pbWt8sCPyxLdRfnXIkDVJKPQ3y8=;
+        b=dOWmeJnL31tz0ELKzZynoFuvFnlMabqrPyGt7HyNS+E3QWn2iaEhji6mlHVTVyHJxn
+         3q0kEBIPvR1fKN8oEp+k35E+Wg/clbfhhAy9zvN5FCbE+OQfFioEZ7E6hN7ZAB2oF63a
+         +VPnLI+KAHz+nWdSJstJLT+zDsqXv2+YWZbA+oB7zHOaiOQL3M7RGYtLOKGXwcnrF+lC
+         gMYsmYKWF10EFvN8IWiI70U209AzyAy1JMHZFbJPlGA+kR3nvNvFJEv+5esckbuVZSjH
+         gG852/MpR21qxJpR1JGo5fEPnsFQkkc6BHE6D1/XDASfoA2Xag1/AulMwmxJWf1od2qI
+         BElw==
+X-Gm-Message-State: ALoCoQkdY+cxi1x0/r+0EL9/iSiSc2nvDgDeMRUtr1maQlFS2r7JRqUCoQ4Aj4VXkrZykKBVOm1D
+X-Received: by 10.194.97.196 with SMTP id ec4mr325487wjb.3.1431026914914;
+        Thu, 07 May 2015 12:28:34 -0700 (PDT)
+Received: from [192.168.245.128] (cpc7-cmbg17-2-0-cust139.5-4.cable.virginm.net. [86.1.43.140])
+        by mx.google.com with ESMTPSA id y7sm4903798wjw.16.2015.05.07.12.28.33
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 07 May 2015 12:28:34 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.6.0
+In-Reply-To: <xmqqr3qsp8a0.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268582>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268583>
 
-Am 07.05.2015 um 18:50 schrieb Eric Sunshine:
-> On Wed, May 6, 2015 at 4:58 PM, S=C3=A9bastien Guimmara
-> <sebastien.guimmara@gmail.com> wrote:
->> On 05/06/2015 08:57 AM, Eric Sunshine wrote:
->>> On Mon, May 4, 2015 at 4:28 PM, S=C3=A9bastien Guimmara
->>> <sebastien.guimmara@gmail.com> wrote:
->>>> -git-write-tree                          plumbingmanipulators
->>>> +git-write-tree                          plumbingmanipulators
->>>> \ No newline at end of file
->>>
->>> Your editor is perhaps dropping the final newline in the file? This=
- is
->>> an undesirable change. Patch 2/3 exhibits the same problem.
->>
->> As for the final newline, it was deliberately removed. I was not awa=
-re it
->> was necessary in text files. I'll correct this.
+On 07/05/15 19:11, Junio C Hamano wrote:
+> Luke Diamand <luke@diamand.org> writes:
 >
-> Historically, many Unix tools incorrectly handled files lacking that
-> final newline; sometimes by dropping the line altogether, sometimes
-> mis-processing it in some way or another. Misbehaviors still exist
-> today, often in BSD tools. In fact, just a few days ago, such a
-> problem was reported for git-filter-branch[1]. Consequently, retainin=
-g
-> newline is good insurance against misbehaving tools.
+>
+> Does the real Perforce, when spawning P4EDITOR, behave the same way?
+>
+> If not, this patch would be breaking not just the expectation of
+> existing git-p4 users (which we cannot avoid and which we are
+> willing to do) but also breaking things for people who _will_ come
+> to us in the future, expecting that
+>
+> 	export P4EDITOR="/Users/me/My Programs/my-editor"
+>
+> to work as they expect.  If they already have to do
+>
+> 	export P4EDITOR="'/Users/me/My Programs/my-editor'"
+>
+> then there is no problem, but because I am not a P4EDITOR user, I am
+> merely double checking.
 
-=46iles lacking the trailing new-line are not "text files" according to=
-=20
-the POSIX definition, BTW.
+On Linux:
 
--- Hannes
+$ export P4EDITOR="gvim -f"
+$ p4 submit
+-- works as you would hope --
+
+$ export P4EDITOR="/home/lgd/My Programs/editor.sh"
+$ p4 submit
+sh: 1: /home/lgd/My: not found
+
+$ export P4EDITOR="/home/lgd/My\ Programs/editor.sh"
+-- works fine --
+
+I don't know what happens on Windows. But I think the "sh -c" code would 
+break on that platform, whereas the current code works fine (*)
+
+Luke
+
+
+(*) I should probably get a Windows test environment going somehow so I 
+can check this stuff.
+
+>
+>>
+>> Suggested-by: Jonathan Nieder <jrnieder@gmail.com>
+>> Signed-off-by: Luke Diamand <luke@diamand.org>
+>> ---
+>>   git-p4.py                         | 2 +-
+>>   t/t9820-git-p4-editor-handling.sh | 2 +-
+>>   2 files changed, 2 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/git-p4.py b/git-p4.py
+>> index 41a77e6..ca6bb95 100755
+>> --- a/git-p4.py
+>> +++ b/git-p4.py
+>> @@ -1248,7 +1248,7 @@ class P4Submit(Command, P4UserMap):
+>>               editor = os.environ.get("P4EDITOR")
+>>           else:
+>>               editor = read_pipe("git var GIT_EDITOR").strip()
+>> -        system([editor, template_file])
+>> +        system(["sh", "-c", ('%s "$@"' % editor), editor, template_file])
+>>
+>>           # If the file was not saved, prompt to see if this patch should
+>>           # be skipped.  But skip this verification step if configured so.
+>> diff --git a/t/t9820-git-p4-editor-handling.sh b/t/t9820-git-p4-editor-handling.sh
+>> index e0a3c52..c178bd7 100755
+>> --- a/t/t9820-git-p4-editor-handling.sh
+>> +++ b/t/t9820-git-p4-editor-handling.sh
+>> @@ -17,9 +17,9 @@ test_expect_success 'init depot' '
+>>   	)
+>>   '
+>>
+>> -test_expect_failure 'EDITOR has options' '
+>>   # Check that the P4EDITOR argument can be given command-line
+>>   # options, which git-p4 will then pass through to the shell.
+>> +test_expect_success 'EDITOR has options' '
+>>   	git p4 clone --dest="$git" //depot &&
+>>   	test_when_finished cleanup_git &&
+>>   	(
