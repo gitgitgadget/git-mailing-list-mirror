@@ -1,83 +1,158 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: Re: [PATCH 2/2] git-p4: fix handling of multi-word P4EDITOR
-Date: Thu, 07 May 2015 21:42:13 +0100
-Message-ID: <554BCE25.5070308@diamand.org>
-References: <1431019501-30807-1-git-send-email-luke@diamand.org>	<1431019501-30807-3-git-send-email-luke@diamand.org>	<xmqqr3qsp8a0.fsf@gitster.dls.corp.google.com>	<554BBCBE.1020408@diamand.org> <xmqqlhh0nny1.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3] http: add support for specifying an SSL cipher list
+Date: Thu, 07 May 2015 13:51:32 -0700
+Message-ID: <xmqqegmsnmaz.fsf@gitster.dls.corp.google.com>
+References: <1431008210-673-1-git-send-email-lars@redhat.com>
+	<1431022630-7005-1-git-send-email-lars@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-	Chris Lasell <chrisl@pixar.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 07 22:42:54 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Lars Kellogg-Stedman <lars@redhat.com>
+X-From: git-owner@vger.kernel.org Thu May 07 22:51:42 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YqSdB-000520-CW
-	for gcvg-git-2@plane.gmane.org; Thu, 07 May 2015 22:42:53 +0200
+	id 1YqSlg-0000m9-S6
+	for gcvg-git-2@plane.gmane.org; Thu, 07 May 2015 22:51:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751859AbbEGUmr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 May 2015 16:42:47 -0400
-Received: from mail-wg0-f48.google.com ([74.125.82.48]:35612 "EHLO
-	mail-wg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751846AbbEGUmr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 May 2015 16:42:47 -0400
-Received: by wgyo15 with SMTP id o15so55032349wgy.2
-        for <git@vger.kernel.org>; Thu, 07 May 2015 13:42:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=uIu11VuWjKmdmpShmnj75Vn3wv9x/ucF+/bCGaEEF7w=;
-        b=iwErtyI5TPYGuUoNGMS5eS1VXsNra+294Ih3DaD7rKyo438mDEfiY8EP2qnEdjY8BO
-         Gx3IbIFJ9hXwJOZMohqL45ipNbZbjnXIYVgfBb9ys+jeCk8KBoQDhs74o6r0GmxGJtng
-         qW8a3ZSgsecaY6iMN9KLXrKR/IA7GxAqKtAwc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
-         :cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=uIu11VuWjKmdmpShmnj75Vn3wv9x/ucF+/bCGaEEF7w=;
-        b=kAjgtEMQffbnQEL1kNwvTOahYgm2wquNtm+nUE5i9Ru0z3dRJ+h7WQJpL1B8E0tMAS
-         UVDNzHtL6zQ39dew8slo6yrEhzVhL+X1KqdAz91CBpfm0kCg+rrlEA1iyWHx05OjrD5T
-         9RMttoSVG1KYJmRqYSIqYKxJ2Yrmmgyo2LfnrQHgzgqwwjJJnEHhV81XpNdXggArU8s3
-         XGqA7IAWjPhcDHaVIZnUYEjGVbTc/fWykuPEjT0Pa9DaX5MSXOlKXombdYTGeh94RNH8
-         K2X3OQuzOiXmE4nZowBxWs+QDtdbmwa8d2NI5dYlvDaJY5xDO8nBCGC6056uydnZV4S+
-         Zgmw==
-X-Gm-Message-State: ALoCoQnUjwMLXKoNoh6GkLLDf4xAy+t67i6GMX4NfUAwVzCs3vEJVkGWzJ6faxFjt1tEDhnAlOUD
-X-Received: by 10.180.79.66 with SMTP id h2mr126831wix.46.1431031365926;
-        Thu, 07 May 2015 13:42:45 -0700 (PDT)
-Received: from [192.168.245.128] (cpc7-cmbg17-2-0-cust139.5-4.cable.virginm.net. [86.1.43.140])
-        by mx.google.com with ESMTPSA id r9sm5155945wjo.26.2015.05.07.13.42.44
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 07 May 2015 13:42:45 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.6.0
-In-Reply-To: <xmqqlhh0nny1.fsf@gitster.dls.corp.google.com>
+	id S1751380AbbEGUvg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 May 2015 16:51:36 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:59278 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751279AbbEGUvf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 May 2015 16:51:35 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8FD734FE7F;
+	Thu,  7 May 2015 16:51:34 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=JRMIUxXkPZP5MOfQyuBapBjvSVI=; b=TT/X4t
+	BMSigwwpWebUEbWAcypPvvmcgH2DooSpElCOJlXIUV8DSB50t2KramXtX+P1tpZ+
+	Esd/hHel9xscMBzLJW1ZfCBBO6mYjP3oEoB1AMAIHDmA/GBk0tDMeAXzDS9HBtno
+	goYbhuL5O4gzVRczWFt/q80Bwil6FnOOuMO6U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=RGwzrql9btX/YkXnU0D71XWPHHBv7n4q
+	Dx50jHviQ3cFZXyRJ9AyycAxBrb+NQymlUQUSd6j274Q/+TasrZQU4QU4rqqWUvE
+	hHZJ7L6jJh1UELTbAz51O+7JThoOhfSzwSXT2XZMBBO9WhevnWg6dUA0hulPohEG
+	qhpSq/L9Q6g=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 84A6B4FE7E;
+	Thu,  7 May 2015 16:51:34 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id ECB8A4FE79;
+	Thu,  7 May 2015 16:51:33 -0400 (EDT)
+In-Reply-To: <1431022630-7005-1-git-send-email-lars@redhat.com> (Lars
+	Kellogg-Stedman's message of "Thu, 7 May 2015 14:17:10 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: D8893768-F4FA-11E4-AC21-83E09F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268586>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268587>
 
-On 07/05/15 21:16, Junio C Hamano wrote:
-> Luke Diamand <luke@diamand.org> writes:
->
->> On Linux:
->>
->> $ export P4EDITOR="gvim -f"
->> $ p4 submit
->> -- works as you would hope --
->>
->> $ export P4EDITOR="/home/lgd/My Programs/editor.sh"
->> $ p4 submit
->> sh: 1: /home/lgd/My: not found
->>
->> $ export P4EDITOR="/home/lgd/My\ Programs/editor.sh"
->> -- works fine --
->
-> Good.  That is exactly I wanted to see.
+Lars Kellogg-Stedman <lars@redhat.com> writes:
 
-Test case t9805-git-p4-skip-submit-edit.sh fails with that change. It 
-sets P4EDITOR to "$TRASH_DIRECTORY/ed.sh".
+> Teach git about a new option, "http.sslCipherList", which permits one to
+> specify a list of ciphers to use when negotiating SSL connections.  The
+> setting can be overwridden by the GIT_SSL_CIPHER_LIST environment
+> variable.
+>
+> Signed-off-by: Lars Kellogg-Stedman <lars@redhat.com>
+> ---
+>
+> This addresses (I hope!) comments from Junio and Ray, and also resolves some
+> whitespace issues present in the earlier version of the patch.
+
+Sounds good.
+
+>  Documentation/config.txt | 13 +++++++++++++
+>  http.c                   | 14 ++++++++++++++
+>  2 files changed, 27 insertions(+)
+>
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 2e5ceaf..b982d66 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -1560,6 +1560,19 @@ http.saveCookies::
+>  	If set, store cookies received during requests to the file specified by
+>  	http.cookieFile. Has no effect if http.cookieFile is unset.
+>  
+> +http.sslCipherList::
+> +	A list of SSL ciphers to use when negotiating an SSL connection.
+> +	The available ciphers depend on whether libcurl was built against
+> +	NSS or OpenSSL and the particular configuration of the crypto
+> +	library in use.  Internally this sets the CURLOPT_SSL_CIPHER_LIST
+> +	option; see the libcurl documentation for that option for more
+> +	details on the format of this list.
+> +
+> +	Can be overridden by the 'GIT_SSL_CIPHER_LIST' environment variable.
+> +	To force git to use libcurl's default cipher list and ignore any
+> +	explicit http.sslCipherList option, set GIT_SSL_CIPHER_LIST to the
+> +	empty string.
+> +
+
+This will not format well, I am afraid.  The second and subsequent
+paragraphs in a description of an enumerated item need to lose the
+initial indentation and the empty line that breaks paragraph need
+to be replaced with a single '+' (plus).  See "color::" in the same
+document for an example.
+
+We chose to use AsciiDoc primarily because its marked-up source is
+easily read as a plain text files, but it is unfortunately somewhat
+finicky around here.
+
+>  http.sslVerify::
+>  	Whether to verify the SSL certificate when fetching or pushing
+>  	over HTTPS. Can be overridden by the 'GIT_SSL_NO_VERIFY' environment
+> diff --git a/http.c b/http.c
+> index 4b179f6..b617546 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -36,6 +36,7 @@ char curl_errorstr[CURL_ERROR_SIZE];
+>  static int curl_ssl_verify = -1;
+>  static int curl_ssl_try;
+>  static const char *ssl_cert;
+> +static const char *ssl_cipherlist;
+>  #if LIBCURL_VERSION_NUM >= 0x070903
+>  static const char *ssl_key;
+>  #endif
+> @@ -187,6 +188,9 @@ static int http_options(const char *var, const char *value, void *cb)
+>  		curl_ssl_verify = git_config_bool(var, value);
+>  		return 0;
+>  	}
+> +	if (!strcmp("http.sslcipherlist", var)) {
+> +		return git_config_string(&ssl_cipherlist, var, value);
+> +	}
+>  	if (!strcmp("http.sslcert", var))
+>  		return git_config_string(&ssl_cert, var, value);
+>  #if LIBCURL_VERSION_NUM >= 0x070903
+> @@ -361,6 +365,16 @@ static CURL *get_curl_handle(void)
+>  	if (http_proactive_auth)
+>  		init_curl_http_auth(result);
+>  
+> +	if (getenv("GIT_SSL_CIPHER_LIST"))
+> +		ssl_cipherlist = getenv("GIT_SSL_CIPHER_LIST");
+> +
+> +	/* See http://curl.haxx.se/libcurl/c/CURLOPT_SSL_CIPHER_LIST.html
+> +	 * for details on the format of and available values for
+> +	 * CURLOPT_SSL_CIPHER_LIST. */
+
+I see Eric already commented on multi-line comment and what he said
+is correct, but as an in-code comment, I do not see much value in
+this---anybody who is _reading_ code would know to look up
+CURLOPT_SSL_CIPHER_LIST in cURL documentation, I would expect (and
+of course this will not be shown to the end user).
+
+> +	if (ssl_cipherlist != NULL && ssl_cipherlist[0] != '\0')
+> +		curl_easy_setopt(result, CURLOPT_SSL_CIPHER_LIST,
+> +				ssl_cipherlist);
+> +
+>  	if (ssl_cert != NULL)
+>  		curl_easy_setopt(result, CURLOPT_SSLCERT, ssl_cert);
+>  	if (has_cert_password())
