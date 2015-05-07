@@ -1,89 +1,82 @@
-From: Paul Tan <pyokagan@gmail.com>
-Subject: Re: [PATCH v2 05/12] t5520: test --rebase failure on unborn branch
- with index
-Date: Fri, 8 May 2015 01:44:47 +0800
-Message-ID: <CACRoPnQzAjY0bPmHrw2o4Mdzn1Q4Dd587hLXkEPA-qYcYrVGEg@mail.gmail.com>
-References: <1430988248-18285-1-git-send-email-pyokagan@gmail.com>
-	<1430988248-18285-6-git-send-email-pyokagan@gmail.com>
-	<CAGZ79kY7gstS1xPcNu4HqmmXA+qg9BKpXZwaHeQ91n7vL2Sa-g@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: --squash has no effect in git subtree push?
+Date: Thu, 07 May 2015 11:05:20 -0700
+Message-ID: <xmqqy4l0p8kf.fsf@gitster.dls.corp.google.com>
+References: <CAMbsUu5g=r867_WOhLCySG3caKj1jhmQgfzBxK4TYV27+nUpsg@mail.gmail.com>
+	<CAMbsUu4v9w6+wiAUm2hpiNrDaoL3U9Z_suXR3NPVGo-JhH3E+Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Jeff King <peff@peff.net>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Thu May 07 19:45:15 2015
+Content-Type: text/plain
+Cc: git develop <git@vger.kernel.org>
+To: Danny Lin <danny0838@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 07 20:05:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YqPrC-0001g6-Vj
-	for gcvg-git-2@plane.gmane.org; Thu, 07 May 2015 19:45:11 +0200
+	id 1YqQBA-0003Po-Is
+	for gcvg-git-2@plane.gmane.org; Thu, 07 May 2015 20:05:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752618AbbEGRow (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 May 2015 13:44:52 -0400
-Received: from mail-la0-f54.google.com ([209.85.215.54]:33150 "EHLO
-	mail-la0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752600AbbEGRos (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 May 2015 13:44:48 -0400
-Received: by layy10 with SMTP id y10so36151272lay.0
-        for <git@vger.kernel.org>; Thu, 07 May 2015 10:44:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=9GllC0d0N9sE68ZTcoC3jmppMggyRhnYX6LlOnKgf54=;
-        b=x04etliuwAUUx/nNpQxA2b9SL+iGi9tTxQ7X+2Yspyn8vlEIiktqQ9LQKDYEo2KrJA
-         Oi8/ENx88WtTr9RcXNC2uK6TFJf5WkMQX6M5+sLA6MH6Aa1HZxZOuAE4QBXObKSwlOZo
-         Xj1xd3+1Sw2qx2oc1CiOcAmHnlg3HI5cxhQ7RvByafyzmfqegpF5HthB1iQwA/slgSN2
-         fWKCX7v+VqQ0yBI7DAySIPZ3y/0+Jd0XY4jEdZn2gY08+Y1OIchD9q6OIp0kaH92v+cY
-         rmVYv8538PmSQLLmSZ7O5C9lNoADSBUR3FnacVYrVeuVkITJxsHTOBOzv1rEOfGedkjx
-         orng==
-X-Received: by 10.152.87.13 with SMTP id t13mr4023513laz.66.1431020687399;
- Thu, 07 May 2015 10:44:47 -0700 (PDT)
-Received: by 10.112.74.133 with HTTP; Thu, 7 May 2015 10:44:47 -0700 (PDT)
-In-Reply-To: <CAGZ79kY7gstS1xPcNu4HqmmXA+qg9BKpXZwaHeQ91n7vL2Sa-g@mail.gmail.com>
+	id S1751809AbbEGSF3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 May 2015 14:05:29 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:64148 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751686AbbEGSF2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 May 2015 14:05:28 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2A3AA4E35D;
+	Thu,  7 May 2015 14:05:22 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=n/kNE+Y7Sn3Yz04Fyy8G+BzHczo=; b=PDxq6G
+	PbvP5GGhM9SkpwkrgdU0tCQHe3cWdKaKpCvAplVFf/G57lkjVt6CAoNAsHMTppzj
+	v9+MQHmZZD2Xy3c5zkUfx3ENBZWWx/CxctapiMUgG/fCPNjjVCyYPk0NMnChzjOU
+	p5jWQ5h1ZcWXQDWRmbfVbLjicGfTO24a7GzwY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=XZo3jYbH/HMv159ct1ZBPPBor9OBrlTS
+	t4h9IbkRMBLaSXP83JfoZ9PK0tXdgNI9e5O0zedt700TZ7d7oB5SHQWBKPlxMtNg
+	bj63zfepgnMX4rRS+ymCyqgnldPHcP5O/77P7o2D/wuSgGlnLemDj6CiDLVwexy/
+	ItvGiHpPZOs=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1FA5B4E35C;
+	Thu,  7 May 2015 14:05:22 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7E1684E349;
+	Thu,  7 May 2015 14:05:21 -0400 (EDT)
+In-Reply-To: <CAMbsUu4v9w6+wiAUm2hpiNrDaoL3U9Z_suXR3NPVGo-JhH3E+Q@mail.gmail.com>
+	(Danny Lin's message of "Thu, 7 May 2015 15:52:33 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: A07DCCB0-F4E3-11E4-B873-83E09F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268563>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268564>
 
-Hi,
+Danny Lin <danny0838@gmail.com> writes:
 
-On Fri, May 8, 2015 at 12:32 AM, Stefan Beller <sbeller@google.com> wrote:
-> On Thu, May 7, 2015 at 1:44 AM, Paul Tan <pyokagan@gmail.com> wrote:
->> +test_expect_success 'pull --rebase fails on unborn branch with staged changes' '
->> +       test_when_finished "rm -rf empty_repo2" &&
->> +       git init empty_repo2 &&
->> +       (
->> +               cd empty_repo2 &&
->> +               echo staged-file >staged-file &&
->> +               git add staged-file &&
->> +               test "$(git ls-files)" = staged-file &&
->
-> I think usually people use
->
->     git ls-files >actual
->     echo staged-file >expected && # you have this already in your 2nd
->     # line in the paragraph
->     test_cmp staged-file actual
->
-> to make debugging easier as you can inspect the files (actual, expected)
-> after the test has failed.
->
-> Personally I don't mind the difference as when it comes to debugging
-> using the test suite I haven't found the silver bullet yet.
+> diff --git a/contrib/subtree/git-subtree.txt b/contrib/subtree/git-subtree.txt
+> index 54e4b4a..60d76cd 100644
+> --- a/contrib/subtree/git-subtree.txt
+> +++ b/contrib/subtree/git-subtree.txt
+> @@ -146,7 +146,7 @@ OPTIONS
+>  OPTIONS FOR add, merge, push, pull
+>  ----------------------------------
+>  --squash::
+> -    This option is only valid for add, merge, push and pull
+> +    This option is only valid for add, merge, and pull
 
-Ehh, but using test_cmp will litter the test with lots of "echo X
->expected" lines which I find quite distracting.
+You seem to have lost leading TABs in the patch somehow.
 
-Just thinking aloud, but it would be great if there was a function to
-compare a string and a file, or a string and a string.
+I manually typed the same change and commited, so no need to resend
+this one, but for future reference, please try sending a patch to
+yourself (and nobody else) and make sure what you reeived applies
+cleanly with "git am" on the commit you based your patch on.
 
-But yeah, I guess if the patches are verified to be correct, then I
-should change these comparisons to use test_cmp.
+And if it doesn't, figure out where tabs are eaten and lines are
+wrapped and fix that problem before sending the patch to the list.
 
-Thanks,
-Paul
+Thanks.
