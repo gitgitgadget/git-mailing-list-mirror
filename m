@@ -1,92 +1,104 @@
 From: Paul Tan <pyokagan@gmail.com>
-Subject: [PATCH v2 04/12] t5520: test --rebase with multiple branches
-Date: Thu,  7 May 2015 16:44:00 +0800
-Message-ID: <1430988248-18285-5-git-send-email-pyokagan@gmail.com>
+Subject: [PATCH v2 02/12] t5520: test for failure if index has unresolved entries
+Date: Thu,  7 May 2015 16:43:58 +0800
+Message-ID: <1430988248-18285-3-git-send-email-pyokagan@gmail.com>
 References: <1430988248-18285-1-git-send-email-pyokagan@gmail.com>
 Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 	Stefan Beller <sbeller@google.com>,
 	Paul Tan <pyokagan@gmail.com>,
-	Jay Soffian <jaysoffian@gmail.com>
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 07 10:44:41 2015
+X-From: git-owner@vger.kernel.org Thu May 07 10:44:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YqHQ5-0005VW-5x
-	for gcvg-git-2@plane.gmane.org; Thu, 07 May 2015 10:44:37 +0200
+	id 1YqHPx-0005P8-1H
+	for gcvg-git-2@plane.gmane.org; Thu, 07 May 2015 10:44:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751740AbbEGIob (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 May 2015 04:44:31 -0400
-Received: from mail-pa0-f41.google.com ([209.85.220.41]:36167 "EHLO
-	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751709AbbEGIo3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 May 2015 04:44:29 -0400
-Received: by pabsx10 with SMTP id sx10so34335985pab.3
-        for <git@vger.kernel.org>; Thu, 07 May 2015 01:44:28 -0700 (PDT)
+	id S1751697AbbEGIoZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 May 2015 04:44:25 -0400
+Received: from mail-pa0-f51.google.com ([209.85.220.51]:36041 "EHLO
+	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751377AbbEGIoW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 May 2015 04:44:22 -0400
+Received: by pabsx10 with SMTP id sx10so34333775pab.3
+        for <git@vger.kernel.org>; Thu, 07 May 2015 01:44:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=d8TIz0jr3jtjVm+rJ9FqjwIeAAGGGX/kMTEgNcfI88s=;
-        b=si4xnLjz06YrQFSLe/fmFhsVLab+O4HDBa1LfcIKF89ZIUiBWo0h1nf8kXJoXK0U52
-         qa0SvkIhzXSS3S/EPmSO+8GGq1wJnQzEJZE78KomJTSzUDN4vWPpDEw3JU6E/H/FQjT8
-         rka74wAmQEidRbYRTReRZocXcHYyaHD76oyJkL9uVMiJ5Eo9vxR9kaOIaUKoCCVLIrrm
-         eOQRVcb/d90yOji6vSwWN/lWCD1/nn4LJDD29qjirkIRYyosvAmBo53hzMZvUNn3ci6Q
-         i/EvwEVovN3m5f8lIHzUFlcsBFtHJs+wqX8gJrn3pJPL6L9xsDd8QVJCxbRfr9oVI57R
-         hd+w==
-X-Received: by 10.68.94.193 with SMTP id de1mr4906279pbb.153.1430988268677;
-        Thu, 07 May 2015 01:44:28 -0700 (PDT)
+        bh=g4A35EMp/uvQzUZ5JM2lQLLUsW7deC6muScTY0YeIHg=;
+        b=H+qTEB8a++DqCZk7tcACbtKHEsrKFDZeArugmy9e+3dEhG2RRWGjh7tOyZh2NY8+TO
+         Fr9BZQjoLZkYQoNr9y3qLqBd0p8gCH4UXR8rSdFYIqPQyEpXwX3GudSa2NiAQT68v6Sg
+         MNYPT9XfjSH/lvaP1ENe4ZlECp/XErsRn8E81kBbUDWeDVuI8JHuHuDigW9CnmsbdNgt
+         DG6AJFCYV9JrREOPw+KCtROLwxlkP5aUHWZHIVtkirnjoRhwGGbJnm3lGaETuhttBWZW
+         IoSUtebeLesop9LCZLKt0aukXNNbiScD+0j99DBn3CRPmcoMv4m1Nz31FtEL0FJiCLN4
+         HbLg==
+X-Received: by 10.70.5.101 with SMTP id r5mr5000806pdr.139.1430988262301;
+        Thu, 07 May 2015 01:44:22 -0700 (PDT)
 Received: from yoshi.pyokagan.tan ([116.86.132.138])
-        by mx.google.com with ESMTPSA id wh6sm1369308pbc.96.2015.05.07.01.44.25
+        by mx.google.com with ESMTPSA id wh6sm1369308pbc.96.2015.05.07.01.44.18
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 07 May 2015 01:44:27 -0700 (PDT)
+        Thu, 07 May 2015 01:44:20 -0700 (PDT)
 X-Mailer: git-send-email 2.1.4
 In-Reply-To: <1430988248-18285-1-git-send-email-pyokagan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268512>
 
-Since rebasing on top of multiple upstream branches does not make sense,
-since commit 51b2ead0 ("disallow providing multiple upstream branches
-to rebase, pull --rebase"), git-pull explicitly disallowed specifying
-multiple branches in the rebase case.
+Commit d38a30df (Be more user-friendly when refusing to do something
+because of conflict) introduced code paths to git-pull which will error
+out with user-friendly advices if the user is in the middle of a merge
+or has unmerged files.
 
-Implement tests to ensure that git-pull fails and prints out the
-user-friendly error message in such a case.
+Implement tests to ensure that git-pull will not run, and will print
+these advices, if the user is in the middle of a merge or has unmerged
+files in the index.
 
 Signed-off-by: Paul Tan <pyokagan@gmail.com>
 ---
 
 Notes:
-    * Check that when git-pull fails, HEAD was not moved.
-    
-    * Removed the not-really-required `test_when_finished "rm -f out"`.
+    * Test that on merge conflict, git-pull will not reset conflict status,
+      or modify the conflicted file.
 
- t/t5520-pull.sh | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ t/t5520-pull.sh | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
 diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index 99b6f67..05a92a2 100755
+index 5add900..37ff45f 100755
 --- a/t/t5520-pull.sh
 +++ b/t/t5520-pull.sh
-@@ -220,6 +220,15 @@ test_expect_success '--rebase' '
- 	test $(git rev-parse HEAD^) = $(git rev-parse copy) &&
- 	test new = $(git show HEAD:file2)
+@@ -164,6 +164,27 @@ test_expect_success 'fail if upstream branch does not exist' '
+ 	test `cat file` = file
  '
-+
-+test_expect_success '--rebase fails with multiple branches' '
-+	git reset --hard before-rebase &&
-+	test_must_fail git pull --rebase . copy master 2>out &&
-+	test $(git rev-parse HEAD) = $(git rev-parse before-rebase) &&
-+	test_i18ngrep "Cannot rebase onto multiple branches" out &&
-+	test modified = "$(git show HEAD:file)"
+ 
++test_expect_success 'fail if the index has unresolved entries' '
++	git checkout -b third master^ &&
++	test_when_finished "git checkout -f copy && git branch -D third" &&
++	echo file >expected &&
++	test_cmp expected file &&
++	echo modified2 >file &&
++	git commit -a -m modified2 &&
++	test -z "$(git ls-files -u)" &&
++	test_must_fail git pull . second &&
++	test -n "$(git ls-files -u)" &&
++	cp file expected &&
++	test_must_fail git pull . second 2>out &&
++	test_i18ngrep "Pull is not possible because you have unmerged files" out &&
++	test_cmp expected file &&
++	git add file &&
++	test -z "$(git ls-files -u)" &&
++	test_must_fail git pull . second 2>out &&
++	test_i18ngrep "You have not concluded your merge" out &&
++	test_cmp expected file
 +'
 +
- test_expect_success 'pull.rebase' '
- 	git reset --hard before-rebase &&
- 	test_config pull.rebase true &&
+ test_expect_success '--rebase' '
+ 	git branch to-rebase &&
+ 	echo modified again > file &&
 -- 
 2.1.4
