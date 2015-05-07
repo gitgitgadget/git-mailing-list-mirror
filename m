@@ -1,90 +1,108 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 01/12] t5520: implement tests for no merge candidates cases
-Date: Thu, 07 May 2015 08:56:39 -0700
-Message-ID: <xmqq4mnos7ns.fsf@gitster.dls.corp.google.com>
-References: <1430988248-18285-1-git-send-email-pyokagan@gmail.com>
-	<1430988248-18285-2-git-send-email-pyokagan@gmail.com>
-	<554B2AEB.3020608@web.de>
-	<xmqqh9roscty.fsf@gitster.dls.corp.google.com>
-	<CACRoPnSCvitGfVKyqV7PJd_TzLJEs8U_mjYhaRy3KOFrWjBEwA@mail.gmail.com>
+From: Lars Kellogg-Stedman <lars@redhat.com>
+Subject: Re: [PATCH] add support for specifying an SSL cipher list
+Date: Thu, 7 May 2015 12:04:13 -0400
+Message-ID: <20150507160413.GB16334@redhat.com>
+References: <1431008210-673-1-git-send-email-lars@redhat.com>
+ <xmqq8ud0s7sv.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	Git List <git@vger.kernel.org>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>
-To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 07 17:56:53 2015
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="GID0FwUMdk1T2AWN"
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 07 18:04:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YqOAN-0005Zq-Tx
-	for gcvg-git-2@plane.gmane.org; Thu, 07 May 2015 17:56:52 +0200
+	id 1YqOHc-0001pu-W7
+	for gcvg-git-2@plane.gmane.org; Thu, 07 May 2015 18:04:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751686AbbEGP4o convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 May 2015 11:56:44 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50966 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751638AbbEGP4l convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 May 2015 11:56:41 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0AAE14DE80;
-	Thu,  7 May 2015 11:56:41 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=0tUPc9amn/oV
-	6GWlxB9VdiSGyso=; b=Y4uNI9QJ93V2i1JhdKlNHsMee4BdTId+ilKp9+dU+ES9
-	FW+iBYXv0aOVzq8W+RWOFZju1Qmo2fHLojAL4lUQUHeXFBiYZ3oIQuP46IEE7XfB
-	Lg2C3I8ms1Ppb2D3SYeHf98exUzpGVpxsV+qhRaMeLK1ylTQEWm4PJlStkH8aFs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=rSG19L
-	O4BPCQ0hX3I4yRAT3gxvY5hNFnWQwoMpCW7L035/R8sxamj23EYNRxcVE0YL3pL6
-	Durc7P19jhc0QjrguWmHFmgdnBY6znHPFgMvJ0irAGAd32mTNSd2AhY2HLkl48qv
-	d/9piGKTeSEJznS/g8Nsjj276+hLOlIwz/mcM=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 01D7B4DE7F;
-	Thu,  7 May 2015 11:56:41 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 72D8F4DE7E;
-	Thu,  7 May 2015 11:56:40 -0400 (EDT)
-In-Reply-To: <CACRoPnSCvitGfVKyqV7PJd_TzLJEs8U_mjYhaRy3KOFrWjBEwA@mail.gmail.com>
-	(Paul Tan's message of "Thu, 7 May 2015 22:47:02 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: A66CDE5C-F4D1-11E4-B1B0-83E09F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1751190AbbEGQEQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 May 2015 12:04:16 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:58364 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751023AbbEGQEP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 May 2015 12:04:15 -0400
+Received: from int-mx13.intmail.prod.int.phx2.redhat.com (int-mx13.intmail.prod.int.phx2.redhat.com [10.5.11.26])
+	by mx1.redhat.com (Postfix) with ESMTPS id 4BE478EA4C;
+	Thu,  7 May 2015 16:04:15 +0000 (UTC)
+Received: from lkellogg-pk115wp.redhat.com (ovpn-112-66.phx2.redhat.com [10.3.112.66])
+	by int-mx13.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id t47G4EcV014813;
+	Thu, 7 May 2015 12:04:14 -0400
+Received: by lkellogg-pk115wp.redhat.com (Postfix, from userid 1000)
+	id EF132A0E2B; Thu,  7 May 2015 12:04:13 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <xmqq8ud0s7sv.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.23.1 (2014-03-12)
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268536>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268537>
 
-Paul Tan <pyokagan@gmail.com> writes:
 
-> Hi Junio,
->
-> On Thu, May 7, 2015 at 10:04 PM, Junio C Hamano <gitster@pobox.com> w=
-rote:
->> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
->>
->>> In other words:
->>> test $(cat file) =3D file &&
->>
->> Is there a guarantee that file has a single word?  Can it be empty?
->> Can it contain "foo bar\n"?
->
-> It can, but it should not ;-). But yes, this will need to be quoted a=
-s
-> well to be safe. Whoops.
+--GID0FwUMdk1T2AWN
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Yup.  I see that existing test (this script is ancient, isn't it?)
-has the same issue of using backticks and not quoting sufficiently.
+[Apologies for the dupe; this should have been cc'd to the list]
 
-Perhaps we would want a clean-up-and-modernise step before this
-patch to reduce patch noise.
+> It is not clear to me what definition of "override" this sentence
+> uses.
 
-Thanks.
+I was using it in what I thought was the common sense of "git will use
+the value in the environment variable if it exists rather than any
+value in the git configuration".  I apologize if this wasn't clear;
+can you suggest how I might rephrase that?
+
+> If you set something to this configuration variable, and if
+> you want to revert the list back to whatever cURL uses by default,
+> what exact value should I set GIT_SSL_CIPHER_LIST to?
+
+So, with the current version of the patch there isn't an easy way to
+say, "use the defaults instead of what is in my git configuration".
+Setting GIT_SSL_CIPHER_LIST to an empty string would simply disable
+SSL.
+
+I'll submit a new version of the patch that treats an emtpy cipher
+list as meaning, "do not explicitly set CURLOPT_SSL_CIPHER_LIST".
+
+> I also wonder if this feature is something we would want a test or
+> two to protect against future changes accidentally breaking it, but
+> I do not offhand know how hard it would be to come up with a
+> reasonable test.
+
+Yeah, I looked briefly through the tests but I didn't see any existing
+SSL tests and wasn't sure where to start.  I'm open to suggestions on
+this front.
+
+--=20
+Lars Kellogg-Stedman <lars@redhat.com> | larsks @ {freenode,twitter,github}
+Cloud Engineering / OpenStack          | http://blog.oddbit.com/
+
+
+--GID0FwUMdk1T2AWN
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJVS4z9AAoJEOTYsrE/X54pLQoQAJQTNp+lFi3xta9RpBG+N/g9
+xIQaSdEM/LGmk5wneajmIwynBUp+x/6KXddDyBs82KgDZN4/JLlyR2ce1qtcv8Te
+ulcpK28U8HUcw9V80tck8jv/BUPeVQdnN6LjJVdR++dpXr83iV8Y5iuUaqdCfKEZ
+LoKfdLueYKeLXTU80T5/sQZXEFR+iFtvzFWwQiW3AQgUC2O8yetXCCSxmVyDxY4k
+0lPqnacP6GaSXYdN836gjt+yPvJaaR28G4buVXzsDPJ6S9T/MbPIpUyfLCCEeh87
+Uc4u1vI3LT8mb6bHTzENeHG64r8f1Ah8RQFPrLU0N+kUVmnlhyyP+GTvP0iLw/pj
+EMz6op+VBgnL/1GptxYkHb6+CYrqnb7I9zW/VB+QZW+QUqGr4ZmrahYg7cJDKGpd
+DoUMJPn4q/1XecKCAuDpKJlVfBwtxTnTqm4qAxME2cdhBQEsTF46Wus7DVla4uw8
+zEKlrVrBHMXoNYjvSuF/JjiaJDlLC9uJZXOVmsBDeWWCFfsU7p4rCuE8i27ELhX+
+bUwZXr13xBT29IDJQrUCSnbvQ2/DaSPj+L0jXk1Vu7tjvn8JU8E6CB6qmPd+sAM5
+qDAlVGPdIWAq//ilP+XNOkuKYpj/+bEzLatdoJjdymIvN/3fhwfmL/ThU+QEBmD+
+EByElQIsPFRUOGGOm0RD
+=k6NR
+-----END PGP SIGNATURE-----
+
+--GID0FwUMdk1T2AWN--
