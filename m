@@ -1,56 +1,61 @@
 From: Danny Lin <danny0838@gmail.com>
 Subject: Re: [PATCH] contrib/subtree: fix linefeeds trimming for cmd_split()
-Date: Thu, 7 May 2015 11:39:47 +0800
-Message-ID: <CAMbsUu66AJ1hC-nDrHSojMibYp-rh=zSpEwC3hCaG-1yU71GZw@mail.gmail.com>
+Date: Thu, 7 May 2015 11:43:15 +0800
+Message-ID: <CAMbsUu7vkS4D2z_gNFsujVsyHjRiXseTLGCaic=841V=HZyb_g@mail.gmail.com>
+References: <CAMbsUu66AJ1hC-nDrHSojMibYp-rh=zSpEwC3hCaG-1yU71GZw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Junio C Hamano <gitster@pobox.com>,
 	git develop <git@vger.kernel.org>
 To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Thu May 07 05:39:56 2015
+X-From: git-owner@vger.kernel.org Thu May 07 05:43:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YqCfB-0002qF-Fx
-	for gcvg-git-2@plane.gmane.org; Thu, 07 May 2015 05:39:54 +0200
+	id 1YqCiX-0004oQ-77
+	for gcvg-git-2@plane.gmane.org; Thu, 07 May 2015 05:43:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751483AbbEGDjt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 May 2015 23:39:49 -0400
-Received: from mail-qc0-f174.google.com ([209.85.216.174]:34092 "EHLO
-	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750965AbbEGDjs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 May 2015 23:39:48 -0400
-Received: by qcyk17 with SMTP id k17so15358154qcy.1
-        for <git@vger.kernel.org>; Wed, 06 May 2015 20:39:47 -0700 (PDT)
+	id S1751030AbbEGDnQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 May 2015 23:43:16 -0400
+Received: from mail-qg0-f43.google.com ([209.85.192.43]:33027 "EHLO
+	mail-qg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750812AbbEGDnQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 May 2015 23:43:16 -0400
+Received: by qgdy78 with SMTP id y78so15206312qgd.0
+        for <git@vger.kernel.org>; Wed, 06 May 2015 20:43:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=4mo4eCTuogFeF05F6dXVQy8FaKGPolo9cETSpcXXxYE=;
-        b=O1CRmCSqF3r67mcNNG+K4lE36aMw+8/9TVEiiz8l8O5t1ozVdzG2VX8cOyhTAvnUN4
-         9ZpchrXAtco68xZN5md9QON/1THMNp+Y8HXPdVmk1Bqkux0VbYSbH6GZdmOXsyLgUJDX
-         5jvoahVB2lu+6vo874vN0AuUg+obwfVMeRFhmbtVm2JKpmISFGharz0bgJCRpDTliNdD
-         LRNHHnsWun8jegoL8aZFljaDtEHrqsH3TSir/+CVbS6uSXr+tYXzbiSZTNBi16lrBT8b
-         DzXjOZVzrbw3V3xhnpioNqJs5gWyLYI/eY9cmrPgv2epmCq61tsWvSbJMVoeRz13dwFO
-         P40Q==
-X-Received: by 10.140.51.106 with SMTP id t97mr2524589qga.44.1430969987520;
- Wed, 06 May 2015 20:39:47 -0700 (PDT)
-Received: by 10.140.98.145 with HTTP; Wed, 6 May 2015 20:39:47 -0700 (PDT)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=pRHKsD1K0xk00OZsADvvxIRwe2dFac6uMg/FQBP5CTg=;
+        b=qgJlZoFe3xyh1b/BruBA+D+F5ucCgJX1pNM1Fw4LpnCR1uzy/DBxR2VWD33zc7Qe0i
+         LOZOIQTe590DvoLnxuui+Fh/KpOH73Z/q+ROshFDwC/dmw++sg+eIuL4moslDCGyGffi
+         4zfW3cjI8USizO7khCz2JI6w7x+tWf9rViFN9Huda8FOCQLF5FkHYR19Mz1HAUzdAJMl
+         ndRiFLudfjotmoawhLklHtTIDUcmMHMRLPm+SZOy9BwmsK49sIz/nMN4HJplvL5R6Hbp
+         X16B1hdzBS7KpojGQ6I7DHRXPGnM4CqM7vEAtaPE03QYwVPTqCNLNGV/IvCgRrpccLkP
+         0Szw==
+X-Received: by 10.55.23.96 with SMTP id i93mr4034097qkh.75.1430970195274; Wed,
+ 06 May 2015 20:43:15 -0700 (PDT)
+Received: by 10.140.98.145 with HTTP; Wed, 6 May 2015 20:43:15 -0700 (PDT)
+In-Reply-To: <CAMbsUu66AJ1hC-nDrHSojMibYp-rh=zSpEwC3hCaG-1yU71GZw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268505>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268506>
+
+Subject: [PATCH] contrib/subtree: portability fix for string printing
 
 Replace all echo using printf for better portability.
 
 Also re-wrap previous 'say -n "$str<CR>"' using a new
-function state() so to prevent CR chars included in
-the source code, which could be mal-processed on some
-shells (e.g. MsysGit trims CR before executing a shell
-script file in order to make it work right on Windows
-even if it uses CRLF as linefeeds.
+function state() to prevent CR chars included in the
+source code, which could be mal-processed on some
+shells. For example, MsysGit trims CR before executing
+a shell script file in order to make it work right on
+Windows even if it uses CRLF as linefeeds.
 
 Signed-off-by: Danny Lin <danny0838@gmail.com>
 ---
@@ -260,55 +265,4 @@ $latest_new || exit $?
 2.3.7.windows.1
 
 
-
-2015-05-07 3:58 GMT+08:00 Eric Sunshine <sunshine@sunshineco.com>:
-> On Wed, May 6, 2015 at 3:49 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Danny Lin <danny0838@gmail.com> writes:
->>
->>> cmd_split() prints a CR char by assigning a variable
->>> with a literal CR in the source code, which could be
->>> trimmed or mis-processed in some terminals. Replace
->>> with $(printf '\r') to fix it.
->
-> For future readers of the patch who haven't followed the email
-> discussion, it might be a good idea to explain the problem in more
-> detail. Saying merely "could be trimmed or mis-processed in some
-> terminals" doesn't give much for people to latch onto if they want to
-> understand the specific problem. Concrete information would help.
->
-Added related information.
-
->>> Signed-off-by: Danny Lin <danny0838@gmail.com>
->>> ---
->>> diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
->>> index fa1a583..3a581fc 100755
->>> --- a/contrib/subtree/git-subtree.sh
->>> +++ b/contrib/subtree/git-subtree.sh
->>> @@ -596,10 +596,11 @@ cmd_split()
->>>      revmax=$(eval "$grl" | wc -l)
->>>      revcount=0
->>>      createcount=0
->>> +    CR=$(printf '\r')
->>>      eval "$grl" |
->>>      while read rev parents; do
->>>          revcount=$(($revcount + 1))
->>> -        say -n "$revcount/$revmax ($createcount)
->>> "
->>> +        say -n "$revcount/$revmax ($createcount)$CR"
->>
->> Interesting.  I would have expected, especially this is a portability-fix
->> change, that the change would be a single liner
->>
->> -       say -n ...
->> +       printf "%s\r" "$revcount/$revmax ($createcount)"
->>
->> that does not touch any other line.
->
-> Unfortunately, that solution does not respect the $quiet flag like
-> say() does. I had envisioned the patch as reimplementing say() using
-> printf rather than echo, and having say() itself either recognizing
-> the -n flag or just update callers to specify \n when they want it
-> (which is probably the cleaner of the two approaches).
->
-If a more thorough portability fix is desired, I'd prefer a work like this
-(see the patch above).
+Typo fix for previous patch.
