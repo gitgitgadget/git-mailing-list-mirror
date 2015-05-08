@@ -1,96 +1,63 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 11/12] t5524: test =?UTF-8?Q?--log=3D=31=20limits?=
- =?UTF-8?Q?=20shortlog=20length?=
-Date: Fri, 08 May 2015 12:07:29 +0200
+Subject: Re: [PATCH 1/3] command-list.txt: group common commands by theme
+Date: Fri, 08 May 2015 12:11:33 +0200
 Organization: gmx
-Message-ID: <8e34bc9ea27d147f86de0cf60141687a@www.dscho.org>
-References: <1430988248-18285-1-git-send-email-pyokagan@gmail.com>
- <1430988248-18285-12-git-send-email-pyokagan@gmail.com>
- <05adfac12cb9a7ad183281974d991e00@www.dscho.org>
- <CACRoPnRfqQMRJ5N=oL84SMw=FC=Eg-Co-De_9E9cpWCaaSZAxw@mail.gmail.com>
- <554BB93A.3090000@kdbg.org>
+Message-ID: <0eb58475c6238be314eb4f0be08f8ae6@www.dscho.org>
+References: <cover.1430770308.git.sebastien.guimmara@gmail.com>
+ <b89d3fec640cb6fb01aa32ad50bae4e064528220.1430770308.git.sebastien.guimmara@gmail.com>
+ <CAPig+cTHQikgOvPrjxikUNjQoWCv2hdubJ55OG0SqpGUs_3Pow@mail.gmail.com>
+ <554A8084.10506@gmail.com>
+ <CAPig+cQ2e4c5hYsRbZhgyvLcMPsqshqRUZGNLwhJd57YP9JEFA@mail.gmail.com>
+ <554BBBAF.30705@kdbg.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: Paul Tan <pyokagan@gmail.com>, Git List <git@vger.kernel.org>,
-	Stefan Beller <sbeller@google.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
+Cc: =?UTF-8?Q?S=C3=A9bastien_Guimmara?= <sebastien.guimmara@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
 To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Fri May 08 12:07:42 2015
+X-From: git-owner@vger.kernel.org Fri May 08 12:11:45 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YqfC2-000237-Am
-	for gcvg-git-2@plane.gmane.org; Fri, 08 May 2015 12:07:42 +0200
+	id 1YqfFv-0003un-Eh
+	for gcvg-git-2@plane.gmane.org; Fri, 08 May 2015 12:11:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750842AbbEHKHi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 May 2015 06:07:38 -0400
-Received: from mout-xforward.gmx.net ([82.165.159.13]:57991 "EHLO
-	mout-xforward.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751409AbbEHKHg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 May 2015 06:07:36 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0LzKyn-1ZLifD2BFp-014Wgj; Fri, 08 May 2015 12:07:30
+	id S1751733AbbEHKLj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 May 2015 06:11:39 -0400
+Received: from mout.gmx.net ([212.227.15.19]:60131 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751149AbbEHKLi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 May 2015 06:11:38 -0400
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0LlV71-1ZPRyL3RHL-00bIyY; Fri, 08 May 2015 12:11:34
  +0200
-In-Reply-To: <554BB93A.3090000@kdbg.org>
+In-Reply-To: <554BBBAF.30705@kdbg.org>
 X-Sender: johannes.schindelin@gmx.de
 User-Agent: Roundcube Webmail/1.1.0
-X-Provags-ID: V03:K0:N16YgYQGzB3szer9n19LVLhBBb/XbZlo06N09dS9jR2Mvyn6cMO
- SjM9jLQys9RMZrsP26s26ZAnxtqWR6yl5TImSCt9BBT0jPC6mLDQbW7tTfd68mhPw/nd1uK
- E/aPtBYKvhfVAykaBNsb9x16zd89XPIrSGhsUpEJIq2ZOoe7zBfrQbgGAueTPq3moBfSIVz
- VZXQQs9zxZPFJLEgH9ymQ==
-X-UI-Out-Filterresults: junk:10;
+X-Provags-ID: V03:K0:W6qTAXGE1gKgOAtr+HAwZtkmnkfAonpECOgsH2Kbeg5m+iIgZin
+ i3UNoW/tMpeKl63BIKvAhaofuaJVAMzaENXpaRalDGu2p7dKQdeIhADZs6sulrr43iv5e/U
+ o5A+J7J2XbXaOSLgAQa8pxj7Ajw9nQMJO5wnxX1nFKiSCsr5kNbacGdVgKMNuw7JTKKC5Fq
+ EFtryjwRq/tq34t1eBrtw==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268610>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268611>
 
 Hi Hannes,
 
-On 2015-05-07 21:12, Johannes Sixt wrote:
-> Am 07.05.2015 um 19:06 schrieb Paul Tan:
->
->> On Fri, May 8, 2015 at 12:28 AM, Johannes Schindelin
->> <johannes.schindelin@gmx.de> wrote:
->>
->>> On 2015-05-07 10:44, Paul Tan wrote:
->>>> @@ -32,4 +35,18 @@ test_expect_success pull '
->>>>   )
->>>>   '
->>>>
->>>> +test_expect_failure '--log=1 limits shortlog length' '
->>>> +(
->>>> +     cd cloned &&
->>>> +     git reset --hard HEAD^ &&
->>>> +     test `cat afile` = original &&
->>>> +     test `cat bfile` = added &&
->>>> +     git pull --log &&
->>>> +     git log -3 &&
->>>> +     git cat-file commit HEAD >result &&
->>>> +     grep Dollar result &&
->>>> +     ! grep "second commit" result
->>>> +)
->>>
->>> I think it might be better to use `test_must_fail` here, just for
->>> consistency (the `!` operator would also pass if `grep` itself could not
->>> be executed correctly, quite academic, I know, given that `grep` is
->>> exercised plenty of times by the test suite, but still...)
->>>
->>> What do you think?
->>
->> Yep, it's definitely better. Sometimes I forget about the existence of
->> some test utility functions :-/.
-> 
-> Nope, it's not better. test_must_fail is explicitly only for git
-> invocations. We do not expect 'grep' to segfault or something.
-> 
-> Cf. eg.
-> http://thread.gmane.org/gmane.comp.version-control.git/258725/focus=258752
+On 2015-05-07 21:23, Johannes Sixt wrote:
 
-That link leads to a patch that changes `! grep` to a `test_must_fail grep` and is not contested, at least not in the thread visible on GMane. Would you have a link with a more convincing argument for me?
+> Files lacking the trailing new-line are not "text files" according to
+> the POSIX definition, BTW.
+
+It's probably my failure for not finding the documentation on that, but I really would like to be educated. Do you have an authoritative source for that statement?
 
 Thank you,
 Johannes
+
+P.S.: Somehow when I ask GMX to send mail to Eric Sunshine today, it refuses ("mailbox not available"?), so I removed the address from the Cc: list. Will investigate what is wrong if that happens again. Sorry!
