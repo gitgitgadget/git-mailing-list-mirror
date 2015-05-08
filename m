@@ -1,71 +1,77 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] sequencer.c: abbreviate hashs placed in the middle of messages
-Date: Fri, 8 May 2015 19:26:16 +0200
-Message-ID: <CAN0XMOLhkTMWDr+eOsb5H8YiC1b7Nk0OKTSfi02ocr1unwFjfw@mail.gmail.com>
+Date: Fri, 08 May 2015 10:31:32 -0700
+Message-ID: <xmqq7fsjm0wb.fsf@gitster.dls.corp.google.com>
 References: <1431104035-2056-1-git-send-email-ralf.thielow@gmail.com>
 	<CAPig+cSeNn0r7N6vp+qs4NTNwfYx5p-zUX3tkifuXLu+nB2yNQ@mail.gmail.com>
 	<xmqqbnhvm1f5.fsf@gitster.dls.corp.google.com>
+	<CAN0XMOLhkTMWDr+eOsb5H8YiC1b7Nk0OKTSfi02ocr1unwFjfw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
 Cc: Eric Sunshine <sunshine@sunshineco.com>,
 	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 08 19:26:26 2015
+To: Ralf Thielow <ralf.thielow@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 08 19:31:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yqm2Y-0005pB-ME
-	for gcvg-git-2@plane.gmane.org; Fri, 08 May 2015 19:26:23 +0200
+	id 1Yqm7f-00083r-Q7
+	for gcvg-git-2@plane.gmane.org; Fri, 08 May 2015 19:31:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932310AbbEHR0S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 May 2015 13:26:18 -0400
-Received: from mail-wi0-f171.google.com ([209.85.212.171]:38547 "EHLO
-	mail-wi0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932068AbbEHR0R (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 May 2015 13:26:17 -0400
-Received: by wiun10 with SMTP id n10so34858931wiu.1
-        for <git@vger.kernel.org>; Fri, 08 May 2015 10:26:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=PvSLm/K8tD+LNtbT0t3snvjwAOWPxZfZG3nKYZDH184=;
-        b=x0F0xXnuwpYr6LwL2o0SqF0H6Ykj+UFTKcNx/SUuCSxwqfPJQ9bOPA3d8HpLUEWtAv
-         EMms3u0ygY7JScf6Q4WnrrKve1Jsgb0Dkyq+6seiLWcDnfZLva5N7fwztMqwpk2hSheD
-         9KcVnOxsTTLnG/fDaqlpMWeUNl2yWncwQivNXL+zynca6H7EeTGWEfq810V+vU45fb7X
-         sI2aZnEPz34BrGTREeKOba9CKotEI0xP9LZFdTEHW3eNd6/kpmPwDOpolB27KhnKfBPo
-         rDHIxJxole3vbMoOSDzEZz5lU/u9WVX9TU0VvYK9WSSvZoS0QvFCA2Ksc1k3WyE2CJZv
-         pvhA==
-X-Received: by 10.180.74.144 with SMTP id t16mr8010631wiv.33.1431105976663;
- Fri, 08 May 2015 10:26:16 -0700 (PDT)
-Received: by 10.194.72.6 with HTTP; Fri, 8 May 2015 10:26:16 -0700 (PDT)
-In-Reply-To: <xmqqbnhvm1f5.fsf@gitster.dls.corp.google.com>
+	id S1753436AbbEHRbf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 May 2015 13:31:35 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:52631 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753309AbbEHRbe (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 May 2015 13:31:34 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 003944E430;
+	Fri,  8 May 2015 13:31:34 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=bb+gnVN1IEekBmgaKafUNcXUGcE=; b=Lz/lfm
+	4hSoKkYQTTxp9M6xFZ+HH5JTYWjlQnymXT6UuGYiQ1esHaO10JuZrVFHHlvRsZwC
+	QuJW7ixdWxzZVOC5nZDSY42S6YATE6eXyknBmVuB9DQ+YCEMOau4GNItSLNis8gE
+	/rxwYsHGFe93Na1QLze1XbRAGRHkJLmG6Owtw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=QU+LjazYkEgTggr27pWoBOJPm/vqKOMf
+	+G3b4HdMbWjSzuHWgWJ2emvFhU81gJVhYrzWgZfctjq/6JKJCN5omxoPfMuCfxwC
+	SM9SYNmfh0UKoo0DJym+lqEDLUyI0bmuvzl1Wk4UqD7rGYxgYx4PaVOhSOSUqNab
+	HWKfc6EJmYw=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id EBC074E42F;
+	Fri,  8 May 2015 13:31:33 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 728CB4E42D;
+	Fri,  8 May 2015 13:31:33 -0400 (EDT)
+In-Reply-To: <CAN0XMOLhkTMWDr+eOsb5H8YiC1b7Nk0OKTSfi02ocr1unwFjfw@mail.gmail.com>
+	(Ralf Thielow's message of "Fri, 8 May 2015 19:26:16 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 121841C4-F5A8-11E4-B3AE-83E09F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268630>
 
-Junio C Hamano <gitster@pobox.com> wrote:
+Ralf Thielow <ralf.thielow@gmail.com> writes:
 
-> If identifying the exact commit has value, on the other hand, we can
-> rephrase it like this:
+>>         error(_("-m option was given for non-merge commit '%s'", ...);
 >
->         error(_("no -m option was given to pick a merge '%s'", ...));
->
-> to place it not in the middle.  We can do similar rephrasing for
-> other messages as well.
->
->>> -                       return error(_("Commit %s does not have parent %d"),
->>> -                               sha1_to_hex(commit->object.sha1), opts->mainline);
->
->         error(_("No parent %d for commit '%s'", opts->mainline, ...);
->
->>> -               return error(_("Mainline was specified but commit %s is not a merge."),
->>> -                       sha1_to_hex(commit->object.sha1));
->
->         error(_("-m option was given for non-merge commit '%s'", ...);
+> The %s can be placed to somewhere else in translations.
 
-The %s can be placed to somewhere else in translations.
+That is true for all the messages, and is something the l10n people
+need to be aware of.
+
+We've seen those who are careful to keep '%s' for longer strings
+(e.g. end-user controlled ones strings) at the end for this exact
+reason. I do not offhand recall if there were cases where we
+committed one version that had %s in the middle and then fixed
+later to change that message in a separate commit, but there were
+cases where earlier messages with %s in the middle were fixed for
+this exact reason in their rerolls.
