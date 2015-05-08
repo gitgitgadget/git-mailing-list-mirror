@@ -1,90 +1,94 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] contrib/subtree: portability fix for string printing
-Date: Fri, 8 May 2015 14:55:17 -0400
-Message-ID: <CAPig+cQVpYseCs7V_zHbUhEbWitdNZx1UJgHSdd2svowBOxsYg@mail.gmail.com>
-References: <xmqqmw1gp7aa.fsf@gitster.dls.corp.google.com>
-	<1431046619-2340-1-git-send-email-danny0838@gmail.com>
-	<xmqqy4kzklhp.fsf@gitster.dls.corp.google.com>
-	<CAPig+cQQSrQiSzp7Jat8LYH+RqYdpJ2XCXweAtrYE_QoLzSznQ@mail.gmail.com>
-	<xmqqpp6alxiw.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/3] git help: group common commands by theme
+Date: Fri, 08 May 2015 11:58:50 -0700
+Message-ID: <xmqqh9rmlwut.fsf@gitster.dls.corp.google.com>
+References: <cover.1430770308.git.sebastien.guimmara@gmail.com>
+	<554B30D5.3050909@emmajane.net> <554CFEC3.5030105@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Danny Lin <danny0838@gmail.com>, git develop <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 08 20:55:26 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Emma Jane Hogbin Westby <emma.westby@gmail.com>,
+	git@vger.kernel.org
+To: =?utf-8?Q?S=C3=A9bastien?= Guimmara <sebastien.guimmara@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 08 20:59:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YqnQi-0002d5-HG
-	for gcvg-git-2@plane.gmane.org; Fri, 08 May 2015 20:55:24 +0200
+	id 1YqnUA-00044I-1d
+	for gcvg-git-2@plane.gmane.org; Fri, 08 May 2015 20:58:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752953AbbEHSzU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 May 2015 14:55:20 -0400
-Received: from mail-ig0-f177.google.com ([209.85.213.177]:38592 "EHLO
-	mail-ig0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752937AbbEHSzS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 May 2015 14:55:18 -0400
-Received: by igbhj9 with SMTP id hj9so29167730igb.1
-        for <git@vger.kernel.org>; Fri, 08 May 2015 11:55:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=pWKLf5Ax6I0yuv8hO/7LPMa8O1rS5Tcv+9gBGlb2qZc=;
-        b=G4fHaR9Jq4OEAD5PvTKgyqn15HLbYZL0U8GQnmd7dt8grYlzAYZCN+Xp1+mJ9ZSEAz
-         N7mUV/NLEwYW3ZvG2lAQu550zMu8xEtp+3IbbgkLuE/0PUkIKZT7tFQXiKLCO7VsIjr9
-         polMhrAEksgz4RHAFkosk7RkKO1bHO83VboXsrvrqYnO40iH8YchOXCXKenAEDccJqyu
-         mkzo7o0Pt5owfkDDM4qrX+WhTJCrWC3CKWuLcO26gPAMXL8U7Fk2oWjUf4x+a8oTGdrV
-         VkRJz6kvBHHBGurl0u3REcVJOd2GuSQbraV34sUdNeHJd8ux+MejVFdmn9QK1H6gDKRI
-         fGjw==
-X-Received: by 10.42.250.70 with SMTP id mn6mr5917149icb.78.1431111317887;
- Fri, 08 May 2015 11:55:17 -0700 (PDT)
-Received: by 10.107.28.132 with HTTP; Fri, 8 May 2015 11:55:17 -0700 (PDT)
-In-Reply-To: <xmqqpp6alxiw.fsf@gitster.dls.corp.google.com>
-X-Google-Sender-Auth: hVw-05nFwblj1B2oVOoAet5hVmI
+	id S1753076AbbEHS6x convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 May 2015 14:58:53 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50747 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752755AbbEHS6w convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 8 May 2015 14:58:52 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1BF4B4E354;
+	Fri,  8 May 2015 14:58:52 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=3SEkkFKdKavN
+	ZGALmCSv2GZfYLM=; b=hpHjni3VULch9Yl5jaefxLoI+CTSXvZlalmD/bVS4td2
+	lefh8aKThXiCqwuXaLLgwQhL6VR+et/il0myVyWBnRqvnL901IpsOHB3LkDGO7pz
+	geDm2Chlpu/gwsea0I0mZNshoa3P+yctZWRGtzO3lzS2MQE0ciPj1DlI51VhdSA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Ni5qwS
+	oS+5/QelanQJ0kwUW1fX/LE8QGmnd5/ApuB1vodvAphU29n3nUcGu6/WzrgRiekn
+	RGY3BskEmujmrIZ3iZlPjXRgeZkB40sV9U/qsNEFUvZMox30hjRkDHJd8A7eLEK2
+	p9FD17K01Z3ly6I+eRTWzPcOsOvHZE+cEJ5Qs=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 139C84E353;
+	Fri,  8 May 2015 14:58:52 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8C8B94E351;
+	Fri,  8 May 2015 14:58:51 -0400 (EDT)
+In-Reply-To: <554CFEC3.5030105@gmail.com> (=?utf-8?Q?=22S=C3=A9bastien?=
+ Guimmara"'s message of
+	"Fri, 08 May 2015 20:21:55 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 443F93B2-F5B4-11E4-877B-83E09F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268645>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268646>
 
-On Fri, May 8, 2015 at 2:44 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
->> On Fri, May 8, 2015 at 1:49 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>> Thanks, this looks good.  Will apply with a little bit of tweak in
->>> the log message.
->>
->> Hmm, I would say that the changes to debug() and say() should either
->> be dropped or moved to a separate patch (along with the first
->> paragraph of the commit message). With the introduction of the
->> progress() abstraction, there is no longer any need for changes to
->> say(), and the "better portability" rationale for changing say() and
->> debug() is never properly explained, and is thus nebulous at best.
+S=C3=A9bastien Guimmara  <sebastien.guimmara@gmail.com> writes:
+
+> On 05/07/2015 11:31 AM, Emma Jane Hogbin Westby wrote:
 >
-> I justified them in this way.
+>>> The most commonly used git commands are:
+>>>
+>>>     * starting a working area:
+>>>        clone      Clone a repository into a new directory
+>>>        init       Create an empty Git repository or reinitialize [.=
+=2E.]
+>>>
+>>>     * working on the current change:
+>>>        add        Add file contents to the index
+>>>        reset      Reset current HEAD to the specified state
+>> I could not live without status at this stage, and status always tel=
+ls
+>> me what I should do next. I'm tempted to see it up here instead...
 >
->     contrib/subtree: portability fix for string printing
->
->     'echo -n' is not portable, but this script used it as a way to give
->     a string followed by a carriage return for progress messages.
->     Introduce a new helper shell function "progress" and use printf as a
->     more portable way to do this.  As a side effect, this makes it
->     unnecessary to have a raw CR in our source, which can be munged in
->     some shells.  For example, MsysGit trims CR before executing a shell
->     script file in order to make it work right on Windows even if it
->     uses CRLF as linefeeds.
+> The layout was not designed to be workflow oriented (even if it appea=
+rs
+> so), but rather theme oriented.
 
-Very nicely explained.
+I tend to agree with Emma here; even if your original ordering was
+not using the workflow as the grouping criterion, that is something
+that can easily be fixed, I would think.
 
->     While at it, replace "echo" using printf in debug() and say() to
->     avoid tempting people introducing the same bug.
+After all, the very original did not categorize and sorted
+alphabetically, so there is no room for the "we chose to be
+theme-oriented (I am not sure what it means, though) and a major
+redesign at this point will confuse users" kind of resistance to
+come into the picture.  At least not yet.
 
-Okay, this works as reasonable justification for including those
-changes in the same patch.
-
-It might read a bit more fluidly if rephrased something like this:
-
-    While at it, replace 'echo' with 'printf' in debug() and say() to
-    eliminate the temptation of reintroducing the same bug.
+Thanks.
