@@ -1,98 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: t0005-signals.sh fails with ksh
-Date: Fri, 08 May 2015 14:39:32 -0700
-Message-ID: <xmqqk2wiiwa3.fsf@gitster.dls.corp.google.com>
-References: <31108626.20150508231514@gmail.com>
-	<xmqq1tiqkdue.fsf@gitster.dls.corp.google.com>
-	<20150508205548.GB13457@peff.net> <20150508211453.GA11594@peff.net>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: Please consider extending .gitignore to support setting of a file size limit
+Date: Fri, 8 May 2015 22:55:17 +0100
+Organization: OPDS
+Message-ID: <682DB2BD13D143CEB606BF9C8E4E55D5@PhilipOakley>
+References: <CAC+AdWRpJnt2PN1YcB7VoHcKsO86_DhE1mOB5Ls9bWaEd_XKXQ@mail.gmail.com> <xmqqy4l0m5wf.fsf@gitster.dls.corp.google.com> <20150508065459.GB31516@vps892.directvps.nl>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: evgeny <illumsoft.org@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri May 08 23:39:40 2015
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "Roger Mendes" <sproger1@gmail.com>, <git@vger.kernel.org>
+To: "Kevin Daudt" <me@ikke.info>, "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 08 23:55:03 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yqpzf-0004ag-EQ
-	for gcvg-git-2@plane.gmane.org; Fri, 08 May 2015 23:39:39 +0200
+	id 1YqqEZ-0002yJ-8D
+	for gcvg-git-2@plane.gmane.org; Fri, 08 May 2015 23:55:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752933AbbEHVjf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 May 2015 17:39:35 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:52179 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751568AbbEHVje (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 May 2015 17:39:34 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0BC3C4E7F6;
-	Fri,  8 May 2015 17:39:34 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=pFtdg7ev5yWk8hSJlY6cu35yWf8=; b=UDFzKj
-	vXf831jgrp0o3mztBZdFn7CcktDMin69nVlC8f3tRfqJPtdT5O6LI/JOTaaEXxSg
-	NkvJx4mwjROZOmueuy5JIHUXFsjFrbPrvCa9HjKLEOH4vYbEdrA1f3xDHZ2ZiY3A
-	OOdmKiKOb5rUG8HRcVnlERIdPIY+LpqqMwk5s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=eIgKaqt4p9ff6Ta5/6i1wOkZZOKKo0Ep
-	hte+x3O8Rf9DigzktBWHc6NujNsz/PkZZrbjsSWBG7LJLQQ0sYR8iWUGgLHewVvF
-	8eyLICiSIlFZgVRLnwh29P3qCOHJkJ0O8eQc2yLjv3Ejjc2VAc8jBVNNaJoVjty9
-	/srOODUxI/A=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 03C094E7F5;
-	Fri,  8 May 2015 17:39:34 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7C00D4E7F4;
-	Fri,  8 May 2015 17:39:33 -0400 (EDT)
-In-Reply-To: <20150508211453.GA11594@peff.net> (Jeff King's message of "Fri, 8
-	May 2015 17:14:54 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: B7498B5E-F5CA-11E4-A8A3-83E09F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1753257AbbEHVy7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 May 2015 17:54:59 -0400
+Received: from out1.ip01ir2.opaltelecom.net ([62.24.128.237]:19747 "EHLO
+	out1.ip01ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752696AbbEHVy6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 8 May 2015 17:54:58 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: A2B8FACGME1VPDsFFlxcgw6BMoZMbcUyBAQCgTVNAQEBAQEBBwEBAQFBJBuEGwUBAQEBAwgBAS4eAQEhCwIDBQIBAw4HAwklFAEECBIGBwMUBgESCAIBAgMBiAYDFrtmh2YNhS8sizqCTYFgWIMegRYFi2aGVXCIHIJ5g1qKZYMZg1WCLByBUz0xgQSBQgEBAQ
+X-IPAS-Result: A2B8FACGME1VPDsFFlxcgw6BMoZMbcUyBAQCgTVNAQEBAQEBBwEBAQFBJBuEGwUBAQEBAwgBAS4eAQEhCwIDBQIBAw4HAwklFAEECBIGBwMUBgESCAIBAgMBiAYDFrtmh2YNhS8sizqCTYFgWIMegRYFi2aGVXCIHIJ5g1qKZYMZg1WCLByBUz0xgQSBQgEBAQ
+X-IronPort-AV: E=Sophos;i="5.13,393,1427756400"; 
+   d="scan'208";a="781372315"
+Received: from host-92-22-5-59.as13285.net (HELO PhilipOakley) ([92.22.5.59])
+  by out1.ip01ir2.opaltelecom.net with ESMTP; 08 May 2015 22:54:52 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268677>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268678>
 
-Jeff King <peff@peff.net> writes:
-
-> Here's an oddity I isolated based on a failure in t5502:
+From: "Kevin Daudt" <me@ikke.info>
+> On Thu, May 07, 2015 at 02:31:12PM -0700, Junio C Hamano wrote:
+>> Roger Mendes <sproger1@gmail.com> writes:
+>>
+>> Having said all that, why is it that you do not want to track
+>> certain files that happen to be large?  Don't the existing large
+>> file support facility work for you (or perhaps you are not using
+>> them)?  It might be that your time is better spent on improving
+>> that, instead of working around the issue, no?
+>>
 >
->   $ git init foo && cd foo
->   Initialized empty Git repository in /home/peff/foo/.git/
->
->   $ (cd .git/objects && ls)
->   info pack
->
-> OK, makes sense. Now...
->
->   $ mkdir subdir && cd subdir
->   $ ls ../.git/objects
->   info  pack
->   $ cd ../.git/objects
->   ksh: cd: /home/peff/foo/git/objects: [No such file or directory]
->
-> Um, what? Apparently using "../.foo" will eat the "." off of "foo"?
+> My experience in #git is that people want to prevent other people
+> accidentelly adding large files, resulting in all sorts of problems,
+> which takes a lot of effort to fix if you're not an experienced user.
+> --
+I'd also support this option.
 
-That is fun.  And doing
+One issue is to locate a suitable method/character code for the 'magic 
+pathspec' that would define a size limit that can be used for the 'git 
+add .' etc., and possibly also for sparse checkout (definitely an area 
+where a size limit may be appropriate for some users).
 
-    $ mkdir -p git/objects
-
-just before you create and chdir into subdir does tell me that the
-last "cd ../.git/objects" is turned into "cd ../git/objects".
-
-Actually, with that extra thing, changing the last one to
-
-    $ cd ../..git/objects
-
-still takes me to ../git/objects, it seems.  But lookie here:
-
-    $ cd ../.....git/objects
-    ksh: cd: /var/tmp/x/ksh/...git/objects: [No such file or directory]
-
-WAT.
-
-I am tempted to say that we should write it off as utterly broken.
+The ability to extend the ignore method could also, in the future be 
+used for a possible narrow clone (when desired).
+--
+Philip 
