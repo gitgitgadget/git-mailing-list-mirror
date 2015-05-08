@@ -1,72 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: A note from the maintainer
-Date: Fri, 08 May 2015 09:25:43 -0700
-Message-ID: <xmqqfv77m3y0.fsf@gitster.dls.corp.google.com>
-References: <xmqqzj5pxumj.fsf@gitster.dls.corp.google.com>
-	<CAP8UFD15C5vU2uiKWZYKQR5MBsV_WKyGKekyCW4UAAsCBrnFxw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git <git@vger.kernel.org>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 08 18:25:53 2015
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: [PATCH] sequencer.c: abbreviate hashs placed in the middle of messages
+Date: Fri,  8 May 2015 18:53:55 +0200
+Message-ID: <1431104035-2056-1-git-send-email-ralf.thielow@gmail.com>
+Cc: Ralf Thielow <ralf.thielow@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 08 18:54:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yql5z-0003Z9-AW
-	for gcvg-git-2@plane.gmane.org; Fri, 08 May 2015 18:25:51 +0200
+	id 1YqlXd-0008Es-BX
+	for gcvg-git-2@plane.gmane.org; Fri, 08 May 2015 18:54:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932216AbbEHQZq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 May 2015 12:25:46 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:61296 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932076AbbEHQZq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 May 2015 12:25:46 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 960E94CDEE;
-	Fri,  8 May 2015 12:25:45 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=6NpXIbkb2GXgVnjgJbjGYgu5Rt4=; b=mCXRNS
-	ZSjwQiwWdc5nYzWYa2wCfzFe0kW0Q/cI3itDyWJ7ar2vvicxqZ27TRq3uB2DIuRj
-	a/XmqZfYMYUy97dobg7rsvj76JURRww/sjM9E7PzOKncBxsFBlORh4nET2XdCg5h
-	LN+5ftZaOG8vUa9DkhCWqQrYIN/bx8JrFiNDA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=AA+MYBizB8RUTylhTOfzhC6zjG9Ri0xF
-	jJhXuMs9CyadlSxHZ6ZQSu4nOUEYAsJV2LiD3SH3bWvrFPnxOmbMmo8OBvm3N8hI
-	2LZDmHU52VXPcJUgXWv7QjpEfydoH4YU/fFyGHU/hYuKHiw/1oyTZU5UAgpzopT1
-	7JMxGlrRO1U=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 89C094CDED;
-	Fri,  8 May 2015 12:25:45 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0D2784CDEC;
-	Fri,  8 May 2015 12:25:44 -0400 (EDT)
-In-Reply-To: <CAP8UFD15C5vU2uiKWZYKQR5MBsV_WKyGKekyCW4UAAsCBrnFxw@mail.gmail.com>
-	(Christian Couder's message of "Fri, 8 May 2015 16:46:26 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: E0A7F1E2-F59E-11E4-885B-83E09F42C9D4-77302942!pb-smtp1.pobox.com
+	id S932081AbbEHQyI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 May 2015 12:54:08 -0400
+Received: from mail-wg0-f50.google.com ([74.125.82.50]:35255 "EHLO
+	mail-wg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752776AbbEHQyG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 May 2015 12:54:06 -0400
+Received: by wgyo15 with SMTP id o15so78001783wgy.2
+        for <git@vger.kernel.org>; Fri, 08 May 2015 09:54:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=it9FGUsATTOBoIqjHjUaxqBI5t2pAG6ZflqWwr/Z3wE=;
+        b=k0wos2p1DbnAK+mi78dRv/iHiMMUOF9OA+w2SuKS3dc4TfQ7i0sPxq8wh4jzzJDK/9
+         3VhlBzysNq0kp37W07lpXmjNdB2kHbEH06EFap37QKOR5mTG9PHdibaXNJmodb/1qpV5
+         n00AUZl+RN+DCosJmepmC8jTokd3jE3fGNUX4Id0FahLA9Re+J6M8kwBbv7Iyu5T1vmq
+         MAhUksgncwrJPPILroNtX73M47lYU5b+HSS7l95fg1K1RgdyFfItLDfk75x7xugjVPJy
+         sjcuVUYGpWRUudkYFkkGA1Gzn7aHl0IYk/lVS0owQRQsUZptbeIRkbJzZMW1KMgxoIXj
+         xCFg==
+X-Received: by 10.180.95.10 with SMTP id dg10mr7940268wib.41.1431104044214;
+        Fri, 08 May 2015 09:54:04 -0700 (PDT)
+Received: from localhost (dslb-092-078-236-214.092.078.pools.vodafone-ip.de. [92.78.236.214])
+        by mx.google.com with ESMTPSA id i13sm13124469wic.13.2015.05.08.09.54.02
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 08 May 2015 09:54:02 -0700 (PDT)
+X-Mailer: git-send-email 2.4.0.228.gc627b12
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268623>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268624>
 
-Christian Couder <christian.couder@gmail.com> writes:
+Printing a 40 character sha1 hash in the middle of a message
+stretches the sentence a lot. Print the abbreviated version
+instead.
 
-> I am still wondering if it has been truncated on purpose or not.
+Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+---
+ sequencer.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-The document is already too large and people come and go over time.
-Maintaining that list becomes time sink, absorbing time better spent
-on reviewing and polishing their patches rather than their names in
-that list.  Rather than keeping a stale list forever, at some point
-I decided to trim and start afresh, perhaps mentioning very notable
-contribution from people there if there were any around the time the
-message goes out to the list, which hasn't happened.
-
-And with Git Rev News, I probably do not have to worry about it too
-much, I hope ;-)
+diff --git a/sequencer.c b/sequencer.c
+index c4f4b7d..2a39ab6 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -498,20 +498,21 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
+ 		struct commit_list *p;
+ 
+ 		if (!opts->mainline)
+-			return error(_("Commit %s is a merge but no -m option was given."),
+-				sha1_to_hex(commit->object.sha1));
++			return error(_("Commit %s... is a merge but no -m option was given."),
++				find_unique_abbrev(commit->object.sha1, DEFAULT_ABBREV));
+ 
+ 		for (cnt = 1, p = commit->parents;
+ 		     cnt != opts->mainline && p;
+ 		     cnt++)
+ 			p = p->next;
+ 		if (cnt != opts->mainline || !p)
+-			return error(_("Commit %s does not have parent %d"),
+-				sha1_to_hex(commit->object.sha1), opts->mainline);
++			return error(_("Commit %s... does not have parent %d"),
++				find_unique_abbrev(commit->object.sha1, DEFAULT_ABBREV),
++				opts->mainline);
+ 		parent = p->item;
+ 	} else if (0 < opts->mainline)
+-		return error(_("Mainline was specified but commit %s is not a merge."),
+-			sha1_to_hex(commit->object.sha1));
++		return error(_("Mainline was specified but commit %s... is not a merge."),
++			find_unique_abbrev(commit->object.sha1, DEFAULT_ABBREV));
+ 	else
+ 		parent = commit->parents->item;
+ 
+-- 
+2.4.0.228.gc627b12
