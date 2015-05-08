@@ -1,134 +1,84 @@
-From: Lars Kellogg-Stedman <lars@redhat.com>
-Subject: [PATCH v5] http: add support for specifying an SSL cipher list
-Date: Fri,  8 May 2015 09:22:15 -0400
-Message-ID: <1431091335-16455-1-git-send-email-lars@redhat.com>
-References: <1431008210-673-1-git-send-email-lars@redhat.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: A note from the maintainer
+Date: Fri, 8 May 2015 16:46:26 +0200
+Message-ID: <CAP8UFD15C5vU2uiKWZYKQR5MBsV_WKyGKekyCW4UAAsCBrnFxw@mail.gmail.com>
+References: <xmqqzj5pxumj.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitster@pobox.com, Lars Kellogg-Stedman <lars@redhat.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 08 15:22:56 2015
+Cc: git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 08 16:46:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YqiEx-0005dE-D3
-	for gcvg-git-2@plane.gmane.org; Fri, 08 May 2015 15:22:55 +0200
+	id 1YqjXt-00020H-0E
+	for gcvg-git-2@plane.gmane.org; Fri, 08 May 2015 16:46:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753235AbbEHNWx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 May 2015 09:22:53 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:55524 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753224AbbEHNWv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 May 2015 09:22:51 -0400
-Received: from int-mx11.intmail.prod.int.phx2.redhat.com (int-mx11.intmail.prod.int.phx2.redhat.com [10.5.11.24])
-	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id t48DMmEU026035
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
-	Fri, 8 May 2015 09:22:48 -0400
-Received: from lkellogg-pk115wp.redhat.com (ovpn-112-66.phx2.redhat.com [10.3.112.66])
-	by int-mx11.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id t48DMlnm016478;
-	Fri, 8 May 2015 09:22:48 -0400
-Received: by lkellogg-pk115wp.redhat.com (Postfix, from userid 1000)
-	id CD8F7A1928; Fri,  8 May 2015 09:22:46 -0400 (EDT)
-In-Reply-To: <1431008210-673-1-git-send-email-lars@redhat.com>
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
+	id S1752407AbbEHOq2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 May 2015 10:46:28 -0400
+Received: from mail-wg0-f50.google.com ([74.125.82.50]:35907 "EHLO
+	mail-wg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751508AbbEHOq1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 May 2015 10:46:27 -0400
+Received: by wgiu9 with SMTP id u9so74666214wgi.3
+        for <git@vger.kernel.org>; Fri, 08 May 2015 07:46:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=+Bz1WP58UXQNbKkya9TZ8i9akGsWAefeHv7MWAeB7SQ=;
+        b=HyaIHQ4bEdMNVPF8Y9ul7fzgqQBx3CCY+H75kxADXq8+C4ON4W2laIbxWJXG2DVlPF
+         aqHhKJAJaMQ9eGv+VSfAlvMc6ZkxhUqRPUuqdkdmK3Jzr5ZHju3YY7OKaGhSO0dz0SYm
+         Rv74ZcmRggkMghT+qttQdz5JKY6HEMNYqQjb/OkXm/U2GCI8M0s9jqNXLSgiulcr4z21
+         0x4AcB5TZFZuobQQr4qqHSk7Z4j0l/fADDo8H+q6lkQ8OeSLEFpnJNxevXgLedN3BHKm
+         Spi1MHDCDYPS+MMzOP6DfOw24Ik8blmA6w+M2jH2y2lym7N6YZ14JFiqTZLwPqxdIOa6
+         XmCA==
+X-Received: by 10.194.178.227 with SMTP id db3mr7899320wjc.82.1431096386519;
+ Fri, 08 May 2015 07:46:26 -0700 (PDT)
+Received: by 10.194.40.8 with HTTP; Fri, 8 May 2015 07:46:26 -0700 (PDT)
+In-Reply-To: <xmqqzj5pxumj.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268618>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268619>
 
-Teach git about a new option, "http.sslCipherList", which permits one t=
-o
-specify a list of ciphers to use when negotiating SSL connections.  The
-setting can be overwridden by the GIT_SSL_CIPHER_LIST environment
-variable.
+Hi Junio,
 
-Signed-off-by: Lars Kellogg-Stedman <lars@redhat.com>
----
+On Thu, Apr 30, 2015 at 9:51 PM, Junio C Hamano <gitster@pobox.com> wrote:
 
-Addressing comments from G=C3=A1bor and Eric.
+[...]
 
- Documentation/config.txt               | 13 +++++++++++++
- contrib/completion/git-completion.bash |  1 +
- http.c                                 | 10 ++++++++++
- 3 files changed, 24 insertions(+)
+> * Other people's trees, trusted lieutenants and credits.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 2e5ceaf..e3f95a2 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1560,6 +1560,19 @@ http.saveCookies::
- 	If set, store cookies received during requests to the file specified =
-by
- 	http.cookieFile. Has no effect if http.cookieFile is unset.
-=20
-+http.sslCipherList::
-+  A list of SSL ciphers to use when negotiating an SSL connection.
-+  The available ciphers depend on whether libcurl was built against
-+  NSS or OpenSSL and the particular configuration of the crypto
-+  library in use.  Internally this sets the 'CURLOPT_SSL_CIPHER_LIST'
-+  option; see the libcurl documentation for more details on the format
-+  of this list.
-++
-+Can be overridden by the 'GIT_SSL_CIPHER_LIST' environment variable.
-+To force git to use libcurl's default cipher list and ignore any
-+explicit http.sslCipherList option, set 'GIT_SSL_CIPHER_LIST' to the
-+empty string.
-+
- http.sslVerify::
- 	Whether to verify the SSL certificate when fetching or pushing
- 	over HTTPS. Can be overridden by the 'GIT_SSL_NO_VERIFY' environment
-diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
-n/git-completion.bash
-index 5944c82..43bfc0c 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2123,6 +2123,7 @@ _git_config ()
- 		http.noEPSV
- 		http.postBuffer
- 		http.proxy
-+		http.sslCipherList
- 		http.sslCAInfo
- 		http.sslCAPath
- 		http.sslCert
-diff --git a/http.c b/http.c
-index 4b179f6..f0c5bbc 100644
---- a/http.c
-+++ b/http.c
-@@ -36,6 +36,7 @@ char curl_errorstr[CURL_ERROR_SIZE];
- static int curl_ssl_verify =3D -1;
- static int curl_ssl_try;
- static const char *ssl_cert;
-+static const char *ssl_cipherlist;
- #if LIBCURL_VERSION_NUM >=3D 0x070903
- static const char *ssl_key;
- #endif
-@@ -187,6 +188,8 @@ static int http_options(const char *var, const char=
- *value, void *cb)
- 		curl_ssl_verify =3D git_config_bool(var, value);
- 		return 0;
- 	}
-+	if (!strcmp("http.sslcipherlist", var))
-+		return git_config_string(&ssl_cipherlist, var, value);
- 	if (!strcmp("http.sslcert", var))
- 		return git_config_string(&ssl_cert, var, value);
- #if LIBCURL_VERSION_NUM >=3D 0x070903
-@@ -361,6 +364,13 @@ static CURL *get_curl_handle(void)
- 	if (http_proactive_auth)
- 		init_curl_http_auth(result);
-=20
-+	if (getenv("GIT_SSL_CIPHER_LIST"))
-+		ssl_cipherlist =3D getenv("GIT_SSL_CIPHER_LIST");
-+
-+	if (ssl_cipherlist !=3D NULL && *ssl_cipherlist)
-+		curl_easy_setopt(result, CURLOPT_SSL_CIPHER_LIST,
-+				ssl_cipherlist);
-+
- 	if (ssl_cert !=3D NULL)
- 		curl_easy_setopt(result, CURLOPT_SSLCERT, ssl_cert);
- 	if (has_cert_password())
---=20
-2.4.0
+It seems strange to me that the above section title still talks about
+"trusted lieutenants and credits" ...
+
+> Documentation/SubmittingPatches outlines to whom your proposed changes
+> should be sent.  As described in contrib/README, I would delegate fixes
+> and enhancements in contrib/ area to the primary contributors of them.
+>
+> Although the following are included in git.git repository, they have their
+> own authoritative repository and maintainers:
+>
+>  - git-gui/ comes from git-gui project, maintained by Pat Thoyts:
+>
+>         git://repo.or.cz/git-gui.git
+>
+>  - gitk-git/ comes from Paul Mackerras's gitk project:
+>
+>         git://ozlabs.org/~paulus/gitk
+>
+>  - po/ comes from the localization coordinator, Jiang Xin:
+>
+>         https://github.com/git-l10n/git-po/
+
+... but it looks like there is only the "Other people's trees" part of
+the message compared to what used to be in this section.
+
+I am still wondering if it has been truncated on purpose or not.
+
+Thanks anyway,
+Christian.
