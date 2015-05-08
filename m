@@ -1,158 +1,116 @@
-From: =?UTF-8?B?U8OpYmFzdGllbiBHdWltbWFyYQ==?= 
-	<sebastien.guimmara@gmail.com>
-Subject: Re: [PATCH 0/3] git help: group common commands by theme
-Date: Fri, 08 May 2015 20:21:55 +0200
-Message-ID: <554CFEC3.5030105@gmail.com>
-References: <cover.1430770308.git.sebastien.guimmara@gmail.com> <554B30D5.3050909@emmajane.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] sequencer.c: abbreviate hashs placed in the middle of messages
+Date: Fri, 08 May 2015 11:42:43 -0700
+Message-ID: <xmqqtwvmlxlo.fsf@gitster.dls.corp.google.com>
+References: <1431104035-2056-1-git-send-email-ralf.thielow@gmail.com>
+	<CAPig+cSeNn0r7N6vp+qs4NTNwfYx5p-zUX3tkifuXLu+nB2yNQ@mail.gmail.com>
+	<xmqqbnhvm1f5.fsf@gitster.dls.corp.google.com>
+	<CAN0XMOKPbKUMwU5-T78m_knt=9O2GkKaqmXKViSi5k-Z7Damrg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?UTF-8?B?U8OpYmFzdGllbiBHdWltbWFyYQ==?= 
-	<sebastien.guimmara@gmail.com>
-To: Emma Jane Hogbin Westby <emma.westby@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 08 20:22:06 2015
+Content-Type: text/plain
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Git List <git@vger.kernel.org>
+To: Ralf Thielow <ralf.thielow@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 08 20:42:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YqmuR-00053W-Mt
-	for gcvg-git-2@plane.gmane.org; Fri, 08 May 2015 20:22:04 +0200
+	id 1YqnEe-0005i3-OE
+	for gcvg-git-2@plane.gmane.org; Fri, 08 May 2015 20:42:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753131AbbEHSV7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 May 2015 14:21:59 -0400
-Received: from mail-wg0-f52.google.com ([74.125.82.52]:32921 "EHLO
-	mail-wg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752741AbbEHSV6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 May 2015 14:21:58 -0400
-Received: by wgin8 with SMTP id n8so79839038wgi.0
-        for <git@vger.kernel.org>; Fri, 08 May 2015 11:21:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=EqirBrz4xfUmkPxQ96aKPdvN6fzilMkkWLdXCxgYK6c=;
-        b=vNQskheBoTNIQdQDif36jMCCUlMya7VOMow2BTKZT/Kvz8KC1xeSK1ysiOx/jsnlgY
-         b/pRqJoeq/XQkArDIeUWkcUvFegdvlzeD080rUTOhDNl2audtiMcOdKvcg2z4r+96hIm
-         U+2GYpMtXCXXM7V7tNlE51slJ7JZEvrAVCoA0pcx8I72DgUSzmbgy4Rmioz8iu/sL44H
-         MMP7oFCAu1UZ2vdpatO952p7/oZ981tMQi72c8NpjaotMoLIDUdiPvuEv+HmaSzorKPM
-         Awxf+0IX7hjrKHzYxXHB/EEqBZXgoepazyo9OBvXJPKzTTxolwDVMRiLncb0UgLSt0/y
-         a8rg==
-X-Received: by 10.180.83.229 with SMTP id t5mr259975wiy.82.1431109317179;
-        Fri, 08 May 2015 11:21:57 -0700 (PDT)
-Received: from [192.168.0.10] (bd231-1-88-176-208-17.fbx.proxad.net. [88.176.208.17])
-        by mx.google.com with ESMTPSA id df1sm13449920wib.12.2015.05.08.11.21.55
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 08 May 2015 11:21:56 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
-In-Reply-To: <554B30D5.3050909@emmajane.net>
+	id S1753020AbbEHSmw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 May 2015 14:42:52 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:59400 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752892AbbEHSmv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 May 2015 14:42:51 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 54F004DDE3;
+	Fri,  8 May 2015 14:42:45 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ZW5a76+bIpk2L2ToCuIbvdn+4yA=; b=Hy4ED1
+	UWoGugvMw7oa2s52aNW+cPc7UysudIB8GqoW8cbQI01idduRbbuqsP+Oq10uEqg2
+	ehft3jVTT4RxSTmNMk2zZbsOgLGdBBJVfdKMt0TSIZms3CyU5b8Y4mLzN0qAUXHu
+	DhreOxTbz7ce/LIfq60SBpmvLwPGHukOUtI2k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Sa/ejsrs3+qk2O+FlSdXaAYFsKg7sUdP
+	2blcllGHz7e47C2Nz92v1mgzTjsJgAHMjz9XprJepSXV3YDsHz0OsqdBR5ZHX/Rf
+	aHnCq2LREHNcDv1D82D9nbtv/8HCGaajRncDftVWpUtqpuQ9GSGDPq2ZPlZN380D
+	ym8RGnw4k30=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4CB464DDE2;
+	Fri,  8 May 2015 14:42:45 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A8E4F4DDE1;
+	Fri,  8 May 2015 14:42:44 -0400 (EDT)
+In-Reply-To: <CAN0XMOKPbKUMwU5-T78m_knt=9O2GkKaqmXKViSi5k-Z7Damrg@mail.gmail.com>
+	(Ralf Thielow's message of "Fri, 8 May 2015 19:58:39 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 03F1A20C-F5B2-11E4-9016-83E09F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268641>
 
-On 05/07/2015 11:31 AM, Emma Jane Hogbin Westby wrote:
-> S=C3=A9bastien !
->
-> This is fantastic! My apologies for jumping in late. Hopefully
-> I'm not too late.
->
+Ralf Thielow <ralf.thielow@gmail.com> writes:
 
-Thank you :) It's just a very modest contribution though.
-
->
-> S=C3=A9bastien Guimmara wrote:
->> This v4 includes the following suggestions:
+> Junio C Hamano <gitster@pobox.com> wrote:
+>> But I doubt the value of pointing out exact commit in the first
+>> place, which leads me to say that "no -m option was given but
+>> history has a merge" might be a viable alternative.
 >>
->> In command-list.txt:
->> - Add a [groups] block containing names and description for groups:
->>
->>     [groups]
->>     init                   starting a working area
->>     worktree               working on the current change
->>     remote                 working with others
->>     info                   examining the history and state
->>     history                growing, marking and tweaking your histor=
-y
-> I like these headings / separation.
+>> If identifying the exact commit has value, on the other hand, we can
+>> rephrase it like this:
 >
-> As you've already "lost" a line to the header, would it make sense to
-> add a "see also" into the Guides from here? For example:
->
-> starting a working area (see also: git help tutorial)
-> working on the current change (see also: git help everyday)
-> working with others (see also: git help workflows)
-> examining the history and state (see also: git help revisions)
->
+> It has value since you see the hash and can check if you have
+> passed a wrong commit accidently.
 
-I think it's a good idea.
+Let's say by mistake I applied your patch while I had 'master'
+checked out, and I want to cherry-pick it to its own branch, by
+doing something like
 
-> [...]
->> This produces the following output of $ git help:
->>
->> [...]
->> The most commonly used git commands are:
->>
->>     * starting a working area:
->>        clone      Clone a repository into a new directory
->>        init       Create an empty Git repository or reinitialize [..=
-=2E]
->>
->>     * working on the current change:
->>        add        Add file contents to the index
->>        reset      Reset current HEAD to the specified state
-> I could not live without status at this stage, and status always tell=
-s
-> me what I should do next. I'm tempted to see it up here instead...
+    $ git checkout -b rt/sequencer-error-messages maint
+    $ git cherry-pick <branch-name-here>
 
-The layout was not designed to be workflow oriented (even if it appears
-so), but rather theme oriented. But I think that a redesign that
-introduces the typical Git workflow in a gentle, not intimidating manne=
-r
-could help beginners realize that Git is extremely simple in its core
-principles.
+and typed next by mistake instead of master in the above.  I should
+get "that commit is a merge but you didn't tell me relative to which
+of its parents you want the changes ported".
 
->
->>     * working with others:
->>        fetch      Download objects and refs from another repository
->>        pull       Fetch from and integrate with another repository [=
-=2E..]
->>        push       Update remote refs along with associated objects
->>
->>     * examining the history and state:
->>        log        Show commit logs
->>        status     Show the working tree status
-> For this grouping, instead of also having "state", I'd like to see lo=
-g
-> and diff. Perhaps the header is simply "examining the history". This
-> narrowing would make more sense to then move status up to "working on
-> the current change".
->
->>     * growing, marking and tweaking your history:
->>        branch     List, create, or delete branches
->>        checkout   Checkout a branch or paths to the working tree
->>        commit     Record changes to the repository
->>        diff       Show changes between commits, commit and working [=
-=2E..]
->>        merge      Join two or more development histories together
-> By the definition of "tweaking" I would include rebase. Hiding rebase
-> from the "common" list will increase its mystique and make people
-> even more hesitant to use it. Best to shine some light on it and help
-> to make it less scary. I would remove diff from this group as it is
-> a non-destructive command.
+Does it make it any clearer to say "commit 38e707... is a merge"
+compared to "commit you gave me is a merge", with or without
+abbreviation?
 
-In a workflow-oriented 'git help', I believe this would make sense.
-The patch originally started by examining what is really a 'common'
-command, and I estimated that 'rebase' was not that common. However,
-since 'rebase' is such a powerful tool and a killer feature of git
-(among others), we could mention it in a way that is less intimidating
-(see above)
+I do not think so.  I know I said "git cherry-pick next".
 
->
-> What a wonderful thing to have started, S=C3=A9bastien ! Thank you. :=
-)
->
-Thank you again :)
+> I don't see why you suggest to rephrase the messages over an
+> abbreviation of the hash. Is it because I wrote "in the middle of"?
+
+No.
+
+I am merely making sure that the original problem is well analysed
+and we looked at other possibilities before picking one, i.e. making
+sure that we did not pick the one merely because it happened to be
+an expedient thing to do.
+
+And shortening the output feels to me a more expedient thing to do
+because we do not have to analyse the ramification of possible
+information loss (your "It has value since...").  If we analyse the
+issue well, we might realize that there is little point in showing
+the commit object name in hexadecimal, be it in full or in shortened
+form.
+
+If the proposal were to parrot what the user typed on the command
+line, e.g. one of these (or their rephrased versions)
+
+	error: commit 'next' is a merge but no -m option was given.
+	error: no -m option was given to pick a merge 'next'.
+
+against the above example, then I would say that would be an
+improvement, but that is not what is being discussed, so...
