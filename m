@@ -1,97 +1,110 @@
-From: =?UTF-8?B?U8OpYmFzdGllbiBHdWltbWFyYQ==?= 
-	<sebastien.guimmara@gmail.com>
-Subject: Re: [PATCH 0/3] git help: group common commands by theme
-Date: Fri, 08 May 2015 22:08:13 +0200
-Message-ID: <554D17AD.9070306@gmail.com>
-References: <cover.1430770308.git.sebastien.guimmara@gmail.com>	<554B30D5.3050909@emmajane.net> <554CFEC3.5030105@gmail.com> <xmqqh9rmlwut.fsf@gitster.dls.corp.google.com>
+From: evgeny <illumsoft.org@gmail.com>
+Subject: t0005-signals.sh fails with ksh
+Date: Fri, 8 May 2015 23:15:14 +0300
+Message-ID: <31108626.20150508231514@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Emma Jane Hogbin Westby <emma.westby@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 08 22:08:24 2015
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 08 22:09:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YqoZL-00084w-Ag
-	for gcvg-git-2@plane.gmane.org; Fri, 08 May 2015 22:08:23 +0200
+	id 1YqoZy-0008M7-AJ
+	for gcvg-git-2@plane.gmane.org; Fri, 08 May 2015 22:09:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932115AbbEHUIT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 May 2015 16:08:19 -0400
-Received: from mail-wg0-f43.google.com ([74.125.82.43]:32871 "EHLO
-	mail-wg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753342AbbEHUIQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 May 2015 16:08:16 -0400
-Received: by wgin8 with SMTP id n8so81995379wgi.0
-        for <git@vger.kernel.org>; Fri, 08 May 2015 13:08:15 -0700 (PDT)
+	id S932187AbbEHUI6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 May 2015 16:08:58 -0400
+Received: from mail-lb0-f171.google.com ([209.85.217.171]:36685 "EHLO
+	mail-lb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932173AbbEHUI5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 May 2015 16:08:57 -0400
+Received: by lbbqq2 with SMTP id qq2so60464379lbb.3
+        for <git@vger.kernel.org>; Fri, 08 May 2015 13:08:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=6qIUhJmZfb6s5SZjXXQEvK8m58JNvHALcn0vIEfLj2k=;
-        b=1B/pzV7/J6cRdG4qxyQlT8wv+W9C2+le7zVEdDL1zA+1sQtIY0J+dqXh0WYgQAuE6B
-         FlJwLaNbrCKL3z8F8FhtUL3IKRRPmqswAgMHy6+O1oIl6xTeWugqd6BxVxysikTKeF3O
-         g/m4Zq/3zEZ2M6y0atgCFai/8PlbyOBvlXAr34RO0qwrA6I300itdLI7VFKELAc2Jo3Q
-         nWEJKfcp3NLBStsP1Ks+ahJTdW25c8OvHwAqPrGMTOxjyRrnBUVSbypzkwizt9c/2aa0
-         LejJprZTK87dNaV3Uym/cZaZwO38tTZ/LSSPzPKXnspF0yzedp4iDF5aq3pmSKWbTz6u
-         cJcA==
-X-Received: by 10.194.57.40 with SMTP id f8mr10692307wjq.86.1431115695331;
-        Fri, 08 May 2015 13:08:15 -0700 (PDT)
-Received: from [192.168.0.10] (bd231-1-88-176-208-17.fbx.proxad.net. [88.176.208.17])
-        by mx.google.com with ESMTPSA id kc4sm9885229wjc.2.2015.05.08.13.08.14
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 08 May 2015 13:08:14 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
-In-Reply-To: <xmqqh9rmlwut.fsf@gitster.dls.corp.google.com>
+        h=date:from:message-id:to:subject:mime-version:content-type
+         :content-transfer-encoding;
+        bh=fwJEFXo8zm+nlcuT9JS5jIBAIXeasNxzxv9jxFPYxWY=;
+        b=oQ/eHedYD26YfzlyJJDVtgW5YEJ/2imrwvaiYwM3V5JxlowpuED0XP/yRXWieUgupP
+         K1+kYfAAa88EDLMuBMLB1Twa3KIzrr4noFDbZ5Tzh27luxRffK864Mdh9vyWL3kYbi93
+         57C5BqjXNvmK07Pvd3XCNXvRMkvhySYXpkhRANlmDCDxGLbJVP3fDoZjLoehOL7jLZMk
+         8gBebZpFW3puIh1o0yyfU2oVQnyK4yZjA7iSD17AHqE62bzJqq9Yz8+v9LZoqPdSbiXN
+         hKZGT7JYfPd6pcyMB831T+bMk/+lWN0dRHen+n5nxHlWs4dO50iui80NQz+mfBMEr+en
+         x12w==
+X-Received: by 10.152.5.7 with SMTP id o7mr4079409lao.51.1431115736009;
+        Fri, 08 May 2015 13:08:56 -0700 (PDT)
+Received: from [10.0.2.15] (ppp78-37-187-150.pppoe.avangarddsl.ru. [78.37.187.150])
+        by mx.google.com with ESMTPSA id do6sm1382373lac.19.2015.05.08.13.08.54
+        for <git@vger.kernel.org>
+        (version=TLSv1.1 cipher=RC4-SHA bits=128/128);
+        Fri, 08 May 2015 13:08:55 -0700 (PDT)
+X-Priority: 3 (Normal)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268657>
 
-On 05/08/2015 08:58 PM, Junio C Hamano wrote:
-> S=C3=A9bastien Guimmara  <sebastien.guimmara@gmail.com> writes:
->
->> On 05/07/2015 11:31 AM, Emma Jane Hogbin Westby wrote:
->>
->>>> The most commonly used git commands are:
->>>>
->>>>      * starting a working area:
->>>>         clone      Clone a repository into a new directory
->>>>         init       Create an empty Git repository or reinitialize =
-[...]
->>>>
->>>>      * working on the current change:
->>>>         add        Add file contents to the index
->>>>         reset      Reset current HEAD to the specified state
->>> I could not live without status at this stage, and status always te=
-lls
->>> me what I should do next. I'm tempted to see it up here instead...
->>
->> The layout was not designed to be workflow oriented (even if it appe=
-ars
->> so), but rather theme oriented.
->
-> I tend to agree with Emma here; even if your original ordering was
-> not using the workflow as the grouping criterion, that is something
-> that can easily be fixed, I would think.
->
-> After all, the very original did not categorize and sorted
-> alphabetically, so there is no room for the "we chose to be
-> theme-oriented (I am not sure what it means, though) and a major
-> redesign at this point will confuse users" kind of resistance to
-> come into the picture.  At least not yet.
->
-> Thanks.
->
+Hi,
 
-Exactly. The new version will be workflow-oriented.
+Test t0005-signals.sh fails when I run 'make test' under ksh (on Solaris and on Linux)
 
-By "theme-oriented", I mean that the group order does not necessarily
-follow a "typical workflow" chronological order, even though it was
-heavily implied. I should emphasize this "workflow" thing in the next
-patch.
+$ ksh t0005-signals.sh -v
+Initialized empty Git repository in /home/test/git/t/trash directory.t0005-signals/.git/
+expecting success: 
+        { test-sigchain >actual; ret=$?; } &&
+        case "$ret" in
+        143) true ;; # POSIX w/ SIGTERM=15
+        271) true ;; # ksh w/ SIGTERM=15
+          3) true ;; # Windows
+          *) false ;;
+        esac &&
+        test_cmp expect actual
+
+t0005-signals.sh[499]: eval: line 4: 23622: Terminated
+ok 1 - sigchain works
+
+expecting success: 
+        # we use exec here to avoid any sub-shell interpretation
+        # of the exit code
+        git config alias.sigterm "!exec test-sigchain" &&
+        test_expect_code 143 git sigterm
+
+three
+two
+one
+error: exec test-sigchain died of signal 15
+ok 2 - signals are propagated using shell convention
+
+expecting success: 
+        test-genrandom foo 16384 >file &&
+        git add file
+
+ok 3 - create blob
+
+expecting success: 
+        OUT=$( ((large_git; echo $? 1>&3) | :) 3>&1 ) &&
+        test "$OUT" -eq 141
+
+t0005-signals.sh[499]: eval: syntax error at line 4: `(' unmatched
+Memory fault
+
+I rather think there are two issues:
+1. two adjacent parentheses
+2. numeric constant (141) should be 269 for ksh, like there are two different 
+constants in the test 'test-sigchain' in this file (in t0005-signals.sh)
+
+'man ksh' reads:
+  (list)
+    Execute  list  in  a  separate environment.
+    Note, that if two adjacent open parentheses are needed for nesting,
+    a space must be inserted to avoid evaluation as an arithmetic command as
+    described above.
+
+
+-- 
+Best regards,
+ evgeny
