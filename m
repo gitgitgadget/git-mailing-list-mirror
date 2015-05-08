@@ -1,97 +1,63 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] sequencer.c: abbreviate hashs placed in the middle of messages
-Date: Fri, 08 May 2015 10:20:14 -0700
-Message-ID: <xmqqbnhvm1f5.fsf@gitster.dls.corp.google.com>
-References: <1431104035-2056-1-git-send-email-ralf.thielow@gmail.com>
-	<CAPig+cSeNn0r7N6vp+qs4NTNwfYx5p-zUX3tkifuXLu+nB2yNQ@mail.gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v2 11/12] t5524: test --log=1 limits shortlog length
+Date: Fri, 08 May 2015 19:19:54 +0200
+Message-ID: <554CF03A.7030503@kdbg.org>
+References: <1430988248-18285-1-git-send-email-pyokagan@gmail.com> <1430988248-18285-12-git-send-email-pyokagan@gmail.com> <05adfac12cb9a7ad183281974d991e00@www.dscho.org> <CACRoPnRfqQMRJ5N=oL84SMw=FC=Eg-Co-De_9E9cpWCaaSZAxw@mail.gmail.com> <554BB93A.3090000@kdbg.org> <8e34bc9ea27d147f86de0cf60141687a@www.dscho.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Ralf Thielow <ralf.thielow@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Fri May 08 19:20:26 2015
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Paul Tan <pyokagan@gmail.com>, Git List <git@vger.kernel.org>,
+	Stefan Beller <sbeller@google.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri May 08 19:20:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yqlwn-0002yp-Ub
-	for gcvg-git-2@plane.gmane.org; Fri, 08 May 2015 19:20:26 +0200
+	id 1Yqlwu-00032u-Gl
+	for gcvg-git-2@plane.gmane.org; Fri, 08 May 2015 19:20:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932379AbbEHRUU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 May 2015 13:20:20 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:65524 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932310AbbEHRUR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 May 2015 13:20:17 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 299174E070;
-	Fri,  8 May 2015 13:20:16 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=j0u2PS8VL9iNk7hwSg1SwEhaJDc=; b=CJzXUP
-	0ZXLfsKWwR6WVHXob+dFYHUjVuMF2hMTKN3Ef5mR1pg/5QvSMsRGBKAg3K+HDFMe
-	ZdNQgOn1iwq3acO8zArBUBav7oD6l2biT7+QCG1P5zDrBoXxau/rJTQvpLedRmM/
-	k28S7ikMuH2dNVOsUt+u+zmankuXIQyRD6yfw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ATILrrjqKWYyugsfYAZYsPj5YS72eJ9F
-	HbFDKS9O52ZXE569ZQ+OuQCJT0xAxVnvyn78hiLOa4E4bdlfWCP8dh9uUDjZ2lmx
-	+bfOUW4t4ZcsiMEKXoKcpqQqjW3tGRl3bdudy+960+jXiPFuA+HJzTFaQWwTwwi9
-	3eizo4FaBfU=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 226944E06F;
-	Fri,  8 May 2015 13:20:16 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 90A864E06E;
-	Fri,  8 May 2015 13:20:15 -0400 (EDT)
-In-Reply-To: <CAPig+cSeNn0r7N6vp+qs4NTNwfYx5p-zUX3tkifuXLu+nB2yNQ@mail.gmail.com>
-	(Eric Sunshine's message of "Fri, 8 May 2015 13:10:57 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 7E0D3B98-F5A6-11E4-9F5E-83E09F42C9D4-77302942!pb-smtp1.pobox.com
+	id S932383AbbEHRU0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 May 2015 13:20:26 -0400
+Received: from bsmtp8.bon.at ([213.33.87.20]:57118 "EHLO bsmtp4.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S932299AbbEHRUC (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 May 2015 13:20:02 -0400
+Received: from bsmtp.bon.at (unknown [192.168.181.107])
+	by bsmtp4.bon.at (Postfix) with ESMTPS id 3ljz1X2d04z5tml
+	for <git@vger.kernel.org>; Fri,  8 May 2015 19:20:00 +0200 (CEST)
+Received: from dx.site (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTPSA id 3ljz1R5Cszz5tlB;
+	Fri,  8 May 2015 19:19:55 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.site (Postfix) with ESMTP id B3FAE5250;
+	Fri,  8 May 2015 19:19:54 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
+In-Reply-To: <8e34bc9ea27d147f86de0cf60141687a@www.dscho.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268627>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268628>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
-
-> On Fri, May 8, 2015 at 12:53 PM, Ralf Thielow <ralf.thielow@gmail.com> wrote:
->> sequencer.c: abbreviate hashs placed in the middle of messages
+Am 08.05.2015 um 12:07 schrieb Johannes Schindelin:
+> On 2015-05-07 21:12, Johannes Sixt wrote:
+>> Nope, it's not better. test_must_fail is explicitly only for git
+>> invocations. We do not expect 'grep' to segfault or something.
+>>
+>> Cf. eg.
+>> http://thread.gmane.org/gmane.comp.version-control.git/258725/focus=258752
 >
-> s/hashs/hashes/
-> ...
->> + return error(_("Commit %s... is a merge but no -m option was
->> given."),
->> +                               find_unique_abbrev(commit->object.sha1, DEFAULT_ABBREV));
->
-> Are short SHA1's followed by "..." anywhere else in the project? It
-> seems strange to introduce such usage here.
+> That link leads to a patch that changes `! grep` to a `test_must_fail
+> grep` and is not contested, at least not in the thread visible on
+> GMane. Would you have a link with a more convincing argument for me?
 
-There are (and used to be the norm), as in "git diff --raw", for
-example.
+Gah! Sorry for sending you in circles. I see that others have brought 
+forward sufficient arguments. Just to get my own argument straight, here 
+is the message I wanted to direct you to:
 
-But I doubt the value of pointing out exact commit in the first
-place, which leads me to say that "no -m option was given but
-history has a merge" might be a viable alternative.
+http://thread.gmane.org/gmane.comp.version-control.git/258725/focus=258792
 
-If identifying the exact commit has value, on the other hand, we can
-rephrase it like this:
-
-	error(_("no -m option was given to pick a merge '%s'", ...));
-
-to place it not in the middle.  We can do similar rephrasing for
-other messages as well.
-
->> -                       return error(_("Commit %s does not have parent %d"),
->> -                               sha1_to_hex(commit->object.sha1), opts->mainline);
-
-	error(_("No parent %d for commit '%s'", opts->mainline, ...);
-
->> -               return error(_("Mainline was specified but commit %s is not a merge."),
->> -                       sha1_to_hex(commit->object.sha1));
-
-	error(_("-m option was given for non-merge commit '%s'", ...);
+-- Hannes
