@@ -1,107 +1,76 @@
-From: Danny Lin <danny0838@gmail.com>
-Subject: [PATCH] contrib/subtree: portability fix for string printing
-Date: Fri,  8 May 2015 08:56:59 +0800
-Message-ID: <1431046619-2340-1-git-send-email-danny0838@gmail.com>
-References: <xmqqmw1gp7aa.fsf@gitster.dls.corp.google.com>
-Cc: git develop <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Danny Lin <danny0838@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 08 02:57:22 2015
+From: Michael Rappazzo <rappazzo@gmail.com>
+Subject: [PATCH] gitk: Add mouse right-click options
+Date: Thu,  7 May 2015 22:29:19 -0400
+Message-ID: <1431052160-82758-1-git-send-email-rappazzo@gmail.com>
+Cc: Michael Rappazzo <rappazzo@gmail.com>, Jens.Lehmann@web.de,
+	Johannes.Schindelin@gmx.de, Josef.Weidendorfer@gmx.de,
+	Knut.Franke@gmx.de, alexhenrie24@gmail.com, andersk@MIT.EDU,
+	andrew.kw.w@gmail.com, angavrilov@gmail.com, arjen@yaph.org,
+	askeolsson@gmail.com, astrilhayato@gmail.com,
+	barra_cuda@katamail.com, bdowning@lavos.net, bebarino@gmail.com,
+	bernt@norang.ca, chriscool@tuxfamily.org,
+	das@users.sourceforge.net, dave@dulson.com, davvid@gmail.com,
+	drafnel@gmail.com, fbriere@fbriere.net, felipe.contreras@gmail.com,
+	gabriele.mzt@gmail.com, gauthier@ostervall.se, gitster@pobox.com,
+	giuseppe.bilotta@gmail.com, gsromero@infernal-iceberg.com,
+	hirofumi@mail.parknet.co.jp, ilya.bobyr@gmail.com, j6t@kdbg.org,
+	jeffh@ActiveState.com, jim@meyering.net,
+	jon.delStrother@bestbefore.tv, jrnieder@gmail.com,
+	judge.packham@gmail.com, kaitanie@cc.helsinki.fi, kevin@sb.org,
+	killekulla@rdrz
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 08 04:29:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YqWbP-0004zX-Ir
-	for gcvg-git-2@plane.gmane.org; Fri, 08 May 2015 02:57:19 +0200
+	id 1YqY2i-0007KL-Pk
+	for gcvg-git-2@plane.gmane.org; Fri, 08 May 2015 04:29:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751599AbbEHA5P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 May 2015 20:57:15 -0400
-Received: from mail-pd0-f175.google.com ([209.85.192.175]:34213 "EHLO
-	mail-pd0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751490AbbEHA5O (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 May 2015 20:57:14 -0400
-Received: by pdbqa5 with SMTP id qa5so55876123pdb.1
-        for <git@vger.kernel.org>; Thu, 07 May 2015 17:57:14 -0700 (PDT)
+	id S1751339AbbEHC3a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 May 2015 22:29:30 -0400
+Received: from mail-qg0-f48.google.com ([209.85.192.48]:34488 "EHLO
+	mail-qg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751023AbbEHC33 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 May 2015 22:29:29 -0400
+Received: by qgfi89 with SMTP id i89so30601768qgf.1
+        for <git@vger.kernel.org>; Thu, 07 May 2015 19:29:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=NXBH3A/JgrfGfcCWznkuODsvsdsrScViL7Q0WXk90ew=;
-        b=Bie7TpsuZVLEKgcJZlrKghJokUHHIb0kepWmjpLcDlqbMYzNU8OYSqBZTTAVJJaH1H
-         /6usruKq6chNPbQ29CWOBYHnkjUFcVAbPoyvHI6kVJV+a/9+oA6SAs0dShjvqccE16Fz
-         Q/IpxF67jeoukPamHaPp23uJZid5B2nzwmOZ5HxcVuYD4jAITfNOhSm4RxeZYRD6Sg5+
-         RPFcuM6L1BRgk+KR/ORCeSSE9rRZ7QVcb+ogoH0qgX+xZlxAC7SujNOrGRpfWuWvAM2m
-         h97MJDraUnAi7fOCVnrqmnwuY+wFd3qlzh4bzruTZcU4TJrhktaWX6xKNekLVfY/3VJx
-         vQMg==
-X-Received: by 10.66.101.9 with SMTP id fc9mr2112209pab.37.1431046634284;
-        Thu, 07 May 2015 17:57:14 -0700 (PDT)
-Received: from localhost.localdomain (1-164-201-189.dynamic.hinet.net. [1.164.201.189])
-        by mx.google.com with ESMTPSA id u8sm3305959pdi.90.2015.05.07.17.57.12
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 07 May 2015 17:57:13 -0700 (PDT)
-X-Mailer: git-send-email 2.3.7.windows.1
-In-Reply-To: <xmqqmw1gp7aa.fsf@gitster.dls.corp.google.com>
+        h=from:to:cc:subject:date:message-id;
+        bh=zWlbFFyxM5FXRITVraEXTRJUhWCjpVCpnjdtha9WLH0=;
+        b=a/YC5FBNpiGLeZxZv3MLu+s1LGHqHfF2d9r88oun92d5bEsaf7xGhi+PrdZnZk0PO8
+         UjXXLri3Ta2kr7E9LbF3IiI6FTUBL47AcoA9m7twq1QOQiIbkCCtGVM3i1cQnqUixWYs
+         YgcKn7nCeCdqp85Y2YCqjRXA0HR/BFrjafELFRp/24mmWeay8UU8oGFVIyRdtT6zr+VC
+         Mf+8vkX4EtjQac4Fr5MPGGpO8QHYeVUgDg38ZW/jEsWAlL6aF/B/R+q4B+DSqadHGG+5
+         Tcef2hGnj2ZDVm5ivHpavC7MombB2HK2y2jrIvLFcEbo/OC0VYywfkPJ145iSlw2UBD0
+         hm4A==
+X-Received: by 10.140.49.11 with SMTP id p11mr2214805qga.60.1431052169017;
+        Thu, 07 May 2015 19:29:29 -0700 (PDT)
+Received: from localhost (ool-18e49664.dyn.optonline.net. [24.228.150.100])
+        by mx.google.com with ESMTPSA id 21sm2708925qks.47.2015.05.07.19.29.27
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 07 May 2015 19:29:27 -0700 (PDT)
+X-Mailer: git-send-email 2.4.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268595>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268596>
 
-Replace echo using printf in debug() and say() for
-better portability.
+I work in a large and deep codebase, and found it useful to have these additional features in gitk.  
 
-Also re-wrap previous 'say -n "$str<CR>"' using a new
-function progress() to prevent CR chars included in the
-source code, which could be mal-processed in some shells.
-For example, MsysGit trims CR before executing a shell
-script file in order to make it work right on Windows
-even if it uses CRLF as linefeeds.
+First, in the commit list, a right click on a branch name will add an option ('Copy branch name') to put that name on the system clipboard.
 
-Signed-off-by: Danny Lin <danny0838@gmail.com>
----
- contrib/subtree/git-subtree.sh | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+Second, in the file list of a commit, a right click on a file will add an option ('Copy path') to put the file path on the system clipboard.
 
-diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-index fa1a583..d4dae7a 100755
---- a/contrib/subtree/git-subtree.sh
-+++ b/contrib/subtree/git-subtree.sh
-@@ -51,14 +51,21 @@ prefix=
- debug()
- {
- 	if [ -n "$debug" ]; then
--		echo "$@" >&2
-+		printf "%s\n" "$*" >&2
- 	fi
- }
- 
- say()
- {
- 	if [ -z "$quiet" ]; then
--		echo "$@" >&2
-+		printf "%s\n" "$*" >&2
-+	fi
-+}
-+
-+progress()
-+{
-+	if [ -z "$quiet" ]; then
-+		printf "%s\r" "$*" >&2
- 	fi
- }
- 
-@@ -599,7 +606,7 @@ cmd_split()
- 	eval "$grl" |
- 	while read rev parents; do
- 		revcount=$(($revcount + 1))
--		say -n "$revcount/$revmax ($createcount)
-"
-+		progress "$revcount/$revmax ($createcount)"
- 		debug "Processing commit: $rev"
- 		exists=$(cache_get $rev)
- 		if [ -n "$exists" ]; then
+
+Michael Rappazzo (1):
+  gitk: Add mouse right-click options
+
+ gitk-git/gitk | 2 ++
+ 1 file changed, 2 insertions(+)
+
 -- 
-2.3.7.windows.1
-
-Previous patch had a flaw, revised.
+2.4.0
