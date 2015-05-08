@@ -1,85 +1,68 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: [PATCH 1/3] command-list.txt: group common commands by theme
-Date: Fri, 08 May 2015 14:01:51 +0200
-Message-ID: <87egmrth00.fsf@igel.home>
-References: <cover.1430770308.git.sebastien.guimmara@gmail.com>
-	<b89d3fec640cb6fb01aa32ad50bae4e064528220.1430770308.git.sebastien.guimmara@gmail.com>
-	<CAPig+cTHQikgOvPrjxikUNjQoWCv2hdubJ55OG0SqpGUs_3Pow@mail.gmail.com>
-	<554A8084.10506@gmail.com>
-	<CAPig+cQ2e4c5hYsRbZhgyvLcMPsqshqRUZGNLwhJd57YP9JEFA@mail.gmail.com>
-	<554BBBAF.30705@kdbg.org>
-	<0eb58475c6238be314eb4f0be08f8ae6@www.dscho.org>
+From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH v4] http: add support for specifying an SSL cipher list
+Date: Fri,  8 May 2015 14:15:05 +0200
+Message-ID: <1431087305-8988-1-git-send-email-szeder@ira.uka.de>
+References: <1431056685-12337-1-git-send-email-lars@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Johannes Sixt <j6t@kdbg.org>,
-	=?utf-8?Q?S=C3=A9bastien?= Guimmara 
-	<sebastien.guimmara@gmail.com>, Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri May 08 14:02:23 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>,
+	gitster@pobox.com, git@vger.kernel.org
+To: Lars Kellogg-Stedman <lars@redhat.com>
+X-From: git-owner@vger.kernel.org Fri May 08 14:16:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yqgz1-0003oB-8L
-	for gcvg-git-2@plane.gmane.org; Fri, 08 May 2015 14:02:23 +0200
+	id 1YqhCE-0001MX-VJ
+	for gcvg-git-2@plane.gmane.org; Fri, 08 May 2015 14:16:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753018AbbEHMB7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 May 2015 08:01:59 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:49629 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752713AbbEHMBz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 May 2015 08:01:55 -0400
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3ljqyS6MJwz3hjPL;
-	Fri,  8 May 2015 14:01:52 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 3ljqyS5j1VzvdWw;
-	Fri,  8 May 2015 14:01:52 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
-	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
-	with ESMTP id K1CtVu4wmH69; Fri,  8 May 2015 14:01:51 +0200 (CEST)
-X-Auth-Info: bNTbhWs7m9HIjk+bCwHPCCgtMIaxEFz3rOVZmYrdyiUfNQtUrVGwDBlnjeYXQaTI
-Received: from igel.home (ppp-93-104-60-133.dynamic.mnet-online.de [93.104.60.133])
-	by mail.mnet-online.de (Postfix) with ESMTPA;
-	Fri,  8 May 2015 14:01:51 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 1000)
-	id 535D12C3B3D; Fri,  8 May 2015 14:01:51 +0200 (CEST)
-X-Yow: These PRESERVES should be FORCE-FED to PENTAGON OFFICIALS!!
-In-Reply-To: <0eb58475c6238be314eb4f0be08f8ae6@www.dscho.org> (Johannes
-	Schindelin's message of "Fri, 08 May 2015 12:11:33 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
+	id S1751988AbbEHMP6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 May 2015 08:15:58 -0400
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:43014 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751118AbbEHMP6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 8 May 2015 08:15:58 -0400
+Received: from x590e3a3d.dyn.telefonica.de ([89.14.58.61] helo=localhost)
+	by iramx2.ira.uni-karlsruhe.de with esmtpsa port 587 
+	iface 141.3.10.81 id 1YqhC4-0004ps-5C; Fri, 08 May 2015 14:15:53 +0200
+X-Mailer: git-send-email 1.9.5.msysgit.0
+In-Reply-To: <1431056685-12337-1-git-send-email-lars@redhat.com>
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1431087353.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268613>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268614>
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> +http.sslCipherList::
+> +  A list of SSL ciphers to use when negotiating an SSL connection.
+> +  The available ciphers depend on whether libcurl was built against
+> +  NSS or OpenSSL and the particular configuration of the crypto
+> +  library in use.  Internally this sets the 'CURLOPT_SSL_CIPHER_LIST=
+'
+> +  option; see the libcurl documentation for more details on the form=
+at
+> +  of this list.
+> ++
+> +Can be overridden by the 'GIT_SSL_CIPHER_LIST' environment variable.
+> +To force git to use libcurl's default cipher list and ignore any
+> +explicit http.sslCipherList option, set 'GIT_SSL_CIPHER_LIST' to the
+> +empty string.
+> +
 
-> It's probably my failure for not finding the documentation on that, but I really would like to be educated. Do you have an authoritative source for that statement?
+=2E.. or with 'git -c http.sslCipherList <cmd>' on the command line (bu=
+t I
+don't think it should be mentioned here that a config variable from a
+config file can be overridden via 'git -c', because that's true for all
+config variables anyway).
 
-http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html
+However, speaking of command line, could you please add this new config
+variable to the completion script (contrib/completion/git-completion.ba=
+sh,
+somewhere around line 2120)?  Thanks.
 
-3.206 Line
-A sequence of zero or more non- <newline> characters plus a terminating
-<newline> character.
-
-3.397 Text File
-A file that contains characters organized into zero or more lines. The
-lines do not contain NUL characters and none can exceed {LINE_MAX} bytes
-in length, including the <newline> character. Although POSIX.1-2008 does
-not distinguish between text files and binary files (see the ISO C
-standard), many utilities only produce predictable or meaningful output
-when operating on text files. The standard utilities that have such
-restrictions always specify "text files" in their STDIN or INPUT FILES
-sections.
-
-Andreas.
-
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+Best,
+G=E1bor
