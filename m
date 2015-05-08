@@ -1,86 +1,63 @@
-From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2] bundle: verify arguments more strictly
-Date: Fri,  8 May 2015 10:02:00 +0200
-Message-ID: <1431072120-24245-1-git-send-email-ps@pks.im>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] bundle: verify arguments more strictly
+Date: Fri, 08 May 2015 10:11:08 +0200
+Organization: gmx
+Message-ID: <239a633b6bbed03e92318322ce566295@www.dscho.org>
 References: <1431071341-23363-1-git-send-email-ps@pks.im>
-Cc: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 08 10:02:34 2015
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Patrick Steinhardt <ps@pks.im>
+X-From: git-owner@vger.kernel.org Fri May 08 10:11:26 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YqdEv-0003Up-4q
-	for gcvg-git-2@plane.gmane.org; Fri, 08 May 2015 10:02:33 +0200
+	id 1YqdNV-0000MK-8A
+	for gcvg-git-2@plane.gmane.org; Fri, 08 May 2015 10:11:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752613AbbEHIC1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 May 2015 04:02:27 -0400
-Received: from sender1.zohomail.com ([74.201.84.162]:28884 "EHLO
-	sender1.zohomail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752348AbbEHICZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 May 2015 04:02:25 -0400
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; 
-  s=mail; d=pks.im; 
-  h=from:to:cc:subject:date:message-id:in-reply-to:references; 
-  b=HHs1bdYenmnbLPIND+WquZEdntj+r/G/4B7vQeqFo78aua72POhnDA+OE5Z7oMbtvdQMoV8j9XVd
-    Epw2kmjvhBZjysa9QtAuT2WoQTpY8ortZxhcSHW5TJKTpfo7pUALDEnd1GG2Tx6Ybp4au1kJcDXB
-    kBxlw5HlWDAMvPC6+eg=  
-Received: from localhost (x5ce10939.dyn.telefonica.de [92.225.9.57]) by mx.zohomail.com
-	with SMTPS id 143107214393742.47905325413342; Fri, 8 May 2015 01:02:23 -0700 (PDT)
-X-Mailer: git-send-email 2.4.0
+	id S1752348AbbEHILS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 May 2015 04:11:18 -0400
+Received: from mout.gmx.net ([212.227.15.15]:56553 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751607AbbEHILO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 May 2015 04:11:14 -0400
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0MAQ0o-1Yxjr43a70-00BYQU; Fri, 08 May 2015 10:11:08
+ +0200
 In-Reply-To: <1431071341-23363-1-git-send-email-ps@pks.im>
-X-ZohoMail: Ss  SS_10 UW1 iCHF_KNW_WHT_EXT  SGR3_0_16045_3
-X-ZohoMail-Owner: <1431072120-24245-1-git-send-email-ps@pks.im>+zmo_0_<ps@pks.im>
-X-ZohoMail-Sender: 92.225.9.57
-X-Zoho-Virus-Status: 2
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.0
+X-Provags-ID: V03:K0:+mUOvYuFP/GWaWntvAnR2kO7oxdUPWWsWQS84UT5N/hMAgC8oOC
+ M2vyv2p1AoIYRHRMRiJGn6JWt5Rm3kAC3DPIo2tbb/ppdmApCM/Yhew8YF2GA7k3rWt6T8q
+ +clvsoDvTar5iFg8CiMw2f2Ml4BiPf93v6Wzzn3eWCU3C/4Oc3DHXekQDFkCJ1RrAQIHPMX
+ nsLlma13pMOeJCUkDyO1g==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268607>
 
-The `verify` and `create` subcommands of the bundle builtin do
-not properly verify the command line arguments that have been
-passed in. While the `verify` subcommand accepts an arbitrary
-amount of ignored arguments the `create` subcommand does not
-complain about being passed too few arguments, resulting in a
-bogus call to `git rev-list`. Fix these errors by verifying that
-the correct amount of arguments has been passed in.
+Hi Patrick,
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
+On 2015-05-08 09:49, Patrick Steinhardt wrote:
+> The `verify` and `create` subcommands of the bundle builtin do
+> not properly verify the command line arguments that have been
+> passed in. While the `verify` subcommand accepts an arbitrary
+> amount of ignored arguments the `create` subcommand does not
+> complain about being passed too few arguments, resulting in a
+> bogus call to `git rev-list`. Fix these errors by verifying that
+> the correct amount of arguments has been passed in.
 
-Added missing Signed-off-by.
+Good catch. But please sign off your patch [*1*]
 
- builtin/bundle.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+Other than that...
+Acked-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-diff --git a/builtin/bundle.c b/builtin/bundle.c
-index 92a8a60..4883a43 100644
---- a/builtin/bundle.c
-+++ b/builtin/bundle.c
-@@ -42,6 +42,10 @@ int cmd_bundle(int argc, const char **argv, const char *prefix)
- 
- 	if (!strcmp(cmd, "verify")) {
- 		close(bundle_fd);
-+		if (argc != 1) {
-+			usage(builtin_bundle_usage);
-+			return 1;
-+		}
- 		if (verify_bundle(&header, 1))
- 			return 1;
- 		fprintf(stderr, _("%s is okay\n"), bundle_file);
-@@ -52,6 +56,10 @@ int cmd_bundle(int argc, const char **argv, const char *prefix)
- 		return !!list_bundle_refs(&header, argc, argv);
- 	}
- 	if (!strcmp(cmd, "create")) {
-+		if (argc < 2) {
-+			usage(builtin_bundle_usage);
-+			return 1;
-+		}
- 		if (!startup_info->have_repository)
- 			die(_("Need a repository to create a bundle."));
- 		return !!create_bundle(&header, bundle_file, argc, argv);
--- 
-2.4.0
+Ciao,
+Johannes
+
+Footnote *1*: Here is why you need to sign off on your patches: https://github.com/git/git/blob/v2.3.5/Documentation/SubmittingPatches#L234-L286
