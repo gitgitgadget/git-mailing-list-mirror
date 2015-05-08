@@ -1,98 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
 Subject: Re: [PATCH] contrib/subtree: portability fix for string printing
-Date: Fri, 08 May 2015 10:49:38 -0700
-Message-ID: <xmqqy4kzklhp.fsf@gitster.dls.corp.google.com>
+Date: Fri, 8 May 2015 13:56:34 -0400
+Message-ID: <CAPig+cQQSrQiSzp7Jat8LYH+RqYdpJ2XCXweAtrYE_QoLzSznQ@mail.gmail.com>
 References: <xmqqmw1gp7aa.fsf@gitster.dls.corp.google.com>
 	<1431046619-2340-1-git-send-email-danny0838@gmail.com>
+	<xmqqy4kzklhp.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git develop <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Danny Lin <danny0838@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 08 19:49:47 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Danny Lin <danny0838@gmail.com>, git develop <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 08 19:56:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YqmPC-0007z7-Fr
-	for gcvg-git-2@plane.gmane.org; Fri, 08 May 2015 19:49:47 +0200
+	id 1YqmVr-0002iF-KV
+	for gcvg-git-2@plane.gmane.org; Fri, 08 May 2015 19:56:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753680AbbEHRtm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 May 2015 13:49:42 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:50183 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752628AbbEHRtl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 May 2015 13:49:41 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 633A44EB0B;
-	Fri,  8 May 2015 13:49:40 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=n2WN6KrAafqaHkl4thaVcekNruQ=; b=ULbj84
-	edq6amg4wLx8KS4H6qE7SyQtTHPFj5+FgMebWWWlzchjkbXJcWNdskCzmI8gxy5Z
-	F2rOBYKE/B52SF+udzJzm5JsQNPI7CKEMBROt9HcCaYb0882auod0t0/6prUul/w
-	0OszcX/rbxs35DHavS1+40n9xgZYueZrc8x68=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=FFGikTtgWkiWqhfBl26S1Z8MqfWYvifj
-	uWR50/JsdPxltzf7B20IM3ouvZn2cgW8NvVyRoQCMpvgwLAAjbGGr0zwLRqe0dTt
-	gMhTkxZJBn31Hkb7IBZtxpEv1psimcsPl4M1hcElPWb1OyUe/SMdG/mYlkDqhW0O
-	IXI2yYHXJsI=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5C6734EB0A;
-	Fri,  8 May 2015 13:49:40 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DA41C4EB09;
-	Fri,  8 May 2015 13:49:39 -0400 (EDT)
-In-Reply-To: <1431046619-2340-1-git-send-email-danny0838@gmail.com> (Danny
-	Lin's message of "Fri, 8 May 2015 08:56:59 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 99A760BE-F5AA-11E4-B7F9-83E09F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1753537AbbEHR4f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 May 2015 13:56:35 -0400
+Received: from mail-ig0-f171.google.com ([209.85.213.171]:35415 "EHLO
+	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753029AbbEHR4e (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 May 2015 13:56:34 -0400
+Received: by igbyr2 with SMTP id yr2so27486362igb.0
+        for <git@vger.kernel.org>; Fri, 08 May 2015 10:56:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=jjti9uHdW7DcMFZmPT1ng8BL7/Ach2utMwdeaMVBmBs=;
+        b=RNWRZUIN0+5UnduTzxbXGI/hL0IaNYDq43nbKeffrJn6X27kupNl2vlHrbAIHUtVIW
+         Be1p7YTTfjO6MzPKo2pEzUzD13foyr5EnqX48PdWPWHG1LQY6pBTlFp+CyohGfB7nRfL
+         3q46dcKMd1XHlGgmG3uRIc60zKpdkF9HJJDXeoWUWJa33+LZdi2BHEcupRfdNujotRWj
+         AZR/b3qPEMW7SydV28N/y3mhaT4oZtubj+v2KmYQFI3BHbzbs5/AlDatlC/wv1U3ea/a
+         54qqMOmZ2g70xBNCLsonV7XddkwNVl8VXOW3G/+E7t+VBj0M8e2WDkY1Yte1orKkpNXo
+         UdtQ==
+X-Received: by 10.107.31.134 with SMTP id f128mr6652097iof.19.1431107794163;
+ Fri, 08 May 2015 10:56:34 -0700 (PDT)
+Received: by 10.107.28.132 with HTTP; Fri, 8 May 2015 10:56:34 -0700 (PDT)
+In-Reply-To: <xmqqy4kzklhp.fsf@gitster.dls.corp.google.com>
+X-Google-Sender-Auth: 1eHJYLMyt-oBxTiA_K89uPOd7RI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268633>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268634>
 
-Danny Lin <danny0838@gmail.com> writes:
-
-> Replace echo using printf in debug() and say() for
-> better portability.
+On Fri, May 8, 2015 at 1:49 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Danny Lin <danny0838@gmail.com> writes:
 >
-> Also re-wrap previous 'say -n "$str<CR>"' using a new
-> function progress() to prevent CR chars included in the
-> source code, which could be mal-processed in some shells.
-> For example, MsysGit trims CR before executing a shell
-> script file in order to make it work right on Windows
-> even if it uses CRLF as linefeeds.
+>> Replace echo using printf in debug() and say() for
+>> better portability.
+>>
+>> Also re-wrap previous 'say -n "$str<CR>"' using a new
+>> function progress() to prevent CR chars included in the
+>> source code, which could be mal-processed in some shells.
+>> For example, MsysGit trims CR before executing a shell
+>> script file in order to make it work right on Windows
+>> even if it uses CRLF as linefeeds.
+>>
+>> Signed-off-by: Danny Lin <danny0838@gmail.com>
+>> ---
 >
-> Signed-off-by: Danny Lin <danny0838@gmail.com>
-> ---
+> Thanks, this looks good.  Will apply with a little bit of tweak in
+> the log message.
 
-Thanks, this looks good.  Will apply with a little bit of tweak in
-the log message.
-
-Just for future reference, when shooting many iterations of the same
-patch in a short timeframe, please be aware that the recipient may
-not get the messages in the order you sent, and that it may not be
-apparent to the recipients what changed between the iterations.
-What we commonly do around here to address these issues is to
-mention what changed from the previous one below the "---" line
-before the diffstat.  I would have done something like this if I
-were doing this patch, for example:
-
-        ...
-        even if it uses CRLF as linefeeds.
-
-        Signed-off-by: Danny Lin <danny0838@gmail.com>
-        ---
-
-        * The previous one still used "log" helper by mistake even
-          though I removed the implementation of it and decided to
-          use "echo" for non-tricky cases.  This fixes it.
-
-          contrib/subtree/git-subtree.sh | 13 ++++++++++---
-        ...
+Hmm, I would say that the changes to debug() and say() should either
+be dropped or moved to a separate patch (along with the first
+paragraph of the commit message). With the introduction of the
+progress() abstraction, there is no longer any need for changes to
+say(), and the "better portability" rationale for changing say() and
+debug() is never properly explained, and is thus nebulous at best.
