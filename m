@@ -1,93 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/3] git help: group common commands by theme
-Date: Fri, 08 May 2015 11:53:34 -0700
-Message-ID: <xmqqlhgylx3l.fsf@gitster.dls.corp.google.com>
-References: <cover.1430770308.git.sebastien.guimmara@gmail.com>
-	<xmqqegmucqyh.fsf@gitster.dls.corp.google.com>
-	<554CF9A4.4050103@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] contrib/subtree: portability fix for string printing
+Date: Fri, 8 May 2015 14:55:17 -0400
+Message-ID: <CAPig+cQVpYseCs7V_zHbUhEbWitdNZx1UJgHSdd2svowBOxsYg@mail.gmail.com>
+References: <xmqqmw1gp7aa.fsf@gitster.dls.corp.google.com>
+	<1431046619-2340-1-git-send-email-danny0838@gmail.com>
+	<xmqqy4kzklhp.fsf@gitster.dls.corp.google.com>
+	<CAPig+cQQSrQiSzp7Jat8LYH+RqYdpJ2XCXweAtrYE_QoLzSznQ@mail.gmail.com>
+	<xmqqpp6alxiw.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Users <git@vger.kernel.org>
-To: =?utf-8?Q?S=C3=A9bastien?= Guimmara <sebastien.guimmara@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 08 20:53:42 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Danny Lin <danny0838@gmail.com>, git develop <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 08 20:55:26 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YqnP3-0001ta-MJ
-	for gcvg-git-2@plane.gmane.org; Fri, 08 May 2015 20:53:42 +0200
+	id 1YqnQi-0002d5-HG
+	for gcvg-git-2@plane.gmane.org; Fri, 08 May 2015 20:55:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752884AbbEHSxh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 May 2015 14:53:37 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:62090 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751185AbbEHSxg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 8 May 2015 14:53:36 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id C7AF64E150;
-	Fri,  8 May 2015 14:53:35 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=pspI4LVOpsrb
-	NBFCKVKxpPVy1sE=; b=DhrEROjdq+QIW7SRx3JqplMB9s52cMBqSgMMcUdF0gq2
-	IkzJQTgqm45XsuxKWD7E3ECWjeuHHZ48Nz7NBjxE2pLFWVwFb8J+7GX4UCmGEuRs
-	8BLREDniad3oXk05vdkZawFPyPaHMrvvT++QbFQC3QPFy05ujsbbSnGq7vECuoM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=aZXFWP
-	CqqB0M30cxRTNLBIBpkdZPTdz6zC4JSgsP7Z1FhAgCTS2tsgAbcqAg6H/E5nZ0Ki
-	vDlceKBuHAHkzGjPf11uBK/20aVAUzrB0BVXQjKyNa8BflPVcdpNttxb3xlwbBQ3
-	f5r21+4JuC1M4TBRYccyYyKkwK/GWd+5YV2ZU=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id C02304E14F;
-	Fri,  8 May 2015 14:53:35 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3EE5D4E14E;
-	Fri,  8 May 2015 14:53:35 -0400 (EDT)
-In-Reply-To: <554CF9A4.4050103@gmail.com> (=?utf-8?Q?=22S=C3=A9bastien?=
- Guimmara"'s message of
-	"Fri, 08 May 2015 20:00:04 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 87B594C6-F5B3-11E4-AB4F-83E09F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1752953AbbEHSzU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 May 2015 14:55:20 -0400
+Received: from mail-ig0-f177.google.com ([209.85.213.177]:38592 "EHLO
+	mail-ig0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752937AbbEHSzS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 May 2015 14:55:18 -0400
+Received: by igbhj9 with SMTP id hj9so29167730igb.1
+        for <git@vger.kernel.org>; Fri, 08 May 2015 11:55:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=pWKLf5Ax6I0yuv8hO/7LPMa8O1rS5Tcv+9gBGlb2qZc=;
+        b=G4fHaR9Jq4OEAD5PvTKgyqn15HLbYZL0U8GQnmd7dt8grYlzAYZCN+Xp1+mJ9ZSEAz
+         N7mUV/NLEwYW3ZvG2lAQu550zMu8xEtp+3IbbgkLuE/0PUkIKZT7tFQXiKLCO7VsIjr9
+         polMhrAEksgz4RHAFkosk7RkKO1bHO83VboXsrvrqYnO40iH8YchOXCXKenAEDccJqyu
+         mkzo7o0Pt5owfkDDM4qrX+WhTJCrWC3CKWuLcO26gPAMXL8U7Fk2oWjUf4x+a8oTGdrV
+         VkRJz6kvBHHBGurl0u3REcVJOd2GuSQbraV34sUdNeHJd8ux+MejVFdmn9QK1H6gDKRI
+         fGjw==
+X-Received: by 10.42.250.70 with SMTP id mn6mr5917149icb.78.1431111317887;
+ Fri, 08 May 2015 11:55:17 -0700 (PDT)
+Received: by 10.107.28.132 with HTTP; Fri, 8 May 2015 11:55:17 -0700 (PDT)
+In-Reply-To: <xmqqpp6alxiw.fsf@gitster.dls.corp.google.com>
+X-Google-Sender-Auth: hVw-05nFwblj1B2oVOoAet5hVmI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268644>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268645>
 
-S=C3=A9bastien Guimmara  <sebastien.guimmara@gmail.com> writes:
-
-> A preliminary question to prepare the next round (v5) of this patch:
+On Fri, May 8, 2015 at 2:44 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+>> On Fri, May 8, 2015 at 1:49 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> Thanks, this looks good.  Will apply with a little bit of tweak in
+>>> the log message.
+>>
+>> Hmm, I would say that the changes to debug() and say() should either
+>> be dropped or moved to a separate patch (along with the first
+>> paragraph of the commit message). With the introduction of the
+>> progress() abstraction, there is no longer any need for changes to
+>> say(), and the "better portability" rationale for changing say() and
+>> debug() is never properly explained, and is thus nebulous at best.
 >
-> All versions of these patches were based upon the tip of 'master' 2.4=
-=2E0
-> (3d4a3ff).
+> I justified them in this way.
 >
-> Should I rebase subsequent patches on top of 'next' ?
+>     contrib/subtree: portability fix for string printing
+>
+>     'echo -n' is not portable, but this script used it as a way to give
+>     a string followed by a carriage return for progress messages.
+>     Introduce a new helper shell function "progress" and use printf as a
+>     more portable way to do this.  As a side effect, this makes it
+>     unnecessary to have a raw CR in our source, which can be munged in
+>     some shells.  For example, MsysGit trims CR before executing a shell
+>     script file in order to make it work right on Windows even if it
+>     uses CRLF as linefeeds.
 
-I think doing it on 2.4.0 is fine.
+Very nicely explained.
 
-In general, you shouldn't base anything on 'next', unless you are
-using some new features that are still cooking in 'next' on their
-own topic branches.  And even if that were the case, I would prefer
-a series that introduces a new feature to wait for those other topic
-branches it wants to use to graduate to 'master'.  Alternatively,
-you can identify these still-in-flight topics that you absolutely
-need to depend on, merge them to 'master' yourself, _and_ build your
-patches on top, but please make it clear that you did that when
-sending the patches in if you take this route.  Your patches would
-become hostage of these other topics and cannot graduate to 'master'
-before they do, so keep that in mind if you do so.
+>     While at it, replace "echo" using printf in debug() and say() to
+>     avoid tempting people introducing the same bug.
 
-Whatever you do, you would still need to make sure that the result
-of applying your patches merges cleanly to 'next' and works well.
+Okay, this works as reasonable justification for including those
+changes in the same patch.
 
-Needless to say, a fix is preferrable to be based on 'maint' (or
-even older maintenance tracks when it is feasible), but that does
-not concern this "update help output" topic.
+It might read a bit more fluidly if rephrased something like this:
 
-Thanks.
+    While at it, replace 'echo' with 'printf' in debug() and say() to
+    eliminate the temptation of reintroducing the same bug.
