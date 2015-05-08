@@ -1,75 +1,60 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4] http: add support for specifying an SSL cipher list
-Date: Thu, 7 May 2015 23:53:19 -0400
-Message-ID: <CAPig+cSvau6=TGrse0J86MY2Sb0qRfoOQybhLkfqCCS2s7NQXQ@mail.gmail.com>
-References: <1431008210-673-1-git-send-email-lars@redhat.com>
-	<1431056685-12337-1-git-send-email-lars@redhat.com>
+From: Thomas Koch <thomas@koch.ro>
+Subject: Re: Please consider extending .gitignore to support setting of a file size limit
+Date: Fri, 8 May 2015 08:44:39 +0200
+Message-ID: <201505080844.40002.thomas@koch.ro>
+References: <CAC+AdWRpJnt2PN1YcB7VoHcKsO86_DhE1mOB5Ls9bWaEd_XKXQ@mail.gmail.com> <xmqqy4l0m5wf.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Lars Kellogg-Stedman <lars@redhat.com>
-X-From: git-owner@vger.kernel.org Fri May 08 05:53:37 2015
+Content-Type: Text/Plain;
+  charset="iso-8859-15"
+Content-Transfer-Encoding: 7bit
+Cc: Roger Mendes <sproger1@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 08 08:51:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YqZM0-000675-Tf
-	for gcvg-git-2@plane.gmane.org; Fri, 08 May 2015 05:53:37 +0200
+	id 1Yqc8R-0007Xn-RC
+	for gcvg-git-2@plane.gmane.org; Fri, 08 May 2015 08:51:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751303AbbEHDxV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 May 2015 23:53:21 -0400
-Received: from mail-ig0-f174.google.com ([209.85.213.174]:36249 "EHLO
-	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750995AbbEHDxU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 May 2015 23:53:20 -0400
-Received: by igbpi8 with SMTP id pi8so11136285igb.1
-        for <git@vger.kernel.org>; Thu, 07 May 2015 20:53:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=zgKaL25LUqLYSFW6dvidA/YuXNAzCjaDU7o54EBdErg=;
-        b=BZ1nXibhQ7efOFNPH6Ec+dle1HMFjdEIXOAipNs0ma87vRbGflfx5jZWn6f7RHg42F
-         yUPGuixa0WYMpb4Dg1o5UsWjn54j5E1DYjGfsEjcebdt3kkKpvj8d78YhDQc13Ghigtq
-         OD18tywG6aw4slQ0pa7ZYwyEWtyplwsJtoGt+seEH1oa3x6sHi1houp6n1Ra4hVt1PrG
-         KHBuFYnXRt6DYNUQ2xU0jkflrD7cky74PILoKGBh8ykWSxeRgCBUgD/fwkqjY/Dw8WSp
-         rlGBqkZeRxlAWh1UQhlNXP4r+RWWq0LvFU2EaP2TFPhBt9KXXg4+xMGNZMzRBk1QjrbV
-         B7oA==
-X-Received: by 10.107.169.74 with SMTP id s71mr2394802ioe.46.1431057199771;
- Thu, 07 May 2015 20:53:19 -0700 (PDT)
-Received: by 10.107.28.132 with HTTP; Thu, 7 May 2015 20:53:19 -0700 (PDT)
-In-Reply-To: <1431056685-12337-1-git-send-email-lars@redhat.com>
-X-Google-Sender-Auth: FKo6IvfCO__YkFnGyoIb5bECoJE
+	id S1752352AbbEHGvn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 May 2015 02:51:43 -0400
+Received: from mx2.mailbox.org ([80.241.60.215]:34356 "EHLO mx2.mailbox.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751474AbbEHGvm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 May 2015 02:51:42 -0400
+X-Greylist: delayed 418 seconds by postgrey-1.27 at vger.kernel.org; Fri, 08 May 2015 02:51:42 EDT
+Received: from smtp1.mailbox.org (smtp1.mailbox.org [80.241.60.240])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mx2.mailbox.org (Postfix) with ESMTPS id 2E672420D0;
+	Fri,  8 May 2015 08:44:42 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at heinlein-support.de
+Received: from smtp1.mailbox.org ([80.241.60.240])
+	by gerste.heinlein-support.de (gerste.heinlein-support.de [91.198.250.173]) (amavisd-new, port 10030)
+	with ESMTP id coyz9oUC3U_1; Fri,  8 May 2015 08:44:41 +0200 (CEST)
+User-Agent: KMail/1.13.7 (Linux/3.16.0-0.bpo.4-amd64; KDE/4.8.4; x86_64; ; )
+In-Reply-To: <xmqqy4l0m5wf.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268602>
 
-On Thu, May 7, 2015 at 11:44 PM, Lars Kellogg-Stedman <lars@redhat.com> wrote:
-> Teach git about a new option, "http.sslCipherList", which permits one to
-> specify a list of ciphers to use when negotiating SSL connections.  The
-> setting can be overwridden by the GIT_SSL_CIPHER_LIST environment
-> variable.
->
-> Signed-off-by: Lars Kellogg-Stedman <lars@redhat.com>
-> ---
-> diff --git a/http.c b/http.c
-> index 4b179f6..3a39d07 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -187,6 +188,9 @@ static int http_options(const char *var, const char *value, void *cb)
->                 curl_ssl_verify = git_config_bool(var, value);
->                 return 0;
->         }
-> +       if (!strcmp("http.sslcipherlist", var)) {
-> +               return git_config_string(&ssl_cipherlist, var, value);
-> +       }
+On Thursday, May 07, 2015 11:31:12 PM Junio C Hamano wrote:
+> Roger Mendes <sproger1@gmail.com> writes:
+> > Allow .gitignore to support setting a file size limit so that all
+> > files over a certain size will by automatically ignored when
+> > performing git add, commit -a...;
+> 
+> No.
 
-Style nit: None of the other conditionals in http_options() use curly
-braces when the 'if' body is a one-liner.
+Please have a look into "git annex". It provides large file support without
+blowing up the repository size entirely and has facilities to decide what to
+do with files based on multiple criterias like file size.
 
->         if (!strcmp("http.sslcert", var))
->                 return git_config_string(&ssl_cert, var, value);
->  #if LIBCURL_VERSION_NUM >= 0x070903
+Maybe some features from git annex have matured enough to be proposed
+for inclusion into git?
+
+Regards, Thomas Koch
