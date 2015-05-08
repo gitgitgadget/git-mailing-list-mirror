@@ -1,102 +1,130 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: t0005-signals.sh fails with ksh
-Date: Fri, 08 May 2015 14:16:19 -0700
-Message-ID: <xmqqwq0iixcs.fsf@gitster.dls.corp.google.com>
-References: <31108626.20150508231514@gmail.com>
-	<xmqq1tiqkdue.fsf@gitster.dls.corp.google.com>
-	<20150508205548.GB13457@peff.net>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH 3/3] git help: group common commands by theme
+Date: Fri, 8 May 2015 14:17:00 -0700
+Message-ID: <CAGZ79kaL219wN4=c9_SQGDk+Mtie0Xm5PDc0Jy6mTQiQ37wj4A@mail.gmail.com>
+References: <cover.1430770308.git.sebastien.guimmara@gmail.com>
+	<13c3dcbd2c5c9dfc0453381b5da53b5d68af7afe.1430770308.git.sebastien.guimmara@gmail.com>
+	<CAPig+cS=u-HK1qNicWiLOQC6RPkR7QueX+kOu8fQwpHekgs1yg@mail.gmail.com>
+	<554D25B1.8050605@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: evgeny <illumsoft.org@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri May 08 23:16:30 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Git List <git@vger.kernel.org>
+To: =?UTF-8?Q?S=C3=A9bastien_Guimmara?= <sebastien.guimmara@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 08 23:17:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YqpdE-0003lG-1T
-	for gcvg-git-2@plane.gmane.org; Fri, 08 May 2015 23:16:28 +0200
+	id 1Yqpds-00043z-KV
+	for gcvg-git-2@plane.gmane.org; Fri, 08 May 2015 23:17:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752812AbbEHVQX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 May 2015 17:16:23 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:60555 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752717AbbEHVQW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 May 2015 17:16:22 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5040341FB2;
-	Fri,  8 May 2015 17:16:21 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=DUNF8hU0f9XirdQ+FQlBcip3fxA=; b=na4DfK
-	onkgLccjRWydfTvFnTT12qzqAQ8d2TjodIgQVV/zKM50flwOBY2fv6jM98L3OtyL
-	QQ4rBdkTHoPlb+Cd/hguh5VHWxyjBHwDUzRbxJkviH0mLY7D7HK8mc3a68l7hjn4
-	Hk7t8VxnLU1ItN1o+s7iOgIhlyf0vK8Xwr6RQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WT2pQli2jPiHFH4dguDYff03LCAwHN3S
-	p2F4H/Tn8rpfYK2kyUZxK1Yor5uiZsFFYQhC/LuoGEgP63x/I0VCrKTikdCY9cEI
-	My4tlntHzJt91fjdxgsBUW3mlaW+HS8983DySaCuCnBFCQ2BvR0oSzSdDZ9EBxXE
-	7JiIsLd8MNk=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 49B3D41FB1;
-	Fri,  8 May 2015 17:16:21 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BB20741FB0;
-	Fri,  8 May 2015 17:16:20 -0400 (EDT)
-In-Reply-To: <20150508205548.GB13457@peff.net> (Jeff King's message of "Fri, 8
-	May 2015 16:55:48 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 7925FE78-F5C7-11E4-835A-83E09F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1753231AbbEHVRE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 May 2015 17:17:04 -0400
+Received: from mail-ie0-f179.google.com ([209.85.223.179]:35532 "EHLO
+	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753278AbbEHVRB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 8 May 2015 17:17:01 -0400
+Received: by ieczm2 with SMTP id zm2so73228962iec.2
+        for <git@vger.kernel.org>; Fri, 08 May 2015 14:17:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=PgBWjk455xhhQBI6q0hGDVFmULwm29kyQRelgMDFrl4=;
+        b=QlwfqFxpaDyJ4O6wdVO6fVZFwMvMdFKbdkXIfe1S3sDJfEu3jm/ESm7eKrItTvQQTr
+         5celNJTqQoHLy5ZGI2SKLnNaBhlCauRjBK0Nc25NmooYQ4c1HnXLoerNyyzzUuk27z98
+         b2mWEwaHWk9BU64zoplBnrqn5jjKV2nEcTlggRJ8Qgm/MasE4aJtTJ7OqN6/S4M9I9oG
+         6D+q6bomV60ByjVvb1gx5jhrzcPkiOKhehqplmGirZbm6ptCGAVYzge/cnVR17HALcr3
+         RdtIFoD9nqPJgp78k9Yu4F7x7J3EpWvi5QmPxv/3XVY9KOUisv2AKrtuDO0Cpq8K6xx3
+         +qOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=PgBWjk455xhhQBI6q0hGDVFmULwm29kyQRelgMDFrl4=;
+        b=gdf+Fw67QQKNhlpXyFqjwp6tXrKAxtbeLjMzvIj/RF8F5qcinv0ggZ3DDPLeS0qQo6
+         shJwno4Hlgsmw+WApfXpzjvn+MgJ978J8IqXIV8kr3IqP6Sxo0rCFPV+BFlPr+zkS63o
+         XbVwW6ExhMzJdKlHA35OUBtuRF9jTSeRW2WBV4MctYokiZvkXjqbWl2li/5FZYa48Zzo
+         WC/BW7gKZK4aimkUsravEtT6+D+TgLAE2Kjqk1VTBmLGv2I8ATGVnAGTU1n2mNg8i7Nj
+         MehQQ9eQtxUl+s5ubOmE1N5sBVlHd7FQrpdReb5msxPOK1tkvzI90KkSzXB9DTdQhkVq
+         0WWg==
+X-Gm-Message-State: ALoCoQlQx2E5DzdX1uSyf1hJsUVrRWGBGj0rJ0PeKtYt3U3WCXfjWR3ZlXctFTyOuvSCfLvi4YHN
+X-Received: by 10.42.20.14 with SMTP id e14mr127301icb.76.1431119821143; Fri,
+ 08 May 2015 14:17:01 -0700 (PDT)
+Received: by 10.107.46.22 with HTTP; Fri, 8 May 2015 14:17:00 -0700 (PDT)
+In-Reply-To: <554D25B1.8050605@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268670>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268671>
 
-Jeff King <peff@peff.net> writes:
-
-> On Fri, May 08, 2015 at 01:34:49PM -0700, Junio C Hamano wrote:
+On Fri, May 8, 2015 at 2:08 PM, S=C3=A9bastien Guimmara
+<sebastien.guimmara@gmail.com> wrote:
+> On 05/06/2015 05:16 AM, Eric Sunshine wrote:
+>>
+>> On Mon, May 4, 2015 at 4:28 PM, S=C3=A9bastien Guimmara
+>>>
+>>> +
+>>> +       if (group1 =3D=3D group2)
+>>> +               return 0;
+>>> +       if (group1 > group2)
+>>> +               return 1;
+>>> +       else
+>>> +               return -1;
+>>
+>>
+>> Do you also want to sort the commands alphabetically within group?
+>> That is, something like this?
+>>
+>>      struct cmdname_help *e1 =3D elem1;
+>>      struct cmdname_help *e2 =3D elem2;
+>>
+>>      if (e1->group < e2->group)
+>>          return -1;
+>>      if (e1->group > e2->group)
+>>          return 1;
+>>      return strcmp(e1->name, e2->name);
+>>
+>>> +}
 >
->> evgeny <illumsoft.org@gmail.com> writes:
->> 
->> > expecting success: 
->> >         OUT=$( ((large_git; echo $? 1>&3) | :) 3>&1 ) &&
->> >         test "$OUT" -eq 141
->> >
->> > t0005-signals.sh[499]: eval: syntax error at line 4: `(' unmatched
->> > Memory fault
->> 
->> Does this work if you did
->> 
->> 	OUT=$( ( (large_git ; echo $? 1>&3) | : ) 3>&2 ) &&
->> 
->> instead?
 >
-> It does for me. I've tested our suite with mksh before, and it passed
-> (that's why the earlier check already covers ksh). But using the ksh I
-> get from "apt-get install ksh" on Debian (ksh93, it looks like?) fails
-> as described. 
-> ...
+> Your version raises:
+>
+> help.c: In function =E2=80=98cmd_group_cmp=E2=80=99:
+> help.c:223:28: warning: initialization discards =E2=80=98const=E2=80=99=
+ qualifier from
+> pointer target type [enabled by default]
+>   struct cmdname_help *e1 =3D elem1;
+>                             ^
+> help.c:224:28: warning: initialization discards =E2=80=98const=E2=80=99=
+ qualifier from
+> pointer target type [enabled by default]
+>   struct cmdname_help *e2 =3D elem2;
+>                             ^
+>
+> With the cast:
+>
+> struct cmdname_help *e1 =3D (struct cmdname_help*)elem1;
+>
+> It compiles without a warning (gcc (Ubuntu 4.8.2-19ubuntu1) 4.8.2)
+>
+>
 
-Yuck.
+I'd rather change the type of struct cmdname_help to be const, such
+that it reads:
 
-> I'm on the fence, though, on declaring ksh93 to be unsupported. I don't
-> know how many other instances of this are in our test suite, and it's
-> one more maintenance headache to deal with. Are there really platforms
-> with no actual POSIX shell (on Solaris, for example, the xpg6 shell is a
-> much better choice)?
+      const struct cmdname_help *e1 =3D elem1;
+      const struct cmdname_help *e2 =3D elem2;
 
-Yeah, ksh has gone too far and now is on the other side, I would
-have to say.  Introducing new keywords and semantics to let its
-users use new features (e.g. "let") is one thing, but breaking a
-valid POSIX shell construct and interpreting it in an incompatible
-way is going just too far for it to be treated as a Bourne variant.
+      if (e1->group < e2->group)
+          return -1;
+      if (e1->group > e2->group)
+          return 1;
+      return strcmp(e1->name, e2->name);
 
-I wonder if zsh is in the same league.  Do we support people who do
-SHELL_PATH=/bin/zsh and bend over backwards when it breaks?
-
-I'm on the fence, too.
+instead of casting if possible.
