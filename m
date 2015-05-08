@@ -1,389 +1,158 @@
-From: dturner@twopensource.com
-Subject: [PATCH 3/3] cat-file: add --follow-symlinks to --batch
-Date: Fri,  8 May 2015 14:13:39 -0400
-Message-ID: <1431108819-6831-3-git-send-email-dturner@twopensource.com>
-References: <1431108819-6831-1-git-send-email-dturner@twopensource.com>
-Cc: David Turner <dturner@twitter.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 08 20:14:10 2015
+From: =?UTF-8?B?U8OpYmFzdGllbiBHdWltbWFyYQ==?= 
+	<sebastien.guimmara@gmail.com>
+Subject: Re: [PATCH 0/3] git help: group common commands by theme
+Date: Fri, 08 May 2015 20:21:55 +0200
+Message-ID: <554CFEC3.5030105@gmail.com>
+References: <cover.1430770308.git.sebastien.guimmara@gmail.com> <554B30D5.3050909@emmajane.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	=?UTF-8?B?U8OpYmFzdGllbiBHdWltbWFyYQ==?= 
+	<sebastien.guimmara@gmail.com>
+To: Emma Jane Hogbin Westby <emma.westby@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 08 20:22:06 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yqmmm-0001k6-TU
-	for gcvg-git-2@plane.gmane.org; Fri, 08 May 2015 20:14:09 +0200
+	id 1YqmuR-00053W-Mt
+	for gcvg-git-2@plane.gmane.org; Fri, 08 May 2015 20:22:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753136AbbEHSOD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 May 2015 14:14:03 -0400
-Received: from mail-qc0-f181.google.com ([209.85.216.181]:33873 "EHLO
-	mail-qc0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752786AbbEHSN4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 May 2015 14:13:56 -0400
-Received: by qcyk17 with SMTP id k17so41141165qcy.1
-        for <git@vger.kernel.org>; Fri, 08 May 2015 11:13:55 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=lSENlUokcZWBTxEdgtxCgAg2XF5VKqbzZkSxqqQHv9M=;
-        b=TZM4T9iJDV9qLEVHPvHQYPX5QIzFW9lZ8s57s2s3h+nXpMj8WvJ78dcC2kBFNU40lx
-         qe9mp4PU/tjBZeFNfOLuCIs66JlwWCYnVS+BIf4kD8F9B/Pcqf/5lUgeTljjGeGJQYDR
-         kbTrtWoBdQQ0SpuBZGhLwI84NWjCsRGPPBR4BkPOSlNAGdG8syDCN1rEQVPIRaB+2CHx
-         iWZkELAa1KKG2Mym1tByrqdZEig+N+dO/NxYAnI3v6QflLs/qRblv98ooHLgcRUj2JDJ
-         QvQKWZRjU+fshm5ldLeh6h90OND1bDB+nXdIgeovDOvGaFcmO9AWRXNw7oujfZvNg8YJ
-         ErJQ==
-X-Gm-Message-State: ALoCoQkK1hhd0tpeLM5dHXHl0ZXh/1GwdFaL0/lYfZGpEn+mekaSFt6AUAl6Xze0oi0of0Lhothw
-X-Received: by 10.55.27.42 with SMTP id b42mr10842579qkb.53.1431108835879;
-        Fri, 08 May 2015 11:13:55 -0700 (PDT)
-Received: from ubuntu.jfk4.office.twttr.net ([192.133.79.147])
-        by mx.google.com with ESMTPSA id 69sm4099966qhv.17.2015.05.08.11.13.54
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 08 May 2015 11:13:54 -0700 (PDT)
-X-Mailer: git-send-email 2.0.4.315.gad8727a-twtrsrc
-In-Reply-To: <1431108819-6831-1-git-send-email-dturner@twopensource.com>
+	id S1753131AbbEHSV7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 May 2015 14:21:59 -0400
+Received: from mail-wg0-f52.google.com ([74.125.82.52]:32921 "EHLO
+	mail-wg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752741AbbEHSV6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 May 2015 14:21:58 -0400
+Received: by wgin8 with SMTP id n8so79839038wgi.0
+        for <git@vger.kernel.org>; Fri, 08 May 2015 11:21:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=EqirBrz4xfUmkPxQ96aKPdvN6fzilMkkWLdXCxgYK6c=;
+        b=vNQskheBoTNIQdQDif36jMCCUlMya7VOMow2BTKZT/Kvz8KC1xeSK1ysiOx/jsnlgY
+         b/pRqJoeq/XQkArDIeUWkcUvFegdvlzeD080rUTOhDNl2audtiMcOdKvcg2z4r+96hIm
+         U+2GYpMtXCXXM7V7tNlE51slJ7JZEvrAVCoA0pcx8I72DgUSzmbgy4Rmioz8iu/sL44H
+         MMP7oFCAu1UZ2vdpatO952p7/oZ981tMQi72c8NpjaotMoLIDUdiPvuEv+HmaSzorKPM
+         Awxf+0IX7hjrKHzYxXHB/EEqBZXgoepazyo9OBvXJPKzTTxolwDVMRiLncb0UgLSt0/y
+         a8rg==
+X-Received: by 10.180.83.229 with SMTP id t5mr259975wiy.82.1431109317179;
+        Fri, 08 May 2015 11:21:57 -0700 (PDT)
+Received: from [192.168.0.10] (bd231-1-88-176-208-17.fbx.proxad.net. [88.176.208.17])
+        by mx.google.com with ESMTPSA id df1sm13449920wib.12.2015.05.08.11.21.55
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 08 May 2015 11:21:56 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
+In-Reply-To: <554B30D5.3050909@emmajane.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268639>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268640>
 
-From: David Turner <dturner@twitter.com>
+On 05/07/2015 11:31 AM, Emma Jane Hogbin Westby wrote:
+> S=C3=A9bastien !
+>
+> This is fantastic! My apologies for jumping in late. Hopefully
+> I'm not too late.
+>
 
-This wires the in-repo-symlink following code through to the cat-file
-builtin.  In the event of an out-of-repo link, cat-file will print
-the link in a new format.
+Thank you :) It's just a very modest contribution though.
 
-Signed-off-by: David Turner <dturner@twitter.com>
----
- Documentation/git-cat-file.txt |  28 ++++++-
- builtin/cat-file.c             |  23 +++++-
- t/t1006-cat-file.sh            | 184 +++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 230 insertions(+), 5 deletions(-)
+>
+> S=C3=A9bastien Guimmara wrote:
+>> This v4 includes the following suggestions:
+>>
+>> In command-list.txt:
+>> - Add a [groups] block containing names and description for groups:
+>>
+>>     [groups]
+>>     init                   starting a working area
+>>     worktree               working on the current change
+>>     remote                 working with others
+>>     info                   examining the history and state
+>>     history                growing, marking and tweaking your histor=
+y
+> I like these headings / separation.
+>
+> As you've already "lost" a line to the header, would it make sense to
+> add a "see also" into the Guides from here? For example:
+>
+> starting a working area (see also: git help tutorial)
+> working on the current change (see also: git help everyday)
+> working with others (see also: git help workflows)
+> examining the history and state (see also: git help revisions)
+>
 
-diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
-index f6a16f4..18b67a3 100644
---- a/Documentation/git-cat-file.txt
-+++ b/Documentation/git-cat-file.txt
-@@ -10,7 +10,7 @@ SYNOPSIS
- --------
- [verse]
- 'git cat-file' (-t | -s | -e | -p | <type> | --textconv ) <object>
--'git cat-file' (--batch | --batch-check) < <list-of-objects>
-+'git cat-file' (--batch | --batch-check) [--follow-symlinks] < <list-of-objects>
- 
- DESCRIPTION
- -----------
-@@ -69,6 +69,19 @@ OPTIONS
- 	not be combined with any other options or arguments.  See the
- 	section `BATCH OUTPUT` below for details.
- 
-+--follow-symlinks::
-+	Follow symlinks inside the repository.  Instead of providing
-+	output about the link itself, provide output about the linked-to
-+	object.  This option requires --batch or --batch-check.  In the
-+	event of a symlink loop (or more than 40 symlinks in a symlink
-+	resolution chain), the file will be treated as missing.  If a
-+	symlink points outside the repository (e.g. a link to /foo or a
-+	root-level link to ../foo), the portion of the link which is
-+	outside the repository will be printed.  Follow-symlinks will
-+	be silently turned off if <object> specifies an object in the
-+	index rather than one in the object database.
-+
-+
- OUTPUT
- ------
- If '-t' is specified, one of the <type>.
-@@ -148,6 +161,19 @@ the repository, then `cat-file` will ignore any custom format and print:
- <object> SP missing LF
- ------------
- 
-+If --follow-symlinks is used, and a symlink in the repository points
-+outside the repository, then `cat-file` will ignore any custom format
-+and print:
-+
-+------------
-+symlink SP <size> LF <symlink> LF
-+------------
-+
-+The symlink will either be absolute (beginning with a /), or relative
-+to the repository root.  For instance, if dir/link points to ../../foo,
-+then <symlink> will be ../foo.  <size> is the size of the symlink in
-+bytes.
-+
- 
- CAVEATS
- -------
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index df99df4..277af32 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -224,6 +224,7 @@ static void print_object_or_die(int fd, struct expand_data *data)
- 
- struct batch_options {
- 	int enabled;
-+	int follow_symlinks;
- 	int print_contents;
- 	const char *format;
- };
-@@ -232,16 +233,24 @@ static int batch_one_object(const char *obj_name, struct batch_options *opt,
- 			    struct expand_data *data)
- {
- 	struct strbuf buf = STRBUF_INIT;
-+	struct object_context ctx;
-+	int flags = opt->follow_symlinks ? GET_SHA1_FOLLOW_SYMLINKS : 0;
- 
- 	if (!obj_name)
- 	   return 1;
- 
--	if (get_sha1(obj_name, data->sha1)) {
-+	if (get_sha1_with_context(obj_name, flags, data->sha1, &ctx)) {
- 		printf("%s missing\n", obj_name);
- 		fflush(stdout);
- 		return 0;
- 	}
- 
-+	if (ctx.mode == 0) {
-+		printf("symlink %"PRIuMAX"\n%s\n", (uintmax_t)strlen(ctx.path),
-+		       ctx.path);
-+		return 0;
-+	}
-+
- 	if (sha1_object_info_extended(data->sha1, &data->info, LOOKUP_REPLACE_OBJECT) < 0) {
- 		printf("%s missing\n", obj_name);
- 		fflush(stdout);
-@@ -342,9 +351,8 @@ static int batch_option_callback(const struct option *opt,
- {
- 	struct batch_options *bo = opt->value;
- 
--	if (unset) {
--		memset(bo, 0, sizeof(*bo));
--		return 0;
-+	if (bo->enabled) {
-+		return 1;
- 	}
- 
- 	bo->enabled = 1;
-@@ -369,6 +377,9 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
- 		OPT_SET_INT('p', NULL, &opt, N_("pretty-print object's content"), 'p'),
- 		OPT_SET_INT(0, "textconv", &opt,
- 			    N_("for blob objects, run textconv on object's content"), 'c'),
-+		OPT_SET_INT(0, "follow-symlinks", &batch.follow_symlinks,
-+			N_("Follow in-repo symlinks; report out-of-repo symlinks (requires --batch or --batch-check)"),
-+			    1),
- 		{ OPTION_CALLBACK, 0, "batch", &batch, "format",
- 			N_("show info and content of objects fed from the standard input"),
- 			PARSE_OPT_OPTARG, batch_option_callback },
-@@ -402,6 +413,10 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
- 		usage_with_options(cat_file_usage, options);
- 	}
- 
-+	if (batch.follow_symlinks && !batch.enabled) {
-+		usage_with_options(cat_file_usage, options);
-+	}
-+
- 	if (batch.enabled)
- 		return batch_objects(&batch);
- 
-diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-index ab36b1e..a9ef3a6 100755
---- a/t/t1006-cat-file.sh
-+++ b/t/t1006-cat-file.sh
-@@ -189,6 +189,13 @@ do
-     '
- done
- 
-+for opt in t s e p
-+do
-+    test_expect_success "Passing -$opt with --follow-symlinks fails" '
-+	    test_must_fail git cat-file --follow-symlinks -$opt $hello_sha1
-+	'
-+done
-+
- test_expect_success "--batch-check for a non-existent named object" '
-     test "foobar42 missing
- foobar84 missing" = \
-@@ -296,4 +303,181 @@ test_expect_success '%(deltabase) reports packed delta bases' '
- 	}
- '
- 
-+# Tests for git cat-file --follow-symlinks
-+test_expect_success 'prep for symlink tests' '
-+	echo_without_newline "$hello_content" > morx &&
-+	ln -s morx same-dir-link &&
-+	ln -s ../fleem out-of-repo-link &&
-+	ln -s .. out-of-repo-link-dir &&
-+	ln -s same-dir-link link-to-link &&
-+	ln -s nope broken-same-dir-link &&
-+	mkdir dir &&
-+	ln -s ../morx dir/parent-dir-link &&
-+	ln -s .. dir/link-dir &&
-+	ln -s ../../escape dir/out-of-repo-link &&
-+	ln -s ../.. dir/out-of-repo-link-dir &&
-+	ln -s nope dir/broken-link-in-dir &&
-+	mkdir dir/subdir &&
-+	ln -s ../../morx dir/subdir/grandparent-dir-link &&
-+	ln -s ../../../great-escape dir/subdir/out-of-repo-link &&
-+	ln -s ../../.. dir/subdir/out-of-repo-link-dir &&
-+	ln -s ../../../ dir/subdir/out-of-repo-link-dir-trailing &&
-+	ln -s ../parent-dir-link dir/subdir/parent-dir-link-to-link &&
-+	echo_without_newline "$hello_content" >dir/subdir/ind2 &&
-+	echo_without_newline "$hello_content" >dir/ind1 &&
-+	ln -s dir dirlink &&
-+	ln -s dir/subdir subdirlink &&
-+	ln -s subdir/ind2 dir/link-to-child &&
-+	ln -s dir/link-to-child link-to-down-link &&
-+	ln -s dir/.. up-down &&
-+	ln -s dir/../ up-down-trailing &&
-+	ln -s dir/../morx up-down-file &&
-+	ln -s dir/../../morx up-up-down-file &&
-+	ln -s subdirlink/../../morx up-two-down-file &&
-+	ln -s loop1 loop2 &&
-+	ln -s loop2 loop1 &&
-+	git add . &&
-+	git commit -am "test"
-+'
-+
-+echo $hello_sha1 blob $hello_size > found
-+
-+test_expect_success 'git cat-file --batch-check --follow-symlinks works for non-links' '
-+	echo HEAD:morx | git cat-file --batch-check --follow-symlinks > actual &&
-+	test_cmp found actual &&
-+	echo HEAD:nope missing > expect &&
-+	echo HEAD:nope | git cat-file --batch-check --follow-symlinks > actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'git cat-file --batch-check --follow-symlinks works for in-repo, same-dir links' '
-+	echo HEAD:same-dir-link | git cat-file --batch-check --follow-symlinks > actual &&
-+	test_cmp found actual
-+'
-+
-+test_expect_success 'git cat-file --batch-check --follow-symlinks works for broken in-repo, same-dir links' '
-+	echo HEAD:broken-same-dir-link missing > expect &&
-+	echo HEAD:broken-same-dir-link | git cat-file --batch-check --follow-symlinks > actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'git cat-file --batch-check --follow-symlinks works for same-dir links-to-links' '
-+	echo HEAD:link-to-link | git cat-file --batch-check --follow-symlinks > actual &&
-+	test_cmp found actual
-+'
-+
-+test_expect_success 'git cat-file --batch-check --follow-symlinks works for parent-dir links' '
-+	echo HEAD:dir/parent-dir-link | git cat-file --batch-check --follow-symlinks > actual &&
-+	test_cmp found actual &&
-+	echo HEAD:dir/parent-dir-link/nope missing > expect &&
-+	echo HEAD:dir/parent-dir-link/nope | git cat-file --batch-check --follow-symlinks > actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'git cat-file --batch-check --follow-symlinks works for .. links' '
-+	echo HEAD:dir/link-dir/nope missing > expect &&
-+	echo HEAD:dir/link-dir/nope | git cat-file --batch-check --follow-symlinks > actual &&
-+	test_cmp expect actual &&
-+	echo HEAD:dir/link-dir/morx | git cat-file --batch-check --follow-symlinks > actual &&
-+	test_cmp found actual &&
-+	echo HEAD:dir/broken-link-in-dir missing > expect &&
-+	echo HEAD:dir/broken-link-in-dir | git cat-file --batch-check --follow-symlinks > actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'git cat-file --batch-check --follow-symlinks works for ../.. links' '
-+	echo HEAD:dir/subdir/grandparent-dir-link/nope missing > expect &&
-+	echo HEAD:dir/subdir/grandparent-dir-link/nope | git cat-file --batch-check --follow-symlinks > actual &&
-+	test_cmp expect actual &&
-+	echo HEAD:dir/subdir/grandparent-dir-link | git cat-file --batch-check --follow-symlinks > actual &&
-+	test_cmp found actual &&
-+	echo HEAD:dir/subdir/parent-dir-link-to-link | git cat-file --batch-check --follow-symlinks > actual &&
-+	test_cmp found actual
-+'
-+
-+test_expect_success 'git cat-file --batch-check --follow-symlinks works for dir/ links' '
-+	echo HEAD:dirlink/morx missing > expect &&
-+	echo HEAD:dirlink/morx | git cat-file --batch-check --follow-symlinks > actual &&
-+	test_cmp expect actual &&
-+	echo $hello_sha1 blob $hello_size > expect &&
-+	echo HEAD:dirlink/ind1 | git cat-file --batch-check --follow-symlinks > actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'git cat-file --batch-check --follow-symlinks works for dir/subdir links' '
-+	echo HEAD:subdirlink/morx missing > expect &&
-+	echo HEAD:subdirlink/morx | git cat-file --batch-check --follow-symlinks > actual &&
-+	test_cmp expect actual &&
-+	echo HEAD:subdirlink/ind2 | git cat-file --batch-check --follow-symlinks > actual &&
-+	test_cmp found actual
-+'
-+
-+test_expect_success 'git cat-file --batch-check --follow-symlinks works for dir -> subdir links' '
-+	echo HEAD:dir/link-to-child/morx missing > expect &&
-+	echo HEAD:dir/link-to-child/morx | git cat-file --batch-check --follow-symlinks > actual &&
-+	test_cmp expect actual &&
-+	echo HEAD:dir/link-to-child | git cat-file --batch-check --follow-symlinks > actual &&
-+	test_cmp found actual &&
-+	echo HEAD:link-to-down-link | git cat-file --batch-check --follow-symlinks > actual &&
-+	test_cmp found actual
-+'
-+
-+test_expect_success 'git cat-file --batch-check --follow-symlinks works for out-of-repo symlinks' '
-+	echo symlink 8 > expect &&
-+	echo ../fleem >> expect &&
-+	echo HEAD:out-of-repo-link | git cat-file --batch-check --follow-symlinks > actual &&
-+	test_cmp expect actual &&
-+	echo symlink 2 > expect &&
-+	echo .. >> expect &&
-+	echo HEAD:out-of-repo-link-dir | git cat-file --batch-check --follow-symlinks > actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'git cat-file --batch-check --follow-symlinks works for out-of-repo symlinks in dirs' '
-+	echo symlink 9 > expect &&
-+	echo ../escape >> expect &&
-+	echo HEAD:dir/out-of-repo-link | git cat-file --batch-check --follow-symlinks > actual &&
-+	test_cmp expect actual &&
-+	echo symlink 2 > expect &&
-+	echo .. >> expect &&
-+	echo HEAD:dir/out-of-repo-link-dir | git cat-file --batch-check --follow-symlinks > actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'git cat-file --batch-check --follow-symlinks works for out-of-repo symlinks in subdirs' '
-+	echo symlink 15 > expect &&
-+	echo ../great-escape >> expect &&
-+	echo HEAD:dir/subdir/out-of-repo-link | git cat-file --batch-check --follow-symlinks > actual &&
-+	test_cmp expect actual &&
-+	echo symlink 2 > expect &&
-+	echo .. >> expect &&
-+	echo HEAD:dir/subdir/out-of-repo-link-dir | git cat-file --batch-check --follow-symlinks > actual &&
-+	test_cmp expect actual &&
-+	echo symlink 3 > expect &&
-+	echo ../ >> expect &&
-+	echo HEAD:dir/subdir/out-of-repo-link-dir-trailing | git cat-file --batch-check --follow-symlinks > actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'git cat-file --batch-check --follow-symlinks works for symlinks with internal ..' '
-+	echo HEAD: | git cat-file --batch-check > expect &&
-+	echo HEAD:up-down | git cat-file --batch-check --follow-symlinks > actual &&
-+	test_cmp expect actual &&
-+	echo HEAD:up-down-trailing | git cat-file --batch-check --follow-symlinks > actual &&
-+	test_cmp expect actual &&
-+	echo HEAD:up-down-file | git cat-file --batch-check --follow-symlinks > actual &&
-+	test_cmp found actual &&
-+	echo symlink 7 > expect &&
-+	echo ../morx >> expect &&
-+	echo HEAD:up-up-down-file | git cat-file --batch-check --follow-symlinks > actual &&
-+	test_cmp expect actual &&
-+	echo HEAD:up-two-down-file | git cat-file --batch-check --follow-symlinks > actual &&
-+	test_cmp found actual
-+'
-+
-+test_expect_success 'git cat-file --batch-check --follow-symlink breaks loops' '
-+	echo HEAD:loop1 missing > expect &&
-+	echo HEAD:loop1 | git cat-file --batch-check --follow-symlinks > actual &&
-+	test_cmp expect actual
-+'
- test_done
--- 
-2.0.4.315.gad8727a-twtrsrc
+I think it's a good idea.
+
+> [...]
+>> This produces the following output of $ git help:
+>>
+>> [...]
+>> The most commonly used git commands are:
+>>
+>>     * starting a working area:
+>>        clone      Clone a repository into a new directory
+>>        init       Create an empty Git repository or reinitialize [..=
+=2E]
+>>
+>>     * working on the current change:
+>>        add        Add file contents to the index
+>>        reset      Reset current HEAD to the specified state
+> I could not live without status at this stage, and status always tell=
+s
+> me what I should do next. I'm tempted to see it up here instead...
+
+The layout was not designed to be workflow oriented (even if it appears
+so), but rather theme oriented. But I think that a redesign that
+introduces the typical Git workflow in a gentle, not intimidating manne=
+r
+could help beginners realize that Git is extremely simple in its core
+principles.
+
+>
+>>     * working with others:
+>>        fetch      Download objects and refs from another repository
+>>        pull       Fetch from and integrate with another repository [=
+=2E..]
+>>        push       Update remote refs along with associated objects
+>>
+>>     * examining the history and state:
+>>        log        Show commit logs
+>>        status     Show the working tree status
+> For this grouping, instead of also having "state", I'd like to see lo=
+g
+> and diff. Perhaps the header is simply "examining the history". This
+> narrowing would make more sense to then move status up to "working on
+> the current change".
+>
+>>     * growing, marking and tweaking your history:
+>>        branch     List, create, or delete branches
+>>        checkout   Checkout a branch or paths to the working tree
+>>        commit     Record changes to the repository
+>>        diff       Show changes between commits, commit and working [=
+=2E..]
+>>        merge      Join two or more development histories together
+> By the definition of "tweaking" I would include rebase. Hiding rebase
+> from the "common" list will increase its mystique and make people
+> even more hesitant to use it. Best to shine some light on it and help
+> to make it less scary. I would remove diff from this group as it is
+> a non-destructive command.
+
+In a workflow-oriented 'git help', I believe this would make sense.
+The patch originally started by examining what is really a 'common'
+command, and I estimated that 'rebase' was not that common. However,
+since 'rebase' is such a powerful tool and a killer feature of git
+(among others), we could mention it in a way that is less intimidating
+(see above)
+
+>
+> What a wonderful thing to have started, S=C3=A9bastien ! Thank you. :=
+)
+>
+Thank you again :)
