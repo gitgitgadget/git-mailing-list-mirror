@@ -1,90 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: t0025 weird behaviour on NonStop ksh/bash
-Date: Fri, 08 May 2015 19:50:50 -0700
-Message-ID: <xmqqbnhuihv9.fsf@gitster.dls.corp.google.com>
-References: <003101d089e5$27347610$759d6230$@nexbridge.com>
+From: Paul Tan <pyokagan@gmail.com>
+Subject: Re: [PATCH v2 10/12] t5520: failing test for pull --all with no
+ configured upstream
+Date: Sat, 9 May 2015 11:10:46 +0800
+Message-ID: <CACRoPnT-9Z-GY9Orid+-nUgTGENakOA8DDD8uUBJGMBw_gbqWQ@mail.gmail.com>
+References: <1430988248-18285-1-git-send-email-pyokagan@gmail.com>
+	<1430988248-18285-11-git-send-email-pyokagan@gmail.com>
+	<xmqq3838qoeb.fsf@gitster.dls.corp.google.com>
+	<CACRoPnRXJOxUkT5sKQf2bLnWVQ-+xFPu8D2PbX2b_9XVEGwQnA@mail.gmail.com>
+	<xmqq3838p6jw.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: <git@vger.kernel.org>
-To: "Randall S. Becker" <rsbecker@nexbridge.com>
-X-From: git-owner@vger.kernel.org Sat May 09 04:51:01 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat May 09 05:11:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yquqx-000628-L4
-	for gcvg-git-2@plane.gmane.org; Sat, 09 May 2015 04:51:00 +0200
+	id 1YqvAb-00050r-KK
+	for gcvg-git-2@plane.gmane.org; Sat, 09 May 2015 05:11:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753374AbbEICuy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 May 2015 22:50:54 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:53269 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751568AbbEICuy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 May 2015 22:50:54 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5ECFA50E7A;
-	Fri,  8 May 2015 22:50:53 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=6meVxHkcmqMxMmtl6j2eS/WG/4E=; b=uGrr2i
-	1HQLbeOTsnwW7tWQGu/apRFd7wH490Y2HHnzF8o26h+AKQ4DFm1uEfItGEfmDZbD
-	jnvSis/8od/xr/tSD+B+v3+BaK1UerxIdxnZAo2Ak/Hlm2TUWmCbb0wt/rs1p2mZ
-	rsV1kcuNsrmKl2raLLtAtm3lzhVz89kpuZ2ZE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xr6boa7ncx1ES46wlmBgqTW+NfLHTskv
-	wC1IBemzZzeSdN2IeCs9Hje/dn/TA2DnwnVpzL9K85gcAilCrdGTaCeozhZVvKYQ
-	Pf+SUu0StOPkGTsKTfPOZJVZ/LBhsq7lZruyo1uin2qCYIt3hU2rz5GPQvts4kku
-	9lzKEfxE/uM=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 577B150E79;
-	Fri,  8 May 2015 22:50:53 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CE20550E78;
-	Fri,  8 May 2015 22:50:52 -0400 (EDT)
-In-Reply-To: <003101d089e5$27347610$759d6230$@nexbridge.com> (Randall
-	S. Becker's message of "Fri, 8 May 2015 19:17:28 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 350A24C4-F5F6-11E4-9E8B-83E09F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1752784AbbEIDKs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 May 2015 23:10:48 -0400
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:35692 "EHLO
+	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751568AbbEIDKr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 May 2015 23:10:47 -0400
+Received: by lbbuc2 with SMTP id uc2so64382023lbb.2
+        for <git@vger.kernel.org>; Fri, 08 May 2015 20:10:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=qOroavAMP6XShCdOgbMVk6LMFmWltafIfnHkEaI/MME=;
+        b=0ErdHNqqxE81bgAwcIatKd0tupbgIc7HivSis7AoKVghBQMehIaXUtMcsS2mdf8aQn
+         Vp9JKdg1sW6K06ZOfFYbH27Wi+B8HnnBuvsgidi75rynoNQYea+SMhlUVqt8/wY0KxLS
+         TIYEGWaLdm6GIEjrgV5j6eCiXdCo8LeH8Hd5KaU/6u2PlSZxJnYtVmKB1difR6yUkHPK
+         XWQ8Vcxs1QcU7fYamoIvKQd5BRVQ75WX3JEcfjKD/1QO+QVm+edUUQ8MEr5ghEFV9z/o
+         TG/Ue5FZLUlGMPzewtMo82UZfhhNMb8P3dNUr5r85NHxtoaoGYp9pQePYi0HnQ9c+yhJ
+         Yp5g==
+X-Received: by 10.112.205.69 with SMTP id le5mr674942lbc.65.1431141046078;
+ Fri, 08 May 2015 20:10:46 -0700 (PDT)
+Received: by 10.112.74.133 with HTTP; Fri, 8 May 2015 20:10:46 -0700 (PDT)
+In-Reply-To: <xmqq3838p6jw.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268693>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268694>
 
-"Randall S. Becker" <rsbecker@nexbridge.com> writes:
+Hi Junio,
 
-> Ok, I'm sure that this is not a git problem, but there is an assumption
-> about echo behaviour in t0025 that may not be correct. When executed from a
-> shell function on the HP NonStop platform under ksh and bash, the LFonly
-> file annoyingly contains cr-lf not just lf. This causes sub-test 4 to fail.
-> Weirdly, this does not happen from an interactive shell. My proposed
-> solution, in t0025-crlf-auto.sh, to this is to make it explicit that bad
-> behaviour on the part of echo should be dealt with severely, as in:
+On Fri, May 8, 2015 at 2:48 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Paul Tan <pyokagan@gmail.com> writes:
 >
->         for w in Hello world how are you; do echo $w; done | tr -d '\r'
->>LFonly
+>> .... This can be
+>> done with the current git-pull.sh, but would be easier with the
+>> superior C parse-options API.
 >
-> instead of 
->
->         for w in Hello world how are you; do echo $w; done >LFonly
->
-> which is a no-op on platforms that behave themselves in this situation. Is
-> this the proper approach?
+> Just this part, but I thought parse-options API is available to
+> scripts via "rev-parse --parseopt".
 
-Why on earth does "echo $w" that prints just ASCII alphabet and
-nothing else (other than the end-of-line, of course) gives CRLF
-in the first place?
+Yes, it kind of is, but my impression is that it only validates
+command-line arguments -- we still have to loop over each of them
+which means more code has to be written as compared to the C version
+(especially if we want to validate all the git-fetch switches as
+well).
 
-Is stripping with "tr -d" a sane approach?  I am not sure if it is
-tackling the right problem.
-
-Because we use 'echo', expecting it to behave sensibly in many other
-places, wouldn't it be the case that all your 'tr -d' here does is
-to add an unnecessary pipe on sane platforms for this single test
-script, while leaving all the other uses of 'echo' in other shell
-scripts, including scripted Porcelains like 'git pull', broken on
-your platform?
+Thanks,
+Paul
