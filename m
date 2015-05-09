@@ -1,125 +1,83 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: t0005-signals.sh fails with ksh
-Date: Sat, 09 May 2015 10:20:18 +0200
-Message-ID: <m2h9rmupq5.fsf@linux-m68k.org>
-References: <31108626.20150508231514@gmail.com>
-	<xmqq1tiqkdue.fsf@gitster.dls.corp.google.com>
-	<20150508205548.GB13457@peff.net> <20150508211453.GA11594@peff.net>
-	<xmqqk2wiiwa3.fsf@gitster.dls.corp.google.com>
+From: Phillip Sz <phillip.szelat@gmail.com>
+Subject: [PATCH] l10n: de.po: change error message from "sagen" to "Meinten Sie"
+Date: Sat,  9 May 2015 13:28:55 +0200
+Message-ID: <1431170935-6027-1-git-send-email-phillip.szelat@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>, evgeny <illumsoft.org@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat May 09 10:20:41 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: tr@thomasrast.ch, jk@jk.gs, stimming@tuhh.de,
+	matthias.ruester@gmail.com, magnus.goerlitz@googlemail.com,
+	ralf.thielow@gmail.com, Phillip Sz <phillip.szelat@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 09 13:29:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yqzzy-0007cn-IS
-	for gcvg-git-2@plane.gmane.org; Sat, 09 May 2015 10:20:38 +0200
+	id 1Yr2wh-00008f-0F
+	for gcvg-git-2@plane.gmane.org; Sat, 09 May 2015 13:29:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752882AbbEIIUd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 May 2015 04:20:33 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:50737 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752529AbbEIIU2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 May 2015 04:20:28 -0400
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3lkM0S716cz3hhYS;
-	Sat,  9 May 2015 10:20:24 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 3lkM0S64tXzvh2V;
-	Sat,  9 May 2015 10:20:24 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
-	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
-	with ESMTP id PUNi3MgWnehN; Sat,  9 May 2015 10:20:22 +0200 (CEST)
-X-Auth-Info: aelqPowWBzL5IQ7Ye/g5CaZNMBtV77fwdsjCkj49VRJLFEpInoEp8LRpdv+c67O2
-Received: from linux.local (ppp-93-104-92-148.dynamic.mnet-online.de [93.104.92.148])
-	by mail.mnet-online.de (Postfix) with ESMTPA;
-	Sat,  9 May 2015 10:20:22 +0200 (CEST)
-Received: by linux.local (Postfix, from userid 501)
-	id 420AF1E57DC; Sat,  9 May 2015 10:20:19 +0200 (CEST)
-X-Yow: What PROGRAM are they watching?
-In-Reply-To: <xmqqk2wiiwa3.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Fri, 08 May 2015 14:39:32 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
+	id S1750849AbbEIL3D convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 9 May 2015 07:29:03 -0400
+Received: from mail-wi0-f173.google.com ([209.85.212.173]:34484 "EHLO
+	mail-wi0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750745AbbEIL3B (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 May 2015 07:29:01 -0400
+Received: by wicmx19 with SMTP id mx19so53028218wic.1
+        for <git@vger.kernel.org>; Sat, 09 May 2015 04:28:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:mime-version:content-type
+         :content-transfer-encoding;
+        bh=yvyw3QIV41dxbu4nT4C5cUNiWtmdvAI8JfOnB0mKvl8=;
+        b=H3SEVj1fzTbjPvBXsarf4Q8D2MR+F4fzU/4Qm5qW6SWTSRnEWtVzuyjQXnXzuqFGfs
+         DPVr9YOH1Y4qxpX19zdAcgKgzEc78vSJxFbWQsqjRukifDKcmRfs2inDNYkjh+fpCW4i
+         NPPo+e7Z9BiW7LhBCXFdHG9WqrFszaamoyKvQInw6gkeuBAKaJyEPGWStFKO6sMLpxjg
+         fu53qDzYPNQdqntVIn87XnrvJZR5rBNiMXF8O+EAjgINY3LI00Gc3YvVNJmcmYZtAmku
+         OkXMhVfroaH2Q9VPcNchFESQilFf9Dk+sfB+BlBacHTl7V8YrQo6KqZpE/qKOrpaZevC
+         EdaQ==
+X-Received: by 10.194.77.180 with SMTP id t20mr4459143wjw.115.1431170939874;
+        Sat, 09 May 2015 04:28:59 -0700 (PDT)
+Received: from phillip.fritz.box (i577AA345.versanet.de. [87.122.163.69])
+        by mx.google.com with ESMTPSA id i13sm3382880wic.13.2015.05.09.04.28.57
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sat, 09 May 2015 04:28:59 -0700 (PDT)
+X-Mailer: git-send-email 2.4.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268699>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268700>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi,
 
-> That is fun.  And doing
->
->     $ mkdir -p git/objects
->
-> just before you create and chdir into subdir does tell me that the
-> last "cd ../.git/objects" is turned into "cd ../git/objects".
+I think we should not use "sagen" if someone has written something wron=
+g.
+Although it's "say" in English I think we should not use it in German a=
+nd instead use our normal error message.
 
-This has been fixed in ksh93v.  Looking at the diff between openSUSE
-13.1 and 13.2 version of ksh, this hunk from
-src/cmd/ksh93/bltins/cd_pwd.c is responsible:
+Phillip
 
-@@ -109,34 +155,22 @@
- 		if(!oldpwd)
- 			oldpwd = path_pwd(shp,1);
- 	}
--	if(*dir=='.')
-+	if(dirfd==shp->pwdfd && *dir!='/')
- 	{
--		/* test for pathname . ./ .. or ../ */
--		int	n=0;
--		char	*sp;
--		for(dp=dir; *dp=='.'; dp++)
--		{
--			if(*++dp=='.' && (*++dp=='/' || *dp==0))
--				n++;
--			else if(*dp && *dp!='/')
--				break;
--			if(*dp==0)
--				break;
--		}
--		if(n)	
--		{
--			cdpath = 0;
--			sp = oldpwd + strlen(oldpwd);
--			while(n--)
--			{
--				while(--sp > oldpwd && *sp!='/');
--				if(sp==oldpwd)
--					break;
--				
--			}
--			sfwrite(shp->strbuf,oldpwd,sp+1-oldpwd);
--			sfputr(shp->strbuf,dp,0);
--			dir = sfstruse(shp->strbuf);
-+		/* check for leading .. */
-+
-+		char *cp;
-+
-+		j = sfprintf(shp->strbuf,"%s",dir);
-+		cp = sfstruse(shp->strbuf);
-+		pathcanon(cp, j + 1, 0);
-+		if(cp[0]=='.' && cp[1]=='.' && (cp[2]=='/' || cp[2]==0))
-+		{
-+			if(!shp->strbuf2)
-+				shp->strbuf2 = sfstropen();
-+			j = sfprintf(shp->strbuf2,"%s/%s",oldpwd,cp);
-+			dir = sfstruse(shp->strbuf2);
-+			pathcanon(dir, j + 1, 0);
- 		}
- 	}
- 	rval = -1;
+Signed-off-by: Phillip Sz <phillip.szelat@gmail.com>
+---
+ po/de.po | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-
-Andreas.
-
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+diff --git a/po/de.po b/po/de.po
+index 2feaec1..a435da0 100644
+--- a/po/de.po
++++ b/po/de.po
+@@ -2183,7 +2183,7 @@ msgstr "Nichts spezifiziert, nichts hinzugef=C3=BC=
+gt.\n"
+ #: builtin/add.c:358
+ #, c-format
+ msgid "Maybe you wanted to say 'git add .'?\n"
+-msgstr "Wollten Sie vielleicht 'git add .' sagen?\n"
++msgstr "Meinten Sie vielleicht 'git add .'?\n"
+=20
+ #: builtin/add.c:363 builtin/check-ignore.c:172 builtin/clean.c:920
+ #: builtin/commit.c:335 builtin/mv.c:130 builtin/reset.c:235 builtin/r=
+m.c:299
+--=20
+2.4.0
