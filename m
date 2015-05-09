@@ -1,308 +1,135 @@
 From: dturner@twopensource.com
-Subject: [PATCH v3 1/3] tree-walk: learn get_tree_entry_follow_symlinks
-Date: Sat,  9 May 2015 16:36:07 -0400
-Message-ID: <1431203769-11855-1-git-send-email-dturner@twopensource.com>
+Subject: [PATCH v3 2/3] sha1_name: get_sha1_with_context learns to follow symlinks
+Date: Sat,  9 May 2015 16:36:08 -0400
+Message-ID: <1431203769-11855-2-git-send-email-dturner@twopensource.com>
+References: <1431203769-11855-1-git-send-email-dturner@twopensource.com>
 Cc: David Turner <dturner@twitter.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 09 22:36:43 2015
+X-From: git-owner@vger.kernel.org Sat May 09 22:36:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YrBUG-0000Z1-TU
-	for gcvg-git-2@plane.gmane.org; Sat, 09 May 2015 22:36:41 +0200
+	id 1YrBUN-0000aI-Bf
+	for gcvg-git-2@plane.gmane.org; Sat, 09 May 2015 22:36:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751581AbbEIUge (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 May 2015 16:36:34 -0400
-Received: from mail-qg0-f51.google.com ([209.85.192.51]:36692 "EHLO
-	mail-qg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750977AbbEIUgd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 May 2015 16:36:33 -0400
-Received: by qgeb100 with SMTP id b100so51583607qge.3
-        for <git@vger.kernel.org>; Sat, 09 May 2015 13:36:30 -0700 (PDT)
+	id S1751820AbbEIUgo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 May 2015 16:36:44 -0400
+Received: from mail-qg0-f46.google.com ([209.85.192.46]:34910 "EHLO
+	mail-qg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751770AbbEIUgn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 May 2015 16:36:43 -0400
+Received: by qgej70 with SMTP id j70so51622602qge.2
+        for <git@vger.kernel.org>; Sat, 09 May 2015 13:36:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=6lPOSe1tRJziYZeorMtySA8X2e4RFfjazLFJVoxqe6I=;
-        b=M+ryQagJXtXuXziUChDZIuWLZlGhqimYRgMQqRgetZVBYbY/eDxRae6/3NLLdQ1IsD
-         D+X8xl4Hnsg0kJ5SymDiC/aPNJZ4iCSwW8w5yRJShGEXZzqjC0Qi7kz/p/B0DY8rYxU7
-         v+7hTsOKrp2YlnVshm7ZsEoqO3hjg5R0Hh5G7kdzCbOdzEicKWp06ComCTxxTc17XcoK
-         4wNAQcgOtz2+tDYsjxWV/xMhnLv4JLQAOVQkPoEJr10AEzW+PphxNWAsHYKeFHEn9WFd
-         a9RQUnZjrgIhOYN6Knii/fsPiqXu+5zaZ1KZbdideqJplDEUDT8TiCW/2nFXJUaoK7Bn
-         GDYA==
-X-Gm-Message-State: ALoCoQnGPbLl4XgfJ4OTMGjUvc6RQg9ryGaHpJHHo/2DtxhQUS3QBskA5JqBW9cP61I5vz1ETuR4
-X-Received: by 10.229.249.6 with SMTP id mi6mr5284406qcb.24.1431203790825;
-        Sat, 09 May 2015 13:36:30 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=can29zaycVgmV9CWK3dUne+/UWCyk2AoMWQFea08gO8=;
+        b=Y3HnPsswvBuG5UF51muIEWFxLj7Zr+jgDuylHUbfmMwSOQvOGwcM+8xoMvsQYouzb6
+         NzDiD8JFGRxfYhzQK4hr+Ob12UF6pM4wP9/1PA41kkgOF8V2oO4bGj7X4sswJup8rk1i
+         nLENi5+NvjsP5sdXqUaWbLwiEQUhIT17bSba+IORmeE1DJY83zn/83NcjMGLfbKLKdQM
+         qyT5hFGtVwm2vb9AZ4pfhEsbhfwenJdICxl4sPoBOqvEb3lclHAaUpUc6e8f5HjpI/e7
+         bON61sgCsL+Y5p19AtGm7cdeTvK9/4ioIvBWqtDGV1udfGjCQUoAegIWXXcQNeUm4YR3
+         EX0Q==
+X-Gm-Message-State: ALoCoQl95wpKbKtGyF80A2XkzVBvTLxpBHkmJZt1iznSrd8w3EUXdDMlXFtQlec5KHKBSOS0RPko
+X-Received: by 10.229.16.69 with SMTP id n5mr5233185qca.25.1431203792029;
+        Sat, 09 May 2015 13:36:32 -0700 (PDT)
 Received: from ubuntu.cable.rcn.com (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com. [207.38.164.98])
-        by mx.google.com with ESMTPSA id n83sm6475929qkh.31.2015.05.09.13.36.29
+        by mx.google.com with ESMTPSA id n83sm6475929qkh.31.2015.05.09.13.36.30
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 09 May 2015 13:36:29 -0700 (PDT)
+        Sat, 09 May 2015 13:36:31 -0700 (PDT)
 X-Mailer: git-send-email 2.0.4.315.gad8727a-twtrsrc
+In-Reply-To: <1431203769-11855-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268713>
 
 From: David Turner <dturner@twitter.com>
 
-Add a new function, get_tree_entry_follow_symlinks, to tree-walk.[ch].
-The function is not yet used.  It will be used to implement git
-cat-file --batch --follow-symlinks.
-
-The function locates an object by path, following symlinks in the
-repository.  If the symlinks lead outside the repository, the function
-reports this to the caller.
+Wire up get_sha1_with_context to call get_tree_entry_follow_symlinks
+when GET_SHA1_FOLLOW_SYMLINKS is passed in flags. G_S_FOLLOW_SYMLINKS
+is incompatible with G_S_ONLY_TO_DIE because the diagnosis
+that ONLY_TO_DIE triggers does not at present consider symlinks, and
+it would be a significant amount of additional code to allow it to
+do so.
 
 Signed-off-by: David Turner <dturner@twitter.com>
 ---
- cache.h     |   5 ++
- tree-walk.c | 195 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- tree-walk.h |   2 +
- 3 files changed, 202 insertions(+)
+ cache.h     | 15 ++++++++-------
+ sha1_name.c | 23 ++++++++++++++++-------
+ 2 files changed, 24 insertions(+), 14 deletions(-)
 
 diff --git a/cache.h b/cache.h
-index 3d3244b..679faa9 100644
+index 679faa9..65505d1 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -922,6 +922,11 @@ struct object_context {
- 	unsigned char tree[20];
- 	char path[PATH_MAX];
- 	unsigned mode;
-+	/*
-+	 * symlink_path is only used by get_tree_entry_follow_symlinks,
-+	 * and only for symlinks that point outside the repository.
-+	 */
-+	struct strbuf symlink_path;
+@@ -929,13 +929,14 @@ struct object_context {
+ 	struct strbuf symlink_path;
  };
  
- #define GET_SHA1_QUIETLY        01
-diff --git a/tree-walk.c b/tree-walk.c
-index 5dd9a71..f93492d 100644
---- a/tree-walk.c
-+++ b/tree-walk.c
-@@ -415,6 +415,12 @@ int traverse_trees(int n, struct tree_desc *t, struct traverse_info *info)
- 	return error;
- }
+-#define GET_SHA1_QUIETLY        01
+-#define GET_SHA1_COMMIT         02
+-#define GET_SHA1_COMMITTISH     04
+-#define GET_SHA1_TREE          010
+-#define GET_SHA1_TREEISH       020
+-#define GET_SHA1_BLOB	       040
+-#define GET_SHA1_ONLY_TO_DIE 04000
++#define GET_SHA1_QUIETLY           01
++#define GET_SHA1_COMMIT            02
++#define GET_SHA1_COMMITTISH        04
++#define GET_SHA1_TREE             010
++#define GET_SHA1_TREEISH          020
++#define GET_SHA1_BLOB             040
++#define GET_SHA1_FOLLOW_SYMLINKS 0100
++#define GET_SHA1_ONLY_TO_DIE    04000
  
-+struct dir_state {
-+	void *tree;
-+	unsigned long size;
-+	unsigned char sha1[20];
-+};
-+
- static int find_tree_entry(struct tree_desc *t, const char *name, unsigned char *result, unsigned *mode)
+ extern int get_sha1(const char *str, unsigned char *sha1);
+ extern int get_sha1_commit(const char *str, unsigned char *sha1);
+diff --git a/sha1_name.c b/sha1_name.c
+index 6d10f05..325f666 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -1434,15 +1434,22 @@ static int get_sha1_with_context_1(const char *name,
+ 			new_filename = resolve_relative_path(filename);
+ 			if (new_filename)
+ 				filename = new_filename;
+-			ret = get_tree_entry(tree_sha1, filename, sha1, &oc->mode);
+-			if (ret && only_to_die) {
+-				diagnose_invalid_sha1_path(prefix, filename,
+-							   tree_sha1,
+-							   name, len);
++			if (flags & GET_SHA1_FOLLOW_SYMLINKS) {
++				ret = get_tree_entry_follow_symlinks(tree_sha1,
++					filename, sha1, &oc->symlink_path,
++					&oc->mode);
++			} else {
++				ret = get_tree_entry(tree_sha1, filename,
++						     sha1, &oc->mode);
++				if (ret && only_to_die) {
++					diagnose_invalid_sha1_path(prefix,
++								   filename,
++								   tree_sha1,
++								   name, len);
++				}
+ 			}
+-			hashcpy(oc->tree, tree_sha1);
+ 			strlcpy(oc->path, filename, sizeof(oc->path));
+-
++			hashcpy(oc->tree, tree_sha1);
+ 			free(new_filename);
+ 			return ret;
+ 		} else {
+@@ -1469,5 +1476,7 @@ void maybe_die_on_misspelt_object_name(const char *name, const char *prefix)
+ 
+ int get_sha1_with_context(const char *str, unsigned flags, unsigned char *sha1, struct object_context *orc)
  {
- 	int namelen = strlen(name);
-@@ -478,6 +484,195 @@ int get_tree_entry(const unsigned char *tree_sha1, const char *name, unsigned ch
- 	return retval;
++	if (flags & GET_SHA1_FOLLOW_SYMLINKS && flags & GET_SHA1_ONLY_TO_DIE)
++		die("BUG: incompatible flags for get_sha1_with_context");
+ 	return get_sha1_with_context_1(str, flags, NULL, sha1, orc);
  }
- 
-+/* This is Linux's built-in max for the number of symlinks to follow.
-+ * That limit, of course, does not affect git, but it's a reasonable
-+ * choice.
-+ */
-+#define GET_TREE_ENTRY_FOLLOW_SYMLINKS_MAX_LINKS 40
-+
-+/**
-+ * Find a tree entry by following symlinks in tree_sha (which is
-+ * assumed to be the root of the repository).  In the event that a
-+ * symlink points outside the repository (e.g. a link to /foo or a
-+ * root-level link to ../foo), the portion of the link which is
-+ * outside the repository will be returned in result_path, and *mode
-+ * will be set to 0.  It is assumed that result_path is uninitialized.
-+ * If there are no symlinks, or the end result of the symlink chain
-+ * points to an object inside the repository, result will be filled in
-+ * with the sha1 of the found object, and *mode will hold the mode of
-+ * the object.  If there is a symlink loop, -1 will be returned.
-+ */
-+int get_tree_entry_follow_symlinks(unsigned char *tree_sha1, const char *name, unsigned char *result, struct strbuf *result_path, unsigned *mode)
-+{
-+	int retval = -1;
-+	void *tree;
-+	struct dir_state *parents = NULL;
-+	size_t parents_alloc = 0;
-+	ssize_t parents_nr = 0;
-+	unsigned long size;
-+	unsigned char root[20];
-+	unsigned char current_tree_sha1[20];
-+	struct strbuf namebuf = STRBUF_INIT;
-+	enum object_type type;
-+	int already_have_tree = 0;
-+	struct tree_desc t = {0};
-+	int follows_remaining = GET_TREE_ENTRY_FOLLOW_SYMLINKS_MAX_LINKS;
-+	int i;
-+
-+	result_path->buf = 0;
-+	result_path->alloc = 0;
-+	result_path->len = 0;
-+	strbuf_addstr(&namebuf, name);
-+	hashcpy(current_tree_sha1, tree_sha1);
-+
-+	while (1) {
-+		char *first_slash;
-+		char *remainder = NULL;
-+		int find_result;
-+
-+		if (!t.buffer) {
-+			tree = read_object_with_reference(current_tree_sha1,
-+							  tree_type, &size,
-+							  root);
-+			if (!tree)
-+				goto done;
-+
-+			ALLOC_GROW(parents, parents_nr + 1, parents_alloc);
-+			parents[parents_nr].tree = tree;
-+			parents[parents_nr].size = size;
-+			hashcpy(parents[parents_nr].sha1, root);
-+
-+			parents_nr++;
-+
-+			if (namebuf.buf[0] == '\0') {
-+				hashcpy(result, root);
-+				retval = 0;
-+				goto done;
-+			}
-+
-+			if (!size)
-+				goto done;
-+
-+			/* descend */
-+			init_tree_desc(&t, tree, size);
-+		}
-+
-+		/* Handle symlinks to e.g. a//b by removing leading slashes */
-+		while (namebuf.buf[0] == '/') {
-+			strbuf_remove(&namebuf, 0, 1);
-+		}
-+
-+		/* Split namebuf into a first component and a
-+		 * remainder */
-+		if ((first_slash = strchr(namebuf.buf, '/'))) {
-+			*first_slash = 0;
-+			remainder = first_slash + 1;
-+		}
-+
-+		if (!strcmp(namebuf.buf, "..")) {
-+			struct dir_state *parent;
-+			/* We could end up with .. in the namebuf if
-+			 * it appears in a symlink. */
-+
-+			if (parents_nr == 1) {
-+				if (remainder)
-+					*first_slash = '/';
-+				strbuf_add(result_path, namebuf.buf,
-+					   namebuf.len);
-+				*mode = 0;
-+				retval = 0;
-+				goto done;
-+			}
-+			parent = &parents[parents_nr - 1];
-+			free(parent->tree);
-+			parents_nr--;
-+			parent = &parents[parents_nr - 1];
-+			init_tree_desc(&t, parent->tree, parent->size);
-+			strbuf_remove(&namebuf, 0, remainder ? 3 : 2);
-+			continue;
-+		}
-+
-+		/* We could end up here via a symlink to dir/.. */
-+		if (namebuf.buf[0] == '\0') {
-+			hashcpy(result, parents[parents_nr - 1].sha1);
-+			retval = 0;
-+			goto done;
-+		}
-+
-+		/* Look up the first (or only) path component
-+		 * in the tree. */
-+		find_result = find_tree_entry(&t, namebuf.buf,
-+					      current_tree_sha1, mode);
-+		if (find_result) {
-+			retval = find_result;
-+			goto done;
-+		}
-+
-+		if (S_ISDIR(*mode)) {
-+			if (!remainder) {
-+				hashcpy(result, current_tree_sha1);
-+				retval = 0;
-+				goto done;
-+			}
-+			/* Descend the tree */
-+			t.buffer = NULL;
-+			strbuf_remove(&namebuf, 0,
-+				      1 + first_slash - namebuf.buf);
-+		} else if (S_ISREG(*mode)) {
-+			if (!remainder) {
-+				hashcpy(result, current_tree_sha1);
-+				retval = 0;
-+			}
-+			goto done;
-+		} else if (S_ISLNK(*mode)) {
-+			/* Follow a symlink */
-+			size_t link_len, len;
-+			char *contents, *contents_start;
-+			struct dir_state *parent;
-+
-+			if (follows_remaining-- == 0)
-+				/* Too many symlinks followed */
-+				goto done;
-+
-+			contents = read_sha1_file(current_tree_sha1, &type,
-+						  &link_len);
-+
-+			if (!contents)
-+				goto done;
-+
-+			if (contents[0] == '/') {
-+				strbuf_addstr(result_path, contents);
-+				*mode = 0;
-+				retval = 0;
-+				goto done;
-+			}
-+
-+			if (remainder)
-+				len = first_slash - namebuf.buf;
-+			else
-+				len = namebuf.len;
-+
-+			contents_start = contents;
-+
-+			parent = &parents[parents_nr - 1];
-+			init_tree_desc(&t, parent->tree, parent->size);
-+			strbuf_splice(&namebuf, 0, len,
-+				      contents_start, link_len);
-+			if (remainder)
-+				namebuf.buf[link_len] = '/';
-+			free(contents);
-+		}
-+	}
-+done:
-+	for (i = 0; i < parents_nr; ++i) {
-+		free(parents[i].tree);
-+	}
-+	free(parents);
-+
-+	strbuf_release(&namebuf);
-+	return retval;
-+}
-+
- static int match_entry(const struct pathspec_item *item,
- 		       const struct name_entry *entry, int pathlen,
- 		       const char *match, int matchlen,
-diff --git a/tree-walk.h b/tree-walk.h
-index ae7fb3a..d1670c6 100644
---- a/tree-walk.h
-+++ b/tree-walk.h
-@@ -40,6 +40,8 @@ struct traverse_info;
- typedef int (*traverse_callback_t)(int n, unsigned long mask, unsigned long dirmask, struct name_entry *entry, struct traverse_info *);
- int traverse_trees(int n, struct tree_desc *t, struct traverse_info *info);
- 
-+int get_tree_entry_follow_symlinks(unsigned char *tree_sha1, const char *name, unsigned char *result, struct strbuf *result_path, unsigned *mode);
-+
- struct traverse_info {
- 	struct traverse_info *prev;
- 	struct name_entry name;
 -- 
 2.0.4.315.gad8727a-twtrsrc
