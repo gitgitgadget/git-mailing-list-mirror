@@ -1,87 +1,140 @@
-From: =?UTF-8?q?S=C3=A9bastien=20Guimmara?= 
-	<sebastien.guimmara@gmail.com>
-Subject: [PATCH v5 6/6] cmd-list.perl: ignore all lines until [commands]
-Date: Sat,  9 May 2015 19:17:36 +0200
-Message-ID: <1431191856-10949-7-git-send-email-sebastien.guimmara@gmail.com>
-References: <1431191856-10949-1-git-send-email-sebastien.guimmara@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/3] sha1_name: get_sha1_with_context learns to follow symlinks
+Date: Sat, 09 May 2015 10:39:24 -0700
+Message-ID: <xmqqlhgxhcqb.fsf@gitster.dls.corp.google.com>
+References: <1431124726-22562-1-git-send-email-dturner@twopensource.com>
+	<1431124726-22562-2-git-send-email-dturner@twopensource.com>
+	<xmqq7fsiifcz.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?S=C3=A9bastien=20Guimmara?= 
-	<sebastien.guimmara@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 09 19:19:00 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, David Turner <dturner@twitter.com>
+To: dturner@twopensource.com
+X-From: git-owner@vger.kernel.org Sat May 09 19:39:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yr8Ox-0000ij-Ow
-	for gcvg-git-2@plane.gmane.org; Sat, 09 May 2015 19:19:00 +0200
+	id 1Yr8iq-0007pg-9f
+	for gcvg-git-2@plane.gmane.org; Sat, 09 May 2015 19:39:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751424AbbEIRSz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 9 May 2015 13:18:55 -0400
-Received: from mail-wi0-f173.google.com ([209.85.212.173]:37470 "EHLO
-	mail-wi0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751196AbbEIRSz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 May 2015 13:18:55 -0400
-Received: by widdi4 with SMTP id di4so57203618wid.0
-        for <git@vger.kernel.org>; Sat, 09 May 2015 10:18:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=Qo/gYDDCxix3+avFrG6G/xhwXkxFJTZPIVjzwN/v1y4=;
-        b=wHxSOwZAG4euZHEzVe3F0Fz9g6F7haeGqG2triUtln4ppbiqi2Dt+nz39nX6JoEexf
-         TWkzIAZtjw/VY2aAhjgL18wsdrOccrN+S6zzDqBZk3HrA4B+hqZ2RVd6S/2FeAP+VDUz
-         re3N4O8G3kCuP6eyMM94QIykntqjkbfwK5QI+TCbxtk1PBtiu2YuOMvGTj/bY3MLF/9W
-         skA7HXgYnDaxMumFSU+CAPAvlzwF+5HPaWp+40s72oYCGXG+1MwQXXFnl788cUdoQarX
-         LWr3a+hqhPmGFTkdxlOlTYuCL6aGKGdf/KtLEfB83Dj/t+WX16LXWMQr1J8DpQotSPki
-         aPAw==
-X-Received: by 10.180.103.3 with SMTP id fs3mr7356707wib.14.1431191933850;
-        Sat, 09 May 2015 10:18:53 -0700 (PDT)
-Received: from localhost.localdomain (bd231-1-88-176-208-17.fbx.proxad.net. [88.176.208.17])
-        by mx.google.com with ESMTPSA id fo7sm4710675wic.1.2015.05.09.10.18.52
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 09 May 2015 10:18:53 -0700 (PDT)
-X-Mailer: git-send-email 2.4.0
-In-Reply-To: <1431191856-10949-1-git-send-email-sebastien.guimmara@gmail.com>
+	id S1751072AbbEIRj1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 May 2015 13:39:27 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:63067 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751045AbbEIRj0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 May 2015 13:39:26 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id CB9CD4F48A;
+	Sat,  9 May 2015 13:39:25 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=EYQHCvBuHvVFn5XDJxqrkS3IZJA=; b=RC3Tjv
+	9Y5h1RiZqK7YmBriGZp80+IbU6Xbw14yBrY0SL7eVLXwtL0fvIXaEj202yGq/aef
+	UpsF0owS091V68YOn39SEStH1Ka34OwF9z7m4uHyXGCyWiilazUWbIkEqg/9ZtPe
+	6z3ocC0PVEI64pjb2F+f+PrEnuALhto6vmtwU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ycKWy02SJTACEdTcS5xnyryxteq0p5jA
+	JhO+aOeR415tvgzb32awFOkpMGj9//0HdBYAU+7Uj9JCq35R3T4rQOZNXuU90ZkB
+	q4xvfi7W+veXUqCDgyMBpOENDIaYx8NwPd5KUrALQN2n1dZRhTUgAS/MHSaE8vwb
+	FdeQcqlc5qk=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C3BCB4F489;
+	Sat,  9 May 2015 13:39:25 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3E46B4F487;
+	Sat,  9 May 2015 13:39:25 -0400 (EDT)
+In-Reply-To: <xmqq7fsiifcz.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Fri, 08 May 2015 20:45:00 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 55B6DFBA-F672-11E4-BB98-83E09F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268707>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268708>
 
-command-list.txt contains a [common] block that should be ignored
-by the Documentation checker cmd-list.perl.
+Junio C Hamano <gitster@pobox.com> writes:
 
-=46ilter out this block before the actual processing of the command lis=
-t.
+> dturner@twopensource.com writes:
+>
+>> From: David Turner <dturner@twitter.com>
+>>
+>> Wire up get_sha1_with_context to call get_tree_entry_follow_symlinks
+>> when GET_SHA1_FOLLOW_SYMLINKS is passed in flags. G_S_FOLLOW_SYMLINKS
+>> is incompatible with G_S_ONLY_TO_DIE because the diagnosis that
+>> ONLY_TO_DIE triggers does not consider symlinks.
+>
+> Is "does not consider" something fundamental, or it just happens to
+> be that way right now?
 
-Signed-off-by: S=C3=A9bastien Guimmara <sebastien.guimmara@gmail.com>
----
- Documentation/cmd-list.perl | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+Regardless of the answer to this question, I find the last part of
+this hunk puzzling.
 
-diff --git a/Documentation/cmd-list.perl b/Documentation/cmd-list.perl
-index 04f9977..d581378 100755
---- a/Documentation/cmd-list.perl
-+++ b/Documentation/cmd-list.perl
-@@ -38,8 +38,14 @@ sub format_one {
- 	}
- }
-=20
-+my @filtered =3D ();
-+while (<>)
-+{
-+	push (@filtered, $_) unless 1../^\[commands\]/;
-+}
-+
- my %cmds =3D ();
--for (sort <>) {
-+for (sort @filtered) {
- 	next if /^#/;
-=20
- 	chomp;
---=20
-2.4.0
+
+> +			if (flags & GET_SHA1_FOLLOW_SYMLINKS) {
+> +				ret = get_tree_entry_follow_symlinks(tree_sha1,
+> +					filename, sha1, oc->path, &oc->mode);
+> +			} else {
+> +				ret = get_tree_entry(tree_sha1, filename,
+> +						     sha1, &oc->mode);
+> +				if (ret && only_to_die) {
+> +					diagnose_invalid_sha1_path(prefix,
+> +								   filename,
+> +								   tree_sha1,
+> +								   name, len);
+> +				}
+> +				hashcpy(oc->tree, tree_sha1);
+> +				strlcpy(oc->path, filename, sizeof(oc->path));
+>  			}
+> -			hashcpy(oc->tree, tree_sha1);
+> -			strlcpy(oc->path, filename, sizeof(oc->path));
+> -
+
+Both variants of get_tree_entry() receive tree_sha1 and &oc->mode as
+places to store the discovered results and that is why we do hashcpy
+and strlcpy in the original codepath.
+
+ - With your patch, the new codepath discards tree_sha1[] because it
+   lost the copy back to oc->tree[]; is this change intended?  As we
+   are not passing oc itself to the function, there is no way for it
+   to return the object name directly to oc->tree[], no?
+
+ - In the new codepath, oc->path[] is also not copied but I can
+   sort-of guess why (you want to return something other than
+   "filename" from get-tree-entry-follow-symlinks in it, or
+   something).  But then the caller is losing the result of parsing
+   the extended SHA-1.
+
+You explain why "if (ret && only_to_die)" part is skipped, but these
+two differences are equally, if not more, important differences
+between the two codepaths.  I do not think I saw it explained.
+
+In any case, I would think that get_sha1_with_context() should have
+an external interface that is as close as the original, with
+enhancement (i.e. not with modification of what existing fields
+mean) [*1*].
+
+That is, if oc->path[] is meant to store filename parsed from the
+end-user input, it should keep doing so with or without
+follow-symlinks.  And if follow-symlinks feature needs to return
+extra information to the caller, it should add a new field to return
+that information.
+
+And my gut feeling is that such a correction to the way how the
+updated get_sha1_with_context() behaves would mean you can (and need
+to) keep hashcpy() and strlcpy() common to both codepaths in this
+patch.
+
+Thanks.
+
+
+[Footnote]
+
+*1* The reason is simple.  On a user input without any symbolic
+link, a caller (not just the caller you are adding in patch 3/3)
+should be able to expect to get the identical outcome from
+get_sha1_with_context(), with or without GET_SHA1_FOLLOW_SYMLINKS.
