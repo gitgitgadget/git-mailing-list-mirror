@@ -1,86 +1,70 @@
-From: "Randall S. Becker" <rsbecker@nexbridge.com>
-Subject: RE: t0025 weird behaviour on NonStop ksh/bash
-Date: Fri, 8 May 2015 23:11:26 -0400
-Message-ID: <004e01d08a05$d6d77b60$84867220$@nexbridge.com>
-References: <003101d089e5$27347610$759d6230$@nexbridge.com> <xmqqbnhuihv9.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/3] sha1_name: get_sha1_with_context learns to follow symlinks
+Date: Fri, 08 May 2015 20:45:00 -0700
+Message-ID: <xmqq7fsiifcz.fsf@gitster.dls.corp.google.com>
+References: <1431124726-22562-1-git-send-email-dturner@twopensource.com>
+	<1431124726-22562-2-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: "'Junio C Hamano'" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat May 09 05:11:44 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, David Turner <dturner@twitter.com>
+To: dturner@twopensource.com
+X-From: git-owner@vger.kernel.org Sat May 09 05:45:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YqvB1-00058Q-11
-	for gcvg-git-2@plane.gmane.org; Sat, 09 May 2015 05:11:43 +0200
+	id 1Yqvhg-0000iO-Pu
+	for gcvg-git-2@plane.gmane.org; Sat, 09 May 2015 05:45:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753235AbbEIDLe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 May 2015 23:11:34 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:60706 "EHLO
-	elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751389AbbEIDLd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 May 2015 23:11:33 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from pangea (CPE0023eb577e25-CM602ad06c91a7.cpe.net.cable.rogers.com [99.237.128.150])
-	(authenticated bits=0)
-	by elephants.elehost.com (8.14.9/8.14.9) with ESMTP id t493BUwj022113
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-	Fri, 8 May 2015 23:11:31 -0400 (EDT)
-	(envelope-from rsbecker@nexbridge.com)
-In-Reply-To: <xmqqbnhuihv9.fsf@gitster.dls.corp.google.com>
-X-Mailer: Microsoft Outlook 15.0
-Thread-Index: AQHmhBdpElHw7saNclhLqsvNo7UNlAHGt8npnTjL70A=
-Content-Language: en-ca
+	id S1753253AbbEIDpF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 May 2015 23:45:05 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:53692 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751568AbbEIDpE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 May 2015 23:45:04 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1401F50854;
+	Fri,  8 May 2015 23:45:03 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=TdrlLLtkWv9N5kvEJ5oQnIwdCiw=; b=mkcXsQ
+	+mYml6dsHnWHA7nt6X4ogw083hZjm/yqLSbmI6bcERKnQMbUAVIAzNuH9BcAoc5b
+	3W1Qx+RV5v8Jo7xFTK7lvdQ4y1F4zltKuZd31F5Zk10yTiQdcIz2pHuU5zYdOIrj
+	momlBtakuvna813OSXZRmVl3hyjJTKn6YlZgY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=IxooUCiJ9Bu87g0sAXR32YYfSUoeGszN
+	Bz1kLFe/SkCbavlFDiRKRKSliobA0H+OyjpxvnhPSSvs1uiMg58PO2lGO/19A2p4
+	+ut0YB3WfbDoJnvaxuTFepbpdVQo8N9yPfvXbxRxMBeAOAsAOAaWpTS/9hsgrV55
+	Hqle66Lg4q4=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0CDFB50853;
+	Fri,  8 May 2015 23:45:03 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 56C9550852;
+	Fri,  8 May 2015 23:45:02 -0400 (EDT)
+In-Reply-To: <1431124726-22562-2-git-send-email-dturner@twopensource.com>
+	(dturner@twopensource.com's message of "Fri, 8 May 2015 18:38:45
+	-0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: C5F7D182-F5FD-11E4-AF0A-83E09F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268695>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268696>
 
-On May 8, 2015 10:51 PM Junio C Hamano wrote:
-> > Ok, I'm sure that this is not a git problem, but there is an
-> > assumption about echo behaviour in t0025 that may not be correct. When
-> > executed from a shell function on the HP NonStop platform under ksh
-> > and bash, the LFonly file annoyingly contains cr-lf not just lf. This
-causes sub-
-> test 4 to fail.
-> > Weirdly, this does not happen from an interactive shell. My proposed
-> > solution, in t0025-crlf-auto.sh, to this is to make it explicit that
-> > bad behaviour on the part of echo should be dealt with severely, as in:
-> >
-> >         for w in Hello world how are you; do echo $w; done | tr -d '\r'
-> >>LFonly
-> >
-> > instead of
-> >
-> >         for w in Hello world how are you; do echo $w; done >LFonly
-> >
-> > which is a no-op on platforms that behave themselves in this
-> > situation. Is this the proper approach?
-> Why on earth does "echo $w" that prints just ASCII alphabet and nothing
-else
-> (other than the end-of-line, of course) gives CRLF in the first place?
-> 
-> Is stripping with "tr -d" a sane approach?  I am not sure if it is
-tackling the right
-> problem.
-> 
-> Because we use 'echo', expecting it to behave sensibly in many other
-places,
-> wouldn't it be the case that all your 'tr -d' here does is to add an
-unnecessary
-> pipe on sane platforms for this single test script, while leaving all the
-other
-> uses of 'echo' in other shell scripts, including scripted Porcelains like
-'git pull',
-> broken on your platform?
+dturner@twopensource.com writes:
 
-Absolutely agree. This (being the test case) is not the problem and adding
-tr -d is not a viable solution even if it appears to fix the issue at this
-moment in time. Built-in and variable processing need to behave in a
-normalized manner. I'm working to get that resolved; however, actually doing
-a proper fix happens to be outside of my control :(.
+> From: David Turner <dturner@twitter.com>
+>
+> Wire up get_sha1_with_context to call get_tree_entry_follow_symlinks
+> when GET_SHA1_FOLLOW_SYMLINKS is passed in flags. G_S_FOLLOW_SYMLINKS
+> is incompatible with G_S_ONLY_TO_DIE because the diagnosis that
+> ONLY_TO_DIE triggers does not consider symlinks.
+
+Is "does not consider" something fundamental, or it just happens to
+be that way right now?
