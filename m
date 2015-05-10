@@ -1,125 +1,98 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 4/8] commit_ref_update(): new function, extracted from write_ref_sha1()
-Date: Sun, 10 May 2015 04:45:33 +0200
-Message-ID: <1431225937-10456-5-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH v2 7/8] ref_transaction_commit(): remove the local flags variable
+Date: Sun, 10 May 2015 04:45:36 +0200
+Message-ID: <1431225937-10456-8-git-send-email-mhagger@alum.mit.edu>
 References: <1431225937-10456-1-git-send-email-mhagger@alum.mit.edu>
 Cc: Jeff King <peff@peff.net>, Eric Sunshine <sunshine@sunshineco.com>,
 	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>,
 	Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Sun May 10 04:46:17 2015
+X-From: git-owner@vger.kernel.org Sun May 10 04:46:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YrHFw-0001a1-FQ
-	for gcvg-git-2@plane.gmane.org; Sun, 10 May 2015 04:46:16 +0200
+	id 1YrHGE-0001h0-J6
+	for gcvg-git-2@plane.gmane.org; Sun, 10 May 2015 04:46:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752132AbbEJCqE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 May 2015 22:46:04 -0400
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:47708 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752119AbbEJCp7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 9 May 2015 22:45:59 -0400
-X-AuditID: 1207440d-f79976d000005643-18-554ec663a6df
+	id S1752137AbbEJCqQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 May 2015 22:46:16 -0400
+Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:63666 "EHLO
+	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752043AbbEJCqN (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 9 May 2015 22:46:13 -0400
+X-AuditID: 1207440f-f792a6d000001284-e1-554ec66795f5
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id B2.10.22083.366CE455; Sat,  9 May 2015 22:45:55 -0400 (EDT)
+	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 7E.3D.04740.766CE455; Sat,  9 May 2015 22:45:59 -0400 (EDT)
 Received: from michael.fritz.box (p5DDB3166.dip0.t-ipconnect.de [93.219.49.102])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t4A2jkxc015925
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t4A2jkxf015925
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Sat, 9 May 2015 22:45:54 -0400
+	Sat, 9 May 2015 22:45:58 -0400
 X-Mailer: git-send-email 2.1.4
 In-Reply-To: <1431225937-10456-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrCIsWRmVeSWpSXmKPExsUixO6iqJt8zC/UYGOPjEXXlW4mi4beK8wW
-	t1fMZ7b40dLDbLF5czuLxZk3jYwObB5/339g8liwqdTjWe8eRo+Ll5Q9Fj/w8vi8SS6ALYrb
-	JimxpCw4Mz1P3y6BO+PNtGmsBb/4Kya97WFuYLzC08XIySEhYCKx5dspdghbTOLCvfVsXYxc
-	HEIClxklZnTMYIVwjjNJLL25iQ2kik1AV2JRTzNTFyMHh4iAl0TbzGKQGmaBXkaJR4tfMYLU
-	CAtESSycvYcZxGYRUJXYdv8fM0g9r4CLxMZ9uhDL5CTOH/8JVsIp4Cpx+8xcMFsIqKRxaRPL
-	BEbeBYwMqxjlEnNKc3VzEzNzilOTdYuTE/PyUot0jfRyM0v0UlNKNzFCQox3B+P/dTKHGAU4
-	GJV4eGds8QsVYk0sK67MPcQoycGkJMprsxAoxJeUn1KZkVicEV9UmpNafIhRgoNZSYT35Hqg
-	HG9KYmVValE+TEqag0VJnFdtibqfkEB6YklqdmpqQWoRTFaGg0NJgvfCEaBGwaLU9NSKtMyc
-	EoQ0EwcnyHAuKZHi1LyU1KLE0pKMeFBkxBcDYwMkxQO01+YoyN7igsRcoChE6ylGRSlx3ukg
-	cwVAEhmleXBjYYnjFaM40JfCvLdAqniASQeu+xXQYCagwX+LfUAGlyQipKQaGJM8aidYtk5y
-	MhPMUD027bpQR+vWys09k45dZu9yefPGNOHyh6qG15+k9iSv4A2Lbz6x6lcP59Mv7xetzXl1
-	yfR/8YrdtzbIaEmcSRHiKr4cdOpR0q6tXhmViyo2HZK4LqThNWt/5pGmVxFv/ogE 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrCIsWRmVeSWpSXmKPExsUixO6iqJt+zC/UYNoDHYuuK91MFg29V5gt
+	bq+Yz2zxo6WH2WLz5nYWizNvGhkd2Dz+vv/A5LFgU6nHs949jB4XLyl7LH7g5fF5k1wAWxS3
+	TVJiSVlwZnqevl0Cd8a2x0sZCybxVPzY3srewLies4uRk0NCwETi45zDrBC2mMSFe+vZuhi5
+	OIQELjNKdLS3MEM4x5kk7q06zQJSxSagK7Gop5mpi5GDQ0TAS6JtZjFIDbNAL6PEo8WvGEFq
+	hAUCJdZ/mgQ2lUVAVaJlz3ZWkHpeAReJG2s8IJbJSZw//pMZxOYUcJW4fWYumC0EVNK4tIll
+	AiPvAkaGVYxyiTmlubq5iZk5xanJusXJiXl5qUW6Jnq5mSV6qSmlmxghIca/g7FrvcwhRgEO
+	RiUe3hlb/EKFWBPLiitzDzFKcjApifLaLAQK8SXlp1RmJBZnxBeV5qQWH2KU4GBWEuE9uR4o
+	x5uSWFmVWpQPk5LmYFES51Vfou4nJJCeWJKanZpakFoEk5Xh4FCS4L1wBKhRsCg1PbUiLTOn
+	BCHNxMEJMpxLSqQ4NS8ltSixtCQjHhQZ8cXA2ABJ8QDtrTwKsre4IDEXKArReopRUUqclw8k
+	IQCSyCjNgxsLSxyvGMWBvhTmvQWynQeYdOC6XwENZgIa/LfYB2RwSSJCSqqBsfGqUNe87+JR
+	108835Mdwl9sqmWzQ/rTmbU2p1aHPs3cJPty6RSbb9WHPsw3dFfZkbmTj3d9qZBBx+VLFeGW
+	TvLLSyR6X57OOaK46W/lrAB3zdtL6i97X3wnlevHKFHhJVm4p/tfdKDsDq9z4nf4 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268720>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268721>
+
+Instead, work directly with update->flags. This has the advantage that
+the REF_DELETING bit, set in the first loop, can be read in the second
+loop instead of having to be recomputed. Plus, it was potentially
+confusing having both update->flags and flags, which sometimes had
+different values.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs.c | 45 +++++++++++++++++++++++++++++----------------
- 1 file changed, 29 insertions(+), 16 deletions(-)
+ refs.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index 9e40c35..7661db9 100644
+index 76609bf..58b1182 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -3085,24 +3085,13 @@ static int write_ref_to_lockfile(struct ref_lock *lock,
- }
+@@ -3802,16 +3802,15 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+ 	/* Acquire all locks while verifying old values */
+ 	for (i = 0; i < n; i++) {
+ 		struct ref_update *update = updates[i];
+-		int flags = update->flags;
  
- /*
-- * Write sha1 into the ref specified by the lock. Make sure that errno
-- * is sane on error.
-+ * Commit a change to a loose reference that has already been written
-+ * to the loose reference lockfile. Also update the reflogs if
-+ * necessary, using the specified lockmsg (which can be NULL).
-  */
--static int write_ref_sha1(struct ref_lock *lock,
--	const unsigned char *sha1, const char *logmsg)
-+static int commit_ref_update(struct ref_lock *lock,
-+			     const unsigned char *sha1, const char *logmsg)
- {
--	if (!lock) {
--		errno = EINVAL;
--		return -1;
--	}
--	if (!lock->force_write && !hashcmp(lock->old_sha1, sha1)) {
--		unlock_ref(lock);
--		return 0;
--	}
--
--	if (write_ref_to_lockfile(lock, sha1))
--		return -1;
--
- 	clear_loose_ref_cache(&ref_cache);
- 	if (log_ref_write(lock->ref_name, lock->old_sha1, sha1, logmsg) < 0 ||
- 	    (strcmp(lock->ref_name, lock->orig_ref_name) &&
-@@ -3141,6 +3130,30 @@ static int write_ref_sha1(struct ref_lock *lock,
- 	return 0;
- }
+ 		if (is_null_sha1(update->new_sha1))
+-			flags |= REF_DELETING;
++			update->flags |= REF_DELETING;
+ 		update->lock = lock_ref_sha1_basic(update->refname,
+ 						   (update->have_old ?
+ 						    update->old_sha1 :
+ 						    NULL),
+ 						   NULL,
+-						   flags,
++						   update->flags,
+ 						   &update->type);
+ 		if (!update->lock) {
+ 			ret = (errno == ENOTDIR)
+@@ -3827,7 +3826,7 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+ 	for (i = 0; i < n; i++) {
+ 		struct ref_update *update = updates[i];
  
-+/*
-+ * Write sha1 as the new value of the reference specified by the
-+ * (open) lock. On error, roll back the lockfile and set errno
-+ * appropriately.
-+ */
-+static int write_ref_sha1(struct ref_lock *lock,
-+			  const unsigned char *sha1, const char *logmsg)
-+{
-+	if (!lock) {
-+		errno = EINVAL;
-+		return -1;
-+	}
-+	if (!lock->force_write && !hashcmp(lock->old_sha1, sha1)) {
-+		unlock_ref(lock);
-+		return 0;
-+	}
-+
-+	if (write_ref_to_lockfile(lock, sha1) ||
-+	    commit_ref_update(lock, sha1, logmsg))
-+		return -1;
-+
-+	return 0;
-+}
-+
- int create_symref(const char *ref_target, const char *refs_heads_master,
- 		  const char *logmsg)
- {
+-		if (!is_null_sha1(update->new_sha1)) {
++		if (!(update->flags & REF_DELETING)) {
+ 			if (!update->lock->force_write &&
+ 			    !hashcmp(update->lock->old_sha1, update->new_sha1)) {
+ 				unlock_ref(update->lock);
 -- 
 2.1.4
