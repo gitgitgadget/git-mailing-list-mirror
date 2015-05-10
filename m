@@ -1,271 +1,104 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v3 3/3] cat-file: add --follow-symlinks to --batch
-Date: Sun, 10 May 2015 09:06:32 +0200
-Message-ID: <554F0378.2070803@kdbg.org>
-References: <1431203769-11855-1-git-send-email-dturner@twopensource.com> <1431203769-11855-3-git-send-email-dturner@twopensource.com>
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: Re: [PATCH] l10n: de.po: change error message from "sagen" to
+ "Meinten Sie"
+Date: Sun, 10 May 2015 10:02:38 +0200
+Message-ID: <20150510080238.GA4955@ralf-ubuntu>
+References: <1431170935-6027-1-git-send-email-phillip.szelat@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, David Turner <dturner@twitter.com>
-To: dturner@twopensource.com
-X-From: git-owner@vger.kernel.org Sun May 10 09:08:50 2015
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, tr@thomasrast.ch, jk@jk.gs, stimming@tuhh.de,
+	matthias.ruester@gmail.com, magnus.goerlitz@googlemail.com
+To: Phillip Sz <phillip.szelat@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 10 10:03:03 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YrLM0-0007Eu-6G
-	for gcvg-git-2@plane.gmane.org; Sun, 10 May 2015 09:08:48 +0200
+	id 1YrMCU-0003X9-G8
+	for gcvg-git-2@plane.gmane.org; Sun, 10 May 2015 10:03:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752245AbbEJHIm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 May 2015 03:08:42 -0400
-Received: from bsmtp4.bon.at ([195.3.86.186]:33863 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752545AbbEJHGh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 May 2015 03:06:37 -0400
-X-Greylist: delayed 135998 seconds by postgrey-1.27 at vger.kernel.org; Sun, 10 May 2015 03:06:37 EDT
-Received: from dx.site (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTPSA id 3lkxJp0NSqz5tlB;
-	Sun, 10 May 2015 09:06:33 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.site (Postfix) with ESMTP id 16CBD51E0;
-	Sun, 10 May 2015 09:06:33 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
-In-Reply-To: <1431203769-11855-3-git-send-email-dturner@twopensource.com>
+	id S1752317AbbEJICs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 May 2015 04:02:48 -0400
+Received: from mail-wi0-f178.google.com ([209.85.212.178]:36142 "EHLO
+	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752119AbbEJICq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 May 2015 04:02:46 -0400
+Received: by wizk4 with SMTP id k4so72468707wiz.1
+        for <git@vger.kernel.org>; Sun, 10 May 2015 01:02:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=kSsabpLCzt9wmgDkCqxID+3Jc0acfoJWTzjdW/zmYpg=;
+        b=Cj9T+o8f1/wQ7MC6q6IZRM5K7VVwjOlHcg2C2rx3bskDG/Vd/Znx93N+y7BElfipU5
+         WnBs5LXEvWweTiEJC7TAZTxoISB+2zqMp7Y+XTL0KKUU7wlOdIj20BAf6eBYxxaCd4xM
+         krq3uqTAQ3qe/29DRr4YhPzliCq+rotGNh0JJI88x5YEWf7N2VOgq6fiPNaTICoFCLZC
+         K1fWDE4hdX88laE9CTy7assW5cLiF5Mcda4/sLAF0AOT9/HAkulfS6FbYmQhjvB6UUj6
+         8vGRGyETmAKs732/RNUYhwENTE3OVbL5+826dwG0w74oN6aCaq/0TCsqilu+ofoMlavK
+         A1Dg==
+X-Received: by 10.194.22.40 with SMTP id a8mr10542660wjf.134.1431244959791;
+        Sun, 10 May 2015 01:02:39 -0700 (PDT)
+Received: from localhost (dslb-092-078-236-214.092.078.pools.vodafone-ip.de. [92.78.236.214])
+        by mx.google.com with ESMTPSA id df1sm7368327wib.12.2015.05.10.01.02.38
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Sun, 10 May 2015 01:02:38 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1431170935-6027-1-git-send-email-phillip.szelat@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268725>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268726>
 
-Am 09.05.2015 um 22:36 schrieb dturner@twopensource.com:
-> diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-> index ab36b1e..dd80c08 100755
-> --- a/t/t1006-cat-file.sh
-> +++ b/t/t1006-cat-file.sh
-> @@ -189,6 +189,13 @@ do
->       '
->   done
->
-> +for opt in t s e p
-> +do
-> +    test_expect_success "Passing -$opt with --follow-symlinks fails" '
-> +	    test_must_fail git cat-file --follow-symlinks -$opt $hello_sha1
-> +	'
-> +done
-> +
->   test_expect_success "--batch-check for a non-existent named object" '
->       test "foobar42 missing
->   foobar84 missing" = \
-> @@ -296,4 +303,187 @@ test_expect_success '%(deltabase) reports packed delta bases' '
->   	}
->   '
->
-> +# Tests for git cat-file --follow-symlinks
-> +test_expect_success 'prep for symlink tests' '
-> +	echo_without_newline "$hello_content" > morx &&
-> +	ln -s morx same-dir-link &&
-> +	ln -s ../fleem out-of-repo-link &&
-> +	ln -s .. out-of-repo-link-dir &&
-> +	ln -s same-dir-link link-to-link &&
-> +	ln -s nope broken-same-dir-link &&
-> +	mkdir dir &&
-> +	ln -s ../morx dir/parent-dir-link &&
-> +	ln -s .. dir/link-dir &&
-> +	ln -s ../../escape dir/out-of-repo-link &&
-> +	ln -s ../.. dir/out-of-repo-link-dir &&
-> +	ln -s nope dir/broken-link-in-dir &&
-> +	mkdir dir/subdir &&
-> +	ln -s ../../morx dir/subdir/grandparent-dir-link &&
-> +	ln -s ../../../great-escape dir/subdir/out-of-repo-link &&
-> +	ln -s ../../.. dir/subdir/out-of-repo-link-dir &&
-> +	ln -s ../../../ dir/subdir/out-of-repo-link-dir-trailing &&
-> +	ln -s ../parent-dir-link dir/subdir/parent-dir-link-to-link &&
-> +	echo_without_newline "$hello_content" >dir/subdir/ind2 &&
-> +	echo_without_newline "$hello_content" >dir/ind1 &&
-> +	ln -s dir dirlink &&
-> +	ln -s dir/subdir subdirlink &&
-> +	ln -s subdir/ind2 dir/link-to-child &&
-> +	ln -s dir/link-to-child link-to-down-link &&
-> +	ln -s dir/.. up-down &&
-> +	ln -s dir/../ up-down-trailing &&
-> +	ln -s dir/../morx up-down-file &&
-> +	ln -s dir/../../morx up-up-down-file &&
-> +	ln -s subdirlink/../../morx up-two-down-file &&
-> +	ln -s loop1 loop2 &&
-> +	ln -s loop2 loop1 &&
-> +	git add . &&
-> +	git commit -am "test"
-> +'
+Phillip Sz <phillip.szelat@gmail.com> wrote:
+> Hi,
+>=20
+> I think we should not use "sagen" if someone has written something wr=
+ong.
+> Although it's "say" in English I think we should not use it in German=
+ and instead use our normal error message.
+>=20
+> Phillip
+>=20
+> Signed-off-by: Phillip Sz <phillip.szelat@gmail.com>
 
-These tests will fail on a file system that does not support symbolic 
-links, such as on Windows. Would you please separate the test cases 
-(that come after the setup) into two groups:
+Thanks. I've changed the commit message a bit.
 
-1. Those that inspect the filesystem and expect a symbolic link. Protect 
-these tests with a SYMLINKS prerequisite.
+-- >8 --
 
-2. Those that look only at repository or index contents and do not 
-require a symbolic link on the file system. These do not need to be 
-protected.
+=46rom: Phillip Sz <phillip.szelat@gmail.com>
+Subject: [PATCH] l10n: de.po: change error message from "sagen" to "Mei=
+nten
+ Sie"
 
-Note that you do not require a symlink enabled file system to generate a 
-repository with symlinks, i.e., you don't have to protect the setup code 
-with SYMLINKS. For this, you can use 'test_ln_s_add' instead of the 
-above sequence of 'ln -s' followed by a single 'git add .'.
+We should not use "sagen" if someone has written something wrong.
+Although it's "say" in English, we should not use it in German
+and instead use our normal error message.
 
-> +
-> +echo $hello_sha1 blob $hello_size > found
+Signed-off-by: Phillip Sz <phillip.szelat@gmail.com>
+Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+---
+ po/de.po | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-This seems to be used only in the next test. Please move it inside 
-test_expect_success.
-
-> +
-> +test_expect_success 'git cat-file --batch-check --follow-symlinks works for non-links' '
-> +	echo HEAD:morx | git cat-file --batch-check --follow-symlinks > actual &&
-> +	test_cmp found actual &&
-> +	echo HEAD:nope missing > expect &&
-> +	echo HEAD:nope | git cat-file --batch-check --follow-symlinks > actual &&
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'git cat-file --batch-check --follow-symlinks works for in-repo, same-dir links' '
-> +	echo HEAD:same-dir-link | git cat-file --batch-check --follow-symlinks > actual &&
-> +	test_cmp found actual
-> +'
-> +
-> +test_expect_success 'git cat-file --batch-check --follow-symlinks works for broken in-repo, same-dir links' '
-> +	echo HEAD:broken-same-dir-link missing > expect &&
-> +	echo HEAD:broken-same-dir-link | git cat-file --batch-check --follow-symlinks > actual &&
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'git cat-file --batch-check --follow-symlinks works for same-dir links-to-links' '
-> +	echo HEAD:link-to-link | git cat-file --batch-check --follow-symlinks > actual &&
-> +	test_cmp found actual
-> +'
-> +
-> +test_expect_success 'git cat-file --batch-check --follow-symlinks works for parent-dir links' '
-> +	echo HEAD:dir/parent-dir-link | git cat-file --batch-check --follow-symlinks > actual &&
-> +	test_cmp found actual &&
-> +	echo HEAD:dir/parent-dir-link/nope missing > expect &&
-> +	echo HEAD:dir/parent-dir-link/nope | git cat-file --batch-check --follow-symlinks > actual &&
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'git cat-file --batch-check --follow-symlinks works for .. links' '
-> +	echo HEAD:dir/link-dir/nope missing > expect &&
-> +	echo HEAD:dir/link-dir/nope | git cat-file --batch-check --follow-symlinks > actual &&
-> +	test_cmp expect actual &&
-> +	echo HEAD:dir/link-dir/morx | git cat-file --batch-check --follow-symlinks > actual &&
-> +	test_cmp found actual &&
-> +	echo HEAD:dir/broken-link-in-dir missing > expect &&
-> +	echo HEAD:dir/broken-link-in-dir | git cat-file --batch-check --follow-symlinks > actual &&
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'git cat-file --batch-check --follow-symlinks works for ../.. links' '
-> +	echo HEAD:dir/subdir/grandparent-dir-link/nope missing > expect &&
-> +	echo HEAD:dir/subdir/grandparent-dir-link/nope | git cat-file --batch-check --follow-symlinks > actual &&
-> +	test_cmp expect actual &&
-> +	echo HEAD:dir/subdir/grandparent-dir-link | git cat-file --batch-check --follow-symlinks > actual &&
-> +	test_cmp found actual &&
-> +	echo HEAD:dir/subdir/parent-dir-link-to-link | git cat-file --batch-check --follow-symlinks > actual &&
-> +	test_cmp found actual
-> +'
-> +
-> +test_expect_success 'git cat-file --batch-check --follow-symlinks works for dir/ links' '
-> +	echo HEAD:dirlink/morx missing > expect &&
-> +	echo HEAD:dirlink/morx | git cat-file --batch-check --follow-symlinks > actual &&
-> +	test_cmp expect actual &&
-> +	echo $hello_sha1 blob $hello_size > expect &&
-> +	echo HEAD:dirlink/ind1 | git cat-file --batch-check --follow-symlinks > actual &&
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'git cat-file --batch-check --follow-symlinks works for dir/subdir links' '
-> +	echo HEAD:subdirlink/morx missing > expect &&
-> +	echo HEAD:subdirlink/morx | git cat-file --batch-check --follow-symlinks > actual &&
-> +	test_cmp expect actual &&
-> +	echo HEAD:subdirlink/ind2 | git cat-file --batch-check --follow-symlinks > actual &&
-> +	test_cmp found actual
-> +'
-> +
-> +test_expect_success 'git cat-file --batch-check --follow-symlinks works for dir -> subdir links' '
-> +	echo HEAD:dir/link-to-child/morx missing > expect &&
-> +	echo HEAD:dir/link-to-child/morx | git cat-file --batch-check --follow-symlinks > actual &&
-> +	test_cmp expect actual &&
-> +	echo HEAD:dir/link-to-child | git cat-file --batch-check --follow-symlinks > actual &&
-> +	test_cmp found actual &&
-> +	echo HEAD:link-to-down-link | git cat-file --batch-check --follow-symlinks > actual &&
-> +	test_cmp found actual
-> +'
-> +
-> +test_expect_success 'git cat-file --batch-check --follow-symlinks works for out-of-repo symlinks' '
-> +	echo symlink 8 > expect &&
-> +	echo ../fleem >> expect &&
-> +	echo HEAD:out-of-repo-link | git cat-file --batch-check --follow-symlinks > actual &&
-> +	test_cmp expect actual &&
-> +	echo symlink 2 > expect &&
-> +	echo .. >> expect &&
-> +	echo HEAD:out-of-repo-link-dir | git cat-file --batch-check --follow-symlinks > actual &&
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'git cat-file --batch-check --follow-symlinks works for out-of-repo symlinks in dirs' '
-> +	echo symlink 9 > expect &&
-> +	echo ../escape >> expect &&
-> +	echo HEAD:dir/out-of-repo-link | git cat-file --batch-check --follow-symlinks > actual &&
-> +	test_cmp expect actual &&
-> +	echo symlink 2 > expect &&
-> +	echo .. >> expect &&
-> +	echo HEAD:dir/out-of-repo-link-dir | git cat-file --batch-check --follow-symlinks > actual &&
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'git cat-file --batch-check --follow-symlinks works for out-of-repo symlinks in subdirs' '
-> +	echo symlink 15 > expect &&
-> +	echo ../great-escape >> expect &&
-> +	echo HEAD:dir/subdir/out-of-repo-link | git cat-file --batch-check --follow-symlinks > actual &&
-> +	test_cmp expect actual &&
-> +	echo symlink 2 > expect &&
-> +	echo .. >> expect &&
-> +	echo HEAD:dir/subdir/out-of-repo-link-dir | git cat-file --batch-check --follow-symlinks > actual &&
-> +	test_cmp expect actual &&
-> +	echo symlink 3 > expect &&
-> +	echo ../ >> expect &&
-> +	echo HEAD:dir/subdir/out-of-repo-link-dir-trailing | git cat-file --batch-check --follow-symlinks > actual &&
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'git cat-file --batch-check --follow-symlinks works for symlinks with internal ..' '
-> +	echo HEAD: | git cat-file --batch-check > expect &&
-> +	echo HEAD:up-down | git cat-file --batch-check --follow-symlinks > actual &&
-> +	test_cmp expect actual &&
-> +	echo HEAD:up-down-trailing | git cat-file --batch-check --follow-symlinks > actual &&
-> +	test_cmp expect actual &&
-> +	echo HEAD:up-down-file | git cat-file --batch-check --follow-symlinks > actual &&
-> +	test_cmp found actual &&
-> +	echo symlink 7 > expect &&
-> +	echo ../morx >> expect &&
-> +	echo HEAD:up-up-down-file | git cat-file --batch-check --follow-symlinks > actual &&
-> +	test_cmp expect actual &&
-> +	echo HEAD:up-two-down-file | git cat-file --batch-check --follow-symlinks > actual &&
-> +	test_cmp found actual
-> +'
-> +
-> +test_expect_success 'git cat-file --batch-check --follow-symlink breaks loops' '
-> +	echo HEAD:loop1 missing > expect &&
-> +	echo HEAD:loop1 | git cat-file --batch-check --follow-symlinks > actual &&
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'git cat-file --batch --follow-symlink returns correct sha and mode' '
-> +	echo HEAD:morx | git cat-file --batch > expect &&
-> +	echo HEAD:morx | git cat-file --batch --follow-symlinks > actual &&
-> +	test_cmp expect actual
-> +'
->   test_done
->
-
--- Hannes
+diff --git a/po/de.po b/po/de.po
+index 2feaec1..a435da0 100644
+--- a/po/de.po
++++ b/po/de.po
+@@ -2183,7 +2183,7 @@ msgstr "Nichts spezifiziert, nichts hinzugef=FCgt=
+=2E\n"
+ #: builtin/add.c:358
+ #, c-format
+ msgid "Maybe you wanted to say 'git add .'?\n"
+-msgstr "Wollten Sie vielleicht 'git add .' sagen?\n"
++msgstr "Meinten Sie vielleicht 'git add .'?\n"
+=20
+ #: builtin/add.c:363 builtin/check-ignore.c:172 builtin/clean.c:920
+ #: builtin/commit.c:335 builtin/mv.c:130 builtin/reset.c:235 builtin/r=
+m.c:299
+--=20
+2.4.0.228.gc627b12
