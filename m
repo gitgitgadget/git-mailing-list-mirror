@@ -1,93 +1,157 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] sequencer.c: abbreviate hashs placed in the middle of messages
-Date: Sun, 10 May 2015 21:36:23 +0200
-Message-ID: <vpqegmow7go.fsf@anie.imag.fr>
-References: <1431104035-2056-1-git-send-email-ralf.thielow@gmail.com>
-	<CAPig+cSeNn0r7N6vp+qs4NTNwfYx5p-zUX3tkifuXLu+nB2yNQ@mail.gmail.com>
-	<xmqqbnhvm1f5.fsf@gitster.dls.corp.google.com>
-	<CAN0XMOKPbKUMwU5-T78m_knt=9O2GkKaqmXKViSi5k-Z7Damrg@mail.gmail.com>
-	<xmqqtwvmlxlo.fsf@gitster.dls.corp.google.com>
-	<CAN0XMO+ZY-oXb1aWK3TzUxDRuBEEoasxjdagYQQoB+JVheju9Q@mail.gmail.com>
-	<xmqqa8xekeb2.fsf@gitster.dls.corp.google.com>
-	<vpqwq0g2462.fsf@anie.imag.fr>
-	<xmqqzj5cfdit.fsf@gitster.dls.corp.google.com>
+From: =?UTF-8?q?Erik=20Elfstr=C3=B6m?= <erik.elfstrom@gmail.com>
+Subject: [PATCH v6 1/7] setup: add gentle version of is_git_directory
+Date: Sun, 10 May 2015 22:00:35 +0200
+Message-ID: <1431288041-21077-2-git-send-email-erik.elfstrom@gmail.com>
+References: <1431288041-21077-1-git-send-email-erik.elfstrom@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Ralf Thielow <ralf.thielow@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun May 10 21:36:42 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Erik=20Elfstr=C3=B6m?= <erik.elfstrom@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 10 22:02:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YrX1l-0004p2-Um
-	for gcvg-git-2@plane.gmane.org; Sun, 10 May 2015 21:36:42 +0200
+	id 1YrXQn-0004lk-Hj
+	for gcvg-git-2@plane.gmane.org; Sun, 10 May 2015 22:02:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751657AbbEJTgh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 May 2015 15:36:37 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:49510 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751372AbbEJTgg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 May 2015 15:36:36 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t4AJaK7i013850
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 10 May 2015 21:36:20 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t4AJaNdm022917;
-	Sun, 10 May 2015 21:36:23 +0200
-In-Reply-To: <xmqqzj5cfdit.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Sun, 10 May 2015 12:17:30 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sun, 10 May 2015 21:36:21 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t4AJaK7i013850
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1431891381.12247@fukzNsWkdJ4zZhDjFhXLFg
+	id S1751710AbbEJUCb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 May 2015 16:02:31 -0400
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:35175 "EHLO
+	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751534AbbEJUCa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 May 2015 16:02:30 -0400
+Received: by lbbuc2 with SMTP id uc2so81511721lbb.2
+        for <git@vger.kernel.org>; Sun, 10 May 2015 13:02:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=ft698WcskEHdqzIl/nnUOWMINW42ksd2z1hnEgY89bI=;
+        b=xElSQZl5o9RKFr50iIoj0ugD+HYUhiVzhyoO2oz5drpsc5ZIwP7V39koCCN3czKB6x
+         Pa0XL/fWn5U1l+7/FY1S3YXmNiJFXAbJUZoBQ2kcpkC+yjB1tta3vPnk8759QXJ4k4ys
+         2oSprZJBcKCL76xIt/dxcQsnL41sQ8ql1FbtvpcwBjkWtUgQw+bOiXTXZKj7Eh1MNw88
+         vo4NDmyph4SLMmxjWjvyN3CVZEltGVHaHhknUltsUevAV4ip6nXrz4r0E5+FBONBggT2
+         Z2cB4XtDnJHDUf34eYy4SAk6sD5HMCCFm2+uCjg1OHFTinwuHlfL9ATF3WYPnsPq780B
+         RzMQ==
+X-Received: by 10.152.5.39 with SMTP id p7mr5617257lap.18.1431288148333;
+        Sun, 10 May 2015 13:02:28 -0700 (PDT)
+Received: from localhost.localdomain (h38n2-lk-d2.ias.bredband.telia.com. [78.72.191.38])
+        by mx.google.com with ESMTPSA id k15sm2586218laa.28.2015.05.10.13.02.26
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 10 May 2015 13:02:27 -0700 (PDT)
+X-Mailer: git-send-email 2.4.0.60.gf7143f7
+In-Reply-To: <1431288041-21077-1-git-send-email-erik.elfstrom@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268740>
 
-Junio C Hamano <gitster@pobox.com> writes:
+This is a prerequisite for implementing a gentle version of
+read_gitfile.
 
-> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
->
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->>> I am not sure how that changes anything.
->>>
->>>     $ git cherry-pick 38e70713119c25ab5699df6b2fb13e4133d399ab
->>>     error: that commit is a merge and you didn't give me -m <which-parent>
->>>
->>>     $ git cherry-pick 38e70713119c25ab5699df6b2fb13e4133d399ab
->>>     error: the commit 38e707... is a merge and you didn't give me -m <which-parent>
->>
->> But ...
->>
->>     ./myscript.sh
->>     error: that commit is a merge and you didn't give me -m <which-parent>
->
-> If myscript.sh did not take the user input, what would the first
-> thing you (who tried to run the script) would do?  At that point,
-> figuring out which wrong commit was fed to underlying cherry-pick
-> becomes a lot less important issue than figuring out _why_ the buggy
-> script fed a wrong commit to it, doesn't it?
+Signed-off-by: Erik Elfstr=C3=B6m <erik.elfstrom@gmail.com>
+---
+ cache.h |  4 ++++
+ setup.c | 44 +++++++++++++++++++++++++++++++++++++++++---
+ 2 files changed, 45 insertions(+), 3 deletions(-)
 
-True, but knowing which commit was fed to cherry-pick may explain why it
-did so. Sure, a developer could find out, but a user asking a question
-or reporting an issue is more effective when the error message contains
-as much information as possible.
-
-(Admittedly, in this senario, I should have written
-./someone-else-s-script.sh ;-) )
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+diff --git a/cache.h b/cache.h
+index b34447f..dd67695 100644
+--- a/cache.h
++++ b/cache.h
+@@ -431,7 +431,11 @@ extern int is_inside_git_dir(void);
+ extern char *git_work_tree_cfg;
+ extern int is_inside_work_tree(void);
+ extern const char *get_git_dir(void);
++
++#define IS_GIT_DIRECTORY_ERR_PATH_TOO_LONG 1
++extern int is_git_directory_gently(const char *path, int *return_err, =
+struct strbuf *err_msg);
+ extern int is_git_directory(const char *path);
++
+ extern char *get_object_directory(void);
+ extern char *get_index_file(void);
+ extern char *get_graft_file(void);
+diff --git a/setup.c b/setup.c
+index 979b13f..62ee88c 100644
+--- a/setup.c
++++ b/setup.c
+@@ -224,6 +224,18 @@ void verify_non_filename(const char *prefix, const=
+ char *arg)
+ 	    "'git <command> [<revision>...] -- [<file>...]'", arg);
+ }
+=20
++__attribute((format (printf,4,5)))
++static void set_error(int *return_err, struct strbuf *err_msg, int err=
+,
++		      const char *msg, ...)
++{
++	va_list params;
++	va_start(params, msg);
++	if (err_msg)
++		strbuf_vaddf(err_msg, msg, params);
++	va_end(params);
++	if (return_err)
++		*return_err =3D err;
++}
+=20
+ /*
+  * Test if it looks like we're at a git directory.
+@@ -235,14 +247,28 @@ void verify_non_filename(const char *prefix, cons=
+t char *arg)
+  *  - either a HEAD symlink or a HEAD file that is formatted as
+  *    a proper "ref:", or a regular file HEAD that has a properly
+  *    formatted sha1 object name.
++ *
++ * In the event of an error, return_err will be set to an error code
++ * and err_msg will be set to an error message describing the error
++ * and 0 will be returned. If no error reporting is required, pass
++ * NULL for return_err and/or err_msg.
+  */
+-int is_git_directory(const char *suspect)
++int is_git_directory_gently(const char *suspect, int *return_err,
++			    struct strbuf *err_msg)
+ {
+ 	char path[PATH_MAX];
+ 	size_t len =3D strlen(suspect);
+=20
+-	if (PATH_MAX <=3D len + strlen("/objects"))
+-		die("Too long path: %.*s", 60, suspect);
++	if (return_err)
++		*return_err =3D 0;
++
++	if (PATH_MAX <=3D len + strlen("/objects")) {
++		set_error(return_err, err_msg,
++			  IS_GIT_DIRECTORY_ERR_PATH_TOO_LONG,
++			  "Too long path: %.*s", 60, suspect);
++		return 0;
++	}
++
+ 	strcpy(path, suspect);
+ 	if (getenv(DB_ENVIRONMENT)) {
+ 		if (access(getenv(DB_ENVIRONMENT), X_OK))
+@@ -265,6 +291,18 @@ int is_git_directory(const char *suspect)
+ 	return 1;
+ }
+=20
++int is_git_directory(const char *suspect)
++{
++	int err;
++	int ret;
++	struct strbuf err_msg =3D STRBUF_INIT;
++	ret =3D is_git_directory_gently(suspect, &err, &err_msg);
++	if (err)
++		die("%s", err_msg.buf);
++	/* No need to free err_msg, will only be touched in case of error */
++	return ret;
++}
++
+ int is_inside_git_dir(void)
+ {
+ 	if (inside_git_dir < 0)
+--=20
+2.4.0.60.gf7143f7
