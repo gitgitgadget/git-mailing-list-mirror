@@ -1,85 +1,107 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Draft of Git Rev News edition 3
-Date: Sun, 10 May 2015 13:14:30 +0200
-Message-ID: <CAP8UFD39uP=x8yEGTNBzA_u4v_bbzjUN0s1hAOsDRUWOdzsZUQ@mail.gmail.com>
+From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+Subject: [PATCH 2/2] completion: simplify query for config variables
+Date: Sun, 10 May 2015 14:50:18 +0200
+Message-ID: <1431262218-7304-2-git-send-email-szeder@ira.uka.de>
+References: <1431262218-7304-1-git-send-email-szeder@ira.uka.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	Thomas Ferris Nicolaisen <tfnico@gmail.com>,
-	Nicola Paolucci <npaolucci@atlassian.com>,
-	Emma Jane Hogbin Westby <emma@emmajane.net>,
-	Phillip Susi <psusi@ubuntu.com>, Joey Hess <joey@kitenet.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Paul Mackerras <paulus@samba.org>,
-	Johan Herland <johan@herland.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	karthik nayak <karthik.188@gmail.com>,
-	Paul Tan <pyokagan@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Andreas Schwab <schwab@linux-m68k.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	=?UTF-8?Q?S=C3=A9bastien_Guimmara?= <sebastien.guimmara@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun May 10 13:14:38 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun May 10 14:54:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YrPBu-0005wT-73
-	for gcvg-git-2@plane.gmane.org; Sun, 10 May 2015 13:14:38 +0200
+	id 1YrQk2-0001Yh-4k
+	for gcvg-git-2@plane.gmane.org; Sun, 10 May 2015 14:53:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751345AbbEJLOd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 May 2015 07:14:33 -0400
-Received: from mail-wg0-f50.google.com ([74.125.82.50]:35158 "EHLO
-	mail-wg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750886AbbEJLOc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 May 2015 07:14:32 -0400
-Received: by wgbhc8 with SMTP id hc8so5442342wgb.2
-        for <git@vger.kernel.org>; Sun, 10 May 2015 04:14:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=mn092PenIE7E+WQfsnhWA/WJwgBtktqhTWRcEY+i9uQ=;
-        b=O8A0V2OpJ2Pb3HKEI3J1YSlteS82iTTmTpeBk9ZYIHORfAsixM9jkrOOd5JD/DaUmf
-         /ITPuyXnbGi22boF8JCwzMWTFBk8HG8ZbF3O56DJ128/zfyTfrfY+ljE4TJkObQHA+gY
-         58hsJX1jgM4jqcOHnVX86+zrRnb3hhCrW8rnmKwppeIZ/izD2saom1N5cU+gU6tCRWlP
-         a9dSkd5QCqtKCpXO5tkgutUni1/JbeY1jpsdiwRKnhdcU4Pk2g4NJ1jeAblvXTYdqCJ2
-         xHR/5on6cRMi1cTgITDeW6s82CtboY4zDQpd5M07bJotUwZxM6JVkggH4vS9OzqpAjSY
-         Nmbw==
-X-Received: by 10.194.95.132 with SMTP id dk4mr11667500wjb.88.1431256470982;
- Sun, 10 May 2015 04:14:30 -0700 (PDT)
-Received: by 10.194.40.8 with HTTP; Sun, 10 May 2015 04:14:30 -0700 (PDT)
+	id S1751367AbbEJMxx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 May 2015 08:53:53 -0400
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:44991 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751196AbbEJMxw (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 10 May 2015 08:53:52 -0400
+Received: from x590d7ec1.dyn.telefonica.de ([89.13.126.193] helo=localhost)
+	by iramx2.ira.uni-karlsruhe.de with esmtpsa port 587 
+	iface 141.3.10.81 id 1YrQjs-0001nx-C0; Sun, 10 May 2015 14:53:49 +0200
+X-Mailer: git-send-email 1.9.5.msysgit.0
+In-Reply-To: <1431262218-7304-1-git-send-email-szeder@ira.uka.de>
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1431262430.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268729>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268730>
 
-Hi,
+To get the name of all config variables in a given section we perform a
+'git config --get-regex' query for all config variables containing the
+name of that section, and then filter its output through a case stateme=
+nt
+to throw away those that though contain but don't start with the given
+section.
 
-A draft of Git Rev News edition 3 is available here:
+Modify the regex to match only at the beginning, so the case statement
+becomes unnecessary and we can get rid of it.  Add a test to check that=
+ a
+match in the middle doesn't fool us.
 
-https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-3.md
+Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
+---
+ contrib/completion/git-completion.bash | 10 +++-------
+ t/t9902-completion.sh                  | 12 ++++++++++++
+ 2 files changed, 15 insertions(+), 7 deletions(-)
 
-Everyone is welcome to contribute in any section either by editing the
-above page on GitHub and sending a pull request, or by commenting on
-this GitHub issue:
-
-https://github.com/git/git.github.io/issues/56
-
-You can also reply to this email.
-
-I tried to cc everyone who appears in this edition but maybe I missed
-some people, sorry about that.
-
-Thomas, Nicola and myself plan to publish this edition on Wednesday
-the 13th of May.
-
-Thanks,
-Christian.
+diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
+n/git-completion.bash
+index 6973620857..63f960b33d 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -745,13 +745,9 @@ __git_compute_porcelain_commands ()
+ __git_get_config_variables ()
+ {
+ 	local section=3D"$1" i IFS=3D$'\n'
+-	for i in $(git --git-dir=3D"$(__gitdir)" config --get-regexp "$sectio=
+n\..*" 2>/dev/null); do
+-		case "$i" in
+-		$section.*)
+-			i=3D"${i#$section.}"
+-			echo "${i/ */}"
+-			;;
+-		esac
++	for i in $(git --git-dir=3D"$(__gitdir)" config --get-regexp "^$secti=
+on\..*" 2>/dev/null); do
++		i=3D"${i#$section.}"
++		echo "${i/ */}"
+ 	done
+ }
+=20
+diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+index 07f2478c9b..2ba62fbc17 100755
+--- a/t/t9902-completion.sh
++++ b/t/t9902-completion.sh
+@@ -370,6 +370,18 @@ test_expect_success '__git_remotes - list remotes =
+from $GIT_DIR/remotes and from
+ 	test_cmp expect actual
+ '
+=20
++test_expect_success '__git_get_config_variables' '
++	cat >expect <<-EOF &&
++	name-1
++	name-2
++	EOF
++	test_config interesting.name-1 good &&
++	test_config interesting.name-2 good &&
++	test_config subsection.interesting.name-3 bad &&
++	__git_get_config_variables interesting >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success '__git_pretty_aliases' '
+ 	cat >expect <<-EOF &&
+ 	author
+--=20
+1.9.5.msysgit.0
