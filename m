@@ -1,102 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: resume downloads
-Date: Sun, 10 May 2015 15:19:34 -0700
-Message-ID: <CAPc5daVwxEniz-s-6dcowQkE-bK50wJ4MOCWGkAM=u02BGtN+w@mail.gmail.com>
-References: <CACnwZYeW3+LQZYV4D_+vWggeh_yoWa-C3KdssHO21sRbsEKrMg@mail.gmail.com>
+From: Trevor Saunders <tbsaunde@tbsaunde.org>
+Subject: Re: [PATCH] bisect: print abbrev sha1 for first bad commit
+Date: Sun, 10 May 2015 19:12:45 -0400
+Message-ID: <20150510231110.GA25157@tsaunders-iceball.corp.tor1.mozilla.com>
+References: <1431128763-28453-1-git-send-email-tbsaunde@tbsaunde.org>
+ <CAGZ79kYjES6DXmvQdmXLAXrKMGrnvQ-vqJuHQU2QxVC4+6M0aA@mail.gmail.com>
+ <20150509014152.GA31119@tsaunders-iceball.corp.tor1.mozilla.com>
+ <20150509040704.GA31428@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Thiago Farina <tfransosi@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 11 00:20:11 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: Stefan Beller <sbeller@google.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon May 11 01:13:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YrZZx-0007yL-Uv
-	for gcvg-git-2@plane.gmane.org; Mon, 11 May 2015 00:20:10 +0200
+	id 1YraPZ-000174-VD
+	for gcvg-git-2@plane.gmane.org; Mon, 11 May 2015 01:13:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751776AbbEJWT4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 May 2015 18:19:56 -0400
-Received: from mail-oi0-f51.google.com ([209.85.218.51]:36465 "EHLO
-	mail-oi0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751691AbbEJWTz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 May 2015 18:19:55 -0400
-Received: by oift201 with SMTP id t201so92096756oif.3
-        for <git@vger.kernel.org>; Sun, 10 May 2015 15:19:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=xLSGSwZPRGFs6dbtYyutXC9w+mDSl0mVEweZe+02GdY=;
-        b=B0tjyuyY2+k646zstqA5Q/rFlriKx95iah/AV8WHzI5KGGTb5fTusvpUqBdvR/akkx
-         FsiCwjniNUCiH8fUFpEg44ZkiO5Iw+kOIer38ximNpHDGsqzCh2mUfg1J8CrNmHs2mWl
-         MIO2U2WxHmWBEzro6wcQvzr5fcN9KK8lEwUFzQ8zHk4rCb0vn2C4cUfVzv52FF49sYoZ
-         DJ9Ry1TJzlhPn1LrFsOXh6hLhguO3haeOZgVdg2yzgJOoaRPCsV9KailjxRTbmm9cUlJ
-         +khvlaEBxhhTIW7hYmIBrHNaIppghdZy8ioD6h6Q/bq4XMIUN2UndNU96SfMHpJvrmUS
-         AORw==
-X-Received: by 10.60.137.201 with SMTP id qk9mr6036325oeb.15.1431296394967;
- Sun, 10 May 2015 15:19:54 -0700 (PDT)
-Received: by 10.202.197.18 with HTTP; Sun, 10 May 2015 15:19:34 -0700 (PDT)
-In-Reply-To: <CACnwZYeW3+LQZYV4D_+vWggeh_yoWa-C3KdssHO21sRbsEKrMg@mail.gmail.com>
-X-Google-Sender-Auth: mWFSTWwwk3Ec7ZibmQPkA6AdeHI
+	id S1751743AbbEJXNG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 May 2015 19:13:06 -0400
+Received: from tbsaunde.org ([66.228.47.254]:43000 "EHLO
+	paperclip.tbsaunde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751679AbbEJXNF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 May 2015 19:13:05 -0400
+Received: from tsaunders-iceball.corp.tor1.mozilla.com (unknown [66.207.208.102])
+	by paperclip.tbsaunde.org (Postfix) with ESMTPSA id C1184C072;
+	Sun, 10 May 2015 23:13:01 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <20150509040704.GA31428@peff.net>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268751>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268752>
 
-The current thinking is to model this after the "repo" tool.
-Prepare a reasonably up-to-date bundle file on the server side,
-add a protocol capability to advertise the URL to download that
-bundle from upload-pack, and have "git clone" to pay attention to it.
+On Sat, May 09, 2015 at 12:07:04AM -0400, Jeff King wrote:
+> On Fri, May 08, 2015 at 10:03:41PM -0400, Trevor Saunders wrote:
+> 
+> > On Fri, May 08, 2015 at 05:29:42PM -0700, Stefan Beller wrote:
+> > > On Fri, May 8, 2015 at 4:46 PM, Trevor Saunders <tbsaunde@tbsaunde.org> wrote:
+> > > > its rather silly especially considering the next line contains the
+> > > > full hash again.
+> > > 
+> > > Maybe we can omit it altogether then?
+> > 
+> > SO we'd print something like
+> > 
+> > the first bad commit is
+> > Commit abcdefabcdefabcdefabcdefabcdefabcdefabcd
+> > Author foo@ba.com
+> > 
+> > blah blah blah
+> > 
+> > ? That seems reasonable to me.  If we're going that far does it also
+> > make sense to drop printingthe lines about which trees have changed and
+> > just print the commit message / author / hash?
+> 
+> Yeah, I have always found bisect's output somewhat silly. It prints the
+> "--raw" diff output, which is not incredibly useful. And then to top it
+> off, it does not feed the "--recursive" switch to the diff, so you don't
+> even get to see the real list of changed files.
 
-Then, a "git clone" could become:
+ So, fun fact it doesn't actually always print the raw diffoutput if
+ there is no diff, for example a merge where both sides only touched
+ different files as in test 40 in t6030.
 
- - If the capability advertises such a prebuilt bundle, spawn "curl"
-   or "wget" internally to fetch it. This can be resumed when the
-   connection goes down and will grab majority of the data necessary.
+> (Actually, it looks like all this is generated in bisect.c:show_diff_tree,
+> so it would have to be written in C; but it should be pretty easy to
+> tweak the display options).
 
- - Extract the bundle into temporary area inside .git/refs/ to help
-   the next step.
+yeah, that seems pretty straight forward, but I'm not really sure what
+to do about this case where no diff is printed, I guess I should figure
+out what bits need to be set for the commit to be shown anyway.
 
- - Internally do a "git fetch" to the original server. Thanks to the
-   bundle transfer that has already happened, this step will become
-   a small incremental update.
-
- - Then prune away the temporary .git/refs/ refs that were in the
-   bundle, as these are not the up-to-date refs that exist on the
-   server side.
-
-A few points that need to be considered by whoever is doing this
-are:
-
- - Where to download the bundle, so that after killing "git clone"
-   that is still in the bundle-download phase, the next invocation
-   of "git clone" can notice and resume the bundle-download;
-
- - What kind of transfer protocols do we want to support? Is http
-   and https from CDN sufficient? In other words, what exactly
-   should the new capability say to point at the prebuilt bundle?
-
-These (and probably there are several others) are not something
-that "repo" does not have to worry about, but would become
-issues when we try to fold this into "git clone".
-
-
-
-On Sun, May 10, 2015 at 2:55 PM, Thiago Farina <tfransosi@gmail.com> wrote:
-> Hi,
->
-> Is there links to discussion on this? I mean, is resume downloads a
-> feature that is still being considered?
->
-> Being able to download huge repos like WebKit, Linux, LibreOffice in
-> small parts seems like a good feature to me.
->
-> --
-> Thiago Farina
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Trev
