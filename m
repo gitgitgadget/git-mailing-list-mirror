@@ -1,73 +1,85 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] sequencer.c: abbreviate hashs placed in the middle of messages
-Date: Sun, 10 May 2015 11:05:41 +0200
-Message-ID: <vpqwq0g2462.fsf@anie.imag.fr>
-References: <1431104035-2056-1-git-send-email-ralf.thielow@gmail.com>
-	<CAPig+cSeNn0r7N6vp+qs4NTNwfYx5p-zUX3tkifuXLu+nB2yNQ@mail.gmail.com>
-	<xmqqbnhvm1f5.fsf@gitster.dls.corp.google.com>
-	<CAN0XMOKPbKUMwU5-T78m_knt=9O2GkKaqmXKViSi5k-Z7Damrg@mail.gmail.com>
-	<xmqqtwvmlxlo.fsf@gitster.dls.corp.google.com>
-	<CAN0XMO+ZY-oXb1aWK3TzUxDRuBEEoasxjdagYQQoB+JVheju9Q@mail.gmail.com>
-	<xmqqa8xekeb2.fsf@gitster.dls.corp.google.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Draft of Git Rev News edition 3
+Date: Sun, 10 May 2015 13:14:30 +0200
+Message-ID: <CAP8UFD39uP=x8yEGTNBzA_u4v_bbzjUN0s1hAOsDRUWOdzsZUQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Ralf Thielow <ralf.thielow@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun May 10 11:06:02 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	Thomas Ferris Nicolaisen <tfnico@gmail.com>,
+	Nicola Paolucci <npaolucci@atlassian.com>,
+	Emma Jane Hogbin Westby <emma@emmajane.net>,
+	Phillip Susi <psusi@ubuntu.com>, Joey Hess <joey@kitenet.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Paul Mackerras <paulus@samba.org>,
+	Johan Herland <johan@herland.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	karthik nayak <karthik.188@gmail.com>,
+	Paul Tan <pyokagan@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Andreas Schwab <schwab@linux-m68k.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	=?UTF-8?Q?S=C3=A9bastien_Guimmara?= <sebastien.guimmara@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun May 10 13:14:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YrNBP-0003qC-IG
-	for gcvg-git-2@plane.gmane.org; Sun, 10 May 2015 11:05:59 +0200
+	id 1YrPBu-0005wT-73
+	for gcvg-git-2@plane.gmane.org; Sun, 10 May 2015 13:14:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752258AbbEJJFy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 May 2015 05:05:54 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:40868 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752170AbbEJJFx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 May 2015 05:05:53 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t4A95e2e029644
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 10 May 2015 11:05:40 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t4A95fIj015311;
-	Sun, 10 May 2015 11:05:41 +0200
-In-Reply-To: <xmqqa8xekeb2.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Fri, 08 May 2015 13:24:49 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sun, 10 May 2015 11:05:41 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t4A95e2e029644
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1431853544.14215@66fG3yHy9cbLcaRzRUmvrA
+	id S1751345AbbEJLOd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 May 2015 07:14:33 -0400
+Received: from mail-wg0-f50.google.com ([74.125.82.50]:35158 "EHLO
+	mail-wg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750886AbbEJLOc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 May 2015 07:14:32 -0400
+Received: by wgbhc8 with SMTP id hc8so5442342wgb.2
+        for <git@vger.kernel.org>; Sun, 10 May 2015 04:14:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        bh=mn092PenIE7E+WQfsnhWA/WJwgBtktqhTWRcEY+i9uQ=;
+        b=O8A0V2OpJ2Pb3HKEI3J1YSlteS82iTTmTpeBk9ZYIHORfAsixM9jkrOOd5JD/DaUmf
+         /ITPuyXnbGi22boF8JCwzMWTFBk8HG8ZbF3O56DJ128/zfyTfrfY+ljE4TJkObQHA+gY
+         58hsJX1jgM4jqcOHnVX86+zrRnb3hhCrW8rnmKwppeIZ/izD2saom1N5cU+gU6tCRWlP
+         a9dSkd5QCqtKCpXO5tkgutUni1/JbeY1jpsdiwRKnhdcU4Pk2g4NJ1jeAblvXTYdqCJ2
+         xHR/5on6cRMi1cTgITDeW6s82CtboY4zDQpd5M07bJotUwZxM6JVkggH4vS9OzqpAjSY
+         Nmbw==
+X-Received: by 10.194.95.132 with SMTP id dk4mr11667500wjb.88.1431256470982;
+ Sun, 10 May 2015 04:14:30 -0700 (PDT)
+Received: by 10.194.40.8 with HTTP; Sun, 10 May 2015 04:14:30 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268728>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268729>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi,
 
-> I am not sure how that changes anything.
->
->     $ git cherry-pick 38e70713119c25ab5699df6b2fb13e4133d399ab
->     error: that commit is a merge and you didn't give me -m <which-parent>
->
->     $ git cherry-pick 38e70713119c25ab5699df6b2fb13e4133d399ab
->     error: the commit 38e707... is a merge and you didn't give me -m <which-parent>
+A draft of Git Rev News edition 3 is available here:
 
-But ...
+https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-3.md
 
-    ./myscript.sh
-    error: that commit is a merge and you didn't give me -m <which-parent>
+Everyone is welcome to contribute in any section either by editing the
+above page on GitHub and sending a pull request, or by commenting on
+this GitHub issue:
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+https://github.com/git/git.github.io/issues/56
+
+You can also reply to this email.
+
+I tried to cc everyone who appears in this edition but maybe I missed
+some people, sorry about that.
+
+Thomas, Nicola and myself plan to publish this edition on Wednesday
+the 13th of May.
+
+Thanks,
+Christian.
