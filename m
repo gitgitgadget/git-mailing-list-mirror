@@ -1,7 +1,7 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 3/8] write_ref_to_lockfile(): new function, extracted from write_ref_sha1()
-Date: Sun, 10 May 2015 04:45:32 +0200
-Message-ID: <1431225937-10456-4-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH v2 2/8] t7004: rename ULIMIT test prerequisite to ULIMIT_STACK_SIZE
+Date: Sun, 10 May 2015 04:45:31 +0200
+Message-ID: <1431225937-10456-3-git-send-email-mhagger@alum.mit.edu>
 References: <1431225937-10456-1-git-send-email-mhagger@alum.mit.edu>
 Cc: Jeff King <peff@peff.net>, Eric Sunshine <sunshine@sunshineco.com>,
 	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
@@ -13,113 +13,73 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YrHUl-0004o6-2v
-	for gcvg-git-2@plane.gmane.org; Sun, 10 May 2015 05:01:35 +0200
+	id 1YrHUk-0004o6-97
+	for gcvg-git-2@plane.gmane.org; Sun, 10 May 2015 05:01:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752116AbbEJDBZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 May 2015 23:01:25 -0400
-Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:54621 "EHLO
+	id S1752103AbbEJDBM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 May 2015 23:01:12 -0400
+Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:54618 "EHLO
 	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752081AbbEJDBZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 9 May 2015 23:01:25 -0400
-X-Greylist: delayed 929 seconds by postgrey-1.27 at vger.kernel.org; Sat, 09 May 2015 23:01:24 EDT
-X-AuditID: 12074411-f79fa6d000006b8a-2a-554ec6610d92
+	by vger.kernel.org with ESMTP id S1752072AbbEJDBK (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 9 May 2015 23:01:10 -0400
+X-Greylist: delayed 915 seconds by postgrey-1.27 at vger.kernel.org; Sat, 09 May 2015 23:01:09 EDT
+X-AuditID: 12074411-f79fa6d000006b8a-24-554ec660a5cc
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id CE.78.27530.166CE455; Sat,  9 May 2015 22:45:54 -0400 (EDT)
+	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 5E.78.27530.066CE455; Sat,  9 May 2015 22:45:52 -0400 (EDT)
 Received: from michael.fritz.box (p5DDB3166.dip0.t-ipconnect.de [93.219.49.102])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t4A2jkxb015925
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t4A2jkxa015925
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Sat, 9 May 2015 22:45:52 -0400
+	Sat, 9 May 2015 22:45:50 -0400
 X-Mailer: git-send-email 2.1.4
 In-Reply-To: <1431225937-10456-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrMIsWRmVeSWpSXmKPExsUixO6iqJt0zC/UoGkHs0XXlW4mi4beK8wW
-	t1fMZ7b40dLDbLF5czuLxZk3jYwObB5/339g8liwqdTjWe8eRo+Ll5Q9Fj/w8vi8SS6ALYrb
-	JimxpCw4Mz1P3y6BO2Pa8lfsBSv5K+Z9XsPSwNjJ08XIySEhYCLx8E0DE4QtJnHh3nq2LkYu
-	DiGBy4wSVzfPYwFJCAkcZ5KY9UMLxGYT0JVY1NMM1MDBISLgJdE2sxiknlmgl1Hi0eJXjCBx
-	YYE4iZsX+UDKWQRUJRqmnwKbzyvgIvHw8mp2iF1yEueP/2QGsTkFXCVun5nLDLHKRaJxaRPL
-	BEbeBYwMqxjlEnNKc3VzEzNzilOTdYuTE/PyUot0TfVyM0v0UlNKNzFCAkxwB+OMk3KHGAU4
-	GJV4eD9s8wsVYk0sK67MPcQoycGkJMprsxAoxJeUn1KZkVicEV9UmpNafIhRgoNZSYT35Hqg
-	HG9KYmVValE+TEqag0VJnJdvibqfkEB6YklqdmpqQWoRTFaGg0NJgjf2KFCjYFFqempFWmZO
-	CUKaiYMTZDiXlEhxal5KalFiaUlGPCgu4ouBkQGS4gHaWwnSzltckJgLFIVoPcWoKCXO2waS
-	EABJZJTmwY2FpY1XjOJAXwrzdoNU8QBTDlz3K6DBTECD/xb7gAwuSURISTUwSgmX8R0ov9sr
-	/08++YHzJq4r2dLb/XImWj2dWctfqOn18/Vjk0Jbg8jJFVP+8Hq5H8rfJa7xKIjzh67z/Zku
-	e7YYGNeu+un9N3J67qebB/brKDxnsmk9LbXi4vtT3HNOl5xe+3LLDB6jnonJr8// 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrCIsWRmVeSWpSXmKPExsUixO6iqJtwzC/U4O9bPouuK91MFg29V5gt
+	bq+Yz2zxo6WH2WLz5nYWizNvGhkd2Dz+vv/A5LFgU6nHs949jB4XLyl7LH7g5fF5k1wAWxS3
+	TVJiSVlwZnqevl0Cd8b/K2uYCz6yV+zolGpgPMDWxcjJISFgItHU/o0dwhaTuHBvPVCci0NI
+	4DKjxLX375kgnONMEi/2HmMBqWIT0JVY1NMMlODgEBHwkmibWQxSwyzQyyjxaPErRpAaYYFg
+	ie+nn4FNZRFQlejbcB5sG6+Ai8Tie69ZIbbJSZw//pMZxOYUcJW4fWYumC0EVNO4tIllAiPv
+	AkaGVYxyiTmlubq5iZk5xanJusXJiXl5qUW6pnq5mSV6qSmlmxghISa4g3HGSblDjAIcjEo8
+	vB+2+YUKsSaWFVfmHmKU5GBSEuW1WQgU4kvKT6nMSCzOiC8qzUktPsQowcGsJMJ7cj1Qjjcl
+	sbIqtSgfJiXNwaIkzsu3RN1PSCA9sSQ1OzW1ILUIJivDwaEkwRt7FKhRsCg1PbUiLTOnBCHN
+	xMEJMpxLSqQ4NS8ltSixtCQjHhQZ8cXA2ABJ8QDtrQRp5y0uSMwFikK0nmJUlBLn9QJJCIAk
+	Mkrz4MbCEscrRnGgL4V5A0GqeIBJB677FdBgJqDBf4t9QAaXJCKkgFHuv1HOrcrpyTGD4Bk3
+	Ox3vMmlcUrDTcrjqNXeB8Pxbyk/WtJY3SemZ92+wMq6f5R+1pGjtnBNFyzO6M1xXbWlXmfH9
+	900feZYi7esam+7cFZqqs4T9V085T+/Sr6v1530T02R/0KAScfde29driSfDNqe1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268722>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268723>
 
-This is the first step towards separating the checking and writing of
-the new reference value to committing the change.
+From: Stefan Beller <sbeller@google.com>
 
+During creation of the patch series our discussion we could have a
+more descriptive name for the prerequisite for the test so it stays
+unique when other limits of ulimit are introduced.
+
+Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs.c | 38 ++++++++++++++++++++++++++------------
- 1 file changed, 26 insertions(+), 12 deletions(-)
+ t/t7004-tag.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index 6664423..9e40c35 100644
---- a/refs.c
-+++ b/refs.c
-@@ -3048,23 +3048,15 @@ int is_branch(const char *refname)
+diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+index 796e9f7..06b8e0d 100755
+--- a/t/t7004-tag.sh
++++ b/t/t7004-tag.sh
+@@ -1463,10 +1463,10 @@ run_with_limited_stack () {
+ 	(ulimit -s 128 && "$@")
  }
  
- /*
-- * Write sha1 into the ref specified by the lock. Make sure that errno
-- * is sane on error.
-+ * Write sha1 into the open lockfile, then close the lockfile. On
-+ * errors, rollback the lockfile and set errno to reflect the problem.
-  */
--static int write_ref_sha1(struct ref_lock *lock,
--	const unsigned char *sha1, const char *logmsg)
-+static int write_ref_to_lockfile(struct ref_lock *lock,
-+				 const unsigned char *sha1)
- {
- 	static char term = '\n';
- 	struct object *o;
+-test_lazy_prereq ULIMIT 'run_with_limited_stack true'
++test_lazy_prereq ULIMIT_STACK_SIZE 'run_with_limited_stack true'
  
--	if (!lock) {
--		errno = EINVAL;
--		return -1;
--	}
--	if (!lock->force_write && !hashcmp(lock->old_sha1, sha1)) {
--		unlock_ref(lock);
--		return 0;
--	}
- 	o = parse_object(sha1);
- 	if (!o) {
- 		error("Trying to write ref %s with nonexistent object %s",
-@@ -3089,6 +3081,28 @@ static int write_ref_sha1(struct ref_lock *lock,
- 		errno = save_errno;
- 		return -1;
- 	}
-+	return 0;
-+}
-+
-+/*
-+ * Write sha1 into the ref specified by the lock. Make sure that errno
-+ * is sane on error.
-+ */
-+static int write_ref_sha1(struct ref_lock *lock,
-+	const unsigned char *sha1, const char *logmsg)
-+{
-+	if (!lock) {
-+		errno = EINVAL;
-+		return -1;
-+	}
-+	if (!lock->force_write && !hashcmp(lock->old_sha1, sha1)) {
-+		unlock_ref(lock);
-+		return 0;
-+	}
-+
-+	if (write_ref_to_lockfile(lock, sha1))
-+		return -1;
-+
- 	clear_loose_ref_cache(&ref_cache);
- 	if (log_ref_write(lock->ref_name, lock->old_sha1, sha1, logmsg) < 0 ||
- 	    (strcmp(lock->ref_name, lock->orig_ref_name) &&
+ # we require ulimit, this excludes Windows
+-test_expect_success ULIMIT '--contains works in a deep repo' '
++test_expect_success ULIMIT_STACK_SIZE '--contains works in a deep repo' '
+ 	>expect &&
+ 	i=1 &&
+ 	while test $i -lt 8000
 -- 
 2.1.4
