@@ -1,104 +1,79 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: Re: [PATCH] l10n: de.po: change error message from "sagen" to
- "Meinten Sie"
-Date: Sun, 10 May 2015 10:02:38 +0200
-Message-ID: <20150510080238.GA4955@ralf-ubuntu>
-References: <1431170935-6027-1-git-send-email-phillip.szelat@gmail.com>
+From: Paul Tan <pyokagan@gmail.com>
+Subject: Re: [PATCH v2 09/12] t7406: use "git pull" instead of "git pull --rebase"
+Date: Sun, 10 May 2015 16:19:48 +0800
+Message-ID: <CACRoPnQdmaoNW_CoZmTz24SgLrQZjyTGWRpCKmWh3bTH92939g@mail.gmail.com>
+References: <1430988248-18285-1-git-send-email-pyokagan@gmail.com>
+	<1430988248-18285-10-git-send-email-pyokagan@gmail.com>
+	<xmqqfv78qp13.fsf@gitster.dls.corp.google.com>
+	<CACRoPnQ3zYsv63pNUtasS6y2HnWMYqwssF=yFA3OHVvF2Yb5Sw@mail.gmail.com>
+	<xmqqpp6cnnyr.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, tr@thomasrast.ch, jk@jk.gs, stimming@tuhh.de,
-	matthias.ruester@gmail.com, magnus.goerlitz@googlemail.com
-To: Phillip Sz <phillip.szelat@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 10 10:03:03 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>,
+	Peter Hutterer <peter.hutterer@who-t.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun May 10 10:20:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YrMCU-0003X9-G8
-	for gcvg-git-2@plane.gmane.org; Sun, 10 May 2015 10:03:02 +0200
+	id 1YrMTD-0007lq-EY
+	for gcvg-git-2@plane.gmane.org; Sun, 10 May 2015 10:20:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752317AbbEJICs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 May 2015 04:02:48 -0400
-Received: from mail-wi0-f178.google.com ([209.85.212.178]:36142 "EHLO
-	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752119AbbEJICq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 May 2015 04:02:46 -0400
-Received: by wizk4 with SMTP id k4so72468707wiz.1
-        for <git@vger.kernel.org>; Sun, 10 May 2015 01:02:39 -0700 (PDT)
+	id S1752119AbbEJITx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 May 2015 04:19:53 -0400
+Received: from mail-lb0-f173.google.com ([209.85.217.173]:33600 "EHLO
+	mail-lb0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752072AbbEJITu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 May 2015 04:19:50 -0400
+Received: by lbbzk7 with SMTP id zk7so76502908lbb.0
+        for <git@vger.kernel.org>; Sun, 10 May 2015 01:19:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=kSsabpLCzt9wmgDkCqxID+3Jc0acfoJWTzjdW/zmYpg=;
-        b=Cj9T+o8f1/wQ7MC6q6IZRM5K7VVwjOlHcg2C2rx3bskDG/Vd/Znx93N+y7BElfipU5
-         WnBs5LXEvWweTiEJC7TAZTxoISB+2zqMp7Y+XTL0KKUU7wlOdIj20BAf6eBYxxaCd4xM
-         krq3uqTAQ3qe/29DRr4YhPzliCq+rotGNh0JJI88x5YEWf7N2VOgq6fiPNaTICoFCLZC
-         K1fWDE4hdX88laE9CTy7assW5cLiF5Mcda4/sLAF0AOT9/HAkulfS6FbYmQhjvB6UUj6
-         8vGRGyETmAKs732/RNUYhwENTE3OVbL5+826dwG0w74oN6aCaq/0TCsqilu+ofoMlavK
-         A1Dg==
-X-Received: by 10.194.22.40 with SMTP id a8mr10542660wjf.134.1431244959791;
-        Sun, 10 May 2015 01:02:39 -0700 (PDT)
-Received: from localhost (dslb-092-078-236-214.092.078.pools.vodafone-ip.de. [92.78.236.214])
-        by mx.google.com with ESMTPSA id df1sm7368327wib.12.2015.05.10.01.02.38
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sun, 10 May 2015 01:02:38 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1431170935-6027-1-git-send-email-phillip.szelat@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=so7C/wMxqYMdLTnTMKWrwgX6jGNRtlAfFQ08pmUEJfg=;
+        b=xhIxTfe42ez/3qiMertycCpKV/H//SULz++3qthr00VzyQCr9uwJjnl6SOkaIGVF+4
+         3KTl+/NYWpHWCuoOHLSzro3ZcqazqnZyfpZDgtvMFjCPWH3nFg3Nmd+nNS4nIWYvCGGY
+         w5iso0d6aQixHwFe6v7uZeTkJOcEsSZ6PVnwXXzOU2wFuSiNNsltEfP5XzblRqTmzUZq
+         BzyDy60PEcg7zGtQqAa2IzH7F5JvuHYhtDSy0ytZiIyFVlG1CXVqkJZH4fjPqzz4xXFv
+         BGnQsWymBeIrVMEbExmQgHP/IiJnmn4abHfnmxPXBBDNpIJWiSU1ewqBXsVg+ISB+d/I
+         jW4g==
+X-Received: by 10.152.43.43 with SMTP id t11mr4013106lal.74.1431245988235;
+ Sun, 10 May 2015 01:19:48 -0700 (PDT)
+Received: by 10.112.74.133 with HTTP; Sun, 10 May 2015 01:19:48 -0700 (PDT)
+In-Reply-To: <xmqqpp6cnnyr.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268727>
 
-Phillip Sz <phillip.szelat@gmail.com> wrote:
-> Hi,
->=20
-> I think we should not use "sagen" if someone has written something wr=
-ong.
-> Although it's "say" in English I think we should not use it in German=
- and instead use our normal error message.
->=20
-> Phillip
->=20
-> Signed-off-by: Phillip Sz <phillip.szelat@gmail.com>
+Hi Junio,
 
-Thanks. I've changed the commit message a bit.
+On Fri, May 8, 2015 at 4:15 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> I do not think touching this test which does not have anything to do
+> with "git pull" in your series is sensible at all, and you shouldn't
+> flip test_expect_success temporarily to _expect_failure, if that is
+> what you have in mind.
+>
+> Just don't run unrelated tests while your series is in flux.
 
--- >8 --
+Yes, you are right, these patches are not related to the topic at all,
+and I will drop them.
 
-=46rom: Phillip Sz <phillip.szelat@gmail.com>
-Subject: [PATCH] l10n: de.po: change error message from "sagen" to "Mei=
-nten
- Sie"
+Just to make myself clear though, the issue I have is that
+git-submodule and the various diff commands do not depend on
+git-pull's functionality at all. If only git-pull breaks, these
+command will continue to work perfectly. However, if all the tests in
+t7406 and t4013 break as well, I would consider that misrepresenting
+the problem.
 
-We should not use "sagen" if someone has written something wrong.
-Although it's "say" in English, we should not use it in German
-and instead use our normal error message.
+Not that this is really a big problem anyway, the entire failing test
+suites just surprised me, that's all. Sorry for the noise.
 
-Signed-off-by: Phillip Sz <phillip.szelat@gmail.com>
-Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
----
- po/de.po | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/po/de.po b/po/de.po
-index 2feaec1..a435da0 100644
---- a/po/de.po
-+++ b/po/de.po
-@@ -2183,7 +2183,7 @@ msgstr "Nichts spezifiziert, nichts hinzugef=FCgt=
-=2E\n"
- #: builtin/add.c:358
- #, c-format
- msgid "Maybe you wanted to say 'git add .'?\n"
--msgstr "Wollten Sie vielleicht 'git add .' sagen?\n"
-+msgstr "Meinten Sie vielleicht 'git add .'?\n"
-=20
- #: builtin/add.c:363 builtin/check-ignore.c:172 builtin/clean.c:920
- #: builtin/commit.c:335 builtin/mv.c:130 builtin/reset.c:235 builtin/r=
-m.c:299
---=20
-2.4.0.228.gc627b12
+Thanks,
+Paul
