@@ -1,100 +1,127 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 1/8] update-ref: test handling large transactions properly
-Date: Sun, 10 May 2015 04:45:30 +0200
-Message-ID: <1431225937-10456-2-git-send-email-mhagger@alum.mit.edu>
-References: <1431225937-10456-1-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH v2 0/8] Fix atomicity and avoid fd exhaustion in ref transactions
+Date: Sun, 10 May 2015 04:45:29 +0200
+Message-ID: <1431225937-10456-1-git-send-email-mhagger@alum.mit.edu>
 Cc: Jeff King <peff@peff.net>, Eric Sunshine <sunshine@sunshineco.com>,
 	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>,
 	Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Sun May 10 04:46:12 2015
+X-From: git-owner@vger.kernel.org Sun May 10 04:46:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YrHFs-0001a1-3b
-	for gcvg-git-2@plane.gmane.org; Sun, 10 May 2015 04:46:12 +0200
+	id 1YrHFs-0001a1-Qw
+	for gcvg-git-2@plane.gmane.org; Sun, 10 May 2015 04:46:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752085AbbEJCpy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 May 2015 22:45:54 -0400
-Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:50554 "EHLO
-	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752043AbbEJCpx (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 9 May 2015 22:45:53 -0400
-X-AuditID: 1207440c-f79376d00000680a-6b-554ec65e4737
+	id S1752111AbbEJCp5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 May 2015 22:45:57 -0400
+Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:63099 "EHLO
+	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752043AbbEJCpz (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 9 May 2015 22:45:55 -0400
+X-AuditID: 12074412-f79e46d0000036b4-83-554ec65d216d
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 99.26.26634.E56CE455; Sat,  9 May 2015 22:45:50 -0400 (EDT)
+	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 35.D5.14004.D56CE455; Sat,  9 May 2015 22:45:49 -0400 (EDT)
 Received: from michael.fritz.box (p5DDB3166.dip0.t-ipconnect.de [93.219.49.102])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t4A2jkxZ015925
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t4A2jkxY015925
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Sat, 9 May 2015 22:45:49 -0400
+	Sat, 9 May 2015 22:45:47 -0400
 X-Mailer: git-send-email 2.1.4
-In-Reply-To: <1431225937-10456-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrMIsWRmVeSWpSXmKPExsUixO6iqBt3zC/UYNpDHYuuK91MFg29V5gt
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrNIsWRmVeSWpSXmKPExsUixO6iqBt7zC/U4MA3MYuuK91MFg29V5gt
 	bq+Yz2zxo6WH2WLz5nYWizNvGhkd2Dz+vv/A5LFgU6nHs949jB4XLyl7LH7g5fF5k1wAWxS3
-	TVJiSVlwZnqevl0Cd0bnlJqCPu6KI9c2MzUwLuPsYuTkkBAwkXi0byMThC0mceHeejYQW0jg
-	MqPEx70mXYxcQPZxJolNl3ezgCTYBHQlFvU0AzVwcIgIeEm0zSwGqWEW6GWUeLT4FSNIjbCA
-	r8TfzbPA6lkEVCV27/kHNpRXwEXi9cL5zBDL5CTOH/8JZnMKuErcPjOXGWKxi0Tj0iaWCYy8
-	CxgZVjHKJeaU5urmJmbmFKcm6xYnJ+blpRbpGurlZpbopaaUbmKEBBjPDsZv62QOMQpwMCrx
-	8M7Y4hcqxJpYVlyZe4hRkoNJSZTXZiFQiC8pP6UyI7E4I76oNCe1+BCjBAezkgjvyfVAOd6U
-	xMqq1KJ8mJQ0B4uSOK/qEnU/IYH0xJLU7NTUgtQimKwMB4eSBO+FI0CNgkWp6akVaZk5JQhp
-	Jg5OkOFcUiLFqXkpqUWJpSUZ8aC4iC8GRgZIigdor81RkL3FBYm5QFGI1lOMilLivHwgCQGQ
-	REZpHtxYWNp4xSgO9KUwbyBIFQ8w5cB1vwIazAQ0+G+xD8jgkkSElFQD40LbY2t6ZFWj0jQu
-	+l777fDAeWG5uH1BY6lH60HHxYIubnMP3XRiUpB93BV0UkdKe/2LyS9XP3TuOV7KvW6J+MTI
-	mZs6lmhtnyN2hV1mdeOJLT3fvql8XrZRadqu5usxe6am2AvLbn2WJ/ru9NEQ28Yf 
+	TVJiSVlwZnqevl0Cd8b6D1MYCy6KVaw4sZm5gXGzUBcjJ4eEgInE6uXdLBC2mMSFe+vZQGwh
+	gcuMEk+PV0PYx5kk9s0VALHZBHQlFvU0M3UxcnCICHhJtM0s7mLk4mAW6GWUeLT4FSNIjbBA
+	oMTfpnlgc1gEVCU+r5sEZvMKuEjcPTKVGWKXnMT54z+ZJzByL2BkWMUol5hTmqubm5iZU5ya
+	rFucnJiXl1qka6aXm1mil5pSuokREjBCOxjXn5Q7xCjAwajEw/thm1+oEGtiWXFl7iFGSQ4m
+	JVFem4VAIb6k/JTKjMTijPii0pzU4kOMEhzMSiK8J9cD5XhTEiurUovyYVLSHCxK4rw/F6v7
+	CQmkJ5akZqemFqQWwWRlODiUJHhjjwI1ChalpqdWpGXmlCCkmTg4QYZzSYkUp+alpBYllpZk
+	xIPCPL4YGOggKR6gvVtB2nmLCxJzgaIQracYFaXEeb1AEgIgiYzSPLixsDTwilEc6EthXhGQ
+	Kh5gCoHrfgU0mAlo8N9iH5DBJYkIKakGxo6pu3wjgxhCV+jbGJYcMTr71/7us8qtZ3UyJv1e
+	5RGWMemlVcCTyst15zmUFtUtFrLQnfP1+Eyx3kWaGRf+THUSErr7QmRTVN712O6PHap7/FZd
+	SlNcXL1Z+v5XryOhmVd7n5Yd5Pu07TVbae5lzi9r8rYF5R4Vvj0/7oz+xvWm3a6+ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268716>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268717>
 
-From: Stefan Beller <sbeller@google.com>
+This is v2 of [1], formerly called
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
- t/t1400-update-ref.sh | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+    Avoid file descriptor exhaustion in ref_transaction_commit()
 
-diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
-index 7b4707b..47d2fe9 100755
---- a/t/t1400-update-ref.sh
-+++ b/t/t1400-update-ref.sh
-@@ -973,4 +973,32 @@ test_expect_success 'stdin -z delete refs works with packed and loose refs' '
- 	test_must_fail git rev-parse --verify -q $c
- '
- 
-+run_with_limited_open_files () {
-+	(ulimit -n 32 && "$@")
-+}
-+
-+test_lazy_prereq ULIMIT_FILE_DESCRIPTORS 'run_with_limited_open_files true'
-+
-+test_expect_failure ULIMIT_FILE_DESCRIPTORS 'large transaction creating branches does not burst open file limit' '
-+(
-+	for i in $(test_seq 33)
-+	do
-+		echo "create refs/heads/$i HEAD"
-+	done >large_input &&
-+	run_with_limited_open_files git update-ref --stdin <large_input &&
-+	git rev-parse --verify -q refs/heads/33
-+)
-+'
-+
-+test_expect_failure ULIMIT_FILE_DESCRIPTORS 'large transaction deleting branches does not burst open file limit' '
-+(
-+	for i in $(test_seq 33)
-+	do
-+		echo "delete refs/heads/$i HEAD"
-+	done >large_input &&
-+	run_with_limited_open_files git update-ref --stdin <large_input &&
-+	test_must_fail git rev-parse --verify -q refs/heads/33
-+)
-+'
-+
- test_done
+As a reminder, this patch series fixes some cases where `git
+update-ref --stdin` (and, on 2.4+, `git push --atomic`) could fail to
+be atomic, and avoids file descriptor exhaustion while carrying out
+ref transactions by closing lockfiles promptly.
+
+Thanks to Peff, Stefan, Junio, and Eric for their comments on v1.
+
+The main change is that this version is rebased onto maint-2.2 as per
+Junio's wish [2]. This was not trivial because of the changes in the
+area between 2.3 and 2.4, especially 'mh/expire-updateref-fixes',
+'mh/refs-have-new', and 'mh/reflog-expire'.
+
+Other changes:
+
+* Remove Stefan's
+
+      bc31f46 refs.c: remove lock_fd from struct ref_lock (2015-04-16)
+
+  from the series, as it is not needed for this fix and was causing
+  extra conflicts when backporting and merging forward. This patch is
+  still a good idea, but there is no need to backport it.
+
+* Change log message of the last patch to describe both of the bugs
+  that it fixes.
+
+* Many other small tweaks.
+
+This patch series is available from my GitHub account [3] as branch
+'write-refs-sooner'. Please note that the branch there is applied on
+top of a cherry-pick of
+
+      f6786c8 http-push: trim trailing newline from remote symref (2015-01-12)
+
+, which was needed to get test t5540 to pass.
+
+The following other branches, also from my GitHub repo, might be
+useful:
+
+* 'write-refs-sooner-2.3' -- suggested merge of the change to 'maint'.
+
+* 'write-refs-sooner-master' -- suggested merge of the change to
+  'master'.
+
+* 'write-refs-sooner-rebased-2.3' and
+  'write-refs-sooner-rebased-master' -- rebases of 'write-refs-sooner'
+  onto 'maint' and 'master' respectively, in case anybody is
+  interested to see how the individual patches would look if
+  implemented natively on these branches.
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/267735
+[2] http://article.gmane.org/gmane.comp.version-control.git/267799
+[3] https://github.com/mhagger/git
+
+Michael Haggerty (6):
+  write_ref_to_lockfile(): new function, extracted from write_ref_sha1()
+  commit_ref_update(): new function, extracted from write_ref_sha1()
+  rename_ref(): inline calls to write_ref_sha1() from this function
+  ref_transaction_commit(): inline calls to write_ref_sha1()
+  ref_transaction_commit(): remove the local flags variable
+  ref_transaction_commit(): fix atomicity and avoid fd exhaustion
+
+Stefan Beller (2):
+  update-ref: test handling large transactions properly
+  t7004: rename ULIMIT test prerequisite to ULIMIT_STACK_SIZE
+
+ refs.c                | 99 +++++++++++++++++++++++++++++++++++++--------------
+ t/t1400-update-ref.sh | 28 +++++++++++++++
+ t/t7004-tag.sh        |  4 +--
+ 3 files changed, 103 insertions(+), 28 deletions(-)
+
 -- 
 2.1.4
