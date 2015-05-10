@@ -1,111 +1,53 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: git difftool and proper path escaping on windows
-Date: Sun, 10 May 2015 22:09:58 +0100
-Organization: OPDS
-Message-ID: <303F4B003829461AB3D516B1837C17E1@PhilipOakley>
-References: <554CF2D9.3050608@gmail.com> <F14B985A-C968-445A-A3F7-10AE425E7029@gmail.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Thiago Farina <tfransosi@gmail.com>
+Subject: resume downloads
+Date: Sun, 10 May 2015 18:55:27 -0300
+Message-ID: <CACnwZYeW3+LQZYV4D_+vWggeh_yoWa-C3KdssHO21sRbsEKrMg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="UTF-8";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-To: "David Aguilar" <davvid@gmail.com>,
-	"Phil Susi" <phillsusi@gmail.com>, <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun May 10 23:05:03 2015
+Content-Type: text/plain; charset=UTF-8
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun May 10 23:55:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YrYPF-0000mJ-EN
-	for gcvg-git-2@plane.gmane.org; Sun, 10 May 2015 23:05:01 +0200
+	id 1YrZC9-000075-DD
+	for gcvg-git-2@plane.gmane.org; Sun, 10 May 2015 23:55:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752016AbbEJVE5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 May 2015 17:04:57 -0400
-Received: from out1.ip02ir2.opaltelecom.net ([62.24.128.238]:29294 "EHLO
-	out1.ip02ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751653AbbEJVE4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 10 May 2015 17:04:56 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2CQFQBUx09VPMw9Flxcgw9UXoMehBu/D4V7BASBHDwRAQEBAQEBAQYBAQEBQSQbhBsFAQEBAQMIAQEZFR4BASwCAwUCAQMOBwMCAgUhAgIUAQQIEgYHAxQGARIIAgECAwEKh3wDFgmzQYZShwMNhR4cBIEhihiCTYUnL4EWBZI9cIMuhHCCeY5DgxuDVYQbPTGCRgEBAQ
-X-IPAS-Result: A2CQFQBUx09VPMw9Flxcgw9UXoMehBu/D4V7BASBHDwRAQEBAQEBAQYBAQEBQSQbhBsFAQEBAQMIAQEZFR4BASwCAwUCAQMOBwMCAgUhAgIUAQQIEgYHAxQGARIIAgECAwEKh3wDFgmzQYZShwMNhR4cBIEhihiCTYUnL4EWBZI9cIMuhHCCeY5DgxuDVYQbPTGCRgEBAQ
-X-IronPort-AV: E=Sophos;i="5.13,403,1427756400"; 
-   d="scan'208";a="35204829"
-Received: from host-92-22-61-204.as13285.net (HELO PhilipOakley) ([92.22.61.204])
-  by out1.ip02ir2.opaltelecom.net with ESMTP; 10 May 2015 22:04:54 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1751996AbbEJVz2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 May 2015 17:55:28 -0400
+Received: from mail-ob0-f170.google.com ([209.85.214.170]:33003 "EHLO
+	mail-ob0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751582AbbEJVz1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 May 2015 17:55:27 -0400
+Received: by obblk2 with SMTP id lk2so87927072obb.0
+        for <git@vger.kernel.org>; Sun, 10 May 2015 14:55:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=cGeHyW0PVKKrY0s99NOen0wWB3iOREymHR2vgdLhPb0=;
+        b=yt8qWcaohEwWRCD3sW1H9Py8XIjYvby23FXw8JjUvvd87y8ezk3Od1GfSe4xICG8bG
+         6HFze8hm8qSbg7UHEIwEsX9gHZQbB/Pj9eSdntRbNyiu4Ib6EI1Xy2NlDuTbUSi3aTHJ
+         MdQaLh5IaRTydzhwGkqYPq4JjBVPeoINhGYKspHcOhQOe2HaVoEKMusmSh+B/QV+RhyP
+         qtaNVY3T+8nhezCZWFwZai7kvxmiNhOdbz5fZoij+ovfPseE/Ww/hVImYgPzaiqeua75
+         oCSXbQEPKvDPddBzkQAYzAdeAN1GKGQOFnfON4QRHN3GiGA6fP2V4iiH+73vdB3mbP6P
+         sWlQ==
+X-Received: by 10.202.93.4 with SMTP id r4mr5708471oib.92.1431294927249; Sun,
+ 10 May 2015 14:55:27 -0700 (PDT)
+Received: by 10.202.80.136 with HTTP; Sun, 10 May 2015 14:55:27 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268749>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268750>
 
-From: "David Aguilar" <davvid@gmail.com>
-> On May 8, 2015 10:31:05 AM PDT, Phil Susi <phillsusi@gmail.com> wrote:
->>I'm trying to have git difftool run winmerge to compare files, but it
->>seems to be doing something silly with path translation.  My first
->>attempt was:
->>
->>git difftool -x /c/Program\ Files\ \(x86\)/WinMerge/WinMergeU.exe
->>
->>To which it responded:
->>
->>C:\Users\psusi\AppData\Local\Programs\Git/libexec/git-core\git-difftool--helper:
->>  eval: line 61: syntax error near unexpected token `('
->>
->>C:\Users\psusi\AppData\Local\Programs\Git/libexec/git-core\git-difftool--helper:
->>eval: line 61: `c:/Program Files (x86)/WinMerge/WinMergeU.exe "$LOCAL"
->>"$REMOTE
->>
->>
->>My first thought was that my shell removed the backslash escapes and
->>then git tried to pass the remaining command to another shell.  So I
->>wrapped the path in single quotes, which should pass the escapes to
->>git,
->>which should pass them to the shell, which should then be able to 
->>parse
->>
->>the spaces in parenthesis in the path, but instead I got this:
->>
->>Launch 'c:/Program/ Files/ /(x86/)/WinMerge/WinMergeU.exe'
->>
->>So it appears that git is replacing backslashes with forward slashes,
->>then trying to pass that to the shell, which doesn't work.  Any idea
->>how
->>to fix or workaround this bug?
->
->
-> paths and executing external programs on windows is confusing and 
-> error-prone for a simple unix user such as myself.
->
-> I think you might be able to work around the difficulties by making 
-> the tool available in your $PATH, that way you don't have to play 
-> shell quoting / escaping games.
->
-> I hope that helps. if you discover a different solution, I'd be happy 
-> to document it so that windows users don't have to rediscover how to 
-> do it in the future.
->
-> let me know how it goes.
-> cheers
->
-A quick web browse found https://gist.github.com/shawndumas/6158524 as 
-one example of a winmerge configuration.
+Hi,
 
-my personal .gitconfig has
-[difftool "WinMerge"]
- path = C:/Program Files/WinMerge/WinMergeU.exe
- cmd = 'C:/Program Files/WinMerge/WinMergeU.exe' /e /x /u $LOCAL $REMOTE
-[mergetool "WinMerge"]
- path = C:/Program Files/WinMerge/WinMergeU.exe
- cmd = 'C:/Program Files/WinMerge/WinMergeU.exe' /e /x /u $LOCAL $REMOTE 
-$MERGED
- trustExitCode = false
+Is there links to discussion on this? I mean, is resume downloads a
+feature that is still being considered?
 
-(excuse whitespace damage)
-though I don't use it much. 
+Being able to download huge repos like WebKit, Linux, LibreOffice in
+small parts seems like a good feature to me.
+
+-- 
+Thiago Farina
