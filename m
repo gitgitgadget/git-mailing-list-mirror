@@ -1,79 +1,73 @@
-From: Paul Tan <pyokagan@gmail.com>
-Subject: Re: [PATCH v2 09/12] t7406: use "git pull" instead of "git pull --rebase"
-Date: Sun, 10 May 2015 16:19:48 +0800
-Message-ID: <CACRoPnQdmaoNW_CoZmTz24SgLrQZjyTGWRpCKmWh3bTH92939g@mail.gmail.com>
-References: <1430988248-18285-1-git-send-email-pyokagan@gmail.com>
-	<1430988248-18285-10-git-send-email-pyokagan@gmail.com>
-	<xmqqfv78qp13.fsf@gitster.dls.corp.google.com>
-	<CACRoPnQ3zYsv63pNUtasS6y2HnWMYqwssF=yFA3OHVvF2Yb5Sw@mail.gmail.com>
-	<xmqqpp6cnnyr.fsf@gitster.dls.corp.google.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] sequencer.c: abbreviate hashs placed in the middle of messages
+Date: Sun, 10 May 2015 11:05:41 +0200
+Message-ID: <vpqwq0g2462.fsf@anie.imag.fr>
+References: <1431104035-2056-1-git-send-email-ralf.thielow@gmail.com>
+	<CAPig+cSeNn0r7N6vp+qs4NTNwfYx5p-zUX3tkifuXLu+nB2yNQ@mail.gmail.com>
+	<xmqqbnhvm1f5.fsf@gitster.dls.corp.google.com>
+	<CAN0XMOKPbKUMwU5-T78m_knt=9O2GkKaqmXKViSi5k-Z7Damrg@mail.gmail.com>
+	<xmqqtwvmlxlo.fsf@gitster.dls.corp.google.com>
+	<CAN0XMO+ZY-oXb1aWK3TzUxDRuBEEoasxjdagYQQoB+JVheju9Q@mail.gmail.com>
+	<xmqqa8xekeb2.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Stefan Beller <sbeller@google.com>,
-	Peter Hutterer <peter.hutterer@who-t.net>
+Content-Type: text/plain
+Cc: Ralf Thielow <ralf.thielow@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Git List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun May 10 10:20:19 2015
+X-From: git-owner@vger.kernel.org Sun May 10 11:06:02 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YrMTD-0007lq-EY
-	for gcvg-git-2@plane.gmane.org; Sun, 10 May 2015 10:20:19 +0200
+	id 1YrNBP-0003qC-IG
+	for gcvg-git-2@plane.gmane.org; Sun, 10 May 2015 11:05:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752119AbbEJITx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 May 2015 04:19:53 -0400
-Received: from mail-lb0-f173.google.com ([209.85.217.173]:33600 "EHLO
-	mail-lb0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752072AbbEJITu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 May 2015 04:19:50 -0400
-Received: by lbbzk7 with SMTP id zk7so76502908lbb.0
-        for <git@vger.kernel.org>; Sun, 10 May 2015 01:19:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=so7C/wMxqYMdLTnTMKWrwgX6jGNRtlAfFQ08pmUEJfg=;
-        b=xhIxTfe42ez/3qiMertycCpKV/H//SULz++3qthr00VzyQCr9uwJjnl6SOkaIGVF+4
-         3KTl+/NYWpHWCuoOHLSzro3ZcqazqnZyfpZDgtvMFjCPWH3nFg3Nmd+nNS4nIWYvCGGY
-         w5iso0d6aQixHwFe6v7uZeTkJOcEsSZ6PVnwXXzOU2wFuSiNNsltEfP5XzblRqTmzUZq
-         BzyDy60PEcg7zGtQqAa2IzH7F5JvuHYhtDSy0ytZiIyFVlG1CXVqkJZH4fjPqzz4xXFv
-         BGnQsWymBeIrVMEbExmQgHP/IiJnmn4abHfnmxPXBBDNpIJWiSU1ewqBXsVg+ISB+d/I
-         jW4g==
-X-Received: by 10.152.43.43 with SMTP id t11mr4013106lal.74.1431245988235;
- Sun, 10 May 2015 01:19:48 -0700 (PDT)
-Received: by 10.112.74.133 with HTTP; Sun, 10 May 2015 01:19:48 -0700 (PDT)
-In-Reply-To: <xmqqpp6cnnyr.fsf@gitster.dls.corp.google.com>
+	id S1752258AbbEJJFy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 May 2015 05:05:54 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:40868 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752170AbbEJJFx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 May 2015 05:05:53 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t4A95e2e029644
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 10 May 2015 11:05:40 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t4A95fIj015311;
+	Sun, 10 May 2015 11:05:41 +0200
+In-Reply-To: <xmqqa8xekeb2.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Fri, 08 May 2015 13:24:49 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sun, 10 May 2015 11:05:41 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t4A95e2e029644
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1431853544.14215@66fG3yHy9cbLcaRzRUmvrA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268727>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268728>
 
-Hi Junio,
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Fri, May 8, 2015 at 4:15 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> I do not think touching this test which does not have anything to do
-> with "git pull" in your series is sensible at all, and you shouldn't
-> flip test_expect_success temporarily to _expect_failure, if that is
-> what you have in mind.
+> I am not sure how that changes anything.
 >
-> Just don't run unrelated tests while your series is in flux.
+>     $ git cherry-pick 38e70713119c25ab5699df6b2fb13e4133d399ab
+>     error: that commit is a merge and you didn't give me -m <which-parent>
+>
+>     $ git cherry-pick 38e70713119c25ab5699df6b2fb13e4133d399ab
+>     error: the commit 38e707... is a merge and you didn't give me -m <which-parent>
 
-Yes, you are right, these patches are not related to the topic at all,
-and I will drop them.
+But ...
 
-Just to make myself clear though, the issue I have is that
-git-submodule and the various diff commands do not depend on
-git-pull's functionality at all. If only git-pull breaks, these
-command will continue to work perfectly. However, if all the tests in
-t7406 and t4013 break as well, I would consider that misrepresenting
-the problem.
+    ./myscript.sh
+    error: that commit is a merge and you didn't give me -m <which-parent>
 
-Not that this is really a big problem anyway, the entire failing test
-suites just surprised me, that's all. Sorry for the noise.
-
-Thanks,
-Paul
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
