@@ -1,95 +1,82 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 04/18] is_refname_available(): convert local variable "dirname" to strbuf
-Date: Mon, 11 May 2015 17:25:06 +0200
-Message-ID: <1431357920-25090-5-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH v2 03/18] is_refname_available(): avoid shadowing "dir" variable
+Date: Mon, 11 May 2015 17:25:05 +0200
+Message-ID: <1431357920-25090-4-git-send-email-mhagger@alum.mit.edu>
 References: <1431357920-25090-1-git-send-email-mhagger@alum.mit.edu>
 Cc: Stefan Beller <sbeller@google.com>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Jeff King <peff@peff.net>, git@vger.kernel.org,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 11 17:25:56 2015
+X-From: git-owner@vger.kernel.org Mon May 11 17:26:03 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YrpaU-0002S7-FH
-	for gcvg-git-2@plane.gmane.org; Mon, 11 May 2015 17:25:46 +0200
+	id 1Yrpai-0002aa-7G
+	for gcvg-git-2@plane.gmane.org; Mon, 11 May 2015 17:26:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752588AbbEKPZj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 May 2015 11:25:39 -0400
-Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:61958 "EHLO
-	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751638AbbEKPZg (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 11 May 2015 11:25:36 -0400
-X-AuditID: 1207440e-f79bc6d000000c43-6c-5550c9ef9ac8
+	id S1754069AbbEKPZs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 May 2015 11:25:48 -0400
+Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:60027 "EHLO
+	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751963AbbEKPZo (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 11 May 2015 11:25:44 -0400
+X-AuditID: 1207440c-f79376d00000680a-6e-5550c9ed17f9
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 4C.55.03139.FE9C0555; Mon, 11 May 2015 11:25:35 -0400 (EDT)
+	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 0D.EE.26634.DE9C0555; Mon, 11 May 2015 11:25:33 -0400 (EDT)
 Received: from michael.fritz.box (p5DDB195E.dip0.t-ipconnect.de [93.219.25.94])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t4BFPNnG002156
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t4BFPNnF002156
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Mon, 11 May 2015 11:25:33 -0400
+	Mon, 11 May 2015 11:25:31 -0400
 X-Mailer: git-send-email 2.1.4
 In-Reply-To: <1431357920-25090-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrKIsWRmVeSWpSXmKPExsUixO6iqPv+ZECowa0/6hZdV7qZLBp6rzBb
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrEIsWRmVeSWpSXmKPExsUixO6iqPv2ZECowefZOhZdV7qZLBp6rzBb
 	3F4xn9niR0sPs8Xmze0sFmfeNDI6sHn8ff+ByWPBplKPZ717GD0uXlL2WPzAy+PzJrkAtihu
-	m6TEkrLgzPQ8fbsE7ox5BxcyFfzjqFgw/x57A2M/excjJ4eEgIlE//bXLBC2mMSFe+vZuhi5
-	OIQELjNKXDjykhEkISRwnEliyoECEJtNQFdiUU8zE4gtIqAmMbHtEAtIA7PALkaJe0ungk0S
-	FoiR+LzgI9gGFgFViUft98DivAIuEnMuX4DaLCdx/vhPZhCbU8BVYunVyywQy1wkmh7fY5nA
-	yLuAkWEVo1xiTmmubm5iZk5xarJucXJiXl5qka6xXm5miV5qSukmRkiQ8e1gbF8vc4hRgINR
-	iYfX4IJ/qBBrYllxZe4hRkkOJiVR3l97A0KF+JLyUyozEosz4otKc1KLDzFKcDArifAqrwHK
-	8aYkVlalFuXDpKQ5WJTEedWWqPsJCaQnlqRmp6YWpBbBZGU4OJQkeBtPADUKFqWmp1akZeaU
-	IKSZODhBhnNJiRSn5qWkFiWWlmTEg2IjvhgYHSApHqC9X0HaeYsLEnOBohCtpxgVpcR5ZYHR
-	LyQAksgozYMbC0sdrxjFgb4U5l0P0s4DTDtw3a+ABjMBDXaMAxtckoiQkmpg3OJ1a7ZqzUa7
-	/uW5q4OS+9j+mMz9dSLwx7m/Qpzv131azVZ31bz9sJlfU/ABxlOvk05PaJp4TeLrnt3XRV+n
-	7Le9us0tp3rKp846FXY+TRbVNX6KSQ9ld/DcUDI60fpmXVGb7zQvjrBEwW9Zux0v 
+	m6TEkrLgzPQ8fbsE7oy/n+cxFuxgr/j38g5jA+NP1i5GTg4JAROJi5cOMEPYYhIX7q1n62Lk
+	4hASuMwo8e7qNUYI5ziTxNz7e1hAqtgEdCUW9TQzgdgiAmoSE9sOsYAUMQvsYpS4t3QqWJGw
+	QIBE8+/F7CA2i4CqxI2jD8HivAIuEg9uzGKEWCcncf74T7DVnAKuEkuvXgarEQKqaXp8j2UC
+	I+8CRoZVjHKJOaW5urmJmTnFqcm6xcmJeXmpRbqGermZJXqpKaWbGCFhxrOD8ds6mUOMAhyM
+	Sjy8HZf8Q4VYE8uKK3MPMUpyMCmJ8v7aGxAqxJeUn1KZkVicEV9UmpNafIhRgoNZSYRXeQ1Q
+	jjclsbIqtSgfJiXNwaIkzqu6RN1PSCA9sSQ1OzW1ILUIJivDwaEkwdt4AqhRsCg1PbUiLTOn
+	BCHNxMEJMpxLSqQ4NS8ltSixtCQjHhQd8cXA+ABJ8QDtrQJp5y0uSMwFikK0nmLU5bgz5f8i
+	JiGWvPy8VClx3nsgRQIgRRmleXArYEnlFaM40MfCvOtBqniACQlu0iugJUxASxzjwJaUJCKk
+	pBoYmwK4PRfYPatJNPcztFnO+uHV/xTrXTfite+J/7qZfrRwmbZj+xPduWukf3+z6ZomElgY
+	7f/a58HUT/t6So3ntfQrPfpy0NvEPls1OtA522SP027m1MuH1u9ONWa8/U30iPqh 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268782>
 
-This change wouldn't be worth it by itself, but in a moment we will
-use the strbuf for more string juggling.
+The function had a "dir" parameter that was shadowed by a local "dir"
+variable within a code block. Use the former in place of the latter.
+(This is consistent with "dir"'s use elsewhere in the function.)
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ refs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index 9d87e84..faabd68 100644
+index 776bbce..9d87e84 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -887,9 +887,8 @@ static int is_refname_available(const char *refname,
- 				struct ref_dir *dir)
- {
- 	const char *slash;
--	size_t len;
- 	int pos;
--	char *dirname;
-+	struct strbuf dirname = STRBUF_INIT;
+@@ -967,10 +967,10 @@ static int is_refname_available(const char *refname,
+ 		 * "refs/foo/bar/"). It is a problem iff it contains
+ 		 * any ref that is not in "skip".
+ 		 */
+-		struct ref_entry *entry = dir->entries[pos];
+-		struct ref_dir *dir = get_ref_dir(entry);
+ 		struct nonmatching_ref_data data;
++		struct ref_entry *entry = dir->entries[pos];
  
- 	/*
- 	 * For the sake of comments in this function, suppose that
-@@ -955,11 +954,10 @@ static int is_refname_available(const char *refname,
- 	 * names are in the "refs/foo/bar/" namespace, because they
- 	 * *do* conflict.
- 	 */
--	len = strlen(refname);
--	dirname = xmallocz(len + 1);
--	sprintf(dirname, "%s/", refname);
--	pos = search_ref_dir(dir, dirname, len + 1);
--	free(dirname);
-+	strbuf_addstr(&dirname, refname);
-+	strbuf_addch(&dirname, '/');
-+	pos = search_ref_dir(dir, dirname.buf, dirname.len);
-+	strbuf_release(&dirname);
- 
- 	if (pos >= 0) {
- 		/*
++		dir = get_ref_dir(entry);
+ 		data.skip = skip;
+ 		sort_ref_dir(dir);
+ 		if (!do_for_each_entry_in_dir(dir, 0, nonmatching_ref_fn, &data))
 -- 
 2.1.4
