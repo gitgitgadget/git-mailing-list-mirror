@@ -1,138 +1,82 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH] bisect: print abbrev sha1 for first bad commit
-Date: Mon, 11 May 2015 11:28:24 -0700
-Message-ID: <CAGZ79kZwjpxP0mDt8YRvvhsOsTfzjNbMFUPwUBfBr-uKaghQTw@mail.gmail.com>
-References: <1431128763-28453-1-git-send-email-tbsaunde@tbsaunde.org>
-	<CAGZ79kYjES6DXmvQdmXLAXrKMGrnvQ-vqJuHQU2QxVC4+6M0aA@mail.gmail.com>
-	<20150509014152.GA31119@tsaunders-iceball.corp.tor1.mozilla.com>
-	<20150509040704.GA31428@peff.net>
-	<20150510231110.GA25157@tsaunders-iceball.corp.tor1.mozilla.com>
-	<20150511011009.GA21830@peff.net>
-	<xmqqmw1bg2dd.fsf@gitster.dls.corp.google.com>
-	<CAP8UFD1Aq54dWvxo5JTP4Fqy5u-qhA0LAm3vRrw9=jYg3o_F+g@mail.gmail.com>
-	<xmqqfv73f420.fsf@gitster.dls.corp.google.com>
-	<20150511181719.GB18112@tsaunders-iceball.corp.tor1.mozilla.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 01/18] t1404: new tests of ref D/F conflicts within transactions
+Date: Mon, 11 May 2015 11:52:25 -0700
+Message-ID: <xmqqpp672bh2.fsf@gitster.dls.corp.google.com>
+References: <1431357920-25090-1-git-send-email-mhagger@alum.mit.edu>
+	<1431357920-25090-2-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <christian.couder@gmail.com>,
-	Jeff King <peff@peff.net>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Trevor Saunders <tbsaunde@tbsaunde.org>
-X-From: git-owner@vger.kernel.org Mon May 11 20:28:39 2015
+Content-Type: text/plain
+Cc: Stefan Beller <sbeller@google.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Mon May 11 20:52:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YrsRS-0003Bf-Dm
-	for gcvg-git-2@plane.gmane.org; Mon, 11 May 2015 20:28:38 +0200
+	id 1Yrsoc-0006Ph-MG
+	for gcvg-git-2@plane.gmane.org; Mon, 11 May 2015 20:52:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932784AbbEKS22 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 May 2015 14:28:28 -0400
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:35779 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932782AbbEKS2Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 May 2015 14:28:24 -0400
-Received: by ieczm2 with SMTP id zm2so115437610iec.2
-        for <git@vger.kernel.org>; Mon, 11 May 2015 11:28:24 -0700 (PDT)
+	id S932629AbbEKSw3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 May 2015 14:52:29 -0400
+Received: from mail-ig0-f169.google.com ([209.85.213.169]:36098 "EHLO
+	mail-ig0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755863AbbEKSw2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 May 2015 14:52:28 -0400
+Received: by igbpi8 with SMTP id pi8so78958544igb.1
+        for <git@vger.kernel.org>; Mon, 11 May 2015 11:52:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=9X34f1VMJEVTBu6e5uYQPhBLRbcDgnL8VjYySqR6ki4=;
-        b=g89gK3TMS3QGVg6qw9KR9iqn47Vhu5qhx1qbk+5HLMhHfxSr4IuOYoUtzt1RWjVEOp
-         JxNue3AvprtQ0aXt5q4yxK1eK28uKK8VKovZQa4UVq9Pjxsplk4eRwUqKvjmZfzdifjs
-         6haO6chcd5/sn5VKc5mV/noNk9GmqLBuOxiiVIvHRyLrOlY5I6HnzyFyeh7LSgauT3q5
-         lYXA2opQjUUdNXly8Q8ktz1gDW1kSGYuue4eOKIBwrlQS1jdc51teXW2wbSvnaROxUZc
-         nakj30MhMMnZ40HfWWZ+lQFrSiu83t3+pCmDBMWiBw3CJKs+j+/22y+dpy1NXZVVg+A0
-         LEIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=9X34f1VMJEVTBu6e5uYQPhBLRbcDgnL8VjYySqR6ki4=;
-        b=PLf6NXxR3sPGlis3zi5WVa7hoqhZZnARY/yvJVW9E30V1onig0ID3X4qb1nE8Cgkf+
-         mNUonwZKQIMq9S4O8NhSCKPuiCfEBAKwaYuZPBtVmxcC9kOsXjsxZXUWOcAXvWZuBphE
-         O18rVMlftoqB0QP2ZNSy0pM3oZBkx6apHvFfaM+gbaeKJJJwH80DbPmiBTrT85Ruy3UV
-         eKSjs5iK92FBBLl+vquGM7NcqYMe8V+XYM5MEYxGUEQ/HWvgPMRnHQq6ZQSZLYMtjGVH
-         NzASFC/mRkhJ3t5Z4Ta70CtfICXAQyAc0vEyrv/vaL3baDCoA2lHKWY31qsS3jfLPcLs
-         Dxxw==
-X-Gm-Message-State: ALoCoQkgboodeyjb1342/TkNIyAqxFXpp/rtRZ2MDCT16owxIV9U2DksRmDfKeoqgDBsQ5+aZFeS
-X-Received: by 10.50.143.97 with SMTP id sd1mr16009956igb.25.1431368904192;
- Mon, 11 May 2015 11:28:24 -0700 (PDT)
-Received: by 10.107.46.22 with HTTP; Mon, 11 May 2015 11:28:24 -0700 (PDT)
-In-Reply-To: <20150511181719.GB18112@tsaunders-iceball.corp.tor1.mozilla.com>
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=OCnh3vEPg2xWNk+IhVVT8jKL9eZSscMGKfPVVQJ8LIw=;
+        b=ihQgFLzS0R6QygZeD6cRS/9h8ohA/Qxkyr51poRhXfeIIbYrI6L/PjkzoGE/JJc2Iu
+         ytXlkTgOLcLfV83BBeUhaPGOTcGyZwlLaKeLGOhZkTLUrQTgW5jqlPEMjH6c6ssgwMtJ
+         55liMuUwzXBLkFIeJxJFKWlLBManW+ZeJGEVBbxDU+9H16HGnlwNT/U8IeYpKa+XiTyQ
+         o94tOwP+MlbMFbqpWlVlmr4+J2uQw22aVa3kzeG0p5IQfktaR1kDYCB3jX1wUkQdALMG
+         nVLgfvgh2Z1IBXfs9QZx2CQilHleDT78e8XI1XOYKeuqxTQRhjUFplNpsZ3MY4b+iwp7
+         wySQ==
+X-Received: by 10.107.136.158 with SMTP id s30mr14979441ioi.65.1431370347347;
+        Mon, 11 May 2015 11:52:27 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:e888:82ed:a88f:f5e4])
+        by mx.google.com with ESMTPSA id vk8sm442471igb.4.2015.05.11.11.52.26
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 11 May 2015 11:52:26 -0700 (PDT)
+In-Reply-To: <1431357920-25090-2-git-send-email-mhagger@alum.mit.edu> (Michael
+	Haggerty's message of "Mon, 11 May 2015 17:25:03 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268814>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268815>
 
-On Mon, May 11, 2015 at 11:17 AM, Trevor Saunders <tbsaunde@tbsaunde.org> wrote:
-> On Mon, May 11, 2015 at 09:54:15AM -0700, Junio C Hamano wrote:
->> Christian Couder <christian.couder@gmail.com> writes:
->>
->> > On Mon, May 11, 2015 at 6:33 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> >> Jeff King <peff@peff.net> writes:
->> >>
->> >>> I'd argue for simply never showing the diff (dropping the "opt.diff = 1"
->> >>> line from bisect.c:show_diff_tree), but that is mostly my personal
->> >>> opinion.
->> >>
->> >> Yeah, I think that is sensible. It may even be OK to just give a
->> >> "log --oneline".
->> >
->> > Or maybe we could let the user configure the diff options or even the
->> > command used when the first bad commit is found?
->>
->> That is a separate discussion.  I do not mind but I doubt many
->> people would use it (I was tempted to say "doubt anybody would", but
->> then was reminded how many people use Git, and toned it down), as
->> long as we have a good default.  And I thought that this discussion
->> was about coming up with a good-enough default.
->
-> agreed
->
->> To be bluntly honest, I think the current one is sufficient as a
->> good-enough default.  The first thing I would do after seeing that
->> message is to either "git checkout <commit-object-name>" or "git
->> show <commit-object-name>", and the current full 40-hex output gives
->> me an easier mouse-double-click target than the proposed abbreviated
->> one, so in that sense the original proposal may even be a usability
->> regression.
->
-> I think printing the full 40 chars once is reasonable, but twice in 2
-> lines seems a bit excessive.  I was thinking of changing the format to
-> be
->
-> the first bad commit is
-> $(git log -1 <bad sha1>)
->
->> It is tempting to say that the output can be eliminated by always
->> checking out the first-bad-commit (i.e. only when the last answer
->> that led to the first-bad decision was "good", do a "git checkout"
->> of that bad commit), but in a project where a branch switching is
->> not instantaneous, that might be problematic (unless the first step
->> the user would have done is to check it out anyway, of course).
->
-> Well,  if you just finished bisecting you are probably on a commit close
-> to the first bad one so it probably will be fast.  However I don't
-> really like that idea because what I generally want to do is read the
-> patch so having the hash printed so I can copy it and run git show -p
-> $hash or something is nice.  Though I guess if the first bad commit is
-> checked out you can just skip the copy paste and use HEAD.
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-Only if you are operating within your local repository only. If you want
-to check a build bot or another database for continuous builds or anything
-outside your local repository you need the hash and not HEAD.
-So I'd think
-
-    the first bad commit is
-    $(git log -1 <bad sha1>)
-
-is fine.
-
+>  t/t1404-update-ref-df-conflicts.sh | 107 +++++++++++++++++++++++++++++++++++++
+>  1 file changed, 107 insertions(+)
+>  create mode 100755 t/t1404-update-ref-df-conflicts.sh
 >
-> Trev
->
+> diff --git a/t/t1404-update-ref-df-conflicts.sh b/t/t1404-update-ref-df-conflicts.sh
+> new file mode 100755
+> index 0000000..ed1b93e
+> --- /dev/null
+> +++ b/t/t1404-update-ref-df-conflicts.sh
+> @@ -0,1 +1,107 @@
+
+Where does this "-0,1" come from???
+
+After fixing it up and then running "format-patch" (or "show"), I
+would get
+
+    diff --git a/t/t1404-update-ref-df-conflicts.sh b/t/t1404-update-ref-df-conflicts.sh
+    new file mode 100755
+    index 0000000..2541a23
+    --- /dev/null
+    +++ b/t/t1404-update-ref-df-conflicts.sh
+    @@ -0,0 +1,107 @@
+    ...
+
+which is more in line with what I would expect.
