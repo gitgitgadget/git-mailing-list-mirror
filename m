@@ -1,101 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] bisect: print abbrev sha1 for first bad commit
-Date: Mon, 11 May 2015 09:54:15 -0700
-Message-ID: <xmqqfv73f420.fsf@gitster.dls.corp.google.com>
-References: <1431128763-28453-1-git-send-email-tbsaunde@tbsaunde.org>
-	<CAGZ79kYjES6DXmvQdmXLAXrKMGrnvQ-vqJuHQU2QxVC4+6M0aA@mail.gmail.com>
-	<20150509014152.GA31119@tsaunders-iceball.corp.tor1.mozilla.com>
-	<20150509040704.GA31428@peff.net>
-	<20150510231110.GA25157@tsaunders-iceball.corp.tor1.mozilla.com>
-	<20150511011009.GA21830@peff.net>
-	<xmqqmw1bg2dd.fsf@gitster.dls.corp.google.com>
-	<CAP8UFD1Aq54dWvxo5JTP4Fqy5u-qhA0LAm3vRrw9=jYg3o_F+g@mail.gmail.com>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: [PATCH v3 3/3] cat-file: add --follow-symlinks to --batch
+Date: Mon, 11 May 2015 13:03:39 -0400
+Organization: Twitter
+Message-ID: <1431363819.15048.2.camel@ubuntu>
+References: <1431203769-11855-1-git-send-email-dturner@twopensource.com>
+	 <1431203769-11855-3-git-send-email-dturner@twopensource.com>
+	 <554F0378.2070803@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>, Trevor Saunders <tbsaunde@tbsaunde.org>,
-	Stefan Beller <sbeller@google.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 11 18:54:24 2015
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, David Turner <dturner@twitter.com>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Mon May 11 19:03:50 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YrqyF-00018k-QC
-	for gcvg-git-2@plane.gmane.org; Mon, 11 May 2015 18:54:24 +0200
+	id 1Yrr7M-0005DG-SL
+	for gcvg-git-2@plane.gmane.org; Mon, 11 May 2015 19:03:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751669AbbEKQyT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 May 2015 12:54:19 -0400
-Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:55994 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751208AbbEKQyS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 May 2015 12:54:18 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 771434E2F5;
-	Mon, 11 May 2015 12:54:17 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=B5VlgOadZlDFIbL8jDODrSaAaC8=; b=S6X+yr
-	YyQExN4nhT9zhF3yZzx6YXRXfdk73o7QPJGJZsLINc60jDCL7kNJcoNVTEe2UiSC
-	MIbcVreQ8g8YfERMBFcmom9QC8pfcioQT+pjH/8zN2BHKykgrZu07uMXC32OYU23
-	iWVmXdLitpYXaEyKXTzxDiPkz5CcPX75Q6CZY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=i6dSI+p0zZ8MMzm/waTNN+pstceR+NZJ
-	ZvdSpUaZaUls6/NGhVrdHe+1S5wjQ/84WgjB0LBiApcRqrhRAbGJ5dzRDdQNtdkm
-	wvAMoxkdBZLtn2+arN8VRT5oVzoYovbgya9N9YzVuPzX1ccJrjWdHdImXudKd3n/
-	C8iB6g/nW6I=
-Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6F0C14E2F3;
-	Mon, 11 May 2015 12:54:17 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D55354E2F2;
-	Mon, 11 May 2015 12:54:16 -0400 (EDT)
-In-Reply-To: <CAP8UFD1Aq54dWvxo5JTP4Fqy5u-qhA0LAm3vRrw9=jYg3o_F+g@mail.gmail.com>
-	(Christian Couder's message of "Mon, 11 May 2015 09:38:12 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 5C387082-F7FE-11E4-BE4F-83E09F42C9D4-77302942!pb-smtp1.pobox.com
+	id S1752175AbbEKRDn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 May 2015 13:03:43 -0400
+Received: from mail-qc0-f172.google.com ([209.85.216.172]:36365 "EHLO
+	mail-qc0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751547AbbEKRDm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 May 2015 13:03:42 -0400
+Received: by qcbgy10 with SMTP id gy10so72171290qcb.3
+        for <git@vger.kernel.org>; Mon, 11 May 2015 10:03:41 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:content-type:mime-version
+         :content-transfer-encoding;
+        bh=A1COfYAM/hUXhN/zfm8LkoaDKuDEO7oWD2vOLNvfbv0=;
+        b=W/3pKIOIojFfyvwRexCnUkngsDePzzTYrR0698pldP78+C5nfMtdOeiC/Lz08KtQst
+         iEsx4IFAaD0UF04NUGh2X9z5Uhree+PD+Q4M33cc9rmXjR1n55iEJoZWozcmAN8TPzTt
+         6W3QiYDrTD6EmJ6sHOGyrbvvEf81zynWyacpwwK6/21Gf9tZi1sEMHGms/jASVTjq1yo
+         /3/wQXmec++QunPeoFyCLrV68XscVkwPSKSbyEVW3P12JANeJYOQf2jwymndisL20Nx7
+         AaIYLUn3JFQa8+uJfo+T1AkGKoonBE2sewBmmqH/LSKIWZVQLAIj9/skBfbIGfbbXC09
+         c1MA==
+X-Gm-Message-State: ALoCoQmKdEba1KrZZqhRo846U2LytTy3rbmQxt05dYo+q4UsCP7ZnfxzdWRopo7tsvpu46NkKuVY
+X-Received: by 10.55.52.129 with SMTP id b123mr24382534qka.34.1431363821709;
+        Mon, 11 May 2015 10:03:41 -0700 (PDT)
+Received: from [172.22.38.222] ([192.133.79.147])
+        by mx.google.com with ESMTPSA id 97sm10943820qkp.39.2015.05.11.10.03.40
+        (version=TLSv1.2 cipher=AES128-GCM-SHA256 bits=128/128);
+        Mon, 11 May 2015 10:03:40 -0700 (PDT)
+In-Reply-To: <554F0378.2070803@kdbg.org>
+X-Mailer: Evolution 3.10.4-0ubuntu2 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268797>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268798>
 
-Christian Couder <christian.couder@gmail.com> writes:
+On Sun, 2015-05-10 at 09:06 +0200, Johannes Sixt wrote:
+> > +	ln -s loop2 loop1 &&
+> > +	git add . &&
+> > +	git commit -am "test"
+> > +'
+> 
+> These tests will fail on a file system that does not support symbolic 
+> links, such as on Windows. Would you please separate the test cases 
+> (that come after the setup) into two groups:
+> 
+> 1. Those that inspect the filesystem and expect a symbolic link. Protect 
+> these tests with a SYMLINKS prerequisite.
 
-> On Mon, May 11, 2015 at 6:33 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> Jeff King <peff@peff.net> writes:
->>
->>> I'd argue for simply never showing the diff (dropping the "opt.diff = 1"
->>> line from bisect.c:show_diff_tree), but that is mostly my personal
->>> opinion.
->>
->> Yeah, I think that is sensible. It may even be OK to just give a
->> "log --oneline".
->
-> Or maybe we could let the user configure the diff options or even the
-> command used when the first bad commit is found?
+I believe that none of these require that.
 
-That is a separate discussion.  I do not mind but I doubt many
-people would use it (I was tempted to say "doubt anybody would", but
-then was reminded how many people use Git, and toned it down), as
-long as we have a good default.  And I thought that this discussion
-was about coming up with a good-enough default.
+> Note that you do not require a symlink enabled file system to generate a 
+> repository with symlinks, i.e., you don't have to protect the setup code 
+> with SYMLINKS. For this, you can use 'test_ln_s_add' instead of the 
+> above sequence of 'ln -s' followed by a single 'git add .'.
 
-To be bluntly honest, I think the current one is sufficient as a
-good-enough default.  The first thing I would do after seeing that
-message is to either "git checkout <commit-object-name>" or "git
-show <commit-object-name>", and the current full 40-hex output gives
-me an easier mouse-double-click target than the proposed abbreviated
-one, so in that sense the original proposal may even be a usability
-regression.
+Will fix, thanks.
 
-It is tempting to say that the output can be eliminated by always
-checking out the first-bad-commit (i.e. only when the last answer
-that led to the first-bad decision was "good", do a "git checkout"
-of that bad commit), but in a project where a branch switching is
-not instantaneous, that might be problematic (unless the first step
-the user would have done is to check it out anyway, of course).
+> > +
+> > +echo $hello_sha1 blob $hello_size > found
+> 
+> This seems to be used only in the next test. Please move it inside 
+> test_expect_success.
+
+This is used in a number of tests, e.g this one:
+
+> > +test_expect_success 'git cat-file --batch-check --follow-symlinks works for in-repo, same-dir links' '
+> > +	echo HEAD:same-dir-link | git cat-file --batch-check --follow-symlinks > actual &&
+> > +	test_cmp found actual
+> > +'
