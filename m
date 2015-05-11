@@ -1,96 +1,56 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 2/3] sha1_name: get_sha1_with_context learns to follow symlinks
-Date: Mon, 11 May 2015 12:42:39 -0700
-Message-ID: <xmqqh9ri3nps.fsf@gitster.dls.corp.google.com>
-References: <1431366989-7405-1-git-send-email-dturner@twopensource.com>
-	<1431366989-7405-3-git-send-email-dturner@twopensource.com>
+From: Phil Susi <phillsusi@gmail.com>
+Subject: What happened to having to recover from upstream rebase?
+Date: Mon, 11 May 2015 15:50:15 -0400
+Message-ID: <555107F7.1040906@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, David Turner <dturner@twitter.com>
-To: dturner@twopensource.com
-X-From: git-owner@vger.kernel.org Mon May 11 21:42:54 2015
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon May 11 21:50:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YrtbD-00049h-F3
-	for gcvg-git-2@plane.gmane.org; Mon, 11 May 2015 21:42:47 +0200
+	id 1Yrtiv-0007QC-Fh
+	for gcvg-git-2@plane.gmane.org; Mon, 11 May 2015 21:50:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932119AbbEKTmm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 May 2015 15:42:42 -0400
-Received: from mail-ie0-f171.google.com ([209.85.223.171]:35621 "EHLO
-	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751926AbbEKTmm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 May 2015 15:42:42 -0400
-Received: by ieczm2 with SMTP id zm2so117411409iec.2
-        for <git@vger.kernel.org>; Mon, 11 May 2015 12:42:41 -0700 (PDT)
+	id S1753869AbbEKTum (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 May 2015 15:50:42 -0400
+Received: from mail-qk0-f170.google.com ([209.85.220.170]:35925 "EHLO
+	mail-qk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752012AbbEKTuk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 May 2015 15:50:40 -0400
+Received: by qku63 with SMTP id 63so94567487qku.3
+        for <git@vger.kernel.org>; Mon, 11 May 2015 12:50:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=/K4/XO34yJILGu17HWgd728ic/kwe4fKaw4mpr4/gcY=;
-        b=cksbk63ampqxaiyK5mVgMV81ULOHOh77nE90QwR+WADuAF4LyEVAilZLAvpxQyOenY
-         m8hzxlN/9nMt1888oNSdmUQCv6WRNTHL+d0GuWbep8paRbspLF5eQNYlKVy1pHr08vdG
-         2QLKFOLJ439cJv1NvYP4accWXlktX+QOVq/6CYOTMvowGu48Nka52vfRGMs3myrciQ1P
-         +3XTZO6pzaVPc6U/7FK4ZljCzQRkRZn57K08KcqVeCMV5x+1Hp+LW+llLJqtr+9nubjt
-         Hj5i2oYV9MTtmN5/hUT5/caSR8V2iYNJkOz9TkPwBeim5zT+DhZQu1Og7s0OG95hZwt0
-         /K5Q==
-X-Received: by 10.42.152.67 with SMTP id h3mr12695170icw.56.1431373361443;
-        Mon, 11 May 2015 12:42:41 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:e888:82ed:a88f:f5e4])
-        by mx.google.com with ESMTPSA id o9sm10337433ioe.35.2015.05.11.12.42.40
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 11 May 2015 12:42:40 -0700 (PDT)
-In-Reply-To: <1431366989-7405-3-git-send-email-dturner@twopensource.com>
-	(dturner@twopensource.com's message of "Mon, 11 May 2015 13:56:28
-	-0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        bh=R+fHZ9+wMLUhX2kma0killZqBgjdvUbmXzqJY7U7gps=;
+        b=pD3t5UGSxAnGmVsH6lJb85C/ESM8Ojbzz9UwqHGrikVcWqKxaZuSqgZDk/1hgFtURv
+         +L6tAuunZFZoSHjqH0AEWyypoCsna6Eegu+aiiUaUINquq24VRkuiXDyPPLsiXY65XIb
+         hecfM+VGP05/YKWH94oShaFkVSzfEV2MUfZ7qCALlFtd71jaOWKzOgpVjt9XJO9Qj3JS
+         kFL/rIzPdcscFe2nRLZWk4P7aUO4yIITiwF1xXVhXeTALaCSfsyGa025eDoZuH9Imx/O
+         XoQQKXoaEOmpjokjzM2mtG+8krmD3VJQh/Jh9FrIDx1y8afcDMoXSegIE9Es3ST+ALZD
+         qu2g==
+X-Received: by 10.140.83.116 with SMTP id i107mr15352811qgd.97.1431373839702;
+        Mon, 11 May 2015 12:50:39 -0700 (PDT)
+Received: from [10.1.1.212] (fl-67-77-88-12.sta.embarqhsd.net. [67.77.88.12])
+        by mx.google.com with ESMTPSA id t33sm11462404qge.19.2015.05.11.12.50.38
+        for <git@vger.kernel.org>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 11 May 2015 12:50:39 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268819>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268820>
 
-dturner@twopensource.com writes:
+So it used to be that when upstream rebased, you'd get an error when you 
+tried to pull again and have to fix things up with some git reset or 
+rebase hackery.  Trying to demo this today I found that the pull 
+*worked*, using an automatic recursive merge.
 
-> From: David Turner <dturner@twitter.com>
->
-> Wire up get_sha1_with_context to call get_tree_entry_follow_symlinks
-> when GET_SHA1_FOLLOW_SYMLINKS is passed in flags. G_S_FOLLOW_SYMLINKS
-> is incompatible with G_S_ONLY_TO_DIE because the diagnosis
-> that ONLY_TO_DIE triggers does not at present consider symlinks, and
-> it would be a significant amount of additional code to allow it to
-> do so.
->
-> Signed-off-by: David Turner <dturner@twitter.com>
-> ---
->  cache.h     | 20 +++++++++++++-------
->  sha1_name.c | 20 +++++++++++++++-----
->  2 files changed, 28 insertions(+), 12 deletions(-)
->
-> diff --git a/cache.h b/cache.h
-> index 3d3244b..65505d1 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -922,15 +922,21 @@ struct object_context {
->  	unsigned char tree[20];
->  	char path[PATH_MAX];
->  	unsigned mode;
-> +	/*
-> +	 * symlink_path is only used by get_tree_entry_follow_symlinks,
-> +	 * and only for symlinks that point outside the repository.
-> +	 */
-> +	struct strbuf symlink_path;
->  };
->...
-> @@ -1469,5 +1477,7 @@ void maybe_die_on_misspelt_object_name(const char *name, const char *prefix)
->  
->  int get_sha1_with_context(const char *str, unsigned flags, unsigned char *sha1, struct object_context *orc)
->  {
-> +	if (flags & GET_SHA1_FOLLOW_SYMLINKS && flags & GET_SHA1_ONLY_TO_DIE)
-> +		die("BUG: incompatible flags for get_sha1_with_context");
->  	return get_sha1_with_context_1(str, flags, NULL, sha1, orc);
->  }
-
-Looks good; thanks.
+Am I crazy in thinking this used to error, and if not, when did it change?
