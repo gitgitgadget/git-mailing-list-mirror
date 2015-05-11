@@ -1,147 +1,100 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 14/18] lock_ref_sha1_basic(): improve diagnostics for ref D/F conflicts
-Date: Mon, 11 May 2015 17:25:16 +0200
-Message-ID: <1431357920-25090-15-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH v2 06/18] report_refname_conflict(): inline function
+Date: Mon, 11 May 2015 17:25:08 +0200
+Message-ID: <1431357920-25090-7-git-send-email-mhagger@alum.mit.edu>
 References: <1431357920-25090-1-git-send-email-mhagger@alum.mit.edu>
 Cc: Stefan Beller <sbeller@google.com>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Jeff King <peff@peff.net>, git@vger.kernel.org,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 11 17:26:25 2015
+X-From: git-owner@vger.kernel.org Mon May 11 17:27:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yrpaw-0002iU-B0
-	for gcvg-git-2@plane.gmane.org; Mon, 11 May 2015 17:26:14 +0200
+	id 1Yrpbs-0003Bm-7G
+	for gcvg-git-2@plane.gmane.org; Mon, 11 May 2015 17:27:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754405AbbEKPZ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 May 2015 11:25:59 -0400
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:56686 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752740AbbEKPZz (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 11 May 2015 11:25:55 -0400
-X-AuditID: 1207440d-f79976d000005643-a4-5550ca02b985
+	id S1753213AbbEKP1H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 May 2015 11:27:07 -0400
+Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:61531 "EHLO
+	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751638AbbEKPZj (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 11 May 2015 11:25:39 -0400
+X-AuditID: 12074414-f797f6d000004084-28-5550c9f306f3
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 66.A3.22083.20AC0555; Mon, 11 May 2015 11:25:54 -0400 (EDT)
+	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 72.94.16516.3F9C0555; Mon, 11 May 2015 11:25:39 -0400 (EDT)
 Received: from michael.fritz.box (p5DDB195E.dip0.t-ipconnect.de [93.219.25.94])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t4BFPNnQ002156
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t4BFPNnI002156
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Mon, 11 May 2015 11:25:52 -0400
+	Mon, 11 May 2015 11:25:38 -0400
 X-Mailer: git-send-email 2.1.4
 In-Reply-To: <1431357920-25090-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrKIsWRmVeSWpSXmKPExsUixO6iqMt0KiDU4PYMVYuuK91MFg29V5gt
-	bq+Yz2zxo6WH2WLz5nYWizNvGhkd2Dz+vv/A5LFgU6nHs949jB4XLyl7LH7g5fF5k1wAWxS3
-	TVJiSVlwZnqevl0Cd8b3qV8YC45IVVx93MrSwNgp2sXIySEhYCJxpL2JEcIWk7hwbz1bFyMX
-	h5DAZUaJNYveQznHmST2H1nJBFLFJqArsainGcwWEVCTmNh2iAWkiFlgF6PEvaVTWUASwgJR
-	EntnbAcq4uBgEVCVePvUDCTMK+AqcWFqAxvENjmJ88d/MoPYnEDxpVcvg7UKCbhIND2+xzKB
-	kXcBI8MqRrnEnNJc3dzEzJzi1GTd4uTEvLzUIl0jvdzMEr3UlNJNjJAg493B+H+dzCFGAQ5G
-	JR7ejkv+oUKsiWXFlbmHGCU5mJREeX/tDQgV4kvKT6nMSCzOiC8qzUktPsQowcGsJMKrvAYo
-	x5uSWFmVWpQPk5LmYFES51Vbou4nJJCeWJKanZpakFoEk5Xh4FCS4E05CdQoWJSanlqRlplT
-	gpBm4uAEGc4lJVKcmpeSWpRYWpIRD4qN+GJgdICkeID2fj0Bsre4IDEXKArReopRUUqcNwUk
-	IQCSyCjNgxsLSx2vGMWBvhTmtQSp4gGmHbjuV0CDmYAGO8aBDS5JREhJNTAyqUzJn+rycyJz
-	YqhKtpvIgf9sb+6abmM+H+Cn0indo3XnQOln5RJJ4R9sn7mP60cvObZq5oOGTrebJTtfb9N1
-	dSvlL5nkt2xv85TykrtOSyrjHI/LrCwWlvp6JLPDs6glSNCy/WSV4cqLD7l/MC6N 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrGIsWRmVeSWpSXmKPExsUixO6iqPv5ZECowa9lAhZdV7qZLBp6rzBb
+	3F4xn9niR0sPs8Xmze0sFmfeNDI6sHn8ff+ByWPBplKPZ717GD0uXlL2WPzAy+PzJrkAtihu
+	m6TEkrLgzPQ8fbsE7owHb+6xF8zgrvi28wdLA+M7ji5GTg4JAROJheceMULYYhIX7q1n62Lk
+	4hASuMwocfjBTyjnOJPEoyln2UGq2AR0JRb1NDOB2CICahIT2w6xgBQxC+xilLi3dCoLSEJY
+	wEWic9EZNhCbRUBVYtnpG8wgNi9QfP6bz+wQ6+Qkzh//CRbnFHCVWHr1MlivEFBN0+N7LBMY
+	eRcwMqxilEvMKc3VzU3MzClOTdYtTk7My0st0rXQy80s0UtNKd3ECAkzkR2MR07KHWIU4GBU
+	4uE1uOAfKsSaWFZcmXuIUZKDSUmU99fegFAhvqT8lMqMxOKM+KLSnNTiQ4wSHMxKIrzKa4By
+	vCmJlVWpRfkwKWkOFiVx3m+L1f2EBNITS1KzU1MLUotgsjIcHEoSvI0ngBoFi1LTUyvSMnNK
+	ENJMHJwgw7mkRIpT81JSixJLSzLiQdERXwyMD5AUD9De3SDtvMUFiblAUYjWU4yKUuK8C0ES
+	AiCJjNI8uLGw5PGKURzoS2HejyBVPMDEA9f9CmgwE9BgxziwwSWJCCmpBsaCjxG8uvXLt2+4
+	JLOw+nrxhoNr2SPf508K22Z9t+P2zyMmbxsbNqZs9kzPfaEik6hhvzM0ZHreoZlOVsdrFtTM
+	u9F1PROYKh0jC1OKcqM39HzeO2P2nU+POiVto47GRDppn6xM9T+k84xlsavciYrk 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268791>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268792>
 
-If there is a failure to lock a reference that is likely caused by a
-D/F conflict (e.g., trying to lock "refs/foo/bar" when reference
-"refs/foo" already exists), invoke verify_refname_available() to try
-to generate a more helpful error message.
-
-That function might not detect an error. For example, some
-non-reference file might be blocking the deletion of an
-otherwise-empty directory tree, or there might be a race with another
-process that just deleted the offending reference. In such cases,
-generate the strerror-based error message like before.
+It wasn't pulling its weight. And we are about to need code similar to
+this where no ref_entry is available and with more diverse error
+messages. Rather than try to generalize the function, just inline it.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs.c                             | 16 ++++++++++++----
- t/t1404-update-ref-df-conflicts.sh |  8 ++++----
- 2 files changed, 16 insertions(+), 8 deletions(-)
+ refs.c | 10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index ff9b9cf..ce993bd 100644
+index 6bdd34f..7422594 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -2369,8 +2369,12 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
- 		ref_file = git_path("%s", orig_refname);
- 		if (remove_empty_directories(ref_file)) {
- 			last_errno = errno;
--			strbuf_addf(err, "there are still refs under '%s'",
--				    orig_refname);
-+
-+			if (!verify_refname_available(orig_refname, extras, skip,
-+						      get_loose_refs(&ref_cache), err))
-+				strbuf_addf(err, "there are still refs under '%s'",
-+					    orig_refname);
-+
- 			goto error_return;
+@@ -857,12 +857,6 @@ static int nonmatching_ref_fn(struct ref_entry *entry, void *vdata)
+ 	return 1;
+ }
+ 
+-static void report_refname_conflict(struct ref_entry *entry,
+-				    const char *refname)
+-{
+-	error("'%s' exists; cannot create '%s'", entry->name, refname);
+-}
+-
+ /*
+  * Return true iff a reference named refname could be created without
+  * conflicting with the name of an existing reference in dir.  If
+@@ -918,7 +912,7 @@ static int is_refname_available(const char *refname,
+ 				 */
+ 				return 1;
+ 			}
+-			report_refname_conflict(entry, refname);
++			error("'%s' exists; cannot create '%s'", entry->name, refname);
+ 			return 0;
  		}
- 		refname = resolve_ref_unsafe(orig_refname, resolve_flags,
-@@ -2380,8 +2384,12 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
- 	    *type_p = type;
- 	if (!refname) {
- 		last_errno = errno;
--		strbuf_addf(err, "unable to resolve reference %s: %s",
--			    orig_refname, strerror(errno));
-+		if (last_errno != ENOTDIR ||
-+		    !verify_refname_available(orig_refname, extras, skip,
-+					      get_loose_refs(&ref_cache), err))
-+			strbuf_addf(err, "unable to resolve reference %s: %s",
-+				    orig_refname, strerror(last_errno));
-+
- 		goto error_return;
+ 
+@@ -969,7 +963,7 @@ static int is_refname_available(const char *refname,
+ 		if (!do_for_each_entry_in_dir(dir, 0, nonmatching_ref_fn, &data))
+ 			return 1;
+ 
+-		report_refname_conflict(data.found, refname);
++		error("'%s' exists; cannot create '%s'", data.found->name, refname);
+ 		return 0;
  	}
- 	/*
-diff --git a/t/t1404-update-ref-df-conflicts.sh b/t/t1404-update-ref-df-conflicts.sh
-index b0bb7d4..348a07a 100755
---- a/t/t1404-update-ref-df-conflicts.sh
-+++ b/t/t1404-update-ref-df-conflicts.sh
-@@ -36,7 +36,7 @@ test_expect_success 'existing loose ref is a simple prefix of new' '
- 
- 	prefix=refs/1l &&
- 	test_update_rejected $prefix "a c e" false "b c/x d" \
--		"unable to resolve reference $prefix/c/x: Not a directory"
-+		"$Q$prefix/c$Q exists; cannot create $Q$prefix/c/x$Q"
- 
- '
- 
-@@ -52,7 +52,7 @@ test_expect_success 'existing loose ref is a deeper prefix of new' '
- 
- 	prefix=refs/2l &&
- 	test_update_rejected $prefix "a c e" false "b c/x/y d" \
--		"unable to resolve reference $prefix/c/x/y: Not a directory"
-+		"$Q$prefix/c$Q exists; cannot create $Q$prefix/c/x/y$Q"
- 
- '
- 
-@@ -68,7 +68,7 @@ test_expect_success 'new ref is a simple prefix of existing loose' '
- 
- 	prefix=refs/3l &&
- 	test_update_rejected $prefix "a c/x e" false "b c d" \
--		"there are still refs under $Q$prefix/c$Q"
-+		"$Q$prefix/c/x$Q exists; cannot create $Q$prefix/c$Q"
- 
- '
- 
-@@ -84,7 +84,7 @@ test_expect_success 'new ref is a deeper prefix of existing loose' '
- 
- 	prefix=refs/4l &&
- 	test_update_rejected $prefix "a c/x/y e" false "b c d" \
--		"there are still refs under $Q$prefix/c$Q"
-+		"$Q$prefix/c/x/y$Q exists; cannot create $Q$prefix/c$Q"
- 
- '
  
 -- 
 2.1.4
