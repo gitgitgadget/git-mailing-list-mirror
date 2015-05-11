@@ -1,142 +1,135 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v5 2/6] help.c: output the typical Git workflow
-Date: Mon, 11 May 2015 02:24:37 -0400
-Message-ID: <CAPig+cR46K2h+hk4riwXcty=T+RBoT1Za9rqOwB9EgvUReUhmg@mail.gmail.com>
+Subject: Re: [PATCH v5 4/6] Makefile: update to new command-list.txt format
+Date: Mon, 11 May 2015 02:44:26 -0400
+Message-ID: <CAPig+cQBUiniQ_A2BZGx-R4kxabE5hPcrbcoPXbq0kJS6oP+uw@mail.gmail.com>
 References: <1431191856-10949-1-git-send-email-sebastien.guimmara@gmail.com>
-	<1431191856-10949-3-git-send-email-sebastien.guimmara@gmail.com>
+	<1431191856-10949-5-git-send-email-sebastien.guimmara@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Git List <git@vger.kernel.org>
 To: =?UTF-8?Q?S=C3=A9bastien_Guimmara?= <sebastien.guimmara@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 11 08:24:52 2015
+X-From: git-owner@vger.kernel.org Mon May 11 08:44:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yrh92-0000hk-3u
-	for gcvg-git-2@plane.gmane.org; Mon, 11 May 2015 08:24:52 +0200
+	id 1YrhS4-0008Az-Un
+	for gcvg-git-2@plane.gmane.org; Mon, 11 May 2015 08:44:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752324AbbEKGYl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 May 2015 02:24:41 -0400
-Received: from mail-ie0-f179.google.com ([209.85.223.179]:36202 "EHLO
-	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751065AbbEKGYi convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 11 May 2015 02:24:38 -0400
-Received: by iecmd7 with SMTP id md7so23101654iec.3
-        for <git@vger.kernel.org>; Sun, 10 May 2015 23:24:37 -0700 (PDT)
+	id S1752330AbbEKGo2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 May 2015 02:44:28 -0400
+Received: from mail-ig0-f176.google.com ([209.85.213.176]:37447 "EHLO
+	mail-ig0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752308AbbEKGo1 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 11 May 2015 02:44:27 -0400
+Received: by igbsb11 with SMTP id sb11so62452827igb.0
+        for <git@vger.kernel.org>; Sun, 10 May 2015 23:44:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc:content-type:content-transfer-encoding;
-        bh=uTxcbEPYqI5Xwcuf62X5y8GCl4XakjdAKXuhQswpsQQ=;
-        b=UuXClmcRRBjCiQBbMMdoU+Lm59axl4czhgG/qGE05t0wSJ9nxFtUiyb4sybcEncRpP
-         JpG0FVzuzL4USXUPwUTqWLTtK/QSE7pEb9ZXF8ccBljyr0GpyFw3FoQGj1YZ/IdVgjoO
-         FKVT+GSBo1J/mj/qZIOVoPKq/l9N9qLIqfNmXonHsIEEXRNvw2y8kXT79euDBfqfkr+D
-         DOQnyRHMj1G+ejjvYoG1sJfiPar1Fg4tXeEuhSZtekOzL5yXvIDMLpAWj+BEdMp5SJMM
-         2YJO3EEELLnbxP6AKrKAlQpz4oDZpkCfj79GFXUG5/SdOzSMfGygLi17qE6a4skyUloT
-         SH5w==
-X-Received: by 10.107.169.74 with SMTP id s71mr10982285ioe.46.1431325477336;
- Sun, 10 May 2015 23:24:37 -0700 (PDT)
-Received: by 10.107.28.132 with HTTP; Sun, 10 May 2015 23:24:37 -0700 (PDT)
-In-Reply-To: <1431191856-10949-3-git-send-email-sebastien.guimmara@gmail.com>
-X-Google-Sender-Auth: B3usoQN476bmLrpb9ldsWaE-Fps
+        bh=dbX/vZxhq4ajxGCuFHmQL9MJCOkjy9FKTChl4iYqNV4=;
+        b=N6dQGN112L1iE+b8eGrQX5ws9RcvWXWT2Lvkt+0tYjFUXoIwid4Im5y/muQjlB9O5P
+         R1zDCYbfmCOlYHHq4qaraI9jl3J20zsFrW6QrjBOB1cYMZCsLmzyYgSgJib58fJ7W4GV
+         v7Yc9WNH9PrEONDhGXnOdnwOUh/nF1auJy8JFKOHBdC824f9/L0cvi1cJjkbhjZzNMP1
+         k2DUpiGfO+4YYCqiKBpb02Eq0YOgf0Iifz7LpBm0q7aKqG2J2hWi36P6FMrVeYk9r0cq
+         rNvuN5d4NVRwo/MhYf2/L7mPy4sGDf5Of3Vs0vXcBU0fl22Y0AHQ9yVF8a4dexi/Jpmj
+         dIaA==
+X-Received: by 10.50.61.200 with SMTP id s8mr12458508igr.7.1431326666972; Sun,
+ 10 May 2015 23:44:26 -0700 (PDT)
+Received: by 10.107.28.132 with HTTP; Sun, 10 May 2015 23:44:26 -0700 (PDT)
+In-Reply-To: <1431191856-10949-5-git-send-email-sebastien.guimmara@gmail.com>
+X-Google-Sender-Auth: L-A4teRwQBpDYzGT0qshH5z89iM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268759>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268760>
 
 On Sat, May 9, 2015 at 1:17 PM, S=C3=A9bastien Guimmara
 <sebastien.guimmara@gmail.com> wrote:
-> 'git help' shows common commands in alphabetical order:
+> * In target common-cmds.h:
+>   The AWK script 'generate-cmdlist.awk' replaces 'generate-cmdlist.sh=
+'
 >
-> The most commonly used git commands are:
->    add        Add file contents to the index
->    bisect     Find by binary search the change that introduced a bug
->    branch     List, create, or delete branches
->    checkout   Checkout a branch or paths to the working tree
->    clone      Clone a repository into a new directory
->    commit     Record changes to the repository
->    [...]
+> * In target check-docs:
+>   command-list.txt now contains common commands group in
+>   the header [common]. sed ignore all lines in command-list.txt
+>   until the [commands] list to correctly checks for missing
+>   documentation on Git commands.
 >
-> without any indication of how commands relate to high-level
-> concepts or each other. Revise the output to explain their relationsh=
-ip
-> with the typical Git workflow:
->
-> The typical Git workflow includes:
->
->    * start a working area (see also: git help tutorial):
->       clone      Clone a repository into a new directory
->       init       Create an empty Git repository or reinitialize [...]
+> For the target common-cmds.h part:
+> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 
-In practice, I find the indented bulleted header items somewhat
-unsightly. More importantly, indenting them wastes precious horizontal
-screen real-estate (for those of who use 80-column terminals). Since
-the headers are already distinguished by being bulleted, you could
-easily drop the indentation; and then reduce the indentation of the
-commands themselves.
+The Makefile modification from my generate-cmdlist patch[1] is part of
+the overall logical change of that patch. Its relation to the Makefile
+changes in this patch is weak at best, or entirely non-existent.
+Consequently, it should not be mixed with them. See my reply[2] to the
+v5 cover letter for more information.
 
->    * work on the current change (see also: git help everyday):
->       add        Add file contents to the index
->       reset      Reset current HEAD to the specified state
->
->    * examine the history and state (see also: git help revisions):
->       log        Show commit logs
->       status     Show the working tree status
->
->    [...]
->
+More below.
+
+[1]: http://article.gmane.org/gmane.comp.version-control.git/268598
+[2]: http://article.gmane.org/gmane.comp.version-control.git/268756
+
+> For the target check-docs part:
 > Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 > Signed-off-by: S=C3=A9bastien Guimmara <sebastien.guimmara@gmail.com>
 > ---
-> diff --git a/help.c b/help.c
-> index 2072a87..1df205f 100644
-> --- a/help.c
-> +++ b/help.c
-> @@ -218,6 +218,18 @@ void list_commands(unsigned int colopts,
->         }
->  }
+> diff --git a/Makefile b/Makefile
+> index 5f3987f..9f333e9 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -1687,10 +1687,10 @@ $(BUILT_INS): git$X
+>         ln -s $< $@ 2>/dev/null || \
+>         cp $< $@
 >
-> +int cmd_group_cmp(const void *elem1, const void *elem2)
-> +{
-> +       const struct cmdname_help *e1 =3D elem1;
-> +       const struct cmdname_help *e2 =3D elem2;
-> +
-> +       if (e1->group < e2->group)
-> +               return -1;
-> +       if (e1->group > e2->group)
-> +               return 1;
-> +       return strcmp(e1->name, e2->name);
-> +}
-> +
->  void list_common_cmds_help(void)
->  {
->         int i, longest =3D 0;
-> @@ -227,9 +239,18 @@ void list_common_cmds_help(void)
->                         longest =3D strlen(common_cmds[i].name);
->         }
+> -common-cmds.h: ./generate-cmdlist.sh command-list.txt
+> +common-cmds.h: generate-cmdlist.awk command-list.txt
 >
-> -       puts(_("The most commonly used git commands are:"));
-> +       qsort(common_cmds, ARRAY_SIZE(common_cmds),
-> +               sizeof(common_cmds[0]), cmd_group_cmp);
-> +
-> +       puts(_("The typical Git workflow includes:"));
-> +
->         for (i =3D 0; i < ARRAY_SIZE(common_cmds); i++) {
-> -               printf("   %s   ", common_cmds[i].name);
-> +               if (common_cmds[i].group !=3D current_grp) {
-> +                       printf("\n   * %s:\n", _(common_cmd_groups[co=
-mmon_cmds[i].group]));
-> +                       current_grp =3D common_cmds[i].group;
-> +               }
-> +
-> +               printf("      %s   ", common_cmds[i].name);
->                 mput_char(' ', longest - strlen(common_cmds[i].name))=
-;
->                 puts(_(common_cmds[i].help));
->         }
+>  common-cmds.h: $(wildcard Documentation/git-*.txt)
+> -       $(QUIET_GEN)./generate-cmdlist.sh > $@+ && mv $@+ $@
+> +       $(QUIET_GEN)awk -f generate-cmdlist.awk command-list.txt > $@=
++ && mv $@+ $@
+>
+>  SCRIPT_DEFINES =3D $(SHELL_PATH_SQ):$(DIFF_SQ):$(GIT_VERSION):\
+>         $(localedir_SQ):$(NO_CURL):$(USE_GETTEXT_SCHEME):$(SANE_TOOL_=
+PATH_SQ):\
+> @@ -2447,7 +2447,7 @@ check-docs::
+>                 esac ; \
+>                 test -f "Documentation/$$v.txt" || \
+>                 echo "no doc: $$v"; \
+> -               sed -e '/^#/d' command-list.txt | \
+> +               sed -e '1,/^\[commands\]/d' <command-list.txt | \
+
+I'm not convinced that it's a good idea to drop comment-line
+processing from this sed invocation. Even though the current
+command-list.txt may not have any comments following the [commands]
+header, there is no guarantee that someone won't some day add some
+comments following the header.
+
+sed accepts multiple -e arguments, so retaining comment-line
+processing does not make the extraction any more expensive. For
+instance:
+
+    sed -e '1,/^\[commands\]/d' -e '/^#/d' <command-list.txt | \
+
+>                 grep -q "^$$v[  ]" || \
+>                 case "$$v" in \
+>                 git) ;; \
+> @@ -2455,7 +2455,7 @@ check-docs::
+>                 esac ; \
+>         done; \
+>         ( \
+> -               sed -e '/^#/d' \
+> +               sed -e '1,/^\[commands\]/d' \
+
+Ditto. It would be more robust to retain comment-line processing.
+
+>                     -e 's/[     ].*//' \
+>                     -e 's/^/listed /' command-list.txt; \
+>                 $(MAKE) -C Documentation print-man1 | \
 > --
 > 2.4.0
