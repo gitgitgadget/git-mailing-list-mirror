@@ -1,395 +1,292 @@
 From: dturner@twopensource.com
-Subject: [PATCH v4 3/3] cat-file: add --follow-symlinks to --batch
-Date: Mon, 11 May 2015 13:56:29 -0400
-Message-ID: <1431366989-7405-4-git-send-email-dturner@twopensource.com>
+Subject: [PATCH v4 1/3] tree-walk: learn get_tree_entry_follow_symlinks
+Date: Mon, 11 May 2015 13:56:27 -0400
+Message-ID: <1431366989-7405-2-git-send-email-dturner@twopensource.com>
 References: <1431366989-7405-1-git-send-email-dturner@twopensource.com>
 Cc: David Turner <dturner@twitter.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 11 19:57:03 2015
+X-From: git-owner@vger.kernel.org Mon May 11 19:57:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yrrws-0004Sx-9R
-	for gcvg-git-2@plane.gmane.org; Mon, 11 May 2015 19:57:02 +0200
+	id 1Yrrx1-0004YI-Mv
+	for gcvg-git-2@plane.gmane.org; Mon, 11 May 2015 19:57:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932110AbbEKR4z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 May 2015 13:56:55 -0400
-Received: from mail-qg0-f43.google.com ([209.85.192.43]:32891 "EHLO
-	mail-qg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753595AbbEKR4x (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 May 2015 13:56:53 -0400
-Received: by qgdy78 with SMTP id y78so71934154qgd.0
-        for <git@vger.kernel.org>; Mon, 11 May 2015 10:56:52 -0700 (PDT)
+	id S1752262AbbEKR5E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 May 2015 13:57:04 -0400
+Received: from mail-qk0-f169.google.com ([209.85.220.169]:34604 "EHLO
+	mail-qk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753584AbbEKR4v (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 May 2015 13:56:51 -0400
+Received: by qkgx75 with SMTP id x75so92341079qkg.1
+        for <git@vger.kernel.org>; Mon, 11 May 2015 10:56:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=YHNgyUKxw0jT8aUt8+XrrQb9PTzHCJuwtDqSrufeY0w=;
-        b=RXD9tsKCZwmmCnKs3utuOgpGFa0LZd/BLgQEVPi2YebAftI42z+lQNIfEr75qH0xcg
-         JLO2b7GmjtD9yBdPMIdhYdeVORanjfoKPrV4d9bYjhF7tI27UdhukokDXhedNL2raUa6
-         Xc+/0JsSD6/emdUQ3qAGDmaKwX6pVweNkxzYgmtDh/MLaN+2h7nEGIX5ULwY0OTMCqmo
-         0iB/tAkH7FCIzZkIQRJAGx0LH+UTB1eTn/4RABHnCXSifqxPzYcZBtWfYIK+wf9MM/nr
-         ZfJuJc6et3ARb61xf17ffd0yO6d80F0ohRZRtwSIYJ/6QLYlvggPvZt85CGtyB2ReqaH
-         O07w==
-X-Gm-Message-State: ALoCoQnUmBXraMwx6BYFa6wMDHCHUylH3U99r0x2sXnW6l3F0mvNWKBrKb9rtwiJlyzXwY15lWai
-X-Received: by 10.55.31.7 with SMTP id f7mr25138349qkf.9.1431367012491;
-        Mon, 11 May 2015 10:56:52 -0700 (PDT)
+        bh=gBF+BYDH4TZjL5DQbpYd0jTDXTLYWdaiTZdTKhZlImM=;
+        b=gZkNreJtkSQL9jb3QJx45+GV83jFi2mYxr6u+0bDHtwaP7cICNxK8hq7Huv81rGFnz
+         cnbBvoiD40g4TkP7VEqTeJ206Zai9/eNkVtcACNia/tLrGr7ew7TsCfbOX67GybskTUm
+         irOG3G8xUYm8mlEaqBFYbvHCipk0F5SMdHByvhDXrpOtYA1S/cikLd6PBzbvEW7beMcv
+         V9c+Q68V0yszyzgunTGflDf68thfHN4ugvuXpXgtr4Ypi4swLXMHFQ0VOORJb2roOYHv
+         tkBcQ4JeIwY/JG85T9Mnl4hJpgqj5FsEuxIzpPbwjPHd1tAb2jH8N41NFieOr3nQ4WUi
+         Alhw==
+X-Gm-Message-State: ALoCoQlQK5E7vTRRb7OOgPuI6rHQk4uARw7/M8lTpen/ouLBxt31dQy1R2peP98stgyfB65r8In1
+X-Received: by 10.140.92.51 with SMTP id a48mr14733692qge.30.1431367010369;
+        Mon, 11 May 2015 10:56:50 -0700 (PDT)
 Received: from ubuntu.jfk4.office.twttr.net ([192.133.79.147])
-        by mx.google.com with ESMTPSA id 20sm11093161qhf.14.2015.05.11.10.56.51
+        by mx.google.com with ESMTPSA id 20sm11093161qhf.14.2015.05.11.10.56.48
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 11 May 2015 10:56:51 -0700 (PDT)
+        Mon, 11 May 2015 10:56:49 -0700 (PDT)
 X-Mailer: git-send-email 2.0.4.315.gad8727a-twtrsrc
 In-Reply-To: <1431366989-7405-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268808>
 
 From: David Turner <dturner@twitter.com>
 
-This wires the in-repo-symlink following code through to the cat-file
-builtin.  In the event of an out-of-repo link, cat-file will print
-the link in a new format.
+Add a new function, get_tree_entry_follow_symlinks, to tree-walk.[ch].
+The function is not yet used.  It will be used to implement git
+cat-file --batch --follow-symlinks.
+
+The function locates an object by path, following symlinks in the
+repository.  If the symlinks lead outside the repository, the function
+reports this to the caller.
 
 Signed-off-by: David Turner <dturner@twitter.com>
 ---
- Documentation/git-cat-file.txt |  28 +++++-
- builtin/cat-file.c             |  24 +++++-
- t/t1006-cat-file.sh            | 189 +++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 236 insertions(+), 5 deletions(-)
+ tree-walk.c | 193 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ tree-walk.h |   2 +
+ 2 files changed, 195 insertions(+)
 
-diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
-index f6a16f4..18b67a3 100644
---- a/Documentation/git-cat-file.txt
-+++ b/Documentation/git-cat-file.txt
-@@ -10,7 +10,7 @@ SYNOPSIS
- --------
- [verse]
- 'git cat-file' (-t | -s | -e | -p | <type> | --textconv ) <object>
--'git cat-file' (--batch | --batch-check) < <list-of-objects>
-+'git cat-file' (--batch | --batch-check) [--follow-symlinks] < <list-of-objects>
+diff --git a/tree-walk.c b/tree-walk.c
+index 5dd9a71..3d088b6 100644
+--- a/tree-walk.c
++++ b/tree-walk.c
+@@ -415,6 +415,12 @@ int traverse_trees(int n, struct tree_desc *t, struct traverse_info *info)
+ 	return error;
+ }
  
- DESCRIPTION
- -----------
-@@ -69,6 +69,19 @@ OPTIONS
- 	not be combined with any other options or arguments.  See the
- 	section `BATCH OUTPUT` below for details.
- 
-+--follow-symlinks::
-+	Follow symlinks inside the repository.  Instead of providing
-+	output about the link itself, provide output about the linked-to
-+	object.  This option requires --batch or --batch-check.  In the
-+	event of a symlink loop (or more than 40 symlinks in a symlink
-+	resolution chain), the file will be treated as missing.  If a
-+	symlink points outside the repository (e.g. a link to /foo or a
-+	root-level link to ../foo), the portion of the link which is
-+	outside the repository will be printed.  Follow-symlinks will
-+	be silently turned off if <object> specifies an object in the
-+	index rather than one in the object database.
++struct dir_state {
++	void *tree;
++	unsigned long size;
++	unsigned char sha1[20];
++};
 +
-+
- OUTPUT
- ------
- If '-t' is specified, one of the <type>.
-@@ -148,6 +161,19 @@ the repository, then `cat-file` will ignore any custom format and print:
- <object> SP missing LF
- ------------
- 
-+If --follow-symlinks is used, and a symlink in the repository points
-+outside the repository, then `cat-file` will ignore any custom format
-+and print:
-+
-+------------
-+symlink SP <size> LF <symlink> LF
-+------------
-+
-+The symlink will either be absolute (beginning with a /), or relative
-+to the repository root.  For instance, if dir/link points to ../../foo,
-+then <symlink> will be ../foo.  <size> is the size of the symlink in
-+bytes.
-+
- 
- CAVEATS
- -------
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index df99df4..6bcf9a0 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -224,6 +224,7 @@ static void print_object_or_die(int fd, struct expand_data *data)
- 
- struct batch_options {
- 	int enabled;
-+	int follow_symlinks;
- 	int print_contents;
- 	const char *format;
- };
-@@ -232,16 +233,25 @@ static int batch_one_object(const char *obj_name, struct batch_options *opt,
- 			    struct expand_data *data)
+ static int find_tree_entry(struct tree_desc *t, const char *name, unsigned char *result, unsigned *mode)
  {
- 	struct strbuf buf = STRBUF_INIT;
-+	struct object_context ctx;
-+	int flags = opt->follow_symlinks ? GET_SHA1_FOLLOW_SYMLINKS : 0;
+ 	int namelen = strlen(name);
+@@ -478,6 +484,193 @@ int get_tree_entry(const unsigned char *tree_sha1, const char *name, unsigned ch
+ 	return retval;
+ }
  
- 	if (!obj_name)
- 	   return 1;
- 
--	if (get_sha1(obj_name, data->sha1)) {
-+	if (get_sha1_with_context(obj_name, flags, data->sha1, &ctx)) {
- 		printf("%s missing\n", obj_name);
- 		fflush(stdout);
- 		return 0;
- 	}
- 
-+	if (ctx.mode == 0) {
-+		printf("symlink %"PRIuMAX"\n%s\n",
-+		       (uintmax_t)ctx.symlink_path.len,
-+		       ctx.symlink_path.buf);
-+		return 0;
++/*
++ * This is Linux's built-in max for the number of symlinks to follow.
++ * That limit, of course, does not affect git, but it's a reasonable
++ * choice.
++ */
++#define GET_TREE_ENTRY_FOLLOW_SYMLINKS_MAX_LINKS 40
++
++/**
++ * Find a tree entry by following symlinks in tree_sha (which is
++ * assumed to be the root of the repository).  In the event that a
++ * symlink points outside the repository (e.g. a link to /foo or a
++ * root-level link to ../foo), the portion of the link which is
++ * outside the repository will be returned in result_path, and *mode
++ * will be set to 0.  It is assumed that result_path is uninitialized.
++ * If there are no symlinks, or the end result of the symlink chain
++ * points to an object inside the repository, result will be filled in
++ * with the sha1 of the found object, and *mode will hold the mode of
++ * the object.  If there is a symlink loop, -1 will be returned.
++ */
++int get_tree_entry_follow_symlinks(unsigned char *tree_sha1, const char *name, unsigned char *result, struct strbuf *result_path, unsigned *mode)
++{
++	int retval = -1;
++	struct dir_state *parents = NULL;
++	size_t parents_alloc = 0;
++	ssize_t parents_nr = 0;
++	unsigned char current_tree_sha1[20];
++	struct strbuf namebuf = STRBUF_INIT;
++	struct tree_desc t = {0};
++	int follows_remaining = GET_TREE_ENTRY_FOLLOW_SYMLINKS_MAX_LINKS;
++	int i;
++
++	result_path->buf = 0;
++	result_path->alloc = 0;
++	result_path->len = 0;
++	strbuf_addstr(&namebuf, name);
++	hashcpy(current_tree_sha1, tree_sha1);
++
++	while (1) {
++		int find_result;
++		char *first_slash;
++		char *remainder = NULL;
++
++		if (!t.buffer) {
++			void *tree;
++			unsigned char root[20];
++			unsigned long size;
++			tree = read_object_with_reference(current_tree_sha1,
++							  tree_type, &size,
++							  root);
++			if (!tree)
++				goto done;
++
++			ALLOC_GROW(parents, parents_nr + 1, parents_alloc);
++			parents[parents_nr].tree = tree;
++			parents[parents_nr].size = size;
++			hashcpy(parents[parents_nr].sha1, root);
++			parents_nr++;
++
++			if (namebuf.buf[0] == '\0') {
++				hashcpy(result, root);
++				retval = 0;
++				goto done;
++			}
++
++			if (!size)
++				goto done;
++
++			/* descend */
++			init_tree_desc(&t, tree, size);
++		}
++
++		/* Handle symlinks to e.g. a//b by removing leading slashes */
++		while (namebuf.buf[0] == '/') {
++			strbuf_remove(&namebuf, 0, 1);
++		}
++
++		/* Split namebuf into a first component and a remainder */
++		if ((first_slash = strchr(namebuf.buf, '/'))) {
++			*first_slash = 0;
++			remainder = first_slash + 1;
++		}
++
++		if (!strcmp(namebuf.buf, "..")) {
++			struct dir_state *parent;
++			/*
++			 * We could end up with .. in the namebuf if it
++			 * appears in a symlink.
++			 */
++
++			if (parents_nr == 1) {
++				if (remainder)
++					*first_slash = '/';
++				strbuf_add(result_path, namebuf.buf,
++					   namebuf.len);
++				*mode = 0;
++				retval = 0;
++				goto done;
++			}
++			parent = &parents[parents_nr - 1];
++			free(parent->tree);
++			parents_nr--;
++			parent = &parents[parents_nr - 1];
++			init_tree_desc(&t, parent->tree, parent->size);
++			strbuf_remove(&namebuf, 0, remainder ? 3 : 2);
++			continue;
++		}
++
++		/* We could end up here via a symlink to dir/.. */
++		if (namebuf.buf[0] == '\0') {
++			hashcpy(result, parents[parents_nr - 1].sha1);
++			retval = 0;
++			goto done;
++		}
++
++		/* Look up the first (or only) path component in the tree. */
++		find_result = find_tree_entry(&t, namebuf.buf,
++					      current_tree_sha1, mode);
++		if (find_result) {
++			retval = find_result;
++			goto done;
++		}
++
++		if (S_ISDIR(*mode)) {
++			if (!remainder) {
++				hashcpy(result, current_tree_sha1);
++				retval = 0;
++				goto done;
++			}
++			/* Descend the tree */
++			t.buffer = NULL;
++			strbuf_remove(&namebuf, 0,
++				      1 + first_slash - namebuf.buf);
++		} else if (S_ISREG(*mode)) {
++			if (!remainder) {
++				hashcpy(result, current_tree_sha1);
++				retval = 0;
++			}
++			goto done;
++		} else if (S_ISLNK(*mode)) {
++			/* Follow a symlink */
++			size_t link_len, len;
++			char *contents, *contents_start;
++			struct dir_state *parent;
++			enum object_type type;
++
++			if (follows_remaining-- == 0)
++				/* Too many symlinks followed */
++				goto done;
++
++			contents = read_sha1_file(current_tree_sha1, &type,
++						  &link_len);
++
++			if (!contents)
++				goto done;
++
++			if (contents[0] == '/') {
++				strbuf_addstr(result_path, contents);
++				*mode = 0;
++				retval = 0;
++				goto done;
++			}
++
++			if (remainder)
++				len = first_slash - namebuf.buf;
++			else
++				len = namebuf.len;
++
++			contents_start = contents;
++
++			parent = &parents[parents_nr - 1];
++			init_tree_desc(&t, parent->tree, parent->size);
++			strbuf_splice(&namebuf, 0, len,
++				      contents_start, link_len);
++			if (remainder)
++				namebuf.buf[link_len] = '/';
++			free(contents);
++		}
 +	}
++done:
++	for (i = 0; i < parents_nr; i++)
++		free(parents[i].tree);
++	free(parents);
 +
- 	if (sha1_object_info_extended(data->sha1, &data->info, LOOKUP_REPLACE_OBJECT) < 0) {
- 		printf("%s missing\n", obj_name);
- 		fflush(stdout);
-@@ -342,9 +352,8 @@ static int batch_option_callback(const struct option *opt,
- {
- 	struct batch_options *bo = opt->value;
++	strbuf_release(&namebuf);
++	return retval;
++}
++
+ static int match_entry(const struct pathspec_item *item,
+ 		       const struct name_entry *entry, int pathlen,
+ 		       const char *match, int matchlen,
+diff --git a/tree-walk.h b/tree-walk.h
+index ae7fb3a..d1670c6 100644
+--- a/tree-walk.h
++++ b/tree-walk.h
+@@ -40,6 +40,8 @@ struct traverse_info;
+ typedef int (*traverse_callback_t)(int n, unsigned long mask, unsigned long dirmask, struct name_entry *entry, struct traverse_info *);
+ int traverse_trees(int n, struct tree_desc *t, struct traverse_info *info);
  
--	if (unset) {
--		memset(bo, 0, sizeof(*bo));
--		return 0;
-+	if (bo->enabled) {
-+		return 1;
- 	}
- 
- 	bo->enabled = 1;
-@@ -369,6 +378,9 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
- 		OPT_SET_INT('p', NULL, &opt, N_("pretty-print object's content"), 'p'),
- 		OPT_SET_INT(0, "textconv", &opt,
- 			    N_("for blob objects, run textconv on object's content"), 'c'),
-+		OPT_SET_INT(0, "follow-symlinks", &batch.follow_symlinks,
-+			N_("follow in-repo symlinks; report out-of-repo symlinks (requires --batch or --batch-check)"),
-+			    1),
- 		{ OPTION_CALLBACK, 0, "batch", &batch, "format",
- 			N_("show info and content of objects fed from the standard input"),
- 			PARSE_OPT_OPTARG, batch_option_callback },
-@@ -402,6 +414,10 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
- 		usage_with_options(cat_file_usage, options);
- 	}
- 
-+	if (batch.follow_symlinks && !batch.enabled) {
-+		usage_with_options(cat_file_usage, options);
-+	}
++int get_tree_entry_follow_symlinks(unsigned char *tree_sha1, const char *name, unsigned char *result, struct strbuf *result_path, unsigned *mode);
 +
- 	if (batch.enabled)
- 		return batch_objects(&batch);
- 
-diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-index ab36b1e..500cfa9 100755
---- a/t/t1006-cat-file.sh
-+++ b/t/t1006-cat-file.sh
-@@ -189,6 +189,13 @@ do
-     '
- done
- 
-+for opt in t s e p
-+do
-+    test_expect_success "Passing -$opt with --follow-symlinks fails" '
-+	    test_must_fail git cat-file --follow-symlinks -$opt $hello_sha1
-+	'
-+done
-+
- test_expect_success "--batch-check for a non-existent named object" '
-     test "foobar42 missing
- foobar84 missing" = \
-@@ -296,4 +303,186 @@ test_expect_success '%(deltabase) reports packed delta bases' '
- 	}
- '
- 
-+# Tests for git cat-file --follow-symlinks
-+test_expect_success 'prep for symlink tests' '
-+	echo_without_newline "$hello_content" >morx &&
-+	test_ln_s_add morx same-dir-link &&
-+	test_ln_s_add ../fleem out-of-repo-link &&
-+	test_ln_s_add .. out-of-repo-link-dir &&
-+	test_ln_s_add same-dir-link link-to-link &&
-+	test_ln_s_add nope broken-same-dir-link &&
-+	mkdir dir &&
-+	test_ln_s_add ../morx dir/parent-dir-link &&
-+	test_ln_s_add .. dir/link-dir &&
-+	test_ln_s_add ../../escape dir/out-of-repo-link &&
-+	test_ln_s_add ../.. dir/out-of-repo-link-dir &&
-+	test_ln_s_add nope dir/broken-link-in-dir &&
-+	mkdir dir/subdir &&
-+	test_ln_s_add ../../morx dir/subdir/grandparent-dir-link &&
-+	test_ln_s_add ../../../great-escape dir/subdir/out-of-repo-link &&
-+	test_ln_s_add ../../.. dir/subdir/out-of-repo-link-dir &&
-+	test_ln_s_add ../../../ dir/subdir/out-of-repo-link-dir-trailing &&
-+	test_ln_s_add ../parent-dir-link dir/subdir/parent-dir-link-to-link &&
-+	echo_without_newline "$hello_content" >dir/subdir/ind2 &&
-+	echo_without_newline "$hello_content" >dir/ind1 &&
-+	test_ln_s_add dir dirlink &&
-+	test_ln_s_add dir/subdir subdirlink &&
-+	test_ln_s_add subdir/ind2 dir/link-to-child &&
-+	test_ln_s_add dir/link-to-child link-to-down-link &&
-+	test_ln_s_add dir/.. up-down &&
-+	test_ln_s_add dir/../ up-down-trailing &&
-+	test_ln_s_add dir/../morx up-down-file &&
-+	test_ln_s_add dir/../../morx up-up-down-file &&
-+	test_ln_s_add subdirlink/../../morx up-two-down-file &&
-+	test_ln_s_add loop1 loop2 &&
-+	test_ln_s_add loop2 loop1 &&
-+	git add morx dir/subdir/ind2 dir/ind1 &&
-+	git commit -am "test"
-+	echo $hello_sha1 blob $hello_size >found
-+'
-+
-+test_expect_success 'git cat-file --batch-check --follow-symlinks works for non-links' '
-+	echo HEAD:morx | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp found actual &&
-+	echo HEAD:nope missing >expect &&
-+	echo HEAD:nope | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'git cat-file --batch-check --follow-symlinks works for in-repo, same-dir links' '
-+	echo HEAD:same-dir-link | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp found actual
-+'
-+
-+test_expect_success 'git cat-file --batch-check --follow-symlinks works for broken in-repo, same-dir links' '
-+	echo HEAD:broken-same-dir-link missing >expect &&
-+	echo HEAD:broken-same-dir-link | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'git cat-file --batch-check --follow-symlinks works for same-dir links-to-links' '
-+	echo HEAD:link-to-link | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp found actual
-+'
-+
-+test_expect_success 'git cat-file --batch-check --follow-symlinks works for parent-dir links' '
-+	echo HEAD:dir/parent-dir-link | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp found actual &&
-+	echo HEAD:dir/parent-dir-link/nope missing >expect &&
-+	echo HEAD:dir/parent-dir-link/nope | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'git cat-file --batch-check --follow-symlinks works for .. links' '
-+	echo HEAD:dir/link-dir/nope missing >expect &&
-+	echo HEAD:dir/link-dir/nope | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp expect actual &&
-+	echo HEAD:dir/link-dir/morx | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp found actual &&
-+	echo HEAD:dir/broken-link-in-dir missing >expect &&
-+	echo HEAD:dir/broken-link-in-dir | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'git cat-file --batch-check --follow-symlinks works for ../.. links' '
-+	echo HEAD:dir/subdir/grandparent-dir-link/nope missing >expect &&
-+	echo HEAD:dir/subdir/grandparent-dir-link/nope | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp expect actual &&
-+	echo HEAD:dir/subdir/grandparent-dir-link | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp found actual &&
-+	echo HEAD:dir/subdir/parent-dir-link-to-link | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp found actual
-+'
-+
-+test_expect_success 'git cat-file --batch-check --follow-symlinks works for dir/ links' '
-+	echo HEAD:dirlink/morx missing >expect &&
-+	echo HEAD:dirlink/morx | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp expect actual &&
-+	echo $hello_sha1 blob $hello_size >expect &&
-+	echo HEAD:dirlink/ind1 | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'git cat-file --batch-check --follow-symlinks works for dir/subdir links' '
-+	echo HEAD:subdirlink/morx missing >expect &&
-+	echo HEAD:subdirlink/morx | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp expect actual &&
-+	echo HEAD:subdirlink/ind2 | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp found actual
-+'
-+
-+test_expect_success 'git cat-file --batch-check --follow-symlinks works for dir ->subdir links' '
-+	echo HEAD:dir/link-to-child/morx missing >expect &&
-+	echo HEAD:dir/link-to-child/morx | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp expect actual &&
-+	echo HEAD:dir/link-to-child | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp found actual &&
-+	echo HEAD:link-to-down-link | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp found actual
-+'
-+
-+test_expect_success 'git cat-file --batch-check --follow-symlinks works for out-of-repo symlinks' '
-+	echo symlink 8 >expect &&
-+	echo ../fleem >>expect &&
-+	echo HEAD:out-of-repo-link | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp expect actual &&
-+	echo symlink 2 >expect &&
-+	echo .. >>expect &&
-+	echo HEAD:out-of-repo-link-dir | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'git cat-file --batch-check --follow-symlinks works for out-of-repo symlinks in dirs' '
-+	echo symlink 9 >expect &&
-+	echo ../escape >>expect &&
-+	echo HEAD:dir/out-of-repo-link | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp expect actual &&
-+	echo symlink 2 >expect &&
-+	echo .. >>expect &&
-+	echo HEAD:dir/out-of-repo-link-dir | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'git cat-file --batch-check --follow-symlinks works for out-of-repo symlinks in subdirs' '
-+	echo symlink 15 >expect &&
-+	echo ../great-escape >>expect &&
-+	echo HEAD:dir/subdir/out-of-repo-link | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp expect actual &&
-+	echo symlink 2 >expect &&
-+	echo .. >>expect &&
-+	echo HEAD:dir/subdir/out-of-repo-link-dir | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp expect actual &&
-+	echo symlink 3 >expect &&
-+	echo ../ >>expect &&
-+	echo HEAD:dir/subdir/out-of-repo-link-dir-trailing | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'git cat-file --batch-check --follow-symlinks works for symlinks with internal ..' '
-+	echo HEAD: | git cat-file --batch-check >expect &&
-+	echo HEAD:up-down | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp expect actual &&
-+	echo HEAD:up-down-trailing | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp expect actual &&
-+	echo HEAD:up-down-file | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp found actual &&
-+	echo symlink 7 >expect &&
-+	echo ../morx >>expect &&
-+	echo HEAD:up-up-down-file | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp expect actual &&
-+	echo HEAD:up-two-down-file | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp found actual
-+'
-+
-+test_expect_success 'git cat-file --batch-check --follow-symlink breaks loops' '
-+	echo HEAD:loop1 missing >expect &&
-+	echo HEAD:loop1 | git cat-file --batch-check --follow-symlinks >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'git cat-file --batch --follow-symlink returns correct sha and mode' '
-+	echo HEAD:morx | git cat-file --batch >expect &&
-+	echo HEAD:morx | git cat-file --batch --follow-symlinks >actual &&
-+	test_cmp expect actual
-+'
- test_done
+ struct traverse_info {
+ 	struct traverse_info *prev;
+ 	struct name_entry name;
 -- 
 2.0.4.315.gad8727a-twtrsrc
