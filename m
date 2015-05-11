@@ -1,100 +1,100 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] bisect: print abbrev sha1 for first bad commit
-Date: Sun, 10 May 2015 21:10:09 -0400
-Message-ID: <20150511011009.GA21830@peff.net>
-References: <1431128763-28453-1-git-send-email-tbsaunde@tbsaunde.org>
- <CAGZ79kYjES6DXmvQdmXLAXrKMGrnvQ-vqJuHQU2QxVC4+6M0aA@mail.gmail.com>
- <20150509014152.GA31119@tsaunders-iceball.corp.tor1.mozilla.com>
- <20150509040704.GA31428@peff.net>
- <20150510231110.GA25157@tsaunders-iceball.corp.tor1.mozilla.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 0/8] Fix atomicity and avoid fd exhaustion in ref transactions
+Date: Sun, 10 May 2015 21:30:47 -0700
+Message-ID: <xmqqr3qng2h4.fsf@gitster.dls.corp.google.com>
+References: <1431225937-10456-1-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Stefan Beller <sbeller@google.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Trevor Saunders <tbsaunde@tbsaunde.org>
-X-From: git-owner@vger.kernel.org Mon May 11 03:10:20 2015
+Content-Type: text/plain
+Cc: Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
+	Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Mon May 11 06:30:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YrcEd-0004vb-If
-	for gcvg-git-2@plane.gmane.org; Mon, 11 May 2015 03:10:19 +0200
+	id 1YrfMl-0007RG-In
+	for gcvg-git-2@plane.gmane.org; Mon, 11 May 2015 06:30:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751755AbbEKBKM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 May 2015 21:10:12 -0400
-Received: from cloud.peff.net ([50.56.180.127]:56365 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751561AbbEKBKM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 May 2015 21:10:12 -0400
-Received: (qmail 26349 invoked by uid 102); 11 May 2015 01:10:11 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 10 May 2015 20:10:11 -0500
-Received: (qmail 4189 invoked by uid 107); 11 May 2015 01:10:45 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 10 May 2015 21:10:45 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 10 May 2015 21:10:09 -0400
-Content-Disposition: inline
-In-Reply-To: <20150510231110.GA25157@tsaunders-iceball.corp.tor1.mozilla.com>
+	id S1752163AbbEKEav (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 May 2015 00:30:51 -0400
+Received: from pb-smtp1.int.icgroup.com ([208.72.237.35]:51163 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750774AbbEKEau (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 May 2015 00:30:50 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 45317517BD;
+	Mon, 11 May 2015 00:30:49 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=exGBRjb4H1cVy33ENZOvymy1/ls=; b=SFwaiA
+	iKrw4ToKI7CbioW7vObFADk6f7L0v/2gZbaZbms4Wt1jxbMYnE1IUsF/+1ERicfM
+	y5gvdx4XZnQiYRP7Dfj+EPKBHVA7S6/PaDmu0JkxUtIvv2j/ed90I5cje9Nstoia
+	U7+GhxSS3lsleM7betb7Wyc3ivEuI9elsoRp4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=iuSZVY1HRFRMYSaajvaESrz4d5bRKRmN
+	vbyCNIBycKUNf/RdtBnCIWv8UDSFL4IXnScDb+vHu+LvRRncvpz/B4WFXaE7GnrG
+	mfbFHEu1MkGLk0KXe6eFdOWBVAhXcM2ye1zTdQQPGroNt8jpBk2HtGrfLwKrWGyT
+	POBLCpQgVR4=
+Received: from pb-smtp1.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3B596517BC;
+	Mon, 11 May 2015 00:30:49 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B5CD5517BB;
+	Mon, 11 May 2015 00:30:48 -0400 (EDT)
+In-Reply-To: <1431225937-10456-1-git-send-email-mhagger@alum.mit.edu> (Michael
+	Haggerty's message of "Sun, 10 May 2015 04:45:29 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 7FB39DB0-F796-11E4-A537-83E09F42C9D4-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268753>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268754>
 
-On Sun, May 10, 2015 at 07:12:45PM -0400, Trevor Saunders wrote:
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-> > Yeah, I have always found bisect's output somewhat silly. It prints the
-> > "--raw" diff output, which is not incredibly useful. And then to top it
-> > off, it does not feed the "--recursive" switch to the diff, so you don't
-> > even get to see the real list of changed files.
-> 
->  So, fun fact it doesn't actually always print the raw diffoutput if
->  there is no diff, for example a merge where both sides only touched
->  different files as in test 40 in t6030.
+> The following other branches, also from my GitHub repo, might be
+> useful:
+>
+> * 'write-refs-sooner-2.3' -- suggested merge of the change to 'maint'.
+>
+> * 'write-refs-sooner-master' -- suggested merge of the change to
+>   'master'.
+>
+> * 'write-refs-sooner-rebased-2.3' and
+>   'write-refs-sooner-rebased-master' -- rebases of 'write-refs-sooner'
+>   onto 'maint' and 'master' respectively, in case anybody is
+>   interested to see how the individual patches would look if
+>   implemented natively on these branches.
 
-Ah, that makes sense. It's basically just feeding the commit to
-"diff-tree" (except doing it internally rather than running it as a
-separate program). And the defaults there do not show anything for merge
-commits. It could do the equivalent of "--cc" (i.e., set the
-dense_combined_merges flag in the "struct rev_info").
+Thanks, that indeed is very helpful and instructive.
 
-> > (Actually, it looks like all this is generated in bisect.c:show_diff_tree,
-> > so it would have to be written in C; but it should be pretty easy to
-> > tweak the display options).
-> 
-> yeah, that seems pretty straight forward, but I'm not really sure what
-> to do about this case where no diff is printed, I guess I should figure
-> out what bits need to be set for the commit to be shown anyway.
+A mechanical merge of sooner-2.2 to maint trivially gave sooner-2.3,
+so I am happy with that one.
 
-I'd argue for simply never showing the diff (dropping the "opt.diff = 1"
-line from bisect.c:show_diff_tree), but that is mostly my personal
-opinion. If we are going to show a diff, perhaps "--recursive
---name-status" would be the most friendly, with "--cc" for the merge
-commits.
+Even though I manually resolved it and the resulting tree pretty
+much matched with your suggested merge, I am hesitant to record the
+change of sooner-2.3 as a single large merge to master.  I am
+tempted to record this as somewhat a wicked merge, e.g.
 
-Translated into C, something like (this is completely untested):
+ - apply posted patches on maint-2.2, which is your sooner-2.2;
 
-diff --git a/bisect.c b/bisect.c
-index 10f5e57..62786cf 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -876,6 +876,8 @@ static void show_diff_tree(const char *prefix, struct commit *commit)
- 	git_config(git_diff_basic_config, NULL); /* no "diff" UI options */
- 	opt.abbrev = 0;
- 	opt.diff = 1;
-+	opt.combine_merges = 1;
-+	opt.dense_combined_merges = 1;
- 
- 	/* This is what "--pretty" does */
- 	opt.verbose_header = 1;
-@@ -884,7 +886,8 @@ static void show_diff_tree(const char *prefix, struct commit *commit)
- 
- 	/* diff-tree init */
- 	if (!opt.diffopt.output_format)
--		opt.diffopt.output_format = DIFF_FORMAT_RAW;
-+		opt.diffopt.output_format = DIFF_FORMAT_NAME_STATUS;
-+	DIFF_OPT_SET(&opt.diffopt, RECURSIVE);
- 
- 	log_tree_commit(&opt, commit);
- }
+ - branch sooner-2.3 from maint, merge sooner-2.2;
+
+ - branch sooner-master from v2.4.0, apply the patches in your
+   sooner-rebased-master on top, and then merge sooner-2.3, possibly
+   with "-s ours"
+
+And then sooner-master would record both "if built naturally on 2.4"
+progression, which would explain what was done much better than a
+huge merge of sooner-2.3 into 'master', and "what is to be done on
+older codebase".
+
+I dunno.
+
+Anyway, these patches looked good both on 2.2 and on 2.4.  Thanks.
