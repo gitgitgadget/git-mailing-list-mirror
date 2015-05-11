@@ -1,95 +1,67 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v5 6/6] cmd-list.perl: ignore all lines until [commands]
-Date: Mon, 11 May 2015 02:59:21 -0400
-Message-ID: <CAPig+cRSPENt8QamfSOSgVFf_nmRKnfYkiOpf09WR=6--fLaEw@mail.gmail.com>
-References: <1431191856-10949-1-git-send-email-sebastien.guimmara@gmail.com>
-	<1431191856-10949-7-git-send-email-sebastien.guimmara@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH] bisect: print abbrev sha1 for first bad commit
+Date: Mon, 11 May 2015 09:38:12 +0200
+Message-ID: <CAP8UFD1Aq54dWvxo5JTP4Fqy5u-qhA0LAm3vRrw9=jYg3o_F+g@mail.gmail.com>
+References: <1431128763-28453-1-git-send-email-tbsaunde@tbsaunde.org>
+	<CAGZ79kYjES6DXmvQdmXLAXrKMGrnvQ-vqJuHQU2QxVC4+6M0aA@mail.gmail.com>
+	<20150509014152.GA31119@tsaunders-iceball.corp.tor1.mozilla.com>
+	<20150509040704.GA31428@peff.net>
+	<20150510231110.GA25157@tsaunders-iceball.corp.tor1.mozilla.com>
+	<20150511011009.GA21830@peff.net>
+	<xmqqmw1bg2dd.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>
-To: =?UTF-8?Q?S=C3=A9bastien_Guimmara?= <sebastien.guimmara@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 11 08:59:28 2015
+Cc: Jeff King <peff@peff.net>, Trevor Saunders <tbsaunde@tbsaunde.org>,
+	Stefan Beller <sbeller@google.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 11 09:38:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YrhgW-0005SO-73
-	for gcvg-git-2@plane.gmane.org; Mon, 11 May 2015 08:59:28 +0200
+	id 1YriI6-0002gp-Mc
+	for gcvg-git-2@plane.gmane.org; Mon, 11 May 2015 09:38:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752412AbbEKG7Y convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 May 2015 02:59:24 -0400
-Received: from mail-ig0-f180.google.com ([209.85.213.180]:38250 "EHLO
-	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751870AbbEKG7W convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 11 May 2015 02:59:22 -0400
-Received: by igbhj9 with SMTP id hj9so62626279igb.1
-        for <git@vger.kernel.org>; Sun, 10 May 2015 23:59:21 -0700 (PDT)
+	id S1752373AbbEKHiO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 May 2015 03:38:14 -0400
+Received: from mail-wi0-f181.google.com ([209.85.212.181]:38368 "EHLO
+	mail-wi0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752192AbbEKHiN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 May 2015 03:38:13 -0400
+Received: by wiun10 with SMTP id n10so85725840wiu.1
+        for <git@vger.kernel.org>; Mon, 11 May 2015 00:38:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=Kqnk0u+McZA/snoI7Mbdd2u/DtFnzdLG5rUkcF2d7w4=;
-        b=HGuz+pwcVrm5xOhY12yJadc741C2rw/3y1ejfL3bh0kE82lpq3HN7PMGLgg+bnQw61
-         Ug5/DofJdRV2SS2nMvDATc1Dsa3Wd/B10RPgdRk+ubDJoJw5F9xgwhYSYgyXSqJGFIsE
-         kOJ3xPIKvTgGXKcC5nrT3hqYcrFbBpJ7Y5TEOF7ctnuF/KNGrevO/Ln8U+jAhKPrfhs8
-         +GHU4f3BDr+ymyxw+Pn6QurNHlBUKJuwwK5yJ+LNwF5HWkj4RkMaMu035bs/tkuEILbz
-         mpOch8+rTwlJ+Pu2ClBlmMzAhdmcltkS8xA3GQX3qIQ+JB7ZJii/wHtLTaH+2mypQY4L
-         J4bA==
-X-Received: by 10.42.146.202 with SMTP id k10mr9532909icv.34.1431327561689;
- Sun, 10 May 2015 23:59:21 -0700 (PDT)
-Received: by 10.107.28.132 with HTTP; Sun, 10 May 2015 23:59:21 -0700 (PDT)
-In-Reply-To: <1431191856-10949-7-git-send-email-sebastien.guimmara@gmail.com>
-X-Google-Sender-Auth: kqfwJNS7nWCsV2ZQq0nJC2kXw-g
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=k/qwtLEJY0EbzNY/CT+XtPTluSVpubkOA3lOgO3n46U=;
+        b=KoFno9nQvzTPsSZwIpJILLTcEBmW2NtmRuxvcF5MV8yBZIraRwjwdnoUTkp3bS7sx0
+         nxlU0P39ayvRPBWt6AysYSy66+FhqROai2AmRatuYdr6fCRB7TI3MfD84SpfIsQt/M+7
+         WZmUiwbMgcljawa6U040jIkcw9890N7u8LfJZ38lYfqPGIwEDmWUbS9wmOOSyJ94ZFIs
+         kw1NgoVzCCoI44Bdgkv/gl6AJvKKy8cr6O5NtrPhQKU8WuUuYYC6Wn3LkuYZZSKxW0oi
+         JFuLltNjn91TNbt1D8uJKlAlkjOSY3rjm+wVQ0l/RqyJ22U1JrxDjjE1blMqkL1W2xEL
+         Ev7w==
+X-Received: by 10.180.100.227 with SMTP id fb3mr16783707wib.90.1431329892830;
+ Mon, 11 May 2015 00:38:12 -0700 (PDT)
+Received: by 10.194.40.8 with HTTP; Mon, 11 May 2015 00:38:12 -0700 (PDT)
+In-Reply-To: <xmqqmw1bg2dd.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268763>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268764>
 
-On Sat, May 9, 2015 at 1:17 PM, S=C3=A9bastien Guimmara
-<sebastien.guimmara@gmail.com> wrote:
-> command-list.txt contains a [common] block that should be ignored
-> by the Documentation checker cmd-list.perl.
+On Mon, May 11, 2015 at 6:33 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jeff King <peff@peff.net> writes:
 >
-> Filter out this block before the actual processing of the command lis=
-t.
+>> I'd argue for simply never showing the diff (dropping the "opt.diff = 1"
+>> line from bisect.c:show_diff_tree), but that is mostly my personal
+>> opinion.
 >
-> Signed-off-by: S=C3=A9bastien Guimmara <sebastien.guimmara@gmail.com>
-> ---
-> diff --git a/Documentation/cmd-list.perl b/Documentation/cmd-list.per=
-l
-> index 04f9977..d581378 100755
-> --- a/Documentation/cmd-list.perl
-> +++ b/Documentation/cmd-list.perl
-> @@ -38,8 +38,14 @@ sub format_one {
->         }
->  }
->
-> +my @filtered =3D ();
-> +while (<>)
-> +{
+> Yeah, I think that is sensible. It may even be OK to just give a
+> "log --oneline".
 
-Style: while (<>) {
-
-> +       push (@filtered, $_) unless 1../^\[commands\]/;
-> +}
-
-Why collect the lines into @filtered when you could instead merely
-skip the unwanted ones outright?
-
-    while (<>) {
-        last if /^\[commands\]/;
-    }
-
-And, then you don't need to touch the following 'for' loop at all.
-
->  my %cmds =3D ();
-> -for (sort <>) {
-> +for (sort @filtered) {
->         next if /^#/;
->
->         chomp;
-> --
-> 2.4.0
+Or maybe we could let the user configure the diff options or even the
+command used when the first bad commit is found?
