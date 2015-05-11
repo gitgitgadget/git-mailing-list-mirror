@@ -1,286 +1,142 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v5 3/6] command-list.txt: group common commands by theme
-Date: Mon, 11 May 2015 02:20:19 -0400
-Message-ID: <CAPig+cSjdJ6Yhbvyw-m4E+Y9wEk71y0Cw2NO6c=f_cFy--YTGA@mail.gmail.com>
+Subject: Re: [PATCH v5 2/6] help.c: output the typical Git workflow
+Date: Mon, 11 May 2015 02:24:37 -0400
+Message-ID: <CAPig+cR46K2h+hk4riwXcty=T+RBoT1Za9rqOwB9EgvUReUhmg@mail.gmail.com>
 References: <1431191856-10949-1-git-send-email-sebastien.guimmara@gmail.com>
-	<1431191856-10949-4-git-send-email-sebastien.guimmara@gmail.com>
+	<1431191856-10949-3-git-send-email-sebastien.guimmara@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Git List <git@vger.kernel.org>
 To: =?UTF-8?Q?S=C3=A9bastien_Guimmara?= <sebastien.guimmara@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 11 08:20:30 2015
+X-From: git-owner@vger.kernel.org Mon May 11 08:24:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yrh4k-0007d8-2x
-	for gcvg-git-2@plane.gmane.org; Mon, 11 May 2015 08:20:26 +0200
+	id 1Yrh92-0000hk-3u
+	for gcvg-git-2@plane.gmane.org; Mon, 11 May 2015 08:24:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752164AbbEKGUW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 May 2015 02:20:22 -0400
-Received: from mail-ie0-f175.google.com ([209.85.223.175]:33344 "EHLO
-	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751298AbbEKGUU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 11 May 2015 02:20:20 -0400
-Received: by iepj10 with SMTP id j10so97375676iep.0
-        for <git@vger.kernel.org>; Sun, 10 May 2015 23:20:19 -0700 (PDT)
+	id S1752324AbbEKGYl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 May 2015 02:24:41 -0400
+Received: from mail-ie0-f179.google.com ([209.85.223.179]:36202 "EHLO
+	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751065AbbEKGYi convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 11 May 2015 02:24:38 -0400
+Received: by iecmd7 with SMTP id md7so23101654iec.3
+        for <git@vger.kernel.org>; Sun, 10 May 2015 23:24:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc:content-type:content-transfer-encoding;
-        bh=oQq91KnNXVf+HZfUsoRWSN1TZ/93FiAufD36Q8f5rh4=;
-        b=iJXMFvoF8FT09y5G6RAmKM3F5Poo/4P5mPkRkSD+sZ3cRaNM2sSzUK+jdQ2/xMdLuq
-         ZI7YopWPE0IogI54wBNBBXkzsxhRE9CJF98Vit3ymDwSyiElWUbi+A3uXAI7iZjo5UYO
-         be9MhCB6//XHmT52R7XcQf9kMDfExbjhsD47WXIUP7TKiz/z3FBaIhl2Md8vncTPd9f/
-         rRprwaGN/brDRP7qWrqxiAh1qbGuh8j7ZE6WfEcK4zRfXoJaqun44QCWN+wGqD7CHR1/
-         DT9gfGm9MU3BK2xxID6OGQ4R7PReUewQe4+cc+hZZDAwAoGVyB2EdrG9HrNIj6yd1yIb
-         mJTQ==
-X-Received: by 10.50.85.43 with SMTP id e11mr12198573igz.15.1431325219226;
- Sun, 10 May 2015 23:20:19 -0700 (PDT)
-Received: by 10.107.28.132 with HTTP; Sun, 10 May 2015 23:20:19 -0700 (PDT)
-In-Reply-To: <1431191856-10949-4-git-send-email-sebastien.guimmara@gmail.com>
-X-Google-Sender-Auth: Qp45nuimo-y_cWXJNFZKCKC2aPY
+        bh=uTxcbEPYqI5Xwcuf62X5y8GCl4XakjdAKXuhQswpsQQ=;
+        b=UuXClmcRRBjCiQBbMMdoU+Lm59axl4czhgG/qGE05t0wSJ9nxFtUiyb4sybcEncRpP
+         JpG0FVzuzL4USXUPwUTqWLTtK/QSE7pEb9ZXF8ccBljyr0GpyFw3FoQGj1YZ/IdVgjoO
+         FKVT+GSBo1J/mj/qZIOVoPKq/l9N9qLIqfNmXonHsIEEXRNvw2y8kXT79euDBfqfkr+D
+         DOQnyRHMj1G+ejjvYoG1sJfiPar1Fg4tXeEuhSZtekOzL5yXvIDMLpAWj+BEdMp5SJMM
+         2YJO3EEELLnbxP6AKrKAlQpz4oDZpkCfj79GFXUG5/SdOzSMfGygLi17qE6a4skyUloT
+         SH5w==
+X-Received: by 10.107.169.74 with SMTP id s71mr10982285ioe.46.1431325477336;
+ Sun, 10 May 2015 23:24:37 -0700 (PDT)
+Received: by 10.107.28.132 with HTTP; Sun, 10 May 2015 23:24:37 -0700 (PDT)
+In-Reply-To: <1431191856-10949-3-git-send-email-sebastien.guimmara@gmail.com>
+X-Google-Sender-Auth: B3usoQN476bmLrpb9ldsWaE-Fps
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268758>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268759>
 
 On Sat, May 9, 2015 at 1:17 PM, S=C3=A9bastien Guimmara
 <sebastien.guimmara@gmail.com> wrote:
-> Declare groups for common commands in the [common] block,
-> followed by group names and descriptions:
+> 'git help' shows common commands in alphabetical order:
 >
->     [common]
->     init         start a working area (see also: git help tutorial)
->     worktree     work on the current change (see also: git [...]
->     info         examine the history and state (see also: git [...]
->     history      grow, mark and tweak your history
->     remote       collaborate (see also: git help workflows)
+> The most commonly used git commands are:
+>    add        Add file contents to the index
+>    bisect     Find by binary search the change that introduced a bug
+>    branch     List, create, or delete branches
+>    checkout   Checkout a branch or paths to the working tree
+>    clone      Clone a repository into a new directory
+>    commit     Record changes to the repository
+>    [...]
 >
-> Some descriptions include a 'see also' to redirect user to more
-> detailed documentation.
+> without any indication of how commands relate to high-level
+> concepts or each other. Revise the output to explain their relationsh=
+ip
+> with the typical Git workflow:
+>
+> The typical Git workflow includes:
+>
+>    * start a working area (see also: git help tutorial):
+>       clone      Clone a repository into a new directory
+>       init       Create an empty Git repository or reinitialize [...]
 
-The example nicely shows the "see also", so this trailing sentence is
-somewhat redundant.
+In practice, I find the indented bulleted header items somewhat
+unsightly. More importantly, indenting them wastes precious horizontal
+screen real-estate (for those of who use 80-column terminals). Since
+the headers are already distinguished by being bulleted, you could
+easily drop the indentation; and then reduce the indentation of the
+commands themselves.
 
-More below.
-
-> Then, in the [commands] block, map all common commands with a group:
+>    * work on the current change (see also: git help everyday):
+>       add        Add file contents to the index
+>       reset      Reset current HEAD to the specified state
 >
->     [commands]
->     git-add        mainporcelain     worktree
->     git-branch     mainporcelain     history
->     git-checkout   mainporcelain     history
->     [...]
+>    * examine the history and state (see also: git help revisions):
+>       log        Show commit logs
+>       status     Show the working tree status
 >
-> So that 'git help' outputs those commands in headered groups.
+>    [...]
 >
-> Helped-by: Junio C Hamano <gitster@pobox.com>
-> Helped-by:  Emma Jane Hogbin Westby <emma.westby@gmail.com>
+> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 > Signed-off-by: S=C3=A9bastien Guimmara <sebastien.guimmara@gmail.com>
 > ---
-> diff --git a/command-list.txt b/command-list.txt
-> index f1eae08..7e7ce53 100644
-> --- a/command-list.txt
-> +++ b/command-list.txt
-> @@ -1,29 +1,41 @@
-> +# common commands are grouped by themes
-> +# this order is the same that output by 'git help'
-> +# map each common commands in the [commands] list to one of the grou=
-ps.
-
-Grammar: "map each common command"
-
-Maybe also "one of these groups".
-
-> +# a command should not be marked both [deprecated] and [common]
-
-I wonder if it is really necessary to state this, as there is no
-technical reason for the restriction, and it should be common sense
-(one would hope).
-
-> +[common]
-> +init         start a working area (see also: git help tutorial)
-> +worktree     work on the current change (see also: git help everyday=
-)
-> +info         examine the history and state (see also: git help revis=
-ions)
-> +history      grow, mark and tweak your history
-> +remote       collaborate (see also: git help workflows)
+> diff --git a/help.c b/help.c
+> index 2072a87..1df205f 100644
+> --- a/help.c
+> +++ b/help.c
+> @@ -218,6 +218,18 @@ void list_commands(unsigned int colopts,
+>         }
+>  }
+>
+> +int cmd_group_cmp(const void *elem1, const void *elem2)
+> +{
+> +       const struct cmdname_help *e1 =3D elem1;
+> +       const struct cmdname_help *e2 =3D elem2;
 > +
->  # List of known git commands.
-> -# command name                         category [deprecated] [common=
-]
-> -git-add                                 mainporcelain common
-> +# command name         [deprecated]     category                [com=
-mon]
-
-Why did [deprecated] move from following "category" to preceding it?
-
-Also, I wonder if [common] should be spelled [<common>] or something
-to distinguish it from [deprecated] which is a literal token. (I don't
-care strongly; I'm just wondering.)
-
-> +[commands]
-> +git-add                                 mainporcelain           work=
-tree
->  git-am                                  mainporcelain
->  git-annotate                            ancillaryinterrogators
->  git-apply                               plumbingmanipulators
->  git-archimport                          foreignscminterface
->  git-archive                             mainporcelain
-> -git-bisect                              mainporcelain common
-> +git-bisect                              mainporcelain           info
->  git-blame                               ancillaryinterrogators
-> -git-branch                              mainporcelain common
-> +git-branch                              mainporcelain           hist=
-ory
->  git-bundle                              mainporcelain
->  git-cat-file                            plumbinginterrogators
->  git-check-attr                          purehelpers
->  git-check-ignore                        purehelpers
->  git-check-mailmap                       purehelpers
-> -git-checkout                            mainporcelain common
-> +git-checkout                            mainporcelain           hist=
-ory
->  git-checkout-index                      plumbingmanipulators
->  git-check-ref-format                    purehelpers
->  git-cherry                              ancillaryinterrogators
->  git-cherry-pick                         mainporcelain
->  git-citool                              mainporcelain
->  git-clean                               mainporcelain
-> -git-clone                               mainporcelain common
-> +git-clone                               mainporcelain           init
->  git-column                              purehelpers
-> -git-commit                              mainporcelain common
-> +git-commit                              mainporcelain           hist=
-ory
->  git-commit-tree                         plumbingmanipulators
->  git-config                              ancillarymanipulators
->  git-count-objects                       ancillaryinterrogators
-> @@ -35,14 +47,14 @@ git-cvsimport                           foreignsc=
-minterface
->  git-cvsserver                           foreignscminterface
->  git-daemon                              synchingrepositories
->  git-describe                            mainporcelain
-> -git-diff                                mainporcelain common
-> +git-diff                                mainporcelain           hist=
-ory
->  git-diff-files                          plumbinginterrogators
->  git-diff-index                          plumbinginterrogators
->  git-diff-tree                           plumbinginterrogators
->  git-difftool                            ancillaryinterrogators
->  git-fast-export                                ancillarymanipulators
->  git-fast-import                                ancillarymanipulators
-> -git-fetch                               mainporcelain common
-> +git-fetch                               mainporcelain           remo=
-te
->  git-fetch-pack                          synchingrepositories
->  git-filter-branch                       ancillarymanipulators
->  git-fmt-merge-msg                       purehelpers
-> @@ -51,7 +63,7 @@ git-format-patch                        mainporcela=
-in
->  git-fsck                               ancillaryinterrogators
->  git-gc                                  mainporcelain
->  git-get-tar-commit-id                   ancillaryinterrogators
-> -git-grep                                mainporcelain common
-> +git-grep                                mainporcelain           info
->  git-gui                                 mainporcelain
->  git-hash-object                         plumbingmanipulators
->  git-help                               ancillaryinterrogators
-> @@ -60,17 +72,17 @@ git-http-fetch                          synchelpe=
-rs
->  git-http-push                           synchelpers
->  git-imap-send                           foreignscminterface
->  git-index-pack                          plumbingmanipulators
-> -git-init                                mainporcelain common
-> +git-init                                mainporcelain           init
->  git-instaweb                            ancillaryinterrogators
->  git-interpret-trailers                  purehelpers
->  gitk                                    mainporcelain
-> -git-log                                 mainporcelain common
-> +git-log                                 mainporcelain           info
->  git-ls-files                            plumbinginterrogators
->  git-ls-remote                           plumbinginterrogators
->  git-ls-tree                             plumbinginterrogators
->  git-mailinfo                            purehelpers
->  git-mailsplit                           purehelpers
-> -git-merge                               mainporcelain common
-> +git-merge                               mainporcelain           hist=
-ory
->  git-merge-base                          plumbinginterrogators
->  git-merge-file                          plumbingmanipulators
->  git-merge-index                         plumbingmanipulators
-> @@ -79,7 +91,7 @@ git-mergetool                           ancillaryma=
-nipulators
->  git-merge-tree                          ancillaryinterrogators
->  git-mktag                               plumbingmanipulators
->  git-mktree                              plumbingmanipulators
-> -git-mv                                  mainporcelain common
-> +git-mv                                  mainporcelain           work=
-tree
->  git-name-rev                            plumbinginterrogators
->  git-notes                               mainporcelain
->  git-p4                                  foreignscminterface
-> @@ -90,11 +102,11 @@ git-parse-remote                        synchelp=
-ers
->  git-patch-id                            purehelpers
->  git-prune                               ancillarymanipulators
->  git-prune-packed                        plumbingmanipulators
-> -git-pull                                mainporcelain common
-> -git-push                                mainporcelain common
-> +git-pull                                mainporcelain           remo=
-te
-> +git-push                                mainporcelain           remo=
-te
->  git-quiltimport                         foreignscminterface
->  git-read-tree                           plumbingmanipulators
-> -git-rebase                              mainporcelain common
-> +git-rebase                              mainporcelain           hist=
-ory
->  git-receive-pack                        synchelpers
->  git-reflog                              ancillarymanipulators
->  git-relink                              ancillarymanipulators
-> @@ -103,28 +115,28 @@ git-repack                              ancilla=
-rymanipulators
->  git-replace                             ancillarymanipulators
->  git-request-pull                        foreignscminterface
->  git-rerere                              ancillaryinterrogators
-> -git-reset                               mainporcelain common
-> +git-reset                               mainporcelain           work=
-tree
->  git-revert                              mainporcelain
->  git-rev-list                            plumbinginterrogators
->  git-rev-parse                           ancillaryinterrogators
-> -git-rm                                  mainporcelain common
-> +git-rm                                  mainporcelain           work=
-tree
->  git-send-email                          foreignscminterface
->  git-send-pack                           synchingrepositories
->  git-shell                               synchelpers
->  git-shortlog                            mainporcelain
-> -git-show                                mainporcelain common
-> +git-show                                mainporcelain           info
->  git-show-branch                         ancillaryinterrogators
->  git-show-index                          plumbinginterrogators
->  git-show-ref                            plumbinginterrogators
->  git-sh-i18n                             purehelpers
->  git-sh-setup                            purehelpers
->  git-stash                               mainporcelain
-> -git-status                              mainporcelain common
-> +git-status                              mainporcelain           info
->  git-stripspace                          purehelpers
->  git-submodule                           mainporcelain
->  git-svn                                 foreignscminterface
->  git-symbolic-ref                        plumbingmanipulators
-> -git-tag                                 mainporcelain common
-> +git-tag                                 mainporcelain           hist=
-ory
->  git-unpack-file                         plumbinginterrogators
->  git-unpack-objects                      plumbingmanipulators
->  git-update-index                        plumbingmanipulators
+> +       if (e1->group < e2->group)
+> +               return -1;
+> +       if (e1->group > e2->group)
+> +               return 1;
+> +       return strcmp(e1->name, e2->name);
+> +}
+> +
+>  void list_common_cmds_help(void)
+>  {
+>         int i, longest =3D 0;
+> @@ -227,9 +239,18 @@ void list_common_cmds_help(void)
+>                         longest =3D strlen(common_cmds[i].name);
+>         }
+>
+> -       puts(_("The most commonly used git commands are:"));
+> +       qsort(common_cmds, ARRAY_SIZE(common_cmds),
+> +               sizeof(common_cmds[0]), cmd_group_cmp);
+> +
+> +       puts(_("The typical Git workflow includes:"));
+> +
+>         for (i =3D 0; i < ARRAY_SIZE(common_cmds); i++) {
+> -               printf("   %s   ", common_cmds[i].name);
+> +               if (common_cmds[i].group !=3D current_grp) {
+> +                       printf("\n   * %s:\n", _(common_cmd_groups[co=
+mmon_cmds[i].group]));
+> +                       current_grp =3D common_cmds[i].group;
+> +               }
+> +
+> +               printf("      %s   ", common_cmds[i].name);
+>                 mput_char(' ', longest - strlen(common_cmds[i].name))=
+;
+>                 puts(_(common_cmds[i].help));
+>         }
 > --
 > 2.4.0
