@@ -1,104 +1,152 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v5 0/6] git help: group common commands by theme
-Date: Mon, 11 May 2015 01:52:50 -0400
-Message-ID: <CAPig+cQ7chw5eNCqv=HrrG1Zc4mGHUKyQssJuH1KAz-utt1h7g@mail.gmail.com>
+Subject: Re: [PATCH v5 1/6] generate-cmdlist: parse common group commands
+Date: Mon, 11 May 2015 02:12:33 -0400
+Message-ID: <CAPig+cQfY+_4qYKR9vSeuwDe1Am3Csh1Q5M1CZbpvCCRHCdkKg@mail.gmail.com>
 References: <1431191856-10949-1-git-send-email-sebastien.guimmara@gmail.com>
+	<1431191856-10949-2-git-send-email-sebastien.guimmara@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Git List <git@vger.kernel.org>
 To: =?UTF-8?Q?S=C3=A9bastien_Guimmara?= <sebastien.guimmara@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 11 07:52:58 2015
+X-From: git-owner@vger.kernel.org Mon May 11 08:13:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Yrge9-0006ZM-8c
-	for gcvg-git-2@plane.gmane.org; Mon, 11 May 2015 07:52:57 +0200
+	id 1Yrgxk-0005Hb-QQ
+	for gcvg-git-2@plane.gmane.org; Mon, 11 May 2015 08:13:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750744AbbEKFww convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 May 2015 01:52:52 -0400
-Received: from mail-ig0-f174.google.com ([209.85.213.174]:34013 "EHLO
-	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750774AbbEKFwv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 11 May 2015 01:52:51 -0400
-Received: by iget9 with SMTP id t9so66090130ige.1
-        for <git@vger.kernel.org>; Sun, 10 May 2015 22:52:51 -0700 (PDT)
+	id S1751739AbbEKGMe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 May 2015 02:12:34 -0400
+Received: from mail-ie0-f176.google.com ([209.85.223.176]:36379 "EHLO
+	mail-ie0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750774AbbEKGMd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 11 May 2015 02:12:33 -0400
+Received: by iecmd7 with SMTP id md7so22956132iec.3
+        for <git@vger.kernel.org>; Sun, 10 May 2015 23:12:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc:content-type:content-transfer-encoding;
-        bh=0B8ntR50sLw+zEh39vo78iiT/bYtTbyOO4EjUZ50DSg=;
-        b=UNRre3AfDLg/XnCN4STlgYwxzeorbh3tQuDBkkilyzWWxh5okkEuaDo0lm/n/P0PpB
-         G/YE+hhUI9Xs+dtwn++zrAVsenUalRXwJWgK24TXnoqWaYojWbQCj27YgMWNdXTmpWGG
-         TNYW+Kht65ApcmMSWtM4fmbF1Gh3ycfhVP+VA+L69PEHhT0f0d+9Sy3PhLFYFJtbgEFp
-         TyqDaUWanS/MOGy3vKGRVXNqvWF0BKlQ3PNnNZSFnayNywyjz/dOBwjQVnyvFyDZ9jhB
-         0icCO06FXX+L3w1lWJPy2RoEIydOMbAJtbVn2ulYvxKWmvjVXJzbRTAGPNyK/IPBeqT/
-         +NJQ==
-X-Received: by 10.107.169.74 with SMTP id s71mr10880997ioe.46.1431323570881;
- Sun, 10 May 2015 22:52:50 -0700 (PDT)
-Received: by 10.107.28.132 with HTTP; Sun, 10 May 2015 22:52:50 -0700 (PDT)
-In-Reply-To: <1431191856-10949-1-git-send-email-sebastien.guimmara@gmail.com>
-X-Google-Sender-Auth: -9IUD7kUF8dxqolS6UczGeMfbK4
+        bh=HevtBjzwDS7eF/DqxpsyunnmajPRs7oVdfkhKLsefgE=;
+        b=MeFQH4FJE5AJ9F4gnMZdVKPLawZ0gayZzjurgsn0IXvOKxJnZ47lcdN+rBE/SFNmUn
+         vHiosIVtZEqTY7dU4IbVqIviLWK6CEl9FC8XGatw/mf+6eMBbsebt9v490yHhWmYkre3
+         H+tEMBw7FkfaUdVGRfgCvMBRwp1F4YsRJXk9QxMV+FMst2UCUvx7/7VScyy7TQrDmuyF
+         CpZHAzVNdQs2FZ5LzvDHf5xsF4gRhfc0cY4FmDzFQN2OkTlEXc4xBxbFXzEQtaNsASyb
+         L5LBYc+FsvX6JIlyx1NZWsReaXZm4AHEpRrZHjBOr9THMroXjNOc2EE0XqEW3XwWwJgF
+         NCKg==
+X-Received: by 10.107.3.163 with SMTP id e35mr10506703ioi.92.1431324753267;
+ Sun, 10 May 2015 23:12:33 -0700 (PDT)
+Received: by 10.107.28.132 with HTTP; Sun, 10 May 2015 23:12:33 -0700 (PDT)
+In-Reply-To: <1431191856-10949-2-git-send-email-sebastien.guimmara@gmail.com>
+X-Google-Sender-Auth: lOXgDE4pUCdhRwnRrE2b_O2XnUg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268757>
 
 On Sat, May 9, 2015 at 1:17 PM, S=C3=A9bastien Guimmara
 <sebastien.guimmara@gmail.com> wrote:
-> S=C3=A9bastien Guimmara (6):
->   generate-cmdlist: parse common group commands
->   help.c: output the typical Git workflow
->   command-list.txt: group common commands by theme
->   Makefile: update to new command-list.txt format
->   new-command.txt: mention the common command groups
->   cmd-list.perl: ignore all lines until [commands]
+> Parse the [common] block to create the array of group descriptions:
 
-When preparing a patch series, it's important to think not just about
-the final result but also the state of the project at any point within
-the series. The project should remain in a working state (not broken
-and not regressed) at all steps during the patch series[1]. As each
-patch is applied, you should be able to build git successfully, and
-run "git help" and get expected results (for that point in the
-series). If you can't do either, then there is a problem.
+Since you're resending a patch which I authored[1], the very first
+line of the email body should be:
 
-Unfortunately, the organization of this series (v5) breaks the build
-and raw functionality from the get-go. Here is a proposed organization
-which will keep the project in a sane state as each patch is applied:
+    From: Eric Sunshine <sunshine@sunshineco.com>
 
-patch 1: Add a [commands] header to command-list.txt and augment
-generate-cmdlist.sh, check-docs in Makefile, and either
-Documentation/Makefile or cmd-list.perl to ignore everything up to and
-including [commands]. You're not actually doing any classification in
-command-list.txt at this point, but instead merely preparing the
-machinery to deal with the [commands] header (and the [common] section
-which you will add in a subsequent patch).
+which git-am will pick up automatically in order to assign proper
+attribution when the patch is applied.
 
-patch 2: Add the [common] block to command-list.txt and tag each of
-the common commands with an attribute from [common]. Do *not*,
-however, remove the old "common" tag at this point since
-generate-cmdlist.sh still needs it.
+More below.
 
-patch 3: Introduce generate-cmdlist.awk and retire
-generate-cmdlist.sh, along with the associated Makefile changes. This
-patch should be exactly the one I posted[2] (between the "--- >8 ---"
-lines), along with the minor fixup[3]. The changes in that patch are a
-logical unit, so they shouldn't be split up (as you did in v5 between
-patches 1/6 and 4/6).
+> static char *common_cmd_groups[] =3D {
+>     [...]
+> };
+>
+> then map each element of common_cmds[] to a group via its index:
+>
+> static struct cmdname_help common_cmds[] =3D {
+>     [...]
+> };
+>
+> so that 'git help' can print those commands grouped by theme.
+>
+> Only commands tagged with an attribute from [common] are emitted to
+> common_cmds[].
+>
+> [commit message by S=C3=A9bastien Guimmara <sebastien.guimmara@gmail.=
+com>]
+>
+> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 
-patch 4: Drop the old "common" attribute from command-list.txt items
-since it's no longer needed by any machinery.
+Likewise, since you're resending[1] this patch you should add your own
+sign-off following the sign-off of the patch's author.
 
-patch 5: Update help.c to group and sort the commands using the new
-common_cmd_groups[] array and common_commands[].group field.
+> ---
+>  generate-cmdlist.awk | 38 ++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 38 insertions(+)
+>  create mode 100644 generate-cmdlist.awk
 
-patch 6 [optional]: Update howto/new-command.txt. Alternately, and
-probably preferably, fold this documentation update into patch 2 and
-omit this step.
+Each patch should be a self-contained logical unit, even if multiple
+files are touched.
 
-[1]: This is called "preserving bisectability". See "git bisect".
-[2]: http://article.gmane.org/gmane.comp.version-control.git/268598
-[3]: http://article.gmane.org/gmane.comp.version-control.git/268599
+In addition to introducing generate-cmdlist.awk, the original patch I
+wrote[1] also changed Makefile and removed generate-cmdlist.sh. Those
+changes are a logical unit, and shouldn't be split up, as you did here
+with v5 by moving the Makefile modifications to patch 4/6. Removal of
+generate-cmdlist.sh seems to have been lost entirely in v5.
+
+[1]: http://article.gmane.org/gmane.comp.version-control.git/268598
+
+> diff --git a/generate-cmdlist.awk b/generate-cmdlist.awk
+> new file mode 100644
+> index 0000000..cbaac88
+> --- /dev/null
+> +++ b/generate-cmdlist.awk
+> @@ -0,0 +1,38 @@
+> +BEGIN {
+> +       print "/* Automatically generated by generate-cmdlist.awk */\=
+n"
+> +       print "struct cmdname_help {"
+> +       print "\tchar name[16];"
+> +       print "\tchar help[80];"
+> +       print "\tunsigned char group;"
+> +       print "};\n"
+> +       print "static char *common_cmd_groups[] =3D {"
+> +}
+> +/^#/ || /^[    ]*$/ { next }
+> +state =3D=3D 2 {
+> +       for (i =3D 2; i <=3D NF; i++)
+> +               if (grp[$i]) {
+> +                       f =3D "Documentation/"$1".txt"
+> +                       while (getline s <f > 0)
+> +                               if (match(s, $1" - ")) {
+> +                                       t =3D substr(s, length($1" - =
+") + 1)
+> +                                       break
+> +                               }
+> +                       close(f)
+> +                       printf "\t{\"%s\", N_(\"%s\"), %s},\n",
+> +                               substr($1, length("git-") + 1), t, gr=
+p[$i] - 1
+> +                       break
+> +               }
+> +}
+> +/\[commands\]/ {
+> +       print "};\n\nstatic struct cmdname_help common_cmds[] =3D {"
+> +       state =3D 2
+> +}
+> +state =3D=3D 1 {
+> +       grp[$1] =3D ++n
+> +       sub($1"[        ][      ]*", "")
+> +       printf "\tN_(\"%s\"),\n", $0
+> +}
+> +/\[common\]/ {
+> +       state =3D 1
+> +}
+> +END { print "};" }
+> --
+> 2.4.0
