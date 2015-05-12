@@ -1,139 +1,193 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH] bisect: print abbrev sha1 for first bad commit
-Date: Tue, 12 May 2015 13:58:56 -0700
-Message-ID: <CAGZ79kZG=9BkEGB_GOsg7F-2mN5iTjmTFK+vUohj_7wJLfPtig@mail.gmail.com>
-References: <1431128763-28453-1-git-send-email-tbsaunde@tbsaunde.org>
-	<CAGZ79kYjES6DXmvQdmXLAXrKMGrnvQ-vqJuHQU2QxVC4+6M0aA@mail.gmail.com>
-	<20150509014152.GA31119@tsaunders-iceball.corp.tor1.mozilla.com>
-	<20150509040704.GA31428@peff.net>
-	<20150510231110.GA25157@tsaunders-iceball.corp.tor1.mozilla.com>
-	<20150511011009.GA21830@peff.net>
-	<xmqqmw1bg2dd.fsf@gitster.dls.corp.google.com>
-	<CAP8UFD1Aq54dWvxo5JTP4Fqy5u-qhA0LAm3vRrw9=jYg3o_F+g@mail.gmail.com>
-	<xmqqfv73f420.fsf@gitster.dls.corp.google.com>
-	<CAP8UFD3LzM3uuUzWYS-o6mhtH-x5+-kyGhDvYnv6ZPRTC18C6w@mail.gmail.com>
-	<xmqq7fsd201d.fsf@gitster.dls.corp.google.com>
-	<CAP8UFD0k-=ESEu-7jhf8Y5wz+5A=MHsjtMnC7YJv_DRi30TmDw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 02/18] is_refname_available(): revamp the comments
+Date: Tue, 12 May 2015 14:04:18 -0700
+Message-ID: <xmqq8uctfqy5.fsf@gitster.dls.corp.google.com>
+References: <1431357920-25090-1-git-send-email-mhagger@alum.mit.edu>
+	<1431357920-25090-3-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Trevor Saunders <tbsaunde@tbsaunde.org>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 12 22:59:08 2015
+Content-Type: text/plain
+Cc: Stefan Beller <sbeller@google.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue May 12 23:04:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YsHGd-0004lL-TE
-	for gcvg-git-2@plane.gmane.org; Tue, 12 May 2015 22:59:08 +0200
+	id 1YsHLp-0007Bk-SP
+	for gcvg-git-2@plane.gmane.org; Tue, 12 May 2015 23:04:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754065AbbELU7C (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 May 2015 16:59:02 -0400
-Received: from mail-ig0-f171.google.com ([209.85.213.171]:36195 "EHLO
-	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753849AbbELU65 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 May 2015 16:58:57 -0400
-Received: by igbpi8 with SMTP id pi8so120774147igb.1
-        for <git@vger.kernel.org>; Tue, 12 May 2015 13:58:56 -0700 (PDT)
+	id S1754096AbbELVE0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 May 2015 17:04:26 -0400
+Received: from mail-ie0-f175.google.com ([209.85.223.175]:36643 "EHLO
+	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753748AbbELVEV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 May 2015 17:04:21 -0400
+Received: by iepk2 with SMTP id k2so12492468iep.3
+        for <git@vger.kernel.org>; Tue, 12 May 2015 14:04:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=DEhLFG2DQaFDx197GXmrwvudqsLfQvN57T75cO4TR34=;
-        b=ES/2a1feBFL/YbyCZ3HQdajbq7RlvWhtD0RmjLIRIeyDS3/CEJmx1nRx9ZbcJ3lUj6
-         Jbq+v/gDB8xwVTj5zBZ25Mymoa7GHVk+z7D5FVcgdM39HtqMx02UE5OUSgIeztlYyif8
-         IU7vVGisQWBxHSK66vS+i3qVSfiJMGvzKBk6LXD091J3/+z6NPe4NW33qYcji8z2RvH1
-         wKlyOdCigMinD17ias0XNYvXxjnBBUmKAtU/pnDwFnppBwKki+lQy1SsqSSl7VHRiQlf
-         YuV5WSQ2DrjI4A5Dk2IR7ZMMdTbzyV/PWEFybQTNxr7ikUhjHwfti06IOs36dAvIcw/3
-         armg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=DEhLFG2DQaFDx197GXmrwvudqsLfQvN57T75cO4TR34=;
-        b=Z0uhC1aeSHdirWcySwqlIMJ2rl+kEKPETivk+ZMwYipvt0hYX91jcPlsuAfidbQAb0
-         Nw2h+B4SEH0v4TcI/7Gv/EYFo35EHEXO2gOiOWmxYRj1O9NTuUe3MOPiM1j/I/H7notY
-         4AnZHw6bvEAEb3VDlZZ/ltOLYn2hlYR3uQ5AuH6MspwBSldtKUvu2tf1IkyEEXHElweT
-         bbPufYyyCTgunvLqBgn4slnKHXs0g/nLR1VxTnlAVQSoTbBA+/fVrrPKEelCA4p8Qu2d
-         forP4qRbiBU1rivvSzJkPmz3IIhTZMpazVquPI8RtO06PNMMjI0NvjWzUtW3ELcnYWxp
-         V4kg==
-X-Gm-Message-State: ALoCoQlN4s+sPxNgz9L6CkbPoj4bT4iVIlqYjQAJNviDez9CefEgZe8HYcP7MDaXbY/+acUzJSI0
-X-Received: by 10.107.170.40 with SMTP id t40mr2420432ioe.2.1431464336191;
- Tue, 12 May 2015 13:58:56 -0700 (PDT)
-Received: by 10.107.46.22 with HTTP; Tue, 12 May 2015 13:58:56 -0700 (PDT)
-In-Reply-To: <CAP8UFD0k-=ESEu-7jhf8Y5wz+5A=MHsjtMnC7YJv_DRi30TmDw@mail.gmail.com>
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=2k6Ix+V5RC1jYT7kpHUc1bgL+OZ5FHkJsXWGsMF9w58=;
+        b=TSc7dBWtLKGzvXubk76opTIZ9ZupxsMwT2y7L8hc2BCyv75QsePdNCjlOQfzxfQCfy
+         cEZP0eW5PjhOF00xbMqyVCCRzxdVjCh+BnOatQz21iCnQNqeHDQrbf9U/czd4ahopd26
+         tvsKDh4FA+6OXgK5sAE6YVepEXXPMVNGWH1nNafZMTSjio4Bgqpsq98z6X9eOOmpDLZG
+         BOv4mD9N/GC9AfU8YmkJXP9H8crvRZGdFUJSmd+bSdlXOzmiVFZaB31eseSt8OkDa/EC
+         orURFbwGwfDwpvI8mJvbE2FltQoVSe9mYzmocJTKPpCUwS2RJgwR/QCFNmFyAN3UpXis
+         2vKg==
+X-Received: by 10.42.119.2 with SMTP id z2mr1274547icq.1.1431464660230;
+        Tue, 12 May 2015 14:04:20 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:1d41:fac7:b879:7542])
+        by mx.google.com with ESMTPSA id q29sm12703768ioi.9.2015.05.12.14.04.19
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 12 May 2015 14:04:19 -0700 (PDT)
+In-Reply-To: <1431357920-25090-3-git-send-email-mhagger@alum.mit.edu> (Michael
+	Haggerty's message of "Mon, 11 May 2015 17:25:04 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268882>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268883>
 
-On Tue, May 12, 2015 at 1:43 PM, Christian Couder
-<christian.couder@gmail.com> wrote:
-> On Tue, May 12, 2015 at 7:11 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Christian Couder <christian.couder@gmail.com> writes:
->>
->>> On Mon, May 11, 2015 at 6:54 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>>
->>>> To be bluntly honest, I think the current one is sufficient as a
->>>> good-enough default.  The first thing I would do after seeing that
->>>> message is to either "git checkout <commit-object-name>" or "git
->>>> show <commit-object-name>", and the current full 40-hex output gives
->>>> me an easier mouse-double-click target than the proposed abbreviated
->>>> one, so in that sense the original proposal may even be a usability
->>>> regression.
->>>
->>> Yeah, it might also be a regression if some users have scripts that
->>> depend on the current behavior.
->>> ...
->>>> It is tempting to say that the output can be eliminated by always
->>>> checking out the first-bad-commit (i.e. only when the last answer
->>>> that led to the first-bad decision was "good", do a "git checkout"
->>>> of that bad commit), but in a project where a branch switching is
->>>> not instantaneous, that might be problematic (unless the first step
->>>> the user would have done is to check it out anyway, of course).
->>>
->>> Yeah, and speaking of regressions, elimiting the output might be a
->>> more serious regression.
->>
->> I am getting somewhat annoyed by this line of thought.
->>
->> Who said bisect output is meant to be parseable and be read by
->> scripts in the first place?  If that were the case, we wouldn't be
->> having this discussion thread in the first place.
->
-> Well "git bisect run" is all about automating bisecting and we know
-> that some people have been using it for a long time.
->
-> See for example this message from 2007:
->
-> http://lkml.iu.edu/hypermail/linux/kernel/0711.1/1443.html
->
-> where there is:
->
-> "Today we can autonomouly
-> bisect build bugs via a simple shell command around "git-bisect run",
-> without any human interaction!"
->
-> So it is reasonnable to wonder if some scripts might be parsing
-> the output.
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-This reasoning sounds to me, that the lack of a plumbing counterpart
-to bisect(porcelain) made it a de facto plumbing command,
-which is unfortunate for discussing changes like these.
+> Change the comments to a running example of running the function with
+> refname set to "refs/foo/bar". Add some more explanation of the logic.
 
-So how to proceed here?
-* one way would be to ignore the scripts out there, "because it's
-  porcelain, so nobody sane would have written a script using it anyway"
-  but this attitude is not well perceived in the community I'd assume.
-* declare the current bisect command a plumbing layer command and
-  introduce a new porcelain command, how about "git find" which can address
-  a variety of issues such as also having the capability to find a fix
-instead of
-  just regressions (make good/bad markers less confusing)
-  Depending on the implementation this may be a lot of work
-  -> copy/paste is fast and involves less work now, but more in the future
-  -> or having a new plumbing-bisect header making calls from the porcelain
-      to the plumbing bisect tool.
+I initially had a hard time understanding what these two "running"s
+were before reading the changes.  They all look good.
+
+Thanks.
+
+
+> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+> ---
+>  refs.c | 69 +++++++++++++++++++++++++++++++++++++++++++++---------------------
+>  1 file changed, 47 insertions(+), 22 deletions(-)
+>
+> diff --git a/refs.c b/refs.c
+> index 47e4e53..776bbce 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -876,9 +876,9 @@ static void report_refname_conflict(struct ref_entry *entry,
+>   * operation).
+>   *
+>   * Two reference names conflict if one of them exactly matches the
+> - * leading components of the other; e.g., "foo/bar" conflicts with
+> - * both "foo" and with "foo/bar/baz" but not with "foo/bar" or
+> - * "foo/barbados".
+> + * leading components of the other; e.g., "refs/foo/bar" conflicts
+> + * with both "refs/foo" and with "refs/foo/bar/baz" but not with
+> + * "refs/foo/bar" or "refs/foo/barbados".
+>   *
+>   * skip must be sorted.
+>   */
+> @@ -891,19 +891,39 @@ static int is_refname_available(const char *refname,
+>  	int pos;
+>  	char *dirname;
+>  
+> +	/*
+> +	 * For the sake of comments in this function, suppose that
+> +	 * refname is "refs/foo/bar".
+> +	 */
+> +
+>  	for (slash = strchr(refname, '/'); slash; slash = strchr(slash + 1, '/')) {
+>  		/*
+> -		 * We are still at a leading dir of the refname; we are
+> -		 * looking for a conflict with a leaf entry.
+> -		 *
+> -		 * If we find one, we still must make sure it is
+> -		 * not in "skip".
+> +		 * We are still at a leading dir of the refname (e.g.,
+> +		 * "refs/foo"; if there is a reference with that name,
+> +		 * it is a conflict, *unless* it is in skip.
+>  		 */
+>  		pos = search_ref_dir(dir, refname, slash - refname);
+>  		if (pos >= 0) {
+> +			/*
+> +			 * We found a reference whose name is a proper
+> +			 * prefix of refname; e.g., "refs/foo".
+> +			 */
+>  			struct ref_entry *entry = dir->entries[pos];
+> -			if (entry_matches(entry, skip))
+> +			if (entry_matches(entry, skip)) {
+> +				/*
+> +				 * The reference we just found, e.g.,
+> +				 * "refs/foo", is also in skip, so it
+> +				 * is not considered a conflict.
+> +				 * Moreover, the fact that "refs/foo"
+> +				 * exists means that there cannot be
+> +				 * any references anywhere under the
+> +				 * "refs/foo/" namespace (because they
+> +				 * would have conflicted with
+> +				 * "refs/foo"). So we can stop looking
+> +				 * now and return true.
+> +				 */
+>  				return 1;
+> +			}
+>  			report_refname_conflict(entry, refname);
+>  			return 0;
+>  		}
+> @@ -911,19 +931,29 @@ static int is_refname_available(const char *refname,
+>  
+>  		/*
+>  		 * Otherwise, we can try to continue our search with
+> -		 * the next component; if we come up empty, we know
+> -		 * there is nothing under this whole prefix.
+> +		 * the next component. So try to look up the
+> +		 * directory, e.g., "refs/foo/".
+>  		 */
+>  		pos = search_ref_dir(dir, refname, slash + 1 - refname);
+> -		if (pos < 0)
+> +		if (pos < 0) {
+> +			/*
+> +			 * There was no directory "refs/foo/", so
+> +			 * there is nothing under this whole prefix,
+> +			 * and we are OK.
+> +			 */
+>  			return 1;
+> +		}
+>  
+>  		dir = get_ref_dir(dir->entries[pos]);
+>  	}
+>  
+>  	/*
+> -	 * We are at the leaf of our refname; we want to
+> -	 * make sure there are no directories which match it.
+> +	 * We are at the leaf of our refname (e.g., "refs/foo/bar").
+> +	 * There is no point in searching for a reference with that
+> +	 * name, because a refname isn't considered to conflict with
+> +	 * itself. But we still need to check for references whose
+> +	 * names are in the "refs/foo/bar/" namespace, because they
+> +	 * *do* conflict.
+>  	 */
+>  	len = strlen(refname);
+>  	dirname = xmallocz(len + 1);
+> @@ -933,9 +963,9 @@ static int is_refname_available(const char *refname,
+>  
+>  	if (pos >= 0) {
+>  		/*
+> -		 * We found a directory named "refname". It is a
+> -		 * problem iff it contains any ref that is not
+> -		 * in "skip".
+> +		 * We found a directory named "$refname/" (e.g.,
+> +		 * "refs/foo/bar/"). It is a problem iff it contains
+> +		 * any ref that is not in "skip".
+>  		 */
+>  		struct ref_entry *entry = dir->entries[pos];
+>  		struct ref_dir *dir = get_ref_dir(entry);
+> @@ -950,11 +980,6 @@ static int is_refname_available(const char *refname,
+>  		return 0;
+>  	}
+>  
+> -	/*
+> -	 * There is no point in searching for another leaf
+> -	 * node which matches it; such an entry would be the
+> -	 * ref we are looking for, not a conflict.
+> -	 */
+>  	return 1;
+>  }
