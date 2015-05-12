@@ -1,141 +1,70 @@
-From: David Turner <dturner@twopensource.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH v5 3/3] cat-file: add --follow-symlinks to --batch
-Date: Tue, 12 May 2015 14:36:19 -0400
-Organization: Twitter
-Message-ID: <1431455779.16652.20.camel@ubuntu>
+Date: Tue, 12 May 2015 11:43:09 -0700
+Message-ID: <xmqqk2wdzlfm.fsf@gitster.dls.corp.google.com>
 References: <1431384645-17276-1-git-send-email-dturner@twopensource.com>
-	 <1431384645-17276-4-git-send-email-dturner@twopensource.com>
-	 <xmqqoalpzn3s.fsf@gitster.dls.corp.google.com>
+	<1431384645-17276-4-git-send-email-dturner@twopensource.com>
+	<xmqqoalpzn3s.fsf@gitster.dls.corp.google.com>
+	<1431455779.16652.20.camel@ubuntu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Cc: git@vger.kernel.org, David Turner <dturner@twitter.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 12 20:36:28 2015
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Tue May 12 20:43:27 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YsF2Z-0007po-DO
-	for gcvg-git-2@plane.gmane.org; Tue, 12 May 2015 20:36:27 +0200
+	id 1YsF9G-0002Vt-Gr
+	for gcvg-git-2@plane.gmane.org; Tue, 12 May 2015 20:43:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933010AbbELSgX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 May 2015 14:36:23 -0400
-Received: from mail-qg0-f50.google.com ([209.85.192.50]:35490 "EHLO
-	mail-qg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932916AbbELSgW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 May 2015 14:36:22 -0400
-Received: by qgej70 with SMTP id j70so9144682qge.2
-        for <git@vger.kernel.org>; Tue, 12 May 2015 11:36:21 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:mime-version
-         :content-transfer-encoding;
-        bh=5bIAsJ6VHwTIBjSYF6fVsay+eGHPJIbuJgv0s4pk4Ik=;
-        b=UFNyK4kptOXvT8C4jF2n5YIF0sX4qPomHmRlJVKr5DRoylv9JOXANwNa1ath6aBeUf
-         aZC0ILk9LnOl1nSmsIfNsSxTYG1KdNaGITfd/pKCNIToHYhcL+f5s8ZQGyeJHn4DciHB
-         crAnz6TqQqTCLxRHhjlqGbOWq+WWv60BtuyClg7jFshMfVCWqdj+cfvAtD367JCHxG4W
-         i1Bp6jss/ijucQf5uxIVZ6ydjn610Kjufq61Uqvt+NKjS39edw6RvJGDIQ03qrhFf47C
-         kfHbynNYXroE2hkZhMrvFD0um0t1GmyoXzuPF4SQIC92l7pmN7TvxosTYRciWNPdTQIz
-         mbvQ==
-X-Gm-Message-State: ALoCoQllYwZuoQ3mGV5qIcPz6wOu3BF+7+Jn2iyPCH+/XShgSR6XXPFgteVnXeNBbSEpk0uYVskv
-X-Received: by 10.229.37.200 with SMTP id y8mr22808008qcd.28.1431455781652;
-        Tue, 12 May 2015 11:36:21 -0700 (PDT)
-Received: from [172.22.38.222] ([192.133.79.147])
-        by mx.google.com with ESMTPSA id n62sm13934348qge.27.2015.05.12.11.36.20
-        (version=TLSv1.2 cipher=AES128-GCM-SHA256 bits=128/128);
-        Tue, 12 May 2015 11:36:20 -0700 (PDT)
-In-Reply-To: <xmqqoalpzn3s.fsf@gitster.dls.corp.google.com>
-X-Mailer: Evolution 3.10.4-0ubuntu2 
+	id S933801AbbELSnN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 May 2015 14:43:13 -0400
+Received: from mail-ig0-f180.google.com ([209.85.213.180]:35585 "EHLO
+	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932870AbbELSnL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 May 2015 14:43:11 -0400
+Received: by igbyr2 with SMTP id yr2so117083239igb.0
+        for <git@vger.kernel.org>; Tue, 12 May 2015 11:43:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=7oEyj5uqLP33MCMMEUyH25GSZNlA9g8NBjlEb9A1m0w=;
+        b=ynWYdX03ceAKY6BOlc81W9Se9yLvWxCSMRXpmDvEy9pKGXxtGcXx0m3ThcX/Ily76i
+         XJ9B7S2TA4eK6ZpecMqOXGV4Ao/yoKJcHgtGQJcyPe7FKMkDLbL5W+OkesKbIWDj4Cgh
+         zyNyAPSUDGJWYQB/8W6fW8QRj3N455hSbcetC5BNV5Gi6Ou3DIIr8CZ1Lk9aC+4nVknk
+         I6rn2Qy2TIpuh/7OM+WhS+HPjUT3bDsXG79XwxzVDsrAuneEm3wgTxyKWNZPDceCq4zB
+         nOrqYkInHvEGB13aW7p4zBTfCPSBI6qFAKLpFRYVR2nKxq5ne67j8w6XjrUP4Xui4rYB
+         wn9Q==
+X-Received: by 10.107.3.106 with SMTP id 103mr2608729iod.60.1431456190747;
+        Tue, 12 May 2015 11:43:10 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:1d41:fac7:b879:7542])
+        by mx.google.com with ESMTPSA id o21sm12439137ioo.31.2015.05.12.11.43.09
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 12 May 2015 11:43:10 -0700 (PDT)
+In-Reply-To: <1431455779.16652.20.camel@ubuntu> (David Turner's message of
+	"Tue, 12 May 2015 14:36:19 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268868>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268869>
 
-On Tue, 2015-05-12 at 11:07 -0700, Junio C Hamano wrote:
-> > +	Both plink and alink point outside the tree, so they would
-> > +	respectively print:
-> > +	symlink 4
-> > +	../f
-> > +
-> > +	symlink 11
-> > +	/etc/passwd
-> > +
-> > +
-> > +
-> 
-> A few points I noticed:
-> 
->  * It is not clear that this is (currently) only for --batch and
->    --batch-check until you read four lines into the description.
-> 
->    Perhaps start the description like this instead?
-> 
->    --follow-symlinks::
->            When answering `--batch` or `--batch-check` request,
->            follow symlinks inside the repository when requesting objects
->            with extended SHA-1 expressions of the form tree-ish:path-in-tree.
+David Turner <dturner@twopensource.com> writes:
 
-Will rearrange.
+>> We need to also say something about the "missing" vs "loop" case, if
+>> we choose to leave that part broken.  I'd rather see it fixed, but
+>> that is not a very strong preference.
+>
+> Will add an example.
 
->    Also I'd lose the "This option requires ..." sentence in the middle
->    (I'll come back to the reason why later).
-> 
->  * Is it fundamental that this is only for --batch family, or is it
->    just lack of need by the current implementor and implementation?
->    "git cat-file --follow-symlinks blob :RelNotes" does not sound
->    a nonsense request to me.
+I do not think we need an example.  By "also say", I meant in
+addition to "This and that does not currently work", we also need to
+say that loops do not work well.  In other words, it is enough to
+just mention that it is a current limitation (or a bug, whichever we
+choose to call) that loops are reported as missing.
 
-The reason that --follow-symlinks doesn't work for non-batch requests is
-that it is impossible to distinguish out-of-tree symlinks from valid
-output in non-batch output. I will add text explaining this. 
-
->  * I am not sure if HEAD:link that points at HEAD:link should be
->    reported as "missing".  It may be better to report the original
->    without any dereferencing just like a link that points at outside
->    the tree? i.e. "symlink 4 LF link".
-
-Unfortunately, a symlink loop might include relative symlinks
-(e.g. ../a).  If we return a relative symlink, the user will
-not be able to distinguish it from a non-loop, out-of-tree symlink.  So
-I think we may not return symlink 4 LF ../a for these cases.  
-
-We could, I guess, have a separate output like loop <size> LF link
-<LF>", but, unless we always save and output the first link in the
-chain, we won't know what any link is relative to.  Since reasonable
-people do not create symlink loops, and since there are other mechanisms
-for symlink loop debugging (e.g. plain cat-file), I think it is OK not
-to put special effort into handling loops.
-
->  * I think "echo :RelNotes | git cat-file --batch --follow-symlinks"
->    that does not follow a symlink is a BUG.  Unless there is
->    something fundamental that in-index object should never support
->    this feature, that is.  But I do not think of a good reason
->    why---it feels that this is just the lack of implementation that
->    can be addressed by somebody else in the future who finds the
->    need for the support.
-
-Yes, this should definitely be addressed in the future.  I didn't see a
-straightforward way to generalize this code to also address the index,
-so a new version of this function would have to be written.  That's why
-I didn't add that feature yet.  The lack of it is definitely a bug,
-though.  
-
->         Also the option does not (currently) work correctly when an
-> 	object in the index is specified (e.g. `:link` instead of
-> 	`HEAD:link`) rather than one in the tree.
-> 
-> We need to also say something about the "missing" vs "loop" case, if
-> we choose to leave that part broken.  I'd rather see it fixed, but
-> that is not a very strong preference.
-
-Will add an example.
-
-> By the way, the text after your patch would not format well thru
-> AsciiDoc.  See attached for a suggested mark-up fix that can be
-> squashed.
-
-I'll squash that in when I re-roll.  Thanks for the formatting.
+Thanks.
