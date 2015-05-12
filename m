@@ -1,80 +1,63 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-pull --tags with no merge candidates case gives confusing error message
-Date: Tue, 12 May 2015 10:23:19 -0700
-Message-ID: <xmqq38311zi0.fsf@gitster.dls.corp.google.com>
-References: <CACRoPnQvNvBv1_wBzWQH6A8XRvWZ+HURvtkqtgYpwjjNXuCERg@mail.gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v5 1/3] tree-walk: learn get_tree_entry_follow_symlinks
+Date: Tue, 12 May 2015 19:29:01 +0200
+Message-ID: <5552385D.1050303@kdbg.org>
+References: <1431384645-17276-1-git-send-email-dturner@twopensource.com> <1431384645-17276-2-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Git List <git@vger.kernel.org>
-To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 12 19:23:28 2015
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: David Turner <dturner@twitter.com>
+To: dturner@twopensource.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 12 19:29:27 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YsDtv-0007Yb-6G
-	for gcvg-git-2@plane.gmane.org; Tue, 12 May 2015 19:23:27 +0200
+	id 1YsDzi-00028b-LW
+	for gcvg-git-2@plane.gmane.org; Tue, 12 May 2015 19:29:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932931AbbELRXW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 May 2015 13:23:22 -0400
-Received: from mail-ig0-f179.google.com ([209.85.213.179]:37504 "EHLO
-	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932776AbbELRXV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 May 2015 13:23:21 -0400
-Received: by igbsb11 with SMTP id sb11so21148726igb.0
-        for <git@vger.kernel.org>; Tue, 12 May 2015 10:23:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=weF3Zgg4YIRGMzewvn7OgMKBMeUl7cTXZR5ApDNop/k=;
-        b=H070qJt9h9iy7tFRsgN/imFNsATCnxPBGYGm9e07CJFfnJK33FXuG0BD1ixlLPx1O2
-         1TxJJheS4r8oXv9UdP2WG8AHxHzhXAkBPwFVDRbIvbe3xuKC7kN7Hk84a1GBw86+V4EQ
-         5FcBA8+DijJHuThpOYTKE1w4b4GnYySsT8DCcJQ1eQtxpD5aiwKg+YfkQvTy2i0c7sp0
-         ZAhgSEDrXKFu1WbniqjxwsIrplgd4eofMsvB8e8mJkRe5Drtab3bBlew1sxBmAqKUH4Q
-         SDLglmtKDo57QLPyDpEHdHNpwKlP1D7ha6IArOjXd4bg4AkgaPByVigV3xA8R873psaC
-         UhMw==
-X-Received: by 10.50.45.103 with SMTP id l7mr5033136igm.41.1431451401337;
-        Tue, 12 May 2015 10:23:21 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:1d41:fac7:b879:7542])
-        by mx.google.com with ESMTPSA id cy11sm1616760igc.14.2015.05.12.10.23.20
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 12 May 2015 10:23:20 -0700 (PDT)
-In-Reply-To: <CACRoPnQvNvBv1_wBzWQH6A8XRvWZ+HURvtkqtgYpwjjNXuCERg@mail.gmail.com>
-	(Paul Tan's message of "Tue, 12 May 2015 13:59:04 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S933454AbbELR3W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 May 2015 13:29:22 -0400
+Received: from bsmtp4.bon.at ([195.3.86.186]:63502 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S932918AbbELR3G (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 May 2015 13:29:06 -0400
+Received: from dx.site (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTPSA id 3lmR254LpFz5tlH;
+	Tue, 12 May 2015 19:29:01 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.site (Postfix) with ESMTP id 3651E2A9E;
+	Tue, 12 May 2015 19:29:01 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
+In-Reply-To: <1431384645-17276-2-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268859>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268860>
 
-Paul Tan <pyokagan@gmail.com> writes:
+Am 12.05.2015 um 00:50 schrieb dturner@twopensource.com:
+> +		} else if (S_ISLNK(*mode)) {
+> +			/* Follow a symlink */
+> +			size_t link_len, len;
+> +			char *contents, *contents_start;
+> +			struct dir_state *parent;
+> +			enum object_type type;
+> +
+> +			if (follows_remaining-- == 0)
+> +				/* Too many symlinks followed */
+> +				goto done;
+> +
+> +			contents = read_sha1_file(current_tree_sha1, &type,
+> +						  &link_len);
 
-> This behavior was introduced in 441ed41 ("git pull --tags": error out
-> with a better message., 2007-12-28), which stated that:
->
->     In the longer term, it would be a better approach to change the
->     semantics of --tags option to make "git fetch" and "git pull"
->     to:
->     ...
->     Then we would not need to have this separate error message, as
->     the ordinary merge will happen even with the --tags option.
->
-> Given that as of c5a84e9 (fetch --tags: fetch tags *in addition to*
-> other stuff, 2013-10-30), git-pull --tags will fetch tags in addition
-> to the configured refspecs, so if there are no merge candidates, it
-> would not be because --tags was specified on the command line.
->
-> As such, I wonder if the error message should be removed, since it
-> conceals the actual reason of why there are no merge candidates.
+In this line, I get:
 
-I love it when people carefully analyse why the things are in the
-way they are, and some things no longer make sense in today's world
-order.
+tree-walk.c: In function 'get_tree_entry_follow_symlinks':
+tree-walk.c:637: warning: passing argument 3 of 'read_sha1_file' from 
+incompatible pointer type
+cache.h:885: note: expected 'long unsigned int *' but argument is of 
+type 'size_t *'
 
-I agree 100% with your analysis.  c5a84e9 should have tweaked this
-part, but was not careful enough, and made the heuristic used in
-441ed41 when diagnosing the error is a bad one now.  It should go.
+-- Hannes
