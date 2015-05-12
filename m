@@ -1,69 +1,93 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 01/18] t1404: new tests of ref D/F conflicts within transactions
-Date: Tue, 12 May 2015 08:45:19 -0700
-Message-ID: <CAPc5daVQEMv-QPDpyNVGzcjrjrw20QLzm8dkC0ZYAX=Y4zGaBQ@mail.gmail.com>
-References: <1431357920-25090-1-git-send-email-mhagger@alum.mit.edu>
- <1431357920-25090-2-git-send-email-mhagger@alum.mit.edu> <xmqqlhgu3nyl.fsf@gitster.dls.corp.google.com>
- <5551BA88.3090900@alum.mit.edu>
+Subject: Re: [PATCH] bisect: print abbrev sha1 for first bad commit
+Date: Tue, 12 May 2015 10:11:42 -0700
+Message-ID: <xmqq7fsd201d.fsf@gitster.dls.corp.google.com>
+References: <1431128763-28453-1-git-send-email-tbsaunde@tbsaunde.org>
+	<CAGZ79kYjES6DXmvQdmXLAXrKMGrnvQ-vqJuHQU2QxVC4+6M0aA@mail.gmail.com>
+	<20150509014152.GA31119@tsaunders-iceball.corp.tor1.mozilla.com>
+	<20150509040704.GA31428@peff.net>
+	<20150510231110.GA25157@tsaunders-iceball.corp.tor1.mozilla.com>
+	<20150511011009.GA21830@peff.net>
+	<xmqqmw1bg2dd.fsf@gitster.dls.corp.google.com>
+	<CAP8UFD1Aq54dWvxo5JTP4Fqy5u-qhA0LAm3vRrw9=jYg3o_F+g@mail.gmail.com>
+	<xmqqfv73f420.fsf@gitster.dls.corp.google.com>
+	<CAP8UFD3LzM3uuUzWYS-o6mhtH-x5+-kyGhDvYnv6ZPRTC18C6w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Stefan Beller <sbeller@google.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Jeff King <peff@peff.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue May 12 17:45:47 2015
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>, Trevor Saunders <tbsaunde@tbsaunde.org>,
+	Stefan Beller <sbeller@google.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 12 19:11:50 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YsCNN-0004eU-Kq
-	for gcvg-git-2@plane.gmane.org; Tue, 12 May 2015 17:45:45 +0200
+	id 1YsDig-0002El-0A
+	for gcvg-git-2@plane.gmane.org; Tue, 12 May 2015 19:11:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753348AbbELPpl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 May 2015 11:45:41 -0400
-Received: from mail-ob0-f172.google.com ([209.85.214.172]:35305 "EHLO
-	mail-ob0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751583AbbELPpk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 May 2015 11:45:40 -0400
-Received: by obcus9 with SMTP id us9so8741008obc.2
-        for <git@vger.kernel.org>; Tue, 12 May 2015 08:45:39 -0700 (PDT)
+	id S932947AbbELRLp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 May 2015 13:11:45 -0400
+Received: from mail-ig0-f169.google.com ([209.85.213.169]:38691 "EHLO
+	mail-ig0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932814AbbELRLo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 May 2015 13:11:44 -0400
+Received: by igbhj9 with SMTP id hj9so20839110igb.1
+        for <git@vger.kernel.org>; Tue, 12 May 2015 10:11:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=JiQ1N6hoaKq+kNPsbDyG7r+2eU9gclDVmZ9HATSYRA0=;
-        b=UMM3QHVQoppIy4+KLLo8+gDLolKI30d5ZfO3Ghcf1dBwRJr7xDaOnOTks3/MPSNOtk
-         5MWsDSGoon5ULbqtlHNovZ48s6olP8t+wETzUrEYfZUu6ad6C4xlrAb+2ehmGqbOqgpg
-         vhFcGaZPhmqvw6dxgqivcm+1IPXuB1KjKwtArScgae1XwME9ioutTort42yeR/Su5ZAz
-         hkLo9qnXMivKMuMfVByIIPjcIiSPdTvGxN0fmhO59tQN00hyiXRES/I1YtoTXsC30XD5
-         MHcJYujk20FjVlKQUiPaYaiQmEEWkuz1LsKx06cV1xqqP/phFAGmmPvz1KWZB1ZoqnSw
-         mCKA==
-X-Received: by 10.60.160.65 with SMTP id xi1mr12415694oeb.17.1431445539838;
- Tue, 12 May 2015 08:45:39 -0700 (PDT)
-Received: by 10.202.197.18 with HTTP; Tue, 12 May 2015 08:45:19 -0700 (PDT)
-In-Reply-To: <5551BA88.3090900@alum.mit.edu>
-X-Google-Sender-Auth: 3_Rw3P758ZPAS-RgJzJnaUQpo0U
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=QhZq1iD2nXjeApiqnRqB+QPaHSveCncye+QDUTtPiYQ=;
+        b=I/btjlXH5XRZARchPrPLWLpCGWOFYSyUHGktCwsiOSeA4L8MpmICJI0AHwSnXmuf4g
+         sFRBsV5eFIMeETkHOPIOFRdWKNYijnlIPN8T21ZQ+Sn71xmX/3Y9YO0wUmPsJXu6mgPG
+         fyQrtCCi1qBJCSSLby0RtquOiP7jKNkjl519qNy2S+WhfPozwYa3CaS1NGLMZEQQqiYY
+         GsZJtv7QBsW/ikh6BRhVtAkaMJ2SEU3E7Wv9CkGMuonyZh3hJJUkj3a+r8mJfukn6Q42
+         npNca/+JMBJ1nt6u8qqcwVy7sngw8WxOf6P/NitoE6OedjDeZM9rClX3QWm+fo0EUi+x
+         63aA==
+X-Received: by 10.50.143.97 with SMTP id sd1mr616334igb.25.1431450703988;
+        Tue, 12 May 2015 10:11:43 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:1d41:fac7:b879:7542])
+        by mx.google.com with ESMTPSA id v4sm12268151ioi.40.2015.05.12.10.11.43
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 12 May 2015 10:11:43 -0700 (PDT)
+In-Reply-To: <CAP8UFD3LzM3uuUzWYS-o6mhtH-x5+-kyGhDvYnv6ZPRTC18C6w@mail.gmail.com>
+	(Christian Couder's message of "Tue, 12 May 2015 11:21:57 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268857>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268858>
 
-On Tue, May 12, 2015 at 1:32 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> On 05/11/2015 09:37 PM, Junio C Hamano wrote:
->> Michael Haggerty <mhagger@alum.mit.edu> writes:
->> ...
->>> +    test_must_fail git update-ref --stdin <input 2>output.err &&
->>> +    grep -F "$error" output.err &&
->>
->> I am not 100% confident that "grep -F" is the right thing to use
->> here.  I checked all the error message these tests are expecting and
->> none seems to go through _(), but is it fundamental that these
->> errors should not be translated?
+Christian Couder <christian.couder@gmail.com> writes:
+
+> On Mon, May 11, 2015 at 6:54 PM, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Aren't tests run in the "C" locale so that tests don't have to worry
-> about i18n?
+>> To be bluntly honest, I think the current one is sufficient as a
+>> good-enough default.  The first thing I would do after seeing that
+>> message is to either "git checkout <commit-object-name>" or "git
+>> show <commit-object-name>", and the current full 40-hex output gives
+>> me an easier mouse-double-click target than the proposed abbreviated
+>> one, so in that sense the original proposal may even be a usability
+>> regression.
+>
+> Yeah, it might also be a regression if some users have scripts that
+> depend on the current behavior.
+> ...
+>> It is tempting to say that the output can be eliminated by always
+>> checking out the first-bad-commit (i.e. only when the last answer
+>> that led to the first-bad decision was "good", do a "git checkout"
+>> of that bad commit), but in a project where a branch switching is
+>> not instantaneous, that might be problematic (unless the first step
+>> the user would have done is to check it out anyway, of course).
+>
+> Yeah, and speaking of regressions, elimiting the output might be a
+> more serious regression.
 
-But there is a i18n markings test, for which test-i18ngrep was invented for.
+I am getting somewhat annoyed by this line of thought.
+
+Who said bisect output is meant to be parseable and be read by
+scripts in the first place?  If that were the case, we wouldn't be
+having this discussion thread in the first place.
