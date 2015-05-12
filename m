@@ -1,79 +1,100 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v2 0/8] Fix atomicity and avoid fd exhaustion in ref transactions
-Date: Tue, 12 May 2015 15:26:50 +0200
-Message-ID: <CAP8UFD2QcbTPmhpjbgE1g6PD5J1xWBv8bpDggH0+niXO-w3UwA@mail.gmail.com>
-References: <1431225937-10456-1-git-send-email-mhagger@alum.mit.edu>
-	<xmqqr3qng2h4.fsf@gitster.dls.corp.google.com>
-	<555051C9.7040204@alum.mit.edu>
-	<CAGZ79kbkfp-nZUqK3nO7hmdL4C+RaTREBTHbkjUtVxFgOeozOQ@mail.gmail.com>
+From: Paul Tan <pyokagan@gmail.com>
+Subject: Re: [PATCH v2 02/12] t5520: test for failure if index has unresolved entries
+Date: Tue, 12 May 2015 21:43:04 +0800
+Message-ID: <CACRoPnR7f713ABa=o2f-VQnDMjGvxKyUmn2Ap-ZCQ_Q447DOLA@mail.gmail.com>
+References: <1430988248-18285-1-git-send-email-pyokagan@gmail.com>
+	<1430988248-18285-3-git-send-email-pyokagan@gmail.com>
+	<CAPig+cRBrcC+Zud=mQoCco9E3DC66gZkX5C0wTWxQ4B-Oje3eQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Tue May 12 15:27:01 2015
+Cc: Git List <git@vger.kernel.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Tue May 12 15:43:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YsAD4-0005xz-Rl
-	for gcvg-git-2@plane.gmane.org; Tue, 12 May 2015 15:26:59 +0200
+	id 1YsASm-00051b-Lp
+	for gcvg-git-2@plane.gmane.org; Tue, 12 May 2015 15:43:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933199AbbELN0y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 May 2015 09:26:54 -0400
-Received: from mail-wi0-f172.google.com ([209.85.212.172]:35245 "EHLO
-	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932892AbbELN0w (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 May 2015 09:26:52 -0400
-Received: by widdi4 with SMTP id di4so153638817wid.0
-        for <git@vger.kernel.org>; Tue, 12 May 2015 06:26:51 -0700 (PDT)
+	id S933286AbbELNnI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 May 2015 09:43:08 -0400
+Received: from mail-la0-f51.google.com ([209.85.215.51]:35405 "EHLO
+	mail-la0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932545AbbELNnG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 May 2015 09:43:06 -0400
+Received: by labbd9 with SMTP id bd9so6130289lab.2
+        for <git@vger.kernel.org>; Tue, 12 May 2015 06:43:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=h6vDJp4k2a475LKNwHnsGwuxvSc+IM98FPFSA0zgk24=;
-        b=Eufk+b1ZEbNnEwUgUE4e/fUYrBDEguDIVsMjSGMDpnQArTgVe6cFjXhoijgAuw0p7S
-         xtX/aUnr6V4IikN2uMdEdRVY4FjIeFb0A2WAUfxueY6M0yyT7qqAS0gskLhez4sQ1K3n
-         HQI7Cd2JWhTy6ip1obKduWkuSC952kTFYqapajSKHrIOAPPklLMEeQxwFswL3AQxWmsG
-         q2PThtYNz5/P/y4iIV/YYxtl0R9/hpYw2KGPxRoVIGC5B4yvw0nKWrkuZ10QnYsQL3l/
-         Eawobg+d50W9tTY8zK5Ee/MUNG14VOttrb0MlVyeJirn+ffDT9tVvoBcIm75Euhtcrk1
-         ZjyQ==
-X-Received: by 10.180.88.99 with SMTP id bf3mr29942393wib.75.1431437210925;
- Tue, 12 May 2015 06:26:50 -0700 (PDT)
-Received: by 10.194.40.8 with HTTP; Tue, 12 May 2015 06:26:50 -0700 (PDT)
-In-Reply-To: <CAGZ79kbkfp-nZUqK3nO7hmdL4C+RaTREBTHbkjUtVxFgOeozOQ@mail.gmail.com>
+        bh=HxzQbMvElUETJrf9U9nfx49Z3rVg56XUScCjvIdovis=;
+        b=W+Os2jnTpkQ22jTnjkk5UxzJDLzk1IVZs7lxI+BoGrWX1UdrsWLWck087H9dssUEdk
+         WNYGbnMw2nWk39Zs/+5FKCzMSyEiCeXPV38tUxXty7C6FnUoSGG1uR6fXWJEoL9n0Ytw
+         +9mUPIpWjWt/oGMuMGFCDvjnDkOacZgo//a3HIqbrq4m4D7w806hq6sUajAo2BiqOffK
+         ddlkc5BRF4l4CwgXMNfx2MfTrcu30Atvf/yO1EIHsFo8vR9RLHHbpTo47+4mieKsqyRa
+         vyv9JeqVwgbmU28cLxkkW/LoXolF6ej0BXnVmNeqa393RQ/6bihWWWB1wCYnVzuAlAwF
+         Vsrg==
+X-Received: by 10.152.87.13 with SMTP id t13mr12231939laz.66.1431438184471;
+ Tue, 12 May 2015 06:43:04 -0700 (PDT)
+Received: by 10.112.74.133 with HTTP; Tue, 12 May 2015 06:43:04 -0700 (PDT)
+In-Reply-To: <CAPig+cRBrcC+Zud=mQoCco9E3DC66gZkX5C0wTWxQ4B-Oje3eQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268854>
 
-On Mon, May 11, 2015 at 7:10 PM, Stefan Beller <sbeller@google.com> wrote:
-> On Sun, May 10, 2015 at 11:52 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
->> This is exactly the kind of case that "rebase with history" [1] was
->> meant to address. But given that our tooling doesn't support such
->> complicated histories very well, your plan sounds reasonable.
+Hi Eric,
+
+On Fri, May 8, 2015 at 2:28 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> A couple very minor comments applying to the entire patch series...
 >
-> As a side note to your blog post unrelated to the current series:
+> On Thu, May 7, 2015 at 4:43 AM, Paul Tan <pyokagan@gmail.com> wrote:
+>> Commit d38a30df (Be more user-friendly when refusing to do something
+>> because of conflict) introduced code paths to git-pull which will error
 >
-> I think the new proposed history for "rebase-by-merging-a-patch-at-a-time" also
-> improves bisectability because you have less long running side branches
-> (as compared to both in traditional rebase and traditional merge), but a finer
-> meshed DAG where it is easier to split the commit range into half its size.
-> When going back one step in history you have more merge nodes where
-> bisect can decide how many commits to chop off of the new range.
+> Custom for citing a commit is also to include the date:
+>
+>     d38a30df (Be more user-friendly...conflict, 2010-01-12)
+>
+> Some people use this git alias to help automate:
+>
+>     whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
 
-Yeah, this was discussed at the Git Merge 2013 in Berlin, where
-Michael gave two presentations (one on the developer day and one on
-the user day) about git-imerge. We also discussed the idea of using a
-replace ref to be able to switch between different "views" of the
-merge, for example one view where you see only one commit for the
-whole merge/rebase with history, and one view where you see all the
-micro merge commits.
+This is really useful, thanks!
 
-Best,
-Christian.
+>> diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
+>> index 5add900..37ff45f 100755
+>> --- a/t/t5520-pull.sh
+>> +++ b/t/t5520-pull.sh
+>> @@ -164,6 +164,27 @@ test_expect_success 'fail if upstream branch does not exist' '
+>>         test `cat file` = file
+>>  '
+>>
+>> +test_expect_success 'fail if the index has unresolved entries' '
+>> +       git checkout -b third master^ &&
+>> +       test_when_finished "git checkout -f copy && git branch -D third" &&
+>> +       echo file >expected &&
+>> +       test_cmp expected file &&
+>> +       echo modified2 >file &&
+>> +       git commit -a -m modified2 &&
+>> +       test -z "$(git ls-files -u)" &&
+>> +       test_must_fail git pull . second &&
+>> +       test -n "$(git ls-files -u)" &&
+>> +       cp file expected &&
+>> +       test_must_fail git pull . second 2>out &&
+>
+> Perhaps call this stderr capture file 'err' rather than 'out' to
+> clarify its nature and to distinguish it from a stdout capture which
+> someone might add in the future?
+
+Will fix.
+
+Regards,
+Paul
