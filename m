@@ -1,92 +1,123 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: Re: git p4 clone - HEAD + partial history
-Date: Tue, 12 May 2015 20:55:05 +0100
-Message-ID: <55525A99.9070702@diamand.org>
-References: <CAFcBi8_sARUkD2iDeto2CXr1vOm473aOSbj9dCiERTj51ot59A@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v5 3/3] cat-file: add --follow-symlinks to --batch
+Date: Tue, 12 May 2015 13:00:47 -0700
+Message-ID: <xmqqlhgtftw0.fsf@gitster.dls.corp.google.com>
+References: <1431384645-17276-1-git-send-email-dturner@twopensource.com>
+	<1431384645-17276-4-git-send-email-dturner@twopensource.com>
+	<xmqqoalpzn3s.fsf@gitster.dls.corp.google.com>
+	<1431455779.16652.20.camel@ubuntu>
+	<xmqqk2wdzlfm.fsf@gitster.dls.corp.google.com>
+	<1431456922.16652.26.camel@ubuntu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: FusionX86 <fusionx86@gmail.com>, Git Users <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 12 21:55:49 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, David Turner <dturner@twitter.com>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Tue May 12 22:00:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YsGHI-00012f-Tk
-	for gcvg-git-2@plane.gmane.org; Tue, 12 May 2015 21:55:45 +0200
+	id 1YsGMI-0003VI-As
+	for gcvg-git-2@plane.gmane.org; Tue, 12 May 2015 22:00:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933523AbbELTzk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 May 2015 15:55:40 -0400
-Received: from mail-wg0-f44.google.com ([74.125.82.44]:32928 "EHLO
-	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932707AbbELTzk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 May 2015 15:55:40 -0400
-Received: by wgin8 with SMTP id n8so21853208wgi.0
-        for <git@vger.kernel.org>; Tue, 12 May 2015 12:55:38 -0700 (PDT)
+	id S1753817AbbELUAu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 May 2015 16:00:50 -0400
+Received: from mail-ie0-f177.google.com ([209.85.223.177]:36821 "EHLO
+	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753812AbbELUAt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 May 2015 16:00:49 -0400
+Received: by iepk2 with SMTP id k2so10851152iep.3
+        for <git@vger.kernel.org>; Tue, 12 May 2015 13:00:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=WMpAddyqRnDeXSAFpYA4xeXc4RayFp3GfoCo6cak4B0=;
-        b=bTKG8wJ76fM5F20HCQdoVrJrVy9b3xZ7syAp0nYTm12zz1SwP4qO/AfaZ0DH4VvUtB
-         pUI8pmzHVxmc4Na2DFbFkP7uJWkpPrk9y5hvFCkOaRisGPs7UxN3uCmdqeyqgBzf/i+z
-         /bTZx7OvN7icMNF4hklxLsTeU4vK/ZQZF9ZUs=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=WMpAddyqRnDeXSAFpYA4xeXc4RayFp3GfoCo6cak4B0=;
-        b=DBJDvDnJmfX4E1I4n+3c/PeDFFV1AEmwq6eGDCnS3FJaAkb55upgCjo5YQxF4bQgE+
-         xTQ0g5FRR70ArrnsvSXQZDyuJLZRpK+m2wfyedI74BMA89T5KwHaLpEn0undSlIWWvMo
-         iaeQizeO0NstUxEO+tDQT3azE/7oHEL3X7OC/xm3gYw500wuVn8RZdxBbj9Nrf/F1Kqt
-         K1ao1aB/H46/UMSPuXpTMWg4eUeIiJOBXugocODGSbw+G+eQBFnLDPbmwvHBwXDfjTTH
-         lexxl+ReiIUEFRiecB7ruuNIb1zsk3Y71mD0n7RG+99eRD6IXyS3WPezs/yNk/GBWxQC
-         TSmw==
-X-Gm-Message-State: ALoCoQlyIW0WXwbVhz+sZI+6sr8Lse9p30y80+sjDua4xzUaJ/h91XleF3cTiWz0bAWU+dRRg0bZ
-X-Received: by 10.194.209.168 with SMTP id mn8mr149075wjc.49.1431460538857;
-        Tue, 12 May 2015 12:55:38 -0700 (PDT)
-Received: from [192.168.245.128] (cpc7-cmbg17-2-0-cust139.5-4.cable.virginm.net. [86.1.43.140])
-        by mx.google.com with ESMTPSA id ez19sm4392514wid.19.2015.05.12.12.55.37
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 12 May 2015 12:55:38 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.6.0
-In-Reply-To: <CAFcBi8_sARUkD2iDeto2CXr1vOm473aOSbj9dCiERTj51ot59A@mail.gmail.com>
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=NeOGbL3iPRB7kMFPxFbQlV/U6lecuIWHn8PJfs/SEws=;
+        b=I/YlCGrhqOUfD2lUkD1qRCtRPNcTFppMV04pbCklYMHci7CZqWyT/HRe7ZqboSkCiu
+         VTmeHlXpX2CjtbdGCFYM8/4ygYSe0zrw3Ibf5PE1oNZZryYxW2/3X78Z6clKulFG6FZ6
+         sGBWy/tKnYOv0gMz//9AslYlVTHAqunpCzdjwNWlibcgeR1XireRhfYfWVVtkb9PHiUO
+         pgw/5MeRLvg1cxvrlXB2nFB6iC+cSXWFMOw2a4UrOYYM4sm0gIWDXtInWfziUz1yk/hy
+         toMAFP9n9Q0RqnFoOWJYLPnAqXl5baalZVDOgWXLOftwmaEty1betsQsrNXitKO/YN+Q
+         RIUQ==
+X-Received: by 10.50.66.230 with SMTP id i6mr6076177igt.22.1431460848553;
+        Tue, 12 May 2015 13:00:48 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:1d41:fac7:b879:7542])
+        by mx.google.com with ESMTPSA id kl1sm1894185igb.15.2015.05.12.13.00.47
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 12 May 2015 13:00:47 -0700 (PDT)
+In-Reply-To: <1431456922.16652.26.camel@ubuntu> (David Turner's message of
+	"Tue, 12 May 2015 14:55:22 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268876>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/268877>
 
-On 12/05/15 20:31, FusionX86 wrote:
-> Hello,
+David Turner <dturner@twopensource.com> writes:
+
+> On Tue, 2015-05-12 at 11:43 -0700, Junio C Hamano wrote:
+>> David Turner <dturner@twopensource.com> writes:
+>> 
+>> >> We need to also say something about the "missing" vs "loop" case, if
+>> >> we choose to leave that part broken.  I'd rather see it fixed, but
+>> >> that is not a very strong preference.
+>> >
+>> > Will add an example.
+>> 
+>> I do not think we need an example.  By "also say", I meant in
+>> addition to "This and that does not currently work", we also need to
+>> say that loops do not work well.  In other words, it is enough to
+>> just mention that it is a current limitation (or a bug, whichever we
+>> choose to call) that loops are reported as missing.
 >
-> I'm migrating my company from Perforce to Git. There is history in
-> Perforce that goes back to 2006 and I'd like to migrate it with some,
-> but not all of the history. I'm not having luck so far.
+> The version of the patch that we are commenting on contained the text: 
+>> +     --batch-check.  In the event of a symlink loop (or more than
+>> +     40 symlinks in a symlink resolution chain), the file will be
+>> +     treated as missing.  If a symlink points outside the tree-ish
 >
->  From what I see, a simple git p4 clone grabs HEAD only. Using @all
-> grabs all history and is way too much to migrate. I have tried using
-> //depot/folder@2015/01/01,@all when cloning, but it doesn't grab the
-> current stuff in HEAD.
->
-> Is it possible to grab what is currently in HEAD and the last few
-> months of history only?
+> Is that sufficient?  
 
-What I've done in the past is just find a commit that's about the right 
-date, and clone from there.
+Not really, as I think people would say "treated as missing" is a
+bug, and it would be better to mark it as "currently does not work"
+in the sense that "you cannot use this feature to tell HEAD:link
+that is not in HEAD and HEAD:link that is a symbolic link that
+points to itself apart".
 
-i.e.
+> Actually, we could simply have a separate output for broken links.
+> Instead of [original path] SP missing, [original path] SP loop.
 
-$ git p4 clone //depot/folder/...@12345
-$ git p4 sync
+Hmm, I do not quite see where this resistance against keeping the
+original request in order to say "You gave HEAD:link to me, but that
+is a symbolic link that leads to 'link'" comes from.  After all,
+wouldn't that be more consistent with what you already show for a
+link that cannot be resolved, i.e. "You gave HEAD:link to me, that
+is a link that points at 'nosuch'" when I do this:
 
-The usual problem I have after that is that P4 repos can get very large, 
-and the process can quite time consuming....
+    $ ln -s nosuch link
+    $ git add link
+    $ echo "$(git write-tree):link" |
+      git cat-file --batch --follow-symlinks
 
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+Ahh, that would also give us "missing", so in that sense you are
+being consistent.
+
+But I do not think that consistency is useful.  Showing just
+"missing" instead is losing information and that is what bothers me.
+
+Showing "symlink 6 nosuch" to this "link points at a target that
+would be in-tree but there is no such object in the tree" symbolic
+link instead of "missing" would make it more useful, and I do not
+offhand think of a downside, but maybe I am missing something.
+
+For a link that points outside, the code already gives
+
+    $ ln -s ../outside outlink
+    $ git add outlink
+    $ echo "$(git write-tree):outlink" |
+      git cat-file --batch --follow-symlinks
+
+"symlink ../outside", so the script reading from the batch output
+already has to be prepared to handle "symlink" and understand it as
+saying "the link does not point an object that is inside the tree".
